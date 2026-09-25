@@ -1395,10 +1395,7 @@ class BlockDefinition:
     item 23) with its lower corner at the measured event's `position`,
     cut to the board on an open axis and wrapped on a periodic one; its `pair` on the six-neighbour term at its cells (a WELL of the
     massive kind's pair, `num' / den' > num / den`; on light's kind a gap,
-    the (M) wall); the dielectric coupling of section 7 in the
-    first-difference form both ways, `receive` the rational g the block's
-    massive row gains times light's first difference and `source` the
-    rational G light's row gains, negated, times the massive current; the
+    the (M) wall); the
     `seed` of its own record on its cells at interval 0 (0: silent; declared,
     no default, BUILD.md section 26 item 28); `ramp`
     (the pushing agent's declaration: its momentum reached from 0 over that
@@ -1418,8 +1415,6 @@ class BlockDefinition:
     # the box's extents per axis (x, y, z); a cube's are (side, side, side),
     # and `side` is the x extent for the readers of a cube
     extents: tuple[int, int, int] = (1, 1, 1)
-    receive: tuple[int, int] = (0, 1)
-    source: tuple[int, int] = (0, 1)
     # the bound mode's integer profile over the whole board (x-major, one per
     # Node) when the seed is declared so; None for a flat seed
     profile: tuple[int, ...] | None = None
@@ -1519,8 +1514,7 @@ class MeasuredDefinition:
     # The body's `level` under `atom_level` (`LevelDeclaration`), None without.
     level: LevelDeclaration | None = None
     # The block (massive-record-v1): the measured event's cells, pair,
-    # coupling, wheel, seed and the rest, or None (a body of one Node or a
-    # span as before).
+    # seed and the rest, or None (a body of one Node or a span as before).
     block: BlockDefinition | None = None
 
     def __post_init__(self) -> None:
@@ -1948,6 +1942,12 @@ RETIRED_KEYS = {
     # model owner's rule through the Boss; BUILD.md section 26 item 28)
     "cavity": "the cavity retired: a body's record is held by the law alone, its border the "
     "world's, no mirror faces of its own (BUILD.md section 26 item 28)",
+    # the dielectric coupling of MASSIVE_RECORD.md section 7 (the response
+    # records, the receive and source terms, the folded denominators):
+    # refused by name since 2026-09-25 (the model owner's decision (2) of
+    # record 1962; ALGEBRA.md 9.34 (B); BUILD.md section 26 item 30)
+    "coupling": "the coupling retired: mass and light meet only at the click, in whole "
+    "numbers (ALGEBRA.md 9.34 (B); BUILD.md section 26 item 30)",
 }
 
 
@@ -2283,19 +2283,16 @@ def _lifetime(value: object, label: str, age_bound: int) -> int | None:
     return lifetime
 
 
-def _pair_bound(
-    numerator: int, denominator: int, label: str, scale: int = 1, bound: int = AMPLITUDE_BOUND
-) -> None:
+def _pair_bound(numerator: int, denominator: int, label: str, bound: int = AMPLITUDE_BOUND) -> None:
     """The load bound of a pair (Reviewer 3's MUST 3): the rule's total at a
     Node under the amplitude bound A (the world's `amplitude_bound`), num x
-    scale x 6 x A + 3 x den x scale x (A + 1), below 2^63 (the coupling's
-    folded denominator as `scale`); refused otherwise naming the bound and
-    the pair."""
-    total = numerator * scale * 6 * bound + 3 * denominator * scale * (bound + 1)
+    6 x A + 3 x den x (A + 1), below 2^63 (the coupling's folded denominator
+    HISTORY, decision (2) of record 1962); refused otherwise naming the
+    bound and the pair."""
+    total = numerator * 6 * bound + 3 * denominator * (bound + 1)
     if total >= TOTAL_BOUND:
         raise ValueError(
             f"{BEAM_LAW}: {label}.pair [{numerator}, {denominator}]"
-            + (f" with the coupling's denominator {scale}" if scale != 1 else "")
             + f": the rule's total num x 6 x A + 3 x den x (A + 1) at the amplitude bound A = "
             f"{bound} is {total}, not below 2^63 (the bound of the rows' int64)"
         )
@@ -2323,7 +2320,7 @@ def _kind_pair(
         raise ValueError(f"{BEAM_LAW}: {label}.pair must be [num, den], the kind's pair")
     numerator = _integer(value[0], f"{label}.pair numerator", 1, MAX_VALUE)
     denominator = _integer(value[1], f"{label}.pair denominator", 1, MAX_VALUE)
-    _pair_bound(numerator, denominator, label, 1, amplitude_bound)
+    _pair_bound(numerator, denominator, label, amplitude_bound)
     if denominator < numerator:
         raise ValueError(
             f"{BEAM_LAW}: {label}.pair [{numerator}, {denominator}]: a kind's pair has den >= num "
@@ -3448,7 +3445,7 @@ def _block(
     `side` is refused; a block needs the world key `massive_record`, no lamp
     and no span; its `pair` is a well on the massive kind (num' / den' >
     num / den) or a gap on light's kind (den' > num', the (M) wall, which
-    declares no clock, coupling, seed or margin); an emitter's
+    declares no clock, seed or margin); an emitter's
     birth cell carries a rich pair (at least 500 remainder values, ALGEBRA.md
     9.22 (4)); the momentum is bounded by the pace, 3 (P . P) < (3 Q S M)^2."""
     declared = [key for key in BLOCK_KEYS if key in obj]
@@ -3513,12 +3510,12 @@ def _block(
                 "raises it (a barrier; MASSIVE_RECORD.md section 4, section 15 M1-6)"
             )
         if pair[0] * kind[1] < pair[1] * kind[0]:
-            clock_keys = [key for key in ("coupling", "seed", "margin") if key in obj]
+            clock_keys = [key for key in ("seed", "margin") if key in obj]
             if clock_keys:
                 raise ValueError(
                     f"{BEAM_LAW}: {label}.{clock_keys[0]} is refused on a barrier (a raised pair "
-                    f"[{pair[0]}, {pair[1]}] on the kind [{kind[0]}, {kind[1]}] has no bound mode, "
-                    "no clock and no coupling; DECLARATIONS.md section 15 M1-6)"
+                    f"[{pair[0]}, {pair[1]}] on the kind [{kind[0]}, {kind[1]}] has no bound mode "
+                    "and no clock; DECLARATIONS.md section 15 M1-6)"
                 )
             obj = dict(obj, seed=0)
     else:
@@ -3528,29 +3525,18 @@ def _block(
                 "(M) wall declares den > num (a lump in the massless surround, "
                 "MASSIVE_RECORD.md section 4)"
             )
-        clock_keys = [key for key in ("coupling", "seed", "margin") if key in obj]
+        clock_keys = [key for key in ("seed", "margin") if key in obj]
         if clock_keys:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.{clock_keys[0]} is refused on a block of light's kind (the "
-                "(M) wall has no clock and no coupling)"
+                "(M) wall has no clock)"
             )
         # the mirror line of light's kind (DECLARATIONS.md section 15 L-1):
         # its cells carry the gap's pair and nothing else, no own record
         obj = dict(obj, seed=0)
-    receive = (0, 1)
-    source = (0, 1)
-    if "coupling" in obj:
-        coupling = obj["coupling"]
-        if not isinstance(coupling, dict) or set(coupling) != {"G", "g"}:
-            raise ValueError(
-                f'{BEAM_LAW}: {label}.coupling must be {{"G": [n, d], "g": [n, d]}} (the dielectric '
-                "coupling of MASSIVE_RECORD.md section 7)"
-            )
-        receive = _ratio(coupling["g"], f"{label}.coupling.g", zero=True)
-        # the block's rows divide by 3 den g_d (the coupling folded into the
-        # one division): the load bound of MUST 3 with that scale
-        _pair_bound(pair[0], pair[1], label, receive[1], amplitude_bound)
-        source = _ratio(coupling["G"], f"{label}.coupling.G", zero=True)
+    # the load bound of MUST 3 on the block's own pair at its cells (the
+    # coupling's folded denominator HISTORY, decision (2) of record 1962)
+    _pair_bound(pair[0], pair[1], label, amplitude_bound)
     if "seed" not in obj:
         # NO IMPLICIT SEED (the model owner's rule through the Boss,
         # 2026-09-25; BUILD.md section 26 item 28): a well declares its own
@@ -3673,20 +3659,9 @@ def _block(
                 f"{BEAM_LAW}: {label}.emitter needs the stock `amount` from 1 (the number of the "
                 "body's excitations, M; a world that needs W births declares M = W)"
             )
-        # THE COUPLING OF AN EMITTING BODY (ALGEBRA.md 9.19 (4e), the
-        # mathematician's word of 2026-09-25): every emitting body declares
-        # (g, G) for the family it births, both nonzero: the records on the
-        # board act on the excited record's rows through g and spread its
-        # residues (a one-unit change of a row moves the next remainder by
-        # num mod 3 den); a body that births light and is not coupled to
-        # light is a write and no source
-        if "coupling" not in obj or receive[0] == 0 or source[0] == 0:
-            raise ValueError(
-                f'{BEAM_LAW}: {label}.emitter needs the body\'s `coupling` {{"G": [n, d], "g": '
-                "[n, d]}} to the family it births, both nonzero (ALGEBRA.md 9.19 (4e): the "
-                "records on the board act on the excited record's rows through g and spread its "
-                "residues; a body that births and is not coupled is a write and no source)"
-            )
+        # THE RESIDUES OF AN EMITTING BODY spread from the remainder kept at
+        # its Nodes (the model owner's decisions (1) and (2) of record 1962;
+        # ALGEBRA.md 9.34 (A) and (B)): the coupling of 9.19 (4e) is HISTORY
         emitter = _emitter(
             obj["emitter"],
             f"{label}.emitter",
@@ -3722,8 +3697,6 @@ def _block(
         pair,
         seed,
         extents=extents,
-        receive=receive,
-        source=source,
         profile=profile,
         clock=clock,
         ramp=ramp,
@@ -3933,7 +3906,9 @@ def _measured(
                 "charge of a measured event is its family's charge per unit of content times "
                 "its content (the family's `charge`, an integer or [n, d]); see docs/MIGRATION.md"
             )
-        _refuse_retired(entry, label, ("absorbing", "take", "emits", "own_grace", "wheel", "cavity"))
+        _refuse_retired(
+            entry, label, ("absorbing", "take", "emits", "own_grace", "wheel", "cavity", "coupling")
+        )
         obj = _object(entry, label, MEASURED_KEYS, {"position", "family", "amount"})
         position = _address(obj["position"], f"{label}.position", shape)
         if any(item.position == position for item in found):

@@ -94,7 +94,6 @@ MOMENTUM_SPEED_QUARTER = 48
 LAYER_RAMP = 12000  # ten relaxation times of the well by the margin module's own omega_b on the 200^2 layer (1164.6 intervals; the design script's 1027 the estimate), the model owner's word of 2026-09-24, 16:48Z: the body's conditions checked at load
 LAYER_HOLD = 8000
 BLOCK_KEYS = (
-    "coupling",
     "seed",
     "ramp",
     "start",
@@ -231,7 +230,6 @@ def stamped(document: dict) -> dict:
 BORN_AMPLITUDE = 1 << 16  # the born train's amplitude A (ALGEBRA.md 9.17 (6a))
 TRAIN_FLUX_TOLERANCE = 2  # per thousand: the train's one-way flux 40 Links ahead within 2 x 10^-3 of T
 TRAIN_FLUX_DISTANCE = 40  # Links ahead of the train's head, the plane the generator's checks read
-TRANSPARENCY_LEAST = 99  # per hundred: a body a born record must enter passes 0.99 of T (9.22 (7a) (iv))
 
 
 def born_train(document: dict, number: int) -> None:
@@ -337,13 +335,6 @@ def born_train(document: dict, number: int) -> None:
             "passage within 2 x 10^-3 (ALGEBRA.md 9.25 (11)); nothing written"
         )
     emitter["born"] = {"now": now, "before": before, "norm": norm}
-    for other, share in transparency_readings(document, number, now, before, norm).items():
-        if share * 100 < TRANSPARENCY_LEAST * norm:
-            raise ValueError(
-                f"measured[{other}] is not transparent to measured[{number}]'s born train: "
-                f"{share / norm:.4f} of the norm passes it, below 0.99 (ALGEBRA.md 9.22 (7a) "
-                "(iv)); nothing written"
-            )
 
 
 def names_of(document: dict) -> dict[str, int]:
@@ -368,32 +359,28 @@ def train_run(
     transverse_corner: tuple[int, int, int],
     now: list[int],
     before: list[int],
-    body: dict | None = None,
 ) -> int:
-    """THE GENERATOR'S RUN OF A TRAIN (HOST; ALGEBRA.md 9.25 (11) (a), 9.22 (7a) (iv)): the
-    train's two levels planted on the born family's VACUUM of the world's families, on a
-    check board of the world's transverse shape and faces whose axis along **K** is open
-    and long (a back margin of one train's length behind the tail, the train, the body
-    where one is given right at the head, the plane one Node deep TRAIN_FLUX_DISTANCE Links
-    beyond the body's far face or the train's head, and a far margin of twelve trains'
+    """THE GENERATOR'S RUN OF A TRAIN (HOST; ALGEBRA.md 9.25 (11) (a)): the train's two
+    levels planted on the born family's VACUUM of the world's families, on a check board of
+    the world's transverse shape and faces whose axis along **K** is open and long (a back
+    margin of one train's length behind the tail, the train, the plane one Node deep
+    TRAIN_FLUX_DISTANCE Links beyond the train's head, and a far margin of twelve trains'
     lengths, so that the far face's reflection returns after the window); the train advanced
-    by the engine's rule for the window (TRAIN_FLUX_DISTANCE + the body's extent + six trains'
-    lengths) / v_g intervals, v_g the dispersion's group pace along **K** (a narrow train's
-    oblique parts pass more slowly: an 8-wide train on a layer books 0.9972 of its norm in a
-    window of three trains and 1.0000 in six, COMPUTATION); the one-way
-    inward flux into the plane summed over the window is returned. A body given is placed
-    alone on the check board with its coupling and its seed on its mode there (its emitter
-    key, its stock and its receiver dropped)."""
+    by the engine's rule for the window (TRAIN_FLUX_DISTANCE + six trains' lengths) / v_g
+    intervals, v_g the dispersion's group pace along **K** (a narrow train's oblique parts
+    pass more slowly: an 8-wide train on a layer books 0.9972 of its norm in a window of
+    three trains and 1.0000 in six, COMPUTATION); the one-way inward flux into the plane
+    summed over the window is returned. The transparency reading of 9.22 (7a) (iv) (a body
+    placed at the train's head) is HISTORY with the coupling (the model owner's decision
+    (2) of record 1962)."""
     import numpy as np
 
     from event_universe.events.detector_law import DetectorLawSimulation
     from event_universe.events.world import block_cell_indices, parse_nature_beam_world
 
     length = train_extents[axis]
-    body_extents = block_extents_of(body) if body is not None else (0, 0, 0)
-    body_length = body_extents[axis] if body is not None else 0
     far = 12 * length + TRAIN_FLUX_DISTANCE
-    total = length + length + body_length + TRAIN_FLUX_DISTANCE + far
+    total = length + length + TRAIN_FLUX_DISTANCE + far
     shape = [int(v) for v in document["shape"]]
     shape[axis] = total
 
@@ -401,8 +388,7 @@ def train_run(
         return t if sign > 0 else total - 1 - t
 
     train_low = length
-    body_low = train_low + length
-    plane_t = body_low + body_length + TRAIN_FLUX_DISTANCE - 1
+    plane_t = train_low + length + TRAIN_FLUX_DISTANCE - 1
     check = json.loads(json.dumps(document))
     check["shape"] = shape
     check["boundary"] = dict(document["boundary"])
@@ -411,24 +397,6 @@ def train_run(
     check.pop("probes", None)
     check["detectors"] = []
     check["measured"] = []
-    if body is not None:
-        kept = json.loads(json.dumps(body))
-        for key in ("emitter", "receiver", "amount", "seed", "clock", "margin"):
-            kept.pop(key, None)
-        kept["amount"] = 1
-        kept["margin"] = "control"
-        position = [int(v) for v in body["position"]]
-        position[axis] = min(at(body_low), at(body_low + body_length - 1))
-        kept["position"] = position
-        declared = body["seed"]  # the declared amplitude, or the profile whose peak is it
-        kept["seed"] = (
-            max(abs(int(v)) for v in declared) if isinstance(declared, list) else int(declared)
-        )
-        check["measured"] = [kept]
-        check["ticks"] = 1
-        stamped(check)
-        kept["seed"] = mode_profile(check, 0, amplitude=kept["seed"])
-        kept["margin"] = "control"
     check["ticks"] = 1
     stamped(check)
     world = parse_nature_beam_world(check)
@@ -454,7 +422,7 @@ def train_run(
     pair = (int(family_entry.get("pair", [1, 1])[0]), int(family_entry.get("pair", [1, 1])[1]))
     p, q = (int(v) for v in family_entry["phase_per_link"])
     k = 2.0 * math.pi * p / (2.0 * int(document["N"]) * q)
-    window = math.ceil((TRAIN_FLUX_DISTANCE + body_length + 6 * length) / group_pace(pair, k))
+    window = math.ceil((TRAIN_FLUX_DISTANCE + 6 * length) / group_pace(pair, k))
     booked = 0
     for _ in range(window):
         simulation._advance(live)
@@ -464,7 +432,7 @@ def train_run(
 
 def train_passage_flux(document: dict, number: int, now: list[int], before: list[int]) -> int:
     """THE FLUX CHECK'S READING (ALGEBRA.md 9.25 (11) (a)): the train alone on the vacuum,
-    the plane TRAIN_FLUX_DISTANCE Links ahead of its head, `train_run` without a body."""
+    the plane TRAIN_FLUX_DISTANCE Links ahead of its head (`train_run`)."""
     entry = document["measured"][number]
     direction = entry["emitter"]["train"]["direction"]
     axis = next(index for index, v in enumerate(direction) if v != 0)
@@ -473,32 +441,6 @@ def train_passage_flux(document: dict, number: int, now: list[int], before: list
     return train_run(
         document, entry["emitter"]["family"], axis, sign, block_extents_of(entry), corner, now, before
     )
-
-
-def transparency_readings(
-    document: dict, number: int, now: list[int], before: list[int], norm: int
-) -> dict[int, int]:
-    """THE TRANSPARENCY READINGS (ALGEBRA.md 9.22 (7a) (iv), HOST): for every body coupled
-    to the born family (the emitter itself included, where its light returns to it), the
-    born train run through that body alone on the vacuum (`train_run` with the body right
-    at the train's head), the one-way flux booked TRAIN_FLUX_DISTANCE Links beyond the
-    body's far face; the reading per body."""
-    entry = document["measured"][number]
-    family = entry["emitter"]["family"]
-    direction = entry["emitter"]["train"]["direction"]
-    axis = next(index for index, v in enumerate(direction) if v != 0)
-    sign = 1 if direction[axis] > 0 else -1
-    extents = block_extents_of(entry)
-    corner = (int(entry["position"][0]), int(entry["position"][1]), int(entry["position"][2]))
-    readings: dict[int, int] = {}
-    for other, body in enumerate(document["measured"]):
-        if "coupling" not in body or ("side" not in body and "extents" not in body):
-            continue
-        if body["family"] == family:
-            continue
-        readings[other] = train_run(document, family, axis, sign, extents, corner, now, before, body)
-    _ = norm
-    return readings
 
 
 def block_extents_of(entry: dict) -> tuple[int, int, int]:

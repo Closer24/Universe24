@@ -14,7 +14,7 @@ THE LIGHT CLOCK (ALGEBRA.md 9.22 (8), its row; the one table of 9.30: the chain 
 extruded to [760, 3, 3], periodic on y and z, so that every detector is a whole cube and
 every pin of the chain stands to the bit): light [1, 1] with the born clock [512, 1] on
 N = 1024, matter [800, 809]; the face slabs 32 deep at both ends of x (`face_depth`); the
-well A [800, 801] of the extents [32, 3, 3] at [600, 632) with its coupling and a stock of
+well A [800, 801] of the extents [32, 3, 3] at [600, 632) with a stock of
 64, its train along +x; the mirror the gap [1, 2] of depth 4 at [690, 694) (a body of
 light's kind over the whole cross-section; the holder body's name waits on the cleanup's
 step 6); the receiving set `at_well` A's own cells (the set bound to the block: the
@@ -188,9 +188,7 @@ def emitter_body(
     mode's profile by `seed_on_the_mode` once the document is complete), its stock `stock`
     excitations, its `emitter` the born family (the residue and the wheel the law's) and,
     with `receiver`, the born records' ladder by name (the sets named; the lamp's `receiver`
-    of old, written only under RECEIVER_KEY); its coupling (g, G) to the family it births
-    (COUPLING, the registered form; required, ALGEBRA.md 9.19 (4e): the born records act
-    back on the excited record's rows and spread its residues)."""
+    of old, written only under RECEIVER_KEY) (no coupling: the coupling is the click alone, the model owner's decision (2) of record 1962)."""
     emitter: dict = {"family": family}
     if receiver is not None and RECEIVER_KEY:
         emitter["receiver"] = list(receiver)
@@ -203,7 +201,6 @@ def emitter_body(
         "fixed": True,
         "side": 1,
         "pair": list(pair or EMITTER_WELL),
-        "coupling": copy.deepcopy(COUPLING),
         "seed": EMITTER_SEED_AMPLITUDE,
         "margin": "control",
         "emitter": emitter,
@@ -504,7 +501,6 @@ WELL_FULL = [
     800,
     801,
 ]  # the rich well of the massive rows' emitters (2403 remainder values; the mathematician's 9.21 (8))
-COUPLING = {"G": [1, 50], "g": [1, 1000]}  # section 15 M1-1, with the seed 50 x 2^20
 EMITTER_SEED = 50 << 20
 AMPLITUDE_BOUND = 1 << 32  # section 15 M1-10, the world key `amplitude_bound` of every massive world
 EMITTER_STOCK = (
@@ -523,8 +519,8 @@ MIRROR_DEPTH = 4  # the mirror's depth, the gap [1, 2] (A.3)
 def emitter(
     position: list[int], extents: list[int], pair: list[int], direction: list[int], **extra: object
 ) -> dict:
-    """A well that emits light (the light clock's A): the coupling G = [1, 50], g = [1, 1000]
-    for its response to light, the seed 50 x 2^20 on its mode; SINCE ALGEBRA.md 9.17
+    """A well that emits light (the light clock's A): the seed 50 x 2^20 on its mode (no
+    coupling: the click alone, the model owner's decision (2) of record 1962); SINCE ALGEBRA.md 9.17
     (BUILD.md section 26) its emission is by its excited records' clicks: the stock
     EMITTER_STOCK excitations, each written once at its rung; SINCE THE BORN TRAIN (item
     27; 9.17 (6a)) each birth the train of TRAIN_PERIODS periods along `direction` on the
@@ -534,7 +530,6 @@ def emitter(
         "position": position,
         "extents": extents,
         "pair": pair,
-        "coupling": copy.deepcopy(COUPLING),
         "seed": EMITTER_SEED,
         "amount": EMITTER_STOCK,
         "emitter": {"family": "light", "train": {"direction": direction, "periods": TRAIN_PERIODS}},

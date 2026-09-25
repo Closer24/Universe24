@@ -40,8 +40,8 @@ def emitter(
     direction: list[int] | None = None,
 ) -> dict:
     """An emitter body over the train's 32 cells from `position` on the matter kind
-    [800, 809]: the well [800, 801] (W = 2403 remainder values, ALGEBRA.md 9.22 (4)), its
-    coupling G [1, 50], g [1, 1000] to light (required, 9.19 (4e)), the seed 50 x 2^20 (its
+    [800, 809]: the well [800, 801] (W = 2403 remainder values, ALGEBRA.md 9.22 (4)), no
+    coupling (the click alone, the model owner's decision (2) of record 1962), the seed 50 x 2^20 (its
     profile on the mode by `seed_source` once the world is built), its `emitter` of light
     with the stock `stock` and its train along `direction` (+x by default; THE BORN TRAIN,
     9.17 (6a)), its `receiver` where one is named (the line at that set's rung)."""
@@ -54,7 +54,6 @@ def emitter(
         "fixed": True,
         "extents": [32, 1, 1],
         "pair": [800, 801],
-        "coupling": {"G": [1, 50], "g": [1, 1000]},
         "seed": 50 << 20,
         "emitter": {
             "family": "light",

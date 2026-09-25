@@ -127,12 +127,11 @@ class LiveRecord:
     # rung's wheel is the record's, never a set's or the world's.
     wheel: int = 1
     # massive-record-v1: the emitter's number for a record a body emitted
-    # (None for a planted record and for a block's own record), and the
-    # coupling's denominator folded into the row's wall (MASSIVE_RECORD.md
-    # section 7, MUST A: one D per row per interval; the wall 3 den x
-    # scale, the remainder in [0, wall)).
+    # (None for a planted record and for a block's own record); the
+    # coupling's folded denominator (`scale`) is HISTORY since the model
+    # owner's decision (2) of record 1962 (the wall 3 den alone, one D per
+    # row per interval, the remainder in [0, wall)).
     emitter: int | None = None
-    scale: int = 1
     # The pair's arms (detector-law-v1, build 2, component 2; DECLARATIONS.md
     # Bell's four settings and the no-signalling control, DESIGN.md 6.3): a lamp with `arms` births one record
     # per arm on one birth stamp (the same ordinal, u and tick), each arm's
@@ -178,8 +177,7 @@ class Block:
     """A block on the board (massive-record-v1, MASSIVE_RECORD.md sections 4
     to 7; BUILD.md section 2): its cells R (the mask over the board, the
     cube of `side` at `corner`), its own massive record (the seed on its
-    cells), its responses (one massive record per light record reaching
-    it), the light records it emitted, its clock (its record's cycles
+    cells), the light records it emitted, its clock (its record's cycles
     across R), its momentum per axis with the drive's accumulators against
     the wall 3 Q S M, and its cell in the simulation's cells."""
 
@@ -195,7 +193,6 @@ class Block:
     count: int = 0
     previous_sum: int = 0
     own: LiveRecord | None = None
-    responses: dict[int, LiveRecord] = field(default_factory=dict)
     emitted: list[int] = field(default_factory=list)
     current: int | None = None
     births: int = 0
@@ -206,7 +203,6 @@ class Block:
     cycle_start: int = 0
     cycle_length: int = 0
     stepped: int = 0
-    answered: int = 0
     # the emitter as a clicking body (ALGEBRA.md 9.17 (4)): the excitations
     # started (k), the current excited record's booked offer C (its own
     # motion through its cells), and whether its rung fired this interval
@@ -464,15 +460,6 @@ class DetectorLawSimulation:
                     self._excite(block, own_record)
             self.blocks.append(block)
             self.block_by_number[number] = block
-        # Light's wall under the coupling (MASSIVE_RECORD.md section 7, MUST
-        # A): 3 L with L the least common multiple of the blocks' source
-        # denominators G_d, one number for the kind (1 without a block: the
-        # first build's rows bit for bit), so that every light row divides
-        # once per interval; a block's source term is scaled by L / G_d.
-        self.light_scale = 1
-        for block in self.blocks:
-            denominator = block.definition.source[1]
-            self.light_scale = self.light_scale * denominator // gcd(self.light_scale, denominator)
         # The blocks' cells: a block's cells carry its cell's index (the flux
         # into them booked to it, never chosen: the cell is on no ladder); a
         # set bound to a block without positions owns the block's cells
@@ -610,19 +597,6 @@ class DetectorLawSimulation:
             return list(block.momentum)
         return [component * elapsed // ramp for component in block.momentum]
 
-    def motion_pair(self, block: Block) -> tuple[int, int]:
-        """The index in motion (MASSIVE_RECORD.md section 7, record 1418): the
-        coupling's g carried as [W_d^2, W_d^2 - 3 P . P] with W_d the drive's
-        wall 3 Q S M and P the block's momentum, integers the stepping cell
-        has (on one axis with K = W_d / abs(P_a) whole, [K^2, K^2 - 3]);
-        [1, 1] at rest; reduced by the gcd."""
-        momentum = self._momentum_now(block)
-        square = block.wall * block.wall
-        numerator = square
-        denominator = square - 3 * sum(component * component for component in momentum)
-        common = gcd(numerator, denominator)
-        return numerator // common, denominator // common
-
     def _move_block(self, block: Block) -> None:
         """The block's step (MASSIVE_RECORD.md section 5): per axis the
         accumulator gains the momentum's component against the wall 3 Q S M
@@ -681,67 +655,17 @@ class DetectorLawSimulation:
             address = (int(node[0]), int(node[1]), int(node[2]))
             self.cell_index[address] = block.cell if set_cell is None else set_cell
 
-    def _difference(self, live: LiveRecord, block: Block) -> np.ndarray:
-        """The first difference of a record's row the coupling reads at the
-        block's cells: the SAME-NODE difference, now less before at the
-        Node, on every interval, a hop interval included (the design's word
-        of records 1444 and 1445: the hop moves the cells' set and the pair
-        region only, the rows stay and re-form by the rule; an along-path
-        difference is pumped parametrically by the hop's pair resonance with
-        light's band and is not built). The block's hop is kept on the block
-        for the record and read by nothing here."""
-        _ = block
-        difference: np.ndarray = live.now - live.before
-        return difference
-
-    def _coupled_term(
-        self, target: LiveRecord, delta: np.ndarray, mask: np.ndarray, numerator: int
-    ) -> np.ndarray:
-        """One entry of the coupling (verb B): the term added to the target's
-        total at the cells, 3 den x numerator x delta, the coupling's
-        denominator folded into the row's wall (MASSIVE_RECORD.md section 7,
-        MUST A: one D per row per interval, no second division; the row's
-        `scale` carries the denominator, `_advance` divides once)."""
-        term: np.ndarray = np.where(mask, 3 * self.kind_den[target.family] * numerator * delta, 0)
-        return term
-
-    def receive_scale(self, block: Block) -> int:
-        """The wall's factor of a block's massive rows: g's denominator times
-        the drive's pair's (the index in motion), the one division's wall
-        3 den g_d x pair_d."""
-        return block.definition.receive[1] * self.motion_pair(block)[1]
-
-    def _receive(self, block: Block, response: LiveRecord, light: LiveRecord) -> np.ndarray:
-        """The receive: the block's massive row gains g times light's first
-        difference at its cells; in motion g carried as the drive's pair;
-        the term 3 den g_n pair_n x delta against the wall 3 den g_d pair_d."""
-        delta = self._difference(light, block)
-        return self._coupled_term(
-            response, delta, block.mask, block.definition.receive[0] * self.motion_pair(block)[0]
-        )
-
-    def _source(self, block: Block, massive: LiveRecord, light: LiveRecord) -> np.ndarray:
-        """The source term (the same entry): light's row gains -G times the
-        massive record's current at the block's cells, the term
-        -3 G_n (L / G_d) x delta against light's wall 3 L (L the least common
-        multiple of the blocks' G_d, `light_scale`)."""
-        delta = self._difference(massive, block)
-        numerator, denominator = block.definition.source
-        return self._coupled_term(
-            light, delta, block.mask, -numerator * (self.light_scale // denominator)
-        )
-
     def residue_of(self, live: LiveRecord, block: Block) -> tuple[int, int]:
         """THE RESIDUE FROM THE LAW (ALGEBRA.md 9.22 (4); BUILD.md section 26
         item 15): the record's rule remainder r at the body's centre cell,
-        read now, in units of the remainder's step g = gcd(num x scale,
-        wall) (r moves on the multiples of g from 0), and the wheel W =
+        read now, in units of the remainder's step g = gcd(num, wall) (r
+        moves on the multiples of g from 0), and the wheel W =
         wall / g = 3 den / gcd(num, 3 den) values (the pair at that cell;
         700 on [801, 700], 2403 on [800, 801]); no declaration, no draw."""
         centre = self.centre_mask(block)
         node = tuple(int(axis[0]) for axis in np.nonzero(centre))
-        num = int(self.kind_num[live.family][node]) * live.scale
-        wall = 3 * int(self.kind_den[live.family][node]) * live.scale
+        num = int(self.kind_num[live.family][node])
+        wall = 3 * int(self.kind_den[live.family][node])
         step = gcd(num, wall)
         return int(live.remainder[node]) // step, wall // step
 
@@ -754,7 +678,7 @@ class DetectorLawSimulation:
         input stamp); its residue and wheel from the
         law (`residue_of`) are read at the first rung AFTER ITS FIRST ADVANCE
         (the load's seed has the remainders 0, the file's integers; a reseed
-        keeps the ended record's remainder at the cells, the model owner's
+        keeps the ended record's remainder at the Nodes, the model owner's
         decision (1) of record 1962, so the residues of the stock's births
         spread from it; the mathematician's word on item 15's finding), the
         offer C counting from that interval."""
@@ -845,7 +769,7 @@ class DetectorLawSimulation:
         centre cell, read at the click), the content one quantum moved from
         the body's stock; then, while the stock lasts, the next excited
         record (the seed again at both levels, its division remainder the
-        ended record's kept at the cells: the model owner's decision (1) of
+        ended record's kept at the Nodes: the model owner's decision (1) of
         record 1962). Nothing drives the born record afterwards: the law
         advances it."""
         world = self.world
@@ -963,10 +887,9 @@ class DetectorLawSimulation:
             # THE REMAINDER IS THE CELL'S (the model owner's decision (1) of
             # record 1962; ALGEBRA.md 9.34 (A), 9.35 (7); BUILD.md section 26
             # item 29): the ended record's division remainder stays at its
-            # cells through the click and the reseed, in its scale, never
-            # reset; it alone spreads the residues of the stock's births
+            # Nodes through the click and the reseed, never reset; it alone
+            # spreads the residues of the stock's births
             fresh.remainder[:] = own.remainder
-            fresh.scale = own.scale
             block.own = fresh
             self.records[fresh.identity] = fresh
             block.previous_sum = int(np.sum(fresh.now[block.mask]))
@@ -977,8 +900,8 @@ class DetectorLawSimulation:
 
     def _block_clock(self, block: Block) -> None:
         """The block's clock (MASSIVE_RECORD.md sections 4 and 6): its total
-        record summed across its cells (G over R: its own record and the
-        responses light drives), one count per cycle (the sum's crossing
+        record summed across its cells (G over R: its own record), one
+        count per cycle (the sum's crossing
         from at most 0 to above 0, verb D's comparison), a `click` line per
         count with its own count (the self-click of row (g)); a new cycle
         births its emission at the next interval."""
@@ -994,9 +917,6 @@ class DetectorLawSimulation:
         if block.own is not None:
             total += int(np.sum(block.own.now[block.mask]))
             at_centre += int(block.own.now[centre])
-        for response in block.responses.values():
-            total += int(np.sum(response.now[block.mask]))
-            at_centre += int(response.now[centre])
         if block.previous_sum <= 0 < total:
             block.count += 1
             block.new_cycle = True
@@ -1039,24 +959,17 @@ class DetectorLawSimulation:
     # The inverse map (ALGEBRA.md 8.8): the step is a bijection but for the
     # click; the property test of 9.20 (B) 4 runs it backwards
 
-    def _advance_inverse(
-        self, live: LiveRecord, extra: np.ndarray | None = None, scale: int = 1
-    ) -> None:
+    def _advance_inverse(self, live: LiveRecord) -> None:
         """One interval of the rule backwards on a record: from (a_next, a_now,
         r') to (a_now, a_before, r) with 3 den a_before - r = num S_6(a_now)
-        + extra - (3 den a_next + r'), the remainder in [0, wall): a_before the
+        - (3 den a_next + r'), the remainder in [0, wall): a_before the
         ceiling of that quotient, r the difference (board_algebra.py's
         `step_inverse`)."""
-        if live.scale != scale:
-            live.remainder = live.remainder * scale // live.scale
-            live.scale = scale
         num = self.kind_num[live.family]
         den = self.kind_den[live.family]
-        wall = 3 * den * scale
-        total = num * scale * self._neighbours(live.before, self.kind_wrap[live.family])
+        wall = 3 * den
+        total = num * self._neighbours(live.before, self.kind_wrap[live.family])
         total -= wall * live.now + live.remainder
-        if extra is not None:
-            total += extra
         a_before = -np.floor_divide(-total, wall)
         live.remainder = wall * a_before - total
         live.now = live.before
@@ -1065,11 +978,11 @@ class DetectorLawSimulation:
 
     def step_inverse(self) -> None:
         """One interval backwards (8.8), in the reverse column order of `step`:
-        the light records first (their sources from the massive records'
-        current differences), then the responses and the bodies' own records
-        (their receive from the light records' recovered differences); no
-        push, no click, no birth (the bodies at rest and no click in the
-        interval, the property test's world)."""
+        the light records first, then the bodies' own records (the coupling
+        HISTORY, the model owner's decision (2) of record 1962: no source, no
+        receive, every record by the rule alone); no push, no click, no birth
+        (the bodies at rest and no click in the interval, the property test's
+        world)."""
         for block in self.blocks:
             if any(int(component) != 0 for component in block.momentum):
                 raise ValueError(
@@ -1079,32 +992,10 @@ class DetectorLawSimulation:
             live = self.records[identity]
             if self.families[live.family].massive_kind and live.emitter is None:
                 continue
-            sources: np.ndarray | None = None
-            if self.blocks:
-                sources = np.zeros(self.shape, dtype=np.int64)
-            for block in self.blocks:
-                if live.emitter == block.number:
-                    continue
-                if block.definition.receive == (0, 1) and block.definition.source == (0, 1):
-                    continue
-                response = block.responses.get(identity)
-                if response is not None and sources is not None:
-                    sources += self._source(block, response, live)
-            self._advance_inverse(live, sources, self.light_scale)
+            self._advance_inverse(live)
         for block in self.blocks:
-            for identity, response in block.responses.items():
-                light = self.records.get(identity)
-                if light is not None:
-                    self._advance_inverse(
-                        response, self._receive(block, response, light), self.receive_scale(block)
-                    )
             if block.own is not None:
-                extra = np.zeros(self.shape, dtype=np.int64)
-                for identity in block.emitted:
-                    light = self.records.get(identity)
-                    if light is not None:
-                        extra += self._receive(block, block.own, light)
-                self._advance_inverse(block.own, extra, self.receive_scale(block))
+                self._advance_inverse(block.own)
         self.tick -= 1
 
     # The rule
@@ -1361,16 +1252,16 @@ class DetectorLawSimulation:
         mask: np.ndarray = dot >= 0
         return mask
 
-    def _advance(self, live: LiveRecord, extra: np.ndarray | None = None, scale: int = 1) -> None:
+    def _advance(self, live: LiveRecord) -> None:
         # THE EMITTER'S CELLS ARE CELLS LIKE EVERY OTHER (ALGEBRA.md 9.17; the
         # Boss's line of 2026-09-24 on the knot): no grace, no exemption, no
         # own take, no fresh Port; the born record is written once and the
         # law advances it (the retired forms in BUILD.md section 26).
         # Every born record, light's kind or a massive kind alike, books its
         # flux at the cells and clicks on its ladder (the click is the law's
-        # one action on any record, POSTULATES 10); a BLOCK'S own record and
-        # its responses (a massive kind, born of no emitter) book nothing and
-        # are on no ladder (massive-record-v1, MUST 2).
+        # one action on any record, POSTULATES 10); a BLOCK'S own record (a
+        # massive kind, born of no emitter) books nothing and is on no
+        # ladder (massive-record-v1, MUST 2).
         booked = not self.families[live.family].massive_kind or live.emitter is not None
         # The rule with the kind's pair on the six-neighbour term
         # (massive-record-v1, MASSIVE_RECORD.md section 1): G over the six
@@ -1378,24 +1269,16 @@ class DetectorLawSimulation:
         # light's pair [1, 1] the first build's integers bit for bit.
         num = self.kind_num[live.family]
         den = self.kind_den[live.family]
-        # The coupling's denominator folded into the wall (MASSIVE_RECORD.md
-        # section 7, MUST A): the wall 3 den x scale, the six-neighbour term
-        # num x scale x S_6, the coupling's term 3 den x numerator x delta,
-        # one division; a scale that changes (the drive's pair under a
-        # ramp) rescales the remainder to the new wall, r x new // old.
-        if live.scale != scale:
-            live.remainder = live.remainder * scale // live.scale
-            live.scale = scale
-        wall = 3 * den * scale
+        # THE COUPLING IS THE CLICK ALONE (the model owner's decision (2) of
+        # record 1962; ALGEBRA.md 9.34 (B); BUILD.md section 26 item 30): no
+        # coupling's term and no folded denominator (MASSIVE_RECORD.md
+        # section 7 HISTORY); the wall 3 den, one division per row per
+        # interval, the remainder kept in [0, wall)
+        wall = 3 * den
         neighbours = self._neighbours(live.now, self.kind_wrap[live.family])
-        total = num * scale * neighbours
+        total = num * neighbours
         total -= wall * live.before
         total += live.remainder
-        if extra is not None:
-            # The coupling's term (massive-record-v1, section 7): one entry
-            # of the declared matrix over the other record's two columns at
-            # a block's cells, undivided, the wall its divisor.
-            total += extra
         nxt = np.floor_divide(total, wall)
         live.remainder = total - wall * nxt
         if self.world.massive_record and int(np.max(np.abs(nxt))) > self.world.amplitude_bound:
@@ -1532,11 +1415,9 @@ class DetectorLawSimulation:
         return squares - links
 
     def _release(self, live: LiveRecord) -> None:
-        """The record's rows leave the board: the
-        blocks' responses, the emitters' lists and the rung counts of the
-        record are dropped."""
+        """The record's rows leave the board: the emitters' lists and the
+        rung counts of the record are dropped."""
         for block in self.blocks:
-            block.responses.pop(live.identity, None)
             if live.identity in block.emitted:
                 block.emitted.remove(live.identity)
         for key in [key for key in self.rung_counts if key[0] == live.identity]:
@@ -1672,20 +1553,14 @@ class DetectorLawSimulation:
         self.tick += 1
         for block in self.blocks:
             self._move_block(block)
-        # The massive records first (each block's own record driven by its
-        # emitted light's first differences, the responses by their light
-        # record's), then the light records with the source terms (the
-        # massive currents just formed): the order of the interval,
-        # MASSIVE_RECORD.md section 7 (the massive step first).
+        # The massive records first (each block's own record by the rule
+        # alone), then the light records: the order of the interval
+        # (MASSIVE_RECORD.md section 7's massive step first; the coupling's
+        # terms HISTORY, the model owner's decision (2) of record 1962).
         for block in self.blocks:
             if block.own is None:
                 continue
-            extra = np.zeros(self.shape, dtype=np.int64)
-            for identity in block.emitted:
-                light = self.records.get(identity)
-                if light is not None:
-                    extra += self._receive(block, block.own, light)
-            self._advance(block.own, extra, self.receive_scale(block))
+            self._advance(block.own)
             if block.definition.emitter is not None:
                 self._excitation_rung(block)
         for identity in list(self.records):
@@ -1699,33 +1574,12 @@ class DetectorLawSimulation:
                 # clock, born of a lamp) is advanced by the rule with the
                 # family's pair alone, through the take and the detector
                 # sets' pointers as light's (the click at W, one per record),
-                # coupled to no block (the coupling is declared on light's
-                # row, MASSIVE_RECORD.md section 7), its faces the world's
-                # (a zero face a mirror).
+                # coupled to nothing (the coupling HISTORY, decision (2) of
+                # record 1962), its faces the world's (a zero face a mirror).
                 if live.emitter is not None:
                     self._advance(live)
                 continue
-            sources: np.ndarray | None = None
-            if self.blocks:
-                sources = np.zeros(self.shape, dtype=np.int64)
-            for block in self.blocks:
-                if live.emitter == block.number:
-                    # a body answers no record of its own (its own record
-                    # received the born light's difference above)
-                    continue
-                if block.definition.receive == (0, 1) and block.definition.source == (0, 1):
-                    continue
-                response = block.responses.get(identity)
-                if response is None:
-                    block.answered += 1
-                    response = self._massive_record(
-                        block.number * (1 << 32) + (1 << 31) + block.answered, block.number, block.family
-                    )
-                    block.responses[identity] = response
-                self._advance(response, self._receive(block, response, live), self.receive_scale(block))
-                if sources is not None:
-                    sources += self._source(block, response, live)
-            self._advance(live, sources, self.light_scale)
+            self._advance(live)
         for block in self.blocks:
             if block.emit_now:
                 self._emit(block)
@@ -1813,11 +1667,6 @@ class DetectorLawSimulation:
                 # the key alone.
                 lines["form"] = sum(
                     self.record_form(live) for live in self.records.values() if live.family == index
-                ) + sum(
-                    self.record_form(response)
-                    for block in self.blocks
-                    for response in block.responses.values()
-                    if response.family == index
                 )
             families[family.name] = lines
         return {
@@ -1897,7 +1746,6 @@ class DetectorLawSimulation:
                         "steps": block.stepped,
                         "drive": list(block.drive),
                         "momentum": list(block.momentum),
-                        "responses": len(block.responses),
                         "emitted": list(block.emitted),
                         "rows": None if block.own is None else block.own.now.ravel().tolist(),
                         "form": None if block.own is None else self.record_form(block.own),

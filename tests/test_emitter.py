@@ -72,8 +72,8 @@ def emitter_world(
     the born light's back-action swamps the excited record, ALGEBRA.md 9.17 (7) (c)), its
     stock `amount` = `stock`, its `emitter` the light family on the born clock [512, 1] of
     N = 1024 with its `train` of 8 periods along +x (THE BORN TRAIN, ALGEBRA.md 9.17 (6a);
-    BUILD.md section 26 item 27) and its ladder the set `screen`, its coupling G [1, 50], g
-    [1, 1000] to light (required, ALGEBRA.md 9.19 (4e)); the receiver the cube of side 3 of
+    BUILD.md section 26 item 27) and its ladder the set `screen` (no coupling: the click alone,
+    the model owner's decision (2) of record 1962); the receiver the cube of side 3 of
     light bodies at [70, 72] read as `screen` (record 1899), 33 Links ahead of the train's
     head; no wheel anywhere."""
     # the cube helper of the detector-law suite (imported here: that suite imports
@@ -114,7 +114,6 @@ def emitter_world(
                 "fixed": True,
                 "extents": [32, 1, 1],
                 "pair": [800, 801],
-                "coupling": {"G": [1, 50], "g": [1, 1000]},
                 "seed": 1 << 20,
                 "margin": "control",
                 "emitter": emitter,
@@ -258,10 +257,10 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
         # a little before it; the rung crossed on the passage
         assert gather["click"] >= gather["birth"] + 50
         assert gather["click"] == gather["tick"] and gather["record"] not in simulation.records
-    # ITEM 15'S FINDING RESOLVED (ALGEBRA.md 9.19 (4e)): the born records act
-    # back on the excited record's rows through the body's coupling g, so the
-    # remainder at the centre cell moves between births and the residues
-    # spread (one residue at every birth without the coupling, item 15)
+    # THE RESIDUES SPREAD FROM THE KEPT REMAINDER (the model owner's decisions
+    # (1) and (2) of record 1962; ALGEBRA.md 9.34 (A) and (B)): the remainder
+    # at the centre cell moves between births with no coupling and no draw
+    # (the coupling's back-action of 9.19 (4e) HISTORY)
     assert len({line["u"] for line in births}) > 1
     # a smaller stock: as many births
     lines, _, _ = run(emitter_world(stock=2))
@@ -272,7 +271,7 @@ def test_the_remainder_is_the_cells_kept_through_the_click_and_the_reseed():
     """THE REMAINDER IS THE CELL'S (the model owner's decision (1) of record 1962; ALGEBRA.md
     9.34 (A), 9.35 (7); BUILD.md section 26 item 29): at every birth of the stock the fresh
     excited record's division remainder is the ended record's at every Node of the board,
-    bit for bit and in its scale, nonzero on the body's cells (the remainder after the
+    bit for bit, nonzero on the body's Nodes (the remainder after the
     advances since the load); the load's seed alone starts at 0 (the file's integers). The
     stock's four residues are not all equal (they spread from the kept remainder). The edge
     case: the last birth leaves no fresh record (the stock spent), so three reseeds keep it."""
@@ -287,10 +286,10 @@ def test_the_remainder_is_the_cells_kept_through_the_click_and_the_reseed():
     def spy(target):
         ended = target.own
         assert ended is not None
-        remainder, scale = ended.remainder.copy(), ended.scale
+        remainder = ended.remainder.copy()
         original(target)
         if target.own is not None:
-            assert np.array_equal(target.own.remainder, remainder) and target.own.scale == scale
+            assert np.array_equal(target.own.remainder, remainder)
             assert np.any(target.own.remainder[target.mask])
             kept.append(simulation.tick)
 
@@ -377,10 +376,12 @@ def test_the_loaders_refusals_name_their_keys():
     refused(emitter("residue_seed", 3), "emitter.residue_seed is refused")
     refused(emitter("rate", [1, 1]), "unknown keys|rate")
 
-    def uncoupled(document):
-        del document["measured"][0]["coupling"]
+    # the coupling of MASSIVE_RECORD.md section 7 retired: refused by name with its
+    # successor (the click alone, the model owner's decision (2) of record 1962)
+    def coupled(document):
+        document["measured"][0]["coupling"] = {"G": [1, 50], "g": [1, 1000]}
 
-    refused(uncoupled, "emitter needs the body's `coupling`")
+    refused(coupled, "coupling is refused")
 
     # the richness of the birth cell (9.22 (4)): a pair with fewer than 500
     # remainder values refuses the emitter naming the count

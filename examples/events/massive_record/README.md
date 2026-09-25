@@ -9,9 +9,10 @@ its section 5 the worlds with their pins; the readings of the runs
 A massive record is a record of the local detector law whose family declares a
 `pair` `[num, den]` on the six-neighbour term of the rule (den > num: a gap, the
 rest frequency cos omega_0 = num / den); a block is a cube of declared cells
-carrying a lowered pair (the well of the pair) with a momentum per axis, a
-coupling to light at its cells (one g with G, the dielectric of section 7,
-folded into the rule's one division), a clock (the upward zero crossings of
+carrying a lowered pair (the well of the pair) with a momentum per axis (the
+coupling to light at its Nodes RETIRED, the model owner's decision (2) of record
+1962: mass and light meet only at the click; BUILD.md section 26 item 30), a
+clock (the upward zero crossings of
 its own record's sum across its cells); the cavity and the take are retired
 (the cavity refused by name, BUILD.md section 26 item 28; the take, item 14). Every world here
 is written by `make_worlds.py` from the design's declarations (since

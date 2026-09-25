@@ -624,8 +624,10 @@ kind births them, its excited record clicking at its own rung on the running tot
 centre cell's share of its conserved form, the click rule of ALGEBRA.md 9.17 (7) (f), BUILD.md
 section 26 item 24; SINCE THE REMAINDER KEPT, the model owner's decision (1) of record 1962,
 BUILD.md section 26 item 29, the excited record seeded after each birth keeps the ended
-record's division remainder at the body's cells, bit for bit and in its scale, never reset,
-so the residues of the stock's births spread from it with no coupling and no draw); every row of a record
+record's division remainder at the body's Nodes, bit for bit, never reset, so the residues
+of the stock's births spread from it with no coupling and no draw; a residue below W / P
+crosses its rung in one interval and the next residue is one less, a countdown of births
+one per interval until 0, item 30's finding for the mathematician); every row of a record
 carries a `record`, a `branch`, a `multiplicity` and its birth phase `u`
 (a row of no record carries none: a declared row, a free family's rows);
 the merge is the normal form that cancels antiphase rows of one record
@@ -1001,10 +1003,12 @@ axis, periodic by default, an open face a zero face); a measured event with
 `side` (or `extents` [x, y, z], the box's extents per axis, the slabs of ALGEBRA.md 9.22 (8); one of the two, BUILD.md section 26 item 23) is a BLOCK, the foreign object: its cells the cube of `side` (the box of `extents`) at its
 `position` (the lower corner), its `pair` at the cells (a well of the
 massive kind's pair, or a gap on light's kind, the (M) wall), its
-`coupling` `{"G": [n, d], "g": [n, d]}` (the dielectric of section 7, the
-first difference both ways on the same Node, each rational folded into
-the row's one division: the massive wall `3 den g_d`, light's `3 L` with L
-the least common multiple of the blocks' `G_d`; `[0, 1]` each by default; REQUIRED, both nonzero, on an emitting body, its coupling to the family it births, ALGEBRA.md 9.19 (4e), BUILD.md section 26 item 19), its `seed` (its own record's
+`coupling` RETIRED and refused by name since 2026-09-25 (the model owner's decision (2)
+of record 1962, ALGEBRA.md 9.34 (B); BUILD.md section 26 item 30: mass and light meet
+only at the click, in whole numbers; the response records, the receive and source
+terms, the folded denominators, the light scale and the index in motion of
+MASSIVE_RECORD.md section 7 are HISTORY, and every record advances by the rule alone
+with the wall 3 den), its `seed` (its own record's
 amplitude on its cells at interval 0, DECLARED on every well, no default since 2026-09-25
 (BUILD.md section 26 item 28; the loader's 2^20 HISTORY), 0 silent; or, with
 `margin` declared, a list of one integer per Node of the board in x-major

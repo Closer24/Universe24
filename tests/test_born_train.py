@@ -200,8 +200,8 @@ def test_the_light_clock_in_the_tables_form_and_the_generators_checks(capsys):
     uniform across y and z, its stock 64 and its `receiver` at_well, the set at_well bound
     to A without positions, the mirror of light's kind with the gap [1, 2] over [4, 3, 3] at
     [690, 694); it loads and constructs. The generator's readings on it (HOST): the passage
-    books the norm within 2 x 10^-3 (1.0002 read) and A is transparent to its own train
-    (1.0002 of the norm 40 Links beyond it, at or above the 0.99 of 9.22 (7a) (iv)). The
+    books the norm within 2 x 10^-3 (1.0002 read); the transparency reading of 9.22 (7a) (iv)
+    is HISTORY with the coupling (the model owner's decision (2) of record 1962). The
     placement rule (9.25 (11) (b)): A moved to [10, 42), nine Links from the low slab's
     front, is refused by the generator naming the emitter and the slab; a set nearer than
     one train's length to the high slab likewise."""
@@ -225,12 +225,7 @@ def test_the_light_clock_in_the_tables_form_and_the_generators_checks(capsys):
     generator = massive_generator()
     booked = generator.train_passage_flux(document, 0, train["now"], train["before"])
     assert abs(booked / train["norm"] - 1.0) < 2e-3
-    readings = generator.transparency_readings(document, 0, train["now"], train["before"], train["norm"])
-    assert list(readings) == [0] and readings[0] * 100 >= 99 * train["norm"]
-    print(
-        f"the light clock (HOST): the passage {booked / train['norm']:.4f} of the norm, A's "
-        f"transparency {readings[0] / train['norm']:.4f}"
-    )
+    print(f"the light clock (HOST): the passage {booked / train['norm']:.4f} of the norm")
     near = json.loads(json.dumps(document))
     near["measured"][0]["position"] = [10, 0, 0]
     with pytest.raises(ValueError, match=r"the emitter measured\[0\] stands .* from the low face slab"):

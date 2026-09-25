@@ -14,7 +14,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-from fractions import Fraction
 
 import numpy as np
 import pytest
@@ -304,11 +303,13 @@ def test_the_light_record_is_byte_identical_without_the_key():
     matter too (one border for every family: the events and the audit moved, the state
     digest unchanged); SINCE THE REMAINDER KEPT (the model owner's decision (1) of record
     1962; BUILD.md section 26 item 29) the residues of the stock's births spread from the
-    kept remainder and all three digests moved; read again at this head."""
+    kept remainder and all three digests moved; SINCE THE COUPLING RETIRED (decision (2),
+    item 30) the excited record and the born light advance by the rule alone and all three
+    moved once more; read again at this head."""
     assert run_chain_digests() == {
-        "events": "222f418d456bd6af6a96864ac9cc4f5deace201c51efd75bae0d2afa86d54084",
-        "state": "ad6bdb078bdb76faf3b340496eec3cf1ac93ee23a3237112b3718583037d7526",
-        "audit": "6cc234b4295532a48f3df47642a056f8dbae61840ea06eb705c07951afdb219f",
+        "events": "621ef0c4bdbcf425b3242d49b567e34d0c856b943694cf82ffa9a5745f7a4270",
+        "state": "ca1cd42bc7a17f6511f948572f2e24933b70297137c8661a409e44623477de6e",
+        "audit": "4d47d255cfb6d90443f9205f069d5c436a36ee728abdcd0cdb7b4868c7f4296f",
     }
 
 
@@ -431,7 +432,6 @@ def block_world(
             "pair": block["pair"],
         }
         for key in (
-            "coupling",
             "seed",
             "ramp",
             "start",
@@ -653,124 +653,6 @@ def six_reads(row: np.ndarray) -> np.ndarray:
     return total
 
 
-def conserved_form(a_next: np.ndarray, a_now: np.ndarray, weight: np.ndarray) -> Fraction:
-    """The form I of section 3 with a Node weight den / num and the Link weight one:
-    SUM_i w_i (a_next^2 + a_now^2) - SUM_i a_next,i S_6(a_now)_i / 3."""
-    nodes = np.sum(weight * (a_next * a_next + a_now * a_now))
-    links = np.sum(a_next * six_reads(a_now))
-    return Fraction(nodes) - Fraction(links, 3)
-
-
-def rows(live: LiveRecord | None, shape: tuple[int, ...]) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """A record's three columns as exact integers (zeros for a record not yet formed)."""
-    if live is None:
-        zero = np.zeros(shape, dtype=object)
-        return zero, zero, zero
-    return live.now.astype(object), live.before.astype(object), live.remainder.astype(object)
-
-
-def light_packet(shape: tuple[int, ...], amplitude: int = 1 << 16) -> tuple[np.ndarray, np.ndarray]:
-    """A wave packet of light on the chain, moving +x at c = 1 / sqrt(3): the two columns
-    of MASSIVE_RECORD.md's script `massive_conserved_form.py` at integer amplitude."""
-    x = np.arange(shape[0], dtype=np.float64)
-    step = 1.0 / np.sqrt(3.0)
-    now = amplitude * np.exp(-((x - 100) ** 2) / 200.0) * np.cos(0.2 * (x - 100))
-    before = amplitude * np.exp(-((x - 100 + step) ** 2) / 200.0) * np.cos(0.2 * (x - 100 + step))
-    return np.rint(now).astype(np.int64).reshape(shape), np.rint(before).astype(np.int64).reshape(shape)
-
-
-def coupled_invariant(g: list[int], G: list[int] | None = None) -> tuple[int, Fraction, Fraction, bool]:
-    """The chain of (g) stepped 400 intervals with the identity of section 7 asserted on each:
-    returns the count of intervals with a nonzero cross term, light's form at the start and at
-    the end, and whether the response's rows stayed 0. G other than [1, 1] puts G_n in alpha's
-    denominator and G_d in light's wall (the scale 3 L g_d G_n, Reviewer 3's token)."""
-    G = G or [1, 1]
-    block: dict = {
-        "position": [200, 0, 0],
-        "side": 12,
-        "pair": [314, 315],
-        "coupling": {"G": G, "g": g},
-    }
-    document = block_world([400, 1, 1], PERIODIC_CHAIN, [156, 157], [block], ticks=500)
-    document["age_bound"] = 100000
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    block_live = simulation.blocks[0]
-    shape = simulation.shape
-    now, before = light_packet(shape)
-    light = planted(simulation, 0, now, before, np.zeros(shape, dtype=np.int64))
-    simulation.records[light.identity] = light
-    g_n, g_d = g
-    G_n, G_d = G
-    assert simulation.light_scale == G_d
-    num_m = simulation.kind_num[1].ravel().tolist()
-    den_m = simulation.kind_den[1].ravel().tolist()
-    weight_m = np.array([Fraction(d, n) for n, d in zip(num_m, den_m, strict=True)], dtype=object)
-    weight_m = weight_m.reshape(shape)
-    inverse_walls = np.array([Fraction(1, 3 * n * g_d) for n in num_m], dtype=object).reshape(shape)
-    weight_l = np.full(shape, Fraction(1), dtype=object)
-    cells = block_live.mask
-    alpha = Fraction(g_n, g_d) * Fraction(315, 314) * Fraction(G_d, G_n)
-
-    def invariant(response: LiveRecord | None) -> Fraction:
-        x_n, x, _ = rows(response, shape)
-        y_n, y, _ = rows(light, shape)
-        cross = Fraction(g_n, g_d) * np.sum((weight_m * (x_n - x) * (y_n - y))[cells])
-        return conserved_form(x_n, x, weight_m) + alpha * conserved_form(y_n, y, weight_l) + cross
-
-    previous = invariant(None)
-    crosses = 0
-    silent = True
-    first_light = conserved_form(*rows(light, shape)[:2], weight_l)
-    for _ in range(400):
-        response = block_live.responses.get(light.identity)
-        matter_row_start, x_b, r_m = rows(response, shape)
-        light_row_start, y_b, r_l = rows(light, shape)
-        simulation.step()
-        assert light.identity in simulation.records
-        response = block_live.responses.get(light.identity)
-        x_n, _, matter_remainder_next = rows(response, shape)
-        y_n, _, light_remainder_next = rows(light, shape)
-        silent = silent and (response is None or not np.any(response.now))
-        light_remainders = Fraction(int(np.sum((y_n - y_b) * (r_l - light_remainder_next))), 3 * G_d)
-        if g_n == 0:
-            # light's own identity, the form I with the remainders' term (section 3)
-            assert (
-                conserved_form(y_n, light_row_start, weight_l)
-                - conserved_form(light_row_start, y_b, weight_l)
-                == light_remainders
-            )
-            continue
-        current = invariant(response)
-        massive_term = np.sum((x_n - x_b) * (r_m - matter_remainder_next) * inverse_walls)
-        assert current - previous == massive_term + alpha * light_remainders, simulation.tick
-        previous = current
-        if np.any(((x_n - matter_row_start) * (y_n - light_row_start))[cells]):
-            crosses += 1
-    last_light = conserved_form(*rows(light, shape)[:2], weight_l)
-    return crosses, first_light, last_light, silent
-
-
-def test_the_coupling_both_ways_conserves_the_schemes_exact_invariant():
-    """BUILD.md (g), MASSIVE_RECORD.md section 7 (MUSTs A and B): on a periodic chain of 400
-    Nodes (the kind [156, 157], a block of side 12 with the well [314, 315] at x = 200, G [1, 1])
-    a planted light packet and the block's response to it, 400 intervals: at g = 1 / 20 and at
-    g = 1 / 5 the identity J(t) - J(t - 1) = SUM_i (x_next - x_before)_i (r - r')_i / (3 num_i
-    g_d) + alpha SUM_i (y_next - y_before)_i (r - r')_i / (3 G_d) holds EXACTLY on every
-    interval (J = I_m + alpha I_l + (g_n / g_d) SUM_cells w_i dx_i dy_i, alpha = g W_in / G, the
-    forms in exact rationals; the remainders' term of each row with its own folded wall the
-    whole correction, no tolerance), the cross term nonzero on some interval (the coupling's
-    grain, a GAMEBOARD reading), and light's own form moved by more than 10 percent between
-    the packet's arrival and the end. The edge case: g = [0, 1] leaves the response's rows 0
-    and light's form its own identity, I_l(t) - I_l(t - 1) = SUM (y_next - y_before)(r - r') / 3."""
-    crosses, first, last, silent = coupled_invariant([0, 1])
-    assert silent
-    for g, G in (([1, 20], None), ([1, 5], None), ([1, 20], [2, 3])):
-        crosses, first, last, silent = coupled_invariant(g, G)
-        assert crosses > 0
-        assert not silent
-        assert abs(last - first) > Fraction(1, 10) * abs(first)
-
-
 def test_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
     """BUILD.md (h) SINCE section 26 (the emission by the coupling's source term retired with
     the lamp; an emitter is a clicking body, ALGEBRA.md 9.17 (4)): an emitter body of the
@@ -801,9 +683,9 @@ def test_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
         assert simulation.books()["balanced"], simulation.tick
     births = [line for line in lines if line["event"] == "birth"]
     assert len(births) == 3
-    # the residues from the law (ALGEBRA.md 9.22 (4)) on W = 700, spread by the
-    # body's coupling to the light it births (9.19 (4e); one residue at every
-    # birth without it, BUILD.md section 26 item 15)
+    # the residues from the law (ALGEBRA.md 9.22 (4)) on W = 700, spread from the
+    # remainder kept at the cells (the model owner's decisions (1) and (2) of
+    # record 1962; the coupling's back-action HISTORY)
     assert all(line["W"] == 700 and 0 <= line["u"] < 700 for line in births)
     assert len({line["u"] for line in births}) > 1
     assert simulation.ledger.held_spent[2] == 3 and simulation.ledger.transit_released[0] == 3
@@ -868,21 +750,11 @@ def test_a_seeded_block_at_rest_counts_its_cycles():
             assert block.count == 0 and not clicks
 
 
-def test_the_index_in_motion_is_the_drives_pair():
-    """BUILD.md (l): a block of content 1 with P = 64 on x (K = 3) carries g as [3, 2] (the
-    pair [K^2, K^2 - 3] = [9, 6] reduced); at rest [1, 1]; with P = [64, 64, 0] the pair
-    [36864, 12288] = [3, 1]. The edge case: K = 1 (P = 192) is refused by the pace bound."""
-    for momentum, expected in (([64, 0, 0], (3, 2)), ([0, 0, 0], (1, 1)), ([64, 64, 0], (3, 1))):
-        world = parse_nature_beam_world(
-            block_world(
-                [24, 1, 1],
-                CHAIN,
-                [800, 809],
-                [{"position": [4, 0, 0], "side": 3, "pair": [800, 800], "momentum": momentum}],
-            )
-        )
-        simulation = DetectorLawSimulation(world)
-        assert simulation.motion_pair(simulation.blocks[0]) == expected
+def test_the_pace_bound_refuses_one_link_per_interval():
+    """The pace bound 3 (P . P) < (3 Q S M)^2 (MASSIVE_RECORD.md section 5): K = 1 (P = 192
+    on x, one Link every interval) is refused naming the bound. The index in motion (the
+    drive's pair carried as the coupling's g, BUILD.md (l)) is HISTORY with the coupling
+    (the model owner's decision (2) of record 1962)."""
     with pytest.raises(ValueError, match="pace bound"):
         parse_nature_beam_world(
             block_world(
@@ -1085,26 +957,21 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
         parse_nature_beam_world(document)
     with pytest.raises(ValueError, match=r"\[1048576, 1048577\]"):
         parse_nature_beam_world(document)
-    for g, admitted in (([1, big], False), ([1, 20], True)):
+    # the block's own pair under the bound (the coupling's folded denominator HISTORY,
+    # decision (2) of record 1962): a well [big, big + 1] at A = 2^40 refused, [800, 800] admitted
+    for pair, admitted in (([big, big + 1], False), ([800, 800], True)):
         world = block_world(
             [24, 24, 24],
             PERIODIC,
             [800, 809],
-            [
-                {
-                    "position": [10, 10, 10],
-                    "side": 3,
-                    "pair": [800, 800],
-                    "coupling": {"G": [1, 1], "g": g},
-                }
-            ],
+            [{"position": [10, 10, 10], "side": 3, "pair": pair}],
         )
         world["age_bound"] = 100
         world["amplitude_bound"] = 1 << 40
         if admitted:
             parse_nature_beam_world(world)
         else:
-            with pytest.raises(ValueError, match="with the coupling's denominator 1048576"):
+            with pytest.raises(ValueError, match=r"not below 2\^63"):
                 parse_nature_beam_world(world)
     unbounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
     unbounded["age_bound"] = 100
@@ -1375,8 +1242,8 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         assert wheel == 700 and 0 <= u < wheel and u == gather["u"]
         assert 2 * wheel * pointer >= (2 * u + 1) * norm and below[identity] == gather["click"] - 1
         # the flight: the train's head over 53 Links at v_g = 0.442, then as
-        # much of the passage as the residue asks (the coupling spreads the
-        # residues, 9.19 (4e))
+        # much of the passage as the residue asks (the residues spread from
+        # the kept remainder, record 1962 (1))
         assert 100 < gather["click"] - gather["birth"] < 400
         assert identity not in simulation.records
 
@@ -1440,7 +1307,6 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "fixed": True,
             "extents": [32, 1, 1],
             "pair": [800, 801],
-            "coupling": {"G": [1, 50], "g": [1, 1000]},
             "seed": 50 << 20,
             "emitter": {"family": "light", "train": {"direction": [1, 0, 0], "periods": 8}},
             "margin": "control",
@@ -1664,7 +1530,7 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
     four percent of the largest level before it (x in [10, 38], the train's own cells; the
     reading on this head in the test's assertion, COMPUTATION), the books balanced at every
     interval; a light-kind block with
-    `seed`, `coupling` or `margin` refused. The chain's source is the emitter body of
+    `seed` or `margin` refused, and `coupling` refused by name on any block. The chain's source is the emitter body of
     section 26 (a block itself, of the matter kind, with its own record)."""
     document = chain_world()  # the closed chain (BUILD.md section 26 item 14)
     document["massive_record"] = True
@@ -1710,11 +1576,15 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
             before = max(before, int(np.max(np.abs(live.now[10:39, 0, 0]))))
             beyond = max(beyond, int(np.max(np.abs(live.now[48:70, 0, 0]))))
     assert before > 0 and beyond * 100 < 4 * before, (before, beyond)
-    for key, value in (("seed", 5), ("coupling", {"G": [1, 1], "g": [1, 2]}), ("margin", "control")):
+    for key, value in (("seed", 5), ("margin", "control")):
         bad = json.loads(json.dumps(document))
         bad["measured"][4][key] = value
         with pytest.raises(ValueError, match="refused on a block of light's kind"):
             parse_nature_beam_world(bad)
+    coupled = json.loads(json.dumps(document))
+    coupled["measured"][4]["coupling"] = {"G": [1, 1], "g": [1, 2]}
+    with pytest.raises(ValueError, match="coupling is refused"):
+        parse_nature_beam_world(coupled)
 
 
 def test_the_momentum_books_carry_the_blocks_held_momentum_and_nothing_else():

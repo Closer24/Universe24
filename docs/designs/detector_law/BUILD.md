@@ -2624,8 +2624,50 @@ would have found no cell.
    click interval 302.2 with the rms 26.0 and the least wait 249 (300.3,
    25.9 and 252 at item 27's head; GAMEBOARD readings for the
    mathematician, no verdict, no pin moved). Decision
-   (5), the Node clock, follows as item 30; (2), (3) and (6) after it; (4),
-   the birth's form, held on record 1963.
+   (2), the coupling retired, follows as item 30 (the Node clock cannot be
+   built before it in integers); (5) as item 31; (3) and (6) after it; (4),
+   the birth's form, held on record 1963. THE NAME NODE (the model owner's
+   record 1970): a location on the GameBoard is a Node in every new text;
+   the texts of this item say Nodes.
+
+30. THE COUPLING IS THE CLICK ALONE (the model owner's decision (2) of
+   record 1962; ALGEBRA.md 9.34 (B); the Boss's word of record 1975 on the
+   order: (2) before (5), since the coupling's folded denominator times
+   the Node clock's Gamma = 10^6 times the level 2^28 is 6.5 x 10^20,
+   above 2^63; built on `emitter-click`). THE LAW: mass and light meet
+   only at the click, in whole numbers; the dielectric coupling of
+   MASSIVE_RECORD.md section 7 (record 1414) is HISTORY: the response
+   records, the receive and source terms, the folded denominators (the
+   row's scale), light's common wall 3 L and the index in motion (the
+   drive's pair as g) are gone from the engine, every record advances by
+   the rule alone with the wall 3 den, and the inverse with the same;
+   the block key `coupling` joins the retired keys, refused by name with
+   its successor; the load condition of 9.17 (7) (c) (an emitting body
+   coupled to the family it births) and the transparency reading of 9.22
+   (7a) (iv) are HISTORY with it; the load bound of MUST 3 stays on every
+   block's pair without a scale. THE FILES: the light clock's A loses its
+   `coupling` (the profile unchanged, the stamp moved); every emitter body
+   of the tests likewise. THE TESTS: the coupling's invariant test and the
+   index in motion retired (the pace bound's refusal kept); the refusal by
+   name read on an emitter body and on a light-kind block; the chain
+   digests moved once more, all three, read again. THE FINDING (the light
+   clock's diagnostic run without pins, GAMEBOARD, no verdict): with the
+   remainder kept (item 29) and nothing else acting on the excited
+   record, its rung read after its first advance is the ended record's
+   residue at the click less one (the profile's first-step rounding at
+   the centre Node); a residue below W / P = 2403 / 94 = 25.6 crosses its
+   rung in one interval ((2 u + 1) P / (2 W) < 1), so its successor is
+   u - 1 and the births run one per interval down to 0, then wrap to
+   W - 1 and wait a period: the 64 births came by interval 1647 (3311
+   with the coupling), 32 of them in two such bursts (ticks 935 to 960
+   and 1640 to 1647), the mean click interval at at_well 270.5 with the
+   rms 29.1 and the least wait 224 (302.2, 26.0 and 249 at item 29's
+   head). With the coupling, the born light's back-action moved the
+   excited record's remainder by more than one unit per interval and no
+   countdown formed. The residues are the law's own arithmetic; whether
+   the burst is the law or a rule of the read point (the rung read after
+   the record's first full cycle, or another form) is the mathematician's
+   ruling, asked on 2026-09-25 with the Boss; no pin moved, no verdict.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
