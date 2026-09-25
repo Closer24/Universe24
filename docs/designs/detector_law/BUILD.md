@@ -4087,72 +4087,27 @@ would have found no cell.
    is meant (the GAMEBOARD sums of the light-kind rows for the `mode` line
    and the probes); the messages print the declared names.
 
-52. THE CLICK JOURNAL (the model owner's word of 2026-09-25 through the
-   Boss, record 2070, on records 2011 and 2069: "the Nodes run backward
-   exactly; a click, the taking and the giving, is not reversible in time;
-   the law needs no inverse of a click; the backward run of the whole
-   engine, clicks included, stays as a test tool, the host's check; the
-   host journals each click once, what was taken or given, where, when, in
-   one generic place for every family; the backward run undoes the clicks
-   from that journal in one generic operation; a new family adds nothing
-   to it; the journal is host storage, reported apart from the Node's cost,
-   nothing kept at a Node"; built inside item 51 as ordered). WHAT STOOD
-   BEFORE: the law's inverse (`step_inverse`) was the Nodes' world alone
-   and is so still; the property test tests/test_board_reversible.py undid
-   the clicks BY HAND from per-interval snapshots of the whole state (the
-   held quanta restored, the fields held again, the given record removed
-   at a giving), and the taking click's deleted rows were "the click's one
-   loss". THE BUILD: `ClickEntry`, one entry per click of any kind, HOST:
-   the interval, the kind ("giving", the record made; "taking", the content
-   moved to a body or booked as escaped; "deletion", the record removed
-   whole), the family, the body, the record's identity, the quanta, and the
-   clicks' world as it stood before the click as ONE GENERIC SNAPSHOT (the
-   held quanta, the ledger, every block's click counters: emit_now, wait,
-   excitations, givings, residue_pending, the window, the emitted list,
-   the own record's residue and wheel; the layer's counts), and for a
-   deletion the record object itself (its rows as the interval's step left
-   them: the one loss kept by the host). THE ONE GENERIC PLACE:
-   `_journal_click`, called before the write at the three sites, the
-   giving (`_emit`), the taking (`_gather_line`) and the deletion (the
-   deletions loop of `step`); no family name, no kind of body. THE ONE
-   GENERIC UNDO: `_undo_clicks`, the interval's entries taken off the
-   journal latest first, each restored from its own snapshot (a made record
-   dropped, a deleted record put back whole with `clicked` cleared, the
-   quanta, the ledger, the counters and the layer's counts as before the
-   click); `step_inverse(with_clicks=True)` calls it before the Nodes'
-   inverse and reads the records back at the held levels the interval
-   began with (the held families' `before` with the bodies held at the
-   quanta before the interval's clicks, the levels the forward step read),
-   then the held families back from their own state and the hold at the
-   restored quanta: exact through every click, nothing lost; without the
-   flag the law's inverse as before, bit for bit (the default; every digest
-   and every test unchanged). A FINDING OF THE BUILD, the engine's order
-   read exactly: a giving holds the lowered quanta at once (`_emit` calls
-   the hold), so the held families' step of that interval reads the
-   post-click quanta; a taking writes the quanta but holds them only after
-   the held families' step (`_advance_fields`), so on an interval with
-   takings alone their step read the hold of the interval's start; the
-   generic undo holds the restored quanta before the held families'
-   inverse on such an interval and leaves their levels on an interval with
-   a giving (the same two cases the by-hand device carried, records 2010
-   and 2011). THE COST:
-   HOST, one snapshot of the clicks' world per click (a few integers per
-   family and per block, the deleted record's three arrays), read by
-   `journal_size()`; OFF IN AN ORDINARY RUN (the model owner's record 2071:
-   a test tool only, outside the law), on by the simulation's flag
-   `journal_clicks` for the backward test alone, the backward run with the
-   clicks refused without it; the Node's work and storage unchanged; the
-   books and the state untouched (no digest moves). THE GATE:
-   tests/test_board_reversible.py 1 (c): the same run a third time, the
-   backward run with the clicks exact at every interval through the taking
-   and the giving down to the load, the journal counting the givings and
-   holding the taking and the deletion of the deleted record, emptied as
-   the run runs back, the books balanced at every interval; the by-hand
-   device of records 2010 and 2011 kept as the journal's check. THE REPORT
-   asked by record 2070 ("report if the current inverse of the clicks
-   already does this"): it did not; the undo lived in the test, by hand,
-   from snapshots of the whole state; now it is the engine's one generic
-   operation from a journal of the clicks alone.
+52. THE CLICK JOURNAL, BUILT AND TAKEN OUT (HISTORY). On the model owner's
+   record 2070 of 2026-09-25 (the backward run with the clicks as a host
+   test tool from a journal of the clicks) the journal was built at
+   33881ace and made a test-only flag at f6d32ff1: one entry per click (a
+   giving, a taking, a deletion) with the clicks' world before it as one
+   snapshot, undone in one generic operation, exact through every click.
+   The owner's word of record 2077 through the Boss took it out the same
+   day: "make sure there is no click journal; everything is implemented
+   inside the family". Reverted by a new commit (no history rewrite): the
+   engine keeps no journal, no journal size, no snapshot; the law's
+   inverse is the Nodes' world alone; the property test keeps its by-hand
+   check of the clicks' ledger (records 2010 and 2011) as a test, not an
+   engine part. WHAT COMES IN ITS PLACE, when the mathematician confirms it
+   (record 2077, form (d) of record 2073): the click written in the clicks
+   family's own record at the Node in the law's second-order form, next =
+   before + F(now), the taking and the giving reading the now level alone,
+   so that the backward run is exact from the records alone. The finding
+   of the build stands as a fact of today's order (a giving holds the
+   lowered quanta at once, a taking only after the held families' step);
+   under form (d) both clicks become terms of the same interval's step of
+   the clicks record, read at now, and the hold's timing no longer enters.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

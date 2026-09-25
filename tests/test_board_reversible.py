@@ -12,15 +12,10 @@ at the bodies and moving elsewhere; on the Node's own pace (ALGEBRA.md 9.50 (13)
    and N back return every level, remainder and field bit for bit, where the family of clicks'
    level rises and where it falls, a Node whose level falls to 0 and rises again among them.
    Across a click no rule undoes it: the deleted record stays deleted, the taken quantum stays
-   with its taker. THE CLICK JOURNAL (the model owner's record 2070 of 2026-09-25 through the
-   Boss; BUILD.md section 26 item 52): the host journals each click once, in one generic place
-   for every family, and the backward run WITH THE CLICKS (`step_inverse(with_clicks=True)`,
-   the host's test tool, not a law) undoes them from the journal in one generic operation:
-   the given record removed at a giving click (its rows the file's given rows), the held
-   quanta restored and the fields held again at a taking click, the deleted record put back
-   whole at its deletion; the backward run is then exact through every click, nothing lost
-   (the by-hand device of records 2010 and 2011, the same undo written out in the test, kept as
-   the journal's check).
+   with its taker. Undoing the click's ledger by hand (the test's device, the click's own write:
+   the held quanta restored and the fields held again; the given record removed at a giving
+   click, its rows the file's given rows), the backward run is exact again for everything but
+   the rows the taking click deleted, which are the click's one loss.
 2. THE CLICKS' PHYSICS, on every line: the count of quanta (the giver's content down by one,
    the taker's up by one, the total of the held quanta and the records in flight unchanged);
    the charge (the total of the bodies' Q and the flights' q unchanged, a click moving q with
@@ -119,9 +114,7 @@ def run_states(document: dict, ticks: int) -> tuple[DetectorLawSimulation, list[
     """The world stepped `ticks` intervals: the simulation, the rows after every interval (the
     load's at index 0), the lines, and the ladder spy's readings at every click."""
     lines: list[dict] = []
-    simulation = DetectorLawSimulation(
-        parse_nature_beam_world(document), observer=lines.append, journal_clicks=True
-    )
+    simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     seen: Seen = {}
     spy_on(simulation, seen)
     states = [rows_of(simulation)]
@@ -236,24 +229,6 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
         simulation.step_inverse()
         assert_same(rows_of(simulation), states[t - 1])
     assert simulation.tick == 0
-    # (c) THE CLICK JOURNAL (record 2070; item 52; on for the test alone, record 2071): the same
-    # run a third time, the backward run
-    # with the clicks undoing every click from the journal in one generic operation: exact at
-    # every interval through the taking click (the deleted record back whole: nothing lost)
-    # and the giving click (the given record removed, the stock restored), down to the load;
-    # the journal emptied as the run runs back
-    journal, states, lines, _ = run_states(document, end)
-    entries = journal.journal_size()
-    assert entries >= 3 and [e.kind for e in journal.click_journal].count("giving") == len(
-        [t for t in giving_ticks if t <= end]
-    )
-    assert any(e.kind == "taking" and e.identity == deleted for e in journal.click_journal)
-    assert any(e.kind == "deletion" and e.identity == deleted for e in journal.click_journal)
-    for t in range(end, 0, -1):
-        journal.step_inverse(with_clicks=True)
-        assert_same(rows_of(journal), states[t - 1])
-        assert journal.books()["balanced"], t
-    assert journal.tick == 0 and journal.journal_size() == 0
 
 
 def inverse_giving_interval(
