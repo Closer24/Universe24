@@ -36,6 +36,7 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
     emitter = emitter_world(stock=2, ticks=250)
     chain = chain_world(stock=2)
     chain["ticks"] = 250
+    chain["input"] = input_stamp(chain)  # the stamp over the whole file (item 28)
     inputs = tmp_path / "inputs"
     inputs.mkdir()
     a = write(inputs, "emitter_small", emitter)

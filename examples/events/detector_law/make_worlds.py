@@ -567,10 +567,10 @@ def matter_world(
     ticks: int,
     clock: list[int],
 ) -> dict:
-    """A world of the matter kind [800, 809] alone (no light), its faces open on x, the
+    """A world of the matter kind [800, 809] alone (no light), the chain open on x, the
     emitter's frequency as the family's `phase_per_link` in the pair form (M1-6); no take
     pair (the take retired, ALGEBRA.md 9.19 (3))."""
-    document = massive.world(name, "PIN", shape, boundary, KIND, [], ticks, faces=massive.FACES_OPEN)
+    document = massive.world(name, "PIN", shape, boundary, KIND, [], ticks)
     document["families"] = [family for family in document["families"] if family["name"] != "light"]
     document["families"][0]["phase_per_link"] = list(clock)
     bounded(document)
@@ -614,7 +614,6 @@ def light_clock(massive) -> dict:
         [emitter([600, 0, 0], [TRAIN_LENGTH, 3, 3], WELL_FULL, [1, 0, 0])],
         LIGHT_CLOCK_TICKS,
         light=light_family(BORN_CLOCK),
-        faces=massive.FACES_OPEN,
         seed_profile=False,
     )
     document["N"] = PHASE_STEPS

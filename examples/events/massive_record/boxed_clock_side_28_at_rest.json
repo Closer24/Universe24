@@ -64,11 +64,6 @@
     1600,
     1609
    ],
-   "margin": "control",
-   "clock": [
-    8317244,
-    4194304
-   ],
    "seed": [
     55494,
     55789,
@@ -110662,12 +110657,17 @@
     56375,
     55789,
     55494
+   ],
+   "margin": "control",
+   "clock": [
+    8317244,
+    4194304
    ]
   }
  ],
  "detectors": [],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "dc677587a5c26213bf829f6d18a183dd966d8668d0516c52fcd0892e11a3cb5e"
+  "hash": "0fc1fb8da7f67b31acf55100564c130b441ce1cb3146a050113efc56b9b11f2d"
  }
 }

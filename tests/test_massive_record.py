@@ -42,19 +42,18 @@ from tests.test_detector_law import (
 from tests.test_emitter import massive_generator
 
 
-def massive_world(
-    shape: list[int], boundary: object, pair: list[int], faces: dict[str, str] | None = None
-) -> dict:
+def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
     """A world of the massive kind `matter` (its pair on the six-neighbour term) beside light,
-    no lamp, no block (the rule's tests construct a record's rows directly)."""
+    no lamp, no block (the rule's tests construct a record's rows directly); every family
+    reads the world's `boundary` (one border, BUILD.md section 26 item 28) and the face slab
+    is one Node deep where the board is open (`face_depth`, declared: no default)."""
     matter: dict = {"name": "matter", "quantum": 1, "pair": pair}
-    if faces is not None:
-        matter["faces"] = faces
     return {
         "law": "beam",
         "model_id": "beam-massive-record-rule-v1",
         "shape": shape,
         "boundary": boundary,
+        "face_depth": 1,
         "ticks": 10,
         "K": 1073741824,
         "N": 1024,
@@ -107,7 +106,7 @@ def test_the_rule_on_a_chain_against_section_ones_integers():
     S_6 = a_W + a_E + 4 a_now with 0 beyond the ends); the totals num S_6 - 9 a_before + r
     are [1, 27, -56, 19, 7], a_next = [0, 3, -7, 2, 0], r' = [1, 0, 7, 1, 7]."""
     world = parse_nature_beam_world(
-        massive_world([5, 1, 1], {"x": "open", "y": "periodic", "z": "periodic"}, [2, 3], {"x": "open"})
+        massive_world([5, 1, 1], {"x": "open", "y": "periodic", "z": "periodic"}, [2, 3])
     )
     simulation = DetectorLawSimulation(world)
     now = np.array([0, 5, -7, 3, 0]).reshape(5, 1, 1)
@@ -124,11 +123,10 @@ def test_the_rule_on_a_chain_against_section_ones_integers():
 
 def test_the_rule_at_a_corner_of_an_open_board():
     """BUILD.md (b): the kind [1, 2] (3 den = 6) at the corner (0, 0, 0) of an open 2^3 board
-    of the massive kind (its faces declared open on every axis): a_now 4 with the three
+    of the massive kind (the world's faces open on every axis, one border): a_now 4 with the three
     neighbours 3, -2, 5 and three zero faces, a_before 1, r 5: the total 5, a_next 0, r' 5;
     with a_before -2 the total 23, a_next 3, r' 5."""
-    faces = {"x": "open", "y": "open", "z": "open"}
-    world = parse_nature_beam_world(massive_world([2, 2, 2], "open", [1, 2], faces))
+    world = parse_nature_beam_world(massive_world([2, 2, 2], "open", [1, 2]))
     simulation = DetectorLawSimulation(world)
     for past, expected in ((1, 0), (-2, 3)):
         now = np.zeros((2, 2, 2), dtype=np.int64)
@@ -222,14 +220,16 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
             assert abs(int(np.sum(light.now * checker)) // 216) == 1
 
 
-def test_the_massive_kinds_faces_are_periodic_by_default_and_a_zero_face_when_open():
-    """BUILD.md (m): on a 5 x 1 x 1 board whose world `boundary` is open on x the massive kind
-    wraps on x by default (Node 0 reads Node 4 as its -x neighbour); with faces {"x": "open"}
-    the neighbour beyond the face reads 0."""
-    for faces, expected in ((None, 9), ({"x": "open"}, 0)):
-        world = parse_nature_beam_world(
-            massive_world([5, 1, 1], {"x": "open", "y": "periodic", "z": "periodic"}, [1, 2], faces)
-        )
+def test_every_family_reads_the_worlds_border_and_a_zero_face_when_open():
+    """ONE BORDER FOR EVERY FAMILY (BUILD.md section 26 item 28; was BUILD.md (m), the
+    kind's own periodic faces): on a 5 x 1 x 1 board whose world `boundary` is periodic on
+    x the massive kind wraps (Node 0 reads Node 4 as its -x neighbour); on a board open on
+    x the neighbour beyond the face reads 0 for the massive kind as for light."""
+    for boundary, expected in (({"x": "periodic", "y": "periodic", "z": "periodic"}, 9), (CHAIN, 0)):
+        document = massive_world([5, 1, 1], boundary, [1, 2])
+        document["age_bound"] = 100000
+        world = parse_nature_beam_world(document)
+        assert world.kind_periodic(1) == world.periodic == world.kind_periodic(0)
         simulation = DetectorLawSimulation(world)
         now = np.array([0, 0, 0, 0, 9]).reshape(5, 1, 1)
         zero = np.zeros((5, 1, 1), dtype=np.int64)
@@ -240,9 +240,10 @@ def test_the_massive_kinds_faces_are_periodic_by_default_and_a_zero_face_when_op
         assert total == expected
     assert world.kind_periodic(1) == (False, True, True)
     assert world.kind_periodic(0) == (False, True, True)
-    default = parse_nature_beam_world(massive_world([5, 1, 1], "open", [1, 2]))
-    assert default.kind_periodic(1) == (True, True, True)
-    assert default.kind_periodic(0) == (False, False, False)
+    # the world open on every axis: every family open on every axis (the massive kind's
+    # periodic default of the first builds, HISTORY)
+    everywhere = parse_nature_beam_world(massive_world([5, 1, 1], "open", [1, 2]))
+    assert everywhere.kind_periodic(1) == everywhere.kind_periodic(0) == (False, False, False)
 
 
 def run_chain_digests() -> dict[str, str]:
@@ -299,11 +300,13 @@ def test_the_light_record_is_byte_identical_without_the_key():
     three by THE BORN TRAIN (ALGEBRA.md 9.17 (6a); item 27: the chain world's emitter body
     the train's 32 cells at [2, 34) with the well [699, 700], light on the born clock
     [512, 1] of N = 1024, every birth the train written on the cells), the digests read at
-    that head."""
+    that head; SINCE THE TIGHTENINGS (BUILD.md section 26 item 28) the closed chain bounds
+    matter too (one border for every family: the events and the audit moved, the state
+    digest unchanged), read again at this head."""
     assert run_chain_digests() == {
-        "events": "773ba1876d49514e2ce829c3013c2a9e86b3d2890e038635ff8e312146800c56",
+        "events": "0f5f662b5a6941c0e5074e6c07f98c690735f9eb941537d779ab2076203c3ecb",
         "state": "08dfb0ede3f9c369f49ba10f9afeac2395321568a2cdb6cfb36214d986a526a9",
-        "audit": "a7045e3a858785ee60e728c0af60b472390fd8f3326d71dadf2c480aebff71f4",
+        "audit": "4f4d7820ced81f30c19a2f9a6fce8ed73340d6bd6699b6ed697f5387e5c97441",
     }
 
 
@@ -319,14 +322,13 @@ def test_the_loaders_refusals_name_the_key():
     reversed_pair["families"][1]["pair"] = [3, 2]
     with pytest.raises(ValueError, match="den >= num"):
         parse_nature_beam_world(reversed_pair)
-    faces_on_light = json.loads(json.dumps(base))
-    faces_on_light["families"][0]["faces"] = {"x": "open"}
-    with pytest.raises(ValueError, match="faces is refused on light's kind"):
-        parse_nature_beam_world(faces_on_light)
-    bad_face = json.loads(json.dumps(base))
-    bad_face["families"][1]["faces"] = {"x": "closed"}
-    with pytest.raises(ValueError, match="faces must be an object"):
-        parse_nature_beam_world(bad_face)
+    # one border for every family (BUILD.md section 26 item 28): the family key `faces`
+    # refused by name on the massive kind and on light's alike
+    for family in (0, 1):
+        faced = json.loads(json.dumps(base))
+        faced["families"][family]["faces"] = {"x": "open"}
+        with pytest.raises(ValueError, match=rf"families\[{family}\]\.faces is refused: one border"):
+            parse_nature_beam_world(faced)
     turned = json.loads(json.dumps(base))
     turned["families"][1]["phase_per_link"] = 5
     with pytest.raises(ValueError, match="never a declared turn"):
@@ -337,6 +339,7 @@ def test_the_loaders_refusals_name_the_key():
     assert parse_nature_beam_world(clocked).families[1].phase_per_age == (1, 2)
     no_law = json.loads(json.dumps(base))
     no_law["detector_law"] = False
+    del no_law["face_depth"]  # the face slab is the detector law's (refused without it)
     with pytest.raises(ValueError, match="massive_record needs detector_law"):
         parse_nature_beam_world(no_law)
     not_bool = json.loads(json.dumps(base))
@@ -366,12 +369,15 @@ def test_the_loaders_refusals_name_the_key():
 
 
 def test_the_records_keys_under_the_key_and_none_without_it():
-    """BUILD.md (r): the identity under `hypotheses`, the families' pair and faces and the books'
-    form under the key; nothing of them without it (the first build's world)."""
-    world = parse_nature_beam_world(massive_world([4, 4, 4], "open", [2, 3], {"z": "open"}))
+    """BUILD.md (r): the identity under `hypotheses`, the families' pair and the books'
+    form under the key; nothing of them without it (the first build's world); every
+    family's faces the world's (one border, BUILD.md section 26 item 28)."""
+    world = parse_nature_beam_world(
+        massive_world([4, 4, 4], {"x": "open", "y": "periodic", "z": "open"}, [2, 3])
+    )
     assert MASSIVE_RECORD_RULE in world.hypotheses
     assert world.families[1].pair == (2, 3) and world.families[1].massive_kind
-    assert world.families[1].faces == (True, True, False)
+    assert world.kind_periodic(1) == (False, True, False) == world.kind_periodic(0)
     simulation = DetectorLawSimulation(world)
     assert "form" in simulation.books()["families"]["matter"]
     # without the key there is no block, so no emitter body (the lamp refused under the
@@ -382,7 +388,7 @@ def test_the_records_keys_under_the_key_and_none_without_it():
     del without["families"][1]
     plain = parse_nature_beam_world(without)
     assert MASSIVE_RECORD_RULE not in plain.hypotheses
-    assert plain.families[0].faces is None
+    assert plain.kind_periodic(0) == plain.periodic
     assert "form" not in DetectorLawSimulation(plain).books()["families"]["light"]
 
 
@@ -396,16 +402,15 @@ def block_world(
     blocks: list[dict],
     source: dict | None = None,
     ticks: int = 100,
-    faces: dict[str, str] | None = None,
 ) -> dict:
     """A world of the massive kind `matter` with blocks (measured events of `matter` with
     `side`), a light family with the chain test's clock [77, 25] (the period 20.8 intervals,
     lambda 12 Links), and optionally an emitter body of light (`emitter_at`, a well of the
     source family) as the first measured event, seeded on its bound mode (the generator's
-    profile at its scalar seed)."""
+    profile at its scalar seed); every well declares its seed (the suite's amplitude 2^20
+    where a test names none: no loader default, BUILD.md section 26 item 28) and the face
+    slab is one Node deep where the board is open."""
     matter: dict = {"name": "matter", "quantum": 1, "pair": kind}
-    if faces is not None:
-        matter["faces"] = faces
     # light on the born clock [512, 1] of N = 1024 (the born train, ALGEBRA.md 9.17 (6a))
     families = [{"name": "light", "quantum": 1, "phase_per_link": [512, 1]}, matter]
     measured: list[dict] = []
@@ -426,7 +431,6 @@ def block_world(
         for key in (
             "coupling",
             "seed",
-            "cavity",
             "ramp",
             "start",
             "margin",
@@ -436,12 +440,17 @@ def block_world(
         ):
             if key in block:
                 entry[key] = block[key]
+        if "seed" not in entry and block["pair"][0] * kind[1] > block["pair"][1] * kind[0]:
+            # every well declares its seed (no loader default, BUILD.md section 26 item
+            # 28): the suite's amplitude 2^20 where a test names none
+            entry["seed"] = 1 << 20
         measured.append(entry)
     document: dict = {
         "law": "beam",
         "model_id": "beam-massive-record-block-v1",
         "shape": shape,
         "boundary": boundary,
+        "face_depth": 1,
         "ticks": ticks,
         "K": 1073741824,
         "N": 1024,
@@ -480,6 +489,7 @@ def with_screen(document: dict, x: int) -> dict:
     item 7): the cube of side 3 of light bodies at [x, x + 2] read as the set `screen`
     (record 1899; no wheel: the rung's wheel is the record's own, ALGEBRA.md 9.22 (4))."""
     receiver_cube(document, "screen", [x, 0, 0])
+    document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
     return document
 
 
@@ -539,7 +549,7 @@ def test_the_blocks_cells_and_its_pair_on_them():
     assert np.all(den[block.mask] == 800) and np.all(den[~block.mask] == 809)
     assert block.own is not None and int(block.own.now[3, 3, 3]) == UNIT
     # a raised pair is a BARRIER (DECLARATIONS.md section 15 M1-6): admitted, no own record,
-    # its seed and clock keys refused; the kind's own pair without `cavity` refused
+    # its seed and clock keys refused; the kind's own pair refused (no cavity, item 28)
     barrier = parse_nature_beam_world(
         block_world(
             [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 810]}]
@@ -588,7 +598,6 @@ def test_the_blocks_drive_steps_its_cells_and_leaves_the_rows():
                         "seed": 5,
                     }
                 ],
-                faces={"x": "open"},
             )
         )
         simulation = DetectorLawSimulation(world)
@@ -779,7 +788,6 @@ def test_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
                 [],
                 emitter_at(100, 3),
                 ticks=600,
-                faces={"x": "open"},
             ),
             230,
         )
@@ -921,10 +929,9 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
                 check_margins(world)
     near = block_world(
         [48, 48, 48],
-        PERIODIC,
+        CHAIN,
         [800, 809],
         [{"position": [3, 14, 14], "side": 20, "pair": [800, 800], "margin": "control"}],
-        faces={"x": "open"},
     )
     near["age_bound"] = 100000
     with pytest.raises(ValueError, match="cells lie 3 Links from a zero face"):
@@ -952,7 +959,7 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
     assert abs(reading.omega_0 - 0.1493) < 0.0001
     assert reading.lines() and reading.to_record()["kind"] == "COMPUTATION"
     deep = {"position": [40, 0, 0], "side": 1, "pair": [800, 700], "margin": "control"}
-    runaway = block_world([200, 1, 1], CHAIN, [800, 809], [deep], faces={"x": "open"})
+    runaway = block_world([200, 1, 1], CHAIN, [800, 809], [deep])
     runaway["age_bound"] = 100000
     reading = block_margin(parse_nature_beam_world(runaway), 0)
     assert reading.runaway and reading.omega_b == 0.0 and abs(reading.lambda_max - 2.032) < 0.002
@@ -963,26 +970,22 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
     assert not block_margin(parse_nature_beam_world(cube), 0).runaway
 
 
-def test_the_cavity_counts_the_separable_forms_cycles():
-    """BUILD.md (o): a cavity of side 5 with the kind's own pair [800, 809] on a periodic 24^3
-    board: the exact separable form cos omega = (800 / 809) cos(pi / 6), omega 0.5423, the
-    period 11.58 intervals; over 1159 intervals the block's count between 99 and 101 (one
-    interval's grain; measured 99), and its rows outside the cube 0 at every interval."""
-    document = block_world(
-        [24, 24, 24],
-        PERIODIC,
-        [800, 809],
-        [{"position": [10, 10, 10], "side": 5, "pair": [800, 809], "cavity": True, "margin": "control"}],
-    )
-    document["age_bound"] = 100000
-    world = parse_nature_beam_world(document)
-    simulation = DetectorLawSimulation(world)
-    block = simulation.blocks[0]
-    assert block.own is not None
-    for _ in range(1159):
-        simulation.step()
-        assert not np.any(block.own.now[~block.mask])
-    assert 99 <= block.count <= 101
+def test_the_cavity_is_refused_by_name():
+    """THE CAVITY RETIRED (BUILD.md section 26 item 28; was BUILD.md (o), the cavity of form
+    (I) counting the separable form's cycles): a block declaring `cavity` is refused by name
+    with what stands in its place (a body's record held by the law alone, its border the
+    world's), true and false alike; the kind's own pair stays no body."""
+    for value in (True, False):
+        document = block_world(
+            [24, 24, 24],
+            PERIODIC,
+            [800, 809],
+            [{"position": [10, 10, 10], "side": 5, "pair": [800, 800], "margin": "control"}],
+        )
+        document["age_bound"] = 100000
+        document["measured"][0]["cavity"] = value
+        with pytest.raises(ValueError, match=r"measured\[0\]\.cavity is refused .*the cavity retired"):
+            parse_nature_beam_world(document)
 
 
 # The series' two keys of step 5 (BUILD.md section 4 step 7 and section 5 (v-m))
@@ -1144,8 +1147,8 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
     remainders' term exactly on every interval: num x (I(t) - I(t - 1)) = L x SUM_i (a_next
     - a_before)_i (r - r')_i, integers, no tolerance, 60 intervals from random rows; the
     same on a periodic x."""
-    for boundary, faces in ((CHAIN, {"x": "open"}), (PERIODIC_CHAIN, None)):
-        document = massive_world([6, 1, 1], boundary, [2, 3], faces)
+    for boundary in (CHAIN, PERIODIC_CHAIN):
+        document = massive_world([6, 1, 1], boundary, [2, 3])
         document["age_bound"] = 1000
         simulation = DetectorLawSimulation(parse_nature_beam_world(document))
         rng = np.random.default_rng(7)
@@ -1406,6 +1409,7 @@ def test_every_declared_wheel_is_refused_by_name():
     ):
         document = json.loads(json.dumps(base))
         mutate(document)
+        document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
         with pytest.raises(ValueError, match=message):
             parse_nature_beam_world(document)
 
@@ -1516,18 +1520,22 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
     bad["detector_law"] = False
     bad["massive_record"] = False
     del bad["amplitude_bound"]
+    del bad["face_depth"]  # the face slab is the detector law's (refused without it)
     with pytest.raises(ValueError, match="closed"):
         parse_nature_beam_world(bad)
     on_body = light_clock_world("open", False)
     on_body["detectors"] = [{"name": "A_face", "block": 0, "positions": [[100, 0, 0]]}]
+    on_body["input"] = input_stamp(on_body)  # the stamp over the whole file (item 28)
     with pytest.raises(ValueError, match="names a Node of a measured event"):
         parse_nature_beam_world(on_body)
     two = light_clock_world("open", False)
     two["detectors"] = [{"name": "A_face", "block": 0, "positions": [[132, 0, 0], [133, 0, 0]]}]
+    two["input"] = input_stamp(two)
     with pytest.raises(ValueError, match=r"is a box of sides \[2, 1, 1\]"):
         parse_nature_beam_world(two)
     no_block = light_clock_world("open", True)
     no_block["detectors"] = [{"name": "B", "block": 1}]
+    no_block["input"] = input_stamp(no_block)
     with pytest.raises(ValueError, match="a receiver set on a BODY is `positions`"):
         parse_nature_beam_world(no_block)
     graced = light_clock_world("open", False)
@@ -1598,6 +1606,7 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
         assert np.array_equal(simulation.cell_index == cell, block.mask)
     bad = document
     bad["detectors"] = [{"name": "B_cells", "block": 1, "wheel": 64}]
+    bad["input"] = input_stamp(bad)  # the stamp over the whole file (item 28)
     with pytest.raises(ValueError, match="wheel is refused"):
         parse_nature_beam_world(bad)
 
@@ -1609,8 +1618,8 @@ def test_a_block_that_steps_off_the_board_refuses_the_interval():
     and the interval, instead of running on with the block gone; before that interval it steps
     and the books balance. The edge case: on a periodic chain the same block wraps and steps on
     through 400 intervals with no refusal."""
-    for boundary, faces, refused in ((CHAIN, {"x": "open"}, True), (PERIODIC_CHAIN, None, False)):
-        document = massive_world([300, 1, 1], boundary, [800, 809], faces=faces)
+    for boundary, refused in ((CHAIN, True), (PERIODIC_CHAIN, False)):
+        document = massive_world([300, 1, 1], boundary, [800, 809])
         document["ticks"] = 400
         document["age_bound"] = 1 << 20
         document["clock_stamp"] = True
@@ -1672,6 +1681,7 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
                 "pair": [1, 2],
             }
         )
+    document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
     world = parse_nature_beam_world(document)
     assert [entry.block is not None for entry in world.measured] == [
         True,

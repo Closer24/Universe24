@@ -50,8 +50,9 @@ family's `pair`; light's kind the value `[1, 1]`),
 
 (verb G, then D by 3 den with the remainder kept, then T), the pair two
 dense arrays over the board per family (`kind_num`, `kind_den`; a block's
-cells carry a lowered pair there, the build's step 3), the kind's own faces
-(`faces`: periodic by default, an open face a zero face) and the conserved
+cells carry a lowered pair there, the build's step 3), the world's border
+read by every family (one border, `boundary`; a zero face beyond an open
+or a closed one, BUILD.md section 26 item 28) and the conserved
 form I of section 3 read by the books as a GAMEBOARD diagnostic
 (`record_form`). Without the key every world reads as it did, byte for
 byte (`tests/test_massive_record.py`).
@@ -409,8 +410,8 @@ class DetectorLawSimulation:
         # six-neighbour term as two dense int64 arrays over the board
         # (light's kind the value [1, 1] everywhere; a massive kind its
         # declared pair; a block's cells a lowered pair there, the build's
-        # step 3) and the faces its rows read (the kind's `faces` for a
-        # massive kind, the world's `boundary` for light's).
+        # step 3) and the faces its rows read (the world's `boundary`, one
+        # border for every family, BUILD.md section 26 item 28).
         self.kind_num: list[np.ndarray] = [
             np.full(self.shape, family.pair[0], dtype=np.int64) for family in world.families
         ]
@@ -542,7 +543,7 @@ class DetectorLawSimulation:
     def _box(self, corner: list[int], extents: tuple[int, int, int], family: int) -> np.ndarray:
         """The cells R of a block: the box of `extents` per axis (a cube's
         side three times; the slabs of ALGEBRA.md 9.22 (8)) from its lower
-        corner, wrapped on an axis the kind's faces make periodic, cut on an
+        corner, wrapped on an axis the world's border makes periodic, cut on an
         open one (a G_48-set of Nodes, world data)."""
         mask = np.zeros(self.shape, dtype=bool)
         wrap = self.kind_wrap[family]
@@ -1105,7 +1106,7 @@ class DetectorLawSimulation:
     ) -> np.ndarray:
         """The neighbour on the side `sign` of `axis`: the wrap on a periodic
         axis, `fill` beyond an open face; `wrap` the faces read (the world's
-        `boundary` by default; a massive kind's own `faces`)."""
+        `boundary`, one border for every family)."""
         periodic = self.world.periodic if wrap is None else wrap
         if periodic[axis]:
             return np.roll(a, sign, axis=axis)
@@ -1124,8 +1125,8 @@ class DetectorLawSimulation:
     def _neighbours(self, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None) -> np.ndarray:
         """The sum of the six neighbours' amplitudes at every Node (verb G):
         the wrap on a periodic axis, 0 beyond a zero face (no Node there),
-        the row itself on an axis of one layer; `wrap` the kind's faces
-        (the world's by default). Nothing is read through a Port: the take
+        the row itself on an axis of one layer; `wrap` the world's faces (one
+        border for every family). Nothing is read through a Port: the take
         is retired (ALGEBRA.md 9.19 (3))."""
         total = np.zeros_like(a)
         for axis in range(3):
@@ -1672,9 +1673,6 @@ class DetectorLawSimulation:
                 if light is not None:
                     extra += self._receive(block, block.own, light)
             self._advance(block.own, extra, self.receive_scale(block))
-            if block.definition.cavity:
-                block.own.now[~block.mask] = 0
-                block.own.remainder[~block.mask] = 0
             if block.definition.emitter is not None:
                 self._excitation_rung(block)
         for identity in list(self.records):
@@ -1689,7 +1687,7 @@ class DetectorLawSimulation:
                 # family's pair alone, through the take and the detector
                 # sets' pointers as light's (the click at W, one per record),
                 # coupled to no block (the coupling is declared on light's
-                # row, MASSIVE_RECORD.md section 7), its faces the kind's
+                # row, MASSIVE_RECORD.md section 7), its faces the world's
                 # (a zero face a mirror).
                 if live.emitter is not None:
                     self._advance(live)

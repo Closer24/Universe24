@@ -772,8 +772,10 @@ DETECTOR_LAW_RULE = "detector-law-v1"
 # owner's words of records 1381 to 1425): a second record kind beside light
 # under the local detector law, its rule the same six-neighbour step with
 # a declared pair [num, den] on the six-neighbour term (a gap, its rest
-# mass); a family declares the kind by the key `pair`, its faces by
-# `faces`. The record carries the identity when the world declares
+# mass); a family declares the kind by the key `pair`; its faces are the
+# world's `boundary`, ONE BORDER FOR EVERY FAMILY (the family key `faces`
+# refused by name since 2026-09-25, BUILD.md section 26 item 28). The
+# record carries the identity when the world declares
 # `massive_record: true`; absent, every world reads as it did, byte for
 # byte.
 MASSIVE_RECORD_RULE = "massive-record-v1"
@@ -832,8 +834,10 @@ FAMILY_KEYS = {
     "hand",
     "massive",
     # massive-record-v1: the kind's pair [num, den] on the six-neighbour
-    # term and its faces per axis (periodic by default: the torus's),
-    # admitted under the world key `massive_record` alone.
+    # term, admitted under the world key `massive_record` alone; `faces`
+    # (a kind's own border per axis, HISTORY) is refused by name: one
+    # border for every family, the world's `boundary` (BUILD.md section
+    # 26 item 28)
     "pair",
     "faces",
 }
@@ -888,9 +892,6 @@ BLOCK_KEYS = {
 # non-periodic face and a periodic side of s + 4 extents; a control world's
 # one extent and s + 2 extents.
 MARGIN_KINDS = ("pin", "control")
-# The block's own record's seed by default: the amplitude unit 2^20 of the
-# local detector law (`detector_law.UNIT`), a declared integer.
-BLOCK_SEED = 1 << 20
 MEASURED_KEYS = {
     "position",
     "family",
@@ -1108,13 +1109,6 @@ class FamilyDefinition:
     # frequency cos omega_0 = num / den. Admitted under the world key
     # `massive_record` alone.
     pair: tuple[int, int] = LIGHT_PAIR
-    # The kind's faces per axis (x, y, z), True where the kind's rows wrap:
-    # None for light's kind (the world's `boundary` as today); a massive
-    # kind's own declaration `faces`, every axis periodic by default (the
-    # torus is the algebra's own, ALGEBRA.md 1.6; an open face a declared
-    # deviation: a zero face for the massive record, MASSIVE_RECORD.md
-    # section 11 item 4).
-    faces: tuple[bool, bool, bool] | None = None
 
     @property
     def massive_kind(self) -> bool:
@@ -1405,8 +1399,8 @@ class BlockDefinition:
     first-difference form both ways, `receive` the rational g the block's
     massive row gains times light's first difference and `source` the
     rational G light's row gains, negated, times the massive current; the
-    `seed` of its own record on its cells at interval 0 (0: silent);
-    `cavity` (form (I): its own record held at 0 outside its cells); `ramp`
+    `seed` of its own record on its cells at interval 0 (0: silent; declared,
+    no default, BUILD.md section 26 item 28); `ramp`
     (the pushing agent's declaration: its momentum reached from 0 over that
     many intervals); `start` (the same agent's: the interval its drive
     begins, 0 by default, the ramp counted from it); `margin` (the margin
@@ -1416,12 +1410,16 @@ class BlockDefinition:
 
     side: int
     pair: tuple[int, int]
+    # the well's own record's amplitude on its cells at interval 0 (0
+    # silent), or its profile's; declared in the file, no default (the
+    # model owner's rule through the Boss, 2026-09-25; BUILD.md section 26
+    # item 28; the loader's 2^20 of the first builds HISTORY)
+    seed: int
     # the box's extents per axis (x, y, z); a cube's are (side, side, side),
     # and `side` is the x extent for the readers of a cube
     extents: tuple[int, int, int] = (1, 1, 1)
     receive: tuple[int, int] = (0, 1)
     source: tuple[int, int] = (0, 1)
-    seed: int = BLOCK_SEED
     # the bound mode's integer profile over the whole board (x-major, one per
     # Node) when the seed is declared so; None for a flat seed
     profile: tuple[int, ...] | None = None
@@ -1430,7 +1428,6 @@ class BlockDefinition:
     # least the profile's amplitude; the loader's integer check of the
     # profile against the eigen-equation reads it; None for a flat seed
     clock: tuple[int, int] | None = None
-    cavity: bool = False
     ramp: int = 0
     start: int = 0
     margin: str = MARGIN_KINDS[0]
@@ -1649,8 +1646,10 @@ class NatureBeamWorld:
     # line a measured event writes carries `clock`, its own count of
     # self-creations; a record field, no physics, no hypothesis.
     clock_stamp: bool = False
-    # the face receiver's depth at every open border (ALGEBRA.md 9.25 (10))
-    face_depth: int = 1
+    # the face receiver's depth at every open border (ALGEBRA.md 9.25 (10)),
+    # declared in the file under the detector law (no default, BUILD.md
+    # section 26 item 28); 0 on a GameBoard with no open face (no slab)
+    face_depth: int = 0
     # detector-law-v1 (2026-09-23): the local detector law selected, false by
     # default; under it the loader refuses a lamp with turns and a measured
     # event with a fan table (instruments of the ray law), and needs the pair
@@ -1658,7 +1657,7 @@ class NatureBeamWorld:
     detector_law: bool = False
     # massive-record-v1 (2026-09-23): the massive record kind beside light
     # under the local detector law, false by default; under it a family may
-    # declare its `pair` and `faces` (`MASSIVE_RECORD_RULE`).
+    # declare its `pair` (`MASSIVE_RECORD_RULE`); its faces are the world's.
     massive_record: bool = False
     # massive-record-v1: the probes, Nodes whose light amplitude is written
     # per interval (GAMEBOARD), empty by default.
@@ -1875,11 +1874,13 @@ class NatureBeamWorld:
         )
 
     def kind_periodic(self, family: int) -> tuple[bool, bool, bool]:
-        """The faces a family's rows read, per axis: a massive kind's own
-        `faces` (periodic by default), light's kind the world's `boundary`
-        (`massive-record-v1`; every family reads the world's without the key)."""
-        faces = self.families[family].faces
-        return self.periodic if faces is None else faces
+        """The faces a family's rows read, per axis: the world's `boundary`,
+        ONE BORDER FOR EVERY FAMILY (the model owner's rule through the Boss,
+        2026-09-25; BUILD.md section 26 item 28); a family's own `faces`
+        (`massive-record-v1`, HISTORY) is refused at load, so every family
+        reads the same border."""
+        assert 0 <= family < len(self.families)
+        return self.periodic
 
     @property
     def boundary_per_axis(self) -> dict[str, str]:
@@ -1942,6 +1943,11 @@ RETIRED_KEYS = {
     "birth cell (9.22 (4)); no order is declared",
     "residue_seed": "the residue is the law's: the clicking record's rule remainder at the "
     "birth cell (9.22 (4)); no seed is declared",
+    # the cavity of form (I) (MASSIVE_RECORD.md section 4, a record held
+    # by mirror faces of its own): refused by name since 2026-09-25 (the
+    # model owner's rule through the Boss; BUILD.md section 26 item 28)
+    "cavity": "the cavity retired: a body's record is held by the law alone, its border the "
+    "world's, no mirror faces of its own (BUILD.md section 26 item 28)",
 }
 
 
@@ -2341,32 +2347,16 @@ def _kind_pair(
     return numerator, denominator
 
 
-def _kind_faces(
-    obj: dict[str, object], label: str, pair: tuple[int, int]
-) -> tuple[bool, bool, bool] | None:
-    """The family key `faces` (`massive-record-v1`): an object of `x`, `y`,
-    `z` to `"periodic"` or `"open"`, the missing axes periodic; only on a
-    massive kind (light's faces are the world's `boundary`); None for
-    light's kind, every axis periodic for a massive kind without the key."""
-    if pair[1] == pair[0]:
-        if "faces" in obj:
-            raise ValueError(
-                f"{BEAM_LAW}: {label}.faces is refused on light's kind (its faces are the world's "
-                "`boundary`); a massive kind (den > num) declares its own"
-            )
-        return None
-    value = obj.get("faces", {})
-    if (
-        not isinstance(value, dict)
-        or not set(value) <= set(AXES)
-        or not all(item in BOUNDARIES for item in value.values())
-    ):
+def _refuse_family_faces(obj: dict[str, object], label: str) -> None:
+    """ONE BORDER FOR EVERY FAMILY (the model owner's rule through the Boss,
+    2026-09-25; BUILD.md section 26 item 28): the family key `faces` (a
+    massive kind's own border per axis, `massive-record-v1`, HISTORY) is
+    refused by name; every family's rows read the world's `boundary`."""
+    if "faces" in obj:
         raise ValueError(
-            f'{BEAM_LAW}: {label}.faces must be an object of "x", "y", "z" to "periodic" or "open" '
-            "(every axis periodic by default: the torus is the algebra's own)"
+            f"{BEAM_LAW}: {label}.faces is refused: one border for every family, the world's "
+            "`boundary` (a kind's own faces are HISTORY; BUILD.md section 26 item 28)"
         )
-    wraps = tuple(value.get(axis, BOUNDARIES[1]) == BOUNDARIES[1] for axis in AXES)
-    return wraps[0], wraps[1], wraps[2]
 
 
 def _families(
@@ -2469,7 +2459,7 @@ def _families(
         hand = _hand(obj["hand"], f"families[{index}].hand") if "hand" in obj else NO_HAND
         massive = _massive(obj, f"families[{index}]", massive_rows, action, quantum, phase, name)
         pair = _kind_pair(obj, f"families[{index}]", massive_record, amplitude_bound)
-        faces = _kind_faces(obj, f"families[{index}]", pair)
+        _refuse_family_faces(obj, f"families[{index}]")
         found.append(
             FamilyDefinition(
                 name,
@@ -2482,7 +2472,6 @@ def _families(
                 hand=hand,
                 massive=massive,
                 pair=pair,
-                faces=faces,
             )
         )
         declared.append(columns)
@@ -2512,7 +2501,6 @@ def _families(
             family.hand,
             family.massive,
             pair=family.pair,
-            faces=family.faces,
         )
         for family, columns in zip(found, declared, strict=True)
     )
@@ -3460,7 +3448,7 @@ def _block(
     `side` is refused; a block needs the world key `massive_record`, no lamp
     and no span; its `pair` is a well on the massive kind (num' / den' >
     num / den) or a gap on light's kind (den' > num', the (M) wall, which
-    declares no clock, coupling, seed, cavity or margin); an emitter's
+    declares no clock, coupling, seed or margin); an emitter's
     birth cell carries a rich pair (at least 500 remainder values, ALGEBRA.md
     9.22 (4)); the momentum is bounded by the pace, 3 (P . P) < (3 Q S M)^2."""
     declared = [key for key in BLOCK_KEYS if key in obj]
@@ -3511,23 +3499,21 @@ def _block(
         _integer(value[1], f"{label}.pair denominator", 1, MAX_VALUE),
     )
     kind = family.pair
-    cavity = obj.get("cavity", False)
-    if type(cavity) is not bool:
-        raise ValueError(f"{BEAM_LAW}: {label}.cavity must be true or false")
     if family.massive_kind:
-        # A well lowers the pair; a cavity (form (I), the faces the mirror)
-        # may carry the kind's own pair, its record bound by the faces; a
-        # BARRIER raises it (num' / den' below the kind's: the matter wall
-        # of DECLARATIONS.md section 15 M1-6, the mirror line of the matter
-        # kind), a block with no bound mode, no seed and no clock.
-        if pair[0] * kind[1] == pair[1] * kind[0] and not cavity:
+        # A well lowers the pair; a BARRIER raises it (num' / den' below the
+        # kind's: the matter wall of DECLARATIONS.md section 15 M1-6, the
+        # mirror line of the matter kind), a block with no bound mode, no
+        # seed and no clock; the kind's own pair is no body (the cavity of
+        # form (I), a record held by mirror faces of its own, is refused by
+        # name: BUILD.md section 26 item 28).
+        if pair[0] * kind[1] == pair[1] * kind[0]:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.pair [{pair[0]}, {pair[1]}] is the kind's own pair "
-                f"[{kind[0]}, {kind[1]}] and no cavity: a block lowers the pair at its cells (a "
-                "well) or raises it (a barrier; MASSIVE_RECORD.md section 4, section 15 M1-6)"
+                f"[{kind[0]}, {kind[1]}]: a block lowers the pair at its cells (a well) or "
+                "raises it (a barrier; MASSIVE_RECORD.md section 4, section 15 M1-6)"
             )
         if pair[0] * kind[1] < pair[1] * kind[0]:
-            clock_keys = [key for key in ("coupling", "seed", "cavity", "margin") if key in obj]
+            clock_keys = [key for key in ("coupling", "seed", "margin") if key in obj]
             if clock_keys:
                 raise ValueError(
                     f"{BEAM_LAW}: {label}.{clock_keys[0]} is refused on a barrier (a raised pair "
@@ -3542,7 +3528,7 @@ def _block(
                 "(M) wall declares den > num (a lump in the massless surround, "
                 "MASSIVE_RECORD.md section 4)"
             )
-        clock_keys = [key for key in ("coupling", "seed", "cavity", "margin") if key in obj]
+        clock_keys = [key for key in ("coupling", "seed", "margin") if key in obj]
         if clock_keys:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.{clock_keys[0]} is refused on a block of light's kind (the "
@@ -3565,9 +3551,18 @@ def _block(
         # one division): the load bound of MUST 3 with that scale
         _pair_bound(pair[0], pair[1], label, receive[1], amplitude_bound)
         source = _ratio(coupling["G"], f"{label}.coupling.G", zero=True)
-    seed = BLOCK_SEED
+    if "seed" not in obj:
+        # NO IMPLICIT SEED (the model owner's rule through the Boss,
+        # 2026-09-25; BUILD.md section 26 item 28): a well declares its own
+        # record's amplitude or its profile; the loader's 2^20 is HISTORY
+        raise ValueError(
+            f"{BEAM_LAW}: {label} lacks keys: seed (a well's own record on its cells: its "
+            "amplitude at interval 0, 0 silent, or its profile with `margin`; no default, "
+            "BUILD.md section 26 item 28)"
+        )
+    seed: int
     profile: tuple[int, ...] | None = None
-    if "seed" in obj and isinstance(obj["seed"], list):
+    if isinstance(obj["seed"], list):
         # The bound mode's integer profile over the whole board (MASSIVE_RECORD.md
         # section 11 item 7: the pin worlds' seed, the generator's integers, the
         # same at both levels; admitted with `margin` declared): a flat list of
@@ -3587,7 +3582,7 @@ def _block(
         if not any(profile):
             raise ValueError(f"{BEAM_LAW}: {label}.seed as a profile must not be all zero")
         seed = max(abs(value) for value in profile)
-    elif "seed" in obj:
+    else:
         seed = _integer(obj["seed"], f"{label}.seed", 0)
     # THE MODE'S CLOCK (ALGEBRA.md 9.22 (7); record 1886): a profile carries
     # its mode's 2 cos omega as the rational [a, b] the generator wrote, b at
@@ -3725,13 +3720,12 @@ def _block(
     return BlockDefinition(
         side,
         pair,
+        seed,
         extents=extents,
         receive=receive,
         source=source,
-        seed=seed,
         profile=profile,
         clock=clock,
-        cavity=cavity,
         ramp=ramp,
         start=start,
         margin=str(margin),
@@ -3815,7 +3809,7 @@ def _emitter(
                 f"{BEAM_LAW}: {label}.born needs the emitter's `train` (the direction and the "
                 "periods; ALGEBRA.md 9.17 (6a))"
             )
-        wrap = periodic if born_family.faces is None else born_family.faces
+        wrap = periodic
         born = _born_train(value, f"{label}.born", born_family, shape, extents, wrap, train)
     return EmitterDefinition(names[name], branches, label_hands, receiver, period, norm, train, born)
 
@@ -3939,7 +3933,7 @@ def _measured(
                 "charge of a measured event is its family's charge per unit of content times "
                 "its content (the family's `charge`, an integer or [n, d]); see docs/MIGRATION.md"
             )
-        _refuse_retired(entry, label, ("absorbing", "take", "emits", "own_grace", "wheel"))
+        _refuse_retired(entry, label, ("absorbing", "take", "emits", "own_grace", "wheel", "cavity"))
         obj = _object(entry, label, MEASURED_KEYS, {"position", "family", "amount"})
         position = _address(obj["position"], f"{label}.position", shape)
         if any(item.position == position for item in found):
@@ -5176,86 +5170,50 @@ def mode_residual(
     return worst_residual, worst_bound, node
 
 
-def initial_state_digest(shape: Sequence[int], bodies: list[dict[str, object]]) -> str:
-    """The hash of the initial state's integers (ALGEBRA.md 9.22 (7) (i)):
-    SHA-256 of the canonical JSON of the board's shape and, per body seeded
-    with a profile, its number, its profile, its clock and its born pair;
-    the same from the raw document (`input_stamp`) and from the parsed
-    world (`_input_stamp_check`)."""
+def input_digest(document: dict[str, object]) -> str:
+    """THE FILE'S DIGEST (ALGEBRA.md 9.22 (7) (i); the model owner's rule of
+    2026-09-25 through the Boss, BUILD.md section 26 item 28: the stamp over
+    the whole file): SHA-256 of the canonical JSON (the keys sorted, no
+    spaces, ASCII) of the document without its `input` key; the same from
+    the raw document (`input_stamp`) and at load (`_input_stamp_check`), so
+    that a file the generator wrote runs as written and a file changed by
+    hand, in any key, is refused."""
     canonical = json.dumps(
-        {"shape": [int(v) for v in shape], "bodies": bodies},
+        {key: value for key, value in document.items() if key != "input"},
         sort_keys=True,
         separators=(",", ":"),
+        ensure_ascii=True,
     )
     return hashlib.sha256(canonical.encode("ascii")).hexdigest()
 
 
 def input_stamp(document: dict[str, object]) -> dict[str, str]:
     """THE INPUT STAMP the generator writes into a world file (record 1886;
-    ALGEBRA.md 9.22 (7) (i)): the law identifier and the hash of the initial
-    state's integers as the raw document carries them (every measured event
-    whose `seed` is a profile: its `seed`, its `clock`, its emitter's
-    `born`). The loader recomputes the hash from the parsed integers and
-    refuses a file whose integers are not the ones the generator wrote."""
-    bodies: list[dict[str, object]] = []
-    measured = document.get("measured", [])
-    if isinstance(measured, list):
-        for number, entry in enumerate(measured):
-            if not isinstance(entry, dict) or not isinstance(entry.get("seed"), list):
-                continue
-            emitter = entry.get("emitter")
-            bodies.append(
-                {
-                    "measured": number,
-                    "seed": entry["seed"],
-                    "clock": entry.get("clock"),
-                    "born": emitter.get("born") if isinstance(emitter, dict) else None,
-                }
-            )
-    shape = document.get("shape", [0, 0, 0])
-    return {
-        "law": LAW_IDENTIFIER,
-        "hash": initial_state_digest(shape if isinstance(shape, list) else [0, 0, 0], bodies),
-    }
+    ALGEBRA.md 9.22 (7) (i); BUILD.md section 26 item 28): the law
+    identifier and the digest of the whole document (`input_digest`). The
+    loader recomputes the digest from the document as loaded and refuses a
+    file that is not the one the generator wrote."""
+    return {"law": LAW_IDENTIFIER, "hash": input_digest(document)}
 
 
-def _input_stamp_check(value: object, shape: Address3, measured: tuple[MeasuredDefinition, ...]) -> None:
+def _input_stamp_check(document: dict[str, object], measured: tuple[MeasuredDefinition, ...]) -> None:
     """THE FILE'S HASH AND THE LAW IT WAS MADE UNDER (the model owner's
-    record 1886; ALGEBRA.md 9.22 (7) (i)): a world with a seeded body
-    carries `input` {law, hash}; the law must be this loader's
-    LAW_IDENTIFIER and the hash must be the digest of the parsed profiles,
-    clocks and born pairs, so that the integers loaded are the ones the
-    generator wrote and a file made under another law is regenerated, not
-    run. A world with no profile needs no stamp."""
-    bodies: list[dict[str, object]] = []
-    for number, entry in enumerate(measured):
-        block = entry.block
-        if block is None or block.profile is None:
-            continue
-        born = (
-            None
-            if block.emitter is None or block.emitter.born is None
-            else {
-                "now": list(block.emitter.born.now),
-                "before": list(block.emitter.born.before),
-                "norm": block.emitter.born.norm,
-            }
-        )
-        bodies.append(
-            {
-                "measured": number,
-                "seed": list(block.profile),
-                "clock": None if block.clock is None else list(block.clock),
-                "born": born,
-            }
-        )
-    if not bodies:
+    record 1886; ALGEBRA.md 9.22 (7) (i); BUILD.md section 26 item 28): a
+    world with a seeded body carries `input` {law, hash}; the law must be
+    this loader's LAW_IDENTIFIER and the hash the digest of the WHOLE
+    document without `input` (the generator's stamp over every key, the
+    profiles, the clocks and the born trains among them), so that the file
+    loaded is the one the generator wrote and a file made under another law
+    is regenerated, not run. A world with no profile needs no stamp."""
+    if not any(entry.block is not None and entry.block.profile is not None for entry in measured):
         return
+    value = document.get("input")
     if value is None:
         raise ValueError(
             f"{BEAM_LAW}: the world declares a seeded body and no `input` stamp: the generator "
-            'writes `input` {"law": ..., "hash": ...}, the law identifier and the hash of the '
-            "initial state's integers (the model owner's record 1886; ALGEBRA.md 9.22 (7) (i))"
+            'writes `input` {"law": ..., "hash": ...}, the law identifier and the digest of the '
+            "whole file (the model owner's record 1886; ALGEBRA.md 9.22 (7) (i); BUILD.md section "
+            "26 item 28)"
         )
     stamp = _object(value, "input", INPUT_KEYS, INPUT_KEYS)
     law, digest = stamp["law"], stamp["hash"]
@@ -5266,12 +5224,13 @@ def _input_stamp_check(value: object, shape: Address3, measured: tuple[MeasuredD
             f"{BEAM_LAW}: input.law is {law!r}; this loader's law is {LAW_IDENTIFIER!r}: the file "
             "was made under another law and is regenerated, not run (record 1886)"
         )
-    expected = initial_state_digest(shape, bodies)
+    expected = input_digest(document)
     if digest != expected:
         raise ValueError(
-            f"{BEAM_LAW}: input.hash {digest[:12]}... is not the digest of the initial state's "
-            f"integers {expected[:12]}...: the profiles, clocks and born pairs are not the ones the "
-            "generator wrote (record 1886; ALGEBRA.md 9.22 (7) (i)); regenerate the file"
+            f"{BEAM_LAW}: input.hash {digest[:12]}... is not the digest of the file "
+            f"{expected[:12]}...: the document is not the one the generator stamped (a key changed "
+            "after the stamp; the stamp covers the whole file, BUILD.md section 26 item 28; record "
+            "1886); regenerate the file"
         )
 
 
@@ -5293,19 +5252,22 @@ def _initial_state_checks(
     (the body's own mode in place on the composed operator: at another
     body's cells the operator carries that body's summand, so those Nodes
     are its check, not this one's; Nature's reading for the mathematician's
-    word, BUILD.md section 26 item 20). The remainders are 0 by
+    word, BUILD.md section 26 item 20), and THE TAIL: its profile 0 at
+    every Node of every other body of its family (a body's mode ends
+    before another body of its family begins; the mathematician's 86e1df43
+    on ALGEBRA.md 9.35, BUILD.md section 26 item 28). The remainders are 0 by
     construction (the profile is written at both levels with none); the
     amplitude's bound and the rich birth cells are checked where the block
     is parsed."""
     board = (int(shape[0]), int(shape[1]), int(shape[2]))
     count = board[0] * board[1] * board[2]
+    stride_x, stride_y = board[1] * board[2], board[2]
     blocks: list[tuple[int, MeasuredDefinition, BlockDefinition, list[int]]] = []
     for number, entry in enumerate(measured):
         block = entry.block
         if block is None:
             continue
-        faces = families[entry.family].faces
-        wrap = periodic if faces is None else faces
+        wrap = periodic
         corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
         # a cube beyond a face or wrapped onto itself is refused by the fit
         # check on the parsed world (naming the axis and the vertex)
@@ -5322,8 +5284,7 @@ def _initial_state_checks(
         if block.profile is None or block.clock is None:
             continue
         family = families[entry.family]
-        faces = family.faces
-        wrap = periodic if faces is None else faces
+        wrap = periodic
         a, b = block.clock
         # (iii) the band: a / b above the family's band top 2 num / den and below 2
         if a * family.pair[1] <= 2 * family.pair[0] * b:
@@ -5361,6 +5322,26 @@ def _initial_state_checks(
                 f"{block.seed}); the generator writes the mode's integers and the loader checks "
                 "them in integers (ALGEBRA.md 9.22 (7) (ii), the model owner's record 1886)"
             )
+        # THE TAIL (the mathematician's 86e1df43 on ALGEBRA.md 9.35; BUILD.md
+        # section 26 item 28): a body's mode ends before another body of its
+        # family begins; the profile is 0 at every Node of every other body
+        # of the family (below one unit: in integers, 0), else refused naming
+        # both bodies, the Node and the value
+        for other_number, other, _other_block, other_cells in blocks:
+            if other_number == number or other.family != entry.family:
+                continue
+            for index in other_cells:
+                value = block.profile[index]
+                if value == 0:
+                    continue
+                node = (index // stride_x, (index // stride_y) % board[1], index % board[2])
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}].seed is {value} at Node {list(node)} of "
+                    f"measured[{other_number}]: a body's mode ends before another body of its "
+                    "family begins (the profile 0 at every Node of every other body of the "
+                    "family; the mathematician's 86e1df43 on ALGEBRA.md 9.35; BUILD.md section "
+                    "26 item 28); move the bodies apart or lower the amplitude"
+                )
 
 
 def _connected_pieces(
@@ -5708,7 +5689,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         document,
         "the world",
         WORLD_KEYS,
-        {"law", "model_id", "shape", "ticks", "K", "release", "families", "measured"},
+        {"law", "model_id", "shape", "ticks", "K", "N", "release", "families", "measured"},
     )
     model_id = obj["model_id"]
     if not isinstance(model_id, str) or not model_id:
@@ -5734,7 +5715,10 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     else:
         turn_rate = _ratio(declared_clock, "K", zero=False)
         K = turn_rate
-    phase_steps = _integer(obj.get("N", 64), "N", 2, MAX_PHASE_STEPS)
+    # N declared in every file (no default: the model owner's rule through
+    # the Boss, 2026-09-25; BUILD.md section 26 item 28; the 64 of the first
+    # worlds HISTORY, written in each)
+    phase_steps = _integer(obj["N"], "N", 2, MAX_PHASE_STEPS)
     if phase_steps & (phase_steps - 1):
         raise ValueError(f"{BEAM_LAW}: N must be a power of two from 2 through {MAX_PHASE_STEPS}")
     release = _ratio(obj["release"], "release", zero=True)
@@ -5772,22 +5756,38 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     clock_stamp = obj.get("clock_stamp", False)
     if type(clock_stamp) is not bool:
         raise ValueError(f"{BEAM_LAW}: clock_stamp must be true or false (false by default)")
+    detector_law = obj.get("detector_law", False)
+    if type(detector_law) is not bool:
+        raise ValueError(
+            f"{BEAM_LAW}: detector_law must be true or false ({DETECTOR_LAW_RULE}, off by default)"
+        )
     # THE FACE SLAB (ALGEBRA.md 9.25 (10), the mathematician's reading: a face
     # one Node deep books 0.15 of a packet and reflects the rest, the slab as
     # deep as the packet books 0.96): the receiver `face` at every open
-    # border is the slab of this depth, one cell, last on every ladder
-    face_depth = _integer(obj.get("face_depth", 1), "face_depth", 1)
+    # border is the slab of this depth, one cell, last on every ladder;
+    # REQUIRED on a GameBoard with an open face under the detector law and
+    # refused without that law (the slab is its receiver), NO DEFAULT (the
+    # model owner's rule through the Boss, 2026-09-25; BUILD.md section 26
+    # item 28); 0 on a GameBoard with no open face (no slab)
+    open_axes = [name for axis, name in enumerate(AXES) if not periodic[axis] and not closed[axis]]
+    if "face_depth" in obj and not detector_law:
+        raise ValueError(
+            f"{BEAM_LAW}: face_depth is refused without `detector_law` (the face slab is the local "
+            "detector law's receiver; the ray law has no slab)"
+        )
+    if detector_law and open_axes and "face_depth" not in obj:
+        raise ValueError(
+            f"{BEAM_LAW}: face_depth is required on a GameBoard open on {', '.join(open_axes)} "
+            "under `detector_law`: the depth of the receiver slab at every open border, no "
+            "default (ALGEBRA.md 9.25 (10); BUILD.md section 26 item 28)"
+        )
+    face_depth = _integer(obj["face_depth"], "face_depth", 1) if "face_depth" in obj else 0
     for axis, name in enumerate(AXES):
         if not periodic[axis] and face_depth > 1 and 2 * face_depth >= int(shape[axis]):
             raise ValueError(
                 f"{BEAM_LAW}: face_depth {face_depth} leaves no interior on the open axis {name} of "
                 f"extent {shape[axis]} (two slabs of the depth fill it)"
             )
-    detector_law = obj.get("detector_law", False)
-    if type(detector_law) is not bool:
-        raise ValueError(
-            f"{BEAM_LAW}: detector_law must be true or false ({DETECTOR_LAW_RULE}, off by default)"
-        )
     # massive-record-v1: true or false, false by default; a kind's pair and
     # faces are admitted under it alone, and it needs the local detector law
     # (the kind's rule is that law's six-neighbour step).
@@ -5897,7 +5897,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         detector_law,
     )
     _column_budget(families, measured, release)
-    _input_stamp_check(obj.get("input"), shape, measured)
+    _input_stamp_check(obj, measured)
     _initial_state_checks(shape, periodic, families, measured)
     families = _massive_families(families, measured, table, width, phase_steps, action)
     # The covariant readings (`covariant-readings-v1`): the key as declared,

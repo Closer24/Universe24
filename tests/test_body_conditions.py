@@ -30,6 +30,8 @@ from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_massive_record import block_world
 
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
+# the world open on x: a zero face there for every family (one border, BUILD.md section 26 item 28)
+OPEN_ON_X = {"x": "open", "y": "periodic", "z": "periodic"}
 KIND = [800, 809]
 WELL = [
     800,
@@ -45,7 +47,6 @@ def seeded(
     side: int,
     momentum: list[int] | None = None,
     ramp: int = 0,
-    faces: dict[str, str] | None = None,
 ) -> dict:
     """A world of one body of the kind [800, 809] with the well [800, 801], a
     control world, its seed the generator's iterated mode at the amplitude 2^20 over the
@@ -55,7 +56,6 @@ def seeded(
         PERIODIC,
         KIND,
         [{"position": corner, "side": side, "pair": WELL, "margin": "control"}],
-        faces=faces,
     )
     document["age_bound"] = 100000
     entry = document["measured"][0]
@@ -103,10 +103,9 @@ def test_a_body_that_does_not_fit_is_refused_at_load_never_cut():
     above). Before this line the engine cut the cube to the board silently."""
     off = block_world(
         [48, 48, 48],
-        PERIODIC,
+        OPEN_ON_X,
         KIND,
         [{"position": [40, 14, 14], "side": 20, "pair": WELL, "margin": "control"}],
-        faces={"x": "open"},
     )
     off["age_bound"] = 100000
     with pytest.raises(
@@ -124,10 +123,9 @@ def test_a_body_that_does_not_fit_is_refused_at_load_never_cut():
         parse_nature_beam_world(wrapped)
     chain = block_world(
         [64, 1, 1],
-        PERIODIC,
+        OPEN_ON_X,
         KIND,
         [{"position": [60, 0, 0], "side": 8, "pair": WELL, "margin": "control"}],
-        faces={"x": "open"},
     )
     chain["age_bound"] = 100000
     with pytest.raises(ValueError, match=r"reaches 67 beyond the face at 63"):

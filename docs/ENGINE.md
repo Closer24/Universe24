@@ -475,8 +475,8 @@ the pair `[1, K]`, or since 2026-09-20 a pair `[n, d]` of phase steps per
 unit of content per self-creation like `release`, the turn `by_clock(age,
 content x n, d)`, refused at half the circle, `NatureBeamWorld.turn_rate`;
 the record carries the key as declared; every example world declares the
-integer); `N` (64 by
-default, a power of two from 2 through 65536, the tables' one bound
+integer); `N` (REQUIRED, no default since 2026-09-25, BUILD.md section 26
+item 28, the 64 of the first worlds HISTORY and written in each; a power of two from 2 through 65536, the tables' one bound
 `core.phase.MAX_PHASE_STEPS`, raised from 4096 on 2026-09-20 by the model
 owner so that a table at 2N exists for every N up to 32768); `release` `[n, d]` per
 direction per self-creation per unit of content of a free family;
@@ -992,8 +992,9 @@ under it a family declares its `pair` `[num, den]` on the six-neighbour
 term of the local detector law's rule (den > num a massive kind, its rest
 frequency the gap cos omega_0 = num / den, no `phase_per_link` and no lamp
 on it; every family without the key reads light's `[1, 1]`) and its
-`faces` (the kind's own faces per axis, periodic by default, an open face a
-zero face; light's faces the world's `boundary`); a measured event with
+`faces` REFUSED by name since 2026-09-25 (ONE BORDER FOR EVERY FAMILY, BUILD.md section 26
+item 28: every family's rows read the world's `boundary`; was: the kind's own faces per
+axis, periodic by default, an open face a zero face); a measured event with
 `side` (or `extents` [x, y, z], the box's extents per axis, the slabs of ALGEBRA.md 9.22 (8); one of the two, BUILD.md section 26 item 23) is a BLOCK, the foreign object: its cells the cube of `side` (the box of `extents`) at its
 `position` (the lower corner), its `pair` at the cells (a well of the
 massive kind's pair, or a gap on light's kind, the (M) wall), its
@@ -1001,14 +1002,16 @@ massive kind's pair, or a gap on light's kind, the (M) wall), its
 first difference both ways on the same Node, each rational folded into
 the row's one division: the massive wall `3 den g_d`, light's `3 L` with L
 the least common multiple of the blocks' `G_d`; `[0, 1]` each by default; REQUIRED, both nonzero, on an emitting body, its coupling to the family it births, ALGEBRA.md 9.19 (4e), BUILD.md section 26 item 19), its `seed` (its own record's
-amplitude on its cells at interval 0, 2^20 by default, 0 silent; or, with
+amplitude on its cells at interval 0, DECLARED on every well, no default since 2026-09-25
+(BUILD.md section 26 item 28; the loader's 2^20 HISTORY), 0 silent; or, with
 `margin` declared, a list of one integer per Node of the board in x-major
 order, the bound mode's integer profile the generator writes into the file
 at the world's amplitude, the record seeded so over the whole board at both
 levels, a standing start on the mode, the load-time check against the margin
-module's mode printed as GAMEBOARD; MASSIVE_RECORD.md section 11 item 7), and beside a profile its mode's `clock` [a, b] (REQUIRED there, refused beside a scalar seed: the generator's rational for 2 cos omega, b a power of two at least twice the amplitude; SINCE the model owner's record 1886 and BUILD.md section 26 item 20 the loader checks the profile in integers at load, with no float: the eigen-equation's residual abs(b num (S_6 p) - 3 den a p) within b (3 num + 6 den) at every Node of the family's composed operator outside the other bodies' cells, a / b above the band's top 2 num / den and below 2, the block's cube whole and disjoint from every other block's, at most three families; a file that fails is refused with the reason, ALGEBRA.md 9.22 (7)); the world key `input` {law, hash} (REQUIRED on a world with a seeded body, BUILD.md section 26 item 21): the law identifier the file was made under (`LAW_IDENTIFIER`) and the SHA-256 of the initial state's integers (the shape and, per seeded body, its number, profile, clock and born train, `input_stamp`), a stamp missing, under another law or not the digest of the integers loaded refused; the one command `tools/run_inputs.py` runs input files in parallel processes, one output file each (record 1887)); the world key `face_depth` (an integer from 1, 1 by default; a depth above one whose two slabs leave no interior on an open axis is refused; ALGEBRA.md 9.25 (10), BUILD.md section 26 item 23): the face receiver at every open border is the slab of that many free Nodes nearest the border, one cell `face`, last on every ladder, a depth that leaves no interior on an open axis refused); THE BORN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27): an emitter's `train` {"direction": one signed unit axis vector, "periods": n >= 8} and its `born` {"now": [...], "before": [...], "norm": T}, the train's two levels over the body's cells in the box's x-major order and its conserved form on the born family's vacuum, the generator's integers (`born_train` of the massive record generator: the character of one **K** over the periods under the tapers and the window, at the amplitude 2^16), checked at load in integers (the born clock the born family's declared clock, the wavelength 2 N q / p a whole number of Links, the body's extent along the direction the train's length, the profile's count, a motion, the flux along the way positive, the norm the vacuum's form; the two-integer pair [now, before] refused by name as the broadband one-cell birth); the engine writes the two levels on the body's cells at the birth and the norm as written,
-`cavity` (its own record held at 0 outside its
-cells), `ramp` (the momentum reached from 0 over that many intervals, the
+module's mode printed as GAMEBOARD; MASSIVE_RECORD.md section 11 item 7), and beside a profile its mode's `clock` [a, b] (REQUIRED there, refused beside a scalar seed: the generator's rational for 2 cos omega, b a power of two at least twice the amplitude; SINCE the model owner's record 1886 and BUILD.md section 26 item 20 the loader checks the profile in integers at load, with no float: the eigen-equation's residual abs(b num (S_6 p) - 3 den a p) within b (3 num + 6 den) at every Node of the family's composed operator outside the other bodies' cells, a / b above the band's top 2 num / den and below 2, the block's cube whole and disjoint from every other block's, at most three families; a file that fails is refused with the reason, ALGEBRA.md 9.22 (7)); the world key `input` {law, hash} (REQUIRED on a world with a seeded body, BUILD.md section 26 item 21): the law identifier the file was made under (`LAW_IDENTIFIER`) and the SHA-256 of the initial state's integers (the shape and, per seeded body, its number, profile, clock and born train, `input_stamp`), a stamp missing, under another law or not the digest of the WHOLE FILE loaded refused (the stamp over every key of the document without `input`, `input_digest`, since 2026-09-25, BUILD.md section 26 item 28; was: the digest of the profiles, clocks and born trains alone); the one command `tools/run_inputs.py` runs input files in parallel processes, one output file each (record 1887)); the world key `face_depth` (an integer from 1, REQUIRED on a GameBoard with an open face under `detector_law` and refused without that law, no default since 2026-09-25, BUILD.md section 26 item 28; a depth above one whose two slabs leave no interior on an open axis is refused; ALGEBRA.md 9.25 (10), BUILD.md section 26 item 23): the face receiver at every open border is the slab of that many free Nodes nearest the border, one cell `face`, last on every ladder, a depth that leaves no interior on an open axis refused); THE BORN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27): an emitter's `train` {"direction": one signed unit axis vector, "periods": n >= 8} and its `born` {"now": [...], "before": [...], "norm": T}, the train's two levels over the body's cells in the box's x-major order and its conserved form on the born family's vacuum, the generator's integers (`born_train` of the massive record generator: the character of one **K** over the periods under the tapers and the window, at the amplitude 2^16), checked at load in integers (the born clock the born family's declared clock, the wavelength 2 N q / p a whole number of Links, the body's extent along the direction the train's length, the profile's count, a motion, the flux along the way positive, the norm the vacuum's form; the two-integer pair [now, before] refused by name as the broadband one-cell birth); the engine writes the two levels on the body's cells at the birth and the norm as written,
+`cavity` (RETIRED, refused by name since 2026-09-25, BUILD.md section 26 item 28: a body's
+record is held by the law alone, its border the world's; was: its own record held at 0
+outside its cells), `ramp` (the momentum reached from 0 over that many intervals, the
 pushing agent's declaration), `start` (the interval its drive begins, 0 by
 default, the ramp counted from it: the same agent's declaration), `margin` (`"pin"` or `"control"`, the margin
 rule's kind of world) and `emits` (the light family its record sources,
@@ -1020,7 +1023,8 @@ each residue class of that coordinate modulo 3 (the content of the mode
 k = 2 pi / 3, the hop pump's signature of MASSIVE_RECORD.md section 7, a
 GAMEBOARD reading; the reading tool forms abs(S_0 + w S_1 + w^2 S_2)^2 with
 w the cube root of unity). The record
-under the key: `massive_record`, per family `pair` and `faces`, and
+under the key: `massive_record`, per family `pair` and `faces` (the world's border,
+one for every family), and
 `margin` (the margin rule's readings per block, MASSIVE_RECORD.md section
 11 item 4: a load-time check made before the world runs by
 `diagnostics/massive_record_margin`, the block's bound mode (the generator's
@@ -1029,7 +1033,7 @@ a diagnostic) on the world's own board, its extent in the medium and the
 margin per axis, two extents for a `"pin"` world and one for a
 `"control"`, a declaration below the margin refusing the run; a HOST
 computation of the declaration, printed and recorded, never read by the
-state; a cavity is skipped, and so is a folded axis, a periodic extent
+state; a folded axis is skipped, a periodic extent
 below the block's side, a layer's or a chain's) in `run.json`; the books' `form` per family (the conserved form I of section
 3, GAMEBOARD); in `events.jsonl` the block's `click` line per cycle of its
 own record (`clock` its count), a `block` line per interval (its record's

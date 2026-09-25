@@ -87,7 +87,7 @@ def chain_of_200(receiver: str | None = "screen") -> dict:
     the train along +x), the set `screen` the cube of side 3 at [91, 93] (40 Links from A's
     head at 51), and the set `beside` the cube at [60, 62] between A and the screen (off
     A's ladder); no wheel (the record's own, 9.22 (4))."""
-    document = massive_world([200, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
+    document = massive_world([200, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 500
     document["clock_stamp"] = True
     document["measured"] = [emitter(20, receiver, 70), *(body(x) for x in (91, 92, 93, 60, 61, 62))]
@@ -162,6 +162,7 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
         document = chain_of_200()
         if reversed_sets:
             document["detectors"] = list(reversed(document["detectors"]))
+            document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
         seen: Spy = {}
         simulation, lines = run(document, 500, seen=seen)
         screen = simulation.cell_names.index("screen")
@@ -210,12 +211,14 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
         parse_nature_beam_world(silent)
     unknown = chain_of_200()
     unknown["measured"][0]["receiver"] = "nowhere"
+    unknown["input"] = input_stamp(unknown)  # the stamp over the whole file (item 28)
     with pytest.raises(
         ValueError, match=r"'nowhere' names no declared detector set.*'screen', 'beside'"
     ):
         parse_nature_beam_world(unknown)
     number = chain_of_200()
     number["measured"][0]["receiver"] = 3
+    number["input"] = input_stamp(number)
     with pytest.raises(
         ValueError, match=r"measured\[0\]\.receiver must be the name of a declared detector set"
     ):
@@ -247,7 +250,7 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     # hundredth of the norm
     assert all(seen[g["record"]][0][own_cell] * 100 < seen[g["record"]][3] for g in found)
     assert all(seen[g["record"]][4] == 2403 for g in found)
-    document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
+    document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 700
     document["clock_stamp"] = True
     document["measured"] = [emitter(300, "at_well", 0)]
@@ -269,10 +272,12 @@ def test_the_lines_time():
     own residue from the law decides how much of the record must pass, the mirrors'
     returns included), stamped with A's count (clock_source measured:0); the record is
     deleted whole at its line (not among the records, no second line within 300
-    intervals). Two emitter bodies three Links apart, the first's train along +x and the
-    second's along -x, naming the set on the cube of three free Nodes between them (bound
-    to the first): both bodies' records write their lines there at a rung with `tick` equal
-    to `click`, stamped with the bound body's count."""
+    intervals). Two emitter bodies a hundred Links apart (A at [100, 132), B at [232, 264):
+    A's mode at 50 x 2^20 ends 63 Links beyond its head, and the loader refuses a body's
+    profile that is not 0 at another body of its family, BUILD.md section 26 item 28), the
+    first's train along +x and the second's along -x, naming the set on the cube of three
+    free Nodes beside the first (bound to it): both bodies' records write their lines there
+    at a rung with `tick` equal to `click`, stamped with the bound body's count."""
     document = light_clock_world("closed", False)
     document["measured"][0]["receiver"] = "A_face"
     simulation, lines = run(document, 300)
@@ -284,17 +289,17 @@ def test_the_lines_time():
     assert line["chosen"] == [["A_face", 0, "0"]] and line["clock_source"] == "measured:0"
     assert 0 <= line["click"] - line["birth"] <= 300 and 0 <= line["u"] < 2403
     assert first not in simulation.records
-    # two bodies three Links apart, each naming the cube between them
-    document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
-    document["ticks"] = 400
+    # two bodies a hundred Links apart, each naming the cube beside the first
+    document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
+    document["ticks"] = 600
     document["clock_stamp"] = True
-    document["measured"] = [emitter(100, "between"), emitter(135, "between", direction=[-1, 0, 0])]
+    document["measured"] = [emitter(100, "between"), emitter(232, "between", direction=[-1, 0, 0])]
     document["detectors"] = [
         {"name": "between", "block": 0, "positions": [[132, 0, 0], [133, 0, 0], [134, 0, 0]]}
     ]
     seed_source(document, 0)
     seed_source(document, 1)
-    simulation, lines = run(document, 400)
+    simulation, lines = run(document, 600)
     found = gathers(lines)
     assert {line["record"] >> 32 for line in found} == {0, 1}
     for line in found:

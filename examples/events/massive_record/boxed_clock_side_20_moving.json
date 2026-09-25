@@ -64,12 +64,6 @@
     800,
     800
    ],
-   "ramp": 1500,
-   "margin": "control",
-   "clock": [
-    8337308,
-    4194304
-   ],
    "seed": [
     267,
     270,
@@ -262215,6 +262209,12 @@
     277,
     270,
     267
+   ],
+   "ramp": 1500,
+   "margin": "control",
+   "clock": [
+    8337308,
+    4194304
    ]
   }
  ],
@@ -262222,6 +262222,6 @@
  "mode_axis": "x",
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "d56d41930535ba276be9d1c438778bdd833427c7a36b1f91705fbafe236a63d7"
+  "hash": "c94f6472cf1706d9e6c57df08053b570a1c7dba0c48718abd5f4ae8861a069c1"
  }
 }

@@ -33,7 +33,8 @@ from event_universe.events.world import (
     six_neighbours_flat,
 )
 from tests.test_emitter import emitter_world, massive_generator
-from tests.test_massive_record import light_clock_world
+from tests.test_massive_record import light_clock_world, massive_world
+from tests.test_receiver_by_name import CLOSED_CHAIN, emitter
 
 
 def peak_of(profile: list[int]) -> int:
@@ -176,8 +177,9 @@ def test_at_most_three_families():
         document["families"].append(
             {"name": f"family_{len(document['families'])}", "quantum": 1, "pair": [800, 809]}
         )
-    parse_nature_beam_world(document)
+    parse_nature_beam_world(restamped(document))
     document["families"].append({"name": "fourth", "quantum": 1, "pair": [800, 809]})
+    restamped(document)
     with pytest.raises(
         ValueError,
         match=f"families declares {MOST_FAMILIES + 1}; at most {MOST_FAMILIES} families",
@@ -207,16 +209,59 @@ def test_bodies_are_whole_and_disjoint():
     overlap = light_clock_world("open", False)
     overlap["measured"].append(wall(105, 1))
     with pytest.raises(ValueError, match=r"measured\[1\] and measured\[0\] overlap"):
-        parse_nature_beam_world(overlap)
+        parse_nature_beam_world(restamped(overlap))
     cut = light_clock_world("open", False)
     cut["measured"].append(wall(171, 3))
     with pytest.raises(
         ValueError, match=r"side 3 at 171 on the axis x reaches 173 beyond the face at 172"
     ):
-        parse_nature_beam_world(cut)
+        parse_nature_beam_world(restamped(cut))
     whole = light_clock_world("open", False)
     whole["measured"].append(wall(160, 3))
-    parse_nature_beam_world(whole)
+    parse_nature_beam_world(restamped(whole))
+
+
+def test_a_bodys_mode_ends_before_another_body_of_its_family_begins():
+    """THE TAIL (the mathematician's 86e1df43 on ALGEBRA.md 9.35; BUILD.md section 26 item
+    28): two wells of the matter kind on the closed chain of 400, A at [100, 132) with its
+    profile at 50 x 2^20 (the generator's mode, its last nonzero Node 194, 63 Links beyond
+    A's head, HOST) and B at [182, 214) with a scalar seed (a gap of 50): refused naming A,
+    B, the Node [182, 0, 0] and A's value there (130 read); B at [232, 264) (a gap of 100):
+    admitted. A light-kind wall at B's place is another family: no check (the light clock's
+    mirror stands 58 Links from A's head)."""
+    for b_corner, admitted in ((182, False), (232, True)):
+        document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
+        document["ticks"] = 10
+        document["measured"] = [emitter(100, None), emitter(b_corner, None, direction=[-1, 0, 0])]
+        for entry in document["measured"]:
+            del entry["emitter"]  # two wells, no birth: the loader's tail check alone
+        profile = massive_generator().mode_profile(document, 0, amplitude=50 << 20)
+        document["measured"][0]["seed"] = profile
+        assert max(x for x in range(400) if profile[x] != 0) == 194
+        restamped(document)
+        if admitted:
+            parse_nature_beam_world(document)
+            continue
+        with pytest.raises(
+            ValueError,
+            match=r"measured\[0\]\.seed is 130 at Node \[182, 0, 0\] of measured\[1\]: a body's mode "
+            r"ends before another body of its family begins",
+        ):
+            parse_nature_beam_world(document)
+    wall = light_clock_world("closed", False)
+    wall["measured"].append(
+        {
+            "position": [160, 0, 0],
+            "family": "light",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "side": 3,
+            "pair": [1, 2],
+        }
+    )
+    parse_nature_beam_world(restamped(wall))
 
 
 def test_the_six_neighbour_read_in_integers():
@@ -230,9 +275,10 @@ def test_the_six_neighbour_read_in_integers():
 def test_the_input_stamp_the_law_and_the_hash():
     """THE FILE'S HASH AND THE LAW IT WAS MADE UNDER (9.22 (7) (i)): a seeded world without
     its `input` stamp is refused naming the key; a stamp under another law is refused naming
-    both laws; a stamp whose hash is not the digest of the integers (the profile changed by
-    one unit without restamping, the clock changed, the born pair changed) is refused as
-    not the ones the generator wrote; a world with no profile needs no stamp (the emitter
+    both laws; a stamp whose hash is not the digest of the whole file (the profile changed by
+    one unit without restamping, the clock changed, the born pair changed, the ticks changed:
+    the stamp covers every key, BUILD.md section 26 item 28) is refused as not the file the
+    generator wrote; a world with no profile needs no stamp (the emitter
     world on its scalar seed, its emitter removed); the stamp is the same from the raw
     document and from the parsed integers (the generated world loads, test a)."""
     missing = emitter_world(stock=2)
@@ -260,10 +306,13 @@ def test_the_input_stamp_the_law_and_the_hash():
             train["now"], train["before"], (80, 1, 1), (0, 0, 0), (32, 1, 1), (1, 1), (False, True, True)
         )
 
-    for change in (unit, clock, born):
+    def ticks(document):
+        document["ticks"] += 1
+
+    for change in (unit, clock, born, ticks):
         changed = emitter_world(stock=2)
         change(changed)
-        with pytest.raises(ValueError, match="is not the digest of the initial state's integers"):
+        with pytest.raises(ValueError, match="is not the digest of the file"):
             parse_nature_beam_world(changed)
     unseeded = emitter_world(stock=2, on_mode=False)
     assert "input" not in unseeded
@@ -278,14 +327,17 @@ def test_the_generator_as_the_operator_iterated_in_integers():
     own operator 3 den v' = num S_6(v) + 6 den v + r from the cells' indicator at the working
     amplitude 2^28 (scaled to the declared 2^20), reads
     the clock as the operator's quotient over the board, and stops at the first iteration at which the
-    scaled profile passes the loader's own residual bound with that clock (1805 iterations
-    read on the 32-cell well of the born train's emitter, COMPUTATION; 1653 on the side-12
+    scaled profile passes the loader's own residual bound with that clock (2487 iterations
+    read on the 32-cell well of the born train's emitter on the closed chain, its border the
+    world's (one border for every family, BUILD.md section 26 item 28; 1805 with the matter
+    border periodic, HISTORY), COMPUTATION; 1653 on the side-12
     well, 1817 at the working amplitude 2^20, which left the muon layer's well hovering at
     1.5 times the bound, BUILD.md section 26 item 25 amended); the result is bit
     for bit the same on a second run; the profile it
     writes passes `mode_residual` (the stop's own condition, read again here) and agrees with
-    the host's eigensolver (ARPACK, a diagnostic now) within 300 units at every Node (276
-    read on the 32-cell well, 204 on the side-12 well: the iteration's floor, the rounding noise of every step fed into the next mode and
+    the host's eigensolver (ARPACK, a diagnostic now) within 500 units at every Node (467
+    read on the 32-cell well five Links from the closed chain's zero face, 276 with the matter
+    border periodic, 204 on the side-12 well: the iteration's floor, the rounding noise of every step fed into the next mode and
     damped only by the gap, about 1 / gap units at the amplitude), its clock within 4 units of
     ARPACK's rounded 2 cos omega at the denominator 2^22 (0 read; 2 at 2^20). The fixed-count
     iteration
@@ -312,7 +364,7 @@ def test_the_generator_as_the_operator_iterated_in_integers():
     assert max(profile) == amplitude and min(profile) >= 0
     lambda_max, mode = accurate_mode(world, 0)
     expected = np.rint(mode * amplitude).astype(np.int64).ravel()
-    assert int(np.max(np.abs(np.array(profile) - expected))) <= 300
+    assert int(np.max(np.abs(np.array(profile) - expected))) <= 500
     assert abs(clock[0] - round(lambda_max * clock[1])) <= 4
     start = np.where(cells, amplitude, 0).astype(np.int64)
     fixed = integer_mode_iteration(start, num, den, wrap, amplitude, 4000)

@@ -7,7 +7,6 @@ Every reading here is the engine's on small worlds (COMPUTATION); no pin.
 
 from __future__ import annotations
 
-import json
 import math
 
 import numpy as np
@@ -96,8 +95,10 @@ def test_the_extents_refusals_and_the_fit_per_axis():
     document = emitter_world(stock=1)
     document["measured"].append(wall([40, 0, 0], extents=[12, 1, 1]))
     document["detectors"].append({"name": "slab", "block": len(document["measured"]) - 1})
+    document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
     parse_nature_beam_world(document)
     document["measured"][-1]["extents"] = [2, 1, 1]
+    document["input"] = input_stamp(document)
     with pytest.raises(ValueError, match=r"a block of extents \[2, 1, 1\]; a detector is one cube"):
         parse_nature_beam_world(document)
 
@@ -137,12 +138,20 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
 
 
 def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
-    """The world key `face_depth`: on the chain of 80 open on x, the face cell covers the 4
-    Nodes nearest each border at depth 4 (8 Nodes, the free ones), 1 at the default; a depth
-    above one that leaves no interior is refused (the depth of one is lawful on a board of
-    extent 2, the law before the slab); a periodic axis has no face whatever the depth."""
+    """The world key `face_depth`, DECLARED on every board with an open face (no default,
+    BUILD.md section 26 item 28): the chain of 80 opened on x without it is refused naming
+    the axis; at depth 1 the face cell is the 2 border Nodes; at depth 4 it covers the 4
+    Nodes nearest each border (8 Nodes, the free ones); a depth above one that leaves no
+    interior is refused; a periodic axis has no face whatever the depth (read on a chain
+    without a body: the emitter's mode is the closed chain's, one border for every family).
+    The stamp is rewritten for every changed key (the stamp over the whole file)."""
     document = emitter_world(stock=1)
     document["boundary"] = {"x": "open", "y": "periodic", "z": "periodic"}
+    document["input"] = input_stamp(document)
+    with pytest.raises(ValueError, match="face_depth is required on a GameBoard open on x"):
+        parse_nature_beam_world(document)
+    document["face_depth"] = 1
+    document["input"] = input_stamp(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     face = simulation.cell_names.index("face")
     assert int((simulation.cell_index == face).sum()) == 2
@@ -153,10 +162,14 @@ def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
     nodes = sorted(int(x) for x in np.nonzero(simulation.cell_index[:, 0, 0] == face)[0])
     assert nodes == [0, 1, 2, 3, 76, 77, 78, 79]
     document["face_depth"] = 40
+    document["input"] = input_stamp(document)
     with pytest.raises(ValueError, match="face_depth 40 leaves no interior on the open axis x"):
         parse_nature_beam_world(document)
-    periodic = json.loads(json.dumps(document))
-    periodic["boundary"] = {"x": "periodic", "y": "periodic", "z": "periodic"}
+    # a periodic chain (no body: the emitter's mode is the closed chain's, one border for
+    # every family, and would not fit the periodic operator) has no face whatever the depth
+    from tests.test_flux_reading import massive_world
+
+    periodic = massive_world([80, 1, 1], {"x": "periodic", "y": "periodic", "z": "periodic"}, [800, 809])
     periodic["face_depth"] = 4
     periodic["age_bound"] = 100000
     assert "face" not in DetectorLawSimulation(parse_nature_beam_world(periodic)).cell_names

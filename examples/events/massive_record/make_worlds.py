@@ -11,14 +11,13 @@ the pair `[800, 800]`; at half depth g = mu^2 / 2 the kind is written
 `[1600, 1618]` and the well `[1600, 1609]`. The drive: the wall 3 Q S M = 192
 at Q = 64, width 1, amount 1, so the momentum 64 on an axis is one Link every
 three intervals (k = 3, beta_c = 1 / sqrt 3, gamma_m = sqrt(3 / 2)) and 48 is
-k = 4. The massive kind's faces are periodic by default (the medium
-continuous) with the margin rule of section 11 item 4 checked at load; the
-chains' light faces are open on x (light's row zero beyond the ends), as the
-design's chain scripts have them (the index script's window before the ends'
-reflections reach the probe; on the moving-index chains a face's reflection
-reaches the probe inside the long chain's window, named in the readings; a
-trial with light's faces periodic, the script's np.roll, moved the rest
-readings away from the script's numbers by the wrapped wave and was not kept).
+k = 4. ONE BORDER FOR EVERY FAMILY (BUILD.md section 26 item 28): every family
+reads the world's `boundary` (the massive kind's own periodic faces of the
+first builds, the family key `faces`, HISTORY, refused by name at load), with
+the margin rule of section 11 item 4 checked at load; a chain open on x is
+open on x for light and for matter alike (a zero face beyond the ends, the
+receiver slab of `face_depth` there). Every well declares its `seed` (no
+loader default, item 28: SEED_AMPLITUDE here).
 
 - (i-a) `boxed_clock_side_20_at_rest.json`, (i-b) `boxed_clock_side_28_at_rest.json`: one block at rest on a periodic
   48^3 board, 3000 intervals: CONTROL worlds (the block's own clock against
@@ -28,10 +27,12 @@ readings away from the script's numbers by the wrapped wave and was not kept).
   8000: PREDICTION worlds (the one formula of section 8 per world on its own
   box, `massive_moving_pins.py`: 0.7831 and 0.8048), with the pump's two
   GAMEBOARD readings (light's energy drift, the mode k = 2 pi / 3 on x).
-- (iii-a) `cavity_24.json`: the rest cavity of form (I), side 24, the kind's
-  own pair, on 48^3: a CONTROL (the separable form's omega 0.19503);
-  (iii-b) `cavity_24_moving.json`: the cavity pushed to k = 3 on 64^3: the
-  CONTROL of the medium's clock (1 / gamma_m^2).
+- CANCELLED WITH THE CAVITY (BUILD.md section 26 item 28; the cavity of form
+  (I), a record held by mirror faces of its own, is refused by name at load):
+  `cavity_24.json` (the rest cavity, side 24, the kind's own pair, on 48^3) and
+  `cavity_24_moving.json` (the cavity pushed to k = 3 on 64^3), moved as
+  written to `docs/designs/detector_law/held_worlds/` (HISTORY, their pins in
+  `expectations.json` never moved), their builders retired here.
 - HELD UNDER THE BORN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27; their
   files in `docs/designs/detector_law/held_worlds/` as written with the one-cell birth,
   HISTORY, not loaded by the gate; their builders retired here, to be rebuilt from the
@@ -76,12 +77,13 @@ import json
 import math
 from pathlib import Path
 
-from event_universe.events.world import BLOCK_SEED
-
 HERE = Path(__file__).resolve().parent
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
-FACES_OPEN = {"x": "open"}
+# the declared amplitude of every well of this generator's worlds (its own
+# record at interval 0, the iterated mode's peak): no loader default (BUILD.md
+# section 26 item 28)
+SEED_AMPLITUDE = 1 << 20
 AGE_BOUND = 1 << 20
 AMPLITUDE_BOUND = 1 << 32
 MOMENTUM_SPEED_THIRD = 64
@@ -94,7 +96,6 @@ LAYER_HOLD = 8000
 BLOCK_KEYS = (
     "coupling",
     "seed",
-    "cavity",
     "ramp",
     "start",
     "margin",
@@ -114,19 +115,16 @@ def world(
     blocks: list[dict],
     ticks: int,
     light: dict | None = None,
-    faces: dict[str, str] | None = None,
     probes: list[list[int]] | None = None,
     mode_axis: str | None = None,
     seed_profile: bool = True,
 ) -> dict:
     """One world file: light's family with its clock, the massive kind `matter` with
-    its pair (and its faces where the chain's are open), the blocks as measured
+    its pair (its faces the world's `boundary`, one border for every family), the blocks as measured
     events with `side` or `extents`, the probes; every bound body's
     seed on its mode (`seed_on_the_mode`) unless `seed_profile` is off, for a caller that
     completes the document first (the detector-law generator's emitters) and calls it then."""
     matter: dict = {"name": "matter", "quantum": 1, "pair": pair}
-    if faces is not None:
-        matter["faces"] = faces
     families = [light or {"name": "light", "quantum": 1, "phase_per_link": [77, 25]}, matter]
     if any(block.get("family") == "source" for block in blocks):
         # the emitter bodies' own family (`emitter_at`): the kind SOURCE_KIND
@@ -188,25 +186,26 @@ def seed_on_the_mode(document: dict) -> None:
     the body's algebraic conditions exact in the initial state, the whole board carrying the
     mode's values; the engine's `check_body_conditions` refuses a body whose initial state
     differs from it on any Node): a block of the massive kind with a lowered pair (a well),
-    a nonzero scalar seed (the loader's default 2^20 where none is declared) and no cavity,
+    a nonzero scalar seed (declared on every well, no loader default: BUILD.md section 26 item 28),
     of ANY massive family (the emitter bodies of the light worlds and the M1 rows' source
     family included, ALGEBRA.md 9.17),
     gets `seed` the profile of `mode_profile` at that scalar, its `margin` made explicit
     (the loader admits a profile with `margin` declared; "pin" is the loader's default). A
-    silent block (seed 0), a barrier (a raised pair) and a cavity keep their keys."""
+    silent block (seed 0) and a barrier (a raised pair) keep their keys."""
     kinds = {family["name"]: family["pair"] for family in document["families"] if "pair" in family}
     for number, entry in enumerate(document["measured"]):
-        if (
-            ("side" not in entry and "extents" not in entry)
-            or entry.get("family") not in kinds
-            or entry.get("cavity")
-        ):
+        if ("side" not in entry and "extents" not in entry) or entry.get("family") not in kinds:
             continue
         kind = kinds[entry["family"]]
         pair = entry["pair"]
         if pair[0] * kind[1] <= pair[1] * kind[0]:
             continue
-        scalar = entry.get("seed", BLOCK_SEED)
+        if "seed" not in entry:
+            raise ValueError(
+                f"measured[{number}] declares no seed: every well declares its own record's "
+                "amplitude (no default, BUILD.md section 26 item 28); nothing written"
+            )
+        scalar = entry["seed"]
         if not isinstance(scalar, int) or scalar == 0:
             continue
         entry.setdefault("margin", "pin")
@@ -408,7 +407,7 @@ def train_run(
     check["shape"] = shape
     check["boundary"] = dict(document["boundary"])
     check["boundary"]["xyz"[axis]] = "open"
-    check.pop("face_depth", None)
+    check["face_depth"] = 1  # the check board's receiver slab one Node deep at its open ends
     check.pop("probes", None)
     check["detectors"] = []
     check["measured"] = []
@@ -421,7 +420,10 @@ def train_run(
         position = [int(v) for v in body["position"]]
         position[axis] = min(at(body_low), at(body_low + body_length - 1))
         kept["position"] = position
-        kept["seed"] = int(body["seed"]) if isinstance(body.get("seed"), int) else BLOCK_SEED
+        declared = body["seed"]  # the declared amplitude, or the profile whose peak is it
+        kept["seed"] = (
+            max(abs(int(v)) for v in declared) if isinstance(declared, list) else int(declared)
+        )
         check["measured"] = [kept]
         check["ticks"] = 1
         stamped(check)
@@ -510,9 +512,10 @@ def placement_check(document: dict) -> None:
     """THE PLACEMENT RULE (ALGEBRA.md 9.25 (11) (b)): every emitter's tail and every
     receiver stands at least one train's length from every face slab's front (the slab
     returns what it books); refused naming the tool and the slab. The face slabs are the
-    `face_depth` Nodes nearest every open border of the world's `boundary`."""
+    `face_depth` Nodes nearest every open border of the world's `boundary` (declared on
+    every open board, no default; 0 on a board with no open face)."""
     shape = [int(v) for v in document["shape"]]
-    depth = int(document.get("face_depth", 1))
+    depth = int(document["face_depth"]) if "face_depth" in document else 0
     lengths = []
     tools: list[tuple[str, tuple[int, int, int], tuple[int, int, int]]] = []
     for number, entry in enumerate(document["measured"]):
@@ -564,7 +567,13 @@ SOURCE_WELL = [
 
 
 def rest_block(side: int, corner: int, pair: list[int], **extra: object) -> dict:
-    block: dict = {"position": [corner, corner, corner], "side": side, "pair": pair, "margin": "control"}
+    block: dict = {
+        "position": [corner, corner, corner],
+        "side": side,
+        "pair": pair,
+        "margin": "control",
+        "seed": SEED_AMPLITUDE,
+    }
     block.update(extra)
     return block
 
@@ -605,26 +614,8 @@ def worlds() -> dict[str, dict]:
             9500,
             mode_axis="x",
         )
-    # (iii) the cavity of form (I), CONTROL
-    out["cavity_24"] = world(
-        "cavity-24",
-        "CONTROL",
-        [48, 48, 48],
-        PERIODIC,
-        [800, 809],
-        [rest_block(24, 12, [800, 809], cavity=True)],
-        3000,
-    )
-    out["cavity_24_moving"] = world(
-        "cavity-24-moving",
-        "CONTROL",
-        [64, 64, 64],
-        PERIODIC,
-        [800, 809],
-        [rest_block(24, 20, [800, 809], cavity=True, momentum=[MOMENTUM_SPEED_THIRD, 0, 0], ramp=1500)],
-        9500,
-        mode_axis="x",
-    )
+    # (iii) the cavity of form (I): CANCELLED, its two worlds held as written (the
+    # module docstring; BUILD.md section 26 item 28)
     # the index rows at rest and in motion: HELD under the born train (the module docstring)
     # (i-L), (ii-L): the layer pin world of section 11 item 7 (mu = 0.15, s = 14, g = mu^2 / 4:
     # the kind [3200, 3236], the well [3200, 3227]) on a periodic 200 x 200 x 1 layer (the pin
@@ -634,7 +625,13 @@ def worlds() -> dict[str, dict]:
     # rest and pushed to k = 3 over the ramp 12000 (ten relaxation times of the well by the
     # margin module's own number, DECLARATIONS.md section 8) and the hold 8000, the ticks
     # 20500 in both (M1-8: the same hold window); the seed on the mode by `seed_on_the_mode`.
-    block = {"position": [93, 93, 0], "side": 14, "pair": [3200, 3227], "margin": "pin"}
+    block = {
+        "position": [93, 93, 0],
+        "side": 14,
+        "pair": [3200, 3227],
+        "margin": "pin",
+        "seed": SEED_AMPLITUDE,
+    }
     rest = world(
         "muon-moving-clock-at-rest-14",
         "PIN",
@@ -669,7 +666,7 @@ def launch_list_worlds() -> dict[str, dict]:
         "position": [44, 44, 0],
         "side": 40,
         "pair": [800, 800],
-        "seed": 1 << 20,
+        "seed": SEED_AMPLITUDE,
         "margin": "control",
     }
     out["deep_well_clock_at_rest_40"] = world(
@@ -688,7 +685,7 @@ def launch_list_worlds() -> dict[str, dict]:
     return out
 
 
-def mode_profile(document: dict, number: int, amplitude: int = 1 << 20) -> list[int]:
+def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
     """The bound mode's integer profile of a block over the whole board, THE GENERATOR AS THE
     BOARD'S OWN OPERATOR ITERATED IN INTEGERS WITH THE STOP (the model owner's word of
     2026-09-25, 04:10Z, closing record 1898; the margin module's `iterated_mode`: the operator

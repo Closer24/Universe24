@@ -64,11 +64,6 @@
     3200,
     3227
    ],
-   "margin": "pin",
-   "clock": [
-    8296354,
-    4194304
-   ],
    "seed": [
     19561,
     19570,
@@ -40070,12 +40065,17 @@
     19589,
     19570,
     19561
+   ],
+   "margin": "pin",
+   "clock": [
+    8296354,
+    4194304
    ]
   }
  ],
  "detectors": [],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "73c5e5e7eb97d02fabe0a1d41635f34101825baf4d0f9ce74278ad66f9f8e227"
+  "hash": "8a1e9b133895993146cbf72afbcfb5df19baa5cb639064b2c2a78c9808015890"
  }
 }

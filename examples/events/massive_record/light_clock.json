@@ -40,10 +40,7 @@
    "pair": [
     800,
     809
-   ],
-   "faces": {
-    "x": "open"
-   }
+   ]
   }
  ],
  "measured": [
@@ -7562,6 +7559,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "24a26092598d69c3c7e1ef312ffcfe1fe69900e2fa2cc5890f38d34e7a41702e"
+  "hash": "f7a2cf94043f00a7845640c553e93614f1ef326cbc4349ae8593d169edaedaad"
  }
 }

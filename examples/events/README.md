@@ -625,10 +625,12 @@ docs/designs/detector_law/MASSIVE_RECORD.md, the build's plan BUILD.md, the
 readings BUILD_READINGS.md), written by `massive_record/make_worlds.py` with
 their pins in `expectations.json` written by `pins.py` before any run: one
 block at rest on a periodic 48^3 board (CONTROL), the block pushed to k = 3
-on 64^3 (PREDICTION of the block form's residual), the rest cavity and the
-cavity moved (CONTROL), the index block at rest on a chain (CONTROL of the
-coupling) and the index in motion at K = 3 and K = 4 (PREDICTION of the
-model as built); `read_runs.py` writes the runs' readings beside the pins.
+on 64^3 (PREDICTION of the block form's residual), the muon's and the deep
+well's clocks (PIN and CONTROL) and the light clock in the one table's form;
+the rest cavity and the cavity moved are CANCELLED with the cavity and the
+index rows HELD under the born train (BUILD.md section 26 items 27 and 28,
+their files as written in `docs/designs/detector_law/held_worlds/`);
+`read_runs.py` writes the runs' readings beside the pins.
 
 ## The massive rows
 

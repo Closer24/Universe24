@@ -12,8 +12,8 @@ rest frequency cos omega_0 = num / den); a block is a cube of declared cells
 carrying a lowered pair (the well of the pair) with a momentum per axis, a
 coupling to light at its cells (one g with G, the dielectric of section 7,
 folded into the rule's one division), a clock (the upward zero crossings of
-its own record's sum across its cells) and, when declared, a cavity (its
-record held at 0 outside its cells) or a take (`absorbing`). Every world here
+its own record's sum across its cells); the cavity and the take are retired
+(the cavity refused by name, BUILD.md section 26 item 28; the take, item 14). Every world here
 is written by `make_worlds.py` from the design's declarations (since
 body-check, 2026-09-24, every bound body's `seed` is the bound mode's integer
 profile over the whole board at the declared amplitude, `seed_on_the_mode`,
@@ -32,26 +32,23 @@ the pair `[800, 800]`; at half depth the kind is written `[1600, 1618]` and the
 well `[1600, 1609]`. The drive: the wall 3 Q S M = 192 (Q = 64, width 1, amount
 1), so the momentum 64 on an axis is one Link every three intervals (k = 3,
 beta_c = 1 / sqrt 3, gamma_m = sqrt(3 / 2)) and 48 is k = 4 (the pace bound
-3 P . P < 192^2 admits no K = 5 as an integer of the drive). The massive kind's
-faces are periodic by default with the margin rule of section 11 item 4 checked
-at load (the module `diagnostics/massive_record_margin`, its lines printed before
-the run and recorded under `margin` in `run.json`; an axis whose periodic extent
-is below the block's side is a folded axis, a layer's or a chain's, with no face
-for the rule to compare). On the chains light's faces are open on x (a zero
-face, a mirror): on the index chain at rest with the design script's geometry and
-its window [1000, 1800], before either end's reflection reaches the probe; on
-the moving-index chains with the script's geometry, where the reflection
-from the face at x = 0 reaches the probe at about 3118 on the chain of 2200 and
-4850 on the chain of 4000 (inside the windows, named in the readings; a trial
-with light's faces periodic, the script's np.roll, moved the rest readings away
-from the script's own numbers by the wrapped wave and was not kept).
+3 P . P < 192^2 admits no K = 5 as an integer of the drive). ONE BORDER FOR
+EVERY FAMILY (BUILD.md section 26 item 28, 2026-09-25): every family reads the
+world's `boundary` (the massive kind's own periodic faces, the family key
+`faces`, HISTORY, refused by name at load), with the margin rule of section 11
+item 4 checked at load (the module `diagnostics/massive_record_margin`, its
+lines printed before the run and recorded under `margin` in `run.json`; an axis
+whose periodic extent is below the block's side is a folded axis, a layer's or
+a chain's, with no face for the rule to compare). A chain open on x is open for
+light and for matter alike (a zero face beyond the ends, the receiver slab of
+`face_depth` there, declared on every open board); the held index chains' notes
+on their faces stand with their files (the section below). Every well declares
+its `seed` (no loader default, item 28).
 
 | World | What it declares | Kind | The pin (COMPUTATION, `expectations.json`) | What its record reads |
 | --- | --- | --- | --- | --- |
 | `boxed_clock_side_20_at_rest.json`, `boxed_clock_side_28_at_rest.json` | one block at rest on a periodic 48^3 board, 3000 intervals: s = 20 at full depth (`[800, 809]`, the well `[800, 800]`), s = 28 at half depth (`[1600, 1618]`, the well `[1600, 1609]`), `margin` `"control"` | CONTROL | omega_b and the extent on the world's own board by the margin module (0.11046 and 5.73 Links; 0.13053 and 7.94), the design's 96^3 numbers beside them (`massive_board_margin.out`: 0.11066 and 5.7; 0.13184 and 8.2, the periodic image's shift) | GAMEBOARD: the block's count over the run (its `click` lines, the `clock` of its `block` lines) and the spectral peak of its record's sum against omega_b |
 | `boxed_clock_side_20_moving.json`, `boxed_clock_side_28_moving.json` | the same blocks pushed to k = 3 on a periodic 64^3 board over a ramp of 1500 intervals and a hold of 8000, `mode_axis` x | PREDICTION (the block form's residual, eps 0.45 and 0.22) | section 8's one formula per world on its own 64^3 box, f / f_0 = omega_b(gamma_m s, g) / (gamma_m omega_b(s, g)): 0.7831 and 0.8048 (`massive_moving_pins.out`, recomputed by `pins.py` to four places); the first order 1 / gamma_m (1 - eps (gamma_m^2 - 1) / 2) = 0.7245 and 0.7712 beside it as the band's second term only | GAMEBOARD: the count per interval over the hold against the rest world's rate (the 64^3 box's rest mode against the 48^3 box's, the ratio printed) and the spectral peak over the hold; the pump's signature (light's energy drift per interval, the mode k = 2 pi / 3 on x), 0 identically here: no light and no coupling declared |
-| `cavity_24.json` | the rest cavity of form (I): s = 24 with the kind's own pair `[800, 809]`, `cavity` true, on 48^3, 3000 intervals | CONTROL | the exact separable form cos omega = (num / den) cos(pi / (s + 1)): omega 0.19485, the period 32.25 intervals (the design's quadrature 0.19515, section 4's table) | GAMEBOARD: the count and the spectral peak against omega |
-| `cavity_24_moving.json` | the cavity pushed to k = 3 on 64^3, the ramp and the hold as (ii) | CONTROL (the medium's clock) | 1 / gamma_m^2 = 0.6667 (section 8's cavity limit, `massive_block_clock_motion.out`) | GAMEBOARD: the hold's rate over the rest cavity's |
 | `medium_index_at_rest_50.json`, `medium_index_at_rest_20.json`, `medium_index_at_rest_10.json` (at rest) and `medium_index_reference.json` | the index block at rest on a chain of 1400 (x open for light): the kind `[7, 8]` (omega_0 = 0.50536), a block of side 12 at x = 900 with seed 0, a CAVITY with the kind's own pair (the design script's oscillator, held at 0 outside its cells), G `[1, 1]`, g 1 / 50, 1 / 20, 1 / 10; the light clock `[153, 100]` (omega 0.15021), a lamp at x = 600 with a train of 64 periods, a probe at x = 1100, 1850 intervals; the reference without the block | CONTROL of the coupling | the closed form n^2 = 1 + G g / (omega_0^2 - omega^2) at the declared integers: n = 1.0421, 1.1022, 1.1956 (the design's chain read 1.034, 1.083, 1.159 at its omega_0 = 0.5, the lattice's band 0.8 to 3.4 percent below the form) | GAMEBOARD: light's phase delay at the probe against the reference over the window [1000, 1800] (the script's), n = 1 + delay / (k s) |
 | `receding_index_short_speed_third_toward.json`, `receding_index_short_speed_third_away.json`, the same at k = 4 (in motion), with `index_moving_rest_*.json` and `index_moving_reference_*.json` | the moving index on the design's chain of 2200: the source at 300 (a train of 200 periods), the probe at 1500, s = 24 with the well `[314, 315]` on the kind `[156, 157]`, g `[1, 200]`, G `[1, 1]`, light at omega 0.035 (`[3565, 10000]`), the block stepping from interval 2600 (`start`) toward the source from x = 1300 or away from x = 700; the block at rest at x = 1100 at omega and at each K's block-frame frequencies omega' = gamma_m omega (1 +- beta) with a reference at each clock | PREDICTION of the model as built | the same-Node ratios of the delay to the covariant expectation (n(omega') - 1) omega' gamma_m s / c on this chain (`massive_moving_index.out` at the design's head, the drive's pair carried): head-on 0.500, from behind 2.569 (the window's halves unequal there); at K = 4 no number (read beside K = 3) | GAMEBOARD: light's phase at the probe by projection on the window [3400, 4300] against the reference, the covariant expectation formed from the engine's own rest reading at omega'; the window's two halves; the pump's signature over the window |
 | `receding_index_speed_third_away.json`, `receding_index_speed_quarter_away.json`, with their rest and reference worlds | the receding case on the longer chain of 4000, REGENERATED on the declared geometry of DECLARATIONS.md section 11 (2026-09-24): the source at 800, the probe at 2400, the block from x = 1500 stepping away from interval 3000, the window [3800, 5400] (the front at the probe at 2770, the reflection from x = 0 at 5543); the rest world at omega' away at x = 2100 (the first geometry, whose window sat inside the train's own arrival, withdrawn before any run) | PREDICTION (P) | the script's number on the same geometry (section 11): the lab phase delay +1.0144 rad over the window (the covariant expectation +0.2323, the ratio 4.37), the halves +0.5539 and +1.5234, the drift 1.2 x 10^-3 rad per interval; the bands +- 0.04 rad and +- 10 percent of the rate | the window's phase against the reference at omega and its drift rate (GAMEBOARD, the row's own reader), the pump beside |
@@ -99,6 +96,14 @@ headless, then the readings):
 ## The born train and the rows held under it (2026-09-25; ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27)
 
 Every birth is a travelling train: an emitting body carries `train` (the direction and the periods) and `born` (the train's two levels over its cells and its norm on the vacuum, the generator's integers, checked at load). THE LIGHT CLOCK (`light_clock.json`, written by the detector-law generator into this folder) stands in the one table's form: [760, 3, 3] periodic on y and z, x open with the face slabs 32 deep, N = 1024, light with the born clock [512, 1], A [800, 801] of the extents [32, 3, 3] at [600, 632) with its coupling, its seed on its mode and a stock of 64, its train along +x, the mirror the gap [1, 2] over [4, 3, 3] at [690, 694), the set `at_well` A's own cells; its blind pins in `../pins.json` (the mean click interval 300 +- 9, the first click 250 +- 8). THE ROWS HELD under the train, their files moved as written (the one-cell birth, HISTORY) to `docs/designs/detector_law/held_worlds/` and their builders retired here, to be rebuilt from the table of ALGEBRA.md 9.22 (8) through the generator: `sagnac_light_times_at_rest`, `sagnac_light_times_speed_third`, `moving_emitter_redshift_at_rest`, `moving_emitter_redshift_speed_third`, `de_broglie_fringes_12`, `de_broglie_fringes_16`, `moving_mass_energy_12`, the four `medium_index_*` and the twenty-one `receding_index_*` worlds (the eight short rest and reference worlds without an emitter held with their row). The readers `pins.py`, `read_runs.py`, `expectations.json` and `readings.json` name them as HISTORY. The worlds this generator still writes: the four boxed clocks, the two cavities, the two muon layers and the two deep wells.
+
+CANCELLED WITH THE CAVITY (2026-09-25; BUILD.md section 26 item 28): `cavity_24.json` and
+`cavity_24_moving.json` (the rest cavity of form (I) and the cavity pushed to k = 3) are
+refused by name at load (a body's record is held by the law alone, its border the
+world's) and stand as written in `docs/designs/detector_law/held_worlds/`; their pins in
+`expectations.json` and their readings in `readings.json` are the record, never moved;
+`pins.py` and `read_runs.py` keep their rows as written (HISTORY; neither runs under the
+gate).
 
 ## The worlds' names since 2026-09-25 (the model owner's rule, record 1924; the names review, record 1925)
 

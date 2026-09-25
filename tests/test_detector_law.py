@@ -18,7 +18,7 @@ import numpy as np
 import pytest
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
-from event_universe.events.world import DETECTOR_LAW_RULE, parse_nature_beam_world
+from event_universe.events.world import DETECTOR_LAW_RULE, input_stamp, parse_nature_beam_world
 from tests.test_emitter import massive_generator
 
 EMITTER_KIND = [7, 8]  # the emitter body's kind (omega_0 = 0.505)
@@ -143,6 +143,7 @@ def chain_world(
         "model_id": "beam-detector-law-chain-v1",
         "shape": [length, 1, 1],
         "boundary": {"x": faces, "y": "periodic", "z": "periodic"},
+        "face_depth": 1,
         "ticks": 600,
         "K": 1073741824,
         "N": PHASE_STEPS,
@@ -316,6 +317,7 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
         parse_nature_beam_world(world_wheel)
     set_wheel = chain_world()
     set_wheel["detectors"][0]["wheel"] = 64
+    set_wheel["input"] = input_stamp(set_wheel)  # the stamp over the whole file (item 28)
     with pytest.raises(ValueError, match=r"detectors\[0\]\.wheel is refused"):
         parse_nature_beam_world(set_wheel)
     on_light = chain_world()
@@ -526,7 +528,9 @@ def test_the_increment_ladder_over_the_named_sets():
     # record's, the ladder's order no input to them)
     backward, _, _ = run_layer(layer_world(["s2", "s1", "s0"]))
     assert len(backward) == 8 and sorted(g["u"] for g in backward) == sorted(g["u"] for g in gathers)
-    one, _, _ = run_layer(layer_world("s1"))
+    # one set on the emitter's row alone books a third of the flux: the last click at 1014
+    # under the one border (the well two Links from the closed face; item 28), COMPUTATION
+    one, _, _ = run_layer(layer_world("s1"), ticks=1200)
     assert len(one) == 8 and all(gather["chosen"][0][0] == "s1" for gather in one)
     with pytest.raises(ValueError, match="names 'screen', which no detector set declares"):
         parse_nature_beam_world(layer_world(["s0", "screen"]))
@@ -568,6 +572,7 @@ def test_detector_is_one_connected_cube_of_side_three():
         document = layer_world()
         document["measured"].extend(receiver_body(position) for position in positions)
         document["detectors"].append({"name": "cube", "positions": positions, "threshold": 1})
+        document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
         if refusal is None:
             simulation = DetectorLawSimulation(parse_nature_beam_world(document))
             cell = simulation.cell_names.index("cube")
@@ -597,6 +602,7 @@ def test_detector_is_one_connected_cube_of_side_three():
             }
         )
         document["detectors"].append({"name": "on_block", "block": len(document["measured"]) - 1})
+        document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
         if refusal is None:
             parse_nature_beam_world(document)
         else:

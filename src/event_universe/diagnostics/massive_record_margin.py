@@ -7,7 +7,7 @@ outside the engine's integer path.
 The block's bound mode in the massive medium: the rule of section 1 with
 the kind's pair `[num, den]` on every Node and the block's lowered pair on
 its cells has the characters `2 cos omega D a = (S_6 / 3) a`, D = den /
-num per Node (the six-neighbour sum with the kind's faces, the row itself
+num per Node (the six-neighbour sum with the world's faces, the row itself
 twice on an axis of one layer, as the engine reads it); the bound mode is
 the largest eigenvalue `lambda = 2 cos omega_b` of the symmetric operator
 `A = D^-1/2 (S_6 / 3) D^-1/2`, found by a Lanczos iteration (the largest
@@ -22,9 +22,7 @@ axis's side is at least the block's side plus TWO extents; a PIN world's
 cells lie at least TWO extents from a non-periodic face and a periodic side
 is at least the side plus FOUR extents (a hard face at distance d shifts
 the mode by about eps e^(-2 kappa d)); a declaration below the margin is
-refused naming the block, the axis, the extent and the distance; a cavity
-(form (I), its record held by its own faces) has no tail and is not
-checked. Every
+refused naming the block, the axis, the extent and the distance. Every
 number here is a COMPUTATION from the declaration, printed before the run
 and written into the run's record; the state never reads it (the
 transcendental of the pair is no verb of the law). This is the method of
@@ -488,7 +486,7 @@ def profile_check(world: NatureBeamWorld, number: int) -> tuple[int, int] | None
 
 def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     """The reading of one block: its mode on the world's own board with its
-    kind's faces, alone in the medium (the other blocks' wells not carried:
+    world's faces, alone in the medium (the other blocks' wells not carried:
     each block is checked on its own)."""
     entry = world.measured[number]
     definition = entry.block
@@ -552,11 +550,6 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
     found = []
     for number, entry in enumerate(world.measured):
         if entry.block is None or not world.families[entry.family].massive_kind:
-            continue
-        if entry.block.cavity:
-            # A cavity (form (I)) binds its record by its mirror faces: its
-            # mode has no tail in the medium and the rule has no extent to
-            # compare; the control world of MASSIVE_RECORD.md section 4.
             continue
         if entry.block.seed == 0:
             # A silent block (seed 0, no own record) holds nothing to bind: a
@@ -657,7 +650,7 @@ def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
 def composed_largest_eigenvalues(world: NatureBeamWorld) -> dict[int, float]:
     """The largest eigenvalue of the COMPOSED operator of each massive family
     (ALGEBRA.md 9.19 (2)): every body's well of the family in one read
-    matrix on the family's faces; the stability condition is read on it,
+    matrix on the world's faces; the stability condition is read on it,
     below 2, refused at or above (a runaway mode of the whole board)."""
     found: dict[int, float] = {}
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))

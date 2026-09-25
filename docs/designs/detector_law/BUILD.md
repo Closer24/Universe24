@@ -2545,6 +2545,57 @@ would have found no cell.
    per family with one remainder (the sum of two records' steps differs
    from the step of their sum by the carries; for the mathematician).
 
+28. THE TIGHTENINGS OF THE INPUT (the model owner's rules through the Boss on
+   the born train's commit, 2026-09-25; the mathematician's 86e1df43 on
+   ALGEBRA.md 9.35 for the tail; built on `emitter-click`). (a) ONE BORDER
+   FOR EVERY FAMILY: every family's rows read the world's `boundary`; the
+   family key `faces` (a massive kind's own border per axis, periodic by
+   default, `massive-record-v1`) is refused by name on light's kind and on a
+   massive kind alike; `kind_periodic` returns the world's periodic,
+   `FamilyDefinition.faces` is gone, the run record's `families[].faces`
+   carries the world's border. The light clock's file loses `matter.faces`
+   (the world's x was open for matter already: the profile unchanged, the
+   stamp moved); the emitter chain of the tests, closed on x, now bounds
+   matter too (a zero face five Links from the well: the iterated mode's
+   readings move to 2487 iterations and 467 units from the eigensolver's
+   mode, COMPUTATION; 1805 and 276 with the matter border periodic,
+   HISTORY). (b) THE CAVITY REFUSED BY NAME: the block key `cavity` (form
+   (I), a record held by mirror faces of its own) joins the retired keys;
+   the engine's zeroing outside the cells and the margin module's skip are
+   gone; the kind's own pair stays no body; `cavity_24` and
+   `cavity_24_moving` are CANCELLED with it, their files as written in
+   `docs/designs/detector_law/held_worlds/`, their pins the record, their
+   builders retired (the massive folder's `pins.py` and `read_runs.py` keep
+   their rows as HISTORY, neither under the gate). (c) THE STAMP OVER THE
+   WHOLE FILE: `input.hash` is the SHA-256 of the canonical JSON of the
+   document without `input` (`input_digest`; was: of the profiles, clocks
+   and born trains alone), so that a file changed by hand in any key is
+   refused ("not the digest of the file"); a world with no profile still
+   needs no stamp; every seeded file regenerated (the same integers, the
+   stamp moved, read again file by file); every test that changes a seeded
+   document after its stamp restamps it. (d) NO IMPLICIT SEED: a well
+   declares `seed` (its amplitude, 0 silent, or its profile); the loader's
+   `BLOCK_SEED` 2^20 is gone and `BlockDefinition.seed` has no default; the
+   massive generator declares `SEED_AMPLITUDE` 2^20 on every well it builds
+   and refuses a well without one; the transparency reading's check board
+   takes the body's declared amplitude (the profile's peak). (e) NO DEFAULT
+   FOR N AND face_depth: `N` is a required world key (every registered file
+   declares it; the 64 of the first worlds written in each); `face_depth`
+   is required on a GameBoard with an open face under `detector_law`,
+   refused without that law (the slab is its receiver), 0 on a board with
+   no open face (no slab); the generator's check board declares 1. (f) THE
+   TAIL: a seeded body's profile must be 0 at every Node of every other
+   body of its family (a body's mode ends before another body of its family
+   begins; the mathematician's "below one unit", in integers 0), refused
+   naming both bodies, the Node and the value; the receiver-by-name test's
+   two bodies moved from three Links apart to a hundred (A's mode at
+   50 x 2^20 on the closed chain ends 63 Links beyond its head, HOST). The
+   files of the tightened keys are regenerated, never edited; nothing
+   physical moves (the rule, the wall and the click unchanged; every
+   reading here COMPUTATION). The retirement of "closed" boards (ALGEBRA.md
+   9.30 (2) (f)) is not in this item: it changes every test world and is
+   raised separately.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2
