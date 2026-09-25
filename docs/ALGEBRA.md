@@ -9128,3 +9128,149 @@ Node's, moved by the step and left by the click. A click acts on the
 clock through the content alone, by (Gamma + M) / (Gamma + M +- 1). No
 run on the board is needed for any line above; the runs of 9.38 and
 9.39 are illustrations of T2, T5 and T3 and add no rule.
+
+### 9.41 A fourth family, of clicks: the clock field (the model owner's question of 2026-09-25 through the Boss, record 1972, "perhaps we need a fourth family, of clicks?"; the Boss's reading; CHECKED against the three tests and COMPUTED on the algebra; a hypothesis under its own identity until the owner's word)
+
+**(1) WHAT IT IS.** A family whose level c_i at a Node is what the Node
+clock reads: (e_i, f_i) = (Gamma, Gamma + c_i). It has a declared pair,
+two levels and a remainder per Node like every family, and it moves by
+the step (D2). The clock term of the step at every other family, 6 den
+(f - e) a_i = 6 den c_i a_i, becomes a product of two families' levels
+at one Node.
+
+**(2) THE THREE TESTS: IT PASSES, AS A MODULATION AND NOT AS A SOURCE.**
+Generic: one primitive, a family named by its role (as the born family
+is), with declared integers and no family name in the rule. Vector: the
+term c_i a_i is a product of two levels at one Node, the share's own
+verb (E_i has a_i b_i), no root, no float; it is NOT the retired
+coupling of 8.5, which made rows of one family out of another's (a
+source term, 9.37 (5)): here the family's own row is multiplied by an
+integer that happens to be another family's level, and by 9.37 (1) it
+sheds nothing of any family. Local: c_i at the Node. Exact and
+reversible between clicks: at each interval the wall 3 den (Gamma +
+c_i) is an integer at the Node, the step of every family given c(t) is
+the bijection of D2, the remainder is formed again below the new wall,
+and c's own step does not read the other families, so the joint step
+inverts; the one bound is |c_i| < Gamma, the loader's.
+
+**(3) ITS PAIR AND ITS SOURCE (DERIVED).** A lasting field around a mass
+is a STATIC solution of the step, a_next = a_before = a_now, that is 2
+a_i = (p / 3) (S_6 a)_i. With p = 1 (light's pair) this is the discrete
+Laplace equation, whose solutions outside a source fall as 1 / r; with
+p < 1 every static solution is screened, falling as exp(- kappa r) / r
+with kappa^2 = 6 (1 / p - 1) (for [800, 809], kappa = 0.26 per Link, a
+range of four Links). So THE CLOCK FIELD IS MASSLESS, ITS PAIR [1, 1].
+Its source: a click alone, a pulse of c born whole and left to the step,
+spreads outward at one Link per interval and leaves no lasting field;
+the field lasts only if THE CONTENT IS HELD at the body's Nodes as a
+boundary value, c_i = M there, written whole at each click and kept,
+which is exactly 9.35 (3) as it stands (M changes only at births and
+clicks). Around it the step's static part is the discrete Coulomb
+potential (COMPUTED, scratchpad side3_window.py (b): a content M held on
+a cube of side 3, the far border 0: the level times the distance is
+constant, 1350 to 1420 for M = 1000 over 2 to 6 Links, the cube acting
+as a sphere of radius about 1.4 Links; it falls only where the far
+border is felt), and the transients are outgoing waves at light's pace,
+booked by the face slabs of an open board; on a periodic board they
+never leave, so the field settles only where the faces take. The one
+thing beside the step is the held level at the body's Nodes, and it is
+already in the law.
+
+**(4) WHAT IT GIVES.** (a) THE SLOWING AROUND A MASS: c_i = M R / r
+(R the source's radius in Links) puts the clock (Gamma, Gamma + M R /
+r) at every Node around the body: 1 - cos omega' = (Gamma / (Gamma +
+c)) (1 - cos omega), a period longer by c / (2 Gamma) = M R / (2 Gamma
+r): NEWTON'S POTENTIAL IN THE CLOCK, the weak-field redshift form with
+R / (2 Gamma) in the place of G / c^2 in the board's units; linear in M,
+so it escapes the quadratic source of 9.29 (4) (a); every family
+including light bends toward the slow region (9.35 (5)). (b) A BODY ITS
+OWN WELL: NO. At its own Nodes c_i = M, the same depth as 9.39 (3),
+(1 - p) M / (p (Gamma + M)), 10^-8 to 10^-4 at Gamma = 10^6 against
+thresholds of 10^-3 to 10^-1; light is never bound by a clock. The
+fourth family moves the field's FORM outside the body, not the binding
+question. (c) LIGHT WITH LIGHT: only if a light record's presence counts
+as content and is held, which light, moving, cannot be: a light record
+would source a moving pulse and no lasting field; so no, by the same
+rule, unless the owner declares light's content otherwise.
+
+**(5) THE PINS AND THE COST.** At Gamma = 10^6 with M at most 100 the
+field is at most 100 x 1.4 / r, the slowing at most 1.4 x 10^-4 at one
+Link and 10^-5 at ten: NO PIN OF THE EIGHTEEN MOVES; the gravity row
+(9.22 (8a)) changes its form from the declared well's profile to the 1 /
+r potential, a computed row. The cost: two levels and a remainder per
+Node more, and the owner's constant of three families becomes four.
+VERDICT: it passes the three tests as a modulation; its pair is [1, 1]
+and its source the held content; it gives the slowing around a mass in
+Newton's form and does not give a body its own well; it is a hypothesis
+under its own identity (the key `clock_family`), built after the Node
+clock (decision (5)) and only on the owner's word.
+
+### 9.42 A detector is a body (the model owner's decision of 2026-09-25 through the Boss, record 1974: "a body has an algebraic definition; just Nodes are not a body; a number of Nodes must click for them to be a body"; the Boss's four questions and record 1975; COMPUTED)
+
+**(1) THE DETECTOR BODY'S STANDING RECORD.** Its family: a matter family,
+the screen's matter, declared per detector region; its pair: the
+family's pair lowered on the region (a well) inside the window of (2);
+its standing record: the well's bound mode, generated as every body's
+(9.22 (7a)); its content M: the quanta it holds, rising by one at each
+of its clicks; its own remainders: kept, and never read while it only
+takes (the threshold of a taking is the PASSING record's residue, D5).
+
+**(2) THE LEAST BODY OF SIDE 3 (COMPUTED, scratchpad side3_window.py
+(a)).** In the vacuum [800, 809] a cube of side 3 binds a mode from the
+relative depth 0.135 and runs away (2 cos omega > 2, no rotation) from
+0.185: THE WINDOW IS THE PAIR INSIDE FROM ABOUT [800, 713] TO [800, 686]
+(2 cos omega from 1.980 to 1.999, the mode on 2000 to 160 Nodes). A pair
+above 1 inside is lawful there because the confinement of three Nodes
+keeps 2 cos omega below 2; the same pair over 32 Nodes runs away (the
+holder's [699, 700], 9.31). A SLAB, the receiver at a face [N, M, d],
+binds at ANY positive depth (a well binds in one dimension however
+shallow), so the face slabs are bodies with a shallow pair such as
+[800, 808]. DOES THE DETECTOR NEED ONE RICH NODE? No: a taking body's
+own remainders are never read; an exact brick (2 cos omega in {-1, 0,
+1}) takes as well as any body; the detector's residue matters only if it
+gives (a screen that re-emits), and then 9.38 (9) reads its sum.
+
+**(3) THE TAKING AT ITS FACES, AND ITS OWN RECORD AT THE CLICK.** The
+passing record is gathered through the body's Ports (9.38 (2), D5 X_S)
+and nowhere else; at the click the record is cleared on all its Nodes,
+the detector's M rises by one on all its Nodes, its clock goes to
+(Gamma, Gamma + M + 1), and so ITS OWN STANDING RECORD'S ROTATION SLOWS
+by (Gamma + M) / (Gamma + M + 1) (T4), its levels untouched (no reseed
+at a taking). That is record 1139's "the detector's own record changes
+at the click", in its exact form.
+
+**(4) THE EIGHTEEN.** Every detector region of the rows (a screen's
+pixels, the receivers, the face slabs) is declared a body: a matter well
+inside its side's window with its mode generated (one small mode per
+detector; a screen of forty pixels of side 3 is forty modes of 27 Nodes;
+a slab one mode); the ladder's places are bodies. The passing light is
+unaffected by a matter well (no coupling, 9.34 (B)) and by the
+detector's clock beyond M / Gamma, at most 10^-4 after thousands of
+clicks: NO PIN MOVES IN FORM. ONE PLACEMENT CHANGE: two wells whose
+modes overlap are ONE body with one click (9.32 (c)), so adjacent pixels
+would merge into one place; at the depth 0.18 the side-3 mode lies on
+about 160 Nodes, a tail of two Links, so PIXELS STAND FOUR LINKS APART
+(a pixel every seven Links), the light between them going to the slab
+behind; the fringe spacing 53 of the two slits is resolved by pixels
+every seven Links as before, and the counts per pixel scale by 3 / 7,
+the pins recomputed under the same rule. The bricks of side 3 (9.35
+(8)) are these bodies.
+
+**(5) THE WHEEL UNDER THE NODE CLOCK, AND THE CURRENT'S BOOKING (record
+1975 (3) and (4); Nature24's question).** The wheel is THE RULE'S AT THE
+NODE: the remainder moves on the multiples of gcd(e num, 6 den M, 3 den
+f) below the wall 3 den f, so W = 3 den f over that gcd; at M = 0 every
+coefficient carries Gamma and W is the pair's own 3 den / gcd(num, 3
+den), and at M > 0 it is finer (18,774,639 at M = 64 on the light
+clock's A against 2403). u and W are read together at the birth and
+travel with the record as the fraction (2 u + 1) / (2 W) (9.25 (2)); all
+the Nodes of one body share M, so the sum of 9.38 (9) is on one wheel;
+the click's statistics are the same on a finer wheel. THE BOOKING: the
+current through a Link stays num Gamma (now_i before_j - before_i
+now_j), read on the two levels before the step, with no weight f / e or
+1 / e (9.35 (2), 9.38 (8)); the weights f / e enter the SHARE and the
+WHOLE (E_i and I), which the tick and the threshold T use; the ladder's
+increments are the currents as booked today times the wall's integer
+factor. The order (2) then (5) is right: without the coupling's scale
+the wall 3 den (Gamma + M) times the amplitude 2^28 is below 2^63 at the
+muon's pair (7.8 x 10^18).
