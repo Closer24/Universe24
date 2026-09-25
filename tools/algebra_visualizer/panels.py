@@ -359,7 +359,7 @@ def panel_state_vector(light: RunRecord, detector: RunRecord) -> Panel:
 
 
 def panel_verb_t(light: RunRecord) -> Panel:
-    births = light.of_kind("birth")
+    births = light.of_kind("birth", "giving")
     clicks = [c for c in light.of_kind("click") if str(c.get("detector", "")).startswith("face:")]
     if not births or not clicks:
         return Panel(
@@ -775,7 +775,7 @@ def panel_light_rule() -> Panel:
 
 
 def panel_fan_faces(light: RunRecord) -> Panel:
-    births = light.of_kind("birth")
+    births = light.of_kind("birth", "giving")
     clicks = [c for c in light.of_kind("click") if str(c.get("detector", "")).startswith("face:")]
     if not births or not clicks:
         return Panel(
@@ -866,7 +866,7 @@ def panel_fan_faces(light: RunRecord) -> Panel:
 
 
 def panel_pace(light: RunRecord) -> Panel:
-    births = light.of_kind("birth")
+    births = light.of_kind("birth", "giving")
     clicks = [c for c in light.of_kind("click") if str(c.get("detector", "")).startswith("face:")]
     if not births or not clicks:
         return Panel(

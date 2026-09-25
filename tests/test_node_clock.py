@@ -13,7 +13,7 @@ form plus the content's weight on the kinetic part, exactly, the share's identit
 the books' form's remainder identity and the inverse map bit for bit; (v) the loader's
 refusals (the key required under the detector law, refused without it, the load bound naming
 the clock and the content) and the registered light clock's Gamma; (vi) the content at a body
-down by one at a birth and up by one at a click, on the birth line. Every number a COMPUTATION
+down by one at a giving and up by one at a click, on the giving line. Every number a COMPUTATION
 on the rule's integers; no pin."""
 
 from __future__ import annotations
@@ -336,12 +336,12 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     assert simulation.wheel_at(1, (100, 0, 0)) == (NODE_CLOCK, 2427)  # the kind's own [800, 809]
 
 
-def test_the_content_at_a_body_falls_at_a_birth_and_rises_at_a_click():
+def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
     """(vi) On the emitter world (the stock 4 at [5, 37), the screen the cube of light bodies at
     [70, 72] whose first body takes the clicks' quanta): the content at the body's centre Node
-    (x = 21) is 4 at the load and falls by one at each birth (the birth line's `content` the
+    (x = 21) is 4 at the load and falls by one at each giving (the giving line's `content` the
     value the clicking record was advanced under, 4, 3, 2, 1, and its `node_clock` [Gamma -
-    content, Gamma]; the born record's wheel the rule's at that content); the content at the
+    content, Gamma]; the given record's wheel the rule's at that content); the content at the
     screen's first body (x = 70) is 1 at the load and rises by one at the interval after each
     gather line there (the click's quantum held by the body); the vacuum between them 0 at
     the load and at x = 50 until the family of clicks' front from the body's head arrives
@@ -353,22 +353,22 @@ def test_the_content_at_a_body_falls_at_a_birth_and_rises_at_a_click():
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     assert int(simulation.node_content[21, 0, 0]) == 4 and int(simulation.node_content[70, 0, 0]) == 1
     assert int(simulation.node_content[71, 0, 0]) == 1 and not simulation.node_content[40:70].any()
-    births_seen = 0
+    givings_seen = 0
     clicks_seen = 0
     for _ in range(document["ticks"]):
-        before_births = sum(1 for line in lines if line["event"] == "birth")
+        before_givings = sum(1 for line in lines if line["event"] == "giving")
         before_clicks = sum(1 for line in lines if line["event"] == "gather")
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-        births_seen = sum(1 for line in lines if line["event"] == "birth")
+        givings_seen = sum(1 for line in lines if line["event"] == "giving")
         clicks_seen = sum(1 for line in lines if line["event"] == "gather")
         # the array after the interval is the one its advances used: rebuilt as the
-        # interval began from the events before it, and again at a birth within it
-        # (the born record's norm under the content the birth leaves), so a click's
-        # quantum enters the array at the next interval unless a birth follows it
-        assert int(simulation.node_content[21, 0, 0]) == 4 - births_seen
+        # interval began from the events before it, and again at a giving within it
+        # (the given record's norm under the content the giving leaves), so a click's
+        # quantum enters the array at the next interval unless a giving follows it
+        assert int(simulation.node_content[21, 0, 0]) == 4 - givings_seen
         # the family of clicks steps last in the interval and is then held at the content
-        # the interval's clicks and births left, so a click's quantum is on the screen's
+        # the interval's clicks and givings left, so a click's quantum is on the screen's
         # body as the interval ends (ALGEBRA.md 9.45 (2))
         assert int(simulation.node_content[70, 0, 0]) == 1 + clicks_seen
         if simulation.tick <= 12:
@@ -377,12 +377,12 @@ def test_the_content_at_a_body_falls_at_a_birth_and_rises_at_a_click():
         # plain step at unit levels: far below Gamma (at most 9 read on this head)
         assert int(np.abs(simulation.node_content[40:70]).max()) <= 64
         del before_clicks
-        for line in lines[len(lines) - (births_seen - before_births) :]:
-            if line["event"] == "birth":
-                assert line["content"] == 4 - before_births
+        for line in lines[len(lines) - (givings_seen - before_givings) :]:
+            if line["event"] == "giving":
+                assert line["content"] == 4 - before_givings
                 assert line["node_clock"] == [NODE_CLOCK - line["content"], NODE_CLOCK]
                 assert lawful_wheel(simulation.world, line)
-    assert births_seen == 4 and clicks_seen >= 1
+    assert givings_seen == 4 and clicks_seen >= 1
     assert int(simulation.node_content[70, 0, 0]) == 1 + clicks_seen
     assert int(simulation.node_content[21, 0, 0]) == 0
 
@@ -473,7 +473,7 @@ def test_the_loader_names_the_family_of_clicks_and_refuses_what_it_cannot_be():
     refused without that law, refused naming no declared family (the families listed), refused
     on a family with a pair other than [1, 1] (the matter kind), on a quantum other than 1 and
     on a family with a clock of its own; a measured event of the family of clicks is refused,
-    `held` naming it is refused, and an emitter born into it is refused; six families are
+    `held` naming it is refused, and an emitter given into it is refused; six families are
     refused (the owner's constant five since the family of charge, ALGEBRA.md 9.48; item 35);
     a world with the family declared and
     named loads, its index the engine's `clock_family`."""
@@ -516,13 +516,13 @@ def test_the_loader_names_the_family_of_clicks_and_refuses_what_it_cannot_be():
     holding["measured"] = [dict(light_body(3, 1), held={"clicks": 2})]
     with pytest.raises(ValueError, match="held names the family of clicks"):
         parse_nature_beam_world(holding)
-    born = emitter_world(stock=1)
-    born["measured"][0]["emitter"]["family"] = "clicks"
-    born["input"] = input_stamp(born)
+    given = emitter_world(stock=1)
+    given["measured"][0]["emitter"]["family"] = "clicks"
+    given["input"] = input_stamp(given)
     with pytest.raises(
-        ValueError, match="births into the family of clicks|the born family is a paid family"
+        ValueError, match="givings into the family of clicks|the given family is a paid family"
     ):
-        parse_nature_beam_world(born)
+        parse_nature_beam_world(given)
     six = json.loads(json.dumps(good))
     six["families"] += [
         {"name": "fifth", "quantum": 1, "pair": [800, 809], "charge": 0},

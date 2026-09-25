@@ -81,7 +81,7 @@ the model owner, 2026-09-19):
   (a paid ray pushes by its label, and the paid family's electric column
   value stays 0), and a lamp on a measured event of a charged paid family
   is refused (its releases would create charge from nothing: a charged
-  paid family is born by a transformation or declared in transit), and
+  paid family is given by a transformation or declared in transit), and
   since the
   same day the columns (the model owner, Highlights 5.4, "one mechanism
   for all the laws on the GameBoard"; the mathematician's verified form,
@@ -148,8 +148,8 @@ the model owner, 2026-09-19):
   only the entries that differ: a window, a rule off the default, a `reads`
   component; an entry equal to the default is accepted and changes nothing)
   and, for a measured event of a paid family, its `lamp` (`wheel` `[r, W]`, the
-  birth wheel's rate, required: u = ordinal x r mod W the record's coordinate on
-  the ladder, [1, N] the count of births mod N, BEAM_LAW note 46; `rate` `[n, d]` units
+  giving wheel's rate, required: u = ordinal x r mod W the record's coordinate on
+  the ladder, [1, N] the count of givings mod N, BEAM_LAW note 46; `rate` `[n, d]` units
   per self-creation per direction, `directions` the directions it releases
   on, the six headings by default, and optionally its `phase_window`); and,
   since 2026-09-20 (the weak force, `weak-v1`: the model owner's "go on
@@ -163,7 +163,7 @@ the model owner, 2026-09-19):
   becomes an event of the family `into`, the products are paid from what
   it holds of its own family (their content R = the sum of amount x
   content, at most its declared `amount`), the rest moves to `into`, the
-  products are born at that self-creation as pending rows (product k on
+  products are given at that self-creation as pending rows (product k on
   the direction counted from (clock age + k) mod the directions, the
   parent's phase, the recoil over all of them, free and paid), and its
   `become` key and every `become` entry of its table are consumed;
@@ -178,7 +178,7 @@ the model owner, 2026-09-19):
   "become", "phase_window": s, "phase_width": w, "into": ...,
   "products": [...]}`: an arrival that passes the threshold and the
   window is clicked exactly as `measure` clicks it and then the same
-  transformation fires, its products born at the reader's next
+  transformation fires, its products given at the reader's next
   self-creation (the same interval if it self-creates in it); no `at`,
   no `crowd` (the window is the gate);
   every measured event is given its number at parsing, 1, 2, ... in
@@ -913,7 +913,7 @@ BLOCK_KEYS = {
     "margin",
     # the emitter as a clicking body (ALGEBRA.md 9.17 (4); LAB_TOOLS.md A.1):
     # the excited records in turn on the body's Nodes, each clicking at its
-    # own rung, the born record written once by E^T at that interval
+    # own rung, the given record written once by E^T at that interval
     "emitter",
     # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
     # 7): an emitting block names the detector set whose one detector is its
@@ -974,7 +974,7 @@ LAMP_KEYS = {
     "train",
     # detector-law-v1: the lamp record's LADDER BY NAME (SIZING.md, the click
     # line and the receiver by name, DECLARATIONS.md section 13 item 7): the
-    # detector sets, by name, among which the birth wheel's u chooses the
+    # detector sets, by name, among which the giving wheel's u chooses the
     # record's detector; every other set and every face is a SINK for the lamp's
     # records (what it takes is booked to the escaped row, never chosen).
     # Absent, the ladder is every detector as built. A string or a list of
@@ -1244,12 +1244,12 @@ class LampDefinition:
     the half circle centred on it."""
 
     rate: tuple[int, int]
-    # The birth wheel (`wheel`, [r, W]; the model owner's decision of
+    # The giving wheel (`wheel`, [r, W]; the model owner's decision of
     # 2026-09-21, record 180 of the log of 2026-09-20; BEAM_LAW note 46):
     # the rate of one row of the lamp's counts table, advanced by r over W
-    # at every birth, whose accumulator before the advance is the record's
+    # at every giving, whose accumulator before the advance is the record's
     # coordinate u on the ladder, u = ordinal x r mod W; the rungs of the
-    # click are on W. [1, N] is the lamp's count of births mod N as built;
+    # click are on W. [1, N] is the lamp's count of givings mod N as built;
     # declared on every lamp, no default.
     wheel: tuple[int, int]
     directions: tuple[int, ...]
@@ -1257,11 +1257,11 @@ class LampDefinition:
     # The window's width in steps (`phase_width`), None for the default
     # N / 2, the half circle.
     width: int | None = None
-    # The phase step each direction's row is born with beyond the clock's
+    # The phase step each direction's row is given with beyond the clock's
     # phase (`turns`, the amplitude law: the reflection's quarter turn at
     # the source's splitter), 0 each by default.
     turns: tuple[int, ...] = ()
-    # The joint labels of a birth with their integer weights (`branches`,
+    # The joint labels of a giving with their integer weights (`branches`,
     # the amplitude law's pair: [[0, 1], [3, 1]] the Bell pair on two
     # arms, the bit k of a label the label on arm k) and `arms`, the count
     # of directions that are separate quanta (1 by default: the directions
@@ -1338,26 +1338,26 @@ class EmitterDefinition:
     integers of 2026-09-24; LAB_TOOLS.md A.1): on a body of a massive kind
     with its seed (the excited record: the body's seed at both levels) and
     its stock `amount` = M (the number of its excitations), the key
-    `emitter`: {"family": the born family's name (a paid family with the
-    pair form of its clock), "branches": the born record's labels (optional,
-    [[0, 1]] by the lamp's form), "receiver": the born records' ladder by
+    `emitter`: {"family": the given family's name (a paid family with the
+    pair form of its clock), "branches": the given record's labels (optional,
+    [[0, 1]] by the lamp's form), "receiver": the given records' ladder by
     name (optional, a list of set names; the block's own `receiver`, one
     name, is the line at the rung), "period": P, the nearest integer to
     2 pi / omega_b of the body's mode (the generator's integer), "norm":
     T, one period's action P e_c: the share of the body's conserved form
     at its centre Node summed over P intervals advanced alone (the
     generator's integer under the input stamp; ALGEBRA.md 9.17 (7) (e) and
-    (f) in the flux's units of 9.19 (3)), "born": the born record's two levels
+    (f) in the flux's units of 9.19 (3)), "given": the given record's two levels
     over the whole board as material (optional; {"now": [...], "before":
     [...]}, x-major, one per Node; the engine copies them at the click;
-    9.17 (5) item 3)}. Without `born` the born record is the pair on every
+    9.17 (5) item 3)}. Without `given` the given record is the pair on every
     Node of the body: now = A C_2N[3 N / 2 + s] on the circle of 2 N steps
-    with s = floor(n / d) the born clock's step and before = -now (the
+    with s = floor(n / d) the given clock's step and before = -now (the
     character half a step either side of its zero, no static part; 9.17
     (6)); an odd s where 2 N exceeds the tables' bound is refused. Excited
     record k clicks at its own rung (E the one-way flux into its centre
     Node, D the rung 2 T u_k + T <= 2 W C with T its norm); at that click
-    X ends it and E^T births the photon (content one quantum, its residue
+    X ends it and E^T givings the photon (content one quantum, its residue
     the excitation's) and, while the stock lasts, excited record k + 1. No
     rate, no train, no drive, no source term, no grace."""
 
@@ -1368,15 +1368,15 @@ class EmitterDefinition:
     period: int | None = None
     norm: int | None = None
     train: TrainDefinition | None = None
-    born: BornTrain | None = None
+    given: GivenTrain | None = None
 
 
 @dataclass(frozen=True)
 class TrainDefinition:
-    """THE BORN TRAIN'S DECLARATION (ALGEBRA.md 9.17 (6a); BUILD.md section
+    """THE GIVEN TRAIN'S DECLARATION (ALGEBRA.md 9.17 (6a); BUILD.md section
     26 item 27): the key `train` of an emitter: {"direction": one signed
     unit axis vector, the train's **K** and its way; "periods": n >= 8, the
-    train's length in periods}. The born clock is the born family's
+    train's length in periods}. The given clock is the given family's
     declared clock [p, q] (the world's family column, one clock per row):
     the wave number k = 2 pi p / (2 N q) per Link on the world's circle of
     N steps, the wavelength 2 N q / p a whole number of Links, and the
@@ -1402,16 +1402,16 @@ class TrainDefinition:
 
 
 @dataclass(frozen=True)
-class BornTrain:
-    """THE BORN TRAIN'S PROFILE (ALGEBRA.md 9.17 (6a)): the key `born` of an
+class GivenTrain:
+    """THE GIVEN TRAIN'S PROFILE (ALGEBRA.md 9.17 (6a)): the key `given` of an
     emitter: {"now": [...], "before": [...]} over the body's Nodes in the
     box's x-major order (`body_node_indices`: the character of the train's
     **K** over its periods under the window across the transverse extents
     and the tapers along **K**, at the two levels t = 0 and t = -1, the
-    generator's integers at the amplitude 2^16), and "norm": T, the born
-    record's conserved form on the born family's VACUUM in the flux's units
-    (9.19 (3)), the generator's integer checked at load (`born_train_norm`):
-    the ladder's T. The two-integer pair [now, before] (the one-Node birth,
+    generator's integers at the amplitude 2^16), and "norm": T, the given
+    record's conserved form on the given family's VACUUM in the flux's units
+    (9.19 (3)), the generator's integer checked at load (`given_train_norm`):
+    the ladder's T. The two-integer pair [now, before] (the one-Node giving,
     a flat pulse of the body's length, broadband) is refused by name."""
 
     now: tuple[int, ...]
@@ -1734,7 +1734,7 @@ class NatureBeamWorld:
     @property
     def recorded(self) -> bool:
         """Whether a row of this world can carry a record: a lamp is
-        declared (a record is born by a lamp, a rebirth follows a lamp's
+        declared (a record is given by a lamp, a rebirth follows a lamp's
         record; the amplitude law, the one click of stage (vii)). The
         record's columns, the books' `cancelled` and `remainder` lines and
         the identity `amplitude-v1` belong to a recorded world alone, so
@@ -1986,12 +1986,12 @@ RETIRED_KEYS = {
     "take": "the take retired: nothing absorbs, no Port follows a wave (9.19 (3))",
     "emits": "a body emits by its excited records' clicks, the key `emitter` (9.17 (4))",
     "own_grace": "the emitter's grace retired with the take (9.17, 9.19 (3))",
-    "wheel": "the rung's wheel is the record's own, W = 3 den / gcd(num, 3 den) at its birth "
-    "Node, born with its residue from the law (9.22 (4)); no set, world or emitter declares one",
+    "wheel": "the rung's wheel is the record's own, W = 3 den / gcd(num, 3 den) at its giving "
+    "Node, given with its residue from the law (9.22 (4)); no set, world or emitter declares one",
     "residue_order": "the residue is the law's: the clicking record's rule remainder at the "
-    "birth Node (9.22 (4)); no order is declared",
+    "giving Node (9.22 (4)); no order is declared",
     "residue_seed": "the residue is the law's: the clicking record's rule remainder at the "
-    "birth Node (9.22 (4)); no seed is declared",
+    "giving Node (9.22 (4)); no seed is declared",
     # the cavity of form (I) (MASSIVE_RECORD.md section 4, a record held
     # by mirror faces of its own): refused by name since 2026-09-25 (the
     # model owner's rule through the Boss; BUILD.md section 26 item 28)
@@ -2378,7 +2378,7 @@ def _field_family(
     (massless: the only pair whose static solutions reach, the discrete
     Coulomb potential around a held level) and its unit the quantum (one
     click writes one unit, `quantum` 1); it declares no clock of its own
-    (no `phase_per_link`: it births nothing)."""
+    (no `phase_per_link`: it givings nothing)."""
     if not isinstance(value, str) or not value:
         raise ValueError(f"{BEAM_LAW}: {key} must name a declared family (a nonempty string)")
     names = [family.name for family in families]
@@ -2403,7 +2403,7 @@ def _field_family(
         )
     if family.phase_per_age is not None or family.phase_per_link:
         raise ValueError(
-            f"{BEAM_LAW}: {key} {value!r} declares phase_per_link: the family of {role} births "
+            f"{BEAM_LAW}: {key} {value!r} declares phase_per_link: the family of {role} givings "
             f"nothing and has no clock of its own (ALGEBRA.md {section})"
         )
     return index
@@ -2465,7 +2465,7 @@ def _field_family_checks(
 ) -> None:
     """A field family takes and gives nothing (ALGEBRA.md 9.45 (1), 9.48 (2)):
     no measured event is of it, none holds its quanta, and no emitter
-    births into it; its level is written by the engine alone, the held
+    givings into it; its level is written by the engine alone, the held
     content or the held charge at every body's Nodes."""
     name = families[index].name
     for number, entry in enumerate(measured):
@@ -2483,7 +2483,7 @@ def _field_family_checks(
         if entry.block is not None and entry.block.emitter is not None:
             if entry.block.emitter.family == index:
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}].emitter births into the family of {role} "
+                    f"{BEAM_LAW}: measured[{number}].emitter givings into the family of {role} "
                     f"{name!r}: it takes and gives nothing (ALGEBRA.md {section})"
                 )
 
@@ -2510,7 +2510,7 @@ def _node_clock_bound(
     the world's Gamma and M twice its whole content (the sum of every
     measured event's held quanta of every family is the most any one Node
     can hold, since the clicks move the quanta between the bodies and the
-    births return them to the board; the family of clicks' level around the
+    givings return them to the board; the family of clicks' level around the
     bodies is bounded by the held content, and a wave of it off a zero face
     doubles, ALGEBRA.md 9.45 (2); BUILD.md section 26 item 32)."""
     content = 2 * sum(sum(entry.held) for entry in measured)
@@ -2863,7 +2863,7 @@ def _handed_products(
     table: tuple[Vector, ...],
 ) -> None:
     """The right-hand rule's refusal at load: on a parent with an `axis` a
-    product of a family with a hand h is born only on the parent's
+    product of a family with a hand h is given only on the parent's
     directions d with sign(A . u_d) = h (a left-handed product leaves
     against the axis), so a product with none such has nowhere to leave:
     refused naming the event's rule, the product and the axis (a declared
@@ -2958,9 +2958,9 @@ def _lamp(
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
     if not isinstance(obj["wheel"], list):
         raise ValueError(
-            f"{BEAM_LAW}: {label}.wheel must be [r, W], the rate of the birth wheel (the record's "
-            "coordinate u on the ladder advances by r over W at every birth; [1, N] the count of "
-            "births mod N)"
+            f"{BEAM_LAW}: {label}.wheel must be [r, W], the rate of the giving wheel (the record's "
+            "coordinate u on the ladder advances by r over W at every giving; [1, N] the count of "
+            "givings mod N)"
         )
     wheel = _ratio(obj["wheel"], f"{label}.wheel", zero=False)
     directions = _directions(
@@ -3012,13 +3012,13 @@ def _lamp(
             if "residue_seed" not in obj:
                 raise ValueError(
                     f'{BEAM_LAW}: {label}.residue_seed is required under residue_order "seed" '
-                    "(an integer in [0, 2^64), the key of the births' order, drawn once per world)"
+                    "(an integer in [0, 2^64), the key of the givings' order, drawn once per world)"
                 )
             residue_seed = _integer(obj["residue_seed"], f"{label}.residue_seed", 0, (1 << 64) - 1)
             if wheel[0] != 1:
                 raise ValueError(
                     f"{BEAM_LAW}: {label}.wheel [{wheel[0]}, {wheel[1]}]: the stride r must be 1 "
-                    'under residue_order "seed" (W births take every residue once by the order)'
+                    'under residue_order "seed" (W givings take every residue once by the order)'
                 )
         elif "residue_seed" in obj:
             raise ValueError(
@@ -3031,7 +3031,7 @@ def _lamp(
                 raise ValueError(
                     f"{BEAM_LAW}: {label}.{key} is not admitted on a lamp without arms"
                     + ("" if detector_law else " or outside the local detector law")
-                    + " (the birth wheel's form as built, no far setting to hide)"
+                    + " (the giving wheel's form as built, no far setting to hide)"
                 )
     branches: tuple[tuple[int, int], ...] = ((0, 1),)
     label_hands: tuple[int, int] | None = None
@@ -3040,7 +3040,7 @@ def _lamp(
     # The lamp's hand (`hand-v1`): declared on a lamp of a family without a
     # hand, or the family's own value repeated; a lamp of a branched family
     # whose labels carry the hands declares neither, and a family with a
-    # hand cannot birth a record whose labels name hands (one or the other
+    # hand cannot giving a record whose labels name hands (one or the other
     # per family, so that a row's hand is defined once).
     hand = NO_HAND
     if "hand" in obj:
@@ -3060,7 +3060,7 @@ def _lamp(
     # (`massive-rows-v1`): required on the lamp of a massive family (its
     # rows' label p_D per direction is formed at the scale p), refused on
     # any other lamp, an integer from 1 (a row at rest is not a massive
-    # row's birth).
+    # row's giving).
     momentum_magnitude: int | None = None
     if "momentum_magnitude" in obj:
         if not massive:
@@ -3142,7 +3142,7 @@ def _receiver_names(obj: dict[str, object], label: str, detector_law: bool) -> t
 def _branches(
     value: object, label: str, arms: int
 ) -> tuple[tuple[tuple[int, int], ...], tuple[int, int] | None]:
-    """The joint labels of a birth: [[label, weight], ...], the labels
+    """The joint labels of a giving: [[label, weight], ...], the labels
     distinct integers below 2^arms (the bit k of a label is its value on
     arm k), the weights integers from 1; since `hand-v1` each may carry a
     third entry, the hand of the label (-1 or +1), every branch or none:
@@ -3705,7 +3705,7 @@ def _block(
     and no span; its `pair` is a well on the massive kind (num' / den' >
     num / den) or a gap on light's kind (den' > num', the (M) wall, which
     declares no clock, seed or margin); an emitter's
-    birth Node carries a rich pair (at least 500 remainder values, ALGEBRA.md
+    giving Node carries a rich pair (at least 500 remainder values, ALGEBRA.md
     9.22 (4)); the momentum is bounded by the pace, 3 (P . P) < (3 Q S M)^2."""
     declared = [key for key in BLOCK_KEYS if key in obj]
     if "side" not in obj and "extents" not in obj:
@@ -3916,7 +3916,7 @@ def _block(
         if amount < 1:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.emitter needs the stock `amount` from 1 (the number of the "
-                "body's excitations, M; a world that needs W births declares M = W)"
+                "body's excitations, M; a world that needs W givings declares M = W)"
             )
         # THE RESIDUES OF AN EMITTING BODY spread from the remainder kept at
         # its Nodes (the model owner's decisions (1) and (2) of record 1962;
@@ -3932,7 +3932,7 @@ def _block(
             extents=extents,
             periodic=periodic,
         )
-        # THE RICHNESS OF THE BIRTH NODE (ALGEBRA.md 9.22 (4); BUILD.md section
+        # THE RICHNESS OF THE GIVING NODE (ALGEBRA.md 9.22 (4); BUILD.md section
         # 26 item 15): the residue from the law takes 3 den / gcd(num, 3 den)
         # values on the pair at the body's centre Node (its own pair), at
         # least 500 of them ([801, 700] gives 700, [800, 801] 2403; [8, 7]
@@ -3941,13 +3941,13 @@ def _block(
         if residues < 500:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.emitter: the body's pair [{pair[0]}, {pair[1]}] gives "
-                f"{residues} remainder values at the birth Node (3 den / gcd(num, 3 den)), below "
+                f"{residues} remainder values at the giving Node (3 den / gcd(num, 3 den)), below "
                 "500: the residue from the law needs a rich pair (ALGEBRA.md 9.22 (4); [801, 700] "
                 "on the kind [7, 8] gives 700, [800, 801] on [800, 809] gives 2403)"
             )
         if receiver is not None and emitter.receiver is not None:
             raise ValueError(
-                f"{BEAM_LAW}: {label}: one ladder for the born records: the block's `receiver` "
+                f"{BEAM_LAW}: {label}: one ladder for the given records: the block's `receiver` "
                 "(one name, the line at the rung) or the emitter's `receiver` (a list, the "
                 "ladder by name), not both"
             )
@@ -3978,37 +3978,37 @@ def _emitter(
     periodic: tuple[bool, bool, bool] = (True, True, True),
 ) -> EmitterDefinition:
     """The `emitter` object of a clicking body (ALGEBRA.md 9.17 (4) to (6),
-    9.22 (4)): the born family a paid family with the pair form of its
-    clock (not the body's own), the born labels, the ladder by name, the
-    period and the norm (the generator's integers), the born profile
+    9.22 (4)): the given family a paid family with the pair form of its
+    clock (not the body's own), the given labels, the ladder by name, the
+    period and the norm (the generator's integers), the given profile
     (material). No wheel, no residue order and no seed: the residue is the
-    law's (the clicking record's remainder at the birth Node, the wheel the
+    law's (the clicking record's remainder at the giving Node, the wheel the
     pair's), and the keys are refused by name."""
     _refuse_retired(value, label, ("wheel", "residue_order", "residue_seed"))
     obj = _object(
         value,
         label,
-        {"family", "branches", "receiver", "period", "norm", "train", "born"},
+        {"family", "branches", "receiver", "period", "norm", "train", "given"},
         {"family"},
     )
     name = obj["family"]
     if not isinstance(name, str) or name not in names:
         raise ValueError(f"{BEAM_LAW}: {label}.family names an unknown family")
-    born_family = families[names[name]]
-    if born_family is family:
+    given_family = families[names[name]]
+    if given_family is family:
         raise ValueError(
-            f"{BEAM_LAW}: {label}.family is the body's own family (the born record is of another "
+            f"{BEAM_LAW}: {label}.family is the body's own family (the given record is of another "
             "family, the photon of the excited body)"
         )
-    if born_family.free or born_family.phase_per_age is None:
+    if given_family.free or given_family.phase_per_age is None:
         raise ValueError(
-            f"{BEAM_LAW}: {label}.family {name!r}: the born family is a paid family with the pair "
+            f"{BEAM_LAW}: {label}.family {name!r}: the given family is a paid family with the pair "
             "form of its clock (light's kind, or a massive kind with a declared clock)"
         )
-    step = born_family.phase_per_age[0] // born_family.phase_per_age[1]
+    step = given_family.phase_per_age[0] // given_family.phase_per_age[1]
     if step % 2 == 1 and 2 * phase_steps > MAX_PHASE_STEPS:
         raise ValueError(
-            f"{BEAM_LAW}: {label}.family {name!r}: the born clock's step floor(n / d) = {step} is "
+            f"{BEAM_LAW}: {label}.family {name!r}: the given clock's step floor(n / d) = {step} is "
             f"odd and the write's circle of 2 N = {2 * phase_steps} steps exceeds the tables' bound "
             f"{MAX_PHASE_STEPS} (ALGEBRA.md 9.17 (6)); declare an even step or a smaller N"
         )
@@ -4021,40 +4021,40 @@ def _emitter(
     norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
     train: TrainDefinition | None = None
     if "train" in obj:
-        train = _train(obj["train"], f"{label}.train", born_family, phase_steps, extents)
-    born: BornTrain | None = None
-    if "born" in obj:
-        # THE BORN TRAIN (ALGEBRA.md 9.17 (6a)): the profile of the train's
+        train = _train(obj["train"], f"{label}.train", given_family, phase_steps, extents)
+    given: GivenTrain | None = None
+    if "given" in obj:
+        # THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a)): the profile of the train's
         # two levels over the body's Nodes and its norm on the vacuum, the
         # generator's integers, checked here in integers; the two-integer pair
-        # (the one-Node birth, a flat pulse of the body's length) refused
-        value = obj["born"]
+        # (the one-Node giving, a flat pulse of the body's length) refused
+        value = obj["given"]
         if isinstance(value, list):
             raise ValueError(
-                f"{BEAM_LAW}: {label}.born is the pair [now, before] on every Node: a flat pulse of "
+                f"{BEAM_LAW}: {label}.given is the pair [now, before] on every Node: a flat pulse of "
                 "the body's length is broadband and its standing components book the ladder by "
-                "sloshing, not by a passage (ALGEBRA.md 9.17 (6a), 9.25 (11)); every birth is a "
-                'travelling train: `born` {"now": [...], "before": [...], "norm": T} with `train`'
+                "sloshing, not by a passage (ALGEBRA.md 9.17 (6a), 9.25 (11)); every giving is a "
+                'travelling train: `given` {"now": [...], "before": [...], "norm": T} with `train`'
             )
         if train is None:
             raise ValueError(
-                f"{BEAM_LAW}: {label}.born needs the emitter's `train` (the direction and the "
+                f"{BEAM_LAW}: {label}.given needs the emitter's `train` (the direction and the "
                 "periods; ALGEBRA.md 9.17 (6a))"
             )
         wrap = periodic
-        born = _born_train(value, f"{label}.born", born_family, shape, extents, wrap, train)
-    return EmitterDefinition(names[name], branches, label_hands, receiver, period, norm, train, born)
+        given = _given_train(value, f"{label}.given", given_family, shape, extents, wrap, train)
+    return EmitterDefinition(names[name], branches, label_hands, receiver, period, norm, train, given)
 
 
 def _train(
     value: object,
     label: str,
-    born_family: FamilyDefinition,
+    given_family: FamilyDefinition,
     phase_steps: int,
     extents: tuple[int, int, int],
 ) -> TrainDefinition:
     """The emitter's `train` (ALGEBRA.md 9.17 (6a)): one signed unit axis
-    vector and the periods n >= 8; the born clock the born family's
+    vector and the periods n >= 8; the given clock the given family's
     declared clock [p, q], the wavelength 2 N q / p a whole number of Links
     and the body's extent along the direction n wavelengths."""
     obj = _object(value, label, {"direction", "periods"}, {"direction", "periods"})
@@ -4072,11 +4072,11 @@ def _train(
     axis = next(index for index, v in enumerate(direction) if v != 0)
     sign = 1 if int(direction[axis]) > 0 else -1
     periods = _integer(obj["periods"], f"{label}.periods", 8)
-    assert born_family.phase_per_age is not None  # the emitter parse checked the clock
-    p, q = int(born_family.phase_per_age[0]), int(born_family.phase_per_age[1])
+    assert given_family.phase_per_age is not None  # the emitter parse checked the clock
+    p, q = int(given_family.phase_per_age[0]), int(given_family.phase_per_age[1])
     if (2 * phase_steps * q) % p != 0:
         raise ValueError(
-            f"{BEAM_LAW}: {label}: the born family's clock [{p}, {q}] on N = {phase_steps} gives "
+            f"{BEAM_LAW}: {label}: the given family's clock [{p}, {q}] on N = {phase_steps} gives "
             f"the wavelength 2 N q / p = {2 * phase_steps * q} / {p}, no whole number of Links "
             "(ALGEBRA.md 9.17 (6a))"
         )
@@ -4090,19 +4090,19 @@ def _train(
     return TrainDefinition(axis, sign, (p, q), periods, wavelength)
 
 
-def _born_train(
+def _given_train(
     value: object,
     label: str,
-    born_family: FamilyDefinition,
+    given_family: FamilyDefinition,
     shape: Address3,
     extents: tuple[int, int, int],
     wrap: tuple[bool, bool, bool],
     train: TrainDefinition,
-) -> BornTrain:
-    """The emitter's `born` profile (ALGEBRA.md 9.17 (6a)) checked in
+) -> GivenTrain:
+    """The emitter's `given` profile (ALGEBRA.md 9.17 (6a)) checked in
     integers: the two levels over the body's Nodes (the box's Node count,
     x-major), a motion, the flux sign along the train's way positive, and
-    the norm the conserved form on the born family's vacuum (the box at the
+    the norm the conserved form on the given family's vacuum (the box at the
     board's origin: the vacuum is the same wherever the box stands)."""
     obj = _object(value, label, {"now", "before", "norm"}, {"now", "before", "norm"})
     count = extents[0] * extents[1] * extents[2]
@@ -4118,7 +4118,7 @@ def _born_train(
     now, before = levels
     if not any(now) and not any(before):
         raise ValueError(f"{BEAM_LAW}: {label} writes no motion (every level 0)")
-    flux = born_train_flux_sign(now, before, extents, train.axis, train.sign)
+    flux = given_train_flux_sign(now, before, extents, train.axis, train.sign)
     if flux <= 0:
         raise ValueError(
             f"{BEAM_LAW}: {label}: the flux along the train's way {list(train.direction)} sums to "
@@ -4126,13 +4126,13 @@ def _born_train(
         )
     norm = _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
     board = (int(shape[0]), int(shape[1]), int(shape[2]))
-    expected = born_train_norm(now, before, board, (0, 0, 0), extents, born_family.pair, wrap)
+    expected = given_train_norm(now, before, board, (0, 0, 0), extents, given_family.pair, wrap)
     if norm != expected:
         raise ValueError(
-            f"{BEAM_LAW}: {label}.norm {norm} is not the born record's conserved form on the "
-            f"vacuum, {expected} (ALGEBRA.md 9.17 (6a), 9.19 (3); the generator's `born_train`)"
+            f"{BEAM_LAW}: {label}.norm {norm} is not the given record's conserved form on the "
+            f"vacuum, {expected} (ALGEBRA.md 9.17 (6a), 9.19 (3); the generator's `given_train`)"
         )
-    return BornTrain(now, before, norm)
+    return GivenTrain(now, before, norm)
 
 
 def _measured(
@@ -4389,15 +4389,15 @@ def _measured(
                 raise ValueError(
                     f"{BEAM_LAW}: {label}: a lamp of the charged paid family {family_name!r} is "
                     "refused: its releases would create charge from nothing (a charged paid family "
-                    "is born by a transformation or declared in transit; D-1, 2026-09-20)"
+                    "is given by a transformation or declared in transit; D-1, 2026-09-20)"
                 )
             if detector_law:
                 # THE LAMP IS RETIRED under the detector law (ALGEBRA.md 9.17,
-                # the model owner's word of 2026-09-24, 22:30Z): a birth is the
+                # the model owner's word of 2026-09-24, 22:30Z): a giving is the
                 # other side of a click that ends a record; a rate with no
                 # record behind it and a drive on the Nodes are refused
                 raise ValueError(
-                    f"{BEAM_LAW}: {label}.lamp is refused under {DETECTOR_LAW_RULE}: a birth has a "
+                    f"{BEAM_LAW}: {label}.lamp is refused under {DETECTOR_LAW_RULE}: a giving has a "
                     "clicking record behind it (ALGEBRA.md 9.17); the emitter is a body of a massive "
                     "kind with its seed, its stock and the key `emitter` (BUILD.md section 26)"
                 )
@@ -4667,7 +4667,7 @@ def _detector_law_load_checks(
     for index, family in enumerate(families):
         # A massive kind (massive-record-v1) needs no declared clock (a
         # block's kind: its clock is its gap; a matter lamp's kind declares
-        # one, checked below); the family of clicks births nothing and has
+        # one, checked below); the family of clicks givings nothing and has
         # no clock of its own (ALGEBRA.md 9.45 (1)); every other paid family
         # declares the pair form.
         if index == clock_family or index == charge_family:
@@ -5125,7 +5125,7 @@ def _massive_families(
     """The magnitude p of every massive family's momentum label, resolved
     from its lamps (`momentum_magnitude`; one table per family, so every
     lamp of the family declares the one value, and a massive family without
-    a lamp is refused: nothing else births its rows), and the ceilings of
+    a lamp is refused: nothing else givings its rows), and the ceilings of
     its tables at load (`massive-rows-v1`, the design's section 1): the
     rest energy E'_0 = Q S M and, on every direction D of the world's table
     with the label p_D at the scale p (`scaled_label`), the square E'_D^2 =
@@ -5291,7 +5291,7 @@ def body_node_indices(
     return [x * stride_x + y * stride_y + z for x in ranges[0] for y in ranges[1] for z in ranges[2]]
 
 
-def born_train_norm(
+def given_train_norm(
     now: Sequence[int],
     before: Sequence[int],
     shape: tuple[int, int, int],
@@ -5300,9 +5300,9 @@ def born_train_norm(
     pair: tuple[int, int],
     wrap: tuple[bool, bool, bool],
 ) -> int:
-    """THE BORN RECORD'S NORM ON THE VACUUM (ALGEBRA.md 9.17 (6a), 9.19 (3)):
+    """THE GIVEN RECORD'S NORM ON THE VACUUM (ALGEBRA.md 9.17 (6a), 9.19 (3)):
     the conserved form of the train's two levels written on the body's
-    Nodes and zero elsewhere, on the born family's vacuum (its pair [num,
+    Nodes and zero elsewhere, on the given family's vacuum (its pair [num,
     den] at every Node, the world's faces), in the flux's units of the
     engine's `conserved_form` with the wall num: the sum over the Nodes of
     3 den (now^2 + before^2) - num now (S_6 before); exact integers; the
@@ -5321,7 +5321,7 @@ def born_train_norm(
     return total
 
 
-def born_train_flux_sign(
+def given_train_flux_sign(
     now: Sequence[int],
     before: Sequence[int],
     extents: tuple[int, int, int],
@@ -5442,7 +5442,7 @@ def _input_stamp_check(document: dict[str, object], measured: tuple[MeasuredDefi
     world with a seeded body carries `input` {law, hash}; the law must be
     this loader's LAW_IDENTIFIER and the hash the digest of the WHOLE
     document without `input` (the generator's stamp over every key, the
-    profiles, the clocks and the born trains among them), so that the file
+    profiles, the clocks and the given trains among them), so that the file
     loaded is the one the generator wrote and a file made under another law
     is regenerated, not run. A world with no profile needs no stamp."""
     if not any(entry.block is not None and entry.block.profile is not None for entry in measured):
@@ -5497,7 +5497,7 @@ def _initial_state_checks(
     before another body of its family begins; the mathematician's 86e1df43
     on ALGEBRA.md 9.35, BUILD.md section 26 item 28). The remainders are 0 by
     construction (the profile is written at both levels with none); the
-    amplitude's bound and the rich birth Nodes are checked where the block
+    amplitude's bound and the rich giving Nodes are checked where the block
     is parsed."""
     board = (int(shape[0]), int(shape[1]), int(shape[2]))
     count = board[0] * board[1] * board[2]
@@ -5921,7 +5921,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         # click): the record form is the law.
         raise ValueError(
             f"{BEAM_LAW}: the world key {DELETED_AMPLITUDE_KEY!r} is deleted: the record form is "
-            "the law and every lamp births records; remove the key (docs/MIGRATION.md, the "
+            "the law and every lamp givings records; remove the key (docs/MIGRATION.md, the "
             "amplitude law (vii-4))"
         )
     _refuse_retired(document, "the world", ("wheel",))
@@ -6155,7 +6155,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         for entry in (declared if isinstance(declared, list) else [])
     ):
         # A record's circle holds the quarter turn of a reflection (the
-        # amplitude law; every lamp births records). Read off the document
+        # amplitude law; every lamp givings records). Read off the document
         # before the measured events are parsed, so that this refusal
         # precedes theirs (`tests/test_amplitude_record.py` (b)).
         raise ValueError(

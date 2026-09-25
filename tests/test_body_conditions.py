@@ -229,7 +229,7 @@ def test_the_run_lists_massive_worlds_load_clean_under_the_check(name: str, verd
     generators (`seed_on_the_mode`: the muon's layer pin worlds at rest and pushed, the deep
     well and its rest world, the boxes, the light clock in the one table's form) and passes
     the check bit for bit, a pushed body's ramp at or above ten relaxation times; the rows
-    held under the born train (BUILD.md section 26 item 27) are not loaded. Before this branch the seven worlds other
+    held under the given train (BUILD.md section 26 item 27) are not loaded. Before this branch the seven worlds other
     than the layer pin's carried a flat seed and were refused (the world line of
     DECLARATIONS.md section 15, the body's seed on its mode)."""
     document = json.loads((WORLDS / name).read_text(encoding="utf-8"))

@@ -10,7 +10,7 @@ Gamma - c + q Lambda d is slowed by a body of the opposite charge (the hill deep
 hastened by one of its own (the hill filled, at most to the vacuum's); light (q = 0) reads the
 content alone. The suite reads the engine: (i) the reading with one sign, the step of a record
 of charge -1 and of +1 beside a body of charge +1 bit for bit the rule's at c + Lambda d and at
-c - Lambda d, a neutral record's at c; (ii) the hold at the bodies at Q, moved at the births
+c - Lambda d, a neutral record's at c; (ii) the hold at the bodies at Q, moved at the givings
 and the clicks with the labels, the whole charge of the bodies and the records in flight
 constant; (iii) the joint step of every family and both fields inverts bit for bit; (iv) the
 loader's refusals, each naming its key; (v) with every charge 0 the field is 0 and the rows are
@@ -145,8 +145,8 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     bodies of one quantum at [70, 72], the cube of side 3 on a chain), the family of charge is
     -4 at every Node of the emitter body and -1 at every Node of the screen at the load, 0 in
     the vacuum; the
-    emitter's Q rises by one at each birth (the quantum spent, its label in flight on the
-    born record) and the birth line carries it, the screen's first body's Q falls by one at
+    emitter's Q rises by one at each giving (the quantum spent, its label in flight on the
+    given record) and the giving line carries it, the screen's first body's Q falls by one at
     each click there (the label held); the whole charge of the bodies and of the records in
     flight is -7 at every interval; the books balanced. The edge case: a light body of charge
     0 in a world whose bodies carry charge holds Q = 0 (the neutral chain, (v))."""
@@ -161,14 +161,14 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     assert np.all(charge.now[5:37] == -4) and np.all(charge.before[5:37] == -4)
     assert np.all(charge.now[70:73] == -1) and not charge.now[37:70].any()
     assert simulation.node_charge is charge.now and not charge.remainder.any()
-    births = 0
+    givings = 0
     clicks = 0
     for _ in range(document["ticks"]):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-        births = sum(1 for line in lines if line["event"] == "birth")
+        givings = sum(1 for line in lines if line["event"] == "giving")
         clicks = sum(1 for line in lines if line["event"] == "gather")
-        assert int(simulation.node_charge[21, 0, 0]) == -4 + births
+        assert int(simulation.node_charge[21, 0, 0]) == -4 + givings
         assert int(simulation.node_charge[70, 0, 0]) == -1 - clicks
         bodies = sum(simulation._body_charge(number) for number in range(len(simulation.held)))
         flight = sum(simulation.family_charge[live.family] for live in simulation.records.values())
@@ -178,9 +178,9 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
             if block.own is not None and block.own.identity in simulation.records
         )
         assert bodies + flight == -7, simulation.tick
-    assert births == 4 and clicks >= 1
+    assert givings == 4 and clicks >= 1
     for line in lines:
-        if line["event"] == "birth":
+        if line["event"] == "giving":
             assert line["charge"] == -line["content"]
 
 
@@ -283,7 +283,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     refused(quantum, "the family of charge is counted in quanta")
     clocked = copy()
     clocked["families"][CHARGE]["phase_per_link"] = [512, 1]
-    refused(clocked, "the family of charge births nothing")
+    refused(clocked, "the family of charge givings nothing")
     charged = copy()
     charged["families"][CHARGE]["charge"] = 1
     refused(charged, "the family of charge carries none")
@@ -322,7 +322,7 @@ def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_
     body of QUANTA quanta at [20, 30) and matter and light records of random rows, the family
     of charge is 0 everywhere at the load and after 40 intervals, the books carry its form 0
     and the state its rows, and the records' rows are bit for bit the same at Lambda = 1 and
-    Lambda = 7 (no charge is read: the strength weighs nothing). The edge case: the birth
+    Lambda = 7 (no charge is read: the strength weighs nothing). The edge case: the giving
     lines of the emitter world carry the charge 0."""
     rows = {}
     for strength in (1, 7):
@@ -363,5 +363,5 @@ def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_
     )
     for _ in range(600):
         simulation.step()
-    births = [line for line in lines if line["event"] == "birth"]
-    assert births and all(line["charge"] == 0 for line in births)
+    givings = [line for line in lines if line["event"] == "giving"]
+    assert givings and all(line["charge"] == 0 for line in givings)

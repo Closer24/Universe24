@@ -7,13 +7,13 @@ GameBoard, and one rotation (a, b, r) stepped by the two-term rule on its clock 
 den_c] at the pace of its Nodes, den_c Gamma a' + r' = (num_c p + 2 den_c (Gamma - p)) a -
 den_c Gamma b + r, the remainder in [0, den_c Gamma); its residue its own remainder on its own
 wheel, read at the click at the seat (the centre Node); its tick the count of intervals against
-(2 u + 1) P / (2 W) as the lattice body's; the born rows the file's, set on the body's Nodes as
+(2 u + 1) P / (2 W) as the lattice body's; the given rows the file's, set on the body's Nodes as
 before. THE EQUIVALENCE (9.46 (4), the gate): (i) the ticks agree in distribution between the
 two forms (the mean cycle length, the residues spread on the wheel, no runs of one-interval
 cycles beyond a fair draw's); (ii) the rotation agrees as a rational with the lattice body's at
-every content within the profile's rounding; (iii) the same born rows at each tick; (iv) the
+every content within the profile's rounding; (iii) the same given rows at each tick; (iv) the
 block's count equal over the run; (v) the family of clicks' field identical where nothing is
-born. Every number a COMPUTATION on the rule's integers; no pin."""
+given. Every number a COMPUTATION on the rule's integers; no pin."""
 
 from __future__ import annotations
 
@@ -46,7 +46,7 @@ def with_body_record(document: dict, on: bool) -> dict:
 def cube_world(ticks: int = 400) -> dict:
     """A solitary body: the block of side 6 on the matter kind [800, 809] with the well [800,
     801] at the amplitude 2^20, seeded on its bound mode by the generator (its profile and its
-    clock pair under the stamp), on a periodic 16^3 board; no emitter, nothing born."""
+    clock pair under the stamp), on a periodic 16^3 board; no emitter, nothing given."""
     document = block_world(
         [16, 16, 16],
         PERIODIC,
@@ -80,7 +80,7 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
     gcd(num_c, den_c) times Gamma / gcd(Gamma, ...) as the rule's gcd gives; the block's count
     (its cycles) over 400 intervals is the same on both forms within one; the body's invariant
     e = den_c Gamma (a^2 + b^2) - K a b jitters below 10^-4 of itself (2 x 10^-5 read); the family of clicks'
-    field is identical on both forms at every interval (nothing born, the same hold). The edge
+    field is identical on both forms at every interval (nothing given, the same hold). The edge
     case: the lattice body's own rows are on the GameBoard and the body record's are not."""
     document = cube_world()
     lattice = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, False)))
@@ -137,8 +137,8 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
 def cycles_of(
     document: dict, on: bool, ticks: int
 ) -> tuple[list[int], list[tuple[int, int]], list[dict]]:
-    """The emitter world run on one form: the birth intervals' gaps (the cycle lengths), the
-    residues with their wheels, and the birth lines."""
+    """The emitter world run on one form: the giving intervals' gaps (the cycle lengths), the
+    residues with their wheels, and the giving lines."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(
         parse_nature_beam_world(with_body_record(document, on)), observer=lines.append
@@ -146,10 +146,10 @@ def cycles_of(
     for _ in range(ticks):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-    births = [line for line in lines if line["event"] == "birth"]
-    ticks_of = [line["tick"] for line in births]
+    givings = [line for line in lines if line["event"] == "giving"]
+    ticks_of = [line["tick"] for line in givings]
     gaps = [b - a for a, b in zip(ticks_of, ticks_of[1:], strict=False)]
-    return gaps, [(line["u"], line["W"]) for line in births], births
+    return gaps, [(line["u"], line["W"]) for line in givings], givings
 
 
 def longest_run_of_ones(gaps: list[int]) -> int:
@@ -162,27 +162,27 @@ def longest_run_of_ones(gaps: list[int]) -> int:
 
 def test_the_ticks_of_the_two_forms_agree_in_distribution():
     """(i) and (iii) on the emitter chain with the stock 600: on both forms the cycle lengths (the
-    intervals between births) have the mean within 5 percent of each other and of the fair
+    intervals between givings) have the mean within 5 percent of each other and of the fair
     draw's (P + 1) / 2 (the count ceil((2 u + 1) P / (2 W)) at a uniform residue; 47.7 and 48.2
-    against 47.0 read, the standard error 2.3 percent; at 240 births the body record read 42.4,
+    against 47.0 read, the standard error 2.3 percent; at 240 givings the body record read 42.4,
     a fluctuation of 2.7 standard errors, COMPUTATION), the residues
     u / W spread on the wheel (the chi-square over 12 bins below 19.7, the 5 percent bound at
-    11 degrees of freedom), and no run of one-interval cycles beyond 3; every birth line's wheel
+    11 degrees of freedom), and no run of one-interval cycles beyond 3; every giving line's wheel
     is the form's own (the lattice body's at its first shell Node, the body record's the
-    two-term rule's, another set of wheels); the born rows of the first birth are the file's train on the
+    two-term rule's, another set of wheels); the given rows of the first giving are the file's train on the
     body's Nodes on both forms, bit for bit; the body record's read Node is its centre. The
-    edge case: the two forms' births differ in their intervals (different residues on different
+    edge case: the two forms' givings differ in their intervals (different residues on different
     wheels: the law's claim is statistical, 9.46 (4))."""
     document = emitter_world(stock=600, ticks=1)
     period = document["measured"][0]["emitter"]["period"]
-    train = document["measured"][0]["emitter"]["born"]
+    train = document["measured"][0]["emitter"]["given"]
     results = {}
     for on in (False, True):
-        gaps, residues, births = cycles_of(document, on, 600 * period)
-        assert len(births) == 600, (on, len(births))
+        gaps, residues, givings = cycles_of(document, on, 600 * period)
+        assert len(givings) == 600, (on, len(givings))
         mean = sum(gaps) / len(gaps)
         fair = (period + 1) / 2
-        # 600 births: the standard error of the mean about 2.3 percent of it
+        # 600 givings: the standard error of the mean about 2.3 percent of it
         assert abs(mean - fair) < 0.05 * fair, (on, mean, fair)
         bins = [0] * 12
         for u, wheel in residues:
@@ -192,10 +192,10 @@ def test_the_ticks_of_the_two_forms_agree_in_distribution():
         chi = sum((count - expected) ** 2 / expected for count in bins)
         assert chi < 19.7, (on, chi, bins)
         assert longest_run_of_ones(gaps) <= 3, (on, gaps)
-        first = births[0]
+        first = givings[0]
         assert first["read_node"] == ([21, 0, 0] if on else [5, 0, 0])
-        assert first["born_norm"] == train["norm"] and first["period"] == period
-        results[on] = (mean, [line["tick"] for line in births], [line["W"] for line in births])
+        assert first["given_norm"] == train["norm"] and first["period"] == period
+        results[on] = (mean, [line["tick"] for line in givings], [line["W"] for line in givings])
     assert abs(results[True][0] - results[False][0]) < 0.05 * results[False][0]
     assert results[True][1] != results[False][1]
     assert set(results[True][2]) != set(results[False][2])

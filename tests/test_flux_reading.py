@@ -283,7 +283,7 @@ def test_the_tally_over_the_ports_is_the_board_wide_reading_and_costs_the_ports_
     bit for bit, for every live record; the Port pairs are listed once per family; and the
     HOST cost printed is the Ports read per record per interval against the board's Nodes
     (4 Ports of 80 Nodes on the chain, the screen cube's two and the emitter body's two; 40
-    of 216 on the layer; the two slits' placement reported when the born train lands)."""
+    of 216 on the layer; the two slits' placement reported when the given train lands)."""
     from tests.test_detector_law import layer_world
     from tests.test_emitter import emitter_world
 

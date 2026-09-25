@@ -2,13 +2,13 @@
 the one map S, ADOPTED with record 1875; the gate of every step of the cleanup, 9.21 (3)):
 on the small world of 9.20 (a cube of 12 x 12 x 12 periodic on every axis; light [77, 25] and
 the massive family [800, 809]; one well of side 2 at the vertex (3, 4, 5) with the pair
-[800, 801] seeded on its composed mode; one light record born on the Node (8, 2, 7) with both
+[800, 801] seeded on its composed mode; one light record given on the Node (8, 2, 7) with both
 labels and the wheel 8; one receiver, the cube of side 3 at (9, 9, 2), on the record's ladder; 60
 intervals): (1) equivariance under the 48; (2) translation on the torus; (3) conservation of
 the content and of the form I between clicks; (4) reversibility except the click, by 8.8's
 inverse; (5) locality; (6) only the click reads. Every comparison is bit for bit on the
 engine's integers unless the expected value says otherwise; a failure is an engine defect,
-never a change of the law. The record is planted as its birth would write it (the pair on the
+never a change of the law. The record is planted as its giving would write it (the pair on the
 circle of 2 N, 9.17 (6)); its labels are one row (the label rows of a rank-2 record are the
 crystal's, held)."""
 
@@ -40,7 +40,7 @@ SIDE = 12
 SHAPE = (SIDE, SIDE, SIDE)
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 WELL_VERTEX = (3, 4, 5)
-BIRTH = (8, 2, 7)
+GIVING = (8, 2, 7)
 RECEIVER = (9, 9, 2)
 WHEEL = 8
 INTERVALS = 90  # the reference record's click at 17 on this head (u = 0; read again under the Node clock, the same interval as before it: the vacuum's levels bit for bit, the norm and the flux both times Gamma; the 81 of the first build HISTORY)
@@ -130,8 +130,8 @@ def small_world(
     return document
 
 
-def born_levels(simulation: DetectorLawSimulation) -> tuple[int, int]:
-    """The birth's pair on the circle of 2 N (9.17 (6)) for light's clock [77, 25] on N = 64:
+def given_levels(simulation: DetectorLawSimulation) -> tuple[int, int]:
+    """The giving's pair on the circle of 2 N (9.17 (6)) for light's clock [77, 25] on N = 64:
     the generator's integer (a host computation; no table in the engine), now = round(A sin(pi
     n / (d N))), the character half a step either side of its zero, before = -now."""
     _ = simulation
@@ -141,12 +141,12 @@ def born_levels(simulation: DetectorLawSimulation) -> tuple[int, int]:
 
 
 def plant(simulation: DetectorLawSimulation, node, u: int, ladder: bool = True, rows=None) -> LiveRecord:
-    """The light record as its birth writes it: the pair on one Node (or the rows given), the
+    """The light record as its giving writes it: the pair on one Node (or the rows given), the
     residue u, the ladder the receiver's detector, the norm its conserved form."""
     now = np.zeros(SHAPE, dtype=np.int64)
     before = np.zeros(SHAPE, dtype=np.int64)
     if rows is None:
-        level_now, level_before = born_levels(simulation)
+        level_now, level_before = given_levels(simulation)
         now[node] = level_now
         before[node] = level_before
     else:
@@ -192,7 +192,7 @@ def run(
     u: int = 0,
     intervals: int = INTERVALS,
     rows=None,
-    birth=BIRTH,
+    giving=GIVING,
     contents: list[np.ndarray] | None = None,
 ):
     """The small world run: the well's own record from interval 0, the light record planted at
@@ -201,7 +201,7 @@ def run(
     the interval's advances used, ALGEBRA.md 9.35 (3))."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    plant(simulation, birth, u, rows=rows)
+    plant(simulation, giving, u, rows=rows)
     states = [state_of(simulation)]
     if contents is not None:
         contents.append(simulation.node_content.copy())
@@ -292,7 +292,7 @@ def test_equivariance_under_the_cube_group():
     assert clicks, "the reference run clicks within the intervals"
     for g in signed_axis_permutations():
         moved = transformed(document, g, lambda n, g=g: apply_g_node(n, g), lambda a, g=g: apply_g(a, g))
-        _, states, moved_clicks = run(moved, birth=apply_g_node(BIRTH, g))
+        _, states, moved_clicks = run(moved, giving=apply_g_node(GIVING, g))
         compare_runs(reference, states, lambda a, g=g: apply_g(a, g), None)
         assert moved_clicks == clicks, g
 
@@ -311,7 +311,7 @@ def test_translation_on_the_torus():
             return np.roll(array, shift, axis=(0, 1, 2))
 
         moved = transformed(document, None, move_node, move_array)
-        _, states, moved_clicks = run(moved, birth=move_node(BIRTH))
+        _, states, moved_clicks = run(moved, giving=move_node(GIVING))
         compare_runs(reference, states, move_array, None)
         assert moved_clicks == clicks, shift
 
@@ -520,13 +520,13 @@ def test_locality():
     that Node, and nonzero somewhere for every m <= 12."""
     document = small_world(receiver_named=False)
     _, reference, _ = run(document, intervals=14)
-    changed = (BIRTH[0] + 1, BIRTH[1], BIRTH[2])
+    changed = (GIVING[0] + 1, GIVING[1], GIVING[2])
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    level_now, level_before = born_levels(simulation)
+    level_now, level_before = given_levels(simulation)
     now = np.zeros(SHAPE, dtype=np.int64)
     before = np.zeros(SHAPE, dtype=np.int64)
-    now[BIRTH] = level_now
-    before[BIRTH] = level_before
+    now[GIVING] = level_now
+    before[GIVING] = level_before
     now[changed] += 1
     _, states, _ = run(document, intervals=14, rows=(now, before))
     light = 1 << 40
@@ -558,7 +558,7 @@ def test_only_the_click_reads():
             now[dst] = now[src]
             before[dst] = before[src]
         remainder[b] = remainder[a]
-        live = plant(simulation, BIRTH, 0, ladder=False, rows=(now, before))
+        live = plant(simulation, GIVING, 0, ladder=False, rows=(now, before))
         live.remainder = remainder.copy()
         simulation._advance(live)
         assert int(live.now[a]) == int(live.now[b]) and int(live.remainder[a]) == int(live.remainder[b])
@@ -606,7 +606,7 @@ def test_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
     shape = (side, side, side)
     now = np.zeros(shape, dtype=np.int64)
     before = np.zeros(shape, dtype=np.int64)
-    level_now, level_before = born_levels(simulation)
+    level_now, level_before = given_levels(simulation)
     now[(side - 4, 2, side - 5)] = level_now
     before[(side - 4, 2, side - 5)] = level_before
     live = LiveRecord(
@@ -699,11 +699,11 @@ def test_the_same_input_gives_the_same_output():
     assert other is None or (other["input"] != first["input"] and other["state"] != first["state"])
     document = json.loads(serialized)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    level_now, level_before = born_levels(simulation)
+    level_now, level_before = given_levels(simulation)
     now = np.zeros(SHAPE, dtype=np.int64)
     before = np.zeros(SHAPE, dtype=np.int64)
-    now[BIRTH] = level_now + 1
-    before[BIRTH] = level_before
+    now[GIVING] = level_now + 1
+    before[GIVING] = level_before
     # read before the click (the deleted summand leaves the final states alike)
     _, states, _ = run(document, intervals=14, rows=(now, before))
     reference = json.loads(serialized)

@@ -1,5 +1,5 @@
-"""THE BORN TRAIN (ALGEBRA.md 9.17 (6a), 9.25 (11), 9.22 (7a) (iv); BUILD.md section 26 item
-27): every birth is a travelling train, the character of one **K** over 8 periods under the
+"""THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a), 9.25 (11), 9.22 (7a) (iv); BUILD.md section 26 item
+27): every giving is a travelling train, the character of one **K** over 8 periods under the
 window across the transverse extents and the tapers along **K**, written on the body's Nodes
 at both levels; the generator's integers (the profile, its norm on the vacuum), its checks
 (the flux sign, the passage's one-way flux within 2 x 10^-3 of the norm, the transparency of a
@@ -22,8 +22,8 @@ import pytest
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import (
     body_node_indices,
-    born_train_flux_sign,
-    born_train_norm,
+    given_train_flux_sign,
+    given_train_norm,
     parse_nature_beam_world,
 )
 from tests.test_detector_law import layer_world
@@ -37,7 +37,7 @@ COS_OMEGA = 2.0 / 3.0  # light's vacuum at k = pi / 2: 3 cos omega = cos k + 2
 
 
 def profile_of(document: dict, number: int = 0) -> dict:
-    return document["measured"][number]["emitter"]["born"]
+    return document["measured"][number]["emitter"]["given"]
 
 
 def test_the_generators_train_is_the_character_under_the_tapers_and_the_window():
@@ -47,8 +47,8 @@ def test_the_generators_train_is_the_character_under_the_tapers_and_the_window()
     tau = 8 at both ends: the flat middle reads 65536, 0, -65536, 0 at t = 0 and 43691,
     -48848, -43691, 48848 at t = -1, the first detector 630 (sin^2(pi / 32) of A) and the last
     0, the profile exactly the formula at every detector; the flux along +x positive and along
-    -x negative (the loader's sign, `born_train_flux_sign`); the norm the conserved form of
-    the record planted alone on the vacuum, bit for bit (`born_train_norm` against the
+    -x negative (the loader's sign, `given_train_flux_sign`); the norm the conserved form of
+    the record planted alone on the vacuum, bit for bit (`given_train_norm` against the
     engine's `conserved_form`). On a layer the window across a transverse extent the body
     does not span is the Hann window sin^2(pi (y + 1 / 2) / Y) (the edge rows 0.0955 of the
     middle on Y = 5), and across an extent the body spans on a periodic face the profile is
@@ -73,8 +73,8 @@ def test_the_generators_train_is_the_character_under_the_tapers_and_the_window()
     assert now[8:12] == [65536, 0, -65536, 0] and before[8:12] == [43691, -48848, -43691, 48848]
     assert now[0] == 630 and now[TRAIN - 1] == 0
     extents = (TRAIN, 1, 1)
-    assert born_train_flux_sign(now, before, extents, 0, 1) > 0
-    assert born_train_flux_sign(now, before, extents, 0, -1) < 0
+    assert given_train_flux_sign(now, before, extents, 0, 1) > 0
+    assert given_train_flux_sign(now, before, extents, 0, -1) < 0
     # the norm on the vacuum against the engine's conserved form of the planted train
     vacuum = json.loads(json.dumps(document))
     vacuum["measured"] = []
@@ -90,7 +90,7 @@ def test_the_generators_train_is_the_character_under_the_tapers_and_the_window()
         level_now[index] = a
         level_before[index] = b
     live = simulation.planted_record(0, level_now.reshape(shape), level_before.reshape(shape))
-    norm = born_train_norm(now, before, shape, (0, 0, 0), extents, (1, 1), world.kind_periodic(0))
+    norm = given_train_norm(now, before, shape, (0, 0, 0), extents, (1, 1), world.kind_periodic(0))
     # the engine's form under the Node's own pace is the file's vacuum norm itself on the
     # vacuum (no content anywhere; the Node's terms weighted by 1 / Gamma; BUILD.md section
     # 26 item 36)
@@ -101,7 +101,7 @@ def test_the_generators_train_is_the_character_under_the_tapers_and_the_window()
     layer["measured"][0]["position"] = [2, 2, 0]
     layer["measured"][0]["seed"] = 1 << 20
     layer["measured"][0].pop("clock", None)
-    layer["measured"][0]["emitter"].pop("born", None)
+    layer["measured"][0]["emitter"].pop("given", None)
     massive_generator().seed_on_the_mode(layer)
     windowed = profile_of(layer)["now"]
     rows = [windowed[y::5][:TRAIN] for y in range(5)]  # x-major: the 5 rows interleaved
@@ -145,7 +145,7 @@ def test_the_passage_books_the_norm_and_a_short_train_does_not(capsys):
 
     now = [round(AMPLITUDE * envelope(i) * math.cos(math.pi * i / 2)) for i in range(short)]
     before = [round(AMPLITUDE * envelope(i) * math.cos(math.pi * i / 2 + omega)) for i in range(short)]
-    norm = born_train_norm(
+    norm = given_train_norm(
         now, before, (80, 1, 1), (0, 0, 0), (short, 1, 1), (1, 1), (False, True, True)
     )
     booked = generator.train_run(document, "light", 0, 1, (short, 1, 1), (5, 0, 0), now, before)
@@ -155,7 +155,7 @@ def test_the_passage_books_the_norm_and_a_short_train_does_not(capsys):
 
 def test_the_engine_writes_the_train_and_a_receiver_ahead_reads_its_passage():
     """THE WRITE AND THE PASSAGE: on the emitter world (the screen 33 Links ahead of the
-    train's head) every born record is written as the train (in `tests/test_emitter.py`
+    train's head) every given record is written as the train (in `tests/test_emitter.py`
     the levels bit for bit) and TRAVELS: the centroid of its levels' magnitude advances
     along +x at about the group pace 0.447 between the ages 10 and 30 (more than 6 Links);
     the screen books the passage and each record clicks there once, its pointer at the
@@ -202,7 +202,7 @@ def test_the_engine_writes_the_train_and_a_receiver_ahead_reads_its_passage():
 def test_the_light_clock_in_the_tables_form_and_the_generators_checks(capsys):
     """THE LIGHT CLOCK (ALGEBRA.md 9.22 (8), its row; the one table of 9.30; the module
     docstring of the detector-law generator): the registered file carries the board
-    [760, 3, 3] with x open and the face slabs 32 deep, N = 1024 and light's born clock
+    [760, 3, 3] with x open and the face slabs 32 deep, N = 1024 and light's given clock
     [512, 1], A [800, 801] of the extents [32, 3, 3] at [600, 632) with its train along +x
     uniform across y and z, its stock 64 and its `receiver` at_well, the set at_well bound
     to A without positions, the mirror of light's kind with the gap [1, 2] over [4, 3, 3] at

@@ -45,7 +45,7 @@ def emitter(
     (4); at its Nodes the wheel of its content under the Node clock, 9.35 (2)), no
     coupling (the click alone, the model owner's decision (2) of record 1962), the seed 50 x 2^20 (its
     profile on the mode by `seed_source` once the world is built), its `emitter` of light
-    with the stock `stock` and its train along `direction` (+x by default; THE BORN TRAIN,
+    with the stock `stock` and its train along `direction` (+x by default; THE GIVEN TRAIN,
     9.17 (6a)), its `receiver` where one is named (the line at that set's rung)."""
     block = {
         "position": [position, 0, 0],
@@ -83,8 +83,8 @@ def body(x: int) -> dict:
 
 
 def chain_of_200(receiver: str | None = "screen") -> dict:
-    """The declaration's test world: a chain of 200 (x closed, mirrors), light on the born
-    clock [512, 1] of N = 1024, the emitter body A at [20, 52) naming `screen` (four births,
+    """The declaration's test world: a chain of 200 (x closed, mirrors), light on the given
+    clock [512, 1] of N = 1024, the emitter body A at [20, 52) naming `screen` (four givings,
     the train along +x), the set `screen` the cube of side 3 at [91, 93] (40 Links from A's
     head at 51), and the set `beside` the cube at [60, 62] between A and the screen (off
     A's ladder); no wheel (the record's own, 9.22 (4))."""
@@ -142,9 +142,9 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
     """(a) On the closed chain of 200 every record A emits writes EXACTLY ONE gather line, at
     `screen`'s rung (`click_at` rung, `chosen` screen, `tick` the rung's interval equal to
     `click`), never before the lattice's cone allows (one Link per interval from the body's
-    head at its birth to the screen's nearest Node at 91; the body steps toward the screen
-    at the momentum 70, so the later births are nearer: the fourth's head 18 Links away,
-    its click 51 intervals after its birth on this head's residue 114 of 2403 before the Node
+    head at its giving to the screen's nearest Node at 91; the body steps toward the screen
+    at the momentum 70, so the later givings are nearer: the fourth's head 18 Links away,
+    its click 51 intervals after its giving on this head's residue 114 of 2403 before the Node
     clock, COMPUTATION; SINCE THE NODE CLOCK, BUILD.md section 26 item 31, the wheel at the
     body's Nodes is the rule's with its content and the residues moved;
     SINCE THE REMAINDER KEPT, BUILD.md section 26 item 29, the residues spread from the
@@ -180,19 +180,19 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
         found = gathers(lines)
         assert len(found) >= 3, found
         assert len({g["record"] for g in found}) == len(found)  # one line per record
-        births = {line["record"]: line for line in lines if line["event"] == "birth"}
+        givings = {line["record"]: line for line in lines if line["event"] == "giving"}
         for line in found:
             assert line["chosen"] == [["screen", 0, "0"]] and line["click_at"] == "rung"
-            head = births[line["record"]]["node"][0] + 31  # the body's head at the birth
-            assert line["tick"] == line["click"] and line["click"] - line["birth"] >= 91 - head
+            head = givings[line["record"]]["node"][0] + 31  # the body's head at the giving
+            assert line["tick"] == line["click"] and line["click"] - line["giving"] >= 91 - head
             assert "ladder" not in line and line["content"] == 1
             assert line["record"] not in simulation.records and line["clock_source"] == "interval"
             pointers, ladder, u, norm, wheel, pace = seen[line["record"]]
-            assert ladder == [screen] and u == line["u"] and wheel == births[line["record"]]["W"]
-            assert lawful_wheel(simulation.world, births[line["record"]])
+            assert ladder == [screen] and u == line["u"] and wheel == givings[line["record"]]["W"]
+            assert lawful_wheel(simulation.world, givings[line["record"]])
             # the cumulative rule on the click's own pointers (ALGEBRA.md 9.19 (3) (b)), the
             # plain flux against the norm's rational norm / pace (item 36)
-            assert pace == births[line["record"]]["pace"]
+            assert pace == givings[line["record"]]["pace"]
             assert 2 * wheel * pace * pointers[screen] >= (2 * u + 1) * norm
             # the detectors off the ladder: booked, never chosen, counted in T
             assert pointers[beside] > 0 and pointers[own] >= 0
@@ -206,7 +206,7 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
     plain = light_clock_world("closed", True)
     for key in ("emitter", "receiver"):
         plain["measured"][0].pop(key)
-    plain["input"] = input_stamp(plain)  # the stamp without the born pair (record 1886)
+    plain["input"] = input_stamp(plain)  # the stamp without the given pair (record 1886)
     simulation, _ = run(plain, 10)
     assert not simulation.has_receiver
     # (c) without `receiver` the ladder is every declared set in the declared order
@@ -245,12 +245,12 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     the mirror at x = 0, below a hundredth of the norm as the click read it) and A's detector
     is never chosen, every line at `screen`. The edge case: a block naming the set that IS its own
     Nodes (the light clock's form, `block` without positions) on the closed chain of 400 at
-    rest, A at [300, 332): the born train is written ON the set's Nodes and leaves them
+    rest, A at [300, 332): the given train is written ON the set's Nodes and leaves them
     toward +x (the outward flux is booked to no detector), so the set reads nothing of the
     write itself; the record clicks at the set only once the mirror at x = 399 returns
     the train into the Nodes (the round trip 2 x 67 Links at v_g = 0.447, about 300
     intervals; the self-click of BUILD.md section 26 item 10 retired with the take), later
-    than the birth's next interval."""
+    than the giving's next interval."""
     seen: Spy = {}
     simulation, lines = run(chain_of_200(), 400, seen=seen)
     block = simulation.blocks[0]
@@ -265,9 +265,9 @@ def test_the_blocks_own_cell_is_on_no_ladder():
         seen[g["record"]][0][own_detector] * seen[g["record"]][5] * 100 < seen[g["record"]][3]
         for g in found
     )
-    births = {line["record"]: line for line in lines if line["event"] == "birth"}
-    assert all(seen[g["record"]][4] == births[g["record"]]["W"] for g in found)
-    assert all(lawful_wheel(simulation.world, births[g["record"]]) for g in found)
+    givings = {line["record"]: line for line in lines if line["event"] == "giving"}
+    assert all(seen[g["record"]][4] == givings[g["record"]]["W"] for g in found)
+    assert all(lawful_wheel(simulation.world, givings[g["record"]]) for g in found)
     document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 700
     document["clock_stamp"] = True
@@ -279,13 +279,13 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     assert simulation.receiver_detector == {0: simulation.detector_names.index("at_well")}
     found = gathers(lines)
     assert found and all(g["chosen"] == [["at_well", 0, "0"]] for g in found)
-    assert all(g["click"] > g["birth"] + 200 and g["tick"] == g["click"] for g in found)
+    assert all(g["click"] > g["giving"] + 200 and g["tick"] == g["click"] for g in found)
 
 
 def test_the_lines_time():
     """The line's time: on the light clock's chain of 173 with the faces CLOSED and A naming
     its own bound set `A_face` (x in [132, 134]), the first record's line is written at the
-    rung's interval (`tick` equal to `click`), after its birth (the set beside A's head
+    rung's interval (`tick` equal to `click`), after its giving (the set beside A's head
     books the train from the first interval; the rung (2 u + 1) T / (2 W) on the record's
     own residue from the law decides how much of the record must pass, the mirrors'
     returns included), stamped with A's count (clock_source measured:0); the record is
@@ -305,9 +305,9 @@ def test_the_lines_time():
     line = found[0]
     assert line["click_at"] == "rung" and line["tick"] == line["click"]
     assert line["chosen"] == [["A_face", 0, "0"]] and line["clock_source"] == "measured:0"
-    born = next(b for b in lines if b["event"] == "birth" and b["record"] == first)
-    assert 0 <= line["click"] - line["birth"] <= 300 and 0 <= line["u"] < born["W"]
-    assert lawful_wheel(simulation.world, born)
+    given = next(b for b in lines if b["event"] == "giving" and b["record"] == first)
+    assert 0 <= line["click"] - line["giving"] <= 300 and 0 <= line["u"] < given["W"]
+    assert lawful_wheel(simulation.world, given)
     assert first not in simulation.records
     # two bodies a hundred Links apart, each naming the cube beside the first
     document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
@@ -332,9 +332,9 @@ def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
     form: [760, 3, 3] with the face slabs 32 deep, A at [600, 632) with its train along +x
     and its stock of 64, the mirror at [690, 694), A's `receiver` at_well the set at its own
     Nodes) loads and is stepped 700 intervals as a load-and-step diagnostic (no pin): A
-    births (its excitations click at their rungs), and its records click at at_well when
+    givings (its excitations click at their rungs), and its records click at at_well when
     the mirror returns them into A's Nodes (the line at the rung, the record deleted at it;
-    at least one within the 700, the round trip about 300 intervals after the birth), none
+    at least one within the 700, the round trip about 300 intervals after the giving), none
     at the faces; the books balanced. The edge case: the file on disk is byte for byte what
     the test read."""
     before = LIGHT_CLOCK.read_bytes()
@@ -345,13 +345,13 @@ def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
         None,
     ]
     simulation, lines = run(copy.deepcopy(document), 700, every=100)
-    births = [line for line in lines if line["event"] == "birth"]
-    assert births and {line["measured"] for line in births} == {0}
+    givings = [line for line in lines if line["event"] == "giving"]
+    assert givings and {line["measured"] for line in givings} == {0}
     found = gathers(lines)
     assert found and {line["chosen"][0][0] for line in found} == {"at_well"}
     assert all(
         line["tick"] == line["click"]
-        and line["click"] - line["birth"] > 200
+        and line["click"] - line["giving"] > 200
         and line["record"] not in simulation.records
         for line in found
     )

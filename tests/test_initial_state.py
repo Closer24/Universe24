@@ -1,7 +1,7 @@
 """THE INPUT CHECKED LAWFUL OR REFUSED IN INTEGERS (the model owner's record 1886 of
 2026-09-25; ALGEBRA.md 9.22 (3) and (7); BUILD.md section 26 items 20 and 21): the
 initial state is stored once in the world file (every seeded body's integer profile at
-both levels, its mode's clock [a, b] and its born pair, the generator's, under the
+both levels, its mode's clock [a, b] and its given pair, the generator's, under the
 file's `input` stamp: the law identifier and the hash of those integers) and the loader
 says at load whether it is lawful, with no float: the stamp's law and hash, the
 eigen-equation's residual at every Node within its proved bound, the clock above the
@@ -26,7 +26,7 @@ from event_universe.diagnostics.massive_record_margin import (
 from event_universe.events.world import (
     LAW_IDENTIFIER,
     MOST_FAMILIES,
-    born_train_norm,
+    given_train_norm,
     input_stamp,
     mode_residual,
     parse_nature_beam_world,
@@ -89,7 +89,7 @@ def test_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_roundi
     the peak is ADMITTED (the edge case: a one-unit change is within the rounding the bound
     allows, so the check does not single it out; the same input then gives another output,
     the property test's test 8), read on a side-12 well [800, 801] seeded by the generator
-    on the emitter world's chain (the 32-Node well of the born train's emitter sits at the
+    on the emitter world's chain (the 32-Node well of the given train's emitter sits at the
     bound's edge: the iteration's floor of 276 units leaves no unit of slack, and the peak
     plus one is refused there naming the Node). The stamp is rewritten for every changed
     profile so that the residual speaks (the hash's own refusal is test g)."""
@@ -241,7 +241,7 @@ def test_a_bodys_mode_ends_before_another_body_of_its_family_begins():
         document["ticks"] = 10
         document["measured"] = [emitter(100, None), emitter(b_corner, None, direction=[-1, 0, 0])]
         for entry in document["measured"]:
-            del entry["emitter"]  # two wells, no birth: the loader's tail check alone
+            del entry["emitter"]  # two wells, no giving: the loader's tail check alone
         profile = massive_generator().mode_profile(document, 0, amplitude=50 << 20)
         document["measured"][0]["seed"] = profile
         assert max(x for x in range(400) if profile[x] != 0) == 194
@@ -283,7 +283,7 @@ def test_the_input_stamp_the_law_and_the_hash():
     """THE FILE'S HASH AND THE LAW IT WAS MADE UNDER (9.22 (7) (i)): a seeded world without
     its `input` stamp is refused naming the key; a stamp under another law is refused naming
     both laws; a stamp whose hash is not the digest of the whole file (the profile changed by
-    one unit without restamping, the clock changed, the born pair changed, the ticks changed:
+    one unit without restamping, the clock changed, the given pair changed, the ticks changed:
     the stamp covers every key, BUILD.md section 26 item 28) is refused as not the file the
     generator wrote; a world with no profile needs no stamp (the emitter
     world on its scalar seed, its emitter removed); the stamp is the same from the raw
@@ -304,19 +304,19 @@ def test_the_input_stamp_the_law_and_the_hash():
     def clock(document):
         document["measured"][0]["clock"][0] += 1
 
-    def born(document):
+    def given(document):
         # a unit on the train's profile with its norm recomputed (the norm check
         # passes; the stamp's hash is what refuses, ALGEBRA.md 9.22 (7) (i))
-        train = document["measured"][0]["emitter"]["born"]
+        train = document["measured"][0]["emitter"]["given"]
         train["now"][16] += 1
-        train["norm"] = born_train_norm(
+        train["norm"] = given_train_norm(
             train["now"], train["before"], (80, 1, 1), (0, 0, 0), (32, 1, 1), (1, 1), (False, True, True)
         )
 
     def ticks(document):
         document["ticks"] += 1
 
-    for change in (unit, clock, born, ticks):
+    for change in (unit, clock, given, ticks):
         changed = emitter_world(stock=2)
         change(changed)
         with pytest.raises(ValueError, match="is not the digest of the file"):
@@ -335,7 +335,7 @@ def test_the_generator_as_the_operator_iterated_in_integers():
     amplitude 2^28 (scaled to the declared 2^20), reads
     the clock as the operator's quotient over the board, and stops at the first iteration at which the
     scaled profile passes the loader's own residual bound with that clock (2487 iterations
-    read on the 32-Node well of the born train's emitter on the closed chain, its border the
+    read on the 32-Node well of the given train's emitter on the closed chain, its border the
     world's (one border for every family, BUILD.md section 26 item 28; 1805 with the matter
     border periodic, HISTORY), COMPUTATION; 1653 on the side-12
     well, 1817 at the working amplitude 2^20, which left the muon layer's well hovering at

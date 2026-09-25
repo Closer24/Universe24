@@ -89,7 +89,7 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
 def planted(
     simulation: DetectorLawSimulation, family: int, now: np.ndarray, before: np.ndarray, r: np.ndarray
 ) -> LiveRecord:
-    """A record's rows given to the rule's step directly (the test's device: no lamp births a
+    """A record's rows given to the rule's step directly (the test's device: no lamp givings a
     massive record; the rule reads the rows and nothing else)."""
     return LiveRecord(
         1,
@@ -310,62 +310,64 @@ def test_the_light_record_is_byte_identical_without_the_key():
     by item 10 (the lamp's own take of its record from the first interval after the train, the
     record alive at 600 carrying its pointers; BUILD.md section 18); then all three once more
     by the emitter as a clicking body (BUILD.md section 26: the chain world's lamp an emitter
-    body of the kind [7, 8] on the well [8, 7], six births at their rungs, the grace and the
+    body of the kind [7, 8] on the well [8, 7], six givings at their rungs, the grace and the
     own take retired), then once more by the write on the circle of 2 N with before = -now
     and the excited record's norm as the one-way flux into its centre Node over one period
     (ALGEBRA.md 9.17 (5) and (6), 9.19 (3); BUILD.md section 26 item 13), then once more by
     the flux reading at every detector with the cumulative ladder and the deletion at the click,
     on the chain world's faces closed (item 14), then once more by the residue from the law
     on the rich well [801, 700] with the take's data gone (item 15), then the events and the
-    audit once more by the born pair on the clock's half step (item 17), then the state and the
+    audit once more by the given pair on the clock's half step (item 17), then the state and the
     audit once more by the detector cube at [70, 72] (item 18; the events unchanged, the six
     clicks at the same intervals), then all three by the emitter's coupling to the light it
-    births and the residue read after the excited record's first advance (item 19), the
+    givings and the residue read after the excited record's first advance (item 19), the
     digests read at that head; then the state once more by the `extents` of every block
     written beside its `side` on the snapshot (item 23; the events and the audit unchanged),
     then the events and the audit by the click rule of ALGEBRA.md 9.17 (7) (f) (the model
     owner's word, record 1918; item 24: the excited record's running total accruing its
     centre Node's share of its conserved form, the emitter's seed raised to 2^20, the six
-    births at (2 u + 1) P / (2 W) after their reads; the state at 600 unchanged), then all
+    givings at (2 u + 1) P / (2 W) after their reads; the state at 600 unchanged), then all
     three by the generator as the operator iterated with the stop (the owner's word of
     2026-09-25; item 25: the emitter's seed and clock the iteration's, within the floor of
     the eigensolver's), then all three by the generator's working amplitude 2^28 (the names'
     regeneration of 2026-09-25, item 25 amended: the muon layer's well hovered at 1.5 times
     the bound at 2^20; the emitter's profile and clock the iteration's at 2^28), then all
-    three by THE BORN TRAIN (ALGEBRA.md 9.17 (6a); item 27: the chain world's emitter body
-    the train's 32 Nodes at [2, 34) with the well [699, 700], light on the born clock
-    [512, 1] of N = 1024, every birth the train written on the Nodes), the digests read at
+    three by THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a); item 27: the chain world's emitter body
+    the train's 32 Nodes at [2, 34) with the well [699, 700], light on the given clock
+    [512, 1] of N = 1024, every giving the train written on the Nodes), the digests read at
     that head; SINCE THE TIGHTENINGS (BUILD.md section 26 item 28) the closed chain bounds
     matter too (one border for every family: the events and the audit moved, the state
     digest unchanged); SINCE THE REMAINDER KEPT (the model owner's decision (1) of record
-    1962; BUILD.md section 26 item 29) the residues of the stock's births spread from the
+    1962; BUILD.md section 26 item 29) the residues of the stock's givings spread from the
     kept remainder and all three digests moved; SINCE THE COUPLING RETIRED (decision (2),
-    item 30) the excited record and the born light advance by the rule alone and all three
+    item 30) the excited record and the given light advance by the rule alone and all three
     moved once more; SINCE THE NODE CLOCK (decision (5), item 31) all three moved once more
     (the remainders Gamma times the plain ones in the vacuum and the wall of the body's
     content at its Nodes, the wheel and the residues read there, the norms on the lines in
     the clock's units); SINCE THE RENAME (record 1978, no cell) the events digest moved once
-    more with the two line fields' names, the birth line's `nodes` and the gather line's
+    more with the two line fields' names, the giving line's `nodes` and the gather line's
     `detectors` (the state and the audit unchanged); SINCE THE FAMILY OF CLICKS (ALGEBRA.md
     9.45; item 32) all three moved once more (the fourth family declared in the chain world,
     one record of it over the board, held at the bodies' Nodes at their content and
     spreading from them by the plain step, every Node's clock pair read from its level);
     SINCE THE RESEED RETIRED (ALGEBRA.md 9.43 (3), 9.44 (5) (c); item 33) all three moved
     once more (the body's own record continuing under its one identity, its levels never
-    rewritten, the residues read at the click at the first shell Node, the births at the
-    counted intervals, the birth lines' fields); SINCE THE FIXED WALL (the model owner's
+    rewritten, the residues read at the click at the first shell Node, the givings at the
+    counted intervals, the giving lines' fields); SINCE THE FIXED WALL (the model owner's
     record 1994; item 34) all three moved once more (the paced reads at and beside the
-    bodies, the forms' units Gamma squared, the birth lines' `read_clocks`); SINCE THE FAMILY
+    bodies, the forms' units Gamma squared, the giving lines' `read_clocks`); SINCE THE FAMILY
     OF CHARGE (ALGEBRA.md 9.48; item 35) all three moved once more (the fifth family declared
     in the chain world, one record of it over the board held at the bodies' Nodes at their
-    charge 0, the birth lines' `charge`, the snapshot's `charge` entry; the rows bit for bit);
+    charge 0, the giving lines' `charge`, the snapshot's `charge` entry; the rows bit for bit);
     SINCE THE NODE'S OWN PACE (ALGEBRA.md 9.50 (13); item 36) all three moved once more (the
     pace on the Node's own sum at and beside the bodies, the forms as exact rationals, the
-    birth lines' `pace`, the plain flux); SINCE THE BODY RECORD (ALGEBRA.md 9.46; item 37)
+    giving lines' `pace`, the plain flux); SINCE THE BODY RECORD (ALGEBRA.md 9.46; item 37)
     the state digest moved once more (the block entry's `rotation`, None under the lattice
-    body; the events and the audit unchanged); read again at this head."""
+    body; the events and the audit unchanged); SINCE THE GIVING CLICK (record 2016) the events
+    digest moved with the line's name alone (`giving` for `birth`, `given_norm` for
+    `born_norm`); read again at this head."""
     assert run_chain_digests() == {
-        "events": "3d6adf318286f7ab077de0760fffcac96a2bd69a705be08bfff569ba9383dca1",
+        "events": "43abd129081c637469bf0a39795c2e0bd1db59c2e94f1e6c75ddfc10ab5fd844",
         "state": "e255526de4b790fcb2f0ae99e775184f10eb188fab8af88bade397c79c88c33c",
         "audit": "18fceec9b9d8e12e478abd84633b08f013658858f3ccb76d17fe61c28b53597e",
     }
@@ -472,7 +474,7 @@ def block_world(
     where a test names none: no loader default, BUILD.md section 26 item 28) and the face
     slab is one Node deep where the board is open."""
     matter: dict = {"name": "matter", "quantum": 1, "pair": kind, "charge": 0}
-    # light on the born clock [512, 1] of N = 1024 (the born train, ALGEBRA.md 9.17 (6a))
+    # light on the given clock [512, 1] of N = 1024 (the given train, ALGEBRA.md 9.17 (6a))
     families = [{"name": "light", "quantum": 1, "phase_per_link": [512, 1], "charge": 0}, matter]
     measured: list[dict] = []
     if source is not None:
@@ -545,7 +547,7 @@ def seed_source(document: dict, number: int) -> None:
     generator = massive_generator()
     entry["seed"] = generator.mode_profile(document, number, amplitude=entry["seed"])
     if "emitter" in entry:
-        generator.born_train(document, number)
+        generator.given_train(document, number)
     # the input stamp (record 1886): the law and the hash of the integers
     document["input"] = input_stamp(document)
 
@@ -563,7 +565,7 @@ SOURCE_KIND = [7, 8]  # the emitter bodies' own kind (omega_0 = 0.505; the index
 SOURCE_WELL = [
     699,
     700,
-]  # its well over the train's 32 Nodes, rich (W = 700, ALGEBRA.md 9.22 (4)) and bound (2 cos omega_b = 1.9944 on a chain; the one-Node birth's [801, 700] is a runaway over 32 Nodes, its interior above 1)
+]  # its well over the train's 32 Nodes, rich (W = 700, ALGEBRA.md 9.22 (4)) and bound (2 cos omega_b = 1.9944 on a chain; the one-Node giving's [801, 700] is a runaway over 32 Nodes, its interior above 1)
 
 
 def source_family() -> dict:
@@ -582,9 +584,9 @@ def emitter_at(
     """An emitter body on a chain (ALGEBRA.md 9.17 (4), 9.17 (6a)): the well of the massive
     family `own` (the well `pair`, SOURCE_WELL by default) over the train's 32 Nodes from x,
     its train along +x, with the scalar seed 2^20
-    (its profile on the mode by `seed_source`; at 100 the born light's back-action swamps
-    the excited record, ALGEBRA.md 9.17 (7) (c)), `stock` excitations, the born family
-    `family`; with `receiver`, the born records' ladder by name. The residue and the wheel
+    (its profile on the mode by `seed_source`; at 100 the given light's back-action swamps
+    the excited record, ALGEBRA.md 9.17 (7) (c)), `stock` excitations, the given family
+    `family`; with `receiver`, the given records' ladder by name. The residue and the wheel
     are the law's (9.22 (4): W = 700 on SOURCE_WELL); the cadence of the excitations under
     the click rule of 9.17 (7) (f) (BUILD.md section 26 item 24): the residue u clicks
     (2 u + 1) P / (2 W) intervals after its read, P the mode's period."""
@@ -717,14 +719,14 @@ def six_reads(row: np.ndarray) -> np.ndarray:
     return total
 
 
-def test_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
+def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     """BUILD.md (h) SINCE section 26 (the emission by the coupling's source term retired with
     the lamp; an emitter is a clicking body, ALGEBRA.md 9.17 (4)): an emitter body of the
     source kind (the one-Node well SOURCE_WELL at x = 100 seeded on its mode, the stock 3)
-    on the chain of 240 with the screen at 230: three births in turn, the residues the
-    law's, each born record of content 1 moved from the stock (`held_spent` 3 of the
+    on the chain of 240 with the screen at 230: three givings in turn, the residues the
+    law's, each given record of content 1 moved from the stock (`held_spent` 3 of the
     source family, `transit_released` 3 of light), the body's own record continuing under its
-    one identity after every birth and after the stock is spent, never rewritten (ALGEBRA.md
+    one identity after every giving and after the stock is spent, never rewritten (ALGEBRA.md
     9.43 (3); item 33), the books balanced at every tick. The
     edge cases: `emits` and `own_grace` beside `emitter` refused naming the key; `emitter` on
     a body of light's kind refused; a stock below 1 refused."""
@@ -746,16 +748,16 @@ def test_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
     for _ in range(600):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-    births = [line for line in lines if line["event"] == "birth"]
-    assert len(births) == 3
+    givings = [line for line in lines if line["event"] == "giving"]
+    assert len(givings) == 3
     # the residues from the law (ALGEBRA.md 9.22 (4)) on the body's own wheel (700
     # on the source well in the vacuum; at its Node the wheel of its content under
     # the Node clock, 9.35 (2), read from the rule), spread from the remainder
     # kept at the Nodes (the model owner's decisions (1) and (2) of record 1962;
     # the coupling's back-action HISTORY)
-    assert all(lawful_wheel(world, line) for line in births)
-    assert [line["content"] for line in births] == [3, 2, 1]
-    assert len({line["u"] for line in births}) > 1
+    assert all(lawful_wheel(world, line) for line in givings)
+    assert [line["content"] for line in givings] == [3, 2, 1]
+    assert len({line["u"] for line in givings}) > 1
     assert simulation.ledger.held_spent[2] == 3 and simulation.ledger.transit_released[0] == 3
     own = simulation.blocks[0].own
     assert own is not None and own.identity == 0  # the standing record continues (9.43 (3))
@@ -1191,10 +1193,10 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
 def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, stock: int = 1) -> dict:
     """A chain of 200 Nodes (x open; y and z periodic of one layer): the light emitter of the
     first build at [2, 34) (chain_world's, its family named `source`) beside the massive kind
-    `matter`, pair [156, 157], the born clock [512, 1] on N = 1024 declared as its
+    `matter`, pair [156, 157], the given clock [512, 1] on N = 1024 declared as its
     `phase_per_link` (the pair form: the matter train at K = pi / 2, cos omega = 0.6624),
-    and, when asked, an emitter body of the source kind at [100, 132) whose born family is
-    `matter` (`stock` births, the train along +x); no detector; `clock` None declares no
+    and, when asked, an emitter body of the source kind at [100, 132) whose given family is
+    `matter` (`stock` givings, the train along +x); no detector; `clock` None declares no
     clock on the kind (the refusal's edge case); every emitter body seeded on its mode."""
     document = chain_world(on_mode=False)
     document["shape"] = [200, 1, 1]
@@ -1215,12 +1217,12 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
 
 def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair():
     """The emitter of a massive kind (the matter lamp's successor, ALGEBRA.md 9.17; the Boss's
-    23:32Z on the lamp verb): an emitter body of the source kind at x = 100 whose born family
-    is `matter` (the kind [156, 157] with the declared clock [512, 1] on N = 1024) births a
+    23:32Z on the lamp verb): an emitter body of the source kind at x = 100 whose given family
+    is `matter` (the kind [156, 157] with the declared clock [512, 1] on N = 1024) givings a
     record of the matter kind, written once on its 32 Nodes at both levels as the train
     (ALGEBRA.md 9.17 (6a)) and advanced by the rule with the kind's pair (a massive kind's
-    born record is driven by nothing and completes as light's: its `driven` set empty); the
-    train TRAVELS +x: a hundred intervals after its birth its levels ahead of the body (x in
+    given record is driven by nothing and completes as light's: its `driven` set empty); the
+    train TRAVELS +x: a hundred intervals after its giving its levels ahead of the body (x in
     [140, 180)) are large and those behind it (x in [40, 90)) below a tenth of them (the
     tapers' dispersion alone goes back, 3.9 percent in the matter family); the books balance
     at every interval; light's rows are identical with and without the matter emitter beside
@@ -1229,7 +1231,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     within the plain step's cone and bends every record it reaches (ALGEBRA.md 9.46 (6)
     (b)), so the rows are compared bit for bit while the field is the same on the record's
     Nodes, on more than one interval, and not after (the first build's chain digests stand,
-    test (p)). The edge cases: an emitter whose born family is a massive kind WITHOUT the
+    test (p)). The edge cases: an emitter whose given family is a massive kind WITHOUT the
     clock is refused at load naming the pair form."""
     world = parse_nature_beam_world(matter_emitter_world(True, [512, 1]))
     beside = parse_nature_beam_world(matter_emitter_world(False, [512, 1]))
@@ -1239,7 +1241,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     simulation = DetectorLawSimulation(world)
     other = DetectorLawSimulation(beside)
     identity = 1 * (1 << 32) + 1
-    born: int | None = None
+    given: int | None = None
     field_reached: int | None = None
     compared = 0
     for tick in range(1, 301):
@@ -1248,7 +1250,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
         assert simulation.books()["balanced"], tick
         live = simulation.records.get(identity)
         if live is not None:
-            born = born if born is not None else tick
+            given = given if given is not None else tick
             assert live.family == matter and live.emitter == 1
         # light's rows unchanged beside the matter emitter while the family of clicks'
         # field is the same on their Nodes (the source body's own standing record is of
@@ -1262,11 +1264,11 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
             if field_reached is None:
                 assert np.array_equal(simulation.records[light_identity].now, light.now), tick
                 compared += 1
-        if born is not None and tick == born + 100:
+        if given is not None and tick == given + 100:
             break
     assert compared > 1 and (field_reached is None or field_reached > 1)
-    # the first birth within the well's period (the residue's wait, 9.17 (7) (f))
-    assert born is not None and born < 120
+    # the first giving within the well's period (the residue's wait, 9.17 (7) (f))
+    assert given is not None and given < 120
     live = simulation.records[identity]
     ahead = int(np.max(np.abs(live.now[140:180, 0, 0])))
     behind = int(np.max(np.abs(live.now[40:90, 0, 0])))
@@ -1287,7 +1289,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     which 2 W C >= (2 u + 1) T on its pointer there (read through the engine's
     `_ladder_click`; the interval before it below the rung), after the train's flight (53
     Links from the head at 131 at v_g = 0.442, 120 intervals, and as much of the passage of
-    72 as the residue asks: between 100 and 400 intervals after the birth), the line's
+    72 as the residue asks: between 100 and 400 intervals after the giving), the line's
     `tick` its `click`, the record deleted whole at it; two gather lines in all, the books
     balanced at every interval."""
     document = matter_emitter_world(True, [512, 1], stock=2)
@@ -1332,7 +1334,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
             break
     gathers = [line for line in lines if line["event"] == "gather"]
     # both records click, each once, in either order (under the click rule of
-    # 9.17 (7) (f) the second is born (2 u + 1) P / (2 W) after the first's
+    # 9.17 (7) (f) the second is given (2 u + 1) P / (2 W) after the first's
     # click and may reach its rung at the screen first when its residue is
     # the smaller)
     assert sorted(gather["record"] for gather in gathers) == identities
@@ -1340,16 +1342,16 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         identity = gather["record"]
         assert gather["chosen"][0][0] == "screen" and gather["click"] == gather["tick"]
         pointer, u, norm, wheel, pace = at_click[identity]
-        births = {line["record"]: line for line in lines if line["event"] == "birth"}
-        assert wheel == births[identity]["W"] and lawful_wheel(world, births[identity])
-        assert 0 <= u < wheel and u == gather["u"] and pace == births[identity]["pace"]
+        givings = {line["record"]: line for line in lines if line["event"] == "giving"}
+        assert wheel == givings[identity]["W"] and lawful_wheel(world, givings[identity])
+        assert 0 <= u < wheel and u == gather["u"] and pace == givings[identity]["pace"]
         # the plain flux against the norm's rational norm / pace (item 36)
         assert 2 * wheel * pace * pointer >= (2 * u + 1) * norm
         assert below[identity] == gather["click"] - 1
         # the flight: the train's head over 53 Links at v_g = 0.442, then as
         # much of the passage as the residue asks (the residues spread from
         # the kept remainder, record 1962 (1))
-        assert 100 < gather["click"] - gather["birth"] < 400
+        assert 100 < gather["click"] - gather["giving"] < 400
         assert identity not in simulation.records
 
 
@@ -1390,11 +1392,11 @@ def test_every_declared_wheel_is_refused_by_name():
 
 def light_clock_world(faces: str, far_body: bool) -> dict:
     """DECLARATIONS.md section 10 with section 15's lines (M1-1, M1-3, M1-4, M1-10) and item 9,
-    SINCE BUILD.md section 26 and THE BORN TRAIN (item 27): a chain of 173 (x `closed` for
+    SINCE BUILD.md section 26 and THE GIVEN TRAIN (item 27): a chain of 173 (x `closed` for
     light, the zero face at 172 the mirror B forty Links from A's head at 131; or x open,
     the sponges), the matter kind [800, 809], the emitter A of the extents [32, 1, 1] at
-    [100, 132) with the seed 50 x 2^20 on its bound mode, its `emitter` of light on the born
-    clock [512, 1] of N = 1024 with its train along +x and the stock 1 (one birth); the
+    [100, 132) with the seed 50 x 2^20 on its bound mode, its `emitter` of light on the given
+    clock [512, 1] of N = 1024 with its train along +x and the stock 1 (one giving); the
     receiving set `A_face` bound to A at the cube of three free Nodes adjacent to A's head
     (x in [132, 134]; item 9, record 1899), A's `receiver` by name; with `far_body`, the cube
     of light bodies at [160, 162] read as the set `far`; the amplitude bound 2^32; no wheel
@@ -1431,7 +1433,7 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
 def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_rung():
     """A set bound to a block is a receiver (the receiving set at ONE free Node) on the light clock's chain of 173 (W = 64;
     the world's `wheel` 64) SINCE THE FLUX READING (ALGEBRA.md 9.19 (3); BUILD.md section 26
-    item 14): A's one born record is written once on A's 32 Nodes as the train and leaves toward +x;
+    item 14): A's one given record is written once on A's 32 Nodes as the train and leaves toward +x;
     the set's cube at [132, 134] books the one-way flux into it from the first interval (its
     pointer above 0 and its rung at the record's own residue from the law, the click line written
     at that rung and stamped with A's count as the interval begins, named by
@@ -1443,7 +1445,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
     refused as a box of sides [2, 1, 1] (the cube of record 1899), `block` naming a body
     refused naming the positions form, `closed` without
     `detector_law` refused, `own_grace` on the emitter refused, a stock below 1 refused."""
-    first = 1  # A's born record: block 0, birth 1
+    first = 1  # A's given record: block 0, giving 1
     for faces in ("closed", "open"):
         world = parse_nature_beam_world(light_clock_world(faces, faces == "open"))
         if faces == "closed":
@@ -1465,7 +1467,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
                 pointer_at_click = pointer
 
         simulation._ladder_click = spy  # type: ignore[method-assign]
-        birth: int | None = None
+        giving: int | None = None
         count_then: int | None = None
         for _ in range(600):
             count_before = block.count
@@ -1474,18 +1476,18 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
             assert books["balanced"], simulation.tick
             live = simulation.records.get(first)
             if live is not None:
-                birth = live.birth_tick
+                giving = live.giving_tick
             if pointer_at_click is not None and count_then is None:
                 count_then = count_before
-        assert birth is not None and pointer_at_click is not None and pointer_at_click > 0
+        assert giving is not None and pointer_at_click is not None and pointer_at_click > 0
         gathers = [g for g in lines if g["event"] == "gather" and g["record"] == first]
         assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "A_face"
         line = gathers[0]
         # the rung (2 u + 1) T / (2 W) on the record's own residue from the law
         # decides how much of the record must pass the set before its click
-        assert 0 <= line["click"] - birth <= 600 and line["tick"] == line["click"]
-        born = next(b for b in lines if b["event"] == "birth" and b["record"] == first)
-        assert 0 <= line["u"] < born["W"] and lawful_wheel(world, born)
+        assert 0 <= line["click"] - giving <= 600 and line["tick"] == line["click"]
+        given = next(b for b in lines if b["event"] == "giving" and b["record"] == first)
+        assert 0 <= line["u"] < given["W"] and lawful_wheel(world, given)
         assert line["clock_source"] == "measured:0" and line["clock"] == count_then
         assert first not in simulation.records
         assert all(g["chosen"][0][0] != "far" for g in lines if g["event"] == "gather")
@@ -1527,7 +1529,7 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
     item 1) under the flux reading (ALGEBRA.md 9.19 (3)): the block's twelve Nodes are the
     set's Nodes (the detector index at them the set's); an emitter's record (the emitter
     body of the source kind at [100, 132) on a chain of 300, its train along +x toward the
-    block 68 Links ahead, two births, the emitter naming the set) books its one-way flux into the
+    block 68 Links ahead, two givings, the emitter naming the set) books its one-way flux into the
     block's Nodes to the set and clicks once there, the click stamped with the block's own
     count as the interval began and named by `clock_source`, the record deleted whole at
     it, the books balanced; nothing absorbs. Pushed toward the emitter at k = 3 (the block

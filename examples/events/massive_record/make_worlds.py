@@ -33,8 +33,8 @@ loader default, item 28: SEED_AMPLITUDE here).
   `cavity_24_moving.json` (the cavity pushed to k = 3 on 64^3), moved as
   written to `docs/designs/detector_law/held_worlds/` (HISTORY, their pins in
   `expectations.json` never moved), their builders retired here.
-- HELD UNDER THE BORN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27; their
-  files in `docs/designs/detector_law/held_worlds/` as written with the one-Node birth,
+- HELD UNDER THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27; their
+  files in `docs/designs/detector_law/held_worlds/` as written with the one-Node giving,
   HISTORY, not loaded by the gate; their builders retired here, to be rebuilt from the
   table of ALGEBRA.md 9.22 (8) in its form, the cleanup's item 7): the index at rest
   (`medium_index_at_rest_50`, `medium_index_at_rest_20`, `medium_index_at_rest_10`,
@@ -245,7 +245,7 @@ def seed_on_the_mode(document: dict) -> None:
         entry["seed"] = mode_profile(document, number, amplitude=scalar)
     for number, entry in enumerate(document["measured"]):
         if "emitter" in entry:
-            born_train(document, number)
+            given_train(document, number)
     placement_check(document)
     stamped(document)
 
@@ -253,7 +253,7 @@ def seed_on_the_mode(document: dict) -> None:
 def stamped(document: dict) -> dict:
     """THE INPUT STAMP (record 1886; ALGEBRA.md 9.22 (7) (i)) rewritten for the document's
     integers as they stand: the law identifier and the hash of every profile, clock and
-    born pair; written before every parse of a document under construction and last of
+    given pair; written before every parse of a document under construction and last of
     all, so that the file carries the stamp of what it holds."""
     from event_universe.events.world import input_stamp
 
@@ -261,30 +261,30 @@ def stamped(document: dict) -> dict:
     return document
 
 
-BORN_AMPLITUDE = 1 << 16  # the born train's amplitude A (ALGEBRA.md 9.17 (6a))
+GIVEN_AMPLITUDE = 1 << 16  # the given train's amplitude A (ALGEBRA.md 9.17 (6a))
 TRAIN_FLUX_TOLERANCE = 2  # per thousand: the train's one-way flux 40 Links ahead within 2 x 10^-3 of T
 TRAIN_FLUX_DISTANCE = 40  # Links ahead of the train's head, the plane the generator's checks read
 
 
-def born_train(document: dict, number: int) -> None:
-    """THE BORN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27): the emitter body
-    `number`'s `born` profile, the character of one **K** over its declared periods under the
+def given_train(document: dict, number: int) -> None:
+    """THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27): the emitter body
+    `number`'s `given` profile, the character of one **K** over its declared periods under the
     window across the transverse extents and the tapers along **K**, written on the body's
     Nodes at both levels (t = 0 and t = -1), the generator's integers at the amplitude
     A = 2^16: now = round(A e(i) h(y) h(z) cos(k i)), before = round(A e h h cos(k i + omega)),
     i the Node's index along the train's way from its tail, k = 2 pi p / (2 N q) from the
-    born family's clock [p, q] on the world's N, 3 cos omega = (num / den) (cos k + 2) on the
-    born family's vacuum pair; h the Hann window sin^2(pi (y + 1 / 2) / Y) across a transverse
+    given family's clock [p, q] on the world's N, 3 cos omega = (num / den) (cos k + 2) on the
+    given family's vacuum pair; h the Hann window sin^2(pi (y + 1 / 2) / Y) across a transverse
     extent Y, and 1 across an axis the body spans on a periodic face (a chain, and the
     extruded axes of the one table's boards, where the seed is uniform across the added
     axes); e the taper over tau = X / 4 Nodes at each end (sin^2(pi (i + 1 / 2) / (2 tau))
     for i < tau, 1 between, mirrored at the tail). THE NORM T the conserved form of the two
-    levels on the vacuum (`born_train_norm`, the one copy the loader checks). THE FLUX CHECK
-    (HOST, the generator, 9.25 (11) (a)): the train alone on the born family's vacuum,
+    levels on the vacuum (`given_train_norm`, the one copy the loader checks). THE FLUX CHECK
+    (HOST, the generator, 9.25 (11) (a)): the train alone on the given family's vacuum,
     advanced by the engine's rule, books its one-way flux through a plane one Node deep 40
     Links ahead of its head; the sum over the passage must be T within 2 x 10^-3, else the
     profile is refused (3 periods 1.0285 and growing; 8 periods 0.9987; 16 periods 0.9997).
-    THE TRANSPARENCY (9.22 (7a) (iv)): every body coupled to the born family (a body its
+    THE TRANSPARENCY (9.22 (7a) (iv)): every body coupled to the given family (a body its
     record must enter to be read: the emitter itself where its light returns, another well,
     a medium) passes the train run through it alone on the vacuum with 0.99 of T booked 40
     Links beyond, refused below. The emitter's `period` and `norm` (the excited record's) are
@@ -295,14 +295,14 @@ def born_train(document: dict, number: int) -> None:
         period_of,
     )
     from event_universe.events.world import (
-        born_train_flux_sign,
-        born_train_norm,
+        given_train_flux_sign,
+        given_train_norm,
         parse_nature_beam_world,
     )
 
     entry = document["measured"][number]
     emitter = entry["emitter"]
-    for key in ("period", "norm", "born"):
+    for key in ("period", "norm", "given"):
         emitter.pop(key, None)
     world = parse_nature_beam_world(stamped(document))
     period = period_of(block_margin(world, number))
@@ -314,10 +314,10 @@ def born_train(document: dict, number: int) -> None:
     if train is None:
         raise ValueError(
             f"measured[{number}].emitter declares no `train` (the direction and the periods): "
-            "every birth is a travelling train (ALGEBRA.md 9.17 (6a)); nothing written"
+            "every giving is a travelling train (ALGEBRA.md 9.17 (6a)); nothing written"
         )
-    born_family = world.families[definition.emitter.family]
-    num, den = int(born_family.pair[0]), int(born_family.pair[1])
+    given_family = world.families[definition.emitter.family]
+    num, den = int(given_family.pair[0]), int(given_family.pair[1])
     p, q = train.clock
     steps = int(world.phase_steps)
     extents = tuple(int(v) for v in definition.extents)
@@ -353,14 +353,14 @@ def born_train(document: dict, number: int) -> None:
                 for other in range(3):
                     if other != axis:
                         shape_factor *= window(position[other], extents[other], spanned[other])
-                amplitude = BORN_AMPLITUDE * shape_factor
+                amplitude = GIVEN_AMPLITUDE * shape_factor
                 now.append(int(round(amplitude * math.cos(k * along))))
                 before.append(int(round(amplitude * math.cos(k * along + omega))))
-    if born_train_flux_sign(now, before, extents, axis, sign) <= 0:
+    if given_train_flux_sign(now, before, extents, axis, sign) <= 0:
         raise ValueError(
             f"measured[{number}]: the train's flux along its way is not positive; nothing written"
         )
-    norm = born_train_norm(now, before, shape, (0, 0, 0), extents, (num, den), wrap)
+    norm = given_train_norm(now, before, shape, (0, 0, 0), extents, (num, den), wrap)
     # the check board's engine books the plain flux, the wall times the current,
     # unweighted (ALGEBRA.md 9.50 (13); BUILD.md section 26 item 36); the file's norm
     # is the plain vacuum form (the loader's check), so the passage is read against
@@ -379,7 +379,7 @@ def born_train(document: dict, number: int) -> None:
             f"({booked / scaled:.4f}): not a passage within 2 x 10^-3 (ALGEBRA.md 9.25 (11)); "
             "nothing written"
         )
-    emitter["born"] = {"now": now, "before": before, "norm": norm}
+    emitter["given"] = {"now": now, "before": before, "norm": norm}
 
 
 def names_of(document: dict) -> dict[str, int]:
@@ -406,7 +406,7 @@ def train_run(
     before: list[int],
 ) -> int:
     """THE GENERATOR'S RUN OF A TRAIN (HOST; ALGEBRA.md 9.25 (11) (a)): the train's two
-    levels planted on the born family's VACUUM of the world's families, on a check board of
+    levels planted on the given family's VACUUM of the world's families, on a check board of
     the world's transverse shape and faces whose axis along **K** is open and long (a back
     margin of one train's length behind the tail, the train, the plane one Node deep
     TRAIN_FLUX_DISTANCE Links beyond the train's head, and a far margin of twelve trains'
@@ -446,24 +446,24 @@ def train_run(
     stamped(check)
     world = parse_nature_beam_world(check)
     simulation = DetectorLawSimulation(world)
-    born = names_of(document)[family]
+    given = names_of(document)[family]
     board = (int(shape[0]), int(shape[1]), int(shape[2]))
     corner = list(transverse_corner)
     corner[axis] = min(at(train_low), at(train_low + length - 1))
     nodes = body_node_indices(
-        board, (corner[0], corner[1], corner[2]), train_extents, world.kind_periodic(born)
+        board, (corner[0], corner[1], corner[2]), train_extents, world.kind_periodic(given)
     )
     level_now = np.zeros(board, dtype=np.int64).reshape(-1)
     level_before = np.zeros(board, dtype=np.int64).reshape(-1)
     for index, a, b in zip(nodes, now, before, strict=True):
         level_now[index] = a
         level_before[index] = b
-    live = simulation.planted_record(born, level_now.reshape(board), level_before.reshape(board))
+    live = simulation.planted_record(given, level_now.reshape(board), level_before.reshape(board))
     plane = np.zeros(board, dtype=bool)
     index_slice: list[object] = [slice(None)] * 3
     index_slice[axis] = at(plane_t)
     plane[tuple(index_slice)] = True
-    family_entry = document["families"][born]
+    family_entry = document["families"][given]
     pair = (int(family_entry.get("pair", [1, 1])[0]), int(family_entry.get("pair", [1, 1])[1]))
     p, q = (int(v) for v in family_entry["phase_per_link"])
     k = 2.0 * math.pi * p / (2.0 * int(document["N"]) * q)
@@ -603,7 +603,7 @@ def worlds() -> dict[str, dict]:
         )
     # (iii) the cavity of form (I): CANCELLED, its two worlds held as written (the
     # module docstring; BUILD.md section 26 item 28)
-    # the index rows at rest and in motion: HELD under the born train (the module docstring)
+    # the index rows at rest and in motion: HELD under the given train (the module docstring)
     # (i-L), (ii-L): the layer pin world of section 11 item 7 (mu = 0.15, s = 14, g = mu^2 / 4:
     # the kind [3200, 3236], the well [3200, 3227]) on a periodic 200 x 200 x 1 layer (the pin
     # margin s + 4 extents = 159 < 200), the seed the BOUND MODE'S INTEGER PROFILE at 2^20 over

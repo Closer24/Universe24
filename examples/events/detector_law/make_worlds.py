@@ -5,31 +5,31 @@ of the writer's own). The engine's keys are the massive record kind's (`../massi
 make_worlds.py`, whose `world` helper writes the massive worlds here, so that their form is
 that series' form byte for byte: `age_bound`, `K`, `N`, `release`, the blocks' keys), the
 bodies with extents and the face slab (BUILD.md section 26 item 23), the emitter as a
-clicking body (item 24) and THE BORN TRAIN (item 27; ALGEBRA.md 9.17 (6a)): every birth is
-a travelling train of 8 periods on the born clock [512, 1] of N = 1024 (k = pi / 2, the
+clicking body (item 24) and THE GIVEN TRAIN (item 27; ALGEBRA.md 9.17 (6a)): every giving is
+a travelling train of 8 periods on the given clock [512, 1] of N = 1024 (k = pi / 2, the
 wavelength 4, the train 32 Nodes along **K**), the body's extent along **K** the train's
 length, the profile and its norm on the vacuum the generator's integers checked at load.
 
 THE LIGHT CLOCK (ALGEBRA.md 9.22 (8), its row; the one table of 9.30: the chain of 760
 extruded to [760, 3, 3], periodic on y and z, so that every detector is a whole cube and
-every pin of the chain stands to the bit): light [1, 1] with the born clock [512, 1] on
+every pin of the chain stands to the bit): light [1, 1] with the given clock [512, 1] on
 N = 1024, matter [800, 809]; the face slabs 32 deep at both ends of x (`face_depth`); the
 well A [800, 801] of the extents [32, 3, 3] at [600, 632) with a stock of
 64, its train along +x; the mirror the gap [1, 2] of depth 4 at [690, 694) (a body of
 light's kind over the whole cross-section; the holder body's name waits on the cleanup's
 step 6); the receiving set `at_well` A's own Nodes (the set bound to the block: the
 outgoing train leaves them through their Ports, negative and not booked, the return enters
-them, 9.25 (11) (d)); 4800 intervals (COMPUTATION: 64 births at the mean cadence P / 2 on
+them, 9.25 (11) (d)); 4800 intervals (COMPUTATION: 64 givings at the mean cadence P / 2 on
 the wheel of 2403, P = 94 on A's mode, about 3000 intervals, the last return 300, a margin;
 the run 9 seconds, HOST). The blind
-pins in `../pins.json`: the mean click interval after the birth 300 +- 9 at 64 records
+pins in `../pins.json`: the mean click interval after the giving 300 +- 9 at 64 records
 (the passage's mean (2 x 58 + 16 + 2) / 0.44721 = 299.7, the rms 24.8, the band 3 rms /
 sqrt 64) and the stock's first click 250 +- 8; the 214 +- 1 of the chain of 674 with the
 cube beside A is HISTORY (BUILD.md section 26 item 22: a cube beside the emitter books the
 outgoing pass).
 
 THE ROWS HELD UNDER THE TRAIN (their files in `docs/designs/detector_law/held_worlds/`,
-HISTORY as written with the one-Node birth, not loaded by the gate; their builders retired
+HISTORY as written with the one-Node giving, not loaded by the gate; their builders retired
 here, to be rebuilt through the generator from the table of ALGEBRA.md 9.22 (8) in its
 form, the cleanup's item 7): the two slits and the pace fans (the light rows of the folder);
 the moving emitter's redshift, Sagnac's two-way light times, de Broglie's fringes and the
@@ -71,7 +71,7 @@ HELD = DESIGNS / "detector_law" / "held_worlds"
 # their two-arm lamp is cancelled and refused at load (ALGEBRA.md 9.17; the model owner's
 # word of 2026-09-24, 15:05Z); the crystal's branch regenerates them through the crystal
 # at the wheel [1, 20] (the Boss's adoption of 00:05Z).
-# THE ROWS HELD UNDER THE BORN TRAIN (BUILD.md section 26 item 27) are moved there as
+# THE ROWS HELD UNDER THE GIVEN TRAIN (BUILD.md section 26 item 27) are moved there as
 # files (the module docstring); their builders are retired, not held: nothing here writes
 # them.
 HELD_NAMES: set[str] = {
@@ -131,7 +131,7 @@ TRAIN_32 = 32  # periods, section 15 L-3 and L-6 (HISTORY: the lamp's train, ret
 # runaway's, withdrawn) and the margin rule refuses it. The one-Node well EMITTER_WELL on
 # the kind EMITTER_KIND (the index worlds' kind, omega_0 = 0.505) is bound on a chain
 # (omega_b = 0.32, P = 20 intervals) and on a layer (omega_b = 0.50, P = 12
-# intervals). A world of W births declares the stock M = W (LAB_TOOLS.md A.1).
+# intervals). A world of W givings declares the stock M = W (LAB_TOOLS.md A.1).
 EMITTER_KIND = [7, 8]
 EMITTER_WELL = [
     801,
@@ -139,7 +139,7 @@ EMITTER_WELL = [
 ]  # the rich well (700 remainder values, ALGEBRA.md 9.19 (4a), 9.22 (4)) bound on a chain and a layer
 EMITTER_SEED_AMPLITUDE = (
     1 << 20
-)  # at 100 the born light's back-action swamps the excited record (ALGEBRA.md 9.17 (7) (c))
+)  # at 100 the given light's back-action swamps the excited record (ALGEBRA.md 9.17 (7) (c))
 BELL_TRAIN = 128  # periods, DECLARATIONS.md sections 1 and 3
 # The receiver by name (#1116, the physicist's form, Reviewer 3 confirmed): a key `receiver`
 # on every emitting block naming the set that takes the block's clicks. ON since the
@@ -195,8 +195,8 @@ def emitter_body(
     """An emitter body (ALGEBRA.md 9.17 (4); BUILD.md section 26): a well of the massive
     family `own` of side 1 at `position` (its seed the scalar EMITTER_SEED_AMPLITUDE, made the
     mode's profile by `seed_on_the_mode` once the document is complete), its stock `stock`
-    excitations, its `emitter` the born family (the residue and the wheel the law's) and,
-    with `receiver`, the born records' ladder by name (the sets named; the lamp's `receiver`
+    excitations, its `emitter` the given family (the residue and the wheel the law's) and,
+    with `receiver`, the given records' ladder by name (the sets named; the lamp's `receiver`
     of old, written only under RECEIVER_KEY) (no coupling: the coupling is the click alone, the model owner's decision (2) of record 1962)."""
     emitter: dict = {"family": family}
     if receiver is not None and RECEIVER_KEY:
@@ -342,10 +342,10 @@ BELL_N2048_RELEASE = [1, 67108864]
 BELL_N2048_STOCK = (
     15728642  # the stock of the Bell worlds at N = 2048 (HISTORY: the amplitude law's lamp)
 )
-# Section 2 item 8: a Bell world counts EXACTLY W = 2048 births (under the seed order more
-# than W births repeat the order), and the lamp's stock of records is its `amount` (one
-# quantum per birth, the engine's `_births`), so the stock is W; the L3 series' stock
-# would birth one record per interval to the end (the preview on 299b6bb2: 3433 births by
+# Section 2 item 8: a Bell world counts EXACTLY W = 2048 givings (under the seed order more
+# than W givings repeat the order), and the lamp's stock of records is its `amount` (one
+# quantum per giving, the engine's `_givings`), so the stock is W; the L3 series' stock
+# would giving one record per interval to the end (the preview on 299b6bb2: 3433 givings by
 # the interval 3433).
 BELL_STOCK = 2048
 BELL_N = 2048
@@ -354,20 +354,20 @@ MALUS_CLOCK = [308, 25]  # section 14 item 1: the same clock on N = 256
 BELL_BRANCHES = [[0, 1], [3, 1]]
 BELL_SETTINGS = {"a0": 0, "a1": BELL_N // 4, "b0": BELL_N // 8, "b1": 3 * BELL_N // 8}
 # Section 2 item 8 (the loader's keys): under `residue_order` "seed" a Bell world counts
-# exactly W = 2048 births at the rate [1, 1] (2048 intervals), so its `ticks` is at least
+# exactly W = 2048 givings at the rate [1, 1] (2048 intervals), so its `ticks` is at least
 # W / rate + the far arm's transit + the completion (Reviewer 3's margin line). The engine
 # ends a train at the first clock zero after the declared periods: on the clock [2464, 25]
-# at N = 2048 the 128 periods (2660 intervals) end at 3200 (the birth line's `train` on
-# 299b6bb2), and every record completed 3204 intervals after its birth in the preview
-# (the last, born 2048, at 5252); the far polariser 7 Links from the lamp is 12.1 intervals
+# at N = 2048 the 128 periods (2660 intervals) end at 3200 (the giving line's `train` on
+# 299b6bb2), and every record completed 3204 intervals after its giving in the preview
+# (the last, given 2048, at 5252); the far polariser 7 Links from the lamp is 12.1 intervals
 # at c = 1 / sqrt 3: 2048 + 3204 + 13 = 5265; written 5500, the margin 235 intervals.
 BELL_TICKS = 5500
 MALUS_TRAIN = 32  # periods (665 intervals on [308, 25]), section 5 item 2, 2026-09-24 06:05Z
-MALUS_TICKS = 3800  # 256 excitations on the well [8, 7]: the wheel in about W P / 2 = 2560 intervals (ALGEBRA.md 9.17 (5) item 1); the engine reads 239 births within 3200 on the flux norm of 9.19 (3), COMPUTATION; the transit 6 and the completion beside
-# Section 5 item 2, "the count of 256 births stands": the lamp's stock of records is its
-# `amount` (a birth spends one quantum of it, the engine's `_births`; two_slits's stock 1024
-# the same key), so the registered 2^50 would birth one record per interval to the end of
-# the 1200 (the preview on 299b6bb2: 1200 births); the declared count is written as the stock.
+MALUS_TICKS = 3800  # 256 excitations on the well [8, 7]: the wheel in about W P / 2 = 2560 intervals (ALGEBRA.md 9.17 (5) item 1); the engine reads 239 givings within 3200 on the flux norm of 9.19 (3), COMPUTATION; the transit 6 and the completion beside
+# Section 5 item 2, "the count of 256 givings stands": the lamp's stock of records is its
+# `amount` (a giving spends one quantum of it, the engine's `_givings`; two_slits's stock 1024
+# the same key), so the registered 2^50 would giving one record per interval to the end of
+# the 1200 (the preview on 299b6bb2: 1200 givings); the declared count is written as the stock.
 MALUS_BIRTHS = 256
 MALUS_SHAPE = [8, 1, 1]  # section 5 item 1 (12:15Z): the exit Node at x = 7 on the board
 MALUS_READ_NODE = [4, 0, 0]  # the registered which-path read body, dropped with its set
@@ -378,9 +378,9 @@ def bell(a: str, b: str) -> dict:
     """DECLARATIONS.md sections 1 and 2: the bar of 21 x 1 x 1 (x open, y and z periodic),
     N = 2048, the pair lamp at x = 10 with two arms and the joint labels 00 and 11, the
     train 128, the polarisers at x = 7 (Alice) and 17 (Bob) with their settings, each a
-    detector set of one Node reading `sum`; the births in the seed-set order (section 2
+    detector set of one Node reading `sum`; the givings in the seed-set order (section 2
     item 8: `residue_order` "seed", the world's own `residue_seed`, the stock 2048 = W
-    births), 5500 intervals (BELL_TICKS); the clock
+    givings), 5500 intervals (BELL_TICKS); the clock
     [2464, 25] on the light family and [1, 1] on the counter family (section 1 item 3 and
     section 15 T-1)."""
     return {
@@ -448,8 +448,8 @@ def malus(name: str, source: Path, setting: int) -> dict:
     [1, 1] on the counter family (section 5 item 3 and section 15 T-1), written in the
     file (the registered entity references carry no clock); the lamp's train 32 periods
     and `ticks` 1200 (section 5 item 2, 2026-09-24: the registered 300 intervals gave 300
-    births and no click, a gather line written only at completion), the lamp's stock
-    `amount` 256 (the count of 256 births)."""
+    givings and no click, a gather line written only at completion), the lamp's stock
+    `amount` 256 (the count of 256 givings)."""
     document = json.loads(source.read_text(encoding="utf-8"))
     document = copy.deepcopy(document)
     rebuilt: dict = {"law": "beam", "model_id": f"beam-detector-law-{name}-v1"}
@@ -524,13 +524,16 @@ CHARGE_STRENGTH = 1  # Lambda; every registered family's charge is 0
 EMITTER_STOCK = (
     64  # the massive rows' emitters: 64 excitations on the wheel [1, 64] (BUILD.md section 26)
 )
-PHASE_STEPS = 1024  # N of every light world (ALGEBRA.md 9.22 (8): the born clock's circle)
-BORN_CLOCK = [512, 1]  # the born clock of every light emitter on N = 1024: k = pi / 2, the wavelength 4
+PHASE_STEPS = 1024  # N of every light world (ALGEBRA.md 9.22 (8): the given clock's circle)
+GIVEN_CLOCK = [
+    512,
+    1,
+]  # the given clock of every light emitter on N = 1024: k = pi / 2, the wavelength 4
 TRAIN_PERIODS = 8  # the train's periods (9.17 (6a))
 TRAIN_LENGTH = 32  # the train's Nodes along K, TRAIN_PERIODS x the wavelength 4
 FACE_DEPTH = 32  # every face a receiver slab as deep as the train (9.25 (11))
 LIGHT_CLOCK_SHAPE = [760, 3, 3]  # the one table (9.30): the chain of 760 extruded to [760, 3, 3]
-LIGHT_CLOCK_TICKS = 4800  # COMPUTATION: 64 births at the mean cadence P / 2 = 47 (P = 94 on A's mode), about 3000 intervals, the last return 300, a margin
+LIGHT_CLOCK_TICKS = 4800  # COMPUTATION: 64 givings at the mean cadence P / 2 = 47 (P = 94 on A's mode), about 3000 intervals, the last return 300, a margin
 MIRROR_DEPTH = 4  # the mirror's depth, the gap [1, 2] (A.3)
 
 
@@ -540,10 +543,10 @@ def emitter(
     """A well that emits light (the light clock's A): the seed 50 x 2^20 on its mode (no
     coupling: the click alone, the model owner's decision (2) of record 1962); SINCE ALGEBRA.md 9.17
     (BUILD.md section 26) its emission is by its excited records' clicks: the stock
-    EMITTER_STOCK excitations, each written once at its rung; SINCE THE BORN TRAIN (item
-    27; 9.17 (6a)) each birth the train of TRAIN_PERIODS periods along `direction` on the
-    born family's clock, the body's `extents` TRAIN_LENGTH along it; the profile and its norm
-    the generator's (`born_train`)."""
+    EMITTER_STOCK excitations, each written once at its rung; SINCE THE GIVEN TRAIN (item
+    27; 9.17 (6a)) each giving the train of TRAIN_PERIODS periods along `direction` on the
+    given family's clock, the body's `extents` TRAIN_LENGTH along it; the profile and its norm
+    the generator's (`given_train`)."""
     block: dict = {
         "position": position,
         "extents": extents,
@@ -617,7 +620,7 @@ def bounded(document: dict) -> None:
 
 def light_clock(massive) -> dict:
     """THE LIGHT CLOCK in the one table's form (the module docstring): the board [760, 3, 3]
-    with x open and the face slabs 32 deep, light with the born clock on N = 1024, A at
+    with x open and the face slabs 32 deep, light with the given clock on N = 1024, A at
     [600, 632) over the whole cross-section with its train along +x and its stock, the mirror
     at [690, 694), the set `at_well` A's own Nodes and A's `receiver` by name; the seeds,
     the train, the placement rule and the stamp by the massive generator's
@@ -630,7 +633,7 @@ def light_clock(massive) -> dict:
         KIND,
         [emitter([600, 0, 0], [TRAIN_LENGTH, 3, 3], WELL_FULL, [1, 0, 0])],
         LIGHT_CLOCK_TICKS,
-        light=light_family(BORN_CLOCK),
+        light=light_family(GIVEN_CLOCK),
         seed_profile=False,
     )
     document["N"] = PHASE_STEPS

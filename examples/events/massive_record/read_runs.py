@@ -200,7 +200,9 @@ def clicks_of(records: Iterable[dict], cells: dict[str, list[Node]] | None = Non
                     tick=int(line["tick"]),
                     node=(int(node[0]), int(node[1]), int(node[2])) if node else None,
                     cell=line.get("detector"),
-                    birth=None if line.get("birth") is None else int(line["birth"]),
+                    birth=None
+                    if line.get("giving", line.get("birth")) is None
+                    else int(line.get("giving", line.get("birth"))),
                     clock=None if line.get("clock") is None else int(line["clock"]),
                 )
             )
@@ -212,7 +214,9 @@ def clicks_of(records: Iterable[dict], cells: dict[str, list[Node]] | None = Non
                     tick=int(line["click"]),
                     node=nodes[0] if len(nodes) == 1 else None,
                     cell=cell,
-                    birth=None if line.get("birth") is None else int(line["birth"]),
+                    birth=None
+                    if line.get("giving", line.get("birth")) is None
+                    else int(line.get("giving", line.get("birth"))),
                     clock=None if line.get("clock") is None else int(line["clock"]),
                 )
             )

@@ -5,7 +5,7 @@ seed and a stock `amount` = M holds its excited records in turn (the seed at bot
 content one quantum, the residue from the body's wheel [step, W] in its residue order);
 excited record k clicks at its own rung on its own Nodes (E its own motion booked through
 its Nodes, D the rung 2 T u_k + T <= 2 W C with T its norm, the seed's squares over its
-Nodes); at that click X ends it and E^T births the photon, written ONCE at both levels
+Nodes); at that click X ends it and E^T givings the photon, written ONCE at both levels
 (now = A C[phase(0)], before = A C[phase(-1)] on the body's Nodes, A the lamp's unit) with
 the norm T the motion the write inserts and the excitation's residue, and, while the stock
 lasts, excited record k + 1. No rate, no train, no drive, no source term, no grace, no own
@@ -13,23 +13,23 @@ take. BUILD.md section 26.
 
 SINCE THE FLUX READING (ALGEBRA.md 9.19 (3); BUILD.md section 26 items 13 and 14): the
 excited record's offer is the one-way flux into the body's centre Node, its norm T the
-generator's integer `norm` (that flux over one period of the mode advanced alone); the born
+generator's integer `norm` (that flux over one period of the mode advanced alone); the given
 record's norm its conserved form I; every set books the one-way flux into its Nodes and the
 click is on the cumulative ladder, the record deleted whole at it. The unit world's faces
 are CLOSED (mirrors): an open face two Links behind a body is the face receiver, last on
 every ladder, and the half that leaves through it clicks there before anything reaches a
 screen (test_detector_law.py reads that).
 
-(a) M excitations give M births at the rungs: each birth at the first interval where the
+(a) M excitations give M givings at the rungs: each giving at the first interval where the
     excited record's booked flux crosses T (2 u + 1) / (2 W) (tracked interval by
     interval), the residues in the wheel's order ("ordinal" the counter, "seed" the keyed
-    permutation), the quanta conserved (the stock spent one per birth, the books balanced
+    permutation), the quanta conserved (the stock spent one per giving, the books balanced
     at every interval), the excited record ended at its click and the next one seeded with
-    the next residue, none after the stock; the birth line's keys.
-(b) The born values: at the birth the record's `now` and `before` equal the cosine table at
-    phase(0) and phase(-1) of the born clock on every Node of the body and 0 elsewhere; its
+    the next residue, none after the stock; the giving line's keys.
+(b) The given values: at the giving the record's `now` and `before` equal the cosine table at
+    phase(0) and phase(-1) of the given clock on every Node of the body and 0 elsewhere; its
     norm is its conserved form; nothing drives it afterwards (its train 0, no grace, no
-    take); nothing reaches Manhattan distance m before age m; the born records reach the
+    take); nothing reaches Manhattan distance m before age m; the given records reach the
     receiver by name and click.
 (c) The loader's refusals, each naming its key.
 """
@@ -82,7 +82,7 @@ def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
 
 
 def lawful_wheel(world, line: dict) -> bool:
-    """A birth line's W is the rule's at the emitting body's read Node with the family of
+    """A giving line's W is the rule's at the emitting body's read Node with the family of
     clicks' level the line carries (`read_clocks`: the level at the read Node, then at its six
     reads, GAMEBOARD; the rule reads the Node's own level alone, item 36), its u below it."""
     block = world.measured[line["measured"]].block
@@ -133,9 +133,9 @@ def emitter_world(
     vacuum, ALGEBRA.md 9.22 (4); at its Nodes the wheel of its content under the Node clock,
     9.35 (2)) over the train's 32 Nodes at [5, 37), seeded on its bound mode at the amplitude
     2^20 (the generator's `seed_on_the_mode`, the body's conditions of the load check; at 100
-    the born light's back-action swamps the excited record, ALGEBRA.md 9.17 (7) (c)), its
-    stock `amount` = `stock`, its `emitter` the light family on the born clock [512, 1] of
-    N = 1024 with its `train` of 8 periods along +x (THE BORN TRAIN, ALGEBRA.md 9.17 (6a);
+    the given light's back-action swamps the excited record, ALGEBRA.md 9.17 (7) (c)), its
+    stock `amount` = `stock`, its `emitter` the light family on the given clock [512, 1] of
+    N = 1024 with its `train` of 8 periods along +x (THE GIVEN TRAIN, ALGEBRA.md 9.17 (6a);
     BUILD.md section 26 item 27) and its ladder the set `screen` (no coupling: the click alone,
     the model owner's decision (2) of record 1962); the receiver the cube of side 3 of
     light bodies at [70, 72] read as `screen` (record 1899), 33 Links ahead of the train's
@@ -225,29 +225,29 @@ def run(document: dict) -> tuple[list[dict], DetectorLawSimulation, list[dict]]:
     return lines, simulation, trace
 
 
-def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved():
+def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserved():
     document = emitter_world(stock=4)
     lines, simulation, trace = run(document)
-    births = [line for line in lines if line["event"] == "birth"]
-    assert len(births) == 4
+    givings = [line for line in lines if line["event"] == "giving"]
+    assert len(givings) == 4
     # the residue from the law (ALGEBRA.md 9.22 (4)) under the Node clock (9.35
     # (2), (3); BUILD.md section 26 item 31): u the clicking record's remainder
-    # at the birth Node in the remainder's step, W = 3 den f / gcd(Gamma num,
+    # at the giving Node in the remainder's step, W = 3 den f / gcd(Gamma num,
     # 6 den M, 3 den f) at that Node with the body's content M (2403 on [800,
-    # 801] in the vacuum; here the stock 4, 3, 2, 1 at the four births), read
+    # 801] in the vacuum; here the stock 4, 3, 2, 1 at the four givings), read
     # from the rule (`lawful_wheel`); read on the board below
-    assert all(lawful_wheel(simulation.world, line) for line in births)
-    assert [line["content"] for line in births] == [4, 3, 2, 1]
-    assert [line["node_clock"] for line in births] == [
+    assert all(lawful_wheel(simulation.world, line) for line in givings)
+    assert [line["content"] for line in givings] == [4, 3, 2, 1]
+    assert [line["node_clock"] for line in givings] == [
         [NODE_CLOCK - m, NODE_CLOCK] for m in (4, 3, 2, 1)
     ]
-    assert [line["excitation"] for line in births] == [1, 2, 3, 4]
-    ticks = [line["tick"] for line in births]
+    assert [line["excitation"] for line in givings] == [1, 2, 3, 4]
+    ticks = [line["tick"] for line in givings]
     # the first residue is read after the body's first advance (9.19 (4e), 9.43 (4); 0 on
     # the seed itself), the tick ceil((2 u + 1) P / (2 W)) intervals after it (9.44 (5) (c))
     assert ticks == sorted(ticks) and ticks[0] >= 2 and ticks[-1] < document["ticks"]
-    norm = births[0]["excitation_norm"]
-    assert norm > 0 and all(line["excitation_norm"] == norm for line in births)
+    norm = givings[0]["excitation_norm"]
+    assert norm > 0 and all(line["excitation_norm"] == norm for line in givings)
     # the norm T: one period's action P e_c, the share of the record's
     # conserved form at the body's centre Node summed over one period of its
     # mode advanced alone (ALGEBRA.md 9.17 (7) (e) and (f), 9.19 (3)), the
@@ -265,7 +265,7 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
     del alone["measured"][0]["emitter"]
     alone["measured"] = alone["measured"][:1]
     alone["detectors"] = []
-    alone["input"] = input_stamp(alone)  # the stamp of the body alone (its born pair gone)
+    alone["input"] = input_stamp(alone)  # the stamp of the body alone (its given pair gone)
     solitary = DetectorLawSimulation(parse_nature_beam_world(alone))
     body = solitary.block_by_number[0]
     centre = np.zeros(solitary.shape, dtype=bool)
@@ -292,17 +292,17 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
     # THE TICK AS A COUNT OF INTERVALS (ALGEBRA.md 9.44 (5) (c), 9.47 (5) (i); BUILD.md
     # section 26 item 33): the residue u read at the previous click (after the first
     # advance for the first, interval 1) times the click at the first count t with 2 W t >=
-    # (2 u + 1) P, so each birth falls EXACTLY ceil((2 u + 1) P / (2 W)) intervals after
-    # its read (at least one), on the residue and the wheel the previous birth line
+    # (2 u + 1) P, so each giving falls EXACTLY ceil((2 u + 1) P / (2 W)) intervals after
+    # its read (at least one), on the residue and the wheel the previous giving line
     # carries; the first residue is on no line, read from the own record before the
-    # first birth (the trace's entry of interval 2, the state after the read at 1)
+    # first giving (the trace's entry of interval 2, the state after the read at 1)
     period = document["measured"][0]["emitter"]["period"]
-    assert all(line["period"] == period for line in births)
+    assert all(line["period"] == period for line in givings)
     first = by_tick[2]["excited_before"]
     assert first is not None and first[1] > 0
     read_at = 1
     previous: tuple[int, int] = (first[1], first[2])
-    for line in births:
+    for line in givings:
         u, wheel = previous
         expected = max(1, -(-(2 * u + 1) * period // (2 * wheel)))
         assert line["tick"] - read_at == expected == line["wait"], (line["tick"], u, wheel)
@@ -312,7 +312,7 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
         # the residue read at the first shell Node, the body's corner at x = 5
         assert line["read_node"] == [5, 0, 0]
         # THE BODY'S OWN RECORD CONTINUES (9.43 (3)): the same record, the body's
-        # identity, before and after every birth; the line's residue on it after the click
+        # identity, before and after every giving; the line's residue on it after the click
         entry = by_tick[line["tick"]]
         assert entry["excited_before"] is not None
         assert entry["excited_after"] == entry["excited_before"][0] == 0
@@ -325,33 +325,33 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
     assert set(simulation.records) == {0}  # the body's own standing record alone remains
     gathers = [line for line in lines if line["event"] == "gather"]
     assert len(gathers) == 4 and all(gather["chosen"] == [["screen", 0, "0"]] for gather in gathers)
-    assert sorted(gather["u"] for gather in gathers) == sorted(line["u"] for line in births)
+    assert sorted(gather["u"] for gather in gathers) == sorted(line["u"] for line in givings)
     for gather in gathers:
         assert gather["content"] == 1 and gather["click_at"] == "rung"
         # the train's head over the 33 Links from the body's head at 36 to the
         # screen at 70 at v_g = 0.447 (about 74 intervals), the tapers' precursor
         # a little before it; the rung crossed on the passage
-        assert gather["click"] >= gather["birth"] + 50
+        assert gather["click"] >= gather["giving"] + 50
         assert gather["click"] == gather["tick"] and gather["record"] not in simulation.records
     # THE RESIDUES SPREAD: the body's own record continues (ALGEBRA.md 9.43 (3)) and its
-    # remainder at the first shell Node moves between births with no coupling, no draw
+    # remainder at the first shell Node moves between givings with no coupling, no draw
     # and no reseed (the kept remainder through a reseed, item 29, HISTORY)
-    assert len({line["u"] for line in births}) > 1
-    # a smaller stock: as many births
+    assert len({line["u"] for line in givings}) > 1
+    # a smaller stock: as many givings
     lines, _, _ = run(emitter_world(stock=2))
-    assert len([line for line in lines if line["event"] == "birth"]) == 2
+    assert len([line for line in lines if line["event"] == "giving"]) == 2
 
 
 def test_the_bodys_own_record_is_never_rewritten_and_the_residue_is_read_at_the_first_shell_node():
     """THE RESEED RETIRED (ALGEBRA.md 9.43 (3) and (4); the residue at the click at the first
-    shell Node, 9.44 (5) (c); BUILD.md section 26 item 33): the giving end sets the born rows,
+    shell Node, 9.44 (5) (c); BUILD.md section 26 item 33): the giving end sets the given rows,
     lowers the stock and the content, and leaves the body's own record as it is: at every one
-    of the four births the own record is the same object with its levels and remainders bit
+    of the four givings the own record is the same object with its levels and remainders bit
     for bit as before the click, and it goes on advancing after the stock is spent (its levels
-    move over the later intervals, no fifth birth). The residue on every birth line is the own
+    move over the later intervals, no fifth giving). The residue on every giving line is the own
     record's remainder at the first shell Node, the body's corner at x = 5 (the first Node in
     x-major order with a Port; the shell the two ends of the train, x = 5 and x = 36), in the
-    remainder's step on the body's wheel there, read at the click; the born record carries
+    remainder's step on the body's wheel there, read at the click; the given record carries
     the same u. The edge case: a body whose every Link is inside it has no shell and is
     refused by name."""
     document = emitter_world(stock=4)
@@ -384,70 +384,70 @@ def test_the_bodys_own_record_is_never_rewritten_and_the_residue_is_read_at_the_
         assert simulation.books()["balanced"], simulation.tick
         if simulation.held[0][block.family] == 0:
             spent.append(own.now[block.mask].copy())
-    births = [line for line in lines if line["event"] == "birth"]
-    assert len(births) == 4 and block.own is own and 0 in simulation.records
-    assert [(line["u"], line["W"]) for line in births] == read
-    assert all(line["read_node"] == [5, 0, 0] for line in births)
+    givings = [line for line in lines if line["event"] == "giving"]
+    assert len(givings) == 4 and block.own is own and 0 in simulation.records
+    assert [(line["u"], line["W"]) for line in givings] == read
+    assert all(line["read_node"] == [5, 0, 0] for line in givings)
     gathers = [line for line in lines if line["event"] == "gather"]
-    assert sorted(g["u"] for g in gathers) == sorted(line["u"] for line in births)
+    assert sorted(g["u"] for g in gathers) == sorted(line["u"] for line in givings)
     # the standing record goes on after the stock is spent: its levels move, no click
     assert len(spent) > 2 and not np.array_equal(spent[0], spent[-1])
     whole = replace(block, mask=np.ones(simulation.shape, dtype=bool))
     with pytest.raises(ValueError, match="has no shell"):
         simulation.first_shell_node(whole)
-    assert len({line["u"] for line in births}) > 1
+    assert len({line["u"] for line in givings}) > 1
 
 
-def test_the_born_record_is_written_once_and_the_law_advances_it():
+def test_the_given_record_is_written_once_and_the_law_advances_it():
     document = emitter_world(stock=1, ticks=400)
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
     block = simulation.block_by_number[0]
-    born = None
+    given = None
     extent: list[tuple[int, int]] = []
     while simulation.tick < 400:
         simulation.step()
         assert simulation.books()["balanced"]
         light = [live for live in simulation.records.values() if live.family == 0]
-        if light and born is None:
-            (born,) = light
-            birth = next(line for line in lines if line["event"] == "birth")
-            assert birth["tick"] == simulation.tick and born.age == 0 and born.train == 0
-            # THE BORN TRAIN (ALGEBRA.md 9.17 (6a)): the world's profile `born`
+        if light and given is None:
+            (given,) = light
+            giving = next(line for line in lines if line["event"] == "giving")
+            assert giving["tick"] == simulation.tick and given.age == 0 and given.train == 0
+            # THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a)): the world's profile `given`
             # {now, before, norm}, the generator's integers, written on the
             # body's 32 Nodes in the box's x-major order and zero elsewhere; the
             # character cos(pi i / 2) under the tapers of 8 at both ends: the
             # levels 1, 0, -1, 0 times 2^16 in the flat middle
-            train = document["measured"][0]["emitter"]["born"]
+            train = document["measured"][0]["emitter"]["given"]
             assert len(train["now"]) == len(train["before"]) == 32
             assert train["now"][8:16] == [65536, 0, -65536, 0, 65536, 0, -65536, 0]
             assert 0 < train["now"][0] < 1000 and train["now"][31] == 0
-            assert list(born.now[5:37, 0, 0]) == train["now"]
-            assert list(born.before[5:37, 0, 0]) == train["before"]
-            assert not np.any(born.now[~block.mask]) and not np.any(born.before[~block.mask])
+            assert list(given.now[5:37, 0, 0]) == train["now"]
+            assert list(given.before[5:37, 0, 0]) == train["before"]
+            assert not np.any(given.now[~block.mask]) and not np.any(given.before[~block.mask])
             # THE NORM UNDER THE NODE'S OWN PACE (BUILD.md section 26 item 36): the
             # record's conserved form as written on the board, the exact rational norm /
             # pace in lowest terms (the Node's terms weighted by 1 / p, p the pace at the
-            # body's Nodes as the birth leaves them, Gamma - content after the birth; p
+            # body's Nodes as the giving leaves them, Gamma - content after the giving; p
             # times the form whole, the pair reducing from (p x form, p)), read again here
-            assert birth["born_norm"] == train["norm"] > 0 and birth["content"] == 1
-            pace = NODE_CLOCK - (birth["content"] - 1)
-            assert born.pace == birth["pace"] and pace % born.pace == 0
-            form = Fraction(born.norm, born.pace)
-            assert form == simulation.conserved_form(born) > 0 and born.norm == birth["norm"]
-            assert form == wall_form(simulation, 0, born.now, born.before)
+            assert giving["given_norm"] == train["norm"] > 0 and giving["content"] == 1
+            pace = NODE_CLOCK - (giving["content"] - 1)
+            assert given.pace == giving["pace"] and pace % given.pace == 0
+            form = Fraction(given.norm, given.pace)
+            assert form == simulation.conserved_form(given) > 0 and given.norm == giving["norm"]
+            assert form == wall_form(simulation, 0, given.now, given.before)
             assert (form * pace).denominator == 1
-            assert birth["nodes"] == 32 and birth["excitation"] == 1 and birth["train"] == 0
-            assert born.u == birth["u"] and born.wheel == birth["W"]
-            assert lawful_wheel(simulation.world, birth)
-            assert born.content == 1 and born.emitter == 0
-            assert born.ladder == [simulation.detector_names.index("screen")]
-        if born is not None and born.identity in simulation.records:
-            nonzero = np.nonzero(born.now)[0]
+            assert giving["nodes"] == 32 and giving["excitation"] == 1 and giving["train"] == 0
+            assert given.u == giving["u"] and given.wheel == giving["W"]
+            assert lawful_wheel(simulation.world, giving)
+            assert given.content == 1 and given.emitter == 0
+            assert given.ladder == [simulation.detector_names.index("screen")]
+        if given is not None and given.identity in simulation.records:
+            nonzero = np.nonzero(given.now)[0]
             if len(nonzero):
-                extent.append((born.age, int(nonzero.min()), int(nonzero.max())))
-    assert born is not None and extent
+                extent.append((given.age, int(nonzero.min()), int(nonzero.max())))
+    assert given is not None and extent
     for age, low, high in extent:
         # nothing reaches Manhattan distance m before age m (the causal bound)
         assert low >= 5 - age and high <= 36 + age
@@ -488,7 +488,7 @@ def test_the_loaders_refusals_name_their_keys():
 
     refused(coupled, "coupling is refused")
 
-    # the richness of the birth Node (9.22 (4)): a pair with fewer than 500
+    # the richness of the giving Node (9.22 (4)): a pair with fewer than 500
     # remainder values refuses the emitter naming the count
     def poor_well(document):
         document["measured"][0]["pair"] = [800, 800]
@@ -515,7 +515,7 @@ def test_the_loaders_refusals_name_their_keys():
 
     # the generator's integers (ALGEBRA.md 9.17 (5) item 1): a norm the
     # emitter does not declare refuses the simulation at its first
-    # excitation; a `born` profile of the wrong count, or one that writes no
+    # excitation; a `given` profile of the wrong count, or one that writes no
     # motion, refuses the loader (9.17 (5) item 3)
     def no_norm(document):
         document["measured"][0]["emitter"]["period"] = 70
@@ -523,21 +523,21 @@ def test_the_loaders_refusals_name_their_keys():
         del document["measured"][0]["emitter"]["norm"]
 
     refused(no_norm, "declares no `norm`", on_mode=True)
-    # the mathematician's gate item 8: a body that births declares its seed
+    # the mathematician's gate item 8: a body that givings declares its seed
     # as its composed mode's profile; a flat scalar seed is refused
     refused(lambda document: None, "seed. as its composed mode's profile")
-    # THE BORN TRAIN'S REFUSALS (ALGEBRA.md 9.17 (6a)): the two-integer pair
-    # (the one-Node birth, a flat pulse) by its reason; a profile of the wrong
+    # THE GIVEN TRAIN'S REFUSALS (ALGEBRA.md 9.17 (6a)): the two-integer pair
+    # (the one-Node giving, a flat pulse) by its reason; a profile of the wrong
     # count, one that writes no motion, one whose flux runs against the
-    # declared way, one whose norm is not the vacuum's form; `born` without
+    # declared way, one whose norm is not the vacuum's form; `given` without
     # `train`; the train's direction, periods, wavelength and extent
-    refused(emitter("born", [5, -5]), "a flat pulse of the body's length is broadband")
-    refused(emitter("born", {"now": [1, 2], "before": [3, 4], "norm": 1}), "must be 32 integers")
-    refused(emitter("born", {"now": [0] * 32, "before": [0] * 32, "norm": 1}), "writes no motion")
+    refused(emitter("given", [5, -5]), "a flat pulse of the body's length is broadband")
+    refused(emitter("given", {"now": [1, 2], "before": [3, 4], "norm": 1}), "must be 32 integers")
+    refused(emitter("given", {"now": [0] * 32, "before": [0] * 32, "norm": 1}), "writes no motion")
 
     def against(document):
-        train = document["measured"][0]["emitter"]["born"]
-        document["measured"][0]["emitter"]["born"] = {
+        train = document["measured"][0]["emitter"]["given"]
+        document["measured"][0]["emitter"]["given"] = {
             "now": train["now"],
             "before": train["now"],
             "norm": train["norm"],
@@ -546,17 +546,17 @@ def test_the_loaders_refusals_name_their_keys():
     refused(against, "not positive: the record does not travel as declared", on_mode=True)
 
     def wrong_norm(document):
-        document["measured"][0]["emitter"]["born"]["norm"] += 1
+        document["measured"][0]["emitter"]["given"]["norm"] += 1
 
-    refused(wrong_norm, "is not the born record's conserved form on the vacuum", on_mode=True)
+    refused(wrong_norm, "is not the given record's conserved form on the vacuum", on_mode=True)
 
     def trainless(document):
         del document["measured"][0]["emitter"]["train"]
 
     refused(trainless, "needs the emitter's `train`", on_mode=True)
     refused(
-        lambda document: document["measured"][0]["emitter"].pop("born"),
-        "declares no born train",
+        lambda document: document["measured"][0]["emitter"].pop("given"),
+        "declares no given train",
         on_mode=True,
     )
     refused(emitter("train", {"direction": [1, 1, 0], "periods": 8}), "one signed unit axis vector")
@@ -586,8 +586,8 @@ def test_the_loaders_refusals_name_their_keys():
 
     refused(two_ladders, "one ladder")
 
-    def free_born(document):
+    def free_given(document):
         document["families"].append({"name": "e", "quantum": 0, "charge": -1, "phase": True})
         document["measured"][0]["emitter"]["family"] = "e"
 
-    refused(free_born, "paid family")
+    refused(free_given, "paid family")

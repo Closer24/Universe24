@@ -21,7 +21,7 @@ from tests.test_flux_reading import planted
 
 def small_layer() -> dict:
     """The layer of 24 x 9 of the first form, empty (no emitter, no set): the detector-law
-    layer's emitter body is the train's 32 Nodes since the born train (BUILD.md section 26
+    layer's emitter body is the train's 32 Nodes since the given train (BUILD.md section 26
     item 27), wider than this layer, so these tests place their bodies on the empty layer."""
     document = layer_world()
     document["shape"] = [24, 9, 1]

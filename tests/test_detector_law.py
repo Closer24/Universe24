@@ -3,11 +3,11 @@ the build's first gate: the loader's key and refusals, the rule's step against
 the design's integers, and one chain world run headless (an emitter body at one
 end, a receiver at the other, the open face behind the emitter): one click per
 record, the books balanced at every tick, the click's time at the front's
-first rung about L / c after the birth, the click line with the stamp. SINCE
+first rung about L / c after the giving, the click line with the stamp. SINCE
 THE EMITTER AS A CLICKING BODY (ALGEBRA.md 9.17; BUILD.md section 26) the
 lamp is refused under the detector law: the chain world's source is a body
 of the matter kind seeded on its bound mode, its excitations clicking at
-their rungs and writing the born record once; the grace, the exemption and
+their rungs and writing the given record once; the grace, the exemption and
 the emitter's own take are retired (its Nodes are Nodes like every other)."""
 
 from __future__ import annotations
@@ -34,11 +34,11 @@ EMITTER_KIND = [7, 8]  # the emitter body's kind (omega_0 = 0.505)
 EMITTER_PAIR = [
     699,
     700,
-]  # the well of the 32-Node emitting body, rich (W = 700 remainder values, ALGEBRA.md 9.22 (4)) and bound on a chain (2 cos omega_b = 1.9944 over 32 Nodes; the one-Node well [801, 700] of the one-Node birth is a runaway over 32 Nodes, 2.285, its interior above 1)
-BORN_CLOCK = [
+]  # the well of the 32-Node emitting body, rich (W = 700 remainder values, ALGEBRA.md 9.22 (4)) and bound on a chain (2 cos omega_b = 1.9944 over 32 Nodes; the one-Node well [801, 700] of the one-Node giving is a runaway over 32 Nodes, 2.285, its interior above 1)
+GIVEN_CLOCK = [
     512,
     1,
-]  # the born clock of every light emitter on N = 1024: k = pi / 2, the wavelength 4 (ALGEBRA.md 9.17 (6a))
+]  # the given clock of every light emitter on N = 1024: k = pi / 2, the wavelength 4 (ALGEBRA.md 9.17 (6a))
 PHASE_STEPS = 1024
 TRAIN_LENGTH = 32  # the train's Nodes along K: 8 periods of the wavelength 4
 
@@ -53,12 +53,12 @@ def emitter_body(
 ) -> dict:
     """An emitter body of the matter kind EMITTER_KIND (the well pair EMITTER_PAIR over the
     train's 32 Nodes along `direction`, +x by default, seeded on its mode at 2^20 by the
-    generator; at 100 the born light's back-action swamps the excited record, ALGEBRA.md
+    generator; at 100 the given light's back-action swamps the excited record, ALGEBRA.md
     9.17 (7) (c)), its stock `stock`, its `emitter` the family given with its `train` of 8
-    periods (THE BORN TRAIN, 9.17 (6a); BUILD.md section 26 item 27: the profile and its
-    norm the generator's, `born_train`) and, with `receiver`, the born records' ladder by
+    periods (THE GIVEN TRAIN, 9.17 (6a); BUILD.md section 26 item 27: the profile and its
+    norm the generator's, `given_train`) and, with `receiver`, the given records' ladder by
     name. The residue and the wheel are the law's (ALGEBRA.md 9.22 (4): the clicking
-    record's remainder at the birth Node, W = 700 on EMITTER_PAIR in the vacuum, at the body's
+    record's remainder at the giving Node, W = 700 on EMITTER_PAIR in the vacuum, at the body's
     Nodes the wheel of its content under the Node clock (9.35 (2); BUILD.md section 26 item
     31), read after the excited record's first advance, 9.19 (4e); the residues spread from the kept remainder, the model
     owner's decisions (1) and (2) of record 1962, no coupling). The cadence under the click
@@ -138,8 +138,8 @@ def chain_world(
     train's 32 Nodes of the matter kind [7, 8] with the well pair [699,
     700], its mode the seed), the receiver cube of side 3 at [70, 72] read
     as the set `screen` (record 1899), 36 Links ahead of the train's head;
-    the light family's born clock [512, 1] on N = 1024 (k = pi / 2, the
-    wavelength 4; THE BORN TRAIN, ALGEBRA.md 9.17 (6a)); no wheel anywhere
+    the light family's given clock [512, 1] on N = 1024 (k = pi / 2, the
+    wavelength 4; THE GIVEN TRAIN, ALGEBRA.md 9.17 (6a)); no wheel anywhere
     (the rung's wheel is the record's own, W = 700). With `faces` "open"
     the face receiver `face` stands at both ends, last on every ladder
     (ALGEBRA.md 9.19 (3) (a)) on the chain of 140 with the body at [34, 66)
@@ -168,7 +168,7 @@ def chain_world(
         "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": list(BORN_CLOCK), "charge": 0},
+            {"name": "light", "quantum": 1, "phase_per_link": list(GIVEN_CLOCK), "charge": 0},
             {"name": "matter", "quantum": 1, "pair": list(EMITTER_KIND), "charge": 0},
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
@@ -190,7 +190,7 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
     assert DETECTOR_LAW_RULE in world.hypotheses
     block = world.measured[0].block
     assert block is not None and block.emitter is not None and block.emitter.family == 0
-    # the lamp is refused under the detector law (ALGEBRA.md 9.17): a birth
+    # the lamp is refused under the detector law (ALGEBRA.md 9.17): a giving
     # has a clicking record behind it
     with_lamp = chain_world()
     with_lamp["measured"][0] = {
@@ -243,7 +243,7 @@ def test_the_rule_is_the_designs_integers_on_a_chain():
 
 def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     """The chain world under the flux reading (ALGEBRA.md 9.19 (3); BUILD.md section 26
-    item 14): six births at their rungs, every record clicking ONCE at `screen` (the
+    item 14): six givings at their rungs, every record clicking ONCE at `screen` (the
     cumulative ladder [screen] on the emitter's default ladder of every declared set, no
     face on a closed chain), its line at the rung's interval and the record deleted whole
     at it (never in `records` after its line), the flight of the train's head over the 36
@@ -261,22 +261,22 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     for _ in range(600):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-    births = [line for line in lines if line["event"] == "birth"]
+    givings = [line for line in lines if line["event"] == "giving"]
     gathers = [line for line in lines if line["event"] == "gather"]
     # the emitter's stock of 6 excitations, each clicking at its own rung; the
     # residues from the law (ALGEBRA.md 9.22 (4)): the clicking record's
-    # remainder at the birth Node on Z_700
+    # remainder at the giving Node on Z_700
     # the wheel the rule's at the body's centre Node under the Node clock (the
-    # stock 6 down to 1 at the six births), u below it
-    assert len(births) == 6 and all(lawful_wheel(world, line) for line in births)
-    assert [line["content"] for line in births] == [6, 5, 4, 3, 2, 1]
+    # stock 6 down to 1 at the six givings), u below it
+    assert len(givings) == 6 and all(lawful_wheel(world, line) for line in givings)
+    assert [line["content"] for line in givings] == [6, 5, 4, 3, 2, 1]
     assert len(gathers) + sum(1 for live in simulation.records.values() if live.family == 0) == 6
     assert len(gathers) >= 3
-    assert all("clock" in g and "birth" in g and "click" in g for g in gathers)
+    assert all("clock" in g and "giving" in g and "click" in g for g in gathers)
     for gather in gathers:
         assert gather["chosen"] == [["screen", 0, "0"]] and gather["click_at"] == "rung"
         assert gather["tick"] == gather["click"] and gather["record"] not in simulation.records
-        flight = gather["click"] - gather["birth"]
+        flight = gather["click"] - gather["giving"]
         # the train's head over 36 Links at v_g = 0.447 (80 intervals), then as
         # much of the passage (72 intervals) as the residue asks (a residue near
         # W waits for the whole train: the residues spread from the kept
@@ -300,9 +300,9 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
 
 def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_record():
     """ALGEBRA.md 9.17 (the Boss's line on the knot): the emitter's own Nodes are Nodes like
-    every other after the birth: no grace, no exemption, no own take. On the chain world
-    the born record's row at the emitter's tail Node evolves under the rule (nonzero at ages
-    after the birth, never held at 0), the ledger's row `taken_by_emitter` stays 0 (kept for the
+    every other after the giving: no grace, no exemption, no own take. On the chain world
+    the given record's row at the emitter's tail Node evolves under the rule (nonzero at ages
+    after the giving, never held at 0), the ledger's row `taken_by_emitter` stays 0 (kept for the
     readers' form) and the records reading carries no `emitter_taking`; a `remnant_take` key
     on the emitter is refused as unknown; the world key `wheel`, a set's `wheel` and a
     family's `take` are refused by name (the retired keys, BUILD.md section 26 item 15); the
@@ -378,7 +378,7 @@ def layer_world(receiver: object = None) -> dict:
         "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": list(BORN_CLOCK), "charge": 0},
+            {"name": "light", "quantum": 1, "phase_per_link": list(GIVEN_CLOCK), "charge": 0},
             {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0},
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
@@ -460,7 +460,7 @@ RESIDUES = 128  # the planted records' wheel: every residue once
 
 def planted_layer(order: tuple[str, ...]) -> tuple[list[dict], DetectorLawSimulation, Seen]:
     """The layer world without its emitter, RESIDUES light records planted at the emitter's
-    Node at interval 0 with every residue of the wheel once (the born pair on the circle of
+    Node at interval 0 with every residue of the wheel once (the given pair on the circle of
     2 N, the norm the conserved form) and the ladder the sets named in `order`; run 300
     intervals; the gather lines, the simulation and the spy's readings."""
     document = layer_world()
@@ -505,10 +505,10 @@ def planted_layer(order: tuple[str, ...]) -> tuple[list[dict], DetectorLawSimula
     return [line for line in lines if line["event"] == "gather"], simulation, seen
 
 
-def lockstep_births(
+def lockstep_givings(
     first: dict, second: dict, ticks: int = 900
 ) -> tuple[list[dict], list[dict], int | None]:
-    """Two worlds stepped together (BUILD.md section 26 item 32, FINDING C): their birth
+    """Two worlds stepped together (BUILD.md section 26 item 32, FINDING C): their giving
     lines and the first interval at which the family of clicks' level differs between them
     on the emitter body's Nodes or their shell (None if it never does)."""
     runs: list[tuple[DetectorLawSimulation, list[dict]]] = []
@@ -529,8 +529,8 @@ def lockstep_births(
             runs[0][0].clock_record.now[near], runs[1][0].clock_record.now[near]
         ):
             differs = runs[0][0].tick
-    births = [[line for line in lines if line["event"] == "birth"] for _run, lines in runs]
-    return births[0], births[1], differs
+    givings = [[line for line in lines if line["event"] == "giving"] for _run, lines in runs]
+    return givings[0], givings[1], differs
 
 
 def test_the_increment_ladder_over_the_named_sets():
@@ -545,7 +545,7 @@ def test_the_increment_ladder_over_the_named_sets():
     the order, 9.25 (3): a theorem in distribution; on eight residues the exact counts
     are (4, 2, 2) against (2, 2, 4), the first detector of the ladder holding more of the eight
     thresholds, COMPUTATION for the mathematician), s0 and s2 alike within the same
-    sampling (the placement's symmetry about the emitter's row). The emitter's own births
+    sampling (the placement's symmetry about the emitter's row). The emitter's own givings
     carry residues spread from the kept remainder (the model owner's decisions (1) and (2)
     of record 1962; the coupling's back-action of 9.19 (4e) HISTORY), each
     clicking at the detector the walk names on its own numbers, the line's `ladder` the names and
@@ -572,7 +572,7 @@ def test_the_increment_ladder_over_the_named_sets():
     forward, backward = counts[("s0", "s1", "s2")], counts[("s2", "s1", "s0")]
     assert all(abs(forward[name] - backward[name]) <= 12 for name in forward), counts
     assert abs(forward["s0"] - forward["s2"]) <= 12 and min(forward.values()) > 0, counts
-    # the emitter's own births: the residues spread from the kept remainder
+    # the emitter's own givings: the residues spread from the kept remainder
     gathers, simulation, seen = run_layer(layer_world(["s0", "s1", "s2"]))
     assert len(gathers) == 8 and len({g["u"] for g in gathers}) > 1
     names = [simulation.detector_names.index(name) for name in ("s0", "s1", "s2")]
@@ -580,7 +580,7 @@ def test_the_increment_ladder_over_the_named_sets():
         assert gather["ladder"] == ["s0", "s1", "s2"] and gather["record"] not in simulation.records
         total, increments, ladder, u, norm, wheel, pace = seen[gather["record"]]
         # the record's wheel the rule's at the body's Node with its content at
-        # the birth (the stock 8 down to 1); its norm's denominator divides Gamma - content
+        # the giving (the stock 8 down to 1); its norm's denominator divides Gamma - content
         assert ladder == names and (3 * EMITTER_PAIR[1] * NODE_CLOCK) % wheel == 0
         assert 0 <= u < wheel and any((NODE_CLOCK - c) % pace == 0 for c in range(9))
         assert gather["chosen"][0][0] == chosen_by_the_rule(
@@ -597,15 +597,15 @@ def test_the_increment_ladder_over_the_named_sets():
     # every residue read before that agrees bit for bit (all eight here, the last read at
     # 209: the tick counts intervals, item 33; on item 32's head six of eight, the two
     # read after 309 differing; COMPUTATION)
-    forward_births, backward_births, differs = lockstep_births(
+    forward_givings, backward_givings, differs = lockstep_givings(
         layer_world(["s0", "s1", "s2"]), layer_world(["s2", "s1", "s0"])
     )
-    assert len(forward_births) == len(backward_births) == 8 and differs is not None
-    assert sorted(line["u"] for line in forward_births) == sorted(g["u"] for g in gathers)
-    reads = [1] + [line["tick"] for line in forward_births[:-1]]
+    assert len(forward_givings) == len(backward_givings) == 8 and differs is not None
+    assert sorted(line["u"] for line in forward_givings) == sorted(g["u"] for g in gathers)
+    reads = [1] + [line["tick"] for line in forward_givings[:-1]]
     agreed = [
         (forward["u"] == backward["u"], read)
-        for forward, backward, read in zip(forward_births, backward_births, reads, strict=True)
+        for forward, backward, read in zip(forward_givings, backward_givings, reads, strict=True)
     ]
     assert all(same for same, read in agreed if read < differs)
     assert sum(1 for _same, read in agreed if read < differs) >= 3

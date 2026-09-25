@@ -17,14 +17,14 @@ Euclidean division by 3 with the remainder kept on the record's row, verb
 D; the pair [1, 3] of the exact square its only constant; a periodic axis
 wraps, an open face is a declared wall that is not read). A record is
 kept as dense arrays over the board (the first build; the record's rows
-are the Nodes it has reached, the rest zero), one record per birth.
+are the Nodes it has reached, the rest zero), one record per giving.
 
 The Outside (DESIGN.md sections 1 and 5): two things only on the board,
 the free Node and the receiver-inserter. A measured event with a lamp
-INSERTS: each birth is a record driven at the lamp's Nodes by the
+INSERTS: each giving is a record driven at the lamp's Nodes by the
 family's clock (the pair `phase_per_link` [n, d] on the circle of N steps)
 for the lamp's train (the key `train`, in periods); the lamp pays the
-family's quantum h at the birth. Every measured event's Nodes, every
+family's quantum h at the giving. Every measured event's Nodes, every
 detector set's Nodes and every open face's layer RECEIVE: the offer
 `a_next^2` arriving at such a Node is added to the record's pointer for
 that detector (a measured event's own detector `measured:<number>`, a set's detector
@@ -35,7 +35,7 @@ of the wheel of what the detectors hold); the click's detector is chosen by
 `cell_of` over the pointers on the record's wheel (the counting form,
 record 1288; `amplitude.cell_of`), one click per record; the click line
 (`gather`, the amplitude law's keys, with `clock` the detector's own count
-and `birth` the record's birth stamp) is written, the record's content h
+and `giving` the record's giving stamp) is written, the record's content h
 handed to the measured event at the chosen Node (or booked as escaped at a
 face or a set without a body), and the record's rows removed. The books
 balance as today: held content initial + measured == current + spent +
@@ -113,8 +113,8 @@ class LiveRecord:
     lamp: int
     family: int
     u: int
-    born: int
-    birth_tick: int
+    given: int
+    giving_tick: int
     content: int
     period_numerator: int
     period_denominator: int
@@ -129,9 +129,9 @@ class LiveRecord:
     norm: int = 0
     first_rung: list[int | None] = field(default_factory=list)
     # THE RESIDUE FROM THE LAW (ALGEBRA.md 9.22 (4); BUILD.md section 26 item
-    # 15): the record's own wheel W, born with its residue u, both read from
-    # the rule's remainder at the birth Node of the record that clicked to
-    # birth it (`residue_of`); a planted record carries the test's W. The
+    # 15): the record's own wheel W, given with its residue u, both read from
+    # the rule's remainder at the giving Node of the record that clicked to
+    # giving it (`residue_of`); a planted record carries the test's W. The
     # rung's wheel is the record's, never a set's or the world's. UNDER THE
     # NODE CLOCK (ALGEBRA.md 9.35 (2), (3); BUILD.md section 26 item 31) W
     # = 3 den f / gcd(Gamma num, 6 den M, 3 den f) at that Node with f =
@@ -146,8 +146,8 @@ class LiveRecord:
     # row per interval, the remainder in [0, wall)).
     emitter: int | None = None
     # The pair's arms (detector-law-v1, build 2, component 2; DECLARATIONS.md
-    # Bell's four settings and the no-signalling control, DESIGN.md 6.3): a lamp with `arms` births one record
-    # per arm on one birth stamp (the same ordinal, u and tick), each arm's
+    # Bell's four settings and the no-signalling control, DESIGN.md 6.3): a lamp with `arms` givings one record
+    # per arm on one giving stamp (the same ordinal, u and tick), each arm's
     # row confined to its own half-space by the arm's first direction (the
     # rows zero beyond the lamp's Node on the other side, verb D's comparison
     # at every interval), the joint labels carried on every arm unchanged;
@@ -172,7 +172,7 @@ class LiveRecord:
     # THE INCREMENT LADDER (ALGEBRA.md 9.25 (2)): the record's running total
     # C of its one-way flux into the detectors of its ladder, every detector's
     # increment in the ladder's order, against the record's threshold
-    # (2 u + 1) T / (2 W) fixed at its birth; the click at the interval C
+    # (2 u + 1) T / (2 W) fixed at its giving; the click at the interval C
     # crosses it, at the detector whose segment of that interval's increment
     # holds the threshold.
     total: int = 0
@@ -241,7 +241,7 @@ class Block:
     body: BodyRotation | None = None
     emitted: list[int] = field(default_factory=list)
     current: int | None = None
-    births: int = 0
+    givings: int = 0
     hop: tuple[int, int, int] = (0, 0, 0)
     new_cycle: bool = False
     # the interval the current cycle began and the last cycle's length (the
@@ -299,14 +299,14 @@ class DetectorLawLayer:
 
     def __init__(self) -> None:
         self.gathers: list[dict[str, object]] = []
-        self.born = 0
+        self.given = 0
         self.gathered = 0
 
     def open_records(self) -> list[dict[str, object]]:
         return []
 
     def report(self) -> dict[str, object]:
-        return {"law": DETECTOR_LAW_RULE, "born": self.born, "gathered": self.gathered, "open": 0}
+        return {"law": DETECTOR_LAW_RULE, "given": self.given, "gathered": self.gathered, "open": 0}
 
 
 class DetectorLawSimulation:
@@ -389,7 +389,7 @@ class DetectorLawSimulation:
                 raise ValueError(
                     f"{BEAM_LAW}: measured[{number}].table is refused under {DETECTOR_LAW_RULE}: the "
                     "tables (the polariser's two detectors at one Node, the splitter's linear form) "
-                    "retired with the flux reading (the born pair on the circle; BUILD.md section 26 item 17); a polariser is "
+                    "retired with the flux reading (the given pair on the circle; BUILD.md section 26 item 17); a polariser is "
                     "a body with an axis and two receivers named, a splitter a region of the one "
                     "operator (ALGEBRA.md 9.21)"
                 )
@@ -447,9 +447,9 @@ class DetectorLawSimulation:
         # clicks brought) on the event's Nodes (a block's Nodes as they
         # stand, a measured event's span), 0 in the vacuum; the clock pair
         # (e, f) = (Gamma, Gamma + M) enters every family's rule at the
-        # Node. M changes only at the law's events (a birth, a click, a
+        # Node. M changes only at the law's events (a giving, a click, a
         # step of a body), so the array is rebuilt from the held books as
-        # each interval begins (`_refresh_node_content`) and after a birth.
+        # each interval begins (`_refresh_node_content`) and after a giving.
         self.node_clock = int(world.node_clock)
         if self.node_clock < 1:
             raise ValueError(
@@ -1008,20 +1008,20 @@ class DetectorLawSimulation:
             # the mathematician's gate item 8: the excited record is the body's
             # composed mode (ALGEBRA.md 9.9, 9.17 (4) item 1), the generator's
             # profile; a flat seed is no mode and is refused where a body
-            # births (at the engine's construction: the generator parses the
+            # givings (at the engine's construction: the generator parses the
             # world with the scalar seed to compute the profile)
             raise ValueError(
                 f"{BEAM_LAW}: measured[{block.number}].emitter needs the body's `seed` as its "
                 "composed mode's profile (one integer per Node, the generator's "
-                "`seed_on_the_mode`; a flat scalar seed is no mode and births nothing lawful, "
+                "`seed_on_the_mode`; a flat scalar seed is no mode and givings nothing lawful, "
                 "ALGEBRA.md 9.17 (4) item 1)"
             )
-        if emitter.train is None or emitter.born is None:
+        if emitter.train is None or emitter.given is None:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{block.number}].emitter declares no born train: `train` "
-                "(the direction and the periods) with `born` (the train's two levels over the "
+                f"{BEAM_LAW}: measured[{block.number}].emitter declares no given train: `train` "
+                "(the direction and the periods) with `given` (the train's two levels over the "
                 "body's Nodes and its norm on the vacuum), the generator's integers (ALGEBRA.md "
-                "9.17 (6a); `born_train` of the massive record generator; no table in the engine)"
+                "9.17 (6a); `given_train` of the massive record generator; no table in the engine)"
             )
         if emitter.norm is None:
             raise ValueError(
@@ -1155,25 +1155,25 @@ class DetectorLawSimulation:
             block.emit_now = True
 
     def _emit(self, block: Block) -> None:
-        """The click of the body's own record and the birth (ALGEBRA.md 9.17 (4)
+        """The click of the body's own record and the giving (ALGEBRA.md 9.17 (4)
         items 1 to 3, (5) items 2 to 4 and (6); 9.43 (3): the giving end sets
-        the born rows, lowers the stock and the content, and LEAVES THE
+        the given rows, lowers the stock and the content, and LEAVES THE
         BODY'S OWN LEVELS, PHASE AND REMAINDERS AS THEY ARE, the step alone
         carrying the standing record between its clicks; no X on the own
         record, no reseed: the reseed of 9.17 (4) item 1 and the remainder
-        kept through it, items 29 and 30, HISTORY). E^T writes the born
+        kept through it, items 29 and 30, HISTORY). E^T writes the given
         record ONCE at both
         of the body (the generator's now = A C_2N[3 N / 2 + s] on the circle
-        of 2 N steps with s = floor(n / d) the born clock's step and before =
+        of 2 N steps with s = floor(n / d) the given clock's step and before =
         -now, the character half a step either side of its zero, no static
         part, A the amplitude unit; no table in the engine); the
         norm T the record's conserved form (9.19 (3)), its residue and
         wheel from the law (9.22 (4), 9.44 (5) (c): the body's own remainder
         at the first shell Node in the declared order, read at the click,
-        the born record's residue and the next excitation's alike: every
+        the given record's residue and the next excitation's alike: every
         Node of the body holds (M, u)), the content one quantum moved from
         the body's stock; the count of intervals to the next click starts
-        here (`_excitation_rung`). Nothing drives the born record
+        here (`_excitation_rung`). Nothing drives the given record
         afterwards: the law advances it."""
         world = self.world
         emitter = block.definition.emitter
@@ -1188,7 +1188,7 @@ class DetectorLawSimulation:
         period = (steps * denominator + numerator - 1) // numerator
         cost = definition.quantum
         excitation = block.excitations
-        # the born record's residue and wheel from the law (9.22 (4), 9.44 (5)
+        # the given record's residue and wheel from the law (9.22 (4), 9.44 (5)
         # (c)): the body's own remainder at its first shell Node in the
         # declared order, read at the click on the body's wheel there
         residue, wheel = self.residue_of(own, block)
@@ -1201,7 +1201,7 @@ class DetectorLawSimulation:
             else self.first_shell_node(block)
         )
         # the family of clicks' level at the read Node and at its reads as the
-        # wheel was read, before the birth lowers the content (item 34; GAMEBOARD)
+        # wheel was read, before the giving lowers the content (item 34; GAMEBOARD)
         read_clocks = [
             int(self.node_content[read_node]),
             [
@@ -1210,23 +1210,23 @@ class DetectorLawSimulation:
             ],
         ]
         # the body's clock pair as the clicking record was advanced (the
-        # content at its centre Node; GAMEBOARD, on the birth line)
+        # content at its centre Node; GAMEBOARD, on the giving line)
         centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
         clock_pair = self.node_clock_pair(centre, block.family)
         # the content and the charge the clicking record was advanced under
-        # (before this birth lowers them; item 35's line reads them here,
+        # (before this giving lowers them; item 35's line reads them here,
         # the pair no longer the content alone for a charged family)
         centre_content = int(self.node_content[centre])
         body_charge = self._body_charge(number)
         # the body's own record is not ended and never rewritten (9.43 (3))
-        block.births += 1
-        identity = number * (1 << 32) + block.births
+        block.givings += 1
+        identity = number * (1 << 32) + block.givings
         live = LiveRecord(
             identity,
             number,
             family,
             residue,
-            block.births,
+            block.givings,
             self.tick,
             cost,
             numerator,
@@ -1242,21 +1242,21 @@ class DetectorLawSimulation:
             labels=tuple(emitter.branches),
             emitter=number,
         )
-        # E^T: the born clock's character on the body's Nodes, written once at
+        # E^T: the given clock's character on the body's Nodes, written once at
         # both levels, every Node at the vertex's phase (the one-Node broadband
-        # birth; a line's travelling character, the per-Link pair of ALGEBRA.md
+        # giving; a line's travelling character, the per-Link pair of ALGEBRA.md
         # 9.17 (4) item 2, is owed until that pair is declared)
         # NO TABLE IN THE ENGINE (the cleanup order's step 2; ALGEBRA.md 9.17
-        # (6), 9.22 (2)): the born pair is the world's two integers `born:
+        # (6), 9.22 (2)): the given pair is the world's two integers `given:
         # [now, before]`, the generator's, checked at load (before = -now),
         # written on every Node of the body
-        # THE BORN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27):
+        # THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27):
         # the train's two levels written on the body's Nodes in the box's
         # x-major order (`body_node_indices`, the loader's and the generator's
         # one convention), the norm T the written one (the conserved form on
-        # the born family's vacuum, the generator's integer checked at load)
-        assert emitter.born is not None
-        self.write_levels(live, block, emitter.born.now, emitter.born.before)
+        # the given family's vacuum, the generator's integer checked at load)
+        assert emitter.given is not None
+        self.write_levels(live, block, emitter.given.now, emitter.given.before)
         if emitter.receiver is not None:
             # the named sets in the NAMED order (ALGEBRA.md 9.19 (3) (b): the
             # ladder cumulative in its declared order), a set's detectors in the
@@ -1270,23 +1270,23 @@ class DetectorLawSimulation:
         self.held[number][block.family] -= 1
         self.ledger.held_spent[block.family] += 1
         # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 items 31 and
-        # 36; ALGEBRA.md 9.50 (13)): the born record's T is p times its
+        # 36; ALGEBRA.md 9.50 (13)): the given record's T is p times its
         # conserved form as written on the board, the engine's own integer
-        # with the content at the body's Nodes as the birth leaves it (one
+        # with the content at the body's Nodes as the giving leaves it (one
         # quantum fewer: the pace p the record is advanced at from the next
         # interval): the form the plain flux booking sums to over the
         # record's passage (the share's identity, `form_share`), read on
         # the ladder as T / p
         self._hold_clock()
-        live.norm, live.pace = self.born_norm(live)
+        live.norm, live.pace = self.given_norm(live)
         self.ledger.transit_released[family] += cost
         block.emitted.append(identity)
         self.records[identity] = live
-        self.layer.born += 1
+        self.layer.given += 1
         if self.record is not None:
             self.record(
                 {
-                    "event": "birth",
+                    "event": "giving",
                     "tick": self.tick,
                     "node": list(block.corner),
                     "measured": number,
@@ -1310,14 +1310,14 @@ class DetectorLawSimulation:
                     # the wheel's ingredients, read with it (item 34; GAMEBOARD)
                     "read_clocks": read_clocks,
                     "norm": live.norm,
-                    # the norm's denominator (item 36): the born record's
+                    # the norm's denominator (item 36): the given record's
                     # form is norm / pace, whole in the body's own units at
                     # the body's level as written
                     "pace": live.pace,
-                    # the file's vacuum norm (p times it the born record's T
+                    # the file's vacuum norm (p times it the given record's T
                     # in the vacuum) and the body's content and clock pair
                     # as the clicking record was advanced (GAMEBOARD; item 31)
-                    "born_norm": emitter.born.norm,
+                    "given_norm": emitter.given.norm,
                     "content": centre_content,
                     "charge": body_charge,
                     "node_clock": list(clock_pair),
@@ -1329,7 +1329,7 @@ class DetectorLawSimulation:
         # THE NEXT EXCITATION while the stock lasts (9.43 (3), 9.44 (5) (c)):
         # the body's own record continues as it is, its levels, phase and
         # remainders untouched by the click; the residue read at this click
-        # at the first shell Node is the born record's and the next
+        # at the first shell Node is the given record's and the next
         # excitation's alike (every Node of the body holds (M, u)); the count
         # of intervals starts from this click (`_excitation_rung`)
         block.emit_now = False
@@ -1344,7 +1344,7 @@ class DetectorLawSimulation:
         count per cycle (the sum's crossing
         from at most 0 to above 0, verb D's comparison), a `click` line per
         count with its own count (the self-click of row (g)); a new cycle
-        births its emission at the next interval."""
+        givings its emission at the next interval."""
         total = 0
         # the co-moving centre Node (the design's reading of the clock in
         # motion, MASSIVE_RECORD.md section 8: "the clock read at the
@@ -1441,7 +1441,7 @@ class DetectorLawSimulation:
         """One interval backwards (8.8), in the reverse column order of `step`:
         the light records first, then the bodies' own records (the coupling
         HISTORY, the model owner's decision (2) of record 1962: no source, no
-        receive, every record by the rule alone); no push, no click, no birth
+        receive, every record by the rule alone); no push, no click, no giving
         (the bodies at rest and no click in the interval, the property test's
         world)."""
         for block in self.blocks:
@@ -1670,7 +1670,7 @@ class DetectorLawSimulation:
         self, family: int, now: np.ndarray, before: np.ndarray, norm: int = 0
     ) -> LiveRecord:
         """A record of the family given to the rule directly, its two levels
-        as given and its remainder 0 (the generator's checks of the born
+        as given and its remainder 0 (the generator's checks of the given
         train, ALGEBRA.md 9.17 (6a) and 9.22 (7a) (iv), and the tests'
         device): registered in no ledger, advanced by `_advance` and read by
         `inward_flux` and `conserved_form` alone; `norm` its T where given."""
@@ -1704,7 +1704,7 @@ class DetectorLawSimulation:
         family's faces (the folded axes' self-reads); the sum of every Node's
         share (`form_share`), an exact rational (the Killing energy: each
         Node's share read in the world's time by its own pace; whole in the
-        body's own units, p times it, at a uniform level, `born_norm`)."""
+        body's own units, p times it, at a uniform level, `given_norm`)."""
         return self.form_share(live, np.ones(self.shape, dtype=bool))
 
     def form_share(self, live: LiveRecord, mask: np.ndarray) -> Fraction:
@@ -1757,9 +1757,9 @@ class DetectorLawSimulation:
             total += Fraction(int(np.sum(values[chosen == value])), value)
         return total
 
-    def born_norm(self, live: LiveRecord) -> tuple[int, int]:
+    def given_norm(self, live: LiveRecord) -> tuple[int, int]:
         """THE NORM AS THE EXACT RATIONAL (ALGEBRA.md 9.46 (1), 9.50 (9) and
-        (13); BUILD.md section 26 item 36): the born record's conserved form
+        (13); BUILD.md section 26 item 36): the given record's conserved form
         Q, the Node's terms weighted by 1 / p_i, as the pair (numerator,
         denominator) in lowest terms, the record's `norm` and `pace`; the
         ladder reads the plain flux C against Q, 2 W pace C against (2 u +
@@ -1786,12 +1786,12 @@ class DetectorLawSimulation:
     def _advance(self, live: LiveRecord) -> None:
         # THE EMITTER'S NODES ARE NODES LIKE EVERY OTHER (ALGEBRA.md 9.17; the
         # Boss's line of 2026-09-24 on the knot): no grace, no exemption, no
-        # own take, no fresh Port; the born record is written once and the
+        # own take, no fresh Port; the given record is written once and the
         # law advances it (the retired forms in BUILD.md section 26).
-        # Every born record, light's kind or a massive kind alike, books its
+        # Every given record, light's kind or a massive kind alike, books its
         # flux at the Nodes and clicks on its ladder (the click is the law's
         # one action on any record, POSTULATES 10); a BLOCK'S own record (a
-        # massive kind, born of no emitter) books nothing and is on no
+        # massive kind, given of no emitter) books nothing and is on no
         # ladder (massive-record-v1, MUST 2).
         field = live is self.clock_record or live is self.charge_record
         booked = not field and (not self.families[live.family].massive_kind or live.emitter is not None)
@@ -1891,7 +1891,7 @@ class DetectorLawSimulation:
         """THE INCREMENT LADDER (ALGEBRA.md 9.25 (2), the mathematician's word
         of 2026-09-25 on the finding of BUILD.md section 26 item 14; the
         cumulative sums of 9.19 (3) (b) withdrawn): the record's threshold
-        theta = (2 u + 1) T / (2 W) is fixed at its birth (u its residue, T
+        theta = (2 u + 1) T / (2 W) is fixed at its giving (u its residue, T
         its norm, W its own wheel); at every interval the record's running
         total C gains this interval's one-way flux into the detectors of its
         ladder, the detectors in the ladder's declared order (the named sets in
@@ -2042,8 +2042,8 @@ class DetectorLawSimulation:
             "arrived": self.tick,
             "family": self.families[family].name,
             "record": live.identity,
-            # HOST: the birth residue, the input of the diagnostic E_N and never
-            # a reader-of-record field (the reader reads `click`, `birth` and
+            # HOST: the giving residue, the input of the diagnostic E_N and never
+            # a reader-of-record field (the reader reads `click`, `giving` and
             # `chosen`; DECLARATIONS.md section 2 item 8)
             "u": live.u,
             # HOST: the ledger's row `taken_by_emitter` is 0 since the emitter's
@@ -2052,7 +2052,7 @@ class DetectorLawSimulation:
             # HOST (the receiver by name): the sinks' take of the record by
             # this line, in the pointer's unit (the faces and every set but
             # the receiver; on no pointer); on a record with a receiver alone
-            "born": live.born,
+            "given": live.given,
             "chosen": (
                 [[self.detector_set[chosen], self.detector_channel[chosen], "0"]]
                 if chosen is not None
@@ -2086,7 +2086,7 @@ class DetectorLawSimulation:
                 if live.ladder is not None
                 else {}
             ),
-            "birth": live.birth_tick,
+            "giving": live.giving_tick,
             # The click's time: the interval at which the chosen detector's pointer
             # crossed its first rung (the counting form, s_D = 1 / W), the
             # detector's own count on the click line; the record completed at
@@ -2160,7 +2160,7 @@ class DetectorLawSimulation:
             if self.families[live.family].massive_kind:
                 # A block's massive record is advanced with its block above;
                 # a matter lamp's record (a massive kind with a declared
-                # clock, born of a lamp) is advanced by the rule with the
+                # clock, given of a lamp) is advanced by the rule with the
                 # family's pair alone, through the take and the detector
                 # sets' pointers as light's (the click at W, one per record),
                 # coupled to nothing (the coupling HISTORY, decision (2) of
@@ -2182,7 +2182,7 @@ class DetectorLawSimulation:
         self.dead = []
         # the family of clicks steps last, after every family read its level,
         # and is held at the bodies' Nodes at the content the interval's clicks
-        # and births left (ALGEBRA.md 9.45 (2))
+        # and givings left (ALGEBRA.md 9.45 (2))
         self._advance_clock()
         if self.world.probes and self.record is not None:
             values = []
@@ -2406,8 +2406,8 @@ class DetectorLawSimulation:
                     # was written at its receiver's rung (it lives on with
                     # content 0); on a world with a receiver alone
                     **({"clicked": live.clicked, "escaped": live.escaped} if self.has_receiver else {}),
-                    "born": live.born,
-                    "birth": live.birth_tick,
+                    "given": live.given,
+                    "giving": live.giving_tick,
                     "age": live.age,
                     "train": live.train,
                     "norm": live.norm,

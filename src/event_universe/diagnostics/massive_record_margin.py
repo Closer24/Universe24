@@ -789,10 +789,10 @@ def check_body_conditions(
                 "bit for bit; 2 pi / omega_b = "
                 f"{2.0 * math.pi / reading.omega_b if reading.omega_b > 0 else math.inf:.2f} intervals"
             )
-            if emitter.born is not None:
+            if emitter.given is not None:
                 lines.append(
-                    f"born (COMPUTATION): block {number}: the born train of "
-                    f"{len(emitter.born.now)} Nodes with the norm {emitter.born.norm} on the "
+                    f"given (COMPUTATION): block {number}: the given train of "
+                    f"{len(emitter.given.now)} Nodes with the norm {emitter.given.norm} on the "
                     "vacuum (the generator's integers, ALGEBRA.md 9.17 (6a); no table in the engine)"
                 )
         relaxation = relaxation_time(reading)
