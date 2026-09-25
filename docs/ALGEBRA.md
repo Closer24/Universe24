@@ -10504,3 +10504,125 @@ weights p_i p_j dropped, the plain current as before item 34; the forms
 with the weight 1 / p_i, or whole at the body's level; the guard and
 the load bound of (8) (the pace at the Node at most Gamma + |c|). (12)
 stands as the record of the sender's form, exact and not adopted.
+
+### 9.51 The final unification of the world of clicks and the world of Nodes: the charge and gravity by energy, both now (the model owner's decision of 2026-09-25 in the mathematician's session: "add everything now: the charge, and the coupling so that there is gravity by energy in the world of clicks; and this is the final unification between the world of clicks and the world of Nodes"; DERIVED under the three tests and the exact backward run of 9.50; the tests of the build; for the Boss's record under record 1940 and Nature24's build after the body record)
+
+**(1) THE TWO WORLDS, AND WHERE THEY TOUCH.** The world of Nodes: at
+every Node the levels of the families, their rotations and their
+division remainders, stepped by the one rule at the Node's own pace
+(9.50 (13)). The world of clicks: the records of bodies, each a count
+of quanta M (the content), a charge Q, a residue u, a stock, a norm T
+and now an energy count s; the clicks that move them. THE UNIFICATION,
+one sentence: the two worlds touch only at the click and at a body's
+Nodes; the click writes a body's record from the world of Nodes (the
+taking end's gather through the Ports, the residue read at the first
+shell Node), and the body's record is the source of every field at the
+body's Nodes (the family of clicks held at s, the family of charge
+held at Q), while every record's step at every Node reads the fields
+as its pace, (e, f) = (Gamma - c_i + q Lambda d_i, Gamma) (9.48 (3) on
+the constant wall of 9.50 (8), (13)). Nothing else joins them: no field
+reads a record between clicks, no record reads a record. Three world
+constants and no more: Gamma (the clock's unit), P_0 (the energy unit,
+(3)) and Lambda (the charge's strength, 9.48 (2)).
+
+**(2) THE CHARGE, AS 9.48, ON THE CONSTANT WALL.** Every family declares
+q in {-1, 0, +1} per quantum, light 0; a click passes q whole; a body's
+Q is the sum; the family of charge is the family of clicks' form with
+Q held at the body's Nodes and the plain step elsewhere; a record of
+charge q reads the pace p_i = Gamma - c_i + q Lambda d_i at Node i, with
+d_i the family of charge's level; like signs a hill, unlike a well,
+light untouched; the guard p_i > 0 everywhere (the loader's bound on
+Lambda, 9.48 (3)). Unchanged from 9.48 but the wall, which is constant,
+so the backward run is exact with the charge too: the pins at a body's
+Nodes are constant between clicks and the pace is state (9.50 (8)).
+
+**(3) GRAVITY BY ENERGY: THE SOURCE OF THE FAMILY OF CLICKS IS THE
+BODY'S ENERGY, AN INTEGER READ AT THE CLICK.** Today the family of
+clicks is held at M at a body's Nodes: one unit per quantum, whatever
+the quantum, however the body moves, however deep it sits. THE
+COUPLING: the held level is the body's energy in the world's time,
+counted in the clock's unit:
+
+  s = (M P_0) div P + the remainder kept on the body's record,
+
+M the content, P the period of the body's rotation at its Nodes in
+intervals (the integer the generator already gives every body,
+`period`, the nearest integer to 2 pi over its rotation's angle, per
+content and per motion, under the input stamp), P_0 the world's energy
+unit, the declared period that one unit of the level is worth (the
+action per quantum over the energy per unit of level: Planck's constant
+over G, in one integer). Why this is energy: a body of M quanta has the
+action M h and rotates once in P intervals, so its energy in the
+world's time is M h / P, and s counts it in units of h / P_0; the
+rotation at the Node is the phase's turn there, which is faster for a
+moving body (the frequency gamma omega_0, the energy) and slower in a
+well (the clock's slowing, the Killing energy), and a bound composite
+body rotates with the bound mode's longer period (9.42, the pair in
+the well; 9.46 (7), the union's eigenvalue). So, with no rule added:
+(i) a heavier family gravitates more, in the ratio of its rest period
+to P_0; (ii) a moving body gravitates by gamma (P shorter by gamma, the
+muon's row's integer); (iii) a body deep in a well gravitates less by
+its clock (P longer); (iv) a bound body gravitates less than its parts
+by its binding energy (P_bound above P_free): THE MASS DEFECT, the
+row of (6). E = m c^2 is the one line s = M P_0 div P. What it does
+not give, by the same line: a free record (light on the board) sources
+nothing, since only a body's record is written at a click; the field's
+own energy sources nothing (the nonlinearity of Einstein's law); both
+OPEN under their own identity, with the reason in (5).
+
+**(4) THE THREE TESTS AND THE BACKWARD RUN.** Generic: one primitive,
+the division with remainder of two declared integers on the body's
+record, no family name, every body the same (the light clock's
+emitter, a detector, a seated body, a composite); P_0 = P for every
+body of a world gives s = M exactly, the count of today, so the
+eighteen's worlds are the same world with the unit chosen at their
+bodies. Vector: verb D, one division with the remainder kept; no root,
+no float (P is the generator's integer under the input stamp; the
+engine computes 2 pi nowhere). Local: the body's own record, read at
+its own click, written at its own Nodes; the field relaxes outside by
+its own plain step as today (9.45 (2)). THE BACKWARD RUN: s is written
+at the load and at the body's clicks alone (M changes there, P with
+it by the generator's table per content), constant between clicks, so
+the pin at the body's Nodes is the constant that today's M is, and the
+joint inverse of 9.50 (8) is exact bit for bit with the energy source
+on; the remainder of the division is the body's datum, carried and
+inverted with M. (A source that changed between clicks, a passing
+record's energy, would need the field's step to add it as a term, and
+then the closed board's mean level grows with the total source, Gauss
+on a box with no outside; that is why light as a source is OPEN, not
+forgotten.) THE WORLD KEY: `energy_source` with P_0, off by default
+(s = M); the charge under its own key of 9.48 (5); all eighteen at q =
+0 and the source off run bit for bit.
+
+**(5) WHAT THE UNIFICATION SETTLES, AND WHAT IT LEAVES.** Settled: one
+record form for every body (family, pair, Nodes S with the profile,
+the clock pair, P, T, stock, M, Q, u, s with its remainder, the rotation
+(a, b, r)); one reading rule for every record, the pace; one write, the
+click; the two fields of one form (the family of clicks and the family
+of charge), each held at the bodies and free elsewhere; the whole
+exact backward between clicks, the click the one deletion (9.26 (3)
+(b)). Left, each with its reason: light as a source (4); the field's
+own energy as a source (the nonlinear term, a row of its own when a
+pin needs it); magnetism (a vector reading, 9.48); spin and exclusion;
+the short-range forces; the box's Gauss problem for any source that is
+not a pin.
+
+**(6) THE TESTS OF THE BUILD (added to 9.49 after its (3), before its
+(4)).** (a) The source off: every world bit-identical to the fixed-wall
+engine. (b) The source on with P_0 equal to each body's own P: bit-
+identical (s = M). (c) Two bodies of equal M whose families' rest
+periods are in the ratio 2 : 1: the field's level around the faster
+one twice the other's within the rounding (a heavier quantum
+gravitates more). (d) THE MASS DEFECT ROW (the model owner's row, with
+its nature pin: the bound body weighs less than its parts by its
+binding energy, the nuclear defect and the Eotvos balances to 10^-13):
+the pair bound in the side-3 well (9.42) as one composite body against
+the same quanta free; the level ratio s_bound / s_free = P_free /
+P_bound within one unit, the control the free quanta. (e) The moving
+body: the muon row's body at K with the generator's P_K = P_0 / gamma:
+its field gamma times the rest body's within the rounding. (f) The
+charge's three tests of 9.48 (5). (g) The backward run with both fields
+on and bodies clicking: bit for bit, remainders and pins included. (h)
+The eighteen: at q = 0 and the source off bit-identical; then with
+everything on, the pins recomputed blind (9.49 (4), (6)); a row outside
+its band comes to the mathematician first.
