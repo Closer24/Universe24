@@ -2389,6 +2389,160 @@ would have found no cell.
    both worlds the tally per cell equals the board-wide reading for every
    live record, the pairs are listed once, the cost printed.
 
+27. THE BORN TRAIN, THE ONE FORM OF A BIRTH (ALGEBRA.md 9.17 (6a), 9.25
+   (11), 9.22 (7a) (iv), the mathematician's 85780fba and 9ffc0fb2 on the
+   physicist's finding at f0d2d745; the Boss's closing list item 3; the
+   model owner's word that the rows come as names with meaning). THE LAW:
+   every birth is a travelling train, the character of one **K** over
+   n >= 8 periods under an envelope, written on the body's cells at both
+   levels; the two-integer `born` [now, before] (the one-cell birth, a
+   flat pulse of the body's length, broadband: its standing components
+   book the ladder by sloshing, not by a passage) is refused by name. THE
+   INPUT: the emitter's `train` {direction: one signed unit axis vector,
+   periods: n >= 8} and its `born` {now, before, norm}, the profile over
+   the body's cells in the box's x-major order (`block_cell_indices`, the
+   one convention of the loader, the generator and the engine) and the
+   norm T on the born family's VACUUM; the born clock is the born family's
+   declared clock [p, q] (one clock per row, the table's family column):
+   k = 2 pi p / (2 N q), the wavelength 2 N q / p a whole number of Links,
+   the body's extent along the direction n wavelengths ([512, 1] on
+   N = 1024: the wavelength 4, the train 32 cells). THE LOADER
+   (`TrainDefinition`, `BornTrain`, `_train`, `_born_train`,
+   `born_train_norm`, `born_train_flux_sign`), in integers: the direction,
+   the periods, the wavelength whole, the extent the train's length, the
+   profile's count, a motion, THE FLUX SIGN along the way positive (the
+   sum over the body's Links of the engine's flux into the ahead cell from
+   its neighbour, now_j before_i - before_j now_i), THE NORM the conserved
+   form of the two levels on the vacuum (3 den (now^2 + before^2) - num
+   now S_6 before summed over the cells, the profile embedded in zeros on
+   the world's faces), the stamp over the profile and its norm. THE
+   GENERATOR (`born_train` of the massive record generator, replacing
+   `excite_on_the_mode`): now = round(A e h h cos(k i)), before = round(A
+   e h h cos(k i + omega)) at A = 2^16, i the cell's index from the tail
+   along the way, 3 cos omega = (num / den) (cos k + 2) on the born
+   family's vacuum pair, e the taper sin^2(pi (i + 1 / 2) / (2 tau)) over
+   tau = X / 4 cells at each end, h the Hann window sin^2(pi (y + 1 / 2) /
+   Y) across a transverse extent Y the body does not span and 1 ACROSS AN
+   AXIS THE BODY SPANS ON A PERIODIC FACE (a chain, and the extruded axes
+   of the one table's boards, whose seed is uniform across the added
+   axes: the extrusion rule of 9.30 read on the mode, A's [32, 3, 3] on
+   [760, 3, 3] at 2 cos omega = 1.995488, the same as [32, 1, 1] on the
+   chain to six figures); its checks, HOST, on its own check board (the
+   world's transverse shape and faces, the axis along **K** open and long:
+   a margin of one train behind the tail, the train, the body where one is
+   run through, the plane one Node deep 40 Links beyond, a far margin of
+   twelve trains so that the far face's reflection returns after the window
+   of (40 + the body + six trains) / v_g intervals, v_g the dispersion's
+   group pace; a narrow train's oblique parts pass more slowly, an 8-wide
+   train on a layer 0.9972 in three trains and 1.0000 in six): THE PASSAGE (9.25 (11) (a)) the train alone books its
+   one-way flux through the plane within 2 x 10^-3 of T (the light clock
+   1.0002; a train of 3 periods 1.0052 on this window, the mathematician's
+   1.0285 on his longer one, refused); THE TRANSPARENCY (9.22 (7a) (iv)) every body coupled to the
+   born family passes the train run through it with 0.99 of T or more
+   booked beyond it (A 1.0002 on the light clock); THE PLACEMENT (9.25
+   (11) (b)) every emitter and every receiver at least one train's length
+   from every face slab's front, refused naming the tool and the slab. THE
+   ENGINE: `_emit` writes the train's two levels on the body's cells
+   (`write_levels`, the block's current corner, its family's faces) and
+   the norm T the written one; `planted_record` gives a record's levels
+   to the rule directly (the generator's checks and the tests' device).
+   THE LIGHT CLOCK RESTATED in the one table's form (ALGEBRA.md 9.22 (8),
+   its row; 9.30's table with the extrusion rule): [760, 3, 3] periodic on
+   y and z, x open with the face slabs 32 deep (`face_depth`), N = 1024,
+   light [1, 1] with the born clock [512, 1], matter [800, 809]; A
+   [800, 801] of the extents [32, 3, 3] at [600, 632) with the coupling,
+   the seed 50 x 2^20 on its mode and a stock of 64, its train along +x;
+   the mirror the gap [1, 2] of light's kind over [4, 3, 3] at [690, 694)
+   (`mirror_slab`; the holder body's name waits on the cleanup's step 6);
+   the set at_well A's own cells (bound to the block, no positions; the
+   outgoing train leaves through their Ports, negative and not booked,
+   the return enters them); 4800 intervals (COMPUTATION: 64 births at the
+   mean cadence P / 2 = 47 on A's mode, P = 94, about 3000 intervals, the
+   last return 300, a margin). THE BLIND PINS (examples/events/pins.json,
+   written before any run against them; the engine is stabilising, the
+   owner's record 1924): the mean click interval after the birth 300 +- 9
+   at 64 records (the passage's mean (2 x 58 + 16 + 2) / 0.44721 = 299.7,
+   the rms 24.8, the band 3 rms / sqrt 64) and the stock's first click
+   250 +- 8 (the least interval since the birth among the records'
+   clicks, the fastest passage); the 214 +- 1 of the chain of 674 with the
+   cube beside A HISTORY (item 22). THE ONE COMMAND: the kind
+   `mean_interval` (the mean over the detector's clicks of the interval
+   since the record's birth, rounded), `first_click` the least such
+   interval (for one record born at interval 0 the click's own interval,
+   as before), every click line carrying its record's `birth`. THE
+   DIAGNOSTIC RUN (the one command without pins, no verdict counted, HOST
+   9 seconds): LAWFUL, 64 births, 64 clicks all at at_well, none at the
+   faces, no record alive at the end; the mean interval 300.3 with the
+   rms 25.9, the least 252 (GAMEBOARD readings of the restated file,
+   reported to the mathematician for 9.25 (11) (d) and (7a) (iv); no pin
+   moved, no verdict). THE ROWS HELD UNDER THE TRAIN: the 26 other
+   emitting worlds (the two slits, the pace fans, Sagnac's two, the
+   redshift's two, de Broglie's two, the moving mass, the four medium
+   index and the twelve receding index rows) cannot load under the law
+   (the two-integer born refused) and their restated forms are the
+   table's: their files moved as written to
+   docs/designs/detector_law/held_worlds (HISTORY, the one-cell birth),
+   their builders retired, RUN_LIST's rows marked HELD, to be rebuilt from
+   the table through the generator (the Boss's item 7). A FINDING FOR THE
+   TABLE (COMPUTATION with the eigensolver): the holder family's 32-cell
+   well [801, 700] on [7, 8] is a RUNAWAY (2 cos omega = 2.285 over 32
+   cells, its interior above 1; the one-cell well 1.902 and bound), so the
+   matter-train rows' holder emitters want a well below 1 and near it
+   ([699, 700] over 32 cells: 1.9944, W = 700), sent to the mathematician
+   for (7a) (iii); the tests' holder emitters use [699, 700]. A SECOND
+   FINDING: a narrow train's oblique parts pass the plane more slowly (a
+   5-wide Hann train on a 9-periodic layer 0.9905 and an 8-wide one 0.9972
+   in a window of three trains, 1.0000 in six), so the check's window is six
+   trains and the far margin twelve. THE TESTS: tests/test_born_train.py
+   (the profile the formula at every cell, the flux sign both ways, the
+   norm against the engine's conserved form of the planted train bit for
+   bit, the window across a transverse extent and the uniform profile
+   across a spanned periodic axis, the passage within 2 x 10^-3 and the
+   3-period train outside it, the engine's write and the passage read by
+   the screen with the pointer at the click between the rung and 1.02 T,
+   the light clock's file in the table's form with the generator's
+   readings and the placement rule's refusals); the emitter, detector-law,
+   massive-record, receiver-by-name, initial-state, flux-reading and
+   one-command suites on the train (the emitter bodies 32 cells with
+   their trains, the born clock [512, 1] on N = 1024, the loader's
+   refusals by name, the stamp moving with the profile, the chain digests
+   read again); the property test unchanged. THE BIRTH'S FORM HELD (the
+   model owner's word of record 1950, through the Boss at 06:50Z: "the
+   born train is not generic enough; a world is content written into the
+   Nodes at once"): the built form stands on the branch as the record of
+   its build and is NOT adopted; the owner's form, a birth as the
+   emitter's own mode (the generic generator's profile, already in the
+   file) times its momentum's character with no window, no taper and no
+   period count, MEASURED on this head with the generator's passage check
+   (COMPUTATION): the mode truncated at A's 32 cells reads 1.0047 of the
+   norm (its edge 0.357 of the peak, a hard edge, refused), the mode
+   written where it lives over 72 cells around A (the edge 0.0035 of the
+   peak) reads 1.00002, over 52 cells 1.00005, against the train's 1.0002;
+   so the owner's form holds when the birth is written on every Node the
+   mode occupies, the tails included; and read as the mathematician's
+   9.35 (the born family's lowest mode on the body's cells alone, the box
+   with zero beyond it: a half sine along **K**, uniform across a spanned
+   periodic axis) times the character, it reads 1.00023 over 32 cells,
+   1.00047 over 33, 1.00014 over 24 and 1.00011 over 48, A's transparency
+   1.00003, within the tolerance with no constant at all; every check of this item
+   (the flux sign, the norm on the vacuum, the count, the stamp, the
+   passage, the transparency, the placement) applies to it unchanged; the
+   generator loses its three constants and the periods key. The
+   mathematician answers on the form and on his passage pin's rms (the
+   born record as long as the mode's tails). THE CARRIES (records 1951
+   and 1955, a GameBoard diagnostic read on the engine's advance by a
+   probe, nothing built): a carry at a Node is the old remainder pushing
+   the quotient up (the remainder decreasing); the rate per occupied Node
+   per interval is (1 - 1 / W) / 2 with W the remainder's wheel (3 den
+   over the gcd of num and 3 den), not the wall: the boxed clock's well
+   [800, 800] (W = 3) 0.3229 and its vacuum [800, 809] (W = 2427) 0.49; the
+   emitter chain's A [800, 801] (W = 2403) 0.5025, its vacuum 0.4934 with
+   the born light and 0.4969 with the body alone; light [1, 1] (W = 3)
+   0.32 to 0.30; zero on the empty board. The engine keeps now, before and
+   the remainder PER RECORD over the whole board and never a Node's total
+   per family with one remainder (the sum of two records' steps differs
+   from the step of their sum by the carries; for the mathematician).
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

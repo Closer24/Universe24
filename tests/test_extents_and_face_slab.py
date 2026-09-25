@@ -20,6 +20,18 @@ from tests.test_emitter import emitter_world, massive_generator
 from tests.test_flux_reading import planted
 
 
+def small_layer() -> dict:
+    """The layer of 24 x 9 of the first form, empty (no emitter, no set): the detector-law
+    layer's emitter body is the train's 32 cells since the born train (BUILD.md section 26
+    item 27), wider than this layer, so these tests place their bodies on the empty layer."""
+    document = layer_world()
+    document["shape"] = [24, 9, 1]
+    document["measured"] = []
+    document["detectors"] = []
+    document.pop("input", None)
+    return document
+
+
 def wall(position, family="light", **keys):
     return {
         "position": position,
@@ -38,7 +50,7 @@ def test_a_box_of_extents_is_placed_whole_and_its_cells_are_the_box():
     the loader carries the extents (the side the x extent) and the engine's cells are the
     box's 12 Nodes; `side` 3 is the extents (3, 3, 3) cut by the layer's thin axis;
     `block_cell_indices` on a cube's side and on the box's extents agree with the box."""
-    document = layer_world()
+    document = small_layer()
     document["measured"].append(wall([10, 2, 0], extents=[4, 3, 1]))
     world = parse_nature_beam_world(document)
     block = world.measured[-1].block
@@ -52,7 +64,7 @@ def test_a_box_of_extents_is_placed_whole_and_its_cells_are_the_box():
     assert block_cell_indices((24, 9, 1), (10, 2, 0), 3, (False, True, True)) == block_cell_indices(
         (24, 9, 1), (10, 2, 0), (3, 3, 3), (False, True, True)
     )
-    cube = layer_world()
+    cube = small_layer()
     cube["measured"].append(wall([10, 2, 0], side=3))
     assert parse_nature_beam_world(cube).measured[-1].block.extents == (3, 3, 3)
 
@@ -64,20 +76,20 @@ def test_the_extents_refusals_and_the_fit_per_axis():
     wider than a periodic axis refused (extents [2, 12, 1] on the layer of 9 on y); a
     detector bound to a block of extents [12, 1, 1] on a chain is a cube cut by the chain
     and admitted, a bound block of extents [2, 1, 1] refused naming the extents."""
-    both = layer_world()
+    both = small_layer()
     both["measured"].append(wall([10, 2, 0], side=3, extents=[3, 3, 1]))
     with pytest.raises(ValueError, match="declares both `side` and `extents`"):
         parse_nature_beam_world(both)
     for bad in ([3, 3], [3, 0, 1], "3", [3, 3, 1, 1]):
-        document = layer_world()
+        document = small_layer()
         document["measured"].append(wall([10, 2, 0], extents=bad))
         with pytest.raises(ValueError, match=r"extents"):
             parse_nature_beam_world(document)
-    beyond = layer_world()
+    beyond = small_layer()
     beyond["measured"].append(wall([22, 2, 0], extents=[4, 3, 1]))
     with pytest.raises(ValueError, match="side 4 at 22 on the axis x reaches 25 beyond the face at 23"):
         parse_nature_beam_world(beyond)
-    wide = layer_world()
+    wide = small_layer()
     wide["measured"].append(wall([10, 2, 0], extents=[2, 12, 1]))
     with pytest.raises(ValueError, match="side 12 wraps onto itself on the periodic axis y of extent 9"):
         parse_nature_beam_world(wide)
@@ -95,7 +107,7 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
     layer of 24 x 9 (a control world), seeded by the generator on its composed mode with its
     clock and stamp: LAWFUL at load, the residual within the bound at every Node, the mode's
     largest entry on the slab's cells; the slab's centre cell (5 + 6, 2 + 2)."""
-    document = layer_world()
+    document = small_layer()
     document["measured"] = [
         {
             "position": [5, 2, 0],

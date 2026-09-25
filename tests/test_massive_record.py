@@ -57,14 +57,14 @@ def massive_world(
         "boundary": boundary,
         "ticks": 10,
         "K": 1073741824,
-        "N": 64,
+        "N": 1024,
         "release": [1, 128],
         "suspension": 0,
         "detector_law": True,
         "massive_record": True,
         "amplitude_bound": 1 << 32,
         "directions": [],
-        "families": [{"name": "light", "quantum": 1, "phase_per_link": [77, 25]}, matter],
+        "families": [{"name": "light", "quantum": 1, "phase_per_link": [512, 1]}, matter],
         "measured": [],
         "detectors": [],
     }
@@ -295,12 +295,15 @@ def test_the_light_record_is_byte_identical_without_the_key():
     2026-09-25; item 25: the emitter's seed and clock the iteration's, within the floor of
     the eigensolver's), then all three by the generator's working amplitude 2^28 (the names'
     regeneration of 2026-09-25, item 25 amended: the muon layer's well hovered at 1.5 times
-    the bound at 2^20; the emitter's profile and clock the iteration's at 2^28), the digests
-    read at that head."""
+    the bound at 2^20; the emitter's profile and clock the iteration's at 2^28), then all
+    three by THE BORN TRAIN (ALGEBRA.md 9.17 (6a); item 27: the chain world's emitter body
+    the train's 32 cells at [2, 34) with the well [699, 700], light on the born clock
+    [512, 1] of N = 1024, every birth the train written on the cells), the digests read at
+    that head."""
     assert run_chain_digests() == {
-        "events": "60f059f541b080252333447e12b651b1b190019db6c338d1836042fa5b6a9d1f",
-        "state": "f81fc3c4f3d377bbdcc4b05ca5289d4d259475f9f8a5427974b825b6a5bbe353",
-        "audit": "3379db93c63839326fc07e83573d37bc9be2a2892d2d05fca138368aac23e95d",
+        "events": "773ba1876d49514e2ce829c3013c2a9e86b3d2890e038635ff8e312146800c56",
+        "state": "08dfb0ede3f9c369f49ba10f9afeac2395321568a2cdb6cfb36214d986a526a9",
+        "audit": "a7045e3a858785ee60e728c0af60b472390fd8f3326d71dadf2c480aebff71f4",
     }
 
 
@@ -403,7 +406,8 @@ def block_world(
     matter: dict = {"name": "matter", "quantum": 1, "pair": kind}
     if faces is not None:
         matter["faces"] = faces
-    families = [{"name": "light", "quantum": 1, "phase_per_link": [77, 25]}, matter]
+    # light on the born clock [512, 1] of N = 1024 (the born train, ALGEBRA.md 9.17 (6a))
+    families = [{"name": "light", "quantum": 1, "phase_per_link": [512, 1]}, matter]
     measured: list[dict] = []
     if source is not None:
         measured.append(source)
@@ -440,7 +444,7 @@ def block_world(
         "boundary": boundary,
         "ticks": ticks,
         "K": 1073741824,
-        "N": 64,
+        "N": 1024,
         "release": [1, 128],
         "suspension": 0,
         "clock_stamp": True,
@@ -466,7 +470,7 @@ def seed_source(document: dict, number: int) -> None:
     generator = massive_generator()
     entry["seed"] = generator.mode_profile(document, number, amplitude=entry["seed"])
     if "emitter" in entry:
-        generator.excite_on_the_mode(document, number)
+        generator.born_train(document, number)
     # the input stamp (record 1886): the law and the hash of the integers
     document["input"] = input_stamp(document)
 
@@ -481,9 +485,9 @@ def with_screen(document: dict, x: int) -> dict:
 
 SOURCE_KIND = [7, 8]  # the emitter bodies' own kind (omega_0 = 0.505; the index worlds')
 SOURCE_WELL = [
-    801,
+    699,
     700,
-]  # its one-cell well, rich (W = 700, ALGEBRA.md 9.22 (4)): bound on a chain and on a layer
+]  # its well over the train's 32 cells, rich (W = 700, ALGEBRA.md 9.22 (4)) and bound (2 cos omega_b = 1.9944 on a chain; the one-cell birth's [801, 700] is a runaway over 32 cells, its interior above 1)
 
 
 def source_family() -> dict:
@@ -499,8 +503,9 @@ def emitter_at(
     pair: list[int] | None = None,
     receiver: object = None,
 ) -> dict:
-    """An emitter body at a Node of a chain (ALGEBRA.md 9.17 (4)): a one-cell well of the
-    massive family `own` (the well `pair`, SOURCE_WELL by default) with the scalar seed 2^20
+    """An emitter body on a chain (ALGEBRA.md 9.17 (4), 9.17 (6a)): the well of the massive
+    family `own` (the well `pair`, SOURCE_WELL by default) over the train's 32 cells from x,
+    its train along +x, with the scalar seed 2^20
     (its profile on the mode by `seed_source`; at 100 the born light's back-action swamps
     the excited record, ALGEBRA.md 9.17 (7) (c)), `stock` excitations, the born family
     `family`; with `receiver`, the born records' ladder by name. The residue and the wheel
@@ -1231,12 +1236,12 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
 
 def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, stock: int = 1) -> dict:
     """A chain of 200 Nodes (x open; y and z periodic of one layer): the light emitter of the
-    first build at x = 2 (chain_world's, its family named `source`) beside the massive kind
-    `matter`, pair [156, 157], the SAME clock [77, 25] on N = 64 declared as its
-    `phase_per_link` (the pair form) and its take [-19, 86], and, when asked, an emitter body
-    of the source kind at x = 100 whose born family is `matter` (`stock` births on the wheel
-    [1, 64]); no detector; `clock` None declares no clock on the kind (the refusal's edge
-    case); every emitter body seeded on its mode."""
+    first build at [2, 34) (chain_world's, its family named `source`) beside the massive kind
+    `matter`, pair [156, 157], the born clock [512, 1] on N = 1024 declared as its
+    `phase_per_link` (the pair form: the matter train at K = pi / 2, cos omega = 0.6624),
+    and, when asked, an emitter body of the source kind at [100, 132) whose born family is
+    `matter` (`stock` births, the train along +x); no detector; `clock` None declares no
+    clock on the kind (the refusal's edge case); every emitter body seeded on its mode."""
     document = chain_world(on_mode=False)
     document["shape"] = [200, 1, 1]
     document["ticks"] = 160
@@ -1257,24 +1262,24 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
 def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair():
     """The emitter of a massive kind (the matter lamp's successor, ALGEBRA.md 9.17; the Boss's
     23:32Z on the lamp verb): an emitter body of the source kind at x = 100 whose born family
-    is `matter` (the kind [156, 157] with the declared clock [77, 25] on N = 64) births a
-    record of the matter kind, written once on its cell at both levels and advanced by the rule
-    with the kind's pair (a massive kind's born record is driven by nothing and completes as
-    light's: its `driven` set empty); the record leaves the cell both ways (the levels at
-    x = 94 and x = 106 nonzero by the interval 100 and equal, the rule's mirror symmetry about
-    the cell; the band's one-Link phase of the old train's reading returns with the line's
-    per-Link pair, owed); the books balance at every interval; light's rows at every interval
+    is `matter` (the kind [156, 157] with the declared clock [512, 1] on N = 1024) births a
+    record of the matter kind, written once on its 32 cells at both levels as the train
+    (ALGEBRA.md 9.17 (6a)) and advanced by the rule with the kind's pair (a massive kind's
+    born record is driven by nothing and completes as light's: its `driven` set empty); the
+    train TRAVELS +x: a hundred intervals after its birth its levels ahead of the body (x in
+    [140, 180)) are large and those behind it (x in [40, 90)) below a tenth of them (the
+    tapers' dispersion alone goes back, 3.9 percent in the matter family); the books balance at every interval; light's rows at every interval
     are identical with and without the matter emitter beside it (and the first build's chain
     digests stand, test (p)). The edge cases: an emitter whose born family is a massive kind
     WITHOUT the clock is refused at load naming the pair form."""
-    world = parse_nature_beam_world(matter_emitter_world(True, [77, 25]))
-    beside = parse_nature_beam_world(matter_emitter_world(False, [77, 25]))
-    assert world.families[2].massive_kind and world.families[2].phase_per_age == (77, 25)
+    world = parse_nature_beam_world(matter_emitter_world(True, [512, 1]))
+    beside = parse_nature_beam_world(matter_emitter_world(False, [512, 1]))
+    assert world.families[2].massive_kind and world.families[2].phase_per_age == (512, 1)
     simulation = DetectorLawSimulation(world)
     other = DetectorLawSimulation(beside)
     identity = 1 * (1 << 32) + 1
     born: int | None = None
-    for tick in range(1, 101):
+    for tick in range(1, 301):
         simulation.step()
         other.step()
         assert simulation.books()["balanced"], tick
@@ -1282,14 +1287,18 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
         if live is not None:
             born = born if born is not None else tick
             assert live.family == 2 and live.emitter == 1
-            assert live.emitter == 1
         # light's rows unchanged beside the matter emitter
         for light_identity, light in other.records.items():
             assert np.array_equal(simulation.records[light_identity].now, light.now), tick
-    assert born is not None and born < 20
+        if born is not None and tick == born + 100:
+            break
+    # the first birth within the well's period (the residue's wait, 9.17 (7) (f))
+    assert born is not None and born < 120
     live = simulation.records[identity]
-    assert int(live.now[94, 0, 0]) != 0 and int(live.now[94, 0, 0]) == int(live.now[106, 0, 0])
-    assert int(live.now[90, 0, 0]) == int(live.now[110, 0, 0])
+    ahead = int(np.max(np.abs(live.now[140:180, 0, 0])))
+    behind = int(np.max(np.abs(live.now[40:90, 0, 0])))
+    # the matter train's tapers disperse more than light's: 3.9 percent behind (COMPUTATION)
+    assert ahead > 1000 and behind * 10 < ahead, (ahead, behind)
     with pytest.raises(ValueError, match="pair form of its clock"):
         parse_nature_beam_world(matter_emitter_world(True))
 
@@ -1303,12 +1312,12 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     W = 700), the cube of matter bodies at [184, 186] read as the set `screen`
     named by the emitter: each record clicks ONCE at the screen, at the first interval at
     which 2 W C >= (2 u + 1) T on its pointer there (read through the engine's
-    `_ladder_click`; the interval before it below the rung), after the front's flight (84
-    Links at the band's group pace 0.5: between 100 and 1000 intervals after the birth, a
-    residue near W waiting for the one-cell birth's slow tail), the line's `tick` its
-    `click`, the record deleted whole at it; two gather lines in all, the books balanced at
-    every interval."""
-    document = matter_emitter_world(True, [77, 25], stock=2)
+    `_ladder_click`; the interval before it below the rung), after the train's flight (53
+    Links from the head at 131 at v_g = 0.442, 120 intervals, and as much of the passage of
+    72 as the residue asks: between 100 and 400 intervals after the birth), the line's
+    `tick` its `click`, the record deleted whole at it; two gather lines in all, the books
+    balanced at every interval."""
+    document = matter_emitter_world(True, [512, 1], stock=2)
     document["ticks"] = 3000
     # the cube of matter bodies at [184, 186] read as `screen` (record 1899), the
     # emitter kept at measured[1] (its records' identities carry its number)
@@ -1360,12 +1369,10 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         pointer, u, norm, wheel = at_click[identity]
         assert wheel == 700 and 0 <= u < wheel and u == gather["u"]
         assert 2 * wheel * pointer >= (2 * u + 1) * norm and below[identity] == gather["click"] - 1
-        # the flight: the front's 84 Links at the group pace, then as much of the
-        # record as the residue asks (a residue near W waits for the one-cell
-        # birth's slow tail; the coupling spreads the residues, 9.19 (4e)): read
-        # 341 at u = 606 and 511 at u = 690 on the generator's profile at the
-        # working amplitude 2^28 (up to 307 at 2^20)
-        assert 100 < gather["click"] - gather["birth"] < 1000
+        # the flight: the train's head over 53 Links at v_g = 0.442, then as
+        # much of the passage as the residue asks (the coupling spreads the
+        # residues, 9.19 (4e))
+        assert 100 < gather["click"] - gather["birth"] < 400
         assert identity not in simulation.records
 
 
@@ -1405,16 +1412,16 @@ def test_every_declared_wheel_is_refused_by_name():
 
 def light_clock_world(faces: str, far_body: bool) -> dict:
     """DECLARATIONS.md section 10 with section 15's lines (M1-1, M1-3, M1-4, M1-10) and item 9,
-    SINCE BUILD.md section 26: a chain of 173 (x `closed` for light, the zero face at 172 the
-    mirror B sixty Links from A's face at 111; or x open, the sponges), the matter kind
-    [800, 809], the emitter A of side 12 at [100, 112) at full depth with the seed 50 x 2^20
-    on its bound mode, its `emitter` of light on the wheel [1, 64] with the stock 1 (one birth),
-    W = 64; light's clock [1, 1]; the receiving set `A_face` bound to A at the cube of three
-    free Nodes adjacent to A's face toward the mirror (x in [112, 114]; item 9, record 1899),
-    A's `receiver` by name; with `far_body`, the cube of light bodies at [160, 162] read as
-    the set `far`; the amplitude bound 2^32; no wheel (the record's own, 9.22 (4))."""
+    SINCE BUILD.md section 26 and THE BORN TRAIN (item 27): a chain of 173 (x `closed` for
+    light, the zero face at 172 the mirror B forty Links from A's head at 131; or x open,
+    the sponges), the matter kind [800, 809], the emitter A of the extents [32, 1, 1] at
+    [100, 132) with the seed 50 x 2^20 on its bound mode, its `emitter` of light on the born
+    clock [512, 1] of N = 1024 with its train along +x and the stock 1 (one birth); the
+    receiving set `A_face` bound to A at the cube of three free Nodes adjacent to A's head
+    (x in [132, 134]; item 9, record 1899), A's `receiver` by name; with `far_body`, the cube
+    of light bodies at [160, 162] read as the set `far`; the amplitude bound 2^32; no wheel
+    (the record's own, 9.22 (4))."""
     document = massive_world([173, 1, 1], {"x": faces, "y": "periodic", "z": "periodic"}, [800, 809])
-    document["families"][0]["phase_per_link"] = [1, 1]
     document["ticks"] = 600
     document["clock_stamp"] = True
     document["measured"] = [
@@ -1425,18 +1432,18 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "phase": 0,
             "momentum": [0, 0, 0],
             "fixed": True,
-            "side": 12,
+            "extents": [32, 1, 1],
             "pair": [800, 801],
             "coupling": {"G": [1, 50], "g": [1, 1000]},
             "seed": 50 << 20,
-            "emitter": {"family": "light"},
+            "emitter": {"family": "light", "train": {"direction": [1, 0, 0], "periods": 8}},
             "margin": "control",
             # the receiver by name (section 13 item 7): A's own bound set
             "receiver": "A_face",
         }
     ]
     document["detectors"] = [
-        {"name": "A_face", "block": 0, "positions": [[112, 0, 0], [113, 0, 0], [114, 0, 0]]}
+        {"name": "A_face", "block": 0, "positions": [[132, 0, 0], [133, 0, 0], [134, 0, 0]]}
     ]
     if far_body:
         receiver_cube(document, "far", [160, 0, 0])
@@ -1447,8 +1454,8 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
 def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_rung():
     """A set bound to a block is a receiver (the receiving set at ONE free Node) on the light clock's chain of 173 (W = 64;
     the world's `wheel` 64) SINCE THE FLUX READING (ALGEBRA.md 9.19 (3); BUILD.md section 26
-    item 14): A's one born record is written once on A's twelve cells and leaves both ways;
-    the set's cube at [112, 114] books the one-way flux into it from the first interval (its
+    item 14): A's one born record is written once on A's 32 cells as the train and leaves toward +x;
+    the set's cube at [132, 134] books the one-way flux into it from the first interval (its
     pointer above 0 and its rung at the record's own residue from the law, the click line written
     at that rung and stamped with A's count as the interval begins, named by
     `clock_source`), and the record is deleted whole at its click, with the faces closed
@@ -1468,7 +1475,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         simulation = DetectorLawSimulation(world, observer=lines.append)
         assert ("face" in simulation.cell_names) == (faces == "open")
         a_face = simulation.cell_names.index("A_face")
-        assert int(simulation.cell_index[112, 0, 0]) == a_face
+        assert int(simulation.cell_index[132, 0, 0]) == a_face
         block = simulation.blocks[0]
         pointer_at_click: int | None = None
         original = simulation._ladder_click
@@ -1516,7 +1523,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
     with pytest.raises(ValueError, match="names a Node of a measured event"):
         parse_nature_beam_world(on_body)
     two = light_clock_world("open", False)
-    two["detectors"] = [{"name": "A_face", "block": 0, "positions": [[112, 0, 0], [113, 0, 0]]}]
+    two["detectors"] = [{"name": "A_face", "block": 0, "positions": [[132, 0, 0], [133, 0, 0]]}]
     with pytest.raises(ValueError, match=r"is a box of sides \[2, 1, 1\]"):
         parse_nature_beam_world(two)
     no_block = light_clock_world("open", True)
@@ -1537,8 +1544,8 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
     """A set bound to a block WITHOUT positions is a receiver (Sagnac's form, DECLARATIONS.md section 13
     item 1) under the flux reading (ALGEBRA.md 9.19 (3)): the block's twelve cells are the
     set's Nodes (the cell index at them the set's cell); an emitter's record (the emitter
-    body of the source kind at x = 150 on a chain of 300, fifty Links before the block, two
-    births on the wheel [1, 64], the emitter naming the set) books its one-way flux into the
+    body of the source kind at [100, 132) on a chain of 300, its train along +x toward the
+    block 68 Links ahead, two births, the emitter naming the set) books its one-way flux into the
     block's cells to the set and clicks once there, the click stamped with the block's own
     count as the interval began and named by `clock_source`, the record deleted whole at
     it, the books balanced; nothing absorbs. Pushed toward the emitter at k = 3 (the block
@@ -1551,7 +1558,7 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
         document["clock_stamp"] = True
         document["families"].append(source_family())
         document["measured"] = [
-            dict(emitter_at(150, 2), receiver="B_cells"),
+            dict(emitter_at(100, 2), receiver="B_cells"),
             {
                 "position": [200, 0, 0],
                 "family": "matter",
@@ -1637,14 +1644,14 @@ def test_a_block_that_steps_off_the_board_refuses_the_interval():
 
 def test_a_wall_of_lights_kind_is_a_mirror_line():
     """DECLARATIONS.md section 15 L-1 (the (M) wall's path): a mirror line of blocks of light's
-    kind with the pair [1, 2], two Nodes deep, on the first build's chain (x = 40 and 41; the
-    lamp at x = 2, the screen cube at [70, 72]): the blocks have no own record, no clock and no
+    kind with the pair [1, 2], FOUR Nodes deep (the mirror's depth of ALGEBRA.md A.3 at the
+    train's wavelength 4), on the first build's chain (x = 40 to 43; the emitter body at
+    [2, 34), the screen cube at [70, 72]): the blocks have no own record, no clock and no
     coupling (the loader sets their seed 0; the engine's blocks' loop skips them; the margin
-    rule skips light's kind), light's pair arrays carry [1, 2] at the two cells and [1, 1]
-    elsewhere; over 200 intervals the largest level beyond the wall (x in [45, 69]) stays below
-    four percent of the largest level before it (x in [10, 38]; the engine reads 3.1 percent
-    on the one-cell birth beside the declaration's 0.7 percent of the amplitude and the
-    train's 1.45, the front's precursor included, COMPUTATION), the books balanced at every
+    rule skips light's kind), light's pair arrays carry [1, 2] at the four cells and [1, 1]
+    elsewhere; over 200 intervals the largest level beyond the wall (x in [48, 69]) stays below
+    four percent of the largest level before it (x in [10, 38], the train's own cells; the
+    reading on this head in the test's assertion, COMPUTATION), the books balanced at every
     interval; a light-kind block with
     `seed`, `coupling` or `margin` refused. The chain's source is the emitter body of
     section 26 (a block itself, of the matter kind, with its own record)."""
@@ -1652,7 +1659,7 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
     document["massive_record"] = True
     document["amplitude_bound"] = 1 << 32
     document["ticks"] = 200
-    for x in (40, 41):
+    for x in (40, 41, 42, 43):
         document["measured"].append(
             {
                 "position": [x, 0, 0],
@@ -1673,6 +1680,8 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
         False,
         True,
         True,
+        True,
+        True,
     ]
     assert world.measured[4].block is not None and world.measured[4].block.seed == 0
     simulation = DetectorLawSimulation(world)
@@ -1687,7 +1696,7 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
             if live.family != 0:
                 continue
             before = max(before, int(np.max(np.abs(live.now[10:39, 0, 0]))))
-            beyond = max(beyond, int(np.max(np.abs(live.now[45:70, 0, 0]))))
+            beyond = max(beyond, int(np.max(np.abs(live.now[48:70, 0, 0]))))
     assert before > 0 and beyond * 100 < 4 * before, (before, beyond)
     for key, value in (("seed", 5), ("coupling", {"G": [1, 1], "g": [1, 2]}), ("margin", "control")):
         bad = json.loads(json.dumps(document))

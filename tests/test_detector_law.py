@@ -23,32 +23,48 @@ from tests.test_emitter import massive_generator
 
 EMITTER_KIND = [7, 8]  # the emitter body's kind (omega_0 = 0.505)
 EMITTER_PAIR = [
-    801,
+    699,
     700,
-]  # its one-cell well, rich (W = 700 remainder values, ALGEBRA.md 9.22 (4)), bound on a chain (2 cos omega_b = 1.90)
+]  # the well of the 32-cell emitting body, rich (W = 700 remainder values, ALGEBRA.md 9.22 (4)) and bound on a chain (2 cos omega_b = 1.9944 over 32 cells; the one-cell well [801, 700] of the one-cell birth is a runaway over 32 cells, 2.285, its interior above 1)
+BORN_CLOCK = [
+    512,
+    1,
+]  # the born clock of every light emitter on N = 1024: k = pi / 2, the wavelength 4 (ALGEBRA.md 9.17 (6a))
+PHASE_STEPS = 1024
+TRAIN_LENGTH = 32  # the train's cells along K: 8 periods of the wavelength 4
 
 
 def emitter_body(
     position: list[int],
     stock: int,
     receiver: object = None,
-    side: int = 1,
     family: str = "light",
+    direction: list[int] | None = None,
+    extents: list[int] | None = None,
 ) -> dict:
-    """An emitter body of the matter kind EMITTER_KIND (the well pair EMITTER_PAIR, seeded on
-    its mode at 2^20 by the generator; at 100 the born light's back-action swamps the excited
-    record, ALGEBRA.md 9.17 (7) (c)), its stock `stock`, its `emitter` the family given and,
-    with `receiver`, the born records' ladder by name. The residue and the wheel are the
-    law's (ALGEBRA.md 9.22 (4): the clicking record's remainder at the birth cell, W = 700 on
-    EMITTER_PAIR, read after the excited record's first advance, 9.19 (4e)); its coupling
-    (g, G) to the born family, the registered form, required (9.19 (4e): the born records act
-    back on the excited record's rows and spread its residues). The cadence under the click
-    rule of ALGEBRA.md 9.17 (7) (f) (BUILD.md section 26 item 24): the residue u clicks
-    (2 u + 1) / (2 W) x P intervals after its read, within the seed's rounding wobble; a well
-    too deep for its board is a runaway and refused at the margin rule."""
-    emitter: dict = {"family": family}
+    """An emitter body of the matter kind EMITTER_KIND (the well pair EMITTER_PAIR over the
+    train's 32 cells along `direction`, +x by default, seeded on its mode at 2^20 by the
+    generator; at 100 the born light's back-action swamps the excited record, ALGEBRA.md
+    9.17 (7) (c)), its stock `stock`, its `emitter` the family given with its `train` of 8
+    periods (THE BORN TRAIN, 9.17 (6a); BUILD.md section 26 item 27: the profile and its
+    norm the generator's, `born_train`) and, with `receiver`, the born records' ladder by
+    name. The residue and the wheel are the law's (ALGEBRA.md 9.22 (4): the clicking
+    record's remainder at the birth cell, W = 700 on EMITTER_PAIR, read after the excited
+    record's first advance, 9.19 (4e)); its coupling (g, G) to the born family, the
+    registered form, required (9.19 (4e): the born records act back on the excited record's
+    rows and spread its residues). The cadence under the click rule of ALGEBRA.md 9.17 (7)
+    (f) (BUILD.md section 26 item 24): the residue u clicks (2 u + 1) / (2 W) x P intervals
+    after its read, within the seed's rounding wobble; a well too deep for its board is a
+    runaway and refused at the margin rule."""
+    emitter: dict = {
+        "family": family,
+        "train": {"direction": direction or [1, 0, 0], "periods": 8},
+    }
     if receiver is not None:
         emitter["receiver"] = receiver
+    if extents is None:
+        extents = [1, 1, 1]
+        extents[next(index for index, v in enumerate(direction or [1, 0, 0]) if v != 0)] = TRAIN_LENGTH
     return {
         "position": position,
         "family": "matter",
@@ -56,7 +72,7 @@ def emitter_body(
         "phase": 0,
         "momentum": [0, 0, 0],
         "fixed": True,
-        "side": side,
+        "extents": extents,
         "pair": list(EMITTER_PAIR),
         "coupling": {"G": [1, 50], "g": [1, 1000]},
         "seed": 1 << 20,
@@ -109,23 +125,27 @@ def chain_world(
     faces: str = "closed",
 ) -> dict:
     """A chain of 80 Nodes (y and z periodic, one layer each; x CLOSED, the
-    zero rows at both ends mirrors): the emitter body at x = 2 (one cell,
-    the matter kind [7, 8] with the well pair [8, 7], its mode the seed),
-    the receiver cube of side 3 at [70, 72] read as the set `screen`
-    (record 1899); the light family's
-    clock the pair [77, 25] on N = 64 (3.08 steps per interval, the period
-    20.78 intervals, lambda = 12 Links); no wheel anywhere (the rung's wheel
-    is the record's own, W = 700). With `faces` "open" the face receiver
-    `face` stands at both ends, last on every ladder (ALGEBRA.md 9.19 (3)
-    (a)): two Links behind the emitter it clicks the half that leaves."""
+    zero rows at both ends mirrors): the emitter body at [2, 34) (the
+    train's 32 cells of the matter kind [7, 8] with the well pair [699,
+    700], its mode the seed), the receiver cube of side 3 at [70, 72] read
+    as the set `screen` (record 1899), 36 Links ahead of the train's head;
+    the light family's born clock [512, 1] on N = 1024 (k = pi / 2, the
+    wavelength 4; THE BORN TRAIN, ALGEBRA.md 9.17 (6a)); no wheel anywhere
+    (the rung's wheel is the record's own, W = 700). With `faces` "open"
+    the face receiver `face` stands at both ends, last on every ladder
+    (ALGEBRA.md 9.19 (3) (a)) on the chain of 140 with the body at [34, 66)
+    and the screen at [100, 102], one train's length from both faces (the
+    generator's placement rule, ALGEBRA.md 9.25 (11) (b)); the train leaves
+    toward +x and nothing of it goes back but the tapers' dispersion."""
+    length, corner, screen = (140, 34, 100) if faces == "open" else (80, 2, 70)
     document = {
         "law": "beam",
         "model_id": "beam-detector-law-chain-v1",
-        "shape": [80, 1, 1],
+        "shape": [length, 1, 1],
         "boundary": {"x": faces, "y": "periodic", "z": "periodic"},
-        "ticks": 400,
+        "ticks": 600,
         "K": 1073741824,
-        "N": 64,
+        "N": PHASE_STEPS,
         "release": [1, 128],
         "suspension": 0,
         "clock_stamp": clock_stamp,
@@ -134,15 +154,15 @@ def chain_world(
         "amplitude_bound": 1 << 32,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
+            {"name": "light", "quantum": 1, "phase_per_link": list(BORN_CLOCK)},
             {"name": "matter", "quantum": 1, "pair": list(EMITTER_KIND)},
         ],
         "measured": [
-            emitter_body([2, 0, 0], stock, receiver),
+            emitter_body([corner, 0, 0], stock, receiver),
         ],
         "detectors": [],
     }
-    receiver_cube(document, "screen", [70, 0, 0])
+    receiver_cube(document, "screen", [screen, 0, 0])
     if on_mode:
         massive_generator().seed_on_the_mode(document)
     return document
@@ -210,12 +230,14 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     item 14): six births at their rungs, every record clicking ONCE at `screen` (the
     cumulative ladder [screen] on the emitter's default ladder of every declared set, no
     face on a closed chain), its line at the rung's interval and the record deleted whole
-    at it (never in `records` after its line), the flight of the +x half's front over the
-    68 Links at c = 0.577 (100 to 140 intervals), every click's quantum on the transit
-    row `absorbed` and the screen body's `measured`, the books balanced. The edge case:
-    the faces OPEN, the face receiver `face` two Links behind the emitter: the first
-    record's -x half leaves through it and clicks there within twelve intervals of the
-    birth, the record deleted, nothing yet at the screen."""
+    at it (never in `records` after its line), the flight of the train's head over the 36
+    Links from the body's head at x = 33 to the screen at v_g = 0.447 (80 intervals) and
+    as much of the passage as the residue asks (the train of 32 cells passes in 72), every
+    click's quantum on the transit row `absorbed` and the screen body's `measured`, the
+    books balanced. The edge case: the faces OPEN on the chain of 140 (the body at [34, 66)
+    one train's length from the low face): the train leaves toward +x and the faces book
+    nothing of it within the first 40 intervals (no click there), the screen not reached
+    yet."""
     world = parse_nature_beam_world(chain_world())
     assert "face" not in DetectorLawSimulation(world).cell_names
     lines: list[dict] = []
@@ -230,17 +252,17 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     # remainder at the birth cell on Z_700
     assert len(births) == 6 and all(0 <= line["u"] < 700 and line["W"] == 700 for line in births)
     assert len(gathers) + sum(1 for live in simulation.records.values() if live.family == 0) == 6
-    assert len(gathers) >= 4
+    assert len(gathers) >= 3
     assert all("clock" in g and "birth" in g and "click" in g for g in gathers)
     for gather in gathers:
         assert gather["chosen"] == [["screen", 0, "0"]] and gather["click_at"] == "rung"
         assert gather["tick"] == gather["click"] and gather["record"] not in simulation.records
         flight = gather["click"] - gather["birth"]
-        # the front's first rung about L / c = 68 / 0.577 = 118 intervals after the
-        # birth; the residue decides how much of the record must pass before the
-        # rung (a residue near W waits for the whole front: the coupling spreads
-        # the residues, 9.19 (4e)), read up to 200 on this head (COMPUTATION)
-        assert 100 <= flight <= 200, flight
+        # the train's head over 36 Links at v_g = 0.447 (80 intervals), then as
+        # much of the passage (72 intervals) as the residue asks (a residue near
+        # W waits for the whole train: the coupling spreads the residues, 9.19
+        # (4e)); the tapers' precursor a little before the head (COMPUTATION)
+        assert 60 <= flight <= 200, flight
     books = simulation.books()["families"]["light"]
     assert books["transit"]["absorbed"] == books["measured"]["measured"] == len(gathers)
     # the edge case: the open faces, the face receiver last on every ladder
@@ -252,17 +274,15 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     for _ in range(40):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-    first = next(line for line in lines if line["event"] == "gather")
-    assert first["chosen"] == [["face", 0, "0"]] and first["click"] - first["birth"] <= 12
-    assert first["record"] not in simulation.records
+    assert not [line for line in lines if line["event"] == "gather"]
     assert simulation.books()["families"]["light"]["measured"]["measured"] == 0
 
 
 def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_record():
     """ALGEBRA.md 9.17 (the Boss's line on the knot): the emitter's own cells are cells like
     every other after the birth: no grace, no exemption, no own take. On the chain world
-    the born record's row at the emitter's cell evolves under the rule (nonzero at ages after
-    the birth, never held at 0), the ledger's row `taken_by_emitter` stays 0 (kept for the
+    the born record's row at the emitter's tail cell evolves under the rule (nonzero at ages
+    after the birth, never held at 0), the ledger's row `taken_by_emitter` stays 0 (kept for the
     readers' form) and the records reading carries no `emitter_taking`; a `remnant_take` key
     on the emitter is refused as unknown; the world key `wheel`, a set's `wheel` and a
     family's `take` are refused by name (the retired keys, BUILD.md section 26 item 15); the
@@ -305,23 +325,26 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
 
 
 def layer_world(receiver: object = None) -> dict:
-    """A layer of 24 x 9 x 1 (x closed at both ends, mirrors; y and z
-    periodic): the emitter body at [2, 4, 0] (the matter kind on its mode,
-    the stock 8), three detector cubes of side 3 at x in [18, 20] on the
-    rows y in [0, 2], [3, 5], [6, 8] read as the sets s0, s1, s2 (the
-    screen, record 1899; s1 centred on the emitter's row, s0 and s2 its
-    mirror images across the periodic seam). With `receiver`, the emitter's
-    records' ladder is the named sets in the named order; without it, every
-    declared set in the declared order (ALGEBRA.md 9.19 (3) (b))."""
-    measured = [emitter_body([2, 4, 0], 8, receiver=receiver)]
+    """A layer of 80 x 9 x 1 (x closed at both ends, mirrors; y and z
+    periodic): the emitter body at [2, 34) across the whole width (the
+    train's 32 cells by 9 of the matter kind on its mode, the stock 8: its
+    train uniform across the periodic y, the extruded form of ALGEBRA.md
+    9.22 (8)), three detector cubes of
+    side 3 at x in [70, 72] on the rows y in [0, 2], [3, 5], [6, 8] read as
+    the sets s0, s1, s2 (the screen, record 1899; s1 centred on the
+    emitter's row, s0 and s2 its mirror images across the periodic seam).
+    With `receiver`, the emitter's records' ladder is the named sets in the
+    named order; without it, every declared set in the declared order
+    (ALGEBRA.md 9.19 (3) (b))."""
+    measured = [emitter_body([2, 0, 0], 8, receiver=receiver, extents=[32, 9, 1])]
     document = {
         "law": "beam",
         "model_id": "beam-detector-law-layer-v1",
-        "shape": [24, 9, 1],
+        "shape": [80, 9, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": 400,
         "K": 1073741824,
-        "N": 64,
+        "N": PHASE_STEPS,
         "release": [1, 128],
         "suspension": 0,
         "clock_stamp": True,
@@ -330,14 +353,14 @@ def layer_world(receiver: object = None) -> dict:
         "amplitude_bound": 1 << 32,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
+            {"name": "light", "quantum": 1, "phase_per_link": list(BORN_CLOCK)},
             {"name": "matter", "quantum": 1, "pair": [800, 809]},
         ],
         "measured": measured,
         "detectors": [],
     }
     for index, y in enumerate((0, 3, 6)):
-        receiver_cube(document, f"s{index}", [18, y, 0])
+        receiver_cube(document, f"s{index}", [70, y, 0])
     massive_generator().seed_on_the_mode(document)
     return document
 
@@ -417,7 +440,7 @@ def planted_layer(order: tuple[str, ...]) -> tuple[list[dict], DetectorLawSimula
     simulation = DetectorLawSimulation(world, observer=lines.append)
     seen: Seen = {}
     spy_on(simulation, seen)
-    level = round(UNIT * math.sin(math.pi * 77 / (25 * 64)))
+    level = round(UNIT * math.sin(math.pi * 512 / (1 * 1024)))
     ladder = [simulation.cell_names.index(name) for name in order]
     for u in range(RESIDUES):
         now = np.zeros(simulation.shape, dtype=np.int64)
@@ -432,10 +455,10 @@ def planted_layer(order: tuple[str, ...]) -> tuple[list[dict], DetectorLawSimula
             1,
             0,
             1,
-            77,
-            25,
+            512,
+            1,
             0,
-            21,
+            2,
             now,
             before,
             np.zeros(simulation.shape, dtype=np.int64),
@@ -524,23 +547,23 @@ def test_the_increment_ladder_over_the_named_sets():
 def test_detector_is_one_connected_cube_of_side_three():
     """THE DETECTOR CUBE (the model owner's word of 2026-09-25, record 1899; ALGEBRA.md 9.25
     (7)): a detector is one region, a cube of side 3 or more, its click the detector's.
-    On the layer of 24 x 9 the loader refuses a cube of side 2 (the 2 x 2 box at (10, 2)
-    naming its sides [2, 2, 1]), admits a cube of side 3 (the 3 x 3 box at (10, 2); the
+    On the layer of 80 x 9, beyond the emitter's box, the loader refuses a cube of side 2 (the 2 x 2 box at (40, 2)
+    naming its sides [2, 2, 1]), admits a cube of side 3 (the 3 x 3 box at (40, 2); the
     layer's thin z axis cuts the cube to one Node deep), admits the 3 x 3 box wrapped across
     the periodic seam (y = 8, 0, 1: one piece, one box), refuses a disconnected set (two
-    bodies at (10, 2) and (13, 2), naming the two pieces) and refuses a connected set that
+    bodies at (40, 2) and (43, 2), naming the two pieces) and refuses a connected set that
     fills no box (the 3 x 3 box less its centre, naming its Nodes); a set bound to a block
     refuses a block of side 1 as its cells and admits one of side 3; the engine reads the
     admitted cube as ONE cell whose Nodes are the cube's (the click line names the set and
     places no Node)."""
-    box = [[x, y, 0] for x in (10, 11, 12) for y in (2, 3, 4)]
-    wrapped = [[x, y, 0] for x in (10, 11, 12) for y in (8, 0, 1)]
+    box = [[x, y, 0] for x in (40, 41, 42) for y in (2, 3, 4)]
+    wrapped = [[x, y, 0] for x in (40, 41, 42) for y in (8, 0, 1)]
     for positions, refusal in (
         ([[x, y, 0] for x in (10, 11) for y in (2, 3)], r"is a box of sides \[2, 2, 1\]"),
         (box, None),
         (wrapped, None),
-        ([[10, 2, 0], [13, 2, 0]], "lies on 2 disconnected pieces"),
-        ([p for p in box if p != [11, 3, 0]], "on 8 Nodes fills no box"),
+        ([[40, 2, 0], [43, 2, 0]], "lies on 2 disconnected pieces"),
+        ([p for p in box if p != [41, 3, 0]], "on 8 Nodes fills no box"),
     ):
         document = layer_world()
         document["measured"].extend(receiver_body(position) for position in positions)
@@ -563,7 +586,7 @@ def test_detector_is_one_connected_cube_of_side_three():
         document = layer_world()
         document["measured"].append(
             {
-                "position": [10, 2, 0],
+                "position": [40, 2, 0],
                 "family": "light",
                 "amount": 1,
                 "phase": 0,

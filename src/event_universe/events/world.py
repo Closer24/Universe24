@@ -1340,7 +1340,56 @@ class EmitterDefinition:
     receiver: tuple[str, ...] | None
     period: int | None = None
     norm: int | None = None
-    born: tuple[int, int] | None = None
+    train: TrainDefinition | None = None
+    born: BornTrain | None = None
+
+
+@dataclass(frozen=True)
+class TrainDefinition:
+    """THE BORN TRAIN'S DECLARATION (ALGEBRA.md 9.17 (6a); BUILD.md section
+    26 item 27): the key `train` of an emitter: {"direction": one signed
+    unit axis vector, the train's **K** and its way; "periods": n >= 8, the
+    train's length in periods}. The born clock is the born family's
+    declared clock [p, q] (the world's family column, one clock per row):
+    the wave number k = 2 pi p / (2 N q) per Link on the world's circle of
+    N steps, the wavelength 2 N q / p a whole number of Links, and the
+    body's extent along the direction n wavelengths (32 cells for 8
+    periods at the wavelength 4 of [512, 1] on N = 1024)."""
+
+    axis: int
+    sign: int
+    clock: tuple[int, int]
+    periods: int
+    wavelength: int
+
+    @property
+    def direction(self) -> tuple[int, int, int]:
+        vector = [0, 0, 0]
+        vector[self.axis] = self.sign
+        return (vector[0], vector[1], vector[2])
+
+    @property
+    def length(self) -> int:
+        """The train's length in cells, periods x wavelength."""
+        return self.periods * self.wavelength
+
+
+@dataclass(frozen=True)
+class BornTrain:
+    """THE BORN TRAIN'S PROFILE (ALGEBRA.md 9.17 (6a)): the key `born` of an
+    emitter: {"now": [...], "before": [...]} over the body's cells in the
+    box's x-major order (`block_cell_indices`: the character of the train's
+    **K** over its periods under the window across the transverse extents
+    and the tapers along **K**, at the two levels t = 0 and t = -1, the
+    generator's integers at the amplitude 2^16), and "norm": T, the born
+    record's conserved form on the born family's VACUUM in the flux's units
+    (9.19 (3)), the generator's integer checked at load (`born_train_norm`):
+    the ladder's T. The two-integer pair [now, before] (the one-cell birth,
+    a flat pulse of the body's length, broadband) is refused by name."""
+
+    now: tuple[int, ...]
+    before: tuple[int, ...]
+    norm: int
 
 
 @dataclass(frozen=True)
@@ -3404,6 +3453,7 @@ def _block(
     shape: Address3,
     amplitude_bound: int = AMPLITUDE_BOUND,
     phase_steps: int = 64,
+    periodic: tuple[bool, bool, bool] = (True, True, True),
 ) -> BlockDefinition | None:
     """The block's keys on a measured event (`massive-record-v1`), each named
     in its refusal: `side` makes a block; every other block key without
@@ -3643,7 +3693,15 @@ def _block(
                 "residues; a body that births and is not coupled is a write and no source)"
             )
         emitter = _emitter(
-            obj["emitter"], f"{label}.emitter", family, families, names, shape, phase_steps
+            obj["emitter"],
+            f"{label}.emitter",
+            family,
+            families,
+            names,
+            shape,
+            phase_steps,
+            extents=extents,
+            periodic=periodic,
         )
         # THE RICHNESS OF THE BIRTH CELL (ALGEBRA.md 9.22 (4); BUILD.md section
         # 26 item 15): the residue from the law takes 3 den / gcd(num, 3 den)
@@ -3690,6 +3748,8 @@ def _emitter(
     names: dict[str, int],
     shape: Address3,
     phase_steps: int,
+    extents: tuple[int, int, int] = (1, 1, 1),
+    periodic: tuple[bool, bool, bool] = (True, True, True),
 ) -> EmitterDefinition:
     """The `emitter` object of a clicking body (ALGEBRA.md 9.17 (4) to (6),
     9.22 (4)): the born family a paid family with the pair form of its
@@ -3702,7 +3762,7 @@ def _emitter(
     obj = _object(
         value,
         label,
-        {"family", "branches", "receiver", "period", "norm", "born"},
+        {"family", "branches", "receiver", "period", "norm", "train", "born"},
         {"family"},
     )
     name = obj["family"]
@@ -3733,29 +3793,120 @@ def _emitter(
     receiver = _receiver_names(obj, label, True)
     period = None if "period" not in obj else _integer(obj["period"], f"{label}.period", 1)
     norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
-    born: tuple[int, int] | None = None
+    train: TrainDefinition | None = None
+    if "train" in obj:
+        train = _train(obj["train"], f"{label}.train", born_family, phase_steps, extents)
+    born: BornTrain | None = None
     if "born" in obj:
-        # NO TABLE IN THE ENGINE (ALGEBRA.md 9.17 (6), 9.22 (2)): the born
-        # record's pair on every cell of the body as the world's two integers
-        # [now, before], the generator's (now = A C_2N[3 N / 2 + s], before =
-        # -now), checked here in integers: two integers, before = -now, a
-        # motion (now nonzero)
+        # THE BORN TRAIN (ALGEBRA.md 9.17 (6a)): the profile of the train's
+        # two levels over the body's cells and its norm on the vacuum, the
+        # generator's integers, checked here in integers; the two-integer pair
+        # (the one-cell birth, a flat pulse of the body's length) refused
         value = obj["born"]
-        if not isinstance(value, list) or len(value) != 2 or any(type(v) is not int for v in value):
+        if isinstance(value, list):
             raise ValueError(
-                f"{BEAM_LAW}: {label}.born must be [now, before], the born pair's two integers on "
-                "every cell of the body (the generator's, ALGEBRA.md 9.17 (6))"
+                f"{BEAM_LAW}: {label}.born is the pair [now, before] on every cell: a flat pulse of "
+                "the body's length is broadband and its standing components book the ladder by "
+                "sloshing, not by a passage (ALGEBRA.md 9.17 (6a), 9.25 (11)); every birth is a "
+                'travelling train: `born` {"now": [...], "before": [...], "norm": T} with `train`'
             )
-        now, before = int(value[0]), int(value[1])
-        if now == 0:
-            raise ValueError(f"{BEAM_LAW}: {label}.born writes no motion (now is 0)")
-        if before != -now:
+        if train is None:
             raise ValueError(
-                f"{BEAM_LAW}: {label}.born [{now}, {before}]: the born pair has before = -now (the "
-                "character half a step either side of its zero, no static part; ALGEBRA.md 9.17 (6))"
+                f"{BEAM_LAW}: {label}.born needs the emitter's `train` (the direction and the "
+                "periods; ALGEBRA.md 9.17 (6a))"
             )
-        born = (now, before)
-    return EmitterDefinition(names[name], branches, label_hands, receiver, period, norm, born)
+        wrap = periodic if born_family.faces is None else born_family.faces
+        born = _born_train(value, f"{label}.born", born_family, shape, extents, wrap, train)
+    return EmitterDefinition(names[name], branches, label_hands, receiver, period, norm, train, born)
+
+
+def _train(
+    value: object,
+    label: str,
+    born_family: FamilyDefinition,
+    phase_steps: int,
+    extents: tuple[int, int, int],
+) -> TrainDefinition:
+    """The emitter's `train` (ALGEBRA.md 9.17 (6a)): one signed unit axis
+    vector and the periods n >= 8; the born clock the born family's
+    declared clock [p, q], the wavelength 2 N q / p a whole number of Links
+    and the body's extent along the direction n wavelengths."""
+    obj = _object(value, label, {"direction", "periods"}, {"direction", "periods"})
+    direction = obj["direction"]
+    if (
+        not isinstance(direction, list)
+        or len(direction) != 3
+        or any(type(v) is not int for v in direction)
+        or sorted(abs(int(v)) for v in direction) != [0, 0, 1]
+    ):
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.direction must be one signed unit axis vector, the train's way "
+            "(ALGEBRA.md 9.17 (6a))"
+        )
+    axis = next(index for index, v in enumerate(direction) if v != 0)
+    sign = 1 if int(direction[axis]) > 0 else -1
+    periods = _integer(obj["periods"], f"{label}.periods", 8)
+    assert born_family.phase_per_age is not None  # the emitter parse checked the clock
+    p, q = int(born_family.phase_per_age[0]), int(born_family.phase_per_age[1])
+    if (2 * phase_steps * q) % p != 0:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}: the born family's clock [{p}, {q}] on N = {phase_steps} gives "
+            f"the wavelength 2 N q / p = {2 * phase_steps * q} / {p}, no whole number of Links "
+            "(ALGEBRA.md 9.17 (6a))"
+        )
+    wavelength = (2 * phase_steps * q) // p
+    if extents[axis] != periods * wavelength:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}: the body's extent {extents[axis]} along the train's axis "
+            f"{AXES[axis]} is not the train's length, {periods} periods of the wavelength "
+            f"{wavelength} = {periods * wavelength} cells (ALGEBRA.md 9.17 (6a))"
+        )
+    return TrainDefinition(axis, sign, (p, q), periods, wavelength)
+
+
+def _born_train(
+    value: object,
+    label: str,
+    born_family: FamilyDefinition,
+    shape: Address3,
+    extents: tuple[int, int, int],
+    wrap: tuple[bool, bool, bool],
+    train: TrainDefinition,
+) -> BornTrain:
+    """The emitter's `born` profile (ALGEBRA.md 9.17 (6a)) checked in
+    integers: the two levels over the body's cells (the box's cell count,
+    x-major), a motion, the flux sign along the train's way positive, and
+    the norm the conserved form on the born family's vacuum (the box at the
+    board's origin: the vacuum is the same wherever the box stands)."""
+    obj = _object(value, label, {"now", "before", "norm"}, {"now", "before", "norm"})
+    count = extents[0] * extents[1] * extents[2]
+    levels: list[tuple[int, ...]] = []
+    for key in ("now", "before"):
+        items = obj[key]
+        if not isinstance(items, list) or len(items) != count or any(type(v) is not int for v in items):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.{key} must be {count} integers, the train's level on every "
+                f"cell of the body's box {list(extents)} in x-major order (ALGEBRA.md 9.17 (6a))"
+            )
+        levels.append(tuple(int(v) for v in items))
+    now, before = levels
+    if not any(now) and not any(before):
+        raise ValueError(f"{BEAM_LAW}: {label} writes no motion (every level 0)")
+    flux = born_train_flux_sign(now, before, extents, train.axis, train.sign)
+    if flux <= 0:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}: the flux along the train's way {list(train.direction)} sums to "
+            f"{flux}, not positive: the record does not travel as declared (ALGEBRA.md 9.17 (6a))"
+        )
+    norm = _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
+    board = (int(shape[0]), int(shape[1]), int(shape[2]))
+    expected = born_train_norm(now, before, board, (0, 0, 0), extents, born_family.pair, wrap)
+    if norm != expected:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.norm {norm} is not the born record's conserved form on the "
+            f"vacuum, {expected} (ALGEBRA.md 9.17 (6a), 9.19 (3); the generator's `born_train`)"
+        )
+    return BornTrain(now, before, norm)
 
 
 def _measured(
@@ -4051,6 +4202,7 @@ def _measured(
             shape,
             amplitude_bound,
             phase_steps,
+            periodic,
         )
         found.append(
             MeasuredDefinition(
@@ -4905,6 +5057,63 @@ def block_cell_indices(
     return [x * stride_x + y * stride_y + z for x in ranges[0] for y in ranges[1] for z in ranges[2]]
 
 
+def born_train_norm(
+    now: Sequence[int],
+    before: Sequence[int],
+    shape: tuple[int, int, int],
+    corner: tuple[int, int, int],
+    extents: tuple[int, int, int],
+    pair: tuple[int, int],
+    wrap: tuple[bool, bool, bool],
+) -> int:
+    """THE BORN RECORD'S NORM ON THE VACUUM (ALGEBRA.md 9.17 (6a), 9.19 (3)):
+    the conserved form of the train's two levels written on the body's
+    cells and zero elsewhere, on the born family's vacuum (its pair [num,
+    den] at every Node, the world's faces), in the flux's units of the
+    engine's `conserved_form` with the wall num: the sum over the cells of
+    3 den (now^2 + before^2) - num now (S_6 before); exact integers; the
+    one copy the generator writes and the loader checks."""
+    num, den = int(pair[0]), int(pair[1])
+    count = int(shape[0]) * int(shape[1]) * int(shape[2])
+    cells = block_cell_indices(shape, corner, extents, wrap)
+    level_before = [0] * count
+    for index, value in zip(cells, before, strict=True):
+        level_before[index] = int(value)
+    read = six_neighbours_flat(level_before, shape, wrap)
+    total = 0
+    for index, now_value, before_value in zip(cells, now, before, strict=True):
+        total += 3 * den * (int(now_value) ** 2 + int(before_value) ** 2)
+        total -= num * int(now_value) * read[index]
+    return total
+
+
+def born_train_flux_sign(
+    now: Sequence[int],
+    before: Sequence[int],
+    extents: tuple[int, int, int],
+    axis: int,
+    sign: int,
+) -> int:
+    """THE FLUX SIGN ALONG THE TRAIN'S **K** (ALGEBRA.md 9.17 (6a), a load
+    check): the sum over the body's Links along the axis, from each cell i
+    to its neighbour j on the train's way, of the flux into j from i, now_j
+    before_i - before_j now_i (the engine's G_ji of 9.19 (3), the flux into
+    a cell from its neighbour); positive when the record travels as
+    declared (the one-way flux leaves through the head)."""
+    strides = (extents[1] * extents[2], extents[2], 1)
+    total = 0
+    for x in range(extents[0]):
+        for y in range(extents[1]):
+            for z in range(extents[2]):
+                position = [x, y, z]
+                if not 0 <= position[axis] + sign < extents[axis]:
+                    continue
+                i = x * strides[0] + y * strides[1] + z
+                j = i + sign * strides[axis]
+                total += int(now[j]) * int(before[i]) - int(before[j]) * int(now[i])
+    return total
+
+
 def six_neighbours_flat(
     values: Sequence[int], shape: tuple[int, int, int], wrap: tuple[bool, bool, bool]
 ) -> list[int]:
@@ -5023,7 +5232,15 @@ def _input_stamp_check(value: object, shape: Address3, measured: tuple[MeasuredD
         block = entry.block
         if block is None or block.profile is None:
             continue
-        born = None if block.emitter is None or block.emitter.born is None else list(block.emitter.born)
+        born = (
+            None
+            if block.emitter is None or block.emitter.born is None
+            else {
+                "now": list(block.emitter.born.now),
+                "before": list(block.emitter.born.before),
+                "norm": block.emitter.born.norm,
+            }
+        )
         bodies.append(
             {
                 "measured": number,

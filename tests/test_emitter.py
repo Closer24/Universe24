@@ -38,14 +38,13 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import math
 import sys
 from pathlib import Path
 
 import numpy as np
 import pytest
 
-from event_universe.events.detector_law import UNIT, DetectorLawSimulation
+from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import input_stamp, parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,23 +63,28 @@ def massive_generator():
 def emitter_world(
     stock: int = 4,
     ticks: int = 1200,
-    side: int = 12,
     on_mode: bool = True,
 ) -> dict:
     """The emitter's unit world: a chain of 80 (x closed, mirrors), the emitter a body of the
     matter kind [800, 809] with the well pair [800, 801] (W = 2403 remainder values, ALGEBRA.md
-    9.22 (4)) of side `side` at x = 5, seeded on its bound mode at the amplitude 2^20 (the
-    generator's `seed_on_the_mode`, the body's conditions of the load check; at 100 the born
-    light's back-action swamps the excited record, ALGEBRA.md 9.17 (7) (c)), its stock
-    `amount` = `stock`, its `emitter` the light family [77, 25] with its ladder the set
-    `screen`, its coupling G [1, 50], g [1, 1000] to light (required, ALGEBRA.md 9.19 (4e));
-    the receiver the cube of side 3 of light bodies at [70, 72] read as `screen` (record
-    1899); no wheel anywhere."""
+    9.22 (4)) over the train's 32 cells at [5, 37), seeded on its bound mode at the amplitude
+    2^20 (the generator's `seed_on_the_mode`, the body's conditions of the load check; at 100
+    the born light's back-action swamps the excited record, ALGEBRA.md 9.17 (7) (c)), its
+    stock `amount` = `stock`, its `emitter` the light family on the born clock [512, 1] of
+    N = 1024 with its `train` of 8 periods along +x (THE BORN TRAIN, ALGEBRA.md 9.17 (6a);
+    BUILD.md section 26 item 27) and its ladder the set `screen`, its coupling G [1, 50], g
+    [1, 1000] to light (required, ALGEBRA.md 9.19 (4e)); the receiver the cube of side 3 of
+    light bodies at [70, 72] read as `screen` (record 1899), 33 Links ahead of the train's
+    head; no wheel anywhere."""
     # the cube helper of the detector-law suite (imported here: that suite imports
     # `massive_generator` from this one)
     from tests.test_detector_law import receiver_cube
 
-    emitter: dict = {"family": "light", "receiver": ["screen"]}
+    emitter: dict = {
+        "family": "light",
+        "receiver": ["screen"],
+        "train": {"direction": [1, 0, 0], "periods": 8},
+    }
     document = {
         "law": "beam",
         "model_id": "beam-detector-law-emitter-unit-v1",
@@ -88,7 +92,7 @@ def emitter_world(
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": ticks,
         "K": 1073741824,
-        "N": 64,
+        "N": 1024,
         "release": [1, 128],
         "suspension": 0,
         "clock_stamp": True,
@@ -97,7 +101,7 @@ def emitter_world(
         "amplitude_bound": 1 << 32,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
+            {"name": "light", "quantum": 1, "phase_per_link": [512, 1]},
             {"name": "matter", "quantum": 1, "pair": [800, 809]},
         ],
         "measured": [
@@ -108,7 +112,7 @@ def emitter_world(
                 "phase": 0,
                 "momentum": [0, 0, 0],
                 "fixed": True,
-                "side": side,
+                "extents": [32, 1, 1],
                 "pair": [800, 801],
                 "coupling": {"G": [1, 50], "g": [1, 1000]},
                 "seed": 1 << 20,
@@ -169,11 +173,11 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
     # mode advanced alone (ALGEBRA.md 9.17 (7) (e) and (f), 9.19 (3)), the
     # generator's integers `period` and `norm`, read on the board here: the
     # body alone (the same world, its emitter and its screen removed), the
-    # share at the Node x = 11 (the corner 5 plus 12 // 2) from the two
+    # share at the Node x = 21 (the corner 5 plus 32 // 2) from the two
     # levels after each interval's step, summed over `period` intervals, bit
     # for bit; the period the nearest integer to 2 pi / omega_b (63 on this
     # well); the share the mode's own tick, constant within the seed's
-    # rounding wobble (below one part in a thousand at 2^20), and the whole
+    # rounding wobble (below three parts in a thousand at 2^20 on the 32-cell well), and the whole
     # board's shares sum to the conserved form
     emitter = document["measured"][0]["emitter"]
     assert emitter["norm"] == norm and emitter["period"] > 0
@@ -185,7 +189,7 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
     solitary = DetectorLawSimulation(parse_nature_beam_world(alone))
     body = solitary.block_by_number[0]
     centre = np.zeros(solitary.shape, dtype=bool)
-    centre[11, 0, 0] = True
+    centre[21, 0, 0] = True
     assert np.array_equal(solitary.centre_mask(body), centre)
     action = 0
     shares = []
@@ -198,7 +202,9 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
         whole = solitary.form_share(body.own, np.ones(solitary.shape, dtype=bool))
         assert whole == solitary.conserved_form(body.own)
     assert action == norm
-    assert 1000 * (max(shares) - min(shares)) < action // emitter["period"]
+    # the share's wobble from the seed's rounding: 2.1 parts in a thousand on the
+    # 32-cell well at 2^20 (COMPUTATION; one part in a thousand on the side-12 well)
+    assert 1000 * (max(shares) - min(shares)) < 3 * (action // emitter["period"])
     by_tick = {entry["tick"]: entry for entry in trace}
     # THE CADENCE UNDER THE CLICK RULE (9.17 (7) (b) and (f)): with the share
     # constant, C = (t - t_0) e_c and T = P e_c, so the residue u clicks
@@ -247,10 +253,10 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
     assert sorted(gather["u"] for gather in gathers) == sorted(line["u"] for line in births)
     for gather in gathers:
         assert gather["content"] == 1 and gather["click_at"] == "rung"
-        # the +x half's front over the 54 Links from the body's face at 16 to
-        # the screen at 70 at light's pace c = 0.577 (about 94 intervals); the
-        # rung (2 u + 1) T / 128 crossed on the front
-        assert gather["click"] >= gather["birth"] + 65
+        # the train's head over the 33 Links from the body's head at 36 to the
+        # screen at 70 at v_g = 0.447 (about 74 intervals), the tapers' precursor
+        # a little before it; the rung crossed on the passage
+        assert gather["click"] >= gather["birth"] + 50
         assert gather["click"] == gather["tick"] and gather["record"] not in simulation.records
     # ITEM 15'S FINDING RESOLVED (ALGEBRA.md 9.19 (4e)): the born records act
     # back on the excited record's rows through the body's coupling g, so the
@@ -278,23 +284,23 @@ def test_the_born_record_is_written_once_and_the_law_advances_it():
             (born,) = light
             birth = next(line for line in lines if line["event"] == "birth")
             assert birth["tick"] == simulation.tick and born.age == 0 and born.train == 0
-            # the write on the circle of 2 N (ALGEBRA.md 9.17 (6)): now = A
-            # C_2N[3 N / 2 + s] with s = floor(77 / 25) = 3 on N = 64, the
-            # entry 99 of the 128-step table (cos 278.4 degrees, 38 of 256 on
-            # the amplitude unit: 155648), before = -now exactly
-            # no table in the engine (9.22 (2)): the pair is the world's two
-            # integers `born`, the generator's: round(A sin(pi n / (d N))) on
-            # the clock [77, 25] at N = 64 (the half step of 3.08 steps)
-            now, before = document["measured"][0]["emitter"]["born"]
-            assert now == 157930 == round(UNIT * math.sin(math.pi * 77 / (25 * 64)))
-            assert before == -now
-            assert np.all(born.now[block.mask] == now) and np.all(born.before[block.mask] == before)
+            # THE BORN TRAIN (ALGEBRA.md 9.17 (6a)): the world's profile `born`
+            # {now, before, norm}, the generator's integers, written on the
+            # body's 32 cells in the box's x-major order and zero elsewhere; the
+            # character cos(pi i / 2) under the tapers of 8 at both ends: the
+            # levels 1, 0, -1, 0 times 2^16 in the flat middle
+            train = document["measured"][0]["emitter"]["born"]
+            assert len(train["now"]) == len(train["before"]) == 32
+            assert train["now"][8:16] == [65536, 0, -65536, 0, 65536, 0, -65536, 0]
+            assert 0 < train["now"][0] < 1000 and train["now"][31] == 0
+            assert list(born.now[5:37, 0, 0]) == train["now"]
+            assert list(born.before[5:37, 0, 0]) == train["before"]
             assert not np.any(born.now[~block.mask]) and not np.any(born.before[~block.mask])
-            # the norm T the record's conserved form I in the flux's units
-            # (ALGEBRA.md 9.19 (3), BUILD.md section 26 item 14), the engine's
-            # integer read on the board at the birth
-            assert born.norm == birth["norm"] == simulation.conserved_form(born) > 0
-            assert birth["cells"] == 12 and birth["excitation"] == 1 and birth["train"] == 0
+            # the norm T the written one, the record's conserved form on the
+            # vacuum (ALGEBRA.md 9.17 (6a), 9.19 (3)): light's pair is the vacuum's
+            # at the body's cells, so the board reads the same integer at the birth
+            assert born.norm == birth["norm"] == train["norm"] == simulation.conserved_form(born) > 0
+            assert birth["cells"] == 32 and birth["excitation"] == 1 and birth["train"] == 0
             assert born.u == birth["u"] and born.wheel == birth["W"] == 2403
             assert born.content == 1 and born.emitter == 0
             assert born.ladder == [simulation.cell_names.index("screen")]
@@ -305,7 +311,7 @@ def test_the_born_record_is_written_once_and_the_law_advances_it():
     assert born is not None and extent
     for age, low, high in extent:
         # nothing reaches Manhattan distance m before age m (the causal bound)
-        assert low >= 5 - age and high <= 16 + age
+        assert low >= 5 - age and high <= 36 + age
     # no drive and no take after the write (the take retired, ALGEBRA.md
     # 9.19 (3)): the ledger's retired row stays 0
     assert simulation.books()["families"]["light"]["transit"]["taken_by_emitter"] == 0
@@ -379,14 +385,47 @@ def test_the_loaders_refusals_name_their_keys():
     # the mathematician's gate item 8: a body that births declares its seed
     # as its composed mode's profile; a flat scalar seed is refused
     refused(lambda document: None, "seed. as its composed mode's profile")
-    refused(emitter("born", {"now": [1, 2], "before": [3, 4]}), r"must be \[now, before\]")
-    refused(emitter("born", [0, 0]), "writes no motion")
-    refused(emitter("born", [5, 4]), "before = -now")
+    # THE BORN TRAIN'S REFUSALS (ALGEBRA.md 9.17 (6a)): the two-integer pair
+    # (the one-cell birth, a flat pulse) by its reason; a profile of the wrong
+    # count, one that writes no motion, one whose flux runs against the
+    # declared way, one whose norm is not the vacuum's form; `born` without
+    # `train`; the train's direction, periods, wavelength and extent
+    refused(emitter("born", [5, -5]), "a flat pulse of the body's length is broadband")
+    refused(emitter("born", {"now": [1, 2], "before": [3, 4], "norm": 1}), "must be 32 integers")
+    refused(emitter("born", {"now": [0] * 32, "before": [0] * 32, "norm": 1}), "writes no motion")
+
+    def against(document):
+        train = document["measured"][0]["emitter"]["born"]
+        document["measured"][0]["emitter"]["born"] = {
+            "now": train["now"],
+            "before": train["now"],
+            "norm": train["norm"],
+        }
+
+    refused(against, "not positive: the record does not travel as declared", on_mode=True)
+
+    def wrong_norm(document):
+        document["measured"][0]["emitter"]["born"]["norm"] += 1
+
+    refused(wrong_norm, "is not the born record's conserved form on the vacuum", on_mode=True)
+
+    def trainless(document):
+        del document["measured"][0]["emitter"]["train"]
+
+    refused(trainless, "needs the emitter's `train`", on_mode=True)
     refused(
         lambda document: document["measured"][0]["emitter"].pop("born"),
-        "declares no `born`",
+        "declares no born train",
         on_mode=True,
     )
+    refused(emitter("train", {"direction": [1, 1, 0], "periods": 8}), "one signed unit axis vector")
+    refused(emitter("train", {"direction": [1, 0, 0], "periods": 3}), "periods")
+    refused(emitter("train", {"direction": [0, 1, 0], "periods": 8}), "is not the train's length")
+
+    def odd_wavelength(document):
+        document["families"][0]["phase_per_link"] = [500, 1]
+
+    refused(odd_wavelength, "no whole number of Links")
 
     for key, value, message in (
         ("emits", "light", "emits is refused"),

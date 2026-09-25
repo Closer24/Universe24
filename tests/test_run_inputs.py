@@ -53,7 +53,9 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
         assert output["format"] == OUTPUT_FORMAT and output["verdict"] == "LAWFUL"
         assert output["ticks"] == 250 and output["stamp"]["law"]
         assert output["counts"]["screen"] >= 1 and output["pins"] == []
-        assert all(set(click) == {"detector", "interval", "record"} for click in output["clicks"])
+        assert all(
+            set(click) == {"detector", "interval", "birth", "record"} for click in output["clicks"]
+        )
         assert sum(output["counts"].values()) == len(
             [click for click in output["clicks"] if click["detector"] is not None]
         )
@@ -64,8 +66,9 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     the residual speaks) is REFUSED, its output carrying the reason and no clicks, and the
     command's exit is 1; a lawful input with pins registered before the run reads MATCH
     within the band and MISS outside it, the value read written beside each: a pin on the
-    count of clicks, and a pin on the interval of the detector's first click (a detector
-    with no click reads None and MISS)."""
+    count of clicks, a pin on the detector's first click (the least interval since the
+    record's birth among its clicks) and a pin on the mean interval since the birth over
+    its clicks (ALGEBRA.md 9.25 (11) (d); a detector with no click reads None and MISS)."""
     inputs = tmp_path / "inputs"
     inputs.mkdir()
     bad = emitter_world(stock=2, ticks=200)
@@ -84,6 +87,8 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
                     {"detector": "screen", "count": 40, "band": 1},
                     {"detector": "screen", "first_click": 1, "band": 0},
                     {"detector": "nowhere", "first_click": 1, "band": 1000},
+                    {"detector": "screen", "mean_interval": 100, "band": 60},
+                    {"detector": "nowhere", "mean_interval": 100, "band": 1000},
                 ]
             }
         ),
@@ -102,12 +107,25 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     good = json.loads((out / "good.output.json").read_text(encoding="utf-8"))
     assert good["verdict"] == "LAWFUL"
     read = good["counts"]["screen"]
-    first = min(click["interval"] for click in good["clicks"] if click["detector"] == "screen")
+    waits = [
+        click["interval"] - click["birth"] for click in good["clicks"] if click["detector"] == "screen"
+    ]
+    first = min(waits)
+    mean = (2 * sum(waits) + len(waits)) // (2 * len(waits))
     assert [pin["verdict"] for pin in good["pins"]] == [
         "MATCH" if abs(read - 2) <= 1 else "MISS",
         "MISS",
         "MATCH" if first == 1 else "MISS",
         "MISS",
+        "MATCH" if abs(mean - 100) <= 60 else "MISS",
+        "MISS",
     ]
-    assert [pin["read"] for pin in good["pins"]] == [read, read, first, None]
-    assert [pin["kind"] for pin in good["pins"]] == ["count", "count", "first_click", "first_click"]
+    assert [pin["read"] for pin in good["pins"]] == [read, read, first, None, mean, None]
+    assert [pin["kind"] for pin in good["pins"]] == [
+        "count",
+        "count",
+        "first_click",
+        "first_click",
+        "mean_interval",
+        "mean_interval",
+    ]

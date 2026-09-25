@@ -26,12 +26,13 @@ from event_universe.diagnostics.massive_record_margin import (
 from event_universe.events.world import (
     LAW_IDENTIFIER,
     MOST_FAMILIES,
+    born_train_norm,
     input_stamp,
     mode_residual,
     parse_nature_beam_world,
     six_neighbours_flat,
 )
-from tests.test_emitter import emitter_world
+from tests.test_emitter import emitter_world, massive_generator
 from tests.test_massive_record import light_clock_world
 
 
@@ -86,9 +87,28 @@ def test_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_roundi
     bound; the profile with its peak zeroed is refused; the profile with one unit added at
     the peak is ADMITTED (the edge case: a one-unit change is within the rounding the bound
     allows, so the check does not single it out; the same input then gives another output,
-    the property test's test 8). The stamp is rewritten for every changed profile so that
-    the residual speaks (the hash's own refusal is test g)."""
-    document = emitter_world(stock=2)
+    the property test's test 8), read on a side-12 well [800, 801] seeded by the generator
+    on the emitter world's chain (the 32-cell well of the born train's emitter sits at the
+    bound's edge: the iteration's floor of 276 units leaves no unit of slack, and the peak
+    plus one is refused there naming the Node). The stamp is rewritten for every changed
+    profile so that the residual speaks (the hash's own refusal is test g)."""
+    document = emitter_world(stock=2, on_mode=False)
+    document["measured"] = [
+        {
+            "position": [5, 0, 0],
+            "family": "matter",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "side": 12,
+            "pair": [800, 801],
+            "seed": 1 << 20,
+            "margin": "control",
+        }
+    ]
+    document["detectors"] = []
+    massive_generator().seed_on_the_mode(document)
     profile = document["measured"][0]["seed"]
     peak = peak_of(profile)
     for change, refused in (
@@ -232,8 +252,13 @@ def test_the_input_stamp_the_law_and_the_hash():
         document["measured"][0]["clock"][0] += 1
 
     def born(document):
-        now = document["measured"][0]["emitter"]["born"][0] + 1
-        document["measured"][0]["emitter"]["born"] = [now, -now]
+        # a unit on the train's profile with its norm recomputed (the norm check
+        # passes; the stamp's hash is what refuses, ALGEBRA.md 9.22 (7) (i))
+        train = document["measured"][0]["emitter"]["born"]
+        train["now"][16] += 1
+        train["norm"] = born_train_norm(
+            train["now"], train["before"], (80, 1, 1), (0, 0, 0), (32, 1, 1), (1, 1), (False, True, True)
+        )
 
     for change in (unit, clock, born):
         changed = emitter_world(stock=2)
@@ -253,13 +278,14 @@ def test_the_generator_as_the_operator_iterated_in_integers():
     own operator 3 den v' = num S_6(v) + 6 den v + r from the cells' indicator at the working
     amplitude 2^28 (scaled to the declared 2^20), reads
     the clock as the operator's quotient over the board, and stops at the first iteration at which the
-    scaled profile passes the loader's own residual bound with that clock (1653 iterations
-    read, COMPUTATION; 1817 at the working amplitude 2^20, which left the muon layer's well
-    hovering at 1.5 times the bound, BUILD.md section 26 item 25 amended); the result is bit
+    scaled profile passes the loader's own residual bound with that clock (1805 iterations
+    read on the 32-cell well of the born train's emitter, COMPUTATION; 1653 on the side-12
+    well, 1817 at the working amplitude 2^20, which left the muon layer's well hovering at
+    1.5 times the bound, BUILD.md section 26 item 25 amended); the result is bit
     for bit the same on a second run; the profile it
     writes passes `mode_residual` (the stop's own condition, read again here) and agrees with
-    the host's eigensolver (ARPACK, a diagnostic now) within 300 units at every Node (204
-    read: the iteration's floor, the rounding noise of every step fed into the next mode and
+    the host's eigensolver (ARPACK, a diagnostic now) within 300 units at every Node (276
+    read on the 32-cell well, 204 on the side-12 well: the iteration's floor, the rounding noise of every step fed into the next mode and
     damped only by the gap, about 1 / gap units at the amplitude), its clock within 4 units of
     ARPACK's rounded 2 cos omega at the denominator 2^22 (0 read; 2 at 2^20). The fixed-count
     iteration
@@ -272,7 +298,7 @@ def test_the_generator_as_the_operator_iterated_in_integers():
     assert block is not None
     shape = (int(world.shape[0]), 1, 1)
     wrap = world.kind_periodic(entry.family)
-    cells = block_cells(shape, (int(entry.position[0]), 0, 0), block.side, wrap)
+    cells = block_cells(shape, (int(entry.position[0]), 0, 0), block.extents, wrap)
     num = np.where(cells, block.pair[0], 800)
     den = np.where(cells, block.pair[1], 809)
     amplitude = 1 << 20

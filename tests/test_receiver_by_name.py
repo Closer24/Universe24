@@ -7,7 +7,7 @@ whole at it; (b) the block's own cell on no ladder; (c) the loader's refusals of
 `receiver`; (d) the permutation test, the detector list reordered giving byte-identical
 gather lines (issue #1116); (e) a set beside the receiver books the flux into its Node and
 is never chosen, its pointer on the line's `sunk` (HOST). Then the line's time, and the
-registered world `sagnac_light_times_at_rest.json` loaded and stepped. SINCE THE FLUX READING (ALGEBRA.md
+registered world `light_clock.json` loaded and stepped. SINCE THE FLUX READING (ALGEBRA.md
 9.19 (3); BUILD.md section 26 item 14) nothing takes: every cell books the one-way flux
 into its Nodes, the click is on the cumulative ladder and ends the record; the chain's
 faces are closed (an open face is the receiver `face`, last on every ladder, and two
@@ -27,21 +27,24 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_massive_record import light_clock_world, massive_world, seed_source
 
-SAGNAC_REST = (
-    Path(__file__).resolve().parents[1]
-    / "examples/events/massive_record/sagnac_light_times_at_rest.json"
-)
+LIGHT_CLOCK = Path(__file__).resolve().parents[1] / "examples/events/massive_record/light_clock.json"
 CLOSED_CHAIN = {"x": "closed", "y": "periodic", "z": "periodic"}
 Spy = dict[int, tuple[list[int], list[int], int, int, int]]
 
 
-def emitter(position: int, receiver: str | None, momentum: int = 0, stock: int = 4) -> dict:
-    """An emitter body of side 12 at `position` on the matter kind [800, 809]: the well
-    [800, 801] (W = 2403 remainder values, ALGEBRA.md 9.22 (4)), its coupling G [1, 50], g
-    [1, 1000] to light (required, 9.19 (4e)), the seed 50 x 2^20 (its
+def emitter(
+    position: int,
+    receiver: str | None,
+    momentum: int = 0,
+    stock: int = 4,
+    direction: list[int] | None = None,
+) -> dict:
+    """An emitter body over the train's 32 cells from `position` on the matter kind
+    [800, 809]: the well [800, 801] (W = 2403 remainder values, ALGEBRA.md 9.22 (4)), its
+    coupling G [1, 50], g [1, 1000] to light (required, 9.19 (4e)), the seed 50 x 2^20 (its
     profile on the mode by `seed_source` once the world is built), its `emitter` of light
-    with the stock `stock`, its `receiver` where one is named (the line at that set's
-    rung)."""
+    with the stock `stock` and its train along `direction` (+x by default; THE BORN TRAIN,
+    9.17 (6a)), its `receiver` where one is named (the line at that set's rung)."""
     block = {
         "position": [position, 0, 0],
         "family": "matter",
@@ -49,11 +52,14 @@ def emitter(position: int, receiver: str | None, momentum: int = 0, stock: int =
         "phase": 0,
         "momentum": [momentum, 0, 0],
         "fixed": True,
-        "side": 12,
+        "extents": [32, 1, 1],
         "pair": [800, 801],
         "coupling": {"G": [1, 50], "g": [1, 1000]},
         "seed": 50 << 20,
-        "emitter": {"family": "light"},
+        "emitter": {
+            "family": "light",
+            "train": {"direction": direction or [1, 0, 0], "periods": 8},
+        },
         "margin": "control",
     }
     if receiver is not None:
@@ -76,18 +82,18 @@ def body(x: int) -> dict:
 
 
 def chain_of_200(receiver: str | None = "screen") -> dict:
-    """The declaration's test world: a chain of 200 (x closed, mirrors), light's clock
-    [1, 1], the emitter body A at [20, 32) naming `screen` (four births), the set `screen`
-    the cube of side 3 at [91, 93] (60 Links from A's face at 31), and the set `beside` the
-    cube at [8, 10] behind A (off A's ladder); no wheel (the record's own, 9.22 (4))."""
+    """The declaration's test world: a chain of 200 (x closed, mirrors), light on the born
+    clock [512, 1] of N = 1024, the emitter body A at [20, 52) naming `screen` (four births,
+    the train along +x), the set `screen` the cube of side 3 at [91, 93] (40 Links from A's
+    head at 51), and the set `beside` the cube at [60, 62] between A and the screen (off
+    A's ladder); no wheel (the record's own, 9.22 (4))."""
     document = massive_world([200, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
-    document["families"][0]["phase_per_link"] = [1, 1]
     document["ticks"] = 500
     document["clock_stamp"] = True
-    document["measured"] = [emitter(20, receiver, 70), *(body(x) for x in (91, 92, 93, 8, 9, 10))]
+    document["measured"] = [emitter(20, receiver, 70), *(body(x) for x in (91, 92, 93, 60, 61, 62))]
     document["detectors"] = [
         {"name": "screen", "positions": [[91, 0, 0], [92, 0, 0], [93, 0, 0]]},
-        {"name": "beside", "positions": [[8, 0, 0], [9, 0, 0], [10, 0, 0]]},
+        {"name": "beside", "positions": [[60, 0, 0], [61, 0, 0], [62, 0, 0]]},
     ]
     seed_source(document, 0)
     return document
@@ -133,19 +139,20 @@ def gathers(lines: list[dict]) -> list[dict]:
 def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells_off_the_ladder():
     """(a) On the closed chain of 200 every record A emits writes EXACTLY ONE gather line, at
     `screen`'s rung (`click_at` rung, `chosen` screen, `tick` the rung's interval equal to
-    `click`), more than 60 intervals after its birth (the +x half's front over 60 Links at a
-    pace below one Link per interval), the ladder the one cell (the block's `receiver`, read
+    `click`), more than 60 intervals after its birth (the train's head over 40 Links at
+    v_g = 0.447), the ladder the one cell (the block's `receiver`, read
     through `receiver_cell`), the line carrying the quantum (`content` 1) and the record
     deleted whole at it (never in `records` after its line), the definition and
     `receiver_cell` carrying the name; (d) the detector list reversed gives byte-identical
     gather lines up to the order of the HOST listing `cells` (issue #1116: the list's order
     is no input to the click); (e) `beside` and A's own cell
-    are CELLS OFF THE LADDER: they book the one-way flux into their Nodes (the -x half
-    passes `beside` twelve Links behind A: its pointer above 0 as the click read it), are
+    are CELLS OFF THE LADDER: they book the one-way flux into their Nodes (the train
+    passes `beside` between A and the screen: its pointer above 0 as the click read it;
+    A's own cell books nothing of its outgoing train, the outward flux negative), are
     never chosen, and the line's `T` counts them with the screen (HOST); the books
     balanced. The edge case (c): the same world without
     `receiver` loads (the ladder every declared set in the declared order, `screen` then
-    `beside`: the first record's line at `beside`, the set its -x half reaches first);
+    `beside`: the first record's line at `beside`, the set the train reaches first);
     `receiver` on a block that emits nothing, a name no set declares (the names listed) and
     a value that is no string are refused."""
     world = parse_nature_beam_world(chain_of_200())
@@ -217,15 +224,17 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
 
 def test_the_blocks_own_cell_is_on_no_ladder():
     """(b) On the closed chain of 200 the block's own cell (`measured:0`) is on no record's
-    ladder: it books the one-way flux into A's cells (the -x half's return through the
-    mirror at x = 0, forty Links there and back, before the +x half's rung at `screen`:
-    its pointer above 0 as the click read it) and is never chosen, every line at `screen`.
-    The edge case: a block naming the set that IS its own cells (the sagnac form, `block`
-    without positions) on the closed chain of 600 at rest: the born record is
-    written ON the set's cells and leaves them (the outward flux is booked to no cell), so
-    the set reads nothing of the write itself; the record clicks at the set only once the
-    mirrors return the field into the cells (the self-click of BUILD.md section 26 item 10
-    retired with the take), later than the birth's next interval."""
+    ladder: the outgoing train leaves A's cells through their Ports (the outward flux
+    negative, booked nowhere; what the cell books is the tapers' dispersion returned off
+    the mirror at x = 0, below a hundredth of the norm as the click read it) and A's cell
+    is never chosen, every line at `screen`. The edge case: a block naming the set that IS its own
+    cells (the light clock's form, `block` without positions) on the closed chain of 400 at
+    rest, A at [300, 332): the born train is written ON the set's cells and leaves them
+    toward +x (the outward flux is booked to no cell), so the set reads nothing of the
+    write itself; the record clicks at the set only once the mirror at x = 399 returns
+    the train into the cells (the round trip 2 x 67 Links at v_g = 0.447, about 300
+    intervals; the self-click of BUILD.md section 26 item 10 retired with the take), later
+    than the birth's next interval."""
     seen: Spy = {}
     simulation, lines = run(chain_of_200(), 400, seen=seen)
     block = simulation.blocks[0]
@@ -233,12 +242,15 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     assert simulation.cell_names[own_cell] == "measured:0"
     found = gathers(lines)
     assert found and all(g["chosen"] == [["screen", 0, "0"]] for g in found)
-    assert any(seen[g["record"]][0][own_cell] > 0 for g in found)
+    # A's own cell books nothing of the outgoing train (the outward flux is negative);
+    # what it books is the tapers' dispersion returned off the mirror at x = 0, below a
+    # hundredth of the norm
+    assert all(seen[g["record"]][0][own_cell] * 100 < seen[g["record"]][3] for g in found)
     assert all(seen[g["record"]][4] == 2403 for g in found)
-    document = massive_world([600, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
+    document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
     document["ticks"] = 700
     document["clock_stamp"] = True
-    document["measured"] = [emitter(200, "at_well", 0)]
+    document["measured"] = [emitter(300, "at_well", 0)]
     document["detectors"] = [{"name": "at_well", "block": 0}]
     seed_source(document, 0)
     seen = {}
@@ -246,21 +258,21 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     assert simulation.receiver_cell == {0: simulation.cell_names.index("at_well")}
     found = gathers(lines)
     assert found and all(g["chosen"] == [["at_well", 0, "0"]] for g in found)
-    assert all(g["click"] > g["birth"] + 1 and g["tick"] == g["click"] for g in found)
+    assert all(g["click"] > g["birth"] + 200 and g["tick"] == g["click"] for g in found)
 
 
 def test_the_lines_time():
     """The line's time: on the light clock's chain of 173 with the faces CLOSED and A naming
-    its own bound set `A_face` (x = 112), the first record's line is written at the
-    rung's interval (`tick` equal to `click`), after its birth (the set beside A's cells
-    books the +x half from the first interval; the rung (2 u + 1) T / (2 W) on the record's
+    its own bound set `A_face` (x in [132, 134]), the first record's line is written at the
+    rung's interval (`tick` equal to `click`), after its birth (the set beside A's head
+    books the train from the first interval; the rung (2 u + 1) T / (2 W) on the record's
     own residue from the law decides how much of the record must pass, the mirrors'
     returns included), stamped with A's count (clock_source measured:0); the record is
     deleted whole at its line (not among the records, no second line within 300
-    intervals). Two emitter bodies three Links apart naming
-    the set on the cube of three free Nodes between them (bound to the first): both bodies'
-    records write their lines there at a rung with `tick` equal to `click`, stamped with the
-    bound body's count."""
+    intervals). Two emitter bodies three Links apart, the first's train along +x and the
+    second's along -x, naming the set on the cube of three free Nodes between them (bound
+    to the first): both bodies' records write their lines there at a rung with `tick` equal
+    to `click`, stamped with the bound body's count."""
     document = light_clock_world("closed", False)
     document["measured"][0]["receiver"] = "A_face"
     simulation, lines = run(document, 300)
@@ -274,12 +286,11 @@ def test_the_lines_time():
     assert first not in simulation.records
     # two bodies three Links apart, each naming the cube between them
     document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
-    document["families"][0]["phase_per_link"] = [1, 1]
     document["ticks"] = 400
     document["clock_stamp"] = True
-    document["measured"] = [emitter(100, "between"), emitter(115, "between")]
+    document["measured"] = [emitter(100, "between"), emitter(135, "between", direction=[-1, 0, 0])]
     document["detectors"] = [
-        {"name": "between", "block": 0, "positions": [[112, 0, 0], [113, 0, 0], [114, 0, 0]]}
+        {"name": "between", "block": 0, "positions": [[132, 0, 0], [133, 0, 0], [134, 0, 0]]}
     ]
     seed_source(document, 0)
     seed_source(document, 1)
@@ -291,33 +302,32 @@ def test_the_lines_time():
         assert line["chosen"] == [["between", 0, "0"]] and line["clock_source"] == "measured:0"
 
 
-def test_sagnac_rest_loads_and_steps_under_the_form_without_positions():
-    """The registered world `examples/events/massive_record/sagnac_light_times_at_rest.json` (the two
-    emitter bodies at [700, 712) and [772, 784) at rest, A `receiver` at_far_well and B at_near_well, the
-    sets at the bodies' cells at W 256) loads and is stepped 300 intervals as a load-and-step
-    diagnostic (no pin): each body births (its excitations click at their rungs, at least
-    one birth per body), and each body's records click at the OTHER body's set (A's at
-    at_far_well, B's at at_near_well: the one-way flux into the other's cells over the 60 Links between
-    them, the line at the rung, the record deleted at it), none at its own; the books
-    balanced. The Sagnac geometry (the form without positions) is re-derived in the mirror
-    item before its run; its readings are held. The edge case: the file on disk is byte for
-    byte what the test read."""
-    before = SAGNAC_REST.read_bytes()
+def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
+    """The registered world `examples/events/massive_record/light_clock.json` (the one table's
+    form: [760, 3, 3] with the face slabs 32 deep, A at [600, 632) with its train along +x
+    and its stock of 64, the mirror at [690, 694), A's `receiver` at_well the set at its own
+    cells) loads and is stepped 700 intervals as a load-and-step diagnostic (no pin): A
+    births (its excitations click at their rungs), and its records click at at_well when
+    the mirror returns them into A's cells (the line at the rung, the record deleted at it;
+    at least one within the 700, the round trip about 300 intervals after the birth), none
+    at the faces; the books balanced. The edge case: the file on disk is byte for byte what
+    the test read."""
+    before = LIGHT_CLOCK.read_bytes()
     document = json.loads(before)
     world = parse_nature_beam_world(document)
     assert [entry.block.receiver for entry in world.measured if entry.block is not None] == [
-        "at_far_well",
-        "at_near_well",
+        "at_well",
+        None,
     ]
-    simulation, lines = run(copy.deepcopy(document), 300, every=100)
+    simulation, lines = run(copy.deepcopy(document), 700, every=100)
     births = [line for line in lines if line["event"] == "birth"]
-    assert {line["measured"] for line in births} == {0, 1}
+    assert births and {line["measured"] for line in births} == {0}
     found = gathers(lines)
-    assert {(line["record"] >> 32, line["chosen"][0][0]) for line in found} == {
-        (0, "at_far_well"),
-        (1, "at_near_well"),
-    }
+    assert found and {line["chosen"][0][0] for line in found} == {"at_well"}
     assert all(
-        line["tick"] == line["click"] and line["record"] not in simulation.records for line in found
+        line["tick"] == line["click"]
+        and line["click"] - line["birth"] > 200
+        and line["record"] not in simulation.records
+        for line in found
     )
-    assert SAGNAC_REST.read_bytes() == before
+    assert LIGHT_CLOCK.read_bytes() == before

@@ -788,9 +788,9 @@ def check_body_conditions(
             )
             if emitter.born is not None:
                 lines.append(
-                    f"born (COMPUTATION): block {number}: the born pair [{emitter.born[0]}, "
-                    f"{emitter.born[1]}] on every cell of the body (the generator's integers, no "
-                    "table in the engine)"
+                    f"born (COMPUTATION): block {number}: the born train of "
+                    f"{len(emitter.born.now)} cells with the norm {emitter.born.norm} on the "
+                    "vacuum (the generator's integers, ALGEBRA.md 9.17 (6a); no table in the engine)"
                 )
         relaxation = relaxation_time(reading)
         if any(int(component) != 0 for component in entry.momentum):

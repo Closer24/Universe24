@@ -59,7 +59,7 @@ byte (`tests/test_massive_record.py`).
 
 from __future__ import annotations
 
-from collections.abc import Callable, Iterator
+from collections.abc import Callable, Iterator, Sequence
 from dataclasses import dataclass, field
 from math import gcd
 
@@ -75,6 +75,7 @@ from event_universe.events.world import (
     BlockDefinition,
     NatureBeamWorld,
     Vector,
+    block_cell_indices,
 )
 
 Record = Callable[[dict[str, object]], None]
@@ -767,12 +768,12 @@ class DetectorLawSimulation:
                 "`seed_on_the_mode`; a flat scalar seed is no mode and births nothing lawful, "
                 "ALGEBRA.md 9.17 (4) item 1)"
             )
-        if emitter.born is None:
+        if emitter.train is None or emitter.born is None:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{block.number}].emitter declares no `born`: the born pair's "
-                "two integers [now, before] on every cell of the body, the generator's (ALGEBRA.md "
-                "9.17 (6); `excite_on_the_mode` of the massive record generator; no table in the "
-                "engine)"
+                f"{BEAM_LAW}: measured[{block.number}].emitter declares no born train: `train` "
+                "(the direction and the periods) with `born` (the train's two levels over the "
+                "body's cells and its norm on the vacuum), the generator's integers (ALGEBRA.md "
+                "9.17 (6a); `born_train` of the massive record generator; no table in the engine)"
             )
         if emitter.norm is None:
             raise ValueError(
@@ -892,11 +893,14 @@ class DetectorLawSimulation:
         # (6), 9.22 (2)): the born pair is the world's two integers `born:
         # [now, before]`, the generator's, checked at load (before = -now),
         # written on every cell of the body
+        # THE BORN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27):
+        # the train's two levels written on the body's cells in the box's
+        # x-major order (`block_cell_indices`, the loader's and the generator's
+        # one convention), the norm T the written one (the conserved form on
+        # the born family's vacuum, the generator's integer checked at load)
         assert emitter.born is not None
-        live.now[block.mask] = emitter.born[0]
-        live.before[block.mask] = emitter.born[1]
-        # the norm T the record's conserved form I in the flux's units (9.19 (3))
-        live.norm = self.conserved_form(live)
+        self.write_levels(live, block, emitter.born.now, emitter.born.before)
+        live.norm = emitter.born.norm
         if emitter.receiver is not None:
             # the named sets in the NAMED order (ALGEBRA.md 9.19 (3) (b): the
             # ladder cumulative in its declared order), a set's cells in the
@@ -1259,6 +1263,53 @@ class DetectorLawSimulation:
                 flux = now * before_j - before * now_j
                 total += int(np.sum(np.where(port & (flux > 0), flux, 0)))
         return total * wall
+
+    def write_levels(
+        self, live: LiveRecord, block: Block, now: Sequence[int], before: Sequence[int]
+    ) -> None:
+        """The two levels written on the block's cells in the box's x-major
+        order (`block_cell_indices` on the block's current corner and its
+        family's faces), the one convention of the loader, the generator and
+        the engine (ALGEBRA.md 9.17 (6a))."""
+        cells = block_cell_indices(
+            (int(self.shape[0]), int(self.shape[1]), int(self.shape[2])),
+            (int(block.corner[0]), int(block.corner[1]), int(block.corner[2])),
+            block.definition.extents,
+            self.kind_wrap[block.family],
+        )
+        flat_now = live.now.reshape(-1)
+        flat_before = live.before.reshape(-1)
+        for index, now_value, before_value in zip(cells, now, before, strict=True):
+            flat_now[index] = now_value
+            flat_before[index] = before_value
+
+    def planted_record(
+        self, family: int, now: np.ndarray, before: np.ndarray, norm: int = 0
+    ) -> LiveRecord:
+        """A record of the family given to the rule directly, its two levels
+        as given and its remainder 0 (the generator's checks of the born
+        train, ALGEBRA.md 9.17 (6a) and 9.22 (7a) (iv), and the tests'
+        device): registered in no ledger, advanced by `_advance` and read by
+        `inward_flux` and `conserved_form` alone; `norm` its T where given."""
+        return LiveRecord(
+            0,
+            0,
+            family,
+            0,
+            0,
+            self.tick,
+            0,
+            1,
+            1,
+            0,
+            1,
+            np.array(now, dtype=np.int64).reshape(self.shape),
+            np.array(before, dtype=np.int64).reshape(self.shape),
+            np.zeros(self.shape, dtype=np.int64),
+            pointers=[0] * len(self.cell_names),
+            first_rung=[None] * len(self.cell_names),
+            norm=norm,
+        )
 
     def conserved_form(self, live: LiveRecord) -> int:
         """The record's conserved form I (ALGEBRA.md 8.2) in the flux's units,

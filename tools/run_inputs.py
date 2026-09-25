@@ -11,9 +11,12 @@ written into `--out`: the input's name, its stamp (the law and the hash), the
 verdict, the ticks, the clicks (the detector's name and the interval of each
 click line, DETECTOR), the count per detector, and, where `--pins` registers a
 blind pin for the input (`{"<name>": [{"detector": ..., "count": ..., "band":
-...}]}` on the count of clicks, or `{"detector": ..., "first_click": ...,
-"band": ...}` on the interval of the detector's first click, written before
-the run), the comparison per pin: MATCH within the band or MISS, with the
+...}]}` on the count of clicks, `{"detector": ..., "first_click": ..., "band":
+...}` on the detector's first click (the least interval since the record's birth
+among its clicks), or `{"detector": ...,
+"mean_interval": ..., "band": ...}` on the mean over the detector's clicks of the
+interval since the record's birth (the passage rows, ALGEBRA.md 9.25 (11) (d)),
+written before the run), the comparison per pin: MATCH within the band or MISS, with the
 value read. Nothing else is compared; a GameBoard
 reading is not written. The output carries no time, so two inputs run
 together give the same files as each alone (the test of record 1887); the
@@ -79,7 +82,14 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
     for gather in simulation.layer.gathers:
         chosen = gather["chosen"]
         detector = chosen[0][0] if isinstance(chosen, list) and chosen else None
-        clicks.append({"detector": detector, "interval": gather["click"], "record": gather["record"]})
+        clicks.append(
+            {
+                "detector": detector,
+                "interval": gather["click"],
+                "birth": gather["birth"],
+                "record": gather["record"],
+            }
+        )
     counts: dict[str, int] = {detector.name: 0 for detector in world.detectors}
     for click in clicks:
         detector = click["detector"]
@@ -90,13 +100,21 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
     output["records_alive"] = len(simulation.records)
     verdicts = []
     for pin in pins:
-        # a pin on the COUNT of clicks at the detector, or on the interval of
-        # its FIRST click (the light clock's and Sagnac's first rungs)
+        # a pin on the COUNT of clicks at the detector, on its FIRST click (the
+        # least interval since the record's birth among its clicks: the stock's
+        # fastest passage; for one record born at interval 0 the interval of the
+        # click itself), or on the MEAN INTERVAL over its clicks since the
+        # record's birth (the passage rows, ALGEBRA.md 9.25 (11) (d): the pin the
+        # mean click interval over the stock), rounded to the nearest integer
         detector, band = str(pin["detector"]), int(pin["band"])
+        at_detector = [c for c in clicks if c["detector"] == detector]
+        waits = [int(c["interval"]) - int(c["birth"]) for c in at_detector]
         if "first_click" in pin:
             kind, expected = "first_click", int(pin["first_click"])
-            firsts = [int(c["interval"]) for c in clicks if c["detector"] == detector]
-            read: int | None = min(firsts) if firsts else None
+            read: int | None = min(waits) if waits else None
+        elif "mean_interval" in pin:
+            kind, expected = "mean_interval", int(pin["mean_interval"])
+            read = (2 * sum(waits) + len(waits)) // (2 * len(waits)) if waits else None
         else:
             kind, expected = "count", int(pin["count"])
             read = counts.get(detector, 0)

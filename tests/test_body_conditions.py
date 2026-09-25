@@ -224,22 +224,14 @@ NONE = "no reading"
         ("massive_record/boxed_clock_side_20_moving.json", CLEAN),
         ("massive_record/boxed_clock_side_20_at_rest.json", CLEAN),
         ("massive_record/light_clock.json", CLEAN),
-        ("massive_record/sagnac_light_times_speed_third.json", CLEAN),
-        ("massive_record/sagnac_light_times_at_rest.json", CLEAN),
-        ("massive_record/moving_emitter_redshift_speed_third.json", CLEAN),
-        ("massive_record/moving_emitter_redshift_at_rest.json", CLEAN),
-        ("massive_record/receding_index_speed_third_away.json", CLEAN),
-        ("detector_law/two_slits.json", CLEAN),
     ],
 )
 def test_the_run_lists_massive_worlds_load_clean_under_the_check(name: str, verdict: str):
     """Every bound body of the run list's massive worlds is seeded on its own mode by the
     generators (`seed_on_the_mode`: the muon's layer pin worlds at rest and pushed, the deep
-    well and its rest world, the boxes, the light clock, the Sagnac blocks and their rest
-    world, the redshift emitter and its control) and passes the check bit for bit, a pushed
-    body's ramp at or above ten relaxation times; the index's and the two slits' emitter
-    bodies (BUILD.md section 26: a well of the source kind seeded on its mode) read clean too,
-    the two slits' mirror line of light's kind having no reading. Before this branch the seven worlds other
+    well and its rest world, the boxes, the light clock in the one table's form) and passes
+    the check bit for bit, a pushed body's ramp at or above ten relaxation times; the rows
+    held under the born train (BUILD.md section 26 item 27) are not loaded. Before this branch the seven worlds other
     than the layer pin's carried a flat seed and were refused (the world line of
     DECLARATIONS.md section 15, the body's seed on its mode)."""
     document = json.loads((WORLDS / name).read_text(encoding="utf-8"))
