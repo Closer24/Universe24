@@ -4496,7 +4496,58 @@ owner's word): `_excitation_rung` compares the record's age with its
 residue on the mode's period instead of booking the flux into the centre
 cell; the emitter's `norm` is the born record's and its `period` the
 mode's pair; the residue's read point and the coupling of 9.19 (4e)
-stay.
+stay. (e) THE INTERNAL CLOCK AND THE ONE FORM (the model owner's
+questions of 2026-09-25 through the Boss: "so it is a general law? the
+clock is the internal clock, and what is the internal clock really?";
+and the Boss's two: is the age a counter, and is the age rung one
+operation with the flux rung; DERIVED HERE). THE AGE IS NOT A COUNTER.
+Let e_i be the Node's share of the record's conserved form (9.19 (3):
+e_i = D_i (now_i^2 + before_i^2) - (1 / 3) now_i (**A** before)_i, a
+bilinear form of the record's two levels at the Node and its six reads,
+verb B, local). For the bound mode a_i(t) = p_i cos(omega t + phi) it
+is CONSTANT at every Node, e_i = D_i p_i^2 sin^2 omega (PROVED by the
+mode equation (**A** p)_i / 3 = 2 cos omega D_i p_i and cos^2 a + cos^2
+b - 2 cos(a - b) cos a cos b = sin^2 (a - b)), positive, and it is what
+the standing mode has in place of a flux (its change, SUM of G_ij, is
+zero). So THE EXCITED RECORD'S RUNNING TOTAL ACCRUES ITS CENTRE CELL'S
+SHARE e_c EVERY INTERVAL, C(t) = C(t - 1) + e_c(t), read from the two
+levels on the board and nothing else; its norm is one period's sum, T =
+P e_c (the record's ACTION over one cycle, energy times time); the rung
+2 T u + T <= 2 W C is unchanged, and for the exact mode it reduces to 2
+W (t - t_0) >= (2 u + 1) P, the age rung of (b), the age appearing only
+as the number of accruals, which the running total C already is: the
+record integer every record carries (9.25 (2)), no clock and no
+counter, nothing kept at a Node; for the rounded mode e_c(t) wobbles
+with the transient and the sum self-corrects. THE INTERNAL CLOCK is
+therefore the mode's own rotation under the law, omega per interval
+with 2 cos omega = a / b (the pair the generator writes and the load
+check verifies, 9.22 (7)); its tick on the board is e_c per interval,
+the same at every interval because the rotation is uniform; and it is
+the one clock of the model: the one that slows in a moving packet by
+the dispersion (0.8146 at k = 3, 9.24 (2)), so the emitter's cadence,
+the muon's tick and the light clock's period are readings of one
+rotation. ONE RULE OR TWO: ONE FORM, ONE RUNG, ONE RUNNING TOTAL, TWO
+READINGS OF THE FORM, and the two are the two sides of one identity.
+The detector reads e's CHANGE within its region, what enters through its
+Ports per interval (the one-way flux, 9.25 (2)); the excited record
+reads e's VALUE at its centre cell per interval (what stays); e_i(t) -
+e_i(t - 1) = SUM over j of G_ij (9.19 (3), PROVED) ties them, the flux
+being the change of the share. Why not one reading: a bound record has
+no change to read (its energy never crosses a Link, (a)), and a
+travelling record's value at a detector would count its residence, not
+its passage (the same energy counted once per interval it sits in the
+cell, a norm that depends on the set's depth and breaks the one
+threshold per record); so each set reads the side of the identity that
+is not identically zero for the record it names. Stated as one law: the
+click reads the record's conserved form at the named set, and C accrues
+per interval the part of it the set acquires, from outside through its
+Ports where the record moves, from its own persistence where the record
+stands. In the engine the two are one machinery (Nature24's
+`conserved_form` is SUM of e_i, the flux its increment), the excited
+record's increment e_c at its centre cell in place of the flux there.
+The Boss's phrasing "the accumulated phase advance, of which the flux is
+the travelling case" is not exact (a passage's flux is the norm, not a
+phase) and is replaced by the above.
 
 ### 9.18 The unification: one object, one record, one rule; what is generic; what the algebra carries at once (the model owner's words of 2026-09-24 to the mathematician: "write the whole unification, what is generic with us, and whether the algebra supports it in one stroke"; ADOPTED by the model owner, 2026-09-24, 22:39Z (2026-09-25 on the Israel clock) through the Boss, record 1875: "adopt; everything is algebra", with bound tool bodies of a holder family, at most three families, one border for every family)
 
