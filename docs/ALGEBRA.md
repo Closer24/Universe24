@@ -11243,3 +11243,55 @@ read from the clicks' delays over many orbits, against (2 + 2 gamma -
 beta) / 3 of nature's. (e) The equivalence and Newton: 9.52 (3). Each
 row's nature pin is the measured value; each row reports which of
 beta and gamma the law carries.
+
+**(7) THE SOLUTION IN THE LAW'S OWN TERMS: EINSTEIN'S WEAK FIELD FROM
+THE NODE ALONE (the model owner, 2026-09-25: "how do we solve it with
+our laws? go to the algebra"; DERIVED and COMPUTED, the scratch script
+`einstein_node.py`; the owner's word "only from the current Node"
+kept).** The ruler need not be read on the Link. The Node's own pace,
+entering twice, gives it: once on the mass term, with the clock's
+second order, and squared on the six reads. The rule at a Node, p =
+Gamma - c its own pace, the wall the constant 6 den Gamma^2:
+
+  6 den Gamma^2 a_next + r' = 2 p^2 num S_6(a_now)
+  + [12 den Gamma^2 - 6 (p^2 + Gamma^2)(den - num) - 12 num p^2] a_now
+  - 6 den Gamma^2 a_before + r,  0 <= r' < 6 den Gamma^2.
+
+WHAT IT IS: at a uniform level the rotation is 1 - cos omega' = ((p^2
++ Gamma^2) / (2 Gamma^2))(1 - num / den) + (p / Gamma)^2 num (6 -
+sigma) / (6 den), sigma the six reads' factor (PROVED as an identity,
+COMPUTED exact): the mass term carries the time factor (p^2 + Gamma^2)
+/ (2 Gamma^2) = 1 - 2 U + 2 U^2 with U = c / (2 Gamma), which is beta =
+1 exactly; the Link term carries (p / Gamma)^2 = 1 - 4 U + 4 U^2, so
+light (den = num) runs at the speed p / Gamma and its index is 1 + 2 U
+to first order, which is gamma = 1. The classical tests then read 1,
+1, 1, 1, 1: the redshift (the rest rotation scaled by the time factor,
+1 - U to first order as before), the equivalence and Newton (the slow
+fall unchanged, the ruler at order v^2 U), the bending of light whole,
+the Shapiro delay whole, Mercury (2 + 2 - 1) / 3 = 1. THE THREE TESTS:
+generic (one primitive, the Node's own level and the declared
+integers, no family name); vector (multiply, add, one division); local
+(the six reads plain, the level read at the Node and nowhere else: the
+owner's word). THE MARKS: at c = 0 the vacuum's rule term for term, the
+levels bit for bit and the remainders 2 Gamma^2 times the plain rule's
+(COMPUTED on a ring, 200 steps); the wall constant, so the backward run
+is exact where the level falls (COMPUTED: 0 of 200 wrong with the level
+walking); the read matrix 2 p_i^2 num is not symmetric, so the
+conserved form carries the weight 1 / p_i^2 at the Node, the Killing
+energy to second order, as 9.50 (13) (iii) reads the weight 1 / p; the
+symmetric product p_i p_j on the reads (3) differs from p_i^2 by a
+gradient term, below every pin, and the Node form is the law's by the
+owner's word. WHAT IT COSTS: the wall carries Gamma^2 and the read term
+2 p^2 num S_6 a is 2 Gamma^2 num 6 A at most, 10^24 at Gamma = 10^6 and
+A = 2^28, beyond int64; it fits at Gamma = 10^4 with A = 2^20 (1.2 x
+10^18), or with wider integers, the host's choice; at Gamma = 10^4 the
+clock's unit is a hundred times coarser than the eighteen's, so their
+pins are recomputed blind under it (9.49 (6)), the light clock's tick
+moving by about 0.3 percent at its content of 64, inside its band.
+WHAT IT DOES NOT GIVE: the dragging of frames and the tensor waves,
+(5), a vector or a tensor part; the field's own energy as a source,
+which nature has behind beta = 1 and this form puts in the time factor
+by the clock's second order, exact to second order in U and a row of
+its own beyond. THE ROWS: (6), read with beta = gamma = 1 expected. THE
+KEY: `weak_field` on, off by default; off, the first-order rule of
+9.50 (13) as today.
