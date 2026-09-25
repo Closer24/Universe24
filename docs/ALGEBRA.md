@@ -14467,3 +14467,60 @@ measurement; the seat's rotation read on the GameBoard is a
 diagnostic beside it (9.21). The pair's property (den > num) in the
 two diagnostic reads is read from the declared pair and is not in the
 law.
+
+### 9.86 Everything is a vector: a click transfers a four-momentum, gravity is one family of ten components and the charge one family of four with light as its wave (the model owner's word of 2026-09-25 in the mathematician's session: "we agreed the clicks are a vector; what we said is that everything is vectors"; supersedes the mathematician's scalar line of record 2074 and 9.85 (4))
+
+**(1) THE WORD, AND WHAT IT MEANS IN THE ALGEBRA.** A click transfers a
+quantum, and a quantum carries a count (its energy) and a momentum:
+a FOUR-VECTOR (the count, the three momenta). The body receives both
+(the count into its content, 9.45 (2); the momentum into its
+accumulator, 9.84 (2)). So the click is a vector, as the owner says,
+and the family that records it holds the four-vector, not the count
+alone. The mathematician's line that the clicks family is a scalar
+(record 2074) is withdrawn: the count is the TIME COMPONENT of the
+vector, and under the cube's group, which has no boosts, the time
+component and the three space components do not mix, so the scalar
+part of 9.78 is the time component of one family and not a family of
+its own.
+
+**(2) THE FAMILIES, THEN, ARE THREE.** (a) GRAVITY: one family of TEN
+components, the symmetric tensor over the four directions h_(mu nu):
+its time-time part the count's field (the family of clicks as built,
+9.45; the pace's scalar), its time-space part the momentum's field
+(the vector of 9.78, the dragging, the transport's angle), its
+space-space part the tensor (the ruler per axis, the waves); under
+G_48 the ten split as 1 + 3 + 6 and each component steps by the one
+rule; its hold is the body's stress-energy at its seat, the ten
+numbers s, 4 s n_i div W, 2 s n_i n_j div W^2 and the spin's dipole
+(9.78 (2)), written by the body's declaration (9.85 (7)). (b) THE
+CHARGE: one family of FOUR components, the four-potential A_mu, phase
+2 (eight integers per Node), with clicks and booked: its time part the
+charge's potential (9.48), its space part the current's (9.82), and
+its waves are LIGHT, the transverse space components carrying the
+polarisation (9.82 (3)); its hold the body's four-current, Q and Q n_i
+div W and the moment's dipole. (c) MATTER: one family, scalar, phase
+2, the pair on each body and record (9.85 (3)). Every family reads
+gravity with 1 and the charge with q Lambda; the pace reads the time
+components and the tensor's diagonal (9.78 (4)), the transport reads
+the space components (9.81 (2)), by the representation of the part,
+one read per field family. The families file has three entries and
+the universe's integers; nothing else.
+
+**(3) THE ATTRIBUTES ARE THE COMPLETE SET (the owner's question "he can
+declare more too, right?").** A family's seven attributes (9.79 (1),
+9.81 (4)) are the maximum: representation (now a list of parts, [1],
+[1, 3], [1, 3, 6]), phase, reads, held, self-unit, clicks, booked. A
+new attribute would be a new operation and not a declaration, so
+none is added. A BODY may declare more NUMBERS (its quanta, charge,
+momentum, spin, moment, pair, stock, period, weight, support, giving
+Nodes, 9.69 (6), 9.85 (7)), each read by an existing operation; a
+number no operation reads is refused by the loader as a declaration
+with no reader.
+
+**(4) BIT FOR BIT AND THE COST, unchanged.** The ten and the four are the
+same integers as 9.78's five instances, grouped; a component with no
+source is exactly zero (the leak test); the shipped rows read as 9.78
+(8) and 9.82 (4) say. Nature24's build: the representation attribute
+takes a list of parts; the step, the hold, the pace and the transport
+run over the parts by their representation; the gate is 9.79 (3)'s
+bit for bit on the shipped worlds.
