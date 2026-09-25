@@ -1137,6 +1137,17 @@ every direction).
 
 ## 5. What is reached under named hypotheses, each with its hypotheses and its kind
 
+HISTORY UNDER THE ONE ALGEBRA (the model owner's adoption of record 1875,
+"everything is algebra"; the correspondence audit of record 1942): chapters 1
+to 7 are the ray law's (beam-v1) algebra and its readings; every SHOWN in
+them is a reading of the retired ray law's worlds, not of the one algebra of
+chapter 8 and 9.12 to 9.30. In particular the crowd clock and the age wall
+(5.4; the wall's standing NOT NOW by record 941, retired here), the shell mean
+and the delay field (5.4, 5.6, 5.9) and the cosmology rows of chapter 6 are
+not laws of the one algebra: 9.22 (8a), 9.29 and 9.30 state what stands in
+their place (the universality of the tick; the fall into a declared well; the
+pair-field hypothesis outside the law).
+
 **The hypotheses, named once, verbatim from their owning files.**
 (A1) A click is the passage of information from Node to Node, at most
 one Node per interval: c is the unit, the same in every family, and
@@ -1879,6 +1890,9 @@ expansion-v1:** named rules outside the law, chapter 6.
 ---
 
 ## 6. What each FAIL row lacks, by the algebra
+
+HISTORY UNDER THE ONE ALGEBRA, as chapter 5's note says: the crowd of these
+rows is the ray law's; chapter 9 does not restate them.
 
 The FAIL Rows Algebraist's reading ([the FAIL rows file](designs/fail_rows/WHAT_IS_MISSING.md),
 merged to main by PR #964, read AE folded; the owner's words of records
@@ -2720,6 +2734,14 @@ other pair is read from the table of families (kind 2).
 
 ### 8.6 The click of a body at W, and the take
 
+HISTORY IN PART (the correspondence audit of record 1942): the take, the
+emitter's own take and the pointer that books the motion squared are retired
+by 9.12 and 9.19 (3) (the click is the one reading, the one-way inward flux
+per Port; the excited record's rung accrues the centre cell's own share e_c,
+9.17 (7) (e)). What stands of this section is the click as the evaluation of
+the body's own record against its rung in the body's own clock
+(POSTULATES.md section 10).
+
 **The click (CARRIED: MASSIVE_RECORD.md section 6; the owner's word of
 record 1414; POSTULATES.md section 10 as settled by record 1421).** The
 click is in the Outside, and light produces it, through a body: the
@@ -2886,6 +2908,12 @@ with a detector declared, which does not return, by the deleted rows
 exactly (section 14 (e)).
 
 ### 8.9 The two kinds of rows, (K) a known formula and (P) a prediction; the eight predictions with their falsifiers, declared before any run
+
+HISTORY IN PART (the correspondence audit of record 1942): prediction 2's
+second term is re-derived in 9.22 (8a) (the cone's term plus the lattice's);
+predictions 3, 4 and 5 rode the moving material and the push, retired by 9.24
+(3); predictions 1, 6, 7 and 8 stand as restated in 8.1, 9.22 (8a), 9.26 (3)
+and 9.22 (8).
 
 **The two kinds (CARRIED: SCHEDULE.md, "The two kinds of rows"; the
 owner's word of about 17:25Z, record 1466).** When the algebra reaches a
@@ -4955,11 +4983,12 @@ HERE:
   on the cells, not through a Port; it books nothing; the record's
   energy is its I from the birth; nothing vanishes and nothing is booked
   unread.
-- THE EXCITED RECORD (9.17 (4)): its named set is a declared sub-cube of
-  its body (its centre cell); its offer the one-way flux into that set,
-  which the mode's sloshing feeds every half period; its norm T the flux
-  of one period, the generator's integer (9.17 (5) item 1, now in the
-  flux's units). The cadence stays half a period per birth.
+- THE EXCITED RECORD: SUPERSEDED by 9.17 (7) (a) and (e) (the correspondence
+  audit of record 1942): a standing mode's flux through every Port vanishes
+  (the Wronskian), so its rung accrues the centre cell's own share e_c and
+  its norm is T = P e_c, one period's sum; the earlier reading here (the
+  one-way flux into the centre cell fed by the mode's sloshing) is HISTORY.
+  The cadence stays half a period per birth.
 - THE MIRROR'S AND THE SPLITTER'S SHARES are the one-way flux through a
   Port behind the body over the record's I, the form the physicist
   measured (his window reading of 18:50Z).
@@ -5004,9 +5033,12 @@ THE PHYSICIST'S THREE QUESTIONS OF 22:17Z, ANSWERED (DERIVED HERE):
   and put every click at the last cell of the order, as the physicist
   found on 2026-09-25: WITHDRAWN.)
 - (c) THE EXCITED RECORD'S SET: one cell always, the body's centre cell
-  at the lower vertex plus side // 2 on each axis; its Ports the cell's
-  six Links; T = the one-way inward flux into it over one period of the
-  mode, the generator's integer. For a one-cell body the set is the cell.
+  at the lower vertex plus side // 2 on each axis; for a one-cell body the
+  set is the cell. Its reading is NOT a flux through the cell's Links (a
+  standing mode has none, 9.17 (7) (a)): the rung accrues the cell's own
+  share e_c and T = P e_c (9.17 (7) (e)); the line that stood here, "T =
+  the one-way inward flux into it over one period", is HISTORY (the
+  correspondence audit of record 1942).
 
 **(4) THE RESIDUE: WHAT IT IS, AND HOW TO STOP DECLARING IT (the owner's
 question; DERIVED HERE, with COMPUTATION).** Two things are called a
@@ -6010,6 +6042,54 @@ centre, width}, visibility, band} twice the Fourier component at the
 spacing over the ordered cubes under a Gaussian window of the width,
 divided by the windowed total (3, 9); {centroid: {detectors: [...]},
 value, band} (3, 9). Nothing else is compared.
+
+**THE SIMPLEST FAITHFUL PLACEMENT OF EVERY MEASURED EXPERIMENT, ONE TABLE
+(the model owner's rule of record 1944: "meet the experiment's conditions in
+the simplest way; if it is with cubes, with cubes; if it means putting the
+cubes in the middle of the big cube, we put them in the middle"; the Boss's
+order of 06:21Z; PROVED and placed here).** THE EXTRUSION RULE (PROVED): a
+chain [N, 1, 1] becomes [N, 3, 3] periodic on y and z and a layer [N, M, 1]
+becomes [N, M, 3] periodic on z, every tool extruded across the added axes
+and every seed uniform across them. On a state uniform across an added
+axis the six-neighbour sum reads 2 a from that axis, exactly what the
+extent-1 self-read gave; the operator commutes with the translation along
+the axis; so the run is the extent-1 run copied identically on each slice,
+bit for bit, remainders included. Every Port across an added axis carries
+zero flux (its two ends are equal), and the tally and the norm scale
+together by the number of slices, so EVERY PIN IS UNCHANGED TO THE BIT,
+while every detector is a whole cube of side 3 and no cube is cut: the
+owner's condition met at 9 times a chain's cells and 3 times a layer's. A
+CUBE BOARD is needed exactly where a condition of the real experiment is
+three-dimensional: (i) the isotropy under the 48 read as a fan of
+directions (the body diagonals exist only in three dimensions): the pace
+fans; (ii) a pin that counts clicks over a distance (the inverse-square
+dilution of a spreading record): none of the eighteen, every pin being a
+ratio, a count through a set, or a pattern along one transverse axis; (iii)
+a bound body whose own three-dimensional mode is pinned: the boxes (already
+cubes); the deep well's own clock is a model number, its pin the dilation
+ratio, so the layer stands and a cube is the owner's choice. Polarisation
+needs no third dimension: the polariser is an element of the wheel's group
+on the label rows (9.14), not a transverse vector. The tools stand in the
+middle of the board, one train's length from every slab's front (9.25
+(11)), extruded across the added axes; the cells named are the host cost
+per record per interval.
+
+| The experiment | The simplest faithful board | Why | The host cost (cells) |
+| --- | --- | --- | --- |
+| Bell's four settings; the two-qubit computer | [96, 128, 3], periodic on all axes | the pins are counts through the polarisers' sets, no length; the 3 keeps every detector a whole cube | 36,864 |
+| Malus's four axes | [192, 3, 3], the face slabs 32 deep on x | a count ratio along one axis | 1,728 |
+| The two slits; de Broglie's fringes; Sorkin's three openings (seven worlds) | [305, 320, 3], every x and y face a receiver slab 32 deep, periodic on z | a real slit is uniform along its length: the pattern lives on one transverse axis; a cube of 305 x 320 x 305 would add 30 million cells and no condition | 292,800 (per world) |
+| The pace fans | the cube [192, 192, 192], the face slabs 32 deep, the emitter cube at the centre, the 26 detector cubes at 48 Links on the axes, the face diagonals and the body diagonals | the one row that reads the isotropy under the 48; the body diagonals need three dimensions | 7,077,888 |
+| The muon's moving clock | [200, 200, 3], periodic | the tick ratio depends on the dispersion along **K** alone; the layer keeps the light clock across the arm | 120,000 |
+| The moving emitter's redshift | [4096, 3, 3], the face slabs 32 deep on x | a ratio of click intervals along one axis | 36,864 |
+| The round trip off a receding mirror | [1600, 3, 3], the face slabs 32 deep on x | as the redshift | 14,400 |
+| Sagnac's two-way light times | [3000, 3, 3], the face slabs 32 deep on x | two passages along one axis | 27,000 |
+| The moving mass's energy | [224, 3, 3], the face slabs 32 deep on x | a first-click interval along one axis | 2,016 |
+| The boxed clocks | the cubes [64, 64, 64] and [48, 48, 48], periodic, the box at the centre | already cubes; a box's mode is three-dimensional | 262,144; 110,592 |
+| The deep well's clock | [128, 128, 3], periodic, the well at the centre; the cube [128, 128, 128] if the owner wants the atom's own clock three-dimensional | the pin is the dilation ratio, unchanged by the dimension; the well's own frequency is a model number | 49,152 (the cube 2,097,152) |
+| The light clock | [760, 3, 3], the face slabs 32 deep on x, the detector the emitter's own cells | a passage and its return along one axis | 6,840 |
+| The receding index, at one third and at one quarter | [4000, 3, 3], the face slabs 32 deep on x | a ratio of delays along one axis | 36,000 |
+| Mach-Zehnder; with one arm blocked | [576, 576, 3], every x and y face a receiver slab 64 deep, periodic on z | the real interferometer is planar; a cube of 576 would cost 191 million cells and add no condition | 995,328 |
 
 **(8a) THE COMPUTED EXPERIMENTS (the model owner's decision of 2026-09-25 through
 the Boss, record 1915, Highlights 5.4: twenty-four experiments, the eighteen measured experiments of (8), run and read in clicks against
@@ -7279,7 +7359,7 @@ something other than his words.
 | The click rule in one statement; the emitter's pace its own clock (1918) | 9.17 (7) (f); built at 294a7c80, the waits within two intervals of the rule | CONSISTENT |
 | The convergence to the freeze; no run against a pin before the engine is stable (1918, 1924) | The table's pins registered before any run; the placements re-derived blind | CONSISTENT |
 | Names with meaning (1924) | Applied in chapters 8 and 9, the tool cards and the placed experiments, the definitions and the postulates (record 1925) | CONSISTENT |
-| The generator is the operator iterated, with its stop; the state only turning by its own clock (1924) | 9.22 (7a) (ii): the stop the shape unchanged within one unit at the peak's amplitude (the cross product with the peak), the clock the Rayleigh quotient in integers, the floor within the loader's bound by construction | CONSISTENT |
+| The generator is the operator iterated, with its stop; the state only turning by its own clock (1924) | 9.22 (7a) (ii) as aligned at 86e1df43: the stop the first iterate that passes the loader's residual bound (the built stop, a9ab486f, confirmed), the clock the operator's quotient in exact integers; the one-unit stop that stood in this row is withdrawn | CONSISTENT |
 | Building a world: each body generated alone on the final board; composing is placing; two bodies two only while each tail at the other's cells is below the rounding floor, nearer one body with one mode; the margin the decay length (1929) | 9.22 (7a) (v) the exact split and the declaration rule; (B) below | CONSISTENT, with one precision: the margin is the distance at which the mode's tail falls below ONE UNIT AT THE SEED'S AMPLITUDE, ln(A) over the decay constant kappa (Sagnac's wells 80 Links apart at 2^20), since the tail scales with the seed and the bound does not |
 | Energy and momentum on the board; the frequency a return; the universe cyclic, reaching its initial point though perhaps not through the same process (1922) | 9.26 (1) and (4): frequency the shape's rotation, momentum its twist, energy the conserved form and the counted quantum; a shape returns within the rounding, never to the bit; the Inside on a bounded orbit returns EXACTLY and through the SAME process; with clicks the whole is not cyclic | DIFFERS IN THREE PLACES: (i) energy is the form, quadratic in the amplitude and in sin omega, not the frequency times the quanta (no E = h f in the law); (ii) the return is through the same process, a deterministic law repeating its cycle; (iii) cyclic only for the Inside with no click and on a bounded orbit. Proposed wording: "the law's Inside is cyclic, returning exactly through the same process on a bounded board; the world with clicks is not, and its arrow is the click's" |
 | Every body has its own click by its frequency; no frequency, no click (1926) | 9.26 (1a): a theorem for "no frequency, no click" (the form vanishes with sin^2 omega); the emitter's rule for a standing record; the arrival's rule for a moving one; the click rule of 1918 the one law | CONSISTENT as a law read at a body; DIFFERS if read as "the frequency times the quanta", which the algebra does not carry |
@@ -7701,3 +7781,151 @@ the board lacks.
 (4) (a) is written as a hypothesis under its own identity with its test
 world, and whether a Node's clock shift for all families (4) (b) is
 wanted beside it; nothing of the law changes before his word.
+
+### 9.30 The correspondence audit's algebra rows (the Boss's two orders of 06:17Z and 06:21Z on records 1937, 1942, 1943 and 1944): the stale lines, the mechanisms to state or retire, the differences judged, mass and time, and the laws at every Node
+
+**(1) THE STALE LINES, CORRECTED IN PLACE (this head).** Chapters 1 to 7
+carry the HISTORY note at chapter 5's and chapter 6's heads (the crowd
+clock, the age wall, the shell mean, the delay field and the cosmology rows
+are the ray law's readings, not the one algebra's). 8.6 carries its note
+(the take, the emitter's own take and the motion-squared pointer retired by
+9.12 and 9.19 (3)). 8.9 carries its note (predictions 2, 3, 4 and 5). 9.19
+(3)'s bullet on the excited record and its (c) are superseded by 9.17 (7)
+(a) and (e): the standing mode's rung accrues e_c and T = P e_c. 9.22 (7a)
+(ii) was aligned at 86e1df43 (the generator is the operator iterated with
+its stop, the model owner's decision). 9.27 (A)'s generator row now names
+the built stop (the loader's residual bound), the one-unit stop withdrawn.
+
+**(2) THE ENGINE'S MECHANISMS THAT THE ALGEBRA DID NOT NAME, NOW STATED
+OR RETIRED EXPLICITLY.** (a) THE RAY-LAW PATH (the flights, the digital
+line, the collision and meeting tables, the crowd, the drive, the pointers
+on the tables) and ITS AGE WALL: RETIRED. The one algebra has one path,
+the operator of 8.1 with the click of 9.17 (7) (f) and the birth of 9.17
+(6a); the ray law (beam-v1, record 15 of 2026-09-19) was replaced by the
+model owner's adoption of record 1875; the age wall's standing was NOT NOW
+by record 941 and is retired by 9.22 (8a) and 9.29 (4): no clock on the
+board runs slow by a crowd. The engine's default path must be the one
+operator's (a world without the key is refused, never run on the ray law):
+Nature24's cleanup, 9.21 (3). (b) THE REMAINDER RESCALED WHEN A RAMP CHANGES
+THE WALL: RETIRED with the ramp (record 1884). The wall 3 den of a row
+never changes during a run; a rescaled remainder is a floor that breaks
+the bijection of 8.8 and is refused. (c) A BLOCK'S CELLS BOOKED TO ITS OWN
+CELL: STATED as host bookkeeping. A body's cells form no receiver unless
+declared (the source's own cells as a detector where the row says so, 9.25
+(11) (d)); an outgoing front gives no inward flux at its own body's Ports
+(9.19 (3)); what the engine books at a body's cells outside a declared set
+is a host row and no click. (d) THE BLOCK CLOCK's sign-crossing count named
+"click": RETIRED. The clock of a body is its own record's click at its rung
+(9.17 (7) (f), 9.26 (1a) (b)); a clock body is an emitting body with a
+stock, its ticks its births; a sign crossing is no event of the law, and a
+line named "click" that deletes nothing must not stamp a set. (e) THE
+CAVITY's per-interval zeroing: RETIRED (9.10 item 4, 9.12): a projection is
+not the law; the cavity is a gap pair on declared cells. (f) FACES PER
+FAMILY and CLOSED BOARDS: RETIRED (one border for every family, record
+1875; a board with neither a periodic axis nor a face receiver refused,
+9.19 (3) (a)). (g) THE `massive_kind` BRANCHES in the law's path: RETIRED
+(9.18 (5), 9.21 (3)): what a record books and which ladder it stands on is
+decided by its named sets and its rung, never by its family's kind.
+
+**(3) THE THREE DIFFERENCES, JUDGED.** (a) MIRRORS AS SILENT BLOCKS OF
+LIGHT'S FAMILY against BOUND HOLDER BODIES: the operator is the same (a
+region where light's pair is the gap [1, 2]); the ALGEBRA IS RIGHT on the
+form, ADOPTED by record 1875: a tool is a body of the holder family
+carrying the material pairs on its cells, with its cube, its orientation
+and its momentum 0, so that a tool's card is the body's; the code's silent
+light-family block is that body under a wrong name, to be declared as the
+holder body at the worlds' rebuild (the cleanup's step 6); no number moves.
+(b) A BODY'S RESPONSE SPLIT PER LIGHT RECORD: the split by origin is
+LAWFUL and is the algebra's own necessity, stated here: a body's massive
+record has a MODE PART (its excited profile, seeded from the stock, which
+sources no light, its emission being the birth, 9.17 (2) to (4)) and a
+DRIVEN PART per light record at its cells (the dielectric response, which
+receives that record's difference with g and sources light with G, the
+Euler-Lagrange pair of 8.5 with its invariant J); the superposition
+principle lets the driven part be kept per light record, equal in total.
+WHERE THE CODE DIFFERS AND THE ALGEBRA IS RIGHT: the mode part's receive is
+the entry of 8.5 over EVERY light record's columns at its cells (the
+returning light, another body's light, its own born train), not its own
+born light alone; that is what spreads the residues (9.19 (4e) (i)). (c)
+THE EMITTER'S BACK-ACTION THROUGH g ONLY, NO G TERM: the CODE IS RIGHT, and
+8.5's J is restated: the mode part sources no light (a G source on the
+excited mode would be a second, unquantised emission at the body's rest
+clock beside the births, which 9.17 forbids), so J holds for each driven
+pair (the response record with its light record) and is not claimed for
+the mode part, whose form is reset at every birth; 9.19 (4e) (i)'s "(g, G)
+for its born family" reads: g on the mode part for the back-action, (g, G)
+on the driven part for the medium's index.
+
+**(4) MASS AND TIME, CONFIRMED EXACTLY.** In the one algebra a Node's pair
+sets the local pace (the massive group velocity, a body's own rotation,
+the index at a coupled body's cells, the dilation of motion) and NO CLOCK
+RUNS SLOW NEAR A MASS: the vacuum around a body keeps the vacuum's pair
+(9.22 (8a)), the old age wall is retired ((2) (a)), and a body's form,
+quanta or content changes nothing in any Node's step (the law is linear).
+What the board has is 9.29: a DECLARED well is a clock shift, and it bends
+and holds its family's records (one field read twice), without a source.
+THE MINIMAL ADDITION, in one clause: THE PAIR-FIELD HYPOTHESIS, "the pair at
+every Node is raised toward 1 by the form held at it and its six
+neighbours and relaxed through them, with one declared integer
+coefficient" (a Poisson law of the pair, the algebraic successor of the
+physics' delay field of DERIVATIONS_BEAM.md 5.1, where the age moment
+obeyed Poisson's equation and slowed the clock by 1 / (1 + k)). THE THREE
+TESTS: generic PASS (one primitive, one declared integer, no family name);
+local PASS (a Node, its six neighbours, nothing kept beyond the pair);
+vector FAIL (the form is quadratic in the levels, not one of the six verbs
+on the state vector: a record acting on a record). So it enters only under
+its own identity, `hypotheses: {"pair_field": true}`, off by default, with
+9.29 (4) (a)'s test world (one field read twice with no declared well), and
+the gravitational clock STAYS OUT of the law until the owner's word. Light's
+fall needs a second clause (a shift of the Node's rotation for all
+families, 9.29 (3) (b)), which the pair cannot express.
+
+**(5) THE LAWS AT EVERY NODE (the model owner's rule of record 1944:
+"in the physics we reached laws at every Node; we must use that for the
+algebra"), CONFIRMED and LISTED.** THE ALGEBRA STATES, PER NODE AND NOTHING
+ELSE AS LAW: (i) the rule at a Node from its own two levels, its remainder
+and its six neighbours, 3 den a_next + r' = num S_6 - 3 den a_before + r
+(8.1, 8.2); (ii) the pair per Node per family, declared per region, a well
+a region of a raised pair (8.1, 8.3, 9.19 (2), 9.29); (iii) the coupling
+between two families at a Node, the first difference both ways, the mode
+part receiving only ((3) (b), (c); 8.5); (iv) the border: the zero row
+beyond an open face, the wrap on a periodic axis, the face slab a receiver
+(1.6, 9.19 (3) (a), 9.25 (10)); (v) the flux per Port from the two levels at
+the Link's ends, and each object's gather of its positive part (9.19 (3),
+9.25 (12) (e)); (vi) the residue read from the remainder at the birth cell
+(9.19 (4)); (vii) the birth written on the body's cells as the train (9.17
+(6a)); (viii) the click: the deletion of one record whole, the one non-local
+act (record 1888). EVERYTHING ELSE IS DERIVED: the band and the paces
+(8.1), gamma and the tick (9.24, 9.22 (8a)), the redshift and the fall in a
+well (9.29), Born's rule and no signalling (9.25), the exact returns (9.26
+(4a)), the split at a splitter and the fringe spacing (A.4, 9.25 (10)). THE
+PER-NODE LAWS OF THE PHYSICS' WORK THAT THE ALGEBRA DOES NOT STATE, EACH
+WITH ITS STANDING: the ray law's walk on the digital line, its collision
+slots and its meeting (beam-v1, record 15; retired by record 1875); the
+crowd and the age wall, the clock at 1 / (1 + k) (record 941 NOT NOW;
+retired, (2) (a)); the delay field and the retarded potential
+(DERIVATIONS_BEAM.md 5.1 to 5.3; moved to history by record 1580; its
+successor the pair-field hypothesis of (4)); the optical turn of a row in a
+crowd (optical-v1, 2026-09-21, a hypothesis under its identity; retired
+with the crowd); the push, the drive and the contact (8.11; retired by
+9.24 (3), record 1884); the give at the return (atom-give-v1, record 881,
+outside the law under its identity, standing); the transformations
+("become", a family change at a click; not in the one algebra, the quarks'
+verdict 9.27 (C)); the pointers on the cosine and sine tables and the
+half-angle rotations (amplitude-v1; retired by 9.14 and 9.18 (5)); the
+cavity's projection (retired, (2) (e)); DESIGN.md 4.1's crowded-Node pair
+(never built; named now as the pair-field hypothesis's ancestor); the
+Hubble rows' crowd (chapter 6, HISTORY). None of these is a law of the one
+algebra; two stand beside it under their own identities (the atom's give,
+the pair field when the owner says so).
+
+**(6) UNDER RECORD 1940, WHERE THE MATHEMATICIAN AND NATURE24 DISAGREE.**
+On the algebra's side nothing is open between us after 86e1df43 (the
+generator, the loader's exclusion, the tail check). What this section
+sends him to build or to confirm, each a code matter: the mode part's
+receive over every light record ((3) (b)); the block clock's "click" line
+retired ((2) (d)); the ray-law default, the cavity, the faces per family,
+the closed boards and the kind branches ((2) (a), (e), (f), (g)), all in
+the cleanup order of 9.21 (3); the holder body's name for the mirror ((3)
+(a), step 6). Where he reads the code otherwise, the Boss hears it from
+both of us.
