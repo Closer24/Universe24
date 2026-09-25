@@ -5899,7 +5899,7 @@ so.
 
 | Row | The board | The entries and the births | The detectors, in the ladder's order | The neglected medium | The blind pin in clicks, with its band | CARRIED or OPEN |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 Bell, four settings | the layer [96, 128, 1], periodic on both axes (no face: the record circulates until it is caught; RE-PLACED for the train, the 30 x 33 layer HISTORY) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder slab [1201, 700] from (8, 60, 0) with the extents 32 x 8 x 1, its train along +x (the pump), the coupling to light, a stock of 100 per setting. The crystal (A.11): a holder body 3 x 32 x 1 from (56, 48, 0) with its light index and the branches [[1, 1], [2, 1]] (HV + VH), the born clocks p_1 + p_2 = p, the pair born as two trains on its cells, one with **K** = +y and one with **K** = -y (its long axis). Alice's polariser (A.5): a holder body of side 3 at (56, 100, 0) with the axis (1, 0) or (1, 1); Bob's at (56, 25, 0) with (1, 2) or (3, 1) | per arm its + cube then its - cube, 3 x 3 each beside its polariser (the placement per A.5); no face | air or fibre common to both arms: cancels | n = 100 pairs per setting: 40 / 10 / 10 / 40, 5 / 45 / 45 / 5, 45 / 5 / 5 / 45, 40 / 10 / 10 / 40 (standard deviations 4.9, 3.0, 3.0, 4.9 and 2.2, 5.0, 5.0, 2.2); S = 2.80 +- 0.14 (the pin [2.38, 3.22], the falsifier S <= 2); the controls: 1d, Alice's counts identical bit for bit under Bob's two axes (9.25 (6)); 1b, the product state HV (the branches [[1, 1]] alone) gives 80 / 20 / 0 / 0, 10 / 90 / 0 / 0, 40 / 10 / 40 / 10, 5 / 45 / 5 / 45 and S = 1.40 +- 0.52; the pins are the projections' shares and do not move with the placement | the crystal's pair birth as two trains (F4) |
+| 1 Bell, four settings | the layer [96, 128, 1], periodic on both axes (no face: the record circulates until it is caught; RE-PLACED for the train, the 30 x 33 layer HISTORY) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder slab [1201, 700] from (8, 60, 0) with the extents 32 x 8 x 1, its train along +x (the pump), the coupling to light, a stock of 100 per setting. The crystal (A.11): a holder body 3 x 32 x 1 from (56, 48, 0) with its light index and the branches [[1, 1], [2, 1]] (HV + VH), the born clocks p_1 + p_2 = p, the pair born as two trains on its cells, one with **K** = +y and one with **K** = -y (its long axis). Alice's polariser (A.5): a holder body of side 3 at (56, 100, 0) with the axis (1, 0) or (1, 1); Bob's at (56, 25, 0) with (1, 2) or (3, 1) | per arm its + cube then its - cube, 3 x 3 each beside its polariser (the placement per A.5); no face | air or fibre common to both arms: cancels | n = 100 pairs per setting: 40 / 10 / 10 / 40, 5 / 45 / 45 / 5, 45 / 5 / 5 / 45, 40 / 10 / 10 / 40 (standard deviations 4.9, 3.0, 3.0, 4.9 and 2.2, 5.0, 5.0, 2.2); S = 2.80 +- 0.14 (the pin [2.38, 3.22], the falsifier S <= 2); the controls: 1d, Alice's counts identical bit for bit under Bob's two axes (9.25 (6)); 1b, the product state HV (the branches [[1, 1]] alone) gives 80 / 20 / 0 / 0, 10 / 90 / 0 / 0, 40 / 10 / 40 / 10, 5 / 45 / 5 / 45 and S = 1.40 +- 0.52; the pins are the projections' shares and do not move with the placement | the crystal's pair birth as two trains (the crystal's build) |
 | 2 Malus, four settings | the chain [192, 1, 1] with the face slabs 32 deep at both ends (the bar of 11 HISTORY) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder well [801, 700] of side 32 at [40, 72), its train along +x (the hand H), the coupling, a stock of 256. The polariser (A.5): a holder body of side 3 at [104, 107) with the axis (1, 1), (5, 1), (15, 8) or (3, 2) | the + cube [112, 115), then the faces (the far slab from 160) | none between the tools | at 256 records on the + cube: 128 +- 24, 246 +- 9, 199 +- 20, 177 +- 22 (3 standard deviations; the expected 128.0, 246.2, 199.3, 177.2; the projections' shares) | none |
 | 3 The two slits | the layer [305, 320, 1], every face a receiver slab of depth 32, one train's length from the emitter and the screen (9.25 (11); the [241, 320] placement with the slab at the screen's back HISTORY: it halved the count) | light [1, 1], born clock [512, 1] (the wavelength 4); the holder [7, 8]. The emitter: a holder slab [1201, 700] from (64, 128, 0) with the extents 32 x 64 x 1, **K** = 0, the coupling, a stock of 4096, its train along +x over 8 periods with the Hann window across y and the tapers of 8 (9.17 (6a)). The wall: a slab of the gap [1, 2] of depth 4 at x = 116 to 119 for y = 32 to 287 except the two openings of width 5 centred at y = 154 and y = 167 (d = 13), cut through its depth (a gap one deep transmits 0.2 at the wavelength 4, A.3). No polariser | the screen: 67 cubes of side 3 at x = 230 to 232, y = 60 to 260, in the order of y (the fringe spacing on the lattice 2 pi L / (d sin k) = 53.2 cells, 9.25 (10), not the continuum's 33.8); then the faces (the slabs x = 0 to 31, x = 273 to 304, y = 0 to 31, y = 288 to 319) | air: the index 2.7 x 10^-4 common to both paths, the Rayleigh loss below 10^-4 | COMPUTED by the generator's run of the placement: the screen's share 0.406 on the ladder, the visibility 0.945 at the lattice spacing 53.2 (read 52.5), the centroid 159.9; THE PIN at a stock of 4096: the screen 1662 +- 94, the visibility 0.94 +- 0.10 at 53.2, the spacing 53 +- 2, the centroid 160 +- 4 (the 1076 +- 84 of the slab at the screen's back HISTORY); the control 10: one opening closed (the opening at 167 filled by the wall's slab), no fringe, the component at 53.2 below 0.2 (computed 0.06) at 1052 +- 84 screen clicks, the centroid 156 +- 4 | none |
 | 4 The pace fans | the layer [256, 256, 1] with the face slabs 32 deep (RE-PLACED at the wavelength 4; the 128 layer at [77, 25] HISTORY) | light [1, 1], born clock [512, 1]; the holder [7, 8]. ONE emitter: a holder slab [1201, 700] from (64, 124, 0) with the extents 32 x 8 x 1, its train along +x with the Hann window of 8 across y (a narrow train diffracts into a fan of every direction at one omega), **K** = 0, the coupling, a stock of 1 | none: the fronts are read as a GAMEBOARD probe at 40 Links along the axis and along the diagonal from the emitter's head, a diagnostic and not a result (9.21 (4)) | none | at one omega = 0.8411 (k = pi / 2 on the axis) the diagonal's wave number is 1.4810 per Link (2 cos(k / sqrt 2) + 1 = 2) and its group velocity 0.5477 against the axis's 0.4472, the ratio sqrt(3 / 2) = 1.2247 (COMPUTED from the dispersion): the diagonal front at 40 Links 73 intervals, the axis's 89; the small-k forms (k^2 / 48 between the axis and the diagonal, k^2 / 36 against the continuum) are the same anisotropy at long wavelengths; no click pin | a diagnostic row |
@@ -6837,3 +6837,142 @@ click interval over the stock, (the head's path + X / 2 + 2) / v_g
 (COMPUTED 299.7 against the form's 299.6 on the light clock), with the
 band 3 rms / sqrt(n), and the stock's first click beside it. What changes
 in the rows is in 9.22 (8) (rows 1 to 4, 6 to 10 and 13 to 18 restated).
+
+### 9.26 A body's frequency, energy and momentum, and the whole's; the clock of a whole; time's reversal; the recurrence of the board (the model owner's four questions of 2026-09-25 through the Boss; DERIVED and PROVED here, for the paper in plain words)
+
+**(1) FREQUENCY, MOMENTUM AND ENERGY OF A BODY (the Boss's reading,
+confirmed on frequency and momentum, corrected on energy).** FREQUENCY
+is the rotation of a shape per interval: the law is the same at every
+interval, so its solutions of one shape are the modes, each turning
+uniformly, 2 cos omega = a / b (1.1, 8.1, 9.22 (7)); a body's frequency
+is its bound mode's own rotation, set by the body's pair and extents
+and by nothing outside it, and seen from outside only as a rate of
+clicks (its births come at the residue's phase of that rotation, 9.17
+(7) (b) and (e)). MOMENTUM **K** is the advance of the phase per Link
+along the axes: the law is the same at every Node, so its solutions of
+one shape along space are the characters and the packets built of them
+(9.24 (2)); **K** is zero for a shape at rest, is carried by a packet as
+its own integer, and is tied to the frequency by the body's band
+omega(**K**): what frequency is for the intervals, momentum is for the
+Links. ENERGY is two things the algebra keeps apart. (a) THE FORM I of
+a record (9.19 (3)): the one bilinear invariant of the rule, what the
+law keeps step by step, what the flux moves through Ports and what a
+click's ladder partitions (Born's rule, 9.25 (3)); for a mode every
+Node's share is e_i = D_i p_i^2 sin^2 omega, so I scales with the
+amplitude squared and with sin^2 omega and not with omega; and a
+record's amplitude is a convention of its write (9.17 (7) (c)), so the
+form is the measure of a wave and no energy per quantum. (b) THE
+QUANTUM: one record, counted once at its click, whatever its form: the
+same rotation at twice the amplitude is one record still, with four
+times the form. The algebra has no E = h f: nothing in the law ties a
+record's form to its rotation. The paper may DEFINE the energy of a
+quantum as its rotation, hbar omega, to speak nature's language; that is
+an identification the algebra neither derives nor contradicts (the
+form's scale being free), and the CONSERVED quantities of the law are I
+step by step and the count at every click. THE MOVING BODY (the Boss's
+question): the phase phi = **K** . x - omega t of a packet turns at
+omega(**K**), above omega_0, when read at a fixed Node, and at omega -
+**K** . grad omega = omega_0 / gamma_eff, below omega_0, when read along
+the packet's own centre (9.24 (2); 9.22 (8a) item 4): one phase, two
+readers. The body's clicks come at its own centre's rotation, so its
+tick slows as it moves while its frequency at a Node rises; both hold
+at once because omega - K d omega / d K = omega_0^2 / omega on the cone,
+the identity of the dispersion.
+
+**(2) THE CLOCK OF A WHOLE (the owner's "the rate of what contains
+everything, the sum of all, like gears").** The state is always a sum:
+the law is linear. (a) TWO RECORDS SIDE BY SIDE are the direct sum:
+each keeps its own rotation, and there are NO BEATS between them: the
+rows are each record's own, the flux and the ladder are read per record
+(9.25 (2)), so nothing on the board and nothing in a click reads the
+difference of two records' clocks (the Boss's "beats in clicks"
+corrected: a click's quadratic form is one record's). Beats appear only
+within ONE record that carries two components (a train of two wave
+numbers): its own form has the cross term. (b) ONE WHOLE OF TWO
+ENTANGLED PARTS, the pair of rank 2 (A.11, 9.23): the joint weight
+multiplies the two branches' amplitudes, each branch turning at its own
+omega_1 and omega_2, and the product of two uniform rotations is one
+uniform rotation at omega_1 + omega_2: the whole turns at the SUM of its
+parts' clocks, EXACTLY when each part is one shape (one mode, or one
+monochromatic train), and over the sum of their bands otherwise; the
+sum is that of the complex rotations the two levels encode (a record's
+now and before fix its phase; in real parts a product carries the sum
+and the difference alike, and the click reads the quadratic form, not
+the phase). THE CLAUSE FOR THE PAPER: two things side by side keep their
+own clocks and never beat; one whole of entangled parts turns at the
+sum of their clocks, exactly for parts of one shape, as energies of a
+composite add. A board contained in a larger board keeps its own
+frequencies, forms and momenta while it is not coupled to the rest (the
+direct sum), and once coupled or entangled they are the larger whole's
+(the sum of its parts', I and **K** conserved by the one law).
+
+**(3) TIME'S REVERSAL (the owner: "whether things are reversible in
+time except the clicks, or whether the clicks also come out reversible;
+the whole big cube should work in both directions").** (a) THE INSIDE
+IS EXACTLY REVERSIBLE (PROVED): the step 3 den a_next + r' = num S_6(a)
+- 3 den a_before + r with 0 <= r' < 3 den is a bijection of the
+states (a_before, a_now, r) -> (a_now, a_next, r'): given a_now, a_next
+and r', the integer M = num S_6(a_now) - 3 den a_next - r' equals 3 den
+a_before - r with 0 <= r < 3 den, so a_before = ceil(M / (3 den)) and r
+= 3 den a_before - M, uniquely. The reversed motion obeys the SAME
+recurrence with next and before exchanged and the remainder's sign
+mirrored (the floor become the ceiling): the law is symmetric under t
+-> -t up to the side of its rounding, which is a convention of the unit
+and not a law (8.8; the property test's digests are the check). (b) THE
+CLICK is the one deletion: X ends the record's rows at once and the
+detector's own record changes (the click line: the detector, the
+interval, the record's residue; POSTULATES.md section 10, record 1139).
+The record's shape, its two levels on every Node, is kept nowhere, so
+THE BOARD WITH ITS DETECTORS IS NOT A BIJECTION: what a click loses is
+the record's two levels on all its Nodes less the few integers of the
+line, its shape and its phase; the line keeps the count and the
+residue, enough to say which record clicked where and when, not enough
+to write it back. (c) A FULLY REVERSIBLE CLICK would keep the whole
+record at the detector, a register at its Nodes: it contradicts no
+proof (Born's rule, no signalling and one quantum one click are
+statements about the forward click and stand whatever the detector
+stores), and it contradicts the owner's decision that the deletion is
+at once and carries no information (record 1888) and that nothing is
+kept at a Node beyond the events there. The birth is the click's mirror
+in form (E^T against X, 9.13): the reversed film shows every click as a
+birth from the detector's stock and every birth as a click at the
+emitter, and it runs exactly where the content the click lost is
+supplied. So the GameBoard works in both directions as a LAW, and its
+one arrow is the click's deletion: a decision, not a theorem, and the
+falsifiable line of 8.9 item 7 stands as the Boss told it.
+
+**(4) THE RECURRENCE OF THE BOARD (the owner: "the frequency of a body
+is within how many turns it returns to its initial state; said of the
+whole universe, it is cyclic").** (a) A BOUND SHAPE returns to itself
+after its period 2 pi / omega in the real recurrence. In integers it
+never returns exactly: 2 cos omega = a / b is rational, and by Niven's
+theorem the cosine of a rational multiple of pi is rational only at 0,
++-1 / 2 and +-1, so for every clock of the generator omega is no
+rational multiple of pi, the rotation is dense on the circle, and the
+shape comes back within the rounding and never to the bit. (b) THE
+WHOLE BOARD (PROVED, with one condition): by (3) (a) the Inside step is
+a bijection of the integer states; on the set of states whose levels
+stay within the amplitude bound A, a finite set, a bijection that keeps
+the set is a permutation, and every state of a bounded orbit RECURS
+EXACTLY after a finite number of intervals and then repeats the SAME
+cycle (a deterministic law repeats its process, not another one): the
+recurrence in integers, with a period at most the set's size, (2 A +
+1)^(2 N) for N Nodes, astronomical. THE CONDITION is that the orbit
+stays bounded. The real recurrence keeps I exactly and I is positive
+on the band (the form bounds every level by sqrt(I / the least
+eigenvalue of **D** - **A** / 6)), so a real orbit is bounded for ever;
+the integer recurrence keeps I within the remainder's effect, at most
+one unit's worth per Node per step, so I drifts by at most the order of
+A per step at worst and of A sqrt(t) at random over t steps; whether
+the drift stays below the bound for ever is OPEN as a proof and
+COMPUTED as far as the runs go (the property test's digests and the
+light clock's 2600 intervals show no drift beyond the rounding). THE
+INTEGERS STAY BOUNDED BY REFUSAL, NEVER BY OVERFLOW: the engine refuses
+a run whose level exceeds A (world.py, MUST 3's bound) rather than
+wrapping it, so a drifting orbit is refused and no false cycle is ever
+read. (c) WITH CLICKS THE WHOLE IS NOT CYCLIC: a click deletes and a
+stock is finite, so a world of emitters and detectors ends with its
+stock spent and its records clicked, the board empty of them (the arrow
+of (3)); the recurrence is the Inside's, and a universe that is one
+Inside with no click is cyclic in the sense of (b), returning through
+the same process.
