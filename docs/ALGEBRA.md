@@ -9874,3 +9874,40 @@ generator's mode under the clock at the body's initial content: a build
 item (9.45 (5)): OPEN on the engine. Every statement above not marked
 OPEN follows from (1) to (3) and the adopted definitions; the runs of
 9.38, 9.39 and 9.43 are computations of the algebra and add no rule.
+
+**(8) A BODY SEATED AT ONE NODE OF THE GameBoard (the model owner's
+question of 2026-09-25 in the mathematician's session: "then it can be
+put in as one small Node that stays a Node on the board, and from that
+Node we read its clicks, instead of three by three by three; will it
+work?").** Yes for three of its four offices, no for the fourth, and the
+fourth has a form. Let the body record of (1) be SEATED at one Node of
+the GameBoard, its seat: its rotation, its content, its residue and its
+stock live there. (a) AS A HOLDER OF CONTENT, the source of the family of
+clicks: the level held at the seat, a point source; the field beyond a
+few Links is the same 1 / r (9.41 (3)), the near field that of a radius
+of one Node instead of the cube's 1.4; no pin reads the near field.
+WORKS. (b) AS ITS OWN CLOCK, the tick: the rotation of (2) at the seat,
+the residue its own remainder, the count the same interval as any
+representation ((5) of 9.47). WORKS. (c) AS A TAKER: the seat's six
+Links are its Ports; a passing record offers it the inflow through six
+Ports instead of the cube's fifty-four, about one twenty-seventh of the
+cube's share, so a seated detector takes fewer records by that factor
+and the rest go on to the slab; the PATTERN across a screen of seated
+pixels is unchanged (each pixel's share is the local intensity, the
+ratios between pixels the same), the COUNTS are rescaled, so the pins'
+counts are recomputed and their form is not. WORKS, with its pins
+recomputed. (d) AS A GIVER: the born record's band is set by the extent
+it is written on, delta k about 2 pi / L (9.17 (6a), the train); a
+record born on one Node is broadband, every wavelength at once, which
+is the one-Node birth retired at 8f224288 and would move every pin that
+reads a wavelength (the two slits' spacing, Mach-Zehnder's dark port,
+the light clock's interval). So a seated emitter WRITES ITS BORN ROWS ON
+A DECLARED EXTENT around its seat, the born family's eigenvector on
+those Nodes times the character, as now; its own rotation sits at the
+seat and its births use the extent. That is the form: A SEAT AND A
+BIRTH EXTENT; a detector, a holder and a clock body need the seat alone,
+an emitter the seat and the extent. The pair region on the GameBoard is
+needed only where a record of the body's OWN family must pass through
+it (lensed, transparent); the eighteen's passing records are of other
+families, so a seated body carries no pair region there. Under these
+two caveats it works, and (4)'s equivalence test decides the numbers.
