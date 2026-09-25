@@ -273,6 +273,51 @@ ALGEBRA.md 9.40 D1, 9.46, 9.51, 9.53).
   charge (the atom row, 9.48 (4), 9.53 (4)), a body is the support of its
   own bound mode and the declared wells remain tools only.
 
+A CLICK (the model owner's word of 2026-09-25: "let it be in the definitions
+of a click"; his rulings of records 1139, 1967 and 2011; ALGEBRA.md 9.40 T3,
+9.44 (5), 9.53 (1), 9.55).
+
+- **Algebraically.** The click is the one write of the law and its one
+  irreversible act; everything else is the Node's rule, which runs backward
+  exactly. It has two ends, at a body. THE TAKING END: the flux through the
+  body's Ports, gathered one way inward over the intervals (the reading E
+  of the click item above), reaches the record's rung at one interval and
+  one Node of the body's ladder; then X_S ends the taken record's rows at
+  once and the body's record moves: M_k + 1 for the taken family, Q + q, s
+  recomputed (9.40 T3, 9.51 (8)). THE GIVING END: the body's own record's
+  fraction becomes whole, the count of intervals since the residue's read
+  reaching ceil((2 u + 1) P / (2 W)) (record 1967; 9.43 (4), 9.44 (5) (c));
+  then X_S^T sets the born family's rows on the body's Nodes, the
+  eigenvector times the character, and the body's record moves: M_k - 1 of
+  the born family, the stock down one, u read anew at the first shell Node,
+  s recomputed; the body's own levels, phase and remainders are left as
+  they are (9.43 (3)). THE LINE the click leaves is four integers and the
+  record's data: the count, the residue u, the Node, the interval (with the
+  born record's norm, wheel and clock pair as GameBoard readings). THE
+  CLICK GOES ONLY FORWARD IN TIME (record 2011): it is what happened in the
+  world; the taken record's rows are the one thing lost; the line is its
+  whole trace; no rule undoes a click, the inverse map fires no rung and
+  writes no line; between clicks everything is the possibilities and
+  returns bit for bit (9.55 (1), (6), (7)). The click is the present: the
+  one interval at which the state at the Nodes is written into a record
+  and made permanent; the future is the state at the Nodes and nothing
+  else, fixed by the deterministic law; the past is the lines and the
+  state back to the last taking.
+- **Practically, for us.** A click is read on the engine as a line in the
+  run's record (the birth line, the click line), never as a level: the
+  taking end at the Node the increment ladder names in the ladder's
+  declared order (9.25 (2)), the giving end at the body's first shell Node
+  in x-major order; a click passes one whole quantum with its family and
+  its charge; the counts per family, the total charge and the energy
+  count are conserved at every click (9.55 (2)); a detector's pixel is one
+  connected region across an exit, a click names one Node of it, nothing
+  below one Node is claimed (9.25 (9)). WHAT IS COMPARED WITH NATURE is the
+  clicks alone: their counts, their Nodes, their intervals, their
+  centroids and their ticks; a level, a share or a field is a GameBoard
+  reading, a diagnostic, and never a result (docs/ENGINE.md, the readings
+  by type). A test that passes in the levels and not in the clicks is a
+  finding, not a pass (9.51 (7)).
+
 THE BODY'S LOAD CONDITIONS, kept from the four-block text as the loader's
 checks (its "takes what reaches its Nodes" and the table body are history;
 the Nodes of every two bodies are disjoint, the seed is the COMPOSED
