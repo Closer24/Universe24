@@ -13051,3 +13051,65 @@ emitter's declared norm, the record's norm at the close its form as it
 stands, the stock down by one, the inverse subtracting each write
 before the record's own inverse step: CONFIRMED as the build's
 reference.
+
+### 9.76 Do the missing vector and tensor parts touch any row? (the Boss's record 2061 of 2026-09-25, the model owner: "but these are things that can affect all the experiments"; the mathematician's answer per row, blind, with the order and the size of each effect)
+
+**(1) WHAT THE MISSING PARTS DO, in three orders.** The scalar family
+carries the potential U of a source's content; a MOVING source also
+makes (a) the vector part, the field of its mass current, of relative
+order v U, felt only by a record that itself moves, as u v U (u the
+reader's speed; the dragging of frames, magnetism's twin), and by
+light passing a moving source as a shift of its deflection by the
+factor 1 - v . n / c_l (first order in v); (b) the tensor part's static
+piece, the v^2 U correction of the potential's boost (a potential is
+one component of a tensor, not a scalar, so the moving mass's scalar
+field misses v^2 U); (c) the tensor waves, radiated by ACCELERATING
+masses, taking from an orbit the fraction (192 pi / 5)(mu / M)(v /
+c_l)^5 of its period per orbit (Peters), and nothing from a static or
+uniformly moving source. A source at rest makes none of the three; a
+reader at rest in the source's frame feels none of the first two.
+
+**(2) PER ROW, the source, the reader, the order and the size against the
+band (Gamma = 10^4, the row's own U and v; c_l = 0.577).**
+
+| The row | The read field's source | The reader | The order | The size against the band |
+| --- | --- | --- | --- | --- |
+| The redshift, the bending, Shapiro (rows 1, 3, 4), the dark body | a held body at rest | light | none: a static source has no vector part; the tensor's static piece is v^2 U = 0 | below (zero at this order) |
+| Kepler, Mercury, the fall (row 5) | a declared well or a heavy body at rest | a test body of small content, mu / M about 10^-2 | the vector part 0 (the source at rest); the waves (mu / M)(v / c_l)^5 x 120 per orbit at v / c_l = 0.19: 3 x 10^-4 x 120 x 10^-2 = 3 x 10^-4 per orbit | below (one hop's share 4 x 10^-3), and the well is declared: it cannot radiate |
+| The muon's clock, the boxed clocks, the deep well in motion, the Lorentz pair | the moving body's own content (the self-level, U about 3 x 10^-3 at s = 64, 5 x 10^-5 at s = 1) | its own clock | none: the reader is at rest in the source's frame, where the vector part vanishes and the potential is the rest one; the frame's dilation is already the proper pair (9.63 (3)) | below (zero at this order) |
+| The Lorentz pair, the mirror in the emitter's field | the emitter's content 64, at 90 Links | the mirror, co-moving | the cross term v u U with u = v: v^2 U at U = 2 x 10^-4: 4 x 10^-5 | below |
+| Coulomb (9.64 (1)) | a charged body at rest | a charged packet at v = 1 / 4 | magnetism needs a moving CHARGE as the source; the packet's own magnetic field acts on nothing read | below (zero) |
+| The atom (9.64 (2)) | a proton body at rest | an electron record | the spin-orbit and magnetic terms need spin (not in the law) and the vector part: order (v / c_l)^2 of the binding, the fine structure, about 10^-2 of the well's depth | below the row's reading (a bound or not, 10^4 intervals; the mass defect 1.155 read at 1 percent) |
+| The eighteen (Bell, Malus, the two slits, the fans, Sagnac, the light clock, the index rows, the computer, Mach-Zehnder, Sorkin) | no held field but the emitters' self-levels | light | none | below (zero) |
+| The contraction check (9.67 (1)) | a moving held body | the field's own contours | the scalar part's boost is the plain step's own and needs no vector part; the vector part is a second field whose contours are not read; the tensor's v^2 U on the contour's level: 19 percent of the level, not of the shape's ratio 1 / gamma, which the scalar's boost gives exactly | the ratio 1 / gamma stands; the contour's absolute level carries v^2 U as a GameBoard diagnostic beside it |
+
+**(3) THE MOVING BODIES' OWN FIELDS (the Boss's question 3).** No row
+reads a moving mass's field except through the mass's own clock, and
+in its own frame the field is the rest field: the proper pair carries
+the dilation, the self-level the potential, and the vector part is
+zero there. The scalar family's plain step is Lorentz invariant at
+long wavelength, so the moving field's SHAPE is right (the contraction
+of 9.67 (1)); what a moving mass's scalar field misses is the vector
+part (v U, felt by other movers) and the tensor's v^2 U on the
+potential's level, and no row reads either at the order of its band.
+So a moving mass needs no vector part for the rows as designed.
+
+**(4) THE ANSWER, one line, and the rows that would read them.** NO ROW,
+today's or the new ones, changes its reading by the missing vector or
+tensor parts at the order of its band: every read field has a source
+at rest, or a reader at rest in the source's frame; the one cross term
+(the Lorentz pair's mirror) is 4 x 10^-5. THE ROWS THAT WOULD READ
+THEM, for the vector family (9.67 (3)) when the owner wants it, with
+their cost (three levels per Node, one product per record per Node):
+(a) LIGHT PAST A MOVING MASS: the bending row with the dark body
+hopping across the line at v = 1 / 4: the deflection times 1 - v . n /
+c_l, a change of 43 percent, readable at once, the cheapest first row
+of the vector family and the same physics as the moving lens in
+nature; (b) THE RING OF HOPPING SEATS and the two-way light times, the
+dragging (9.67 (3)); (c) for the tensor family (six levels per Node):
+TWO BODIES OF EQUAL CONTENT orbiting each other by the law's own fall,
+both fields dynamical: the period drifts (192 pi / 5)(1 / 2)(v /
+c_l)^5 per orbit, 1.5 percent per orbit at v / c_l = 0.19, readable in
+a few orbits; the declared well of row 5 cannot radiate and is not
+that row. Nothing in the twenty-four or the five needs the addition
+to stand; the additions stand on their own rows, after the Go.
