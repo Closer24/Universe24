@@ -29,8 +29,8 @@ def test_the_preflight_loads_every_listed_world_and_runs_none(tmp_path: Path, ca
     root = tmp_path / "events"
     (root / "massive_record").mkdir(parents=True)
     (root / "bell").mkdir()
-    good = ROOT / "examples/events/massive_record/layer_pin_rest_14.json"
-    (root / "massive_record/layer_pin_rest_14.json").write_bytes(good.read_bytes())
+    good = ROOT / "examples/events/massive_record/muon_moving_clock_at_rest_14.json"
+    (root / "massive_record/muon_moving_clock_at_rest_14.json").write_bytes(good.read_bytes())
     ray = ROOT / "examples/events/one_content.json"
     (root / "bell/bell_a0b0.json").write_bytes(ray.read_bytes())
     # the ray world's entity definitions, referenced relative to its own file
@@ -43,13 +43,13 @@ def test_the_preflight_loads_every_listed_world_and_runs_none(tmp_path: Path, ca
     (root / "massive_record/unbounded.json").write_text(json.dumps(bad), encoding="utf-8")
     listing = tmp_path / "RUN_LIST.md"
     listing.write_text(
-        "| row | `massive_record/layer_pin_rest_14.json` | `bell_{a0b0,a1b1}.json` |\n"
+        "| row | `massive_record/muon_moving_clock_at_rest_14.json` | `bell_{a0b0,a1b1}.json` |\n"
         "| row | `unbounded.json` and `expectations.json` | `to_write.json` |\n",
         encoding="utf-8",
     )
     names = PREFLIGHT.listed(listing.read_text(encoding="utf-8"))
     assert names == [
-        "massive_record/layer_pin_rest_14.json",
+        "massive_record/muon_moving_clock_at_rest_14.json",
         "bell_a0b0.json",
         "bell_a1b1.json",
         "unbounded.json",

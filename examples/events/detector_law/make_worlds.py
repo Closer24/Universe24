@@ -53,20 +53,20 @@ physicist's 07:37Z, one integer with the sets' rung of section 13 item 4), 64
 on the light clock.
 
 The massive rows (group M1, written into `../massive_record/`, the folder of
-their family; section 15 M1-1 to M1-6): `redshift_k3.json` and
-`redshift_control.json` (section 4 with item 7's CHECK on the loader's bound of 4096: the
+their family; section 15 M1-1 to M1-6): `moving_emitter_redshift_speed_third.json` and
+`moving_emitter_redshift_at_rest.json` (section 4 with item 7's CHECK on the loader's bound of 4096: the
 chain of 4096, A at 2994, the receiver's set at 4094 with wheel 64, A's `own_grace` 3000
-and the world key `wheel` 64, 9600 intervals), `sagnac_k3.json` and `sagnac_rest.json`
+and the world key `wheel` 64, 9600 intervals), `sagnac_light_times_speed_third.json` and `sagnac_light_times_at_rest.json`
 (section 13 on the chain of 3000 of 2026-09-24 07:58Z, the blocks their own receivers at
 W = 256 with `own_grace` 3000, the hold, 6400 and 8450 intervals),
-`light_clock_60.json` (section 10, A's receiving set at the free Node x = 612 beyond
+`light_clock.json` (section 10, A's receiving set at the free Node x = 612 beyond
 its face with `own_grace` 70, the chain closed for light, 2600 intervals), every emitter at G = [1, 50], g = [1, 1000] with the
 seed 50 x 2^20 (M1-1), holding no light content (M1-2), light's clock [1, 1]
 (M1-3), the receivers detector sets with their own wheel (M1-4: 4b's at its body's Node with
 wheel 64, Sagnac's bound to the blocks by the key `block` with wheel 256, the light
 clock's at the free Node x = 612 with wheel 64), `amplitude_bound` 2^32 on every massive world
-(M1-10); `matter_waves_12.json`, `matter_waves_16.json` and
-`matter_front_12.json` (M1-6: the matter family's `phase_per_link` [1089, 320]
+(M1-10); `de_broglie_fringes_12.json`, `de_broglie_fringes_16.json` and
+`moving_mass_energy_12.json` (M1-6: the matter family's `phase_per_link` [1089, 320]
 or [11, 4] on N = 64, the lamp with the wheel [1, 64], the stock 2048 at one
 per 8 intervals, the train 8 periods and `own_grace` 16700, the wall a barrier
 line of matter-kind blocks with the raised pair [1, 2] two deep, the take lines
@@ -187,9 +187,9 @@ BELL_TRAIN = 128  # periods, DECLARATIONS.md sections 1 and 3
 SAGNAC_CHAIN = 3000  # the physicist's declaration of 07:58Z: one chain of 3000 for both sagnac worlds, the blocks and the gap unchanged
 # The physicist's word of 08:06Z on Reviewer 3's arithmetic (a k3 record born at t completes near
 # 0.423 t + 4468, a rest record near t + 3990; the last hold birth near 4450): every hold record
-# counts, so sagnac_k3 6400 and sagnac_rest 8450; the redshift pair 15000 (the last hold records,
+# counts, so sagnac_light_times_speed_third 6400 and sagnac_light_times_at_rest 8450; the redshift pair 15000 (the last hold records,
 # born near 9500, complete near 14800).
-SAGNAC_TICKS = {"sagnac_k3": 6400, "sagnac_rest": 8450}
+SAGNAC_TICKS = {"sagnac_light_times_speed_third": 6400, "sagnac_light_times_at_rest": 8450}
 REDSHIFT_TICKS = 9600  # the physicist's line of 10:15Z (10000 runs A off the board at 9732)
 LIGHT_CLOCK_TICKS = 2600  # the physicist's 09:18Z: the -x half's round trip on the closed chain (2078) before item 10's take removes it; the first cycle's record closes between about 2150 and 2400
 # The receiver by name (#1116, the physicist's form, Reviewer 3 confirmed): a key `receiver`
@@ -765,8 +765,11 @@ def massive_worlds(massive) -> dict[str, dict]:
     # ticks 9600 in both worlds (the physicist's 10:15Z; the two readers' windows equal).
     redshift_ticks = REDSHIFT_TICKS
     for name, motion in (
-        ("redshift_k3", {"momentum": [-massive.MOMENTUM_SPEED_THIRD, 0, 0], "ramp": 1500}),
-        ("redshift_control", {}),
+        (
+            "moving_emitter_redshift_speed_third",
+            {"momentum": [-massive.MOMENTUM_SPEED_THIRD, 0, 0], "ramp": 1500},
+        ),
+        ("moving_emitter_redshift_at_rest", {}),
     ):
         document = massive.world(
             name.replace("_", "-"),
@@ -799,8 +802,11 @@ def massive_worlds(massive) -> dict[str, dict]:
     # (the physicist's 07:37Z, one integer with the sets' rung); the control with both at
     # rest; the probes at the facing cells.
     for name, motion in (
-        ("sagnac_k3", {"momentum": [massive.MOMENTUM_SPEED_THIRD, 0, 0], "ramp": 1500}),
-        ("sagnac_rest", {}),
+        (
+            "sagnac_light_times_speed_third",
+            {"momentum": [massive.MOMENTUM_SPEED_THIRD, 0, 0], "ramp": 1500},
+        ),
+        ("sagnac_light_times_at_rest", {}),
     ):
         document = massive.world(
             name.replace("_", "-"),
@@ -827,21 +833,21 @@ def massive_worlds(massive) -> dict[str, dict]:
                 emitter([772, 0, 0], 12, WELL_FULL, SAGNAC_GRACE),
             ],
         )
-        receiver_set(document, "at_a", 0)
-        receiver_set(document, "at_b", 1)
-        named_receiver(document, {0: "at_b", 1: "at_a"})
+        receiver_set(document, "at_near_well", 0)
+        receiver_set(document, "at_far_well", 1)
+        named_receiver(document, {0: "at_far_well", 1: "at_near_well"})
         massive.seed_on_the_mode(document)
         out[name] = document
     # The light clock (ALGEBRA.md 9.22 (8), the table's form since 2026-09-25): the
     # chain of 674 with the face receivers at both ends, the emitter A of side 12 at full
     # depth at [600, 612) with its coupling and its stock, the MIRROR the gap [1, 2] of
     # depth 2 at [672, 674) (A.3: a material of light's kind, no closed face), the
-    # receiving set at_a the cube [612, 614] of free Nodes beside A, 2600 intervals; the
+    # receiving set at_well the cube [612, 614] of free Nodes beside A, 2600 intervals; the
     # -x half of every born record leaves through the face at x = 0 (last on the ladder).
     # The closed chain of 673 with the mirror as the closed face is HISTORY (BUILD.md
     # section 26 item 22).
     document = massive.world(
-        "light-clock-60",
+        "light-clock",
         "PIN",
         [674, 1, 1],
         chain,
@@ -862,15 +868,15 @@ def massive_worlds(massive) -> dict[str, dict]:
     # positions (the loader's form (b) of BUILD.md item 14 on 299b6bb2).
     document["detectors"].append(
         {
-            "name": "at_a",
+            "name": "at_well",
             "block": 0,
             "positions": cube_positions(document, [612, 0, 0]),
             "threshold": 1,
         }
     )
-    named_receiver(document, {0: "at_a"})
+    named_receiver(document, {0: "at_well"})
     massive.seed_on_the_mode(document)
-    out["light_clock_60"] = document
+    out["light_clock"] = document
     # De Broglie's fringes and the moving mass's energy (section 12 with section 15 M1-6; THE SIZED FORM of SIZING.md, section
     # 12's line of 2026-09-24): the 128 x 128 x 1 layer, y periodic, x open for the matter
     # kind, no light; the matter lamp at (20, 64) with its own clock, the wheel [1, 2048]
@@ -888,7 +894,7 @@ def massive_worlds(massive) -> dict[str, dict]:
     for wavelength, clock in MATTER_CLOCKS.items():
         document = matter_world(
             massive,
-            f"matter-waves-{wavelength}",
+            f"de-broglie-fringes-{wavelength}",
             [128, 128, 1],
             {"x": "open", "y": "periodic", "z": "periodic"},
             MATTER_TICKS,
@@ -913,13 +919,13 @@ def massive_worlds(massive) -> dict[str, dict]:
             ),
         )
         massive.seed_on_the_mode(document)
-        out[f"matter_waves_{wavelength}"] = document
-    document = matter_world(massive, "matter-front-12", [200, 1, 1], chain, 600, MATTER_CLOCKS[12])
+        out[f"de_broglie_fringes_{wavelength}"] = document
+    document = matter_world(massive, "moving-mass-energy-12", [200, 1, 1], chain, 600, MATTER_CLOCKS[12])
     document["families"].append(emitter_kind_family(SOURCE_FAMILY))
     document["measured"].append(emitter_body([20, 0, 0], 1, family="matter", own=SOURCE_FAMILY))
     receiver_cube(document, "front", [104, 0, 0], "matter")
     massive.seed_on_the_mode(document)
-    out["matter_front_12"] = document
+    out["moving_mass_energy_12"] = document
     return out
 
 

@@ -1,7 +1,7 @@
 {
  "format": "one-command-pins-v1",
  "source": "ALGEBRA.md 9.22 (8), the mathematician's table of the eighteen (lab-tools-unification); every pin written before its input runs and never moved after a reading; the one command tools/run_inputs.py reads this file with --pins",
- "light_clock_60": [
-  {"detector": "at_a", "first_click": 214, "band": 1, "row": "13 the light clock: the first cycle's first rung 2 x 60 / 0.57689 + 3.973 = 211.98 plus the rung's offset, OWED on the flux form"}
+ "light_clock": [
+  {"detector": "at_well", "first_click": 214, "band": 1, "row": "the light clock: the first cycle's first rung 2 x 60 / 0.57689 + 3.973 = 211.98 plus the rung's offset, OWED on the flux form"}
  ]
 }

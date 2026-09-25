@@ -20,7 +20,7 @@ failure (`--strict` makes it one). Nothing here runs a rule or reads a record.
 
     PYTHONPATH=src python tools/preflight_worlds.py
     PYTHONPATH=src python tools/preflight_worlds.py --list docs/designs/detector_law/RUN_LIST.md --root examples/events
-    PYTHONPATH=src python tools/preflight_worlds.py examples/events/massive_record/layer_pin_k3_14.json
+    PYTHONPATH=src python tools/preflight_worlds.py examples/events/massive_record/muon_moving_clock_speed_third_14.json
 """
 
 from __future__ import annotations

@@ -7,7 +7,7 @@ whole at it; (b) the block's own cell on no ladder; (c) the loader's refusals of
 `receiver`; (d) the permutation test, the detector list reordered giving byte-identical
 gather lines (issue #1116); (e) a set beside the receiver books the flux into its Node and
 is never chosen, its pointer on the line's `sunk` (HOST). Then the line's time, and the
-registered world `sagnac_rest.json` loaded and stepped. SINCE THE FLUX READING (ALGEBRA.md
+registered world `sagnac_light_times_at_rest.json` loaded and stepped. SINCE THE FLUX READING (ALGEBRA.md
 9.19 (3); BUILD.md section 26 item 14) nothing takes: every cell books the one-way flux
 into its Nodes, the click is on the cumulative ladder and ends the record; the chain's
 faces are closed (an open face is the receiver `face`, last on every ladder, and two
@@ -27,7 +27,10 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_massive_record import light_clock_world, massive_world, seed_source
 
-SAGNAC_REST = Path(__file__).resolve().parents[1] / "examples/events/massive_record/sagnac_rest.json"
+SAGNAC_REST = (
+    Path(__file__).resolve().parents[1]
+    / "examples/events/massive_record/sagnac_light_times_at_rest.json"
+)
 CLOSED_CHAIN = {"x": "closed", "y": "periodic", "z": "periodic"}
 Spy = dict[int, tuple[list[int], list[int], int, int, int]]
 
@@ -235,14 +238,14 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     document = massive_world([600, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
     document["ticks"] = 700
     document["clock_stamp"] = True
-    document["measured"] = [emitter(200, "at_a", 0)]
-    document["detectors"] = [{"name": "at_a", "block": 0}]
+    document["measured"] = [emitter(200, "at_well", 0)]
+    document["detectors"] = [{"name": "at_well", "block": 0}]
     seed_source(document, 0)
     seen = {}
     simulation, lines = run(document, 700, seen=seen)
-    assert simulation.receiver_cell == {0: simulation.cell_names.index("at_a")}
+    assert simulation.receiver_cell == {0: simulation.cell_names.index("at_well")}
     found = gathers(lines)
-    assert found and all(g["chosen"] == [["at_a", 0, "0"]] for g in found)
+    assert found and all(g["chosen"] == [["at_well", 0, "0"]] for g in found)
     assert all(g["click"] > g["birth"] + 1 and g["tick"] == g["click"] for g in found)
 
 
@@ -289,12 +292,12 @@ def test_the_lines_time():
 
 
 def test_sagnac_rest_loads_and_steps_under_the_form_without_positions():
-    """The registered world `examples/events/massive_record/sagnac_rest.json` (the two
-    emitter bodies at [700, 712) and [772, 784) at rest, A `receiver` at_b and B at_a, the
+    """The registered world `examples/events/massive_record/sagnac_light_times_at_rest.json` (the two
+    emitter bodies at [700, 712) and [772, 784) at rest, A `receiver` at_far_well and B at_near_well, the
     sets at the bodies' cells at W 256) loads and is stepped 300 intervals as a load-and-step
     diagnostic (no pin): each body births (its excitations click at their rungs, at least
     one birth per body), and each body's records click at the OTHER body's set (A's at
-    at_b, B's at at_a: the one-way flux into the other's cells over the 60 Links between
+    at_far_well, B's at at_near_well: the one-way flux into the other's cells over the 60 Links between
     them, the line at the rung, the record deleted at it), none at its own; the books
     balanced. The Sagnac geometry (the form without positions) is re-derived in the mirror
     item before its run; its readings are held. The edge case: the file on disk is byte for
@@ -303,14 +306,17 @@ def test_sagnac_rest_loads_and_steps_under_the_form_without_positions():
     document = json.loads(before)
     world = parse_nature_beam_world(document)
     assert [entry.block.receiver for entry in world.measured if entry.block is not None] == [
-        "at_b",
-        "at_a",
+        "at_far_well",
+        "at_near_well",
     ]
     simulation, lines = run(copy.deepcopy(document), 300, every=100)
     births = [line for line in lines if line["event"] == "birth"]
     assert {line["measured"] for line in births} == {0, 1}
     found = gathers(lines)
-    assert {(line["record"] >> 32, line["chosen"][0][0]) for line in found} == {(0, "at_b"), (1, "at_a")}
+    assert {(line["record"] >> 32, line["chosen"][0][0]) for line in found} == {
+        (0, "at_far_well"),
+        (1, "at_near_well"),
+    }
     assert all(
         line["tick"] == line["click"] and line["record"] not in simulation.records for line in found
     )

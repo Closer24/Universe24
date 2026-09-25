@@ -22,7 +22,7 @@ wall seconds go to the summary printed.
 Run with PYTHONPATH set to the checkout's src:
 
     PYTHONPATH=src python tools/run_inputs.py --out runs/inputs --jobs 4 \\
-        examples/events/massive_record/light_clock_60.json ...
+        examples/events/massive_record/light_clock.json ...
 """
 
 from __future__ import annotations

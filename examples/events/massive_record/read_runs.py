@@ -51,6 +51,9 @@ from pathlib import Path
 
 import numpy as np
 
+# the drives' names in the worlds' names, the generator's `SPEED_NAME` (make_worlds.py)
+SPEED_NAME = {3: "speed_third", 4: "speed_quarter"}
+
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 ARTIFACTS = ROOT / "artifacts" / "massive_record"
@@ -404,7 +407,7 @@ def main() -> None:
         "artifacts": "artifacts/massive_record/<world>/ (events.jsonl, run.json), each world run headless by python -m event_universe; the pins in expectations.json",
     }
     # (i) at rest
-    for name in ("rest_20", "rest_28"):
+    for name in ("boxed_clock_side_20_at_rest", "boxed_clock_side_28_at_rest"):
         reading = clock(name, REST_WINDOW)
         if reading:
             pin = pins[name]["pin"]
@@ -422,8 +425,8 @@ def main() -> None:
         readings["cavity_24"] = {"kind": "GAMEBOARD", **reading}
     # (ii) and (iii-b) in motion
     for name, rest in (
-        ("moving_20", "rest_20"),
-        ("moving_28", "rest_28"),
+        ("boxed_clock_side_20_moving", "boxed_clock_side_20_at_rest"),
+        ("boxed_clock_side_28_moving", "boxed_clock_side_28_at_rest"),
         ("cavity_24_moving", "cavity_24"),
     ):
         hold = clock(name, HOLD)
@@ -448,19 +451,19 @@ def main() -> None:
     # the layer pin worlds of the muon's moving clock: the clicks' mean interval over the hold
     # [10200, 18200] at k = 3 over the rest world's over [200, 3000] (DETECTOR), the peaks
     # GAMEBOARD beside
-    layer_hold = clock("layer_pin_k3_14", LAYER_HOLD)
-    layer_rest = clock("layer_pin_rest_14", REST_WINDOW)
+    layer_hold = clock("muon_moving_clock_speed_third_14", LAYER_HOLD)
+    layer_rest = clock("muon_moving_clock_at_rest_14", REST_WINDOW)
     if layer_rest:
-        pin = pins["layer_pin_rest_14"]["pin"]
+        pin = pins["muon_moving_clock_at_rest_14"]["pin"]
         layer_rest["pin_omega_b"] = pin["omega_b"]
         layer_rest["peak_over_pin"] = layer_rest["spectral_peak_omega"] / pin["omega_b"]
         layer_rest["rate_over_pin"] = layer_rest["rate_per_interval"] * 2.0 * math.pi / pin["omega_b"]
-        readings["layer_pin_rest_14"] = {
+        readings["muon_moving_clock_at_rest_14"] = {
             "kind": "DETECTOR (the clicks); the peaks GAMEBOARD",
             **layer_rest,
         }
     if layer_hold and layer_rest:
-        pin = pins["layer_pin_k3_14"]["pin"]
+        pin = pins["muon_moving_clock_speed_third_14"]["pin"]
         expected = pin.get("pin_f_over_f0", pin.get("f_over_f0"))
         reading = {
             "kind": "DETECTOR (the clicks); the peaks GAMEBOARD",
@@ -469,25 +472,25 @@ def main() -> None:
             "f_over_f0_by_rate": layer_hold["rate_per_interval"] / layer_rest["rate_per_interval"],
             "f_over_f0_by_peak": layer_hold["spectral_peak_omega"] / layer_rest["spectral_peak_omega"],
             "pin_f_over_f0": expected,
-            "pump": pump("layer_pin_k3_14", LAYER_HOLD),
+            "pump": pump("muon_moving_clock_speed_third_14", LAYER_HOLD),
         }
         reading["rate_over_pin"] = reading["f_over_f0_by_rate"] / expected
         reading["peak_over_pin"] = reading["f_over_f0_by_peak"] / expected
-        readings["layer_pin_k3_14"] = reading
+        readings["muon_moving_clock_speed_third_14"] = reading
     # the deep well in motion (the cavity row's CONTROL, RUN_LIST.md step 3): the clicks'
     # mean interval over the hold at k = 3 over the rest world's (DETECTOR)
-    deep_hold = clock("deep_well_k3_40", HOLD)
-    deep_rest = clock("deep_well_rest_40", REST_WINDOW)
+    deep_hold = clock("deep_well_clock_speed_third_40", HOLD)
+    deep_rest = clock("deep_well_clock_at_rest_40", REST_WINDOW)
     if deep_rest:
-        pin = pins["deep_well_rest_40"]["pin"]
+        pin = pins["deep_well_clock_at_rest_40"]["pin"]
         deep_rest["pin_omega_b"] = pin["omega_b"]
         deep_rest["rate_over_pin"] = deep_rest["rate_per_interval"] * 2.0 * math.pi / pin["omega_b"]
-        readings["deep_well_rest_40"] = {
+        readings["deep_well_clock_at_rest_40"] = {
             "kind": "DETECTOR (the clicks); the peaks GAMEBOARD",
             **deep_rest,
         }
     if deep_hold and deep_rest:
-        expected = pins["deep_well_k3_40"]["pin"]["pin_f_over_f0"]
+        expected = pins["deep_well_clock_speed_third_40"]["pin"]["pin_f_over_f0"]
         reading = {
             "kind": "DETECTOR (the clicks); the peaks GAMEBOARD",
             "hold": deep_hold,
@@ -495,15 +498,15 @@ def main() -> None:
             "f_over_f0_by_rate": deep_hold["rate_per_interval"] / deep_rest["rate_per_interval"],
             "f_over_f0_by_peak": deep_hold["spectral_peak_omega"] / deep_rest["spectral_peak_omega"],
             "pin_f_over_f0": expected,
-            "pump": pump("deep_well_k3_40", HOLD),
+            "pump": pump("deep_well_clock_speed_third_40", HOLD),
         }
         reading["rate_over_pin"] = reading["f_over_f0_by_rate"] / expected
         reading["peak_over_pin"] = reading["f_over_f0_by_peak"] / expected
-        readings["deep_well_k3_40"] = reading
+        readings["deep_well_clock_speed_third_40"] = reading
     # (v) the index at rest
-    for name in ("index_50", "index_20", "index_10"):
+    for name in ("medium_index_at_rest_50", "medium_index_at_rest_20", "medium_index_at_rest_10"):
         pin = pins[name]["pin"]
-        reading = index_reading(name, "index_reference", pin["omega"], INDEX_CELLS, INDEX_WINDOW)
+        reading = index_reading(name, "medium_index_reference", pin["omega"], INDEX_CELLS, INDEX_WINDOW)
         if reading:
             reading["pin_n"] = pin["n"]
             reading["n_over_pin"] = reading["n"] / pin["n"]
@@ -512,25 +515,25 @@ def main() -> None:
     # the index in motion
     for k in (3, 4):
         for direction in ("toward", "away"):
-            name = f"index_moving_k{k}_{direction}"
+            name = f"receding_index_short_{SPEED_NAME[k]}_{direction}"
             pin = pins[name]["pin"]
             omega, omega_prime, gamma = pin["omega"], pin["omega_prime"], pin["gamma_m"]
             rest_prime = index_reading(
-                f"index_moving_rest_k{k}_{direction}",
-                f"index_moving_reference_k{k}_{direction}",
+                f"receding_index_short_{SPEED_NAME[k]}_{direction}_rest",
+                f"receding_index_short_{SPEED_NAME[k]}_{direction}_reference",
                 omega_prime,
                 MOVING_CELLS,
                 MOVING_WINDOW,
             )
             rest_omega = index_reading(
-                "index_moving_rest_omega",
-                "index_moving_reference_omega",
+                "receding_index_short_omega_rest",
+                "receding_index_short_omega_reference",
                 omega,
                 MOVING_CELLS,
                 MOVING_WINDOW,
             )
             moving = index_reading(
-                name, "index_moving_reference_omega", omega, MOVING_CELLS, MOVING_WINDOW
+                name, "receding_index_short_omega_reference", omega, MOVING_CELLS, MOVING_WINDOW
             )
             if rest_prime and moving:
                 expected = (rest_prime["n"] - 1.0) * omega_prime * gamma * MOVING_CELLS / C
@@ -544,9 +547,9 @@ def main() -> None:
                     "pump": pump(name, MOVING_WINDOW),
                 }
                 reading["halves"] = [
-                    index_reading(name, "index_moving_reference_omega", omega, MOVING_CELLS, half).get(
-                        "delay_rad"
-                    )
+                    index_reading(
+                        name, "receding_index_short_omega_reference", omega, MOVING_CELLS, half
+                    ).get("delay_rad")
                     for half in (
                         (MOVING_WINDOW[0], (MOVING_WINDOW[0] + MOVING_WINDOW[1]) // 2),
                         ((MOVING_WINDOW[0] + MOVING_WINDOW[1]) // 2, MOVING_WINDOW[1]),
@@ -559,19 +562,17 @@ def main() -> None:
                     )
                 readings[name] = reading
         # the receding case on the longer chain
-        name = f"index_moving_long_k{k}_away"
+        name = f"receding_index_{SPEED_NAME[k]}_away"
         pin = pins[name]["pin"]
         omega, omega_prime, gamma = pin["omega"], pin["omega_prime"], pin["gamma_m"]
         rest_prime = index_reading(
-            f"index_moving_long_rest_k{k}_away",
-            f"index_moving_long_reference_k{k}_away",
+            f"receding_index_{SPEED_NAME[k]}_away_rest",
+            f"receding_index_{SPEED_NAME[k]}_away_reference",
             omega_prime,
             MOVING_CELLS,
             LONG_WINDOW,
         )
-        moving = index_reading(
-            name, "index_moving_long_reference_omega", omega, MOVING_CELLS, LONG_WINDOW
-        )
+        moving = index_reading(name, "receding_index_omega_reference", omega, MOVING_CELLS, LONG_WINDOW)
         if rest_prime and moving:
             expected = (rest_prime["n"] - 1.0) * omega_prime * gamma * MOVING_CELLS / C
             reading = {
@@ -581,9 +582,9 @@ def main() -> None:
                 "covariant_expected_delay_rad": expected,
                 "ratio_read_over_expected": moving["delay_rad"] / expected if expected else math.nan,
                 "halves": [
-                    index_reading(
-                        name, "index_moving_long_reference_omega", omega, MOVING_CELLS, half
-                    ).get("delay_rad")
+                    index_reading(name, "receding_index_omega_reference", omega, MOVING_CELLS, half).get(
+                        "delay_rad"
+                    )
                     for half in (
                         (LONG_WINDOW[0], (LONG_WINDOW[0] + LONG_WINDOW[1]) // 2),
                         ((LONG_WINDOW[0] + LONG_WINDOW[1]) // 2, LONG_WINDOW[1]),

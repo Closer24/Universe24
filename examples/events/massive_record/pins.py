@@ -46,6 +46,9 @@ from event_universe.diagnostics.massive_record_margin import (
 )
 from event_universe.events.world import parse_nature_beam_world
 
+# the drives' names in the worlds' names, the generator's `SPEED_NAME` (make_worlds.py)
+SPEED_NAME = {3: "speed_third", 4: "speed_quarter"}
+
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 DESIGN = ROOT / "docs" / "designs" / "detector_law"
@@ -158,7 +161,10 @@ def main() -> None:
     }
     worlds: dict[str, object] = pins["worlds"]  # type: ignore[assignment]
     # (i) at rest, CONTROL
-    for name, design in (("rest_20", (0.11066, 5.7, 0.451)), ("rest_28", (0.13184, 8.2, 0.220))):
+    for name, design in (
+        ("boxed_clock_side_20_at_rest", (0.11066, 5.7, 0.451)),
+        ("boxed_clock_side_28_at_rest", (0.13184, 8.2, 0.220)),
+    ):
         world = load(name)
         reading = block_margin(world, 0)
         worlds[name] = {
@@ -180,8 +186,8 @@ def main() -> None:
         }
     # (ii) pushed to k = 3, PREDICTION
     for name, design in (
-        ("moving_20", (0.7814, 0.7805, 0.7831)),
-        ("moving_28", (0.8032, 0.8024, 0.8048)),
+        ("boxed_clock_side_20_moving", (0.7814, 0.7805, 0.7831)),
+        ("boxed_clock_side_28_moving", (0.8032, 0.8024, 0.8048)),
     ):
         world = load(name)
         formula = one_formula(world, 0, 3, "exact")
@@ -203,10 +209,10 @@ def main() -> None:
     # (i-L), (ii-L): the layer pin world of section 11 item 7 (mu = 0.15, s = 14, g = mu^2 / 4
     # on a periodic 200^2 layer, the seed the bound mode's integer profile): the rest world's
     # pin the mode's period, the moving world's the one formula at the exact cone
-    if (HERE / "layer_pin_rest_14.json").exists():
-        world = load("layer_pin_rest_14")
+    if (HERE / "muon_moving_clock_at_rest_14.json").exists():
+        world = load("muon_moving_clock_at_rest_14")
         reading = block_margin(world, 0)
-        worlds["layer_pin_rest_14"] = {
+        worlds["muon_moving_clock_at_rest_14"] = {
             "kind": "PIN (layer)",
             "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over the hold [10200, 18200] (the same window as the k = 3 world's, DECLARATIONS.md section 8) against the mode's period; the clicks' own spectrum the finer COMPUTATION; the summed record's and the centre cell's spectral peaks GAMEBOARD diagnostics beside",
             "pin": {
@@ -222,8 +228,8 @@ def main() -> None:
                 "source": "massive_layer_pins.out (a 256^2 layer)",
             },
         }
-        world = load("layer_pin_k3_14")
-        worlds["layer_pin_k3_14"] = {
+        world = load("muon_moving_clock_speed_third_14")
+        worlds["muon_moving_clock_speed_third_14"] = {
             "kind": "PIN (layer)",
             "reads": "THE CLICKS (DETECTOR): the count between clicks over the hold [10200, 18200] after the ramp of 10000 (DECLARATIONS.md section 8) against the rest world's, f / f_0; the peaks GAMEBOARD diagnostics beside; a row whose clicks still beat after the ramp is a diagnostic until they read the mode (then a longer ramp)",
             "pin": one_formula(world, 0, 3, "exact"),
@@ -269,20 +275,20 @@ def main() -> None:
         "design": {"f_over_f0": 0.6667, "source": "massive_block_clock_motion.out"},
     }
     # the index at rest, CONTROL of the coupling
-    world = load("index_50")
+    world = load("medium_index_at_rest_50")
     clock = world.families[0].phase_per_age
     assert clock is not None
     omega = clock_omega(clock)
     omega_0 = math.acos(7.0 / 8.0)
     for name, g, design in (
-        ("index_50", 1 / 50, 1.0430),
-        ("index_20", 1 / 20, 1.1044),
-        ("index_10", 1 / 10, 1.1998),
+        ("medium_index_at_rest_50", 1 / 50, 1.0430),
+        ("medium_index_at_rest_20", 1 / 20, 1.1044),
+        ("medium_index_at_rest_10", 1 / 10, 1.1998),
     ):
         n = math.sqrt(1.0 + g / (omega_0 * omega_0 - omega * omega))
         worlds[name] = {
             "kind": "CONTROL",
-            "reads": "light's phase delay at the probe against index_reference over the block's 12 cells (GAMEBOARD): n = 1 + delay / (k s), k = omega / c",
+            "reads": "light's phase delay at the probe against medium_index_reference over the block's 12 cells (GAMEBOARD): n = 1 + delay / (k s), k = omega / c",
             "pin": {
                 "omega": omega,
                 "omega_0": omega_0,
@@ -331,7 +337,7 @@ def main() -> None:
                 entry["design"] = {
                     "source": "no number declared at K = 4 (MASSIVE_RECORD.md section 11 item 4: read beside K = 3 to say how much of the same-Node numbers is the degenerate resonance's, exact at K = 3)",
                 }
-            worlds[f"index_moving_k{k}_{direction}"] = entry
+            worlds[f"receding_index_short_{SPEED_NAME[k]}_{direction}"] = entry
         omega_away = gamma * clock_omega((3565, 10000)) * (1.0 - beta)
         long_entry: dict[str, object] = {
             "kind": "PREDICTION",
@@ -365,16 +371,16 @@ def main() -> None:
             }
         else:
             long_entry["design"] = {"source": "no number declared at K = 4 (read beside K = 3)"}
-        worlds[f"index_moving_long_k{k}_away"] = long_entry
+        worlds[f"receding_index_{SPEED_NAME[k]}_away"] = long_entry
     # The launch list's worlds (RUN_LIST.md; DECLARATIONS.md sections 4 and 10; the Boss's
     # 23:40Z item (c)), each pin the declaration's number written before any run.
-    if (HERE / "redshift_k3.json").exists():
-        world = load("redshift_k3")
+    if (HERE / "moving_emitter_redshift_speed_third.json").exists():
+        world = load("moving_emitter_redshift_speed_third")
         formula = one_formula(world, 0, 3, "exact")
         omega_0 = block_margin(world, 0).omega_0
         _, gamma3 = gamma_of(3, omega_0, "exact")
         beta = 1.0 / math.sqrt(3.0)
-        worlds["redshift_k3"] = {
+        worlds["moving_emitter_redshift_speed_third"] = {
             "kind": "PIN",
             "reads": "THE CLICKS of the light detector B at x = 1900 (DETECTOR, `light_clicks`): the mean interval between clicks over the hold [1500, 9500] in the receding world over the same in the control world is 1 + z; GAMEBOARD the light amplitude's spectral peak at the probe (x = 1899, the free Node B faces), A's count per interval, the energy account and the form J",
             "pin": {
@@ -400,7 +406,7 @@ def main() -> None:
                 "source": "DECLARATIONS.md section 4 (the second draft, 2026-09-24 00:30Z) and coupled_mode_pins.py (c)",
             },
         }
-        worlds["redshift_control"] = {
+        worlds["moving_emitter_redshift_at_rest"] = {
             "kind": "CONTROL",
             "reads": "A at rest at x = 1300: B's clicks over the hold, the received line at rest (the denominator of 1 + z)",
             "pin": {
@@ -412,10 +418,10 @@ def main() -> None:
                 "source": "DECLARATIONS.md section 4: the well's mode 0.10175 (eps 0.188)",
             },
         }
-    if (HERE / "deep_well_k3_40.json").exists():
-        world = load("deep_well_k3_40")
+    if (HERE / "deep_well_clock_speed_third_40.json").exists():
+        world = load("deep_well_clock_speed_third_40")
         formula = one_formula(world, 0, 3, "exact")
-        worlds["deep_well_rest_40"] = {
+        worlds["deep_well_clock_at_rest_40"] = {
             "kind": "CONTROL",
             "reads": "the deep well at rest: the clicks over [200, 3000] against the mode (DETECTOR); the peaks GAMEBOARD",
             "pin": {
@@ -425,7 +431,7 @@ def main() -> None:
                 "extent": formula["extent"],
             },
         }
-        worlds["deep_well_k3_40"] = {
+        worlds["deep_well_clock_speed_third_40"] = {
             "kind": "CONTROL (the cavity row's)",
             "reads": "the deep well pushed to k = 3: the clicks' mean interval over the hold [1500, 9500] over the rest world's (DETECTOR, read_runs.py), f / f_0 against the one formula at the exact cone",
             "pin": formula,
@@ -438,8 +444,8 @@ def main() -> None:
                 "source": "RUN_LIST.md step 3 (massive_layer_pins.py, the layer's own)",
             },
         }
-    if (HERE / "EXPLORATORY_light_clock_60.json").exists():
-        worlds["EXPLORATORY_light_clock_60"] = {
+    if (HERE / "EXPLORATORY_light_clock.json").exists():
+        worlds["EXPLORATORY_light_clock"] = {
             "kind": "EXPLORATORY",
             "reads": "the light clock of two bodies read by PROBES (GAMEBOARD): the light amplitude at x = 612 and 613 over the window [0, 2000]; the return's front against 2 L / c = 207.85 intervals after the emission's front (the declared pin's form, DECLARATIONS.md section 10, the band +- 2 to 3 intervals at the declared rung W = 10000, which no lamp-less world can declare: named in BUILD.md); A's own clicks beside",
             "pin": {"two_L_over_c": 2.0 * 60.0 * math.sqrt(3.0), "L": 60, "band_intervals": 3},
