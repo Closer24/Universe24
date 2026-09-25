@@ -11703,18 +11703,20 @@ already declares, here of length one. Then S_6 = 6 a and the rule at
 level c = M reads 3 den Gamma a' + r' = 6 num (Gamma - M) a + 6 den M a
 - 3 den Gamma b + r. With the seat's pair [num, den] = [num_c, 2 den_c]
 (the clock pair of 9.46 (1) in the rule's convention, 2 cos omega = 2
-num / den = num_c / den_c) this is 6 den_c Gamma a' + r' = (3 num_c
-(Gamma - M) + 6 den_c M) a - 6 den_c Gamma b + r, which is 9.46 (2)'s
-constant-wall step multiplied by 6: the same rotation as rationals,
-2 cos omega' = (num_c (Gamma - M) + 2 den_c M) / (den_c Gamma), and the
-remainder six times the body record's, r_seat = 6 r_body, when the
-starts agree. So the standing record needs no rule of its own: the
-"two-term rule" of 9.46 (2) is the one rule with S_6 = 6 a. The wheel
-of the seat is 2 W_body and its residue 2 u_body (the coefficients
-three times, the wall six times); the tick rule reads the seat's own
-W and u, one wheel twice as fine, the same draw (9.43). Under the
-Einstein form the seat's record slows at second order with every
-other record, with no second form to keep.
+num / den = num_c / den_c) this is 6 den_c Gamma a' + r' = (6 num_c
+(Gamma - M) + 12 den_c M) a - 6 den_c Gamma b + r, which is 9.46 (2)'s
+constant-wall step multiplied by 6 in every coefficient (Nature24's
+correction of 2026-09-25 of the first draft's "3 num_c (Gamma - M) + 6
+den_c M"): the same rotation as rationals, 2 cos omega' = (num_c (Gamma
+- M) + 2 den_c M) / (den_c Gamma), and the remainder six times the body
+record's, r_seat = 6 r_body, when the starts agree. So the standing
+record needs no rule of its own: the "two-term rule" of 9.46 (2) is
+the one rule with S_6 = 6 a. The wheel and the residue are the body
+record's own: the coefficients and the wall are both six times, so
+gcd scales by six, W_seat = W_body and u_seat = u_body; the tick rule
+reads the same W and u, the same draw (9.43), bit-equal in the residue
+too. Under the Einstein form the seat's record slows at second order
+with every other record, with no second form to keep.
 
 **(3) WHAT KEEPS IT FROM SPREADING.** Not a well: a level slows a
 clock and does not confine a record; confinement from the law is the
@@ -11742,8 +11744,9 @@ file's declarations.
 ROTATION becomes an identity: one rule, one wall, no second form to
 compare; it is replaced by "the seat's record steps by the engine's
 one rule with S_6 = 6 a, asserted once". (i) THE TICKS are read on
-the seat's own wheel (2 W_body), the same distribution, the mean P /
-2 and the chi-square unchanged in form. (iii), (iv), (v) unchanged.
+the same wheel and residue as the body record's (9.60 (2)), so they
+are bit-equal to item 37's, and the distribution test is kept as the
+control. (iii), (iv), (v) unchanged.
 For Nature24 (item 37): the body's rotation and its remainder leave
 the entry beside the GameBoard and become the seat Node's record of the
 standing family under the family's key, its Ports closed on the seat;
@@ -11772,9 +11775,9 @@ body at the Node, 9.60).** The blind expectation of every one of the
 eighteen is 9.46 (10), unchanged, with two additions written here
 before any run. (a) At level 0 the Einstein form and today's law are
 one rule bit for bit (9.57 (1)), and with the seat's step bit-equal to
-the body record's (9.60 (2)) the seat's wheel is twice as fine, so
-9.46 (10) (b) and (c) read "the seat's own wheel" where they say the
-body record's; nothing else moves. (b) THE SELF-LEVEL: as built, the
+the body record's in the rotation, the wheel and the residue (9.60
+(2), as corrected by Nature24), 9.46 (10) (b) and (c) stand as written;
+nothing else moves. (b) THE SELF-LEVEL: as built, the
 family of clicks' level is held at every body's Nodes at the body's
 content (`node_content`; 9.45 (2)), so every body's own clock runs at
 its own level s: its tick lengthens by the factor 1 / sqrt(1 - s /
@@ -11985,3 +11988,73 @@ the given light's wavelength at a grating.
 block, on the one command; 9.61 (5)'s scaling by nine is withdrawn and
 9.59's sizes stand; the resting clock read 303.1 +- 2.3 at 64 clicks,
 inside 300 +- 9.
+
+### 9.63 The seat's wheel is the body record's own (Nature24's correction of 9.60 (2)), and the moving body's seat: the proper pair (Nature24's finding on the seat-cube pairs in motion, 2026-09-25; the mathematician's ruling)
+
+**(1) THE COEFFICIENT.** Nature24 read 9.60 (2) line by line and found
+the first draft's coefficient on a wrong by a factor two: with S_6 = 6
+a and the seat's pair [num_c, 2 den_c] the one rule reads 6 den_c Gamma
+a' + r' = 6 K a - 6 den_c Gamma b + r with K = num_c (Gamma - M) + 2
+den_c M, every coefficient of 9.46 (2) times six. So the remainder is
+six times the body record's, the gcd of the coefficients six times, and
+the wheel W and the residue u are the body record's OWN, not twice as
+fine as the draft said. Corrected in 9.60 (2), (5) and 9.61 (1) (a).
+The consequence is stronger than the draft's: the seat is bit-equal to
+item 37 in the rotation, the wheel and the residue, and item 37's tick
+gate is kept as the control. CONFIRMED, his line: build the one rule as
+it stands, the seat's record stepped by the engine's own step with the
+six reads returning the seat.
+
+**(2) THE FINDING: THE SEAT'S CLOCK DOES NOT SLOW IN MOTION.** The
+seat-cube pairs at rest are bit-equal in the count and the cycle (the
+deep well 30 cycles at 117.28, the boxed 20 at 56.88, the rotation
+within 6 x 10^-7). In motion the cube's clock slows (the deep well at
+speed one third: 63 cycles at 150.48 against 81 at rest; the boxed 20:
+135 against 167), the seat's does not: the seat's record has no K, the
+generator writes the rest pair for both. That is the finding of 9.46
+(10) (d) ("the tick within the band") and it is a real one.
+
+**(3) WHY THE CUBE SLOWS, AND THE RULING.** The cube's moving
+eigenvector is phi(x - v t) times the character cos(K x - omega_K t)
+(9.40 T3); read at its own centre, which moves with it, x = v t + x_0,
+its rows rotate at omega_K - K v, the PROPER rate: in the continuum
+omega_K = gamma m and K = gamma m v, so omega_K - K v = m / gamma, the
+dilation; on the lattice it is the moving mode's rate at its moving
+centre, what his cube measured (81 to 63 at speed one third, the
+lattice's gamma there). The seat under 9.60 rotates at its declared
+pair between hops and the hop moves it; at the rest pair it keeps the
+rest rate, at the lab pair of the moving mode ([3200, 3236] for the
+muon, the rate at a FIXED Node, omega_K) it would run fast. RULE: the
+seat of a moving body declares THE PROPER PAIR: [num, den] with 2
+cos((k omega_K - K) / k) = num / den for a hop every k intervals, the
+rotation of the moving mode's rows at its moving centre over one hop
+period, which the generator reads from its moving mode exactly as it
+reads the moving pair (the phase advance at the centre per hop period,
+a rational pair like every pair); the rest pair at K = 0. This is 9.46
+(7) (c) ("its clock pair is the moving mode's at that K") made
+precise: the moving mode's pair AT THE MOVING CENTRE, not at a fixed
+Node. Nothing else moves: the one rule with closed Ports, the declared
+pair depending on the declared momentum as the moving packet's pair
+already does. On the cube the dilation arises from the rule; at the
+seat it is carried by the declared pair, the seam of the host form
+(9.46, under its own identity); the equivalence test (i) of 9.46 (4)
+is what checks that they agree. THE BLIND EXPECTATION for the rerun:
+the seat's cycles equal the cube's within the draw, 63 +- 8 at 150 for
+the deep well at speed one third, 135 +- 12 for the boxed 20 moving; a
+seat outside that comes to the mathematician.
+
+**(4) THE SELF-LEVEL NUMBERS (9.61 (1), from Nature24's list, at Gamma =
+10^4, the tick factor 1 + s / (2 Gamma)).** The light clock's emitter A,
+content 64: the factor 1.0032 on its rung's 88 of the tick, 0.3 interval
+of 300, and light's flight in its own field (the field of 64 outside a
+side-12 body falls as 64 x 12 / r, U at the mirror's 60 Links about 6 x
+10^-4): the pin 300 +- 9 unchanged in its band, the expectation 300.5.
+The boxed clocks, the deep well, the muon: content 1: 5 x 10^-5,
+nothing. The dark body rows: at Gamma = 10^6 as built, the emitter 30
+gives 1.5 x 10^-5, nothing; the body's 10^5 is the row's field, not a
+self-level of a clock. The toward-nature rows: the emitters at 64 (3.2 x
+10^-3 on the rung's share only), the bending's dark body 4812 the row's
+field. So at Gamma = 10^4 no shipped row's expectation moves outside
+its band; the held rows (Bell, Malus, the two slits, Sagnac, the
+redshift, de Broglie, the moving mass) get their numbers when their
+files return, from their contents then.
