@@ -4030,12 +4030,13 @@ would have found no cell.
    9.48; absent for a family the step alone moves); `reads`, the held
    families whose levels enter the family's pace, [{family, weight, by}]
    each, the effective content SUM weight x level for by "plain" and - q x
-   weight x level for by "charge" (q the reading family's own charge sign;
+   weight x level for by "sign" (q the reading family's own charge sign;
    c - q Lambda d where a family reads the content plainly and the charge
    by its sign at the weight Lambda), REQUIRED on every family under the
    law, the empty list on a held family (the plain rule at the pace 1 of
    its own); `booked`, whether the detectors book the family's records
-   (false for a held family, the default there; true otherwise); and
+   (false for a held family, the default there; true otherwise; HISTORY
+   since item 53: derived, not declared); and
    `components`, the representation's count (1 alone admitted today; 3 and
    6 with ALGEBRA.md 9.77's landing, refused by name until then). THE
    ENGINE: one list of held records (`held_records`, one per family with
@@ -4108,6 +4109,33 @@ would have found no cell.
    lowered quanta at once, a taking only after the held families' step);
    under form (d) both clicks become terms of the same interval's step of
    the clicks record, read at now, and the hold's timing no longer enters.
+
+53. THE SOURCE WORDS AND THE DERIVED BOOKING (the model owner's word of
+   2026-09-25 to Nature, on the genericity: "make sure there are no family
+   names in the engine; content or charge is fine as long as it is not
+   confused with the families; the engine fully generic; a family need not
+   know what a detector or an emitter is"). THE AUDIT: no code line of the
+   engine branches on a family's name; the attribute values were "content"
+   and "charge" for the held source and "plain" and "charge" for the read
+   mode, and two registered families are named `clicks` and `charge`: the
+   word "charge" stood for a source, a read mode and a family's name at
+   once. THE BUILD: the held source "charge" is "sign" (the signed sum of a
+   body's quanta by the families' declared signs, the d of 9.48) and the
+   read mode "charge" is "sign" (- q x weight x level, q the reading
+   family's own sign); the attribute `booked` is gone (derived: a held
+   family is booked by no detector, every other family is; a family
+   declares nothing about detectors or emitters, which are the bodies'
+   mechanisms); the loader's constant for the massless pair is
+   MASSLESS_PAIR (no family's name in a code name). THE PROOF: the
+   adversarial names test (tests/test_node_clock.py (x)): the family
+   holding the content named `charge`, the family holding the sign named
+   `content`, a reading family named `sign`, the two held families in the
+   other order: the rows bit for bit. Every shipped world regenerated (the
+   two words); the state digest moved once more by the word alone
+   (`held_fields[].held`), the events and the audit unchanged; every row
+   bit for bit. What the engine still knows and is not a name: the four
+   source and mode words above, `massive_kind` (the declared pair's gap),
+   and the bodies' mechanisms chosen by declared keys.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

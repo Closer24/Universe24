@@ -568,8 +568,8 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     with pytest.raises(ValueError, match="is held and reads"):
         parse_nature_beam_world(reading)
     booked = json.loads(json.dumps(good))
-    booked["families"][2]["booked"] = True
-    with pytest.raises(ValueError, match="is held and booked"):
+    booked["families"][2]["booked"] = True  # HISTORY (item 53): derived, not declared
+    with pytest.raises(ValueError, match="unknown keys: booked"):
         parse_nature_beam_world(booked)
     twice = json.loads(json.dumps(good))
     twice["families"][3]["held"] = "content"
@@ -612,12 +612,14 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
 def test_the_engine_reads_no_family_name_the_held_families_renamed_step_bit_for_bit():
     """(x) THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26 item 51):
     the chain of 60 with QUANTA quanta at [20, 30) and a light record of random rows, stepped
-    40 intervals, then the same world with the two held families renamed (`clicks` to `ticks`,
-    `charge` to `sign`, the reads following the names) and the two held families in the other
-    order: the light record's rows, the held levels and the books are bit for bit the same
-    (the engine reads the attributes `held` and `reads`, never a name or a position), the books
-    read alike. The edge case: a reading family renamed too (`light` to `photon`) changes nothing
-    either."""
+    40 intervals, then the same world with the two held families renamed ADVERSARIALLY (the
+    family holding the content named `charge`, the family holding the sign named `content`, the
+    reads following the names; the model owner's word of 2026-09-25: a source word must not be
+    confused with a family, item 53) and the two held families in the other order: the light
+    record's rows, the held levels and the books are bit for bit the same (the engine reads the
+    attributes `held` and `reads`, never a name or a position), the books read alike. The edge
+    case: a reading family renamed too (`light` to `sign`, the read mode's own word) changes
+    nothing either."""
     rng = np.random.default_rng(23)
     now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
@@ -629,7 +631,7 @@ def test_the_engine_reads_no_family_name_the_held_families_renamed_step_bit_for_
         for _ in range(40):
             simulation.step()
         content = simulation.level_of("content").copy()
-        charge = simulation.level_of("charge").copy()
+        charge = simulation.level_of("sign").copy()
         return (
             live.now.copy(),
             live.before.copy(),
@@ -641,7 +643,7 @@ def test_the_engine_reads_no_family_name_the_held_families_renamed_step_bit_for_
 
     plain = content_chain(60, PERIODIC, range(20, 30), QUANTA)
     renamed = json.loads(json.dumps(plain))
-    names = {"clicks": "ticks", "charge": "sign", "light": "photon"}
+    names = {"clicks": "charge", "charge": "content", "light": "sign"}
     for family in renamed["families"]:
         family["name"] = names.get(family["name"], family["name"])
         for read in family["reads"]:
@@ -655,7 +657,8 @@ def test_the_engine_reads_no_family_name_the_held_families_renamed_step_bit_for_
     others = [f for f in renamed["families"] if not f.get("held")]
     renamed["families"] = others + held[::-1]
     world = parse_nature_beam_world(renamed)
-    assert [world.families[i].held for i in world.held_families] == ["charge", "content"]
+    assert [world.families[i].held for i in world.held_families] == ["sign", "content"]
+    assert [world.families[i].name for i in world.held_families] == ["content", "charge"]
     first, second = run(plain), run(renamed)
     for a, b in zip(first[:5], second[:5], strict=True):
         assert np.array_equal(a, b)

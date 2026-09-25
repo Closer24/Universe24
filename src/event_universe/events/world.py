@@ -816,7 +816,7 @@ AMPLITUDE_BOUND = 1 << 28
 TOTAL_BOUND = 1 << 63
 # Light's kind: the pair [1, 1] on the six-neighbour term, the value every
 # family without a declared pair reads (no branch on a name).
-LIGHT_PAIR = (1, 1)
+MASSLESS_PAIR = (1, 1)
 # The identity of the massive rows (`massive-rows-v1`; the model owner's yes
 # of 2026-09-21, record 332 of docs/LOG_2026-09-20.md; the mathematician's
 # design docs/designs/massive_rows/DESIGN.md, the physics-rule review's
@@ -870,13 +870,13 @@ FAMILY_KEYS = {
     # THE FAMILY GENERICITY (record 2066; BUILD.md section 26 item 51): what
     # a family is, declared on the family and read by the engine as
     # attributes alone, admitted under `detector_law`: `held` (the source a
-    # body's record writes at its Nodes: "content" or "charge"), `reads`
+    # body's record writes at its Nodes: "content" or "sign"), `reads`
     # (the held levels that enter the family's pace, with their weights),
-    # `booked` (the detectors book its records) and `components` (1 today;
-    # 3 and 6 with the vector and tensor families of ALGEBRA.md 9.77)
+    # and `components` (1 today; 3 and 6 with the vector and tensor
+    # families of ALGEBRA.md 9.77); `booked` HISTORY (item 53: derived, a held
+    # family is never booked and every other family is)
     "held",
     "reads",
-    "booked",
     "components",
 }
 # The border every event in transit of a family with a lifetime clicks on
@@ -1151,7 +1151,7 @@ class FamilyDefinition:
     # the key `pair`); a massive kind declares den > num, its rest
     # frequency cos omega_0 = num / den. Admitted under the world key
     # `massive_record` alone.
-    pair: tuple[int, int] = LIGHT_PAIR
+    pair: tuple[int, int] = MASSLESS_PAIR
     # THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25
     # through the Boss: "the engine does not know the family's name, does not
     # know what the family does; it only supports the family's operations";
@@ -1163,16 +1163,25 @@ class FamilyDefinition:
     # quanta, the d of 9.48), None for a family the step alone moves; `reads`,
     # the held families whose levels enter this family's pace at every Node,
     # (family index, weight, by) each, the effective content SUM weight x
-    # level for by = "plain" and - q x weight x level for by = "charge" (q
-    # the reading family's own charge sign; 9.48 (3): c - q Lambda d), empty
-    # for a held family (the plain rule, the pace 1 of its own); `booked`,
-    # whether the detectors book the family's records at their Ports (a held
-    # family is never booked); `components`, the representation's count (1 a
-    # scalar; 3 and 6 the vector and tensor families of 9.77, not yet built).
+    # level for by = "plain" and - q x weight x level for by = "sign" (q the
+    # reading family's own charge sign; 9.48 (3): c - q Lambda d), empty for
+    # a held family (the plain rule, the pace 1 of its own); `components`,
+    # the representation's count (1 a scalar; 3 and 6 the vector and tensor
+    # families of 9.77, not yet built). The sources and the read modes are
+    # the operations' words, never a family's name (item 53: "sign", the
+    # signed sum of the quanta by the families' declared signs). A held
+    # family is booked by no detector and every other family is (`booked`,
+    # derived, item 53); a family declares nothing about detectors or
+    # emitters: those are the bodies' mechanisms.
     held: str | None = None
     reads: tuple[tuple[int, int, str], ...] = ()
-    booked: bool = True
     components: int = 1
+
+    @property
+    def booked(self) -> bool:
+        """The detectors book the family's records at their Ports: every
+        family but a held one (derived from `held`, item 53)."""
+        return self.held is None
 
     @property
     def massive_kind(self) -> bool:
@@ -2071,8 +2080,8 @@ RETIRED_KEYS = {
     "clock_family": "the family genericity: a family's role is its own declaration; the family "
     'of clicks declares `held: "content"` in `families` and the families that read it declare '
     "`reads` (record 2066; BUILD.md section 26 item 51)",
-    "charge_family": 'the family genericity: the family of charge declares `held: "charge"` '
-    'in `families` and a charged family reads it by `reads` with `by: "charge"` (record '
+    "charge_family": 'the family genericity: the family of charge declares `held: "sign"` '
+    'in `families` and a charged family reads it by `reads` with `by: "sign"` (record '
     "2066; BUILD.md section 26 item 51)",
     "charge_strength": "the family genericity: Lambda is the `weight` of the reading family's "
     "`reads` entry on the family of charge (record 2066; BUILD.md section 26 item 51)",
@@ -2532,7 +2541,7 @@ def _node_clock_bound(
     # sources weighted by the largest reads
     def source_of(family: FamilyDefinition, entry: MeasuredDefinition) -> int:
         quanta = sum(entry.held)
-        if family.held == "charge":
+        if family.held == "sign":
             return abs(
                 sum(other.charge[0] * held for other, held in zip(families, entry.held, strict=True))
             )
@@ -2583,7 +2592,7 @@ def _kind_pair(
     clock a matter lamp drives, is admitted) or with the massive rows' flag
     `massive` (one massive form per family)."""
     if "pair" not in obj:
-        return LIGHT_PAIR
+        return MASSLESS_PAIR
     if not massive_record:
         raise ValueError(
             f"{BEAM_LAW}: {label}.pair is refused without the world key `massive_record` "
@@ -2655,9 +2664,9 @@ def _families(
     # family declaring another sign for the name is refused.
     names: list[str] = []
     signs: dict[str, tuple[int, int]] = {}
-    # THE FAMILY GENERICITY (item 51): the four attributes per family, the
+    # THE FAMILY GENERICITY (item 51): the three attributes per family, the
     # reads resolved by name once every family is read
-    generic: list[tuple[str | None, bool, int, list[tuple[str, int, str]]]] = []
+    generic: list[tuple[str | None, int, list[tuple[str, int, str]]]] = []
     for index, entry in enumerate(value):
         if isinstance(entry, dict) and KIND_KEY in entry:
             raise ValueError(
@@ -2780,10 +2789,9 @@ def _families(
             pair=family.pair,
             held=held,
             reads=_resolve_reads(reads, family_names, f"families[{index}]"),
-            booked=booked,
             components=components,
         )
-        for index, (family, columns, (held, booked, components, reads)) in enumerate(
+        for index, (family, columns, (held, components, reads)) in enumerate(
             zip(found, declared, generic, strict=True)
         )
     )
@@ -2791,25 +2799,25 @@ def _families(
     return families
 
 
-HELD_SOURCES = ("content", "charge")
-READ_BY = ("plain", "charge")
+HELD_SOURCES = ("content", "sign")
+READ_BY = ("plain", "sign")
 
 
 def _family_generic(
     obj: dict[str, object], label: str, detector_law: bool
-) -> tuple[str | None, bool, int, list[tuple[str, int, str]]]:
+) -> tuple[str | None, int, list[tuple[str, int, str]]]:
     """THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section
     26 item 51): the family's own declaration of what it is, `held`,
-    `booked`, `components` and `reads` (the reads by name, resolved after
-    every family is read). Admitted under `detector_law` alone; under it
-    every family declares `reads` (a held family the empty list: the plain
-    rule), no default."""
-    keys = [key for key in ("held", "reads", "booked", "components") if key in obj]
+    `components` and `reads` (the reads by name, resolved after every family
+    is read). Admitted under `detector_law` alone; under it every family
+    declares `reads` (a held family the empty list: the plain rule), no
+    default. The booking is derived (item 53), not declared."""
+    keys = [key for key in ("held", "reads", "components") if key in obj]
     if keys and not detector_law:
         raise ValueError(
             f"{BEAM_LAW}: {label} declares {', '.join(keys)}, refused without `detector_law` (a "
-            "family's held source, reads, booking and components are the local detector law's; "
-            "BUILD.md section 26 item 51)"
+            "family's held source, reads and components are the local detector law's; BUILD.md "
+            "section 26 item 51)"
         )
     held: str | None = None
     if "held" in obj:
@@ -2821,16 +2829,6 @@ def _family_generic(
                 "(2), 9.48 (1); BUILD.md section 26 item 51)"
             )
         held = str(held_value)
-    booked_value = obj.get("booked", held is None)
-    if type(booked_value) is not bool:
-        raise ValueError(f"{BEAM_LAW}: {label}.booked must be true or false")
-    booked = bool(booked_value)
-    if held is not None and booked:
-        raise ValueError(
-            f"{BEAM_LAW}: {label} is held and booked: a held family's level is the engine's write "
-            "at the bodies' Nodes and its own plain step elsewhere, booked by no detector "
-            "(ALGEBRA.md 9.45 (1); BUILD.md section 26 item 51)"
-        )
     components = _integer(obj.get("components", 1), f"{label}.components", 1, 6)
     if components != 1:
         raise ValueError(
@@ -2862,7 +2860,7 @@ def _family_generic(
             raise ValueError(
                 f"{BEAM_LAW}: {label}.reads[{position}].by must be one of {list(READ_BY)}: the level "
                 "enters the pace as weight x level (plain) or as - q x weight x level, q the "
-                "reading family's own charge sign (charge; ALGEBRA.md 9.48 (3))"
+                "reading family's own charge sign (sign; ALGEBRA.md 9.48 (3))"
             )
         if any(other == name for other, _, _ in reads):
             raise ValueError(f"{BEAM_LAW}: {label}.reads names {name!r} twice")
@@ -2873,7 +2871,7 @@ def _family_generic(
             "steps by the plain rule at the pace 1 of its own and reads no level (ALGEBRA.md 9.45 "
             "(2); BUILD.md section 26 item 51)"
         )
-    return held, booked, components, reads
+    return held, components, reads
 
 
 def _resolve_reads(
@@ -2897,13 +2895,13 @@ def _held_family_shapes(families: tuple[FamilyDefinition, ...], detector_law: bo
     9.48 (2); item 51): the pair [1, 1] (massless: the only pair whose
     static solutions reach), the quantum 1 (one click writes one unit), no
     clock of its own (it givings nothing), its own charge 0 (its level is
-    the charge, it carries none); a read names a held family; under the
+    the source it holds, it carries none); a read names a held family; under the
     detector law at most one family holds each source (the level every
     other family reads is one array)."""
     for index, family in enumerate(families):
         label = f"families[{index}] ({family.name!r})"
         if family.held is not None:
-            if family.pair != LIGHT_PAIR:
+            if family.pair != MASSLESS_PAIR:
                 raise ValueError(
                     f"{BEAM_LAW}: {label} is held with the pair {list(family.pair)}: a held family "
                     "is massless, its pair [1, 1], the only pair whose static field reaches "

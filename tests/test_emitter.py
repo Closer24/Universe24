@@ -69,11 +69,11 @@ NODE_CLOCK = (
 CLOCK_FAMILY_NAME = "clicks"
 CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "content", "reads": []}
 CHARGE_FAMILY_NAME = "charge"
-CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "charge", "reads": []}
+CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "sign", "reads": []}
 CHARGE_STRENGTH = 1
 READS = [
     {"family": CLOCK_FAMILY_NAME, "weight": 1},
-    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "charge"},
+    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "sign"},
 ]
 
 

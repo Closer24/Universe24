@@ -545,13 +545,13 @@ CLOCK_FAMILY_NAME = (
 )
 CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "content", "reads": []}
 CHARGE_FAMILY_NAME = "charge"  # the family whose held level is the signed charge
-CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "charge", "reads": []}
+CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "sign", "reads": []}
 CHARGE_STRENGTH = (
     1  # Lambda, the weight of the read on the charge; every registered family's charge is 0
 )
 READS = [
     {"family": CLOCK_FAMILY_NAME, "weight": 1},
-    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "charge"},
+    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "sign"},
 ]  # every reading family's `reads`: the content plainly, the charge by its own sign at Lambda
 EMITTER_STOCK = (
     64  # the massive rows' emitters: 64 excitations on the wheel [1, 64] (BUILD.md section 26)

@@ -110,11 +110,11 @@ CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "c
 # holding the signed charge at every body's Nodes; Lambda the weight of the read on it;
 # every registered family's charge is 0, so the field stays 0 and no row moves
 CHARGE_FAMILY_NAME = "charge"
-CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "charge", "reads": []}
+CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "sign", "reads": []}
 CHARGE_STRENGTH = 1
 READS = [
     {"family": CLOCK_FAMILY_NAME, "weight": 1},
-    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "charge"},
+    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "sign"},
 ]  # every reading family's `reads` (item 51): the content plainly, the charge by its own sign
 MOMENTUM_SPEED_THIRD = 64
 MOMENTUM_SPEED_QUARTER = 48

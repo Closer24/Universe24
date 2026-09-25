@@ -87,9 +87,9 @@ def rows_of(simulation: DetectorLawSimulation) -> dict[str, object]:
             simulation.held_record("content").remainder.copy(),
         ),
         "charge": (
-            simulation.held_record("charge").now.copy(),
-            simulation.held_record("charge").before.copy(),
-            simulation.held_record("charge").remainder.copy(),
+            simulation.held_record("sign").now.copy(),
+            simulation.held_record("sign").before.copy(),
+            simulation.held_record("sign").remainder.copy(),
         ),
         "held": copy.deepcopy(simulation.held),
         "tick": simulation.tick,
@@ -264,7 +264,7 @@ def inverse_giving_interval(
     held_before = states[t - 1]["held"]
     number = line["measured"]
     mask = block.mask
-    clock, charge = simulation.held_record("content"), simulation.held_record("charge")
+    clock, charge = simulation.held_record("content"), simulation.held_record("sign")
     pre_content = clock.before.copy()
     pre_charge = charge.before.copy()
     pre_content[mask] = sum(held_before[number])

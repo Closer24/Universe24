@@ -97,8 +97,8 @@ def test_both_worlds_run_with_the_same_field_beside_the_body_and_the_dark_body_n
             if interval % 20 == 19:
                 assert simulation.books()["balanced"], (name, simulation.tick)
         assert (
-            not simulation.held_record("charge").now.any()
-            and not simulation.held_record("charge").remainder.any()
+            not simulation.held_record("sign").now.any()
+            and not simulation.held_record("sign").remainder.any()
         )
         simulations[name] = simulation
     # ten Links outside the slab's four faces (the slab [184, 216) x [143, 148)) and beside

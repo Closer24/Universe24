@@ -513,7 +513,11 @@ class DetectorLawSimulation:
         # `node_level` is each held family's level as every reading family's
         # step reads it (`_effective_content`, by the reading family's
         # declared `reads`: SUM weight x level, or - q x weight x level by the
-        # reading family's own charge sign q; 9.45 (3), 9.48 (3)).
+        # reading family's own charge sign q; 9.45 (3), 9.48 (3)). The sources
+        # and the read modes are words of the operations ("content", "sign";
+        # "plain", "sign"), never a family's name (item 53). The sources
+        # and the read modes are words of the operations ("content", "sign";
+        # "plain", "sign"), never a family's name (item 53).
         self.held_families: list[int] = list(world.held_families)
         self.family_charge = [int(family.charge[0]) for family in world.families]
         self.node_level: dict[int, np.ndarray] = {
@@ -678,8 +682,8 @@ class DetectorLawSimulation:
     def body_source(self, number: int, source: str) -> int:
         """A body's declared source for a held family (item 51): its content,
         the quanta it holds of every family ("content", ALGEBRA.md 9.45 (2)),
-        or its signed charge Q ("charge", 9.48 (1))."""
-        if source == "charge":
+        or its signed charge Q ("sign", 9.48 (1))."""
+        if source == "sign":
             return self._body_charge(number)
         return sum(self.held[number])
 
@@ -707,7 +711,7 @@ class DetectorLawSimulation:
 
     def held_record(self, source: str) -> LiveRecord | None:
         """The held record of the family holding `source` ("content" or
-        "charge"), None where no family holds it; a GAMEBOARD reading by the
+        "sign"), None where no family holds it; a GAMEBOARD reading by the
         declared attribute, never by a name."""
         for family, record in self.held_records.items():
             if self.families[family].held == source:
@@ -716,7 +720,7 @@ class DetectorLawSimulation:
 
     def level_of(self, source: str) -> np.ndarray:
         """The level over the board of the family holding `source` (the Node
-        clock's c for "content", 9.45; the charge field d for "charge", 9.48),
+        clock's c for "content", 9.45; the charge field d for "sign", 9.48),
         zeros where no family holds it; a GAMEBOARD reading."""
         for family in self.held_records:
             if self.families[family].held == source:
@@ -800,7 +804,7 @@ class DetectorLawSimulation:
         """THE PACE'S READ (ALGEBRA.md 9.45 (3), 9.48 (3); BUILD.md section 26
         items 35 and 51): the content a record of `family` reads at every
         Node, the sum over its declared reads of weight x level (by "plain")
-        or - q x weight x level (by "charge", q the family's own charge sign):
+        or - q x weight x level (by "sign", q the family's own charge sign):
         c - q Lambda d where a family reads the content plainly and the
         charge by its sign; zeros for a family that reads nothing (a held
         family, or the vacuum's rule). HOST: one array per family per
@@ -2132,11 +2136,11 @@ class DetectorLawSimulation:
         # one action on any record, POSTULATES 10); a BLOCK'S own record (a
         # massive kind, given of no emitter) books nothing and is on no
         # ladder (massive-record-v1, MUST 2).
-        # THE BOOKING BY ATTRIBUTE (item 51): a held family's record and a body's
-        # own standing record are read by no detector; every other record of a
-        # booked family is booked at the Ports
+        # THE BOOKING BY ATTRIBUTE (item 51; item 53): a held family's record
+        # and a body's own standing record are read by no detector; every other
+        # record is booked at the Ports (nothing declared: derived from `held`)
         field = self.families[live.family].held is not None
-        booked = self.families[live.family].booked and not live.standing
+        booked = not field and not live.standing
         # The rule with the kind's pair on the six-neighbour term
         # (massive-record-v1, MASSIVE_RECORD.md section 1): G over the six
         # neighbours, then D by 3 den with the remainder kept, then T; at

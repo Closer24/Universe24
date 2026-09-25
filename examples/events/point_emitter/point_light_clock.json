@@ -43,7 +43,7 @@
     {
      "family": "charge",
      "weight": 1,
-     "by": "charge"
+     "by": "sign"
     }
    ]
   },
@@ -63,7 +63,7 @@
     {
      "family": "charge",
      "weight": 1,
-     "by": "charge"
+     "by": "sign"
     }
    ]
   },
@@ -78,7 +78,7 @@
    "name": "charge",
    "quantum": 1,
    "charge": 0,
-   "held": "charge",
+   "held": "sign",
    "reads": []
   }
  ],
@@ -563,7 +563,7 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "8a8d5dd7996b21145bb11ce408724ec75fcc3a840a438b70add61440ae53253e"
+  "hash": "28e4dccb2a29ae38c2547a208df27f2fc533bfdd3132897e2de47493f6ee182d"
  },
  "body_record": true,
  "point_emitter": true

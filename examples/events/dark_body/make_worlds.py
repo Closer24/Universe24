@@ -68,7 +68,7 @@ SEED = 1 << 18  # below the amplitude bound 2^20 (9.61 (3))
 GIVEN_CLOCK = [512, 1]
 READS = [
     {"family": "clicks", "weight": 1},
-    {"family": "charge", "weight": 1, "by": "charge"},
+    {"family": "charge", "weight": 1, "by": "sign"},
 ]  # every reading family's `reads` (BUILD.md section 26 item 51): the content plainly, the charge by its own sign
 DETECTOR_SIDE = 3
 
@@ -178,7 +178,7 @@ def world(dark: bool) -> dict:
                 "reads": [dict(read) for read in READS],
             },
             {"name": "clicks", "quantum": 1, "charge": 0, "held": "content", "reads": []},
-            {"name": "charge", "quantum": 1, "charge": 0, "held": "charge", "reads": []},
+            {"name": "charge", "quantum": 1, "charge": 0, "held": "sign", "reads": []},
         ],
         "measured": [],
         "detectors": [],

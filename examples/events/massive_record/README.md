@@ -58,7 +58,7 @@ family whose level at a Node is the M of that Node's clock pair, held at every
 body's Nodes at the body's content and spreading elsewhere by its own plain
 step, stepped last in the interval. Every world declares the family `charge`
 (the pair [1, 1], the quantum 1, its own charge 0) holding the signed charge
-(`held` "charge"; ALGEBRA.md 9.48; item 35): the family whose level at a Node
+(`held` "sign"; ALGEBRA.md 9.48; item 35): the family whose level at a Node
 is the signed charge Q held at every body's Nodes. Every other family declares
 its `reads`: the content plainly and the charge by its own sign at the weight
 Lambda = 1 (the effective content c - q Lambda d). No world key names a

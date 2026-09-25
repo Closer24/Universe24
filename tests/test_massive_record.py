@@ -27,8 +27,8 @@ from event_universe.diagnostics.massive_record_margin import (
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord, form_json
 from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import (
-    LIGHT_PAIR,
     MASSIVE_RECORD_RULE,
+    MASSLESS_PAIR,
     input_stamp,
     parse_nature_beam_world,
 )
@@ -171,7 +171,7 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     3 Gamma a_before + r (tests/test_node_clock.py reads it on random rows too)."""
     world = parse_nature_beam_world(chain_world())
     simulation = DetectorLawSimulation(world)
-    assert world.families[0].pair == LIGHT_PAIR
+    assert world.families[0].pair == MASSLESS_PAIR
     assert np.all(simulation.kind_num[0] == 1) and np.all(simulation.kind_den[0] == 1)
     rng = np.random.default_rng(7)
     now = rng.integers(-UNIT, UNIT, size=(80, 1, 1), dtype=np.int64)
@@ -377,10 +377,11 @@ def test_the_light_record_is_byte_identical_without_the_key():
     giving lines' content and the books per family); SINCE THE FAMILY GENERICITY (record 2066;
     item 51) the state digest alone moved once more, by the state's entries (`node_clock` and
     `held_fields` in place of `clock` and `charge`), the events and the audit unchanged: the
-    rows, the held levels and every line bit for bit; read again at this head."""
+    rows, the held levels and every line bit for bit; SINCE ITEM 53 the state digest once
+    more by the source word alone (`held_fields[].held` "sign"); read again at this head."""
     assert run_chain_digests() == {
         "events": "b8d7eae3058a1fb39c8ab4a75df408e1258a6cc4997e45f7f3451c18bb8d2833",
-        "state": "1866d56666323d4c5a28e8fbb22c69384cb588f67ec86285ea083dbdce29eaf8",
+        "state": "1028bffc2e6efd5687feb85d9da8f5c8f1fb72f917754077c742e7c6f1e4ceca",
         "audit": "372e68dbe0e0ef831d7115456de3de6b97ec09277db5db3d980eda236ad50b78",
     }
 

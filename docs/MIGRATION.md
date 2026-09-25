@@ -12,7 +12,7 @@ The model owner's record 2066 through the Boss (BUILD.md section 26 item 51):
 the engine knows no family's name or role. The world keys `clock_family`,
 `charge_family` and `charge_strength` are refused by name. Their content moves
 into the families: the family of clicks declares `"held": "content"` and
-`"reads": []`, the family of charge `"held": "charge"` and `"reads": []`, and
+`"reads": []`, the family of charge `"held": "sign"` (the word "charge" for the source and the read mode was renamed "sign" the same day, BUILD.md item 53; a key `booked` is refused as unknown, the booking derived) and `"reads": []`, and
 every other family under `detector_law` declares `"reads": [{"family":
 "clicks", "weight": 1}, {"family": "charge", "weight": Lambda, "by":
 "charge"}]` (Lambda the former `charge_strength`). The state's `clock` and
