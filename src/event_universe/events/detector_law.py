@@ -161,6 +161,14 @@ class LiveRecord:
     # that has completed waits, its rows still, for the other arms; the pair
     # gathers once when every arm has completed.
     arm_done: bool = False
+    # HOST (record 2039 (b); BUILD.md section 26 item 43): the record's support
+    # box, [lo, hi) per axis, outside which its two levels and its remainder
+    # are zero; None for the whole board. The step reads and writes the box
+    # grown by one Link (the rule's reach) and writes zeros elsewhere: the
+    # same integers as the whole-board step, bit for bit, since zero rows with
+    # a zero remainder step to zero under the rule. A shortcut of the host,
+    # not of the law: the model's local work per Node is unchanged.
+    box: tuple[tuple[int, int], ...] | None = None
 
     # The record's LADDER BY NAME (the lamp's `receiver`, SIZING.md; the
     # click line and the receiver by name, DECLARATIONS.md section 13 item
@@ -1284,6 +1292,7 @@ class DetectorLawSimulation:
         # the given family's vacuum, the generator's integer checked at load)
         assert emitter.given is not None
         self.write_levels(live, block, emitter.given.now, emitter.given.before)
+        live.box = self.support_box(live.now, live.before)  # HOST (item 43): the train's own Nodes
         if emitter.receiver is not None:
             # the named sets in the NAMED order (ALGEBRA.md 9.19 (3) (b): the
             # ladder cumulative in its declared order), a set's detectors in the
@@ -1454,10 +1463,35 @@ class DetectorLawSimulation:
         content = 0 if field else self._effective_content(live.family)
         # the same integers as the forward step's: the pace on the Node's own
         # sum (item 36)
-        neighbours = self._neighbours(live.before, self.kind_wrap[live.family])
-        a_before, live.remainder = self.one_rule_inverse(
-            num, den, gamma, content, neighbours, live.now, live.before, live.remainder
-        )
+        # HOST (item 43): the record's box holds the reach of `before`'s rows
+        # (it was the window of the step that wrote `now`), so the inverse is
+        # read on the box itself, zeros elsewhere; the box stays (a superset)
+        if live.box is None or self._window(live.box, self.kind_wrap[live.family]) is None:
+            neighbours = self._neighbours(live.before, self.kind_wrap[live.family])
+            a_before, live.remainder = self.one_rule_inverse(
+                num, den, gamma, content, neighbours, live.now, live.before, live.remainder
+            )
+        else:
+            slices = tuple(slice(lo, hi) for lo, hi in live.box)
+            wraps = tuple(
+                self.kind_wrap[live.family][axis] and (lo == 0 and hi == self.shape[axis])
+                for axis, (lo, hi) in enumerate(live.box)
+            )
+            content_w = content[slices] if isinstance(content, np.ndarray) else content
+            neighbours = self._neighbours(live.before[slices], (wraps[0], wraps[1], wraps[2]))
+            a_before_w, remainder_w = self.one_rule_inverse(
+                num[slices],
+                den[slices],
+                gamma,
+                content_w,
+                neighbours,
+                live.now[slices],
+                live.before[slices],
+                live.remainder[slices],
+            )
+            a_before = np.zeros_like(live.now)
+            a_before[slices] = a_before_w
+            live.remainder[slices] = remainder_w
         live.now = live.before
         live.before = a_before
         live.age -= 1
@@ -1815,6 +1849,63 @@ class DetectorLawSimulation:
         mask: np.ndarray = dot >= 0
         return mask
 
+    @staticmethod
+    def support_box(*arrays: np.ndarray) -> tuple[tuple[int, int], ...] | None:
+        """HOST: the bounding box [lo, hi) per axis of the Nodes where any of the
+        arrays is not zero; None when every array is zero everywhere (the
+        whole board then, the safe default)."""
+        nonzero = np.zeros(arrays[0].shape, dtype=bool)
+        for array in arrays:
+            nonzero |= array != 0
+        if not nonzero.any():
+            return None
+        box = []
+        for axis in range(nonzero.ndim):
+            along = np.any(nonzero, axis=tuple(other for other in range(nonzero.ndim) if other != axis))
+            where = np.nonzero(along)[0]
+            box.append((int(where[0]), int(where[-1]) + 1))
+        return tuple(box)
+
+    def _window(
+        self, box: tuple[tuple[int, int], ...] | None, wrap: tuple[bool, bool, bool]
+    ) -> tuple[tuple[slice, ...], tuple[bool, bool, bool], tuple[tuple[int, int], ...]] | None:
+        """HOST: the box grown by one Link per axis, the rule's reach, as the
+        slices to step, the faces the reads wrap on inside the window and the
+        window itself as the record's next box; None when the window is the
+        whole board (the whole-board step then, as before). On a periodic axis
+        a window that would touch the axis's ends is the whole axis with its
+        wrap; elsewhere the reads beyond the window are zeros, which is what
+        the rows there are (or the open face's nothing)."""
+        if box is None:
+            return None
+        slices: list[slice] = []
+        wraps: list[bool] = []
+        grown: list[tuple[int, int]] = []
+        whole = True
+        for axis in range(3):
+            lo, hi = box[axis]
+            size = self.shape[axis]
+            if size == 1:
+                slices.append(slice(0, 1))
+                wraps.append(wrap[axis])
+                grown.append((0, 1))
+                continue
+            lo -= 1
+            hi += 1
+            if wrap[axis] and (lo < 0 or hi > size):
+                lo, hi = 0, size
+                wraps.append(True)
+            else:
+                lo, hi = max(lo, 0), min(hi, size)
+                wraps.append(False if not (lo == 0 and hi == size) else wrap[axis])
+            if lo > 0 or hi < size:
+                whole = False
+            slices.append(slice(lo, hi))
+            grown.append((lo, hi))
+        if whole:
+            return None
+        return tuple(slices), (wraps[0], wraps[1], wraps[2]), tuple(grown)
+
     @overload
     @staticmethod
     def one_rule(
@@ -1953,10 +2044,33 @@ class DetectorLawSimulation:
         # S_6(a_now)_i + 6 den c_i a_now - 3 den Gamma a_before + r; the
         # Node steps the vacuum's rule at its own pace (the pace on each
         # read's far end, form (B) of item 34, HISTORY)
-        neighbours = self._neighbours(live.now, self.kind_wrap[live.family])
-        nxt, live.remainder = self.one_rule(
-            num, den, gamma, content, neighbours, live.now, live.before, live.remainder
-        )
+        window = self._window(live.box, self.kind_wrap[live.family])
+        if window is None:
+            neighbours = self._neighbours(live.now, self.kind_wrap[live.family])
+            nxt, live.remainder = self.one_rule(
+                num, den, gamma, content, neighbours, live.now, live.before, live.remainder
+            )
+            live.box = None
+        else:
+            # HOST (record 2039 (b); item 43): the rule on the support box grown
+            # by one, zeros elsewhere; the same integers at every Node
+            slices, wraps, grown = window
+            content_w = content[slices] if isinstance(content, np.ndarray) else content
+            neighbours = self._neighbours(live.now[slices], wraps)
+            nxt_w, remainder_w = self.one_rule(
+                num[slices],
+                den[slices],
+                gamma,
+                content_w,
+                neighbours,
+                live.now[slices],
+                live.before[slices],
+                live.remainder[slices],
+            )
+            nxt = np.zeros_like(live.now)
+            nxt[slices] = nxt_w
+            live.remainder[slices] = remainder_w
+            live.box = grown
         if self.world.massive_record and int(np.max(np.abs(nxt))) > self.world.amplitude_bound:
             raise RuntimeError(
                 f"{BEAM_LAW}: the record {live.identity} reached the level "

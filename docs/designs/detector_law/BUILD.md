@@ -3677,6 +3677,40 @@ would have found no cell.
    refusals as item 37's. THE NAME NODE (the model owner's record 1970):
    every new text of this item says Node.
 
+43. THE SUPPORT-ONLY STEP, A SHORTCUT OF THE HOST (the model owner's question
+   of 2026-09-25 through the Boss, record 2039: "can we shorten the run
+   somehow?"; HOST, not the law). THE PROFILE (the light clock, 2400 intervals,
+   about nine records alive): the records' step 88 percent of the host time
+   (the six neighbour reads 38, the family's wall gathered anew per record per
+   interval 23, the arithmetic 21, the allocations 5), the flux booking at the
+   Ports 27, the two field families 15, the books and the lines under 2; the
+   cost scales with the records alive times the board (the dark body's 30
+   records on 80000 Nodes: 40 minutes). BUILT, bit for bit: (a) the family's
+   wall read once per family and kept until a pair is written (`kind_wall`,
+   `_write_pair`), a quarter of the time; (b) the support-only step: a
+   record's rows are zero outside its box (`LiveRecord.box`, [lo, hi) per
+   axis, None for the whole board; the given record's first box the train's
+   own Nodes, `support_box`), the one rule is evaluated on the box grown by one
+   Link (`_window`: the rule's reach; on a periodic axis a window touching the
+   axis's ends is the whole axis with its wrap, elsewhere the reads beyond the
+   window are the zeros the rows are, or the open face's nothing) and zeros
+   are written elsewhere (`_advance`); the inverse reads the box itself (it
+   holds the reach of `before`'s rows) and keeps it (`_advance_inverse`); the
+   step is the whole board's again when the window is the whole board. Zero
+   rows with a zero remainder step to zero under the rule, so every integer at
+   every Node is the whole-board step's: the digests of
+   tests/test_massive_record.py unchanged, and tests/test_support_box.py
+   (the emitter's chain 600 intervals with the boxes and without, the same
+   lines, rows and remainders; a planted record wrapping every axis of a
+   periodic board forward 40 and back 40 the same; the box's growth and its
+   stop at an open face; outside the box zero at every interval). THE GAIN:
+   the light clock 8.2 to 5.3 seconds per 2400 intervals (the chain's records
+   span its cross-section and grow along it); the layers, where a record is a
+   small train on a large board, tens of times. NOT DONE: the flux booking at
+   the Ports already reads the Ports alone; the in-place buffers and a
+   compiled kernel wait on the check-mode runs' need. The model's local work
+   per Node is unchanged: a host cost, reported apart (AGENTS.md).
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

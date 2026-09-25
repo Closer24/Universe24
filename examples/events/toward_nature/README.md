@@ -119,14 +119,22 @@ dark body row's own pins are not read: this is the one command without pins.
 
 Read 2026-09-25 (PRE-CHANGE CONTROLS on today's law, the Boss's record 2038):
 
-| Reading | Kind | The dark body's `dark.json` (Gamma 10^6, the beam 5 wide, 30 records) | `bending.json` (Gamma 10^4, the beam 20 wide, 100 records) |
-| --- | --- | --- | --- |
-| The emitter's records' clicks at the screen (at the faces) | DETECTOR | 25 (5) | 95 (5) |
-| Centroid less the beam's line, toward the body positive; rms; standard error | DETECTOR | +5.68 Links; 37.07; 7.41 | +11.96 Links; 31.19; 3.20 |
-| The level on the beam's line under the body, c_b, from the declared content | COMPUTATION | 41561 (U_b = 0.021) | 2000 (U_b = 0.1) |
-| 2 U_b L (the cube's 1 / r form, which does not hold on this layer, 9.61 (2) (c)) | COMPUTATION | 7.5 | 36.0 |
-| The ray through the static field (`ray_bend`, the beam's centre line at k = pi / 2) | COMPUTATION | 13.7 | 76.3 |
-| Host seconds, the one command | HOST | (in the batch) | 1032 |
+| Reading | Kind | The dark body's `dark.json` (Gamma 10^6, the beam 5 wide, 30 records) | Its `bright.json` (the body an emitter too, the shadow control) | `bending.json` (Gamma 10^4, the beam 20 wide, 100 records) |
+| --- | --- | --- | --- | --- |
+| The emitter's records' clicks at the screen (at the faces; at the body's set) | DETECTOR | 25 (5; no set) | 21 (5; 4 at `at_body`, the shadow) | 95 (5; no set) |
+| The body's own records' clicks | DETECTOR | 0 (dark) | 83 (74 at the screen, 9 at the faces) | 0 (dark) |
+| Centroid of the emitter's clicks less the beam's line, toward the body positive; rms; standard error | DETECTOR | +5.68 Links; 37.07; 7.41 | +4.00 Links; 34.59; 7.55 | +11.96 Links; 31.19; 3.20 |
+| The level on the beam's line under the body, c_b, from the declared content | COMPUTATION | 41561 (U_b = 0.021) | 41561 | 2000 (U_b = 0.1) |
+| 2 U_b L (the cube's 1 / r form, which does not hold on this layer, 9.61 (2) (c)) | COMPUTATION | 7.5 | 7.5 | 36.0 |
+| The ray through the static field (`ray_bend`, the beam's centre line at k = pi / 2) | COMPUTATION | 13.7 | 13.7 | 76.3 |
+| Host seconds, the one command, before the support-only step | HOST | 933 | 3673 | 1032 |
+
+The dark and the bright worlds read the same centroid within their errors (5.7
+and 4.0 against 7.4 and 7.6), the dark body's row's own "the same in both within
+one cube" (9.54 (4)); the bright body's shadow takes 4 of the 30 records at
+`at_body` and its own 83 given records reach the screen. The redshift's two
+worlds took 58 and 73 host seconds, Lorentz's 17 and 57, before the support-only
+step.
 
 THE DIRECTION HOLDS in both: the centroid moves toward the body, in the second
 world by 3.7 standard errors. THE SIZE is far below the ray's number: the beam
@@ -138,5 +146,4 @@ dark body's world with 30 records cannot read its 7 to 14 Links at all (the
 standard error 7.4). Both are PRE-CHANGE CONTROLS; the row toward nature moves
 to the given clock at k = 0.302 (9.62 (1)), where the lattice's term is 0.3
 percent and the beam spreads less, and is read again after the change of
-9.60 and the Einstein form (the check-mode runs of 9.61). The bright world's
-run, the shadow control, is pending in this record.
+9.60 and the Einstein form (the check-mode runs of 9.61). 
