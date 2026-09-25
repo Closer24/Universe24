@@ -10650,6 +10650,44 @@ untouched, as 9.48 (5); (h) the eighteen: their clicks against their
 pins. A test that passes in the levels and not in the clicks is a
 finding for the mathematician, not a pass.
 
+**(8) THE CONTENT PER FAMILY, THE STOCK, THE CHARGE CONSERVED, AND THE
+UNIT OF MASS (Nature24's finding B on his head 8e8ef04e, the charge
+built; the model owner's question of 2026-09-25: "how does this affect
+the masses as a minimal unit?").** A body holds quanta of more than one
+family: its own (its matter, with its charge) and what it has taken or
+was loaded with (the light it holds, its stock). So the body's content
+is per family, M_k, with M = SUM_k M_k; its charge Q = SUM_k q_k M_k;
+and its energy count
+
+  s = SUM_k (M_k P_0) div P_k, one remainder kept per family,
+
+with P_k the period of family k's quantum at the body: the body's own
+mode's period for its own family (9.51 (3)), the family's rest period
+at the body's level for held quanta of another family (the generator's
+integer per family, under the input stamp). At q = 0 and P_0 = P_k for
+every family present, s = M, the count of today. THE STOCK IS BORN-
+FAMILY CONTENT: a birth lowers M_k of the born family by one (light, q
+= 0), so the body's own quanta and its Q stay, as 9.48 (1) says and
+9.40 T3 meant by "stock and M - 1"; the engine's spending of a quantum
+of the body's OWN family per birth (Nature24's finding B) is refused:
+with it a charged body would lose charge by giving light. THE WHOLE
+CHARGE of the bodies and the records in flight is then constant at
+every click, by construction, as his test reads. THE UNIT OF MASS: the
+minimal unit splits in two. The quantum stays the unit of CONTENT, what
+one click passes, whole. The unit of MASS is one unit of the family of
+clicks' level, the energy h / P_0, the world's constant; a quantum of
+family k weighs P_0 / P_k of it, more than one unit for a heavy family
+(P_k below P_0), less than one for a light one, so that a body of few
+light quanta may weigh 0 units until its remainder carries, and light
+in flight weighs none. The two units coincide only at P_k = P_0, which
+is where the eighteen stand today; with `energy_source` off they are
+one unit, as before. The largest mass at one Node is Gamma units, the
+guard of 9.50 (8). THE LOAD BOUND per body (Nature24's C): s + Lambda
+|Q| < Gamma with s in place of M; the run's guard the pace positive at
+every read for every declared sign; the int64 reach (his D): twice the
+world's s plus Lambda times twice the held charge in place of item 34's
+M. CONFIRMED with the substitution of s for M.
+
 ### 9.52 A body's fall in the field: the seated body's hop fed by the pace across its faces (the model owner's word of 2026-09-25 through the Boss and Nature24: "the two worlds must be joined, and all of it done now"; Nature24's proposed form; DERIVED from the law's own dispersion in the slow limit, the host form of the body record under `body_record`; every body falls alike)
 
 **(1) WHAT THE LAW ALREADY DOES.** A record in a field of the family of
