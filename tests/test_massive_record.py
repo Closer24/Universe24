@@ -27,7 +27,12 @@ from event_universe.diagnostics.massive_record_margin import (
     profile_check,
 )
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
-from event_universe.events.world import LIGHT_PAIR, MASSIVE_RECORD_RULE, parse_nature_beam_world
+from event_universe.events.world import (
+    LIGHT_PAIR,
+    MASSIVE_RECORD_RULE,
+    input_stamp,
+    parse_nature_beam_world,
+)
 from tests.test_detector_law import (
     chain_world,
     cube_positions,
@@ -452,6 +457,8 @@ def seed_source(document: dict, number: int) -> None:
     entry["seed"] = generator.mode_profile(document, number, amplitude=entry["seed"])
     if "emitter" in entry:
         generator.excite_on_the_mode(document, number)
+    # the input stamp (record 1886): the law and the hash of the integers
+    document["input"] = input_stamp(document)
 
 
 def with_screen(document: dict, x: int) -> dict:
@@ -1187,6 +1194,7 @@ def test_y_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
             clock=list(mode_clock(lambda_max, 1 << 20)),
         )
     ]
+    seeded["input"] = input_stamp(seeded)
     world = parse_nature_beam_world(seeded)
     assert profile_check(world, 0) == (0, 1 << 20)
     lines: list[dict] = []
@@ -1299,6 +1307,7 @@ def test_aa_a_matter_emitters_record_clicks_once_at_the_rung():
         *(receiver_body(position, "matter") for position in positions[1:]),
     ]
     document["detectors"] = [{"name": "screen", "positions": positions, "threshold": 1}]
+    document["input"] = input_stamp(document)  # the stamp of the rebuilt list (record 1886)
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)

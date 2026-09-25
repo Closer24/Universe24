@@ -46,7 +46,7 @@ import numpy as np
 import pytest
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation
-from event_universe.events.world import parse_nature_beam_world
+from event_universe.events.world import input_stamp, parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -177,6 +177,7 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     del alone["measured"][0]["emitter"]
     alone["measured"] = alone["measured"][:1]
     alone["detectors"] = []
+    alone["input"] = input_stamp(alone)  # the stamp of the body alone (its born pair gone)
     solitary = DetectorLawSimulation(parse_nature_beam_world(alone))
     body = solitary.block_by_number[0]
     centre = np.zeros(solitary.shape, dtype=bool)
@@ -292,6 +293,9 @@ def test_c_the_loaders_refusals_name_their_keys():
     def refused(mutate, message: str, on_mode: bool = False) -> None:
         document = emitter_world(stock=2, on_mode=on_mode)
         mutate(document)
+        # the stamp of the changed integers (record 1886): the named refusal,
+        # not the hash's, is the one read here
+        document["input"] = input_stamp(document)
         with pytest.raises(ValueError, match=message):
             DetectorLawSimulation(parse_nature_beam_world(document))
 

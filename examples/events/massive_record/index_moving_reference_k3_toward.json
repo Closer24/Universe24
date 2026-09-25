@@ -54,5 +54,9 @@
    0,
    0
   ]
- ]
+ ],
+ "input": {
+  "law": "detector-law algebra 9.25 (2026-09-25)",
+  "hash": "a15f60d7211f86628612398f884b1655ccb8b0cfb48c30c9889c8c51b1b231a4"
+ }
 }

@@ -287,6 +287,46 @@ def accurate_mode(world: NatureBeamWorld, number: int) -> tuple[float, np.ndarra
     return float(values[0]), mode
 
 
+def integer_mode_iteration(
+    start: np.ndarray,
+    num: np.ndarray,
+    den: np.ndarray,
+    wrap: tuple[bool, bool, bool],
+    amplitude: int,
+    iterations: int,
+) -> np.ndarray:
+    """THE GENERATOR AS THE BOARD'S OWN OPERATOR, ITERATED IN INTEGERS (the
+    model owner's record 1898; ALGEBRA.md 9.22 (7)): from any start the
+    power iteration v -> (M + 2 I) v, in the law's own integers 3 den v' =
+    num S_6(v) + 6 den v + r with the remainder r kept from step to step,
+    converges to the bound mode (Perron-Frobenius on the nonnegative
+    shifted operator) at the rate 1 - gap / (lambda + 2) per iteration;
+    when the levels pass twice the amplitude they are renormalised by an
+    exact shift by a power of two, the remainder shifted with them (the
+    value v + r / wall halved k times is (v >> k) + ((v mod 2^k) wall + r)
+    / (wall 2^k), whose remainder against the same wall is the floor of
+    ((v mod 2^k) wall + r) / 2^k: nothing of the fraction is dropped but
+    the last bits below the wall). Reproducible bit for bit on every host;
+    the cost one board step per iteration. Returns the levels after
+    `iterations`, their largest magnitude in [amplitude, 2 amplitude)."""
+    levels = start.astype(np.int64).copy()
+    remainder = np.zeros_like(levels)
+    wall = 3 * den.astype(np.int64)
+    for _ in range(iterations):
+        total = num.astype(np.int64) * six_neighbours(levels, wrap).astype(np.int64)
+        total += 6 * den.astype(np.int64) * levels + remainder
+        levels = np.floor_divide(total, wall)
+        remainder = total - wall * levels
+        largest = int(np.max(np.abs(levels)))
+        if largest >= 2 * amplitude:
+            shift = largest.bit_length() - int(amplitude).bit_length()
+            shifted = np.right_shift(levels, shift)
+            low = levels - np.left_shift(shifted, shift)
+            remainder = np.right_shift(low * wall + remainder, shift)
+            levels = shifted
+    return levels
+
+
 def mode_clock(lambda_max: float, amplitude: int) -> tuple[int, int]:
     """The mode's 2 cos omega as the rational [a, b] the generator writes
     (ALGEBRA.md 9.22 (7)): b a power of two at least twice the amplitude and

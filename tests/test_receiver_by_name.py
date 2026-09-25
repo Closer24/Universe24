@@ -24,7 +24,7 @@ from pathlib import Path
 import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import parse_nature_beam_world
+from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_massive_record import light_clock_world, massive_world, seed_source
 
 SAGNAC_REST = Path(__file__).resolve().parents[1] / "examples/events/massive_record/sagnac_rest.json"
@@ -182,6 +182,7 @@ def test_a_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cel
     plain = light_clock_world("closed", True)
     for key in ("emitter", "receiver"):
         plain["measured"][0].pop(key)
+    plain["input"] = input_stamp(plain)  # the stamp without the born pair (record 1886)
     simulation, _ = run(plain, 10)
     assert not simulation.has_receiver
     # (c) without `receiver` the ladder is every declared set in the declared order

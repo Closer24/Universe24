@@ -2064,6 +2064,56 @@ would have found no cell.
    and are refused by the count; RUN_LIST.md row 4c holds the cart until
    its rebuild as a transponder with three families (step 6), the file
    kept on disk as history.
+21. THE INPUT STAMP, THE INTEGER GENERATOR AND THE ONE COMMAND (the model
+   owner's records 1886, 1898 and 1887; ALGEBRA.md 9.22 (7); the property
+   test green). THE STAMP (9.22 (7) (i)): every world with a seeded body
+   carries `input` {law, hash}: the law identifier this loader runs under
+   (`LAW_IDENTIFIER`, moved by a change of the laws that moves the
+   initial state, forcing the files' regeneration) and the SHA-256 of the
+   canonical JSON of the shape and, per seeded body, its number, its
+   profile, its clock and its born pair (`input_stamp` on the raw
+   document, the same digest from the parsed integers at load); the loader
+   refuses a seeded world without the stamp naming the key, a stamp under
+   another law naming both, and a hash that is not the digest of the
+   integers loaded ("not the ones the generator wrote"); a world with no
+   profile needs none. The generator writes the stamp last of all and
+   before every parse of a document under construction (`stamped`); the
+   tests' builders and refusal tests restamp a changed document so that
+   the named refusal speaks and not the hash's. THE INTEGER GENERATOR
+   (record 1898; `integer_mode_iteration` in the margin module): the power
+   iteration 3 den v' = num S_6(v) + 6 den v + r with the remainder kept,
+   renormalised by an exact power-of-two shift when the levels pass twice
+   the amplitude, the remainder shifted with the levels (nothing of the
+   fraction dropped but the bits below the wall); bit for bit reproducible
+   (test h: two runs the same integers). ITS FLOOR (COMPUTATION on the
+   emitter world's chain of 80, the well [800, 801] in [800, 809], the
+   amplitude 2^20): from the cells' indicator it reaches ARPACK's mode
+   within 78 units and stays there from 4000 to 16000 iterations: every
+   step's rounding feeds the next mode and is damped only by the gap
+   (0.0105 in lambda here), so the iterate carries an admixture of about
+   1 / gap units at the amplitude; the float power iteration agrees with
+   ARPACK to the unit, and the loader's bound accepts both (an admixture
+   of the next mode moves the residual by the gap times the admixture,
+   within the bound; the mathematician's own note that (ii) does not
+   single out near-degenerate modes). So the ARPACK profile is what the
+   generator writes and the integer iteration is the reproducible check
+   of the same law, not the writer; the mathematician has the numbers.
+   THE ONE COMMAND (record 1887; tools/run_inputs.py; tests/test_run_inputs.py):
+   input files in, one output file per experiment out, each input in its
+   own process (a spawned process pool, at most `--jobs` at once), each
+   first LAWFUL or REFUSED at load with the reason (the loader's checks),
+   the lawful one run under the law for its ticks, headless, and
+   `<name>.output.json` written with the input's name and stamp, the
+   verdict, the ticks, the click lines (DETECTOR: the detector's name and
+   the interval), the count per detector, the records alive at the end
+   and, where `--pins` registers a blind pin for the input before the run
+   ({name: [{detector, count, band}]}), MATCH within the band or MISS
+   with the count read; no time in the output, so two inputs run together
+   give the files of each alone byte for byte (test a); a refused input's
+   output carries the reason and the command exits 1 (test b). The pins
+   of the seventeen enter that file as the mathematician's table completes
+   per experiment; the short experiment file of 9.22 (5), the generator
+   reading it and deriving the rest, is the next form, with his table.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

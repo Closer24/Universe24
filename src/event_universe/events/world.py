@@ -301,6 +301,8 @@ family or a content that is not a positive integer.
 
 from __future__ import annotations
 
+import hashlib
+import json
 import math
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, replace
@@ -396,6 +398,10 @@ EVENTS_KEYS = ("dynamics", "max_active_owners")
 WORLD_KEYS = {
     "law",
     "model_id",
+    # THE INPUT STAMP (the model owner's record 1886; ALGEBRA.md 9.22 (7)
+    # (i)): the law identifier the file was made under and the hash of the
+    # initial state's integers the generator wrote (`input_stamp`)
+    "input",
     "shape",
     "boundary",
     "ticks",
@@ -839,6 +845,12 @@ NO_CHARGE = (0, 1)
 # declares `side`, under the world key `massive_record` alone.
 # At most three families on a GameBoard (record 1875; ALGEBRA.md 9.22 (2)).
 MOST_FAMILIES = 3
+# THE LAW IDENTIFIER (record 1886; ALGEBRA.md 9.22 (7) (i)): the law an input
+# file was made under, written by the generator into the file's `input` and
+# compared at load; a change of the laws that moves the initial state moves
+# this name and forces the files' regeneration.
+LAW_IDENTIFIER = "detector-law algebra 9.25 (2026-09-25)"
+INPUT_KEYS = {"law", "hash"}
 BLOCK_KEYS = {
     "side",
     "pair",
@@ -4903,6 +4915,97 @@ def mode_residual(
     return worst_residual, worst_bound, node
 
 
+def initial_state_digest(shape: Sequence[int], bodies: list[dict[str, object]]) -> str:
+    """The hash of the initial state's integers (ALGEBRA.md 9.22 (7) (i)):
+    SHA-256 of the canonical JSON of the board's shape and, per body seeded
+    with a profile, its number, its profile, its clock and its born pair;
+    the same from the raw document (`input_stamp`) and from the parsed
+    world (`_input_stamp_check`)."""
+    canonical = json.dumps(
+        {"shape": [int(v) for v in shape], "bodies": bodies},
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return hashlib.sha256(canonical.encode("ascii")).hexdigest()
+
+
+def input_stamp(document: dict[str, object]) -> dict[str, str]:
+    """THE INPUT STAMP the generator writes into a world file (record 1886;
+    ALGEBRA.md 9.22 (7) (i)): the law identifier and the hash of the initial
+    state's integers as the raw document carries them (every measured event
+    whose `seed` is a profile: its `seed`, its `clock`, its emitter's
+    `born`). The loader recomputes the hash from the parsed integers and
+    refuses a file whose integers are not the ones the generator wrote."""
+    bodies: list[dict[str, object]] = []
+    measured = document.get("measured", [])
+    if isinstance(measured, list):
+        for number, entry in enumerate(measured):
+            if not isinstance(entry, dict) or not isinstance(entry.get("seed"), list):
+                continue
+            emitter = entry.get("emitter")
+            bodies.append(
+                {
+                    "measured": number,
+                    "seed": entry["seed"],
+                    "clock": entry.get("clock"),
+                    "born": emitter.get("born") if isinstance(emitter, dict) else None,
+                }
+            )
+    shape = document.get("shape", [0, 0, 0])
+    return {
+        "law": LAW_IDENTIFIER,
+        "hash": initial_state_digest(shape if isinstance(shape, list) else [0, 0, 0], bodies),
+    }
+
+
+def _input_stamp_check(value: object, shape: Address3, measured: tuple[MeasuredDefinition, ...]) -> None:
+    """THE FILE'S HASH AND THE LAW IT WAS MADE UNDER (the model owner's
+    record 1886; ALGEBRA.md 9.22 (7) (i)): a world with a seeded body
+    carries `input` {law, hash}; the law must be this loader's
+    LAW_IDENTIFIER and the hash must be the digest of the parsed profiles,
+    clocks and born pairs, so that the integers loaded are the ones the
+    generator wrote and a file made under another law is regenerated, not
+    run. A world with no profile needs no stamp."""
+    bodies: list[dict[str, object]] = []
+    for number, entry in enumerate(measured):
+        block = entry.block
+        if block is None or block.profile is None:
+            continue
+        born = None if block.emitter is None or block.emitter.born is None else list(block.emitter.born)
+        bodies.append(
+            {
+                "measured": number,
+                "seed": list(block.profile),
+                "clock": None if block.clock is None else list(block.clock),
+                "born": born,
+            }
+        )
+    if not bodies:
+        return
+    if value is None:
+        raise ValueError(
+            f"{BEAM_LAW}: the world declares a seeded body and no `input` stamp: the generator "
+            'writes `input` {"law": ..., "hash": ...}, the law identifier and the hash of the '
+            "initial state's integers (the model owner's record 1886; ALGEBRA.md 9.22 (7) (i))"
+        )
+    stamp = _object(value, "input", INPUT_KEYS, INPUT_KEYS)
+    law, digest = stamp["law"], stamp["hash"]
+    if not isinstance(law, str) or not isinstance(digest, str):
+        raise ValueError(f"{BEAM_LAW}: input.law and input.hash must be strings")
+    if law != LAW_IDENTIFIER:
+        raise ValueError(
+            f"{BEAM_LAW}: input.law is {law!r}; this loader's law is {LAW_IDENTIFIER!r}: the file "
+            "was made under another law and is regenerated, not run (record 1886)"
+        )
+    expected = initial_state_digest(shape, bodies)
+    if digest != expected:
+        raise ValueError(
+            f"{BEAM_LAW}: input.hash {digest[:12]}... is not the digest of the initial state's "
+            f"integers {expected[:12]}...: the profiles, clocks and born pairs are not the ones the "
+            "generator wrote (record 1886; ALGEBRA.md 9.22 (7) (i)); regenerate the file"
+        )
+
+
 def _initial_state_checks(
     shape: Address3,
     periodic: tuple[bool, bool, bool],
@@ -5513,6 +5616,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         detector_law,
     )
     _column_budget(families, measured, release)
+    _input_stamp_check(obj.get("input"), shape, measured)
     _initial_state_checks(shape, periodic, families, measured)
     families = _massive_families(families, measured, table, width, phase_steps, action)
     # The covariant readings (`covariant-readings-v1`): the key as declared,

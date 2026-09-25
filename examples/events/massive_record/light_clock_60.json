@@ -796,5 +796,9 @@
    0,
    0
   ]
- ]
+ ],
+ "input": {
+  "law": "detector-law algebra 9.25 (2026-09-25)",
+  "hash": "1f980afd5ceea4b8d1fe7db3afe959e6d447a27d366a6ce77d47b2ea70122af9"
+ }
 }

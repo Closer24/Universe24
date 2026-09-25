@@ -68,5 +68,9 @@
    "margin": "control"
   }
  ],
- "detectors": []
+ "detectors": [],
+ "input": {
+  "law": "detector-law algebra 9.25 (2026-09-25)",
+  "hash": "14f3e704ea65b8b8b1d16eb742ce3e64376c65ba28ec68665ffed8074ffc3f2a"
+ }
 }

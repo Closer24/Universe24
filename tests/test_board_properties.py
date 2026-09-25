@@ -25,7 +25,7 @@ import numpy as np
 import pytest
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
-from event_universe.events.world import parse_nature_beam_world
+from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_emitter import massive_generator
 
 SIDE = 12
@@ -107,6 +107,8 @@ def small_world(
         document["measured"][0]["seed"] = [int(value) for value in np.asarray(seed).ravel()]
         assert clock is not None
         document["measured"][0]["clock"] = list(clock)
+    # the input stamp (record 1886): the law and the hash of the integers
+    document["input"] = input_stamp(document)
     return document
 
 

@@ -110665,5 +110665,9 @@
    ]
   }
  ],
- "detectors": []
+ "detectors": [],
+ "input": {
+  "law": "detector-law algebra 9.25 (2026-09-25)",
+  "hash": "2ad97476e1f57a2f05c0b5df2c70c0031d92759a03c12b7888651b0d8390c1f0"
+ }
 }

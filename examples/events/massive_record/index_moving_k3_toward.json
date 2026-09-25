@@ -2345,5 +2345,9 @@
    0
   ]
  ],
- "mode_axis": "x"
+ "mode_axis": "x",
+ "input": {
+  "law": "detector-law algebra 9.25 (2026-09-25)",
+  "hash": "b582cf290bf6e3c1b1f83353e470b029a5294ff9f3139ce9d2d18dbaa86b8626"
+ }
 }

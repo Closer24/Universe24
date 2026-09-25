@@ -1,21 +1,31 @@
 """THE INPUT CHECKED LAWFUL OR REFUSED IN INTEGERS (the model owner's record 1886 of
-2026-09-25; ALGEBRA.md 9.22 (3) and (7); BUILD.md section 26 item 20): the initial state
-is stored once in the world file (every seeded body's integer profile at both levels and
-its mode's clock [a, b], the generator's) and the loader says at load whether it is lawful,
-with no float: the eigen-equation's residual at every Node within its proved bound, the
-clock above the band's top and below 2, the bodies whole and disjoint, at most three
-families. Every reading here is the loader's on the test worlds of the line (COMPUTATION);
-no pin.
+2026-09-25; ALGEBRA.md 9.22 (3) and (7); BUILD.md section 26 items 20 and 21): the
+initial state is stored once in the world file (every seeded body's integer profile at
+both levels, its mode's clock [a, b] and its born pair, the generator's, under the
+file's `input` stamp: the law identifier and the hash of those integers) and the loader
+says at load whether it is lawful, with no float: the stamp's law and hash, the
+eigen-equation's residual at every Node within its proved bound, the clock above the
+band's top and below 2, the bodies disjoint, at most three families; and the generator
+as the board's own operator iterated in integers (record 1898). Every reading here is
+the loader's on the test worlds of the line (COMPUTATION); no pin.
 """
 
 from __future__ import annotations
 
 import json
 
+import numpy as np
 import pytest
 
+from event_universe.diagnostics.massive_record_margin import (
+    accurate_mode,
+    block_cells,
+    integer_mode_iteration,
+)
 from event_universe.events.world import (
+    LAW_IDENTIFIER,
     MOST_FAMILIES,
+    input_stamp,
     mode_residual,
     parse_nature_beam_world,
     six_neighbours_flat,
@@ -28,17 +38,28 @@ def peak_of(profile: list[int]) -> int:
     return max(range(len(profile)), key=lambda index: abs(profile[index]))
 
 
-def test_a_a_generated_world_is_lawful_and_carries_its_clock():
+def restamped(document: dict) -> dict:
+    """The document with its `input` stamp rewritten for its integers as they stand, so
+    that the check under test speaks and not the hash's."""
+    document["input"] = input_stamp(document)
+    return document
+
+
+def test_a_a_generated_world_is_lawful_and_carries_its_clock_and_stamp():
     """The emitter world (the well [800, 801] of side 12 on the chain of 80, the amplitude
     100) and the light clock's chain (the amplitude 50 x 2^20): each body's profile carries
     its clock [a, b] with b a power of two at least twice the amplitude and at least 2^20,
-    a / b above the family's band top 2 x 800 / 809 and below 2; the loader admits the file
-    and the definition carries the clock; the residual of the profile against the body's
-    operator is within the bound at every Node (read through the loader's own function)."""
+    a / b above the family's band top 2 x 800 / 809 and below 2, and the file its `input`
+    stamp with this loader's law identifier and the hash of the integers; the loader
+    admits the file and the definition carries the clock; the residual of the profile
+    against the body's operator is within the bound at every Node (read through the
+    loader's own function)."""
     for document, amplitude in (
         (emitter_world(stock=2), 100),
         (light_clock_world("closed", False), 50 << 20),
     ):
+        assert document["input"] == input_stamp(document)
+        assert document["input"]["law"] == LAW_IDENTIFIER and len(document["input"]["hash"]) == 64
         world = parse_nature_beam_world(document)
         block = world.measured[0].block
         assert block is not None and block.profile is not None and block.clock is not None
@@ -64,7 +85,8 @@ def test_b_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_roun
     bound; the profile with its peak zeroed is refused; the profile with one unit added at
     the peak is ADMITTED (the edge case: a one-unit change is within the rounding the bound
     allows, so the check does not single it out; the same input then gives another output,
-    the property test's test 8)."""
+    the property test's test 8). The stamp is rewritten for every changed profile so that
+    the residual speaks (the hash's own refusal is test g)."""
     document = emitter_world(stock=2)
     profile = document["measured"][0]["seed"]
     peak = peak_of(profile)
@@ -75,10 +97,12 @@ def test_b_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_roun
     ):
         changed = json.loads(json.dumps(document))
         change(changed["measured"][0]["seed"])
+        restamped(changed)
         if refused:
             with pytest.raises(
                 ValueError,
-                match=r"seed is not the mode of its family's operator.*at Node \[\d+, 0, 0\] the eigen-equation's residual \d+ is above the bound \d+",
+                match=r"seed is not the mode of its family's operator.*at Node \[\d+, 0, 0\] the "
+                r"eigen-equation's residual \d+ is above the bound \d+",
             ):
                 parse_nature_beam_world(changed)
         else:
@@ -94,6 +118,7 @@ def test_c_the_clocks_refusals_name_the_rule():
     def refused(mutate, message):
         document = emitter_world(stock=2)
         mutate(document["measured"][0])
+        restamped(document)
         with pytest.raises(ValueError, match=message):
             parse_nature_beam_world(document)
 
@@ -110,7 +135,8 @@ def test_c_the_clocks_refusals_name_the_rule():
         "is not above the band's top 2 x 800 / 809",
     )
     refused(
-        lambda entry: entry.__setitem__("clock", [2 * b, b]), "is at or above 2: the mode is a runaway"
+        lambda entry: entry.__setitem__("clock", [2 * b, b]),
+        "is at or above 2: the mode is a runaway",
     )
 
     def scalar(entry):
@@ -132,7 +158,8 @@ def test_d_at_most_three_families():
     parse_nature_beam_world(document)
     document["families"].append({"name": "fourth", "quantum": 1, "pair": [800, 809]})
     with pytest.raises(
-        ValueError, match=f"families declares {MOST_FAMILIES + 1}; at most {MOST_FAMILIES} families"
+        ValueError,
+        match=f"families declares {MOST_FAMILIES + 1}; at most {MOST_FAMILIES} families",
     ):
         parse_nature_beam_world(document)
 
@@ -177,3 +204,81 @@ def test_f_the_six_neighbour_read_in_integers():
     folded axis): [3 + 1 + 4 x 5, 5 + 1 + 4 x 3, 3 + 5 + 4 x 1]."""
     assert six_neighbours_flat([1, 2, 3], (3, 1, 1), (False, False, False)) == [2, 4, 2]
     assert six_neighbours_flat([5, 3, 1], (3, 1, 1), (True, True, True)) == [24, 18, 12]
+
+
+def test_g_the_input_stamp_the_law_and_the_hash():
+    """THE FILE'S HASH AND THE LAW IT WAS MADE UNDER (9.22 (7) (i)): a seeded world without
+    its `input` stamp is refused naming the key; a stamp under another law is refused naming
+    both laws; a stamp whose hash is not the digest of the integers (the profile changed by
+    one unit without restamping, the clock changed, the born pair changed) is refused as
+    not the ones the generator wrote; a world with no profile needs no stamp (the emitter
+    world on its scalar seed, its emitter removed); the stamp is the same from the raw
+    document and from the parsed integers (the generated world loads, test a)."""
+    missing = emitter_world(stock=2)
+    del missing["input"]
+    with pytest.raises(ValueError, match="declares a seeded body and no `input` stamp"):
+        parse_nature_beam_world(missing)
+    other = emitter_world(stock=2)
+    other["input"]["law"] = "another law"
+    with pytest.raises(ValueError, match="input.law is 'another law'; this loader's law is"):
+        parse_nature_beam_world(other)
+
+    def unit(document):
+        seed = document["measured"][0]["seed"]
+        seed[peak_of(seed)] += 1
+
+    def clock(document):
+        document["measured"][0]["clock"][0] += 1
+
+    def born(document):
+        now = document["measured"][0]["emitter"]["born"][0] + 1
+        document["measured"][0]["emitter"]["born"] = [now, -now]
+
+    for change in (unit, clock, born):
+        changed = emitter_world(stock=2)
+        change(changed)
+        with pytest.raises(ValueError, match="is not the digest of the initial state's integers"):
+            parse_nature_beam_world(changed)
+    unseeded = emitter_world(stock=2, on_mode=False)
+    assert "input" not in unseeded
+    del unseeded["measured"][0]["emitter"]
+    parse_nature_beam_world(unseeded)
+
+
+def test_h_the_generator_as_the_operator_iterated_in_integers():
+    """RECORD 1898 (ALGEBRA.md 9.22 (7)): from the cells' indicator on the emitter world's
+    chain of 80 (the well [800, 801] in the kind [800, 809]) the integer power iteration
+    3 den v' = num S_6(v) + 6 den v with the remainder kept, renormalised by a power-of-two
+    shift, converges to the bound mode: after 4000 iterations its levels, scaled to the
+    amplitude 2^20, pass the loader's residual bound with the accurate clock and agree with
+    ARPACK's rounded mode within 200 units at every Node (78 read, COMPUTATION: the
+    iteration's floor, the rounding noise of every step fed into the next mode and damped
+    only by the gap, about 1 / gap units at the amplitude; the float power iteration itself
+    agrees with ARPACK to the unit), and are bit for bit the same on a second run (the same
+    integers in, the same out)."""
+    document = emitter_world(stock=1)
+    world = parse_nature_beam_world(document)
+    entry = world.measured[0]
+    block = entry.block
+    assert block is not None
+    shape = (int(world.shape[0]), 1, 1)
+    wrap = world.kind_periodic(entry.family)
+    cells = block_cells(shape, (int(entry.position[0]), 0, 0), block.side, wrap)
+    num = np.where(cells, block.pair[0], 800)
+    den = np.where(cells, block.pair[1], 809)
+    amplitude = 1 << 20
+    start = np.where(cells, amplitude, 0).astype(np.int64)
+    first = integer_mode_iteration(start, num, den, wrap, amplitude, 4000)
+    second = integer_mode_iteration(start, num, den, wrap, amplitude, 4000)
+    assert np.array_equal(first, second)
+    lambda_max, mode = accurate_mode(world, 0)
+    expected = np.rint(mode * amplitude).astype(np.int64)
+    scaled = np.rint(first.astype(np.float64) * amplitude / np.max(np.abs(first))).astype(np.int64)
+    assert int(np.max(np.abs(scaled - expected))) <= 200
+    b = 1 << 22
+    clock = (round(lambda_max * b), b)
+    flat = [int(v) for v in scaled.ravel()]
+    residual, bound, _ = mode_residual(
+        flat, [int(v) for v in num.ravel()], [int(v) for v in den.ravel()], clock, shape, wrap
+    )
+    assert residual <= bound

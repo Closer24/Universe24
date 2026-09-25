@@ -28,7 +28,7 @@ from event_universe.diagnostics.massive_record_margin import (
     relaxation_time,
 )
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import parse_nature_beam_world
+from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_massive_record import block_world
 
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
@@ -67,8 +67,9 @@ def seeded(
         entry["ramp"] = ramp
     lambda_max, mode = accurate_mode(parse_nature_beam_world(document), 0)
     entry["seed"] = [int(value) for value in np.rint(mode * AMPLITUDE).astype(np.int64).ravel()]
-    # the mode's clock beside the profile (record 1886; ALGEBRA.md 9.22 (7))
+    # the mode's clock beside the profile and the input stamp (record 1886)
     entry["clock"] = list(mode_clock(lambda_max, AMPLITUDE))
+    document["input"] = input_stamp(document)
     return document
 
 
@@ -147,6 +148,7 @@ def test_c_one_node_off_the_mode_is_refused_naming_the_node():
     document = seeded([48, 48, 48], [14, 14, 14], 20)
     index = (14 * 48 + 14) * 48 + 14
     document["measured"][0]["seed"][index] += 1
+    document["input"] = input_stamp(document)  # the stamp of the changed integers
     with pytest.raises(ValueError, match=r"at the Node \(14, 14, 14\) the level `now` holds") as found:
         checked(document)
     assert "(1 Nodes differ" in str(found.value)

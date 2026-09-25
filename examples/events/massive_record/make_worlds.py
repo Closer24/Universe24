@@ -234,6 +234,18 @@ def seed_on_the_mode(document: dict) -> None:
     for number, entry in enumerate(document["measured"]):
         if "emitter" in entry:
             excite_on_the_mode(document, number)
+    stamped(document)
+
+
+def stamped(document: dict) -> dict:
+    """THE INPUT STAMP (record 1886; ALGEBRA.md 9.22 (7) (i)) rewritten for the document's
+    integers as they stand: the law identifier and the hash of every profile, clock and
+    born pair; written before every parse of a document under construction and last of
+    all, so that the file carries the stamp of what it holds."""
+    from event_universe.events.world import input_stamp
+
+    document["input"] = input_stamp(document)
+    return document
 
 
 def excite_on_the_mode(document: dict, number: int) -> None:
@@ -258,7 +270,7 @@ def excite_on_the_mode(document: dict, number: int) -> None:
     emitter.pop("period", None)
     emitter.pop("norm", None)
     emitter.pop("born", None)
-    world = parse_nature_beam_world(document)
+    world = parse_nature_beam_world(stamped(document))
     period = period_of(block_margin(world, number))
     emitter["period"] = period
     emitter["norm"] = excitation_norm(world, number, period)
@@ -690,7 +702,7 @@ def mode_profile(document: dict, number: int, amplitude: int = 1 << 20) -> list[
     from event_universe.diagnostics.massive_record_margin import accurate_mode, mode_clock
     from event_universe.events.world import block_cell_indices, mode_residual, parse_nature_beam_world
 
-    world = parse_nature_beam_world(document)
+    world = parse_nature_beam_world(stamped(document))
     lambda_max, mode = accurate_mode(world, number)
     clock = mode_clock(lambda_max, amplitude)
     profile = np.rint(mode * amplitude).astype(np.int64)

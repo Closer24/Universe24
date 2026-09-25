@@ -32397,5 +32397,9 @@
    ],
    "threshold": 1
   }
- ]
+ ],
+ "input": {
+  "law": "detector-law algebra 9.25 (2026-09-25)",
+  "hash": "f9a4762cb564f68d967f58ce77364bd7a95c3d68c306eb5944a54a715b5b8cf8"
+ }
 }
