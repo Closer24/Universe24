@@ -13942,7 +13942,14 @@ sees d_k:
   0 <= rho' < d_k,
 
 rho_re and rho_im the Port's own two remainders at the Node, state
-like the rule's r. (d) THE INVERSE, exact per Node: the transport is
+like the rule's r: they stay at their Node, never travel, and never
+enter a click; the residue that sets a click's rung is read from the
+rule's r at the seat as today (9.19 (4), 9.45 (4)), and the click
+moves the whole, one quantum, as today; the circle of 9.45 (4) is
+unchanged by the transport (the model owner's question of
+2026-09-25: "the remainder stays at the Node and the whole passes to
+the clicks"; yes, and the Port's remainders are of the same kind).
+(d) THE INVERSE, exact per Node: the transport is
 a function of the arrival (a start value, known backward), the
 Port's remainder at the start and the table; backward, rho at the
 start is the unique value in [0, d_k) with rho = rho' - (c re_arr -
