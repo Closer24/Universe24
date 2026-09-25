@@ -9518,3 +9518,48 @@ A law in which the records' energy sources the clock (gravity by energy
 and not by counted quanta alone) would need the field to read the
 families, a coupling beyond the click, and stands outside the adopted
 law under its own identity if ever wanted.
+
+**(5) THE SHELL READS THE BODY AND THE CLICK THROUGH THE FAMILY OF
+CLICKS (the model owner's record 1984 through the Boss; his aim: at each
+Node of a body's shell, to know whether this is a body and whether it
+clicked, through the family of clicks).** (a) WHETHER THIS IS A BODY,
+through the family: a body's Nodes hold the family's level at the
+content M and outside it falls as about M R / r (9.45 (2)); the mark at
+a shell Node is the LEVEL STEP across its outward Links, its own level
+held and not moving against a neighbour's lower and moving level, not a
+current (a static field has no current: now = before at every Node, so
+the Wronskian is 0). It is a local reading, right, for a body whose
+content is not 0; a body with no content (a detector before its first
+click, an emitter whose stock is spent) is marked only by its
+eigenvector, (1). (b) WHETHER IT CLICKED: at a click the held level
+steps by one on all the body's Nodes in that interval, so every Node of
+the body, the shell included, sees the step at once, and the Nodes
+outside see it arrive a Link per interval later; right, local. (c) WHEN
+IT CLICKS, the trigger. THE GIVING END CAN BE LOCAL AT EVERY NODE: the
+tick's count is the same at every Node (T2); the period each Node reads
+from its own levels; and the one body-wide number, the residue, can ride
+the click's own write: at the click the body's Nodes receive, in the one
+act that already writes M on all of them, the residue u read at that
+interval at the first shell Node (the first shell Node's remainder at
+the click, on the body's wheel). Then every Node of the body holds (M,
+u), counts its own intervals against (2 u + 1) P / (2 W) with its own P,
+and all reach the rung at the same interval by construction; no sum, no
+tally, and no fraction moved (the remainders stay where they are; u is
+a reading of one of them, whole). The born record's residue is the same
+u. THE TAKING END CANNOT: the passing record's chance to click at this
+body is its share of the record's whole gathered through ALL the body's
+Ports (Born's rule, 9.25 (3)); a threshold at each shell Node on its own
+Ports' inflow would make the body click on the largest single Node's
+share and not on the body's, and Born's rule would fail at every body of
+more than one Node; so the taking end's gather stays one sum over the
+body's Ports per interval, the body's one act at its own scale, as the
+deletion is; a tally passed along the Links would give the same sum
+after the diameter's delay and is a register in transit. (d) "THE
+FAMILY RECEIVES THEM, MAYBE", of the remainders: the reading that moves
+no fraction between families (records 1962 (2) and 1983) is (c): what
+the family's write at the click carries to the body's Nodes is the
+residue, a whole reading of one remainder, and never a remainder itself;
+the remainders stay at their Nodes and the step alone moves them. With
+(c) the reading of (2) above changes in one word: the residue is read at
+the click, not after the first advance, and written with the content on
+the body's Nodes.
