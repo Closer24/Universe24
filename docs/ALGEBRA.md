@@ -7093,6 +7093,55 @@ of (3)); the recurrence is the Inside's, and a universe that is one
 Inside with no click is cyclic in the sense of (b), returning through
 the same process.
 
+**(4a) THE THREE-CUBE UNIVERSE AS A DETECTOR, AND THE SPECIAL NUMBERS
+(the model owner's question, record 1932: "the universe for us is also a
+detector, and a detector alone has a click, no? a three-by-three universe
+forces something so that it is periodic and has a click: the numbers we
+must choose for it are special numbers so that it turns"; the Boss's
+reading PROVED and made exact).** (i) THE CLICK. A detector's running
+total accrues the flux entering through its Ports FROM OUTSIDE (9.25
+(2)); a universe that is the whole detector has no outside and no Port,
+so it never clicks by flux. A standing record named on the whole set
+clicks by its own tick ((1a) (b), the emitter's rule), ONCE: then it is
+deleted and the universe is empty of it. A click is an exchange between
+two systems ((3) (b)); a universe alone has no one to exchange with, and
+its only click is its own ending. (ii) THE SPECIAL NUMBERS, EXACT. On
+the torus of three Nodes per axis the six-neighbour sum's eigenvalues
+are 6, 3, 0 and -3 (each axis contributing 2 cos(2 pi j / 3), that is 2
+or -1), and a mode's multiplier is m = 2 cos omega = num lambda / (3
+den). The step 3 den a_next + r' = num S_6(a) - 3 den a_before + r on an
+eigenvector p with num lambda = 3 den m, m an integer, is a_next = m
+a_now - a_before EXACTLY, the remainder 0 for ever (PROVED: the total is
+an exact multiple of 3 den); the recurrence a_next = m a - a_before is
+periodic for |m| < 2 and unbounded for |m| > 2 (its characteristic roots
+lie on the unit circle only there), and by Niven's theorem 2 cos of a
+rational multiple of pi is rational only at 0, +-1 and +-2, so THE ONLY
+MODES THAT RETURN TO THE BIT ON ANY BOARD have m in {-1, 0, 1}: THE
+PERIODS 3, 4 AND 6 (m = -1: a_next = -a - a_before, period 3, omega = 2
+pi / 3; m = 0: period 4, omega = pi / 2; m = 1: period 6, omega = pi /
+3), while m = 2 (static) and m = -2 (alternating) carry zero form ((1a)
+(a)). For light [1, 1] the three-cube realises all three: lambda = 3
+(one axis at 2 pi / 3), 0 (two axes), -3 (three axes); COMPUTED on the
+integer step with the eigenvector seeds (the profile 2, -1, -1 along each
+turned axis, scaled even so that the level one step back is an integer):
+the period 6 at lambda = 3 and 4 at lambda = 0 with the remainder 0 and
+the form 1458 and 972 in the flux's units; lambda = -3 the period 3 by the
+recurrence. A general pair [num, den] reaches them only where num lambda
+/ (3 den) is an integer: lambda = 0 (the period 4) for every pair; the
+others for num = den, and the gap [1, 2] at lambda = 6 (m = 1, the
+period 6): so the special numbers are the periods 3, 4 and 6, and a
+three-cube universe that is exactly periodic and carries form turns
+with one of them. THE SMALLEST DETECTOR AND THE SMALLEST SUCH UNIVERSE
+COINCIDE AT SIDE 3 for one reason: three Nodes on an axis are the least
+at which a Node's two neighbours are distinct from it and from each
+other (a detector's interior Node, 9.25 (10); a torus whose reads are
+not its own cell), the grain of the geometry and nothing more. (iii)
+PERIODIC AND CLICKING AT ONCE: with the click irreversible one click ends
+the periodicity ((3) (b), (4) (c)); a universe cannot be both exactly
+periodic and clicking unless its click is made reversible, the owner's
+decision of (3) (c); with a finite stock the cycle of births and clicks
+ends when the stock is spent.
+
 ### 9.27 The coherence of the model owner's decisions with the algebra; the generic way to build a board; the quarks (the model owner's order of 2026-09-25 through the Boss, record 1930: "take my decisions to the mathematician, so he sees that they really are laws that can be used ... see that all the laws are coherent"; "what is the generic way we build a board"; "how do the quarks connect here")
 
 **(A) THE COHERENCE TABLE.** Every decision row of docs/HIGHLIGHTS.md 5.4
