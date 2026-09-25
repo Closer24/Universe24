@@ -8911,3 +8911,101 @@ percent in 20 bins, which no pin sees (the pins are binomial shares with
 bands of 5 to 10 percent, 9.22 (8)). RECOMMENDED: the owner's form, the
 sum over the body's cells, as the body's remainder; the landing cell of
 (2) withdrawn inside a body.
+
+### 9.39 The cube's click with everything in, and what must be declared (the model owner's words of 2026-09-25 through the Boss: record 1970, only the name Node, a body a number of Nodes; record 1971, "we do not need a well and a wave height; everything converges from the click once the laws are at the Node; check the algebra with everything in; run a world with a cube and see its click by the faces or by the sum of the remainders"; the Boss's host run; DERIVED and COMPUTED; written with the name Node alone)
+
+**(1) THE CUBE'S CLICK, DERIVED WITH EVERYTHING IN.** The state at a Node:
+per record two levels and a remainder, kept at the Node (9.34 (A)); per
+family a pair; per Node the content M of the body it belongs to and the
+Node clock (Gamma, Gamma + M) (9.35 (3)). The step at every Node: 3 den
+f a_next + r' = e num S_6 + 6 den (f - e) a_now - 3 den f a_before + r,
+with (e, f) the Node's clock. A cube of side 3 is a body of 27 Nodes; its
+faces are its 54 outward Ports (9.38 (1)); it holds no standing record
+(a detector), or it holds one (an emitter, a holder). THE TAKING END: a
+record passing the cube offers, every interval, the positive current
+through its faces, num Gamma (now_i before_j - before_i now_j), read on
+the two levels before the step; by the body's Gauss law (9.38 (3) (b))
+the net current through the faces is the change of the record's share
+inside, so the faces read the body's whole of the record and nothing
+twice. The record's running total C is compared with (2 u + 1) T / (2
+W): T its whole; u and W its residue and wheel, INHERITED AT ITS BIRTH
+from the body that gave the click (9.19 (4); a record of light [1, 1]
+born of a body [800, 801] carries W = 2403, not light's own wheel of 3,
+which would quantise every share to sixths). The click at the first
+interval at which C reaches the threshold: the record is cleared on all
+its Nodes, the cube's content rises by one, its clock at its 27 Nodes
+slows by 1 / (Gamma + M), and the remainders stay where they are. THE
+GIVING END, if the cube holds a standing record: its own share at its
+Nodes, gathered every interval (constant; the tick), against P times
+that share; the click at (2 u + 1) P / (2 W) with u the sum of the
+body's remainders on its wheel (9.38 (9)); the born family's levels set
+on the 27 Nodes with the character, the stock down one, the remainders
+kept. THE REMAINDER RULE: a record whose remainders are 0 for ever (an
+exact one, 9.26 (4a)) has no residue and never clicks; a residue that
+happens to read 0 on a body that is not exact is a rung at 1 / (2 W),
+the first place on the wheel, and clicks (9.33 (4) and 9.34 (4) agree on
+this: the rule is about the exact record, not about the digit 0). NO
+PART FAILS WITH THE OTHERS IN: the clock changes the operator at the
+body's Nodes at each click by 1 / (Gamma + M) and sheds nothing of the
+born family (9.37 (1)); the remainders kept through the click and the
+reseed spread the residues with no coupling (9.34 (2), 9.38 (9)); the
+click hands over whole numbers only; the faces are read on the levels
+before the step, which the Node has; the exact record passes the faces
+and is not gathered. THE BOSS'S HOST RUN, CONFIRMED: a half-sine record
+of 32 Nodes through a cube of side 3 across a section of 9 x 9 offers
+the cube 0.1107 of its whole, which is the geometric share 9 / 81 = 1 /
+9 of the section (the record's form is uniform across it); the net
+inflow equals the change of the share inside, in integers, which is the
+body's Gauss law; and THE SUM OF THE CUBE'S REMAINDERS STAYS IN [0, 54]
+(27 Nodes on light's wall 3) AND DOES NOT FOLLOW THE PASSAGE, which is
+right: the remainder is not the measure of what passes, the faces are;
+the remainder is the measure of WHERE in the share the click falls, read
+once at a birth on the giving body's wheel. So the cube's click reads
+the faces, and the remainder sets its place: the Boss's sentence,
+derived.
+
+**(2) THE WAVE HEIGHT IS NOT PHYSICS (CONFIRMED, with its two bounds).**
+The click is scale-free: the threshold is a fraction of the record's
+whole, and scaling every level by a factor scales every share and the
+whole by its square, the ratio unchanged; one record is one quantum
+whatever its height (9.33 (2), "the quantum is counted, not weighed").
+The height is a convention of the write, with two bounds that are the
+integers' and not nature's: below, the rounding (the accounting error
+under one unit per Node per interval, 8.2; a body whose remainders take
+fewer than 500 values is refused, 9.19 (4a); a tail must reach 0 before
+the next body or a face, 9.22 (7a) (i)); above, the working amplitude
+2^28 under int64 (9.35 (3)). Between them no pin depends on it.
+
+**(3) THE WELL: WHAT THE OWNER'S CLAIM GETS RIGHT, AND THE LEAST THAT MUST
+BE DECLARED (COMPUTED).** (a) A TAKING BODY NEEDS NO WELL: a detector is
+a declared number of Nodes with its Ports and a place on a ladder; the
+Boss's cube is 27 Nodes of the vacuum and reads 1 / 9 of the record;
+nothing at its Nodes is lowered. Every detector of the rows is such a
+body. (b) A GIVING BODY NEEDS A STANDING RECORD, and a standing record
+needs a bound mode of the operator; in a uniform vacuum the operator has
+none (every mode is a plane wave; a written packet disperses). CAN THE
+NODE CLOCK BIND IT, so that the content makes its own well and nothing is
+declared? For a family of pair p the clock at a body of content M raises
+the local band top by 2 (1 - p) M / (Gamma + M), the same as a lowered
+pair of relative depth (1 - p) M / (p (Gamma + M)); FOR LIGHT (p = 1) IT
+RAISES NOTHING: the clock never binds light, at any Gamma (9.29, light
+has no well). For matter [800, 809] the critical depth of a cube on the
+three-dimensional lattice (scratchpad cube_bind_np.py, the top mode by
+iteration on a periodic box, bound when it lies above the vacuum's band
+top and on few Nodes): side 3 between 0.10 and 0.15; side 8 between
+0.010 and 0.020; side 32 between 0.002 and 0.003 (the declared well
+[800, 801] in [800, 809] is 0.010, bound on about 20800 Nodes). The
+clock's depth at Gamma = 10^6: 1.1 x 10^-8 for M = 1, 7.2 x 10^-7 for M =
+64, 1.1 x 10^-4 for M = 10^4, below every threshold; to bind a cube of
+side 32 by its own content the clock needs Gamma of the order of M
+(Gamma = 300 at M = 64 gives 2.0 x 10^-3, just short; Gamma = M gives 5.6
+x 10^-3, bound), and then the clock at the body runs at 0.5 to 0.8 of
+the vacuum's, which moves every clock row of 9.22 (8) by tens of percent
+against bands of 0.3 percent. So THE LEAST THAT MUST BE DECLARED for a
+body that gives is ONE LOWERED PAIR PER REGION PER FAMILY, the well,
+which stands in for the binding the algebra does not yet have (a charge
+law would be its own identity, 9.27 (D)); the alternative, Gamma of the
+order of the content under its own identity, is the content as its own
+well and is refused by the clock rows as they stand. The owner's
+sentence holds for everything that takes and for the height; for what
+gives, the well is the one declaration left.
