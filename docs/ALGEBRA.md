@@ -10045,3 +10045,24 @@ three pieces no section stated are now stated: the load bound's factor
 2 on the world's content is host arithmetic; the click's content held
 at a set's first body goes with (v); the kept remainder above a shrunk
 wall is 9.45 (5).
+
+**(9) TWO CONVENTIONS FOR THE BUILD (Nature24's plan, the Boss's record
+1992).** (a) THE CLOCK PAIR: the nearest pair [num_c, den_c] to the
+iterated mode's 2 cos omega at a declared denominator of the world (the
+generator's, under the stamp); the equality of (4) (ii) is read as: the
+lattice body's rotation, (a_next + a_before) / a_now at any of its
+Nodes, agrees with num_c / den_c within the loader's residual bound at
+every content M, the clock's transform applied to both; a bit-equal
+rational does not exist for a lattice body, whose rotation is the
+integer profile's to the rounding. (b) THE SHARE AND THE NORM: e = den_c
+(a^2 + b^2) - num_c a b is the invariant of the two-term rule (a' =
+(num_c / den_c) a - b leaves it fixed: PROVED in one line); T is the
+generator's declared norm at the body's initial content, one period's
+action, an integer, unchanged with M as 9.45 (5) rules (the drift 10^-5,
+no register); the rung is the first t with 2 W t e >= (2 u + 1) T. (c)
+THE ORDER, confirmed: (iii) the reseed retired on the lattice body, so
+the reference is right; the body record under its key with the
+equivalence test; (v) the detectors as seated body records with their
+pins recomputed blind; then the special paths; (iv) folded into the body
+record, its taking end being the engine's one gather over the Ports
+already and its giving end at the seat equal to the shell's by T2.
