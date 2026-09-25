@@ -5769,7 +5769,22 @@ power iteration of record 1898 is the reproducible form; the float is
 the host's shortcut and the integer residual the gate, as (7) says. A
 one-unit change at one Node stays within the bound and is admitted (it
 changes the output, 9.20 test 8); a profile off the mode by the
-amplitude's order is refused. (iii) THE ONE-CELL EMITTER ON A LAYER (his
+amplitude's order is refused. THE INTEGER ITERATION'S FLOOR (his
+computation at de363acb, 2026-09-25): from the cells' indicator the
+integer power iteration of record 1898 reaches the mode within 78 units
+at the amplitude 2^20 (the chain of 80, the gap 0.0105) and stays there
+from 4000 to 16000 iterations: each step's rounding, about half a unit
+per Node, feeds the next mode and is damped only by gap / (lambda + 2)
+per step, so the iterate carries an admixture of the next mode of about
+1 / gap units, its residual 0.43 of the bound against the float mode's
+0.15, both admitted. DECIDED: the generator writes the accurate float
+mode and the integer iteration is the reproducible CHECK of the same
+law, not the writer; the stored integers with their stamp (9.22 (7) (i),
+built at de363acb: the law identifier and the SHA-256 of the shape and
+every seeded body's profile, clock and born pair, refused missing, of
+another law or mismatched) are the world, and a regeneration that
+differs by units within the bound is another lawful world with another
+hash, never the same one silently. (iii) THE ONE-CELL EMITTER ON A LAYER (his
 reading): the well [801, 700] on the holder's [7, 8] binds on a chain
 (2 cos omega = 1.897 against the band's top 1.75) but on a layer only by
 1.1 x 10^-3 (1.751147), its mode spread over 4200 Nodes: a source forty
