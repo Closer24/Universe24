@@ -3,7 +3,7 @@ world's circle nearest to a record's pair (a_before, a_now) at a Node at the rec
 and amplitude, with the reading's residual; a GAMEBOARD diagnostic of a row, never an input
 of the law. SINCE THE CLEANUP ORDER'S STEP 3 (BUILD.md section 26 item 17; ALGEBRA.md 9.21)
 the tables are retired from the engine with their tests: the splitter's linear form (c), the
-polariser as a table body of two cells (d, d2, d3, held since item 14) and the joint weights
+polariser as a table body of two detectors (d, d2, d3, held since item 14) and the joint weights
 and the partial trace (g, d4); a polariser is a body with an axis and two receivers named, a
 splitter a region of the one operator; the pair is born at the crystal. The engine's
 `read_phase` and its cosine and sine tables are gone with them (no table in the engine,
@@ -37,7 +37,7 @@ def test_a_the_phase_reading_reads_the_clocks_phase_back_at_every_age():
     wave, so the reading is not exact there (a design question for the Bell row's N). On the
     chain world the record's reading at a free Node 12 Links from the source, advancing by the
     clock's step between consecutive intervals: RETIRED with the lamp's drive (ALGEBRA.md 9.17;
-    the emitter body's one-cell birth is broadband). The edge cases: the zero pair reads None; a zero circle, clock or
+    the emitter body's one-Node birth is broadband). The edge cases: the zero pair reads None; a zero circle, clock or
     amplitude is refused."""
     factor = UNIT // 256
     for steps, clock, band, within in (
@@ -69,7 +69,7 @@ def test_a_the_phase_reading_reads_the_clocks_phase_back_at_every_age():
         assert checked >= steps // 2, (steps, checked)
     # (the chain part of this test, the reading's advance along a driven
     # train at a free Node, retired with the lamp's drive, ALGEBRA.md 9.17:
-    # an emitter body's one-cell birth is broadband)
+    # an emitter body's one-Node birth is broadband)
     assert nearest_phase(0, 0, UNIT, (77, 25), 64) is None
     with pytest.raises(ValueError):
         nearest_phase(1, 1, UNIT, (0, 1), 64)

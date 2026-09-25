@@ -889,16 +889,16 @@ BLOCK_KEYS = {
     "start",
     "margin",
     # the emitter as a clicking body (ALGEBRA.md 9.17 (4); LAB_TOOLS.md A.1):
-    # the excited records in turn on the body's cells, each clicking at its
+    # the excited records in turn on the body's Nodes, each clicking at its
     # own rung, the born record written once by E^T at that interval
     "emitter",
     # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
-    # 7): an emitting block names the detector set whose one cell is its
+    # 7): an emitting block names the detector set whose one detector is its
     # record's ladder; admitted on an emitting block alone
     "receiver",
 }
 # The margin rule's two kinds of world (MASSIVE_RECORD.md section 11 item 4,
-# Reviewer 3's two lines): a pin world's cells two extents from a
+# Reviewer 3's two lines): a pin world's Nodes two extents from a
 # non-periodic face and a periodic side of s + 4 extents; a control world's
 # one extent and s + 2 extents.
 MARGIN_KINDS = ("pin", "control")
@@ -952,9 +952,9 @@ LAMP_KEYS = {
     # detector-law-v1: the lamp record's LADDER BY NAME (SIZING.md, the click
     # line and the receiver by name, DECLARATIONS.md section 13 item 7): the
     # detector sets, by name, among which the birth wheel's u chooses the
-    # record's cell; every other set and every face is a SINK for the lamp's
+    # record's detector; every other set and every face is a SINK for the lamp's
     # records (what it takes is booked to the escaped row, never chosen).
-    # Absent, the ladder is every cell as built. A string or a list of
+    # Absent, the ladder is every detector as built. A string or a list of
     # strings; refused outside `detector_law` and on a name no set declares.
     "receiver",
     "directions",
@@ -1033,7 +1033,7 @@ AXES = ("x", "y", "z")
 BOUNDARIES = ("open", "periodic")
 # detector-law-v1 (DECLARATIONS.md section 10, Reviewer 3's line, 2026-09-24):
 # a face declared "closed" is a zero face for light WITHOUT the open face's
-# take (a mirror: the level 0 beyond it, no face cell, no sponge), per
+# take (a mirror: the level 0 beyond it, no face detector, no sponge), per
 # axis, admitted under `detector_law` alone (the ray law has no rows).
 CLOSED_FACE = "closed"
 
@@ -1274,8 +1274,8 @@ class LampDefinition:
     # its own record; None: two periods of its clock (the engine's constant).
     own_grace: int | None = None
     # detector-law-v1: the record's ladder by name (`receiver`), the detector
-    # sets among which u chooses the cell, in the world's order; None: every
-    # cell as built (the lamp worlds of the tables, untouched).
+    # sets among which u chooses the detector, in the world's order; None: every
+    # detector as built (the lamp worlds of the tables, untouched).
     receiver: tuple[str, ...] | None = None
 
 
@@ -1322,18 +1322,18 @@ class EmitterDefinition:
     name, is the line at the rung), "period": P, the nearest integer to
     2 pi / omega_b of the body's mode (the generator's integer), "norm":
     T, one period's action P e_c: the share of the body's conserved form
-    at its centre cell summed over P intervals advanced alone (the
+    at its centre Node summed over P intervals advanced alone (the
     generator's integer under the input stamp; ALGEBRA.md 9.17 (7) (e) and
     (f) in the flux's units of 9.19 (3)), "born": the born record's two levels
     over the whole board as material (optional; {"now": [...], "before":
     [...]}, x-major, one per Node; the engine copies them at the click;
     9.17 (5) item 3)}. Without `born` the born record is the pair on every
-    cell of the body: now = A C_2N[3 N / 2 + s] on the circle of 2 N steps
+    Node of the body: now = A C_2N[3 N / 2 + s] on the circle of 2 N steps
     with s = floor(n / d) the born clock's step and before = -now (the
     character half a step either side of its zero, no static part; 9.17
     (6)); an odd s where 2 N exceeds the tables' bound is refused. Excited
     record k clicks at its own rung (E the one-way flux into its centre
-    cell, D the rung 2 T u_k + T <= 2 W C with T its norm); at that click
+    Node, D the rung 2 T u_k + T <= 2 W C with T its norm); at that click
     X ends it and E^T births the photon (content one quantum, its residue
     the excitation's) and, while the stock lasts, excited record k + 1. No
     rate, no train, no drive, no source term, no grace."""
@@ -1357,7 +1357,7 @@ class TrainDefinition:
     declared clock [p, q] (the world's family column, one clock per row):
     the wave number k = 2 pi p / (2 N q) per Link on the world's circle of
     N steps, the wavelength 2 N q / p a whole number of Links, and the
-    body's extent along the direction n wavelengths (32 cells for 8
+    body's extent along the direction n wavelengths (32 Nodes for 8
     periods at the wavelength 4 of [512, 1] on N = 1024)."""
 
     axis: int
@@ -1374,21 +1374,21 @@ class TrainDefinition:
 
     @property
     def length(self) -> int:
-        """The train's length in cells, periods x wavelength."""
+        """The train's length in Nodes, periods x wavelength."""
         return self.periods * self.wavelength
 
 
 @dataclass(frozen=True)
 class BornTrain:
     """THE BORN TRAIN'S PROFILE (ALGEBRA.md 9.17 (6a)): the key `born` of an
-    emitter: {"now": [...], "before": [...]} over the body's cells in the
-    box's x-major order (`block_cell_indices`: the character of the train's
+    emitter: {"now": [...], "before": [...]} over the body's Nodes in the
+    box's x-major order (`body_node_indices`: the character of the train's
     **K** over its periods under the window across the transverse extents
     and the tapers along **K**, at the two levels t = 0 and t = -1, the
     generator's integers at the amplitude 2^16), and "norm": T, the born
     record's conserved form on the born family's VACUUM in the flux's units
     (9.19 (3)), the generator's integer checked at load (`born_train_norm`):
-    the ladder's T. The two-integer pair [now, before] (the one-cell birth,
+    the ladder's T. The two-integer pair [now, before] (the one-Node birth,
     a flat pulse of the body's length, broadband) is refused by name."""
 
     now: tuple[int, ...]
@@ -1399,14 +1399,14 @@ class BornTrain:
 @dataclass(frozen=True)
 class BlockDefinition:
     """A block, the foreign object of the massive record kind
-    (`massive-record-v1`, MASSIVE_RECORD.md sections 4 to 7): its cells R
+    (`massive-record-v1`, MASSIVE_RECORD.md sections 4 to 7): its Nodes R
     the box of `extents` per axis (the cube of `side` the shorthand for
     equal extents; the slabs of ALGEBRA.md 9.22 (8), BUILD.md section 26
     item 23) with its lower corner at the measured event's `position`,
-    cut to the board on an open axis and wrapped on a periodic one; its `pair` on the six-neighbour term at its cells (a WELL of the
+    cut to the board on an open axis and wrapped on a periodic one; its `pair` on the six-neighbour term at its Nodes (a WELL of the
     massive kind's pair, `num' / den' > num / den`; on light's kind a gap,
     the (M) wall); the
-    `seed` of its own record on its cells at interval 0 (0: silent; declared,
+    `seed` of its own record on its Nodes at interval 0 (0: silent; declared,
     no default, BUILD.md section 26 item 28); `ramp`
     (the pushing agent's declaration: its momentum reached from 0 over that
     many intervals); `start` (the same agent's: the interval its drive
@@ -1417,7 +1417,7 @@ class BlockDefinition:
 
     side: int
     pair: tuple[int, int]
-    # the well's own record's amplitude on its cells at interval 0 (0
+    # the well's own record's amplitude on its Nodes at interval 0 (0
     # silent), or its profile's; declared in the file, no default (the
     # model owner's rule through the Boss, 2026-09-25; BUILD.md section 26
     # item 28; the loader's 2^20 of the first builds HISTORY)
@@ -1437,11 +1437,11 @@ class BlockDefinition:
     start: int = 0
     margin: str = MARGIN_KINDS[0]
     # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
-    # 7, the click line): the name of the detector set whose one cell is the
-    # ladder of every record this block emits (the click line at that cell's
+    # 7, the click line): the name of the detector set whose one detector is the
+    # ladder of every record this block emits (the click line at that detector's
     # first rung after the record's train; the faces and every other set
     # sinks for it); None where the world names none, the ladder then every
-    # cell and the line at the close, as before the key.
+    # detector and the line at the close, as before the key.
     receiver: str | None = None
     # the emitter as a clicking body (ALGEBRA.md 9.17 (4)): None on a body
     # that emits nothing by the click
@@ -1523,7 +1523,7 @@ class MeasuredDefinition:
     energy: int | None = None
     # The body's `level` under `atom_level` (`LevelDeclaration`), None without.
     level: LevelDeclaration | None = None
-    # The block (massive-record-v1): the measured event's cells, pair,
+    # The block (massive-record-v1): the measured event's Nodes, pair,
     # seed and the rest, or None (a body of one Node or a span as before).
     block: BlockDefinition | None = None
 
@@ -1578,7 +1578,7 @@ class DetectorDefinition:
     (`beam` or `wave`): ONE DETECTOR, one cube of side DETECTOR_SIDE or
     more (record 1899), whose click is the detector's and never a Node's;
     under the local detector law a set may instead be BOUND TO A BLOCK
-    (`block`, the measured event's number): its Nodes are the block's cells
+    (`block`, the measured event's number): its Nodes are the block's Nodes
     at every interval (a stepping block's follow it) or a cube of free
     Nodes beside it, its pointer the one-way flux into them; the click
     stamps the block's own count. The rung's wheel is the record's own
@@ -1943,16 +1943,16 @@ def is_nature_beam_world(document: object) -> bool:
 # what stands in its place, on the world, a family, a measured event, an
 # emitter and a detector set alike.
 RETIRED_KEYS = {
-    "absorbing": "the take retired: every cell books the one-way flux into its Nodes (9.19 (3))",
+    "absorbing": "the take retired: every detector books the one-way flux into its Nodes (9.19 (3))",
     "take": "the take retired: nothing absorbs, no Port follows a wave (9.19 (3))",
     "emits": "a body emits by its excited records' clicks, the key `emitter` (9.17 (4))",
     "own_grace": "the emitter's grace retired with the take (9.17, 9.19 (3))",
     "wheel": "the rung's wheel is the record's own, W = 3 den / gcd(num, 3 den) at its birth "
-    "cell, born with its residue from the law (9.22 (4)); no set, world or emitter declares one",
+    "Node, born with its residue from the law (9.22 (4)); no set, world or emitter declares one",
     "residue_order": "the residue is the law's: the clicking record's rule remainder at the "
-    "birth cell (9.22 (4)); no order is declared",
+    "birth Node (9.22 (4)); no order is declared",
     "residue_seed": "the residue is the law's: the clicking record's rule remainder at the "
-    "birth cell (9.22 (4)); no seed is declared",
+    "birth Node (9.22 (4)); no seed is declared",
     # the cavity of form (I) (MASSIVE_RECORD.md section 4, a record held
     # by mirror faces of its own): refused by name since 2026-09-25 (the
     # model owner's rule through the Boss; BUILD.md section 26 item 28)
@@ -3507,7 +3507,7 @@ def _block(
     and no span; its `pair` is a well on the massive kind (num' / den' >
     num / den) or a gap on light's kind (den' > num', the (M) wall, which
     declares no clock, seed or margin); an emitter's
-    birth cell carries a rich pair (at least 500 remainder values, ALGEBRA.md
+    birth Node carries a rich pair (at least 500 remainder values, ALGEBRA.md
     9.22 (4)); the momentum is bounded by the pace, 3 (P . P) < (3 Q S M)^2."""
     declared = [key for key in BLOCK_KEYS if key in obj]
     if "side" not in obj and "extents" not in obj:
@@ -3548,10 +3548,10 @@ def _block(
         )
         side = extents[0]
     if "pair" not in obj:
-        raise ValueError(f"{BEAM_LAW}: {label} lacks keys: pair (the block's pair at its cells)")
+        raise ValueError(f"{BEAM_LAW}: {label} lacks keys: pair (the block's pair at its Nodes)")
     value = obj["pair"]
     if not isinstance(value, list) or len(value) != 2:
-        raise ValueError(f"{BEAM_LAW}: {label}.pair must be [num, den], the pair at the cells")
+        raise ValueError(f"{BEAM_LAW}: {label}.pair must be [num, den], the pair at the Nodes")
     pair = (
         _integer(value[0], f"{label}.pair numerator", 1, MAX_VALUE),
         _integer(value[1], f"{label}.pair denominator", 1, MAX_VALUE),
@@ -3567,7 +3567,7 @@ def _block(
         if pair[0] * kind[1] == pair[1] * kind[0]:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.pair [{pair[0]}, {pair[1]}] is the kind's own pair "
-                f"[{kind[0]}, {kind[1]}]: a block lowers the pair at its cells (a well) or "
+                f"[{kind[0]}, {kind[1]}]: a block lowers the pair at its Nodes (a well) or "
                 "raises it (a barrier; MASSIVE_RECORD.md section 4, section 15 M1-6)"
             )
         if pair[0] * kind[1] < pair[1] * kind[0]:
@@ -3593,9 +3593,9 @@ def _block(
                 "(M) wall has no clock)"
             )
         # the mirror line of light's kind (DECLARATIONS.md section 15 L-1):
-        # its cells carry the gap's pair and nothing else, no own record
+        # its Nodes carry the gap's pair and nothing else, no own record
         obj = dict(obj, seed=0)
-    # the load bound of MUST 3 on the block's own pair at its cells (the
+    # the load bound of MUST 3 on the block's own pair at its Nodes (the
     # coupling's folded denominator HISTORY, decision (2) of record 1962)
     _pair_bound(pair[0], pair[1], label, amplitude_bound)
     if "seed" not in obj:
@@ -3603,7 +3603,7 @@ def _block(
         # 2026-09-25; BUILD.md section 26 item 28): a well declares its own
         # record's amplitude or its profile; the loader's 2^20 is HISTORY
         raise ValueError(
-            f"{BEAM_LAW}: {label} lacks keys: seed (a well's own record on its cells: its "
+            f"{BEAM_LAW}: {label} lacks keys: seed (a well's own record on its Nodes: its "
             "amplitude at interval 0, 0 silent, or its profile with `margin`; no default, "
             "BUILD.md section 26 item 28)"
         )
@@ -3734,16 +3734,16 @@ def _block(
             extents=extents,
             periodic=periodic,
         )
-        # THE RICHNESS OF THE BIRTH CELL (ALGEBRA.md 9.22 (4); BUILD.md section
+        # THE RICHNESS OF THE BIRTH NODE (ALGEBRA.md 9.22 (4); BUILD.md section
         # 26 item 15): the residue from the law takes 3 den / gcd(num, 3 den)
-        # values on the pair at the body's centre cell (its own pair), at
+        # values on the pair at the body's centre Node (its own pair), at
         # least 500 of them ([801, 700] gives 700, [800, 801] 2403; [8, 7]
         # 21 and [800, 800] 3 are refused)
         residues = 3 * pair[1] // math.gcd(pair[0], 3 * pair[1])
         if residues < 500:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.emitter: the body's pair [{pair[0]}, {pair[1]}] gives "
-                f"{residues} remainder values at the birth cell (3 den / gcd(num, 3 den)), below "
+                f"{residues} remainder values at the birth Node (3 den / gcd(num, 3 den)), below "
                 "500: the residue from the law needs a rich pair (ALGEBRA.md 9.22 (4); [801, 700] "
                 "on the kind [7, 8] gives 700, [800, 801] on [800, 809] gives 2403)"
             )
@@ -3784,7 +3784,7 @@ def _emitter(
     clock (not the body's own), the born labels, the ladder by name, the
     period and the norm (the generator's integers), the born profile
     (material). No wheel, no residue order and no seed: the residue is the
-    law's (the clicking record's remainder at the birth cell, the wheel the
+    law's (the clicking record's remainder at the birth Node, the wheel the
     pair's), and the keys are refused by name."""
     _refuse_retired(value, label, ("wheel", "residue_order", "residue_seed"))
     obj = _object(
@@ -3827,13 +3827,13 @@ def _emitter(
     born: BornTrain | None = None
     if "born" in obj:
         # THE BORN TRAIN (ALGEBRA.md 9.17 (6a)): the profile of the train's
-        # two levels over the body's cells and its norm on the vacuum, the
+        # two levels over the body's Nodes and its norm on the vacuum, the
         # generator's integers, checked here in integers; the two-integer pair
-        # (the one-cell birth, a flat pulse of the body's length) refused
+        # (the one-Node birth, a flat pulse of the body's length) refused
         value = obj["born"]
         if isinstance(value, list):
             raise ValueError(
-                f"{BEAM_LAW}: {label}.born is the pair [now, before] on every cell: a flat pulse of "
+                f"{BEAM_LAW}: {label}.born is the pair [now, before] on every Node: a flat pulse of "
                 "the body's length is broadband and its standing components book the ladder by "
                 "sloshing, not by a passage (ALGEBRA.md 9.17 (6a), 9.25 (11)); every birth is a "
                 'travelling train: `born` {"now": [...], "before": [...], "norm": T} with `train`'
@@ -3887,7 +3887,7 @@ def _train(
         raise ValueError(
             f"{BEAM_LAW}: {label}: the body's extent {extents[axis]} along the train's axis "
             f"{AXES[axis]} is not the train's length, {periods} periods of the wavelength "
-            f"{wavelength} = {periods * wavelength} cells (ALGEBRA.md 9.17 (6a))"
+            f"{wavelength} = {periods * wavelength} Nodes (ALGEBRA.md 9.17 (6a))"
         )
     return TrainDefinition(axis, sign, (p, q), periods, wavelength)
 
@@ -3902,7 +3902,7 @@ def _born_train(
     train: TrainDefinition,
 ) -> BornTrain:
     """The emitter's `born` profile (ALGEBRA.md 9.17 (6a)) checked in
-    integers: the two levels over the body's cells (the box's cell count,
+    integers: the two levels over the body's Nodes (the box's Node count,
     x-major), a motion, the flux sign along the train's way positive, and
     the norm the conserved form on the born family's vacuum (the box at the
     board's origin: the vacuum is the same wherever the box stands)."""
@@ -3914,7 +3914,7 @@ def _born_train(
         if not isinstance(items, list) or len(items) != count or any(type(v) is not int for v in items):
             raise ValueError(
                 f"{BEAM_LAW}: {label}.{key} must be {count} integers, the train's level on every "
-                f"cell of the body's box {list(extents)} in x-major order (ALGEBRA.md 9.17 (6a))"
+                f"Node of the body's box {list(extents)} in x-major order (ALGEBRA.md 9.17 (6a))"
             )
         levels.append(tuple(int(v) for v in items))
     now, before = levels
@@ -4197,7 +4197,7 @@ def _measured(
                 # THE LAMP IS RETIRED under the detector law (ALGEBRA.md 9.17,
                 # the model owner's word of 2026-09-24, 22:30Z): a birth is the
                 # other side of a click that ends a record; a rate with no
-                # record behind it and a drive on the cells are refused
+                # record behind it and a drive on the Nodes are refused
                 raise ValueError(
                     f"{BEAM_LAW}: {label}.lamp is refused under {DETECTOR_LAW_RULE}: a birth has a "
                     "clicking record behind it (ALGEBRA.md 9.17); the emitter is a body of a massive "
@@ -5060,17 +5060,17 @@ def block_extents(side: int | tuple[int, int, int]) -> tuple[int, int, int]:
     return (int(side[0]), int(side[1]), int(side[2]))
 
 
-def block_cell_indices(
+def body_node_indices(
     shape: tuple[int, int, int],
     corner: tuple[int, int, int],
     side: int | tuple[int, int, int],
     wrap: tuple[bool, bool, bool],
 ) -> list[int]:
-    """The block's cells as the engine forms them (`_box`): the box of the
+    """The block's Nodes as the engine forms them (`_box`): the box of the
     extents per axis (a cube's side for all three) from its lower corner,
     wrapped on a periodic axis of the kind, cut on an open one; the Nodes'
     flat indices in x-major order (x, then y, then z). The one copy of the
-    rule in integers; the margin module's array form (`block_cells`) is
+    rule in integers; the margin module's array form (`body_nodes`) is
     built from it."""
     extents = block_extents(side)
     ranges: list[list[int]] = []
@@ -5098,20 +5098,20 @@ def born_train_norm(
 ) -> int:
     """THE BORN RECORD'S NORM ON THE VACUUM (ALGEBRA.md 9.17 (6a), 9.19 (3)):
     the conserved form of the train's two levels written on the body's
-    cells and zero elsewhere, on the born family's vacuum (its pair [num,
+    Nodes and zero elsewhere, on the born family's vacuum (its pair [num,
     den] at every Node, the world's faces), in the flux's units of the
-    engine's `conserved_form` with the wall num: the sum over the cells of
+    engine's `conserved_form` with the wall num: the sum over the Nodes of
     3 den (now^2 + before^2) - num now (S_6 before); exact integers; the
     one copy the generator writes and the loader checks."""
     num, den = int(pair[0]), int(pair[1])
     count = int(shape[0]) * int(shape[1]) * int(shape[2])
-    cells = block_cell_indices(shape, corner, extents, wrap)
+    nodes = body_node_indices(shape, corner, extents, wrap)
     level_before = [0] * count
-    for index, value in zip(cells, before, strict=True):
+    for index, value in zip(nodes, before, strict=True):
         level_before[index] = int(value)
     read = six_neighbours_flat(level_before, shape, wrap)
     total = 0
-    for index, now_value, before_value in zip(cells, now, before, strict=True):
+    for index, now_value, before_value in zip(nodes, now, before, strict=True):
         total += 3 * den * (int(now_value) ** 2 + int(before_value) ** 2)
         total -= num * int(now_value) * read[index]
     return total
@@ -5125,10 +5125,10 @@ def born_train_flux_sign(
     sign: int,
 ) -> int:
     """THE FLUX SIGN ALONG THE TRAIN'S **K** (ALGEBRA.md 9.17 (6a), a load
-    check): the sum over the body's Links along the axis, from each cell i
+    check): the sum over the body's Links along the axis, from each Node i
     to its neighbour j on the train's way, of the flux into j from i, now_j
     before_i - before_j now_i (the engine's G_ji of 9.19 (3), the flux into
-    a cell from its neighbour); positive when the record travels as
+    a Node from its neighbour); positive when the record travels as
     declared (the one-way flux leaves through the head)."""
     strides = (extents[1] * extents[2], extents[2], 1)
     total = 0
@@ -5279,21 +5279,21 @@ def _initial_state_checks(
     """THE INPUT CHECKED LAWFUL OR REFUSED, IN INTEGERS (the model owner's
     record 1886; ALGEBRA.md 9.22 (3) and (7)): the initial state is stored
     once in the file and the loader says at load whether it is lawful, with
-    no float. Every block's cells disjoint from every other block's (9.9
+    no float. Every block's Nodes disjoint from every other block's (9.9
     (4); a cube beyond a face is the fit check's refusal, naming the axis
     and the vertex); for every body seeded with a profile, its clock a / b
     strictly above its family's band top 2 num / den (a bound mode) and
     below 2 (stable), and the eigen-equation's residual within its proved
     bound at every Node of the board outside the other bodies of its family
     (the body's own mode in place on the composed operator: at another
-    body's cells the operator carries that body's summand, so those Nodes
+    body's Nodes the operator carries that body's summand, so those Nodes
     are its check, not this one's; Nature's reading for the mathematician's
     word, BUILD.md section 26 item 20), and THE TAIL: its profile 0 at
     every Node of every other body of its family (a body's mode ends
     before another body of its family begins; the mathematician's 86e1df43
     on ALGEBRA.md 9.35, BUILD.md section 26 item 28). The remainders are 0 by
     construction (the profile is written at both levels with none); the
-    amplitude's bound and the rich birth cells are checked where the block
+    amplitude's bound and the rich birth Nodes are checked where the block
     is parsed."""
     board = (int(shape[0]), int(shape[1]), int(shape[2]))
     count = board[0] * board[1] * board[2]
@@ -5307,16 +5307,16 @@ def _initial_state_checks(
         corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
         # a cube beyond a face or wrapped onto itself is refused by the fit
         # check on the parsed world (naming the axis and the vertex)
-        cells = block_cell_indices(board, corner, block.extents, wrap)
-        own = set(cells)
-        for other_number, _, _, other_cells in blocks:
-            if own.intersection(other_cells):
+        nodes = body_node_indices(board, corner, block.extents, wrap)
+        own = set(nodes)
+        for other_number, _, _, other_nodes in blocks:
+            if own.intersection(other_nodes):
                 raise ValueError(
                     f"{BEAM_LAW}: measured[{number}] and measured[{other_number}] overlap: two "
-                    "bodies' cells are disjoint (ALGEBRA.md 9.9 (4), 9.22 (3))"
+                    "bodies' Nodes are disjoint (ALGEBRA.md 9.9 (4), 9.22 (3))"
                 )
-        blocks.append((number, entry, block, cells))
-    for number, entry, block, _cells in blocks:
+        blocks.append((number, entry, block, nodes))
+    for number, entry, block, _nodes in blocks:
         if block.profile is None or block.clock is None:
             continue
         family = families[entry.family]
@@ -5337,14 +5337,14 @@ def _initial_state_checks(
                 "9.22 (7) (iii))"
             )
         # (ii) the residual on the composed operator of the family (every
-        # body of the family in place), read outside the other bodies' cells
+        # body of the family in place), read outside the other bodies' Nodes
         num = [family.pair[0]] * count
         den = [family.pair[1]] * count
         where = [True] * count
-        for other_number, other, other_block, other_cells in blocks:
+        for other_number, other, other_block, other_nodes in blocks:
             if other.family != entry.family:
                 continue
-            for index in other_cells:
+            for index in other_nodes:
                 num[index] = other_block.pair[0]
                 den[index] = other_block.pair[1]
                 if other_number != number:
@@ -5363,10 +5363,10 @@ def _initial_state_checks(
         # family begins; the profile is 0 at every Node of every other body
         # of the family (below one unit: in integers, 0), else refused naming
         # both bodies, the Node and the value
-        for other_number, other, _other_block, other_cells in blocks:
+        for other_number, other, _other_block, other_nodes in blocks:
             if other_number == number or other.family != entry.family:
                 continue
-            for index in other_cells:
+            for index in other_nodes:
                 value = block.profile[index]
                 if value == 0:
                     continue
@@ -5548,7 +5548,7 @@ def _detectors(
                 least = [min(DETECTOR_SIDE, int(shape[axis])) for axis in range(3)]
                 if any(bound.extents[axis] < least[axis] for axis in range(3)):
                     raise ValueError(
-                        f"{BEAM_LAW}: the receiver {name!r} is the cells of measured[{bound_block}], "
+                        f"{BEAM_LAW}: the receiver {name!r} is the Nodes of measured[{bound_block}], "
                         f"a block of extents {list(bound.extents)}; a detector is one cube of side "
                         f"{DETECTOR_SIDE} or more (at least {least} on this GameBoard; record 1899)"
                     )
@@ -5642,7 +5642,7 @@ def _body_fit_check(world: NatureBeamWorld) -> None:
     """A body's cube whole on the board, never cut (the model owner's word of
     2026-09-24, 16:35Z and 16:48Z, through the Boss: the experimenter places
     the body exactly where he wants it; SIMULATOR_DEFINITIONS.md, the four
-    building blocks, the body's condition 1): the cells [x0, x0 + s) on each
+    building blocks, the body's condition 1): the Nodes [x0, x0 + s) on each
     axis from the lower vertex `position` with the edge `side` lie on the
     board on every axis the body's kind does not fold. On an open or closed
     axis the far vertex is on the board; on a periodic axis the extent is at
@@ -5650,7 +5650,7 @@ def _body_fit_check(world: NatureBeamWorld) -> None:
     itself is not); the folded axis of extent 1 (a layer, a chain) is the
     one exception, the stabiliser's square or segment (ALGEBRA.md 8.2 and
     8.3). Refused naming the body, the axis and the extent; the engine's
-    `_cube` and the margin module's `block_cells` then never cut."""
+    `_cube` and the margin module's `body_nodes` then never cut."""
     shape = world.shape
     for number, entry in enumerate(world.measured):
         block = entry.block
@@ -5800,7 +5800,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     # THE FACE SLAB (ALGEBRA.md 9.25 (10), the mathematician's reading: a face
     # one Node deep books 0.15 of a packet and reflects the rest, the slab as
     # deep as the packet books 0.96): the receiver `face` at every open
-    # border is the slab of this depth, one cell, last on every ladder;
+    # border is the slab of this depth, one detector, last on every ladder;
     # REQUIRED on a GameBoard with an open face under the detector law and
     # refused without that law (the slab is its receiver), NO DEFAULT (the
     # model owner's rule through the Boss, 2026-09-25; BUILD.md section 26

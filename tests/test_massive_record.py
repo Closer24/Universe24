@@ -8,7 +8,7 @@ of the step's keys; (r) the record's keys under the key and none without it. SIN
 EMITTER AS A CLICKING BODY (ALGEBRA.md 9.17 (4); BUILD.md section 26) every source in these
 worlds is an emitter body of a massive kind seeded on its bound mode (the lamp is refused
 under the detector law; the emission by the coupling's source term, the emitter's grace,
-its exemption and its own take are retired: its cells are cells like every other)."""
+its exemption and its own take are retired: its Nodes are Nodes like every other)."""
 
 from __future__ import annotations
 
@@ -89,8 +89,8 @@ def planted(
         now.astype(np.int64),
         before.astype(np.int64),
         r.astype(np.int64),
-        pointers=[0] * len(simulation.cell_names),
-        first_rung=[None] * len(simulation.cell_names),
+        pointers=[0] * len(simulation.detector_names),
+        first_rung=[None] * len(simulation.detector_names),
         age=10,
     )
 
@@ -290,9 +290,9 @@ def test_the_light_record_is_byte_identical_without_the_key():
     by the emitter as a clicking body (BUILD.md section 26: the chain world's lamp an emitter
     body of the kind [7, 8] on the well [8, 7], six births at their rungs, the grace and the
     own take retired), then once more by the write on the circle of 2 N with before = -now
-    and the excited record's norm as the one-way flux into its centre cell over one period
+    and the excited record's norm as the one-way flux into its centre Node over one period
     (ALGEBRA.md 9.17 (5) and (6), 9.19 (3); BUILD.md section 26 item 13), then once more by
-    the flux reading at every cell with the cumulative ladder and the deletion at the click,
+    the flux reading at every detector with the cumulative ladder and the deletion at the click,
     on the chain world's faces closed (item 14), then once more by the residue from the law
     on the rich well [801, 700] with the take's data gone (item 15), then the events and the
     audit once more by the born pair on the clock's half step (item 17), then the state and the
@@ -303,7 +303,7 @@ def test_the_light_record_is_byte_identical_without_the_key():
     written beside its `side` on the snapshot (item 23; the events and the audit unchanged),
     then the events and the audit by the click rule of ALGEBRA.md 9.17 (7) (f) (the model
     owner's word, record 1918; item 24: the excited record's running total accruing its
-    centre cell's share of its conserved form, the emitter's seed raised to 2^20, the six
+    centre Node's share of its conserved form, the emitter's seed raised to 2^20, the six
     births at (2 u + 1) P / (2 W) after their reads; the state at 600 unchanged), then all
     three by the generator as the operator iterated with the stop (the owner's word of
     2026-09-25; item 25: the emitter's seed and clock the iteration's, within the floor of
@@ -311,8 +311,8 @@ def test_the_light_record_is_byte_identical_without_the_key():
     regeneration of 2026-09-25, item 25 amended: the muon layer's well hovered at 1.5 times
     the bound at 2^20; the emitter's profile and clock the iteration's at 2^28), then all
     three by THE BORN TRAIN (ALGEBRA.md 9.17 (6a); item 27: the chain world's emitter body
-    the train's 32 cells at [2, 34) with the well [699, 700], light on the born clock
-    [512, 1] of N = 1024, every birth the train written on the cells), the digests read at
+    the train's 32 Nodes at [2, 34) with the well [699, 700], light on the born clock
+    [512, 1] of N = 1024, every birth the train written on the Nodes), the digests read at
     that head; SINCE THE TIGHTENINGS (BUILD.md section 26 item 28) the closed chain bounds
     matter too (one border for every family: the events and the audit moved, the state
     digest unchanged); SINCE THE REMAINDER KEPT (the model owner's decision (1) of record
@@ -322,9 +322,11 @@ def test_the_light_record_is_byte_identical_without_the_key():
     moved once more; SINCE THE NODE CLOCK (decision (5), item 31) all three moved once more
     (the remainders Gamma times the plain ones in the vacuum and the wall of the body's
     content at its Nodes, the wheel and the residues read there, the norms on the lines in
-    the clock's units); read again at this head."""
+    the clock's units); SINCE THE RENAME (record 1978, no cell) the events digest moved once
+    more with the two line fields' names, the birth line's `nodes` and the gather line's
+    `detectors` (the state and the audit unchanged); read again at this head."""
     assert run_chain_digests() == {
-        "events": "d20cd10760db4c7a8e13743196b888ba269d9e95d43cc998a2a807d2ab220764",
+        "events": "3e605bfdf4efc58f1e98c380482149528bb278f3d897c60b6ae1ae435ec8ff35",
         "state": "05ebc8e9338ddf5b5d1c828f82be0baf86f393b973e6041e8ea5f6c5dde6e1d4",
         "audit": "51dff33c24a49a165b49116ef63c47dfce5f88aa0a3fcb920565869f7f84d053",
     }
@@ -491,7 +493,7 @@ def block_world(
 
 
 def seed_source(document: dict, number: int) -> None:
-    """The measured event `number` (an emitter body, a one-cell well) seeded on its bound
+    """The measured event `number` (an emitter body, a one-Node well) seeded on its bound
     mode at its scalar seed (the generator's `mode_profile`, the world's other blocks left as
     declared), its `margin` made explicit."""
     entry = document["measured"][number]
@@ -517,7 +519,7 @@ SOURCE_KIND = [7, 8]  # the emitter bodies' own kind (omega_0 = 0.505; the index
 SOURCE_WELL = [
     699,
     700,
-]  # its well over the train's 32 cells, rich (W = 700, ALGEBRA.md 9.22 (4)) and bound (2 cos omega_b = 1.9944 on a chain; the one-cell birth's [801, 700] is a runaway over 32 cells, its interior above 1)
+]  # its well over the train's 32 Nodes, rich (W = 700, ALGEBRA.md 9.22 (4)) and bound (2 cos omega_b = 1.9944 on a chain; the one-Node birth's [801, 700] is a runaway over 32 Nodes, its interior above 1)
 
 
 def source_family() -> dict:
@@ -534,7 +536,7 @@ def emitter_at(
     receiver: object = None,
 ) -> dict:
     """An emitter body on a chain (ALGEBRA.md 9.17 (4), 9.17 (6a)): the well of the massive
-    family `own` (the well `pair`, SOURCE_WELL by default) over the train's 32 cells from x,
+    family `own` (the well `pair`, SOURCE_WELL by default) over the train's 32 Nodes from x,
     its train along +x, with the scalar seed 2^20
     (its profile on the mode by `seed_source`; at 100 the born light's back-action swamps
     the excited record, ALGEBRA.md 9.17 (7) (c)), `stock` excitations, the born family
@@ -553,8 +555,8 @@ CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
 
 def test_the_blocks_cells_and_its_pair_on_them():
     """BUILD.md (e): a block of side 3 at (2, 2, 2) on an open 8^3 board of the kind [800, 809]
-    with the well [800, 800]: den reads 809 on every Node but the 27 cells, 800 there, num 800
-    everywhere; the cells are the cube. The edge case: a pair that is no well is refused."""
+    with the well [800, 800]: den reads 809 on every Node but the 27 Nodes, 800 there, num 800
+    everywhere; the Nodes are the cube. The edge case: a pair that is no well is refused."""
     world = parse_nature_beam_world(
         block_world(
             [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 800]}]
@@ -597,7 +599,7 @@ def test_the_blocks_cells_and_its_pair_on_them():
 def test_the_blocks_drive_steps_its_cells_and_leaves_the_rows():
     """BUILD.md (f): a block of content 1 with P = 64 on x (the wall 3 Q S M = 192) steps at the
     intervals 3, 6, 9 with the remainder 0; with P = 70 at 3, 6, 9 with the remainders 18, 36,
-    54 and at 11 with the remainder 2; the cells and the pair arrays move, the record's rows
+    54 and at 11 with the remainder 2; the Nodes and the pair arrays move, the record's rows
     stay. The edge case: P = [112, 112, 112] and [64, 64, 64] refused by the pace bound,
     [64, 64, 0] admitted."""
     for momentum, ticks_and_remainders in (
@@ -634,7 +636,7 @@ def test_the_blocks_drive_steps_its_cells_and_leaves_the_rows():
         assert block.mask[corner : corner + 3, 0, 0].all() and not block.mask[4, 0, 0]
         assert np.all(simulation.kind_den[1][corner : corner + 3, 0, 0] == 800)
         assert int(simulation.kind_den[1][4, 0, 0]) == 809
-    # the rows stayed: the seeded record's rows are still centred on the old cells
+    # the rows stayed: the seeded record's rows are still centred on the old Nodes
     assert block.own is not None
     rows = block.own.now[:, 0, 0]
     assert abs(rows[4:7]).sum() > abs(rows[corner + 3 : corner + 6]).sum()
@@ -674,7 +676,7 @@ def six_reads(row: np.ndarray) -> np.ndarray:
 def test_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
     """BUILD.md (h) SINCE section 26 (the emission by the coupling's source term retired with
     the lamp; an emitter is a clicking body, ALGEBRA.md 9.17 (4)): an emitter body of the
-    source kind (the one-cell well SOURCE_WELL at x = 100 seeded on its mode, the stock 3)
+    source kind (the one-Node well SOURCE_WELL at x = 100 seeded on its mode, the stock 3)
     on the chain of 240 with the screen at 230: three births in turn, the residues the
     law's, each born record of content 1 moved from the stock (`held_spent` 3 of the
     source family, `transit_released` 3 of light), the excited record ended at each birth (no
@@ -704,7 +706,7 @@ def test_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
     # the residues from the law (ALGEBRA.md 9.22 (4)) on the body's own wheel (700
     # on the source well in the vacuum; at its Node the wheel of its content under
     # the Node clock, 9.35 (2), read from the rule), spread from the remainder
-    # kept at the cells (the model owner's decisions (1) and (2) of record 1962;
+    # kept at the Nodes (the model owner's decisions (1) and (2) of record 1962;
     # the coupling's back-action HISTORY)
     assert all(lawful_wheel(world, line) for line in births)
     assert [line["content"] for line in births] == [3, 2, 1]
@@ -795,14 +797,14 @@ PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
     """BUILD.md (n): (1) the s = 28 block of world (i-b) on the periodic 48^3 board is refused as
     a pin world naming x, the extent (about 7.9 Links) and the side needed (about 60 > 48), and
-    admitted as a control (44 < 48); (2) a block of s = 20 whose cells lie 3 Links from an open
+    admitted as a control (44 < 48); (2) a block of s = 20 whose Nodes lie 3 Links from an open
     massive face is refused as a control (3 < 5.7) naming the axis and the distance; (3) the
     kind [800, 809] with the well [800, 808] at s = 3 (far below the threshold) is refused: on a
     finite periodic box the unbound case reads as an extent beyond the board (261 Links against
     24), the refusal the margin's; (4) the extent printed for (i-a) on 48^3 is 5.73 within 0.05
     Links (the float scratch of the plan) and its mode 0.1105 (the design's 96^3 box 0.1107);
     (5) BUILD.md section 26: a well too deep for its board is a RUNAWAY (the largest
-    eigenvalue at or above 2, no oscillation, a level growing every interval; the one-cell
+    eigenvalue at or above 2, no oscillation, a level growing every interval; the one-Node
     well [800, 700] on the kind [800, 809] on a chain, 2 cos omega_b = 2.03, its level
     growing by 1.2 per interval) and is refused naming it, while the same well on a cube of
     24^3 is no runaway (the folded axes' self-reads count fully on a chain)."""
@@ -829,7 +831,7 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
         [{"position": [3, 14, 14], "side": 20, "pair": [800, 800], "margin": "control"}],
     )
     near["age_bound"] = 100000
-    with pytest.raises(ValueError, match="cells lie 3 Links from a zero face"):
+    with pytest.raises(ValueError, match="Nodes lie 3 Links from a zero face"):
         check_margins(parse_nature_beam_world(near))
     shallow = block_world(
         [24, 24, 24],
@@ -1165,7 +1167,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     """The emitter of a massive kind (the matter lamp's successor, ALGEBRA.md 9.17; the Boss's
     23:32Z on the lamp verb): an emitter body of the source kind at x = 100 whose born family
     is `matter` (the kind [156, 157] with the declared clock [512, 1] on N = 1024) births a
-    record of the matter kind, written once on its 32 cells at both levels as the train
+    record of the matter kind, written once on its 32 Nodes at both levels as the train
     (ALGEBRA.md 9.17 (6a)) and advanced by the rule with the kind's pair (a massive kind's
     born record is driven by nothing and completes as light's: its `driven` set empty); the
     train TRAVELS +x: a hundred intervals after its birth its levels ahead of the body (x in
@@ -1235,7 +1237,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
     identities = [1 * (1 << 32) + 1, 1 * (1 << 32) + 2]
-    screen = simulation.cell_names.index("screen")
+    screen = simulation.detector_names.index("screen")
     at_click: dict[int, tuple[int, int, int, int]] = {}
     original = simulation._ladder_click
 
@@ -1358,12 +1360,12 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
 def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_rung():
     """A set bound to a block is a receiver (the receiving set at ONE free Node) on the light clock's chain of 173 (W = 64;
     the world's `wheel` 64) SINCE THE FLUX READING (ALGEBRA.md 9.19 (3); BUILD.md section 26
-    item 14): A's one born record is written once on A's 32 cells as the train and leaves toward +x;
+    item 14): A's one born record is written once on A's 32 Nodes as the train and leaves toward +x;
     the set's cube at [132, 134] books the one-way flux into it from the first interval (its
     pointer above 0 and its rung at the record's own residue from the law, the click line written
     at that rung and stamped with A's count as the interval begins, named by
     `clock_source`), and the record is deleted whole at its click, with the faces closed
-    and open alike (no `face` cell on the closed chain; `face` on the open one, last on the
+    and open alike (no `face` detector on the closed chain; `face` on the open one, last on the
     ladder and never reached first); nothing absorbs (the take retired). A receiver body at
     x = 160 read as `far` is a declared set off A's ladder (A names A_face): never chosen.
     The loader: `block` with a position on a measured Node refused, with two positions
@@ -1377,9 +1379,9 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
             assert world.closed == (True, False, False) and world.boundary_per_axis["x"] == "closed"
         lines: list[dict] = []
         simulation = DetectorLawSimulation(world, observer=lines.append)
-        assert ("face" in simulation.cell_names) == (faces == "open")
-        a_face = simulation.cell_names.index("A_face")
-        assert int(simulation.cell_index[132, 0, 0]) == a_face
+        assert ("face" in simulation.detector_names) == (faces == "open")
+        a_face = simulation.detector_names.index("A_face")
+        assert int(simulation.detector_at_node[132, 0, 0]) == a_face
         block = simulation.blocks[0]
         pointer_at_click: int | None = None
         original = simulation._ladder_click
@@ -1451,14 +1453,14 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
 
 def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_block():
     """A set bound to a block WITHOUT positions is a receiver (Sagnac's form, DECLARATIONS.md section 13
-    item 1) under the flux reading (ALGEBRA.md 9.19 (3)): the block's twelve cells are the
-    set's Nodes (the cell index at them the set's cell); an emitter's record (the emitter
+    item 1) under the flux reading (ALGEBRA.md 9.19 (3)): the block's twelve Nodes are the
+    set's Nodes (the detector index at them the set's); an emitter's record (the emitter
     body of the source kind at [100, 132) on a chain of 300, its train along +x toward the
     block 68 Links ahead, two births, the emitter naming the set) books its one-way flux into the
-    block's cells to the set and clicks once there, the click stamped with the block's own
+    block's Nodes to the set and clicks once there, the click stamped with the block's own
     count as the interval began and named by `clock_source`, the record deleted whole at
     it, the books balanced; nothing absorbs. Pushed toward the emitter at k = 3 (the block
-    stepping, its cells and the set's Nodes following it): the record still clicks once at
+    stepping, its Nodes and the set's Nodes following it): the record still clicks once at
     the set, the books balanced. The loader: a set's `wheel` refused by name."""
     for momentum in ([0, 0, 0], [-64, 0, 0]):
         document = massive_world([300, 1, 1], CHAIN, [800, 809])
@@ -1467,7 +1469,7 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
         document["clock_stamp"] = True
         document["families"].append(source_family())
         document["measured"] = [
-            dict(emitter_at(100, 2), receiver="B_cells"),
+            dict(emitter_at(100, 2), receiver="B_nodes"),
             {
                 "position": [200, 0, 0],
                 "family": "matter",
@@ -1481,14 +1483,14 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
                 "margin": "control",
             },
         ]
-        document["detectors"] = [{"name": "B_cells", "block": 1}]
+        document["detectors"] = [{"name": "B_nodes", "block": 1}]
         seed_source(document, 0)
         world = parse_nature_beam_world(document)
         lines: list[dict] = []
         simulation = DetectorLawSimulation(world, observer=lines.append)
         block = simulation.blocks[1]
-        cell = simulation.cell_names.index("B_cells")
-        assert int(simulation.cell_index[205, 0, 0]) == cell
+        detector = simulation.detector_names.index("B_nodes")
+        assert int(simulation.detector_at_node[205, 0, 0]) == detector
         identity = 0 * (1 << 32) + 1
         count_at_rung: int | None = None
         for _ in range(1200):
@@ -1500,13 +1502,13 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
                 count_at_rung = count_before
                 break
         gathers = [g for g in lines if g["event"] == "gather" and g["record"] == identity]
-        assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "B_cells", gathers
+        assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "B_nodes", gathers
         assert gathers[0]["clock_source"] == "measured:1" and gathers[0]["clock"] == count_at_rung
         assert gathers[0]["tick"] == gathers[0]["click"] and identity not in simulation.records
         assert block.stepped > 0 if momentum[0] else block.stepped == 0
-        assert np.array_equal(simulation.cell_index == cell, block.mask)
+        assert np.array_equal(simulation.detector_at_node == detector, block.mask)
     bad = document
-    bad["detectors"] = [{"name": "B_cells", "block": 1, "wheel": 64}]
+    bad["detectors"] = [{"name": "B_nodes", "block": 1, "wheel": 64}]
     bad["input"] = input_stamp(bad)  # the stamp over the whole file (item 28)
     with pytest.raises(ValueError, match="wheel is refused"):
         parse_nature_beam_world(bad)
@@ -1515,7 +1517,7 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
 def test_a_block_that_steps_off_the_board_refuses_the_interval():
     """Reviewer 3's line from the redshift dry run (BUILD.md section 18): a block pushed toward
     a zero face (momentum [-64, 0, 0] from x = 30 on the open chain of 300, one hop per three
-    intervals) refuses the run at the interval its cells would leave the board, naming the block
+    intervals) refuses the run at the interval its Nodes would leave the board, naming the block
     and the interval, instead of running on with the block gone; before that interval it steps
     and the books balance. The edge case: on a periodic chain the same block wraps and steps on
     through 400 intervals with no refusal."""
@@ -1558,9 +1560,9 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
     train's wavelength 4), on the first build's chain (x = 40 to 43; the emitter body at
     [2, 34), the screen cube at [70, 72]): the blocks have no own record, no clock and no
     coupling (the loader sets their seed 0; the engine's blocks' loop skips them; the margin
-    rule skips light's kind), light's pair arrays carry [1, 2] at the four cells and [1, 1]
+    rule skips light's kind), light's pair arrays carry [1, 2] at the four Nodes and [1, 1]
     elsewhere; over 200 intervals the largest level beyond the wall (x in [48, 69]) stays below
-    four percent of the largest level before it (x in [10, 38], the train's own cells; the
+    four percent of the largest level before it (x in [10, 38], the train's own Nodes; the
     reading on this head in the test's assertion, COMPUTATION), the books balanced at every
     interval; a light-kind block with
     `seed` or `margin` refused, and `coupling` refused by name on any block. The chain's source is the emitter body of

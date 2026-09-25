@@ -5,9 +5,9 @@
 engine's integer rule up to the remainders' own term of 8.2 at the Node, (a_next,i -
 a_before,i) (r_i - r'_i) / (3 num_i), on planted random rows (light's pair [1, 1] and the
 matter kind [800, 809]), the flux antisymmetric and pair-free; (b) a packet's one-way inward
-flux into one cell, SUM over intervals and Ports of max(G, 0), over its passage is the
+flux into one detector, SUM over intervals and Ports of max(G, 0), over its passage is the
 packet's conserved form I to a part in a hundred (the backward part of a planted packet
-returns through the open face's mirror and passes the cell too, the excess the lattice's
+returns through the open face's mirror and passes the detector too, the excess the lattice's
 counter-flow), the signed sum below a part in a million of I. Every number here is a
 COMPUTATION on the rule's integers; no pin."""
 
@@ -43,8 +43,8 @@ def planted(simulation: DetectorLawSimulation, family: int, now, before, remaind
         now.astype(np.int64),
         before.astype(np.int64),
         remainder.astype(np.int64),
-        pointers=[0] * len(simulation.cell_names),
-        first_rung=[None] * len(simulation.cell_names),
+        pointers=[0] * len(simulation.detector_names),
+        first_rung=[None] * len(simulation.detector_names),
         age=10,
     )
 
@@ -136,9 +136,9 @@ def test_the_local_flux_identity_is_exact_on_the_rules_integers():
 
 def test_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
     """(b) a Gaussian packet of 40 Links at k = 0.3024 on light's open chain of 400, read at the
-    cell 200 over 600 intervals: the one-way inward flux 1.0017 of I (the backward part of the
+    Node 200 over 600 intervals: the one-way inward flux 1.0017 of I (the backward part of the
     planted packet, 1.35 percent, returns through the -x face, no Node beyond the board, and
-    passes the cell too; the excess the lattice's counter-flow on the passage; before the
+    passes the Node too; the excess the lattice's counter-flow on the passage; before the
     take retired the sponge took that part and the reading was 0.9865), the signed sum
     7 x 10^4 against I 5.9 x 10^11 (COMPUTATION)."""
     simulation = chain_world(None, 400, {"x": "open", "y": "periodic", "z": "periodic"})
@@ -164,16 +164,16 @@ def test_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
         return total
 
     start = form(live.now, live.before)
-    cell = 200
+    node = 200
     one_way = Fraction(0)
     signed = Fraction(0)
     for _ in range(600):
         a_now, a_before = live.now.copy(), live.before.copy()
         simulation._advance(live)
-        for j in (cell - 1, cell + 1):
+        for j in (node - 1, node + 1):
             g = Fraction(1, 3) * (
-                int(a_now[cell, 0, 0]) * int(a_before[j, 0, 0])
-                - int(a_before[cell, 0, 0]) * int(a_now[j, 0, 0])
+                int(a_now[node, 0, 0]) * int(a_before[j, 0, 0])
+                - int(a_before[node, 0, 0]) * int(a_now[j, 0, 0])
             )
             one_way += max(g, Fraction(0))
             signed += g
@@ -259,8 +259,8 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
                 - Fraction(1, 3) * int(now[i, 0, 0]) * read
             )
         assert simulation.conserved_form(live) == 3 * wall * NODE_CLOCK * expected
-        pair = simulation.cell_names.index("pair")
-        far = simulation.cell_names.index("far")
+        pair = simulation.detector_names.index("pair")
+        far = simulation.detector_names.index("far")
         offers = simulation.detector_inflow_tally(live)
         inward = Fraction(0)
         for i, j in ((5, 4), (7, 8)):
@@ -278,7 +278,7 @@ def test_the_tally_over_the_ports_is_the_board_wide_reading_and_costs_the_ports_
     detectors' inflow per record is read at the Port pairs alone. On the emitter world
     (the chain of 80 with the cube screen at [70, 72] and the closed faces) and on the
     detector-law layer (24 x 9 with three cubes of side 3), after every interval of a run
-    the tally per cell equals the board-wide reading `inward_flux` into that cell's Nodes,
+    the tally per detector equals the board-wide reading `inward_flux` into that detector's Nodes,
     bit for bit, for every live record; the Port pairs are listed once per family; and the
     HOST cost printed is the Ports read per record per interval against the board's Nodes
     (4 Ports of 80 Nodes on the chain, the screen cube's two and the emitter body's two; 40
@@ -297,19 +297,19 @@ def test_the_tally_over_the_ports_is_the_board_wide_reading_and_costs_the_ports_
             simulation.step()
             for live in simulation.records.values():
                 tally = simulation.detector_inflow_tally(live)
-                for cell in range(len(simulation.cell_names)):
-                    mask = simulation.cell_index == cell
-                    assert tally.get(cell, 0) == simulation.inward_flux(live, mask), (
+                for detector in range(len(simulation.detector_names)):
+                    mask = simulation.detector_at_node == detector
+                    assert tally.get(detector, 0) == simulation.inward_flux(live, mask), (
                         name,
                         simulation.tick,
-                        cell,
+                        detector,
                     )
                 checked += 1
         assert checked > 0
         families = sorted({live.family for live in simulation.records.values()} | {0})
         for family in families:
-            port_i, port_j, port_cell = simulation._inflow_ports(family)
-            assert port_i.shape == port_j.shape == port_cell.shape
+            port_i, port_j, port_detector = simulation._inflow_ports(family)
+            assert port_i.shape == port_j.shape == port_detector.shape
             assert simulation._inflow_ports(family) is simulation._inflow_ports(family)
             print(
                 f"click cost (HOST): {name}: family {family}: {int(port_i.size)} Ports read per "

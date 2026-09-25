@@ -1,6 +1,6 @@
 """THE BORN TRAIN (ALGEBRA.md 9.17 (6a), 9.25 (11), 9.22 (7a) (iv); BUILD.md section 26 item
 27): every birth is a travelling train, the character of one **K** over 8 periods under the
-window across the transverse extents and the tapers along **K**, written on the body's cells
+window across the transverse extents and the tapers along **K**, written on the body's Nodes
 at both levels; the generator's integers (the profile, its norm on the vacuum), its checks
 (the flux sign, the passage's one-way flux within 2 x 10^-3 of the norm, the transparency of a
 coupled body, the placement one train's length from every face slab), the loader's checks in
@@ -21,7 +21,7 @@ import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import (
-    block_cell_indices,
+    body_node_indices,
     born_train_flux_sign,
     born_train_norm,
     parse_nature_beam_world,
@@ -45,8 +45,8 @@ def test_the_generators_train_is_the_character_under_the_tapers_and_the_window()
     integers are round(A e(i) cos(pi i / 2)) and round(A e(i) cos(pi i / 2 + omega)) with
     A = 2^16, omega = acos(2 / 3) (light's vacuum at the wavelength 4) and the tapers of
     tau = 8 at both ends: the flat middle reads 65536, 0, -65536, 0 at t = 0 and 43691,
-    -48848, -43691, 48848 at t = -1, the first cell 630 (sin^2(pi / 32) of A) and the last
-    0, the profile exactly the formula at every cell; the flux along +x positive and along
+    -48848, -43691, 48848 at t = -1, the first detector 630 (sin^2(pi / 32) of A) and the last
+    0, the profile exactly the formula at every detector; the flux along +x positive and along
     -x negative (the loader's sign, `born_train_flux_sign`); the norm the conserved form of
     the record planted alone on the vacuum, bit for bit (`born_train_norm` against the
     engine's `conserved_form`). On a layer the window across a transverse extent the body
@@ -83,10 +83,10 @@ def test_the_generators_train_is_the_character_under_the_tapers_and_the_window()
     world = parse_nature_beam_world(vacuum)
     simulation = DetectorLawSimulation(world)
     shape = (int(world.shape[0]), 1, 1)
-    cells = block_cell_indices(shape, (5, 0, 0), extents, world.kind_periodic(0))
+    nodes = body_node_indices(shape, (5, 0, 0), extents, world.kind_periodic(0))
     level_now = np.zeros(shape, dtype=np.int64).reshape(-1)
     level_before = np.zeros(shape, dtype=np.int64).reshape(-1)
-    for index, a, b in zip(cells, now, before, strict=True):
+    for index, a, b in zip(nodes, now, before, strict=True):
         level_now[index] = a
         level_before[index] = b
     live = simulation.planted_record(0, level_now.reshape(shape), level_before.reshape(shape))
@@ -117,7 +117,7 @@ def test_the_passage_books_the_norm_and_a_short_train_does_not(capsys):
     """THE FLUX CHECK (ALGEBRA.md 9.25 (11) (a), the generator's `train_passage_flux`): the
     emitter world's train alone on the vacuum books its one-way flux through a plane 40
     Links ahead within 2 x 10^-3 of its norm (COMPUTATION; the mathematician's 0.9987 on his
-    window), while a train of 3 periods (12 cells, the same formula) books above it: 1.0052
+    window), while a train of 3 periods (12 Nodes, the same formula) books above it: 1.0052
     read on the generator's window of six trains (`train_run` on the 3-period profile; the
     mathematician's 1.0285 on his longer window, the standing parts' sloshing growing),
     outside the tolerance and refused. The loader refuses periods below 8 by name before
@@ -163,7 +163,7 @@ def test_the_engine_writes_the_train_and_a_receiver_ahead_reads_its_passage():
     document = emitter_world(stock=2, ticks=600)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    screen = simulation.cell_names.index("screen")
+    screen = simulation.detector_names.index("screen")
     at_click: dict[int, tuple[int, int, int, int]] = {}
     original = simulation._ladder_click
 

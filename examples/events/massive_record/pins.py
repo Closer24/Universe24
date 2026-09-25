@@ -40,8 +40,8 @@ from pathlib import Path
 import numpy as np
 
 from event_universe.diagnostics.massive_record_margin import (
-    block_cells,
     block_margin,
+    body_nodes,
     largest_eigenvalue,
 )
 from event_universe.events.world import parse_nature_beam_world
@@ -104,7 +104,7 @@ def rectangular_mode(world, number: int, width: int) -> float:
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-    cube = block_cells(shape, corner, definition.side, wrap)
+    cube = body_nodes(shape, corner, definition.side, wrap)
     along = np.zeros(shape, dtype=bool)
     start = corner[0] - (width - definition.side) // 2
     for offset in range(width):

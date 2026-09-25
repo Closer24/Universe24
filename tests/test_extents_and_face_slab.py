@@ -1,7 +1,7 @@
 """BODIES WITH EXTENTS AND THE FACE SLAB (ALGEBRA.md 9.22 (8) and 9.25 (10); BUILD.md
 section 26 item 23): a block is the box of `extents` per axis (the cube of `side` the
 shorthand), the slabs of the table's emitters, walls and receivers; the face receiver at
-every open border is the slab of the world's `face_depth`, one cell, last on every ladder.
+every open border is the slab of the world's `face_depth`, one detector, last on every ladder.
 Every reading here is the engine's on small worlds (COMPUTATION); no pin.
 """
 
@@ -13,7 +13,7 @@ import numpy as np
 import pytest
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation
-from event_universe.events.world import block_cell_indices, input_stamp, parse_nature_beam_world
+from event_universe.events.world import body_node_indices, input_stamp, parse_nature_beam_world
 from tests.test_detector_law import layer_world
 from tests.test_emitter import emitter_world, massive_generator
 from tests.test_flux_reading import planted
@@ -21,7 +21,7 @@ from tests.test_flux_reading import planted
 
 def small_layer() -> dict:
     """The layer of 24 x 9 of the first form, empty (no emitter, no set): the detector-law
-    layer's emitter body is the train's 32 cells since the born train (BUILD.md section 26
+    layer's emitter body is the train's 32 Nodes since the born train (BUILD.md section 26
     item 27), wider than this layer, so these tests place their bodies on the empty layer."""
     document = layer_world()
     document["shape"] = [24, 9, 1]
@@ -46,21 +46,21 @@ def wall(position, family="light", **keys):
 
 def test_a_box_of_extents_is_placed_whole_and_its_cells_are_the_box():
     """A light-kind wall slab with the extents [4, 3, 1] at (10, 2, 0) on the layer of 24 x 9:
-    the loader carries the extents (the side the x extent) and the engine's cells are the
+    the loader carries the extents (the side the x extent) and the engine's Nodes are the
     box's 12 Nodes; `side` 3 is the extents (3, 3, 3) cut by the layer's thin axis;
-    `block_cell_indices` on a cube's side and on the box's extents agree with the box."""
+    `body_node_indices` on a cube's side and on the box's extents agree with the box."""
     document = small_layer()
     document["measured"].append(wall([10, 2, 0], extents=[4, 3, 1]))
     world = parse_nature_beam_world(document)
     block = world.measured[-1].block
     assert block is not None and block.extents == (4, 3, 1) and block.side == 4
     simulation = DetectorLawSimulation(world)
-    cells = simulation.blocks[-1].mask
-    assert int(cells.sum()) == 12 and cells[10:14, 2:5, 0].all()
-    assert set(block_cell_indices((24, 9, 1), (10, 2, 0), (4, 3, 1), (False, True, True))) == {
+    nodes = simulation.blocks[-1].mask
+    assert int(nodes.sum()) == 12 and nodes[10:14, 2:5, 0].all()
+    assert set(body_node_indices((24, 9, 1), (10, 2, 0), (4, 3, 1), (False, True, True))) == {
         x * 9 + y for x in range(10, 14) for y in range(2, 5)
     }
-    assert block_cell_indices((24, 9, 1), (10, 2, 0), 3, (False, True, True)) == block_cell_indices(
+    assert body_node_indices((24, 9, 1), (10, 2, 0), 3, (False, True, True)) == body_node_indices(
         (24, 9, 1), (10, 2, 0), (3, 3, 3), (False, True, True)
     )
     cube = small_layer()
@@ -107,7 +107,7 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
     """A well [800, 801] of the matter kind with the extents [12, 5, 1] at (5, 2, 0) on the
     layer of 24 x 9 (a control world), seeded by the generator on its composed mode with its
     clock and stamp: LAWFUL at load, the residual within the bound at every Node, the mode's
-    largest entry on the slab's cells; the slab's centre cell (5 + 6, 2 + 2)."""
+    largest entry on the slab's Nodes; the slab's centre Node (5 + 6, 2 + 2)."""
     document = small_layer()
     document["measured"] = [
         {
@@ -140,7 +140,7 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
 def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
     """The world key `face_depth`, DECLARED on every board with an open face (no default,
     BUILD.md section 26 item 28): the chain of 80 opened on x without it is refused naming
-    the axis; at depth 1 the face cell is the 2 border Nodes; at depth 4 it covers the 4
+    the axis; at depth 1 the face detector is the 2 border Nodes; at depth 4 it covers the 4
     Nodes nearest each border (8 Nodes, the free ones); a depth above one that leaves no
     interior is refused; a periodic axis has no face whatever the depth (read on a chain
     without a body: the emitter's mode is the closed chain's, one border for every family).
@@ -153,13 +153,13 @@ def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
     document["face_depth"] = 1
     document["input"] = input_stamp(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    face = simulation.cell_names.index("face")
-    assert int((simulation.cell_index == face).sum()) == 2
+    face = simulation.detector_names.index("face")
+    assert int((simulation.detector_at_node == face).sum()) == 2
     document["face_depth"] = 4
     document["input"] = input_stamp(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    face = simulation.cell_names.index("face")
-    nodes = sorted(int(x) for x in np.nonzero(simulation.cell_index[:, 0, 0] == face)[0])
+    face = simulation.detector_names.index("face")
+    nodes = sorted(int(x) for x in np.nonzero(simulation.detector_at_node[:, 0, 0] == face)[0])
     assert nodes == [0, 1, 2, 3, 76, 77, 78, 79]
     document["face_depth"] = 40
     document["input"] = input_stamp(document)
@@ -172,7 +172,7 @@ def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
     periodic = massive_world([80, 1, 1], {"x": "periodic", "y": "periodic", "z": "periodic"}, [800, 809])
     periodic["face_depth"] = 4
     periodic["age_bound"] = 100000
-    assert "face" not in DetectorLawSimulation(parse_nature_beam_world(periodic)).cell_names
+    assert "face" not in DetectorLawSimulation(parse_nature_beam_world(periodic)).detector_names
 
 
 def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
@@ -194,7 +194,7 @@ def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
         document["detectors"] = []
         document["face_depth"] = depth
         simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-        face = simulation.cell_names.index("face")
+        face = simulation.detector_names.index("face")
         k = 0.3
         omega = math.acos((math.cos(k) + 2) / 3)
         x = np.arange(300)

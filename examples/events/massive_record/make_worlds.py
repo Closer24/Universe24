@@ -34,7 +34,7 @@ loader default, item 28: SEED_AMPLITUDE here).
   written to `docs/designs/detector_law/held_worlds/` (HISTORY, their pins in
   `expectations.json` never moved), their builders retired here.
 - HELD UNDER THE BORN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27; their
-  files in `docs/designs/detector_law/held_worlds/` as written with the one-cell birth,
+  files in `docs/designs/detector_law/held_worlds/` as written with the one-Node birth,
   HISTORY, not loaded by the gate; their builders retired here, to be rebuilt from the
   table of ALGEBRA.md 9.22 (8) in its form, the cleanup's item 7): the index at rest
   (`medium_index_at_rest_50`, `medium_index_at_rest_20`, `medium_index_at_rest_10`,
@@ -247,14 +247,14 @@ def born_train(document: dict, number: int) -> None:
     """THE BORN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27): the emitter body
     `number`'s `born` profile, the character of one **K** over its declared periods under the
     window across the transverse extents and the tapers along **K**, written on the body's
-    cells at both levels (t = 0 and t = -1), the generator's integers at the amplitude
+    Nodes at both levels (t = 0 and t = -1), the generator's integers at the amplitude
     A = 2^16: now = round(A e(i) h(y) h(z) cos(k i)), before = round(A e h h cos(k i + omega)),
-    i the cell's index along the train's way from its tail, k = 2 pi p / (2 N q) from the
+    i the Node's index along the train's way from its tail, k = 2 pi p / (2 N q) from the
     born family's clock [p, q] on the world's N, 3 cos omega = (num / den) (cos k + 2) on the
     born family's vacuum pair; h the Hann window sin^2(pi (y + 1 / 2) / Y) across a transverse
     extent Y, and 1 across an axis the body spans on a periodic face (a chain, and the
     extruded axes of the one table's boards, where the seed is uniform across the added
-    axes); e the taper over tau = X / 4 cells at each end (sin^2(pi (i + 1 / 2) / (2 tau))
+    axes); e the taper over tau = X / 4 Nodes at each end (sin^2(pi (i + 1 / 2) / (2 tau))
     for i < tau, 1 between, mirrored at the tail). THE NORM T the conserved form of the two
     levels on the vacuum (`born_train_norm`, the one copy the loader checks). THE FLUX CHECK
     (HOST, the generator, 9.25 (11) (a)): the train alone on the born family's vacuum,
@@ -397,7 +397,7 @@ def train_run(
     import numpy as np
 
     from event_universe.events.detector_law import DetectorLawSimulation
-    from event_universe.events.world import block_cell_indices, parse_nature_beam_world
+    from event_universe.events.world import body_node_indices, parse_nature_beam_world
 
     length = train_extents[axis]
     far = 12 * length + TRAIN_FLUX_DISTANCE
@@ -426,12 +426,12 @@ def train_run(
     board = (int(shape[0]), int(shape[1]), int(shape[2]))
     corner = list(transverse_corner)
     corner[axis] = min(at(train_low), at(train_low + length - 1))
-    cells = block_cell_indices(
+    nodes = body_node_indices(
         board, (corner[0], corner[1], corner[2]), train_extents, world.kind_periodic(born)
     )
     level_now = np.zeros(board, dtype=np.int64).reshape(-1)
     level_before = np.zeros(board, dtype=np.int64).reshape(-1)
-    for index, a, b in zip(cells, now, before, strict=True):
+    for index, a, b in zip(nodes, now, before, strict=True):
         level_now[index] = a
         level_before[index] = b
     live = simulation.planted_record(born, level_now.reshape(board), level_before.reshape(board))
@@ -526,7 +526,7 @@ SOURCE_KIND = [7, 8]  # the emitter bodies' own family `source` (omega_0 = 0.505
 SOURCE_WELL = [
     801,
     700,
-]  # its one-cell well, rich (700 remainder values, ALGEBRA.md 9.19 (4a)): bound on a chain (2 cos omega_b = 1.90) and on a layer (1.75)
+]  # its one-Node well, rich (700 remainder values, ALGEBRA.md 9.19 (4a)): bound on a chain (2 cos omega_b = 1.90) and on a layer (1.75)
 
 
 def rest_block(side: int, corner: int, pair: list[int], **extra: object) -> dict:
@@ -652,7 +652,7 @@ def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
     """The bound mode's integer profile of a block over the whole board, THE GENERATOR AS THE
     BOARD'S OWN OPERATOR ITERATED IN INTEGERS WITH THE STOP (the model owner's word of
     2026-09-25, 04:10Z, closing record 1898; the margin module's `iterated_mode`: the operator
-    iterated from the cells' indicator, the clock read from the growth at the peak cell, the
+    iterated from the Nodes' indicator, the clock read from the growth at the peak Node, the
     stop the first iteration at which the scaled profile passes the loader's own residual
     bound), the pin worlds' seed of MASSIVE_RECORD.md section 11 item 7: a HOST computation of
     the generator, reproducible bit for bit, written into the world file so that the run's
@@ -662,7 +662,7 @@ def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
     residual bound before it is written: a profile that fails is a generator fault, raised,
     never written."""
     from event_universe.diagnostics.massive_record_margin import iterated_mode
-    from event_universe.events.world import block_cell_indices, mode_residual, parse_nature_beam_world
+    from event_universe.events.world import body_node_indices, mode_residual, parse_nature_beam_world
 
     world = parse_nature_beam_world(stamped(document))
     flat, clock, _ = iterated_mode(world, number, amplitude)
@@ -675,7 +675,7 @@ def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
     count = shape[0] * shape[1] * shape[2]
     num, den = [family.pair[0]] * count, [family.pair[1]] * count
-    for index in block_cell_indices(shape, corner, block.extents, wrap):
+    for index in body_node_indices(shape, corner, block.extents, wrap):
         num[index], den[index] = block.pair[0], block.pair[1]
     residual, bound, node = mode_residual(flat, num, den, clock, shape, wrap)
     if residual > bound:

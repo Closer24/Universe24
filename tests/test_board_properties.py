@@ -2,7 +2,7 @@
 the one map S, ADOPTED with record 1875; the gate of every step of the cleanup, 9.21 (3)):
 on the small world of 9.20 (a cube of 12 x 12 x 12 periodic on every axis; light [77, 25] and
 the massive family [800, 809]; one well of side 2 at the vertex (3, 4, 5) with the pair
-[800, 801] seeded on its composed mode; one light record born on the cell (8, 2, 7) with both
+[800, 801] seeded on its composed mode; one light record born on the Node (8, 2, 7) with both
 labels and the wheel 8; one receiver, the cube of side 3 at (9, 9, 2), on the record's ladder; 60
 intervals): (1) equivariance under the 48; (2) translation on the torus; (3) conservation of
 the content and of the form I between clicks; (4) reversibility except the click, by 8.8's
@@ -128,8 +128,8 @@ def born_levels(simulation: DetectorLawSimulation) -> tuple[int, int]:
 
 
 def plant(simulation: DetectorLawSimulation, node, u: int, ladder: bool = True, rows=None) -> LiveRecord:
-    """The light record as its birth writes it: the pair on one cell (or the rows given), the
-    residue u, the ladder the receiver's cell, the norm its conserved form."""
+    """The light record as its birth writes it: the pair on one Node (or the rows given), the
+    residue u, the ladder the receiver's detector, the norm its conserved form."""
     now = np.zeros(SHAPE, dtype=np.int64)
     before = np.zeros(SHAPE, dtype=np.int64)
     if rows is None:
@@ -154,14 +154,14 @@ def plant(simulation: DetectorLawSimulation, node, u: int, ladder: bool = True, 
         now,
         before,
         np.zeros(SHAPE, dtype=np.int64),
-        pointers=[0] * len(simulation.cell_names),
-        first_rung=[None] * len(simulation.cell_names),
+        pointers=[0] * len(simulation.detector_names),
+        first_rung=[None] * len(simulation.detector_names),
         wheel=WHEEL,
         labels=((0, 1), (1, 1)),
     )
     live.driven = np.zeros(SHAPE, dtype=bool)
-    if ladder and "screen" in simulation.cell_names:
-        live.ladder = [simulation.cell_names.index("screen")]
+    if ladder and "screen" in simulation.detector_names:
+        live.ladder = [simulation.detector_names.index("screen")]
     live.norm = simulation.conserved_form(live)
     simulation.records[live.identity] = live
     return live
@@ -570,12 +570,12 @@ def test_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
         now,
         before,
         np.zeros(shape, dtype=np.int64),
-        pointers=[0] * len(simulation.cell_names),
-        first_rung=[None] * len(simulation.cell_names),
+        pointers=[0] * len(simulation.detector_names),
+        first_rung=[None] * len(simulation.detector_names),
         wheel=WHEEL,
     )
     live.driven = np.zeros(shape, dtype=bool)
-    live.ladder = [simulation.cell_names.index("screen")]
+    live.ladder = [simulation.detector_names.index("screen")]
     live.norm = simulation.conserved_form(live)
     simulation.records[live.identity] = live
     nodes = side**3

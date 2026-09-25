@@ -112,7 +112,7 @@ def pair_lamp_checks(world: NatureBeamWorld) -> None:
                 f"{entry.amount} (W = {wheel} births needed, one per residue; CHECK 2)"
             )
         # Reviewer 3's nit: W births within the ticks is necessary, not
-        # sufficient; the W-th birth must also reach its cell and complete
+        # sufficient; the W-th birth must also reach its detector and complete
         # within the ticks. The margin printed is the ticks beyond the W-th
         # birth; the arm's transit and the completion are NOT checked here
         # (they are the world's geometry, the World Generator's line).

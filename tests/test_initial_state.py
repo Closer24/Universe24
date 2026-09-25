@@ -19,7 +19,7 @@ import pytest
 
 from event_universe.diagnostics.massive_record_margin import (
     accurate_mode,
-    block_cells,
+    body_nodes,
     integer_mode_iteration,
     iterated_mode,
 )
@@ -89,7 +89,7 @@ def test_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_roundi
     the peak is ADMITTED (the edge case: a one-unit change is within the rounding the bound
     allows, so the check does not single it out; the same input then gives another output,
     the property test's test 8), read on a side-12 well [800, 801] seeded by the generator
-    on the emitter world's chain (the 32-cell well of the born train's emitter sits at the
+    on the emitter world's chain (the 32-Node well of the born train's emitter sits at the
     bound's edge: the iteration's floor of 276 units leaves no unit of slack, and the peak
     plus one is refused there naming the Node). The stamp is rewritten for every changed
     profile so that the residual speaks (the hash's own refusal is test g)."""
@@ -188,8 +188,8 @@ def test_at_most_three_families():
 
 
 def test_bodies_are_whole_and_disjoint():
-    """Two bodies whose cells overlap are refused naming both (a light-kind block of side 1
-    inside A's cells on the light clock's chain); a block beyond a face of the board is
+    """Two bodies whose Nodes overlap are refused naming both (a light-kind block of side 1
+    inside A's Nodes on the light clock's chain); a block beyond a face of the board is
     refused by the fit check naming the axis and the vertex (a light-kind block of side 3 at
     x = 171 on the open chain of 173 reaches 173 beyond the face at 172); a block of side 3
     at x = 160, whole, is admitted."""
@@ -324,11 +324,11 @@ def test_the_generator_as_the_operator_iterated_in_integers():
     """THE GENERATOR WITH THE STOP (the model owner's word of 2026-09-25, 04:10Z, closing
     record 1898; ALGEBRA.md 9.22 (7); BUILD.md section 26 item 25): on the emitter world's
     chain of 80 (the well [800, 801] in the kind [800, 809]) `iterated_mode` iterates the law's
-    own operator 3 den v' = num S_6(v) + 6 den v + r from the cells' indicator at the working
+    own operator 3 den v' = num S_6(v) + 6 den v + r from the Nodes' indicator at the working
     amplitude 2^28 (scaled to the declared 2^20), reads
     the clock as the operator's quotient over the board, and stops at the first iteration at which the
     scaled profile passes the loader's own residual bound with that clock (2487 iterations
-    read on the 32-cell well of the born train's emitter on the closed chain, its border the
+    read on the 32-Node well of the born train's emitter on the closed chain, its border the
     world's (one border for every family, BUILD.md section 26 item 28; 1805 with the matter
     border periodic, HISTORY), COMPUTATION; 1653 on the side-12
     well, 1817 at the working amplitude 2^20, which left the muon layer's well hovering at
@@ -336,7 +336,7 @@ def test_the_generator_as_the_operator_iterated_in_integers():
     for bit the same on a second run; the profile it
     writes passes `mode_residual` (the stop's own condition, read again here) and agrees with
     the host's eigensolver (ARPACK, a diagnostic now) within 500 units at every Node (467
-    read on the 32-cell well five Links from the closed chain's zero face, 276 with the matter
+    read on the 32-Node well five Links from the closed chain's zero face, 276 with the matter
     border periodic, 204 on the side-12 well: the iteration's floor, the rounding noise of every step fed into the next mode and
     damped only by the gap, about 1 / gap units at the amplitude), its clock within 4 units of
     ARPACK's rounded 2 cos omega at the denominator 2^22 (0 read; 2 at 2^20). The fixed-count
@@ -350,9 +350,9 @@ def test_the_generator_as_the_operator_iterated_in_integers():
     assert block is not None
     shape = (int(world.shape[0]), 1, 1)
     wrap = world.kind_periodic(entry.family)
-    cells = block_cells(shape, (int(entry.position[0]), 0, 0), block.extents, wrap)
-    num = np.where(cells, block.pair[0], 800)
-    den = np.where(cells, block.pair[1], 809)
+    nodes = body_nodes(shape, (int(entry.position[0]), 0, 0), block.extents, wrap)
+    num = np.where(nodes, block.pair[0], 800)
+    den = np.where(nodes, block.pair[1], 809)
     amplitude = 1 << 20
     profile, clock, iterations = iterated_mode(world, 0, amplitude)
     assert iterated_mode(world, 0, amplitude) == (profile, clock, iterations)
@@ -366,7 +366,7 @@ def test_the_generator_as_the_operator_iterated_in_integers():
     expected = np.rint(mode * amplitude).astype(np.int64).ravel()
     assert int(np.max(np.abs(np.array(profile) - expected))) <= 500
     assert abs(clock[0] - round(lambda_max * clock[1])) <= 4
-    start = np.where(cells, amplitude, 0).astype(np.int64)
+    start = np.where(nodes, amplitude, 0).astype(np.int64)
     fixed = integer_mode_iteration(start, num, den, wrap, amplitude, 4000)
     scaled = np.rint(fixed.astype(np.float64) * amplitude / np.max(np.abs(fixed))).astype(np.int64)
     assert int(np.max(np.abs(scaled.ravel() - expected))) <= 300

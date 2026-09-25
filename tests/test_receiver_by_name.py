@@ -3,12 +3,12 @@ DECLARATIONS.md section 13 item 7 and section 10 items 9 and 10; BUILD.md sectio
 Nature24's eight decisions of 2026-09-24, 12:40Z, through the Boss). On a closed chain of
 200 with one emitter body and one named set 60 Links away at wheel 64: (a) exactly one
 gather line per record at the set's rung, its time the rung's interval, the record deleted
-whole at it; (b) the block's own cell on no ladder; (c) the loader's refusals of
+whole at it; (b) the block's own detector on no ladder; (c) the loader's refusals of
 `receiver`; (d) the permutation test, the detector list reordered giving byte-identical
 gather lines (issue #1116); (e) a set beside the receiver books the flux into its Node and
 is never chosen, its pointer on the line's `sunk` (HOST). Then the line's time, and the
 registered world `light_clock.json` loaded and stepped. SINCE THE FLUX READING (ALGEBRA.md
-9.19 (3); BUILD.md section 26 item 14) nothing takes: every cell books the one-way flux
+9.19 (3); BUILD.md section 26 item 14) nothing takes: every detector books the one-way flux
 into its Nodes, the click is on the cumulative ladder and ends the record; the chain's
 faces are closed (an open face is the receiver `face`, last on every ladder, and two
 Links behind a body it clicks the half that leaves). Every number here is the engine's
@@ -40,7 +40,7 @@ def emitter(
     stock: int = 4,
     direction: list[int] | None = None,
 ) -> dict:
-    """An emitter body over the train's 32 cells from `position` on the matter kind
+    """An emitter body over the train's 32 Nodes from `position` on the matter kind
     [800, 809]: the well [800, 801] (W = 2403 remainder values in the vacuum, ALGEBRA.md 9.22
     (4); at its Nodes the wheel of its content under the Node clock, 9.35 (2)), no
     coupling (the click alone, the model owner's decision (2) of record 1962), the seed 50 x 2^20 (its
@@ -147,15 +147,15 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
     clock, COMPUTATION; SINCE THE NODE CLOCK, BUILD.md section 26 item 31, the wheel at the
     body's Nodes is the rule's with its content and the residues moved;
     SINCE THE REMAINDER KEPT, BUILD.md section 26 item 29, the residues spread from the
-    kept remainder), the ladder the one cell (the block's `receiver`, read
-    through `receiver_cell`), the line carrying the quantum (`content` 1) and the record
+    kept remainder), the ladder the one detector (the block's `receiver`, read
+    through `receiver_detector`), the line carrying the quantum (`content` 1) and the record
     deleted whole at it (never in `records` after its line), the definition and
-    `receiver_cell` carrying the name; (d) the detector list reversed gives byte-identical
-    gather lines up to the order of the HOST listing `cells` (issue #1116: the list's order
-    is no input to the click); (e) `beside` and A's own cell
-    are CELLS OFF THE LADDER: they book the one-way flux into their Nodes (the train
+    `receiver_detector` carrying the name; (d) the detector list reversed gives byte-identical
+    gather lines up to the order of the HOST listing `detectors` (issue #1116: the list's order
+    is no input to the click); (e) `beside` and A's own detector
+    are DETECTORS OFF THE LADDER: they book the one-way flux into their Nodes (the train
     passes `beside` between A and the screen: its pointer above 0 as the click read it;
-    A's own cell books nothing of its outgoing train, the outward flux negative), are
+    A's own detector books nothing of its outgoing train, the outward flux negative), are
     never chosen, and the line's `T` counts them with the screen (HOST); the books
     balanced. The edge case (c): the same world without
     `receiver` loads (the ladder every declared set in the declared order, `screen` then
@@ -172,10 +172,10 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
             document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
         seen: Spy = {}
         simulation, lines = run(document, 500, seen=seen)
-        screen = simulation.cell_names.index("screen")
-        beside = simulation.cell_names.index("beside")
-        own = simulation.blocks[0].cell
-        assert simulation.receiver_cell == {0: screen} and simulation.has_receiver
+        screen = simulation.detector_names.index("screen")
+        beside = simulation.detector_names.index("beside")
+        own = simulation.blocks[0].detector
+        assert simulation.receiver_detector == {0: screen} and simulation.has_receiver
         found = gathers(lines)
         assert len(found) >= 3, found
         assert len({g["record"] for g in found}) == len(found)  # one line per record
@@ -191,13 +191,13 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
             assert lawful_wheel(simulation.world, births[line["record"]])
             # the cumulative rule on the click's own pointers (ALGEBRA.md 9.19 (3) (b))
             assert 2 * wheel * pointers[screen] >= (2 * u + 1) * norm
-            # the cells off the ladder: booked, never chosen, counted in T
+            # the detectors off the ladder: booked, never chosen, counted in T
             assert pointers[beside] > 0 and pointers[own] >= 0
             assert line["T"] == sum(pointers) == pointers[screen] + pointers[beside] + pointers[own]
-        # the line's `cells` is a HOST listing in the cells' order (the detector
+        # the line's `detectors` is a HOST listing in the detectors' order (the detector
         # list's, its rungs cumulative in that order); the click's fields are
         # compared without it
-        dumps.append([json.dumps({k: v for k, v in g.items() if k != "cells"}) for g in found])
+        dumps.append([json.dumps({k: v for k, v in g.items() if k != "detectors"}) for g in found])
     assert dumps[0] == dumps[1]
     # a world with no emitter carries no receiver
     plain = light_clock_world("closed", True)
@@ -236,29 +236,29 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
 
 
 def test_the_blocks_own_cell_is_on_no_ladder():
-    """(b) On the closed chain of 200 the block's own cell (`measured:0`) is on no record's
-    ladder: the outgoing train leaves A's cells through their Ports (the outward flux
-    negative, booked nowhere; what the cell books is the tapers' dispersion returned off
-    the mirror at x = 0, below a hundredth of the norm as the click read it) and A's cell
+    """(b) On the closed chain of 200 the block's own detector (`measured:0`) is on no record's
+    ladder: the outgoing train leaves A's Nodes through their Ports (the outward flux
+    negative, booked nowhere; what the detector books is the tapers' dispersion returned off
+    the mirror at x = 0, below a hundredth of the norm as the click read it) and A's detector
     is never chosen, every line at `screen`. The edge case: a block naming the set that IS its own
-    cells (the light clock's form, `block` without positions) on the closed chain of 400 at
-    rest, A at [300, 332): the born train is written ON the set's cells and leaves them
-    toward +x (the outward flux is booked to no cell), so the set reads nothing of the
+    Nodes (the light clock's form, `block` without positions) on the closed chain of 400 at
+    rest, A at [300, 332): the born train is written ON the set's Nodes and leaves them
+    toward +x (the outward flux is booked to no detector), so the set reads nothing of the
     write itself; the record clicks at the set only once the mirror at x = 399 returns
-    the train into the cells (the round trip 2 x 67 Links at v_g = 0.447, about 300
+    the train into the Nodes (the round trip 2 x 67 Links at v_g = 0.447, about 300
     intervals; the self-click of BUILD.md section 26 item 10 retired with the take), later
     than the birth's next interval."""
     seen: Spy = {}
     simulation, lines = run(chain_of_200(), 400, seen=seen)
     block = simulation.blocks[0]
-    own_cell = block.cell
-    assert simulation.cell_names[own_cell] == "measured:0"
+    own_detector = block.detector
+    assert simulation.detector_names[own_detector] == "measured:0"
     found = gathers(lines)
     assert found and all(g["chosen"] == [["screen", 0, "0"]] for g in found)
-    # A's own cell books nothing of the outgoing train (the outward flux is negative);
+    # A's own detector books nothing of the outgoing train (the outward flux is negative);
     # what it books is the tapers' dispersion returned off the mirror at x = 0, below a
     # hundredth of the norm
-    assert all(seen[g["record"]][0][own_cell] * 100 < seen[g["record"]][3] for g in found)
+    assert all(seen[g["record"]][0][own_detector] * 100 < seen[g["record"]][3] for g in found)
     births = {line["record"]: line for line in lines if line["event"] == "birth"}
     assert all(seen[g["record"]][4] == births[g["record"]]["W"] for g in found)
     assert all(lawful_wheel(simulation.world, births[g["record"]]) for g in found)
@@ -270,7 +270,7 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     seed_source(document, 0)
     seen = {}
     simulation, lines = run(document, 700, seen=seen)
-    assert simulation.receiver_cell == {0: simulation.cell_names.index("at_well")}
+    assert simulation.receiver_detector == {0: simulation.detector_names.index("at_well")}
     found = gathers(lines)
     assert found and all(g["chosen"] == [["at_well", 0, "0"]] for g in found)
     assert all(g["click"] > g["birth"] + 200 and g["tick"] == g["click"] for g in found)
@@ -325,9 +325,9 @@ def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
     """The registered world `examples/events/massive_record/light_clock.json` (the one table's
     form: [760, 3, 3] with the face slabs 32 deep, A at [600, 632) with its train along +x
     and its stock of 64, the mirror at [690, 694), A's `receiver` at_well the set at its own
-    cells) loads and is stepped 700 intervals as a load-and-step diagnostic (no pin): A
+    Nodes) loads and is stepped 700 intervals as a load-and-step diagnostic (no pin): A
     births (its excitations click at their rungs), and its records click at at_well when
-    the mirror returns them into A's cells (the line at the rung, the record deleted at it;
+    the mirror returns them into A's Nodes (the line at the rung, the record deleted at it;
     at least one within the 700, the round trip about 300 intervals after the birth), none
     at the faces; the books balanced. The edge case: the file on disk is byte for byte what
     the test read."""

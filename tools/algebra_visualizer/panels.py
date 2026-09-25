@@ -598,10 +598,10 @@ def panel_verb_e(detector: RunRecord, gather: dict[str, Any] | None) -> Panel:
     numbers = [
         Number("the wheel's value u", str(gather["u"]), "DETECTOR", "events.jsonl: gather.u"),
         Number(
-            "the cells (the rungs of the ladder)",
-            str(len(gather["cells"])),
+            "the detectors (the rungs of the ladder)",
+            str(len(gather.get("detectors", gather.get("cells", [])))),
             "DETECTOR",
-            "events.jsonl: gather.cells",
+            "events.jsonl: gather.detectors",
         ),
         Number("the chosen set", name, "DETECTOR", "events.jsonl: gather.chosen"),
         Number("the chosen Node", vec(gather["node"][0]), "DETECTOR", "events.jsonl: gather.node"),
@@ -670,7 +670,10 @@ def panel_verb_d(light: RunRecord, detector: RunRecord, gather: dict[str, Any] |
         ]
     ladder: list[tuple[str, int]] = []
     if gather is not None:
-        ladder = [(str(cell[0][0][0]), int(cell[1])) for cell in gather["cells"]]
+        ladder = [
+            (str(rung[0][0][0]), int(rung[1]))
+            for rung in gather.get("detectors", gather.get("cells", []))
+        ]
         numbers += [
             Number("the wheel's value u", str(gather["u"]), "DETECTOR", "events.jsonl: gather.u"),
             Number(
@@ -709,7 +712,7 @@ def panel_verb_d(light: RunRecord, detector: RunRecord, gather: dict[str, Any] |
                 "ALGEBRA.md 2.6",
             ),
         ],
-        note="The ladder of one gather: the rungs in order and the wheel's value u; the first rung above u is the cell chosen, as recorded on the gather line.",
+        note="The ladder of one gather: the rungs in order and the wheel's value u; the first rung above u is the detector chosen, as recorded on the gather line.",
         numbers=numbers,
         figure={
             "kind": "ladder",

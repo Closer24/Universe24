@@ -167,7 +167,7 @@ def test_one_unit_off_the_mode_is_admitted_and_the_peak_doubled_is_refused_namin
 
 
 def test_a_flat_seed_is_not_the_mode_and_is_refused():
-    """The flat seed of the first builds (the value on the cells, 0 outside) is not the bound
+    """The flat seed of the first builds (the value on the Nodes, 0 outside) is not the bound
     mode's profile: refused, the sentence naming the generator's `mode_profile` as the form
     the seed takes (the operator iterated with the stop)."""
     document = block_world(

@@ -7,7 +7,7 @@ that series' form byte for byte: `age_bound`, `K`, `N`, `release`, the blocks' k
 bodies with extents and the face slab (BUILD.md section 26 item 23), the emitter as a
 clicking body (item 24) and THE BORN TRAIN (item 27; ALGEBRA.md 9.17 (6a)): every birth is
 a travelling train of 8 periods on the born clock [512, 1] of N = 1024 (k = pi / 2, the
-wavelength 4, the train 32 cells along **K**), the body's extent along **K** the train's
+wavelength 4, the train 32 Nodes along **K**), the body's extent along **K** the train's
 length, the profile and its norm on the vacuum the generator's integers checked at load.
 
 THE LIGHT CLOCK (ALGEBRA.md 9.22 (8), its row; the one table of 9.30: the chain of 760
@@ -17,7 +17,7 @@ N = 1024, matter [800, 809]; the face slabs 32 deep at both ends of x (`face_dep
 well A [800, 801] of the extents [32, 3, 3] at [600, 632) with a stock of
 64, its train along +x; the mirror the gap [1, 2] of depth 4 at [690, 694) (a body of
 light's kind over the whole cross-section; the holder body's name waits on the cleanup's
-step 6); the receiving set `at_well` A's own cells (the set bound to the block: the
+step 6); the receiving set `at_well` A's own Nodes (the set bound to the block: the
 outgoing train leaves them through their Ports, negative and not booked, the return enters
 them, 9.25 (11) (d)); 4800 intervals (COMPUTATION: 64 births at the mean cadence P / 2 on
 the wheel of 2403, P = 94 on A's mode, about 3000 intervals, the last return 300, a margin;
@@ -29,7 +29,7 @@ cube beside A is HISTORY (BUILD.md section 26 item 22: a cube beside the emitter
 outgoing pass).
 
 THE ROWS HELD UNDER THE TRAIN (their files in `docs/designs/detector_law/held_worlds/`,
-HISTORY as written with the one-cell birth, not loaded by the gate; their builders retired
+HISTORY as written with the one-Node birth, not loaded by the gate; their builders retired
 here, to be rebuilt through the generator from the table of ALGEBRA.md 9.22 (8) in its
 form, the cleanup's item 7): the two slits and the pace fans (the light rows of the folder);
 the moving emitter's redshift, Sagnac's two-way light times, de Broglie's fringes and the
@@ -81,7 +81,7 @@ HELD_NAMES: set[str] = {
     "bell_a1b1",
     # the four Malus worlds held with them (BUILD.md section 26 item 14): under
     # the cumulative ladder of ALGEBRA.md 9.19 (3) (b) the table body's two
-    # cells at ONE Node cannot give Malus's counts (the entry's whole offer
+    # detectors at ONE Node cannot give Malus's counts (the entry's whole offer
     # crosses the rung no later than the + share of it), so the polariser
     # returns as a body with an axis and two receivers named (the
     # mathematician's step 3), the counts re-derived on it
@@ -128,7 +128,7 @@ TRAIN_32 = 32  # periods, section 15 L-3 and L-6 (HISTORY: the lamp's train, ret
 # in about W P / 2; a well too deep for its board is a RUNAWAY (the
 # largest eigenvalue at or above 2, no oscillation; the deep wells [800, 700], [800, 500]
 # and [800, 400] of the first smoke runs were such on a chain and their cadences the
-# runaway's, withdrawn) and the margin rule refuses it. The one-cell well EMITTER_WELL on
+# runaway's, withdrawn) and the margin rule refuses it. The one-Node well EMITTER_WELL on
 # the kind EMITTER_KIND (the index worlds' kind, omega_0 = 0.505) is bound on a chain
 # (omega_b = 0.32, P = 20 intervals) and on a layer (omega_b = 0.50, P = 12
 # intervals). A world of W births declares the stock M = W (LAB_TOOLS.md A.1).
@@ -361,7 +361,7 @@ MALUS_TICKS = 3800  # 256 excitations on the well [8, 7]: the wheel in about W P
 # the same key), so the registered 2^50 would birth one record per interval to the end of
 # the 1200 (the preview on 299b6bb2: 1200 births); the declared count is written as the stock.
 MALUS_BIRTHS = 256
-MALUS_SHAPE = [8, 1, 1]  # section 5 item 1 (12:15Z): the exit cell at x = 7 on the board
+MALUS_SHAPE = [8, 1, 1]  # section 5 item 1 (12:15Z): the exit Node at x = 7 on the board
 MALUS_READ_NODE = [4, 0, 0]  # the registered which-path read body, dropped with its set
 MALUS_READ_SET = "first"
 
@@ -432,11 +432,11 @@ def malus(name: str, source: Path, setting: int) -> dict:
     """DECLARATIONS.md sections 5 and 6: the registered form of the source world with
     `detector_law` true, `clock_stamp` true, the table's `phase_window` at the declared
     setting, ON THE BAR OF 8 (section 5 item 1, 12:15Z, Reviewer 3's read of the 7-Node
-    files: the polariser's exit cell, the Node beyond its entry at x = 6, on the board at
+    files: the polariser's exit Node, the Node beyond its entry at x = 6, on the board at
     x = 7) WITHOUT the which-path `read` body at x = 4 and its set `first` (dropped there:
     under detector-law-v1 a set's Node is a take Node, so that set took the record before
     the polariser), the polariser's set alone on its entry Node (the table body of two
-    cells, section 14 item 6), the clock [308, 25] on N = 256 (section 14 item 1) on the light family and
+    detectors, section 14 item 6), the clock [308, 25] on N = 256 (section 14 item 1) on the light family and
     [1, 1] on the counter family (section 5 item 3 and section 15 T-1), written in the
     file (the registered entity references carry no clock); the lamp's train 32 periods
     and `ticks` 1200 (section 5 item 2, 2026-09-24: the registered 300 intervals gave 300
@@ -514,7 +514,7 @@ EMITTER_STOCK = (
 PHASE_STEPS = 1024  # N of every light world (ALGEBRA.md 9.22 (8): the born clock's circle)
 BORN_CLOCK = [512, 1]  # the born clock of every light emitter on N = 1024: k = pi / 2, the wavelength 4
 TRAIN_PERIODS = 8  # the train's periods (9.17 (6a))
-TRAIN_LENGTH = 32  # the train's cells along K, TRAIN_PERIODS x the wavelength 4
+TRAIN_LENGTH = 32  # the train's Nodes along K, TRAIN_PERIODS x the wavelength 4
 FACE_DEPTH = 32  # every face a receiver slab as deep as the train (9.25 (11))
 LIGHT_CLOCK_SHAPE = [760, 3, 3]  # the one table (9.30): the chain of 760 extruded to [760, 3, 3]
 LIGHT_CLOCK_TICKS = 4800  # COMPUTATION: 64 births at the mean cadence P / 2 = 47 (P = 94 on A's mode), about 3000 intervals, the last return 300, a margin
@@ -544,7 +544,7 @@ def emitter(
 
 
 def mirror_slab(position: list[int], extents: list[int]) -> dict:
-    """A mirror (A.3): a body of light's kind over a box, carrying the gap [1, 2] at its cells
+    """A mirror (A.3): a body of light's kind over a box, carrying the gap [1, 2] at its Nodes
     (a material of light's kind; the holder body's name waits on the cleanup's step 6)."""
     entry = body(position, "light")
     entry["extents"] = extents
@@ -555,7 +555,7 @@ def mirror_slab(position: list[int], extents: list[int]) -> dict:
 def receiver_set(document: dict, name: str, block: int) -> None:
     """A detector set on the light record bound to the receiving block (section 15 M1-4:
     the one key `block`, the measured number of the block, its Nodes the block's current
-    cells); no wheel (the rung's wheel is the record's own, ALGEBRA.md 9.22 (4))."""
+    Nodes); no wheel (the rung's wheel is the record's own, ALGEBRA.md 9.22 (4))."""
     document["detectors"].append({"name": name, "block": block, "threshold": 1})
 
 
@@ -603,7 +603,7 @@ def light_clock(massive) -> dict:
     """THE LIGHT CLOCK in the one table's form (the module docstring): the board [760, 3, 3]
     with x open and the face slabs 32 deep, light with the born clock on N = 1024, A at
     [600, 632) over the whole cross-section with its train along +x and its stock, the mirror
-    at [690, 694), the set `at_well` A's own cells and A's `receiver` by name; the seeds,
+    at [690, 694), the set `at_well` A's own Nodes and A's `receiver` by name; the seeds,
     the train, the placement rule and the stamp by the massive generator's
     `seed_on_the_mode`."""
     document = massive.world(

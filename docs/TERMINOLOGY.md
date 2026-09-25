@@ -324,10 +324,10 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
 - **Offer, ladder**: what a record's rows put at a `sum` set's Node when the
   set ends them, the phase-count vector per label and Node (`Offer.counts`),
   the residual units, the content and the momentum they carried; a set's
-  weight in the cells is the sum over its Nodes of the bilinear form of the
-  sum over the labels. The ladder is the record's cells in the order of its
-  offers, each cell's rung b_k = (2 W C_k + Total) // (2 Total) on the
-  record's wheel W, and u falls in the cell whose rung it is below: Born's
+  weight in the detectors is the sum over its Nodes of the bilinear form of the
+  sum over the labels. The ladder is the record's detectors in the order of its
+  offers, each detector's rung b_k = (2 W C_k + Total) // (2 Total) on the
+  record's wheel W, and u falls in the detector whose rung it is below: Born's
   rule read as a count over the wheel (note 37 (iii) and (xii); note 46).
 - **Release**: what a body's self-creation creates: at a turn s each unit a
   lamp releases costs it h x s content, carries that content and the
@@ -592,7 +592,7 @@ names everywhere.
 | **f** (of a record) | the phase-count vector of a record's rows at one end Node and label, f_p the amount at the phase p at the amplitude scale 32 (`amplitude.Counts`), the record's element of Z[Z_N] | vector | 32 per unit of amount, per phase step | record 188; BEAM_LAW note 37 (xii) |
 | **T** | the traceless second moment, 3 sum amount **u**_d **u**_d^T less its trace | tensor, 3 x 3 symmetric | Q^2 per unit of amount | ENGINE, the readings by type |
 | **C** | the coupling matrix, the reader's charges per column | matrix | charge per unit of content | DERIVATIONS_BEAM section 0 |
-| **G** | the click's Gram matrix, **E**^T **E**, G_jk = C_j C_k + S_j S_k over the rounded tables (`core.phase.phase_gram`); the weight of a cell **f**^T **G** **f** | matrix | 256^2 | record 188; BEAM_LAW note 37 (xii) |
+| **G** | the click's Gram matrix, **E**^T **E**, G_jk = C_j C_k + S_j S_k over the rounded tables (`core.phase.phase_gram`); the weight of a detector **f**^T **G** **f** | matrix | 256^2 | record 188; BEAM_LAW note 37 (xii) |
 | **E** | the 2 x N matrix whose rows are the tables C and S; the pointer **E** **f** its evaluation at the circle (`Layer.evaluate`, a report) | matrix | 256 per unit | BEAM_LAW note 37 (xii); DERIVATIONS_BEAM section 6 |
 | N_t | the cosine tables' scale, 256, the unit of the tables C and S of **E** (the paper's letter, needed for S(N, Q)) | scalar | table units per unit | BEAM_LAW note 37 (xii); record 379 |
 | **Phi** (**F** in the law's documents until their next pass) | the interval's map, one piecewise-linear map of the state | operator | none | DERIVATIONS_BEAM section 0; record 369 |
@@ -603,7 +603,7 @@ names everywhere.
 | `m` (a row's field) | the multiplicity of a record's row, in code font, never in a formula beside the mass m | scalar | dimensionless | BEAM_LAW note 37 (i); record 369 |
 | (the norm of a split) | the sum of the squares of a split's weights, written out; its shares' letter BEAM_LAW's writer's (A until its next pass; not a) | scalar | dimensionless | BEAM_LAW note 37 (ii); record 369 |
 | **e**_A (**A** in the law's documents until their next pass) | the axis of a body (`axis`), a unit vector | vector | one heading | BEAM_LAW note 39; record 369 |
-| b_k, C_k, C_K (T in the law's documents until their next pass) | a rung of the ladder on the record's wheel N_u, a cell's cumulative weight, the total (the last cumulative weight) | scalars | wheel steps; the unit 2^58 | BEAM_LAW notes 37 (iii) and 46; record 369 |
+| b_k, C_k, C_K (T in the law's documents until their next pass) | a rung of the ladder on the record's wheel N_u, a detector's cumulative weight, the total (the last cumulative weight) | scalars | wheel steps; the unit 2^58 | BEAM_LAW notes 37 (iii) and 46; record 369 |
 | w | the width of a window (`phase_width`) | scalar | phase steps | BEAM_LAW note 36 (i) |
 | **v**, v | a body's velocity and its speed | vector, scalar | Links per interval | DERIVATIONS_BEAM |
 | beta | the speed over the pace of a row, v / c | scalar | dimensionless | DERIVATIONS_BEAM section 12 |
@@ -614,7 +614,7 @@ names everywhere.
 | zeta_N | the primitive N-th root of unity | scalar | none | DERIVATIONS_BEAM 6.5 |
 | N_theta (G in the law's documents until their next pass) | the fan's angular grain, the grain of the fan's angular weights: each direction of the fan within P carries the angle it covers, half the gap to each Farey neighbour, gap(D, D') = 3 Q^2 / (T_D T_D'), as the integer a_D = floor(G x (gap(D^-, D) + gap(D, D^+)) / 2), G = 2^18 in the plane (2^24, 2^14 and 2^5 in the sphere's form); a constant of the law beside N, Q, P, W and K; a different constant from the retired grain of `doppler-v1` below, kept | scalar | dimensionless, a resolution of the angle | [TWO_SLITS.md](designs/fraction_free/TWO_SLITS.md) sections 7 and 10; [LAW.md](designs/vector_form/LAW.md); Highlights 5.7; the fan of record 160 decided and not built, so BEAM_LAW has no owning note yet |
 | G (the grain of `doppler-v1`) | the deleted grain of the reading's weight at the relative speed | retired | none | MIGRATION 2026-09-21 |
-| R(f) | the click's reading, the weight of a cell **f**^T **G** **f** (W in DERIVATIONS_BEAM 6.5 to 6.7 until its next pass; code `gram_form`) | scalar | the unit of **G** times the unit of **f** squared | DERIVATIONS_BEAM 6.5; record 369 |
+| R(f) | the click's reading, the weight of a detector **f**^T **G** **f** (W in DERIVATIONS_BEAM 6.5 to 6.7 until its next pass; code `gram_form`) | scalar | the unit of **G** times the unit of **f** squared | DERIVATIONS_BEAM 6.5; record 369 |
 | d_p | the drive's wall, the wall of the momentum's accumulator (W in designs/light_speed/FORM.md 3 until its next pass; code `wall`) | scalar | as FORM.md 3 states | designs/light_speed/FORM.md 3; record 369 |
 | sigma_s | the strong coupling per unit of content, the strong column (G in BEAM_LAW note 40 until its next pass; the column key keeps its name) | scalar | per unit of content, as the column declares | BEAM_LAW note 40; record 369 |
 | **D**_diff | the diffusion tensor of the crowd (written D_diff in prose; distinct from a direction **D**) | tensor, 3 x 3 | as DERIVATIONS_BEAM 25.6 states | DERIVATIONS_BEAM 25.6; record 369 |
