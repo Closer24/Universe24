@@ -4138,8 +4138,11 @@ would have found no cell.
    and 2011). THE COST:
    HOST, one snapshot of the clicks' world per click (a few integers per
    family and per block, the deleted record's three arrays), read by
-   `journal_size()`; the Node's work and storage unchanged; the books and
-   the state untouched (no digest moves). THE GATE:
+   `journal_size()`; OFF IN AN ORDINARY RUN (the model owner's record 2071:
+   a test tool only, outside the law), on by the simulation's flag
+   `journal_clicks` for the backward test alone, the backward run with the
+   clicks refused without it; the Node's work and storage unchanged; the
+   books and the state untouched (no digest moves). THE GATE:
    tests/test_board_reversible.py 1 (c): the same run a third time, the
    backward run with the clicks exact at every interval through the taking
    and the giving down to the load, the journal counting the givings and

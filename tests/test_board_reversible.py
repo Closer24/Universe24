@@ -119,7 +119,9 @@ def run_states(document: dict, ticks: int) -> tuple[DetectorLawSimulation, list[
     """The world stepped `ticks` intervals: the simulation, the rows after every interval (the
     load's at index 0), the lines, and the ladder spy's readings at every click."""
     lines: list[dict] = []
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
+    simulation = DetectorLawSimulation(
+        parse_nature_beam_world(document), observer=lines.append, journal_clicks=True
+    )
     seen: Seen = {}
     spy_on(simulation, seen)
     states = [rows_of(simulation)]
@@ -234,7 +236,8 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
         simulation.step_inverse()
         assert_same(rows_of(simulation), states[t - 1])
     assert simulation.tick == 0
-    # (c) THE CLICK JOURNAL (record 2070; item 52): the same run a third time, the backward run
+    # (c) THE CLICK JOURNAL (record 2070; item 52; on for the test alone, record 2071): the same
+    # run a third time, the backward run
     # with the clicks undoing every click from the journal in one generic operation: exact at
     # every interval through the taking click (the deleted record back whole: nothing lost)
     # and the giving click (the given record removed, the stock restored), down to the load;

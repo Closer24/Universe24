@@ -386,7 +386,9 @@ class DetectorLawLayer:
 class DetectorLawSimulation:
     """One world under the local detector law, stepped interval by interval."""
 
-    def __init__(self, world: NatureBeamWorld, observer: Record | None = None) -> None:
+    def __init__(
+        self, world: NatureBeamWorld, observer: Record | None = None, journal_clicks: bool = False
+    ) -> None:
         if not world.detector_law:
             raise ValueError(f"{BEAM_LAW}: the world does not declare detector_law")
         self.world = world
@@ -564,6 +566,9 @@ class DetectorLawSimulation:
         # of any kind, in the order of the run; read by the backward run with
         # the clicks alone (`step_inverse(with_clicks=True)`), never by the law
         self.click_journal: list[ClickEntry] = []
+        # off in an ordinary run (the model owner's record 2071: a test tool only,
+        # outside the law); on for the backward test alone
+        self.journal_clicks = bool(journal_clicks)
         # the records clicked this interval, deleted whole after the advances
         self.dead: list[int] = []
         self.blocks: list[Block] = []
@@ -1657,6 +1662,11 @@ class DetectorLawSimulation:
                 raise ValueError(
                     f"{BEAM_LAW}: the inverse map is defined at rest (block {block.number} moves)"
                 )
+        if with_clicks and not self.journal_clicks:
+            raise ValueError(
+                f"{BEAM_LAW}: the backward run with the clicks needs the click journal, on for the "
+                "test alone (`journal_clicks`; the model owner's records 2070 and 2071)"
+            )
         undone = self._undo_clicks() if with_clicks else []
         if undone and not any(entry.kind == "giving" for entry in undone):
             # the held families' forward step read the hold of the interval's
@@ -2685,7 +2695,10 @@ class DetectorLawSimulation:
         BEFORE its write, with the clicks' world as it stands: the held
         quanta, the ledger and every block's click counters (one snapshot,
         whatever the family), and for a deletion the record itself. HOST
-        storage, reported apart (`journal_size`)."""
+        storage, reported apart (`journal_size`); nothing written in an
+        ordinary run (`journal_clicks` off, record 2071)."""
+        if not self.journal_clicks:
+            return
         self.click_journal.append(
             ClickEntry(
                 self.tick,
