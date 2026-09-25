@@ -60,6 +60,7 @@ byte (`tests/test_massive_record.py`).
 
 from __future__ import annotations
 
+import copy
 from collections.abc import Callable, Iterator, Sequence
 from dataclasses import dataclass, field
 from fractions import Fraction
@@ -337,6 +338,36 @@ class Ledger:
         return [0, 0, 0]
 
 
+@dataclass
+class ClickEntry:
+    """THE CLICK JOURNAL'S ONE ENTRY (the model owner's record 2070 of
+    2026-09-25 through the Boss: "the Nodes run backward exactly; a click is
+    not reversible in time; the law needs no inverse of a click; the host
+    journals each click once, what was taken or given, where, when, in one
+    generic place for every family; the backward run undoes the clicks from
+    that journal in one generic operation"; BUILD.md section 26 item 52). HOST
+    storage, nothing kept at a Node: the interval, the kind ("giving", the
+    record made; "taking", the content moved to a body or booked as escaped;
+    "deletion", the record removed whole), the family, the body (None where
+    none), the record's identity, the quanta moved, and the clicks' world as
+    it stood BEFORE the click (the held quanta, the ledger, every block's
+    click counters: one generic snapshot, so that a new family adds nothing
+    to the undo); for a deletion the record object itself (its rows as the
+    interval's step left them, the click's one loss kept by the host)."""
+
+    tick: int
+    kind: str
+    family: int
+    body: int | None
+    identity: int
+    quanta: int
+    held: list[list[int]]
+    ledger: Ledger
+    blocks: dict[int, tuple[bool, int, int, int, bool, int | None, list[int], int, int]]
+    layer: tuple[int, int]
+    record: LiveRecord | None = None
+
+
 class DetectorLawLayer:
     """The record's lines the runner writes into run.json (the amplitude law's shape)."""
 
@@ -529,6 +560,10 @@ class DetectorLawSimulation:
                 self.span_masks[number] = span
         self.records: dict[int, LiveRecord] = {}
         self._kind_walls: dict[int, int] = {}  # HOST: `kind_wall` per family, cleared by `_write_pair`
+        # THE CLICK JOURNAL (record 2070; item 52): HOST, one entry per click
+        # of any kind, in the order of the run; read by the backward run with
+        # the clicks alone (`step_inverse(with_clicks=True)`), never by the law
+        self.click_journal: list[ClickEntry] = []
         # the records clicked this interval, deleted whole after the advances
         self.dead: list[int] = []
         self.blocks: list[Block] = []
@@ -1325,6 +1360,9 @@ class DetectorLawSimulation:
         centre_content = int(content_level[centre])
         body_charge = self._body_charge(number)
         # the body's own record is not ended and never rewritten (9.43 (3))
+        # THE CLICK JOURNAL (record 2070; item 52): the giving journaled before
+        # its write, the clicks' world as it stands
+        self._journal_click("giving", family, number, number * (1 << 32) + block.givings + 1, cost)
         block.givings += 1
         identity = number * (1 << 32) + block.givings
         live = LiveRecord(
@@ -1598,24 +1636,53 @@ class DetectorLawSimulation:
         live.before = a_before
         live.age -= 1
 
-    def step_inverse(self) -> None:
+    def step_inverse(self, with_clicks: bool = False) -> None:
         """One interval backwards (8.8), in the reverse column order of `step`:
         the light records first, then the bodies' own records (the coupling
         HISTORY, the model owner's decision (2) of record 1962: no source, no
         receive, every record by the rule alone); no push, no click, no giving
         (the bodies at rest and no click in the interval, the property test's
-        world)."""
+        world). THE LAW'S INVERSE is the Nodes' world alone: a click is not
+        reversible in time (the model owner's records 2011, 2069 and 2070).
+        WITH THE CLICKS (`with_clicks`, the host's test tool, record 2070;
+        item 52): the interval's clicks are undone from the click journal in
+        one generic operation (`_undo_clicks`) before the Nodes' inverse,
+        the records' inverse at the held levels the interval began with (the
+        clicks' world before the click, held at the bodies), the held
+        families' inverse from their own state (they stepped after the
+        clicks), and the hold at the restored quanta: the backward run is
+        then exact through every click, nothing lost."""
         for block in self.blocks:
             if any(int(component) != 0 for component in block.momentum):
                 raise ValueError(
                     f"{BEAM_LAW}: the inverse map is defined at rest (block {block.number} moves)"
                 )
+        undone = self._undo_clicks() if with_clicks else []
+        if undone and not any(entry.kind == "giving" for entry in undone):
+            # the held families' forward step read the hold of the interval's
+            # start where the interval gave nothing (a taking writes the quanta
+            # but holds them only after the fields' step; a giving holds them
+            # at once, `_emit`): their levels at the bodies back to the quanta
+            # before the clicks, the levels their step and its inverse read
+            self._hold()
         # the joint inverse (ALGEBRA.md 9.41 (2), 9.45 (2); item 51): every
         # family backward at the held levels of the interval's start (their
         # `before` level: the held families stepped last), then the held
         # families backward and their hold
         for family, record in self.held_records.items():
-            self.node_level[family] = record.before
+            level = record.before
+            if undone:
+                # the level the records' forward step read: the held families'
+                # `before` with the bodies held at the quanta before the
+                # interval's clicks (the hold at the interval's start)
+                level = level.copy()
+                source = self.families[family].held
+                assert source is not None
+                for number in range(len(self.held)):
+                    holder = self.block_by_number.get(number)
+                    mask = holder.mask if holder is not None else self.span_masks[number]
+                    level[mask] = self.body_source(number, source)
+            self.node_level[family] = level
         self._effective.clear()
         for block in self.blocks:
             if block.window is not None:
@@ -2586,6 +2653,101 @@ class DetectorLawSimulation:
         its own Link loop, HISTORY since item 44: one form, one code)."""
         return self.conserved_form(live)
 
+    def _block_counters(
+        self, block: Block
+    ) -> tuple[bool, int, int, int, bool, int | None, list[int], int, int]:
+        """A block's click counters as one tuple (the clicks' world at the
+        block): emit_now, wait, excitations, givings, residue_pending, the
+        window, the emitted list, and its own record's residue and wheel."""
+        own: LiveRecord | SeatRecord | None = block.seat if block.seat is not None else block.own
+        return (
+            block.emit_now,
+            block.wait,
+            block.excitations,
+            block.givings,
+            block.residue_pending,
+            block.window,
+            list(block.emitted),
+            own.u if own is not None else 0,
+            own.wheel if own is not None else 1,
+        )
+
+    def _journal_click(
+        self,
+        kind: str,
+        family: int,
+        body: int | None,
+        identity: int,
+        quanta: int,
+        record: LiveRecord | None = None,
+    ) -> None:
+        """THE ONE GENERIC PLACE (record 2070; item 52): the click journaled
+        BEFORE its write, with the clicks' world as it stands: the held
+        quanta, the ledger and every block's click counters (one snapshot,
+        whatever the family), and for a deletion the record itself. HOST
+        storage, reported apart (`journal_size`)."""
+        self.click_journal.append(
+            ClickEntry(
+                self.tick,
+                kind,
+                family,
+                body,
+                identity,
+                quanta,
+                copy.deepcopy(self.held),
+                copy.deepcopy(self.ledger),
+                {block.number: self._block_counters(block) for block in self.blocks},
+                (self.layer.given, self.layer.gathered),
+                record,
+            )
+        )
+
+    def journal_size(self) -> int:
+        """HOST: the click journal's entries (the host's storage for the
+        backward run with the clicks; nothing of it at a Node)."""
+        return len(self.click_journal)
+
+    def _undo_clicks(self) -> list[ClickEntry]:
+        """THE ONE GENERIC UNDO (record 2070; item 52): the clicks of the
+        current interval taken off the journal in the reverse order, each
+        undone from its own snapshot: a made record dropped, a deleted record
+        put back whole, the held quanta, the ledger, the blocks' counters and
+        the layer's counts restored to what they were before the click. The
+        entries are removed from the journal (the run's history shortened as
+        the run runs back). Returns the entries undone, latest first."""
+        undone: list[ClickEntry] = []
+        while self.click_journal and self.click_journal[-1].tick == self.tick:
+            entry = self.click_journal.pop()
+            undone.append(entry)
+            if entry.kind == "giving":
+                self.records.pop(entry.identity, None)
+            elif entry.kind == "deletion" and entry.record is not None:
+                entry.record.clicked = False
+                self.records[entry.identity] = entry.record
+            self.held = copy.deepcopy(entry.held)
+            self.ledger = copy.deepcopy(entry.ledger)
+            for block in self.blocks:
+                counters = entry.blocks.get(block.number)
+                if counters is None:
+                    continue
+                (
+                    block.emit_now,
+                    block.wait,
+                    block.excitations,
+                    block.givings,
+                    block.residue_pending,
+                    block.window,
+                    emitted,
+                    residue,
+                    wheel,
+                ) = counters
+                block.emitted = list(emitted)
+                own: LiveRecord | SeatRecord | None = block.seat if block.seat is not None else block.own
+                if own is not None:
+                    own.u, own.wheel = residue, wheel
+            self.layer.given, self.layer.gathered = entry.layer
+        return undone
+
     def _release(self, live: LiveRecord) -> None:
         """The record's rows leave the board: the emitters' lists and the
         rung counts of the record are dropped."""
@@ -2616,6 +2778,15 @@ class DetectorLawSimulation:
         family = live.family
         ladder, total = rungs(weights, live.wheel)
         sunk = sum(p for p, here in zip(live.pointers, on_ladder, strict=True) if not here)
+        # THE CLICK JOURNAL (record 2070; item 52): the taking journaled before
+        # its write (the content moved to the taker, or escaped)
+        self._journal_click(
+            "taking",
+            family,
+            self.detector_measured[chosen] if chosen is not None else None,
+            live.identity,
+            live.content,
+        )
         if chosen is None:
             self.ledger.transit_escaped[family] += live.content
             self.ledger.held_escaped[family] += 0
@@ -2776,6 +2947,10 @@ class DetectorLawSimulation:
         # a record alive at the run's last interval is reported alive
         for identity in self.dead:
             if identity in self.records:
+                # THE CLICK JOURNAL (record 2070; item 52): the deletion, the
+                # record itself kept by the host (the click's one loss)
+                live = self.records[identity]
+                self._journal_click("deletion", live.family, live.emitter, identity, live.content, live)
                 self._release(self.records.pop(identity))
         self.dead = []
         # the held families step last, after every family read their levels,
