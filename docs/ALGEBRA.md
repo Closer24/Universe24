@@ -10626,3 +10626,26 @@ on and bodies clicking: bit for bit, remainders and pins included. (h)
 The eighteen: at q = 0 and the source off bit-identical; then with
 everything on, the pins recomputed blind (9.49 (4), (6)); a row outside
 its band comes to the mathematician first.
+
+**(7) THE PASS OF BOTH WORLDS (the model owner, 2026-09-25: "we need
+to see that it passes the world of Nodes and the world of clicks").**
+Every test of (6) is read in both worlds, and only the click's reading
+is compared with nature (a GameBoard reading is a diagnostic, the
+readings by type in docs/ENGINE.md). THE WORLD OF NODES passes when:
+(a) and (b) are bit-identical in every level and remainder; (g) returns
+bit for bit; the rule at every Node is the one primitive with the pace
+(Gamma - c_i + q Lambda d_i) and nothing else (the three tests of every
+rule); the pins at a body's Nodes are constant between clicks. THE
+WORLD OF CLICKS passes when each physical claim is a detector's click:
+(c) the heavier family: a beam of light passing each body at the same
+distance, its centroid at a receiver bent twice as much by the faster
+family's body (9.29's hill read at the screen), and a light clock at
+each body ticking slower by the same ratio; (d) the mass defect: the
+same beam past the bound composite and past the free quanta, the
+centroid's bend in the ratio P_free / P_bound, the tick of a light
+clock at the body in the same ratio; (e) the moving body: the beam's
+bend gamma times the rest body's; (f) the charge: the centroid moved
+away from a like body and toward an unlike one, light between them
+untouched, as 9.48 (5); (h) the eighteen: their clicks against their
+pins. A test that passes in the levels and not in the clicks is a
+finding for the mathematician, not a pass.
