@@ -11332,6 +11332,36 @@ detector at one level are the plain flux's, and the click's count is
 whole (9.25 (2), (3)). THE CLICK unchanged in every part (9.53 (1),
 SIMULATOR_DEFINITIONS.md "A click"). THE TWO WEIGHTS: the clock's
 second-order weight 1 and the ruler's weight 1, exactly, 9.56 (7).
+THE ORDER OF READING, STATED (the model owner's question of 2026-09-25
+through the Boss, record 2026: "each Link carries the pace of the
+neighbour from the previous step, no? there is no information at time
+0"; and record 2025, the two holds of a giving click's interval): every
+level the rule reads at an interval, the six neighbours' rows, the
+Node's own pace and, where the Link form below reads it, the
+neighbour's pace, is the level at the interval's start, the previous
+step's output, never a value written in the same interval; one Link per
+interval and nothing in zero time; at the first interval the loaded
+levels. Every family, the two field families included, steps in the
+same sweep from the same start values, so no order among the families
+matters under the constant wall (the order the edge wall of 9.50 (2)
+needed is gone). THE CLICK'S WRITES ENTER AT THE NEXT INTERVAL: a giving
+click at interval t lowers the body's content, recomputes s and Q and
+holds the pins after the interval's steps, and the fields read the new
+content from t + 1; one content per interval, so the one inverse steps
+the interval back with its start values and then undoes the click by
+its line (9.55 (7); Nature24's finding on the reversibility test, the
+two holds, ruled: the giving's hold waits for the interval's end). THE
+LINK FORM, THE OWNER'S ONE LINE: the ruler can be read on the Link
+instead of at the Node, the reads carried by 2 p_i num SUM_j p_j a_j in
+place of 2 p_i^2 num S_6, the wall and the self term unchanged; the two
+forms have the same two weights and differ by a gradient term below
+every pin (9.50 (13) (iv)); the Link form's read matrix is symmetric, so
+its conserved form is whole and unweighted, and the Link is slowed the
+same seen from both ends, the neighbour's pace read at the interval's
+start as every read is; the Node form keeps his earlier word "only from
+the current Node". His question of record 2026 reopens the choice; the
+section stands on the Node form until his line, and the Link form is
+one substitution in (1).
 
 **(2) THE INTEGERS, DECIDED (with Nature24 before the build).** The
 rule's total at a Node under the amplitude bound A is at most 2 Gamma^2
