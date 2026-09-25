@@ -10968,3 +10968,9 @@ direction. THE OWNER'S SENTENCE, EXACT: the click is the present, the
 one interval at which the state at the Nodes is written into a record
 and made permanent; the future is the state at the Nodes and nothing
 else; the past is the lines, and the state back to the last taking.
+THE OWNER'S RULING (record 2011): "clicks go only forward in time,
+because they are what happened in the world; the rest is all
+possibilities." For the test, three assertions name it: between
+clicks the board returns bit for bit; across a click exactly the rows
+the click deleted are lost and nothing else; NO RULE UNDOES A CLICK,
+the inverse map fires no rung and writes no line.

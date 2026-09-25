@@ -119,7 +119,12 @@ in the day's log; nothing of them is a name the engine branches on.
   (8.8), its content and its push handed to the clicking body. There is no
   take, no grace, no exemption, no own take, no close and no sponge: an
   open face is a receiver `face` at the border, last on every ladder, and
-  what leaves clicks there (Highlights' record 15, kept).
+  what leaves clicks there (Highlights' record 15, kept). THE CLICK GOES ONLY FORWARD IN TIME (the model owner, record 2011):
+  it is what happened in the world, the one irreversible act of the
+  law; the taken record's rows are the one thing lost, the line keeps
+  the count, the residue, the Node and the interval, and no rule undoes
+  a click; between clicks the board runs backward exactly (ALGEBRA.md
+  9.55 (1), (6), (7)).
 - **The birth.** The other side of a click: a body's own excited record
   (the body's seed, its stock M excitations in turn) clicks at its centre
   Node, and the born record is written ONCE on the body's Nodes at both
@@ -233,7 +238,11 @@ ALGEBRA.md 9.40 D1, 9.46, 9.51, 9.53).
   and s recomputed; the giving end sets the born family's rows on S with
   M_k - 1 of the born family, u read at the first shell Node, s recomputed;
   the body's own levels, phase and remainders are left as they are (9.40
-  T3, 9.43 (3), 9.44 (5) (c), 9.51 (8)). Between its clicks a body moves
+  T3, 9.43 (3), 9.44 (5) (c), 9.51 (8)). A click goes only forward in
+  time: it is what happened in the world, the one irreversible act, and
+  no rule undoes it; everything between clicks is the possibilities and
+  runs backward exactly (the model owner, record 2011; ALGEBRA.md 9.55
+  (7)). Between its clicks a body moves
   only by the first sentence: its mode drifts down the pace by the ray
   equation, the same for every family (9.52). So the owner's sentence is
   right with one precision: the rule never becomes a body's law; only the
