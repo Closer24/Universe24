@@ -12437,7 +12437,9 @@ at an open face); ONE CHECK BEFORE THE MERGE: a window edge INSIDE the
 board on a CLOSED axis must read zero beyond it, not the closed face's
 reflection; the tests cover open and periodic faces and not a closed
 axis (the dark body's x); one test, a box short of a closed face
-bit-equal against the whole-board step, closes it.
+bit-equal against the whole-board step, closes it. [CLOSED: the fourth
+test of tests/test_support_box.py, landed with item 43's head, reads a
+closed axis; Nature24, 2026-09-25.]
 
 **(4) THE ITEMS TO LAND, each with its gate in one line.** The proper
 pair of a moving seat (9.63 (3)): the seat's cycles equal the cube's
@@ -12646,8 +12648,8 @@ and the four moving pairs against 63 +- 8, 135 +- 12, 164 +- 13, 430 +-
 (9.62 (3)); Doppler (9.62 (4)); the transverse Lorentz world; row 3 at
 k = 0.299 per 9.65 (4); the charge rows (9.64); the contraction world
 (9.67 (1)); the three tools; the display; the smaller boards (9.66).
-The closed-axis test of the support box (9.68 (3)) stays owed before
-the merge.
+The closed-axis test of the support box (9.68 (3)) is landed (the
+fourth test of tests/test_support_box.py); nothing of item 43 is owed.
 
 ### 9.71 The overnight preparation for the Go (the Boss's record 2054 of 2026-09-25, the model owner: "prepare all the lab tools we need; try to reduce them all to a Node, and if you want, a range of a few Nodes; everything tested, and be ready for the Go, to start running with pins; every experiment with its algebraic expectation, the formulas we derived")
 
@@ -12770,6 +12772,81 @@ bd43b945 the Einstein form: CONFIRMED (9.70 (1)). The items to land and
 their gates: 9.68 (4) and 9.70 (4); the point emitter: (1) above, its
 gate the first row's four readings and the light clock's digests
 unchanged with the key off; the three tools: their part A checks and
-the counts of their rows; the closed-axis test of the support box:
-owed before the merge. On the Go the stack merges in the order it
+the counts of their rows; the closed-axis test of the support box: landed
+(9.68 (3)). On the Go the stack merges in the order it
 landed, PR #1150 (9.17 to 9.71) with it.
+
+### 9.72 The proper pair built (Nature24's head c814fb26, item 46, 2026-09-25): the gate, the reading of "the moving mode", the four moving pairs within their bands, and the cube's excess in the deep well as a reading of the cube form
+
+**(1) THE GATE ON c814fb26: CONFIRMED.** The seat's pair this interval is
+the world's `proper_clock` at the momentum's whole part m along its one
+axis (the ramp's m = P t // ramp, then P, the same m the drive hops
+with), the rest pair at m = 0, refused without the table on a moving
+body and with a first pair other than the clock; the seat's rule reads
+it as [num_c, 2 den_c] (9.60 (2)); the cube carries the dilation in its
+rows by the rule, the seat in the declared pair, the seam of the host
+form (9.46). The generator: the mode's own dispersion along the axis,
+2 cos omega_K = 2 cos omega_b - (1 - cos K) X with X = SUM num_i p_i
+(p_{i+e} + p_{i-e}) / (3 SUM den_i p_i^2), the profile's quotient on the
+axis's two reads (the plane wave's 2 num / (3 den) and 9.24 (2)
+exactly, asserted: K = 0.18556 and 0.81457 at v = 1 / 3 on [800, 809]);
+K by bisection where the group pace X sin K / (2 sin omega_K) equals
+v (the host's floats, as the given train solves its clock); the proper
+rotation omega_K - K v; the pair [round(b 2 cos(omega_K - K v)), b] on
+the clock's denominator, one per whole part of the momentum. THE TABLE
+IN PLACE OF ONE PAIR is right: the rows' bands are counts over the
+whole run, the ramp included, and the seat must rotate at the pair of
+its momentum now as the drive hops at it; 9.63 (3) is read so. The
+test asserts the generator's line on a plane wave, the seat's pair
+following the ramp, and the four worlds' counts. CONFIRMED line by
+line.
+
+**(2) THE READING OF "THE MOVING MODE": the dispersion form is the one
+meant.** 9.63 (3) asked for the moving mode's rotation at its moving
+centre; the rest profile times the character of K (9.40 T3) rotating on
+the mode's own dispersion is that mode to first order in the boost and
+to the order the bands read, and its proper rate omega_K - K v is the
+smooth boost's answer, the direction of nature's (Lorentz's dilation on
+the lattice's dispersion, 9.67 (1)). The Floquet form (the eigenphase
+of the k-step propagator followed by the translation back) is the
+EXACT answer of the HOPPING cube, the sudden shift of the well by one
+Link every k intervals, and it is not wanted for the seat: the hop is
+the seam (9.67 (1)), and the seat is meant to carry the boost, not the
+seam's artifact. Not to be built.
+
+**(3) THE FOUR MOVING PAIRS, READ (GameBoard cycle counts over the
+declared ticks, the ramp included, cube and seat on the law as built):**
+the deep well at speed one third, cube 63 at 150.50, seat 67 at 140.50,
+the band 63 +- 8: inside; the boxed 20, 135 at 70.54 against 140 at
+68.03, 135 +- 12: inside; the boxed 28, 164 at 57.87 against 166 at
+57.17, 164 +- 13: inside; the muon, 429 at 47.71 against 430 at 47.60,
+430 +- 21: inside; at rest bit-equal (30, 52, 62, 484). THE EQUIVALENCE
+IN MOTION HOLDS in all four, the finding of 9.63 (2) closed.
+
+**(4) THE CUBE'S EXCESS, a reading of the cube form.** Where the well is
+deep the cube reads fewer cycles than the dispersion gives (the deep
+well's hold cycle about 157 against the dispersion's 143.7, 9 percent;
+the boxed 20 about 4 percent; the boxed 28 about 1 percent; the muon
+0.2 percent), the seat reading the dispersion's within its draw. THE
+READING: the cube's rows follow the hopping well imperfectly, a sudden
+shift of one Link every three intervals against a mode of small
+rotation per interval, so a part of the norm lags at each hop and the
+tick, read on the gathered norm, slows beyond the dilation: the hop's
+non-adiabaticity, the seam's own artifact, largest for the deepest and
+narrowest mode. RULED: record it per world as a reading of the CUBE
+FORM (a GameBoard diagnostic, no pin); read the seat against the
+dispersion's number (143.7 for the deep well: the seat's 140.5 is
+within its draw), and the equivalence within the draw as read; its
+dependence on the mode (the decay constant, the well's side against
+the torus) is a diagnostic for a later line, not a law. The seam it
+reads is the one 9.67 (1) named: a declared hop does not boost a mode
+smoothly; the atom row and the point emitter, when a body moves by the
+law's own field, are where it closes.
+
+**(5) THE MOVING EMITTER OF ROW 2** carries its table too (3073 pairs at
+v = 1 / 4, the last against the clock at the ratio 0.90, gamma = 1.109
+of 9.67 (1)); the row runs in cube form until its seat form.
+**Nature24's order** stands: the stock as content, the taking at a hop,
+Doppler, the point emitter (9.71 (1)), the tools at their least form
+(9.71 (2)). The closed-axis test of item 43 is landed; nothing of it is
+owed.
