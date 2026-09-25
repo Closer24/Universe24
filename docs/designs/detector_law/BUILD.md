@@ -1879,6 +1879,54 @@ would have found no cell.
    word on the form is owed, the file's integer carries it either way.
    The Malus and Bell worlds stay held (the polariser body and the
    crystal, and the excited record's residue).
+18. THE DETECTOR CUBE (the model owner's decisions of 2026-09-25, record
+   1899, through the Boss; ALGEBRA.md 9.25; the property test green). THE
+   RULE: a detector is one region, a cube of side 3 or more; its
+   sensitivity is its whole cube, read as the one-way flux into the cube
+   through its Ports from outside (9.25 (2); a Link inside the cube is no
+   Port, item 16); the click is the detector's, reported by its name on
+   the click line and never placed at a Node (the detector does not know
+   which Node inside it clicked); the ladder lays the detectors'
+   increments in the declared order. THE ENGINE AS BUILT already reads a
+   set as ONE cell over all its Nodes (`cell_index` maps every Node of
+   the set to the set's cell, `flux_offer` books the set's Ports to that
+   cell, `_ladder_click` walks the cells, the line's `chosen` names the
+   set and `node` is empty), so nothing moved in the click's code; the
+   docstrings say it. THE LOADER (`_detector_region` in world.py, with
+   `_box_sides`): a detector's Nodes must be one connected piece (9.25
+   (7)), fill one box (per axis one run of coordinates, across a periodic
+   seam too, the count the runs' product), and the box's sides must be
+   `DETECTOR_SIDE` = 3 or more, cut by the GameBoard on an axis whose
+   extent is below 3 (a chain's or a layer's thin axis: the cube of side
+   3 on a chain is three Nodes in a row, as a block's cube is cut by an
+   open face; the thin-axis reading is Nature's, the chain and layer
+   reading being with the mathematician); the refusals name the sides,
+   the Node count that fills no box, or the pieces. A set bound to a block
+   is the block's cells (its side 3 or more, refused below) or a cube of
+   free Nodes beside it under `positions` (the one-Node form retired).
+   THE TESTS (test_detector_law.py, the cube test): a 2 x 2 box on the
+   layer REFUSED naming its sides [2, 2, 1]; a 3 x 3 box LAWFUL (the
+   layer's thin z cuts it to one deep), also wrapped across the periodic
+   seam; two bodies three Links apart REFUSED naming 2 pieces; the 3 x 3
+   box less its centre REFUSED as filling no box; a block of side 1 as a
+   bound set REFUSED, of side 3 admitted; the engine's cell over the
+   cube's Nodes exactly. THE WORLDS AND THE LINE'S TEST WORLDS on cube
+   detectors: the two slits' screen a row of 67 cubes of side 3 (x in
+   [153, 155], y in [28, 228]); the matter waves' screen 41 cubes over y
+   in [3, 125]; the matter front, the redshift's light detector (the cube
+   at [4092, 4094], the +x face at 4095 beyond it) and the light clock's
+   `at_a` (the cube of free Nodes at [612, 614] bound to A) cubes cut by
+   the chain; the Sagnac sets the blocks' cells of side 12 unchanged;
+   every test world's one-Node receiver a cube of three on its chain, the
+   layer test on 24 x 9 with three 3 x 3 cubes at x in [18, 20] on the
+   rows [0, 2], [3, 5], [6, 8] (s1 centred on the emitter's row y = 4);
+   the property test's receiver the cube of side 3 at (9, 9, 2), rotated
+   as the well is. THE MALUS FOUR stand held as written at ead580df (the
+   generator no longer rewrites them: their one-Node set `second` on the
+   bar of 8 is refused by the cube, and the polariser returns as a body
+   with an axis and two cube receivers at the worlds' rebuild, step 6);
+   the Bell four held as before. The chain digests of test p moved by the
+   cube at x in [70, 72] (COMPUTATION, read on this head).
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

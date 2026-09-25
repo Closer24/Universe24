@@ -57,7 +57,8 @@ def emitter(position: int, receiver: str | None, momentum: int = 0, stock: int =
 
 
 def body(x: int) -> dict:
-    """A receiver body of light at x (a measured event, one Node), read as a set by name."""
+    """A receiver body of light at x (a measured event, one Node), one Node of a detector
+    cube read as a set by name (record 1899)."""
     return {
         "position": [x, 0, 0],
         "family": "light",
@@ -72,16 +73,16 @@ def body(x: int) -> dict:
 def chain_of_200(receiver: str | None = "screen") -> dict:
     """The declaration's test world: a chain of 200 (x closed, mirrors), light's clock
     [1, 1], the emitter body A at [20, 32) naming `screen` (four births), the set `screen`
-    on the body at x = 91 (60 Links from A's face at 31), and the set `beside` on the body
-    at x = 8 behind A (off A's ladder); no wheel (the record's own, 9.22 (4))."""
+    the cube of side 3 at [91, 93] (60 Links from A's face at 31), and the set `beside` the
+    cube at [8, 10] behind A (off A's ladder); no wheel (the record's own, 9.22 (4))."""
     document = massive_world([200, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
     document["families"][0]["phase_per_link"] = [1, 1]
     document["ticks"] = 500
     document["clock_stamp"] = True
-    document["measured"] = [emitter(20, receiver, 70), body(91), body(8)]
+    document["measured"] = [emitter(20, receiver, 70), *(body(x) for x in (91, 92, 93, 8, 9, 10))]
     document["detectors"] = [
-        {"name": "screen", "positions": [[91, 0, 0]]},
-        {"name": "beside", "positions": [[8, 0, 0]]},
+        {"name": "screen", "positions": [[91, 0, 0], [92, 0, 0], [93, 0, 0]]},
+        {"name": "beside", "positions": [[8, 0, 0], [9, 0, 0], [10, 0, 0]]},
     ]
     seed_source(document, 0)
     return document
@@ -250,8 +251,8 @@ def test_c_the_lines_time():
     own residue from the law decides how much of the record must pass, the mirrors'
     returns included), stamped with A's count (clock_source measured:0); the record is
     deleted whole at its line (not among the records, no second line within 300
-    intervals). Two emitter bodies one Link apart naming
-    the set on the one free Node between them (bound to the first): both bodies'
+    intervals). Two emitter bodies three Links apart naming
+    the set on the cube of three free Nodes between them (bound to the first): both bodies'
     records write their lines there at a rung with `tick` equal to `click`, stamped with the
     bound body's count."""
     document = light_clock_world("closed", False)
@@ -265,13 +266,15 @@ def test_c_the_lines_time():
     assert line["chosen"] == [["A_face", 0, "0"]] and line["clock_source"] == "measured:0"
     assert 0 <= line["click"] - line["birth"] <= 300 and 0 <= line["u"] < 2403
     assert first not in simulation.records
-    # two bodies one Link apart, each naming the set between them
+    # two bodies three Links apart, each naming the cube between them
     document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
     document["families"][0]["phase_per_link"] = [1, 1]
     document["ticks"] = 400
     document["clock_stamp"] = True
-    document["measured"] = [emitter(100, "between"), emitter(113, "between")]
-    document["detectors"] = [{"name": "between", "block": 0, "positions": [[112, 0, 0]]}]
+    document["measured"] = [emitter(100, "between"), emitter(115, "between")]
+    document["detectors"] = [
+        {"name": "between", "block": 0, "positions": [[112, 0, 0], [113, 0, 0], [114, 0, 0]]}
+    ]
     seed_source(document, 0)
     seed_source(document, 1)
     simulation, lines = run(document, 400)

@@ -19,8 +19,8 @@ The form is the first build's ray-law world
 true, an emitter body of a massive kind with its `emitter` and its stock,
 seeded on its mode (BUILD.md section 26; the lamp is refused under the
 detector law; no wheel and no residue key anywhere since item 15: the residue
-and the wheel are the law's, ALGEBRA.md 9.22 (4)), a receiver a fixed body of the family with one detector set on
-its Node, a screen one set per Node of its row) and, for the massive rows, the massive record series'
+and the wheel are the law's, ALGEBRA.md 9.22 (4)), a receiver a cube of side 3 of fixed bodies of the family read as
+one detector set (record 1899), a screen a row of such cubes) and, for the massive rows, the massive record series'
 form (`../massive_record/make_worlds.py`, whose `world` helper writes them;
 they live in that folder). Every light wall is the mirror line of section 15
 L-1 (the fourth commit): blocks of light's kind of side 1 per Node with the

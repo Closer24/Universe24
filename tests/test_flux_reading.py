@@ -182,9 +182,10 @@ def test_b_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
 def test_c_the_conserved_form_and_the_flux_offer_are_the_engines_integers():
     """(c) the engine's `conserved_form` is 3 I times the family's wall on planted rows, exact
     against the Fraction form, for light (the wall 1) and for a massive family with a well
-    ([8, 7] on the kind [7, 8]: the wall 56); (d) the engine's `flux_offer` into a set of two
-    Nodes counts the two outer Ports only (the Link between the two Nodes is inside the set),
-    exact against the Fraction fluxes, and 0 into a set the record does not reach."""
+    ([8, 7] on the kind [7, 8]: the wall 56); (d) the engine's `flux_offer` into a set of
+    three Nodes (a detector cube cut by the chain, record 1899) counts the two outer Ports
+    only (the Links inside the set are no Ports), exact against the Fraction fluxes, and 0
+    into a set the record does not reach."""
     document = massive_world([40, 1, 1], PERIODIC, [800, 809])
     document["age_bound"] = 100000
     document["families"].append({"name": "source", "quantum": 1, "pair": [7, 8]})
@@ -208,26 +209,21 @@ def test_c_the_conserved_form_and_the_flux_offer_are_the_engines_integers():
             "momentum": [0, 0, 0],
             "fixed": True,
         },
-        {
-            "position": [6, 0, 0],
-            "family": "light",
-            "amount": 1,
-            "phase": 0,
-            "momentum": [0, 0, 0],
-            "fixed": True,
-        },
-        {
-            "position": [30, 0, 0],
-            "family": "light",
-            "amount": 1,
-            "phase": 0,
-            "momentum": [0, 0, 0],
-            "fixed": True,
-        },
+        *(
+            {
+                "position": [x, 0, 0],
+                "family": "light",
+                "amount": 1,
+                "phase": 0,
+                "momentum": [0, 0, 0],
+                "fixed": True,
+            }
+            for x in (6, 7, 30, 31, 32)
+        ),
     ]
     document["detectors"] = [
-        {"name": "pair", "positions": [[5, 0, 0], [6, 0, 0]]},
-        {"name": "far", "positions": [[30, 0, 0]]},
+        {"name": "pair", "positions": [[5, 0, 0], [6, 0, 0], [7, 0, 0]]},
+        {"name": "far", "positions": [[30, 0, 0], [31, 0, 0], [32, 0, 0]]},
     ]
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     assert simulation.kind_wall(0) == 1 and simulation.kind_wall(2) == 56
@@ -254,7 +250,7 @@ def test_c_the_conserved_form_and_the_flux_offer_are_the_engines_integers():
         far = simulation.cell_names.index("far")
         offers = simulation.flux_offer(live)
         inward = Fraction(0)
-        for i, j in ((5, 4), (6, 7)):
+        for i, j in ((5, 4), (7, 8)):
             g = Fraction(
                 int(now[i, 0, 0]) * int(before[j, 0, 0]) - int(before[i, 0, 0]) * int(now[j, 0, 0])
             )

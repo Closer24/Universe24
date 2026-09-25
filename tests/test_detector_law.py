@@ -60,6 +60,42 @@ def emitter_body(
     }
 
 
+DETECTOR_SIDE = 3  # the detector cube's side (the model owner's word of 2026-09-25, record 1899)
+
+
+def cube_positions(shape: list[int], corner: list[int]) -> list[list[int]]:
+    """The Nodes of a detector cube of side DETECTOR_SIDE from its lower corner, cut by the
+    GameBoard on an axis of extent below the side (a chain's or a layer's thin axis)."""
+    return [
+        [corner[0] + dx, corner[1] + dy, corner[2] + dz]
+        for dx in range(min(DETECTOR_SIDE, shape[0]))
+        for dy in range(min(DETECTOR_SIDE, shape[1]))
+        for dz in range(min(DETECTOR_SIDE, shape[2]))
+    ]
+
+
+def receiver_body(position: list[int], family: str = "light") -> dict:
+    """A fixed receiver body of the family at one Node (a measured event)."""
+    return {
+        "position": position,
+        "family": family,
+        "amount": 1,
+        "phase": 0,
+        "momentum": [0, 0, 0],
+        "fixed": True,
+        "directions": [[-1, 0, 0]],
+    }
+
+
+def receiver_cube(document: dict, name: str, corner: list[int], family: str = "light") -> None:
+    """ONE DETECTOR (record 1899): the cube of side DETECTOR_SIDE of receiver bodies from
+    `corner`, read as the one set `name` (its sensitivity its whole cube, the click the
+    detector's, never a Node's)."""
+    positions = cube_positions(document["shape"], corner)
+    document["measured"].extend(receiver_body(position, family) for position in positions)
+    document["detectors"].append({"name": name, "positions": positions, "threshold": 1})
+
+
 def chain_world(
     stock: int = 6,
     receiver: object = None,
@@ -69,8 +105,9 @@ def chain_world(
 ) -> dict:
     """A chain of 80 Nodes (y and z periodic, one layer each; x CLOSED, the
     zero rows at both ends mirrors): the emitter body at x = 2 (one cell,
-    the matter kind [7, 8] with the well pair [8, 7], its mode the seed), a
-    receiver body at x = 70 read as the set `screen`; the light family's
+    the matter kind [7, 8] with the well pair [8, 7], its mode the seed),
+    the receiver cube of side 3 at [70, 72] read as the set `screen`
+    (record 1899); the light family's
     clock the pair [77, 25] on N = 64 (3.08 steps per interval, the period
     20.78 intervals, lambda = 12 Links); no wheel anywhere (the rung's wheel
     is the record's own, W = 700). With `faces` "open" the face receiver
@@ -97,18 +134,10 @@ def chain_world(
         ],
         "measured": [
             emitter_body([2, 0, 0], stock, receiver),
-            {
-                "position": [70, 0, 0],
-                "family": "light",
-                "amount": 1,
-                "phase": 0,
-                "momentum": [0, 0, 0],
-                "fixed": True,
-                "directions": [[-1, 0, 0]],
-            },
         ],
-        "detectors": [{"name": "screen", "positions": [[70, 0, 0]], "threshold": 1}],
+        "detectors": [],
     }
+    receiver_cube(document, "screen", [70, 0, 0])
     if on_mode:
         massive_generator().seed_on_the_mode(document)
     return document
@@ -268,32 +297,19 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
 
 
 def layer_world(receiver: object = None) -> dict:
-    """A layer of 24 x 7 x 1 (x closed at both ends, mirrors; y and z
-    periodic): the emitter body at [2, 3, 0] (the matter kind on its mode,
-    the stock 8), three receiver bodies at x = 18 on the
-    rows y = 2, 3, 4 read as the sets s0, s1, s2 (one Node each, the
-    screen). With `receiver`, the emitter's records' ladder is the named
-    sets in the named order; without it, every declared set in the
-    declared order (ALGEBRA.md 9.19 (3) (b))."""
-    measured = [emitter_body([2, 3, 0], 8, receiver=receiver)]
-    detectors = []
-    for index, y in enumerate((2, 3, 4)):
-        measured.append(
-            {
-                "position": [18, y, 0],
-                "family": "light",
-                "amount": 1,
-                "phase": 0,
-                "momentum": [0, 0, 0],
-                "fixed": True,
-                "directions": [[-1, 0, 0]],
-            }
-        )
-        detectors.append({"name": f"s{index}", "positions": [[18, y, 0]], "threshold": 1})
+    """A layer of 24 x 9 x 1 (x closed at both ends, mirrors; y and z
+    periodic): the emitter body at [2, 4, 0] (the matter kind on its mode,
+    the stock 8), three detector cubes of side 3 at x in [18, 20] on the
+    rows y in [0, 2], [3, 5], [6, 8] read as the sets s0, s1, s2 (the
+    screen, record 1899; s1 centred on the emitter's row, s0 and s2 its
+    mirror images across the periodic seam). With `receiver`, the emitter's
+    records' ladder is the named sets in the named order; without it, every
+    declared set in the declared order (ALGEBRA.md 9.19 (3) (b))."""
+    measured = [emitter_body([2, 4, 0], 8, receiver=receiver)]
     document = {
         "law": "beam",
         "model_id": "beam-detector-law-layer-v1",
-        "shape": [24, 7, 1],
+        "shape": [24, 9, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": 400,
         "K": 1073741824,
@@ -310,8 +326,10 @@ def layer_world(receiver: object = None) -> dict:
             {"name": "matter", "quantum": 1, "pair": [800, 809]},
         ],
         "measured": measured,
-        "detectors": detectors,
+        "detectors": [],
     }
+    for index, y in enumerate((0, 3, 6)):
+        receiver_cube(document, f"s{index}", [18, y, 0])
     massive_generator().seed_on_the_mode(document)
     return document
 
@@ -396,8 +414,8 @@ def planted_layer(order: tuple[str, ...]) -> tuple[list[dict], DetectorLawSimula
     for u in range(RESIDUES):
         now = np.zeros(simulation.shape, dtype=np.int64)
         before = np.zeros(simulation.shape, dtype=np.int64)
-        now[2, 3, 0] = level
-        before[2, 3, 0] = -level
+        now[2, 4, 0] = level
+        before[2, 4, 0] = -level
         live = LiveRecord(
             (1 << 40) + u,
             0,
@@ -486,32 +504,58 @@ def test_the_increment_ladder_over_the_named_sets():
         parse_nature_beam_world(layer_world([]))
 
 
-def test_a_detector_is_one_connected_region():
-    """ALGEBRA.md 9.25 (7), the model owner's word: a receiver's Nodes are connected by Links;
-    two receiver bodies at (10, 2, 0) and (13, 2, 0) under one name are refused naming the
-    two pieces, at (10, 2, 0) and (11, 2, 0) admitted, and at (10, 0, 0) and (10, 6, 0)
-    across the layer's periodic seam admitted (one piece)."""
-    for positions, admitted in (
-        ([[10, 2, 0], [13, 2, 0]], False),
-        ([[10, 2, 0], [11, 2, 0]], True),
-        ([[10, 0, 0], [10, 6, 0]], True),
+def test_a_detector_is_one_connected_cube_of_side_three():
+    """THE DETECTOR CUBE (the model owner's word of 2026-09-25, record 1899; ALGEBRA.md 9.25
+    (7)): a detector is one region, a cube of side 3 or more, its click the detector's.
+    On the layer of 24 x 9 the loader refuses a cube of side 2 (the 2 x 2 box at (10, 2)
+    naming its sides [2, 2, 1]), admits a cube of side 3 (the 3 x 3 box at (10, 2); the
+    layer's thin z axis cuts the cube to one Node deep), admits the 3 x 3 box wrapped across
+    the periodic seam (y = 8, 0, 1: one piece, one box), refuses a disconnected set (two
+    bodies at (10, 2) and (13, 2), naming the two pieces) and refuses a connected set that
+    fills no box (the 3 x 3 box less its centre, naming its Nodes); a set bound to a block
+    refuses a block of side 1 as its cells and admits one of side 3; the engine reads the
+    admitted cube as ONE cell whose Nodes are the cube's (the click line names the set and
+    places no Node)."""
+    box = [[x, y, 0] for x in (10, 11, 12) for y in (2, 3, 4)]
+    wrapped = [[x, y, 0] for x in (10, 11, 12) for y in (8, 0, 1)]
+    for positions, refusal in (
+        ([[x, y, 0] for x in (10, 11) for y in (2, 3)], r"is a box of sides \[2, 2, 1\]"),
+        (box, None),
+        (wrapped, None),
+        ([[10, 2, 0], [13, 2, 0]], "lies on 2 disconnected pieces"),
+        ([p for p in box if p != [11, 3, 0]], "on 8 Nodes fills no box"),
     ):
         document = layer_world()
-        for position in positions:
-            document["measured"].append(
-                {
-                    "position": position,
-                    "family": "light",
-                    "amount": 1,
-                    "phase": 0,
-                    "momentum": [0, 0, 0],
-                    "fixed": True,
-                    "directions": [[-1, 0, 0]],
-                }
-            )
-        document["detectors"].append({"name": "pair", "positions": positions, "threshold": 1})
-        if admitted:
+        document["measured"].extend(receiver_body(position) for position in positions)
+        document["detectors"].append({"name": "cube", "positions": positions, "threshold": 1})
+        if refusal is None:
+            simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+            cell = simulation.cell_names.index("cube")
+            nodes = {tuple(p) for p in positions}
+            assert {
+                tuple(int(v) for v in node)
+                for node in zip(*np.nonzero(simulation.cell_index == cell), strict=True)
+            } == nodes
+        else:
+            with pytest.raises(ValueError, match=refusal):
+                parse_nature_beam_world(document)
+    for side, refusal in ((1, "a block of side 1; a detector is one cube of side 3"), (3, None)):
+        document = layer_world()
+        document["measured"].append(
+            {
+                "position": [10, 2, 0],
+                "family": "light",
+                "amount": 1,
+                "phase": 0,
+                "momentum": [0, 0, 0],
+                "fixed": True,
+                "side": side,
+                "pair": [1, 2],
+            }
+        )
+        document["detectors"].append({"name": "on_block", "block": len(document["measured"]) - 1})
+        if refusal is None:
             parse_nature_beam_world(document)
         else:
-            with pytest.raises(ValueError, match="lies on 2 disconnected pieces"):
+            with pytest.raises(ValueError, match=refusal):
                 parse_nature_beam_world(document)

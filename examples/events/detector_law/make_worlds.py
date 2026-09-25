@@ -291,19 +291,45 @@ def wall_line(
     return [wall_node([x, y, 0], family, pair) for x in xs for y in ys if y not in openings]
 
 
+DETECTOR_SIDE = 3  # the detector cube's side (the model owner's word of 2026-09-25, record 1899)
+
+
+def cube_positions(document: dict, corner: list[int]) -> list[list[int]]:
+    """The Nodes of a detector cube of side DETECTOR_SIDE from its lower corner, cut by the
+    GameBoard on an axis of extent below the side (a chain's or a layer's thin axis), as
+    the loader's check reads it (`_detector_region` of the world loader)."""
+    shape = document["shape"]
+    return [
+        [corner[0] + dx, corner[1] + dy, corner[2] + dz]
+        for dx in range(min(DETECTOR_SIDE, shape[0]))
+        for dy in range(min(DETECTOR_SIDE, shape[1]))
+        for dz in range(min(DETECTOR_SIDE, shape[2]))
+    ]
+
+
+def receiver_cube(document: dict, name: str, corner: list[int], family: str = "light") -> str:
+    """ONE DETECTOR (record 1899): a cube of side DETECTOR_SIDE of receiver bodies of the
+    family from `corner`, read as the one set `name` (its sensitivity its whole cube, the
+    flux into it through its Ports from outside; the click the detector's, reported by its
+    name and never by a Node). The name is returned."""
+    positions = cube_positions(document, corner)
+    for position in positions:
+        document["measured"].append(body(position, family, [[-1, 0, 0]]))
+    document["detectors"].append({"name": name, "positions": positions, "threshold": 1})
+    return name
+
+
 def screen(document: dict, x: int, ys: range, family: str = "light") -> list[str]:
-    """A screen of one-Node detectors `screen_<y>` on receiver bodies at x: one set per
-    Node of the row, each with its own click (section 12; Builder 2's finding) and, when
-    `wheel` is given, its own rung wheel (SIZING.md: the screen's sets are the lamp
-    record's ladder; the wheel must exceed the inverse of the dimmest cell's share). The
-    sets' names are returned, the lamp's `receiver` list."""
-    names: list[str] = []
-    for y in ys:
-        document["measured"].append(body([x, y, 0], family, [[-1, 0, 0]]))
-        detector: dict = {"name": f"screen_{y}", "positions": [[x, y, 0]], "threshold": 1}
-        document["detectors"].append(detector)
-        names.append(detector["name"])
-    return names
+    """A screen as a row of cube detectors `screen_<y>` (record 1899): from the column x,
+    DETECTOR_SIDE deep, one cube per DETECTOR_SIDE rows of `ys` (whose count must divide),
+    each with its own click (section 12; Builder 2's finding); the rung's wheel is the
+    record's own (ALGEBRA.md 9.22 (4)). The sets' names are returned, the emitter's
+    `receiver` list (its records' ladder)."""
+    assert len(ys) % DETECTOR_SIDE == 0, (ys, DETECTOR_SIDE)
+    return [
+        receiver_cube(document, f"screen_{y}", [x, y, 0], family)
+        for y in range(ys.start, ys.stop, DETECTOR_SIDE)
+    ]
 
 
 def lamp(
@@ -350,7 +376,7 @@ def lamp(
 TWO_SLITS_SHAPE = [160, 256, 1]  # L-3's second draft (2026-09-24, 12:10Z): x AND y open
 TWO_SLITS_OPENINGS = {114, 115, 116, 140, 141, 142}  # width 3, centred at y = 115 and 141 (d = 26)
 TWO_SLITS_SCREEN_X = 153  # L = 113 from the mirror line at x = 40
-TWO_SLITS_SCREEN_YS = range(28, 229)  # 201 sets, the ladder
+TWO_SLITS_SCREEN_YS = range(28, 229)  # 201 rows: 67 cube detectors of side 3, the ladder (record 1899)
 TWO_SLITS_STOCK = 1024  # one wheel [1, 1024], each u once (SIZING.md)
 TWO_SLITS_TICKS = (
     6000  # 1024 excitations on [800, 500] (about 4096 intervals), the transit 231, the close, the margin
@@ -363,9 +389,10 @@ def two_slits() -> dict:
     x and y open (the four faces light's sponges); the lamp at [20, 128] with the stock
     1024 at one per 4 on the wheel [1, 1024], the train 32 periods; the mirror line at
     x = 40 two deep (L-1) with two openings of width 3 centred at y = 115 and 141; the
-    screen at x = 153, one set per Node over y in [28, 228] with the rung wheel 2^20; the
-    lamp's `receiver` the 201 screen sets (its records' ladder; the faces and the mirror
-    line sinks outside it); 5500 intervals. The first draft (128 x 128, y periodic, the
+    screen at x = 153 as a row of 67 cube detectors of side 3 (x in [153, 155], y in [28,
+    228]; record 1899, the rung's wheel the record's own); the emitter's `receiver` the 67
+    screen sets (its records' ladder; the faces and the mirror line sinks outside it);
+    5500 intervals. The first draft (128 x 128, y periodic, the
     openings of width 1 at y = 48 and 80, the screen at x = 104, 17300 intervals) is
     HISTORY in L-3."""
     document = ray_world(
@@ -599,14 +626,11 @@ def table_worlds(massive) -> dict[str, dict]:
     for a in ("a0", "a1"):
         for b in ("b0", "b1"):
             out[f"bell_{a}{b}"] = bell(a, b)
-    out["malus_45"] = malus("malus-45", EVENTS / "amplitude" / "malus_22_5.json", 64)
-    for degrees, setting in (("11.25", 16), ("28.125", 40), ("33.75", 48)):
-        out[f"malus_{degrees}"] = malus(
-            f"malus-{degrees.replace('.', '-')}", NEW_ROWS / f"malus_s{setting}.json", setting
-        )
-    for name, document in out.items():
-        if not name.startswith("bell_"):
-            massive.seed_on_the_mode(document)
+    # THE MALUS FOUR STAND HELD AS WRITTEN (their files of the head ead580df in
+    # held_worlds): under the detector cube (record 1899) their one-Node set
+    # `second` on the bar of 8 is refused at load, and the polariser returns as
+    # a body with an axis and two cube receivers when the worlds are rebuilt
+    # (the cleanup order's step 6); `malus` above is that rebuild's material.
     return out
 
 
@@ -726,9 +750,9 @@ def massive_worlds(massive) -> dict[str, dict]:
     # emitter A of side 12 at the half-depth well at x = 2994, receding on -x at k = 3 over
     # the ramp 1500 with own_grace 3000 and the hold 3000 (the physicist's 09:33Z: at the
     # hold's end A stands at 1744, inside the board; the earlier 8000 ran A off the board at
-    # 9722); the receiver a body of one Node at 4094 (1100 Links,
-    # the transit 1905; the +x face at 4095 beyond it) with its set {positions [[4094, 0, 0]],
-    # wheel 64}; the probe there; the control the same world without the momentum. The
+    # 9722); the receiver the cube of side 3 at [4092, 4094] (1098 Links to its near face,
+    # the transit 1905; the +x face at 4095 beyond it; record 1899) read as the set
+    # `light_detector`; the probe at 4094; the control the same world without the momentum. The
     # ticks 9600 in both worlds (the physicist's 10:15Z; the two readers' windows equal).
     redshift_ticks = REDSHIFT_TICKS
     for name, motion in (
@@ -752,10 +776,7 @@ def massive_worlds(massive) -> dict[str, dict]:
         bounded(document)
         graced(document, [emitter([2994, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE)])
         named_receiver(document, {0: "light_detector"})
-        document["measured"].append(body([4094, 0, 0], "light", [[-1, 0, 0]]))
-        document["detectors"].append(
-            {"name": "light_detector", "positions": [[4094, 0, 0]], "threshold": 1}
-        )
+        receiver_cube(document, "light_detector", [4096 - DETECTOR_SIDE - 1, 0, 0])
         massive.seed_on_the_mode(document)
         out[name] = document
     # Row R2 (section 13 with M1-1 to M1-4): two full-depth blocks A at [700, 712) and B at
@@ -823,12 +844,17 @@ def massive_worlds(massive) -> dict[str, dict]:
     )
     bounded(document)
     graced(document, [emitter([600, 0, 0], 12, WELL_FULL, OWN_GRACE)])
-    # section 10 item 9 (go-lines 9024cea0): the receiving set bound to A is the free
-    # Node adjacent to A's face toward the mirror, x = 612, alone, with its own wheel 64,
-    # taking the returning record at its click: `block` 0 with the one declared position
-    # (the loader's form (b) of BUILD.md item 14 on 299b6bb2).
+    # section 10 item 9 (go-lines 9024cea0): the receiving set bound to A is the cube of
+    # free Nodes adjacent to A's face toward the mirror, x in [612, 614] (record 1899), the
+    # returning record's click at its rung stamped with A's count: `block` 0 with the cube's
+    # positions (the loader's form (b) of BUILD.md item 14 on 299b6bb2).
     document["detectors"].append(
-        {"name": "at_a", "block": 0, "positions": [[612, 0, 0]], "threshold": 1}
+        {
+            "name": "at_a",
+            "block": 0,
+            "positions": cube_positions(document, [612, 0, 0]),
+            "threshold": 1,
+        }
     )
     named_receiver(document, {0: "at_a"})
     massive.seed_on_the_mode(document)
@@ -844,8 +870,9 @@ def massive_worlds(massive) -> dict[str, dict]:
     # x = 0 and 127 absorbing blocks of the matter kind (the fifth commit's correction, the
     # Boss's 02:20Z) with the kind's own pair and the take's pair under the builder's key
     # `take` (BUILD.md item 6b); the amplitude bound A = 2^32 of M1-10; the screen at
-    # x = 104 over y in [4, 124], one set per Node. M2 on its own chain of 200: the lamp
-    # at x = 20 with one record, the detector at x = 104, 600 intervals.
+    # x = 104 a row of 41 cube detectors of side 3 over y in [3, 125] (record 1899). M2 on
+    # its own chain of 200: the emitter at x = 20 with one record, the detector the cube
+    # at [104, 106], 600 intervals.
     for wavelength, clock in MATTER_CLOCKS.items():
         document = matter_world(
             massive,
@@ -856,7 +883,7 @@ def massive_worlds(massive) -> dict[str, dict]:
             clock,
         )
         document["measured"].extend(wall_line([40, 41], range(128), {48, 80}, "matter"))
-        names = screen(document, 104, range(4, 125), "matter")
+        names = screen(document, 104, range(3, 126), "matter")
         # the matter emitter body (ALGEBRA.md 9.17): a well of the source family
         # (the kind EMITTER_KIND, no clock) of side 1, the well EMITTER_WELL, the
         # stock 2048 = W, the born family `matter` with its clock (the cadence
@@ -878,8 +905,7 @@ def massive_worlds(massive) -> dict[str, dict]:
     document = matter_world(massive, "matter-front-12", [200, 1, 1], chain, 600, MATTER_CLOCKS[12])
     document["families"].append(emitter_kind_family(SOURCE_FAMILY))
     document["measured"].append(emitter_body([20, 0, 0], 1, family="matter", own=SOURCE_FAMILY))
-    document["measured"].append(body([104, 0, 0], "matter", [[-1, 0, 0]]))
-    document["detectors"].append({"name": "front", "positions": [[104, 0, 0]], "threshold": 1})
+    receiver_cube(document, "front", [104, 0, 0], "matter")
     massive.seed_on_the_mode(document)
     out["matter_front_12"] = document
     return out

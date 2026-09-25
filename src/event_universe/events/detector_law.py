@@ -289,6 +289,9 @@ class DetectorLawSimulation:
         )
         # The cells: index 0 .. K - 1 with a name, the Nodes of each, and the
         # measured event (if any) that receives the content of a click there.
+        # A detector set is ONE cell over its whole cube (record 1899): the
+        # flux into the cube through its Ports from outside is its increment,
+        # the click is the detector's, reported by its name, never by a Node.
         self.cell_names: list[str] = []
         self.cell_measured: list[int | None] = []
         self.cell_face: list[bool] = []
@@ -1124,9 +1127,9 @@ class DetectorLawSimulation:
         the mathematician's gate item 2): per axis of extent above 1 and
         per side s, the Nodes of a cell whose neighbour on that side (the
         read across the Link, on the family's faces) is a Node of no set or
-        of ANOTHER set; a Link between two cells of one set (a table body's
-        two cells) is no Port, so the energy that entered the set at one
-        cell is not offered again at its neighbour. A self-read of a folded
+        of ANOTHER set; a Link between two Nodes of one set (inside a
+        detector's cube) is no Port, so the energy that entered the set at
+        one Node is not offered again at its neighbour. A self-read of a folded
         axis carries no flux; beyond an open face there is no Node and no
         Link."""
         wrap = self.kind_wrap[family]
@@ -1314,11 +1317,14 @@ class DetectorLawSimulation:
         interval's increment, laid out in the ladder's order, holds theta
         (the walk: the cell k at which 2 W (C + f_1 + ... + f_k) >= (2 u + 1)
         T first). Born's rule is its theorem (9.25 (3): the cell's share of
-        the record's total inward flux, whatever the time profile). The click
-        line, the content handed to the set's body, the record deleted whole
-        after the interval's advances (8.8's one deletion, record 1888). A set
-        bound to a block stamps the line with the block's count as the
-        interval began."""
+        the record's total inward flux, whatever the time profile). A cell is
+        a detector's whole cube (record 1899): its increment the flux into
+        the cube through its Ports from outside, the click the detector's,
+        named on the line and never placed at a Node. The click line, the
+        content handed to the set's body, the record deleted whole after the
+        interval's advances (8.8's one deletion, record 1888). A set bound to
+        a block stamps the line with the block's count as the interval
+        began."""
         if live.clicked or live.norm <= 0:
             return
         ladder = self._ladder_of(live)

@@ -3,7 +3,7 @@ the one map S, ADOPTED with record 1875; the gate of every step of the cleanup, 
 on the small world of 9.20 (a cube of 12 x 12 x 12 periodic on every axis; light [77, 25] and
 the massive family [800, 809]; one well of side 2 at the vertex (3, 4, 5) with the pair
 [800, 801] seeded on its composed mode; one light record born on the cell (8, 2, 7) with both
-labels and the wheel 8; one receiver of one cell at (9, 9, 2) on the record's ladder; 60
+labels and the wheel 8; one receiver, the cube of side 3 at (9, 9, 2), on the record's ladder; 60
 intervals): (1) equivariance under the 48; (2) translation on the torus; (3) conservation of
 the content and of the form I between clicks; (4) reversibility except the click, by 8.8's
 inverse; (5) locality; (6) only the click reads. Every comparison is bit for bit on the
@@ -78,10 +78,18 @@ def small_world(
                 "margin": "control",
             }
         ],
-        # the receiver: a name for one Node (the loader of this head admits a set on a
-        # free Node only bound to a body, the light clock's form; the loader's step of the
-        # cleanup admits any Node)
-        "detectors": [{"name": "screen", "block": 0, "positions": [list(receiver)]}]
+        # the receiver: the detector cube of side 3 from `receiver` (record 1899; a set
+        # on free Nodes is bound to a body, the light clock's form)
+        "detectors": [
+            {
+                "name": "screen",
+                "block": 0,
+                "positions": [
+                    [(receiver[a] + d[a]) % side for a in range(3)]
+                    for d in itertools.product(range(3), repeat=3)
+                ],
+            }
+        ]
         if receiver_named
         else [],
     }
@@ -215,10 +223,13 @@ def cube_mask(vertex, side: int) -> np.ndarray:
 
 
 def transformed(document: dict, g, transform_node, transform_array) -> dict:
-    """The world under g: the well's cube, the receiver's cell and the seed's array."""
+    """The world under g: the well's cube, the receiver's cube and the seed's array."""
     vertex = vertex_of(transform_array(cube_mask(WELL_VERTEX, 2)), 2)
     seed = transform_array(np.asarray(document["measured"][0]["seed"], dtype=np.int64).reshape(SHAPE))
-    return small_world(well_vertex=vertex, receiver=transform_node(RECEIVER), seed=seed)
+    _ = transform_node
+    return small_world(
+        well_vertex=vertex, receiver=vertex_of(transform_array(cube_mask(RECEIVER, 3)), 3), seed=seed
+    )
 
 
 def compare_runs(reference_states, states, transform_array, identities):

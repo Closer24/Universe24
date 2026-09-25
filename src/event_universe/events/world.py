@@ -1488,12 +1488,14 @@ class TransitDefinition:
 @dataclass(frozen=True)
 class DetectorDefinition:
     """A named set of measured events, its threshold and its reading
-    (`beam` or `wave`); under the local detector law a set may instead be
-    BOUND TO A BLOCK (`block`, the measured event's number): its Nodes are
-    the block's cells at every interval (a stepping block's follow it), its
-    pointer the one-way flux into them; the click stamps the block's own
-    count. The rung's wheel is the record's own (ALGEBRA.md 9.22 (4)): a
-    set declares none."""
+    (`beam` or `wave`): ONE DETECTOR, one cube of side DETECTOR_SIDE or
+    more (record 1899), whose click is the detector's and never a Node's;
+    under the local detector law a set may instead be BOUND TO A BLOCK
+    (`block`, the measured event's number): its Nodes are the block's cells
+    at every interval (a stepping block's follow it) or a cube of free
+    Nodes beside it, its pointer the one-way flux into them; the click
+    stamps the block's own count. The rung's wheel is the record's own
+    (ALGEBRA.md 9.22 (4)): a set declares none."""
 
     name: str
     positions: tuple[Address3, ...]
@@ -4783,6 +4785,68 @@ def _connected_pieces(
     return pieces
 
 
+# THE DETECTOR CUBE (the model owner's word of 2026-09-25, record 1899;
+# ALGEBRA.md 9.25): a detector is one region, a cube of side 3 or more; its
+# sensitivity is its whole cube, read by the flux into it through its Ports
+# from outside; the click is the detector's, reported by its name and never
+# by a Node. The cube is cut by the GameBoard on an axis whose extent is
+# below the side (a chain's or a layer's thin axis), as a block's cube is.
+DETECTOR_SIDE = 3
+
+
+def _box_sides(
+    positions: list[Address3], shape: Address3, periodic: tuple[bool, bool, bool]
+) -> tuple[int, int, int] | None:
+    """The sides of the box a set of Nodes fills, or None where it fills no
+    box: per axis the distinct coordinates form one run (the shortest arc
+    across a periodic seam) and the count of Nodes is the runs' product."""
+    sides: list[int] = []
+    for axis in range(3):
+        coordinates = sorted({node[axis] for node in positions})
+        extent = int(shape[axis])
+        if periodic[axis]:
+            run = min(max((c - start) % extent for c in coordinates) + 1 for start in coordinates)
+        else:
+            run = coordinates[-1] - coordinates[0] + 1
+        if run != len(coordinates):
+            return None
+        sides.append(run)
+    if sides[0] * sides[1] * sides[2] != len(set(positions)):
+        return None
+    return (sides[0], sides[1], sides[2])
+
+
+def _detector_region(
+    name: str, positions: list[Address3], shape: Address3, periodic: tuple[bool, bool, bool]
+) -> None:
+    """The three refusals on a detector's Nodes: disconnected pieces (ALGEBRA.md
+    9.25 (7)), no box, a side below DETECTOR_SIDE where the GameBoard's extent
+    allows it (record 1899)."""
+    pieces = _connected_pieces(positions, shape, periodic)
+    if pieces > 1:
+        raise ValueError(
+            f"{BEAM_LAW}: the receiver {name!r} lies on {pieces} disconnected pieces; a detector "
+            "is one connected region, and separate places are separate names (ALGEBRA.md "
+            "9.25 (7))"
+        )
+    sides = _box_sides(positions, shape, periodic)
+    if sides is None:
+        raise ValueError(
+            f"{BEAM_LAW}: the receiver {name!r} on {len(positions)} Nodes fills no box; a "
+            f"detector is one cube of side {DETECTOR_SIDE} or more, its Nodes the whole box of "
+            f"its sides, cut by the GameBoard on an axis of extent below {DETECTOR_SIDE} (the "
+            "model owner's word of 2026-09-25, record 1899)"
+        )
+    least = [min(DETECTOR_SIDE, int(shape[axis])) for axis in range(3)]
+    if any(sides[axis] < least[axis] for axis in range(3)):
+        raise ValueError(
+            f"{BEAM_LAW}: the receiver {name!r} is a box of sides {list(sides)}; a detector is "
+            f"one cube of side {DETECTOR_SIDE} or more (at least {least} on this GameBoard), its "
+            "sensitivity its whole cube and the click the detector's, never a Node's (the model "
+            "owner's word of 2026-09-25, record 1899)"
+        )
+
+
 def _detectors(
     value: object,
     shape: Address3,
@@ -4829,24 +4893,38 @@ def _detectors(
             threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
             bound_positions: list[Address3] = []
             if "positions" in obj:
-                # the receiving set at ONE declared Node beside the block (the
-                # light clock's free Node adjacent to A's face, section 10
-                # item 9): a free Node is admitted here, the set its receiver
+                # the receiving set on free Nodes beside the block (the light
+                # clock's cube adjacent to A's face, section 10 item 9): free
+                # Nodes are admitted here, the set their receiver; the cube of
+                # record 1899 as any detector
                 positions_value = obj["positions"]
-                if not isinstance(positions_value, list) or len(positions_value) != 1:
+                if not isinstance(positions_value, list) or not positions_value:
                     raise ValueError(
-                        f"{BEAM_LAW}: {label}.positions with `block` names ONE Node, the receiving "
-                        "set beside the block (DECLARATIONS.md section 10 item 9)"
+                        f"{BEAM_LAW}: {label}.positions with `block` must be a nonempty list of "
+                        "Nodes, the receiving cube beside the block (DECLARATIONS.md section 10 "
+                        "item 9; record 1899)"
                     )
-                position = _address(positions_value[0], f"{label}.positions", shape)
-                if position in at or position in inside or position in taken:
+                for item in positions_value:
+                    position = _address(item, f"{label}.positions", shape)
+                    if position in at or position in inside or position in taken:
+                        raise ValueError(
+                            f"{BEAM_LAW}: {label}.positions with `block` names a Node of a measured "
+                            f"event or of another set {list(position)}: the receiving set is a cube "
+                            "of free Nodes beside the block"
+                        )
+                    taken.add(position)
+                    bound_positions.append(position)
+                _detector_region(name, bound_positions, shape, periodic)
+            else:
+                bound = measured[bound_block].block
+                assert bound is not None
+                block_side = bound.side
+                if block_side < DETECTOR_SIDE:
                     raise ValueError(
-                        f"{BEAM_LAW}: {label}.positions with `block` names a Node of a measured "
-                        f"event or of another set {list(position)}: the receiving set is a free "
-                        "Node beside the block"
+                        f"{BEAM_LAW}: the receiver {name!r} is the cells of measured[{bound_block}], "
+                        f"a block of side {block_side}; a detector is one cube of side "
+                        f"{DETECTOR_SIDE} or more (record 1899)"
                     )
-                taken.add(position)
-                bound_positions.append(position)
             found.append(DetectorDefinition(name, tuple(bound_positions), threshold, block=bound_block))
             continue
         if "positions" not in obj:
@@ -4875,16 +4953,12 @@ def _detectors(
                 raise ValueError(f"{BEAM_LAW}: a Node in two detectors {list(position)}")
             taken.add(position)
             positions.append(position)
-        # THE DETECTOR IS ONE CONNECTED REGION (ALGEBRA.md 9.25 (7), the model
-        # owner's word): its Nodes are connected by Links (across a periodic
-        # seam too); separate places are separate names
-        pieces = _connected_pieces(positions, shape, periodic)
-        if pieces > 1:
-            raise ValueError(
-                f"{BEAM_LAW}: the receiver {name!r} lies on {pieces} disconnected pieces; a detector "
-                "is one connected region, and separate places are separate names (ALGEBRA.md "
-                "9.25 (7))"
-            )
+        # THE DETECTOR IS ONE CONNECTED REGION, A CUBE (ALGEBRA.md 9.25 (7);
+        # record 1899): its Nodes are connected by Links (across a periodic
+        # seam too), fill one box, and the box's sides are DETECTOR_SIDE or
+        # more where the GameBoard's extent allows; separate places are
+        # separate names
+        _detector_region(name, positions, shape, periodic)
         threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
         if name.startswith(RESERVED_SET_PREFIX) or name in FACE_NAMES or name == LIFETIME_NAME:
             raise ValueError(

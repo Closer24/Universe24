@@ -4190,6 +4190,52 @@
   },
   {
    "position": [
+    4092,
+    0,
+    0
+   ],
+   "family": "light",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    4093,
+    0,
+    0
+   ],
+   "family": "light",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     4094,
     0,
     0
@@ -4216,6 +4262,16 @@
   {
    "name": "light_detector",
    "positions": [
+    [
+     4092,
+     0,
+     0
+    ],
+    [
+     4093,
+     0,
+     0
+    ],
     [
      4094,
      0,

@@ -27,7 +27,13 @@ from event_universe.diagnostics.massive_record_margin import (
 )
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import LIGHT_PAIR, MASSIVE_RECORD_RULE, parse_nature_beam_world
-from tests.test_detector_law import chain_world, emitter_body
+from tests.test_detector_law import (
+    chain_world,
+    cube_positions,
+    emitter_body,
+    receiver_body,
+    receiver_cube,
+)
 from tests.test_emitter import massive_generator
 
 
@@ -270,12 +276,13 @@ def test_p_the_light_record_is_byte_identical_without_the_key():
     the flux reading at every cell with the cumulative ladder and the deletion at the click,
     on the chain world's faces closed (item 14), then once more by the residue from the law
     on the rich well [801, 700] with the take's data gone (item 15), then the events and the
-    audit once more by the born pair on the clock's half step (item 17), the digests read at
-    that head."""
+    audit once more by the born pair on the clock's half step (item 17), then the state and the
+    audit once more by the detector cube at [70, 72] (item 18; the events unchanged, the six
+    clicks at the same intervals), the digests read at that head."""
     assert run_chain_digests() == {
         "events": "b8442ecfed1675d1649142e26532c308f492856858b06e4179395225689e4ffe",
-        "state": "d67c9eb9f0392759598c7479900b3a5015b4a9d6076c27bd17d6902b55e3334a",
-        "audit": "c0dd40515116f2866c4901347be2f28130bd1bd012110fb5681b4f6d9c11082f",
+        "state": "1dac5348b27c1d7d4d3459c0303233d66394eace116d38766f26bd09c9df4a03",
+        "audit": "835b3cc1cdcec7f309e1d6091281246dcacfacb3f0f6d7e2a530a697c828dbbe",
     }
 
 
@@ -446,20 +453,9 @@ def seed_source(document: dict, number: int) -> None:
 
 def with_screen(document: dict, x: int) -> dict:
     """The receiver by name for a test world's emitter body (DECLARATIONS.md section 13
-    item 7): a receiver body of light at x read as the set `screen` (no wheel: the rung's
-    wheel is the record's own, ALGEBRA.md 9.22 (4))."""
-    document["measured"].append(
-        {
-            "position": [x, 0, 0],
-            "family": "light",
-            "amount": 1,
-            "phase": 0,
-            "momentum": [0, 0, 0],
-            "fixed": True,
-            "directions": [[-1, 0, 0]],
-        }
-    )
-    document["detectors"].append({"name": "screen", "positions": [[x, 0, 0]]})
+    item 7): the cube of side 3 of light bodies at [x, x + 2] read as the set `screen`
+    (record 1899; no wheel: the rung's wheel is the record's own, ALGEBRA.md 9.22 (4))."""
+    receiver_cube(document, "screen", [x, 0, 0])
     return document
 
 
@@ -1274,7 +1270,7 @@ def test_aa_a_matter_emitters_record_clicks_once_at_the_rung():
     through the same pointer path as light's (the click is the law's one action on any
     record, POSTULATES 10). The chain world of test (z) without light's emitter (the matter
     kind's faces periodic), the matter emitter's stock 2 (the residues from the law on
-    W = 700), a receiver body of the matter family at x = 184 read as the set `screen`
+    W = 700), the cube of matter bodies at [184, 186] read as the set `screen`
     named by the emitter: each record clicks ONCE at the screen, at the first interval at
     which 2 W C >= (2 u + 1) T on its pointer there (read through the engine's
     `_ladder_click`; the interval before it below the rung), after the front's flight (84
@@ -1283,19 +1279,15 @@ def test_aa_a_matter_emitters_record_clicks_once_at_the_rung():
     books balanced at every interval."""
     document = matter_emitter_world(True, [77, 25], stock=2)
     document["ticks"] = 3000
+    # the cube of matter bodies at [184, 186] read as `screen` (record 1899), the
+    # emitter kept at measured[1] (its records' identities carry its number)
+    positions = cube_positions(document["shape"], [184, 0, 0])
     document["measured"] = [
-        {
-            "position": [184, 0, 0],
-            "family": "matter",
-            "amount": 1,
-            "phase": 0,
-            "momentum": [0, 0, 0],
-            "fixed": True,
-            "directions": [[-1, 0, 0]],
-        },
+        receiver_body(positions[0], "matter"),
         dict(document["measured"][1], receiver="screen"),
+        *(receiver_body(position, "matter") for position in positions[1:]),
     ]
-    document["detectors"] = [{"name": "screen", "positions": [[184, 0, 0]], "threshold": 1}]
+    document["detectors"] = [{"name": "screen", "positions": positions, "threshold": 1}]
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
@@ -1376,10 +1368,10 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
     mirror B sixty Links from A's face at 111; or x open, the sponges), the matter kind
     [800, 809], the emitter A of side 12 at [100, 112) at full depth with the seed 50 x 2^20
     on its bound mode, its `emitter` of light on the wheel [1, 64] with the stock 1 (one birth),
-    W = 64; light's clock [1, 1]; the receiving set `A_face` bound to A at ONE declared Node,
-    the free Node adjacent to A's face toward the mirror (x = 112; item 9), with its own wheel
-    64 (line 7: a receiver), A's `receiver` by name; with `far_body`, a receiver body at x =
-    160 read as the set `far` with its own wheel 64; the amplitude bound 2^32."""
+    W = 64; light's clock [1, 1]; the receiving set `A_face` bound to A at the cube of three
+    free Nodes adjacent to A's face toward the mirror (x in [112, 114]; item 9, record 1899),
+    A's `receiver` by name; with `far_body`, the cube of light bodies at [160, 162] read as
+    the set `far`; the amplitude bound 2^32; no wheel (the record's own, 9.22 (4))."""
     document = massive_world([173, 1, 1], {"x": faces, "y": "periodic", "z": "periodic"}, [800, 809])
     document["families"][0]["phase_per_link"] = [1, 1]
     document["ticks"] = 600
@@ -1401,20 +1393,11 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "receiver": "A_face",
         }
     ]
-    document["detectors"] = [{"name": "A_face", "block": 0, "positions": [[112, 0, 0]]}]
+    document["detectors"] = [
+        {"name": "A_face", "block": 0, "positions": [[112, 0, 0], [113, 0, 0], [114, 0, 0]]}
+    ]
     if far_body:
-        document["measured"].append(
-            {
-                "position": [160, 0, 0],
-                "family": "light",
-                "amount": 1,
-                "phase": 0,
-                "momentum": [0, 0, 0],
-                "fixed": True,
-                "directions": [[-1, 0, 0]],
-            }
-        )
-        document["detectors"].append({"name": "far", "positions": [[160, 0, 0]]})
+        receiver_cube(document, "far", [160, 0, 0])
     seed_source(document, 0)
     return document
 
@@ -1423,7 +1406,7 @@ def test_ac_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_it
     """Line 7 (the receiving set at ONE free Node) on the light clock's chain of 173 (W = 64;
     the world's `wheel` 64) SINCE THE FLUX READING (ALGEBRA.md 9.19 (3); BUILD.md section 26
     item 14): A's one born record is written once on A's twelve cells and leaves both ways;
-    the set's Node x = 112 books the one-way flux into it from the first interval (its
+    the set's cube at [112, 114] books the one-way flux into it from the first interval (its
     pointer above 0 and its rung at the record's own residue from the law, the click line written
     at that rung and stamped with A's count as the interval begins, named by
     `clock_source`), and the record is deleted whole at its click, with the faces closed
@@ -1431,7 +1414,8 @@ def test_ac_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_it
     ladder and never reached first); nothing absorbs (the take retired). A receiver body at
     x = 160 read as `far` is a declared set off A's ladder (A names A_face): never chosen.
     The loader: `block` with a position on a measured Node refused, with two positions
-    refused, `block` naming a body refused naming the positions form, `closed` without
+    refused as a box of sides [2, 1, 1] (the cube of record 1899), `block` naming a body
+    refused naming the positions form, `closed` without
     `detector_law` refused, `own_grace` on the emitter refused, a stock below 1 refused."""
     first = 1  # A's born record: block 0, birth 1
     for faces in ("closed", "open"):
@@ -1491,7 +1475,7 @@ def test_ac_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_it
         parse_nature_beam_world(on_body)
     two = light_clock_world("open", False)
     two["detectors"] = [{"name": "A_face", "block": 0, "positions": [[112, 0, 0], [113, 0, 0]]}]
-    with pytest.raises(ValueError, match="names ONE Node"):
+    with pytest.raises(ValueError, match=r"is a box of sides \[2, 1, 1\]"):
         parse_nature_beam_world(two)
     no_block = light_clock_world("open", True)
     no_block["detectors"] = [{"name": "B", "block": 1}]
@@ -1612,7 +1596,7 @@ def test_al_a_block_that_steps_off_the_board_refuses_the_interval():
 def test_ad_a_wall_of_lights_kind_is_a_mirror_line():
     """DECLARATIONS.md section 15 L-1 (the (M) wall's path): a mirror line of blocks of light's
     kind with the pair [1, 2], two Nodes deep, on the first build's chain (x = 40 and 41; the
-    lamp at x = 2, the screen at x = 70): the blocks have no own record, no clock and no
+    lamp at x = 2, the screen cube at [70, 72]): the blocks have no own record, no clock and no
     coupling (the loader sets their seed 0; the engine's blocks' loop skips them; the margin
     rule skips light's kind), light's pair arrays carry [1, 2] at the two cells and [1, 1]
     elsewhere; over 200 intervals the largest level beyond the wall (x in [45, 69]) stays below
@@ -1640,8 +1624,15 @@ def test_ad_a_wall_of_lights_kind_is_a_mirror_line():
             }
         )
     world = parse_nature_beam_world(document)
-    assert [entry.block is not None for entry in world.measured] == [True, False, True, True]
-    assert world.measured[2].block is not None and world.measured[2].block.seed == 0
+    assert [entry.block is not None for entry in world.measured] == [
+        True,
+        False,
+        False,
+        False,
+        True,
+        True,
+    ]
+    assert world.measured[4].block is not None and world.measured[4].block.seed == 0
     simulation = DetectorLawSimulation(world)
     assert all(block.own is None for block in simulation.blocks[1:])
     assert int(simulation.kind_den[0][40, 0, 0]) == 2 and int(simulation.kind_den[0][41, 0, 0]) == 2
@@ -1658,7 +1649,7 @@ def test_ad_a_wall_of_lights_kind_is_a_mirror_line():
     assert before > 0 and beyond * 100 < 4 * before, (before, beyond)
     for key, value in (("seed", 5), ("coupling", {"G": [1, 1], "g": [1, 2]}), ("margin", "control")):
         bad = json.loads(json.dumps(document))
-        bad["measured"][2][key] = value
+        bad["measured"][4][key] = value
         with pytest.raises(ValueError, match="refused on a block of light's kind"):
             parse_nature_beam_world(bad)
 

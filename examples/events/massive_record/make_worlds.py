@@ -553,20 +553,23 @@ def worlds() -> dict[str, dict]:
     return out
 
 
-def receiver_at(x: int, name: str) -> tuple[dict, dict]:
-    """A DETECTOR of the ray law on the light record at a Node of the chain: the receiver
-    body (the Port's take, DESIGN.md section 5) and its detector set of one Node; the
-    click at the world's wheel (a lamp-less world has no key for W, named in the plan)."""
-    body = {
-        "position": [x, 0, 0],
-        "family": "light",
-        "amount": 1,
-        "phase": 0,
-        "momentum": [0, 0, 0],
-        "fixed": True,
-        "directions": [[-1, 0, 0]],
-    }
-    return body, {"name": name, "positions": [[x, 0, 0]]}
+def receiver_at(x: int, name: str) -> tuple[list[dict], dict]:
+    """A DETECTOR on the light record on the chain: the cube of side 3 of receiver bodies
+    at [x, x + 2] (record 1899: one region, its click the detector's) and its detector set;
+    the rung's wheel is the record's own (ALGEBRA.md 9.22 (4))."""
+    bodies = [
+        {
+            "position": [x + offset, 0, 0],
+            "family": "light",
+            "amount": 1,
+            "phase": 0,
+            "momentum": [0, 0, 0],
+            "fixed": True,
+            "directions": [[-1, 0, 0]],
+        }
+        for offset in range(3)
+    ]
+    return bodies, {"name": name, "positions": [body["position"] for body in bodies]}
 
 
 def emitter(position: list[int], side: int, pair: list[int], ticks: int, **extra: object) -> dict:
@@ -613,7 +616,7 @@ def launch_list_worlds(include_refused: bool = False) -> dict[str, dict]:
         else []
     )
     for name, x, extra in emitters:
-        body, detector = receiver_at(1900, "B")
+        bodies, detector = receiver_at(1900, "B")
         document = world(
             name.replace("_", "-"),
             "PIN" if extra else "CONTROL",
@@ -625,7 +628,7 @@ def launch_list_worlds(include_refused: bool = False) -> dict[str, dict]:
             faces=FACES_OPEN,
             probes=[[1899, 0, 0]],
         )
-        document["measured"].append(body)
+        document["measured"].extend(bodies)
         document["detectors"] = [detector]
         out[name] = document
     # the deep well in motion (the cavity row's CONTROL): a 128^2 layer, s = 40 at full depth

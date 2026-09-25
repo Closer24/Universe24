@@ -16461,127 +16461,47 @@
    "emitter": {
     "family": "matter",
     "receiver": [
-     "screen_4",
-     "screen_5",
+     "screen_3",
      "screen_6",
-     "screen_7",
-     "screen_8",
      "screen_9",
-     "screen_10",
-     "screen_11",
      "screen_12",
-     "screen_13",
-     "screen_14",
      "screen_15",
-     "screen_16",
-     "screen_17",
      "screen_18",
-     "screen_19",
-     "screen_20",
      "screen_21",
-     "screen_22",
-     "screen_23",
      "screen_24",
-     "screen_25",
-     "screen_26",
      "screen_27",
-     "screen_28",
-     "screen_29",
      "screen_30",
-     "screen_31",
-     "screen_32",
      "screen_33",
-     "screen_34",
-     "screen_35",
      "screen_36",
-     "screen_37",
-     "screen_38",
      "screen_39",
-     "screen_40",
-     "screen_41",
      "screen_42",
-     "screen_43",
-     "screen_44",
      "screen_45",
-     "screen_46",
-     "screen_47",
      "screen_48",
-     "screen_49",
-     "screen_50",
      "screen_51",
-     "screen_52",
-     "screen_53",
      "screen_54",
-     "screen_55",
-     "screen_56",
      "screen_57",
-     "screen_58",
-     "screen_59",
      "screen_60",
-     "screen_61",
-     "screen_62",
      "screen_63",
-     "screen_64",
-     "screen_65",
      "screen_66",
-     "screen_67",
-     "screen_68",
      "screen_69",
-     "screen_70",
-     "screen_71",
      "screen_72",
-     "screen_73",
-     "screen_74",
      "screen_75",
-     "screen_76",
-     "screen_77",
      "screen_78",
-     "screen_79",
-     "screen_80",
      "screen_81",
-     "screen_82",
-     "screen_83",
      "screen_84",
-     "screen_85",
-     "screen_86",
      "screen_87",
-     "screen_88",
-     "screen_89",
      "screen_90",
-     "screen_91",
-     "screen_92",
      "screen_93",
-     "screen_94",
-     "screen_95",
      "screen_96",
-     "screen_97",
-     "screen_98",
      "screen_99",
-     "screen_100",
-     "screen_101",
      "screen_102",
-     "screen_103",
-     "screen_104",
      "screen_105",
-     "screen_106",
-     "screen_107",
      "screen_108",
-     "screen_109",
-     "screen_110",
      "screen_111",
-     "screen_112",
-     "screen_113",
      "screen_114",
-     "screen_115",
-     "screen_116",
      "screen_117",
-     "screen_118",
-     "screen_119",
      "screen_120",
-     "screen_121",
-     "screen_122",
-     "screen_123",
-     "screen_124"
+     "screen_123"
     ],
     "period": 12,
     "norm": 12604536,
@@ -21886,6 +21806,29 @@
   {
    "position": [
     104,
+    3,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    104,
     4,
     0
    ],
@@ -21909,6 +21852,144 @@
   {
    "position": [
     104,
+    5,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    3,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    4,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    5,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    3,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    4,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     5,
     0
    ],
@@ -22000,6 +22081,144 @@
   },
   {
    "position": [
+    105,
+    6,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    7,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    8,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    6,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    7,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    8,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     9,
     0
@@ -22047,6 +22266,144 @@
   {
    "position": [
     104,
+    11,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    9,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    10,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    11,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    9,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    10,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     11,
     0
    ],
@@ -22138,6 +22495,144 @@
   },
   {
    "position": [
+    105,
+    12,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    13,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    14,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    12,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    13,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    14,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     15,
     0
@@ -22185,6 +22680,144 @@
   {
    "position": [
     104,
+    17,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    15,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    16,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    17,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    15,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    16,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     17,
     0
    ],
@@ -22276,6 +22909,144 @@
   },
   {
    "position": [
+    105,
+    18,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    19,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    20,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    18,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    19,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    20,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     21,
     0
@@ -22323,6 +23094,144 @@
   {
    "position": [
     104,
+    23,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    21,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    22,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    23,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    21,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    22,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     23,
     0
    ],
@@ -22414,6 +23323,144 @@
   },
   {
    "position": [
+    105,
+    24,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    25,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    26,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    24,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    25,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    26,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     27,
     0
@@ -22461,6 +23508,144 @@
   {
    "position": [
     104,
+    29,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    27,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    28,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    29,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    27,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    28,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     29,
     0
    ],
@@ -22552,6 +23737,144 @@
   },
   {
    "position": [
+    105,
+    30,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    31,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    32,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    30,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    31,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    32,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     33,
     0
@@ -22599,6 +23922,144 @@
   {
    "position": [
     104,
+    35,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    33,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    34,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    35,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    33,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    34,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     35,
     0
    ],
@@ -22690,6 +24151,144 @@
   },
   {
    "position": [
+    105,
+    36,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    37,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    38,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    36,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    37,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    38,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     39,
     0
@@ -22737,6 +24336,144 @@
   {
    "position": [
     104,
+    41,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    39,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    40,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    41,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    39,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    40,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     41,
     0
    ],
@@ -22828,6 +24565,144 @@
   },
   {
    "position": [
+    105,
+    42,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    43,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    44,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    42,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    43,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    44,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     45,
     0
@@ -22875,6 +24750,144 @@
   {
    "position": [
     104,
+    47,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    45,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    46,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    47,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    45,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    46,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     47,
     0
    ],
@@ -22966,6 +24979,144 @@
   },
   {
    "position": [
+    105,
+    48,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    49,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    50,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    48,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    49,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    50,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     51,
     0
@@ -23013,6 +25164,144 @@
   {
    "position": [
     104,
+    53,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    51,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    52,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    53,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    51,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    52,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     53,
     0
    ],
@@ -23104,6 +25393,144 @@
   },
   {
    "position": [
+    105,
+    54,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    55,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    56,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    54,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    55,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    56,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     57,
     0
@@ -23151,6 +25578,144 @@
   {
    "position": [
     104,
+    59,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    57,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    58,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    59,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    57,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    58,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     59,
     0
    ],
@@ -23242,6 +25807,144 @@
   },
   {
    "position": [
+    105,
+    60,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    61,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    62,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    60,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    61,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    62,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     63,
     0
@@ -23289,6 +25992,144 @@
   {
    "position": [
     104,
+    65,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    63,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    64,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    65,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    63,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    64,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     65,
     0
    ],
@@ -23380,6 +26221,144 @@
   },
   {
    "position": [
+    105,
+    66,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    67,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    68,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    66,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    67,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    68,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     69,
     0
@@ -23427,6 +26406,144 @@
   {
    "position": [
     104,
+    71,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    69,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    70,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    71,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    69,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    70,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     71,
     0
    ],
@@ -23518,6 +26635,144 @@
   },
   {
    "position": [
+    105,
+    72,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    73,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    74,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    72,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    73,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    74,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     75,
     0
@@ -23565,6 +26820,144 @@
   {
    "position": [
     104,
+    77,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    75,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    76,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    77,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    75,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    76,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     77,
     0
    ],
@@ -23656,6 +27049,144 @@
   },
   {
    "position": [
+    105,
+    78,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    79,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    80,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    78,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    79,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    80,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     81,
     0
@@ -23703,6 +27234,144 @@
   {
    "position": [
     104,
+    83,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    81,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    82,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    83,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    81,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    82,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     83,
     0
    ],
@@ -23794,6 +27463,144 @@
   },
   {
    "position": [
+    105,
+    84,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    85,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    86,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    84,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    85,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    86,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     87,
     0
@@ -23841,6 +27648,144 @@
   {
    "position": [
     104,
+    89,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    87,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    88,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    89,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    87,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    88,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     89,
     0
    ],
@@ -23932,6 +27877,144 @@
   },
   {
    "position": [
+    105,
+    90,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    91,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    92,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    90,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    91,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    92,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     93,
     0
@@ -23979,6 +28062,144 @@
   {
    "position": [
     104,
+    95,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    93,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    94,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    95,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    93,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    94,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     95,
     0
    ],
@@ -24070,6 +28291,144 @@
   },
   {
    "position": [
+    105,
+    96,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    97,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    98,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    96,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    97,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    98,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     99,
     0
@@ -24117,6 +28476,144 @@
   {
    "position": [
     104,
+    101,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    99,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    100,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    101,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    99,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    100,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     101,
     0
    ],
@@ -24208,6 +28705,144 @@
   },
   {
    "position": [
+    105,
+    102,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    103,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    104,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    102,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    103,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    104,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     105,
     0
@@ -24255,6 +28890,144 @@
   {
    "position": [
     104,
+    107,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    105,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    106,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    107,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    105,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    106,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     107,
     0
    ],
@@ -24346,6 +29119,144 @@
   },
   {
    "position": [
+    105,
+    108,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    109,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    110,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    108,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    109,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    110,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     111,
     0
@@ -24393,6 +29304,144 @@
   {
    "position": [
     104,
+    113,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    111,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    112,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    113,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    111,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    112,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     113,
     0
    ],
@@ -24484,6 +29533,144 @@
   },
   {
    "position": [
+    105,
+    114,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    115,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    116,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    114,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    115,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    116,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     117,
     0
@@ -24531,6 +29718,144 @@
   {
    "position": [
     104,
+    119,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    117,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    118,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    119,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    117,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    118,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
     119,
     0
    ],
@@ -24622,6 +29947,144 @@
   },
   {
    "position": [
+    105,
+    120,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    121,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    122,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    120,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    121,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    122,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
     104,
     123,
     0
@@ -24665,25 +30128,215 @@
      0
     ]
    ]
+  },
+  {
+   "position": [
+    104,
+    125,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    123,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    124,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    105,
+    125,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    123,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    124,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "position": [
+    106,
+    125,
+    0
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "directions": [
+    [
+     -1,
+     0,
+     0
+    ]
+   ]
   }
  ],
  "detectors": [
   {
-   "name": "screen_4",
+   "name": "screen_3",
    "positions": [
+    [
+     104,
+     3,
+     0
+    ],
     [
      104,
      4,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_5",
-   "positions": [
+    ],
     [
      104,
+     5,
+     0
+    ],
+    [
+     105,
+     3,
+     0
+    ],
+    [
+     105,
+     4,
+     0
+    ],
+    [
+     105,
+     5,
+     0
+    ],
+    [
+     106,
+     3,
+     0
+    ],
+    [
+     106,
+     4,
+     0
+    ],
+    [
+     106,
      5,
      0
     ]
@@ -24697,26 +30350,44 @@
      104,
      6,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_7",
-   "positions": [
+    ],
     [
      104,
      7,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_8",
-   "positions": [
+    ],
     [
      104,
+     8,
+     0
+    ],
+    [
+     105,
+     6,
+     0
+    ],
+    [
+     105,
+     7,
+     0
+    ],
+    [
+     105,
+     8,
+     0
+    ],
+    [
+     106,
+     6,
+     0
+    ],
+    [
+     106,
+     7,
+     0
+    ],
+    [
+     106,
      8,
      0
     ]
@@ -24730,26 +30401,44 @@
      104,
      9,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_10",
-   "positions": [
+    ],
     [
      104,
      10,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_11",
-   "positions": [
+    ],
     [
      104,
+     11,
+     0
+    ],
+    [
+     105,
+     9,
+     0
+    ],
+    [
+     105,
+     10,
+     0
+    ],
+    [
+     105,
+     11,
+     0
+    ],
+    [
+     106,
+     9,
+     0
+    ],
+    [
+     106,
+     10,
+     0
+    ],
+    [
+     106,
      11,
      0
     ]
@@ -24763,26 +30452,44 @@
      104,
      12,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_13",
-   "positions": [
+    ],
     [
      104,
      13,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_14",
-   "positions": [
+    ],
     [
      104,
+     14,
+     0
+    ],
+    [
+     105,
+     12,
+     0
+    ],
+    [
+     105,
+     13,
+     0
+    ],
+    [
+     105,
+     14,
+     0
+    ],
+    [
+     106,
+     12,
+     0
+    ],
+    [
+     106,
+     13,
+     0
+    ],
+    [
+     106,
      14,
      0
     ]
@@ -24796,26 +30503,44 @@
      104,
      15,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_16",
-   "positions": [
+    ],
     [
      104,
      16,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_17",
-   "positions": [
+    ],
     [
      104,
+     17,
+     0
+    ],
+    [
+     105,
+     15,
+     0
+    ],
+    [
+     105,
+     16,
+     0
+    ],
+    [
+     105,
+     17,
+     0
+    ],
+    [
+     106,
+     15,
+     0
+    ],
+    [
+     106,
+     16,
+     0
+    ],
+    [
+     106,
      17,
      0
     ]
@@ -24829,26 +30554,44 @@
      104,
      18,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_19",
-   "positions": [
+    ],
     [
      104,
      19,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_20",
-   "positions": [
+    ],
     [
      104,
+     20,
+     0
+    ],
+    [
+     105,
+     18,
+     0
+    ],
+    [
+     105,
+     19,
+     0
+    ],
+    [
+     105,
+     20,
+     0
+    ],
+    [
+     106,
+     18,
+     0
+    ],
+    [
+     106,
+     19,
+     0
+    ],
+    [
+     106,
      20,
      0
     ]
@@ -24862,26 +30605,44 @@
      104,
      21,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_22",
-   "positions": [
+    ],
     [
      104,
      22,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_23",
-   "positions": [
+    ],
     [
      104,
+     23,
+     0
+    ],
+    [
+     105,
+     21,
+     0
+    ],
+    [
+     105,
+     22,
+     0
+    ],
+    [
+     105,
+     23,
+     0
+    ],
+    [
+     106,
+     21,
+     0
+    ],
+    [
+     106,
+     22,
+     0
+    ],
+    [
+     106,
      23,
      0
     ]
@@ -24895,26 +30656,44 @@
      104,
      24,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_25",
-   "positions": [
+    ],
     [
      104,
      25,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_26",
-   "positions": [
+    ],
     [
      104,
+     26,
+     0
+    ],
+    [
+     105,
+     24,
+     0
+    ],
+    [
+     105,
+     25,
+     0
+    ],
+    [
+     105,
+     26,
+     0
+    ],
+    [
+     106,
+     24,
+     0
+    ],
+    [
+     106,
+     25,
+     0
+    ],
+    [
+     106,
      26,
      0
     ]
@@ -24928,26 +30707,44 @@
      104,
      27,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_28",
-   "positions": [
+    ],
     [
      104,
      28,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_29",
-   "positions": [
+    ],
     [
      104,
+     29,
+     0
+    ],
+    [
+     105,
+     27,
+     0
+    ],
+    [
+     105,
+     28,
+     0
+    ],
+    [
+     105,
+     29,
+     0
+    ],
+    [
+     106,
+     27,
+     0
+    ],
+    [
+     106,
+     28,
+     0
+    ],
+    [
+     106,
      29,
      0
     ]
@@ -24961,26 +30758,44 @@
      104,
      30,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_31",
-   "positions": [
+    ],
     [
      104,
      31,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_32",
-   "positions": [
+    ],
     [
      104,
+     32,
+     0
+    ],
+    [
+     105,
+     30,
+     0
+    ],
+    [
+     105,
+     31,
+     0
+    ],
+    [
+     105,
+     32,
+     0
+    ],
+    [
+     106,
+     30,
+     0
+    ],
+    [
+     106,
+     31,
+     0
+    ],
+    [
+     106,
      32,
      0
     ]
@@ -24994,26 +30809,44 @@
      104,
      33,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_34",
-   "positions": [
+    ],
     [
      104,
      34,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_35",
-   "positions": [
+    ],
     [
      104,
+     35,
+     0
+    ],
+    [
+     105,
+     33,
+     0
+    ],
+    [
+     105,
+     34,
+     0
+    ],
+    [
+     105,
+     35,
+     0
+    ],
+    [
+     106,
+     33,
+     0
+    ],
+    [
+     106,
+     34,
+     0
+    ],
+    [
+     106,
      35,
      0
     ]
@@ -25027,26 +30860,44 @@
      104,
      36,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_37",
-   "positions": [
+    ],
     [
      104,
      37,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_38",
-   "positions": [
+    ],
     [
      104,
+     38,
+     0
+    ],
+    [
+     105,
+     36,
+     0
+    ],
+    [
+     105,
+     37,
+     0
+    ],
+    [
+     105,
+     38,
+     0
+    ],
+    [
+     106,
+     36,
+     0
+    ],
+    [
+     106,
+     37,
+     0
+    ],
+    [
+     106,
      38,
      0
     ]
@@ -25060,26 +30911,44 @@
      104,
      39,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_40",
-   "positions": [
+    ],
     [
      104,
      40,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_41",
-   "positions": [
+    ],
     [
      104,
+     41,
+     0
+    ],
+    [
+     105,
+     39,
+     0
+    ],
+    [
+     105,
+     40,
+     0
+    ],
+    [
+     105,
+     41,
+     0
+    ],
+    [
+     106,
+     39,
+     0
+    ],
+    [
+     106,
+     40,
+     0
+    ],
+    [
+     106,
      41,
      0
     ]
@@ -25093,26 +30962,44 @@
      104,
      42,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_43",
-   "positions": [
+    ],
     [
      104,
      43,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_44",
-   "positions": [
+    ],
     [
      104,
+     44,
+     0
+    ],
+    [
+     105,
+     42,
+     0
+    ],
+    [
+     105,
+     43,
+     0
+    ],
+    [
+     105,
+     44,
+     0
+    ],
+    [
+     106,
+     42,
+     0
+    ],
+    [
+     106,
+     43,
+     0
+    ],
+    [
+     106,
      44,
      0
     ]
@@ -25126,26 +31013,44 @@
      104,
      45,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_46",
-   "positions": [
+    ],
     [
      104,
      46,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_47",
-   "positions": [
+    ],
     [
      104,
+     47,
+     0
+    ],
+    [
+     105,
+     45,
+     0
+    ],
+    [
+     105,
+     46,
+     0
+    ],
+    [
+     105,
+     47,
+     0
+    ],
+    [
+     106,
+     45,
+     0
+    ],
+    [
+     106,
+     46,
+     0
+    ],
+    [
+     106,
      47,
      0
     ]
@@ -25159,26 +31064,44 @@
      104,
      48,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_49",
-   "positions": [
+    ],
     [
      104,
      49,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_50",
-   "positions": [
+    ],
     [
      104,
+     50,
+     0
+    ],
+    [
+     105,
+     48,
+     0
+    ],
+    [
+     105,
+     49,
+     0
+    ],
+    [
+     105,
+     50,
+     0
+    ],
+    [
+     106,
+     48,
+     0
+    ],
+    [
+     106,
+     49,
+     0
+    ],
+    [
+     106,
      50,
      0
     ]
@@ -25192,26 +31115,44 @@
      104,
      51,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_52",
-   "positions": [
+    ],
     [
      104,
      52,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_53",
-   "positions": [
+    ],
     [
      104,
+     53,
+     0
+    ],
+    [
+     105,
+     51,
+     0
+    ],
+    [
+     105,
+     52,
+     0
+    ],
+    [
+     105,
+     53,
+     0
+    ],
+    [
+     106,
+     51,
+     0
+    ],
+    [
+     106,
+     52,
+     0
+    ],
+    [
+     106,
      53,
      0
     ]
@@ -25225,26 +31166,44 @@
      104,
      54,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_55",
-   "positions": [
+    ],
     [
      104,
      55,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_56",
-   "positions": [
+    ],
     [
      104,
+     56,
+     0
+    ],
+    [
+     105,
+     54,
+     0
+    ],
+    [
+     105,
+     55,
+     0
+    ],
+    [
+     105,
+     56,
+     0
+    ],
+    [
+     106,
+     54,
+     0
+    ],
+    [
+     106,
+     55,
+     0
+    ],
+    [
+     106,
      56,
      0
     ]
@@ -25258,26 +31217,44 @@
      104,
      57,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_58",
-   "positions": [
+    ],
     [
      104,
      58,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_59",
-   "positions": [
+    ],
     [
      104,
+     59,
+     0
+    ],
+    [
+     105,
+     57,
+     0
+    ],
+    [
+     105,
+     58,
+     0
+    ],
+    [
+     105,
+     59,
+     0
+    ],
+    [
+     106,
+     57,
+     0
+    ],
+    [
+     106,
+     58,
+     0
+    ],
+    [
+     106,
      59,
      0
     ]
@@ -25291,26 +31268,44 @@
      104,
      60,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_61",
-   "positions": [
+    ],
     [
      104,
      61,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_62",
-   "positions": [
+    ],
     [
      104,
+     62,
+     0
+    ],
+    [
+     105,
+     60,
+     0
+    ],
+    [
+     105,
+     61,
+     0
+    ],
+    [
+     105,
+     62,
+     0
+    ],
+    [
+     106,
+     60,
+     0
+    ],
+    [
+     106,
+     61,
+     0
+    ],
+    [
+     106,
      62,
      0
     ]
@@ -25324,26 +31319,44 @@
      104,
      63,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_64",
-   "positions": [
+    ],
     [
      104,
      64,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_65",
-   "positions": [
+    ],
     [
      104,
+     65,
+     0
+    ],
+    [
+     105,
+     63,
+     0
+    ],
+    [
+     105,
+     64,
+     0
+    ],
+    [
+     105,
+     65,
+     0
+    ],
+    [
+     106,
+     63,
+     0
+    ],
+    [
+     106,
+     64,
+     0
+    ],
+    [
+     106,
      65,
      0
     ]
@@ -25357,26 +31370,44 @@
      104,
      66,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_67",
-   "positions": [
+    ],
     [
      104,
      67,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_68",
-   "positions": [
+    ],
     [
      104,
+     68,
+     0
+    ],
+    [
+     105,
+     66,
+     0
+    ],
+    [
+     105,
+     67,
+     0
+    ],
+    [
+     105,
+     68,
+     0
+    ],
+    [
+     106,
+     66,
+     0
+    ],
+    [
+     106,
+     67,
+     0
+    ],
+    [
+     106,
      68,
      0
     ]
@@ -25390,26 +31421,44 @@
      104,
      69,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_70",
-   "positions": [
+    ],
     [
      104,
      70,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_71",
-   "positions": [
+    ],
     [
      104,
+     71,
+     0
+    ],
+    [
+     105,
+     69,
+     0
+    ],
+    [
+     105,
+     70,
+     0
+    ],
+    [
+     105,
+     71,
+     0
+    ],
+    [
+     106,
+     69,
+     0
+    ],
+    [
+     106,
+     70,
+     0
+    ],
+    [
+     106,
      71,
      0
     ]
@@ -25423,26 +31472,44 @@
      104,
      72,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_73",
-   "positions": [
+    ],
     [
      104,
      73,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_74",
-   "positions": [
+    ],
     [
      104,
+     74,
+     0
+    ],
+    [
+     105,
+     72,
+     0
+    ],
+    [
+     105,
+     73,
+     0
+    ],
+    [
+     105,
+     74,
+     0
+    ],
+    [
+     106,
+     72,
+     0
+    ],
+    [
+     106,
+     73,
+     0
+    ],
+    [
+     106,
      74,
      0
     ]
@@ -25456,26 +31523,44 @@
      104,
      75,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_76",
-   "positions": [
+    ],
     [
      104,
      76,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_77",
-   "positions": [
+    ],
     [
      104,
+     77,
+     0
+    ],
+    [
+     105,
+     75,
+     0
+    ],
+    [
+     105,
+     76,
+     0
+    ],
+    [
+     105,
+     77,
+     0
+    ],
+    [
+     106,
+     75,
+     0
+    ],
+    [
+     106,
+     76,
+     0
+    ],
+    [
+     106,
      77,
      0
     ]
@@ -25489,26 +31574,44 @@
      104,
      78,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_79",
-   "positions": [
+    ],
     [
      104,
      79,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_80",
-   "positions": [
+    ],
     [
      104,
+     80,
+     0
+    ],
+    [
+     105,
+     78,
+     0
+    ],
+    [
+     105,
+     79,
+     0
+    ],
+    [
+     105,
+     80,
+     0
+    ],
+    [
+     106,
+     78,
+     0
+    ],
+    [
+     106,
+     79,
+     0
+    ],
+    [
+     106,
      80,
      0
     ]
@@ -25522,26 +31625,44 @@
      104,
      81,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_82",
-   "positions": [
+    ],
     [
      104,
      82,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_83",
-   "positions": [
+    ],
     [
      104,
+     83,
+     0
+    ],
+    [
+     105,
+     81,
+     0
+    ],
+    [
+     105,
+     82,
+     0
+    ],
+    [
+     105,
+     83,
+     0
+    ],
+    [
+     106,
+     81,
+     0
+    ],
+    [
+     106,
+     82,
+     0
+    ],
+    [
+     106,
      83,
      0
     ]
@@ -25555,26 +31676,44 @@
      104,
      84,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_85",
-   "positions": [
+    ],
     [
      104,
      85,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_86",
-   "positions": [
+    ],
     [
      104,
+     86,
+     0
+    ],
+    [
+     105,
+     84,
+     0
+    ],
+    [
+     105,
+     85,
+     0
+    ],
+    [
+     105,
+     86,
+     0
+    ],
+    [
+     106,
+     84,
+     0
+    ],
+    [
+     106,
+     85,
+     0
+    ],
+    [
+     106,
      86,
      0
     ]
@@ -25588,26 +31727,44 @@
      104,
      87,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_88",
-   "positions": [
+    ],
     [
      104,
      88,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_89",
-   "positions": [
+    ],
     [
      104,
+     89,
+     0
+    ],
+    [
+     105,
+     87,
+     0
+    ],
+    [
+     105,
+     88,
+     0
+    ],
+    [
+     105,
+     89,
+     0
+    ],
+    [
+     106,
+     87,
+     0
+    ],
+    [
+     106,
+     88,
+     0
+    ],
+    [
+     106,
      89,
      0
     ]
@@ -25621,26 +31778,44 @@
      104,
      90,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_91",
-   "positions": [
+    ],
     [
      104,
      91,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_92",
-   "positions": [
+    ],
     [
      104,
+     92,
+     0
+    ],
+    [
+     105,
+     90,
+     0
+    ],
+    [
+     105,
+     91,
+     0
+    ],
+    [
+     105,
+     92,
+     0
+    ],
+    [
+     106,
+     90,
+     0
+    ],
+    [
+     106,
+     91,
+     0
+    ],
+    [
+     106,
      92,
      0
     ]
@@ -25654,26 +31829,44 @@
      104,
      93,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_94",
-   "positions": [
+    ],
     [
      104,
      94,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_95",
-   "positions": [
+    ],
     [
      104,
+     95,
+     0
+    ],
+    [
+     105,
+     93,
+     0
+    ],
+    [
+     105,
+     94,
+     0
+    ],
+    [
+     105,
+     95,
+     0
+    ],
+    [
+     106,
+     93,
+     0
+    ],
+    [
+     106,
+     94,
+     0
+    ],
+    [
+     106,
      95,
      0
     ]
@@ -25687,26 +31880,44 @@
      104,
      96,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_97",
-   "positions": [
+    ],
     [
      104,
      97,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_98",
-   "positions": [
+    ],
     [
      104,
+     98,
+     0
+    ],
+    [
+     105,
+     96,
+     0
+    ],
+    [
+     105,
+     97,
+     0
+    ],
+    [
+     105,
+     98,
+     0
+    ],
+    [
+     106,
+     96,
+     0
+    ],
+    [
+     106,
+     97,
+     0
+    ],
+    [
+     106,
      98,
      0
     ]
@@ -25720,26 +31931,44 @@
      104,
      99,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_100",
-   "positions": [
+    ],
     [
      104,
      100,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_101",
-   "positions": [
+    ],
     [
      104,
+     101,
+     0
+    ],
+    [
+     105,
+     99,
+     0
+    ],
+    [
+     105,
+     100,
+     0
+    ],
+    [
+     105,
+     101,
+     0
+    ],
+    [
+     106,
+     99,
+     0
+    ],
+    [
+     106,
+     100,
+     0
+    ],
+    [
+     106,
      101,
      0
     ]
@@ -25753,26 +31982,44 @@
      104,
      102,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_103",
-   "positions": [
+    ],
     [
      104,
      103,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_104",
-   "positions": [
+    ],
     [
      104,
+     104,
+     0
+    ],
+    [
+     105,
+     102,
+     0
+    ],
+    [
+     105,
+     103,
+     0
+    ],
+    [
+     105,
+     104,
+     0
+    ],
+    [
+     106,
+     102,
+     0
+    ],
+    [
+     106,
+     103,
+     0
+    ],
+    [
+     106,
      104,
      0
     ]
@@ -25786,26 +32033,44 @@
      104,
      105,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_106",
-   "positions": [
+    ],
     [
      104,
      106,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_107",
-   "positions": [
+    ],
     [
      104,
+     107,
+     0
+    ],
+    [
+     105,
+     105,
+     0
+    ],
+    [
+     105,
+     106,
+     0
+    ],
+    [
+     105,
+     107,
+     0
+    ],
+    [
+     106,
+     105,
+     0
+    ],
+    [
+     106,
+     106,
+     0
+    ],
+    [
+     106,
      107,
      0
     ]
@@ -25819,26 +32084,44 @@
      104,
      108,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_109",
-   "positions": [
+    ],
     [
      104,
      109,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_110",
-   "positions": [
+    ],
     [
      104,
+     110,
+     0
+    ],
+    [
+     105,
+     108,
+     0
+    ],
+    [
+     105,
+     109,
+     0
+    ],
+    [
+     105,
+     110,
+     0
+    ],
+    [
+     106,
+     108,
+     0
+    ],
+    [
+     106,
+     109,
+     0
+    ],
+    [
+     106,
      110,
      0
     ]
@@ -25852,26 +32135,44 @@
      104,
      111,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_112",
-   "positions": [
+    ],
     [
      104,
      112,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_113",
-   "positions": [
+    ],
     [
      104,
+     113,
+     0
+    ],
+    [
+     105,
+     111,
+     0
+    ],
+    [
+     105,
+     112,
+     0
+    ],
+    [
+     105,
+     113,
+     0
+    ],
+    [
+     106,
+     111,
+     0
+    ],
+    [
+     106,
+     112,
+     0
+    ],
+    [
+     106,
      113,
      0
     ]
@@ -25885,26 +32186,44 @@
      104,
      114,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_115",
-   "positions": [
+    ],
     [
      104,
      115,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_116",
-   "positions": [
+    ],
     [
      104,
+     116,
+     0
+    ],
+    [
+     105,
+     114,
+     0
+    ],
+    [
+     105,
+     115,
+     0
+    ],
+    [
+     105,
+     116,
+     0
+    ],
+    [
+     106,
+     114,
+     0
+    ],
+    [
+     106,
+     115,
+     0
+    ],
+    [
+     106,
      116,
      0
     ]
@@ -25918,26 +32237,44 @@
      104,
      117,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_118",
-   "positions": [
+    ],
     [
      104,
      118,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_119",
-   "positions": [
+    ],
     [
      104,
+     119,
+     0
+    ],
+    [
+     105,
+     117,
+     0
+    ],
+    [
+     105,
+     118,
+     0
+    ],
+    [
+     105,
+     119,
+     0
+    ],
+    [
+     106,
+     117,
+     0
+    ],
+    [
+     106,
+     118,
+     0
+    ],
+    [
+     106,
      119,
      0
     ]
@@ -25951,26 +32288,44 @@
      104,
      120,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_121",
-   "positions": [
+    ],
     [
      104,
      121,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_122",
-   "positions": [
+    ],
     [
      104,
+     122,
+     0
+    ],
+    [
+     105,
+     120,
+     0
+    ],
+    [
+     105,
+     121,
+     0
+    ],
+    [
+     105,
+     122,
+     0
+    ],
+    [
+     106,
+     120,
+     0
+    ],
+    [
+     106,
+     121,
+     0
+    ],
+    [
+     106,
      122,
      0
     ]
@@ -25984,16 +32339,45 @@
      104,
      123,
      0
-    ]
-   ],
-   "threshold": 1
-  },
-  {
-   "name": "screen_124",
-   "positions": [
+    ],
     [
      104,
      124,
+     0
+    ],
+    [
+     104,
+     125,
+     0
+    ],
+    [
+     105,
+     123,
+     0
+    ],
+    [
+     105,
+     124,
+     0
+    ],
+    [
+     105,
+     125,
+     0
+    ],
+    [
+     106,
+     123,
+     0
+    ],
+    [
+     106,
+     124,
+     0
+    ],
+    [
+     106,
+     125,
      0
     ]
    ],

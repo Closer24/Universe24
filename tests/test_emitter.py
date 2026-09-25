@@ -72,7 +72,12 @@ def emitter_world(
     9.22 (4)) of side `side` at x = 5, seeded on its bound mode at the amplitude 100 (the
     generator's `seed_on_the_mode`, the body's conditions of the load check), its stock
     `amount` = `stock`, its `emitter` the light family [77, 25] with its ladder the set
-    `screen`; the receiver a body of light at x = 70 read as `screen`; no wheel anywhere."""
+    `screen`; the receiver the cube of side 3 of light bodies at [70, 72] read as `screen`
+    (record 1899); no wheel anywhere."""
+    # the cube helper of the detector-law suite (imported here: that suite imports
+    # `massive_generator` from this one)
+    from tests.test_detector_law import receiver_cube
+
     emitter: dict = {"family": "light", "receiver": ["screen"]}
     document = {
         "law": "beam",
@@ -107,18 +112,10 @@ def emitter_world(
                 "margin": "control",
                 "emitter": emitter,
             },
-            {
-                "position": [70, 0, 0],
-                "family": "light",
-                "amount": 1,
-                "phase": 0,
-                "momentum": [0, 0, 0],
-                "fixed": True,
-                "directions": [[-1, 0, 0]],
-            },
         ],
-        "detectors": [{"name": "screen", "positions": [[70, 0, 0]], "threshold": 1}],
+        "detectors": [],
     }
+    receiver_cube(document, "screen", [70, 0, 0])
     if on_mode:
         massive_generator().seed_on_the_mode(document)
     return document
