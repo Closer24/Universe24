@@ -12648,3 +12648,128 @@ k = 0.299 per 9.65 (4); the charge rows (9.64); the contraction world
 (9.67 (1)); the three tools; the display; the smaller boards (9.66).
 The closed-axis test of the support box (9.68 (3)) stays owed before
 the merge.
+
+### 9.71 The overnight preparation for the Go (the Boss's record 2054 of 2026-09-25, the model owner: "prepare all the lab tools we need; try to reduce them all to a Node, and if you want, a range of a few Nodes; everything tested, and be ready for the Go, to start running with pins; every experiment with its algebraic expectation, the formulas we derived")
+
+**(1) THE POINT EMITTER, THE BUILD'S REFERENCE (9.69 (2); under its own
+identity, the world key `point_emitter`, off by default).** The rule
+for Nature24, in the engine's terms: (a) at the seat's giving click
+(the rung on its own residue, as now) a WINDOW opens; (b) at every
+interval of the window the seat's rotation is written into the given
+family's row at the seat: a_given(seat) += g x a_seat, with g the
+body's declared coupling to the given family (the (g, G) of 9.19 (4e),
+one integer, no float), after the given family's own step of that
+interval so that the write is the interval's last act (9.57 (1), the
+order of reading); (c) the norm leaving the seat is booked each
+interval as the OUTWARD flux through the seat's six Ports, the taking's
+inward booking with the sign reversed (`_inflow_ports` read outward),
+summed in the window; (d) the window closes at the first interval at
+which the summed outward norm reaches T (the quantum's norm, 9.17 (7)
+(e)); the stock falls by one, the given record is named at the close
+with its residue u (the seat's remainder at the open, as now); (e) the
+inverse undoes each interval's write by subtraction (an addition
+inverts) and the window's bookings with it. WHAT IS NOT DECLARED: the
+train's length, shape and wave number: the length is n c_l Links with n
+the window's intervals, the band 1 / n, the wave number light's
+dispersion at the seat's frequency (9.62 (1): cos omega_0 = 1 - (1 -
+cos k) / 3 on a chain, omega_0 = 0.174 giving k = 0.302). THE THREE
+TESTS: one primitive (a rotation copied at a declared weight), the
+rule's verbs, one Node and its six Ports. THE FIRST ROW AND ITS BLIND
+EXPECTATION: a point emitter of the light clock's family (omega_0 =
+0.174, g such that the window is about 32 periods, n about 1150
+intervals) at the middle of a chain of 1200 with a face receiver at each
+end, the stock 64: (i) the counts at the two faces 32 +- 4 each (the
+two Ports of a chain take the rotation alike, isotropy, 9.58 (2) (b));
+(ii) the first click at each face at L / c_l + the window's share, the
+head at 600 / 0.577 = 1040 intervals after the open, the centroid of
+the clicks' arrival n / 2 later; (iii) the train's wavelength read on
+the chain as a GameBoard diagnostic, 21 Links; (iv) the light clock
+with a point emitter and a mirror at 60, the detector the seat's own
+taking extent: the tick 208 + the window's centroid n / 2, every tick
+within the band sqrt(n) of it, the mean cycle then n / 2 + 208 in place
+of the train's 300, with the rung's draw as now. On a layer: the four
+faces 16 +- 3 each. Nothing else in the engine moves; the train on its
+extent stays for every row that needs a beam until the tools of (2)
+make one.
+
+**(2) THE POLARISER, THE CRYSTAL AND THE JOINT BODY: THE LEAST FORM.**
+THE RULE OF THE LEAST FORM: a tool acts on the beam's cross-section,
+and a Node acts on its six Links alone, so a tool's least form is ONE
+NODE PER NODE OF THE CROSS-SECTION: on a chain every tool is ONE NODE;
+on a layer a LINE across the beam; on a cube a square. The owner's
+"reduce them all to a Node" is exact on a chain and "a range of a few
+Nodes" is the cross-section elsewhere. (a) THE POLARISER (A.5): one Node
+with the axis [a, b], the rational rotation M_u on the two labels of
+the light passing through it and the take on one component (its two
+receivers + and -): on Malus's bar (a chain) ONE NODE, as the bar of 11
+already places it (9.22 (8)); on a layer a line. Its expectation: cos^2
+of the angle (9.14; 128.0, 246.2, 199.3, 177.2 of 256 at the four axes
+with their binomial bands). (b) THE CRYSTAL (A.6): one Node, a seat with
+a taking extent of its six Ports and a giving extent of its two arms:
+the arriving record clicks at its rung, the pair is given on its two
+Ports' sides with the labels of the branches [[1, 1], [2, 1]] and the
+clocks p_1 + p_2 = p, carrying the residue: on a chain the two arms are
+the chain's two directions, ONE NODE. Bell's four settings then run on
+ONE CHAIN of about 30 Nodes: the crystal at the middle, a polariser
+Node and a detector Node at each end, the four axes' settings four
+worlds: the same counts as the layer's (the pins are counts through the
+polarisers' sets, no length, 9.22 (8)), Bell's S = 2 sqrt 2 times the
+visibility, the pins of 9.22 (8) and 9.46 (10) (a) as written. (c) THE
+JOINT BODY (A.13): one Node, a seat whose ladder sums both arms' offers
+and whose giving writes the pair with the weights G c: ONE NODE on a
+chain or a layer alike (the arms are the labels' bits, not places). The
+two-qubit computer keeps its layer [40, 40, 1] for its paths; its pins
+(9.23) unchanged. (d) TWO-PATH ROWS WITH ONE-NODE TOOLS: Mach-Zehnder
+and the computer need two paths; on a layer a path can be a
+WAVEGUIDE, a chain of vacuum Nodes walled by the gap pair [1, 2] of
+depth 3 (the leak 10^-6 per wall Node at the chains' light, 9.22 (8);
+LAB_TOOLS.md A.3), and every tool in it one Node: a splitter Node, a
+mirror Node at a bend, a detector Node at an exit: the row's pins
+unchanged (the dark share of row 17 depends on the splitter's pair, not
+on the size); a range of a few Nodes across, as the owner allows. THE
+TESTS each tool carries: its load-time check of part A, its unit tests
+of part A, and the seat-against-cube equivalence of 9.46 (10) where a
+cube form exists.
+
+**(3) EVERY EXPERIMENT WITH ITS FORMULA AND ITS SECTION, for the files.**
+Born's rule: the counts in the proportion of the flux through the
+Ports, 9.25 (3). Malus: cos^2 theta, 9.14. Bell: S = 2 sqrt 2 V, 9.22
+(8). The two slits, de Broglie, Sorkin: the spacing L lambda / d, the
+seven counts' pattern, 9.25 (11). The pace fans: k^2 / 48 at the band's
+middle, 9.22 (8), 9.67 (2). The light clock: 2 L / c_l + the rung's
+offset, 211.98 + 88 = 300, 9.24 (6). Sagnac: the two-way times, 219,
+9.24 (6). The round trip, the moving emitter's redshift, the index at
+one third and one quarter: the crossing rule and the delays' ratios,
+9.24, 9.31. The moving mass's energy: 5.6. The muon's clock, the boxed
+clocks, the deep well: the dilation 1 / gamma with gamma = 1 / sqrt(1
+- 3 v^2) at long wavelength (9.67 (1)) and the lattice's own at the
+row's K (9.24), the modes' rotations 9.22 (8b); the seat's proper pair
+9.63 (3). The computer: 9.23. Mach-Zehnder: 100 / 0 with the dark share
+3.3 x 10^-4, row 17; its control 50 / 50. The redshift: the light clock
+with a declared arm sqrt(1 - 2 U) on today's law, 1 / (1 - 2 U) on the
+Einstein form; the clock body 1 / sqrt(1 - 2 U + 2 U^2); the exact
+lattice form sin k / (f sin k'), 9.62 (1), (2), 9.70 (2). Lorentz: gamma
+transverse, gamma^2 longitudinal, 9.62 (2). The bending: the ray
+integral with the index 1 + U (today) or 1 + 2 U (Einstein), the cube's
+2 U_b L and 4 U_b L, 9.61 (2) (c), 9.65. Shapiro: 2 (1 + gamma_PPN) U_b b
+ln(4 L_e L_r / b^2), 9.59 (4). The fall: a = g_c / (2 Gamma), 9.59 (5).
+Kepler: T^2 / r^3 = 8 pi^2 Gamma / (c_R R), 9.59 (5); Mercury 6 pi U_p
+per orbit, 9.57 (4). The dark body: 9.54 (4) with 9.65. Coulomb: delta =
+Lambda |Q| R / (Gamma b v^2), the five pins, 9.64 (1). The atom: the
+threshold Lambda |d| = 0.25 Gamma, the mass defect sqrt(1 - Lambda |d| /
+Gamma), the crossing's gain w (1 / v - 1 / v'), 9.64 (2). The
+contraction: the contours' ratio 1 / gamma, 9.67 (1). The point
+emitter's first row: (1) above. The seat against the cube: 9.46 (10),
+9.63. The self-level: 1 + s / (2 Gamma), 9.61 (1), 9.63 (4). Each file's
+expectations carry the formula's section and the number it gives on
+the file's own integers; a number without its section is not an
+expectation (the model owner, 2026-09-21, record 281).
+
+**(4) THE GATE, one line each, on every head from bd43b945 on.**
+bd43b945 the Einstein form: CONFIRMED (9.70 (1)). The items to land and
+their gates: 9.68 (4) and 9.70 (4); the point emitter: (1) above, its
+gate the first row's four readings and the light clock's digests
+unchanged with the key off; the three tools: their part A checks and
+the counts of their rows; the closed-axis test of the support box:
+owed before the merge. On the Go the stack merges in the order it
+landed, PR #1150 (9.17 to 9.71) with it.
