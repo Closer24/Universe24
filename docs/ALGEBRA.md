@@ -7092,3 +7092,147 @@ stock spent and its records clicked, the board empty of them (the arrow
 of (3)); the recurrence is the Inside's, and a universe that is one
 Inside with no click is cyclic in the sense of (b), returning through
 the same process.
+
+### 9.27 The coherence of the model owner's decisions with the algebra; the generic way to build a board; the quarks (the model owner's order of 2026-09-25 through the Boss, record 1930: "take my decisions to the mathematician, so he sees that they really are laws that can be used ... see that all the laws are coherent"; "what is the generic way we build a board"; "how do the quarks connect here")
+
+**(A) THE COHERENCE TABLE.** Every decision row of docs/HIGHLIGHTS.md 5.4
+from the one algebra on (records 1852 to 1929), each as the owner said
+it, the law as a usable statement in the algebra's terms, and the
+verdict: CONSISTENT, or DIFFERS with the exact difference and the wording
+proposed for his yes. "Consistent" means the algebra proves or contains
+the decision as stated; "differs" names where my derivation says
+something other than his words.
+
+| The decision (the owner's words, short; the record) | The law as a usable statement | The verdict |
+| --- | --- | --- |
+| Momentum is conserved on the board; no operation on cells but the click; each tool the law's advance on its material plus at most a click (1856) | The rule conserves the board's total momentum and the record's form (8.1, 9.19 (3)); the only acts outside the advance are the click X and its other side the birth E^T (9.13); a tool is a region of pairs and does nothing else | CONSISTENT (the birth counted as the click's other side, as record 1879 says) |
+| The residue from the law, never declared (1872) | The residue u = r / g and the wheel W = wall / g from the record's own remainder at the centre cell after its first advance (9.19 (4), (4e)); the loader refuses a declared residue | CONSISTENT |
+| An experiment is an algebraic experiment: the world says what is on the board, the engine does the algebra, the outcome derived before the run (1873) | The table of 9.22 (8): every row a list of regions and a blind pin computed from the algebra; the run checks in clicks | CONSISTENT |
+| The one algebra: one element, one operator, covariant under the cube group and the translations; the click deletes, the birth writes; at most three families; one border (1875) | 9.20 (the one operator), 9.21, 9.22 (2); the loader's three-family bound | CONSISTENT |
+| How an experiment is built: a list of what is on the board; never a residue, a wheel, a take, a grace, a TRAIN, a rate, a heading or a table (1875) | The list of 9.22 (2); the born profile of 9.17 (6a) is the GENERATOR'S integers on the emitting body's cells, its length the body's extent along its momentum, its wavelength the family's born clock: the experimenter declares the body and its clock, never a train | DIFFERS IN A WORD: "never a train" stands for the lamp's declared count of periods (retired); the birth's shape is a travelling train the generator writes from the body's extent. Proposed wording: "no train is declared; the born profile's length is the emitting body's extent along its momentum" |
+| What a lab tool is: a region of the operator, a cube of the holder family with its material integers, its momentum, at most a birth and a name (1875) | The tool cards of LAB_TOOLS.md; the bodies with extents per axis (a slab, a line, a cube) since 9.22 (8) | CONSISTENT (a cube become a box of extents, record 1929's bodies with extents) |
+| The initial state: the sum over the occupied modes of the composed operator of the quanta times the profile, the momentum's character for a moving body, every remainder 0, checked at load bit for bit (1875) | 9.22 (3) and (7); the remainders 0 at the write and nonzero after one step, where the residue is read | CONSISTENT |
+| An experiment checks only clicks (1875) | 9.21; the pins' file form of 9.22 (8): every reading a click's count, interval, cadence, ratio, sum, fringe or centroid | CONSISTENT |
+| No table and no formula on the GameBoard; a birth's born PAIR the world's integers (1878) | No table (9.17 (6)); the birth's integers are the born TRAIN, a profile at both levels on the body's cells (9.17 (6a)); the two-integer pair on every cell is a flat pulse, broadband, whose one-way flux exceeds the norm 4.65 times beside its emitter (the physicist's finding at f0d2d745) and it is refused | DIFFERS: the born pair of record 1878 is replaced by the born train, a derivation from the physicist's finding, NOT YET THE OWNER'S DECISION. Proposed wording for his yes: "the birth is a travelling train of the generator's integers on the body's cells, at least eight periods under an envelope; a flat pulse is refused" |
+| The crystal: the click of the arriving record then the birth of an entangled pair; the pair's directions set by where the receivers are placed (1879) | A.11; the pair's two records are two trains on the crystal's cells with their momenta along the crystal's long axis, toward the polarisers (9.22 (8), Bell's four settings) | CONSISTENT (the crystal a body of extents 3 x 32 so that each train fits) |
+| Three roles on the board: the generator the only writer at interval 0, the law at every Node, the click reader the only reader; no world writer (1879) | 9.22 (7) with the stamp; the generator the operator iterated with its stop ((7a) (ii)) | CONSISTENT |
+| Where a tensor enters: the pair of rank 2 only, born by the crystal, never written at interval 0 (1880) | 9.23; the pair's clock the sum of its parts' (9.26 (2)) | CONSISTENT |
+| The input file and its check in integers; a failing file refused; recomputation at load a diagnostic (1886) | 9.22 (7); the born train's checks the form, the flux sign along the momentum and the hash (9.17 (6a)); the transparency condition (7a) (iv) | CONSISTENT, with two checks added for his yes (the train's, the transparency's) |
+| One command, one output file per experiment, in parallel (1887) | tools/run_inputs.py; the pins' readers of 9.22 (8) | CONSISTENT |
+| The click the one non-local act; no information through it; the click what the Outside sees (1888) | 9.25 (6) no signalling; 9.26 (3) (b): the click deletes the record's shape at once and keeps the line only | CONSISTENT |
+| Mach-Zehnder: the dark port has no inward flux and never clicks (1891) | The dark port's share is the splitters' imbalance over the train's band plus the lattice's diffracted wing, 0.0054 at 16 periods (9.22 (8)): one dark click in 100 within the algebra, two at the 10 percent level, three a defect | DIFFERS IN THE NUMBER: not exactly zero on a lattice at one wavelength's band. Proposed wording: "the dark port's share is below one click in a hundred, the band's residual; the bright port takes the rest" |
+| What lies between the tools is neglected with a stated reason (1891) | The placed experiments of LAB_TOOLS.md, one clause per row | CONSISTENT |
+| A moving body: a packet carried by its momentum's character, its clock slowed by its own dispersion, no acceleration; a light clock across its arm reads gamma; along the arm withdrawn (1895) | 9.24 (2); 9.26 (1): one phase, two readers; 9.22 (8a): gamma at the kind's own cone c_eff with a lattice term of order K^4 | CONSISTENT, with one precision for his yes: the dilation is Lorentz's at the kind's OWN cone c_eff, below light's c by omega_0^2 / 6 (8.1 (ii)), and light's gamma to the bands' precision |
+| A detector's sensitivity is its cube of side at least 3; the click the detector's, never a Node's; the increment ladder at the detector level (1899) | 9.25 (10); the one-Node line of record 1894 superseded (9.25 (9) HISTORY) | CONSISTENT; two additions for his yes: the face is a slab as deep as the train, standing a train's length from every tool, and where the light returns to its source the detector is the source's own cells (9.25 (11)) |
+| The paper on the new engine (1899) | 9.22 (8) and (8a) the paper's sources; the names of record 1925 | CONSISTENT |
+| Sorkin's three openings: the algebra gives exactly zero for a fixed operator, the board a small term from the openings coupling through the wall (1911) | 9.22 (8): the sum 0 within the runs' resolution on the re-placed board; the pin S = 0 +- 284 at 16384 records per world (the +80 +- 400 of the slab at the screen's back HISTORY) | CONSISTENT |
+| Twenty-four experiments: eighteen measured, six algebraic, the sixth gravity's forms under a shell average (1915) | 9.22 (8) and (8a) | DIFFERS ON THE SIXTH: gravity's forms are not the algebra's (no field around a body; the pair-field a hypothesis under its own identity); replaced by the universality of the tick. Proposed wording: "the sixth computed experiment is the universality of the tick; gravity waits on a hypothesis outside the law" |
+| The click rule in one statement; the emitter's pace its own clock (1918) | 9.17 (7) (f); built at 294a7c80, the waits within two intervals of the rule | CONSISTENT |
+| The convergence to the freeze; no run against a pin before the engine is stable (1918, 1924) | The table's pins registered before any run; the placements re-derived blind | CONSISTENT |
+| Names with meaning (1924) | Applied in chapters 8 and 9, the tool cards and the placed experiments, the definitions and the postulates (record 1925) | CONSISTENT |
+| The generator is the operator iterated, with its stop; the state only turning by its own clock (1924) | 9.22 (7a) (ii): the stop the shape unchanged within one unit at the peak's amplitude (the cross product with the peak), the clock the Rayleigh quotient in integers, the floor within the loader's bound by construction | CONSISTENT |
+| Building a world: each body generated alone on the final board; composing is placing; two bodies two only while each tail at the other's cells is below the rounding floor, nearer one body with one mode; the margin the decay length (1929) | 9.22 (7a) (v) the exact split and the declaration rule; (B) below | CONSISTENT, with one precision: the margin is the distance at which the mode's tail falls below ONE UNIT AT THE SEED'S AMPLITUDE, ln(A) over the decay constant kappa (Sagnac's wells 80 Links apart at 2^20), since the tail scales with the seed and the bound does not |
+| Energy and momentum on the board; the frequency a return; the universe cyclic, reaching its initial point though perhaps not through the same process (1922) | 9.26 (1) and (4): frequency the shape's rotation, momentum its twist, energy the conserved form and the counted quantum; a shape returns within the rounding, never to the bit; the Inside on a bounded orbit returns EXACTLY and through the SAME process; with clicks the whole is not cyclic | DIFFERS IN THREE PLACES: (i) energy is the form, quadratic in the amplitude and in sin omega, not the frequency times the quanta (no E = h f in the law); (ii) the return is through the same process, a deterministic law repeating its cycle; (iii) cyclic only for the Inside with no click and on a bounded orbit. Proposed wording: "the law's Inside is cyclic, returning exactly through the same process on a bounded board; the world with clicks is not, and its arrow is the click's" |
+| Every body has its own click by its frequency; no frequency, no click (1926) | 9.26 (1a): a theorem for "no frequency, no click" (the form vanishes with sin^2 omega); the emitter's rule for a standing record; the arrival's rule for a moving one; the click rule of 1918 the one law | CONSISTENT as a law read at a body; DIFFERS if read as "the frequency times the quanta", which the algebra does not carry |
+| The click the systems' way of communicating; an irreversible click leaves no frequency of the whole (1927) | 9.26 (3) (b): the click the one exchange, carrying no signal; with the click irreversible the whole has no period and no frequency of its own, every body keeping its clock | CONSISTENT, with one precision: reversibility once the detectors' records are counted would need the detector to keep the record's whole shape, the register of record 1888's deletion; the line keeps the count, the interval and the residue only |
+
+TWO DECISIONS THAT PULL AGAINST EACH OTHER, for the owner: (i) "a
+birth's born pair" (1878) and "never a train" (1875) against the born
+train of 9.17 (6a), which the physicist's run forced: his yes on the train
+retires the pair and reads "never a train" as "never a declared one".
+(ii) "The universe is cyclic" (1922) against "the click is the one
+non-local act, the record ends at once" (1888): a deleted record cannot
+return, so the world with clicks has no period; the two hold together
+only as "the Inside is cyclic, the click is the arrow" (9.26 (4) (c)),
+which is what the algebra proves. No other pair conflicts; every other
+difference above is a precision the owner can adopt in one word.
+
+**(B) THE GENERIC WAY TO BUILD A BOARD (from record 1929, the physicist's
+answer, made one statement and one ordered procedure).** THE STATEMENT:
+A WORLD IS ONE BOARD, ONE OPERATOR AND A LIST OF REGIONS; EVERY REGION IS
+GENERATED ALONE ON THE FINAL BOARD AND PLACED, NEVER REGENERATED; THE
+OPERATOR IS THE SUM OF THE REGIONS' PAIRS; TWO REGIONS WITH RECORDS ARE
+TWO BODIES ONLY WHILE EACH ONE'S MODE IS A MODE OF THE COMPOSED BOARD
+WITHIN ONE UNIT, ELSE THEY ARE ONE BODY WITH ONE MODE; THE INITIAL STATE
+IS THE SUM OF THE SEEDED MODES, EACH RECORD ONE MODE WITH ONE CLOCK; AND
+THE BOARD IS AS LARGE AS THE MARGINS AND THE PATHS ASK. THE PROCEDURE, in
+order, the same for a small world and a large one: (1) THE BOARD AND
+THE FAMILIES: the extents per axis, periodic or open per axis, the
+families (at most three: light, the experiment's matter, the holder of
+the tools' bodies) with their vacuum pairs and, for an emitting family,
+its born clock. (2) THE MATERIAL REGIONS, which carry no record: mirrors
+and walls (the gap [1, 2] of depth 4), splitters (the diagonal line of
+[2, 3]), polarisers (a holder body with its axis), a medium (a bound
+body with the coupling), each a box of extents per axis; they are placed
+first because every body's mode is generated with them in place. (3)
+THE BODIES WITH RECORDS: emitters (a well of the holder or the matter
+family, its extent along its momentum the train's length, its coupling
+(g, G), its stock), wells with a quantum at rest (the clocks), the
+crystal (a holder body of extents 3 x 32 with its branches); EACH IS
+GENERATED ALONE ON THE FINAL BOARD with every material region in place:
+the operator iterated in integers until the shape only turns, its clock
+read by the Rayleigh quotient, its residual checked ((7a) (ii)). (4) THE
+COMPOSITION CHECK: with every body placed, each body's own mode is
+checked on the composed operator outside the other bodies' cells; it
+passes when its tail at every other body's cells is below one unit at
+its seed's amplitude, the distance ln(A) / kappa from each (kappa from
+cosh kappa = 3 (den / num) cos omega_b - 2, 9.22 (9)); where it fails the
+two are one body with one mode, generated as one region ((7a) (v)); a
+moving body is its packet with its momentum's character and its moving
+name (9.24). (5) THE DETECTORS AND THE FACES: every detector a cube of
+free Nodes of side 3 or more (or a body's own cells where the light
+returns to it), every open border a face slab as deep as the train, every
+detector and every emitter one train's length from every slab (9.25 (10)
+and (11)); the ladder's order declared. (6) THE BIRTHS: the born train on
+each emitting body's cells along its momentum (9.17 (6a)), the emitter
+transparent to it ((7a) (iv)). (7) THE BOARD'S SIZE, checked last: every
+body a decay length from every face and from every other body, every
+path (the passage times, the round trips) inside the run's intervals,
+the fringe geometry as the row states it. (8) THE STAMP AND THE PINS:
+the generator writes the file with its stamp {law, hash}; the algebra's
+pin with its band is registered before any run. COMPOSED STRUCTURES: a
+structure is a set of regions placed by the same procedure; AN ATOM in
+this algebra is a nucleus, a deep well of a heavy family, and an
+electron, a bound mode of a second family in a well declared at the same
+cells (two regions, two families, two records with two clocks), and its
+"stability without the electron" has no counterpart in the law: a body
+is where its pair is declared and its mode exists whether or not another
+record is present; the law has no force of one body on another (the
+coupling of 9.19 (4e) is a body's to light alone), so the atom's stability
+as a consequence of the electron's presence is outside the law, under
+its own identity, as record 881 left it. Small and large worlds differ
+only in the extents and the margins: the procedure is one.
+
+**(C) THE QUARKS.** HOW GROUPING WOULD APPEAR: a composite body is one
+declared well whose composed operator has several bound modes (9.22 (9)
+shows a well of side 32 with three), and a group is several records on
+those modes, or several quanta on one mode; the group's clock is each
+record's own, and its total form and momentum are the sums (9.26 (2)).
+WHAT THE LAW AS BUILT ALLOWS: at most three families on a board, so a
+proton of three quark families cannot be declared beside light and a
+holder; three records of ONE matter family in one declared well can be;
+their masses are their modes' rotations, set by the well's pair and
+extents that the experimenter declares (9.22 (9)), not by any binding
+among them. WHAT IT LACKS: (i) a colour-like label (light's records
+carry the two polarisation labels; a matter record carries none); (ii)
+any interaction between records (the law is linear: two records on one
+board never act on each other, the only nonlinearity being the click),
+so no binding of one record to another and no confinement: a record is
+bound by a declared well, never by other records; (iii) a mass from
+binding (a mode's rotation comes from the declared pair, not from the
+group). THE VERDICT: quark groups are representable now only as several
+records on the modes of one well declared by hand, a bag with no colour,
+no confinement and no mass of its own; the earlier quark worlds (the
+series of examples/events/quarks, the quarks as rows of the family table
+with the binding through the table) are HISTORY with the tables and the
+take. THE MINIMAL ADDITION, stated as a hypothesis outside the law under
+its own identity, never in it: a record-record coupling, one record's
+form lowering the weight D at its own cells for a second family (the
+pair-field hypothesis, a body's pair spread by its record's form: the same
+addition gravity would need, (8a)), together with a third label module,
+a colour with three values on the matter family's records, and a closure
+condition on the bound mode (only the colour-neutral combination of three
+records has a mode below the band: confinement as a closure, the
+hypothesis of POSTULATES.md on colour); each with its own tests and its
+own expectations, and none of it a computation of the algebra as it
+stands.
