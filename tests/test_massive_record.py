@@ -364,11 +364,12 @@ def test_the_light_record_is_byte_identical_without_the_key():
     giving lines' `pace`, the plain flux); SINCE THE BODY RECORD (ALGEBRA.md 9.46; item 37)
     the state digest moved once more (the block entry's `rotation`, None under the lattice
     body; the events and the audit unchanged); SINCE THE GIVING CLICK (record 2016) the events
-    digest moved with the line's name alone (`giving` for `birth`, `given_norm` for
-    `born_norm`); read again at this head."""
+    and the state digests moved with the lines' names alone (`giving` for `birth`,
+    `given_norm` for `born_norm`; the state's record entries carry `giving`); read again at
+    this head."""
     assert run_chain_digests() == {
         "events": "43abd129081c637469bf0a39795c2e0bd1db59c2e94f1e6c75ddfc10ab5fd844",
-        "state": "e255526de4b790fcb2f0ae99e775184f10eb188fab8af88bade397c79c88c33c",
+        "state": "45c0aa7afcee235cd98644024e7344e9c68b76493e28ed06df4f0099daea3230",
         "audit": "18fceec9b9d8e12e478abd84633b08f013658858f3ccb76d17fe61c28b53597e",
     }
 
