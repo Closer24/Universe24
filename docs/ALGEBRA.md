@@ -5658,6 +5658,42 @@ run; for the two-qubit computer the generator's iterations are the gates
 on 2^n weights, exponential in n, and the board adds the click, not
 computing power (9.23 (7)).
 
+**(7a) THE CHECK'S TWO READINGS AT bab3056a (the physicist's, 2026-09-25;
+DECIDED HERE).** (i) WHICH OPERATOR A BODY'S SUMMAND IS THE MODE OF: the
+top mode of the operator with THAT BODY ALONE in its family's vacuum
+(the other bodies' regions replaced by the vacuum), one summand per
+occupied body as (3) says; the composed operator of every body in place
+has, for two equal wells, the symmetric hybrid as its top mode, which is
+no summand of one body (9.9 (3)), and a body's summand is not its
+eigenvector (it tunnels at the hybrid share, 3.2 x 10^-6 over Sagnac's
+run, the separate load check of 9.9 (3)). So THE RESIDUAL OF (7) (ii) IS
+READ ON THE COMPOSED OPERATOR AT EVERY NODE OUTSIDE THE OTHER BODIES'
+CELLS, where the two operators agree; at the other bodies' cells the
+operator carries their summands, and the mode's tunnel tail there
+(10^-5 of the amplitude on Sagnac) is not this summand's to satisfy. The
+physicist's reading CONFIRMED and this the rule; the two hybrids are not
+the summands (they would put half a quantum in each well). (ii) THE
+GENERATOR'S MODE: the three-term Lanczos without reorthogonalisation
+gave the vector to 3 x 10^-4 and the stored profiles failed the bound by
+6 to 860 times (COMPUTED by him); the accurate float mode (ARPACK's
+implicitly restarted Lanczos at the machine's tolerance, scipy in the
+generator and the diagnostics, never in the engine) passes the bound
+with margin (the worst residual 0.18 to 0.53 of it), and the integer
+power iteration of record 1898 is the reproducible form; the float is
+the host's shortcut and the integer residual the gate, as (7) says. A
+one-unit change at one Node stays within the bound and is admitted (it
+changes the output, 9.20 test 8); a profile off the mode by the
+amplitude's order is refused. (iii) THE ONE-CELL EMITTER ON A LAYER (his
+reading): the well [801, 700] on the holder's [7, 8] binds on a chain
+(2 cos omega = 1.897 against the band's top 1.75) but on a layer only by
+1.1 x 10^-3 (1.751147), its mode spread over 4200 Nodes: a source forty
+Links wide. On the layer rows (Bell, the computer) the one-cell emitter
+is therefore [1201, 700] (2 cos omega = 1.9011, 69 Nodes above one
+percent of its peak; W = 3 x 700 / gcd(1201, 2100) = 2100, above the 500
+of 9.19 (4a); [1001, 700] binds at 1.7946 but has W = 300 and is
+refused); the chain rows keep [801, 700] (W = 700). The table of (8)
+carries it.
+
 **(8) THE SEVENTEEN, EACH COMPLETE FOR ITS INPUT FILE (the model owner's
 words of 2026-09-25 through the Boss, records 1901 and 1902: "try to
 reach a state where all 17 experiments run correctly"; "all the inputs
@@ -5679,7 +5715,8 @@ world's circle (N = 2048 steps unless the row says N = 64) per Link, so
 [2464, 25] on 2048 and [77, 25] on 64 are one clock, k = 0.30238 per
 Link (the wavelength 20.78), and [512, 1] is k = pi / 2 (the wavelength
 4); the holder family's vacuum pair is [7, 8] and its one-cell emitters
-are wells [801, 700] (9.19 (4a)); matter's emitting bodies are [800,
+are wells [801, 700] on a chain and [1201, 700] on a layer ((7a) (iii);
+9.19 (4a)); matter's emitting bodies are [800,
 801] on [800, 809] or [314, 315] on [156, 157]; every emitting body
 declares its coupling (g, G) to its born family (9.19 (4e)); A ONE-CELL
 BIRTH IS ONE PULSE, broadband (the born pair on one cell, 9.17 (6)),
@@ -5691,7 +5728,7 @@ M1, the pace fans' lines and Mach-Zehnder are placed so.
 
 | Row | The board | The entries and the births | The detectors, in the ladder's order | The neglected medium | The blind pin in clicks, with its band | CARRIED or OPEN |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 Bell, four settings | the layer [30, 33, 1], periodic on both axes (no face) | light [1, 1], born clock [2464, 25]; the holder [7, 8]. The emitter: a holder well [801, 700] of side 1 at (2, 16), **K** = 0, the coupling to light, a stock of 100 per setting, the born pair on the cell. The crystal (A.11): a holder body of side 3 at the vertex (13, 15) with its light index and the branches [[1, 1], [2, 1]] (HV + VH), the born clocks p_1 + p_2 = p. Alice's polariser (A.5): a holder body at (26, 28) with the axis (1, 0) or (1, 1); Bob's at (26, 4) with (1, 2) or (3, 1) | per arm its + cube then its - cube, 3 x 3 each beside its polariser (the placement per A.5); no face | air or fibre common to both arms: cancels | n = 100 pairs per setting: 40 / 10 / 10 / 40, 5 / 45 / 45 / 5, 45 / 5 / 5 / 45, 40 / 10 / 10 / 40 (standard deviations 4.9, 3.0, 3.0, 4.9 and 2.2, 5.0, 5.0, 2.2); S = 2.80 +- 0.14 (the pin [2.38, 3.22], the falsifier S <= 2); the controls: 1d, Alice's counts identical bit for bit under Bob's two axes (9.25 (6)); 1b, the product state |HV> (the branches [[1, 1]] alone) gives 80 / 20 / 0 / 0, 10 / 90 / 0 / 0, 40 / 10 / 40 / 10, 5 / 45 / 5 / 45 and S = 1.40 +- 0.52 | none |
+| 1 Bell, four settings | the layer [30, 33, 1], periodic on both axes (no face) | light [1, 1], born clock [2464, 25]; the holder [7, 8]. The emitter: a holder well [1201, 700] of side 1 at (2, 16) (the layer's pair, (7a) (iii)), **K** = 0, the coupling to light, a stock of 100 per setting, the born pair on the cell. The crystal (A.11): a holder body of side 3 at the vertex (13, 15) with its light index and the branches [[1, 1], [2, 1]] (HV + VH), the born clocks p_1 + p_2 = p. Alice's polariser (A.5): a holder body at (26, 28) with the axis (1, 0) or (1, 1); Bob's at (26, 4) with (1, 2) or (3, 1) | per arm its + cube then its - cube, 3 x 3 each beside its polariser (the placement per A.5); no face | air or fibre common to both arms: cancels | n = 100 pairs per setting: 40 / 10 / 10 / 40, 5 / 45 / 45 / 5, 45 / 5 / 5 / 45, 40 / 10 / 10 / 40 (standard deviations 4.9, 3.0, 3.0, 4.9 and 2.2, 5.0, 5.0, 2.2); S = 2.80 +- 0.14 (the pin [2.38, 3.22], the falsifier S <= 2); the controls: 1d, Alice's counts identical bit for bit under Bob's two axes (9.25 (6)); 1b, the product state |HV> (the branches [[1, 1]] alone) gives 80 / 20 / 0 / 0, 10 / 90 / 0 / 0, 40 / 10 / 40 / 10, 5 / 45 / 5 / 45 and S = 1.40 +- 0.52 | none |
 | 2 Malus, four settings | the bar [11, 1, 1] with the face receivers | light [1, 1], born clock [308, 25]; the holder [7, 8]. The emitter: a holder well [801, 700] at x = 0, **K** = 0, the coupling, a stock of 256, the born pair on the cell (the hand H). The polariser (A.5): a holder body at x = 6 with the axis (1, 1), (5, 1), (15, 8) or (3, 2) | the + cube [7, 9], then the faces | none between the tools | at 256 records on the + cube: 128 +- 24, 246 +- 9, 199 +- 20, 177 +- 22 (3 standard deviations; the expected 128.0, 246.2, 199.3, 177.2) | none |
 | 3 The two slits | the layer [241, 320, 1], every face a receiver slab of depth 32 (9.25 (10); the first draft's 160 x 256 with the lamp's train of 32 periods and its margin to x >= 485 HISTORY: a one-cell birth is one pulse, so the emitter is a slab) | light [1, 1], born clock [512, 1] (the wavelength 4); the holder [7, 8]. The emitter: a holder slab from (40, 128, 0) with the extents 32 x 64 x 1, **K** = 0, the coupling, a stock of 1024, its born profile the travelling character along +x over 8 periods with the Hann envelope across y (row 17's form). The wall: a slab of the gap [1, 2] of depth 4 at x = 92 to 95 for y = 32 to 287 except the two openings of width 3 centred at y = 154 and y = 167 (d = 13), cut through its depth (a gap one deep transmits 0.2 at the wavelength 4, A.3). No polariser | the screen: 67 cubes of side 3 at x = 206 to 208, y = 60 to 260, in the order of y; then the faces (the slabs x = 0 to 31, x = 209 to 240, y = 0 to 31, y = 288 to 319) | air: the index 2.7 x 10^-4 common to both paths, the Rayleigh loss below 10^-4 | the fringe spacing lambda L / d = 4 x 113 / 13 = 34.8 cells (the pixel of 3 scales the visibility by 0.988); the visibility over the central fringes and the pattern's centroid at y = 128: COMPUTED by the generator's run of this placement (owed today, as row 17's was; the first draft's 0.96 +- 0.02 was the lamp's 32-period train at the wavelength 20.78, HISTORY); the control 10: one opening closed, no fringe (an opening of 3 cells at the wavelength 4 lights the whole screen; the counts' profile the single opening's, computed by the same run) | none |
 | 4 The pace fans | the layer [128, 128, 1] with the face receivers | light [1, 1], born clock [77, 25] on N = 64; the holder [7, 8]. Two LINE emitters: holder slabs with travelling born profiles of 8 periods, one along the axis from (16, 64) and one along the diagonal, **K** = 0, the coupling, a stock of 1 each | none: the fronts are read as a GAMEBOARD probe at 40 and 36 Links on each ray, a diagnostic and not a result (9.21 (4)) | none | the axis's k above the diagonal's by k^2 / 48 at the same omega (the axis above the continuum's sqrt(3) omega by k^2 / 36, the diagonal's by k^2 / 144; the group velocities differ by k^2 / 16); no click pin | a diagnostic row |
