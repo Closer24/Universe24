@@ -524,6 +524,11 @@ class DetectorLawSimulation:
             family: np.zeros(self.shape, dtype=np.int64) for family in self.held_families
         }
         self._effective: dict[int, np.ndarray] = {}  # HOST: per interval, cleared by the hold
+        # THE LEAK TEST (the model owner's record 2075 (3); BUILD.md section 26
+        # item 55): a held family no body has ever sourced must be exactly zero
+        # everywhere; the hold marks the first nonzero source (HOST, a flag per
+        # held family, read by `leaks`)
+        self._sourced_ever: dict[int, bool] = {family: False for family in self.held_families}
         self.span_masks: dict[int, np.ndarray] = {}
         for number, entry in enumerate(world.measured):
             if entry.block is None:
@@ -701,6 +706,8 @@ class DetectorLawSimulation:
             assert source is not None
             for number in range(len(self.held)):
                 value = self.body_source(number, source)
+                if value:
+                    self._sourced_ever[family] = True
                 block = self.block_by_number.get(number)
                 mask = block.mask if block is not None else self.span_masks[number]
                 record.now[mask] = value
@@ -708,6 +715,35 @@ class DetectorLawSimulation:
                 record.remainder[mask] = 0
             self.node_level[family] = record.now
         self._effective.clear()
+
+    def leaks(self) -> list[str]:
+        """THE LEAK TEST (the model owner's record 2075 (3): "a family with no
+        source stays exactly zero; that is a test in every run: no leak, no
+        family doing what it should not"; BUILD.md section 26 item 55): the
+        names of the families that carry rows without a source. A held family
+        no body has ever sourced (every body's declared source 0 at every
+        hold so far) whose record has a nonzero level or remainder anywhere; a
+        family the step alone moves with no body of it, no body holding its
+        quanta and no emitter giving into it, that has a record. Read by
+        attribute, never by a name; a HOST reading of the state, no line."""
+        found: list[str] = []
+        for family, record in self.held_records.items():
+            if self._sourced_ever[family]:
+                continue
+            if record.now.any() or record.before.any() or record.remainder.any():
+                found.append(self.families[family].name)
+        sourced = set(self.held_families)
+        for number, entry in enumerate(self.world.measured):
+            sourced.add(entry.family)
+            sourced.update(index for index, quanta in enumerate(self.held[number]) if quanta)
+            if entry.block is not None and entry.block.emitter is not None:
+                sourced.add(entry.block.emitter.family)
+        for live in self.records.values():
+            if live.family not in sourced:
+                name = self.families[live.family].name
+                if name not in found:
+                    found.append(name)
+        return found
 
     def held_record(self, source: str) -> LiveRecord | None:
         """The held record of the family holding `source` ("content" or

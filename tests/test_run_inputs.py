@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from run_inputs import OUTPUT_FORMAT, main  # noqa: E402
+from run_inputs import OUTPUT_FORMAT, main, run_input  # noqa: E402
 
 from event_universe.events.world import input_stamp  # noqa: E402
 from tests.test_detector_law import chain_world  # noqa: E402
@@ -130,3 +130,33 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
         "mean_interval",
         "mean_interval",
     ]
+
+
+def test_a_leak_refuses_the_run_naming_the_family(tmp_path: Path, monkeypatch):
+    """THE LEAK TEST IN EVERY RUN (the model owner's record 2075 (3); BUILD.md section 26 item
+    55): the runner reads the engine's leaks after every interval; a family carrying rows without
+    a source ends the run with the verdict LEAK, the reason naming the family and the interval,
+    the output written. The engine's own reading is tested in tests/test_charge.py (v); here its
+    report is stood in for on the first interval. The edge case: with no leak the run is LAWFUL."""
+    from event_universe.events.detector_law import DetectorLawSimulation
+
+    document = emitter_world(stock=1, ticks=20)
+    path = write(tmp_path, "leaky", document)
+    calls: list[int] = []
+
+    def ghost(self: DetectorLawSimulation) -> list[str]:
+        calls.append(self.tick)
+        return ["ghost"] if len(calls) == 1 else []
+
+    monkeypatch.setattr(DetectorLawSimulation, "leaks", ghost)
+    row = run_input(str(path), str(tmp_path), [])
+    assert row["verdict"] == "LEAK"
+    output = json.loads((tmp_path / "leaky.output.json").read_text(encoding="utf-8"))
+    assert (
+        output["verdict"] == "LEAK"
+        and "['ghost']" in output["reason"]
+        and "interval 1" in output["reason"]
+    )
+    assert "clicks" not in output
+    monkeypatch.setattr(DetectorLawSimulation, "leaks", lambda self: [])
+    assert run_input(str(path), str(tmp_path), [])["verdict"] == "LAWFUL"

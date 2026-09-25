@@ -29,7 +29,7 @@ import pytest
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, form_json
 from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import input_stamp, parse_nature_beam_world
-from tests.test_emitter import NODE_CLOCK, emitter_world, lawful_wheel
+from tests.test_emitter import NODE_CLOCK, emitter_world, lawful_wheel, reads
 from tests.test_flux_reading import planted
 from tests.test_massive_record import massive_world
 
@@ -510,7 +510,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     held is refused, and a read naming no family; under the detector law a family without
     `reads` is refused and the attributes are refused without the law; a measured event of a
     held family, `held` naming it and an emitter given into it are refused; six families are
-    refused (the owner's constant five since the family of charge, ALGEBRA.md 9.48; item 35); a
+    refused (the owner's cap of twenty, record 2081; the five of 9.48 HISTORY); a
     world with the family declared loads, its index among the engine's held families."""
     good = content_chain(12, PERIODIC, [], 1)
     parse_nature_beam_world(good)
@@ -598,13 +598,13 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
         ValueError, match="givings into the held family 'clicks'|the given family is a paid family"
     ):
         parse_nature_beam_world(given)
-    six = json.loads(json.dumps(good))
-    six["families"] += [
-        {"name": "fifth", "quantum": 1, "pair": [800, 809], "charge": 0},
-        {"name": "sixth", "quantum": 1, "pair": [800, 809], "charge": 0},
+    many = json.loads(json.dumps(good))
+    many["families"] += [
+        {"name": f"family_{n}", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()}
+        for n in range(len(many["families"]), 21)
     ]
-    with pytest.raises(ValueError, match="families declares 6; at most 5 families"):
-        parse_nature_beam_world(six)
+    with pytest.raises(ValueError, match="families declares 21; at most 20 families"):
+        parse_nature_beam_world(many)
     world = parse_nature_beam_world(good)
     assert world.held_families == (2, 3) and DetectorLawSimulation(world).held_families == [2, 3]
 

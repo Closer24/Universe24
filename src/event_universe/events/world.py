@@ -894,10 +894,11 @@ NO_CHARGE = (0, 1)
 # The block's keys (massive-record-v1, MASSIVE_RECORD.md sections 4 to 7;
 # the build's plan BUILD.md section 3): admitted on a measured event that
 # declares `side`, under the world key `massive_record` alone.
-# At most three families on a GameBoard (record 1875; ALGEBRA.md 9.22 (2)).
-# THE OWNER'S CONSTANT (record 1875: at most three families; record 1982: four,
-# the family of clicks the fourth, ALGEBRA.md 9.45; BUILD.md section 26 item 32)
-MOST_FAMILIES = 5
+# THE OWNER'S CONSTANT: at most twenty families on a GameBoard (the model
+# owner's record 2081 of 2026-09-25 through the Boss, "lift the cap, put it at
+# 20": every family works in every experiment; record 1875's three, 1982's
+# four and 9.48's five HISTORY; BUILD.md section 26 item 54)
+MOST_FAMILIES = 20
 # THE LAW IDENTIFIER (record 1886; ALGEBRA.md 9.22 (7) (i)): the law an input
 # file was made under, written by the generator into the file's `input` and
 # compared at load; a change of the laws that moves the initial state moves
@@ -2654,8 +2655,8 @@ def _families(
     if len(value) > MOST_FAMILIES:
         raise ValueError(
             f"{BEAM_LAW}: families declares {len(value)}; at most {MOST_FAMILIES} families on a "
-            "GameBoard (the unification ADOPTED by the model owner, record 1875; ALGEBRA.md 9.18, "
-            "9.22 (2); four with the family of clicks, 9.45; five with the family of charge, 9.48)"
+            "GameBoard (the model owner's record 2081 of 2026-09-25: every family works in every "
+            "experiment, the cap 20; record 1875's unification and its counts HISTORY)"
         )
     found: list[FamilyDefinition] = []
     declared: list[dict[str, tuple[tuple[int, int], int]]] = []

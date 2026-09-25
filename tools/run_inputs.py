@@ -79,6 +79,18 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
     clicks: list[dict[str, object]] = []
     for _ in range(world.ticks):
         simulation.step()
+        # THE LEAK TEST IN EVERY RUN (the model owner's record 2075 (3); BUILD.md
+        # section 26 item 55): a family with no source stays exactly zero at
+        # every interval, or the run is refused naming the family
+        leaks = simulation.leaks()
+        if leaks:
+            output["verdict"] = "LEAK"
+            output["reason"] = (
+                f"the families {leaks} carry rows without a source at interval {simulation.tick} "
+                "(the model owner's record 2075 (3): a family with no source stays exactly zero)"
+            )
+            write_output(Path(out_dir), name, output)
+            return {"name": name, "verdict": "LEAK", "seconds": time.monotonic() - started}
     for gather in simulation.layer.gathers:
         chosen = gather["chosen"]
         detector = chosen[0][0] if isinstance(chosen, list) and chosen else None

@@ -4137,6 +4137,29 @@ would have found no cell.
    source and mode words above, `massive_kind` (the declared pair's gap),
    and the bodies' mechanisms chosen by declared keys.
 
+54. THE FAMILIES CAP IS TWENTY (the model owner's record 2081 of
+   2026-09-25 through the Boss: "lift the cap, of course; put it at 20";
+   every family works in every experiment, record 2079): `MOST_FAMILIES`
+   20, the loader refusing a twenty-first naming the count; record 1875's
+   three, record 1982's four and 9.48's five HISTORY. The tests of the cap
+   moved (tests/test_node_clock.py (ix), tests/test_initial_state.py).
+
+55. THE LEAK TEST IN EVERY RUN (the model owner's record 2075 (3): "a
+   family with no source stays exactly zero; that is a test in every run:
+   no leak, no family doing what it should not"). THE READING `leaks()`,
+   by attribute: a held family no body has ever sourced (every body's
+   declared source 0 at every hold so far, a HOST flag set at the first
+   nonzero source) whose record has a nonzero level or remainder anywhere;
+   a family the step alone moves with no body of it, none holding its
+   quanta and no emitter giving into it, that has a record. THE RUNNER
+   (tools/run_inputs.py) reads it after every interval and refuses the run
+   with the verdict LEAK naming the families. No line, no book, no digest
+   moved; the Node's work unchanged (a HOST reading of the state). THE
+   GATE: tests/test_charge.py (v): the world with every charge 0 reads no
+   leak at every interval, and a row planted in the never-sourced sign
+   family is named; tests/test_run_inputs.py: the verdict LEAK on such a
+   world.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

@@ -350,8 +350,11 @@ def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_
     body of QUANTA quanta at [20, 30) and matter and light records of random rows, the family
     of charge is 0 everywhere at the load and after 40 intervals, the books carry its form 0
     and the state its rows, and the records' rows are bit for bit the same at Lambda = 1 and
-    Lambda = 7 (no charge is read: the strength weighs nothing). The edge case: the giving
-    lines of the emitter world carry the charge 0."""
+    Lambda = 7 (no charge is read: the strength weighs nothing); THE LEAK TEST (the model owner's
+    record 2075 (3); BUILD.md section 26 item 55): the never-sourced sign family is named at no
+    interval, the planted matter record (no body of its family) is, and a row planted in the sign
+    family is named. The edge case: the giving lines of the emitter
+    world carry the charge 0."""
     rows = {}
     for strength in (1, 7):
         rng = np.random.default_rng(41)
@@ -374,7 +377,15 @@ def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_
             simulation._advance(lives[1])
             simulation.step()
             assert not held_record(simulation, "sign").now.any()
+            # THE LEAK TEST (record 2075 (3); item 55): the never-sourced sign family is not
+            # named; the planted matter record (no body of its family, the test's device) is
+            assert simulation.leaks() == ["matter"]
         assert not held_record(simulation, "sign").remainder.any()
+        # a row planted in the never-sourced family is a leak, named by the family's declared name
+        held_record(simulation, "sign").now[3, 0, 0] = 1
+        assert simulation.leaks() == [CHARGE_FAMILY_NAME, "matter"]
+        held_record(simulation, "sign").now[3, 0, 0] = 0
+        assert simulation.leaks() == ["matter"]
         rows[strength] = [(live.now.copy(), live.before.copy(), live.remainder.copy()) for live in lives]
         books = simulation.books()
         assert books["families"][CHARGE_FAMILY_NAME]["form"] == [0, 1]
