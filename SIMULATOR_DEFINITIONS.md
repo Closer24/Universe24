@@ -318,6 +318,74 @@ of a click"; his rulings of records 1139, 1967 and 2011; ALGEBRA.md 9.40 T3,
   by type). A test that passes in the levels and not in the clicks is a
   finding, not a pass (9.51 (7)).
 
+THE CLOCK AND THE RULER (the model owner's word of 2026-09-25 through the
+Boss, records 2024, 2027 and 2028: "switch" to Einstein's weak field; "is the
+speed c slowed between Nodes, or is the distance between them lengthened?";
+"to Highlights and to the definitions; show the algebra too"; ALGEBRA.md
+9.56 (7), 9.57).
+
+- **The rule.** At every Node, for every family, with p = Gamma - c + q Lambda
+  d the Node's own PACE (Gamma the clock's unit declared per world, c the
+  family of clicks' level at the Node, d the family of charge's level there,
+  q the record's charge in {-1, 0, +1}, Lambda the charge's strength), num
+  and den the family's declared pair, S_6 the sum of the six neighbours'
+  rows at the interval's start, and the wall the constant 6 den Gamma^2:
+  6 den Gamma^2 a_next + r' = 2 p^2 num S_6(a_now) + [12 den Gamma^2 - 6 (p^2
+  + Gamma^2)(den - num) - 12 num p^2] a_now - 6 den Gamma^2 a_before + r,
+  with 0 <= r' < 6 den Gamma^2 (a_before, a_now, a_next the record's row at
+  the Node at three intervals, r and r' the division's remainder kept at the
+  Node). Every level the rule reads is the level at the interval's start; the
+  click's writes enter at the next interval (ALGEBRA.md 9.57 (1)). At c = 0
+  and d = 0 the rule is the vacuum's term for term. The inverse is exact
+  (the wall constant). The two field families step plain, as before.
+- **The rotation, and its two halves.** At a uniform level the rule turns a
+  mode by the angle omega' with
+  1 - cos omega' = ((p^2 + Gamma^2) / (2 Gamma^2)) (1 - num / den)
+  + (p / Gamma)^2 num (6 - sigma) / (6 den),
+  sigma the six reads' factor of the mode (6 for a mode at rest, less for a
+  moving one). The first half is the MASS TERM, the family's rest rotation 1
+  - num / den, scaled once by the TIME FACTOR (p^2 + Gamma^2) / (2 Gamma^2) =
+  1 - 2 U + 2 U^2 with U = c / (2 Gamma) the potential in nature's units:
+  this is THE CLOCK, slowed at the Node. The second half is the LINK TERM,
+  the six reads, scaled by (p / Gamma)^2 = 1 - 4 U + 4 U^2: this is THE
+  CLOCK AND THE RULER together, the reads slowed once more than the mass
+  term. The time factor is p / Gamma at first order; light (num = den) has
+  no mass term and runs at the speed p / Gamma. The two weights of the weak
+  field, the clock's second-order weight and the ruler's weight, are both 1
+  exactly, as in general relativity (ALGEBRA.md 9.56 (2), (7)).
+- **The GameBoard's count, and the observer's reading: one algebra, two
+  readings of the owner's question.** Counted on the GameBoard, in Links and
+  intervals: near a body light crosses about 1 - 2 U Links per interval (its
+  speed p / Gamma), and a clock of any family ticks about 1 - U times per
+  interval of the world's (the root of the time factor). So on the board's
+  count THE SPEED OF LIGHT IS SLOWED BETWEEN THE NODES, and the Link's length
+  is one Link. Read by an observer in the well, with his own clock and his
+  own ruler: his clock is slower by 1 - U, and light crosses (1 - 2 U) / (1 -
+  U), about 1 - U, Links per tick of his; for him the speed of light is 1,
+  as everywhere, so each Link measures about 1 + U of his ruler's units: FOR
+  HIM THE DISTANCE BETWEEN THE NODES IS LENGTHENED and c is unchanged. Both
+  are the one rule above; the first is the world's reading, the second the
+  well's. Without the ruler (the first-order rule, history as the law,
+  ALGEBRA.md 9.50 (13)) light crossed 1 - U Links per interval, half the
+  slowing, and an observer in the well would have found his Links unchanged
+  and light slowed: nature's light past the Sun says otherwise.
+- **The row that reads it, by a detector's clicks.** THE SHAPIRO DELAY
+  (ALGEBRA.md 9.56 (6) (c), 9.57 (4) (c)): a record sent past a heavy body
+  and back, the click at the receiver delayed against the same path with no
+  body by 4 U_b times the path's length within the well's reach, U_b the
+  potential at the closest distance; the first-order rule gives 2 U_b, half;
+  nature's 200 microseconds past the Sun. Beside it THE BENDING (the beam's
+  centroid at the receiver, 4 U_b L against the first-order 2 U_b L; nature's
+  1.75 seconds of arc) and THE REDSHIFT (two light clocks at two heights,
+  the tick ratio the root of the time factors). The level and the pace at a
+  Node are GameBoard readings beside the clicks, diagnostics, never results.
+- **The integers.** The world declares Gamma and the amplitude bound A under
+  one bound: the rule's total at a Node below 2^63; the eighteen's choice
+  Gamma = 10^4 and A = 2^20 (ALGEBRA.md 9.57 (2)); a world outside the bound
+  is refused by the loader naming the total. Newton's constant is not
+  declared: it is the reference flux over twice Gamma per unit of energy
+  count (ALGEBRA.md 9.57 (5)).
+
 THE BODY'S LOAD CONDITIONS, kept from the four-block text as the loader's
 checks (its "takes what reaches its Nodes" and the table body are history;
 the Nodes of every two bodies are disjoint, the seed is the COMPOSED
