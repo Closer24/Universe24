@@ -4922,7 +4922,20 @@ denominator at that cell. Then the world declares no residue.
     the one-cell emitters [801, 700] included; the equidistribution of
     the residues so born is COMPUTED on the engine (owed: a chain of 100
     births with the registered G [1, 50], g [1, 1000], the chi-square
-    against the wheel). (ii) The excited record's own residue read at its
+    against the wheel). WHAT THE BACK-ACTION CAN SPREAD (DERIVED HERE):
+    only what the board holds at the reseed. The state at a reseed is the
+    seed, the record just born (the same profile at every birth) and
+    whatever earlier records are still on the board; a world whose born
+    records all leave (their click at a receiver or the face) before the
+    next reseed has the SAME state at every reseed and repeats one
+    residue exactly, coupling or not, by the determinism of 2.7. The
+    residues spread only where records are still in flight at the
+    reseed, and then as a deterministic walk on Z_W whose cycle the
+    chi-square measures. So the chi-square is read PER WORLD (the Malus
+    bar's 256 births in 3800 ticks are about 15 apart against a transit
+    of 7 and more, so they overlap; the Bell layer's likewise), and a
+    world whose residues cycle short is cured by memory (a longer board,
+    a torus, a denser stock), never by a draw. (ii) The excited record's own residue read at its
     (re)seed is 0 (the seed's remainders are 0), so its rung is T / (2 W)
     and it clicks at the first interval with any flux, one birth per
     interval: WITHDRAWN as a reading point. The excited record's residue
