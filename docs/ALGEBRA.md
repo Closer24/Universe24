@@ -12286,3 +12286,92 @@ physical: the content at the detector's Nodes, read at any interval as
 the level of the family of clicks there (a GameBoard reading), and it
 is what every other record feels as the field (9.48 (6) (C): the field
 is the memory of every click).
+
+### 9.67 Where the algebra does not yet reach nature: three gaps answered from the Node's law (the Boss's record 2048 of 2026-09-25, the model owner: "of course, everything must stand"; the mathematician's lines: the contraction, the grain, the vector and tensor parts)
+
+**(1) THE CONTRACTION: WHAT IN THE LAW MAKES A MOVING BODY CONTRACT.** The
+one rule at long wavelength is the wave equation with one speed for
+every family, c_l = 1 / sqrt(3) Links per interval (9.58 (2) (b)), so it
+is invariant under the Lorentz boosts of that speed, with gamma = 1 /
+sqrt(1 - 3 v^2) (1.109 at v = 1 / 4, 1.225 at v = 1 / 3). Two things
+follow, both DERIVED and neither yet run. (a) THE FIELD OF A MOVING
+BODY CONTRACTS: the family of clicks steps by the plain rule, and the
+steady field of a held level moving uniformly at v is the rest field
+boosted, its contours flattened along the motion by 1 / gamma (the
+retarded solution of a uniformly moving source; on a layer the same
+ratio, the boost does not read the dimension). (b) A BODY BOUND BY THAT
+FIELD CONTRACTS WITH IT: the moving mode of a well that moves and
+contracts is the boosted rest mode, shorter by 1 / gamma along the
+motion; and a light clock whose mirrors are such bodies has a
+contracted arm and reads gamma, nature's, not gamma^2. WHAT DOES NOT
+CONTRACT: every declared size, the arm, the declared well, the seat's
+extents, the hop's rigid pattern; these are coordinate objects, the
+seam of 9.53, and 9.24 (6)'s gamma^2 is that seam read by a clock. So
+the contraction is in the law for whatever the law binds, and absent
+for whatever is declared; it enters the rows when binding from the law
+runs (the atom row, 9.53 (4)). WHAT READS NATURE'S gamma TODAY: the
+transverse light clock (9.62 (2), the light across the motion, no
+contraction needed: gamma at long wavelength); the moving clock body
+with its proper pair (9.63 (3), gamma through the mode); and the
+longitudinal clock with its arm declared at L / gamma for the moving
+body, a declared contraction, labelled as the seam. A BLIND CHECK OF
+(a) FROM THE LAW, runnable now: a held body of content s hopping at v
+on a layer, the field left to settle in the body's frame, its level
+contours read as a GameBoard diagnostic: the extent along the motion
+over the extent across, at one level, 1 / gamma: 0.90 at v = 1 / 4,
+0.82 at v = 1 / 3, within the rounding's Link; the same field at rest
+round. This is the first row in which the Lorentz contraction comes
+out of the Node's rule with nothing declared.
+
+**(2) THE GRAIN AT SHORT WAVELENGTH: WHICH ROWS MOVE TO k = 0.302.** The
+rule (9.62 (1)): the rows toward nature use the given clock at k = 0.302
+or longer, where the lattice's term is 0.3 percent and inside the
+bands. CONFIRMED for: the five runs of 9.59, the charge rows (9.64),
+the moving clocks, the redshift, the bending, Shapiro, Kepler, the
+chains' rows (already at that clock: the light [2464, 25], the
+splitter's pair [129, 142] computed at omega = 0.174), Bell, Malus, the
+computer (counts, no length, any k). THE COST at that k: the wavelength
+is 21 Links, so a train of 16 periods is 336 Links and a beam narrower
+than sqrt(21 L) diffracts (9.65 (4)): the layers grow in the train's
+direction or the trains carry fewer periods and a wider band, and the
+visibility rows (the two slits, Mach-Zehnder) then have their bands
+recomputed for the train they carry (the dark port's share grows with
+the band, 9.22 (8), row 17: 3.3 x 10^-4 at 32 periods). WHERE A ROW
+CANNOT MOVE: the pace fans, whose pin IS the grain (k^2 / 48: 0.0019 at
+k = 0.302, an arrival difference of 0.2 interval over 48 Links, below
+one interval; 0.051 at the band's middle, 4 intervals): it stays at the
+band's middle by design, a diagnostic of the lattice and not a row
+toward nature (9.58 (2) (c)). No other row is held at short wavelength.
+
+**(3) THE DRAGGING OF FRAMES AND THE TENSOR WAVES: THE LEAST GENERIC
+ADDITION, AND WHY NOT NOW.** The family of clicks is the scalar part of
+the field, the group's trivial representation (9.58 (2) (e)); the
+dragging of frames is the VECTOR part and the waves the TENSOR part,
+the group's vector and tensor representations, and nothing scalar can
+carry them (9.56 (5)). THE LEAST ADDITION, under its own identity, one
+family per rank on the scaffold of the family of clicks: (a) THE VECTOR
+FAMILY, three levels per Node, held at a body's Nodes at its content
+times its hop velocity (the accumulator of 9.52 (4), an integer per
+axis), stepping by the plain rule elsewhere, and read by a record
+through its own Link current (the flux's direction, local): the pace
+at a Node p = Gamma - c + the current's product with the vector level
+over a declared scale; this one family serves TWO known formulas at
+once, since the charge's current on the same scaffold with Lambda and
+the sign is magnetism (Ampere's force, the Lorentz force; 9.48 (5))
+and the content's current is the dragging (Lense and Thirring); its
+row: two-way light times around a ring of seats hopping in a circle
+(a Sagnac reading of the vector level), the difference the dragging's.
+(b) THE TENSOR FAMILY, six levels per Node (the symmetric part), held
+at the content's current pair and read through the record's current
+pair: the waves; its row: the Kepler pair of 9.59 (5) radiating, the
+period's drift over many orbits (Hulse and Taylor). Each passes the
+three tests as the family of charge did: one primitive with declared
+integers, the rule's verbs (products and sums, one division), the
+Node's own current and its six reads. WHY NOT NOW, three lines: no row
+of the twenty-four reads them, so they would be additions without a
+pin; the seam of binding is open and they would sit on it; and each
+needs its own rows to stand (the ring, the radiating pair), hours
+each, after the check-mode runs and the charge rows. THE ORDER when
+the owner wants them: the vector family first, since it closes
+magnetism and the dragging together, and the Kepler pair already
+exists to source the tensor waves after it.
