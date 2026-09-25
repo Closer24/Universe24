@@ -7390,3 +7390,40 @@ records has a mode below the band: confinement as a closure, the
 hypothesis of POSTULATES.md on colour); each with its own tests and its
 own expectations, and none of it a computation of the algebra as it
 stands.
+
+**(D) THE EXCHANGE HYPOTHESIS, UNDER ITS OWN IDENTITY, OUTSIDE THE LAW
+(the model owner's idea in the mathematician's session, 2026-09-25: "the
+click spreads between the systems and that is how they talk, and that is
+also their forces"; his word: "we are closed; pass the idea on so that
+they implement it and write it"; STATED here, not adopted into the law
+until its gate).** THE STATEMENT: at a record's click at a body (a
+detector bound to the block, or any body the record ends at) the
+record's momentum integer is ADDED to the receiving body's momentum
+accumulator (the drive of the moving name, 9.24), and at a birth the born
+record's momentum is SUBTRACTED from the emitting body's; nothing else in
+the law changes. WHAT IT IS: the exchange of quanta (birth, passage,
+click) made a transfer of momentum, which the owner's decision that
+momentum is conserved on the board (record 1856) demands once a record
+with momentum is deleted at a body: without it the board's total
+momentum drops by the record's at every click. WHAT IT GIVES: pressure
+and recoil (a body pushed by the trains it absorbs, an emitter pushed the
+other way), the first force of the model, mediated by records; WHAT IT
+DOES NOT GIVE: attraction, gravity or binding (an exchange of light
+pushes; an attraction would need a record-record coupling, (C)). ITS
+IDENTITY: the world key `hypotheses: {"exchange": true}`, off by default,
+refused absent, named in the run's record; nothing of the twenty-four
+experiments touched, no pin moved. ITS TEST WORLD, `exchange_recoil`: a
+chain with the face slabs, an emitter of trains with momentum K along +x
+(the born clock [512, 1], the train 32 cells, a stock of 64) and a
+receiving body of the matter family whose own cells are the detector,
+both at rest at interval 0; THE BLIND EXPECTATION, a GameBoard diagnostic
+and no click count: after the 64 clicks the receiving body has hopped
+floor(64 K / W_body) Links along +x and the emitter floor(64 K /
+W_emitter) along -x, K the train's momentum integer in the drive's units
+and W each body's wall, and the board's total momentum the same at every
+interval; a hop count off by more than one Link falsifies the form.
+THE THREE TESTS: generic (one integer moved between a record and a body,
+no family name), vector (the translation verb on the accumulator, 1.5),
+local (at the click's body alone); what it adds beyond the law is a
+second act at the click besides the deletion, which is why it stands
+outside the law under its own name until the owner's gate.
