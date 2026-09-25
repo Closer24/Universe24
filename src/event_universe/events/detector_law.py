@@ -208,18 +208,18 @@ class Block:
     cycle_start: int = 0
     cycle_length: int = 0
     stepped: int = 0
-    # the emitter as a clicking body (ALGEBRA.md 9.17 (4)): the excitations
-    # started (k), the current excited record's booked offer C (its own
-    # motion through its Nodes), and whether its rung fired this interval
+    # the emitter as a clicking body (ALGEBRA.md 9.17 (4), 9.43 (3), 9.44 (5)
+    # (c)): the excitations started (k), the intervals counted since the
+    # residue's read (the count t against (2 u + 1) P / (2 W), no running
+    # total), and whether the tick fired this interval
     excitations: int = 0
-    offer: int = 0
+    wait: int = 0
     emit_now: bool = False
-    # THE READ POINT OF THE EXCITED RECORD'S RESIDUE (ALGEBRA.md 9.19 (4e),
-    # the mathematician's word of 2026-09-25 on BUILD.md section 26 item
-    # 15's finding): the seed's remainders are 0 at the write and nonzero
-    # after one step of the rule, so u and W are read from the record's own
-    # remainder at the centre Node at the first rung after its first
-    # advance, and the offer C counts from that interval
+    # THE READ POINT OF THE FIRST RESIDUE (ALGEBRA.md 9.19 (4e), 9.43 (4)):
+    # the load's seed has the remainders 0 at the write and nonzero after
+    # one step of the rule, so the first u and W are read from the body's
+    # own remainder at the first shell Node after its first advance; every
+    # later residue is read at the click (9.44 (5) (c))
     residue_pending: bool = False
 
 
@@ -782,34 +782,66 @@ class DetectorLawSimulation:
             address = (int(node[0]), int(node[1]), int(node[2]))
             self.detector_at_node[address] = block.detector if set_detector is None else set_detector
 
+    def shell_mask(self, block: Block) -> np.ndarray:
+        """THE SHELL of a body (ALGEBRA.md 9.38 (2), 9.44 (5)): its Nodes with
+        a Port, a Link to a Node outside the body on the board (the wrap on
+        an axis the family's border makes periodic; beyond an open face there
+        is no Node and no Port; a folded axis of extent 1 carries none, as
+        the flux reading's Ports)."""
+        mask = block.mask
+        wrap = self.kind_wrap[block.family]
+        shell = np.zeros(self.shape, dtype=bool)
+        for axis in range(3):
+            if self.shape[axis] == 1:
+                continue
+            for side in (1, -1):
+                inside = self._shift(mask, axis, -side, fill=True, wrap=wrap)
+                shell |= mask & ~inside
+        return shell
+
+    def first_shell_node(self, block: Block) -> tuple[int, int, int]:
+        """THE FIRST SHELL NODE IN THE DECLARED ORDER (ALGEBRA.md 9.44 (5) (c);
+        9.47 (5) (ii): which Node is read is a convention): the first Node of
+        the body in the engine's x-major order (`body_node_indices`, the
+        loader's and the generator's one convention) that has a Port; it
+        follows the body's steps. A body with no shell (every Link inside
+        it) is refused: nothing reads its residue."""
+        where = np.nonzero(self.shell_mask(block))
+        if len(where[0]) == 0:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{block.number}] has no shell (no Node of it has a Port to "
+                "a Node outside it), so no Node reads its residue (ALGEBRA.md 9.44 (5) (c))"
+            )
+        return int(where[0][0]), int(where[1][0]), int(where[2][0])
+
     def residue_of(self, live: LiveRecord, block: Block) -> tuple[int, int]:
         """THE RESIDUE FROM THE LAW (ALGEBRA.md 9.22 (4); BUILD.md section 26
-        item 15) UNDER THE NODE CLOCK (9.35 (2), (3); item 31): the record's
-        rule remainder r at the body's centre Node, read now, in units of
-        the remainder's step g = gcd(Gamma num, 6 den M, 3 den f) at that
-        Node (r moves on the multiples of g from 0), and the wheel W = 3 den
-        f / g values (`wheel_at`: the pair's own 3 den / gcd(num, 3 den)
-        where the content is 0, 700 on [801, 700] and 2403 on [800, 801];
-        at a body's Nodes the wheel of its content, 18774639 on [800, 801]
-        at Gamma = 10^6 with M = 64); no declaration, no draw."""
-        centre = self.centre_mask(block)
-        node = tuple(int(axis[0]) for axis in np.nonzero(centre))
+        item 15) UNDER THE NODE CLOCK (9.35 (2), (3); item 31), READ AT THE
+        FIRST SHELL NODE (9.44 (5) (c); item 33): the record's rule remainder
+        r at the body's first shell Node in the declared order, read now, in
+        units of the remainder's step g = gcd(Gamma num, 6 den M, 3 den f) at
+        that Node (r moves on the multiples of g from 0), and the wheel W =
+        3 den f / g values (`wheel_at`: the pair's own 3 den / gcd(num, 3
+        den) where the content is 0, 700 on [801, 700] and 2403 on [800,
+        801]; at a body's Nodes the wheel of its content, 18774639 on [800,
+        801] at Gamma = 10^6 with M = 64); no declaration, no draw; which
+        Node is read is a convention (9.47 (5) (ii)), the centre Node
+        HISTORY."""
+        node = self.first_shell_node(block)
         step, wheel = self.wheel_at(live.family, node)
         return int(live.remainder[node]) // step, wheel
 
     def _excite(self, block: Block, own_record: LiveRecord) -> None:
-        """The excited record's norm and the residue owed (ALGEBRA.md 9.17
-        (7) (e) and (f), 9.19 (3), 9.19 (4e) and 9.22 (4)): the norm T one
-        period's action of its own mode, the share e_c of its conserved form
-        at the body's centre Node summed over one period P advanced alone
-        (the emitter's declared integer `norm`, the generator's, under the
-        input stamp); its residue and wheel from the
-        law (`residue_of`) are read at the first rung AFTER ITS FIRST ADVANCE
-        (the load's seed has the remainders 0, the file's integers; a reseed
-        keeps the ended record's remainder at the Nodes, the model owner's
-        decision (1) of record 1962, so the residues of the stock's births
-        spread from it; the mathematician's word on item 15's finding), the
-        offer C counting from that interval."""
+        """The body's own record at the load, the one write of a body's record
+        (ALGEBRA.md 9.43 (4); 9.17 (4) item 1): its norm T one period's
+        action of its own mode (the emitter's declared integer `norm`, the
+        generator's, under the input stamp; the body's T of 9.46 (1), not
+        read by the tick since the count in intervals of 9.44 (5) (c)); its
+        first residue and wheel from the law (`residue_of`) are read after
+        ITS FIRST ADVANCE (the load's seed has the remainders 0, the file's
+        integers; 9.19 (4e), 9.43 (4)); every later residue is read at the
+        click (`_emit`). SINCE THE RESEED RETIRED (9.43 (3); BUILD.md section
+        26 item 33) this is called at the load alone."""
         emitter = block.definition.emitter
         assert emitter is not None
         if block.definition.profile is None:
@@ -838,10 +870,17 @@ class DetectorLawSimulation:
                 "over the period, the generator's integer (ALGEBRA.md 9.17 (7) (e) and (f), 9.19 "
                 "(3); `excite_on_the_mode` of the massive record generator)"
             )
+        if emitter.period is None:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{block.number}].emitter declares no `period`: P, the "
+                "nearest integer to 2 pi / omega_b of the body's mode, the generator's integer "
+                "(ALGEBRA.md 9.17 (7) (f), 9.44 (5) (c): the tick counts intervals against "
+                "(2 u + 1) P / (2 W))"
+            )
         block.excitations += 1
         block.residue_pending = True
         own_record.norm = emitter.norm
-        block.offer = 0
+        block.wait = 0
         block.emit_now = False
 
     def centre_mask(self, block: Block) -> np.ndarray:
@@ -856,50 +895,57 @@ class DetectorLawSimulation:
         )
 
     def _excitation_rung(self, block: Block) -> None:
-        """E then D on the excited record under THE CLICK RULE OF ALGEBRA.md
-        9.17 (7) (f) (the model owner's word, record 1918): the record's
-        running total C accrues each interval the share e_c of its conserved
-        form at its centre Node, the set's own detector where the record stands
-        (its own tick, the mode's rotation read on the board; a bound mode
-        has no flux to read, 9.17 (7) (a)), and the rung 2 T u + T <= 2 W C
-        on the record's own wheel W fires the click (the birth follows once
-        the interval's records are advanced); T is one period's action, P
-        e_c, the emitter's `norm`. The share is read from the two levels
-        AFTER the interval's advance (the block's record is advanced before
-        this is called). At the first call after a (re)seed the record's
-        residue u and wheel W are read from its own remainder at the centre
-        Node, now nonzero after its first advance (9.19 (4e); the kept
-        remainder advanced once after a reseed, record 1962 (1)), and C
-        counts from this interval."""
+        """THE TICK OF THE GIVING END (ALGEBRA.md 9.44 (5) (c), 9.47 (5) (i)
+        and (6); BUILD.md section 26 item 33): the body counts its intervals
+        since the residue's read against (2 u + 1) P / (2 W), P the
+        emitter's `period` (the generator's integer, the mode's period in
+        intervals) and W the body's wheel at the read Node; the click fires
+        at the first count t with 2 W t >= (2 u + 1) P (the interval
+        ceil((2 u + 1) P / (2 W)) after the read, at least one), the same
+        at every Node of the body (T2); no running total, no share summed,
+        no fraction moved (the click rule on the offer C of 9.17 (7) (f),
+        item 24, HISTORY). The first residue after the load is read here
+        after the body's first advance (the seed's remainders 0 at the
+        write), the count starting from that interval; every later residue
+        is read at the click (`_emit`). Nothing fires while the stock is
+        spent: the body's own record continues (9.43 (3))."""
         own = block.own
         emitter = block.definition.emitter
         if own is None or emitter is None or block.emit_now:
             return
+        if self.held[block.number][block.family] <= 0:
+            return
         if block.residue_pending:
             own.u, own.wheel = self.residue_of(own, block)
             block.residue_pending = False
-            block.offer = 0
-        block.offer += self.form_share(own, self.centre_mask(block))
-        if 2 * own.norm * own.u + own.norm <= 2 * own.wheel * block.offer:
+            block.wait = 0
+            return
+        assert emitter.period is not None
+        block.wait += 1
+        if 2 * own.wheel * block.wait >= (2 * own.u + 1) * emitter.period:
             block.emit_now = True
 
     def _emit(self, block: Block) -> None:
-        """The click of the excited record and the birth (ALGEBRA.md 9.17 (4)
-        items 1 to 3, (5) items 2 to 4 and (6); 9.13: E, then X, then E^T): X
-        ends the excited record; E^T writes the born record ONCE at both
-        levels: the world's two integers `born` [now, before] on every Node
+        """The click of the body's own record and the birth (ALGEBRA.md 9.17 (4)
+        items 1 to 3, (5) items 2 to 4 and (6); 9.43 (3): the giving end sets
+        the born rows, lowers the stock and the content, and LEAVES THE
+        BODY'S OWN LEVELS, PHASE AND REMAINDERS AS THEY ARE, the step alone
+        carrying the standing record between its clicks; no X on the own
+        record, no reseed: the reseed of 9.17 (4) item 1 and the remainder
+        kept through it, items 29 and 30, HISTORY). E^T writes the born
+        record ONCE at both
         of the body (the generator's now = A C_2N[3 N / 2 + s] on the circle
         of 2 N steps with s = floor(n / d) the born clock's step and before =
         -now, the character half a step either side of its zero, no static
         part, A the amplitude unit; no table in the engine); the
         norm T the record's conserved form (9.19 (3)), its residue and
-        wheel from the law (9.22 (4): the clicking record's remainder at the
-        centre Node, read at the click), the content one quantum moved from
-        the body's stock; then, while the stock lasts, the next excited
-        record (the seed again at both levels, its division remainder the
-        ended record's kept at the Nodes: the model owner's decision (1) of
-        record 1962). Nothing drives the born record afterwards: the law
-        advances it."""
+        wheel from the law (9.22 (4), 9.44 (5) (c): the body's own remainder
+        at the first shell Node in the declared order, read at the click,
+        the born record's residue and the next excitation's alike: every
+        Node of the body holds (M, u)), the content one quantum moved from
+        the body's stock; the count of intervals to the next click starts
+        here (`_excitation_rung`). Nothing drives the born record
+        afterwards: the law advances it."""
         world = self.world
         emitter = block.definition.emitter
         own = block.own
@@ -913,18 +959,17 @@ class DetectorLawSimulation:
         period = (steps * denominator + numerator - 1) // numerator
         cost = definition.quantum
         excitation = block.excitations
-        # the born record's residue and wheel from the law (9.22 (4)): the
-        # clicking record's remainder at the birth's centre Node, read at the
-        # click
+        # the born record's residue and wheel from the law (9.22 (4), 9.44 (5)
+        # (c)): the body's own remainder at its first shell Node in the
+        # declared order, read at the click on the body's wheel there
         residue, wheel = self.residue_of(own, block)
-        offer = block.offer
+        wait = block.wait
+        read_node = self.first_shell_node(block)
         # the body's clock pair as the clicking record was advanced (the
         # content at its centre Node; GAMEBOARD, on the birth line)
         centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
         clock_pair = self.node_clock_pair(centre)
-        # X: the excited record ends
-        del self.records[own.identity]
-        block.own = None
+        # the body's own record is not ended and never rewritten (9.43 (3))
         block.births += 1
         identity = number * (1 << 32) + block.births
         live = LiveRecord(
@@ -1008,7 +1053,12 @@ class DetectorLawSimulation:
                     "train": 0,
                     "excitation": excitation,
                     "excitation_norm": own.norm,
-                    "excitation_offer": offer,
+                    # the tick's count (9.44 (5) (c)): the intervals from the
+                    # residue's read to this click, the period P counted
+                    # against, and the first shell Node that read u
+                    "wait": wait,
+                    "period": emitter.period,
+                    "read_node": list(read_node),
                     "norm": live.norm,
                     # the file's vacuum norm (Gamma times it the vacuum's form
                     # under the clock) and the body's content and clock pair
@@ -1021,30 +1071,17 @@ class DetectorLawSimulation:
                     **({"clock": block.count} if world.clock_stamp else {}),
                 }
             )
-        # the next excitation while the stock lasts
+        # THE NEXT EXCITATION while the stock lasts (9.43 (3), 9.44 (5) (c)):
+        # the body's own record continues as it is, its levels, phase and
+        # remainders untouched by the click; the residue read at this click
+        # at the first shell Node is the born record's and the next
+        # excitation's alike (every Node of the body holds (M, u)); the count
+        # of intervals starts from this click (`_excitation_rung`)
+        block.emit_now = False
+        block.wait = 0
+        own.u, own.wheel = residue, wheel
         if self.held[number][block.family] > 0:
-            fresh = self._massive_record(
-                number * (1 << 32) + (1 << 30) + block.excitations, number, block.family
-            )
-            # the seed is the body's composed mode (9.9, 9.17 (4) item 1): the
-            # loader requires the profile on a body that births
-            assert block.definition.profile is not None
-            profile = np.array(block.definition.profile, dtype=np.int64).reshape(self.shape)
-            fresh.now[:] = profile
-            fresh.before[:] = profile
-            # THE REMAINDER IS THE NODE'S (the model owner's decision (1) of
-            # record 1962; ALGEBRA.md 9.34 (A), 9.35 (7); BUILD.md section 26
-            # item 29): the ended record's division remainder stays at its
-            # Nodes through the click and the reseed, never reset; it alone
-            # spreads the residues of the stock's births
-            fresh.remainder[:] = own.remainder
-            block.own = fresh
-            self.records[fresh.identity] = fresh
-            block.previous_sum = int(np.sum(fresh.now[block.mask]))
-            self._excite(block, fresh)
-        else:
-            block.emit_now = False
-            block.offer = 0
+            block.excitations += 1
 
     def _block_clock(self, block: Block) -> None:
         """The block's clock (MASSIVE_RECORD.md sections 4 and 6): its total

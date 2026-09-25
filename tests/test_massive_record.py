@@ -339,11 +339,14 @@ def test_the_light_record_is_byte_identical_without_the_key():
     9.45; item 32) all three moved once more (the fourth family declared in the chain world,
     one record of it over the board, held at the bodies' Nodes at their content and
     spreading from them by the plain step, every Node's clock pair read from its level);
-    read again at this head."""
+    SINCE THE RESEED RETIRED (ALGEBRA.md 9.43 (3), 9.44 (5) (c); item 33) all three moved
+    once more (the body's own record continuing under its one identity, its levels never
+    rewritten, the residues read at the click at the first shell Node, the births at the
+    counted intervals, the birth lines' fields); read again at this head."""
     assert run_chain_digests() == {
-        "events": "6600b80afacfae8c7ddc12379a6592842c83cb1c070137a2c83eaa5e3aa0df18",
-        "state": "4e78fb11c69a78c4eb14a4c3a72c658e28440f3b564d6d3eb7c84dda25298078",
-        "audit": "fdd6f4fb95abdd9b70d593dfdb456d0c41de6ed701c9ca830f778b1860d1a649",
+        "events": "4d5bd4ecb7a8a7b3a2624845af3748bf638c01868a2a7c8ccdb49f4e52c76537",
+        "state": "b3395367edc543f3eea5cbc50d2f9de9c48fbb689750900e0321b4f0d35c13ea",
+        "audit": "7eded01ed609b5a4fadee60eee84d0aa3791af979a7ac5523d158b57af299c6f",
     }
 
 
@@ -696,8 +699,9 @@ def test_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
     source kind (the one-Node well SOURCE_WELL at x = 100 seeded on its mode, the stock 3)
     on the chain of 240 with the screen at 230: three births in turn, the residues the
     law's, each born record of content 1 moved from the stock (`held_spent` 3 of the
-    source family, `transit_released` 3 of light), the excited record ended at each birth (no
-    record of the matter kind once the stock is spent), the books balanced at every tick. The
+    source family, `transit_released` 3 of light), the body's own record continuing under its
+    one identity after every birth and after the stock is spent, never rewritten (ALGEBRA.md
+    9.43 (3); item 33), the books balanced at every tick. The
     edge cases: `emits` and `own_grace` beside `emitter` refused naming the key; `emitter` on
     a body of light's kind refused; a stock below 1 refused."""
     world = parse_nature_beam_world(
@@ -729,8 +733,11 @@ def test_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
     assert [line["content"] for line in births] == [3, 2, 1]
     assert len({line["u"] for line in births}) > 1
     assert simulation.ledger.held_spent[2] == 3 and simulation.ledger.transit_released[0] == 3
-    assert simulation.blocks[0].own is None
-    assert all(live.family == 0 and live.content == 1 for live in simulation.records.values())
+    own = simulation.blocks[0].own
+    assert own is not None and own.identity == 0  # the standing record continues (9.43 (3))
+    assert all(
+        live.family == 0 and live.content == 1 for live in simulation.records.values() if live is not own
+    )
     base = with_screen(block_world([240, 1, 1], CHAIN, [156, 157], [], emitter_at(100, 3)), 230)
     for key in ("emits", "own_grace"):
         bad = json.loads(json.dumps(base))
@@ -1189,10 +1196,15 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     born record is driven by nothing and completes as light's: its `driven` set empty); the
     train TRAVELS +x: a hundred intervals after its birth its levels ahead of the body (x in
     [140, 180)) are large and those behind it (x in [40, 90)) below a tenth of them (the
-    tapers' dispersion alone goes back, 3.9 percent in the matter family); the books balance at every interval; light's rows at every interval
-    are identical with and without the matter emitter beside it (and the first build's chain
-    digests stand, test (p)). The edge cases: an emitter whose born family is a massive kind
-    WITHOUT the clock is refused at load naming the pair form."""
+    tapers' dispersion alone goes back, 3.9 percent in the matter family); the books balance
+    at every interval; light's rows are identical with and without the matter emitter beside
+    it UNTIL the matter body's content field, the family of clicks (BUILD.md section 26 item
+    32), reaches a light record's support: the field spreads from the body at [100, 132)
+    within the plain step's cone and bends every record it reaches (ALGEBRA.md 9.46 (6)
+    (b)), so the rows are compared bit for bit while the field is the same on the record's
+    Nodes, on more than one interval, and not after (the first build's chain digests stand,
+    test (p)). The edge cases: an emitter whose born family is a massive kind WITHOUT the
+    clock is refused at load naming the pair form."""
     world = parse_nature_beam_world(matter_emitter_world(True, [512, 1]))
     beside = parse_nature_beam_world(matter_emitter_world(False, [512, 1]))
     matter = [family.name for family in world.families].index("matter")
@@ -1202,6 +1214,8 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     other = DetectorLawSimulation(beside)
     identity = 1 * (1 << 32) + 1
     born: int | None = None
+    field_reached: int | None = None
+    compared = 0
     for tick in range(1, 301):
         simulation.step()
         other.step()
@@ -1210,11 +1224,21 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
         if live is not None:
             born = born if born is not None else tick
             assert live.family == matter and live.emitter == 1
-        # light's rows unchanged beside the matter emitter
+        # light's rows unchanged beside the matter emitter while the family of clicks'
+        # field is the same on their Nodes (the source body's own standing record is of
+        # the source kind, its tail reached by the field too: not light's row)
         for light_identity, light in other.records.items():
-            assert np.array_equal(simulation.records[light_identity].now, light.now), tick
+            if other.families[light.family].massive_kind:
+                continue
+            differs = simulation.clock_record.now != other.clock_record.now
+            if field_reached is None and np.any(differs & (light.now != 0)):
+                field_reached = tick
+            if field_reached is None:
+                assert np.array_equal(simulation.records[light_identity].now, light.now), tick
+                compared += 1
         if born is not None and tick == born + 100:
             break
+    assert compared > 1 and (field_reached is None or field_reached > 1)
     # the first birth within the well's period (the residue's wait, 9.17 (7) (f))
     assert born is not None and born < 120
     live = simulation.records[identity]

@@ -620,14 +620,18 @@ step 4, the one click, MIGRATION (vii-4), and the world key `amplitude`
 of stages (i) to (vii-3) is deleted, a world that declares it refused
 naming MIGRATION): every lamp births records (under the detector law, since
 BUILD.md section 26, the lamp is refused and an emitter body of a massive
-kind births them, its excited record clicking at its own rung on the running total of its
-centre Node's share of its conserved form, the click rule of ALGEBRA.md 9.17 (7) (f), BUILD.md
-section 26 item 24; SINCE THE REMAINDER KEPT, the model owner's decision (1) of record 1962,
-BUILD.md section 26 item 29, the excited record seeded after each birth keeps the ended
-record's division remainder at the body's Nodes, bit for bit, never reset, so the residues
-of the stock's births spread from it with no coupling and no draw; a residue below W / P
-crosses its rung in one interval and the next residue is one less, a countdown of births
-one per interval until 0, item 30's finding for the mathematician); every row of a record
+kind births them, its own standing record ticking on a count of intervals: SINCE THE RESEED
+RETIRED (ALGEBRA.md 9.43 (3) and (4), 9.44 (5) (c); BUILD.md section 26 item 33) a click sets
+the born rows, lowers the stock and the content and leaves the body's own record as it is
+(its levels, phase and remainders never rewritten; the reseed of item 29 and the click rule
+on the running total of item 24 HISTORY); the residue u is the own record's remainder at the
+body's first shell Node in the declared order (the first Node in x-major order with a Port),
+read at the click on the body's wheel there, the born record's residue and the next
+excitation's alike; the next click fires at the first count t of intervals since the read
+with 2 W t >= (2 u + 1) P, P the emitter's `period` (the generator's integer, required), so
+each birth falls ceil((2 u + 1) P / (2 W)) intervals after its read, at least one; the first
+residue after the load is read after the body's first advance; the birth line carries
+`wait`, `period` and `read_node` beside `u` and `W`); every row of a record
 carries a `record`, a `branch`, a `multiplicity` and its birth phase `u`
 (a row of no record carries none: a declared row, a free family's rows);
 the merge is the normal form that cancels antiphase rows of one record

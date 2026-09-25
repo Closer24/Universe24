@@ -40,6 +40,7 @@ import importlib.util
 import json
 import math
 import sys
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
@@ -159,15 +160,19 @@ def emitter_world(
 
 def run(document: dict) -> tuple[list[dict], DetectorLawSimulation, list[dict]]:
     """The world stepped over its ticks, the books balanced at every interval; the lines,
-    the simulation, and per interval the emitter's excited record's state before the
-    interval's emission (its residue, norm and booked offer after the interval's advance)."""
+    the simulation, and per interval the emitter body's own record before the interval's
+    emission (its identity, residue, wheel and norm) and its count of intervals after it."""
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
     block = simulation.block_by_number[0]
     trace: list[dict] = []
     for _ in range(document["ticks"]):
-        before = None if block.own is None else (block.own.identity, block.own.u, block.own.norm)
+        before = (
+            None
+            if block.own is None
+            else (block.own.identity, block.own.u, block.own.wheel, block.own.norm)
+        )
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
         trace.append(
@@ -175,7 +180,7 @@ def run(document: dict) -> tuple[list[dict], DetectorLawSimulation, list[dict]]:
                 "tick": simulation.tick,
                 "excited_before": before,
                 "excited_after": None if block.own is None else block.own.identity,
-                "offer": block.offer,
+                "wait": block.wait,
             }
         )
     return lines, simulation, trace
@@ -199,8 +204,8 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
     ]
     assert [line["excitation"] for line in births] == [1, 2, 3, 4]
     ticks = [line["tick"] for line in births]
-    # the excited record's residue is read after its first advance (9.19 (4e);
-    # 0 on the seed itself), its rung (2 u + 1) T / (2 W) from that interval
+    # the first residue is read after the body's first advance (9.19 (4e), 9.43 (4); 0 on
+    # the seed itself), the tick ceil((2 u + 1) P / (2 W)) intervals after it (9.44 (5) (c))
     assert ticks == sorted(ticks) and ticks[0] >= 2 and ticks[-1] < document["ticks"]
     norm = births[0]["excitation_norm"]
     assert norm > 0 and all(line["excitation_norm"] == norm for line in births)
@@ -242,48 +247,40 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
     # 32-Node well at 2^20 (COMPUTATION; one part in a thousand on the side-12 well)
     assert 1000 * (max(shares) - min(shares)) < 3 * (action // emitter["period"])
     by_tick = {entry["tick"]: entry for entry in trace}
-    # THE CADENCE UNDER THE CLICK RULE (9.17 (7) (b) and (f)): with the share
-    # constant, C = (t - t_0) e_c and T = P e_c, so the residue u clicks
-    # (2 u + 1) P / (2 W) intervals after its read (a uniform waiting time in
-    # [0, P) set by the residue, one birth per half period on average),
-    # within two intervals here (the wobble, the read's own interval)
-    read_at = 2
+    # THE TICK AS A COUNT OF INTERVALS (ALGEBRA.md 9.44 (5) (c), 9.47 (5) (i); BUILD.md
+    # section 26 item 33): the residue u read at the previous click (after the first
+    # advance for the first, interval 1) times the click at the first count t with 2 W t >=
+    # (2 u + 1) P, so each birth falls EXACTLY ceil((2 u + 1) P / (2 W)) intervals after
+    # its read (at least one), on the residue and the wheel the previous birth line
+    # carries; the first residue is on no line, read from the own record before the
+    # first birth (the trace's entry of interval 2, the state after the read at 1)
+    period = document["measured"][0]["emitter"]["period"]
+    assert all(line["period"] == period for line in births)
+    first = by_tick[2]["excited_before"]
+    assert first is not None and first[1] > 0
+    read_at = 1
+    previous: tuple[int, int] = (first[1], first[2])
     for line in births:
-        excited_u = by_tick[line["tick"]]["excited_before"][1]
-        waited = line["tick"] - read_at
-        expected = (2 * excited_u + 1) * emitter["period"] / (2 * line["W"])
-        assert abs(waited - expected) <= 2, (line["tick"], excited_u, waited, expected)
-        read_at = line["tick"] + 1
-    for line in births:
-        # the excited record's own rung on its residue read after its first
-        # advance (the trace reads u before the interval: 0 in the interval
-        # of the read itself, the rung then T / (2 W), a weaker bound)
-        excited_u = by_tick[line["tick"]]["excited_before"][1]
-        threshold = norm * (2 * excited_u + 1)  # 2 T u + T <= 2 W C
-        assert 2 * line["W"] * line["excitation_offer"] >= threshold
-        # the interval before the click: the offer below the rung (a birth at
-        # the first interval has no interval before it)
-        previous = by_tick.get(line["tick"] - 1)
-        assert (
-            previous is None
-            or 2 * line["W"] * previous["offer"] < threshold
-            or previous["excited_before"] is None
-        )
-        # the excited record ended at its click, the next one seeded
+        u, wheel = previous
+        expected = max(1, -(-(2 * u + 1) * period // (2 * wheel)))
+        assert line["tick"] - read_at == expected == line["wait"], (line["tick"], u, wheel)
+        assert 2 * wheel * (line["wait"] - 1) < (2 * u + 1) * period <= 2 * wheel * line["wait"]
+        read_at = line["tick"]
+        previous = (line["u"], line["W"])
+        # the residue read at the first shell Node, the body's corner at x = 5
+        assert line["read_node"] == [5, 0, 0]
+        # THE BODY'S OWN RECORD CONTINUES (9.43 (3)): the same record, the body's
+        # identity, before and after every birth; the line's residue on it after the click
         entry = by_tick[line["tick"]]
         assert entry["excited_before"] is not None
-        if line["excitation"] < 4:
-            assert (
-                entry["excited_after"] is not None
-                and entry["excited_after"] != entry["excited_before"][0]
-            )
-        else:
-            assert entry["excited_after"] is None
-    assert simulation.block_by_number[0].own is None
+        assert entry["excited_after"] == entry["excited_before"][0] == 0
+        after = by_tick.get(line["tick"] + 1)
+        assert after is None or after["excited_before"][1:3] == (line["u"], line["W"])
+    assert simulation.block_by_number[0].own is not None  # the standing record continues
     assert simulation.held[0] == [0, 0, 0]  # light, matter and the family of clicks
     books = simulation.books()["families"]
     assert books["matter"]["measured"]["spent"] == 4 and books["light"]["transit"]["released"] == 4
-    assert not simulation.records
+    assert set(simulation.records) == {0}  # the body's own standing record alone remains
     gathers = [line for line in lines if line["event"] == "gather"]
     assert len(gathers) == 4 and all(gather["chosen"] == [["screen", 0, "0"]] for gather in gathers)
     assert sorted(gather["u"] for gather in gathers) == sorted(line["u"] for line in births)
@@ -294,48 +291,68 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
         # a little before it; the rung crossed on the passage
         assert gather["click"] >= gather["birth"] + 50
         assert gather["click"] == gather["tick"] and gather["record"] not in simulation.records
-    # THE RESIDUES SPREAD FROM THE KEPT REMAINDER (the model owner's decisions
-    # (1) and (2) of record 1962; ALGEBRA.md 9.34 (A) and (B)): the remainder
-    # at the centre Node moves between births with no coupling and no draw
-    # (the coupling's back-action of 9.19 (4e) HISTORY)
+    # THE RESIDUES SPREAD: the body's own record continues (ALGEBRA.md 9.43 (3)) and its
+    # remainder at the first shell Node moves between births with no coupling, no draw
+    # and no reseed (the kept remainder through a reseed, item 29, HISTORY)
     assert len({line["u"] for line in births}) > 1
     # a smaller stock: as many births
     lines, _, _ = run(emitter_world(stock=2))
     assert len([line for line in lines if line["event"] == "birth"]) == 2
 
 
-def test_the_remainder_is_the_nodes_kept_through_the_click_and_the_reseed():
-    """THE REMAINDER IS THE NODE'S (the model owner's decision (1) of record 1962; ALGEBRA.md
-    9.34 (A), 9.35 (7); BUILD.md section 26 item 29): at every birth of the stock the fresh
-    excited record's division remainder is the ended record's at every Node of the board,
-    bit for bit, nonzero on the body's Nodes (the remainder after the
-    advances since the load); the load's seed alone starts at 0 (the file's integers). The
-    stock's four residues are not all equal (they spread from the kept remainder). The edge
-    case: the last birth leaves no fresh record (the stock spent), so three reseeds keep it."""
+def test_the_bodys_own_record_is_never_rewritten_and_the_residue_is_read_at_the_first_shell_node():
+    """THE RESEED RETIRED (ALGEBRA.md 9.43 (3) and (4); the residue at the click at the first
+    shell Node, 9.44 (5) (c); BUILD.md section 26 item 33): the giving end sets the born rows,
+    lowers the stock and the content, and leaves the body's own record as it is: at every one
+    of the four births the own record is the same object with its levels and remainders bit
+    for bit as before the click, and it goes on advancing after the stock is spent (its levels
+    move over the later intervals, no fifth birth). The residue on every birth line is the own
+    record's remainder at the first shell Node, the body's corner at x = 5 (the first Node in
+    x-major order with a Port; the shell the two ends of the train, x = 5 and x = 36), in the
+    remainder's step on the body's wheel there, read at the click; the born record carries
+    the same u. The edge case: a body whose every Link is inside it has no shell and is
+    refused by name."""
     document = emitter_world(stock=4)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     block = simulation.block_by_number[0]
-    assert block.own is not None and not np.any(block.own.remainder)
-    kept: list[int] = []
+    own = block.own
+    assert own is not None and not np.any(own.remainder) and own.identity == 0
+    assert simulation.first_shell_node(block) == (5, 0, 0)
+    shell = simulation.shell_mask(block)
+    assert int(shell.sum()) == 2 and shell[5, 0, 0] and shell[36, 0, 0]
+    read: list[tuple[int, int]] = []
     original = simulation._emit
 
     def spy(target):
-        ended = target.own
-        assert ended is not None
-        remainder = ended.remainder.copy()
+        assert target.own is own
+        before = (own.now.copy(), own.before.copy(), own.remainder.copy())
+        node = simulation.first_shell_node(target)
+        step, wheel = simulation.wheel_at(target.family, node)
+        read.append((int(own.remainder[node]) // step, wheel))
         original(target)
-        if target.own is not None:
-            assert np.array_equal(target.own.remainder, remainder)
-            assert np.any(target.own.remainder[target.mask])
-            kept.append(simulation.tick)
+        assert target.own is own and block.wait == 0
+        for x, y in zip((own.now, own.before, own.remainder), before, strict=True):
+            assert np.array_equal(x, y)
 
     simulation._emit = spy  # type: ignore[method-assign]
+    spent: list[np.ndarray] = []
     for _ in range(document["ticks"]):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
+        if simulation.held[0][block.family] == 0:
+            spent.append(own.now[block.mask].copy())
     births = [line for line in lines if line["event"] == "birth"]
-    assert len(births) == 4 and len(kept) == 3 and block.own is None
+    assert len(births) == 4 and block.own is own and 0 in simulation.records
+    assert [(line["u"], line["W"]) for line in births] == read
+    assert all(line["read_node"] == [5, 0, 0] for line in births)
+    gathers = [line for line in lines if line["event"] == "gather"]
+    assert sorted(g["u"] for g in gathers) == sorted(line["u"] for line in births)
+    # the standing record goes on after the stock is spent: its levels move, no click
+    assert len(spent) > 2 and not np.array_equal(spent[0], spent[-1])
+    whole = replace(block, mask=np.ones(simulation.shape, dtype=bool))
+    with pytest.raises(ValueError, match="has no shell"):
+        simulation.first_shell_node(whole)
     assert len({line["u"] for line in births}) > 1
 
 

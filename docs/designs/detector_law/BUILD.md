@@ -2933,6 +2933,84 @@ would have found no cell.
    with the family declared in every world. THE NAME NODE (the model
    owner's record 1970): every new text of this item says Node.
 
+33. THE RESEED RETIRED, THE RESIDUE AT THE CLICK AT THE FIRST SHELL NODE,
+   THE TICK A COUNT OF INTERVALS (ALGEBRA.md 9.43 (3) and (4), the
+   mathematician's ruling on item 30's finding; 9.44 (5) (c) and (d), the
+   model owner's record 1984 through the Boss; 9.47 (5) (i) and (ii), (6)
+   and (9); the owner's closing of record 1982, (iii) of Nature24's order;
+   built on `emitter-click`, held by the rule of three). THE LAW: a body's
+   own record is never rewritten. The giving end of a click sets the born
+   family's rows on the body's Nodes, lowers the stock and the content, and
+   LEAVES THE BODY'S OWN LEVELS, PHASE AND REMAINDERS AS THEY ARE; the step
+   alone carries the standing record between its clicks, and after the
+   stock is spent it goes on (the reseed of 9.17 (4) item 1, the fresh
+   excited record with the kept remainder of item 29, and the click rule on
+   the running total of item 24, HISTORY). THE RESIDUE u is the own record's
+   rule remainder at the body's FIRST SHELL NODE in the declared order (the
+   shell its Nodes with a Port, a Link to a Node outside the body on the
+   board; the first in the engine's x-major order, the loader's and the
+   generator's one convention; which Node is read is a convention, 9.47 (5)
+   (ii)), in the remainder's step on the body's wheel there, READ AT THE
+   CLICK: the born record's residue and the next excitation's alike (every
+   Node of the body holds (M, u), 9.44 (5) (c)); the first residue after the
+   load is read after the body's first advance (the seed's remainders 0 at
+   the write, 9.19 (4e), 9.43 (4)). THE TICK: the body counts its intervals
+   since the read against (2 u + 1) P / (2 W), P the emitter's `period` (the
+   generator's integer, the mode's period in intervals, now REQUIRED on an
+   emitter) and W the body's wheel at the read Node; the click fires at the
+   first count t with 2 W t >= (2 u + 1) P, ceil((2 u + 1) P / (2 W))
+   intervals after the read and at least one, the same at every Node of the
+   body (T2); no running total, no share summed, no fraction moved. The
+   excitation norm T stays the emitter's declared integer (the body's T of
+   9.46 (1); checked and carried, not read by the tick). THE ENGINE:
+   `shell_mask`, `first_shell_node` (a body with no shell refused by name),
+   `residue_of` at the first shell Node, `_excite` at the load alone (the
+   `period` refused absent), `_excitation_rung` the count, `_emit` without
+   X on the own record and without the reseed (the residue read there is
+   the next excitation's; the count restarts); the Block's `wait` (the
+   `offer` HISTORY); the birth line carries `wait` (the intervals from the
+   previous read to this click), `period` and `read_node` beside `u` and
+   `W` (`excitation_offer` HISTORY; `excitation_norm` kept); the own
+   record's identity the body's for the whole run (the excited records'
+   identities HISTORY). THE READINGS (COMPUTATION on the engine's integers):
+   (a) the emitter chain (the train's 32 Nodes at [5, 37), the stock 4, P =
+   93): the shell the two ends x = 5 and x = 36, the read Node x = 5; the
+   births at 57, 101, 125 and 172, each exactly ceil((2 u + 1) P / (2 W))
+   intervals after its read (56, 44, 24 and 47), on the wheels of the
+   content 4, 3, 2 and 1; the own record the same object through the four
+   births, its levels and remainders bit for bit across every click, and
+   advancing after the stock is spent; the four residues distinct; the born
+   records' residues the lines' u at their clicks. (b) The detector-law
+   layer in lockstep (item 32's finding C read again): the eight births by
+   236, the first click at 136, the clock field differing at the body's
+   shell from 216 and at the own record's remainder from 240: all eight
+   residues agree between the two ladder orders (six of eight on item 32's
+   head), the finding standing as stated. (c) THE LIGHT CLOCK'S DIAGNOSTIC
+   RUN without pins (GAMEBOARD, no verdict, no pin moved): LAWFUL in 9
+   seconds, 64 births and 64 clicks at at_well alone, the mean click
+   interval 299.1 with the rms 18.5, the least wait 258 and the most 366,
+   the 64 births by interval 3040, NO burst and seven gaps below ten (299.8,
+   28.7, 236, 438, 2871 and one run of three at item 32; 298.1, 18.0, 257,
+   349, 3098 and none at item 31): the mathematician's expectation of 9.43
+   (4), the mean cycle P / 2 and no run, read as expected. THE DIGESTS of
+   the chain moved once more, all three (the own record's identity and
+   levels, the birth lines' fields). THE TESTS: the emitter suite (the tick
+   exact at ceil((2 u + 1) P / (2 W)) on the previous line's residue and
+   wheel, the read Node, the own record's identity before and after every
+   birth, the standing record alone left in the records; the own record
+   never rewritten, the residue read at the first shell Node on its wheel,
+   the shell's two Nodes, the record advancing after the stock, a body
+   with no shell refused), the ladder test's lockstep reads at the click.
+   THE ALGEBRA NAMED (record 1987): 9.43 (3) and (4), 9.44 (5) (c), 9.47
+   (5), (6) and (9). PIECES NO SECTION STATES, listed for the
+   mathematician: the first residue read after the first advance (9.43
+   (4)'s "as now", a convention of the load); the shell on a folded axis of
+   extent 1 (no Port, as the flux reading's); the emitter's `period` as the
+   count's P under the Node clock (the plain mode's period; the clocked
+   period longer by about M / (2 Gamma), below the count's resolution). THE
+   NAME NODE (the model owner's record 1970): every new text of this item
+   says Node.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

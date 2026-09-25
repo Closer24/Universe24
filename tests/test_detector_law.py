@@ -540,7 +540,8 @@ def test_the_increment_ladder_over_the_named_sets():
     clicking at the detector the walk names on its own numbers, the line's `ladder` the names and
     its `sunk` the pointers off the ladder; under the family of clicks (item 32, FINDING C)
     the two ladder orders are read in lockstep: the residues read before the clock field
-    differs at the body agree bit for bit (six of the eight), the later ones differ. The
+    differs at the body agree bit for bit (all eight since item 33's count of intervals;
+    six of eight on item 32's head, the later two differing). The
     loader refuses a name no set declares, a repeated name, an empty list, and a body's
     `coupling` by name."""
     counts: dict[tuple[str, ...], dict[str, int]] = {}
@@ -576,27 +577,27 @@ def test_the_increment_ladder_over_the_named_sets():
         )
         assert gather["T"] >= gather["sunk"] >= 0
     # THE REVERSED ORDER under the family of clicks (ALGEBRA.md 9.45; BUILD.md section 26
-    # item 32, FINDING C): the residues are the excited record's, read from its kept
-    # remainder at the centre Node, and the ladder's order is no input to them UNTIL the
-    # clock field differs at the body: the first click (at 167, at s0 under one order and
-    # at s2 under the other) writes its content at the set's first body (row 0 or row 6,
-    # no mirror images across the seam), the difference spreads by the family's own step
-    # to the body's shell (interval 249) and to the excited record's remainder (309); the
-    # six residues read before that agree bit for bit and the two read after it differ
-    # (COMPUTATION on this head; the mirror may return under one body per detector)
+    # item 32, FINDING C): the residues are the body's own record's, read at the first
+    # shell Node at each click (item 33), and the ladder's order is no input to them UNTIL
+    # the clock field differs at the body: the first click (at 136, at s0 under one order
+    # and at s2 under the other) writes its content at the set's first body (row 0 or row
+    # 6, no mirror images across the seam), the difference spreads by the family's own
+    # step to the body's shell (interval 216) and to the own record's remainder (240);
+    # every residue read before that agrees bit for bit (all eight here, the last read at
+    # 209: the tick counts intervals, item 33; on item 32's head six of eight, the two
+    # read after 309 differing; COMPUTATION)
     forward_births, backward_births, differs = lockstep_births(
         layer_world(["s0", "s1", "s2"]), layer_world(["s2", "s1", "s0"])
     )
     assert len(forward_births) == len(backward_births) == 8 and differs is not None
     assert sorted(line["u"] for line in forward_births) == sorted(g["u"] for g in gathers)
-    reads = [2] + [line["tick"] + 1 for line in forward_births[:-1]]
+    reads = [1] + [line["tick"] for line in forward_births[:-1]]
     agreed = [
         (forward["u"] == backward["u"], read)
         for forward, backward, read in zip(forward_births, backward_births, reads, strict=True)
     ]
     assert all(same for same, read in agreed if read < differs)
     assert sum(1 for _same, read in agreed if read < differs) >= 3
-    assert not all(same for same, _read in agreed)
     # one set on the emitter's row alone books a third of the flux: the last click at 1014
     # under the one border (the well two Links from the closed face; item 28), COMPUTATION
     one, _, _ = run_layer(layer_world("s1"), ticks=1200)
