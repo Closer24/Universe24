@@ -9563,3 +9563,19 @@ the remainders stay at their Nodes and the step alone moves them. With
 (c) the reading of (2) above changes in one word: the residue is read at
 the click, not after the first advance, and written with the content on
 the body's Nodes.
+Two readings of Nature24's build of the Node clock (head e84ddba4), for
+the record: (a) the declared norm T of a body's own record is one
+period's action at its initial content; after births at a lower content
+its share is smaller by about (M_0 - M) times the kinetic part over
+Gamma T, 10^-5 on the light clock, the rung's crossing moving by a
+hundredth of an interval at most; an exact T per excitation would be a
+register the law does not keep, so the declared T stands. (b) After a
+birth the wall at the body's Nodes falls from 3 den (Gamma + M) to 3 den
+(Gamma + M - 1), and a kept remainder at or above the new wall (the
+chance about 1 / Gamma per Node) is absorbed by the next division, the
+invariant restored after one advance: lawful, the remainder re-formed
+below the wall it has. And the generator's mode is the mode of the
+operator the body sees (9.22 (7a)), so the generator carries the Node
+clock at the body's declared initial content on its Nodes; without it
+the body's record starts off the clocked mode by about M / Gamma of its
+amplitude (6 x 10^-5 at M = 64), a transient below every pin.
