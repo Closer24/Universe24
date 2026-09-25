@@ -294,10 +294,12 @@ There is no instantaneous update of the whole universe or central repair of all
 space. An event first changes its own location. Its influence travels from neighbor
 to neighbor, and each location updates upon receipt under the same local law.
 There is no host-computation exception: the oracle of section 14 was deleted
-on 2026-09-17. The one exception is the completion of a record read at more than
-one detector: the pair's gather, one gather of one record from both settings, the
-law's one non-local operation and the host's (ALGEBRA.md 3.1, 3.4); no Node reads
-it.
+on 2026-09-17. The one exception is the click: a record is deleted at once, whole,
+wherever its rows lie, the law's one non-local act (the model owner's record 1888
+of 2026-09-25; ALGEBRA.md 9.25 (2)); for a pair record the one click carries the
+pair's one outcome to both arms, and no information passes through it, by the
+no-signalling theorem (9.25 (6)); no Node reads it. (The pair's gather of the
+first engine, ALGEBRA.md 3.1 and 3.4, was its earlier form.)
 
 Global consistency emerges from consistent local updates. New information does
 not rewrite completed events; it becomes causal input to future events.
@@ -369,7 +371,9 @@ step, without exception. The joint outcome of a bonded pair, two rays emitted
 together, is the one thing that does not: each ray carries the Node and tick
 of its birth through the GameBoard at link speed, and when either end is
 measured, the bond registry answers for both ends at once, at any distance (the
-bonded ray field).
+bonded ray field). Its successor is the pair record of rank 2 born by the
+crystal, whose one click carries the outcome to both arms (ALGEBRA.md 3.6, 9.25
+(6); the model owner's record 1888 of 2026-09-25).
 That answer carries no energy, no momentum and no message: each end alone sees
 an even coin whatever the other end does, which the Bell probe measures as
 plus rates that do not move with the other side's setting, not a consequence
@@ -450,10 +454,13 @@ Every value affecting simulation evolution is an integer: position, time, field,
 momentum, counter and remainder.
 
 Core calculations contain no floating-point values, trigonometry, roots or vector
-normalization, with two declared exceptions on main: the run-time roots under the
+normalization, with one declared exception on main: the run-time roots under the
 keys `meeting` and `optical` (ALGEBRA.md 2.7, the seventh verb, not admitted to
-the law, each declared by its design), and the cosine and sine tables at the
-scale 256 formed at load, a declared rounding (2.5). Conservation-preserving division retains the missing fraction as
+the law, each declared by its design); the cosine and sine tables at the scale
+256 of the first engine are HISTORY (no table in the engine, the model owner's
+record 1878 of 2026-09-25: the born pair and every profile are the world's
+integers, written by the generator on the host and read by the law as integers
+alone, ALGEBRA.md 9.17 (6)). Conservation-preserving division retains the missing fraction as
 an integer remainder carried into the next calculation.
 
 (History, marked 2026-09-23: the finite-attenuation candidate of the next
@@ -658,13 +665,17 @@ Addition (the model owner, 2026-09-23, record 1421, on the algebra): a
 measurement is a detector's click, an action of the law on the state
 (ALGEBRA.md 3.1; the model owner, record 1139): a record is read at a detector
 by the evaluation E of the detector's own record in the detector's own clock
-(2.5, the evaluation at the roots of unity; the weight the norm f^T **G** f, f
-the record's element of the group ring and **G** the click's Gram matrix), the
-click stamped with the detector's own count n_D (3.1, 3.2); a light record ends
-only where a take is declared, in the absorbing worlds (a screen, a sponge),
-and a clock body takes nothing: the record passes on and is read again (the
-model owner, 2026-09-23, record 1421); the flight of every other record is
-untouched; nothing else measures. The click is the one deletion of the interval
+(2.5; since the model owner's record 1875 of 2026-09-25 the weight is the
+record's ONE-WAY INWARD FLUX into the detector's cube through its Ports, the
+one reading, ALGEBRA.md 9.19 (3), and the click falls by the increment ladder,
+9.25 (2), at the detector whose segment holds the record's threshold; the Gram
+form f^T **G** f of the first engine is HISTORY), the click stamped with the
+detector's own count n_D (3.1, 3.2); a record ends at its click alone: there is
+no take and no sponge (record 1875); a detector that has not clicked leaves the
+record whole and the record passes on (a mirror, not a detector, is the board's
+beam block); the flight of every other record is untouched; nothing else
+measures. A detector is one cube of side 3 or more, its sensitivity its whole
+cube and the click the detector's, never a Node's (record 1899). The click is the one deletion of the interval
 (4.7) and, read at several detectors, the one non-local step (3.1). Displays
 and the host's diagnostics are outside the physics and only read (3.2).
 
@@ -706,11 +717,15 @@ explicit visualization request adds frame capture and a visual artifact identify
 its displayed quantity and geometry. A slice does not change the underlying 3D world.
 (HOST: a rule of the machine, not of the law.)
 
-The apparatus of a world (a detector, a lamp, an external body; since
-2026-09-23 one generic detector-emitter, a receiver-inserter, Highlights 5.4,
-record 1327) is a declaration of the world file, the Outside, never physics
-(ALGEBRA.md 3.4); nothing draws (2.7); the click is the one measurement (3.1),
-in the form of the addition of record 1421 above.
+The apparatus of a world (a detector, an emitter, a mirror, a splitter, a
+polariser, a crystal, a medium) is, since the model owner's record 1875 of
+2026-09-25, a REGION OF THE ONE OPERATOR with its integers, a body of a holder
+family (ALGEBRA.md 9.18): a lab tool is physics on the board, and the world file
+declares its place, its pair and its name, nothing else (the earlier reading,
+"a declaration of the world file, the Outside, never physics", ALGEBRA.md 3.4,
+and the generic detector-emitter of record 1327 are HISTORY); nothing draws
+(2.7); the click is the one measurement (3.1), per detector, in the form of the
+addition of record 1421 above as amended by records 1875 and 1899.
 
 Addition (model owner, 2026-09-17; Highlights 5.2): inside the physics, the
 two marks of a world, the Detector and the external body (section 23,
@@ -828,12 +843,14 @@ The ray explains the shared origin, the no-signaling and the collapse's
 timing; it cannot explain the correlations beyond the bound, and no local
 rule on this GameBoard can. Replacing the lottery by deterministic hidden
 variables (the `threshold` capture) raises S to exactly 2 and no further, as
-the theorem says. The excess is reached only by the bonded ray field, which
-takes the split of postulate 4: the pair's joint outcome is answered for both
-ends at once by the bond registry, with no energy, momentum or message in it,
-and S rises to the quantum value. The ray then carries everything physical at
-link speed and the bond carries the one thing the experiments say is not
-carried: the correlation. It is not a local derivation of the quantum
+the theorem says. The excess is reached by the pair record of rank 2, born by
+the crystal, whose ONE CLICK carries the pair's one outcome to both arms at once
+(ALGEBRA.md 3.6, 9.25 (6); the model owner's record 1888 of 2026-09-25): no
+energy, momentum or message passes through it, by the no-signalling theorem,
+and S rises to 14 / 5 = 2.8 (9.16 (4)). The record carries everything physical
+at link speed and the click carries the one thing the experiments say is not
+carried: the correlation. (The bond registry of the first engine, which
+answered for both ends, is HISTORY.) It is not a local derivation of the quantum
 correlations, and it does not claim to be. What remains open is what the
 registry is.
 
@@ -1948,8 +1965,13 @@ match level 1, the comparison table. "Gives level 2's form" is read as the
 comparison of 26.6, tested by the light clock: the click theorem gives
 that form under A1 and A2 together, the law as built meets A1 and not A2,
 and no derivation is claimed for the law as built until the light clock
-passes. The light clock tests both at once: if it reads gamma squared and
-gamma (gamma the Lorentz factor) where Einstein's forms read 1 and 1, the
+passes. The light clock at rest is the test that runs (ALGEBRA.md 9.24 (6):
+211.98 intervals plus the rung's offset at the true clock); the longitudinal
+gamma squared of the pushed scaffold is WITHDRAWN as a prediction (the model
+owner's record 1895 of 2026-09-25: the model has clocks and no rods, and a
+moving longitudinal clock is not a run), so the sentence that follows is
+HISTORY: if a moving clock read gamma squared and gamma (gamma the Lorentz
+factor) where Einstein's forms read 1 and 1, the
 claim that level 3 gives level 2's form, the double test's first half,
 fails in its present form; 26.6, which states a comparison and claims no
 derivation, then stands as a disagreement in the comparison table, and
