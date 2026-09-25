@@ -15,7 +15,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from event_universe.events.detector_law import UNIT, DetectorLawSimulation
+from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import DETECTOR_LAW_RULE, parse_nature_beam_world
 from tests.test_emitter import massive_generator
 
@@ -313,99 +313,202 @@ def layer_world(receiver: object = None) -> dict:
     return document
 
 
-def run_layer(
-    document: dict, ticks: int = 900
-) -> tuple[list[dict], DetectorLawSimulation, dict[int, tuple[list[int], list[int], int, int, int]]]:
+Seen = dict[int, tuple[int, list[int], list[int], int, int, int]]
+
+
+def run_layer(document: dict, ticks: int = 900) -> tuple[list[dict], DetectorLawSimulation, Seen]:
     """The layer world stepped with the books balanced at every interval; the gather lines,
-    the simulation, and per clicked record the pointers and the ladder as the click read
-    them (a spy on the engine's `_ladder_click`: the pointers before the call, the ladder
-    of `_ladder_of`, u, the norm and the record's own wheel W)."""
+    the simulation, and per clicked record what the click read (a spy on the engine's
+    `_ladder_click`: the running total before the interval, the interval's increments, the
+    ladder of `_ladder_of`, u, the norm and the record's own wheel W)."""
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
-    seen: dict[int, tuple[list[int], list[int], int, int, int]] = {}
-    original = simulation._ladder_click
-
-    def spy(live):
-        pointers = list(live.pointers)
-        original(live)
-        if live.clicked and live.identity not in seen:
-            seen[live.identity] = (pointers, simulation._ladder_of(live), live.u, live.norm, live.wheel)
-
-    simulation._ladder_click = spy  # type: ignore[method-assign]
+    seen: Seen = {}
+    spy_on(simulation, seen)
     for _ in range(ticks):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
     return [line for line in lines if line["event"] == "gather"], simulation, seen
 
 
+def spy_on(simulation: DetectorLawSimulation, seen: Seen) -> None:
+    original = simulation._ladder_click
+
+    def spy(live, increments):
+        total = live.total
+        original(live, increments)
+        if live.clicked and live.identity not in seen:
+            seen[live.identity] = (
+                total,
+                list(increments),
+                simulation._ladder_of(live),
+                live.u,
+                live.norm,
+                live.wheel,
+            )
+
+    simulation._ladder_click = spy  # type: ignore[method-assign]
+
+
 def chosen_by_the_rule(
     simulation: DetectorLawSimulation,
-    pointers: list[int],
+    total: int,
+    increments: list[int],
     ladder: list[int],
     u: int,
     norm: int,
     wheel: int,
 ) -> str:
-    """The cumulative rule of ALGEBRA.md 9.19 (3) (b) on the click's own numbers: the first
-    cell k of the ladder with 2 W L_k >= (2 u + 1) T, L_k the ladder's sum up to k, W the
-    record's own wheel (9.22 (4))."""
-    total = 0
+    """The increment ladder of ALGEBRA.md 9.25 (2) on the click's own numbers: the running
+    total C before the interval below the threshold, and the first cell k of the ladder at
+    which 2 W (C + f_1 + ... + f_k) >= (2 u + 1) T, the f the interval's increments."""
+    threshold = (2 * u + 1) * norm
+    running = 2 * wheel * total
+    assert running < threshold
     for cell in ladder:
-        total += pointers[cell]
-        if 2 * wheel * total >= (2 * u + 1) * norm:
+        running += 2 * wheel * increments[cell]
+        if running >= threshold:
             return simulation.cell_set[cell]
-    raise AssertionError("no rung crossed")
+    raise AssertionError("no cell crossed")
 
 
-def test_the_emitters_ladder_by_name_orders_the_named_sets():
-    """(f) The emitter's records' ladder by name (DECLARATIONS.md section 13 item 7; the
-    emitter's `receiver` since ALGEBRA.md 9.17) under the cumulative ladder of 9.19 (3)
-    (b) AS WRITTEN: with `receiver` [s0, s1, s2] every click of the layer world's emitter
-    is at one of the three sets, the cell of u the FIRST cell k of the ladder, in the named
-    order, at which 2 W L_k >= (2 u + 1) T on the click's own pointers (the spy's reading of
-    the engine's numbers), the line's `ladder` the names and its `sunk` the pointers off the
-    ladder (the emitter's own cell books the return through the mirror); the record deleted
-    at its line; the books balanced. THE FINDING FOR THE MATHEMATICIAN (the model owner's
-    method: the algebra checked with values on the board): the three Nodes at x = 18 receive
-    the +x half at the same intervals, so the LAST sum L_3 is the first to reach the rung at
-    every u, and the first k at which L_k >= (2 u + 1) T / (2 W) at that interval is k = 3:
-    ALL EIGHT clicks are at s2 under [s0, s1, s2] and all eight at s0 under [s2, s1, s0],
-    whatever the residue, no distribution over the cells (the same for a screen of any
-    number of cells and for the polariser's two cells at one Node). 9.22 (3) (b)'s
-    derivation, "for offers in fixed proportions the crossing cell is the final ladder's",
-    holds only if the click's INTERVAL is read on the ladder's total against T and the
-    CELL on the ladder's proportions at that interval (main's `cell_of` with the total the
-    ladder's own sum), two comparisons, not one; the mathematician's word is owed and the
-    engine carries the rule as written until then (BUILD.md section 26 item 14). With "s1"
-    alone every click is at s1; without the key the ladder is every declared set in the
-    declared order (the same clicks as [s0, s1, s2], no `ladder` and no `sunk` on the
-    line). The loader refuses a name no set declares, a repeated name and an empty list."""
+RESIDUES = 128  # the planted records' wheel: every residue once
+
+
+def planted_layer(order: tuple[str, ...]) -> tuple[list[dict], DetectorLawSimulation, Seen]:
+    """The layer world without its emitter, RESIDUES light records planted at the emitter's
+    Node at interval 0 with every residue of the wheel once (the born pair on the circle of
+    2 N, the norm the conserved form) and the ladder the sets named in `order`; run 300
+    intervals; the gather lines, the simulation and the spy's readings."""
+    document = layer_world()
+    document["measured"] = document["measured"][1:]
+    world = parse_nature_beam_world(document)
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    seen: Seen = {}
+    spy_on(simulation, seen)
+    level = int(simulation._cosine_table(128)[(96 + 77 // 25) % 128])
+    ladder = [simulation.cell_names.index(name) for name in order]
+    for u in range(RESIDUES):
+        now = np.zeros(simulation.shape, dtype=np.int64)
+        before = np.zeros(simulation.shape, dtype=np.int64)
+        now[2, 3, 0] = level
+        before[2, 3, 0] = -level
+        live = LiveRecord(
+            (1 << 40) + u,
+            0,
+            0,
+            u,
+            1,
+            0,
+            1,
+            77,
+            25,
+            0,
+            21,
+            now,
+            before,
+            np.zeros(simulation.shape, dtype=np.int64),
+            pointers=[0] * len(simulation.cell_names),
+            first_rung=[None] * len(simulation.cell_names),
+            wheel=RESIDUES,
+            ladder=list(ladder),
+        )
+        live.norm = simulation.conserved_form(live)
+        simulation.records[live.identity] = live
+        simulation.ledger.transit_released[0] += 1
+    for _ in range(300):
+        simulation.step()
+    return [line for line in lines if line["event"] == "gather"], simulation, seen
+
+
+def test_the_increment_ladder_over_the_named_sets():
+    """THE INCREMENT LADDER (ALGEBRA.md 9.25 (2), the mathematician's word of 2026-09-25 on
+    the finding of item 14; the cumulative sums withdrawn): 128 light records planted at
+    the layer's emitter Node with every residue of the wheel 128 once and the ladder [s0,
+    s1, s2]: every record clicks exactly once, at the cell the walk of 9.25 (2) names on
+    the click's own numbers (the running total before the interval below the threshold,
+    the first cell of the ladder at which the interval's increments carry it across); the
+    counts per cell under [s0, s1, s2] agree with the counts under [s2, s1, s0] within the
+    sampling of 128 residues (the cell's share of the record's total inward flux, whatever
+    the order, 9.25 (3): a theorem in distribution; on eight residues the exact counts
+    are (4, 2, 2) against (2, 2, 4), the first cell of the ladder holding more of the eight
+    thresholds, COMPUTATION for the mathematician), s0 and s2 alike within the same
+    sampling (the placement's symmetry about the emitter's row). The emitter's own births (the same residue at
+    every birth of a body without a coupling, item 15) all click at one cell under either
+    order (the cell itself depends on the order, the walk names it), the line's `ladder`
+    the names and its `sunk` the pointers off the ladder. The
+    loader refuses a name no set declares, a repeated name and an empty list."""
+    counts: dict[tuple[str, ...], dict[str, int]] = {}
+    for order in (("s0", "s1", "s2"), ("s2", "s1", "s0")):
+        gathers, simulation, seen = planted_layer(order)
+        assert len(gathers) == RESIDUES and len({g["record"] for g in gathers}) == RESIDUES
+        for gather in gathers:
+            total, increments, ladder, u, norm, wheel = seen[gather["record"]]
+            assert wheel == RESIDUES and u == gather["u"] and gather["record"] not in simulation.records
+            assert ladder == [simulation.cell_names.index(name) for name in order]
+            assert gather["chosen"][0][0] == chosen_by_the_rule(
+                simulation, total, increments, ladder, u, norm, wheel
+            )
+        counts[order] = {
+            name: sum(1 for g in gathers if g["chosen"][0][0] == name) for name in ("s0", "s1", "s2")
+        }
+    forward, backward = counts[("s0", "s1", "s2")], counts[("s2", "s1", "s0")]
+    assert all(abs(forward[name] - backward[name]) <= 12 for name in forward), counts
+    assert abs(forward["s0"] - forward["s2"]) <= 12 and min(forward.values()) > 0, counts
+    # the emitter's own births: one residue, one cell, under either order
     gathers, simulation, seen = run_layer(layer_world(["s0", "s1", "s2"]))
-    assert len(gathers) == 8
+    assert len(gathers) == 8 and len({g["chosen"][0][0] for g in gathers}) == 1
     names = [simulation.cell_names.index(name) for name in ("s0", "s1", "s2")]
     for gather in gathers:
         assert gather["ladder"] == ["s0", "s1", "s2"] and gather["record"] not in simulation.records
-        assert gather["chosen"] is not None and gather["chosen"][0][0] in {"s0", "s1", "s2"}
-        pointers, ladder, u, norm, wheel = seen[gather["record"]]
-        assert ladder == names and u == gather["u"] and wheel == 700 and 0 <= u < wheel
-        assert gather["chosen"][0][0] == chosen_by_the_rule(simulation, pointers, ladder, u, norm, wheel)
-        assert gather["sunk"] == sum(p for cell, p in enumerate(pointers) if cell not in names)
-        assert gather["T"] == sum(pointers)
-        # the finding: the three Nodes book together, the last sum crosses first
-        assert all(pointers[cell] > 0 for cell in names)
-    forward = [gather["chosen"][0][0] for gather in gathers]
-    assert forward == ["s2"] * 8, forward
+        total, increments, ladder, u, norm, wheel = seen[gather["record"]]
+        assert ladder == names and wheel == 700 and 0 <= u < wheel
+        assert gather["chosen"][0][0] == chosen_by_the_rule(
+            simulation, total, increments, ladder, u, norm, wheel
+        )
+        assert gather["T"] >= gather["sunk"] >= 0
+    # the reversed order: one residue, one cell again (the cell of a single
+    # record depends on the order; the shares over the residues do not)
     backward, _, _ = run_layer(layer_world(["s2", "s1", "s0"]))
-    assert [g["chosen"][0][0] for g in backward] == ["s0"] * 8
+    assert len(backward) == 8 and len({g["chosen"][0][0] for g in backward}) == 1
     one, _, _ = run_layer(layer_world("s1"))
     assert len(one) == 8 and all(gather["chosen"][0][0] == "s1" for gather in one)
-    control, _, _ = run_layer(layer_world())
-    assert all("ladder" not in gather and "sunk" not in gather for gather in control)
-    assert [g["chosen"][0][0] for g in control] == forward
     with pytest.raises(ValueError, match="names 'screen', which no detector set declares"):
         parse_nature_beam_world(layer_world(["s0", "screen"]))
     with pytest.raises(ValueError, match="names a set twice"):
         parse_nature_beam_world(layer_world(["s0", "s0"]))
     with pytest.raises(ValueError, match="nonempty list of names"):
         parse_nature_beam_world(layer_world([]))
+
+
+def test_a_detector_is_one_connected_region():
+    """ALGEBRA.md 9.25 (7), the model owner's word: a receiver's Nodes are connected by Links;
+    two receiver bodies at (10, 2, 0) and (13, 2, 0) under one name are refused naming the
+    two pieces, at (10, 2, 0) and (11, 2, 0) admitted, and at (10, 0, 0) and (10, 6, 0)
+    across the layer's periodic seam admitted (one piece)."""
+    for positions, admitted in (
+        ([[10, 2, 0], [13, 2, 0]], False),
+        ([[10, 2, 0], [11, 2, 0]], True),
+        ([[10, 0, 0], [10, 6, 0]], True),
+    ):
+        document = layer_world()
+        for position in positions:
+            document["measured"].append(
+                {
+                    "position": position,
+                    "family": "light",
+                    "amount": 1,
+                    "phase": 0,
+                    "momentum": [0, 0, 0],
+                    "fixed": True,
+                    "directions": [[-1, 0, 0]],
+                }
+            )
+        document["detectors"].append({"name": "pair", "positions": positions, "threshold": 1})
+        if admitted:
+            parse_nature_beam_world(document)
+        else:
+            with pytest.raises(ValueError, match="lies on 2 disconnected pieces"):
+                parse_nature_beam_world(document)

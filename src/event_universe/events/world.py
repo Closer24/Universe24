@@ -4775,6 +4775,38 @@ def _in_transit(
     return tuple(found)
 
 
+def _connected_pieces(
+    positions: list[Address3], shape: Address3, periodic: tuple[bool, bool, bool]
+) -> int:
+    """The number of pieces of a set of Nodes under the board's Links: two
+    Nodes are linked when they differ by one on one axis (modulo the extent
+    on a periodic axis); an axis of extent 1 links nothing."""
+    remaining = set(positions)
+    pieces = 0
+    while remaining:
+        pieces += 1
+        frontier = [remaining.pop()]
+        while frontier:
+            node = frontier.pop()
+            for axis in range(3):
+                extent = int(shape[axis])
+                if extent < 2:
+                    continue
+                for step in (1, -1):
+                    coordinate = node[axis] + step
+                    if periodic[axis]:
+                        coordinate %= extent
+                    elif not 0 <= coordinate < extent:
+                        continue
+                    neighbour = list(node)
+                    neighbour[axis] = coordinate
+                    candidate = (neighbour[0], neighbour[1], neighbour[2])
+                    if candidate in remaining:
+                        remaining.remove(candidate)
+                        frontier.append(candidate)
+    return pieces
+
+
 def _detectors(
     value: object,
     shape: Address3,
@@ -4867,6 +4899,16 @@ def _detectors(
                 raise ValueError(f"{BEAM_LAW}: a Node in two detectors {list(position)}")
             taken.add(position)
             positions.append(position)
+        # THE DETECTOR IS ONE CONNECTED REGION (ALGEBRA.md 9.25 (7), the model
+        # owner's word): its Nodes are connected by Links (across a periodic
+        # seam too); separate places are separate names
+        pieces = _connected_pieces(positions, shape, periodic)
+        if pieces > 1:
+            raise ValueError(
+                f"{BEAM_LAW}: the receiver {name!r} lies on {pieces} disconnected pieces; a detector "
+                "is one connected region, and separate places are separate names (ALGEBRA.md "
+                "9.25 (7))"
+            )
         threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
         if name.startswith(RESERVED_SET_PREFIX) or name in FACE_NAMES or name == LIFETIME_NAME:
             raise ValueError(

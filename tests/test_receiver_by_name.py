@@ -99,9 +99,9 @@ def run(
     if seen is not None:
         original = simulation._ladder_click
 
-        def spy(live):
+        def spy(live, increments):
             pointers = list(live.pointers)
-            original(live)
+            original(live, increments)
             if live.clicked and live.identity not in seen:
                 seen[live.identity] = (
                     pointers,

@@ -162,10 +162,15 @@ class LiveRecord:
     # never chooses it and its share is not in the ladder's sum.
     ladder: list[int] | None = None
 
-    # The receiver by name (DECLARATIONS.md section 13 item 7, the click
-    # line): whether the record's line was written at its receiver's first
-    # rung (the record lives on with content 0, field energy the sinks
-    # absorb, and closes with no second line).
+    # THE INCREMENT LADDER (ALGEBRA.md 9.25 (2)): the record's running total
+    # C of its one-way flux into the cells of its ladder, every cell's
+    # increment in the ladder's order, against the record's threshold
+    # (2 u + 1) T / (2 W) fixed at its birth; the click at the interval C
+    # crosses it, at the cell whose segment of that interval's increment
+    # holds the threshold.
+    total: int = 0
+    # whether the record's line was written (the record is deleted whole at
+    # that interval, ALGEBRA.md 8.8, record 1888)
     clicked: bool = False
     # The sinks' take of a record under the receiver by name (HOST, the
     # pointer's unit): what the faces and every set but the receiver took,
@@ -1607,12 +1612,15 @@ class DetectorLawSimulation:
         # inward flux into every cell this interval, from the record's two
         # levels, booked to the cell's pointer C; nothing is taken, the rows
         # evolve at every Node
+        before_booking = list(live.pointers)
         for cell, value in self.flux_offer(live).items():
             live.pointers[cell] += value
             live.absorbed += value
         if self.table_bodies:
             self._split_table_offers(live)
-        self._ladder_click(live)
+        # this interval's increment per cell (the split's shares included)
+        increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
+        self._ladder_click(live, increments)
         self._split(live)
 
     def _ladder_of(self, live: LiveRecord) -> list[int]:
@@ -1629,21 +1637,33 @@ class DetectorLawSimulation:
             ladder.append(self.face_cell)
         return ladder
 
-    def _ladder_click(self, live: LiveRecord) -> None:
-        """The click on the cumulative ladder (ALGEBRA.md 9.19 (3) (b)): at
-        every interval the ladder's sums L_k = C_1 + ... + C_k in its declared
-        order; the click fires at the first k at which 2 W L_k >= (2 u + 1) T
-        (the rung of 9.7 on the record's residue u, its norm T its conserved
-        form I, W the record's own wheel, 9.22 (4)), at that set: the click line, the content
-        handed to the set's body, the record deleted whole after the
-        interval's advances (8.8's one deletion). A set bound to a block
-        stamps the line with the block's count as the interval began."""
+    def _ladder_click(self, live: LiveRecord, increments: list[int]) -> None:
+        """THE INCREMENT LADDER (ALGEBRA.md 9.25 (2), the mathematician's word
+        of 2026-09-25 on the finding of BUILD.md section 26 item 14; the
+        cumulative sums of 9.19 (3) (b) withdrawn): the record's threshold
+        theta = (2 u + 1) T / (2 W) is fixed at its birth (u its residue, T
+        its norm, W its own wheel); at every interval the record's running
+        total C gains this interval's one-way flux into the cells of its
+        ladder, the cells in the ladder's declared order (the named sets in
+        the named order, the face last); the click fires at the first
+        interval at which C crosses theta, at the cell whose segment of that
+        interval's increment, laid out in the ladder's order, holds theta
+        (the walk: the cell k at which 2 W (C + f_1 + ... + f_k) >= (2 u + 1)
+        T first). Born's rule is its theorem (9.25 (3): the cell's share of
+        the record's total inward flux, whatever the time profile). The click
+        line, the content handed to the set's body, the record deleted whole
+        after the interval's advances (8.8's one deletion, record 1888). A set
+        bound to a block stamps the line with the block's count as the
+        interval began."""
         if live.clicked or live.norm <= 0:
             return
-        total = 0
-        for cell in self._ladder_of(live):
-            total += live.pointers[cell]
-            if 2 * live.wheel * total >= (2 * live.u + 1) * live.norm:
+        ladder = self._ladder_of(live)
+        threshold = (2 * live.u + 1) * live.norm
+        running = 2 * live.wheel * live.total
+        for cell in ladder:
+            running += 2 * live.wheel * increments[cell]
+            live.total += increments[cell]
+            if running >= threshold:
                 live.first_rung[cell] = self.tick
                 if cell in self.set_block:
                     self.rung_counts[(live.identity, cell)] = self.block_by_number[

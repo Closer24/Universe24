@@ -1305,9 +1305,9 @@ def test_aa_a_matter_emitters_record_clicks_once_at_the_rung():
     at_click: dict[int, tuple[int, int, int, int]] = {}
     original = simulation._ladder_click
 
-    def spy(live):
+    def spy(live, increments):
         pointer = live.pointers[screen]
-        original(live)
+        original(live, increments)
         if live.clicked and live.identity not in at_click:
             at_click[live.identity] = (pointer, live.u, live.norm, live.wheel)
 
@@ -1448,10 +1448,10 @@ def test_ac_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_it
         pointer_at_click: int | None = None
         original = simulation._ladder_click
 
-        def spy(live, original=original, a_face=a_face):
+        def spy(live, increments, original=original, a_face=a_face):
             nonlocal pointer_at_click
             pointer = live.pointers[a_face]
-            original(live)
+            original(live, increments)
             if live.clicked and live.identity == first and pointer_at_click is None:
                 pointer_at_click = pointer
 

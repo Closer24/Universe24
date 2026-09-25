@@ -1776,6 +1776,57 @@ would have found no cell.
    record 1886's LAWFUL / REFUSED input check and record 1887's one
    command (queued after the emitter line).
 
+16. THE INCREMENT LADDER AND THE SAME INPUT (ALGEBRA.md 9.25, the
+   mathematician's word of 2026-09-25 00:25Z on item 14's finding, at once
+   on the Boss's order; the model owner's word through the Boss of 23:51Z
+   and his proposal "a Node shouts by itself"; the property test green,
+   10 of 10). THE RULE WITHDRAWN AND THE RULE IN FORCE: the cumulative
+   sums of 9.19 (3) (b) are withdrawn ("your finding is right and the
+   sentence was mine"); the click is THE INCREMENT LADDER (9.25 (2)): the
+   record's threshold (2 u + 1) T / (2 W) is fixed at its birth; at every
+   interval its running total C (`LiveRecord.total`) gains this interval's
+   one-way flux into the cells of its ladder in the ladder's declared
+   order (the named sets in the named order, the face last); the click
+   fires at the first interval at which C crosses the threshold, at the
+   cell whose segment of that interval's increment holds it (the walk of
+   `_ladder_click`: the first cell k at which 2 W (C + f_1 + ... + f_k)
+   >= (2 u + 1) T); the record deleted whole at that interval (record
+   1888). Born's rule is its theorem (9.25 (3): a cell's share of the
+   record's total inward flux, whatever the time profile); the owner's
+   form, a Node shouting by itself, is exact only when the Node holds the
+   record's two integers, the threshold and the running total, which is
+   this walk read cell by cell (9.25 (3), the mathematician). THE DETECTOR
+   IS ONE CONNECTED REGION (9.25 (7), the owner's word): the loader
+   refuses a receiver on disconnected pieces naming their number
+   (`_connected_pieces`, the Links across a periodic seam counted). THE
+   TESTS: tests/test_detector_law.py plants 128 light records with every
+   residue of the wheel 128 once on the layer and reads every click
+   against the walk on the click's own numbers (a spy on
+   `_ladder_click`), the counts per cell under [s0, s1, s2] against
+   [s2, s1, s0] within the sampling and s0 against s2 alike (COMPUTATION:
+   on eight residues the exact counts are (4, 2, 2) against (2, 2, 4), the
+   first cell of the ladder holding more of the eight thresholds, so the
+   mathematician's "the counts EQUAL" of 9.25 (8) holds in distribution,
+   not per residue); the emitter's own births, all of one residue (item
+   15), click at one cell under either order, the cell itself the
+   order's; the connected-region refusals. THE SAME INPUT, THE SAME OUTPUT
+   (the owner's word): test 8 of the property test runs the small world's
+   input text twice and in two separate processes at once, byte-identical
+   outputs (the input's hash, the click lines, the final state's digest);
+   a one-unit change in the seed profile or in the planted row changes
+   the output, never silently the same. The Malus and Bell worlds stay
+   HELD: the increment ladder gives their counts once the residues are
+   spread, and a one-cell emitter without a coupling births one residue
+   (item 15's finding (a)), so their unhold waits on the mathematician's
+   word on the excited record's residue. Also taken from the notices of
+   this hour: record 1884 (no ramp; the `ramp` key's refusal goes to the
+   loader's checks of step 5 with record 1886's LAWFUL / REFUSED), record
+   1885 (every entry carries its K; a region does not move), record 1889
+   (the moving name, for the line after the cleanup), record 1890 (the
+   joint body dropped: the sixteenth's circuit is the generator's), the
+   seventeenth (Mach-Zehnder, after the mathematician's pin and the
+   generator).
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2
