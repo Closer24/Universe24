@@ -5929,7 +5929,7 @@ superposition of two rates, has no one clock a / b, and the clock check
 of (7) refuses it. "Two bodies, two records" is lawful exactly when each
 body's own mode is a mode of the composed board within the rounding,
 which is the loader's residual check outside the other bodies' cells
-((7a) (i)): the tail of one at the other's cells below one unit (on the stored integers: the profile 0 at every Node of every other body of its family, a load check that names the two bodies, the Node and the value when it refuses). The tail
+((7a) (i)): the tail of one at the other's cells below one unit (on the stored integers: the profile 0 at every Node of every other body of its family AND at every Node of a zero face of the board on an open or closed axis, a load check that names the two bodies or the body and the face, the Node and the value when it refuses; a zero face is a boundary of the operator, so a profile that is not 0 there is the mode of the well and the wall together, a different body with its own clock; the well [800, 801] of side 32 in [800, 809] decays by 0.79337 per Link outside and needs 56 Links to a zero face at the amplitude 2^20, 73 at 50 x 2^20, COMPUTED, scratchpad tail_decay.py; the condition is on the body's own family alone, a body or a material region of another family being transparent to it by 9.34 (B)). The tail
 scales with the amplitude and the bound does not, so the check reads the
 seed: Sagnac's wells at the gap 60 carry A's tail at B's centre at 1.7 x
 10^-6 of the peak, 1.8 units at 2^20 and 91 units at 50 x 2^20 (the three
