@@ -8820,3 +8820,31 @@ tick's interval the same by (3) (a) and (4); the detectors' cells were
 already read at their Ports; the born residues' spread the same
 statistics by (4)); the host cost of a click falls from the body's cells
 to its shell (side 32: 5768 cells of 32768).
+
+**(8) THE BOSS'S FACE CONDITION AND HIS CURRENT (record 1965, answered).**
+(a) "A taker clicks when what entered through its faces reaches the
+drawn share; a giver when what left through its faces reaches it": the
+first half is (2); the second cannot be, because a standing record's
+current through every Link is 0 (9.17 (7) (a), 9.32 (b)) and 9.37 (1)
+proves that no change of the body's integers makes it leak by the step:
+NOTHING LEAVES A BODY AT REST BEFORE ITS CLICK. The giver's term on the
+shell is therefore not an outflow but the TICK, the share of its own
+standing record at the shell's cells gathered per interval ((2)); the
+one rule for both ends is the one gather on the shell, the passing
+record through the Ports and the own record at the cells, with one
+threshold. What leaves the body is the born record, set on the body's
+cells at the click (9.37 (2)) and carried out through the faces by the
+step alone afterwards; the quantum stays one per click (9.37 (2), 9.25
+(2)). (b) THE BOSS'S CURRENT, (1/2)[a_j(now)(a_i(next) - a_i(before)) -
+a_i(now)(a_j(next) - a_j(before))], CHECKED (scratchpad boss_current2.py,
+the chain with a pair boundary and a Node clock field): per Link it is
+exactly the mean of the one-sided current now_i before_j - before_i now_j
+at two successive readings (before -> now and now -> next; to 1.6 x
+10^-14), and num Gamma times its six values at a cell is the mean of two
+successive intervals' changes of the form E_i of 9.35 (2) (to 3.7 x
+10^-15), carrying no pair weight and no clock weight, as he says. It is
+the same line centred in time, and right as a diagnostic; THE CLICK'S
+GATHER STAYS THE ONE-SIDED CURRENT read on the two levels before the
+step (9.35 (2), 9.25 (2)): it needs no next level (which the gather does
+not yet have), and it gives each interval its own flux whole, where the
+centred one hands half of it to the neighbouring interval.
