@@ -75,6 +75,7 @@ from __future__ import annotations
 
 import json
 import math
+from fractions import Fraction
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -247,6 +248,9 @@ def seed_on_the_mode(document: dict) -> None:
             continue
         entry.setdefault("margin", "pin")
         entry["seed"] = mode_profile(document, number, amplitude=scalar)
+        if any(component != 0 for component in entry.get("momentum", [0, 0, 0])):
+            # the moving seat's proper pairs (ALGEBRA.md 9.63 (3); item 46)
+            entry["proper_clock"] = proper_clock(document, number)
     for number, entry in enumerate(document["measured"]):
         if "emitter" in entry:
             given_train(document, number)
@@ -714,6 +718,110 @@ def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
         )
     document["measured"][number]["clock"] = list(clock)
     return flat
+
+
+def mode_dispersion(document: dict, number: int, axis: int) -> tuple[Fraction, Fraction]:
+    """THE MODE'S OWN DISPERSION ALONG AN AXIS (ALGEBRA.md 9.63 (3), 9.46 (7) (b), 9.24 (2)):
+    the bound mode's profile p times the character of K along `axis` rotates at 2 cos omega_K
+    = 2 cos omega_b - (1 - cos K) X, with X = SUM_i num_i p_i (p_{i+e} + p_{i-e}) / (3 SUM_i
+    den_i p_i^2) the profile's own quotient on the axis's two reads (the operator's quotient
+    as `iterated_mode` reads the clock, every Node weighing in; the reads wrap on a periodic
+    axis and are zero beyond a face). Returns (2 cos omega_b, X) as exact rationals, 2 cos
+    omega_b the entry's clock a / b. On a plane wave X = 2 num / (3 den) and the line is the
+    free dispersion 3 cos omega = (num / den)(cos K + 2) of 9.24 (2) exactly. HOST, the
+    generator's own reading of its integers."""
+    import numpy as np
+
+    entry = document["measured"][number]
+    shape = [int(extent) for extent in document["shape"]]
+    profile = np.array(entry["seed"], dtype=object).reshape(shape)
+    kinds = {family["name"]: family["pair"] for family in document["families"] if "pair" in family}
+    kind = kinds[entry["family"]]
+    num = np.full(shape, int(kind[0]), dtype=object)
+    den = np.full(shape, int(kind[1]), dtype=object)
+    corner = [int(component) for component in entry["position"]]
+    extents = [int(entry["side"])] * 3 if "side" in entry else [int(v) for v in entry["extents"]]
+    wrap = tuple(document["boundary"][name] == "periodic" for name in ("x", "y", "z"))
+    for index in range(3):
+        if wrap[index]:
+            continue
+        if corner[index] < 0 or corner[index] + extents[index] > shape[index]:
+            raise ValueError(f"measured[{number}] leaves the board on an open axis; nothing written")
+    on_body = np.zeros(shape, dtype=bool)
+    for x in range(extents[0]):
+        for y in range(extents[1]):
+            for z in range(extents[2]):
+                on_body[
+                    (corner[0] + x) % shape[0], (corner[1] + y) % shape[1], (corner[2] + z) % shape[2]
+                ] = True
+    num[on_body] = int(entry["pair"][0])
+    den[on_body] = int(entry["pair"][1])
+    reads = np.zeros(shape, dtype=object)
+    for side in (1, -1):
+        shifted = np.roll(profile, side, axis=axis)
+        if not wrap[axis]:
+            edge = [slice(None)] * 3
+            edge[axis] = slice(0, 1) if side == 1 else slice(shape[axis] - 1, shape[axis])
+            shifted[tuple(edge)] = 0
+        reads = reads + shifted
+    quotient = Fraction(int(np.sum(num * profile * reads)), 3 * int(np.sum(den * profile * profile)))
+    a, b = entry["clock"]
+    return Fraction(int(a), int(b)), quotient
+
+
+def moving_rotation(two_cos_rest: float, quotient: float, pace: float) -> tuple[float, float]:
+    """The moving mode at the pace v = `pace` Links per interval on the dispersion 2 cos
+    omega_K = 2 cos omega_b - (1 - cos K) X: the wavenumber K at which the group pace X sin
+    K / (2 sin omega_K) equals v (bisection on [0, pi], the host's floats as `given_train`
+    solves its clock) and the rotation of the rows at the moving centre per interval,
+    omega_K - K v (ALGEBRA.md 9.63 (3), 9.24 (2)); on the plane wave of [800, 809] at v = 1 /
+    3 the algebra's own K = 0.18556 and (omega_K - K v) / omega_b = 0.81457 (COMPUTATION)."""
+
+    def omega_at(k: float) -> float:
+        return math.acos((two_cos_rest - (1.0 - math.cos(k)) * quotient) / 2.0)
+
+    low, high = 0.0, math.pi
+    for _ in range(200):
+        middle = 0.5 * (low + high)
+        group = quotient * math.sin(middle) / (2.0 * math.sin(omega_at(middle)))
+        if group < pace:
+            low = middle
+        else:
+            high = middle
+    wavenumber = 0.5 * (low + high)
+    return wavenumber, omega_at(wavenumber) - wavenumber * pace
+
+
+def proper_clock(document: dict, number: int) -> list[list[int]]:
+    """THE PROPER PAIRS OF A MOVING SEAT (ALGEBRA.md 9.63 (3); BUILD.md section 26 item 46; the
+    mathematician's ruling on Nature24's finding that the seat's clock did not slow in motion):
+    for a block with the momentum P on one axis, the pair [num_m, b] for every whole part m of
+    the momentum from 0 to |P| (the ramp's P t // ramp, then P; the engine's `_momentum_now`),
+    b the clock's denominator and num_m = round(b 2 cos(omega_K - K v)) with v = m / W the hop
+    rate (W = 3 Q S M, the drive's wall) and (K, omega_K - K v) from `moving_rotation` on the
+    mode's own dispersion (`mode_dispersion`): the rotation of the moving mode's rows at its
+    moving centre per interval, which the seat rotates at between hops; at m = 0 the clock
+    itself. The cube carries the dilation in its rows by the rule; the seat carries it in
+    this declared pair, the seam of the host form (9.46). HOST, the generator's; the engine
+    reads the integers alone."""
+    from event_universe.events.world import LABEL_SCALE
+
+    entry = document["measured"][number]
+    momentum = [int(component) for component in entry.get("momentum", [0, 0, 0])]
+    axes = [axis for axis in range(3) if momentum[axis] != 0]
+    if len(axes) != 1:
+        raise ValueError(
+            f"measured[{number}]: the proper pair is read along one axis of motion; the momentum "
+            f"{momentum} lies on {len(axes)} (ALGEBRA.md 9.63 (3)); nothing written"
+        )
+    two_cos_rest, quotient = mode_dispersion(document, number, axes[0])
+    a, b = (int(value) for value in entry["clock"])
+    wall = 3 * LABEL_SCALE * int(document.get("width", 1)) * int(entry.get("amount", 1))
+    table = [[a, b]]
+    for whole in range(1, abs(momentum[axes[0]]) + 1):
+        _, rotation = moving_rotation(float(two_cos_rest), float(quotient), whole / wall)
+        table.append([round(b * 2.0 * math.cos(rotation)), b])
+    return table
 
 
 def main() -> None:

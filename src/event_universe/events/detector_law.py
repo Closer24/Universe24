@@ -1067,17 +1067,37 @@ class DetectorLawSimulation:
         block.wait = 0
         block.emit_now = False
 
+    def seat_clock(self, block: Block) -> tuple[int, int]:
+        """THE SEAT'S PAIR THIS INTERVAL (ALGEBRA.md 9.63 (3); BUILD.md section
+        26 item 46): the declared clock pair [num_c, den_c] of the body's mode
+        at rest, and on a moving body THE PROPER PAIR of the drive's momentum
+        now, the world's `proper_clock` at the momentum's whole part along its
+        one axis (under the ramp m = P t // ramp, then P, the same m the drive
+        hops with): the moving mode's rotation at its moving centre per
+        interval, 2 cos(omega_K - K v), which the generator wrote from the
+        mode's own dispersion; the rest pair at m = 0. The cube carries the
+        dilation in its rows by the rule; the seat carries it in its declared
+        pair, the seam of the host form (9.46), and the equivalence test is
+        what checks that they agree."""
+        clock = block.definition.clock
+        assert clock is not None
+        table = block.definition.proper_clock
+        if table is None:
+            return int(clock[0]), int(clock[1])
+        index = max(abs(int(component)) for component in self._momentum_now(block))
+        num_c, den_c = table[index]
+        return int(num_c), int(den_c)
+
     def seat_rule(self, block: Block) -> tuple[int, int, int, int]:
         """THE ONE RULE AT THE SEAT (ALGEBRA.md 9.60 (1), (2); item 42): the
         integers the seat's record is stepped with, (num, den, Gamma, c): the
-        declared pair [num_c, 2 den_c] (the body's clock pair in the rule's
-        convention, 2 cos omega = num_c / den_c), the world's Gamma and the
-        seat's own effective content c (Gamma - p at the body's centre Node,
-        the family of clicks' level less the charge's read, uniform over its
-        Nodes); the wall 3 den Gamma = 6 den_c Gamma."""
-        clock = block.definition.clock
-        assert clock is not None
-        num_c, den_c = int(clock[0]), int(clock[1])
+        seat's pair this interval as [num_c, 2 den_c] (`seat_clock`: the body's
+        clock pair in the rule's convention, 2 cos omega = num_c / den_c, the
+        proper pair of its momentum on a moving body), the world's Gamma and
+        the seat's own effective content c (Gamma - p at the body's centre
+        Node, the family of clicks' level less the charge's read, uniform over
+        its Nodes); the wall 3 den Gamma = 6 den_c Gamma."""
+        num_c, den_c = self.seat_clock(block)
         centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
         pace, gamma = self.node_clock_pair(centre, block.family)
         return num_c, 2 * den_c, gamma, gamma - pace

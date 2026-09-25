@@ -3756,6 +3756,45 @@ would have found no cell.
    (the owner's second word) is item 45's. THE NAME NODE (the model owner's
    record 1970): every new text of this item says Node.
 
+46. THE PROPER PAIR OF A MOVING SEAT (ALGEBRA.md 9.63 (3), the mathematician's
+   ruling of 2026-09-25 on Nature24's finding of 9.63 (2): in motion the
+   cube's clock slowed and the seat's did not, the generator having written
+   the rest pair for both; 9.46 (7) (b) and (c), "its clock pair is the
+   moving mode's at that K", made precise: at the MOVING CENTRE, not at a
+   fixed Node). THE RULE: the seat of a moving body rotates at the proper
+   pair, 2 cos(omega_K - K v) = num / den, the rotation of the moving mode's
+   rows at its moving centre per interval (omega_K the moving mode's rate at
+   a fixed Node, K its wavenumber, v its pace: (k omega_K - K) / k for a hop
+   every k intervals); the rest pair at K = 0. THE GENERATOR reads it from
+   the mode as it reads the clock: the mode's own dispersion along the axis
+   of motion, 2 cos omega_K = 2 cos omega_b - (1 - cos K) X with X = SUM
+   num_i p_i (p_{i+e} + p_{i-e}) / (3 SUM den_i p_i^2) the profile's
+   quotient on the axis's two reads (`mode_dispersion`, an exact rational;
+   on a plane wave 2 num / (3 den), the free dispersion of 9.24 (2) exactly,
+   whose numbers it reproduces: K = 0.18556 and the ratio 0.81457 at v = 1 /
+   3 on [800, 809]); K at which the group pace X sin K / (2 sin omega_K) is
+   v (`moving_rotation`, the host's floats as `given_train`); the pair
+   [round(b 2 cos(omega_K - K v)), b] with the clock's b (`proper_clock`).
+   THE KEY: a moving seeded block carries `proper_clock`, the |P| + 1 pairs
+   indexed by the momentum's whole part m from 0 (the clock itself) to |P|
+   along its one axis of motion, v = m / (3 Q S M) the drive's rate at that
+   m, so that under the ramp (m = P t // ramp) the seat follows the momentum
+   the drive hops with, interval by interval, as the cube's rows follow the
+   well; the engine reads the pair of the momentum now (`seat_clock`; the
+   seat's rule, wheel, residue and form read it); refused absent on a moving
+   block under body_record, on a block at rest, on a momentum on two axes, at
+   the wrong length or with a first entry other than the clock, each named.
+   THE WORLDS: the four moving worlds of the massive record and the moving
+   emitter of the row toward nature regenerated with the key (the rest
+   worlds byte for byte as before). THE GATE tests/test_body_record.py (the
+   plane wave's numbers, the table, the seat's pair by the interval, the
+   refusals). THE BLIND EXPECTATION (9.63 (3)): the seat's cycles equal the
+   cube's within the draw on the four moving worlds, 63 +- 8, 135 +- 12, 164
+   +- 13, 430 +- 21; the reading is the run's (the README of the massive
+   record), a seat outside it goes to the mathematician. The cube carries
+   the dilation in its rows by the rule; the seat carries it in its declared
+   pair, the seam of the host form under its own identity (9.46).
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

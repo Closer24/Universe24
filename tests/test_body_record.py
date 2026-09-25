@@ -293,3 +293,117 @@ def test_the_loader_and_the_state_name_the_body_record():
     lattice = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, False)))
     entry = dict(lattice.snapshot_stream())["blocks"][0]
     assert entry["seat"] is None and entry["rows"] is not None
+
+
+def moving_world(ticks: int = 600, ramp: int = 200) -> dict:
+    """The solitary body of `cube_world` pushed to speed one third along x (the momentum 64
+    against the drive's wall 3 x 64 x 1 x 1 = 192: one Link every three intervals) over a ramp,
+    seeded on its mode with its proper pairs by the generator (ALGEBRA.md 9.63 (3))."""
+    document = block_world(
+        [16, 16, 16],
+        PERIODIC,
+        [800, 809],
+        [
+            {
+                "position": [5, 5, 5],
+                "side": 6,
+                "pair": [800, 801],
+                "seed": 1 << 20,
+                "margin": "control",
+                "momentum": [64, 0, 0],
+                "ramp": ramp,
+            }
+        ],
+        ticks=ticks,
+    )
+    document["age_bound"] = 100000  # a periodic board keeps every ray: the store's bound
+    massive_generator().seed_on_the_mode(document)
+    return document
+
+
+def test_the_moving_seat_rotates_at_the_proper_pair_of_its_momentum():
+    """ALGEBRA.md 9.63 (3) (BUILD.md section 26 item 46). (1) THE GENERATOR'S LINE on a plane
+    wave: the mode's quotient X is 2 num / (3 den) exactly and the moving rotation at v = 1 / 3
+    and v = 1 / 5 on [800, 809] is the algebra's own (9.24 (2)): K = 0.18556 with the ratio
+    0.81457 to the rest rotation, K = 0.09637 with 0.93757 (COMPUTATION). (2) THE TABLE: 65
+    pairs for the momentum 64, the first the clock, the numerators never falling as the momentum
+    grows (the proper rate slows), the last the rounding of b 2 cos(omega_K - K v) at v = 1 / 3
+    from the mode's own dispersion. (3) THE SEAT reads the pair of the drive's momentum now: the
+    clock before the ramp's first whole part, the table's entry at P t // ramp during it, the
+    last after it, its rule at [num_m, 2 b]; the seat moved with its body. (4) THE LOADER under
+    body_record refuses a moving seeded block without `proper_clock`, a table of the wrong
+    length, a first entry other than the clock and the key on a body at rest, naming each; the
+    generator refuses a momentum on two axes; the cube form loads the same file as before."""
+    generator = massive_generator()
+    # (1) the plane wave: every Node the kind's pair, the profile uniform
+    plane = {
+        "shape": [12, 3, 3],
+        "boundary": PERIODIC,
+        "families": [{"name": "matter", "pair": [800, 809]}],
+        "measured": [
+            {
+                "family": "matter",
+                "position": [0, 0, 0],
+                "side": 12,
+                "pair": [800, 809],
+                "seed": [1000] * 108,
+                "clock": [1600, 809],
+            }
+        ],
+    }
+    two_cos_rest, quotient = generator.mode_dispersion(plane, 0, 0)
+    assert two_cos_rest == Fraction(1600, 809) and quotient == Fraction(1600, 3 * 809)
+    rest_rotation = math.acos(800 / 809)
+    for pace, wavenumber, ratio in ((1 / 3, 0.18556, 0.81457), (0.2, 0.09637, 0.93757)):
+        k, rotation = generator.moving_rotation(float(two_cos_rest), float(quotient), pace)
+        assert k == pytest.approx(wavenumber, abs=1e-5)
+        assert rotation / rest_rotation == pytest.approx(ratio, abs=1e-5)
+    # (2) the table of the moving world
+    document = moving_world()
+    entry = document["measured"][0]
+    table = entry["proper_clock"]
+    a, b = entry["clock"]
+    assert len(table) == 65 and table[0] == [a, b]
+    assert all(pair[1] == b for pair in table)
+    assert all(table[m][0] >= table[m - 1][0] for m in range(1, 65))
+    assert table[64][0] > table[0][0]
+    two_cos_rest, quotient = generator.mode_dispersion(document, 0, 0)
+    assert two_cos_rest == Fraction(a, b)
+    _, rotation = generator.moving_rotation(float(two_cos_rest), float(quotient), 64 / 192)
+    assert table[64] == [round(b * 2 * math.cos(rotation)), b]
+    # (3) the seat's pair by the interval
+    seated = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, True)))
+    block = seated.blocks[0]
+    assert block.seat is not None and block.definition.proper_clock is not None
+    centre_at_rest = int(np.nonzero(seated.centre_mask(block))[0][0])
+    assert seated.seat_clock(block) == (a, b)
+    for tick in range(1, 301):
+        seated.step()
+        whole = 64 * tick // 200 if tick < 200 else 64
+        assert seated.seat_clock(block) == tuple(table[whole]), tick
+        num, den, _, _ = seated.seat_rule(block)
+        assert (num, den) == (table[whole][0], 2 * b)
+    assert block.stepped > 60 and int(np.nonzero(seated.centre_mask(block))[0][0]) != centre_at_rest
+    # (4) the refusals, each named; the cube form loads the file as before
+    parse_nature_beam_world(with_body_record(document, False))
+    without = json.loads(json.dumps(document))
+    del without["measured"][0]["proper_clock"]
+    parse_nature_beam_world(with_body_record(without, False))
+    with pytest.raises(ValueError, match=r"measured\[0\] under body_record moves and declares no"):
+        parse_nature_beam_world(with_body_record(without, True))
+    short = json.loads(json.dumps(document))
+    short["measured"][0]["proper_clock"] = table[:-1]
+    with pytest.raises(ValueError, match=r"proper_clock must be 65 pairs"):
+        parse_nature_beam_world(with_body_record(short, True))
+    other = json.loads(json.dumps(document))
+    other["measured"][0]["proper_clock"] = [[a + 1, b]] + table[1:]
+    with pytest.raises(ValueError, match=r"proper_clock\[0\] .* is not the clock"):
+        parse_nature_beam_world(with_body_record(other, True))
+    at_rest = cube_world(ticks=4)
+    at_rest["measured"][0]["proper_clock"] = [list(at_rest["measured"][0]["clock"])]
+    with pytest.raises(ValueError, match=r"proper_clock is admitted beside `clock` on a block whose"):
+        parse_nature_beam_world(with_body_record(at_rest, True))
+    two_axes = json.loads(json.dumps(document))
+    two_axes["measured"][0]["momentum"] = [64, 64, 0]
+    with pytest.raises(ValueError, match=r"the proper pair is read along one axis of motion"):
+        generator.proper_clock(two_axes, 0)

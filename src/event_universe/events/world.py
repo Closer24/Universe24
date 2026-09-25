@@ -908,6 +908,9 @@ BLOCK_KEYS = {
     "seed",
     # the bound mode's clock [a, b] beside a profile (ALGEBRA.md 9.22 (7))
     "clock",
+    # the moving seat's proper pairs by the momentum's whole part (ALGEBRA.md
+    # 9.63 (3); BUILD.md section 26 item 46), beside `clock` on a moving block
+    "proper_clock",
     "cavity",
     "ramp",
     "start",
@@ -1457,6 +1460,13 @@ class BlockDefinition:
     # least the profile's amplitude; the loader's integer check of the
     # profile against the eigen-equation reads it; None for a flat seed
     clock: tuple[int, int] | None = None
+    # THE PROPER PAIR OF A MOVING SEAT (ALGEBRA.md 9.63 (3); BUILD.md section 26
+    # item 46): the pairs [num_m, b] the seat rotates at while the drive's
+    # momentum is m, indexed by m from 0 (the clock itself) to |P| along the
+    # one axis of the declared momentum, the generator's reading of the moving
+    # mode at its moving centre, 2 cos(omega_K - K v) at v = m / (3 Q S M);
+    # None on a body at rest
+    proper_clock: tuple[tuple[int, int], ...] | None = None
     ramp: int = 0
     start: int = 0
     margin: str = MARGIN_KINDS[0]
@@ -3875,6 +3885,44 @@ def _block(
             "generator's rational for 2 cos omega, b at least the amplitude; the loader checks "
             "the profile against the eigen-equation in integers, ALGEBRA.md 9.22 (7), record 1886)"
         )
+    # THE PROPER PAIR OF A MOVING SEAT (ALGEBRA.md 9.63 (3); BUILD.md section 26
+    # item 46): beside `clock`, on a block whose momentum lies on one axis, the
+    # |P| + 1 pairs [num, den] indexed by the momentum's whole part, the first
+    # the clock itself (the rest pair at K = 0)
+    proper_clock: tuple[tuple[int, int], ...] | None = None
+    if "proper_clock" in obj:
+        moving_axes = [axis for axis in range(3) if int(momentum[axis]) != 0]
+        if clock is None or len(moving_axes) != 1:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.proper_clock is admitted beside `clock` on a block whose "
+                "momentum lies on one axis (the moving seat's pairs by the momentum's whole part, "
+                "ALGEBRA.md 9.63 (3))"
+            )
+        value = obj["proper_clock"]
+        count = abs(int(momentum[moving_axes[0]])) + 1
+        if (
+            not isinstance(value, list)
+            or len(value) != count
+            or any(
+                not isinstance(item, list)
+                or len(item) != 2
+                or any(type(part) is not int for part in item)
+                or item[0] < 1
+                or item[1] < seed
+                for item in value
+            )
+        ):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.proper_clock must be {count} pairs [num, den] of positive "
+                f"integers, den at least the profile's amplitude {seed}, one for every whole part "
+                f"of the momentum from 0 to {count - 1} (ALGEBRA.md 9.63 (3))"
+            )
+        if (int(value[0][0]), int(value[0][1])) != clock:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.proper_clock[0] {value[0]} is not the clock {list(clock)}: at "
+                "rest the seat rotates at the mode's own pair (ALGEBRA.md 9.63 (3))"
+            )
+        proper_clock = tuple((int(item[0]), int(item[1])) for item in value)
     if seed > amplitude_bound:
         raise ValueError(
             f"{BEAM_LAW}: {label}.seed {seed} (the scalar seed, or a profile's largest magnitude) "
@@ -3968,6 +4016,7 @@ def _block(
         extents=extents,
         profile=profile,
         clock=clock,
+        proper_clock=proper_clock,
         ramp=ramp,
         start=start,
         margin=str(margin),
@@ -6264,6 +6313,13 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                     "profile: a body record is its stored profile and one rotation on its clock pair "
                     "[num_c, den_c], the generator's (ALGEBRA.md 9.46 (1) and (9) (a); "
                     "`seed_on_the_mode`)"
+                )
+            if block.proper_clock is None and any(int(part) != 0 for part in entry.momentum):
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}] under body_record moves and declares no "
+                    "`proper_clock`: the seat of a moving body rotates at the proper pair of its "
+                    "momentum, the moving mode's rotation at its moving centre, the generator's "
+                    "(ALGEBRA.md 9.63 (3); `seed_on_the_mode`)"
                 )
     _input_stamp_check(obj, measured)
     _initial_state_checks(shape, periodic, families, measured)

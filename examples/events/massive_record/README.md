@@ -174,3 +174,43 @@ Every registered world of this folder is named by its experiment (the canonical 
 | `index_moving_long_reference_k4_away` | `receding_index_speed_quarter_away_reference` |
 
 The light clock's receiving set is `at_well` (was `at_a`); Sagnac's two sets are `at_near_well` beside the body at x = 700 and `at_far_well` beside the body at x = 772 (were `at_a` and `at_b`). The exploratory folders keep their names as history.
+
+## The moving seat's proper pairs (ALGEBRA.md 9.63 (3); BUILD.md section 26 item 46)
+
+Under `body_record` the body's record is kept at its seat Node and rotates at its
+declared pair between hops (item 42). In motion the cube's clock slows by the rule
+(its rows carry the moving mode, whose rows at the moving centre rotate at omega_K
+- K v) and the seat's did not at the rest pair (Nature24's finding, 9.63 (2)); the
+mathematician's ruling: the seat of a moving body declares THE PROPER PAIR, 2
+cos(omega_K - K v) = num / den, the rest pair at K = 0. The generator writes it on
+every moving block as `proper_clock`, the |P| + 1 pairs indexed by the momentum's
+whole part m from 0 (the clock itself) to |P| along the one axis of motion, v = m /
+(3 Q S M) the drive's rate at that m, so that under the ramp (m = P t // ramp) the
+seat follows the momentum the drive hops with. The pair is read from the mode's own
+dispersion along the axis, 2 cos omega_K = 2 cos omega_b - (1 - cos K) X with X the
+profile's quotient on the axis's two reads (`mode_dispersion`, an exact rational; 2
+num / (3 den) on a plane wave, the free dispersion of 9.24 (2) exactly), K where the
+group pace equals v (`moving_rotation`), the pair [round(b 2 cos(omega_K - K v)),
+b] with the clock's b (`proper_clock`). The four moving worlds here carry it (65
+pairs each, the momentum 64); the blind expectation of 9.63 (3) for the seat form of
+each is the cube's count within the draw: the deep well at speed one third 63 +- 8,
+the boxed 20 moving 135 +- 12, the boxed 28 moving 164 +- 13, the muon at speed one
+third 430 +- 21 (GAMEBOARD cycle counts over the declared ticks, the ramp included;
+no pin).
+
+THE READING (2026-09-25, the law as built at item 46, both forms rerun; GAMEBOARD
+cycle counts over the declared ticks and the mean cycle in intervals; the seat
+before item 46 kept the rest rate, the pre-change control):
+
+| world | cube | seat before item 46 | seat with the proper pair | the blind band | direction |
+| --- | --- | --- | --- | --- | --- |
+| deep well, speed one third | 63 at 150.50 | 81 at 117.28 | 67 at 140.50 | 63 +- 8 | inside |
+| boxed 20 moving | 135 at 70.54 | 167 at 56.78 | 140 at 68.03 | 135 +- 12 | inside |
+| boxed 28 moving | 164 at 57.87 | 199 at 47.71 | 166 at 57.17 | 164 +- 13 | inside |
+| muon, speed one third | 429 at 47.71 | 484 at 42.33 | 430 at 47.60 | 430 +- 21 | inside |
+
+At rest the two forms stay bit-equal in the count and the cycle (30 at 117.28, 52 at
+56.88, 62 at 48.13, 484 at 42.33). The seat reads a few cycles more than the cube
+where the well is deep (the deep well: 67 against 63): the cube's rows follow the
+hopping well imperfectly and its tick slows beyond the dispersion's rate, a reading
+for the mathematician beside the band, not a pin.
