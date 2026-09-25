@@ -11072,3 +11072,84 @@ possibilities." For the test, three assertions name it: between
 clicks the board returns bit for bit; across a click exactly the rows
 the click deleted are lost and nothing else; NO RULE UNDOES A CLICK,
 the inverse map fires no rung and writes no line.
+
+### 9.56 Einstein's equations in the world of clicks: what the adopted law gives, what it does not, and the two additions that would give the weak field of general relativity (the model owner's requirement of 2026-09-25: "a body with mass and charge must satisfy Einstein's equations in the world of clicks; at low velocity, Newton"; DERIVED, with the post-Newtonian reading; the rows with their nature pins; two decisions named for the owner)
+
+**(1) WHAT THE ADOPTED LAW IS.** The family of clicks is one level c per
+Node, and every record steps at the Node's own pace p = Gamma - c on
+its whole operator (9.50 (13)). That is a scalar gravity of the index
+kind: one potential, U = c / (2 Gamma) in nature's units (9.52 (2)),
+that slows every clock and every wave alike. It gives, exactly: the
+redshift and the time dilation of a clock in a well to first order
+(9.45 (2)); the equivalence of all bodies in a fall (9.52 (2)); Newton's
+fall and Kepler's orbits at low velocity (9.52 (3)); a horizon where c
+reaches Gamma (9.50 (8)); and waves of the field at the speed of light
+(the family's own step, 9.45 (2)), scalar ones. AT LOW VELOCITY,
+NEWTON: yes, and exactly.
+
+**(2) WHAT IT DOES NOT GIVE, IN THE POST-NEWTONIAN READING.** Write the
+weak field as nature does: the clock factor g_00 = 1 - 2 U + 2 beta U^2,
+the ruler factor g_ij = (1 + 2 gamma U); general relativity has beta =
+gamma = 1. The adopted law has g_00 = p / Gamma = 1 - 2 U exactly (the
+constant wall, linear in c) and no ruler factor, so BETA = 0 AND GAMMA
+= 0. The classical tests then read, as fractions of general
+relativity's: the redshift 1; the equivalence 1; Newton 1; the bending
+of light past the Sun (1 + gamma) / 2 = 1 / 2, that is 0.87 seconds of
+arc against the measured 1.75; the Shapiro delay (1 + gamma) / 2 = 1 /
+2; Mercury's perihelion (2 + 2 gamma - beta) / 3 = 2 / 3, that is 29
+seconds of arc per century against the measured 43; the dragging of
+frames 0 (no vector part); the waves scalar (a breathing mode), where
+nature's are tensor (a quadrupole). The earlier pair (Gamma, Gamma + c)
+had beta = 2 and gamma = 0: Mercury 0, the bending 1 / 2. So THE
+ADOPTED LAW SATISFIES EINSTEIN'S EQUATIONS AT FIRST ORDER IN THE CLOCK
+AND NOT BEYOND; the owner's sentence holds for the redshift, the
+equivalence and Newton, and fails by one half for light and by one
+third for Mercury.
+
+**(3) THE FIRST ADDITION, gamma = 1: THE PACE ON THE LINKS.** Nature's
+factor 2 in light's bending is the ruler's, the space between the
+Nodes: light is slowed once by the clock at the Node and once more by
+the space it crosses. On the GameBoard the space between two Nodes is
+the Link, so gamma = 1 needs the pace on the Link as well as at the
+Node: the Node's step at p_i and the six reads each carried at the
+Link's pace, (p_i + p_j) / 2 with the wall doubled, or p_j (the sender's
+form of 9.50 (12), which the owner refused as strange). Light's index
+is then Gamma / p to first order, 1 + 2 U, the bending and the Shapiro
+delay whole; a slow body's fall is unchanged (the ruler enters its
+motion at order v^2 U). Generic, vector, local (one Link) and exact
+backward (the wall constant) as 9.50 (12) showed; and it READS THE
+NEIGHBOUR'S LEVEL THROUGH THE LINK, which is exactly what the owner's
+word "only from the current Node" excludes. THE DECISION IS HIS: the
+Node alone gives Newton's half of light's bending; Einstein's whole
+needs the Link.
+
+**(4) THE SECOND ADDITION, beta = 1: THE CLOCK'S SECOND ORDER.** The
+clock factor must be 1 - 2 U + 2 U^2 to second order, which in the
+law's integers is ((Gamma - c)^2 + Gamma^2) / (2 Gamma^2), a rational,
+the pace squared plus Gamma squared over twice Gamma squared; with it
+Mercury reads (2 + 2 - 1) / 3 = 1 with (3), and 2 / 3 without. In
+nature this term is not put in by hand but comes from the field's own
+energy as a source (the nonlinearity, 9.51 (5), OPEN); on the
+GameBoard either form is a row of its own. The cost: the numerator
+carries Gamma^2 and the rows' int64 has no room at Gamma = 10^6 with
+the amplitude 2^28 (9.35 (2)'s bound); the row runs at Gamma near 10^4
+or with wider integers, a host matter.
+
+**(5) WHAT NEEDS MORE THAN A LEVEL.** The dragging of frames and the
+tensor waves need a vector or a tensor part of the field, as magnetism
+does for the charge (9.48); the level of one family cannot carry them;
+they stand where record 1880 put the tensor: OPEN under their own
+identity.
+
+**(6) THE ROWS THAT TEST "EINSTEIN IN THE WORLD OF CLICKS", each a
+detector's click.** (a) The redshift: a light clock at the well's
+bottom against one at its top, the tick ratio 1 - 2 U (already the
+law's). (b) The bending: the beam past a heavy body, the centroid's
+shift against 4 U_b (with (3)) or 2 U_b (without), U_b at the beam's
+closest distance. (c) The Shapiro delay: the round trip of a record
+past the body, the click's delay against the closed form. (d) Mercury:
+an orbiting emitter (9.52 (4) (vi)), the perihelion's advance per orbit
+read from the clicks' delays over many orbits, against (2 + 2 gamma -
+beta) / 3 of nature's. (e) The equivalence and Newton: 9.52 (3). Each
+row's nature pin is the measured value; each row reports which of
+beta and gamma the law carries.
