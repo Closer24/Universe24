@@ -4420,7 +4420,15 @@ never 0). THE ENGINE HOLDS NO TABLE FOR IT: the born pair is TWO INTEGERS
 OF THE WORLD, `born: [now, before]` per birth, computed by the generator
 (a host tool, as the seed's mode is) and checked at load against the
 generator's recompute; a line's born profile is the generator's integers
-in the same way. No emitter is refused for any s.
+in the same way. No emitter is refused for any s. THE TWO FORMS OF THE
+KEY, stated once (2026-09-25, on the physicist's reading of this
+paragraph as "two integers only"): `born` is EITHER two integers [now,
+before], the uniform birth on every cell of the body with before = -now
+exactly, OR a profile, one integer per cell of the body at each of the
+two levels (item (5) 3; the packet's summand of 9.22 (3): a travelling
+character has before = the character one interval earlier, not -now),
+checked at load for its count and for a motion; both are the world's
+integers, the generator's, and neither is a table in the engine.
 
 ### 9.18 The unification: one object, one record, one rule; what is generic; what the algebra carries at once (the model owner's words of 2026-09-24 to the mathematician: "write the whole unification, what is generic with us, and whether the algebra supports it in one stroke"; ADOPTED by the model owner, 2026-09-24, 22:39Z (2026-09-25 on the Israel clock) through the Boss, record 1875: "adopt; everything is algebra", with bound tool bodies of a holder family, at most three families, one border for every family)
 
