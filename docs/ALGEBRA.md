@@ -5854,6 +5854,62 @@ reflects foreign light entirely contradicts g G = 2 x 10^-5 per cell
 into light's family, about 10^5 per interval at the seed 50 x 2^20, which
 swamps any reading sharing its record); it is re-measured on the train's
 own record, OWED from him before the chain rows' files.
+(v) TWO WELLS ON ONE BOARD, THE EXACT SPLIT (the physicist's two-well
+statement for the model owner, 2026-09-25, given by him as an
+approximation; DERIVED HERE and COMPUTED). The composed board is one
+linear operator: the mode equation is (1 / 3) (**A** p)_i = lambda D_i
+p_i with lambda = 2 cos omega and D_i = den_i / num_i, and a well lowers
+D on its cells by Delta D = den_vac / num_vac - den_well / num_well (0.01
+for [800, 801] on [800, 809]). Let p_A and p_B be the modes of each well
+alone on the same board, lambda_0 their common rate for equal wells. On
+the span of p_A and p_B (the two-level reduction, Rayleigh-Ritz on the
+generalized problem) the composed board's two rates are lambda_+- =
+lambda_0 (M_11 + t_11 +- (M_12 + t_12)) / (M_11 +- M_12) with M_11 =
+sum_i D_i p_A_i^2 (the mode's D-norm), M_12 = sum_i D_i p_A_i p_B_i (the
+D-weighted overlap of the two modes), t_12 = sum over A's cells of Delta D
+p_A_i p_B_i (THE OVERLAP THAT SPLITS: the well's weight difference times
+the two modes, summed over ONE well's cells) and t_11 = sum over B's
+cells of Delta D p_A_i^2 (A's tail's weight in B's well, a shift common to
+both). THE SPLIT to leading order in the tails is lambda_+ - lambda_- = 2
+lambda_0 t_12 / M_11, the M_12 and t_11 terms entering at second order;
+the modes are near p_A + p_B and p_A - p_B; a record seeded on p_A alone
+is their half sum and beats between the wells with the period 2 pi / (omega_-
+- omega_+) = 4 pi sin omega_0 / (lambda_+ - lambda_-). In the law's
+integers Delta D_i = (den_vac num_well - den_well num_vac) / (num_vac
+num_well), so t_12 multiplied by num_vac num_well is an integer sum. THE
+CORRECTION BEYOND TWO LEVELS is the coupling of the pair to the band's
+modes, of relative order (the tail / the gap), and it is what the exact
+eigenproblem adds to the Ritz values. COMPUTED on a chain of [800, 809]
+with two wells [800, 801] of side 12 (omega_0 = 0.10022, kappa = 0.1922
+per Link), by the gap between their faces: gap 2, the exact split 5.917
+x 10^-3 against the leading form 5.902 x 10^-3 (the Ritz pair 6.108 x
+10^-3), the beat 213 intervals; gap 4, 4.042 x 10^-3 against 4.017 x
+10^-3, the beat 311; gap 8, 1.872 x 10^-3 against 1.862 x 10^-3, the beat
+672; gap 16, 4.005 x 10^-4 against 4.001 x 10^-4, the beat 3.1 x 10^3;
+gap 32, 1.848 x 10^-5, the forms equal to four figures, the beat 6.8 x
+10^4; gap 60 (Sagnac's wells of side 12), 8.5 x 10^-8, the beat 1.5 x 10^7
+intervals; gap 80, 1.8 x 10^-9. THE LAWFUL DECLARATION (the physicist's
+question (2)): two near wells are ONE body, the composed operator, and a
+record on it is one composed mode with one clock (the sum or the
+difference, each its own record if wanted); a record seeded on p_A is a
+superposition of two rates, has no one clock a / b, and the clock check
+of (7) refuses it. "Two bodies, two records" is lawful exactly when each
+body's own mode is a mode of the composed board within the rounding,
+which is the loader's residual check outside the other bodies' cells
+((7a) (i)): the tail of one at the other's cells below one unit. The tail
+scales with the amplitude and the bound does not, so the check reads the
+seed: Sagnac's wells at the gap 60 carry A's tail at B's centre at 1.7 x
+10^-6 of the peak, 1.8 units at 2^20 and 91 units at 50 x 2^20 (the three
+times the bound the physicist read); at the gap 80 it is 0.04 and 1.9
+units. So Sagnac's two wells are two bodies at the seed 2^20 with their
+faces 80 Links apart, or one composed body otherwise; the table's row
+takes the gap 80 (the wells at [700, 732) and [812, 844)). THE READING
+the physicist proposes (two equal wells at the gaps 2, 4, 8 and 16 on a
+chain, the split read from the generator's clocks of the sum and the
+difference and the beat from a record seeded on one well, a GameBoard
+diagnostic with no pin) is CONFIRMED, with the numbers above as its
+expectation: the two-level form within 0.3 percent at the gap 2 and
+within 10^-4 from the gap 16 on.
 
 **(8) THE MEASURED EXPERIMENTS, EACH COMPLETE FOR ITS INPUT FILE (the model owner's
 words of 2026-09-25 through the Boss, records 1901 and 1902: "try to
@@ -5905,7 +5961,7 @@ so.
 | The muon's moving clock | the layer [200, 200, 1], periodic | matter [3200, 3236]. At rest: the well [3200, 3227] of side 14 at the vertex (93, 93), one quantum at the amplitude 2^20 on its composed mode, **K** = 0. In motion: a packet of the matter family about 100 Links wide with **K** = 0.18556 per Link (v = 1 / 3), written moving at interval 0 (no ramp, record 1884) | the well's own cells (side 14) at rest; in motion a co-moving name of side 3 or more translating with the packet (A.14); no face | nature's muons slow in air over the hold: the one declared idealisation (the row reads the tick at one fixed **K**) | at rest the mode's period 42.33 intervals (omega_b = 0.14845) by its own clicks; in motion the tick ratio 0.8146 of the rest (1 / gamma = 0.8165), band 0.3 percent | the push CARRIED, retiring; 8.4's well form HISTORY |
 | The moving emitter's redshift | the chain [4096, 1, 1] with the face slabs 32 deep at both ends | light [1, 1], born clock [512, 1]; matter [156, 157]. At rest: the well [314, 315] of side 32 at [2944, 2976), the coupling (g, G) to light, a stock of 256, its train along +x written on its cells at each of its rungs (its cadence the internal clock, 9.17 (7)), **K** = 0. In motion: the emitter a packet of [156, 157] of side 32 with **K** = 0.13946 per Link (v = 1 / 3) receding from the receiver (moving -x), and a co-moving name with its stock | the receiver the cube [4000, 4003) (one train's length before the far slab), then the faces; the emitter's own cells for its births | none | 1 + z = (1 + v / c_l) / (the tick ratio) = (1 + 0.33333 / 0.44721) / 0.8154 = 2.141 at v = 1 / 3, band 0.3 percent, as the ratio of the receiver's click cadence to the emitter's birth cadence (the 1.935 at c_l = 0.57689 HISTORY); the control the rest world, the ratio 1 | the moving name ADOPTED (1889); the push CARRIED |
 | The round trip off a receding mirror | the chain [1600, 1, 1] with the face slabs 32 deep at both ends (the 1000 chain with the name receding toward x = 0 HISTORY: it left the board) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The mirror (A.3): the gap [1, 2] of depth 4 at [40, 44), at rest, at the low end. The emitter and its receiver ONE co-moving name: a holder well [801, 700] of side 32 on a holder packet with **K** for v = 1 / 3, from [300, 332) moving +x, receding from the mirror, its train along -x toward the mirror, the coupling, a stock of 32 | the receiver the name's own cells (the return enters them; 9.25 (11) (d)), then the faces | none | (1 + beta) / (1 - beta) = 6.856 at beta = v / c_l = 0.7454, band 0.3 percent, as the sent over the received click cadence at the moving name (the 3.7373 at c_l = 0.57689 HISTORY; the continuum's two-way Doppler is the same form at that beta) | the moving name ADOPTED; `cart_k3.json` REBUILT in this form |
-| Sagnac's two-way light times | the chain [3000, 1, 1] with the face slabs 32 deep at both ends | light [1, 1], born clock [512, 1]; matter [800, 809]. At rest: two wells [800, 801] of side 32 at [700, 732) (A) and [792, 824) (B), each with the coupling and a stock of 64, A's train along +x and B's along -x, **K** = 0; co-moving at v = 1 / 3: two packets of [800, 809] of side 32 with **K** = 0.18556 and two co-moving names with their stocks | at_a and at_b the wells' own cells (A's train enters B's cells and B's enters A's; 9.25 (11) (d)); the ladders A -> at_b, B -> at_a; then the faces | Fizeau's drag cancels on a closed loop | at rest the passage's mean click interval at the other well (60 + 16 + 2) / 0.44721 = 174 +- 6 at 64 records each way (the head's 60 Links from A's far face to B's near face; the rms 25), the same both ways; in motion the passages scaled by c_l / (c_l -+ v) = 3.927 with the motion and 0.573 against it (683 and 100), their ratio (c_l - v) / (c_l + v) = 0.146 +- 0.01 (the 108 +- 2 and 0.5774 at c_l = 0.57689 HISTORY) | the moving names ADOPTED; the push CARRIED; the hybrid share 3.2 x 10^-6 a load check |
+| Sagnac's two-way light times | the chain [3000, 1, 1] with the face slabs 32 deep at both ends | light [1, 1], born clock [512, 1]; matter [800, 809]. At rest: two wells [800, 801] of side 32 at [700, 732) (A) and [812, 844) (B), their faces 80 Links apart so that each is a mode of the composed board within the rounding at the seed 2^20 ((7a) (v)), each with the coupling and a stock of 64, A's train along +x and B's along -x, **K** = 0; co-moving at v = 1 / 3: two packets of [800, 809] of side 32 with **K** = 0.18556 and two co-moving names with their stocks | at_a and at_b the wells' own cells (A's train enters B's cells and B's enters A's; 9.25 (11) (d)); the ladders A -> at_b, B -> at_a; then the faces | Fizeau's drag cancels on a closed loop | at rest the passage's mean click interval at the other well (80 + 16 + 2) / 0.44721 = 219 +- 6 at 64 records each way (the head's 80 Links from A's far face to B's near face; the rms 25), the same both ways; in motion the passages scaled by c_l / (c_l -+ v) = 3.927 with the motion and 0.573 against it (860 and 125), their ratio (c_l - v) / (c_l + v) = 0.146 +- 0.01 (the 108 +- 2 and 0.5774 at c_l = 0.57689 HISTORY) | the moving names ADOPTED; the push CARRIED; the hybrid share 3.2 x 10^-6 a load check |
 | De Broglie's fringes | the two slits' layer [305, 320, 1] with the face slabs 32 deep on both axes (the y-periodic layer of 128 HISTORY: the pattern wraps at 2.41 spacings and its visibility falls to 0.43, 9.25 (11) (c)) | matter [800, 809]; the holder [7, 8]. The emitter: a matter slab [800, 801] from (64, 128, 0) with the extents 32 x 64 x 1, its train the character of the matter family at **K** = pi / 2 over 8 periods with the Hann window across y and the tapers of 8 (cos omega = 0.6593, v_g = 0.4384), the coupling, a stock of 2048. The barrier: holder bodies carrying the matter pair [1, 2] as a slab of depth 4 at x = 116 to 119 for y = 32 to 287 except two openings of width 5 centred at y = 154 and y = 167 (d = 13, as the two slits) | the screen: 67 cubes of side 3 at x = 230 to 232, y = 60 to 260, in the order of y (the fringe spacing on the lattice 2 pi L / (d sin K) = 53.2 cells); then the faces as the two slits | a vacuum chamber in nature: nothing | COMPUTED by the generator's run of the placement: the screen's share 0.410 on the ladder, the visibility 0.946 at 53.2 (read 52.5), the centroid 160.0, the lobes' centroids 160.5, 108.0 and 213.5; THE PIN at a stock of 2048: the screen 840 +- 67, the visibility 0.95 +- 0.15 at 53.2, the centroid 160 +- 5, the lobes 160.5, 108 and 213.5 each +- 3 (the 515 +- 58 on the 128 layer HISTORY) | none |
 | The moving mass's energy | the chain [224, 1, 1] with the face slabs 32 deep at both ends | matter [800, 809]. The emitter: a matter well [800, 801] of side 32 at [64, 96) with a stock of 400; its births trains of the matter family at **K** = pi / 2 (v_g = 0.4384, omega = 0.8503), written on its cells, travelling +x | the receiver the cube [136, 139), then the faces (the far slab from 192) | none | the passage's mean click interval (41 + 16 + 2) / 0.4384 = 135 +- 5 at 400 records (the head's 41 Links from the well's far face to the cube; the 169 +- 2 HISTORY); the pace v_g(**K**) and the energy omega(**K**) closed forms beside (8.4, 9.24 (2)) | none |
 | The boxed clocks, the box of side 20 and the box of side 28 | the cubes [64, 64, 64] and [48, 48, 48], periodic | matter [800, 809]; one well [800, 801] of side 20 or 28, one quantum at rest on its mode; the box of side 28 in motion a packet with **K** (v = 1 / 3) | the well's own cells; in motion a co-moving name | none | at rest omega_b by the mode's clicks (0.11929 and 0.09885, the periods 52.67 and 63.56 intervals); in motion the tick 0.8146 from the dispersion (the design's 0.7814 and 0.8032 HISTORY) | the push CARRIED |
