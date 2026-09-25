@@ -9721,3 +9721,156 @@ tail rule and the two-bodies check hold on its profile as on any
 body's. What the law does not give a composite is what it gives no
 body: binding between its parts other than the declared well (9.39
 (3)), contact and repulsion ((6)).
+
+### 9.47 The law, derived: the chain of the adopted statements, each marked (the model owner's word of 2026-09-25 through the Boss, record 1987: "everything we do must be backed by the algebra and follow from it, the family of clicks, the clock and a body represented by something smaller included"; every statement marked PROVED, DERIVED, COMPUTED, ADOPTED or OPEN, with its section; Nature24 names the section each commit implements)
+
+**(1) THE NODE AND ITS NUMBERS.** A Node carries, per record of each
+family, two integer levels a_i and b_i and one remainder r_i, kept at
+the Node through every click (D1; the remainder the Node's: ADOPTED,
+records 1962 (1) and 1966); per family a pair [num, den] per declared
+region, the family's rest rotation cos omega_0 = num / den (8.1,
+DEFINITION); and the level c_i of the family of clicks, which is its
+clock (e_i, f_i) = (Gamma, Gamma + c_i), Gamma one integer of the world
+(9.45 (1), ADOPTED, record 1982). The remainder moves on the multiples
+of the gcd of the step's coefficients below the wall 3 den f_i, so the
+wheel at the Node is W = 3 den f_i over that gcd, the pair's own where
+c_i = 0 (9.19 (4), 9.42 (5): DERIVED). Nothing else is at a Node (9.40
+D6: ADOPTED as the frame, record 1967).
+
+**(2) THE FOUR FAMILIES.** Light, pair [1, 1]; the matter families, each
+with its declared pair; and the family of clicks, pair [1, 1], whose
+level is the clock (9.45; ADOPTED, record 1982; the owner's constant at
+most four). Every family is one primitive under the same step; no
+family name enters any rule (the generic test, skills/workflow.md).
+
+**(3) THE STEP.** At every Node, per record, 3 den f a' + r' = e num S_6
+(a) + 6 den (f - e) a - 3 den f b + r, 0 <= r' < 3 den f (D2). It is a
+bijection of (a, b, r) (9.26 (3) (a): PROVED); separate per family, no
+cross term (9.34 (B): ADOPTED). The share E_i = 3 den f (a^2 + b^2) -
+num Gamma a (S_6 b)_i - 6 den c_i a b and the current J_ij = num Gamma
+(a_i b_j - b_i a_j) satisfy, at every Node and on every set of Nodes,
+E after minus E before equals the sum of the currents through the Ports
+(T1, 9.35 (2), 9.38 (3) (b): PROVED; exact to 10^-15 on the float law
+and to the rounding on the integer law: COMPUTED). Where the clock is
+static the whole I is invariant (PROVED); where the clock changes, the
+record's share changes by 3 den (f' - f)(a^2 + b^2) - 6 den (c' - c) a b,
+a one-way exchange with no conserved total of the families together, by
+the law's choice (9.45 (5): DERIVED). The clock's rotation: 1 - cos
+omega' = (Gamma / (Gamma + c))(1 - cos omega) (9.35 (2): PROVED;
+COMPUTED on the engine to 10^-5, 9.45 (5)). The family of clicks' own
+step runs plain, e = f for itself (DERIVED, 9.45 (2)); at a body's
+Nodes its level is held at the content and elsewhere it moves by the
+plain step (9.45 (2): ADOPTED); its static part around a held content
+is the discrete Coulomb potential (9.41 (3): COMPUTED), so around a mass
+every clock reads Newton's potential (9.41 (4): DERIVED); a pair below
+[1, 1] would screen it (DERIVED), which is why its pair is [1, 1].
+
+**(4) A BODY.** A body is the support of an eigenvector of the family's
+operator with its declared well, a standing record (D4: DEFINITION).
+Its Nodes carry one time: every current of a standing record is 0 and
+its share is constant at every Node, so the count t / P is the same at
+one Node, at the shell and at all (T2, 9.32 (b): PROVED; COMPUTED 600
+of 600 cycles, 9.38 (4)). The mark of a body at a Node is zero current
+with a constant share, local (9.44 (1): PROVED). Two bodies whose modes
+overlap are one eigenvector and one body (9.32 (c): PROVED). A body
+needs a declared well: the uniform operator has no eigenvector of
+finite support, and the clock lowers nothing for light and 10^-8 to
+10^-4 for matter at Gamma = 10^6 against thresholds of 10^-3 to 10^-1
+(T3, 9.39 (3): COMPUTED). A body's content is the sum of its parts'
+and its rotation the union's eigenvalue (9.46 (7): DERIVED).
+
+**(5) THE SMALLER REPRESENTATION, AND THE PROOF THAT IT GIVES THE SAME
+CLICKS.** A body is represented by its content M, its residue u read at
+its first shell Node in the declared order, and one rotation (a, b, r)
+with its stored profile (9.44, 9.46). THE PROOF, in four parts. (i) THE
+GIVING CLICK'S INTERVAL: for a standing record the share is constant
+at every Node and the count against T = P times the share is the same
+count, so for a given u the click falls at the interval ceil((2 u + 1) P
+/ (2 W)) whether it is read at one Node, at the shell, at all the Nodes,
+or on the one rotation of 9.46 (2), which has the same P as a rational
+(T2: PROVED; 9.38 (4) and 9.46 (4) (ii): COMPUTED). (ii) THE RESIDUE:
+with the reseed retired, the remainder at any one Node of the body is a
+fair draw on the wheel in the sense the pins need, the residues spread
+with no run beyond a fair draw's and the mean cycle P / 2 (9.43 (3):
+COMPUTED, 3000 cycles); the pins are marginal shares (9.22 (8)), so
+which Node is read is a convention; the ORDER of the residues is a
+deterministic map that differs between any two representations (T5:
+DERIVED), so the equivalence is in distribution and not bit for bit,
+which is all the law claims (9.43 (2)). (iii) THE TAKING CLICK: gathered
+through the body's Ports on the GameBoard in every representation, the
+same integers (9.38 (2), 9.46 (3) (b): identical by construction). (iv)
+THE BORN ROWS: the born family's eigenvector on the body's Nodes times
+the character, set at the tick, the same in every representation (9.37
+(2), 9.46 (3) (a): identical by construction). Hence the same clicks:
+the same intervals for the same residues, the same residue statistics,
+the same takings and the same births. OPEN: the equivalence test of
+9.46 (4) on the engine, body record against lattice body on one world,
+not yet run because the body record is not yet built; until it passes
+the body record is a host form under its key and the lattice body the
+reference.
+
+**(6) THE TWO ENDS OF THE CLICK.** A click is X_S (the taking end: the
+record's rows to 0 on its support, M + 1 on S, r unchanged) or X_S^T
+(the giving end: the born family's eigenvector on S times the character
+set, the stock and M down one, the body's own levels, phase and
+remainders left as they are), applied once at one interval on all the
+Nodes of one set, and nothing else (D5: DEFINITION; ADOPTED, records
+1962 (4), 1963, 1964, 1982). A change of a body's integers alone sheds
+nothing of the born family (9.37 (1): PROVED), so the giving end must
+set the rows and no wave is written (9.37 (2): DERIVED; the born mode's
+flux check 0.9997 on the algebra and 1.00023 on the engine: COMPUTED).
+The clock under a click changes through the content alone, by (Gamma +
+M) / (Gamma + M +- 1) (T4: PROVED). The giving trigger is local at
+every Node, the residue riding the click's write to all the body's
+Nodes (9.44 (5) (c): DERIVED); the taking trigger is one gather over the
+body's Ports, by Born's rule (9.25 (3): PROVED; a per-Node threshold
+would break it: DERIVED). One quantum, one click (9.25 (2): PROVED).
+The record's ending on all its Nodes at once is the one non-local act
+(ADOPTED, record 1888) and is required by Bell's row: a spreading
+ending would let two far bodies take one quantum or bound the
+correlations at the local value (DERIVED, in the mathematician's
+session). The remainder rule: an exact record never clicks (T6: ADOPTED,
+record 1962 (3)).
+
+**(7) THE SURFACE RULE.** The shell of a body is its Nodes with a Port;
+every click is read there, the passing record through the Ports and the
+own record at the shell's Nodes, one threshold (9.38 (2): DERIVED;
+ADOPTED, record 1982); the body's Gauss law makes the shell read the
+body's whole and nothing twice (9.38 (3) (b): PROVED); the tick at the
+shell equals the tick at all the Nodes (9.38 (4): COMPUTED, 600 of 600).
+
+**(8) A DETECTOR IS A BODY.** A detector is a matter well's bound mode
+with its held quanta as content (9.42 (1); ADOPTED, record 1974). The
+least body of side 3 in [800, 809] has its pair inside from about [800,
+713] to [800, 686] (9.42 (2): COMPUTED); a slab binds at any depth
+(DERIVED); no rich Node is needed, the taking reads the passing record's
+residue (DERIVED). Its own record changes at a click by (Gamma + M) /
+(Gamma + M + 1) (T4: PROVED). Pixels stand four Links apart so that no
+two merge (9.42 (4): DERIVED from 9.32 (c)). OPEN: the eighteen's files
+with their detectors as bodies and their pins recomputed under the same
+rule, on the new engine.
+
+**(9) THE RESEED RETIRED.** Under a reseed the residues' order is u -> u
++ S(t(u)) with S(1) the profile's first-step rounding at the read Node,
+a host constant (9.43 (2): DERIVED; -1 on the engine, -1147 and +337 in
+two roundings: COMPUTED), which would make a closed body's births depend
+on the profile's precision; with the body's own record left as it is,
+the phase carries and no run forms (9.43 (3): COMPUTED; ADOPTED, record
+1982). The light clock's interval pins are expected unchanged: OPEN
+until read on the engine without the reseed.
+
+**(10) WHAT STANDS OUTSIDE THE LAW.** A well from the law itself: no
+(9.39 (3): COMPUTED). A conserved total of the families under a moving
+clock: none, by choice (9.45 (5): DERIVED). Contact, repulsion,
+exclusion, charge: none (9.46 (6): DERIVED); the exchange hypothesis
+(9.27 (D)) is where a charge would enter, under its own identity. Dark
+matter: not given, the field is Newton's exactly (9.41 (4): DERIVED).
+Light with light: not given (9.41 (4) (c): DERIVED). The family of
+clicks carries no quantum, no residue and no click of its own (9.45 (1):
+ADOPTED); its unit is the quantum and its reach in integers M R Links
+(9.45 (2): DERIVED), a declared resolution. The body record (9.46) is a
+host form under its key, its gate the equivalence test: OPEN. The
+generator's mode under the clock at the body's initial content: a build
+item (9.45 (5)): OPEN on the engine. Every statement above not marked
+OPEN follows from (1) to (3) and the adopted definitions; the runs of
+9.38, 9.39 and 9.43 are computations of the algebra and add no rule.
