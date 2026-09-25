@@ -10712,3 +10712,58 @@ itself (the self-force), zero by the read at its two faces of a
 symmetric self-field; two bodies falling on each other, which the form
 gives at once (each reads the other's field) and which the binding
 row of 9.48 (4) will run.
+
+### 9.53 How the law enters, once; what is a host form; the one seam left, and what closes it (the model owner, 2026-09-25: "so how does the law enter? think again whether this unifies everything"; the mathematician's answer, for the record)
+
+**(1) THE LAW ENTERS ONCE, IN THREE SENTENCES.** Every Node steps
+every family by the one rule at its own pace, 3 den Gamma a_next + r'
+= p_i num S_6(a_now) + 6 den c_i a_now - 3 den Gamma a_before + r with
+p_i = Gamma - c_i + q Lambda d_i, the two field families stepping plain
+(9.50 (8), (13); 9.48 (3)). A body is the support of a mode of that
+rule (9.40 D1), and the levels of the two fields at a body's Nodes are
+the body's record, s and Q, part of the NodeState there (9.51 (1)).
+The click is the one write: the taking end's rows to 0 with M + 1, Q +
+q and s recomputed; the giving end's born rows on S with M - 1, u read
+at the first shell Node, s recomputed (9.40 T3, 9.44 (5), 9.51 (3)).
+Nothing else is law. Everything that moves between clicks moves by
+the first sentence; everything written is written by the third.
+
+**(2) WHAT IS A HOST FORM, AND ITS GATE.** Each of these is the host's
+shortcut for what the law does on the lattice, and each stands only by
+its equivalence to the law's own run: the body record, one Node for a
+body's mode (9.46; the gate 9.46 (4)); the seat's hop by the velocity
+accumulator (9.52; the gate: the lattice mode's drift by the ray
+equation, within one hop); the tick as a count (9.44 (5) (c); the gate:
+the residue rung on the lattice, in distribution); the energy count s =
+(M P_0) div P with P the generator's integer (9.51 (3); the gate: P
+equal to the mode's period as the rule turns it, within one interval).
+A host form that fails its gate is refused, not adjusted.
+
+**(3) THE ONE SEAM LEFT.** Today a body is a mode in a DECLARED well: a
+region of the material pair nailed to the GameBoard (the detector's
+well, 9.42; the deep well; the emitter's well). The law cannot move a
+declared region, so a body held by one cannot fall by the law; its
+fall exists only as the seated body's hop (9.52), the host form of a
+body that holds itself. And its period P, the energy, is the mode of
+the declared well, the generator's integer, not the law's own. That is
+the seam: the binding of a body is not yet the law's.
+
+**(4) WHAT CLOSES IT: BINDING FROM THE LAW, THE ATOM ROW.** With the
+charge (9.48), a record of charge q is bound in the well of an unlike
+body by the law itself (9.48 (4): side 32 and above at Lambda |d| about
+0.25 Gamma), with no declared region: the body is then the support of
+a self-bound mode, and everything about it is the first sentence's:
+its shape S (the support), its period P (the bound mode's, as the rule
+turns it, so the energy count and the mass defect are computed, not
+declared), its fall (the support drifts down the pace, the seat's hop
+its gated shortcut), its clicks (the third sentence). The declared
+wells stay as the laboratory's tools, mirrors, splitters, gaps, which
+are regions of the vacuum's pair and never bodies. So the answer to
+"does this unify everything": yes, up to one row, the atom row, which
+is the binding row of 9.48 (4) and Nature24's item 5; when it runs and
+the seated body passes its gates against the self-bound mode, the
+world of clicks and the world of Nodes are one under the three
+sentences of (1), and nothing is declared but the world's constants
+(Gamma, P_0, Lambda), the families' pairs and the initial state. Until
+then the seam is stated here and in every row that uses a declared
+well for a body.
