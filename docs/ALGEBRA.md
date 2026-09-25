@@ -8867,3 +8867,47 @@ fraction of it at which the gathering is complete. At that moment one
 whole quantum leaves: the born record, set on the body's cells at the
 click and carried out through the faces by the step alone; nothing is
 written, and the remainder stays behind at the cell.
+
+**(9) THE BIGGER RULE: THE BODY IS ONE NODE (the model owner's word,
+2026-09-25, in the mathematician's session: "this feels to me like a
+complication of a bigger rule that we need, out of clicks, a sum of
+remainders and the order of the small Node"; CHECKED and COMPUTED).**
+The owner is right that (2) can be said without the walk. THE RULE: a
+body is one Node. Its levels are its profile on its cells; its Ports are
+its surface ((1)); its share is its whole; and ITS REMAINDER IS THE SUM
+OF ITS CELLS' REMAINDERS, read on the wheel: u = (sum over the body's
+cells of r_i, mod wall) / g, with g = gcd(num, wall) and W = wall / g as
+for one cell (9.19 (4); each r_i moves on the multiples of g, so the sum
+does). Then the order of the small Node applies to the body verbatim:
+the step at every cell; the gather, the inward current of a passing
+record through the Ports and the body's own share; the click at the
+threshold (2 u + 1) / (2 W) of the whole set by the remainder; at the
+click the whole out (a passing record cleared and the content up one;
+the own record's click the born family's levels set and the stock down
+one), the remainders staying behind at the cells. No cell is chosen and
+no order is declared inside a body: the landing cell and the walk of
+(2) are needed only between bodies (the ladder of detectors, 9.25 (2),
+where a cell of the ladder is a whole body) and never inside one. This
+is the frame of record 1967 read on a body as on a Node, and it is what
+the owner asked for.
+
+COMPUTED on the integer law with the remainders kept and no coupling
+(scratchpad sum_remainders.py, sum_remainders2.py, sum_remainders3.py;
+the well [800, 801] of side 32 on the chain, W = 2403): the born residue
+as the sum over all the body's cells: 4000 cycles, 1949 distinct values
+where a uniform draw expects 1948, the chi-square over 20 bins 30.3 on
+all 4000 (33.5 and 21.3 on the two halves; the 95 percent bound 30.1),
+the mean cycle 48.1 +- 0.4 against P / 2 = 46.8; the sum over the shell
+cells alone: 1944 distinct, the chi-square 52.2 on 4000 (25.3 and 38.2),
+the mean cycle 46.8 +- 0.4; the remainder at one cell (the centre, the
+engine's reading today): 1325 distinct of 2000 where uniform expects
+1357, the chi-square 50.3 on 2000. THE HONEST READING: every reading of
+a reseeded body's remainder is a deterministic map on the wheel (the
+levels are the same profile at every reseed, so the next residue is a
+fixed function of the last), and none is exactly uniform over thousands
+of cycles; the sum over the body's cells covers the wheel exactly as a
+uniform draw does and shows the mildest structure of the three, a few
+percent in 20 bins, which no pin sees (the pins are binomial shares with
+bands of 5 to 10 percent, 9.22 (8)). RECOMMENDED: the owner's form, the
+sum over the body's cells, as the body's remainder; the landing cell of
+(2) withdrawn inside a body.
