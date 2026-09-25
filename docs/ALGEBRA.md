@@ -10942,3 +10942,29 @@ element turning (the law's own bijection, the Inside of 8.8), which is
 another law under another identity. What the click keeps is the line:
 the count, the residue, the Node, the interval; that is the record's
 whole trace, and (1) (b) is its exact statement.
+
+**(7) THE CLICK IS THE PRESENT; WHAT A BACKWARD RUN GIVES BACK AND WHAT
+IT DOES NOT (the model owner, 2026-09-25: "the click is the present;
+all the future is in the Nodes, all the possibilities after the click;
+if the board is reversible in time, are the clicks made again, or is
+information lost?").** Three answers, each exact. (a) FORWARD, the
+future is in the Nodes entirely: the law is deterministic (2.7), so
+from a state every later click, its Node and its interval, is fixed;
+run the same state forward twice and the same clicks come again, bit
+for bit; the "possibilities" are one possibility, chosen by the
+residues, which are the rounding's walk of the Nodes' own integers
+(9.43), unknown to a body until its fraction is whole (record 1967).
+(b) BACKWARD, between clicks, the past is given back exactly, to the
+interval of the last click ((1) (a)). (c) BACKWARD THROUGH A CLICK, no
+click is made again and the information is lost, exactly this: the
+inverse map fires no rung, so a birth is undone (the born rows return
+into the body by X_S from the line) but a taking is not undone: the
+taken record's rows and remainders do not come back, since the line
+kept four integers of them and the law has no term that makes rows
+from a line ((1) (b), (6)). So the past is recoverable only to the
+last taking, and the future is fixed to the end: the arrow of time of
+the law is the click, and nowhere else; between clicks time has no
+direction. THE OWNER'S SENTENCE, EXACT: the click is the present, the
+one interval at which the state at the Nodes is written into a record
+and made permanent; the future is the state at the Nodes and nothing
+else; the past is the lines, and the state back to the last taking.
