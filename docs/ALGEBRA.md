@@ -13632,3 +13632,155 @@ self-coupled force are declarations or the law's own, as (6) (f) to
 Nature24 builds (1) to (6) in one stroke, names the ALGEBRA section
 in the commit, and the gate reads it line by line; the rows of (9)
 run in check mode after the shipped worlds are read bit for bit (8).
+
+### 9.79 The family genericity: the engine's operations written once, and the attributes of a family (the Boss's records 2065, 2066 and 2069 of 2026-09-25, the model owner: "the engine does not know the family's name, does not know what the family does; the engine only supports the family's operations, fully generic for all families; if we fix something, we fix it in one place and not in eight"; top priority, everyone on this alone; the two worlds and time; Nature24's audit of record 2066 confirmed line by line)
+
+**(0) THE WORD.** Everything a family is lives in the world file's
+families list; the engine branches on no name and no role; it
+supports OPERATIONS, each written once for any family, each reading
+only declared attributes. Direction (record 2065) is one attribute
+among them: any family, a family of records or a field family, may
+declare its representation of G_48, and the one rule steps every
+component alike. 9.78 rides on this section: gravity and the charge
+are entries of the families list and nothing in the engine. The
+whole numbers, the remainders kept, no formula in the engine, the
+Nodes' world exactly backward: unchanged (record 2069, (5)).
+
+**(1) THE ATTRIBUTES OF A FAMILY, the complete set.** Eight, each read
+by the operations of (2) and by nothing else:
+
+| Attribute | Its values | Read by |
+| --- | --- | --- |
+| name | the host's word, for the world file and the display | no operation (the engine never branches on it) |
+| pair [num, den] | the rotation at rest; [1, 1] unbounded range; den > num a rest mass, a finite range for a held family | the step, the inverse, the wheel, the form |
+| representation | scalar (1 component), vector (3), tensor (6); the group acts on the component index alone (signed permutations of the axes; g h g^T on the pairs) | the step, the hold, the pace, the self-source, the booking, the form |
+| reads | a list of {family, weight, by}: the held families this family's records read, the weight (Lambda; 1 for gravity), by (the record's own charge q, or 1); an empty list is the plain rule | the pace, the step (the four paces), the reading on bodies |
+| held | absent for a family of records; for a field family {count, factor, dipole}: count "content" (s) or "charge" (Q); factor the whole number on the momentum's power (4, 2 or 1 in 9.78 (2)); dipole "spin" or "moment" or absent | the hold, the loader |
+| self_unit | P_2, 0 by default (9.78 (3)) | the self-source |
+| clicks | absent, or {gives, takes, quantum}: whether records of this family are given and taken at clicks, and the count per click | the click, the loader |
+| booked | true for a family whose flux is booked at a detector's Ports and at a hop; false for a held family | the booking |
+
+A body's numbers (9.69 (6) with the spin and the moment of 9.78 (2))
+stay the body's, in its entity; a family declares nothing about a
+body. The loader's checks read the attributes and refuse by name: the
+guard p > 0 for every declared sign under every read (9.57 (1)), the
+rule's total under 2^63 (9.57 (2)), P_2 >= 24 A, a held family with
+clicks or booked, a family that reads a family with no held.
+
+**(2) THE OPERATIONS, WRITTEN ONCE FOR ANY FAMILY.** Nature24's list C
+of record 2066, confirmed, with the four paces, the self-source and
+the spin from 9.78 in their places and one correction (item 10):
+
+1. THE STEP: the one rule 9.78 (4) on every component with the
+   family's pair, the four paces from its reads (p_0 from the scalar
+   reads, p_a from the tensor reads' diagonal div 2); a family with
+   no reads steps at p_0 = p_a = Gamma, the plain rule. Reads: pair,
+   representation, reads. The Nodes' world.
+2. THE INVERSE: the same integers, the ceiling, per Node, the
+   families in the reverse of the step's order, the fields before
+   the seats. Reads: the same. The Nodes' world.
+3. THE HOLD: a held family's components written whole at every Node
+   of a body from the body's record: the count times the factor
+   times the momentum's power of the representation (1, n / W,
+   n n / W^2), both levels, remainder 0, the division's remainder on
+   the body's record; the dipole on the seat's six from the spin or
+   the moment (9.78 (2)); at a hop the field's integers of the
+   covered Nodes move to the vacated ones (9.52 (4) (i)). Reads:
+   held, representation. The Nodes' world (a write undone by the
+   seat's inverse).
+4. THE PACE: a record's reads contracted with the held families'
+   components at its Node, weight times by, one division with the
+   remainder kept: at every Node the scalar's level into p_0 and the
+   tensor's diagonal div 2 into p_a; at a seat the full contraction
+   of 9.78 (4) with the body's n and n n. Reads: reads, and the read
+   family's representation. The Nodes' world.
+5. THE SELF-SOURCE: the six differences squared, summed over the
+   components, div P_2, subtracted from the step's right side (9.78
+   (3)); off at P_2 = 0. Reads: self_unit, representation. The
+   Nodes' world.
+6. THE CLICK: the taking and the giving for a family with clicks, the
+   quantum whole; the given rows by the body's declaration (a train,
+   or the point emitter's window, whose writes are item 1's world).
+   Reads: clicks; the body's numbers. THE CLICKS' WORLD: no inverse.
+7. THE BOOKING AT PORTS: the one-way flux into a detector's Nodes,
+   summed over the components, Born's shares per Node (9.25 (3)); the
+   taking at a hop in the body's frame (9.72). Reads: booked,
+   representation. The Nodes' world (a reading).
+8. THE WHEEL AND THE RESIDUE: the rule's own at the Node, from the
+   integers of item 1, never declared (9.22 (4)). Reads: nothing
+   beyond item 1's.
+9. THE FORM: the conserved form of 9.57 (1) from the rule's integers,
+   the components summed by the representation's invariant norm; a
+   GameBoard reading. Reads: pair, representation.
+10. THE READING ON BODIES: the seat's hop rule with the feed (the
+   difference of item 4's contraction across the two faces of each
+   axis), the induction (minus the change of the contraction's
+   momentum part at the record's Node over the interval, the hop
+   included) and the spin's step (9.78 (5)); 9.77 (3)'s separate curl
+   is not an operation: the magnetic and tidal terms are what the
+   feed and the induction of the contraction give, and the curl
+   appears only inside the spin's step. Reads: the body's standing
+   family's reads; the body's numbers. The Nodes' world.
+
+Nothing else. What the engine also does reads no family attribute:
+the sweep (every family from the same start values, 9.57 (1)), the
+support-only window (b7d6f082), the display (state only), the
+digests. Anything the engine does beyond this list, or any branch on
+a name or a role that remains, is a defect for the gate.
+
+**(3) THE FAMILIES OF CLICKS AND OF CHARGE ARE ENTRIES, CONFIRMED.** No
+special operation, no world key, no special record; the loader makes
+nothing by role:
+
+| Family | pair | representation | reads | held | clicks | booked |
+| --- | --- | --- | --- | --- | --- | --- |
+| clicks (gravity's scalar) | [1, 1] | scalar | {clicks, 1} | {content, 1} | none | false |
+| charge (its scalar) | [1, 1] | scalar | {clicks, 1} | {charge, 1} | none | false |
+| light | [1, 1] | scalar | {clicks, 1} | absent | {gives, takes, 1} | true |
+| a matter family | [num, den] | scalar | {clicks, 1}, {charge, Lambda, q} | absent | {gives, takes, 1} | true |
+| gravity's vector | [1, 1] | vector | {clicks, 1} | {content, 4, spin} | none | false |
+| gravity's tensor | [1, 1] | tensor | {clicks, 1} | {content, 2} | none | false |
+| the charge's vector | [1, 1] | vector | {clicks, 1} | {charge, 1, moment} | none | false |
+
+The effective content c - q Lambda d of 9.57 (1) is item 4 with two
+reads; "gamma 1, content 0" for a field was the plain rule and is now
+reads {clicks, 1} (9.78 (1): a field steps at the Node's own pace,
+the family of clicks reading itself), bit for bit where c = 0;
+"unbooked" is booked false; the step order is any order, since every
+family reads the interval's start values (9.57 (1)), and the inverse
+reverses whatever order the build fixes. A run of every shipped world
+under the entries above reads bit for bit against its digest: that is
+the gate of the genericity head.
+
+**(4) NATURE24'S TWO QUESTIONS.** (a) A held family reads a pace by its
+reads like any family; the plain rule is the empty list; 9.78 (1)
+declares every field of the frozen engine with {clicks, 1}. (b) The
+components step independently by the same scalar rule; the group acts
+on the component index alone, by signed permutation on a vector and
+by g h g^T on a tensor; "representation" fixes the count and the
+action and is the whole declaration; the tensor's trace has no line of
+its own: it is three components sourced by the hold like the others
+(2 s n_a n_a div W^2) and read into the axes' paces alike. Where 9.77
+and 9.78 need an attribute beyond Nature24's list B: the factor and
+the dipole inside held, self_unit, the four paces inside the step,
+and by inside reads for the seat's contraction; nothing else.
+
+**(5) THE TWO WORLDS AND TIME, one line each (record 2069).** The
+Nodes' world, items 1 to 5 and 7 to 10, runs backward exactly, and
+the backward run is its test that nothing is deleted between clicks.
+The clicks' world, item 6 (every taking and giving, the content, the
+stock, the charge, the counts), has no time reversal. 9.69 (2)
+restated: the point emitter's window writes (a_given at the seat
+raised by g times the seat's level each interval) are the Nodes'
+world and invert bit for bit; the giving click itself (the stock
+down by one, the content, the ledger's line) is the clicks' world and
+does not. The first reason of 9.78 (4) against the twist on a free
+record stands by the owner's word (the Nodes' world runs backward
+exactly); the second, the wall's room, stands by the integers.
+
+**(6) THE ORDER OF WORK (record 2069).** Everyone on the genericity
+alone: Nature24 builds (1) to (3) with the gate of (3), names this
+section in the commit; the mathematician gates it line by line;
+9.78's instances are then entries of the families list on the same
+head or the next; the point emitter's five questions and every row
+wait until the genericity lands, then the experiments return.
