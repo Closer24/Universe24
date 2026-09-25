@@ -199,6 +199,11 @@ class LiveRecord:
     # summed; the giving line held until the close names the record
     window_open: bool = False
     window: int = 0
+    # THE FAMILY GENERICITY (record 2066; item 51): a body's own standing
+    # record (the lattice body's, held by the law at the body and read by no
+    # detector, its inverse with the body's), marked on the record and not
+    # on its family
+    standing: bool = False
     outward: int = 0
     giving_line: dict[str, object] | None = None
     # The sinks' take of a record under the receiver by name (HOST, the
@@ -487,50 +492,34 @@ class DetectorLawSimulation:
         # (e, f) = (Gamma, Gamma + M) enters every family's rule at the
         # Node. M changes only at the law's events (a giving, a click, a
         # step of a body), so the array is rebuilt from the held books as
-        # each interval begins (`_refresh_node_content`) and after a giving.
+        # each interval begins (`_hold`) and after a giving.
         self.node_clock = int(world.node_clock)
         if self.node_clock < 1:
             raise ValueError(
                 f"{BEAM_LAW}: the world declares no Node clock (`node_clock`, Gamma from 1; "
                 "ALGEBRA.md 9.35 (3); BUILD.md section 26 item 31)"
             )
-        # THE FAMILY OF CLICKS (the model owner's record 1982; ALGEBRA.md 9.41,
-        # 9.44 (3), 9.45; BUILD.md section 26 item 32): the fourth family,
-        # whose level c at a Node IS the Node clock (Gamma, Gamma + c); one
-        # record of it over the board (`clock_record`), its level held at
-        # every body's Nodes at the body's content (both levels, the
-        # remainder 0, not the step's own there), written at the load and at
-        # every click; elsewhere it moves by its own plain step after the
-        # other families' (so the joint step inverts); no residue, no ladder,
-        # no click of its own, never booked. `node_content` is its level as
-        # every other family's step reads it: the static M of decision (5)
-        # was its value at a body's own Nodes.
-        if world.clock_family is None:
-            raise ValueError(
-                f"{BEAM_LAW}: the world declares no family of clicks (`clock_family`; ALGEBRA.md "
-                "9.45; BUILD.md section 26 item 32)"
-            )
-        self.clock_family = int(world.clock_family)
-        self.node_content = np.zeros(self.shape, dtype=np.int64)
-        # THE FAMILY OF CHARGE (the model owner's decision of 2026-09-25;
-        # ALGEBRA.md 9.48; BUILD.md section 26 item 35): the fifth family, on
-        # the scaffold of the family of clicks: one record over the board
-        # (`charge_record`), its level held at every body's Nodes at the
-        # body's signed charge Q (the sum of the signs of the quanta it
-        # holds, `_body_charge`), elsewhere its own plain step; a record of
-        # charge q reads at every Node the effective content c - q Lambda d
-        # in place of c, the sign opposite to its own (a hill beside a body
-        # of its own sign, a well beside the other sign; light, q = 0, reads
-        # the content alone), Lambda the world's `charge_strength`
-        if world.charge_family is None:
-            raise ValueError(
-                f"{BEAM_LAW}: the world declares no family of charge (`charge_family`; ALGEBRA.md "
-                "9.48; BUILD.md section 26 item 35)"
-            )
-        self.charge_family = int(world.charge_family)
-        self.charge_strength = int(world.charge_strength)
+        # THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25
+        # through the Boss; BUILD.md section 26 item 51; the family of clicks
+        # of record 1982 and ALGEBRA.md 9.45, item 32, and the family of
+        # charge of 9.48, item 35, are its two cases): the engine knows no
+        # family's name or role. A family with a declared `held` source has
+        # one record over the board (`held_records`), its level held at every
+        # body's Nodes at the body's declared source (the quanta it holds, or
+        # their signed sum; both levels, the remainder 0, not the step's own
+        # there), written at the load and at every click; elsewhere it moves
+        # by its own plain step after the other families' (so the joint step
+        # inverts); no residue, no ladder, no click of its own, never booked.
+        # `node_level` is each held family's level as every reading family's
+        # step reads it (`_effective_content`, by the reading family's
+        # declared `reads`: SUM weight x level, or - q x weight x level by the
+        # reading family's own charge sign q; 9.45 (3), 9.48 (3)).
+        self.held_families: list[int] = list(world.held_families)
         self.family_charge = [int(family.charge[0]) for family in world.families]
-        self.node_charge = np.zeros(self.shape, dtype=np.int64)
+        self.node_level: dict[int, np.ndarray] = {
+            family: np.zeros(self.shape, dtype=np.int64) for family in self.held_families
+        }
+        self._effective: dict[int, np.ndarray] = {}  # HOST: per interval, cleared by the hold
         self.span_masks: dict[int, np.ndarray] = {}
         for number, entry in enumerate(world.measured):
             if entry.block is None:
@@ -613,6 +602,7 @@ class DetectorLawSimulation:
                 else:
                     own_record.now[mask] = definition.seed
                     own_record.before[mask] = definition.seed
+                own_record.standing = True  # a body's own record, read by no detector (item 51)
                 block.own = own_record
                 self.records[own_record.identity] = own_record
                 block.previous_sum = int(np.sum(own_record.now[mask]))
@@ -656,103 +646,109 @@ class DetectorLawSimulation:
                 )
             self.receiver_detector[block.number] = self.detector_names.index(name)
         self.has_receiver = bool(self.receiver_detector)
-        # the family of clicks' record: the load's write, the content held at
-        # every body's Nodes and 0 elsewhere (ALGEBRA.md 9.45 (2))
-        self.clock_record = LiveRecord(
-            -1,
-            -1,
-            self.clock_family,
-            0,
-            0,
-            self.tick,
-            0,
-            1,
-            1,
-            0,
-            1,
-            np.zeros(self.shape, dtype=np.int64),
-            np.zeros(self.shape, dtype=np.int64),
-            np.zeros(self.shape, dtype=np.int64),
-            pointers=[0] * len(self.detector_names),
-            first_rung=[None] * len(self.detector_names),
-        )
-        # the family of charge's record: the load's write, the signed charge
-        # held at every body's Nodes and 0 elsewhere (ALGEBRA.md 9.48 (2))
-        self.charge_record = LiveRecord(
-            -2,
-            -2,
-            self.charge_family,
-            0,
-            0,
-            self.tick,
-            0,
-            1,
-            1,
-            0,
-            1,
-            np.zeros(self.shape, dtype=np.int64),
-            np.zeros(self.shape, dtype=np.int64),
-            np.zeros(self.shape, dtype=np.int64),
-            pointers=[0] * len(self.detector_names),
-            first_rung=[None] * len(self.detector_names),
-        )
-        self._hold_clock()
-
-    # The Node clock as the family of clicks (ALGEBRA.md 9.35 (2), 9.45; BUILD.md
-    # section 26 items 31 and 32)
-
-    def _hold_clock(self) -> None:
-        """THE HOLD (ALGEBRA.md 9.45 (2)): at every body's Nodes the family of
-        clicks' level is the body's content, the held quanta of every family
-        (a block's Nodes as they stand this interval, a measured event's
-        span), written whole at both levels with the remainder 0: the one
-        place where a family's level is not the step's own, the same write as
-        the load's, at the load and at every click (up by one at a taking,
-        down by one at a giving). `node_content` is then the level every
-        other family's step reads at the Node. THE FAMILY OF CHARGE is held
-        the same way at the body's signed charge Q (ALGEBRA.md 9.48 (1) and
-        (2); item 35), `node_charge` its level."""
-        clock = self.clock_record
-        charge = self.charge_record
-        for number in range(len(self.held)):
-            quanta = sum(self.held[number])
-            signed = self._body_charge(number)
-            block = self.block_by_number.get(number)
-            mask = block.mask if block is not None else self.span_masks[number]
-            clock.now[mask] = quanta
-            clock.before[mask] = quanta
-            clock.remainder[mask] = 0
-            charge.now[mask] = signed
-            charge.before[mask] = signed
-            charge.remainder[mask] = 0
-        self.node_content = clock.now
-        self.node_charge = charge.now
-
-    def _advance_clock(self) -> None:
-        """The family of clicks' own step and the family of charge's, after every
-        other family's (ALGEBRA.md 9.45 (2), 9.48 (2)): the plain step of the
-        pair [1, 1] at every Node (the pace 1 for its own level: a field
-        family reads no other family and not itself), then the hold at the
-        bodies' Nodes; the joint step inverts (`step_inverse`).
-        THE GUARD: the pace Gamma - c stays positive at every Node and the
-        level above -Gamma (|c| below Gamma, the loader's bound on twice the
-        world's content); the run is refused where it does not."""
-        self._advance(self.clock_record)
-        self._advance(self.charge_record)
-        self._hold_clock()
-        # the pace Gamma - c + q Lambda d of every family's reads stays
-        # positive (ALGEBRA.md 9.45 (3), 9.48 (3); items 34 and 35)
-        for sign in sorted(set(self.family_charge)):
-            most = int(
-                np.max(np.abs(self.node_content - sign * self.charge_strength * self.node_charge))
+        # the held families' records (item 51): the load's write, each family's
+        # declared source held at every body's Nodes and 0 elsewhere (ALGEBRA.md
+        # 9.45 (2), 9.48 (2)); the identities below 0, one per held family
+        self.held_records: dict[int, LiveRecord] = {
+            family: LiveRecord(
+                -1 - position,
+                -1 - position,
+                family,
+                0,
+                0,
+                self.tick,
+                0,
+                1,
+                1,
+                0,
+                1,
+                np.zeros(self.shape, dtype=np.int64),
+                np.zeros(self.shape, dtype=np.int64),
+                np.zeros(self.shape, dtype=np.int64),
+                pointers=[0] * len(self.detector_names),
+                first_rung=[None] * len(self.detector_names),
             )
+            for position, family in enumerate(self.held_families)
+        }
+        self._hold()
+
+    # The held families (ALGEBRA.md 9.35 (2), 9.45, 9.48; BUILD.md section 26
+    # items 31, 32, 35 and 51): the operations, written once for any family
+
+    def body_source(self, number: int, source: str) -> int:
+        """A body's declared source for a held family (item 51): its content,
+        the quanta it holds of every family ("content", ALGEBRA.md 9.45 (2)),
+        or its signed charge Q ("charge", 9.48 (1))."""
+        if source == "charge":
+            return self._body_charge(number)
+        return sum(self.held[number])
+
+    def _hold(self) -> None:
+        """THE HOLD (ALGEBRA.md 9.45 (2), 9.48 (2); item 51): at every body's
+        Nodes a held family's level is the body's declared source (a block's
+        Nodes as they stand this interval, a measured event's span), written
+        whole at both levels with the remainder 0: the one place where a
+        family's level is not the step's own, the same write as the load's,
+        at the load and at every click (up by one at a taking, down by one at
+        a giving). `node_level` is then each held family's level as every
+        reading family's step reads it at the Node."""
+        for family, record in self.held_records.items():
+            source = self.families[family].held
+            assert source is not None
+            for number in range(len(self.held)):
+                value = self.body_source(number, source)
+                block = self.block_by_number.get(number)
+                mask = block.mask if block is not None else self.span_masks[number]
+                record.now[mask] = value
+                record.before[mask] = value
+                record.remainder[mask] = 0
+            self.node_level[family] = record.now
+        self._effective.clear()
+
+    def held_record(self, source: str) -> LiveRecord | None:
+        """The held record of the family holding `source` ("content" or
+        "charge"), None where no family holds it; a GAMEBOARD reading by the
+        declared attribute, never by a name."""
+        for family, record in self.held_records.items():
+            if self.families[family].held == source:
+                return record
+        return None
+
+    def level_of(self, source: str) -> np.ndarray:
+        """The level over the board of the family holding `source` (the Node
+        clock's c for "content", 9.45; the charge field d for "charge", 9.48),
+        zeros where no family holds it; a GAMEBOARD reading."""
+        for family in self.held_records:
+            if self.families[family].held == source:
+                return self.node_level[family]
+        return np.zeros(self.shape, dtype=np.int64)
+
+    def _advance_fields(self) -> None:
+        """The held families' own steps, after every other family's (ALGEBRA.md
+        9.45 (2), 9.48 (2); item 51): the plain step of the pair [1, 1] at
+        every Node (the pace 1 for its own level: a held family reads no
+        family and not itself), in the declared order, then the hold at the
+        bodies' Nodes; the joint step inverts (`step_inverse`).
+        THE GUARD: every reading family's pace Gamma - (its effective
+        content) stays positive at every Node and the content above -Gamma
+        (the loader's bound on twice the world's sources); the run is refused
+        where it does not."""
+        for record in self.held_records.values():
+            self._advance(record)
+        self._hold()
+        # the pace of every family's reads stays positive (ALGEBRA.md 9.45 (3),
+        # 9.48 (3); items 34, 35 and 51)
+        for family, definition in enumerate(self.families):
+            if not definition.reads:
+                continue
+            most = int(np.max(np.abs(self._effective_content(family))))
             if most >= self.node_clock:
                 raise RuntimeError(
-                    f"{BEAM_LAW}: the effective content c - q Lambda d for the charge q = {sign} "
-                    f"reached {most} in size at interval {self.tick}, at or beyond Gamma = "
-                    f"{self.node_clock}: the pace Gamma - c + q Lambda d of every read stays "
-                    "positive under the fixed wall (ALGEBRA.md 9.45 (3), 9.48 (3); BUILD.md "
-                    "section 26 items 34 and 35); the run is refused"
+                    f"{BEAM_LAW}: the effective content {definition.name!r} reads reached {most} "
+                    f"in size at interval {self.tick}, at or beyond Gamma = {self.node_clock}: "
+                    "the pace Gamma minus the weighted held levels of every read stays positive "
+                    "under the fixed wall (ALGEBRA.md 9.45 (3), 9.48 (3); BUILD.md section 26 "
+                    "items 34, 35 and 51); the run is refused"
                 )
 
     def _neighbour_nodes(
@@ -801,15 +797,30 @@ class DetectorLawSimulation:
         return self.node_clock - int(self._effective_content(family)[node]), self.node_clock
 
     def _effective_content(self, family: int) -> np.ndarray:
-        """THE READING WITH ONE SIGN (ALGEBRA.md 9.48 (3); BUILD.md section 26
-        item 35): the content a record of `family` reads at every Node, c -
-        q Lambda d, the family of clicks' level less the family's charge q
-        times the strength times the family of charge's level; the content
-        alone for q = 0 (light)."""
+        """THE PACE'S READ (ALGEBRA.md 9.45 (3), 9.48 (3); BUILD.md section 26
+        items 35 and 51): the content a record of `family` reads at every
+        Node, the sum over its declared reads of weight x level (by "plain")
+        or - q x weight x level (by "charge", q the family's own charge sign):
+        c - q Lambda d where a family reads the content plainly and the
+        charge by its sign; zeros for a family that reads nothing (a held
+        family, or the vacuum's rule). HOST: one array per family per
+        interval, cleared by the hold; a single plain read at weight 1 is
+        that held level itself, no copy."""
+        cached = self._effective.get(family)
+        if cached is not None:
+            return cached
+        reads = self.families[family].reads
         sign = self.family_charge[family]
-        if sign == 0:
-            return self.node_content
-        return self.node_content - sign * self.charge_strength * self.node_charge
+        if len(reads) == 1 and reads[0][1] == 1 and reads[0][2] == "plain":
+            content = self.node_level[reads[0][0]]
+        else:
+            content = np.zeros(self.shape, dtype=np.int64)
+            for other, weight, by in reads:
+                factor = weight if by == "plain" else -sign * weight
+                if factor:
+                    content = content + factor * self.node_level[other]
+        self._effective[family] = content
+        return content
 
     def _body_charge(self, number: int) -> int:
         """A body's charge Q (ALGEBRA.md 9.48 (1)): the sum of the signs of the
@@ -1293,12 +1304,14 @@ class DetectorLawSimulation:
             if block.seat is not None
             else self.first_shell_node(block)
         )
-        # the family of clicks' level at the read Node and at its reads as the
-        # wheel was read, before the giving lowers the content (item 34; GAMEBOARD)
+        # the held content's level at the read Node and at its reads as the
+        # wheel was read, before the giving lowers the content (item 34;
+        # GAMEBOARD; the family holding "content", item 51)
+        content_level = self.level_of("content")
         read_clocks = [
-            int(self.node_content[read_node]),
+            int(content_level[read_node]),
             [
-                int(self.node_content[j])
+                int(content_level[j])
                 for j in self._neighbour_nodes(read_node, self.kind_wrap[block.family])
             ],
         ]
@@ -1309,7 +1322,7 @@ class DetectorLawSimulation:
         # the content and the charge the clicking record was advanced under
         # (before this giving lowers them; item 35's line reads them here,
         # the pair no longer the content alone for a charged family)
-        centre_content = int(self.node_content[centre])
+        centre_content = int(content_level[centre])
         body_charge = self._body_charge(number)
         # the body's own record is not ended and never rewritten (9.43 (3))
         block.givings += 1
@@ -1385,7 +1398,7 @@ class DetectorLawSimulation:
         # interval): the form the plain flux booking sums to over the
         # record's passage (the share's identity, `form_share`), read on
         # the ladder as T / p
-        self._hold_clock()
+        self._hold()
         if live.window_open:
             # THE POINT EMITTER (item 50): the record's norm is T from the open,
             # the excitation's action the window will reach (9.71 (1) (d)), as the
@@ -1546,7 +1559,7 @@ class DetectorLawSimulation:
         `step_inverse`)."""
         num = self.kind_num[live.family]
         den = self.kind_den[live.family]
-        field = live is self.clock_record or live is self.charge_record
+        field = self.families[live.family].held is not None
         gamma = 1 if field else self.node_clock
         content = 0 if field else self._effective_content(live.family)
         # the same integers as the forward step's: the pace on the Node's own
@@ -1597,17 +1610,19 @@ class DetectorLawSimulation:
                 raise ValueError(
                     f"{BEAM_LAW}: the inverse map is defined at rest (block {block.number} moves)"
                 )
-        # the joint inverse (ALGEBRA.md 9.41 (2), 9.45 (2)): every family backward
-        # at the family of clicks' level of the interval's start (its `before`
-        # level: the clock stepped last), then the clock backward and its hold
-        self.node_content = self.clock_record.before
-        self.node_charge = self.charge_record.before
+        # the joint inverse (ALGEBRA.md 9.41 (2), 9.45 (2); item 51): every
+        # family backward at the held levels of the interval's start (their
+        # `before` level: the held families stepped last), then the held
+        # families backward and their hold
+        for family, record in self.held_records.items():
+            self.node_level[family] = record.before
+        self._effective.clear()
         for block in self.blocks:
             if block.window is not None:
                 self._point_window_inverse(block)
         for identity in list(self.records):
             live = self.records[identity]
-            if self.families[live.family].massive_kind and live.emitter is None:
+            if live.standing:
                 continue
             self._advance_inverse(live)
         for block in self.blocks:
@@ -1615,9 +1630,9 @@ class DetectorLawSimulation:
                 self._advance_seat_inverse(block)
             elif block.own is not None:
                 self._advance_inverse(block.own)
-        self._advance_inverse(self.clock_record)
-        self._advance_inverse(self.charge_record)
-        self._hold_clock()
+        for record in self.held_records.values():
+            self._advance_inverse(record)
+        self._hold()
         self.tick -= 1
 
     # The rule
@@ -1887,7 +1902,7 @@ class DetectorLawSimulation:
         # through the Node's Links plus the remainders' term (wall / (num_i
         # p_i)) (a_next - a_before)(r - r'), an exact rational per Node (the
         # weights p_i p_j at one integer scale, form (B) of item 34, HISTORY)
-        field = live is self.clock_record or live is self.charge_record
+        field = self.families[live.family].held is not None
         gamma = 1 if field else self.node_clock
         content = (
             np.zeros(self.shape, dtype=object)
@@ -2117,8 +2132,11 @@ class DetectorLawSimulation:
         # one action on any record, POSTULATES 10); a BLOCK'S own record (a
         # massive kind, given of no emitter) books nothing and is on no
         # ladder (massive-record-v1, MUST 2).
-        field = live is self.clock_record or live is self.charge_record
-        booked = not field and (not self.families[live.family].massive_kind or live.emitter is not None)
+        # THE BOOKING BY ATTRIBUTE (item 51): a held family's record and a body's
+        # own standing record are read by no detector; every other record of a
+        # booked family is booked at the Ports
+        field = self.families[live.family].held is not None
+        booked = self.families[live.family].booked and not live.standing
         # The rule with the kind's pair on the six-neighbour term
         # (massive-record-v1, MASSIVE_RECORD.md section 1): G over the six
         # neighbours, then D by 3 den with the remainder kept, then T; at
@@ -2374,7 +2392,7 @@ class DetectorLawSimulation:
         item 48)."""
         family = live.family
         wall = self.kind_wall(family)
-        field = live is self.clock_record or live is self.charge_record
+        field = self.families[family].held is not None
         gamma = 1 if field else self.node_clock
         content = self._effective_content(family) if not field else np.zeros(self.shape, dtype=np.int64)
         num = self.kind_num[family].ravel()[nodes]
@@ -2453,7 +2471,7 @@ class DetectorLawSimulation:
                 live = self.records[identity]
                 if live.clicked or live.arm_done or live.norm <= 0:
                     continue
-                if self.families[live.family].massive_kind and live.emitter is None:
+                if live.standing:
                     continue  # a block's own standing record is taken by no set
                 wall = self.kind_wall(live.family)
                 now = live.now.ravel()
@@ -2712,9 +2730,9 @@ class DetectorLawSimulation:
         self.tick += 1
         for block in self.blocks:
             self._move_block(block)
-        # the family of clicks' level as the interval begins: the hold follows
-        # the bodies' steps (a stepping body's Nodes), ALGEBRA.md 9.45 (2)
-        self._hold_clock()
+        # the held levels as the interval begins: the hold follows the bodies'
+        # steps (a stepping body's Nodes), ALGEBRA.md 9.45 (2)
+        self._hold()
         # The massive records first (each block's own record by the rule
         # alone), then the light records: the order of the interval
         # (MASSIVE_RECORD.md section 7's massive step first; the coupling's
@@ -2733,16 +2751,13 @@ class DetectorLawSimulation:
             if live.arm_done:
                 # a completed arm of a pair waits for the other arms
                 continue
-            if self.families[live.family].massive_kind:
-                # A block's massive record is advanced with its block above;
-                # a matter lamp's record (a massive kind with a declared
-                # clock, given of a lamp) is advanced by the rule with the
-                # family's pair alone, through the take and the detector
-                # sets' pointers as light's (the click at W, one per record),
-                # coupled to nothing (the coupling HISTORY, decision (2) of
-                # record 1962), its faces the world's (a zero face a mirror).
-                if live.emitter is not None:
-                    self._advance(live)
+            if live.standing:
+                # A block's own standing record is advanced with its block
+                # above; every other record (a lamp's record of a massive
+                # kind too) is advanced by the rule with the family's pair
+                # alone, through the detector sets' pointers (the click at W,
+                # one per record), coupled to nothing (the coupling HISTORY,
+                # decision (2) of record 1962), its faces the world's.
                 continue
             self._advance(live)
         # THE TAKING AT A HOP (ALGEBRA.md 9.62 (3); item 48), after the interval's
@@ -2763,10 +2778,10 @@ class DetectorLawSimulation:
             if identity in self.records:
                 self._release(self.records.pop(identity))
         self.dead = []
-        # the family of clicks steps last, after every family read its level,
-        # and is held at the bodies' Nodes at the content the interval's clicks
-        # and givings left (ALGEBRA.md 9.45 (2))
-        self._advance_clock()
+        # the held families step last, after every family read their levels,
+        # and are held at the bodies' Nodes at the sources the interval's
+        # clicks and givings left (ALGEBRA.md 9.45 (2); item 51)
+        self._advance_fields()
         if self.world.probes and self.record is not None:
             values = []
             for probe in self.world.probes:
@@ -2851,10 +2866,8 @@ class DetectorLawSimulation:
                         Fraction(0),
                     )
                     + (
-                        self.record_form(self.clock_record)
-                        if index == self.clock_family
-                        else self.record_form(self.charge_record)
-                        if index == self.charge_family
+                        self.record_form(self.held_records[index])
+                        if index in self.held_records
                         else Fraction(0)
                     )
                 )
@@ -2918,27 +2931,21 @@ class DetectorLawSimulation:
         yield "law", DETECTOR_LAW_RULE
         yield "tick", self.tick
         yield "measured", self.contents()
-        # the family of clicks' level over the board, the Node clock's c at
-        # every Node (GAMEBOARD; ALGEBRA.md 9.45)
+        # the held families' levels over the board (GAMEBOARD; ALGEBRA.md 9.45,
+        # 9.48; item 51): each by its declared name and source, the Node
+        # clock's Gamma beside them
+        yield "node_clock", self.node_clock
         yield (
-            "clock",
-            {
-                "family": self.families[self.clock_family].name,
-                "node_clock": self.node_clock,
-                "rows": self.clock_record.now.ravel().tolist(),
-                "form": form_json(self.record_form(self.clock_record)),
-            },
-        )
-        # the family of charge's level over the board (ALGEBRA.md 9.48; item
-        # 35): a GAMEBOARD diagnostic beside the family of clicks'
-        yield (
-            "charge",
-            {
-                "family": self.families[self.charge_family].name,
-                "charge_strength": self.charge_strength,
-                "rows": self.charge_record.now.ravel().tolist(),
-                "form": form_json(self.record_form(self.charge_record)),
-            },
+            "held_fields",
+            [
+                {
+                    "family": self.families[family].name,
+                    "held": self.families[family].held,
+                    "rows": record.now.ravel().tolist(),
+                    "form": form_json(self.record_form(record)),
+                }
+                for family, record in self.held_records.items()
+            ],
         )
         if self.world.massive_record:
             # The blocks (massive-record-v1): the corner, the count, the

@@ -41,13 +41,11 @@ from tests.test_detector_law import (
 )
 from tests.test_emitter import (
     CHARGE_FAMILY,
-    CHARGE_FAMILY_NAME,
-    CHARGE_STRENGTH,
     CLOCK_FAMILY,
-    CLOCK_FAMILY_NAME,
     NODE_CLOCK,
     lawful_wheel,
     massive_generator,
+    reads,
 )
 
 
@@ -56,7 +54,7 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
     no lamp, no block (the rule's tests construct a record's rows directly); every family
     reads the world's `boundary` (one border, BUILD.md section 26 item 28) and the face slab
     is one Node deep where the board is open (`face_depth`, declared: no default)."""
-    matter: dict = {"name": "matter", "quantum": 1, "pair": pair, "charge": 0}
+    matter: dict = {"name": "matter", "quantum": 1, "pair": pair, "charge": 0, "reads": reads()}
     return {
         "law": "beam",
         "model_id": "beam-massive-record-rule-v1",
@@ -72,12 +70,9 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
-        "clock_family": CLOCK_FAMILY_NAME,
-        "charge_family": CHARGE_FAMILY_NAME,
-        "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": [512, 1], "charge": 0},
+            {"name": "light", "quantum": 1, "phase_per_link": [512, 1], "charge": 0, "reads": reads()},
             matter,
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
@@ -189,7 +184,7 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     expected_next = np.floor_divide(total, 3 * vacuum_scale)
     expected_remainder = total - 3 * vacuum_scale * expected_next
     a_next, r_next = step_once(simulation, live)
-    content = simulation.node_content
+    content = simulation.level_of("content")
     free = (content == 0) & (simulation._neighbours(content, simulation.kind_wrap[0]) == 0)
     assert 30 <= int(np.sum(free)) <= 45
     assert np.array_equal(a_next[free], expected_next[free])
@@ -379,10 +374,13 @@ def test_the_light_record_is_byte_identical_without_the_key():
     the amplitude 2^22, the seed 50 x 2^12: every level, remainder, giving line and book); SINCE THE
     STOCK AS GIVEN-FAMILY CONTENT (ALGEBRA.md 9.51 (8); item 47) all three moved (the emitter's
     level one more, its one own quantum beside the held stock: every pace at its Nodes, the
-    giving lines' content and the books per family); read again at this head."""
+    giving lines' content and the books per family); SINCE THE FAMILY GENERICITY (record 2066;
+    item 51) the state digest alone moved once more, by the state's entries (`node_clock` and
+    `held_fields` in place of `clock` and `charge`), the events and the audit unchanged: the
+    rows, the held levels and every line bit for bit; read again at this head."""
     assert run_chain_digests() == {
         "events": "b8d7eae3058a1fb39c8ab4a75df408e1258a6cc4997e45f7f3451c18bb8d2833",
-        "state": "184343ea739fa1538f9d27798212b3b1f54e68ee40435283c7a85b83f2f7c316",
+        "state": "1866d56666323d4c5a28e8fbb22c69384cb588f67ec86285ea083dbdce29eaf8",
         "audit": "372e68dbe0e0ef831d7115456de3de6b97ec09277db5db3d980eda236ad50b78",
     }
 
@@ -487,9 +485,12 @@ def block_world(
     profile at its scalar seed); every well declares its seed (the suite's amplitude 2^20
     where a test names none: no loader default, BUILD.md section 26 item 28) and the face
     slab is one Node deep where the board is open."""
-    matter: dict = {"name": "matter", "quantum": 1, "pair": kind, "charge": 0}
+    matter: dict = {"name": "matter", "quantum": 1, "pair": kind, "charge": 0, "reads": reads()}
     # light on the given clock [512, 1] of N = 1024 (the given train, ALGEBRA.md 9.17 (6a))
-    families = [{"name": "light", "quantum": 1, "phase_per_link": [512, 1], "charge": 0}, matter]
+    families = [
+        {"name": "light", "quantum": 1, "phase_per_link": [512, 1], "charge": 0, "reads": reads()},
+        matter,
+    ]
     measured: list[dict] = []
     if source is not None:
         measured.append(source)
@@ -539,9 +540,6 @@ def block_world(
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
-        "clock_family": CLOCK_FAMILY_NAME,
-        "charge_family": CHARGE_FAMILY_NAME,
-        "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": families,
         "measured": measured,
@@ -584,7 +582,7 @@ SOURCE_WELL = [
 
 def source_family() -> dict:
     """The emitter bodies' massive family `source` (the kind SOURCE_KIND, no clock)."""
-    return {"name": "source", "quantum": 1, "pair": list(SOURCE_KIND), "charge": 0}
+    return {"name": "source", "quantum": 1, "pair": list(SOURCE_KIND), "charge": 0, "reads": reads()}
 
 
 def emitter_at(
@@ -1251,7 +1249,7 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
     document["ticks"] = 160
     document["families"][1]["name"] = "source"
     document["measured"][0]["family"] = "source"
-    matter: dict = {"name": "matter", "quantum": 1, "pair": [156, 157], "charge": 0}
+    matter: dict = {"name": "matter", "quantum": 1, "pair": [156, 157], "charge": 0, "reads": reads()}
     if clock is not None:
         matter["phase_per_link"] = clock  # None: no clock (the refusal's edge case)
     document["families"].append(matter)
@@ -1306,7 +1304,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
         for light_identity, light in other.records.items():
             if other.families[light.family].massive_kind:
                 continue
-            differs = simulation.clock_record.now != other.clock_record.now
+            differs = simulation.held_record("content").now != other.held_record("content").now
             if field_reached is None and np.any(differs & (light.now != 0)):
                 field_reached = tick
             if field_reached is None:

@@ -59,18 +59,27 @@ ROOT = Path(__file__).resolve().parents[1]
 NODE_CLOCK = (
     10**4
 )  # the integers of ALGEBRA.md 9.57 (2) and 9.61 (3) under the weak-field rule (item 44)
-# THE FAMILY OF CLICKS (the model owner's record 1982; ALGEBRA.md 9.45; BUILD.md section 26
-# item 32): the fourth family of every test world, named by the key `clock_family`; its
-# level at a Node is the Node clock, held at every body's Nodes at the content
+# THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26 item 51): what a
+# family is stands on the family. THE FAMILY OF CLICKS (record 1982; ALGEBRA.md 9.45; item
+# 32): the fourth family of every test world, holding the content ("held": "content"); its
+# level at a Node is the Node clock. THE FAMILY OF CHARGE (9.48; item 35): the fifth family,
+# holding the signed charge; every reading family declares `reads`, the content plainly and
+# the charge by its own sign at the weight Lambda (CHARGE_STRENGTH); every family declares
+# its charge, 0 here.
 CLOCK_FAMILY_NAME = "clicks"
-CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0}
-# THE FAMILY OF CHARGE (the model owner's decision of 2026-09-25; ALGEBRA.md 9.48; BUILD.md
-# section 26 item 35): the fifth family of every test world, named by `charge_family`, its
-# level the signed charge held at a body's Nodes; Lambda its weight (`charge_strength`);
-# every family declares its charge, 0 here
+CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "content", "reads": []}
 CHARGE_FAMILY_NAME = "charge"
-CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0}
+CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "charge", "reads": []}
 CHARGE_STRENGTH = 1
+READS = [
+    {"family": CLOCK_FAMILY_NAME, "weight": 1},
+    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "charge"},
+]
+
+
+def reads() -> list[dict]:
+    """A reading family's `reads`, a fresh copy."""
+    return [dict(read) for read in READS]
 
 
 def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
@@ -102,7 +111,7 @@ def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
     the Nodes, p_i = Gamma - c_i the pace, and L (a_i b_j + a_j b_i) on the Links, plain; an
     exact rational over the six reads (the pace at both ends of a Link, item 34, HISTORY)."""
     gamma = simulation.node_clock
-    levels = simulation.node_content if content is None else content
+    levels = simulation.level_of("content") if content is None else content
     num = simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
     wall = simulation.kind_wall(family)
@@ -170,13 +179,10 @@ def emitter_world(
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
-        "clock_family": CLOCK_FAMILY_NAME,
-        "charge_family": CHARGE_FAMILY_NAME,
-        "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": [512, 1], "charge": 0},
-            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0},
+            {"name": "light", "quantum": 1, "phase_per_link": [512, 1], "charge": 0, "reads": reads()},
+            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -613,7 +619,9 @@ def test_the_loaders_refusals_name_their_keys():
     refused(two_ladders, "one ladder")
 
     def free_given(document):
-        document["families"].append({"name": "e", "quantum": 0, "charge": -1, "phase": True})
+        document["families"].append(
+            {"name": "e", "quantum": 0, "charge": -1, "phase": True, "reads": reads()}
+        )
         document["measured"][0]["emitter"]["family"] = "e"
 
     refused(free_given, "paid family")

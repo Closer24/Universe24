@@ -22,6 +22,7 @@ from event_universe.events.detector_law import UNIT, DetectorLawSimulation, Live
 from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import parse_nature_beam_world
 from tests.test_emitter import NODE_CLOCK
+from tests.test_emitter import reads as family_reads
 from tests.test_massive_record import massive_world
 
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
@@ -195,7 +196,9 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
     into a set the record does not reach."""
     document = massive_world([40, 1, 1], PERIODIC, [800, 809])
     document["age_bound"] = 100000
-    document["families"].append({"name": "source", "quantum": 1, "pair": [7, 8], "charge": 0})
+    document["families"].append(
+        {"name": "source", "quantum": 1, "pair": [7, 8], "charge": 0, "reads": family_reads()}
+    )
     document["measured"] = [
         {
             "position": [20, 0, 0],
@@ -248,7 +251,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
         for i in range(40):
             num = int(simulation.kind_num[family][i, 0, 0])
             den = int(simulation.kind_den[family][i, 0, 0])
-            content = int(simulation.node_content[i, 0, 0])
+            content = int(simulation.level_of("content")[i, 0, 0])
             assert content == (1 if i in (5, 6, 7, 20, 30, 31, 32) else 0)
             read_i, self_i, wall_i = rule_coefficients(num, den, NODE_CLOCK, content, True)
             # the six reads plain, the Node's terms [w (a^2 + b^2) - S a b] / (3 R) (item 44)

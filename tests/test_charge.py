@@ -5,7 +5,7 @@ the quantum 1, no clock of its own); its level d at a Node is held at every body
 body's signed charge Q, the sum of the signs on the quanta it holds (every family declares its
 `charge` q in {-1, 0, +1} under the detector law, no default), and steps by its own plain rule
 elsewhere, last in the interval with the family of clicks. A record of charge q reads the
-content with one sign, c - q Lambda d (Lambda the world key `charge_strength`), so its pace
+content with one sign, c - q Lambda d (Lambda the weight of its read on the charge), so its pace
 Gamma - c + q Lambda d is slowed by a body of the opposite charge (the hill deepened) and
 hastened by one of its own (the hill filled, at most to the vacuum's); light (q = 0) reads the
 content alone. The suite reads the engine: (i) the reading with one sign, the step of a record
@@ -30,9 +30,9 @@ from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import parse_nature_beam_world
 from tests.test_emitter import (
     CHARGE_FAMILY_NAME,
-    CLOCK_FAMILY_NAME,
     emitter_world,
     massive_generator,
+    reads,
     wheel_of,
 )
 from tests.test_flux_reading import planted
@@ -60,10 +60,29 @@ def charged_chain(
     document["families"][LIGHT]["charge"] = light_charge
     document["families"][MATTER]["charge"] = matter_charge
     document["families"].insert(
-        NEUTRAL, {"name": "neutral", "quantum": 1, "phase_per_link": [512, 1], "charge": 0}
+        NEUTRAL,
+        {"name": "neutral", "quantum": 1, "phase_per_link": [512, 1], "charge": 0, "reads": reads()},
     )
-    document["charge_strength"] = strength
+    set_strength(document, strength)
     return document
+
+
+def set_strength(document: dict, strength: int) -> None:
+    """Lambda on every reading family: the weight of its read on the family of charge (the
+    family genericity, BUILD.md section 26 item 51)."""
+    for family in document["families"]:
+        for read in family.get("reads", []):
+            if read["family"] == CHARGE_FAMILY_NAME:
+                read["weight"] = strength
+
+
+def held_record(simulation: DetectorLawSimulation, source: str):
+    """The engine's held record of the family holding `source` (the family genericity, item
+    51: by attribute, never by index or name)."""
+    for family, record in simulation.held_records.items():
+        if simulation.families[family].held == source:
+            return record
+    raise KeyError(source)
 
 
 def rule_step(
@@ -109,10 +128,17 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
         for matter_charge in (-1, 1):
             document = charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, matter_charge, strength)
             simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-            assert simulation.charge_family == CHARGE and simulation.charge_strength == strength
+            assert [simulation.families[f].held for f in simulation.held_families] == [
+                "content",
+                "charge",
+            ]
+            assert simulation.families[MATTER].reads == (
+                (CLICKS, 1, "plain"),
+                (CHARGE, strength, "charge"),
+            )
             assert simulation.family_charge == [1, matter_charge, 0, 0, 0]
-            assert [int(v) for v in simulation.node_charge[:, 0, 0]] == slab
-            assert [int(v) for v in simulation.node_content[:, 0, 0]] == slab
+            assert [int(v) for v in simulation.level_of("charge")[:, 0, 0]] == slab
+            assert [int(v) for v in simulation.level_of("content")[:, 0, 0]] == slab
             effective = [c - matter_charge * strength * c for c in slab]
             assert [int(v) for v in simulation._effective_content(MATTER)[:, 0, 0]] == effective
             assert [int(v) for v in simulation._effective_content(NEUTRAL)[:, 0, 0]] == slab
@@ -135,9 +161,7 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
                 assert [int(v) for v in live.remainder[:, 0, 0]] == remainders, family
                 assert np.array_equal(live.before, now)
     parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, -1, 98))
-    with pytest.raises(
-        ValueError, match="measured\\[0\\]: the pace Gamma - c \\+ q Lambda d could reach 0"
-    ):
+    with pytest.raises(ValueError, match="measured\\[0\\]: the pace of 'light' could reach 0"):
         parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, -1, 99))
 
 
@@ -160,11 +184,11 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     massive_generator().seed_on_the_mode(document)  # the stamp covers the charges
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    charge = simulation.charge_record
+    charge = held_record(simulation, "charge")
     assert simulation.family_charge == [-1, -1, 0, 0]
     assert np.all(charge.now[5:37] == -5) and np.all(charge.before[5:37] == -5)
     assert np.all(charge.now[70:73] == -1) and not charge.now[37:70].any()
-    assert simulation.node_charge is charge.now and not charge.remainder.any()
+    assert simulation.level_of("charge") is charge.now and not charge.remainder.any()
     givings = 0
     clicks = 0
     for _ in range(document["ticks"]):
@@ -172,8 +196,8 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
         assert simulation.books()["balanced"], simulation.tick
         givings = sum(1 for line in lines if line["event"] == "giving")
         clicks = sum(1 for line in lines if line["event"] == "gather")
-        assert int(simulation.node_charge[21, 0, 0]) == -5 + givings
-        assert int(simulation.node_charge[70, 0, 0]) == -1 - clicks
+        assert int(simulation.level_of("charge")[21, 0, 0]) == -5 + givings
+        assert int(simulation.level_of("charge")[70, 0, 0]) == -1 - clicks
         bodies = sum(simulation._body_charge(number) for number in range(len(simulation.held)))
         flight = sum(simulation.family_charge[live.family] for live in simulation.records.values())
         flight -= sum(
@@ -209,7 +233,7 @@ def test_the_joint_step_with_both_fields_inverts_bit_for_bit():
             live = replace(live, identity=family + 1)
             simulation.records[live.identity] = live
             starts.append((live, now.copy(), before.copy()))
-        clock, charge = simulation.clock_record, simulation.charge_record
+        clock, charge = held_record(simulation, "content"), held_record(simulation, "charge")
         fields = (clock.now.copy(), charge.now.copy())
         falls = 0
         previous = charge.now.copy()
@@ -230,19 +254,21 @@ def test_the_joint_step_with_both_fields_inverts_bit_for_bit():
 
 
 def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
-    """(iv) `charge_family` and `charge_strength` are REQUIRED under `detector_law` (refused
-    absent, each naming its key) and refused without that law; `charge_strength` below 1 is
+    """(iv) THE FAMILY GENERICITY (record 2066; item 51): the family of charge is the family
+    declaring `held: "charge"` and Lambda the weight of a reading family's read on it; the world
+    keys `charge_family` and `charge_strength` are refused by name (retired); a weight below 1 is
     refused; a family without `charge` is refused under the detector law, a charge beyond one
     sign (|q| > 1) is refused and a charge with a denominator other than 1 (the paid family's
     whole charge, D-1 of 2026-09-20, the check before this one) is refused; the family of
     charge is refused as the family of clicks, on a pair other than [1, 1], on a quantum other
     than 1, on a clock of its own and with a charge of its own; a measured event of it and
     `held` naming it are refused; a world with the family declared and named loads, its index
-    the engine's `charge_family` and Lambda its `charge_strength`."""
+    its index among the engine's held families and its reads the matter family's."""
     good = charged_chain(12, PERIODIC, [], 1, 0, 0)
     world = parse_nature_beam_world(good)
-    assert world.charge_family == CHARGE and world.charge_strength == 1
+    assert world.held_families == (CLICKS, CHARGE) and world.families[CHARGE].held == "charge"
     assert world.families[CHARGE].name == CHARGE_FAMILY_NAME
+    assert world.families[MATTER].reads == ((CLICKS, 1, "plain"), (CHARGE, 1, "charge"))
 
     def copy() -> dict:
         return json.loads(json.dumps(good))
@@ -251,22 +277,21 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
         with pytest.raises(ValueError, match=message):
             parse_nature_beam_world(document)
 
-    for key in ("charge_family", "charge_strength"):
-        absent = copy()
-        del absent[key]
-        refused(absent, f"{key} is required under `detector_law`")
-        ray = copy()
-        ray["detector_law"] = False
-        ray["massive_record"] = False
-        for gone in ("amplitude_bound", "face_depth", "node_clock", "clock_family"):
-            del ray[gone]
-        del ray["families"][MATTER]
-        ray["charge_strength" if key == "charge_family" else "charge_family"] = None
-        del ray["charge_strength" if key == "charge_family" else "charge_family"]
-        refused(ray, f"{key} is refused without `detector_law`")
+    for key, value in (("charge_family", CHARGE_FAMILY_NAME), ("charge_strength", 1)):
+        retired = copy()
+        retired[key] = value
+        refused(retired, f"{key} is refused under detector-law-v1: the family genericity")
     weak = copy()
-    weak["charge_strength"] = 0
-    refused(weak, "charge_strength")
+    set_strength(weak, 0)
+    refused(weak, r"reads\[1\].weight")
+    by = copy()
+    by["families"][MATTER]["reads"][1]["by"] = "sign"
+    refused(by, r"reads\[1\].by must be one of")
+    twice = copy()
+    twice["families"][MATTER]["reads"].append(
+        {"family": CHARGE_FAMILY_NAME, "weight": 2, "by": "charge"}
+    )
+    refused(twice, "reads names 'charge' twice")
     unlabelled = copy()
     del unlabelled["families"][MATTER]["charge"]
     refused(unlabelled, r"families\[1\] \('matter'\) declares no `charge`")
@@ -277,23 +302,24 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     split["families"][LIGHT]["charge"] = [1, 2]
     refused(split, r"the pair \[1, 2\] is refused on 'light'")
     same = copy()
-    same["charge_family"] = CLOCK_FAMILY_NAME
-    refused(same, "is the family of clicks")
+    same["families"][CHARGE]["held"] = "content"
+    refused(same, "two families hold 'content'")
     massive = copy()
-    massive["charge_family"] = "matter"
-    refused(massive, r"the family of charge is massless, its pair \[1, 1\]")
+    massive["families"][MATTER]["held"] = "charge"
+    massive["families"][MATTER]["reads"] = []
+    refused(massive, r"a held family is massless, its pair \[1, 1\]")
     quantum = copy()
     quantum["families"][CHARGE]["quantum"] = 2
-    refused(quantum, "the family of charge is counted in quanta")
+    refused(quantum, "a held family is counted in quanta")
     clocked = copy()
     clocked["families"][CHARGE]["phase_per_link"] = [512, 1]
-    refused(clocked, "the family of charge givings nothing")
+    refused(clocked, "a held family givings nothing")
     charged = copy()
     charged["families"][CHARGE]["charge"] = 1
-    refused(charged, "the family of charge carries none")
+    refused(charged, "a held family carries none")
     unknown = copy()
-    unknown["charge_family"] = "ions"
-    refused(unknown, "charge_family names 'ions', which no family declares")
+    unknown["families"][MATTER]["reads"][1]["family"] = "ions"
+    refused(unknown, "reads names 'ions', which no family declares")
     body = copy()
     body["measured"] = [
         {
@@ -305,7 +331,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
             "fixed": True,
         }
     ]
-    refused(body, r"measured\[0\] is of the family of charge")
+    refused(body, r"measured\[0\] is of the held family 'charge'")
     held = copy()
     held["measured"] = [
         {
@@ -318,7 +344,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
             "held": {CHARGE_FAMILY_NAME: 1},
         }
     ]
-    refused(held, r"measured\[0\].held names the family of charge")
+    refused(held, r"measured\[0\].held names the held family 'charge'")
 
 
 def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_lambda():
@@ -332,10 +358,10 @@ def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_
     for strength in (1, 7):
         rng = np.random.default_rng(41)
         document = content_chain(60, PERIODIC, range(20, 30), QUANTA)
-        document["charge_strength"] = strength
+        set_strength(document, strength)
         simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-        assert simulation.charge_strength == strength
-        assert not simulation.charge_record.now.any()
+        assert simulation.families[MATTER].reads[1][1] == strength
+        assert not held_record(simulation, "charge").now.any()
         lives = []
         for family in (0, 1):
             now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
@@ -349,15 +375,18 @@ def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_
             # in the register is a block's own: the step advances it with its block)
             simulation._advance(lives[1])
             simulation.step()
-            assert not simulation.charge_record.now.any()
-        assert not simulation.charge_record.remainder.any()
+            assert not held_record(simulation, "charge").now.any()
+        assert not held_record(simulation, "charge").remainder.any()
         rows[strength] = [(live.now.copy(), live.before.copy(), live.remainder.copy()) for live in lives]
         books = simulation.books()
         assert books["families"][CHARGE_FAMILY_NAME]["form"] == [0, 1]
         state = dict(simulation.snapshot_stream())
-        assert state["charge"]["family"] == CHARGE_FAMILY_NAME
-        assert state["charge"]["charge_strength"] == strength
-        assert state["charge"]["rows"] == [0] * 60 and state["charge"]["form"] == [0, 1]
+        fields = {field["family"]: field for field in state["held_fields"]}
+        assert fields[CHARGE_FAMILY_NAME]["held"] == "charge"
+        assert fields[CHARGE_FAMILY_NAME]["rows"] == [0] * 60 and fields[CHARGE_FAMILY_NAME]["form"] == [
+            0,
+            1,
+        ]
     for one, seven in zip(rows[1], rows[7], strict=True):
         for x, y in zip(one, seven, strict=True):
             assert np.array_equal(x, y)

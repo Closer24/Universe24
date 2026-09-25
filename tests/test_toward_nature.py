@@ -109,7 +109,7 @@ def test_the_held_level_is_the_well_on_the_arm_and_the_moving_clock_hops_togethe
     bottom = DetectorLawSimulation(
         parse_nature_beam_world(document("redshift_bottom")), observer=lines.append
     )
-    level = bottom.node_content
+    level = bottom.level_of("content")
     arm_start = generator.REDSHIFT_EMITTER_X + 32
     assert (
         int(level[arm_start, 1, 1]) == 2000 and int(level[generator.REDSHIFT_MIRROR_X - 1, 1, 1]) == 2000

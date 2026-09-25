@@ -4004,6 +4004,89 @@ would have found no cell.
    light clock's own A rotates at 0.067), the weight as an integer (the
    window's granularity at small weights).
 
+51. THE FAMILY GENERICITY (the model owner's word of 2026-09-25 through the
+   Boss, record 2066, TOP PRIORITY: "the engine does not know the family's
+   name, does not know what the family does, knows nothing; the engine only
+   supports the family's operations; what each family does is in the
+   entities' config; if we fix something, we fix it in one place"; records
+   2064 and 2065 beside it, the one stroke of the vector and tensor families
+   to ride on it; the mathematician's list of operations asked). THE AUDIT
+   (Nature, sent as record 2066's answer): the engine named two roles, the
+   family of clicks and the family of charge, at thirteen places: the world
+   keys `clock_family`, `charge_family` and `charge_strength` and the
+   loader's role parsers and checks; two special records made at the load;
+   the two arrays `node_content` and `node_charge`; the hold of the two by
+   role; the step order by identity (the two last, first in the inverse);
+   `field = live is clock_record or charge_record` at four places; the
+   effective content c - q Lambda d with the roles wired in; the overflow
+   refusal naming them; the books and the state by role; the loader's
+   refusals of a body or a held or an emitter into a field family; and the
+   idiom `massive_kind and emitter is None` at five places for a body's own
+   standing record. THE BUILD: what a family is stands on the family, in
+   the world file's `families`, four attributes admitted under
+   `detector_law` and read by the engine as attributes alone: `held`, the
+   source a body's record writes at its Nodes ("content", the quanta it
+   holds, the Node clock's c of 9.45; "charge", their signed sum, the d of
+   9.48; absent for a family the step alone moves); `reads`, the held
+   families whose levels enter the family's pace, [{family, weight, by}]
+   each, the effective content SUM weight x level for by "plain" and - q x
+   weight x level for by "charge" (q the reading family's own charge sign;
+   c - q Lambda d where a family reads the content plainly and the charge
+   by its sign at the weight Lambda), REQUIRED on every family under the
+   law, the empty list on a held family (the plain rule at the pace 1 of
+   its own); `booked`, whether the detectors book the family's records
+   (false for a held family, the default there; true otherwise); and
+   `components`, the representation's count (1 alone admitted today; 3 and
+   6 with ALGEBRA.md 9.77's landing, refused by name until then). THE
+   ENGINE: one list of held records (`held_records`, one per family with
+   `held`, in the declared order), their levels `node_level` per family;
+   the hold `_hold` writes each family's declared source (`body_source`)
+   at every body's Nodes; the effective content `_effective_content` is
+   the sum over the family's reads (one array per family per interval,
+   cleared by the hold; a single plain read at weight 1 the held level
+   itself); `field = family.held is not None` at the four places; the
+   booking `family.booked and not live.standing`, the body's own standing
+   record marked on the record (`LiveRecord.standing`) at its making and
+   not on its family (the five `massive_kind and emitter is None` idioms);
+   the held families stepped last in the declared order (`_advance_fields`)
+   and first backward, the guard on every reading family's effective
+   content; the giving line's GAMEBOARD content read as the level of the
+   family holding "content" (`level_of`); the books' form of a held family
+   its record's; the state's `held_fields` entry (every held family by its
+   declared name and source, its rows and form) and `node_clock` beside it,
+   the `clock` and `charge` entries HISTORY. THE LOADER: the three world
+   keys RETIRED (`RETIRED_KEYS`, refused by name with the successor named);
+   a held family's shape checked by attribute (`_held_family_shapes`: the
+   pair [1, 1], the quantum 1, no clock, no charge, no reads, not booked;
+   one holder per source; a read names a held family), the bodies' checks
+   by attribute (`_held_bodies_checks`: no body of a held family, none
+   holds its quanta, no emitter into it), the load bound from the reads'
+   weights on the bodies' sources (`_node_clock_bound`), the detector law's
+   clock check skipping a held family by attribute. THE GENERATORS and the
+   test worlds declare the two held families and every reading family's
+   `reads` (the detector generator's `READS`, the massive generator's, the
+   dark body's; tests/test_emitter.py's `reads()`); every shipped world of
+   the detector law regenerated (the keys moved into the families; the
+   stamps moved). WHAT DID NOT CHANGE: the arithmetic and the order of every
+   operation; the rows, the held levels and the lines are bit for bit those
+   of d8ce79bd on every shipped world compared (the light clock 700
+   intervals, the boxed clock at rest 120, the bright body 400, the moving
+   long-wave Lorentz clock 300, the point light clock 2500; the old engine
+   in a worktree at d8ce79bd on the old files, the new on the regenerated);
+   the state digest of tests/test_massive_record.py moved once more by the
+   state's entries alone (`node_clock`, `held_fields`), the events and the
+   audit digests unchanged. THE GATE: tests/test_node_clock.py (ix)
+   rewritten by attribute (the retired keys refused by name, the held
+   family's shape, the reads, the components, the bodies), the swapped
+   names test (the two held families renamed and the engine's rows bit for
+   bit: no name is read), tests/test_charge.py (iv) by attribute, every
+   test's `clock_record` / `charge_record` / `node_content` read through
+   `held_record(source)` and `level_of(source)`; the gate's suites; ruff,
+   mypy. What stays named in the engine and is not a role: `massive_kind`,
+   a property of the declared pair (den > num), used where the pair's gap
+   is meant (the GAMEBOARD sums of the light-kind rows for the `mode` line
+   and the probes); the messages print the declared names.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

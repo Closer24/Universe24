@@ -103,7 +103,7 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
         slowed = DetectorLawSimulation(
             parse_nature_beam_world(content_chain(12, PERIODIC, range(12), QUANTA))
         )
-        assert int(slowed.node_content.min()) == QUANTA == int(slowed.node_content.max())
+        assert int(slowed.level_of("content").min()) == QUANTA == int(slowed.level_of("content").max())
         live = planted(slowed, family, rows_now, rows_before, rows_remainder)
         slowed._advance(live)
         reads = six_reads(rows_now, True)
@@ -118,7 +118,7 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
             assert 0 <= int(live.remainder[x, 0, 0]) < wall
         # the plain limit: no content, r = 0
         vacuum = DetectorLawSimulation(parse_nature_beam_world(content_chain(12, PERIODIC, [], 1)))
-        assert not vacuum.node_content.any()
+        assert not vacuum.level_of("content").any()
         live = planted(vacuum, family, rows_now, rows_before, np.zeros((12, 1, 1), dtype=np.int64))
         vacuum._advance(live)
         for x in range(12):
@@ -230,7 +230,7 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
     simulation = DetectorLawSimulation(
         parse_nature_beam_world(content_chain(60, PERIODIC, range(20, 30), QUANTA))
     )
-    content = [int(v) for v in simulation.node_content[:, 0, 0]]
+    content = [int(v) for v in simulation.level_of("content")[:, 0, 0]]
     assert content == [QUANTA if 20 <= i < 30 else 0 for i in range(60)]
     for family, (num, den) in ((0, (1, 1)), (1, PAIR)):
         wall = simulation.kind_wall(family)
@@ -282,7 +282,9 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
                 term += Fraction(
                     int(live.now[i, 0, 0] - a_before[i, 0, 0])
                     * int(r[i, 0, 0] - live.remainder[i, 0, 0]),
-                    rule_coefficients(num, den, GAMMA, int(simulation.node_content[i, 0, 0]), True)[0],
+                    rule_coefficients(
+                        num, den, GAMMA, int(simulation.level_of("content")[i, 0, 0]), True
+                    )[0],
                 )
             assert current - previous == wall * term
             previous = current
@@ -372,8 +374,14 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     # the emitter's level 5: one own quantum and the stock of 4 held light quanta (item 47)
-    assert int(simulation.node_content[21, 0, 0]) == 5 and int(simulation.node_content[70, 0, 0]) == 1
-    assert int(simulation.node_content[71, 0, 0]) == 1 and not simulation.node_content[40:70].any()
+    assert (
+        int(simulation.level_of("content")[21, 0, 0]) == 5
+        and int(simulation.level_of("content")[70, 0, 0]) == 1
+    )
+    assert (
+        int(simulation.level_of("content")[71, 0, 0]) == 1
+        and not simulation.level_of("content")[40:70].any()
+    )
     givings_seen = 0
     clicks_seen = 0
     for _ in range(document["ticks"]):
@@ -387,16 +395,16 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
         # interval began from the events before it, and again at a giving within it
         # (the given record's norm under the content the giving leaves), so a click's
         # quantum enters the array at the next interval unless a giving follows it
-        assert int(simulation.node_content[21, 0, 0]) == 5 - givings_seen
+        assert int(simulation.level_of("content")[21, 0, 0]) == 5 - givings_seen
         # the family of clicks steps last in the interval and is then held at the content
         # the interval's clicks and givings left, so a click's quantum is on the screen's
         # body as the interval ends (ALGEBRA.md 9.45 (2))
-        assert int(simulation.node_content[70, 0, 0]) == 1 + clicks_seen
+        assert int(simulation.level_of("content")[70, 0, 0]) == 1 + clicks_seen
         if simulation.tick <= 12:
-            assert int(simulation.node_content[50, 0, 0]) == 0
+            assert int(simulation.level_of("content")[50, 0, 0]) == 0
         # the family's waves and, at these small contents, the rounding's own walk of the
         # plain step at unit levels: far below Gamma (at most 9 read on this head)
-        assert int(np.abs(simulation.node_content[40:70]).max()) <= 64
+        assert int(np.abs(simulation.level_of("content")[40:70]).max()) <= 64
         del before_clicks
         for line in lines[len(lines) - (givings_seen - before_givings) :]:
             if line["event"] == "giving":
@@ -404,8 +412,8 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
                 assert line["node_clock"] == [NODE_CLOCK - line["content"], NODE_CLOCK]
                 assert lawful_wheel(simulation.world, line)
     assert givings_seen == 4 and clicks_seen >= 1
-    assert int(simulation.node_content[70, 0, 0]) == 1 + clicks_seen
-    assert int(simulation.node_content[21, 0, 0]) == 1  # the one own quantum stays (item 47)
+    assert int(simulation.level_of("content")[70, 0, 0]) == 1 + clicks_seen
+    assert int(simulation.level_of("content")[21, 0, 0]) == 1  # the one own quantum stays (item 47)
 
 
 def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_elsewhere():
@@ -423,13 +431,13 @@ def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_el
     edge case: a world with no content anywhere keeps the family at 0 for ever."""
     document = content_chain(200, CHAIN, range(90, 110), QUANTA)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    clock = simulation.clock_record
-    assert simulation.clock_family == 2 and simulation.families[2].name == "clicks"
+    clock = simulation.held_records[2]
+    assert simulation.held_families == [2] + [3] and simulation.families[2].held == "content"
     held = np.zeros((200, 1, 1), dtype=bool)
     held[90:110] = True
     assert np.all(clock.now[held] == QUANTA) and np.all(clock.before[held] == QUANTA)
     assert not clock.now[~held].any() and not clock.remainder.any()
-    assert simulation.node_content is clock.now
+    assert simulation.level_of("content") is clock.now
     reached = None
     for _ in range(80):
         simulation.step()
@@ -440,17 +448,20 @@ def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_el
             assert int(clock.now[60, 0, 0]) == 0 and int(clock.now[139, 0, 0]) == 0
         elif reached is None and int(clock.now[60, 0, 0]) != 0:
             reached = simulation.tick
-        assert simulation.node_content is clock.now
+        assert simulation.level_of("content") is clock.now
     assert reached is not None and 30 <= reached <= 70, reached
     books = simulation.books()
     assert books["families"]["clicks"]["form"] == form_json(simulation.record_form(clock))
     assert books["families"]["clicks"]["measured"]["current"] == 0
     state = dict(simulation.snapshot_stream())
-    assert state["clock"]["family"] == "clicks" and state["clock"]["rows"] == clock.now.ravel().tolist()
+    fields = {field["family"]: field for field in state["held_fields"]}
+    assert (
+        fields["clicks"]["held"] == "content" and fields["clicks"]["rows"] == clock.now.ravel().tolist()
+    )
     empty = DetectorLawSimulation(parse_nature_beam_world(content_chain(60, PERIODIC, [], 1)))
     for _ in range(20):
         empty.step()
-    assert not empty.clock_record.now.any() and not empty.node_content.any()
+    assert not empty.held_records[2].now.any() and not empty.level_of("content").any()
 
 
 def test_the_joint_step_inverts_bit_for_bit_wherever_the_clock_falls():
@@ -472,7 +483,7 @@ def test_the_joint_step_inverts_bit_for_bit_wherever_the_clock_falls():
     )
     live = planted(simulation, 0, now, before, np.zeros((60, 1, 1), dtype=np.int64))
     simulation.records[live.identity] = live
-    clock = simulation.clock_record
+    clock = simulation.held_records[2]
     start = (live.now.copy(), live.before.copy(), live.remainder.copy(), clock.now.copy())
     falls = 0
     previous = clock.now.copy()
@@ -489,21 +500,27 @@ def test_the_joint_step_inverts_bit_for_bit_wherever_the_clock_falls():
     assert simulation.tick == 0
 
 
-def test_the_loader_names_the_family_of_clicks_and_refuses_what_it_cannot_be():
-    """(ix) `clock_family` is REQUIRED under `detector_law` (refused absent naming the key),
-    refused without that law, refused naming no declared family (the families listed), refused
-    on a family with a pair other than [1, 1] (the matter kind), on a quantum other than 1 and
-    on a family with a clock of its own; a measured event of the family of clicks is refused,
-    `held` naming it is refused, and an emitter given into it is refused; six families are
-    refused (the owner's constant five since the family of charge, ALGEBRA.md 9.48; item 35);
-    a world with the family declared and
-    named loads, its index the engine's `clock_family`."""
+def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_cannot_be():
+    """(ix) THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26 item 51):
+    the family whose level is the Node clock is the family declaring `held: "content"`, no
+    world key and no name in the engine; the world keys clock_family, charge_family and
+    charge_strength are refused by name (retired); a held family is refused with a pair other
+    than [1, 1] (the matter kind), with a quantum other than 1, with a clock of its own, with a
+    charge; two families holding the content are refused; a read naming a family that is not
+    held is refused, and a read naming no family; under the detector law a family without
+    `reads` is refused and the attributes are refused without the law; a measured event of a
+    held family, `held` naming it and an emitter given into it are refused; six families are
+    refused (the owner's constant five since the family of charge, ALGEBRA.md 9.48; item 35); a
+    world with the family declared loads, its index among the engine's held families."""
     good = content_chain(12, PERIODIC, [], 1)
     parse_nature_beam_world(good)
-    absent = json.loads(json.dumps(good))
-    del absent["clock_family"]
-    with pytest.raises(ValueError, match="clock_family is required under `detector_law`"):
-        parse_nature_beam_world(absent)
+    for key, value in (("clock_family", "clicks"), ("charge_family", "charge"), ("charge_strength", 1)):
+        retired = json.loads(json.dumps(good))
+        retired[key] = value
+        with pytest.raises(
+            ValueError, match=f"{key} is refused under detector-law-v1: the family genericity"
+        ):
+            parse_nature_beam_world(retired)
     ray = json.loads(json.dumps(good))
     ray["detector_law"] = False
     ray["massive_record"] = False
@@ -511,15 +528,26 @@ def test_the_loader_names_the_family_of_clicks_and_refuses_what_it_cannot_be():
     del ray["face_depth"]
     del ray["node_clock"]
     del ray["families"][1]
-    with pytest.raises(ValueError, match="clock_family is refused without `detector_law`"):
+    with pytest.raises(ValueError, match="declares reads, refused without `detector_law`"):
         parse_nature_beam_world(ray)
+    unread = json.loads(json.dumps(good))
+    del unread["families"][0]["reads"]
+    with pytest.raises(ValueError, match=r"families\[0\] declares no `reads` under detector-law-v1"):
+        parse_nature_beam_world(unread)
     unknown = json.loads(json.dumps(good))
-    unknown["clock_family"] = "ticks"
-    with pytest.raises(ValueError, match="clock_family names 'ticks', which no family declares"):
+    unknown["families"][0]["reads"][0]["family"] = "ticks"
+    with pytest.raises(ValueError, match="reads names 'ticks', which no family declares"):
         parse_nature_beam_world(unknown)
+    unheld = json.loads(json.dumps(good))
+    unheld["families"][0]["reads"][0]["family"] = "matter"
+    with pytest.raises(ValueError, match="reads names 'matter', which is not held"):
+        parse_nature_beam_world(unheld)
     massive = json.loads(json.dumps(good))
-    massive["clock_family"] = "matter"
-    with pytest.raises(ValueError, match="the family of clicks is massless, its pair \\[1, 1\\]"):
+    massive["families"][1]["held"] = "content"
+    massive["families"][1]["reads"] = []
+    with pytest.raises(
+        ValueError, match="is held with the pair \\[800, 809\\]: a held family is massless"
+    ):
         parse_nature_beam_world(massive)
     quantum = json.loads(json.dumps(good))
     quantum["families"][2]["quantum"] = 2
@@ -529,19 +557,45 @@ def test_the_loader_names_the_family_of_clicks_and_refuses_what_it_cannot_be():
     clocked["families"][2]["phase_per_link"] = [512, 1]
     with pytest.raises(ValueError, match="has no clock of its own"):
         parse_nature_beam_world(clocked)
+    charged = json.loads(json.dumps(good))
+    charged["families"][2]["charge"] = 1
+    with pytest.raises(
+        ValueError, match="is held and declares the charge 1: a held family carries none"
+    ):
+        parse_nature_beam_world(charged)
+    reading = json.loads(json.dumps(good))
+    reading["families"][2]["reads"] = [{"family": "charge", "weight": 1}]
+    with pytest.raises(ValueError, match="is held and reads"):
+        parse_nature_beam_world(reading)
+    booked = json.loads(json.dumps(good))
+    booked["families"][2]["booked"] = True
+    with pytest.raises(ValueError, match="is held and booked"):
+        parse_nature_beam_world(booked)
+    twice = json.loads(json.dumps(good))
+    twice["families"][3]["held"] = "content"
+    with pytest.raises(ValueError, match="two families hold 'content'"):
+        parse_nature_beam_world(twice)
+    source = json.loads(json.dumps(good))
+    source["families"][2]["held"] = "momentum"
+    with pytest.raises(ValueError, match="held must be one of"):
+        parse_nature_beam_world(source)
+    components = json.loads(json.dumps(good))
+    components["families"][0]["components"] = 3
+    with pytest.raises(ValueError, match="components 3: one component alone is built"):
+        parse_nature_beam_world(components)
     body = json.loads(json.dumps(good))
     body["measured"] = [dict(light_body(3, 1), family="clicks")]
-    with pytest.raises(ValueError, match="is of the family of clicks 'clicks': no body is of it"):
+    with pytest.raises(ValueError, match="is of the held family 'clicks': no body is of it"):
         parse_nature_beam_world(body)
     holding = json.loads(json.dumps(good))
     holding["measured"] = [dict(light_body(3, 1), held={"clicks": 2})]
-    with pytest.raises(ValueError, match="held names the family of clicks"):
+    with pytest.raises(ValueError, match="held names the held family 'clicks'"):
         parse_nature_beam_world(holding)
     given = emitter_world(stock=1)
     given["measured"][0]["emitter"]["family"] = "clicks"
     given["input"] = input_stamp(given)
     with pytest.raises(
-        ValueError, match="givings into the family of clicks|the given family is a paid family"
+        ValueError, match="givings into the held family 'clicks'|the given family is a paid family"
     ):
         parse_nature_beam_world(given)
     six = json.loads(json.dumps(good))
@@ -552,4 +606,57 @@ def test_the_loader_names_the_family_of_clicks_and_refuses_what_it_cannot_be():
     with pytest.raises(ValueError, match="families declares 6; at most 5 families"):
         parse_nature_beam_world(six)
     world = parse_nature_beam_world(good)
-    assert world.clock_family == 2 and DetectorLawSimulation(world).clock_family == 2
+    assert world.held_families == (2, 3) and DetectorLawSimulation(world).held_families == [2, 3]
+
+
+def test_the_engine_reads_no_family_name_the_held_families_renamed_step_bit_for_bit():
+    """(x) THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26 item 51):
+    the chain of 60 with QUANTA quanta at [20, 30) and a light record of random rows, stepped
+    40 intervals, then the same world with the two held families renamed (`clicks` to `ticks`,
+    `charge` to `sign`, the reads following the names) and the two held families in the other
+    order: the light record's rows, the held levels and the books are bit for bit the same
+    (the engine reads the attributes `held` and `reads`, never a name or a position), the books
+    read alike. The edge case: a reading family renamed too (`light` to `photon`) changes nothing
+    either."""
+    rng = np.random.default_rng(23)
+    now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
+    before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
+
+    def run(document: dict) -> tuple:
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+        live = planted(simulation, 0, now.copy(), before.copy(), np.zeros((60, 1, 1), dtype=np.int64))
+        simulation.records[live.identity] = live
+        for _ in range(40):
+            simulation.step()
+        content = simulation.level_of("content").copy()
+        charge = simulation.level_of("charge").copy()
+        return (
+            live.now.copy(),
+            live.before.copy(),
+            live.remainder.copy(),
+            content,
+            charge,
+            simulation.books()["balanced"],
+        )
+
+    plain = content_chain(60, PERIODIC, range(20, 30), QUANTA)
+    renamed = json.loads(json.dumps(plain))
+    names = {"clicks": "ticks", "charge": "sign", "light": "photon"}
+    for family in renamed["families"]:
+        family["name"] = names.get(family["name"], family["name"])
+        for read in family["reads"]:
+            read["family"] = names.get(read["family"], read["family"])
+    for entry in renamed["measured"]:
+        entry["family"] = names.get(entry["family"], entry["family"])
+        if "held" in entry:
+            entry["held"] = {names.get(k, k): v for k, v in entry["held"].items()}
+    # the two held families in the other order (the indices move, the attributes stay)
+    held = [f for f in renamed["families"] if f.get("held")]
+    others = [f for f in renamed["families"] if not f.get("held")]
+    renamed["families"] = others + held[::-1]
+    world = parse_nature_beam_world(renamed)
+    assert [world.families[i].held for i in world.held_families] == ["charge", "content"]
+    first, second = run(plain), run(renamed)
+    for a, b in zip(first[:5], second[:5], strict=True):
+        assert np.array_equal(a, b)
+    assert first[5] == second[5]  # the books read alike (a planted record is outside the ledger)

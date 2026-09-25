@@ -25,9 +25,6 @@
  "massive_record": true,
  "amplitude_bound": 1048576,
  "node_clock": 10000,
- "clock_family": "clicks",
- "charge_family": "charge",
- "charge_strength": 1,
  "directions": [],
  "families": [
   {
@@ -37,7 +34,18 @@
     77,
     25
    ],
-   "charge": 0
+   "charge": 0,
+   "reads": [
+    {
+     "family": "clicks",
+     "weight": 1
+    },
+    {
+     "family": "charge",
+     "weight": 1,
+     "by": "charge"
+    }
+   ]
   },
   {
    "name": "matter",
@@ -46,17 +54,32 @@
     800,
     809
    ],
-   "charge": 0
+   "charge": 0,
+   "reads": [
+    {
+     "family": "clicks",
+     "weight": 1
+    },
+    {
+     "family": "charge",
+     "weight": 1,
+     "by": "charge"
+    }
+   ]
   },
   {
    "name": "clicks",
    "quantum": 1,
-   "charge": 0
+   "charge": 0,
+   "held": "content",
+   "reads": []
   },
   {
    "name": "charge",
    "quantum": 1,
-   "charge": 0
+   "charge": 0,
+   "held": "charge",
+   "reads": []
   }
  ],
  "measured": [
@@ -16476,6 +16499,6 @@
  "detectors": [],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "bff8453d906028db71de1f8984bc90eca581e170754a4a68207abadccdfcddfa"
+  "hash": "17d296ffbfea65f3d3a028cc5b15b168776cc55bec55ed7d40f573d0ff29d58c"
  }
 }

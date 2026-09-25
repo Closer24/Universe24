@@ -40,7 +40,7 @@ from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import body_node_indices, input_stamp, parse_nature_beam_world
 from tests.test_board_properties import exchange_of, form_I
 from tests.test_detector_law import Seen, chosen_by_the_rule, spy_on
-from tests.test_emitter import emitter_world, massive_generator
+from tests.test_emitter import emitter_world, massive_generator, reads
 
 LIGHT, MATTER, POSITIVE = 0, 1, 2
 STOCK = 3
@@ -55,7 +55,8 @@ def reversible_world(ticks: int = 400) -> dict:
     document["families"][LIGHT]["charge"] = -1
     document["families"][MATTER]["charge"] = -1
     document["families"].insert(
-        POSITIVE, {"name": "positive", "quantum": 1, "phase_per_link": [512, 1], "charge": 1}
+        POSITIVE,
+        {"name": "positive", "quantum": 1, "phase_per_link": [512, 1], "charge": 1, "reads": reads()},
     )
     document["measured"].append(
         {
@@ -81,14 +82,14 @@ def rows_of(simulation: DetectorLawSimulation) -> dict[str, object]:
             for identity, live in simulation.records.items()
         },
         "clock": (
-            simulation.clock_record.now.copy(),
-            simulation.clock_record.before.copy(),
-            simulation.clock_record.remainder.copy(),
+            simulation.held_record("content").now.copy(),
+            simulation.held_record("content").before.copy(),
+            simulation.held_record("content").remainder.copy(),
         ),
         "charge": (
-            simulation.charge_record.now.copy(),
-            simulation.charge_record.before.copy(),
-            simulation.charge_record.remainder.copy(),
+            simulation.held_record("charge").now.copy(),
+            simulation.held_record("charge").before.copy(),
+            simulation.held_record("charge").remainder.copy(),
         ),
         "held": copy.deepcopy(simulation.held),
         "tick": simulation.tick,
@@ -212,7 +213,7 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
         simulation.step_inverse()
         assert_same(rows_of(simulation), states[t - 1])
     simulation.held = copy.deepcopy(states[t_taking - 1]["held"])
-    simulation._hold_clock()
+    simulation._hold()
     simulation.step_inverse()
     assert_same(rows_of(simulation), states[t_taking - 1], lost={deleted})
     lost = {deleted}
@@ -263,16 +264,18 @@ def inverse_giving_interval(
     held_before = states[t - 1]["held"]
     number = line["measured"]
     mask = block.mask
-    pre_content = simulation.clock_record.before.copy()
-    pre_charge = simulation.charge_record.before.copy()
+    clock, charge = simulation.held_record("content"), simulation.held_record("charge")
+    pre_content = clock.before.copy()
+    pre_charge = charge.before.copy()
     pre_content[mask] = sum(held_before[number])
     pre_charge[mask] = sum(
         sign * quanta for sign, quanta in zip(simulation.family_charge, held_before[number], strict=True)
     )
-    simulation.node_content = pre_content
-    simulation.node_charge = pre_charge
+    simulation.node_level[clock.family] = pre_content
+    simulation.node_level[charge.family] = pre_charge
+    simulation._effective.clear()
     for other in list(simulation.records.values()):
-        if simulation.families[other.family].massive_kind and other.emitter is None:
+        if other.standing:
             continue
         simulation._advance_inverse(other)
     for each in simulation.blocks:
@@ -280,10 +283,10 @@ def inverse_giving_interval(
             simulation._advance_seat_inverse(each)
         elif each.own is not None:
             simulation._advance_inverse(each.own)
-    simulation._advance_inverse(simulation.clock_record)
-    simulation._advance_inverse(simulation.charge_record)
+    simulation._advance_inverse(clock)
+    simulation._advance_inverse(charge)
     simulation.held = copy.deepcopy(held_before)
-    simulation._hold_clock()
+    simulation._hold()
     simulation.tick -= 1
 
 

@@ -102,15 +102,20 @@ NODE_CLOCK = 10_000  # Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44; the
 # THE FAMILY OF CLICKS (the model owner's record 1982; ALGEBRA.md 9.45; BUILD.md
 # section 26 item 32): the fourth family, whose level at a Node is the Node
 # clock; its pair [1, 1] (light's kind, the default), its unit the quantum, no
-# clock of its own; declared in every world and named by `clock_family`
+# clock of its own; declared in every world as the family holding the content (the family
+# genericity, the model owner's record 2066; BUILD.md section 26 item 51)
 CLOCK_FAMILY_NAME = "clicks"
-CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0}
+CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "content", "reads": []}
 # THE FAMILY OF CHARGE (ALGEBRA.md 9.48; BUILD.md section 26 item 35): the fifth family,
-# its level the signed charge held at every body's Nodes; Lambda its weight in the clock;
+# holding the signed charge at every body's Nodes; Lambda the weight of the read on it;
 # every registered family's charge is 0, so the field stays 0 and no row moves
 CHARGE_FAMILY_NAME = "charge"
-CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0}
+CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "charge", "reads": []}
 CHARGE_STRENGTH = 1
+READS = [
+    {"family": CLOCK_FAMILY_NAME, "weight": 1},
+    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "charge"},
+]  # every reading family's `reads` (item 51): the content plainly, the charge by its own sign
 MOMENTUM_SPEED_THIRD = 64
 MOMENTUM_SPEED_QUARTER = 48
 # The layer pin world's push (DECLARATIONS.md section 8): the ramp ten relaxation times of
@@ -156,11 +161,13 @@ def world(
     if any(block.get("family") == "source" for block in blocks):
         # the emitter bodies' own family (`emitter_at`): the kind SOURCE_KIND
         families.append({"name": "source", "quantum": 1, "pair": list(SOURCE_KIND)})
-    families.append(dict(CLOCK_FAMILY))  # the family of clicks, the Node clock (item 32)
     for family in families:
-        # the sign on the quantum (ALGEBRA.md 9.48 (1)): 0 on every registered family
+        # the sign on the quantum (ALGEBRA.md 9.48 (1)): 0 on every registered family;
+        # the reads (item 51): the held content plainly, the held charge by the sign
         family.setdefault("charge", 0)
-    families.append(dict(CHARGE_FAMILY))  # the family of charge (item 35)
+        family.setdefault("reads", [dict(read) for read in READS])
+    families.append(dict(CLOCK_FAMILY))  # the family holding the content, the Node clock (item 32)
+    families.append(dict(CHARGE_FAMILY))  # the family holding the charge (item 35)
     measured: list[dict] = []
     for block in blocks:
         entry: dict = {
@@ -201,12 +208,8 @@ def world(
         # the Node clock Gamma (ALGEBRA.md 9.35 (3); item 31): (e, f) = (Gamma,
         # Gamma + M) at every Node, M the content held there; required, no default
         "node_clock": NODE_CLOCK,
-        # the family of clicks by name: its level at a Node is the Node clock
-        # (Gamma, Gamma + c), held at every body's Nodes at the content (9.45)
-        "clock_family": CLOCK_FAMILY_NAME,
-        # the family of charge by name and Lambda, its weight in the clock (9.48)
-        "charge_family": CHARGE_FAMILY_NAME,
-        "charge_strength": CHARGE_STRENGTH,
+        # the families' roles stand on the families (`held`, `reads`; the family
+        # genericity, BUILD.md section 26 item 51)
         "directions": [],
         "families": families,
         "measured": measured,

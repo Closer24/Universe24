@@ -32,7 +32,7 @@ from event_universe.events.world import (
     parse_nature_beam_world,
     six_neighbours_flat,
 )
-from tests.test_emitter import emitter_world, massive_generator
+from tests.test_emitter import emitter_world, massive_generator, reads
 from tests.test_massive_record import light_clock_world, massive_world
 from tests.test_receiver_by_name import CLOSED_CHAIN, emitter
 
@@ -182,10 +182,13 @@ def test_at_most_five_families():
                 "quantum": 1,
                 "pair": [800, 809],
                 "charge": 0,
+                "reads": reads(),
             }
         )
     parse_nature_beam_world(restamped(document))
-    document["families"].append({"name": "sixth", "quantum": 1, "pair": [800, 809], "charge": 0})
+    document["families"].append(
+        {"name": "sixth", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()}
+    )
     restamped(document)
     with pytest.raises(
         ValueError,

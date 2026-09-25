@@ -113,6 +113,7 @@ HOLDER_FAMILY = {
     "quantum": 1,
     "pair": list(detector.KIND),
     "charge": 0,
+    "reads": [dict(read) for read in detector.READS],
 }  # the fifth family
 
 

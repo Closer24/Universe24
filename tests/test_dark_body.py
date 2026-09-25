@@ -96,21 +96,24 @@ def test_both_worlds_run_with_the_same_field_beside_the_body_and_the_dark_body_n
             simulation.step()
             if interval % 20 == 19:
                 assert simulation.books()["balanced"], (name, simulation.tick)
-        assert not simulation.charge_record.now.any() and not simulation.charge_record.remainder.any()
+        assert (
+            not simulation.held_record("charge").now.any()
+            and not simulation.held_record("charge").remainder.any()
+        )
         simulations[name] = simulation
     # ten Links outside the slab's four faces (the slab [184, 216) x [143, 148)) and beside
     # the beam's line; the bright body's content is lower by its giving clicks so far (a few
     # quanta of 100000), so the levels agree within one percent
     beside = [(226, 145, 0), (173, 145, 0), (200, 158, 0), (200, 132, 0), (200, 125, 0)]
     for node in beside:
-        dark_level = int(simulations["dark"].node_content[node])
-        bright_level = int(simulations["bright"].node_content[node])
+        dark_level = int(simulations["dark"].level_of("content")[node])
+        bright_level = int(simulations["bright"].level_of("content")[node])
         assert abs(dark_level - bright_level) <= max(10, abs(dark_level) // 100), (
             node,
             dark_level,
             bright_level,
         )
-    assert int(simulations["dark"].node_content[BODY_CENTRE]) == 4812
+    assert int(simulations["dark"].level_of("content")[BODY_CENTRE]) == 4812
     # the dark body's own rotation cycles on (its `click` and `block` lines are the GameBoard's
     # count of its own record, 9.54 (3)); no giving click and no taking click name it
     assert not [

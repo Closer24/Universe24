@@ -29,12 +29,10 @@ from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_emitter import (
     CHARGE_FAMILY,
-    CHARGE_FAMILY_NAME,
-    CHARGE_STRENGTH,
     CLOCK_FAMILY,
-    CLOCK_FAMILY_NAME,
     NODE_CLOCK,
     massive_generator,
+    reads,
 )
 
 SIDE = 12
@@ -78,13 +76,10 @@ def small_world(
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
-        "clock_family": CLOCK_FAMILY_NAME,
-        "charge_family": CHARGE_FAMILY_NAME,
-        "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": [77, 25], "charge": 0},
-            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0},
+            {"name": "light", "quantum": 1, "phase_per_link": [77, 25], "charge": 0, "reads": reads()},
+            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -205,12 +200,12 @@ def run(
     plant(simulation, giving, u, rows=rows)
     states = [state_of(simulation)]
     if contents is not None:
-        contents.append(simulation.node_content.copy())
+        contents.append(simulation.level_of("content").copy())
     for _ in range(intervals):
         simulation.step()
         states.append(state_of(simulation))
         if contents is not None:
-            contents.append(simulation.node_content.copy())
+            contents.append(simulation.level_of("content").copy())
     clicks = [(line["tick"], line["record"]) for line in lines if line["event"] == "gather"]
     return simulation, states, clicks
 
@@ -339,7 +334,7 @@ def form_I(
     # Gamma^2 num, S = 0, w = 6 den Gamma^2; the first-order form of item 36 HISTORY)
     gamma = simulation.node_clock
     if content is None:
-        content = simulation.node_content
+        content = simulation.level_of("content")
     num = simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
     read_coefficient, self_coefficient, wall = rule_coefficients(
@@ -489,7 +484,7 @@ def test_reversibility_except_the_click():
         simulation.step_inverse()
     final = state_of(simulation)
     assert set(final) == set(states[0]) and simulation.tick == 0
-    assert np.array_equal(simulation.clock_record.now, contents[0])
+    assert np.array_equal(simulation.held_record("content").now, contents[0])
     for identity in final:
         for x, y in zip(final[identity], states[0][identity], strict=True):
             assert np.array_equal(x, y), identity

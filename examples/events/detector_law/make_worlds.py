@@ -151,7 +151,7 @@ RECEIVER_KEY = True
 
 
 def light_family(pair: list[int] | None) -> dict:
-    family: dict = {"name": "light", "quantum": 1, "charge": 0}
+    family: dict = {"name": "light", "quantum": 1, "charge": 0, "reads": [dict(read) for read in READS]}
     if pair is not None:
         family["phase_per_link"] = pair
     return family
@@ -165,9 +165,6 @@ def ray_world(name: str, shape: list[int], boundary: dict, pair: list[int], tick
     document["massive_record"] = True  # the absorbing blocks and the `probes` key live under it
     document["amplitude_bound"] = AMPLITUDE_BOUND  # the emitter body's massive family (M1-10)
     document["node_clock"] = NODE_CLOCK  # the Node clock Gamma (item 31)
-    document["clock_family"] = CLOCK_FAMILY_NAME  # the family of clicks (item 32)
-    document["charge_family"] = CHARGE_FAMILY_NAME  # the family of charge (item 35)
-    document["charge_strength"] = CHARGE_STRENGTH
     document["families"] = [
         light_family(pair),
         emitter_kind_family(),
@@ -181,7 +178,13 @@ def ray_world(name: str, shape: list[int], boundary: dict, pair: list[int], tick
 
 def emitter_kind_family(name: str = "matter") -> dict:
     """The emitter bodies' massive family (the kind EMITTER_KIND, no clock)."""
-    return {"name": name, "quantum": 1, "pair": list(EMITTER_KIND), "charge": 0}
+    return {
+        "name": name,
+        "quantum": 1,
+        "pair": list(EMITTER_KIND),
+        "charge": 0,
+        "reads": [dict(read) for read in READS],
+    }
 
 
 def emitter_body(
@@ -400,7 +403,13 @@ def bell(a: str, b: str) -> dict:
         "detector_law": True,
         "families": [
             light_family(BELL_CLOCK),
-            {"name": "counter", "quantum": 1, "phase_per_link": [1, 1], "charge": 0},
+            {
+                "name": "counter",
+                "quantum": 1,
+                "phase_per_link": [1, 1],
+                "charge": 0,
+                "reads": [dict(read) for read in READS],
+            },
         ],
         "measured": [
             {
@@ -468,7 +477,13 @@ def malus(name: str, source: Path, setting: int) -> dict:
             rebuilt["detector_law"] = True
     rebuilt["families"] = [
         light_family(MALUS_CLOCK),
-        {"name": "counter", "quantum": 1, "phase_per_link": [1, 1], "charge": 0},
+        {
+            "name": "counter",
+            "quantum": 1,
+            "phase_per_link": [1, 1],
+            "charge": 0,
+            "reads": [dict(read) for read in READS],
+        },
         emitter_kind_family(),
     ]
     rebuilt["massive_record"] = True
@@ -521,11 +536,23 @@ AMPLITUDE_BOUND = (
     1 << 20
 )  # the world key `amplitude_bound` of every massive world: the ceiling under the Node clock (BUILD.md section 26 item 31; section 15 M1-10's 2^32 HISTORY)
 NODE_CLOCK = 10_000  # the world key `node_clock`, Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44) (ALGEBRA.md 9.35 (3); item 31): the massive generator's integer, written in every world
-CLOCK_FAMILY_NAME = "clicks"  # the family of clicks, the Node clock (ALGEBRA.md 9.45; item 32): the massive generator's name and family
-CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0}
-CHARGE_FAMILY_NAME = "charge"  # the family of charge (ALGEBRA.md 9.48; item 35)
-CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0}
-CHARGE_STRENGTH = 1  # Lambda; every registered family's charge is 0
+# THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26 item 51): what a
+# family is stands on the family: the family of clicks holds the content (ALGEBRA.md 9.45;
+# item 32), the family of charge holds the signed charge (9.48; item 35), and every other
+# family reads them by `reads`, the charge at the weight Lambda by its own sign
+CLOCK_FAMILY_NAME = (
+    "clicks"  # the family whose held level is the Node clock: the massive generator's name and family
+)
+CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "content", "reads": []}
+CHARGE_FAMILY_NAME = "charge"  # the family whose held level is the signed charge
+CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "charge", "reads": []}
+CHARGE_STRENGTH = (
+    1  # Lambda, the weight of the read on the charge; every registered family's charge is 0
+)
+READS = [
+    {"family": CLOCK_FAMILY_NAME, "weight": 1},
+    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "charge"},
+]  # every reading family's `reads`: the content plainly, the charge by its own sign at Lambda
 EMITTER_STOCK = (
     64  # the massive rows' emitters: 64 excitations on the wheel [1, 64] (BUILD.md section 26)
 )
@@ -621,9 +648,6 @@ def bounded(document: dict) -> None:
         if key == "massive_record":
             document["amplitude_bound"] = AMPLITUDE_BOUND
             document["node_clock"] = NODE_CLOCK
-            document["clock_family"] = CLOCK_FAMILY_NAME
-            document["charge_family"] = CHARGE_FAMILY_NAME
-            document["charge_strength"] = CHARGE_STRENGTH
 
 
 def light_clock(massive) -> dict:

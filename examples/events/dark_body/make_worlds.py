@@ -66,6 +66,10 @@ WELL = [800, 801]  # the emitter's well, the light clock's
 BODY_WELL = WELL  # the body's well the emitter's: 32 by 5 binds its mode in [800, 801]
 SEED = 1 << 18  # below the amplitude bound 2^20 (9.61 (3))
 GIVEN_CLOCK = [512, 1]
+READS = [
+    {"family": "clicks", "weight": 1},
+    {"family": "charge", "weight": 1, "by": "charge"},
+]  # every reading family's `reads` (BUILD.md section 26 item 51): the content plainly, the charge by its own sign
 DETECTOR_SIDE = 3
 
 
@@ -150,16 +154,31 @@ def world(dark: bool) -> dict:
         "massive_record": True,
         "amplitude_bound": 1 << 20,  # the integers of 9.61 (3) (item 44)
         "node_clock": NODE_CLOCK,
-        "clock_family": "clicks",
-        "charge_family": "charge",
-        "charge_strength": 1,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": list(GIVEN_CLOCK), "charge": 0},
-            {"name": "matter", "quantum": 1, "pair": list(MATTER), "charge": 0},
-            {"name": "dark", "quantum": 1, "pair": list(MATTER), "charge": 0},
-            {"name": "clicks", "quantum": 1, "charge": 0},
-            {"name": "charge", "quantum": 1, "charge": 0},
+            {
+                "name": "light",
+                "quantum": 1,
+                "phase_per_link": list(GIVEN_CLOCK),
+                "charge": 0,
+                "reads": [dict(read) for read in READS],
+            },
+            {
+                "name": "matter",
+                "quantum": 1,
+                "pair": list(MATTER),
+                "charge": 0,
+                "reads": [dict(read) for read in READS],
+            },
+            {
+                "name": "dark",
+                "quantum": 1,
+                "pair": list(MATTER),
+                "charge": 0,
+                "reads": [dict(read) for read in READS],
+            },
+            {"name": "clicks", "quantum": 1, "charge": 0, "held": "content", "reads": []},
+            {"name": "charge", "quantum": 1, "charge": 0, "held": "charge", "reads": []},
         ],
         "measured": [],
         "detectors": [],

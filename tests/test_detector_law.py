@@ -22,13 +22,11 @@ from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import DETECTOR_LAW_RULE, input_stamp, parse_nature_beam_world
 from tests.test_emitter import (
     CHARGE_FAMILY,
-    CHARGE_FAMILY_NAME,
-    CHARGE_STRENGTH,
     CLOCK_FAMILY,
-    CLOCK_FAMILY_NAME,
     NODE_CLOCK,
     lawful_wheel,
     massive_generator,
+    reads,
 )
 
 EMITTER_KIND = [7, 8]  # the emitter body's kind (omega_0 = 0.505)
@@ -165,13 +163,16 @@ def chain_world(
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
-        "clock_family": CLOCK_FAMILY_NAME,
-        "charge_family": CHARGE_FAMILY_NAME,
-        "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": list(GIVEN_CLOCK), "charge": 0},
-            {"name": "matter", "quantum": 1, "pair": list(EMITTER_KIND), "charge": 0},
+            {
+                "name": "light",
+                "quantum": 1,
+                "phase_per_link": list(GIVEN_CLOCK),
+                "charge": 0,
+                "reads": reads(),
+            },
+            {"name": "matter", "quantum": 1, "pair": list(EMITTER_KIND), "charge": 0, "reads": reads()},
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -376,13 +377,16 @@ def layer_world(receiver: object = None) -> dict:
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
-        "clock_family": CLOCK_FAMILY_NAME,
-        "charge_family": CHARGE_FAMILY_NAME,
-        "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": list(GIVEN_CLOCK), "charge": 0},
-            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0},
+            {
+                "name": "light",
+                "quantum": 1,
+                "phase_per_link": list(GIVEN_CLOCK),
+                "charge": 0,
+                "reads": reads(),
+            },
+            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -529,7 +533,7 @@ def lockstep_givings(
         for simulation, _lines in runs:
             simulation.step()
         if differs is None and not np.array_equal(
-            runs[0][0].clock_record.now[near], runs[1][0].clock_record.now[near]
+            runs[0][0].held_record("content").now[near], runs[1][0].held_record("content").now[near]
         ):
             differs = runs[0][0].tick
     givings = [[line for line in lines if line["event"] == "giving"] for _run, lines in runs]

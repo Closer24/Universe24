@@ -124,8 +124,10 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
         seated_levels.append(body.now)
         lattice_levels.append(int(lattice_block.own.now[centre]))
         forms.append(seated.seat_form(seated_block))
-        assert np.array_equal(seated.clock_record.now, lattice.clock_record.now)
-        assert np.array_equal(seated.clock_record.remainder, lattice.clock_record.remainder)
+        assert np.array_equal(seated.held_record("content").now, lattice.held_record("content").now)
+        assert np.array_equal(
+            seated.held_record("content").remainder, lattice.held_record("content").remainder
+        )
     expected = Fraction(coefficient, wall)
     # the read at the levels above half the amplitude: (r' - r) / (wall a_now) below 2 x 10^-6
     # on the body record; the profile's rounding on the lattice body below 10^-4 (the median
@@ -233,7 +235,7 @@ def test_the_joint_inverse_is_exact_with_a_body_record():
     live = planted(simulation, 0, now, before, np.zeros(simulation.shape, dtype=np.int64))
     simulation.records[live.identity] = live
     start = (block.seat.now, block.seat.before, block.seat.remainder)
-    field = simulation.clock_record.now.copy()
+    field = simulation.held_record("content").now.copy()
     for _ in range(60):
         simulation.step()
     assert (block.seat.now, block.seat.before, block.seat.remainder) != start
@@ -242,7 +244,7 @@ def test_the_joint_inverse_is_exact_with_a_body_record():
     assert (block.seat.now, block.seat.before, block.seat.remainder) == start
     assert np.array_equal(live.now, now) and np.array_equal(live.before, before)
     assert not live.remainder.any() and simulation.tick == 0
-    assert np.array_equal(simulation.clock_record.now, field)
+    assert np.array_equal(simulation.held_record("content").now, field)
 
 
 def test_the_loader_and_the_state_name_the_body_record():
