@@ -6971,7 +6971,23 @@ THE BOARD WITH ITS DETECTORS IS NOT A BIJECTION: what a click loses is
 the record's two levels on all its Nodes less the few integers of the
 line, its shape and its phase; the line keeps the count and the
 residue, enough to say which record clicked where and when, not enough
-to write it back. (c) A FULLY REVERSIBLE CLICK would keep the whole
+to write it back. THE CLICK AS THE ONE EXCHANGE BETWEEN SYSTEMS, AND THE
+WHOLE'S FREQUENCY (the owner's line, "the click is a way for systems to
+communicate; when the click is not reversible, there is no frequency,
+really"; CONFIRMED with one precision): the click is the one exchange of
+the model, a record born at one body ending at another whose own record
+changes, the exchange travelling between them locally as flux and the
+click itself carrying no signal (9.25 (6)); and with the click
+irreversible the whole, the board with its detectors, is no bijection,
+so the exact recurrence of (4) (b) fails for it: the whole has no period
+and hence no frequency of its own, while every body keeps its own clock
+between clicks and every record its own rotation; were the click made
+reversible by keeping the record at the detector, the whole would be a
+bijection again and would recur exactly, with a period, under the one
+condition of (4) (b) that its orbit stays bounded. So the owner's
+decision on the click's reversibility decides whether the universe of
+the model has a frequency; the algebra gives both answers and chooses
+neither. (c) A FULLY REVERSIBLE CLICK would keep the whole
 record at the detector, a register at its Nodes: it contradicts no
 proof (Born's rule, no signalling and one quantum one click are
 statements about the forward click and stand whatever the detector
