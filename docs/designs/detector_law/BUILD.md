@@ -2478,7 +2478,9 @@ would have found no cell.
    moved, no verdict). THE ROWS HELD UNDER THE TRAIN: the 26 other
    emitting worlds (the two slits, the pace fans, Sagnac's two, the
    redshift's two, de Broglie's two, the moving mass, the four medium
-   index and the twelve receding index rows) cannot load under the law
+   index and the twenty-one receding index worlds, the eight short rest
+   and reference worlds without an emitter held with their row) cannot
+   load under the law
    (the two-integer born refused) and their restated forms are the
    table's: their files moved as written to
    docs/designs/detector_law/held_worlds (HISTORY, the one-cell birth),
