@@ -11958,7 +11958,8 @@ share are the ladder's own primitives; the newly covered Nodes are one
 face, fixed K; no float, no root.
 
 **(4) FINDING 3, THE GIVEN TRAIN OF A MOVING BODY: RULED, A GENERALISATION
-OF T3 FOR THE OWNER.** The moving emitter gave its train at the board's
+OF T3 FOR THE OWNER. [ADOPTED by the model owner, 2026-09-25, record 2042
+through the Boss: "yes, adopt Doppler".]** The moving emitter gave its train at the board's
 k, as the resting one. 9.40 T3 and 9.17 (6a) say the given rows are the
 eigenvector times the character of the body's momentum; for a body's
 OWN family that character is the plane wave of its momentum K per Node,
@@ -12058,3 +12059,95 @@ field. So at Gamma = 10^4 no shipped row's expectation moves outside
 its band; the held rows (Bell, Malus, the two slits, Sagnac, the
 redshift, de Broglie, the moving mass) get their numbers when their
 files return, from their contents then.
+
+### 9.64 The charge rows, blind (the Boss's record 2042 of 2026-09-25, the model owner: "build the charge experiments if possible"; on the law after the change, 9.57 with the body at the seat, Gamma = 10^4; the mathematician's expectations before any run; DERIVED from 9.48)
+
+**(0) WHAT THE INTEGERS ALLOW, IN ONE LINE EACH.** A body's charge Q is a
+count of quanta held at its Nodes as the charge family's level d = Q
+(9.48 (1), (2)), and 9.48 (6) (B) rules that a level of a few units
+makes no resolved field beyond a few Links: so COULOMB AT A DISTANCE
+needs a heavy charge, Q of hundreds, as gravity's resolved field needs a
+heavy content, and the row stands with Q = +-400; THE ATOM at Q = +1 is
+not Coulomb's 1 / r but the well of the body's own Nodes, a top-hat of
+depth Lambda |d| / Gamma on its extent and the rounding's walk outside,
+and the row stands as the atom's first form with that said. Both stand
+on Gamma = 10^4, A = 2^19 or 2^20: the charge term q Lambda d a sits in
+the numerator under the same bound as the content's, and the loader's
+f > 0 (Lambda |d| < Gamma + c, 9.48 (3)) holds in both rows below.
+
+**(1) COULOMB, 9.48 (4).** The world: a layer [200, 120, 1] (or the cube
+for the closed form), a body of side 10 (R = 5) holding a charge Q =
++400 of one sign and a small content, Lambda = 1; a packet of a charged
+massive family (q = -1, the pair of the muon's kind) given at v = 1 / 4
+along a line at closest distance b = 20 from the body's centre; a
+receiver 100 Links beyond, wide, read by the increment ladder; the same
+world with Q = -400, with Q = 0, with the packet's family at q = 0, and
+with light. The effective level a record of charge q reads is c - q
+Lambda d (9.48 (3)), so the packet sees the potential Phi = -c / (2
+Gamma) + q Lambda d / (2 Gamma): a well for unlike signs, a hill for
+like signs. THE CLOSED FORM (the cube, d = Q R / r): the small-angle
+bend of a slow packet, delta = 2 Lambda |Q| R / (2 Gamma b v^2) = Lambda
+|Q| R / (Gamma b v^2), toward the body for unlike signs and away for
+like: at Q = 400, R = 5, b = 20, v = 1 / 4: 0.16 radians, the centroid
+16 Nodes off the control's line at the receiver; at Q = 800, 32 Nodes
+(the small-angle form about 5 percent high there); at v = 1 / 3, nine
+sixteenths of it. On the layer the field is the layer's static
+solution and the closed form is the ray integral with the index of the
+charged record, as 9.61 (2) (c) for light. THE PINS THAT HOLD ON ANY
+BOARD, blind: (i) the shifts at +Q and -Q are opposite and equal within
+the second order (about 1 percent) and the draw; (ii) their half-sum is
+the neutral record's shift, the content's bend alone, and their
+half-difference is the charge's, linear in Q within 5 percent between
+400 and 800 and linear in Lambda; (iii) light's shift is the content's
+alone, the same in every world of the row, since q = 0 reads no charge
+(9.48 (3)); (iv) the charge's bend falls as 1 / v^2 between v = 1 / 4
+and 1 / 3; (v) the same on today's law and on the Einstein form to first
+order (the charge enters the level; the Einstein form's second order
+moves it by U_eff^2, below 1 percent here). Nature: Coulomb's force,
+Rutherford's small-angle scattering, light untouched by charge. THE
+SIZE: 200 x 120 Nodes, a packet crossing in 800 intervals, 100 records
+or one train, about 2 x 10^7 Node-intervals: minutes.
+
+**(2) THE ATOM, 9.48 (4), AT Gamma = 10^4.** The threshold re-read: the
+charge well for a record of the opposite sign has the relative depth
+Lambda |d| / Gamma on the body's Nodes (today's law scales the mass
+term by 1 - c_eff / Gamma); for a body of side 32 the bound-mode
+threshold of 9.48 (4) is Lambda |d| about 0.25 Gamma = 2500 at Gamma =
+10^4 with d = Q = 1, so Lambda = 2500, under f > 0 (2500 < 10^4); a body
+of side 8 needs 1.5 Gamma, forbidden, and side 3 never binds: unchanged
+in ratio, since the threshold is a ratio to Gamma. THE WORLD: a body of
+side 32 holding Q = +1 (one proton-like quantum) and no declared well,
+Lambda = 2500; an electron-like record (q = -1) given inside the body,
+and face receivers all round; the controls: Lambda = 0, and q = +1 (the
+like sign). WHAT A DETECTOR READS, blind: (i) THE BOUND CASE (unlike
+sign, Lambda = 2500): the record is a mode of the top-hat well and
+stays: no click at the faces over a run of 10^4 intervals, all its
+norm inside the body's Nodes (a GameBoard reading, diagnostic); the
+control at Lambda = 0 clicks at the faces, all records, within the
+crossing time 3 x the half-board over v; the like sign clicks at the
+faces too, sooner, pushed out by the hill. (ii) THE MASS DEFECT (9.51
+(3)): the bound mode's frequency is lower, 1 - cos omega' = (1 - Lambda
+|d| / Gamma)(1 - cos omega_0), the ratio omega' / omega_0 = sqrt(0.75) =
+0.866 at 0.25 Gamma on today's law, sqrt(1 - 0.5 + 0.125) = 0.79 on the
+Einstein form's clock (9.56 (4)); read by a clock body of charge -1
+seated in the well, its giving clicks' mean interval longer by 1 /
+0.866 = 1.155 than the same body outside; nature: the binding energy as
+the atom's mass defect, with the ratio the integers give it. (iii) THE
+CROSSING ROW at a lower strength, Lambda |d| = 0.08 Gamma (U_eff =
+0.04), a packet crossing the body at v = 1 / 4: the unlike sign arrives
+at the far receiver EARLIER than the neutral control by the well's
+gain, w (1 / v - 1 / v') with v'^2 = v^2 + 2 U_eff, 32 x (4 - 2.65) = 43
+intervals (the packet's wavelength 60 against the width 32: the edges
+reflect a part, the ordering holds); the like sign meets a hill higher
+than its kinetic term (2 U_eff = 0.08 > v^2 = 0.0625) and turns back:
+no far click but a few percent that tunnel the width, the receiver
+behind the emitter clicks instead. THE SIZE: a cube [64, 64, 64] for the
+atom, 2.6 x 10^5 Nodes x 10^4 intervals = 2.6 x 10^9: an hour at the
+resting rate; on a layer [96, 96, 1] with a square of side 32, 10^8:
+a minute, the threshold then the layer's own (the same ratio to Gamma
+to the order of the well's shape).
+
+**(3) THE RULE OF READING.** Directions beside nature, no pins: a row
+outside its band comes to the mathematician before any word. The
+Coulomb row is the first in which a body repels, and its pin (i), the
+sign's reversal, is the one the law was changed for (9.48).
