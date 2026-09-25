@@ -549,7 +549,7 @@ The physics the method keeps:
 
 - The law is written for the Node only. A body is the support of a mode of the Node's rule. The click is the one write at a body's scale (record 2008; ALGEBRA.md 9.53).
 - A host form (a body on one Node, the seat's hop, the tick as a count, the energy count) stands only by its equivalence gate against the law's own run on the GameBoard.
-- The clock is Einstein's weak field: the Node's own pace on its step, and each read of a neighbour carrying that neighbour's pace through the Link, with the clock's second order (record 2024, replacing the Node alone of record 2003; ALGEBRA.md 9.56).
+- The clock is Einstein's weak field from the Node alone: the Node's own pace entering twice, squared on its six-neighbour sum and on its mass term with the clock's second order; nothing is read from a neighbour's clock, and every level read is the interval's start value (records 2003, 2024 and 2035; ALGEBRA.md 9.57).
 - Look in the algebra for the generic solution. What changes in time enters the numerator; the wall stays constant (records 1996 and 1997).
 - The backward run is exact everywhere. A lost inverse is a defect, not a choice (record 1994).
 - No conservation is decreed. It follows from the rule at the Node or it does not exist (record 1997).
