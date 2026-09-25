@@ -523,7 +523,7 @@ Every report, proposal, review finding or question a role sends to the Boss, and
 
 ## Short sentences, one idea each (the model owner, 2026-09-25, record 1989)
 
-Every message between roles, to the Boss and to the owner, is written in short sentences, one idea each, with the central ideas first. No long paragraphs. Use short lists where there are several items. Put a question, if there is one, on its own line at the end, asked plainly. Evidence and numbers follow the ideas in the same short form. This covers every report, answer and handoff, including the six lines above; the repository's documents keep their own form. Messages to the owner in Hebrew are written one sentence per line, with no blank lines between them, no bullet points and no full stop at the end of a line, because those are hard for him to read (the model owner, 2026-09-25, record 2029).
+Every message between roles, to the Boss and to the owner, is written in short sentences, one idea each, with the central ideas first. No long paragraphs. Use short lists where there are several items. Put a question, if there is one, on its own line at the end, asked plainly. Evidence and numbers follow the ideas in the same short form. This covers every report, answer and handoff, including the six lines above; the repository's documents keep their own form. Messages to the owner in Hebrew are written one sentence per line, with no blank lines between them, no bullet points and no full stop at the end of a line, because those are hard for him to read (the model owner, 2026-09-25, record 2029). The important sentences are in bold (the model owner, 2026-09-25, record 2032).
 
 ## The method of work: from the owner's word to the build (the model owner, 2026-09-25, record 2009)
 
