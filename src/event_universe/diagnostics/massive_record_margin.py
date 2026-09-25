@@ -291,6 +291,38 @@ def accurate_mode(world: NatureBeamWorld, number: int) -> tuple[float, np.ndarra
     return float(values[0]), mode
 
 
+def _operator_step(
+    levels: np.ndarray,
+    remainder: np.ndarray,
+    num: np.ndarray,
+    den: np.ndarray,
+    wrap: tuple[bool, bool, bool],
+    amplitude: int,
+) -> tuple[np.ndarray, np.ndarray]:
+    """One step of the board's own operator in the law's integers, 3 den v' =
+    num S_6(v) + 6 den v + r with the remainder r carried from step to step
+    (the one copy of the generator's step; ALGEBRA.md 9.22 (7)): returns
+    the levels and the remainder after the step. When the levels pass twice the amplitude they are renormalised by an
+    exact shift by a power of two, the remainder shifted with them (the
+    value v + r / wall halved k times is (v >> k) + ((v mod 2^k) wall + r)
+    / (wall 2^k), whose remainder against the same wall is the floor of
+    ((v mod 2^k) wall + r) / 2^k: nothing of the fraction is dropped but
+    the last bits below the wall)."""
+    wall = 3 * den.astype(np.int64)
+    total = num.astype(np.int64) * six_neighbours(levels, wrap).astype(np.int64) + remainder
+    total += 6 * den.astype(np.int64) * levels
+    levels = np.floor_divide(total, wall)
+    remainder = total - wall * levels
+    largest = int(np.max(np.abs(levels)))
+    if largest >= 2 * amplitude:
+        shift = largest.bit_length() - int(amplitude).bit_length()
+        shifted = np.right_shift(levels, shift)
+        low = levels - np.left_shift(shifted, shift)
+        remainder = np.right_shift(low * wall + remainder, shift)
+        levels = shifted
+    return levels, remainder
+
+
 def integer_mode_iteration(
     start: np.ndarray,
     num: np.ndarray,
@@ -299,45 +331,126 @@ def integer_mode_iteration(
     amplitude: int,
     iterations: int,
 ) -> np.ndarray:
-    """THE GENERATOR AS THE BOARD'S OWN OPERATOR, ITERATED IN INTEGERS (the
-    model owner's record 1898; ALGEBRA.md 9.22 (7)): from any start the
-    power iteration v -> (M + 2 I) v, in the law's own integers 3 den v' =
-    num S_6(v) + 6 den v + r with the remainder r kept from step to step,
-    converges to the bound mode (Perron-Frobenius on the nonnegative
-    shifted operator) at the rate 1 - gap / (lambda + 2) per iteration;
-    when the levels pass twice the amplitude they are renormalised by an
-    exact shift by a power of two, the remainder shifted with them (the
-    value v + r / wall halved k times is (v >> k) + ((v mod 2^k) wall + r)
-    / (wall 2^k), whose remainder against the same wall is the floor of
-    ((v mod 2^k) wall + r) / 2^k: nothing of the fraction is dropped but
-    the last bits below the wall). Reproducible bit for bit on every host;
-    the cost one board step per iteration. Returns the levels after
-    `iterations`, their largest magnitude in [amplitude, 2 amplitude)."""
+    """The board's own operator iterated a FIXED number of times from
+    `start` (a diagnostic of the generator's convergence, `_operator_step`
+    repeated; the generator itself stops by the rule of `iterated_mode`):
+    from any start the power iteration v -> (M + 2 I) v converges to the
+    bound mode (Perron-Frobenius on the nonnegative shifted operator) at
+    the rate 1 - gap / (lambda + 2) per iteration. Reproducible bit for bit
+    on every host; the cost one board step per iteration. Returns the
+    levels after `iterations`, their largest magnitude in [amplitude, 2
+    amplitude)."""
     levels = start.astype(np.int64).copy()
     remainder = np.zeros_like(levels)
-    wall = 3 * den.astype(np.int64)
     for _ in range(iterations):
-        total = num.astype(np.int64) * six_neighbours(levels, wrap).astype(np.int64)
-        total += 6 * den.astype(np.int64) * levels + remainder
-        levels = np.floor_divide(total, wall)
-        remainder = total - wall * levels
-        largest = int(np.max(np.abs(levels)))
-        if largest >= 2 * amplitude:
-            shift = largest.bit_length() - int(amplitude).bit_length()
-            shifted = np.right_shift(levels, shift)
-            low = levels - np.left_shift(shifted, shift)
-            remainder = np.right_shift(low * wall + remainder, shift)
-            levels = shifted
+        levels, remainder = _operator_step(levels, remainder, num, den, wrap, amplitude)
     return levels
 
 
-def mode_clock(lambda_max: float, amplitude: int) -> tuple[int, int]:
-    """The mode's 2 cos omega as the rational [a, b] the generator writes
-    (ALGEBRA.md 9.22 (7)): b a power of two at least twice the amplitude and
-    at least 2^20 (so that a shallow mode's binding above the band's top is
-    resolved), a the nearest integer to lambda b."""
-    b = max(1 << (int(amplitude).bit_length() + 1), 1 << 20)
-    return int(round(lambda_max * b)), b
+WORKING_AMPLITUDE = 1 << 20  # the generator's least working amplitude (`iterated_mode`)
+
+
+def clock_denominator(amplitude: int) -> int:
+    """The clock's denominator b for a profile at `amplitude` (ALGEBRA.md 9.22
+    (7)): a power of two at least twice the amplitude and at least 2^20 (so
+    that a shallow mode's binding above the band's top is resolved)."""
+    return max(1 << (int(amplitude).bit_length() + 1), 1 << 20)
+
+
+def iterated_mode(
+    world: NatureBeamWorld, number: int, amplitude: int, limit: int = 1 << 20
+) -> tuple[list[int], tuple[int, int], int]:
+    """THE GENERATOR: THE BOARD'S OWN OPERATOR ITERATED IN INTEGERS, WITH THE
+    STOP (the model owner's word of 2026-09-25, 04:10Z, closing record 1898:
+    "the iterated operator becomes the generator itself, with the stop").
+    The block alone in its medium on the world's own board (the family's
+    pair everywhere, the block's pair on its cells), from the cells'
+    indicator at `amplitude`: every iteration is one step of the operator
+    (`_operator_step`), the levels are scaled to the amplitude at the peak,
+    and the clock a / b is read from the scaled profile p as the operator's
+    quotient over the whole board, a = round(b SUM_i p_i num_i (S_6 p)_i /
+    SUM_i 3 den_i p_i^2) with b = `clock_denominator` (exact for the mode,
+    second order in the rounding, every Node weighing in; the growth at the
+    peak cell alone was READ AND REJECTED: its remainder's noise at a small
+    amplitude, 4096, moves the read by more than a shallow well's binding
+    above the band's top); THE STOP is the first iteration at which the
+    scaled profile with that clock passes the loader's own residual bound
+    (`mode_residual`: |b num_i (S_6 p)_i - 3 den_i a p_i| <= b (3 num_i + 6
+    den_i) at every Node, ALGEBRA.md 9.22 (7)): the next step changes the
+    board no more than the rounding floor, the board only rotating (a float
+    reading of the residual filters the iterations first; the verdict is
+    the loader's integer check alone). THE WORKING AMPLITUDE: the
+    iteration runs at 2^20 or the declared amplitude, whichever is larger
+    (`WORKING_AMPLITUDE`), and the profile checked and written is its
+    rounding at the declared amplitude: the loader's bound is the bound
+    for one rounding of an exact mode, while the iteration's own noise (a
+    unit per Node per step through the six reads) must sit below it, which
+    it does only when the working amplitude is large against the bound's
+    1.5 / p relative width (a side-4 well of [850, 800] on the 24-cube at
+    4096 hovered at 1.2 to 1.7 times the bound for ever; at 2^20 it
+    stops). A HOST
+    computation of the generator, reproducible bit for bit (the same
+    integers in, the same out); the loader reads the written integers alone
+    and checks them again. Returns the profile (x-major over the board),
+    the clock [a, b] and the iterations taken; past `limit` iterations
+    without the stop it raises, naming the last residual against the
+    bound (a generator fault or the iteration's floor, never a bound
+    moved)."""
+    from event_universe.events.world import mode_residual
+
+    entry = world.measured[number]
+    definition = entry.block
+    if definition is None:
+        raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
+    family = world.families[entry.family]
+    shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
+    wrap = world.kind_periodic(entry.family)
+    corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
+    cells = block_cells(shape, corner, definition.extents, wrap)
+    num = np.where(cells, definition.pair[0], family.pair[0]).astype(np.int64)
+    den = np.where(cells, definition.pair[1], family.pair[1]).astype(np.int64)
+    num_flat = [int(value) for value in num.ravel()]
+    den_flat = [int(value) for value in den.ravel()]
+    b = clock_denominator(amplitude)
+    working = max(amplitude, WORKING_AMPLITUDE)
+    levels = np.where(cells, working, 0).astype(np.int64)
+    remainder = np.zeros_like(levels)
+    residual = bound = 0
+    # the loader's bound per Node and the operator's integers as floats for the
+    # quick filter below (a filter, never the verdict)
+    num_float = num.astype(np.float64)
+    den_float = den.astype(np.float64)
+    bound_float = float(b) * (3.0 * num_float + 6.0 * den_float)
+    for iteration in range(1, limit + 1):
+        levels, remainder = _operator_step(levels, remainder, num, den, wrap, working)
+        largest = int(np.max(np.abs(levels)))
+        scaled = np.floor_divide(2 * levels * amplitude + largest, 2 * largest)
+        six = six_neighbours(scaled, wrap)
+        profile_float = scaled.astype(np.float64)
+        six_float = six.astype(np.float64)
+        quotient = float(np.sum(profile_float * num_float * six_float)) / float(
+            np.sum(3.0 * den_float * profile_float * profile_float)
+        )
+        reading = np.abs(
+            float(b) * num_float * six_float - 3.0 * den_float * (b * quotient) * profile_float
+        )
+        if not bool(np.all(reading <= bound_float * (1.0 + 1e-9))):
+            continue
+        # the exact integers: the clock as the quotient over the board, then the
+        # loader's own check
+        flat = [int(value) for value in scaled.ravel()]
+        six_flat = [int(value) for value in six.ravel()]
+        numerator = sum(p * n * s for p, n, s in zip(flat, num_flat, six_flat, strict=True))
+        denominator = sum(3 * d * p * p for p, d in zip(flat, den_flat, strict=True))
+        a = (2 * b * numerator + denominator) // (2 * denominator)
+        residual, bound, _ = mode_residual(flat, num_flat, den_flat, (a, b), shape, wrap)
+        if residual <= bound:
+            return flat, (a, b), iteration
+    raise ValueError(
+        f"{BEAM_LAW}: the generator's iteration for measured[{number}] did not stop within "
+        f"{limit} iterations: the last residual {residual} against the bound {bound} (the "
+        f"amplitude {amplitude}; the iteration's floor or a generator fault; nothing written)"
+    )
 
 
 def bound_mode(world: NatureBeamWorld, number: int) -> np.ndarray:
@@ -350,10 +463,13 @@ def bound_mode(world: NatureBeamWorld, number: int) -> np.ndarray:
 
 
 def profile_check(world: NatureBeamWorld, number: int) -> tuple[int, int] | None:
-    """The GAMEBOARD check at load of a block seeded with an integer
+    """A GAMEBOARD diagnostic at load of a block seeded with an integer
     profile: the largest deviation, in units, of the file's integers from
-    the module's mode at the file's amplitude, with that amplitude; None
-    for a flat seed (a comparison printed, never read by the state)."""
+    the eigensolver's mode at the file's amplitude, with that amplitude;
+    None for a flat seed (a comparison printed, never read by the state;
+    the generator's iterated profile sits within its floor, about 1 / gap
+    units, of the eigensolver's; the law's check is the loader's residual
+    bound)."""
     definition = world.measured[number].block
     if definition is None or definition.profile is None:
         return None
@@ -608,25 +724,33 @@ def check_body_conditions(
                 f"{BEAM_LAW}: measured[{number}]: a bound body without its own record at load"
             )
         amplitude = int(definition.seed)
-        expected = np.rint(bound_mode(world, number) * amplitude).astype(np.int64)
+        if definition.profile is None:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}]: a bound body declares its seed as the "
+                "generator's profile (the operator iterated with the stop, `mode_profile` of the "
+                "massive record generator); a flat scalar seed is no mode"
+            )
+        # the initial state is the file's profile at both levels, bit for bit; that
+        # the profile IS the mode within the rounding is the loader's own residual
+        # check (record 1886), made before this
+        expected = np.array(definition.profile, dtype=np.int64).reshape(world.shape)
         for level_name, level in (("now", own.now), ("before", own.before)):
             found = np.asarray(level, dtype=np.int64)
             differing = np.nonzero(found != expected)
             if differing[0].size:
                 x, y, z = (int(differing[axis][0]) for axis in range(3))
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}]: the body's initial state is not the bound "
-                    f"mode's integer profile at the amplitude {amplitude}: at the Node ({x}, {y}, "
-                    f"{z}) the level `{level_name}` holds {int(found[x, y, z])} where the mode gives "
-                    f"{int(expected[x, y, z])} ({int(differing[0].size)} Nodes differ; the seed is "
-                    "written as the margin module's own integers over the whole board, "
-                    "`mode_profile` of the massive record generator, ALGEBRA.md 8.7: the standing "
-                    "start exact; the model owner's word of 2026-09-24, 16:48Z)"
+                    f"{BEAM_LAW}: measured[{number}]: the body's initial state is not the file's "
+                    f"profile at the amplitude {amplitude}: at the Node ({x}, {y}, {z}) the level "
+                    f"`{level_name}` holds {int(found[x, y, z])} where the profile gives "
+                    f"{int(expected[x, y, z])} ({int(differing[0].size)} Nodes differ; ALGEBRA.md "
+                    "8.7: the standing start exact; the model owner's word of 2026-09-24, 16:48Z)"
                 )
         lines.append(
-            f"seed (COMPUTATION): block {number}: the initial state is the bound mode's integer "
-            f"profile at the amplitude {amplitude} at both levels, bit for bit "
-            f"({int(np.count_nonzero(expected))} Nodes nonzero)"
+            f"seed (COMPUTATION): block {number}: the initial state is the file's profile at the "
+            f"amplitude {amplitude} at both levels, bit for bit "
+            f"({int(np.count_nonzero(expected))} Nodes nonzero; the profile the mode within the "
+            "loader's residual bound, record 1886)"
         )
         emitter = definition.emitter
         if emitter is not None:

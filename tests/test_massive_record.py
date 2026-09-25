@@ -20,10 +20,9 @@ import numpy as np
 import pytest
 
 from event_universe.diagnostics.massive_record_margin import (
-    accurate_mode,
     block_margin,
     check_margins,
-    mode_clock,
+    iterated_mode,
     profile_check,
 )
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
@@ -291,11 +290,14 @@ def test_p_the_light_record_is_byte_identical_without_the_key():
     then the events and the audit by the click rule of ALGEBRA.md 9.17 (7) (f) (the model
     owner's word, record 1918; item 24: the excited record's running total accruing its
     centre cell's share of its conserved form, the emitter's seed raised to 2^20, the six
-    births at (2 u + 1) P / (2 W) after their reads; the state at 600 unchanged)."""
+    births at (2 u + 1) P / (2 W) after their reads; the state at 600 unchanged), then all
+    three by the generator as the operator iterated with the stop (the owner's word of
+    2026-09-25; item 25: the emitter's seed and clock the iteration's, within the floor of
+    the eigensolver's), the digests read at that head."""
     assert run_chain_digests() == {
-        "events": "90f2583b0b69233b444134793a3bcaff6e02dbd8d3eff7df12a22a08718cc290",
-        "state": "79ebdb9711a964cb0b2e2211250487365b13fa6186e32cb3db49a6f2ffb4fce9",
-        "audit": "52205723a5be90d98a4b59694de1282da0995318c9594b47f885911ef00a0094",
+        "events": "3496296bee92a70a769098681a13fb600ab608f1780ee7f4b0a793241501bd02",
+        "state": "56e556bd2cc73026277f3f119acda2af1fab4c818f34fed804e658ebdd5ad457",
+        "audit": "034c20598f45eb6b617dffd3f0f7c307dd6c2c56c4cbce322ecca7655e7d57fb",
     }
 
 
@@ -1180,8 +1182,9 @@ def test_y_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     beat (the mean interval 39.3 against the mode's period 42.32), seeded with the module's mode
     as integers at 2^20 over the whole layer (the generator's integers in the world file, the
     same at both levels) it reads the mode: the clicks' mean interval over [200, 1500] within
-    0.5 percent of 2 pi / omega_b; the load-time check of the profile against the module's mode
-    reads 0 units. The edge cases: a profile without `margin` refused; a profile of the wrong
+    0.5 percent of 2 pi / omega_b; the load-time diagnostic of the profile against the
+    eigensolver's mode reads the generator's floor on this layer's small gap (3497 units, at
+    most 4000; the loader's residual bound is the law's check). The edge cases: a profile without `margin` refused; a profile of the wrong
     length refused; an all-zero profile refused."""
     block = {"position": [57, 57, 0], "side": 14, "pair": [3200, 3227], "margin": "control"}
     document = block_world([128, 128, 1], PERIODIC, [3200, 3236], [block], ticks=1500)
@@ -1189,23 +1192,21 @@ def test_y_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     world = parse_nature_beam_world(document)
     reading = block_margin(world, 0)
     period = 2 * np.pi / reading.omega_b
-    lambda_max, mode = accurate_mode(world, 0)
-    profile = np.rint(mode * (1 << 20)).astype(np.int64)
+    # the generator as the operator iterated with the stop (the owner's word of
+    # 2026-09-25): the profile with its clock beside it (record 1886; ALGEBRA.md 9.22 (7))
+    profile, clock, _ = iterated_mode(world, 0, 1 << 20)
     seeded = dict(document)
-    seeded["measured"] = [
-        dict(
-            document["measured"][0],
-            seed=[int(v) for v in profile.ravel()],
-            # the mode's clock beside the profile (record 1886; ALGEBRA.md 9.22 (7))
-            clock=list(mode_clock(lambda_max, 1 << 20)),
-        )
-    ]
+    seeded["measured"] = [dict(document["measured"][0], seed=profile, clock=list(clock))]
     seeded["input"] = input_stamp(seeded)
     world = parse_nature_beam_world(seeded)
-    assert profile_check(world, 0) == (0, 1 << 20)
+    deviation, amplitude = profile_check(world, 0)
+    # the diagnostic against the eigensolver's rounded mode reads the iteration's floor:
+    # on this layer the gap is small and the loader's bound admits about 3 / gap units
+    # of the neighbouring mode (3497 read, COMPUTATION; the bound is the law's check)
+    assert amplitude == 1 << 20 and deviation <= 4000
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
-    assert np.array_equal(simulation.blocks[0].own.now, profile)
+    assert np.array_equal(simulation.blocks[0].own.now, np.array(profile).reshape(world.shape))
     for _ in range(1500):
         simulation.step()
     clicks = [line["tick"] for line in lines if line["event"] == "click" and line["tick"] >= 200]

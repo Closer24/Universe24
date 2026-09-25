@@ -98,8 +98,6 @@ import json
 import math
 from pathlib import Path
 
-import numpy as np
-
 from event_universe.events.world import BLOCK_SEED
 
 HERE = Path(__file__).resolve().parent
@@ -697,21 +695,23 @@ def launch_list_worlds(include_refused: bool = False) -> dict[str, dict]:
 
 
 def mode_profile(document: dict, number: int, amplitude: int = 1 << 20) -> list[int]:
-    """The bound mode's integer profile of a block over the whole board (the margin module's
-    accurate mode, rounded at the amplitude), the pin worlds' seed of MASSIVE_RECORD.md section
-    11 item 7: a HOST computation of the generator, written into the world file so that the
-    run's record follows from the file and the engine alone. SINCE record 1886 (ALGEBRA.md 9.22
-    (7)) the entry also receives the mode's `clock` [a, b] (2 cos omega as a rational, b at
-    least twice the amplitude), and the profile is checked here against the loader's own
-    integer residual bound on the body's operator before it is written: a profile that fails
-    is a generator fault, raised, never written."""
-    from event_universe.diagnostics.massive_record_margin import accurate_mode, mode_clock
+    """The bound mode's integer profile of a block over the whole board, THE GENERATOR AS THE
+    BOARD'S OWN OPERATOR ITERATED IN INTEGERS WITH THE STOP (the model owner's word of
+    2026-09-25, 04:10Z, closing record 1898; the margin module's `iterated_mode`: the operator
+    iterated from the cells' indicator, the clock read from the growth at the peak cell, the
+    stop the first iteration at which the scaled profile passes the loader's own residual
+    bound), the pin worlds' seed of MASSIVE_RECORD.md section 11 item 7: a HOST computation of
+    the generator, reproducible bit for bit, written into the world file so that the run's
+    record follows from the file and the engine alone. SINCE record 1886 (ALGEBRA.md 9.22 (7))
+    the entry also receives the mode's `clock` [a, b] (2 cos omega as a rational, b at least
+    twice the amplitude), and the profile is checked here once more against the loader's
+    residual bound before it is written: a profile that fails is a generator fault, raised,
+    never written."""
+    from event_universe.diagnostics.massive_record_margin import iterated_mode
     from event_universe.events.world import block_cell_indices, mode_residual, parse_nature_beam_world
 
     world = parse_nature_beam_world(stamped(document))
-    lambda_max, mode = accurate_mode(world, number)
-    clock = mode_clock(lambda_max, amplitude)
-    profile = np.rint(mode * amplitude).astype(np.int64)
+    flat, clock, _ = iterated_mode(world, number, amplitude)
     entry = world.measured[number]
     block = entry.block
     assert block is not None
@@ -723,7 +723,6 @@ def mode_profile(document: dict, number: int, amplitude: int = 1 << 20) -> list[
     num, den = [family.pair[0]] * count, [family.pair[1]] * count
     for index in block_cell_indices(shape, corner, block.extents, wrap):
         num[index], den[index] = block.pair[0], block.pair[1]
-    flat = [int(value) for value in profile.ravel()]
     residual, bound, node = mode_residual(flat, num, den, clock, shape, wrap)
     if residual > bound:
         raise ValueError(

@@ -21,6 +21,7 @@ from event_universe.diagnostics.massive_record_margin import (
     accurate_mode,
     block_cells,
     integer_mode_iteration,
+    iterated_mode,
 )
 from event_universe.events.world import (
     LAW_IDENTIFIER,
@@ -246,16 +247,20 @@ def test_g_the_input_stamp_the_law_and_the_hash():
 
 
 def test_h_the_generator_as_the_operator_iterated_in_integers():
-    """RECORD 1898 (ALGEBRA.md 9.22 (7)): from the cells' indicator on the emitter world's
-    chain of 80 (the well [800, 801] in the kind [800, 809]) the integer power iteration
-    3 den v' = num S_6(v) + 6 den v with the remainder kept, renormalised by a power-of-two
-    shift, converges to the bound mode: after 4000 iterations its levels, scaled to the
-    amplitude 2^20, pass the loader's residual bound with the accurate clock and agree with
-    ARPACK's rounded mode within 200 units at every Node (78 read, COMPUTATION: the
-    iteration's floor, the rounding noise of every step fed into the next mode and damped
-    only by the gap, about 1 / gap units at the amplitude; the float power iteration itself
-    agrees with ARPACK to the unit), and are bit for bit the same on a second run (the same
-    integers in, the same out)."""
+    """THE GENERATOR WITH THE STOP (the model owner's word of 2026-09-25, 04:10Z, closing
+    record 1898; ALGEBRA.md 9.22 (7); BUILD.md section 26 item 25): on the emitter world's
+    chain of 80 (the well [800, 801] in the kind [800, 809]) `iterated_mode` iterates the law's
+    own operator 3 den v' = num S_6(v) + 6 den v + r from the cells' indicator at 2^20, reads
+    the clock as the operator's quotient over the board, and stops at the first iteration at which the
+    scaled profile passes the loader's own residual bound with that clock (1817 iterations
+    read, COMPUTATION); the result is bit for bit the same on a second run; the profile it
+    writes passes `mode_residual` (the stop's own condition, read again here) and agrees with
+    the host's eigensolver (ARPACK, a diagnostic now) within 300 units at every Node (193
+    read: the iteration's floor, the rounding noise of every step fed into the next mode and
+    damped only by the gap, about 1 / gap units at the amplitude), its clock within 4 units of
+    ARPACK's rounded 2 cos omega at the denominator 2^22 (2 read). The fixed-count iteration
+    (`integer_mode_iteration`, the same step 4000 times) lands within the same 300 units. The
+    edge: a limit below the stop refuses, naming the last residual against the bound."""
     document = emitter_world(stock=1)
     world = parse_nature_beam_world(document)
     entry = world.measured[0]
@@ -267,18 +272,21 @@ def test_h_the_generator_as_the_operator_iterated_in_integers():
     num = np.where(cells, block.pair[0], 800)
     den = np.where(cells, block.pair[1], 809)
     amplitude = 1 << 20
-    start = np.where(cells, amplitude, 0).astype(np.int64)
-    first = integer_mode_iteration(start, num, den, wrap, amplitude, 4000)
-    second = integer_mode_iteration(start, num, den, wrap, amplitude, 4000)
-    assert np.array_equal(first, second)
-    lambda_max, mode = accurate_mode(world, 0)
-    expected = np.rint(mode * amplitude).astype(np.int64)
-    scaled = np.rint(first.astype(np.float64) * amplitude / np.max(np.abs(first))).astype(np.int64)
-    assert int(np.max(np.abs(scaled - expected))) <= 200
-    b = 1 << 22
-    clock = (round(lambda_max * b), b)
-    flat = [int(v) for v in scaled.ravel()]
-    residual, bound, _ = mode_residual(
-        flat, [int(v) for v in num.ravel()], [int(v) for v in den.ravel()], clock, shape, wrap
-    )
+    profile, clock, iterations = iterated_mode(world, 0, amplitude)
+    assert iterated_mode(world, 0, amplitude) == (profile, clock, iterations)
+    assert 1000 < iterations < 4000 and clock[1] == 1 << 22
+    num_flat = [int(v) for v in num.ravel()]
+    den_flat = [int(v) for v in den.ravel()]
+    residual, bound, _ = mode_residual(profile, num_flat, den_flat, clock, shape, wrap)
     assert residual <= bound
+    assert max(profile) == amplitude and min(profile) >= 0
+    lambda_max, mode = accurate_mode(world, 0)
+    expected = np.rint(mode * amplitude).astype(np.int64).ravel()
+    assert int(np.max(np.abs(np.array(profile) - expected))) <= 300
+    assert abs(clock[0] - round(lambda_max * clock[1])) <= 4
+    start = np.where(cells, amplitude, 0).astype(np.int64)
+    fixed = integer_mode_iteration(start, num, den, wrap, amplitude, 4000)
+    scaled = np.rint(fixed.astype(np.float64) * amplitude / np.max(np.abs(fixed))).astype(np.int64)
+    assert int(np.max(np.abs(scaled.ravel() - expected))) <= 300
+    with pytest.raises(ValueError, match="did not stop within 100 iterations: the last residual"):
+        iterated_mode(world, 0, amplitude, limit=100)

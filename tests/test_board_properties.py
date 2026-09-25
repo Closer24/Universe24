@@ -46,9 +46,13 @@ def small_world(
     receiver_named=True,
     side: int = SIDE,
     clock: list[int] | None = None,
+    pair: tuple[int, int] = (800, 801),
+    well_side: int = 2,
 ) -> dict:
     """The small world of 9.20 as a document; the well's seed the composed mode's integer
-    profile at the amplitude (the generator's, or `seed` given: a transformed reference)."""
+    profile at the amplitude (the generator's, or `seed` given: a transformed reference);
+    the well's `pair` and `well_side` the gate's side-2 cube of [800, 801] unless given (the
+    host-cost scaling worlds take a deeper, larger well: `scaled_world`)."""
     document = {
         "law": "beam",
         "model_id": "beam-board-properties-v1",
@@ -77,8 +81,8 @@ def small_world(
                 "phase": 0,
                 "momentum": [0, 0, 0],
                 "fixed": True,
-                "side": 2,
-                "pair": [800, 801],
+                "side": well_side,
+                "pair": list(pair),
                 "seed": AMPLITUDE,
                 "margin": "control",
             }
@@ -457,9 +461,14 @@ def test_6_only_the_click_reads():
 
 
 def scaled_world(side: int) -> dict:
-    """The small world's form on a cube of `side`: the well of side 2 at the vertex (3, 4, 5),
-    the receiver at (side - 3, side - 3, 2)."""
-    return small_world(receiver=(side - 3, side - 3, 2), side=side)
+    """The small world's form on a cube of `side`: a well of side 4 and the pair [850, 800] at
+    the vertex (3, 4, 5), the receiver at (side - 3, side - 3, 2). The gate's side-2 well of
+    [800, 801] is bound by its torus, not by its well (2 cos omega above the band's top by
+    9 x 10^-5 on the 12-cube and 1.5 x 10^-6 on the 48-cube, where the generator's iteration
+    stops on a mixture of the band's modes and the loader refuses it as no bound mode;
+    BUILD.md section 26 item 25); the side-4 well of [850, 800] binds by 3 x 10^-3 on the
+    24-cube and is a body on every side here."""
+    return small_world(receiver=(side - 3, side - 3, 2), side=side, pair=(850, 800), well_side=4)
 
 
 @pytest.mark.parametrize("side", [12, 24, 48])

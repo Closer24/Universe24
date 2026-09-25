@@ -17,14 +17,12 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import numpy as np
 import pytest
 
 from event_universe.diagnostics.massive_record_margin import (
-    accurate_mode,
     check_body_conditions,
     check_margins,
-    mode_clock,
+    iterated_mode,
     relaxation_time,
 )
 from event_universe.events.detector_law import DetectorLawSimulation
@@ -50,8 +48,8 @@ def seeded(
     faces: dict[str, str] | None = None,
 ) -> dict:
     """A world of one body of the kind [800, 809] with the well [800, 801], a
-    control world, its seed the margin module's own mode rounded at the amplitude 2^20 over
-    the whole board (the generator's `mode_profile` form)."""
+    control world, its seed the generator's iterated mode at the amplitude 2^20 over the
+    whole board (the generator's `mode_profile` form)."""
     document = block_world(
         shape,
         PERIODIC,
@@ -65,10 +63,11 @@ def seeded(
     if momentum is not None:
         entry["momentum"] = momentum
         entry["ramp"] = ramp
-    lambda_max, mode = accurate_mode(parse_nature_beam_world(document), 0)
-    entry["seed"] = [int(value) for value in np.rint(mode * AMPLITUDE).astype(np.int64).ravel()]
-    # the mode's clock beside the profile and the input stamp (record 1886)
-    entry["clock"] = list(mode_clock(lambda_max, AMPLITUDE))
+    # the generator as the operator iterated with the stop (the owner's word of 2026-09-25):
+    # the profile and the mode's clock beside it, then the input stamp (record 1886)
+    profile, clock, _ = iterated_mode(parse_nature_beam_world(document), 0, AMPLITUDE)
+    entry["seed"] = profile
+    entry["clock"] = list(clock)
     document["input"] = input_stamp(document)
     return document
 
@@ -144,20 +143,35 @@ def test_b_a_body_that_does_not_fit_is_refused_at_load_never_cut():
     assert parse_nature_beam_world(seam).measured[0].block is not None
 
 
-def test_c_one_node_off_the_mode_is_refused_naming_the_node():
+def test_c_one_unit_off_the_mode_is_admitted_and_the_peak_doubled_is_refused_naming_the_node():
+    """SINCE THE GENERATOR WITH THE STOP (the owner's word of 2026-09-25; BUILD.md section 26
+    item 25) the law's check of a profile is the loader's own residual bound in integers
+    (record 1886), and the body's condition here is that the initial state IS the file's
+    profile at both levels: one unit off at a Node stays within the rounding the bound allows
+    (admitted, the check's line naming the profile), the peak doubled is refused by the loader
+    naming the Node, its residual and the bound (before this the check compared the state
+    with the eigensolver's rounded mode and refused the one unit)."""
     document = seeded([48, 48, 48], [14, 14, 14], 20)
     index = (14 * 48 + 14) * 48 + 14
     document["measured"][0]["seed"][index] += 1
     document["input"] = input_stamp(document)  # the stamp of the changed integers
-    with pytest.raises(ValueError, match=r"at the Node \(14, 14, 14\) the level `now` holds") as found:
-        checked(document)
-    assert "(1 Nodes differ" in str(found.value)
+    lines = checked(document)
+    assert any("the initial state is the file's profile" in line for line in lines)
+    doubled = seeded([48, 48, 48], [14, 14, 14], 20)
+    peak = max(
+        range(len(doubled["measured"][0]["seed"])), key=doubled["measured"][0]["seed"].__getitem__
+    )
+    doubled["measured"][0]["seed"][peak] *= 2
+    doubled["input"] = input_stamp(doubled)
+    with pytest.raises(ValueError, match="residual") as found:
+        checked(doubled)
+    assert "the bound" in str(found.value)
 
 
 def test_d_a_flat_seed_is_not_the_mode_and_is_refused():
     """The flat seed of the first builds (the value on the cells, 0 outside) is not the bound
-    mode's profile: refused at the first differing Node, the sentence naming the generator's
-    `mode_profile` as the form the seed takes."""
+    mode's profile: refused, the sentence naming the generator's `mode_profile` as the form
+    the seed takes (the operator iterated with the stop)."""
     document = block_world(
         [48, 48, 48],
         PERIODIC,
@@ -166,9 +180,7 @@ def test_d_a_flat_seed_is_not_the_mode_and_is_refused():
     )
     document["age_bound"] = 100000
     document["measured"][0]["seed"] = AMPLITUDE
-    with pytest.raises(
-        ValueError, match=r"is not the bound mode's integer profile at the amplitude 1048576"
-    ):
+    with pytest.raises(ValueError, match="a flat scalar seed is no mode"):
         checked(document)
 
 

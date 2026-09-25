@@ -2154,15 +2154,15 @@ would have found no cell.
    Sagnac's 108 and its ratio, the redshift's ratio, the moving mass's
    169). THE REMEDY IS THE MATHEMATICIAN'S OWN FOR THE LAYERS, now for
    every emitting row: the born profile as a TRAVELLING character over
-   several periods with an envelope (F1 of the build order, 9.22 (3):
+   several periods with an envelope (the travelling born profile of the build order, 9.22 (3):
    the profile times the character of K at the two levels), for which the
    one-way flux is the energy passing to a part in a thousand; the
    one-pair form stays as the write of a body that births nothing lawful
    to read. Nothing in the engine changed here; his word on the form and
    the pins before the rest rows' files are written.
-23. BODIES WITH EXTENTS AND THE FACE SLAB (F0 and F2 of the build order
+23. BODIES WITH EXTENTS AND THE FACE SLAB (two items of the build order
    the Boss approved on 03:18Z; ALGEBRA.md 9.22 (8) and 9.25 (10); the
-   property test green). F0: a block is the box of `extents` [x, y, z]
+   property test green). BODIES WITH EXTENTS: a block is the box of `extents` [x, y, z]
    per axis; `side` stays the cube's shorthand (the extents three times;
    one of the two keys, both refused); the loader's fit check reads the
    side per axis, the bound set's cube check the extents against min(3,
@@ -2172,7 +2172,7 @@ would have found no cell.
    margin module's per-axis margins read the extent on that axis, the
    accurate mode and the profile check the box's cells; the generator's
    seeding admits `extents`; `block_cell_indices` and `block_cells` take
-   a side or the extents (the one copy of the box's rule). F2: the world
+   a side or the extents (the one copy of the box's rule). THE FACE SLAB: the world
    key `face_depth` (1 by default): the face receiver at every open
    border is the slab of that many free Nodes nearest the border, ONE
    cell `face`, last on every ladder, its Ports toward the interior alone
@@ -2194,7 +2194,7 @@ would have found no cell.
    a Gaussian packet of width 14 at k = 0.3 leaving light's open chain of
    300 books more than 0.9 of its I into a face slab of depth 40 and less
    than 0.5 into a face one Node deep (the rest reflected). No world
-   changed; F1, the born profile, waits for the mathematician's form.
+   changed; the travelling born profile waits for the mathematician's form.
 
 24. THE CLICK RULE OF ALGEBRA.md 9.17 (7) (f) IN THE ENGINE (the model
    owner's word, record 1918, through the Boss's closing list of 03:38Z,
@@ -2248,9 +2248,95 @@ would have found no cell.
    .json against pins.json): LAWFUL, 64 clicks at `at_a` over 2600
    intervals, the first at 51 against the pin 214 +- 1: MISS, a fault to
    find, the pin unmoved (the born pulse is still the one-cell broadband
-   birth of item 17; F1, the travelling born profile, is the remedy in
+   birth of item 17; the travelling born profile is the remedy in
    the build order). Every world with an emitter regenerated (the norm
    and the seeds); the Malus four held as written.
+
+25. THE GENERATOR AS THE BOARD'S OWN OPERATOR ITERATED, WITH THE STOP (the
+   model owner's word of 2026-09-25, 04:10Z, in Nature's session, closing
+   record 1898: "the iterated operator must become the generator itself,
+   with the stop"; and his rule of the same minute: no more letter-and-
+   number codes in any artifact or message, every thing named by what it
+   is, the Boss to review the code's names). THE GENERATOR
+   (`iterated_mode` in the margin module, called by the massive record
+   generator's `mode_profile` and by every seeded test world): the block
+   alone in its medium on the world's own board, from the cells'
+   indicator at the amplitude; every iteration one step of the law's own
+   operator 3 den v' = num S_6(v) + 6 den v + r with the remainder
+   carried and the levels renormalised by an exact power-of-two shift
+   (`_operator_step`, the one copy of the step; the fixed-count
+   `integer_mode_iteration` is its diagnostic); the levels scaled to the
+   amplitude at the peak; the clock a / b read from the scaled profile p
+   as the operator's quotient over the whole board, a = round(b SUM_i p_i
+   num_i (S_6 p)_i / SUM_i 3 den_i p_i^2), b the power of two at least
+   twice the amplitude and at least 2^20 (`clock_denominator`; exact for
+   the mode, second order in the rounding, every Node weighing in; the
+   growth at the peak cell alone READ AND REJECTED: its remainder's noise
+   at the amplitude 4096 moved the read by 2 x 10^-4, more than the
+   property test's shallow well is bound above the band's top, 9 x 10^-5,
+   and the loader refused the clock as no bound mode); THE STOP the first
+   iteration at which
+   that scaled profile with that clock passes the loader's own residual
+   bound (`mode_residual`, the same function the loader runs on the
+   file): the next step changes the board no more than the rounding
+   floor, the board only rotating. Reproducible bit for bit; a limit
+   (2^20 iterations) past which the generator refuses naming the last
+   residual against the bound (the iteration's floor or a fault, never a
+   bound moved). The host's eigensolver (`accurate_mode`, ARPACK) is no
+   longer the generator: it stays a diagnostic (the margin readings'
+   extent, and the cross-check of test_initial_state (h)); `mode_clock`
+   retired. THE READINGS (COMPUTATION, the emitter world's chain of 80,
+   the well [800, 801]): the stop after 1817 iterations at 2^20 and 3204
+   at 50 x 2^20 (0.1 and 0.2 seconds); the clock 8346518 / 2^22 and
+   267088580 / 2^27, the same integers as ARPACK's rounded 2 cos omega
+   (the peak's read gave 8346516 and 267088578); the profile
+   within 193 and 215 units of ARPACK's rounded mode (the iteration's
+   floor near 1 / gap units); the same integers on a second run; the
+   128 x 128 layer pin world stops after 33822 iterations (21 seconds; a
+   small gap) with its profile 3497 units from ARPACK's, within the
+   loader's bound, which admits about 3 / gap units of the neighbouring
+   mode (the bound is the law's check; the deviation a diagnostic). A stop by "the scaled
+   profile changes by at most one unit for two successive iterations"
+   was READ AND REJECTED: it fires at 1544 iterations with the residual
+   twice the bound and the profile 370 units off (the creep below one
+   unit per iteration accumulates; the rounding floor is the loader's
+   bound, not a unit). THE WORKING AMPLITUDE: the iteration runs at 2^20
+   or the declared amplitude, whichever is larger, and writes the
+   rounding of the converged profile at the declared amplitude: the
+   loader's bound is the bound for ONE rounding of an exact mode, while
+   the iteration's own noise (a unit per Node per step through the six
+   reads) sits below it only when the working amplitude is large against
+   the bound's relative width 1.5 / p (READ: a side-4 well of [850, 800]
+   on the 24-cube iterated at 4096 hovered at 1.2 to 1.7 times the bound
+   at the well's cells for 20000 iterations, its clock converged; at the
+   working amplitude 2^20 it stops). TWO FINDINGS ON THE 3D WELLS
+   (COMPUTATION): (i) the property test's small world's body, the side-2
+   cube [800, 801] in [800, 809], is bound by its torus, not by its well:
+   2 cos omega above the band's top by 9.4 x 10^-5 on the 12-cube, 4.7 x
+   10^-5 on the 24-cube and 1.5 x 10^-6 on the 48-cube (the eigensolver's
+   readings; a side-2 well of any of the pairs [800, 800] to [900, 800]
+   binds by less than 4 x 10^-5 on the 48-cube: a shallow cube in three
+   dimensions binds only above a critical depth); on the 48-cube the
+   iteration stops on a mixture of the band's modes whose quotient reads
+   below the top and the loader refuses the world as no bound mode (the
+   eigensolver passed it by 1.6 units of 2^20 before); so the host-cost
+   scaling worlds of the property test (12, 24, 48) take a side-4 well of
+   [850, 800], bound by 2.9 x 10^-3 on the 24-cube; the gate's 12-cube
+   world itself is unchanged (a finding for the mathematician, not a
+   change of his world). (ii) The loader's residual bound admits about
+   3 / gap units of the neighbouring mode, so on a small gap the
+   generator's profile can sit thousands of units from the eigensolver's
+   while lawful (the layer's 3497). Every seeded world regenerated (the
+   profiles and clocks move by the floor; the digests of
+   test_massive_record (p) with them); no registered world sits below
+   2^20 (the four held Malus worlds at 100 stay held as written). HOST
+   cost of the regeneration: about 31 minutes for the massive record
+   generator's eight chain worlds at 50 x 2^20 and one minute for the
+   detector-law generator's thirty-six. THE TESTS: test_initial_state (h) the stop, the reproduction,
+   the residual passed, the agreement with ARPACK within 300 units and 4
+   clock units, the fixed-count iteration within the same, and a limit
+   below the stop refused by name; test_body_conditions seeds by the
+   generator.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

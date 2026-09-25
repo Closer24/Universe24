@@ -1023,8 +1023,9 @@ w the cube root of unity). The record
 under the key: `massive_record`, per family `pair` and `faces`, and
 `margin` (the margin rule's readings per block, MASSIVE_RECORD.md section
 11 item 4: a load-time check made before the world runs by
-`diagnostics/massive_record_margin`, the block's bound mode by a Lanczos
-iteration on the world's own board, its extent in the medium and the
+`diagnostics/massive_record_margin`, the block's bound mode (the generator's
+iterated operator with the stop, BUILD.md section 26 item 25; the eigensolver
+a diagnostic) on the world's own board, its extent in the medium and the
 margin per axis, two extents for a `"pin"` world and one for a
 `"control"`, a declaration below the margin refusing the run; a HOST
 computation of the declaration, printed and recorded, never read by the
