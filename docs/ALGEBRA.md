@@ -8316,4 +8316,88 @@ at the cell (9.32); the click is where the remainder leaves, carrying the
 whole and the place of the next click; what is whole moves at the click
 and what moves at the step carries the remainder; a body is periodic to
 the bit by its clicks and drifts without them. Nothing of the five lines
-of 9.32 changes; (4) waits on the owner.
+of 9.32 changes; (4) waits on the owner. (Revised by 9.34: at the owner's
+word the remainder is the cell's, kept through the click and the reseed;
+(1) and (3) above are restated there.)
+
+### 9.34 The remainder is the cell's; the families coupled by the click alone (the model owner's word, 2026-09-25, in the mathematician's session: "if you think it explains everything, then yes; but note that in a single cell you have to couple the families, you couple them to the click; and there is a remainder in the cell, and by it the click is measured; and with no remainder the click is only the speed of light passing from Node to Node"; CHECKED and COMPUTED; three decisions named)
+
+**(1) WHAT THE REMAINDER RULE EXPLAINS, HONESTLY.** The rule of 9.33 (4)
+by itself explains one thing: an exact record (the remainder 0 for ever)
+does not click but only turns and splits, one Link per interval, the
+owner's "at the speed of light from Node to Node"; the exact worlds are
+eternal instead of emptying at once. It moves no measured number. What
+DOES reach further is the owner's other sentence, "there is a remainder in
+the cell, and by it the click is measured", once it is taken literally,
+below.
+
+**(2) THE REMAINDER IS THE CELL'S (COMPUTED; the correction of 9.33 (1) and
+(3)).** The law as written owns the remainder by the RECORD: born 0,
+deleted at the click, reset to 0 at an emitter's reseed. Taken so, an
+emitter reseeded identically with no coupling to light births ONE residue
+for ever (Nature24's finding, 9.19 (4e) (i)), and the spread of the
+residues, on which Born's rule rests (9.25 (3)), had to come from light's
+back-action on the body (the coupling g of record 1414). COMPUTED on the
+INTEGER law, an emitter [800, 801] of side 32 on the chain [800, 809] (W
+= 2403), the mode at 2^20, no coupling at all, 600 cycles, the residue
+read after the first advance and the click by the standing record's rung:
+with the remainder RESET at every reseed, one residue (337) in 600 cycles
+and a mean cycle of 14 intervals, not P / 2; with the remainder KEPT AT
+THE CELLS through the click and the reseed (the levels rewritten, the
+remainders left where they are), 532 distinct residues in 600 cycles,
+equidistributed over the wheel (chi-square 26.1 on 20 bins, the 95 percent
+bound 30.1), and the mean cycle 46.8 = P / 2 exactly as 9.17 (7) (b)
+says. So THE CELL'S REMAINDER ALONE SPREADS THE RESIDUES, deterministically
+and locally, with no coupling and no draw: the remainder is where chance
+lives, and it lives AT THE CELL, as the owner said, not in the record.
+THE FORM: at a body's reseed the levels are rewritten as the profile and
+the remainders at the body's cells are KEPT; a record born elsewhere is
+still written with the remainder 0 and its remainders end with it (there
+they carry nothing across). The step stays the bijection of (levels,
+remainders) (9.26 (3) (a)); the click deletes the levels; the form's
+accounting per record moves by less than a unit per cell (8.2). Taken to
+the letter, "one remainder per cell per family" shared by every record of
+the family at the cell, stepping in their declared order, is the same idea
+with one integer fewer per record and a coupling of records below one
+unit; the body's form above is the least change and is what was computed.
+The three tests: generic (one integer per cell, no family name), vector
+(verb (D) with the remainder kept, as now), local (the cell's own).
+
+**(3) THE FAMILIES ARE COUPLED BY THE CLICK ALONE.** With (2) the bilinear
+coupling of 8.5 (record 1414, "a_m += g a_l") has no role left in the law:
+the index of a medium is the pair's (9.31 (8)); the residues' spread is
+the cell's remainder ((2)); the emitter's transparency to its born family
+is then exact (no coupling, no index at its cells, 9.22 (7a) (iv) empty);
+the load condition of 9.17 (7) (c) has nothing to bound; the response
+records, the invariant J and the kind branches of the coupling (9.30 (3))
+go with it. What couples mass and light is the CLICK, at a cell, and it
+hands over whole integers only: the quantum, the content, the labels, the
+residue (the place of the next click, read from the cell's remainder at
+the birth cell), and the momentum if the exchange hypothesis is adopted
+(9.27 (D)); the click is measured by the cell's remainder, as the owner
+says. The Inside is then one operator per family with no cross term at
+all, and 9.32's five lines lose nothing.
+
+**(4) NO REMAINDER, NO CLICK.** An exact record, the remainder 0 at every
+cell for ever, has no residue to draw and does not click: it splits and
+turns at one Link per interval, the owner's "the click is only the speed
+of light from Node to Node"; every other record clicks from its remainder
+(9.33 (4), the remainder rule, now with (2) as its reason: the click IS
+the remainder leaving the cell).
+
+**(5) THE THREE DECISIONS FOR THE MODEL OWNER, each a law change stated
+for his word under record 1940 (the algebra: this section; the code:
+Nature24 after his word; the Boss records):** (A) THE REMAINDER IS THE
+CELL'S: kept at a body's cells through its clicks and reseeds ((2)); it
+replaces "reset to 0 at the reseed" and revises 9.33 (1) and (3) (a body
+is periodic to the bit in its LEVELS at each reseed, its remainders its
+memory). (B) THE COUPLING IS THE CLICK ALONE: the bilinear term of record
+1414 retired from the law, the click's handover the one exchange ((3)).
+(C) THE REMAINDER RULE: an exact record never clicks ((4), 9.33 (4)). What
+moves if he says yes to all three: no measured pin (the pins are binomial
+about the ladder's shares, which need only the residues' spread, given by
+(A)); the exact worlds become eternal (C); the engine loses the coupling,
+the response records, J, the transparency and the back-action checks (B)
+and keeps the remainders at a body's cells (A). The mathematician's
+recommendation: yes to all three; they are one thing, the owner's "the
+click is a kind of remainder in the cell".
