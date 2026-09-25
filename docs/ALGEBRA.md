@@ -12576,3 +12576,75 @@ the residue, the extents and the couplings complete the set. NOT
 DEFINED, and not in the scalar law: spin and any vector label (the
 vector family, 9.67 (3)), and a lifetime (a family change at a click,
 "become", 9.27: open).
+
+### 9.70 The Einstein form landed (Nature24's head bd43b945, 2026-09-25): the gate, the integers' bound corrected, and the first check-mode readings (the light clock holds; the redshift reads the ruler's weight, the first reading in which the two forms separate)
+
+**(1) THE GATE ON bd43b945, line by line: CONFIRMED.** The rule's three
+integers at a Node, (R, S, w) = (2 p^2 num, 12 den Gamma^2 - 6 (p^2 +
+Gamma^2)(den - num) - 12 num p^2, 6 den Gamma^2), written once
+(`rule_coefficients`) and read by the step, its inverse, the seat, the
+wheel, the form and the load bound: 9.57 (1) term for term. At c = 0, S
+= 0 and the rule is the vacuum's with the remainder 2 Gamma^2 times the
+plain one: bit for bit (9.57 (1)). The inverse: w a_before - r = R S_6
+(a_now) + S a_now - w a_next - r', the ceiling, r in [0, w): exact
+(9.50 (8)). The seat: the coefficient 6 R + S on a, the wall w, at the
+pair [num_c, 2 den_c] and the seat's own content: 9.60 (2) on the
+Einstein form, the clock's second order carried with no second form
+(9.60 (2), last line). The wheel gcd (w, S, R). The field families
+plain at pace 1 (9.57 (1)). The conserved form L [w (a^2 + b^2) - S a b]
+/ R at the Nodes and the Links plain: the weighted form of 9.50 (9)
+with the read coefficient R_i as the weight; one form, one code. The
+rotation 2 - (1 + f)(1 - num / den) with f = (p / Gamma)^2 and light's
+dispersion 1 - f (1 - cos k) / 3 asserted in the tests: 9.56 (4) and
+9.62 (1). THE BOUND, CORRECTED: the loader's total 6 A R + A |S| + w (A
++ 1) at the vacuum's level and at the content is the exact worst case,
+6.1 x 10^18 at c = 0 for the muon's pair [3200, 3227] at A = 2^20, two
+thirds of 2^63 (COMPUTED, Nature24's "two thirds of the room"); 9.61
+(3)'s 30 den Gamma^2 A summed the
+coefficients as if all six reads and both levels stood at A with one
+sign, which the rule's signs do not allow, and its "2^19 above den
+2900" is WITHDRAWN: A = 2^20 in every shipped world, as built.
+
+**(2) THE FIRST CHECK-MODE READINGS (no pin, no verdict).** (a) THE LIGHT
+CLOCK on the Einstein form at Gamma = 10^4: expected 300 +- 9 times
+1.0032 (9.63 (4)); read 301.8, standard error 2.5, 64 clicks: HOLDS. (b)
+THE REDSHIFT at the long wave (the light [4096, 21], k = 0.299, the
+wavelength 21 whole, 9.17 (6a); the given clock of the rows from here
+on, [2464, 25]'s 20.8 not being whole): bottom over top 1.205 +- 0.011.
+The expectation of 9.62 (2) for a light clock with a declared arm on
+the arm's share: the flight inside the well slows by 1.258 (COMPUTED at
+k = 0.299, U = 0.1, f = 0.64), the emitter's Nodes and the mirror's
+delay outside it do not; on Nature24's share, 1120 of the 1283
+intervals, (1120 x 1.258 + 163) / 1283 = 1.225, and 1.218 at the
+continuum's 1.25; the share's own uncertainty (the packet's centroid
+against the well's edges, about ten Nodes of 1120) is +- 0.012. The
+edges of the well reflect 1.3 percent of the norm each on the Einstein
+form at U = 0.1 (9.62 (1)); a reflected part returns to the emitter's
+own detector as an EARLY click, and one such click in 48 lowers the
+mean ratio by about 0.016: if the early clicks are in the mean, the
+expectation is 1.20; if set apart as in row 1, 1.218 +- 0.012. READ:
+1.205 is within the band either way (1.2 standard errors below 1.218,
+at 1.20 with the early clicks), and nine standard errors above today's
+law's 1.103. THE READING FOR THE RECORD: the light clock with a
+declared arm in a well reads light's coordinate speed, 1 / (1 - 2 U),
+on the Einstein form, as 9.62 (2) said before the run; this is the
+ruler's weight, gamma_PPN = 1, and it is the first reading on the
+GameBoard in which the two forms separate (9.59 (6)). The redshift
+proper is the clock body's 1.104, the next reading of this row. Rule
+for the share: the exact share is the packet's centroid path inside
+the well over its whole path, computed from the world's geometry
+before the number is quoted beyond the hundredth.
+
+**(3) THE MUON'S WELL AT 2^18.** The eigenvector's residual against the
+rule at the body's level reads 2493 at the amplitude 2^18, admitted by
+the loader's own bound (the first-order floor 875 scaled): the re-read
+9.61 (3) asked for, done; the world loads and runs.
+
+**(4) NATURE24'S ORDER OF BUILDING, agreed:** the proper pair (9.63 (3))
+and the four moving pairs against 63 +- 8, 135 +- 12, 164 +- 13, 430 +-
+21; the stock as given-family content (9.51 (3)); the taking at a hop
+(9.62 (3)); Doppler (9.62 (4)); the transverse Lorentz world; row 3 at
+k = 0.299 per 9.65 (4); the charge rows (9.64); the contraction world
+(9.67 (1)); the three tools; the display; the smaller boards (9.66).
+The closed-axis test of the support box (9.68 (3)) stays owed before
+the merge.
