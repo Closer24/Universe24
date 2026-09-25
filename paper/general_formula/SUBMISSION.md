@@ -65,8 +65,9 @@ journal third.
    `anc/`. The bundle `Universe24_arxiv_<commit>.tar.gz` in the author's
    files is that layout, compiled clean at 46 pages.
 4. The metadata: the title as in the paper; the abstract as plain text
-   (below); the author as on the title page; the licence: CC BY 4.0 is
-   the usual choice for a paper whose code is MIT; the comment line:
+   (below); the author as on the title page; the licence: CC BY 4.0,
+   decided by the author on 2026-09-25 (the usual choice for a paper
+   whose code is MIT; irrevocable for each version); the comment line:
    "46 pages, 3 figures; code and data at doi:10.5281/zenodo.22738746".
 5. After the posting, the arXiv identifier goes into the cover letter.
 
