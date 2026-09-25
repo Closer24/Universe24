@@ -132,35 +132,114 @@ A map that keeps opposite Ports opposite is fixed by the images of $+x$, $+y$, $
 \end{equation}
 then $\abefore \leftarrow \anow$, $\anow \leftarrow \anext$, $r \leftarrow r'$ \cite[8.1]{algebra}. Here $S_6$ is the sum of the six reads of the record's $\anow$ (the neighbour across a Link; the Node itself on a folded axis of extent $1$; $0$ beyond an open face), $[\num_i, \den_i]$ the family's pair at the Node (the vacuum's pair everywhere, a body's pair on its cells) and $r$ the remainder of the division, kept on the record's row. Light is the pair $[1, 1]$; a massive family is a pair with $\den > \num$, and nothing else names the mass. The step is made of three verbs on the row: the bilinear form (B), one entry $\num_i$ on the six reads and one entry $-3\,\den_i$ on the row's past; the translation (T) of the row by that rate; and the division (D) by the wall $3\,\den_i$ with the remainder kept. The three tests hold \cite[8.1]{algebra}: generic, one primitive with one declared pair and no family name; vector, the three verbs with no root and no float; local, the record's own row and its six reads, nothing kept at a Node beyond the row and its remainder.
 
-\paragraph{The conserved form.} Let $\bA$ be the read matrix of the board ($A_{ij}$ the number of reads of $j$ among the six reads of $i$), symmetric with row sums at most $6$, $\bD = \mathrm{diag}(D_i)$ with $D_i = \den_i/\num_i$, and $\bM = \bD^{-1}\bA/3$. Without the remainder the rule is $\mathbf a_{\mathrm{next}} + \mathbf a_{\mathrm{before}} = \bM\mathbf a_{\mathrm{now}}$, and the form
+\paragraph{The conserved form.} Let $\bA$ be the read matrix of the board, $A_{ij}$ the number of reads of $j$ among the six reads of $i$ (the neighbour across a Link once; the Node itself once per folded direction; nothing beyond an open face). It is symmetric, because $i$ reads $j$ in the direction $d$ exactly when $j$ reads $i$ in $-d$, and every row sums to at most $6$. Let $\bD = \mathrm{diag}(D_i)$ with $D_i = \den_i/\num_i \ge 1$ and $\bM = \bD^{-1}\bA/3$. Dividing Eq.~\eqref{eq:rule} by $3\,\den_i$, the level is
+\begin{equation}\label{eq:rulematrix}
+\mathbf a_{\mathrm{next}} = \bM\,\mathbf a_{\mathrm{now}} - \mathbf a_{\mathrm{before}} + \mathbf e, \qquad e_i^{\mathrm{rem}} = \frac{r_i - r'_i}{3\,\den_i},
+\end{equation}
+the rule without the remainder being $\mathbf a_{\mathrm{next}} + \mathbf a_{\mathrm{before}} = \bM\mathbf a_{\mathrm{now}}$ ($\mathbf e = \mathbf 0$), and $\mathbf e$ the vector of the remainder terms $e_i^{\mathrm{rem}}$.
+\begin{theorem}[the conserved form]\label{th:form}
+Without the remainder, the form
 \begin{equation}\label{eq:form}
-I(\mathbf a_{\mathrm{next}}, \mathbf a_{\mathrm{now}}) = \sum_i D_i\,(a_{\mathrm{next},i}^2 + a_{\mathrm{now},i}^2) - \tfrac13 \sum_i a_{\mathrm{next},i}\,(\bA\mathbf a_{\mathrm{now}})_i
+\begin{aligned}
+I(\mathbf a_{\mathrm{next}}, \mathbf a_{\mathrm{now}}) &= \mathbf a_{\mathrm{next}}\cdot\bD\mathbf a_{\mathrm{next}} + \mathbf a_{\mathrm{now}}\cdot\bD\mathbf a_{\mathrm{now}} - \mathbf a_{\mathrm{next}}\cdot\bD\bM\mathbf a_{\mathrm{now}}\\
+&= \sum_i D_i\,(a_{\mathrm{next},i}^2 + a_{\mathrm{now},i}^2) - \tfrac13 \sum_i a_{\mathrm{next},i}\,(\bA\mathbf a_{\mathrm{now}})_i
+\end{aligned}
 \end{equation}
-is conserved on every board and every extent, since $\bD\bM = \bA/3$ is symmetric; it is positive definite for every massive pair and semidefinite at light's pair; and with the remainders kept the change per interval is exactly $I(t) - I(t - 1) = \sum_i (a_{\mathrm{next},i} - a_{\mathrm{before},i})(r_i - r'_i)/(3\,\num_i)$, an integer identity with no tolerance (PROVED \cite[8.2]{algebra}). A static level has $I = 0$.
+is conserved on every board and every extent. With the remainders kept, the change in one interval is exactly
+\begin{equation}\label{eq:remid}
+I(t) - I(t - 1) = \sum_i D_i\,e_i^{\mathrm{rem}}\,(a_{\mathrm{next},i} - a_{\mathrm{before},i}) = \sum_i \frac{(a_{\mathrm{next},i} - a_{\mathrm{before},i})(r_i - r'_i)}{3\,\num_i},
+\end{equation}
+an identity in the state the engine holds, with no tolerance.
+\end{theorem}
+\begin{proof}
+Write $\mathbf x = \mathbf a_{\mathrm{now}}$, $\mathbf y = \mathbf a_{\mathrm{next}}$ and $\mathbf y' = \bM\mathbf y - \mathbf x$ the level one interval later, with no remainder. Then
+\[
+I(\mathbf y', \mathbf y) - I(\mathbf y, \mathbf x) = \mathbf y'\cdot\bD\mathbf y' - \mathbf x\cdot\bD\mathbf x - \mathbf y'\cdot\bD\bM\mathbf y + \mathbf y\cdot\bD\bM\mathbf x .
+\]
+Since $\bD\bM\mathbf y = \bD\mathbf y' + \bD\mathbf x$, the third term is $-\mathbf y'\cdot\bD\mathbf y' - \mathbf y'\cdot\bD\mathbf x$. Since $\bD\bM = \bA/3$ is symmetric, the fourth term is $(\bD\bM\mathbf y)\cdot\mathbf x = \mathbf y'\cdot\bD\mathbf x + \mathbf x\cdot\bD\mathbf x$. The four terms sum to $0$. Nothing but the symmetry of $\bD\bM$ is used, so the identity holds on every extent and with every face. With the remainder, $\mathbf y' = \bM\mathbf y - \mathbf x + \mathbf e$, so $\bD\bM\mathbf y = \bD\mathbf y' + \bD\mathbf x - \bD\mathbf e$: the third term gains $+\mathbf y'\cdot\bD\mathbf e$ and the fourth gains $-\mathbf e\cdot\bD\mathbf x$, and the change is $\mathbf e\cdot\bD(\mathbf y' - \mathbf x)$. In the interval that $\mathbf y'$ ends, $\mathbf y'$ is $\mathbf a_{\mathrm{next}}$ and $\mathbf x$ is $\mathbf a_{\mathrm{before}}$, which is Eq.~\eqref{eq:remid} \cite[8.2]{algebra}.
+\end{proof}
+In the engine's units, times $3\,\num$ for one pair, the form is $3\,\den\,(a_{\mathrm{next}}^2 + a_{\mathrm{now}}^2)$ summed over the Nodes less $\num\,(a_{\mathrm{next},i}a_{\mathrm{now},j} + a_{\mathrm{next},j}a_{\mathrm{now},i})$ summed over the Links, an integer, and the change of Eq.~\eqref{eq:remid} is the integer $\sum_i (a_{\mathrm{next},i} - a_{\mathrm{before},i})(r_i - r'_i)$, bounded by $3\,\den$ times the motion. A static level ($\mathbf a_{\mathrm{now}} = \mathbf a_{\mathrm{before}}$ everywhere) has $I = 0$, so it clicks nowhere; the sum of the squares would count it.
 
-\paragraph{The modes and the stability condition.} Restricted to one family, $\bS$ is a second-order linear recurrence with the symmetric operator $\bD^{-1/2}(\bA/3)\bD^{-1/2}$, whose eigenvectors are the board's \emph{modes} and whose eigenvalues are $2\cos\omega$, the angle $\omega$ being the mode's clock, its frequency per interval; on a torus there is one mode per Node. A mode is \emph{bound} when $2\cos\omega$ lies above the vacuum band's top and \emph{free} inside the band. The form $I$ is positive definite, and every mode a rotation, exactly when the largest eigenvalue is below $2$; by Perron--Frobenius that one condition bounds both ends of the spectrum. A pair with $\num \le \den$ at every Node is sufficient, not necessary. The loader's check is the spectral one: the composed operator's largest eigenvalue below $2$, the file refused otherwise (PROVED \cite[9.19 (2)]{algebra}).
+\begin{proposition}[positive definiteness]\label{prop:posdef}
+$I$ is positive definite for every massive pair ($\den_i > \num_i$ at every Node) on every board, and semidefinite at light's pair.
+\end{proposition}
+\begin{proof}
+Let $\mathbf N = \bD^{-1/2}(\bA/3)\bD^{-1/2}$, symmetric. In the variables $(\bD^{1/2}\mathbf a_{\mathrm{next}}, \bD^{1/2}\mathbf a_{\mathrm{now}})$ the form $I$ is the quadratic form of the block matrix $\begin{pmatrix}\mathbf 1 & -\mathbf N/2\\ -\mathbf N/2 & \mathbf 1\end{pmatrix}$, $\mathbf 1$ the identity; on an eigenvector of $\mathbf N$ with the eigenvalue $\lambda$ it is $\begin{pmatrix}1 & -\lambda/2\\ -\lambda/2 & 1\end{pmatrix}$, with the eigenvalues $1 \pm \lambda/2$, positive exactly when $|\lambda| < 2$. By Gershgorin every eigenvalue of $\bA$ has $|\lambda| \le 6$ (each row at most six entries, each $1$), so $|\lambda(\mathbf N)| \le 6/(3\min_i D_i) = 2\max_i(\num_i/\den_i)$, below $2$ when every $\den_i > \num_i$ and equal to $2$ at light's pair, whose null directions are the zero mode and the checkerboard \cite[8.2]{algebra}.
+\end{proof}
 
-\paragraph{The coupling of two families.} At a cell of a coupled body $R$ the two records' rows are coupled by one entry of verb (B) over the other record's two levels, the first difference both ways: the massive row gains $g\,(a_{l,\mathrm{now}} - a_{l,\mathrm{before}})$, the receive, and light's row gains $-G\,(a_{m,\mathrm{next}} - a_{m,\mathrm{now}})$, the source, with $g$ and $G$ the two declared coupling pairs at the body's cells (the capital $G$ apart from the flux $G_{ij}$ below, which always carries two Node indices; CARRIED \cite[8.5]{algebra}). The scheme is the Euler--Lagrange scheme of a two-point Lagrangian, so it is symplectic and has the exact invariant
+\paragraph{The modes and the stability condition.} Restricted to one family without the remainder, $\bS$ is the second-order linear recurrence $\mathbf a_{\mathrm{next}} + \mathbf a_{\mathrm{before}} = \bM\mathbf a_{\mathrm{now}}$. In the variables $\bD^{1/2}\mathbf a$ it reads with the symmetric $\mathbf N$, whose orthonormal eigenvectors $\mathbf q$ are the board's \emph{modes}: on a mode with the eigenvalue $\lambda = 2\cos\omega$ the recurrence $q(t + 1) + q(t - 1) = 2\cos\omega\,q(t)$ has the solutions $\cos(\omega t)$ and $\sin(\omega t)$, a rotation at the angle $\omega$ per interval, the mode's clock, while an eigenvalue $|\lambda| \ge 2$ gives $\cosh$ and $\sinh$, a growth without bound. On a torus there is one mode per Node. A mode is \emph{bound} when $2\cos\omega$ lies above the vacuum band's top and \emph{free} inside the band (Section~\ref{sec:massive}).
+\begin{theorem}[the stability condition]\label{th:stability}
+Every mode is a rotation, and $I$ is positive definite, exactly when the largest eigenvalue of $\mathbf N$ is below $2$.
+\end{theorem}
+\begin{proof}
+By Proposition~\ref{prop:posdef}'s block form, $I$ is positive definite exactly when every $|\lambda| < 2$. The matrix $\mathbf N$ has nonnegative entries, so by Perron--Frobenius its largest eigenvalue $\lambda_{\max}$ is the largest in absolute value, and every eigenvalue lies in $[-\lambda_{\max}, \lambda_{\max}]$. So $\lambda_{\max} < 2$ puts every eigenvalue in $(-2, 2)$: the one check bounds both ends \cite[9.19 (2)]{algebra}.
+\end{proof}
+A pair with $\num \le \den$ at every Node is sufficient (Proposition~\ref{prop:posdef}), not necessary: a one-cell well $[8, 7]$ on the vacuum $[7, 8]$ has $\lambda_{\max} = 1.90$ on a chain and is stable, while $[800, 700]$ on $[800, 809]$ has $2.03$ and runs away (COMPUTATIONS of the algebra, 9.19 (2)). The loader's check is the spectral one: the composed operator's largest eigenvalue below $2$, the file refused otherwise. Light cannot be a body: an index for light has $D_i \ge 1$ everywhere, so $\|\mathbf N\| \le 6/3 = 2$, no eigenvalue lies above the massless band's top and no bound mode of light exists \cite[8.3]{algebra}.
+
+\paragraph{The coupling of two families.} At a cell of a coupled body $R$ the two records' rows are coupled by one entry of verb (B) over the other record's two levels, the first difference both ways, with $g$ and $G$ the two declared coupling pairs at the body's cells (the capital $G$ apart from the flux $G_{ij}$ below, which always carries two Node indices; CARRIED \cite[8.5]{algebra}):
+\begin{equation}\label{eq:coupling}
+\begin{aligned}
+\mathbf a_{m,\mathrm{next}} + \mathbf a_{m,\mathrm{before}} &= \bM\mathbf a_{m,\mathrm{now}} + g\,\mathbf P_R(\mathbf a_{l,\mathrm{now}} - \mathbf a_{l,\mathrm{before}}),\\
+\mathbf a_{l,\mathrm{next}} + \mathbf a_{l,\mathrm{before}} &= \tfrac13\bA\mathbf a_{l,\mathrm{now}} - G\,\mathbf P_R(\mathbf a_{m,\mathrm{next}} - \mathbf a_{m,\mathrm{now}}),
+\end{aligned}
+\end{equation}
+the massive record $m$ receiving light's backward difference and light $l$ receiving the massive record's forward difference as its source, $\mathbf P_R$ the projector onto the cells ($1$ on $R$, $0$ elsewhere); the massive step is taken first and light's step reads the massive level just written. The body declares one pair on its coupled cells, so $\mathbf P_R\bD = D_{\mathrm{in}}\mathbf P_R$, and we write $\alpha = g\,D_{\mathrm{in}}/G$, one number of the body.
+\begin{proposition}[the scheme is variational]\label{prop:lagrangian}
+Eq.~\eqref{eq:coupling} is the discrete Euler--Lagrange equation of the two-point Lagrangian
+\[
+L(t) = -\mathbf a_{m,t}\cdot\bD\mathbf a_{m,t+1} + \tfrac12\,\mathbf a_{m,t}\cdot\tfrac13\bA\mathbf a_{m,t} + \alpha\bigl(-\mathbf a_{l,t}\cdot\mathbf a_{l,t+1} + \tfrac12\,\mathbf a_{l,t}\cdot\tfrac13\bA\mathbf a_{l,t}\bigr) + g\,\mathbf a_{m,t+1}\cdot\bD\mathbf P_R(\mathbf a_{l,t+1} - \mathbf a_{l,t}).
+\]
+\end{proposition}
+\begin{proof}
+The derivative of $L(t - 1) + L(t)$ with respect to $\mathbf a_{m,t}$, set to zero, is $-\bD\mathbf a_{m,t-1} + g\,\bD\mathbf P_R(\mathbf a_{l,t} - \mathbf a_{l,t-1}) - \bD\mathbf a_{m,t+1} + \tfrac13\bA\mathbf a_{m,t} = 0$, which is the massive step with light's backward difference. With respect to $\mathbf a_{l,t}$ it is $-\alpha\mathbf a_{l,t-1} + g\,\mathbf P_R\bD\mathbf a_{m,t} - g\,\mathbf P_R\bD\mathbf a_{m,t+1} - \alpha\mathbf a_{l,t+1} + \alpha\tfrac13\bA\mathbf a_{l,t} = 0$, that is $\mathbf a_{l,t+1} + \mathbf a_{l,t-1} = \tfrac13\bA\mathbf a_{l,t} - (g D_{\mathrm{in}}/\alpha)\,\mathbf P_R(\mathbf a_{m,t+1} - \mathbf a_{m,t})$, light's step with $g D_{\mathrm{in}}/\alpha = G$ \cite[8.5]{algebra}.
+\end{proof}
+Being variational and linear, the scheme is symplectic, and a symplectic linear map has an exact quadratic invariant.
+\begin{theorem}[the coupled invariant]\label{th:J}
+With $I_m$ the massive form of Eq.~\eqref{eq:form} and $I_l$ light's form with the weight $1$,
 \begin{equation}\label{eq:J}
-J = I_m + \alpha\,I_l + g \sum_{i \in R} D_i\,(a_{m,\mathrm{next}} - a_{m,\mathrm{now}})_i\,(a_{l,\mathrm{next}} - a_{l,\mathrm{now}})_i, \qquad \alpha = g\,D_{\mathrm{in}}/G,
+J = I_m + \alpha\,I_l + g \sum_{i \in R} D_i\,(a_{m,\mathrm{next}} - a_{m,\mathrm{now}})_i\,(a_{l,\mathrm{next}} - a_{l,\mathrm{now}})_i
 \end{equation}
-$I_m$ and $I_l$ the two families' forms, $D_{\mathrm{in}}$ the weight on the body's cells and $\alpha$ one number of the body: conserved exactly on every board, before the remainders (PROVED \cite[8.5]{algebra}). The amplitude form of the coupling is withdrawn as tachyonic, its mass matrix at zero wave vector having a negative eigenvalue.
+is conserved exactly on every board and every extent, before the remainders.
+\end{theorem}
+\begin{proof}
+The massive step is Eq.~\eqref{eq:rulematrix} with $\mathbf e_m = g\,\mathbf P_R(\mathbf a_{l,\mathrm{now}} - \mathbf a_{l,\mathrm{before}})$, so by Eq.~\eqref{eq:remid} $I_m(t) - I_m(t - 1) = g\,D_{\mathrm{in}}\sum_{i\in R}(a_{l,\mathrm{now}} - a_{l,\mathrm{before}})_i(a_{m,\mathrm{next}} - a_{m,\mathrm{before}})_i$. Light's step has $\mathbf e_l = -G\,\mathbf P_R(\mathbf a_{m,\mathrm{next}} - \mathbf a_{m,\mathrm{now}})$, so $\alpha(I_l(t) - I_l(t - 1)) = -g\,D_{\mathrm{in}}\sum_{i\in R}(a_{m,\mathrm{next}} - a_{m,\mathrm{now}})_i(a_{l,\mathrm{next}} - a_{l,\mathrm{before}})_i$. Write per cell $X = a_{m,\mathrm{next}} - a_{m,\mathrm{now}}$, $Y = a_{m,\mathrm{now}} - a_{m,\mathrm{before}}$, $U = a_{l,\mathrm{next}} - a_{l,\mathrm{now}}$ and $V = a_{l,\mathrm{now}} - a_{l,\mathrm{before}}$. The cross term changes by $g\,D_{\mathrm{in}}(XU - YV)$, and the whole change of $J$ per cell is
+\[
+g\,D_{\mathrm{in}}\bigl[V(X + Y) - X(U + V) + XU - YV\bigr] = 0
+\]
+\cite[8.5]{algebra}.
+\end{proof}
+The amplitude form of the coupling, light's row gaining $g$ times the massive level, is withdrawn as tachyonic: its mass matrix at zero wave vector, $\begin{pmatrix}0 & -g\\ -g & \omega_0^2\end{pmatrix}$, has the determinant $-g^2 < 0$ and so one negative eigenvalue \cite[8.5]{algebra}.
 
-\paragraph{The label matrix.} Every record carries its rows per label value of each arm. A polar body with the integer axis $\mathbf u = (a, b)$ applies at its cells the integer matrix $\bM_{\mathbf u} = \begin{pmatrix} a & b \\ -b & a \end{pmatrix}$ to the record's pair of label rows, verb (B), with no division: the common factor $a^2 + b^2$ scales the record's form by Brahmagupta's identity $(ax + by)^2 + (-bx + ay)^2 = (a^2 + b^2)(x^2 + y^2)$, exact on integers \cite[9.16 (2)]{algebra}. The polariser's angle is this integer axis; there is no table of angles \cite[9.14 (b)]{algebra}.
+\paragraph{The label matrix.} Every record carries its rows per label value of each arm. A polar body with the integer axis $\mathbf u = (a, b)$ applies at its cells the integer matrix $\bM_{\mathbf u} = \begin{pmatrix} a & b \\ -b & a \end{pmatrix}$ to the record's pair of label rows $(x, y)$, verb (B), with no division. Its rows are orthogonal, each of squared length $a^2 + b^2$, so $\bM_{\mathbf u}^{\mathsf T}\bM_{\mathbf u} = (a^2 + b^2)\,\mathbf 1$, which is Brahmagupta's identity
+\begin{equation}\label{eq:brahmagupta}
+(ax + by)^2 + (-bx + ay)^2 = (a^2 + b^2)(x^2 + y^2),
+\end{equation}
+exact on integers: the common factor $a^2 + b^2$ scales the record's form and cancels in every share \cite[9.16 (2)]{algebra}. The polariser's angle is this integer axis, $\arctan(b/a)$ on the comparison side only; there is no table of angles \cite[9.14 (b)]{algebra}.
 
 \paragraph{The flux.} Let $e_i = D_i\,(a_{\mathrm{next},i}^2 + a_{\mathrm{now},i}^2) - \tfrac13\,a_{\mathrm{next},i}(\bA\mathbf a_{\mathrm{now}})_i$ be the Node's share of the form, so that $I = \sum_i e_i$.
 \begin{proposition}[the local flux identity]\label{prop:flux}
-Between two intervals,
+Without the remainder, between two intervals,
 \begin{equation}\label{eq:flux}
 e_i(t) - e_i(t - 1) = \sum_{j \text{ read by } i} G_{ij}, \qquad G_{ij} = \tfrac13\,A_{ij}\,\bigl(a_{\mathrm{now},i}\,a_{\mathrm{before},j} - a_{\mathrm{before},i}\,a_{\mathrm{now},j}\bigr), \qquad G_{ij} = -G_{ji}.
 \end{equation}
 \end{proposition}
 \begin{proof}
-Substitute the rule $D_i\,(a_{\mathrm{next},i} + a_{\mathrm{before},i}) = (\bA\mathbf a_{\mathrm{now}})_i/3$ into the difference of $e_i$ between the two intervals \cite[9.19 (3)]{algebra}.
+Write $x_i = a_{\mathrm{next},i}$, $y_i = a_{\mathrm{now},i}$ and $z_i = a_{\mathrm{before},i}$, so $e_i(t) = D_i(x_i^2 + y_i^2) - \tfrac13 x_i(\bA\mathbf y)_i$ and $e_i(t - 1) = D_i(y_i^2 + z_i^2) - \tfrac13 y_i(\bA\mathbf z)_i$. Their difference is $D_i(x_i^2 - z_i^2) - \tfrac13\bigl[x_i(\bA\mathbf y)_i - y_i(\bA\mathbf z)_i\bigr]$. The rule gives $D_i(x_i + z_i) = \tfrac13(\bA\mathbf y)_i$, so $D_i(x_i^2 - z_i^2) = \tfrac13(x_i - z_i)(\bA\mathbf y)_i$, and the difference is
+\[
+\tfrac13\bigl[(x_i - z_i)(\bA\mathbf y)_i - x_i(\bA\mathbf y)_i + y_i(\bA\mathbf z)_i\bigr] = \tfrac13\bigl[y_i(\bA\mathbf z)_i - z_i(\bA\mathbf y)_i\bigr] = \sum_j \tfrac13 A_{ij}\,(y_i z_j - z_i y_j),
+\]
+which is Eq.~\eqref{eq:flux}; the pairs have cancelled, and $G_{ji} = -G_{ij}$ since $\bA$ is symmetric \cite[9.19 (3)]{algebra}.
 \end{proof}
-$G_{ij}$ is the flux into Node $i$ from Node $j$: a bilinear form of the record's own two levels at the two ends of a Link, free of the pairs (they cancel), antisymmetric and local. For a character moving from $j$ to $i$ it is positive. The one-way inward flux into one Node, summed over intervals and Ports of $\max(G_{ij}, 0)$, equals the record's form over the passage of a packet (COMPUTED to six digits on a chain \cite[9.19 (3)]{algebra}). The rectification $\max(G, 0)$ is the click's own comparison: a record's energy is counted where it enters.
+$G_{ij}$ is the flux into Node $i$ from Node $j$: a bilinear form of the record's own two levels at the two ends of a Link, free of the pairs, antisymmetric and local. For a character $A\cos(\omega t - \mathbf k\cdot\mathbf x)$ moving from $j$ to $i$ along the Link's direction it is positive: with $\theta = \omega t - \mathbf k\cdot\mathbf x_j$ and $\mathbf x_i = \mathbf x_j + \hat{\mathbf n}$ one Link on, $a_{\mathrm{now},i}a_{\mathrm{before},j} - a_{\mathrm{before},i}a_{\mathrm{now},j} = A^2[\cos(\theta - k)\cos(\theta - \omega) - \cos(\theta - k - \omega)\cos\theta] = \tfrac12 A^2[\cos(\omega - k) - \cos(\omega + k)] = A^2\sin\omega\sin k$, so $G_{ij} = \tfrac13 A^2\sin\omega\sin k$, $k$ the wave number along the Link, independent of the time. The one-way inward flux into one Node, summed over intervals and Ports of $\max(G_{ij}, 0)$, equals the record's form over the passage of a packet (COMPUTED to six digits on a chain, 2.135254 against 2.135254 \cite[9.19 (3)]{algebra}). The rectification $\max(G, 0)$ is the click's own comparison: a record's energy is counted where it enters.
 
-\paragraph{The residue and the wheel.} Two things are called a remainder. The rule's remainder $r$ is kept per Node on the record's row and is the law's own. A record's residue $u$ is one integer, read once: the rule's remainder at the record's birth cell at the interval of the click that births it; its wheel is $W = 3\,\den/\gcd(\num, 3)$ of that cell's pair for the clicking record's family, in lowest terms. No residue, seed, order or wheel is declared anywhere; the loader refuses them (ADOPTED, record 1872 \cite{log}; \cite[9.19 (4)]{algebra}). From $r = 0$ every remainder at a Node is a multiple of $\gcd(\num, 3)$, so at most $3\,\den/\gcd(\num, 3)$ values occur (PROVED); that they are reached and equidistributed is COMPUTED, not proved. The granularity of Born's rule on a wheel of $W$ values biases a share by at most $1/(2W)$, so every birth cell carries a pair with $W \ge 500$, checked at load \cite[9.19 (4a)]{algebra}. With the law's remainder the residues are equidistributed and not a permutation, and the counts are binomial about the shares, as nature's are; the run stays deterministic and reproducible.
+\paragraph{The residue and the wheel.} Two things are called a remainder. The rule's remainder $r$ is kept per Node on the record's row and is the law's own. A record's residue $u$ is one integer, read once: the rule's remainder at the record's birth cell at the interval of the click that births it; its wheel is $W = 3\,\den/\gcd(\num, 3)$ of that cell's pair for the clicking record's family, in lowest terms. No residue, seed, order or wheel is declared anywhere; the loader refuses them (ADOPTED, record 1872 \cite{log}; \cite[9.19 (4)]{algebra}). The range of the remainder is fixed by the pair:
+\begin{proposition}[the remainder's range]\label{prop:range}
+With the pair in lowest terms and every remainder $0$ at interval $0$, every remainder at a Node is a multiple of $\gcd(\num, 3)$, so at most $3\,\den/\gcd(\num, 3)$ values occur.
+\end{proposition}
+\begin{proof}
+By Eq.~\eqref{eq:rule}, $r' \equiv \num\,S_6 - 3\,\den\,\abefore + r \equiv \num\,S_6 + r \pmod{3\,\den}$. If $r$ is a multiple of $g = \gcd(\num, 3\,\den)$, so is $\num\,S_6 + r$, and so is its residue modulo $3\,\den$, a multiple of $g$; by induction from $r = 0$ every remainder is. Since $\gcd(\num, \den) = 1$, $g = \gcd(\num, 3)$, and the multiples of $g$ in $[0, 3\,\den)$ number $3\,\den/g$ \cite[9.19 (4)]{algebra}.
+\end{proof}
+That every one of these values is reached, and equidistributed, is COMPUTED, not proved: on a chain the vacuum $[800, 809]$ gives $2427$ values equidistributed over $18000$ intervals (the chi-square $21$ on $19$ degrees of freedom), and a pair $[1, 1]$ gives three \cite[9.19 (4)]{algebra}. The residues of an emitter spread only by the board's own back-action: a body reseeded identically after every click, with no coupling to the light on the board, repeats one residue, a perfectly periodic source; so every emitting body declares its coupling $(g, G)$ to the family it births, and the excited record's residue is read at its centre cell after its first advance \cite[9.19 (4e)]{algebra}. The granularity of Born's rule on a wheel of $W$ values biases a share by at most $1/(2W)$, so every birth cell carries a pair with $W \ge 500$, checked at load \cite[9.19 (4a)]{algebra}. With the law's remainder the residues are equidistributed and not a permutation, and the counts are binomial about the shares, as nature's are; the run stays deterministic and reproducible.
 
 \begin{definition}[The detector and the click]\label{def:click}
 A \emph{detector} is one connected named region, a cube of side at least $3$ (a smaller cube, or one name on disconnected pieces, is refused at load); separate places are separate names \cite[9.25 (7)]{algebra}; record 1899 \cite{log}. A record carries a \emph{ladder}, the detectors it names in a declared order with the face receiver last. At its birth the record's threshold is fixed, $\theta = (2u + 1)\,T/(2W)$, with $T$ the record's form $I$, and its running total starts at $C = 0$. At every interval $t$ each detector $d$ of the ladder receives the increment
@@ -176,14 +255,18 @@ The three tests hold for the click: generic, the integers $u$, $T$, $W$ and the 
 With the face receiver last on every ladder, every record clicks exactly once.
 \end{theorem}
 \begin{proof}
-$C$ is non-decreasing and $\theta < T$, while everything that leaves the board offers its whole form at the face; so $\theta$ is crossed exactly once, and the deletion at that interval leaves nothing to cross it again \cite[9.25 (2)]{algebra}.
+Every increment $f_d(t) \ge 0$, so $C$ is non-decreasing. Since $u \le W - 1$, $\theta = (2u + 1)T/(2W) \le (2W - 1)T/(2W) < T$. With the face receiver last on the ladder, a record's whole form is eventually offered: what stays on the board enters some detector, and what leaves enters the face, so $C(t) \to C(\infty) \ge T > \theta$ and $\theta$ is crossed at a first interval $t^*$. At $t^*$ the record is deleted whole, so no later increment exists and $\theta$ cannot be crossed again: one click \cite[9.25 (2)]{algebra}.
 \end{proof}
 
 \begin{theorem}[Born's rule for a detector]\label{th:born}
 Let the residue $u$ be spread evenly over $\{0, \dots, W - 1\}$. Then the probability that a record clicks at detector $d$ is $C_d(\infty)/T$, the detector's share of the record's total inward flux, whatever the flux's time profile, to the grain $1/W$; over the ladder with the face the shares sum to one. A detector's share is the sum of its Nodes' shares.
 \end{theorem}
 \begin{proof}
-$\theta$ is spread evenly over a grid of $W$ points in $[0, T)$. The segments of the increments, one per interval and detector in the ladder's order, partition $[0, C(\infty))$ with the lengths $f_d(t)$, so the click falls at $(t, d)$ with probability $f_d(t)/T$ to the grain $1/W$; summing over $t$ gives $C_d(\infty)/T$. The total length of a detector's segments does not depend on the order within an interval \cite[9.25 (3), (4)]{algebra}.
+With $u$ uniform on $\{0, \dots, W - 1\}$ the threshold $\theta = (2u + 1)T/(2W)$ is uniform on the $W$ midpoints of a partition of $[0, T)$ into cells of length $T/W$. Lay out, for each interval $t$ and each detector $d$ of the ladder in its declared order, the segment
+\[
+\Bigl[\,C(t - 1) + \sum_{d' \text{ before } d} f_{d'}(t),\ \ C(t - 1) + \sum_{d' \text{ up to } d} f_{d'}(t)\Bigr)
+\]
+of length $f_d(t)$. These segments are disjoint and cover $[0, C(\infty))$, and $C(\infty) \ge T$ with the face last. By Definition~\ref{def:click} the click falls at $(t, d)$ exactly when $\theta$ lies in that segment, so the number of the $W$ midpoints in it is $W f_d(t)/T$ up to one at each end, and $P(t, d) = f_d(t)/T$ to the grain $1/W$. Summing over $t$, $P(d) = \sum_t f_d(t)/T = C_d(\infty)/T$. The total length of a detector's segments is $\sum_t f_d(t)$ for every order within an interval, so the distribution does not depend on that order; a single record's detector at a given $u$ does, which is why the order is the world's declared data \cite[9.25 (3), (4)]{algebra}. A detector's increment is the sum of its boundary Nodes' inward fluxes from outside, so its segment is the union of its Nodes' segments and its share is the sum of their shares \cite[9.25 (10)]{algebra}.
 \end{proof}
 The residues of the law's remainder are equidistributed (COMPUTED), not a permutation, so the counts are binomial about the shares \cite[9.19 (4b)]{algebra}. Two other forms were weighed and refused: a race in which each Node shouts on its own threshold is not Born's rule (two Nodes receiving the shares $0.9$ and $0.1$ give $17/18$ to the first, PROVED), and exactness needs the chance normalised by the record's remaining norm, which is the increment ladder read cell by cell \cite[9.25 (5)]{algebra}.
 
@@ -197,7 +280,11 @@ The reading $\bE$ maps a record at a set of cells to its offer there; its transp
 For a pair record, the share of records clicking $+$ at Alice's detector is $|\mathbf w_+|^2/(|\mathbf w_+|^2 + |\mathbf w_-|^2)$, with $\mathbf w_{o}$ her arm's label state projected on her own axis, exactly in integers and independent of Bob's axis, placement and distance; the same holds for Bob. So the counts at one detector do not depend on what is done at the other, and no information passes through the click, at any speed.
 \end{theorem}
 \begin{proof}
-Her marginal is $\sum_b R(+, b)/\sum R$, and $\sum_b R(o_A, b) = (a_B^2 + b_B^2)\,|\mathbf w_{o_A}|^2$ by Brahmagupta's identity, Bob's axis being $(a_B, b_B)$; the scale $a_B^2 + b_B^2$ is common to both outcomes and cancels in the share. Her click's time is her own arm's flux and her outcome's boundary her own projection \cite[9.25 (6)]{algebra}.
+Let the pair's four weights be $w_{ab}$, $a$ Alice's label and $b$ Bob's, and let $\bM_A$ and $\bM_B$ be the two label matrices of the axes $(a_A, b_A)$ and $(a_B, b_B)$. The joint amplitude is\[J(o_A, o_B) = \sum_{a, b} w_{ab}\,\bM_A[o_A][a]\,\bM_B[o_B][b],\] and the weight is $R = J^2$. For a fixed $o_A$ write $(\mathbf w_{o_A})_b = \sum_a w_{ab}\,\bM_A[o_A][a]$, her arm's label state projected on her own outcome; then $J(o_A, o_B) = (\bM_B\mathbf w_{o_A})_{o_B}$ and
+\[
+\sum_{o_B} R(o_A, o_B) = |\bM_B\mathbf w_{o_A}|^2 = (a_B^2 + b_B^2)\,|\mathbf w_{o_A}|^2
+\]
+by Eq.~\eqref{eq:brahmagupta}. So her share of $+$ is $(a_B^2 + b_B^2)|\mathbf w_+|^2/\bigl((a_B^2 + b_B^2)(|\mathbf w_+|^2 + |\mathbf w_-|^2)\bigr)$, the scale cancelling exactly. On the joint ladder with $o_A$ outer, her outcome $+$ is the union of the segments $[0, \sum_b R(+, b))$, whose length is fixed by her own projection whatever Bob's axis; her click's time is her own arm's flux through her own detectors. Nothing of Bob's setting, placement or distance enters either \cite[9.25 (6)]{algebra}.
 \end{proof}
 What is non-local is Bob's outcome given Alice's, decided by the same residue and the joint weights: the correlation, not a signal. A deletion that spread from Alice's click at one Link per interval would be a local rule at each arm, and every such rule gives the CHSH sum at most $2$; so the deletion is at once, the algebra's one non-local act \cite[9.25 (6)]{algebra}; record 1888 \cite{log}.
 
@@ -205,7 +292,7 @@ What is non-local is Bob's outcome given Alice's, decided by the same residue an
 Given the neighbours' reads, the step $(\abefore, r) \mapsto (\anext, r')$ of one row is a bijection of $\Z \times \{0, \dots, 3\,\den - 1\}$ onto itself, with the exact inverse $\abefore = \lceil m/(3\,\den) \rceil$, $r = 3\,\den\,\abefore - m$, where $m = \num\,S_6 - 3\,\den\,\anext - r'$. The coupled step is two such bijections in a fixed order, inverted in the reverse order. The click deletes a summand and has no inverse.
 \end{theorem}
 \begin{proof}
-$(\abefore, r) \mapsto n = \num\,S_6 - 3\,\den\,\abefore + r$ is a bijection onto $\Z$ by the uniqueness of the Euclidean division, and so is $n \mapsto (\lfloor n/(3\,\den) \rfloor, n \bmod 3\,\den)$ \cite[8.8]{algebra}; \cite[9.20 (A) 4]{algebra}.
+Fix $S_6$ and write $d = 3\,\den$. The map $(\abefore, r) \mapsto n = \num\,S_6 - d\,\abefore + r$ from $\Z \times \{0, \dots, d - 1\}$ to $\Z$ is a bijection: every integer $n$ has exactly one representation $n - \num\,S_6 = -d\,\abefore + r$ with $0 \le r < d$, the Euclidean division of $\num\,S_6 - n$ by $d$ read with the ceiling. The map $n \mapsto (\lfloor n/d \rfloor, n \bmod d) = (\anext, r')$ is a bijection of $\Z$ onto $\Z \times \{0, \dots, d - 1\}$. Their composition is the step, and its inverse is the pair of inverses: from $(\anext, r')$, $n = d\,\anext + r'$, $m = \num\,S_6 - n = d\,\abefore - r$, so $\abefore = \lceil m/d \rceil$ and $r = d\,\abefore - m$. The reads $S_6$ are of the level now, which the inverse holds at every Node, so the inverse is computed Node by Node. For two coupled families each half-step is invertible given the other family's levels, which it leaves in place, so the pair of half-steps is inverted in the reverse order \cite[8.8]{algebra}; \cite[9.20 (A) 4]{algebra}.
 \end{proof}
 The Inside is reversible to the bit on every board and is not symmetric in form, the remainder living on the later level: the rule carries an arrow in its bookkeeping and none in its information. The arrow of time is born at the click and nowhere in the rule. The check that shows it is a property test and never a pin: a planted board with no detector run forward and back under the exact inverse returns bit for bit, and the same board with a detector does not, by the deleted record exactly \cite[9.20]{algebra}.
 
@@ -229,35 +316,80 @@ Not part of it, and refused at load: a residue, a wheel, a seed written by hand,
 &+ \sum_{\text{packets}} (\text{the profile}) \times (\text{the character of } \mathbf K),
 \end{aligned}
 \end{equation}
-each profile at the declared amplitude, with every remainder $0$ and nothing else on the board: no light record and no remainder at interval $0$ \cite[9.22 (3)]{algebra}. The modes are those of the composed operator of the body's family, every region in place. The generator is the board's own operator iterated: the power iteration $\bv \mapsto (\bM + 2\,\mathbf 1)\bv$, $\mathbf 1$ the identity, applies the law's own read and nothing else and converges to the bound mode from any start, $\bM + 2\,\mathbf 1$ having nonnegative entries (PROVED by Perron--Frobenius); in integers it is reproducible bit for bit \cite[9.22 (7)]{algebra}. So the law \emph{steps} the operator, the generator \emph{relaxes} with it, and the click compares and deletes; nothing on the board relaxes.
+each profile at the declared amplitude, with every remainder $0$ and nothing else on the board: no light record and no remainder at interval $0$ \cite[9.22 (3)]{algebra}. The modes are those of the composed operator of the body's family, every region in place. The generator is the board's own operator iterated.
+\begin{proposition}[the generator relaxes with the law's read]\label{prop:power}
+The power iteration $\bv \mapsto (\bM + 2\,\mathbf 1)\bv$, $\mathbf 1$ the identity, converges from any start with a nonzero overlap to the bound mode of the composed operator, the eigenvector of its largest eigenvalue $\lambda$, at the rate $1 - \mathrm{gap}/(\lambda + 2)$ per iteration, $\mathrm{gap}$ the distance of $\lambda$ from the next eigenvalue.
+\end{proposition}
+\begin{proof}
+$\bM + 2\,\mathbf 1$ has the eigenvalues $\lambda_k + 2$ of $\bM$ shifted by $2$, all in $(0, 4)$ by Theorem~\ref{th:stability}, so they are positive and the lowest mode cannot compete in absolute value. Its entries are nonnegative, so by Perron--Frobenius its top eigenvalue is simple on a connected board with a nonnegative eigenvector, the bound mode. Expanding the start on the eigenvectors, the $k$-th component is multiplied by $((\lambda_k + 2)/(\lambda + 2))^n$ after $n$ iterations, at most $(1 - \mathrm{gap}/(\lambda + 2))^n$ for every $k$ but the top \cite[9.22 (7)]{algebra}.
+\end{proof}
+The iteration applies the law's own read (the six neighbours with the pairs at every Node) and nothing else. In integers, $3\,\den\,\bv' = \num\,S_6(\bv) + 6\,\den\,\bv$ with the remainder kept and an exact shift by a power of two when the levels pass the amplitude, it is reproducible bit for bit on any host; the float Lanczos iteration is a host shortcut only \cite[9.22 (7)]{algebra}. So the law \emph{steps} the operator, the generator \emph{relaxes} with it, and the click compares and deletes; nothing on the board relaxes.
 
 \paragraph{The load check.} The initial element is written once into the experiment's input file, with each occupied mode's clock as a rational $a/b$, and the engine checks it at load in integers only and says LAWFUL or REFUSED with the reason: the law and generator the file was made under (a change of the laws forces regeneration); the eigen-equation's residual at every Node of the profile $\mathbf p$,
 \begin{equation}\label{eq:residual}
 \bigl|\,b\,\num_i\,(S_6\mathbf p)_i - 3\,\den_i\,a\,p_i\,\bigr| \le b\,(3\,\num_i + 6\,\den_i),
 \end{equation}
-PROVED as the bound for the rounded profile of an exact mode; $a/b$ above the band's top and below $2$; every remainder $0$; the stability of the composed operator; the rich birth cells; the detectors' cubes; and the refused keys \cite[9.22 (3), (7)]{algebra}; record 1886 \cite{log}. Recomputation at load is a diagnostic only, since a host's float mode computation is not reproducible across hosts.
+the bound for the rounded profile of an exact mode (Proposition~\ref{prop:residual}); $a/b$ above the band's top and below $2$; every remainder $0$; the stability of the composed operator; the rich birth cells; the detectors' cubes; and the refused keys \cite[9.22 (3), (7)]{algebra}; record 1886 \cite{log}. Recomputation at load is a diagnostic only, since a host's float mode computation is not reproducible across hosts.
+\begin{proposition}[the residual bound]\label{prop:residual}
+Let $\mathbf q$ be an exact mode, $\num_i(S_6\mathbf q)_i = 3\,\den_i\,\lambda\,q_i$ at every Node with $|\lambda| < 2$ and $|q_i| \le A$, the amplitude. Let $\mathbf p$ be $\mathbf q$ rounded to the nearest integers, and $a/b$ be $\lambda$ rounded to the nearest multiple of $1/b$ with $b \ge A$. Then Eq.~\eqref{eq:residual} holds at every Node.
+\end{proposition}
+\begin{proof}
+Write $\mathbf p = \mathbf q + \boldsymbol\delta$ with $|\delta_i| \le 1/2$, and $a/b = \lambda + \varepsilon$ with $|\varepsilon| \le 1/(2b)$. Using the eigen-equation,
+\[
+b\,\num_i(S_6\mathbf p)_i - 3\,\den_i\,a\,p_i = b\,\num_i(S_6\boldsymbol\delta)_i - 3\,\den_i\,b\lambda\,\delta_i - 3\,\den_i\,b\varepsilon\,q_i - 3\,\den_i\,b\varepsilon\,\delta_i .
+\]
+The four terms are bounded by $6 \cdot \tfrac12\,b\,\num_i = 3b\,\num_i$, by $3\,\den_i \cdot 2 \cdot \tfrac12\,b = 3b\,\den_i$, by $3\,\den_i \cdot \tfrac12 A \le \tfrac32 b\,\den_i$, and by $\tfrac34\den_i \le \tfrac32 b\,\den_i$; their sum is at most $b(3\,\num_i + 6\,\den_i)$ \cite[9.22 (7)]{algebra}.
+\end{proof}
+A profile that is not a mode fails the bound by a margin of the amplitude's order; the check does not single out the mode among near-degenerate ones, whose hybrid share stays the generator's, printed as a GameBoard diagnostic \cite[9.22 (7)]{algebra}.
 
 \section{The massive family: the band, the cone, the bound body and the moving packet}\label{sec:massive}
 
 The rule of Eq.~\eqref{eq:rule} gives every family one declared pair and lets the one operator carry mass, a clock and a body \cite[chapter 8, 9.24]{algebra}. This section states what follows from the pair before any run; each sentence carries the algebra document's mark, and every number is a COMPUTATION declared before its run.
 
-\paragraph{The band and the pitch.} Read on a character $\cos(\omega t - \mathbf k\cdot\mathbf x)$ of a periodic board, with $\omega$ the frequency angle per interval and $\mathbf k$ the wave vector (angles $k_x$, $k_y$, $k_z$ per Link), Eq.~\eqref{eq:rule} without its remainder holds exactly when $2\cos\omega = (2\,\num/(3\,\den))(\cos k_x + \cos k_y + \cos k_z)$; with light's band $\cos\omega_l(\mathbf k) = (\cos k_x + \cos k_y + \cos k_z)/3$ at the same $\mathbf k$ the same line reads
+\paragraph{The band and the pitch.} Read Eq.~\eqref{eq:rule} without its remainder on a character $a(\mathbf x, t) = \cos(\omega t - \mathbf k\cdot\mathbf x)$ of a periodic board, with $\omega$ the frequency angle per interval and $\mathbf k$ the wave vector (angles $k_x$, $k_y$, $k_z$ per Link).
+\begin{theorem}[the band]\label{th:band}
+The character is a solution of the rule exactly when
 \begin{equation}\label{eq:band}
-\boxed{\,\cos\omega = \cos\omega_0\,\cos\omega_l(\mathbf k), \qquad \cos\omega_0 = \num/\den\,},
+\boxed{\,\cos\omega = \cos\omega_0\,\cos\omega_l(\mathbf k), \qquad \cos\omega_0 = \num/\den, \qquad \cos\omega_l(\mathbf k) = \tfrac13(\cos k_x + \cos k_y + \cos k_z)\,},
 \end{equation}
-the massive band as light's band times the cosine of the pitch $\omega_0$, the family's rest frequency (PROVED for every periodic board \cite[8.1]{algebra}). At $\mathbf k = \mathbf 0$ the gap is the pitch, the rest period $N_0 = 2\pi/\omega_0$ intervals and the rest energy $h\,\omega_0$, $h$ the action; light has $\omega_0 = 0$, a zero mode that is a level and not a clock, so the whole difference between light and a massive family in the algebra is a gap. With $2 - 2\cos\omega = 4\sin^2(\omega/2)$ the band is light's form with the pace squared scaled by $\num/\den$, one substitution.
+$\omega_l(\mathbf k)$ being light's band at the same wave vector and $\omega_0$ the family's pitch, its rest frequency. Every character has a real $\omega$ for every $\mathbf k$, the band lying in $[-\num/\den, \num/\den]$ in $\cos\omega$.
+\end{theorem}
+\begin{proof}
+By the angle-addition formula, $a(\mathbf x, t + 1) + a(\mathbf x, t - 1) = 2\cos\omega\,a(\mathbf x, t)$, and the six reads give $S_6 = \sum_{\pm, i}\cos(\omega t - \mathbf k\cdot\mathbf x \mp k_i) = 2(\cos k_x + \cos k_y + \cos k_z)\,a(\mathbf x, t)$. The rule $3\,\den(\anext + \abefore) = \num\,S_6$ holds at every Node and interval exactly when $3\,\den \cdot 2\cos\omega = 2\,\num\,(\cos k_x + \cos k_y + \cos k_z)$, which is Eq.~\eqref{eq:band}. Since $|\cos k_x + \cos k_y + \cos k_z| \le 3$, $|\cos\omega| \le \num/\den \le 1$ \cite[8.1]{algebra}.
+\end{proof}
+At $\mathbf k = \mathbf 0$ the gap is the pitch, the rest period $N_0 = 2\pi/\omega_0$ intervals and the rest energy $h\,\omega_0$, $h$ the action; light has $\omega_0 = 0$, a zero mode that is a level and not a clock, so the whole difference between light and a massive family in the algebra is a gap. The band is exact on a periodic board for every extent; on a board with an open face the characters are not eigenvectors and the statement is the periodic board's. With $\cos k_i = 1 - 2\sin^2(k_i/2)$ and $2 - 2\cos\omega = 4\sin^2(\omega/2)$ the band is, exactly,
+\begin{equation}\label{eq:bandsin}
+4\sin^2\frac{\omega}{2} = 2\Bigl(1 - \frac{\num}{\den}\Bigr) + \frac{\num}{\den}\cdot\frac43\Bigl(\sin^2\frac{k_x}{2} + \sin^2\frac{k_y}{2} + \sin^2\frac{k_z}{2}\Bigr),
+\end{equation}
+light's form ($\num = \den$) with the pace squared scaled by $\num/\den$ and a gap added \cite[8.1]{algebra}.
 
-\paragraph{The two paces and the exact cone.} Near $\mathbf k = \mathbf 0$ light's band gives $\omega_l^2 = k^2/3 + O(k^4)$, $k$ the length of $\mathbf k$: the pace of light $c = 1/\sqrt3$ Links per interval. To second order in $\omega$ and $\mathbf k$ together the massive band is Klein--Gordon's with the cone $c_m^2 = \cos\omega_0\,c^2$, a massive record's limiting pace $c_m$ below light's by $\omega_0^2/4$ ($0.56$ percent at the pair $[800, 809]$, $N_0 = 42.08$: a COMPUTATION of the algebra \cite[8.1]{algebra}, not a pin); with no truncation in $\omega_0$, at the band's bottom,
+\paragraph{The two paces and the exact cone.} Near $\mathbf k = \mathbf 0$, $\cos\omega_l = 1 - k^2/6 + O(k^4)$ with $k = |\mathbf k|$, so $\omega_l^2 = k^2/3 + O(k^4)$: light's pace is $c = 1/\sqrt3$ Links per interval. For the massive band there are two second-order readings \cite[8.1]{algebra}.
+(i) Jointly in $\omega$ and $\mathbf k$: $2 - 2\cos\omega = 2(1 - \cos\omega_0) + 2\cos\omega_0(1 - \cos\omega_l)$, and to second order $\omega^2 = \omega_0'^2 + \cos\omega_0\,c^2 k^2$ with $\omega_0'^2 = 2(1 - \cos\omega_0)$: the Klein--Gordon dispersion with the cone
+\[
+c_m^2 = \cos\omega_0\,c^2, \qquad c_m = c\sqrt{\cos\omega_0} = c\bigl(1 - \omega_0^2/4 + O(\omega_0^4)\bigr),
+\]
+a massive record's limiting pace below light's by $\omega_0^2/4$ ($0.56$ percent at the pair $[800, 809]$, $\omega_0 = \arccos(800/809) = 0.1493$, $N_0 = 42.08$: a COMPUTATION of the algebra, 8.1, not a pin).
+(ii) In $\mathbf k$ alone, with no truncation in $\omega_0$: write $\omega = \omega_0 + \delta$ at the band's bottom. Then $\cos(\omega_0 + \delta) = \cos\omega_0 - \sin\omega_0\,\delta + O(\delta^2)$ and $\cos\omega_0\cos\omega_l = \cos\omega_0(1 - \omega_l^2/2 + O(\omega_l^4))$, so $\sin\omega_0\,\delta = \cos\omega_0\,\omega_l^2/2$; and $\omega^2 = \omega_0^2 + 2\omega_0\delta + O(\delta^2)$ gives
 \begin{equation}\label{eq:cone}
 \boxed{\,\omega^2 = \omega_0^2 + c_{\mathrm{eff}}^2\,k^2 + O(k^4), \qquad c_{\mathrm{eff}}^2 = \cos\omega_0\,\frac{\omega_0}{\sin\omega_0}\,c^2, \qquad \frac{c_{\mathrm{eff}}^2}{c_m^2} = \frac{\omega_0}{\sin\omega_0} = 1 + \frac{\omega_0^2}{6} + O(\omega_0^4)\,},
 \end{equation}
-$c_{\mathrm{eff}}$ the effective pace of the band's bottom (PROVED as the expansion there \cite[8.1]{algebra}; $1.0037$ for the ratio at $\omega_0 = 0.15$, a COMPUTATION of the algebra, 8.1, not a pin).
+$c_{\mathrm{eff}}$ the effective pace of the band's bottom, the named cone of the massive family ($1.0037$ for the ratio at $\omega_0 = 0.15$, a COMPUTATION of the algebra, 8.1, not a pin). The two readings agree at leading order in $\omega_0$ and differ at order $\omega_0^2$.
 
-\paragraph{Light against itself.} Light's own band, the pair $[1, 1]$, disperses by wavelength and by direction with nothing declared: along a unit direction $\mathbf n$ with $|\mathbf k| = k$, the group velocity $v_g$ obeys
+\paragraph{Light against itself.} Light's own band, the pair $[1, 1]$, disperses by wavelength and by direction with nothing declared.
+\begin{proposition}[light's dispersion]\label{prop:dispersion}
+Along a unit direction $\mathbf n$ with $|\mathbf k| = k$, the group velocity $v_g = d\omega/dk$ of light's band is
 \begin{equation}\label{eq:dispersion}
-\boxed{\,\frac{v_g}{c} = 1 - \frac{\bigl(3\sum_i n_i^4 - 1\bigr)\,k^2}{24} + O(k^4)\,},
+\boxed{\,\frac{v_g}{c} = 1 - \frac{\bigl(3\sum_i n_i^4 - 1\bigr)\,k^2}{24} + O(k^4)\,}.
 \end{equation}
-the coefficient $0$ on a body diagonal, $1/2$ on a face diagonal, $2$ on an axis and $4/5$ averaged over the sphere (COMPUTATION, the series checked against the exact group pace \cite{lightdispersion}): a prediction of form, the quadratic dispersion of light anisotropic with the cubic pattern of the $48$ and no free coefficient; nature today has bounds and no measured coefficient.
+\end{proposition}
+\begin{proof}
+At $[1, 1]$, $\cos\omega = \tfrac13\sum_i\cos(kn_i) = 1 - \tfrac{k^2}{6} + \tfrac{k^4}{72}\sum_i n_i^4 + O(k^6)$, using $\sum_i n_i^2 = 1$. Write $u = 1 - \cos\omega = \tfrac{k^2}{6} - \tfrac{k^4}{72}\sum_i n_i^4 + O(k^6)$. Inverting $u = \omega^2/2 - \omega^4/24 + O(\omega^6)$ gives $\omega^2 = 2u + u^2/3 + O(u^3)$, so
+\[
+\omega^2 = \frac{k^2}{3} - \frac{k^4}{36}\sum_i n_i^4 + \frac{k^4}{108} + O(k^6) = \frac{k^2}{3}\Bigl(1 - \frac{(3\sum_i n_i^4 - 1)\,k^2}{36}\Bigr) + O(k^6),
+\]
+$\omega = (k/\sqrt3)\bigl(1 - (3\sum_i n_i^4 - 1)k^2/72 + O(k^4)\bigr)$, and $d\omega/dk$ is Eq.~\eqref{eq:dispersion} with $c = 1/\sqrt3$ \cite{lightdispersion}.
+\end{proof}
+The coefficient $3\sum_i n_i^4 - 1$ is $0$ on a body diagonal ($n_i^4 = 1/9$), $1/2$ on a face diagonal ($n_i^4 = 1/4, 1/4, 0$), $2$ on an axis, and $4/5$ averaged over the sphere (the average of $n_x^4$ is $1/5$); the series agrees with the exact group pace, $0.992472$ against $0.992500$ on an axis at $k = 0.3$ (COMPUTATION \cite{lightdispersion}). It is a prediction of form: the quadratic dispersion of light anisotropic with the cubic pattern of the $48$ and no free coefficient; nature today has bounds and no measured coefficient (the algebraic experiment A2, Section~\ref{sec:algebraic}).
 
 \paragraph{The bound body at rest.} A body is no new object: a region $R$ of the operator, a cube of Nodes on which the $48$ act, where the massive family's pair is $[\num', \den']$ with $\num'/\den' > \num/\den$, a well \cite[8.3]{algebra}. Its clock is the composed operator's bound mode, the angle $\omega_b$ below the rest frequency $\omega_0$, whose $2\cos\omega_b$ lies above the vacuum band's top; the mode's tail falls exponentially away from the well (PROVED), so the torus must be large enough that its wrapped tail stays below half a unit at the amplitude \cite[9.22 (9)]{algebra}. A bound tool body is of the holder family, distinct from the experiment's matter (record 1875 \cite{log}). At interval $0$ the body's mode is written by the generator at both levels, and the load check verifies it (Eq.~\eqref{eq:residual}).
 
@@ -265,11 +397,17 @@ the coefficient $0$ on a body diagonal, $1/2$ on a face diagonal, $2$ on an axis
 \begin{theorem}[no self-bound body]\label{th:noselfbound}
 A linear translation-invariant map has the characters as its modes and nothing else stationary, so a localised stationary state needs a region of material that breaks the translations. There is no self-bound localised body in the one algebra: a moving body is either a packet of a family carried by the character of its momentum, or a region of material, which does not move.
 \end{theorem}
-The proof is \cite[9.24 (1), (3)]{algebra}; a well carried by a record of the holder family would need a term of degree three in the amplitudes, refused by the three tests. On a homogeneous board every character is a mode with $3\cos\omega = (\num/\den)\sum_i \cos k_i$, and a packet, a sum of characters, is an exact solution, each character advanced by its own clock; the written initial state, the profile times the character of $\mathbf K$ at both levels, moves from interval $0$ with no ramp (PROVED \cite[9.24 (2)]{algebra}). Its group velocity per axis is $v_i = (\num/\den)\sin k_i/(3\sin\omega)$, and at small $\mathbf K$ and $\omega$, $\omega^2 = \omega_0^2 + k^2/3$ with $\omega_0^2 = 2(1 - \num/\den)$, the relativistic band with $c = 1/\sqrt3$ and the mass $\omega_0$. At the packet's centre, which moves at $v = v_g(\mathbf K)$, the phase advances by $\omega(\mathbf K) - \mathbf K\cdot\mathbf v$ per interval, so
+\begin{proof}
+Away from material the step commutes with every translation of the torus, so it commutes with the discrete Fourier transform's shifts and is diagonal on the characters $e^{i\mathbf k\cdot\mathbf x}$: every solution is a sum of characters, each advanced by its own clock $\omega(\mathbf k)$ of Eq.~\eqref{eq:band}. A stationary solution, one whose level returns to itself up to a phase, is then a single character or a sum at one frequency, spread over the whole board, and not localised; a localised mode needs an eigenvector of a composed operator that breaks the translations, a region of material. A body's own quanta cannot bind each other, since that would need a term of degree two or more in one family's amplitude, which the three tests exclude. A well carried by a record of the holder family would need a family's pair at a Node to be a function of the holder's amplitude there, a term of degree three, or a threshold read on a cell, and is refused \cite[9.24 (1), (3)]{algebra}.
+\end{proof} On a homogeneous board every character is a mode with $3\cos\omega = (\num/\den)\sum_i \cos k_i$, and a packet, a sum of characters, is an exact solution, each character advanced by its own clock; the written initial state, the profile times the character of $\mathbf K$ at both levels, moves from interval $0$ with no ramp (PROVED \cite[9.24 (2)]{algebra}). Its group velocity follows by differentiating $3\cos\omega = (\num/\den)\sum_i\cos k_i$: $-3\sin\omega\,d\omega = -(\num/\den)\sin k_i\,dk_i$, so
+\begin{equation}\label{eq:vg}
+v_i = \frac{\partial\omega}{\partial k_i} = \frac{\num}{\den}\,\frac{\sin k_i}{3\sin\omega},
+\end{equation}
+and at small $\mathbf K$ and $\omega$, $\omega^2 = \omega_0^2 + k^2/3$ with $\omega_0^2 = 2(1 - \num/\den)$, the relativistic band with $c = 1/\sqrt3$ and the mass $\omega_0$ \cite[9.24 (2)]{algebra}. The packet's phase is $\varphi(\mathbf x, t) = \mathbf K\cdot\mathbf x - \omega(\mathbf K)t$; at its centre, $\mathbf x = \mathbf x_0 + \mathbf v t$ with $\mathbf v = \mathbf v_g(\mathbf K)$, $d\varphi/dt = \mathbf K\cdot\mathbf v - \omega(\mathbf K)$, so the phase turns by $\omega(\mathbf K) - \mathbf K\cdot\mathbf v$ per interval and
 \begin{equation}\label{eq:tick}
 \boxed{\,\frac{f}{f_0} = \frac{\omega(\mathbf K) - \mathbf K\cdot\mathbf v}{\omega_0}\,},
 \end{equation}
-$f_0$ the rest tick and $f$ the moving packet's own tick: time dilation from the dispersion, with no rule for it, exactly the Lorentz factor's inverse for the relativistic band and, on the lattice band along an axis at $v = 1/3$, the tick ratio $0.8146$ (the pin of \cite[9.22 (8)]{algebra}, rows 5, 11 and 12; \cite[B]{labtools}). A packet of width $\sigma$ (Links) spreads on the time $2\sigma^2/\omega''$, $\omega''$ the curvature of the dispersion at rest, so a moving clock is a large packet, about a hundred Links wide for the experiments' holds \cite[9.24 (2)]{algebra}. A detector or an emitter carried by a moving body is a \emph{moving name}: its cells translate at the body's own group velocity from its $\mathbf K$, with no declared rate or heading; the click reads the flux into the moving region and the birth writes on it (the model owner's decision, record 1889 \cite{log}; \cite[9.24 (4)]{algebra}). There is no acceleration during a run: a moving entry is written moving at interval $0$ and its energy of motion is conserved with the rest (record 1884 \cite{log}). On the board's own surface nothing contracts: the profile is as written. The model has clocks and no rods: a moving rigid arm is not yet defined, and a light clock moving across its arm reads the packet's own dilation; the longitudinal clock's factor is not claimed (record 1895 \cite{log}; \cite[9.24 (6)]{algebra}).
+$f_0$ the rest tick and $f$ the moving packet's own tick: time dilation from the dispersion, with no rule for it. For the relativistic band $\omega^2 = \omega_0^2 + c^2K^2$ the group velocity is $v = c^2K/\omega$, so $\omega - Kv = (\omega^2 - c^2K^2)/\omega = \omega_0^2/\omega$; with $\omega = \gamma\omega_0$, $\gamma = 1/\sqrt{1 - v^2/c^2}$ the Lorentz factor (since $\omega^2(1 - v^2/c^2) = \omega^2 - c^2K^2 = \omega_0^2$), the ratio is exactly $1/\gamma$. On the lattice band along an axis at $v = 1/3$, the tick ratio $0.8146$ (the pin of \cite[9.22 (8)]{algebra}, rows 5, 11 and 12; \cite[B]{labtools}). A packet of width $\sigma$ (Links) spreads on the time $2\sigma^2/\omega''$, $\omega''$ the curvature of the dispersion at rest, so a moving clock is a large packet, about a hundred Links wide for the experiments' holds \cite[9.24 (2)]{algebra}. A detector or an emitter carried by a moving body is a \emph{moving name}: its cells translate at the body's own group velocity from its $\mathbf K$, with no declared rate or heading; the click reads the flux into the moving region and the birth writes on it (the model owner's decision, record 1889 \cite{log}; \cite[9.24 (4)]{algebra}). There is no acceleration during a run: a moving entry is written moving at interval $0$ and its energy of motion is conserved with the rest (record 1884 \cite{log}). On the board's own surface nothing contracts: the profile is as written. The model has clocks and no rods: a moving rigid arm is not yet defined, and a light clock moving across its arm reads the packet's own dilation; the longitudinal clock's factor is not claimed (record 1895 \cite{log}; \cite[9.24 (6)]{algebra}).
 
 \paragraph{The coupling and the index.} A body coupled to light by the pairs $g$ and $G$ (Eq.~\eqref{eq:J}) scatters light at its cells; a medium body at rest has the index $n$ with $n^2 = 1 + Gg/(\omega_0^2 - \omega^2)$ in closed form, the design's, its $\omega_0$ the medium's pitch and $\omega$ light's frequency; the medium is a bound body of the holder family, its pin re-derived blind on that body (record 1877 \cite{log}; \cite[9.22 (8)]{algebra}, rows 14 and 15).
 
@@ -329,7 +467,11 @@ What follows from the algebra is stated first in one paragraph, each item with i
 
 \paragraph{Interference, by the formulas alone.} The law is linear, so two paths of one record add or cancel at a Node; a detector counts the record's inward flux, so where the two paths cancel no flux enters and no click comes. At the exit ports of a balanced Mach--Zehnder interferometer with two large detectors, one region each, the dark port's share of the inward flux is small and the bright port's large, against a half-and-half split with one arm blocked: on the placement of the lab tools' part B the shares COMPUTED by the generator's float run are $0.969$ bright, $0.0062$ dark (the splitters' imbalance over the packet's band and the bright beam's diffracted wing, a part that depends on the grain) and $0.025$ at the faces, the spill (record 1891 \cite{log}; \cite[B]{labtools}). On a screen of many detectors the counts are binomial about each detector's share of the record's total inward flux (Theorem~\ref{th:born}); the two slits' visibility is re-derived blind on the grown board (Section~\ref{sec:comparison}).
 
-\paragraph{Malus's share.} A record with the label state $H$ arriving at a polariser with the integer axis $(a, b)$ clicks at the detector along the axis with the share $a^2/(a^2 + b^2)$, by the label matrix and Brahmagupta's identity \cite[9.16 (4)]{algebra}: at the axes $(1, 1)$, $(5, 1)$, $(15, 8)$ and $(3, 2)$ the shares $1/2$, $25/26$, $225/289$ and $9/13$, at $45$, $11.31$, $28.07$ and $33.69$ degrees. There is no table of angles.
+\paragraph{Malus's share.} A record with the label state $H = (1, 0)$ arriving at a polariser with the integer axis $(a, b)$ leaves with the label rows $\bM_{\mathbf u}H = (a, -b)$: the component $a$ on the detector along the axis and $-b$ on the other. The flux of each component is its form, quadratic in its amplitude, and by Eq.~\eqref{eq:brahmagupta} the two sum to $(a^2 + b^2)$ times the arriving form, so by Theorem~\ref{th:born} the share along the axis is
+\begin{equation}\label{eq:malus}
+P_+ = \frac{a^2}{a^2 + b^2},
+\end{equation}
+Malus's $\cos^2$ of the axis's angle, exact in integers \cite[9.16 (4)]{algebra}: at the axes $(1, 1)$, $(5, 1)$, $(15, 8)$ and $(3, 2)$ the shares $1/2$, $25/26$, $225/289$ and $9/13$, at $45$, $11.31$, $28.07$ and $33.69$ degrees. There is no table of angles.
 
 \paragraph{de Broglie and the rest energy.} A matter record's wave number is the band's $\mathbf k$ at its frequency (Eq.~\eqref{eq:band}), the de Broglie fringes' spacing its consequence; the rest energy is $h\,\omega_0$, the pitch (Section~\ref{sec:massive}).
 
@@ -350,9 +492,27 @@ $(1, 1)$, $(3, 1)$ & $16, 4, 4, 16$ of $40$ & $3/5$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-so the CHSH sum is $S = 3/5 + 4/5 + 4/5 + 3/5 = 14/5$ exactly. A product state gives $S \le 2$ (PROVED, CHSH's bound for weights that factor), and $2\sqrt2$ (Tsirelson's value, nature's optimum) is not a pin \cite[9.22 (6)]{algebra}.
+The first row, worked out: the state $HV + VH$ has $w_{01} = w_{10} = 1$ and $w_{00} = w_{11} = 0$; Alice's axis $(1, 0)$ gives $\bM_A = \mathbf 1$ and Bob's $(1, 2)$ gives $\bM_B = \begin{pmatrix}1 & 2\\ -2 & 1\end{pmatrix}$, so $J(o_A, o_B) = \bM_A[o_A][0]\,\bM_B[o_B][1] + \bM_A[o_A][1]\,\bM_B[o_B][0]$ is $2$, $1$, $1$, $-2$ for $(++, +-, -+, --)$, and $R = J^2$ is $4, 1, 1, 4$ of $10$. The correlation of one setting is
+\[
+E = \frac{R(++) + R(--) - R(+-) - R(-+)}{\sum R},
+\]
+$(4 + 4 - 1 - 1)/10 = 3/5$; the other three rows follow the same way (a host computation of the four weights confirms them). So the CHSH sum is
+\begin{equation}\label{eq:chsh}
+S = E(\mathbf a, \mathbf b) - E(\mathbf a, \mathbf b') + E(\mathbf a', \mathbf b) + E(\mathbf a', \mathbf b') = \frac35 + \frac45 + \frac45 + \frac35 = \frac{14}{5}
+\end{equation}
+exactly, with Alice's $\mathbf a = (1, 0)$, $\mathbf a' = (1, 1)$ and Bob's $\mathbf b = (1, 2)$, $\mathbf b' = (3, 1)$. Tsirelson's value $2\sqrt2$, nature's optimum, is not a pin \cite[9.16 (4), 9.22 (6)]{algebra}.
+\begin{proposition}[a product state is local]\label{prop:product}
+If the pair's weights factor, $w_{ab} = x_a y_b$, then $|S| \le 2$ for every four axes.
+\end{proposition}
+\begin{proof}
+Then $J(o_A, o_B) = (\bM_A\mathbf x)_{o_A}(\bM_B\mathbf y)_{o_B}$ and $R$ factors, $R(o_A, o_B) = P_A(o_A)P_B(o_B)\cdot$(a positive scale), so $E(\mathbf a, \mathbf b) = e_A(\mathbf a)\,e_B(\mathbf b)$ with $|e_A|, |e_B| \le 1$. Then $S = e_A(\mathbf a)[e_B(\mathbf b) - e_B(\mathbf b')] + e_A(\mathbf a')[e_B(\mathbf b) + e_B(\mathbf b')]$, and $|S| \le |e_B(\mathbf b) - e_B(\mathbf b')| + |e_B(\mathbf b) + e_B(\mathbf b')| = 2\max(|e_B(\mathbf b)|, |e_B(\mathbf b')|) \le 2$ \cite[9.22 (6)]{algebra}.
+\end{proof}
 
-\paragraph{The counts as distributions.} With the residue the law's own remainder, the counts are binomial about the weights \cite[9.19 (4b)]{algebra}. At $n = 100$ pair records per setting the expected counts are $40/10/10/40$, $5/45/45/5$, $45/5/5/45$ and $40/10/10/40$, and $S = 2.80$ with the standard deviation $0.141$, the variance $\sum (1 - E^2)/n = 2.00/n$ over the four settings. The pin, written before any run: $S$ in $[2.38, 3.22]$ (three standard deviations), the falsifier $S \le 2$.
+\paragraph{The counts as distributions.} With the residue the law's own remainder, the counts are binomial about the weights \cite[9.19 (4b)]{algebra}. At $n = 100$ pair records per setting the expected counts are $40/10/10/40$, $5/45/45/5$, $45/5/5/45$ and $40/10/10/40$, and $S = 2.80$ with the standard deviation $0.141$. The variance follows from the binomial counts: at one setting the estimate of $E$ is the mean of $n$ values $\pm1$ of mean $E$, of variance $(1 - E^2)/n$, and the four settings are independent, so
+\[
+\mathrm{Var}(S) = \sum_{\text{settings}}\frac{1 - E^2}{n} = \frac{16 + 9 + 9 + 16}{25\,n} = \frac{2.00}{n}, \qquad \sqrt{2/100} = 0.141 .
+\]
+$S$ lies above $2$ by $0.8/0.141 = 5.7$ standard deviations; the verdict ``above $2$ at five standard deviations'' needs $n \ge 79$ per setting \cite[9.19 (4b)]{algebra}. The pin, written before any run: $S$ in $[2.38, 3.22]$ (three standard deviations), the falsifier $S \le 2$.
 
 \paragraph{The marginals and the order of the outcomes.} Each party's share of $+$ is $1/2$ at every axis for the state $HV + VH$ (COMPUTED), and by Theorem~\ref{th:nosignal} it does not depend on the far axis, exactly in integers; each party's counts are binomial about it. Alice's outcome is chosen on the outer segments of the joint ladder, whose union does not depend on Bob's axis, so her record-by-record outcomes and click intervals do not depend on his setting (the property test's seventh test \cite[9.25 (8)]{algebra}). Whether the order of Bob's outcomes, chosen on the inner segments, carries Alice's setting under the law's remainder is to be re-derived; this paper claims nothing for it.
 
