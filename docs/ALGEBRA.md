@@ -6026,9 +6026,16 @@ norm T, its wheel W, hence its threshold theta = (2 u + 1) T / (2 W),
 fixed at the birth; its ladder, the named sets in their declared order
 with the face last, and within a set the cells in the set's declared
 order. At every interval t each cell i of the ladder receives the
-one-way inward flux f_i(t) >= 0 of the record's rows through its Ports
-(9.19 (3)); the record's running total is C(t) = C(t - 1) + SUM over the
-ladder's cells of f_i(t). THE CLICK: at the first interval t* with C(t*)
+one-way inward flux f_i(t) >= 0 of the record's rows through ITS SET'S
+PORTS that land in it: the Links from a Node outside the SET into a Node
+of cell i (9.19 (3)); a Link between two cells of one set is not a Port
+of the set and carries no offer (else the energy that entered the set
+at one cell would be offered again at its neighbour, and the set's total
+would exceed the record's I per passage); the flux is read from the two
+levels after the interval's step, now = a(t) and before = a(t - 1), as
+the identity of 9.19 (3) and the prototypes read it; the record's
+running total is C(t) = C(t - 1) + SUM over the ladder's cells of
+f_i(t). THE CLICK: at the first interval t* with C(t*)
 >= theta, at the cell whose segment of THAT INTERVAL'S increment, laid
 out in the ladder's order, contains theta - C(t* - 1); there the record
 ends, whole, at that interval (record 1888). WHICH RECORD: the one whose
