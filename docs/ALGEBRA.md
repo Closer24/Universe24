@@ -13736,11 +13736,10 @@ nothing by role:
 | --- | --- | --- | --- | --- | --- | --- |
 | clicks (gravity's scalar) | [1, 1] | scalar | {clicks, 1} | {content, 1} | none | false |
 | charge (its scalar) | [1, 1] | scalar | {clicks, 1} | {charge, 1} | none | false |
-| light | [1, 1] | scalar | {clicks, 1} | absent | {gives, takes, 1} | true |
-| a matter family | [num, den] | scalar | {clicks, 1}, {charge, Lambda, q} | absent | {gives, takes, 1} | true |
+| light, the charge's own vector wave (9.82) | [1, 1] | vector, phase 2 | {clicks, 1}, {gravity's vector, the row's frequency, 1} | {charge, 1, moment} | {gives, takes, 1} | true |
+| a matter family | [num, den] | scalar, phase 1 or 2 | {clicks, 1}, {charge, Lambda, q}, {light, Lambda_v, q} | absent | {gives, takes, 1} | true |
 | gravity's vector | [1, 1] | vector | {clicks, 1} | {content, 4, spin} | none | false |
 | gravity's tensor | [1, 1] | tensor | {clicks, 1} | {content, 2} | none | false |
-| the charge's vector | [1, 1] | vector | {clicks, 1} | {charge, 1, moment} | none | false |
 
 The effective content c - q Lambda d of 9.57 (1) is item 4 with two
 reads; "gamma 1, content 0" for a field was the plain rule and is now
@@ -14075,3 +14074,75 @@ phase as the eighth attribute's twin, the twist table as world data;
 (iii) a ray as an emitter's declaration under the one law; (iv) light
 as the charge's own vector wave stays his line, now with phase 2 and
 the vector representation, six components.
+
+### 9.82 Light is the charge's own vector wave (the model owner's decisions of 2026-09-25 in the mathematician's session: "the engine freezes only after it is complete with every attribute, generic, and has passed every experiment at the test level; only then"; and "light is the vector wave of the charge, yes, because it adds genericity"; the declaration, what it gives, what it changes, the gate)
+
+**(1) THE TWO DECISIONS, one line each.** (i) THE FREEZE: the engine is
+frozen only after it is complete with every attribute of 9.79 and
+9.81, generic, and every experiment has passed at the test level (the
+shipped worlds bit for bit, the check-mode rows read); not before.
+(ii) LIGHT: one family, the charge's vector instance with clicks: no
+separate scalar light family. The reason his: it adds genericity (a
+family may have a hold, clicks and components at once, 9.81 (9)).
+
+**(2) THE DECLARATION.** In the families list, light is the entry:
+pair [1, 1]; representation vector with phase 2 (six components:
+three axes, each a pair (re, im)); reads {clicks, 1} (the four paces)
+and {gravity's vector, the row's frequency, 1} (the transport, 9.81
+(3)); held {charge, 1, moment} (a moving charge's current Q n_i div W
+at its Nodes, the moment's dipole on the six, 9.78 (2)); clicks
+{gives, takes, quantum 1}; booked true. The charge's scalar instance
+stays its own entry (the potential d, read through the pace). A
+charged matter family reads light with {light, Lambda_v, q} through
+the transport (magnetism on a charged wave), and the charge's scalar
+with {charge, Lambda, q} through the pace, as before. The table of
+9.79 (3) is edited to this.
+
+**(3) WHAT THE GROUP FIXES IN IT, one line each.** (a) THE POLARISATION
+is the transverse pair of components: a wave along axis a carries its
+two components b and c, the group's action on them the rotation
+about a. (b) THE BOOKING THROUGH A PORT along axis a sums the flux of
+the components TRANSVERSE to a (b and c), the pair's norm each: the
+part of the representation the axis's stabiliser turns among
+themselves; for a scalar family this is the whole, for a tensor the
+pairs (b, c) with b, c different from a. This is generic in the
+representation and it is the Poynting flux through a face with normal
+a (E_b B_c - E_c B_b). (c) THE LONGITUDINAL COMPONENT along the Port's
+axis is not booked: it is sourced by the gradient part of the current
+alone, a pure gauge, and acts on nothing (the transport's loop form,
+9.81 (7)); it carries the near field and no count. (d) THE GIVING: the
+point emitter (9.71 (1)) writes the seat's rotation into the component
+along the emitter's declared moment vector mu at its seat (a dipole
+source); the plain step radiates it, transverse in the far field, and
+the booking's transverse rule reads the radiated part. An emitter with
+no declared moment is refused for a vector family (no direction to
+write). (e) MALUS: a detector declares its axis e transverse to the
+beam; the booking projects the transverse pair on e, and Born's
+shares are cos^2 of the angle between the emitter's moment and e, by
+the pair's norm and no angle on the wheel (9.14's angle retired for
+light; the wheel stays the residue's). A POLARISER is a material
+region whose lowered pair is declared per component (the component
+along its absorbing axis lowered, the other free): one attribute of a
+region, generic, and birefringence with it. (f) BELL: the two given
+records of the pair's emitter are written with the emitter's declared
+correlation of their transverse vectors, each end's detector with its
+axis; the coincidence count is re-read on the components, and its
+blind expectation is OWED by the mathematician before the row runs,
+with the row's control. (g) LIGHT'S GRAVITY: s of a light record is
+its frequency by 9.51 (3), and light reads gravity's vector with the
+row's frequency, 9.81 (3): light past a moving mass as a wave.
+
+**(4) THE GATE, bit for bit.** Every shipped light row is re-declared
+with its light as this family, the emitter's moment along one
+transverse axis and the detector's axis the same: then one component
+carries the row and the other five are 0, the transport is the
+identity (no vector read is nonzero), and that component's levels and
+the counts read bit for bit against the scalar light's digest; the
+face receivers along the polarisation axis book nothing there, which
+no row reads. Bell and Malus are the two rows re-read, (3) (e), (f).
+
+**(5) THE ORDER, unchanged.** The genericity (9.79 with phase and the
+transport) first, the shipped worlds bit for bit; then the instances
+of 9.78 and this light as entries; then the check-mode rows of 9.78
+(9), 9.81 (8) and (3) (e), (f) here; then, complete and generic and
+every experiment passed at the test level, the freeze (1) (i).
