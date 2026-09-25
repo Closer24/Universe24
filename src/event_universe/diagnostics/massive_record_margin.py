@@ -653,6 +653,40 @@ def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
     return int(total.numerator) if total.denominator != 1 else int(total)
 
 
+def excitation_action(world: NatureBeamWorld, number: int, period: int) -> Fraction:
+    """The excited record's action over one period as the exact rational (the
+    Fraction whose numerator `excitation_norm` returns): the summed share of
+    the body's own conserved form at its centre Node over `period` intervals
+    advanced alone, in the form's units of ALGEBRA.md 9.19 (3). THE POINT
+    EMITTER (9.71 (1) (d); BUILD.md section 26 item 50) closes its window when
+    the given family's norm that left the seat reaches it, so the generator
+    writes its denominator beside the norm (`norm_denominator`)."""
+    from event_universe.events.detector_law import DetectorLawSimulation
+
+    entry = world.measured[number]
+    definition = entry.block
+    if definition is None:
+        raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
+    alone = dataclasses.replace(
+        world,
+        measured=(
+            dataclasses.replace(
+                entry, block=dataclasses.replace(definition, emitter=None, receiver=None)
+            ),
+        ),
+        detectors=(),
+    )
+    simulation = DetectorLawSimulation(alone)
+    block = simulation.blocks[0]
+    total = Fraction(0)
+    for _ in range(period):
+        simulation.step()
+        own = block.own
+        assert own is not None
+        total += simulation.form_share(own, simulation.centre_mask(block))
+    return total
+
+
 def composed_largest_eigenvalues(world: NatureBeamWorld) -> dict[int, float]:
     """The largest eigenvalue of the COMPOSED operator of each massive family
     (ALGEBRA.md 9.19 (2)): every body's well of the family in one read

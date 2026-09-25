@@ -3928,6 +3928,82 @@ would have found no cell.
    waits on the mathematician: the transverse boost (a train across the
    motion), the blind numbers of the long-wave pair.
 
+50. THE POINT EMITTER (ALGEBRA.md 9.69 (2), the mathematician's proposal
+   under its own identity; 9.71 (1), the build's reference; the model owner's
+   word of 2026-09-25 through the Boss, record 2054: "try to reduce them all
+   to a Node"). A HYPOTHESIS UNDER ITS OWN IDENTITY: the world key
+   `point_emitter`, off by default; every shipped world and digest unchanged
+   with it off. THE RULE, as built: an emitting body declares no train but a
+   `weight` g (an integer from 1) and, beside its `norm`, the action's exact
+   denominator `norm_denominator` (the generator's); it needs `body_record`
+   (the seat). (a) At the seat's giving click (the rung on its own residue,
+   as now) a WINDOW opens: the given record is made with no rows, the
+   quantum moved at the open (the content, the stock one less, the ledger's
+   rows, as the train emitter's) and its norm T from the open, so the
+   ladder reads its bookings from the first interval; (b) at every interval of the window, right after the record's
+   own step and before any booking reads its rows, the seat's rotation is
+   written into the given row at the seat, a_given(seat) += g x a_seat
+   (`_window_write`; the bookings then read the rows as the interval leaves
+   them, both levels with their writes); (c) the norm leaving the seat is
+   read each interval as the OUTWARD flux through the seat's six Ports
+   (`seat_outward_flux`, the taking's inward booking with the sign reversed,
+   from the same two levels) and summed; (d) the window
+   closes at the first interval at which the summed outward norm reaches T,
+   the excitation's action over one period as the exact rational norm /
+   norm_denominator in the form's units (`excitation_action`): the writing
+   ends, the giving line names the record with the window's length and the
+   open's interval, and the next excitation's count starts; while a window is open the rung waits; (e) the inverse
+   subtracts each interval's write and takes the interval's outward booking
+   off the sum before the record's own inverse step (`_point_window_inverse`;
+   the giving is n additive writes, each undone). THE GENERATOR: the rung
+   without a train (`emitter_rung`, the period and the norm as before, the
+   denominator beside them); the weight by trial (`point_weight`): the
+   window at g = 1 read, the estimate sqrt(n_1 / target) and its neighbours
+   read, the nearest to the target's periods taken (`window_read` beside it,
+   HOST). THE FIRST ROW (examples/events/point_emitter): the chain of 1200
+   with the one-Node well [800, 802] of the kind [800, 813] at its middle
+   (its mode at omega = 0.178, light's k there 0.31, the wavelength about
+   20), the stock 64, two sets of three light bodies 500 Links away on each
+   side; and the light clock with a point emitter, the mirror 60 Links
+   beyond the seat, the seat's own set; the weights 1 (the windows 1009 and
+   1503 intervals, the generator's trials at the seed 2^12). THE GATE
+   tests/test_point_emitter.py (the window's mechanics and its close at T,
+   the window's fall with the weight (17.6 between g = 1 and g = 4 on the
+   chain of 400, beside g^2 = 16, COMPUTATION), the inverse bit for bit inside a window, the
+   loader's pairings); the row's readings in the README of the row, beside
+   9.71 (1)'s blind numbers. THE FIRST READINGS (check mode, no pin;
+   DETECTOR unless marked): the chain's 64 records all clicked, left 24,
+   right 19, the faces 21 (the sets of three light bodies take a part and
+   pass the rest; the two sides alike within one standard deviation); the
+   first clicks 884 and 914 intervals after the open against the flight's
+   873; the wavelength on the chain (GAMEBOARD) 20.3 and 20.4 Links against
+   light's dispersion at the seat's rotation, 20.4; the light clock's tick
+   from the open 1313 +- 93 (63 clicks, rms 738, least 363), bimodal,
+   against 961 +- 39 (209 + n / 2 at n = 1503): the window's light is 860
+   Links long and the arm 60, so the record's own return is booked while
+   its window is open, the click closes the window short of T and the
+   taking re-gives (90 opens for 64 quanta); and the point emitter gives
+   both ways, so the half toward the open face 100 Links away returns from
+   the board's end at 349 intervals (the least ticks 363 here and 382 with
+   the mirror moved to 500 Links, where it cannot return before 1745): a
+   light clock with a point emitter needs its faces farther than the
+   window's light plus the arm; and on the later records of a long run the
+   seat's own set books the record's own rows before any return can arrive
+   (0.12 of the norm 1691 intervals after an open whose mirror return was
+   due at 1745; nothing on a fresh chain, 0.001 of the norm from the
+   opening's transient), the cause not found (the content field's ripples
+   from the takings and givings, or the earlier records' rows, the next
+   diagnostic); the question to the mathematician in the README, with the
+   diagnostics at an arm of 500 beside it. THE FINDING OF THE BUILD: a flux read across a write books the
+   write; with the booking reading `before` with the last write in it and
+   `now` without this one's, the seat's own set clicked 22 intervals after
+   the open on its own emission; with the write before the bookings the
+   emission is one-signed outward at the seat's Ports and the least tick is
+   363 (the earliest return 209 plus the write's build-up). What waits on the mathematician: the seat's
+   frequency for the row (his omega_0 = 0.174 is light's at k = 0.302; the
+   light clock's own A rotates at 0.067), the weight as an integer (the
+   window's granularity at small weights).
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

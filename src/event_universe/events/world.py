@@ -439,6 +439,10 @@ WORLD_KEYS = {
     # false by default (the lattice body); a host form under its own
     # identity, gated by the equivalence test of 9.46 (4)
     "body_record",
+    # THE POINT EMITTER (ALGEBRA.md 9.69 (2), 9.71 (1); BUILD.md section 26 item
+    # 50): under its own identity, off by default; the seat's rotation written
+    # into the given family's row at the seat over a window
+    "point_emitter",
     # massive-record-v1: `probes`, declared Nodes whose light amplitude the
     # record writes per interval (a GAMEBOARD reading of the rows), a list
     # of Nodes, admitted under `massive_record` alone.
@@ -1376,6 +1380,16 @@ class EmitterDefinition:
     norm: int | None = None
     train: TrainDefinition | None = None
     given: GivenTrain | None = None
+    # THE POINT EMITTER'S NORM DENOMINATOR (9.71 (1) (d); item 50): the
+    # excitation's action T as the exact rational norm / norm_denominator,
+    # in the form's units, which the window's outward norm is read against;
+    # None on a train emitter; required under `point_emitter`
+    norm_denominator: int | None = None
+    # THE POINT EMITTER'S WEIGHT g (ALGEBRA.md 9.71 (1) (b); item 50): the
+    # body's coupling to the given family, one integer, the seat's rotation
+    # copied at that weight into the given row at the seat every interval of
+    # the window; None on a train emitter; required under `point_emitter`
+    weight: int | None = None
 
 
 @dataclass(frozen=True)
@@ -1712,6 +1726,12 @@ class NatureBeamWorld:
     # (a Node with a shape), its profile read and never stepped; false, the
     # default, the lattice body (its own rows on the GameBoard)
     body_record: bool = False
+    # THE POINT EMITTER (ALGEBRA.md 9.69 (2), 9.71 (1); BUILD.md section 26 item
+    # 50; the world key `point_emitter`, under its own identity, off by
+    # default): every emitting body gives by the seat's rotation written into
+    # the given row at its seat over a window, at its declared `weight`; needs
+    # `body_record` (the seat) and refuses a `train`
+    point_emitter: bool = False
     # massive-record-v1: the probes, Nodes whose light amplitude is written
     # per interval (GAMEBOARD), empty by default.
     probes: tuple[Address3, ...] = ()
@@ -4073,7 +4093,18 @@ def _emitter(
     obj = _object(
         value,
         label,
-        {"family", "branches", "receiver", "period", "norm", "train", "given"},
+        {
+            "family",
+            "branches",
+            "receiver",
+            "period",
+            "norm",
+            "train",
+            "given",
+            "weight",
+            "norm_denominator",
+            "window_read",
+        },
         {"family"},
     )
     name = obj["family"]
@@ -4103,6 +4134,14 @@ def _emitter(
         branches, label_hands = _branches(obj["branches"], f"{label}.branches", 1)
     receiver = _receiver_names(obj, label, True)
     period = None if "period" not in obj else _integer(obj["period"], f"{label}.period", 1)
+    # THE POINT EMITTER'S WEIGHT (ALGEBRA.md 9.71 (1); item 50): an integer from
+    # 1; the world's `point_emitter` key pairs it with the absence of a train
+    weight = None if "weight" not in obj else _integer(obj["weight"], f"{label}.weight", 1)
+    norm_denominator = (
+        None
+        if "norm_denominator" not in obj
+        else _integer(obj["norm_denominator"], f"{label}.norm_denominator", 1)
+    )
     norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
     train: TrainDefinition | None = None
     if "train" in obj:
@@ -4128,7 +4167,18 @@ def _emitter(
             )
         wrap = periodic
         given = _given_train(value, f"{label}.given", given_family, shape, extents, wrap, train)
-    return EmitterDefinition(names[name], branches, label_hands, receiver, period, norm, train, given)
+    return EmitterDefinition(
+        names[name],
+        branches,
+        label_hands,
+        receiver,
+        period,
+        norm,
+        train,
+        given,
+        weight=weight,
+        norm_denominator=norm_denominator,
+    )
 
 
 def _train(
@@ -6352,6 +6402,46 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         _clock_family_checks(clock_family, families, measured)
         _field_family_checks(charge_family, families, measured, "charge", "9.48 (2)")
         _node_clock_bound(families, measured, amplitude_bound, node_clock, charge_strength)
+    point_emitter = obj.get("point_emitter", False)
+    if type(point_emitter) is not bool:
+        raise ValueError(
+            f"{BEAM_LAW}: point_emitter must be true or false (ALGEBRA.md 9.71 (1); off by default, "
+            "the train emitter)"
+        )
+    if point_emitter and not body_record:
+        raise ValueError(
+            f"{BEAM_LAW}: point_emitter needs body_record: true (the point emitter writes the seat's "
+            "rotation into the given row at the seat, ALGEBRA.md 9.69 (2), 9.71 (1))"
+        )
+    for number, entry in enumerate(measured):
+        block = entry.block
+        if block is None or block.emitter is None:
+            continue
+        if point_emitter:
+            if block.emitter.train is not None or block.emitter.given is not None:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}].emitter declares a `train` under point_emitter: "
+                    "the point emitter declares no train, its length, shape and wave number come "
+                    "from the window and light's dispersion (ALGEBRA.md 9.71 (1))"
+                )
+            if block.emitter.weight is None:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}].emitter declares no `weight` under point_emitter: "
+                    "the seat's rotation is copied into the given row at a declared weight g, one "
+                    "integer from 1 (ALGEBRA.md 9.71 (1) (b))"
+                )
+            if block.emitter.norm is not None and block.emitter.norm_denominator is None:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}].emitter declares no `norm_denominator` under "
+                    "point_emitter: the window closes when the outward norm reaches the excitation's "
+                    "action norm / norm_denominator, the generator's exact rational (ALGEBRA.md 9.71 "
+                    "(1) (d))"
+                )
+        elif block.emitter.weight is not None:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}].emitter.weight is the point emitter's, admitted under "
+                "the world key point_emitter alone (ALGEBRA.md 9.71 (1))"
+            )
     if body_record:
         # every seeded block carries its profile and its clock pair (the
         # generator's, under the stamp): the body record's shape and its
@@ -6471,6 +6561,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         detector_law=detector_law,
         massive_record=massive_record,
         body_record=body_record,
+        point_emitter=point_emitter,
         probes=probes,
         mode_axis=mode_axis,
         closed=closed,

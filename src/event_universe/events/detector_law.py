@@ -193,6 +193,14 @@ class LiveRecord:
     # the fraction of a hop's booking below one unit of the flux, carried to
     # the next hop's booking (a remainder kept on the record, exact)
     hop_carry: Fraction = Fraction(0)
+    # THE POINT EMITTER'S WINDOW (ALGEBRA.md 9.71 (1); BUILD.md section 26 item
+    # 50): open from the giving click until the outward norm through the
+    # seat's six Ports reaches T; the intervals written and the outward norm
+    # summed; the giving line held until the close names the record
+    window_open: bool = False
+    window: int = 0
+    outward: int = 0
+    giving_line: dict[str, object] | None = None
     # The sinks' take of a record under the receiver by name (HOST, the
     # pointer's unit): what the faces and every set but the receiver took,
     # inside `absorbed` (the completion's measure) and on no pointer.
@@ -270,6 +278,9 @@ class Block:
     # THE TAKING AT A HOP (ALGEBRA.md 9.62 (3); item 48): the Nodes the body
     # newly covers at this interval's hop, None when it did not hop
     covered: np.ndarray | None = None
+    # THE POINT EMITTER (item 50): the identity of the given record whose
+    # window is open at this body, None when none is
+    window: int | None = None
     new_cycle: bool = False
     # the interval the current cycle began and the last cycle's length (the
     # emitted record's period for its grace, the block's grace for its emitted records)
@@ -1059,7 +1070,8 @@ class DetectorLawSimulation:
                 "`seed_on_the_mode`; a flat scalar seed is no mode and givings nothing lawful, "
                 "ALGEBRA.md 9.17 (4) item 1)"
             )
-        if emitter.train is None or emitter.given is None:
+        # the point emitter (item 50) gives by the window, no train
+        if (emitter.train is None or emitter.given is None) and not self.world.point_emitter:
             raise ValueError(
                 f"{BEAM_LAW}: measured[{block.number}].emitter declares no given train: `train` "
                 "(the direction and the periods) with `given` (the train's two levels over the "
@@ -1217,7 +1229,7 @@ class DetectorLawSimulation:
         spent: the body's own record continues (9.43 (3))."""
         own: LiveRecord | SeatRecord | None = block.seat if block.seat is not None else block.own
         emitter = block.definition.emitter
-        if own is None or emitter is None or block.emit_now:
+        if own is None or emitter is None or block.emit_now or block.window is not None:
             return
         # the stock is the given family's content held at the body (ALGEBRA.md
         # 9.51 (8); item 47): nothing fires once it is spent
@@ -1336,9 +1348,18 @@ class DetectorLawSimulation:
         # x-major order (`body_node_indices`, the loader's and the generator's
         # one convention), the norm T the written one (the conserved form on
         # the given family's vacuum, the generator's integer checked at load)
-        assert emitter.given is not None
-        self.write_levels(live, block, emitter.given.now, emitter.given.before)
-        live.box = self.support_box(live.now, live.before)  # HOST (item 43): the train's own Nodes
+        if self.world.point_emitter:
+            # THE POINT EMITTER (ALGEBRA.md 9.69 (2), 9.71 (1) (a); item 50): no
+            # train; the window opens at the click, the given row at the seat
+            # written from the seat's rotation every interval (`_point_windows`)
+            # until the outward norm reaches T; the record named at the close
+            live.window_open = True
+            live.box = tuple((int(index), int(index) + 1) for index in centre)
+            block.window = identity
+        else:
+            assert emitter.given is not None
+            self.write_levels(live, block, emitter.given.now, emitter.given.before)
+            live.box = self.support_box(live.now, live.before)  # HOST (item 43): the train's own Nodes
         if emitter.receiver is not None:
             # the named sets in the NAMED order (ALGEBRA.md 9.19 (3) (b): the
             # ladder cumulative in its declared order), a set's detectors in the
@@ -1351,7 +1372,9 @@ class DetectorLawSimulation:
             ]
         # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md 9.51 (8); item 47): the
         # giving lowers the given family's content held at the body by one,
-        # the body's own quanta and its charge untouched
+        # the body's own quanta and its charge untouched (under the point
+        # emitter too, item 50: the quantum moves at the open, the window
+        # shapes its rows, the close names the record)
         self.held[number][family] -= 1
         self.ledger.held_spent[family] += 1
         # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 items 31 and
@@ -1363,54 +1386,70 @@ class DetectorLawSimulation:
         # record's passage (the share's identity, `form_share`), read on
         # the ladder as T / p
         self._hold_clock()
-        live.norm, live.pace = self.given_norm(live)
+        if live.window_open:
+            # THE POINT EMITTER (item 50): the record's norm is T from the open,
+            # the excitation's action the window will reach (9.71 (1) (d)), as the
+            # exact rational norm / norm_denominator, so the ladder reads its
+            # bookings from the first interval (Born's rule's walk as now)
+            assert emitter.norm is not None and emitter.norm_denominator is not None
+            live.norm, live.pace = emitter.norm, emitter.norm_denominator
+        else:
+            live.norm, live.pace = self.given_norm(live)
         self.ledger.transit_released[family] += cost
         block.emitted.append(identity)
         self.records[identity] = live
         self.layer.given += 1
         if self.record is not None:
-            self.record(
-                {
-                    "event": "giving",
-                    "tick": self.tick,
-                    "node": list(block.corner),
-                    "measured": number,
-                    "family": definition.name,
-                    "record": identity,
-                    "u": residue,
-                    "W": wheel,
-                    "labels": [list(label) for label in emitter.branches],
-                    "arms": 1,
-                    "units": 1,
-                    "multiplicity": 1,
-                    "train": 0,
-                    "excitation": excitation,
-                    "excitation_norm": own.norm,
-                    # the tick's count (9.44 (5) (c)): the intervals from the
-                    # residue's read to this click, the period P counted
-                    # against, and the first shell Node that read u
-                    "wait": wait,
-                    "period": emitter.period,
-                    "read_node": list(read_node),
-                    # the wheel's ingredients, read with it (item 34; GAMEBOARD)
-                    "read_clocks": read_clocks,
-                    "norm": live.norm,
-                    # the norm's denominator (item 36): the given record's
-                    # form is norm / pace, whole in the body's own units at
-                    # the body's level as written
-                    "pace": live.pace,
-                    # the file's vacuum norm (p times it the given record's T
-                    # in the vacuum) and the body's content and clock pair
-                    # as the clicking record was advanced (GAMEBOARD; item 31)
-                    "given_norm": emitter.given.norm,
-                    "content": centre_content,
-                    "charge": body_charge,
-                    "node_clock": list(clock_pair),
-                    "nodes": int(np.sum(block.mask)),
-                    "cycle": block.count,
-                    **({"clock": block.count} if world.clock_stamp else {}),
-                }
-            )
+            giving_line: dict[str, object] = {
+                "event": "giving",
+                "tick": self.tick,
+                "node": list(block.corner),
+                "measured": number,
+                "family": definition.name,
+                "record": identity,
+                "u": residue,
+                "W": wheel,
+                "labels": [list(label) for label in emitter.branches],
+                "arms": 1,
+                "units": 1,
+                "multiplicity": 1,
+                "train": 0,
+                "excitation": excitation,
+                "excitation_norm": own.norm,
+                # the tick's count (9.44 (5) (c)): the intervals from the
+                # residue's read to this click, the period P counted
+                # against, and the first shell Node that read u
+                "wait": wait,
+                "period": emitter.period,
+                "read_node": list(read_node),
+                # the wheel's ingredients, read with it (item 34; GAMEBOARD)
+                "read_clocks": read_clocks,
+                "norm": live.norm,
+                # the norm's denominator (item 36): the given record's
+                # form is norm / pace, whole in the body's own units at
+                # the body's level as written
+                "pace": live.pace,
+                # the file's vacuum norm (p times it the given record's T
+                # in the vacuum) and the body's content and clock pair
+                # as the clicking record was advanced (GAMEBOARD; item 31)
+                "given_norm": emitter.given.norm if emitter.given is not None else 0,
+                "content": centre_content,
+                "charge": body_charge,
+                "node_clock": list(clock_pair),
+                "nodes": int(np.sum(block.mask)),
+                "cycle": block.count,
+                **({"clock": block.count} if world.clock_stamp else {}),
+            }
+            if live.window_open:
+                live.giving_line = giving_line  # named at the close (item 50)
+            else:
+                self.record(giving_line)
+        if live.window_open:
+            # the next excitation and the count wait for the window's close
+            block.emit_now = False
+            block.wait = 0
+            own.u, own.wheel = residue, wheel
+            return
         # THE NEXT EXCITATION while the stock lasts (9.43 (3), 9.44 (5) (c)):
         # the body's own record continues as it is, its levels, phase and
         # remainders untouched by the click; the residue read at this click
@@ -1563,6 +1602,9 @@ class DetectorLawSimulation:
         # level: the clock stepped last), then the clock backward and its hold
         self.node_content = self.clock_record.before
         self.node_charge = self.charge_record.before
+        for block in self.blocks:
+            if block.window is not None:
+                self._point_window_inverse(block)
         for identity in list(self.records):
             live = self.records[identity]
             if self.families[live.family].massive_kind and live.emitter is None:
@@ -2163,6 +2205,13 @@ class DetectorLawSimulation:
         live.before = live.now
         live.now = nxt
         live.age += 1
+        if live.window_open:
+            # THE POINT EMITTER (ALGEBRA.md 9.71 (1) (b), (c); item 50): the
+            # window's write and its outward reading right after the record's
+            # own step, before any booking reads the rows: the bookings read
+            # the rows as the interval leaves them, both levels with their
+            # writes (a flux read across a write books the write itself)
+            self._window_write(live)
         # THE FLUX READING (ALGEBRA.md 9.19 (3)): after the step, the one-way
         # inward flux into every detector this interval, from the record's two
         # levels at the Ports alone (record 1934), booked to the detector's
@@ -2174,6 +2223,148 @@ class DetectorLawSimulation:
         # this interval's increment per detector
         increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
         self._ladder_click(live, increments)
+
+    def _window_centre(self, block: Block) -> tuple[int, int, int]:
+        """The seat Node of a block with a window (its centre Node)."""
+        axes = np.nonzero(self.centre_mask(block))
+        return (int(axes[0][0]), int(axes[1][0]), int(axes[2][0]))
+
+    def _window_write(self, live: LiveRecord) -> None:
+        """One interval of an open window (ALGEBRA.md 9.71 (1) (b), (c); item
+        50), right after the record's own step: (b) the seat's rotation is
+        written into the given row at the seat, a_given(seat) += g x a_seat
+        (the seat stepped this interval already, its level the one written);
+        (c) the norm that left the seat this interval is read as the outward
+        flux through its six Ports from the two levels as the interval leaves
+        them, both with their writes, and summed; the window's count grows by
+        one and the record's box takes the seat in."""
+        block = self.block_by_number.get(live.emitter) if live.emitter is not None else None
+        if block is None or block.window != live.identity:
+            return
+        emitter = block.definition.emitter
+        if emitter is None or emitter.weight is None:
+            return
+        centre = self._window_centre(block)
+        live.now[centre] += emitter.weight * self._seat_level(block)
+        live.outward += self.seat_outward_flux(live, centre)
+        live.window += 1
+        if live.box is not None:
+            live.box = tuple(
+                (min(lo, centre[axis]), max(hi, centre[axis] + 1))
+                for axis, (lo, hi) in enumerate(live.box)
+            )
+
+    def seat_outward_flux(self, live: LiveRecord, centre: tuple[int, int, int]) -> int:
+        """THE OUTWARD FLUX through the seat's six Ports this interval (ALGEBRA.md
+        9.71 (1) (c); item 50): the taking's inward booking with the sign
+        reversed, wall (now_j before_i - before_j now_i) where positive over
+        the seat's Links (the Link to a Node beyond an open face carries none;
+        a folded axis none), from the record's two levels as the interval leaves
+        them, this interval's write in `now` and the last one's in `before`
+        (a flux read across a write would book the write itself)."""
+        wall = self.kind_wall(live.family)
+        wrap = self.kind_wrap[live.family]
+        now_i = int(live.now[centre])
+        before_i = int(live.before[centre])
+        total = 0
+        for axis in range(3):
+            if self.shape[axis] == 1:
+                continue
+            for side in (1, -1):
+                index = list(centre)
+                index[axis] += side
+                if index[axis] < 0 or index[axis] >= self.shape[axis]:
+                    if not wrap[axis]:
+                        continue
+                    index[axis] %= self.shape[axis]
+                j = (index[0], index[1], index[2])
+                flux = int(live.now[j]) * before_i - int(live.before[j]) * now_i
+                if flux > 0:
+                    total += flux * wall
+        return total
+
+    def _seat_level(self, block: Block) -> int:
+        """The seat's rotation's level now (the standing record at the seat, item
+        42; the lattice body's centre Node otherwise)."""
+        if block.seat is not None:
+            return int(block.seat.now)
+        assert block.own is not None
+        centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
+        return int(block.own.now[centre])
+
+    def _point_windows(self) -> None:
+        """THE POINT EMITTER'S WINDOW, one interval (ALGEBRA.md 9.69 (2), 9.71
+        (1); BUILD.md section 26 item 50; a hypothesis under its own identity,
+        the world key `point_emitter`): the close, after the interval's
+        bookings; the write (b) and the outward reading (c) are the record's
+        own, right after its step (`_window_write`). (d) At the first interval
+        at which the summed outward norm reaches T (the quantum's norm, the
+        emitter's `norm`) the window closes: the writing ends (the
+        quantum, the stock and the ledger moved at the open, the norm T from
+        there), the giving line names the record with the window's length,
+        and the next excitation waits its count from here. What comes out by the law: a train of about n c_l
+        Links with the band 1 / n, at the wave number light's dispersion gives
+        to the seat's frequency; no declared train. The giving is n additive
+        writes, each undone by the inverse (`_point_window_inverse`)."""
+        for block in self.blocks:
+            if block.window is None:
+                continue
+            live = self.records.get(block.window)
+            emitter = block.definition.emitter
+            if live is None or emitter is None or emitter.weight is None or emitter.norm is None:
+                block.window = None
+                continue
+            if live.clicked:
+                # taken while its window was open (its own seat's set reading the
+                # returning light, the light clock): the window closes at the
+                # click, the record named
+                self._close_window(block, live)
+                continue
+            # (d) the close: the outward norm against the excitation's action T as
+            # the exact rational norm / norm_denominator, both in the form's units
+            denominator = emitter.norm_denominator if emitter.norm_denominator is not None else 1
+            if live.outward * denominator >= emitter.norm:
+                self._close_window(block, live)
+
+    def _close_window(self, block: Block, live: LiveRecord) -> None:
+        """The window's close (ALGEBRA.md 9.71 (1) (d); item 50): the writing
+        ends, the record is named on its giving line with the window's length
+        and the open's interval, the next excitation's count starts (the
+        quantum moved at the open: the stock, the content and the ledger's
+        rows as the train emitter's; the norm T from the open)."""
+        emitter = block.definition.emitter
+        assert emitter is not None
+        family = live.family
+        live.window_open = False
+        block.window = None
+        if live.giving_line is not None and self.record is not None:
+            line = dict(live.giving_line)
+            line["tick"] = self.tick
+            line["norm"] = live.norm
+            line["pace"] = live.pace
+            line["window"] = live.window
+            line["outward"] = live.outward
+            line["opened"] = self.tick - live.window  # the open's interval (HOST)
+            self.record(line)
+        live.giving_line = None
+        block.wait = 0
+        if self.held[block.number][family] > 0:
+            block.excitations += 1
+
+    def _point_window_inverse(self, block: Block) -> None:
+        """One interval of an open window backwards (ALGEBRA.md 9.71 (1) (e)):
+        the interval's outward reading taken off the sum on the rows as the
+        interval left them, then the write subtracted (an addition inverts),
+        before the record's own inverse step; the seat's level is the one
+        written, its own inverse coming after."""
+        live = self.records.get(block.window) if block.window is not None else None
+        emitter = block.definition.emitter
+        if live is None or emitter is None or emitter.weight is None or live.window <= 0:
+            return
+        centre = self._window_centre(block)
+        live.outward -= self.seat_outward_flux(live, centre)
+        live.now[centre] -= emitter.weight * self._seat_level(block)
+        live.window -= 1
 
     def hop_density(self, live: LiveRecord, nodes: np.ndarray) -> list[Fraction]:
         """The record's density e at each of the Nodes (flat indices), the
@@ -2339,7 +2530,12 @@ class DetectorLawSimulation:
         interval's advances (8.8's one deletion, record 1888). A set bound to
         a block stamps the line with the block's count as the interval
         began."""
-        if live.clicked or live.norm <= 0:
+        if live.clicked:
+            return
+        if live.norm <= 0:
+            # a record without its norm yet (the point emitter's open window, item
+            # 50): the bookings enter the running total, the click waits for the norm
+            live.total += sum(increments)
             return
         ladder = self._ladder_of(live)
         # the norm as the exact rational norm / pace (item 36): the plain
@@ -2552,6 +2748,10 @@ class DetectorLawSimulation:
         # THE TAKING AT A HOP (ALGEBRA.md 9.62 (3); item 48), after the interval's
         # step and its Port booking
         self._hop_takings()
+        # THE POINT EMITTER'S WINDOWS (ALGEBRA.md 9.71 (1); item 50): the
+        # closes, after the interval's bookings (the writes came with the
+        # records' own steps, `_window_write`)
+        self._point_windows()
         for block in self.blocks:
             if block.emit_now:
                 self._emit(block)

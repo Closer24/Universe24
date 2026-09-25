@@ -638,6 +638,17 @@ No `expectations.json`, no pin, no verdict; every reading in the README is
 labelled by kind and set beside nature's value only for the direction; a reading
 outside the mathematician's band goes to him before any word (9.59 (6)).
 
+## The point emitter
+
+The folder [point_emitter/](point_emitter/README.md) holds the first row of the
+point emitter (ALGEBRA.md 9.69 (2), 9.71 (1); BUILD.md section 26 item 50), a
+hypothesis under its own identity, the world key `point_emitter`: a one-Node
+well on a chain of 1200 giving light by the window between two receiver sets
+(`point_chain.json`) and the light clock with a point emitter
+(`point_light_clock.json`), written by `point_emitter/make_worlds.py`. No
+`expectations.json`, no pin, no verdict; the README sets every reading beside
+its algebraic expectation by kind, for the direction alone.
+
 ## The massive record kind
 
 The folder [massive_record/](massive_record/README.md) holds the check worlds

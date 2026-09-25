@@ -256,7 +256,13 @@ def seed_on_the_mode(document: dict) -> None:
             entry["proper_clock"] = proper_clock(document, number)
     for number, entry in enumerate(document["measured"]):
         if "emitter" in entry:
-            given_train(document, number)
+            if "train" not in entry["emitter"]:
+                # THE POINT EMITTER (ALGEBRA.md 9.71 (1); item 50): no train, the rung
+                # alone (the world key, the weight and the seat are set after the seeding,
+                # as `body_record` is: the mode is computed first)
+                emitter_rung(document, number)
+            else:
+                given_train(document, number)
     placement_check(document)
     stamped(document)
 
@@ -275,6 +281,37 @@ def stamped(document: dict) -> dict:
 GIVEN_AMPLITUDE = 1 << 16  # the given train's amplitude A (ALGEBRA.md 9.17 (6a))
 TRAIN_FLUX_TOLERANCE = 2  # per thousand: the train's one-way flux 40 Links ahead within 2 x 10^-3 of T
 TRAIN_FLUX_DISTANCE = 40  # Links ahead of the train's head, the plane the generator's checks read
+
+
+def emitter_rung(document: dict, number: int):  # type: ignore[no-untyped-def]
+    """The emitter's rung as the file declares it (ALGEBRA.md 9.17 (7) (e) and (f); 9.44 (5)
+    (c)): `period` P, the nearest integer to 2 pi over the body's mode's rotation, and `norm`
+    T, one period's action of the excited record (`excitation_norm`), the generator's integers
+    under the input stamp, written on the emitter of measured[`number`] (the train emitter's
+    by `given_train`, the point emitter's on their own, ALGEBRA.md 9.71 (1); item 50). Returns
+    the world parsed with them."""
+    from event_universe.diagnostics.massive_record_margin import (
+        block_margin,
+        excitation_action,
+        excitation_norm,
+        period_of,
+    )
+    from event_universe.events.world import parse_nature_beam_world
+
+    emitter = document["measured"][number]["emitter"]
+    for key in ("period", "norm", "norm_denominator"):
+        emitter.pop(key, None)
+    world = parse_nature_beam_world(stamped(document))
+    period = period_of(block_margin(world, number))
+    emitter["period"] = period
+    emitter["norm"] = excitation_norm(world, number, period)
+    if "train" not in emitter:
+        # THE POINT EMITTER (9.71 (1) (d); item 50): the action's exact rational, the
+        # window's T; the train emitter's norm stays the numerator alone
+        action = excitation_action(world, number, period)
+        assert action.numerator == emitter["norm"]
+        emitter["norm_denominator"] = int(action.denominator)
+    return parse_nature_beam_world(stamped(document))
 
 
 def given_train(document: dict, number: int) -> None:
@@ -300,25 +337,15 @@ def given_train(document: dict, number: int) -> None:
     a medium) passes the train run through it alone on the vacuum with 0.99 of T booked 40
     Links beyond, refused below. The emitter's `period` and `norm` (the excited record's) are
     the mode's as before (`excitation_norm`)."""
-    from event_universe.diagnostics.massive_record_margin import (
-        block_margin,
-        excitation_norm,
-        period_of,
-    )
     from event_universe.events.world import (
         given_train_flux_sign,
         given_train_norm,
-        parse_nature_beam_world,
     )
 
     entry = document["measured"][number]
     emitter = entry["emitter"]
-    for key in ("period", "norm", "given"):
-        emitter.pop(key, None)
-    world = parse_nature_beam_world(stamped(document))
-    period = period_of(block_margin(world, number))
-    emitter["period"] = period
-    emitter["norm"] = excitation_norm(world, number, period)
+    emitter.pop("given", None)
+    world = emitter_rung(document, number)
     definition = world.measured[number].block
     assert definition is not None and definition.emitter is not None
     train = definition.emitter.train
@@ -433,6 +460,56 @@ def doppler_clock(
     wavelength = max(2, round(2.0 * math.pi / boosted))
     g = math.gcd(2 * phase_steps, wavelength)
     return [2 * phase_steps // g, wavelength // g], wavelength
+
+
+def point_window(document: dict, number: int, weight: int, limit: int) -> int | None:
+    """HOST: the first window's length of the point emitter measured[`number`] at the weight
+    `weight` on the document as it stands (the keys `body_record` and `point_emitter` on),
+    run up to `limit` intervals; None when no window closed by then."""
+    from event_universe.events.detector_law import DetectorLawSimulation
+    from event_universe.events.world import parse_nature_beam_world
+
+    trial = json.loads(json.dumps(document))
+    trial["measured"][number]["emitter"]["weight"] = weight
+    trial["ticks"] = limit
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(parse_nature_beam_world(stamped(trial)), observer=lines.append)
+    for _ in range(limit):
+        simulation.step()
+        for line in lines:
+            if line.get("event") == "giving" and line.get("measured") == number:
+                return int(line["window"])
+        lines.clear()
+    return None
+
+
+def point_weight(document: dict, number: int, periods: int) -> int:
+    """THE POINT EMITTER'S WEIGHT (ALGEBRA.md 9.71 (1); BUILD.md section 26 item 50): the
+    integer g at which the window of measured[`number`] is nearest `periods` periods of the
+    body's rotation (the window's length falls about as 1 / g^2, the outward norm growing as
+    the square of the written amplitude): the window at g = 1 read first, the estimate g* =
+    sqrt(n_1 / target) and its neighbours read, the nearest taken; written as the emitter's
+    `weight`. HOST, a trial run of the generator; the engine reads the integer."""
+    emitter = document["measured"][number]["emitter"]
+    target = periods * int(emitter["period"])
+    limit = 12 * target
+    first = point_window(document, number, 1, limit)
+    if first is None:
+        raise ValueError(
+            f"measured[{number}]: the point emitter's window at the weight 1 did not close within "
+            f"{limit} intervals; nothing written"
+        )
+    guess = max(1, round(math.sqrt(first / target)))
+    readings: dict[int, int] = {1: first}
+    for weight in sorted({guess, guess + 1, max(1, guess - 1)}):
+        if weight not in readings:
+            window = point_window(document, number, weight, limit)
+            if window is not None:
+                readings[weight] = window
+    best = min(readings, key=lambda w: (abs(readings[w] - target), w))
+    emitter["weight"] = best
+    emitter["window_read"] = readings[best]  # HOST: the trial's window at the chosen weight
+    return best
 
 
 def train_run(
