@@ -6898,6 +6898,80 @@ band 3 rms / sqrt(n), and the stock's first click beside it. What changes
 in the rows is in 9.22 (8) (every row but the muon's moving clock, the boxed clocks and the deep
 well's clock restated).
 
+**(12) WHAT A CLICK IS, GENERICALLY, AND THE TOOL THAT DRAWS IT WITHOUT
+COUNTING THE CELLS (the model owner's big question, records 1933 and
+1934: "what is a click, really? how do we know a click is produced
+without counting all the cells? if a click is a change, one turn, how do
+we reach the generic rule?"; "the generic rule to draw a detector's
+click, and make it a kind of local"; the Boss's reading PROVED and
+corrected in two places).** (a) A CLICK IS AN EVENT OF ONE RECORD AND ONE
+OBJECT: the record's one quantum, its norm T fixed at birth and conserved,
+handed over to an object; the click falls when the handed-over share
+reaches the record's drawn share (2 u + 1) / (2 W), the residue u the
+law's own remainder at the birth cell ((2), 9.19 (4)); no cell clicks,
+the object clicks as a whole (10). (b) WITHOUT COUNTING THE CELLS, THE
+EXACT BOUNDARY STATEMENT. The form is conserved and moves only across
+Links: for any region R the change of its share over one interval is the
+SIGNED sum of the fluxes through its Ports, E_R(t) - E_R(t - 1) = sum
+over R's Ports of G_ij (9.19 (3), the discrete Gauss law, exact). The
+tally reads the POSITIVE PART of each Port's flux, sum over R's Ports of
+max(G_ij, 0): a boundary quantity too, read at the same Ports, but not
+the net: the net is what the region HOLDS, the one-way sum is what has
+ENTERED, and the two agree exactly for a passage (a travelling record's
+current through a Port keeps one sign, (11) (a)) and differ where the
+record stands at a Port or returns through it. So the tool reads the
+boundary, never the volume (a cube of side s has 6 s^2 Ports, not s^3
+cells), and a large system needs one tally per record, not a count of
+its cells; the tally is exactly "what has crossed in", the Boss's
+statement with the positive part in place of Gauss's net. (c) ONE TURN,
+AND WHETHER THE STANDING AND THE TRAVELLING CASES ARE ONE BOUNDARY
+STATEMENT: they are NOT one boundary statement but one FORM read two
+ways. For a standing record the flux through every Port is zero (the
+Wronskian of a mode vanishes, 9.17 (7) (a)), so the boundary reads
+nothing and the tally accrues the cell's own share e_c, a VOLUME reading
+of the same form, one period's sum being one whole quantum, T = P e_c
+(9.17 (7) (e)): its click falls at a drawn phase within ONE TURN of its
+own clock, exactly; for a travelling record the turn is its passage into
+the object. The identity that joins them is the one of (b): the change
+of the share equals the net flux, so where nothing crosses the share
+itself is the tick; the standing cell is not a degenerate boundary but
+the other side of Gauss's law. (d) THE GENERIC LAW IN ONE LINE: every
+record clicks once, when the share of its one quantum acquired by an
+object reaches its drawn share; the acquisition is read on the object's
+boundary as what has crossed in where the record moves, and as the
+object's own held share where the record stands. (e) THE TOOL, THREE
+STEPS PER INTERVAL, AND WHAT IN IT IS LOCAL: (1) each object sums, over
+its own Ports, the positive part of each record's flux through the Port
+(local: a Port's flux is the two ends of one Link, and the sum is the
+object's own gather); (2) each record carries three integers of its own,
+its norm T, its residue u with its wheel W, and its tally C; (3) the
+objects' increments for that record are added to its tally in the
+declared order, and at the first interval at which 2 W C reaches (2 u +
+1) T the object whose piece holds the crossing clicks and the record is
+deleted whole. THE COST is the Ports the record currently touches, not
+the board: a record's rows are zero where it has not yet reached (one
+Link per interval), so nothing is added before it arrives. WHAT IS LOCAL:
+every gather is local; the addition across the objects one record touches
+and the deletion of that record's rows everywhere are the click's one
+non-local act (record 1888), and Bell's theorem forces it ((6): a click
+that is fully local gives S at most 2). THE BOSS'S "WHOLLY LOCAL WHEN ONLY
+ONE OBJECT IS REACHED", CORRECTED: when a record's form reaches one
+object only, the DECISION is local (the tally is that object's own sum,
+compared with the record's own integers at the object), but the DELETION
+is not: the record's rows elsewhere (its tail, its part not yet arrived,
+its reflection) vanish at once; the click is wholly local only for a
+record wholly inside the object. THE DECLARED ORDER: it decides only how
+one interval's increments are split among objects reached at once, and
+the counts are equal in distribution under every fixed order ((8), the
+physicist's correction), so any declared order serves Born's rule; what
+cannot be replaced is the SUM across objects: separate tallies racing per
+object lose Born's rule (the race, 17 against 18 on the Born share), so
+the one addition is the price of the quantum case, one quantum shared
+among several objects (the two slits, Bell), and it is the only price.
+(f) THE UNIVERSE: it has no boundary and no Port, so it cannot click by
+crossing; a standing record named on the whole of it clicks once by its
+own turn and leaves it empty (9.26 (4a)).
+
 ### 9.26 A body's frequency, energy and momentum, and the whole's; the clock of a whole; time's reversal; the recurrence of the board (the model owner's four questions of 2026-09-25 through the Boss; DERIVED and PROVED here, for the paper in plain words)
 
 **(1) FREQUENCY, MOMENTUM AND ENERGY OF A BODY (the Boss's reading,
