@@ -10767,3 +10767,51 @@ sentences of (1), and nothing is declared but the world's constants
 (Gamma, P_0, Lambda), the families' pairs and the initial state. Until
 then the seam is stated here and in every row that uses a declared
 well for a body.
+
+### 9.54 A body is seen only by its clicks; a body without clicks is dark matter (the model owner's question of 2026-09-25: "a body's behaviour derives from the basic laws of a Node, local only; the form in which we make a body lets us see its clicks; so does it follow that dark matter is without clicks?"; DERIVED from 9.51 and 9.53; one row)
+
+**(1) A BODY IS SEEN ONLY BY ITS CLICKS.** Nothing on the GameBoard is
+observed but a detector's click (POSTULATES.md section 10, record
+1139). A body reaches a detector in two ways only: the light it gives
+(the giving end, its stock and its clicks) and the light it takes (the
+taking end, the shadow it casts, its clicks again). Its record, (M, Q,
+u, s, the stock), is exactly its click history: the click is the one
+write (9.53 (1)). So the form in which a body is made (9.46, 9.51) is
+the form in which its clicks are seen, and nothing else of it is seen.
+
+**(2) A BODY WITHOUT CLICKS.** Nothing in the law forbids a body whose
+record is written once, at the load, and never at a click: a family
+with q = 0 (no charge, 9.48 (1)), no born family and no stock (it gives
+nothing), and no declared family it receives (it takes nothing). Such a
+body still holds its content M and its energy count s = (M P_0) div P
+at its Nodes (9.51 (3)), so the family of clicks reads it and every
+record's pace bends toward it (9.45 (2), 9.52); and it has no charge,
+so the family of charge is flat around it. Light passes through it
+(no contact, 9.46 (6)) and is bent by it, and it casts no shadow and
+gives no light. It moves by the field like every body (9.52) and
+gathers under gravity. It is matter, it is dark, and the law has a
+place for it with nothing added: DARK MATTER IS CONTENT WITHOUT
+CLICKS. The owner's inference holds.
+
+**(3) WHAT THE LAW SAYS AND DOES NOT SAY.** The law's field is exactly
+Newton's (9.45 (2)); it does not slow the fall at large distances, so
+the galaxies' extra pull is not a change of the law here but content,
+and content without clicks is the only content that is not already
+seen. The law does not say how much of it there is, nor whether it
+clicks among its own kind (a dark family with a dark born family is
+allowed and unseen by us all the same); those are the initial state's
+and a row's. A dark body's own rotation stays, and its P with it, so
+its energy count is the law's like any body's.
+
+**(4) THE ROW (added to 9.49 after the eighteen, with the mass defect
+row of 9.51 (6) (d)).** A dark body of content M on the beam's side, at
+the distance of the gravity row's body (9.22 (8a)): the beam's centroid
+at the far receiver bent as by a bright body of the same s, within the
+rounding; ALL its records arrive, the count at the far receiver the
+emitter's stock, no shadow, no click at the dark body, no light from
+it; the control the same M in a bright body of the light clock's
+family: the same bend, a shadow's missing counts and its own births.
+The GameBoard reading beside it: the family of clicks' level around
+the two bodies equal, the family of charge flat around the dark one.
+Both worlds read (9.51 (7)): the bend and the counts are clicks; the
+levels are diagnostics.
