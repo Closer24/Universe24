@@ -7230,7 +7230,17 @@ carries the period 4 alone (its other integer multipliers are +-2, the
 static and the alternating levels); the six-cube carries all three
 again; so THE THREE-CUBE IS THE SMALLEST UNIVERSE THAT TURNS EXACTLY IN
 EVERY WAY THE LAW ALLOWS, and its side is the detector's least side for
-the one reason above. (iii)
+the one reason above. THE SAME THEOREM IN SPACE (the owner's "everything
+is Rubik's cubes", 2026-09-25): the cube group's elements have the orders
+1, 2, 3, 4 and 6 and no other, by the crystallographic restriction (a
+turn that maps the integer lattice to itself has an integer 2 cos theta,
+hence 2 cos theta in {0, +-1, +-2}), which is the exact-return theorem's
+own argument read on the lattice's axes instead of on the intervals: on
+the one integer lattice of the GameBoard the turns that return exactly
+in space and the turns that return exactly in time are the same orders,
+1, 2, 3, 4, 6, for the same reason; a body is a sub-cube with its own
+turn, the law is the turn, the click is the one cut, and the remainder
+is where chance lives (the exact worlds have none). (iii)
 PERIODIC AND CLICKING AT ONCE: with the click irreversible one click ends
 the periodicity ((3) (b), (4) (c)); a universe cannot be both exactly
 periodic and clicking unless its click is made reversible, the owner's
