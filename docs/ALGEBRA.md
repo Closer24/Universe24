@@ -4547,7 +4547,42 @@ stands. In the engine the two are one machinery (Nature24's
 record's increment e_c at its centre cell in place of the flux there.
 The Boss's phrasing "the accumulated phase advance, of which the flux is
 the travelling case" is not exact (a passage's flux is the norm, not a
-phase) and is replaced by the above.
+phase) and is replaced by the above. (f) THE RULE IN ONE STATEMENT, in
+the model owner's framing of record 1912 ("first we set their clock by
+our general rule"; "it is really the rate: the rate of the click with
+its own clock"), fit for his yes:
+
+    EVERY RECORD CLICKS ONCE, at the first interval at which its running
+    total C reaches its threshold theta = (2 u + 1) T / (2 W), and C
+    accrues each interval the record's conserved form e that its named
+    set ACQUIRES: through the set's Ports from outside where the record
+    moves (the one-way flux, the detector's pace), and at the set's own
+    cell where the record stands (its share e_c, the record's own tick,
+    the emitter's pace); T is the norm of one whole acquisition, the
+    record's energy entering a detector, or one period's action, P e_c,
+    at the emitter.
+
+One click, two sources of its pace, exactly as the owner framed it; the
+clock of the second source is set by the law alone, the mode's rotation
+omega with 2 cos omega = a / b, no declaration. THE THREE TESTS: generic
+(the integers u, W, T, the form e and its increments, no family name
+and no kind; the same rung for a photon at a screen, an excited atom
+and a pair); vector (e is a bilinear form of the record's two levels,
+verb B; the accrual a sum, verb T; the click one comparison, verb D; no
+root, no float); local (e_i from the Node's two levels and its six
+reads; the flux from the two ends of a Link; the running total and the
+threshold the record's own integers, nothing kept at a Node; the record
+deleted whole at the click, record 1888). WHAT CHANGES IN THE ENGINE
+(for the physicist, on the owner's yes): in `_excitation_rung` the
+excited record's increment is its centre cell's share of the conserved
+form (the per-Node term of `conserved_form`, D_c (now^2 + before^2) -
+(1 / 3) now (A before)_c in the flux's units) in place of `inward_flux`
+there; the emitter's `norm` is P e_c, the generator's integer from the
+mode's period [p, q] and its share, recomputed at load; the residue's
+read point and the coupling of 9.19 (4e) stay; every detector's ladder
+is untouched. What it settles: the emitter's cadence is one birth per
+half period on average, fixed by the law's remainder, the same for a
+one-cell emitter and a slab, on a chain and on a layer.
 
 ### 9.18 The unification: one object, one record, one rule; what is generic; what the algebra carries at once (the model owner's words of 2026-09-24 to the mathematician: "write the whole unification, what is generic with us, and whether the algebra supports it in one stroke"; ADOPTED by the model owner, 2026-09-24, 22:39Z (2026-09-25 on the Israel clock) through the Boss, record 1875: "adopt; everything is algebra", with bound tool bodies of a holder family, at most three families, one border for every family)
 
