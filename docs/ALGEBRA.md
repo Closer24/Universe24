@@ -8173,6 +8173,17 @@ none is a law change: the law is (a) and (b) and the click.
 
 ### 9.32 The one law at the single cell (the model owner's word, 2026-09-25, in the mathematician's session: "look at the small things, at the level of the single cell: the single cell produces a click; and many cells, if all the cells together produce a click, then you know you have a body that is not connected to another body; something with the remainder you said; connect everything into one law that solves everything for us"; PROVED and COMPUTED here)
 
+**THE FRAME (the model owner's sentence, adopted as the frame of everything,
+record 1967 through the Boss, 2026-09-25): "The click is the moment the
+fraction becomes whole, at the level of the record and not at each Node
+alone. The record gathers part after part. When the gathering completes
+the share the remainder set, one whole quantum leaves. The click takes
+out the whole, and the remainder stays behind at the cell." It adds no
+rule: it is 9.17 (7) (f), this section and 9.33 to 9.35 in one sentence,
+and 9.38 reads it on the body's shell. With it the owner withdrew his
+old rule that a Node keeps no remainder (record 1966): a Node keeps its
+remainder, 9.34 (A).**
+
 **THE ONE LAW, AT A CELL, IN FIVE LINES.** (1) THE STATE: a cell holds,
 per record, two levels and a remainder, and nothing else (record 155;
 8.1). (2) THE STEP (the Inside): every interval the cell's level goes to
@@ -8848,3 +8859,11 @@ GATHER STAYS THE ONE-SIDED CURRENT read on the two levels before the
 step (9.35 (2), 9.25 (2)): it needs no next level (which the gather does
 not yet have), and it gives each interval its own flux whole, where the
 centred one hands half of it to the neighbouring interval.
+(c) THE SAME ANSWER IN THE FRAME OF RECORD 1967. A taker completes the
+share the remainder set by what enters through its faces, part after
+part. A giver completes it by its own rotation, gathered part after part
+at its shell's cells: one period is the whole, and the remainder set the
+fraction of it at which the gathering is complete. At that moment one
+whole quantum leaves: the born record, set on the body's cells at the
+click and carried out through the faces by the step alone; nothing is
+written, and the remainder stays behind at the cell.
