@@ -11764,3 +11764,115 @@ It is read only by the giving click, on the giving extent, to write
 the given rows; it is never stepped and never read by a passing
 record. A constant read at a click on a fixed extent is local (fixed
 K); a constant is not state, so it is not "kept at a Node".
+
+### 9.61 The check-mode runs: the eighteen on the law after the change, the corrections to 9.59 from Nature24's findings, the integers' bound, the light clock twice read, the sizes at the measured rate (the Boss's record 2037, the model owner: "make the change first, and then all the experiments run in check mode, to see they look as expected, without pins"; Nature24's findings of 2026-09-25 on rows 1 to 3)
+
+**(1) THE EIGHTEEN ON THE LAW AS BUILT AFTER THE CHANGE (9.57 with the
+body at the Node, 9.60).** The blind expectation of every one of the
+eighteen is 9.46 (10), unchanged, with two additions written here
+before any run. (a) At level 0 the Einstein form and today's law are
+one rule bit for bit (9.57 (1)), and with the seat's step bit-equal to
+the body record's (9.60 (2)) the seat's wheel is twice as fine, so
+9.46 (10) (b) and (c) read "the seat's own wheel" where they say the
+body record's; nothing else moves. (b) THE SELF-LEVEL: as built, the
+family of clicks' level is held at every body's Nodes at the body's
+content (`node_content`; 9.45 (2)), so every body's own clock runs at
+its own level s: its tick lengthens by the factor 1 / sqrt(1 - s /
+Gamma), which is 1 + s / (2 Gamma) to first order, the same on both
+forms to first order, and s falls by one at each giving click (a drift
+of 1 / (2 Gamma) per click over the stock). At the integers as built
+(Gamma = 10^6) this is at most 1.3 x 10^-4 for s = 256: below every
+band; at Gamma = 10^4 (the Einstein form's integers, 9.57 (2)) it is
+1.3 percent for s = 256 and 0.5 percent for s = 100: inside the count
+rows' bands and the light clock's 300 +- 9, OUTSIDE a 0.3 percent band
+on a tick. RULE: before the eighteen run at Gamma = 10^4, every row
+that reads a body's own tick (the light clock, Sagnac, the moving
+emitter's redshift, the muon's clock, the boxed clocks, the deep
+well's clock, the moving mass's energy) gets its expectation restated
+as the pin times 1 + s / (2 Gamma) with s the body's content at the
+run's start, from the world file; Nature24 sends the list (row, body,
+content), the mathematician writes the numbers, then the row runs. A
+body of content 0 has no self-level. This is nature's own effect (a
+clock at a body's surface runs in the body's own potential) at the
+size the integers give it, a known systematic and not a defect.
+
+**(2) THE CORRECTIONS TO 9.59 ROWS 1 TO 3 (Nature24's findings).**
+(a) LORENTZ, 9.59 (2): the light of the given clock runs at the group
+speed c_l = 0.577 Links per interval at its wave number (9.24 (6)), not
+1; the factor is gamma = 1 / sqrt(1 - (v / c_l)^2). At v = 1 / 4 (a hop
+every four intervals), v / c_l = 0.433: gamma = 1.109. THE TWO FORMS
+OF THE CLOCK: the transverse form (the light across the motion, a
+layer, an isotropic emitter) reads gamma, tick counts 180 +- 1 against
+200, nature's reading; the longitudinal form (the light along the arm,
+the chain, as built) reads gamma^2 = 1.231, tick counts 162 +- 1
+against 200, because a body that hops by declared momentum keeps its
+declared arm and nature's arm contracts by 1 / gamma (9.24 (6), the
+prediction there). The longitudinal reading is the hop's seam (9.52
+(4) (iv)) made visible, a diagnostic; the transverse form is the row
+toward nature and is to be built. Both forms the same on both laws at
+level 0. (b) THE REDSHIFT, 9.59 (1): a Node belongs to one body, so a
+holder over the arm's free Nodes leaves the emitter's and the mirror's
+Nodes at their own contents. Two readings, both valid, each labelled:
+THE ARM'S SHARE (as built): the tick 300 = 212 of flight + 88 of the
+emitter's rung (9.24 (6)); only the flight slows: the ratio (212 x
+1.118 + 88) / 300 = 1.083 on today's law, (212 x 1.104 + 88) / 300 =
+1.073 on the Einstein form; THE WHOLE CLOCK IN THE WELL: the emitter's
+and the mirror's contents declared equal to the holder's level (s =
+c_1 = 2000, their held level then the holder's), the holder over every
+free Node of the clock's box: the ratio 1.118 and 1.104 on the whole
+tick, as 9.59 (1). (c) THE BENDING ON THE DARK BODY'S LAYER (400 x 200,
+the body of content 10^5 at Gamma = 10^6, 45 Links beside the beam, the
+screen 180 beyond): the layer's static field is not 1 / r (zero faces
+on y, closed on x; it decays along x on the scale of the height), so
+the closed form is the ray integral itself: the shift = the integral
+along the undeflected line of the remaining distance times the
+transverse gradient of the index, the index 1 + c / (2 Gamma) on
+today's law (the ray equation of the world file, cos omega' = 1 - (p /
+Gamma)(1 - cos omega_k), whose group speed is sqrt(p / Gamma) = 1 - U
+to first order: gamma_PPN = 0), which Nature24 computed as 13.7 Links:
+that is today's law's blind number, and the cube's 1 / r form c_b L /
+Gamma does not apply on this layer. On the Einstein form the index is
+1 + 2 U (the Link term (p / Gamma)^2, 9.57 (1)): the shift 27 +- 2
+Links, twice today's less the second order at U = 0.05 (about 5
+percent). The blind pin of 9.57 (4) (b) stands: twice the control
+within the band.
+
+**(3) THE INTEGERS' BOUND, CORRECTED (9.57 (2)).** The worst case of
+the Einstein rule at a Node, the six reads in phase at the amplitude
+A, is 30 den Gamma^2 A (2 p^2 num S_6 with S_6 = 6 A, the middle
+coefficient up to 12 den Gamma^2, the third 6 den Gamma^2). At Gamma =
+10^4 and the largest registered den, the muon's 3227, it is 1.0 x 10^19
+at A = 2^20, above 2^63 = 9.2 x 10^18: so A = 2^19 in the worlds whose
+den exceeds 2900, 2^20 elsewhere; 9.57 (2)'s "3 x 10^18" was computed
+at den near 10^3 and is corrected here. Nature24's line CONFIRMED with
+one correction: the seed's unit falls to 2^12 (the seed 50 x 2^12 =
+2.0 x 10^5, under 2^19), the rung wheel W stays, and the train's norm T
+scales with the seed SQUARED (the action is quadratic in the
+amplitude, 9.17 (7) (e)), not with the seed. One condition before the
+eighteen run at these integers: the generator's iteration for the muon
+layer's well hovered at 1.5 times the loader's residual bound at 2^20
+(the reason A went to 2^28, 2026-09-25); that bound is re-read at 2^19
+and Gamma = 10^4 first; if it fails, the residual bound is the finding
+and comes to the mathematician, not the amplitude.
+
+**(4) THE LIGHT CLOCK TWICE, READ (9.46 (10) (a); Nature24's
+diagnostic).** Cubes: mean 307.5, rms 38.9, 64 clicks; seats: mean
+297.2, rms 23.0. The standard error of the difference of means is
+sqrt(38.9^2 / 64 + 23.0^2 / 64) = 5.6, so 10.3 is 1.8 standard errors:
+within two, as 9.46 (10) (a) asks; and the cube's rms carries the 582
+second-pass click alone (its share of the variance (582 - 307)^2 / 64
+= 1180, without it the cube's rms is 18 and its mean 303, the
+difference 6, one standard error). The second-pass tail: one in 64 on
+the cubes, none on the seats, both within "one or two in 64" (a count
+of mean about one is zero in a third of the draws). READ AS EQUIVALENT
+in distribution, not judged; the 582's flux gap between its two passes
+stays owed as the check of 9.55 (7).
+
+**(5) THE SIZES AT THE MEASURED RATE.** Nature24's measurement: 1.1 x
+10^5 Node-intervals per host second on one core, replacing 9.59 (0)'s
+assumption. The redshift (2 x 10^8): 30 minutes. Lorentz (10^8): 15
+minutes. The bending (5 x 10^7): 8 minutes. Shapiro (10^7): 2 minutes.
+Kepler, reduced to the hour: a layer [160, 160, 1], the circles at r =
+30 and r = 60 with c_R R = 10^4, two orbits each, periods 1460 and 4130
+intervals, T^2 / r^3 = 79 at both: 2.9 x 10^8, 45 minutes. Mercury
+(three orbits at r = 80): 2 hours, run when the hour is not the bound.
