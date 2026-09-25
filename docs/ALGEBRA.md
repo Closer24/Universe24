@@ -5760,8 +5760,12 @@ the controls inside rows 1, 14 and 3 above; 2c (Sorkin's three
 openings) is prepared as an eighteenth in the specification's part B (its
 first runs at d = 13 read a Sorkin sum of +0.11 of the three-opening
 share, the openings coupling through the wall at 3.25 wavelengths apart:
-re-placed at d = 39 with a three-source variant to isolate the click's
-own term, the numbers owed);
+re-placed at d = 39 with a three-source variant on the one wall to
+isolate the click's own term: the seven walls +0.011 of the
+three-opening screen flux, the three sources +0.022 at d = 39 and +0.005
+at d = 13, the click's rectification a positive grain term of the order
+(lambda / the fringe spacing)^2, 10^-6 in nature's regime; the pin
+within +- 0.05 at 16384 records per world, the specification's row 18);
 7 (the atom's lines at the coupled modes) waits on the owner; LCm (the
 light clock in motion) stays out, the model having clocks and no rods
 (record 1895); the bounds A, A2 and B have no world.
