@@ -11580,3 +11580,101 @@ the owner's word, the two equal to first order in the gradient (9.57
 frames, the tensor waves, the short-range forces: OPEN (9.48, 9.56 (5)).
 Binding from the law, the atom row: the one seam, OPEN until it runs
 (9.53). Nothing else in the law is declared or put in to come out.
+
+### 9.59 The five runs toward nature, blind (the Boss's record 2030 of 2026-09-25, the model owner: "when will experiments start, to see that there is a direction toward nature, without pins?"; diagnostic runs, no pin, no verdict, each read beside nature's value only for the direction; the mathematician's expected readings in the GameBoard's own numbers, on today's law (9.50 (13)) and on the Einstein form (9.57 (1)), and the sizes)
+
+**(0) THE COMMON GROUND.** The integers of 9.57 (2): Gamma = 10^4.
+A well is a declared level (9.53, the one seam): a body's field c(r)
+= c_R R / r with c_R the level at the body's surface R, in Links; the
+potential U = c / (2 Gamma). A light clock is 9.24 (6): a tick 212
+intervals at rest, its band one interval. Every reading below is a
+detector's click count or a click's time; the second column is what
+changes on the Einstein form; where one number stands, the two forms
+agree. Sizes are in Node-intervals; the host's rate per second is
+Nature24's measurement (the mathematician's assumption for the hour,
+to be replaced: 10^6 Node-intervals per host second, 3.6 x 10^9 an
+hour).
+
+**(1) THE REDSHIFT.** Two light clocks of one family, one at a
+uniform level c_1 (the well's bottom), one at c_2 = 0 (the top), over
+a run of 10^5 intervals. The ratio of their tick intervals, bottom
+over top: today's law sqrt of (1 - c_2 / Gamma) / (1 - c_1 / Gamma),
+which is 1 / sqrt(1 - 2 U_1); the Einstein form 1 / sqrt(1 - 2 U_1 +
+2 U_1^2); both 1 + U_1 to first order. At c_1 = 2000 (U_1 = 0.1):
+today 1.118, the tick counts 422 against 472; the Einstein form 1.104,
+427 against 472; the difference between the forms 5 ticks, above the
+band. Nature: 1 + U to first order in every reading; at second order
+nature's static clock reads 1 / sqrt(1 - 2 U) with r the Schwarzschild
+radius and 1 / sqrt(1 - 2 U + 2 U^2) with r the isotropic radius; the
+Link count is the isotropic one on the Einstein form (the ruler's
+weight 1, 9.56 (3)), so the direction toward nature at second order
+is the Einstein form's. Size: a layer [64, 32, 1], two clocks of ten
+Nodes, 2 x 10^8 Node-intervals, minutes.
+
+**(2) LORENTZ.** A light clock carried by a body hopping one Link
+every k intervals (v = 1 / k) at level 0, against the same clock at
+rest, 200 ticks each. The moving clock's tick interval over the
+resting one's: gamma = 1 / sqrt(1 - v^2), on the GameBoard less by the
+grain's term of the dispersion at the light's wave number, 0.2 percent
+at k_light = 0.17 per Link (9.24, 0.8146 against 0.8165). At v = 1 / 2:
+1.1547 in nature, 1.152 +- 0.003 expected on the GameBoard, the tick
+counts 173 +- 1 against 200. The same on both forms bit for bit (at
+c = 0 the forms coincide, 9.57 (1)). Size: a periodic layer [64, 32,
+1], 4 x 10^4 intervals, 10^8 Node-intervals, minutes.
+
+**(3) THE BENDING ON TODAY'S LAW.** A beam of one light family of
+width 20 Nodes past the body at closest distance b = 20 Links with c_b
+= 2000 (U_b = 0.1, c_R = 8000 at R = 5, below Gamma), the declared
+level c_b b / r along the whole path; a receiver L = 100 Links beyond
+the body, wide enough for the spread beam, read by the increment
+ladder (9.25 (2)) to 400 clicks. The centroid of the clicks shifted
+toward the body by 2 U_b L = c_b L / Gamma: 20 Nodes on today's law;
+the Einstein form 4 U_b L = 40 Nodes; the standard error of the
+centroid about 2 Nodes from the beam's spread over 400 clicks; the
+second order of the strong field about one Node. Nature: 4 U_b L, the
+Einstein form's, twice today's; the direction is toward nature only
+when the Einstein form runs (9.56 (2), gamma = 0 on today's law).
+Size: a layer [200, 120, 1], one beam held 2000 intervals, 5 x 10^7
+Node-intervals, minutes.
+
+**(4) AFTER THE EINSTEIN FORM.** (a) The bending whole: (3)'s world
+under the Einstein form, 40 Nodes against the control's 20 within 2.
+(b) The Shapiro delay: the same body, an emitter and a mirror on
+opposite sides at L_e = L_r = 100 Links, the beam passing at b = 20
+(U_b b = 2 Links), the round trip's click against the same world with
+no well (the zero row): the delay 2 (1 + gamma) U_b b ln(4 L_e L_r /
+b^2) = 2 (1 + gamma) x 2 x 4.6 (U_b b is G M in Links, 9.57 (5)):
+today's law (gamma = 0) 18 intervals, the Einstein form 37; the band
+one interval. Nature: the
+Einstein form's, twice today's. Size: the layer of (3) with the
+mirror, 600 intervals per trip, 10^7 Node-intervals, seconds.
+
+**(5) AFTER THE FALL (9.52).** (a) Newton's fall: a declared uniform
+gradient, the level rising g_c = 4 per Link, a body at rest released
+at t = 0: its hops after t intervals a t^2 / 2 with a = g_c / (2
+Gamma) = 2 x 10^-4 Nodes per interval^2: 25 Nodes at t = 500, 100 at
+t = 1000, the ratio 4 within one hop, the same for every family (9.52
+(2)) and the same on both forms (the fall reads the level's gradient
+at v << 1). (b) Kepler: the well c_R R = 10^4 (c_R = 1000 at R = 10),
+a body launched on a circle at r = 40 with v^2 = c_R R / (2 Gamma r)
+= 0.0125 (a hop every 9 intervals), and again at r = 80 (v = 0.079):
+the periods 2 pi r / v = 2250 and 6360 intervals, read from the
+orbiting emitter's clicks at a fixed detector; T^2 / r^3 = 8 pi^2
+Gamma / (c_R R) = 79 intervals^2 per Link^3 at both radii, within one
+hop's share (0.4 percent at r = 40). Both forms the same at these
+speeds. Nature: Kepler's third law with the same constant at every
+radius. (c) Mercury, when wanted: the orbit at a = 80, e = 0.3, the
+perihelion advancing 6 pi U_p per orbit with U_p = c(a (1 - e^2)) / (2
+Gamma) = 0.0068: 0.128 radians per orbit on the Einstein form, 10
+Nodes of the perihelion's position per orbit at r = 80; today's law
+two thirds, 7 Nodes; readable after three orbits. Size: a layer [200,
+200, 1], three orbits at r = 80, 8 x 10^8 Node-intervals, about
+fifteen minutes at the assumed rate.
+
+**(6) THE RULE OF READING.** These are directions, not pins: a
+reading within its band beside nature's value says the direction
+holds; a reading outside comes to the mathematician before any word.
+The one number that separates the two forms in every row is the
+ruler's weight, whole on the Einstein form and absent on today's law
+(9.56 (2), (3)); rows (1), (2) and (5a) cannot separate them at first
+order and are the controls of the run.
