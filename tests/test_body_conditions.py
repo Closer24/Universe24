@@ -80,7 +80,7 @@ def checked(document: dict) -> list[str]:
     return check_body_conditions(world, DetectorLawSimulation(world), readings)
 
 
-def test_a_cube_square_and_segment_seeded_on_the_mode_pass_bit_for_bit():
+def test_cube_square_and_segment_seeded_on_the_mode_pass_bit_for_bit():
     """The cube of side 20 in 48^3, the square of side 8 on a 32 x 32 layer and the segment
     of side 8 on a chain of 64, each on its own board's mode: two COMPUTATION lines each
     (the family's composed operator below 2, ALGEBRA.md 9.19 (2); the initial state the
@@ -96,7 +96,7 @@ def test_a_cube_square_and_segment_seeded_on_the_mode_pass_bit_for_bit():
         assert f"amplitude {AMPLITUDE}" in lines[1]
 
 
-def test_b_a_body_that_does_not_fit_is_refused_at_load_never_cut():
+def test_a_body_that_does_not_fit_is_refused_at_load_never_cut():
     """A body whose far vertex passes an open face is refused naming the axis and the
     vertex; a body wider than a periodic axis is refused as wrapped onto itself; a segment
     past the chain's end the same; the folded axis of extent 1 is no refusal (the square
@@ -143,7 +143,7 @@ def test_b_a_body_that_does_not_fit_is_refused_at_load_never_cut():
     assert parse_nature_beam_world(seam).measured[0].block is not None
 
 
-def test_c_one_unit_off_the_mode_is_admitted_and_the_peak_doubled_is_refused_naming_the_node():
+def test_one_unit_off_the_mode_is_admitted_and_the_peak_doubled_is_refused_naming_the_node():
     """SINCE THE GENERATOR WITH THE STOP (the owner's word of 2026-09-25; BUILD.md section 26
     item 25) the law's check of a profile is the loader's own residual bound in integers
     (record 1886), and the body's condition here is that the initial state IS the file's
@@ -168,7 +168,7 @@ def test_c_one_unit_off_the_mode_is_admitted_and_the_peak_doubled_is_refused_nam
     assert "the bound" in str(found.value)
 
 
-def test_d_a_flat_seed_is_not_the_mode_and_is_refused():
+def test_a_flat_seed_is_not_the_mode_and_is_refused():
     """The flat seed of the first builds (the value on the cells, 0 outside) is not the bound
     mode's profile: refused, the sentence naming the generator's `mode_profile` as the form
     the seed takes (the operator iterated with the stop)."""
@@ -184,7 +184,7 @@ def test_d_a_flat_seed_is_not_the_mode_and_is_refused():
         checked(document)
 
 
-def test_e_a_pair_not_lowered_is_the_loaders_own_refusal():
+def test_a_pair_not_lowered_is_the_loaders_own_refusal():
     document = block_world(
         [48, 48, 48],
         PERIODIC,
@@ -196,7 +196,7 @@ def test_e_a_pair_not_lowered_is_the_loaders_own_refusal():
         parse_nature_beam_world(document)
 
 
-def test_f_the_ramp_against_ten_relaxation_times():
+def test_the_ramp_against_ten_relaxation_times():
     """The box of side 20 on the well [800, 801] (the relaxation about 33 intervals, the
     margin module's own omega_b; on [800, 800] it read 25.7, DECLARATIONS.md section 8's
     26): pushed with a ramp of 100 it is refused naming the ramp and the relaxation time;
@@ -232,7 +232,7 @@ NONE = "no reading"
         ("detector_law/two_slits.json", CLEAN),
     ],
 )
-def test_g_the_run_lists_massive_worlds_load_clean_under_the_check(name: str, verdict: str):
+def test_the_run_lists_massive_worlds_load_clean_under_the_check(name: str, verdict: str):
     """Every bound body of the run list's massive worlds is seeded on its own mode by the
     generators (`seed_on_the_mode`: the muon's layer pin worlds at rest and pushed, the deep
     well and its rest world, the boxes, the light clock, the Sagnac blocks and their rest

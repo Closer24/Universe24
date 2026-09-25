@@ -33,7 +33,7 @@ def wall(position, family="light", **keys):
     }
 
 
-def test_a_a_box_of_extents_is_placed_whole_and_its_cells_are_the_box():
+def test_a_box_of_extents_is_placed_whole_and_its_cells_are_the_box():
     """A light-kind wall slab with the extents [4, 3, 1] at (10, 2, 0) on the layer of 24 x 9:
     the loader carries the extents (the side the x extent) and the engine's cells are the
     box's 12 Nodes; `side` 3 is the extents (3, 3, 3) cut by the layer's thin axis;
@@ -57,7 +57,7 @@ def test_a_a_box_of_extents_is_placed_whole_and_its_cells_are_the_box():
     assert parse_nature_beam_world(cube).measured[-1].block.extents == (3, 3, 3)
 
 
-def test_b_the_extents_refusals_and_the_fit_per_axis():
+def test_the_extents_refusals_and_the_fit_per_axis():
     """Both `side` and `extents` refused; `extents` not three integers from 1 refused; a box
     reaching beyond a face is refused per axis naming its side on that axis (the extents
     [4, 3, 1] at x = 22 on the layer of 24: side 4 reaches 25 beyond the face at 23); a box
@@ -90,7 +90,7 @@ def test_b_the_extents_refusals_and_the_fit_per_axis():
         parse_nature_beam_world(document)
 
 
-def test_c_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
+def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
     """A well [800, 801] of the matter kind with the extents [12, 5, 1] at (5, 2, 0) on the
     layer of 24 x 9 (a control world), seeded by the generator on its composed mode with its
     clock and stamp: LAWFUL at load, the residual within the bound at every Node, the mode's
@@ -124,7 +124,7 @@ def test_c_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
     assert centre[11, 4, 0] and int(centre.sum()) == 1
 
 
-def test_d_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
+def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
     """The world key `face_depth`: on the chain of 80 open on x, the face cell covers the 4
     Nodes nearest each border at depth 4 (8 Nodes, the free ones), 1 at the default; a depth
     above one that leaves no interior is refused (the depth of one is lawful on a board of
@@ -150,7 +150,7 @@ def test_d_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
     assert "face" not in DetectorLawSimulation(parse_nature_beam_world(periodic)).cell_names
 
 
-def test_e_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
+def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
     """ALGEBRA.md 9.25 (10), the mathematician's reading: a face one Node deep books a part of
     a packet and reflects the rest, a slab as deep as the packet books nearly all of it.
     On light's open chain of 300 a Gaussian packet of width 14 at k = 0.3 moving +x is

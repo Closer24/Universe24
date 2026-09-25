@@ -132,7 +132,7 @@ class LiveRecord:
     emitter: int | None = None
     scale: int = 1
     # The pair's arms (detector-law-v1, build 2, component 2; DECLARATIONS.md
-    # rows 1a and 1d, DESIGN.md 6.3): a lamp with `arms` births one record
+    # Bell's four settings and the no-signalling control, DESIGN.md 6.3): a lamp with `arms` births one record
     # per arm on one birth stamp (the same ordinal, u and tick), each arm's
     # row confined to its own half-space by the arm's first direction (the
     # rows zero beyond the lamp's Node on the other side, verb D's comparison
@@ -200,7 +200,7 @@ class Block:
     hop: tuple[int, int, int] = (0, 0, 0)
     new_cycle: bool = False
     # the interval the current cycle began and the last cycle's length (the
-    # emitted record's period for its grace, line B)
+    # emitted record's period for its grace, the block's grace for its emitted records)
     cycle_start: int = 0
     cycle_length: int = 0
     stepped: int = 0
@@ -315,7 +315,7 @@ class DetectorLawSimulation:
             for node in nodes:
                 self.cell_index[node] = own
         # The sets bound to a block (DECLARATIONS.md section 10 item 9, section
-        # 13 item 1, section 15 M1-4; line 7): RECEIVERS in the form of
+        # 13 item 1, section 15 M1-4; a set bound to a block is a receiver): RECEIVERS in the form of
         # DESIGN.md section 5, their Nodes take Nodes (the one-way Port take,
         # the row held at 0, the offer booked to the set's cell, `absorbed`
         # moved, the click at the first rung stamped with the block's own
@@ -323,7 +323,7 @@ class DetectorLawSimulation:
         # record's grace (the masks per record by its emitter and age). A set
         # with one declared position is the receiving Node beside the block
         # (the light clock's x = 612); a set without positions takes at the
-        # block's current cells (R2's blocks, a stepping block's cells follow
+        # block's current cells (the Sagnac blocks, a stepping block's cells follow
         # it). `set_block`: the set's cell to its block; `set_nodes`: the
         # set's declared Nodes' mask, None where the Nodes are the block's.
         self.set_block: dict[int, int] = {}
@@ -343,7 +343,7 @@ class DetectorLawSimulation:
                 raise ValueError(
                     f"{BEAM_LAW}: measured[{number}].table is refused under {DETECTOR_LAW_RULE}: the "
                     "tables (the polariser's two cells at one Node, the splitter's linear form) "
-                    "retired with the flux reading (BUILD.md section 26 item 17); a polariser is "
+                    "retired with the flux reading (the born pair on the circle; BUILD.md section 26 item 17); a polariser is "
                     "a body with an axis and two receivers named, a splitter a region of the one "
                     "operator (ALGEBRA.md 9.21)"
                 )
@@ -472,7 +472,7 @@ class DetectorLawSimulation:
         # The blocks' cells: a block's cells carry its cell's index (the flux
         # into them booked to it, never chosen: the cell is on no ladder); a
         # set bound to a block without positions owns the block's cells
-        # instead (the flux into them booked to the set; line 7). Nothing
+        # instead (the flux into them booked to the set; a set bound to a block is a receiver). Nothing
         # takes (ALGEBRA.md 9.19 (3)): the rows evolve at every cell.
         if self.blocks:
             for block in self.blocks:
@@ -1534,7 +1534,7 @@ class DetectorLawSimulation:
                 if chosen is not None and live.first_rung[chosen] is not None
                 else self.tick
             ),
-            # Reviewer 3's line 2 (the Boss's 01:40Z): which the click's time
+            # the gate reviewer's line on the click's time (the Boss's 01:40Z): which the click's time
             # is, the chosen cell's first rung or, where no rung was crossed
             # (a screen row's Node at 1e-4 of the norm), the completion
             # interval; a reader never reads a completion as a rung.

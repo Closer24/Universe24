@@ -27,7 +27,7 @@ def write(directory: Path, name: str, document: dict) -> Path:
     return path
 
 
-def test_a_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
+def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
     """Two small worlds (the emitter world with a stock of 2 over 250 intervals, the chain
     world with a stock of 2) run together in two processes and each alone: the output files
     are byte for byte the same; each output carries the format, the input's stamp, the
@@ -59,7 +59,7 @@ def test_a_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
         )
 
 
-def test_b_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path: Path):
+def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path: Path):
     """An input whose profile is off the mode (the peak doubled, the stamp rewritten so that
     the residual speaks) is REFUSED, its output carrying the reason and no clicks, and the
     command's exit is 1; a lawful input with pins registered before the run reads MATCH

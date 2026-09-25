@@ -127,7 +127,7 @@ def gathers(lines: list[dict]) -> list[dict]:
     return [line for line in lines if line["event"] == "gather"]
 
 
-def test_a_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells_off_the_ladder():
+def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells_off_the_ladder():
     """(a) On the closed chain of 200 every record A emits writes EXACTLY ONE gather line, at
     `screen`'s rung (`click_at` rung, `chosen` screen, `tick` the rung's interval equal to
     `click`), more than 60 intervals after its birth (the +x half's front over 60 Links at a
@@ -212,7 +212,7 @@ def test_a_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cel
         parse_nature_beam_world(number)
 
 
-def test_b_the_blocks_own_cell_is_on_no_ladder():
+def test_the_blocks_own_cell_is_on_no_ladder():
     """(b) On the closed chain of 200 the block's own cell (`measured:0`) is on no record's
     ladder: it books the one-way flux into A's cells (the -x half's return through the
     mirror at x = 0, forty Links there and back, before the +x half's rung at `screen`:
@@ -246,7 +246,7 @@ def test_b_the_blocks_own_cell_is_on_no_ladder():
     assert all(g["click"] > g["birth"] + 1 and g["tick"] == g["click"] for g in found)
 
 
-def test_c_the_lines_time():
+def test_the_lines_time():
     """The line's time: on the light clock's chain of 173 with the faces CLOSED and A naming
     its own bound set `A_face` (x = 112), the first record's line is written at the
     rung's interval (`tick` equal to `click`), after its birth (the set beside A's cells
@@ -288,7 +288,7 @@ def test_c_the_lines_time():
         assert line["chosen"] == [["between", 0, "0"]] and line["clock_source"] == "measured:0"
 
 
-def test_d_sagnac_rest_loads_and_steps_under_the_form_without_positions():
+def test_sagnac_rest_loads_and_steps_under_the_form_without_positions():
     """The registered world `examples/events/massive_record/sagnac_rest.json` (the two
     emitter bodies at [700, 712) and [772, 784) at rest, A `receiver` at_b and B at_a, the
     sets at the bodies' cells at W 256) loads and is stepped 300 intervals as a load-and-step

@@ -205,7 +205,7 @@ def test_the_rule_is_the_designs_integers_on_a_chain():
     assert np.array_equal(total - 3 * nxt, np.mod(total, 3))
 
 
-def test_a_chain_world_clicks_once_per_record_with_the_books_balanced():
+def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     """The chain world under the flux reading (ALGEBRA.md 9.19 (3); BUILD.md section 26
     item 14): six births at their rungs, every record clicking ONCE at `screen` (the
     cumulative ladder [screen] on the emitter's default ladder of every declared set, no
@@ -521,7 +521,7 @@ def test_the_increment_ladder_over_the_named_sets():
         parse_nature_beam_world(silent)
 
 
-def test_a_detector_is_one_connected_cube_of_side_three():
+def test_detector_is_one_connected_cube_of_side_three():
     """THE DETECTOR CUBE (the model owner's word of 2026-09-25, record 1899; ALGEBRA.md 9.25
     (7)): a detector is one region, a cube of side 3 or more, its click the detector's.
     On the layer of 24 x 9 the loader refuses a cube of side 2 (the 2 x 2 box at (10, 2)

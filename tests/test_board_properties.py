@@ -187,10 +187,10 @@ def run(document: dict, u: int = 0, intervals: int = INTERVALS, rows=None, birth
     return simulation, states, clicks
 
 
-# ---------------------------------------------------------------- the 48 and the translations
+# ---------------------------------------------------------------- the signed axis permutations and the translations
 
 
-def the_48():
+def signed_axis_permutations():
     """The signed permutations of the three axes: g = (permutation, signs)."""
     for permutation in itertools.permutations(range(3)):
         for signs in itertools.product((1, -1), repeat=3):
@@ -257,20 +257,20 @@ def compare_runs(reference_states, states, transform_array, identities):
                 assert np.array_equal(transform_array(x), y), (t, identity, level)
 
 
-def test_1_equivariance_under_the_48():
+def test_equivariance_under_the_cube_group():
     """48 of 48 transformed worlds give the transformed states at every interval, the
     remainders included, and the same click at the same interval."""
     document = small_world()
     _, reference, clicks = run(document)
     assert clicks, "the reference run clicks within the intervals"
-    for g in the_48():
+    for g in signed_axis_permutations():
         moved = transformed(document, g, lambda n, g=g: apply_g_node(n, g), lambda a, g=g: apply_g(a, g))
         _, states, moved_clicks = run(moved, birth=apply_g_node(BIRTH, g))
         compare_runs(reference, states, lambda a, g=g: apply_g(a, g), None)
         assert moved_clicks == clicks, g
 
 
-def test_2_translation_on_the_torus():
+def test_translation_on_the_torus():
     """7 of 7 shifts (one Link along each axis in each sign, and the diagonal (3, 5, 7))."""
     document = small_world()
     _, reference, clicks = run(document)
@@ -313,7 +313,7 @@ def form_I(
     return total
 
 
-def test_3_conservation_between_clicks():
+def test_conservation_between_clicks():
     """(a) the content per family constant before the click and down by one quantum of light
     at it; (b) per record, I(t) less the accumulated remainder term of 8.2 is the same rational
     at every interval (the remainder identity, exact)."""
@@ -356,7 +356,7 @@ def test_3_conservation_between_clicks():
             assert invariant == reference, (identity, t)
 
 
-def test_4_reversibility_except_the_click():
+def test_reversibility_except_the_click():
     """60 intervals with no receiver named, then 60 of 8.8's inverse: the initial element
     returns bit for bit, remainders included; with the receiver named the inverse from 60
     returns the state at the click's interval without the deleted summand, and the difference
@@ -397,7 +397,7 @@ def manhattan_ball(node, radius: int) -> np.ndarray:
     return distance <= radius
 
 
-def test_5_locality():
+def test_locality():
     """Two runs whose initial elements differ at one Node of the light record by one unit of
     `now`: at every interval m the difference is inside the Manhattan ball of radius m about
     that Node, and nonzero somewhere for every m <= 12."""
@@ -422,7 +422,7 @@ def test_5_locality():
             assert np.any(difference), m
 
 
-def test_6_only_the_click_reads():
+def test_only_the_click_reads():
     """(b) for 200 random elements, two Nodes whose seven inputs are equal by construction (the
     pair, the row and remainder, the six neighbours' rows) give equal outputs; (c) two runs
     whose records differ only in their residues u are identical until the first click."""
@@ -472,7 +472,7 @@ def scaled_world(side: int) -> dict:
 
 
 @pytest.mark.parametrize("side", [12, 24, 48])
-def test_7_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
+def test_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
     """The owner's question on large boards (the Boss's 22:55Z): the host time per Node per
     interval and the state's memory per Node stay within a constant across 12^3, 24^3 and
     48^3 (every step linear or bilinear in the levels), and the generator's cost for the
@@ -554,7 +554,7 @@ def output_of(serialized: str) -> dict:
     }
 
 
-def test_8_the_same_input_gives_the_same_output():
+def test_the_same_input_gives_the_same_output():
     """The owner's word (the Boss's relay of 23:51Z): the same input file run twice, and run in
     two separate processes at once, gives byte-identical outputs (the clicks and the final
     state's digest, with the input's own hash). The edge cases: a one-unit change in the

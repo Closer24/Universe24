@@ -102,7 +102,7 @@ def step_once(simulation: DetectorLawSimulation, live: LiveRecord) -> tuple[np.n
     return live.now.copy(), live.remainder.copy()
 
 
-def test_a_the_rule_on_a_chain_against_section_ones_integers():
+def test_the_rule_on_a_chain_against_section_ones_integers():
     """BUILD.md (a): the kind [2, 3] on a 5-Node open chain (y, z one layer periodic, so
     S_6 = a_W + a_E + 4 a_now with 0 beyond the ends); the totals num S_6 - 9 a_before + r
     are [1, 27, -56, 19, 7], a_next = [0, 3, -7, 2, 0], r' = [1, 0, 7, 1, 7]."""
@@ -122,7 +122,7 @@ def test_a_the_rule_on_a_chain_against_section_ones_integers():
     assert live.before.ravel().tolist() == [0, 5, -7, 3, 0]
 
 
-def test_b_the_rule_at_a_corner_of_an_open_board():
+def test_the_rule_at_a_corner_of_an_open_board():
     """BUILD.md (b): the kind [1, 2] (3 den = 6) at the corner (0, 0, 0) of an open 2^3 board
     of the massive kind (its faces declared open on every axis): a_now 4 with the three
     neighbours 3, -2, 5 and three zero faces, a_before 1, r 5: the total 5, a_next 0, r' 5;
@@ -146,7 +146,7 @@ def test_b_the_rule_at_a_corner_of_an_open_board():
         assert int(r_next[0, 0, 0]) == 5
 
 
-def test_c_lights_pair_is_the_first_builds_integers_bit_for_bit():
+def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     """BUILD.md (c): on the first build's random chain the step at light's pair [1, 1] gives the
     same total, quotient and remainder as the line 3 a_next + r' = S_6 - 3 a_before + r."""
     world = parse_nature_beam_world(chain_world())
@@ -182,7 +182,7 @@ def checkerboard_seed(n: int) -> tuple[np.ndarray, np.ndarray]:
     return now.astype(np.int64), before.astype(np.int64)
 
 
-def test_d_the_conserved_form_holds_to_the_remainders_jitter():
+def test_the_conserved_form_holds_to_the_remainders_jitter():
     """BUILD.md (d): on a periodic 6^3 board at [128, 129] and at [1600, 1618] the form I stays
     within 10^-3 of its start over 200 intervals (measured: 3 x 10^-6) and the amplitude stays
     bounded (below 2 x 2^20); the books read the form under the key (GAMEBOARD). The edge case:
@@ -222,7 +222,7 @@ def test_d_the_conserved_form_holds_to_the_remainders_jitter():
             assert abs(int(np.sum(light.now * checker)) // 216) == 1
 
 
-def test_m_the_massive_kinds_faces_are_periodic_by_default_and_a_zero_face_when_open():
+def test_the_massive_kinds_faces_are_periodic_by_default_and_a_zero_face_when_open():
     """BUILD.md (m): on a 5 x 1 x 1 board whose world `boundary` is open on x the massive kind
     wraps on x by default (Node 0 reads Node 4 as its -x neighbour); with faces {"x": "open"}
     the neighbour beyond the face reads 0."""
@@ -263,12 +263,12 @@ def run_chain_digests() -> dict[str, str]:
     }
 
 
-def test_p_the_light_record_is_byte_identical_without_the_key():
+def test_the_light_record_is_byte_identical_without_the_key():
     """BUILD.md (p): the first build's chain world over 600 intervals gives the digests read at
     the head f4a3971a before any line of the build was written: the state and the audit
     the witness that the rows are byte for byte; the events' digest moved ONCE, at the GO's
     fold (BUILD.md section 14), by the two fields added to every gather line (`click_at`,
-    `clock_source`; Reviewer 3's line 2 and key (i)), and the audit's digest once, by issue
+    `clock_source`; the gate reviewer's line on the click's time and key (i)), and the audit's digest once, by issue
     #1086's momentum books (the blocks' held momentum, the transit and escape not accounted,
     the scope of `balanced` named), every other field byte for byte; then all three once more
     by item 10 (the lamp's own take of its record from the first interval after the train, the
@@ -301,7 +301,7 @@ def test_p_the_light_record_is_byte_identical_without_the_key():
     }
 
 
-def test_q_the_loaders_refusals_name_the_key():
+def test_the_loaders_refusals_name_the_key():
     """BUILD.md (q): the step's keys refused one by one, each naming the key."""
     base = massive_world([4, 4, 4], "open", [2, 3])
     without_key = json.loads(json.dumps(base))
@@ -359,7 +359,7 @@ def test_q_the_loaders_refusals_name_the_key():
     assert not world.families[1].massive_kind
 
 
-def test_r_the_records_keys_under_the_key_and_none_without_it():
+def test_the_records_keys_under_the_key_and_none_without_it():
     """BUILD.md (r): the identity under `hypotheses`, the families' pair and faces and the books'
     form under the key; nothing of them without it (the first build's world)."""
     world = parse_nature_beam_world(massive_world([4, 4, 4], "open", [2, 3], {"z": "open"}))
@@ -513,7 +513,7 @@ def emitter_at(
 CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
 
 
-def test_e_the_blocks_cells_and_its_pair_on_them():
+def test_the_blocks_cells_and_its_pair_on_them():
     """BUILD.md (e): a block of side 3 at (2, 2, 2) on an open 8^3 board of the kind [800, 809]
     with the well [800, 800]: den reads 809 on every Node but the 27 cells, 800 there, num 800
     everywhere; the cells are the cube. The edge case: a pair that is no well is refused."""
@@ -556,7 +556,7 @@ def test_e_the_blocks_cells_and_its_pair_on_them():
         )
 
 
-def test_f_the_blocks_drive_steps_its_cells_and_leaves_the_rows():
+def test_the_blocks_drive_steps_its_cells_and_leaves_the_rows():
     """BUILD.md (f): a block of content 1 with P = 64 on x (the wall 3 Q S M = 192) steps at the
     intervals 3, 6, 9 with the remainder 0; with P = 70 at 3, 6, 9 with the remainders 18, 36,
     54 and at 11 with the remainder 2; the cells and the pair arrays move, the record's rows
@@ -704,33 +704,34 @@ def coupled_invariant(g: list[int], G: list[int] | None = None) -> tuple[int, Fr
     first_light = conserved_form(*rows(light, shape)[:2], weight_l)
     for _ in range(400):
         response = block_live.responses.get(light.identity)
-        x_n0, x_b, r_m = rows(response, shape)
-        y_n0, y_b, r_l = rows(light, shape)
+        matter_row_start, x_b, r_m = rows(response, shape)
+        light_row_start, y_b, r_l = rows(light, shape)
         simulation.step()
         assert light.identity in simulation.records
         response = block_live.responses.get(light.identity)
-        x_n, _, r_m2 = rows(response, shape)
-        y_n, _, r_l2 = rows(light, shape)
+        x_n, _, matter_remainder_next = rows(response, shape)
+        y_n, _, light_remainder_next = rows(light, shape)
         silent = silent and (response is None or not np.any(response.now))
-        light_remainders = Fraction(int(np.sum((y_n - y_b) * (r_l - r_l2))), 3 * G_d)
+        light_remainders = Fraction(int(np.sum((y_n - y_b) * (r_l - light_remainder_next))), 3 * G_d)
         if g_n == 0:
             # light's own identity, the form I with the remainders' term (section 3)
             assert (
-                conserved_form(y_n, y_n0, weight_l) - conserved_form(y_n0, y_b, weight_l)
+                conserved_form(y_n, light_row_start, weight_l)
+                - conserved_form(light_row_start, y_b, weight_l)
                 == light_remainders
             )
             continue
         current = invariant(response)
-        massive_term = np.sum((x_n - x_b) * (r_m - r_m2) * inverse_walls)
+        massive_term = np.sum((x_n - x_b) * (r_m - matter_remainder_next) * inverse_walls)
         assert current - previous == massive_term + alpha * light_remainders, simulation.tick
         previous = current
-        if np.any(((x_n - x_n0) * (y_n - y_n0))[cells]):
+        if np.any(((x_n - matter_row_start) * (y_n - light_row_start))[cells]):
             crosses += 1
     last_light = conserved_form(*rows(light, shape)[:2], weight_l)
     return crosses, first_light, last_light, silent
 
 
-def test_g_the_coupling_both_ways_conserves_the_schemes_exact_invariant():
+def test_the_coupling_both_ways_conserves_the_schemes_exact_invariant():
     """BUILD.md (g), MASSIVE_RECORD.md section 7 (MUSTs A and B): on a periodic chain of 400
     Nodes (the kind [156, 157], a block of side 12 with the well [314, 315] at x = 200, G [1, 1])
     a planted light packet and the block's response to it, 400 intervals: at g = 1 / 20 and at
@@ -751,7 +752,7 @@ def test_g_the_coupling_both_ways_conserves_the_schemes_exact_invariant():
         assert abs(last - first) > Fraction(1, 10) * abs(first)
 
 
-def test_h_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
+def test_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
     """BUILD.md (h) SINCE section 26 (the emission by the coupling's source term retired with
     the lamp; an emitter is a clicking body, ALGEBRA.md 9.17 (4)): an emitter body of the
     source kind (the one-cell well SOURCE_WELL at x = 100 seeded on its mode, the stock 3)
@@ -810,7 +811,7 @@ def test_h_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
         parse_nature_beam_world(empty)
 
 
-def test_j_a_seeded_block_at_rest_counts_its_cycles():
+def test_a_seeded_block_at_rest_counts_its_cycles():
     """BUILD.md (j): a seeded block (the kind [800, 809], the well [800, 800], s = 10) on a
     periodic 32^3 board, no light: over 500 intervals its count equals the upward zero crossings
     of its summed record on the `block` lines, one `click` line per count, the mean period
@@ -849,7 +850,7 @@ def test_j_a_seeded_block_at_rest_counts_its_cycles():
             assert block.count == 0 and not clicks
 
 
-def test_l_the_index_in_motion_is_the_drives_pair():
+def test_the_index_in_motion_is_the_drives_pair():
     """BUILD.md (l): a block of content 1 with P = 64 on x (K = 3) carries g as [3, 2] (the
     pair [K^2, K^2 - 3] = [9, 6] reduced); at rest [1, 1]; with P = [64, 64, 0] the pair
     [36864, 12288] = [3, 1]. The edge case: K = 1 (P = 192) is refused by the pace bound."""
@@ -880,7 +881,7 @@ def test_l_the_index_in_motion_is_the_drives_pair():
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 
-def test_n_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
+def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
     """BUILD.md (n): (1) the s = 28 block of world (i-b) on the periodic 48^3 board is refused as
     a pin world naming x, the extent (about 7.9 Links) and the side needed (about 60 > 48), and
     admitted as a control (44 < 48); (2) a block of s = 20 whose cells lie 3 Links from an open
@@ -954,7 +955,7 @@ def test_n_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
     assert not block_margin(parse_nature_beam_world(cube), 0).runaway
 
 
-def test_o_the_cavity_counts_the_separable_forms_cycles():
+def test_the_cavity_counts_the_separable_forms_cycles():
     """BUILD.md (o): a cavity of side 5 with the kind's own pair [800, 809] on a periodic 24^3
     board: the exact separable form cos omega = (800 / 809) cos(pi / 6), omega 0.5423, the
     period 11.58 intervals; over 1159 intervals the block's count between 99 and 101 (one
@@ -979,7 +980,7 @@ def test_o_the_cavity_counts_the_separable_forms_cycles():
 # The series' two keys of step 5 (BUILD.md section 4 step 7 and section 5 (v-m))
 
 
-def test_s_the_drives_start_and_the_ramp_counted_from_it():
+def test_the_drives_start_and_the_ramp_counted_from_it():
     """The block key `start` (the pushing agent's declaration, like `ramp`): a block of side 3
     with the momentum 64 on x (one Link every three intervals against the wall 192) and
     `start` 30 has not moved by interval 30, has stepped once by interval 33 and ten times by
@@ -1019,7 +1020,7 @@ def test_s_the_drives_start_and_the_ramp_counted_from_it():
         parse_nature_beam_world(refused)
 
 
-def test_t_the_mode_line_sums_lights_field_by_residue_class():
+def test_the_mode_line_sums_lights_field_by_residue_class():
     """The world key `mode_axis` ("x"): the record's `mode` line per interval carries the
     three sums of light's total field over the Nodes whose x coordinate is 0, 1, 2 modulo 3,
     equal to the sums formed from the records' rows at that interval; on a chain of 30 with
@@ -1054,7 +1055,7 @@ def test_t_the_mode_line_sums_lights_field_by_residue_class():
 # Reviewer 3's three MUSTs on step 2 (the Boss's 16:42Z) and his layer line (18:12Z)
 
 
-def test_v_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
+def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
     """MUST 3: a kind's pair whose rule total at the world's declared amplitude bound A reaches
     2^63 is refused at load naming the bound and the pair (A = 2^40 declared, [2^20, 2^20 + 1]:
     6 x 2^60 + ... above 2^63); [800, 809] is admitted; a block's pair with its g_d folded into
@@ -1128,7 +1129,7 @@ def test_v_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
         simulation._advance(planted_row)
 
 
-def test_w_the_form_on_a_chain_is_exact_with_the_remainders_term():
+def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
     """MUST 1's test: on the chain 6 x 1 x 1 (y and z folded, the Node reading itself twice on
     each) at the pair [2, 3], open on x, the form I of section 3 as the books read it
     (`record_form`, the weights L / num, L the numerators' lcm, here 2) changes by the
@@ -1156,7 +1157,7 @@ def test_w_the_form_on_a_chain_is_exact_with_the_remainders_term():
             previous = current
 
 
-def test_x_the_margin_rule_on_a_layer_keeps_the_folded_axis_self_reads():
+def test_the_margin_rule_on_a_layer_keeps_the_folded_axis_self_reads():
     """Reviewer 3's line (18:12Z): on a periodic 256 x 256 x 1 layer the mode's operator keeps
     the folded axis's two self-reads (S_4 + 2 a_now), so the layer row of MASSIVE_RECORD.md
     section 11 item 7 (mu = 0.15, s = 14, g = mu^2 / 4: the kind [3200, 3236], the well
@@ -1175,7 +1176,7 @@ def test_x_the_margin_rule_on_a_layer_keeps_the_folded_axis_self_reads():
     assert [axis for axis, _, _, _ in reading.axes] == ["x", "y"]
 
 
-def test_y_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
+def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     """The seed as the bound mode's integer profile (MASSIVE_RECORD.md section 11 item 7, the
     reader of record and the seed; EXPLORATORY, the cheap 128^2 rest layer): the block s = 14 at
     g = mu^2 / 4 (the kind [3200, 3236], the well [3200, 3227]) seeded flat reads its clicks at a
@@ -1250,7 +1251,7 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
     return document
 
 
-def test_z_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair():
+def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair():
     """The emitter of a massive kind (the matter lamp's successor, ALGEBRA.md 9.17; the Boss's
     23:32Z on the lamp verb): an emitter body of the source kind at x = 100 whose born family
     is `matter` (the kind [156, 157] with the declared clock [77, 25] on N = 64) births a
@@ -1290,7 +1291,7 @@ def test_z_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pa
         parse_nature_beam_world(matter_emitter_world(True))
 
 
-def test_aa_a_matter_emitters_record_clicks_once_at_the_rung():
+def test_a_matter_emitters_record_clicks_once_at_the_rung():
     """Reviewer 3's line on the matter lamp (the Boss's 01:10Z), on the matter emitter under
     the flux reading (ALGEBRA.md 9.19 (3)): an emitter's record of a massive kind goes
     through the same pointer path as light's (the click is the law's one action on any
@@ -1362,7 +1363,7 @@ def test_aa_a_matter_emitters_record_clicks_once_at_the_rung():
         assert identity not in simulation.records
 
 
-def test_ab_every_declared_wheel_is_refused_by_name():
+def test_every_declared_wheel_is_refused_by_name():
     """The wheel is the record's own (ALGEBRA.md 9.22 (4); BUILD.md section 26 item 15): the
     world key `wheel`, a detector set's `wheel`, a block's `wheel` and an emitter's `wheel`
     are each refused by name with the successor named; the same for `residue_order` and
@@ -1437,8 +1438,8 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
     return document
 
 
-def test_ac_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_rung():
-    """Line 7 (the receiving set at ONE free Node) on the light clock's chain of 173 (W = 64;
+def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_rung():
+    """A set bound to a block is a receiver (the receiving set at ONE free Node) on the light clock's chain of 173 (W = 64;
     the world's `wheel` 64) SINCE THE FLUX READING (ALGEBRA.md 9.19 (3); BUILD.md section 26
     item 14): A's one born record is written once on A's twelve cells and leaves both ways;
     the set's cube at [112, 114] books the one-way flux into it from the first interval (its
@@ -1526,8 +1527,8 @@ def test_ac_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_it
         parse_nature_beam_world(empty)
 
 
-def test_ah_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_block():
-    """Line 7 for a set bound to a block WITHOUT positions (R2's form, DECLARATIONS.md section 13
+def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_block():
+    """A set bound to a block WITHOUT positions is a receiver (Sagnac's form, DECLARATIONS.md section 13
     item 1) under the flux reading (ALGEBRA.md 9.19 (3)): the block's twelve cells are the
     set's Nodes (the cell index at them the set's cell); an emitter's record (the emitter
     body of the source kind at x = 150 on a chain of 300, fifty Links before the block, two
@@ -1588,7 +1589,7 @@ def test_ah_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_
         parse_nature_beam_world(bad)
 
 
-def test_al_a_block_that_steps_off_the_board_refuses_the_interval():
+def test_a_block_that_steps_off_the_board_refuses_the_interval():
     """Reviewer 3's line from the redshift dry run (BUILD.md section 18): a block pushed toward
     a zero face (momentum [-64, 0, 0] from x = 30 on the open chain of 300, one hop per three
     intervals) refuses the run at the interval its cells would leave the board, naming the block
@@ -1628,7 +1629,7 @@ def test_al_a_block_that_steps_off_the_board_refuses_the_interval():
             assert block.stepped > 100 and int(np.count_nonzero(block.mask)) == 12
 
 
-def test_ad_a_wall_of_lights_kind_is_a_mirror_line():
+def test_a_wall_of_lights_kind_is_a_mirror_line():
     """DECLARATIONS.md section 15 L-1 (the (M) wall's path): a mirror line of blocks of light's
     kind with the pair [1, 2], two Nodes deep, on the first build's chain (x = 40 and 41; the
     lamp at x = 2, the screen cube at [70, 72]): the blocks have no own record, no clock and no
@@ -1689,7 +1690,7 @@ def test_ad_a_wall_of_lights_kind_is_a_mirror_line():
             parse_nature_beam_world(bad)
 
 
-def test_ae_the_momentum_books_carry_the_blocks_held_momentum_and_nothing_else():
+def test_the_momentum_books_carry_the_blocks_held_momentum_and_nothing_else():
     """Issue #1086 (a GAMEBOARD diagnostic, no law, no pin): the books' `momentum` carries
     `held` as the sum of the blocks' declared momentum vectors ([64, 0, 0] for one block
     pushed to k = 3; [0, 0, 0] at rest), `transit` and `escaped` null with the note that

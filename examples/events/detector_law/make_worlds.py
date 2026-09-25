@@ -24,7 +24,7 @@ centre with one record on the four headings; the physicist's lines of
 Nodes, no ring sets, the ticks 1000, 1400 and 1900 per clock; the clocks
 [77, 25], [30, 13], [77, 50]). Every light wall is a MIRROR LINE (L-1, the
 fourth commit): blocks of light's kind of side 1 per Node with the pair [1, 2],
-two Nodes deep, under the world key `massive_record`. Rows 2c, 10 (a), 10 (b)
+two Nodes deep, under the world key `massive_record`. Sorkin's three openings and the two slits with one opening closed
 and 2b are not in the GO (L-4, L-5, T-2) and have no file.
 
 The table rows (group T, this folder; section 14 item 1 and section 15 T-1):
@@ -48,7 +48,7 @@ item 10) is THE RULE of the law, not a world key (the model owner, 2026-09-24
 it at load. A world with a detector set and no lamp carries the world key
 `wheel`, the rung W of the ladder that chooses a record's cell (Reviewer 3's
 line, the Boss's 06:50Z; without it the loader's default is 1 and a set holding
-a quarter of a record's offer crosses no rung): 256 on the four R2 files (the
+a quarter of a record's offer crosses no rung): 256 on the four Sagnac files (the
 physicist's 07:37Z, one integer with the sets' rung of section 13 item 4), 64
 on the light clock.
 
@@ -63,7 +63,7 @@ W = 256 with `own_grace` 3000, the hold, 6400 and 8450 intervals),
 its face with `own_grace` 70, the chain closed for light, 2600 intervals), every emitter at G = [1, 50], g = [1, 1000] with the
 seed 50 x 2^20 (M1-1), holding no light content (M1-2), light's clock [1, 1]
 (M1-3), the receivers detector sets with their own wheel (M1-4: 4b's at its body's Node with
-wheel 64, R2's bound to the blocks by the key `block` with wheel 256, the light
+wheel 64, Sagnac's bound to the blocks by the key `block` with wheel 256, the light
 clock's at the free Node x = 612 with wheel 64), `amplitude_bound` 2^32 on every massive world
 (M1-10); `matter_waves_12.json`, `matter_waves_16.json` and
 `matter_front_12.json` (M1-6: the matter family's `phase_per_link` [1089, 320]
@@ -184,12 +184,12 @@ EMITTER_SEED_AMPLITUDE = (
     1 << 20
 )  # at 100 the born light's back-action swamps the excited record (ALGEBRA.md 9.17 (7) (c))
 BELL_TRAIN = 128  # periods, DECLARATIONS.md sections 1 and 3
-R2_CHAIN = 3000  # the physicist's declaration of 07:58Z: one chain of 3000 for both sagnac worlds, the blocks and the gap unchanged
+SAGNAC_CHAIN = 3000  # the physicist's declaration of 07:58Z: one chain of 3000 for both sagnac worlds, the blocks and the gap unchanged
 # The physicist's word of 08:06Z on Reviewer 3's arithmetic (a k3 record born at t completes near
 # 0.423 t + 4468, a rest record near t + 3990; the last hold birth near 4450): every hold record
 # counts, so sagnac_k3 6400 and sagnac_rest 8450; the redshift pair 15000 (the last hold records,
 # born near 9500, complete near 14800).
-R2_TICKS = {"sagnac_k3": 6400, "sagnac_rest": 8450}
+SAGNAC_TICKS = {"sagnac_k3": 6400, "sagnac_rest": 8450}
 REDSHIFT_TICKS = 9600  # the physicist's line of 10:15Z (10000 runs A off the board at 9732)
 LIGHT_CLOCK_TICKS = 2600  # the physicist's 09:18Z: the -x half's round trip on the closed chain (2078) before item 10's take removes it; the first cycle's record closes between about 2150 and 2400
 # The receiver by name (#1116, the physicist's form, Reviewer 3 confirmed): a key `receiver`
@@ -389,7 +389,7 @@ TWO_SLITS_TICKS = (
 
 
 def two_slits() -> dict:
-    """Section 15 L-3 (row 2a), THE SECOND DRAFT (2026-09-24, 12:10Z, on the blind map
+    """Section 15 L-3 (the two slits), THE SECOND DRAFT (2026-09-24, 12:10Z, on the blind map
     `two_slits_1024.py` beside SIZING.md): 6.2's own geometry on the 160 x 256 layer with
     x and y open (the four faces light's sponges); the lamp at [20, 128] with the stock
     1024 at one per 4 on the wheel [1, 1024], the train 32 periods; the mirror line at
@@ -448,7 +448,7 @@ FAN_TICKS = {12: 1000, 16: 1400, 24: 1900}
 
 
 def pace_fan(name: str, pair: list[int], wavelength: int) -> dict:
-    """Section 15 L-6 (row 5a) with the physicist's lines of 2026-09-24 09:02Z and 10:15Z:
+    """Section 15 L-6 (the pace fans) with the physicist's lines of 2026-09-24 09:02Z and 10:15Z:
     the lamp at the centre, one record on the four headings; two probes per ray at 36 and 40
     Links (free Nodes); NO ring sets (the observed drift is the ring's back-scatter, not the
     front; the reading is the probes' phase two periods after the front, the spread printed);
@@ -475,9 +475,13 @@ def light_worlds(massive) -> dict[str, dict]:
 
 # Group T: the table rows.
 
-L3_K = 15728640  # the L3 series' K (`amplitude/bell_n2048_*.json`)
-L3_RELEASE = [1, 67108864]
-L3_LAMP_AMOUNT = 15728642  # the L3 series' stock (HISTORY: the amplitude law's lamp)
+BELL_N2048_LABEL_SCALE = (
+    15728640  # the label scale of the Bell worlds at N = 2048 (`amplitude/bell_n2048_*.json`)
+)
+BELL_N2048_RELEASE = [1, 67108864]
+BELL_N2048_STOCK = (
+    15728642  # the stock of the Bell worlds at N = 2048 (HISTORY: the amplitude law's lamp)
+)
 # Section 2 item 8: a Bell world counts EXACTLY W = 2048 births (under the seed order more
 # than W births repeat the order), and the lamp's stock of records is its `amount` (one
 # quantum per birth, the engine's `_births`), so the stock is W; the L3 series' stock
@@ -525,9 +529,9 @@ def bell(a: str, b: str) -> dict:
         "shape": [21, 1, 1],
         "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
         "ticks": BELL_TICKS,
-        "K": L3_K,
+        "K": BELL_N2048_LABEL_SCALE,
         "N": BELL_N,
-        "release": L3_RELEASE,
+        "release": BELL_N2048_RELEASE,
         "suspension": 0,
         "clock_stamp": True,
         "detector_law": True,
@@ -663,7 +667,7 @@ OWN_GRACE = 70  # section 10 item 1: the light clock's A, one period
 # block's); the ticks 9600 for both redshift worlds (the physicist's line of 10:15Z, through
 # the Boss's 10:18Z: 10000 runs A off the board at 9732).
 REDSHIFT_GRACE = 3000
-R2_GRACE = 3000  # section 13 item 1: R2's blocks, the whole hold
+SAGNAC_GRACE = 3000  # section 13 item 1: the Sagnac blocks, the whole hold
 LAMP_GRACE = MATTER_TICKS  # HISTORY: the matter lamp's `own_grace` (retired, ALGEBRA.md 9.17)
 EMITTER_STOCK = (
     64  # the massive rows' emitters: 64 excitations on the wheel [1, 64] (BUILD.md section 26)
@@ -750,7 +754,7 @@ def massive_worlds(massive) -> dict[str, dict]:
     out: dict[str, dict] = {}
     chain = massive.CHAIN
     light_11 = light_family([1, 1])
-    # Row 4b (section 4 with section 15 M1-1 to M1-5 and item 7's CHECK on the loader's
+    # The moving emitter's redshift (section 4 with section 15 M1-1 to M1-5 and item 7's CHECK on the loader's
     # bound, 2026-09-24 06:10Z): the chain of 4096 (every shape axis is capped at 4096), the
     # emitter A of side 12 at the half-depth well at x = 2994, receding on -x at k = 3 over
     # the ramp 1500 with own_grace 3000 and the hold 3000 (the physicist's 09:33Z: at the
@@ -761,7 +765,7 @@ def massive_worlds(massive) -> dict[str, dict]:
     # ticks 9600 in both worlds (the physicist's 10:15Z; the two readers' windows equal).
     redshift_ticks = REDSHIFT_TICKS
     for name, motion in (
-        ("redshift_k3", {"momentum": [-massive.MOMENTUM_K3, 0, 0], "ramp": 1500}),
+        ("redshift_k3", {"momentum": [-massive.MOMENTUM_SPEED_THIRD, 0, 0], "ramp": 1500}),
         ("redshift_control", {}),
     ):
         document = massive.world(
@@ -784,7 +788,7 @@ def massive_worlds(massive) -> dict[str, dict]:
         receiver_cube(document, "light_detector", [4096 - DETECTOR_SIDE - 1, 0, 0])
         massive.seed_on_the_mode(document)
         out[name] = document
-    # Row R2 (section 13 with M1-1 to M1-4): two full-depth blocks A at [700, 712) and B at
+    # Sagnac's two-way light times (section 13 with M1-1 to M1-4): two full-depth blocks A at [700, 712) and B at
     # [772, 784) on the chain of 3000 (the physicist's 07:58Z: one chain for both worlds,
     # the blocks and the gap of 60 unchanged, so that every hold record's forward half
     # reaches the +x face at 2999 and completes within the ticks: 6400 for k3, 8450 at
@@ -795,20 +799,20 @@ def massive_worlds(massive) -> dict[str, dict]:
     # (the physicist's 07:37Z, one integer with the sets' rung); the control with both at
     # rest; the probes at the facing cells.
     for name, motion in (
-        ("sagnac_k3", {"momentum": [massive.MOMENTUM_K3, 0, 0], "ramp": 1500}),
+        ("sagnac_k3", {"momentum": [massive.MOMENTUM_SPEED_THIRD, 0, 0], "ramp": 1500}),
         ("sagnac_rest", {}),
     ):
         document = massive.world(
             name.replace("_", "-"),
             "PIN",
-            [R2_CHAIN, 1, 1],
+            [SAGNAC_CHAIN, 1, 1],
             chain,
             KIND,
             [
-                emitter([700, 0, 0], 12, WELL_FULL, R2_GRACE, **motion),
-                emitter([772, 0, 0], 12, WELL_FULL, R2_GRACE, **motion),
+                emitter([700, 0, 0], 12, WELL_FULL, SAGNAC_GRACE, **motion),
+                emitter([772, 0, 0], 12, WELL_FULL, SAGNAC_GRACE, **motion),
             ],
-            R2_TICKS[name],
+            SAGNAC_TICKS[name],
             light=light_11,
             faces=massive.FACES_OPEN,
             probes=[[712, 0, 0], [772, 0, 0]],
@@ -819,8 +823,8 @@ def massive_worlds(massive) -> dict[str, dict]:
         graced(
             document,
             [
-                emitter([700, 0, 0], 12, WELL_FULL, R2_GRACE),
-                emitter([772, 0, 0], 12, WELL_FULL, R2_GRACE),
+                emitter([700, 0, 0], 12, WELL_FULL, SAGNAC_GRACE),
+                emitter([772, 0, 0], 12, WELL_FULL, SAGNAC_GRACE),
             ],
         )
         receiver_set(document, "at_a", 0)
@@ -828,7 +832,7 @@ def massive_worlds(massive) -> dict[str, dict]:
         named_receiver(document, {0: "at_b", 1: "at_a"})
         massive.seed_on_the_mode(document)
         out[name] = document
-    # The light clock (ALGEBRA.md 9.22 (8) row 13, the table's form since 2026-09-25): the
+    # The light clock (ALGEBRA.md 9.22 (8), the table's form since 2026-09-25): the
     # chain of 674 with the face receivers at both ends, the emitter A of side 12 at full
     # depth at [600, 612) with its coupling and its stock, the MIRROR the gap [1, 2] of
     # depth 2 at [672, 674) (A.3: a material of light's kind, no closed face), the
@@ -867,7 +871,7 @@ def massive_worlds(massive) -> dict[str, dict]:
     named_receiver(document, {0: "at_a"})
     massive.seed_on_the_mode(document)
     out["light_clock_60"] = document
-    # Rows M1 and M2 (section 12 with section 15 M1-6; THE SIZED FORM of SIZING.md, section
+    # De Broglie's fringes and the moving mass's energy (section 12 with section 15 M1-6; THE SIZED FORM of SIZING.md, section
     # 12's line of 2026-09-24): the 128 x 128 x 1 layer, y periodic, x open for the matter
     # kind, no light; the matter lamp at (20, 64) with its own clock, the wheel [1, 2048]
     # (one wheel, each u once), the stock 2048 at one record per 2 intervals, the train 8
@@ -878,7 +882,7 @@ def massive_worlds(massive) -> dict[str, dict]:
     # x = 0 and 127 absorbing blocks of the matter kind (the fifth commit's correction, the
     # Boss's 02:20Z) with the kind's own pair and the take's pair under the builder's key
     # `take` (BUILD.md item 6b); the amplitude bound A = 2^32 of M1-10; the screen at
-    # x = 104 a row of 41 cube detectors of side 3 over y in [3, 125] (record 1899). M2 on
+    # x = 104 a row of 41 cube detectors of side 3 over y in [3, 125] (record 1899). The moving mass's energy on
     # its own chain of 200: the emitter at x = 20 with one record, the detector the cube
     # at [104, 106], 600 intervals.
     for wavelength, clock in MATTER_CLOCKS.items():

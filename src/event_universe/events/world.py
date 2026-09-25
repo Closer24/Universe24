@@ -917,7 +917,7 @@ MEASURED_KEYS = {
 LAMP_KEYS = {
     "rate",
     "wheel",
-    # detector-law-v1, line B: a lamp's `own_grace` (N_s, the intervals after
+    # detector-law-v1, the block's grace for its emitted records: a lamp's `own_grace` (N_s, the intervals after
     # its train during which its own body takes nothing of its own record;
     # DECLARATIONS.md section 15 M1-6: the matter lamp 16700, the hold);
     # without it a lamp's grace is the engine's constant two periods
@@ -1265,7 +1265,7 @@ class LampDefinition:
     # detector-law-v1: the record's train in periods of the family's clock,
     # None without (the law's default then).
     train: int | None = None
-    # detector-law-v1, line B: the lamp's declared own_grace (N_s), the
+    # detector-law-v1, the block's grace for its emitted records: the lamp's declared own_grace (N_s), the
     # intervals after its train during which its own body takes nothing of
     # its own record; None: two periods of its clock (the engine's constant).
     own_grace: int | None = None
@@ -1905,7 +1905,7 @@ def _refuse_retired(value: object, label: str, keys: tuple[str, ...]) -> None:
         if key in value:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.{key} is refused under {DETECTOR_LAW_RULE}: {RETIRED_KEYS[key]} "
-                "(BUILD.md section 26 item 15)"
+                "(the retired keys of the detector law; BUILD.md section 26 item 15)"
             )
 
 
@@ -3424,7 +3424,7 @@ def _block(
     if "side" in obj and "extents" in obj:
         raise ValueError(
             f"{BEAM_LAW}: {label} declares both `side` and `extents`: a cube is `side`, a box is "
-            "`extents` [x, y, z] (BUILD.md section 26 item 23)"
+            "`extents` [x, y, z] (the bodies with extents per axis; BUILD.md section 26 item 23)"
         )
     if not massive_record:
         raise ValueError(
@@ -3443,7 +3443,7 @@ def _block(
         if not isinstance(value, list) or len(value) != 3:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.extents must be [x, y, z], the box's extents per axis, "
-                "each from 1 (BUILD.md section 26 item 23)"
+                "each from 1 (the bodies with extents per axis; BUILD.md section 26 item 23)"
             )
         extents = (
             _integer(value[0], f"{label}.extents[0]", 1),
@@ -4662,9 +4662,9 @@ def _column_budget(
     times the largest label flow per axis A can meet from one number's
     rays of g in one interval, V_g = Q x w_A x (the largest release of one
     self-creation of g by any event over its directions), must stay within
-    2^62 - 1 (the run-time rule R1 tested at every push), and the sum over
+    2^62 - 1 (the per-push bound, tested at every push), and the sum over
     the columns of the whole parts, each at most |E_c n_c| V_g / (D_c d_c)
-    + 1, within the same bound (R2), so that k terms each inside the
+    + 1, within the same bound (the column-sum bound), so that k terms each inside the
     budget sum inside it in any order. Static and conservative on the
     declared keys: a declared ray in transit, a merged or re-emitted row
     and a content grown by clicks are beyond it and are refused at the
@@ -5640,7 +5640,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     # The bound is asked of a world with a MASSIVE FAMILY (a pair with den >
     # num; DECLARATIONS.md section 15 M1-10 lists the massive worlds): a
     # light world under `massive_record` (its probes, its mirror blocks of
-    # light's kind) loads without it (the Boss's 03:44Z, Reviewer 3's line B).
+    # light's kind) loads without it (the Boss's 03:44Z, the gate reviewer's line on the block's grace).
     if massive_record and "amplitude_bound" not in obj and any(f.massive_kind for f in families):
         raise ValueError(
             f"{BEAM_LAW}: a world with a massive family declares `amplitude_bound`, the amplitude "

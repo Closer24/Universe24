@@ -75,7 +75,7 @@ def chain_world(pair: list[int] | None, length: int, boundary: dict[str, str]) -
     return DetectorLawSimulation(parse_nature_beam_world(document))
 
 
-def test_a_the_local_flux_identity_is_exact_on_the_rules_integers():
+def test_the_local_flux_identity_is_exact_on_the_rules_integers():
     """(a) on a periodic chain of 60, five intervals, random rows and remainders."""
     for family, (num, den) in ((0, (1, 1)), (1, (800, 809))):
         simulation = chain_world(None, 60, PERIODIC)
@@ -131,7 +131,7 @@ def test_a_the_local_flux_identity_is_exact_on_the_rules_integers():
                 assert g_ij == -g_ji
 
 
-def test_b_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
+def test_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
     """(b) a Gaussian packet of 40 Links at k = 0.3024 on light's open chain of 400, read at the
     cell 200 over 600 intervals: the one-way inward flux 1.0017 of I (the backward part of the
     planted packet, 1.35 percent, returns through the -x face, no Node beyond the board, and
@@ -179,7 +179,7 @@ def test_b_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
     assert abs(signed) * 1_000_000 < start, (float(signed), float(start))
 
 
-def test_c_the_conserved_form_and_the_flux_offer_are_the_engines_integers():
+def test_the_conserved_form_and_the_flux_offer_are_the_engines_integers():
     """(c) the engine's `conserved_form` is 3 I times the family's wall on planted rows, exact
     against the Fraction form, for light (the wall 1) and for a massive family with a well
     ([8, 7] on the kind [7, 8]: the wall 56); (d) the engine's `flux_offer` into a set of

@@ -17,9 +17,9 @@ PREDICTION) is written with its pin.
   (gamma_m^2 - 1) / 2) beside it as the band's second term only.
 - (iii) the cavity: the exact separable form cos omega = (num / den) cos(pi / (s + 1)) at
   rest; 1 / gamma_m^2 in motion (section 8's cavity limit).
-- (v) the index block at rest: the closed form n^2 = 1 + G g / (omega_0^2 - omega^2) at
+- the index block at rest: the closed form n^2 = 1 + G g / (omega_0^2 - omega^2) at
   the declared integers, and the phase delay (n - 1) k s it predicts at the probe.
-- (v-m) the index in motion: the design's same-Node ratios of the covariant dielectric's
+- the index in motion: the design's same-Node ratios of the covariant dielectric's
   delay (`massive_moving_index.out` at the design's head), the drive's pair carried; at
   K = 4 no number is declared (read beside K = 3 to say how much of the same-Node
   numbers is the degenerate resonance's); the covariant expectation itself is formed at
@@ -236,7 +236,7 @@ def main() -> None:
                 "control_second_order": 0.8108,
                 "control_light": 0.8132,
                 "script_layer_reading": 0.8113,
-                "source": "MASSIVE_RECORD.md section 11 item 7 and SCHEDULE.md row 4a (the exact cone; the second order and light's beside; massive_layer_pins.out the script's own reading)",
+                "source": "MASSIVE_RECORD.md section 11 item 7 and SCHEDULE.md's row of the muon's moving clock (the exact cone; the second order and light's beside; massive_layer_pins.out the script's own reading)",
             },
         }
     # (iii) the cavity, CONTROL
@@ -268,7 +268,7 @@ def main() -> None:
         },
         "design": {"f_over_f0": 0.6667, "source": "massive_block_clock_motion.out"},
     }
-    # (v) the index at rest, CONTROL of the coupling
+    # the index at rest, CONTROL of the coupling
     world = load("index_50")
     clock = world.families[0].phase_per_age
     assert clock is not None
@@ -295,7 +295,7 @@ def main() -> None:
                 "source": "massive_dielectric_index.out at its omega_0 = 0.5000; the chain's own 1.034, 1.083, 1.159 the lattice's band, 0.8 to 3.4 percent below the closed form",
             },
         }
-    # (v-m) the index in motion, PREDICTION
+    # the index in motion, PREDICTION
     for k in (3, 4):
         beta, gamma = gamma_of(k)
         for direction, sign in (("toward", 1.0), ("away", -1.0)):

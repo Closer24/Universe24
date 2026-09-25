@@ -23,7 +23,7 @@ readings away from the script's numbers by the wrapped wave and was not kept).
 - (i-a) `rest_20.json`, (i-b) `rest_28.json`: one block at rest on a periodic
   48^3 board, 3000 intervals: CONTROL worlds (the block's own clock against
   section 4's threshold table; the extent and the margin printed at load).
-- (ii-a) `moving_20.json`, (ii-b) `moving_28.json`: the same blocks pushed to
+- `moving_20.json` and `moving_28.json` (the boxed clocks of sides 20 and 28 in motion): the same blocks pushed to
   k = 3 on a periodic 64^3 board over a ramp of 1500 intervals and a hold of
   8000: PREDICTION worlds (the one formula of section 8 per world on its own
   box, `massive_moving_pins.py`: 0.7831 and 0.8048), with the pump's two
@@ -32,14 +32,14 @@ readings away from the script's numbers by the wrapped wave and was not kept).
   own pair, on 48^3: a CONTROL (the separable form's omega 0.19503);
   (iii-b) `cavity_24_moving.json`: the cavity pushed to k = 3 on 64^3: the
   CONTROL of the medium's clock (1 / gamma_m^2).
-- (v) `index_50.json`, `index_20.json`, `index_10.json` and
+- the index at rest: `index_50.json`, `index_20.json`, `index_10.json` and
   `index_reference.json`: the index block at rest on a chain of 1400 (the
   kind `[7, 8]`; a block of side 12 at x = 900 with seed 0, a CAVITY with the
   kind's own pair, the design script's oscillator held at 0 outside its
   cells; G `[1, 1]` and g 1 / 50, 1 / 20, 1 / 10; the light clock `[153, 100]` on N = 64, omega
   0.150214; a lamp at x = 600, a probe at x = 1100): CONTROL of the coupling
   (the closed form n^2 = 1 + G g / (omega_0^2 - omega^2)).
-- (v-m) `index_moving_k3_toward.json`, `index_moving_k3_away.json` and the
+- the index in motion: `index_moving_k3_toward.json`, `index_moving_k3_away.json` and the
   same at k = 4: the moving index on the design's chain of 2200 (the source
   at 300, the probe at 1500, s = 24, the kind `[156, 157]`, the well
   `[314, 315]`, g `[1, 200]`, G `[1, 1]`, light at omega 0.035, the block
@@ -78,7 +78,7 @@ readings away from the script's numbers by the wrapped wave and was not kept).
   well in motion `deep_well_k3_40.json` and `deep_well_rest_40.json` (a 128^2 layer,
   s = 40 at full depth [800, 800] in [800, 809], the flat seed, the ramp 1500 and the
   hold 8000; the block centred, the rest world's 3500 intervals the series' rest
-  length, as the layer pin's rest world keeps 3500 on main); (v-m) the long chains REGENERATED on section 11's geometry (the chain of
+  length, as the layer pin's rest world keeps 3500 on main); the long chains REGENERATED on section 11's geometry (the chain of
   4000, the source at 800, the probe at 2400, the block from x = 1500 stepping away
   from interval 3000, the window [3800, 5400]); and `EXPLORATORY_light_clock_60.json`
   (NOT WRITTEN, refused by MUST 3 as 4b's; section 10 read by PROBES only: the chain of 673, A at [600, 612) at full depth,
@@ -106,8 +106,8 @@ CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
 FACES_OPEN = {"x": "open"}
 AGE_BOUND = 1 << 20
 AMPLITUDE_BOUND = 1 << 32
-MOMENTUM_K3 = 64
-MOMENTUM_K4 = 48
+MOMENTUM_SPEED_THIRD = 64
+MOMENTUM_SPEED_QUARTER = 48
 # The layer pin world's push (DECLARATIONS.md section 8): the ramp ten relaxation times of
 # the well (1027 intervals), the hold 8000 after it, the ticks 18500 (500 more, the hold
 # read over [10200, 18200] by RUN_LIST.md).
@@ -389,7 +389,7 @@ def worlds() -> dict[str, dict]:
             [64, 64, 64],
             PERIODIC,
             kind_pair,
-            [rest_block(side, corner, well, momentum=[MOMENTUM_K3, 0, 0], ramp=1500)],
+            [rest_block(side, corner, well, momentum=[MOMENTUM_SPEED_THIRD, 0, 0], ramp=1500)],
             9500,
             mode_axis="x",
         )
@@ -409,7 +409,7 @@ def worlds() -> dict[str, dict]:
         [64, 64, 64],
         PERIODIC,
         [800, 809],
-        [rest_block(24, 20, [800, 809], cavity=True, momentum=[MOMENTUM_K3, 0, 0], ramp=1500)],
+        [rest_block(24, 20, [800, 809], cavity=True, momentum=[MOMENTUM_SPEED_THIRD, 0, 0], ramp=1500)],
         9500,
         mode_axis="x",
     )
@@ -478,7 +478,7 @@ def worlds() -> dict[str, dict]:
                 lamp=None,
                 probes=[[1500, 0, 0]],
             )
-    for k, momentum in ((3, MOMENTUM_K3), (4, MOMENTUM_K4)):
+    for k, momentum in ((3, MOMENTUM_SPEED_THIRD), (4, MOMENTUM_SPEED_QUARTER)):
         for direction, x, sign in (("toward", 1300, -1), ("away", 700, 1)):
             name = f"index_moving_k{k}_{direction}"
             out[name] = world(
@@ -523,7 +523,7 @@ def worlds() -> dict[str, dict]:
                 lamp=None,
                 probes=[[2400, 0, 0]],
             )
-    for k, momentum in ((3, MOMENTUM_K3), (4, MOMENTUM_K4)):
+    for k, momentum in ((3, MOMENTUM_SPEED_THIRD), (4, MOMENTUM_SPEED_QUARTER)):
         name = f"index_moving_long_k{k}_away"
         out[name] = world(
             name.replace("_", "-"),
@@ -564,7 +564,7 @@ def worlds() -> dict[str, dict]:
         [200, 200, 1],
         PERIODIC,
         [3200, 3236],
-        [dict(block, momentum=[MOMENTUM_K3, 0, 0], ramp=LAYER_RAMP)],
+        [dict(block, momentum=[MOMENTUM_SPEED_THIRD, 0, 0], ramp=LAYER_RAMP)],
         LAYER_RAMP + LAYER_HOLD + 500,
         mode_axis="x",
     )
@@ -629,7 +629,7 @@ def launch_list_worlds(include_refused: bool = False) -> dict[str, dict]:
     # B the light detector at x = 1900, a probe at the free Node it faces (GAMEBOARD).
     emitters: list[tuple[str, int, dict]] = (
         [
-            ("redshift_k3", 700, {"momentum": [-MOMENTUM_K3, 0, 0], "ramp": 1500}),
+            ("redshift_k3", 700, {"momentum": [-MOMENTUM_SPEED_THIRD, 0, 0], "ramp": 1500}),
             ("redshift_control", 1300, {}),
         ]
         if include_refused
@@ -670,7 +670,7 @@ def launch_list_worlds(include_refused: bool = False) -> dict[str, dict]:
         [128, 128, 1],
         PERIODIC,
         [800, 809],
-        [dict(deep, momentum=[MOMENTUM_K3, 0, 0], ramp=1500)],
+        [dict(deep, momentum=[MOMENTUM_SPEED_THIRD, 0, 0], ramp=1500)],
         9500,
         mode_axis="x",
     )

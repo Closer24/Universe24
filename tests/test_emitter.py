@@ -148,7 +148,7 @@ def run(document: dict) -> tuple[list[dict], DetectorLawSimulation, list[dict]]:
     return lines, simulation, trace
 
 
-def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved():
+def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved():
     document = emitter_world(stock=4)
     lines, simulation, trace = run(document)
     births = [line for line in lines if line["event"] == "birth"]
@@ -262,7 +262,7 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     assert len([line for line in lines if line["event"] == "birth"]) == 2
 
 
-def test_b_the_born_record_is_written_once_and_the_law_advances_it():
+def test_the_born_record_is_written_once_and_the_law_advances_it():
     document = emitter_world(stock=1, ticks=400)
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
@@ -311,7 +311,7 @@ def test_b_the_born_record_is_written_once_and_the_law_advances_it():
     assert simulation.books()["families"]["light"]["transit"]["taken_by_emitter"] == 0
 
 
-def test_c_the_loaders_refusals_name_their_keys():
+def test_the_loaders_refusals_name_their_keys():
     def refused(mutate, message: str, on_mode: bool = False) -> None:
         document = emitter_world(stock=2, on_mode=on_mode)
         mutate(document)

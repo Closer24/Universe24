@@ -19,14 +19,14 @@ declaration; a reading "matches the algebra's number", never "is nature").
   k = 2 pi / 3 along x (the `mode` lines: abs(S_0 + w S_1 + w^2 S_2)^2, w the cube root
   of unity, mean and largest over the hold).
 - The clicks alone, for the ray law's screens and the light detectors' trains (RUN_LIST.md,
-  the reader of record of rows 2a, 2c, 10, M1, M2, 4b, R2 and the light clock): `clicks_of`
+  the reader of record of the two slits, Sorkin's three openings, the one opening, de Broglie's fringes, the moving mass's energy, the moving emitter's redshift, Sagnac and the light clock): `clicks_of`
   turns a run's click lines into clicks (a `click` line's tick and Node; a `gather` line's
   chosen cell and its `click` interval, the Node the cell's one declared Node), `screen_clicks`
   counts them per Node of a detector row (the count centroid, the maxima's positions and the
   visibility as exact fractions), `light_clicks` reads one detector's train (the first click's
   interval from a declared birth stamp, the mean interval by the same reader as the block
   clocks above, the train's line 2 pi over it): DETECTOR readings, no value of the board read.
-- The index (v, v-m): light's phase at the probe by projection on the window (the
+- The index at rest and in motion: light's phase at the probe by projection on the window (the
   design's `massive_moving_index.py`: phase = atan2(sum v cos omega t, sum v sin
   omega t)), the delay the reference's phase less the world's, n = 1 + delay / (k s)
   with k = omega / c at rest; in motion the ratio of the delay to the covariant
@@ -58,7 +58,7 @@ C = 1.0 / math.sqrt(3.0)
 N_PHASE = 64
 REST_WINDOW = (200, 3000)
 HOLD = (1500, 9500)
-# the layer pin world of 4a pushed to k = 3: the hold after the ramp 10000 (DECLARATIONS.md
+# the muon's moving clock, the layer pin world pushed to k = 3: the hold after the ramp 10000 (DECLARATIONS.md
 # section 8); the rest world (3500 intervals) is read over REST_WINDOW
 LAYER_HOLD = (10200, 18200)
 INDEX_WINDOW = (1000, 1800)
@@ -445,7 +445,7 @@ def main() -> None:
             reading["rate_over_pin"] = reading["f_over_f0_by_rate"] / expected
             reading["peak_over_pin"] = reading["f_over_f0_by_peak"] / expected
             readings[name] = reading
-    # (i-L), (ii-L) the layer pin worlds of row 4a: the clicks' mean interval over the hold
+    # the layer pin worlds of the muon's moving clock: the clicks' mean interval over the hold
     # [10200, 18200] at k = 3 over the rest world's over [200, 3000] (DETECTOR), the peaks
     # GAMEBOARD beside
     layer_hold = clock("layer_pin_k3_14", LAYER_HOLD)
@@ -509,7 +509,7 @@ def main() -> None:
             reading["n_over_pin"] = reading["n"] / pin["n"]
             reading["excess_over_pin"] = (reading["n"] - 1.0) / (pin["n"] - 1.0)
             readings[name] = {"kind": "GAMEBOARD", **reading}
-    # (v-m) the index in motion
+    # the index in motion
     for k in (3, 4):
         for direction in ("toward", "away"):
             name = f"index_moving_k{k}_{direction}"

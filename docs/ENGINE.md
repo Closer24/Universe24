@@ -258,7 +258,7 @@ turn, the owed count, the release and the lamp keep `by_clock`, the same
 count where the rate is constant); the drive of every axis advances at every such self-creation,
 and a later axis whose drive reaches its D in the interval of an earlier
 axis's step loses that Link, its D subtracted, as the frame lost it
-before; the model owner's D1 of 2026-09-19 and the label along the unit
+before; the model owner's push-width decision of 2026-09-19 and the label along the unit
 vector of the same day,
 [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 5
 and notes 15 and 23; one unit of net flow, the label Q M, gives the speed

@@ -2237,10 +2237,10 @@ would have found no cell.
    with the share wobbling from -18961 to 555039 (the rounding of a
    profile of 100 against a share of 3 percent of its square) and the
    offers growing a hundredfold at every reseed (the swamping). THE TESTS:
-   test_emitter (a) reads the norm as the share's sum bit for bit, the
+   test_emitter's births test reads the norm as the share's sum bit for bit, the
    board's shares summing to the conserved form, the share's wobble below
    one part in a thousand, and every birth's wait within two intervals of
-   (2 u + 1) P / (2 W); test_massive_record (aa) admits the two matter
+   (2 u + 1) P / (2 W); test_massive_record's matter emitter test admits the two matter
    records' clicks in either order (the second born (2 u + 1) P / (2 W)
    after the first's click); the chain digests' events and audit moved
    once (the state at 600 unchanged). THE LIGHT CLOCK by the one command
@@ -2284,7 +2284,7 @@ would have found no cell.
    residual against the bound (the iteration's floor or a fault, never a
    bound moved). The host's eigensolver (`accurate_mode`, ARPACK) is no
    longer the generator: it stays a diagnostic (the margin readings'
-   extent, and the cross-check of test_initial_state (h)); `mode_clock`
+   extent, and the cross-check of test_initial_state's generator test); `mode_clock`
    retired. THE READINGS (COMPUTATION, the emitter world's chain of 80,
    the well [800, 801]): the stop after 1817 iterations at 2^20 and 3204
    at 50 x 2^20 (0.1 and 0.2 seconds); the clock 8346518 / 2^22 and
@@ -2328,11 +2328,11 @@ would have found no cell.
    generator's profile can sit thousands of units from the eigensolver's
    while lawful (the layer's 3497). Every seeded world regenerated (the
    profiles and clocks move by the floor; the digests of
-   test_massive_record (p) with them); no registered world sits below
+   the chain digests test of test_massive_record with them); no registered world sits below
    2^20 (the four held Malus worlds at 100 stay held as written). HOST
    cost of the regeneration: about 31 minutes for the massive record
    generator's eight chain worlds at 50 x 2^20 and one minute for the
-   detector-law generator's thirty-six. THE TESTS: test_initial_state (h) the stop, the reproduction,
+   detector-law generator's thirty-six. THE TESTS: test_initial_state's generator test the stop, the reproduction,
    the residual passed, the agreement with ARPACK within 300 units and 4
    clock units, the fixed-count iteration within the same, and a limit
    below the stop refused by name; test_body_conditions seeds by the

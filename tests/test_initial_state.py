@@ -46,7 +46,7 @@ def restamped(document: dict) -> dict:
     return document
 
 
-def test_a_a_generated_world_is_lawful_and_carries_its_clock_and_stamp():
+def test_a_generated_world_is_lawful_and_carries_its_clock_and_stamp():
     """The emitter world (the well [800, 801] of side 12 on the chain of 80, the amplitude
     100) and the light clock's chain (the amplitude 50 x 2^20): each body's profile carries
     its clock [a, b] with b a power of two at least twice the amplitude and at least 2^20,
@@ -80,7 +80,7 @@ def test_a_a_generated_world_is_lawful_and_carries_its_clock_and_stamp():
         assert 0 <= residual <= bound
 
 
-def test_b_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_rounding():
+def test_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_rounding():
     """The residual bound (9.22 (7) (ii), proved for the rounded profile of an exact mode):
     the profile with its peak doubled is refused naming the Node, its residual and the
     bound; the profile with its peak zeroed is refused; the profile with one unit added at
@@ -110,7 +110,7 @@ def test_b_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_roun
             parse_nature_beam_world(changed)
 
 
-def test_c_the_clocks_refusals_name_the_rule():
+def test_the_clocks_refusals_name_the_rule():
     """The clock [a, b] beside a profile: absent, refused naming the key; not [a, b] of two
     positive integers, refused; b below the amplitude, refused; a / b at the band's top
     (a = floor(2 x 800 b / 809)), refused as no bound mode; a = 2 b, refused as a runaway;
@@ -147,7 +147,7 @@ def test_c_the_clocks_refusals_name_the_rule():
     refused(scalar, "clock is admitted only beside a profile")
 
 
-def test_d_at_most_three_families():
+def test_at_most_three_families():
     """Three families are admitted (the emitter world's two and a third), a fourth is
     refused naming the count and the bound (record 1875; 9.22 (2))."""
     document = emitter_world(stock=2)
@@ -165,7 +165,7 @@ def test_d_at_most_three_families():
         parse_nature_beam_world(document)
 
 
-def test_e_bodies_are_whole_and_disjoint():
+def test_bodies_are_whole_and_disjoint():
     """Two bodies whose cells overlap are refused naming both (a light-kind block of side 1
     inside A's cells on the light clock's chain); a block beyond a face of the board is
     refused by the fit check naming the axis and the vertex (a light-kind block of side 3 at
@@ -199,7 +199,7 @@ def test_e_bodies_are_whole_and_disjoint():
     parse_nature_beam_world(whole)
 
 
-def test_f_the_six_neighbour_read_in_integers():
+def test_the_six_neighbour_read_in_integers():
     """`six_neighbours_flat` on a 3 x 1 x 1 chain: open on x, [1, 2, 3] reads [2, 4, 2];
     periodic on x, [5, 3, 1] with y and z of extent 1 periodic (the Node itself twice per
     folded axis): [3 + 1 + 4 x 5, 5 + 1 + 4 x 3, 3 + 5 + 4 x 1]."""
@@ -207,7 +207,7 @@ def test_f_the_six_neighbour_read_in_integers():
     assert six_neighbours_flat([5, 3, 1], (3, 1, 1), (True, True, True)) == [24, 18, 12]
 
 
-def test_g_the_input_stamp_the_law_and_the_hash():
+def test_the_input_stamp_the_law_and_the_hash():
     """THE FILE'S HASH AND THE LAW IT WAS MADE UNDER (9.22 (7) (i)): a seeded world without
     its `input` stamp is refused naming the key; a stamp under another law is refused naming
     both laws; a stamp whose hash is not the digest of the integers (the profile changed by
@@ -246,7 +246,7 @@ def test_g_the_input_stamp_the_law_and_the_hash():
     parse_nature_beam_world(unseeded)
 
 
-def test_h_the_generator_as_the_operator_iterated_in_integers():
+def test_the_generator_as_the_operator_iterated_in_integers():
     """THE GENERATOR WITH THE STOP (the model owner's word of 2026-09-25, 04:10Z, closing
     record 1898; ALGEBRA.md 9.22 (7); BUILD.md section 26 item 25): on the emitter world's
     chain of 80 (the well [800, 801] in the kind [800, 809]) `iterated_mode` iterates the law's
