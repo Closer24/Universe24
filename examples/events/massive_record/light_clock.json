@@ -23,7 +23,8 @@
  "clock_stamp": true,
  "detector_law": true,
  "massive_record": true,
- "amplitude_bound": 4294967296,
+ "amplitude_bound": 268435456,
+ "node_clock": 1000000,
  "directions": [],
  "families": [
   {
@@ -6921,7 +6922,7 @@
      "periods": 8
     },
     "period": 94,
-    "norm": 2801246617382809996,
+    "norm": 2801254251937537357822336,
     "born": {
      "now": [
       630,
@@ -7549,6 +7550,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "4c7384da46ce2c92897069918768fc1b562cd2564f3bd2a427816415d60cd15a"
+  "hash": "c47e72265bd3db876b915749c128868edc2210e58f52f61e778b6a6e398b58ff"
  }
 }

@@ -38,6 +38,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -48,6 +49,26 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import input_stamp, parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
+# THE NODE CLOCK (the model owner's decision (5) of record 1962; ALGEBRA.md 9.35 (2), (3);
+# BUILD.md section 26 item 31): Gamma, the world key `node_clock` of every test world, the
+# eighteen's 10^6; the clock pair (e, f) = (Gamma, Gamma + M) at every Node
+NODE_CLOCK = 10**6
+
+
+def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
+    """The wheel W of a rule at a Node under the Node clock (ALGEBRA.md 9.22 (4), 9.35 (2); the
+    engine's `wheel_at`): 3 den f / gcd(Gamma num, 6 den M, 3 den f) with f = Gamma + M, the
+    pair's own 3 den / gcd(num, 3 den) at M = 0 (2403 on [800, 801], 700 on [801, 700])."""
+    num, den = int(pair[0]), int(pair[1])
+    f = gamma + content
+    return 3 * den * f // math.gcd(gamma * num, 6 * den * content, 3 * den * f)
+
+
+def lawful_wheel(world, line: dict) -> bool:
+    """A birth line's W is the rule's at the emitting body's centre Node with the content the
+    line carries (the body's held quanta as the clicking record was advanced), its u below it."""
+    block = world.measured[line["measured"]].block
+    return line["W"] == wheel_of(block.pair, line["content"]) and 0 <= line["u"] < line["W"]
 
 
 def massive_generator():
@@ -66,8 +87,9 @@ def emitter_world(
     on_mode: bool = True,
 ) -> dict:
     """The emitter's unit world: a chain of 80 (x closed, mirrors), the emitter a body of the
-    matter kind [800, 809] with the well pair [800, 801] (W = 2403 remainder values, ALGEBRA.md
-    9.22 (4)) over the train's 32 cells at [5, 37), seeded on its bound mode at the amplitude
+    matter kind [800, 809] with the well pair [800, 801] (W = 2403 remainder values in the
+    vacuum, ALGEBRA.md 9.22 (4); at its Nodes the wheel of its content under the Node clock,
+    9.35 (2)) over the train's 32 cells at [5, 37), seeded on its bound mode at the amplitude
     2^20 (the generator's `seed_on_the_mode`, the body's conditions of the load check; at 100
     the born light's back-action swamps the excited record, ALGEBRA.md 9.17 (7) (c)), its
     stock `amount` = `stock`, its `emitter` the light family on the born clock [512, 1] of
@@ -98,7 +120,8 @@ def emitter_world(
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
-        "amplitude_bound": 1 << 32,
+        "amplitude_bound": 1 << 28,
+        "node_clock": NODE_CLOCK,
         "directions": [],
         "families": [
             {"name": "light", "quantum": 1, "phase_per_link": [512, 1]},
@@ -156,10 +179,17 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
     lines, simulation, trace = run(document)
     births = [line for line in lines if line["event"] == "birth"]
     assert len(births) == 4
-    # the residue from the law (ALGEBRA.md 9.22 (4)): u the clicking record's
-    # remainder at the birth cell in the remainder's step, W = 3 den / gcd(num,
-    # 3 den) = 2403 on [800, 801]; read on the board below
-    assert all(line["W"] == 2403 and 0 <= line["u"] < 2403 for line in births)
+    # the residue from the law (ALGEBRA.md 9.22 (4)) under the Node clock (9.35
+    # (2), (3); BUILD.md section 26 item 31): u the clicking record's remainder
+    # at the birth Node in the remainder's step, W = 3 den f / gcd(Gamma num,
+    # 6 den M, 3 den f) at that Node with the body's content M (2403 on [800,
+    # 801] in the vacuum; here the stock 4, 3, 2, 1 at the four births), read
+    # from the rule (`lawful_wheel`); read on the board below
+    assert all(lawful_wheel(simulation.world, line) for line in births)
+    assert [line["content"] for line in births] == [4, 3, 2, 1]
+    assert [line["node_clock"] for line in births] == [
+        [NODE_CLOCK, NODE_CLOCK + m] for m in (4, 3, 2, 1)
+    ]
     assert [line["excitation"] for line in births] == [1, 2, 3, 4]
     ticks = [line["tick"] for line in births]
     # the excited record's residue is read after its first advance (9.19 (4e);
@@ -214,7 +244,7 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
     for line in births:
         excited_u = by_tick[line["tick"]]["excited_before"][1]
         waited = line["tick"] - read_at
-        expected = (2 * excited_u + 1) * emitter["period"] / (2 * 2403)
+        expected = (2 * excited_u + 1) * emitter["period"] / (2 * line["W"])
         assert abs(waited - expected) <= 2, (line["tick"], excited_u, waited, expected)
         read_at = line["tick"] + 1
     for line in births:
@@ -223,13 +253,13 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
         # of the read itself, the rung then T / (2 W), a weaker bound)
         excited_u = by_tick[line["tick"]]["excited_before"][1]
         threshold = norm * (2 * excited_u + 1)  # 2 T u + T <= 2 W C
-        assert 2 * 2403 * line["excitation_offer"] >= threshold
+        assert 2 * line["W"] * line["excitation_offer"] >= threshold
         # the interval before the click: the offer below the rung (a birth at
         # the first interval has no interval before it)
         previous = by_tick.get(line["tick"] - 1)
         assert (
             previous is None
-            or 2 * 2403 * previous["offer"] < threshold
+            or 2 * line["W"] * previous["offer"] < threshold
             or previous["excited_before"] is None
         )
         # the excited record ended at its click, the next one seeded
@@ -330,12 +360,23 @@ def test_the_born_record_is_written_once_and_the_law_advances_it():
             assert list(born.now[5:37, 0, 0]) == train["now"]
             assert list(born.before[5:37, 0, 0]) == train["before"]
             assert not np.any(born.now[~block.mask]) and not np.any(born.before[~block.mask])
-            # the norm T the written one, the record's conserved form on the
-            # vacuum (ALGEBRA.md 9.17 (6a), 9.19 (3)): light's pair is the vacuum's
-            # at the body's cells, so the board reads the same integer at the birth
-            assert born.norm == birth["norm"] == train["norm"] == simulation.conserved_form(born) > 0
+            # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 item 31): T the
+            # record's conserved form as written on the board, the engine's exact
+            # integer: Gamma times the file's vacuum norm (ALGEBRA.md 9.17 (6a),
+            # 9.19 (3); light's pair is the vacuum's at the body's Nodes) plus the
+            # content after the birth (the stock less one) times 3 wall (now -
+            # before)^2 over the body's Nodes (light's wall 1)
+            kinetic = sum((a - b) ** 2 for a, b in zip(train["now"], train["before"], strict=True))
+            assert birth["born_norm"] == train["norm"] > 0 and birth["content"] == 1
+            assert born.norm == birth["norm"] == simulation.conserved_form(born) > 0
+            assert (
+                born.norm
+                == NODE_CLOCK * train["norm"]
+                + 3 * simulation.kind_wall(0) * (birth["content"] - 1) * kinetic
+            )
             assert birth["cells"] == 32 and birth["excitation"] == 1 and birth["train"] == 0
-            assert born.u == birth["u"] and born.wheel == birth["W"] == 2403
+            assert born.u == birth["u"] and born.wheel == birth["W"]
+            assert lawful_wheel(simulation.world, birth)
             assert born.content == 1 and born.emitter == 0
             assert born.ladder == [simulation.cell_names.index("screen")]
         if born is not None and born.identity in simulation.records:

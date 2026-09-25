@@ -25,6 +25,7 @@ import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import input_stamp, parse_nature_beam_world
+from tests.test_emitter import lawful_wheel
 from tests.test_massive_record import light_clock_world, massive_world, seed_source
 
 LIGHT_CLOCK = Path(__file__).resolve().parents[1] / "examples/events/massive_record/light_clock.json"
@@ -40,7 +41,8 @@ def emitter(
     direction: list[int] | None = None,
 ) -> dict:
     """An emitter body over the train's 32 cells from `position` on the matter kind
-    [800, 809]: the well [800, 801] (W = 2403 remainder values, ALGEBRA.md 9.22 (4)), no
+    [800, 809]: the well [800, 801] (W = 2403 remainder values in the vacuum, ALGEBRA.md 9.22
+    (4); at its Nodes the wheel of its content under the Node clock, 9.35 (2)), no
     coupling (the click alone, the model owner's decision (2) of record 1962), the seed 50 x 2^20 (its
     profile on the mode by `seed_source` once the world is built), its `emitter` of light
     with the stock `stock` and its train along `direction` (+x by default; THE BORN TRAIN,
@@ -141,7 +143,9 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
     `click`), never before the lattice's cone allows (one Link per interval from the body's
     head at its birth to the screen's nearest Node at 91; the body steps toward the screen
     at the momentum 70, so the later births are nearer: the fourth's head 18 Links away,
-    its click 51 intervals after its birth on this head's residue 114 of 2403, COMPUTATION;
+    its click 51 intervals after its birth on this head's residue 114 of 2403 before the Node
+    clock, COMPUTATION; SINCE THE NODE CLOCK, BUILD.md section 26 item 31, the wheel at the
+    body's Nodes is the rule's with its content and the residues moved;
     SINCE THE REMAINDER KEPT, BUILD.md section 26 item 29, the residues spread from the
     kept remainder), the ladder the one cell (the block's `receiver`, read
     through `receiver_cell`), the line carrying the quantum (`content` 1) and the record
@@ -183,7 +187,8 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
             assert "ladder" not in line and line["content"] == 1
             assert line["record"] not in simulation.records and line["clock_source"] == "interval"
             pointers, ladder, u, norm, wheel = seen[line["record"]]
-            assert ladder == [screen] and u == line["u"] and wheel == 2403
+            assert ladder == [screen] and u == line["u"] and wheel == births[line["record"]]["W"]
+            assert lawful_wheel(simulation.world, births[line["record"]])
             # the cumulative rule on the click's own pointers (ALGEBRA.md 9.19 (3) (b))
             assert 2 * wheel * pointers[screen] >= (2 * u + 1) * norm
             # the cells off the ladder: booked, never chosen, counted in T
@@ -254,7 +259,9 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     # what it books is the tapers' dispersion returned off the mirror at x = 0, below a
     # hundredth of the norm
     assert all(seen[g["record"]][0][own_cell] * 100 < seen[g["record"]][3] for g in found)
-    assert all(seen[g["record"]][4] == 2403 for g in found)
+    births = {line["record"]: line for line in lines if line["event"] == "birth"}
+    assert all(seen[g["record"]][4] == births[g["record"]]["W"] for g in found)
+    assert all(lawful_wheel(simulation.world, births[g["record"]]) for g in found)
     document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 700
     document["clock_stamp"] = True
@@ -292,7 +299,9 @@ def test_the_lines_time():
     line = found[0]
     assert line["click_at"] == "rung" and line["tick"] == line["click"]
     assert line["chosen"] == [["A_face", 0, "0"]] and line["clock_source"] == "measured:0"
-    assert 0 <= line["click"] - line["birth"] <= 300 and 0 <= line["u"] < 2403
+    born = next(b for b in lines if b["event"] == "birth" and b["record"] == first)
+    assert 0 <= line["click"] - line["birth"] <= 300 and 0 <= line["u"] < born["W"]
+    assert lawful_wheel(simulation.world, born)
     assert first not in simulation.records
     # two bodies a hundred Links apart, each naming the cube beside the first
     document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])

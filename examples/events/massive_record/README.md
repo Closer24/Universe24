@@ -44,7 +44,10 @@ a chain's, with no face for the rule to compare). A chain open on x is open for
 light and for matter alike (a zero face beyond the ends, the receiver slab of
 `face_depth` there, declared on every open board); the held index chains' notes
 on their faces stand with their files (the section below). Every well declares
-its `seed` (no loader default, item 28).
+its `seed` (no loader default, item 28). Every world declares `node_clock`, the
+Node clock's Gamma (10^6; ALGEBRA.md 9.35 (3); BUILD.md section 26 item 31: the
+clock pair (Gamma, Gamma + M) at every Node, M the content held there), and
+`amplitude_bound` 2^28, its ceiling under the clock.
 
 | World | What it declares | Kind | The pin (COMPUTATION, `expectations.json`) | What its record reads |
 | --- | --- | --- | --- | --- |

@@ -164,6 +164,7 @@ def ray_world(name: str, shape: list[int], boundary: dict, pair: list[int], tick
     document.update({key: value for key, value in TEMPLATE_KEYS.items() if key != "law"})
     document["massive_record"] = True  # the absorbing blocks and the `probes` key live under it
     document["amplitude_bound"] = AMPLITUDE_BOUND  # the emitter body's massive family (M1-10)
+    document["node_clock"] = NODE_CLOCK  # the Node clock Gamma (item 31)
     document["families"] = [light_family(pair), emitter_kind_family()]
     document["measured"] = []
     document["detectors"] = []
@@ -461,6 +462,7 @@ def malus(name: str, source: Path, setting: int) -> dict:
     ]
     rebuilt["massive_record"] = True
     rebuilt["amplitude_bound"] = AMPLITUDE_BOUND
+    rebuilt["node_clock"] = NODE_CLOCK
     rebuilt["measured"] = [
         entry for entry in rebuilt["measured"] if entry["position"] != MALUS_READ_NODE
     ]
@@ -502,7 +504,10 @@ WELL_FULL = [
     801,
 ]  # the rich well of the massive rows' emitters (2403 remainder values; the mathematician's 9.21 (8))
 EMITTER_SEED = 50 << 20
-AMPLITUDE_BOUND = 1 << 32  # section 15 M1-10, the world key `amplitude_bound` of every massive world
+AMPLITUDE_BOUND = (
+    1 << 28
+)  # the world key `amplitude_bound` of every massive world: the ceiling under the Node clock (BUILD.md section 26 item 31; section 15 M1-10's 2^32 HISTORY)
+NODE_CLOCK = 1_000_000  # the world key `node_clock`, Gamma (ALGEBRA.md 9.35 (3); item 31): the massive generator's integer, written in every world
 EMITTER_STOCK = (
     64  # the massive rows' emitters: 64 excitations on the wheel [1, 64] (BUILD.md section 26)
 )
@@ -591,6 +596,7 @@ def bounded(document: dict) -> None:
         document[key] = value
         if key == "massive_record":
             document["amplitude_bound"] = AMPLITUDE_BOUND
+            document["node_clock"] = NODE_CLOCK
 
 
 def light_clock(massive) -> dict:

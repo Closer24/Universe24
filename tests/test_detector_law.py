@@ -19,7 +19,7 @@ import pytest
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import DETECTOR_LAW_RULE, input_stamp, parse_nature_beam_world
-from tests.test_emitter import massive_generator
+from tests.test_emitter import NODE_CLOCK, lawful_wheel, massive_generator, wheel_of
 
 EMITTER_KIND = [7, 8]  # the emitter body's kind (omega_0 = 0.505)
 EMITTER_PAIR = [
@@ -49,8 +49,9 @@ def emitter_body(
     periods (THE BORN TRAIN, 9.17 (6a); BUILD.md section 26 item 27: the profile and its
     norm the generator's, `born_train`) and, with `receiver`, the born records' ladder by
     name. The residue and the wheel are the law's (ALGEBRA.md 9.22 (4): the clicking
-    record's remainder at the birth cell, W = 700 on EMITTER_PAIR, read after the excited
-    record's first advance, 9.19 (4e); the residues spread from the kept remainder, the model
+    record's remainder at the birth cell, W = 700 on EMITTER_PAIR in the vacuum, at the body's
+    Nodes the wheel of its content under the Node clock (9.35 (2); BUILD.md section 26 item
+    31), read after the excited record's first advance, 9.19 (4e); the residues spread from the kept remainder, the model
     owner's decisions (1) and (2) of record 1962, no coupling). The cadence under the click
     rule of ALGEBRA.md 9.17 (7)
     (f) (BUILD.md section 26 item 24): the residue u clicks (2 u + 1) / (2 W) x P intervals
@@ -151,7 +152,8 @@ def chain_world(
         "clock_stamp": clock_stamp,
         "detector_law": True,
         "massive_record": True,
-        "amplitude_bound": 1 << 32,
+        "amplitude_bound": 1 << 28,
+        "node_clock": NODE_CLOCK,
         "directions": [],
         "families": [
             {"name": "light", "quantum": 1, "phase_per_link": list(BORN_CLOCK)},
@@ -250,7 +252,10 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     # the emitter's stock of 6 excitations, each clicking at its own rung; the
     # residues from the law (ALGEBRA.md 9.22 (4)): the clicking record's
     # remainder at the birth cell on Z_700
-    assert len(births) == 6 and all(0 <= line["u"] < 700 and line["W"] == 700 for line in births)
+    # the wheel the rule's at the body's centre Node under the Node clock (the
+    # stock 6 down to 1 at the six births), u below it
+    assert len(births) == 6 and all(lawful_wheel(world, line) for line in births)
+    assert [line["content"] for line in births] == [6, 5, 4, 3, 2, 1]
     assert len(gathers) + sum(1 for live in simulation.records.values() if live.family == 0) == 6
     assert len(gathers) >= 3
     assert all("clock" in g and "birth" in g and "click" in g for g in gathers)
@@ -352,7 +357,8 @@ def layer_world(receiver: object = None) -> dict:
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
-        "amplitude_bound": 1 << 32,
+        "amplitude_bound": 1 << 28,
+        "node_clock": NODE_CLOCK,
         "directions": [],
         "families": [
             {"name": "light", "quantum": 1, "phase_per_link": list(BORN_CLOCK)},
@@ -519,7 +525,10 @@ def test_the_increment_ladder_over_the_named_sets():
     for gather in gathers:
         assert gather["ladder"] == ["s0", "s1", "s2"] and gather["record"] not in simulation.records
         total, increments, ladder, u, norm, wheel = seen[gather["record"]]
-        assert ladder == names and wheel == 700 and 0 <= u < wheel
+        # the record's wheel the rule's at the body's Node with its content at
+        # the birth (the stock 8 down to 1)
+        assert ladder == names and wheel in {wheel_of(EMITTER_PAIR, m) for m in range(1, 9)}
+        assert 0 <= u < wheel
         assert gather["chosen"][0][0] == chosen_by_the_rule(
             simulation, total, increments, ladder, u, norm, wheel
         )

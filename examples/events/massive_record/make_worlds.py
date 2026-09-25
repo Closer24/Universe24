@@ -85,7 +85,15 @@ CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
 # section 26 item 28)
 SEED_AMPLITUDE = 1 << 20
 AGE_BOUND = 1 << 20
-AMPLITUDE_BOUND = 1 << 32
+# the amplitude bound A of every row: the ceiling 2^28 under the Node clock (the
+# model owner's decision (5) of record 1962; BUILD.md section 26 item 31)
+AMPLITUDE_BOUND = 1 << 28
+# THE NODE CLOCK (ALGEBRA.md 9.35 (3); item 31): Gamma, declared per world like
+# the pairs, the clock pair (e, f) = (Gamma, Gamma + M) at every Node with M the
+# content held there; the eighteen declare 10^6 (a clock body of 64 quanta slows
+# by 6 x 10^-5, a well of one quantum by 10^-6, the mathematician's reading: no
+# pin of the eighteen moves beyond its band)
+NODE_CLOCK = 1_000_000
 MOMENTUM_SPEED_THIRD = 64
 MOMENTUM_SPEED_QUARTER = 48
 # The layer pin world's push (DECLARATIONS.md section 8): the ramp ten relaxation times of
@@ -161,10 +169,13 @@ def world(
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
-        # the amplitude bound A every row stays below (DECLARATIONS.md section
-        # 15 M1-10: 2^32 in every massive world; MUST 3 at that A, the rows
-        # asserted below it at run time)
+        # the amplitude bound A every row stays below (2^28, the ceiling under
+        # the Node clock, BUILD.md section 26 item 31; DECLARATIONS.md section
+        # 15 M1-10's 2^32 HISTORY; the rows asserted below it at run time)
         "amplitude_bound": AMPLITUDE_BOUND,
+        # the Node clock Gamma (ALGEBRA.md 9.35 (3); item 31): (e, f) = (Gamma,
+        # Gamma + M) at every Node, M the content held there; required, no default
+        "node_clock": NODE_CLOCK,
         "directions": [],
         "families": families,
         "measured": measured,
@@ -327,12 +338,22 @@ def born_train(document: dict, number: int) -> None:
             f"measured[{number}]: the train's flux along its way is not positive; nothing written"
         )
     norm = born_train_norm(now, before, shape, (0, 0, 0), extents, (num, den), wrap)
+    # the check board's engine books the flux in the Node clock's units, the wall
+    # times Gamma (BUILD.md section 26 item 31); the file's norm is the plain vacuum
+    # form (the loader's check), so the passage is read against norm times Gamma
+    gamma = int(document["node_clock"])
     booked = train_passage_flux(document, number, now, before)
-    if not norm * (1000 - TRAIN_FLUX_TOLERANCE) <= booked * 1000 <= norm * (1000 + TRAIN_FLUX_TOLERANCE):
+    scaled = norm * gamma
+    if (
+        not scaled * (1000 - TRAIN_FLUX_TOLERANCE)
+        <= booked * 1000
+        <= scaled * (1000 + TRAIN_FLUX_TOLERANCE)
+    ):
         raise ValueError(
             f"measured[{number}]: the train of {train.periods} periods books {booked} of its norm "
-            f"{norm} through a plane {TRAIN_FLUX_DISTANCE} Links ahead ({booked / norm:.4f}): not a "
-            "passage within 2 x 10^-3 (ALGEBRA.md 9.25 (11)); nothing written"
+            f"{norm} times the Node clock {gamma} through a plane {TRAIN_FLUX_DISTANCE} Links ahead "
+            f"({booked / scaled:.4f}): not a passage within 2 x 10^-3 (ALGEBRA.md 9.25 (11)); "
+            "nothing written"
         )
     emitter["born"] = {"now": now, "before": before, "norm": norm}
 

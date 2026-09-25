@@ -26,7 +26,7 @@ import pytest
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import input_stamp, parse_nature_beam_world
-from tests.test_emitter import massive_generator
+from tests.test_emitter import NODE_CLOCK, massive_generator
 
 SIDE = 12
 SHAPE = (SIDE, SIDE, SIDE)
@@ -35,7 +35,7 @@ WELL_VERTEX = (3, 4, 5)
 BIRTH = (8, 2, 7)
 RECEIVER = (9, 9, 2)
 WHEEL = 8
-INTERVALS = 90  # the reference record's click at 81 (u = 0; the prototype and the engine read the same flux since the prototype's factor of 3 was fixed, ALGEBRA.md 9.20 (C))
+INTERVALS = 90  # the reference record's click at 17 on this head (u = 0; read again under the Node clock, the same interval as before it: the vacuum's levels bit for bit, the norm and the flux both times Gamma; the 81 of the first build HISTORY)
 AMPLITUDE = 1 << 12
 
 
@@ -67,7 +67,8 @@ def small_world(
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
-        "amplitude_bound": 1 << 32,
+        "amplitude_bound": 1 << 28,
+        "node_clock": NODE_CLOCK,
         "directions": [],
         "families": [
             {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
@@ -173,16 +174,29 @@ def state_of(simulation: DetectorLawSimulation) -> dict[int, tuple[np.ndarray, n
     }
 
 
-def run(document: dict, u: int = 0, intervals: int = INTERVALS, rows=None, birth=BIRTH):
+def run(
+    document: dict,
+    u: int = 0,
+    intervals: int = INTERVALS,
+    rows=None,
+    birth=BIRTH,
+    contents: list[np.ndarray] | None = None,
+):
     """The small world run: the well's own record from interval 0, the light record planted at
-    interval 0; the states after every interval and the click lines."""
+    interval 0; the states after every interval and the click lines; with `contents` given,
+    the Node clock's content array as the engine holds it after every interval (the array
+    the interval's advances used, ALGEBRA.md 9.35 (3))."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     plant(simulation, birth, u, rows=rows)
     states = [state_of(simulation)]
+    if contents is not None:
+        contents.append(simulation.node_content.copy())
     for _ in range(intervals):
         simulation.step()
         states.append(state_of(simulation))
+        if contents is not None:
+            contents.append(simulation.node_content.copy())
     clicks = [(line["tick"], line["record"]) for line in lines if line["event"] == "gather"]
     return simulation, states, clicks
 
@@ -298,16 +312,33 @@ def reads_of(simulation: DetectorLawSimulation, family: int):
 
 
 def form_I(
-    simulation: DetectorLawSimulation, family: int, now: np.ndarray, before: np.ndarray
+    simulation: DetectorLawSimulation,
+    family: int,
+    now: np.ndarray,
+    before: np.ndarray,
+    content: np.ndarray | None = None,
 ) -> Fraction:
+    # the form under the Node clock (ALGEBRA.md 9.35 (2); BUILD.md section 26 item 31):
+    # the weights den f / (Gamma num) on the squares and 2 den M / (Gamma num) on now x
+    # before with (Gamma, f) = (Gamma, Gamma + M) at the Node, M the content there (1 at
+    # the well's Nodes, 0 elsewhere), the Link term as before
+    gamma = simulation.node_clock
+    if content is None:
+        content = simulation.node_content
     num = simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
     read = reads_of(simulation, family)(before).astype(object)
     now_o, before_o = now.astype(object), before.astype(object)
     total = Fraction(0)
     for node in zip(*np.nonzero(now_o | before_o | read), strict=True):
-        total += Fraction(int(den[node]), int(num[node])) * (
+        f = gamma + int(content[node])
+        total += Fraction(int(den[node]) * f, gamma * int(num[node])) * (
             int(now_o[node]) ** 2 + int(before_o[node]) ** 2
+        )
+        total -= (
+            Fraction(2 * int(den[node]) * (f - gamma), gamma * int(num[node]))
+            * int(now_o[node])
+            * int(before_o[node])
         )
         total -= Fraction(1, 3) * int(now_o[node]) * int(read[node])
     return total
@@ -315,10 +346,14 @@ def form_I(
 
 def test_conservation_between_clicks():
     """(a) the content per family constant before the click and down by one quantum of light
-    at it; (b) per record, I(t) less the accumulated remainder term of 8.2 is the same rational
-    at every interval (the remainder identity, exact)."""
+    at it; (b) per record, I(t) - I(t - 1) is the remainder term of 8.2 over the step, exactly,
+    both forms with the Node clock's content in force for that step (ALGEBRA.md 9.35 (2),
+    (3); BUILD.md section 26 item 31: the well's Nodes at M = 1 until the click at the set
+    bound to the well hands it the light quantum, M = 2 after; the form changes with the
+    content at the event and the identity holds step by step across it)."""
     document = small_world()
-    simulation, states, clicks = run(document)
+    contents: list[np.ndarray] = []
+    simulation, states, clicks = run(document, contents=contents)
     assert len(clicks) == 1
     click_tick = clicks[0][0]
     light = 1 << 40
@@ -329,27 +364,55 @@ def test_conservation_between_clicks():
             assert light in state
         else:
             assert light not in state
-    # (b) the form I with the remainder identity, per record, exact
+    # (b) the form I with the remainder identity, per record, exact, step by step with the
+    # content the step's advances used (`contents[t]`, the array after interval t is the
+    # one refreshed as interval t began)
+    well = simulation.blocks[0].mask
+    assert all(np.all(contents[t][well] == 1) for t in range(click_tick + 1))
+    assert all(np.all(contents[t][well] == 2) for t in range(click_tick + 1, len(states)))
+    gamma = simulation.node_clock
     for identity in (light, 0):
         family = 0 if identity == light else 1
         drift = Fraction(0)
+        accumulated = Fraction(0)
         reference = None
         for t in range(len(states)):
             if identity not in states[t]:
                 break
             now, before, remainder = states[t][identity]
-            value = form_I(simulation, family, now, before)
+            value = form_I(simulation, family, now, before, contents[t])
             if t >= 1 and identity in states[t - 1]:
-                # the remainder term of 8.2 over the step t - 1 -> t:
-                # (a_next - a_before) (r - r') / (3 num) per Node
+                previous = form_I(simulation, family, *states[t - 1][identity][:2], contents[t])
+                # the remainder term of 8.2 over the step t - 1 -> t under the
+                # Node clock (9.35 (2)): (a_next - a_before) (r - r') / (3 Gamma
+                # num) per Node
                 prev_now, prev_before, prev_remainder = states[t - 1][identity]
                 num = simulation.kind_num[family]
                 for node in zip(
                     *np.nonzero((now != prev_before) | (remainder != prev_remainder)), strict=True
                 ):
                     drift += Fraction(int(now[node]) - int(prev_before[node])) * Fraction(
-                        int(prev_remainder[node]) - int(remainder[node]), 3 * int(num[node])
+                        int(prev_remainder[node]) - int(remainder[node]),
+                        3 * simulation.node_clock * int(num[node]),
                     )
+                # the step's identity, exact, with the content in force for the step
+                assert value - previous == drift - accumulated, (identity, t)
+                if identity == 0 and t == click_tick + 1:
+                    # THE EVENT (ALGEBRA.md 9.35 (3)): the click's quantum enters the
+                    # well's Nodes as this interval begins (M 1 -> 2), and the form of
+                    # the well's own record jumps by the content's weight on its
+                    # kinetic part, den (now - before)^2 / (Gamma num) over the well's
+                    # Nodes, exactly; the invariant is one rational on either side
+                    den = simulation.kind_den[family]
+                    jump = sum(
+                        Fraction(int(den[node]), gamma * int(num[node]))
+                        * (int(prev_now[node]) - int(prev_before[node])) ** 2
+                        for node in zip(*np.nonzero(well), strict=True)
+                    )
+                    unmoved = form_I(simulation, family, prev_now, prev_before, contents[t - 1])
+                    assert jump > 0 and previous - unmoved == jump
+                    reference = None
+            accumulated = drift
             invariant = value - drift
             if reference is None:
                 reference = invariant

@@ -23,7 +23,8 @@
  "clock_stamp": true,
  "detector_law": true,
  "massive_record": true,
- "amplitude_bound": 4294967296,
+ "amplitude_bound": 268435456,
+ "node_clock": 1000000,
  "directions": [],
  "families": [
   {
@@ -110668,6 +110669,6 @@
  "detectors": [],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "0fc1fb8da7f67b31acf55100564c130b441ce1cb3146a050113efc56b9b11f2d"
+  "hash": "0428a7a84da3007a7ed62762f95525be15625b75aba2e2605ecdb8b8b8981bb8"
  }
 }

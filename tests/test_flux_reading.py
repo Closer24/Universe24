@@ -20,6 +20,7 @@ import numpy as np
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import parse_nature_beam_world
+from tests.test_emitter import NODE_CLOCK
 from tests.test_massive_record import massive_world
 
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
@@ -113,8 +114,10 @@ def test_the_local_flux_identity_is_exact_on_the_rules_integers():
                     for (ii, j), m in matrix.items()
                     if ii == i
                 )
+                # the remainders' term under the Node clock, (a_next - a_before) (r -
+                # r') / (3 Gamma num) at a Node without content (ALGEBRA.md 9.35 (2))
                 remainder_term = (level(a_next, i) - level(a_before, i)) * Fraction(
-                    int(r_old[i, 0, 0]) - int(r_new[i, 0, 0]), 3 * num
+                    int(r_old[i, 0, 0]) - int(r_new[i, 0, 0]), 3 * NODE_CLOCK * num
                 )
                 assert new[i] - old[i] - flux == remainder_term, (family, i)
         # antisymmetry and the pair-free form: G_ij = -G_ji on every Link
@@ -180,8 +183,11 @@ def test_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
 
 
 def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integers():
-    """(c) the engine's `conserved_form` is 3 I times the family's wall on planted rows, exact
-    against the Fraction form, for light (the wall 1) and for a massive family with a well
+    """(c) the engine's `conserved_form` is 3 I times the family's wall times Gamma (the Node
+    clock, ALGEBRA.md 9.35 (2); BUILD.md section 26 item 31: I with the clock's weights (den f
+    / (Gamma num)) on the squares and (2 den M / (Gamma num)) on now x before at the seven
+    Nodes with content, the well at 20 and the six receiver bodies, M = 1) on planted rows,
+    exact against the Fraction form, for light (the wall 1) and for a massive family with a well
     ([8, 7] on the kind [7, 8]: the wall 56); (d) the engine's `detector_inflow_tally` into a set of
     three Nodes (a detector cube cut by the chain, record 1899) counts the two outer Ports
     only (the Links inside the set are no Ports), exact against the Fraction fluxes, and 0
@@ -240,12 +246,19 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
         for i in range(40):
             num = int(simulation.kind_num[family][i, 0, 0])
             den = int(simulation.kind_den[family][i, 0, 0])
+            content = int(simulation.node_content[i, 0, 0])
+            assert content == (1 if i in (5, 6, 7, 20, 30, 31, 32) else 0)
+            f = NODE_CLOCK + content
             read = sum(Fraction(m) * int(before[j, 0, 0]) for (ii, j), m in matrix.items() if ii == i)
             expected += (
-                Fraction(den, num) * (int(now[i, 0, 0]) ** 2 + int(before[i, 0, 0]) ** 2)
+                Fraction(den * f, NODE_CLOCK * num)
+                * (int(now[i, 0, 0]) ** 2 + int(before[i, 0, 0]) ** 2)
+                - Fraction(2 * den * content, NODE_CLOCK * num)
+                * int(now[i, 0, 0])
+                * int(before[i, 0, 0])
                 - Fraction(1, 3) * int(now[i, 0, 0]) * read
             )
-        assert simulation.conserved_form(live) == 3 * wall * expected
+        assert simulation.conserved_form(live) == 3 * wall * NODE_CLOCK * expected
         pair = simulation.cell_names.index("pair")
         far = simulation.cell_names.index("far")
         offers = simulation.detector_inflow_tally(live)
@@ -255,7 +268,8 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
                 int(now[i, 0, 0]) * int(before[j, 0, 0]) - int(before[i, 0, 0]) * int(now[j, 0, 0])
             )
             inward += max(g, Fraction(0))
-        assert offers.get(pair, 0) == inward * wall
+        # the tally in the form's units, the wall times Gamma (the flux itself unweighted)
+        assert offers.get(pair, 0) == inward * wall * NODE_CLOCK
         assert offers.get(far, 0) == 0
 
 

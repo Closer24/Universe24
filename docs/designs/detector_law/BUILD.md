@@ -2669,6 +2669,133 @@ would have found no cell.
    the record's first full cycle, or another form) is the mathematician's
    ruling, asked on 2026-09-25 with the Boss; no pin moved, no verdict.
 
+31. THE NODE CLOCK (the model owner's decision (5) of record 1962: the
+   clock pair (e, f) = (Gamma, Gamma + M) per Node with Gamma declared per
+   world, 10^6 in the eighteen, and the amplitude bound 2^28; ALGEBRA.md
+   9.35 (2) and (3), the mathematician's form that passes the three tests;
+   the Boss's order of record 1975, (5) after (2); built on `emitter-click`).
+   THE LAW: at every Node a clock pair (e, f) = (Gamma, Gamma + M), THE SAME
+   FOR EVERY FAMILY, Gamma the world key `node_clock` (one integer from 1,
+   REQUIRED under the detector law with no default, refused without that
+   law; 10^6 in every registered world) and M the content at the Node (the
+   held quanta of every family of the measured events whose Nodes include
+   it: a body's stock and what its clicks brought, on a block's cells as
+   they stand and on a measured event's span; 0 in the vacuum), entering
+   every family's rule as 3 den f a_next + r' = e num S_6 + 6 den (f - e)
+   a_now - 3 den f a_before + r with the wall 3 den f and the remainder in
+   [0, wall), the inverse with the same integers. In the vacuum (M = 0) the
+   levels are the plain rule's bit for bit and the remainder Gamma times
+   the plain one (the property test's click at 17 unchanged; the chain
+   digests moved with the remainders' scale and the residues at the body's
+   Nodes). At a Node with content every family's rotation is slowed by e /
+   f: 2 cos omega' = 2 - 2 (e / f)(1 - num / den) at k = 0, 1.982200 at e /
+   f = 0.8 on [800, 809] and 1.988875 at 1 / 2 (the mathematician's numbers,
+   read on the engine to 10^-5); light through a slab of content is delayed
+   by the slowed dispersion (the flux test's packet through 40 Nodes at e /
+   f = 0.8: the transmitted centroid lags 4.73 Links against 4.76 predicted
+   from cos omega' = 1 - (e / f)(1 - cos omega), the slab's faces reflecting
+   below a part in a thousand; COMPUTATION). THE CONTENT CHANGES ONLY AT
+   EVENTS: the engine rebuilds the array from the held books as every
+   interval begins and after a birth (M down by one at a birth, up by the
+   click's quantum at the set's body, moved with a stepping body), so
+   between events the step is linear, conservative and reversible exactly
+   (the property test's inverse; the Node clock test's inverse with
+   content). THE FORM under the clock (9.35 (2) scaled to integers by 3 L
+   e): the books' form SUM over the Nodes of 3 den_i (L / num_i) f_i
+   (now_i^2 + before_i^2) - SUM over the Nodes of 6 den_i (L / num_i) (f_i
+   - e) now_i before_i - L e SUM over the Links of (now_i before_j + now_j
+   before_i); the share at a Node in the flux's units 3 wall (den_i /
+   num_i) f_i (now_i^2 + before_i^2) - 6 wall (den_i / num_i) (f_i - e)
+   now_i before_i - wall e now_i (A before)_i: Gamma times the plain share
+   where M_i = 0 and, at a Node with content, the excess M_i x 3 wall
+   (den_i / num_i) (now_i - before_i)^2 (the content's weight on the
+   kinetic part), exact identities read on random rows. THE SHARE'S
+   IDENTITY, derived here (the physicist's algebra, for the mathematician's
+   confirmation) and read exactly: the share's change over an interval is
+   Gamma wall times the sum of the PLAIN fluxes now_i before_j - before_i
+   now_j through the Node's Links plus the remainders' term Gamma wall
+   (a_next - a_before) (r - r') / (Gamma num), whatever the clock field: THE
+   FLUX CARRIES NO WEIGHT OF THE CLOCK, so the click's booking stays now_i
+   before_j - before_i now_j at the Ports, times the wall and Gamma (the
+   form's units; the rung's ratio unchanged; the answer to the question put
+   with item 30). THE NORM: the excited record's T stays the generator's
+   `norm`, one period's action of the body's mode advanced alone, now under
+   the clock at the body's content (the light clock's A: 2.80 x 10^24 in the
+   clock's units, the period 94 unchanged); the born record's T is its
+   conserved form as written on the board, the engine's own integer with the
+   content the birth leaves (one quantum fewer: the clock it is advanced
+   under from the next interval), Gamma times the file's `norm` (the
+   vacuum's plain form, the generator's integer checked at load as before;
+   no profile and no born integer moved) plus (M - 1) times 3 wall (now -
+   before)^2 over the body's Nodes (the emitter test reads the identity);
+   the birth line carries `born_norm`, `content` and `node_clock` beside
+   `norm`; the generator's passage check reads the check board's engine
+   against Gamma times the norm. THE WHEEL, READ FROM THE RULE AT THE NODE
+   (the Boss's order of record 1975): W = 3 den f / gcd(Gamma num, 6 den M,
+   3 den f) at the body's centre Node (`wheel_at`), the pair's own 3 den /
+   gcd(num, 3 den) where M = 0 (2403 on [800, 801], 700 on [801, 700]) and
+   content-dependent at a body's Nodes (18774639 on [800, 801] at Gamma =
+   10^6 with M = 64, the remainder's step 128; 600752403 with M = 4,
+   2403007209 with M = 3: the stock's births each on their own wheel); the
+   tests that pinned W = 2403 and 700 now read W from the rule with the
+   line's content (`lawful_wheel` of tests/test_emitter.py), the pair's
+   values asserted in the vacuum alone; whether the wheel of the body's
+   content is the law's wheel is the mathematician's ruling, asked with this
+   item. THE LOAD BOUND: the rule's int64 total Gamma num 6 A + 6 den M A +
+   3 den (Gamma + M) (A + 1) below 2^63 for every family's pair and every
+   block's pair, M the world's whole content (the most one Node can carry),
+   a second pass once the measured events are read (the plain bound on the
+   pair alone first); the ceiling of `amplitude_bound` 2^28 (MUST 3's 2^40
+   HISTORY): at Gamma = 10^6 the muon layer's [3200, 3236] totals 7.8 x
+   10^18, the largest registered pair, and [2^20, 2^20 + 1] is refused
+   naming Gamma and M. THE FILES: every registered world declares
+   `amplitude_bound` 2^28 and `node_clock` 10^6 (regenerated: the profiles
+   unchanged, the plain operator's modes; the light clock's excitation norm
+   and every stamp moved). THE ENGINE: `node_clock`, `node_content`,
+   `_refresh_node_content`, `node_clock_pair` and `wheel_at` on the
+   simulation; `_advance`, `_advance_inverse`, `form_share`,
+   `conserved_form`, `record_form`, `detector_inflow_tally`, `inward_flux`,
+   `residue_of` and `_emit` under the clock. THE TESTS:
+   `tests/test_node_clock.py` (the rule in integers at a Node with content
+   and its plain limit; the rotation at e / f = 0.8 and 1 / 2; light through
+   a slab; the form's identity, the share's identity per Node, the books'
+   remainder identity and the inverse with content; the loader's refusals,
+   the bound naming Gamma and M, the registered light clock's clock pairs
+   and wheels; the content down at a birth and up at a click on the birth
+   line); the property test's conservation step by step with the content in
+   force and the exact jump of the well's form at the click's event (its
+   content 1 to 2, the jump den (now - before)^2 / (Gamma num) over its
+   Nodes); the emitter, detector-law, massive-record, receiver-by-name,
+   born-train and flux-reading suites in the clock's units. THE LIGHT CLOCK'S
+   DIAGNOSTIC RUN without pins (GAMEBOARD, no verdict, no pin moved):
+   LAWFUL in 13 seconds, 64 births and 64 clicks at at_well alone, the mean
+   click interval 298.1 with the rms 18.0, the least wait 257 and the most
+   349, the 64 births by interval 3098 with NO burst (no run of births one
+   interval apart; 1647 with two bursts at item 30, 3311 with the coupling):
+   the wheel of the body's content changes at every birth (M down by one),
+   so the kept remainder's residue is read on a new wheel each time and the
+   countdown of item 30 does not form; whether this is the law's answer to
+   item 30's finding is the mathematician's ruling. FINDINGS for the
+   mathematician: (a) the generator's mode is the plain operator's
+   (`iterated_mode`; the load check's residual on the plain operator), so
+   under the clock a body's own record starts off the clocked operator's
+   exact mode by about M / Gamma of its amplitude (6 x 10^-5 at M = 64), a
+   transient the excitation norm measures on the engine; the clocked
+   operator's mode in the generator is its own item on his word. (b) The
+   excited record's declared norm is one period's action at the body's
+   initial content; the later excitations at a lower content run on a share
+   smaller by about (M_0 - M) times the kinetic part over Gamma T, 10^-5 on
+   the light clock (the rung's crossing moves by a hundredth of an interval
+   at most): an exact T per excitation would be the engine's own sum over a
+   period, a register the law does not keep; his call. (c) A kept remainder
+   (item 29) at or above the new wall after a birth (the wall 3 den (Gamma
+   + M - 1) below the old, the chance about 1 / Gamma per Node) is absorbed
+   by the next division (the floor takes it), the invariant restored after
+   one advance. (d) The pins' file does not yet carry Gamma with the pairs
+   (9.35 (3) says it does): no pin moved, the row's text on the Boss's
+   word. THE NAME NODE (the model owner's record 1970): every new text of
+   this item says Node.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

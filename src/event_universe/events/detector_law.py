@@ -124,7 +124,12 @@ class LiveRecord:
     # 15): the record's own wheel W, born with its residue u, both read from
     # the rule's remainder at the birth cell of the record that clicked to
     # birth it (`residue_of`); a planted record carries the test's W. The
-    # rung's wheel is the record's, never a set's or the world's.
+    # rung's wheel is the record's, never a set's or the world's. UNDER THE
+    # NODE CLOCK (ALGEBRA.md 9.35 (2), (3); BUILD.md section 26 item 31) W
+    # = 3 den f / gcd(Gamma num, 6 den M, 3 den f) at that Node with f =
+    # Gamma + M (`wheel_at`): the pair's own where the content M is 0,
+    # content-dependent at a body's Nodes, read from the rule and never
+    # declared.
     wheel: int = 1
     # massive-record-v1: the emitter's number for a record a body emitted
     # (None for a planted record and for a block's own record); the
@@ -394,6 +399,30 @@ class DetectorLawSimulation:
                 view = np.moveaxis(self.cell_index, axis, 0)[index]
                 free = view < 0
                 view[free] = self.face_cell
+        # THE NODE CLOCK (the model owner's decision (5) of record 1962;
+        # ALGEBRA.md 9.35 (2) and (3); BUILD.md section 26 item 31): the
+        # world's Gamma and the content M at every Node, the held quanta of
+        # every family at every measured event (a body's stock and what its
+        # clicks brought) on the event's Nodes (a block's cells as they
+        # stand, a measured event's span), 0 in the vacuum; the clock pair
+        # (e, f) = (Gamma, Gamma + M) enters every family's rule at the
+        # Node. M changes only at the law's events (a birth, a click, a
+        # step of a body), so the array is rebuilt from the held books as
+        # each interval begins (`_refresh_node_content`) and after a birth.
+        self.node_clock = int(world.node_clock)
+        if self.node_clock < 1:
+            raise ValueError(
+                f"{BEAM_LAW}: the world declares no Node clock (`node_clock`, Gamma from 1; "
+                "ALGEBRA.md 9.35 (3); BUILD.md section 26 item 31)"
+            )
+        self.node_content = np.zeros(self.shape, dtype=np.int64)
+        self.span_masks: dict[int, np.ndarray] = {}
+        for number, entry in enumerate(world.measured):
+            if entry.block is None:
+                span = np.zeros(self.shape, dtype=bool)
+                for node in self._span_nodes(entry.position, entry.span):
+                    span[node] = True
+                self.span_masks[number] = span
         self.records: dict[int, LiveRecord] = {}
         # the records clicked this interval, deleted whole after the advances
         self.dead: list[int] = []
@@ -493,6 +522,45 @@ class DetectorLawSimulation:
                 )
             self.receiver_cell[block.number] = self.cell_names.index(name)
         self.has_receiver = bool(self.receiver_cell)
+        self._refresh_node_content()
+
+    # The Node clock (ALGEBRA.md 9.35 (2) and (3); BUILD.md section 26 item 31)
+
+    def _refresh_node_content(self) -> None:
+        """The content M at every Node (ALGEBRA.md 9.35 (3)): the held quanta
+        of every family at every measured event, on its Nodes (a block's
+        cells as they stand this interval, a measured event's span); 0 in
+        the vacuum. Read from the held books, the record of the law's
+        events, as every interval begins and after a birth."""
+        content = np.zeros(self.shape, dtype=np.int64)
+        for number in range(len(self.held)):
+            quanta = sum(self.held[number])
+            if quanta <= 0:
+                continue
+            block = self.block_by_number.get(number)
+            mask = block.mask if block is not None else self.span_masks[number]
+            content[mask] += quanta
+        self.node_content = content
+
+    def node_clock_pair(self, node: tuple[int, ...]) -> tuple[int, int]:
+        """The clock pair (e, f) = (Gamma, Gamma + M) at a Node (9.35 (3))."""
+        return self.node_clock, self.node_clock + int(self.node_content[node])
+
+    def wheel_at(self, family: int, node: tuple[int, ...]) -> tuple[int, int]:
+        """The remainder's step g and the wheel W of the family's rule at a
+        Node under the Node clock (ALGEBRA.md 9.22 (4), 9.35 (2); BUILD.md
+        section 26 item 31): the wall 3 den f, the step g = gcd(Gamma num,
+        6 den M, 3 den f) (the three integers the rule's total is made of,
+        so the remainder moves on the multiples of g), W = wall / g values;
+        the pair's own 3 den / gcd(num, 3 den) where M = 0 (the vacuum:
+        2403 on [800, 801]), content-dependent at a body's Nodes; read
+        from the rule, never declared."""
+        num = int(self.kind_num[family][node])
+        den = int(self.kind_den[family][node])
+        gamma, f = self.node_clock_pair(node)
+        wall = 3 * den * f
+        step = gcd(gamma * num, 6 * den * (f - gamma), wall)
+        return step, wall // step
 
     def _receiver_of(self, live: LiveRecord) -> int | None:
         """The one cell of the record's ladder under the receiver by name
@@ -657,17 +725,18 @@ class DetectorLawSimulation:
 
     def residue_of(self, live: LiveRecord, block: Block) -> tuple[int, int]:
         """THE RESIDUE FROM THE LAW (ALGEBRA.md 9.22 (4); BUILD.md section 26
-        item 15): the record's rule remainder r at the body's centre cell,
-        read now, in units of the remainder's step g = gcd(num, wall) (r
-        moves on the multiples of g from 0), and the wheel W =
-        wall / g = 3 den / gcd(num, 3 den) values (the pair at that cell;
-        700 on [801, 700], 2403 on [800, 801]); no declaration, no draw."""
+        item 15) UNDER THE NODE CLOCK (9.35 (2), (3); item 31): the record's
+        rule remainder r at the body's centre Node, read now, in units of
+        the remainder's step g = gcd(Gamma num, 6 den M, 3 den f) at that
+        Node (r moves on the multiples of g from 0), and the wheel W = 3 den
+        f / g values (`wheel_at`: the pair's own 3 den / gcd(num, 3 den)
+        where the content is 0, 700 on [801, 700] and 2403 on [800, 801];
+        at a body's Nodes the wheel of its content, 18774639 on [800, 801]
+        at Gamma = 10^6 with M = 64); no declaration, no draw."""
         centre = self.centre_mask(block)
         node = tuple(int(axis[0]) for axis in np.nonzero(centre))
-        num = int(self.kind_num[live.family][node])
-        wall = 3 * int(self.kind_den[live.family][node])
-        step = gcd(num, wall)
-        return int(live.remainder[node]) // step, wall // step
+        step, wheel = self.wheel_at(live.family, node)
+        return int(live.remainder[node]) // step, wheel
 
     def _excite(self, block: Block, own_record: LiveRecord) -> None:
         """The excited record's norm and the residue owed (ALGEBRA.md 9.17
@@ -790,6 +859,10 @@ class DetectorLawSimulation:
         # click
         residue, wheel = self.residue_of(own, block)
         offer = block.offer
+        # the body's clock pair as the clicking record was advanced (the
+        # content at its centre Node; GAMEBOARD, on the birth line)
+        centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
+        clock_pair = self.node_clock_pair(centre)
         # X: the excited record ends
         del self.records[own.identity]
         block.own = None
@@ -831,7 +904,6 @@ class DetectorLawSimulation:
         # the born family's vacuum, the generator's integer checked at load)
         assert emitter.born is not None
         self.write_levels(live, block, emitter.born.now, emitter.born.before)
-        live.norm = emitter.born.norm
         if emitter.receiver is not None:
             # the named sets in the NAMED order (ALGEBRA.md 9.19 (3) (b): the
             # ladder cumulative in its declared order), a set's cells in the
@@ -844,6 +916,17 @@ class DetectorLawSimulation:
             ]
         self.held[number][block.family] -= 1
         self.ledger.held_spent[block.family] += 1
+        # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 item 31): the
+        # born record's T is its conserved form as written on the board, the
+        # engine's own integer with the content at the body's Nodes as the
+        # birth leaves it (one quantum fewer: the clock the record is
+        # advanced under from the next interval): Gamma times the file's
+        # `norm` (the vacuum's form, checked at load) plus M times 3 wall
+        # (den / num) (now - before)^2 over the body's Nodes; the form the
+        # flux booking sums to over the record's passage (the share's
+        # identity, `form_share`)
+        self._refresh_node_content()
+        live.norm = self.conserved_form(live)
         self.ledger.transit_released[family] += cost
         block.emitted.append(identity)
         self.records[identity] = live
@@ -868,6 +951,12 @@ class DetectorLawSimulation:
                     "excitation_norm": own.norm,
                     "excitation_offer": offer,
                     "norm": live.norm,
+                    # the file's vacuum norm (Gamma times it the vacuum's form
+                    # under the clock) and the body's content and clock pair
+                    # as the clicking record was advanced (GAMEBOARD; item 31)
+                    "born_norm": emitter.born.norm,
+                    "content": clock_pair[1] - clock_pair[0],
+                    "node_clock": list(clock_pair),
                     "cells": int(np.sum(block.mask)),
                     "cycle": block.count,
                     **({"clock": block.count} if world.clock_stamp else {}),
@@ -961,14 +1050,19 @@ class DetectorLawSimulation:
 
     def _advance_inverse(self, live: LiveRecord) -> None:
         """One interval of the rule backwards on a record: from (a_next, a_now,
-        r') to (a_now, a_before, r) with 3 den a_before - r = num S_6(a_now)
-        - (3 den a_next + r'), the remainder in [0, wall): a_before the
-        ceiling of that quotient, r the difference (board_algebra.py's
-        `step_inverse`)."""
+        r') to (a_now, a_before, r) with 3 den f a_before - r = e num
+        S_6(a_now) + 6 den (f - e) a_now - (3 den f a_next + r') under the
+        Node clock (e, f) at the Node (ALGEBRA.md 9.35 (2); the same
+        integers as the forward step's, the content constant between
+        events), the remainder in [0, wall): a_before the ceiling of that
+        quotient, r the difference (board_algebra.py's `step_inverse`)."""
         num = self.kind_num[live.family]
         den = self.kind_den[live.family]
-        wall = 3 * den
-        total = num * self._neighbours(live.before, self.kind_wrap[live.family])
+        gamma = self.node_clock
+        content = self.node_content
+        wall = 3 * den * (gamma + content)
+        total = gamma * num * self._neighbours(live.before, self.kind_wrap[live.family])
+        total += 6 * den * content * live.before
         total -= wall * live.now + live.remainder
         a_before = -np.floor_divide(-total, wall)
         live.remainder = wall * a_before - total
@@ -988,6 +1082,7 @@ class DetectorLawSimulation:
                 raise ValueError(
                     f"{BEAM_LAW}: the inverse map is defined at rest (block {block.number} moves)"
                 )
+        self._refresh_node_content()
         for identity in list(self.records):
             live = self.records[identity]
             if self.families[live.family].massive_kind and live.emitter is None:
@@ -1117,7 +1212,9 @@ class DetectorLawSimulation:
         """THE DETECTORS' INFLOW, PER RECORD, OVER THE PORTS ALONE (ALGEBRA.md
         9.19 (3), 9.25 (2); the model owner's record 1934): this interval's
         one-way inward flux into every cell, 3 G_ij = now_i before_j -
-        before_i now_j where positive per Port, times the family's wall,
+        before_i now_j where positive per Port, times the family's wall and
+        the Node clock's Gamma (the form's units under the clock, ALGEBRA.md
+        9.35 (2); the flux itself carries no weight of the clock),
         from the record's two levels AFTER the interval's step, by the cell's
         index. The record's levels are read at the Port pairs only (one
         gather per pair, exact Python integers), never over the board: the
@@ -1126,7 +1223,7 @@ class DetectorLawSimulation:
         port_i, port_j, port_cell = self._inflow_ports(live.family)
         if port_i.size == 0:
             return {}
-        wall = self.kind_wall(live.family)
+        wall = self.kind_wall(live.family) * self.node_clock
         now = live.now.ravel()
         before = live.before.ravel()
         now_i = now[port_i].astype(object)
@@ -1143,11 +1240,12 @@ class DetectorLawSimulation:
     def inward_flux(self, live: LiveRecord, mask: np.ndarray) -> int:
         """The one-way inward flux into the Nodes of `mask` through the Links
         from Nodes outside it (9.19 (3)): 3 G_ij = now_i before_j - before_i
-        now_j where positive, times the family's wall, from the record's two
-        levels after the interval's step (`now`, `before`; the prototype's
+        now_j where positive, times the family's wall and the Node clock's
+        Gamma (the form's units, 9.35 (2)), from the record's two levels
+        after the interval's step (`now`, `before`; the prototype's
         reading, board_algebra.py)."""
         wrap = self.kind_wrap[live.family]
-        wall = self.kind_wall(live.family)
+        wall = self.kind_wall(live.family) * self.node_clock
         level_now, level_before = live.now, live.before
         now = level_now.astype(object)
         before = level_before.astype(object)
@@ -1217,11 +1315,13 @@ class DetectorLawSimulation:
         )
 
     def conserved_form(self, live: LiveRecord) -> int:
-        """The record's conserved form I (ALGEBRA.md 8.2) in the flux's units,
-        3 I x wall: over the Nodes 3 wall (den_i / num_i) (now_i^2 +
-        before_i^2) - wall now_i (A before)_i, A the read matrix with the
-        family's faces (the six reads, the folded axes' self-reads); the sum
-        of every Node's share (`form_share`)."""
+        """The record's conserved form I (ALGEBRA.md 8.2; under the Node clock
+        9.35 (2)) in the flux's units times Gamma, 3 I x wall x Gamma: over
+        the Nodes 3 wall (den_i / num_i) f_i (now_i^2 + before_i^2) - 6 wall
+        (den_i / num_i) (f_i - e) now_i before_i - wall e now_i (A before)_i,
+        (e, f_i) = (Gamma, Gamma + M_i), A the read matrix with the family's
+        faces (the six reads, the folded axes' self-reads); the sum of every
+        Node's share (`form_share`)."""
         return self.form_share(live, np.ones(self.shape, dtype=bool))
 
     def form_share(self, live: LiveRecord, mask: np.ndarray) -> int:
@@ -1234,11 +1334,25 @@ class DetectorLawSimulation:
         is constant where nothing flows (the excited record's own tick)."""
         family = live.family
         wall = self.kind_wall(family)
+        # THE SHARE UNDER THE NODE CLOCK (ALGEBRA.md 9.35 (2); BUILD.md
+        # section 26 item 31), the flux's units times Gamma: e_i = 3 wall
+        # (den_i / num_i) f_i (now_i^2 + before_i^2) - 6 wall (den_i / num_i)
+        # (f_i - e) now_i before_i - wall e now_i (A before)_i with (e, f_i)
+        # = (Gamma, Gamma + M_i): Gamma times the plain share where M_i = 0,
+        # and the excess M_i x 3 wall (den_i / num_i) (now_i - before_i)^2
+        # at a Node with content; its change over an interval is Gamma wall
+        # times the sum of the plain fluxes now_i before_j - before_i now_j
+        # through the Node's Links (the flux carries no weight of the
+        # clock: the share's identity, exact, whatever the clock field)
+        gamma = self.node_clock
+        content = self.node_content.astype(object)
         weight = (3 * wall * self.kind_den[family] // self.kind_num[family]).astype(object)
         now = live.now.astype(object)
         before = live.before.astype(object)
         read = self._neighbours(live.before, self.kind_wrap[family]).astype(object)
-        share = weight * (now * now + before * before) - wall * now * read
+        share = weight * (gamma + content) * (now * now + before * before)
+        share -= 2 * weight * content * now * before
+        share -= wall * gamma * now * read
         return int(np.sum(share[mask]))
 
     def _half_space(self, origin: Address3, vector: Vector) -> np.ndarray:
@@ -1274,9 +1388,22 @@ class DetectorLawSimulation:
         # coupling's term and no folded denominator (MASSIVE_RECORD.md
         # section 7 HISTORY); the wall 3 den, one division per row per
         # interval, the remainder kept in [0, wall)
-        wall = 3 * den
+        # THE NODE CLOCK (the model owner's decision (5) of record 1962;
+        # ALGEBRA.md 9.35 (2) and (3); BUILD.md section 26 item 31): at every
+        # Node the pair (e, f) = (Gamma, Gamma + M), the same for every
+        # family, M the content at the Node; the rule 3 den f a_next + r' =
+        # e num S_6 + 6 den (f - e) a_now - 3 den f a_before + r with the
+        # wall 3 den f, the remainder in [0, wall); e = f the plain rule (the
+        # vacuum: the levels bit for bit the plain rule's, the remainder
+        # Gamma times its), a Node with content slowed by e / f for every
+        # family; one division per row per interval, the int64 total under
+        # the load bound of `_pair_bound`
+        gamma = self.node_clock
+        content = self.node_content
+        wall = 3 * den * (gamma + content)
         neighbours = self._neighbours(live.now, self.kind_wrap[live.family])
-        total = num * neighbours
+        total = gamma * num * neighbours
+        total += 6 * den * content * live.now
         total -= wall * live.before
         total += live.remainder
         nxt = np.floor_divide(total, wall)
@@ -1387,11 +1514,18 @@ class DetectorLawSimulation:
         scale = np.floor_divide(common, num)
         now = live.now.astype(object)
         before = live.before.astype(object)
+        # the Node clock's weights (ALGEBRA.md 9.35 (2); BUILD.md section 26
+        # item 31), the form times Gamma: 3 den_i (L / num_i) f_i on the
+        # squares, 6 den_i (L / num_i) (f_i - e) on now_i before_i, L e on
+        # the Links, (e, f_i) = (Gamma, Gamma + M_i)
+        gamma = self.node_clock
+        content = self.node_content.astype(object)
         weight = (3 * den * scale).astype(object)
-        squares = int(np.sum(weight * (now * now + before * before)))
+        squares = int(np.sum(weight * (gamma + content) * (now * now + before * before)))
+        squares -= int(np.sum(2 * weight * content * now * before))
         links = 0
         wrap = self.kind_wrap[live.family]
-        link_weight = common
+        link_weight = common * gamma
         for axis in range(3):
             # Each Link once: the Node and its neighbour on the + side (the
             # wrap on a periodic axis closes the last Link, an open face
@@ -1553,6 +1687,9 @@ class DetectorLawSimulation:
         self.tick += 1
         for block in self.blocks:
             self._move_block(block)
+        # the content at every Node as the events left it (the steps above,
+        # the births and clicks of the last interval), ALGEBRA.md 9.35 (3)
+        self._refresh_node_content()
         # The massive records first (each block's own record by the rule
         # alone), then the light records: the order of the interval
         # (MASSIVE_RECORD.md section 7's massive step first; the coupling's

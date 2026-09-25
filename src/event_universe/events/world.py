@@ -450,6 +450,12 @@ WORLD_KEYS = {
     # profile's largest magnitude refused above it, the rows asserted below
     # it at every interval.
     "amplitude_bound",
+    # THE NODE CLOCK (the model owner's decision (5) of record 1962; ALGEBRA.md
+    # 9.35 (2) and (3); BUILD.md section 26 item 31): the world key
+    # `node_clock`, Gamma, the one integer of the clock pair (e, f) = (Gamma,
+    # Gamma + M) at every Node, M the content held at the Node; required
+    # under `detector_law` (no default), refused without it.
+    "node_clock",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -781,11 +787,15 @@ DETECTOR_LAW_RULE = "detector-law-v1"
 MASSIVE_RECORD_RULE = "massive-record-v1"
 # The amplitude bound A of a record's row under the massive record kind
 # (Reviewer 3's MUST 3 on step 2; BUILD.md section 3): the rule's total at a
-# Node, num x 6 x A + 3 x den x (A + 1), must stay below 2^63 for every
-# declared pair, checked at load; A = 2^40 (a seed of 2^20 squared by
-# nothing: the rows' amplitudes stay at the seed's order, the pointers
-# alone square them, as Python integers).
-AMPLITUDE_BOUND = 1 << 40
+# Node under the Node clock, Gamma x num x 6 x A + 6 x den x M x A + 3 x
+# den x (Gamma + M) x (A + 1), must stay below 2^63 for every declared pair
+# with the world's Gamma and its whole content M, checked at load; the
+# ceiling A = 2^28 (the model owner's decision (5) of record 1962; BUILD.md
+# section 26 item 31: at Gamma = 10^6 on the pair [3200, 3236] the total is
+# 7.8 x 10^18, below 2^63 = 9.2 x 10^18; the rows' amplitudes stay at the
+# seed's order, the pointers alone square them, as Python integers; the
+# 2^40 of MUST 3 was the plain rule's ceiling, HISTORY).
+AMPLITUDE_BOUND = 1 << 28
 TOTAL_BOUND = 1 << 63
 # Light's kind: the pair [1, 1] on the six-neighbour term, the value every
 # family without a declared pair reads (no branch on a name).
@@ -1661,9 +1671,15 @@ class NatureBeamWorld:
     # zero face for light with no take); never on a periodic axis.
     closed: tuple[bool, bool, bool] = (False, False, False)
     # massive-record-v1: the world key `amplitude_bound`, the amplitude A
-    # every row stays below (declared on a massive world; the constant
-    # 2^40 on a world without the kind, where no row is bounded so).
+    # every row stays below (declared on a massive world; the ceiling 2^28
+    # under the Node clock, BUILD.md section 26 item 31, on a world without
+    # the kind, where no row is bounded so).
     amplitude_bound: int = AMPLITUDE_BOUND
+    # THE NODE CLOCK (ALGEBRA.md 9.35 (2), (3); BUILD.md section 26 item 31):
+    # Gamma, the world key `node_clock`, the clock pair (Gamma, Gamma + M) at
+    # every Node; required under the detector law, 0 on a world without it
+    # (the ray law has no rule with a division).
+    node_clock: int = 0
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -2283,19 +2299,64 @@ def _lifetime(value: object, label: str, age_bound: int) -> int | None:
     return lifetime
 
 
-def _pair_bound(numerator: int, denominator: int, label: str, bound: int = AMPLITUDE_BOUND) -> None:
-    """The load bound of a pair (Reviewer 3's MUST 3): the rule's total at a
-    Node under the amplitude bound A (the world's `amplitude_bound`), num x
-    6 x A + 3 x den x (A + 1), below 2^63 (the coupling's folded denominator
-    HISTORY, decision (2) of record 1962); refused otherwise naming the
-    bound and the pair."""
-    total = numerator * 6 * bound + 3 * denominator * (bound + 1)
+def _pair_bound(
+    numerator: int,
+    denominator: int,
+    label: str,
+    bound: int = AMPLITUDE_BOUND,
+    node_clock: int = 1,
+    content: int = 0,
+) -> None:
+    """The load bound of a pair (Reviewer 3's MUST 3) under the Node clock
+    (ALGEBRA.md 9.35 (2); BUILD.md section 26 item 31): the rule's total at
+    a Node under the amplitude bound A (the world's `amplitude_bound`),
+    Gamma x num x 6 x A + 6 x den x M x A + 3 x den x (Gamma + M) x (A + 1),
+    below 2^63, Gamma the world's `node_clock` and M the content at the
+    Node (the world's whole content at the second pass, `_node_clock_bound`;
+    the plain rule at Gamma = 1 and M = 0, the first pass on the pair
+    alone); refused otherwise naming the bound, the clock, the content and
+    the pair."""
+    total = node_clock * numerator * 6 * bound
+    total += 6 * denominator * content * bound
+    total += 3 * denominator * (node_clock + content) * (bound + 1)
     if total >= TOTAL_BOUND:
         raise ValueError(
             f"{BEAM_LAW}: {label}.pair [{numerator}, {denominator}]"
-            + f": the rule's total num x 6 x A + 3 x den x (A + 1) at the amplitude bound A = "
-            f"{bound} is {total}, not below 2^63 (the bound of the rows' int64)"
+            + ": the rule's total Gamma x num x 6 x A + 6 x den x M x A + 3 x den x (Gamma + M) "
+            f"x (A + 1) at the amplitude bound A = {bound}, the Node clock Gamma = {node_clock} "
+            f"and the content M = {content} is {total}, not below 2^63 (the bound of the rows' "
+            "int64; ALGEBRA.md 9.35 (2))"
         )
+
+
+def _node_clock_bound(
+    families: tuple[FamilyDefinition, ...],
+    measured: tuple[MeasuredDefinition, ...],
+    amplitude_bound: int,
+    node_clock: int,
+) -> None:
+    """THE LOAD BOUND UNDER THE NODE CLOCK (BUILD.md section 26 item 31), the
+    second pass once the content is known: every family's pair and every
+    block's pair against the rule's int64 total at the amplitude bound with
+    the world's Gamma and its whole content M (the sum of every measured
+    event's held quanta of every family: the most any one Node can carry,
+    since the clicks move the quanta between the bodies and the births
+    return them to the board)."""
+    content = sum(sum(entry.held) for entry in measured)
+    for index, family in enumerate(families):
+        _pair_bound(
+            family.pair[0], family.pair[1], f"families[{index}]", amplitude_bound, node_clock, content
+        )
+    for number, entry in enumerate(measured):
+        if entry.block is not None:
+            _pair_bound(
+                entry.block.pair[0],
+                entry.block.pair[1],
+                f"measured[{number}]",
+                amplitude_bound,
+                node_clock,
+                content,
+            )
 
 
 def _kind_pair(
@@ -5788,14 +5849,34 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         amplitude_bound = _integer(obj["amplitude_bound"], "amplitude_bound", 1, AMOUNT_BOUND)
         if amplitude_bound > AMPLITUDE_BOUND:
             raise ValueError(
-                f"{BEAM_LAW}: amplitude_bound {amplitude_bound} is above the ceiling 2^40 = "
-                f"{AMPLITUDE_BOUND}, the A at which MUST 3's proof of the rule's int64 total "
-                "stands (issue #1085; DECLARATIONS.md section 15 M1-10 declares 2^32)"
+                f"{BEAM_LAW}: amplitude_bound {amplitude_bound} is above the ceiling 2^28 = "
+                f"{AMPLITUDE_BOUND}, the A at which the rule's int64 total under the Node clock "
+                "stands (the model owner's decision (5) of record 1962; BUILD.md section 26 item "
+                "31; MUST 3's 2^40 and DECLARATIONS.md section 15 M1-10's 2^32 HISTORY)"
             )
     elif "amplitude_bound" in obj:
         raise ValueError(
             f"{BEAM_LAW}: amplitude_bound is refused without the world key `massive_record`"
         )
+    # THE NODE CLOCK (the model owner's decision (5) of record 1962; ALGEBRA.md
+    # 9.35 (2) and (3); BUILD.md section 26 item 31): Gamma, one integer from
+    # 1, the clock pair (e, f) = (Gamma, Gamma + M) at every Node under the
+    # detector law's rule (M the content held at the Node, 0 in the vacuum);
+    # REQUIRED under `detector_law` with no default, refused without that law
+    node_clock = 0
+    if "node_clock" in obj and not detector_law:
+        raise ValueError(
+            f"{BEAM_LAW}: node_clock is refused without `detector_law` (the Node clock enters the "
+            "local detector law's rule, ALGEBRA.md 9.35 (2); the ray law has no rule with a division)"
+        )
+    if detector_law and "node_clock" not in obj:
+        raise ValueError(
+            f"{BEAM_LAW}: node_clock is required under `detector_law`: Gamma, the one integer of "
+            "the Node clock (e, f) = (Gamma, Gamma + M) at every Node, no default (ALGEBRA.md "
+            "9.35 (3); BUILD.md section 26 item 31)"
+        )
+    if detector_law:
+        node_clock = _integer(obj["node_clock"], "node_clock", 1, AMOUNT_BOUND)
     mode_axis: int | None = None
     if "mode_axis" in obj:
         if not massive_record:
@@ -5836,9 +5917,9 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     if massive_record and "amplitude_bound" not in obj and any(f.massive_kind for f in families):
         raise ValueError(
             f"{BEAM_LAW}: a world with a massive family declares `amplitude_bound`, the amplitude "
-            "A every row stays below (DECLARATIONS.md section 15 M1-10: 2^32 in every massive "
-            "world of the GO; MUST 3's load bound and the rows' run-time assertion use it; no "
-            "default)"
+            "A every row stays below (2^28 in every registered massive world since BUILD.md "
+            "section 26 item 31, DECLARATIONS.md section 15 M1-10's 2^32 HISTORY; the load bound "
+            "and the rows' run-time assertion use it; no default)"
         )
     # The meeting: true or false (false by default); under it a paid family
     # without a phase circle is refused, the phase being the register the
@@ -5872,6 +5953,8 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         detector_law,
     )
     _column_budget(families, measured, release)
+    if detector_law:
+        _node_clock_bound(families, measured, amplitude_bound, node_clock)
     _input_stamp_check(obj, measured)
     _initial_state_checks(shape, periodic, families, measured)
     families = _massive_families(families, measured, table, width, phase_steps, action)
@@ -5972,6 +6055,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         mode_axis=mode_axis,
         closed=closed,
         amplitude_bound=amplitude_bound,
+        node_clock=node_clock,
     )
     if detector_law:
         _detector_law_load_checks(measured, families, table, periodic, phase_steps)

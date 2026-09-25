@@ -38,7 +38,7 @@ from tests.test_detector_law import (
     receiver_body,
     receiver_cube,
 )
-from tests.test_emitter import massive_generator
+from tests.test_emitter import NODE_CLOCK, lawful_wheel, massive_generator
 
 
 def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
@@ -60,7 +60,8 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "suspension": 0,
         "detector_law": True,
         "massive_record": True,
-        "amplitude_bound": 1 << 32,
+        "amplitude_bound": 1 << 28,
+        "node_clock": NODE_CLOCK,
         "directions": [],
         "families": [{"name": "light", "quantum": 1, "phase_per_link": [512, 1]}, matter],
         "measured": [],
@@ -103,19 +104,21 @@ def step_once(simulation: DetectorLawSimulation, live: LiveRecord) -> tuple[np.n
 def test_the_rule_on_a_chain_against_section_ones_integers():
     """BUILD.md (a): the kind [2, 3] on a 5-Node open chain (y, z one layer periodic, so
     S_6 = a_W + a_E + 4 a_now with 0 beyond the ends); the totals num S_6 - 9 a_before + r
-    are [1, 27, -56, 19, 7], a_next = [0, 3, -7, 2, 0], r' = [1, 0, 7, 1, 7]."""
+    are [1, 27, -56, 19, 7], a_next = [0, 3, -7, 2, 0], r' = [1, 0, 7, 1, 7]. UNDER THE NODE
+    CLOCK (BUILD.md section 26 item 31) the vacuum's wall is 9 Gamma and the remainder Gamma
+    times the line's, the levels bit for bit: r and r' here are the line's times Gamma."""
     world = parse_nature_beam_world(
         massive_world([5, 1, 1], {"x": "open", "y": "periodic", "z": "periodic"}, [2, 3])
     )
     simulation = DetectorLawSimulation(world)
     now = np.array([0, 5, -7, 3, 0]).reshape(5, 1, 1)
     before = np.array([1, 0, 2, -1, 0]).reshape(5, 1, 1)
-    r = np.array([0, 1, 2, 0, 1]).reshape(5, 1, 1)
+    r = np.array([0, 1, 2, 0, 1]).reshape(5, 1, 1) * NODE_CLOCK
     live = planted(simulation, 1, now, before, r)
     a_next, r_next = step_once(simulation, live)
     assert a_next.ravel().tolist() == [0, 3, -7, 2, 0]
-    assert r_next.ravel().tolist() == [1, 0, 7, 1, 7]
-    assert all(0 <= value < 9 for value in r_next.ravel().tolist())
+    assert r_next.ravel().tolist() == [value * NODE_CLOCK for value in (1, 0, 7, 1, 7)]
+    assert all(0 <= value < 9 * NODE_CLOCK for value in r_next.ravel().tolist())
     # T: the row's past is the amplitude the step read
     assert live.before.ravel().tolist() == [0, 5, -7, 3, 0]
 
@@ -145,7 +148,11 @@ def test_the_rule_at_a_corner_of_an_open_board():
 
 def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     """BUILD.md (c): on the first build's random chain the step at light's pair [1, 1] gives the
-    same total, quotient and remainder as the line 3 a_next + r' = S_6 - 3 a_before + r."""
+    same quotient as the line 3 a_next + r' = S_6 - 3 a_before + r, the total and the remainder
+    Gamma times the line's (the Node clock in the vacuum, BUILD.md section 26 item 31) on
+    every Node without content; at the emitter body's 32 Nodes and the screen's three (their
+    content M) the clocked line 3 f a_next + r' = Gamma S_6 + 6 M a_now - 3 f a_before + r
+    with f = Gamma + M (tests/test_node_clock.py reads it on random rows too)."""
     world = parse_nature_beam_world(chain_world())
     simulation = DetectorLawSimulation(world)
     assert world.families[0].pair == LIGHT_PAIR
@@ -153,16 +160,22 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     rng = np.random.default_rng(7)
     now = rng.integers(-UNIT, UNIT, size=(80, 1, 1), dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=(80, 1, 1), dtype=np.int64)
-    remainder = rng.integers(0, 3, size=(80, 1, 1), dtype=np.int64)
+    remainder = rng.integers(0, 3, size=(80, 1, 1), dtype=np.int64) * NODE_CLOCK
     live = planted(simulation, 0, now, before, remainder)
     live.age = 1000
-    total = simulation._neighbours(now) - 3 * before + remainder
-    expected_next = np.floor_divide(total, 3)
-    expected_remainder = total - 3 * expected_next
+    total = NODE_CLOCK * (simulation._neighbours(now) - 3 * before) + remainder
+    expected_next = np.floor_divide(total, 3 * NODE_CLOCK)
+    expected_remainder = total - 3 * NODE_CLOCK * expected_next
     a_next, r_next = step_once(simulation, live)
-    free = np.ones(simulation.shape, dtype=bool)
+    free = simulation.node_content == 0
+    assert 35 <= int(np.sum(free)) <= 45
     assert np.array_equal(a_next[free], expected_next[free])
     assert np.array_equal(r_next[free], expected_remainder[free])
+    content = simulation.node_content
+    f = NODE_CLOCK + content
+    clocked = NODE_CLOCK * simulation._neighbours(now) + 6 * content * now - 3 * f * before + remainder
+    assert np.array_equal(a_next[~free], np.floor_divide(clocked, 3 * f)[~free])
+    assert np.array_equal(r_next[~free], (clocked - 3 * f * np.floor_divide(clocked, 3 * f))[~free])
 
 
 def checkerboard_seed(n: int) -> tuple[np.ndarray, np.ndarray]:
@@ -234,9 +247,10 @@ def test_every_family_reads_the_worlds_border_and_a_zero_face_when_open():
         zero = np.zeros((5, 1, 1), dtype=np.int64)
         live = planted(simulation, 1, now, zero, zero)
         a_next, r_next = step_once(simulation, live)
-        # at Node 0: the total num S_6 = 1 x (a_W + a_E + 4 x 0) = a_W, divided by 6
-        total = 6 * int(a_next[0, 0, 0]) + int(r_next[0, 0, 0])
-        assert total == expected
+        # at Node 0: the total Gamma num S_6 = Gamma x (a_W + a_E + 4 x 0) = Gamma a_W,
+        # divided by the vacuum's wall 6 Gamma (the Node clock, item 31)
+        total = 6 * NODE_CLOCK * int(a_next[0, 0, 0]) + int(r_next[0, 0, 0])
+        assert total == NODE_CLOCK * expected
     assert world.kind_periodic(1) == (False, True, True)
     assert world.kind_periodic(0) == (False, True, True)
     # the world open on every axis: every family open on every axis (the massive kind's
@@ -305,11 +319,14 @@ def test_the_light_record_is_byte_identical_without_the_key():
     1962; BUILD.md section 26 item 29) the residues of the stock's births spread from the
     kept remainder and all three digests moved; SINCE THE COUPLING RETIRED (decision (2),
     item 30) the excited record and the born light advance by the rule alone and all three
-    moved once more; read again at this head."""
+    moved once more; SINCE THE NODE CLOCK (decision (5), item 31) all three moved once more
+    (the remainders Gamma times the plain ones in the vacuum and the wall of the body's
+    content at its Nodes, the wheel and the residues read there, the norms on the lines in
+    the clock's units); read again at this head."""
     assert run_chain_digests() == {
-        "events": "621ef0c4bdbcf425b3242d49b567e34d0c856b943694cf82ffa9a5745f7a4270",
-        "state": "ca1cd42bc7a17f6511f948572f2e24933b70297137c8661a409e44623477de6e",
-        "audit": "4d47d255cfb6d90443f9205f069d5c436a36ee728abdcd0cdb7b4868c7f4296f",
+        "events": "d20cd10760db4c7a8e13743196b888ba269d9e95d43cc998a2a807d2ab220764",
+        "state": "05ebc8e9338ddf5b5d1c828f82be0baf86f393b973e6041e8ea5f6c5dde6e1d4",
+        "audit": "51dff33c24a49a165b49116ef63c47dfce5f88aa0a3fcb920565869f7f84d053",
     }
 
 
@@ -461,7 +478,8 @@ def block_world(
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
-        "amplitude_bound": 1 << 32,
+        "amplitude_bound": 1 << 28,
+        "node_clock": NODE_CLOCK,
         "directions": [],
         "families": families,
         "measured": measured,
@@ -683,10 +701,13 @@ def test_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
         assert simulation.books()["balanced"], simulation.tick
     births = [line for line in lines if line["event"] == "birth"]
     assert len(births) == 3
-    # the residues from the law (ALGEBRA.md 9.22 (4)) on W = 700, spread from the
-    # remainder kept at the cells (the model owner's decisions (1) and (2) of
-    # record 1962; the coupling's back-action HISTORY)
-    assert all(line["W"] == 700 and 0 <= line["u"] < 700 for line in births)
+    # the residues from the law (ALGEBRA.md 9.22 (4)) on the body's own wheel (700
+    # on the source well in the vacuum; at its Node the wheel of its content under
+    # the Node clock, 9.35 (2), read from the rule), spread from the remainder
+    # kept at the cells (the model owner's decisions (1) and (2) of record 1962;
+    # the coupling's back-action HISTORY)
+    assert all(lawful_wheel(world, line) for line in births)
+    assert [line["content"] for line in births] == [3, 2, 1]
     assert len({line["u"] for line in births}) > 1
     assert simulation.ledger.held_spent[2] == 3 and simulation.ledger.transit_released[0] == 3
     assert simulation.blocks[0].own is None
@@ -941,24 +962,34 @@ def test_the_mode_line_sums_lights_field_by_residue_class():
 
 
 def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
-    """MUST 3: a kind's pair whose rule total at the world's declared amplitude bound A reaches
-    2^63 is refused at load naming the bound and the pair (A = 2^40 declared, [2^20, 2^20 + 1]:
-    6 x 2^60 + ... above 2^63); [800, 809] is admitted; a block's pair with its g_d folded into
-    the wall is checked with that scale ([800, 800] with g = [1, 2^20] refused at A = 2^40, with
-    g = [1, 20] admitted). The world key (issue #1085, section 15 M1-10): a massive world
-    without `amplitude_bound` is refused naming it; a seed above the bound is refused naming
-    the bound and the pair (a seed of 2^60 at A = 2^32); the key without `massive_record`
-    refused; a planted row above the bound stops the run at its interval."""
+    """MUST 3 UNDER THE NODE CLOCK (BUILD.md section 26 item 31): a kind's pair whose rule total
+    at the world's declared amplitude bound A with the clock Gamma = 10^6 and the world's
+    content M reaches 2^63 is refused at load naming the bound, the clock, the content and
+    the pair (A = 2^28, [2^20, 2^20 + 1]: 10^6 x 2^20 x 6 x 2^28 above 2^63, admitted by the
+    plain rule's first pass on the pair alone); [800, 809] is admitted (1.9 x 10^18) and so
+    is the muon layer's [3200, 3236] (7.8 x 10^18, the largest registered pair); a block's
+    pair is checked the same way with the world's content ([big, big + 1] refused naming
+    measured[0] and M = 1, [800, 800] admitted). The world key (issue #1085): a massive world
+    without `amplitude_bound` is refused naming it; the ceiling 2^28 (2^29 refused naming
+    it); a seed above the bound is refused naming the bound and the pair (a seed of 2^60 at
+    A = 2^28); the key without `massive_record` refused; a planted row above the bound stops
+    the run at its interval."""
     big = 1 << 20
     document = massive_world([6, 6, 6], PERIODIC, [big, big + 1])
     document["age_bound"] = 100
-    document["amplitude_bound"] = 1 << 40
-    with pytest.raises(ValueError, match=r"num x 6 x A \+ 3 x den x \(A \+ 1\).*not below 2\^63"):
+    with pytest.raises(
+        ValueError,
+        match=r"Gamma x num x 6 x A .*Gamma = 1000000 and the content M = 0 is .*not below 2\^63",
+    ):
         parse_nature_beam_world(document)
-    with pytest.raises(ValueError, match=r"\[1048576, 1048577\]"):
+    with pytest.raises(ValueError, match=r"families\[1\]\.pair \[1048576, 1048577\]"):
         parse_nature_beam_world(document)
-    # the block's own pair under the bound (the coupling's folded denominator HISTORY,
-    # decision (2) of record 1962): a well [big, big + 1] at A = 2^40 refused, [800, 800] admitted
+    for pair in ([800, 809], [3200, 3236]):
+        admitted_pair = massive_world([6, 6, 6], PERIODIC, pair)
+        admitted_pair["age_bound"] = 100
+        parse_nature_beam_world(admitted_pair)
+    # the block's own pair under the bound with the world's content (one well of one
+    # quantum, M = 1): a well [big, big + 1] refused, [800, 800] admitted
     for pair, admitted in (([big, big + 1], False), ([800, 800], True)):
         world = block_world(
             [24, 24, 24],
@@ -967,11 +998,12 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
             [{"position": [10, 10, 10], "side": 3, "pair": pair}],
         )
         world["age_bound"] = 100
-        world["amplitude_bound"] = 1 << 40
         if admitted:
             parse_nature_beam_world(world)
         else:
-            with pytest.raises(ValueError, match=r"not below 2\^63"):
+            with pytest.raises(
+                ValueError, match=r"measured\[0\]\.pair .*the content M = 1 is .*not below 2\^63"
+            ):
                 parse_nature_beam_world(world)
     unbounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
     unbounded["age_bound"] = 100
@@ -980,8 +1012,8 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
         parse_nature_beam_world(unbounded)
     ceiling = massive_world([6, 6, 6], PERIODIC, [800, 809])
     ceiling["age_bound"] = 100
-    ceiling["amplitude_bound"] = 1 << 41
-    with pytest.raises(ValueError, match="above the ceiling 2\\^40"):
+    ceiling["amplitude_bound"] = 1 << 29
+    with pytest.raises(ValueError, match="above the ceiling 2\\^28"):
         parse_nature_beam_world(ceiling)
     huge_seed = block_world(
         [24, 24, 24],
@@ -990,9 +1022,7 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
         [{"position": [10, 10, 10], "side": 3, "pair": [800, 800], "seed": 1 << 60}],
     )
     huge_seed["age_bound"] = 100
-    with pytest.raises(
-        ValueError, match=r"above the world's amplitude bound A = 4294967296 on the pair"
-    ):
+    with pytest.raises(ValueError, match=r"above the world's amplitude bound A = 268435456 on the pair"):
         parse_nature_beam_world(huge_seed)
     bounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
     bounded["age_bound"] = 100
@@ -1239,7 +1269,9 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         identity = gather["record"]
         assert gather["chosen"][0][0] == "screen" and gather["click"] == gather["tick"]
         pointer, u, norm, wheel = at_click[identity]
-        assert wheel == 700 and 0 <= u < wheel and u == gather["u"]
+        births = {line["record"]: line for line in lines if line["event"] == "birth"}
+        assert wheel == births[identity]["W"] and lawful_wheel(world, births[identity])
+        assert 0 <= u < wheel and u == gather["u"]
         assert 2 * wheel * pointer >= (2 * u + 1) * norm and below[identity] == gather["click"] - 1
         # the flight: the train's head over 53 Links at v_g = 0.442, then as
         # much of the passage as the residue asks (the residues spread from
@@ -1379,7 +1411,8 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         # the rung (2 u + 1) T / (2 W) on the record's own residue from the law
         # decides how much of the record must pass the set before its click
         assert 0 <= line["click"] - birth <= 600 and line["tick"] == line["click"]
-        assert 0 <= line["u"] < 2403
+        born = next(b for b in lines if b["event"] == "birth" and b["record"] == first)
+        assert 0 <= line["u"] < born["W"] and lawful_wheel(world, born)
         assert line["clock_source"] == "measured:0" and line["clock"] == count_then
         assert first not in simulation.records
         assert all(g["chosen"][0][0] != "far" for g in lines if g["event"] == "gather")
@@ -1534,7 +1567,7 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
     section 26 (a block itself, of the matter kind, with its own record)."""
     document = chain_world()  # the closed chain (BUILD.md section 26 item 14)
     document["massive_record"] = True
-    document["amplitude_bound"] = 1 << 32
+    document["amplitude_bound"] = 1 << 28
     document["ticks"] = 200
     for x in (40, 41, 42, 43):
         document["measured"].append(
