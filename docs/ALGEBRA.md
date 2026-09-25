@@ -9681,3 +9681,43 @@ meeting (the mirrors and slabs are regions, the wells declared apart),
 so no pin asks for it; the crystal rows (9.31) hold their bodies apart
 by declaration. The body record changes none of this: it holds the four
 ways as the lattice body does, and has no fifth.
+
+**(7) A COMPOSITE BODY RECORD ON THE GameBoard: ITS MASS, ITS MOMENTUM, ITS
+PLACE (the model owner's question of 2026-09-25 in the mathematician's
+session: "for such a special Node, its mass as the mass of all its parts
+and its momentum as the momentum of all its parts; how would we put such
+a Node into our board naturally?").** (a) MASS, TWICE. The law has two
+things called mass. THE CONTENT M, the quanta held, is ADDITIVE: a body
+made of parts holds the sum of its parts' contents, and that sum is what
+the family of clicks reads, so the gravitational mass of the composite
+is the sum of its parts', exactly. THE REST ROTATION omega, the pair's
+and the well's, is NOT a sum: a composite is one eigenvector on the union
+of its parts' Nodes (9.32 (c), two wells whose modes overlap are one
+body), and its rotation is the composed operator's top eigenvalue, which
+the generator computes once; parts that do not overlap are not one body
+at all but several, each with its own record. So a composite body record
+carries one M (the sum) and one clock pair (the union's eigenvalue).
+(b) MOMENTUM. A moving body is its eigenvector times the character of one
+**K** (9.17 (6a), 9.31 the moving name): all its Nodes share the one
+**K**, so the composite's momentum is the one **K** with the content M
+behind it, M **K** in the exchange hypothesis's units (9.27 (D)),
+additive over parts that share the character and undefined for parts
+that do not (they would not be one record). Its pace is the dispersion's
+at that **K** under its clock, dω/dK, carried as the pace pair per axis on
+an accumulator (9.31 (2)), the hop of p Links every q intervals. (c) THE
+INSERTION, NATURALLY: a body record is placed on the GameBoard by its
+corner and its extents, its pair region written on S there, its profile
+phi on S, its clock pair the generator's for that well AT THAT **K** (the
+moving mode's clock), its T, stock, M, u, its rotation (a, b, r) at phase
+0 and remainder 0 (the load's one write), its **K** and its accumulators;
+each interval its rotation steps by (2) and its accumulators by the pace;
+when an accumulator carries, S and its pair region hop one Link on that
+axis (the moving name), its held M with them (the family of clicks'
+source moves, and the field follows at one Link per interval, a retarded
+potential); its Ports are those of S where it stands, its born rows go
+on S where it stands. Nothing else is declared: a composite is the same
+body record with the union's Nodes, the sum's content and one **K**; the
+tail rule and the two-bodies check hold on its profile as on any
+body's. What the law does not give a composite is what it gives no
+body: binding between its parts other than the declared well (9.39
+(3)), contact and repulsion ((6)).
