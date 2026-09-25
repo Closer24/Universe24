@@ -14153,3 +14153,99 @@ transport) first, the shipped worlds bit for bit; then the instances
 of 9.78 and this light as entries; then the check-mode rows of 9.78
 (9), 9.81 (8) and (3) (e), (f) here; then, complete and generic and
 every experiment passed at the test level, the freeze (1) (i).
+
+### 9.83 Every experiment with every family on: the one families file, its couplings with their lines, and the blind expectations with everything on (the Boss's record 2075 of 2026-09-25, the model owner: "in every experiment we put all the families into action with the right couplings, not only some, as if we are in the real world; what we want in the families' definitions file is the vector, tensor or scalar action of each thing")
+
+**(1) THE DECISION, as recorded.** One families file for the universe;
+every world references it, none copies it, none turns a family or a
+coupling off; a world's file places tools and states the initial
+state. Everything on in every run. A family with no source in a world
+stays exactly zero, and that is a test in every run. Hypotheses
+outside the law (the point emitter 9.69 (2), the exchange 9.27 (D),
+the recoil of record 2074) stay off until the owner decides.
+
+**(2) THE FAMILIES FILE: the universe's integers and every coupling, each
+with its line.** (a) THE UNIVERSE'S INTEGERS: Gamma = 10^4 and A = 2^20
+(9.57 (2)); the energy unit P_0 (9.51 (3)); the charge's strengths
+Lambda (9.48 (3), 9.51 (2)) and Lambda_v (9.81 (3)); the twist table
+(theta_unit and its triples, 9.81 (2) (b)); the wall W = 2 Gamma L of
+the accumulator (9.52 (4)). (b) THE ENTRIES, 9.79 (3) as edited by
+9.82: clicks (gravity's scalar), charge (its scalar), gravity's vector,
+gravity's tensor, light (the charge's vector wave), and the matter
+families with their pairs, all with phase 2 where they read a vector
+instance. (c) THE COUPLINGS, one line each:
+- every family reads {clicks, 1}: the pace p_0 (9.57 (1), 9.78 (4));
+- every family reads {gravity's tensor, 1}: the ruler per axis p_a
+  (9.78 (4)), the diagonal div 2;
+- every family with phase 2 reads {gravity's vector, its own rotation
+  per interval in the table's unit, by 1}: the transport (9.81 (2),
+  (3)); the weight is the record's own rotation, a matter record's
+  rest rotation from its pair, a light record's given clock from its
+  emitter's declaration (9.62 (1)), so the gravitational charge of a
+  wave is its frequency, as s = M P_0 div P is a body's (9.51 (3));
+- every charged family reads {charge, Lambda, q}: the pace (9.51 (2));
+  and {light, Lambda_v, q}: the transport, magnetism on a charged
+  wave (9.81 (3), 9.82 (2));
+- a seat reads every instance by the contraction (9.78 (4)) and steps
+  its spin by (9.78 (5));
+- the holds: clicks {content, 1} (9.45 (2), 9.51 (3)); gravity's vector
+  {content, 4, spin} (9.78 (2)); gravity's tensor {content, 2} (9.78
+  (2)); charge {charge, 1} (9.48, 9.51 (2)); light {charge, 1, moment}
+  (9.82 (2));
+- the self-unit P_2 = 0 for gravity's three and for the charge's two:
+  the term exists (9.78 (3)) and its value under this form is nature's
+  0, since the form carries beta = 1 by the pace entering twice; a
+  nonzero P_2 moves the perihelion off nature;
+- the clicks entries: light and every matter family {gives, takes, 1},
+  booked true, recoil off (record 2074, a hypothesis until the owner's
+  word); the field entries none, booked false;
+- the transverse booking (9.82 (3) (b)) and the transport are
+  operations, not couplings: they read the entries above.
+
+**(3) EVERY SHIPPED EXPERIMENT WITH EVERYTHING ON, blind: the effect of
+each family in the expectation or its bound below the resolution.**
+(a) THE SCALAR OF GRAVITY (the family of clicks): in every expectation
+already, the self-level at Gamma = 10^4 (9.61 (1) (b), 9.63 (4)): no
+shipped row moves. (b) THE CHARGE'S SCALAR: exactly zero in every row
+without a charged body (the leak test); in the charge rows (9.64) it
+is the row. (c) GRAVITY'S VECTOR AND TENSOR on bodies and on light
+through the paces: 9.76 (2)'s table stands row by row: every read
+field has a source at rest or a reader at rest in the source's frame;
+the one cross term 4 x 10^-5 (the Lorentz pair's mirror). (d) THE
+TRANSPORT on phase-2 records, new since 9.76: its angle per Link is
+the record's rotation times the vector level of both ends over Gamma
+(9.81 (2)); the largest vector level in any shipped row is a moving
+body's own, 4 s n div W at most 4 x 64 / 4 = 64 units at s = 64 and
+v = 1 / 4, so A / Gamma = 6 x 10^-3 at the body's Node, falling as
+1 / r; at the light's rotation 0.17 the angle is 10^-3 of a radian
+per Link at the body and 10^-5 at 90 Links; a record crossing the
+body's field once turns by at most 10^-2 of a radian, 2 x 10^-3 of a
+period, below every band (the light clock's tick, the fringes' pixel,
+the counts); a record that never passes a moving body turns by
+nothing, the transport the identity, bit for bit. (e) THE TENSOR'S
+RULER PER AXIS on light: h_aa = 2 s n_a n_a div W^2 at most 8 units at
+the body, 8 x 10^-4 of the ruler at its Node and 10^-5 at 90 Links:
+below. (f) LIGHT'S PHASE PAIR AND SIX COMPONENTS: one transverse
+component carries every shipped light row, the other five 0, bit for
+bit (9.82 (4)); the transverse booking books the row's component at
+every detector whose Ports are not along it, which every shipped
+detector satisfies (the beams run along x, the polarisation is
+declared along z). (g) THE SPIN'S STEP: every shipped body declares
+spin 0 and moment 0: exactly zero. (h) THE SELF-SOURCE: P_2 = 0,
+exactly zero. (i) THE CHARGE'S VECTOR (light's hold from currents): no
+shipped row moves a charged body; exactly zero beyond the given light
+itself; in Coulomb's row (9.64 (1)) the packet is a free record and
+sources nothing, in the atom (9.64 (2)) the proton is at rest with
+spin 0: zero. So every blind expectation of 9.68 stands with
+everything on, and (b), (g), (h), (i) are read as exact zeros in
+every run: THE LEAK TEST of (1): a family's levels and remainders all
+0 at every interval wherever it has no source, checked by the run's
+own digest.
+
+**(4) THE COST, Nature24's report awaited.** A family exactly zero costs
+nothing under the support-only step (b7d6f082, 9.78 (8)); a family
+with a source costs its support; the transport costs about twice the
+rule on the phase-2 families where a vector level is nonzero, nothing
+where it is 0 (the identity read from k = 0). The light clock's two
+to three times is the light's six components stepped where they are
+nonzero (one of six in a shipped row).
