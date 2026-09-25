@@ -614,13 +614,14 @@ that GitHub enforces a branch protection rule unless it was actually verified.
 The owner's words of 2026-09-24, 12:36Z to 14:12Z, in force for the
 stabilisation of the engine and the freeze:
 
-1. **One list, fifteen experiments** ([RUN_LIST.md](../docs/designs/detector_law/RUN_LIST.md));
+1. **One list, sixteen experiments** ([RUN_LIST.md](../docs/designs/detector_law/RUN_LIST.md); the sixteenth, a two-qubit quantum computer, added on 2026-09-25, record 1883);
    the seven others are OUT, not deferred ("there is no after the paper").
 2. **One agent writes all the engine code, the worlds and the test-run lines**
    (Nature24, the physicist; the owner's word of 17:05Z: "only one writes the
    code, the worlds and the test world: for us Nature24"): the
-   three features are one job, making the four building blocks (the emitter,
-   the body, the receiver, the clock) one code for every body on the board;
+   three features are one job, making the one operator, the click and the
+   birth (which replaced the four building blocks on 2026-09-25, record 1875)
+   one code for every body on the board;
    the experiments are compositions declared in the world file and defined
    in [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md); the engine
    knows no lamp, polariser or light clock by name. No builders, no World
@@ -653,12 +654,13 @@ stabilisation of the engine and the freeze:
    composed into an experiment's world, which tests the composition. A
    block tested on one kind of input alone is a gap: the polariser's bug
    lived because it was tested on label 0 alone.
-8. **Three levels: the building blocks, the lab tools, the experiments**
-   (the owner, 2026-09-24, record 1825). The engine knows the emitter, the
-   body, the receiver, the clock and the six verbs. A lab tool (the
-   polariser, the splitter, the mirror, the crystal, the well body) is a
-   named composition defined once in the tool library
-   (`examples/events/entities/apparatus.json`), with its own section of
+8. **Three levels: the one operator, the lab tools, the experiments**
+   (the owner, 2026-09-24, record 1825; the engine's level made the one
+   operator, the click and the birth on 2026-09-25, record 1875). The engine
+   knows the one operator, the click, the birth and the six verbs. A lab tool
+   (the polariser, the splitter, the mirror, the crystal, the well body) is a
+   region of the operator with its material integers, defined once in the
+   tool library (`examples/events/entities/apparatus.json`), with its own section of
    algebra and a unit test that checks that algebra exactly. An experiment
    is a world file that places tools by name at positions on the board,
    and its pin is computed from the tools' algebra. All the tools are specified in one
@@ -690,6 +692,11 @@ stabilisation of the engine and the freeze:
    is conserved on the board's own values. Nature24 merges each tool to main
    on green CI with the mathematician's line-by-line confirmation, and tells
    the Boss for the record (the owner, 2026-09-25, record 1856).
+   Everything is algebra (the owner, 2026-09-25, record 1875): a world
+   declares only its extents, its operator as data, the births' data, the
+   occupation and the receivers' names; a lab tool is a region of the
+   operator with its material integers, never code; the initial state is
+   derived and checked at load; an experiment's run checks only clicks.
 9. **A physicist's validity report at the freeze** (the owner, 2026-09-24,
    record 1826): before the owner's GO, an independent physicist session,
    never the worlds' writer, writes one report on the list. For each
