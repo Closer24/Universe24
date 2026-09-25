@@ -14380,11 +14380,12 @@ on in every run, no key (the owner's decision 3 of record 2081). A family with n
 is exactly zero: the leak test (9.83 (3)).
 
 **(4) THE EXCHANGE'S LINE, RESTATED.** 9.84 (2), the recoil in the law
-for every body at every click, on in every run (the owner's decision
-2 of record 2079). The clicks family stays a scalar (record 2074, my
-answer 1): the count is the trivial representation; the momentum's
-place is the body's accumulator and gravity's vector hold. THE
-EXCHANGE'S OWN IDENTITY (9.27 (D)) IS RETIRED into 9.84.
+for every body at every click, on in every run (the owner's decision 2
+of record 2079). The click transfers a four-vector, the count and the
+momentum; the clicks family holds it as the time-space part of
+gravity's one family of ten components (9.86, the owner's word; my
+scalar line of record 2074 withdrawn). THE EXCHANGE'S OWN IDENTITY
+(9.27 (D)) IS RETIRED into 9.84.
 
 **(5) THE POINT EMITTER ON, AND ROW (iv) SOLVED (the owner's decision 3;
 Nature24's five questions of 9.75's readings).** The row as read: the
