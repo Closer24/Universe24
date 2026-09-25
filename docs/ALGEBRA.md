@@ -10751,6 +10751,68 @@ symmetric self-field; two bodies falling on each other, which the form
 gives at once (each reads the other's field) and which the binding
 row of 9.48 (4) will run.
 
+**(4) THE BUILD'S RULINGS (Nature24's two findings and four pieces on
+9.52 before the build, 2026-09-25; DERIVED).** (i) THE HOP MOVES THE
+FIELD THROUGH THE BODY, IT DOES NOT OVERWRITE IT (his finding 1). Today
+the hold writes (s, s, 0) on the Nodes a hop newly covers and the free
+field's two levels and remainder there are lost, a second deletion.
+The law's form: at a hop the pins move with the body, and the field's
+own integers at the covered Nodes (two levels and the remainder, per
+field family) MOVE TO THE VACATED NODES, face to face along the hop's
+axis, the slab ahead to the slab behind; every other Node is untouched.
+That is a permutation of NodeStates within the body's own extent (one
+Link for a seated body, the body's width for a lattice body), a
+bijection, so the hop loses nothing and the inverse restores it with
+the seat and the accumulators; the field's state passes through the
+body as everything else does (no contact, 9.46 (6)); the transient the
+move leaves behind the body dies in the rounding as the field's other
+transients do (9.45 (2)). The click stays the one deletion (9.55 (7)).
+(ii) THE FEED READS THE TOTAL LEVEL AT THE FACES, THE BODY'S OWN FIELD
+INCLUDED (his finding 2). A field cannot be split at a Node, so there is
+no local reading that excludes the body's own hold; the feed is the
+level as it is. At rest the own field is symmetric and the feed is 0
+bit for bit (his reading, 400 intervals). In motion the own field lags
+by the field's one Link per interval and is written by hops, so the
+faces read the rounding's walk of the own field (9.45 (6) (B)), a few
+units per interval, of mean 0 by the symmetry of a uniformly moving
+source's retarded field (the boosted static field is symmetric front
+and back; the lattice adds no odd term at first order); its running
+sum wanders as a walk, within a few sqrt(N) units over N intervals,
+and moves no hop over a run of the eighteen's length (a Link is 2 Gamma
+L units at the accumulator's scale, 10^7 and above). THE ASSERTION that
+replaces (3) (e) "bit-identical": a body in no field but its own hops
+at the same intervals as today's moving body over the run; its
+accumulator differs by the walk; the mean feed over the run is within
+three standard errors of 0. A mean feed beyond that, a drag or a push
+on a uniformly moving body, is a finding for the mathematician before
+anything else (a self-force would break the law's invariance under a
+uniform motion, 9.26 (2)). (iii) THE FACE READS (his A): the two whole
+faces, the body's shell Nodes with a Port on that axis (9.38 (2)), their
+sums differenced, and the unit scaled by the face's count of Nodes so
+that a seated body (one Node, its two reads on the axis) and a block of
+side S read the same feed per Node; the two centre-line Nodes alone
+are the S = 1 case. (iv) THE UNITS (his B): one accumulator at the
+engine's common integer scale, the feed and the carry scaled together
+(the form of (2) times the common factor), so that a body with no feed
+moves as today bit for bit. CONFIRMED. (v) THE ACCUMULATOR'S RANGE (his
+C): the remainder form of 9.50 (8), the accumulator in [0, W) with the
+floor, one to one for every |n| below W, under a velocity of either
+sign (a bounce, an orbit); the signed form in (-W, W) is refused for
+its two pre-images. CONFIRMED. (vi) THE CLICK THAT READS A BODY'S
+ARRIVAL (his D). A body's arrival is no click and bodies do not click
+on bodies (9.46 (6)); a body is read by the light it gives (9.54 (1)).
+So the falling body of (3) (a) is an emitter with a stock, giving light
+toward a receiver below it at its period P; the receiver's click times
+are the reading: the n-th birth arrives at n P + d(n P), d the distance
+shrinking as the body falls, so the arrival intervals compress by the
+free fall's closed form, d(t) = d_0 - M R t^2 / (4 Gamma r^2) at first
+order; the pin is the arrival times against that form within one
+interval. Equivalence, (3) (b): two such emitters of different families
+released together, the same compression. Kepler, (3) (c): an orbiting
+emitter's births reach the receiver with the orbit's period in their
+delays, read from the clicks. The seat's position stays a GameBoard
+reading beside them (9.51 (7)).
+
 ### 9.53 How the law enters, once; what is a host form; the one seam left, and what closes it (the model owner, 2026-09-25: "so how does the law enter? think again whether this unifies everything"; the mathematician's answer, for the record)
 
 **(1) THE LAW ENTERS ONCE, IN THREE SENTENCES.** Every Node steps
