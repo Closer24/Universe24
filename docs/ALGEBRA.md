@@ -10853,3 +10853,92 @@ The GameBoard reading beside it: the family of clicks' level around
 the two bodies equal, the family of charge flat around the dark one.
 Both worlds read (9.51 (7)): the bend and the counts are clicks; the
 levels are diagnostics.
+
+### 9.55 The test of the board's reversibility and of what the clicks keep: the independent expectations (the model owner's word of 2026-09-25 through the Boss, record 2010: "write a test that shows the board is reversible in time, and in general keeps the physical definitions known in the clicks"; Nature24 writes the one file; each expectation with its section; nothing here is a new rule)
+
+**(1) REVERSIBILITY, EXACTLY.** (a) Between clicks the joint step of
+every family (the records, the family of clicks, the family of charge)
+inverts bit for bit: every level, every remainder, every field level,
+the seated body's accumulators and its seat (9.52 (2)), for any clock
+history, the falls included, on a periodic board and an open one, at
+Gamma = 10^6 and at a small Gamma where a unit of the level is visible
+(9.50 (8), (13); the pins at bodies constant between clicks, 9.51 (4)).
+(b) What a click loses and nothing else (9.53 (1), 9.26 (3) (b)): the
+state after a click, inverted back to the click's interval, differs
+from the state before it ONLY in the taken record's rows and remainders
+(gone, the record ended) and in the click line's writes (M_k, Q, s, u on
+the body's record and the two fields' levels at its Nodes); every other
+record's levels and remainders, and the body's own levels, phase and
+remainders (9.43 (3)), are bit-equal. (c) The giving end is reversible
+given the line: the born record's rows are X_S^T of the body's data
+(the eigenvector times the character on S, 9.40 T3), so removing them
+by X_S from the line's integers returns the board bit for bit; the
+taking end is not (that is the one deletion, (6)).
+
+**(2) WHAT EVERY CLICK KEEPS (the physical definitions known in the
+clicks).** (a) The count of quanta per family: the bodies' M_k plus
+the records of family k in flight is constant through every click; a
+taking moves one from flight to a body, a giving the reverse (9.40 T3,
+9.51 (8)). (b) The whole quantum: M_k moves by exactly one per click,
+never a fraction (9.40 T3). (c) The total charge SUM q_k M_k over the
+bodies and the flights is constant (9.51 (8)). (d) The residue: u in
+[0, W) read at the first shell Node in x-major order, the born record's
+and the body's next alike (9.44 (5) (c)). (e) The next click counted:
+the giving end's next click exactly ceil((2 u + 1) P / (2 W)) intervals
+after the read, at least one (9.43 (4), item 33's test). (f) The energy
+count: s recomputed at the click as SUM_k (M_k P_0) div P_k with the
+remainders kept; with `energy_source` off, s = M (9.51 (3), (8)). (g)
+Born's shares at the taking end: over N records of the same flux
+through a set of pixels, the counts per pixel in the proportion of the
+flux through each pixel's Ports, in distribution (the chi-square within
+its bound; the increment ladder, 9.25 (2)); the charge's pace changes
+the rays, not the shares at one level (9.50 (13) (iv)).
+
+**(3) WHAT HOLDS BETWEEN CLICKS.** The conserved form of the Node's own
+pace (9.50 (9), (13)): E = SUM_i [3 den Gamma (now_i^2 + before_i^2) - 6
+den c_i now_i before_i] / p_i - num SUM_i now_i S_6(before)_i, read in
+exact rationals, constant to the rounding where the field stands; at a
+uniform level (the vacuum, a body's region) the integer form p E is
+constant exactly up to the remainders' term. Where the field moves,
+the identity per Node: the change of the Node's weighted share equals
+the plain currents num (now_i before_j - before_i now_j) through its
+Links, plus the remainders' term (a_next - a_before)(r - r') over the
+wall, plus the weight's change (1 / p' - 1 / p) times the Node's terms;
+residual 0 on random rows (9.50 (5), (9); Nature24's identity of item
+34 with the plain current in place of the paced one). The count of
+quanta and the total charge do not change between clicks at all.
+
+**(4) THE EDGE CASES, ONE ASSERTION EACH.** A pin that jumps by more
+than one unit in one interval (a click at a neighbouring body): the
+inverse exact. A remainder of 0 and of wall - 1 (the ceiling's edge).
+A negative effective level (the charge's hill, c - q Lambda d below 0):
+the numerator above the vacuum's, the inverse exact. The guard tripped
+(a pace at or below 0): refused by name, no step taken. A body on a
+folded axis of extent 1 (no Port there). A body with no shell: refused.
+The first click after the load (the residue read after the first
+advance). Two clicks in one interval at two bodies (disjoint Nodes,
+the order of the writes immaterial to the inverse). The seat's carry at
+the boundary (x_acc exactly at 2 Gamma L) and the hop across a periodic
+edge. The stock's last quantum (M_k of the born family to 0, no birth
+after). A body of Q = 0 holding quanta of both signs (the pin 0, the
+records still read their q). The energy source on with P_0 = P (s = M,
+bit-identical) and with P_0 not P (the remainder kept and inverted).
+Two families of different pairs in one world under one clock.
+
+**(5) THE ONE READING.** Every assertion above is on the board's
+integers and the click lines; none reads a float; the shares of (3)
+are read as exact rationals; the distributions of (2) (g) over N = 100
+or more births with the bound stated. A test that passes on the
+levels and fails on a click line is a finding, not a pass (9.51 (7)).
+
+**(6) CAN THE CLICK ITSELF BE MADE REVERSIBLE (the Boss's question,
+also put to the owner).** Not under the adopted law, and by its
+choice: the click is the one deletion, the measurement (record 1139;
+POSTULATES.md section 10; 9.26 (3) (b)). To keep the taken record's
+rows lawfully the detector would need a store beyond the events at
+its Nodes, a register, which the local test forbids; and a board that
+deletes nothing has no measurement and no click, only the whole
+element turning (the law's own bijection, the Inside of 8.8), which is
+another law under another identity. What the click keeps is the line:
+the count, the residue, the Node, the interval; that is the record's
+whole trace, and (1) (b) is its exact statement.
