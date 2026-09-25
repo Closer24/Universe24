@@ -53,6 +53,7 @@ def emitter_body(
         "side": side,
         "pair": list(EMITTER_PAIR),
         "seed": 100,
+        "margin": "control",
         "emitter": emitter,
     }
 
@@ -250,15 +251,15 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
     keyed["measured"][0]["emitter"]["remnant_take"] = 4
     with pytest.raises(ValueError, match="remnant_take"):
         parse_nature_beam_world(keyed)
-    world_wheel = chain_world(on_mode=False)
+    world_wheel = chain_world()
     world_wheel["wheel"] = 64
     with pytest.raises(ValueError, match="the world.wheel is refused"):
         parse_nature_beam_world(world_wheel)
-    set_wheel = chain_world(on_mode=False)
+    set_wheel = chain_world()
     set_wheel["detectors"][0]["wheel"] = 64
     with pytest.raises(ValueError, match=r"detectors\[0\]\.wheel is refused"):
         parse_nature_beam_world(set_wheel)
-    on_light = chain_world(on_mode=False)
+    on_light = chain_world()
     on_light["families"][0]["take"] = [-15, 56]
     with pytest.raises(ValueError, match=r"families\[0\]\.take is refused"):
         parse_nature_beam_world(on_light)

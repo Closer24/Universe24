@@ -1076,6 +1076,18 @@ class DetectorLawSimulation:
         offer C from 0."""
         emitter = block.definition.emitter
         assert emitter is not None
+        if block.definition.profile is None:
+            # the mathematician's gate item 8: the excited record is the body's
+            # composed mode (ALGEBRA.md 9.9, 9.17 (4) item 1), the generator's
+            # profile; a flat seed is no mode and is refused where a body
+            # births (at the engine's construction: the generator parses the
+            # world with the scalar seed to compute the profile)
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{block.number}].emitter needs the body's `seed` as its "
+                "composed mode's profile (one integer per Node, the generator's "
+                "`seed_on_the_mode`; a flat scalar seed is no mode and births nothing lawful, "
+                "ALGEBRA.md 9.17 (4) item 1)"
+            )
         if emitter.norm is None:
             raise ValueError(
                 f"{BEAM_LAW}: measured[{block.number}].emitter declares no `norm`: the one-way flux "
@@ -1105,7 +1117,8 @@ class DetectorLawSimulation:
         booked to its offer C (read-through, nothing taken), and the rung
         2 T u + T <= 2 W C on the record's own wheel W fires the click (the
         birth follows once the interval's records are advanced). The flux
-        is read from the two levels that entered the interval's advance."""
+        is read from the two levels AFTER the interval's advance (the block's
+        record is advanced before this is called)."""
         own = block.own
         emitter = block.definition.emitter
         if own is None or emitter is None or block.emit_now:
@@ -1234,13 +1247,12 @@ class DetectorLawSimulation:
             fresh = self._massive_record(
                 number * (1 << 32) + (1 << 30) + block.excitations, number, block.family
             )
-            if block.definition.profile is not None:
-                profile = np.array(block.definition.profile, dtype=np.int64).reshape(self.shape)
-                fresh.now[:] = profile
-                fresh.before[:] = profile
-            else:
-                fresh.now[block.mask] = block.definition.seed
-                fresh.before[block.mask] = block.definition.seed
+            # the seed is the body's composed mode (9.9, 9.17 (4) item 1): the
+            # loader requires the profile on a body that births
+            assert block.definition.profile is not None
+            profile = np.array(block.definition.profile, dtype=np.int64).reshape(self.shape)
+            fresh.now[:] = profile
+            fresh.before[:] = profile
             block.own = fresh
             self.records[fresh.identity] = fresh
             block.previous_sum = int(np.sum(fresh.now[block.mask]))
@@ -1463,27 +1475,37 @@ class DetectorLawSimulation:
         return wall
 
     def _flux_ports(self, family: int) -> list[tuple[int, int, np.ndarray]]:
-        """The Ports of every cell for the flux reading: per axis of extent
-        above 1 and per side s, the Nodes of a cell whose neighbour on that
-        side (the read across the Link, on the family's faces) is a Node of
-        no cell or of another cell. A self-read of a folded axis carries no
-        flux; beyond an open face there is no Node and no Link."""
+        """The Ports of every cell for the flux reading (ALGEBRA.md 9.25 (2),
+        the mathematician's gate item 2): per axis of extent above 1 and
+        per side s, the Nodes of a cell whose neighbour on that side (the
+        read across the Link, on the family's faces) is a Node of no set or
+        of ANOTHER set; a Link between two cells of one set (a table body's
+        two cells) is no Port, so the energy that entered the set at one
+        cell is not offered again at its neighbour. A self-read of a folded
+        axis carries no flux; beyond an open face there is no Node and no
+        Link."""
         wrap = self.kind_wrap[family]
+        set_names = sorted(set(self.cell_set))
+        set_of_cell = [set_names.index(name) for name in self.cell_set]
+        set_index = np.full(self.shape, -1, dtype=np.int64)
+        occupied = self.cell_index >= 0
+        set_index[occupied] = np.array(set_of_cell, dtype=np.int64)[self.cell_index[occupied]]
         ports: list[tuple[int, int, np.ndarray]] = []
         for axis in range(3):
             if self.shape[axis] == 1:
                 continue
             for side in (1, -1):
-                neighbour = self._shift(self.cell_index, axis, -side, fill=-2, wrap=wrap)
-                mask = (self.cell_index >= 0) & (neighbour != -2) & (neighbour != self.cell_index)
+                neighbour = self._shift(set_index, axis, -side, fill=-2, wrap=wrap)
+                mask = occupied & (neighbour != -2) & (neighbour != set_index)
                 ports.append((axis, side, mask))
         return ports
 
     def flux_offer(self, live: LiveRecord) -> dict[int, int]:
         """The one-way inward flux into every cell this interval (9.19 (3)):
         over the cell's Ports, 3 G_ij = now_i before_j - before_i now_j where
-        positive, times the family's wall, from the two levels that enter the
-        step (`now`, `before` before the advance); by the cell's index."""
+        positive, times the family's wall, from the record's two levels AFTER
+        the interval's step (`_advance` books it once `now` and `before` have
+        moved; the prototype's reading); by the cell's index."""
         wrap = self.kind_wrap[live.family]
         wall = self.kind_wall(live.family)
         now = live.now.astype(object)

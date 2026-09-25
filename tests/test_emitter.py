@@ -104,6 +104,7 @@ def emitter_world(
                 "side": side,
                 "pair": [800, 801],
                 "seed": 100,
+                "margin": "control",
                 "emitter": emitter,
             },
             {
@@ -288,8 +289,8 @@ def test_b_the_born_record_is_written_once_and_the_law_advances_it():
 
 
 def test_c_the_loaders_refusals_name_their_keys():
-    def refused(mutate, message: str) -> None:
-        document = emitter_world(stock=2, on_mode=False)
+    def refused(mutate, message: str, on_mode: bool = False) -> None:
+        document = emitter_world(stock=2, on_mode=on_mode)
         mutate(document)
         with pytest.raises(ValueError, match=message):
             DetectorLawSimulation(parse_nature_beam_world(document))
@@ -343,7 +344,10 @@ def test_c_the_loaders_refusals_name_their_keys():
         document["measured"][0]["emitter"]["norm"] = 1000
         del document["measured"][0]["emitter"]["norm"]
 
-    refused(no_norm, "declares no `norm`")
+    refused(no_norm, "declares no `norm`", on_mode=True)
+    # the mathematician's gate item 8: a body that births declares its seed
+    # as its composed mode's profile; a flat scalar seed is refused
+    refused(lambda document: None, "seed. as its composed mode's profile")
     refused(emitter("born", {"now": [1, 2], "before": [3, 4]}), "must be 80 integers")
     refused(emitter("born", {"now": [0] * 80, "before": [0] * 80}), "writes no motion")
 

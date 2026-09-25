@@ -34,7 +34,7 @@ WELL_VERTEX = (3, 4, 5)
 BIRTH = (8, 2, 7)
 RECEIVER = (9, 9, 2)
 WHEEL = 8
-INTERVALS = 90  # the reference record's click at 81 (u = 0; 9.20's 60 read on the prototype's flux, three times the engine's, BUILD.md section 26 item 14)
+INTERVALS = 90  # the reference record's click at 81 (u = 0; the prototype and the engine read the same flux since the prototype's factor of 3 was fixed, ALGEBRA.md 9.20 (C))
 AMPLITUDE = 1 << 12
 
 

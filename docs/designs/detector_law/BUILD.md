@@ -1825,7 +1825,23 @@ would have found no cell.
    (the moving name, for the line after the cleanup), record 1890 (the
    joint body dropped: the sixteenth's circuit is the generator's), the
    seventeenth (Mach-Zehnder, after the mathematician's pin and the
-   generator).
+   generator). THE GATE'S READING OF 2bd20b8c (the mathematician, 00:31Z:
+   NOT YET, two lines blocking, the rest CONFIRMED in form) folded here:
+   item 1, the withdrawn ladder, is the increment ladder above; item 2,
+   `_flux_ports` forms a Port only where the neighbour is a Node of no set
+   or of ANOTHER set (a Link between two cells of one set, a table body's
+   two cells, is no Port: the energy that entered the set at one cell is
+   not offered again at its neighbour; one-cell sets unchanged); item 3,
+   the two docstrings that said "the levels that enter the step" now say
+   after the step; item 8, the next excitation's flat-seed fallback is
+   gone and a body that births needs its seed as the composed mode's
+   profile (refused at the engine's construction, where `_excite` runs,
+   since the generator parses the world with the scalar seed to compute
+   the profile; the line's test worlds declare `margin` so the generator
+   writes their profiles); item 10's note on INTERVALS' comment (the
+   prototype's factor of 3 fixed: the two agree). Items 5 and 9 (the
+   branch on the kind, `live.mask`, `arm_done`, the cavity's zeroing, the
+   tables) are the later steps'.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
