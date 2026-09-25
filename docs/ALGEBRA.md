@@ -9595,7 +9595,10 @@ with a shape.
 
 **(2) ITS STEP.** The rotation moves by the two-term rule with the clock
 of its content: den_c (Gamma + M) a' + r' = (num_c Gamma + 2 den_c M) a
-- den_c (Gamma + M) b + r, 0 <= r' < den_c (Gamma + M); this is 2 cos
+- den_c (Gamma + M) b + r, 0 <= r' < den_c (Gamma + M) (between clicks;
+at the interval of a click the two walls of 9.50 (6), the produced value
+under the content after the click and the before term under the content
+before it, so that the record's own backward run is exact); this is 2 cos
 omega' = (Gamma / (Gamma + M)) 2 cos omega + 2 M / (Gamma + M), which is
 1 - cos omega' = (Gamma / (Gamma + M))(1 - cos omega), the Node clock's
 rotation of 9.35 (2) in one coordinate; all integers, one division, the
@@ -10011,7 +10014,11 @@ ever after each birth, a physical change the owner has not made. The
 property (4) of 9.20 (B) is restated: the joint step inverts exactly
 wherever the clock has not fallen at a Node with a record, and loses at
 most one remainder's worth of state per unit of fall where it has; the
-tests assert that. (B) THE FIELD AT UNIT LEVELS. With one unit per
+tests assert that. [SUPERSEDED by 9.50 on the owner's requirement of
+2026-09-25: the wall belongs to the edge between two intervals, and
+then the inverse is exact where the level falls too; the reason here
+(the content in f, e uniform on the Links) stands and 9.50 keeps it.]
+(B) THE FIELD AT UNIT LEVELS. With one unit per
 quantum (9.45 (1), the owner's "the clock as its amplitude") a body of
 1 to 64 quanta makes a field that is the rounding's walk within a few
 Links and nothing beyond (13 units at most on the small world, 9 in the
@@ -10130,6 +10137,145 @@ moved the counts. This is the cracking; a row outside its band is a
 finding for the mathematician before anything else changes.
 
 **(7) WHAT IS NOT BUILT, by the owner's earlier words.** The clock
-sourced by energy (9.45 (5)); the wall that never shrinks (9.45 (6) (A));
+sourced by energy (9.45 (5)); the wall that never shrinks (9.45 (6) (A),
+not needed since 9.50 keeps the inverse with the wall on the edge);
 magnetism, spin, exclusion, the short-range forces (9.48's neighbours).
 Each waits on its own row and its own word.
+
+### 9.50 The backward run exact where the clock falls: the wall belongs to the edge between two intervals, not to the interval (the model owner's requirement of 2026-09-25 through the Boss: "the backward run must be solved; we need to find the right way to solve it"; PROVED and COMPUTED; supersedes the ruling (A) of 9.45 (6); for Nature24's build before 9.49 (2))
+
+**(1) WHERE THE INVERSE IS LOST, EXACTLY.** The step at a Node under the
+Node clock (9.45 (3)): 3 den f a_next + r' = e num S_6(a_now) + 6 den
+(f - e) a_now - 3 den f a_before + r, with (e, f) = (Gamma, Gamma + c),
+c the family of clicks' level at the Node, the wall W = 3 den f and 0
+<= r' < W. The remainder r on the right was written by the previous
+step under ITS wall, W_prev = 3 den (Gamma + c_prev): 0 <= r < W_prev.
+The inverse (9.26 (3) (a)) reads K = e num S_6(a_now) + 6 den (f - e)
+a_now - W a_next - r' = W a_before - r and takes a_before = ceil(K / W),
+r = W a_before - K. This is one pair only when r < W, that is when
+W_prev <= W. Where the level fell between the two intervals, c_prev >
+c, the remainders r in [W, W_prev), 3 den (c_prev - c) of the 3 den
+(Gamma + c_prev), satisfy W a_before - r = W (a_before + 1) - (r + W):
+the states (a_before, r) and (a_before + 1, r + W) give one K and the
+inverse cannot tell them apart. The integers: the two coefficients of
+one step, of a_next and of a_before, are one wall, W(t); the remainder
+crosses from the step at t - 1 to the step at t; where W(t - 1) > W(t)
+it does not fit under the wall that consumes it. The fraction lost is
+(c_prev - c) / (Gamma + c_prev) per unit of fall, 10^-6 at Gamma =
+10^6, the number of 9.45 (6) (A). COMPUTED (the scratch script
+`edge_wall.py`): a ring of 48 Nodes with S_6 read as the two ring
+neighbours (the same algebra), Gamma = 50 so that the loss shows,
+levels walking by 0 or +-1 per interval at every Node; 400 of 400
+backward steps wrong, the first already (about 1 / 53 of the remainders
+merge at each unit of fall on 48 Nodes); for one unit of fall at Gamma
++ c = 53, 1503 of 79659 remainders merge, 0.0189 = 1 / 53.
+
+**(2) THE FIX: THE WALL ON THE EDGE.** Attach the wall to the edge
+between two intervals and not to the interval: the edge (t, t + 1)
+carries the level c(t + 1), the family of clicks' own value after its
+step of interval t. Its own wall is constant, 3 den Gamma, by (D) of
+9.45 (6) (e = f for its own step), so its a_next at the Node is known
+from its own record and the six neighbours at t before any other family
+divides: the family of clicks steps first in the sweep. The rule at a
+Node, for every other family, with f_- = Gamma + c(t) and f_+ = Gamma +
+c(t + 1), W_- = 3 den f_-, W_+ = 3 den f_+:
+
+  W_+ a_next + r' = e num S_6(a_now) + [3 den (f_- + f_+) - 6 den e]
+  a_now - W_- a_before + r,  0 <= r' < W_+,  0 <= r < W_-.
+
+The produced value stands under the wall of the edge it enters; the
+before term stands under the wall of the edge it came from; the middle
+is the mean of the two walls, an integer since 6 den (f - e) = 3 den
+(f_- + f_+) - 6 den e when f_- = f_+ = f. PROVED, THE INVERSE: K = e num
+S_6(a_now) + [3 den (f_- + f_+) - 6 den e] a_now - W_+ a_next - r' = W_-
+a_before - r with 0 <= r < W_-, so a_before = ceil(K / W_-) and r = W_-
+a_before - K, one pair, for every sequence of walls, rising or falling.
+THE REVERSED MOTION obeys the same rule with the two edges exchanged
+(the value it produces under the earlier edge's wall, its before term
+under the later edge's) and the remainder's sign mirrored, exactly as in
+9.26 (3) (a); the middle is symmetric in f_- and f_+, so it reads the
+same both ways. REDUCTIONS: at a constant level, f_- = f_+, the rule is
+9.45 (3) term for term (COMPUTED: 400 steps on the ring, bit-identical);
+at c = 0 everywhere it is the eighteen's rule. COMPUTED on the ring with
+the levels rising and falling (4426 falls at the Nodes over 400
+intervals): 0 of 400 backward steps wrong; the state returns bit for bit
+to the first interval. The clock of a mode at a static level is
+unchanged, 1 - cos omega' = (Gamma / (Gamma + c))(1 - cos omega); on an
+edge where the level moves the step reads both walls, and that two-wall
+form is the one that admits the inverse.
+
+**(3) THE THREE TESTS.** Generic: one primitive with declared integers
+(num, den, Gamma, the two levels at the Node), no family name, every
+family reading the two edge levels the same way; with the charge (9.48)
+each edge level is c - q Lambda d read on that edge. Vector: multiply
+by an integer, add, one division with a remainder; no root, no float.
+Local: the two levels are the family of clicks' own record at the Node
+at t and at t + 1, the second its own a_next from its record and the six
+neighbours; nothing else is kept at the Node, the state per family
+stays (a_before, a_now, r). It is the same law with its wall read at the
+right moment, not a new coupling.
+
+**(4) THE IDEAS TO JUDGE, JUDGED (the Boss's three, and one more).**
+(i) The family of clicks conserved, what enters a Node leaves it: a
+conserved field still has a level that falls at a Node when the flow
+leaves it; conservation does not keep the wall from shrinking; not a
+fix. (ii) The wall never shrinks inside a step, only at a click: at a
+body's Node the level is held and moves only at clicks, but at every
+other Node the field's own step moves it every interval, far from any
+click; and a wall that never falls keeps the giver's clock slow for ever
+(9.45 (6) (A)), a physical change; not a fix. (iii) The merged remainder
+kept as part of the Node's own numbers: a count that grows with every
+fall, a register of the Node's history beyond the events there; fails
+the local test. (iv) The level in e with f fixed, a constant wall:
+reversible, but the coefficient of a Link's current, e num, then differs
+at its two ends and T1's conserved form is lost; the reason of 9.45 (6)
+(A) stands. The edge wall keeps e = Gamma on the Links, the content in
+the wall, and the inverse: (A) chose conservation over reversibility,
+and the choice is no longer made.
+
+**(5) THE SHARE AND THE WORK TERM ON THE EDGE (the conservation answer
+of 9.45 (5), restated).** The share on the edge (t, t + 1) over a set:
+Q(t + 1/2) = sum over the Nodes of [3 den f_+ (a_{t+1}^2 + a_t^2) - e num
+a_{t+1} S_6(a_t) - (3 den (f_- + f_+) - 6 den e) a_{t+1} a_t]. At a
+static clock it is conserved exactly (T1; COMPUTED in exact rationals
+on the ring). Where the clock moves, per Node, Q(t + 1/2) - Q(t - 1/2)
+= 3 den (f(t + 1) - f(t)) (a_t^2 + a_{t+1} a_{t-1}) - 3 den (f(t + 1) -
+f(t - 1)) a_t a_{t-1}, with f(t) the wall of the edge (t - 1, t)
+(PROVED: the two products a_{t+1} W_- a_{t-1} and a_{t-1} W_+ a_{t+1}
+differ by (W_+ - W_-) a_{t+1} a_{t-1}, and the two middles by 3 den
+(f(t - 1) - f(t + 1)); COMPUTED exactly, the scratch script
+`edge_share.py`). This is the work term of 9.45 (5) on the edge; the
+answer there stands: no conserved total of the families under a moving
+clock, by the law's choice, the exchange the clock's work on the
+records; the remainders add their walk under rounding as always. What
+changes is one word of 9.45 (6) (A): the law no longer keeps
+conservation OVER reversibility; it keeps both.
+
+**(6) THE PINS AND THE BODY RECORD.** Every world with a static clock
+(the eighteen today: c = 0 everywhere, or the Node clock off) runs bit
+for bit as before; no pin moves. Where the clock moves, the pins are
+the ones 9.49 (4) and (6) recompute blind in any case. The body record
+(9.46 (2)): its content M moves only at its clicks, so between clicks its
+step is unchanged; at the interval of a click, with M_- the content
+before and M_+ after, its step is den_c (Gamma + M_+) a' + r' = (num_c
+Gamma + den_c (M_- + M_+)) a - den_c (Gamma + M_-) b + r, 0 <= r' < den_c
+(Gamma + M_+), the two-term form of (2) (the middle num_c Gamma + 2 den_c
+M when M_- = M_+); the record's own backward run is then exact, and the
+equivalence test of 9.46 (4) is unchanged.
+
+**(7) THE REQUIREMENT AS READ, AND ITS TEST.** The backward run is
+exact at every Node between clicks, whatever the level does, by (2). A
+click stays the one deletion (9.26 (3) (b), the owner's record 1139):
+the record ends at the detector and the detector's record changes;
+across a click the GameBoard is not a bijection, by the law. The owner's
+words are read as the first, the run between clicks; if he means the
+second as well, that is a change of POSTULATES.md section 10 and needs
+his own word. For the build (9.49): this section goes before 9.49 (2).
+The rule with the two walls, the family of clicks first in the sweep,
+the body record's click step of (6). The test: (a) a world where the
+level falls at Nodes with records (a body's field with its transients,
+or the countdown world under the Node clock), run forward T intervals
+and backward T, the state bit-equal to the start, T at least the
+world's longest cycle; (b) the static-clock worlds bit-identical to
+today's digests; (c) the assertion of 9.45 (6) (A), "loses at most one
+remainder's worth per unit of fall", retired for "returns bit for bit".
