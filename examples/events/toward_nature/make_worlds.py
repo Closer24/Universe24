@@ -55,6 +55,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import sys
+from fractions import Fraction
 from pathlib import Path
 
 from event_universe.events.world import input_stamp
@@ -96,6 +97,14 @@ LORENTZ_SHAPE = [1500, 3, 3]
 LORENTZ_EMITTER_X = 100
 LORENTZ_MIRROR_X = 190  # the light clock's own arm, D = 58
 LORENTZ_TICKS = 3600
+# THE LONG-WAVE LORENTZ PAIR WITH DOPPLER (ALGEBRA.md 9.62 (1) and (4); BUILD.md section 26
+# item 49): the light clock at k = 0.299 at rest and carried along its arm, the moving
+# emitter's train at the boosted wave number k gamma (1 + v / c_l) (the wavelength 13 in
+# place of 21, the body 104 Nodes in place of 168), the arm LONG_LORENTZ_ARM from the
+# train's head to the mirror in both worlds
+LONG_LORENTZ_EMITTER_X = 200  # one train (168) beyond the low face slab (32), 9.25 (11) (b)
+LONG_LORENTZ_ARM = 90
+LONG_LORENTZ_TICKS = 3600
 HOP_EVERY = 4  # v = 1 / HOP_EVERY Link per interval
 DRIVE_WALL_WIDTH = 1  # the massive worlds' window width (`world.width`), read back at load
 LABEL_SCALE = 64  # Q, the drive wall's scale (world.py LABEL_SCALE)
@@ -123,16 +132,34 @@ def clock_world(
     given_clock: list[int] | None = None,
     phase_steps: int | None = None,
     train_length: int | None = None,
+    doppler: bool = False,
+    arm: int | None = None,
 ) -> dict:
     """The light clock's form (`detector.light_clock`) with the arm's ends and the
     ticks as given, Gamma = NODE_CLOCK, an optional holder block and an optional
     hop of the whole clock along +x every `hop_every` intervals; the given clock,
     its circle N and the train's length the light clock's unless given (the
-    long-wave rows of 9.62 (1) give theirs)."""
+    long-wave rows of 9.62 (1) give theirs). DOPPLER (ALGEBRA.md 9.62 (4); item 49):
+    with `doppler` the moving emitter's train is given at the boosted wave number
+    k gamma (1 + v / c_l) along its motion (`massive.doppler_clock`), declared as
+    the train's own clock, the body's length the periods of the boosted
+    wavelength; with `arm` the mirror stands that many Links beyond the train's
+    head (in place of `mirror_x`)."""
     given_clock = list(detector.GIVEN_CLOCK) if given_clock is None else list(given_clock)
     phase_steps = detector.PHASE_STEPS if phase_steps is None else phase_steps
     train_length = detector.TRAIN_LENGTH if train_length is None else train_length
+    train_clock: list[int] | None = None
+    if doppler:
+        assert hop_every is not None, "Doppler is the moving body's"
+        train_clock, wavelength = massive.doppler_clock(
+            given_clock, phase_steps, [1, 1], Fraction(1, hop_every), True
+        )
+        train_length = detector.TRAIN_PERIODS * wavelength
+    if arm is not None:
+        mirror_x = emitter_x + train_length + arm
     blocks = [detector.emitter([emitter_x, 0, 0], [train_length, 3, 3], detector.WELL_FULL, [1, 0, 0])]
+    if train_clock is not None:
+        blocks[0]["emitter"]["train"]["clock"] = train_clock
     if holder is not None:
         blocks.append(holder)
     document = massive.world(
@@ -245,6 +272,30 @@ def worlds() -> dict[str, dict]:
             hop_every=HOP_EVERY,
         ),
         "bending": bending(),
+        "lorentz_rest_long": clock_world(
+            "lorentz-rest-long",
+            LORENTZ_SHAPE,
+            LONG_LORENTZ_EMITTER_X,
+            0,
+            LONG_LORENTZ_TICKS,
+            given_clock=LONG_GIVEN_CLOCK,
+            phase_steps=LONG_PHASE_STEPS,
+            train_length=LONG_TRAIN_LENGTH,
+            arm=LONG_LORENTZ_ARM,
+        ),
+        "lorentz_moving_long": clock_world(
+            "lorentz-moving-long",
+            LORENTZ_SHAPE,
+            LONG_LORENTZ_EMITTER_X,
+            0,
+            LONG_LORENTZ_TICKS,
+            hop_every=HOP_EVERY,
+            given_clock=LONG_GIVEN_CLOCK,
+            phase_steps=LONG_PHASE_STEPS,
+            train_length=LONG_TRAIN_LENGTH,
+            doppler=True,
+            arm=LONG_LORENTZ_ARM,
+        ),
         "redshift_top_long": clock_world(
             "redshift-top-long",
             REDSHIFT_SHAPE,

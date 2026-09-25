@@ -1388,7 +1388,14 @@ class TrainDefinition:
     the wave number k = 2 pi p / (2 N q) per Link on the world's circle of
     N steps, the wavelength 2 N q / p a whole number of Links, and the
     body's extent along the direction n wavelengths (32 Nodes for 8
-    periods at the wavelength 4 of [512, 1] on N = 1024)."""
+    periods at the wavelength 4 of [512, 1] on N = 1024). DOPPLER (ALGEBRA.md
+    9.62 (4), adopted by the model owner, record 2042; BUILD.md section 26
+    item 49): the given rows of a MOVING body carry its motion in the given
+    family's representation, the wave number boosted, forward k gamma (1 + v
+    / c_l), backward k gamma (1 - v / c_l), declared for the declared momentum
+    as the train's own clock pair `clock` [p, q] (the generator's, the
+    wavelength whole, the body's extent n of them); admitted on a moving body
+    alone, at rest the given family's clock."""
 
     axis: int
     sign: int
@@ -3994,6 +4001,7 @@ def _block(
             phase_steps,
             extents=extents,
             periodic=periodic,
+            momentum=momentum,
         )
         # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md 9.51 (8); BUILD.md
         # section 26 item 47): the quanta a body gives are the given family's,
@@ -4052,6 +4060,7 @@ def _emitter(
     phase_steps: int,
     extents: tuple[int, int, int] = (1, 1, 1),
     periodic: tuple[bool, bool, bool] = (True, True, True),
+    momentum: tuple[int, ...] = (0, 0, 0),
 ) -> EmitterDefinition:
     """The `emitter` object of a clicking body (ALGEBRA.md 9.17 (4) to (6),
     9.22 (4)): the given family a paid family with the pair form of its
@@ -4097,7 +4106,7 @@ def _emitter(
     norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
     train: TrainDefinition | None = None
     if "train" in obj:
-        train = _train(obj["train"], f"{label}.train", given_family, phase_steps, extents)
+        train = _train(obj["train"], f"{label}.train", given_family, phase_steps, extents, momentum)
     given: GivenTrain | None = None
     if "given" in obj:
         # THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a)): the profile of the train's
@@ -4128,12 +4137,17 @@ def _train(
     given_family: FamilyDefinition,
     phase_steps: int,
     extents: tuple[int, int, int],
+    momentum: tuple[int, ...] = (0, 0, 0),
 ) -> TrainDefinition:
     """The emitter's `train` (ALGEBRA.md 9.17 (6a)): one signed unit axis
     vector and the periods n >= 8; the given clock the given family's
     declared clock [p, q], the wavelength 2 N q / p a whole number of Links
-    and the body's extent along the direction n wavelengths."""
-    obj = _object(value, label, {"direction", "periods"}, {"direction", "periods"})
+    and the body's extent along the direction n wavelengths. DOPPLER
+    (ALGEBRA.md 9.62 (4); BUILD.md section 26 item 49): a moving body's train
+    declares its own clock pair `clock`, the wave number boosted by its
+    motion in the given family's representation (the generator's); refused
+    on a body at rest."""
+    obj = _object(value, label, {"direction", "periods", "clock"}, {"direction", "periods"})
     direction = obj["direction"]
     if (
         not isinstance(direction, list)
@@ -4150,6 +4164,28 @@ def _train(
     periods = _integer(obj["periods"], f"{label}.periods", 8)
     assert given_family.phase_per_age is not None  # the emitter parse checked the clock
     p, q = int(given_family.phase_per_age[0]), int(given_family.phase_per_age[1])
+    if "clock" in obj:
+        # DOPPLER (ALGEBRA.md 9.62 (4); item 49): the moving body's train at its
+        # own boosted wave number, declared for the declared momentum
+        if all(int(component) == 0 for component in momentum):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.clock is admitted on a moving body alone: at rest the given "
+                "rows carry the given family's clock (ALGEBRA.md 9.62 (4), the given rows of a "
+                "moving body carry its motion in the given family's representation)"
+            )
+        pair = obj["clock"]
+        if (
+            not isinstance(pair, list)
+            or len(pair) != 2
+            or any(type(item) is not int for item in pair)
+            or pair[0] < 1
+            or pair[1] < 1
+        ):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.clock must be [p, q], two positive integers, the train's "
+                "boosted wave number 2 pi p / (2 N q) per Link (ALGEBRA.md 9.62 (4))"
+            )
+        p, q = int(pair[0]), int(pair[1])
     if (2 * phase_steps * q) % p != 0:
         raise ValueError(
             f"{BEAM_LAW}: {label}: the given family's clock [{p}, {q}] on N = {phase_steps} gives "

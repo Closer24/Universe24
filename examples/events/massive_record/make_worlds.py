@@ -406,6 +406,35 @@ def group_pace(pair: tuple[int, int], k: float) -> float:
     return (num / den) * math.sin(k) / (3.0 * math.sqrt(1.0 - cos_omega * cos_omega))
 
 
+def doppler_clock(
+    given_clock: list[int], phase_steps: int, given_pair: list[int], pace: Fraction, forward: bool
+) -> tuple[list[int], int]:
+    """DOPPLER (ALGEBRA.md 9.62 (4), adopted by the model owner, record 2042; BUILD.md section
+    26 item 49): the given rows of a moving body carry its motion in the given family's
+    representation. For a train given along the motion (`forward`) or against it, the wave
+    number k = 2 pi p / (2 N q) of the given family's clock is boosted to k' = k gamma (1 +- v /
+    c_l), v the body's pace (Links per interval, the momentum over the drive's wall) and c_l the
+    given family's group pace at k (`group_pace`), gamma = 1 / sqrt(1 - (v / c_l)^2); the
+    train's wavelength is the whole number nearest 2 pi / k' (the loader's rule: a whole
+    wavelength, the body's extent n of them), and the pair returned is [2 N / g, lambda' / g]
+    with g their gcd, so that 2 N q' / p' = lambda' exactly. Returns (the pair, the wavelength).
+    HOST, the generator's floats as `given_train` solves its clock; the engine reads the pair."""
+    p, q = int(given_clock[0]), int(given_clock[1])
+    k = 2.0 * math.pi * p / (2.0 * phase_steps * q)
+    speed = group_pace((int(given_pair[0]), int(given_pair[1])), k)
+    v = float(pace)
+    if not 0 < v < speed:
+        raise ValueError(
+            f"the body's pace {v:.4f} is not between 0 and the given family's pace {speed:.4f} at "
+            f"k = {k:.4f}: no boost (ALGEBRA.md 9.62 (4))"
+        )
+    gamma = 1.0 / math.sqrt(1.0 - (v / speed) ** 2)
+    boosted = k * gamma * (1.0 + v / speed if forward else 1.0 - v / speed)
+    wavelength = max(2, round(2.0 * math.pi / boosted))
+    g = math.gcd(2 * phase_steps, wavelength)
+    return [2 * phase_steps // g, wavelength // g], wavelength
+
+
 def train_run(
     document: dict,
     family: str,

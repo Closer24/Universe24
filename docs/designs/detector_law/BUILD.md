@@ -3900,6 +3900,34 @@ would have found no cell.
    0.085 of Q against 0.47 and 0.26 expected), to be read further. THE ROW's
    table is in the README of the rows toward nature.
 
+49. DOPPLER, THE GIVEN ROWS OF A MOVING BODY CARRY ITS MOTION (ALGEBRA.md 9.62
+   (4), the mathematician's ruling on Nature24's finding 3 of row 2, adopted
+   by the model owner through the Boss, record 2042: "yes, adopt Doppler").
+   THE RULE: the given rows of a moving body carry its motion in the given
+   family's representation, the wave number boosted, forward k gamma (1 + v /
+   c_l), backward k gamma (1 - v / c_l), v the body's pace and c_l the given
+   family's group pace at k; declared in the world file for the declared
+   momentum. THE KEY: the emitter's `train` admits its own `clock` [p, q]
+   (the boosted wave number on the circle, the wavelength 2 N q / p whole,
+   the body's extent the periods of it), on a moving body alone (refused at
+   rest: the given family's clock there). THE GENERATOR (`doppler_clock` of
+   the massive record's generator): k' from the boost with gamma = 1 / sqrt(1
+   - (v / c_l)^2), the wavelength the whole number nearest 2 pi / k', the pair
+   [2 N / g, wavelength / g]; the train written at k' by `given_train` as at
+   any clock (its flux check and its norm as before). THE PAIR: at the long
+   wave [4096, 21] on N = 2048 (k = 0.299, c_l = 0.573) and v = 1 / 4, forward
+   the wavelength 13 ([4096, 13]), backward 34 ([2048, 17]); at the light
+   clock's k = pi / 2 the forward boost reaches the band's edge (the
+   wavelength 2), so the Lorentz pair moves to the long wave as rows 1 and 3
+   (9.62 (1)): `lorentz_rest_long` (the emitter of 168 Nodes at 200, the
+   mirror 90 Links beyond its head) and `lorentz_moving_long` (the emitter of
+   104 Nodes at the boosted train, hopping with its mirror one Link every 4
+   intervals). THE GATE tests/test_doppler_train.py (the boosted pairs, the
+   loader's admission and refusals, the written train's crossings); the
+   pair's check-mode reading in the README of the rows toward nature. What
+   waits on the mathematician: the transverse boost (a train across the
+   motion), the blind numbers of the long-wave pair.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

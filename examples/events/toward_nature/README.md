@@ -165,6 +165,27 @@ the first pass (the cluster at 350 to 500) and clicks late on what lingers (550 
 the few early clicks (below 300) are the outgoing train's rows at the hops' grain.
 Finding 3 (the moving emitter gives its train at rest) stands for 9.62 (4).
 
+THE LONG-WAVE PAIR WITH DOPPLER (ALGEBRA.md 9.62 (1) and (4); BUILD.md section 26 item
+49; `lorentz_rest_long.json`, `lorentz_moving_long.json`): the light [4096, 21] on N =
+2048 (k = 0.299, c_l = 0.573), the emitter at 200, the mirror 90 Links beyond the train's
+head; the moving emitter's train at the boosted wave number k gamma (1 + v / c_l), the
+wavelength 13 (the body 104 Nodes in place of 168), hopping with its mirror one Link every
+4 intervals; 3600 intervals; the reading in check mode on the head of item 49 (DETECTOR; no
+pin):
+
+| Reading | Rest | Moving |
+| --- | --- | --- |
+| Clicks at `at_well` | 51 | 52 |
+| Mean wait, rms, standard error | 459.0, 58.2, 8.1 | 569.6, 59.6, 8.3 |
+| Ratio moving / rest of the means (COMPUTATION) | | 1.241 +- 0.028; the longitudinal form's gamma^2 = 1.235 on the flight at v / c_l = 0.436 (9.24 (6)); nature's gamma 1.111 |
+
+The rest tick reads the round trip 2 x 90 / 0.573 = 314 plus the returning train's passage
+into its own body (168 Nodes at 0.573, the click at the residue's rung within it, about 146
+on average): 460 (COMPUTATION), read 459. The moving clock's spread is the rest clock's
+(rms 60 against 58): with the boosted train the clusters of the k = pi / 2 world are gone.
+The blind numbers for this pair are asked of the mathematician; the ratio stands beside the
+longitudinal form's gamma^2 as a check-mode reading, no verdict.
+
 ## Row (3): the bending on today's law
 
 Two forms. FIRST, the dark body's two worlds (`../dark_body/dark.json` and

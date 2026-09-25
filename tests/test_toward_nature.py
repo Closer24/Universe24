@@ -29,6 +29,8 @@ NAMES = (
     "bending",
     "redshift_top_long",
     "redshift_bottom_long",
+    "lorentz_rest_long",
+    "lorentz_moving_long",
 )
 
 

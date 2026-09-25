@@ -106,8 +106,11 @@ def redshift(out: Path, suffix: str = "") -> None:
 
 
 def lorentz(out: Path, suffix: str = "") -> None:
+    long_wave = suffix == "_long"
     print(
-        f"== ROW (2) LORENTZ, today's law, the longitudinal clock{' under body_record' if suffix else ''}"
+        "== ROW (2) LORENTZ, the longitudinal clock"
+        + (" at the long wave k = 0.299 with Doppler (item 49)" if long_wave else "")
+        + (" under body_record" if suffix == "_seat" else "")
     )
     rest, rest_counts = waits(out / f"lorentz_rest{suffix}.output.json")
     moving, moving_counts = waits(out / f"lorentz_moving{suffix}.output.json")
@@ -118,10 +121,12 @@ def lorentz(out: Path, suffix: str = "") -> None:
     v = 1 / HOP_EVERY
     # c_l from the rest tick: the light clock's tick 2 D / c_l + the delay; the delay read from
     # the redshift's top world (D = 558) against the rest world (D = 58) where both exist
-    c_l = 1 / (3 * math.sqrt(1 - (2 / 3) ** 2))
+    k = 2 * math.pi / 21 if long_wave else math.pi / 2
+    cos_omega = (math.cos(k) + 2) / 3
+    c_l = math.sin(k) / (3 * math.sqrt(1 - cos_omega * cos_omega))
     gamma = 1 / math.sqrt(1 - (v / c_l) ** 2)
     print(
-        f"COMPUTATION set beside: c_l = {c_l:.3f} at k = pi / 2 (the plain rule's group velocity), v / c_l = {v / c_l:.3f}, nature's gamma = {gamma:.3f}, the longitudinal form's gamma^2 = {gamma**2:.3f} (9.24 (6))"
+        f"COMPUTATION set beside: c_l = {c_l:.3f} at k = {k:.3f} (the plain rule's group velocity), v / c_l = {v / c_l:.3f}, nature's gamma = {gamma:.3f}, the longitudinal form's gamma^2 = {gamma**2:.3f} on the flight (9.24 (6))"
     )
 
 
@@ -135,3 +140,5 @@ if __name__ == "__main__":
         lorentz(folder)
     if (folder / "lorentz_rest_seat.output.json").exists():
         lorentz(folder, "_seat")
+    if (folder / "lorentz_rest_long.output.json").exists():
+        lorentz(folder, "_long")
