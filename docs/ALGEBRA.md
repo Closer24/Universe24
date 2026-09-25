@@ -8706,3 +8706,117 @@ click lost. So the law keeps the click's two ends and drops the word
 "birth"; the light on the board is never written as a wave, only set on
 a body's cells as the state of its Nodes at its click, and then left to
 the step.
+
+### 9.38 The surface rule: every click is read at the body's outer shell, at both ends (the model owner's word of 2026-09-25 in the mathematician's session: "there are still bugs in the code, in the births; we need one generic thing that solves everything with the remainder and the click, when the remainder is and how the click is measured, with no remainder or with a remainder; connect it all into one generic law in the engine; maybe on the boundary of the body we are looking for something: the whole outer boundary of our body gives the click"; PROVED and COMPUTED)
+
+**(1) THE SHELL.** A body is the cells of one standing record (9.32
+(b)). Its OUTER SHELL is the set of its cells that have a Port: a Link to
+a Node that is no cell of the body (9.19 (3)); the shell's Ports are the
+body's SURFACE. On a chain the shell is two cells; a cube of side n has
+n^3 - (n - 2)^3 shell cells (side 3: 26 of 27; side 32: 5768 of 32768);
+on the extruded boards [N, 3, 3] of 9.22 (8) every cell is a shell cell.
+A body of one cell is its own shell, its surface its six Ports. THE
+INTERIOR IS NEVER READ: the owner's sentence, "the whole outer boundary
+of the body gives the click", is the rule below, and it is one rule at a
+Node and at a body.
+
+**(2) THE RULE: ONE GATHER, ONE THRESHOLD, ONE LADDER, AT BOTH ENDS.**
+Every interval the body's shell gathers, per record: THROUGH ITS PORTS,
+the positive inward current of a record that passes, num Gamma (now_i
+before_j - before_i now_j) read on the levels before the step (9.35 (2),
+9.25 (2)); AT ITS CELLS, the share e_i (9.32 (3)) of the body's OWN
+record, the record whose cells they are (its tick, 9.17 (7) (f)). The
+record's running total C is compared with theta = (2 u + 1) T / (2 W), T
+the whole the shell gathers in one acquisition: a passing record's whole
+I (what crosses the surface once), the own record's P times the shell's
+share (one period of its rotation). THE WALK over the shell cells in
+their declared order (the box's x-major order, the loader's one
+convention, 9.17 (6a)) lands the click at one shell cell, the cell whose
+segment of that interval's gather holds theta - C(t - 1); THE RESIDUE OF
+WHAT THE CLICK BIRTHS IS THE REMAINDER AT THAT CELL, on its wheel W
+(9.19 (4)); no centre cell, which a body of even side does not have. The
+two ends are this one landing read with the sign of the body's change
+(9.37 (2)): a passing record that lands is cleared on all its cells and
+the body's content rises by one; the body's own record that lands sets
+the born family's levels on the body's cells with the character of the
+declared **K** and lowers the stock, and the body's levels are rewritten
+as its profile with the remainders KEPT (9.34 (A)). Nothing else is read
+and nothing else is written; the record then moves by the step alone
+(9.37).
+
+**(3) PROVED.** (a) THE TICK IS THE SAME AT THE SHELL, AT ONE CELL AND
+AT ALL THE CELLS: for a standing record the current through every Link
+vanishes (the Wronskian, 9.17 (7) (a)), so e_i is constant at every cell
+and the ratio C / T = t / P is the same over any set of its cells (9.32
+(b)); the shell is such a set. (b) THE BODY'S GAUSS LAW: E_S(t) - E_S(t
+- 1) = the sum over the body's surface Ports of the current into it,
+because the per-cell identity of 9.19 (3) summed over the body's cells
+cancels every interior Link pairwise (G_ij = - G_ji), and only the
+surface remains; so what the shell gathers of a passing record IS the
+change of the body's share of it: the surface reads the body's whole,
+never less and never twice (the Port rule of 9.25 (2), a Link inside the
+body no Port, is this cancellation). (c) THE ONE RULE AT A NODE AND AT A
+BODY: a one-cell body's shell is its cell and its six Ports, so (2) at
+one Node is 9.32 (a) and at a body 9.32 (b), one sentence.
+
+**(4) COMPUTED on the integer law with the remainders kept at the cells
+and no coupling** (scratchpad surface_click.py and surface_tick.py; the
+well [800, 801] of side 32 on the chain [800, 809], W = 2403, the mode
+at 2^20, the period 93.53, 600 cycles): the tick read at the shell (the
+two outermost cells of the well) fires at the same interval as the tick
+read over all the cells in EVERY one of the 600 cycles; the centre
+cell's reading differs from all the cells' in 2 cycles by one interval
+(the rounding at one cell; the shell's share per interval varies by 3.8
+x 10^-4 of itself and the shell reads two cells); the born residue read
+at the shell cell where the walk lands: 531 distinct residues in 600
+cycles, the chi-square over 20 bins of the wheel 15.6 (the centre
+cell's 26.1; the 95 percent bound 30.1); the mean cycle 46.8 = P / 2;
+the walk lands 293 times on the first shell cell and 307 on the last.
+The body's Gauss law on the integer law, a travelling record of 32
+cells crossing the well over 260 intervals: the defect of E_S(t) - E_S(t
+- 1) against the surface currents is at most 8.8 x 10^-7 of the
+record's whole per interval, the rounding of the levels alone (the
+float law's identity is exact, node_clock_flux.py, 9.35 (2)).
+
+**(5) WHEN THE REMAINDER, AND WHEN NO REMAINDER (the owner's question,
+answered once more in the surface's words).** The click is MEASURED BY
+the remainder: u, the remainder at the shell cell where the walk lands,
+sets the place of the next click, (2 u + 1) / (2 W) of the whole; the
+click HAPPENS when there is a remainder to read. A record with no
+remainder (an exact record, 9.26 (4a); the periods 3, 4 and 6) has
+nothing to draw: it crosses the surface and is not gathered, one Link
+per interval, Node to Node (9.34 (4), the remainder rule, adopted). So
+the two sentences the owner keeps asking about are one: the remainder
+is the measure, and a record clicks when it has one.
+
+**(6) WHAT THE ENGINE CARRIES BESIDE THIS RULE (read at Nature24's head
+b8faee40 on emitter-click; the list for his order after the owner's
+word; the owner's "bugs in the births").** (a) Two click readings
+instead of one: the emitter's tick at the CENTRE cell (`_excitation_rung`
+over `centre_mask` and `form_share`) and the detectors' ladder over the
+Ports (`_ladder_click`); under (2) one ladder over the shell at both
+ends. (b) The residue read at the centre cell (`residue_of`) instead of
+at the click's cell. (c) The coupling still in the step: `_receive`,
+`_source`, `_coupled_term`, the response records and the `extra` of the
+block's emitted light, retired by record 1962 (9.34 (B)). (d) The
+remainder reset at every reseed (a fresh record with zero remainders at
+each `_excite`) against 9.34 (A); with it the emitter births one residue
+for ever (9.34 (2)). (e) The cavity's zeroing of the levels and the
+remainders outside the body's mask, an act beside the law. (f) No Node
+clock: no Gamma and no content in the step (9.35 (3)). (a), (b), (d)
+and (e) are the births' bugs in the owner's sense: the emitter reads an
+interior cell the rule does not name, resets what the cell keeps, and
+zeroes what the step made; (c) and (f) are the two law changes of 1962
+not yet built.
+
+**(7) THE THREE TESTS AND THE ROWS.** Generic: the shell is defined by
+the Ports alone (a cell with a Link to a non-cell), no family name, no
+shape counted beyond "has a Port" (record 1934). Vector: sums over
+declared cells and Ports, one comparison, the division with the
+remainder kept, no root, no float. Local: a shell cell reads its own
+Ports and its own share; the two record integers C and theta travel
+with the record (9.25 (2)). The rows and their pins: UNCHANGED (the
+tick's interval the same by (3) (a) and (4); the detectors' cells were
+already read at their Ports; the born residues' spread the same
+statistics by (4)); the host cost of a click falls from the body's cells
+to its shell (side 32: 5768 cells of 32768).
