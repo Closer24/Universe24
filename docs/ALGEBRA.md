@@ -7590,3 +7590,119 @@ has a frequency. (d) The born train in place of the born pair (9.17
 other differences of that table. (e) The wording of his own summary to
 the Boss, per (3) (a): "the click's deletion is non-local by decision;
 the theorem is about the remainder and exact return".
+
+### 9.29 Gravity as the clock shift of the pair: what the GameBoard has today, checked at the model owner's word (2026-09-25, in the mathematician's session: "in our Nodes there is a clock shift; place a body and there is a clock shift, and that makes couplings; it is not gravity, it is the clock shift that makes gravity; a body with mass should have gravity there; check me")
+
+**(1) THE CLAIM, CHECKED: CONFIRMED FOR THE MASSIVE FAMILY, with what is
+missing named.** The mathematician's earlier line ("today the board has
+gravity's effect on clocks, not attraction") was too narrow. A declared
+well is a clock shift, and a clock shift attracts: the two are one field
+read twice, inside the one operator, with no force term and no new
+rule. What the board does NOT have is the well's source (a body does not
+make the well around itself) and light's fall.
+
+**(2) THE THEOREM, ONE FIELD READ TWICE (PROVED and COMPUTED here).**
+THE FIELD: a family's pair p = num / den per Node, declared per region
+(8.1); a well is a region whose pair is closer to 1 than the medium's
+(8.3, "a lowered pair, num' / den' > num / den"). THE DISPERSION under
+the one operator: cos omega = p (cos K_x + cos K_y + cos K_z) / 3, so
+the rest frequency is cos omega_0 = p, and for small K and small
+omega_0, omega = omega_0 + p K^2 / (6 omega_0): the inertial mass is m*
+= 3 omega_0 / p, that is omega_0 = m* c^2 with c^2 = 1 / 3 (8.1), the
+rest frequency the rest energy. THE FIRST READING, THE CLOCK: where p
+is closer to 1 the rest frequency is lower, so a body held there ticks
+slower (the well [800, 801] on [800, 809]: omega_0 0.04997 against
+0.14930; the deep well's bound clock 0.0729 between them, 9.22 (8)):
+the gravitational redshift of the rows. THE SECOND READING, THE FALL:
+the operator is linear, so a packet's centre follows the ray equations
+of its dispersion (the eikonal, Ehrenfest's theorem on the lattice):
+d**x** / dt = grad_K omega and d**K** / dt = - grad_x omega = + (lambda(K)
+/ (3 sin omega)) grad p, lambda(K) the six-neighbour eigenvalue of the
+packet's character; a packet accelerates TOWARD THE LARGER PAIR, that
+is toward the lower rest frequency, the slower clock, with no force
+term: the same p that slows the clock bends the path. IN NEWTON'S FORM
+(small K): the potential is the rest frequency itself, U(**x**) =
+omega_0(**x**), and the acceleration is **a** = - grad omega_0 / m* =
+- c^2 grad ln omega_0, so between two places the clock's shift and the
+fall's work are one number, delta omega_0 / omega_0 = delta Phi / c^2
+with Phi = c^2 ln omega_0: Einstein's II.10a with no declared constant
+(chapter 5.4 wrote the same sentence under the suspension hypothesis,
+a host field with a pin n S_w = d; here it is a theorem of the
+operator, the pin automatic). COMPUTED on the law (real-valued levels,
+the integer step differing by the carried remainder only): a 400 x 200
+layer, a Gaussian well of width 30 at (200, 70), a packet 12 wide at K
+= 0.5 passing 45 cells above its centre over 500 intervals, and the ray
+of the same dispersion beside it, the transverse shift of the packet's
+centre in cells (toward the centre negative):
+
+| the region on the medium [800, 809] | the packet's centre (the law) | the ray (the eikonal) |
+| --- | --- | --- |
+| the well [800, 801] | -14.8 | -17.2 |
+| the hill [800, 817] (a higher rest clock) | +13.1 | +15.6 |
+| the well [1, 1] | -16.6 | -19.4 |
+| light [1, 1] through a region [99, 100] (K = pi / 2) | +1.9 | +2.0 |
+
+The sign and the size agree; the packet, 12 wide against the well's 30,
+averages the gradient, the difference. So THE EQUIVALENCE OF THE CLOCK'S
+SLOWING AND THE FALL is a theorem of the law for a massive family, and
+the atom's binding is this fall: the bound mode of 8.3 is a record held
+by the same gradient.
+
+**(3) UNIVERSALITY: WITHIN A FAMILY YES, ACROSS FAMILIES NO.** Within a
+family the fall is the same for every record and every amplitude (the
+operator is linear; the field is the region's). Across families it is
+NOT: (a) a well is declared for one family's pair, and another family
+in the same region keeps its own pair; (b) LIGHT HAS NO WELL: a family's
+pair cannot exceed 1 (at p > 1 the uniform character has cos omega > 1,
+an unbounded level, refused by the bound), so a massless family (p =
+1) can only have its pair LOWERED by a region, which gives it a rest
+frequency and REPELS its ray (the last row of the table: +1.9 away);
+a material region slows light's passage (the group index, the index
+rows) and bends its phase away. So today's board has gravity for
+matter and none for light; nature's light falls (Eddington 1919, and
+the Shapiro delay). A clock shift that every family feels would have
+to be a shift OF THE NODE (its rotation slowed for all families), not
+of a family's pair; the pair cannot express it.
+
+**(4) WHAT IS MISSING FOR GRAVITY PROPER, exactly.** (a) THE SOURCE: the
+well is declared in the world file; no body raises the pair around
+itself; two bodies in the vacuum are the sum of each alone (linearity),
+so neither bends the other: no two-body attraction, no 1 / r. The one
+law that would make the well from the body is a Poisson law of the
+pair: the pair at a Node raised toward 1 by the form held nearby and
+relaxed through the six neighbours (the discrete Laplacian's Green's
+function gives 1 / r at long range on the lattice). It is local (six
+neighbours) and integer, but QUADRATIC in the levels (the form is the
+source, the level is not): a record acting on a record, outside the
+linear law; it is stated only under its own identity, a hypothesis
+beside the exchange (9.27 (D)), with one test world reading one field
+twice: a bound clock beside a heavy body reads its redshift, and a
+packet passing the body falls toward it by the same field, with no
+declared well. (b) LIGHT'S FALL: a shift of the Node's clock for all
+families, (3) (b); not expressible by the pair; a second hypothesis if
+the owner wants it. (c) The coupling between families of 8.5 (light's
+row gains g times the holder's difference, and back with G) is
+additive, linear in each, and shifts no clock: it is not the clock
+shift the owner names; the force between two blocks through light of
+8.11 rode the push, which is retired (9.24 (b)).
+
+**(5) COHERENCE WITH THE DECISIONS.** Record 1884 (no acceleration, no
+ramp) retired the push, a ramp from outside the operator; the fall of
+(2) is the operator's own, and the rows are untouched: every row's
+well is a uniform block and every moving body of the rows moves in the
+vacuum, where p is constant and **K** is conserved; a graded well is a
+placement no row uses. Record 1885 (the momentum an integer of every
+entry) stands: **K** is written at birth and changes inside a material
+by the operator, as it does at every index boundary. The click's rules
+(9.25) are untouched: the fall is the Inside's. THE OWNER'S SENTENCE,
+made exact: "it is not gravity, it is the clock shift that makes
+gravity" is a theorem of the law for the family whose pair is shifted;
+"a body with mass should have gravity there" holds for a body placed
+IN a declared well and fails for a body placed in the vacuum, whose
+mass shifts no clock: that step, mass makes the well, is the one law
+the board lacks.
+
+**(6) FOR THE OWNER TO DECIDE.** Whether the Poisson law of the pair
+(4) (a) is written as a hypothesis under its own identity with its test
+world, and whether a Node's clock shift for all families (4) (b) is
+wanted beside it; nothing of the law changes before his word.
