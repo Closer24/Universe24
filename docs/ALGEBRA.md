@@ -9656,3 +9656,28 @@ no float. Local: the body record reads its own state and its Ports on
 S; its one non-local act is the click's, as before. It is the owner's
 "the body is one Node" (9.38 (9), 9.40 T2) made an engine form, and it
 is what the owner asked to build now.
+
+**(6) WHAT BODIES DO TO EACH OTHER, AND WHAT THEY DO NOT (the model owner's
+observation of 2026-09-25 in the mathematician's session: "our simulator
+declares that everything is bodies; there is no resistance between
+bodies").** Right, and it is the law's own content, not the body
+record's. Two bodies act on each other in four ways and no other: (a) BY
+CLICKS: a record born of one and taken by the other moves one quantum,
+whole, with its labels (9.37, 9.40 D5); this is the only collision the
+law has, an absorption, at the taker's share by Born's rule. (b) BY THE
+FAMILY OF CLICKS: each body's content slows every clock around it and
+bends every record toward it (9.41 (4), 9.45), an attraction and never
+a repulsion. (c) BY PASSAGE: a moving record of one body's family
+crosses another body's well transparent and lensed (9.29), never
+stopped. (d) BY OVERLAP: two bodies whose modes overlap are one
+eigenvector, one body with one click (9.32 (c)); they merge, they do not
+push. THERE IS NO CONTACT, NO REPULSION AND NO EXCLUSION in the law:
+nothing keeps two bodies apart, and two bodies at one place superpose.
+A repulsion needs a label with a sign and a rule that reads it, a
+charge, which the algebra does not have (the exchange hypothesis of 9.27
+(D) is the place it would enter, under its own identity); a contact
+force is that or nothing. None of the eighteen rows has two bodies
+meeting (the mirrors and slabs are regions, the wells declared apart),
+so no pin asks for it; the crystal rows (9.31) hold their bodies apart
+by declaration. The body record changes none of this: it holds the four
+ways as the lattice body does, and has no fifth.
