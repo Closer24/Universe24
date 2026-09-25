@@ -9735,6 +9735,62 @@ body's. What the law does not give a composite is what it gives no
 body: binding between its parts other than the declared well (9.39
 (3)), contact and repulsion ((6)).
 
+**(10) THE BLIND EXPECTATIONS FOR THE EIGHTEEN RUN TWICE, CUBES AGAINST
+SEATS (the model owner's word of 2026-09-25 through the Boss, record
+2022: "if the equivalence test passes, then do the experiments this
+way, to see that it is really equivalent"; the two runs compared with
+each other, not with the pins; written before any run).** Per kind, in
+the clicks (9.51 (7)); a level is a diagnostic beside them.
+(a) A DETECTOR (a seat with its TAKING EXTENT declared as the cube's
+shell, or the pixel region's own shell for a screen's pixel, 9.25 (7)):
+the gather is the same one-way inward flux through the same Ports, so
+each detector's share of the counts is the same in expectation; the
+counts differ by the draw of the residues on different wheels
+(9.46 (4) (i)), so the two runs differ as two draws of one
+distribution: for a count N p in N records the difference has the
+spread sqrt(2 N p (1 - p)) (Mach-Zehnder's 97 of 100: about 2.4; a
+screen total near 1400 with its band 91: about 130; a visibility
+0.95: about 0.15); the ratios (the visibility, Bell's S, the seven
+counts' pattern of Sorkin) equal within those spreads; NOT bit-equal
+click by click. Without the taking extent, the seat's six Ports alone
+gather one Node's cross-section against the cube's shell, one part in
+nine to one in twenty-seven of the flux for a packet wider than the
+cube, so most records pass the seat on the first pass and click later
+or at the faces: the counts fall by that fraction and the timing
+spreads; that run is refused as the equivalence's, the extent is the
+rule (9.46 (8), the ruling of 2026-09-25). THE TIMING: the mean click
+interval and its spread equal within two standard errors of the mean
+(the light clock: the mean within about 10 intervals at 64 clicks); the
+second-pass tail (9.55 (7); the 582 click) equal in weight, one or two
+in 64, never outlier to outlier. (b) A HOLDER AND A CLOCK BODY: the gate
+of 9.46 (4): the ticks in distribution (the mean cycle (P + 1) / 2, the
+residues uniform, no runs), the rotation within the loader's bound, the
+given rows bit-equal, the taking end and the field identical (the
+field through a shell, with the flux pin of 9.51 (9), the same for the
+side-3 shape). (c) A GIVER: a seat with its GIVING EXTENT declared as
+the cube's Nodes: the given rows on those Nodes bit-equal at each
+giving click (the eigenvector times the character, 9.40 T3), the
+residue u read at the seat in place of the first shell Node, so the
+giving clicks' intervals differ in the draw and agree in distribution
+(the mean (P + 1) / 2 over the stock); every pin that reads the given
+light (the light clock's 300, Sagnac's 219) agrees within its band's
+spread. (d) A MOVING BODY (the muon's hold, the moving detector): the
+seat's hop by the same accumulator and the same declared momentum
+(9.52 (4) (iv)), the field moved through the body at the hop (9.52
+(4) (i)): the hops at the same intervals, the tick within the band.
+(e) WHICH OF THE EIGHTEEN I EXPECT NOT EQUIVALENT: none in
+distribution, if the extents are declared; the two places to watch,
+blind: a body whose shape is not the side-3 cube (a chain segment of 12
+or 24 Nodes, the index's block of side 24, the deep well), where the
+flux pin must carry the shape's flux and the seat's pace is read at one
+Node of a body that spans a varying level (the pin of a large body is
+flat inside, 9.51 (9), so the seat and the cube agree only if the
+cube's own field is read the same way, through the shell); and a body
+whose given rows extend beyond its declared extent (a train longer
+than its cube, 9.17 (6a)), where the extent must be the train's. A row
+outside its spread on either count is a finding for the mathematician
+before the row moves to seats; a row within it moves.
+
 ### 9.47 The law, derived: the chain of the adopted statements, each marked (the model owner's word of 2026-09-25 through the Boss, record 1987: "everything we do must be backed by the algebra and follow from it, the family of clicks, the clock and a body represented by something smaller included"; every statement marked PROVED, DERIVED, COMPUTED, ADOPTED or OPEN, with its section; Nature24 names the section each commit implements)
 
 **(1) THE NODE AND ITS NUMBERS.** A Node carries, per record of each
