@@ -235,9 +235,11 @@ def emitter_body(
     """An emitter body (ALGEBRA.md 9.17 (4); BUILD.md section 26): a well of the massive
     family `own` of side 1 at `position` (its seed the scalar EMITTER_SEED_AMPLITUDE, made the
     mode's profile by `seed_on_the_mode` once the document is complete), its stock `stock`
-    excitations, its `emitter` the born family on the wheel with its residue order and, with
-    `receiver`, the born records' ladder by name (the sets named; the lamp's `receiver` of
-    old, written only under RECEIVER_KEY)."""
+    excitations, its `emitter` the born family (the residue and the wheel the law's) and,
+    with `receiver`, the born records' ladder by name (the sets named; the lamp's `receiver`
+    of old, written only under RECEIVER_KEY); its coupling (g, G) to the family it births
+    (COUPLING, the registered form; required, ALGEBRA.md 9.19 (4e): the born records act
+    back on the excited record's rows and spread its residues)."""
     emitter: dict = {"family": family}
     if receiver is not None and RECEIVER_KEY:
         emitter["receiver"] = list(receiver)
@@ -250,6 +252,7 @@ def emitter_body(
         "fixed": True,
         "side": 1,
         "pair": list(pair or EMITTER_WELL),
+        "coupling": copy.deepcopy(COUPLING),
         "seed": EMITTER_SEED_AMPLITUDE,
         "margin": "control",
         "emitter": emitter,

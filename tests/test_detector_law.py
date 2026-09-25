@@ -39,8 +39,11 @@ def emitter_body(
     its mode at 100 by the generator), its stock `stock`, its `emitter` the family given and,
     with `receiver`, the born records' ladder by name. The residue and the wheel are the
     law's (ALGEBRA.md 9.22 (4): the clicking record's remainder at the birth cell, W = 700 on
-    EMITTER_PAIR). The cadence (COMPUTATION, BUILD.md section 26): the residue u clicks about
-    (2 u + 1) / (2 W) x P intervals after its excitation, P the mode's period; a well too
+    EMITTER_PAIR, read after the excited record's first advance, 9.19 (4e)); its coupling
+    (g, G) to the born family, the registered form, required (9.19 (4e): the born records act
+    back on the excited record's rows and spread its residues). The cadence (COMPUTATION,
+    BUILD.md section 26 item 19): the flux after the standing start is front-loaded, so the
+    residue u clicks within a few intervals of its read, not (2 u + 1) / (2 W) x P; a well too
     deep for its board is a runaway and refused at the margin rule."""
     emitter: dict = {"family": family}
     if receiver is not None:
@@ -54,6 +57,7 @@ def emitter_body(
         "fixed": True,
         "side": side,
         "pair": list(EMITTER_PAIR),
+        "coupling": {"G": [1, 50], "g": [1, 1000]},
         "seed": 100,
         "margin": "control",
         "emitter": emitter,
@@ -231,8 +235,11 @@ def test_a_chain_world_clicks_once_per_record_with_the_books_balanced():
         assert gather["chosen"] == [["screen", 0, "0"]] and gather["click_at"] == "rung"
         assert gather["tick"] == gather["click"] and gather["record"] not in simulation.records
         flight = gather["click"] - gather["birth"]
-        # the front's first rung about L / c = 68 / 0.577 = 118 intervals after the birth
-        assert 100 <= flight <= 140, flight
+        # the front's first rung about L / c = 68 / 0.577 = 118 intervals after the
+        # birth; the residue decides how much of the record must pass before the
+        # rung (a residue near W waits for the whole front: the coupling spreads
+        # the residues, 9.19 (4e)), read up to 200 on this head (COMPUTATION)
+        assert 100 <= flight <= 200, flight
     books = simulation.books()["families"]["light"]
     assert books["transit"]["absorbed"] == books["measured"]["measured"] == len(gathers)
     # the edge case: the open faces, the face receiver last on every ladder
@@ -456,11 +463,12 @@ def test_the_increment_ladder_over_the_named_sets():
     the order, 9.25 (3): a theorem in distribution; on eight residues the exact counts
     are (4, 2, 2) against (2, 2, 4), the first cell of the ladder holding more of the eight
     thresholds, COMPUTATION for the mathematician), s0 and s2 alike within the same
-    sampling (the placement's symmetry about the emitter's row). The emitter's own births (the same residue at
-    every birth of a body without a coupling, item 15) all click at one cell under either
-    order (the cell itself depends on the order, the walk names it), the line's `ladder`
-    the names and its `sunk` the pointers off the ladder. The
-    loader refuses a name no set declares, a repeated name and an empty list."""
+    sampling (the placement's symmetry about the emitter's row). The emitter's own births
+    carry residues the coupling spreads (ALGEBRA.md 9.19 (4e): the born records act back on
+    the excited record's rows; item 15's finding of one residue at every birth resolved), each
+    clicking at the cell the walk names on its own numbers, the line's `ladder` the names and
+    its `sunk` the pointers off the ladder. The loader refuses a name no set declares, a
+    repeated name, an empty list, and an emitting body without its coupling."""
     counts: dict[tuple[str, ...], dict[str, int]] = {}
     for order in (("s0", "s1", "s2"), ("s2", "s1", "s0")):
         gathers, simulation, seen = planted_layer(order)
@@ -478,9 +486,9 @@ def test_the_increment_ladder_over_the_named_sets():
     forward, backward = counts[("s0", "s1", "s2")], counts[("s2", "s1", "s0")]
     assert all(abs(forward[name] - backward[name]) <= 12 for name in forward), counts
     assert abs(forward["s0"] - forward["s2"]) <= 12 and min(forward.values()) > 0, counts
-    # the emitter's own births: one residue, one cell, under either order
+    # the emitter's own births: the residues spread by the coupling's back-action
     gathers, simulation, seen = run_layer(layer_world(["s0", "s1", "s2"]))
-    assert len(gathers) == 8 and len({g["chosen"][0][0] for g in gathers}) == 1
+    assert len(gathers) == 8 and len({g["u"] for g in gathers}) > 1
     names = [simulation.cell_names.index(name) for name in ("s0", "s1", "s2")]
     for gather in gathers:
         assert gather["ladder"] == ["s0", "s1", "s2"] and gather["record"] not in simulation.records
@@ -490,10 +498,10 @@ def test_the_increment_ladder_over_the_named_sets():
             simulation, total, increments, ladder, u, norm, wheel
         )
         assert gather["T"] >= gather["sunk"] >= 0
-    # the reversed order: one residue, one cell again (the cell of a single
-    # record depends on the order; the shares over the residues do not)
+    # the reversed order: the same eight residues (the residues are the excited
+    # record's, the ladder's order no input to them)
     backward, _, _ = run_layer(layer_world(["s2", "s1", "s0"]))
-    assert len(backward) == 8 and len({g["chosen"][0][0] for g in backward}) == 1
+    assert len(backward) == 8 and sorted(g["u"] for g in backward) == sorted(g["u"] for g in gathers)
     one, _, _ = run_layer(layer_world("s1"))
     assert len(one) == 8 and all(gather["chosen"][0][0] == "s1" for gather in one)
     with pytest.raises(ValueError, match="names 'screen', which no detector set declares"):
@@ -502,6 +510,14 @@ def test_the_increment_ladder_over_the_named_sets():
         parse_nature_beam_world(layer_world(["s0", "s0"]))
     with pytest.raises(ValueError, match="nonempty list of names"):
         parse_nature_beam_world(layer_world([]))
+    uncoupled = layer_world("s1")
+    del uncoupled["measured"][0]["coupling"]
+    with pytest.raises(ValueError, match="emitter needs the body's `coupling`"):
+        parse_nature_beam_world(uncoupled)
+    silent = layer_world("s1")
+    silent["measured"][0]["coupling"]["g"] = [0, 1]
+    with pytest.raises(ValueError, match="both nonzero"):
+        parse_nature_beam_world(silent)
 
 
 def test_a_detector_is_one_connected_cube_of_side_three():

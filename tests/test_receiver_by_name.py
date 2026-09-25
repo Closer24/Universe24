@@ -34,7 +34,8 @@ Spy = dict[int, tuple[list[int], list[int], int, int, int]]
 
 def emitter(position: int, receiver: str | None, momentum: int = 0, stock: int = 4) -> dict:
     """An emitter body of side 12 at `position` on the matter kind [800, 809]: the well
-    [800, 801] (W = 2403 remainder values, ALGEBRA.md 9.22 (4)), the seed 50 x 2^20 (its
+    [800, 801] (W = 2403 remainder values, ALGEBRA.md 9.22 (4)), its coupling G [1, 50], g
+    [1, 1000] to light (required, 9.19 (4e)), the seed 50 x 2^20 (its
     profile on the mode by `seed_source` once the world is built), its `emitter` of light
     with the stock `stock`, its `receiver` where one is named (the line at that set's
     rung)."""
@@ -47,6 +48,7 @@ def emitter(position: int, receiver: str | None, momentum: int = 0, stock: int =
         "fixed": True,
         "side": 12,
         "pair": [800, 801],
+        "coupling": {"G": [1, 50], "g": [1, 1000]},
         "seed": 50 << 20,
         "emitter": {"family": "light"},
         "margin": "control",

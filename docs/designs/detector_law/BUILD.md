@@ -1927,6 +1927,60 @@ would have found no cell.
    with an axis and two cube receivers at the worlds' rebuild, step 6);
    the Bell four held as before. The chain digests of test p moved by the
    cube at x in [70, 72] (COMPUTATION, read on this head).
+19. THE EMITTER'S COUPLING AND THE RESIDUE'S READ POINT (the mathematician's
+   answers of 2026-09-25, ALGEBRA.md 9.19 (4e), to item 15's two findings;
+   the property test green). (a) EVERY EMITTING BODY DECLARES (g, G) FOR
+   ITS BORN FAMILY, both nonzero, refused absent at load naming the key
+   (the one-cell emitters [801, 700] included, the registered form G [1,
+   50], g [1, 1000]): the born records act back on the excited record's
+   rows through g (`step` drives a body's own record by its emitted
+   records' first differences; a one-unit change of a row moves the next
+   remainder by num mod 3 den), so the remainder at the centre cell moves
+   between births and the residues spread; a body that births and is not
+   coupled is a write and no source. The body's G acts on every other
+   record's light and not on the light it births ("a body answers no
+   record of its own", as built): whether G must act on its own born
+   light too is asked of the mathematician; g alone is built. (b) THE
+   EXCITED RECORD'S RESIDUE IS READ AFTER ITS FIRST ADVANCE: `_excite`
+   marks the residue pending (`Block.residue_pending`), and the first
+   `_excitation_rung` after the (re)seed reads u and W from the record's
+   own remainder at the centre cell (nonzero after one step of the rule;
+   0 at the write) and counts the offer C from that interval; the born
+   photon's residue stays the excited record's remainder at the click.
+   The first excitation of a run then carries the residue the generator's
+   seed gives after one step, the same in every run of that world; every
+   later one differs by the back-action of (a). THE TESTS: test_emitter's
+   (a) reads the residues of four births no longer one (item 15's finding
+   resolved) and the loader's refusal of an emitter without its coupling;
+   the layer test reads eight births' residues spread and the same eight
+   under the reversed order (the residues the excited record's, the
+   ladder's order no input to them), an emitter without coupling and one
+   with g = 0 refused; the chain world's flight bound widened to 200 (a
+   residue near W waits for the whole front). The worlds regenerated with
+   the coupling on every emitting body (the index rows, the pace fans, the
+   two slits, the matter rows). THE 100-BIRTH READING owed to the
+   mathematician (COMPUTATION on this head, the emitter world of
+   test_emitter [800, 801] with the seed 100 and the stock 100, and the
+   chain world of test_detector_law [801, 700] with the stock 100): the
+   residues SPREAD, 97 distinct of 100 on W = 2403 with the ten-bin counts
+   [6, 7, 8, 9, 12, 9, 11, 11, 14, 13] (chi-square 6.20 on 9 degrees of
+   freedom), 93 distinct of 100 on W = 700 with [12, 10, 9, 16, 9, 14, 4,
+   6, 11, 9] (11.20); the first excitation's residue the same in every
+   run (1165 on the emitter world, 360 on the chain). TWO READINGS FOR
+   HIM: (i) THE CADENCE is a few intervals, not (2 u + 1) P / (2 W): the
+   flux into the centre cell after the standing start (now = before =
+   the profile) is front-loaded, 0.2 to 0.4 of the norm T in the first
+   interval on the seed 50 x 2^20 body of the chain of 200, so most
+   residues click within one to ten intervals of their read (the gaps 1 to
+   10, the mean about 4); (ii) on the test worlds seeded at the amplitude
+   100 the born light (the world's `born` about 1.6 x 10^5 on the body's
+   cells) times g = 1 / 1000 is about 158 per cell per interval, above the
+   excited record's own amplitude, so the back-action swamps the excited
+   record (the offer at the click up to 230 times the norm, the births
+   one per interval on the chain world): the spread is the coupling's,
+   the cadence the amplitude ratio's; the registered bodies at 50 x 2^20
+   are not swamped (the offer at the click 0.2 to 0.7 of the norm). The
+   pins are not moved; the rule stands as written until his word.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

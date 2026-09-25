@@ -291,14 +291,18 @@ def emitter_at(x: int, stock: int = 1, pair: list[int] | None = None) -> dict:
     travelling character is owed, LAB_TOOLS.md A.1). The body is of the family `source` (the
     kind SOURCE_KIND, added to the world by `world`), its well SOURCE_WELL unless given; the
     residue and the wheel are the law's (ALGEBRA.md 9.22 (4): the remainder at the birth
-    cell, W = 700 on SOURCE_WELL), the cadence about (2 u + 1) P / (2 W) intervals for the
-    residue u, P the mode's period (COMPUTATION, BUILD.md section 26); a well too deep for
-    its board is a runaway, refused at the margin rule."""
+    cell, W = 700 on SOURCE_WELL, read after the excited record's first advance, 9.19
+    (4e)), the cadence a few intervals after the read (the flux after the standing start is
+    front-loaded; COMPUTATION, BUILD.md section 26 item 19); a well too deep for its board is a runaway,
+    refused at the margin rule; its coupling G [1, 50], g [1, 1000] to the family it
+    births (required, 9.19 (4e): the born records act back on the excited record's rows
+    and spread its residues)."""
     return {
         "position": [x, 0, 0],
         "family": "source",
         "side": 1,
         "pair": list(pair or SOURCE_WELL),
+        "coupling": {"G": [1, 50], "g": [1, 1000]},
         "seed": 100,
         "amount": stock,
         "margin": "control",

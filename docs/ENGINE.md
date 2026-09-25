@@ -998,7 +998,7 @@ massive kind's pair, or a gap on light's kind, the (M) wall), its
 `coupling` `{"G": [n, d], "g": [n, d]}` (the dielectric of section 7, the
 first difference both ways on the same Node, each rational folded into
 the row's one division: the massive wall `3 den g_d`, light's `3 L` with L
-the least common multiple of the blocks' `G_d`; `[0, 1]` each by default), its `seed` (its own record's
+the least common multiple of the blocks' `G_d`; `[0, 1]` each by default; REQUIRED, both nonzero, on an emitting body, its coupling to the family it births, ALGEBRA.md 9.19 (4e), BUILD.md section 26 item 19), its `seed` (its own record's
 amplitude on its cells at interval 0, 2^20 by default, 0 silent; or, with
 `margin` declared, a list of one integer per Node of the board in x-major
 order, the bound mode's integer profile the generator writes into the file

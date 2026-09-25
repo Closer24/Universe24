@@ -278,11 +278,13 @@ def test_p_the_light_record_is_byte_identical_without_the_key():
     on the rich well [801, 700] with the take's data gone (item 15), then the events and the
     audit once more by the born pair on the clock's half step (item 17), then the state and the
     audit once more by the detector cube at [70, 72] (item 18; the events unchanged, the six
-    clicks at the same intervals), the digests read at that head."""
+    clicks at the same intervals), then all three by the emitter's coupling to the light it
+    births and the residue read after the excited record's first advance (item 19), the
+    digests read at that head."""
     assert run_chain_digests() == {
-        "events": "b8442ecfed1675d1649142e26532c308f492856858b06e4179395225689e4ffe",
-        "state": "1dac5348b27c1d7d4d3459c0303233d66394eace116d38766f26bd09c9df4a03",
-        "audit": "835b3cc1cdcec7f309e1d6091281246dcacfacb3f0f6d7e2a530a697c828dbbe",
+        "events": "16b65b8101cb9e4755d5510d65c810a44aadf8b9a4c17da1c77893627fe10ace",
+        "state": "2ae6bf378e22e92be563c5c6a62cc5edcbf6dc38285c858a37a0f9baea73c232",
+        "audit": "2f9cd60f50bafeeeba6b945c1592dfa67141bec4724ff7207abfa6afad099b55",
     }
 
 
@@ -764,10 +766,11 @@ def test_h_an_emitter_body_births_in_turn_each_birth_one_quantum_of_its_stock():
         assert simulation.books()["balanced"], simulation.tick
     births = [line for line in lines if line["event"] == "birth"]
     assert len(births) == 3
-    # the residues from the law (ALGEBRA.md 9.22 (4)) on W = 700; the same at
-    # every birth of a body without a coupling (BUILD.md section 26 item 15)
+    # the residues from the law (ALGEBRA.md 9.22 (4)) on W = 700, spread by the
+    # body's coupling to the light it births (9.19 (4e); one residue at every
+    # birth without it, BUILD.md section 26 item 15)
     assert all(line["W"] == 700 and 0 <= line["u"] < 700 for line in births)
-    assert len({line["u"] for line in births}) == 1
+    assert len({line["u"] for line in births}) > 1
     assert simulation.ledger.held_spent[2] == 3 and simulation.ledger.transit_released[0] == 3
     assert simulation.blocks[0].own is None
     assert all(live.family == 0 and live.content == 1 for live in simulation.records.values())
@@ -1324,7 +1327,10 @@ def test_aa_a_matter_emitters_record_clicks_once_at_the_rung():
         pointer, u, norm, wheel = at_click[identity]
         assert wheel == 700 and 0 <= u < wheel and u == gather["u"]
         assert 2 * wheel * pointer >= (2 * u + 1) * norm and below[identity] == gather["click"] - 1
-        assert 100 < gather["click"] - gather["birth"] < 250
+        # the flight: the front's 84 Links at the group pace, then as much of the
+        # record as the residue asks (a residue near W waits for the whole front;
+        # the coupling spreads the residues, 9.19 (4e)): read up to 307 here
+        assert 100 < gather["click"] - gather["birth"] < 400
         assert identity not in simulation.records
 
 
@@ -1386,6 +1392,7 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "fixed": True,
             "side": 12,
             "pair": [800, 801],
+            "coupling": {"G": [1, 50], "g": [1, 1000]},
             "seed": 50 << 20,
             "emitter": {"family": "light"},
             "margin": "control",

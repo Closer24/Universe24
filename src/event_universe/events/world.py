@@ -3527,6 +3527,20 @@ def _block(
                 f"{BEAM_LAW}: {label}.emitter needs the stock `amount` from 1 (the number of the "
                 "body's excitations, M; a world that needs W births declares M = W)"
             )
+        # THE COUPLING OF AN EMITTING BODY (ALGEBRA.md 9.19 (4e), the
+        # mathematician's word of 2026-09-25): every emitting body declares
+        # (g, G) for the family it births, both nonzero: the records on the
+        # board act on the excited record's rows through g and spread its
+        # residues (a one-unit change of a row moves the next remainder by
+        # num mod 3 den); a body that births light and is not coupled to
+        # light is a write and no source
+        if "coupling" not in obj or receive[0] == 0 or source[0] == 0:
+            raise ValueError(
+                f'{BEAM_LAW}: {label}.emitter needs the body\'s `coupling` {{"G": [n, d], "g": '
+                "[n, d]}} to the family it births, both nonzero (ALGEBRA.md 9.19 (4e): the "
+                "records on the board act on the excited record's rows through g and spread its "
+                "residues; a body that births and is not coupled is a write and no source)"
+            )
         emitter = _emitter(
             obj["emitter"], f"{label}.emitter", family, families, names, shape, phase_steps
         )

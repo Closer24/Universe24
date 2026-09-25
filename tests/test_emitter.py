@@ -72,8 +72,9 @@ def emitter_world(
     9.22 (4)) of side `side` at x = 5, seeded on its bound mode at the amplitude 100 (the
     generator's `seed_on_the_mode`, the body's conditions of the load check), its stock
     `amount` = `stock`, its `emitter` the light family [77, 25] with its ladder the set
-    `screen`; the receiver the cube of side 3 of light bodies at [70, 72] read as `screen`
-    (record 1899); no wheel anywhere."""
+    `screen`, its coupling G [1, 50], g [1, 1000] to light (required, ALGEBRA.md 9.19 (4e));
+    the receiver the cube of side 3 of light bodies at [70, 72] read as `screen` (record
+    1899); no wheel anywhere."""
     # the cube helper of the detector-law suite (imported here: that suite imports
     # `massive_generator` from this one)
     from tests.test_detector_law import receiver_cube
@@ -108,6 +109,7 @@ def emitter_world(
                 "fixed": True,
                 "side": side,
                 "pair": [800, 801],
+                "coupling": {"G": [1, 50], "g": [1, 1000]},
                 "seed": 100,
                 "margin": "control",
                 "emitter": emitter,
@@ -156,9 +158,9 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     assert all(line["W"] == 2403 and 0 <= line["u"] < 2403 for line in births)
     assert [line["excitation"] for line in births] == [1, 2, 3, 4]
     ticks = [line["tick"] for line in births]
-    # the excited record's residue is 0 on the seed (its remainder 0), its rung
-    # T / (2 W): the click at the first interval with flux into the centre cell
-    assert ticks == sorted(ticks) and ticks[0] >= 1 and ticks[-1] < document["ticks"]
+    # the excited record's residue is read after its first advance (9.19 (4e);
+    # 0 on the seed itself), its rung (2 u + 1) T / (2 W) from that interval
+    assert ticks == sorted(ticks) and ticks[0] >= 2 and ticks[-1] < document["ticks"]
     norm = births[0]["excitation_norm"]
     assert norm > 0 and all(line["excitation_norm"] == norm for line in births)
     # the norm T: the one-way flux into the body's centre cell over one period
@@ -188,8 +190,9 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     assert flux == norm
     by_tick = {entry["tick"]: entry for entry in trace}
     for line in births:
-        # the excited record's own rung: its residue is the seed's remainder
-        # at the centre cell as excited (0 on a fresh seed), the rung T / (2 W)
+        # the excited record's own rung on its residue read after its first
+        # advance (the trace reads u before the interval: 0 in the interval
+        # of the read itself, the rung then T / (2 W), a weaker bound)
         excited_u = by_tick[line["tick"]]["excited_before"][1]
         threshold = norm * (2 * excited_u + 1)  # 2 T u + T <= 2 W C
         assert 2 * 2403 * line["excitation_offer"] >= threshold
@@ -226,12 +229,11 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
         # rung (2 u + 1) T / 128 crossed on the front
         assert gather["click"] >= gather["birth"] + 65
         assert gather["click"] == gather["tick"] and gather["record"] not in simulation.records
-    # THE FINDING (BUILD.md section 26 item 15): the excited record is the
-    # seed again after every click and the body has no coupling to the light
-    # on the board, so its remainder at the centre cell repeats and every
-    # birth carries the same residue (a distribution needs the coupling, or
-    # the arriving field of another body)
-    assert len({line["u"] for line in births}) == 1
+    # ITEM 15'S FINDING RESOLVED (ALGEBRA.md 9.19 (4e)): the born records act
+    # back on the excited record's rows through the body's coupling g, so the
+    # remainder at the centre cell moves between births and the residues
+    # spread (one residue at every birth without the coupling, item 15)
+    assert len({line["u"] for line in births}) > 1
     # a smaller stock: as many births
     lines, _, _ = run(emitter_world(stock=2))
     assert len([line for line in lines if line["event"] == "birth"]) == 2
@@ -307,6 +309,11 @@ def test_c_the_loaders_refusals_name_their_keys():
     refused(emitter("residue_order", "ordinal"), "emitter.residue_order is refused")
     refused(emitter("residue_seed", 3), "emitter.residue_seed is refused")
     refused(emitter("rate", [1, 1]), "unknown keys|rate")
+
+    def uncoupled(document):
+        del document["measured"][0]["coupling"]
+
+    refused(uncoupled, "emitter needs the body's `coupling`")
 
     # the richness of the birth cell (9.22 (4)): a pair with fewer than 500
     # remainder values refuses the emitter naming the count

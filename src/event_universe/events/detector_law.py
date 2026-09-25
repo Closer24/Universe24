@@ -211,6 +211,13 @@ class Block:
     excitations: int = 0
     offer: int = 0
     emit_now: bool = False
+    # THE READ POINT OF THE EXCITED RECORD'S RESIDUE (ALGEBRA.md 9.19 (4e),
+    # the mathematician's word of 2026-09-25 on BUILD.md section 26 item
+    # 15's finding): the seed's remainders are 0 at the write and nonzero
+    # after one step of the rule, so u and W are read from the record's own
+    # remainder at the centre cell at the first rung after its first
+    # advance, and the offer C counts from that interval
+    residue_pending: bool = False
 
 
 @dataclass
@@ -729,13 +736,14 @@ class DetectorLawSimulation:
         return int(live.remainder[node]) // step, wall // step
 
     def _excite(self, block: Block, own_record: LiveRecord) -> None:
-        """The excited record's residue and norm (ALGEBRA.md 9.17 (4) item 1,
-        (5) item 1, 9.19 (3) and 9.22 (4)): its residue and wheel from the
-        law (`residue_of`, the remainder at the centre cell as it stands:
-        0 on the seed), the norm T the one-way flux into the body's centre
-        cell its own mode books over one period of its clock (the emitter's
-        declared integer `norm`, the generator's, recomputed at load), the
-        offer C from 0."""
+        """The excited record's norm and the residue owed (ALGEBRA.md 9.17
+        (4) item 1, (5) item 1, 9.19 (3), 9.19 (4e) and 9.22 (4)): the norm
+        T the one-way flux into the body's centre cell its own mode books
+        over one period of its clock (the emitter's declared integer `norm`,
+        the generator's, recomputed at load); its residue and wheel from the
+        law (`residue_of`) are read at the first rung AFTER ITS FIRST ADVANCE
+        (the seed's remainders are 0 at the write; the mathematician's word
+        on item 15's finding), the offer C counting from that interval."""
         emitter = block.definition.emitter
         assert emitter is not None
         if block.definition.profile is None:
@@ -765,7 +773,7 @@ class DetectorLawSimulation:
                 "generator)"
             )
         block.excitations += 1
-        own_record.u, own_record.wheel = self.residue_of(own_record, block)
+        block.residue_pending = True
         own_record.norm = emitter.norm
         block.offer = 0
         block.emit_now = False
@@ -787,11 +795,18 @@ class DetectorLawSimulation:
         2 T u + T <= 2 W C on the record's own wheel W fires the click (the
         birth follows once the interval's records are advanced). The flux
         is read from the two levels AFTER the interval's advance (the block's
-        record is advanced before this is called)."""
+        record is advanced before this is called). At the first call after
+        a (re)seed the record's residue u and wheel W are read from its own
+        remainder at the centre cell, now nonzero after its first advance
+        (9.19 (4e)), and C counts from this interval."""
         own = block.own
         emitter = block.definition.emitter
         if own is None or emitter is None or block.emit_now:
             return
+        if block.residue_pending:
+            own.u, own.wheel = self.residue_of(own, block)
+            block.residue_pending = False
+            block.offer = 0
         block.offer += self.inward_flux(own, self.centre_mask(block))
         if 2 * own.norm * own.u + own.norm <= 2 * own.wheel * block.offer:
             block.emit_now = True
