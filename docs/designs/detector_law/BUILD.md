@@ -3491,6 +3491,54 @@ would have found no cell.
    NODE (the model owner's record 1970): every new text of this item says
    Node.
 
+39. THE DARK BODY ROW, BUILT AND NOT RUN (the model owner's question of
+   2026-09-25, "does it follow that dark matter is without clicks?", and
+   his "yes" through the Boss, record 2015, to building it now and
+   running it only after he says the engine is stable; ALGEBRA.md 9.54
+   (1) to (4), DERIVED from 9.51 and 9.53; 9.41 (3) and 9.29 for the
+   pin's computation; built on `emitter-click` after item 38, held by the
+   rule of three). THE ROW: a beam of given light along a layer's line
+   passes a body of content M = 100000 standing 45 Links beside it (a
+   slab of 32 by 5 Nodes, the family of clicks held at M on it) and
+   reaches a screen of 40 cubes 340 Links ahead. THE DARK BODY (9.54
+   (2)): the family `dark` of the matter kind, charge 0, no emitter, on
+   no detector set: it gives nothing, takes nothing, and is seen by
+   nothing but its field. THE BRIGHT CONTROL: the same M at the same
+   place in the light clock's family with an emitter of light and a set
+   bound to its Nodes: its own giving clicks, and the shadow of its
+   taking clicks on the beam. THE FILES: `examples/events/dark_body/`,
+   `dark.json`, `bright.json` and `expectations.json` by `make_worlds.py`
+   under the stamp; the README. THE PINS, declared blind from the
+   algebra before any run (DETECTOR): dark, every one of the emitter's
+   30 records clicks at the screen, none at the body, no light from it;
+   bright, fewer than 30 at the screen (the shadow), the body's own
+   giving lines; THE BEND, the centroid of the emitter's records' clicks
+   over the screen's cubes moved toward the body by 13.7 Links (the
+   ray's COMPUTATION: the family of clicks' static level with the body's
+   Nodes held at M and the faces at 0, the plain step's fixed point
+   solved on the board, and the ray of the given clock traced through it
+   by 9.29's equations under the Node's own pace), the band 30 percent
+   (the packet averages the gradient and falls short of the ray, 9.29's
+   table), the same in both worlds within one cube. GAMEBOARD beside:
+   the family of clicks' level beside the two bodies equal, the family of
+   charge flat. NOT RUN: no run against these pins until the owner says
+   the engine is stable; the light clock's family gives light from the
+   bright body as the row asks. THE TEST, `tests/test_dark_body.py`,
+   without the pins: the files the generator's under the stamp and the
+   pins declared with their kinds; the dark body dark by declaration and
+   the bright one not; 80 intervals of each world with the books
+   balanced every 20, the family of charge 0 everywhere, the family of clicks'
+   level 10 Links beside the body the same in both worlds within the
+   rounding, no giving click and no taking click of the dark world
+   naming the dark body (its own rotation's cycle lines the
+   GameBoard's), the emitter's giving clicks begun. A PIECE FOR THE MATHEMATICIAN: the
+   pin's field is the static fixed point of the plain step; the engine's
+   family of clicks is a wave rule off a held level with zero faces that
+   reflect, so the field around the body is the fixed point plus its
+   waves, damped by the rounding alone (finding B of item 32); the run
+   will read how far the waves move the bend. THE NAME NODE (the model
+   owner's record 1970): every new text of this item says Node.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

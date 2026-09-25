@@ -617,6 +617,16 @@ register entry is
 0.5893 (the mean 0.5810) over the fan at this GameBoard, 0.5774 to
 0.5818 in the limit, against c = 0.5774.
 
+## The dark body
+
+The folder [dark_body/](dark_body/README.md) holds the two worlds of the dark
+body row (ALGEBRA.md 9.54 (4); BUILD.md section 26 item 39): a body of content
+100000 beside a beam's line that gives nothing and takes nothing (`dark.json`)
+and the bright control of the same content with its giving and taking clicks
+(`bright.json`), written by `dark_body/make_worlds.py` with their pins in
+`expectations.json` declared blind from the algebra before any run; run only
+when the model owner says the engine is stable.
+
 ## The massive record kind
 
 The folder [massive_record/](massive_record/README.md) holds the check worlds
