@@ -11,8 +11,10 @@ written into `--out`: the input's name, its stamp (the law and the hash), the
 verdict, the ticks, the clicks (the detector's name and the interval of each
 click line, DETECTOR), the count per detector, and, where `--pins` registers a
 blind pin for the input (`{"<name>": [{"detector": ..., "count": ..., "band":
-...}]}`, written before the run), the comparison per detector: MATCH within
-the band or MISS, with the count read. Nothing else is compared; a GameBoard
+...}]}` on the count of clicks, or `{"detector": ..., "first_click": ...,
+"band": ...}` on the interval of the detector's first click, written before
+the run), the comparison per pin: MATCH within the band or MISS, with the
+value read. Nothing else is compared; a GameBoard
 reading is not written. The output carries no time, so two inputs run
 together give the same files as each alone (the test of record 1887); the
 wall seconds go to the summary printed.
@@ -88,15 +90,24 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
     output["records_alive"] = len(simulation.records)
     verdicts = []
     for pin in pins:
-        detector, count, band = str(pin["detector"]), int(pin["count"]), int(pin["band"])
-        read = counts.get(detector, 0)
+        # a pin on the COUNT of clicks at the detector, or on the interval of
+        # its FIRST click (the light clock's and Sagnac's first rungs)
+        detector, band = str(pin["detector"]), int(pin["band"])
+        if "first_click" in pin:
+            kind, expected = "first_click", int(pin["first_click"])
+            firsts = [int(c["interval"]) for c in clicks if c["detector"] == detector]
+            read: int | None = min(firsts) if firsts else None
+        else:
+            kind, expected = "count", int(pin["count"])
+            read = counts.get(detector, 0)
         verdicts.append(
             {
                 "detector": detector,
-                "pin": count,
+                "kind": kind,
+                "pin": expected,
                 "band": band,
                 "read": read,
-                "verdict": "MATCH" if abs(read - count) <= band else "MISS",
+                "verdict": "MATCH" if read is not None and abs(read - expected) <= band else "MISS",
             }
         )
     output["pins"] = verdicts

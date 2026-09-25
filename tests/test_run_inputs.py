@@ -63,7 +63,9 @@ def test_b_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_pa
     """An input whose profile is off the mode (the peak doubled, the stamp rewritten so that
     the residual speaks) is REFUSED, its output carrying the reason and no clicks, and the
     command's exit is 1; a lawful input with pins registered before the run reads MATCH
-    within the band and MISS outside it, the count read written beside each."""
+    within the band and MISS outside it, the value read written beside each: a pin on the
+    count of clicks, and a pin on the interval of the detector's first click (a detector
+    with no click reads None and MISS)."""
     inputs = tmp_path / "inputs"
     inputs.mkdir()
     bad = emitter_world(stock=2, ticks=200)
@@ -80,6 +82,8 @@ def test_b_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_pa
                 "good": [
                     {"detector": "screen", "count": 2, "band": 1},
                     {"detector": "screen", "count": 40, "band": 1},
+                    {"detector": "screen", "first_click": 1, "band": 0},
+                    {"detector": "nowhere", "first_click": 1, "band": 1000},
                 ]
             }
         ),
@@ -98,8 +102,12 @@ def test_b_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_pa
     good = json.loads((out / "good.output.json").read_text(encoding="utf-8"))
     assert good["verdict"] == "LAWFUL"
     read = good["counts"]["screen"]
+    first = min(click["interval"] for click in good["clicks"] if click["detector"] == "screen")
     assert [pin["verdict"] for pin in good["pins"]] == [
         "MATCH" if abs(read - 2) <= 1 else "MISS",
         "MISS",
+        "MATCH" if first == 1 else "MISS",
+        "MISS",
     ]
-    assert all(pin["read"] == read for pin in good["pins"])
+    assert [pin["read"] for pin in good["pins"]] == [read, read, first, None]
+    assert [pin["kind"] for pin in good["pins"]] == ["count", "count", "first_click", "first_click"]

@@ -826,27 +826,30 @@ def massive_worlds(massive) -> dict[str, dict]:
         named_receiver(document, {0: "at_b", 1: "at_a"})
         massive.seed_on_the_mode(document)
         out[name] = document
-    # The light clock of two bodies (section 10, the third draft, with M1-1 to M1-4): the
-    # chain of 673 CLOSED for light at both ends (the loader's third face value, the
-    # builder's line), the emitter A of side 12 at full depth at [600, 612) with own_grace
-    # 70, the mirror the closed face at 672, the receiving set A's face cell x = 611 alone
-    # with its own wheel 64 (section 10 item 9), 2600 intervals (the physicist's 09:18Z: the
-    # -x half's round trip 2078 on the closed chain before the take removes it); the probe
-    # at the face.
+    # The light clock (ALGEBRA.md 9.22 (8) row 13, the table's form since 2026-09-25): the
+    # chain of 674 with the face receivers at both ends, the emitter A of side 12 at full
+    # depth at [600, 612) with its coupling and its stock, the MIRROR the gap [1, 2] of
+    # depth 2 at [672, 674) (A.3: a material of light's kind, no closed face), the
+    # receiving set at_a the cube [612, 614] of free Nodes beside A, 2600 intervals; the
+    # -x half of every born record leaves through the face at x = 0 (last on the ladder).
+    # The closed chain of 673 with the mirror as the closed face is HISTORY (BUILD.md
+    # section 26 item 22).
     document = massive.world(
         "light-clock-60",
         "PIN",
-        [673, 1, 1],
-        {"x": "closed", "y": "periodic", "z": "periodic"},
+        [674, 1, 1],
+        chain,
         KIND,
         [emitter([600, 0, 0], 12, WELL_FULL, OWN_GRACE)],
         LIGHT_CLOCK_TICKS,
         light=light_11,
+        faces=massive.FACES_OPEN,
         probes=[[612, 0, 0]],
         seed_profile=False,
     )
     bounded(document)
     graced(document, [emitter([600, 0, 0], 12, WELL_FULL, OWN_GRACE)])
+    document["measured"].extend(wall_line([672, 673], range(1), set()))
     # section 10 item 9 (go-lines 9024cea0): the receiving set bound to A is the cube of
     # free Nodes adjacent to A's face toward the mirror, x in [612, 614] (record 1899), the
     # returning record's click at its rung stamped with A's count: `block` 0 with the cube's

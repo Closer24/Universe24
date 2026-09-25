@@ -2114,6 +2114,52 @@ would have found no cell.
    of the seventeen enter that file as the mathematician's table completes
    per experiment; the short experiment file of 9.22 (5), the generator
    reading it and deriving the rest, is the next form, with his table.
+22. THE FIRST INPUT FILE OF THE TABLE RUN BY THE ONE COMMAND, AND ITS
+   FINDING (the mathematician's table of the eighteen, ALGEBRA.md 9.22
+   (8), row 13; the owner's record 1887). THE LIGHT CLOCK IN THE TABLE'S
+   FORM: the chain [674, 1, 1] with the face receivers, the well A [800,
+   801] of side 12 at [600, 612) with its coupling and its stock, the
+   MIRROR the gap [1, 2] of depth 2 at [672, 674) as a material of light's
+   kind (A.3; the closed face of the chain of 673 HISTORY), the receiving
+   set at_a the cube [612, 614] beside A; its blind pin registered in
+   examples/events/pins.json (the one command's pins file, a pin on the
+   COUNT of clicks or on the interval of a detector's FIRST CLICK,
+   `first_click`, written before the run): at_a's first click 214 +- 1
+   (the table's 211.98 plus the rung's offset). THE RUN (COMPUTATION,
+   `tools/run_inputs.py --pins examples/events/pins.json`, 0.4 s): LAWFUL;
+   64 births, 64 clicks at at_a, the first at interval 76, 21 intervals
+   after the first birth: MISS. No pin moved. THE FAULT FOUND, for the
+   mathematician: every one of the 64 records clicks within 150 intervals
+   of its birth, whatever its residue (u / W from 0.01 to 0.98), on the
+   OUTGOING pass and never on the return from the mirror, because the
+   one-way flux the receiver books is not bounded by the record's energy
+   for the born pulse as written. Measured on one born record kept from
+   clicking (its norm set beyond reach): the adjacent cube [612, 614]
+   books 1.31 I within 50 intervals of the birth, 2.57 I by 100, 4.65 I by
+   400 and then nothing more; A's own cell 4.23 I; a cube placed 30 Links
+   away, [640, 642], books 2.61 I over the outgoing pass and the return
+   (two passages of the +x half, whose energy is I / 2 each: the booking
+   2.6 times the energy passing); the record's conserved form I unchanged
+   throughout; a SMOOTH planted packet (test b of the flux reading) books
+   1.0017 of its I on a passage. So the born pair's form of 9.17 (6), one
+   pair [now, before] on every cell of the body (a flat box of 12 cells
+   with the slow clock's half step), is a broadband DISPERSIVE pulse: its
+   components run at every pace of the band and interfere, the local
+   current changes sign, and the positive part the ladder books (9.19
+   (3)) exceeds the energy several times, most at the emitter's own face
+   (the standing components' sloshing across the Link 611 | 612). The
+   increment ladder is then met by sloshing, not by the record's passage,
+   and no rung read at a receiver beside an emitter, nor a first rung on
+   a chain, means what the table's pins mean (the light clock's 214,
+   Sagnac's 108 and its ratio, the redshift's ratio, the moving mass's
+   169). THE REMEDY IS THE MATHEMATICIAN'S OWN FOR THE LAYERS, now for
+   every emitting row: the born profile as a TRAVELLING character over
+   several periods with an envelope (F1 of the build order, 9.22 (3):
+   the profile times the character of K at the two levels), for which the
+   one-way flux is the energy passing to a part in a thousand; the
+   one-pair form stays as the write of a body that births nothing lawful
+   to read. Nothing in the engine changed here; his word on the form and
+   the pins before the rest rows' files are written.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
