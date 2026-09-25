@@ -4413,10 +4413,14 @@ first head (emitter-click 7ce8d66a, 20:45Z; DECIDED HERE).**
 **(6) The write for an odd clock step (the physicist's question (2) of
 22:00Z; DECIDED HERE; the table moved out of the engine on the owner's
 word of 23:00Z).** The born pair is the character sampled half a step
-either side of its zero: now = round(A x 256 sin(pi s / N)) and before =
--now exactly, s = floor(n / d) the clock's step per interval (for s even
-this is the table of N at 3 N / 4 + s / 2; for s = 1 on N = 64 it is 13,
-never 0). THE ENGINE HOLDS NO TABLE FOR IT: the born pair is TWO INTEGERS
+either side of its zero: now = round(A sin(pi n / (d N))) and before =
+-now exactly, n / d the clock's advance per interval in steps of the
+circle of N, taken EXACT as the rational, A the amplitude unit
+(CORRECTED 2026-09-25 on the physicist's finding: the first draft's
+whole step s = floor(n / d) is 0 for a clock below one step per
+interval, the index rows' [3565, 10000] on N = 64, and wrote no motion;
+the half of the exact advance is never 0: 157930 on [77, 25] at N = 64
+for A = 2^20, 18349 on [3565, 10000]). THE ENGINE HOLDS NO TABLE FOR IT: the born pair is TWO INTEGERS
 OF THE WORLD, `born: [now, before]` per birth, computed by the generator
 (a host tool, as the seed's mode is) and checked at load against the
 generator's recompute; a line's born profile is the generator's integers
@@ -6107,15 +6111,17 @@ rule below replaces it.
 **(2) THE RULE (DERIVED HERE): THE INCREMENT LADDER.** The data: the
 record's residue u (the law's remainder at its birth cell, 9.19 (4)), its
 norm T, its wheel W, hence its threshold theta = (2 u + 1) T / (2 W),
-fixed at the birth; its ladder, the named sets in their declared order
-with the face last, and within a set the cells in the set's declared
-order. At every interval t each cell i of the ladder receives the
-one-way inward flux f_i(t) >= 0 of the record's rows through ITS SET'S
-PORTS that land in it: the Links from a Node outside the SET into a Node
-of cell i (9.19 (3)); a Link between two cells of one set is not a Port
-of the set and carries no offer (else the energy that entered the set
-at one cell would be offered again at its neighbour, and the set's total
-would exceed the record's I per passage); the flux is read from the two
+fixed at the birth; its ladder, the named DETECTORS in their declared
+order with the face last. A CELL OF THE LADDER IS ONE DETECTOR, a cube
+of side 3 or more (the model owner's record 1899 of 2026-09-25, (10)
+below; the first draft's cells within a set are HISTORY). At every
+interval t each cell i of the ladder receives the one-way inward flux
+f_i(t) >= 0 of the record's rows through ITS PORTS: the Links from a
+Node outside the detector into a Node of it (9.19 (3)); a Link between
+two Nodes of one detector is not a Port and carries no offer (else the
+energy that entered at one Node would be offered again at its
+neighbour, and the detector's total would exceed the record's I per
+passage); the flux is read from the two
 levels after the interval's step, now = a(t) and before = a(t - 1), as
 the identity of 9.19 (3) and the prototypes read it; the record's
 running total is C(t) = C(t - 1) + SUM over the ladder's cells of
@@ -6139,9 +6145,10 @@ theta is spread evenly over a grid of W points in [0, T). The segments
 of f_j(t)), one per (interval, cell), partition [0, C(infinity)) and have
 the lengths f_i(t). So P(the click at interval t, at cell i) = f_i(t) / T
 to the grain 1 / W, and summing over t, P(cell i) = C_i(infinity) / T:
-THE CELL'S SHARE OF THE RECORD'S TOTAL INWARD FLUX, whatever the time
-profile; over every set of the ladder the shares sum to one with the
-face. COMPUTED on the planted profile: 0.3521, 0.3662, 0.2817 exactly, in
+THE DETECTOR'S SHARE OF THE RECORD'S TOTAL INWARD FLUX, whatever the
+time profile (the sum over its boundary Nodes of their inward flux from
+outside the cube, (10)); over every detector of the ladder the shares
+sum to one with the face. COMPUTED on the planted profile: 0.3521, 0.3662, 0.2817 exactly, in
 either order of the cells. The grain: a count is the number of u whose
 theta falls in the cell's segments, within 1 / W of the share; with the
 law's remainder the residues are equidistributed and not a permutation,
@@ -6151,11 +6158,11 @@ so the counts are binomial about the shares (9.19 (4b)).
 depend on it: the total length of a cell's segments is SUM over t of
 f_i(t) for every order. A single record's cell at a given u does depend
 on it, so for equivariance bit for bit (9.20 (1)) the order must be data
-of the world that transforms with it: the set's declared order (a list's
-order; a cube's cells by its vertex and edge), never the host's
-lexicographic order of the lattice, which a rotation of the 48 does not
-preserve. Any deterministic declared order passes the three tests: it is
-a name's data, as the ladder's order of sets is.
+of the world that transforms with it: the detectors' declared order (a
+list's order; inside a detector there is no order, its cube being one
+cell, record 1899), never the host's lexicographic order of the lattice,
+which a rotation of the 48 does not preserve. Any deterministic declared
+order passes the three tests: it is a name's data.
 
 **(5) THE TWO OTHER FORMS, AND WHY NOT (COMPUTED on the planted
 profile).**
@@ -6241,33 +6248,40 @@ would read two places as one and its clicks could not be placed. LOAD
 CHECK: a receiver's name on two pieces not connected by Links (the
 six-neighbour adjacency on the torus) is refused with the sentence "the
 receiver `name` lies on n disconnected pieces; a detector is one
-connected region, and separate places are separate names". UNIT TEST: a
-receiver named on the cells (2, 2, 0) and (5, 2, 0) of a layer is
-refused; on (2, 2, 0) and (3, 2, 0) admitted; a cube of side 2 across a
-periodic seam admitted (connected through the seam).
+connected region, and separate places are separate names". UNIT TEST
+(restated on the cube of (10), 2026-09-25): two 3 x 3 cubes three Links
+apart under one name are refused naming 2 pieces; one 3 x 3 cube is
+admitted, also across a periodic seam (connected through the seam); the
+3 x 3 cube less its centre is refused as filling no box; a box of sides
+[2, 2, 1] on a layer is refused naming its sides.
 
-**(8) UNIT TESTS WITH EXPECTED VALUES (for the engine).**
-- The physicist's layer (24 x 7 closed, the emitter at (2, 3), three
-  one-Node sets at x = 18 on the rows 2, 3 and 4, the residues u = 0 to 7
-  on W = 8): the counts under the order [s0, s1, s2] and under [s2, s1,
-  s0] are EQUAL IN DISTRIBUTION (the theorem of (3)), not residue by
-  residue: on eight residues the physicist reads (4, 2, 2) under the one
-  order and (2, 2, 4) under the other, since reversing the cells within
-  an interval's increment moves where the eight thresholds fall (a
-  finite wheel is a sample; CORRECTED on his finding, 2026-09-25); each
-  count is the number of u whose theta falls in the cell's segments of
-  the final increment ladder, which the harness computes from the same
-  fluxes before the run and the engine gives bit for bit; on 128 planted
-  residues the two orders agree within the sampling. (The first draft's
-  "the middle cell most" assumed a free layer; on his closed layer the
-  mirrors' returns put s0 and s2 ahead of s1: the harness's shares
-  decide, not a guess.)
-- Malus's four worlds: the shares a^2 / (a^2 + b^2) on the + cell, the
-  expected 128.0, 246.2, 199.3, 177.2 at 256 records with their bands
-  (9.19 (4b)).
-- The two slits: the screen's counts binomial about the cells' shares of
-  the record's total flux over its passage; the visibility 0.96 +- 0.02
-  re-derived on the grown board (owed).
+**(8) UNIT TESTS WITH EXPECTED VALUES (for the engine; restated PER
+DETECTOR on record 1899, 2026-09-25: every set below is a cube of side 3
+or more, cut by the board on a thin axis).**
+- The physicist's layer (24 x 9 closed, the emitter at (2, 4), three 3 x
+  3 cubes at x = 17 to 19, s1 centred on the emitter's row, s0 and s2
+  its images across the periodic seam; the residues u = 0 to 7 on W =
+  8): the counts under the order [s0, s1, s2] and under [s2, s1, s0] are
+  EQUAL IN DISTRIBUTION (the theorem of (3)), not residue by residue: on
+  eight residues of the first draft's one-Node sets he read (4, 2, 2)
+  under the one order and (2, 2, 4) under the other, since reversing the
+  detectors within an interval's increment moves where the eight
+  thresholds fall (a finite wheel is a sample; CORRECTED on his finding,
+  2026-09-25); each count is the number of u whose theta falls in the
+  detector's segments of the final increment ladder, which the harness
+  computes from the same fluxes before the run and the engine gives bit
+  for bit; on 128 planted residues the two orders agree within 12 on the
+  cubes (the engine's own count, emitter-click 55830eec). (The first
+  draft's "the middle cell most" assumed a free layer; on his closed
+  layer the mirrors' returns put s0 and s2 ahead of s1: the harness's
+  shares decide, not a guess.)
+- Malus's four worlds: the shares a^2 / (a^2 + b^2) on the + cube (the
+  cube [7, 9] of the bar grown to 11), the expected 128.0, 246.2, 199.3,
+  177.2 at 256 records with their bands (9.19 (4b)).
+- The two slits: the screen's counts binomial about the 67 pixels'
+  shares (cubes of side 3) of the record's total flux over its passage;
+  the visibility 0.96 +- 0.02 re-derived on the grown board (owed); the
+  pixel of 3 against the fringe spacing 90 cells scales it by 0.998.
 - NO SIGNALLING (9.20 (B)'s seventh test): two Bell worlds differing only
   in Bob's axis, (1, 2) against (3, 1), give at Alice's two receivers
   identical counts and identical click intervals, record by record, bit
@@ -6276,17 +6290,19 @@ periodic seam admitted (connected through the seam).
 - ONE QUANTUM, ONE CLICK: with the face last on every ladder, every record
   clicks exactly once (the content's count).
 
-**(9) THE DETECTOR IS SENSITIVE TO ONE NODE (the model owner's
-declaration, record 1894, 2026-09-25 on the Israel clock: "the detector
-is sensitive to a single Node by declaration; we built the board by the
-detector's sensitivity"; "a wave spreads over several Nodes; that does
-not contradict the detector being sensitive to a Node").** One Node is
-the smallest thing a detector tells apart: every armed Node of a
-detector region is a cell of the increment ladder (2), a click names one
-Node, and nothing below one Node is observable or claimed. THE MAPPING
-TO NATURE (DERIVED): on the board a wavelength spans several detector
-cells (the born light's 20.78 Links at [2464, 25], 64 at the chains'
-[1, 1]), while a real pixel is larger than a real wavelength; so an
+**(9) THE MAPPING TO NATURE BY RATIOS (record 1894 of 2026-09-25 on the
+Israel clock, whose first sentence, "the detector is sensitive to a
+single Node by declaration", is SUPERSEDED by record 1899 and (10): a
+detector's sensitivity is its whole cube, of side 3 or more, and a Node
+is the grain of the board; his second sentence stands: "a wave spreads
+over several Nodes; that does not contradict the detector's
+sensitivity").** A Node is the grain and a detector's cube is the
+smallest thing a detector tells apart: a click names the detector, and
+nothing below a detector is observable or claimed. THE MAPPING TO NATURE
+(DERIVED): on the board a wavelength spans several Nodes and one or a
+few detector cubes (the born light's 20.78 Links at [2464, 25], 64 at
+the chains' [1, 1], 4 at the Mach-Zehnder's [512, 1]), while a real
+pixel is larger than a real wavelength; so an
 experiment is compared by the RATIOS it measures, and each pinned ratio
 is checked to be free of that scaling: the counts and their shares
 (Bell's S, Malus's shares, Grover's and Deutsch-Jozsa's counts) are
@@ -6300,3 +6316,64 @@ a diagnostic by construction; and the moving rows' ticks carry the
 dispersion's lattice term (0.8146 against 1 / gamma = 0.8165 at K =
 0.18556 per Link, 0.2 percent, inside their 0.3 percent bands, 9.24
 (2)); no other pin depends on the wavelength's size in cells.
+
+**(10) THE DETECTOR CUBE (the model owner's decisions of 2026-09-25 on
+the Israel clock, record 1899, through the Boss: "the detector can
+define a sensitivity, say a cube 3 by 3: when there is a click the whole
+cube shouts; the detector does not know which Node shouted in the cube;
+the detector's sensitivity is its size; there is a minimal size of 3 by
+3"; "cubes smaller than side 3 must be refused"; ADOPTED with the
+increment ladder at the detector level).** WHAT THE MATHEMATICIAN
+CORRECTED WITH THE OWNER, in his words: the cube does not shout by a
+count of Nodes shouting; its one reading is the FLUX INTO THE CUBE
+through its Ports from outside (9.19 (3)), and the click is the
+detector's when the record's running total crosses its threshold in the
+cube's segment of the interval's increment (2); so the cube's share is
+its share of the record's inward flux, Born's rule per detector (3).
+THE PER-DETECTOR FORM (DERIVED): the operation of the click is the
+projection onto the detector's region: the flux through the region's
+Ports is the SUM over its boundary Nodes of their inward flux from
+outside the region (the Links between two Nodes of the region carry no
+offer, (2)), so a detector's segment of an interval is the sum of its
+Nodes' segments and its share is the sum of its Nodes' shares; the order
+inside a detector no longer exists (one segment), and only the declared
+order of the detectors decides within an interval (4). The record is
+deleted whole at the click (record 1888) and the line names the
+detector, never a Node. THE MINIMUM SIDE 3, ITS REASON (DERIVED; the
+Boss's reading confirmed): a box of side 3 is the smallest with an
+INTERIOR Node, a Node all of whose six neighbours lie in the region (its
+centre), so it is the smallest region with Ports on its boundary and a
+Node with none; a box of side 2 has no interior (every Node touches the
+outside) and no centre Node; the engine reads a body's centre cell as
+the excited record's named set (9.19 (3)); and the sensitivity is then
+strictly coarser than the grain: 3 Nodes on a chain, 9 on a layer, 27
+in a cube. THE CUT CUBE (the physicist's reading, CONFIRMED; the Boss's
+"at least 3 along every axis of the board" is the same statement): on
+an axis whose extent is below 3 (a chain's y and z, a layer's z) the
+cube is cut by the GameBoard as a block's cube is, so the side required
+per axis is min(3, the extent): three Nodes in a row on a chain, a 3 x
+3 box one deep on a layer. THE LOAD CHECK (55830eec): a detector's
+Nodes are one connected piece (7), fill one box (per axis one run of
+coordinates, across a periodic seam the shortest arc, the count the
+runs' product), and every side is 3 or more where the board's extent
+allows; a set bound to a block is the block's cells (side 3 or more,
+refused below) or a cube of free Nodes beside it, checked as any
+detector; the one-Node receiver is retired. WHAT CHANGES IN THE ROWS
+(the specification's part B, each restated blind before any run): every
+receiver becomes a cube of side 3 (the two slits' screen 67 pixels of 3
+over y = 28 to 228, x = 153 to 155; M1's 41 pixels; the chains'
+receivers three Nodes in a row: the redshift's [4092, 4094], the light
+clock's [612, 614], M2's [104, 106]; Malus's + receiver [7, 9] on the bar
+grown to 11; Bell's four receivers 3 x 3 cubes beside the polarisers;
+Sagnac's wells' own cells of side 12; the Mach-Zehnder's regions 5 x 113
+and 81 x 5 already so); THE PINS: a count or a share does not move (Bell,
+Malus, the computer, Mach-Zehnder); a fringe pattern read on pixels of 3
+is the pattern's box average over 3 cells, which scales the visibility by
+sin(3 pi / L) / (3 pi / L) for the fringe spacing L in cells: 0.998 on
+the two slits (L = 20.78 x 113 / 26 = 90), inside the band; a centroid
+read on binned counts keeps its band of one Node while the lobe spans
+several pixels (M1: the generator's map states it); a first rung is read
+at the cube's NEAR FACE, so it holds where the cube begins at the old
+Node (the light clock's 612, M2's 104) and moves by the offset over v_g
+where it does not (the redshift's, a ratio of intervals that cancels);
+the first-rung pins are owed on the flux form in any case.

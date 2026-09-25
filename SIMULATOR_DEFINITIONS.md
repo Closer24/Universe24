@@ -112,8 +112,12 @@ in the day's log; nothing of them is a name the engine branches on.
   the one whose segment of that interval's increment, in the ladder's
   order, holds the threshold; Born's rule, the share of a cell equal to
   its share of the record's inward flux, is then a theorem (ALGEBRA.md
-  9.19 (3), 9.25 (2) and (3)); a detector is one connected region, and
-  separate places are separate names (9.25 (7)). At the click the record is deleted whole
+  9.19 (3), 9.25 (2) and (3)); a cell of the ladder is one DETECTOR, a
+  cube of side 3 or more (cut by the GameBoard on a thin axis), one
+  connected region, its sensitivity its whole cube and the click the
+  detector's, never a Node's; a box below side 3 is refused at load;
+  separate places are separate names (9.25 (7) and (10); the model
+  owner's record 1899 of 2026-09-25). At the click the record is deleted whole
   (8.8), its content and its push handed to the clicking body. There is no
   take, no grace, no exemption, no own take, no close and no sponge: an
   open face is a receiver `face` at the border, last on every ladder, and
@@ -179,7 +183,8 @@ in the day's log; nothing of them is a name the engine branches on.
   the material map (the regions with their pairs, couplings and axes, as
   cubes by vertex and edge); the occupation (the quanta, amplitudes,
   stocks, born clocks and profiles, the crystal's branches, the joint
-  body's matrix); the momentum of every entry, the integer wave vector
+  body's matrix, which is OPTIONAL: the generator folds a circuit into
+  the crystal's branches, record 1890); the momentum of every entry, the integer wave vector
   **K** of its character, 0 at rest (record 1885; a packet moves by it
   from interval 0, a region of material has **K** = 0, ALGEBRA.md 9.24);
   the names (the receivers' sets and the ladders). Refused: a residue, a
@@ -191,7 +196,8 @@ in the day's log; nothing of them is a name the engine branches on.
   slowed by the dispersion; a region of material does not move; the push
   of a region is outside the one algebra and is carried, named so, until
   it goes; a moving receiver or emitter as a NAME that translates with its
-  packet is derived as lawful and waits on the model owner's word.
+  packet is derived as lawful and ADOPTED (record 1889, 2026-09-25): a set
+  translating at v_g(**K**), the verb T on a name (9.24 (4)).
 - **What is compared with nature.** The clicks alone: the counts and the
   first rungs on the receivers' names (the owner's word of 22:39Z, "check
   clicks only in the experiment"); every other property of the run is
@@ -233,15 +239,20 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   the layer's one z, a square and not a cube put on one z; ON A CHAIN it is
   the segment [x0, x0 + s) (the light clock's A at [600, 612), sagnac's
   blocks at 700 and 772 of side 12, the index's block of side 24). THE
-  FIFTEEN WORLDS' BODIES, checked against this (15:20Z): 4a's block of side
+  FIFTEEN WORLDS' BODIES of that day (SEVENTEEN since 2026-09-25, with
+  the two-qubit computer and Mach-Zehnder, LAB_TOOLS.md part B rows 16
+  and 17), checked against this (15:20Z): 4a's block of side
   14 at [93, 93] on the 200 x 200 layer and the deep well's of side 40 at
   [44, 44] on 128 x 128, squares; the boxes' blocks of side 20 and 28 in
   64^3 and 48^3, cubes; the light clock's, sagnac's, redshift's and the
   index's blocks on chains, segments of 12 and 24; the mirror line's and
   the take lines' blocks of side 1 on the two_slits and M1 layers, single
-  cells; Bell's and Malus's polarisers, bodies of one Node with a table;
-  the fans, M2 and the cart have no block (a lamp and receiver bodies of
-  one Node): every file declares its body by the lower vertex and the edge
+  cells; Bell's and Malus's polarisers, bodies of one Node with a table
+  (HISTORY: no table, record 1878; a polariser is a body with an axis and
+  two receiver cubes, ALGEBRA.md 9.18); the fans, M2 and the cart have no
+  block (a lamp and receiver bodies of one Node: HISTORY, a detector is a
+  cube of side 3 or more, record 1899): every file declares its body by
+  the lower vertex and the edge
   as the loader reads it; none fails; no world line owed.
   ITS NODES ARE ORDINARY NODES (the owner's word of 15:38Z through the
   Boss, 15:40Z): a body's cells are Nodes under the same six verbs every
@@ -308,7 +319,11 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
      passes bit for bit (test g).
   6. THE AMPLITUDE BOUND: the seed's magnitude at most A. CHECKED AT LOAD
      (world.py, MUST 3; the profile's largest magnitude the same).
-  7. THE RAMP of a pushed body at least ten relaxation times 1 / (omega_0
+  7. (RETIRED by the model owner's record 1884 of 2026-09-25: no ramp and
+     no acceleration; a moving entry is written moving at interval 0 as a
+     packet with its **K**, ALGEBRA.md 9.24 (2); the lines of this item
+     are the HISTORY of the first engine's check.) THE RAMP of a pushed
+     body at least ten relaxation times 1 / (omega_0
      - omega_b) of its own well (DECLARATIONS.md section 8). Before
      body-check DECLARED ONLY, NOT CHECKED (the pins script printed the
      relaxation time; nothing compared the declared `ramp` with it).
@@ -337,9 +352,10 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   same call, before the first interval); the owner's word of 16:48Z
   answered conditions 1, 5 and 7 and they are built on body-check, read by
   Reviewer 3 on main.
-  THE FIFTEEN WORLDS' BODIES AGAINST THE LIST (the scan of 2026-09-24,
-  read from the files on `main` 8b9a2897 through the loader; with the
-  vertex check of 15:20Z above):
+  THE FIFTEEN WORLDS' BODIES OF 2026-09-24 AGAINST THE LIST (the scan of
+  that day, HISTORY since the unification and the seventeen of
+  2026-09-25; read from the files on `main` 8b9a2897 through the loader;
+  with the vertex check of 15:20Z above):
   the muon's form, the layer pin world at rest (`layer_pin_rest_14.json`):
   the square of edge 14 at [93, 93] on the 200 x 200 periodic layer, whole;
   the well [3200, 3227] on [3200, 3236]; `margin` pin; the seed a PROFILE
@@ -393,7 +409,8 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   files were REFUSED at load for the family's missing `take` pair (the fix
   on runner-lines 195a9fb9, merged in here). Bell's four, Malus's four,
   the pace fans and the cart: no body (the polarisers bodies of one Node
-  with a table, the receivers bodies of one Node). SO: ELEVEN FILES (the
+  with a table, the receivers bodies of one Node: HISTORY, no table and a
+  detector cube of side 3 or more, records 1878 and 1899). SO: ELEVEN FILES (the
   deep well's two, `deep_well_k3_40` and `deep_well_rest_40`; the boxes'
   four, `moving_20`, `moving_28`, `rest_20`, `rest_28`; the light clock,
   `light_clock_60`; Sagnac's two, `sagnac_k3` and `sagnac_rest`; the
@@ -405,7 +422,8 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   REGENERATED with the seed on the mode (the declaration of the body's
   seed on its mode, DECLARATIONS.md section 15 M1-11; the generators'
   `seed_on_the_mode`) and the muon's form in motion with the ramp 12000
-  (the ramp's declaration, section 8); every listed massive world now
+  (the ramp's declaration, section 8; HISTORY, the ramp retired by record
+  1884); every listed massive world now
   loads clean under the check (test g of tests/test_body_conditions.py).
   The readings declared on the flat-seeded worlds are re-derived blind
   before their preliminaries (M1-11).
