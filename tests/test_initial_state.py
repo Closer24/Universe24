@@ -71,7 +71,7 @@ def test_a_a_generated_world_is_lawful_and_carries_its_clock_and_stamp():
         count = shape[0] * shape[1] * shape[2]
         num, den = [800] * count, [809] * count
         corner = int(world.measured[0].position[0])
-        for x in range(corner, corner + block.side):
+        for x in range(corner, corner + block.extents[0]):
             num[x], den[x] = 800, 801
         residual, bound, _ = mode_residual(
             block.profile, num, den, block.clock, shape, world.kind_periodic(1)

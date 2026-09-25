@@ -378,14 +378,19 @@ class DetectorLawSimulation:
         # on every ladder, so that what leaves the board clicks there; a
         # periodic axis has none; a `closed` face (DECLARATIONS.md section
         # 10's mirror B) is a zero row with no receiver, the level 0 beyond it
-        # as `_shift` fills. Nothing takes: the sponge is retired.
+        # as `_shift` fills. Nothing takes: the sponge is retired. THE FACE
+        # SLAB (9.25 (10); BUILD.md section 26 item 23): the receiver is the
+        # slab of the world's `face_depth` free Nodes nearest every open
+        # border, one cell, its Ports toward the interior alone (a Link inside
+        # the slab carries no offer, the zero row beyond the border no Node).
         self.face_cell: int | None = None
         for axis in range(3):
             if world.periodic[axis] or world.closed[axis] or self.shape[axis] < 2:
                 continue
             if self.face_cell is None:
                 self.face_cell = self._cell("face", None, True)
-            for index in (0, self.shape[axis] - 1):
+            depth = min(world.face_depth, self.shape[axis])
+            for index in [*range(depth), *range(self.shape[axis] - depth, self.shape[axis])]:
                 view = np.moveaxis(self.cell_index, axis, 0)[index]
                 free = view < 0
                 view[free] = self.face_cell
@@ -420,7 +425,7 @@ class DetectorLawSimulation:
                 continue
             definition = entry.block
             corner = [int(entry.position[axis]) for axis in range(3)]
-            mask = self._cube(corner, definition.side, entry.family)
+            mask = self._box(corner, definition.extents, entry.family)
             wall = 3 * LABEL_SCALE * world.width * entry.amount
             block = Block(
                 number,
@@ -531,16 +536,17 @@ class DetectorLawSimulation:
 
     # The blocks (massive-record-v1)
 
-    def _cube(self, corner: list[int], side: int, family: int) -> np.ndarray:
-        """The cells R of a block: the cube of `side` from its lower corner,
-        wrapped on an axis the kind's faces make periodic, cut on an open
-        one (a G_48-set of Nodes, world data)."""
+    def _box(self, corner: list[int], extents: tuple[int, int, int], family: int) -> np.ndarray:
+        """The cells R of a block: the box of `extents` per axis (a cube's
+        side three times; the slabs of ALGEBRA.md 9.22 (8)) from its lower
+        corner, wrapped on an axis the kind's faces make periodic, cut on an
+        open one (a G_48-set of Nodes, world data)."""
         mask = np.zeros(self.shape, dtype=bool)
         wrap = self.kind_wrap[family]
         ranges = []
         for axis in range(3):
             extent = self.shape[axis]
-            indices = [corner[axis] + offset for offset in range(side)]
+            indices = [corner[axis] + offset for offset in range(extents[axis])]
             if wrap[axis]:
                 indices = [index % extent for index in indices]
             else:
@@ -638,7 +644,7 @@ class DetectorLawSimulation:
                 if self.kind_wrap[block.family][axis]:
                     block.corner[axis] %= self.shape[axis]
         old_mask = block.mask
-        block.mask = self._cube(block.corner, block.definition.side, block.family)
+        block.mask = self._box(block.corner, block.definition.extents, block.family)
         if int(np.count_nonzero(block.mask)) < int(np.count_nonzero(old_mask)):
             # Reviewer 3's line from the redshift dry run (the Boss's 09:45Z): a
             # stepping block whose cell would leave the board by a zero face
@@ -648,7 +654,7 @@ class DetectorLawSimulation:
             # block at load, not at a hop, so this is the run's own check.
             raise RuntimeError(
                 f"{BEAM_LAW}: measured[{block.number}] stepped off the board at interval "
-                f"{self.tick} (its corner {list(block.corner)}, side {block.definition.side}, "
+                f"{self.tick} (its corner {list(block.corner)}, extents {list(block.definition.extents)}, "
                 f"{int(np.count_nonzero(block.mask))} of {int(np.count_nonzero(old_mask))} cells "
                 "left on the board): a block's cells must stay on the board; the run is refused"
             )
@@ -780,11 +786,12 @@ class DetectorLawSimulation:
 
     def centre_mask(self, block: Block) -> np.ndarray:
         """The excited record's named set (ALGEBRA.md 9.19 (3)): the body's
-        centre cell, the lower corner plus side // 2 on each axis, one Node
-        (the cell itself for a body of side 1); it follows the body's steps."""
-        return self._cube(
-            [int(block.corner[axis]) + block.definition.side // 2 for axis in range(3)],
-            1,
+        centre cell, the lower corner plus the extent // 2 on each axis, one
+        Node (the cell itself for a body of side 1); it follows the body's
+        steps."""
+        return self._box(
+            [int(block.corner[axis]) + block.definition.extents[axis] // 2 for axis in range(3)],
+            (1, 1, 1),
             block.family,
         )
 
@@ -955,7 +962,8 @@ class DetectorLawSimulation:
         # motion, MASSIVE_RECORD.md section 8: "the clock read at the
         # co-moving centre"): the total record's value there, on the line
         centre = tuple(
-            (block.corner[axis] + block.definition.side // 2) % self.shape[axis] for axis in range(3)
+            (block.corner[axis] + block.definition.extents[axis] // 2) % self.shape[axis]
+            for axis in range(3)
         )
         at_centre = 0
         if block.own is not None:
@@ -1772,6 +1780,7 @@ class DetectorLawSimulation:
                         "family": self.families[block.family].name,
                         "corner": list(block.corner),
                         "side": block.definition.side,
+                        "extents": list(block.definition.extents),
                         "clock": block.count,
                         "steps": block.stepped,
                         "drive": list(block.drive),

@@ -415,6 +415,9 @@ WORLD_KEYS = {
     "meeting",
     "massive_rows",
     "clock_stamp",
+    # THE FACE SLAB (ALGEBRA.md 9.25 (10); BUILD.md section 26 item 23): the
+    # depth of the face receiver at every open border, 1 by default
+    "face_depth",
     # detector-law-v1 (2026-09-23): the local detector law, a boolean, false
     # by default (`DETECTOR_LAW_RULE`; docs/designs/detector_law/DESIGN.md).
     "detector_law",
@@ -853,6 +856,9 @@ LAW_IDENTIFIER = "detector-law algebra 9.25 (2026-09-25)"
 INPUT_KEYS = {"law", "hash"}
 BLOCK_KEYS = {
     "side",
+    # the box's extents per axis in place of `side` (the slabs of ALGEBRA.md
+    # 9.22 (8); BUILD.md section 26 item 23)
+    "extents",
     "pair",
     "coupling",
     "seed",
@@ -1335,9 +1341,10 @@ class EmitterDefinition:
 class BlockDefinition:
     """A block, the foreign object of the massive record kind
     (`massive-record-v1`, MASSIVE_RECORD.md sections 4 to 7): its cells R
-    the cube of `side` with its lower corner at the measured event's
-    `position`, cut to the board on an open axis and wrapped on a periodic
-    one; its `pair` on the six-neighbour term at its cells (a WELL of the
+    the box of `extents` per axis (the cube of `side` the shorthand for
+    equal extents; the slabs of ALGEBRA.md 9.22 (8), BUILD.md section 26
+    item 23) with its lower corner at the measured event's `position`,
+    cut to the board on an open axis and wrapped on a periodic one; its `pair` on the six-neighbour term at its cells (a WELL of the
     massive kind's pair, `num' / den' > num / den`; on light's kind a gap,
     the (M) wall); the dielectric coupling of section 7 in the
     first-difference form both ways, `receive` the rational g the block's
@@ -1354,6 +1361,9 @@ class BlockDefinition:
 
     side: int
     pair: tuple[int, int]
+    # the box's extents per axis (x, y, z); a cube's are (side, side, side),
+    # and `side` is the x extent for the readers of a cube
+    extents: tuple[int, int, int] = (1, 1, 1)
     receive: tuple[int, int] = (0, 1)
     source: tuple[int, int] = (0, 1)
     seed: int = BLOCK_SEED
@@ -1584,6 +1594,8 @@ class NatureBeamWorld:
     # line a measured event writes carries `clock`, its own count of
     # self-creations; a record field, no physics, no hypothesis.
     clock_stamp: bool = False
+    # the face receiver's depth at every open border (ALGEBRA.md 9.25 (10))
+    face_depth: int = 1
     # detector-law-v1 (2026-09-23): the local detector law selected, false by
     # default; under it the loader refuses a lamp with turns and a measured
     # event with a fan table (instruments of the ray law), and needs the pair
@@ -3396,13 +3408,18 @@ def _block(
     birth cell carries a rich pair (at least 500 remainder values, ALGEBRA.md
     9.22 (4)); the momentum is bounded by the pace, 3 (P . P) < (3 Q S M)^2."""
     declared = [key for key in BLOCK_KEYS if key in obj]
-    if "side" not in obj:
+    if "side" not in obj and "extents" not in obj:
         if declared:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.{declared[0]} belongs to a block (a measured event that "
-                "declares `side`, massive-record-v1)"
+                "declares `side` or `extents`, massive-record-v1)"
             )
         return None
+    if "side" in obj and "extents" in obj:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} declares both `side` and `extents`: a cube is `side`, a box is "
+            "`extents` [x, y, z] (BUILD.md section 26 item 23)"
+        )
     if not massive_record:
         raise ValueError(
             f"{BEAM_LAW}: {label}.side is refused without the world key `massive_record` "
@@ -3412,7 +3429,22 @@ def _block(
         raise ValueError(f"{BEAM_LAW}: {label}: a block declares no lamp (its record is its own)")
     if span != ONE_NODE:
         raise ValueError(f"{BEAM_LAW}: {label}: a block declares `side`, never `span`")
-    side = _integer(obj["side"], f"{label}.side", 1)
+    if "side" in obj:
+        side = _integer(obj["side"], f"{label}.side", 1)
+        extents = (side, side, side)
+    else:
+        value = obj["extents"]
+        if not isinstance(value, list) or len(value) != 3:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.extents must be [x, y, z], the box's extents per axis, "
+                "each from 1 (BUILD.md section 26 item 23)"
+            )
+        extents = (
+            _integer(value[0], f"{label}.extents[0]", 1),
+            _integer(value[1], f"{label}.extents[1]", 1),
+            _integer(value[2], f"{label}.extents[2]", 1),
+        )
+        side = extents[0]
     if "pair" not in obj:
         raise ValueError(f"{BEAM_LAW}: {label} lacks keys: pair (the block's pair at its cells)")
     value = obj["pair"]
@@ -3629,6 +3661,7 @@ def _block(
     return BlockDefinition(
         side,
         pair,
+        extents=extents,
         receive=receive,
         source=source,
         seed=seed,
@@ -4831,17 +4864,30 @@ def _in_transit(
     return tuple(found)
 
 
+def block_extents(side: int | tuple[int, int, int]) -> tuple[int, int, int]:
+    """A block's extents per axis: the cube's side three times, or the box's
+    extents as given."""
+    if isinstance(side, int):
+        return (side, side, side)
+    return (int(side[0]), int(side[1]), int(side[2]))
+
+
 def block_cell_indices(
-    shape: tuple[int, int, int], corner: tuple[int, int, int], side: int, wrap: tuple[bool, bool, bool]
+    shape: tuple[int, int, int],
+    corner: tuple[int, int, int],
+    side: int | tuple[int, int, int],
+    wrap: tuple[bool, bool, bool],
 ) -> list[int]:
-    """The block's cells as the engine forms them (`_cube`): the cube from
-    its lower corner, wrapped on a periodic axis of the kind, cut on an open
-    one; the Nodes' flat indices in x-major order (x, then y, then z). The
-    one copy of the rule in integers; the margin module's array form
-    (`block_cells`) is built from it."""
+    """The block's cells as the engine forms them (`_box`): the box of the
+    extents per axis (a cube's side for all three) from its lower corner,
+    wrapped on a periodic axis of the kind, cut on an open one; the Nodes'
+    flat indices in x-major order (x, then y, then z). The one copy of the
+    rule in integers; the margin module's array form (`block_cells`) is
+    built from it."""
+    extents = block_extents(side)
     ranges: list[list[int]] = []
     for axis in range(3):
-        indices = [corner[axis] + offset for offset in range(side)]
+        indices = [corner[axis] + offset for offset in range(extents[axis])]
         if wrap[axis]:
             indices = [index % shape[axis] for index in indices]
         else:
@@ -5040,7 +5086,7 @@ def _initial_state_checks(
         corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
         # a cube beyond a face or wrapped onto itself is refused by the fit
         # check on the parsed world (naming the axis and the vertex)
-        cells = block_cell_indices(board, corner, block.side, wrap)
+        cells = block_cell_indices(board, corner, block.extents, wrap)
         own = set(cells)
         for other_number, _, _, other_cells in blocks:
             if own.intersection(other_cells):
@@ -5259,12 +5305,12 @@ def _detectors(
             else:
                 bound = measured[bound_block].block
                 assert bound is not None
-                block_side = bound.side
-                if block_side < DETECTOR_SIDE:
+                least = [min(DETECTOR_SIDE, int(shape[axis])) for axis in range(3)]
+                if any(bound.extents[axis] < least[axis] for axis in range(3)):
                     raise ValueError(
                         f"{BEAM_LAW}: the receiver {name!r} is the cells of measured[{bound_block}], "
-                        f"a block of side {block_side}; a detector is one cube of side "
-                        f"{DETECTOR_SIDE} or more (record 1899)"
+                        f"a block of extents {list(bound.extents)}; a detector is one cube of side "
+                        f"{DETECTOR_SIDE} or more (at least {least} on this GameBoard; record 1899)"
                     )
             found.append(DetectorDefinition(name, tuple(bound_positions), threshold, block=bound_block))
             continue
@@ -5376,18 +5422,19 @@ def _body_fit_check(world: NatureBeamWorld) -> None:
             corner = int(entry.position[axis])
             if extent == 1:
                 continue
+            side = block.extents[axis]
             if wrap[axis]:
-                if extent < block.side:
+                if extent < side:
                     raise ValueError(
-                        f"{BEAM_LAW}: measured[{number}]: the body of side {block.side} wraps onto "
+                        f"{BEAM_LAW}: measured[{number}]: the body of side {side} wraps onto "
                         f"itself on the periodic axis {name} of extent {extent} (a body is a whole "
                         "cube, square or segment on the board, never cut or folded but on an axis "
                         "of extent 1; the model owner's word of 2026-09-24, 16:35Z)"
                     )
-            elif corner < 0 or corner + block.side > extent:
+            elif corner < 0 or corner + side > extent:
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}]: the body of side {block.side} at {corner} on "
-                    f"the axis {name} reaches {corner + block.side - 1} beyond the face at "
+                    f"{BEAM_LAW}: measured[{number}]: the body of side {side} at {corner} on "
+                    f"the axis {name} reaches {corner + side - 1} beyond the face at "
                     f"{extent - 1}: a body lies whole on the board, exactly where it is declared, "
                     "never cut to fit (the model owner's word of 2026-09-24, 16:35Z; move the "
                     "vertex or the edge, or open the axis as periodic)"
@@ -5502,6 +5549,17 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     clock_stamp = obj.get("clock_stamp", False)
     if type(clock_stamp) is not bool:
         raise ValueError(f"{BEAM_LAW}: clock_stamp must be true or false (false by default)")
+    # THE FACE SLAB (ALGEBRA.md 9.25 (10), the mathematician's reading: a face
+    # one Node deep books 0.15 of a packet and reflects the rest, the slab as
+    # deep as the packet books 0.96): the receiver `face` at every open
+    # border is the slab of this depth, one cell, last on every ladder
+    face_depth = _integer(obj.get("face_depth", 1), "face_depth", 1)
+    for axis, name in enumerate(AXES):
+        if not periodic[axis] and face_depth > 1 and 2 * face_depth >= int(shape[axis]):
+            raise ValueError(
+                f"{BEAM_LAW}: face_depth {face_depth} leaves no interior on the open axis {name} of "
+                f"extent {shape[axis]} (two slabs of the depth fill it)"
+            )
     detector_law = obj.get("detector_law", False)
     if type(detector_law) is not bool:
         raise ValueError(
@@ -5708,6 +5766,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         flow_link=flow_link,
         centred_step=centred_step,
         clock_stamp=clock_stamp,
+        face_depth=face_depth,
         atom_level=atom_level,
         detector_law=detector_law,
         massive_record=massive_record,

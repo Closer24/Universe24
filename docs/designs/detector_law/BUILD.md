@@ -2160,6 +2160,41 @@ would have found no cell.
    one-pair form stays as the write of a body that births nothing lawful
    to read. Nothing in the engine changed here; his word on the form and
    the pins before the rest rows' files are written.
+23. BODIES WITH EXTENTS AND THE FACE SLAB (F0 and F2 of the build order
+   the Boss approved on 03:18Z; ALGEBRA.md 9.22 (8) and 9.25 (10); the
+   property test green). F0: a block is the box of `extents` [x, y, z]
+   per axis; `side` stays the cube's shorthand (the extents three times;
+   one of the two keys, both refused); the loader's fit check reads the
+   side per axis, the bound set's cube check the extents against min(3,
+   the extent) per axis; the engine's `_box` (the `_cube` renamed) forms
+   the cells and the centre cell from the extents (the corner plus the
+   extent // 2 per axis), the readings carry `extents` beside `side`; the
+   margin module's per-axis margins read the extent on that axis, the
+   accurate mode and the profile check the box's cells; the generator's
+   seeding admits `extents`; `block_cell_indices` and `block_cells` take
+   a side or the extents (the one copy of the box's rule). F2: the world
+   key `face_depth` (1 by default): the face receiver at every open
+   border is the slab of that many free Nodes nearest the border, ONE
+   cell `face`, last on every ladder, its Ports toward the interior alone
+   (a Link inside the slab no offer, no Node beyond the border); a depth
+   above one whose two slabs leave no interior on an open axis is refused
+   (the depth of one is the law before the slab, lawful on a board of
+   extent 2, whose two Nodes are both face). THE
+   TESTS (tests/test_extents_and_face_slab.py): a wall slab [4, 3, 1] on
+   the layer placed whole with its 12 cells, the indices of a side and of
+   equal extents the same; both keys refused, malformed extents refused,
+   a box beyond a face refused per axis naming its side there, a box
+   wider than a periodic axis refused, a bound slab [12, 1, 1] on a chain
+   admitted as a cut cube and [2, 1, 1] refused naming the extents; a
+   slab well [12, 5, 1] seeded on its composed mode with its clock and
+   stamp LAWFUL, its peak on the slab, its centre cell the box's; the face
+   slab's Nodes at depth 4 on the chain of 80 (0 to 3 and 76 to 79), the
+   default's 2, a depth of 40 refused, none on a periodic axis; the
+   mathematician's reading of 9.25 (10) read on the board (COMPUTATION):
+   a Gaussian packet of width 14 at k = 0.3 leaving light's open chain of
+   300 books more than 0.9 of its I into a face slab of depth 40 and less
+   than 0.5 into a face one Node deep (the rest reflected). No world
+   changed; F1, the born profile, waits for the mathematician's form.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

@@ -220,7 +220,11 @@ def seed_on_the_mode(document: dict) -> None:
     silent block (seed 0), a barrier (a raised pair) and a cavity keep their keys."""
     kinds = {family["name"]: family["pair"] for family in document["families"] if "pair" in family}
     for number, entry in enumerate(document["measured"]):
-        if "side" not in entry or entry.get("family") not in kinds or entry.get("cavity"):
+        if (
+            ("side" not in entry and "extents" not in entry)
+            or entry.get("family") not in kinds
+            or entry.get("cavity")
+        ):
             continue
         kind = kinds[entry["family"]]
         pair = entry["pair"]
@@ -715,7 +719,7 @@ def mode_profile(document: dict, number: int, amplitude: int = 1 << 20) -> list[
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
     count = shape[0] * shape[1] * shape[2]
     num, den = [family.pair[0]] * count, [family.pair[1]] * count
-    for index in block_cell_indices(shape, corner, block.side, wrap):
+    for index in block_cell_indices(shape, corner, block.extents, wrap):
         num[index], den[index] = block.pair[0], block.pair[1]
     flat = [int(value) for value in profile.ravel()]
     residual, bound, node = mode_residual(flat, num, den, clock, shape, wrap)

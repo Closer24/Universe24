@@ -555,7 +555,10 @@ def test_a_detector_is_one_connected_cube_of_side_three():
         else:
             with pytest.raises(ValueError, match=refusal):
                 parse_nature_beam_world(document)
-    for side, refusal in ((1, "a block of side 1; a detector is one cube of side 3"), (3, None)):
+    for side, refusal in (
+        (1, r"a block of extents \[1, 1, 1\]; a detector is one cube of side 3"),
+        (3, None),
+    ):
         document = layer_world()
         document["measured"].append(
             {

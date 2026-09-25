@@ -286,10 +286,11 @@ def test_p_the_light_record_is_byte_identical_without_the_key():
     audit once more by the detector cube at [70, 72] (item 18; the events unchanged, the six
     clicks at the same intervals), then all three by the emitter's coupling to the light it
     births and the residue read after the excited record's first advance (item 19), the
-    digests read at that head."""
+    digests read at that head; then the state once more by the `extents` of every block
+    written beside its `side` on the snapshot (item 23; the events and the audit unchanged)."""
     assert run_chain_digests() == {
         "events": "16b65b8101cb9e4755d5510d65c810a44aadf8b9a4c17da1c77893627fe10ace",
-        "state": "2ae6bf378e22e92be563c5c6a62cc5edcbf6dc38285c858a37a0f9baea73c232",
+        "state": "79ebdb9711a964cb0b2e2211250487365b13fa6186e32cb3db49a6f2ffb4fce9",
         "audit": "2f9cd60f50bafeeeba6b945c1592dfa67141bec4724ff7207abfa6afad099b55",
     }
 

@@ -137,10 +137,14 @@ class MarginReading:
 
 
 def block_cells(
-    shape: tuple[int, int, int], corner: tuple[int, int, int], side: int, wrap: tuple[bool, bool, bool]
+    shape: tuple[int, int, int],
+    corner: tuple[int, int, int],
+    side: int | tuple[int, int, int],
+    wrap: tuple[bool, bool, bool],
 ) -> np.ndarray:
     """The block's cells as a mask over the board: the array form of the
-    loader's `block_cell_indices` (the one copy of the cube's rule)."""
+    loader's `block_cell_indices` (the one copy of the box's rule; a cube's
+    side or the box's extents)."""
     mask = np.zeros(shape, dtype=bool)
     mask.ravel()[block_cell_indices(shape, corner, side, wrap)] = True
     return mask
@@ -268,7 +272,7 @@ def accurate_mode(world: NatureBeamWorld, number: int) -> tuple[float, np.ndarra
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-    cells = block_cells(shape, corner, definition.side, wrap)
+    cells = block_cells(shape, corner, definition.extents, wrap)
     ratio = np.where(cells, definition.pair[1] / definition.pair[0], family.pair[1] / family.pair[0])
     scale = 1.0 / np.sqrt(ratio)
     count = int(np.prod(shape))
@@ -373,7 +377,7 @@ def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-    cells = block_cells(shape, corner, definition.side, wrap)
+    cells = block_cells(shape, corner, definition.extents, wrap)
     ratio_out = family.pair[1] / family.pair[0]
     ratio_in = definition.pair[1] / definition.pair[0]
     ratio = np.where(cells, ratio_in, ratio_out)
@@ -388,7 +392,8 @@ def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     extent = 1.0 / kappa if kappa > 0.0 else math.inf
     axes = []
     for axis, name in enumerate(("x", "y", "z")):
-        if wrap[axis] and shape[axis] <= definition.side:
+        side = definition.extents[axis]
+        if wrap[axis] and shape[axis] <= side:
             # A FOLDED axis (a layer or a chain, MASSIVE_RECORD.md section 11
             # item 7: the block wraps onto itself and the rule reads the
             # Node itself across it, a_U = a_D = a_now): no face, no tail,
@@ -398,9 +403,9 @@ def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
             continue
         if wrap[axis]:
             have = float(shape[axis])
-            need = definition.side + SIDE_EXTENTS[definition.margin] * extent
+            need = side + SIDE_EXTENTS[definition.margin] * extent
         else:
-            have = float(min(corner[axis], shape[axis] - corner[axis] - definition.side))
+            have = float(min(corner[axis], shape[axis] - corner[axis] - side))
             need = FACE_EXTENTS[definition.margin] * extent
         axes.append((name, wrap[axis], have, need))
     return MarginReading(
@@ -544,7 +549,7 @@ def composed_largest_eigenvalues(world: NatureBeamWorld) -> dict[int, float]:
             if definition is None or entry.family != index or definition.seed == 0:
                 continue
             corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-            cells = block_cells(shape, corner, definition.side, world.kind_periodic(index))
+            cells = block_cells(shape, corner, definition.extents, world.kind_periodic(index))
             ratio = np.where(cells, definition.pair[1] / definition.pair[0], ratio)
             seed = seed + np.where(cells, 1.0, 0.0)
             bodies = True
