@@ -9347,3 +9347,88 @@ pinned (the mean cycle P / 2 and no run). In the engine: the emitter's
 click creates no fresh excited record; the block's own record continues;
 the next residue is read after the first advance as now; the stock and M
 move.
+
+### 9.44 The click known at each Node of a body's boundary (the model owner's word of 2026-09-25 through the Boss, record 1981: "a click is a connected body all of which passed one phase; you want to know it from each Node on its boundary; perhaps a family of clicks that spreads, and that is the flux; with a constant flux you recognise the body at each Node of its boundary; the fourth family gathers everyone's remainders and knows whether you are on a body's boundary; if you are, and the body passed a phase, you get the click"; the Boss's four questions; DERIVED, and one recommendation of 9.38 (9) withdrawn)
+
+**(1) THE PHASE IS ALREADY LOCAL AT EVERY NODE OF A BODY.** For a
+standing record (D4) every Node carries the same rotation: the
+eigen-relation a_next + a_before = 2 cos omega a_now holds at each Node
+by itself, so a Node reads 2 cos omega, hence the period P, from its own
+three levels; its share E_i is constant in time (T2), so "the body passed
+the fraction t / P of a phase" is the same count at every Node; and the
+content M, which changes at the click, is on every Node of the body, so
+each Node counts from the last click. THE MARK OF A BODY AT A NODE IS A
+CONSTANT FLUX, AND THE CONSTANT IS ZERO: for a standing record the
+current through every Link is exactly 0 (T2) and the share is constant;
+a passing record gives a changing share and currents through the Links.
+A Node knows it is on a body by that mark, and on the body's BOUNDARY by
+a neighbour whose row of the record is 0, all from itself and its six
+neighbours. So the owner's sentence, "with a constant flux you recognise
+the body at each Node of its boundary", holds in the law as it stands,
+with the fourth family not needed for it: the constant flux is the
+standing record's own zero current, and the phase is its own rotation.
+
+**(2) THE ONE BODY-WIDE INTEGER IS THE RESIDUE, AND A SPREADING FIELD
+CANNOT MAKE IT LOCAL.** What the shell's gather of 9.38 (2) sums across
+the body is not the phase but the residue u, the place on the wheel at
+which the count is complete. A family sourced by the Nodes' remainders
+and spread by the step delivers at each Node the static part of its
+step, a sum of the remainders weighted by the lattice's Green function
+(about 1 / distance, 9.41 (3)): a real number, different at every Node,
+never the integer sum modulo the wall; so the boundary Nodes would read
+different residues and click at different intervals, and the body would
+not click together (T2). Nor can the remainders be its source (9.41 (5)
+and the owner's question in the mathematician's session): the remainder
+is where chance lives and the click reads it (9.32 (d)); a field fed by
+remainders would count occupied Nodes at wall / 2 each, whatever their
+energy (9.35 (1)), so a photon would source it like an atom; and a
+record that gives its remainder away loses the bijection of its step.
+The family of 9.41 is sourced by the CONTENT, whole at each click; it
+passes the three tests as a modulation; the remainder-sourced family
+passes them in form (one primitive, sums, local) and fails in what it
+sources. The two local ways to a common residue: (a) THE REMAINDER AT
+ONE NODE OF THE BODY, the first shell Node in the declared order, where
+the walk of 9.38 (2) lands for the tick (the shares being constant, it
+lands there every time): one integer at one Node, read after the first
+advance, and by 9.43 a fair draw once the reseed is retired (COMPUTED,
+countdown2.py (iii): the chi-square 16.5 and 13.7 on 20 bins, no run,
+the mean cycle P / 2); (b) a tally passed along the body's Links at one
+Link per interval, which reaches every Node after the body's diameter
+and is a register in transit, which the law does not keep at a Node.
+RECOMMENDATION, REVISED: 9.38 (9)'s sum was my answer to the lattice of
+residues under the one-Node read, and 9.43 has traced that lattice to
+the reseed, not to the read; with the reseed retired the one-Node read
+is fair and LOCAL, so I withdraw the sum in favour of (a): the body's
+residue is the remainder at its first shell Node, read after the first
+advance; the born record's residue the same Node's remainder at the
+click. This is the owner's wish for a click known at a Node, met inside
+the law.
+
+**(3) WHAT THE FOURTH FAMILY DOES, AND DOES NOT.** It does not mark the
+body (the eigenvector does) and does not carry the residue (nothing
+spreading can). It carries the CLICK OUTWARD: at the click c rises by one
+on the taker's Nodes or falls by one on the giver's, and the step spreads
+the change from the body's surface at one Link per interval as a shell
+with the sign, behind it the static part higher by one (9.41 (3)); a far
+Node learns that a click happened, where and in which direction, when the
+shell arrives, and the far clock changes then and not before: the one
+non-local act stays the record's ending, and the knowledge of the click
+travels at light's pace. That is the owner's "a family of clicks that
+spreads, and that is the flux", exactly as 9.41 has it, with the content
+as its source. One integer caution: a write of one unit per Node falls
+below one unit within about sqrt(N_surface / (4 pi)) Links (22 for a body
+of side 32, 2 for side 3) and the rounding takes it; so the fourth
+family's quantum, how many units one click writes, is a declared number,
+like every write's height, and sets how far in integers a click is seen.
+
+**(4) THE CONSTANT FLUX, TWICE.** For the body's own standing record the
+constant flux is 0 through every Link with a constant share: the mark of
+a body at each of its Nodes, local, (1). For the fourth family around a
+held content the steady state is the discrete Coulomb field, and by Gauss
+on the lattice (T1) the outward flux through the body's surface is
+constant in time and equal to its source: a Node with a steady nonzero
+flux of that family through its Links is at a source, and the body's
+surface is where the flux is constant and equal to M; that is the owner's
+"constant flux" for the fourth family, the steady state that marks a
+source's boundary from outside. Both are true; the first needs no new
+family.
