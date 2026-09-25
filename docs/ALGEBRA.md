@@ -12850,3 +12850,57 @@ of 9.67 (1)); the row runs in cube form until its seat form.
 Doppler, the point emitter (9.71 (1)), the tools at their least form
 (9.71 (2)). The closed-axis test of item 43 is landed; nothing of it is
 owed.
+
+### 9.73 The stock as given-family content built (Nature24's head 241f7588, item 47): the gate, the re-giving of absorbed light ruled the law's, the rule for a row's count, and the share booked at a hop
+
+**(1) THE GATE ON 241f7588: CONFIRMED.** An emitting body holds its stock
+as the given family's content under `held` and its own quanta as
+`amount`; a giving lowers the given family's held content by one, the
+body's own quanta and its charge stay; the family of clicks' level at
+the body is the sum over families; the drive's wall 3 Q S M reads the
+whole held content (9.46 (7) (b): the content behind the one K; the
+stock is content, 9.51 (3), (8)). The worlds regenerated with `amount`
+1 and the old stock under `held`: the level at each emitter one more,
+the self-level 1.00325 in place of 1.0032 (9.63 (4)), no reading moved
+outside its band. THE BRIGHT BODY of the dark body row keeps its level
+4812 as the row's field, split as 128 of light held beside 4684 own
+quanta: right, since the level is the row's field and the split is
+the row's declaration; a body of 4812 own beside 4812 held would
+double the field and U_b with it.
+
+**(2) THE FINDING, RULED: A BODY GIVES AGAIN THE LIGHT IT TAKES.** The light
+clock's emitter is its own receiver; a quantum it takes is held light
+again, and the rung gives it again while the run lasts: 85 givings on
+a stock of 64 in 4800 intervals, the redshift pair 62 and 72 on 64.
+This follows from the two rules as written (the taking raises the
+taker's content of the taken family, 9.40 T3; the giving fires while
+the given family's content lasts, 9.51 (8)) and IT IS THE LAW'S: a body
+that absorbs a quantum is excited and gives it again after its rung's
+draw, as an atom absorbs and re-emits, the rung's mean (P + 1) / 2 its
+lifetime; the energy count is conserved through the pair of clicks.
+The reading per record, the wait from the giving to the click, is
+unchanged (the light clock 301.9 +- 1.9 on 85; the redshift 1.201 +-
+0.010), so no row's expectation moves. THE RULE FOR A ROW'S COUNT: a
+pin that counts records (the dark body's 30 at the screen, Malus's 256,
+Mach-Zehnder's 100) means the GIVINGS of an emitter that is not its own
+receiver, and its stock is that count; where the emitter is its own
+receiver (the light clock, Sagnac, the redshift's clocks) the number of
+givings is the run's and not the stock's, the row reads per record,
+and the count is a GameBoard diagnostic beside it. The rows toward
+nature keep their emitter as its own receiver: the clock is the round
+trip, and the re-giving is what makes it tick again.
+
+**(3) THE SHARE BOOKED AT A HOP (9.62 (3)), the reading confirmed with one
+line.** Nature24's reading: the record's form share on the newly
+covered Nodes (`form_share`, the exact rational in the form's units,
+the units the ladder's running total is compared in against the norm),
+added to the set's pointer after the interval's step and Port booking,
+the whole part booked and the fraction carried on the record to the
+next hop's booking. CONFIRMED with the partition stated: the share of
+a set of Nodes is its Node terms, plus the Link terms of the Links
+inside it, plus HALF of every Link term crossing its boundary, so
+that the shares of a partition of the board sum to the whole form and
+a body that covers a record whole books exactly T; not the Node terms
+alone (the Link terms would be dropped) and not the plain levels
+squared (not the form). The fraction carried is the record's own, a
+remainder kept on the record and not at a Node.
