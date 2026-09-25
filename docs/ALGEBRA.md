@@ -5509,6 +5509,36 @@ Recomputation at load stays a DIAGNOSTIC (the largest deviation
 printed), never the check. IN ONE LINE: store once, check exactly in
 integers; recompute only to print.
 
+THE GENERATOR IS THE BOARD'S OWN OPERATOR, ITERATED (the model owner's
+word, 2026-09-25: "the generator is iterative by nature; it starts from
+a state until it reaches the desired one"; DERIVED HERE). The bound mode
+is the top eigenvector of the composed operator **M**; the power
+iteration v -> (**M** + 2 **I**) v applies the law's own read (the six
+neighbours with the pairs at every Node) and nothing else, from any
+start, and converges to the mode (PROVED: **M** + 2 **I** has nonnegative
+entries, so by Perron-Frobenius its top eigenvector is the mode and the
+shift keeps the lowest mode from competing), at the rate 1 - gap / (lambda
++ 2) per iteration, gap the distance of the mode's eigenvalue from the
+band's top; Lanczos is the same read with inner products. So the
+generator is the same algebra in another mode of use: the law STEPS the
+operator (second order, every mode a rotation, reversible), the
+generator RELAXES with it (first order, the top mode grows and the rest
+decay), the click compares and deletes. Three consequences. (i) The ramp
+was the board doing the generator's relaxation; record 1884 puts it
+where it belongs, and nothing on the board relaxes. (ii) IN INTEGERS the
+iteration is reproducible bit for bit: 3 den v' = num S_6(v) + 6 den v
+with the remainder kept, renormalised by an exact shift by a power of
+two when the levels pass the amplitude; the float Lanczos above is then
+a host shortcut only, the stored state can be re-derived exactly on any
+host, and the load check stays (ii) above (the residual). (iii) THE COST
+of an experiment is the generator's iterations, each the work of one
+board step (linear in the Nodes), about (lambda + 2) / gap of them per
+e-fold (COMPUTED: 15700 for the muon's form, whose gap is 0.00025 in
+lambda, 450 for the boxes' 0.0089; fourteen e-folds to 10^-6), plus the
+run; for the two-qubit computer the generator's iterations are the gates
+on 2^n weights, exponential in n, and the board adds the click, not
+computing power (9.23 (7)).
+
 **(8) THE SIXTEEN, EACH REPRESENTED ALGEBRAICALLY? (the model owner's
 question, 2026-09-25 on the Israel clock, through the Boss; the sixteenth
 is 9.23's computer, record 1883).** For each row: (a) what is on the
