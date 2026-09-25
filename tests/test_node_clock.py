@@ -304,7 +304,8 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     of 250000 quanta, M = 2 x 10^7 on the matter pair [800, 809], twice the content for the
     family of clicks' waves) refused naming Gamma and M; the
     registered light clock declares 10^6 and loads, its A's clock pair (10^6 - 64, 10^6) at
-    its Nodes and (10^6, 10^6) in the vacuum under the fixed wall (item 34), its wheel at
+    its Nodes and (10^6, 10^6) in the vacuum under the fixed wall (item 34; the pair a record
+    of the matter kind reads, its charge 0, item 35), its wheel at
     A's centre Node the rule's with the stock (4171875 on [800, 801], the remainder's step
     576, COMPUTATION), the kind's own 2427 on [800, 809] in the vacuum beside it (the step
     Gamma)."""
@@ -339,8 +340,8 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     simulation = DetectorLawSimulation(world)
     block = simulation.blocks[0]
     centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))
-    assert simulation.node_clock_pair(centre) == (NODE_CLOCK - 64, NODE_CLOCK)
-    assert simulation.node_clock_pair((100, 0, 0)) == (NODE_CLOCK, NODE_CLOCK)
+    assert simulation.node_clock_pair(centre, 1) == (NODE_CLOCK - 64, NODE_CLOCK)
+    assert simulation.node_clock_pair((100, 0, 0), 1) == (NODE_CLOCK, NODE_CLOCK)
     assert simulation.wheel_at(1, centre) == (576, 4171875)
     assert simulation.wheel_at(1, (100, 0, 0)) == (NODE_CLOCK, 2427)  # the kind's own [800, 809]
 
@@ -482,8 +483,9 @@ def test_the_loader_names_the_family_of_clicks_and_refuses_what_it_cannot_be():
     refused without that law, refused naming no declared family (the families listed), refused
     on a family with a pair other than [1, 1] (the matter kind), on a quantum other than 1 and
     on a family with a clock of its own; a measured event of the family of clicks is refused,
-    `held` naming it is refused, and an emitter born into it is refused; five families are
-    refused (the owner's constant four, record 1982); a world with the family declared and
+    `held` naming it is refused, and an emitter born into it is refused; six families are
+    refused (the owner's constant five since the family of charge, ALGEBRA.md 9.48; item 35);
+    a world with the family declared and
     named loads, its index the engine's `clock_family`."""
     good = content_chain(12, PERIODIC, [], 1)
     parse_nature_beam_world(good)
@@ -531,12 +533,12 @@ def test_the_loader_names_the_family_of_clicks_and_refuses_what_it_cannot_be():
         ValueError, match="births into the family of clicks|the born family is a paid family"
     ):
         parse_nature_beam_world(born)
-    five = json.loads(json.dumps(good))
-    five["families"] += [
-        {"name": "fourth", "quantum": 1, "pair": [800, 809]},
-        {"name": "fifth", "quantum": 1, "pair": [800, 809]},
+    six = json.loads(json.dumps(good))
+    six["families"] += [
+        {"name": "fifth", "quantum": 1, "pair": [800, 809], "charge": 0},
+        {"name": "sixth", "quantum": 1, "pair": [800, 809], "charge": 0},
     ]
-    with pytest.raises(ValueError, match="families declares 5; at most 4 families"):
-        parse_nature_beam_world(five)
+    with pytest.raises(ValueError, match="families declares 6; at most 5 families"):
+        parse_nature_beam_world(six)
     world = parse_nature_beam_world(good)
     assert world.clock_family == 2 and DetectorLawSimulation(world).clock_family == 2

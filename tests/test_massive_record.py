@@ -39,6 +39,9 @@ from tests.test_detector_law import (
     receiver_cube,
 )
 from tests.test_emitter import (
+    CHARGE_FAMILY,
+    CHARGE_FAMILY_NAME,
+    CHARGE_STRENGTH,
     CLOCK_FAMILY,
     CLOCK_FAMILY_NAME,
     NODE_CLOCK,
@@ -52,7 +55,7 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
     no lamp, no block (the rule's tests construct a record's rows directly); every family
     reads the world's `boundary` (one border, BUILD.md section 26 item 28) and the face slab
     is one Node deep where the board is open (`face_depth`, declared: no default)."""
-    matter: dict = {"name": "matter", "quantum": 1, "pair": pair}
+    matter: dict = {"name": "matter", "quantum": 1, "pair": pair, "charge": 0}
     return {
         "law": "beam",
         "model_id": "beam-massive-record-rule-v1",
@@ -69,11 +72,14 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "amplitude_bound": 1 << 28,
         "node_clock": NODE_CLOCK,
         "clock_family": CLOCK_FAMILY_NAME,
+        "charge_family": CHARGE_FAMILY_NAME,
+        "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": [512, 1]},
+            {"name": "light", "quantum": 1, "phase_per_link": [512, 1], "charge": 0},
             matter,
             dict(CLOCK_FAMILY),
+            dict(CHARGE_FAMILY),
         ],
         "measured": [],
         "detectors": [],
@@ -346,12 +352,15 @@ def test_the_light_record_is_byte_identical_without_the_key():
     rewritten, the residues read at the click at the first shell Node, the births at the
     counted intervals, the birth lines' fields); SINCE THE FIXED WALL (the model owner's
     record 1994; item 34) all three moved once more (the paced reads at and beside the
-    bodies, the forms' units Gamma squared, the birth lines' `read_clocks`); read again at
-    this head."""
+    bodies, the forms' units Gamma squared, the birth lines' `read_clocks`); SINCE THE FAMILY
+    OF CHARGE (ALGEBRA.md 9.48; item 35) all three moved once more (the fifth family declared
+    in the chain world, one record of it over the board held at the bodies' Nodes at their
+    charge 0, the birth lines' `charge`, the snapshot's `charge` entry; the rows bit for bit);
+    read again at this head."""
     assert run_chain_digests() == {
-        "events": "6eb44fa81d6e178302d7818a9ef244ed3f6dfd5a8b2766e59f6c4859b2ecd960",
-        "state": "36684f6bf38b01e5592b7c04fa6c129e9e27d8185ead08010f73d90d0dadd51c",
-        "audit": "55265e69fc5e83ef56b6a1f1f9604b16d03b70ae1179d28829b3a77ea65f8ce5",
+        "events": "8bf54019776b5060452972bb1a4c7e578d7948b82a585b484a0fd17a20bb8414",
+        "state": "423e763081805f5458ebbef912e74f5c67ef017705b88b31deeaee542529cea6",
+        "audit": "b4910917eb90c1beb71c54aa57fb9a29dfc33b3e477202a8f3a56b2dcec26ce5",
     }
 
 
@@ -455,13 +464,14 @@ def block_world(
     profile at its scalar seed); every well declares its seed (the suite's amplitude 2^20
     where a test names none: no loader default, BUILD.md section 26 item 28) and the face
     slab is one Node deep where the board is open."""
-    matter: dict = {"name": "matter", "quantum": 1, "pair": kind}
+    matter: dict = {"name": "matter", "quantum": 1, "pair": kind, "charge": 0}
     # light on the born clock [512, 1] of N = 1024 (the born train, ALGEBRA.md 9.17 (6a))
-    families = [{"name": "light", "quantum": 1, "phase_per_link": [512, 1]}, matter]
+    families = [{"name": "light", "quantum": 1, "phase_per_link": [512, 1], "charge": 0}, matter]
     measured: list[dict] = []
     if source is not None:
         measured.append(source)
         families.append(source_family())
+    families.append(dict(CHARGE_FAMILY))  # the family of charge (item 35)
     families.append(dict(CLOCK_FAMILY))  # the family of clicks (BUILD.md section 26 item 32)
     for block in blocks:
         entry = {
@@ -507,6 +517,8 @@ def block_world(
         "amplitude_bound": 1 << 28,
         "node_clock": NODE_CLOCK,
         "clock_family": CLOCK_FAMILY_NAME,
+        "charge_family": CHARGE_FAMILY_NAME,
+        "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": families,
         "measured": measured,
@@ -549,7 +561,7 @@ SOURCE_WELL = [
 
 def source_family() -> dict:
     """The emitter bodies' massive family `source` (the kind SOURCE_KIND, no clock)."""
-    return {"name": "source", "quantum": 1, "pair": list(SOURCE_KIND)}
+    return {"name": "source", "quantum": 1, "pair": list(SOURCE_KIND), "charge": 0}
 
 
 def emitter_at(
@@ -1181,7 +1193,7 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
     document["ticks"] = 160
     document["families"][1]["name"] = "source"
     document["measured"][0]["family"] = "source"
-    matter: dict = {"name": "matter", "quantum": 1, "pair": [156, 157]}
+    matter: dict = {"name": "matter", "quantum": 1, "pair": [156, 157], "charge": 0}
     if clock is not None:
         matter["phase_per_link"] = clock  # None: no clock (the refusal's edge case)
     document["families"].append(matter)

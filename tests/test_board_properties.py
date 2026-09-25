@@ -26,7 +26,15 @@ import pytest
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import input_stamp, parse_nature_beam_world
-from tests.test_emitter import CLOCK_FAMILY, CLOCK_FAMILY_NAME, NODE_CLOCK, massive_generator
+from tests.test_emitter import (
+    CHARGE_FAMILY,
+    CHARGE_FAMILY_NAME,
+    CHARGE_STRENGTH,
+    CLOCK_FAMILY,
+    CLOCK_FAMILY_NAME,
+    NODE_CLOCK,
+    massive_generator,
+)
 
 SIDE = 12
 SHAPE = (SIDE, SIDE, SIDE)
@@ -70,11 +78,14 @@ def small_world(
         "amplitude_bound": 1 << 28,
         "node_clock": NODE_CLOCK,
         "clock_family": CLOCK_FAMILY_NAME,
+        "charge_family": CHARGE_FAMILY_NAME,
+        "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
-            {"name": "matter", "quantum": 1, "pair": [800, 809]},
+            {"name": "light", "quantum": 1, "phase_per_link": [77, 25], "charge": 0},
+            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0},
             dict(CLOCK_FAMILY),
+            dict(CHARGE_FAMILY),
         ],
         "measured": [
             {

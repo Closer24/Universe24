@@ -59,7 +59,14 @@ NODE_CLOCK = 10**6
 # item 32): the fourth family of every test world, named by the key `clock_family`; its
 # level at a Node is the Node clock, held at every body's Nodes at the content
 CLOCK_FAMILY_NAME = "clicks"
-CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1}
+CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0}
+# THE FAMILY OF CHARGE (the model owner's decision of 2026-09-25; ALGEBRA.md 9.48; BUILD.md
+# section 26 item 35): the fifth family of every test world, named by `charge_family`, its
+# level the signed charge held at a body's Nodes; Lambda its weight (`charge_strength`);
+# every family declares its charge, 0 here
+CHARGE_FAMILY_NAME = "charge"
+CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0}
+CHARGE_STRENGTH = 1
 
 
 def wheel_of(pair, content: int, reads, gamma: int = NODE_CLOCK) -> int:
@@ -156,11 +163,14 @@ def emitter_world(
         "amplitude_bound": 1 << 28,
         "node_clock": NODE_CLOCK,
         "clock_family": CLOCK_FAMILY_NAME,
+        "charge_family": CHARGE_FAMILY_NAME,
+        "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": [512, 1]},
-            {"name": "matter", "quantum": 1, "pair": [800, 809]},
+            {"name": "light", "quantum": 1, "phase_per_link": [512, 1], "charge": 0},
+            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0},
             dict(CLOCK_FAMILY),
+            dict(CHARGE_FAMILY),
         ],
         "measured": [
             {
@@ -304,7 +314,7 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
         after = by_tick.get(line["tick"] + 1)
         assert after is None or after["excited_before"][1:3] == (line["u"], line["W"])
     assert simulation.block_by_number[0].own is not None  # the standing record continues
-    assert simulation.held[0] == [0, 0, 0]  # light, matter and the family of clicks
+    assert simulation.held[0] == [0, 0, 0, 0]  # light, matter, the clicks and the charge
     books = simulation.books()["families"]
     assert books["matter"]["measured"]["spent"] == 4 and books["light"]["transit"]["released"] == 4
     assert set(simulation.records) == {0}  # the body's own standing record alone remains
@@ -568,7 +578,7 @@ def test_the_loaders_refusals_name_their_keys():
     refused(two_ladders, "one ladder")
 
     def free_born(document):
-        document["families"].append({"name": "e", "quantum": 0, "charge": -15, "phase": True})
+        document["families"].append({"name": "e", "quantum": 0, "charge": -1, "phase": True})
         document["measured"][0]["emitter"]["family"] = "e"
 
     refused(free_born, "paid family")

@@ -26,6 +26,8 @@
  "amplitude_bound": 268435456,
  "node_clock": 1000000,
  "clock_family": "clicks",
+ "charge_family": "charge",
+ "charge_strength": 1,
  "directions": [],
  "families": [
   {
@@ -34,7 +36,8 @@
    "phase_per_link": [
     77,
     25
-   ]
+   ],
+   "charge": 0
   },
   {
    "name": "matter",
@@ -42,11 +45,18 @@
    "pair": [
     800,
     809
-   ]
+   ],
+   "charge": 0
   },
   {
    "name": "clicks",
-   "quantum": 1
+   "quantum": 1,
+   "charge": 0
+  },
+  {
+   "name": "charge",
+   "quantum": 1,
+   "charge": 0
   }
  ],
  "measured": [
@@ -262228,6 +262238,6 @@
  "mode_axis": "x",
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "b0180b47d7930175092d65cbaa71569cd82c2fffb8599767003ad67fceb40b32"
+  "hash": "3f4e664fc833fbdee4a4fb9ed1859a9cd99094630715e742163f3cc54e0d57f9"
  }
 }

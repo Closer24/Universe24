@@ -53,6 +53,14 @@ family `clicks` (the pair [1, 1], the quantum 1) and names it by `clock_family`
 (ALGEBRA.md 9.45; item 32): the family of clicks, whose level at a Node is the
 M of that Node's clock pair, held at every body's Nodes at the body's content
 and spreading elsewhere by its own plain step, stepped last in the interval.
+Every world declares the family `charge` (the pair [1, 1], the quantum 1, its
+own charge 0), names it by `charge_family` and declares `charge_strength` 1
+(ALGEBRA.md 9.48; item 35): the family of charge, whose level at a Node is the
+signed charge Q held at every body's Nodes, read by a record of charge q with
+the sign opposite to its own (the effective content c - q Lambda d). Every
+family of these worlds declares `charge` 0, so the field is 0 everywhere and
+the rows are bit for bit as without it (the light clock's diagnostic run
+identical line for line to item 34's; only the stamps moved).
 
 | World | What it declares | Kind | The pin (COMPUTATION, `expectations.json`) | What its record reads |
 | --- | --- | --- | --- | --- |

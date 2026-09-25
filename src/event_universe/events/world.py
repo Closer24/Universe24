@@ -462,6 +462,15 @@ WORLD_KEYS = {
     # Gamma + c); its pair [1, 1], its unit the quantum; required under
     # `detector_law` (no default), refused without it.
     "clock_family",
+    # THE FAMILY OF CHARGE (the model owner's decision of 2026-09-25;
+    # ALGEBRA.md 9.48; BUILD.md section 26 item 35): the world key
+    # `charge_family`, the name of the fifth family, whose level d at a Node
+    # is the signed charge field a record of charge q reads with the sign
+    # opposite to its own, and `charge_strength`, Lambda, the charge's
+    # weight in the clock (an integer from 1); both required under
+    # `detector_law` (no default), refused without it.
+    "charge_family",
+    "charge_strength",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -875,7 +884,7 @@ NO_CHARGE = (0, 1)
 # At most three families on a GameBoard (record 1875; ALGEBRA.md 9.22 (2)).
 # THE OWNER'S CONSTANT (record 1875: at most three families; record 1982: four,
 # the family of clicks the fourth, ALGEBRA.md 9.45; BUILD.md section 26 item 32)
-MOST_FAMILIES = 4
+MOST_FAMILIES = 5
 # THE LAW IDENTIFIER (record 1886; ALGEBRA.md 9.22 (7) (i)): the law an input
 # file was made under, written by the generator into the file's `input` and
 # compared at load; a change of the laws that moves the initial state moves
@@ -1692,6 +1701,13 @@ class NatureBeamWorld:
     # index of the family whose level at a Node is the Node clock (the world
     # key `clock_family`); required under the detector law, None without it.
     clock_family: int | None = None
+    # THE FAMILY OF CHARGE (ALGEBRA.md 9.48; BUILD.md section 26 item 35): the
+    # index of the family whose level at a Node is the signed charge field
+    # (the world key `charge_family`) and Lambda, the charge's weight in the
+    # clock (`charge_strength`); required under the detector law, None and 0
+    # without it.
+    charge_family: int | None = None
+    charge_strength: int = 0
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -2342,41 +2358,123 @@ def _pair_bound(
         )
 
 
-def _clock_family(value: object, families: tuple[FamilyDefinition, ...]) -> int:
-    """THE FAMILY OF CLICKS (ALGEBRA.md 9.41 (3), 9.45 (1); BUILD.md section 26
-    item 32): the world key `clock_family` names a declared family; its pair
-    is [1, 1] (massless: the only pair whose static solutions reach, the
-    discrete Coulomb potential around a held content) and its unit the
-    quantum (one click writes one unit, `quantum` 1); it declares no clock
-    of its own (no `phase_per_link`: it births nothing)."""
+def _field_family(
+    value: object, families: tuple[FamilyDefinition, ...], key: str, role: str, section: str
+) -> int:
+    """A FIELD FAMILY, the family of clicks (ALGEBRA.md 9.41 (3), 9.45 (1);
+    BUILD.md section 26 item 32) or the family of charge (9.48 (2); item
+    35): the world key names a declared family; its pair is [1, 1]
+    (massless: the only pair whose static solutions reach, the discrete
+    Coulomb potential around a held level) and its unit the quantum (one
+    click writes one unit, `quantum` 1); it declares no clock of its own
+    (no `phase_per_link`: it births nothing)."""
     if not isinstance(value, str) or not value:
-        raise ValueError(f"{BEAM_LAW}: clock_family must name a declared family (a nonempty string)")
+        raise ValueError(f"{BEAM_LAW}: {key} must name a declared family (a nonempty string)")
     names = [family.name for family in families]
     if value not in names:
         raise ValueError(
-            f"{BEAM_LAW}: clock_family names {value!r}, which no family declares (the families: "
-            f"{names}); the family of clicks is declared like every family, with the pair [1, 1] "
-            "(ALGEBRA.md 9.45 (1))"
+            f"{BEAM_LAW}: {key} names {value!r}, which no family declares (the families: "
+            f"{names}); the family of {role} is declared like every family, with the pair [1, 1] "
+            f"(ALGEBRA.md {section})"
         )
     index = names.index(value)
     family = families[index]
     if family.pair != LIGHT_PAIR:
         raise ValueError(
-            f"{BEAM_LAW}: clock_family {value!r} has the pair {list(family.pair)}: the family of "
-            "clicks is massless, its pair [1, 1], the only pair whose static field reaches "
-            "(ALGEBRA.md 9.41 (3), 9.45 (1))"
+            f"{BEAM_LAW}: {key} {value!r} has the pair {list(family.pair)}: the family of "
+            f"{role} is massless, its pair [1, 1], the only pair whose static field reaches "
+            f"(ALGEBRA.md 9.41 (3), {section})"
         )
     if family.quantum != 1:
         raise ValueError(
-            f"{BEAM_LAW}: clock_family {value!r} has the quantum {family.quantum}: the family of "
-            "clicks is counted in quanta, one click one unit (`quantum` 1; ALGEBRA.md 9.45 (1))"
+            f"{BEAM_LAW}: {key} {value!r} has the quantum {family.quantum}: the family of "
+            f"{role} is counted in quanta, one click one unit (`quantum` 1; ALGEBRA.md {section})"
         )
     if family.phase_per_age is not None or family.phase_per_link:
         raise ValueError(
-            f"{BEAM_LAW}: clock_family {value!r} declares phase_per_link: the family of clicks births "
-            "nothing and has no clock of its own (ALGEBRA.md 9.45 (1))"
+            f"{BEAM_LAW}: {key} {value!r} declares phase_per_link: the family of {role} births "
+            f"nothing and has no clock of its own (ALGEBRA.md {section})"
         )
     return index
+
+
+def _clock_family(value: object, families: tuple[FamilyDefinition, ...]) -> int:
+    """THE FAMILY OF CLICKS (ALGEBRA.md 9.45 (1); BUILD.md section 26 item 32)."""
+    return _field_family(value, families, "clock_family", "clicks", "9.45 (1)")
+
+
+def _charge_family(value: object, families: tuple[FamilyDefinition, ...], clock_family: int) -> int:
+    """THE FAMILY OF CHARGE (ALGEBRA.md 9.48 (2); BUILD.md section 26 item 35):
+    a field family of its own, not the family of clicks, and of charge 0
+    itself (its level is the charge, it carries none)."""
+    index = _field_family(value, families, "charge_family", "charge", "9.48 (2)")
+    if index == clock_family:
+        raise ValueError(
+            f"{BEAM_LAW}: charge_family {value!r} is the family of clicks: the family of charge "
+            "is a fifth family of its own, its level the signed charge (ALGEBRA.md 9.48 (2))"
+        )
+    if families[index].charge != NO_CHARGE:
+        raise ValueError(
+            f"{BEAM_LAW}: charge_family {value!r} declares the charge "
+            f"{families[index].charge[0]}: the family of charge carries none, its level is the "
+            "charge (ALGEBRA.md 9.48 (2))"
+        )
+    return index
+
+
+def _charge_labels(raw: object, families: tuple[FamilyDefinition, ...], detector_law: bool) -> None:
+    """THE SIGN ON THE QUANTUM (ALGEBRA.md 9.48 (1); BUILD.md section 26 item
+    35): under the detector law every family declares its `charge` q, one
+    of -1, 0 and +1 per quantum (light 0, a matter family its own), no
+    default; the label passes whole in the click, a body's charge Q the
+    signed sum of the quanta it holds."""
+    if not detector_law or not isinstance(raw, list):
+        return
+    for index, (entry, family) in enumerate(zip(raw, families, strict=True)):
+        if not isinstance(entry, dict) or "charge" not in entry:
+            raise ValueError(
+                f"{BEAM_LAW}: families[{index}] ({family.name!r}) declares no `charge`: under "
+                f"{DETECTOR_LAW_RULE} every family declares the sign on its quantum, -1, 0 or +1, "
+                "no default (ALGEBRA.md 9.48 (1); BUILD.md section 26 item 35)"
+            )
+        if family.charge[1] != 1 or abs(family.charge[0]) > 1:
+            raise ValueError(
+                f"{BEAM_LAW}: families[{index}].charge {list(family.charge)}: under "
+                f"{DETECTOR_LAW_RULE} the charge is the sign on the quantum, -1, 0 or +1 "
+                "(ALGEBRA.md 9.48 (1))"
+            )
+
+
+def _field_family_checks(
+    index: int,
+    families: tuple[FamilyDefinition, ...],
+    measured: tuple[MeasuredDefinition, ...],
+    role: str,
+    section: str,
+) -> None:
+    """A field family takes and gives nothing (ALGEBRA.md 9.45 (1), 9.48 (2)):
+    no measured event is of it, none holds its quanta, and no emitter
+    births into it; its level is written by the engine alone, the held
+    content or the held charge at every body's Nodes."""
+    name = families[index].name
+    for number, entry in enumerate(measured):
+        if entry.family == index:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}] is of the family of {role} {name!r}: no body is of "
+                "it; its level is held at the bodies' Nodes, written by the engine at the "
+                f"load and at every click (ALGEBRA.md {section})"
+            )
+        if len(entry.held) > index and entry.held[index]:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}].held names the family of {role} {name!r}: nothing "
+                f"holds its quanta; its level is held at a body's Nodes (ALGEBRA.md {section})"
+            )
+        if entry.block is not None and entry.block.emitter is not None:
+            if entry.block.emitter.family == index:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}].emitter births into the family of {role} "
+                    f"{name!r}: it takes and gives nothing (ALGEBRA.md {section})"
+                )
 
 
 def _clock_family_checks(
@@ -2384,30 +2482,8 @@ def _clock_family_checks(
     families: tuple[FamilyDefinition, ...],
     measured: tuple[MeasuredDefinition, ...],
 ) -> None:
-    """The family of clicks takes and gives nothing (ALGEBRA.md 9.45 (1)): no
-    measured event is of it, none holds its quanta, and no emitter births
-    into it; its level is written by the engine alone, the held content at
-    every body's Nodes."""
-    name = families[clock_family].name
-    for number, entry in enumerate(measured):
-        if entry.family == clock_family:
-            raise ValueError(
-                f"{BEAM_LAW}: measured[{number}] is of the family of clicks {name!r}: no body is of "
-                "it; its level is the held content of the bodies, written by the engine at the "
-                "load and at every click (ALGEBRA.md 9.45 (2))"
-            )
-        if len(entry.held) > clock_family and entry.held[clock_family]:
-            raise ValueError(
-                f"{BEAM_LAW}: measured[{number}].held names the family of clicks {name!r}: nothing "
-                "holds its quanta; its level is the content of every family held at a body's Nodes "
-                "(ALGEBRA.md 9.45 (2))"
-            )
-        if entry.block is not None and entry.block.emitter is not None:
-            if entry.block.emitter.family == clock_family:
-                raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}].emitter births into the family of clicks {name!r}: "
-                    "it takes and gives nothing (ALGEBRA.md 9.45 (1))"
-                )
+    """The family of clicks takes and gives nothing (ALGEBRA.md 9.45 (1))."""
+    _field_family_checks(clock_family, families, measured, "clicks", "9.45 (2)")
 
 
 def _node_clock_bound(
@@ -2415,6 +2491,7 @@ def _node_clock_bound(
     measured: tuple[MeasuredDefinition, ...],
     amplitude_bound: int,
     node_clock: int,
+    charge_strength: int = 0,
 ) -> None:
     """THE LOAD BOUND UNDER THE NODE CLOCK (BUILD.md section 26 item 31), the
     second pass once the content is known: every family's pair and every
@@ -2426,6 +2503,33 @@ def _node_clock_bound(
     bodies is bounded by the held content, and a wave of it off a zero face
     doubles, ALGEBRA.md 9.45 (2); BUILD.md section 26 item 32)."""
     content = 2 * sum(sum(entry.held) for entry in measured)
+    # THE CHARGE (ALGEBRA.md 9.48 (3); BUILD.md section 26 item 35): a record
+    # of charge q reads the pace Gamma - c + q Lambda d, d the charge field;
+    # at a body's Nodes c is its content M and d its charge Q, so the pace
+    # of a record of the sign opposite to Q's is Gamma - M - Lambda |Q|
+    # there, positive at the load at every body (the run's guard,
+    # `_advance_clock`, holds it everywhere afterwards); the rows' int64
+    # bound takes the reach of the effective content, twice the world's
+    # content plus Lambda times twice the held charge
+    for number, entry in enumerate(measured):
+        held = sum(entry.held)
+        signed = abs(
+            sum(family.charge[0] * quanta for family, quanta in zip(families, entry.held, strict=True))
+        )
+        if held + charge_strength * signed >= node_clock:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}]: the pace Gamma - c + q Lambda d could reach 0 at "
+                f"its Nodes: its content {held} plus Lambda = {charge_strength} times its charge "
+                f"{signed} in size is {held + charge_strength * signed}, not below Gamma = "
+                f"{node_clock} (ALGEBRA.md 9.48 (3): the charge's hill hastens a clock at most to "
+                "the vacuum's; BUILD.md section 26 items 34 and 35)"
+            )
+    charge = 2 * sum(
+        abs(family.charge[0]) * quanta
+        for entry in measured
+        for family, quanta in zip(families, entry.held, strict=True)
+    )
+    content += charge_strength * charge
     for index, family in enumerate(families):
         _pair_bound(
             family.pair[0], family.pair[1], f"families[{index}]", amplitude_bound, node_clock, content
@@ -2515,7 +2619,7 @@ def _families(
         raise ValueError(
             f"{BEAM_LAW}: families declares {len(value)}; at most {MOST_FAMILIES} families on a "
             "GameBoard (the unification ADOPTED by the model owner, record 1875; ALGEBRA.md 9.18, "
-            "9.22 (2))"
+            "9.22 (2); four with the family of clicks, 9.45; five with the family of charge, 9.48)"
         )
     found: list[FamilyDefinition] = []
     declared: list[dict[str, tuple[tuple[int, int], int]]] = []
@@ -4510,6 +4614,7 @@ def _detector_law_load_checks(
     periodic: tuple[bool, bool, bool],
     phase_steps: int,
     clock_family: int | None = None,
+    charge_family: int | None = None,
 ) -> None:
     """Under `detector_law` (detector-law-v1) the instruments of the ray law
     are refused, naming the rule: a lamp's `turns` (a fan of directions
@@ -4554,7 +4659,7 @@ def _detector_law_load_checks(
         # one, checked below); the family of clicks births nothing and has
         # no clock of its own (ALGEBRA.md 9.45 (1)); every other paid family
         # declares the pair form.
-        if index == clock_family:
+        if index == clock_family or index == charge_family:
             continue
         if family.quantum != FREE_QUANTUM and family.phase_per_age is None and not family.massive_kind:
             raise ValueError(
@@ -5981,6 +6086,27 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             "clicks, whose level at a Node is the Node clock (Gamma, Gamma + c), no default "
             "(ALGEBRA.md 9.45 (1); BUILD.md section 26 item 32)"
         )
+    # THE FAMILY OF CHARGE (the model owner's decision of 2026-09-25; ALGEBRA.md
+    # 9.48; BUILD.md section 26 item 35): the name of the fifth family, whose
+    # level d at a Node is the signed charge field, and Lambda, the charge's
+    # weight in the clock; REQUIRED under `detector_law` with no default,
+    # refused without that law; the family is resolved once the families are
+    # read (below)
+    charge_strength = 0
+    for key in ("charge_family", "charge_strength"):
+        if key in obj and not detector_law:
+            raise ValueError(
+                f"{BEAM_LAW}: {key} is refused without `detector_law` (the family of charge is the "
+                "local detector law's signed field, ALGEBRA.md 9.48)"
+            )
+        if detector_law and key not in obj:
+            raise ValueError(
+                f"{BEAM_LAW}: {key} is required under `detector_law`: the family of charge and its "
+                "strength Lambda, the charge's weight in the clock, no default (ALGEBRA.md 9.48 "
+                "(2) and (3); BUILD.md section 26 item 35)"
+            )
+    if detector_law:
+        charge_strength = _integer(obj["charge_strength"], "charge_strength", 1, AMOUNT_BOUND)
     mode_axis: int | None = None
     if "mode_axis" in obj:
         if not massive_record:
@@ -6015,8 +6141,11 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         obj["families"], phase_steps, age_bound, massive_rows, action, massive_record, amplitude_bound
     )
     clock_family: int | None = None
+    charge_family: int | None = None
     if detector_law:
         clock_family = _clock_family(obj["clock_family"], families)
+        charge_family = _charge_family(obj["charge_family"], families, clock_family)
+        _charge_labels(obj["families"], families, detector_law)
     # The bound is asked of a world with a MASSIVE FAMILY (a pair with den >
     # num; DECLARATIONS.md section 15 M1-10 lists the massive worlds): a
     # light world under `massive_record` (its probes, its mirror blocks of
@@ -6061,9 +6190,10 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     )
     _column_budget(families, measured, release)
     if detector_law:
-        assert clock_family is not None
+        assert clock_family is not None and charge_family is not None
         _clock_family_checks(clock_family, families, measured)
-        _node_clock_bound(families, measured, amplitude_bound, node_clock)
+        _field_family_checks(charge_family, families, measured, "charge", "9.48 (2)")
+        _node_clock_bound(families, measured, amplitude_bound, node_clock, charge_strength)
     _input_stamp_check(obj, measured)
     _initial_state_checks(shape, periodic, families, measured)
     families = _massive_families(families, measured, table, width, phase_steps, action)
@@ -6166,9 +6296,13 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         amplitude_bound=amplitude_bound,
         node_clock=node_clock,
         clock_family=clock_family,
+        charge_family=charge_family,
+        charge_strength=charge_strength,
     )
     if detector_law:
-        _detector_law_load_checks(measured, families, table, periodic, phase_steps, clock_family)
+        _detector_law_load_checks(
+            measured, families, table, periodic, phase_steps, clock_family, charge_family
+        )
         set_names = {detector.name for detector in detectors}
         for number, entry in enumerate(measured):
             # the lamp record's ladder by name: every name a declared set's

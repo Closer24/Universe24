@@ -168,18 +168,24 @@ def test_the_clocks_refusals_name_the_rule():
     refused(scalar, "clock is admitted only beside a profile")
 
 
-def test_at_most_four_families():
-    """Four families are admitted (the emitter world's three, the family of clicks among them,
-    and a fourth), a fifth is refused naming the count and the bound (the owner's constant:
-    record 1875's three, four since the family of clicks, record 1982; ALGEBRA.md 9.45)."""
+def test_at_most_five_families():
+    """Five families are admitted (the emitter world's four, the families of clicks and of
+    charge among them, and a fifth), a sixth is refused naming the count and the bound (the
+    owner's constant: record 1875's three, four since the family of clicks, record 1982,
+    five since the family of charge, ALGEBRA.md 9.48; BUILD.md section 26 item 35)."""
     document = emitter_world(stock=2)
     assert len(document["families"]) <= MOST_FAMILIES
     while len(document["families"]) < MOST_FAMILIES:
         document["families"].append(
-            {"name": f"family_{len(document['families'])}", "quantum": 1, "pair": [800, 809]}
+            {
+                "name": f"family_{len(document['families'])}",
+                "quantum": 1,
+                "pair": [800, 809],
+                "charge": 0,
+            }
         )
     parse_nature_beam_world(restamped(document))
-    document["families"].append({"name": "fifth", "quantum": 1, "pair": [800, 809]})
+    document["families"].append({"name": "sixth", "quantum": 1, "pair": [800, 809], "charge": 0})
     restamped(document)
     with pytest.raises(
         ValueError,

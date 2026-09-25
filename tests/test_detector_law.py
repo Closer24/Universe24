@@ -20,6 +20,9 @@ import pytest
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import DETECTOR_LAW_RULE, input_stamp, parse_nature_beam_world
 from tests.test_emitter import (
+    CHARGE_FAMILY,
+    CHARGE_FAMILY_NAME,
+    CHARGE_STRENGTH,
     CLOCK_FAMILY,
     CLOCK_FAMILY_NAME,
     NODE_CLOCK,
@@ -161,11 +164,14 @@ def chain_world(
         "amplitude_bound": 1 << 28,
         "node_clock": NODE_CLOCK,
         "clock_family": CLOCK_FAMILY_NAME,
+        "charge_family": CHARGE_FAMILY_NAME,
+        "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": list(BORN_CLOCK)},
-            {"name": "matter", "quantum": 1, "pair": list(EMITTER_KIND)},
+            {"name": "light", "quantum": 1, "phase_per_link": list(BORN_CLOCK), "charge": 0},
+            {"name": "matter", "quantum": 1, "pair": list(EMITTER_KIND), "charge": 0},
             dict(CLOCK_FAMILY),
+            dict(CHARGE_FAMILY),
         ],
         "measured": [
             emitter_body([corner, 0, 0], stock, receiver),
@@ -368,11 +374,14 @@ def layer_world(receiver: object = None) -> dict:
         "amplitude_bound": 1 << 28,
         "node_clock": NODE_CLOCK,
         "clock_family": CLOCK_FAMILY_NAME,
+        "charge_family": CHARGE_FAMILY_NAME,
+        "charge_strength": CHARGE_STRENGTH,
         "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": list(BORN_CLOCK)},
-            {"name": "matter", "quantum": 1, "pair": [800, 809]},
+            {"name": "light", "quantum": 1, "phase_per_link": list(BORN_CLOCK), "charge": 0},
+            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0},
             dict(CLOCK_FAMILY),
+            dict(CHARGE_FAMILY),
         ],
         "measured": measured,
         "detectors": [],

@@ -3120,6 +3120,104 @@ would have found no cell.
    (Gamma + M) factor. THE NAME NODE (the model owner's record 1970):
    every new text of this item says Node.
 
+35. THE FAMILY OF CHARGE (the model owner's decision of 2026-09-25 in the
+   mathematician's session, "I want to add this feature; it seems important
+   to me", and his word in Nature24's session, "a family of charge and
+   binding are missing" and "see that you and the mathematician are
+   aligned, and let us add everything now"; ALGEBRA.md 9.48 (1) to (5),
+   DERIVED from 9.45 by one sign; built on `emitter-click` after item 34,
+   held by the rule of three). THE SIGN ON THE QUANTUM (9.48 (1)): under
+   the detector law every family declares its `charge` q, one of -1, 0
+   and +1 per quantum, no default (the existing family key, the pair (q,
+   1); a family without it, a charge beyond one sign and a charge with a
+   denominator other than 1 refused by name); the label passes whole in
+   the click as every label does: a body's charge Q is the sum of the
+   signs of the quanta it holds, an integer of either sign, up by the
+   taken quantum's q at a click there, down by the spent quantum's q at a
+   birth (the emitter's stock model of item 33: the spent quantum is of
+   the body's family; a body giving light from a stock of a charged
+   family changes its Q by the stock's sign, listed below). THE FIFTH
+   FAMILY (9.48 (2)): the world key `charge_family` names a family
+   declared like every other with the pair [1, 1], the quantum 1, no
+   clock of its own and the charge 0 (its level is the charge, it carries
+   none; the family of clicks refused as it), REQUIRED under the detector
+   law with no default, refused without it; one record of it lies over
+   the board, held at every body's Nodes at Q (both levels, the remainder
+   0; the hold of 9.45 (2) with Q for M, `_hold_clock` holding both
+   fields) and moving elsewhere by its own plain step, stepped last in
+   the interval with the family of clicks; the joint inverse steps every
+   family backward at both fields' levels of the interval's start, then
+   the two fields; its transients unbooked. THE STRENGTH: the world key
+   `charge_strength`, Lambda, an integer from 1, the charge's weight in
+   the clock, REQUIRED under the detector law with no default. THE
+   READING WITH ONE SIGN (9.48 (3), under the fixed wall of item 34): a
+   record of charge q reads at every Node the effective content c - q
+   Lambda d, the family of clicks' level less its own sign times the
+   strength times the family of charge's level, and its pace is Gamma - c
+   + q Lambda d on each of the six reads and at the Node (the rule of
+   item 34 with the effective content for c, one product more in the
+   self term); light, q = 0, reads the content alone, untouched. A record
+   near a body of the opposite sign reads a deeper well (c + Lambda |d|
+   at the body) and bends toward it; near a body of its own sign a hill
+   (c - Lambda |d|, the vacuum's pace at Lambda |d| = c) and bends away
+   (9.29 as the algebra states it; no run reads the bending here). The
+   clock pair a record reads is (Gamma - c + q Lambda d, Gamma), the
+   wheel at a Node the rule's at the effective content (`wheel_at`,
+   `node_clock_pair` per family); the birth line carries the body's
+   `charge` beside its `content`, its `node_clock` the pair the clicking
+   record read. THE GUARD: the effective content stays below Gamma in
+   size at every Node for every sign a family declares (the run refused
+   where it does not, `_advance_clock`); THE LOAD BOUND: at every body
+   its content M plus Lambda times |Q| below Gamma (the pace of a record
+   of the sign opposite to Q's positive at the body's Nodes, 9.48 (3)'s
+   f > 0 at the load), and the rows' int64 bound on the reach of the
+   effective content, twice the world's content plus Lambda times twice
+   the held charge. AT MOST FIVE FAMILIES (the owner's constant of four
+   becomes five, 9.48 (5)). THE REGISTERED WORLDS (9.48 (5)): every
+   family of the eighteen and of the emitter's unit worlds declares q =
+   0, the generators write the family `charge` (the pair [1, 1], the
+   quantum 1) and the keys `charge_family` and `charge_strength` 1; the
+   field is 0 everywhere and the rows are bit for bit as without it (the
+   light clock's diagnostic run without pins, GAMEBOARD, no verdict: the
+   64 clicks at at_well identical line for line to item 34's, the mean
+   click interval 300.3 with the rms 15.8, the least wait 263 and the
+   most 338, no burst, LAWFUL in 10 seconds); the stamps moved and the
+   chain digests moved once more, all three; no pin moved. THE ENGINE:
+   `family_charge`, `charge_family`, `charge_strength`, `charge_record`,
+   `node_charge`, `_body_charge`, `_effective_content`, `_hold_clock` and
+   `_advance_clock` on both fields, `_advance` and `_advance_inverse`,
+   `form_share`, `record_form`, `detector_inflow_tally`, `inward_flux`,
+   `wheel_at` and `node_clock_pair` on the effective content, the
+   snapshot's `charge` entry and the books' form of the family (GAMEBOARD
+   diagnostics); the loader's `_field_family` (the shared checks of the
+   two field families), `_charge_family`, `_charge_labels`,
+   `_field_family_checks`, `_node_clock_bound` with the strength,
+   `_detector_law_load_checks` skipping both fields, MOST_FAMILIES 5.
+   THE TESTS: the charge suite `tests/test_charge.py` (the reading with
+   one sign bit for bit the rule's at c + Lambda d, c - Lambda d and c on
+   random rows at Lambda 1 and 3, the pairs and the wheel at the
+   effective content, the load bound at a body; the hold at Q signed,
+   moved at the births and the clicks with the labels, the whole charge
+   of the bodies and the records in flight constant; the joint inverse
+   with both fields exact through the falls on the periodic and the open
+   chain; the loader's refusals each naming its key; every charge 0: the
+   field 0, the rows bit for bit at Lambda 1 and 7, the birth lines'
+   charge 0), the Node clock suite (the pair per family, six families
+   refused), the initial-state suite (five admitted, a sixth refused),
+   the massive-record suite (the digests), every test world declaring
+   the fifth family and the keys. THE ALGEBRA NAMED (record 1987): 9.48
+   (1), (2), (3) and (5), on the fixed wall of item 34 (9.35 (2) as
+   amended). PIECES NO SECTION STATES, listed for the mathematician: the
+   translation of 9.48 (3)'s (Gamma, Gamma + c - q Lambda d) to the pace
+   form Gamma - c + q Lambda d over the constant wall (item 34's form
+   carried); the spent quantum's sign at a birth from a charged stock
+   (9.48 (1) says a body giving light keeps its Q; the stock model spends
+   a quantum of the body's own family, so its Q moves by that family's
+   sign); the load bound's form at a body, M + Lambda |Q| < Gamma, and
+   the run's guard for every declared sign; the int64 bound's reach. THE
+   NAME NODE (the model owner's record 1970): every new text of this item
+   says Node.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2
