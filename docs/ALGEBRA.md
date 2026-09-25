@@ -14169,7 +14169,13 @@ with its line.** (a) THE UNIVERSE'S INTEGERS: Gamma = 10^4 and A = 2^20
 (9.57 (2)); the energy unit P_0 (9.51 (3)); the charge's strengths
 Lambda (9.48 (3), 9.51 (2)) and Lambda_v (9.81 (3)); the twist table
 (theta_unit and its triples, 9.81 (2) (b)); the wall W = 2 Gamma L of
-the accumulator (9.52 (4)). (b) THE ENTRIES, 9.79 (3) as edited by
+the accumulator (9.52 (4)). These are the law's numbers and they live
+in the families file alone; a run's parameters (the outputs, the
+check mode, the backward test's option, the digests) live in the one
+engine start file; no number of either kind has a default in the
+engine's code, and a missing key is refused by name (the Boss's record
+2089 of 2026-09-25, the model owner: "every flag the engine needs for
+a run should leave the code"). (b) THE ENTRIES, 9.79 (3) as edited by
 9.82: clicks (gravity's scalar), charge (its scalar), gravity's vector,
 gravity's tensor, light (the charge's vector wave), and the matter
 families with their pairs, all with phase 2 where they read a vector
