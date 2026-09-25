@@ -161,9 +161,10 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     """BUILD.md (c): on the first build's random chain the step at light's pair [1, 1] gives the
     same quotient as the line 3 a_next + r' = S_6 - 3 a_before + r, the total and the remainder
     Gamma times the line's (the Node clock in the vacuum, BUILD.md section 26 item 31) on
-    every Node without content; at the emitter body's 32 Nodes and the screen's three (their
-    content M) the clocked line 3 f a_next + r' = Gamma S_6 + 6 M a_now - 3 f a_before + r
-    with f = Gamma + M (tests/test_node_clock.py reads it on random rows too)."""
+    every Node without content whose six reads have none; at the emitter body's 32 Nodes and
+    the screen's three (their content M) and at the Nodes beside them the line under the
+    fixed wall (item 34), 3 Gamma a_next + r' = SUM_j (Gamma - c_j) a_j + 6 c a_now - 3 Gamma
+    a_before + r (tests/test_node_clock.py reads it on random rows too)."""
     world = parse_nature_beam_world(chain_world())
     simulation = DetectorLawSimulation(world)
     assert world.families[0].pair == LIGHT_PAIR
@@ -178,15 +179,16 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     expected_next = np.floor_divide(total, 3 * NODE_CLOCK)
     expected_remainder = total - 3 * NODE_CLOCK * expected_next
     a_next, r_next = step_once(simulation, live)
-    free = simulation.node_content == 0
-    assert 35 <= int(np.sum(free)) <= 45
+    content = simulation.node_content
+    free = (content == 0) & (simulation._neighbours(content, simulation.kind_wrap[0]) == 0)
+    assert 30 <= int(np.sum(free)) <= 45
     assert np.array_equal(a_next[free], expected_next[free])
     assert np.array_equal(r_next[free], expected_remainder[free])
-    content = simulation.node_content
-    f = NODE_CLOCK + content
-    clocked = NODE_CLOCK * simulation._neighbours(now) + 6 * content * now - 3 * f * before + remainder
-    assert np.array_equal(a_next[~free], np.floor_divide(clocked, 3 * f)[~free])
-    assert np.array_equal(r_next[~free], (clocked - 3 * f * np.floor_divide(clocked, 3 * f))[~free])
+    wall = 3 * NODE_CLOCK
+    paced = simulation._neighbours((NODE_CLOCK - content) * now, simulation.kind_wrap[0])
+    clocked = paced + 6 * content * now - wall * before + remainder
+    assert np.array_equal(a_next, np.floor_divide(clocked, wall))
+    assert np.array_equal(r_next, clocked - wall * np.floor_divide(clocked, wall))
 
 
 def checkerboard_seed(n: int) -> tuple[np.ndarray, np.ndarray]:
@@ -342,11 +344,14 @@ def test_the_light_record_is_byte_identical_without_the_key():
     SINCE THE RESEED RETIRED (ALGEBRA.md 9.43 (3), 9.44 (5) (c); item 33) all three moved
     once more (the body's own record continuing under its one identity, its levels never
     rewritten, the residues read at the click at the first shell Node, the births at the
-    counted intervals, the birth lines' fields); read again at this head."""
+    counted intervals, the birth lines' fields); SINCE THE FIXED WALL (the model owner's
+    record 1994; item 34) all three moved once more (the paced reads at and beside the
+    bodies, the forms' units Gamma squared, the birth lines' `read_clocks`); read again at
+    this head."""
     assert run_chain_digests() == {
-        "events": "4d5bd4ecb7a8a7b3a2624845af3748bf638c01868a2a7c8ccdb49f4e52c76537",
-        "state": "b3395367edc543f3eea5cbc50d2f9de9c48fbb689750900e0321b4f0d35c13ea",
-        "audit": "7eded01ed609b5a4fadee60eee84d0aa3791af979a7ac5523d158b57af299c6f",
+        "events": "6eb44fa81d6e178302d7818a9ef244ed3f6dfd5a8b2766e59f6c4859b2ecd960",
+        "state": "36684f6bf38b01e5592b7c04fa6c129e9e27d8185ead08010f73d90d0dadd51c",
+        "audit": "55265e69fc5e83ef56b6a1f1f9604b16d03b70ae1179d28829b3a77ea65f8ce5",
     }
 
 
@@ -1005,7 +1010,7 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
     document["age_bound"] = 100
     with pytest.raises(
         ValueError,
-        match=r"Gamma x num x 6 x A .*Gamma = 1000000 and the content M = 0 is .*not below 2\^63",
+        match=r"\(Gamma \+ M\) x num x 6 x A .*Gamma = 1000000 and the content M = 0 is .*not below 2\^63",
     ):
         parse_nature_beam_world(document)
     with pytest.raises(ValueError, match=r"families\[1\]\.pair \[1048576, 1048577\]"):
@@ -1069,9 +1074,10 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
     """MUST 1's test: on the chain 6 x 1 x 1 (y and z folded, the Node reading itself twice on
     each) at the pair [2, 3], open on x, the form I of section 3 as the books read it
     (`record_form`, the weights L / num, L the numerators' lcm, here 2) changes by the
-    remainders' term exactly on every interval: num x (I(t) - I(t - 1)) = L x SUM_i (a_next
-    - a_before)_i (r - r')_i, integers, no tolerance, 60 intervals from random rows; the
-    same on a periodic x."""
+    remainders' term exactly on every interval: num x (I(t) - I(t - 1)) = L x Gamma x SUM_i
+    (a_next - a_before)_i (r - r')_i (the pace Gamma at every Node of the vacuum under the
+    fixed wall, item 34), integers, no tolerance, 60 intervals from random rows; the same on
+    a periodic x."""
     for boundary in (CHAIN, PERIODIC_CHAIN):
         document = massive_world([6, 1, 1], boundary, [2, 3])
         document["age_bound"] = 1000
@@ -1089,7 +1095,7 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
             remainders = int(
                 np.sum((live.now.astype(object) - a_before) * (r - live.remainder.astype(object)))
             )
-            assert 2 * (current - previous) == 2 * remainders, boundary
+            assert 2 * (current - previous) == 2 * NODE_CLOCK * remainders, boundary
             previous = current
 
 

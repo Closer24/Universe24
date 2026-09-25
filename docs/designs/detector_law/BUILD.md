@@ -2878,7 +2878,9 @@ would have found no cell.
    16 units). Whether the family's level may fall at a Node with a record,
    or the clock must be read from a level that never falls (the running
    total of the clicks, 9.44 (2)'s stock, or a rule of the step), is the
-   mathematician's word; no law is claimed here. (B) AT UNIT LEVELS THE
+   mathematician's word; no law is claimed here. RESOLVED at item 34 (the
+   owner's record 1994 and his word of 2026-09-25): the wall fixed at 3
+   den Gamma, the clock in the numerator, the inverse exact everywhere. (B) AT UNIT LEVELS THE
    FIELD IS THE ROUNDING'S WALK: at small contents (one or four quanta)
    the family's level around a body is the plain step's own walk of its
    remainders at unit levels (13 units at most on the small world in 60
@@ -3010,6 +3012,113 @@ would have found no cell.
    period longer by about M / (2 Gamma), below the count's resolution). THE
    NAME NODE (the model owner's record 1970): every new text of this item
    says Node.
+
+34. THE FIXED WALL: THE BACKWARD RUN EXACT EVERYWHERE (the model owner's
+   ruling of record 1994, "the backward run must be exact everywhere, also
+   where the family of clicks falls", and his word of 2026-09-25 in
+   Nature24's session on this form, "go for it"; his two rules of the same
+   hour: a conservation follows from the Node's local rule or does not
+   exist, never decreed, and the generic solution is sought in the
+   algebra; ALGEBRA.md 9.35 (2) amended, the mathematician's section asked
+   and to be named here; built on `emitter-click`, held by the rule of
+   three). WHERE THE INVERSE WAS LOST (item 32's finding A, in the
+   integers): the step at a Node divided by the wall 3 den (Gamma + c), c
+   the family of clicks' level there; the remainder it read was formed on
+   the previous interval's wall; where the level fell the wall shrank and
+   a remainder at or above the new wall gave the same total as the state
+   (a_before - 1, r - wall): two states to one, a fraction (c_old - c) /
+   (Gamma + c_old) of them per unit fall; not a fault of the inverse, the
+   forward map was not one to one there, and nothing kept at the Node can
+   repair a remainder range that shrinks. THE LAW: the wall is 3 den
+   Gamma at every Node, a constant of the declared region, and the clock
+   enters the numerator as the pace p = Gamma - c of each of the six reads:
+   3 den Gamma a_next + r' = num SUM_j (Gamma - c_j) a_j + 6 den c a_now -
+   3 den Gamma a_before + r, the remainder in [0, 3 den Gamma). The
+   remainder's range never changes, so the step is one to one at every
+   Node for every clock history and the joint inverse is exact bit for
+   bit, remainders and the family's field included, wherever the level
+   falls (the property (4) of 9.20 (B) restored in full; the property
+   test's and the Node clock test's bounded loss of item 32 HISTORY). THE
+   ROTATION at uniform content: 1 - cos omega' = (1 - cos omega)(Gamma -
+   c) / Gamma (Gamma / (Gamma + c) before: the same to first order in c /
+   Gamma, apart at (c / Gamma)^2, 4 x 10^-9 at c = 64, below every pin);
+   the vacuum bit for bit the plain rule with the remainder Gamma times
+   its (unchanged from item 31). THE TWO FORMS with the fixed wall: (A)
+   the clock on the Node's own neighbour sum, (Gamma - c_i) num S_6, is
+   one to one too but its invariant carries the clock in the denominator
+   (no integer weights at one scale over a board where c varies); (B) the
+   clock on the Link's two ends, built here, has the invariant with
+   INTEGER WEIGHTS at the one scale 3 Gamma L: 3 den_i (L / num_i) Gamma
+   p_i on the squares, 6 den_i (L / num_i) p_i c_i on now_i before_i, L
+   p_i p_j on the Link ij (the operator symmetric under p_i den_i /
+   num_i); the form is exactly invariant where the field stands still and
+   changes by the weights' change where it moves (the exchange of 9.45
+   (5), the Link weights now moving too); the share's change over an
+   interval is the sum of the currents L p_i p_j (now_i before_j -
+   before_i now_j) through the Node's Links plus the remainders' term (L /
+   num_i) p_i (a_next - a_before)(r - r'), every term an integer, read
+   exactly on random rows (the residual 0 at every Node of the chain of
+   60 with content). THE CURRENT carries the pace at both ends: the click's
+   booking at a detector's Ports is L p_i p_j (now_i before_j - before_i
+   now_j), (Gamma - c)^2 / Gamma^2 of the vacuum's at a detector of
+   content c, about 1 - 2 M / Gamma (the flux unweighted at item 31,
+   HISTORY); the form's units Gamma^2 times the plain form in the vacuum
+   (Gamma times at item 31): the born record's norm, the tally and the
+   generator's passage check move together, the rung's ratio unchanged.
+   THE WHEEL from the rule at the Node: 3 den Gamma over the gcd of the
+   total's coefficients, num (Gamma - c_j) over the six reads, 6 den c and
+   the wall (the pair's own in the vacuum; at A's centre Node of the light
+   clock the step 576 and W = 4171875 with the stock 64, 18774639 at item
+   31); the birth line carries `read_clocks`, the level at the read Node
+   and at its six reads as the wheel was read. THE GUARD: |c| below Gamma
+   at every Node (the pace positive); THE LOAD BOUND (Gamma + M) num 6 A +
+   6 den M A + 3 den Gamma (A + 1) below 2^63, M twice the world's content
+   (the muon layer's pair still the largest registered). THE FILES: the
+   light clock regenerated (its excitation norm read on the engine in the
+   new units; the stamp moved; no profile moved); the chain digests moved
+   once more, all three. THE ENGINE: `_advance` and `_advance_inverse`
+   (the paced reads), `form_share`, `record_form`, `conserved_form`,
+   `detector_inflow_tally`, `inward_flux` (the weights), `wheel_at` with
+   `_neighbour_nodes`, `node_clock_pair` ((Gamma - c, Gamma)), the guard
+   of `_advance_clock`, the birth line's `read_clocks`; the loader's
+   `_pair_bound`; the generator's passage check against Gamma^2 times the
+   norm. THE READINGS (COMPUTATION on the engine's integers): (a) the
+   small world (the 12-cube, the well of one quantum): 90 intervals
+   forward and 90 inverse, the family's level falling at 51056 Node
+   intervals, every record's levels and remainders and the field returned
+   exactly; the chain of 60 at Gamma 1000 with a body of 250 quanta: 30
+   and 30 exact through 214 falls; the property test's run of 90: exact,
+   the click's deletion alone outside the inverse; (b) the rotation at
+   the pace 0.75: 2 cos omega' = 1.983313, read to 10^-5; 1.988875 at
+   the pace 1 / 2; the vacuum 1.977750; (c) light through the slab of 40
+   Nodes at the pace 0.75: the transmitted centroid lags the vacuum's by
+   6.16 Links against 6.23 predicted from the slowed dispersion (10.9
+   intervals; the index 1.156), 0.956 of the energy beyond the slab
+   (0.974 in the vacuum: the slab's faces reflect about two percent), the
+   form drifting 4 x 10^-6 over the passage; (d) THE LIGHT CLOCK'S
+   DIAGNOSTIC RUN without pins (GAMEBOARD, no verdict, no pin moved):
+   LAWFUL in 8 seconds, 64 births and 64 clicks at at_well alone, the mean
+   click interval 300.3 with the rms 15.8, the least wait 263 and the
+   most 338, the 64 births by interval 3199, no burst and six gaps below
+   ten (299.1, 18.5, 258, 366, 3040 and none at item 33). THE TESTS: the
+   Node clock suite (the rule in integers with the paced reads and its
+   plain limit, the rotation, the slab, the form and the share's identity
+   and the books' remainder identity with the pace, the loader's bound
+   and the light clock's pairs and wheel, the joint inverse exact through
+   the falls), the property test (the form with the fixed wall's weights,
+   the conservation with the exchange of the weights at the Nodes and on
+   the Links, the reversibility exact over the whole run), the emitter
+   suite (the wheel from the line's `read_clocks`, the born norm as its
+   form as written, the pairs), the flux reading (the form and the tally
+   with the pace at both ends), the born train (the units Gamma^2), the
+   massive-record suite (the bound's message, the digests), the layer
+   test (the wheel a divisor of the wall). THE ALGEBRA NAMED (record 1987):
+   9.35 (2) as amended on the owner's word; the mathematician's section
+   to be named here when it exists. PIECES NO SECTION STATES, listed for
+   the mathematician: the form (B) over (A) (the integer weights); the
+   current's pace at both ends; the guard |c| < Gamma; the load bound's
+   (Gamma + M) factor. THE NAME NODE (the model owner's record 1970):
+   every new text of this item says Node.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

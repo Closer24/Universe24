@@ -76,22 +76,23 @@ def six_reads(levels: np.ndarray, wrap_x: bool) -> list[int]:
 
 
 def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_e_over_f():
-    """(i) THE RULE IN INTEGERS: on the periodic chain of 12 with QUANTA quanta held at every
-    Node (e / f = 0.8), one step of the engine on random rows of light and of the matter kind
-    equals 3 den f a_next + r' = e num S_6 + 6 den (f - e) a_now - 3 den f a_before + r with the
-    wall 3 den f and the remainder in [0, wall), computed in Python integers; on the same rows
-    with no content the levels are the plain rule's bit for bit and the remainder Gamma times
-    the plain one (from r = 0). (ii) THE ROTATION (ALGEBRA.md 9.35 (2)): a uniform record (k = 0)
-    of the matter kind at 2^24 turns with 2 cos omega' = 2 - 2 (e / f)(1 - num / den) read from
-    three consecutive levels at a Node: 1.982200 at e / f = 0.8 (the mathematician's computed
-    number) and 1.977750 = 2 num / den in the vacuum, within 10^-5 over 60 intervals; the
-    edge case: at e / f = 1 / 2 (M = Gamma) 1.988875, the mathematician's second number."""
+    """(i) THE RULE IN INTEGERS UNDER THE FIXED WALL (BUILD.md section 26 item 34): on the
+    periodic chain of 12 with QUANTA quanta held at every Node (the pace (Gamma - c) / Gamma =
+    0.75), one step of the engine on random rows of light and of the matter kind equals 3 den
+    Gamma a_next + r' = num SUM_j (Gamma - c_j) a_j + 6 den c a_now - 3 den Gamma a_before + r
+    with the wall 3 den Gamma and the remainder in [0, wall), computed in Python integers; on
+    the same rows with no content the levels are the plain rule's bit for bit and the
+    remainder Gamma times the plain one (from r = 0). (ii) THE ROTATION: a uniform record (k =
+    0) of the matter kind at 2^24 turns with 2 cos omega' = 2 - 2 ((Gamma - c) / Gamma)(1 - num
+    / den) read from three consecutive levels at a Node: 1.983313 at the pace 0.75 and
+    1.977750 = 2 num / den in the vacuum, within 10^-5 over 60 intervals; the edge case: at
+    the pace 1 / 2 (c = Gamma / 2) 1.988875."""
     rng = np.random.default_rng(11)
     for family, (num, den) in ((0, (1, 1)), (1, PAIR)):
         rows_now = rng.integers(-UNIT, UNIT, size=(12, 1, 1), dtype=np.int64)
         rows_before = rng.integers(-UNIT, UNIT, size=(12, 1, 1), dtype=np.int64)
-        f = GAMMA + QUANTA
-        wall = 3 * den * f
+        wall = 3 * den * GAMMA  # the fixed wall (item 34)
+        pace = GAMMA - QUANTA  # every read's pace on the uniform content
         rows_remainder = rng.integers(0, wall, size=(12, 1, 1), dtype=np.int64)
         slowed = DetectorLawSimulation(
             parse_nature_beam_world(content_chain(12, PERIODIC, range(12), QUANTA))
@@ -101,7 +102,7 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
         slowed._advance(live)
         reads = six_reads(rows_now, True)
         for x in range(12):
-            total = GAMMA * num * reads[x] + 6 * den * QUANTA * int(rows_now[x, 0, 0])
+            total = num * pace * reads[x] + 6 * den * QUANTA * int(rows_now[x, 0, 0])
             total -= wall * int(rows_before[x, 0, 0])
             total += int(rows_remainder[x, 0, 0])
             expected = total // wall
@@ -120,12 +121,12 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
     # (ii) the rotation at k = 0
     amplitude = 1 << 24
     num, den = PAIR
-    for quanta, expected in ((QUANTA, 1.982200), (0, 1.977750), (GAMMA, 1.988875)):
+    for quanta, expected in ((QUANTA, 1.983313), (0, 1.977750), (GAMMA // 2, 1.988875)):
         nodes = range(12) if quanta else []
         simulation = DetectorLawSimulation(
             parse_nature_beam_world(content_chain(12, PERIODIC, nodes, max(quanta, 1)))
         )
-        assert 2 - 2 * (GAMMA / (GAMMA + quanta)) * (1 - num / den) == pytest.approx(expected, abs=5e-7)
+        assert 2 - 2 * ((GAMMA - quanta) / GAMMA) * (1 - num / den) == pytest.approx(expected, abs=5e-7)
         uniform = np.full((12, 1, 1), amplitude, dtype=np.int64)
         live = planted(simulation, 1, uniform, uniform.copy(), np.zeros((12, 1, 1), dtype=np.int64))
         readings = []
@@ -157,15 +158,15 @@ def group_pace_light(k: float, ratio: float) -> float:
 def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
     """(iii) THE SLAB: the flux test's Gaussian packet of light (40 Links, k = 0.3024, UNIT) on
     the open chain of 400 from x = 60, run 400 intervals with and without a slab of 40 Nodes at
-    [150, 190) holding QUANTA quanta each (e / f = 0.8 there): the transmitted packet's
+    [150, 190) holding QUANTA quanta each (the pace 0.75 there, item 34): the transmitted packet's
     centroid (its levels' magnitude beyond the slab, x >= 190) lags the vacuum's by the slab's
     delay 40 (1 / v' - 1 / v) intervals at the vacuum's pace v, v' the group pace of the slowed
-    dispersion (ALGEBRA.md 9.35 (2): 8.3 intervals, 4.76 Links; read 4.73, COMPUTATION),
-    within 15 percent; 0.97 of the packet's energy is beyond the slab in both runs (the
-    planted packet's own backward part, 2.6 percent, returns off the face at x = 0 in both;
-    the slab's faces reflect below a part in a thousand, the index 1.12); the books' form
-    `record_form` is the same integer to the remainders' jitter (a part in a thousand) over
-    the passage."""
+    dispersion (the pace 0.75 under the fixed wall, item 34: 10.9 intervals, 6.23 Links; read
+    6.16, COMPUTATION), within 15 percent; 0.974 of the packet's energy is beyond the slab
+    in the vacuum run and 0.956 with the slab (the planted packet's own backward part, 2.6
+    percent, returns off the face at x = 0 in both; the slab's faces reflect about two
+    percent at the index 1.156); the books' form `record_form` is the same integer to the
+    remainders' jitter (4 x 10^-6 of it) over the passage."""
     k = 0.3024
     x = np.arange(400)
     envelope = np.exp(-(((x - 60) / 14.0) ** 2))
@@ -190,25 +191,25 @@ def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
         energy = live.now[:, 0, 0].astype(np.float64) ** 2 + live.before[:, 0, 0].astype(np.float64) ** 2
         beyond[slab] = float(energy[190:].sum() / energy.sum())
     pace = group_pace_light(k, 1.0)
-    slowed = group_pace_light(k, GAMMA / (GAMMA + QUANTA))
+    slowed = group_pace_light(k, (GAMMA - QUANTA) / GAMMA)
     delay = 40.0 * (1.0 / slowed - 1.0 / pace)
     lag = centroids[False] - centroids[True]
-    assert beyond[False] > 0.97 and beyond[True] > 0.97, beyond
+    assert beyond[False] > 0.97 and beyond[True] > 0.95, beyond
     assert 0.85 * delay * pace < lag < 1.15 * delay * pace, (centroids, delay * pace)
 
 
 def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_content():
-    """(iv) On the periodic chain of 60 with QUANTA quanta at the Nodes [20, 30), random rows of
-    light and of the matter kind: (a) the engine's `conserved_form` is Gamma times the plain
-    form (the pair's den / num on the squares and the Link term, in the flux's units 3 wall)
-    plus M x 3 wall (den / num) (now - before)^2 summed over the slab's Nodes, exactly; (b) the
-    share's identity per Node: its change over an interval is Gamma wall times the plain
-    fluxes now_i before_j - before_i now_j through its Links (no weight of the clock on the
-    flux) plus the remainders' term Gamma wall (a_next - a_before) (r - r') / (Gamma num),
-    exactly, at the slab's Nodes as in the vacuum; (c) the books' form `record_form` changes by
-    L SUM (a_next - a_before) (r - r') / num over 40 intervals exactly (L the numerators' lcm);
-    (d) 30 steps then 30 inverse steps return the two levels and the remainders bit for bit
-    (the content constant between events)."""
+    """(iv) UNDER THE FIXED WALL (BUILD.md section 26 item 34), on the periodic chain of 60 with
+    QUANTA quanta at the Nodes [20, 30), random rows of light and of the matter kind: (a) the
+    engine's `conserved_form` is the form with the pace p_i = Gamma - c_i: 3 L (den / num)
+    Gamma p_i (a^2 + b^2) - 6 L (den / num) p_i c_i a b at the Nodes and L p_i p_j (a_i b_j +
+    a_j b_i) on the Links, exactly (Gamma^2 times the plain form in the vacuum); (b) the
+    share's identity per Node: its change over an interval is L times the currents p_i p_j
+    (now_i before_j - before_i now_j) through its Links plus the remainders' term (L / num)
+    p_i (a_next - a_before) (r - r'), exactly, at the slab's Nodes as in the vacuum; (c) the
+    books' form `record_form` changes by (L / num) SUM p_i (a_next - a_before) (r - r') over 40
+    intervals exactly (L the numerators' lcm); (d) 30 steps then 30 inverse steps return the
+    two levels and the remainders bit for bit."""
     rng = np.random.default_rng(23)
     simulation = DetectorLawSimulation(
         parse_nature_beam_world(content_chain(60, PERIODIC, range(20, 30), QUANTA))
@@ -221,15 +222,17 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
         before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
         live = planted(simulation, family, now, before, np.zeros((60, 1, 1), dtype=np.int64))
         # (a) the form: Gamma times the plain form plus the content's weight on the kinetic part
-        reads = six_reads(before, True)
-        plain = 0
-        kinetic = 0
+        pace = [GAMMA - c for c in content]
+        paced = np.array([[[pace[i] * int(before[i, 0, 0])]] for i in range(60)], dtype=np.int64)
+        reads = six_reads(paced, True)
+        expected = 0
         for i in range(60):
             a, b = int(now[i, 0, 0]), int(before[i, 0, 0])
-            plain += 3 * wall * den // num * (a * a + b * b) - wall * a * reads[i]
-            kinetic += content[i] * 3 * wall * den // num * (a - b) ** 2
-        assert simulation.conserved_form(live) == GAMMA * plain + kinetic
-        assert kinetic > 0
+            weight = 3 * wall * den // num
+            expected += weight * GAMMA * pace[i] * (a * a + b * b)
+            expected -= 2 * weight * pace[i] * content[i] * a * b
+            expected -= wall * pace[i] * a * reads[i]
+        assert simulation.conserved_form(live) == expected
         # (b) the share's identity per Node, one interval
         old = [simulation.form_share(live, one_node(60, i)) for i in range(60)]
         a_before, a_now, r_old = live.before.copy(), live.now.copy(), live.remainder.copy()
@@ -239,8 +242,13 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
         for i in range(60):
             flux = 0
             for j in ((i - 1) % 60, (i + 1) % 60):
-                flux += int(a_now[i, 0, 0]) * int(a_before[j, 0, 0]) - int(a_before[i, 0, 0]) * int(
-                    a_now[j, 0, 0]
+                flux += (
+                    (GAMMA - content[i])
+                    * (GAMMA - content[j])
+                    * (
+                        int(a_now[i, 0, 0]) * int(a_before[j, 0, 0])
+                        - int(a_before[i, 0, 0]) * int(a_now[j, 0, 0])
+                    )
                 )
             flux += 4 * (
                 int(a_now[i, 0, 0]) * int(a_before[i, 0, 0])
@@ -251,8 +259,11 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
                 * (int(r_old[i, 0, 0]) - int(r_new[i, 0, 0])),
                 num,
             )
-            assert new[i] - old[i] == GAMMA * wall * flux + wall * remainders, (family, i)
-            assert 0 <= int(r_new[i, 0, 0]) < 3 * den * (GAMMA + content[i])
+            assert new[i] - old[i] == wall * flux + wall * (GAMMA - content[i]) * remainders, (
+                family,
+                i,
+            )
+            assert 0 <= int(r_new[i, 0, 0]) < 3 * den * GAMMA
         # (c) the books' form's remainder identity, exact, over 40 intervals
         previous = simulation.record_form(live)
         for _ in range(40):
@@ -261,7 +272,11 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
             simulation._advance(live)
             current = simulation.record_form(live)
             term = int(
-                np.sum((live.now.astype(object) - a_before) * (r - live.remainder.astype(object)))
+                np.sum(
+                    (GAMMA - simulation.node_content.astype(object))
+                    * (live.now.astype(object) - a_before)
+                    * (r - live.remainder.astype(object))
+                )
             )
             assert num * (current - previous) == wall * term
             previous = current
@@ -288,10 +303,11 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     clock names the clock and the content: the slab world of (iii) at Gamma = 10^6 (40 bodies
     of 250000 quanta, M = 2 x 10^7 on the matter pair [800, 809], twice the content for the
     family of clicks' waves) refused naming Gamma and M; the
-    registered light clock declares 10^6 and loads, its A's clock pair (10^6, 10^6 + 64) at
-    its Nodes and (10^6, 10^6) in the vacuum, its wheel at A's centre Node the rule's with
-    the stock (18774639 on [800, 801], the remainder's step 128, COMPUTATION), the kind's
-    own 2427 on [800, 809] in the vacuum beside it (the step Gamma)."""
+    registered light clock declares 10^6 and loads, its A's clock pair (10^6 - 64, 10^6) at
+    its Nodes and (10^6, 10^6) in the vacuum under the fixed wall (item 34), its wheel at
+    A's centre Node the rule's with the stock (4171875 on [800, 801], the remainder's step
+    576, COMPUTATION), the kind's own 2427 on [800, 809] in the vacuum beside it (the step
+    Gamma)."""
     document = content_chain(12, PERIODIC, [], 1)
     del document["node_clock"]
     with pytest.raises(ValueError, match="node_clock is required under `detector_law`"):
@@ -323,9 +339,9 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     simulation = DetectorLawSimulation(world)
     block = simulation.blocks[0]
     centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))
-    assert simulation.node_clock_pair(centre) == (NODE_CLOCK, NODE_CLOCK + 64)
+    assert simulation.node_clock_pair(centre) == (NODE_CLOCK - 64, NODE_CLOCK)
     assert simulation.node_clock_pair((100, 0, 0)) == (NODE_CLOCK, NODE_CLOCK)
-    assert simulation.wheel_at(1, centre) == (128, 18774639)
+    assert simulation.wheel_at(1, centre) == (576, 4171875)
     assert simulation.wheel_at(1, (100, 0, 0)) == (NODE_CLOCK, 2427)  # the kind's own [800, 809]
 
 
@@ -333,8 +349,8 @@ def test_the_content_at_a_body_falls_at_a_birth_and_rises_at_a_click():
     """(vi) On the emitter world (the stock 4 at [5, 37), the screen the cube of light bodies at
     [70, 72] whose first body takes the clicks' quanta): the content at the body's centre Node
     (x = 21) is 4 at the load and falls by one at each birth (the birth line's `content` the
-    value the clicking record was advanced under, 4, 3, 2, 1, and its `node_clock` [Gamma,
-    Gamma + content]; the born record's wheel the rule's at that content); the content at the
+    value the clicking record was advanced under, 4, 3, 2, 1, and its `node_clock` [Gamma -
+    content, Gamma]; the born record's wheel the rule's at that content); the content at the
     screen's first body (x = 70) is 1 at the load and rises by one at the interval after each
     gather line there (the click's quantum held by the body); the vacuum between them 0 at
     the load and at x = 50 until the family of clicks' front from the body's head arrives
@@ -373,7 +389,7 @@ def test_the_content_at_a_body_falls_at_a_birth_and_rises_at_a_click():
         for line in lines[len(lines) - (births_seen - before_births) :]:
             if line["event"] == "birth":
                 assert line["content"] == 4 - before_births
-                assert line["node_clock"] == [NODE_CLOCK, NODE_CLOCK + line["content"]]
+                assert line["node_clock"] == [NODE_CLOCK - line["content"], NODE_CLOCK]
                 assert lawful_wheel(simulation.world, line)
     assert births_seen == 4 and clicks_seen >= 1
     assert int(simulation.node_content[70, 0, 0]) == 1 + clicks_seen
@@ -425,62 +441,40 @@ def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_el
     assert not empty.clock_record.now.any() and not empty.node_content.any()
 
 
-def test_the_joint_step_inverts_while_the_clock_rises_and_loses_states_where_it_falls():
-    """(viii) THE JOINT INVERSE (ALGEBRA.md 9.41 (2), 9.45 (2)) and THE FINDING for the
-    mathematician's ruling: on the periodic chain of 60 with a body of QUANTA quanta at
-    [20, 30) and a light record of random rows registered (no detector set and no face:
-    nothing clicks), the family of clicks' front rises the clock ahead of it and the joint
-    step inverts bit for bit, the record's two levels and remainders and the family's own,
-    for every interval before the level first falls at some Node (10 intervals read here;
-    every family backward at the level of the interval's start, then the clock backward and
-    its hold). WHERE THE LEVEL FALLS the wall 3 den (Gamma + c) shrinks and the remainders'
-    states merge (a remainder at or above the new wall and one below it give one total): 30
-    intervals forward and back return the family's field exactly and the record within a few
-    units of its 2^20 (4 read on this head; asserted below 16), the loss about one part in
-    Gamma per unit of the fall; no law is claimed for it here, the ruling is asked."""
+def test_the_joint_step_inverts_bit_for_bit_wherever_the_clock_falls():
+    """(viii) THE EXACT BACKWARD RUN EVERYWHERE (the model owner's record 1994 and his word of
+    2026-09-25; BUILD.md section 26 item 34): on the periodic chain of 60 with a body of QUANTA
+    quanta at [20, 30) and a light record of random rows registered (no detector set and no
+    face: nothing clicks), the family of clicks' field rises and FALLS at Nodes over 30
+    intervals (the falls counted, above 0), and the joint step inverts bit for bit, the
+    record's two levels and remainders and the family's own field, over the whole run: the
+    wall 3 den Gamma is the same at every interval, so the remainder's range never shrinks
+    and no two states merge (the loss of item 32's finding A, where the wall 3 den (Gamma +
+    c) shrank, HISTORY). The edge case: the field did move (the end state differs from the
+    start before the inverse)."""
     rng = np.random.default_rng(31)
-
-    def fresh():
-        simulation = DetectorLawSimulation(
-            parse_nature_beam_world(content_chain(60, PERIODIC, range(20, 30), QUANTA))
-        )
-        live = planted(simulation, 0, now, before, np.zeros((60, 1, 1), dtype=np.int64))
-        simulation.records[live.identity] = live
-        return simulation, live
-
     now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
-    simulation, live = fresh()
-    clock = simulation.clock_record
-    levels = [clock.now.copy()]
-    for _ in range(30):
-        simulation.step()
-        levels.append(clock.now.copy())
-    assert live.identity in simulation.records and not live.clicked
-    fall = next(t for t in range(1, 31) if (levels[t] < levels[t - 1]).any())
-    assert 5 <= fall <= 20, fall
-    # exact for the intervals before the first fall
-    simulation, live = fresh()
+    simulation = DetectorLawSimulation(
+        parse_nature_beam_world(content_chain(60, PERIODIC, range(20, 30), QUANTA))
+    )
+    live = planted(simulation, 0, now, before, np.zeros((60, 1, 1), dtype=np.int64))
+    simulation.records[live.identity] = live
     clock = simulation.clock_record
     start = (live.now.copy(), live.before.copy(), live.remainder.copy(), clock.now.copy())
-    for _ in range(fall - 1):
+    falls = 0
+    previous = clock.now.copy()
+    for _ in range(30):
         simulation.step()
-    assert not np.array_equal(clock.now, start[3])
-    for _ in range(fall - 1):
+        falls += int(np.sum(clock.now < previous))
+        previous = clock.now.copy()
+    assert live.identity in simulation.records and not live.clicked
+    assert falls > 0 and not np.array_equal(clock.now, start[3])
+    for _ in range(30):
         simulation.step_inverse()
     for x, y in zip((live.now, live.before, live.remainder, clock.now), start, strict=True):
         assert np.array_equal(x, y)
     assert simulation.tick == 0
-    # the loss where it fell, bounded (the finding)
-    simulation, live = fresh()
-    clock = simulation.clock_record
-    for _ in range(30):
-        simulation.step()
-    for _ in range(30):
-        simulation.step_inverse()
-    assert np.array_equal(clock.now, start[3]) and simulation.tick == 0
-    assert int(np.abs(live.now - start[0]).max()) < 16
-    assert int(np.abs(live.before - start[1]).max()) < 16
 
 
 def test_the_loader_names_the_family_of_clicks_and_refuses_what_it_cannot_be():

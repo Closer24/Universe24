@@ -348,12 +348,13 @@ def born_train(document: dict, number: int) -> None:
             f"measured[{number}]: the train's flux along its way is not positive; nothing written"
         )
     norm = born_train_norm(now, before, shape, (0, 0, 0), extents, (num, den), wrap)
-    # the check board's engine books the flux in the Node clock's units, the wall
-    # times Gamma (BUILD.md section 26 item 31); the file's norm is the plain vacuum
-    # form (the loader's check), so the passage is read against norm times Gamma
+    # the check board's engine books the flux in the form's units under the fixed
+    # wall, the wall times the pace at both ends of a Link, Gamma squared in the
+    # vacuum (BUILD.md section 26 item 34); the file's norm is the plain vacuum form
+    # (the loader's check), so the passage is read against norm times Gamma squared
     gamma = int(document["node_clock"])
     booked = train_passage_flux(document, number, now, before)
-    scaled = norm * gamma
+    scaled = norm * gamma * gamma
     if (
         not scaled * (1000 - TRAIN_FLUX_TOLERANCE)
         <= booked * 1000
@@ -361,7 +362,8 @@ def born_train(document: dict, number: int) -> None:
     ):
         raise ValueError(
             f"measured[{number}]: the train of {train.periods} periods books {booked} of its norm "
-            f"{norm} times the Node clock {gamma} through a plane {TRAIN_FLUX_DISTANCE} Links ahead "
+            f"{norm} times the Node clock {gamma} squared through a plane {TRAIN_FLUX_DISTANCE} Links "
+            "ahead "
             f"({booked / scaled:.4f}): not a passage within 2 x 10^-3 (ALGEBRA.md 9.25 (11)); "
             "nothing written"
         )

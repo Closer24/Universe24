@@ -249,17 +249,20 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             den = int(simulation.kind_den[family][i, 0, 0])
             content = int(simulation.node_content[i, 0, 0])
             assert content == (1 if i in (5, 6, 7, 20, 30, 31, 32) else 0)
-            f = NODE_CLOCK + content
-            read = sum(Fraction(m) * int(before[j, 0, 0]) for (ii, j), m in matrix.items() if ii == i)
-            expected += (
-                Fraction(den * f, NODE_CLOCK * num)
-                * (int(now[i, 0, 0]) ** 2 + int(before[i, 0, 0]) ** 2)
-                - Fraction(2 * den * content, NODE_CLOCK * num)
-                * int(now[i, 0, 0])
-                * int(before[i, 0, 0])
-                - Fraction(1, 3) * int(now[i, 0, 0]) * read
+            pace = NODE_CLOCK - content
+            # the six reads weighted by the read Node's pace (the fixed wall, item 34)
+            read = sum(
+                Fraction(m) * (NODE_CLOCK - int(simulation.node_content[j, 0, 0])) * int(before[j, 0, 0])
+                for (ii, j), m in matrix.items()
+                if ii == i
             )
-        assert simulation.conserved_form(live) == 3 * wall * NODE_CLOCK * expected
+            expected += (
+                Fraction(den * NODE_CLOCK * pace, num)
+                * (int(now[i, 0, 0]) ** 2 + int(before[i, 0, 0]) ** 2)
+                - Fraction(2 * den * pace * content, num) * int(now[i, 0, 0]) * int(before[i, 0, 0])
+                - Fraction(pace, 3) * int(now[i, 0, 0]) * read
+            )
+        assert simulation.conserved_form(live) == 3 * wall * expected
         pair = simulation.detector_names.index("pair")
         far = simulation.detector_names.index("far")
         offers = simulation.detector_inflow_tally(live)
@@ -268,9 +271,12 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             g = Fraction(
                 int(now[i, 0, 0]) * int(before[j, 0, 0]) - int(before[i, 0, 0]) * int(now[j, 0, 0])
             )
-            inward += max(g, Fraction(0))
-        # the tally in the form's units, the wall times Gamma (the flux itself unweighted)
-        assert offers.get(pair, 0) == inward * wall * NODE_CLOCK
+            pace_i = NODE_CLOCK - int(simulation.node_content[i, 0, 0])
+            pace_j = NODE_CLOCK - int(simulation.node_content[j, 0, 0])
+            inward += pace_i * pace_j * max(g, Fraction(0))
+        # the tally in the form's units: the wall times the pace at the Port's two ends
+        # (the fixed wall, item 34)
+        assert offers.get(pair, 0) == inward * wall
         assert offers.get(far, 0) == 0
 
 

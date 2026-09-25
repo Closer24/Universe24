@@ -25,7 +25,6 @@ from tests.test_emitter import (
     NODE_CLOCK,
     lawful_wheel,
     massive_generator,
-    wheel_of,
 )
 
 EMITTER_KIND = [7, 8]  # the emitter body's kind (omega_0 = 0.505)
@@ -570,7 +569,7 @@ def test_the_increment_ladder_over_the_named_sets():
         total, increments, ladder, u, norm, wheel = seen[gather["record"]]
         # the record's wheel the rule's at the body's Node with its content at
         # the birth (the stock 8 down to 1)
-        assert ladder == names and wheel in {wheel_of(EMITTER_PAIR, m) for m in range(1, 9)}
+        assert ladder == names and (3 * EMITTER_PAIR[1] * NODE_CLOCK) % wheel == 0
         assert 0 <= u < wheel
         assert gather["chosen"][0][0] == chosen_by_the_rule(
             simulation, total, increments, ladder, u, norm, wheel

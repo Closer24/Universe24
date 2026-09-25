@@ -91,9 +91,9 @@ def test_the_generators_train_is_the_character_under_the_tapers_and_the_window()
         level_before[index] = b
     live = simulation.planted_record(0, level_now.reshape(shape), level_before.reshape(shape))
     norm = born_train_norm(now, before, shape, (0, 0, 0), extents, (1, 1), world.kind_periodic(0))
-    # the engine's form under the Node clock is Gamma times the file's vacuum norm on
-    # the vacuum (no content anywhere; ALGEBRA.md 9.35 (2), BUILD.md section 26 item 31)
-    assert norm == train["norm"] > 0 and simulation.conserved_form(live) == NODE_CLOCK * norm
+    # the engine's form under the fixed wall is Gamma squared times the file's vacuum norm
+    # on the vacuum (no content anywhere; BUILD.md section 26 item 34)
+    assert norm == train["norm"] > 0 and simulation.conserved_form(live) == NODE_CLOCK**2 * norm
     # the window across y on a layer: Y = 5 not spanned, then Y = 9 spanned (uniform)
     layer = layer_world()
     layer["measured"][0]["extents"] = [TRAIN, 5, 1]
@@ -125,10 +125,10 @@ def test_the_passage_books_the_norm_and_a_short_train_does_not(capsys):
     generator = massive_generator()
     document = emitter_world(stock=1)
     train = profile_of(document)
-    # the check board's engine books in the Node clock's units, the wall times Gamma
-    # (BUILD.md section 26 item 31); the file's norm is the plain vacuum form
+    # the check board's engine books in the form's units, the wall times Gamma squared in
+    # the vacuum (BUILD.md section 26 item 34); the file's norm is the plain vacuum form
     booked = generator.train_passage_flux(document, 0, train["now"], train["before"])
-    ratio = booked / (NODE_CLOCK * train["norm"])
+    ratio = booked / (NODE_CLOCK**2 * train["norm"])
     print(f"the emitter chain's train books {ratio:.5f} of its norm (HOST)")
     assert abs(ratio - 1.0) < 2e-3, ratio
     omega = math.acos(COS_OMEGA)
@@ -148,8 +148,8 @@ def test_the_passage_books_the_norm_and_a_short_train_does_not(capsys):
         now, before, (80, 1, 1), (0, 0, 0), (short, 1, 1), (1, 1), (False, True, True)
     )
     booked = generator.train_run(document, "light", 0, 1, (short, 1, 1), (5, 0, 0), now, before)
-    print(f"the 3-period train books {booked / (NODE_CLOCK * norm):.4f} of its norm (HOST)")
-    assert booked / (NODE_CLOCK * norm) > 1.002
+    print(f"the 3-period train books {booked / (NODE_CLOCK**2 * norm):.4f} of its norm (HOST)")
+    assert booked / (NODE_CLOCK**2 * norm) > 1.002
 
 
 def test_the_engine_writes_the_train_and_a_receiver_ahead_reads_its_passage():
@@ -229,7 +229,7 @@ def test_the_light_clock_in_the_tables_form_and_the_generators_checks(capsys):
     DetectorLawSimulation(world)
     generator = massive_generator()
     booked = generator.train_passage_flux(document, 0, train["now"], train["before"])
-    ratio = booked / (NODE_CLOCK * train["norm"])  # the engine's units, the wall times Gamma
+    ratio = booked / (NODE_CLOCK**2 * train["norm"])  # the engine's units, the wall times Gamma squared
     assert abs(ratio - 1.0) < 2e-3
     print(f"the light clock (HOST): the passage {ratio:.4f} of the norm")
     near = json.loads(json.dumps(document))

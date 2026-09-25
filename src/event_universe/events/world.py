@@ -2320,24 +2320,25 @@ def _pair_bound(
     content: int = 0,
 ) -> None:
     """The load bound of a pair (Reviewer 3's MUST 3) under the Node clock
-    (ALGEBRA.md 9.35 (2); BUILD.md section 26 item 31): the rule's total at
-    a Node under the amplitude bound A (the world's `amplitude_bound`),
-    Gamma x num x 6 x A + 6 x den x M x A + 3 x den x (Gamma + M) x (A + 1),
-    below 2^63, Gamma the world's `node_clock` and M the content at the
+    with the fixed wall (ALGEBRA.md 9.35 (2); BUILD.md section 26 items 31
+    and 34): the rule's total at a Node under the amplitude bound A (the
+    world's `amplitude_bound`), (Gamma + M) x num x 6 x A + 6 x den x M x A
+    + 3 x den x Gamma x (A + 1) (the pace Gamma - c of a read at most Gamma
+    + M in size), below 2^63, Gamma the world's `node_clock` and M the content at the
     Node (the world's whole content at the second pass, `_node_clock_bound`;
     the plain rule at Gamma = 1 and M = 0, the first pass on the pair
     alone); refused otherwise naming the bound, the clock, the content and
     the pair."""
-    total = node_clock * numerator * 6 * bound
+    total = (node_clock + content) * numerator * 6 * bound
     total += 6 * denominator * content * bound
-    total += 3 * denominator * (node_clock + content) * (bound + 1)
+    total += 3 * denominator * node_clock * (bound + 1)
     if total >= TOTAL_BOUND:
         raise ValueError(
             f"{BEAM_LAW}: {label}.pair [{numerator}, {denominator}]"
-            + ": the rule's total Gamma x num x 6 x A + 6 x den x M x A + 3 x den x (Gamma + M) "
+            + ": the rule's total (Gamma + M) x num x 6 x A + 6 x den x M x A + 3 x den x Gamma "
             f"x (A + 1) at the amplitude bound A = {bound}, the Node clock Gamma = {node_clock} "
             f"and the content M = {content} is {total}, not below 2^63 (the bound of the rows' "
-            "int64; ALGEBRA.md 9.35 (2))"
+            "int64; ALGEBRA.md 9.35 (2) under the fixed wall, BUILD.md section 26 item 34)"
         )
 
 

@@ -52,7 +52,8 @@ from event_universe.events.world import input_stamp, parse_nature_beam_world
 ROOT = Path(__file__).resolve().parents[1]
 # THE NODE CLOCK (the model owner's decision (5) of record 1962; ALGEBRA.md 9.35 (2), (3);
 # BUILD.md section 26 item 31): Gamma, the world key `node_clock` of every test world, the
-# eighteen's 10^6; the clock pair (e, f) = (Gamma, Gamma + M) at every Node
+# eighteen's 10^6; the clock pair (e, f) = (Gamma - c, Gamma) at every Node under the fixed
+# wall 3 den Gamma (BUILD.md section 26 item 34), c the family of clicks' level there
 NODE_CLOCK = 10**6
 # THE FAMILY OF CLICKS (the model owner's record 1982; ALGEBRA.md 9.45; BUILD.md section 26
 # item 32): the fourth family of every test world, named by the key `clock_family`; its
@@ -61,20 +62,46 @@ CLOCK_FAMILY_NAME = "clicks"
 CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1}
 
 
-def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
-    """The wheel W of a rule at a Node under the Node clock (ALGEBRA.md 9.22 (4), 9.35 (2); the
-    engine's `wheel_at`): 3 den f / gcd(Gamma num, 6 den M, 3 den f) with f = Gamma + M, the
-    pair's own 3 den / gcd(num, 3 den) at M = 0 (2403 on [800, 801], 700 on [801, 700])."""
+def wheel_of(pair, content: int, reads, gamma: int = NODE_CLOCK) -> int:
+    """The wheel W of a rule at a Node under the fixed wall (ALGEBRA.md 9.22 (4); BUILD.md
+    section 26 item 34; the engine's `wheel_at`): 3 den Gamma over the gcd of the total's
+    coefficients, num (Gamma - c_j) over the six reads j, 6 den c at the Node and the wall;
+    the pair's own 3 den / gcd(num, 3 den) in the vacuum (2403 on [800, 801], 700 on [801,
+    700])."""
     num, den = int(pair[0]), int(pair[1])
-    f = gamma + content
-    return 3 * den * f // math.gcd(gamma * num, 6 * den * content, 3 * den * f)
+    wall = 3 * den * gamma
+    return wall // math.gcd(wall, 6 * den * content, *(num * (gamma - c) for c in reads))
 
 
 def lawful_wheel(world, line: dict) -> bool:
-    """A birth line's W is the rule's at the emitting body's centre Node with the content the
-    line carries (the body's held quanta as the clicking record was advanced), its u below it."""
+    """A birth line's W is the rule's at the emitting body's read Node with the family of
+    clicks' levels the line carries (`read_clocks`: the level at the read Node and at its
+    six reads as the clicking record was advanced), its u below it."""
     block = world.measured[line["measured"]].block
-    return line["W"] == wheel_of(block.pair, line["content"]) and 0 <= line["u"] < line["W"]
+    at_node, reads = line["read_clocks"]
+    return line["W"] == wheel_of(block.pair, at_node, reads) and 0 <= line["u"] < line["W"]
+
+
+def wall_form(simulation, family: int, now, before, content=None) -> int:
+    """A record's conserved form under the fixed wall (BUILD.md section 26 item 34) from its
+    two levels and the family of clicks' levels `content` (the engine's array when None), in
+    the engine's units (the scale 3 Gamma L, L the numerators' lcm): 3 L (den / num) Gamma
+    p_i (a^2 + b^2) - 6 L (den / num) p_i c_i a b at the Nodes and L p_i p_j (a_i b_j + a_j
+    b_i) on the Links, p_i = Gamma - c_i the pace; Python integers over the six reads."""
+    gamma = simulation.node_clock
+    levels = simulation.node_content if content is None else content
+    pace = (gamma - levels).astype(object)
+    num = simulation.kind_num[family].astype(object)
+    den = simulation.kind_den[family].astype(object)
+    wall = simulation.kind_wall(family)
+    a = now.astype(object)
+    b = before.astype(object)
+    read = simulation._neighbours((gamma - levels) * before, simulation.kind_wrap[family])
+    weight = 3 * wall * den // num
+    total = weight * gamma * pace * (a * a + b * b)
+    total = total - 2 * weight * pace * levels.astype(object) * a * b
+    total = total - wall * pace * a * read.astype(object)
+    return int(np.sum(total))
 
 
 def massive_generator():
@@ -200,7 +227,7 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
     assert all(lawful_wheel(simulation.world, line) for line in births)
     assert [line["content"] for line in births] == [4, 3, 2, 1]
     assert [line["node_clock"] for line in births] == [
-        [NODE_CLOCK, NODE_CLOCK + m] for m in (4, 3, 2, 1)
+        [NODE_CLOCK - m, NODE_CLOCK] for m in (4, 3, 2, 1)
     ]
     assert [line["excitation"] for line in births] == [1, 2, 3, 4]
     ticks = [line["tick"] for line in births]
@@ -384,20 +411,14 @@ def test_the_born_record_is_written_once_and_the_law_advances_it():
             assert list(born.now[5:37, 0, 0]) == train["now"]
             assert list(born.before[5:37, 0, 0]) == train["before"]
             assert not np.any(born.now[~block.mask]) and not np.any(born.before[~block.mask])
-            # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 item 31): T the
+            # THE NORM UNDER THE FIXED WALL (BUILD.md section 26 item 34): T the
             # record's conserved form as written on the board, the engine's exact
-            # integer: Gamma times the file's vacuum norm (ALGEBRA.md 9.17 (6a),
-            # 9.19 (3); light's pair is the vacuum's at the body's Nodes) plus the
-            # content after the birth (the stock less one) times 3 wall (now -
-            # before)^2 over the body's Nodes (light's wall 1)
-            kinetic = sum((a - b) ** 2 for a, b in zip(train["now"], train["before"], strict=True))
+            # integer with the family of clicks' levels as the birth leaves them
+            # (the pace Gamma - c at every Node and read; Gamma^2 times the file's
+            # vacuum norm where the field is 0), read again here in Python integers
             assert birth["born_norm"] == train["norm"] > 0 and birth["content"] == 1
             assert born.norm == birth["norm"] == simulation.conserved_form(born) > 0
-            assert (
-                born.norm
-                == NODE_CLOCK * train["norm"]
-                + 3 * simulation.kind_wall(0) * (birth["content"] - 1) * kinetic
-            )
+            assert born.norm == wall_form(simulation, 0, born.now, born.before)
             assert birth["nodes"] == 32 and birth["excitation"] == 1 and birth["train"] == 0
             assert born.u == birth["u"] and born.wheel == birth["W"]
             assert lawful_wheel(simulation.world, birth)
