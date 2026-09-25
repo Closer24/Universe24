@@ -622,7 +622,10 @@ naming MIGRATION): every lamp births records (under the detector law, since
 BUILD.md section 26, the lamp is refused and an emitter body of a massive
 kind births them, its excited record clicking at its own rung on the running total of its
 centre cell's share of its conserved form, the click rule of ALGEBRA.md 9.17 (7) (f), BUILD.md
-section 26 item 24); every row of a record
+section 26 item 24; SINCE THE REMAINDER KEPT, the model owner's decision (1) of record 1962,
+BUILD.md section 26 item 29, the excited record seeded after each birth keeps the ended
+record's division remainder at the body's cells, bit for bit and in its scale, never reset,
+so the residues of the stock's births spread from it with no coupling and no draw); every row of a record
 carries a `record`, a `branch`, a `multiplicity` and its birth phase `u`
 (a row of no record carries none: a declared row, a free family's rows);
 the merge is the normal form that cancels antiphase rows of one record

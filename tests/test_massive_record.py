@@ -302,11 +302,13 @@ def test_the_light_record_is_byte_identical_without_the_key():
     [512, 1] of N = 1024, every birth the train written on the cells), the digests read at
     that head; SINCE THE TIGHTENINGS (BUILD.md section 26 item 28) the closed chain bounds
     matter too (one border for every family: the events and the audit moved, the state
-    digest unchanged), read again at this head."""
+    digest unchanged); SINCE THE REMAINDER KEPT (the model owner's decision (1) of record
+    1962; BUILD.md section 26 item 29) the residues of the stock's births spread from the
+    kept remainder and all three digests moved; read again at this head."""
     assert run_chain_digests() == {
-        "events": "0f5f662b5a6941c0e5074e6c07f98c690735f9eb941537d779ab2076203c3ecb",
-        "state": "08dfb0ede3f9c369f49ba10f9afeac2395321568a2cdb6cfb36214d986a526a9",
-        "audit": "4f4d7820ced81f30c19a2f9a6fce8ed73340d6bd6699b6ed697f5387e5c97441",
+        "events": "222f418d456bd6af6a96864ac9cc4f5deace201c51efd75bae0d2afa86d54084",
+        "state": "ad6bdb078bdb76faf3b340496eec3cf1ac93ee23a3237112b3718583037d7526",
+        "audit": "6cc234b4295532a48f3df47642a056f8dbae61840ea06eb705c07951afdb219f",
     }
 
 

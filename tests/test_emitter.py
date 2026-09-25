@@ -268,6 +268,41 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
     assert len([line for line in lines if line["event"] == "birth"]) == 2
 
 
+def test_the_remainder_is_the_cells_kept_through_the_click_and_the_reseed():
+    """THE REMAINDER IS THE CELL'S (the model owner's decision (1) of record 1962; ALGEBRA.md
+    9.34 (A), 9.35 (7); BUILD.md section 26 item 29): at every birth of the stock the fresh
+    excited record's division remainder is the ended record's at every Node of the board,
+    bit for bit and in its scale, nonzero on the body's cells (the remainder after the
+    advances since the load); the load's seed alone starts at 0 (the file's integers). The
+    stock's four residues are not all equal (they spread from the kept remainder). The edge
+    case: the last birth leaves no fresh record (the stock spent), so three reseeds keep it."""
+    document = emitter_world(stock=4)
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
+    block = simulation.block_by_number[0]
+    assert block.own is not None and not np.any(block.own.remainder)
+    kept: list[int] = []
+    original = simulation._emit
+
+    def spy(target):
+        ended = target.own
+        assert ended is not None
+        remainder, scale = ended.remainder.copy(), ended.scale
+        original(target)
+        if target.own is not None:
+            assert np.array_equal(target.own.remainder, remainder) and target.own.scale == scale
+            assert np.any(target.own.remainder[target.mask])
+            kept.append(simulation.tick)
+
+    simulation._emit = spy  # type: ignore[method-assign]
+    for _ in range(document["ticks"]):
+        simulation.step()
+        assert simulation.books()["balanced"], simulation.tick
+    births = [line for line in lines if line["event"] == "birth"]
+    assert len(births) == 4 and len(kept) == 3 and block.own is None
+    assert len({line["u"] for line in births}) > 1
+
+
 def test_the_born_record_is_written_once_and_the_law_advances_it():
     document = emitter_world(stock=1, ticks=400)
     world = parse_nature_beam_world(document)

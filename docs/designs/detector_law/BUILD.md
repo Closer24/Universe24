@@ -2596,6 +2596,37 @@ would have found no cell.
    9.30 (2) (f)) is not in this item: it changes every test world and is
    raised separately.
 
+29. THE REMAINDER IS THE CELL'S (the model owner's decision (1) of record
+   1962, "this closes everything", and his order of record 1968 that the
+   engine change at the single Node, the remainder kept first; ALGEBRA.md
+   9.34 (A), 9.35 (6) and (7); built on `emitter-click`). THE LAW: a
+   record's division remainder at a Node is one of the law's own numbers
+   (record 1966, the owner's "a Node does not keep a remainder" withdrawn)
+   and is never reset by the engine: at an emitter's click the ended
+   excited record's remainder stays at the body's cells and the fresh
+   excited record (the seed again at both levels) takes it over the whole
+   board, bit for bit and in its scale (the coupling's scale folded into
+   the wall), so the residues of the stock's births spread from the kept
+   remainder with no coupling and no draw (9.34 (A)'s computation, 532
+   residues in 600 cycles); the load's seed alone starts at 0, the file's
+   integers (9.35 (6)), and the residue is read after the first advance as
+   before (the born record's u and W at the click from the ended record's
+   remainder at the centre cell, unchanged). THE ENGINE: one place, the
+   reseed in `_emit` (the fresh record's remainder and scale the ended
+   record's); nothing else moves (the rule, the wall, the click, the
+   born record's write unchanged). THE TESTS: test_emitter reads at every
+   birth of a stock of four that the fresh record's remainder is the ended
+   record's at every Node and nonzero on the body's cells (three
+   reseeds), and the four residues not all equal; the chain digests of
+   test_massive_record moved once more, all three (the residues moved),
+   read again at this head; the light clock's diagnostic run without pins
+   read again: LAWFUL, 64 births and 64 clicks at at_well alone, the mean
+   click interval 302.2 with the rms 26.0 and the least wait 249 (300.3,
+   25.9 and 252 at item 27's head; GAMEBOARD readings for the
+   mathematician, no verdict, no pin moved). Decision
+   (5), the Node clock, follows as item 30; (2), (3) and (6) after it; (4),
+   the birth's form, held on record 1963.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

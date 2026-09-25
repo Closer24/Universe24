@@ -753,8 +753,11 @@ class DetectorLawSimulation:
         (the emitter's declared integer `norm`, the generator's, under the
         input stamp); its residue and wheel from the
         law (`residue_of`) are read at the first rung AFTER ITS FIRST ADVANCE
-        (the seed's remainders are 0 at the write; the mathematician's word
-        on item 15's finding), the offer C counting from that interval."""
+        (the load's seed has the remainders 0, the file's integers; a reseed
+        keeps the ended record's remainder at the cells, the model owner's
+        decision (1) of record 1962, so the residues of the stock's births
+        spread from it; the mathematician's word on item 15's finding), the
+        offer C counting from that interval."""
         emitter = block.definition.emitter
         assert emitter is not None
         if block.definition.profile is None:
@@ -813,8 +816,9 @@ class DetectorLawSimulation:
         AFTER the interval's advance (the block's record is advanced before
         this is called). At the first call after a (re)seed the record's
         residue u and wheel W are read from its own remainder at the centre
-        cell, now nonzero after its first advance (9.19 (4e)), and C counts
-        from this interval."""
+        cell, now nonzero after its first advance (9.19 (4e); the kept
+        remainder advanced once after a reseed, record 1962 (1)), and C
+        counts from this interval."""
         own = block.own
         emitter = block.definition.emitter
         if own is None or emitter is None or block.emit_now:
@@ -840,8 +844,10 @@ class DetectorLawSimulation:
         wheel from the law (9.22 (4): the clicking record's remainder at the
         centre cell, read at the click), the content one quantum moved from
         the body's stock; then, while the stock lasts, the next excited
-        record (the seed again). Nothing drives the born record afterwards:
-        the law advances it."""
+        record (the seed again at both levels, its division remainder the
+        ended record's kept at the cells: the model owner's decision (1) of
+        record 1962). Nothing drives the born record afterwards: the law
+        advances it."""
         world = self.world
         emitter = block.definition.emitter
         own = block.own
@@ -954,6 +960,13 @@ class DetectorLawSimulation:
             profile = np.array(block.definition.profile, dtype=np.int64).reshape(self.shape)
             fresh.now[:] = profile
             fresh.before[:] = profile
+            # THE REMAINDER IS THE CELL'S (the model owner's decision (1) of
+            # record 1962; ALGEBRA.md 9.34 (A), 9.35 (7); BUILD.md section 26
+            # item 29): the ended record's division remainder stays at its
+            # cells through the click and the reseed, in its scale, never
+            # reset; it alone spreads the residues of the stock's births
+            fresh.remainder[:] = own.remainder
+            fresh.scale = own.scale
             block.own = fresh
             self.records[fresh.identity] = fresh
             block.previous_sum = int(np.sum(fresh.now[block.mask]))

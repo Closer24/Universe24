@@ -139,8 +139,12 @@ def gathers(lines: list[dict]) -> list[dict]:
 def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells_off_the_ladder():
     """(a) On the closed chain of 200 every record A emits writes EXACTLY ONE gather line, at
     `screen`'s rung (`click_at` rung, `chosen` screen, `tick` the rung's interval equal to
-    `click`), more than 60 intervals after its birth (the train's head over 40 Links at
-    v_g = 0.447), the ladder the one cell (the block's `receiver`, read
+    `click`), never before the lattice's cone allows (one Link per interval from the body's
+    head at its birth to the screen's nearest Node at 91; the body steps toward the screen
+    at the momentum 70, so the later births are nearer: the fourth's head 18 Links away,
+    its click 51 intervals after its birth on this head's residue 114 of 2403, COMPUTATION;
+    SINCE THE REMAINDER KEPT, BUILD.md section 26 item 29, the residues spread from the
+    kept remainder), the ladder the one cell (the block's `receiver`, read
     through `receiver_cell`), the line carrying the quantum (`content` 1) and the record
     deleted whole at it (never in `records` after its line), the definition and
     `receiver_cell` carrying the name; (d) the detector list reversed gives byte-identical
@@ -172,9 +176,11 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
         found = gathers(lines)
         assert len(found) >= 3, found
         assert len({g["record"] for g in found}) == len(found)  # one line per record
+        births = {line["record"]: line for line in lines if line["event"] == "birth"}
         for line in found:
             assert line["chosen"] == [["screen", 0, "0"]] and line["click_at"] == "rung"
-            assert line["tick"] == line["click"] and line["click"] - line["birth"] > 60
+            head = births[line["record"]]["node"][0] + 31  # the body's head at the birth
+            assert line["tick"] == line["click"] and line["click"] - line["birth"] >= 91 - head
             assert "ladder" not in line and line["content"] == 1
             assert line["record"] not in simulation.records and line["clock_source"] == "interval"
             pointers, ladder, u, norm, wheel = seen[line["record"]]
