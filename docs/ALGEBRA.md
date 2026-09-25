@@ -3179,3 +3179,1224 @@ c^2 = 1 / 3 as the design states, 3 omega_1 omega_2 - k_1 k_2 = 0). A
 consequence of the algebra written before any board run; the board's
 two-block world reads it; the force is the push of light at the Ports
 and nothing beside it (no 1 / r form: 8.9's rows not reached).
+
+---
+
+## 9. The tools as operations of the group: a body at rest that does one thing (the mathematician, 2026-09-24, on the model owner's words of 19:10Z to 19:35Z through the Boss)
+
+THE OWNER'S WORD (translated): "derive everything that happens in the
+body through the group and its operations ... the body does not move but
+does something, and each does something different, polar or not polar.
+It must come from the group." This chapter derives every lab tool from
+chapters 1 to 8 alone. Each statement is marked IN THE ALGEBRA (its
+section), DERIVED HERE (the proof is here) or MISSING (what the algebra
+lacks). The engine lines, the numbers and the unit tests of each tool are
+[the lab tools' specification](designs/lab_tools/LAB_TOOLS.md), which
+cites this chapter and copies none of it.
+
+### 9.1 The notion: a tool is a body at rest, and what it does is an equivariant map
+
+**The object (IN THE ALGEBRA, 8.3 and 1.7).** A tool is a finite set R of
+Nodes, a G_48-set, with integers written on its cells (a pair, a seed;
+the take of this first reading is removed, 9.12), declared world data of
+kind 3. AT REST: its cells do not move and
+its integers do not change with the interval, so the tool is a fixed
+point of the time translation's action on the apparatus (its momentum 0,
+8.3 (v)). Its SHAPE is fixed by its STABILISER H, the subgroup of G_48
+(with the translations along any axis on which R is unbounded) that maps
+R to itself and its integers to themselves.
+
+**The theorem (DERIVED HERE).** Every operation of the law commutes with
+every g of G_48 (1.1, the law's claim) and with the translations (1.6).
+The tool's integers are invariant under H by the definition of H. So the
+one rule on the board with the tool written on it commutes with every h
+in H: THE TOOL'S ACTION A ON THE RECORDS THAT PASS IT IS AN H-EQUIVARIANT
+MAP, A(h . s) = h . A(s). Proof: for h in H the board with the tool is
+carried to itself by h, and the rule commutes with h, so the map from a
+record's state before the tool to after it commutes with h. Consequence
+(Schur's lemma on each isotypic part of H's representation): on each
+irreducible part the action is fixed up to one number per multiplicity,
+and a map between parts of different irreducible types is 0. So what a
+tool CAN do is the space of H-equivariant maps, and what is written on
+its cells chooses one of them; nothing about its action outside that
+space can be declared.
+
+**Polar or not polar (DERIVED HERE, the owner's distinction).** H acts on
+the label module (the hand, a pseudoscalar, h -> det(g) h, IN THE
+ALGEBRA, 1.2's dictionary: "spin, polarisation: the hand"). A tool is NOT
+POLAR when its action is the identity on the label module (it acts on
+the places and the characters only): the mirror, the splitter, the
+receiver, the emitter, the well body. It is POLAR when its action on the
+label module is not the identity: the polariser (a rotation of the label
+pair) and the crystal (a map from the arriving label into the pair's
+label module).
+
+### 9.2 The operations, tool by tool
+
+**The emitter: the orbit of a Port (DERIVED HERE).** A birth at one
+Node with nothing declared about a direction is invariant under the
+Node's stabiliser, all of G_48; G_48 acts transitively on the six Ports
+(1.1), so the only invariant set of headings containing one Port is all
+six: the emitter is isotropic, the orbit sum of a Port. A direction can
+come only from the SHAPE of its cells (a line of cells born in phase,
+its stabiliser the line's), never from a declared heading. Written on
+the board: the clock pair (a character of the time translation), the
+amplitude, the train, the label state (IN THE ALGEBRA, 1.7 and 4.11).
+Load check: the train ends at the clock's zero, exact. Not polar.
+SUPERSEDED by 9.17: the emitter is a clicking body with a stock of
+excitations; the drive and the train retire, the born profile of 9.17
+(4) in the train's place.
+
+**The receiver: the click (IN THE ALGEBRA, 2.5 and 8.6).** The evaluation
+of the record on the body's cells (E), the norm (a bilinear form, B), the
+rung (D): THE RECEIVER IS WHERE THE CLICK IS. Its TAKE is a declaration of
+the world, not an operation of the law (8.6 says so): MISSING as an
+operation, IN THE ALGEBRA as a declaration. Written: the take pair and
+the wheel W. Load check: W >= 1, the take [n, d] with 0 <= n <= d. Not
+polar (it books the sum over the labels). SUPERSEDED: a receiver is its
+name on the records' ladders, with no take (9.12) and no wheel (the
+rung's wheel is the record's own, from its birth cell's pair, 9.19 (4)).
+
+**The mirror: a reflection (DERIVED HERE).** A slab of cells whose pair
+opens a gap (8.1's band, cos omega = (num / den) cos omega_l(k), IN THE
+ALGEBRA): its stabiliser contains the translations along its plane and
+the time translation. So the incoming character's component along the
+plane and its clock are kept (the action is equivariant under both);
+no clock with cos omega > num / den propagates inside (8.1), so the
+outgoing character has the same clock, the same tangential part, and
+the other root of the band: k_perp -> -k_perp, THE REFLECTION of the det
+= -1 coset through the plane (1.1). The reflection is not written on the
+board: it is the only equivariant outcome of a gap. Written: the gap pair
+and the depth. Load check: every family clock that reaches it lies below
+the gap, C[k] > 256 num / den on the tables (an integer comparison).
+Not polar.
+
+**The splitter: a mirror of finite depth (DERIVED HERE).** The same
+operation weighted by the layer's reflection r and transmission t; its
+stabiliser contains the reflection through its own mid-plane, which
+exchanges its two sides, so its scattering matrix on the two paths is
+symmetric, [[t, r], [r, t]], and the conserved form I (8.2) makes it
+norm-preserving: abs(t)^2 + abs(r)^2 = 1 and t r* + r t* = 0, the
+reflected and the transmitted parts a quarter turn apart. So THE
+SPLITTER'S FORM FOLLOWS: a thin material layer; a table with declared
+outputs cannot be H-equivariant (its outputs are directions it declares,
+which its stabiliser does not fix). Written: the layer's pair (its share
+computed from the band). Not polar.
+
+**The polariser: a rotation of the label pair (IN THE ALGEBRA, 3.6).**
+The rotation **U**_s on the label module with **U**_s^T **U**_s = n_s
+**I** exactly, then the receiver's take on one component. It is a
+receiver acting in the rotated label basis, not a separate operation
+(DERIVED HERE). Its equivariance: a reflection exchanges the two hands,
+and exchanging the rows and columns of **U**_s gives **U**_(-s), so the
+mirror image of a polariser at s is the polariser at -s (DERIVED HERE, a
+one-line check). At a general s the rotation is not an element of the
+cells' group (the 48 give only quarter turns); it IS an element of the
+wheel's group, the relative translation x^s of the two hands, with no
+table (9.14).
+Polar. SUPERSEDED: the setting s, **U**_s and "then the receiver's take"
+by the integer axis (a, b) and **M**_u = [[a, b], [-b, a]] on the label
+rows (9.14 (b), ADOPTED; 9.16 (2)), the click's weights R = J^2 in the
+take's place (9.12).
+
+**The well body (IN THE ALGEBRA, 8.3).** A G_48-set with a lowered pair,
+its clock the bound mode, its seed computed and checked at load (8.7).
+Not polar.
+
+**The crystal: the transpose of the product (DERIVED HERE).** A record is
+two samples of one character of the phase circle, the time translation
+and the translations (1.7, 8.1); the characters form a group under the
+pointwise product, so energy adding and momentum adding are the dual
+group's law ([p] [q] = [p + q] on Z_N, 1.1 and 1.5). The transpose of the
+product, m^T([p]) = SUM over a + b = p of [a] (x) [b], is a linear map
+with the group's own 0 / 1 table (verb B) whose image lies exactly on the
+pairs whose product is the arriving character: CONSERVATION IS ITS
+SUPPORT, not a check. On the translations the transpose would be the drive at
+every cell with the arriving character's phase there; under the rule of
+reading (9.7) that phase is not read, the pair is born by the crystal's
+click with its own clocks, and the arriving record's momentum is carried
+by the board's own values, the crystal's cells taking their share as the
+law advances them (9.15; record 1856: the first reading's "handed to the
+crystal at its click, the receiver's take" is SUPERSEDED), the pair's
+birth spreading from the crystal's cells with no phase gradient. The degenerate split [p / 2] (x) [p / 2] is exact on the
+circle of 2N (3.6's tables). IT TAKES WITHOUT A CLICK: what it takes is
+the born record's (m^T conserves the quantum), so it has no rung and
+books on no pointer. MISSING: a record on main carries one clock per
+family, so the born family's clock is one split of m^T declared as the
+crystal's material; the whole sum (all the splits) in one record is not
+on main. Polar.
+
+### 9.3 What follows, not chosen (DERIVED HERE)
+
+**The crystal's state.** Let the crystal's stabiliser contain the
+reflection sigma_y through the plane of the arriving axis normal to the
+layer's in-plane transverse axis (a crystal symmetric about the arriving
+axis); sigma_y exchanges the two arms' headings (+theta and -theta) and,
+being a reflection, exchanges the two hands (1.2, h -> det(g) h). Write
+the crystal's action on an arriving hand H as T(H) = a HH + b VV + c HV +
+d VH in the pair's label module (the first letter the arm at +theta).
+The layer's own reflection sigma_z (every body on a layer has it)
+exchanges the hands and keeps the arms: T(V) = a VV + b HH + c VH + d HV.
+sigma_y exchanges the hands AND the arms: HV -> HV, VH -> VH, HH <-> VV;
+equivariance gives T(V) = sigma_y T(H) = a VV + b HH + c HV + d VH.
+Comparing the two, c = d: THE TWO MIXED CHANNELS CARRY EQUAL WEIGHTS AND
+THE SAME PHASE, HV + VH, the owner's channels of record 1821, now a
+theorem of the crystal's symmetry and not a declaration. The weights a
+and b of the same-hand channels are not fixed by the symmetry: whether
+the crystal also converts into HH and VV is its material (a declared
+integer, MISSING a derivation). A crystal with c = d and a = b = 0 gives
+HV + VH; its Bell counts follow from ALGEBRA 3.6 and 4.10 and the
+tables: at the settings (0, 256), (0, 768), (512, 256), (512, 768), the
+counts 150, 874, 874, 150 and 874, 150, 150, 874 thrice, S = 181 / 64
+with Bob's two settings exchanged (the mirror image of Bob's polariser,
+the exchange of the rows of **U**_b, 9.2), 0 in the cancelled roles.
+SUPERSEDED: those counts and S = 181 / 64 are the tables'; under the
+integer axis the weights are 9.16 (4)'s (S = 14 / 5) and the pins are
+distributions (9.19 (4b)).
+
+**The hands' paces: equal, never birefringence.** A pace per hand inside the
+crystal would have to be invariant under the stabiliser; sigma_z
+exchanges the hands, so the two hands' indices are EQUAL in every body on
+a layer (DERIVED HERE): birefringence between the hands is forbidden by
+the crystal's own symmetry. Under the crystal of 9.7 (the click, then a
+birth) the pair is born in phase over the crystal's cells and no cone
+forms; a cone would need the pair's phase to carry the arriving record's
+local phase, which needs a read (9.7): the cone is NOT DERIVABLE under
+the rule of reading, and an experiment's headings are its placement's
+(9.6). THE CONTRADICTION, NAMED: this paragraph contradicted Highlights
+5.4's line of record 1829, "The crystal is birefringent; its directions
+arise by phase matching". RESOLVED by the model owner (record 1879,
+2026-09-25 on the Israel clock): the crystal of 9.7 (b) is APPROVED, a
+click then the birth of an entangled pair, not birefringent, its
+directions from the receivers' placement; the line of record 1829 is
+marked superseded in Highlights.
+
+**The length the experiment needs.** The joint gather reads the pair's
+label state and the two receivers' rotations (3.6); the arms' headings
+enter only the share of the conversions that reaches the receivers, never
+the counts. A crystal of ONE cell (m^T at one point, every heading alike)
+performs the whole operation; a length L only narrows the headings (the
+sum over L cells, its width about the born family's period in Links over
+L), which the counts do not read. DERIVED: the Bell experiment needs L =
+1; a formed cone is a separate test.
+
+**The splitter's form.** A thin material layer (9.2), its share computed.
+
+### 9.4 The group element of each tool, and whether it has a direction at all (the owner's word of 19:50Z: "this is rotation X of the group, this is rotation Y"; "think whether they have a direction at all; maybe they have none")
+
+**Two facts of the group used below (IN THE ALGEBRA, 1.1; DERIVED HERE in
+one line each).** (i) G_48 = G_24 x {I, -I}: the inversion -I commutes with
+everything and has det = -1, so EVERY REFLECTION IS THE INVERSION TIMES A
+ROTATION of G_24 = S_4: the reflection through a coordinate plane is -I
+times the half-turn about that plane's normal, one of the three
+double transpositions of S_4 (the Klein four-group V_4, the half-turns
+about the three axes); the reflection through a diagonal plane is -I
+times a half-turn about a face diagonal, a transposition of S_4. (ii) The
+hand is invariant under G_24 and exchanged by the other coset (h ->
+det(g) h, 1.2): S_4 acts TRIVIALLY on the hands.
+
+**A tool has a direction exactly when its stabiliser H is smaller than
+G_48 in the part that moves directions (DERIVED HERE).** A direction (an
+axis, a plane's normal) is fixed by H only if H is not transitive on the
+six Ports; a body whose shape is a CUBE and whose written integers are
+invariant under the 48 has H = G_48, which is transitive on the Ports
+(1.1), so it has NO DIRECTION. A direction enters only through a body's
+shape (a slab, a line) or through the record that arrives (its
+character). The table:
+
+| Tool | Its operation, as a group element | Its stabiliser on a cube body | A direction? |
+| --- | --- | --- | --- |
+| The emitter | the orbit sum of a Port, the projector onto the trivial representation of G_48 ((1 / 48) SUM over g of g applied to one Port) | G_48 | NONE: isotropic; a beam's axis only from a line of cells (stabiliser the line's, D_4h, of order 16) |
+| The receiver | the evaluation (E) then the rung: a scalar, the trivial representation (the click does not move under any g) | G_48 | NONE |
+| The mirror | the reflection through the face the record meets: -I times the half-turn of V_4 in S_4 about that face's normal, acting on the arriving character (k_perp -> -k_perp) | G_48 (a cube of gap): the face is chosen by the record, not by the mirror | NONE of its own on a cube; on a slab its normal (stabiliser D_4h), an unoriented axis |
+| The splitter | the same reflection weighted by r, the identity weighted by t (9.2) | D_4h for a one-Node layer | its normal only (a layer is a slab) |
+| The polariser | the rotation U_s of the label module, in SO(2) of the label plane, NOT an element of G_48 (except s = 0 and s = N / 2, the identity and the quarter turn); it commutes with S_4, which acts trivially on the hands, and a reflection turns it into U_(-s) (9.2) | EXACTLY G_24 = S_4 for s not 0 or N / 2 | NO SPATIAL DIRECTION, but CHIRAL: it tells the two cosets apart (a reflection turns the polariser at s into the one at -s) |
+| The crystal | the transpose m^T of the ring's product on the characters (9.2), equivariant under all of G_48 acting on the characters and the hands | G_48 for a crystal of one cell (a cube) | NONE of its own: the cone's axis is the arriving record's character; the mirrors that fix that axis (the layer's and the transverse one) give HV + VH (9.3) |
+| The well body | the bound mode of a lowered pair on a G_48-set (8.3), a character of the time translation at **k** = 0 | G_48 (a cube) | NONE at rest; its motion's direction is its momentum, a declared **p** (8.3 (v)), not a tool's |
+
+SUPERSEDED in the polariser's row: **U**_s and the stabiliser G_24 belong
+to the setting s; under the adopted axis (9.14 (b)) the polariser is the
+rational projector **P**_u of the specification's A.5, chiral as before
+(a reflection sends (a, b) to (a, -b)).
+
+So THE OWNER'S GUESS IS RIGHT, derived: no tool on a cube body has a
+direction of its own. The mirror and the splitter act by a reflection =
+the inversion times a rotation of S_4 (the half-turn about the normal of
+the face met); the polariser acts by a rotation of the label module that
+S_4 leaves alone and the inversion reverses; the emitter, the receiver,
+the crystal and the well body are invariant under all 48. Where a
+direction appears in an experiment it comes from the SHAPE of a body (a
+slab, a line of cells) or from the ARRIVING record, never from a
+declaration.
+
+### 9.5 The code is the algebra: the confirmation that gates every tool's merge (the owner's word of 19:50Z)
+
+For every tool, after the physicist writes its code, the mathematician
+reads the code against this chapter and confirms, line by line, that
+each operation on a cell is one of the six verbs (2.1 to 2.6) applied
+with the tool's written integers and performs exactly the group
+operation of 9.4, and nothing else. THE RULE OF THE READING (the owner's word of 20:05Z, through the Boss
+at 20:20Z: "you cannot ask a cell what is in it; you get it only by a
+click from above"): the ONLY lawful read of a cell's value that decides
+anything is THE CLICK, the rung of 8.6 and 9.2; a count of a record's or
+a body's OWN clock (its accumulator under verb T: an emitter's train
+counted on its own clock, a body's age) is not a read of a cell and is
+lawful; a check at LOAD (the gap's check, the clocks' sum, the seeds) is
+the loader's, not the law's; every other branch on a cell's value, on a
+family's name or on a tool's name is a DEFECT (the owner: "every operation
+in the cells is always an operation of the group, exactly the one"). The confirmation is written
+per tool as CONFIRMED (the code is the algebra) or the defect line with
+its file and line; it is the gate for the tool's merge.
+
+### 9.6 Cubes and their orientation (the owner's word of 20:05Z: "everything is made of cubes ... check whether the cubes' orientation has a meaning")
+
+**A cube has no orientation of its own (DERIVED HERE).** A body is
+declared by a cube's lower vertex and edge (8.3; a square on a layer, a
+segment on a chain, the cube's section by the board's folded axes). Its
+faces are the lattice's coordinate planes, so every g of G_48 about its
+centre maps it onto itself: its stabiliser is the whole G_48, and the
+only "orientation" a cube could have is an element of G_48, which leaves
+it unchanged. THE CUBES' ORIENTATION HAS NO MEANING. A direction in an
+experiment can come from exactly three places (DERIVED HERE, by listing
+what can break G_48): (i) THE RELATIVE PLACEMENT of cubes (the vectors
+between their centres; the arrangement's stabiliser is the intersection
+of the placements' stabilisers); (ii) THE ARRIVING RECORD (its
+character's wave vector, 9.4); (iii) THE LABEL AXIS of a polariser's
+rotation, which is not a spatial direction (9.4). The board's own shape
+(a layer, a chain) is the torus's, not a tool's.
+
+**No tool needs a shape other than a cube (DECIDED HERE, derived).** The
+mirror: a cube of gap of side s reflects through whichever face the
+record meets (9.4); its transmitted share falls with the depth crossed
+(the chain's numbers, the lab tools' specification 3.3), so a cube of
+side s >= 2 is a mirror for a beam no wider than s; a wider mirror is a
+row of such cubes side by side, a RELATIVE PLACEMENT (i), not a new
+shape. The splitter: a row of cubes of side 1 (its plane the row's, a
+placement). The polariser, the receiver, the emitter, the crystal and the
+well body: one cube each (a beam from an emitter is a row of emitter
+cubes born in phase, a placement). So AN EXPERIMENT IS CUBES ON A
+BOARD, and every direction it has is a placement of cubes or the
+arriving record's.
+
+### 9.7 Nothing asks a cell (the owner's word of 20:05Z: "you cannot ASK a cell what is in it; you can get it only by a click from above")
+
+**The rule of reading (DERIVED HERE from 2.1 to 2.6 and 3.1).** The six
+verbs READ amplitudes to COMPUTE (the sum of six reads, a bilinear form,
+a division): that is the rule itself, a group-ring and bilinear
+operation, and no decision. What the law never does is read a cell to
+DECIDE (a branch on a value): the one comparison that decides is verb D's
+at the click, the rung, from above (3.1, 8.6). So a tool's definition may
+use the six verbs on the amplitudes freely and a comparison only as the
+click.
+
+**The places in the tools' definitions that asked a cell, and their
+replacements.**
+
+1. THE CRYSTAL'S START "at the arriving amplitude's first rising zero
+   after that Node's first rung" (the lab tools' specification 1.1a)
+   READS A CELL TO DECIDE: WITHDRAWN. Two replacements were weighed:
+   (a) THE BILINEAR COUPLING g a_arriving a_born (verb B, no read): the
+   halving would arise by resonance, BUT from a born amplitude of 0 the
+   product is 0 (PROVED HERE), so it needs a SEED of the born family at
+   interval 0; a seed on the board is a record with no birth, which
+   spreads by the split before any arrival and could be booked and click
+   with no quantum behind it: it breaks one quantum, one click (8.6) and
+   the initial state (9.9). REJECTED. (b) THE CLICK, THEN A BIRTH (the
+   Boss's "or the click itself"; the owner's "the receiver gives a
+   click"; the physicist's form of 18:05Z): the crystal's cells are the
+   arriving record's NAMED RECEIVER (its ladder by name, SIMULATOR_DEFINITIONS.md,
+   the receiver by name: every other cell a sink), so the arriving record
+   clicks at its FIRST RUNG at the crystal (the one comparison 9.5 allows,
+   the line at the rung where the ladder holds one cell) and ends there
+   (ONE QUANTUM, ONE CLICK; its remaining field is energy the sinks
+   absorb, content 0, as main's receiver by name does); at that interval
+   the crystal, as an EMITTER, BIRTHS the pair's record on its cells by
+   its own clocks (the born clocks summing to the arriving one: m^T, 9.2),
+   the pair carrying the arriving record's residue u (one quantum, one
+   residue). ADOPTED (DERIVED HERE: it reads nothing but the rung and
+   keeps one quantum, one click). Consequences, DERIVED HERE: the pair's
+   phase cannot inherit the arriving record's local phase (that would be
+   a read), so the pair is born in phase over the crystal's cells and NO
+   CONE forms (the headings come from the placement, 9.6); every arriving
+   record that reaches the crystal's rung gives one pair, so W arriving
+   births over the wheel give W pairs and the pairs' counts are exact
+   (874, 150, 150, 874 up to the settings' order); the "fraction
+   converted" becomes the share of the arriving norm the crystal's cells
+   book, which decides only whether the rung is reached (it must be at
+   least 1 / W). SUPERSEDED in its sinks and its numbers: the leftover
+   field goes to no sink, the record ends whole at its click (9.12), and
+   the exact counts 874 / 150 are distributions (9.19 (4b)).
+2. The train's end at the clock's quarter (the emitter): computed AT
+   LOAD from the declared clock, no cell read: LAWFUL. RETIRED with the
+   train (9.17).
+3. The emitter's take of its own remnant after its train: a comparison
+   of the record's AGE with its train, the emitter's own count, not a
+   cell's value: LAWFUL (the clock's comparison, verb D on a count).
+   RETIRED: there is no own take (9.12); the emitter's own record clicks
+   at its rung (9.17).
+4. The polariser: a take per label component in the rotated basis (a
+   multiplication, B), no branch: LAWFUL; its click's weights are read
+   from the record's label state AT THE CLICK, from above: LAWFUL.
+5. The record's completion (the pair's gather waiting for every arm): a
+   HOST reading of the board's remaining motion, named as the one
+   non-local host step (DESIGN.md 2.1): not a cell's decision, but a
+   host's; LAWFUL as named, never a physical dependency. RETIRED: no
+   completion (9.12 item 4); a record ends at its click (9.19 (3)).
+6. The mirror, the splitter, the receiver's take, the well body: no read
+   beyond the six verbs: LAWFUL (the receiver's take RETIRED, 9.12).
+
+### 9.8 Outside the cubes: what an experiment defines (the owner's word of 20:05Z)
+
+**DECIDED HERE, derived.** An experiment defines exactly: (1) THE BOARD,
+the torus's extents per axis (the translation group, 1.6); (2) THE
+FAMILIES, each its clock and its vacuum pair (light's [1, 1], a massive
+kind's [num, den]; 8.1); (3) THE CUBES, each with its written integers
+(its pair per family, its coupling, its seed, its axis; the take and the
+wheel of this first reading are SUPERSEDED, 9.12 and 9.19 (4)); (4)
+THE INITIAL STATE (9.9). Nothing else. THE FACES: an open face on main is a sponge whose Nodes are not on the
+board (the row beyond read as 0, the boundary Node's outward Port booked
+to the face's cell, a sink under the receiver by name); a shell of
+receiver cubes of side 1 with the take [1, 1] on a periodic board is the
+same held-at-0 boundary with the same booking. DECIDED: the face's cell
+is ADMITTED as the shell's shorthand (the two are the same operation; the
+shell would add one body per boundary Node, about 830 on the two slits'
+layer, for nothing), and the load check counts the face's cells as a
+declared set. So an experiment is cubes on a board whose faces are
+receivers. SUPERSEDED in its form: the sponge and the shell with the take
+[1, 1] retire; an open face is the zero row with the receiver `face` at
+the border, last on every ladder (9.19 (3) (a), 9.22 (2)). What lies
+between the cubes is the vacuum: the families' own pairs, declared once.
+
+### 9.9 The initial state, over the whole board (the owner's word of 20:05Z)
+
+**DERIVED HERE from 8.7.** At interval 0 every Node's state is the SUM
+over the bodies of each body's seed: a well body's seed is its bound
+mode's integer profile OVER THE WHOLE BOARD at both levels (8.7: the
+tail is not cut at the cube, so "zero outside the bodies" would be wrong
+for a well); no other record exists but the emitter bodies' own excited
+records (a crystal carries no seed, 9.7; an emitter body's record at
+interval 0 is its first excitation, 9.17 (4) item 1 and 9.22 (3), and
+its births come later); every remainder is 0. THE LOAD-TIME CONDITION: the board's state at interval 0 equals that
+sum Node by Node, exactly (integers), each well's profile equal bit for
+bit to the generator's (the body check, 8.7), and no Node carries any
+other nonzero amplitude; refused at load otherwise.
+
+**THE WELL AND THE OTHER TOOLS (the owner's word through the Boss,
+22:10Z: "a well looking at the fields around it must not collide with
+the other lab tools; the initial conditions must close that").** A
+correction of wording first: each well's seed is written on ITS OWN
+RECORD (every record carries its own rows, 8.6), not summed with other
+seeds on one Node's state. The condition then follows in four steps
+(DERIVED HERE).
+
+1. WHICH TOOLS ENTER A WELL'S RECORD. A record of the family F moves by
+   the one rule with each Node's pair FOR F (8.1). A tool enters F's
+   operator only through a pair for F, or through a polar matrix that
+   acts on F's labels. The mirror, the splitter, the polariser, the
+   crystal and the receivers are LIGHT's materials: they carry no pair
+   for a massive family, so they are the vacuum for a matter record, and
+   a light tool anywhere leaves the well's operator unchanged. So a well
+   can collide only with a body that carries a pair of its own family:
+   another well of that family, a transponder's massive body, or that
+   family's faces (the zero row, already in the module).
+2. NO TOOL READS OR CHANGES THE WELL'S RECORD BY AN OPERATION. By 9.7 the
+   only read that decides is a click, and a click reads only a record
+   that names the clicking cells (the ladder by name): a receiver's E and
+   a crystal's click read their named records, and the well's record
+   names its own block. The take is removed (9.12). So nothing but the
+   rule's material acts on the well's record, and step 1 names that
+   material.
+3. THE SEED IS THE MODE OF THE COMPOSED WORLD. The standing start is
+   exact only for an eigenvector of the operator the record actually
+   feels (8.7). That is F's operator with EVERY body's pair for F in
+   place, not the well's alone. Two cases:
+   - (i) The well's mode is separated from every other mode of the
+     composed operator by more than 1 / T (T the run's intervals). Then
+     the seed is the composed operator's own mode, computed with every
+     body of F in place.
+   - (ii) Two wells of one family whose modes are nearly degenerate (the
+     same pair and side). The composed modes are the even and odd
+     hybrids, split by delta omega, and NO LOCALISED EIGENVECTOR EXISTS.
+     The seed is then the well-alone mode projected on the composed modes
+     within 1 / T of its own frequency; for two wells that is the hybrid
+     combination localised on the well. It moves to the other well at the
+     rate delta omega / 2, carrying the norm share sin^2(delta omega T /
+     2) over the run. THE CONDITION: that share must be below the
+     reading's band.
+
+   On main, `bound_mode` computes each well ALONE ("the other blocks'
+   wells not carried"): a defect for every world with two wells of one
+   family.
+4. NO OVERLAP. One Node is one body's: a body is the material of its
+   Nodes (9.1), and two bodies on one Node give that Node two materials
+   with no rule to choose between them. REFUSED at load.
+
+THE LOAD-TIME CHECK that follows (the body check, extended):
+- (a) The cells of every two bodies are disjoint; the first shared Node
+  is named in the refusal.
+- (b) For each well of family F, the composed operator (every body's pair
+  for F) is formed. Its modes within 1 / T of the well's are found, and
+  the seed is recomputed as in 3 and compared with the file bit for bit
+  at both levels.
+- (c) In case (ii), sin^2(delta omega T / 2) is printed (COMPUTATION) and
+  the world is refused if it exceeds the reading's declared band.
+
+THE EXPECTED VALUES (COMPUTATION: a dense eigen decomposition of the
+chain operator D^(-1/2) (S_6 / 3) D^(-1/2), float, on the host):
+- `sagnac_rest.json` (two matter wells of side 12 at x = 700 and 772 on
+  the open chain of 3000, T = 8450; RECOMPUTED BLIND at the pair [800,
+  801] of 9.19 (4a), the file's [800, 800] being history): the wells are
+  case (ii). omega_b = 0.100217 per interval, delta omega = 4.25 x 10^-7
+  per interval and sin^2(delta omega T / 2) = 3.2 x 10^-6, far below the
+  band of 3 x 10^-3: ACCEPTED on (c). The composed seed differs from the
+  well-alone seed at the amplitude 52428800 by at most 639 units, at 89
+  Nodes (at the file's [800, 800]: omega_b 0.089258, delta omega 1.96 x
+  10^-7, sin^2 6.9 x 10^-7, 244 units at 72 Nodes). So the file's seeds, computed alone, are REFUSED by (b) until
+  they are regenerated on the composed world; the reading does not move
+  beyond 7 x 10^-7.
+- `deep_well_rest_40.json` with a light mirror cube added anywhere off
+  the well: the matter operator is unchanged, so the seed is the same
+  bit for bit: ACCEPTED.
+- The same world with a receiver cube of side 2 at (80, 80, 0), inside
+  the well [44, 84): REFUSED by (a) at (80, 80, 0). At (84, 44, 0),
+  adjacent to the well: ACCEPTED.
+- Every other world of the list has a single well per family (the
+  layer, the redshift, the deep well, the boxes, the light clock, the
+  receding index): (b) reduces to main's check, with no change.
+
+### 9.10 Reviewer 3's forbidden branches, and the one rule for each group (the Boss's line of 20:20Z)
+
+Reviewer 3's audit of main's physical path named eleven per-cell branches
+that are not group operations. Each group has one rule, DERIVED HERE:
+
+1. THE EMITTER'S OWN CELLS (the grace window; its exclusion in the Port
+   read; the exemption of an emitting block's sets for its own record;
+   the own take; the fresh Port's first-interval case): ONE RULE: the
+   emitter's cells are cells like every other; a record's offer at them
+   is booked as at any receiver whose take they declare, and they are on
+   the record's ladder as every cell is. WHETHER AN EMITTER MAY CLICK ON
+   ITS OWN RECORD follows from the algebra and is not decided: a rule that
+   treats a record's own emitter's cells differently branches on the
+   record's identity, which no element of the group sees (9.1: the tool's
+   action is equivariant; a record's identity is not a group object); so
+   an emitter MAY click on its own record, with the share its cells book.
+   The driven cells' amplitude is imposed by the emitter's own clock
+   (verb T); their Ports book the offer that arrives through them from the
+   neighbours, as every cell's do. The test value: the share of a record's
+   norm booked at a one-cell emitter with the take [1, 1] on a free board
+   (a COMPUTATION owed with DESIGN.md section 5's Port form; MEASURED ONLY
+   until then), and 0 at an emitter declared with the take [0, 1].
+   SUPERSEDED: the take retires (9.12) and the owed share with it; the
+   emitter's own record clicks at its own rung by the flux (9.17, 9.19
+   (3)).
+2. THE TAKE PAIRS (two take pairs chosen per cell by set membership): ONE
+   RULE: one take pair per cell, the cell's material (section 9.2's
+   receiver), whatever sets name the cell. SUPERSEDED: no take pair
+   (9.12); one material per cell stands.
+3. THE TABLE FORMS (the splitter's Node that takes and books nothing; the
+   table body acting on one family only): RETIRED with the table forms
+   (the no-table rule; the material tools of 9.2).
+4. THE BODY'S READ (the cavity's record zeroed outside its cells every
+   interval; two forms of a body's read chosen by absorbing or taking):
+   ONE RULE: one read for every body (its pair, rule 2; the take is
+   removed, 9.12); the
+   cavity's boundary is a DECLARED ZERO FACE made material: a gap pair of
+   the record's own kind around the cells, whose band admits no clock of
+   the mode (8.1), so the mode's amplitude decays outside as exp(-kappa)
+   per Link, kappa (the decay constant per Link) given by cosh kappa =
+   6 (den / num) cos omega_b - 2 on a chain; the declared zero
+   is the limit of a deep gap, and the leak per Node e^(-kappa) is the
+   test value (computed per world from the cavity's pair).
+5. The arm's half-space cut dies with the two-arm emitter (record 1818).
+
+### 9.11 The first tool through the gate: the polariser's fix (PR 1139, polariser-fix at 32745860), read against this chapter
+
+Read line by line: `TableBody` gains the half-angle pair; `_split_table_offers`
+forms the weights from `joint_weights` with one body on the record's
+labels and moves J(+)^2 / (J(+)^2 + J(-)^2) of each interval's booked
+gain to the + cell with the remainder kept. THE ALGEBRA, for a record of
+ONE arm: CONFIRMED (the weights are 3.6's projection of the record's label
+state on the body's rotation, verb B then the square; the division verb
+D with its remainder; the first rung the click). THE DEFECTS: (a) `if
+body.family != live.family: continue` is a branch on a family (Reviewer
+3's item 28, 9.10 rule 3); (b) `if norm:` is a dead branch (J(+)^2 +
+J(-)^2 = n_s times the state's norm, never 0), to be removed; (c) `if
+gain:` is a host skip with no effect (the division of 0 with a remainder
+below the wall gives 0): lawful as bookkeeping; (d) FOR A RECORD OF RANK
+2 the one-body weights on the JOINT labels are a coherent sum over the
+other arm's bit, which is not the arm's reduced state: the lawful weight
+is the partial trace, R(o) = SUM over the other arms' bits b of (SUM over
+the labels l with that bit b of w_l U_s[o][bit of l on this arm])^2; with
+HV + VH at s = 512 the code books all of an arm's offer on the + cell
+where the reduced state books half; the Bell counts are not moved (the
+joint gather reads the whole offer), but the books are wrong; (e) the
+tool is still the table form, which the no-table rule retires (the
+absorbing material of the lab tools' specification, section 2). VERDICT:
+the fix is the algebra for one-arm records and may merge as the bug's fix
+with (a), (b) and (d) corrected; the tool's final form is the material
+one.
+
+**CONFIRMED at polariser-fix e99b7091 (2026-09-24, the physicist's
+corrected head).** The three corrections read line by line:
+- (a) `table_bodies_by_family` is indexed by the record's family as data,
+  filled from each body's own declaration, with no branch on a family.
+- (b) The guard on the weights' sum is removed.
+- (d) `channel_weights` groups the labels by their bits on the other arms
+  (the key label & ~(1 << arm)). The pointer is coherent within a group
+  (verb B) and the weight is the sum over the groups of the squares: the
+  partial trace. An arm of HV + VH gets (65522, 65522) at s = 512,
+  (65536, 65536) at s = 0 and (65773, 65773) at s = 256, which is 2 x
+  181^2, 2 x 256^2 and 237^2 + 98^2 on the tables.
+- `if gain:` remains the lawful host skip.
+
+tests/test_detector_law_tables.py passes on that head (15 passed). The
+gate: CONFIRMED as the bug's fix. Under 9.14's adopted axis, the pair
+(a, b) enters `channel_weights` in place of (C', S') with no other
+change.
+
+### 9.12 The take and the click (the owner's word of 21:30Z through the Boss: "the receiver's take is defined by an operation of the group; we named it E, I think; check it")
+
+**Three operations at a receiver, told apart (DERIVED HERE from 2.5, 3.1,
+8.6 and 8.8).** (i) THE EVALUATION E (2.5): ev: Z[Z_N] -> Z[zeta_N], a
+ring homomorphism; with the norm (B) and the rung (D) it READS the
+record at the receiver's cells and changes nothing on the board. (ii) THE
+CLICK'S ACTION (3.1; POSTULATES.md section 10): the record ENDS at the
+detector, all its rows everywhere, and the detector's own record
+changes: the one deletion of the law (8.8). (iii) THE TAKE (8.6's last
+paragraph): at every interval the declared cells' amplitude of the record
+is held at 0 and its motion booked: a projection of the Inside, a
+diagonal map with a 0 on those cells (verb B with a degenerate matrix),
+NOT invertible. THE TAKE IS NOT E: E reads and leaves the Inside a
+bijection; the take removes amplitude from the Inside before any click.
+And it is not the click: the click deletes a record once and whole; the
+take deletes part of every record that passes, every interval. By 8.8
+the Inside is a bijection and the click is its one deletion; the take is
+the one other loss, which 8.6 already names "a declaration of the world,
+not the law's". Under the owner's rule that every operation in the cells
+is an operation of the group (9.5), a projection that no group element
+performs is not admitted into the law.
+
+**The take can be removed, and what replaces it (DERIVED HERE).**
+
+1. A record whose click's weights are COMPUTED from its state, not from
+   booked offers (the joint gather's R = J^2; the polariser's
+   projection; a ladder of one named receiver), needs no take: its click
+   is E then D at the first rung (the line at the rung, the receiver by
+   name), and at that interval the click's action DELETES THE RECORD
+   WHOLE, its leftover field included. The leftover field does not go to
+   sinks; it ends with the record. The crystal's arriving record (9.7
+   (b)) and the pair's gather are of this kind.
+2. A record whose click chooses among SEVERAL cells by their booked offers
+   (a screen's pixels: the two slits, de Broglie's fringes) needs the
+   offers at a CLOSE. Without a take the lossless field is read by E at
+   the screen's cells as it passes (a clock body is read and not taken,
+   8.6: "light passes on, and the click needs no sink"), and the close is
+   a COUNT ON THE RECORD'S OWN CLOCK (its age reaching a declared close,
+   lawful by 9.5): the offers booked up to that age form the ladder, the
+   residue chooses the cell, and the click deletes the record. The world
+   must be large enough that no reflection from a face reaches the screen
+   before the close (a timing condition per world, from the distances and
+   c, a load check). SUPERSEDED by 9.19 (3) (a): the screen's ladder is
+   read cumulatively at every interval by the flux and the record clicks
+   at the first crossing; there is no close on a record's age.
+3. THE FACES: an open axis's face is the segment's border (1.6); with no
+   take, the row beyond read as 0 is a closed face that reflects (the
+   delay 3.547 intervals of the lab tools' specification 11.5), and it is
+   harmless exactly when every click happens before the first reflection
+   reaches its receiver (items 1 and 2). No face and no receiver then
+   needs a take pair; the shell of receiver cubes (9.8) needs none.
+   SUPERSEDED by 9.19 (3) (a): an open face is the zero row with the
+   receiver `face` at the border, last on every ladder (Highlights'
+   record 15, kept); nothing reflects at an open face, what leaves clicks
+   there.
+4. THE COMPLETION (the host's reading of a record's remaining motion,
+   DESIGN.md 2.1) RETIRES: a record ends at its click (item 1) or at its
+   close (item 2), both lawful. A record that never reaches a rung before
+   its close ends at the close with the ladder of the offers it booked;
+   with no offer at all it ends unread, which the books count as its own
+   row (a record with no click), never as "escaped" into a sink. THE
+   CLOSE SUPERSEDED as in item 2: a record ends at its click, at the face
+   receiver at the latest (9.19 (3) (a)).
+
+**What changes in the counts and the books (DERIVED HERE).** The Bell
+counts: none (the weights are computed; the first rungs unchanged,
+because the first rung is reached by the direct front before any
+reflection on the Bell layer: the faces are at least 11 Links behind every
+receiver along its line, 11.3 of the lab tools' specification). Malus:
+none (computed weights). The two slits and de Broglie's fringes: the
+screen's offers up to the close equal the offers the sinks' form booked,
+provided no reflection arrives before the close; their pins stand on
+that condition, which each world's generator checks. The books: the
+Inside's content is conserved exactly until the clicks (8.8's bijection);
+"absorbed" is the clicked content alone; "escaped" retires, replaced by
+"ended unread" for a record that closes with no offer. The one input the
+algebra did not produce (the take, 9.16 item 3) is thereby removed.
+
+### 9.13 The emitter as the transpose of the click (the owner's word of 21:40Z: "perhaps the emitter is the reverse: a click produces the emitter")
+
+**DERIVED HERE.** The click's evaluation on the tables is the linear map
+**E**: Z[Z_N] -> Z^2, f -> (SUM over p of f_p C[p], SUM over p of f_p S[p])
+(2.5). Its transpose for the inner product in which the [p] are
+orthonormal is **E**^T: Z^2 -> Z[Z_N], (X, Y) -> SUM over p of (X C[p] + Y
+S[p]) [p]: from a number back to a record, the real part of a character
+on the phase circle. A lamp's drive is exactly this, sampled by its own
+clock: a_now(t) = A C[phase(t)] at its Node is **E**^T applied to (A, 0)
+and read at the clock's phase (1.7); spread by the split to the six
+neighbours, the birth is invariant under the Node's stabiliser G_48, the
+projector onto the trivial representation (9.4). And **E** **E**^T =
+[[SUM C^2, SUM C S], [SUM C S, SUM S^2]] = (N / 2) 256^2 **I** up to the
+tables' rounding (the characters' orthogonality on Z_N): THE EMITTER IS
+THE RECEIVER'S TRANSPOSE, its right inverse up to the scale (N / 2) 256^2
+and the rounding. ITS TRIGGER IS A CLICK OF ITS OWN RECORD: an emitting
+block births one record per cycle of its own mode, the cycle counted by
+its own clock, the evaluation of its own record at its rung (8.6, the
+block's clock): exactly "a click produces the emitter". A lamp is the
+degenerate case: its own clock is its rate's accumulator (verb T) with no
+record behind it; a lamp that must be read so is a block emitter. So THE
+RECEIVER IS **E**, THE EMITTER IS **E**^T, AND THE CRYSTAL IS **E**
+(the arriving record's click at its cells) THEN m^T (the arriving clock
+split into the two born clocks, 9.2) THEN **E**^T (the pair's birth): EXACT
+as the path of the data a click lets through, namely the clock (the
+energy, through m^T) and the residue u (9.7 (b)); the arriving record's
+amplitude and phase are not passed (no read), the born amplitude is the
+crystal's own declared number and its phase starts at the born clock's
+zero. What it changes in the code: nothing for a block emitter (its
+births per cycle of its own clock are this); for a lamp, only the naming
+(its rate's count is its clock); for the crystal, its births fired by the
+arriving record's click, not by its own clock (9.7 (b)); the train, the
+wheel and the residue were unchanged in this reading. SUPERSEDED: the
+train by the born profile (9.17 (4)), the wheel and the residue by the
+law's own remainder (9.19 (4)).
+
+### 9.14 The polariser's angle: an element of the wheel's group, with no table (the owner's word of 21:40Z, and of 2026-09-24 17:27Z through the Boss: "about the general angle of the polariser, perhaps we do not need it at all")
+
+This section replaces the earlier reading, in which the half-angle tables
+were kept as a declared rounding. The question: can every polariser
+setting the fifteen experiments need be an operation of the algebra, with
+no declared table? Two candidates are tested: (a) the setting as an
+element of the wheel's group Z_N; (b) the setting as an element of the
+cells' group ring. The result: (a) is exact and keeps every pin; (b) is
+exact only on the lattice's rational axes, and it never reaches 22.5
+degrees.
+
+**The cells' own group gives no Bell violation (PROVED HERE).** A
+reflection of G_48 that keeps the record's path exchanges the two hands
+(the hand is a pseudoscalar, 9.3). The elements that fix the path act on
+the plane across it only through quarter turns and the reflections of
+that plane. So the polarisers in the group sit at multiples of 45 degrees
+(s a multiple of N / 4, with the angle theta = pi s / N). Every
+correlation E(a, b) = cos 2 (theta_a - theta_b) is then 1, 0 or -1, and
+the four terms of CHSH give abs(S) <= 2. THE STEP WRITTEN OUT (Reviewer
+4's line: S = 3 was not excluded by the text): let A, A', B, B' be twice
+the four angles, multiples of 90 degrees, so that every term is the
+cosine of a multiple of 90 degrees, in {-1, 0, 1}, and note the identity
+(A - B) - (A - B') - (A' - B) + (A' - B') = 0. If one term is 0, its
+difference is an odd multiple of 90 degrees, so by the identity an odd
+number of the four differences are, and at least two terms are 0:
+abs(S) <= 2. If no term is 0, every difference is a multiple of 180
+degrees and by the identity an even number of them are odd multiples,
+so the four signs have the product +1; S = 4 needs the signs (+, -, +,
++), the product -1, and S = 3 needs a 0: both excluded, and S lies in
+{-2, 2}. COMPUTED beside it: the 4^4 = 256 settings give max abs(S) = 2.
+So S above 2 needs something beyond the cells' own group.
+
+**(b) The cells' group ring: exact, but only on rational axes (PROVED
+HERE).** The group ring Q[G_48] acts on the plane across the path through
+the dihedral group of the square, D_4: I, **Z** = diag(1, -1) (the
+reflection in the H axis), **X** (the reflection in the diagonal, which
+exchanges H and V) and the quarter turn **X** **Z**. Their rational span is
+all of M_2(Q), the 2 x 2 rational matrices. Every element of the ring
+therefore acts by a RATIONAL matrix, because G_48's characters are
+integers and this plane is realised over Q with entries 0 and +-1. A
+polariser is an orthogonal rank-one projector. The rational ones are
+exactly **P** = **u** **u**^T / abs(**u**)^2 for an integer axis **u** =
+(a, b); this is the lattice-axes result of the earlier reading. The
+projector at 22.5 degrees has the entries (2 + sqrt 2) / 4 and sqrt 2 /
+4, which are irrational, so it is NOT in the ring: "22.5 degrees through
+the ring" is impossible exactly. What (b) does give is S = 14 / 5 exactly
+on the axes (1, 0) and (1, 1) for Alice and (2, 1) and (1, 3) for Bob,
+with R(+, +) = (**u**_A . **u**_B)^2 and R(+, -) = (**u**_A x
+**u**_B)^2 (COMPUTATION; the counts at W = 2048 are 819/205 and 102/922,
+S = 717 / 256, and S = 14 / 5 exactly at W = 2560). That result stands
+as a special case, but it moves Bell's pin, and Malus's angles are not
+rational axes.
+
+**(a) The wheel's group: the setting is a translation (DERIVED HERE).**
+Read the label pair in the hands (circular) basis, with `label_hands`
+declared (LAB_TOOLS.md 11.6). A turn of the polarisation plane by theta
+multiplies the two hands by exp(-i theta) and exp(+i theta). Up to a
+common phase, which cancels in every weight, that is the RELATIVE
+translation by s on the wheel: 2 theta = 2 pi s / N, so the setting s
+is the element x^s of Z_N acting on one hand. The group the polarisers
+live in is the dihedral group D_N = Z_N x| {hand exchange}: the wheel's
+translations together with the cells' hand exchange. Both factors are
+already in the algebra (the wheel, chapter 2; the exchange, 9.3), so
+nothing is declared but the integer s. G_48's quarter turns are the
+subgroup s in {0, N / 4, N / 2, 3 N / 4}. THE WHEEL'S GROUP IS WHAT GOES
+BEYOND THE CELLS.
+- The polariser at s is the reflection r_s = (hand exchange) then x^s in
+  D_N, and its pass projector is the ring element (1 + r_s) / 2. In the
+  hands basis (+, -) the channel rows have ONE GROUP ELEMENT PER ENTRY:
+  the pass row (x^0, x^(-s)) and the block row (x^0, x^(N/2 - s)), the
+  second because -x^(-s) = x^(N/2 - s) under the cancel (2.3). Each row
+  has the norm 2, the same for both channels, and the common factor
+  drops out of every ladder as n_s does today. The half angle is gone:
+  in the linear basis the angle enters as cos theta and sin theta, while
+  in the hands basis it enters only as the full relative phase 2 theta,
+  a whole number s of steps.
+- The joint pointer is J(o_A, o_B) = SUM over the joint labels of w times
+  the product of the two rows' entries: an element of the group ring
+  Z[Z_N], formed with the ring's convolution (`ring_product`). The cell's
+  weight is R = J J*, with J* the involution x^p -> x^(-p) (the complex
+  conjugate under ev). R is a REAL element of Z[zeta_N], and the cancel
+  x^(N/2) = -1 reduces it exactly (2.3; for N a power of two, the
+  cancel IS ev). For HH + VV = (+-) + (-+) and k = s_A - s_B:
+  R(+, +) = R(-, -) = 2 + x^k + x^(-k) and R(+, -) = R(-, +) = 2 - x^k -
+  x^(-k). The TOTAL is the integer 8 at every setting, because the
+  channel projectors sum to the identity. E(a, b) = ev(x^k + x^(-k)) / 2
+  = cos(2 pi k / N), exactly.
+- Bell's settings s = 0 and 512 for Alice and s = 256 and 768 for Bob, at
+  N = 2048, give k = -256, -768, 256 and -256. In the ring, S = 3 cos(pi
+  / 4) + cos(pi / 4) = 2 sqrt 2 = ev(x^(N/8) + x^(-N/8)) EXACTLY: the
+  Tsirelson bound as an element of Z[zeta_N]. S ABOVE 2 FOLLOWS WITH NO
+  DECLARATION beyond the integers s.
+
+**The click: the one place a weight becomes a count (PROVED HERE).** The
+rung compares 2 T u + T <= 2 W C_k (`cell_of`). Here T is an integer and
+C_k a real element of Z[zeta_N], so the rung is the NEAREST INTEGER TO AN
+IRRATIONAL. That value is unique and never a tie. It is main's own
+rounding at the rung, the same one that makes 14 / 5 exact only at W a
+multiple of 20; it is not a declared table. The comparison is exact with
+integers alone, no root and no float. For N = 2^m, the number c_m = 2
+cos(2 pi / 2^m) satisfies c_m^2 = 2 + c_(m-1), with c_2 = 0. An element
+p(c_m) splits as a + b c_m, with a and b one level down, and the sign of
+a + b c_m follows from sign a, sign b and, where these differ, sign(a^2 -
+b^2 (2 + c_(m-1))). The recursion ends at the integers. Its depth is
+log2 of the order of the element x^k, minus 2: depth 1 for Bell (the
+order 8), where the test is one comparison of squares: (16 u + 8 - 4 W)
+<= 0 or (16 u + 8 - 4 W)^2 <= 8 W^2. Malus's settings have the depths 0,
+2, 3 and 2. The work is fixed for a fixed wheel but grows exponentially
+with the depth: a general s at N = 2048 has a depth of up to 9 (this is
+the host's cost, reported separately).
+
+**The pins do not move (COMPUTATION, exact sign recursion against the
+current tables, checked against floats on 300 random elements with no
+mismatch).**
+- Bell at N = W = 2048: the counts are 874, 150, 150, 874 at every pair
+  of settings (150, 874, 874, 150 at E = -cos(pi / 4)), the same as the
+  half-angle tables give, so S = 181 / 64 on the counts (2 sqrt 2 in the
+  ring).
+- Malus at N = W = 256 with H arriving and R(+) = 2 + x^s + x^(-s) of
+  the total 4: the counts are 128, 246, 199 and 177 at s = 64, 16, 40
+  and 48, the same as today.
+- So the owner's open choice between the tables (181 / 64) and the
+  lattice axes (14 / 5) DISSOLVES: (a) keeps 181 / 64 with no table.
+
+**Which is exact, and the verdict.** Both are exact. (a) is exact in the
+ring: every setting s is a group element, the weights are elements of
+Z[zeta_N], ev is the cancel, and the only rounding is the rung's. (b) is
+exact in the rationals, but only on the rational axes: it gives S = 14 / 5
+and reaches neither 22.5 degrees nor Malus's angles. RECOMMENDED: (a).
+It needs no new object, keeps every pin, and retires the half-angle
+tables from every polariser path. (b) stays admissible for a world that
+declares integer axes.
+
+**ADOPTED: (b), the integer axis (the Boss's order of 2026-09-24, 22:10Z,
+on the owner's hint "perhaps we do not need the general angle at all").**
+A polariser declares its AXIS as an integer vector **u** = (a, b) of the
+plane across the path; the setting s and the half-angle tables retire.
+The engine's change is one line, because `joint_weights` already takes a
+pair (C', S') per body and forms U = [[C', S'], [-S', C']]: it takes
+(a, b) in its place. The weights R = J^2 are then exact integers, the rung
+is unchanged, the sign recursion of (a) is not needed and no ring weight
+enters the ladder. The steps that belong to (a) alone (1, 2 and 3 in the
+list below) do not apply. The pins under (b) are in 9.16 (4). (a) stays
+derived, for a world that needs an angle that is not a rational axis;
+none of the fifteen needs one.
+
+**What disappears from the code (read at 9b8554e1's base).**
+- `amplitude.half_angle` and the tables of 2N behind it, at its four call
+  sites: `DetectorLaw.joint_weights` (through `_click_pair`),
+  `_table_body` (the pair C'^2, S'^2 and n_s = C'^2 + S'^2 in
+  `TableBody`), the amplitude layer's rotation (`amplitude.py`, the
+  `half_angle(s, self.steps)` line) and `nature_beam.py`'s rotation.
+- The norm n_s and the assertion **U**_s^T **U**_s = n_s **I** (3.6)
+  become the fixed row norm 2.
+- The polariser keeps no remainder: its rows are group elements, so it
+  applies only the ring's verbs (a translation and a sum), with no
+  division.
+- What STAYS: `phase_cosines` and `phase_sines` where ev is still read
+  through the rounded circle (the Z[i] pointers and `cmul`, the detector
+  law's cosine and sine arrays, `world.py`'s sine table). Replacing that
+  ev by the cancel is the same step one level down, and it removes the
+  homomorphism defect of the derivations' 6.7. It is A POINT FOR THE OWNER
+  and outside this order.
+
+**What Nature24 must change.**
+1. `joint_weights`: take the rows (x^0, x^(-s)) and (x^0, x^(N/2 - s))
+   per body, form J with `ring_product` in place of the Z[i] product of
+   the table rows, and form R = J J* reduced by the cancel.
+2. `cell_of` and `rungs`: accept the weights as real elements of the
+   ring, with an integer total, and compare them by the sign recursion
+   above in place of the integer product.
+3. `TableBody` and `_split_table_offers`: the split share becomes the
+   ring element (2 +- (x^s + x^(-s))) / 4. An integer count cannot carry
+   an irrational share with a kept remainder, so the split moves onto the
+   ring pointer (the per-hand amplitude of 9.16 (2)), or the body's books
+   are compared with the click only within the rung's margin (LAB_TOOLS.md
+   2.3).
+4. The world file: the settings stay integers s, and `label_hands` is
+   declared wherever a polariser acts.
+5. The tests: the pins stay (874/150/150/874 with S = 181 / 64; Malus
+   128, 246, 199, 177). Tests that pin the tables' integers C'[s], S'[s]
+   or n_s retire with the tables. A new test pins the sign recursion on
+   inputs, their expected signs and an edge case: the zero element, and a
+   u exactly at a rational rung.
+The gate (9.5) reads the new `joint_weights` line by line against this
+section.
+
+### 9.15 Momentum on the board's own values (the owner's words of 21:40Z and 22:30Z, record 1856 of 2026-09-25 on the Israel clock; REVISED at 22:30Z: no book at a held body)
+
+THE OWNER'S WORD (22:30Z, translated): "when the photon moves in the
+crystal the momentum IS conserved, because the crystal's cells change ...
+after we put the values into the board, the momentum is conserved." The
+earlier reading (a book at a held body) is WITHDRAWN. The reading below
+has four parts.
+
+**(i) The theorem on a homogeneous board (PROVED HERE).** Where every
+Node carries the same pair, the rule commutes with every translation
+(1.6). So the rule maps each character of the torus to itself: the
+record's content in each wave vector **k** is advanced by that character's
+own clock and never moved to another **k** (8.1's band). The records'
+total content in each **k**, and with it the total momentum SUM over **k**
+of **k** times that content, is therefore the same at every interval.
+Nothing is booked: the values carry it.
+
+**(ii) Where a tool's cells carry it (DERIVED HERE, from 8.11 and 8.3
+(v)).** A tool's material breaks the translations at its cells, and there
+the field's momentum changes (a reflection sends k_perp to -k_perp). On
+the board the difference is carried by the one value that a body has
+besides its material: ITS OWN RECORD'S MOMENTUM VECTOR, advanced by the
+push (8.11). The push is the stress of light's field summed at the body's
+outer Ports (verb G), divided with the remainder kept (verb D), and it
+steps the body's record, by the hop, when the accumulator passes its
+wall (verb T). These are the law's own verbs on the body's own values:
+NO BOOK. "The crystal's cells change" is this: the body's record moves
+by the push it received.
+- At the crystal: before the click the arriving record's stress at the
+  crystal's outer Ports enters the crystal's vector. At the click the
+  arriving record ends. The pair is born by **E**^T with no heading, and
+  the birth's own push on the crystal is 0 on the average, because the
+  six Port vectors of the orbit sum add to 0 (PROVED HERE: SUM over the
+  six Ports of the unit vectors is 0). So the board's total before is the
+  crystal's vector plus the arriving record's, and after it is the
+  crystal's new vector plus the pair's mean of 0: equal.
+- At the mirror: the reflected record's stress at the mirror's Ports
+  steps the mirror body's vector by twice the normal momentum.
+
+**(iii) What cannot carry it, said plainly.** A body declared `fixed` has
+its step suppressed: its vector is held at 0. So a FIXED BODY'S CELLS
+CANNOT CARRY MOMENTUM UNDER THE LAW, and wherever a fixed body reflects,
+converts or absorbs, the board's total changes by the difference.
+Momentum is conserved on the board exactly when EVERY TOOL IS A FREE BODY
+WITH ITS OWN RECORD (a block of a massive kind carrying the tool's light
+material, the transponder's form, section 8 of the specification;
+ADOPTED, record 1875, 2026-09-25 on the Israel clock: of the HOLDER
+family, BOUND, 9.18 (2)), held
+in place only by its mass: its velocity after a push is the push over
+its mass. A body of mass M that reflects a photon of momentum k moves
+at 2 k / M Links per interval afterwards, so it drifts 2 k T / M Links
+over T intervals. A crystal
+or mirror of a massive kind that drifts less than one Link over the run
+is "at rest" to the board's own grain.
+
+**(iv) Exactness.** The push's accumulator and its step are PROVED as
+identities (8.11). That the stress at the Ports equals the field's
+momentum flux is CARRIED (8.11: a declaration of the design, not of the
+law). So on the GameBoard the total over the records' characters and the
+free bodies' vectors is conserved to that declaration. It is exact in
+(i), where no body intervenes.
+
+WHAT CHANGES. The tools of the specification become free bodies of a
+massive kind carrying their light material. Their `fixed` flag retires
+from the tools, and their mass is written so that the drift over the run
+is below one Link (the specification's A.3, A.4, A.5 and A.6). Nothing
+changes in any count: the counts are computed weights or first rungs, and
+a drift below one Link moves no cell. MISSING: a proof that the stress is
+the flux on the board, not only in the continuum.
+
+### 9.16 What was missing, closed item by item (the Boss's order of 2026-09-24, 22:10Z: "close, do not bring the owner questions")
+
+**(1) The whole sum m^T on one record: an engine form (DERIVED HERE).**
+A record's clock becomes a finite list of COMPONENTS, each with its own
+clock pair on its arms and an integer weight: arm 0 at a and arm 1 at p -
+a, for a in the crystal's declared WINDOW [a_lo, a_hi] (its material, both
+clocks inside their families' propagating bands, 8.1). One component is
+main's record, unchanged. The generic step: each component is propagated
+by the one rule at its own clock, and the record's offer at a cell is the
+sum of the components' offers (linearity; distinct clocks are orthogonal
+characters, so the norms add over a full period). The click reads the
+record's offer; the joint gather's weights read the label state only
+(3.6), so THE COUNTS DO NOT DEPEND ON THE COMPONENTS. The identity behind
+it: m(m^T([p])) = N [p] on Z[Z_N], and over a window of w components
+m(SUM over the window) = w [p] (PROVED HERE: each term [a] (x) [p - a]
+multiplies back to [p]). None of the fifteen pins reads it; it is the
+form for nature's broad spectrum of the pair. The engine form and its
+unit tests: [the lab tools' specification](designs/lab_tools/LAB_TOOLS.md),
+section 12.1.
+
+**(2) One amplitude per label on every record: an engine form (DERIVED
+HERE).** Every record carries its rows per label value of each arm (two
+rows per arm for the label pair). The one rule acts on each label row
+alike, because the paces of the two labels are equal in every body
+(9.3). A POLAR BODY with the axis **u** = (a, b) applies at its cells the
+integer matrix **M**_u = [[a, b], [-b, a]] to the pair of label rows
+(verb B). There is no division: the common factor abs(**u**)^2 scales the
+record's norm, as n_s did, by the identity (a x + b y)^2 + (-b x + a y)^2
+= (a^2 + b^2)(x^2 + y^2) (Brahmagupta's, exact on integers). For a record
+of rank 2 the arm's weights are the partial trace (9.11 (d)), which the
+per-label rows give without a new rule. The unit tests are in the
+specification's section 12.2.
+
+**(3) The take: REMOVED (9.12).** CLOSED.
+
+**(4) The polariser's angle: the integer axis, ADOPTED (9.14).** The
+setting s and the half-angle tables retire. THE PINS, written before any
+run (COMPUTATION: main's `joint_weights` with (a, b) in place of (C', S')
+and main's `rungs`):
+- BELL. The pair's state is HV + VH, the crystal's (item (5)). Alice's
+  axes are (1, 0) and (1, 1). Bob's are (1, 2) and (3, 1): the reflections
+  in the diagonal of (2, 1) and (1, 3), because the state HV + VH is HH +
+  VV with Bob's labels exchanged. For the lamp's HH + VV on main's files,
+  Bob's axes are (2, 1) and (1, 3) and the counts are the same. The
+  weights (++, +-, -+, --) are:
+  - (1, 0) with (1, 2): 4, 1, 1, 4 of 10, so E = 3 / 5.
+  - (1, 0) with (3, 1): 1, 9, 9, 1 of 20, so E = -4 / 5.
+  - (1, 1) with (1, 2): 9, 1, 1, 9 of 20, so E = 4 / 5.
+  - (1, 1) with (3, 1): 16, 4, 4, 16 of 40, so E = 3 / 5.
+
+  S = 3 / 5 + 4 / 5 + 4 / 5 + 3 / 5 = 14 / 5 EXACTLY at every wheel W that
+  is a multiple of 20. THE PIN AT W = 2560 (the wheel [1, 2560], N = 2048
+  unchanged): 1024, 256, 256, 1024; 128, 1152, 1152, 128; 1152, 128, 128,
+  1152; 1024, 256, 256, 1024. So S = 14 / 5 = 2.8 (DETECTOR), each
+  marginal exactly 1280 of 2560, with no band: a differing count is an
+  engine defect. RETIRED with the declared wheel (record 1872): the band
+  is binomial, 9.19 (4b). At W = 2048 the same weights give 717 / 256 (the rung's
+  rounding), which is why the wheel moves to 2560. Nature's optimum, 2
+  sqrt 2 = 2.828, is not a pin.
+  THE HOST'S FORM (the physicist's cost of 19:00Z: about 1.7 ms per
+  record-interval on the Bell layer, about 6 hours at 2048 records): the
+  counts are deterministic over the wheel, so the smallest exact wheel,
+  W = 20, gives the SAME S = 14 / 5 with 20 pair records per setting.
+  The counts are 8, 2, 2, 8; 1, 9, 9, 1; 9, 1, 1, 9; 8, 2, 2, 8, with
+  marginals exactly 10 (COMPUTATION, main's `rungs`), in about 1 / 100 of
+  the host time. Any multiple of 20 is the same pin scaled. ADOPTED by
+  the Boss at 00:05Z: THE BELL WORLDS ARE PINNED AT W = 20. RETIRED by
+  record 1872 (the residue from the law, no declared wheel): the pins are
+  distributions, n = 100 pair records per setting, 9.19 (4b).
+- MALUS. H arrives; the + cell is along the axis, with the share a^2 /
+  (a^2 + b^2). The axes, chosen as the integer vectors nearest the four
+  settings of the list:
+  - (1, 1) at 45 degrees: 1 / 2.
+  - (5, 1) at 11.31 degrees: 25 / 26.
+  - (15, 8) at 28.07 degrees: 225 / 289.
+  - (3, 2) at 33.69 degrees: 9 / 13.
+
+  THE PINS AT W = 256 (the wheel [159, 256] as the files stand): 128, 246,
+  199 and 177 of 256 on the + cell (DETECTOR). RETIRED as exact counts by
+  record 1872: the expected values 128.0, 246.2, 199.3, 177.2 with their
+  binomial bands, 9.19 (4b). These are the rung's
+  nearest integers to 128, 246.15, 199.31 and 177.23, none of them a tie,
+  and they are the list's numbers, unmoved. Each share is exact at its own
+  wheel: W = 2, 26, 289 and 13, or together at W = 7514, with 3757, 7225,
+  5850 and 5202.
+
+**(5) The crystal's same-hand weights a and b: the crystal's MATERIAL,
+with a = b = 0 (DERIVED HERE).** Beyond c = d (9.3) the symmetry fixes
+nothing. The half-turn about the arriving axis exchanges the arms and
+changes the sign of both labels, and gives c = d again. The quarter turn
+carries the arms out of the placement's plane, so it relates channels of
+other headings. So a and b are free. What the algebra does fix is WHICH
+STATES ARE MAXIMALLY ENTANGLED: the coefficient matrix [[a, c], [c, b]]
+must be a multiple of an orthogonal matrix, and that holds exactly when
+b = -a (any c) or when c = 0 and a = b (PROVED HERE: a c + c b = 0 and a^2
++ c^2 = c^2 + b^2). A state outside those two families (for example a =
+b = c, the product state (H + V)(H + V)) lowers S. THE VALUE WRITTEN IN
+THE CRYSTAL'S WORLD FILE is a = b = 0 and c = 1, the branches [[1, 1],
+[2, 1]] (label bit j is the value on arm j). The reasons:
+- It is maximally entangled.
+- It is the smallest material: one nonzero integer, the channel that
+  symmetry already fixes.
+- It is the owner's channel of record 1821.
+- The Bell pin in (4) is computed for it.
+
+**(6) The cone: ACCEPTED as not derivable (9.3, 9.7).** The pair's
+headings are the placement's: the receivers are placed where the pair
+goes (LAB_TOOLS.md 11.3).
+
+### 9.17 The only operation is the click, and the emitter clicks (the owner's word of 22:30Z: "in principle we cannot do any operation on the cells except to produce a click, which really takes out a record. Verify whether the emitter must also make a click")
+
+**(1) The form of every tool (DERIVED HERE, from 8.8 and 9.12).** The
+Inside is a bijection and the click is its one deletion (8.8). So a
+tool's action is the law's own advance (the rule **R**, with the tool's
+material, and the push of 9.15) PLUS AT MOST A CLICK. The click may have
+a birth as its other side (9.13): **E**^T writes the born record's two
+levels once, at the click's interval, and from then on only the law
+advances it. Read against that form:
+- THE RECEIVER: a click. FORM MET.
+- THE MIRROR, THE SPLITTER, THE FACES: the law's advance on a gap or on
+  the zero row. No click. FORM MET.
+- THE POLARISER: the law's advance with **B**_u on the label rows
+  (9.16 (2)), then its receivers' clicks. FORM MET once the per-label
+  rows are built. The table form (the split of booked offers with a kept
+  remainder) is an operation on the books and not the law's advance: it
+  RETIRES (9.11 (e)).
+- THE CRYSTAL: the arriving record's click, then a birth. FORM MET.
+- THE WELL AND THE TRANSPONDER: the law's advance, and its own record's
+  clicks. FORM MET.
+- THE EMITTER, as main has it: NOT MET, twice over. First, the lamp's
+  births come from a rate accumulator with no record behind them, so a
+  record begins where none ends. Second, `_drive` writes the cosine value
+  at the emitter's Node every interval of the train (verb T on a cell
+  that the law does not advance), and it overwrites what arrives there
+  (the physicist's observation of 18:50Z).
+
+**(2) The emitter must click (DERIVED HERE).** One quantum, one click
+(8.6) and the bijection (8.8) together say that the number of quanta
+changes only at a click. A birth adds one, so A BIRTH MUST BE THE OTHER
+SIDE OF A CLICK THAT ENDS ONE: the emitter's own excited record ends as
+the new record begins. This is the atom's transition: **E** on the
+emitter's own record, then **E**^T. Its own clock's rung alone is not
+enough, because a count on a clock with no record behind it ends nothing
+(it is lawful as a count, 9.5, but it creates a quantum from nothing).
+The algebra's form is therefore THE BLOCK EMITTER: a body with its own
+record (a well of a massive kind, 8.3) whose record clicks at its own
+rung. That click ends the record, and the photon's record is born at the
+same interval on the emitter's cells.
+- THE BORN RECORD'S VALUES are written once, at the click, by **E**^T:
+  the born clock's character on the emitter's cells at both levels. They
+  are never driven afterwards.
+- A NARROW TRAIN IS A LENGTH, NOT A DURATION: a record of n periods is
+  written over n wavelengths of emitter cells in a line (its direction
+  the line's, a placement, 9.6). On a single cell the born record is
+  broadband.
+- The emitter's cells are cells like any other before and after the
+  birth, and an arriving amplitude passes them under the rule. This
+  answers 9.10 item 1 and the physicist's question: nothing is
+  overwritten.
+
+**(3) What changes in the code.**
+- `_drive` retires. The lamp's rate accumulator retires as a source of
+  births. `train` becomes the born record's extent on a line of emitter
+  cells.
+- A birth is fired only by a click: the emitter body's own record's rung,
+  or an arriving record's rung at a crystal.
+- The loader refuses a birth with no clicking record behind it.
+- The light clock's A changes too (see (4): main's block does not delete
+  its record at its count, and it drives its light record by the source
+  term).
+- The consequences for the fifteen:
+  - Bell and Malus read computed weights and are unchanged.
+  - The rows reading a steady field (the two slits, the pace fans, M1,
+    the index probes) take the born packet's spectrum, the extent of
+    their emitter line. Their pins are re-derived blind on the
+    regenerated worlds.
+  - The first-rung rows (M2, Sagnac) re-derive their first rung from the
+    packet's front.
+
+**(4) The emitter's integers (the physicist's five questions of 19:45Z;
+DERIVED HERE).** First, a CORRECTION of (3): main's block emitter is not
+the form either. Its "click" is a count on the sum of its record (a
+crossing from at most 0 to above 0) that deletes nothing. Its light
+record is born at content 0 and filled at every interval of the cycle by
+the coupling's source term (`_source`). So the light clock's A CHANGES
+too. The form, with its integers:
+1. THE EXCITED RECORDS, IN TURN. The emitter is a body of a massive kind
+   with `emits` and a STOCK `amount` = M, the number of its excitations.
+   - At interval 0 its first excited record is on the board: the body's
+     seed at both levels (9.9), content one quantum, its residue u_1 from
+     the body's wheel [step, W] in its residue order.
+   - Excited record k clicks at ITS OWN RUNG on its own cells: **E** is
+     its own offer booked through its cells (read-through, no take), and
+     **D** is 2 T u_k + T <= 2 W C with T its norm.
+   - At that click **X** ends it, and **E**^T births two records: the
+     photon (content one quantum) and, while the stock lasts, excited
+     record k + 1 (the seed again, content one quantum, residue u_(k+1)).
+   - So quanta are conserved at every click, M in all. The emission
+     times are the rungs, spread by the residues over the wheel: the
+     spontaneous emission of the algebra. THE RATE KEY RETIRES: the rate
+     is the rungs'. There is no source term and no drive.
+2. THE BORN VALUES, written once at the click's interval t_0 on the
+   emitter's cells (N the wheel of phases, [p, q] the born family's
+   phase per Link, n / d its clock per interval, phase(age) main's
+   `_phase` = (3 N / 4 + floor(age n / d)) mod N):
+   - On ONE CELL: now = A C[phase(0)] and before = A C[phase(-1)]. The
+     record is broadband.
+   - On A LINE of L cells from the vertex along +e, at the cell x = 0 ..
+     L - 1: now = A C[(phase(0) - floor(x p / q)) mod N] and before = A
+     C[(phase(-1) - floor(x p / q)) mod N], a character travelling along
+     +e. The line's order from its vertex is its placement (9.6), and its
+     heading is the born character's.
+   - A narrow packet of n wavelengths has L = round(n N q / p) Links, the
+     nearest integer (the loader prints it).
+   - The residue u enters only the born record's rung, as today.
+3. THE NORM: T = SUM over the emitter's cells of (now - before)^2 at the
+   birth, the motion the one write inserts. The rung's T is this.
+4. THE WHEEL AND THE RATE: the wheel [step, W] and the residue order
+   `seed` stay on the emitter body. The rate keys ([1, 1] for Bell, [1, 4]
+   for the two slits) retire: births come at the excited records' rungs.
+   A world that needs W births declares M = W.
+5. THE STEADY-FIELD PINS are re-derived blind by the World Generator's
+   map (the physicist's tool) on the born packets. The mathematician
+   checks each derivation. The pace fans need no single-cell source: two
+   LINE emitters, one along the axis and one along the diagonal, each
+   give a travelling character, and k(axis) - k(diagonal) = k^2 / 48 at
+   fixed omega is a property of the band that holds per character. So the
+   fans' reading is kept with lines, and the pin stands.
+
+**(5) The physicist's two readings and one question on the emitter's
+first head (emitter-click 7ce8d66a, 20:45Z; DECIDED HERE).**
+1. THE EXCITED RECORD'S NORM T is the offer its own mode books over ONE
+   PERIOD of its own clock, T = SUM over the P intervals of a period of
+   SUM over its cells of (now - before)^2, with P the nearest integer to
+   2 pi / omega_b. The generator computes it by advancing the seed alone
+   for P intervals, the rule being exact on integers, and writes it as the
+   emitter's integer `norm`. The loader recomputes it the same way and
+   refuses a mismatch; the count is the loader's, not the law's (9.5).
+   - WHY: a bound record books without end, so its only finite measure is
+     per cycle. With this T, the excitation of residue u clicks within its
+     first period, at about (2 u + 1) / (2 W) of it. The mean wait is half
+     a period WHATEVER THE WELL'S DEPTH: W births take about W P / 2
+     intervals, and the cadence is not a sizing integer.
+   - The seed's squares (the head's T) make the wait scale as 1 / omega^2,
+     which is a unit accident.
+   - The smoke run's numbers move accordingly. The generator re-derives
+     them.
+2. THE STATIC LEVEL: the one-cell write carries no zero-frequency part.
+   now = A C[(3 N / 4 + floor(s / 2)) mod N], with s = floor(n / d) the
+   clock's step, and before = -now EXACTLY. That is the character sampled
+   half a step either side of its zero crossing. The norm is then 4 now^2
+   per cell.
+3. THE LINE'S TRAVELLING CHARACTER: no per-Link pair enters the engine.
+   The band's k at a rational omega is not rational, so the born profile
+   along a line is MATERIAL: the generator writes the two levels' integers
+   over the body's cells (the key `born`, a profile at both levels, as the
+   well's seed is, 8.7). The engine copies them at the click. The loader
+   prints the band check (the profile's k and omega on 3 cos omega = cos
+   k + 2), as the seed's check is printed.
+   - Default with no `born`: the one-cell pair of item 2 on every cell
+     (cells in phase).
+4. A DEFECT to correct: `_emit` branches on `self.families[family].
+   massive_kind` to set the record's `driven` mask. That is a branch on a
+   family's kind (9.10; the three tests: no family name or kind). The mask
+   belongs to the record's own data, set from the emitter's declaration,
+   with no branch at the birth.
+5. CONFIRMED IN FORM on 7ce8d66a:
+   - X is `del self.records[...]`, a deletion of the whole record.
+   - The rung 2 T u + T <= 2 W C.
+   - The offer read through the body's cells with no take.
+   - One write at the birth, with nothing driven afterwards.
+   - The next excitation, while the stock lasts.
+   - The content moved from the stock.
+   THE GATE (9.5) stays on the whole line, the retirements and the
+   regenerated worlds included.
