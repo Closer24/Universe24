@@ -14525,3 +14525,123 @@ source is exactly zero (the leak test); the shipped rows read as 9.78
 takes a list of parts; the step, the hold, the pace and the transport
 run over the parts by their representation; the gate is 9.79 (3)'s
 bit for bit on the shipped worlds.
+
+### 9.87 The acceptance list's lines, the gaps, vectors from the start, the check-mode table of the new physics, and the all-families world (the Boss's records 2083, 2084 and 2085 of 2026-09-25, the model owner: "everything runs and works; vectors from the start; every experiment in check mode against nature; one test experiment where every family works with every other; Go level in a few hours")
+
+**(1) THE LINES FOR THE ACCEPTANCE ITEMS (record 2083), one each.**
+Item 5, gravity complete: the Node clock 9.57 (1) (Newton's fall 9.52,
+Einstein's second order 9.62 (2)); the vector part 9.78 (2), (4) with
+the transport 9.81; the tensor part 9.78 (2), (4); the field-energy
+source 9.78 (3) at nature's value 0 under this form; all one family
+of ten, 9.86 (2) (a). Item 6, the charge complete: the scalar 9.48,
+9.51 (2); the vector (magnetism) 9.78 (2), 9.82; one family of four
+with light as its wave, 9.86 (2) (b). Item 8: the click is written by
+the families' own holds and records, no journal (9.80 (4), 9.85 (2));
+its read stays the step's flux, no phase shift, ruled in 9.85 (1):
+the backward test never recomputes a condition. Item 9: the click a
+four-vector, the recoil at the taking and the giving in the law, 9.84
+(2), 9.86 (1). Item 10: the point emitter in the law 9.71 (1), row
+(iv) 9.85 (5). Item 15: the pair on the body and the record, 9.85
+(3). Item 16: the taking at a hop as one rule, 9.74 (the booking in
+the body's frame at every face, cut at zero after the sum).
+
+**(2) ITEM 7, THE GAPS, each built or its plain reason.** Built: spin
+(9.78 (2), (5)); the dragging, magnetism, induction, the waves, the
+gyroscope (9.78); the odd parts on a wave through the transport (9.81);
+the ray (9.81 (5)); light's polarisation (9.82); the recoil (9.84);
+light's gravity by its frequency (9.83 (2)). Declared, not built as a
+rule: the magnetic moment (the g-factor is not derived, 9.78 (2)); a
+finite-range force (a lowered pair, 9.78 (6) (h)); a self-coupled
+force (three signs and a self-unit, 9.78 (6) (i), confinement not
+derived). The law's own with no piece: binding and the mass defect
+(9.78 (6) (f)); a body's lifetime as its giving period (9.78 (6) (g)).
+OUTSIDE, with the reason: a decay with several daughters (a click
+gives one record to one family); the tensor's off-diagonal acting on
+a wave (the second neighbours, beyond the six; 9.81 (6)); a conserved
+total across families between clicks (the law's own choice, 9.45
+(5)); Bell re-read on the components with its expectation owed before
+the row runs (9.82 (3) (f)).
+
+**(3) VECTORS FROM THE START (record 2084, decision 1), confirmed.**
+Every directed thing is an integer vector on the axes and nothing
+else: the momentum n_i (the accumulator per axis, 9.52 (4)); the spin
+S_i and the moment mu_i (9.78 (2)); the current 4 s n_i div W and Q
+n_i div W (the holds); the click's direction, the per-Port tally per
+axis, and the recoil per axis (9.84 (2)); the given light's direction,
+the emitter's moment vector (9.82 (3) (d)); the wave's direction, its
+phase pair per axis (9.81 (4)). No magnitude with an angle, no root,
+no fraction: an angle appears in one place only, the Link's twist,
+and there as an exact integer triple of the table (9.81 (2) (b)); a
+pair [num, den] is a cosine as two integers (9.22). A number that
+comes out with a point marks a property that should have been a
+vector; none remains.
+
+**(4) THE CHECK-MODE TABLE OF THE NEW PHYSICS (record 2084, decision 4),
+each row with its formula and blind expectation, no pin.**
+
+| The physics | The row | The formula | The blind expectation |
+| --- | --- | --- | --- |
+| Masses attract and move (Newton) | two seats of equal content falling together from rest at 20 Links (9.52 (3) (a) as a pair); the Kepler pair of 9.59 (5) | d(t) = d_0 - (M R / (2 Gamma r^2)) t^2 at first order, both bodies; Kepler's T^2 = 4 pi^2 a^3 / G (M_1 + M_2) | the meeting interval within one hop of the closed form; the period within the draw (9.63 (3)); equivalence: two families alike |
+| The stretching of space and the slowing of clocks (Einstein) | rows 1, 3, 4 (9.59, 9.62, 9.65) | the clock 1 / sqrt(1 - 2U + 2U^2); light's coordinate speed 1 - 2U; the bending 4 G M / b; Shapiro's delay | the redshift 1.104 at k = 0.302 (the clock body), the light clock 1.258; the bending twice Newton's; the delay 37 against 18 |
+| The vector part of gravity | the ring of 9.77 (6) (b); the gyroscope 9.78 (9) (e); the matter wave around the ring 9.81 (8) (d) | the node precession 2 G J / r^3; Schiff's (3 / 2) G M / (c^2 r) and the dragging; the loop's angle | 4.5 Nodes per orbit in the ring's sense; 0.19 radians per orbit; the fringe shift of the loop; the ring at rest: none |
+| The tensor part (a wave of gravity) | the orbiting pair and the interferometer of 9.78 (9) (c), (d) | h = 4 U v^2 at twice the orbital frequency; the period's drift (192 pi / 5)(1 / 2)(v / c_l)^5 per orbit | the two arms of 600 Links one tick apart at the peak; 1.5 percent per orbit at v / c_l = 0.19 |
+| Magnetism | Ampere and Lorentz 9.77 (6) (a); Faraday 9.78 (9) (f); the sign 9.81 (8) (b) | the force times 1 - (v / c_l)^2 for parallel motion, 1 + for opposite; the induction - dA / dt | 13 and 19 Nodes against 16 at rest; the resting seat's accumulator moves by minus the change of A; a body and a wave curve the same way |
+| The recoil | 9.84 (5) (a) to (c) | Delta n = (W P_body) div (M lambda_q) per quantum | 100 quanta push a seat of 64 by the momentum's whole part; a train emitter recoils, a point emitter not; a tool of a million quanta not |
+| The point emitter | 9.85 (5), 9.75 rows (i) to (iii) | the tick 209 + n / 2 +- n / sqrt(12); the wavelength 2 pi / k at the seat's rotation | 241 +- 18 at n = 64; 20.4 Links; the two sides alike |
+| Aharonov and Bohm | 9.81 (8) (a) | the shift Phi / (2 pi) of a spacing | at Phi = pi the central maximum becomes a minimum; Phi = 0 or a pure gradient: unchanged |
+| The charge's rows | 9.64 | Coulomb's deflection, the atom's binding | as 9.64, everything on |
+
+**(5) THE ALL-FAMILIES WORLD (record 2085, item 21), designed.** ONE
+world, every family coupled with every other. THE BODIES: two seats A
+and B, each of M = 2000 quanta (s = 2000, P_0 chosen so; the well at a
+seat's own Node c / Gamma = 0.2, the guard holds), charges +Q on both
+with Lambda Q = 50 (like signs, a push against the pull), bound in a
+mutual orbit at separation d = 10 Links (each on a circle of radius 5
+about the centre): the gravitational U of one at the other 2000 / (2
+x 10^4 x 10) = 0.01, the orbital speed v = 0.1, v / c_l = 0.17, the
+period 314 intervals with gravity alone. A spins: S = 1000 along the
+orbit's axis. A is a point emitter (its window g = 4, its stock 200)
+giving light at its own period; a detector D of a million quanta at
+60 Links in the orbit's plane takes it; the faces receivers of every
+family. The GameBoard 48 x 48 x 48, the light's k = 0.302. THE
+CHANNELS, each with its formula and its blind expectation:
+(a) NEWTON AGAINST THE CHARGES: the effective pull s - Lambda Q = 150
+of 200: the period 314 x sqrt(200 / 150) = 363 +- 3 (the hop's
+granularity); with the charges 0: 314; with the charges and no
+gravity: unbound.
+(b) MAGNETISM: the two charges move oppositely at every instant, like
+charges in antiparallel currents repel: the push grows by (v / c_l)^2
+= 3 percent, the period by 0.4 percent, 1.4 intervals per orbit, read
+over ten orbits as 14 +- 3 against the same world with the charge's
+vector part sourced by nothing (a static charge of the same Q at the
+centre).
+(c) THE DRAGGING: A's spin drags B's orbit: the node precesses 2 G J /
+r^3 per interval with G J = (S / M) G M = 0.05 Links: 10^-4 per
+interval, 0.03 radians per orbit, 0.3 Links per orbit along the
+orbit, 10 Links over thirty orbits; with S = 0: none.
+(d) THE WAVE OF GRAVITY: the pair radiates at twice the orbital
+frequency; the period drifts (192 pi / 5)(1 / 2)(v / c_l)^5 = 8.5 x
+10^-3 per orbit, 8 percent over ten orbits; a far seat pair across
+the GameBoard reads the tidal signal at twice the frequency.
+(e) THE CLOCK'S LIGHT: A's giving intervals at D carry the redshift
+of the well at A (its own and B's: 1 + U_A, about 1.2 percent, 4
+intervals of 314) and the Doppler of the orbit, +- v / c_l = +- 17
+percent at the orbital period, a modulation of +- 53 intervals: the
+cleanest channel.
+(f) THE RECOIL: A's point emitter gives symmetrically and recoils by
+nothing net (the tallies cancel); D takes 200 quanta from one
+direction and, at a million quanta, moves by nothing; the total
+momentum, the bodies' accumulators plus the tallies in flight, is the
+start's at every interval (a check, exact in integers).
+(g) THE CHARGE KEPT: the sum of Q over the bodies constant; the leak
+test on every component with no source (the tensor's off-diagonal
+where the orbit's plane is the x y plane sources h_xy: not zero,
+expected; the z components of the currents zero, expected).
+(h) THE BACKWARD RUN exact from the records alone through every click,
+the events output giving the intervals (9.80 (4)).
+THE COST: 48^3 = 1.1 x 10^5 Nodes with every component live, about
+0.6 seconds per interval (9.78 (8)), ten orbits of 363 intervals in
+about forty minutes; thirty orbits for (c) in two hours: one world
+suffices; if the host is slower, the second world is (c) alone with
+the charges 0 (the dragging needs the orbits, not the charges), and
+that is the only split.
