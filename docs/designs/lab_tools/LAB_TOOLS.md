@@ -200,21 +200,29 @@ and no tool name.** Every tool is built from these alone.
 - On the board at interval 0: nothing.
 - Its load check: every clock that reaches it lies below its gap; the
   transmitted share at its depth is below the declared bound.
-- Its unit tests (COMPUTATION, the chain's exact harmonic solution; an
-  emitter of [2464, 25], the gap [1, 2]):
-  - The transmitted share is 3.000 x 10^-2 at depth 1 and 5.561 x 10^-4
-    at depth 2. The interval over the train at depth 2 is [5.314 x 10^-4,
-    5.816 x 10^-4].
-  - The reflection's delay is 4.085 intervals, against 3.547 for the
-    closed face: a difference of +0.538.
+- Its unit tests (COMPUTATION, the chain's exact harmonic solution at
+  the TRUE clocks, corrected 2026-09-25; the first draft's 3.000 x 10^-2,
+  5.561 x 10^-4 and 4.085 against 3.547 were computed at the old reading
+  of [2464, 25] as omega = 0.302378, which is k: HISTORY):
+  - At [2464, 25] (omega = 0.17413) the gap [1, 2] transmits 1.006 x
+    10^-2 at depth 1 and 1.66 x 10^-4 at depth 2; the reflection's group
+    delay at depth 2, referred to the last free Node, is 4.007 intervals
+    against 3.491 for the zero row (2 / v_g): a difference of +0.516.
+  - At the chains' light [1, 1] on N = 64 (omega = 0.05667, the light
+    clock's) the gap transmits 1.07 x 10^-3 at depth 1 and 1.68 x 10^-5
+    at depth 2; the delay at depth 2 is 3.973 against the zero row's
+    3.467: +0.506.
 
 **A.4 The splitter.**
 - Its group element: the mirror's reflection weighted by r and the
   identity weighted by t (9.2).
 - A direction: its plane's normal (a layer of cubes of side 1).
 - Its primitive: **R**, with the layer's pair.
-- Its material integers: the pair [91, 107] at [2464, 25], or [183, 199]
-  at [1232, 25].
+- Its material integers: the pair [129, 142] at [2464, 25] (omega =
+  0.17413, the true clock; the pair [91, 107] of the first draft was
+  computed at the old reading of [2464, 25] as omega = 0.302378, which is
+  k, and splits 3 : 1 at the true clock: HISTORY, corrected 2026-09-25),
+  or [377, 396] at [1232, 25] (omega = 0.08723).
 - Its momentum: the integer wave vector **K** of its character, 0 at
   rest (the model owner's record 1885; ALGEBRA.md 9.22 (2)); a region of
   material carries **K** = 0 in the one algebra, a packet its **K**, written
@@ -222,8 +230,14 @@ and no tool name.** Every tool is built from these alone.
 - On the board at interval 0: nothing.
 - Its load check: the share computed from the pair at the declared
   clock, printed at load (GAMEBOARD).
-- Its unit tests: 0.49987 reflected and 0.50013 transmitted; the
-  interval over the train is [0.4901, 0.5098].
+- Its unit tests (COMPUTATION, the chain's exact harmonic solution at
+  the true clock): [129, 142] reflects 0.49995 and transmits 0.50005 at
+  omega = 0.17413, the reflected and transmitted parts a quarter turn
+  apart (arg(r / t) = -90 degrees exactly, unitarity and the layer's
+  symmetry); over a train of 32 periods the reflected share lies in
+  [0.4845, 0.5159]; [377, 396] reflects 0.50004 at omega = 0.08723 with
+  the same band. (The first draft's 0.49987 / 0.50013 and [0.4901,
+  0.5098] were [91, 107]'s at the old reading: HISTORY.)
 
 **A.5 The polariser.**
 - Its group element: the rational projector **P**_u = **u** **u**^T /
@@ -327,8 +341,10 @@ and no tool name.** Every tool is built from these alone.
 - On the board at interval 0: nothing.
 - Its load check: a periodic axis or a face receiver on every axis (a
   closed board is refused); the timing condition of A.2.
-- Its unit test: the closed face's reflection delay on the chain at
-  [2464, 25] is 3.547 intervals.
+- Its unit test: the zero row's reflection delay, 2 / v_g referred to
+  the last free Node, is 3.491 intervals at [2464, 25] (omega = 0.17413)
+  and 3.467 at the chains' light [1, 1] on N = 64 (the first draft's
+  3.547 was the old reading's: HISTORY).
 
 **A.13 The joint body (the two-qubit gate; the model owner's record 1883,
 2026-09-25 on the Israel clock: the sixteenth experiment).**
@@ -432,7 +448,7 @@ it drifts less than one Link over the run.
 | Emitter | YES: its own record clicks, and the birth is the click's other side | **E**^T, the projector onto G_48's trivial representation (the orbit sum of a Port) | none on a cube; a line of cells gives a line's (a placement) | its own record's **E**, **D**, **X**, then **E**^T once | the block's pair, side and seed; the born clock [p, q]; A; the line's length; the branches; a stock M (no wheel, 9.19 (4)) |
 | Receiver | YES | **E** then the rung: a scalar, the trivial representation | none | **E**, **D**, **X** | its name in the ladders (no wheel) |
 | Mirror | no | the reflection -I x (the half-turn of V_4 about the face's normal), arising from the gap | none on a cube; a slab's unoriented normal | **R** with the gap | the gap [num, den], the side |
-| Splitter | no | the reflection weighted by r, the identity by t | the layer's normal | **R** with the layer's pair | [91, 107] at [2464, 25] |
+| Splitter | no | the reflection weighted by r, the identity by t | the layer's normal | **R** with the layer's pair | [129, 142] at [2464, 25] ([91, 107] HISTORY) |
 | Polariser | no of its own; its two receivers click | the rational projector **P**_u in Q[G_48]'s image M_2(Q), not in G_48; chiral: (a, b) -> (a, -b) | no spatial direction | **B**_u on the label rows | the axis [a, b], gcd 1; its two receivers |
 | Crystal | YES: the arriving record clicks at it, and the pair is born | **E**, then m^T, then **E**^T; all 48 on a cube | none; the headings are the placement's | **E**, **D**, **X** on the arriving record, then **E**^T | the born clocks p_1 + p_2 = p; the branches [[1, 1], [2, 1]]; `label_hands` (no wheel, 9.19 (4)) |
 | Well | YES: its own record's clicks (its clock) | the bound mode, a character of the time translation at **k** = 0 | none at rest; its momentum in motion | **R** with the lowered pair; its own **E**, **D** | the pair, the side, the momentum and ramp, the coupling (no wheel; the seed is the generator's) |
@@ -494,6 +510,59 @@ options and readings of that one body.
 
 ## B. THE FIFTEEN EXPERIMENTS AS PLACED TOOLS (cubes on a torus; RUN_LIST.md's rows; the pins blind, written before any run)
 
+THE NEGLECTED SPACE BETWEEN THE TOOLS (the model owner's word,
+2026-09-25: "in the real world there is air between the emitter and the
+detector; we must say that we neglect it and for what reason"). On the
+board the space between the tools is the vacuum of the one operator, the
+family's pair [1, 1] for light and the matter family's pair for matter,
+and nothing else. THE GENERIC REASON, checked: for light in air the
+refractive index differs from 1 by 2.7 x 10^-4 (dry air, visible light),
+so a path of L metres is delayed by 2.7 x 10^-4 L / c and a balanced
+interferometer's two arms cross the same air, so the common delay
+cancels in their difference; the scattering loss in clean air is about
+1 x 10^-5 per metre at visible wavelengths (Rayleigh), so over a
+laboratory's metres fewer than 1 in 10^4 quanta are lost, below one
+click in 100; air is not birefringent, so a polarisation's shares are
+untouched. For matter waves air scatters every quantum within
+millimetres, so those rows are in a vacuum chamber in nature, and the
+neglect is the chamber's own. Where the real apparatus has a holder, a
+fibre or a chamber wall between the tools, it is not on a quantum's
+path or it is common to every path, and cancels as air does. THE ROWS,
+each with its number against its band:
+- Bell: air or fibre on both arms, common to every record; S is a
+  ratio of counts; a fibre's birefringence is compensated in nature and
+  absent on the board: no count moves (the band 0.14 on S).
+- Malus: centimetres of air, the loss below 10^-6 per record against
+  the band of 24 in 256: no count moves.
+- The two slits, the pace fans: air between the slits and the screen,
+  the common delay cancels in the pattern; the visibility 0.96 +- 0.02
+  is a ratio: no count moves.
+- The muon's form: nature's muons cross the atmosphere and lose about 2
+  MeV per g / cm^2 in it; the row reads the tick at one fixed pace and
+  neglects the slowing (a 0.3 percent band on the tick ratio; the
+  slowing over the hold would move the pace, and the row is defined at
+  a fixed K): stated, not below the band, a declared idealisation.
+- The redshift: the space is the vacuum between stars, the interstellar
+  dispersion at optical wavelengths below 10^-6 of z: no count moves.
+- The round trip, the light clock, Sagnac: air on both legs, common to
+  the sent and the received; ratios of intervals; the Sagnac phase is
+  independent of the medium's index to first order (Fizeau's drag
+  cancels on a closed loop): no count moves.
+- M1 and M2 (matter waves): a vacuum chamber in nature, residual gas at
+  10^-6 mbar with a mean free path above 100 metres against a path of
+  a metre: fewer than 1 in 10^4 quanta scattered; no count moves.
+- The boxes and the deep well: a bound clock at rest, nothing between
+  any tools; no space to neglect.
+- The receding index: the medium IS the material; the air outside it
+  shifts the reference delay by 2.7 x 10^-4 against an index of 1.04 to
+  1.25 read to 4 percent: no number moves.
+- The two-qubit computer and Mach-Zehnder: as Bell, air or fibre common
+  to both arms; the counts are shares: no count moves.
+WHERE THE NEGLECT IS NOT BELOW THE BAND: the muon's slowing in air
+alone, and there the row declares the idealisation (a fixed K); every
+other row neglects its space by a number below its band, and none needs
+air as a material region.
+
 THE TIMING'S FORM, in every row: nothing reaches a receiver at Manhattan
 distance m before age m (the causal bound). The front's K form is
 distance / v_g. For light at the born clocks [2464, 25] (N = 2048), [77,
@@ -530,6 +599,9 @@ where a shift common to every record cancels.
 | The receding index at k = 3 (v-m) | chain 4000 with the face receivers | the medium body, side 24, pair [314, 315], at 1500, BOUND (the holder family) and AT REST (material does not move, ALGEBRA.md 9.24 (3)); the light emitter at 800 (the clock [3565, 10000]) and the probe at 2400 as ONE co-moving name on a holder packet with K (v = 1 / 3) receding from the medium (A.14); the rest and reference worlds beside | the probe's phase is a GAMEBOARD reading, a diagnostic and not a result (9.21 (4)); in the frame form the medium reads the receding source at omega' = 0.0181 with the rest index n = 1.2519 (the design's rest number) and the moving probe sees the delay (n - 1) x 24 / c_l shifted by its own motion: COMPUTATION owed on the bound medium before any run; the design's +1.0144 rad and its drift, read on the pushed medium, HISTORY | the probe's window [3800, 5400]; FACE MARGIN checked by the generator against the window (OWED) |
 | The receding index at k = 4 | as at k = 3 | as at k = 3 with K for v = 1 / 4 (beta = 0.433) | as at k = 3 with omega' = 0.02202 and n = 1.2577 (the design's rest number); the design's +0.6103 rad and its drift HISTORY | as at k = 3 |
 | The two-qubit computer (16; the model owner's record 1883; ALGEBRA.md 9.23) | a layer [40, 40, 1], periodic; light [1, 1] with its born clock, a holder family | the emitter body at (4, 19) with a stock of 100 per setting; the crystal, side 3, at vertex (18, 18) with its light index, births the pair in the state the circuit has reached at its entangling gate: GROVER the branches [[0, 1], [1, 1], [2, 1], [3, -1]] (the uniform state after the oracle marking |11>); DEUTSCH-JOZSA [[0, 1], [1, 1], [2, -1], [3, -1]] (|+> on the query arm 0, |-> on the ancilla arm 1; the label index a + 2 b); ONE joint body (A.13), side 3, at vertex (28, 18), named first on the pair's ladder for both arms: GROVER **G** = diag(1, -1, -1, -1) (the diffusion's centre); DEUTSCH-JOZSA the four oracles, **G** = I, -I (constant), diag(1, -1, 1, -1) and its negative (balanced); the readout polarisers at (34, 30) and (34, 6) with their receivers at (35, 31) and (35, 5), the axes carrying the last one-qubit gates: GROVER both (1, 1) (the Hadamard then the axis (1, 0)); DEUTSCH-JOZSA the query arm's (1, 1), the ancilla's (1, 0); the ladders arm 0 -> the first polariser's receivers, arm 1 -> the second's | GROVER: the born weights (1, -1, -1, 1) = (1, -1) (x) (1, -1), every record clicks (-, -): 0 / 0 / 0 / 100 at n = 100, the band 0 (K, DETECTOR; one click elsewhere is an engine defect). DEUTSCH-JOZSA: the query arm clicks + for a constant oracle and - for a balanced one, 100 / 0 and 0 / 100 per oracle at n = 100, the band 0; the ancilla clicks - always, 100 of 100 (a check). Bell as row 1. The records: Grover 100, Deutsch-Jozsa 4 x 100, Bell 400 | the light record's first rung at the crystal, the pair's first rung at the joint body, the born pair's first rungs at the two readouts, equal by the placement's mirror symmetry (the mirror theorem, 11.3); on the periodic layer every record clicks (no face), the counts are computed weights |
+
+| Mach-Zehnder (17; the model owner's approval of 2026-09-25 through the Boss) | a layer [48, 48, 1], periodic on y, the face receivers on x | light [1, 1] with its born clock [2464, 25], a holder family; the emitter body (A.1) at (3, 12) with a stock of 100, a line of 5 cells born in phase along y (a beam along +x); the first splitter (A.4), a diagonal line of one-Node layers of the pair [129, 142] from (12, 8) to (12 + 8, 8 + 8) (its plane's normal along the diagonal, the beam split into +x and +y); two mirrors (A.3), diagonal slabs of the gap [1, 2] of depth 2 at (32, 12) and at (12, 32), turning the +x arm to +y and the +y arm to +x; the second splitter of the same pair and orientation at (32, 32); two receivers, each ONE connected region of 9 x 5 cells across an exit port, the bright at x = 40 across the +x exit and the dark at y = 40 across the +y exit; the two arms of equal length by the placement's mirror symmetry in the diagonal (the mirror theorem); the ladders: the bright, the dark, then the faces | 100 bright / 0 dark at 100 records (K, DETECTOR, blind): the algebra cancels the dark port's field per wave number to the splitter's imbalance, so the dark port's share is not 0 but SUM over the packet's band of abs(t_k^2 + r_k^2)^2 / (abs(t_k^2 + r_k^2)^2 + abs(2 r_k t_k)^2), COMPUTED on the chain's harmonic solution with the two splitters [129, 142]: 3.3 x 10^-4 averaged over a train of 32 periods (1.0 x 10^-3 at the band's edge), 2.1 x 10^-5 over 128 periods; the expected dark clicks in 100 records 0.033 (0.002 with the longer train): the band is 0 in the sense that ONE dark click in 100 is within the algebra at the 3 percent level and two are a defect; the bright detector's share is the rest, every record clicking there or at a face; the board size: the detectors' 9 x 5 regions catch the exit beams of 5 cells' width after the layer's spreading over 30 Links (owed: the generator's map of the exit beams' widths, to grow the regions if a beam spills) | the births in turn at the emitter's rungs; the front at the bright detector after 2 x 28 / 0.5729 = 98 intervals; every record clicks at the bright detector (its increment ladder), the dark's segments carrying 3.3 x 10^-4 of the flux; the faces catch the spill |
+| Mach-Zehnder, one arm blocked (17's CONTROL) | as row 17 | as row 17 with a gap cube [1, 2] of side 3 on the +y arm between the first splitter and its mirror (the arm blocked; the blocked light clicks at the gap's face, or reflects to the emitter's face) | 50 / 50 at 100 records, the expected counts 50 +- 15 (3 standard deviations) at each detector (K, DETECTOR, blind): the one open arm meets the second splitter alone and its light is split 0.50005 / 0.49995 between the two exits; the two detectors are lit together, which the increment ladder reads (ALGEBRA.md 9.25 (2)): NOT HELD | as row 17; the blocked arm's records end at the gap's face receiver or the emitter's face; the counts are computed shares |
 
 THE MINIMAL FORM (the model owner's reading, ALGEBRA.md 9.23 (7)): the
 generator folds the whole circuit up to the readout into the crystal's

@@ -4904,6 +4904,36 @@ denominator at that cell. Then the world declares no residue.
     0.02; one Node) that the binomial spread at their records (1024 and
     2048 over 201 and 121 pixels) lies inside; the generator's map prints
     the binomial band beside each on regeneration.
+  - (4e) THE EMITTER'S RESIDUES (the physicist's two findings on the
+    board, 2026-09-25, emitter-click 055de7be; DERIVED HERE). (i) A body
+    whose excited record is reseeded identically after every click, with
+    no coupling to the light on the board, repeats its remainder at the
+    centre cell and births ONE residue every time (his chain: 214, 214,
+    214 on W = 700): the algebra's own answer, a deterministic law with
+    an identical start gives an identical cycle, a perfectly periodic
+    source. THE RESIDUES SPREAD ONLY BY THE BOARD'S OWN BACK-ACTION: the
+    emitting body's COUPLING (g, G) to the family it births (8.5), by
+    which the photons already on the board act on the excited record's
+    rows (a one-unit change of a row changes the next remainder by
+    numerator mod 3 denominator, so any back-action spreads them), and
+    which an emitter carries because it radiates (a body that births
+    light and is not coupled to light is a write and no source). So
+    EVERY EMITTING BODY DECLARES (g, G) FOR ITS BORN FAMILY on its cells,
+    the one-cell emitters [801, 700] included; the equidistribution of
+    the residues so born is COMPUTED on the engine (owed: a chain of 100
+    births with the registered G [1, 50], g [1, 1000], the chi-square
+    against the wheel). (ii) The excited record's own residue read at its
+    (re)seed is 0 (the seed's remainders are 0), so its rung is T / (2 W)
+    and it clicks at the first interval with any flux, one birth per
+    interval: WITHDRAWN as a reading point. The excited record's residue
+    is read from its own remainder at the centre cell AFTER ITS FIRST
+    ADVANCE (the seed's remainders are 0 at the write and nonzero after
+    one step of the rule), and the rung compares from that interval on;
+    the born photon's residue is the excited record's remainder at the
+    click, as built. The first excitation of a run then has the residue
+    the generator's seed gives after one step, the same in every run of
+    that world (deterministic, 2.7), and every later one differs by the
+    back-action of (i).
   - (4c) THE FIRST-RUNG ROWS (M2, Sagnac, the light clock, the redshift)
     DO NOT CHANGE: a first rung is the interval at which 2 W C first
     reaches T, the u = 0 rung, and reads no residue. They move only with
@@ -5561,7 +5591,7 @@ computes, with its blind pin; (c) what in it is only CARRIED or OPEN.
 | 10 The moving mass (M2) | the chain 200 with the faces; matter; the emitter body with a stock, the receiver at 104; COMPLETE: the moving mass is a free packet already | BOARD-COMPUTED: the first rung 169 +- 2 (owed on the flux form); its pace v_g(**K**) CLOSED FORM beside | none: 8.4 is DERIVED for a free packet (9.24 (2)) |
 | 11 The boxes (ii-a, ii-b) | the cubes 64^3 and 48^3; matter; the well [800, 801] of side 20 or 28 at rest; COMPLETE. ii-b in motion: a packet with **K** (v = 1 / 3); its tick by clicks needs a moving name | at rest BOARD-COMPUTED (omega_b); in motion CLOSED FORM: the tick 0.8146 from the dispersion (the design's 0.7814 and 0.8032, the well form with its residual, CARRIED) | the moving name OPEN; the push CARRIED |
 | 12 The deep well | the layer 128^2; matter; the well [800, 801] of side 40 at rest; COMPLETE; in motion (the control) as row 11 | at rest omega_b by the mode; in motion the design's 0.7531 CARRIED, the dispersion's 0.8146 beside | as row 11 |
-| 13 The light clock | the chain 674 with the faces; light [1, 1], matter [800, 809], a holder; the well A [800, 801] with the coupling and a stock, the mirror body [1, 2], the receiver at 612; COMPLETE at rest | CLOSED FORM at rest: 2 D / v_g + the mirror's delay = 212.1 (the pin 214 +- 1 with the rung's offset, owed on the flux form); in motion CLOSED FORM ONLY, gamma^2 (the longitudinal arm) and gamma (the transverse) from the dispersion (9.24 (6)), never run: a moving mirror is material | none at rest; the moving clock is not a run |
+| 13 The light clock | the chain 674 with the faces; light [1, 1], matter [800, 809], a holder; the well A [800, 801] with the coupling and a stock, the mirror body [1, 2], the receiver at 612; COMPLETE at rest | CLOSED FORM at rest: 2 D / v_g + the mirror's delay = 212.0 (the pin 214 +- 1 with the rung's offset, owed on the flux form); in motion CLOSED FORM ONLY, gamma^2 (the longitudinal arm) and gamma (the transverse) from the dispersion (9.24 (6)), never run: a moving mirror is material | none at rest; the moving clock is not a run |
 | 14 The receding index, k = 3 | the chain 4000 with the faces; light [1, 1] with the born clock, matter [156, 157], a holder; the light emitter body (200), the medium body [314, 315] of side 24 with the coupling, BOUND, at rest; the probe a GAMEBOARD reading; the medium does not move: in the frame form the emitter and the probe are moving names | CLOSED FORM: n^2 = 1 + G g / (omega_0^2 - omega^2) (the design's) and the phase drift, re-derived blind on the bound medium (owed) | the bound medium's pin owed; the moving names OPEN; the push CARRIED |
 | 15 The receding index, k = 4 | as row 14 at k = 4 | as row 14 | as row 14 |
 | 16 The two-qubit computer | the layer; light and a holder; the emitter body, the crystal (the branches of the prepared state), ONE joint body (a 4 x 4 integer matrix), two readout polarisers whose axes carry the last gates, four receivers; COMPLETE, 100 records per setting | CLOSED FORM: Grover 0 / 0 / 0 / 100, Deutsch-Jozsa 100 / 0 per oracle, the band 0; Bell as row 1 | the joint body NEW for the engine (the crystal's form with a matrix, DERIVED); complex joint weights OPEN, not needed |
@@ -5998,18 +6028,21 @@ list carries **K**, the integer wave vector of its character, 0 at rest
 (DERIVED HERE from the dispersion; the chain of 674, the receiver at 612,
 the mirror at [672, 674), D = 60 Links, the light of the chains at k = 2
 pi / 64, v_g = c_l = 0.57689):
-- AT REST: the tick is 2 D / c_l + the mirror's delay = 208.01 + 4.085 =
-  212.10 intervals, plus the rung's own offset (the design's blind pin
+- AT REST: the tick is 2 D / c_l + the mirror's delay = 208.01 + 3.973 =
+  211.98 intervals (the gap [1, 2] of depth 2 at the chains' light, its
+  group delay referred to the last free Node, COMPUTED at the true
+  clock on 2026-09-25; the first draft's 4.085 was the old reading's),
+  plus the rung's own offset (the design's blind pin
   214 +- 1; OWED on the flux form and [800, 801]). The run at rest
   confirms exactly these ingredients by clicks: c_l on the board's band
   and the material mirror's delay.
 - MOVING WITH **K** ALONG ITS ARM (the longitudinal clock, mirror and
   receiver together at v): the tick is D / (c_l - v) + D / (c_l + v) +
   the delay = gamma^2 (2 D / c_l) + the delay with gamma = 1 / sqrt(1 -
-  v^2 / c_l^2): 218.54 at v = 0.1, 240.52 at v = 0.2, 316.36 at v = 1 /
+  v^2 / c_l^2): 218.43 at v = 0.1, 240.40 at v = 0.2, 316.22 at v = 1 /
   3 (gamma = 1.2252).
 - MOVING ACROSS ITS ARM (the transverse clock): 2 D / sqrt(c_l^2 - v^2)
-  + the delay = gamma (2 D / c_l) + the delay: 215.30, 225.85, 258.95.
+  + the delay = gamma (2 D / c_l) + the delay: 215.18, 225.73, 258.83.
 - THE LATTICE'S ANISOTROPY enters through c_l alone, the light's group
   velocity at its k along the arm's axis (0.57689 on an axis at k = 2 pi
   / 64, 0.57735 in the limit); the mirror's delay is the material's.
@@ -6195,13 +6228,19 @@ periodic seam admitted (connected through the seam).
 **(8) UNIT TESTS WITH EXPECTED VALUES (for the engine).**
 - The physicist's layer (24 x 7 closed, the emitter at (2, 3), three
   one-Node sets at x = 18 on the rows 2, 3 and 4, the residues u = 0 to 7
-  on W = 8): the counts under the order [s0, s1, s2] EQUAL the counts
-  under [s2, s1, s0]; each equals the number of u whose theta falls in
-  the cell's segments of the final increment ladder, which the harness
-  computes from the same fluxes before the run and the engine must give
-  bit for bit; by the placement's symmetry the rows 2 and 4 have equal
-  total flux and the row 3 the larger, so the middle cell has the most
-  clicks and the two others equal within one.
+  on W = 8): the counts under the order [s0, s1, s2] and under [s2, s1,
+  s0] are EQUAL IN DISTRIBUTION (the theorem of (3)), not residue by
+  residue: on eight residues the physicist reads (4, 2, 2) under the one
+  order and (2, 2, 4) under the other, since reversing the cells within
+  an interval's increment moves where the eight thresholds fall (a
+  finite wheel is a sample; CORRECTED on his finding, 2026-09-25); each
+  count is the number of u whose theta falls in the cell's segments of
+  the final increment ladder, which the harness computes from the same
+  fluxes before the run and the engine gives bit for bit; on 128 planted
+  residues the two orders agree within the sampling. (The first draft's
+  "the middle cell most" assumed a free layer; on his closed layer the
+  mirrors' returns put s0 and s2 ahead of s1: the harness's shares
+  decide, not a guess.)
 - Malus's four worlds: the shares a^2 / (a^2 + b^2) on the + cell, the
   expected 128.0, 246.2, 199.3, 177.2 at 256 records with their bands
   (9.19 (4b)).
@@ -6215,3 +6254,28 @@ periodic seam admitted (connected through the seam).
   projection (1 : 1 for HV + VH).
 - ONE QUANTUM, ONE CLICK: with the face last on every ladder, every record
   clicks exactly once (the content's count).
+
+**(9) THE DETECTOR IS SENSITIVE TO ONE NODE (the model owner's
+declaration, record 1894, 2026-09-25 on the Israel clock: "the detector
+is sensitive to a single Node by declaration; we built the board by the
+detector's sensitivity"; "a wave spreads over several Nodes; that does
+not contradict the detector being sensitive to a Node").** One Node is
+the smallest thing a detector tells apart: every armed Node of a
+detector region is a cell of the increment ladder (2), a click names one
+Node, and nothing below one Node is observable or claimed. THE MAPPING
+TO NATURE (DERIVED): on the board a wavelength spans several detector
+cells (the born light's 20.78 Links at [2464, 25], 64 at the chains'
+[1, 1]), while a real pixel is larger than a real wavelength; so an
+experiment is compared by the RATIOS it measures, and each pinned ratio
+is checked to be free of that scaling: the counts and their shares
+(Bell's S, Malus's shares, Grover's and Deutsch-Jozsa's counts) are
+numbers of clicks and carry no length; a fringe spacing or a centroid in
+cells (the two slits, M1) is compared as spacing over wavelength, L / d
+on the board as in nature; a first rung or a tick is compared as a ratio
+of intervals (the clocks, the redshift, the round trip, Sagnac, the
+light clock); an index as a ratio of delays. WHERE A PIN DOES DEPEND ON
+THE GRAIN: the pace fans read k^2 / 48, the lattice's own anisotropy,
+a diagnostic by construction; and the moving rows' ticks carry the
+dispersion's lattice term (0.8146 against 1 / gamma = 0.8165 at K =
+0.18556 per Link, 0.2 percent, inside their 0.3 percent bands, 9.24
+(2)); no other pin depends on the wavelength's size in cells.
