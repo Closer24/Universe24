@@ -13784,3 +13784,95 @@ section in the commit; the mathematician gates it line by line;
 9.78's instances are then entries of the families list on the same
 head or the next; the point emitter's five questions and every row
 wait until the genericity lands, then the experiments return.
+
+### 9.80 The genericity in the algebra's own terms: a family is a module with the group acting, the operations are one equivariant map and its invariant couplings, and the two worlds are a group and its projections (the model owner's words of 2026-09-25 in the mathematician's session: "everything is defined in the config; a family, an attribute, an attribute in an operation, everything composed into one thing so that it is only once in the code, without a name; think of it from modern algebra, how these things should work"; and his question: "today the clicks do not run backward; how do we do it?")
+
+**(1) A FAMILY IS A MODULE WITH THE GROUP ACTING ON IT.** The state of a
+family at a Node is the free module over the integers Z^m x (Z^2 x Z):
+m components, two levels each, one remainder each; the group G_48
+acts on the component index by the family's representation and
+trivially on the levels and the remainder. The NodeState is the
+direct sum of these modules over the families list; the GameBoard's
+state is the direct sum over the Nodes, with the translations acting.
+The three representations are the symmetric powers of the group's
+vector representation: Sym^0 (the scalar, one component), Sym^1 (the
+vector, three), Sym^2 (the symmetric tensor, six); the attribute
+"representation" of 9.79 (1) is the one integer k in {0, 1, 2}, and
+m = (k + 1)(k + 2) / 2. Every attribute of 9.79 (1) is a datum of the
+object; the name is not a datum, it is the host's label for the
+summand.
+
+**(2) THE ONE RULE IS ONE EQUIVARIANT AUTOMORPHISM.** The step at a Node,
+per component, is the map (a_now, a_before, r) -> (a_next, a_now, r')
+of 9.78 (4): integer products and sums, one floor; it is a bijection
+of the module's underlying set (the ceiling is its inverse, 9.50
+(8)). It commutes with the action of G_48 on everything at once (the
+state, the fields, the paces: the four paces are the diagonal of a
+tensor, covariant with the tensor's diagonal), and it acts on every
+component by the same scalar map: that is Schur's lemma read
+forward, and it is why "direction for everyone is the same function"
+(record 2065): a map that commutes with the group and reads only the
+representation's index is the same formula on Sym^0, Sym^1 and Sym^2.
+The sweep over the Nodes is an automorphism of the whole state; the
+Nodes' operations under composition form a GROUP (the Nodes' world's
+group); the inverse of a composite is the composite of the inverses
+in the reverse order, which is why the backward run's order is the
+step's word read backward (the fields before the seats, 9.79 (2)
+item 2), a property of groups and not a choice of the build.
+
+**(3) THE COUPLINGS ARE THE INVARIANT MAPS BETWEEN THE OBJECTS.** (a)
+THE HOLD is a map from a body's record to a held family's module: the
+count times Sym^k of the momentum's whole part, (1, n_i, n_i n_j) for
+k = 0, 1, 2, times the factor: the only equivariant polynomial map of
+degree k from the momentum to Sym^k, so the hold is forced by the
+representation and not chosen; the factor is its one scalar. The
+spin's dipole is the same map on the six with the antisymmetric pair
+(the axial vector) in place of the momentum's power. (b) THE PACE is
+the invariant pairing of the reading record's Sym^k of its own
+momentum with the held family's components (the contraction of 9.78
+(4)); (c) THE SELF-SOURCE is the invariant quadratic form (the norm)
+on Sym^k. Under G_48 alone Sym^2 splits into three parts (the trace,
+the two diagonal differences, the three off-diagonals) and the group
+allows a scalar on each; the engine takes the ONE pairing and the ONE
+norm that the group's continuous parent O(3) fixes (the Euclidean
+contraction), which is the law's isotropy (9.58 (2)): the group's
+extra invariants are exactly the anisotropies the rule does not use.
+So every coupling is one function of k, written once: the hold Sym^k,
+the pace the contraction, the self-source the norm; reads and held
+in the world file are the morphisms, the families list the objects,
+and there is no branch anywhere.
+
+**(4) THE TWO WORLDS: A GROUP, AND ITS PROJECTIONS.** A click is a
+PROJECTION, an idempotent map e with e e = e: the taking sets the
+record's rows at the detector's Nodes to zero and raises the content
+by the quantum; the giving lowers the stock and writes the given
+rows; Born's rule chooses which Node's projection acts, with the
+flux's weight (9.25 (3)). An idempotent other than the identity has no
+inverse: what it sends to zero, its kernel, is gone. A run is a word
+in automorphisms and projections, g_1 g_2 ... e_1 g_3 ... e_2 ...;
+the backward run inverts every g exactly; a projection is undone
+only from what was kept outside the state. THE OWNER'S QUESTION,
+ANSWERED: the backward run crosses a click from the host's ledger,
+which keeps per click its LINE (the Node, the family, the count, the
+interval; the law's own record) and, when the run asks for it, its
+KERNEL (the rows the taking set to zero at the detector's Nodes, and
+the rows a replacing write covered: at most the detector's Nodes
+times the family's integers per click; an adding write, the point
+emitter's, has no kernel and inverts by subtraction). The backward
+run then undoes the line (the content and the stock back by the
+quantum) and writes the kernel back, and continues with the group's
+inverses. That is a REPLAY of the host's record, a diagnostic and
+not a reversal of the click in the law: the clicks' world has no time
+reversal (record 2069), and the kernel is the host's, never at a Node
+between clicks. The test: forward through N clicks, backward through
+them with the ledger, the start state bit for bit; that is today's
+reversibility test extended across clicks. Its place: a run option,
+off by default, not an attribute of any family.
+
+**(5) WHAT THIS FIXES FOR THE BUILD, one line each.** The state is the
+direct sum of the families' modules; k is the one parameter of every
+operation that touches a representation; the hold, the pace and the
+self-source are one function each of k; the inverse's order is the
+reverse word; the click is the one idempotent, with its line always
+and its kernel on request; nothing is named. 9.79 (1) to (3) stand as
+written; this section is their reason.
