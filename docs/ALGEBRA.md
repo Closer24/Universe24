@@ -13768,7 +13768,9 @@ and by inside reads for the seat's contraction; nothing else.
 Nodes' world, items 1 to 5 and 7 to 10, runs backward exactly, and
 the backward run is its test that nothing is deleted between clicks.
 The clicks' world, item 6 (every taking and giving, the content, the
-stock, the charge, the counts), has no time reversal. 9.69 (2)
+stock, the charge, the counts), has no time reversal; the backward
+test crosses a click with no journal and no kernel, the taken record
+absent, the intervals from the run's events output (9.80 (4)). 9.69 (2)
 restated: the point emitter's window writes (a_given at the seat
 raised by g times the seat's level each interval) are the Nodes'
 world and invert bit for bit; the giving click itself (the stock
@@ -13851,22 +13853,27 @@ inverse: what it sends to zero, its kernel, is gone. A run is a word
 in automorphisms and projections, g_1 g_2 ... e_1 g_3 ... e_2 ...;
 the backward run inverts every g exactly; a projection is undone
 only from what was kept outside the state. THE OWNER'S QUESTION,
-ANSWERED: the backward run crosses a click from the host's ledger,
-which keeps per click its LINE (the Node, the family, the count, the
-interval; the law's own record) and, when the run asks for it, its
-KERNEL (the rows the taking set to zero at the detector's Nodes, and
-the rows a replacing write covered: at most the detector's Nodes
-times the family's integers per click; an adding write, the point
-emitter's, has no kernel and inverts by subtraction). The backward
-run then undoes the line (the content and the stock back by the
-quantum) and writes the kernel back, and continues with the group's
-inverses. That is a REPLAY of the host's record, a diagnostic and
-not a reversal of the click in the law: the clicks' world has no time
-reversal (record 2069), and the kernel is the host's, never at a Node
-between clicks. The test: forward through N clicks, backward through
-them with the ledger, the start state bit for bit; that is today's
-reversibility test extended across clicks. Its place: a run option,
-off by default, not an attribute of any family.
+ANSWERED (his form of records 2072 and 2073: no journal, nothing kept
+at a Node; the mathematician's choice): the backward run crosses a
+click with NO JOURNAL AND NO KERNEL. The click's intervals are in
+the run's own events output, written today (docs/ENGINE.md, the
+run's record), and its count is already in the state: the detector's
+content is its click counter (9.66), the giver's window counter its
+giving step (9.71 (1)). At a logged interval the backward run undoes
+the line from the state, the taker's content down by one and the
+giver's stock up by one, and leaves the TAKEN RECORD ABSENT: its
+rows are gone by the law (the record ends at the detector) and no
+test needs them. Every other record and every field then reads bit
+for bit at the start, exactly, because a free record sources nothing
+(9.45 (5)) and the fields read bodies, not records, so a taken
+record's absence changes nothing else. That is the test of the
+Nodes' world along the clicks' sequence, not a reversal of a click
+in the law (record 2069). A kernel (the deleted rows saved by the
+host) is withdrawn: nothing is kept anywhere. Why the interval cannot
+come from the state: a count is not a time, and one number at a Node
+holds one click back; why not from an additive taking: the rows are
+deleted by the law, and an additive taking would keep the record
+alive against the postulate.
 
 **(5) WHAT THIS FIXES FOR THE BUILD, one line each.** The state is the
 direct sum of the families' modules; k is the one parameter of every
