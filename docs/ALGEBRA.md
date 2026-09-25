@@ -14747,3 +14747,27 @@ integers per component per Node where the family is nonzero, nothing
 elsewhere; (ii) the polynomial's products per Node where the family
 is nonzero, about a hundred operations for eight components, nothing
 elsewhere.
+
+**(8) WHAT A PARTICLE IS IN THIS ENGINE (the model owner's question of
+2026-09-25 in the mathematician's session: "particles: are they in the
+world of clicks, as bodies?"; his own answer: "the solution is through
+the algebra: what representation at the Node gives what one sees at a
+click").** A particle is a CLICK: one whole quantum of one family
+taken or given at one Node (9.25 (3), Born's rule); between clicks
+there is no particle, there is the family's record on the Nodes (a
+wave), and the clicks' world is where particles are. WHAT ONE SEES AT
+A CLICK is the quantum's whole numbers under the family's declared
+representation: its count (the energy), its momentum (the tally per
+axis, 9.84), its charge sign (the phase pair's U(1)), its internal
+numbers (colour, isospin: the internal representation of (1)), and on
+a body its spin's hand (5). So the representation at the Node IS the
+particle's identity, and the click is the projection of the record
+onto it: the owner's line is the algebra's. A BODY is a particle that
+sits (a seat, a whole record with its numbers at one Node, 9.60), a
+RAY a particle that moves without interfering (9.81 (5)), a WAVE the
+particle between clicks; one family, three declarations. CONFINEMENT
+in these terms: a click's conserved signs (4) are what nature shows;
+a colour-charged product alone is refused by the click list's signs,
+so a quark is never seen alone at a click, while a colour-neutral
+product is. What the engine cannot show as a particle: a hand on a
+wave (5), and a nucleus at its true size (6).
