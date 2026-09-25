@@ -82,21 +82,21 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   a row is a body of no content (the first test of every rule, generic).
 - **Body (a measured event)**: an event created here without end, at one
   Node or on a set of Nodes (`span`), with one record: its held content per
-  family, its momentum vector **p**, its phase, its clock and its counts
-  table; it meets what arrives by its table and releases off its clock
+  family, its momentum vector **p**, its phase and its clock; it meets what
+  arrives by the one operator on its region, with no table (records 1875 and
+  1878), and releases off its clock
   ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
-- **Record (of a quantum)**: in a recorded world (one with a lamp,
-  `amplitude-v1`), the identity a lamp's self-creation gives every row it
-  births, the lamp's number x 2^32 + the birth's ordinal, carried through
-  every split, re-emission, rotation and gate; one record is one quantum of
-  the world's list of clicks, its rows are its paths, its click is one
-  (BEAM_LAW note 37). In the vector form the record is the phase-count
+- **Record (of a quantum)**: the identity a birth, the law's one write,
+  gives the quantum it writes (record 1875), carried through every split,
+  re-emission, rotation and gate; one record is one quantum of the world's
+  list of clicks, its rows are its paths, its click is one and ends it whole
+  (BEAM_LAW note 37; record 1899). In the vector form the record is the phase-count
   vector **f** of Z^N, an element of the group ring Z[Z_N] (record 188).
-- **Family**: one row of the family table, the world's `families`: its
-  quantum h (0 a free family, 1 or more a paid one), its charge per unit of
-  content rho, its columns, its lifetime L, its phase (a circle or none),
-  its phase per Link and its hand; its kind is derived from its quantum and
-  never declared (the model owner, 2026-09-19, the table from the keys).
+- **Family**: a summand of the one element of the algebra, algebraically its
+  pair and its label module, named by an entry of an experiment's list; at
+  most three per world (light, the experiment's matter, the holder of the
+  tools' bodies) (records 1875 and 1882); its kind is derived and never
+  declared (the model owner, 2026-09-19).
 - **Content**: the integer M a body holds, or a paid row carries per unit,
   in the family's units: the mass; `content` on a body or a row
   (BEAM_LAW section 2). A free row carries no content.
@@ -295,24 +295,25 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   times the arriving family's value: gravity -M_A **V**_B, the electric part
   rho_A rho_B M_A **V**_B; for a paid family's rows the label itself; the
   bilinear form **C a** (note 31; DERIVATIONS_BEAM).
-- **Table**: a body's rule per family, generated from the families' keys: a
-  free family read (`read`, the push taken, the rows go on), a paid one
-  measured (`measure`, the click); a world declares only what differs, a
-  window, `rerelease`, `pass`, `become` or a `reads` component (the model
-  owner, 2026-09-19). Not a table at a Node.
+- **Table**: none on the GameBoard: the engine carries no table and no
+  formula; the phase tables live only in the input-file generator and the
+  host's readers, outside the engine (the model owner, 2026-09-25, record
+  1878). A body's rule per family is the one operator on its region (record
+  1875).
 - **Click (measurement)**: a paid row's units merged into a body's record by
   the rule `measure`: the content joins, the label enters the momentum, the
   phase is read, one click per unit; the click is the only one-way border of
   the law (BEAM_LAW section 5). A measurement is this action of the law on
   the state, the record ended at the detector and the detector's own record
   changed, and nothing else measures (the model owner, 2026-09-23, record 1139;
-  [POSTULATES.md](../POSTULATES.md) section 10). **Gather** is the click of a record: when
-  its live units are 0 the layer reads its ladder at u and the record clicks
-  at the chosen set, arm, channel and Node, with the content and the momentum
-  the chosen rows carried; each Node's weight is the bilinear form
-  **f**^T **G** **f** of its own phase-count vector, no pointer formed,
-  coherent within one Node only (record 188; note 37 (xii); on main at
-  7e523c55).
+  [POSTULATES.md](../POSTULATES.md) section 10). **Gather** is the click of a record by
+  the increment ladder (ALGEBRA.md 9.25): the record's threshold is fixed at
+  its birth; each interval each armed detector's increment is the flux into
+  its cube through its Ports from outside it; the record clicks at the
+  detector whose segment of the crossing interval's increment holds the
+  threshold, reported per detector and never per Node, and ends whole at
+  once (the model owner, 2026-09-25, record 1899); the click is the only
+  non-local act and carries no signal (record 1888).
 - **Exact phase at the click**: the phase a record's row is read at when it
   ends (a click, a `sum` re-emitter, an open face, the border), the phase at
   the exact time of its last Link, phi = phase - floor(terms n / d) +
@@ -321,14 +322,13 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   at the click with the remainder kept (`nature_beam.exact_phase`; the click
   line's `exact` and `remainder`); the row's `phase` column stays the
   walk's (the model owner, record 163 (2); note 45).
-- **Offer, ladder**: what a record's rows put at a `sum` set's Node when the
-  set ends them, the phase-count vector per label and Node (`Offer.counts`),
-  the residual units, the content and the momentum they carried; a set's
-  weight in the cells is the sum over its Nodes of the bilinear form of the
-  sum over the labels. The ladder is the record's cells in the order of its
-  offers, each cell's rung b_k = (2 W C_k + Total) // (2 Total) on the
-  record's wheel W, and u falls in the cell whose rung it is below: Born's
-  rule read as a count over the wheel (note 37 (iii) and (xii); note 46).
+- **Offer, ladder**: the one-way flux of a record into a detector through
+  its region's Ports from outside, per interval (the offer); the ladder is
+  the increment ladder of ALGEBRA.md 9.25: the record's threshold is fixed
+  at its birth, each interval's increments of the armed detectors are laid
+  out in their declared order, and the click is at the detector whose
+  segment of the crossing interval's increment holds the threshold; Born's
+  rule is its theorem (records 1895 and 1899). No wheel and no table.
 - **Release**: what a body's self-creation creates: at a turn s each unit a
   lamp releases costs it h x s content, carries that content and the
   momentum h x s **u**_d along its direction, E = h f; a free family's
@@ -392,14 +392,14 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   in one interval below which every row passes with a `pass` record; the
   sensitivity; at a record's click the divisor of the rungs (BEAM_LAW
   section 5).
-- **Lamp**: a body's declared source: at its self-creations it births rows
-  of its family with its amount, phase and wheel value, in a recorded world
-  one record per birth, at its declared `rate` and `wheel` (the world's
-  `lamp` key; BEAM_LAW section 5, note 46).
-- **Detector**: a declared set of measured events (`detectors[].positions`)
-  with one record; a click says "here, in one of these", the set's extent
-  the position's uncertainty; a measured event outside every declared
-  detector is a detector of one Node (the model owner, 2026-09-19).
+- **Lamp**: retired. A source is an emitter body: its click triggers the
+  birth, the law's one write, from its stock (ALGEBRA.md 9.13 and 9.17;
+  record 1875).
+- **Detector**: a lab tool, one region of the one operator, a box of side
+  at least 3 (smaller is refused at load); its sensitivity is its whole
+  region: a click is the detector's, reported per detector, never per Node,
+  its increment the flux into the region through its Ports from outside
+  (records 1899 and 1900).
 - **Self-creation**: a body created at the next interval, at its Node or
   where it steps, one tick of its clock; a row's transfer is not one.
 - **Step**: the Link a body's drive counts on an axis; refused onto a Node

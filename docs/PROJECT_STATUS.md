@@ -1,67 +1,53 @@
 # Project status and restart guide
 
-## Where the project stands on 2026-09-24 (read this first)
+## Where the project stands on 2026-09-25 (read this first)
 
-Written by the Boss on 2026-09-24 at about 12:30Z from `main` at
-`111e6b1e`, the open pull requests and issues on GitHub, and
-[Highlights 5.4](HIGHLIGHTS.md#54-the-detector). A snapshot, not live
-evidence: read current Git before acting on it. The record of the day is
-`docs/LOG_2026-09-20.md`; records 1654 to 1806 are on the records branch
-(PR #1107) until it merges.
+Items 1 to 4 written by the Boss on 2026-09-25 at about 01:00Z from `main`
+at `b3268367` (PR #1140 merged), records 1875 to 1903 of
+`docs/LOG_2026-09-20.md` and [Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"What defines the system now"; items 5 and 6 are the Boss's snapshot of
+2026-09-24 at about 12:30Z from `main` at `111e6b1e`. A snapshot, not live
+evidence: read current Git before acting on it.
 
-1. **The plan in force (the model owner, 2026-09-24, 11:27Z to 11:58Z,
-   records 1805 and 1806).** One list of every experiment we want to
-   support, kept by the physicist; one engine on `main`, every fix and
-   build merged into it; no world file is generated, sized or regenerated
-   now; the engine is stabilised until the freeze; until the freeze no pin
-   run anywhere, every preliminary run a diagnostic (HOST, GAMEBOARD,
-   COMPUTATION by kind) and never a result; the freeze is the one commit
-   of `main` on which every world of the list loads and reads clean,
-   announced by the Boss; the GO is the owner's own word on that commit,
-   and then every pin runs in one go; the paper is submitted only when
-   everything is stable, not today. On the owner's stop order of 11:52Z
-   every agent session is stopped until a plan reached with the physicist
-   is presented to him; no agent runs before that.
-2. **The law and the engine.** The Beam Law (`beam-v1`,
-   [BEAM_LAW.md](BEAM_LAW.md)) with `amplitude-v1` and the detector's law
-   (`detector-law-v1`: [DESIGN.md](designs/detector_law/DESIGN.md), the
-   declarations in
-   [DECLARATIONS.md](designs/detector_law/declarations/DECLARATIONS.md))
-   runs in `src/event_universe/events/`; the three tests of every rule
-   (generic, vector, local), bounded integers and LOCALITY-1 hold. On
-   `main`: PR #1122 (the click line and the receiver by name, the Bell
-   joint gather, the redshift ticks 9600) at `ecebf895`, PR #1098 (the
-   detector-law world files) at `068b89b1`, PR #1123 (the preliminaries'
-   record) at `111e6b1e`. In flight: PR #1115 (`detector-law-build-3`,
-   the rule at T = 0 and the hop-take fix; Reviewer 3 CONFIRMED
-   `d65eadb2`; CI in progress at 11:28Z; merges on green), the receiver by
-   name as build-4 (local on the first builder's container, not on
-   origin), the joint gather's commits 2 and 3 (local on Builder 3's
-   container; commit 1 on `detector-law-joint-gather` at `cac9653d`).
-3. **The experiments and their three checks.** The paper's list with one
-   row per experiment and three checks each (the algebra, the GameBoard
-   without pins, the pins) is
-   [APPROVALS.md](designs/detector_law/APPROVALS.md); the launch list with
-   the world file, the run command, the reader of record and the pin by
-   kind is [RUN_LIST.md](designs/detector_law/RUN_LIST.md). At this
-   writing every CLOSED row carries the algebra check (A2, de Broglie and
-   E = m c^2 pending their declaration); the GameBoard check is partial or
-   "not yet" on most rows (the atom's coupled mode, the index at rest and
-   the 64^3 clock rows read exploratory); no row carries the pinned check.
-   Declaration defects found on 2026-09-24 and not yet fixed: the Bell
-   pin's rational (to be re-printed blind from the form's own integers
-   before any Bell reading is seen), the Malus files' two defects (the
-   polariser's exit off the chain, the read set at a take Node), the index
-   files' one clock, the fans' settling criterion (L-6), and the redshift
-   row 4b's three forms (issue #1125). The exploratory readings of the day
-   are in [PRELIMINARY_RUNS_2026-09-24.md](designs/detector_law/PRELIMINARY_RUNS_2026-09-24.md)
-   and [EXPLORATION.md](designs/detector_law/EXPLORATION.md), diagnostics
-   by kind, never results.
-4. **The paper.** `paper/general_formula/` on branch `paper-48` (PR #1006,
-   commit 65 at `cc8b22b8`, 48 pages); the venue Foundations of Physics
-   (record 1621); the results table fills only from pinned readings of
-   merged records; the Zenodo record is to be opened anew and its DOI
+1. **The new engine and its cleanup.** The system is one element of the
+   algebra and one operator on it (local, six neighbours, integers); the
+   click is the only non-local act and carries no signal; the birth is the
+   only write; no table and no formula on the GameBoard (records 1875,
+   1878 and 1888). Nature24 does the cleanup on his branch `emitter-click`,
+   each head under the mathematician's gate before its merge (record 1896).
+   First: the per-detector click, the increment ladder of ALGEBRA.md 9.25
+   over detectors, each a cube of side at least 3, its increment the flux
+   into the cube through its Ports from outside, the click reported per
+   detector, and the load check refusing a smaller cube (records 1899 and
+   1900). Then the rest of the cleanup, and next the input-file generator
+   (the operator iterated in integers, record 1898), which writes each
+   experiment's input file once, checked LAWFUL or REFUSED at load
+   (record 1886), and the one command that runs the input files in
+   parallel (record 1887). Three roles: the experimenter writes the list,
+   the generator writes the input file, the engine runs; no world writer
+   (records 1879 and 1882).
+2. **The experiments.** The mathematician's table of the seventeen is
+   ALGEBRA.md 9.22 (8) on PR #1145 (`lab-tools-unification`), with the
+   tools' cards in `docs/designs/lab_tools/LAB_TOOLS.md`: each experiment's
+   entries, its detectors as cubes of side 3 or more, its neglected medium
+   with the reason (record 1891), its blind pin in clicks; it is to be
+   completed per experiment so Nature24 writes every input file through
+   the generator without asking (records 1901 to 1903).
+3. **The paper.** Rewritten on the new engine per
+   [NEW_ENGINE_AUDIT.md](designs/paper_verification/NEW_ENGINE_AUDIT.md) by
+   a new paper writer on branch `paper-new-engine`, opened from `paper-48`
+   (records 1899 and 1900): first the general formula and the algebra
+   chapter (the one operator, the click, the birth), then the experiments'
+   rows after their new-engine runs with blind pins; the old-engine figures
+   and numbers leave the body. The venue Foundations of Physics
+   (record 1621); the Zenodo record is to be opened anew and its DOI
    replaced in the paper and in `README.md`, `CITATION.cff` (record 1653).
+4. **The goal (the model owner, 2026-09-25, record 1901).** All seventeen
+   experiments (the fifteen, the two-qubit computer and Mach-Zehnder)
+   run on the new engine from their input files, each loaded LAWFUL, each
+   read in clicks against its blind pin; a miss is a fault to find in the
+   law or the design, never a pin moved. An experiment checks only clicks
+   (records 1875 and 1876).
 5. **Open on GitHub.** Pull requests: #1115 (build-3), #1124 (`SIZING.md`,
    the sizing by the algebra, moot while no world is built), #1006 (the
    paper), #1107 (the records 1654 to 1806, the Highlights clauses and the

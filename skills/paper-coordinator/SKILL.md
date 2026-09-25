@@ -4,7 +4,9 @@ The writer of the one paper on the general formula (the model owner's GO,
 record 264 of docs/LOG_2026-09-20.md; the title of record 275 as the owner
 sharpened it on 2026-09-22, record 712, "Universe24: a local integer law of
 nature with a non-local read-out, and what follows from it"), in its own session on
-its own branch, following [the shared workflow](../workflow.md) and its
+its own branch, `paper-new-engine`, rewriting the paper on the new engine
+per `docs/designs/paper_verification/NEW_ENGINE_AUDIT.md` (records 1899 and
+1900), following [the shared workflow](../workflow.md) and its
 section [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309).
 
 ## What the coordinator writes and does not write
@@ -61,10 +63,11 @@ and make sure there is no circularity in them. And show how we arrived at
 modern algebra from the physical laws we put into the cells."
 
 The check, run on every formula before it enters the paper and recorded
-in PLAN.md as the paper's circularity audit:
+on branch `paper-new-engine` as the paper's circularity audit:
 
 1. Name the inputs: the postulates (P1 to P11), the declared inputs (the
-   tables, the grains, the family table, the dictionary), the assumptions
+   integers of the one algebra and the experiment's list, no table; records
+   1875 and 1878; the dictionary), the assumptions
    the ledger's third column names, and any identity a hypothesis
    declared (record 270's covariant identity is one).
 2. Name the operations from the inputs to the result: which of the six
@@ -78,7 +81,8 @@ in PLAN.md as the paper's circularity audit:
    arrived at (a conversion Outside under the frame's assumptions), and
    names the strongest input in the same sentence, so that the reader
    sees what carries the result (the balanced splitter's conservation
-   carries the square; the tables' cosines carry the cos^2 correlation;
+   carries the square; the rank-2 pair's click carries the cos^2
+   correlation;
    (A1) with the relativity of the two directions carries the Lorentz
    group; the wall T_D carries the value 1 / sqrt 3).
 5. Where a derivation in writing would remove a declaration (part 6 of
@@ -93,7 +97,7 @@ rotation of labels; a read-out that counts; six neighbours and one Link
 per interval) are, written down, integer accumulators with a carry, the
 cyclic group Z_N, the group ring Z[Z_N] and its addition, an integer
 matrix with the sum of squares as its multiplicity, an orthogonal
-integer matrix from the tables, the evaluation at the roots of unity
+integer matrix of the labels, the evaluation at the roots of unity
 with its norm, and the translation group's shift. So the state is a free
 Z-module, the interval a Z-linear map on it, and the click one bilinear
 form: modern algebra is not assumed, it is what the cell rules are when
