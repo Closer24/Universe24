@@ -8594,3 +8594,50 @@ content at its cells, its coupling to everything the click. The whole:
 the GameBoard with its faces, exact and reversible between clicks,
 whose only events are the clicks and the births, and whose remainders
 live at the cells.
+
+### 9.36 The cell's law with its couplings, closed in one circle (the model owner's word, 2026-09-25, in the mathematician's session: "yes" to the remainder rule of 9.33 (4) and 9.34 (C), "a click when there is a remainder"; and "it has to enter the cell's law and the cell's couplings: how do we couple the mass and the click at the Node?")
+
+**THE STATE AT A NODE.** Per record of each family: two levels and a
+remainder, kept at the cell (9.34 (A)). Per family: the pair [num, den],
+which is the family's mass (its rest rotation cos omega_0 = num / den,
+8.1). Per Node: the CONTENT M, the quanta of the body whose cell it is
+(0 in the vacuum), and from it the NODE CLOCK (e, f) = (Gamma, Gamma +
+M), one for every family (9.35 (3)).
+
+**THE STEP (the Inside),** for every record of every family at the Node:
+3 den f a_next + r' = e num S_6 + 6 den (f - e) a_now - 3 den f
+a_before + r, the remainder kept at the cell. The mass enters here
+twice: the family's pair (its own rest rotation) and the Node's content
+through the clock (which slows every family alike, light included). No
+continuous term couples one family to another (9.34 (B)).
+
+**THE GATHER.** Each object sums at its Ports the positive current of
+each record, num Gamma (now_i before_j - before_i now_j), and a standing
+record its own share at the cell (9.32 (4), 9.35 (2)).
+
+**THE CLICK, WHICH IS THE WHOLE COUPLING.** A record clicks when the
+share of it gathered by one object reaches (2 u + 1) / (2 W) of its
+whole, u the remainder at its birth cell; A RECORD WITH NO REMAINDER
+NEVER CLICKS (the remainder rule, ADOPTED by the model owner,
+2026-09-25: it splits and turns at one Link per interval and stays). At
+the click, in whole numbers only: the record ends on all its cells (1888);
+THE RECEIVING BODY'S CONTENT M RISES BY ONE, and at a birth the emitter's
+falls by one: THIS IS THE COUPLING OF MASS TO THE CLICK. The content
+changes the Node clock at the body's cells, which slows the rotation of
+its own mode and of every record passing through it; a quantum of light
+becomes content, content becomes clock, clock becomes rotation. A body
+heavier at its cells turns slower and so CLICKS slower (its rung T = P
+e_c grows with its period). The labels, a charge and the momentum (if
+the exchange hypothesis is adopted, 9.27 (D)) pass in the same click,
+whole. The born record starts from the remainder at its birth cell,
+which sets the place of its own click.
+
+**THE CIRCLE AT THE CELL.** The remainder gives the click its place; the
+click moves the content; the content sets the clock of every family at
+the cell; the clock sets the rotation; the rotation leaves the
+remainder. Mass and light are coupled by nothing else: the pair gives
+each family its pace and its rest mass, the click moves the whole
+numbers between them, and the Node clock is how what is at a cell slows
+what passes through it. 9.32's five lines, 9.34's three decisions and
+9.35's Node clock are this one circle; nothing is kept at a cell beyond
+the law's own numbers.
