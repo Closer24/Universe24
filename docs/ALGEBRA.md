@@ -11876,3 +11876,112 @@ Kepler, reduced to the hour: a layer [160, 160, 1], the circles at r =
 30 and r = 60 with c_R R = 10^4, two orbits each, periods 1460 and 4130
 intervals, T^2 / r^3 = 79 at both: 2.9 x 10^8, 45 minutes. Mercury
 (three orbits at r = 80): 2 hours, run when the hour is not the bound.
+
+### 9.62 Rows 1 and 2 read: the well's flight at the lattice's wave number, the light clock's two readings on the Einstein form (a correction of 9.57 (4) (a) and 9.59 (1)), the taking at a hop, the given train of a moving body (Nature24's readings and three findings of 2026-09-25; the mathematician's rulings; DERIVED, COMPUTED)
+
+**(1) THE READING OF ROW 1 AND FINDING 1: THE WELL AT k = pi / 2.** Nature24
+read the redshift row on today's law at Gamma = 10^4, U_1 = 0.1, with the
+given train of wavelength 4 (k = pi / 2): the ratio bottom over top 1.283
++- 0.010 on the mirror's cluster, against 9.59 (1)'s 1.118. His finding
+is right and the law is not at fault: the continuum's number holds at
+long wavelength only. THE EXACT FORM on a chain (four of the six reads
+return the Node itself, so light's dispersion at level c is cos omega =
+1 - f (1 - cos k) / 3 with f = 1 - c / Gamma on today's law and f = (1 -
+c / Gamma)^2 on the Einstein form; at c = 0 the speed 1 / sqrt(3) =
+0.577 of 9.24 (6)): a static well conserves omega, so the wave number
+inside refracts to 1 - cos k' = (1 - cos k) / f, and the flight ratio is
+the group velocities' ratio, sin k / (f sin k'). COMPUTED at U_1 = 0.1:
+at k = pi / 2, today's law 1.291 (cos k' = -0.25, the speeds 0.447 and
+0.346), the Einstein form 1.890; at the given clock's k = 0.302 (omega
+= 0.174, the light [2464, 25] of the light clock row), today's law 1.121
+against the continuum's 1.118, the Einstein form 1.258 against 1.250.
+Nature24's 1.283 +- 0.010 is within one standard error of 1.291: the row
+READ AS EXPECTED at its wave number; the two early clicks (657, 871) are
+the well's edge reflecting the train (the group velocities' mismatch
+gives about 1.6 percent per edge at k = pi / 2, 0.3 percent at k =
+0.302), labelled and set apart from the mirror's cluster, as he did.
+RULE: the rows toward nature (9.59) use the given clock at k = 0.302,
+where the lattice's term is 0.3 percent, inside the bands; a row at the
+band's middle reads the grain and is a diagnostic of it (9.58 (2) (c)).
+
+**(2) THE CORRECTION: WHAT A LIGHT CLOCK READS ON THE EINSTEIN FORM.** 9.57
+(4) (a) and 9.59 (1) wrote the light clocks' ratio as the root of the time
+factors on both forms. That is right on today's law and WRONG on the
+Einstein form. On the Einstein form light's coordinate speed at level c
+is (1 - 2 U) (the Link term (p / Gamma)^2, gamma_PPN = 1), while a clock
+body's rotation runs at sqrt(1 - 2 U + 2 U^2) (the mass term, 9.56 (4)).
+A light clock's arm on the GameBoard is a declared number of Links, a
+coordinate length: it does not shorten in the well as a rod of fixed
+proper length does in nature (by 1 / (1 + U), the ruler's weight). So on
+the Einstein form: A LIGHT CLOCK WITH A DECLARED ARM reads 1 / (1 - 2 U)
+= 1.250 at U = 0.1 (1.258 at k = 0.302), which is the coordinate speed of
+light, the Shapiro reading, twice the redshift; A CLOCK BODY (a massive
+record's rotation, its giving clicks' mean interval (P + 1) / 2 read at
+the two levels) reads 1 / sqrt(1 - 2 U + 2 U^2) = 1.104, the redshift;
+a light clock whose arm is declared shorter by 1 / (1 + U) (558 Links
+at the top, 507 at the bottom) reads the redshift too. Nature has the
+same two readings: two clocks of equal proper arms differ by 1 + U, two
+of equal coordinate arms by 1 + 2 U (isotropic coordinates); the
+GameBoard's declared arm is the coordinate one. On today's law
+(gamma_PPN = 0) light and rulers are unchanged in the well, so every
+clock reads sqrt(1 - 2 U) alike: 1.118 at long wavelength. THE ROW,
+restated: on the Einstein form the redshift is read by a clock body,
+expected 1.104; the light clock with the declared arm is row 4's
+Shapiro reading in another dress, expected 1.250 (1.258 at k = 0.302),
+and both are set beside nature's, each against its own. The ruler's
+weight is what separates the two forms, as 9.59 (6) says, and this is
+where it shows first.
+
+**(3) FINDING 2, THE TAKING AT A HOP: RULED.** The moving detector of row
+2 took nothing on the first pass: the ladder books the inward flux
+through the set's Ports (9.25 (2)), and a hop covers the rows in front
+of the block with no Port crossing, so at v = 1 / 4 against light at 0.45
+most of a record enters by hops unbooked. Nature24's proposal is
+ADOPTED as the algebra's own consequence: a hop is a translation of the
+body by one Link, and in the body's frame the rows it newly covers
+crossed its face. RULE: at a hop, the rows of every record on the Nodes
+the body newly covers are booked to the set's ladder as inward flux, at
+their share of the norm (the invariant's density e on those Nodes, the
+same quantity the Port booking sums), read after the interval's step
+and the interval's Port booking; the two bookings are disjoint (the
+Port booking reads rows crossing the old boundary during the step, the
+hop's booking reads rows standing on the newly covered Nodes after it);
+the rows the body uncovers at its back are not booked (the booking is
+one-way inward, 9.46 (10) (a), and a booking is not undone). Nothing
+else moves; at v = 0 the rule is void. It is 9.52 (4) (i) (the field
+moved face to face through the body at the hop) read for the taking.
+The three tests: the evaluation on the body's Nodes and the norm's
+share are the ladder's own primitives; the newly covered Nodes are one
+face, fixed K; no float, no root.
+
+**(4) FINDING 3, THE GIVEN TRAIN OF A MOVING BODY: RULED, A GENERALISATION
+OF T3 FOR THE OWNER.** The moving emitter gave its train at the board's
+k, as the resting one. 9.40 T3 and 9.17 (6a) say the given rows are the
+eigenvector times the character of the body's momentum; for a body's
+OWN family that character is the plane wave of its momentum K per Node,
+right as it stands (a massive quantum given by a moving body inherits
+its velocity). For a DIFFERENT family, light from a massive emitter,
+the body's K is not light's shift; the character is the body's MOTION
+read in the given family's own representation: the light's wave number
+boosted, forward k gamma (1 + v / c_l), backward k gamma (1 - v / c_l),
+the Doppler shift of the wave number, with v the body's hop velocity
+and c_l light's speed at that k on that board. RULE: the given rows of
+a moving body carry its motion in the given family's representation;
+for the eighteen's moving bodies they are declared in the world file
+for the declared momentum, as the muon's moving packet already is
+(LAB_TOOLS.md part B, the packet [3200, 3236]); the click rate carries
+the rate's Doppler by the crossing rule as before (9.24, record 163).
+This is a statement of T3 in general form, not a new rule: it goes to
+the owner through the Boss before it is adopted (the rule of three).
+FOR ROW 2 it changes little: the tick reads the round trip's time, and
+at k = 0.302 the group velocity moves by the lattice's term only (0.3
+percent between k and its Doppler'd neighbours at v = 1 / 4), so the
+row's expectation, 162 +- 1 against 200 longitudinal, 180 +- 1
+transverse, stands with either train; it matters for any row reading
+the given light's wavelength at a grating.
+
+**(5) THE RATE AND THE SIZES.** Nature24's corrected measurement: 2.6 x
+10^6 Node-intervals per host second at rest, 8 x 10^5 with a hopping
+block, on the one command; 9.61 (5)'s scaling by nine is withdrawn and
+9.59's sizes stand; the resting clock read 303.1 +- 2.3 at 64 clicks,
+inside 300 +- 9.
