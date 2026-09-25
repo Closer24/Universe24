@@ -8445,9 +8445,7 @@ intervals). THE BENDING: light [1, 1] at K = pi / 2 and matter [800,
 500 intervals: a slow region is a lens for every family. THE THREE
 TESTS: generic (one pair per Node, no family name), vector (the same
 three verbs with integer entries, no root, no float), local (the Node's
-own pair). This is the shift of the Node's rotation for all families
-that 9.29 (3) (b) said the family's pair cannot express: the pair
-cannot, the Node clock can.
+own pair). This is the shift of the Node's rotation for all families that 9.29 (3) (b) said the family's pair cannot express: the pair cannot, the Node clock can. THE SHARE AND THE CURRENT UNDER THE NODE CLOCK (Nature24's question, PROVED and COMPUTED): with (e, f) = (Gamma, Gamma + M_i) and in the integer units 3 num Gamma e_i, the cell's own share is E_i = 3 den (Gamma + M_i)(now_i^2 + before_i^2) - num Gamma now_i (**A** before)_i - 6 den M_i now_i before_i (**A** the six reads with the self reads of a folded axis), the record's norm T = sum over its cells of E_i, and its change per interval is the sum over the cell's six Links of num Gamma (now_i before_j - before_i now_j) read on the levels before the step: THE LINK'S CURRENT IS THE SAME BILINEAR FORM AS WITHOUT THE CLOCK, only the cell's own term changes; the one-way flux per Port for the click's tally is num Gamma max(now_i before_j - before_i now_j, 0) in these units (the identity computed exact to 5 x 10^-15 on a random clock field, the sum of E_i the invariant above).
 
 **(3) WHAT IS AT THE NODE: THE CONTENT, CHANGING ONLY AT EVENTS (the
 Boss's question (a) of record 1949, answered yes).** The Node's clock is
