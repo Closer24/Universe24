@@ -144,6 +144,27 @@ the same k as the resting one, where nature's moving source gives
 Doppler-shifted light. The row has no reading until both are ruled; the files
 stand.
 
+THE ROW ON THE HEAD OF ITEM 48 (the taking at a hop, ALGEBRA.md 9.62 (3), built; the
+detectors' Ports re-read at every hop, the host bug behind finding 2; DETECTOR unless
+marked; no pin), the same two worlds rerun in check mode:
+
+| Reading | Rest | Moving |
+| --- | --- | --- |
+| Clicks at `at_well` | 80 (1 at a face) | 69 |
+| Mean wait, rms, standard error | 294.7, 20.8, 2.3 | 513.3, 144.2, 17.4 |
+| Waits by 50-interval bins | 200: 1, 250: 46, 300: 33 | 50: 1, 150: 1, 200: 3, 250: 2, 300: 1, 350: 5, 400: 8, 450: 8, 500: 5, 550: 13, 600: 10, 650: 10, 700: 2 |
+| Ratio moving / rest of the means (COMPUTATION) | | 1.742 +- 0.060; the longitudinal form's gamma^2 = 1.455 on the flight (9.24 (6)), 1.40 on the whole tick with the rung's wait |
+
+The moving clock ticks now (finding 2 closed: the light returning from the mirror is
+booked at the hops it is overtaken by and at the Ports). The spread is the row's own,
+for the mathematician (GAMEBOARD trace of one late record): the light returning from the
+receding mirror carries 0.735 of its given norm (the form is not conserved under a
+hopping pair region, Doppler's loss at the mirror), the ladder's threshold stands on the
+given norm, so a record whose residue asks more than the returned norm cannot click on
+the first pass (the cluster at 350 to 500) and clicks late on what lingers (550 to 700);
+the few early clicks (below 300) are the outgoing train's rows at the hops' grain.
+Finding 3 (the moving emitter gives its train at rest) stands for 9.62 (4).
+
 ## Row (3): the bending on today's law
 
 Two forms. FIRST, the dark body's two worlds (`../dark_body/dark.json` and

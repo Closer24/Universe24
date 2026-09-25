@@ -195,8 +195,12 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
             # plain flux against the norm's rational norm / pace (item 36)
             assert pace == givings[line["record"]]["pace"]
             assert 2 * wheel * pace * pointers[screen] >= (2 * u + 1) * norm
-            # the detectors off the ladder: booked, never chosen, counted in T
-            assert pointers[beside] > 0 and pointers[own] >= 0
+            # the detectors off the ladder: booked, never chosen, counted in T; `beside` books
+            # while its Nodes are its own (SINCE item 48 the Ports are re-read at every hop, so
+            # once the stepping body covers [60, 62] the set has no Node and no Port)
+            assert pointers[own] >= 0
+            if head < 60:
+                assert pointers[beside] > 0
             assert line["T"] == sum(pointers) == pointers[screen] + pointers[beside] + pointers[own]
         # the line's `detectors` is a HOST listing in the detectors' order (the detector
         # list's, its rungs cumulative in that order); the click's fields are
@@ -210,12 +214,15 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
     plain["input"] = input_stamp(plain)  # the stamp without the given pair (record 1886)
     simulation, _ = run(plain, 10)
     assert not simulation.has_receiver
-    # (c) without `receiver` the ladder is every declared set in the declared order
-    unnamed = parse_nature_beam_world(chain_of_200(None))
+    # (c) without `receiver` the ladder is every declared set in the declared order; the
+    # emitter at rest here (SINCE item 48 a stepping body covering the set at [60, 62] takes
+    # its Nodes and its Ports, so the set books nothing from then on)
+    resting = chain_of_200(None)
+    resting["measured"][0]["momentum"] = [0, 0, 0]
+    resting["input"] = input_stamp(resting)
+    unnamed = parse_nature_beam_world(resting)
     assert unnamed.measured[0].block is not None and unnamed.measured[0].block.receiver is None
-    simulation, lines = run(
-        chain_of_200(None), 300
-    )  # the first gather past 120 at the seed 50 x 2^12 (item 44)
+    simulation, lines = run(resting, 300)  # the first gather past 120 at the seed 50 x 2^12 (item 44)
     assert not simulation.has_receiver
     first = gathers(lines)[0]
     assert first["chosen"] == [["beside", 0, "0"]] and "ladder" not in first

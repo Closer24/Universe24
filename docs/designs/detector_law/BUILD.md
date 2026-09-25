@@ -3838,6 +3838,68 @@ would have found no cell.
    detector-law design keep the stock as `amount` until their rows return. The
    stock as `amount` HISTORY.
 
+48. THE TAKING AT A HOP (ALGEBRA.md 9.62 (3), the mathematician's ruling of
+   2026-09-25 on Nature24's finding 2 of the run toward nature, row 2: the
+   moving detector took nothing on the first pass; the model owner's
+   adoption through the Boss, record 2042). THE RULE: a hop is a translation
+   of the body by one Link, and in the body's frame the rows it newly covers
+   crossed its face: at a hop, the rows of every record on the Nodes the body
+   newly covers are booked to the set bound to the body as inward flux, at
+   their share of the norm (the invariant's density e on those Nodes,
+   `form_share`, the quantity the Port booking sums to over a passage, in the
+   units the ladder's running total is compared in), read after the
+   interval's step and the interval's Port booking (`_hop_takings`); the two
+   bookings are disjoint; the rows the body uncovers at its back are booked
+   nowhere (one-way inward); the whole part of the share is booked and the
+   fraction carried on the record to its next hop booking (`hop_carry`, a
+   remainder kept, exact); a share at or below zero books nothing; at v = 0
+   the rule is void, the resting worlds bit for bit (the light clock's
+   digests unchanged). Fixed work per hop: the newly covered Nodes are one
+   face of the body. THE HOST BUG BEHIND THE FINDING, fixed with it: the
+   detectors' Port pairs are cached per family (`_inflow_ports`) and were
+   never re-read after a hop, so a moving set's Ports stayed at its place of
+   the load while the body moved on; the cache is cleared at every hop.
+   THE GATE tests/test_hop_taking.py (COMPUTATION on the engine's integers,
+   no pin): on a closed chain of 300 a record of 32 Nodes passes through a
+   cart of three Nodes moving toward it at one Link every four intervals;
+   the Port booking alone reaches 0.6394 of the record's norm over its pace,
+   with the hop's booking 1.0001, the difference 0.3607 against the hop's
+   share v / (v + c_l) = 0.3587; with the ladder live both records click at
+   the cart on the first pass; at rest the pointers and the lines are bit
+   for bit the same with the rule and without and no Node is newly covered.
+   IN THE BODY'S FRAME, Nature24's reading of the ruling's own words ("in the
+   body's frame the rows it newly covers crossed its face"), for the
+   mathematician's line: rows receding ahead of the body faster than it moves
+   did not cross its face; the lattice's hop overtook them by one Link and
+   they leave again through the front Port within a few intervals (the
+   emitter's own outgoing train: booked, they would be the emitter taking its
+   own light as it leaves, 70 intervals after the giving in the first rerun of
+   row 2), so a covered Node's density is booked only where the record's
+   plain current through the Link ahead is below the body's own pace in the
+   density's units, c W < e p (an exact comparison of the Node's current, its
+   density and the body's declared momentum; an oncoming, standing or
+   transverse record booked whole, a record outrunning the body not at all;
+   the current over the density reads the group pace, 0.44 on the chain,
+   COMPUTATION). THREE FINDINGS FOR THE MATHEMATICIAN: (a) the re-entry at
+   the back face: a record overtaking the body from behind is booked c / (c -
+   v) = 2.27 times its norm by the Port booking in the board's frame, the
+   rows the back face uncovers re-entering through the back Port (the ruling
+   books nothing at the back; the body-frame flux G - v e at a receding face
+   would book the norm once; tests/test_hop_taking.py states the fact); (b)
+   the moving clock of row 2 now ticks (69 clicks; no tick before), its mean
+   wait 513 +- 17 with a wide spread (rms 144; the rest 294.7 +- 2.3, rms 21),
+   the ratio 1.74 +- 0.06 against the longitudinal form's gamma^2 = 1.455 on
+   the flight and 1.40 on the whole tick; a trace shows why: the light
+   returning from the receding mirror carries 0.735 of its given norm (the
+   form is not conserved under a hopping pair region: Doppler's loss), and
+   the ladder's threshold (2 u + 1) T / (2 W) stands on the given T, so a
+   record whose residue asks more than the returned norm cannot click on the
+   first pass and clicks late on what lingers (the clusters at 350 to 500 and
+   550 to 700); (c) over the return passage the Port and the hop bookings
+   reach about half of the returned norm on the [32, 3, 3] body (0.25 and
+   0.085 of Q against 0.47 and 0.26 expected), to be read further. THE ROW's
+   table is in the README of the rows toward nature.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2
