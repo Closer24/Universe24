@@ -3432,6 +3432,65 @@ would have found no cell.
    NAME NODE (the model owner's record 1970): every new text of this
    item says Node.
 
+38. THE BOARD IS REVERSIBLE IN TIME, AND THE CLICKS KEEP THE PHYSICS: THE
+   ONE TEST (the model owner's word of 2026-09-25 through the Boss,
+   records 2010 and 2011: "write a test that shows the board is
+   reversible in time, and in general keeps the physical definitions
+   known in the clicks"; "clicks go only forward in time because they
+   are what happened in the world; the rest is all possibilities";
+   ALGEBRA.md 9.50 (8), (9) and (13), 9.26 (3) (b), 9.44 (5) (c), 9.48
+   (1), 9.51 (2), 9.25 (2) and (3), 9.45 (2) and (5); the mathematician's
+   expectations to be named beside; built on `emitter-click` after the
+   rename of record 2016; no physics moved). THE WORLD, one small chain
+   with every piece: the emitter body of the matter kind with the stock
+   3 and its given family light, both of charge -1; one body of a fifth
+   family `positive` of charge +1 at x = 55; the screen of three light
+   bodies at [70, 72]; the family of clicks and the family of charge held
+   at the bodies and moving elsewhere; the Node's own pace. THE TEST,
+   `tests/test_board_reversible.py`, four readings (COMPUTATION,
+   GAMEBOARD, no pin): (1) BETWEEN CLICKS the board returns bit for bit:
+   from the load to the interval before the first giving click and back,
+   every level, remainder and field, the held quanta; the family of
+   clicks' level fell at Nodes on the way (the falls counted), and at
+   some Node it fell to 0 and rose again. (2) ACROSS A CLICK: (a) NO RULE
+   UNDOES A CLICK: the engine's inverse stepped back across the first
+   taking click leaves the deleted record deleted, the taker's held
+   quantum with it and the field at the taker held at the click's
+   content; (b) THE CLICK'S ONE LOSS: with the click's ledger undone by
+   hand (the held quanta of the interval before restored and the fields
+   held again), the backward run across the taking click returns every
+   row but the deleted record's, and across each giving click (the given
+   record removed, its rows at its write asserted the file's given rows
+   on the body's Nodes; the stock restored) returns every row with
+   nothing lost; then down to the load exactly. A PIECE FOR THE
+   MATHEMATICIAN found here: at a giving click's interval the records
+   step at the hold the interval began with (the content before the
+   click) while the two fields step at the click's hold (the giving
+   holds the body at its lowered content before the fields' own step,
+   9.45 (2)); the engine's one inverse (`step_inverse`, one content for
+   the interval) cannot serve both, so the test steps that interval back
+   by hand with the two holds; whether the giving's hold should wait for
+   the interval's end (one hold per interval, the inverse then the
+   engine's) is his to rule. (3) THE CLICKS' PHYSICS on every line over
+   400 intervals: the books balance; the held quanta plus the records in
+   flight are the load's total; the bodies' Q plus the flights' q are
+   the load's total (-5); at every giving click the giver's content falls
+   by one, the given record's content is 1, u in [0, W) at the first
+   shell Node, the click's interval the counted one (2 W (wait - 1) < (2
+   u + 1) P <= 2 W wait from the residue read before it); at every taking
+   click the taker's content rises by one, the record's content is 1,
+   and the detector is the one the increment ladder chooses on the plain
+   flux against the norm's rational (Born's rule at the taking end). (4)
+   THE WEIGHTED FORM between clicks on the given light record from its
+   write to its taking click: its change with the effective content the
+   interval began with (light of charge -1 reads c + Lambda d) is the
+   remainders' term exactly, and with the field's move the weights'
+   change exactly; where the field stands, constant but for the
+   remainders' term. NOT IN IT: the energy count s of 9.51 (3) (the key
+   `energy_source`, not built); its line waits on the build. THE NAME
+   NODE (the model owner's record 1970): every new text of this item says
+   Node.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2
