@@ -14,7 +14,10 @@ crystal's, held)."""
 
 from __future__ import annotations
 
+import hashlib
 import itertools
+import json
+import multiprocessing
 from fractions import Fraction
 
 import numpy as np
@@ -493,3 +496,67 @@ def test_7_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
         f"{generator_seconds:.2f} seconds"
     )
     assert per_node < 50e-6, per_node
+
+
+# ---------------------------------------------------------------- the same input, the same output
+
+
+def output_of(serialized: str) -> dict:
+    """The run's output from its input text alone (the model owner's word through the Boss,
+    23:51Z: the same input gives the same output): the input's hash, the click lines (the
+    receiver and the interval) and the digest of the final state's rows, for one process."""
+    document = json.loads(serialized)
+    simulation, states, clicks = run(document)
+    digest = hashlib.sha256()
+    for identity in sorted(states[-1]):
+        for array in states[-1][identity]:
+            digest.update(np.ascontiguousarray(array).tobytes())
+    return {
+        "input": hashlib.sha256(serialized.encode("utf-8")).hexdigest(),
+        "clicks": [[tick, record] for tick, record in clicks],
+        "state": digest.hexdigest(),
+    }
+
+
+def test_8_the_same_input_gives_the_same_output():
+    """The owner's word (the Boss's relay of 23:51Z): the same input file run twice, and run in
+    two separate processes at once, gives byte-identical outputs (the clicks and the final
+    state's digest, with the input's own hash). The edge cases: a one-unit change in the
+    input's seed profile changes the input's hash and gives a different output (the loader
+    of this head admits it; record 1886's load check refuses it), never silently the same
+    output; a one-unit change in the planted record's row gives a different output (test
+    5's difference)."""
+    serialized = json.dumps(small_world(), sort_keys=True)
+    first = output_of(serialized)
+    second = output_of(serialized)
+    assert first == second and first["clicks"]
+    with multiprocessing.get_context("spawn").Pool(2) as pool:
+        apart = pool.map(output_of, [serialized, serialized])
+    assert apart == [first, first]
+    changed = json.loads(serialized)
+    profile = changed["measured"][0]["seed"]
+    index = next(i for i, value in enumerate(profile) if value)
+    profile[index] += 1
+    altered = json.dumps(changed, sort_keys=True)
+    assert hashlib.sha256(altered.encode("utf-8")).hexdigest() != first["input"]
+    try:
+        other = output_of(altered)
+    except ValueError:
+        other = None  # refused at load: never the same output
+    assert other is None or (other["input"] != first["input"] and other["state"] != first["state"])
+    document = json.loads(serialized)
+    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+    level_now, level_before = born_levels(simulation)
+    now = np.zeros(SHAPE, dtype=np.int64)
+    before = np.zeros(SHAPE, dtype=np.int64)
+    now[BIRTH] = level_now + 1
+    before[BIRTH] = level_before
+    # read before the click (the deleted summand leaves the final states alike)
+    _, states, _ = run(document, intervals=14, rows=(now, before))
+    reference = json.loads(serialized)
+    _, plain, _ = run(reference, intervals=14)
+    assert any(
+        not np.array_equal(a, b)
+        for identity in plain[-1]
+        for a, b in zip(plain[-1][identity], states[-1][identity], strict=True)
+    )
