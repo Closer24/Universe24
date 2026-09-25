@@ -10690,7 +10690,8 @@ M. CONFIRMED with the substitution of s for M.
 
 **(9) THE MASS SUMS THE QUANTA, AND WHAT THE OUTSIDE SEES IS THE FLUX
 THROUGH THE SHELL (the model owner's question of 2026-09-25: "a body
-must have a mass that sums the Nodes, no? and charge?"; DERIVED).** Two
+must have a mass that sums the Nodes, no? and charge?"; DERIVED; the
+names plain, the owner's word: no codes, record 1924).** Two
 sums, and one scaling that makes them the field's. THE SUMS: a body's
 mass is the sum of its quanta's masses, s = SUM_k (M_k P_0) div P_k, and
 its charge the sum of its quanta's charges, Q = SUM_k q_k M_k, over its
@@ -10699,24 +10700,25 @@ composite's content is additive). THE FLUX: what the field's readers
 outside see of a body is the total flux of the family of clicks through
 its shell (T1, Gauss on the body's set), since the far field is that
 flux over the distance; and a level PINNED on a region makes a flux
-that is the pin times the shape's flux per unit level, C_S, the
-discrete capacitance of the shape on the board (the harmonic
+that is the pin times THE SHAPE'S FLUX, the flux per unit of level of that
+shape pinned on the board (the harmonic
 extension's outward differences summed over the shell Ports per unit
 of the pin; a load-time integer of the generator, like P, under the
 input stamp; it grows with the shape's size, about its radius, not its
 count of Nodes). So for the mass to sum the quanta and not the shape,
 THE PIN AT A BODY'S NODES IS THE FLUX PIN: the level held there is (s
-C_ref) div C_S with the remainder kept on the record, C_ref the
-capacitance of the reference shape (the side-3 cube of the eighteen),
-and likewise (Q C_ref) div C_S for the family of charge; a body of the
+times the reference flux) div the shape's flux, with the remainder kept
+on the record, the reference flux being the side-3 cube's, the shape of
+the eighteen, and likewise (Q times the reference flux) div the shape's
+flux for the family of charge; a body of the
 reference shape pins s and Q as before, bit for bit, and two bodies of
 the same quanta and different shapes make the same flux and weigh the
 same from outside. A seated body (9.46 (8)) pins about three times a
-side-3 body's s to weigh the same (C_1 against C_3 about 1 : 3, the
-radius ratio), which is what its equivalence gate needs (9.46 (4)
+side-3 body's s to weigh the same (the one-Node flux against the
+side-3 cube's flux about 1 : 3, the radius ratio), which is what its equivalence gate needs (9.46 (4)
 (v), "the field identical"): the gate reads the flux through a shell
-around the body, not the level at it. A composite (9.46 (7)) pins the
-union's C. WHAT THE PIN DOES NOT GIVE: inside a pinned region the field
+around the body, not the level at it. A composite (9.46 (7)) pins with the
+union's flux. WHAT THE PIN DOES NOT GIVE: inside a pinned region the field
 is flat, so a body larger than its field's resolution has no gravity
 inside it; the per-Node density form (the mass at each Node the mode's
 share there, the field sourced by it, Gauss inside the body) is the
