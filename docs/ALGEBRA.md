@@ -12904,3 +12904,83 @@ a body that covers a record whole books exactly T; not the Node terms
 alone (the Link terms would be dropped) and not the plain levels
 squared (not the form). The fraction carried is the record's own, a
 remainder kept on the record and not at a Node.
+
+### 9.74 The taking at a hop built (Nature24's head 3959f589, item 48): the booking in the body's frame at every face, one rule; the threshold and the boosted norm of a moving emitter's given rows; the Doppler numbers at the long wave and the blind ticks of the long-wave Lorentz pair
+
+**(1) THE GATE ON 3959f589: CONFIRMED as the first form, and RULED to move
+to one rule.** As built: at a hop the density per Node of the rows the
+body newly covers is booked to the set bound to it, after the
+interval's step and Port booking, the whole part booked and the
+fraction carried on the record, void at rest; the chain test sums the
+Port booking 0.6394 and the hop's 0.3607 to 1.0001 of the norm against
+v / (v + c_l) = 0.3587: the partition holds (9.73 (3) is met by that
+sum). The host bug found with it (a moving set's Ports cached at the
+load and never moved) is fixed; every earlier reading of a moving set
+stood on still Ports; the resting worlds untouched.
+
+**(2) THE BOOKING IN THE BODY'S FRAME, the one rule (Nature24's second
+option, adopted).** A face of a body moving at v with outward normal n
+books per interval the flux in the body's frame, (G_in + (v . n) e_out)
+cut at zero AFTER the sum: G_in the board's inward current through the
+face's Link (the Port booking as now), e_out the record's density on
+the Node outside the face (the same units), v . n positive for a face
+advancing into the outside (the front) and negative for a face
+receding from it (the back). It covers both faces and needs no
+separate hop booking: at the front an oncoming record books G_in + v
+e_out (the Port and the hop of item 48 together), a standing or
+transverse record v e_out, and a record outrunning the body nothing
+(Nature24's refinement, c W < e p, is exactly this face's cut: RIGHT);
+at the back a record overtaking from behind books G_in - v e_out, the
+norm once and not c / (c - v) times (his finding (a)), with no
+negative booking: the one-way principle is the cut after the sum. The
+three tests: the face's Link, the outside Node's density and the
+body's own pace (the accumulator, 9.52 (4)), fixed work; products and
+sums; one rule for every face of every moving set. Per interval, not
+per hop: the mean is the hop's and the grain's overtaking artifact
+(the lattice's face jumping a Link past a receding train) does not
+arise.
+
+**(3) THE THRESHOLD AND THE MOVING EMITTER'S NORM (finding (b)).** The
+ladder's threshold stays on the given T; the record's form as it
+stands is no local read, and a late click on a redshifted record is
+not the law's. What is missing is the other half of 9.62 (4): a moving
+emitter's given rows carry the boosted wave number AND THE BOOSTED
+NORM, T' = gamma (1 + beta) T forward and gamma (1 - beta) T backward
+(a quantum's energy in the board's frame, beta = v / c_l), since T is
+the quantum's norm in the emitter's own frame. Then the round trip of
+the longitudinal clock closes: emitted forward at 1.596 T, reflected
+off the receding mirror at (1 - beta) / (1 + beta) = 0.392 of it, 0.626
+T in the board's frame, and booked at the approaching emitter in the
+body's frame by (2) at gamma (1 + beta) times, 1.000 T: the record
+reaches every rung on its first pass (COMPUTED at v = 1 / 4, k =
+0.299, c_l = 0.573, beta = 0.436, gamma = 1.111). THE MIRROR'S LOSS is
+real in nature (the receding mirror gains what the light loses) and
+on the GameBoard is booked nowhere: the declared hop does no work, the
+seam of 9.67 (1); it is recorded as the seam's leak and closes when a
+mirror moves by the law's own momentum (the vector family, 9.67 (3)).
+Nature24's 0.735 of the norm after the reflection against the
+continuum's 0.392 is the hopping pair region's own reading, to be
+understood with his finding (c), not a pin.
+
+**(4) DOPPLER AT THE LONG WAVE, the numbers (9.62 (4)).** The light [4096,
+21] at k = 0.299: c_l = 0.573 (the group speed there, not the 0.447 of
+the band's middle, which gave the wavelength 11); beta = 0.436, gamma =
+1.111, the Doppler factor sqrt((1 + beta) / (1 - beta)) = 1.596 on the
+emitter's frequency 0.172 at that k: forward 0.275, backward 0.108;
+through light's dispersion on the chain the wave numbers 0.479 (the
+wavelength 13.1) and 0.187 (33.6); the whole-wavelength pairs at 13
+and 34 (9.17 (6a)); the norms 1.596 T and 0.626 T. The generator writes the
+moving emitter's forward and backward trains with those pairs, those
+lengths and those norms.
+
+**(5) THE BLIND TICKS OF THE LONG-WAVE LORENTZ PAIR (the arm L, the rung's
+offset 88 at rest).** The rest tick 2 L / 0.573 + 88 (L = 60: 297;
+read 294.7 +- 2.3). The longitudinal moving clock: the flight gamma^2
+times, the rung's wait gamma times (the emitter's own rotation at its
+proper pair, the draw in its proper time): 1.235 x 209 + 1.111 x 88 =
+356 at L = 60, the ratio 1.198 on the whole tick (1.235 on the flight
+alone). The transverse clock: gamma times the whole, 331, the ratio
+1.111. Until the norm of (3) is carried, the longitudinal reading
+keeps its late clicks and reads above 1.4, as the 1.74 +- 0.06 of
+this head; with it, 1.20 +- 0.02. The receding mirror's reflected
+norm 0.392 of the incident, a GameBoard reading beside the clicks.
