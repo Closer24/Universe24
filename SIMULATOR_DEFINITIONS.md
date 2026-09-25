@@ -107,8 +107,13 @@ in the day's log; nothing of them is a name the engine branches on.
   positive, over the intervals; the record's norm T is its conserved form
   I (8.2); the rung 2 T u + T <= 2 W C fires the click, u the record's
   residue and W its wheel; the ladder of several sets is read cumulatively
-  in its declared order at every interval, the click at the first
-  crossing (ALGEBRA.md 9.19 (3)). At the click the record is deleted whole
+  in its declared order at every interval as the INCREMENT LADDER: the
+  running total crosses the threshold at one interval, and the cell is
+  the one whose segment of that interval's increment, in the ladder's
+  order, holds the threshold; Born's rule, the share of a cell equal to
+  its share of the record's inward flux, is then a theorem (ALGEBRA.md
+  9.19 (3), 9.25 (2) and (3)); a detector is one connected region, and
+  separate places are separate names (9.25 (7)). At the click the record is deleted whole
   (8.8), its content and its push handed to the clicking body. There is no
   take, no grace, no exemption, no own take, no close and no sponge: an
   open face is a receiver `face` at the border, last on every ladder, and

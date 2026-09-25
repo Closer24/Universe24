@@ -4783,14 +4783,16 @@ THE PHYSICIST'S THREE QUESTIONS OF 22:17Z, ANSWERED (DERIVED HERE):
   read through its Ports only (a Link from a Node outside the set into a
   Node inside it), the Ports of a set at a body's cells included. WITH
   SEVERAL SETS ON ONE LADDER (a screen), the ladder is cumulative in its
-  declared order, L_k = C_1 + ... + C_k at every interval, and the click
-  fires at the FIRST interval at which some L_k reaches (2 u + 1) T / (2
-  W), at the first such k: the cell of u on the cumulative ladder (main's
-  `cell_of`) read at every interval instead of at a close. For one set
-  this is the rung above; for a screen whose offers arrive in fixed
-  proportions it is main's cell at the close (DERIVED: the crossing cell
-  is then the final ladder's); where they do not, the generator's map on
-  the two slits re-derives the visibility pin blind.
+  declared order and THE CLICK IS THE INCREMENT LADDER OF 9.25 (2): the
+  running total C(t) of the record's offers into the ladder's cells
+  crosses theta = (2 u + 1) T / (2 W) at one interval, and the cell is the
+  one whose segment of THAT INTERVAL'S increment, laid out in the
+  ladder's order, contains theta - C(t - 1); Born's rule is then exact
+  (9.25 (3)). (The sentence that stood here, "the click fires at the
+  first interval at which some partial sum L_k reaches the threshold, at
+  the first such k", read the cell on the partial sums at the crossing
+  and put every click at the last cell of the order, as the physicist
+  found on 2026-09-25: WITHDRAWN.)
 - (c) THE EXCITED RECORD'S SET: one cell always, the body's centre cell
   at the lower vertex plus side // 2 on each axis; its Ports the cell's
   six Links; T = the one-way inward flux into it over one period of the
@@ -5080,6 +5082,15 @@ covariance (9.19 (6)) and its dependence on the seven inputs alone; 3 (a)
 and (b) from 8.6 and 8.2; 3 (c) from 1.6 on a homogeneous board; 4 from
 8.8; 5 from the six reads (8.1). A failure of any of them is an engine
 defect, never a change of the law.
+
+7. NO SIGNALLING (9.25 (6), the model owner's record 1888). Two Bell
+   worlds differing only in Bob's axis ((1, 2) against (3, 1)): Alice's
+   two receivers give identical counts and identical click intervals,
+   record by record, bit for bit, and her shares are abs(v_+)^2 :
+   abs(v_-)^2 of her own projection (1 : 1 for HV + VH); the same with
+   Bob's polariser moved farther from the crystal. Expected value: no
+   difference at Alice at all; the joint counts differ as the joint
+   weights say.
 
 **(C) THE PROTOTYPES' READING (COMPUTATION, 2026-09-24, outside the engine:
 [docs/designs/lab_tools/board_algebra.py](designs/lab_tools/board_algebra.py),
@@ -5531,8 +5542,44 @@ algebraic at rest with their moving half a closed form from the
 dispersion (the muon's form, Sagnac, the boxes, the deep well, the light
 clock, the last a closed form only); the remaining 4 (the redshift, the
 round trip, the index at k = 3 and 4) and every moving half that is to
-be RUN wait on one word of the owner, the MOVING NAME of 9.24 (4), and
-until then their moving forms are the push's, CARRIED.
+be RUN waited on the MOVING NAME of 9.24 (4), ADOPTED by the model owner
+(record 1889, 2026-09-25 on the Israel clock); their pins are re-derived
+blind in the specification's part B, and their runs are the physicist's
+after the cleanup.
+**(9) THE BOARD SIZE PER WELL (the Boss's item of 2026-09-25; COMPUTED by
+Lanczos on the symmetrised operator of each well's own geometry; the
+decay constant kappa along an axis from cosh kappa = 3 (denominator /
+numerator) cos omega_b - 2 with the vacuum's pair, PROVED from 8.1 for a
+tail at an imaginary wave number; the smallest torus the one whose
+wrapped tail stays below half a unit at the amplitude A, N >= side + 2
+ln(2 A) / kappa).**
+
+| The well | omega_b, omega_0, the gap | kappa per Link, the decay length | The smallest torus at A = 4096 and 2^20 |
+| --- | --- | --- | --- |
+| the muon's form (4a): [3200, 3227] of side 14 on [3200, 3236], the layer 200^2 | 0.14845, 0.14930, 0.00085 | 0.0277, 36 Links | 665 and 1066 (the 200-layer holds it only with the wrapped tail: a weakly bound, wide mode) |
+| the boxes ii-a: [800, 801] of side 20 on [800, 809], 64^3 | 0.11929, 0.14930, 0.0300 | 0.156, 6.4 | 136 and 207 (64^3 wraps the tail at 2^20; at 4096 within 0.03 units) |
+| the boxes ii-b: side 28 on 48^3 | 0.09885, 0.14930, 0.0504 | 0.194, 5.1 | 121 and 178 |
+| the deep well: side 40 on the layer 128^2 | 0.07285, 0.14930, 0.0765 | 0.226, 4.4 | 120 and 169 |
+| Sagnac, the light clock: [800, 801] of side 12 on the chains | 0.10022, 0.14930, 0.0491 | 0.192, 5.2 | 106 and 163 |
+| the redshift: [314, 315] of side 12 on [156, 157] | 0.10175, 0.11293, 0.0112 | 0.085, 11.8 | 224 and 355 |
+| the receding index: [314, 315] of side 24 on [156, 157] | 0.09203, 0.11293, 0.0209 | 0.114, 8.8 | 183 and 280 |
+| the emitter body of 9.19 (4a): [801, 700] of side 3 on [7, 8] | 0.3753, 0.5054, 0.130 | 0.607, 1.6 | 33 and 51 |
+
+THE SMALLEST CUBE OF [800, 801] ON [800, 809] THAT BINDS IN THREE
+DIMENSIONS (COMPUTED, Lanczos at 100 steps on 40^3 and 56^3): a side of
+16 is bound (4.99 x 10^-3 above the band's top on 40^3), a side of 12 is
+marginal (1.6 x 10^-3 on 40^3, 1.0 x 10^-3 on 56^3, still falling with
+the board), and sides 2 to 10 are not bound in the large-board limit
+(their excess over the top falls toward 0 as the torus grows); the
+estimate from the band's curvature and the well's depth, side^2 >= 3 pi^2
+/ (8 m V) with m = 3 denominator / (2 numerator) and V = 2 (800 / 801 -
+800 / 809) = 0.0198, gives a side of about 11. So the property test's
+well of side 2 on 12^3 (9.20 (B)) binds only by its small torus, which is
+enough for the test (any mode of the composed operator is a valid seed),
+and a moving-clock well on a cube is of side 16 or more, or a packet
+(9.24).
+
+
 ### 9.23 A two-qubit quantum computer on the board (the model owner's word of 2026-09-24, 22:46Z (2026-09-25 on the Israel clock), through the Boss: "in our world the Outside sees only the click; lab equipment simulates on the board what we built from the algebra; check whether a quantum computer of two qubits can be simulated this way"), marked, before any code
 
 **(1) THE QUBIT (DERIVED HERE from 3.6, 9.16 (2) and 9.19 (1)).** A qubit
@@ -5850,8 +5897,9 @@ weighed.**
   material at rest on both sides; those are CLOSED FORMS (item 6), the
   runs at rest confirming their ingredients by clicks.
 
-**(4) THE MOVING NAME (DERIVED HERE as lawful; OPEN for the owner's
-word).** The Boss's question: can a receiver or an emitter be named by
+**(4) THE MOVING NAME (DERIVED HERE as lawful; ADOPTED by the model
+owner, record 1889, 2026-09-25 on the Israel clock: "yes, approve the
+moving name"; the specification's card A.14).** The Boss's question: can a receiver or an emitter be named by
 the record rather than by fixed cells? A receiver is a name (9.19 (5)),
 no material: a set of cells that the click reads (the flux into it) and
 the birth writes on. A NAME MAY TRANSLATE: the set S(t) = S(0) + (the
@@ -5869,9 +5917,9 @@ births at S(t) at the packet's own tick rate, which item 2 dilates), and
 the moving receiver. The three tests: generic (the name's rate is derived
 from **K** by the generator, an integer pair per axis, not a declared
 heading; verb T), vector (no root), local (the set's cells). WHAT IT IS
-NOT: a mirror, a well, a medium (material), which stay at rest. OPEN FOR
-THE OWNER: whether a name may move; the words of records 1872 and 1875
-refuse a declared rate and heading, and here the rate is **K**'s own.
+NOT: a mirror, a well, a medium (material), which stay at rest. ADOPTED
+(record 1889): a name may move; its rate is **K**'s own, computed by the
+generator, and no rate or heading is declared beyond the body's **K**.
 
 **(5) WHAT EACH MOVING ROW DECLARES NOW (DERIVED, on items 2 to 4), and
 the ramp.** THE RAMP IS NOT NEEDED (DECIDED, record 1884; DERIVED, item 2:
@@ -5909,8 +5957,9 @@ well. The rows:
   the holder family), the light emitter and the probe moving names; the
   probe stays a GAMEBOARD reading; the pin re-derived blind on the bound
   medium (owed).
-Every one of these needs item 4's word before it is run; until then its
-moving form is the push's, CARRIED and named so.
+Every one of these runs with the moving name (ADOPTED, record 1889),
+after the physicist's cleanup; until built, its moving form on main is
+the push's, CARRIED and named so.
 
 **(6) THE MOMENTUM AS A TOOL'S INTEGER, AND THE LIGHT CLOCK IN CLOSED
 FORM (the model owner's record 1885).** Every entry of an experiment's
@@ -5944,8 +5993,8 @@ pi / 64, v_g = c_l = 0.57689):
   and not hidden. The run only confirms by clicks what the closed form
   uses.
 
-**(7) WHAT STAYS OPEN FOR THE OWNER.** (i) The moving name (item 4): one
-word. (ii) With it, the emission of a moving packet (a stock at a moving
+**(7) WHAT STAYS OPEN FOR THE OWNER.** (i) The moving name: ADOPTED
+(record 1889); its pins re-derived blind in the specification's part B. (ii) With it, the emission of a moving packet (a stock at a moving
 name) as the redshift's and Sagnac's mechanism, and its blind pins
 re-derived. (iii) Rods: the model has clocks and no rods (item 6), so a moving rigid
 arm, and with it the longitudinal light clock and Michelson-Morley, are not
@@ -5953,3 +6002,179 @@ yet in it; whether a rod arises from packets is a question for the owner. (iv) T
 mirror, the index's medium) stay closed forms in the frame form; if the
 owner wants them RUN with moving material, that is the push, outside the
 one algebra, and is to be said so.
+
+### 9.25 The click over a set of cells: which record, when, at which cell (the model owner's question of 2026-09-25 on the Israel clock, through the Boss: "what does the algebra say about the way to catch a click on the board?"; his form, "a Node can shout it and that's it"; his word, "in a detector all the cells are armed as long as they are together"; his decision of record 1888: the deletion at once, the one non-local act, and no information through it), marked, before any code
+
+**(1) THE PHYSICIST'S FINDING, CONFIRMED (COMPUTED).** The rule as it
+stood in 9.19 (3) (b), "the click fires at the first interval at which
+some partial sum L_k reaches (2 u + 1) T / (2 W), at the first such k",
+reads the interval by the total's crossing and the cell by the partial
+sums at that interval; since each cell's cumulative offer exceeds one
+interval's increment, at the crossing every partial sum but the total is
+still below the threshold, and the click falls at the LAST cell of the
+order for every residue: eight of eight on his layer. On a planted profile
+of three cells over five intervals whose proportions change in time (the
+final shares 0.352, 0.366, 0.282) it gives 0.225, 0.352, 0.423. The
+sentence was mine and it conflated the interval with the cell; the
+derivation behind it ("the crossing cell is the final ladder's") was
+right and its local-in-time form was not written. WITHDRAWN there; the
+rule below replaces it.
+
+**(2) THE RULE (DERIVED HERE): THE INCREMENT LADDER.** The data: the
+record's residue u (the law's remainder at its birth cell, 9.19 (4)), its
+norm T, its wheel W, hence its threshold theta = (2 u + 1) T / (2 W),
+fixed at the birth; its ladder, the named sets in their declared order
+with the face last, and within a set the cells in the set's declared
+order. At every interval t each cell i of the ladder receives the
+one-way inward flux f_i(t) >= 0 of the record's rows through its Ports
+(9.19 (3)); the record's running total is C(t) = C(t - 1) + SUM over the
+ladder's cells of f_i(t). THE CLICK: at the first interval t* with C(t*)
+>= theta, at the cell whose segment of THAT INTERVAL'S increment, laid
+out in the ladder's order, contains theta - C(t* - 1); there the record
+ends, whole, at that interval (record 1888). WHICH RECORD: the one whose
+ladder names the cell. WHEN: t*. WHERE: that cell. ONE QUANTUM, ONE CLICK
+(PROVED): C is non-decreasing and theta < T <= the total offered with the
+face last (what leaves offers everything at the face), so theta is
+crossed exactly once, and the deletion at once leaves nothing to cross it
+again. The three tests: generic (the integers u, T, W and the fluxes, no
+family name), vector (sums and one comparison per cell, verb D, no root),
+local (each cell's flux is its own six Ports'; the two record integers
+theta and C(t - 1) travel with the record as its residue does).
+
+**(3) BORN'S RULE (PROVED HERE).** Let u be spread evenly over {0, ...,
+W - 1} (the law's remainder, 9.19 (4), COMPUTED equidistributed); then
+theta is spread evenly over a grid of W points in [0, T). The segments
+[C(t - 1) + SUM over j before i of f_j(t), C(t - 1) + SUM over j up to i
+of f_j(t)), one per (interval, cell), partition [0, C(infinity)) and have
+the lengths f_i(t). So P(the click at interval t, at cell i) = f_i(t) / T
+to the grain 1 / W, and summing over t, P(cell i) = C_i(infinity) / T:
+THE CELL'S SHARE OF THE RECORD'S TOTAL INWARD FLUX, whatever the time
+profile; over every set of the ladder the shares sum to one with the
+face. COMPUTED on the planted profile: 0.3521, 0.3662, 0.2817 exactly, in
+either order of the cells. The grain: a count is the number of u whose
+theta falls in the cell's segments, within 1 / W of the share; with the
+law's remainder the residues are equidistributed and not a permutation,
+so the counts are binomial about the shares (9.19 (4b)).
+
+**(4) THE ORDER WITHIN AN INTERVAL (DERIVED).** The distribution does not
+depend on it: the total length of a cell's segments is SUM over t of
+f_i(t) for every order. A single record's cell at a given u does depend
+on it, so for equivariance bit for bit (9.20 (1)) the order must be data
+of the world that transforms with it: the set's declared order (a list's
+order; a cube's cells by its vertex and edge), never the host's
+lexicographic order of the lattice, which a rotation of the 48 does not
+preserve. Any deterministic declared order passes the three tests: it is
+a name's data, as the ladder's order of sets is.
+
+**(5) THE TWO OTHER FORMS, AND WHY NOT (COMPUTED on the planted
+profile).**
+- (a) THE PHYSICIST'S TWO COMPARISONS (the interval by the total, the
+  cell by the cumulative proportions at that interval): exact only when
+  the proportions are constant in time; on the profile 0.550, 0.239, 0.211
+  against Born's 0.352, 0.366, 0.282, the cells that receive early
+  overcounted (a screen's centre against its fringes). Malus's two cells
+  receive in a constant proportion, so his form is exact there; the two
+  slits are not.
+- (b) THE NODE THAT SHOUTS ALONE (the owner's form): each cell with its
+  own threshold from its own remainder and its own accumulator, the first
+  to pass shouting. With thresholds spread evenly over [0, T) the race is
+  not Born's rule: two cells receiving in the constant shares 0.9 and 0.1
+  give 17 / 18 = 0.944 to the first (PROVED: P(theta_1 / 0.9 < theta_2 /
+  0.1) = 1 - 1 / 18), and on the profile 0.317, 0.248, 0.140 with 30
+  percent of the quanta never clicking at the set. With MEMORYLESS
+  thresholds (a chance f_i(t) / T at each cell at each interval, the
+  cell's own remainder as its die) the race gives the shares exactly for
+  a constant proportion among those that click, but only 1 - e^-1 = 63
+  percent click and 37 percent pass on to the face, and for a changing
+  profile the early flux is overweighted (0.454, 0.344, 0.202).
+  EXACTNESS NEEDS THE CHANCE NORMALISED BY THE RECORD'S REMAINING NORM,
+  f_i(t) / (T - C(t - 1)): then the survival to t is (T - C(t)) / T and
+  P(t, i) = f_i(t) / T exactly (PROVED, the product telescopes), and T -
+  C(t - 1) is the ladder's running total, a record integer. So THE NODE
+  SHOUTS EXACTLY WHEN IT HOLDS THE RECORD'S TWO INTEGERS, theta and C(t -
+  1): its test is whether theta - C(t - 1) - (the increments of the cells
+  before it in the order) falls within its own increment f_i(t); that is
+  the increment ladder read cell by cell, and no other race is exact.
+  RECOMMENDED: the increment ladder, read as each cell's own test with
+  the record's two integers (the owner's "a Node shouts", in its exact
+  form), with the deletion at once (record 1888); the hidden variable
+  stays one per record, u, and no cell throws a die (2.7).
+
+**(6) THE PAIR, AND NO SIGNALLING (PROVED HERE; record 1888).** A pair
+record (rank 2) has one residue u, its norm T, and per arm its rows and
+its named sets (arm 0 the first polariser's cells, arm 1 the second's).
+ITS CLICK: each arm's TIME by its own increment ladder over its own cells
+(the arm's rows' flux; the crossing of theta by that arm's running
+total); its OUTCOME on the JOINT LADDER of the four outcomes (o_A, o_B)
+with the weights R(o_A, o_B) = J^2 (3.6), laid out with o_A outer and o_B
+inner in the sets' declared order, the point (u + 1 / 2) / W of the total
+SUM of R choosing the outcome for both arms at once: the one gather at
+two clicks (record 1141), the one non-local act. THEOREM (no signalling):
+the share of records clicking + at Alice is SUM over b of R(+, b) / SUM
+of R, and SUM over b of R(o_A, b) = (a_B^2 + b_B^2) abs(v_(o_A))^2 with
+v_(o_A) = SUM over a of w_(a b) M_A[o_A][a] the arm's projected label
+state, by Brahmagupta's identity (9.16 (2)); the scale a_B^2 + b_B^2 is
+common to both o_A and cancels in the share; so Alice's marginal share is
+abs(v_+)^2 / (abs(v_+)^2 + abs(v_-)^2), independent of Bob's axis EXACTLY
+in integers (her two segments' union is [0, SUM over b of R(+, b))
+whatever Bob's axis, the joint ladder being o_A-outer), and independent
+of anything beyond her light cone: her click's time is her own arm's
+flux (her rows and her cells) and her outcome's boundary her own
+projection; nothing of Bob's setting, placement or distance enters
+either. The same for Bob. The counts are binomial about shares that do
+not depend on the far setting: NO INFORMATION MOVES, at any speed. What
+is non-local is Bob's outcome GIVEN Alice's (the inner segments), decided
+by the same u and the joint weights: the correlation S = 14 / 5 (9.16
+(4)), which is not a signal. COMPUTED: for HV + VH the marginal is 1 : 1
+at every axis, the maximally entangled pair's.
+A DELETION FRONT (the owner's "not all at once"; analysis only, the
+reason for record 1888): if the record's end spread from Alice's click
+at one Link per interval, Bob's arm would click before the front arrived
+on the data at Bob alone (his rows, his axis, u): a local rule at each
+arm; by Bell's theorem, and by 9.14's result for the cells' group, every
+such rule gives S at most 2, against nature's loophole-free 2.4 to 2.7
+and the model's 2.8; and a second crossing at Bob before the front would
+be two clicks of one quantum. So a front cannot reproduce S above 2; the
+deletion at once is the algebra's one non-local act, carrying the pair's
+one outcome to both arms, and no information passes through it, by the
+theorem.
+
+**(7) THE DETECTOR AS ONE REGION (the owner's word; DERIVED).** For the
+rule of (2) and Born's rule, contiguity is not needed: the increment
+ladder runs over any named set. It IS needed for the detector as a BODY,
+whose own record changes at the click (POSTULATES.md section 10: the
+content and the push handed to it), a body being one connected G_48-set
+of cubes (8.3, 9.6); and for the NAME: cells in separate places are
+separate detectors with separate names (Bell's two arms), else one name
+would read two places as one and its clicks could not be placed. LOAD
+CHECK: a receiver's name on two pieces not connected by Links (the
+six-neighbour adjacency on the torus) is refused with the sentence "the
+receiver `name` lies on n disconnected pieces; a detector is one
+connected region, and separate places are separate names". UNIT TEST: a
+receiver named on the cells (2, 2, 0) and (5, 2, 0) of a layer is
+refused; on (2, 2, 0) and (3, 2, 0) admitted; a cube of side 2 across a
+periodic seam admitted (connected through the seam).
+
+**(8) UNIT TESTS WITH EXPECTED VALUES (for the engine).**
+- The physicist's layer (24 x 7 closed, the emitter at (2, 3), three
+  one-Node sets at x = 18 on the rows 2, 3 and 4, the residues u = 0 to 7
+  on W = 8): the counts under the order [s0, s1, s2] EQUAL the counts
+  under [s2, s1, s0]; each equals the number of u whose theta falls in
+  the cell's segments of the final increment ladder, which the harness
+  computes from the same fluxes before the run and the engine must give
+  bit for bit; by the placement's symmetry the rows 2 and 4 have equal
+  total flux and the row 3 the larger, so the middle cell has the most
+  clicks and the two others equal within one.
+- Malus's four worlds: the shares a^2 / (a^2 + b^2) on the + cell, the
+  expected 128.0, 246.2, 199.3, 177.2 at 256 records with their bands
+  (9.19 (4b)).
+- The two slits: the screen's counts binomial about the cells' shares of
+  the record's total flux over its passage; the visibility 0.96 +- 0.02
+  re-derived on the grown board (owed).
+- NO SIGNALLING (9.20 (B)'s seventh test): two Bell worlds differing only
+  in Bob's axis, (1, 2) against (3, 1), give at Alice's two receivers
+  identical counts and identical click intervals, record by record, bit
+  for bit; and her counts' shares are abs(v_+)^2 : abs(v_-)^2 of her own
+  projection (1 : 1 for HV + VH).
+- ONE QUANTUM, ONE CLICK: with the face last on every ladder, every record
+  clicks exactly once (the content's count).
