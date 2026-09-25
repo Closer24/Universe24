@@ -8462,7 +8462,9 @@ TESTS: generic (one pair per Node, no family name), vector (the same
 three verbs with integer entries, no root, no float), local (the Node's
 own pair). This is the shift of the Node's rotation for all families that 9.29 (3) (b) said the family's pair cannot express: the pair cannot, the Node clock can. THE SHARE AND THE CURRENT UNDER THE NODE CLOCK (Nature24's question, PROVED and COMPUTED): with (e, f) = (Gamma, Gamma + M_i) and in the integer units 3 num Gamma e_i, the Node's own share is E_i = 3 den (Gamma + M_i)(now_i^2 + before_i^2) - num Gamma now_i (**A** before)_i - 6 den M_i now_i before_i (**A** the six reads with the self reads of a folded axis), the record's norm T = sum over its Nodes of E_i, and its change per interval is the sum over the Node's six Links of num Gamma (now_i before_j - before_i now_j) read on the levels before the step: THE LINK'S CURRENT IS THE SAME BILINEAR FORM AS WITHOUT THE CLOCK, only the Node's own term changes; the one-way flux per Port for the click's tally is num Gamma max(now_i before_j - before_i now_j, 0) in these units (the identity computed exact to 5 x 10^-15 on a random clock field, the sum of E_i the invariant above).
 
-**(3) WHAT IS AT THE NODE: THE CONTENT, CHANGING ONLY AT EVENTS (the
+**(3) WHAT IS AT THE NODE: THE CONTENT, CHANGING ONLY AT EVENTS (since
+record 1982 the content is the level of the family of clicks held at the
+body's Nodes, and the clock its amplitude: 9.45, the one statement) (the
 Boss's question (a) of record 1949, answered yes).** The Node's clock is
 set by the content at the Node,
 
@@ -9134,7 +9136,7 @@ clock through the content alone, by (Gamma + M) / (Gamma + M +- 1). No
 run on the board is needed for any line above; the runs of 9.38 and
 9.39 are illustrations of T2, T5 and T3 and add no rule.
 
-### 9.41 A fourth family, of clicks: the clock field (the model owner's question of 2026-09-25 through the Boss, record 1972, "perhaps we need a fourth family, of clicks?"; the Boss's reading; CHECKED against the three tests and COMPUTED on the algebra; a hypothesis under its own identity until the owner's word)
+### 9.41 A fourth family, of clicks: the clock field (the model owner's question of 2026-09-25 through the Boss, record 1972, "perhaps we need a fourth family, of clicks?"; the Boss's reading; CHECKED against the three tests and COMPUTED on the algebra; ADOPTED by the model owner as the fourth family, record 1982, "close everything together, the family of clicks included, the clock inside it as its amplitude"; the one statement in 9.45)
 
 **(1) WHAT IT IS.** A family whose level c_i at a Node is what the Node
 clock reads: (e_i, f_i) = (Gamma, Gamma + c_i). It has a declared pair,
@@ -9432,3 +9434,63 @@ surface is where the flux is constant and equal to M; that is the owner's
 "constant flux" for the fourth family, the steady state that marks a
 source's boundary from outside. Both are true; the first needs no new
 family.
+
+### 9.45 The Node clock is the family of clicks: the one statement (the model owner's decision of 2026-09-25 through the Boss, record 1982: "close everything together, the family of clicks included, the clock inside it as its amplitude"; 9.35 (3) and 9.41 read here as one; the owner's constant now at most four families)
+
+**(1) THE FAMILY.** The fourth family is THE FAMILY OF CLICKS. Its pair
+is [1, 1] (9.41 (3): the only pair whose static solutions reach). Its
+level c_i at a Node is the Node clock: (e_i, f_i) = (Gamma, Gamma + c_i),
+read by the step of every other family (D2). Its unit is the quantum:
+one click writes one unit; its levels are counted in quanta and not in
+the write-height of the other families, so THE CLOCK IS ITS AMPLITUDE,
+as the owner says. It carries no residue, no ladder and no click of its
+own: it takes and gives nothing; every family's clock reads it. The
+static content M of 9.35 (3) and 9.36 is this family's level held at a
+body's Nodes: the same integer under a family's name.
+
+**(2) ITS SOURCE AND ITS STEP.** At the Nodes of a body the level is
+HELD: c_i = the body's content, written whole at each click (up by one
+at a taking, down by one at a giving, 9.40 D5) and kept between clicks;
+that hold is the one place where a family's level is not the step's
+own, and it is the same write as the load's (the vector test's verb).
+At every other Node the family moves by the step of D2 with its own
+pair, like every family, and reads the world's one border (record 1970).
+Around a held body the step's static part is the discrete Coulomb
+potential, about M R / r with R the body's radius in Links (COMPUTED,
+9.41 (3)); a change of the held level at a click spreads outward from
+the body's surface at one Link per interval with its sign (9.44 (3));
+in integers a change of one unit per Node falls below one unit within
+about sqrt(N_surface / (4 pi)) Links and the rounding takes it, and the
+static level M R / r is below one unit beyond M R Links, so the field
+in integers is the held content, its potential to M R Links, and
+nothing farther; on the eighteen at Gamma = 10^6 no pin sees it.
+
+**(3) WHAT IT CHANGES IN THE STEP, THE SHARE AND THE WHEEL.** Nothing in
+form: the step at every Node is 3 den f a_next + r' = e num S_6 + 6 den
+(f - e) a_now - 3 den f a_before + r with f = Gamma + c_i (9.35 (2)); the
+share E_i = 3 den f (now^2 + before^2) - num Gamma now (A before)_i - 6
+den c_i now before and the current num Gamma (now_i before_j - before_i
+now_j), no weight in the current (9.38 (8), 9.42 (5)); the wheel at a
+Node the rule's, 3 den f over the gcd of the step's coefficients, the
+pair's own where c_i = 0 (9.42 (5)); the bounds: c_i < Gamma everywhere
+(f > 0; Gamma above the world's whole stock) and the amplitude ceiling
+2^28 with the wall 3 den (Gamma + c). WHERE THE FIELD IS STATIC the
+per-Node identity and the invariant of 9.35 (2) hold exactly (computed
+to 10^-15); WHERE IT CHANGES, a transient passing a Node, the identity
+gains the term 3 den (f' - f)(now^2 + before^2) of the record there, the
+clock's change working on the record: an exchange between the family of
+clicks and the others, whose one conserved total, the field's own form
+included, is OWED as algebra; at Gamma = 10^6 the term is 10^-6 of the
+share per unit of the field and below every pin.
+
+**(4) THE CIRCLE, CLOSED.** The remainder at a Node gives the place of
+the click (9.44 (2), at one Node of the body); the click moves the whole,
+one unit of the family of clicks at the body's Nodes; the family's level
+is the clock at those Nodes and, by the step, the clock around them
+(Newton's potential in the clock, 9.41 (4)); the clock sets every
+family's rotation; the rotation leaves the remainder. 9.36's circle with
+its one integer named as a family; 9.32's five lines, 9.34's decisions,
+9.35's clock, 9.37's two ends, 9.38's shell, 9.40's sentences, 9.43's
+retired reseed and 9.44's local reading are this one law, and the
+owner's constant is four families: light, the matter families, and the
+family of clicks.
