@@ -40,7 +40,12 @@ AMPLITUDE = 1 << 12
 
 
 def small_world(
-    well_vertex=WELL_VERTEX, receiver=RECEIVER, seed=None, receiver_named=True, side: int = SIDE
+    well_vertex=WELL_VERTEX,
+    receiver=RECEIVER,
+    seed=None,
+    receiver_named=True,
+    side: int = SIDE,
+    clock: list[int] | None = None,
 ) -> dict:
     """The small world of 9.20 as a document; the well's seed the composed mode's integer
     profile at the amplitude (the generator's, or `seed` given: a transformed reference)."""
@@ -94,11 +99,14 @@ def small_world(
         else [],
     }
     if seed is None:
+        # the generator writes the profile and the mode's clock [a, b] (record 1886)
         document["measured"][0]["seed"] = massive_generator().mode_profile(
             document, 0, amplitude=AMPLITUDE
         )
     else:
         document["measured"][0]["seed"] = [int(value) for value in np.asarray(seed).ravel()]
+        assert clock is not None
+        document["measured"][0]["clock"] = list(clock)
     return document
 
 
@@ -228,7 +236,10 @@ def transformed(document: dict, g, transform_node, transform_array) -> dict:
     seed = transform_array(np.asarray(document["measured"][0]["seed"], dtype=np.int64).reshape(SHAPE))
     _ = transform_node
     return small_world(
-        well_vertex=vertex, receiver=vertex_of(transform_array(cube_mask(RECEIVER, 3)), 3), seed=seed
+        well_vertex=vertex,
+        receiver=vertex_of(transform_array(cube_mask(RECEIVER, 3)), 3),
+        seed=seed,
+        clock=document["measured"][0]["clock"],
     )
 
 

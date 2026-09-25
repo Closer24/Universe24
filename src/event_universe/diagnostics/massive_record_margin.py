@@ -41,8 +41,9 @@ from dataclasses import dataclass
 from typing import Any
 
 import numpy as np
+from scipy.sparse.linalg import LinearOperator, eigsh  # type: ignore[import-untyped]
 
-from event_universe.events.world import BEAM_LAW, MARGIN_KINDS, NatureBeamWorld
+from event_universe.events.world import BEAM_LAW, MARGIN_KINDS, NatureBeamWorld, block_cell_indices
 
 # The ramp of a pushed body at least this many relaxation times 1 / (omega_0
 # - omega_b) of its own well (DECLARATIONS.md section 8, the rule for any
@@ -138,19 +139,10 @@ class MarginReading:
 def block_cells(
     shape: tuple[int, int, int], corner: tuple[int, int, int], side: int, wrap: tuple[bool, bool, bool]
 ) -> np.ndarray:
-    """The block's cells as the engine forms them: the cube from its lower
-    corner, wrapped on a periodic axis of the kind, cut on an open one."""
+    """The block's cells as a mask over the board: the array form of the
+    loader's `block_cell_indices` (the one copy of the cube's rule)."""
     mask = np.zeros(shape, dtype=bool)
-    ranges = []
-    for axis in range(3):
-        indices = [corner[axis] + offset for offset in range(side)]
-        if wrap[axis]:
-            indices = [index % shape[axis] for index in indices]
-        else:
-            indices = [index for index in indices if 0 <= index < shape[axis]]
-        ranges.append(sorted(set(indices)))
-    if all(ranges):
-        mask[np.ix_(ranges[0], ranges[1], ranges[2])] = True
+    mask.ravel()[block_cell_indices(shape, corner, side, wrap)] = True
     return mask
 
 
@@ -254,12 +246,20 @@ def lanczos(
     return ritz, count, mode
 
 
-def bound_mode(world: NatureBeamWorld, number: int) -> np.ndarray:
-    """The bound mode's shape of a block on the world's own board (the
-    margin module's Lanczos vector, its largest entry 1), over the whole
-    board: the seed a pin world declares as integers at its amplitude
-    (MASSIVE_RECORD.md section 11 item 7, the reader of record and the
-    seed; a HOST computation of the generator, never of the engine's run)."""
+def accurate_mode(world: NatureBeamWorld, number: int) -> tuple[float, np.ndarray]:
+    """The bound mode of a block alone in its medium on the world's own
+    board, to the host's floating precision: the largest eigenpair of the
+    symmetric operator A = D^-1/2 (S_6 / 3) D^-1/2 (D = den / num per Node)
+    by the implicitly restarted Lanczos method (ARPACK through scipy's
+    `eigsh`, the tolerance the machine's, the start the cells' indicator
+    plus a flat 10^-3), the eigenvalue 2 cos omega_b and the mode of the
+    rule's operator (A's vector times D^-1/2, its largest entry 1). A HOST
+    computation of the generator and of the diagnostics, never of the
+    engine's run; the loader reads its rounded integers alone and checks
+    them in integers (ALGEBRA.md 9.22 (7)). The three-term recurrence of
+    `lanczos` (no reorthogonalisation) gave the mode to about 3 x 10^-4
+    relative, hundreds of units at the amplitude 50 x 2^20, which the
+    integer check refuses (BUILD.md section 26 item 20)."""
     entry = world.measured[number]
     definition = entry.block
     if definition is None:
@@ -270,10 +270,39 @@ def bound_mode(world: NatureBeamWorld, number: int) -> np.ndarray:
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
     cells = block_cells(shape, corner, definition.side, wrap)
     ratio = np.where(cells, definition.pair[1] / definition.pair[0], family.pair[1] / family.pair[0])
-    seed = np.where(cells, 1.0, 0.0) + 1e-3 * np.random.default_rng(0).standard_normal(shape)
-    _, _, mode = lanczos(ratio, wrap, seed, vector=True)
-    assert mode is not None
-    return mode
+    scale = 1.0 / np.sqrt(ratio)
+    count = int(np.prod(shape))
+
+    def apply(flat: np.ndarray) -> np.ndarray:
+        result: np.ndarray = scale * six_neighbours(scale * flat.reshape(shape), wrap) / 3.0
+        return result.ravel()
+
+    operator = LinearOperator((count, count), matvec=apply, dtype=np.float64)
+    start = (np.where(cells, 1.0, 0.0) + 1e-3).ravel()
+    values, vectors = eigsh(operator, k=1, which="LA", v0=start, tol=0, maxiter=100 * count)
+    mode: np.ndarray = scale * vectors[:, 0].reshape(shape)
+    mode /= np.max(np.abs(mode))
+    if mode[np.unravel_index(int(np.argmax(np.abs(mode))), mode.shape)] < 0:
+        mode = -mode
+    return float(values[0]), mode
+
+
+def mode_clock(lambda_max: float, amplitude: int) -> tuple[int, int]:
+    """The mode's 2 cos omega as the rational [a, b] the generator writes
+    (ALGEBRA.md 9.22 (7)): b a power of two at least twice the amplitude and
+    at least 2^20 (so that a shallow mode's binding above the band's top is
+    resolved), a the nearest integer to lambda b."""
+    b = max(1 << (int(amplitude).bit_length() + 1), 1 << 20)
+    return int(round(lambda_max * b)), b
+
+
+def bound_mode(world: NatureBeamWorld, number: int) -> np.ndarray:
+    """The bound mode's shape of a block on the world's own board (its
+    largest entry 1), over the whole board: the seed a pin world declares as
+    integers at its amplitude (MASSIVE_RECORD.md section 11 item 7, the
+    reader of record and the seed; a HOST computation of the generator,
+    never of the engine's run); `accurate_mode`'s vector."""
+    return accurate_mode(world, number)[1]
 
 
 def profile_check(world: NatureBeamWorld, number: int) -> tuple[int, int] | None:

@@ -20,9 +20,10 @@ import numpy as np
 import pytest
 
 from event_universe.diagnostics.massive_record_margin import (
+    accurate_mode,
     block_margin,
-    bound_mode,
     check_margins,
+    mode_clock,
     profile_check,
 )
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
@@ -1175,10 +1176,17 @@ def test_y_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     world = parse_nature_beam_world(document)
     reading = block_margin(world, 0)
     period = 2 * np.pi / reading.omega_b
-    mode = bound_mode(world, 0)
+    lambda_max, mode = accurate_mode(world, 0)
     profile = np.rint(mode * (1 << 20)).astype(np.int64)
     seeded = dict(document)
-    seeded["measured"] = [dict(document["measured"][0], seed=[int(v) for v in profile.ravel()])]
+    seeded["measured"] = [
+        dict(
+            document["measured"][0],
+            seed=[int(v) for v in profile.ravel()],
+            # the mode's clock beside the profile (record 1886; ALGEBRA.md 9.22 (7))
+            clock=list(mode_clock(lambda_max, 1 << 20)),
+        )
+    ]
     world = parse_nature_beam_world(seeded)
     assert profile_check(world, 0) == (0, 1 << 20)
     lines: list[dict] = []

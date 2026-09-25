@@ -680,14 +680,41 @@ def launch_list_worlds(include_refused: bool = False) -> dict[str, dict]:
 
 def mode_profile(document: dict, number: int, amplitude: int = 1 << 20) -> list[int]:
     """The bound mode's integer profile of a block over the whole board (the margin module's
-    Lanczos vector at load, rounded at the amplitude), the pin worlds' seed of MASSIVE_RECORD.md
-    section 11 item 7: a HOST computation of the generator, written into the world file so that
-    the run's record follows from the file and the engine alone."""
-    from event_universe.diagnostics.massive_record_margin import bound_mode
-    from event_universe.events.world import parse_nature_beam_world
+    accurate mode, rounded at the amplitude), the pin worlds' seed of MASSIVE_RECORD.md section
+    11 item 7: a HOST computation of the generator, written into the world file so that the
+    run's record follows from the file and the engine alone. SINCE record 1886 (ALGEBRA.md 9.22
+    (7)) the entry also receives the mode's `clock` [a, b] (2 cos omega as a rational, b at
+    least twice the amplitude), and the profile is checked here against the loader's own
+    integer residual bound on the body's operator before it is written: a profile that fails
+    is a generator fault, raised, never written."""
+    from event_universe.diagnostics.massive_record_margin import accurate_mode, mode_clock
+    from event_universe.events.world import block_cell_indices, mode_residual, parse_nature_beam_world
 
-    mode = bound_mode(parse_nature_beam_world(document), number)
-    return [int(value) for value in np.rint(mode * amplitude).astype(np.int64).ravel()]
+    world = parse_nature_beam_world(document)
+    lambda_max, mode = accurate_mode(world, number)
+    clock = mode_clock(lambda_max, amplitude)
+    profile = np.rint(mode * amplitude).astype(np.int64)
+    entry = world.measured[number]
+    block = entry.block
+    assert block is not None
+    family = world.families[entry.family]
+    shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
+    wrap = world.kind_periodic(entry.family)
+    corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
+    count = shape[0] * shape[1] * shape[2]
+    num, den = [family.pair[0]] * count, [family.pair[1]] * count
+    for index in block_cell_indices(shape, corner, block.side, wrap):
+        num[index], den[index] = block.pair[0], block.pair[1]
+    flat = [int(value) for value in profile.ravel()]
+    residual, bound, node = mode_residual(flat, num, den, clock, shape, wrap)
+    if residual > bound:
+        raise ValueError(
+            f"the generator's mode for measured[{number}] fails the loader's residual bound at "
+            f"Node {list(node)}: {residual} above {bound} (the clock {list(clock)}, the amplitude "
+            f"{amplitude}); nothing written"
+        )
+    document["measured"][number]["clock"] = list(clock)
+    return flat
 
 
 def main() -> None:

@@ -21,9 +21,10 @@ import numpy as np
 import pytest
 
 from event_universe.diagnostics.massive_record_margin import (
-    bound_mode,
+    accurate_mode,
     check_body_conditions,
     check_margins,
+    mode_clock,
     relaxation_time,
 )
 from event_universe.events.detector_law import DetectorLawSimulation
@@ -64,8 +65,10 @@ def seeded(
     if momentum is not None:
         entry["momentum"] = momentum
         entry["ramp"] = ramp
-    mode = bound_mode(parse_nature_beam_world(document), 0)
+    lambda_max, mode = accurate_mode(parse_nature_beam_world(document), 0)
     entry["seed"] = [int(value) for value in np.rint(mode * AMPLITUDE).astype(np.int64).ravel()]
+    # the mode's clock beside the profile (record 1886; ALGEBRA.md 9.22 (7))
+    entry["clock"] = list(mode_clock(lambda_max, AMPLITUDE))
     return document
 
 

@@ -837,11 +837,15 @@ NO_CHARGE = (0, 1)
 # The block's keys (massive-record-v1, MASSIVE_RECORD.md sections 4 to 7;
 # the build's plan BUILD.md section 3): admitted on a measured event that
 # declares `side`, under the world key `massive_record` alone.
+# At most three families on a GameBoard (record 1875; ALGEBRA.md 9.22 (2)).
+MOST_FAMILIES = 3
 BLOCK_KEYS = {
     "side",
     "pair",
     "coupling",
     "seed",
+    # the bound mode's clock [a, b] beside a profile (ALGEBRA.md 9.22 (7))
+    "clock",
     "cavity",
     "ramp",
     "start",
@@ -1344,6 +1348,11 @@ class BlockDefinition:
     # the bound mode's integer profile over the whole board (x-major, one per
     # Node) when the seed is declared so; None for a flat seed
     profile: tuple[int, ...] | None = None
+    # THE MODE'S CLOCK (ALGEBRA.md 9.22 (7); record 1886): 2 cos omega of the
+    # body's bound mode as the rational [a, b] the generator wrote, b at
+    # least the profile's amplitude; the loader's integer check of the
+    # profile against the eigen-equation reads it; None for a flat seed
+    clock: tuple[int, int] | None = None
     cavity: bool = False
     ramp: int = 0
     start: int = 0
@@ -2292,6 +2301,12 @@ def _families(
 ) -> tuple[FamilyDefinition, ...]:
     if not isinstance(value, list) or not value:
         raise ValueError(f"{BEAM_LAW}: families must be a nonempty list")
+    if len(value) > MOST_FAMILIES:
+        raise ValueError(
+            f"{BEAM_LAW}: families declares {len(value)}; at most {MOST_FAMILIES} families on a "
+            "GameBoard (the unification ADOPTED by the model owner, record 1875; ALGEBRA.md 9.18, "
+            "9.22 (2))"
+        )
     found: list[FamilyDefinition] = []
     declared: list[dict[str, tuple[tuple[int, int], int]]] = []
     # The world's columns beyond the two built in, in the order of their
@@ -3474,6 +3489,42 @@ def _block(
         seed = max(abs(value) for value in profile)
     elif "seed" in obj:
         seed = _integer(obj["seed"], f"{label}.seed", 0)
+    # THE MODE'S CLOCK (ALGEBRA.md 9.22 (7); record 1886): a profile carries
+    # its mode's 2 cos omega as the rational [a, b] the generator wrote, b at
+    # least the amplitude; the world's integer check of the profile against
+    # the eigen-equation reads it (`_initial_state_checks`)
+    clock: tuple[int, int] | None = None
+    if "clock" in obj:
+        if profile is None:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.clock is admitted only beside a profile (the mode's 2 cos "
+                "omega belongs to the mode's integers, ALGEBRA.md 9.22 (7))"
+            )
+        value = obj["clock"]
+        if (
+            not isinstance(value, list)
+            or len(value) != 2
+            or any(type(item) is not int for item in value)
+            or value[0] < 1
+            or value[1] < 1
+        ):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.clock must be [a, b], two positive integers, the mode's 2 cos "
+                "omega as a rational (ALGEBRA.md 9.22 (7))"
+            )
+        if value[1] < seed:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.clock [{value[0]}, {value[1]}]: b must be at least the "
+                f"profile's amplitude {seed} (the rounding of 2 cos omega to 1 / b at most, "
+                "ALGEBRA.md 9.22 (7))"
+            )
+        clock = (int(value[0]), int(value[1]))
+    elif profile is not None:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.seed as a profile needs the mode's `clock` [a, b] beside it (the "
+            "generator's rational for 2 cos omega, b at least the amplitude; the loader checks "
+            "the profile against the eigen-equation in integers, ALGEBRA.md 9.22 (7), record 1886)"
+        )
     if seed > amplitude_bound:
         raise ValueError(
             f"{BEAM_LAW}: {label}.seed {seed} (the scalar seed, or a profile's largest magnitude) "
@@ -3570,6 +3621,7 @@ def _block(
         source=source,
         seed=seed,
         profile=profile,
+        clock=clock,
         cavity=cavity,
         ramp=ramp,
         start=start,
@@ -4767,6 +4819,178 @@ def _in_transit(
     return tuple(found)
 
 
+def block_cell_indices(
+    shape: tuple[int, int, int], corner: tuple[int, int, int], side: int, wrap: tuple[bool, bool, bool]
+) -> list[int]:
+    """The block's cells as the engine forms them (`_cube`): the cube from
+    its lower corner, wrapped on a periodic axis of the kind, cut on an open
+    one; the Nodes' flat indices in x-major order (x, then y, then z). The
+    one copy of the rule in integers; the margin module's array form
+    (`block_cells`) is built from it."""
+    ranges: list[list[int]] = []
+    for axis in range(3):
+        indices = [corner[axis] + offset for offset in range(side)]
+        if wrap[axis]:
+            indices = [index % shape[axis] for index in indices]
+        else:
+            indices = [index for index in indices if 0 <= index < shape[axis]]
+        ranges.append(sorted(set(indices)))
+    if not all(ranges):
+        return []
+    stride_x, stride_y = shape[1] * shape[2], shape[2]
+    return [x * stride_x + y * stride_y + z for x in ranges[0] for y in ranges[1] for z in ranges[2]]
+
+
+def six_neighbours_flat(
+    values: Sequence[int], shape: tuple[int, int, int], wrap: tuple[bool, bool, bool]
+) -> list[int]:
+    """S_6 of a flat x-major integer array in exact integers: the sum of the
+    six neighbours, a periodic axis wrapped (an axis of extent 1 reads the
+    Node itself twice), an open axis reading 0 beyond its faces; the read of
+    the law's rule and of the generator's iteration (ALGEBRA.md 9.22 (7))."""
+    extents = (int(shape[0]), int(shape[1]), int(shape[2]))
+    strides = (extents[1] * extents[2], extents[2], 1)
+    total = [0] * len(values)
+    for axis in range(3):
+        extent, stride = extents[axis], strides[axis]
+        for index, value in enumerate(values):
+            coordinate = (index // stride) % extent
+            for step in (1, -1):
+                neighbour = coordinate + step
+                if wrap[axis]:
+                    neighbour %= extent
+                elif not 0 <= neighbour < extent:
+                    continue
+                total[index + (neighbour - coordinate) * stride] += value
+    return total
+
+
+def mode_residual(
+    profile: Sequence[int],
+    num: Sequence[int],
+    den: Sequence[int],
+    clock: tuple[int, int],
+    shape: tuple[int, int, int],
+    wrap: tuple[bool, bool, bool],
+    where: Sequence[bool] | None = None,
+) -> tuple[int, int, tuple[int, int, int]]:
+    """THE EIGEN-EQUATION'S RESIDUAL IN INTEGERS (ALGEBRA.md 9.22 (7) (ii),
+    PROVED there as the bound for the rounded profile of an exact mode): at
+    every Node i of `where` (every Node by default) the residual
+    abs(b num_i (S_6 p)_i - 3 den_i a p_i) against the bound b (3 num_i + 6
+    den_i), the clock [a, b] the mode's 2 cos omega as a rational; the
+    Node of the largest excess with its residual and its bound (the
+    residual at or below the bound everywhere means the profile is the
+    operator's mode to within its rounding). Exact Python integers, the
+    same on every host; the arrays flat in x-major order."""
+    a, b = clock
+    read = six_neighbours_flat(profile, shape, wrap)
+    worst_index, worst_excess, worst_residual, worst_bound = 0, None, 0, 0
+    for index, (p, n, d, s) in enumerate(zip(profile, num, den, read, strict=True)):
+        if where is not None and not where[index]:
+            continue
+        residual = abs(b * n * s - 3 * d * a * p)
+        bound = b * (3 * n + 6 * d)
+        excess = residual - bound
+        if worst_excess is None or excess > worst_excess:
+            worst_index, worst_excess, worst_residual, worst_bound = index, excess, residual, bound
+    stride_x, stride_y = int(shape[1]) * int(shape[2]), int(shape[2])
+    node = (
+        worst_index // stride_x,
+        (worst_index // stride_y) % int(shape[1]),
+        worst_index % int(shape[2]),
+    )
+    return worst_residual, worst_bound, node
+
+
+def _initial_state_checks(
+    shape: Address3,
+    periodic: tuple[bool, bool, bool],
+    families: tuple[FamilyDefinition, ...],
+    measured: tuple[MeasuredDefinition, ...],
+) -> None:
+    """THE INPUT CHECKED LAWFUL OR REFUSED, IN INTEGERS (the model owner's
+    record 1886; ALGEBRA.md 9.22 (3) and (7)): the initial state is stored
+    once in the file and the loader says at load whether it is lawful, with
+    no float. Every block's cells disjoint from every other block's (9.9
+    (4); a cube beyond a face is the fit check's refusal, naming the axis
+    and the vertex); for every body seeded with a profile, its clock a / b
+    strictly above its family's band top 2 num / den (a bound mode) and
+    below 2 (stable), and the eigen-equation's residual within its proved
+    bound at every Node of the board outside the other bodies of its family
+    (the body's own mode in place on the composed operator: at another
+    body's cells the operator carries that body's summand, so those Nodes
+    are its check, not this one's; Nature's reading for the mathematician's
+    word, BUILD.md section 26 item 20). The remainders are 0 by
+    construction (the profile is written at both levels with none); the
+    amplitude's bound and the rich birth cells are checked where the block
+    is parsed."""
+    board = (int(shape[0]), int(shape[1]), int(shape[2]))
+    count = board[0] * board[1] * board[2]
+    blocks: list[tuple[int, MeasuredDefinition, BlockDefinition, list[int]]] = []
+    for number, entry in enumerate(measured):
+        block = entry.block
+        if block is None:
+            continue
+        faces = families[entry.family].faces
+        wrap = periodic if faces is None else faces
+        corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
+        # a cube beyond a face or wrapped onto itself is refused by the fit
+        # check on the parsed world (naming the axis and the vertex)
+        cells = block_cell_indices(board, corner, block.side, wrap)
+        own = set(cells)
+        for other_number, _, _, other_cells in blocks:
+            if own.intersection(other_cells):
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}] and measured[{other_number}] overlap: two "
+                    "bodies' cells are disjoint (ALGEBRA.md 9.9 (4), 9.22 (3))"
+                )
+        blocks.append((number, entry, block, cells))
+    for number, entry, block, _cells in blocks:
+        if block.profile is None or block.clock is None:
+            continue
+        family = families[entry.family]
+        faces = family.faces
+        wrap = periodic if faces is None else faces
+        a, b = block.clock
+        # (iii) the band: a / b above the family's band top 2 num / den and below 2
+        if a * family.pair[1] <= 2 * family.pair[0] * b:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}].clock [{a}, {b}] is not above the band's top "
+                f"2 x {family.pair[0]} / {family.pair[1]} of the family {family.name!r}: the "
+                "profile is no bound mode (ALGEBRA.md 9.22 (7) (iii); a well too shallow for its "
+                "board, or a mode of the band)"
+            )
+        if a >= 2 * b:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}].clock [{a}, {b}] is at or above 2: the mode is a "
+                "runaway (no oscillation, a level growing every interval; ALGEBRA.md 9.19 (2), "
+                "9.22 (7) (iii))"
+            )
+        # (ii) the residual on the composed operator of the family (every
+        # body of the family in place), read outside the other bodies' cells
+        num = [family.pair[0]] * count
+        den = [family.pair[1]] * count
+        where = [True] * count
+        for other_number, other, other_block, other_cells in blocks:
+            if other.family != entry.family:
+                continue
+            for index in other_cells:
+                num[index] = other_block.pair[0]
+                den[index] = other_block.pair[1]
+                if other_number != number:
+                    where[index] = False
+        residual, bound, node = mode_residual(block.profile, num, den, block.clock, board, wrap, where)
+        if residual > bound:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}].seed is not the mode of its family's operator "
+                f"within the rounding bound: at Node {list(node)} the eigen-equation's residual "
+                f"{residual} is above the bound {bound} (the clock [{a}, {b}], the amplitude "
+                f"{block.seed}); the generator writes the mode's integers and the loader checks "
+                "them in integers (ALGEBRA.md 9.22 (7) (ii), the model owner's record 1886)"
+            )
+
+
 def _connected_pieces(
     positions: list[Address3], shape: Address3, periodic: tuple[bool, bool, bool]
 ) -> int:
@@ -5289,6 +5513,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         detector_law,
     )
     _column_budget(families, measured, release)
+    _initial_state_checks(shape, periodic, families, measured)
     families = _massive_families(families, measured, table, width, phase_steps, action)
     # The covariant readings (`covariant-readings-v1`): the key as declared,
     # its domain and its integers checked at load, None by default.

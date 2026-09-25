@@ -1981,6 +1981,89 @@ would have found no cell.
    the cadence the amplitude ratio's; the registered bodies at 50 x 2^20
    are not swamped (the offer at the click 0.2 to 0.7 of the norm). The
    pins are not moved; the rule stands as written until his word.
+20. THE INPUT CHECKED LAWFUL OR REFUSED, IN INTEGERS (the model owner's
+   record 1886 of 2026-09-25; ALGEBRA.md 9.22 (3) and (7); the property
+   test green). THE FORM: the initial state is stored once in the world
+   file, every seeded body's integer profile at both levels (`seed` as the
+   list, as before) and NOW ITS MODE'S CLOCK `clock` [a, b], the
+   generator's rational for 2 cos omega (b a power of two at least twice
+   the amplitude and at least 2^20, so that a shallow mode's binding above
+   the band's top is resolved; a the nearest integer to lambda b),
+   required beside a profile and refused beside a scalar seed. THE LOADER
+   (`_initial_state_checks` in world.py, after the measured events are
+   parsed, in Python integers with no float and no numpy: the loader
+   carries none): (a) every block's cells disjoint from every other
+   block's (9.9 (4); a cube beyond a face or wrapped onto itself stays the
+   fit check's refusal, naming the axis and the vertex); (b) the clock
+   a / b strictly above the family's band top 2
+   num / den (else "no bound mode") and below 2 (else "a runaway"), the
+   rational comparisons a den > 2 num b and a < 2 b; (c) THE
+   EIGEN-EQUATION'S RESIDUAL at every Node, abs(b num_i (S_6 p)_i - 3
+   den_i a p_i) <= b (3 num_i + 6 den_i), the mathematician's proved bound
+   for the rounded profile of an exact mode (`mode_residual`,
+   `six_neighbours_flat`, `block_cell_indices`; the one copy of the cube's
+   rule, the margin module's array form built from it), on the COMPOSED
+   operator of the body's family (every body of the family in place),
+   read at every Node outside the OTHER bodies of the family: NATURE'S
+   READING, for the mathematician's word: at another body's cells the
+   composed operator carries that body's summand, so those Nodes are its
+   check and not this one's (a body's own mode in place); with every Node
+   counted the two Sagnac wells' profiles (each the mode of its body alone
+   in the medium, as the generator writes them) fail the bound at the
+   other well's cells by about three times (the tunnel tail 10^-5 of the
+   amplitude there), and the composed operator's exact top mode is the
+   symmetric hybrid of both wells, which is no summand of one body (9.9
+   (3)); (d) at most three families (record 1875), the fourth refused
+   naming the count. What the check does not do: single out the mode among
+   near-degenerate ones (the hybrid share stays the generator's), check a
+   moving body's summand (the moving rows return as packets with the
+   generator, record 1884), read a file's hash or the law it was made
+   under (the input file's form of the integer generator, next); the
+   `ramp` key's refusal waits for the moving rows' regeneration, by record
+   1884's own words ("retires with the rows' regeneration"). THE FINDING
+   THE CHECK MADE AT ONCE (COMPUTATION on the registered worlds at
+   fd1734c2): the profiles the generator had written were NOT the modes to
+   within their rounding: the three-term Lanczos recurrence without
+   reorthogonalisation (`lanczos`, RITZ_TOLERANCE 10^-9) gave the vector to
+   about 3 x 10^-4 relative, so the residual exceeded the bound by 6 to 12
+   times on the 2^20 worlds (the boxes, the deep well, the layer pin,
+   14758 Nodes above the bound on the layer) and by 640 to 860 times on
+   the 50 x 2^20 chains (the light clock, Sagnac, the redshift), the
+   stored integers off the accurate mode by up to 16349 units at 50 x
+   2^20 and 888 at 2^20; the small worlds at the amplitude 100 and 4096
+   passed. THE GENERATOR NOW (`accurate_mode` in the margin module): the
+   largest eigenpair of the symmetric operator A = D^-1/2 (S_6 / 3)
+   D^-1/2 by the implicitly restarted Lanczos method, ARPACK through
+   scipy's `eigsh` at the machine's tolerance (scipy a declared
+   dependency since this item, used by the diagnostics and the generator
+   alone, never by the engine), the start the cells' indicator plus a flat
+   10^-3; the profile rounded at the amplitude passes the bound with
+   margin (the worst residual 0.18 to 0.53 of the bound on the four large
+   worlds probed); `mode_profile` checks its own output through the
+   loader's `mode_residual` before writing (a failing mode is raised, never
+   written) and writes the clock; every world regenerated (the profiles
+   moved by the accuracy). The integer power iteration of record 1898
+   (3 den v' = num S_6(v) + 6 den v, the remainder kept, the power-of-two
+   shift) is the generator's reproducible form owed with the input file;
+   its cost per e-fold is (lambda + 2) / gap board steps (the
+   mathematician's 15700 for the muon's form), so the float ARPACK start
+   stays the host shortcut and the integer check the gate. A ONE-UNIT
+   CHANGE at one Node is within the bound (the rounding it allows) and is
+   ADMITTED: the check refuses a profile off the mode by the amplitude's
+   order (the peak doubled or zeroed), not a unit; the same input then
+   gives another output (the property test's test 8). THE TESTS
+   (tests/test_initial_state.py): a generated world lawful with its
+   clock; the peak doubled and the peak zeroed refused naming the Node,
+   the residual and the bound, one unit off admitted; the clock's
+   refusals by name (absent, malformed, b below the amplitude, at the
+   band's top, at 2, beside a scalar seed); three families admitted and a
+   fourth refused; two bodies overlapping refused, a cube beyond a face
+   refused by the fit check, a whole one admitted; the six-neighbour read
+   on a chain of three, open and folded. THE CART HELD: the cart worlds
+   of the moving detector carry four families (post, source, cart, mass)
+   and are refused by the count; RUN_LIST.md row 4c holds the cart until
+   its rebuild as a transponder with three families (step 6), the file
+   kept on disk as history.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

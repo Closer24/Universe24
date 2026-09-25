@@ -1004,7 +1004,7 @@ amplitude on its cells at interval 0, 2^20 by default, 0 silent; or, with
 order, the bound mode's integer profile the generator writes into the file
 at the world's amplitude, the record seeded so over the whole board at both
 levels, a standing start on the mode, the load-time check against the margin
-module's mode printed as GAMEBOARD; MASSIVE_RECORD.md section 11 item 7),
+module's mode printed as GAMEBOARD; MASSIVE_RECORD.md section 11 item 7), and beside a profile its mode's `clock` [a, b] (REQUIRED there, refused beside a scalar seed: the generator's rational for 2 cos omega, b a power of two at least twice the amplitude; SINCE the model owner's record 1886 and BUILD.md section 26 item 20 the loader checks the profile in integers at load, with no float: the eigen-equation's residual abs(b num (S_6 p) - 3 den a p) within b (3 num + 6 den) at every Node of the family's composed operator outside the other bodies' cells, a / b above the band's top 2 num / den and below 2, the block's cube whole and disjoint from every other block's, at most three families; a file that fails is refused with the reason, ALGEBRA.md 9.22 (7)),
 `cavity` (its own record held at 0 outside its
 cells), `ramp` (the momentum reached from 0 over that many intervals, the
 pushing agent's declaration), `start` (the interval its drive begins, 0 by
