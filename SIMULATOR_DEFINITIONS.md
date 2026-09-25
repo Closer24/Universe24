@@ -125,10 +125,12 @@ in the day's log; nothing of them is a name the engine branches on.
 - **The birth.** The other side of a click: a body's own excited record
   (the body's seed, its stock M excitations in turn) clicks at its centre
   cell, and the born record is written ONCE on the body's cells at both
-  levels, the world's two integers `born: [now, before]` with before =
-  -now (the generator's, round(A x 256 sin(pi s / N)), checked at load)
-  or the generator's born profile along a line; the next
-  excitation follows while the stock lasts (ALGEBRA.md 9.17 (4) to (6)).
+  levels as the BORN TRAIN, the generator's integer profile of one **K**
+  over at least 8 periods under an envelope (ALGEBRA.md 9.17 (6a); the
+  two-integer pair `born: [now, -now]`, a flat pulse, is refused: its
+  standing components make the one-way flux exceed the norm, 9.25 (11));
+  the next excitation follows while the stock lasts (ALGEBRA.md 9.17 (4)
+  to (7)).
   A crystal births a record of rank 2 at an arriving record's click on
   its cells (9.7 (b), 9.13). Nothing drives a record after its birth.
 - **No table in the engine** (the model owner, 2026-09-24, 23:00Z: "if

@@ -458,9 +458,10 @@ normalization, with one declared exception on main: the run-time roots under the
 keys `meeting` and `optical` (ALGEBRA.md 2.7, the seventh verb, not admitted to
 the law, each declared by its design); the cosine and sine tables at the scale
 256 of the first engine are HISTORY (no table in the engine, the model owner's
-record 1878 of 2026-09-25: the born pair and every profile are the world's
+record 1878 of 2026-09-25: the born train and every profile are the world's
 integers, written by the generator on the host and read by the law as integers
-alone, ALGEBRA.md 9.17 (6)). Conservation-preserving division retains the missing fraction as
+alone, ALGEBRA.md 9.17 (6) and (6a); every birth is a travelling train of at
+least 8 periods, a flat pulse being refused, 9.25 (11)). Conservation-preserving division retains the missing fraction as
 an integer remainder carried into the next calculation.
 
 (History, marked 2026-09-23: the finite-attenuation candidate of the next

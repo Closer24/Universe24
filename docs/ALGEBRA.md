@@ -4433,6 +4433,55 @@ two levels (item (5) 3; the packet's summand of 9.22 (3): a travelling
 character has before = the character one interval earlier, not -now),
 checked at load for its count and for a motion; both are the world's
 integers, the generator's, and neither is a table in the engine.
+(6a) THE BORN TRAIN, THE ONE FORM OF A BIRTH (the physicist's finding on
+emitter-click f0d2d745, 2026-09-25: the light clock's file run by the one
+command, every record clicking on its outgoing pass, the one-way flux
+into the cube beside the emitter 4.65 times the record's norm within 400
+intervals and 4.23 at the emitter's own cell; DERIVED HERE, the first
+form of the key RETIRED). The uniform birth [now, -now] on every cell of
+a body is a flat pulse of the body's length: on twelve cells at the
+wavelength 20.78 it is 0.58 of a period, broadband, and its standing
+components (the band's edges, whose group velocity is about zero) carry
+an alternating current at the body's Ports with no transport; the
+positive part of an alternating current grows without bound, so the
+one-way flux booked by any region beside the emitter exceeds the
+record's norm and the ladder is met by sloshing, not by a passage (9.25
+(11)). THE LOAD CONDITION (DERIVED): every birth is a TRAVELLING TRAIN,
+the character of one **K** over n >= 8 periods under an envelope, written
+on the body's cells at both levels; `born` has this one form, the
+profile, and the two-integer form is refused with this reason. THE
+INTEGER FORM: now[x, y, z] = round(A e(x) h(y) h(z) cos(k (x - x0))),
+before[x, y, z] = round(A e(x) h(y) h(z) cos(k (x - x0) + omega)), the
+character exp(i (k x - omega t)) at t = 0 and t = -1 along **K** = (k,
+0, 0), travelling from interval 0 with no ramp (9.24 (2)); 3 cos omega =
+(num / den) (cos k + 2) for a profile constant across (the reads on an
+axis of extent 1 are the cell itself); the born clock [p, q] gives k = 2
+pi p / (2 N q), and [512, 1] on N = 1024 (k = pi / 2, the wavelength 4;
+cos omega = 2 / 3 for light, 0.6593 for [800, 809]) is the one clock of
+every light emitter, since a longer wavelength fits no train on a body;
+h the Hann window across each transverse extent Y, h(y) = sin^2(pi (y -
+y0 + 1 / 2) / Y) (1 on a chain); e the taper along **K** over tau = X / 4
+cells at each end, e(i) = sin^2(pi (i + 1 / 2) / (2 tau)) for i < tau, 1
+between, e(X - 1 - i) for the tail (a hard-edged train is broadband at
+its ends); X = 32 cells, 8 periods (64 for Mach-Zehnder), and the
+emitting body's side along **K** is X; A = 2^16 (the rounding below 10^-5
+of the norm; the ladder's integers are Python integers in the engine's
+flux reading; the back-action 6 g x 1.41 A = 556 against the seed / 1000
+= 52429 under (7) (c)). THE NORM T of the born record is the conserved
+form of its two levels on the vacuum (9.19 (3)), computed by the
+generator in integers, written beside the profile and checked at load:
+it is the ladder's T. THE CHECKS: at load, in integers, the FORM (the two
+levels on the body's cells and zero elsewhere; the hash of 9.22 (7)) and
+the FLUX SIGN along **K** (the sum over the body's Links along **K** of
+now_i before_j - before_i now_j positive: the record travels as
+declared); not a residual of the character (a windowed train is no
+solution of the rule, and a bound on its residual would be a number
+chosen to pass). Before writing, the generator (float, the writer) runs
+the train alone on the vacuum and reads its one-way flux through a plane
+40 Links ahead: the norm within 2 x 10^-3 (COMPUTED on a chain of light at
+k = pi / 2: 8 periods 0.9987, 16 periods 0.9997; 3 periods 1.0285 and
+still growing, refused). The excited record's rung is untouched here
+((7) (f), for the owner's word).
 
 **(7) THE EXCITED RECORD'S RUNG, CORRECTED (the physicist's two readings
 on emitter-click fd1734c2, 2026-09-25: the births 1 to 10 intervals
@@ -5793,7 +5842,19 @@ is therefore [1201, 700] (2 cos omega = 1.9011, 69 Nodes above one
 percent of its peak; W = 3 x 700 / gcd(1201, 2100) = 2100, above the 500
 of 9.19 (4a); [1001, 700] binds at 1.7946 but has W = 300 and is
 refused); the chain rows keep [801, 700] (W = 700). The table of (8)
-carries it.
+carries it. (iv) TRANSPARENCY, a load condition (DERIVED with 9.25
+(11) (d)): every body whose cells a born record must ENTER to be read (an
+emitter whose light returns to it, the other well of Sagnac, a moving
+name's receiver, a medium) is transparent to that family at the born
+**K**: the generator runs a train through the body alone on the vacuum
+and reads its one-way flux 40 Links beyond against the norm, 0.99 or
+above, refused below. Below it the coupling's scale is wrong, not the
+placement: the physicist's reading at f0d2d745 that a body's coupling
+reflects foreign light entirely contradicts g G = 2 x 10^-5 per cell
+(while the source term -G delta(massive) is a CW radiation at omega_b
+into light's family, about 10^5 per interval at the seed 50 x 2^20, which
+swamps any reading sharing its record); it is re-measured on the train's
+own record, OWED from him before the chain rows' files.
 
 **(8) THE SEVENTEEN, EACH COMPLETE FOR ITS INPUT FILE (the model owner's
 words of 2026-09-25 through the Boss, records 1901 and 1902: "try to
@@ -5810,44 +5871,53 @@ crystal's branches); the detectors as cubes of side 3 or more in the
 ladder's declared order, the face last where the board has one (9.25
 (10)); the neglected medium and its reason against the band (the
 specification's part B); the board size and its reason; the blind pin
-in clicks with its band; what is CARRIED or OPEN. Conventions: light's
-vacuum pair is [1, 1]; a born clock [n, d] is the advance n / d of the
-world's circle (N = 2048 steps unless the row says N = 64) per Link, so
-[2464, 25] on 2048 and [77, 25] on 64 are one clock, k = 0.30238 per
-Link (the wavelength 20.78), and [512, 1] is k = pi / 2 (the wavelength
-4); the holder family's vacuum pair is [7, 8] and its one-cell emitters
-are wells [801, 700] on a chain and [1201, 700] on a layer ((7a) (iii);
-9.19 (4a)); matter's emitting bodies are [800,
-801] on [800, 809] or [314, 315] on [156, 157]; every emitting body
-declares its coupling (g, G) to its born family (9.19 (4e)); A ONE-CELL
-BIRTH IS ONE PULSE, broadband (the born pair on one cell, 9.17 (6)),
-which the rows whose pin is a count, a share or a first rung admit,
-while a row that reads a FRINGE or an INTERFEROMETER needs a narrow
-band, a slab emitter with a travelling born profile of several periods
-at a short wavelength (9.17 (5) item 3; row 17's form): the two slits,
-M1, the pace fans' lines and Mach-Zehnder are placed so.
+in clicks with its band; what is CARRIED or OPEN. Conventions (RESTATED 2026-09-25 on the physicist's finding at
+f0d2d745, 9.17 (6a) and 9.25 (11)): light's vacuum pair is [1, 1]; a
+born clock [p, q] is the advance p / q of the world's circle of N = 1024
+steps per Link; EVERY BIRTH IS A TRAIN (9.17 (6a)), the character of one
+**K** over 8 periods (16 for Mach-Zehnder) under the Hann window and the
+tapers, at the born clock [512, 1] (k = pi / 2, the wavelength 4, cos
+omega = 2 / 3) for every light emitter, so light's pace on every row is
+v_g = 0.44721 Links per interval (the wavelength 20.78 of the earlier
+rows, [2464, 25], is HISTORY: it fits no train on a body, and a body's
+flat pulse is the broadband birth of 9.17 (6a)); every emitting body's
+extent along **K** is the train's 32 cells; the holder family's vacuum
+pair is [7, 8] and its emitting bodies are wells [801, 700] on a chain
+and [1201, 700] on a layer, of side 32 along **K** ((7a) (iii)); matter's
+emitting bodies are [800, 801] on [800, 809] (the train at **K** = pi / 2
+in the matter family, cos omega = 0.6593, v_g = 0.4384) or [314, 315] on
+[156, 157]; every emitting body declares its coupling (g, G) to its born
+family (9.19 (4e)) and is TRANSPARENT to it ((7a) (iv)); every face is a
+receiver slab as deep as the train, one train's length from every
+emitter and receiver, and a fringe row's transverse axis carries slabs,
+not a period (9.25 (11)); where the light returns to its source the
+detector is the source's own cells; a pin on a passage is the MEAN click
+interval over the stock with its band 3 rms / sqrt(n) (9.25 (11) (d)).
+The rows' earlier placements and pins (the first draft's, at the
+wavelength 20.78 or with a one-cell birth) are HISTORY where a row says
+so.
 
 | Row | The board | The entries and the births | The detectors, in the ladder's order | The neglected medium | The blind pin in clicks, with its band | CARRIED or OPEN |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 Bell, four settings | the layer [30, 33, 1], periodic on both axes (no face) | light [1, 1], born clock [2464, 25]; the holder [7, 8]. The emitter: a holder well [1201, 700] of side 1 at (2, 16) (the layer's pair, (7a) (iii)), **K** = 0, the coupling to light, a stock of 100 per setting, the born pair on the cell. The crystal (A.11): a holder body of side 3 at the vertex (13, 15) with its light index and the branches [[1, 1], [2, 1]] (HV + VH), the born clocks p_1 + p_2 = p. Alice's polariser (A.5): a holder body at (26, 28) with the axis (1, 0) or (1, 1); Bob's at (26, 4) with (1, 2) or (3, 1) | per arm its + cube then its - cube, 3 x 3 each beside its polariser (the placement per A.5); no face | air or fibre common to both arms: cancels | n = 100 pairs per setting: 40 / 10 / 10 / 40, 5 / 45 / 45 / 5, 45 / 5 / 5 / 45, 40 / 10 / 10 / 40 (standard deviations 4.9, 3.0, 3.0, 4.9 and 2.2, 5.0, 5.0, 2.2); S = 2.80 +- 0.14 (the pin [2.38, 3.22], the falsifier S <= 2); the controls: 1d, Alice's counts identical bit for bit under Bob's two axes (9.25 (6)); 1b, the product state |HV> (the branches [[1, 1]] alone) gives 80 / 20 / 0 / 0, 10 / 90 / 0 / 0, 40 / 10 / 40 / 10, 5 / 45 / 5 / 45 and S = 1.40 +- 0.52 | none |
-| 2 Malus, four settings | the bar [11, 1, 1] with the face receivers | light [1, 1], born clock [308, 25]; the holder [7, 8]. The emitter: a holder well [801, 700] at x = 0, **K** = 0, the coupling, a stock of 256, the born pair on the cell (the hand H). The polariser (A.5): a holder body at x = 6 with the axis (1, 1), (5, 1), (15, 8) or (3, 2) | the + cube [7, 9], then the faces | none between the tools | at 256 records on the + cube: 128 +- 24, 246 +- 9, 199 +- 20, 177 +- 22 (3 standard deviations; the expected 128.0, 246.2, 199.3, 177.2) | none |
-| 3 The two slits | the layer [241, 320, 1], every face a receiver slab of depth 32 (9.25 (10); the first draft's 160 x 256 with the lamp's train of 32 periods and its margin to x >= 485 HISTORY: a one-cell birth is one pulse, so the emitter is a slab) | light [1, 1], born clock [512, 1] (the wavelength 4); the holder [7, 8]. The emitter: a holder slab from (40, 128, 0) with the extents 32 x 64 x 1, **K** = 0, the coupling, a stock of 1024, its born profile the travelling character along +x over 8 periods with the Hann envelope across y (row 17's form). The wall: a slab of the gap [1, 2] of depth 4 at x = 92 to 95 for y = 32 to 287 except the two openings of width 5 centred at y = 154 and y = 167 (d = 13; width 3 passed too little light, one sixth of the record, for the pixels' counts), cut through its depth (a gap one deep transmits 0.2 at the wavelength 4, A.3). No polariser | the screen: 67 cubes of side 3 at x = 206 to 208, y = 60 to 260, in the order of y (the fringe spacing on the lattice 2 pi L / (d sin k) = 53.2 cells, 9.25 (10), not the continuum's 33.8); then the faces (the slabs x = 0 to 31, x = 209 to 240, y = 0 to 31, y = 288 to 319) | air: the index 2.7 x 10^-4 common to both paths, the Rayleigh loss below 10^-4 | the fringe spacing lambda L / d = 4 x 113 / 13 = 34.8 cells (the pixel of 3 scales the visibility by 0.988); COMPUTED by the generator's run of the placement: the screen's share 0.263, the visibility 0.950 at the lattice spacing 53.2 (0.05 at the continuum's), the spacing read 52.5, the centroid 159.1; the pin at a stock of 4096: the screen 1076 +- 84, the visibility 0.95 +- 0.13, the spacing 53 +- 2, the centroid 160.5 +- 2 (the first draft's 0.96 +- 0.02 was the lamp's 32-period train at the wavelength 20.78, HISTORY); the control 10: one opening closed, no fringe, the component at 53.2 below 0.2 at 647 +- 74 screen clicks (computed 0.02 to 0.04) | none |
-| 4 The pace fans | the layer [128, 128, 1] with the face receivers | light [1, 1], born clock [77, 25] on N = 64; the holder [7, 8]. Two LINE emitters: holder slabs with travelling born profiles of 8 periods, one along the axis from (16, 64) and one along the diagonal, **K** = 0, the coupling, a stock of 1 each | none: the fronts are read as a GAMEBOARD probe at 40 and 36 Links on each ray, a diagnostic and not a result (9.21 (4)) | none | the axis's k above the diagonal's by k^2 / 48 at the same omega (the axis above the continuum's sqrt(3) omega by k^2 / 36, the diagonal's by k^2 / 144; the group velocities differ by k^2 / 16); no click pin | a diagnostic row |
+| 1 Bell, four settings | the layer [96, 128, 1], periodic on both axes (no face: the record circulates until it is caught; RE-PLACED for the train, the 30 x 33 layer HISTORY) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder slab [1201, 700] from (8, 60, 0) with the extents 32 x 8 x 1, its train along +x (the pump), the coupling to light, a stock of 100 per setting. The crystal (A.11): a holder body 3 x 32 x 1 from (56, 48, 0) with its light index and the branches [[1, 1], [2, 1]] (HV + VH), the born clocks p_1 + p_2 = p, the pair born as two trains on its cells, one with **K** = +y and one with **K** = -y (its long axis). Alice's polariser (A.5): a holder body of side 3 at (56, 100, 0) with the axis (1, 0) or (1, 1); Bob's at (56, 25, 0) with (1, 2) or (3, 1) | per arm its + cube then its - cube, 3 x 3 each beside its polariser (the placement per A.5); no face | air or fibre common to both arms: cancels | n = 100 pairs per setting: 40 / 10 / 10 / 40, 5 / 45 / 45 / 5, 45 / 5 / 5 / 45, 40 / 10 / 10 / 40 (standard deviations 4.9, 3.0, 3.0, 4.9 and 2.2, 5.0, 5.0, 2.2); S = 2.80 +- 0.14 (the pin [2.38, 3.22], the falsifier S <= 2); the controls: 1d, Alice's counts identical bit for bit under Bob's two axes (9.25 (6)); 1b, the product state HV (the branches [[1, 1]] alone) gives 80 / 20 / 0 / 0, 10 / 90 / 0 / 0, 40 / 10 / 40 / 10, 5 / 45 / 5 / 45 and S = 1.40 +- 0.52; the pins are the projections' shares and do not move with the placement | the crystal's pair birth as two trains (F4) |
+| 2 Malus, four settings | the chain [192, 1, 1] with the face slabs 32 deep at both ends (the bar of 11 HISTORY) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder well [801, 700] of side 32 at [40, 72), its train along +x (the hand H), the coupling, a stock of 256. The polariser (A.5): a holder body of side 3 at [104, 107) with the axis (1, 1), (5, 1), (15, 8) or (3, 2) | the + cube [112, 115), then the faces (the far slab from 160) | none between the tools | at 256 records on the + cube: 128 +- 24, 246 +- 9, 199 +- 20, 177 +- 22 (3 standard deviations; the expected 128.0, 246.2, 199.3, 177.2; the projections' shares) | none |
+| 3 The two slits | the layer [305, 320, 1], every face a receiver slab of depth 32, one train's length from the emitter and the screen (9.25 (11); the [241, 320] placement with the slab at the screen's back HISTORY: it halved the count) | light [1, 1], born clock [512, 1] (the wavelength 4); the holder [7, 8]. The emitter: a holder slab [1201, 700] from (64, 128, 0) with the extents 32 x 64 x 1, **K** = 0, the coupling, a stock of 4096, its train along +x over 8 periods with the Hann window across y and the tapers of 8 (9.17 (6a)). The wall: a slab of the gap [1, 2] of depth 4 at x = 116 to 119 for y = 32 to 287 except the two openings of width 5 centred at y = 154 and y = 167 (d = 13), cut through its depth (a gap one deep transmits 0.2 at the wavelength 4, A.3). No polariser | the screen: 67 cubes of side 3 at x = 230 to 232, y = 60 to 260, in the order of y (the fringe spacing on the lattice 2 pi L / (d sin k) = 53.2 cells, 9.25 (10), not the continuum's 33.8); then the faces (the slabs x = 0 to 31, x = 273 to 304, y = 0 to 31, y = 288 to 319) | air: the index 2.7 x 10^-4 common to both paths, the Rayleigh loss below 10^-4 | COMPUTED by the generator's run of the placement: the screen's share 0.406 on the ladder, the visibility 0.945 at the lattice spacing 53.2 (read 52.5), the centroid 159.9; THE PIN at a stock of 4096: the screen 1662 +- 94, the visibility 0.94 +- 0.10 at 53.2, the spacing 53 +- 2, the centroid 160 +- 4 (the 1076 +- 84 of the slab at the screen's back HISTORY); the control 10: one opening closed (the opening at 167 filled by the wall's slab), no fringe, the component at 53.2 below 0.2 (computed 0.06) at 1052 +- 84 screen clicks, the centroid 156 +- 4 | none |
+| 4 The pace fans | the layer [256, 256, 1] with the face slabs 32 deep (RE-PLACED at the wavelength 4; the 128 layer at [77, 25] HISTORY) | light [1, 1], born clock [512, 1]; the holder [7, 8]. ONE emitter: a holder slab [1201, 700] from (64, 124, 0) with the extents 32 x 8 x 1, its train along +x with the Hann window of 8 across y (a narrow train diffracts into a fan of every direction at one omega), **K** = 0, the coupling, a stock of 1 | none: the fronts are read as a GAMEBOARD probe at 40 Links along the axis and along the diagonal from the emitter's head, a diagnostic and not a result (9.21 (4)) | none | at one omega = 0.8411 (k = pi / 2 on the axis) the diagonal's wave number is 1.4810 per Link (2 cos(k / sqrt 2) + 1 = 2) and its group velocity 0.5477 against the axis's 0.4472, the ratio sqrt(3 / 2) = 1.2247 (COMPUTED from the dispersion): the diagonal front at 40 Links 73 intervals, the axis's 89; the small-k forms (k^2 / 48 between the axis and the diagonal, k^2 / 36 against the continuum) are the same anisotropy at long wavelengths; no click pin | a diagnostic row |
 | 5 The muon's form (4a) | the layer [200, 200, 1], periodic | matter [3200, 3236]. At rest: the well [3200, 3227] of side 14 at the vertex (93, 93), one quantum at the amplitude 2^20 on its composed mode, **K** = 0. In motion: a packet of the matter family about 100 Links wide with **K** = 0.18556 per Link (v = 1 / 3), written moving at interval 0 (no ramp, record 1884) | the well's own cells (side 14) at rest; in motion a co-moving name of side 3 or more translating with the packet (A.14); no face | nature's muons slow in air over the hold: the one declared idealisation (the row reads the tick at one fixed **K**) | at rest the mode's period 42.33 intervals (omega_b = 0.14845) by its own clicks; in motion the tick ratio 0.8146 of the rest (1 / gamma = 0.8165), band 0.3 percent | the push CARRIED, retiring; 8.4's well form HISTORY |
-| 6 The redshift (4b) | the chain [4096, 1, 1] with the face receivers | light [1, 1]; matter [156, 157]. At rest: the well [314, 315] of side 12 at 2994, the coupling (g, G) to light, a stock, its light born on the cells with the born clock of the well's own mode, **K** = 0. In motion: the emitter a packet of [156, 157] with **K** = 0.13946 per Link (v = 1 / 3) and a co-moving name with its stock | the receiver [4092, 4094], then the faces; the emitter's own name for its births | none | 1 + z = (1 + v / c_l) / (the tick ratio) = 1.935 at v = 1 / 3 (c_l = 0.57689, the tick ratio 0.8154), band 0.3 percent, as the ratio of the receiver's click intervals to the emitter's; the control the rest world, the ratio 1 | the moving name ADOPTED (1889); the push CARRIED |
-| 7 The round trip (4c) | the chain [1000, 1, 1] with the face receivers | light [1, 1], born clock [2464, 25]; the holder [7, 8]. The mirror (A.3): the gap [1, 2] of depth 2 at [980, 982), at rest. The emitter (a holder well [801, 700], the coupling, a stock) and its receiver ONE co-moving name on a holder packet with **K** for v = 1 / 3 receding from the mirror from x = 300 | the receiver, a cube of three Nodes in the moving name, then the faces | none | (1 + beta) / (1 - beta) = 3.7373 at beta = v / c_l = 0.5778, band 0.3 percent, as the sent over the received click intervals at the moving name (the design's 3.7733 on a moving mirror HISTORY; the continuum 3.732) | the moving name ADOPTED; `cart_k3.json` REBUILT in this form |
-| 8 Sagnac (R2) | the chain [3000, 1, 1] with the face receivers | light [1, 1]; matter [800, 809]. At rest: two wells [800, 801] of side 12 at 700 and 772, each with the coupling and a stock, **K** = 0; co-moving at k = 3: two packets of [800, 809] with **K** = 0.18556 and two co-moving names with their stocks | at_a and at_b, the wells' own cells (side 12); the ladders A -> at_b, B -> at_a; then the faces | Fizeau's drag cancels on a closed loop | at rest the first rung 108 +- 2 (OWED on the flux form, read at the cube's near face); in motion the first rungs scaled by c_l / (c_l -+ v) = 2.369 and 0.634 (about 256 and 68 against the design's 247 and 72), the exact rungs OWED on the flux form; the ratio 0.5774 +- 0.01 | the moving names ADOPTED; the push CARRIED; the hybrid share 3.2 x 10^-6 a load check |
-| 9 de Broglie's fringes (M1) | the layer [241, 128, 1], the x faces receiver slabs of depth 32 (9.25 (10)), y periodic | matter [800, 809]; the holder [7, 8]. The emitter: a matter slab [800, 801] from (40, 32, 0) with the extents 32 x 64 x 1, its born profile the travelling character of the matter family at **K** = pi / 2 over 8 periods with the Hann envelope across y, a stock of 2048 (the take lines HISTORY). The barrier: holder bodies carrying the matter pair [1, 2] as a slab of depth 4 at x = 92 to 95 except two openings of width 5 centred at y = 58 and y = 71 (d = 13, as row 3) | the screen: 41 cubes of side 3 at x = 206 to 208, y = 3 to 125, in the order of y (the fringe spacing on the lattice 2 pi L / (d sin K) = 53.2 cells); then the x faces (the slabs x = 0 to 31 and 209 to 240) | a vacuum chamber in nature: nothing | the fringe spacing lambda_dB L / d with lambda_dB = 4 Links; COMPUTED by the generator's run of the placement: the screen's share 0.251, the visibility 0.92 at 53.2, the central lobe's centroid 64.4, the side lobes at 64.5 -+ 53.2; the pin at a stock of 2048: the screen 515 +- 58, the visibility 0.92 +- 0.19, the central lobe 64.5 +- 2, the side lobes 11 +- 3 and 118 +- 3 (the design's 64 + 27.4 on the take lines HISTORY) | none |
-| 10 The moving mass's energy (M2) | the chain [200, 1, 1] with the face receivers | matter [800, 809]. The emitter: a matter well [800, 801] of side 3 at 20 with a stock; its births packets with **K** (the row's k), written moving | the receiver [104, 106] (its first rung at the near face 104), then the faces | none | the first rung 169 +- 2 (OWED, re-derived blind on the flux form); the pace v_g(**K**) a closed form beside | none: 8.4 DERIVED for a free packet (9.24 (2)) |
+| 6 The redshift (4b) | the chain [4096, 1, 1] with the face slabs 32 deep at both ends | light [1, 1], born clock [512, 1]; matter [156, 157]. At rest: the well [314, 315] of side 32 at [2944, 2976), the coupling (g, G) to light, a stock of 256, its train along +x written on its cells at each of its rungs (its cadence the internal clock, 9.17 (7)), **K** = 0. In motion: the emitter a packet of [156, 157] of side 32 with **K** = 0.13946 per Link (v = 1 / 3) receding from the receiver (moving -x), and a co-moving name with its stock | the receiver the cube [4000, 4003) (one train's length before the far slab), then the faces; the emitter's own cells for its births | none | 1 + z = (1 + v / c_l) / (the tick ratio) = (1 + 0.33333 / 0.44721) / 0.8154 = 2.141 at v = 1 / 3, band 0.3 percent, as the ratio of the receiver's click cadence to the emitter's birth cadence (the 1.935 at c_l = 0.57689 HISTORY); the control the rest world, the ratio 1 | the moving name ADOPTED (1889); the push CARRIED |
+| 7 The round trip (4c) | the chain [1600, 1, 1] with the face slabs 32 deep at both ends (the 1000 chain with the name receding toward x = 0 HISTORY: it left the board) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The mirror (A.3): the gap [1, 2] of depth 4 at [40, 44), at rest, at the low end. The emitter and its receiver ONE co-moving name: a holder well [801, 700] of side 32 on a holder packet with **K** for v = 1 / 3, from [300, 332) moving +x, receding from the mirror, its train along -x toward the mirror, the coupling, a stock of 32 | the receiver the name's own cells (the return enters them; 9.25 (11) (d)), then the faces | none | (1 + beta) / (1 - beta) = 6.856 at beta = v / c_l = 0.7454, band 0.3 percent, as the sent over the received click cadence at the moving name (the 3.7373 at c_l = 0.57689 HISTORY; the continuum's two-way Doppler is the same form at that beta) | the moving name ADOPTED; `cart_k3.json` REBUILT in this form |
+| 8 Sagnac (R2) | the chain [3000, 1, 1] with the face slabs 32 deep at both ends | light [1, 1], born clock [512, 1]; matter [800, 809]. At rest: two wells [800, 801] of side 32 at [700, 732) (A) and [792, 824) (B), each with the coupling and a stock of 64, A's train along +x and B's along -x, **K** = 0; co-moving at v = 1 / 3: two packets of [800, 809] of side 32 with **K** = 0.18556 and two co-moving names with their stocks | at_a and at_b the wells' own cells (A's train enters B's cells and B's enters A's; 9.25 (11) (d)); the ladders A -> at_b, B -> at_a; then the faces | Fizeau's drag cancels on a closed loop | at rest the passage's mean click interval at the other well (60 + 16 + 2) / 0.44721 = 174 +- 6 at 64 records each way (the head's 60 Links from A's far face to B's near face; the rms 25), the same both ways; in motion the passages scaled by c_l / (c_l -+ v) = 3.927 with the motion and 0.573 against it (683 and 100), their ratio (c_l - v) / (c_l + v) = 0.146 +- 0.01 (the 108 +- 2 and 0.5774 at c_l = 0.57689 HISTORY) | the moving names ADOPTED; the push CARRIED; the hybrid share 3.2 x 10^-6 a load check |
+| 9 de Broglie's fringes (M1) | row 3's layer [305, 320, 1] with the face slabs 32 deep on both axes (the y-periodic layer of 128 HISTORY: the pattern wraps at 2.41 spacings and its visibility falls to 0.43, 9.25 (11) (c)) | matter [800, 809]; the holder [7, 8]. The emitter: a matter slab [800, 801] from (64, 128, 0) with the extents 32 x 64 x 1, its train the character of the matter family at **K** = pi / 2 over 8 periods with the Hann window across y and the tapers of 8 (cos omega = 0.6593, v_g = 0.4384), the coupling, a stock of 2048. The barrier: holder bodies carrying the matter pair [1, 2] as a slab of depth 4 at x = 116 to 119 for y = 32 to 287 except two openings of width 5 centred at y = 154 and y = 167 (d = 13, as row 3) | the screen: 67 cubes of side 3 at x = 230 to 232, y = 60 to 260, in the order of y (the fringe spacing on the lattice 2 pi L / (d sin K) = 53.2 cells); then the faces as row 3 | a vacuum chamber in nature: nothing | COMPUTED by the generator's run of the placement: the screen's share 0.410 on the ladder, the visibility 0.946 at 53.2 (read 52.5), the centroid 160.0, the lobes' centroids 160.5, 108.0 and 213.5; THE PIN at a stock of 2048: the screen 840 +- 67, the visibility 0.95 +- 0.15 at 53.2, the centroid 160 +- 5, the lobes 160.5, 108 and 213.5 each +- 3 (the 515 +- 58 on the 128 layer HISTORY) | none |
+| 10 The moving mass's energy (M2) | the chain [224, 1, 1] with the face slabs 32 deep at both ends | matter [800, 809]. The emitter: a matter well [800, 801] of side 32 at [64, 96) with a stock of 400; its births trains of the matter family at **K** = pi / 2 (v_g = 0.4384, omega = 0.8503), written on its cells, travelling +x | the receiver the cube [136, 139), then the faces (the far slab from 192) | none | the passage's mean click interval (41 + 16 + 2) / 0.4384 = 135 +- 5 at 400 records (the head's 41 Links from the well's far face to the cube; the 169 +- 2 HISTORY); the pace v_g(**K**) and the energy omega(**K**) closed forms beside (8.4, 9.24 (2)) | none |
 | 11 The boxes (ii-a, ii-b) | the cubes [64, 64, 64] and [48, 48, 48], periodic | matter [800, 809]; one well [800, 801] of side 20 or 28, one quantum at rest on its mode; ii-b in motion a packet with **K** (v = 1 / 3) | the well's own cells; in motion a co-moving name | none | at rest omega_b by the mode's clicks (0.11929 and 0.09885, the periods 52.67 and 63.56 intervals); in motion the tick 0.8146 from the dispersion (the design's 0.7814 and 0.8032 HISTORY) | the push CARRIED |
 | 12 The deep well | the layer [128, 128, 1], periodic | matter [800, 809]; the well [800, 801] of side 40 at (44, 44), one quantum at rest; in motion (the control) a packet with **K** | the well's own cells; in motion a co-moving name | none | at rest omega_b = 0.07285 (the period 86.25 intervals) by the mode's clicks; in motion the tick 0.8146 (the design's 0.7531 HISTORY) | as row 11 |
-| 13 The light clock | the chain [674, 1, 1] with the face receivers | light [1, 1]; matter [800, 809]; the holder [7, 8]. The well A [800, 801] of side 12 at 600 with the coupling and a stock, **K** = 0; the mirror (A.3): the gap [1, 2] at [672, 674) | at_a, the cube [612, 614] of free Nodes beside A (its first rung at the near face 612), then the faces | none | at rest the first cycle's first rung 2 x 60 / 0.57689 + 3.973 = 211.98 plus the rung's offset (the pin 214 +- 1, OWED on the flux form and [800, 801]); in motion a closed form only, never a run (the longitudinal gamma squared WITHDRAWN as a prediction, record 1895) | none at rest |
-| 14 The receding index at k = 3 | the chain [4000, 1, 1] with the face receivers | light [1, 1], born clock [3565, 10000] on N = 64; matter [156, 157]; the holder [7, 8]. The medium: a BOUND body [314, 315] of side 24 at 1500 with the coupling to light, at rest (material does not move); the emitter (a holder well [801, 700], the coupling, a stock of 200) at 800 and the receiver at 2400 ONE co-moving name on a holder packet with **K** for v = 1 / 3 receding from the medium; the rest and reference worlds beside | the receiver, a cube of three Nodes in the moving name (the probe's phase a GAMEBOARD diagnostic), then the faces | none | the delay of the receiver's first rung behind the medium against the reference world: at rest (the control v) (n - 1) L / c_l = 10.5 intervals at n = 1.2519 (the design's rest number, OWED on the bound medium), band 1 interval; receding, the frame form's delay at omega' = 0.0181, COMPUTED on the bound medium before any run (the design's +1.0144 rad on the pushed medium HISTORY) | the bound medium's number owed; the moving name ADOPTED; the push CARRIED |
-| 15 The receding index at k = 4 | as row 14 | as row 14 with **K** for v = 1 / 4 (beta = 0.433), the clock [1846, 10000] or [2243, 10000] | as row 14 | none | as row 14 with omega' = 0.02202 and n = 1.2577 (the design's +0.6103 rad HISTORY) | as row 14 |
-| 16 The two-qubit computer | the layer [30, 33, 1], periodic, as row 1 | as row 1: the emitter, the crystal with the branches of the prepared state (Grover: the uniform superposition [[0, 1], [1, 1], [2, 1], [3, 1]] with the circuit folded in by the generator; Deutsch-Jozsa: |+>|-> [[0, 1], [1, -1], [2, 1], [3, -1]] with the oracle folded in), two readout polarisers whose axes carry the last gates; the joint body OPTIONAL (record 1890) | per arm its + then its - cube, 3 x 3 | as row 1 | Grover on four items: 0 / 0 / 0 / 100 at 100 records, the band 0 on the first three; Deutsch-Jozsa: 100 / 0 per oracle, the band 0; Bell as row 1 | the joint body optional; complex joint weights OPEN, not needed |
-| 17 Mach-Zehnder | the layer [416, 416, 1], every face a receiver slab (9.25 (10): of depth 64, the packet's 16 periods; the placement's tools stand clear of them, the far slabs behind the receivers) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder slab from (8, 76, 0) with the extents 64 x 64 x 1, the coupling, a stock of 100, its born profile the travelling character along +x over 16 periods with the Hann envelope across y; the splitters (A.4): light's pair [2, 3] on the line x = y from (70, 70) to (146, 146) and from (166, 166) to (242, 242); the mirrors (A.3): the gap [1, 2] of depth 4 on x - y = 96 to 99 for y = 70 to 146 and on x - y = -96 to -99 for x = 70 to 146 | the bright, from (324, 148, 0) with the extents 5 x 113 x 1; the dark, from (148, 324, 0) with the extents 81 x 5 x 1; then the faces | air or fibre common to both arms: cancels | at 100 records: the bright 97 +- 5, the dark 0 or 1 (share 0.0062; two at the 12 percent level, three a defect), the faces 3 (0 to 7), COMPUTED by the generator's run of the placement (the specification's row 17) | none |
-| 17c Mach-Zehnder, one arm blocked | as row 17 | as row 17 with a gap slab [1, 2] of depth 4 across the +y arm, its normal along y, at y = 156 to 159 for x = 70 to 146 (a receiver cannot block an arm: it books flux and leaves the amplitude; a mirror is the board's beam block) | as row 17 | as row 17 | at 100 records: the bright 47 +- 15, the dark 39 +- 15, the faces 14 +- 10, COMPUTED as row 17's | none |
-| 18 Sorkin's three openings (the model owner's record 1911 of 2026-09-25: the eighteenth, its seven worlds on the two slits' placement, nothing new in the engine) | row 3's layer [241, 320, 1], every face a receiver slab of depth 32 | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder slab from (40, 96, 0) with the extents 32 x 128 x 1 (128 wide, centred on y = 160), **K** = 0, the coupling, a stock of 16384 per world, its born profile the travelling character along +x over 8 periods with the Hann envelope across y. The wall: a slab of the gap [1, 2] of depth 4 at x = 92 to 95 for y = 32 to 287 with THREE openings of width 5 centred at y = 121, 160 and 199 (d = 39, 9.75 wavelengths), cut through its depth; SEVEN WORLDS by the openings left open, A, B, C, AB, AC, BC, ABC, the closed ones filled by the wall's slab | the screen: 67 cubes of side 3 at x = 206 to 208, y = 60 to 260, in the order of y; then the faces | air: the index 2.7 x 10^-4 common to every path | THE SORKIN SUM OF THE SCREEN'S CLICK TOTALS S = N_ABC - N_AB - N_AC - N_BC + N_A + N_B + N_C. COMPUTED by the generator's runs of the seven placements on the booked flux (the screen's shares A 0.037, B 0.336, C 0.033, AB 0.395, AC 0.072, BC 0.388, ABC 0.454): the sum +0.0049 per record, the openings' coupling through the wall at 9.75 wavelengths; its binomial spread 1.04 sqrt(n) per world. THE PIN at 16384 records per world: S = +80 +- 400 (3 standard deviations), so within 400 of 0, and the seven screen counts each within 3 sqrt(n p (1 - p)) of n p; to tell the model's +0.0049 from 0 at 5 standard deviations needs 1.1 x 10^6 records per world, NOT FEASIBLE on the board, so the click's own term is read on the flux (the generator's map), not on clicks. THE CLICK'S OWN TERM, isolated on the three-source variant (one wall with all three open, each opening lit by its own narrow emitter of 12 cells, the seven combinations of sources; a computation, not a world to run): +0.022 of the three-opening screen flux at the fringe spacing 17.7 and +0.005 at 53.2, the rectification max(G, 0) a positive grain term of the order (lambda / spacing)^2, 10^-6 in nature's regime (Sinha 2010: 0.006 +- 0.012); the fringes of ABC at the spacing 2 pi L / (d sin k) = 17.7 cells (the visibility 0.46 at the pixel of 3, which averages a sixth of a fringe) | none |
+| 13 The light clock | the chain [760, 1, 1] with the face slabs 32 deep at both ends (the chain of 674 with at_a the cube beside A HISTORY: a cube beside the emitter books the outgoing pass, the physicist's finding at f0d2d745) | light [1, 1], born clock [512, 1]; matter [800, 809]; the holder [7, 8]. The well A [800, 801] of side 32 at [600, 632) with the coupling and a stock of 64, its train along +x, **K** = 0; the mirror (A.3): the gap [1, 2] of depth 4 at [690, 694) | at_a IS A'S OWN CELLS (the set bound to the block, 9.25 (10) and (11) (d)): the outgoing train leaves them through the Port (negative, not booked) and the return enters them (0.998 of T booked, COMPUTED); then the faces | none | at rest THE MEAN click interval after the birth 300 +- 9 at 64 records (the passage's mean 299.7 = (2 x 58 + 16 + 2) / 0.44721, its rms 24.8, COMPUTED by the generator's run of the placement; the first click of the stock 250 +- 8); the 214 +- 1 HISTORY; in motion a closed form only, never a run (the longitudinal gamma squared WITHDRAWN as a prediction, record 1895) | the transparency of A to its return, (7a) (iv) |
+| 14 The receding index at k = 3 | the chain [4000, 1, 1] with the face slabs 32 deep | light [1, 1]; matter [156, 157]; the holder [7, 8]. The medium: a BOUND body [314, 315] of side 24 at 1500 with the coupling to light, at rest (material does not move); the emitter a holder well [801, 700] of side 32 and the receiver a holder body of side 32, ONE co-moving name on holder packets with **K** for v = 1 / 3 receding from the medium, the emitter's train through the medium toward the receiver | the receiver the name's own cells, then the faces | none | OPEN ON THE TRAIN'S WAVELENGTH: the index n = 1.2519 of the design was the bound medium's response BELOW its mode (omega_b = 0.092) at the light of omega' = 0.0181; at the train's omega = 0.841 (the wavelength 4, above every matter body's mode) the coupled index lies below 1 and its delay below the band of one interval (the resonance form n^2 - 1 = f / (omega_b^2 - omega^2)), and a train of 8 periods at the design's wavelength (200 cells a period) fits no body; the row is re-derived on a medium whose mode lies ABOVE the train's omega (the holder family's bodies, omega_b in 0.3 to 0.5, with a train at [2464, 25], the wavelength 20.78, 166 cells on a body of side 166; or a shorter train under the generator's check of 9.17 (6a)); the design's +1.0144 rad and 10.5 intervals HISTORY | the moving name ADOPTED; the push CARRIED; the medium's index at the train's omega OWED |
+| 15 The receding index at k = 4 | as row 14 | as row 14 with **K** for v = 1 / 4 (beta = v / c_l = 0.559 at c_l = 0.44721) | as row 14 | none | as row 14, OPEN with it (the design's omega' = 0.02202 and n = 1.2577 HISTORY) | as row 14 |
+| 16 The two-qubit computer | the layer [96, 128, 1], periodic, as row 1 | as row 1: the emitter slab, the crystal with the branches of the prepared state (Grover: the uniform superposition [[0, 1], [1, 1], [2, 1], [3, 1]] with the circuit folded in by the generator; Deutsch-Jozsa: the state |+>|-> [[0, 1], [1, -1], [2, 1], [3, -1]] with the oracle folded in), two readout polarisers whose axes carry the last gates; the joint body OPTIONAL (record 1890) | per arm its + then its - cube, 3 x 3 | as row 1 | Grover on four items: 0 / 0 / 0 / 100 at 100 records, the band 0 on the first three; Deutsch-Jozsa: 100 / 0 per oracle, the band 0; Bell as row 1 | the joint body optional; complex joint weights OPEN, not needed |
+| 17 Mach-Zehnder | the layer [576, 576, 1], every face a receiver slab of depth 64 (the train's 16 periods), the emitter 32 Links from the x = 0 slab and the far slabs 100 Links behind the receivers (9.25 (11) (b); the 416 layer with the emitter at the slab HISTORY) | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder slab [1201, 700] from (96, 164, 0) with the extents 64 x 64 x 1, the coupling, a stock of 100, its train along +x over 16 periods with the Hann window across y and the tapers of 16; the splitters (A.4): light's pair [2, 3] on the line x = y from (158, 158) to (234, 234) and from (254, 254) to (330, 330); the mirrors (A.3): the gap [1, 2] of depth 4 on x - y = 96 to 99 for y = 158 to 234 and on x - y = -96 to -99 for x = 158 to 234 | the bright, from (412, 236, 0) with the extents 5 x 113 x 1; the dark, from (236, 412, 0) with the extents 81 x 5 x 1; then the faces | air or fibre common to both arms: cancels | at 100 records: the bright 97 +- 5 (share 0.968), the dark 0 or 1 (share 0.0054; two at the 10 percent level, three a defect), the faces 3 (0 to 7; share 0.027), COMPUTED by the generator's run of the placement (the specification's row 17) | none |
+| 17c Mach-Zehnder, one arm blocked | as row 17 | as row 17 with a gap slab [1, 2] of depth 4 across the +y arm, its normal along y, at y = 244 to 247 for x = 158 to 234 (a receiver cannot block an arm: it books flux and leaves the amplitude; a mirror is the board's beam block) | as row 17 | as row 17 | at 100 records: the bright 25 +- 13 (share 0.248), the dark 22 +- 12 (0.219), the faces 53 +- 15 (0.534): the open arm's half splits at the second splitter and the blocked arm's half returns through the first splitter to the near slabs, COMPUTED as row 17's (the 47 / 39 / 14 of one-Node faces, which reflected the blocked arm back into the interferometer, HISTORY) | none |
+| 18 Sorkin's three openings (the model owner's record 1911 of 2026-09-25: the eighteenth, its seven worlds on the two slits' placement, nothing new in the engine) | row 3's layer [305, 320, 1], every face a receiver slab of depth 32 | light [1, 1], born clock [512, 1]; the holder [7, 8]. The emitter: a holder slab [1201, 700] from (64, 96, 0) with the extents 32 x 128 x 1 (128 wide, centred on y = 160), **K** = 0, the coupling, a stock of 16384 per world, its train along +x over 8 periods with the Hann window across y. The wall: a slab of the gap [1, 2] of depth 4 at x = 116 to 119 for y = 32 to 287 with THREE openings of width 5 centred at y = 121, 160 and 199 (d = 39, 9.75 wavelengths), cut through its depth; SEVEN WORLDS by the openings left open, A, B, C, AB, AC, BC, ABC, the closed ones filled by the wall's slab | the screen: 67 cubes of side 3 at x = 230 to 232, y = 60 to 260, in the order of y; then the faces | air: the index 2.7 x 10^-4 common to every path | THE SORKIN SUM OF THE SCREEN'S CLICK TOTALS S = N_ABC - N_AB - N_AC - N_BC + N_A + N_B + N_C. COMPUTED by the generator's runs of the seven placements on the ladder's shares: A 0.0129, B 0.1361, C 0.0108, AB 0.1473, AC 0.0241, BC 0.1452, ABC 0.1569, the sum 0 within the runs' resolution of 4 x 10^-4 per record; ABC's visibility 0.35 at the spacing 17.7. THE PIN at 16384 records per world: S = 0 +- 284 (3 standard deviations of the seven binomial totals), and the seven screen counts A 211 +- 43, B 2230 +- 132, C 177 +- 40, AB 2414 +- 136, AC 395 +- 59, BC 2380 +- 135, ABC 2570 +- 140. THE CLICK'S OWN TERM (the rectification max(G, 0) of 9.19 (3), a positive grain term of the order (lambda / the fringe spacing)^2, 10^-6 in nature's regime; Sinha 2010: 0.006 +- 0.003 of the central count on a bound of 10^-2) lies below the runs' resolution on the re-placed board and below the pin's band; the earlier +0.0049 per record was read on a flux that counted the slab's return (HISTORY) | none |
 
 IN ONE LINE: every row is on the board with nothing outside (2) declared;
 the pins that are counts or shares are closed forms with their bands
@@ -5871,6 +5941,21 @@ within +- 0.05 at 16384 records per world, the specification's row 18);
 7 (the atom's lines at the coupled modes) waits on the owner; LCm (the
 light clock in motion) stays out, the model having clocks and no rods
 (record 1895); the bounds A, A2 and B have no world.
+
+THE PINS' FILE FORM (for the one command's `--pins`, 9.22 (7)): every
+reading is of clicks. {detector, count, band} the count of clicks;
+{detector, first_click, band} the interval of the detector's first
+click; {detector, mean_interval, band} the mean over the detector's
+clicks of the interval since the record's birth (the passage rows: 8,
+10, 13); {detector, cadence, band} the mean spacing of successive clicks
+at a detector, or of the births at an emitter (its own line); {ratio:
+[reading_a, reading_b], value, band} of two readings of these forms (6,
+7, 8); {sum: [{world, detector, weight}], value, band} (18; Bell's S from
+the sixteen counts of row 1); {fringe: {detectors: [...], spacing,
+centre, width}, visibility, band} twice the Fourier component at the
+spacing over the ordered cubes under a Gaussian window of the width,
+divided by the windowed total (3, 9); {centroid: {detectors: [...]},
+value, band} (3, 9). Nothing else is compared.
 
 **(9) THE BOARD SIZE PER WELL (the Boss's item of 2026-09-25; COMPUTED by
 Lanczos on the symmetrised operator of each well's own geometry; the
@@ -6651,3 +6736,65 @@ k = 0.30 the factor k / sin k is 1.015. So a fringe spacing compared
 with nature by "spacing over wavelength" (9) carries the factor k / sin
 k, a grain term named beside the pace fans' and the moving rows'; the
 VISIBILITY and Born's rule are what the row compares.
+
+**(11) THE ONE-WAY FLUX READS A PASSAGE; THE BORN TRAIN AS THE LOAD
+CONDITION; WHERE THE FACE SLAB STANDS (the physicist's finding on
+emitter-click f0d2d745, 2026-09-25: the light clock's file run by the
+one command, MISS, every record clicking on its outgoing pass; and the
+Boss's question: can a lawful state make the one-way inward flux exceed
+the record's norm, and is the click then Born's rule; DERIVED and
+COMPUTED).** (a) The one-way inward flux per Port (9.19 (3): the positive
+part per Link, booked after the step) equals the conserved form passing
+when the current through the Port keeps one sign, which a travelling
+record does: COMPUTED on a chain of light [1, 1], a train of 8 periods at
+k = pi / 2 under the tapers books 0.9987 of its norm T through a Port 40
+Links ahead and 16 periods 0.9997 (the physicist's smooth packet 1.0017).
+A lawful state CAN make it exceed T: a record that STANDS at the Port.
+Its standing components (the band's edges, whose group velocity is
+about zero) carry an alternating current with no transport, and the
+positive part of an alternating current grows without bound: the
+uniform birth of 9.17 (6) on twelve cells (0.58 of a period at the
+wavelength 20.78) booked 4.65 T into the cube beside its emitter within
+400 intervals and 4.23 T at the emitter's own cell, so every record
+clicked on its outgoing pass; a train of 3 periods books 1.0285 T at 40
+Links and keeps growing. So the click of (2) is Born's rule for a record
+that PASSES its detectors, and only for it: this is 9.17 (7) (e) made a
+condition (a standing record's acquisition is its own cell's share e_c,
+a moving record's the flux through its Ports; a broadband pulse at the
+emitter's face is both at once and is read wrongly by either). The
+SIGNED flux is not the reading: through a thin receiver the net during a
+passage is about zero (in at the front, out at the back), so it would not
+count what passes, and the ladder cannot carry a negative increment.
+THE LOAD CONDITION (DERIVED): every birth is a travelling train (9.17
+(6a)); the generator refuses a profile whose one-way flux through a plane
+40 Links ahead, run alone on the vacuum, is not T within 2 x 10^-3. (b)
+THE FACE SLAB RETURNS WHAT IT BOOKS: the reflection off the zero row
+comes back out of the slab, so a slab beside a tool books the tool's own
+light, and the light a receiver passes is booked by two regions at once
+when the slab stands at its back. THE PLACEMENT RULE (COMPUTED on the
+generator's runs): every emitter's tail and every receiver stands at
+least one train's length from every slab's front. Mach-Zehnder's emitter
+ADJACENT to the x = 0 slab put 0.2078 of T into that face, 32 Links away
+0.0079; its far slab 23 Links behind the bright receiver took 0.156 of
+the ladder from the receiver (the bright 0.8365), 100 Links behind 0.027
+(the bright 0.968); the two slits' slab at the screen's back halved the
+screen's count (the share 0.263 against 0.406 with the slab 40 Links
+behind), the fringe the same (0.950 against 0.945). (c) A FRINGE ROW'S
+TRANSVERSE AXIS CARRIES SLABS, NOT A PERIOD: on a y-periodic layer of 128
+the two openings' pattern wraps at 2.41 spacings and adds itself
+shifted, and the visibility on the ladder falls to 0.43 (light and matter
+alike, COMPUTED); on the layer of 320 with y slabs it is 0.95 for both.
+(d) WHERE THE LIGHT RETURNS TO ITS SOURCE, THE DETECTOR IS THE SOURCE'S
+OWN CELLS (the set bound to the block, (10)): the outgoing train leaves
+the body through its Ports (negative, not booked) and the return enters
+them (0.998 of T booked, COMPUTED on the light clock's chain); a cube
+beside the emitter books the outgoing pass (the physicist's finding:
+HISTORY for the light clock's [612, 614]); this asks that the body be
+transparent to its born family at the born **K** (9.22 (7a) (iv)). THE
+PIN OF A PASSAGE: a record's click interval at a detector is spread over
+the passage (a train of 32 cells passes a Port in 72 intervals at v_g =
+0.44721; the rms of the click intervals 24.8), so the pin is the MEAN
+click interval over the stock, (the head's path + X / 2 + 2) / v_g
+(COMPUTED 299.7 against the form's 299.6 on the light clock), with the
+band 3 rms / sqrt(n), and the stock's first click beside it. What changes
+in the rows is in 9.22 (8) (rows 1 to 4, 6 to 10 and 13 to 18 restated).
