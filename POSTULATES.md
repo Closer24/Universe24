@@ -50,9 +50,9 @@ The detector itself is ordinary Nodes and Events. (AGREES with the algebra on th
 model owner's word of 2026-09-23, record 1425: every thing on the board is an
 algebraic object declared under the algebraic laws; ALGEBRA.md 3.4, chapter 2.11
 as rewritten on the branch algebra-chapter-2-11, and
-docs/designs/detector_law/MASSIVE_RECORD.md section 4: a declared set of cells
+docs/designs/detector_law/MASSIVE_RECORD.md section 4: a declared set of Nodes
 running the one map with one declared pair, read by the evaluation E across its
-cells.) Its complete physical state
+Nodes.) Its complete physical state
 is definite; a common visible result is formed by local physical interactions.
 Information preservation is a separate requirement from determinism. The
 uncertainty relation is an identity of the click: the record's element of Z[Z_N]
@@ -60,7 +60,7 @@ uncertainty relation is an identity of the click: the record's element of Z[Z_N]
 (ALGEBRA.md 2.5), and on the phase circle the supports of a record and of its
 transform obey abs(supp f) x abs(supp f_hat) >= N (4.11), Kennard's relation the
 thing compared with in the limit. The owner's
-hypothesis is that cell sensitivity together with on-board information retention
+hypothesis is that Node sensitivity together with on-board information retention
 can produce Heisenberg uncertainty; this remains a research target (history,
 superseded on 2026-09-23 by ALGEBRA.md 4.11).
 Under the Beam Law (`beam-v1`, 2026-09-19) the interval is a bijection
@@ -460,7 +460,7 @@ the law, each declared by its design); the cosine and sine tables at the scale
 256 of the first engine are HISTORY (no table in the engine, the model owner's
 record 1878 of 2026-09-25: the born train and every profile are the world's
 integers, written by the generator on the host and read by the law as integers
-alone, ALGEBRA.md 9.17 (6) and (6a); every birth is the born family's own lowest mode on the body's cells with the zero row beyond, times the character of its momentum, at both levels, as long as the body's extent (ALGEBRA.md 9.35 (10), the model owner's record 1962; the earlier train under a window HISTORY), a flat pulse being refused, 9.25 (11)). Conservation-preserving division retains the missing fraction as
+alone, ALGEBRA.md 9.17 (6) and (6a); every birth is the born family's own lowest mode on the body's Nodes with the zero row beyond, times the character of its momentum, at both levels, as long as the body's extent (ALGEBRA.md 9.35 (10), the model owner's record 1962; the earlier train under a window HISTORY), a flat pulse being refused, 9.25 (11)). Conservation-preserving division retains the missing fraction as
 an integer remainder carried into the next calculation.
 
 (History, marked 2026-09-23: the finite-attenuation candidate of the next
@@ -771,7 +771,7 @@ per link may come from its emitter's momentum, `|p| / D`, the de Broglie
 hypothesis: measured as a fringe period inverse to momentum, not derived.
 
 A record lands whole at one detector: one click per record, the ladder choosing
-one cell and deleting the offers, the completion the host's one non-local step
+one Node and deleting the offers, the completion the host's one non-local step
 and no signal on the board (ALGEBRA.md 3.1, 4.12); the fringes follow the
 Euclidean path difference, C(y) / W as 5.7 gives it (C(y) the count at the
 pixel y over W births); a mirror's reflections are the cube group's, the signed
@@ -1003,9 +1003,9 @@ direct oracle ticks remain unchanged. This is a representation/channel extension
 not a new collapse law or a derived physical species Hamiltonian. Its
 implementation and document were deleted on 2026-09-17.
 
-## 18. Event-spacetime origin cells - Q-ORIGINS-3
+## 18. Event-spacetime origin Nodes - Q-ORIGINS-3
 
-The user-selected origin-cell candidate keeps history solely in immutable event
+The user-selected origin-Node candidate keeps history solely in immutable event
 spacetime, with no separate linked list per Node or wave. A participating Node
 holds at most six origin IDs. Configured local operations propagate possible
 causal support; they do not sample a hidden particle path. Current virtual
@@ -1032,7 +1032,7 @@ Resolution status is quantum-owner bookkeeping associated with the source event,
 not a mutation of its historical physical data or an ordinary remote field read.
 The finite candidate, initialization requirements, cost distinctions and open
 physical questions were defined in a document deleted on 2026-09-17 with the
-origin cells themselves.
+origin Nodes themselves.
 Bounded local lookup does not make total host evaluation or memory constant.
 
 ## 19. Localized quantum contact candidate
