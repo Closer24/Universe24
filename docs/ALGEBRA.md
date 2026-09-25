@@ -8246,3 +8246,74 @@ the residue from the remainder at its birth cell; the birth, the train on
 the body's cells. A body is the cells of one standing record, which click
 together; two bodies share no cell; the remainder is where chance lives
 (2026-09-25)".
+
+### 9.33 The remainder and the click: what nature keeps whole (the model owner's word, 2026-09-25, in the mathematician's session: "think: mass and light should perhaps be coupled to the click, and the click is a kind of remainder in the cell, so they are coupled to the remainder in the cell; nature does not want a remainder, nature wants a click; so it tends to things without a remainder, to periodic things, by coupling everything to the click; the click is the amplitude; nature does not want a remainder in charge, so it couples charge to the click; connect everything now"; CHECKED: three theorems of the law as written, and one decision)
+
+**(1) THE REMAINDER LIVES ONLY INSIDE A RECORD'S LIFE, AND LEAVES AS A CLICK
+(PROVED from the law as written).** A record is born with the remainder 0
+at every cell (the seed's and the train's write, 9.17 (6a), 9.19 (4e));
+between its birth and its click its remainders move exactly with it (the
+step a bijection, 9.26 (3) (a)); at its click its rows AND its remainders
+are deleted at every cell at once (record 1888); and the one thing of them
+that survives is the remainder at the birth cell at that interval, which
+becomes the born record's residue u, the place of its click (9.19 (4)). So
+the board never keeps a remainder beyond the life of the record that made
+it: the remainder is turned into a click's place and erased. That is the
+owner's sentence, "nature does not want a remainder, nature wants a click",
+as the law stands; and mass and light are coupled to the click by the same
+rule, the standing record by its own tick and the passing one by its
+arrival (9.26 (1a), one law), each with its residue from the remainder at
+its birth cell: "coupled to the remainder in the cell".
+
+**(2) WHAT IS WHOLE MOVES ONLY AT THE CLICK; WHAT MOVES AT THE STEP CARRIES
+THE REMAINDER (PROVED).** The levels move every interval by the division
+with the remainder kept (8.1). The quantum, the content, the labels and
+every conserved integer of the law (a charge, if a family declares one;
+the momentum of the exchange hypothesis, 9.27 (D)) move at the click alone,
+in whole units, with no division and no remainder (9.17 (7) (c), "the
+quantum is counted, not weighed"; the click line's handover, 9.18 (4)).
+That is why charge has no remainder: it is coupled to the click, as the
+owner says, and to nothing that moves at the step. "The click is the
+amplitude" holds in this form: the click carries the record's whole, its
+form and its one quantum, never a part; the amplitude itself is a
+convention of the write and the click is scale-free.
+
+**(3) PERIODICITY TO THE BIT COMES FROM THE CLICK, NOT FROM THE INSIDE
+(PROVED).** The Inside alone never returns a shape to the bit (Niven, 9.26
+(4) (a)) except the exact modes of 9.26 (4a). A body that clicks does: at
+each click its excited record is reseeded from the stock as the same
+integers with the remainder 0 (9.17 (4)), so every cycle starts bit for bit
+where the last did and differs only in its length, (2 u + 1) P / (2 W),
+and in light's back-action within it. So "nature tends to periodic things
+by coupling everything to the click" is the law's own: a body's exact
+periodicity is the click's reseed; a body with no click drifts within the
+rounding for ever; the clock rows read this (9.31 (13)). A body whose
+stock is spent stands and clicks no more: the model's ground state, the
+stability the atom's rule of record 881 was to give, is here the stock,
+one integer, and no rule beside the five lines of 9.32.
+
+**(4) THE ONE DECISION, WHERE THE OWNER'S READING GOES BEYOND THE LAW: THE
+EXACT RECORD.** The law as written makes a record with the residue u = 0
+click at the FIRST rung, at once (9.28 (2) (e)): on an exact board (the
+remainder 0 for ever, the periods 3, 4, 6) every record is born with u =
+0 and the three-cube universe clicks once and empties itself (9.26 (4a)
+(i)). The owner's reading, "nature tends to what has no remainder", would
+make the exact record the one that does NOT click: what has no remainder
+has nothing to release, and stays periodic for ever. The two agree on
+every measured row (no real clock is exact, by Niven) and differ on the
+exact test worlds alone. It is a decision of the owner and not a theorem,
+stated under its own identity until his word: THE REMAINDER RULE, "a
+record clicks only from a remainder: a residue 0 read from an exact
+record is no rung, and the record stands", the key `hypotheses:
+{"remainder_rule": true}`, off by default; its one test the three-cube
+universe, eternal under the rule and emptied at once without it; the
+three tests: generic (no family name), vector (a comparison on the
+residue, verb (D)), local (the birth cell's own remainder); no pin of the
+eighteen moves either way.
+
+**(5) THE ONE SENTENCE.** The remainder is where chance lives and it lives
+at the cell (9.32); the click is where the remainder leaves, carrying the
+whole and the place of the next click; what is whole moves at the click
+and what moves at the step carries the remainder; a body is periodic to
+the bit by its clicks and drifts without them. Nothing of the five lines
+of 9.32 changes; (4) waits on the owner.
