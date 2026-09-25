@@ -12151,3 +12151,55 @@ to the order of the well's shape).
 outside its band comes to the mathematician before any word. The
 Coulomb row is the first in which a body repels, and its pin (i), the
 sign's reversal, is the one the law was changed for (9.48).
+
+### 9.65 Row 3 read on today's law (Nature24, 2026-09-25): the direction holds, the size a sixth of the ray's; two causes to read on the GameBoard; the layout at k = 0.302
+
+**(1) THE READING.** The row's world (Gamma = 10^4, the layer of the dark
+body, the beam 20 wide at k = pi / 2, 100 records, the body's content
+4812 so that c_b = 2000 on the line under it): 95 clicks, the centroid
++12.0 Links toward the body, standard error 3.2, the clicks' rms over
+the screen 31 Links. Beside it the ray through the static field on the
+centre line, 76 Links. The direction holds at 3.7 standard errors; the
+size is a sixth of the ray's. Not judged; two causes, each a GameBoard
+reading, before the rerun.
+
+**(2) THE RAY'S OWN k.** The ray equation of the world file bends more
+at the band's middle than the continuum's index: the transverse rate
+over the group velocity over k gives the angle (L / Gamma) dc / dy
+times 0.64 at k = pi / 2 and times 0.50 at k = 0.302 (COMPUTED; the
+continuum's 1 + c / (2 Gamma) gives 0.50), so the same field bends the
+k = 0.302 ray to about 59 Links here. That is not the sixth.
+
+**(3) THE TWO CAUSES TO READ.** (a) THE FIELD AT THE PASSAGE: the family
+of clicks' level spreads from the held body at one Link per interval
+and settles to the static solution only after its transients die in
+the rounding and the faces (9.45 (2)); the ray was traced on the static
+solution, the beam crossed at the run's start. READ the level on the
+beam's line at the passage's interval (a GameBoard reading beside the
+clicks): if it is a sixth of the static value, the field had not
+settled, and the row's world starts the family of clicks' record at
+the static solution (the load's write, the same seam as the declared
+well, 9.53) or runs the field alone until it settles before the beam
+is given. (b) THE SCREEN'S REACH: the screen's cubes end 60 Links from
+the line (y = 40 to 160); a ray shifted 76 lands beyond the screen's
+end, so the records bent more than 60 Links do not click at the screen
+and the centroid is truncated toward the line. READ the clicks by cube
+and the clicks at the faces: a pile at the screen's far end, or face
+clicks toward the body's side, is this cause. RULE for the layout: the
+screen's half-width at least the ray's shift plus twice the beam's
+spread.
+
+**(4) THE RERUN AT k = 0.302 (9.62 (1)).** Yes: the number to set beside
+it is the ray integral at k = 0.302 through this layer's static field
+on the centre line, averaged over the beam's transverse profile at the
+screen, on the board's own level read at the passage. THE BEAM: at k
+= 0.302 the wavelength is 21 Links and a beam of 20 diffracts into the
+whole screen; the Fresnel width for L = 180 is sqrt(21 x 180) = 61, so
+the beam is at least 40 wide (the spread 21 / 40 x 180 = 95 Links rms at
+the screen) and the centroid is read from 400 records (the standard
+error 5 Links) or a train of 400 quanta; the shift against its error
+is 2 U_b w sqrt(N) / lambda = 0.2 x 40 x 20 / 21 = 7.7 standard errors.
+The closest distance b then exceeds the beam's half-width with room,
+b = 45 as built with the beam 40 wide is the edge; b = 60 with c_b
+set to 2000 there is the layout. The Einstein form: twice, less the
+second order, as 9.61 (2) (c).
