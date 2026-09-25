@@ -275,8 +275,8 @@ def inverse_giving_interval(
             continue
         simulation._advance_inverse(other)
     for each in simulation.blocks:
-        if each.body is not None:
-            simulation._advance_body_inverse(each)
+        if each.seat is not None:
+            simulation._advance_seat_inverse(each)
         elif each.own is not None:
             simulation._advance_inverse(each.own)
     simulation._advance_inverse(simulation.clock_record)

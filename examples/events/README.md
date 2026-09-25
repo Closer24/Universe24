@@ -627,6 +627,17 @@ and the bright control of the same content with its giving and taking clicks
 `expectations.json` declared blind from the algebra before any run; run only
 when the model owner says the engine is stable.
 
+## The runs toward nature
+
+The folder [toward_nature/](toward_nature/README.md) holds the diagnostic worlds
+of rows 1 to 3 of ALGEBRA.md 9.59 (the model owner's question of 2026-09-25,
+record 2030: the direction toward nature, without pins): the redshift's two
+light clocks, the longitudinal Lorentz clock at rest and moving, and the
+bending's beam past a dark body, under Gamma 10^4 (BUILD.md section 26 item 41).
+No `expectations.json`, no pin, no verdict; every reading in the README is
+labelled by kind and set beside nature's value only for the direction; a reading
+outside the mathematician's band goes to him before any word (9.59 (6)).
+
 ## The massive record kind
 
 The folder [massive_record/](massive_record/README.md) holds the check worlds

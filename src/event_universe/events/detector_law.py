@@ -64,6 +64,7 @@ from collections.abc import Callable, Iterator, Sequence
 from dataclasses import dataclass, field
 from fractions import Fraction
 from math import gcd
+from typing import overload
 
 import numpy as np
 
@@ -194,16 +195,25 @@ class LiveRecord:
 
 
 @dataclass
-class BodyRotation:
-    """THE BODY RECORD'S ROTATION (ALGEBRA.md 9.46 (1) and (2); BUILD.md
-    section 26 item 37): a body held as one Node with a shape: two integer
-    levels and one remainder (a, b, r) stepped by the two-term rule on the
-    body's clock pair [num_c, den_c] at the pace of its Nodes, den_c Gamma
-    a' + r' = (num_c p + 2 den_c (Gamma - p)) a - den_c Gamma b + r, 0 <= r'
-    < den_c Gamma (9.50 (8)'s line under the constant wall, the Node's own
-    pace of item 36); its residue u its own remainder on its wheel, read at
-    the click and carried; its norm T the emitter's declared integer; the
-    identity the body's record's (number x 2^32)."""
+class SeatRecord:
+    """THE BODY'S RECORD AT ITS SEAT NODE (ALGEBRA.md 9.60 (1) and (2); BUILD.md
+    section 26 item 42; the model owner's question of record 2036, "can it not
+    be represented somehow in the Node?"): the standing record of the body's
+    own standing family on the seat Node alone (the body's centre Node,
+    `centre_mask`), two integer levels and one remainder (a, b, r) at that
+    Node, stepped by the engine's one rule (`one_rule`, ALGEBRA.md 9.50 (13))
+    with the standing family's six Ports closed on the seat, so that the six
+    reads return the seat itself, S_6 = 6 a, with the declared pair [num_c,
+    2 den_c] (the body's clock pair in the rule's convention) and the seat's
+    own level: 6 den_c Gamma a' + r' = (6 num_c p + 12 den_c c) a - 6 den_c
+    Gamma b + r, 0 <= r' < 6 den_c Gamma, the rotation of 9.46 (2) as
+    rationals with the remainder six times its (9.60 (2)); its residue u its
+    own remainder on its wheel, read at the click and carried; its norm T the
+    emitter's declared integer; the identity the body's record's (number x
+    2^32). Nothing physical is kept beside the GameBoard: the record is the
+    seat's, the content the seat's level of the family of clicks, the charge
+    the family of charge's; the shape phi and the pairs are the world file's
+    declared constants (9.60 (6))."""
 
     identity: int
     now: int
@@ -235,10 +245,11 @@ class Block:
     count: int = 0
     previous_sum: int = 0
     own: LiveRecord | None = None
-    # THE BODY RECORD (ALGEBRA.md 9.46; item 37): the body's rotation under
-    # the world key `body_record`, its own rows then off the GameBoard (`own`
+    # THE BODY'S RECORD AT ITS SEAT (ALGEBRA.md 9.60; item 42, item 37
+    # HISTORY): the standing record on the seat Node under the world key
+    # `body_record`, its own rows then nowhere else on the GameBoard (`own`
     # None); None under the lattice body
-    body: BodyRotation | None = None
+    seat: SeatRecord | None = None
     emitted: list[int] = field(default_factory=list)
     current: int | None = None
     givings: int = 0
@@ -501,6 +512,7 @@ class DetectorLawSimulation:
                     span[node] = True
                 self.span_masks[number] = span
         self.records: dict[int, LiveRecord] = {}
+        self._kind_walls: dict[int, int] = {}  # HOST: `kind_wall` per family, cleared by `_write_pair`
         # the records clicked this interval, deleted whole after the advances
         self.dead: list[int] = []
         self.blocks: list[Block] = []
@@ -549,16 +561,17 @@ class DetectorLawSimulation:
                 # 26 item 37): the load's one write, the rotation at the
                 # profile's value at the body's centre Node at both levels with
                 # the remainder 0 (the lattice body's standing start, both
-                # levels the profile), the profile stored and never stepped,
-                # no rows on the GameBoard
+                # levels the profile), the profile a declared constant read at
+                # the giving click alone (9.60 (6)), no rows elsewhere on the
+                # GameBoard
                 assert definition.profile is not None and definition.clock is not None
                 profile = np.array(definition.profile, dtype=np.int64).reshape(self.shape)
                 centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
                 level = int(profile[centre])
-                block.body = BodyRotation(number * (1 << 32), level, level)
+                block.seat = SeatRecord(number * (1 << 32), level, level)
                 block.previous_sum = level
                 if definition.emitter is not None:
-                    self._excite(block, block.body)
+                    self._excite(block, block.seat)
             elif definition.seed > 0:
                 own_record = self._massive_record(number * (1 << 32), number, entry.family)
                 if definition.profile is not None:
@@ -832,6 +845,7 @@ class DetectorLawSimulation:
     def _write_pair(self, block: Block) -> None:
         """The block's pair written on its Nodes into its kind's arrays; the
         kind's own pair elsewhere on the Nodes the block left."""
+        self._kind_walls.pop(block.family, None)  # the family's wall read anew (`kind_wall`)
         family = self.families[block.family]
         num = self.kind_num[block.family]
         num[~block.mask] = family.pair[0]
@@ -969,7 +983,7 @@ class DetectorLawSimulation:
             )
         return int(where[0][0]), int(where[1][0]), int(where[2][0])
 
-    def residue_of(self, live: LiveRecord | BodyRotation, block: Block) -> tuple[int, int]:
+    def residue_of(self, live: LiveRecord | SeatRecord, block: Block) -> tuple[int, int]:
         """THE RESIDUE FROM THE LAW (ALGEBRA.md 9.22 (4); BUILD.md section 26
         item 15) UNDER THE NODE CLOCK (9.35 (2), (3); item 31), READ AT THE
         FIRST SHELL NODE (9.44 (5) (c); item 33): the record's rule remainder
@@ -982,16 +996,16 @@ class DetectorLawSimulation:
         801] at Gamma = 10^6 with M = 64); no declaration, no draw; which
         Node is read is a convention (9.47 (5) (ii)), the centre Node
         HISTORY."""
-        if isinstance(live, BodyRotation):
-            # THE BODY RECORD (ALGEBRA.md 9.46 (2)): its residue its own
-            # remainder on its own wheel, the seat's read
-            step, wheel = self.body_wheel(block)
+        if isinstance(live, SeatRecord):
+            # THE SEAT'S RECORD (ALGEBRA.md 9.60 (1), 9.46 (2)): its residue its
+            # own remainder on its own wheel, read at the seat
+            step, wheel = self.seat_wheel(block)
             return live.remainder // step, wheel
         node = self.first_shell_node(block)
         step, wheel = self.wheel_at(live.family, node)
         return int(live.remainder[node]) // step, wheel
 
-    def _excite(self, block: Block, own_record: LiveRecord | BodyRotation) -> None:
+    def _excite(self, block: Block, own_record: LiveRecord | SeatRecord) -> None:
         """The body's own record at the load, the one write of a body's record
         (ALGEBRA.md 9.43 (4); 9.17 (4) item 1): its norm T one period's
         action of its own mode (the emitter's declared integer `norm`, the
@@ -1043,73 +1057,86 @@ class DetectorLawSimulation:
         block.wait = 0
         block.emit_now = False
 
-    def body_coefficients(self, block: Block) -> tuple[int, int]:
-        """The body record's two-term rule at this interval (ALGEBRA.md 9.46
-        (2), 9.50 (8), item 36): (K, wall) with wall = den_c Gamma and K =
-        num_c p + 2 den_c (Gamma - p), p the pace at the body's centre Node
-        (Gamma - c + q Lambda d, the body's own effective content; uniform
-        over its Nodes), so that den_c Gamma a' + r' = K a - den_c Gamma b +
-        r; at p = Gamma the plain rule times Gamma."""
+    def seat_rule(self, block: Block) -> tuple[int, int, int, int]:
+        """THE ONE RULE AT THE SEAT (ALGEBRA.md 9.60 (1), (2); item 42): the
+        integers the seat's record is stepped with, (num, den, Gamma, c): the
+        declared pair [num_c, 2 den_c] (the body's clock pair in the rule's
+        convention, 2 cos omega = num_c / den_c), the world's Gamma and the
+        seat's own effective content c (Gamma - p at the body's centre Node,
+        the family of clicks' level less the charge's read, uniform over its
+        Nodes); the wall 3 den Gamma = 6 den_c Gamma."""
         clock = block.definition.clock
         assert clock is not None
         num_c, den_c = int(clock[0]), int(clock[1])
         centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
         pace, gamma = self.node_clock_pair(centre, block.family)
-        return num_c * pace + 2 * den_c * (gamma - pace), den_c * gamma
+        return num_c, 2 * den_c, gamma, gamma - pace
 
-    def _advance_body(self, block: Block) -> None:
-        """One interval of the body record's rotation (ALGEBRA.md 9.46 (2)):
-        verb D with the remainder kept, one division; the amplitude bound as
-        the rows'."""
-        body = block.body
-        assert body is not None
-        coefficient, wall = self.body_coefficients(block)
-        total = coefficient * body.now - wall * body.before + body.remainder
-        nxt = total // wall
+    def seat_coefficients(self, block: Block) -> tuple[int, int]:
+        """The one rule's coefficients at the seat with the six reads returning
+        the seat (S_6 = 6 a): (the coefficient on a, the wall) = (6 num (Gamma
+        - c) + 6 den c, 3 den Gamma) = (6 num_c p + 12 den_c c, 6 den_c Gamma),
+        six times 9.46 (2)'s (K, den_c Gamma): the same rotation as rationals
+        (9.60 (2))."""
+        num, den, gamma, content = self.seat_rule(block)
+        return 6 * num * (gamma - content) + 6 * den * content, 3 * den * gamma
+
+    def _advance_seat(self, block: Block) -> None:
+        """One interval of the seat's record (ALGEBRA.md 9.60 (2)): the engine's
+        one rule (`one_rule`, the same integers as every record's step) with
+        the standing family's Ports closed on the seat, the six reads the seat
+        itself (S_6 = 6 a); the amplitude bound as the rows'."""
+        seat = block.seat
+        assert seat is not None
+        num, den, gamma, content = self.seat_rule(block)
+        nxt, remainder = self.one_rule(
+            num, den, gamma, content, 6 * seat.now, seat.now, seat.before, seat.remainder
+        )
         if abs(nxt) > self.world.amplitude_bound:
             raise RuntimeError(
-                f"{BEAM_LAW}: the body record of measured[{block.number}] reached the level {nxt} "
+                f"{BEAM_LAW}: the seat's record of measured[{block.number}] reached the level {nxt} "
                 f"at interval {self.tick}, above the world's declared amplitude bound A = "
                 f"{self.world.amplitude_bound}: the run is refused"
             )
-        body.remainder = total - wall * nxt
-        body.before = body.now
-        body.now = nxt
+        seat.remainder = remainder
+        seat.before = seat.now
+        seat.now = nxt
 
-    def _advance_body_inverse(self, block: Block) -> None:
-        """The rotation one interval back with the same integers (ALGEBRA.md
-        9.50 (8): the wall constant, the remainder's range the same at every
-        interval, one to one): den_c Gamma a_before - r = K a_now - den_c
-        Gamma a_next - r', a_before the ceiling, r the difference."""
-        body = block.body
-        assert body is not None
-        coefficient, wall = self.body_coefficients(block)
-        total = coefficient * body.before - wall * body.now - body.remainder
-        a_before = -((-total) // wall)
-        body.remainder = wall * a_before - total
-        body.now = body.before
-        body.before = a_before
+    def _advance_seat_inverse(self, block: Block) -> None:
+        """The seat's record one interval back with the same integers
+        (`one_rule_inverse`; ALGEBRA.md 9.50 (8): the wall constant, the
+        remainder's range the same at every interval, one to one)."""
+        seat = block.seat
+        assert seat is not None
+        num, den, gamma, content = self.seat_rule(block)
+        a_before, remainder = self.one_rule_inverse(
+            num, den, gamma, content, 6 * seat.before, seat.now, seat.before, seat.remainder
+        )
+        seat.remainder = remainder
+        seat.now = seat.before
+        seat.before = a_before
 
-    def body_wheel(self, block: Block) -> tuple[int, int]:
-        """The remainder's step g and the wheel W of the body record's rule
-        (ALGEBRA.md 9.46 (2), 9.22 (4)): g the gcd of the rule's coefficients
-        (K on a, the wall on b and the wall itself), W = wall / g; the pair's
-        own den_c / gcd(num_c, den_c) in the vacuum."""
-        coefficient, wall = self.body_coefficients(block)
+    def seat_wheel(self, block: Block) -> tuple[int, int]:
+        """The remainder's step g and the wheel W of the one rule at the seat
+        (ALGEBRA.md 9.60 (2), 9.22 (4); `wheel_at`'s reading with the six reads
+        the seat): g the gcd of the rule's coefficients (on a and the wall), W
+        = wall / g; 9.46 (2)'s wheel of the body record, the remainder six
+        times its (the coefficients and the wall six times)."""
+        coefficient, wall = self.seat_coefficients(block)
         step = gcd(wall, coefficient)
         return step, wall // step
 
-    def body_form(self, block: Block) -> int:
-        """The body record's invariant (ALGEBRA.md 9.46 (2), (9) (b)): e = den_c
-        Gamma (a^2 + b^2) - K a b, the two-term rule's own (a' = (K / wall) a
-        - b leaves it fixed), Gamma (den_c (a^2 + b^2) - num_c a b) in the
-        vacuum; constant between the remainders' jitter (GAMEBOARD)."""
-        body = block.body
-        assert body is not None
-        coefficient, wall = self.body_coefficients(block)
+    def seat_form(self, block: Block) -> int:
+        """The seat's record's invariant (ALGEBRA.md 9.46 (2), (9) (b); 9.60):
+        e = wall (a^2 + b^2) - coefficient a b, the one rule's own at the seat
+        (a' = (coefficient / wall) a - b leaves it fixed); constant between the
+        remainders' jitter (GAMEBOARD)."""
+        seat = block.seat
+        assert seat is not None
+        coefficient, wall = self.seat_coefficients(block)
         return (
-            wall * (body.now * body.now + body.before * body.before)
-            - coefficient * body.now * body.before
+            wall * (seat.now * seat.now + seat.before * seat.before)
+            - coefficient * seat.now * seat.before
         )
 
     def centre_mask(self, block: Block) -> np.ndarray:
@@ -1138,7 +1165,7 @@ class DetectorLawSimulation:
         write), the count starting from that interval; every later residue
         is read at the click (`_emit`). Nothing fires while the stock is
         spent: the body's own record continues (9.43 (3))."""
-        own: LiveRecord | BodyRotation | None = block.body if block.body is not None else block.own
+        own: LiveRecord | SeatRecord | None = block.seat if block.seat is not None else block.own
         emitter = block.definition.emitter
         if own is None or emitter is None or block.emit_now:
             return
@@ -1177,7 +1204,7 @@ class DetectorLawSimulation:
         afterwards: the law advances it."""
         world = self.world
         emitter = block.definition.emitter
-        own: LiveRecord | BodyRotation | None = block.body if block.body is not None else block.own
+        own: LiveRecord | SeatRecord | None = block.seat if block.seat is not None else block.own
         assert emitter is not None and own is not None
         number = block.number
         family = emitter.family
@@ -1194,10 +1221,10 @@ class DetectorLawSimulation:
         residue, wheel = self.residue_of(own, block)
         wait = block.wait
         # the read Node: the first shell Node of the lattice body (item 33),
-        # the seat (the centre Node) of a body record (item 37)
+        # the seat (the centre Node) of a seated body (9.60; item 42)
         read_node = (
             tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
-            if block.body is not None
+            if block.seat is not None
             else self.first_shell_node(block)
         )
         # the family of clicks' level at the read Node and at its reads as the
@@ -1354,11 +1381,11 @@ class DetectorLawSimulation:
             for axis in range(3)
         )
         at_centre = 0
-        if block.body is not None:
-            # the body record's rotation (9.46 (2)): its level is the standing
-            # record's coefficient, the sum over the Nodes and the centre alike
-            total += block.body.now
-            at_centre += block.body.now
+        if block.seat is not None:
+            # the seat's record (9.60 (1)): its level is the standing record's
+            # coefficient, the sum over the Nodes and the centre alike
+            total += block.seat.now
+            at_centre += block.seat.now
         elif block.own is not None:
             total += int(np.sum(block.own.now[block.mask]))
             at_centre += int(block.own.now[centre])
@@ -1376,8 +1403,8 @@ class DetectorLawSimulation:
                         "measured": block.number,
                         "family": self.families[block.family].name,
                         "record": (
-                            block.body.identity
-                            if block.body is not None
+                            block.seat.identity
+                            if block.seat is not None
                             else None
                             if block.own is None
                             else block.own.identity
@@ -1425,14 +1452,12 @@ class DetectorLawSimulation:
         field = live is self.clock_record or live is self.charge_record
         gamma = 1 if field else self.node_clock
         content = 0 if field else self._effective_content(live.family)
-        wall = 3 * den * gamma
         # the same integers as the forward step's: the pace on the Node's own
         # sum (item 36)
-        total = num * (gamma - content) * self._neighbours(live.before, self.kind_wrap[live.family])
-        total += 6 * den * content * live.before
-        total -= wall * live.now + live.remainder
-        a_before = -np.floor_divide(-total, wall)
-        live.remainder = wall * a_before - total
+        neighbours = self._neighbours(live.before, self.kind_wrap[live.family])
+        a_before, live.remainder = self.one_rule_inverse(
+            num, den, gamma, content, neighbours, live.now, live.before, live.remainder
+        )
         live.now = live.before
         live.before = a_before
         live.age -= 1
@@ -1460,8 +1485,8 @@ class DetectorLawSimulation:
                 continue
             self._advance_inverse(live)
         for block in self.blocks:
-            if block.body is not None:
-                self._advance_body_inverse(block)
+            if block.seat is not None:
+                self._advance_seat_inverse(block)
             elif block.own is not None:
                 self._advance_inverse(block.own)
         self._advance_inverse(self.clock_record)
@@ -1525,11 +1550,18 @@ class DetectorLawSimulation:
     def kind_wall(self, family: int) -> int:
         """The family's common wall: the least common multiple of the
         numerators of its pair over the board (the vacuum's and every body's),
-        so that wall x den_i / num_i is an integer at every Node."""
-        wall = 1
-        for value in np.unique(self.kind_num[family]).tolist():
-            value = int(value)
-            wall = wall * value // gcd(wall, value)
+        so that wall x den_i / num_i is an integer at every Node. HOST: read
+        once per family from the board's pair array and kept until a pair is
+        written (`_write_pair`, the load and a hop); the same integer at every
+        call, bit for bit (record 2039: the distinct numerators were gathered
+        anew for every record at every interval, a fifth of the run)."""
+        wall = self._kind_walls.get(family)
+        if wall is None:
+            wall = 1
+            for value in np.unique(self.kind_num[family]).tolist():
+                value = int(value)
+                wall = wall * value // gcd(wall, value)
+            self._kind_walls[family] = wall
         return wall
 
     def _flux_ports(self, family: int) -> list[tuple[int, int, np.ndarray]]:
@@ -1783,6 +1815,92 @@ class DetectorLawSimulation:
         mask: np.ndarray = dot >= 0
         return mask
 
+    @overload
+    @staticmethod
+    def one_rule(
+        num: np.ndarray,
+        den: np.ndarray,
+        gamma: int,
+        content: np.ndarray | int,
+        neighbours: np.ndarray,
+        now: np.ndarray,
+        before: np.ndarray,
+        remainder: np.ndarray,
+    ) -> tuple[np.ndarray, np.ndarray]: ...
+
+    @overload
+    @staticmethod
+    def one_rule(
+        num: int,
+        den: int,
+        gamma: int,
+        content: int,
+        neighbours: int,
+        now: int,
+        before: int,
+        remainder: int,
+    ) -> tuple[int, int]: ...
+
+    @staticmethod
+    def one_rule(num, den, gamma, content, neighbours, now, before, remainder):  # type: ignore[no-untyped-def]
+        """THE ONE RULE (ALGEBRA.md 9.50 (13), the Node's own pace; item 36),
+        the same integers for every record at every Node and for the seat's
+        record with its six reads returning the seat (9.60 (2); item 42): 3
+        den Gamma a_next + r' = (Gamma - c) num S_6(a_now) + 6 den c a_now - 3
+        den Gamma a_before + r, the remainder in [0, 3 den Gamma); on the
+        board's arrays or on one Node's integers alike (verbs G, D, T).
+        Returns (a_next, r')."""
+        wall = 3 * den * gamma
+        total = num * (gamma - content) * neighbours
+        total += 6 * den * content * now
+        total -= wall * before
+        total += remainder
+        nxt = np.floor_divide(total, wall) if isinstance(total, np.ndarray) else total // wall
+        return nxt, total - wall * nxt
+
+    @overload
+    @staticmethod
+    def one_rule_inverse(
+        num: np.ndarray,
+        den: np.ndarray,
+        gamma: int,
+        content: np.ndarray | int,
+        neighbours_of_before: np.ndarray,
+        now: np.ndarray,
+        before: np.ndarray,
+        remainder: np.ndarray,
+    ) -> tuple[np.ndarray, np.ndarray]: ...
+
+    @overload
+    @staticmethod
+    def one_rule_inverse(
+        num: int,
+        den: int,
+        gamma: int,
+        content: int,
+        neighbours_of_before: int,
+        now: int,
+        before: int,
+        remainder: int,
+    ) -> tuple[int, int]: ...
+
+    @staticmethod
+    def one_rule_inverse(num, den, gamma, content, neighbours_of_before, now, before, remainder):  # type: ignore[no-untyped-def]
+        """The one rule one interval back with the same integers (ALGEBRA.md
+        9.50 (8), (9); item 34): 3 den Gamma a_before - r = (Gamma - c) num
+        S_6(a_before) + 6 den c a_before - (3 den Gamma a_next + r'), a_before
+        the ceiling of that quotient, r the difference, exact for every clock
+        history since the remainder's range is the wall's. Returns (a_before,
+        r)."""
+        wall = 3 * den * gamma
+        total = num * (gamma - content) * neighbours_of_before
+        total += 6 * den * content * before
+        total -= wall * now + remainder
+        a_before = (
+            -np.floor_divide(-total, wall) if isinstance(total, np.ndarray) else -((-total) // wall)
+        )
+        return a_before, wall * a_before - total
+
     def _advance(self, live: LiveRecord) -> None:
         # THE EMITTER'S NODES ARE NODES LIKE EVERY OTHER (ALGEBRA.md 9.17; the
         # Boss's line of 2026-09-24 on the knot): no grace, no exemption, no
@@ -1827,7 +1945,6 @@ class DetectorLawSimulation:
         # level (ALGEBRA.md 9.41 (2), 9.45 (2))
         gamma = 1 if field else self.node_clock
         content = 0 if field else self._effective_content(live.family)
-        wall = 3 * den * gamma
         # THE NODE'S OWN PACE (the model owner's ruling of record 2003, "take
         # only from the current Node, not from the neighbours"; ALGEBRA.md
         # 9.50 (13); BUILD.md section 26 item 36): the pace p_i = Gamma - c_i
@@ -1837,12 +1954,9 @@ class DetectorLawSimulation:
         # Node steps the vacuum's rule at its own pace (the pace on each
         # read's far end, form (B) of item 34, HISTORY)
         neighbours = self._neighbours(live.now, self.kind_wrap[live.family])
-        total = num * (gamma - content) * neighbours
-        total += 6 * den * content * live.now
-        total -= wall * live.before
-        total += live.remainder
-        nxt = np.floor_divide(total, wall)
-        live.remainder = total - wall * nxt
+        nxt, live.remainder = self.one_rule(
+            num, den, gamma, content, neighbours, live.now, live.before, live.remainder
+        )
         if self.world.massive_record and int(np.max(np.abs(nxt))) > self.world.amplitude_bound:
             raise RuntimeError(
                 f"{BEAM_LAW}: the record {live.identity} reached the level "
@@ -2144,8 +2258,8 @@ class DetectorLawSimulation:
         # (MASSIVE_RECORD.md section 7's massive step first; the coupling's
         # terms HISTORY, the model owner's decision (2) of record 1962).
         for block in self.blocks:
-            if block.body is not None:
-                self._advance_body(block)
+            if block.seat is not None:
+                self._advance_seat(block)
             elif block.own is not None:
                 self._advance(block.own)
             else:
@@ -2378,17 +2492,17 @@ class DetectorLawSimulation:
                         "emitted": list(block.emitted),
                         "rows": None if block.own is None else block.own.now.ravel().tolist(),
                         "form": (
-                            form_json(Fraction(self.body_form(block)))
-                            if block.body is not None
+                            form_json(Fraction(self.seat_form(block)))
+                            if block.seat is not None
                             else None
                             if block.own is None
                             else form_json(self.record_form(block.own))
                         ),
-                        # the body record's rotation and residue (item 37; GAMEBOARD)
-                        "rotation": (
+                        # the seat's record, (a, b, r) at the seat Node (9.60; item 42; GAMEBOARD)
+                        "seat": (
                             None
-                            if block.body is None
-                            else [block.body.now, block.body.before, block.body.remainder]
+                            if block.seat is None
+                            else [block.seat.now, block.seat.before, block.seat.remainder]
                         ),
                     }
                     for block in self.blocks

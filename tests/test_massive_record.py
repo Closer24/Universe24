@@ -365,11 +365,13 @@ def test_the_light_record_is_byte_identical_without_the_key():
     the state digest moved once more (the block entry's `rotation`, None under the lattice
     body; the events and the audit unchanged); SINCE THE GIVING CLICK (record 2016) the events
     and the state digests moved with the lines' names alone (`giving` for `birth`,
-    `given_norm` for `born_norm`; the state's record entries carry `giving`); read again at
+    `given_norm` for `born_norm`; the state's record entries carry `giving`); SINCE THE SEAT (ALGEBRA.md 9.60; item 42) the state digest moved once more (the block
+    entry's `seat` for `rotation`, None under the lattice body; the events and the audit
+    unchanged: the one rule factored and the support box of item 43 bit for bit); read again at
     this head."""
     assert run_chain_digests() == {
         "events": "43abd129081c637469bf0a39795c2e0bd1db59c2e94f1e6c75ddfc10ab5fd844",
-        "state": "45c0aa7afcee235cd98644024e7344e9c68b76493e28ed06df4f0099daea3230",
+        "state": "387a7111fd1ba06d7d86a4e90edbc40f9efedc9f5a67b7922c5cb4016fce6abb",
         "audit": "18fceec9b9d8e12e478abd84633b08f013658858f3ccb76d17fe61c28b53597e",
     }
 

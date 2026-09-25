@@ -3331,7 +3331,9 @@ would have found no cell.
    in the body's own units. THE NAME NODE (the model
    owner's record 1970): every new text of this item says Node.
 
-37. THE BODY RECORD: A BODY HELD AS ONE NODE WITH A SHAPE (the model
+37. THE BODY RECORD: A BODY HELD AS ONE NODE WITH A SHAPE (SINCE ITEM 42 the
+   record is the seat Node's own, nothing beside the GameBoard, ALGEBRA.md
+   9.60; the rotation beside the GameBoard of this item HISTORY) (the model
    owner's word of 2026-09-25 in the mathematician's session, "already
    now, because it is generic; a body holds real parameters, and then it
    is a special Node in the simulator; it can be checked that it is
@@ -3576,6 +3578,104 @@ would have found no cell.
    blind wait on the owner's word that the engine is stable; the
    question put to him through the Boss). THE NAME NODE (the model
    owner's record 1970): every new text of this item says Node.
+
+41. THE RUNS TOWARD NATURE, ROWS 1 TO 3, WITHOUT PINS (ALGEBRA.md 9.59 (0)
+   to (3); the model owner's question of 2026-09-25 through the Boss,
+   record 2030: "when will experiments start, to see that there is a
+   direction toward nature, without pins?"; PRE-CHANGE CONTROLS on today's
+   law, the Boss's record 2038).
+
+   THE ROW: diagnostic runs, no pin, no verdict (9.59 (6)); every number
+   labelled by kind and set beside nature's value only for the direction; a
+   reading outside the mathematician's band goes to him before any word.
+   The worlds, their generator, their readers and the readings of
+   2026-09-25 are in `examples/events/toward_nature/README.md`;
+   `tests/test_toward_nature.py` gates the files, the held level, the joint
+   hop and the reader's arithmetic. Under Gamma = 10^4 (9.57 (2), 9.59
+   (0)); on today's law, the first-order rule of 9.50 (13).
+
+   (1) THE REDSHIFT (9.59 (1)): two light clocks in the light clock's own
+   form (item 27, the one table of 9.30) on the chain [760, 3, 3], the arm
+   558 Links; the bottom's arm held at c_1 = 2000 (U_1 = 0.1) by a holder
+   body of a fifth family over the arm's free Nodes (the hold of 9.45 (2):
+   the level at a body's Nodes is its content); the emitter's own Nodes and
+   the mirror outside the well in both. READ: the ratio of the mean waits
+   (the giving click to the click at `at_well`) bottom over top 1.283 +-
+   0.010 (DETECTOR, COMPUTATION), the two early clicks turned at the well's
+   edge set apart. The direction holds (the clock in the well is slower);
+   the size is the lattice's own at the given train's k = pi / 2 (1.291
+   with the frequency conserved across the well's edge and the wave number
+   refracted, COMPUTATION), not the continuum's 1.118 (9.59 (1)) nor
+   nature's 1 + U_1 at first order: FINDING 1 for the mathematician, the
+   rows' expectations at the lattice's wave number or the wavelength the
+   rows should use.
+
+   (2) LORENTZ (9.59 (2), 9.24 (6)): the light clock at rest and carried
+   along its arm (the longitudinal clock) one Link every 4 intervals, the
+   emitter, its mirror and its set hopping together by the declared
+   momentum of each block at one quarter of its own drive wall 3 Q width
+   amount (`_move_block`'s accumulator); the board's light at k = pi / 2 at
+   c_l = 0.447 (v / c_l = 0.559, nature's gamma 1.206, the longitudinal
+   form's gamma^2 1.455, 9.24 (6)'s PREDICTION). READ: rest 303.1 (64
+   clicks), moving 1352.6 with the waits growing over the run; the same
+   under `body_record`; NOT A TICK. FINDING 2: the set's ladder books the
+   plain inward flux at its Ports (9.25 (2)); a hop covers the rows in
+   front of the block without a Port crossing and books nothing, so the
+   moving detector does not take on the first pass (the proposal to the
+   mathematician: a hop books the covered rows as inward flux, their share
+   of the norm, as 9.52 (4) (i) moves the field face to face). FINDING 3:
+   the moving emitter gives its train at rest in the board's frame, no
+   Doppler shift; whether the train carries the body's **K** (9.17 (6a)) is
+   his to say. No reading until both are ruled.
+
+   (3) THE BENDING on today's law (9.59 (3)): first the dark body's two
+   worlds (item 39) run as they stand, then `bending.json`, the same layout
+   under the row's numbers (the beam 20 wide, the body's content set by the
+   static field so that U_b = 0.1 on the beam's line under it, 100 records,
+   the body dark). The reading the centroid of the emitter's clicks over
+   the screen less the beam's line, set beside 2 U_b L and the ray through
+   the static field (COMPUTATION). The numbers in the README.
+
+   THE HOST RATE, measured with the one command (`tools/run_inputs.py`):
+   2.6 x 10^6 Node-intervals per second on the chain at rest, 8 x 10^5 with
+   a hopping block, one core; the older runner (`python -m event_universe`,
+   the state record written) 1.1 x 10^5.
+
+42. THE BODY'S RECORD KEPT AT ITS SEAT NODE, NOTHING BESIDE THE GameBoard
+   (ALGEBRA.md 9.60 (1) to (6); the model owner's question of record 2036,
+   "what does it mean, the body's record on the side? can it not be
+   represented somehow in the Node?", and his order of record 2037 through
+   the Boss, "make the change first"; the mathematician's ruling: the body
+   record of item 37 is an ordinary record of its own standing family on the
+   seat Node, stepped by the one rule with the family's six Ports closed on
+   the seat; DERIVED, bit-equal to 9.46 (2); item 37's record beside the
+   GameBoard HISTORY). BUILT: `SeatRecord` (BodyRotation HISTORY), the
+   standing record (a, b, r) on the seat Node (the body's centre Node,
+   `centre_mask`), held on the Block as `seat` (`body` HISTORY) and stepped by
+   `_advance_seat` through the engine's one rule `one_rule` (the same integers
+   as every record's step, factored out of `_advance`; its inverse
+   `one_rule_inverse` out of `_advance_inverse`) with the six reads returning
+   the seat, S_6 = 6 a, the declared pair [num_c, 2 den_c] and the seat's own
+   effective content (`seat_rule`): 6 den_c Gamma a' + r' = (6 num_c p + 12
+   den_c c) a - 6 den_c Gamma b + r, six times item 37's two-term rule
+   (`seat_coefficients`), the same rotation as rationals, the remainder six
+   times; its wheel W the rule's gcd at the seat (`seat_wheel`: 9.46 (2)'s
+   wheel, since the coefficients and the wall are six times its; the
+   coefficient is 6 K, not the 3 K of 9.60 (2)'s line, sent to the
+   mathematician), its residue u the seat's remainder on that wheel
+   (`residue_of`); the invariant `seat_form`; the inverse
+   `_advance_seat_inverse` exact; the state's block entry carries `seat` [a,
+   b, r] (`rotation` HISTORY). The content, the stock and the charge are the
+   seat's levels as before (the hold of 9.45 (2) at the body's Nodes; the held
+   quanta per family the engine's ledger of them); the profile phi is a
+   declared constant of the world file read at the giving click alone (9.60
+   (6)); the hop moves the seat with the body's centre (9.60 (5)). THE GATE
+   (tests/test_body_record.py, 9.60 (5)): the rotation identity replaced by
+   the one assertion that the seat's rule is the one rule with S_6 = 6 a at
+   the pair [num_c, 2 den_c] and its coefficients six times (K, den_c Gamma);
+   the ticks, the field, the count, the given rows, the inverse and the
+   refusals as item 37's. THE NAME NODE (the model owner's record 1970):
+   every new text of this item says Node.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

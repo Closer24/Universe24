@@ -86,20 +86,29 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
     lattice = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, False)))
     seated = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, True)))
     lattice_block, seated_block = lattice.blocks[0], seated.blocks[0]
-    assert lattice_block.own is not None and lattice_block.body is None
-    assert seated_block.body is not None and seated_block.own is None
+    assert lattice_block.own is not None and lattice_block.seat is None
+    assert seated_block.seat is not None and seated_block.own is None
     assert seated_block.own is None and all(
         not seated.families[live.family].massive_kind for live in seated.records.values()
     )
-    body = seated_block.body
+    body = seated_block.seat
     centre = tuple(int(axis[0]) for axis in np.nonzero(seated.centre_mask(seated_block)))
     profile = np.array(document["measured"][0]["seed"], dtype=np.int64).reshape(seated.shape)
     assert (body.now, body.before, body.remainder) == (int(profile[centre]), int(profile[centre]), 0)
-    coefficient, wall = seated.body_coefficients(seated_block)
+    # THE SEAT'S RULE (ALGEBRA.md 9.60 (2)): the one rule with the six reads returning the
+    # seat, the pair [num_c, 2 den_c] and the seat's own level: its coefficients are six
+    # times 9.46 (2)'s (K, den_c Gamma), K = num_c p + 2 den_c (Gamma - p); asserted once
     num_c, den_c = seated_block.definition.clock
     pace, gamma = seated.node_clock_pair(centre, seated_block.family)
-    assert (pace, gamma) == (gamma - 1, gamma) and wall == den_c * gamma
-    assert coefficient == num_c * pace + 2 * den_c * (gamma - pace)
+    assert (pace, gamma) == (gamma - 1, gamma)
+    assert seated.seat_rule(seated_block) == (num_c, 2 * den_c, gamma, 1)
+    coefficient, wall = seated.seat_coefficients(seated_block)
+    assert wall == 6 * den_c * gamma
+    assert coefficient == 6 * (num_c * pace + 2 * den_c * (gamma - pace))
+    assert seated.one_rule(num_c, 2 * den_c, gamma, 1, 6 * body.now, body.now, body.before, 0) == (
+        (coefficient * body.now - wall * body.before) // wall,
+        (coefficient * body.now - wall * body.before) % wall,
+    )
     forms = []
     seated_levels = [body.before, body.now]
     lattice_levels = [int(lattice_block.own.before[centre]), int(lattice_block.own.now[centre])]
@@ -112,7 +121,7 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
         assert 0 <= body.remainder < wall and body.before == a_now
         seated_levels.append(body.now)
         lattice_levels.append(int(lattice_block.own.now[centre]))
-        forms.append(seated.body_form(seated_block))
+        forms.append(seated.seat_form(seated_block))
         assert np.array_equal(seated.clock_record.now, lattice.clock_record.now)
         assert np.array_equal(seated.clock_record.remainder, lattice.clock_record.remainder)
     expected = Fraction(coefficient, wall)
@@ -130,8 +139,10 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
     assert abs(lattice_block.count - seated_block.count) <= 1 and seated_block.count >= 5
     # the invariant's jitter (a_next - a_before)(r - r') over e: 2 x 10^-5 read, below 10^-4
     assert max(forms) - min(forms) < max(forms) // 10**4
-    step, wheel = seated.body_wheel(seated_block)
+    step, wheel = seated.seat_wheel(seated_block)
     assert step * wheel == wall and step == math.gcd(wall, coefficient)
+    # the wheel is 9.46 (2)'s own (the coefficients and the wall six times, 9.60 (2))
+    assert wheel == den_c * gamma // math.gcd(den_c * gamma, coefficient // 6)
 
 
 def cycles_of(
@@ -211,19 +222,19 @@ def test_the_joint_inverse_is_exact_with_a_body_record():
     rng = np.random.default_rng(46)
     simulation = DetectorLawSimulation(parse_nature_beam_world(with_body_record(cube_world(), True)))
     block = simulation.blocks[0]
-    assert block.body is not None
+    assert block.seat is not None
     now = rng.integers(-UNIT, UNIT, size=simulation.shape, dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=simulation.shape, dtype=np.int64)
     live = planted(simulation, 0, now, before, np.zeros(simulation.shape, dtype=np.int64))
     simulation.records[live.identity] = live
-    start = (block.body.now, block.body.before, block.body.remainder)
+    start = (block.seat.now, block.seat.before, block.seat.remainder)
     field = simulation.clock_record.now.copy()
     for _ in range(60):
         simulation.step()
-    assert (block.body.now, block.body.before, block.body.remainder) != start
+    assert (block.seat.now, block.seat.before, block.seat.remainder) != start
     for _ in range(60):
         simulation.step_inverse()
-    assert (block.body.now, block.body.before, block.body.remainder) == start
+    assert (block.seat.now, block.seat.before, block.seat.remainder) == start
     assert np.array_equal(live.now, now) and np.array_equal(live.before, before)
     assert not live.remainder.any() and simulation.tick == 0
     assert np.array_equal(simulation.clock_record.now, field)
@@ -268,12 +279,12 @@ def test_the_loader_and_the_state_name_the_body_record():
         seated.step()
     state = dict(seated.snapshot_stream())
     entry = state["blocks"][0]
-    body = seated.blocks[0].body
+    body = seated.blocks[0].seat
     assert body is not None
-    assert entry["rows"] is None and entry["rotation"] == [body.now, body.before, body.remainder]
-    assert entry["form"] == [seated.body_form(seated.blocks[0]), 1]
+    assert entry["rows"] is None and entry["seat"] == [body.now, body.before, body.remainder]
+    assert entry["form"] == [seated.seat_form(seated.blocks[0]), 1]
     clicks = [line for line in lines if line["event"] == "click"]
     assert clicks and all(line["record"] == body.identity == 0 for line in clicks)
     lattice = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, False)))
     entry = dict(lattice.snapshot_stream())["blocks"][0]
-    assert entry["rotation"] is None and entry["rows"] is not None
+    assert entry["seat"] is None and entry["rows"] is not None
