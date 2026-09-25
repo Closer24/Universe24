@@ -210,6 +210,60 @@ in the day's log; nothing of them is a name the engine branches on.
   first, met on the planted boards of `docs/designs/lab_tools/`, and built
   on the engine from that section as the gate of the cleanup (9.21 (3)).
 
+A BODY (the model owner's word of 2026-09-25 through the Boss, record 2008:
+"only in the definitions, add what a body is, algebraically and practically,
+for us; we have no laws written for a body, they were written for the Node,
+and where they can, they become a body; and a body can be on one Node";
+ALGEBRA.md 9.40 D1, 9.46, 9.51, 9.53).
+
+- **Algebraically.** No step law is written for a body. The one rule is
+  written for the Node, and every Node steps every family by it at its own
+  pace, p_i = Gamma - c_i + q Lambda d_i, with c_i and d_i the levels of the
+  family of clicks and the family of charge there (ALGEBRA.md 9.50 (8),
+  (13); 9.48 (3)). A body is the support of a mode of that rule: the set S
+  of Nodes where the mode's rows are nonzero, its Nodes one time, no current
+  across its Links, a constant share (9.40 D1). Its record is what the
+  click writes and nothing else: the content per family M_k, the charge Q
+  (the signed sum), the energy count s = SUM_k (M_k P_0) div P_k with one
+  remainder per family, the residue u, the stock, the norm T (9.51 (3),
+  (8)); and the levels of the two fields at its Nodes ARE that record, s and
+  Q, held there and free elsewhere (9.51 (1)). The click is the one act at
+  the body's scale and the one write on it: the taking end gathers the flux
+  through the body's Ports and sets the taken rows to 0 with M_k + 1, Q + q
+  and s recomputed; the giving end sets the born family's rows on S with
+  M_k - 1 of the born family, u read at the first shell Node, s recomputed;
+  the body's own levels, phase and remainders are left as they are (9.40
+  T3, 9.43 (3), 9.44 (5) (c), 9.51 (8)). Between its clicks a body moves
+  only by the first sentence: its mode drifts down the pace by the ray
+  equation, the same for every family (9.52). So the owner's sentence is
+  right with one precision: the rule never becomes a body's law; only the
+  click is written at the body's scale, through its Ports and its shape.
+- **Practically, for us.** Today a world declares a body by a region of
+  Nodes (the cube by its lower vertex and its edge, below), a declared well
+  (the material pair on those Nodes, which binds the mode), a stock (the
+  born family's quanta it holds), a content per family, a charge per
+  family's quantum, a `period` P (the generator's integer, the mode's
+  turn at the body's Nodes) and, for a moving body, a momentum. A body on
+  ONE NODE is the body record (ALGEBRA.md 9.46): its parameters (the family,
+  the pair, S with the stored profile, the clock pair, P, T, the stock, M_k,
+  Q, u, s) and one rotation (a, b, r) at one seat; it holds, it takes
+  through its six Ports, it falls by its accumulators (9.52), and it gives
+  only with a declared birth extent (9.46 (8)); it is a host form, valid
+  only by its equivalence gate against the lattice body (9.46 (4): the
+  ticks in distribution, the rotation bit for bit, the born rows bit-equal,
+  the taking and the field identical), under the world key `body_record`,
+  off by default. A body's faces are its Nodes with a Port, a Link to a Node
+  outside it (the shell, 9.38 (2)); the first shell Node in the engine's
+  x-major order reads its residue; a body with no shell is refused. WHAT IS
+  A BODY AND WHAT IS NOT: a body holds a record and clicks (an emitter, a
+  detector, a seated body, a composite of bodies, a dark body that never
+  clicks, 9.54); a tool is a region of the vacuum's pair with no record
+  and no click (a mirror, a splitter, a gap, a slab, a layer of one Node)
+  and is never a body; a declared well is today's way to hold a body's
+  mode and is not the body: when binding comes from the law through the
+  charge (the atom row, 9.48 (4), 9.53 (4)), a body is the support of its
+  own bound mode and the declared wells remain tools only.
+
 THE BODY'S LOAD CONDITIONS, kept from the four-block text as the loader's
 checks (its "takes what reaches its Nodes" and the table body are history;
 the Nodes of every two bodies are disjoint, the seed is the COMPOSED
