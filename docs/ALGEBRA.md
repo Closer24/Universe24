@@ -14371,9 +14371,12 @@ gravity's vector, gravity's tensor, light (the charge's vector wave,
 Lambda_v, q}, clicks {gives, takes, 1}, booked). The rule reads the
 pair per record (the wheel, the wall and the rung the record's own,
 as today); the loader checks the rule's total for every declared pair
-(9.57 (2)). The cap of five is lifted; the count is the file's. The
-unit tests keep their small lists (the Boss's 6); every experiment is
-bound to the file. A family with no record and no source in a world
+(9.57 (2)). The cap of five is lifted: the cap is TWENTY, the loader
+refusing a twenty-first (the owner's decision 1 of record 2081). The
+unit tests keep their small lists (the Boss's 6, the owner's decision
+2 of record 2081); every experiment is bound to the file. The recoil
+(9.84) and the point emitter (9.71 (1), (5) here) are part of the law,
+on in every run, no key (the owner's decision 3 of record 2081). A family with no record and no source in a world
 is exactly zero: the leak test (9.83 (3)).
 
 **(4) THE EXCHANGE'S LINE, RESTATED.** 9.84 (2), the recoil in the law
