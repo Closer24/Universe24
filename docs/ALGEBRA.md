@@ -11432,3 +11432,42 @@ the control's advance within the rounding. (e) THE EQUIVALENCE AND
 NEWTON: 9.52 (3), unchanged, the same interval for two families within
 one hop. A row outside its band comes to the mathematician before any
 pin moves.
+
+**(5) WHAT NEWTON'S CONSTANT IS ON THE GAMEBOARD (the model owner's
+question of 2026-09-25: "what represents G in the real world, the one
+we said could change?").** G is not declared. It is made of three
+declared numbers. A body of energy count s makes the level c(r) = s
+times the reference flux over the distance r in Links (9.45 (2), 9.51
+(9)), and the level slows the clock by the potential Phi = -c / (2
+Gamma) per unit of mass (9.52 (2)); so Phi = -(s) (reference flux) / (2
+Gamma r), which is Newton's -G m / r with the mass m = s times the
+mass of one unit of level and
+
+  G = (the reference flux) / (2 Gamma), per unit of energy count,
+
+in the board's units (a Link, an interval, the speed of light 1). The
+three numbers: Gamma, the clock's unit, declared per world; the energy
+unit (the period one unit of level is worth, 9.51 (3)), which sets the
+mass of one unit; and the reference flux, a number of the lattice's
+geometry (about 1.4 for the side-3 cube), computed once. WHAT IT
+REPRESENTS IN NATURE: how much one unit of mass-energy slows the clock
+at one Link's distance; that is what Newton's G says in nature's units,
+6.674 x 10^-11 in metres, kilograms and seconds. THE ONE THAT "COULD
+CHANGE" IS GAMMA: G is 1 / Gamma up to the two other numbers, so a world
+at Gamma = 10^4 has gravity a hundred times stronger, per unit of
+content, than one at 10^6; that is why the light clock's tick moves
+with Gamma (9.57 (2)), as it would move with G; the ratios between rows
+(Kepler's constant against the fall, the bending against the redshift)
+do not move, since they carry G once and cancel it. Nature's G is one
+number; the board's Gamma is chosen so that the rows' integers fit the
+engine, and the rows compare with nature as ratios (9.25 (9)). A Gamma
+that changes in time would be a G that changes in time, which nature
+bounds to below 10^-13 a year (the lunar ranging); on the GameBoard
+Gamma is a constant of the world and never a state. THE THREE CONSTANTS
+OF NATURE ON THE BOARD, for the record: the speed of light is 1 Link
+per interval, built in; the quantum of action is one click, its energy
+set by the energy unit; G is the line above. Their one combination
+with a length, the Planck length squared, h G / (2 pi c^3), reads on the
+board as (the reference flux)(the energy unit) / (2 Gamma) up to 2 pi,
+about 10^-2 Links squared at Gamma = 10^4 and an energy unit near 100:
+below one Link, as a lattice must have it.
