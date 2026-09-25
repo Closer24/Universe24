@@ -14249,3 +14249,72 @@ rule on the phase-2 families where a vector level is nonzero, nothing
 where it is 0 (the identity read from k = 0). The light clock's two
 to three times is the light's six components stepped where they are
 nonzero (one of six in a shipped row).
+
+### 9.84 The recoil at a click, generic: no journal, no attribute, the numbers decide (the model owner's words of 2026-09-25 in the mathematician's session: "does nature behave this way?"; "a generic law where the body does not need to know whether it is at rest or moving, fixed or free"; "no click journal: each family just writes its click, and that is it")
+
+**(1) NATURE.** Momentum is conserved at every absorption and emission:
+radiation pressure, Compton's scattering, laser cooling, the recoil
+of an emitting nucleus. The engine conserves the energy count at a
+click (9.51 (3)); without the recoil it would break momentum at every
+click. So the recoil is the law's, not a hypothesis: the exchange of
+9.27 (D) enters the law in this form and its own identity is retired.
+
+**(2) THE RULE, one line, whole numbers, no attribute.** At a click the
+body's accumulator gains, per axis, the taken quantum's momentum over
+the body's own energy, on the accumulator's wall:
+
+  n_a += sigma_a x (W x P_body) div (M x lambda_q),
+
+sigma_a the sign of the per-Port tally on axis a (Port +a minus Port
+-a of the booked flux, 9.25 (12)), P_body the body's rotation period
+in intervals (its record's `period`, 9.51 (3)), M its quanta, lambda_q
+the quantum's wavelength in Links (the emitter's declared given clock,
+9.62 (1)), the remainder kept on the body's record; the giving the
+same with the opposite sign, the tally the outward flux of the given
+record through the emitter's Ports over its window. Why this is the
+recoil: Delta v = P_body / (M lambda_q) = k_q / (M omega_body), the
+quantum's momentum over the body's energy in natural units. THE BODY
+KNOWS NOTHING: not whether it rests or moves (the accumulator is
+added to as it is, and the proper pair of 9.63 (3) reads the new n),
+not whether it is a tool or a test body; a point emitter or a dipole
+gives symmetrically and its tallies cancel; a train along an axis
+recoils by minus its momentum. EACH FAMILY WRITES ITS OWN CLICK: the
+scalar of gravity writes the count (the content, 9.45 (2)), the vector
+of gravity writes the momentum through its hold 4 s n / W at the next
+interval (9.78 (2)), the giver's stock and window counter are its
+record; nothing else records anything, and the backward test reads
+the intervals from the run's events output (9.80 (4)).
+
+**(3) WHY NO "FIXED" IS NEEDED: THE MASS, AS IN NATURE.** A tool is
+fixed by its mass. A body of M quanta recoils by 1 / M of the
+quantum's momentum per click; a laboratory's tool declares its true
+quanta, M of a million and more, and recoils by a millionth of a hop
+per quantum, below every band; a light body of 64 quanta recoils as a
+light nucleus does, visibly, and that is right. THE TOOL'S GRAVITY
+does not grow with M: the gravitating count is s = M P_0 div P (9.51
+(3)), and the energy unit P_0, the engine's G, is the universe's
+declaration (9.83 (2) (a)); a tool of a million quanta with P_0
+lowered in the same ratio keeps s = 64 and its well as today. That is
+nature's own separation: G is small, so a huge mass makes a tiny
+well and a huge inertia. The integers: W x P_body at most 10^7 x 10^2;
+M x lambda_q at most 10^7 x 10^2; one division; the remainder on the
+record.
+
+**(4) THE SHIPPED ROWS.** The generator re-declares every tool with its
+true quanta and lowers P_0 in the same ratio; s and every level are
+unchanged, every row reads bit for bit but the recoil, which is then
+below 10^-6 of a hop per quantum and below every band; the leak test
+(9.83 (3)) reads it as the only change. A free body that gives or
+takes (the orbiting emitter of 9.52 (4) (vi), the muon as a point
+emitter) recoils by (2), and its blind expectation carries it: a
+point emitter's net recoil is 0 by symmetry; a train's is minus its
+momentum per giving.
+
+**(5) THE ROWS, blind.** (a) RADIATION PRESSURE: a seat of M = 64 in a
+beam of 100 quanta along +x, taken one by one: the accumulator gains
+100 x (W P_body) div (64 lambda_q), the seat hops along +x by the
+momentum's whole part, against the same seat beside the beam: no
+hop. (b) THE RECOIL OF A TRAIN EMITTER: a seat of M = 64 giving 10
+quanta along +x recoils along -x by the same count; the same seat as a
+point emitter: no net hop. (c) THE HEAVY TOOL: the detector of (a)
+declared with a million quanta: no hop over the run.
