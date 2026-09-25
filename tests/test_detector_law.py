@@ -15,35 +15,32 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from event_universe.core.integer import keyed_permutation
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation
 from event_universe.events.world import DETECTOR_LAW_RULE, parse_nature_beam_world
 from tests.test_emitter import massive_generator
 
 EMITTER_KIND = [7, 8]  # the emitter body's kind (omega_0 = 0.505)
-EMITTER_PAIR = [8, 7]  # its one-cell well, bound on a chain (2 cos omega_b = 1.90, omega_b = 0.32)
+EMITTER_PAIR = [
+    801,
+    700,
+]  # its one-cell well, rich (W = 700 remainder values, ALGEBRA.md 9.22 (4)), bound on a chain (2 cos omega_b = 1.90)
 
 
 def emitter_body(
     position: list[int],
     stock: int,
-    wheel: tuple[int, int],
-    order: str = "ordinal",
-    seed: int | None = None,
     receiver: object = None,
     side: int = 1,
     family: str = "light",
 ) -> dict:
     """An emitter body of the matter kind EMITTER_KIND (the well pair EMITTER_PAIR, seeded on
-    its mode at 100 by the generator), its stock `stock`, its `emitter` the family given on
-    the wheel with its residue order and, with `receiver`, the born records' ladder by name.
-    The cadence (COMPUTATION, BUILD.md section 26): the u-th residue clicks about (2 u + 1) /
-    (2 W) x P intervals after its excitation, P the mode's period (20 on this well; ALGEBRA.md
-    9.17 (5) item 1 on the flux norm of 9.19 (3)); a well too
+    its mode at 100 by the generator), its stock `stock`, its `emitter` the family given and,
+    with `receiver`, the born records' ladder by name. The residue and the wheel are the
+    law's (ALGEBRA.md 9.22 (4): the clicking record's remainder at the birth cell, W = 700 on
+    EMITTER_PAIR). The cadence (COMPUTATION, BUILD.md section 26): the residue u clicks about
+    (2 u + 1) / (2 W) x P intervals after its excitation, P the mode's period; a well too
     deep for its board is a runaway and refused at the margin rule."""
-    emitter: dict = {"family": family, "wheel": list(wheel), "residue_order": order}
-    if seed is not None:
-        emitter["residue_seed"] = seed
+    emitter: dict = {"family": family}
     if receiver is not None:
         emitter["receiver"] = receiver
     return {
@@ -62,9 +59,6 @@ def emitter_body(
 
 def chain_world(
     stock: int = 6,
-    wheel: tuple[int, int] = (1, 6),
-    order: str = "ordinal",
-    seed: int | None = None,
     receiver: object = None,
     clock_stamp: bool = True,
     on_mode: bool = True,
@@ -75,8 +69,8 @@ def chain_world(
     the matter kind [7, 8] with the well pair [8, 7], its mode the seed), a
     receiver body at x = 70 read as the set `screen`; the light family's
     clock the pair [77, 25] on N = 64 (3.08 steps per interval, the period
-    20.78 intervals, lambda = 12 Links); the world's wheel 64 the sets' rung
-    (larger than the emitter's). With `faces` "open" the face receiver
+    20.78 intervals, lambda = 12 Links); no wheel anywhere (the rung's wheel
+    is the record's own, W = 700). With `faces` "open" the face receiver
     `face` stands at both ends, last on every ladder (ALGEBRA.md 9.19 (3)
     (a)): two Links behind the emitter it clicks the half that leaves."""
     document = {
@@ -93,14 +87,13 @@ def chain_world(
         "detector_law": True,
         "massive_record": True,
         "amplitude_bound": 1 << 32,
-        "wheel": 64,
         "directions": [],
         "families": [
             {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
             {"name": "matter", "quantum": 1, "pair": list(EMITTER_KIND)},
         ],
         "measured": [
-            emitter_body([2, 0, 0], stock, wheel, order, seed, receiver),
+            emitter_body([2, 0, 0], stock, receiver),
             {
                 "position": [70, 0, 0],
                 "family": "light",
@@ -123,7 +116,7 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
     assert world.detector_law
     assert DETECTOR_LAW_RULE in world.hypotheses
     block = world.measured[0].block
-    assert block is not None and block.emitter is not None and block.emitter.wheel == (1, 6)
+    assert block is not None and block.emitter is not None and block.emitter.family == 0
     # the lamp is refused under the detector law (ALGEBRA.md 9.17): a birth
     # has a clicking record behind it
     with_lamp = chain_world()
@@ -195,8 +188,10 @@ def test_a_chain_world_clicks_once_per_record_with_the_books_balanced():
         assert simulation.books()["balanced"], simulation.tick
     births = [line for line in lines if line["event"] == "birth"]
     gathers = [line for line in lines if line["event"] == "gather"]
-    # the emitter's stock of 6 excitations, each clicking at its own rung
-    assert len(births) == 6 and [line["u"] for line in births] == list(range(6))
+    # the emitter's stock of 6 excitations, each clicking at its own rung; the
+    # residues from the law (ALGEBRA.md 9.22 (4)): the clicking record's
+    # remainder at the birth cell on Z_700
+    assert len(births) == 6 and all(0 <= line["u"] < 700 and line["W"] == 700 for line in births)
     assert len(gathers) + sum(1 for live in simulation.records.values() if live.family == 0) == 6
     assert len(gathers) >= 4
     assert all("clock" in g and "birth" in g and "click" in g for g in gathers)
@@ -223,76 +218,17 @@ def test_a_chain_world_clicks_once_per_record_with_the_books_balanced():
     assert simulation.books()["families"]["light"]["measured"]["measured"] == 0
 
 
-def test_the_order_channels_keys_on_the_emitter_body_seed_the_residues_order():
-    """Line 8, the order channel's two keys (DECLARATIONS.md section 2 item 8, the model
-    owner's declaration; Reviewer 3's line of 04:38Z: no default; the Boss's 04:55Z and
-    05:30Z), on the EMITTER BODY since ALGEBRA.md 9.17 (the excitations' residues):
-    `keyed_permutation` is the declaration's Fisher-Yates permutation driven by the SplitMix64
-    mixing hash, a bijection on Z_W at W = 16, 256 and 2048 for several keys, the same key the
-    same order, two keys two orders, no key the counter's order, a count below 1 refused; under
-    "ordinal" the births' residues are the counter's, u = (ordinal - 1) mod W; under "seed" the
-    W births take every residue of Z_W once, in the permutation's order (the engine's
-    `birth_orders`), two seeds two orders, the same seed the same order; the gather line keeps
-    `u` (HOST); the refusals: the step above 1 under "seed", the seed absent under "seed", the
-    seed present under "ordinal", a value that is neither."""
-    for count in (16, 256, 2048):
-        for key in (0, 1, 50 << 20, (1 << 64) - 1):
-            order = keyed_permutation(count, key)
-            assert sorted(order) == list(range(count))
-            assert order == keyed_permutation(count, key)
-        assert keyed_permutation(count, 1) != keyed_permutation(count, 2)
-        assert keyed_permutation(count, 7) != list(range(count))
-    with pytest.raises(ValueError, match="positive count"):
-        keyed_permutation(0, 1)
-
-    def run(document: dict) -> tuple[list[dict], list[dict], DetectorLawSimulation]:
-        world = parse_nature_beam_world(document)
-        lines: list[dict] = []
-        simulation = DetectorLawSimulation(world, observer=lines.append)
-        for _ in range(document["ticks"]):
-            simulation.step()
-        births = [line for line in lines if line["event"] == "birth"]
-        gathers = [line for line in lines if line["event"] == "gather"]
-        return births, gathers, simulation
-
-    ordinal_births, ordinal_gathers, ordinal = run(chain_world(8, (1, 8)))
-    assert [line["u"] for line in ordinal_births] == list(range(8))
-    assert ordinal.birth_orders == {}
-    seed_births, seed_gathers, seeded = run(chain_world(8, (1, 8), "seed", 50 << 20))
-    residues = [line["u"] for line in seed_births]
-    assert sorted(residues) == list(range(8)) and residues != list(range(8))
-    assert residues == seeded.birth_orders[0] == keyed_permutation(8, 50 << 20)
-    other_births, _, _ = run(chain_world(8, (1, 8), "seed", 7))
-    assert [line["u"] for line in other_births] != residues
-    again_births, _, _ = run(chain_world(8, (1, 8), "seed", 50 << 20))
-    assert [line["u"] for line in again_births] == residues
-    assert all("u" in gather and "birth" in gather and "click" in gather for gather in seed_gathers)
-    for order, seed, message in (
-        ("seed", None, "residue_seed is required under residue_order"),
-        ("ordinal", 5, "residue_seed is refused under residue_order"),
-        ("counter", None, 'must be "ordinal"'),
-        ("seed", -1, "residue_seed"),
-        ("seed", 1 << 64, "residue_seed"),
-    ):
-        with pytest.raises(ValueError, match=message):
-            parse_nature_beam_world(chain_world(8, (1, 8), order, seed, on_mode=False))
-    with pytest.raises(ValueError, match="the step must be 1"):
-        parse_nature_beam_world(chain_world(8, (3, 8), "seed", 3, on_mode=False))
-
-
 def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_record():
     """ALGEBRA.md 9.17 (the Boss's line on the knot): the emitter's own cells are cells like
     every other after the birth: no grace, no exemption, no own take. On the chain world
     the born record's row at the emitter's cell evolves under the rule (nonzero at ages after
-    the birth, never held at 0), no Node absorbs (the take retired, 9.19 (3)), the ledger's
-    row `taken_by_emitter` stays 0 (kept for the readers' form) and the records reading
-    carries no `emitter_taking`; a `remnant_take` key on the emitter is refused as unknown;
-    a detector-law world with a detector set declares the world key `wheel` (refused
-    absent, no implicit default); a massive kind's `take` is refused on light's kind; the
+    the birth, never held at 0), the ledger's row `taken_by_emitter` stays 0 (kept for the
+    readers' form) and the records reading carries no `emitter_taking`; a `remnant_take` key
+    on the emitter is refused as unknown; the world key `wheel`, a set's `wheel` and a
+    family's `take` are refused by name (the retired keys, BUILD.md section 26 item 15); the
     books balanced."""
-    world = parse_nature_beam_world(chain_world(1, (1, 1)))
+    world = parse_nature_beam_world(chain_world(1))
     simulation = DetectorLawSimulation(world)
-    assert not simulation.absorbing.any()
     at_cell: list[int] = []
     booked = 0
     for _ in range(200):
@@ -314,28 +250,29 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
     keyed["measured"][0]["emitter"]["remnant_take"] = 4
     with pytest.raises(ValueError, match="remnant_take"):
         parse_nature_beam_world(keyed)
-    no_wheel = chain_world(on_mode=False)
-    del no_wheel["measured"][0]
-    del no_wheel["wheel"]
-    with pytest.raises(ValueError, match="declares the world key `wheel`"):
-        parse_nature_beam_world(no_wheel)
-    no_wheel["wheel"] = 64
-    parse_nature_beam_world(no_wheel)
+    world_wheel = chain_world(on_mode=False)
+    world_wheel["wheel"] = 64
+    with pytest.raises(ValueError, match="the world.wheel is refused"):
+        parse_nature_beam_world(world_wheel)
+    set_wheel = chain_world(on_mode=False)
+    set_wheel["detectors"][0]["wheel"] = 64
+    with pytest.raises(ValueError, match=r"detectors\[0\]\.wheel is refused"):
+        parse_nature_beam_world(set_wheel)
     on_light = chain_world(on_mode=False)
     on_light["families"][0]["take"] = [-15, 56]
-    with pytest.raises(ValueError, match="admitted on a massive kind alone"):
+    with pytest.raises(ValueError, match=r"families\[0\]\.take is refused"):
         parse_nature_beam_world(on_light)
 
 
 def layer_world(receiver: object = None) -> dict:
     """A layer of 24 x 7 x 1 (x closed at both ends, mirrors; y and z
     periodic): the emitter body at [2, 3, 0] (the matter kind on its mode,
-    the stock 8 on the wheel [1, 8]), three receiver bodies at x = 18 on the
+    the stock 8), three receiver bodies at x = 18 on the
     rows y = 2, 3, 4 read as the sets s0, s1, s2 (one Node each, the
     screen). With `receiver`, the emitter's records' ladder is the named
     sets in the named order; without it, every declared set in the
     declared order (ALGEBRA.md 9.19 (3) (b))."""
-    measured = [emitter_body([2, 3, 0], 8, (1, 8), receiver=receiver)]
+    measured = [emitter_body([2, 3, 0], 8, receiver=receiver)]
     detectors = []
     for index, y in enumerate((2, 3, 4)):
         measured.append(
@@ -378,22 +315,22 @@ def layer_world(receiver: object = None) -> dict:
 
 def run_layer(
     document: dict, ticks: int = 900
-) -> tuple[list[dict], DetectorLawSimulation, dict[int, tuple[list[int], list[int], int, int]]]:
+) -> tuple[list[dict], DetectorLawSimulation, dict[int, tuple[list[int], list[int], int, int, int]]]:
     """The layer world stepped with the books balanced at every interval; the gather lines,
     the simulation, and per clicked record the pointers and the ladder as the click read
     them (a spy on the engine's `_ladder_click`: the pointers before the call, the ladder
-    of `_ladder_of`, u and the norm)."""
+    of `_ladder_of`, u, the norm and the record's own wheel W)."""
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
-    seen: dict[int, tuple[list[int], list[int], int, int]] = {}
+    seen: dict[int, tuple[list[int], list[int], int, int, int]] = {}
     original = simulation._ladder_click
 
     def spy(live):
         pointers = list(live.pointers)
         original(live)
         if live.clicked and live.identity not in seen:
-            seen[live.identity] = (pointers, simulation._ladder_of(live), live.u, live.norm)
+            seen[live.identity] = (pointers, simulation._ladder_of(live), live.u, live.norm, live.wheel)
 
     simulation._ladder_click = spy  # type: ignore[method-assign]
     for _ in range(ticks):
@@ -403,14 +340,20 @@ def run_layer(
 
 
 def chosen_by_the_rule(
-    simulation: DetectorLawSimulation, pointers: list[int], ladder: list[int], u: int, norm: int
+    simulation: DetectorLawSimulation,
+    pointers: list[int],
+    ladder: list[int],
+    u: int,
+    norm: int,
+    wheel: int,
 ) -> str:
     """The cumulative rule of ALGEBRA.md 9.19 (3) (b) on the click's own numbers: the first
-    cell k of the ladder with 2 W_k L_k >= (2 u + 1) T, L_k the ladder's sum up to k."""
+    cell k of the ladder with 2 W L_k >= (2 u + 1) T, L_k the ladder's sum up to k, W the
+    record's own wheel (9.22 (4))."""
     total = 0
     for cell in ladder:
         total += pointers[cell]
-        if 2 * simulation.cell_wheel.get(cell, simulation.wheel) * total >= (2 * u + 1) * norm:
+        if 2 * wheel * total >= (2 * u + 1) * norm:
             return simulation.cell_set[cell]
     raise AssertionError("no rung crossed")
 
@@ -440,27 +383,26 @@ def test_the_emitters_ladder_by_name_orders_the_named_sets():
     line). The loader refuses a name no set declares, a repeated name and an empty list."""
     gathers, simulation, seen = run_layer(layer_world(["s0", "s1", "s2"]))
     assert len(gathers) == 8
-    assert sorted(gather["u"] for gather in gathers) == list(range(8))
     names = [simulation.cell_names.index(name) for name in ("s0", "s1", "s2")]
     for gather in gathers:
         assert gather["ladder"] == ["s0", "s1", "s2"] and gather["record"] not in simulation.records
         assert gather["chosen"] is not None and gather["chosen"][0][0] in {"s0", "s1", "s2"}
-        pointers, ladder, u, norm = seen[gather["record"]]
-        assert ladder == names and u == gather["u"]
-        assert gather["chosen"][0][0] == chosen_by_the_rule(simulation, pointers, ladder, u, norm)
+        pointers, ladder, u, norm, wheel = seen[gather["record"]]
+        assert ladder == names and u == gather["u"] and wheel == 700 and 0 <= u < wheel
+        assert gather["chosen"][0][0] == chosen_by_the_rule(simulation, pointers, ladder, u, norm, wheel)
         assert gather["sunk"] == sum(p for cell, p in enumerate(pointers) if cell not in names)
         assert gather["T"] == sum(pointers)
         # the finding: the three Nodes book together, the last sum crosses first
         assert all(pointers[cell] > 0 for cell in names)
-    forward = {gather["u"]: gather["chosen"][0][0] for gather in gathers}
-    assert forward == {u: "s2" for u in range(8)}, forward
+    forward = [gather["chosen"][0][0] for gather in gathers]
+    assert forward == ["s2"] * 8, forward
     backward, _, _ = run_layer(layer_world(["s2", "s1", "s0"]))
-    assert {g["u"]: g["chosen"][0][0] for g in backward} == {u: "s0" for u in range(8)}
+    assert [g["chosen"][0][0] for g in backward] == ["s0"] * 8
     one, _, _ = run_layer(layer_world("s1"))
     assert len(one) == 8 and all(gather["chosen"][0][0] == "s1" for gather in one)
     control, _, _ = run_layer(layer_world())
     assert all("ladder" not in gather and "sunk" not in gather for gather in control)
-    assert {g["u"]: g["chosen"][0][0] for g in control} == forward
+    assert [g["chosen"][0][0] for g in control] == forward
     with pytest.raises(ValueError, match="names 'screen', which no detector set declares"):
         parse_nature_beam_world(layer_world(["s0", "screen"]))
     with pytest.raises(ValueError, match="names a set twice"):

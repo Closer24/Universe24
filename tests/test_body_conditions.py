@@ -32,7 +32,10 @@ from tests.test_massive_record import block_world
 
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 KIND = [800, 809]
-WELL = [800, 800]
+WELL = [
+    800,
+    801,
+]  # the rich well (2403 remainder values, ALGEBRA.md 9.22 (4)), the fifteen's since item 15
 AMPLITUDE = 1 << 20
 WORLDS = Path(__file__).resolve().parents[1] / "examples" / "events"
 
@@ -45,7 +48,7 @@ def seeded(
     ramp: int = 0,
     faces: dict[str, str] | None = None,
 ) -> dict:
-    """A world of one body of the kind [800, 809] with the full-depth well [800, 800], a
+    """A world of one body of the kind [800, 809] with the well [800, 801], a
     control world, its seed the margin module's own mode rounded at the amplitude 2^20 over
     the whole board (the generator's `mode_profile` form)."""
     document = block_world(
@@ -177,16 +180,17 @@ def test_e_a_pair_not_lowered_is_the_loaders_own_refusal():
 
 
 def test_f_the_ramp_against_ten_relaxation_times():
-    """The box of side 20 (omega_0 0.1493, omega_b 0.1105: the relaxation 25.7 intervals,
-    DECLARATIONS.md section 8's 26): pushed with a ramp of 100 it is refused naming the ramp
-    and the relaxation time; with 300 (11.7 times) it is admitted with the ramp's line."""
+    """The box of side 20 on the well [800, 801] (the relaxation about 33 intervals, the
+    margin module's own omega_b; on [800, 800] it read 25.7, DECLARATIONS.md section 8's
+    26): pushed with a ramp of 100 it is refused naming the ramp and the relaxation time;
+    with 400 (above ten times) it is admitted with the ramp's line."""
     world = parse_nature_beam_world(seeded([48, 48, 48], [14, 14, 14], 20))
     relaxation = relaxation_time(check_margins(world)[0])
-    assert 25.0 < relaxation < 26.5
+    assert 30.0 < relaxation < 36.0
     with pytest.raises(ValueError, match=r"the ramp 100 is below 10 relaxation times"):
         checked(seeded([48, 48, 48], [14, 14, 14], 20, momentum=[64, 0, 0], ramp=100))
-    lines = checked(seeded([48, 48, 48], [14, 14, 14], 20, momentum=[64, 0, 0], ramp=300))
-    assert len(lines) == 3 and lines[2].startswith("ramp (COMPUTATION): block 0: the ramp 300")
+    lines = checked(seeded([48, 48, 48], [14, 14, 14], 20, momentum=[64, 0, 0], ramp=400))
+    assert len(lines) == 3 and lines[2].startswith("ramp (COMPUTATION): block 0: the ramp 400")
 
 
 CLEAN = "bit for bit"

@@ -39,10 +39,6 @@
    "phase_per_link": [
     1089,
     320
-   ],
-   "take": [
-    -19,
-    86
    ]
   },
   {
@@ -72,8 +68,8 @@
    "fixed": true,
    "side": 1,
    "pair": [
-    8,
-    7
+    801,
+    700
    ],
    "seed": [
     0,
@@ -280,13 +276,8 @@
    "margin": "control",
    "emitter": {
     "family": "matter",
-    "wheel": [
-     1,
-     64
-    ],
-    "residue_order": "ordinal",
     "period": 20,
-    "norm": 53536
+    "norm": 6403194
    }
   },
   {

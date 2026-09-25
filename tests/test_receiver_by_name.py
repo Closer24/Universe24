@@ -29,14 +29,15 @@ from tests.test_massive_record import light_clock_world, massive_world, seed_sou
 
 SAGNAC_REST = Path(__file__).resolve().parents[1] / "examples/events/massive_record/sagnac_rest.json"
 CLOSED_CHAIN = {"x": "closed", "y": "periodic", "z": "periodic"}
-Spy = dict[int, tuple[list[int], list[int], int, int]]
+Spy = dict[int, tuple[list[int], list[int], int, int, int]]
 
 
 def emitter(position: int, receiver: str | None, momentum: int = 0, stock: int = 4) -> dict:
     """An emitter body of side 12 at `position` on the matter kind [800, 809]: the well
-    [800, 800], the seed 50 x 2^20 (its profile on the mode by `seed_source` once the world
-    is built), W 64, its `emitter` of light on the wheel [1, 64] with the stock `stock`, its
-    `receiver` where one is named (the line at that set's rung)."""
+    [800, 801] (W = 2403 remainder values, ALGEBRA.md 9.22 (4)), the seed 50 x 2^20 (its
+    profile on the mode by `seed_source` once the world is built), its `emitter` of light
+    with the stock `stock`, its `receiver` where one is named (the line at that set's
+    rung)."""
     block = {
         "position": [position, 0, 0],
         "family": "matter",
@@ -45,10 +46,9 @@ def emitter(position: int, receiver: str | None, momentum: int = 0, stock: int =
         "momentum": [momentum, 0, 0],
         "fixed": True,
         "side": 12,
-        "pair": [800, 800],
+        "pair": [800, 801],
         "seed": 50 << 20,
-        "wheel": 64,
-        "emitter": {"family": "light", "wheel": [1, 64], "residue_order": "ordinal"},
+        "emitter": {"family": "light"},
         "margin": "control",
     }
     if receiver is not None:
@@ -72,17 +72,16 @@ def body(x: int) -> dict:
 def chain_of_200(receiver: str | None = "screen") -> dict:
     """The declaration's test world: a chain of 200 (x closed, mirrors), light's clock
     [1, 1], the emitter body A at [20, 32) naming `screen` (four births), the set `screen`
-    on the body at x = 91 (60 Links from A's face at 31) at wheel 64, and the set `beside`
-    on the body at x = 8 behind A at wheel 64 (off A's ladder); the world's wheel 64."""
+    on the body at x = 91 (60 Links from A's face at 31), and the set `beside` on the body
+    at x = 8 behind A (off A's ladder); no wheel (the record's own, 9.22 (4))."""
     document = massive_world([200, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
     document["families"][0]["phase_per_link"] = [1, 1]
     document["ticks"] = 500
     document["clock_stamp"] = True
-    document["wheel"] = 64
     document["measured"] = [emitter(20, receiver, 70), body(91), body(8)]
     document["detectors"] = [
-        {"name": "screen", "positions": [[91, 0, 0]], "wheel": 64},
-        {"name": "beside", "positions": [[8, 0, 0]], "wheel": 64},
+        {"name": "screen", "positions": [[91, 0, 0]]},
+        {"name": "beside", "positions": [[8, 0, 0]]},
     ]
     seed_source(document, 0)
     return document
@@ -104,7 +103,13 @@ def run(
             pointers = list(live.pointers)
             original(live)
             if live.clicked and live.identity not in seen:
-                seen[live.identity] = (pointers, simulation._ladder_of(live), live.u, live.norm)
+                seen[live.identity] = (
+                    pointers,
+                    simulation._ladder_of(live),
+                    live.u,
+                    live.norm,
+                    live.wheel,
+                )
 
         simulation._ladder_click = spy  # type: ignore[method-assign]
     for _ in range(ticks):
@@ -158,10 +163,10 @@ def test_a_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cel
             assert line["tick"] == line["click"] and line["click"] - line["birth"] > 60
             assert "ladder" not in line and line["content"] == 1
             assert line["record"] not in simulation.records and line["clock_source"] == "interval"
-            pointers, ladder, u, norm = seen[line["record"]]
-            assert ladder == [screen] and u == line["u"]
+            pointers, ladder, u, norm, wheel = seen[line["record"]]
+            assert ladder == [screen] and u == line["u"] and wheel == 2403
             # the cumulative rule on the click's own pointers (ALGEBRA.md 9.19 (3) (b))
-            assert 2 * 64 * pointers[screen] >= (2 * u + 1) * norm
+            assert 2 * wheel * pointers[screen] >= (2 * u + 1) * norm
             # the cells off the ladder: booked, never chosen, counted in T
             assert pointers[beside] > 0 and pointers[own] >= 0
             assert line["T"] == sum(pointers) == pointers[screen] + pointers[beside] + pointers[own]
@@ -209,7 +214,7 @@ def test_b_the_blocks_own_cell_is_on_no_ladder():
     mirror at x = 0, forty Links there and back, before the +x half's rung at `screen`:
     its pointer above 0 as the click read it) and is never chosen, every line at `screen`.
     The edge case: a block naming the set that IS its own cells (the sagnac form, `block`
-    without positions, W 256) on the closed chain of 600 at rest: the born record is
+    without positions) on the closed chain of 600 at rest: the born record is
     written ON the set's cells and leaves them (the outward flux is booked to no cell), so
     the set reads nothing of the write itself; the record clicks at the set only once the
     mirrors return the field into the cells (the self-click of BUILD.md section 26 item 10
@@ -222,12 +227,12 @@ def test_b_the_blocks_own_cell_is_on_no_ladder():
     found = gathers(lines)
     assert found and all(g["chosen"] == [["screen", 0, "0"]] for g in found)
     assert any(seen[g["record"]][0][own_cell] > 0 for g in found)
+    assert all(seen[g["record"]][4] == 2403 for g in found)
     document = massive_world([600, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
     document["ticks"] = 700
     document["clock_stamp"] = True
-    document["wheel"] = 64
     document["measured"] = [emitter(200, "at_a", 0)]
-    document["detectors"] = [{"name": "at_a", "block": 0, "wheel": 256}]
+    document["detectors"] = [{"name": "at_a", "block": 0}]
     seed_source(document, 0)
     seen = {}
     simulation, lines = run(document, 700, seen=seen)
@@ -239,12 +244,14 @@ def test_b_the_blocks_own_cell_is_on_no_ladder():
 
 def test_c_the_lines_time():
     """The line's time: on the light clock's chain of 173 with the faces CLOSED and A naming
-    its own bound set `A_face` (x = 112, W 64), the first record's line is written at the
-    rung's interval (`tick` equal to `click`), within ten intervals of the birth (the set
-    beside A's cells books the +x half from the first interval), stamped with A's count
-    (clock_source measured:0); the record is deleted whole at its line (not among the
-    records, no second line within 300 intervals). Two emitter bodies one Link apart naming
-    the set on the one free Node between them (bound to the first, W 256): both bodies'
+    its own bound set `A_face` (x = 112), the first record's line is written at the
+    rung's interval (`tick` equal to `click`), after its birth (the set beside A's cells
+    books the +x half from the first interval; the rung (2 u + 1) T / (2 W) on the record's
+    own residue from the law decides how much of the record must pass, the mirrors'
+    returns included), stamped with A's count (clock_source measured:0); the record is
+    deleted whole at its line (not among the records, no second line within 300
+    intervals). Two emitter bodies one Link apart naming
+    the set on the one free Node between them (bound to the first): both bodies'
     records write their lines there at a rung with `tick` equal to `click`, stamped with the
     bound body's count."""
     document = light_clock_world("closed", False)
@@ -256,16 +263,15 @@ def test_c_the_lines_time():
     line = found[0]
     assert line["click_at"] == "rung" and line["tick"] == line["click"]
     assert line["chosen"] == [["A_face", 0, "0"]] and line["clock_source"] == "measured:0"
-    assert 0 <= line["click"] - line["birth"] <= 10
+    assert 0 <= line["click"] - line["birth"] <= 300 and 0 <= line["u"] < 2403
     assert first not in simulation.records
     # two bodies one Link apart, each naming the set between them
     document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809], faces={"x": "open"})
     document["families"][0]["phase_per_link"] = [1, 1]
     document["ticks"] = 400
     document["clock_stamp"] = True
-    document["wheel"] = 64
     document["measured"] = [emitter(100, "between"), emitter(113, "between")]
-    document["detectors"] = [{"name": "between", "block": 0, "positions": [[112, 0, 0]], "wheel": 256}]
+    document["detectors"] = [{"name": "between", "block": 0, "positions": [[112, 0, 0]]}]
     seed_source(document, 0)
     seed_source(document, 1)
     simulation, lines = run(document, 400)

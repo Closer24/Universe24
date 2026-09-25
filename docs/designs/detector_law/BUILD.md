@@ -1722,6 +1722,60 @@ would have found no cell.
    suites re-read on this engine: their numbers are the engine's,
    COMPUTATION; the property test green at every push of this item.
 
+15. THE RESIDUE FROM THE LAW AND THE TAKE'S DATA GONE (ALGEBRA.md 9.22
+   (4), 9.19 (4a) and 9.21 (8b) with the mathematician's answers of
+   23:13Z; the cleanup order's step 2, its first push; the property test
+   green). THE RESIDUE: no world declares a residue. At an excitation and
+   at the click that births a record, the engine reads the clicking record's
+   rule remainder r at the body's centre cell (`residue_of`): u = r / g in
+   the remainder's step g = gcd(num x scale, wall), and the record's own
+   wheel W = wall / g = 3 den / gcd(num, 3 den) values of the pair at that
+   cell; the born record carries u and W (the birth line's `u` and `W`),
+   the rung 2 W L_k >= (2 u + 1) T is read on the record's W everywhere
+   (the ladder click, the excited record's rung, the gather line's rungs,
+   the table body's split), and no set, block, world or emitter declares a
+   wheel. THE RICHNESS: the loader refuses an emitter whose body's pair
+   gives fewer than 500 remainder values, naming the count; every one-cell
+   emitter moves to the well [801, 700] on the kind [7, 8] (700 values,
+   the mathematician's confirmation: bound on a chain at 1.90193 and on a
+   layer at 1.75218; on a cube a one-cell body does not bind and the
+   emitter is a body of side 3, 9.21 (8b)), every emitting body of side 12
+   to [800, 801] on [800, 809] (2403 values; [800, 800] gives 3 and is
+   refused); the non-emitting wells keep [800, 800] until step 6. THE
+   TAKE'S DATA REMOVED: `absorbing`, `take` (a block's and a family's),
+   the take masks and their Ports, a record's `driven` and `port_motion`,
+   a block's `taking`, `_form_take_masks`, the take's pair arrays; the
+   loader refuses `absorbing`, `take`, `emits`, `own_grace`, `wheel`,
+   `residue_order` and `residue_seed` BY NAME with the successor in the
+   message (`RETIRED_KEYS`, `_refuse_retired`) on the world, a family, a
+   measured event, an emitter and a detector set; `_neighbours` reads the
+   six neighbours and nothing through a Port; a born record of a massive
+   kind is told from a block's own record by its `emitter` (the `driven`
+   mask retired). THE WORLDS regenerated on the rich wells without the
+   keys (the two matter layer worlds lose their take lines at x = 0 and
+   127: the open faces there are the receiver `face`); the Malus and Bell
+   worlds held as before. TWO FINDINGS FOR THE MATHEMATICIAN (values on
+   the board): (a) an excited record is the seed again after every click
+   (9.17 (4)), so on a body WITHOUT a coupling to the light on the board
+   its remainder at the centre cell repeats and every birth carries the
+   same residue (the chain of 240: 214, 214, 214 on W = 700; the emitter's
+   unit chain: one value over four births on W = 2403): a distribution of
+   residues needs the body's coupling (the registered emitters carry G
+   [1, 50], g [1, 1000]) or another body's field; (b) the excited record's
+   own residue is 0 on a fresh seed (its remainder 0), so its rung is
+   T / (2 W) and it clicks at the first interval with flux into the centre
+   cell: the births come one per interval while the stock lasts. Retired
+   tests: the order channel (test_detector_law.py), the world key `wheel`
+   (test_massive_record.py ab, rewritten as the refusals by name), the
+   silent take line (aj); the chain digests of (p) moved; every other
+   suite rewritten onto the record's W (BUILD.md item 14's spy reads it).
+   Left for the next push of step 2: no table in the engine (`born: [now,
+   before]` from the generator, the cosine and sine tables and the phase
+   imports retired with step 3's tables), `_source` and `_receive` (not in
+   the order's list: the coupling stays until the mathematician's word),
+   record 1886's LAWFUL / REFUSED input check and record 1887's one
+   command (queued after the emitter line).
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

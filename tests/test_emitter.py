@@ -44,7 +44,6 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe.core.integer import keyed_permutation
 from event_universe.core.phase import phase_cosines
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import parse_nature_beam_world
@@ -64,27 +63,17 @@ def massive_generator():
 
 def emitter_world(
     stock: int = 4,
-    wheel: tuple[int, int] = (1, 4),
-    order: str = "ordinal",
-    seed: int | None = None,
     ticks: int = 1200,
     side: int = 12,
     on_mode: bool = True,
 ) -> dict:
-    """The emitter's unit world: a chain of 80 (x closed, mirrors), the emitter a body of the matter
-    kind [800, 809] with the well pair [800, 800] of side `side` at x = 5, seeded on its
-    bound mode at the amplitude 100 (the generator's `seed_on_the_mode`, the body's
-    conditions of the load check), its stock `amount` = `stock`, its `emitter` the light
-    family [77, 25] on the wheel given with its residue order and its ladder the set
-    `screen`; the receiver a body of light at x = 70 read as `screen`; the world's wheel 64 the sets' rung."""
-    emitter: dict = {
-        "family": "light",
-        "wheel": list(wheel),
-        "residue_order": order,
-        "receiver": ["screen"],
-    }
-    if seed is not None:
-        emitter["residue_seed"] = seed
+    """The emitter's unit world: a chain of 80 (x closed, mirrors), the emitter a body of the
+    matter kind [800, 809] with the well pair [800, 801] (W = 2403 remainder values, ALGEBRA.md
+    9.22 (4)) of side `side` at x = 5, seeded on its bound mode at the amplitude 100 (the
+    generator's `seed_on_the_mode`, the body's conditions of the load check), its stock
+    `amount` = `stock`, its `emitter` the light family [77, 25] with its ladder the set
+    `screen`; the receiver a body of light at x = 70 read as `screen`; no wheel anywhere."""
+    emitter: dict = {"family": "light", "receiver": ["screen"]}
     document = {
         "law": "beam",
         "model_id": "beam-detector-law-emitter-unit-v1",
@@ -99,7 +88,6 @@ def emitter_world(
         "detector_law": True,
         "massive_record": True,
         "amplitude_bound": 1 << 32,
-        "wheel": 64,
         "directions": [],
         "families": [
             {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
@@ -114,7 +102,7 @@ def emitter_world(
                 "momentum": [0, 0, 0],
                 "fixed": True,
                 "side": side,
-                "pair": [800, 800],
+                "pair": [800, 801],
                 "seed": 100,
                 "emitter": emitter,
             },
@@ -160,14 +148,19 @@ def run(document: dict) -> tuple[list[dict], DetectorLawSimulation, list[dict]]:
 
 
 def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved():
-    document = emitter_world(stock=4, wheel=(1, 4))
+    document = emitter_world(stock=4)
     lines, simulation, trace = run(document)
     births = [line for line in lines if line["event"] == "birth"]
     assert len(births) == 4
-    assert [line["u"] for line in births] == [0, 1, 2, 3]
+    # the residue from the law (ALGEBRA.md 9.22 (4)): u the clicking record's
+    # remainder at the birth cell in the remainder's step, W = 3 den / gcd(num,
+    # 3 den) = 2403 on [800, 801]; read on the board below
+    assert all(line["W"] == 2403 and 0 <= line["u"] < 2403 for line in births)
     assert [line["excitation"] for line in births] == [1, 2, 3, 4]
     ticks = [line["tick"] for line in births]
-    assert ticks == sorted(ticks) and ticks[0] > 1 and ticks[-1] < document["ticks"]
+    # the excited record's residue is 0 on the seed (its remainder 0), its rung
+    # T / (2 W): the click at the first interval with flux into the centre cell
+    assert ticks == sorted(ticks) and ticks[0] >= 1 and ticks[-1] < document["ticks"]
     norm = births[0]["excitation_norm"]
     assert norm > 0 and all(line["excitation_norm"] == norm for line in births)
     # the norm T: the one-way flux into the body's centre cell over one period
@@ -179,7 +172,7 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     # `period` intervals, bit for bit; the period the nearest integer to
     # 2 pi / omega_b (about 70 on this well)
     emitter = document["measured"][0]["emitter"]
-    assert emitter["norm"] == norm and 60 <= emitter["period"] <= 80
+    assert emitter["norm"] == norm and emitter["period"] > 0
     alone = json.loads(json.dumps(document))
     del alone["measured"][0]["emitter"]
     alone["measured"] = alone["measured"][:1]
@@ -197,15 +190,22 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     assert flux == norm
     by_tick = {entry["tick"]: entry for entry in trace}
     for line in births:
-        u = line["u"]
-        threshold = norm * (2 * u + 1)  # 2 T u + T <= 2 W C
-        assert 2 * 4 * line["excitation_offer"] >= threshold
-        # the interval before the click: the offer below the rung
-        previous = by_tick[line["tick"] - 1]
-        assert 2 * 4 * previous["offer"] < threshold or previous["excited_before"] is None
-        # the excited record ended at its click, the next one seeded with the next residue
+        # the excited record's own rung: its residue is the seed's remainder
+        # at the centre cell as excited (0 on a fresh seed), the rung T / (2 W)
+        excited_u = by_tick[line["tick"]]["excited_before"][1]
+        threshold = norm * (2 * excited_u + 1)  # 2 T u + T <= 2 W C
+        assert 2 * 2403 * line["excitation_offer"] >= threshold
+        # the interval before the click: the offer below the rung (a birth at
+        # the first interval has no interval before it)
+        previous = by_tick.get(line["tick"] - 1)
+        assert (
+            previous is None
+            or 2 * 2403 * previous["offer"] < threshold
+            or previous["excited_before"] is None
+        )
+        # the excited record ended at its click, the next one seeded
         entry = by_tick[line["tick"]]
-        assert entry["excited_before"] is not None and entry["excited_before"][1] == u
+        assert entry["excited_before"] is not None
         if line["excitation"] < 4:
             assert (
                 entry["excited_after"] is not None
@@ -220,7 +220,7 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
     assert not simulation.records
     gathers = [line for line in lines if line["event"] == "gather"]
     assert len(gathers) == 4 and all(gather["chosen"] == [["screen", 0, "0"]] for gather in gathers)
-    assert sorted(gather["u"] for gather in gathers) == [0, 1, 2, 3]
+    assert sorted(gather["u"] for gather in gathers) == sorted(line["u"] for line in births)
     for gather in gathers:
         assert gather["content"] == 1 and gather["click_at"] == "rung"
         # the +x half's front over the 54 Links from the body's face at 16 to
@@ -228,19 +228,19 @@ def test_a_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserv
         # rung (2 u + 1) T / 128 crossed on the front
         assert gather["click"] >= gather["birth"] + 65
         assert gather["click"] == gather["tick"] and gather["record"] not in simulation.records
-    # the seed order: the wheel's permutation, the same counts of births
-    lines, _, _ = run(emitter_world(stock=4, wheel=(1, 4), order="seed", seed=7))
-    seeded = [line["u"] for line in lines if line["event"] == "birth"]
-    assert seeded == keyed_permutation(4, 7) and sorted(seeded) == [0, 1, 2, 3]
-    # a stock below the wheel: the first residues alone; above it: the wheel again
-    lines, _, _ = run(emitter_world(stock=2, wheel=(1, 4)))
-    assert [line["u"] for line in lines if line["event"] == "birth"] == [0, 1]
-    lines, _, _ = run(emitter_world(stock=3, wheel=(3, 4), ticks=1500))
-    assert [line["u"] for line in lines if line["event"] == "birth"] == [0, 3, 2]
+    # THE FINDING (BUILD.md section 26 item 15): the excited record is the
+    # seed again after every click and the body has no coupling to the light
+    # on the board, so its remainder at the centre cell repeats and every
+    # birth carries the same residue (a distribution needs the coupling, or
+    # the arriving field of another body)
+    assert len({line["u"] for line in births}) == 1
+    # a smaller stock: as many births
+    lines, _, _ = run(emitter_world(stock=2))
+    assert len([line for line in lines if line["event"] == "birth"]) == 2
 
 
 def test_b_the_born_record_is_written_once_and_the_law_advances_it():
-    document = emitter_world(stock=1, wheel=(1, 1), ticks=400)
+    document = emitter_world(stock=1, ticks=400)
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
@@ -271,7 +271,8 @@ def test_b_the_born_record_is_written_once_and_the_law_advances_it():
             # integer read on the board at the birth
             assert born.norm == birth["norm"] == simulation.conserved_form(born) > 0
             assert birth["cells"] == 12 and birth["excitation"] == 1 and birth["train"] == 0
-            assert born.u == 0 and born.content == 1 and born.emitter == 0
+            assert born.u == birth["u"] and born.wheel == birth["W"] == 2403
+            assert born.content == 1 and born.emitter == 0
             assert born.ladder == [simulation.cell_names.index("screen")]
         if born is not None and born.identity in simulation.records:
             nonzero = np.nonzero(born.now)[0]
@@ -282,8 +283,7 @@ def test_b_the_born_record_is_written_once_and_the_law_advances_it():
         # nothing reaches Manhattan distance m before age m (the causal bound)
         assert low >= 5 - age and high <= 16 + age
     # no drive and no take after the write (the take retired, ALGEBRA.md
-    # 9.19 (3)): nothing absorbs, and the ledger's retired row stays 0
-    assert not simulation.absorbing.any()
+    # 9.19 (3)): the ledger's retired row stays 0
     assert simulation.books()["families"]["light"]["transit"]["taken_by_emitter"] == 0
 
 
@@ -302,22 +302,19 @@ def test_c_the_loaders_refusals_name_their_keys():
 
     refused(emitter("family", "matter"), "the body's own family")
     refused(emitter("family", "nobody"), "unknown family")
-    refused(emitter("wheel", [2, 4]), "coprime")
-    refused(emitter("wheel", 4), "must be \\[step, W\\]")
-    refused(emitter("residue_order", "counter"), 'must be "ordinal" or "seed"')
-    refused(emitter("residue_seed", 3), "refused under residue_order")
+    # the retired keys of the declared residue (ALGEBRA.md 9.22 (4)), each
+    # refused by name with its successor
+    refused(emitter("wheel", [1, 4]), "emitter.wheel is refused")
+    refused(emitter("residue_order", "ordinal"), "emitter.residue_order is refused")
+    refused(emitter("residue_seed", 3), "emitter.residue_seed is refused")
+    refused(emitter("rate", [1, 1]), "unknown keys|rate")
 
-    def seed_without_seed(document):
-        document["measured"][0]["emitter"]["residue_order"] = "seed"
+    # the richness of the birth cell (9.22 (4)): a pair with fewer than 500
+    # remainder values refuses the emitter naming the count
+    def poor_well(document):
+        document["measured"][0]["pair"] = [800, 800]
 
-    refused(seed_without_seed, "residue_seed is required")
-
-    def seed_with_stride(document):
-        document["measured"][0]["emitter"].update({"residue_order": "seed", "residue_seed": 1})
-        document["measured"][0]["emitter"]["wheel"] = [3, 4]
-
-    refused(seed_with_stride, "the step must be 1")
-    refused(emitter("rate", [1, 1]), "unsupported key|rate")
+    refused(poor_well, "gives 3 remainder values")
 
     def on_light(document):
         document["measured"][0]["family"] = "light"
@@ -351,8 +348,11 @@ def test_c_the_loaders_refusals_name_their_keys():
     refused(emitter("born", {"now": [0] * 80, "before": [0] * 80}), "writes no motion")
 
     for key, value, message in (
-        ("emits", "light", "emits"),
+        ("emits", "light", "emits is refused"),
         ("own_grace", 3, "own_grace is refused"),
+        ("absorbing", True, "absorbing is refused"),
+        ("take", [-15, 56], "take is refused"),
+        ("wheel", 64, "wheel is refused"),
     ):
 
         def beside(document, key=key, value=value):

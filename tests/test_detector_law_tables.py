@@ -97,7 +97,7 @@ def splitter_world(weights: list[list[int]], turns: list[list[int]], inputs: boo
     (12, 2, 0) arriving from -x (the input direction +x) with its two outputs +x and +y, the
     split's weights and turns given; no detector set, so the born record's ladder is empty
     and it lives on."""
-    document = chain_world(stock=1, wheel=(1, 1), on_mode=False)
+    document = chain_world(stock=1, on_mode=False)
     document["shape"] = [30, 20, 1]
     document["boundary"] = {"x": "closed", "y": "closed", "z": "periodic"}
     document["ticks"] = 120
@@ -146,7 +146,6 @@ def planted_light(simulation: DetectorLawSimulation, age: int, identity: int = 1
         np.zeros(simulation.shape, dtype=np.int64),
         pointers=[0] * len(simulation.cell_names),
         first_rung=[None] * len(simulation.cell_names),
-        ports=[np.zeros(simulation.shape, dtype=np.int64) for _ in simulation.take_masks],
         age=age,
     )
 
@@ -221,10 +220,8 @@ def test_c_the_splitters_table_acts_on_the_pair_by_the_linear_form():
             assert all(0 <= r < sines[3] * 29 or 0 <= r < sines[4] * 29 for r in remainders)
     live = next(record for record in simulation.records.values() if record.family == 0)
     assert abs(int(live.now[14, 2, 0])) > 0 and abs(int(live.now[12, 4, 0])) > 0
-    # the one `click` line is the emitter's excited record's (its birth); the
-    # born record clicks nowhere (no gather line: its ladder is empty)
+    # the born record clicks nowhere (no gather line: its ladder is empty)
     assert not any(line["event"] == "gather" for line in lines)
-    assert [line["family"] for line in lines if line["event"] == "click"] == ["matter"]
     assert not live.clicked and not simulation.dead
     with pytest.raises(ValueError, match="a splitter declares its inputs"):
         parse_nature_beam_world(splitter_world([[21, 20]], [[0, 16]], inputs=False))

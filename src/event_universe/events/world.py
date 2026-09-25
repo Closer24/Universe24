@@ -435,11 +435,6 @@ WORLD_KEYS = {
     # profile's largest magnitude refused above it, the rows asserted below
     # it at every interval.
     "amplitude_bound",
-    # detector-law-v1: `wheel`, the rung W of the world's detector sets
-    # where no lamp's birth wheel declares a larger one (a world whose
-    # records a block emits; RUN_LIST.md's light detectors at W = 64), an
-    # integer from 1, 1 by default, admitted under `detector_law` alone.
-    "wheel",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -826,11 +821,6 @@ FAMILY_KEYS = {
     # admitted under the world key `massive_record` alone.
     "pair",
     "faces",
-    # item 10 and Reviewer 3's line 2 on item 6b: the kind's take pair [n, d]
-    # (the Ports' follow of a record of the kind at its emitter's own take),
-    # admitted on a massive kind alone; light's kind keeps the law's
-    # [-15, 56]; required where a lamp of the kind emits.
-    "take",
 }
 # The border every event in transit of a family with a lifetime clicks on
 # when its age reaches the lifetime: named like a face detector in the
@@ -851,14 +841,11 @@ BLOCK_KEYS = {
     "side",
     "pair",
     "coupling",
-    "wheel",
     "seed",
-    "absorbing",
     "cavity",
     "ramp",
     "start",
     "margin",
-    "emits",
     # the emitter as a clicking body (ALGEBRA.md 9.17 (4); LAB_TOOLS.md A.1):
     # the excited records in turn on the body's cells, each clicking at its
     # own rung, the born record written once by E^T at that interval
@@ -881,15 +868,6 @@ MEASURED_KEYS = {
     "family",
     "amount",
     "held",
-    # detector-law-v1 (DECLARATIONS.md section 15, the take's pair per kind,
-    # a declaration of kind 2): an absorbing block's `take` [n, d], the pair
-    # of its Ports' take (light's [-15, 56] where none is declared)
-    "take",
-    # detector-law-v1, line B: an emitting body's `own_grace` (N_s, the
-    # intervals after its train during which its own set takes nothing of
-    # its own record; DECLARATIONS.md section 10 item 1), required on an
-    # emitter, refused elsewhere
-    "own_grace",
     "phase",
     "momentum",
     "fixed",
@@ -990,7 +968,7 @@ CLOCK_ONLY_KEYS = ("at", "crowd")
 # rows at the set give the centre, and the offset added to it.
 WINDOW_READING_KEYS = {"reads", "offset"}
 TRANSIT_KEYS = {"position", "family", "number", "direction", "amount", "phase", "age", "hand"}
-DETECTOR_KEYS = {"name", "positions", "threshold", "reading", "block", "wheel"}
+DETECTOR_KEYS = {"name", "positions", "threshold", "reading", "block"}
 # The readings a detector may declare; the first is the default: `wave`
 # since 2026-09-20 (the model owner: "on the GameBoard a ray, in the world a
 # wave"; `beam` was the default from 2026-09-19 to 2026-09-20).
@@ -1109,8 +1087,6 @@ class FamilyDefinition:
     # deviation: a zero face for the massive record, MASSIVE_RECORD.md
     # section 11 item 4).
     faces: tuple[bool, bool, bool] | None = None
-    # item 10: the kind's take pair (None: light's kind, the law's [-15, 56])
-    take: tuple[int, int] | None = None
 
     @property
     def massive_kind(self) -> bool:
@@ -1308,9 +1284,7 @@ class EmitterDefinition:
     with its seed (the excited record: the body's seed at both levels) and
     its stock `amount` = M (the number of its excitations), the key
     `emitter`: {"family": the born family's name (a paid family with the
-    pair form of its clock), "wheel": [step, W] (the excited records'
-    residues, one per excitation), "residue_order": "ordinal" or "seed"
-    with "residue_seed", "branches": the born record's labels (optional,
+    pair form of its clock), "branches": the born record's labels (optional,
     [[0, 1]] by the lamp's form), "receiver": the born records' ladder by
     name (optional, a list of set names; the block's own `receiver`, one
     name, is the line at the rung), "period": P, the nearest integer to
@@ -1333,9 +1307,6 @@ class EmitterDefinition:
     rate, no train, no drive, no source term, no grace."""
 
     family: int
-    wheel: tuple[int, int]
-    residue_order: str
-    residue_seed: int | None
     branches: tuple[tuple[int, int], ...]
     label_hands: tuple[int, int] | None
     receiver: tuple[str, ...] | None
@@ -1356,41 +1327,27 @@ class BlockDefinition:
     first-difference form both ways, `receive` the rational g the block's
     massive row gains times light's first difference and `source` the
     rational G light's row gains, negated, times the massive current; the
-    wheel W of its first rung (None: the world's); the `seed` of its own
-    record on its cells at interval 0 (0: silent); `absorbing` (the take on
-    light's row at its cells, DESIGN.md section 5; a clock body takes
-    nothing); `cavity` (form (I): its own record held at 0 outside its
-    cells); `ramp` (the pushing agent's declaration: its momentum reached
-    from 0 over that many intervals); `start` (the same agent's: the
-    interval its drive begins, 0 by default, the ramp counted from it);
-    `margin` (the margin rule's kind of
-    world); `emits` (the light family its own record sources, one record
-    per cycle of its clock, paid from its held content)."""
+    `seed` of its own record on its cells at interval 0 (0: silent);
+    `cavity` (form (I): its own record held at 0 outside its cells); `ramp`
+    (the pushing agent's declaration: its momentum reached from 0 over that
+    many intervals); `start` (the same agent's: the interval its drive
+    begins, 0 by default, the ramp counted from it); `margin` (the margin
+    rule's kind of world). The take (`absorbing`, `take`), the cycle
+    emitter (`emits`, `own_grace`) and a declared wheel are retired
+    (BUILD.md section 26 items 14 and 15)."""
 
     side: int
     pair: tuple[int, int]
     receive: tuple[int, int] = (0, 1)
     source: tuple[int, int] = (0, 1)
-    wheel: int | None = None
     seed: int = BLOCK_SEED
     # the bound mode's integer profile over the whole board (x-major, one per
     # Node) when the seed is declared so; None for a flat seed
     profile: tuple[int, ...] | None = None
-    absorbing: bool = False
-    # detector-law-v1: an absorbing block's own take pair [n, d] (the
-    # Port's one-way follow, k = n / d; light's [-15, 56] where none is
-    # declared: the physicist's declaration per kind, section 15)
-    take: tuple[int, int] | None = None
     cavity: bool = False
     ramp: int = 0
     start: int = 0
     margin: str = MARGIN_KINDS[0]
-    emits: int | None = None
-    # detector-law-v1, line B: the emitter's `own_grace` (N_s), the intervals
-    # after each cycle's end during which its own cells take nothing of the
-    # record it emitted (the grace = the train + own_grace; DECLARATIONS.md
-    # section 10 item 1); declared on every emitter, no default.
-    own_grace: int | None = None
     # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
     # 7, the click line): the name of the detector set whose one cell is the
     # ladder of every record this block emits (the click line at that cell's
@@ -1534,16 +1491,15 @@ class DetectorDefinition:
     (`beam` or `wave`); under the local detector law a set may instead be
     BOUND TO A BLOCK (`block`, the measured event's number): its Nodes are
     the block's cells at every interval (a stepping block's follow it), its
-    pointer the light record's motion summed there, its rung its own
-    `wheel` (DECLARATIONS.md section 15 M1-4, keys (i) and (ii)); the click
-    stamps the block's own count."""
+    pointer the one-way flux into them; the click stamps the block's own
+    count. The rung's wheel is the record's own (ALGEBRA.md 9.22 (4)): a
+    set declares none."""
 
     name: str
     positions: tuple[Address3, ...]
     threshold: int
     reading: str = DETECTOR_READINGS[0]
     block: int | None = None
-    wheel: int | None = None
 
 
 @dataclass(frozen=True)
@@ -1618,9 +1574,6 @@ class NatureBeamWorld:
     # per interval (GAMEBOARD), empty by default.
     probes: tuple[Address3, ...] = ()
     mode_axis: int | None = None
-    # detector-law-v1: the world key `wheel`, the detector sets' rung W
-    # where no emitter body declares a larger wheel; 1 by default.
-    wheel: int = 1
     # detector-law-v1: per axis, whether the face is declared "closed" (a
     # zero face for light with no take); never on a periodic axis.
     closed: tuple[bool, bool, bool] = (False, False, False)
@@ -1882,6 +1835,37 @@ class NatureBeamWorld:
 def is_nature_beam_world(document: object) -> bool:
     """Whether a document declares the Beam Law (`"law": "beam"`)."""
     return isinstance(document, dict) and document.get("law") == LAW_VALUE
+
+
+# THE RETIRED KEYS OF THE TAKE AND THE DECLARED RESIDUE (ALGEBRA.md 9.19 (3),
+# 9.22 (4); BUILD.md section 26 items 14 and 15): each refused by name with
+# what stands in its place, on the world, a family, a measured event, an
+# emitter and a detector set alike.
+RETIRED_KEYS = {
+    "absorbing": "the take retired: every cell books the one-way flux into its Nodes (9.19 (3))",
+    "take": "the take retired: nothing absorbs, no Port follows a wave (9.19 (3))",
+    "emits": "a body emits by its excited records' clicks, the key `emitter` (9.17 (4))",
+    "own_grace": "the emitter's grace retired with the take (9.17, 9.19 (3))",
+    "wheel": "the rung's wheel is the record's own, W = 3 den / gcd(num, 3 den) at its birth "
+    "cell, born with its residue from the law (9.22 (4)); no set, world or emitter declares one",
+    "residue_order": "the residue is the law's: the clicking record's rule remainder at the "
+    "birth cell (9.22 (4)); no order is declared",
+    "residue_seed": "the residue is the law's: the clicking record's rule remainder at the "
+    "birth cell (9.22 (4)); no seed is declared",
+}
+
+
+def _refuse_retired(value: object, label: str, keys: tuple[str, ...]) -> None:
+    """A retired key on `value` (an object) is refused naming the key and its
+    successor; the loader accepts no world written under the retired forms."""
+    if not isinstance(value, dict):
+        return
+    for key in keys:
+        if key in value:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.{key} is refused under {DETECTOR_LAW_RULE}: {RETIRED_KEYS[key]} "
+                "(BUILD.md section 26 item 15)"
+            )
 
 
 def _object(value: object, label: str, allowed: set[str], required: set[str]) -> dict[str, object]:
@@ -2320,6 +2304,7 @@ def _families(
                 "the kind of a family follows from its quantum (0 free, 1 or more paid) and is "
                 "not declared; see docs/MIGRATION.md"
             )
+        _refuse_retired(entry, f"families[{index}]", ("take",))
         obj = _object(entry, f"families[{index}]", FAMILY_KEYS, {"name", "quantum"})
         name = obj["name"]
         if not isinstance(name, str) or not name:
@@ -2389,14 +2374,6 @@ def _families(
         massive = _massive(obj, f"families[{index}]", massive_rows, action, quantum, phase, name)
         pair = _kind_pair(obj, f"families[{index}]", massive_record, amplitude_bound)
         faces = _kind_faces(obj, f"families[{index}]", pair)
-        take: tuple[int, int] | None = None
-        if "take" in obj:
-            if pair is None or pair[1] <= pair[0]:
-                raise ValueError(
-                    f"{BEAM_LAW}: families[{index}].take is admitted on a massive kind alone (light's "
-                    "kind takes with the law's [-15, 56])"
-                )
-            take = _take_pair(obj["take"], f"families[{index}].take")
         found.append(
             FamilyDefinition(
                 name,
@@ -2410,7 +2387,6 @@ def _families(
                 massive=massive,
                 pair=pair,
                 faces=faces,
-                take=take,
             )
         )
         declared.append(columns)
@@ -2441,7 +2417,6 @@ def _families(
             family.massive,
             pair=family.pair,
             faces=family.faces,
-            take=family.take,
         )
         for family, columns in zip(found, declared, strict=True)
     )
@@ -3366,11 +3341,6 @@ def _atom_levels(
     return tuple(found)
 
 
-def names_of_emits(emits: int, families: tuple[FamilyDefinition, ...]) -> str:
-    """The emitted family's name for a refusal's sentence."""
-    return families[emits].name
-
-
 def _block(
     obj: dict[str, object],
     label: str,
@@ -3393,9 +3363,9 @@ def _block(
     `side` is refused; a block needs the world key `massive_record`, no lamp
     and no span; its `pair` is a well on the massive kind (num' / den' >
     num / den) or a gap on light's kind (den' > num', the (M) wall, which
-    declares no clock, coupling, seed, cavity, margin or wheel); `emits`
-    names a held light family and is refused on an absorbing block; the
-    momentum is bounded by the pace, 3 (P . P) < (3 Q S M)^2."""
+    declares no clock, coupling, seed, cavity or margin); an emitter's
+    birth cell carries a rich pair (at least 500 remainder values, ALGEBRA.md
+    9.22 (4)); the momentum is bounded by the pace, 3 (P . P) < (3 Q S M)^2."""
     declared = [key for key in BLOCK_KEYS if key in obj]
     if "side" not in obj:
         if declared:
@@ -3433,17 +3403,14 @@ def _block(
         # BARRIER raises it (num' / den' below the kind's: the matter wall
         # of DECLARATIONS.md section 15 M1-6, the mirror line of the matter
         # kind), a block with no bound mode, no seed and no clock.
-        if pair[0] * kind[1] == pair[1] * kind[0] and not cavity and not obj.get("absorbing"):
+        if pair[0] * kind[1] == pair[1] * kind[0] and not cavity:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.pair [{pair[0]}, {pair[1]}] is the kind's own pair "
                 f"[{kind[0]}, {kind[1]}] and no cavity: a block lowers the pair at its cells (a "
-                "well) or raises it (a barrier; MASSIVE_RECORD.md section 4, section 15 M1-6); an "
-                "ABSORBING block may carry the kind's own pair (a take line, M1-6)"
+                "well) or raises it (a barrier; MASSIVE_RECORD.md section 4, section 15 M1-6)"
             )
         if pair[0] * kind[1] < pair[1] * kind[0]:
-            clock_keys = [
-                key for key in ("coupling", "seed", "emits", "cavity", "margin", "wheel") if key in obj
-            ]
+            clock_keys = [key for key in ("coupling", "seed", "cavity", "margin") if key in obj]
             if clock_keys:
                 raise ValueError(
                     f"{BEAM_LAW}: {label}.{clock_keys[0]} is refused on a barrier (a raised pair "
@@ -3458,9 +3425,7 @@ def _block(
                 "(M) wall declares den > num (a lump in the massless surround, "
                 "MASSIVE_RECORD.md section 4)"
             )
-        clock_keys = [
-            key for key in ("coupling", "seed", "emits", "cavity", "margin", "wheel") if key in obj
-        ]
+        clock_keys = [key for key in ("coupling", "seed", "cavity", "margin") if key in obj]
         if clock_keys:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.{clock_keys[0]} is refused on a block of light's kind (the "
@@ -3483,7 +3448,6 @@ def _block(
         # one division): the load bound of MUST 3 with that scale
         _pair_bound(pair[0], pair[1], label, receive[1], amplitude_bound)
         source = _ratio(coupling["G"], f"{label}.coupling.G", zero=True)
-    wheel = None if "wheel" not in obj else _integer(obj["wheel"], f"{label}.wheel", 1)
     seed = BLOCK_SEED
     profile: tuple[int, ...] | None = None
     if "seed" in obj and isinstance(obj["seed"], list):
@@ -3515,88 +3479,20 @@ def _block(
             f"[{pair[0]}, {pair[1]}]: every admitted amplitude enters the one declared bound "
             "(issue #1085; MUST 3)"
         )
-    absorbing = obj.get("absorbing", False)
-    if type(absorbing) is not bool:
-        raise ValueError(f"{BEAM_LAW}: {label}.absorbing must be true or false")
-    take: tuple[int, int] | None = None
-    if "take" in obj:
-        if not absorbing:
-            raise ValueError(
-                f"{BEAM_LAW}: {label}.take is refused on a block that is not absorbing (the take's "
-                "pair is its Ports' follow; a clock body has no Port)"
-            )
-        value = obj["take"]
-        if not isinstance(value, list) or len(value) != 2:
-            raise ValueError(f"{BEAM_LAW}: {label}.take must be [n, d], the take's pair")
-        numerator = _integer(value[0], f"{label}.take numerator", -MAX_VALUE, 0)
-        denominator = _integer(value[1], f"{label}.take denominator", 1, MAX_VALUE)
-        if -numerator >= denominator:
-            raise ValueError(
-                f"{BEAM_LAW}: {label}.take [{numerator}, {denominator}]: the take's pair k = n / d "
-                "lies in (-1, 0] (the Port follows the wave one way; light's [-15, 56])"
-            )
-        take = (numerator, denominator)
-    if absorbing and take is None and family.massive_kind and "emits" not in obj:
-        # Reviewer 3's line 1 on item 6b: light's pair on a massive kind's take
-        # line would be an implicit default of a physical rate; light's kind
-        # keeps the law's [-15, 56].
-        raise ValueError(
-            f"{BEAM_LAW}: {label}.take is required on an absorbing block of a massive kind (the "
-            "take's pair k = n / d is a declaration of the kind; light's kind alone takes with the "
-            "law's [-15, 56])"
-        )
     ramp = 0 if "ramp" not in obj else _integer(obj["ramp"], f"{label}.ramp", 0)
     start = 0 if "start" not in obj else _integer(obj["start"], f"{label}.start", 0)
     margin = obj.get("margin", MARGIN_KINDS[0])
     if margin not in MARGIN_KINDS:
         raise ValueError(f"{BEAM_LAW}: {label}.margin must be one of {list(MARGIN_KINDS)}")
-    emits: int | None = None
-    if "emits" in obj:
-        name = obj["emits"]
-        if not isinstance(name, str) or name not in names:
-            raise ValueError(f"{BEAM_LAW}: {label}.emits names an unknown family")
-        emits = names[name]
-        if obj.get("held"):
-            raise ValueError(
-                f"{BEAM_LAW}: {label}.held is refused on a block that emits: the declarations' "
-                "sixth commit (DECLARATIONS.md section 15 M1-2) withdrew the stock; the emission "
-                "is the coupling's source term, the record born at content 0"
-            )
-        emitted = families[emits]
-        if emitted.free or emitted.massive_kind or emitted.phase_per_age is None:
-            raise ValueError(
-                f"{BEAM_LAW}: {label}.emits {name!r}: a block emits a paid family of light's kind "
-                "with the pair form of its clock"
-            )
-        # The emission is the coupling's source term, born at content 0 and
-        # consuming no stock (DECLARATIONS.md section 15 M1-2, the sixth
-        # commit: no `held` on an emitter; a `held` book stays inert).
-        if absorbing:
-            raise ValueError(
-                f"{BEAM_LAW}: {label}: an absorbing block emits nothing (its light rows are "
-                "taken); `emits` with `absorbing` is refused"
-            )
     wall = 3 * LABEL_SCALE * width * amount
     if 3 * sum(component * component for component in momentum) >= wall * wall:
         raise ValueError(
             f"{BEAM_LAW}: {label}.momentum {list(momentum)}: the pace bound 3 (P . P) < (3 Q S M)^2 "
             f"= {wall * wall} fails (the block's pace v = P / (3 Q S M) below c, DESIGN.md 5.1 (a))"
         )
-    own_grace: int | None = None
-    if "own_grace" in obj:
-        if emits is None:
-            raise ValueError(f"{BEAM_LAW}: {label}.own_grace is refused on a block that emits nothing")
-        own_grace = _integer(obj["own_grace"], f"{label}.own_grace", 0)
-    elif emits is not None:
-        raise ValueError(
-            f"{BEAM_LAW}: {label} emits {names_of_emits(emits, families)!r} and declares no "
-            "`own_grace`: an emitting body declares the intervals after its train during which "
-            "its own set takes nothing of its own record (N_s, DECLARATIONS.md section 10 item "
-            "1; no default)"
-        )
     receiver: str | None = None
     if "receiver" in obj:
-        if emits is None and "emitter" not in obj:
+        if "emitter" not in obj:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.receiver is refused on a block that emits nothing (the "
                 "receiver by name is the ladder of the block's emitted records, DECLARATIONS.md "
@@ -3609,12 +3505,6 @@ def _block(
                 "nonempty string)"
             )
         receiver = value
-    elif emits is not None:
-        raise ValueError(
-            f"{BEAM_LAW}: {label} emits {names_of_emits(emits, families)!r} and declares no "
-            "`receiver`: an emitting block names the detector set whose one cell is the ladder "
-            "of its records (the receiver by name, DECLARATIONS.md section 13 item 7; no default)"
-        )
     emitter: EmitterDefinition | None = None
     if "emitter" in obj:
         # the emitter as a clicking body (ALGEBRA.md 9.17 (4)): a body of a
@@ -3635,17 +3525,22 @@ def _block(
                 f"{BEAM_LAW}: {label}.emitter needs the stock `amount` from 1 (the number of the "
                 "body's excitations, M; a world that needs W births declares M = W)"
             )
-        for key in ("emits", "own_grace"):
-            if key in obj:
-                raise ValueError(
-                    f"{BEAM_LAW}: {label}.{key} is refused beside `emitter`: the emission by the "
-                    "cycle's source term and the emitter's grace retire (ALGEBRA.md 9.17)"
-                )
-        if absorbing:
-            raise ValueError(f"{BEAM_LAW}: {label}: an absorbing block emits nothing")
         emitter = _emitter(
             obj["emitter"], f"{label}.emitter", family, families, names, shape, phase_steps
         )
+        # THE RICHNESS OF THE BIRTH CELL (ALGEBRA.md 9.22 (4); BUILD.md section
+        # 26 item 15): the residue from the law takes 3 den / gcd(num, 3 den)
+        # values on the pair at the body's centre cell (its own pair), at
+        # least 500 of them ([801, 700] gives 700, [800, 801] 2403; [8, 7]
+        # 21 and [800, 800] 3 are refused)
+        residues = 3 * pair[1] // math.gcd(pair[0], 3 * pair[1])
+        if residues < 500:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.emitter: the body's pair [{pair[0]}, {pair[1]}] gives "
+                f"{residues} remainder values at the birth cell (3 den / gcd(num, 3 den)), below "
+                "500: the residue from the law needs a rich pair (ALGEBRA.md 9.22 (4); [801, 700] "
+                "on the kind [7, 8] gives 700, [800, 801] on [800, 809] gives 2403)"
+            )
         if receiver is not None and emitter.receiver is not None:
             raise ValueError(
                 f"{BEAM_LAW}: {label}: one ladder for the born records: the block's `receiver` "
@@ -3657,17 +3552,12 @@ def _block(
         pair,
         receive=receive,
         source=source,
-        wheel=wheel,
         seed=seed,
         profile=profile,
-        absorbing=absorbing,
         cavity=cavity,
         ramp=ramp,
         start=start,
         margin=str(margin),
-        emits=emits,
-        own_grace=own_grace,
-        take=take,
         receiver=receiver,
         emitter=emitter,
     )
@@ -3682,27 +3572,19 @@ def _emitter(
     shape: Address3,
     phase_steps: int,
 ) -> EmitterDefinition:
-    """The `emitter` object of a clicking body (ALGEBRA.md 9.17 (4) to (6)):
-    the born family a paid family with the pair form of its clock (not the
-    body's own), the wheel [step, W] of the excitations' residues (the step
-    coprime to W: a permutation), the residue order with its seed as the
-    lamp's keys had them, the born labels, the ladder by name, the period
-    and the norm (the generator's integers), the born profile (material)."""
+    """The `emitter` object of a clicking body (ALGEBRA.md 9.17 (4) to (6),
+    9.22 (4)): the born family a paid family with the pair form of its
+    clock (not the body's own), the born labels, the ladder by name, the
+    period and the norm (the generator's integers), the born profile
+    (material). No wheel, no residue order and no seed: the residue is the
+    law's (the clicking record's remainder at the birth cell, the wheel the
+    pair's), and the keys are refused by name."""
+    _refuse_retired(value, label, ("wheel", "residue_order", "residue_seed"))
     obj = _object(
         value,
         label,
-        {
-            "family",
-            "wheel",
-            "residue_order",
-            "residue_seed",
-            "branches",
-            "receiver",
-            "period",
-            "norm",
-            "born",
-        },
-        {"family", "wheel", "residue_order"},
+        {"family", "branches", "receiver", "period", "norm", "born"},
+        {"family"},
     )
     name = obj["family"]
     if not isinstance(name, str) or name not in names:
@@ -3725,26 +3607,6 @@ def _emitter(
             f"odd and the write's circle of 2 N = {2 * phase_steps} steps exceeds the tables' bound "
             f"{MAX_PHASE_STEPS} (ALGEBRA.md 9.17 (6)); declare an even step or a smaller N"
         )
-    if not isinstance(obj["wheel"], list):
-        raise ValueError(f"{BEAM_LAW}: {label}.wheel must be [step, W], the excitations' residue wheel")
-    wheel = _ratio(obj["wheel"], f"{label}.wheel", zero=False)
-    if math.gcd(wheel[0], wheel[1]) != 1:
-        raise ValueError(
-            f"{BEAM_LAW}: {label}.wheel [{wheel[0]}, {wheel[1]}]: the step is coprime to W (one "
-            "residue per excitation over W excitations, a permutation)"
-        )
-    order = obj["residue_order"]
-    if order not in ("ordinal", "seed"):
-        raise ValueError(f'{BEAM_LAW}: {label}.residue_order must be "ordinal" or "seed"')
-    seed: int | None = None
-    if order == "seed":
-        if "residue_seed" not in obj:
-            raise ValueError(f'{BEAM_LAW}: {label}.residue_seed is required under residue_order "seed"')
-        seed = _integer(obj["residue_seed"], f"{label}.residue_seed", 0, (1 << 64) - 1)
-        if wheel[0] != 1:
-            raise ValueError(f'{BEAM_LAW}: {label}.wheel: the step must be 1 under residue_order "seed"')
-    elif "residue_seed" in obj:
-        raise ValueError(f'{BEAM_LAW}: {label}.residue_seed is refused under residue_order "ordinal"')
     branches: tuple[tuple[int, int], ...] = ((0, 1),)
     label_hands: tuple[int, int] | None = None
     if "branches" in obj:
@@ -3777,9 +3639,7 @@ def _emitter(
                 f"{BEAM_LAW}: {label}.born writes no motion (the two levels equal on every Node)"
             )
         born = (rows[0], rows[1])
-    return EmitterDefinition(
-        names[name], wheel, str(order), seed, branches, label_hands, receiver, period, norm, born
-    )
+    return EmitterDefinition(names[name], branches, label_hands, receiver, period, norm, born)
 
 
 def _measured(
@@ -3812,6 +3672,7 @@ def _measured(
                 "charge of a measured event is its family's charge per unit of content times "
                 "its content (the family's `charge`, an integer or [n, d]); see docs/MIGRATION.md"
             )
+        _refuse_retired(entry, label, ("absorbing", "take", "emits", "own_grace", "wheel"))
         obj = _object(entry, label, MEASURED_KEYS, {"position", "family", "amount"})
         position = _address(obj["position"], f"{label}.position", shape)
         if any(item.position == position for item in found):
@@ -4075,20 +3936,6 @@ def _measured(
             amplitude_bound,
             phase_steps,
         )
-        if (
-            detector_law
-            and block is not None
-            and (block.emits is not None or block.own_grace is not None)
-        ):
-            # the cycle emitter and the emitter's grace are retired under the
-            # detector law (ALGEBRA.md 9.17; BUILD.md section 26): a body emits
-            # by its excited records' clicks, the key `emitter`
-            key = "emits" if block.emits is not None else "own_grace"
-            raise ValueError(
-                f"{BEAM_LAW}: {label}.{key} is refused under {DETECTOR_LAW_RULE}: the emission by "
-                "the cycle's source term and the emitter's grace retired (ALGEBRA.md 9.17); a body "
-                "emits by its excited records' clicks, the key `emitter` (BUILD.md section 26)"
-            )
         found.append(
             MeasuredDefinition(
                 position,
@@ -4273,21 +4120,6 @@ def covariant_square(
                 f"grain {grain} (a larger grain)"
             )
     return square
-
-
-def _take_pair(value: object, label: str) -> tuple[int, int]:
-    """A take pair [n, d]: the Ports' one-way follow k = n / d in (-1, 0]
-    (light's [-15, 56]); a declaration of kind 2 per kind or per block."""
-    if not isinstance(value, list) or len(value) != 2:
-        raise ValueError(f"{BEAM_LAW}: {label} must be [n, d], the take's pair")
-    numerator = _integer(value[0], f"{label} numerator", -MAX_VALUE, 0)
-    denominator = _integer(value[1], f"{label} denominator", 1, MAX_VALUE)
-    if -numerator >= denominator:
-        raise ValueError(
-            f"{BEAM_LAW}: {label} [{numerator}, {denominator}]: the take's pair k = n / d lies in "
-            "(-1, 0] (the Port follows the wave one way; light's [-15, 56])"
-        )
-    return (numerator, denominator)
 
 
 def _detector_law_load_checks(
@@ -4960,6 +4792,7 @@ def _detectors(
     found: list[DetectorDefinition] = []
     for index, entry in enumerate(value):
         label = f"detectors[{index}]"
+        _refuse_retired(entry, label, ("wheel",))
         obj = _object(entry, label, DETECTOR_KEYS, {"name"})
         name = obj["name"]
         if not isinstance(name, str) or not name:
@@ -4977,16 +4810,13 @@ def _detectors(
                 "family with a lifetime clicks on; declare another"
             )
         bound_block: int | None = None
-        set_wheel: int | None = None
-        if "wheel" in obj:
-            set_wheel = _integer(obj["wheel"], f"{label}.wheel", 1)
         if "block" in obj:
             bound_block = _integer(obj["block"], f"{label}.block", 0, max(0, len(measured) - 1))
             if measured[bound_block].block is None:
                 raise ValueError(
                     f"{BEAM_LAW}: {label}.block {bound_block} names a measured event that is no "
-                    "block; a receiver set on a BODY is `positions` on the body's Node with its "
-                    "own `wheel` (4b's B at [1900, 0, 0]: DECLARATIONS.md section 15 M1-4)"
+                    "block; a receiver set on a BODY is `positions` on the body's Node "
+                    "(DECLARATIONS.md section 15 M1-4)"
                 )
             threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
             bound_positions: list[Address3] = []
@@ -5009,11 +4839,7 @@ def _detectors(
                     )
                 taken.add(position)
                 bound_positions.append(position)
-            found.append(
-                DetectorDefinition(
-                    name, tuple(bound_positions), threshold, block=bound_block, wheel=set_wheel
-                )
-            )
+            found.append(DetectorDefinition(name, tuple(bound_positions), threshold, block=bound_block))
             continue
         if "positions" not in obj:
             raise ValueError(
@@ -5054,9 +4880,7 @@ def _detectors(
                 f"{BEAM_LAW}: {label}.reading must be one of "
                 f"{[*DETECTOR_READINGS, SUM_READING]}, not {reading!r}"
             )
-        found.append(
-            DetectorDefinition(name, tuple(positions), threshold, str(reading), wheel=set_wheel)
-        )
+        found.append(DetectorDefinition(name, tuple(positions), threshold, str(reading)))
     return tuple(found)
 
 
@@ -5176,6 +5000,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             "the law and every lamp births records; remove the key (docs/MIGRATION.md, the "
             "amplitude law (vii-4))"
         )
+    _refuse_retired(document, "the world", ("wheel",))
     obj = _object(
         document,
         "the world",
@@ -5282,14 +5107,6 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         raise ValueError(
             f"{BEAM_LAW}: amplitude_bound is refused without the world key `massive_record`"
         )
-    wheel = 1
-    if "wheel" in obj:
-        if not detector_law:
-            raise ValueError(
-                f"{BEAM_LAW}: the world key `wheel` is refused without `detector_law` (the rung W of "
-                "the detector sets under the local detector law)"
-            )
-        wheel = _integer(obj["wheel"], "wheel", 1, MAX_VALUE)
     mode_axis: int | None = None
     if "mode_axis" in obj:
         if not massive_record:
@@ -5461,33 +5278,11 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         massive_record=massive_record,
         probes=probes,
         mode_axis=mode_axis,
-        wheel=wheel,
         closed=closed,
         amplitude_bound=amplitude_bound,
     )
     if detector_law:
         _detector_law_load_checks(measured, families, table, periodic, phase_steps)
-        emitters = [
-            entry for entry in measured if entry.block is not None and entry.block.emitter is not None
-        ]
-        if detectors and not emitters and "wheel" not in obj:
-            # the Boss's line (5) of 06:50Z: no implicit default of the rung
-            raise ValueError(
-                f"{BEAM_LAW}: a world under the local detector law with a detector set and no emitter "
-                "body declares the world key `wheel` (the sets' rung W and the records' completion "
-                "rung; no implicit default)"
-            )
-        for number, entry in enumerate(measured):
-            # item 10: a lamp of a massive kind takes its record's remnant in
-            # the kind's own pair, which the family must declare (no default)
-            if entry.lamp is not None and families[entry.family].massive_kind:
-                if families[entry.family].take is None:
-                    raise ValueError(
-                        f"{BEAM_LAW}: measured[{number}]: a lamp of the massive kind "
-                        f"{families[entry.family].name!r} needs the kind's take pair (the family key "
-                        "`take` [n, d], the Ports' follow at its own remnant take; DECLARATIONS.md "
-                        "section 10 item 10)"
-                    )
         set_names = {detector.name for detector in detectors}
         for number, entry in enumerate(measured):
             # the lamp record's ladder by name: every name a declared set's

@@ -16,9 +16,10 @@ script writes `expectations.json` before each run.
 
 The form is the first build's ray-law world
 (`tests/test_detector_law.py::chain_world`: `clock_stamp` and `detector_law`
-true, an emitter body of a massive kind with its `emitter` on a wheel and its
-stock, seeded on its mode (BUILD.md section 26; the lamp is refused under the
-detector law), a receiver a fixed body of the family with one detector set on
+true, an emitter body of a massive kind with its `emitter` and its stock,
+seeded on its mode (BUILD.md section 26; the lamp is refused under the
+detector law; no wheel and no residue key anywhere since item 15: the residue
+and the wheel are the law's, ALGEBRA.md 9.22 (4)), a receiver a fixed body of the family with one detector set on
 its Node, a screen one set per Node of its row) and, for the massive rows, the massive record series'
 form (`../massive_record/make_worlds.py`, whose `world` helper writes them;
 they live in that folder). Every light wall is the mirror line of section 15
@@ -30,10 +31,9 @@ A world whose declared lines the engine on main does not carry yet is written
 into `docs/designs/detector_law/held_worlds/`, outside the shipped set under
 `examples/events` that the gate loads (the Boss's rule of 2026-09-24: nothing
 shipped that the gate loads and refuses); it moves back to its folder when its
-line lands. Since PR 1118's merge (main 1454030f: the margin rule skips a
-silent block, seed 0 with no record of its own, so an absorbing take line of
-the matter kind at the kind's own pair is no longer refused as a mode that is
-not bound) every world loads and constructs at its RUN_LIST path, the pre-GO
+line lands. Every world loads and constructs at its RUN_LIST path (the take
+lines of the matter layer worlds are gone with the take, BUILD.md section 26
+item 15: the open faces there are the receiver `face`), the pre-GO
 preflight tool (`tools/preflight_worlds.py`) and the runner sharing that
 construction. Since the emitter as a clicking body (BUILD.md section 26) the
 four Bell worlds are held there until the crystal (the pair lamp's arms have

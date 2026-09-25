@@ -55,10 +55,6 @@
      1,
      1
     ],
-    "wheel": [
-     1,
-     2048
-    ],
     "directions": [
      [
       1,
@@ -82,9 +78,7 @@
       1
      ]
     ],
-    "train": 128,
-    "residue_order": "seed",
-    "residue_seed": 10500263402406155263
+    "train": 128
    }
   },
   {

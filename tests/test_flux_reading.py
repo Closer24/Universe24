@@ -44,7 +44,6 @@ def planted(simulation: DetectorLawSimulation, family: int, now, before, remaind
         remainder.astype(np.int64),
         pointers=[0] * len(simulation.cell_names),
         first_rung=[None] * len(simulation.cell_names),
-        ports=[np.zeros(simulation.shape, dtype=np.int64) for _ in simulation.take_masks],
         age=10,
     )
 
@@ -227,10 +226,9 @@ def test_c_the_conserved_form_and_the_flux_offer_are_the_engines_integers():
         },
     ]
     document["detectors"] = [
-        {"name": "pair", "positions": [[5, 0, 0], [6, 0, 0]], "wheel": 64},
-        {"name": "far", "positions": [[30, 0, 0]], "wheel": 64},
+        {"name": "pair", "positions": [[5, 0, 0], [6, 0, 0]]},
+        {"name": "far", "positions": [[30, 0, 0]]},
     ]
-    document["wheel"] = 64
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     assert simulation.kind_wall(0) == 1 and simulation.kind_wall(2) == 56
     rng = np.random.default_rng(5)

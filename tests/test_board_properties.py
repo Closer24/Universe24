@@ -55,7 +55,6 @@ def small_world(
         "detector_law": True,
         "massive_record": True,
         "amplitude_bound": 1 << 32,
-        "wheel": WHEEL,
         "directions": [],
         "families": [
             {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
@@ -78,7 +77,7 @@ def small_world(
         # the receiver: a name for one Node (the loader of this head admits a set on a
         # free Node only bound to a body, the light clock's form; the loader's step of the
         # cleanup admits any Node)
-        "detectors": [{"name": "screen", "block": 0, "positions": [list(receiver)], "wheel": WHEEL}]
+        "detectors": [{"name": "screen", "block": 0, "positions": [list(receiver)]}]
         if receiver_named
         else [],
     }
@@ -128,6 +127,7 @@ def plant(simulation: DetectorLawSimulation, node, u: int, ladder: bool = True, 
         np.zeros(SHAPE, dtype=np.int64),
         pointers=[0] * len(simulation.cell_names),
         first_rung=[None] * len(simulation.cell_names),
+        wheel=WHEEL,
         labels=((0, 1), (1, 1)),
     )
     live.driven = np.zeros(SHAPE, dtype=bool)
@@ -260,7 +260,7 @@ def test_2_translation_on_the_torus():
 
 def reads_of(simulation: DetectorLawSimulation, family: int):
     """The read matrix as a function: the six reads' sum of an array (the family's faces)."""
-    return lambda a: simulation._neighbours(a, None, None, simulation.kind_wrap[family])
+    return lambda a: simulation._neighbours(a, simulation.kind_wrap[family])
 
 
 def form_I(
@@ -328,7 +328,6 @@ def test_4_reversibility_except_the_click():
     returns the state at the click's interval without the deleted summand, and the difference
     from the forward state there is exactly that summand's rows."""
     unnamed = small_world(receiver_named=False)
-    unnamed["wheel"] = WHEEL
     simulation, states, clicks = run(unnamed)
     assert not clicks
     for _ in range(INTERVALS):
@@ -369,7 +368,6 @@ def test_5_locality():
     `now`: at every interval m the difference is inside the Manhattan ball of radius m about
     that Node, and nonzero somewhere for every m <= 12."""
     document = small_world(receiver_named=False)
-    document["wheel"] = WHEEL
     _, reference, _ = run(document, intervals=14)
     changed = (BIRTH[0] + 1, BIRTH[1], BIRTH[2])
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
@@ -395,7 +393,6 @@ def test_6_only_the_click_reads():
     pair, the row and remainder, the six neighbours' rows) give equal outputs; (c) two runs
     whose records differ only in their residues u are identical until the first click."""
     document = small_world(receiver_named=False)
-    document["wheel"] = WHEEL
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     rng = np.random.default_rng(11)
     a, b = (2, 2, 2), (8, 7, 9)
@@ -473,6 +470,7 @@ def test_7_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
         np.zeros(shape, dtype=np.int64),
         pointers=[0] * len(simulation.cell_names),
         first_rung=[None] * len(simulation.cell_names),
+        wheel=WHEEL,
     )
     live.driven = np.zeros(shape, dtype=bool)
     live.ladder = [simulation.cell_names.index("screen")]

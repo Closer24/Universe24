@@ -24,7 +24,6 @@
  "detector_law": true,
  "massive_record": true,
  "amplitude_bound": 4294967296,
- "wheel": 64,
  "directions": [],
  "families": [
   {
@@ -78,7 +77,6 @@
      1000
     ]
    },
-   "wheel": 64,
    "seed": [
     37,
     40,
@@ -4179,11 +4177,6 @@
    ],
    "emitter": {
     "family": "light",
-    "wheel": [
-     1,
-     64
-    ],
-    "residue_order": "ordinal",
     "period": 62,
     "norm": 2538934865582544
    },
@@ -4224,8 +4217,7 @@
      0
     ]
    ],
-   "threshold": 1,
-   "wheel": 64
+   "threshold": 1
   }
  ],
  "probes": [

@@ -116,14 +116,11 @@ LAYER_RAMP = 12000  # ten relaxation times of the well by the margin module's ow
 LAYER_HOLD = 8000
 BLOCK_KEYS = (
     "coupling",
-    "wheel",
     "seed",
-    "absorbing",
     "cavity",
     "ramp",
     "start",
     "margin",
-    "emits",
     "held",
     # the emitter as a clicking body (ALGEBRA.md 9.17; BUILD.md section 26)
     "emitter",
@@ -263,22 +260,23 @@ def excite_on_the_mode(document: dict, number: int) -> None:
 
 
 SOURCE_KIND = [7, 8]  # the emitter bodies' own family `source` (omega_0 = 0.505; no clock)
-SOURCE_WELL = [8, 7]  # its one-cell well: bound on a chain (omega_b = 0.32) and on a layer
+SOURCE_WELL = [
+    801,
+    700,
+]  # its one-cell well, rich (700 remainder values, ALGEBRA.md 9.19 (4a)): bound on a chain (2 cos omega_b = 1.90) and on a layer (1.75)
 
 
-def emitter_at(
-    x: int, stock: int = 1, wheel: list[int] | None = None, pair: list[int] | None = None
-) -> dict:
+def emitter_at(x: int, stock: int = 1, pair: list[int] | None = None) -> dict:
     """An EMITTER BODY of light at a Node of the chain (ALGEBRA.md 9.17 (4); BUILD.md section
     26): a well of the massive kind of side 1 seeded on its mode (`seed_on_the_mode`), its
-    stock `stock` excitations on the wheel given ([1, 1] for one birth), each clicking at its
-    own rung and writing its photon once; the lamp's train of periods retired (a one-cell
-    birth is broadband; the line emitter's travelling character is owed, LAB_TOOLS.md A.1).
-    The body is of the family `source` (the kind SOURCE_KIND, added to the world by
-    `world`), its well SOURCE_WELL unless given; the wheel's cadence (COMPUTATION, BUILD.md
-    section 26) about (2 u + 1) P / (2 W) intervals for the u-th residue, P the mode's period
-    (20 on this well; ALGEBRA.md 9.17 (5) item 1 on the flux norm of 9.19 (3)); a well too deep for its board is a runaway, refused at the margin
-    rule."""
+    stock `stock` excitations, each clicking at its own rung and writing its photon once;
+    the lamp's train of periods retired (a one-cell birth is broadband; the line emitter's
+    travelling character is owed, LAB_TOOLS.md A.1). The body is of the family `source` (the
+    kind SOURCE_KIND, added to the world by `world`), its well SOURCE_WELL unless given; the
+    residue and the wheel are the law's (ALGEBRA.md 9.22 (4): the remainder at the birth
+    cell, W = 700 on SOURCE_WELL), the cadence about (2 u + 1) P / (2 W) intervals for the
+    residue u, P the mode's period (COMPUTATION, BUILD.md section 26); a well too deep for
+    its board is a runaway, refused at the margin rule."""
     return {
         "position": [x, 0, 0],
         "family": "source",
@@ -287,7 +285,7 @@ def emitter_at(
         "seed": 100,
         "amount": stock,
         "margin": "control",
-        "emitter": {"family": "light", "wheel": list(wheel or [1, 1]), "residue_order": "ordinal"},
+        "emitter": {"family": "light"},
     }
 
 
@@ -567,9 +565,8 @@ def emitter(position: list[int], side: int, pair: list[int], ticks: int, **extra
         "pair": pair,
         "seed": 50 << 20,
         "coupling": {"G": [1, 50], "g": [1, 1000]},
-        "wheel": 64,
         "amount": 64,
-        "emitter": {"family": "light", "wheel": [1, 64], "residue_order": "ordinal"},
+        "emitter": {"family": "light"},
         "margin": "pin",
     }
     block.update(extra)
@@ -650,7 +647,7 @@ def launch_list_worlds(include_refused: bool = False) -> dict[str, dict]:
             [673, 1, 1],
             CHAIN,
             [800, 809],
-            [emitter([600, 0, 0], 12, [800, 800], 2000)],
+            [emitter([600, 0, 0], 12, [800, 801], 2000)],
             2000,
             probes=[[612, 0, 0], [613, 0, 0]],
         )

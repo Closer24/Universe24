@@ -92,7 +92,6 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
-import secrets
 import sys
 from pathlib import Path
 
@@ -177,11 +176,12 @@ TRAIN_32 = 32  # periods, section 15 L-3 and L-6 (HISTORY: the lamp's train, ret
 # (omega_b = 0.32, P = 20 intervals) and on a layer (omega_b = 0.50, P = 12
 # intervals). A world of W births declares the stock M = W (LAB_TOOLS.md A.1).
 EMITTER_KIND = [7, 8]
-EMITTER_WELL = [8, 7]
+EMITTER_WELL = [
+    801,
+    700,
+]  # the rich well (700 remainder values, ALGEBRA.md 9.19 (4a), 9.22 (4)) bound on a chain and a layer
 EMITTER_SEED_AMPLITUDE = 100
 BELL_TRAIN = 128  # periods, DECLARATIONS.md sections 1 and 3
-SET_WHEEL = 64  # the world key `wheel` of a world with a set and no lamp (the Boss's 06:50Z (a))
-R2_WORLD_WHEEL = 256  # the physicist's word of 07:37Z: R2's ladder W is 256, one integer with the sets' rung (section 13 item 4), on the four R2 files; the light clock keeps 64
 R2_CHAIN = 3000  # the physicist's declaration of 07:58Z: one chain of 3000 for both sagnac worlds, the blocks and the gap unchanged
 # The physicist's word of 08:06Z on Reviewer 3's arithmetic (a k3 record born at t completes near
 # 0.423 t + 4468, a rest record near t + 3990; the last hold birth near 4450): every hold record
@@ -227,13 +227,10 @@ def emitter_kind_family(name: str = "matter") -> dict:
 def emitter_body(
     position: list[int],
     stock: int,
-    wheel: list[int],
     receiver: list[str] | None = None,
     family: str = "light",
     own: str = "matter",
     pair: list[int] | None = None,
-    order: str = "ordinal",
-    seed: int | None = None,
 ) -> dict:
     """An emitter body (ALGEBRA.md 9.17 (4); BUILD.md section 26): a well of the massive
     family `own` of side 1 at `position` (its seed the scalar EMITTER_SEED_AMPLITUDE, made the
@@ -241,9 +238,7 @@ def emitter_body(
     excitations, its `emitter` the born family on the wheel with its residue order and, with
     `receiver`, the born records' ladder by name (the sets named; the lamp's `receiver` of
     old, written only under RECEIVER_KEY)."""
-    emitter: dict = {"family": family, "wheel": list(wheel), "residue_order": order}
-    if seed is not None:
-        emitter["residue_seed"] = seed
+    emitter: dict = {"family": family}
     if receiver is not None and RECEIVER_KEY:
         emitter["receiver"] = list(receiver)
     return {
@@ -276,52 +271,27 @@ def body(position: list[int], family: str = "light", directions: list[list[int]]
     return entry
 
 
-def wall_node(
-    position: list[int],
-    family: str = "light",
-    pair: list[int] | None = WALL_PAIR,
-    absorbing: bool = False,
-    take: list[int] | None = None,
-) -> dict:
+def wall_node(position: list[int], family: str = "light", pair: list[int] | None = WALL_PAIR) -> dict:
     """One Node of a wall: a block of side 1 with the pair [1, 2] (section 15 L-1 the
     mirror line of light's kind; M1-6 the barrier line of the matter kind, its raised pair
-    the builder's line), or a take Node (`absorbing` true with `seed` 0, no record of its
-    own; the matter kind's take lines of M1-6's correction: the kind's own pair on the block
-    and the take's pair [n, d] under the builder's key `take`, BUILD.md item 6b)."""
+    the builder's line). The take lines (`absorbing` blocks with a `take` pair) are retired
+    with the take (ALGEBRA.md 9.19 (3); BUILD.md section 26 item 15)."""
     entry = body(position, family)
     entry["side"] = 1
     if pair is not None:
         entry["pair"] = list(pair)
-    if absorbing:
-        # A take line holds no record of its own: `seed` 0 (the builder's line of
-        # 2026-09-24 08:56Z: a block without the key takes the loader's default seed and
-        # builds an own record on its cell, which the margin rule refuses as unbound).
-        entry["absorbing"] = True
-        entry["seed"] = 0
-    if take is not None:
-        entry["take"] = list(take)
     return entry
 
 
 def wall_line(
-    xs: list[int],
-    ys: range,
-    openings: set[int],
-    family: str = "light",
-    pair=WALL_PAIR,
-    absorbing: bool = False,
-    take: list[int] | None = None,
+    xs: list[int], ys: range, openings: set[int], family: str = "light", pair=WALL_PAIR
 ) -> list[dict]:
     """A wall of the declared depth: one block per Node of the columns `xs`, the openings
     free in every column."""
-    return [
-        wall_node([x, y, 0], family, pair, absorbing, take) for x in xs for y in ys if y not in openings
-    ]
+    return [wall_node([x, y, 0], family, pair) for x in xs for y in ys if y not in openings]
 
 
-def screen(
-    document: dict, x: int, ys: range, family: str = "light", wheel: int | None = None
-) -> list[str]:
+def screen(document: dict, x: int, ys: range, family: str = "light") -> list[str]:
     """A screen of one-Node detectors `screen_<y>` on receiver bodies at x: one set per
     Node of the row, each with its own click (section 12; Builder 2's finding) and, when
     `wheel` is given, its own rung wheel (SIZING.md: the screen's sets are the lamp
@@ -331,8 +301,6 @@ def screen(
     for y in ys:
         document["measured"].append(body([x, y, 0], family, [[-1, 0, 0]]))
         detector: dict = {"name": f"screen_{y}", "positions": [[x, y, 0]], "threshold": 1}
-        if wheel is not None:
-            detector["wheel"] = wheel
         document["detectors"].append(detector)
         names.append(detector["name"])
     return names
@@ -384,7 +352,6 @@ TWO_SLITS_OPENINGS = {114, 115, 116, 140, 141, 142}  # width 3, centred at y = 1
 TWO_SLITS_SCREEN_X = 153  # L = 113 from the mirror line at x = 40
 TWO_SLITS_SCREEN_YS = range(28, 229)  # 201 sets, the ladder
 TWO_SLITS_STOCK = 1024  # one wheel [1, 1024], each u once (SIZING.md)
-TWO_SLITS_SET_WHEEL = 1 << 20  # the screen sets' own rung wheel (SIZING.md, Reviewer 3's line (c))
 TWO_SLITS_TICKS = (
     6000  # 1024 excitations on [800, 500] (about 4096 intervals), the transit 231, the close, the margin
 )
@@ -409,10 +376,10 @@ def two_slits() -> dict:
         TWO_SLITS_TICKS,
     )
     document["measured"].extend(wall_line([40, 41], range(TWO_SLITS_SHAPE[1]), TWO_SLITS_OPENINGS))
-    names = screen(document, TWO_SLITS_SCREEN_X, TWO_SLITS_SCREEN_YS, wheel=TWO_SLITS_SET_WHEEL)
+    names = screen(document, TWO_SLITS_SCREEN_X, TWO_SLITS_SCREEN_YS)
     document["measured"].insert(
         0,
-        emitter_body([20, 128, 0], TWO_SLITS_STOCK, [1, TWO_SLITS_STOCK], receiver=names),
+        emitter_body([20, 128, 0], TWO_SLITS_STOCK, receiver=names),
     )
     return document
 
@@ -460,7 +427,7 @@ def pace_fan(name: str, pair: list[int], wavelength: int) -> dict:
     # no heading (16:25Z): the six headings by the loader's default, one record; the
     # emitter body's one excitation (ALGEBRA.md 9.17), broadband on one cell (the line
     # emitter of LAB_TOOLS.md A.1 owed: the fans' pin re-derived blind on it)
-    document["measured"].append(emitter_body([64, 64, 0], 1, [1, 64]))
+    document["measured"].append(emitter_body([64, 64, 0], 1))
     document["probes"] = [list(position) for position in FAN_PROBES_40 + FAN_PROBES_36]
     return document
 
@@ -486,7 +453,6 @@ L3_LAMP_AMOUNT = 15728642  # the L3 series' stock (HISTORY: the amplitude law's 
 # the interval 3433).
 BELL_STOCK = 2048
 BELL_N = 2048
-BELL_WHEEL = [1, BELL_N]  # section 1 item 2, kept by section 14 item 1
 BELL_CLOCK = [2464, 25]  # section 14 item 1: the 12-Link clock [77, 25] on 64 scaled by 32 to N = 2048
 MALUS_CLOCK = [308, 25]  # section 14 item 1: the same clock on N = 256
 BELL_BRANCHES = [[0, 1], [3, 1]]
@@ -510,21 +476,6 @@ MALUS_BIRTHS = 256
 MALUS_SHAPE = [8, 1, 1]  # section 5 item 1 (12:15Z): the exit cell at x = 7 on the board
 MALUS_READ_NODE = [4, 0, 0]  # the registered which-path read body, dropped with its set
 MALUS_READ_SET = "first"
-
-
-def residue_seed(name: str) -> int:
-    """Section 2 item 8: one `residue_seed` per Bell world, a 64-bit draw from the host's
-    entropy, independent per world, drawn once and kept over regenerations (read back from
-    the world's file where it exists), written into the file and never into a pin."""
-    for folder in (HELD, HERE):
-        path = folder / f"{name}.json"
-        if path.exists():
-            document = json.loads(path.read_text(encoding="utf-8"))
-            for entry in document.get("measured", []):
-                inner = entry.get("lamp")
-                if isinstance(inner, dict) and "residue_seed" in inner:
-                    return int(inner["residue_seed"])
-    return secrets.randbits(64)
 
 
 def bell(a: str, b: str) -> dict:
@@ -561,13 +512,10 @@ def bell(a: str, b: str) -> dict:
                 "fixed": True,
                 "lamp": {
                     "rate": [1, 1],
-                    "wheel": BELL_WHEEL,
                     "directions": [[1, 0, 0], [-1, 0, 0]],
                     "arms": 2,
                     "branches": BELL_BRANCHES,
                     "train": BELL_TRAIN,
-                    "residue_order": "seed",
-                    "residue_seed": residue_seed(f"bell_{a}{b}"),
                 },
             },
             {
@@ -642,9 +590,7 @@ def malus(name: str, source: Path, setting: int) -> dict:
             # the source's lamp becomes the emitter body (ALGEBRA.md 9.17): the
             # stock 256 = W on the lamp's declared wheel, the well EMITTER_WELL
             # (bound on the periodic bar of 8: the extent 1.4 Links)
-            rebuilt["measured"][index] = emitter_body(
-                list(entry["position"]), MALUS_BIRTHS, list(inner["wheel"])
-            )
+            rebuilt["measured"][index] = emitter_body(list(entry["position"]), MALUS_BIRTHS)
     return rebuilt
 
 
@@ -669,19 +615,17 @@ def table_worlds(massive) -> dict[str, dict]:
 MEDIUM = [156, 157]  # omega_0 = 0.1129 (sections 4 and 11)
 WELL_HALF = [314, 315]
 KIND = [800, 809]  # mu = 0.15
-WELL_FULL = [800, 800]
+WELL_FULL = [
+    800,
+    801,
+]  # the rich well of the massive rows' emitters (2403 remainder values; the mathematician's 9.21 (8))
 COUPLING = {"G": [1, 50], "g": [1, 1000]}  # section 15 M1-1, with the seed 50 x 2^20
 EMITTER_SEED = 50 << 20
 AMPLITUDE_BOUND = 1 << 32  # section 15 M1-10, the world key `amplitude_bound` of every massive world
 MATTER_CLOCKS = {12: [1089, 320], 16: [11, 4]}  # M1-6: the matter family's `phase_per_link`, N = 64
-MATTER_TAKE_PAIRS = {
-    12: [-19, 86],
-    16: [-5, 27],
-}  # M1-6: the take's pair on the matter kind's take lines
 MATTER_TRAIN = 8  # periods (150 intervals), section 12 and M1-6
 MATTER_STOCK = 2048  # section 12: one wheel [1, 2048], each u once (SIZING.md)
 MATTER_RATE = [1, 2]  # the cadence one per 2 (SIZING.md, section 12)
-MATTER_SET_WHEEL = 65536  # the screen sets' own rung wheel (section 12, SIZING.md)
 MATTER_TICKS = 4700  # 2048 births at one per 2, the train 150, the transit 167, the margin (SIZING.md)
 OWN_GRACE = 70  # section 10 item 1: the light clock's A, one period
 # 4b's A: the physicist's line of 2026-09-24 09:33Z (through the Boss's 09:40Z): own_grace
@@ -690,9 +634,7 @@ OWN_GRACE = 70  # section 10 item 1: the light clock's A, one period
 # block's); the ticks 9600 for both redshift worlds (the physicist's line of 10:15Z, through
 # the Boss's 10:18Z: 10000 runs A off the board at 9732).
 REDSHIFT_GRACE = 3000
-REDSHIFT_WORLD_WHEEL = 64
 R2_GRACE = 3000  # section 13 item 1: R2's blocks, the whole hold
-R2_WHEEL = 256  # section 13 item 4 (main 25a7abf4): the declared wheel of R2's block sets
 LAMP_GRACE = MATTER_TICKS  # HISTORY: the matter lamp's `own_grace` (retired, ALGEBRA.md 9.17)
 EMITTER_STOCK = (
     64  # the massive rows' emitters: 64 excitations on the wheel [1, 64] (BUILD.md section 26)
@@ -716,19 +658,18 @@ def emitter(position: list[int], side: int, pair: list[int], grace: int | None, 
         "pair": pair,
         "coupling": copy.deepcopy(COUPLING),
         "seed": EMITTER_SEED,
-        "wheel": 64,
         "amount": EMITTER_STOCK,
-        "emitter": {"family": "light", "wheel": [1, EMITTER_STOCK], "residue_order": "ordinal"},
+        "emitter": {"family": "light"},
     }
     block.update(extra)
     return block
 
 
-def receiver_set(document: dict, name: str, block: int, wheel: int) -> None:
+def receiver_set(document: dict, name: str, block: int) -> None:
     """A detector set on the light record bound to the receiving block (section 15 M1-4:
     the one key `block`, the measured number of the block, its Nodes the block's current
-    cells) with its own wheel: 256 on R2's sets (section 13 item 4, main 25a7abf4)."""
-    document["detectors"].append({"name": name, "block": block, "threshold": 1, "wheel": wheel})
+    cells); no wheel (the rung's wheel is the record's own, ALGEBRA.md 9.22 (4))."""
+    document["detectors"].append({"name": name, "block": block, "threshold": 1})
 
 
 def matter_world(
@@ -738,16 +679,13 @@ def matter_world(
     boundary: dict,
     ticks: int,
     clock: list[int],
-    take: list[int],
 ) -> dict:
     """A world of the matter kind [800, 809] alone (no light), its faces open on x, the
-    lamp's frequency as the family's `phase_per_link` in the pair form (M1-6) and the
-    family's `take` (the kind's own take at the lamp's cells after its train, item 10; the
-    loader requires it on a lamp of a massive kind; section 12, 14:50Z)."""
+    emitter's frequency as the family's `phase_per_link` in the pair form (M1-6); no take
+    pair (the take retired, ALGEBRA.md 9.19 (3))."""
     document = massive.world(name, "PIN", shape, boundary, KIND, [], ticks, faces=massive.FACES_OPEN)
     document["families"] = [family for family in document["families"] if family["name"] != "light"]
     document["families"][0]["phase_per_link"] = list(clock)
-    document["families"][0]["take"] = list(take)
     bounded(document)
     return document
 
@@ -768,18 +706,15 @@ def graced(document: dict, blocks: list[dict]) -> None:
     _ = (document, blocks)
 
 
-def bounded(document: dict, wheel: int | None = None) -> None:
-    """The amplitude bound of section 15 M1-10 on a massive world, after `massive_record`,
-    and the world key `wheel` of a world with a set and no lamp (the ladder's W; the Boss's
-    06:50Z (a) on Reviewer 3's line) after it."""
+def bounded(document: dict) -> None:
+    """The amplitude bound of section 15 M1-10 on a massive world, after `massive_record`
+    (no world key `wheel`: the rung's wheel is the record's own, ALGEBRA.md 9.22 (4))."""
     items = list(document.items())
     document.clear()
     for key, value in items:
         document[key] = value
         if key == "massive_record":
             document["amplitude_bound"] = AMPLITUDE_BOUND
-            if wheel is not None:
-                document["wheel"] = wheel
 
 
 def massive_worlds(massive) -> dict[str, dict]:
@@ -814,12 +749,12 @@ def massive_worlds(massive) -> dict[str, dict]:
             mode_axis="x" if motion else None,
             seed_profile=False,
         )
-        bounded(document, REDSHIFT_WORLD_WHEEL)
+        bounded(document)
         graced(document, [emitter([2994, 0, 0], 12, WELL_HALF, REDSHIFT_GRACE)])
         named_receiver(document, {0: "light_detector"})
         document["measured"].append(body([4094, 0, 0], "light", [[-1, 0, 0]]))
         document["detectors"].append(
-            {"name": "light_detector", "positions": [[4094, 0, 0]], "threshold": 1, "wheel": 64}
+            {"name": "light_detector", "positions": [[4094, 0, 0]], "threshold": 1}
         )
         massive.seed_on_the_mode(document)
         out[name] = document
@@ -854,7 +789,7 @@ def massive_worlds(massive) -> dict[str, dict]:
             mode_axis="x" if motion else None,
             seed_profile=False,
         )
-        bounded(document, R2_WORLD_WHEEL)
+        bounded(document)
         graced(
             document,
             [
@@ -862,8 +797,8 @@ def massive_worlds(massive) -> dict[str, dict]:
                 emitter([772, 0, 0], 12, WELL_FULL, R2_GRACE),
             ],
         )
-        receiver_set(document, "at_a", 0, R2_WHEEL)
-        receiver_set(document, "at_b", 1, R2_WHEEL)
+        receiver_set(document, "at_a", 0)
+        receiver_set(document, "at_b", 1)
         named_receiver(document, {0: "at_b", 1: "at_a"})
         massive.seed_on_the_mode(document)
         out[name] = document
@@ -886,14 +821,14 @@ def massive_worlds(massive) -> dict[str, dict]:
         probes=[[612, 0, 0]],
         seed_profile=False,
     )
-    bounded(document, SET_WHEEL)
+    bounded(document)
     graced(document, [emitter([600, 0, 0], 12, WELL_FULL, OWN_GRACE)])
     # section 10 item 9 (go-lines 9024cea0): the receiving set bound to A is the free
     # Node adjacent to A's face toward the mirror, x = 612, alone, with its own wheel 64,
     # taking the returning record at its click: `block` 0 with the one declared position
     # (the loader's form (b) of BUILD.md item 14 on 299b6bb2).
     document["detectors"].append(
-        {"name": "at_a", "block": 0, "positions": [[612, 0, 0]], "threshold": 1, "wheel": 64}
+        {"name": "at_a", "block": 0, "positions": [[612, 0, 0]], "threshold": 1}
     )
     named_receiver(document, {0: "at_a"})
     massive.seed_on_the_mode(document)
@@ -919,15 +854,9 @@ def massive_worlds(massive) -> dict[str, dict]:
             {"x": "open", "y": "periodic", "z": "periodic"},
             MATTER_TICKS,
             clock,
-            MATTER_TAKE_PAIRS[wavelength],
         )
-        take_pair = MATTER_TAKE_PAIRS[wavelength]
-        for column in ([0], [127]):
-            document["measured"].extend(
-                wall_line(column, range(128), set(), "matter", KIND, absorbing=True, take=take_pair)
-            )
         document["measured"].extend(wall_line([40, 41], range(128), {48, 80}, "matter"))
-        names = screen(document, 104, range(4, 125), "matter", wheel=MATTER_SET_WHEEL)
+        names = screen(document, 104, range(4, 125), "matter")
         # the matter emitter body (ALGEBRA.md 9.17): a well of the source family
         # (the kind EMITTER_KIND, no clock) of side 1, the well EMITTER_WELL, the
         # stock 2048 = W, the born family `matter` with its clock (the cadence
@@ -939,7 +868,6 @@ def massive_worlds(massive) -> dict[str, dict]:
             emitter_body(
                 [20, 64, 0],
                 MATTER_STOCK,
-                [1, MATTER_STOCK],
                 receiver=names,
                 family="matter",
                 own=SOURCE_FAMILY,
@@ -947,11 +875,9 @@ def massive_worlds(massive) -> dict[str, dict]:
         )
         massive.seed_on_the_mode(document)
         out[f"matter_waves_{wavelength}"] = document
-    document = matter_world(
-        massive, "matter-front-12", [200, 1, 1], chain, 600, MATTER_CLOCKS[12], MATTER_TAKE_PAIRS[12]
-    )
+    document = matter_world(massive, "matter-front-12", [200, 1, 1], chain, 600, MATTER_CLOCKS[12])
     document["families"].append(emitter_kind_family(SOURCE_FAMILY))
-    document["measured"].append(emitter_body([20, 0, 0], 1, [1, 64], family="matter", own=SOURCE_FAMILY))
+    document["measured"].append(emitter_body([20, 0, 0], 1, family="matter", own=SOURCE_FAMILY))
     document["measured"].append(body([104, 0, 0], "matter", [[-1, 0, 0]]))
     document["detectors"].append({"name": "front", "positions": [[104, 0, 0]], "threshold": 1})
     massive.seed_on_the_mode(document)
