@@ -11471,3 +11471,32 @@ with a length, the Planck length squared, h G / (2 pi c^3), reads on the
 board as (the reference flux)(the energy unit) / (2 Gamma) up to 2 pi,
 about 10^-2 Links squared at Gamma = 10^4 and an energy unit near 100:
 below one Link, as a lattice must have it.
+
+**(6) THE QUANTA OF DISTANCE, TIME, SPEED AND RATE IN THE WORLD OF
+CLICKS (the model owner's question of 2026-09-25: "does this say
+something about the quantum of distance and time and speed in the
+world of clicks?").** Four quanta, three built in and one declared.
+DISTANCE: the Link. A click names one Node, and nothing below one Node
+is observed or claimed (9.25 (9)); the Planck length of (5) is a
+derived length, about a tenth of a Link at the eighteen's constants,
+not a grain of the board: the board's grain is the Link, coarser than
+the Planck length, and no row reads anything between two Nodes. TIME:
+the interval. A click names one interval; a clock's tick is a count of
+intervals (9.44 (5) (c)); nothing between two intervals is observed.
+SPEED: the speed of light is 1 Link per interval, built in, the most
+any record moves (the ray equation, 9.29; the one Link per interval of
+the cone, 8.8); every other speed is a rational, a count of Links over
+a count of intervals (the declared momentum, the seat's accumulator,
+9.52 (2)); there is no smallest speed but 0, and the lattice's own
+anisotropy, k^2 / 48, is the one mark of the grain a pin can read
+(record 1894). RATE, the one Gamma declares: a clock's rate moves in
+steps of 1 / Gamma, one unit of level, and one unit of level is what
+one click writes per unit of energy count (9.45 (1), 9.51 (3)); so THE
+QUANTUM OF GRAVITY IS THE CLICK: the potential at a body's Nodes changes
+by (the reference flux) / (2 Gamma) per unit of energy count, never by
+less, and the field outside relaxes to it in whole units; nature's
+smallest gravitational change is then one quantum's worth, G times the
+mass of one unit over the distance. What is NOT quantised: the phase of
+a record between clicks (an integer of the rows at every Node, whole
+but as fine as the amplitude bound) and the level's walk in the
+rounding; those are the possibilities, not the present (9.55 (7)).
