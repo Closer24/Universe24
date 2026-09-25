@@ -8165,3 +8165,84 @@ the born pair in place of the train (9.17 (6a)); the placement rule and
 the tail check not yet refused at load. Each is a code matter of
 Nature24's under the cleanup order of 9.21 (3), gated line by line, and
 none is a law change: the law is (a) and (b) and the click.
+
+### 9.32 The one law at the single cell (the model owner's word, 2026-09-25, in the mathematician's session: "look at the small things, at the level of the single cell: the single cell produces a click; and many cells, if all the cells together produce a click, then you know you have a body that is not connected to another body; something with the remainder you said; connect everything into one law that solves everything for us"; PROVED and COMPUTED here)
+
+**THE ONE LAW, AT A CELL, IN FIVE LINES.** (1) THE STATE: a cell holds,
+per record, two levels and a remainder, and nothing else (record 155;
+8.1). (2) THE STEP (the Inside): every interval the cell's level goes to
+its six neighbours with the pair's weight and turns against its own past,
+the remainder kept, 3 den a_next + r' = num S_6 - 3 den a_before + r
+(8.1); the pair per cell is the clock, a mass a pair with a rest
+rotation, light the pair [1, 1] (9.31 (14)). (3) THE SHARE, derived and
+never stored: a record's form at a cell, e_i = D_i (now_i^2 + before_i^2)
+- (1 / 3) now_i (**A** before)_i; its change per interval is the net flux
+through the cell's six Links (the discrete Gauss law, 9.19 (3)); the
+record's whole is I = sum over its cells of e_i, conserved. (4) THE CLICK:
+a record ends at every cell at once at the first interval at which the
+share of it gathered by one object reaches (2 u + 1) / (2 W) of its
+whole; the gather is the cell's own share where the record stands and
+the positive flux through the object's Ports where it passes (9.25 (12));
+u is the record's remainder at its birth cell on the wheel W = 3 den /
+gcd(num, 3 den) (9.19 (4)); the object's own record changes at the click
+(a count; a birth if it emits). (5) THE BIRTH: at a body's click the
+train is written on its cells (9.17 (6a)). Nothing else is law; every
+detector, emitter, mirror, clock and body of the rows is cells under
+these five lines with the pairs declared per region, and Born's rule,
+Bell, the clocks, the fall in a well and the exact returns are their
+theorems (9.25, 9.26, 9.29).
+
+**THE OWNER'S TWO STATEMENTS ARE THEOREMS OF (4).** (a) THE SINGLE CELL
+CLICKS: a record confined to one cell (the one-cell emitter [801, 700])
+clicks by (4) with the cell's own share; the click is that cell's event.
+(b) ALL THE CELLS TOGETHER CLICK THE SAME CLICK (PROVED): for a standing
+record the flux through every Link vanishes (the Wronskian of a mode,
+9.17 (7) (a)), so by (3) the share at EVERY cell is constant in time,
+e_i = D_i p_i^2 sin^2 omega; the gather over one cell is t e_c against
+T = P e_c and over all the cells t I against P I, the same ratio t / P;
+so the rung is reached at the same interval t = ceil((2 u + 1) P / (2 W))
+whether the click is read at one cell, at some cells or at all of them:
+ONE CLICK, READ ANYWHERE ON THE BODY. COMPUTED (the float law, a well
+[800, 801] of side 32 on the chain [800, 809], the mode at 2^20, 400
+intervals): the share at the centre cell, at an edge cell and at a cell
+outside the well constant to 10^-13, the whole I constant to 10^-14; the
+click interval at the centre cell and over all the cells identical at
+every residue tried (u = 0, 600, 1201, 2402: t = 1, 24, 47, 94, the
+period 93.53). THAT IS WHAT MAKES THE CELLS ONE BODY: A BODY IS THE SET
+OF CELLS OF ONE STANDING RECORD, the cells that click together, and no
+declaration. (c) NOT CONNECTED TO ANOTHER BODY: two standing records with
+no cell in common are two bodies with two clicks, each at its own u; two
+wells so near that the composed operator's mode lies on both are ONE
+standing record on both and ONE click on all their cells, one body with
+one mode (9.22 (7a) (v)); so the loader's "two bodies, two records" check
+(the stored profile 0 at every cell of the other body, 9.31 (3)) is
+exactly the click's own criterion, and not a rule beside it. A passing
+record shares a body's cells while it crosses and is no part of the
+body: its share there is not constant, and its click is the gather at
+the object's boundary, (4). (d) THE REMAINDER: the one thing at a cell
+beyond the two levels; it carries the phase below one unit, is kept
+exactly (the step a bijection, 9.26 (3) (a)), makes the integer step
+exact, and at a birth cell gives the born record its residue u, the
+place of its click within the acquisition; where the remainder is 0 for
+ever (the exact returns, 9.26 (4a)) every click falls at the first rung
+and there is no chance (9.28 (2) (e)): the remainder is where chance
+lives, and it lives at the cell.
+
+**WHAT THE ONE LAW SOLVES, AND HOW IT SITS WITH WHAT IS WRITTEN.** The
+Inside (2), the click (4), the body (b), two bodies (c), chance (d) and
+the birth (5) are one statement at the cell; 9.18 ("one object, one
+record, one rule") and 9.25 (12) (d) (the generic click in one line) are
+this statement read at the object; (b) adds the theorem that a body's
+click is the same at each of its cells, which is why the emitter's rung
+may read one cell (9.17 (7) (e)) and the clock body's period may be read
+at its centre (9.31 (13)); (c) adds that the body is the record's
+support and the "two bodies" check the click's own. The cleanup of 9.30
+(2) is the removal of everything the engine does beside these five
+lines. Proposed for Highlights 5.4, at the owner's word: "The law is five
+lines at a cell: two levels and a remainder; the split to the six
+neighbours and the turn against the past by the pair; the share, derived;
+the click, one record ending on all its cells at once at its drawn share,
+the residue from the remainder at its birth cell; the birth, the train on
+the body's cells. A body is the cells of one standing record, which click
+together; two bodies share no cell; the remainder is where chance lives
+(2026-09-25)".
