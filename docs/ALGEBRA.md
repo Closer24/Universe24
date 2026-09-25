@@ -10066,3 +10066,70 @@ equivalence test; (v) the detectors as seated body records with their
 pins recomputed blind; then the special paths; (iv) folded into the body
 record, its taking end being the engine's one gather over the Ports
 already and its giving end at the seat equal to the shell's by T2.
+
+### 9.49 The build, all together, and the test of each piece (the model owner's word of 2026-09-25 in the mathematician's session: "go for everything together, with tests that it works"; the order of records 1992 and 1985; each piece with the test that gates it; for Nature24's build and the Boss's record)
+
+**(1) THE RESEED RETIRED (9.43), on the lattice body.** Build: at a birth
+the body's own record is left as it is; the residue read at the click
+at the first shell Node in the declared order, written with the content
+on the body's Nodes; the born record's residue the same u. TEST: 3000
+births of the emitter chain, the cycle lengths in order: no run of
+one-interval cycles beyond a fair draw's (the longest at most 3), the
+mean cycle P / 2 within 3 percent, the residues' chi-square on 20 bins of
+the wheel below 30.1; the light clock without pins: the mean interval
+and the least wait inside 300 +- 9 and 250 +- 8, as readings.
+
+**(2) THE GENERATOR UNDER THE CLOCK (9.45 (5)).** Build: the mode of the
+operator with the Node clock at the body's declared initial content on
+its Nodes. TEST: the body's record on the engine starts within the
+loader's residual bound of the clocked mode (no transient above 10^-5
+of the amplitude); the excitation norm read on the engine equal to the
+declared T within 10^-5.
+
+**(3) THE BODY RECORD (9.46), under `body_record`.** Build: (1) to (3) of
+9.46 with the conventions of 9.46 (9). TEST, the equivalence of 9.46 (4)
+on three worlds: (i) the emitter chain, 3000 births on both forms, the
+cycle lengths equal in distribution (the mean within 3 percent, the
+chi-square of the residues on both below 30.1, the longest run at most
+3 on both); (ii) the clocked rotation of the body record equal to the
+lattice body's read from its levels within the loader's bound at every
+content; (iii) the light clock, the same born rows on the body's Nodes
+at each tick bit for bit, 300 +- 9 and 250 +- 8 on both forms as
+readings; (iv) the boxed clock of side 20, the block's count over 3000
+intervals equal on both forms, the host time beside; (v) the family of
+clicks' field identical on all three. A form that fails any one is
+refused naming the test.
+
+**(4) THE DETECTORS AS SEATED BODIES (9.42, 9.46 (8)), the eighteen's
+files.** Build: every detector a seated body record with its six Ports
+and its held content; every emitter a seat with its declared birth
+extent; the tests' wells 56 Links from a face. TEST: the pins recomputed
+blind on the new files by the generator's runs, then the eighteen run
+against them; the screens' patterns unchanged in form (the two slits'
+visibility 0.95 within its band, the spacing 53.2 within 2 percent), the
+counts rescaled by the seat's share; Bell's S above 2.5; Mach-Zehnder's
+dark port at most 1 in 100.
+
+**(5) THE CHARGE (9.48).** Build: the charge label per family, Q per
+body moved at clicks, the family of charge on the family of clicks'
+form with Q for M, the reading with the sign opposite to the reader's,
+Lambda a world key, the bound f > 0 at load. TEST: (i) every registered
+file at q = 0 for every family: the engine bit for bit as without the
+family (the chain digests unchanged); (ii) a charged world: two seated
+bodies of like sign 40 Links apart, a record of one family with q = +1
+sent between them, bent away from the like body by the ray equation's
+sign (the centroid moves away, computed against 9.29's hill, +13 Nodes
+at the declared Lambda scaled); a body of the opposite sign, bent
+toward; light between them untouched to 10^-6; (iii) the Coulomb form:
+the field's level around a seated body of charge Q at 2, 4, 8 Links in
+the ratio 4 : 2 : 1 within the rounding.
+
+**(6) THE EIGHTEEN, RUN.** After (1) to (5): every row of 9.22 (8)
+against its pins on the new engine, the pins recomputed blind where (4)
+moved the counts. This is the cracking; a row outside its band is a
+finding for the mathematician before anything else changes.
+
+**(7) WHAT IS NOT BUILT, by the owner's earlier words.** The clock
+sourced by energy (9.45 (5)); the wall that never shrinks (9.45 (6) (A));
+magnetism, spin, exclusion, the short-range forces (9.48's neighbours).
+Each waits on its own row and its own word.
