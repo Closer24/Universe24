@@ -659,3 +659,5 @@ names (BEAM_LAW, "The owner's name"). Every new symbol enters this file with
 its name, kind, unit and owner before a document uses it alone.
 
 **Node, not cell (the model owner, 2026-09-25, records 1970 and 1978).** A location on the GameBoard is a Node, and many are Nodes; the word cell is not used for it in any text, identifier or message. A detector is a body: the Nodes of one standing record, which click together (ALGEBRA.md 9.32); a set of free Nodes is not a body.
+
+**The giving click and the taking click, not birth (the model owner, 2026-09-25, record 2016).** Every click has two ends. At the taking click a body takes one whole quantum and its content rises by one; at the giving click a body gives one whole quantum and its content falls by one. What was called a birth is the giving click; what it writes is the given record, of the given family, with the given rows. The words birth, born and birthing are not used for it in any new text, identifier or message; Born's rule keeps its name.
