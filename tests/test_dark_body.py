@@ -8,8 +8,8 @@ needs no run against the pins: (i) the files are the generator's under the stamp
 are declared with their kinds; (ii) the dark body is dark by declaration: every family's charge
 0, no emitter on it, no detector set names its Nodes; the bright body has both; (iii) over 80
 intervals of each world the books balance, the family of charge is 0 everywhere, the family
-of clicks' level beside the two bodies is the same in both worlds within the rounding, no line
-of the dark world names the dark body, and the emitter's giving clicks have begun (GAMEBOARD
+of clicks' level beside the two bodies is the same in both worlds within the rounding, no giving click
+    and no taking click of the dark world names the dark body, and the emitter's giving clicks have begun (GAMEBOARD
 readings, COMPUTATION; no pin read)."""
 
 from __future__ import annotations
@@ -79,8 +79,8 @@ def test_both_worlds_run_with_the_same_field_beside_the_body_and_the_dark_body_n
     """(iii) 80 intervals of each world: the books balanced every 20 intervals; the family of
     charge 0 everywhere (every family's charge 0); the family of clicks' level at the Nodes 10
     Links outside the body's four faces equal in the two worlds within one percent (the same
-    held content at the same Nodes, the bright body's lower by its giving clicks so far); no line of the dark world names the
-    dark body (no click, no giving); the emitter's first giving click has happened in both."""
+    held content at the same Nodes, the bright body's lower by its giving clicks so far); no giving click and no taking click of the dark world
+    names the dark body (its own rotation's cycle lines are the GameBoard's); the emitter's first giving click has happened in both."""
     simulations = {}
     lines: dict[str, list[dict]] = {}
     for name in ("dark", "bright"):

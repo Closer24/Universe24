@@ -5648,11 +5648,22 @@ def _box_sides(
 
 
 def _detector_region(
-    name: str, positions: list[Address3], shape: Address3, periodic: tuple[bool, bool, bool]
+    name: str,
+    positions: list[Address3],
+    shape: Address3,
+    periodic: tuple[bool, bool, bool],
+    seated: bool = False,
 ) -> None:
     """The three refusals on a detector's Nodes: disconnected pieces (ALGEBRA.md
     9.25 (7)), no box, a side below DETECTOR_SIDE where the GameBoard's extent
-    allows it (record 1899)."""
+    allows it (record 1899). THE SEATED DETECTOR (ALGEBRA.md 9.46 (8) (c);
+    the model owner's word of 2026-09-25 in Nature24's session, "start";
+    BUILD.md section 26 item 40): under `body_record` a detector may be ONE
+    Node, its seat, its six Links its Ports (the cube's fifty-four
+    HISTORY there, the counts rescaled by the seat's share); a set of more
+    than one Node keeps the cube rule."""
+    if seated and len(set(positions)) == 1:
+        return
     pieces = _connected_pieces(positions, shape, periodic)
     if pieces > 1:
         raise ValueError(
@@ -5675,6 +5686,12 @@ def _detector_region(
             f"one cube of side {DETECTOR_SIDE} or more (at least {least} on this GameBoard), its "
             "sensitivity its whole cube and the click the detector's, never a Node's (the model "
             "owner's word of 2026-09-25, record 1899)"
+            + (
+                "; under body_record a seat is one Node and a cube three or more, nothing between "
+                "(ALGEBRA.md 9.46 (8) (c); BUILD.md section 26 item 40)"
+                if seated
+                else ""
+            )
         )
 
 
@@ -5683,6 +5700,7 @@ def _detectors(
     shape: Address3,
     periodic: tuple[bool, bool, bool],
     measured: tuple[MeasuredDefinition, ...],
+    body_record: bool = False,
 ) -> tuple[DetectorDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{BEAM_LAW}: detectors must be a list")
@@ -5745,12 +5763,15 @@ def _detectors(
                         )
                     taken.add(position)
                     bound_positions.append(position)
-                _detector_region(name, bound_positions, shape, periodic)
+                _detector_region(name, bound_positions, shape, periodic, seated=body_record)
             else:
                 bound = measured[bound_block].block
                 assert bound is not None
                 least = [min(DETECTOR_SIDE, int(shape[axis])) for axis in range(3)]
-                if any(bound.extents[axis] < least[axis] for axis in range(3)):
+                # a seated body of one Node is its own detector under body_record (the
+                # seat's six Links its Ports; ALGEBRA.md 9.46 (8) (c); item 40)
+                seat = body_record and all(int(extent) == 1 for extent in bound.extents)
+                if not seat and any(bound.extents[axis] < least[axis] for axis in range(3)):
                     raise ValueError(
                         f"{BEAM_LAW}: the receiver {name!r} is the Nodes of measured[{bound_block}], "
                         f"a block of extents {list(bound.extents)}; a detector is one cube of side "
@@ -5789,7 +5810,7 @@ def _detectors(
         # seam too), fill one box, and the box's sides are DETECTOR_SIDE or
         # more where the GameBoard's extent allows; separate places are
         # separate names
-        _detector_region(name, positions, shape, periodic)
+        _detector_region(name, positions, shape, periodic, seated=body_record)
         threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
         if name.startswith(RESERVED_SET_PREFIX) or name in FACE_NAMES or name == LIFETIME_NAME:
             raise ValueError(
@@ -6278,7 +6299,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     in_transit = _in_transit(
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
-    detectors = _detectors(obj.get("detectors", []), shape, periodic, measured)
+    detectors = _detectors(obj.get("detectors", []), shape, periodic, measured, body_record)
     optical = _optical(obj.get("optical"), suspension, meeting, table, massive_rows)
     # Every family under one wall, step 3: a moving body under the wall
     # (the law's own since the generic entry of 2026-09-22).

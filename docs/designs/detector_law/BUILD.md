@@ -3539,6 +3539,44 @@ would have found no cell.
    will read how far the waves move the bend. THE NAME NODE (the model
    owner's record 1970): every new text of this item says Node.
 
+40. THE SEATED DETECTOR: ONE NODE WITH ITS SIX PORTS, UNDER body_record
+   (ALGEBRA.md 9.46 (8) (c), the mathematician's form of a detector seated
+   at one Node; 9.49 (4); the model owner's word of 2026-09-25 in
+   Nature24's session, "start", on the two questions of the seats, the
+   cube rule of record 1899 lifted for seats under the key alone; built
+   on `emitter-click` after item 39, held by the rule of three). THE FORM:
+   under `body_record` a detector may be ONE Node, its seat: a receiver
+   body at that Node read as a set of one position, its six Links its
+   Ports (four on a layer, two on a chain), the flux into it through them
+   from outside, the click the seat's; Born's rule at the taking end the
+   increment ladder on the plain flux as for a cube (9.25 (2) and (3),
+   item 36); a seated detector's inflow per interval is its Ports' share
+   of a cube's, so its clicks come later and, where records can leave,
+   fewer, the pattern across seated pixels the same (9.46 (8) (c): the
+   counts rescaled, the form not). A block of extents [1, 1, 1] bound as its own detector is a seat
+   too. A set of more than one Node keeps the cube rule (record 1899);
+   without the key the seat is refused as before. The emitter as a seat
+   with a birth extent (9.46 (8) (d)) is item 37's body record already:
+   its rotation at the centre Node, its given rows on its Nodes. THE
+   LOADER: `_detector_region` and `_detectors` under `body_record`. THE
+   TEST, `tests/test_seated_detector.py` (COMPUTATION, GAMEBOARD, no
+   pin): on the detector-law layer (80 by 9, three places at x = 70 on
+   the rows 1, 4 and 7, the x faces closed) three seats against the
+   three cubes over 60 giving clicks: every record clicks at one of the
+   places on both forms (nothing leaves the closed layer), the seats'
+   clicks come later (the mean wait from the giving to the taking click
+   longer: a seat's inflow per interval is its four Ports' against the
+   cube's twelve, so the running total reaches the threshold later; where
+   records can leave, fewer), the three places share alike within the
+   draw on both forms (the train uniform across the periodic width); at
+   every seat's click the detector chosen is
+   the increment ladder's on the plain flux and the seat's content rises
+   by one; the loader's refusals. THE EIGHTEEN'S FILES AND PINS
+   UNTOUCHED (9.49 (4)'s rebuild with seats and the pins recomputed
+   blind wait on the owner's word that the engine is stable; the
+   question put to him through the Boss). THE NAME NODE (the model
+   owner's record 1970): every new text of this item says Node.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2
