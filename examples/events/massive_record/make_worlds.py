@@ -83,17 +83,21 @@ CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
 # the declared amplitude of every well of this generator's worlds (its own
 # record at interval 0, the iterated mode's peak): no loader default (BUILD.md
 # section 26 item 28)
-SEED_AMPLITUDE = 1 << 20
+SEED_AMPLITUDE = (
+    1 << 18
+)  # below the amplitude bound A = 2^20 of the weak-field rule's integers (ALGEBRA.md 9.61 (3); item 44)
 AGE_BOUND = 1 << 20
 # the amplitude bound A of every row: the ceiling 2^28 under the Node clock (the
 # model owner's decision (5) of record 1962; BUILD.md section 26 item 31)
-AMPLITUDE_BOUND = 1 << 28
+AMPLITUDE_BOUND = (
+    1 << 20
+)  # the integers of ALGEBRA.md 9.57 (2) and 9.61 (3) under the weak-field rule (item 44; 2^28 under the first-order rule HISTORY)
 # THE NODE CLOCK (ALGEBRA.md 9.35 (3); item 31): Gamma, declared per world like
 # the pairs, the clock pair (e, f) = (Gamma, Gamma + M) at every Node with M the
 # content held there; the eighteen declare 10^6 (a clock body of 64 quanta slows
 # by 6 x 10^-5, a well of one quantum by 10^-6, the mathematician's reading: no
 # pin of the eighteen moves beyond its band)
-NODE_CLOCK = 1_000_000
+NODE_CLOCK = 10_000  # Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44; the eighteen's 10^6 under the first-order rule HISTORY)
 # THE FAMILY OF CLICKS (the model owner's record 1982; ALGEBRA.md 9.45; BUILD.md
 # section 26 item 32): the fourth family, whose level at a Node is the Node
 # clock; its pair [1, 1] (light's kind, the default), its unit the quantum, no

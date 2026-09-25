@@ -25,6 +25,7 @@ import numpy as np
 import pytest
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
+from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_emitter import (
     CHARGE_FAMILY,
@@ -75,7 +76,7 @@ def small_world(
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
-        "amplitude_bound": 1 << 28,
+        "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "clock_family": CLOCK_FAMILY_NAME,
         "charge_family": CHARGE_FAMILY_NAME,
@@ -331,31 +332,29 @@ def form_I(
     before: np.ndarray,
     content: np.ndarray | None = None,
 ) -> Fraction:
-    # the form under the Node's own pace (ALGEBRA.md 9.50 (9) and (13); BUILD.md section 26
-    # item 36) at the scale of the plain form (the engine's rational over 3 L): with the pace
-    # p_i = Gamma - c_i, the weights den Gamma / (num p_i) on the squares, 2 den c_i / (num
-    # p_i) on now x before, and 1 / 3 on every Link, plain (den / num, 0 and 1 / 3 in the
-    # vacuum; the Link weights p_i p_j of item 34, HISTORY)
+    # the form from the rule's own integers (ALGEBRA.md 9.57 (1); BUILD.md section 26 item 44)
+    # at the scale of the plain form (the engine's rational over 3 L): with (R_i, S_i, w_i) the
+    # weak-field rule's coefficients at the Node, [w_i (a^2 + b^2) - S_i a b] / (3 R_i) at the
+    # Nodes and 1 / 3 on every Link, plain (den / num, 0 and 1 / 3 in the vacuum, where R = 2
+    # Gamma^2 num, S = 0, w = 6 den Gamma^2; the first-order form of item 36 HISTORY)
     gamma = simulation.node_clock
     if content is None:
         content = simulation.node_content
     num = simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
-    pace = (gamma - content).astype(object)
+    read_coefficient, self_coefficient, wall = rule_coefficients(
+        num, den, gamma, content.astype(object), True
+    )
     read = reads_of(simulation, family)(before).astype(object)
     now_o, before_o = now.astype(object), before.astype(object)
     total = Fraction(0)
     for node in zip(*np.nonzero(now_o | before_o | read), strict=True):
-        p = int(pace[node])
-        total += Fraction(int(den[node]) * gamma, int(num[node]) * p) * (
-            int(now_o[node]) ** 2 + int(before_o[node]) ** 2
+        a, b = int(now_o[node]), int(before_o[node])
+        total += Fraction(
+            int(wall[node]) * (a * a + b * b) - int(self_coefficient[node]) * a * b,
+            3 * int(read_coefficient[node]),
         )
-        total -= (
-            Fraction(2 * int(den[node]) * int(content[node]), int(num[node]) * p)
-            * int(now_o[node])
-            * int(before_o[node])
-        )
-        total -= Fraction(1, 3) * int(now_o[node]) * int(read[node])
+        total -= Fraction(1, 3) * a * int(read[node])
     return total
 
 
@@ -401,8 +400,16 @@ def test_conservation_between_clicks():
             prev_now, prev_before, prev_remainder = states[t - 1][identity]
             value = form_I(simulation, family, now, before, contents[t - 1])
             previous = form_I(simulation, family, prev_now, prev_before, contents[t - 1])
-            # the remainder term of 8.2 over the step t - 1 -> t under the Node's own pace
-            # (item 36): (a_next - a_before) (r - r') / (3 num p_i) per Node, p_i the pace
+            # the remainder term of 8.2 over the step t - 1 -> t under the weak-field rule
+            # (9.57 (1); item 44): (a_next - a_before) (r - r') / (3 R_i) per Node, R_i the
+            # rule's coefficient on the six reads at the Node's level in force for the step
+            read_coefficient, _self, _wall = rule_coefficients(
+                num.astype(object),
+                simulation.kind_den[family].astype(object),
+                gamma,
+                contents[t - 1].astype(object),
+                True,
+            )
             drift = Fraction(0)
             for node in zip(
                 *np.nonzero((now != prev_before) | (remainder != prev_remainder)), strict=True
@@ -410,7 +417,7 @@ def test_conservation_between_clicks():
                 drift += Fraction(
                     (int(now[node]) - int(prev_before[node]))
                     * (int(prev_remainder[node]) - int(remainder[node])),
-                    3 * int(num[node]) * (gamma - int(contents[t - 1][node])),
+                    3 * int(read_coefficient[node]),
                 )
             # the step's identity, exact, with the level in force for the step
             assert value - previous == drift, (identity, t)
@@ -438,27 +445,24 @@ def exchange_of(
     new: np.ndarray,
 ) -> Fraction:
     """The change of the form I of `form_I` when the family of clicks' levels move from `old`
-    to `new` (ALGEBRA.md 9.45 (5) under the Node's own pace, item 36): at every Node den Gamma
-    (1 / p' - 1 / p) (a^2 + b^2) / num - 2 den (c' / p' - c / p) a b / num, p the pace Gamma -
-    c; nothing on the Links (their weights plain; the Link weights of item 34, HISTORY)."""
+    to `new` (ALGEBRA.md 9.45 (5) under the weak-field rule, 9.57 (1); item 44): at every Node
+    the Node's term [w (a^2 + b^2) - S a b] / (3 R) at the new level less the same at the old
+    (R and S move with the level, w does not); nothing on the Links (their weights plain)."""
     gamma = simulation.node_clock
     num = simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
-    p_old = (gamma - old).astype(object)
-    p_new = (gamma - new).astype(object)
+    read_old, self_old, wall = rule_coefficients(num, den, gamma, old.astype(object), True)
+    read_new, self_new, _wall = rule_coefficients(num, den, gamma, new.astype(object), True)
     a, b = now.astype(object), before.astype(object)
     total = Fraction(0)
     for node in zip(*np.nonzero(a | b), strict=True):
         squares = int(a[node]) ** 2 + int(b[node]) ** 2
-        total += (
-            Fraction(int(den[node]) * gamma, int(num[node]))
-            * squares
-            * (Fraction(1, int(p_new[node])) - Fraction(1, int(p_old[node])))
+        product = int(a[node]) * int(b[node])
+        total += Fraction(
+            int(wall[node]) * squares - int(self_new[node]) * product, 3 * int(read_new[node])
         )
-        total -= (
-            Fraction(2 * int(den[node]), int(num[node]))
-            * (int(a[node]) * int(b[node]))
-            * (Fraction(int(new[node]), int(p_new[node])) - Fraction(int(old[node]), int(p_old[node])))
+        total -= Fraction(
+            int(wall[node]) * squares - int(self_old[node]) * product, 3 * int(read_old[node])
         )
     return total
 

@@ -56,7 +56,7 @@ def emitter(
         "fixed": True,
         "extents": [32, 1, 1],
         "pair": [800, 801],
-        "seed": 50 << 20,
+        "seed": 50 << 12,
         "emitter": {
             "family": "light",
             "train": {"direction": direction or [1, 0, 0], "periods": 8},
@@ -212,7 +212,9 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
     # (c) without `receiver` the ladder is every declared set in the declared order
     unnamed = parse_nature_beam_world(chain_of_200(None))
     assert unnamed.measured[0].block is not None and unnamed.measured[0].block.receiver is None
-    simulation, lines = run(chain_of_200(None), 120)
+    simulation, lines = run(
+        chain_of_200(None), 300
+    )  # the first gather past 120 at the seed 50 x 2^12 (item 44)
     assert not simulation.has_receiver
     first = gathers(lines)[0]
     assert first["chosen"] == [["beside", 0, "0"]] and "ladder" not in first

@@ -71,6 +71,7 @@ import numpy as np
 from event_universe.core.game_board import Address3
 from event_universe.core.integer import by_drive
 from event_universe.events.amplitude import rungs
+from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import (
     AXES,
     BEAM_LAW,
@@ -764,12 +765,13 @@ class DetectorLawSimulation:
         num = int(self.kind_num[family][node])
         den = int(self.kind_den[family][node])
         gamma = self.node_clock
-        wall = 3 * den * gamma
         effective = self._effective_content(family)
         content = int(effective[node])
-        # the pace on the Node's own sum (item 36): the coefficients p_i num
-        # on the six reads, 6 den c_i at the Node and the wall
-        step = gcd(wall, 6 * den * content, num * (gamma - content))
+        # the rule's three integers at the Node (9.57 (1); item 44): the
+        # coefficient on the six reads, the coefficient at the Node and the
+        # wall; the remainder moves on the multiples of their gcd
+        read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, True)
+        step = gcd(wall, self_coefficient, read)
         return step, wall // step
 
     def node_clock_pair(self, node: tuple[int, ...], family: int) -> tuple[int, int]:
@@ -1087,7 +1089,8 @@ class DetectorLawSimulation:
         six times 9.46 (2)'s (K, den_c Gamma): the same rotation as rationals
         (9.60 (2))."""
         num, den, gamma, content = self.seat_rule(block)
-        return 6 * num * (gamma - content) + 6 * den * content, 3 * den * gamma
+        read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, True)
+        return 6 * read + self_coefficient, wall
 
     def _advance_seat(self, block: Block) -> None:
         """One interval of the seat's record (ALGEBRA.md 9.60 (2)): the engine's
@@ -1469,7 +1472,7 @@ class DetectorLawSimulation:
         if live.box is None or self._window(live.box, self.kind_wrap[live.family]) is None:
             neighbours = self._neighbours(live.before, self.kind_wrap[live.family])
             a_before, live.remainder = self.one_rule_inverse(
-                num, den, gamma, content, neighbours, live.now, live.before, live.remainder
+                num, den, gamma, content, neighbours, live.now, live.before, live.remainder, not field
             )
         else:
             slices = tuple(slice(lo, hi) for lo, hi in live.box)
@@ -1488,6 +1491,7 @@ class DetectorLawSimulation:
                 live.now[slices],
                 live.before[slices],
                 live.remainder[slices],
+                not field,
             )
             a_before = np.zeros_like(live.now)
             a_before[slices] = a_before_w
@@ -1802,22 +1806,35 @@ class DetectorLawSimulation:
             if field
             else self._effective_content(live.family).astype(object)
         )
-        pace = gamma - content
-        weight = (3 * wall * self.kind_den[family] // self.kind_num[family]).astype(object)
+        # THE FORM FROM THE RULE'S OWN INTEGERS (ALGEBRA.md 9.57 (1); item 44):
+        # with (R_i, S_i, w_i) the rule's coefficients at the Node, the Node's
+        # term is L [w_i (now^2 + before^2) - S_i now before] / R_i and the
+        # Link term L now_i SUM_j before_j, L the family's common wall; exact
+        # where the field stands (the step's operator symmetric under the
+        # weight 1 / R_i), the work term where it moves; the first-order form
+        # of item 36, [3 den Gamma (a^2 + b^2) - 6 den c a b] / (p num), is
+        # this at R = p num, S = 6 den c, w = 3 den Gamma
+        read_coefficient, self_coefficient, wall_at = rule_coefficients(
+            self.kind_num[family].astype(object),
+            self.kind_den[family].astype(object),
+            gamma,
+            content,
+            not field,
+        )
         now = live.now.astype(object)
         before = live.before.astype(object)
-        read = self._neighbours(live.before, self.kind_wrap[family]).astype(object)
-        node = weight * (gamma * (now * now + before * before) - 2 * content * now * before)
-        links = wall * now * read
-        return self._weighted_sum(node, pace, mask) - int(np.sum(links[mask]))
+        reads = self._neighbours(live.before, self.kind_wrap[family]).astype(object)
+        node = wall * (wall_at * (now * now + before * before) - self_coefficient * now * before)
+        links = wall * now * reads
+        return self._weighted_sum(node, read_coefficient, mask) - int(np.sum(links[mask]))
 
     @staticmethod
-    def _weighted_sum(node: np.ndarray, pace: np.ndarray, mask: np.ndarray) -> Fraction:
-        """SUM_i node_i / pace_i over the Nodes of `mask`, exact (one Fraction
-        per distinct pace: the paces present are few, the body's and the
-        field's levels)."""
+    def _weighted_sum(node: np.ndarray, divisor: np.ndarray, mask: np.ndarray) -> Fraction:
+        """SUM_i node_i / divisor_i over the Nodes of `mask`, exact (one Fraction
+        per distinct divisor: the rule's read coefficients present are few,
+        the body's and the field's levels)."""
         total = Fraction(0)
-        chosen = pace[mask]
+        chosen = divisor[mask]
         values = node[mask]
         for value in set(int(v) for v in chosen.tolist()):
             total += Fraction(int(np.sum(values[chosen == value])), value)
@@ -1917,6 +1934,7 @@ class DetectorLawSimulation:
         now: np.ndarray,
         before: np.ndarray,
         remainder: np.ndarray,
+        weak_field: bool = True,
     ) -> tuple[np.ndarray, np.ndarray]: ...
 
     @overload
@@ -1930,20 +1948,26 @@ class DetectorLawSimulation:
         now: int,
         before: int,
         remainder: int,
+        weak_field: bool = True,
     ) -> tuple[int, int]: ...
 
     @staticmethod
-    def one_rule(num, den, gamma, content, neighbours, now, before, remainder):  # type: ignore[no-untyped-def]
-        """THE ONE RULE (ALGEBRA.md 9.50 (13), the Node's own pace; item 36),
-        the same integers for every record at every Node and for the seat's
-        record with its six reads returning the seat (9.60 (2); item 42): 3
-        den Gamma a_next + r' = (Gamma - c) num S_6(a_now) + 6 den c a_now - 3
-        den Gamma a_before + r, the remainder in [0, 3 den Gamma); on the
-        board's arrays or on one Node's integers alike (verbs G, D, T).
-        Returns (a_next, r')."""
-        wall = 3 * den * gamma
-        total = num * (gamma - content) * neighbours
-        total += 6 * den * content * now
+    def one_rule(num, den, gamma, content, neighbours, now, before, remainder, weak_field=True):  # type: ignore[no-untyped-def]
+        """THE ONE RULE (ALGEBRA.md 9.57 (1), the law's rule with Einstein's weak
+        field, the model owner's "switch" of record 2024; BUILD.md section 26
+        item 44), the same integers for every record at every Node and for
+        the seat's record with its six reads returning the seat (9.60 (2);
+        item 42): w a_next + r' = R S_6(a_now) + S a_now - w a_before + r, the
+        remainder in [0, w), with (R, S, w) the rule's integers at the Node
+        (`rule_coefficients`: R = 2 p^2 num, S = 12 den Gamma^2 - 6 (p^2 +
+        Gamma^2)(den - num) - 12 num p^2, w = 6 den Gamma^2, p = Gamma - c the
+        Node's own pace; the first-order rule of 9.50 (13), R = p num, S = 6
+        den c, w = 3 den Gamma, is the field families' plain step at pace 1
+        and the control, `weak_field` False); on the board's arrays or on one
+        Node's integers alike (verbs G, D, T). Returns (a_next, r')."""
+        read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, weak_field)
+        total = read * neighbours
+        total += self_coefficient * now
         total -= wall * before
         total += remainder
         nxt = np.floor_divide(total, wall) if isinstance(total, np.ndarray) else total // wall
@@ -1960,6 +1984,7 @@ class DetectorLawSimulation:
         now: np.ndarray,
         before: np.ndarray,
         remainder: np.ndarray,
+        weak_field: bool = True,
     ) -> tuple[np.ndarray, np.ndarray]: ...
 
     @overload
@@ -1973,19 +1998,21 @@ class DetectorLawSimulation:
         now: int,
         before: int,
         remainder: int,
+        weak_field: bool = True,
     ) -> tuple[int, int]: ...
 
     @staticmethod
-    def one_rule_inverse(num, den, gamma, content, neighbours_of_before, now, before, remainder):  # type: ignore[no-untyped-def]
+    def one_rule_inverse(  # type: ignore[no-untyped-def]
+        num, den, gamma, content, neighbours_of_before, now, before, remainder, weak_field=True
+    ):
         """The one rule one interval back with the same integers (ALGEBRA.md
-        9.50 (8), (9); item 34): 3 den Gamma a_before - r = (Gamma - c) num
-        S_6(a_before) + 6 den c a_before - (3 den Gamma a_next + r'), a_before
-        the ceiling of that quotient, r the difference, exact for every clock
-        history since the remainder's range is the wall's. Returns (a_before,
-        r)."""
-        wall = 3 * den * gamma
-        total = num * (gamma - content) * neighbours_of_before
-        total += 6 * den * content * before
+        9.50 (8), (9), 9.57 (1); item 34): w a_before - r = R S_6(a_now) + S
+        a_now - (w a_next + r'), a_before the ceiling of that quotient, r the
+        difference, exact for every clock history since the remainder's range
+        is the wall's, constant. Returns (a_before, r)."""
+        read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, weak_field)
+        total = read * neighbours_of_before
+        total += self_coefficient * before
         total -= wall * now + remainder
         a_before = (
             -np.floor_divide(-total, wall) if isinstance(total, np.ndarray) else -((-total) // wall)
@@ -2048,7 +2075,7 @@ class DetectorLawSimulation:
         if window is None:
             neighbours = self._neighbours(live.now, self.kind_wrap[live.family])
             nxt, live.remainder = self.one_rule(
-                num, den, gamma, content, neighbours, live.now, live.before, live.remainder
+                num, den, gamma, content, neighbours, live.now, live.before, live.remainder, not field
             )
             live.box = None
         else:
@@ -2066,6 +2093,7 @@ class DetectorLawSimulation:
                 live.now[slices],
                 live.before[slices],
                 live.remainder[slices],
+                not field,
             )
             nxt = np.zeros_like(live.now)
             nxt[slices] = nxt_w
@@ -2159,66 +2187,15 @@ class DetectorLawSimulation:
 
     def record_form(self, live: LiveRecord) -> Fraction:
         """The conserved form I of the record (MASSIVE_RECORD.md section 3, a
-        GAMEBOARD diagnostic read by the books): the invariant of the rule
-        written as a_next + a_before = D^-1 (S_6 / 3) with D_x = den_x /
-        num_x, I = a_next . D a_next + a_now . D a_now - a_next . (S_6 / 3)
-        a_now, scaled by 3 L to integers: 3 den_x (L / num_x) (a_now^2 +
-        a_before^2) summed over the Nodes less L (a_now,i a_before,j +
-        a_now,j a_before,i) summed over the Links, L the least common
-        multiple of the distinct numerators (at one numerator L = num and
-        the form is section 3's line, 3 den (a^2 + b^2) less num over the
-        Links). Verb B with the declared matrix and G; conserved by the
-        rule up to the remainders' bounded jitter; positive definite for
-        den > num."""
-        num = self.kind_num[live.family]
-        den = self.kind_den[live.family]
-        distinct = [int(value) for value in np.unique(num)]
-        common = 1
-        for value in distinct:
-            common = common * value // gcd(common, value)
-        scale = np.floor_divide(common, num)
-        now = live.now.astype(object)
-        before = live.before.astype(object)
-        # THE WEIGHTS UNDER THE NODE'S OWN PACE (ALGEBRA.md 9.50 (9) and
-        # (13); BUILD.md section 26 item 36), the plain form in the vacuum:
-        # with the pace p_i, [3 den_i (L / num_i) Gamma (a^2 + b^2) - 6 den_i
-        # (L / num_i) c_i a b] / p_i at the Node, L on the Link ij, plain; an
-        # exact rational (the weights p_i p_j at one integer scale, item 34,
-        # HISTORY); the family of clicks' own form plain (its pace 1)
-        field = live is self.clock_record or live is self.charge_record
-        gamma = 1 if field else self.node_clock
-        content = (
-            np.zeros(self.shape, dtype=object)
-            if field
-            else self._effective_content(live.family).astype(object)
-        )
-        pace = gamma - content
-        weight = (3 * den * scale).astype(object)
-        node = weight * (gamma * (now * now + before * before) - 2 * content * now * before)
-        squares = self._weighted_sum(node, pace, np.ones(self.shape, dtype=bool))
-        links = 0
-        wrap = self.kind_wrap[live.family]
-        for axis in range(3):
-            # Each Link once: the Node and its neighbour on the + side (the
-            # wrap on a periodic axis closes the last Link, an open face
-            # has none); an axis of one layer reads the row itself as its
-            # two neighbours (DESIGN.md section 2), two self-Links the form
-            # carries (the roll on a length-one axis is the identity).
-            if wrap[axis] or self.shape[axis] == 1:
-                now_next = np.roll(now, -1, axis=axis)
-                before_next = np.roll(before, -1, axis=axis)
-                links += int(np.sum(common * (now * before_next + now_next * before)))
-            else:
-                lower = [slice(None)] * 3
-                upper = [slice(None)] * 3
-                lower[axis] = slice(None, -1)
-                upper[axis] = slice(1, None)
-                a_now = now[tuple(lower)]
-                a_before = before[tuple(lower)]
-                b_now = now[tuple(upper)]
-                b_before = before[tuple(upper)]
-                links += int(np.sum(common * (a_now * b_before + b_now * a_before)))
-        return squares - links
+        GAMEBOARD diagnostic read by the books): the one form of the rule,
+        `conserved_form` (ALGEBRA.md 9.57 (1); item 44: from the rule's own
+        integers, L [w (a^2 + b^2) - S a b] / R at the Nodes and L now_i SUM_j
+        before_j on the Links, L the least common multiple of the distinct
+        numerators, an exact rational; the plain form 3 den (a^2 + b^2) less
+        num over the Links in the vacuum); conserved by the rule up to the
+        remainders' bounded jitter (the books' second copy of the form, with
+        its own Link loop, HISTORY since item 44: one form, one code)."""
+        return self.conserved_form(live)
 
     def _release(self, live: LiveRecord) -> None:
         """The record's rows leave the board: the emitters' lists and the

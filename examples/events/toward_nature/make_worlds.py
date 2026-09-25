@@ -81,6 +81,17 @@ REDSHIFT_SHAPE = [760, 3, 3]
 REDSHIFT_EMITTER_X = 100
 REDSHIFT_MIRROR_X = 690
 REDSHIFT_TICKS = 6000  # 64 givings by about 3000, the last return about 2200 later at the well's level
+# THE LONG-WAVE ROWS (ALGEBRA.md 9.62 (1), the mathematician's rule for the rows toward
+# nature): the given clock near k = 0.302 (the light clock row's own [2464, 25] on N = 2048,
+# 9.24 (6), gives the wavelength 20.8, not whole; the train needs a whole wavelength, 9.17
+# (6a): [4096, 21] on N = 2048 gives 21 Links, k = 2 pi / 21 = 0.299), where the lattice's
+# term is 0.3 percent; the train's 8 periods of the wavelength 21 over 168 Nodes
+LONG_GIVEN_CLOCK = [4096, 21]
+LONG_PHASE_STEPS = 2048
+LONG_TRAIN_LENGTH = 168
+LONG_REDSHIFT_EMITTER_X = 200  # one train (168) beyond the low face slab (32), 9.25 (11) (b)
+LONG_REDSHIFT_MIRROR_X = 690  # the arm 322 Links from the train's head at 368
+LONG_REDSHIFT_TICKS = 6000
 LORENTZ_SHAPE = [1500, 3, 3]
 LORENTZ_EMITTER_X = 100
 LORENTZ_MIRROR_X = 190  # the light clock's own arm, D = 58
@@ -109,13 +120,19 @@ def clock_world(
     ticks: int,
     holder: dict | None = None,
     hop_every: int | None = None,
+    given_clock: list[int] | None = None,
+    phase_steps: int | None = None,
+    train_length: int | None = None,
 ) -> dict:
     """The light clock's form (`detector.light_clock`) with the arm's ends and the
     ticks as given, Gamma = NODE_CLOCK, an optional holder block and an optional
-    hop of the whole clock along +x every `hop_every` intervals."""
-    blocks = [
-        detector.emitter([emitter_x, 0, 0], [detector.TRAIN_LENGTH, 3, 3], detector.WELL_FULL, [1, 0, 0])
-    ]
+    hop of the whole clock along +x every `hop_every` intervals; the given clock,
+    its circle N and the train's length the light clock's unless given (the
+    long-wave rows of 9.62 (1) give theirs)."""
+    given_clock = list(detector.GIVEN_CLOCK) if given_clock is None else list(given_clock)
+    phase_steps = detector.PHASE_STEPS if phase_steps is None else phase_steps
+    train_length = detector.TRAIN_LENGTH if train_length is None else train_length
+    blocks = [detector.emitter([emitter_x, 0, 0], [train_length, 3, 3], detector.WELL_FULL, [1, 0, 0])]
     if holder is not None:
         blocks.append(holder)
     document = massive.world(
@@ -126,12 +143,12 @@ def clock_world(
         detector.KIND,
         blocks,
         ticks,
-        light=detector.light_family(detector.GIVEN_CLOCK),
+        light=detector.light_family(given_clock),
         seed_profile=False,
     )
     if holder is not None:
         document["families"].append(dict(HOLDER_FAMILY))
-    document["N"] = detector.PHASE_STEPS
+    document["N"] = phase_steps
     document["face_depth"] = detector.FACE_DEPTH
     detector.bounded(document)
     document["node_clock"] = NODE_CLOCK
@@ -225,6 +242,31 @@ def worlds() -> dict[str, dict]:
             hop_every=HOP_EVERY,
         ),
         "bending": bending(),
+        "redshift_top_long": clock_world(
+            "redshift-top-long",
+            REDSHIFT_SHAPE,
+            LONG_REDSHIFT_EMITTER_X,
+            LONG_REDSHIFT_MIRROR_X,
+            LONG_REDSHIFT_TICKS,
+            given_clock=LONG_GIVEN_CLOCK,
+            phase_steps=LONG_PHASE_STEPS,
+            train_length=LONG_TRAIN_LENGTH,
+        ),
+        "redshift_bottom_long": clock_world(
+            "redshift-bottom-long",
+            REDSHIFT_SHAPE,
+            LONG_REDSHIFT_EMITTER_X,
+            LONG_REDSHIFT_MIRROR_X,
+            LONG_REDSHIFT_TICKS,
+            holder=holder_block(
+                [LONG_REDSHIFT_EMITTER_X + LONG_TRAIN_LENGTH, 0, 0],
+                [LONG_REDSHIFT_MIRROR_X - LONG_REDSHIFT_EMITTER_X - LONG_TRAIN_LENGTH, 3, 3],
+                WELL_LEVEL,
+            ),
+            given_clock=LONG_GIVEN_CLOCK,
+            phase_steps=LONG_PHASE_STEPS,
+            train_length=LONG_TRAIN_LENGTH,
+        ),
     }
 
 

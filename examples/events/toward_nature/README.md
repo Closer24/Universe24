@@ -62,6 +62,32 @@ the light clock in a well reads nearer 1 / (1 - c / Gamma) than 1 / sqrt(1 - c
 wavelength the rows should use, is the mathematician's to state (his finding
 1 of 2026-09-25).
 
+### The long-wave pair for the check-mode runs
+
+`redshift_top_long.json` and `redshift_bottom_long.json`: the same two clocks
+with the given clock near k = 0.302, the mathematician's rule for the rows
+toward nature (ALGEBRA.md 9.62 (1): at the band's middle the row reads the
+lattice's grain; at k = 0.3 the lattice's term is 0.3 percent). The light
+[4096, 21] on the circle N = 2048 gives the whole wavelength 21 Links (k = 2 pi
+/ 21 = 0.299; the light clock row's own [2464, 25] gives 20.8, not whole, and a
+train needs a whole wavelength, 9.17 (6a)); the train 8 periods over 168 Nodes;
+the emitter A at [200, 368) (one train beyond the low face slab, 9.25 (11) (b)),
+the mirror at [690, 694), the arm 322 Links; the bottom's holder over [368, 690)
+at 2000. On the Einstein form (9.62 (2)) a light clock with a declared arm reads
+the coordinate speed of light, 1 / (1 - 2 U_1) = 1.250 (1.258 at k = 0.302),
+the Shapiro reading in another dress; a clock body reads the redshift, 1 /
+sqrt(1 - 2 U_1 + 2 U_1^2) = 1.104; both are set beside nature's, each against
+its own. These two worlds are the check-mode rows of 9.61. THE FIRST CHECK-MODE
+TABLE (2026-09-25, the law as built, ALGEBRA.md 9.57 (1) at Gamma 10^4; no pin, no
+verdict; DETECTOR unless marked):
+
+| Row | Expected (blind, the mathematician's) | Read | Direction |
+| --- | --- | --- | --- |
+| The light clock (`../massive_record/light_clock.json`, k = pi / 2), the mean wait giving to click | 300 +- 9 (9.24 (6), 9.46 (10) (a)) times the self-level 1 + 64 / (2 Gamma) = 1.0032 (9.61 (1) (b)): 301 | 301.8, rms 20.3, standard error 2.5, 64 clicks | holds |
+| The redshift, long wave, the ratio bottom over top of the mean waits | a light clock with a declared arm reads 1 / (1 - 2 U_1) = 1.250 on the arm's share of the tick (9.62 (2); 1.258 at k = 0.302); the arm's share here 1120 of 1283 intervals (COMPUTATION: 2 x 322 / 0.575), so 1.218 to 1.225 on the whole tick; a clock body would read 1.104; today's law 1.118 on the share, 1.103 on the tick | 1.205 +- 0.011 (64 and 64 clicks; the top 1283.2 +- 6.8, the bottom 1546.6 +- 10.7) | holds: the well slows the clock by the coordinate speed of light's factor, not the redshift's; 1.2 to 1.8 standard errors below the Einstein form's line, 9 above today's law's |
+
+The host: 8, 26 and 32 seconds for the three runs with the support-only step.
+
 ## Row (2): Lorentz
 
 The light clock at rest (`lorentz_rest.json`) and the same clock carried along

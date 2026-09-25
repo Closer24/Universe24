@@ -19,6 +19,7 @@ from fractions import Fraction
 import numpy as np
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
+from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import parse_nature_beam_world
 from tests.test_emitter import NODE_CLOCK
 from tests.test_massive_record import massive_world
@@ -114,10 +115,10 @@ def test_the_local_flux_identity_is_exact_on_the_rules_integers():
                     for (ii, j), m in matrix.items()
                     if ii == i
                 )
-                # the remainders' term under the Node clock, (a_next - a_before) (r -
-                # r') / (3 Gamma num) at a Node without content (ALGEBRA.md 9.35 (2))
+                # the remainders' term under the weak-field rule, (a_next - a_before) (r -
+                # r') / (3 R) at a Node without content, R = 2 Gamma^2 num (ALGEBRA.md 9.57 (1))
                 remainder_term = (level(a_next, i) - level(a_before, i)) * Fraction(
-                    int(r_old[i, 0, 0]) - int(r_new[i, 0, 0]), 3 * NODE_CLOCK * num
+                    int(r_old[i, 0, 0]) - int(r_new[i, 0, 0]), 3 * 2 * NODE_CLOCK**2 * num
                 )
                 assert new[i] - old[i] - flux == remainder_term, (family, i)
         # antisymmetry and the pair-free form: G_ij = -G_ji on every Link
@@ -249,15 +250,12 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             den = int(simulation.kind_den[family][i, 0, 0])
             content = int(simulation.node_content[i, 0, 0])
             assert content == (1 if i in (5, 6, 7, 20, 30, 31, 32) else 0)
-            pace = NODE_CLOCK - content
-            # the six reads plain, the Node's terms weighted by 1 / p_i (item 36)
+            read_i, self_i, wall_i = rule_coefficients(num, den, NODE_CLOCK, content, True)
+            # the six reads plain, the Node's terms [w (a^2 + b^2) - S a b] / (3 R) (item 44)
             read = sum(Fraction(m) * int(before[j, 0, 0]) for (ii, j), m in matrix.items() if ii == i)
-            expected += (
-                Fraction(den * NODE_CLOCK, num * pace)
-                * (int(now[i, 0, 0]) ** 2 + int(before[i, 0, 0]) ** 2)
-                - Fraction(2 * den * content, num * pace) * int(now[i, 0, 0]) * int(before[i, 0, 0])
-                - Fraction(1, 3) * int(now[i, 0, 0]) * read
-            )
+            a, b = int(now[i, 0, 0]), int(before[i, 0, 0])
+            expected += Fraction(wall_i * (a * a + b * b) - self_i * a * b, 3 * read_i)
+            expected -= Fraction(1, 3) * a * read
         assert simulation.conserved_form(live) == 3 * wall * expected
         pair = simulation.detector_names.index("pair")
         far = simulation.detector_names.index("far")

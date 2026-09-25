@@ -37,7 +37,7 @@ def test_the_files_are_the_generators_and_the_pins_are_declared_blind():
     ray's COMPUTATION, positive toward the body, before any run."""
     for name in ("dark", "bright"):
         world = parse_nature_beam_world(load(name))
-        assert world.node_clock == 1_000_000 and world.body_record is False
+        assert world.node_clock == 10_000 and world.body_record is False
         assert [family.name for family in world.families] == [
             "light",
             "matter",
@@ -51,7 +51,7 @@ def test_the_files_are_the_generators_and_the_pins_are_declared_blind():
     for pin in pins["pins"].values():
         assert pin["kind"] == "DETECTOR"
     bend = pins["pins"]["bend_links"]
-    assert 5.0 < bend["value"] < 30.0 and bend["band"][0] < bend["value"] < bend["band"][1]
+    assert 5.0 < bend["value"] < 120.0 and bend["band"][0] < bend["value"] < bend["band"][1]
     assert pins["pins"]["dark_far_count_equals_stock"]["value"] == 30
 
 
@@ -64,7 +64,7 @@ def test_the_dark_body_is_dark_by_declaration_and_the_bright_one_is_not():
     for document in (dark, bright):
         body = document["measured"][DARK_NUMBER]
         assert body["position"] == [184, 143, 0] and body["extents"] == [32, 5, 1]
-        assert body["amount"] == 100_000
+        assert body["amount"] == 4812
     assert dark["measured"][DARK_NUMBER]["family"] == "dark"
     assert "emitter" not in dark["measured"][DARK_NUMBER]
     assert all("block" not in detector for detector in dark["detectors"])
@@ -106,7 +106,7 @@ def test_both_worlds_run_with_the_same_field_beside_the_body_and_the_dark_body_n
             dark_level,
             bright_level,
         )
-    assert int(simulations["dark"].node_content[BODY_CENTRE]) == 100_000
+    assert int(simulations["dark"].node_content[BODY_CENTRE]) == 4812
     # the dark body's own rotation cycles on (its `click` and `block` lines are the GameBoard's
     # count of its own record, 9.54 (3)); no giving click and no taking click name it
     assert not [

@@ -3711,6 +3711,51 @@ would have found no cell.
    compiled kernel wait on the check-mode runs' need. The model's local work
    per Node is unchanged: a host cost, reported apart (AGENTS.md).
 
+44. THE LAW'S RULE WITH EINSTEIN'S WEAK FIELD (ALGEBRA.md 9.57 (1) to (3), 9.61
+   (3), 9.62 (1); the model owner's decision of 2026-09-25 through the Boss,
+   record 2024: "switch. Fix the display."; the mathematician's section 9.57
+   and his integers of 9.61 (3); the first-order rule of item 36, 9.50 (13),
+   HISTORY as the law, kept as the field families' plain step and as the
+   check-mode runs' control). THE RULE: at every Node, for every record, w
+   a_next + r' = R S_6(a_now) + S a_now - w a_before + r with the Node's own
+   pace p = Gamma - c (c the effective content, 9.48 (3)): R = 2 p^2 num, S =
+   12 den Gamma^2 - 6 (p^2 + Gamma^2)(den - num) - 12 num p^2, w = 6 den
+   Gamma^2 (`event_universe.events.rule.rule_coefficients`, the one place the
+   three integers are written; `one_rule` and `one_rule_inverse` read them,
+   so the step, its exact inverse, the seat's record (item 42; its six reads
+   the seat) and the support box (item 43) all carry the weak field with no
+   second form). At c = 0 the rule is the vacuum's term for term (S = 0, the
+   levels bit for bit, the remainders 2 Gamma^2 times the plain rule's). THE
+   TWO FIELD FAMILIES step plain at pace 1 (`weak_field` False). THE WHEEL at
+   a Node: w over the gcd of (w, S, R) (`wheel_at`; the seat's `seat_wheel`
+   on (w, 6 R + S)). THE CONSERVED FORM from the same integers: L [w (a^2 +
+   b^2) - S a b] / R at the Nodes and L a_i SUM_j b_j on the Links (`form_share`,
+   `conserved_form`; `record_form`, the books' second copy of the form with
+   its own Link loop, HISTORY: one form, one code), exact where the field
+   stands, the remainders' term (L / R)(a_next - a_before)(r - r') where it
+   moves; the given record's norm the exact rational (numerator, denominator)
+   as before, the body's excitation norm the summed share's numerator
+   (`excitation_norm`; the pace times the share HISTORY). THE FLUX BOOKING
+   unchanged (the plain current at the Ports), BORN'S RULE unchanged, THE
+   CLICK unchanged. THE ROTATION at k = 0: 2 cos omega' = 2 - (1 + f)(1 - num /
+   den) with f = (p / Gamma)^2 (the clock's second-order weight, 9.56 (4));
+   light's dispersion at level c: cos omega' = 1 - f (1 - cos omega) (9.62
+   (1)). THE INTEGERS (9.57 (2), 9.61 (3)): Gamma = 10^4, the amplitude bound
+   A = 2^20 in every shipped world (the muon layer's pair [3200, 3227] at
+   two thirds of the room, measured exactly, so 2^19 is not needed), the
+   emitter's seed 50 x 2^12, the blocks' seeds 2^18, the norm T with the
+   seed squared (the form is quadratic); the loader's bound is the rule's
+   own total 6 A R + A |S| + w (A + 1) at the level 0 and at the world's
+   content read below Gamma (`_pair_bound`, `rule_total_bound`), below 2^63;
+   the test suites at Gamma 10^4 and A = 2^22 (the planted rows at 2^20 with
+   room), the Node clock suite at its Gamma 1000 and A = 2^26. EVERY SHIPPED
+   WORLD REGENERATED at these integers (the massive record's nine, the dark
+   body's two with the body's content 4812 below Gamma, the rows toward
+   nature's five); their pins recomputed blind by the generators where the
+   generators write them; the light clock's digests re-read. THE DISPLAY
+   (the owner's second word) is item 45's. THE NAME NODE (the model owner's
+   record 1970): every new text of this item says Node.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

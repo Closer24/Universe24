@@ -511,11 +511,13 @@ WELL_FULL = [
     800,
     801,
 ]  # the rich well of the massive rows' emitters (2403 remainder values; the mathematician's 9.21 (8))
-EMITTER_SEED = 50 << 20
+EMITTER_SEED = (
+    50 << 12
+)  # the seed's unit 2^12 under the amplitude bound 2^20 (ALGEBRA.md 9.61 (3); item 44; 50 x 2^20 HISTORY)
 AMPLITUDE_BOUND = (
-    1 << 28
+    1 << 20
 )  # the world key `amplitude_bound` of every massive world: the ceiling under the Node clock (BUILD.md section 26 item 31; section 15 M1-10's 2^32 HISTORY)
-NODE_CLOCK = 1_000_000  # the world key `node_clock`, Gamma (ALGEBRA.md 9.35 (3); item 31): the massive generator's integer, written in every world
+NODE_CLOCK = 10_000  # the world key `node_clock`, Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44) (ALGEBRA.md 9.35 (3); item 31): the massive generator's integer, written in every world
 CLOCK_FAMILY_NAME = "clicks"  # the family of clicks, the Node clock (ALGEBRA.md 9.45; item 32): the massive generator's name and family
 CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0}
 CHARGE_FAMILY_NAME = "charge"  # the family of charge (ALGEBRA.md 9.48; item 35)

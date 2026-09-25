@@ -646,15 +646,11 @@ def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
         own = block.own
         assert own is not None
         total += simulation.form_share(own, simulation.centre_mask(block))
-    # THE BODY'S OWN UNITS (ALGEBRA.md 9.50 (13); BUILD.md section 26 item 36):
-    # the share at the centre Node is read in the world's time by the Node's
-    # pace p = Gamma - c there (an exact rational); p times it is whole, the
-    # norm as the body's own record carries it
-    centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))
-    pace = simulation.node_clock_pair(centre, block.family)[0]
-    norm = total * pace
-    assert norm.denominator == 1, (norm, pace)
-    return int(norm)
+    # THE BODY'S OWN UNITS (ALGEBRA.md 9.57 (1); item 44): the share's denominator at the
+    # centre Node is the rule's coefficient on the six reads there, R = 2 p^2 num (the pace p
+    # of item 36 under the first-order rule, HISTORY); T is the summed share in those units,
+    # the numerator of the exact rational, whole
+    return int(total.numerator) if total.denominator != 1 else int(total)
 
 
 def composed_largest_eigenvalues(world: NatureBeamWorld) -> dict[int, float]:

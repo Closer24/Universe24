@@ -59,7 +59,7 @@ def test_a_generated_world_is_lawful_and_carries_its_clock_and_stamp():
     loader's own function)."""
     for document, amplitude in (
         (emitter_world(stock=2), 100),
-        (light_clock_world("closed", False), 50 << 20),
+        (light_clock_world("closed", False), 50 << 12),
     ):
         assert document["input"] == input_stamp(document)
         assert document["input"]["law"] == LAW_IDENTIFIER and len(document["input"]["hash"]) == 64
@@ -236,22 +236,24 @@ def test_a_bodys_mode_ends_before_another_body_of_its_family_begins():
     B, the Node [182, 0, 0] and A's value there (130 read); B at [232, 264) (a gap of 100):
     admitted. A light-kind wall at B's place is another family: no check (the light clock's
     mirror stands 58 Links from A's head)."""
-    for b_corner, admitted in ((182, False), (232, True)):
+    for b_corner, admitted in ((170, False), (232, True)):  # the tail ends at 180 at the seed 50 x 2^12
         document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
         document["ticks"] = 10
         document["measured"] = [emitter(100, None), emitter(b_corner, None, direction=[-1, 0, 0])]
         for entry in document["measured"]:
             del entry["emitter"]  # two wells, no giving: the loader's tail check alone
-        profile = massive_generator().mode_profile(document, 0, amplitude=50 << 20)
+        profile = massive_generator().mode_profile(document, 0, amplitude=50 << 12)
         document["measured"][0]["seed"] = profile
-        assert max(x for x in range(400) if profile[x] != 0) == 194
+        assert (
+            max(x for x in range(400) if profile[x] != 0) == 180
+        )  # at the seed 50 x 2^12 (194 at 50 x 2^20 HISTORY)
         restamped(document)
         if admitted:
             parse_nature_beam_world(document)
             continue
         with pytest.raises(
             ValueError,
-            match=r"measured\[0\]\.seed is 130 at Node \[182, 0, 0\] of measured\[1\]: a body's mode "
+            match=r"measured\[0\]\.seed is 8 at Node \[170, 0, 0\] of measured\[1\]: a body's mode "
             r"ends before another body of its family begins",
         ):
             parse_nature_beam_world(document)

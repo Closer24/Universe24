@@ -21,7 +21,15 @@ from event_universe.events.world import parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
 FOLDER = ROOT / "examples" / "events" / "toward_nature"
-NAMES = ("redshift_top", "redshift_bottom", "lorentz_rest", "lorentz_moving", "bending")
+NAMES = (
+    "redshift_top",
+    "redshift_bottom",
+    "lorentz_rest",
+    "lorentz_moving",
+    "bending",
+    "redshift_top_long",
+    "redshift_bottom_long",
+)
 
 
 def load_module(name: str):
@@ -48,6 +56,17 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
             continue
         assert doc["detectors"][0]["name"] == "at_well" and doc["detectors"][0]["block"] == 0
         assert world.shape[1:] == (3, 3)
+    # the long-wave pair (ALGEBRA.md 9.62 (1)): the given clock [4096, 21] on N = 2048, the
+    # wavelength 21 Links (k = 0.299), the train 168 Nodes, the emitter one train from the face
+    for name in ("redshift_top_long", "redshift_bottom_long"):
+        doc = document(name)
+        assert doc["N"] == generator.LONG_PHASE_STEPS == 2048
+        assert doc["families"][0]["phase_per_link"] == generator.LONG_GIVEN_CLOCK == [4096, 21]
+        assert doc["measured"][0]["extents"] == [generator.LONG_TRAIN_LENGTH, 3, 3] == [168, 3, 3]
+        assert doc["measured"][0]["position"] == [generator.LONG_REDSHIFT_EMITTER_X, 0, 0]
+    long_holder = document("redshift_bottom_long")["measured"][1]
+    assert long_holder["family"] == "well" and long_holder["amount"] == 2000
+    assert long_holder["position"] == [368, 0, 0] and long_holder["extents"] == [322, 3, 3]
     bending = document("bending")
     emitter, body = bending["measured"][0], bending["measured"][1]
     assert bending["model_id"] == "beam-toward-nature-bending-v1"

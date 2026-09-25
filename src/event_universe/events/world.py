@@ -317,6 +317,7 @@ from event_universe.core.integer import (
     rational_sum,
 )
 from event_universe.core.phase import MAX_PHASE_STEPS
+from event_universe.events.rule import rule_total_bound
 
 BEAM_LAW = "beam-v1"
 LAW_VALUE = "beam"
@@ -2347,25 +2348,34 @@ def _pair_bound(
     content: int = 0,
 ) -> None:
     """The load bound of a pair (Reviewer 3's MUST 3) under the Node clock
-    with the fixed wall (ALGEBRA.md 9.35 (2); BUILD.md section 26 items 31
-    and 34): the rule's total at a Node under the amplitude bound A (the
-    world's `amplitude_bound`), (Gamma + M) x num x 6 x A + 6 x den x M x A
-    + 3 x den x Gamma x (A + 1) (the pace Gamma - c of a read at most Gamma
-    + M in size), below 2^63, Gamma the world's `node_clock` and M the content at the
-    Node (the world's whole content at the second pass, `_node_clock_bound`;
-    the plain rule at Gamma = 1 and M = 0, the first pass on the pair
-    alone); refused otherwise naming the bound, the clock, the content and
-    the pair."""
-    total = (node_clock + content) * numerator * 6 * bound
-    total += 6 * denominator * content * bound
-    total += 3 * denominator * node_clock * (bound + 1)
+    (ALGEBRA.md 9.57 (2), 9.61 (3); BUILD.md section 26 items 31, 34 and 44):
+    the weak-field rule's total at a Node under the amplitude bound A (the
+    world's `amplitude_bound`), 6 A R + A |S| + w (A + 1) with the rule's
+    integers (R, S, w) at the vacuum's level and at the content M, below
+    2^63, Gamma the world's `node_clock` and M the content at the Node (the
+    world's whole content at the second pass, `_node_clock_bound`; the plain
+    rule at Gamma = 1 and M = 0, the first pass on the pair alone); refused
+    otherwise naming the bound, the clock, the content and the pair."""
+    # THE BOUND FROM THE RULE'S OWN INTEGERS (ALGEBRA.md 9.57 (2), 9.61 (3);
+    # BUILD.md section 26 item 44): 6 A R + A |S| + w (A + 1) with (R, S, w)
+    # the weak-field rule's coefficients at the level 0 and at the level M
+    # (the two levels a Node can read: the vacuum's and a body's), the larger;
+    # the plain rule's at Gamma = 1 on the first pass over the pair alone
+    # the level a Node can read stays below Gamma (the pace positive: the load's guard per
+    # body, `_node_clock_bound`, and the run's, `_advance_clock`), so the reach is read there
+    weak_field = node_clock > 1
+    reach = min(content, node_clock - 1) if weak_field else content
+    total = max(
+        rule_total_bound(numerator, denominator, node_clock, level, bound, weak_field)
+        for level in (0, reach)
+    )
     if total >= TOTAL_BOUND:
         raise ValueError(
             f"{BEAM_LAW}: {label}.pair [{numerator}, {denominator}]"
-            + ": the rule's total (Gamma + M) x num x 6 x A + 6 x den x M x A + 3 x den x Gamma "
-            f"x (A + 1) at the amplitude bound A = {bound}, the Node clock Gamma = {node_clock} "
-            f"and the content M = {content} is {total}, not below 2^63 (the bound of the rows' "
-            "int64; ALGEBRA.md 9.35 (2) under the fixed wall, BUILD.md section 26 item 34)"
+            + ": the rule's total 6 A R + A |S| + w (A + 1) at the amplitude bound A = "
+            f"{bound}, the Node clock Gamma = {node_clock} and the content M = {content} (read at "
+            f"the level {reach}) is {total}, not below 2^63 (the bound of the rows' int64; ALGEBRA.md 9.57 (2) and "
+            "9.61 (3), BUILD.md section 26 item 44)"
         )
 
 

@@ -113,3 +113,31 @@ def test_the_box_grows_by_one_link_and_stops_at_an_open_face() -> None:
     for _ in range(30):
         simulation.step()
     assert live.box is None  # the whole chain: the plain step
+
+
+def test_a_box_short_of_a_closed_face_reads_zero_beyond_it_like_the_whole_board(monkeypatch) -> None:
+    """The mathematician's check before the merge (ALGEBRA.md 9.68 (3)): on a CLOSED axis
+    (mirrors) a window's edge inside the board reads zero beyond it, as the whole-board step
+    does (the board's faces reflect nothing by themselves: a mirror is a body of light's kind,
+    the face beyond the last Node has no Node); a planted record 10 Links from the closed face
+    steps 6 intervals with its box short of the face and the same 6 on the whole board, bit
+    for bit, then reaches the face and stays bit-equal for 30 more."""
+    boundary = {"x": "closed", "y": "periodic", "z": "periodic"}
+    document = block_world([40, 1, 1], boundary, [800, 809], [], ticks=50)
+    now = np.zeros((40, 1, 1), dtype=np.int64)
+    now[29:31, 0, 0] = UNIT // 2
+    boxed = DetectorLawSimulation(parse_nature_beam_world(document))
+    live = planted(boxed, 0, now.copy(), np.zeros_like(now), np.zeros_like(now))
+    live.box = boxed.support_box(live.now, live.before)
+    boxed.records[live.identity] = live
+    plain = DetectorLawSimulation(parse_nature_beam_world(document))
+    other = planted(plain, 0, now.copy(), np.zeros_like(now), np.zeros_like(now))
+    plain.records[other.identity] = other
+    for step in range(36):
+        boxed.step()
+        plain.step()
+        if step < 6:
+            assert live.box is not None and live.box[0][1] < 40  # short of the closed face at 39
+        outside_is_zero(boxed)
+        assert np.array_equal(live.now, other.now) and np.array_equal(live.remainder, other.remainder)
+    assert live.box is None or live.box[0][1] == 40

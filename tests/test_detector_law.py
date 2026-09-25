@@ -18,6 +18,7 @@ import numpy as np
 import pytest
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
+from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import DETECTOR_LAW_RULE, input_stamp, parse_nature_beam_world
 from tests.test_emitter import (
     CHARGE_FAMILY,
@@ -161,7 +162,7 @@ def chain_world(
         "clock_stamp": clock_stamp,
         "detector_law": True,
         "massive_record": True,
-        "amplitude_bound": 1 << 28,
+        "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "clock_family": CLOCK_FAMILY_NAME,
         "charge_family": CHARGE_FAMILY_NAME,
@@ -371,7 +372,7 @@ def layer_world(receiver: object = None) -> dict:
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
-        "amplitude_bound": 1 << 28,
+        "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "clock_family": CLOCK_FAMILY_NAME,
         "charge_family": CHARGE_FAMILY_NAME,
@@ -581,8 +582,13 @@ def test_the_increment_ladder_over_the_named_sets():
         total, increments, ladder, u, norm, wheel, pace = seen[gather["record"]]
         # the record's wheel the rule's at the body's Node with its content at
         # the giving (the stock 8 down to 1); its norm's denominator divides Gamma - content
-        assert ladder == names and (3 * EMITTER_PAIR[1] * NODE_CLOCK) % wheel == 0
-        assert 0 <= u < wheel and any((NODE_CLOCK - c) % pace == 0 for c in range(9))
+        # the wheel divides the weak-field wall 6 den Gamma^2 (9.57 (1); item 44); the norm's
+        # denominator divides the rule's read coefficient at the body's content at the giving
+        assert ladder == names and (6 * EMITTER_PAIR[1] * NODE_CLOCK**2) % wheel == 0
+        assert 0 <= u < wheel and any(
+            rule_coefficients(EMITTER_PAIR[0], EMITTER_PAIR[1], NODE_CLOCK, c, True)[0] % pace == 0
+            for c in range(9)
+        )
         assert gather["chosen"][0][0] == chosen_by_the_rule(
             simulation, total, increments, ladder, u, norm, wheel, pace
         )

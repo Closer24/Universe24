@@ -29,10 +29,10 @@
   },
   "bend_links": {
    "kind": "DETECTOR",
-   "value": 13.729398594388357,
+   "value": 76.26678322291815,
    "band": [
-    9.61057901607185,
-    17.848218172704865
+    53.3867482560427,
+    99.14681818979359
    ],
    "reading": "the centroid of the emitter's records' clicks over the screen's cubes, in y, less the beam's line (toward the body positive), the same in both worlds within one cube (3 Links)",
    "computed": "the ray of the given clock through the static Coulomb field of the held M (9.41 (3), 9.29, 9.50 (13))"

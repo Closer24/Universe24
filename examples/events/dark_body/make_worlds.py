@@ -49,18 +49,18 @@ SHAPE = [400, 200, 1]
 BEAM_Y = 100  # the beam's line
 BODY_CORNER = [184, 143, 0]  # the body's lower corner: its centre (200, 145), 45 Links beside the line
 BODY_EXTENTS = [32, 5, 1]  # the train's length along x (a bright body's emitter needs it), 5 across
-BODY_CONTENT = 100_000  # M, the quanta held at every Node of the body (below Gamma with room)
+BODY_CONTENT = 4812  # M, the quanta held at every Node of the body: below Gamma = 10^4 (the load's guard), the static level on the beam's line under it 2000, U_b = 0.1 (100000 at Gamma 10^6 HISTORY)
 EMITTER_CORNER = [5, 98, 0]  # the train's 32 Nodes along x, 5 wide across the beam
 EMITTER_EXTENTS = [32, 5, 1]
 STOCK = 30  # the emitter's given records, one per giving click
 SCREEN_X = 380  # the screen's column, cubes of side 3 from y = 40 to 160
 SCREEN_YS = range(40, 160)
 TICKS = 2400  # the last giving near 30 x P / 2 intervals, the flight 340 Links at 0.447
-NODE_CLOCK = 1_000_000
+NODE_CLOCK = 10_000  # Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44)
 MATTER = [800, 809]
 WELL = [800, 801]  # the emitter's well, the light clock's
 BODY_WELL = WELL  # the body's well the emitter's: 32 by 5 binds its mode in [800, 801]
-SEED = 1 << 20
+SEED = 1 << 18  # below the amplitude bound 2^20 (9.61 (3))
 GIVEN_CLOCK = [512, 1]
 DETECTOR_SIDE = 3
 
@@ -136,7 +136,7 @@ def world(dark: bool) -> dict:
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
-        "amplitude_bound": 1 << 28,
+        "amplitude_bound": 1 << 20,  # the integers of 9.61 (3) (item 44)
         "node_clock": NODE_CLOCK,
         "clock_family": "clicks",
         "charge_family": "charge",

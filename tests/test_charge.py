@@ -26,6 +26,7 @@ import numpy as np
 import pytest
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation
+from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import parse_nature_beam_world
 from tests.test_emitter import (
     CHARGE_FAMILY_NAME,
@@ -69,17 +70,18 @@ def rule_step(
     pair: tuple[int, int], effective: list[int], now: np.ndarray, before: np.ndarray, wrap: bool
 ) -> tuple[list[int], list[int]]:
     """One step of the rule under the Node's own pace at the effective content `effective`
-    per Node (ALGEBRA.md 9.50 (13), 9.48 (3), 9.51 (2)): 3 den Gamma a_next + r' = (Gamma - c_i)
-    num S_6(a_now)_i + 6 den c_i a_now - 3 den Gamma a_before + r with r = 0, c_i the effective
-    content at the Node alone; the levels and the remainders, Python integers."""
+    per Node (ALGEBRA.md 9.57 (1), 9.48 (3), 9.51 (2)): w a_next + r' = R S_6(a_now)_i + S a_now
+    - w a_before + r with r = 0 and (R, S, w) the rule's integers at the effective content c_i of
+    the Node alone; the levels and the remainders, Python integers."""
     num, den = pair
-    wall = 3 * den * GAMMA
     reads = six_reads(now, wrap)
     levels: list[int] = []
     remainders: list[int] = []
     for i, c in enumerate(effective):
         a, b = int(now[i, 0, 0]), int(before[i, 0, 0])
-        total = num * (GAMMA - c) * reads[i] + 6 * den * c * a - wall * b
+        # the weak-field rule's three integers at the effective content (ALGEBRA.md 9.57 (1))
+        read, self_coefficient, wall = rule_coefficients(num, den, GAMMA, c, True)
+        total = read * reads[i] + self_coefficient * a - wall * b
         levels.append(total // wall)
         remainders.append(total - wall * (total // wall))
     return levels, remainders

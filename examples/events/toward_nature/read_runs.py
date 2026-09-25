@@ -62,10 +62,11 @@ def ratio(a: tuple[float, float], b: tuple[float, float]) -> tuple[float, float]
     return value, error
 
 
-def redshift(out: Path) -> None:
-    print("== ROW (1) THE REDSHIFT, today's law (ALGEBRA.md 9.50 (13)), Gamma 10^4, c_1 = 2000")
-    top, top_counts = waits(out / "redshift_top.output.json")
-    bottom, bottom_counts = waits(out / "redshift_bottom.output.json")
+def redshift(out: Path, suffix: str = "") -> None:
+    wave = "at the long wavelength 21 (k = 0.299)" if suffix else "at k = pi / 2"
+    print(f"== ROW (1) THE REDSHIFT {wave}, Gamma 10^4, c_1 = 2000, the law as built")
+    top, top_counts = waits(out / f"redshift_top{suffix}.output.json")
+    bottom, bottom_counts = waits(out / f"redshift_bottom{suffix}.output.json")
     t = report("redshift_top (the arm at 0)", top, top_counts)
     b = report("redshift_bottom (the arm held at 2000)", bottom, bottom_counts)
     # the early clicks of the bottom world: records turned back at the well's edge before the
@@ -91,7 +92,10 @@ def redshift(out: Path) -> None:
     v0 = 1 / (3 * sin_w0)
     v1 = p * sin_k1 / (3 * GAMMA * sin_w0)
     print(
-        f"COMPUTATION set beside: the continuum's 1 / sqrt(1 - 2 U_1) = {continuum:.3f} at U_1 = {u} (9.59 (1)); nature 1 + U_1 = {1 + u:.3f} at first order"
+        f"COMPUTATION set beside: the continuum's 1 / sqrt(1 - 2 U_1) = {continuum:.3f} at U_1 = {u} (today's law, 9.59 (1)); nature 1 + U_1 = {1 + u:.3f} at first order"
+    )
+    print(
+        f"COMPUTATION on the Einstein form (9.62 (2)): a light clock with a declared arm reads the coordinate speed of light, 1 / (1 - 2 U_1) = {1 / (1 - 2 * u):.3f}; a clock body reads the redshift 1 / sqrt(1 - 2 U_1 + 2 U_1^2) = {1 / math.sqrt(1 - 2 * u + 2 * u * u):.3f}"
     )
     print(
         f"COMPUTATION the lattice's own at k = pi / 2: v_g at 0 = {v0:.4f}, in the well cos k' = {cos_k1:.3f}, v_g' = {v1:.4f}, the flight ratio {v0 / v1:.3f}"
@@ -125,6 +129,8 @@ if __name__ == "__main__":
     folder = Path(sys.argv[1])
     if (folder / "redshift_top.output.json").exists():
         redshift(folder)
+    if (folder / "redshift_top_long.output.json").exists():
+        redshift(folder, "_long")
     if (folder / "lorentz_rest.output.json").exists():
         lorentz(folder)
     if (folder / "lorentz_rest_seat.output.json").exists():

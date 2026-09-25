@@ -45,12 +45,13 @@ light and for matter alike (a zero face beyond the ends, the receiver slab of
 `face_depth` there, declared on every open board); the held index chains' notes
 on their faces stand with their files (the section below). Every well declares
 its `seed` (no loader default, item 28). Every world declares `node_clock`, the
-Node clock's Gamma (10^6; ALGEBRA.md 9.35 (3); BUILD.md section 26 item 31: the
+Node clock's Gamma (10^4 SINCE the weak-field rule, ALGEBRA.md 9.57 (2) and 9.61 (3), BUILD.md section 26 item 44; 10^6 HISTORY; ALGEBRA.md 9.35 (3); BUILD.md section 26 item 31: the
 clock pair (Gamma - c, Gamma) at every Node under the fixed wall 3 den Gamma, c the
 family of clicks' level there, item 34; the pace of the Node alone on its own
-six-neighbour sum, item 36, ALGEBRA.md 9.50 (13); the excitation `norm` in the
-body's own units, the centre Node's pace times its share over the period), and
-`amplitude_bound` 2^28, its ceiling under the clock. Every world declares the
+six-neighbour sum, item 36, ALGEBRA.md 9.50 (13); SINCE item 44 the weak-field rule
+of ALGEBRA.md 9.57 (1) with the pace entering as p^2 on the reads; the excitation
+`norm` in the body's own units, the summed share's numerator over the period), and
+`amplitude_bound` 2^20 (2^28 HISTORY; item 44), its ceiling under the clock. Every world declares the
 family `clicks` (the pair [1, 1], the quantum 1) and names it by `clock_family`
 (ALGEBRA.md 9.45; item 32): the family of clicks, whose level at a Node is the
 M of that Node's clock pair, held at every body's Nodes at the body's content

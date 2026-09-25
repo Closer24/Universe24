@@ -48,6 +48,7 @@ import numpy as np
 import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import input_stamp, parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -55,7 +56,9 @@ ROOT = Path(__file__).resolve().parents[1]
 # BUILD.md section 26 item 31): Gamma, the world key `node_clock` of every test world, the
 # eighteen's 10^6; the clock pair (e, f) = (Gamma - c, Gamma) at every Node under the fixed
 # wall 3 den Gamma (BUILD.md section 26 item 34), c the family of clicks' level there
-NODE_CLOCK = 10**6
+NODE_CLOCK = (
+    10**4
+)  # the integers of ALGEBRA.md 9.57 (2) and 9.61 (3) under the weak-field rule (item 44)
 # THE FAMILY OF CLICKS (the model owner's record 1982; ALGEBRA.md 9.45; BUILD.md section 26
 # item 32): the fourth family of every test world, named by the key `clock_family`; its
 # level at a Node is the Node clock, held at every body's Nodes at the content
@@ -71,14 +74,15 @@ CHARGE_STRENGTH = 1
 
 
 def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
-    """The wheel W of a rule at a Node under the Node's own pace (ALGEBRA.md 9.22 (4), 9.50
-    (8) and (13); BUILD.md section 26 items 34 and 36; the engine's `wheel_at`): 3 den Gamma
-    over the gcd of the total's coefficients, p num on the six reads (p = Gamma - c the pace at
-    the Node), 6 den c at the Node and the wall; the pair's own 3 den / gcd(num, 3 den) in the
-    vacuum (2403 on [800, 801], 700 on [801, 700])."""
+    """The wheel W of the rule at a Node (ALGEBRA.md 9.22 (4), 9.57 (1); BUILD.md section 26
+    items 34, 36 and 44; the engine's `wheel_at`): the wall w over the gcd of the rule's three
+    integers, R on the six reads, S at the Node and w itself (`rule_coefficients`, the
+    weak-field rule at the Node's own pace p = Gamma - c); the pair's own 3 den / gcd(num, 3
+    den) in the vacuum (2403 on [800, 801], 700 on [801, 700]: at c = 0 the weak-field rule is
+    the plain rule times 2 Gamma^2)."""
     num, den = int(pair[0]), int(pair[1])
-    wall = 3 * den * gamma
-    return wall // math.gcd(wall, 6 * den * content, num * (gamma - content))
+    read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, True)
+    return wall // math.gcd(wall, self_coefficient, read)
 
 
 def lawful_wheel(world, line: dict) -> bool:
@@ -105,11 +109,13 @@ def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
     a = now.astype(object)
     b = before.astype(object)
     read = simulation._neighbours(before, simulation.kind_wrap[family]).astype(object)
-    weight = 3 * wall * den // num
-    node = weight * (gamma * (a * a + b * b) - 2 * levels.astype(object) * a * b)
+    read_coefficient, self_coefficient, wall_at = rule_coefficients(
+        num, den, gamma, levels.astype(object), True
+    )
+    node = wall * (wall_at * (a * a + b * b) - self_coefficient * a * b)
     total = Fraction(0)
     for index in zip(*np.nonzero(node), strict=True):
-        total += Fraction(int(node[index]), gamma - int(levels[index]))
+        total += Fraction(int(node[index]), int(read_coefficient[index]))
     return total - int(np.sum(wall * a * read))
 
 
@@ -162,7 +168,7 @@ def emitter_world(
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
-        "amplitude_bound": 1 << 28,
+        "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "clock_family": CLOCK_FAMILY_NAME,
         "charge_family": CHARGE_FAMILY_NAME,
@@ -281,10 +287,14 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
         action += share
         whole = solitary.form_share(body.own, np.ones(solitary.shape, dtype=bool))
         assert whole == solitary.conserved_form(body.own)
-    # the file's norm in the body's own units: the centre Node's pace times the action
-    # (item 36; the pace Gamma - stock at the solitary body's centre)
+    # the file's norm in the body's own units (9.57 (1); item 44): the action's numerator, its
+    # denominator a divisor of the rule's coefficient on the six reads at the centre, R = 2 p^2
+    # num with the pace Gamma - stock at the solitary body's centre
     pace = solitary.node_clock_pair((21, 0, 0), body.family)[0]
-    assert pace == NODE_CLOCK - 4 and pace * action == norm
+    num, den = body.definition.pair
+    read_coefficient = rule_coefficients(int(num), int(den), NODE_CLOCK, NODE_CLOCK - pace, True)[0]
+    assert pace == NODE_CLOCK - 4 and action.numerator == norm
+    assert read_coefficient % action.denominator == 0
     # the share's wobble from the seed's rounding: 2.1 parts in a thousand on the
     # 32-Node well at 2^20 (COMPUTATION; one part in a thousand on the side-12 well)
     assert 1000 * (max(shares) - min(shares)) < 3 * (action // emitter["period"])
