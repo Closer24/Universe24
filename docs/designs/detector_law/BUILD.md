@@ -2338,6 +2338,37 @@ would have found no cell.
    below the stop refused by name; test_body_conditions seeds by the
    generator.
 
+26. THE CLICK'S COST: THE DETECTORS' INFLOW READ AT THE PORTS ALONE (the
+   model owner's record 1934, through the Boss's 05:32Z: "how we do it
+   without starting to count all the shapes on the board"; no new law).
+   THE RULE, unchanged: per record and per interval the click reads only
+   the one-way flux through the detectors' Ports, sums it per cell in
+   the ladder's declared order onto the record's own tally and compares
+   once with its threshold; nothing of the board's shapes is counted.
+   THE CODE BEFORE: the flux was computed by whole-board array shifts
+   per record per interval (six shifted copies of the record's two
+   levels over every Node, object arrays), so the HOST cost was the
+   board's Nodes times the records. NOW: `_inflow_ports(family)` lists
+   the Port pairs ONCE per family on first use (the flat index of every
+   Port Node, of its neighbour across the Link on the family's faces,
+   and the cell of the Port), and `detector_inflow_tally(live)` reads
+   the record's two levels at those pairs alone, one gather per pair in
+   exact Python integers, the positive part per Port summed per cell
+   times the wall: the same integers as the board-wide reading bit for
+   bit (`inward_flux` per cell stays as the board-wide reference of the
+   tests). The board-wide `flux_offer` is retired. WHAT IS NOT CLAIMED:
+   the record's two levels are still board arrays and the advance is the
+   board's cost; reading only the Ports a record's rows currently touch
+   needs the record's bounding box, which the advance does not keep. THE
+   READING (HOST, tests/test_flux_reading.py): on the emitter chain of 80
+   with the cube screen 4 Ports against 80 Nodes (the screen cube's two
+   and the emitter body's two); on the detector-law layer of 24 x 9 with
+   three cubes 40 Ports against 216 Nodes; the two
+   slits' restated placement (about 1800 Ports of 97600 Nodes) reported
+   when the born train lands. THE TEST: after every interval of a run on
+   both worlds the tally per cell equals the board-wide reading for every
+   live record, the pairs are listed once, the cost printed.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

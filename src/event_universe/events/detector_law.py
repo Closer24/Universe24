@@ -309,6 +309,8 @@ class DetectorLawSimulation:
         self.cell_set: list[str] = []
         self.cell_channel: list[int] = []
         self.cell_index = np.full(self.shape, -1, dtype=np.int64)
+        # the Port pairs per family for the detectors' inflow, listed once on first use
+        self._inflow_port_pairs: dict[int, tuple[np.ndarray, np.ndarray, np.ndarray]] = {}
         for number, entry in enumerate(world.measured):
             nodes = self._span_nodes(entry.position, entry.span)
             own = self._cell(f"measured:{number}", number, False)
@@ -1176,26 +1178,57 @@ class DetectorLawSimulation:
                 ports.append((axis, side, mask))
         return ports
 
-    def flux_offer(self, live: LiveRecord) -> dict[int, int]:
-        """The one-way inward flux into every cell this interval (9.19 (3)):
-        over the cell's Ports, 3 G_ij = now_i before_j - before_i now_j where
-        positive, times the family's wall, from the record's two levels AFTER
-        the interval's step (`_advance` books it once `now` and `before` have
-        moved; the prototype's reading); by the cell's index."""
-        wrap = self.kind_wrap[live.family]
+    def _inflow_ports(self, family: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """The Port pairs of the family's cells, listed ONCE (the click's cost,
+        the model owner's record 1934: the click never counts the board's
+        shapes; it reads the Ports alone): the flat index of every Port Node
+        i, of its neighbour j across the Link (on the family's faces), and
+        the cell of i, from `_flux_ports`."""
+        cached = self._inflow_port_pairs.get(family)
+        if cached is not None:
+            return cached
+        wrap = self.kind_wrap[family]
+        count = int(np.prod(self.shape))
+        flat = np.arange(count, dtype=np.int64).reshape(self.shape)
+        nodes: list[np.ndarray] = []
+        neighbours: list[np.ndarray] = []
+        for axis, side, mask in self._flux_ports(family):
+            across = self._shift(flat, axis, -side, fill=-1, wrap=wrap)
+            where = mask & (across >= 0)
+            nodes.append(flat[where])
+            neighbours.append(across[where])
+        port_i = np.concatenate(nodes) if nodes else np.zeros(0, dtype=np.int64)
+        port_j = np.concatenate(neighbours) if neighbours else np.zeros(0, dtype=np.int64)
+        port_cell = self.cell_index.ravel()[port_i]
+        pairs = (port_i, port_j, port_cell)
+        self._inflow_port_pairs[family] = pairs
+        return pairs
+
+    def detector_inflow_tally(self, live: LiveRecord) -> dict[int, int]:
+        """THE DETECTORS' INFLOW, PER RECORD, OVER THE PORTS ALONE (ALGEBRA.md
+        9.19 (3), 9.25 (2); the model owner's record 1934): this interval's
+        one-way inward flux into every cell, 3 G_ij = now_i before_j -
+        before_i now_j where positive per Port, times the family's wall,
+        from the record's two levels AFTER the interval's step, by the cell's
+        index. The record's levels are read at the Port pairs only (one
+        gather per pair, exact Python integers), never over the board: the
+        HOST cost is the Ports, not the Nodes (the two levels are still
+        board arrays; the advance is the board's cost)."""
+        port_i, port_j, port_cell = self._inflow_ports(live.family)
+        if port_i.size == 0:
+            return {}
         wall = self.kind_wall(live.family)
-        now = live.now.astype(object)
-        before = live.before.astype(object)
-        inward = np.zeros(self.shape, dtype=object)
-        for axis, side, mask in self._flux_ports(live.family):
-            now_j = self._shift(live.now, axis, -side, wrap=wrap).astype(object)
-            before_j = self._shift(live.before, axis, -side, wrap=wrap).astype(object)
-            flux = now * before_j - before * now_j
-            inward = inward + np.where(mask & (flux > 0), flux, 0)
+        now = live.now.ravel()
+        before = live.before.ravel()
+        now_i = now[port_i].astype(object)
+        before_i = before[port_i].astype(object)
+        now_j = now[port_j].astype(object)
+        before_j = before[port_j].astype(object)
+        flux = now_i * before_j - before_i * now_j
         offers: dict[int, int] = {}
-        for node in zip(*np.nonzero(inward), strict=True):
-            cell = int(self.cell_index[node])
-            offers[cell] = offers.get(cell, 0) + int(inward[node]) * wall
+        for value, cell in zip(flux.tolist(), port_cell.tolist(), strict=True):
+            if value > 0:
+                offers[cell] = offers.get(cell, 0) + int(value) * wall
         return offers
 
     def inward_flux(self, live: LiveRecord, mask: np.ndarray) -> int:
@@ -1320,10 +1353,10 @@ class DetectorLawSimulation:
         live.age += 1
         # THE FLUX READING (ALGEBRA.md 9.19 (3)): after the step, the one-way
         # inward flux into every cell this interval, from the record's two
-        # levels, booked to the cell's pointer C; nothing is taken, the rows
-        # evolve at every Node
+        # levels at the Ports alone (record 1934), booked to the cell's
+        # pointer C; nothing is taken, the rows evolve at every Node
         before_booking = list(live.pointers)
-        for cell, value in self.flux_offer(live).items():
+        for cell, value in self.detector_inflow_tally(live).items():
             live.pointers[cell] += value
             live.absorbed += value
         # this interval's increment per cell

@@ -179,10 +179,10 @@ def test_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
     assert abs(signed) * 1_000_000 < start, (float(signed), float(start))
 
 
-def test_the_conserved_form_and_the_flux_offer_are_the_engines_integers():
+def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integers():
     """(c) the engine's `conserved_form` is 3 I times the family's wall on planted rows, exact
     against the Fraction form, for light (the wall 1) and for a massive family with a well
-    ([8, 7] on the kind [7, 8]: the wall 56); (d) the engine's `flux_offer` into a set of
+    ([8, 7] on the kind [7, 8]: the wall 56); (d) the engine's `detector_inflow_tally` into a set of
     three Nodes (a detector cube cut by the chain, record 1899) counts the two outer Ports
     only (the Links inside the set are no Ports), exact against the Fraction fluxes, and 0
     into a set the record does not reach."""
@@ -248,7 +248,7 @@ def test_the_conserved_form_and_the_flux_offer_are_the_engines_integers():
         assert simulation.conserved_form(live) == 3 * wall * expected
         pair = simulation.cell_names.index("pair")
         far = simulation.cell_names.index("far")
-        offers = simulation.flux_offer(live)
+        offers = simulation.detector_inflow_tally(live)
         inward = Fraction(0)
         for i, j in ((5, 4), (7, 8)):
             g = Fraction(
@@ -257,3 +257,47 @@ def test_the_conserved_form_and_the_flux_offer_are_the_engines_integers():
             inward += max(g, Fraction(0))
         assert offers.get(pair, 0) == inward * wall
         assert offers.get(far, 0) == 0
+
+
+def test_the_tally_over_the_ports_is_the_board_wide_reading_and_costs_the_ports_alone(capsys):
+    """THE CLICK'S COST (the model owner's record 1934; BUILD.md section 26 item 26): the
+    detectors' inflow per record is read at the Port pairs alone. On the emitter world
+    (the chain of 80 with the cube screen at [70, 72] and the closed faces) and on the
+    detector-law layer (24 x 9 with three cubes of side 3), after every interval of a run
+    the tally per cell equals the board-wide reading `inward_flux` into that cell's Nodes,
+    bit for bit, for every live record; the Port pairs are listed once per family; and the
+    HOST cost printed is the Ports read per record per interval against the board's Nodes
+    (4 Ports of 80 Nodes on the chain, the screen cube's two and the emitter body's two; 40
+    of 216 on the layer; the two slits' placement reported when the born train lands)."""
+    from tests.test_detector_law import layer_world
+    from tests.test_emitter import emitter_world
+
+    for name, document, intervals in (
+        ("the emitter chain", emitter_world(stock=2), 120),
+        ("the detector-law layer", layer_world(), 60),
+    ):
+        world = parse_nature_beam_world(document)
+        simulation = DetectorLawSimulation(world)
+        checked = 0
+        for _ in range(intervals):
+            simulation.step()
+            for live in simulation.records.values():
+                tally = simulation.detector_inflow_tally(live)
+                for cell in range(len(simulation.cell_names)):
+                    mask = simulation.cell_index == cell
+                    assert tally.get(cell, 0) == simulation.inward_flux(live, mask), (
+                        name,
+                        simulation.tick,
+                        cell,
+                    )
+                checked += 1
+        assert checked > 0
+        families = sorted({live.family for live in simulation.records.values()} | {0})
+        for family in families:
+            port_i, port_j, port_cell = simulation._inflow_ports(family)
+            assert port_i.shape == port_j.shape == port_cell.shape
+            assert simulation._inflow_ports(family) is simulation._inflow_ports(family)
+            print(
+                f"click cost (HOST): {name}: family {family}: {int(port_i.size)} Ports read per "
+                f"record per interval against {int(np.prod(simulation.shape))} Nodes"
+            )
