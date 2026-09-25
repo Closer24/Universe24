@@ -34,7 +34,10 @@ from tests.test_flux_reading import planted
 from tests.test_massive_record import massive_world
 
 ROOT = Path(__file__).resolve().parents[1]
-VACUUM_WHEEL = (200000000, 2427)  # (g, W) of [800, 809] at c = 0 under the weak field: g = 2 Gamma^2 gcd(num, 3 den)
+VACUUM_WHEEL = (
+    200000000,
+    2427,
+)  # (g, W) of [800, 809] at c = 0 under the weak field: g = 2 Gamma^2 gcd(num, 3 den)
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
 GAMMA = 1000  # the suite's Node clock (declared per world like the pairs; the eighteen's 10^6)
