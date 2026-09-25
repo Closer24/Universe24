@@ -13737,7 +13737,7 @@ nothing by role:
 | clicks (gravity's scalar) | [1, 1] | scalar | {clicks, 1} | {content, 1} | none | false |
 | charge (its scalar) | [1, 1] | scalar | {clicks, 1} | {charge, 1} | none | false |
 | light, the charge's own vector wave (9.82) | [1, 1] | vector, phase 2 | {clicks, 1}, {gravity's vector, the row's frequency, 1} | {charge, 1, moment} | {gives, takes, 1} | true |
-| a matter family | [num, den] | scalar, phase 1 or 2 | {clicks, 1}, {charge, Lambda, q}, {light, Lambda_v, q} | absent | {gives, takes, 1} | true |
+| matter, one family, the pair (the mass) and q on each body and record (9.85 (3)) | the record's | scalar, phase 2 | {clicks, 1}, {gravity's tensor, 1}, {gravity's vector, own rotation, 1}, {charge, Lambda, q}, {light, Lambda_v, q} | absent | {gives, takes, 1} | true |
 | gravity's vector | [1, 1] | vector | {clicks, 1} | {content, 4, spin} | none | false |
 | gravity's tensor | [1, 1] | tensor | {clicks, 1} | {content, 2} | none | false |
 
@@ -14318,3 +14318,118 @@ hop. (b) THE RECOIL OF A TRAIN EMITTER: a seat of M = 64 giving 10
 quanta along +x recoils along -x by the same count; the same seat as a
 point emitter: no net hop. (c) THE HEAVY TOOL: the detector of (a)
 declared with a million quanta: no hop over the run.
+
+### 9.85 Four rulings for the one stroke (the Boss's records 2077 and 2079 of 2026-09-25, the model owner: "turn both on and solve them, so the engine runs with everything; every family works in every experiment"; Nature24's six items on form (d) and his five questions on the point emitter's row (iv))
+
+**(1) THE CLICK KEEPS ITS READ; NO PHASE SHIFT (the Boss's recommendation
+4 and Nature24's items 1 to 3, 5, 6).** The booking reads the flux of
+the interval's step, the current between the step's output pair
+(next, now) through the detector's Ports (9.25 (12), 9.57 (1)), and the
+click's writes enter at the next interval. That is causal: the flux
+that arrived during the interval is what is booked; reading the
+previous pair instead would book the previous interval's arrivals, a
+delay of one interval and nothing more. The reason offered for the
+shift, that the backward run must recompute the click's condition
+from now levels, is void: the backward test takes the click intervals
+from the run's events output and never recomputes a condition (9.80
+(4), record 2077); the taken record is absent. So: no change of the
+law's order, no phase shift, every digest and every row stands. Born's
+rule and the ladder unchanged (item 5). Form (d) means what 9.80 (4)
+says: the click is written by the families' own holds and records,
+nothing else.
+
+**(2) ONE ORDER FOR BOTH CLICKS: THE HOLD AFTER THE HELD FAMILIES' STEP
+(Nature24's item 4).** 9.57 (1) rules that a click's writes enter at
+the next interval: the content, s and Q are recomputed and held after
+the interval's steps, and the fields read the new content from t + 1.
+Nature24's engine holds a giving's lowered quanta at once (the held
+families' step of that interval reads the post-click quanta) and a
+taking's only after the held families' step. The taking's order is
+the law's; the giving's moves to it. The pin stays: the clicks
+record is HELD at the bodies' Nodes to the quanta they hold (9.45 (2));
+no click term is added to a free record. The digests of the giving
+worlds move by this fix alone (a defect against 9.57 (1), not a phase
+of the law); the others stand.
+
+**(3) THE FAMILIES FILE HOLDS LAWS, THE BODIES AND RECORDS HOLD THEIR
+NUMBERS (the Boss's recommendation 5, the owner's "every family works
+in every experiment").** A family is a law: representation, phase,
+reads, held, self-unit, clicks, booked (9.79 (1), 9.81 (4)). A
+particular thing's numbers sit on the body or the record: THE PAIR (a
+matter body's mass, a light record's given clock from its emitter,
+9.62 (1); 9.46 (2) already carries the pair on the record), the charge
+sign q, the quanta M, the spin S, the moment mu, the stock, the giving
+period, the weight g. So the matter kinds [800, 809], [1600, 1618],
+[800, 813] and [156, 157] are four bodies' masses under ONE matter
+family, as in nature (one law for matter, different masses), and
+light's [77, 25] and [512, 1] are two emitters' clocks under one light
+family. THE FILE'S ENTRIES, six, everything on in every run (9.83 (2)
+edited to this): clicks (gravity's scalar), charge (its scalar),
+gravity's vector, gravity's tensor, light (the charge's vector wave,
+9.82), matter (scalar, phase 2, reads {clicks, 1}, {gravity's tensor,
+1}, {gravity's vector, own rotation, 1}, {charge, Lambda, q}, {light,
+Lambda_v, q}, clicks {gives, takes, 1}, booked). The rule reads the
+pair per record (the wheel, the wall and the rung the record's own,
+as today); the loader checks the rule's total for every declared pair
+(9.57 (2)). The cap of five is lifted; the count is the file's. The
+unit tests keep their small lists (the Boss's 6); every experiment is
+bound to the file. A family with no record and no source in a world
+is exactly zero: the leak test (9.83 (3)).
+
+**(4) THE EXCHANGE'S LINE, RESTATED.** 9.84 (2), the recoil in the law
+for every body at every click, on in every run (the owner's decision
+2 of record 2079). The clicks family stays a scalar (record 2074, my
+answer 1): the count is the trivial representation; the momentum's
+place is the body's accumulator and gravity's vector hold. THE
+EXCHANGE'S OWN IDENTITY (9.27 (D)) IS RETIRED into 9.84.
+
+**(5) THE POINT EMITTER ON, AND ROW (iv) SOLVED (the owner's decision 3;
+Nature24's five questions of 9.75's readings).** The row as read: the
+tick 1313 +- 93 against the design's 961, bimodal; Nature24's three
+reasons are right and are the design's, not the law's. THE FIX, four
+lines: (a) THE WINDOW SHORTER THAN THE ROUND TRIP: the weight g = 4
+(the unit chain's window 64 intervals, its light 37 Links) against the
+arm's round trip of 208 intervals, so the return arrives after the
+window closes and no taking meets an open window; g = 1 stays for the
+chain rows where nothing returns. (b) A MIRROR BEHIND THE SEAT: a gap
+slab of depth 2 at one Link behind the point emitter, so the half
+given away from the arm returns forward two Links later and nothing
+reaches the open face; a one-sided source is a mirror-backed source,
+in nature too. (c) THE FACES are the world's declaration (periodic, a
+mirror, or a receiver) and never a zero read beyond the last Node; a
+receiver at a face takes and ends a record, so a row whose record must
+return keeps its faces beyond the window's light plus the arm, or
+declares mirrors. (d) THE READING: the rung's share on the return:
+the tick is 209 + (the residue's fraction) x n with n the window's
+length, uniform over the window: 209 + n / 2 +- n / sqrt(12); at n =
+64: 241 +- 18; the centroid's arrival is not the click. THE FIVE
+ANSWERS: (1) the row's frequency is the seat's own rotation, 0.178 for
+the well [800, 802] of the kind [800, 813], since the giving writes the
+seat's rotation (9.71 (1)); the wavelength read, 20.3 to 20.4 Links,
+is that rotation on light's dispersion, and it settles it; my 0.174
+was light's at k = 0.302, withdrawn. (2) g is the row's: 4 for the
+light clock, 1 for the chains; the granularity of the window at g = 1
+(1124 intervals) is why. (3) The window runs to T; a taking of the
+record by its own emitter's set while the window is open is excluded
+by (a) and (b); if it ever happens, the record ends and the window
+ends with it (Nature24's choice, the fallback). (4) As (c). (5) As (d).
+THE OPEN FINDING of the long chain (the seat's own set booking the
+record's own rows before any return, 0.12 of the norm at interval
+47000 against 0.001 on a fresh chain): on a chain the family of
+clicks' static field is not M R / r but a TENT, the plain step's
+static solution in one dimension is linear, so the seat's content
+tilts the light's pace over the whole chain, and every click's step
+of the content launches a front that never decays in one dimension
+and bounces between the faces; after ninety clicks the chain carries
+ninety moving pace fronts, and the record's own rows scatter off them
+back into the seat's Ports: a GameBoard reading of the chain's own
+one-dimensional field, not the point emitter's. Nature24's diagnostic
+(the content held fixed) will read 0.001 at every record; the row's
+expectation is per record on a fresh chain, or with the world's faces
+as receivers of the content field's fronts (the chain's faces
+declared receivers of every family, the fronts taken there).
+
+**(6) FOR THE RECORD.** 9.83 (2) (b) and its table read with (3): six
+entries, the pairs on bodies and records. 9.79 (1)'s attribute "pair"
+moves from the family to the record and the body; the family keeps
+"representation, phase, reads, held, self_unit, clicks, booked".
