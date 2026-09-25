@@ -10454,3 +10454,53 @@ exact under (B) with the level walking (COMPUTED: 0 of 300 backward
 steps wrong). (8)'s pointers read (B) where they read (A): the body
 record at one level is (8)'s (the same at a uniform level); the charge
 reads (Gamma - c_j + q Lambda d_j) at each far end.
+
+**(13) THE NODE'S OWN PACE, RULED THE LAW'S FORM; (12) REVERSED (the
+model owner on the built form, 2026-09-25 through the Boss, record
+2000: "on the neighbour, that is very strange"; the Boss's reading of
+the two forms as the receiver's clock and the sender's clock; PROVED
+and COMPUTED).** The owner is right, and (12) chose for the wrong
+reason. The two forms, written as operators on the vacuum's own rule L
+= num S_6 - 6 den: (A) (Gamma - c_i) num S_6(a)_i + 6 den c_i a_i - 6
+den Gamma a_i = p_i (L a)_i with p_i = Gamma - c_i: THE NODE STEPS THE
+VACUUM'S RULE AT ITS OWN PACE, a_next + a_before - 2 a_now = (p_i /
+Gamma) times the vacuum's second difference, time dilation as a
+sentence; (B) num SUM_j p_j a_j - 6 den p_i a_i = (L (p a))_i: each Node
+sends at its own pace and the neighbour's step is scaled by the
+sender's clock, which is the strangeness the owner saw: a clock
+belongs to the Node that steps, not to the Nodes it hears. THE RULING:
+(A) IS THE LAW'S FORM. The reasons, one each. (i) It is the generic
+statement: the clock at a Node multiplies that Node's step, one
+product at the Node, the reads plain as S_6 reads them; the family of
+clicks' level is read where it sits and nowhere else. (ii) It is
+nature's form: in a static metric the lapse at the point multiplies the
+wave's whole local operator, and the conserved energy of the field is
+the local energy weighted by the lapse (the Killing energy); (12)'s
+"divergence form" was the spatial metric's part, which the adopted law
+does not carry (the clock is one level, not a spatial metric), so the
+argument does not apply. (iii) The conserved form of (9) with the
+weight 1 / p_i is that Killing energy, physics and not a defect: each
+Node's share is read in the world's time by dividing by its own pace;
+at a uniform level (a body, a record at one level) the form is whole
+in the body's own units, p times it an integer, and the born record's
+norm T stays the integer of 9.46 (1) at the body's level; only a
+record lying across different levels has a rational world-energy, a
+GameBoard reading. (iv) The Link current is num (now_i before_j -
+before_i now_j), UNWEIGHTED, as today: the flux booking at every
+detector's Ports and Born's rule at the taking end are unchanged by
+one bit, where (B) carried p_i p_j on every Port. (v) Exact backward
+run: the same, the wall constant (COMPUTED in (8): 0 of 400). (vi)
+The vacuum bit for bit; the rotation at a uniform level the same.
+WHAT MOVES: nothing in any pin. The rays' equation is the local
+dispersion, one and the same in (A) and (B); the delay through a slab
+at a uniform level identical; the bending at a body's field identical
+at first order (9.29's hill); the two differ by the gradient term
+num SUM_j (c_j - c_i) a_j, the amplitude's transport where the level is
+steep, of the order of the level's slope over Gamma, 10^-6 and below,
+under every band. FOR NATURE24 (the head 1d73c754 to move): the pace on
+the Node's own sum, (Gamma - c_i) num S_6, in the rule and its inverse;
+the wheel's gcd of (p_i num, 6 den c_i, 3 den Gamma), (8); the flux
+weights p_i p_j dropped, the plain current as before item 34; the forms
+with the weight 1 / p_i, or whole at the body's level; the guard and
+the load bound of (8) (the pace at the Node at most Gamma + |c|). (12)
+stands as the record of the sender's form, exact and not adopted.
