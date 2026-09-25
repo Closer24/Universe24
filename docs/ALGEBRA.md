@@ -5713,6 +5713,37 @@ a share of 0 has the band 0 (one click there is a defect).
   cost is exponential in the qubits, as for any board simulation of a
   quantum computer, and the Outside sees only the clicks.
 
+**(7) THE MODEL OWNER'S READING (2026-09-25 on the Israel clock, to the
+mathematician, translated: "the computation is in the generator, not on
+the board; the board cannot compute like that, it is local; reaching the
+quantum state required the computation; the quantum state computes
+nothing, the entanglement is already on the board; creating that
+entanglement is the cost; the generator, if it works right, computes it
+in iterations"): CONFIRMED, and it sharpens (6).** THE BOARD COMPUTES
+NOTHING: the law spreads the rows locally (the split) and the click reads
+(9.19); no verb of the law reaches a record's joint weights but the click
+and the birth. So the whole unitary part of a circuit is a computation
+OUTSIDE the law: the board generator iterates the circuit's gates on the
+weights (each gate one product of a 2^n x 2^n integer matrix with the
+weight vector, 2^n = 4 here) and writes the result as the crystal's
+branches, with the readout axes carrying the last one-qubit gates; THAT
+IS THE COST, exponential in the qubits, and it sits in the generator,
+not on the board. The joint body of (3) is the crystal's own act (a birth
+with a matrix on the weights) placed in the middle of the run: it
+computes nothing the generator could not have folded into the branches,
+so it is OPTIONAL, wanted only to test a gate as a body of the engine.
+WHAT THE BOARD ADDS, which no generator can: the ENTANGLEMENT AS A THING
+ON THE BOARD, one record of rank 2 carried by the local law to two
+separated readouts, and THE CLICKS: Born's rule by the residue and the
+rung (9.19 (4)), the two arms' clicks with no signal between them (the
+pair's one gather), and the distributions of the counts. So the
+sixteenth tests the measurement law on a prepared entangled state, as
+Bell does with its own branches; the unitary circuit is the generator's
+iteration, and the board's cost stays linear (the transport and the
+clicks, 9.21 (8)). The verdict of (6) reads so: "the board simulates a
+two-qubit computer" means the generator computes the state and the board
+carries and measures it.
+
 ### 9.24 The moving body under the one operator (the model owner's question of 2026-09-25 on the Israel clock, through the Boss: "how is a moving body represented algebraically? that is the question"; his lead: "it is a large bound body with momentum"; his decisions of records 1884 and 1885: no acceleration, and the momentum an integer of every entry), marked, before any code
 
 **(1) THE THEOREM THAT DECIDES THE FORM (PROVED HERE).** The one

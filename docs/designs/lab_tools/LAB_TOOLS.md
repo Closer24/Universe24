@@ -372,6 +372,11 @@ and no tool name.** Every tool is built from these alone.
 - What is new for the engine: the birth's weights as a matrix applied to
   the arriving pair's weights (the crystal births fixed branches today);
   nothing else.
+- OPTIONAL under the model owner's reading (ALGEBRA.md 9.23 (7)): the
+  board computes nothing; the generator iterates the circuit's gates on
+  the weights and writes the result as the crystal's branches, so the
+  sixteenth's pins need no joint body; the joint body tests a gate as a
+  body of the engine, and that is its only use.
 
 **A.10 THE ONE TABLE (the owner's word of 22:30Z: every tool, click or
 no click, the rotation of its shape, its primitive, its material).**
@@ -485,6 +490,14 @@ where a shift common to every record cancels.
 | The receding index at k = 3 (v-m) | chain 4000 with the face receivers and the margin | an emitter at 800 (the clock [3565, 10000]); a moving well, side 24, pair [314, 315], at 1500; the rest and reference worlds beside | the lab phase +1.0144 rad +- 0.04; the drift 1.2 x 10^-3 rad per interval +- 10 percent (P; GAMEBOARD by declaration) | the probe's window [3800, 5400]; FACE MARGIN checked by the generator against the window (OWED) |
 | The receding index at k = 4 | as at k = 3 | as at k = 3, at k = 4 | +0.6103 rad +- 0.04; drift 4.3 x 10^-4 rad per interval +- 10 percent (P) | as at k = 3 |
 | The two-qubit computer (16; the model owner's record 1883; ALGEBRA.md 9.23) | a layer [40, 40, 1], periodic; light [1, 1] with its born clock, a holder family | the emitter body at (4, 19) with a stock of 100 per setting; the crystal, side 3, at vertex (18, 18) with its light index, births the pair in the state the circuit has reached at its entangling gate: GROVER the branches [[0, 1], [1, 1], [2, 1], [3, -1]] (the uniform state after the oracle marking |11>); DEUTSCH-JOZSA [[0, 1], [1, 1], [2, -1], [3, -1]] (|+> on the query arm 0, |-> on the ancilla arm 1; the label index a + 2 b); ONE joint body (A.13), side 3, at vertex (28, 18), named first on the pair's ladder for both arms: GROVER **G** = diag(1, -1, -1, -1) (the diffusion's centre); DEUTSCH-JOZSA the four oracles, **G** = I, -I (constant), diag(1, -1, 1, -1) and its negative (balanced); the readout polarisers at (34, 30) and (34, 6) with their receivers at (35, 31) and (35, 5), the axes carrying the last one-qubit gates: GROVER both (1, 1) (the Hadamard then the axis (1, 0)); DEUTSCH-JOZSA the query arm's (1, 1), the ancilla's (1, 0); the ladders arm 0 -> the first polariser's receivers, arm 1 -> the second's | GROVER: the born weights (1, -1, -1, 1) = (1, -1) (x) (1, -1), every record clicks (-, -): 0 / 0 / 0 / 100 at n = 100, the band 0 (K, DETECTOR; one click elsewhere is an engine defect). DEUTSCH-JOZSA: the query arm clicks + for a constant oracle and - for a balanced one, 100 / 0 and 0 / 100 per oracle at n = 100, the band 0; the ancilla clicks - always, 100 of 100 (a check). Bell as row 1. The records: Grover 100, Deutsch-Jozsa 4 x 100, Bell 400 | the light record's first rung at the crystal, the pair's first rung at the joint body, the born pair's first rungs at the two readouts, equal by the placement's mirror symmetry (the mirror theorem, 11.3); on the periodic layer every record clicks (no face), the counts are computed weights |
+
+THE MINIMAL FORM (the model owner's reading, ALGEBRA.md 9.23 (7)): the
+generator folds the whole circuit up to the readout into the crystal's
+branches (GROVER (0, 0, 0, 1), the marked item; DEUTSCH-JOZSA the query
+arm's final state), and the row is the crystal, the two readout
+polarisers with the axis (1, 0) and their receivers, no joint body; the
+board carries the entangled pair and clicks, and the pins are the same.
+The form with the joint body above tests the gate as a body.
 
 THE SIXTEENTH ROW'S TOOLS: it REUSES the emitter (A.1), the crystal (A.6,
 its branches the prepared state), the polariser (A.5, its axis carrying
