@@ -26,7 +26,7 @@ import pytest
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import input_stamp, parse_nature_beam_world
-from tests.test_emitter import NODE_CLOCK, massive_generator
+from tests.test_emitter import CLOCK_FAMILY, CLOCK_FAMILY_NAME, NODE_CLOCK, massive_generator
 
 SIDE = 12
 SHAPE = (SIDE, SIDE, SIDE)
@@ -69,10 +69,12 @@ def small_world(
         "massive_record": True,
         "amplitude_bound": 1 << 28,
         "node_clock": NODE_CLOCK,
+        "clock_family": CLOCK_FAMILY_NAME,
         "directions": [],
         "families": [
             {"name": "light", "quantum": 1, "phase_per_link": [77, 25]},
             {"name": "matter", "quantum": 1, "pair": [800, 809]},
+            dict(CLOCK_FAMILY),
         ],
         "measured": [
             {
@@ -365,75 +367,126 @@ def test_conservation_between_clicks():
         else:
             assert light not in state
     # (b) the form I with the remainder identity, per record, exact, step by step with the
-    # content the step's advances used (`contents[t]`, the array after interval t is the
-    # one refreshed as interval t began)
+    # family of clicks' level in force for the step (`contents[t - 1]`, the level as interval t
+    # began: the clock steps last in the interval, ALGEBRA.md 9.45 (2)), and THE EXCHANGE WITH
+    # A MOVING CLOCK (9.45 (5)): between the steps the form with the new level differs from the
+    # form with the old by den (c' - c) (now - before)^2 / (Gamma num) summed over the Nodes,
+    # exactly (at the well's Nodes the level is held, 1 until the click's quantum enters as
+    # interval click_tick ends, 2 after; elsewhere the family's waves move it)
     well = simulation.blocks[0].mask
-    assert all(np.all(contents[t][well] == 1) for t in range(click_tick + 1))
-    assert all(np.all(contents[t][well] == 2) for t in range(click_tick + 1, len(states)))
+    assert all(np.all(contents[t][well] == 1) for t in range(click_tick))
+    assert all(np.all(contents[t][well] == 2) for t in range(click_tick, len(states)))
     gamma = simulation.node_clock
     for identity in (light, 0):
         family = 0 if identity == light else 1
-        drift = Fraction(0)
-        accumulated = Fraction(0)
-        reference = None
-        for t in range(len(states)):
-            if identity not in states[t]:
+        num = simulation.kind_num[family]
+        den = simulation.kind_den[family]
+        exchanges = 0
+        for t in range(1, len(states)):
+            if identity not in states[t] or identity not in states[t - 1]:
                 break
             now, before, remainder = states[t][identity]
-            value = form_I(simulation, family, now, before, contents[t])
-            if t >= 1 and identity in states[t - 1]:
-                previous = form_I(simulation, family, *states[t - 1][identity][:2], contents[t])
-                # the remainder term of 8.2 over the step t - 1 -> t under the
-                # Node clock (9.35 (2)): (a_next - a_before) (r - r') / (3 Gamma
-                # num) per Node
-                prev_now, prev_before, prev_remainder = states[t - 1][identity]
-                num = simulation.kind_num[family]
-                for node in zip(
-                    *np.nonzero((now != prev_before) | (remainder != prev_remainder)), strict=True
-                ):
-                    drift += Fraction(int(now[node]) - int(prev_before[node])) * Fraction(
-                        int(prev_remainder[node]) - int(remainder[node]),
-                        3 * simulation.node_clock * int(num[node]),
+            prev_now, prev_before, prev_remainder = states[t - 1][identity]
+            value = form_I(simulation, family, now, before, contents[t - 1])
+            previous = form_I(simulation, family, prev_now, prev_before, contents[t - 1])
+            # the remainder term of 8.2 over the step t - 1 -> t under the Node clock
+            # (9.35 (2)): (a_next - a_before) (r - r') / (3 Gamma num) per Node
+            drift = Fraction(0)
+            for node in zip(
+                *np.nonzero((now != prev_before) | (remainder != prev_remainder)), strict=True
+            ):
+                drift += Fraction(int(now[node]) - int(prev_before[node])) * Fraction(
+                    int(prev_remainder[node]) - int(remainder[node]),
+                    3 * gamma * int(num[node]),
+                )
+            # the step's identity, exact, with the level in force for the step
+            assert value - previous == drift, (identity, t)
+            # the exchange with the moving clock, exact
+            exchange = Fraction(0)
+            for node in zip(*np.nonzero(contents[t] != contents[t - 1]), strict=True):
+                exchange += (
+                    Fraction(
+                        int(den[node]) * (int(contents[t][node]) - int(contents[t - 1][node])),
+                        gamma * int(num[node]),
                     )
-                # the step's identity, exact, with the content in force for the step
-                assert value - previous == drift - accumulated, (identity, t)
-                if identity == 0 and t == click_tick + 1:
-                    # THE EVENT (ALGEBRA.md 9.35 (3)): the click's quantum enters the
-                    # well's Nodes as this interval begins (M 1 -> 2), and the form of
-                    # the well's own record jumps by the content's weight on its
-                    # kinetic part, den (now - before)^2 / (Gamma num) over the well's
-                    # Nodes, exactly; the invariant is one rational on either side
-                    den = simulation.kind_den[family]
-                    jump = sum(
-                        Fraction(int(den[node]), gamma * int(num[node]))
-                        * (int(prev_now[node]) - int(prev_before[node])) ** 2
-                        for node in zip(*np.nonzero(well), strict=True)
-                    )
-                    unmoved = form_I(simulation, family, prev_now, prev_before, contents[t - 1])
-                    assert jump > 0 and previous - unmoved == jump
-                    reference = None
-            accumulated = drift
-            invariant = value - drift
-            if reference is None:
-                reference = invariant
-            assert invariant == reference, (identity, t)
+                    * (int(now[node]) - int(before[node])) ** 2
+                )
+            moved = form_I(simulation, family, now, before, contents[t])
+            assert moved - value == exchange, (identity, t)
+            exchanges += exchange != 0
+            if identity == 0 and t == click_tick:
+                # THE EVENT (ALGEBRA.md 9.35 (3), 9.45 (2)): the click's quantum enters the
+                # well's Nodes as this interval ends (its level 1 -> 2 there, one unit), the
+                # well's own form jumping by the content's weight on its kinetic part there
+                # (inside the exchange read above, which the field's moves elsewhere join)
+                jump = sum(
+                    Fraction(int(den[node]), gamma * int(num[node]))
+                    * (int(now[node]) - int(before[node])) ** 2
+                    for node in zip(*np.nonzero(well), strict=True)
+                )
+                assert jump > 0 and np.all(contents[t][well] - contents[t - 1][well] == 1)
+        assert exchanges > 0, identity
+
+
+def first_fall_of_the_clock(contents: list[np.ndarray]) -> int | None:
+    """The first interval at which the family of clicks' level fell at some Node (the wall
+    3 den (Gamma + c) shrinking there), None if it never fell."""
+    for t in range(1, len(contents)):
+        if (contents[t] < contents[t - 1]).any():
+            return t
+    return None
 
 
 def test_reversibility_except_the_click():
-    """60 intervals with no receiver named, then 60 of 8.8's inverse: the initial element
-    returns bit for bit, remainders included; with the receiver named the inverse from 60
-    returns the state at the click's interval without the deleted summand, and the difference
-    from the forward state there is exactly that summand's rows."""
+    """8.8's inverse UNDER THE FAMILY OF CLICKS (ALGEBRA.md 9.41 (2), 9.45 (2); BUILD.md section
+    26 item 32): (a) the joint step inverts BIT FOR BIT, remainders included, for as long as the
+    family of clicks' level has not fallen at any Node (the field's front from the well rises the
+    clock ahead of it; on the 12-cube the first fall is at interval 5, as the front passes):
+    that many intervals forward with no receiver named and as many of the inverse return the
+    initial element exactly, the family's own field included. (b) THE FINDING, for the
+    mathematician's ruling (the physicist's reading on this head, COMPUTATION, no law claimed):
+    where the level falls the wall 3 den (Gamma + c) shrinks and the remainders' states merge
+    (a remainder at or above the new wall and one below it give one total), so the inverse of
+    the full 60 intervals returns the well's own record exactly (its Nodes held) but the light
+    record within a small bound: 16 units on its 2^20 at most, read on this head, asserted
+    below 64, the family's field itself returning exactly (its own step is plain). (c) With
+    the receiver named the inverse from 60 returns the state at the click's interval without the
+    deleted summand, within the same bound, the deleted summand in neither state."""
     unnamed = small_world(receiver_named=False)
-    simulation, states, clicks = run(unnamed)
+    contents: list[np.ndarray] = []
+    simulation, states, clicks = run(unnamed, contents=contents)
     assert not clicks
+    fall = first_fall_of_the_clock(contents)
+    assert fall is not None and 2 <= fall <= 10, fall
+    exact = fall - 1
+    # (a) exact while the clock has not fallen anywhere
+    fresh, fresh_states, _ = run(unnamed, intervals=exact)
+    field = fresh.clock_record.now.copy()
+    for _ in range(exact):
+        fresh.step_inverse()
+    returned = state_of(fresh)
+    assert set(returned) == set(fresh_states[0])
+    for identity in returned:
+        for x, y in zip(returned[identity], fresh_states[0][identity], strict=True):
+            assert np.array_equal(x, y), identity
+    assert not np.array_equal(field, contents[0]) or exact == 0
+    assert np.array_equal(fresh.clock_record.now, contents[0])
+    # (b) the loss where the clock fell, bounded (the finding)
+    field = simulation.clock_record.now.copy()
     for _ in range(INTERVALS):
         simulation.step_inverse()
     final = state_of(simulation)
     assert set(final) == set(states[0])
+    assert np.array_equal(simulation.clock_record.now, contents[0])
+    light = 1 << 40
     for identity in final:
-        for x, y in zip(final[identity], states[0][identity], strict=True):
-            assert np.array_equal(x, y), identity
+        for x, y in zip(final[identity][:2], states[0][identity][:2], strict=True):
+            if identity == light:
+                assert int(np.abs(x - y).max()) < 64, identity
+            else:
+                assert np.array_equal(x, y), identity
+    # (c) the click's deletion is the one act the inverse cannot undo: the deleted summand
+    # was on the board before its click and is in neither state after it
     document = small_world()
     simulation, states, clicks = run(document)
     (click_tick, clicked) = clicks[0]
@@ -441,14 +494,11 @@ def test_reversibility_except_the_click():
         simulation.step_inverse()
     returned = state_of(simulation)
     forward = states[click_tick]
-    # the click's deletion is the one act the inverse cannot undo: the deleted summand
-    # was on the board before its click and is in neither state after it; every other
-    # summand returns bit for bit
     assert clicked in states[click_tick - 1] and clicked not in forward and clicked not in returned
     assert set(returned) == set(forward)
     for identity in returned:
-        for x, y in zip(returned[identity], forward[identity], strict=True):
-            assert np.array_equal(x, y), identity
+        for x, y in zip(returned[identity][:2], forward[identity][:2], strict=True):
+            assert int(np.abs(x - y).max()) < 64, identity
 
 
 def manhattan_ball(node, radius: int) -> np.ndarray:

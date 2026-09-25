@@ -38,7 +38,13 @@ from tests.test_detector_law import (
     receiver_body,
     receiver_cube,
 )
-from tests.test_emitter import NODE_CLOCK, lawful_wheel, massive_generator
+from tests.test_emitter import (
+    CLOCK_FAMILY,
+    CLOCK_FAMILY_NAME,
+    NODE_CLOCK,
+    lawful_wheel,
+    massive_generator,
+)
 
 
 def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
@@ -62,8 +68,13 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "massive_record": True,
         "amplitude_bound": 1 << 28,
         "node_clock": NODE_CLOCK,
+        "clock_family": CLOCK_FAMILY_NAME,
         "directions": [],
-        "families": [{"name": "light", "quantum": 1, "phase_per_link": [512, 1]}, matter],
+        "families": [
+            {"name": "light", "quantum": 1, "phase_per_link": [512, 1]},
+            matter,
+            dict(CLOCK_FAMILY),
+        ],
         "measured": [],
         "detectors": [],
     }
@@ -324,11 +335,15 @@ def test_the_light_record_is_byte_identical_without_the_key():
     content at its Nodes, the wheel and the residues read there, the norms on the lines in
     the clock's units); SINCE THE RENAME (record 1978, no cell) the events digest moved once
     more with the two line fields' names, the birth line's `nodes` and the gather line's
-    `detectors` (the state and the audit unchanged); read again at this head."""
+    `detectors` (the state and the audit unchanged); SINCE THE FAMILY OF CLICKS (ALGEBRA.md
+    9.45; item 32) all three moved once more (the fourth family declared in the chain world,
+    one record of it over the board, held at the bodies' Nodes at their content and
+    spreading from them by the plain step, every Node's clock pair read from its level);
+    read again at this head."""
     assert run_chain_digests() == {
-        "events": "3e605bfdf4efc58f1e98c380482149528bb278f3d897c60b6ae1ae435ec8ff35",
-        "state": "05ebc8e9338ddf5b5d1c828f82be0baf86f393b973e6041e8ea5f6c5dde6e1d4",
-        "audit": "51dff33c24a49a165b49116ef63c47dfce5f88aa0a3fcb920565869f7f84d053",
+        "events": "6600b80afacfae8c7ddc12379a6592842c83cb1c070137a2c83eaa5e3aa0df18",
+        "state": "4e78fb11c69a78c4eb14a4c3a72c658e28440f3b564d6d3eb7c84dda25298078",
+        "audit": "fdd6f4fb95abdd9b70d593dfdb456d0c41de6ed701c9ca830f778b1860d1a649",
     }
 
 
@@ -439,6 +454,7 @@ def block_world(
     if source is not None:
         measured.append(source)
         families.append(source_family())
+    families.append(dict(CLOCK_FAMILY))  # the family of clicks (BUILD.md section 26 item 32)
     for block in blocks:
         entry = {
             "position": block["position"],
@@ -482,6 +498,7 @@ def block_world(
         "massive_record": True,
         "amplitude_bound": 1 << 28,
         "node_clock": NODE_CLOCK,
+        "clock_family": CLOCK_FAMILY_NAME,
         "directions": [],
         "families": families,
         "measured": measured,
@@ -970,8 +987,8 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
     the pair (A = 2^28, [2^20, 2^20 + 1]: 10^6 x 2^20 x 6 x 2^28 above 2^63, admitted by the
     plain rule's first pass on the pair alone); [800, 809] is admitted (1.9 x 10^18) and so
     is the muon layer's [3200, 3236] (7.8 x 10^18, the largest registered pair); a block's
-    pair is checked the same way with the world's content ([big, big + 1] refused naming
-    measured[0] and M = 1, [800, 800] admitted). The world key (issue #1085): a massive world
+    pair is checked the same way with the world's content, M twice it for the family of
+    clicks' waves ([big, big + 1] refused naming measured[0] and M = 2, [800, 800] admitted). The world key (issue #1085): a massive world
     without `amplitude_bound` is refused naming it; the ceiling 2^28 (2^29 refused naming
     it); a seed above the bound is refused naming the bound and the pair (a seed of 2^60 at
     A = 2^28); the key without `massive_record` refused; a planted row above the bound stops
@@ -1004,7 +1021,7 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
             parse_nature_beam_world(world)
         else:
             with pytest.raises(
-                ValueError, match=r"measured\[0\]\.pair .*the content M = 1 is .*not below 2\^63"
+                ValueError, match=r"measured\[0\]\.pair .*the content M = 2 is .*not below 2\^63"
             ):
                 parse_nature_beam_world(world)
     unbounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
@@ -1178,7 +1195,9 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     WITHOUT the clock is refused at load naming the pair form."""
     world = parse_nature_beam_world(matter_emitter_world(True, [512, 1]))
     beside = parse_nature_beam_world(matter_emitter_world(False, [512, 1]))
-    assert world.families[2].massive_kind and world.families[2].phase_per_age == (512, 1)
+    matter = [family.name for family in world.families].index("matter")
+    assert world.families[matter].massive_kind
+    assert world.families[matter].phase_per_age == (512, 1)
     simulation = DetectorLawSimulation(world)
     other = DetectorLawSimulation(beside)
     identity = 1 * (1 << 32) + 1
@@ -1190,7 +1209,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
         live = simulation.records.get(identity)
         if live is not None:
             born = born if born is not None else tick
-            assert live.family == 2 and live.emitter == 1
+            assert live.family == matter and live.emitter == 1
         # light's rows unchanged beside the matter emitter
         for light_identity, light in other.records.items():
             assert np.array_equal(simulation.records[light_identity].now, light.now), tick

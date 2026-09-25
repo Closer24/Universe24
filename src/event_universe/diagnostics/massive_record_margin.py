@@ -134,7 +134,7 @@ class MarginReading:
         }
 
 
-def body_nodes(
+def body_node_mask(
     shape: tuple[int, int, int],
     corner: tuple[int, int, int],
     side: int | tuple[int, int, int],
@@ -270,7 +270,7 @@ def accurate_mode(world: NatureBeamWorld, number: int) -> tuple[float, np.ndarra
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-    nodes = body_nodes(shape, corner, definition.extents, wrap)
+    nodes = body_node_mask(shape, corner, definition.extents, wrap)
     ratio = np.where(nodes, definition.pair[1] / definition.pair[0], family.pair[1] / family.pair[0])
     scale = 1.0 / np.sqrt(ratio)
     count = int(np.prod(shape))
@@ -409,7 +409,7 @@ def iterated_mode(
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-    nodes = body_nodes(shape, corner, definition.extents, wrap)
+    nodes = body_node_mask(shape, corner, definition.extents, wrap)
     num = np.where(nodes, definition.pair[0], family.pair[0]).astype(np.int64)
     den = np.where(nodes, definition.pair[1], family.pair[1]).astype(np.int64)
     num_flat = [int(value) for value in num.ravel()]
@@ -496,7 +496,7 @@ def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-    nodes = body_nodes(shape, corner, definition.extents, wrap)
+    nodes = body_node_mask(shape, corner, definition.extents, wrap)
     ratio_out = family.pair[1] / family.pair[0]
     ratio_in = definition.pair[1] / definition.pair[0]
     ratio = np.where(nodes, ratio_in, ratio_out)
@@ -665,7 +665,7 @@ def composed_largest_eigenvalues(world: NatureBeamWorld) -> dict[int, float]:
             if definition is None or entry.family != index or definition.seed == 0:
                 continue
             corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-            nodes = body_nodes(shape, corner, definition.extents, world.kind_periodic(index))
+            nodes = body_node_mask(shape, corner, definition.extents, world.kind_periodic(index))
             ratio = np.where(nodes, definition.pair[1] / definition.pair[0], ratio)
             seed = seed + np.where(nodes, 1.0, 0.0)
             bodies = True

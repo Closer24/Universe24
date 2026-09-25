@@ -53,6 +53,11 @@ ROOT = Path(__file__).resolve().parents[1]
 # BUILD.md section 26 item 31): Gamma, the world key `node_clock` of every test world, the
 # eighteen's 10^6; the clock pair (e, f) = (Gamma, Gamma + M) at every Node
 NODE_CLOCK = 10**6
+# THE FAMILY OF CLICKS (the model owner's record 1982; ALGEBRA.md 9.45; BUILD.md section 26
+# item 32): the fourth family of every test world, named by the key `clock_family`; its
+# level at a Node is the Node clock, held at every body's Nodes at the content
+CLOCK_FAMILY_NAME = "clicks"
+CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1}
 
 
 def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
@@ -122,10 +127,12 @@ def emitter_world(
         "massive_record": True,
         "amplitude_bound": 1 << 28,
         "node_clock": NODE_CLOCK,
+        "clock_family": CLOCK_FAMILY_NAME,
         "directions": [],
         "families": [
             {"name": "light", "quantum": 1, "phase_per_link": [512, 1]},
             {"name": "matter", "quantum": 1, "pair": [800, 809]},
+            dict(CLOCK_FAMILY),
         ],
         "measured": [
             {
@@ -273,7 +280,7 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
         else:
             assert entry["excited_after"] is None
     assert simulation.block_by_number[0].own is None
-    assert simulation.held[0] == [0, 0]
+    assert simulation.held[0] == [0, 0, 0]  # light, matter and the family of clicks
     books = simulation.books()["families"]
     assert books["matter"]["measured"]["spent"] == 4 and books["light"]["transit"]["released"] == 4
     assert not simulation.records

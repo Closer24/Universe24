@@ -94,6 +94,12 @@ AMPLITUDE_BOUND = 1 << 28
 # by 6 x 10^-5, a well of one quantum by 10^-6, the mathematician's reading: no
 # pin of the eighteen moves beyond its band)
 NODE_CLOCK = 1_000_000
+# THE FAMILY OF CLICKS (the model owner's record 1982; ALGEBRA.md 9.45; BUILD.md
+# section 26 item 32): the fourth family, whose level at a Node is the Node
+# clock; its pair [1, 1] (light's kind, the default), its unit the quantum, no
+# clock of its own; declared in every world and named by `clock_family`
+CLOCK_FAMILY_NAME = "clicks"
+CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1}
 MOMENTUM_SPEED_THIRD = 64
 MOMENTUM_SPEED_QUARTER = 48
 # The layer pin world's push (DECLARATIONS.md section 8): the ramp ten relaxation times of
@@ -136,6 +142,7 @@ def world(
     if any(block.get("family") == "source" for block in blocks):
         # the emitter bodies' own family (`emitter_at`): the kind SOURCE_KIND
         families.append({"name": "source", "quantum": 1, "pair": list(SOURCE_KIND)})
+    families.append(dict(CLOCK_FAMILY))  # the family of clicks, the Node clock (item 32)
     measured: list[dict] = []
     for block in blocks:
         entry: dict = {
@@ -176,6 +183,9 @@ def world(
         # the Node clock Gamma (ALGEBRA.md 9.35 (3); item 31): (e, f) = (Gamma,
         # Gamma + M) at every Node, M the content held there; required, no default
         "node_clock": NODE_CLOCK,
+        # the family of clicks by name: its level at a Node is the Node clock
+        # (Gamma, Gamma + c), held at every body's Nodes at the content (9.45)
+        "clock_family": CLOCK_FAMILY_NAME,
         "directions": [],
         "families": families,
         "measured": measured,

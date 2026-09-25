@@ -25,6 +25,7 @@
  "massive_record": true,
  "amplitude_bound": 268435456,
  "node_clock": 1000000,
+ "clock_family": "clicks",
  "directions": [],
  "families": [
   {
@@ -42,6 +43,10 @@
     3200,
     3236
    ]
+  },
+  {
+   "name": "clicks",
+   "quantum": 1
   }
  ],
  "measured": [
@@ -40077,6 +40082,6 @@
  "detectors": [],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "698cbcea0ce06e2c73f3f4106636ba17c844afb6b5473229fe99541d9eef044e"
+  "hash": "36b3f538ff5a413f8fab52ce7f2d592c89e68f200b5e18e3ddc1c094429852de"
  }
 }

@@ -2796,6 +2796,143 @@ would have found no cell.
    word. THE NAME NODE (the model owner's record 1970): every new text of
    this item says Node.
 
+32. THE FAMILY OF CLICKS (the model owner's closing of record 1982 through
+   the Boss; ALGEBRA.md 9.41 and 9.45 on `lab-tools-unification` at
+   d396f7b8, the mathematician's form; the Boss's records 1985 and 1986 on
+   the order, (ii) after the rename of record 1978; built on
+   `emitter-click`, the merge held by the rule of three until the rulings
+   below). THE LAW: the Node clock's content M of item 31 is the level of a
+   FOURTH FAMILY, the family of clicks, declared in every world file like
+   any family (the pair [1, 1], the quantum 1, no clock of its own, no
+   `phase_per_link`) and named by the world key `clock_family` (REQUIRED
+   under the detector law with no default, refused without that law; a
+   name no family declares, a massive pair, a quantum other than 1 or a
+   clock of its own refused by name; no body is of it, no `held` names it,
+   no emitter births into it). ONE RECORD of it lies over the board
+   (`clock_record`, the load's write). At every body's Nodes (a block's
+   Nodes as they stand this interval, a measured event's span) its level is
+   THE HOLD: the body's content written whole at both levels with the
+   remainder 0 (the held quanta of every family, the stock and what the
+   clicks brought), the one place where a family's level is not the step's
+   own, written at the load and at every interval's end (up by one at a
+   taking, down by one at a giving). Elsewhere its level moves by ITS OWN
+   PLAIN STEP with the pair [1, 1] (e = f for its own level: it reads no
+   other family and not itself), stepped LAST in the interval after every
+   family read its level, then held at the content the interval's clicks
+   and births left. Every other family's rule at a Node reads the clock
+   pair (Gamma, Gamma + c) with c the family of clicks' level THERE
+   (`node_content` is the clock record's `now` after the hold; the wheel,
+   the forms, the share and the flux booking of item 31 unchanged in form,
+   c for M). So item 31's content, held at the bodies' Nodes and 0
+   elsewhere, is the family's level at the first interval, and from then
+   the level spreads from every body at the plain step's pace (the front
+   strictly within one Link per interval, the long waves at 1 / sqrt 3).
+   THE JOINT INVERSE (9.41 (2), 9.45 (2)): every family backward at the
+   clock's level of the interval's start (its `before` level, the clock
+   having stepped last), then the clock backward and its hold. THE GUARD:
+   the clock (Gamma, Gamma + c) stays positive at every Node; the run is
+   refused at a level at or below -Gamma; the load bound of item 31 is
+   read with M twice the world's whole content (the wave's overshoot off a
+   face; the muon layer's pair still the largest registered). MOST_FAMILIES
+   4 (the owner's constant: record 1875's three, four since the family).
+   THE FILES: every registered world declares the family `clicks` (light,
+   matter, clicks) and the key `clock_family` (regenerated: the profiles
+   unchanged, every stamp moved; the light clock's excitation norm and
+   period unchanged, 2.80 x 10^24 and 94). THE ENGINE: `clock_family`,
+   `clock_record`, `span_masks`, `_hold_clock`, `_advance_clock`;
+   `_advance` and `_advance_inverse` with the clock's own selection (Gamma
+   1 and content 0 for its own record); `step` (the hold after the bodies'
+   moves, the clock's step after the dead deletion), `step_inverse` (the
+   joint inverse), `_emit` (the hold before the born record's norm is read:
+   the content the birth leaves), the books' form of the family (the clock
+   record's form under its family's line) and the snapshot's `clock` entry
+   (the family, Gamma, the rows, the form; GAMEBOARD diagnostics both).
+   THE READINGS (COMPUTATION on the engine's integers): (a) where the level
+   is 0 the step is item 31's bit for bit (the property test's click at 17
+   unchanged); (b) the family held at the bodies (the small world's well
+   at 1, a chain's bodies at 250 quanta, the emitter chain's body at its
+   stock) and its front from the body (on the open chain of 200 the level
+   30 Links from a body's edge is 0 through interval 29 and nonzero
+   between 30 and 70, read 50 to 60; nowhere above twice the content); its
+   books' form under its line and the snapshot's `clock` state; (c) the
+   content down at a birth and up at a click as item 31 read them; (d) the
+   joint step's inverse bit for bit for every interval before the clock's
+   first fall at some Node (the chain of 60 at Gamma = 1000: the first
+   fall at 10; the small world: at 5, as the front passes). THE FINDINGS
+   for the mathematician's ruling: (A) THE INVERSE IS LOST WHERE THE CLOCK
+   FALLS. The joint step inverts bit for bit only while the family's level
+   stands or rises at every Node with a record; where it falls between two
+   intervals the wall 3 den (Gamma + c) shrinks and two remainders' states
+   of the interval before merge into one (a remainder at or above the new
+   wall and one below it give one total: about (c - c') / (Gamma + c) of
+   the states per unit fall), so the inverse recovers the levels only to
+   within the merged states. On the small world (the 12-cube, the well of
+   one quantum, Gamma 10^6) 60 intervals forward and 60 inverse return the
+   well's own record and the family's field exactly and the light record
+   within 16 units of its 2^20, differing on 1508 of the 1728 Nodes; on
+   the chain of 60 at Gamma = 1000, 30 and 30 within 4 units. The property
+   (4) of 9.20 (B) (the exact return, Highlights 5.4) is WEAKENED by this
+   item by about one part in Gamma per unit of the fall, transparently:
+   the property test and the Node clock test now assert the exact return
+   before the first fall and a bounded loss after it (below 64 and below
+   16 units). Whether the family's level may fall at a Node with a record,
+   or the clock must be read from a level that never falls (the running
+   total of the clicks, 9.44 (2)'s stock, or a rule of the step), is the
+   mathematician's word; no law is claimed here. (B) AT UNIT LEVELS THE
+   FIELD IS THE ROUNDING'S WALK: at small contents (one or four quanta)
+   the family's level around a body is the plain step's own walk of its
+   remainders at unit levels (13 units at most on the small world in 60
+   intervals; 9 in the emitter chain's vacuum around the body's stock),
+   not the potential of a declared height (9.44 (3)'s caution; 9.45 (1)'s
+   one click one unit): the field's shape at the contents of every
+   registered world is this walk, and a reading of "gravity" from it would
+   be a reading of the rounding. (C) THE CLICKS REACH THE BIRTHS: an
+   emitter's later births carry residues that depend on WHERE the clicks
+   landed, since a click's content spreads from the detector as the clock
+   field and reaches the body's rounding. On the detector-law layer (the
+   emitter at [2, 34) across the width, the sets s0, s1, s2 at x in [70,
+   72] on the rows [0, 2], [3, 5], [6, 8]) the two ladder orders click
+   first at 167, at s0 or at s2, the content held at the set's FIRST body
+   (row 0 or row 6, not mirror images across the seam); the clock field
+   differs at the body's shell from 249 and the excited record's remainder
+   on the body from 309; the six residues read before that agree bit for
+   bit and the two read after differ (the ladder test reads the two runs
+   in lockstep; under (v), one body per detector, the mirror may return).
+   The residues were "the excited record's, the ladder's order no input to
+   them" (item 25); under the family every click is an input to every
+   later residue on the board. (D) THE LIGHT CLOCK'S DIAGNOSTIC RUN without
+   pins (GAMEBOARD, no verdict, no pin moved): LAWFUL in 14 seconds, 64
+   births and 64 clicks at at_well alone, the mean click interval 299.8
+   with the rms 28.7, the least wait 236 and the most 438 (298.1, 18.0, 257
+   and 349 at item 31), the 64 births by interval 2871 with one run of
+   three births one interval apart and nine gaps below ten (none and five
+   at item 31): the field of A's own content around its Nodes moves the
+   kept remainder's walk between births, and the spread of the waits
+   widens. (E) ASKED WITH THIS ITEM: e = f for the family's own step (the
+   family reads no level, its own included; one line to change if it is to
+   read its own). (F) THE ALGEBRA NAMED (the model owner's record 1987):
+   ALGEBRA.md 9.45 (1) to (5) the family, its hold and its step; 9.41 (2)
+   the joint inverse; 9.35 (2) and (3) the clock pair and the rule. PIECES
+   NO SECTION STATES, listed for the mathematician as the record asks: the
+   load bound's factor 2 on the world's content (host arithmetic against
+   int64, not a law); the click's content held at a set's FIRST body (the
+   flux reading's write at a set of several bodies, gone under (v)); a
+   kept remainder at or above a shrunk wall absorbed by the next division
+   (item 31's finding (c)). THE DIGESTS of the chain moved once more, all
+   three. THE TESTS: tests/test_node_clock.py (the family held at the bodies and its
+   front, the books' form and the snapshot's state, a world without
+   content at 0 for ever; the joint inverse exact before the first fall
+   and its bounded loss after; the loader's naming and every refusal
+   above; five families refused); the property test (conservation step by
+   step with the content in force at every Node, the click's jump, the
+   reversibility exact before the first fall and bounded after, the click's
+   deletion in neither state); the emitter, detector-law (the ladder in
+   lockstep), massive-record (the families by name, the digests),
+   receiver-by-name, born-train, flux-reading (the source family by name),
+   initial-state (four families admitted, five refused) and extents suites
+   with the family declared in every world. THE NAME NODE (the model
+   owner's record 1970): every new text of this item says Node.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

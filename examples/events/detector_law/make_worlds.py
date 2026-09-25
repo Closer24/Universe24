@@ -165,7 +165,8 @@ def ray_world(name: str, shape: list[int], boundary: dict, pair: list[int], tick
     document["massive_record"] = True  # the absorbing blocks and the `probes` key live under it
     document["amplitude_bound"] = AMPLITUDE_BOUND  # the emitter body's massive family (M1-10)
     document["node_clock"] = NODE_CLOCK  # the Node clock Gamma (item 31)
-    document["families"] = [light_family(pair), emitter_kind_family()]
+    document["clock_family"] = CLOCK_FAMILY_NAME  # the family of clicks (item 32)
+    document["families"] = [light_family(pair), emitter_kind_family(), dict(CLOCK_FAMILY)]
     document["measured"] = []
     document["detectors"] = []
     return document
@@ -508,6 +509,8 @@ AMPLITUDE_BOUND = (
     1 << 28
 )  # the world key `amplitude_bound` of every massive world: the ceiling under the Node clock (BUILD.md section 26 item 31; section 15 M1-10's 2^32 HISTORY)
 NODE_CLOCK = 1_000_000  # the world key `node_clock`, Gamma (ALGEBRA.md 9.35 (3); item 31): the massive generator's integer, written in every world
+CLOCK_FAMILY_NAME = "clicks"  # the family of clicks, the Node clock (ALGEBRA.md 9.45; item 32): the massive generator's name and family
+CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1}
 EMITTER_STOCK = (
     64  # the massive rows' emitters: 64 excitations on the wheel [1, 64] (BUILD.md section 26)
 )
@@ -597,6 +600,7 @@ def bounded(document: dict) -> None:
         if key == "massive_record":
             document["amplitude_bound"] = AMPLITUDE_BOUND
             document["node_clock"] = NODE_CLOCK
+            document["clock_family"] = CLOCK_FAMILY_NAME
 
 
 def light_clock(massive) -> dict:

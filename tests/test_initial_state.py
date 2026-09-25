@@ -19,7 +19,7 @@ import pytest
 
 from event_universe.diagnostics.massive_record_margin import (
     accurate_mode,
-    body_nodes,
+    body_node_mask,
     integer_mode_iteration,
     iterated_mode,
 )
@@ -168,9 +168,10 @@ def test_the_clocks_refusals_name_the_rule():
     refused(scalar, "clock is admitted only beside a profile")
 
 
-def test_at_most_three_families():
-    """Three families are admitted (the emitter world's two and a third), a fourth is
-    refused naming the count and the bound (record 1875; 9.22 (2))."""
+def test_at_most_four_families():
+    """Four families are admitted (the emitter world's three, the family of clicks among them,
+    and a fourth), a fifth is refused naming the count and the bound (the owner's constant:
+    record 1875's three, four since the family of clicks, record 1982; ALGEBRA.md 9.45)."""
     document = emitter_world(stock=2)
     assert len(document["families"]) <= MOST_FAMILIES
     while len(document["families"]) < MOST_FAMILIES:
@@ -178,7 +179,7 @@ def test_at_most_three_families():
             {"name": f"family_{len(document['families'])}", "quantum": 1, "pair": [800, 809]}
         )
     parse_nature_beam_world(restamped(document))
-    document["families"].append({"name": "fourth", "quantum": 1, "pair": [800, 809]})
+    document["families"].append({"name": "fifth", "quantum": 1, "pair": [800, 809]})
     restamped(document)
     with pytest.raises(
         ValueError,
@@ -350,7 +351,7 @@ def test_the_generator_as_the_operator_iterated_in_integers():
     assert block is not None
     shape = (int(world.shape[0]), 1, 1)
     wrap = world.kind_periodic(entry.family)
-    nodes = body_nodes(shape, (int(entry.position[0]), 0, 0), block.extents, wrap)
+    nodes = body_node_mask(shape, (int(entry.position[0]), 0, 0), block.extents, wrap)
     num = np.where(nodes, block.pair[0], 800)
     den = np.where(nodes, block.pair[1], 809)
     amplitude = 1 << 20

@@ -232,9 +232,10 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
         {"name": "far", "positions": [[30, 0, 0], [31, 0, 0], [32, 0, 0]]},
     ]
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    assert simulation.kind_wall(0) == 1 and simulation.kind_wall(2) == 56
+    source = [family.name for family in simulation.families].index("source")
+    assert simulation.kind_wall(0) == 1 and simulation.kind_wall(source) == 56
     rng = np.random.default_rng(5)
-    for family in (0, 2):
+    for family in (0, source):
         matrix = reads(simulation, family, 40)
         now = rng.integers(-UNIT, UNIT, size=(40, 1, 1), dtype=np.int64)
         before = rng.integers(-UNIT, UNIT, size=(40, 1, 1), dtype=np.int64)

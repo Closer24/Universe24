@@ -19,7 +19,14 @@ import pytest
 
 from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
 from event_universe.events.world import DETECTOR_LAW_RULE, input_stamp, parse_nature_beam_world
-from tests.test_emitter import NODE_CLOCK, lawful_wheel, massive_generator, wheel_of
+from tests.test_emitter import (
+    CLOCK_FAMILY,
+    CLOCK_FAMILY_NAME,
+    NODE_CLOCK,
+    lawful_wheel,
+    massive_generator,
+    wheel_of,
+)
 
 EMITTER_KIND = [7, 8]  # the emitter body's kind (omega_0 = 0.505)
 EMITTER_PAIR = [
@@ -154,10 +161,12 @@ def chain_world(
         "massive_record": True,
         "amplitude_bound": 1 << 28,
         "node_clock": NODE_CLOCK,
+        "clock_family": CLOCK_FAMILY_NAME,
         "directions": [],
         "families": [
             {"name": "light", "quantum": 1, "phase_per_link": list(BORN_CLOCK)},
             {"name": "matter", "quantum": 1, "pair": list(EMITTER_KIND)},
+            dict(CLOCK_FAMILY),
         ],
         "measured": [
             emitter_body([corner, 0, 0], stock, receiver),
@@ -359,10 +368,12 @@ def layer_world(receiver: object = None) -> dict:
         "massive_record": True,
         "amplitude_bound": 1 << 28,
         "node_clock": NODE_CLOCK,
+        "clock_family": CLOCK_FAMILY_NAME,
         "directions": [],
         "families": [
             {"name": "light", "quantum": 1, "phase_per_link": list(BORN_CLOCK)},
             {"name": "matter", "quantum": 1, "pair": [800, 809]},
+            dict(CLOCK_FAMILY),
         ],
         "measured": measured,
         "detectors": [],
@@ -483,6 +494,34 @@ def planted_layer(order: tuple[str, ...]) -> tuple[list[dict], DetectorLawSimula
     return [line for line in lines if line["event"] == "gather"], simulation, seen
 
 
+def lockstep_births(
+    first: dict, second: dict, ticks: int = 900
+) -> tuple[list[dict], list[dict], int | None]:
+    """Two worlds stepped together (BUILD.md section 26 item 32, FINDING C): their birth
+    lines and the first interval at which the family of clicks' level differs between them
+    on the emitter body's Nodes or their shell (None if it never does)."""
+    runs: list[tuple[DetectorLawSimulation, list[dict]]] = []
+    for document in (first, second):
+        lines: list[dict] = []
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
+        runs.append((simulation, lines))
+    mask = runs[0][0].block_by_number[0].mask
+    near = mask.copy()
+    for axis in range(3):
+        for shift in (-1, 1):
+            near |= np.roll(mask, shift, axis=axis)
+    differs = None
+    for _ in range(ticks):
+        for simulation, _lines in runs:
+            simulation.step()
+        if differs is None and not np.array_equal(
+            runs[0][0].clock_record.now[near], runs[1][0].clock_record.now[near]
+        ):
+            differs = runs[0][0].tick
+    births = [[line for line in lines if line["event"] == "birth"] for _run, lines in runs]
+    return births[0], births[1], differs
+
+
 def test_the_increment_ladder_over_the_named_sets():
     """THE INCREMENT LADDER (ALGEBRA.md 9.25 (2), the mathematician's word of 2026-09-25 on
     the finding of item 14; the cumulative sums withdrawn): 128 light records planted at
@@ -499,8 +538,11 @@ def test_the_increment_ladder_over_the_named_sets():
     carry residues spread from the kept remainder (the model owner's decisions (1) and (2)
     of record 1962; the coupling's back-action of 9.19 (4e) HISTORY), each
     clicking at the detector the walk names on its own numbers, the line's `ladder` the names and
-    its `sunk` the pointers off the ladder. The loader refuses a name no set declares, a
-    repeated name, an empty list, and a body's `coupling` by name."""
+    its `sunk` the pointers off the ladder; under the family of clicks (item 32, FINDING C)
+    the two ladder orders are read in lockstep: the residues read before the clock field
+    differs at the body agree bit for bit (six of the eight), the later ones differ. The
+    loader refuses a name no set declares, a repeated name, an empty list, and a body's
+    `coupling` by name."""
     counts: dict[tuple[str, ...], dict[str, int]] = {}
     for order in (("s0", "s1", "s2"), ("s2", "s1", "s0")):
         gathers, simulation, seen = planted_layer(order)
@@ -533,10 +575,28 @@ def test_the_increment_ladder_over_the_named_sets():
             simulation, total, increments, ladder, u, norm, wheel
         )
         assert gather["T"] >= gather["sunk"] >= 0
-    # the reversed order: the same eight residues (the residues are the excited
-    # record's, the ladder's order no input to them)
-    backward, _, _ = run_layer(layer_world(["s2", "s1", "s0"]))
-    assert len(backward) == 8 and sorted(g["u"] for g in backward) == sorted(g["u"] for g in gathers)
+    # THE REVERSED ORDER under the family of clicks (ALGEBRA.md 9.45; BUILD.md section 26
+    # item 32, FINDING C): the residues are the excited record's, read from its kept
+    # remainder at the centre Node, and the ladder's order is no input to them UNTIL the
+    # clock field differs at the body: the first click (at 167, at s0 under one order and
+    # at s2 under the other) writes its content at the set's first body (row 0 or row 6,
+    # no mirror images across the seam), the difference spreads by the family's own step
+    # to the body's shell (interval 249) and to the excited record's remainder (309); the
+    # six residues read before that agree bit for bit and the two read after it differ
+    # (COMPUTATION on this head; the mirror may return under one body per detector)
+    forward_births, backward_births, differs = lockstep_births(
+        layer_world(["s0", "s1", "s2"]), layer_world(["s2", "s1", "s0"])
+    )
+    assert len(forward_births) == len(backward_births) == 8 and differs is not None
+    assert sorted(line["u"] for line in forward_births) == sorted(g["u"] for g in gathers)
+    reads = [2] + [line["tick"] + 1 for line in forward_births[:-1]]
+    agreed = [
+        (forward["u"] == backward["u"], read)
+        for forward, backward, read in zip(forward_births, backward_births, reads, strict=True)
+    ]
+    assert all(same for same, read in agreed if read < differs)
+    assert sum(1 for _same, read in agreed if read < differs) >= 3
+    assert not all(same for same, _read in agreed)
     # one set on the emitter's row alone books a third of the flux: the last click at 1014
     # under the one border (the well two Links from the closed face; item 28), COMPUTATION
     one, _, _ = run_layer(layer_world("s1"), ticks=1200)
