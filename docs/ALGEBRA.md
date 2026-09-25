@@ -5947,8 +5947,9 @@ pi / 64, v_g = c_l = 0.57689):
 **(7) WHAT STAYS OPEN FOR THE OWNER.** (i) The moving name (item 4): one
 word. (ii) With it, the emission of a moving packet (a stock at a moving
 name) as the redshift's and Sagnac's mechanism, and its blind pins
-re-derived. (iii) The longitudinal light clock's gamma^2 as the model's
-prediction. (iv) The rows whose material must move (the transponder's
+re-derived. (iii) Rods: the model has clocks and no rods (item 6), so a moving rigid
+arm, and with it the longitudinal light clock and Michelson-Morley, are not
+yet in it; whether a rod arises from packets is a question for the owner. (iv) The rows whose material must move (the transponder's
 mirror, the index's medium) stay closed forms in the frame form; if the
 owner wants them RUN with moving material, that is the push, outside the
 one algebra, and is to be said so.
