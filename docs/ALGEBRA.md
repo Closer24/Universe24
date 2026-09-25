@@ -9579,3 +9579,80 @@ operator the body sees (9.22 (7a)), so the generator carries the Node
 clock at the body's declared initial content on its Nodes; without it
 the body's record starts off the clocked mode by about M / Gamma of its
 amplitude (6 x 10^-5 at M = 64), a transient below every pin.
+
+### 9.46 The body record: a body held as one Node in the engine, its parameters, its step and its equivalence test (the model owner's word of 2026-09-25 in the mathematician's session: "already now, because it is generic; a body holds real parameters, and then it is a special Node in the simulator; it can be checked that it is equivalent"; DERIVED; a host form under its own identity, its gate the equivalence below)
+
+**(1) WHAT A BODY IS, AS DATA.** A body's own standing record is phi_i
+cos(omega t): a fixed integer profile times ONE rotation (D4, T2). So a
+body is one Node's worth of state and a stored shape. THE BODY RECORD
+holds: its family and its pair on its Nodes; its Nodes S (the declared
+region) and its profile phi on them, the generator's integers, read and
+never stepped; its clock pair [num_c, den_c] with 2 cos omega = num_c /
+den_c, the generator's; its norm T (one period's action, 9.17 (7) (e));
+its stock; its content M; its residue u; and ITS ROTATION (a, b, r): two
+levels and one remainder. Nothing else. It is a special Node: a Node
+with a shape.
+
+**(2) ITS STEP.** The rotation moves by the two-term rule with the clock
+of its content: den_c (Gamma + M) a' + r' = (num_c Gamma + 2 den_c M) a
+- den_c (Gamma + M) b + r, 0 <= r' < den_c (Gamma + M); this is 2 cos
+omega' = (Gamma / (Gamma + M)) 2 cos omega + 2 M / (Gamma + M), which is
+1 - cos omega' = (Gamma / (Gamma + M))(1 - cos omega), the Node clock's
+rotation of 9.35 (2) in one coordinate; all integers, one division, the
+remainder kept. Its wheel is den_c (Gamma + M) over the gcd of the
+step's coefficients, the pair's own at M = 0. Its share per interval is
+the invariant of the two-term rule, e = D (a^2 + b^2) - (num_c / den_c)
+a b in the rule's units, constant in time; its tick is the count t
+against T: the click at the first t with 2 W t e >= (2 u + 1) T, the
+same interval as the lattice body's at every Node (9.32 (b)). Its
+residue u is its own remainder r on its wheel, read at the click and
+carried (9.44 (5) (c)); the born record's residue the same u.
+
+**(3) ITS INTERFACES TO THE GameBoard, unchanged in form.** (a) THE GIVING
+END: at its tick the born family's eigenvector on S times the character
+is set on the GameBoard's Nodes of S (9.37 (2)), the stock and M fall by
+one; the body's own rotation continues (9.43, no reseed). (b) THE TAKING
+END: a passing record's inflow through the Ports of S is gathered on
+the GameBoard as now; at its click M rises by one and the body record's
+clock changes with it (T4). (c) THE FAMILY OF CLICKS: the level held at
+M on the Nodes of S, as 9.45 (2). (d) THE PAIR REGION on S stays on the
+GameBoard, so every passing record of every family, the body's own
+family included, moves through S by the lattice step with the well in
+place; the body's own rows are NOT on the GameBoard, and by the
+linearity of the step per family (D2) no passing record ever needed
+them: a record's motion through S does not read the standing record
+there, and a click counts per record. (e) The tail rule (9.22 (7a) (i))
+and the two-bodies check are read on the stored profile as now.
+
+**(4) WHAT IS NOT BIT-EQUAL, AND THE EQUIVALENCE TEST (THE GATE).** The
+body record's rotation and its remainder run on the two-term rule with
+the wall den_c (Gamma + M), the lattice body's on the six-neighbour
+rule with the wall 3 den (Gamma + M) at every Node: the rotations agree
+as rationals (the same clock pair), the remainders are different
+integers on different wheels, so the residues' ORDER differs and the
+drift within the rounding differs (Niven, 9.26 (4)). The law's claim is
+statistical there (9.43), so the equivalence to require is: (i) THE
+TICKS: the distribution of the body's cycle lengths, the mean P / 2, no
+runs of one-interval cycles beyond a fair draw's, the residues spread on
+the wheel (the chi-square within its bound), read on both forms over the
+same number of births; (ii) THE ROTATION: 2 cos omega' equal as
+rationals at every content M, bit for bit; (iii) THE BORN RECORDS: the
+same rows set on S at each tick (the same eigenvector, the same
+character), so every pin of the eighteen that reads the born light
+(the light clock's 300 +- 9 and 250 +- 8 first) unchanged to its band;
+(iv) THE TAKING END identical by construction (the GameBoard's own
+gather); (v) THE FAMILY OF CLICKS' field identical (the same held M).
+A body record that passes (i) to (v) replaces the lattice body under the
+world key `body_record`, off by default; one that fails is refused
+naming the test.
+
+**(5) THE HOST COST AND THE THREE TESTS.** The step of the body's own
+family over the N Nodes of S is gone; the rest of the GameBoard's cost
+is unchanged; in a world of many bodies (a crystal of atoms, 9.31) the
+cost is linear in the bodies and not in their Nodes. Generic: one
+primitive, a Node with a shape, declared integers, no family name.
+Vector: the two-term rule is verb (D) with the remainder kept, no root,
+no float. Local: the body record reads its own state and its Ports on
+S; its one non-local act is the click's, as before. It is the owner's
+"the body is one Node" (9.38 (9), 9.40 T2) made an engine form, and it
+is what the owner asked to build now.
