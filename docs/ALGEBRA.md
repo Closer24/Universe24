@@ -9990,3 +9990,58 @@ pace changed by the field's gradient at its seat (9.29's ray equation
 as a line; a record on the lattice needs none, the step refracts it).
 The owner's constant of four families becomes five. What stays open:
 the atom as a computed row; the strength's scale as a declared trade.
+
+**(6) THE FAMILY OF CLICKS AS BUILT (Nature24's head 1b3c7b0f): FOUR
+RULINGS.** (A) THE INVERSE WHERE THE CLOCK FALLS. The step is a bijection
+of (a, b, r) for a fixed wall (9.26 (3) (a)); under the Node clock the
+wall at a Node is 3 den (Gamma + c) and moves with c. Where c does not
+fall the joint step still inverts bit for bit. Where c falls between
+two intervals, a remainder at or above the new wall and one below it
+give one total, and the inverse cannot tell them apart: about (c - c')
+/ (Gamma + c) of the states per unit of fall, 10^-6 at Gamma = 10^6
+(COMPUTED by Nature24: exact return before the first fall, a return
+within 16 units of 2^20 after it). THE RULING: THE LEVEL MAY FALL, and
+the law keeps conservation over bit-exact reversibility there, by its
+own structure: the content must sit in f (the self term and the wall)
+and not in e, because a per-Node e makes the neighbour coupling
+asymmetric and the conserved form of T1 is lost, so the wall must move
+with the content; a clock read from a level that never falls (a running
+total of clicks, a monotone rule) would keep the giver's clock slow for
+ever after each birth, a physical change the owner has not made. The
+property (4) of 9.20 (B) is restated: the joint step inverts exactly
+wherever the clock has not fallen at a Node with a record, and loses at
+most one remainder's worth of state per unit of fall where it has; the
+tests assert that. (B) THE FIELD AT UNIT LEVELS. With one unit per
+quantum (9.45 (1), the owner's "the clock as its amplitude") a body of
+1 to 64 quanta makes a field that is the rounding's walk within a few
+Links and nothing beyond (13 units at most on the small world, 9 in the
+emitter chain's vacuum: COMPUTED by Nature24), not a resolved
+potential; this is what the clock's own resolution allows, since a
+clock (Gamma, Gamma + c) reads shifts of 1 / Gamma and the potential M
+R / r is below one quantum beyond M R Links (9.45 (2)); the walk's
+jitter is at most 13 / Gamma of the clock, below every pin. THE
+RULING: the step at unit levels is the law's and one click writes one
+unit; a resolved potential comes from a heavy body (a content of 10^4
+quanta resolves the 1 / r to 10^4 R Links), which is how the gravity
+row (9.22 (8a)) is to be read, and not from a finer unit, because a
+unit U per quantum multiplies the wall (Gamma U + c) against the
+amplitude under int64 (at 2^28 and Gamma = 10^6 there is no room for U
+above 3). (C) THE CLICKS REACH THE BIRTHS. A click's content spreads
+from the taker as the field, reaches an emitter's Nodes at one Link per
+interval, moves its rounding, and so moves the residues of its later
+births with where the click landed (COMPUTED by Nature24: the residues
+agree bit for bit until the field arrives, and differ after). THE
+RULING: THIS IS THE LAW: the field is the memory of every click,
+causal, at light's pace, and it is the back-action of the board on a
+body's residues that 9.19 (4e) once assigned to the retired coupling,
+now lawful and one-way; the residues' statistics are unchanged, their
+order is not, which is all the law claims (9.43). The asymmetry Nature24
+read (the content held at a set's first body, row 0 against row 6) is
+the set's write for a set of several bodies, and goes with (v), one
+body per detector. (D) e = f FOR THE FAMILY'S OWN STEP: confirmed, the
+plain step, the field linear. THE GATE on 1b3c7b0f, with the rename
+601a3741 (names only): CONFIRMED as 9.45 with these four rulings; the
+three pieces no section stated are now stated: the load bound's factor
+2 on the world's content is host arithmetic; the click's content held
+at a set's first body goes with (v); the kept remainder above a shrunk
+wall is 9.45 (5).
