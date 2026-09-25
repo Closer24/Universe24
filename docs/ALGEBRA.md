@@ -13876,3 +13876,195 @@ self-source are one function each of k; the inverse's order is the
 reverse word; the click is the one idempotent, with its line always
 and its kernel on request; nothing is named. 9.79 (1) to (3) stand as
 written; this section is their reason.
+
+### 9.81 The closure: one operation at a Node on its own state and its six arrivals, the transport on the Port, the phase pair, and the ray (the model owner's words of 2026-09-25 in the mathematician's session: "in the Nodes we do not read the neighbours; how do we solve everything generically, without reading the neighbours, only with whole numbers, so that the engine supports everything we need"; "if I say it also propagates like a ray, does that help?"; "think it all over again and write exactly what we need, and see that it really closes everything; whole numbers, beautiful"; DERIVED; supersedes the dividing line of 9.78 (4) and the obstruction of 9.77 (4); adds one attribute pair and one operation to 9.79 and the connection to 9.80 (3))
+
+**(0) THE CLAIM.** Nothing crosses a Link but the neighbour's levels of the
+interval's start, all components, through the Port: the ARRIVAL. A
+Node acts on its own state and its six arrivals with one operation.
+Every coupling of every instance, on a wave and on a body, is a map
+the Node builds from its own state and the arrival and applies to the
+arrival: the TRANSPORT. With it the odd parts (the vector's action on
+a wave, magnetism and the dragging on light and matter waves) are
+inside the frozen engine, the exact per-Node inverse stands, the wall
+is untouched, and the integers of 9.57 (2) hold as declared. What was
+missing was not a read of the neighbour: it was a second component of
+the record, so that a wave's direction is written in one interval's
+levels and travels through the Port.
+
+**(1) THE ONE OPERATION AT A NODE.** For every family, every component:
+
+  6 den Gamma^2 a_next + r' = 2 num SUM over the six Ports of
+      p_a(port)^2 x T_port(arrival_port)
+  + [12 den Gamma^2 - 6 (p_0^2 + Gamma^2)(den - num)
+     - 4 num SUM_a p_a^2] a_now - 6 den Gamma^2 a_before + r,
+
+the paces p_0 and p_a of 9.78 (4) from the Node's own reads, and
+T_port the transport of that Port's arrival: for a family with one
+phase component T is the identity, and the rule is 9.78 (4) term for
+term; for a family with a PHASE PAIR (two components per
+representation index, (re, im), each with its two levels and
+remainder, (4)) T rotates the arrived pair by the Link's angle. A seat
+reads its instances by the contraction of 9.78 (4), also from its own
+state and its arrivals. Nothing else exists at a Node.
+
+**(2) THE TRANSPORT ON THE PORT, IN WHOLE NUMBERS.** (a) THE LINK'S
+ANGLE, one number seen the same from both ends: for each vector
+instance V the family reads with weight w_V and by q, on the Port along
+axis a in the sense sigma (+1 outward along +a, -1 along -a),
+
+  k_port = sigma x q x w_V x (A_a at this Node + A_a arrived through
+           the Port),
+
+an integer in the units of the instance's level (the arrival carries
+the neighbour's vector levels too, so the sum of both ends is the
+Node's own reading, and the other end forms the same number with the
+opposite sign: the transport back is the inverse rotation, the read
+matrix symmetric, the conserved form whole; this is the Link form of
+9.57 (1) for the angle). (b) THE ROTATION as a declared triple: the
+world's TWIST TABLE gives, for each |k| up to the world's bound K, a
+Pythagorean triple (c_k, s_k, d_k) with c_k^2 + s_k^2 = d_k^2 exactly,
+whose angle atan2(s_k, c_k) is k times the table's unit theta_unit to
+the table's declared precision (the generator finds n / m nearest
+tan(k theta_unit / 2) and writes (m^2 - n^2, 2 m n, m^2 + n^2); the
+loader checks every triple's identity and rejects any other); k < 0
+takes (c, -s, d). A rotation is exact: the norm of the rotated pair is
+the norm of the pair, times d_k^2, with no approximation; only the
+ANGLE is a declared number, as every pair [num, den] is a declared
+cosine. The crystallographic restriction (section 1.6) says why a
+table is needed and not a wheel: the only rotations with no
+denominator are the cube group's own. (c) THE DIVISION INSIDE THE
+TRANSPORT, with a running remainder per Port, so that the wall never
+sees d_k:
+
+  T_re x d_k + rho_re' = c_k x re_arr - s_k x im_arr + rho_re,
+  T_im x d_k + rho_im' = s_k x re_arr + c_k x im_arr + rho_im,
+  0 <= rho' < d_k,
+
+rho_re and rho_im the Port's own two remainders at the Node, state
+like the rule's r. (d) THE INVERSE, exact per Node: the transport is
+a function of the arrival (a start value, known backward), the
+Port's remainder at the start and the table; backward, rho at the
+start is the unique value in [0, d_k) with rho = rho' - (c re_arr -
+s im_arr) mod d_k, T follows, and the rule's inverse by the ceiling
+proceeds as in 9.50 (8). The remainder makes the transport unbiased
+over time, as the rule's r does; without it a floor would drift by
+half a unit per Port per interval. (e) THE INTEGERS: d_k up to 10^9
+gives angles to 10^-6 of a radian per Link, below every band over a
+hundred Links; c_k x arrival at most 10^9 x 2^20 = 10^15, within
+int64 with room; the rule's total UNCHANGED at 6.1 x 10^18 (9.57
+(2)), since T is level-sized; so Gamma = 10^4 and A = 2^20 stand.
+Storage: twelve remainders per twisted family per Node (six Ports,
+two per pair). Cost: four products and one division per Port, about
+twice the rule for a twisted family, nothing for the others.
+
+**(3) THE WEIGHTS, DECLARED, ONE PER READ.** The charge's vector on a
+charged family: w = Lambda_v, by q, the Lorentz force's sign fixed
+once by the row (8) (b). Gravity's vector on a matter family: w = the
+family's rest rotation omega_0 in the table's unit (a whole number
+the generator writes from the pair, as it writes the pair), by 1: the
+mass current turns a matter wave by its rest frequency, which is the
+neutron's Sagnac and the dragging on matter waves. Gravity's vector on
+light: w = the row's light frequency in the table's unit, declared
+per world, since every row is monochromatic (9.22 (8)); so light past
+a moving mass reads the vector part at order v / c (the moving lens,
+9.76) as a wave. The tensor's off-diagonal on a wave: no read, (6).
+
+**(4) THE PHASE PAIR, one attribute.** A family declares phase in {1,
+2}: 1 for a real record as today, 2 for a record that carries its
+direction (re, im); m = (the representation's count) x phase; every
+operation of 9.79 (2) sums or acts over all m components alike (the
+booking sums both, Born's shares are the pair's norm per Node, the
+form the invariant norm). A seed with phase 2 is given by the
+generator with its quadrature, as it gives the pair; the point
+emitter (9.71 (1)) writes both from a seat whose standing family has
+phase 2; a hold writes the same count on both levels of re and 0 on
+im (a field has no phase). BIT FOR BIT: a family with phase 1 is
+untouched; a family with phase 2 whose im is 0 and whose vector reads
+are 0 (k = 0: the triple (1, 0, 1), T the identity) steps exactly as
+with phase 1; so every shipped world reads bit for bit (9.78 (8)). A
+family that declares phase 2 and reads no vector instance is refused
+by the loader as a declaration with no reader.
+
+**(5) THE RAY, the owner's question answered.** A ray is a body whose
+standing family has the light pair [1, 1], seated at one Node, with
+the row's wave number as its momentum and the mode's own group speed
+from the dispersion X as its hop speed (the proper pair table of 9.63
+(3), which already carries every mode); its energy count s = M P_0
+div P with P its period, so a ray gravitates and reads gravity by its
+frequency; it reads every instance by the contraction at its seat,
+the vector and the off-diagonal tensor included, with whole numbers
+and no transport; it is taken at the one Node it reaches (Born's rule
+trivial) and given by an emitter in a declared direction. So a ray
+HELPS exactly where direction is read and interference is not: the
+bending, Shapiro, the moving lens, light in a wave of either
+polarisation. A ray cannot interfere: the two slits, Mach-Zehnder,
+Sagnac and Bell need the wave, whose click is shared by Born's rule.
+It is not a second law: the seat's hop rule was derived from the
+law's own dispersion (9.52), so the ray is the wave in its short
+limit under the one rule; a world declares per emitter whether its
+quanta go as waves or as rays, and a row that reads direction alone
+may run both and read them equal within its band ((8) (c)).
+
+**(6) WHAT REMAINS OUTSIDE, ONE LINE.** The tensor's off-diagonal
+components acting on a WAVE (a gravitational wave of x polarisation
+along the world's axes, read by light): the mixed second difference
+needs the second neighbours, beyond LOCALITY-1's six; the world
+declares its axes so that a source's + polarisation lies on them, and
+a body or a ray reads both polarisations; nothing else is outside.
+
+**(7) THE THREE TESTS AND THE ALGEBRA.** Generic: one operation, the
+transport of an arrival by a map built from the Node's own levels,
+the arrival's levels, a declared weight and a declared table; no name.
+Vector: a rotation (one of the six verbs) with products and one
+division, the remainder kept; a scale per axis; no root, no float.
+Local: the Node's own state, the six arrivals, the Port's own
+remainder; nothing kept beyond the events there. The exact inverse
+per Node, (2) (d). IN 9.80's TERMS: the transport is a CONNECTION, an
+element of the representation's group on each Link (a rotation for
+the phase pair under a vector instance, a scale for the ruler), and
+the rule is the covariant sum over the Ports; the physics is in the
+loops (the product of the four transports around a square, the flux
+through it: Aharonov and Bohm's phase), and a change of frame at any
+Node changes nothing (gauge invariance), both by the structure and
+not by a rule. A wave's direction is its phase pair's ratio, written
+at one interval and carried through the Port: the odd part became
+even by one more component.
+
+**(8) THE CHECK-MODE ROWS, blind.** (a) AHARONOV AND BOHM: the two
+slits of 9.22 (8) with the matter family at phase 2 and a declared
+vector level curling once around a line between the slits (zero
+curl on every path, a loop angle Phi): the fringes shift by Phi /
+(2 pi) of a spacing; at Phi = pi the central pixel's count falls
+from the maximum to the minimum; the same world with Phi = 0 or with
+the level a pure gradient: the fringes of 9.22 (8) unchanged in count.
+(b) THE SIGN, body against wave: a charged seat and a charged wave of
+the same q in the same declared uniform vector level curve the same
+way (the seat by the contraction, the wave by the transport). (c) RAY
+AGAINST WAVE: the bending row of 9.65 run with the light as rays and
+as a wave, the two centroids equal within the row's band. (d) THE
+DRAGGING ON A MATTER WAVE: the ring of 9.77 (6) (b) with a matter
+wave of phase 2 sent two ways around it at r = 30: the two-way phase
+difference is the loop's angle, w times the sum of the vector level
+around the circumference, in the table's unit (the same number the
+test seat's node precession reads as 2 G J / r^3 per interval in
+9.77 (6) (b)), read as the fringe shift of the returning pair;
+against the ring at rest: none.
+
+**(9) WHAT THIS CHANGES IN 9.78 TO 9.80, one line each.** 9.78 (4)'s
+"what the pace cannot carry" is superseded: a wave reads the vector
+parts through the transport; the ruling now reads "every part on a
+body by the contraction, every part but the tensor's off-diagonal on
+a wave by the four paces and the transport". 9.78 (6) unchanged; 9.78
+(9) gains (8) here. 9.79 (1) gains the attribute phase and the world's
+twist table (world data, not a family's attribute); 9.79 (2) gains
+item 11, the transport, the Nodes' world, reading phase, reads and
+the table; the loader's line "a held family with clicks or booked" is
+dropped, since a family may have a hold, clicks and components at
+once (a vector light family is one such). 9.80 (3) gains (7) here: the
+couplings are the connection. THE OWNER'S DECISIONS: (i) the transport
+in the frozen engine, dormant until a family declares phase 2; (ii)
+phase as the eighth attribute's twin, the twist table as world data;
+(iii) a ray as an emitter's declaration under the one law; (iv) light
+as the charge's own vector wave stays his line, now with phase 2 and
+the vector representation, six components.
