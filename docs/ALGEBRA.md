@@ -11678,3 +11678,89 @@ The one number that separates the two forms in every row is the
 ruler's weight, whole on the Einstein form and absent on today's law
 (9.56 (2), (3)); rows (1), (2) and (5a) cannot separate them at first
 order and are the controls of the run.
+
+### 9.60 The body's record kept at its seat Node, nothing beside the GameBoard (the Boss's record 2036 of 2026-09-25, the model owner: "what does it mean, the body's record on the side? can it not be represented somehow in the Node?"; the mathematician's ruling: yes, and it is the one rule with closed Ports; DERIVED, bit-equal to 9.46 (2))
+
+**(1) THE RULING.** The body's record of 9.46 (1) is kept AT the seat
+Node as an ordinary record of its own standing family: two levels and
+one remainder (a, b, r), stepped by the one rule (9.50 (13) today, 9.57
+(1) when adopted) with a declared pair at that Node. Nothing physical
+is kept beside the GameBoard. The body's entry in the world file keeps
+only declared constants: its Nodes S, its shape phi on S, its pairs,
+its extents. Its state is the seat's: the standing record (a, b, r);
+the content M as the level of the family of clicks at the seat (9.51
+(1)); the stock as the given family's content at the seat (9.51 (3),
+the stock is given-family content); the charge as the charge family's
+level there (9.48); the residue u as the standing record's own
+remainder on its wheel (9.44 (5) (c)). The norm T and the wheel W are
+functions of the declared pair, computed once, not state.
+
+**(2) WHY IT IS THE SAME STEP, BIT FOR BIT.** The one rule at a Node
+reads the six neighbours' levels S_6. Declare the standing family's
+six Ports at the seat CLOSED ON THE SEAT: each Port leads back to the
+seat, a periodic region of one Node, the periodic boundary every world
+already declares, here of length one. Then S_6 = 6 a and the rule at
+level c = M reads 3 den Gamma a' + r' = 6 num (Gamma - M) a + 6 den M a
+- 3 den Gamma b + r. With the seat's pair [num, den] = [num_c, 2 den_c]
+(the clock pair of 9.46 (1) in the rule's convention, 2 cos omega = 2
+num / den = num_c / den_c) this is 6 den_c Gamma a' + r' = (3 num_c
+(Gamma - M) + 6 den_c M) a - 6 den_c Gamma b + r, which is 9.46 (2)'s
+constant-wall step multiplied by 6: the same rotation as rationals,
+2 cos omega' = (num_c (Gamma - M) + 2 den_c M) / (den_c Gamma), and the
+remainder six times the body record's, r_seat = 6 r_body, when the
+starts agree. So the standing record needs no rule of its own: the
+"two-term rule" of 9.46 (2) is the one rule with S_6 = 6 a. The wheel
+of the seat is 2 W_body and its residue 2 u_body (the coefficients
+three times, the wall six times); the tick rule reads the seat's own
+W and u, one wheel twice as fine, the same draw (9.43). Under the
+Einstein form the seat's record slows at second order with every
+other record, with no second form to keep.
+
+**(3) WHAT KEEPS IT FROM SPREADING.** Not a well: a level slows a
+clock and does not confine a record; confinement from the law is the
+atom row (9.53 (4), OPEN). The closed Ports of the standing family at
+the seat confine it by declaration: it has no Link out. This is the
+one seam of 9.53 in a second place: the declared well stands for the
+field a body should make, the closed Ports stand for the binding a
+well should do; when binding from the law runs, the closed Ports are
+replaced by the well that binds, the same test as the declared well's.
+The standing family is its own world-defined family (a name and the
+pair [num_c, 2 den_c]); the free family of the same pair passes
+through S by the lattice step as before (9.46 (3) (d)), so no passing
+record meets a closed Node and D2's linearity per family holds.
+
+**(4) THE THREE TESTS.** Generic: one primitive, the one rule, with a
+declared pair and a declared Port topology at one Node; no family name
+in the rule, no second rule. Vector: the one rule's verbs, the
+remainder kept, no root, no float. Local: the seat reads its own
+record and its six reads, which return itself; fixed work, fixed
+storage; the click's act as before. Nothing is kept at a Node beyond
+its records, and nothing is kept beside the GameBoard but the world
+file's declarations.
+
+**(5) WHAT CHANGES IN THE GATE OF 9.46 (4) AND IN ITEM 37.** (ii) THE
+ROTATION becomes an identity: one rule, one wall, no second form to
+compare; it is replaced by "the seat's record steps by the engine's
+one rule with S_6 = 6 a, asserted once". (i) THE TICKS are read on
+the seat's own wheel (2 W_body), the same distribution, the mean P /
+2 and the chi-square unchanged in form. (iii), (iv), (v) unchanged.
+For Nature24 (item 37): the body's rotation and its remainder leave
+the entry beside the GameBoard and become the seat Node's record of the
+standing family under the family's key, its Ports closed on the seat;
+the entry keeps S, phi, the pairs and the extents; the content, the
+stock and the charge are the seat's levels of their families; the
+residue is read from the seat's remainder; the hop of 9.52 (4) moves
+the seat's records with the body as it moves the field's (the same
+bijection); the giving click reads the seat's remainder and writes the
+given rows on the extent from phi; the taking click raises the seat's
+level of the family of clicks. The world key `body_record` names the
+form; its default stays off until the gate passes.
+
+**(6) THE SHAPE AS A DECLARED CONSTANT.** Yes: phi on S is a table of
+integers of the world file, formula-free, like a pair or a train's
+form (ARCHITECTURE.md, the local integer operation contract: formula-
+free payloads; 9.22 (2), the generator's integers on the host's table).
+It is read only by the giving click, on the giving extent, to write
+the given rows; it is never stepped and never read by a passing
+record. A constant read at a click on a fixed extent is local (fixed
+K); a constant is not state, so it is not "kept at a Node".
