@@ -12203,3 +12203,86 @@ The closest distance b then exceeds the beam's half-width with room,
 b = 45 as built with the beam 40 wide is the edge; b = 60 with c_b
 set to 2000 there is the layout. The Einstein form: twice, less the
 second order, as 9.61 (2) (c).
+
+### 9.66 The big boards, and the click counter (the Boss's record 2044 of 2026-09-25, the model owner: "the big cubes, is there no way to shrink them? how is a click counted? is there a dynamic click counter?"; the mathematician's answer per board of 9.22 (8), on the body at its seat (9.60) and the support-only step)
+
+**(1) WHAT SETS A BOARD, three things.** (i) THE PASSAGES: the paths the
+given light must travel to read the pin (the arm of a light clock, the
+distance to a screen that sets a fringe spacing, the radius to the
+fans' detectors); these set the pin's number and cannot shrink without
+restating it. (ii) THE ABSORBING FACES: slabs as deep as the train (32
+or 64), so that no reflection returns within the read. (iii) THE TAILS
+OF THE BOUND MODES: a torus must hold a mode's decay length or its
+tail wraps (9.22 (8b): the 64^3 for the box of 20, 48^3 for 28, the
+200-layer for the muon's wide mode). THE BODY AT ITS SEAT (9.60) removes
+(iii): the mode is not on the GameBoard, its rows are written on the
+extent at the click only; so every board sized by a tail shrinks to
+its extents and its passages. THE SUPPORT-ONLY STEP (Nature24's host
+shortcut: the rule applied where a record's rows are nonzero and at
+their neighbours, the vacuum untouched) makes the host cost per
+interval the records' support and not the board's Nodes; the board's
+size then costs memory alone. Neither changes a click: the rule at a
+Node of zero rows with zero neighbours writes zero, bit for bit, and
+the seat is bit-equal to the cube (9.63 (1)).
+
+**(2) PER BOARD.** The pace fans [192, 192, 192]: STAYS in extent, three
+dimensions and the 48-Link radius, because the pin reads the isotropy
+under the 48 along the body diagonals, and its precision grows with
+the radius; the seat changes nothing (one emitter cube); the support-
+only step cuts the cost per interval from 7 million Nodes to the light
+shell's, about 4 pi r^2 times the train's 32 at r = 48, 9 x 10^5, and to
+memory for the rest; the expectation unchanged. Mach-Zehnder [576, 576,
+3]: SHRINKS to [320, 320, 3] with the arms 200 and the slabs 64 deep,
+the beams 64 wide (at k = 0.302 the wavelength is 21 and a beam
+narrower than sqrt(21 x 200) = 65 diffracts across the receivers; the
+first draft's 5-cell beam was at the wavelength 4); the blind pin, 100
+bright and 0 dark, does not depend on the size (LAB_TOOLS.md part B,
+row 17); the support-only cost the two beams' 2 x 64 x 64, about 10^4.
+The boxed clocks [64]^3 and [48]^3: SHRINK to [32]^3 and [40]^3, the
+extent (side 20, 28) plus a margin for the given rows to leave, since
+the torus no longer holds a tail; three dimensions stay (a cube's
+extent); the ticks bit-equal at the seat, so the tick expectations
+stand; one number moves: the interval at which the wrapped light first
+returns to the box scales with the torus (halved at 32), and any row
+reading that return is restated by the torus's side. The two slits,
+de Broglie, Sorkin [305, 320, 3]: CAN SHRINK to [160, 200, 3] with the
+slabs 32 deep, the screen 128 Links from the slits; the fringe spacing
+in Nodes halves with L, the pin as spacing over wavelength (L / d, as
+in nature) is unchanged, and the counts per fringe are restated by the
+same formula (9.25 (11)); the support-only cost the train's 32 x 200,
+6 x 10^3. The muon layer [200, 200, 3] and the deep well [128, 128, 3]:
+SHRINK to [64, 64, 3], the extent (side 14, 40) plus the hop's path per
+run, since the 200 held the wide mode's 36-Link tail (9.22 (8b)) and
+the seat holds no mode; the ticks bit-equal. The chains (the light
+clock 760, Sagnac 3000, the redshift 4096, the receding index 4000,
+the round trip 1600): STAY, the arm and the receding path are the pin;
+their cost is already small (10^3 to 4 x 10^4 Nodes) and the support-
+only step makes it the train's 32 x 9 per interval. Bell and the
+computer [96, 128, 3], Malus [192, 3, 3]: small already, unchanged.
+After both changes no board costs more than the fans' 9 x 10^5 per
+interval and most cost 10^3 to 10^4; the extents that stay large (the
+fans, the chains) cost memory, 7 million Nodes at most.
+
+**(3) WHERE A SMALLER BOARD CHANGES A BLIND EXPECTATION.** The two slits'
+family: the spacing in Nodes (halved, the ratio kept). The boxed
+clocks: the wrapped light's first return (scaled by the torus). Nothing
+else: the ticks, the counts and their shares, the visibilities, the
+delays and the dilation ratios do not read the board's size once the
+passages and the slabs are kept.
+
+**(4) THE CLICK COUNTER (the Boss's answer, corrected in two lines).** The
+detector's own content is the live counter: at each taking click its
+content of the taken family rises by one, M_k + 1, and the family of
+clicks' level at its Nodes rises by that quantum's energy share, P_0
+div P_k (9.51 (3)); at a giving click the giver's content falls by one.
+So a detector that gives nothing counts its takings exactly; a body
+that gives and takes counts the net. The taking click comes when the
+booked inflow through the set's Ports (and at a hop through the newly
+covered Nodes, 9.62 (3)), summed in the increment ladder, reaches the
+rung its residue set, 2 W (C + f_1 + ... + f_k) >= (2 u + 1) T (9.25
+(2)). The run's click line is the host's copy of that write, not the
+counter. The dynamic counter the owner asks for exists and is
+physical: the content at the detector's Nodes, read at any interval as
+the level of the family of clicks there (a GameBoard reading), and it
+is what every other record feels as the field (9.48 (6) (C): the field
+is the memory of every click).
