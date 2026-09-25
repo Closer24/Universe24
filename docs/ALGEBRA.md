@@ -6883,6 +6883,46 @@ tick slows as it moves while its frequency at a Node rises; both hold
 at once because omega - K d omega / d K = omega_0^2 / omega on the cone,
 the identity of the dispersion.
 
+**(1a) THE OWNER'S CANDIDATE LAW, "every body has its own click by its
+frequency, and if it has no frequency it has no click" (2026-09-25,
+through the Boss; TESTED against the algebra).** (a) NO FREQUENCY, NO
+FORM, NO CLICK, a THEOREM: for a mode every Node's share of the
+conserved form is e_i = D_i p_i^2 sin^2 omega (9.17 (7) (e), PROVED), so
+a record of zero frequency carries zero form identically, and its
+threshold cannot be reached by an acquisition that has nothing to
+acquire (a record of zero norm is no record: the loader refuses it,
+9.17 (6a)). Zero frequency IS a lawful state of light's family, the
+static level (now = before = p, 2 cos omega = 2 at **k** = 0, the band's
+top), whose form is 0 exactly; and its mirror at omega = pi (now =
+-before, the alternating level, the band's other edge) carries zero form
+as well, sin pi = 0: the two states that are their own reverse in time
+carry nothing and click nowhere. A massive kind has NO zero-frequency
+mode at all: its band's bottom is omega_0 = arccos(num / den) > 0 (8.1),
+and no well raises 2 cos omega to 2 short of light's own pair. What is
+NOT the algebra's in the sentence is "energy per quantum proportional to
+frequency": the form goes as the amplitude squared times sin^2 omega
+((1) above), so it vanishes with the frequency quadratically and is not
+the frequency times the quanta. (b) A STANDING RECORD clicks by its own
+frequency EXACTLY: the excited record's running total accrues e_c per
+interval, the same every interval, and its rung fires at the phase (2 u
++ 1) / (2 W) of its own period, a uniform waiting time in [0, P), one
+birth per half period on average (9.17 (7) (b), (e) and (f); COMPUTED in
+the engine at 294a7c80: the six waits within two intervals of (2 u + 1)
+P / (2 W)); so "every body has its own click by its frequency" is the
+emitter's rule of 9.17 (7) (f) at the set's own cell, word for word, the
+body's click being its birth. (c) A TRAVELLING RECORD clicks by the
+ARRIVAL of its form at a detector, through the detector's Ports (9.25
+(2), (11)), and a detector has no frequency of its own (it is a set of
+Nodes, not a body): its pace is the record's group velocity, from the
+band, not a rotation. THE ONE LAW that holds both is the click rule as
+adopted: EVERY RECORD CLICKS WHEN ITS NAMED SET HAS ACQUIRED THE
+RESIDUE'S SHARE (2 u + 1) / (2 W) OF ITS CONSERVED FORM, the acquisition
+running at the record's own tick where it stands (its frequency, through
+e_c) and at the arrival of its form where it moves (its pace, through the
+flux); the owner's law is that law read at a body, and "no frequency, no
+click" is its theorem (a); it does not hold as "the frequency times the
+quanta", which the algebra does not carry.
+
 **(2) THE CLOCK OF A WHOLE (the owner's "the rate of what contains
 everything, the sum of all, like gears").** The state is always a sum:
 the law is linear. (a) TWO RECORDS SIDE BY SIDE are the direct sum:
