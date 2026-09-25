@@ -10649,3 +10649,66 @@ away from a like body and toward an unlike one, light between them
 untouched, as 9.48 (5); (h) the eighteen: their clicks against their
 pins. A test that passes in the levels and not in the clicks is a
 finding for the mathematician, not a pass.
+
+### 9.52 A body's fall in the field: the seated body's hop fed by the pace across its faces (the model owner's word of 2026-09-25 through the Boss and Nature24: "the two worlds must be joined, and all of it done now"; Nature24's proposed form; DERIVED from the law's own dispersion in the slow limit, the host form of the body record under `body_record`; every body falls alike)
+
+**(1) WHAT THE LAW ALREADY DOES.** A record in a field of the family of
+clicks refracts: the ray equation of 9.29 bends a light record toward
+content, because the pace p = Gamma - c changes the rotation, 1 - cos
+omega' = (p / Gamma)(1 - cos omega_0). A body's own mode is a record
+too, so a bound packet drifts down the pace's slope by the same
+equation; on the lattice body the mode's Nodes S and the held content
+do not follow the packet, which is a defect of the lattice form, not of
+the law. The body record (9.46) seats the body at one Node with a
+momentum accumulator per axis (9.46 (7) (c)); its hop is where the
+law's drift is written.
+
+**(2) THE FALL, DERIVED IN THE SLOW LIMIT.** For a slow body, omega'
+= omega_0 sqrt(p / Gamma) = omega_0 (1 - c / (2 Gamma)) to first order,
+so the clock shifts the mode's energy by -omega_0 c / (2 Gamma): the
+potential per unit of mass is Phi = -c / (2 Gamma), and the
+acceleration is -grad Phi = grad c / (2 Gamma), toward content, THE
+SAME FOR EVERY FAMILY, because the clock multiplies the whole operator
+(9.50 (13)): Galileo's equivalence follows from the form, no rule
+added. In integers: along axis x the body's two faces read the levels
+c_+ and c_- at the seat's two reads (the six reads of the Node, 9.50
+(12)'s `_neighbour_nodes`; for a body of width L Links in its pair
+region, the levels at its two faces), and the velocity accumulator n_x
+(an integer, the velocity in units of 1 / (2 Gamma L) Links per
+interval) is fed each interval by
+
+  n_x <- n_x + (c_+ - c_-),
+
+while the position accumulator x_acc <- x_acc + n_x carries one Link
+when it passes 2 Gamma L (in either sign): the seat, the pair region and
+the held content hop one Link, as the hop by declared momentum does
+now; the declared momentum of a moving body is the initial n_x in the
+same units, so one accumulator serves both, and a body with no field
+around it moves as today. Two integers per axis, no root, no float; the
+feed reads the field at the interval's start (state), the hop is a
+carry; THE INVERSE is exact: the carry happened if and only if the
+new x_acc is below the feed's sign-side (x_acc' < n_x for a forward
+hop), so the seat's previous position and the accumulator are one pair
+(the same argument as the remainder's, 9.50 (8)). Generic: one
+primitive for every body, no family name, no mass. Local: the body's
+own reads and its own record.
+
+**(3) WHAT IT GIVES, AND THE TESTS (added to 9.49 after the seated
+detectors).** (a) Newton's fall: a seated body released at rest at
+distance r from a heavy body of content M (the field c = M R / r, 9.45
+(2)) accelerates by M R / (2 Gamma r^2); the click reading: the
+interval at which it reaches a detector at distance d, against the
+free fall's closed form within one hop. (b) Equivalence: two bodies of
+different families released together reach the detector at the same
+interval, within one hop. (c) Kepler: a body with a declared transverse
+velocity orbits; the period squared over the radius cubed the constant
+2 Gamma / (M R) within the rounding, read by the clicks of a detector
+on the orbit. (d) The backward run with hops and clicks, bit for bit.
+(e) A body in no field: bit-identical to the moving body of today.
+WHAT IS NOT IN IT: the relativistic fall (v near 1 Link per interval,
+the full dispersion in place of the slow limit), a refinement under
+the same identity when a row needs it; the body's own field acting on
+itself (the self-force), zero by the read at its two faces of a
+symmetric self-field; two bodies falling on each other, which the form
+gives at once (each reads the other's field) and which the binding
+row of 9.48 (4) will run.
