@@ -14175,7 +14175,19 @@ check mode, the backward test's option, the digests) live in the one
 engine start file; no number of either kind has a default in the
 engine's code, and a missing key is refused by name (the Boss's record
 2089 of 2026-09-25, the model owner: "every flag the engine needs for
-a run should leave the code"). (b) THE ENTRIES, 9.79 (3) as edited by
+a run should leave the code"). Nature24's audit (record 2092) found
+five law's numbers in the code, and each has its place: the unit 2^20
+is A, the families file; the bound 2^28 is retired (A = 2^20 at Gamma
+= 10^4 is the one number, 9.57 (2)); the light pair [1, 1] is the
+field entries' pair in the families file and a light record's given
+clock on its emitter (9.85 (3)), never a constant; the choice between
+9.57 (1) and the first-order rule is no choice, the law is 9.57 (1)
+and the first-order rule is history whose digests stay as records
+(9.57 (1)); the train of 32 periods is retired with the train, the
+window's length being the body's declaration (9.85 (7) (b)). The
+start file holds the run's mode ("check" until the Go), the outputs
+and the backward test's option; a measured event's margin is the
+world file's, required. (b) THE ENTRIES, 9.79 (3) as edited by
 9.82: clicks (gravity's scalar), charge (its scalar), gravity's vector,
 gravity's tensor, light (the charge's vector wave), and the matter
 families with their pairs, all with phase 2 where they read a vector
