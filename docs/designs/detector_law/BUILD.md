@@ -3218,6 +3218,119 @@ would have found no cell.
    NAME NODE (the model owner's record 1970): every new text of this item
    says Node.
 
+36. THE NODE'S OWN PACE: FORM (A) RULED, FORM (B) OF ITEM 34 HISTORY (the
+   model owner's ruling of record 2003 through the Boss, "take only from
+   the current Node, not from the neighbours", and his word of record
+   2005, "excellent, tell Nature to build it now"; ALGEBRA.md 9.50 (13)
+   at 2d07bdf4, the mathematician's PROVED and COMPUTED section that
+   reverses his 9.50 (12); 9.50 (8) and (9) for the constant wall and the
+   weighted form; 9.51 (2) for the charge on it; built on `emitter-click`
+   after item 35, held by the rule of three). THE LAW: the wall is 3 den
+   Gamma at every Node (item 34 stands), and the pace p_i = Gamma - c_i +
+   q Lambda d_i of the Node ALONE multiplies the Node's own six-neighbour
+   sum, the reads plain as S_6 reads them: 3 den Gamma a_next + r' = p_i
+   num S_6(a_now)_i + 6 den c_i a_now - 3 den Gamma a_before + r, the
+   remainder in [0, 3 den Gamma); written on the vacuum's own rule L =
+   num S_6 - 6 den, the step is p_i (L a)_i: THE NODE STEPS THE VACUUM'S
+   RULE AT ITS OWN PACE, time dilation as one sentence. Form (B) of item
+   34 (the pace on each read's far end, (L (p a))_i, each Node sending at
+   its own pace and the neighbour's step scaled by the sender's clock)
+   is the strangeness the owner saw: a clock belongs to the Node that
+   steps, not to the Nodes it hears; (B) stays recorded, exact and not
+   adopted. The inverse with the same integers, the wall constant, one
+   to one for every clock history: THE BACKWARD RUN EXACT EVERYWHERE
+   stands. The vacuum bit for bit; the rotation at a uniform level the
+   same as item 34's (1 - cos omega' = (1 - cos omega)(Gamma - c) /
+   Gamma); (A) and (B) differ by the gradient term num SUM_j (c_j - c_i)
+   a_j, the amplitude's transport where the level is steep, of the order
+   of the level's slope over Gamma, under every band. THE CONSERVED FORM
+   (9.50 (9)): the step's operator is symmetric under the weight den_i /
+   (num_i p_i), so the invariant is the sum over the Nodes of [3 den_i
+   Gamma (a^2 + b^2) - 6 den_i c_i a b] / (num_i p_i) less the plain
+   Link sum (a_i b_j + a_j b_i), at the scale 3 L an EXACT RATIONAL, the
+   Killing energy: each Node's share read in the world's time by its own
+   pace; whole in the body's own units, p times it, for a record at one
+   level; the plain form in the vacuum (Gamma^2 times it under (B),
+   HISTORY). The share's change over an interval is the sum of the PLAIN
+   currents L (now_i before_j - before_i now_j) through the Node's Links
+   plus the remainders' term (L / (num_i p_i)) (a_next - a_before)(r -
+   r'), read exactly on random rows (the residual 0 at every Node of the
+   chain of 60 with content); the books and the state carry every form
+   as the pair [numerator, denominator] (GAMEBOARD). THE CURRENT IS
+   UNWEIGHTED: the click's booking at a detector's Ports is L (now_i
+   before_j - before_i now_j), the plain current as before item 34, so
+   the flux booking and Born's rule at the taking end are unchanged by
+   one bit (the weight p_i p_j of (B), HISTORY). THE NORM: the born
+   record's conserved form as written is the exact rational norm / pace
+   in lowest terms (`born_norm`), the record carrying both, `pace` on
+   the birth line beside `norm`; at one level (a body at rest) p times
+   the form is whole, the integer T of 9.46 (1) in the body's own units,
+   and the pair reduces from (p T', p); a record written across levels
+   (a moving body's Nodes as the hold leaves them, the receiver-by-name
+   world) has a rational form, its world energy, read the same way; the
+   ladder reads the plain flux C against the form: the click at the first
+   detector k with 2 W pace (C + f_1 + ... + f_k) >= (2 u + 1) norm; the
+   excitation norm of the generator (`excitation_norm`) p times the
+   centre Node's share summed over the period, the same units; the
+   generator's passage check reads the plain flux against the file's
+   norm itself. THE WHEEL from the rule at the Node: 3 den Gamma over the
+   gcd of p_i num, 6 den c_i and the wall (the same numbers at A's centre
+   Node of the light clock, the step 576 and W = 4171875, the six reads
+   of item 34 being at the body's own level there); the birth line's
+   `read_clocks` stays as a GAMEBOARD reading (the level at the read Node
+   and at its six reads), the rule reading the Node's own level alone.
+   THE CHARGE (item 35) follows: p_i = Gamma - c_i + q Lambda d_i from
+   the Node's own effective content only (9.51 (2)); the guard and the
+   load bound of items 34 and 35 unchanged (the pace at a Node at most
+   Gamma + |c|, the int64 bound the same). THE FILES: every registered
+   world regenerated (the light clock's excitation norm in the body's own
+   units, the stamps moved); the chain digests moved once more, all
+   three; no pin moved. THE ENGINE: `_advance` and `_advance_inverse`
+   (the pace on the Node's own sum), `wheel_at`, `detector_inflow_tally`
+   and `inward_flux` (plain), `form_share`, `conserved_form` and
+   `record_form` (exact rationals, `_weighted_sum`), `born_norm` and the
+   record's `pace`, `_ladder_click` (T / p), `form_json` for the books
+   and the state; `excitation_norm` of the margin module; the generator's
+   passage check; the run reader's `form_value`. THE READINGS
+   (COMPUTATION on the engine's integers): the Node clock suite's rule on
+   random rows bit for bit the pace on the Node's own sum at the pace
+   0.75 and its plain limit; the rotation 1.983313, 1.977750, 1.988875
+   unchanged; the slab's lag unchanged within its band; the share's
+   identity and the books' identity with the weight 1 / p_i exact; the
+   joint inverse exact through the falls with both fields (the charge
+   suite, the property test); THE LIGHT CLOCK'S DIAGNOSTIC RUN without
+   pins (GAMEBOARD, no verdict, no pin moved): LAWFUL in 11 seconds, 64
+   births and 64 clicks at at_well alone, the mean click interval 307.5
+   with the rms 38.9, the least wait 252 and the most 582, the 64 births
+   by interval 3372, no burst and one gap below ten (300.3, 15.8, 263,
+   338, 3199 and six under form (B) at items 34 and 35). THE FINDING, for
+   the mathematician: the clicks differ from form (B)'s line for line
+   (the residues are read on the shell Node's wheel, W = 4171875 at every
+   body Node under (A) where (B)'s gcd carried the vacuum's num Gamma on
+   the outside reads; the flight to the click reads the plain flux
+   against T / p), and one record of the 64 clicked at 582 intervals,
+   near twice the mean, a threshold near the top of its wheel reached as
+   the record's tail entered; the rms widened from 15.8 to 38.9 on this
+   one reading; no pin reads it, no verdict. THE TESTS: the Node clock suite (the rule, the form with 1 /
+   p_i, the identities, the wheel), the property test (form_I and
+   exchange_of with the Node weights alone), the emitter suite
+   (`wheel_of` from the Node's own level, `wall_form` exact rational,
+   the born norm p times the form, the action p times the shares), the
+   flux reading (the form and the plain tally), the born train (the
+   vacuum norm itself), the massive-record suite (the rule on the light
+   pair, the remainder identity at the pace Gamma, the digests), the
+   detector-law suite (the ladder with the norm's pace), the charge
+   suite (the rule with the effective content at the Node alone). THE
+   ALGEBRA NAMED (record 1987): 9.50 (13) with 9.50 (8) and (9); 9.51
+   (2). PIECES NO SECTION STATES, listed for the mathematician: the
+   norm as the exact rational (numerator, denominator) on the record
+   and the ladder's 2 W pace C against (2 u + 1) norm (the reading of
+   the form in integers; a moving body's born record lies across two
+   levels, so p times its form is not whole and the rational is the
+   generic statement); the books' form as a pair; the excitation norm
+   in the body's own units. THE NAME NODE (the model
+   owner's record 1970): every new text of this item says Node.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

@@ -24,7 +24,7 @@ from event_universe.diagnostics.massive_record_margin import (
     iterated_mode,
     profile_check,
 )
-from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
+from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord, form_json
 from event_universe.events.world import (
     LIGHT_PAIR,
     MASSIVE_RECORD_RULE,
@@ -169,8 +169,8 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     Gamma times the line's (the Node clock in the vacuum, BUILD.md section 26 item 31) on
     every Node without content whose six reads have none; at the emitter body's 32 Nodes and
     the screen's three (their content M) and at the Nodes beside them the line under the
-    fixed wall (item 34), 3 Gamma a_next + r' = SUM_j (Gamma - c_j) a_j + 6 c a_now - 3 Gamma
-    a_before + r (tests/test_node_clock.py reads it on random rows too)."""
+    Node's own pace (item 36), 3 Gamma a_next + r' = (Gamma - c_i) S_6(a_now)_i + 6 c_i a_now -
+    3 Gamma a_before + r (tests/test_node_clock.py reads it on random rows too)."""
     world = parse_nature_beam_world(chain_world())
     simulation = DetectorLawSimulation(world)
     assert world.families[0].pair == LIGHT_PAIR
@@ -191,8 +191,9 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     assert np.array_equal(a_next[free], expected_next[free])
     assert np.array_equal(r_next[free], expected_remainder[free])
     wall = 3 * NODE_CLOCK
-    paced = simulation._neighbours((NODE_CLOCK - content) * now, simulation.kind_wrap[0])
-    clocked = paced + 6 * content * now - wall * before + remainder
+    # the Node's own pace on its six-neighbour sum (item 36)
+    clocked = (NODE_CLOCK - content) * simulation._neighbours(now, simulation.kind_wrap[0])
+    clocked += 6 * content * now - wall * before + remainder
     assert np.array_equal(a_next, np.floor_divide(clocked, wall))
     assert np.array_equal(r_next, clocked - wall * np.floor_divide(clocked, wall))
 
@@ -242,7 +243,9 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
         assert peak < 2 * UNIT
         assert projection < 40
         simulation.records[live.identity] = live
-        assert simulation.books()["families"]["matter"]["form"] == simulation.record_form(live)
+        assert simulation.books()["families"]["matter"]["form"] == form_json(
+            simulation.record_form(live)
+        )
         # light's pair on the same seed: the checkerboard's stationary alternation, one unit
         light = planted(simulation, 0, now, before, np.zeros((6, 6, 6), dtype=np.int64))
         light.age = 1000
@@ -356,11 +359,13 @@ def test_the_light_record_is_byte_identical_without_the_key():
     OF CHARGE (ALGEBRA.md 9.48; item 35) all three moved once more (the fifth family declared
     in the chain world, one record of it over the board held at the bodies' Nodes at their
     charge 0, the birth lines' `charge`, the snapshot's `charge` entry; the rows bit for bit);
-    read again at this head."""
+    SINCE THE NODE'S OWN PACE (ALGEBRA.md 9.50 (13); item 36) all three moved once more (the
+    pace on the Node's own sum at and beside the bodies, the forms as exact rationals, the
+    birth lines' `pace`, the plain flux); read again at this head."""
     assert run_chain_digests() == {
-        "events": "8bf54019776b5060452972bb1a4c7e578d7948b82a585b484a0fd17a20bb8414",
-        "state": "423e763081805f5458ebbef912e74f5c67ef017705b88b31deeaee542529cea6",
-        "audit": "b4910917eb90c1beb71c54aa57fb9a29dfc33b3e477202a8f3a56b2dcec26ce5",
+        "events": "3d6adf318286f7ab077de0760fffcac96a2bd69a705be08bfff569ba9383dca1",
+        "state": "18c980b36b09cefd0cb470f8635ba09adffdcde0cb56226c841ab42098125fe1",
+        "audit": "18fceec9b9d8e12e478abd84633b08f013658858f3ccb76d17fe61c28b53597e",
     }
 
 
@@ -1086,10 +1091,10 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
     """MUST 1's test: on the chain 6 x 1 x 1 (y and z folded, the Node reading itself twice on
     each) at the pair [2, 3], open on x, the form I of section 3 as the books read it
     (`record_form`, the weights L / num, L the numerators' lcm, here 2) changes by the
-    remainders' term exactly on every interval: num x (I(t) - I(t - 1)) = L x Gamma x SUM_i
-    (a_next - a_before)_i (r - r')_i (the pace Gamma at every Node of the vacuum under the
-    fixed wall, item 34), integers, no tolerance, 60 intervals from random rows; the same on
-    a periodic x."""
+    remainders' term exactly on every interval: num x Gamma x (I(t) - I(t - 1)) = L x SUM_i
+    (a_next - a_before)_i (r - r')_i (the pace Gamma at every Node of the vacuum, the Node's
+    terms weighted by 1 / Gamma, item 36), integers, no tolerance, 60 intervals from random
+    rows; the same on a periodic x."""
     for boundary in (CHAIN, PERIODIC_CHAIN):
         document = massive_world([6, 1, 1], boundary, [2, 3])
         document["age_bound"] = 1000
@@ -1107,7 +1112,8 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
             remainders = int(
                 np.sum((live.now.astype(object) - a_before) * (r - live.remainder.astype(object)))
             )
-            assert 2 * (current - previous) == 2 * NODE_CLOCK * remainders, boundary
+            # the vacuum's pace Gamma at every Node: num Gamma (I(t) - I(t - 1)) = L x the sum
+            assert 2 * NODE_CLOCK * (current - previous) == 2 * remainders, boundary
             previous = current
 
 
@@ -1306,7 +1312,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         pointer = live.pointers[screen]
         original(live, increments)
         if live.clicked and live.identity not in at_click:
-            at_click[live.identity] = (pointer, live.u, live.norm, live.wheel)
+            at_click[live.identity] = (pointer, live.u, live.norm, live.wheel, live.pace)
 
     simulation._ladder_click = spy  # type: ignore[method-assign]
     below: dict[int, int] = {}
@@ -1331,11 +1337,13 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     for gather in gathers:
         identity = gather["record"]
         assert gather["chosen"][0][0] == "screen" and gather["click"] == gather["tick"]
-        pointer, u, norm, wheel = at_click[identity]
+        pointer, u, norm, wheel, pace = at_click[identity]
         births = {line["record"]: line for line in lines if line["event"] == "birth"}
         assert wheel == births[identity]["W"] and lawful_wheel(world, births[identity])
-        assert 0 <= u < wheel and u == gather["u"]
-        assert 2 * wheel * pointer >= (2 * u + 1) * norm and below[identity] == gather["click"] - 1
+        assert 0 <= u < wheel and u == gather["u"] and pace == births[identity]["pace"]
+        # the plain flux against the norm's rational norm / pace (item 36)
+        assert 2 * wheel * pace * pointer >= (2 * u + 1) * norm
+        assert below[identity] == gather["click"] - 1
         # the flight: the train's head over 53 Links at v_g = 0.442, then as
         # much of the passage as the residue asks (the residues spread from
         # the kept remainder, record 1962 (1))

@@ -36,6 +36,7 @@ from __future__ import annotations
 import dataclasses
 import math
 from dataclasses import dataclass
+from fractions import Fraction
 from typing import Any
 
 import numpy as np
@@ -618,9 +619,10 @@ def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
     `period` intervals of its own mode advanced ALONE (the body on its board
     with no other measured event, no set and no emitter, the rule exact on
     integers; constant for the exact mode, wobbling with the seed's
-    rounding transient), the same sum `_excitation_rung` accrues to the
-    running total. The generator writes it as the emitter's `norm`, under
-    the input stamp (a HOST computation, not the law)."""
+    rounding transient), times the centre Node's pace (the body's own units,
+    item 36). The generator writes it as the emitter's `norm`, under the
+    input stamp (a HOST computation, not the law; the count of intervals
+    reads no norm since item 33)."""
     from event_universe.events.detector_law import DetectorLawSimulation
 
     entry = world.measured[number]
@@ -638,13 +640,21 @@ def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
     )
     simulation = DetectorLawSimulation(alone)
     block = simulation.blocks[0]
-    total = 0
+    total = Fraction(0)
     for _ in range(period):
         simulation.step()
         own = block.own
         assert own is not None
         total += simulation.form_share(own, simulation.centre_mask(block))
-    return total
+    # THE BODY'S OWN UNITS (ALGEBRA.md 9.50 (13); BUILD.md section 26 item 36):
+    # the share at the centre Node is read in the world's time by the Node's
+    # pace p = Gamma - c there (an exact rational); p times it is whole, the
+    # norm as the body's own record carries it
+    centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))
+    pace = simulation.node_clock_pair(centre, block.family)[0]
+    norm = total * pace
+    assert norm.denominator == 1, (norm, pace)
+    return int(norm)
 
 
 def composed_largest_eigenvalues(world: NatureBeamWorld) -> dict[int, float]:

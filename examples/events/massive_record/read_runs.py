@@ -337,6 +337,15 @@ def light_clicks(
     }
 
 
+def form_value(form: object) -> float:
+    """The books' form as a number: the pair [numerator, denominator] since the Node's
+    own pace (BUILD.md section 26 item 36; an exact rational, read here as a float for
+    the drift), or the integer of the older records."""
+    if isinstance(form, list):
+        return float(form[0]) / float(form[1])
+    return float(form)  # type: ignore[arg-type]
+
+
 def pump(name: str, window: tuple[int, int]) -> dict[str, float]:
     """The pump's two signatures over a window: light's energy drift per interval (the
     books' `form` of the light family, first differences) and the mode k = 2 pi / 3."""
@@ -344,7 +353,7 @@ def pump(name: str, window: tuple[int, int]) -> dict[str, float]:
     reading: dict[str, float] = {}
     if record is not None:
         forms = [
-            (entry["tick"], entry["families"]["light"]["form"])
+            (entry["tick"], form_value(entry["families"]["light"]["form"]))
             for entry in record.get("audit", [])
             if window[0] <= entry["tick"] <= window[1] and "light" in entry.get("families", {})
         ]

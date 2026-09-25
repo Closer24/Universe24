@@ -26,7 +26,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe.events.detector_law import UNIT, DetectorLawSimulation
+from event_universe.events.detector_law import UNIT, DetectorLawSimulation, form_json
 from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_emitter import NODE_CLOCK, emitter_world, lawful_wheel
 from tests.test_flux_reading import planted
@@ -102,6 +102,7 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
         slowed._advance(live)
         reads = six_reads(rows_now, True)
         for x in range(12):
+            # the Node's own pace on its six-neighbour sum (item 36)
             total = num * pace * reads[x] + 6 * den * QUANTA * int(rows_now[x, 0, 0])
             total -= wall * int(rows_before[x, 0, 0])
             total += int(rows_remainder[x, 0, 0])
@@ -221,17 +222,15 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
         now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
         before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
         live = planted(simulation, family, now, before, np.zeros((60, 1, 1), dtype=np.int64))
-        # (a) the form: Gamma times the plain form plus the content's weight on the kinetic part
+        # (a) the form: the Node's terms weighted by 1 / p_i, the Links plain (item 36)
         pace = [GAMMA - c for c in content]
-        paced = np.array([[[pace[i] * int(before[i, 0, 0])]] for i in range(60)], dtype=np.int64)
-        reads = six_reads(paced, True)
-        expected = 0
+        reads = six_reads(before, True)
+        expected = Fraction(0)
         for i in range(60):
             a, b = int(now[i, 0, 0]), int(before[i, 0, 0])
             weight = 3 * wall * den // num
-            expected += weight * GAMMA * pace[i] * (a * a + b * b)
-            expected -= 2 * weight * pace[i] * content[i] * a * b
-            expected -= wall * pace[i] * a * reads[i]
+            expected += Fraction(weight * (GAMMA * (a * a + b * b) - 2 * content[i] * a * b), pace[i])
+            expected -= wall * a * reads[i]
         assert simulation.conserved_form(live) == expected
         # (b) the share's identity per Node, one interval
         old = [simulation.form_share(live, one_node(60, i)) for i in range(60)]
@@ -240,29 +239,20 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
         a_next, r_new = live.now.copy(), live.remainder.copy()
         new = [simulation.form_share(live, one_node(60, i)) for i in range(60)]
         for i in range(60):
+            # the plain currents through the Node's two Links (unweighted, item 36)
             flux = 0
             for j in ((i - 1) % 60, (i + 1) % 60):
-                flux += (
-                    (GAMMA - content[i])
-                    * (GAMMA - content[j])
-                    * (
-                        int(a_now[i, 0, 0]) * int(a_before[j, 0, 0])
-                        - int(a_before[i, 0, 0]) * int(a_now[j, 0, 0])
-                    )
+                flux += int(a_now[i, 0, 0]) * int(a_before[j, 0, 0]) - int(a_before[i, 0, 0]) * int(
+                    a_now[j, 0, 0]
                 )
-            flux += 4 * (
-                int(a_now[i, 0, 0]) * int(a_before[i, 0, 0])
-                - int(a_before[i, 0, 0]) * int(a_now[i, 0, 0])
-            )  # the folded axes' self-reads carry no flux
+            # the folded axes' self-reads carry no flux; the remainders' term (wall / (num
+            # p_i)) (a_next - a_before)(r - r')
             remainders = Fraction(
                 (int(a_next[i, 0, 0]) - int(a_before[i, 0, 0]))
                 * (int(r_old[i, 0, 0]) - int(r_new[i, 0, 0])),
-                num,
+                num * (GAMMA - content[i]),
             )
-            assert new[i] - old[i] == wall * flux + wall * (GAMMA - content[i]) * remainders, (
-                family,
-                i,
-            )
+            assert new[i] - old[i] == wall * flux + wall * remainders, (family, i)
             assert 0 <= int(r_new[i, 0, 0]) < 3 * den * GAMMA
         # (c) the books' form's remainder identity, exact, over 40 intervals
         previous = simulation.record_form(live)
@@ -271,13 +261,13 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
             r = live.remainder.astype(object)
             simulation._advance(live)
             current = simulation.record_form(live)
-            term = int(
-                np.sum(
-                    (GAMMA - simulation.node_content.astype(object))
-                    * (live.now.astype(object) - a_before)
-                    * (r - live.remainder.astype(object))
+            term = Fraction(0)
+            for i in range(60):
+                term += Fraction(
+                    int(live.now[i, 0, 0] - a_before[i, 0, 0])
+                    * int(r[i, 0, 0] - live.remainder[i, 0, 0]),
+                    GAMMA - int(simulation.node_content[i, 0, 0]),
                 )
-            )
             assert num * (current - previous) == wall * term
             previous = current
         # (d) the inverse map with content: 30 steps back return the state bit for bit
@@ -432,7 +422,7 @@ def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_el
         assert simulation.node_content is clock.now
     assert reached is not None and 30 <= reached <= 70, reached
     books = simulation.books()
-    assert books["families"]["clicks"]["form"] == simulation.record_form(clock)
+    assert books["families"]["clicks"]["form"] == form_json(simulation.record_form(clock))
     assert books["families"]["clicks"]["measured"]["current"] == 0
     state = dict(simulation.snapshot_stream())
     assert state["clock"]["family"] == "clicks" and state["clock"]["rows"] == clock.now.ravel().tolist()

@@ -68,22 +68,18 @@ def charged_chain(
 def rule_step(
     pair: tuple[int, int], effective: list[int], now: np.ndarray, before: np.ndarray, wrap: bool
 ) -> tuple[list[int], list[int]]:
-    """One step of the rule under the fixed wall at the effective content `effective` per Node
-    (ALGEBRA.md 9.35 (2) under item 34, 9.48 (3)): 3 den Gamma a_next + r' = num SUM_j (Gamma -
-    c_j) a_j + 6 den c a_now - 3 den Gamma a_before + r with r = 0; the levels and the
-    remainders, Python integers."""
+    """One step of the rule under the Node's own pace at the effective content `effective`
+    per Node (ALGEBRA.md 9.50 (13), 9.48 (3), 9.51 (2)): 3 den Gamma a_next + r' = (Gamma - c_i)
+    num S_6(a_now)_i + 6 den c_i a_now - 3 den Gamma a_before + r with r = 0, c_i the effective
+    content at the Node alone; the levels and the remainders, Python integers."""
     num, den = pair
     wall = 3 * den * GAMMA
-    paced = np.array(
-        [[[(GAMMA - effective[i]) * int(now[i, 0, 0])]] for i in range(len(effective))],
-        dtype=np.int64,
-    )
-    reads = six_reads(paced, wrap)
+    reads = six_reads(now, wrap)
     levels: list[int] = []
     remainders: list[int] = []
     for i, c in enumerate(effective):
         a, b = int(now[i, 0, 0]), int(before[i, 0, 0])
-        total = num * reads[i] + 6 * den * c * a - wall * b
+        total = num * (GAMMA - c) * reads[i] + 6 * den * c * a - wall * b
         levels.append(total // wall)
         remainders.append(total - wall * (total // wall))
     return levels, remainders
@@ -121,11 +117,7 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
             assert simulation.node_clock_pair((25, 0, 0), MATTER) == (GAMMA - effective[25], GAMMA)
             assert simulation.node_clock_pair((25, 0, 0), NEUTRAL) == (GAMMA - QUANTA, GAMMA)
             assert simulation.node_clock_pair((5, 0, 0), MATTER) == (GAMMA, GAMMA)
-            reads = [effective[24], effective[26], effective[25], effective[25]]
-            reads += [effective[25], effective[25]]
-            assert simulation.wheel_at(MATTER, (25, 0, 0))[1] == wheel_of(
-                PAIR, effective[25], reads, GAMMA
-            )
+            assert simulation.wheel_at(MATTER, (25, 0, 0))[1] == wheel_of(PAIR, effective[25], GAMMA)
             # one step of the rule on each family's record (the engine's `_advance`, the
             # step's own on a record: a massive record in the register is a block's own)
             lit = [c - strength * c for c in slab]
@@ -357,11 +349,11 @@ def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_
         assert not simulation.charge_record.remainder.any()
         rows[strength] = [(live.now.copy(), live.before.copy(), live.remainder.copy()) for live in lives]
         books = simulation.books()
-        assert books["families"][CHARGE_FAMILY_NAME]["form"] == 0
+        assert books["families"][CHARGE_FAMILY_NAME]["form"] == [0, 1]
         state = dict(simulation.snapshot_stream())
         assert state["charge"]["family"] == CHARGE_FAMILY_NAME
         assert state["charge"]["charge_strength"] == strength
-        assert state["charge"]["rows"] == [0] * 60 and state["charge"]["form"] == 0
+        assert state["charge"]["rows"] == [0] * 60 and state["charge"]["form"] == [0, 1]
     for one, seven in zip(rows[1], rows[7], strict=True):
         for x, y in zip(one, seven, strict=True):
             assert np.array_equal(x, y)

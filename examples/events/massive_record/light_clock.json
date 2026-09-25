@@ -6937,7 +6937,7 @@
      "periods": 8
     },
     "period": 94,
-    "norm": 2800876305772757043882515791872,
+    "norm": 2801067135367739595344640,
     "born": {
      "now": [
       630,
@@ -7565,6 +7565,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "eb3439f3c22f99e44ad1d4c7911a41da03fc45bd45ef443cd404da1d305b77d3"
+  "hash": "e57894a0c49f0aeaac1c4d67f0b8b2bed2c9e0cf224d38e223963e5b0c1ef92b"
  }
 }

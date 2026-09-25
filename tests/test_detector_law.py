@@ -392,7 +392,7 @@ def layer_world(receiver: object = None) -> dict:
     return document
 
 
-Seen = dict[int, tuple[int, list[int], list[int], int, int, int]]
+Seen = dict[int, tuple[int, list[int], list[int], int, int, int, int]]
 
 
 def run_layer(document: dict, ticks: int = 900) -> tuple[list[dict], DetectorLawSimulation, Seen]:
@@ -425,6 +425,7 @@ def spy_on(simulation: DetectorLawSimulation, seen: Seen) -> None:
                 live.u,
                 live.norm,
                 live.wheel,
+                live.pace,
             )
 
     simulation._ladder_click = spy  # type: ignore[method-assign]
@@ -438,15 +439,17 @@ def chosen_by_the_rule(
     u: int,
     norm: int,
     wheel: int,
+    pace: int,
 ) -> str:
     """The increment ladder of ALGEBRA.md 9.25 (2) on the click's own numbers: the running
     total C before the interval below the threshold, and the first detector k of the ladder at
-    which 2 W (C + f_1 + ... + f_k) >= (2 u + 1) T, the f the interval's increments."""
+    which 2 W p (C + f_1 + ... + f_k) >= (2 u + 1) T, the f the interval's plain increments and
+    p the norm's pace (T in the body's own units, item 36)."""
     threshold = (2 * u + 1) * norm
-    running = 2 * wheel * total
+    running = 2 * wheel * pace * total
     assert running < threshold
     for detector in ladder:
-        running += 2 * wheel * increments[detector]
+        running += 2 * wheel * pace * increments[detector]
         if running >= threshold:
             return simulation.detector_set[detector]
     raise AssertionError("no detector crossed")
@@ -557,11 +560,11 @@ def test_the_increment_ladder_over_the_named_sets():
         gathers, simulation, seen = planted_layer(order)
         assert len(gathers) == RESIDUES and len({g["record"] for g in gathers}) == RESIDUES
         for gather in gathers:
-            total, increments, ladder, u, norm, wheel = seen[gather["record"]]
+            total, increments, ladder, u, norm, wheel, pace = seen[gather["record"]]
             assert wheel == RESIDUES and u == gather["u"] and gather["record"] not in simulation.records
             assert ladder == [simulation.detector_names.index(name) for name in order]
             assert gather["chosen"][0][0] == chosen_by_the_rule(
-                simulation, total, increments, ladder, u, norm, wheel
+                simulation, total, increments, ladder, u, norm, wheel, pace
             )
         counts[order] = {
             name: sum(1 for g in gathers if g["chosen"][0][0] == name) for name in ("s0", "s1", "s2")
@@ -575,13 +578,13 @@ def test_the_increment_ladder_over_the_named_sets():
     names = [simulation.detector_names.index(name) for name in ("s0", "s1", "s2")]
     for gather in gathers:
         assert gather["ladder"] == ["s0", "s1", "s2"] and gather["record"] not in simulation.records
-        total, increments, ladder, u, norm, wheel = seen[gather["record"]]
+        total, increments, ladder, u, norm, wheel, pace = seen[gather["record"]]
         # the record's wheel the rule's at the body's Node with its content at
-        # the birth (the stock 8 down to 1)
+        # the birth (the stock 8 down to 1); its norm's denominator divides Gamma - content
         assert ladder == names and (3 * EMITTER_PAIR[1] * NODE_CLOCK) % wheel == 0
-        assert 0 <= u < wheel
+        assert 0 <= u < wheel and any((NODE_CLOCK - c) % pace == 0 for c in range(9))
         assert gather["chosen"][0][0] == chosen_by_the_rule(
-            simulation, total, increments, ladder, u, norm, wheel
+            simulation, total, increments, ladder, u, norm, wheel, pace
         )
         assert gather["T"] >= gather["sunk"] >= 0
     # THE REVERSED ORDER under the family of clicks (ALGEBRA.md 9.45; BUILD.md section 26

@@ -62,6 +62,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterator, Sequence
 from dataclasses import dataclass, field
+from fractions import Fraction
 from math import gcd
 
 import numpy as np
@@ -95,6 +96,13 @@ DEFAULT_TRAIN = 32  # periods of the record's clock (DESIGN.md section 6.2)
 # rounding declared at load, not a root at run time; the free neighbour reads
 # g as the receiver's amplitude on that Link, and the receiver books g^2 as
 # the offer arriving by that Port.
+
+
+def form_json(value: Fraction) -> list[int]:
+    """A form's exact rational for the books and the state (GAMEBOARD): the
+    pair [numerator, denominator] in lowest terms (the denominator 1 for a
+    record at one level and for the fields; ALGEBRA.md 9.50 (13))."""
+    return [value.numerator, value.denominator]
 
 
 @dataclass
@@ -175,6 +183,14 @@ class LiveRecord:
     # pointer's unit): what the faces and every set but the receiver took,
     # inside `absorbed` (the completion's measure) and on no pointer.
     escaped: int = 0
+    # THE NORM'S DENOMINATOR (ALGEBRA.md 9.50 (13); BUILD.md section 26 item
+    # 36): the record's conserved form is the exact rational norm / pace (the
+    # Node's terms weighted by 1 / p_i); at one level p times the form is
+    # whole and the pair reduces from (p x form, p), the pace Gamma - c + q
+    # Lambda d at the body's Nodes as written; the ladder reads the plain
+    # flux against it, 2 W pace C against (2 u + 1) norm. 1 for a record
+    # whose norm is set in the form's own units.
+    pace: int = 1
 
 
 @dataclass
@@ -677,11 +693,11 @@ class DetectorLawSimulation:
 
     def wheel_at(self, family: int, node: tuple[int, ...]) -> tuple[int, int]:
         """The remainder's step g and the wheel W of the family's rule at a
-        Node under the fixed wall (ALGEBRA.md 9.22 (4); BUILD.md section 26
-        item 34): the wall 3 den Gamma, the step g the gcd of the total's
-        coefficients (num (Gamma - c_j) over the six reads j, 6 den c at the
-        Node and the wall itself: the remainder moves on the multiples of
-        g), W = wall / g values; the pair's own 3 den / gcd(num, 3 den) in
+        Node under the fixed wall (ALGEBRA.md 9.22 (4), 9.50 (8) and (13);
+        BUILD.md section 26 items 34 and 36): the wall 3 den Gamma, the step
+        g the gcd of the total's coefficients (p_i num on the six reads, 6
+        den c_i at the Node and the wall itself: the remainder moves on the
+        multiples of g), W = wall / g values; the pair's own 3 den / gcd(num, 3 den) in
         the vacuum (2403 on [800, 801]), content-dependent at and beside a
         body; read from the rule, never declared."""
         num = int(self.kind_num[family][node])
@@ -690,9 +706,9 @@ class DetectorLawSimulation:
         wall = 3 * den * gamma
         effective = self._effective_content(family)
         content = int(effective[node])
-        reads = self._neighbour_nodes(node, self.kind_wrap[family])
-        coefficients = [num * (gamma - int(effective[j])) for j in reads]
-        step = gcd(wall, 6 * den * content, *coefficients)
+        # the pace on the Node's own sum (item 36): the coefficients p_i num
+        # on the six reads, 6 den c_i at the Node and the wall
+        step = gcd(wall, 6 * den * content, num * (gamma - content))
         return step, wall // step
 
     def node_clock_pair(self, node: tuple[int, ...], family: int) -> tuple[int, int]:
@@ -1133,17 +1149,16 @@ class DetectorLawSimulation:
             ]
         self.held[number][block.family] -= 1
         self.ledger.held_spent[block.family] += 1
-        # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 item 31): the
-        # born record's T is its conserved form as written on the board, the
-        # engine's own integer with the content at the body's Nodes as the
-        # birth leaves it (one quantum fewer: the clock the record is
-        # advanced under from the next interval): Gamma times the file's
-        # `norm` (the vacuum's form, checked at load) plus M times 3 wall
-        # (den / num) (now - before)^2 over the body's Nodes; the form the
-        # flux booking sums to over the record's passage (the share's
-        # identity, `form_share`)
+        # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 items 31 and
+        # 36; ALGEBRA.md 9.50 (13)): the born record's T is p times its
+        # conserved form as written on the board, the engine's own integer
+        # with the content at the body's Nodes as the birth leaves it (one
+        # quantum fewer: the pace p the record is advanced at from the next
+        # interval): the form the plain flux booking sums to over the
+        # record's passage (the share's identity, `form_share`), read on
+        # the ladder as T / p
         self._hold_clock()
-        live.norm = self.conserved_form(live)
+        live.norm, live.pace = self.born_norm(live)
         self.ledger.transit_released[family] += cost
         block.emitted.append(identity)
         self.records[identity] = live
@@ -1175,8 +1190,12 @@ class DetectorLawSimulation:
                     # the wheel's ingredients, read with it (item 34; GAMEBOARD)
                     "read_clocks": read_clocks,
                     "norm": live.norm,
-                    # the file's vacuum norm (Gamma times it the vacuum's form
-                    # under the clock) and the body's content and clock pair
+                    # the norm's denominator (item 36): the born record's
+                    # form is norm / pace, whole in the body's own units at
+                    # the body's level as written
+                    "pace": live.pace,
+                    # the file's vacuum norm (p times it the born record's T
+                    # in the vacuum) and the body's content and clock pair
                     # as the clicking record was advanced (GAMEBOARD; item 31)
                     "born_norm": emitter.born.norm,
                     "content": centre_content,
@@ -1276,8 +1295,9 @@ class DetectorLawSimulation:
         gamma = 1 if field else self.node_clock
         content = 0 if field else self._effective_content(live.family)
         wall = 3 * den * gamma
-        paced = (gamma - content) * live.before
-        total = num * self._neighbours(paced, self.kind_wrap[live.family])
+        # the same integers as the forward step's: the pace on the Node's own
+        # sum (item 36)
+        total = num * (gamma - content) * self._neighbours(live.before, self.kind_wrap[live.family])
         total += 6 * den * content * live.before
         total -= wall * live.now + live.remainder
         a_before = -np.floor_divide(-total, wall)
@@ -1435,10 +1455,9 @@ class DetectorLawSimulation:
         """THE DETECTORS' INFLOW, PER RECORD, OVER THE PORTS ALONE (ALGEBRA.md
         9.19 (3), 9.25 (2); the model owner's record 1934): this interval's
         one-way inward flux into every detector, 3 G_ij = now_i before_j -
-        before_i now_j where positive per Port, times the family's wall and
-        the pace Gamma - c at the Port's two ends (the form's units under
-        the fixed wall, BUILD.md section 26 item 34),
-        from the record's two levels AFTER the interval's step, by the detector's
+        before_i now_j where positive per Port, times the family's wall (the
+        form's units; the current unweighted, ALGEBRA.md 9.50 (13); BUILD.md
+        section 26 item 36), from the record's two levels AFTER the interval's step, by the detector's
         index. The record's levels are read at the Port pairs only (one
         gather per pair, exact Python integers), never over the board: the
         HOST cost is the Ports, not the Nodes (the two levels are still
@@ -1446,20 +1465,19 @@ class DetectorLawSimulation:
         port_i, port_j, port_detector = self._inflow_ports(live.family)
         if port_i.size == 0:
             return {}
-        # THE CURRENT UNDER THE FIXED WALL (item 34): wall p_i p_j (now_i
-        # before_j - before_i now_j) through the Port ij, p the pace Gamma - c
-        # at each end (the form's units; Gamma^2 times the plain current in
-        # the vacuum)
+        # THE CURRENT IS UNWEIGHTED (ALGEBRA.md 9.50 (9) and (13); BUILD.md
+        # section 26 item 36): wall (now_i before_j - before_i now_j) through
+        # the Port ij, the plain current of the form's units (the pace at
+        # both ends, form (B) of item 34, HISTORY); Born's rule at the
+        # taking end unchanged by one bit
         wall = self.kind_wall(live.family)
-        pace = (self.node_clock - self._effective_content(live.family)).ravel()
         now = live.now.ravel()
         before = live.before.ravel()
         now_i = now[port_i].astype(object)
         before_i = before[port_i].astype(object)
         now_j = now[port_j].astype(object)
         before_j = before[port_j].astype(object)
-        flux = pace[port_i].astype(object) * pace[port_j].astype(object)
-        flux = flux * (now_i * before_j - before_i * now_j)
+        flux = now_i * before_j - before_i * now_j
         offers: dict[int, int] = {}
         for value, detector in zip(flux.tolist(), port_detector.tolist(), strict=True):
             if value > 0:
@@ -1469,8 +1487,8 @@ class DetectorLawSimulation:
     def inward_flux(self, live: LiveRecord, mask: np.ndarray) -> int:
         """The one-way inward flux into the Nodes of `mask` through the Links
         from Nodes outside it (9.19 (3)): 3 G_ij = now_i before_j - before_i
-        now_j where positive, times the family's wall and the pace Gamma - c
-        at both ends (the form's units under the fixed wall, item 34), from the record's two levels
+        now_j where positive, times the family's wall (the form's units; the
+        current unweighted, item 36), from the record's two levels
         after the interval's step (`now`, `before`; the prototype's
         reading, board_algebra.py)."""
         wrap = self.kind_wrap[live.family]
@@ -1478,8 +1496,6 @@ class DetectorLawSimulation:
         level_now, level_before = live.now, live.before
         now = level_now.astype(object)
         before = level_before.astype(object)
-        paces = self.node_clock - self._effective_content(live.family)
-        pace = paces.astype(object)
         total = 0
         for axis in range(3):
             if self.shape[axis] == 1:
@@ -1494,8 +1510,7 @@ class DetectorLawSimulation:
                     continue
                 now_j = self._shift(level_now, axis, -side, wrap=wrap).astype(object)
                 before_j = self._shift(level_before, axis, -side, wrap=wrap).astype(object)
-                pace_j = self._shift(paces, axis, -side, wrap=wrap).astype(object)
-                flux = pace * pace_j * (now * before_j - before * now_j)
+                flux = now * before_j - before * now_j
                 total += int(np.sum(np.where(port & (flux > 0), flux, 0)))
         return total * wall
 
@@ -1546,50 +1561,83 @@ class DetectorLawSimulation:
             norm=norm,
         )
 
-    def conserved_form(self, live: LiveRecord) -> int:
-        """The record's conserved form I (ALGEBRA.md 8.2; under the fixed wall,
-        BUILD.md section 26 item 34) in the form's units, Gamma^2 times 3 I
-        x wall in the vacuum: over the Nodes 3 wall (den_i / num_i) Gamma p_i
-        (now_i^2 + before_i^2) - 6 wall (den_i / num_i) p_i c_i now_i
-        before_i - wall p_i now_i SUM_j p_j before_j, p_i = Gamma - c_i the
-        pace at the Node, the six reads with the family's faces (the folded
-        axes' self-reads); the sum of every Node's share (`form_share`)."""
+    def conserved_form(self, live: LiveRecord) -> Fraction:
+        """The record's conserved form I (ALGEBRA.md 8.2; under the Node's own
+        pace, 9.50 (9) and (13); BUILD.md section 26 item 36) in the form's
+        units, 3 I x wall in the vacuum: over the Nodes [3 wall (den_i /
+        num_i) Gamma (now_i^2 + before_i^2) - 6 wall (den_i / num_i) c_i
+        now_i before_i] / p_i - wall now_i SUM_j before_j, p_i = Gamma - c_i
+        (+ q Lambda d_i) the pace at the Node, the six reads with the
+        family's faces (the folded axes' self-reads); the sum of every Node's
+        share (`form_share`), an exact rational (the Killing energy: each
+        Node's share read in the world's time by its own pace; whole in the
+        body's own units, p times it, at a uniform level, `born_norm`)."""
         return self.form_share(live, np.ones(self.shape, dtype=bool))
 
-    def form_share(self, live: LiveRecord, mask: np.ndarray) -> int:
+    def form_share(self, live: LiveRecord, mask: np.ndarray) -> Fraction:
         """The Nodes' share e of the record's conserved form (ALGEBRA.md 9.17
-        (7) (e), 9.19 (3)) on the Nodes of `mask`, in the form's units under
-        the fixed wall (item 34): a bilinear form of the record's two levels
-        at the Node, its six reads and the clock's pace at the Node and its
-        neighbours (verb B, local); its change over an interval is the sum
-        of the currents through the Node's Links plus the remainders' term,
+        (7) (e), 9.19 (3), 9.50 (9)) on the Nodes of `mask`, in the form's
+        units: a bilinear form of the record's two levels at the Node, its
+        six reads and the pace at the Node (verb B, local), the Node's terms
+        weighted by 1 / p_i; its change over an interval is the sum of the
+        plain currents through the Node's Links plus the remainders' term,
         so a bound mode's share is constant where nothing flows."""
         family = live.family
         wall = self.kind_wall(family)
-        # THE SHARE UNDER THE FIXED WALL (BUILD.md section 26 item 34; the
-        # form's units, Gamma^2 times the plain share in the vacuum): with the
-        # pace p_i = Gamma - c_i at every Node, e_i = 3 wall (den_i / num_i)
-        # Gamma p_i (now_i^2 + before_i^2) - 6 wall (den_i / num_i) p_i c_i
-        # now_i before_i - wall p_i now_i SUM_j p_j before_j; the operator is
-        # symmetric under the weight p_i den_i / num_i, so the sum over the
-        # board is exactly invariant where the clock field stands still,
-        # and the share's change over an interval is the sum of the currents
-        # wall p_i p_j (now_i before_j - before_i now_j) through the Node's
-        # Links plus the remainders' term (wall / num_i) p_i (a_next -
-        # a_before)(r - r'), every weight an integer at the one fixed scale
+        # THE SHARE UNDER THE NODE'S OWN PACE (ALGEBRA.md 9.50 (9) and (13);
+        # BUILD.md section 26 item 36; the form's units, the plain share in
+        # the vacuum): with the pace p_i at every Node, e_i = [3 wall (den_i
+        # / num_i) Gamma (now_i^2 + before_i^2) - 6 wall (den_i / num_i) c_i
+        # now_i before_i] / p_i - wall now_i SUM_j before_j; the step's
+        # operator is symmetric under the weight den_i / (num_i p_i), so the
+        # sum over the board is exactly invariant where the clock field
+        # stands still, and the share's change over an interval is the sum
+        # of the plain currents wall (now_i before_j - before_i now_j)
+        # through the Node's Links plus the remainders' term (wall / (num_i
+        # p_i)) (a_next - a_before)(r - r'), an exact rational per Node (the
+        # weights p_i p_j at one integer scale, form (B) of item 34, HISTORY)
         field = live is self.clock_record or live is self.charge_record
         gamma = 1 if field else self.node_clock
-        levels = 0 if field else self._effective_content(live.family)
-        content = 0 if field else self._effective_content(live.family).astype(object)
+        content = (
+            np.zeros(self.shape, dtype=object)
+            if field
+            else self._effective_content(live.family).astype(object)
+        )
         pace = gamma - content
         weight = (3 * wall * self.kind_den[family] // self.kind_num[family]).astype(object)
         now = live.now.astype(object)
         before = live.before.astype(object)
-        read = self._neighbours((gamma - levels) * live.before, self.kind_wrap[family]).astype(object)
-        share = weight * gamma * pace * (now * now + before * before)
-        share -= 2 * weight * pace * content * now * before
-        share -= wall * pace * now * read
-        return int(np.sum(share[mask]))
+        read = self._neighbours(live.before, self.kind_wrap[family]).astype(object)
+        node = weight * (gamma * (now * now + before * before) - 2 * content * now * before)
+        links = wall * now * read
+        return self._weighted_sum(node, pace, mask) - int(np.sum(links[mask]))
+
+    @staticmethod
+    def _weighted_sum(node: np.ndarray, pace: np.ndarray, mask: np.ndarray) -> Fraction:
+        """SUM_i node_i / pace_i over the Nodes of `mask`, exact (one Fraction
+        per distinct pace: the paces present are few, the body's and the
+        field's levels)."""
+        total = Fraction(0)
+        chosen = pace[mask]
+        values = node[mask]
+        for value in set(int(v) for v in chosen.tolist()):
+            total += Fraction(int(np.sum(values[chosen == value])), value)
+        return total
+
+    def born_norm(self, live: LiveRecord) -> tuple[int, int]:
+        """THE NORM AS THE EXACT RATIONAL (ALGEBRA.md 9.46 (1), 9.50 (9) and
+        (13); BUILD.md section 26 item 36): the born record's conserved form
+        Q, the Node's terms weighted by 1 / p_i, as the pair (numerator,
+        denominator) in lowest terms, the record's `norm` and `pace`; the
+        ladder reads the plain flux C against Q, 2 W pace C against (2 u +
+        1) norm, in integers. For a record written at one level (a body's
+        Nodes at rest, the content and the charge uniform there) p Q is
+        whole, the integer T of 9.46 (1) in the body's own units, and the
+        pair reduces from (p Q, p); a record written across levels (a moving
+        body's Nodes as the hold leaves them) has a rational Q, its world
+        energy, and the same reading."""
+        form = self.conserved_form(live)
+        return form.numerator, form.denominator
 
     def _half_space(self, origin: Address3, vector: Vector) -> np.ndarray:
         """The Nodes on the arm's side of the lamp: (node - origin) . vector at
@@ -1647,9 +1695,16 @@ class DetectorLawSimulation:
         gamma = 1 if field else self.node_clock
         content = 0 if field else self._effective_content(live.family)
         wall = 3 * den * gamma
-        paced = (gamma - content) * live.now
-        neighbours = self._neighbours(paced, self.kind_wrap[live.family])
-        total = num * neighbours
+        # THE NODE'S OWN PACE (the model owner's ruling of record 2003, "take
+        # only from the current Node, not from the neighbours"; ALGEBRA.md
+        # 9.50 (13); BUILD.md section 26 item 36): the pace p_i = Gamma - c_i
+        # (+ q Lambda d_i) multiplies the Node's own six-neighbour sum, the
+        # reads plain as S_6 reads them: 3 den Gamma a_next + r' = p_i num
+        # S_6(a_now)_i + 6 den c_i a_now - 3 den Gamma a_before + r; the
+        # Node steps the vacuum's rule at its own pace (the pace on each
+        # read's far end, form (B) of item 34, HISTORY)
+        neighbours = self._neighbours(live.now, self.kind_wrap[live.family])
+        total = num * (gamma - content) * neighbours
         total += 6 * den * content * live.now
         total -= wall * live.before
         total += live.remainder
@@ -1723,10 +1778,12 @@ class DetectorLawSimulation:
         if live.clicked or live.norm <= 0:
             return
         ladder = self._ladder_of(live)
+        # the norm as the exact rational norm / pace (item 36): the plain
+        # flux C against it, 2 W pace C against (2 u + 1) norm
         threshold = (2 * live.u + 1) * live.norm
-        running = 2 * live.wheel * live.total
+        running = 2 * live.wheel * live.pace * live.total
         for detector in ladder:
-            running += 2 * live.wheel * increments[detector]
+            running += 2 * live.wheel * live.pace * increments[detector]
             live.total += increments[detector]
             if running >= threshold:
                 live.first_rung[detector] = self.tick
@@ -1739,7 +1796,7 @@ class DetectorLawSimulation:
                 self.dead.append(live.identity)
                 return
 
-    def record_form(self, live: LiveRecord) -> int:
+    def record_form(self, live: LiveRecord) -> Fraction:
         """The conserved form I of the record (MASSIVE_RECORD.md section 3, a
         GAMEBOARD diagnostic read by the books): the invariant of the rule
         written as a_next + a_before = D^-1 (S_6 / 3) with D_x = den_x /
@@ -1761,12 +1818,12 @@ class DetectorLawSimulation:
         scale = np.floor_divide(common, num)
         now = live.now.astype(object)
         before = live.before.astype(object)
-        # THE WEIGHTS UNDER THE FIXED WALL (BUILD.md section 26 item 34), the
-        # form times Gamma^2 in the vacuum: with the pace p_i = Gamma - c_i,
-        # 3 den_i (L / num_i) Gamma p_i on the squares, 6 den_i (L / num_i)
-        # p_i c_i on now_i before_i, L p_i p_j on the Link ij; every weight an
-        # integer at the one scale 3 Gamma L; the family of clicks' own form
-        # plain (its pace 1)
+        # THE WEIGHTS UNDER THE NODE'S OWN PACE (ALGEBRA.md 9.50 (9) and
+        # (13); BUILD.md section 26 item 36), the plain form in the vacuum:
+        # with the pace p_i, [3 den_i (L / num_i) Gamma (a^2 + b^2) - 6 den_i
+        # (L / num_i) c_i a b] / p_i at the Node, L on the Link ij, plain; an
+        # exact rational (the weights p_i p_j at one integer scale, item 34,
+        # HISTORY); the family of clicks' own form plain (its pace 1)
         field = live is self.clock_record or live is self.charge_record
         gamma = 1 if field else self.node_clock
         content = (
@@ -1776,8 +1833,8 @@ class DetectorLawSimulation:
         )
         pace = gamma - content
         weight = (3 * den * scale).astype(object)
-        squares = int(np.sum(weight * gamma * pace * (now * now + before * before)))
-        squares -= int(np.sum(2 * weight * pace * content * now * before))
+        node = weight * (gamma * (now * now + before * before) - 2 * content * now * before)
+        squares = self._weighted_sum(node, pace, np.ones(self.shape, dtype=bool))
         links = 0
         wrap = self.kind_wrap[live.family]
         for axis in range(3):
@@ -1789,8 +1846,7 @@ class DetectorLawSimulation:
             if wrap[axis] or self.shape[axis] == 1:
                 now_next = np.roll(now, -1, axis=axis)
                 before_next = np.roll(before, -1, axis=axis)
-                pace_next = np.roll(pace, -1, axis=axis)
-                links += int(np.sum(common * pace * pace_next * (now * before_next + now_next * before)))
+                links += int(np.sum(common * (now * before_next + now_next * before)))
             else:
                 lower = [slice(None)] * 3
                 upper = [slice(None)] * 3
@@ -1798,11 +1854,9 @@ class DetectorLawSimulation:
                 upper[axis] = slice(1, None)
                 a_now = now[tuple(lower)]
                 a_before = before[tuple(lower)]
-                a_pace = pace[tuple(lower)]
                 b_now = now[tuple(upper)]
                 b_before = before[tuple(upper)]
-                b_pace = pace[tuple(upper)]
-                links += int(np.sum(common * a_pace * b_pace * (a_now * b_before + b_now * a_before)))
+                links += int(np.sum(common * (a_now * b_before + b_now * a_before)))
         return squares - links
 
     def _release(self, live: LiveRecord) -> None:
@@ -2068,14 +2122,22 @@ class DetectorLawSimulation:
                 # The conserved form I summed over the family's live records
                 # (massive-record-v1): a GAMEBOARD diagnostic, written under
                 # the key alone.
-                lines["form"] = sum(
-                    self.record_form(live) for live in self.records.values() if live.family == index
-                ) + (
-                    self.record_form(self.clock_record)
-                    if index == self.clock_family
-                    else self.record_form(self.charge_record)
-                    if index == self.charge_family
-                    else 0
+                lines["form"] = form_json(
+                    sum(
+                        (
+                            self.record_form(live)
+                            for live in self.records.values()
+                            if live.family == index
+                        ),
+                        Fraction(0),
+                    )
+                    + (
+                        self.record_form(self.clock_record)
+                        if index == self.clock_family
+                        else self.record_form(self.charge_record)
+                        if index == self.charge_family
+                        else Fraction(0)
+                    )
                 )
             families[family.name] = lines
         return {
@@ -2145,7 +2207,7 @@ class DetectorLawSimulation:
                 "family": self.families[self.clock_family].name,
                 "node_clock": self.node_clock,
                 "rows": self.clock_record.now.ravel().tolist(),
-                "form": self.record_form(self.clock_record),
+                "form": form_json(self.record_form(self.clock_record)),
             },
         )
         # the family of charge's level over the board (ALGEBRA.md 9.48; item
@@ -2156,7 +2218,7 @@ class DetectorLawSimulation:
                 "family": self.families[self.charge_family].name,
                 "charge_strength": self.charge_strength,
                 "rows": self.charge_record.now.ravel().tolist(),
-                "form": self.record_form(self.charge_record),
+                "form": form_json(self.record_form(self.charge_record)),
             },
         )
         if self.world.massive_record:
@@ -2179,7 +2241,7 @@ class DetectorLawSimulation:
                         "momentum": list(block.momentum),
                         "emitted": list(block.emitted),
                         "rows": None if block.own is None else block.own.now.ravel().tolist(),
-                        "form": None if block.own is None else self.record_form(block.own),
+                        "form": None if block.own is None else form_json(self.record_form(block.own)),
                     }
                     for block in self.blocks
                 ],
@@ -2203,7 +2265,7 @@ class DetectorLawSimulation:
                     "norm": live.norm,
                     "absorbed": live.absorbed,
                     "pointers": dict(zip(self.detector_names, live.pointers, strict=True)),
-                    **({"form": self.record_form(live)} if self.world.massive_record else {}),
+                    **({"form": form_json(self.record_form(live))} if self.world.massive_record else {}),
                 }
                 for live in self.records.values()
             ],

@@ -122,6 +122,7 @@ def run(
                     live.u,
                     live.norm,
                     live.wheel,
+                    live.pace,
                 )
 
         simulation._ladder_click = spy  # type: ignore[method-assign]
@@ -186,11 +187,13 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
             assert line["tick"] == line["click"] and line["click"] - line["birth"] >= 91 - head
             assert "ladder" not in line and line["content"] == 1
             assert line["record"] not in simulation.records and line["clock_source"] == "interval"
-            pointers, ladder, u, norm, wheel = seen[line["record"]]
+            pointers, ladder, u, norm, wheel, pace = seen[line["record"]]
             assert ladder == [screen] and u == line["u"] and wheel == births[line["record"]]["W"]
             assert lawful_wheel(simulation.world, births[line["record"]])
-            # the cumulative rule on the click's own pointers (ALGEBRA.md 9.19 (3) (b))
-            assert 2 * wheel * pointers[screen] >= (2 * u + 1) * norm
+            # the cumulative rule on the click's own pointers (ALGEBRA.md 9.19 (3) (b)), the
+            # plain flux against the norm's rational norm / pace (item 36)
+            assert pace == births[line["record"]]["pace"]
+            assert 2 * wheel * pace * pointers[screen] >= (2 * u + 1) * norm
             # the detectors off the ladder: booked, never chosen, counted in T
             assert pointers[beside] > 0 and pointers[own] >= 0
             assert line["T"] == sum(pointers) == pointers[screen] + pointers[beside] + pointers[own]
@@ -258,7 +261,10 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     # A's own detector books nothing of the outgoing train (the outward flux is negative);
     # what it books is the tapers' dispersion returned off the mirror at x = 0, below a
     # hundredth of the norm
-    assert all(seen[g["record"]][0][own_detector] * 100 < seen[g["record"]][3] for g in found)
+    assert all(
+        seen[g["record"]][0][own_detector] * seen[g["record"]][5] * 100 < seen[g["record"]][3]
+        for g in found
+    )
     births = {line["record"]: line for line in lines if line["event"] == "birth"}
     assert all(seen[g["record"]][4] == births[g["record"]]["W"] for g in found)
     assert all(lawful_wheel(simulation.world, births[g["record"]]) for g in found)

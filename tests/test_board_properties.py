@@ -331,30 +331,31 @@ def form_I(
     before: np.ndarray,
     content: np.ndarray | None = None,
 ) -> Fraction:
-    # the form under the fixed wall (BUILD.md section 26 item 34) at the scale of the plain
-    # form (the engine's integer over 3 Gamma^2 L): with the pace p_i = Gamma - c_i, the
-    # weights den p_i / (Gamma num) on the squares, 2 den p_i c_i / (Gamma^2 num) on now x
-    # before, and p_i p_j / (3 Gamma^2) on the Link ij (den / num, 0 and 1 / 3 in the vacuum)
+    # the form under the Node's own pace (ALGEBRA.md 9.50 (9) and (13); BUILD.md section 26
+    # item 36) at the scale of the plain form (the engine's rational over 3 L): with the pace
+    # p_i = Gamma - c_i, the weights den Gamma / (num p_i) on the squares, 2 den c_i / (num
+    # p_i) on now x before, and 1 / 3 on every Link, plain (den / num, 0 and 1 / 3 in the
+    # vacuum; the Link weights p_i p_j of item 34, HISTORY)
     gamma = simulation.node_clock
     if content is None:
         content = simulation.node_content
     num = simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
     pace = (gamma - content).astype(object)
-    read = reads_of(simulation, family)((gamma - content) * before).astype(object)
+    read = reads_of(simulation, family)(before).astype(object)
     now_o, before_o = now.astype(object), before.astype(object)
     total = Fraction(0)
     for node in zip(*np.nonzero(now_o | before_o | read), strict=True):
         p = int(pace[node])
-        total += Fraction(int(den[node]) * p, gamma * int(num[node])) * (
+        total += Fraction(int(den[node]) * gamma, int(num[node]) * p) * (
             int(now_o[node]) ** 2 + int(before_o[node]) ** 2
         )
         total -= (
-            Fraction(2 * int(den[node]) * p * int(content[node]), gamma * gamma * int(num[node]))
+            Fraction(2 * int(den[node]) * int(content[node]), int(num[node]) * p)
             * int(now_o[node])
             * int(before_o[node])
         )
-        total -= Fraction(p, 3 * gamma * gamma) * int(now_o[node]) * int(read[node])
+        total -= Fraction(1, 3) * int(now_o[node]) * int(read[node])
     return total
 
 
@@ -400,17 +401,16 @@ def test_conservation_between_clicks():
             prev_now, prev_before, prev_remainder = states[t - 1][identity]
             value = form_I(simulation, family, now, before, contents[t - 1])
             previous = form_I(simulation, family, prev_now, prev_before, contents[t - 1])
-            # the remainder term of 8.2 over the step t - 1 -> t under the fixed wall (item
-            # 34): p_i (a_next - a_before) (r - r') / (3 Gamma^2 num) per Node, p_i the pace
+            # the remainder term of 8.2 over the step t - 1 -> t under the Node's own pace
+            # (item 36): (a_next - a_before) (r - r') / (3 num p_i) per Node, p_i the pace
             drift = Fraction(0)
             for node in zip(
                 *np.nonzero((now != prev_before) | (remainder != prev_remainder)), strict=True
             ):
                 drift += Fraction(
-                    (gamma - int(contents[t - 1][node])) * (int(now[node]) - int(prev_before[node]))
-                ) * Fraction(
-                    int(prev_remainder[node]) - int(remainder[node]),
-                    3 * gamma * gamma * int(num[node]),
+                    (int(now[node]) - int(prev_before[node]))
+                    * (int(prev_remainder[node]) - int(remainder[node])),
+                    3 * int(num[node]) * (gamma - int(contents[t - 1][node])),
                 )
             # the step's identity, exact, with the level in force for the step
             assert value - previous == drift, (identity, t)
@@ -438,9 +438,9 @@ def exchange_of(
     new: np.ndarray,
 ) -> Fraction:
     """The change of the form I of `form_I` when the family of clicks' levels move from `old`
-    to `new` (ALGEBRA.md 9.45 (5) under the fixed wall, item 34): at every Node den (p' - p)
-    (a^2 + b^2) / (Gamma num) - 2 den (p' c' - p c) a b / (Gamma^2 num), and on every Link (p'_i
-    p'_j - p_i p_j)(a_i b_j + a_j b_i) / (3 Gamma^2), p the pace Gamma - c; each Link once."""
+    to `new` (ALGEBRA.md 9.45 (5) under the Node's own pace, item 36): at every Node den Gamma
+    (1 / p' - 1 / p) (a^2 + b^2) / num - 2 den (c' / p' - c / p) a b / num, p the pace Gamma -
+    c; nothing on the Links (their weights plain; the Link weights of item 34, HISTORY)."""
     gamma = simulation.node_clock
     num = simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
@@ -449,32 +449,17 @@ def exchange_of(
     a, b = now.astype(object), before.astype(object)
     total = Fraction(0)
     for node in zip(*np.nonzero(a | b), strict=True):
-        total += Fraction(
-            int(den[node]) * (int(p_new[node]) - int(p_old[node])), gamma * int(num[node])
-        ) * (int(a[node]) ** 2 + int(b[node]) ** 2)
-        total -= Fraction(
-            2 * int(den[node]) * (int(p_new[node]) * int(new[node]) - int(p_old[node]) * int(old[node])),
-            gamma * gamma * int(num[node]),
-        ) * (int(a[node]) * int(b[node]))
-    wrap = simulation.kind_wrap[family]
-    for axis in range(3):
-        if wrap[axis] or simulation.shape[axis] == 1:
-            pairs = (
-                (a, np.roll(a, -1, axis=axis), b, np.roll(b, -1, axis=axis)),
-                (p_old, np.roll(p_old, -1, axis=axis), p_new, np.roll(p_new, -1, axis=axis)),
-            )
-        else:
-            lower = [slice(None)] * 3
-            upper = [slice(None)] * 3
-            lower[axis] = slice(None, -1)
-            upper[axis] = slice(1, None)
-            pairs = (
-                (a[tuple(lower)], a[tuple(upper)], b[tuple(lower)], b[tuple(upper)]),
-                (p_old[tuple(lower)], p_old[tuple(upper)], p_new[tuple(lower)], p_new[tuple(upper)]),
-            )
-        (a_i, a_j, b_i, b_j), (po_i, po_j, pn_i, pn_j) = pairs
-        weights = pn_i * pn_j - po_i * po_j
-        total -= Fraction(int(np.sum(weights * (a_i * b_j + a_j * b_i))), 3 * gamma * gamma)
+        squares = int(a[node]) ** 2 + int(b[node]) ** 2
+        total += (
+            Fraction(int(den[node]) * gamma, int(num[node]))
+            * squares
+            * (Fraction(1, int(p_new[node])) - Fraction(1, int(p_old[node])))
+        )
+        total -= (
+            Fraction(2 * int(den[node]), int(num[node]))
+            * (int(a[node]) * int(b[node]))
+            * (Fraction(int(new[node]), int(p_new[node])) - Fraction(int(old[node]), int(p_old[node])))
+        )
     return total
 
 

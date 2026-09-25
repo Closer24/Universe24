@@ -41,6 +41,7 @@ import json
 import math
 import sys
 from dataclasses import replace
+from fractions import Fraction
 from pathlib import Path
 
 import numpy as np
@@ -69,46 +70,47 @@ CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0}
 CHARGE_STRENGTH = 1
 
 
-def wheel_of(pair, content: int, reads, gamma: int = NODE_CLOCK) -> int:
-    """The wheel W of a rule at a Node under the fixed wall (ALGEBRA.md 9.22 (4); BUILD.md
-    section 26 item 34; the engine's `wheel_at`): 3 den Gamma over the gcd of the total's
-    coefficients, num (Gamma - c_j) over the six reads j, 6 den c at the Node and the wall;
-    the pair's own 3 den / gcd(num, 3 den) in the vacuum (2403 on [800, 801], 700 on [801,
-    700])."""
+def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
+    """The wheel W of a rule at a Node under the Node's own pace (ALGEBRA.md 9.22 (4), 9.50
+    (8) and (13); BUILD.md section 26 items 34 and 36; the engine's `wheel_at`): 3 den Gamma
+    over the gcd of the total's coefficients, p num on the six reads (p = Gamma - c the pace at
+    the Node), 6 den c at the Node and the wall; the pair's own 3 den / gcd(num, 3 den) in the
+    vacuum (2403 on [800, 801], 700 on [801, 700])."""
     num, den = int(pair[0]), int(pair[1])
     wall = 3 * den * gamma
-    return wall // math.gcd(wall, 6 * den * content, *(num * (gamma - c) for c in reads))
+    return wall // math.gcd(wall, 6 * den * content, num * (gamma - content))
 
 
 def lawful_wheel(world, line: dict) -> bool:
     """A birth line's W is the rule's at the emitting body's read Node with the family of
-    clicks' levels the line carries (`read_clocks`: the level at the read Node and at its
-    six reads as the clicking record was advanced), its u below it."""
+    clicks' level the line carries (`read_clocks`: the level at the read Node, then at its six
+    reads, GAMEBOARD; the rule reads the Node's own level alone, item 36), its u below it."""
     block = world.measured[line["measured"]].block
-    at_node, reads = line["read_clocks"]
-    return line["W"] == wheel_of(block.pair, at_node, reads) and 0 <= line["u"] < line["W"]
+    at_node, _reads = line["read_clocks"]
+    return line["W"] == wheel_of(block.pair, at_node) and 0 <= line["u"] < line["W"]
 
 
-def wall_form(simulation, family: int, now, before, content=None) -> int:
-    """A record's conserved form under the fixed wall (BUILD.md section 26 item 34) from its
-    two levels and the family of clicks' levels `content` (the engine's array when None), in
-    the engine's units (the scale 3 Gamma L, L the numerators' lcm): 3 L (den / num) Gamma
-    p_i (a^2 + b^2) - 6 L (den / num) p_i c_i a b at the Nodes and L p_i p_j (a_i b_j + a_j
-    b_i) on the Links, p_i = Gamma - c_i the pace; Python integers over the six reads."""
+def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
+    """A record's conserved form under the Node's own pace (ALGEBRA.md 9.50 (9) and (13);
+    BUILD.md section 26 item 36) from its two levels and the family of clicks' levels
+    `content` (the engine's array when None), in the engine's units (the scale 3 L, L the
+    numerators' lcm): [3 L (den / num) Gamma (a^2 + b^2) - 6 L (den / num) c_i a b] / p_i at
+    the Nodes, p_i = Gamma - c_i the pace, and L (a_i b_j + a_j b_i) on the Links, plain; an
+    exact rational over the six reads (the pace at both ends of a Link, item 34, HISTORY)."""
     gamma = simulation.node_clock
     levels = simulation.node_content if content is None else content
-    pace = (gamma - levels).astype(object)
     num = simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
     wall = simulation.kind_wall(family)
     a = now.astype(object)
     b = before.astype(object)
-    read = simulation._neighbours((gamma - levels) * before, simulation.kind_wrap[family])
+    read = simulation._neighbours(before, simulation.kind_wrap[family]).astype(object)
     weight = 3 * wall * den // num
-    total = weight * gamma * pace * (a * a + b * b)
-    total = total - 2 * weight * pace * levels.astype(object) * a * b
-    total = total - wall * pace * a * read.astype(object)
-    return int(np.sum(total))
+    node = weight * (gamma * (a * a + b * b) - 2 * levels.astype(object) * a * b)
+    total = Fraction(0)
+    for index in zip(*np.nonzero(node), strict=True):
+        total += Fraction(int(node[index]), gamma - int(levels[index]))
+    return total - int(np.sum(wall * a * read))
 
 
 def massive_generator():
@@ -279,7 +281,10 @@ def test_m_excitations_give_m_births_at_their_rungs_and_the_quanta_are_conserved
         action += share
         whole = solitary.form_share(body.own, np.ones(solitary.shape, dtype=bool))
         assert whole == solitary.conserved_form(body.own)
-    assert action == norm
+    # the file's norm in the body's own units: the centre Node's pace times the action
+    # (item 36; the pace Gamma - stock at the solitary body's centre)
+    pace = solitary.node_clock_pair((21, 0, 0), body.family)[0]
+    assert pace == NODE_CLOCK - 4 and pace * action == norm
     # the share's wobble from the seed's rounding: 2.1 parts in a thousand on the
     # 32-Node well at 2^20 (COMPUTATION; one part in a thousand on the side-12 well)
     assert 1000 * (max(shares) - min(shares)) < 3 * (action // emitter["period"])
@@ -421,14 +426,18 @@ def test_the_born_record_is_written_once_and_the_law_advances_it():
             assert list(born.now[5:37, 0, 0]) == train["now"]
             assert list(born.before[5:37, 0, 0]) == train["before"]
             assert not np.any(born.now[~block.mask]) and not np.any(born.before[~block.mask])
-            # THE NORM UNDER THE FIXED WALL (BUILD.md section 26 item 34): T the
-            # record's conserved form as written on the board, the engine's exact
-            # integer with the family of clicks' levels as the birth leaves them
-            # (the pace Gamma - c at every Node and read; Gamma^2 times the file's
-            # vacuum norm where the field is 0), read again here in Python integers
+            # THE NORM UNDER THE NODE'S OWN PACE (BUILD.md section 26 item 36): the
+            # record's conserved form as written on the board, the exact rational norm /
+            # pace in lowest terms (the Node's terms weighted by 1 / p, p the pace at the
+            # body's Nodes as the birth leaves them, Gamma - content after the birth; p
+            # times the form whole, the pair reducing from (p x form, p)), read again here
             assert birth["born_norm"] == train["norm"] > 0 and birth["content"] == 1
-            assert born.norm == birth["norm"] == simulation.conserved_form(born) > 0
-            assert born.norm == wall_form(simulation, 0, born.now, born.before)
+            pace = NODE_CLOCK - (birth["content"] - 1)
+            assert born.pace == birth["pace"] and pace % born.pace == 0
+            form = Fraction(born.norm, born.pace)
+            assert form == simulation.conserved_form(born) > 0 and born.norm == birth["norm"]
+            assert form == wall_form(simulation, 0, born.now, born.before)
+            assert (form * pace).denominator == 1
             assert birth["nodes"] == 32 and birth["excitation"] == 1 and birth["train"] == 0
             assert born.u == birth["u"] and born.wheel == birth["W"]
             assert lawful_wheel(simulation.world, birth)
