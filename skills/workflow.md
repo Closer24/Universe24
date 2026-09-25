@@ -525,6 +525,35 @@ Every report, proposal, review finding or question a role sends to the Boss, and
 
 Every message between roles, to the Boss and to the owner, is written in short sentences, one idea each, with the central ideas first. No long paragraphs. Use short lists where there are several items. Put a question, if there is one, on its own line at the end, asked plainly. Evidence and numbers follow the ideas in the same short form. This covers every report, answer and handoff, including the six lines above; the repository's documents keep their own form.
 
+## The method of work: from the owner's word to the build (the model owner, 2026-09-25, record 2009)
+
+The owner's word: "put the method of work in the skill". This is the method as it ran on 2026-09-25 (records 1993 to 2008).
+
+The chain, one step each:
+
+1. The owner may speak to any role. Whoever hears him relays his words verbatim to the Boss.
+2. The Boss records the word in the day's log, next number. A decision also gets one line in Highlights 5.4.
+3. The Boss sends the same text to the mathematician and to Nature24. Both work from one text.
+4. The mathematician writes the section in docs/ALGEBRA.md: proved, computed, the three tests stated.
+5. Nature24 builds on the section at once. Every commit names its section (record 1987). A piece no section states is listed for the mathematician.
+6. The mathematician gates the code. The merge waits on the rule of three (record 1940), and the owner is told in plain words.
+
+Pace:
+
+- Now, not later (record 2003). The sections are written in parallel. Each item is built as soon as its section lands. No long queue.
+- A doubt of the owner ("that is strange") goes back to the mathematician at once. A section may be reversed, as 9.50 (13) reversed 9.50 (12).
+- The Boss may test a proposal with a scratch host check before the section. It is labelled a diagnostic, never a result.
+- No run against pins until the owner says the engine is stable (record 1924).
+
+The physics the method keeps:
+
+- The law is written for the Node only. A body is the support of a mode of the Node's rule. The click is the one write at a body's scale (record 2008; ALGEBRA.md 9.53).
+- A host form (a body on one Node, the seat's hop, the tick as a count, the energy count) stands only by its equivalence gate against the law's own run on the GameBoard.
+- The Node reads its clock from its own level alone, never from its neighbours (record 2003).
+- Look in the algebra for the generic solution. What changes in time enters the numerator; the wall stays constant (records 1996 and 1997).
+- The backward run is exact everywhere. A lost inverse is a defect, not a choice (record 1994).
+- No conservation is decreed. It follows from the rule at the Node or it does not exist (record 1997).
+
 ## How the team works now (the model owner, 2026-09-21, record 309)
 
 The owner's instruction: the Skills describe the team as he builds it now. The
