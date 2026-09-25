@@ -3331,6 +3331,107 @@ would have found no cell.
    in the body's own units. THE NAME NODE (the model
    owner's record 1970): every new text of this item says Node.
 
+37. THE BODY RECORD: A BODY HELD AS ONE NODE WITH A SHAPE (the model
+   owner's word of 2026-09-25 in the mathematician's session, "already
+   now, because it is generic; a body holds real parameters, and then it
+   is a special Node in the simulator; it can be checked that it is
+   equivalent"; ALGEBRA.md 9.46 (1) to (3) and (9), 9.50 (8)'s line for
+   its step under the constant wall, 9.49 (3) for its gate; the
+   mathematician's two answers of records 1991 and 1992; built on
+   `emitter-click` after item 36, held by the rule of three; a host form
+   under its own identity, the world key `body_record`, off by default).
+   THE FORM: under `body_record` every seeded block is held as its stored
+   profile (the generator's integers, read and never stepped: the shape),
+   its clock pair [num_c, den_c] (the block's `clock`, the generator's
+   rational for the bound mode's 2 cos omega under the stamp), its norm T,
+   its stock, its content M, its charge Q, its residue u and ONE ROTATION
+   (a, b, r): two integer levels and one remainder, the load's one write
+   a = b = the profile's value at the body's centre Node (the lattice
+   body's standing start, both levels the profile) and r = 0; its own rows
+   are NOT on the GameBoard (9.46 (3) (d): no passing record ever read
+   them, the step being linear per family). ITS STEP: the two-term rule
+   at the pace of its Nodes (the Node's own pace of item 36, the charge
+   included): den_c Gamma a' + r' = K a - den_c Gamma b + r with K = num_c
+   p + 2 den_c (Gamma - p), p = Gamma - c + q Lambda d at the seat, 0 <=
+   r' < den_c Gamma; at p = Gamma the plain rule times Gamma; one division
+   per interval per body in place of the six-neighbour step over its
+   Nodes (the cost linear in the bodies, 9.46 (5)); its inverse with the
+   same integers, exact (9.50 (8)). ITS WHEEL: den_c Gamma over the gcd of
+   K and the wall; ITS RESIDUE its own remainder on that wheel, read at the
+   click at the seat (the centre Node, the read Node on the birth line);
+   ITS TICK the count of intervals against (2 u + 1) P / (2 W) as the
+   lattice body's (item 33; the mathematician's e = den_c (a^2 + b^2) -
+   num_c a b and T = P e cancel in the count); ITS CYCLES the rotation's
+   crossings from at most 0 to above 0 (the block's count, the click
+   lines with the body's identity); ITS INVARIANT e = den_c Gamma (a^2 +
+   b^2) - K a b, the two-term rule's own, on the state's block entry as
+   its form beside the rotation [a, b, r] (GAMEBOARD). THE INTERFACES
+   unchanged in form (9.46 (3)): the giving end sets the file's born rows
+   on the body's Nodes at the tick and lowers the stock and the content;
+   the taking end is the GameBoard's gather at the block's detector, M
+   rising with the click and the pace with it (K follows at the next
+   step); the family of clicks and the family of charge held at M and Q
+   at its Nodes as before; the pair region on its Nodes stays on the
+   GameBoard. THE LOADER: `body_record` true or false (another value
+   refused), refused without `massive_record`, refused on a seeded block
+   without its `clock` and profile, naming the block; the generators
+   build with the key off (the profile and the clock pair are written
+   first; a test sets the key and renews the stamp). THE EQUIVALENCE (the
+   gate, 9.46 (4), 9.49 (3); COMPUTATION on the engine): (ii) THE
+   ROTATION: on a solitary cube (the side-6 well [800, 801] in [800, 809]
+   at 2^20, seeded on the mode, on a periodic 16^3 board) the body
+   record's rule holds exactly at every interval and its 2 cos omega'
+   read from three consecutive levels above half the amplitude is K /
+   (den_c Gamma) within 2 x 10^-6 (the remainder over the level), the
+   lattice body's at its centre Node within 10^-4 of the same rational
+   (the median 6 x 10^-6, the worst 4.5 x 10^-5 over 400 intervals: the
+   profile's rounding, no bit-equal rational, 9.46 (9) (a)); (iv) the
+   block's count over 400 intervals the same on both forms within one;
+   (v) the family of clicks' field identical bit for bit at every interval
+   (nothing born, the same hold); the invariant's jitter below 10^-4 (2
+   x 10^-5 read). (i) THE TICKS on the emitter chain (the stock 600,
+   both forms): the mean cycle length within 5 percent of the fair
+   draw's (P + 1) / 2 and of each other (47.7 and 48.2 against 47.0, the
+   standard error 2.3 percent; at 240 births the body record read 42.4,
+   a fluctuation of 2.7 standard errors, COMPUTATION), the residues
+   spread on the wheel (the chi-square over 12 bins below 19.7; the
+   solitary body record's remainder over 4000 intervals uniform on its
+   wall), no run of one-interval cycles beyond 3; the two
+   forms' births differ in their intervals (different residues on
+   different wheels, the body record's larger), which is all the law
+   claims (9.43, 9.46 (4)); (iii) THE BORN ROWS the file's train on both
+   forms bit for bit. THE BACKWARD RUN: 60 intervals forward and back
+   with a body record and a light record, the rotation, the record and
+   both fields returned bit for bit. THE LIGHT CLOCK UNDER THE BODY
+   RECORD, a diagnostic run without pins on the registered file with the
+   key set and the stamp renewed (GAMEBOARD, no verdict, no pin moved):
+   LAWFUL in 10 seconds, 64 births and 64 clicks at at_well alone, the
+   mean click interval 297.2 with the rms 23.0, the least wait 248 and
+   the most 372, the 64 births by interval 2670, no burst and eleven
+   gaps below ten (the lattice body at item 36: 307.5, 38.9, 252, 582,
+   3372, one); both readings within the light clock's band as readings,
+   neither a verdict. THE REGISTERED WORLDS keep the key
+   off: no file moved, no pin moved; the chain's state digest moved
+   (the block entry's `rotation`, None under the lattice body), the
+   events and the audit digests unchanged (the lattice body as it was);
+   the pins of the eighteen under the body record are the
+   seated detectors' business (9.49 (4), next). THE ENGINE:
+   `BodyRotation`, `Block.body`, `body_coefficients`, `_advance_body`,
+   `_advance_body_inverse`, `body_wheel`, `body_form`, `residue_of` on
+   the rotation, `_excite` and `_excitation_rung` and `_emit` on either
+   carrier, `_block_clock` on the rotation, the step and the inverse,
+   the snapshot's `rotation`; the loader's key and its checks. THE
+   TESTS: `tests/test_body_record.py` (the five above and the loader).
+   THE ALGEBRA NAMED (record 1987): 9.46 (1), (2), (3), (9) (a) and (b);
+   9.50 (8)'s line; 9.49 (3). PIECES NO SECTION STATES, listed for the
+   mathematician: the rotation's load write a = b = the profile at the
+   centre, r = 0 (the lattice's standing start carried over); the pace
+   of the seat as the body's p (the charge included); the invariant e
+   with K in place of num_c (the clocked rule's own); the block's
+   cycles as the rotation's sign crossings; the read Node the seat. THE
+   NAME NODE (the model owner's record 1970): every new text of this
+   item says Node.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

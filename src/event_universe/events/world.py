@@ -432,6 +432,12 @@ WORLD_KEYS = {
     # (`MASSIVE_RECORD_RULE`; docs/designs/detector_law/MASSIVE_RECORD.md,
     # the build's plan BUILD.md).
     "massive_record",
+    # THE BODY RECORD (ALGEBRA.md 9.46; BUILD.md section 26 item 37): every
+    # seeded block held as one rotation (a, b, r) on its clock pair, its
+    # profile stored and never stepped, its own rows off the GameBoard;
+    # false by default (the lattice body); a host form under its own
+    # identity, gated by the equivalence test of 9.46 (4)
+    "body_record",
     # massive-record-v1: `probes`, declared Nodes whose light amplitude the
     # record writes per interval (a GAMEBOARD reading of the rows), a list
     # of Nodes, admitted under `massive_record` alone.
@@ -1680,6 +1686,11 @@ class NatureBeamWorld:
     # under the local detector law, false by default; under it a family may
     # declare its `pair` (`MASSIVE_RECORD_RULE`); its faces are the world's.
     massive_record: bool = False
+    # THE BODY RECORD (ALGEBRA.md 9.46 (1) to (3); BUILD.md section 26 item
+    # 37): true holds every seeded block as one rotation on its clock pair
+    # (a Node with a shape), its profile read and never stepped; false, the
+    # default, the lattice body (its own rows on the GameBoard)
+    body_record: bool = False
     # massive-record-v1: the probes, Nodes whose light amplitude is written
     # per interval (GAMEBOARD), empty by default.
     probes: tuple[Address3, ...] = ()
@@ -6025,6 +6036,20 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         raise ValueError(
             f"{BEAM_LAW}: massive_record must be true or false ({MASSIVE_RECORD_RULE}, off by default)"
         )
+    # THE BODY RECORD (ALGEBRA.md 9.46; BUILD.md section 26 item 37): true or
+    # false, false by default (the lattice body); a body held as one
+    # rotation on its clock pair needs the massive record's blocks
+    body_record = obj.get("body_record", False)
+    if type(body_record) is not bool:
+        raise ValueError(
+            f"{BEAM_LAW}: body_record must be true or false (ALGEBRA.md 9.46; off by default, the "
+            "lattice body)"
+        )
+    if body_record and not massive_record:
+        raise ValueError(
+            f"{BEAM_LAW}: body_record needs massive_record: true (a body record is a block held as "
+            "one rotation on its clock pair, ALGEBRA.md 9.46 (1))"
+        )
     if massive_record and not detector_law:
         raise ValueError(
             f"{BEAM_LAW}: massive_record needs detector_law: true ({MASSIVE_RECORD_RULE} is a record "
@@ -6194,6 +6219,21 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         _clock_family_checks(clock_family, families, measured)
         _field_family_checks(charge_family, families, measured, "charge", "9.48 (2)")
         _node_clock_bound(families, measured, amplitude_bound, node_clock, charge_strength)
+    if body_record:
+        # every seeded block carries its profile and its clock pair (the
+        # generator's, under the stamp): the body record's shape and its
+        # rotation's rational (ALGEBRA.md 9.46 (1), (9) (a))
+        for number, entry in enumerate(measured):
+            block = entry.block
+            if block is None or block.seed <= 0:
+                continue
+            if block.profile is None or block.clock is None:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{number}] under body_record declares no `clock` with its "
+                    "profile: a body record is its stored profile and one rotation on its clock pair "
+                    "[num_c, den_c], the generator's (ALGEBRA.md 9.46 (1) and (9) (a); "
+                    "`seed_on_the_mode`)"
+                )
     _input_stamp_check(obj, measured)
     _initial_state_checks(shape, periodic, families, measured)
     families = _massive_families(families, measured, table, width, phase_steps, action)
@@ -6290,6 +6330,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         atom_level=atom_level,
         detector_law=detector_law,
         massive_record=massive_record,
+        body_record=body_record,
         probes=probes,
         mode_axis=mode_axis,
         closed=closed,

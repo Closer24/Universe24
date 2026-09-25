@@ -361,10 +361,12 @@ def test_the_light_record_is_byte_identical_without_the_key():
     charge 0, the birth lines' `charge`, the snapshot's `charge` entry; the rows bit for bit);
     SINCE THE NODE'S OWN PACE (ALGEBRA.md 9.50 (13); item 36) all three moved once more (the
     pace on the Node's own sum at and beside the bodies, the forms as exact rationals, the
-    birth lines' `pace`, the plain flux); read again at this head."""
+    birth lines' `pace`, the plain flux); SINCE THE BODY RECORD (ALGEBRA.md 9.46; item 37)
+    the state digest moved once more (the block entry's `rotation`, None under the lattice
+    body; the events and the audit unchanged); read again at this head."""
     assert run_chain_digests() == {
         "events": "3d6adf318286f7ab077de0760fffcac96a2bd69a705be08bfff569ba9383dca1",
-        "state": "18c980b36b09cefd0cb470f8635ba09adffdcde0cb56226c841ab42098125fe1",
+        "state": "e255526de4b790fcb2f0ae99e775184f10eb188fab8af88bade397c79c88c33c",
         "audit": "18fceec9b9d8e12e478abd84633b08f013658858f3ccb76d17fe61c28b53597e",
     }
 

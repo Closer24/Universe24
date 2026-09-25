@@ -194,6 +194,27 @@ class LiveRecord:
 
 
 @dataclass
+class BodyRotation:
+    """THE BODY RECORD'S ROTATION (ALGEBRA.md 9.46 (1) and (2); BUILD.md
+    section 26 item 37): a body held as one Node with a shape: two integer
+    levels and one remainder (a, b, r) stepped by the two-term rule on the
+    body's clock pair [num_c, den_c] at the pace of its Nodes, den_c Gamma
+    a' + r' = (num_c p + 2 den_c (Gamma - p)) a - den_c Gamma b + r, 0 <= r'
+    < den_c Gamma (9.50 (8)'s line under the constant wall, the Node's own
+    pace of item 36); its residue u its own remainder on its wheel, read at
+    the click and carried; its norm T the emitter's declared integer; the
+    identity the body's record's (number x 2^32)."""
+
+    identity: int
+    now: int
+    before: int
+    remainder: int = 0
+    u: int = 0
+    wheel: int = 1
+    norm: int = 0
+
+
+@dataclass
 class Block:
     """A block on the board (massive-record-v1, MASSIVE_RECORD.md sections 4
     to 7; BUILD.md section 2): its Nodes R (the mask over the board, the
@@ -214,6 +235,10 @@ class Block:
     count: int = 0
     previous_sum: int = 0
     own: LiveRecord | None = None
+    # THE BODY RECORD (ALGEBRA.md 9.46; item 37): the body's rotation under
+    # the world key `body_record`, its own rows then off the GameBoard (`own`
+    # None); None under the lattice body
+    body: BodyRotation | None = None
     emitted: list[int] = field(default_factory=list)
     current: int | None = None
     births: int = 0
@@ -519,7 +544,22 @@ class DetectorLawSimulation:
                 [int(component) for component in entry.momentum],
             )
             self._write_pair(block)
-            if definition.seed > 0:
+            if definition.seed > 0 and world.body_record:
+                # THE BODY RECORD (ALGEBRA.md 9.46 (1), (7) (c); BUILD.md section
+                # 26 item 37): the load's one write, the rotation at the
+                # profile's value at the body's centre Node at both levels with
+                # the remainder 0 (the lattice body's standing start, both
+                # levels the profile), the profile stored and never stepped,
+                # no rows on the GameBoard
+                assert definition.profile is not None and definition.clock is not None
+                profile = np.array(definition.profile, dtype=np.int64).reshape(self.shape)
+                centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
+                level = int(profile[centre])
+                block.body = BodyRotation(number * (1 << 32), level, level)
+                block.previous_sum = level
+                if definition.emitter is not None:
+                    self._excite(block, block.body)
+            elif definition.seed > 0:
                 own_record = self._massive_record(number * (1 << 32), number, entry.family)
                 if definition.profile is not None:
                     # the declared integer profile over the whole board at both
@@ -929,7 +969,7 @@ class DetectorLawSimulation:
             )
         return int(where[0][0]), int(where[1][0]), int(where[2][0])
 
-    def residue_of(self, live: LiveRecord, block: Block) -> tuple[int, int]:
+    def residue_of(self, live: LiveRecord | BodyRotation, block: Block) -> tuple[int, int]:
         """THE RESIDUE FROM THE LAW (ALGEBRA.md 9.22 (4); BUILD.md section 26
         item 15) UNDER THE NODE CLOCK (9.35 (2), (3); item 31), READ AT THE
         FIRST SHELL NODE (9.44 (5) (c); item 33): the record's rule remainder
@@ -942,11 +982,16 @@ class DetectorLawSimulation:
         801] at Gamma = 10^6 with M = 64); no declaration, no draw; which
         Node is read is a convention (9.47 (5) (ii)), the centre Node
         HISTORY."""
+        if isinstance(live, BodyRotation):
+            # THE BODY RECORD (ALGEBRA.md 9.46 (2)): its residue its own
+            # remainder on its own wheel, the seat's read
+            step, wheel = self.body_wheel(block)
+            return live.remainder // step, wheel
         node = self.first_shell_node(block)
         step, wheel = self.wheel_at(live.family, node)
         return int(live.remainder[node]) // step, wheel
 
-    def _excite(self, block: Block, own_record: LiveRecord) -> None:
+    def _excite(self, block: Block, own_record: LiveRecord | BodyRotation) -> None:
         """The body's own record at the load, the one write of a body's record
         (ALGEBRA.md 9.43 (4); 9.17 (4) item 1): its norm T one period's
         action of its own mode (the emitter's declared integer `norm`, the
@@ -998,6 +1043,75 @@ class DetectorLawSimulation:
         block.wait = 0
         block.emit_now = False
 
+    def body_coefficients(self, block: Block) -> tuple[int, int]:
+        """The body record's two-term rule at this interval (ALGEBRA.md 9.46
+        (2), 9.50 (8), item 36): (K, wall) with wall = den_c Gamma and K =
+        num_c p + 2 den_c (Gamma - p), p the pace at the body's centre Node
+        (Gamma - c + q Lambda d, the body's own effective content; uniform
+        over its Nodes), so that den_c Gamma a' + r' = K a - den_c Gamma b +
+        r; at p = Gamma the plain rule times Gamma."""
+        clock = block.definition.clock
+        assert clock is not None
+        num_c, den_c = int(clock[0]), int(clock[1])
+        centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
+        pace, gamma = self.node_clock_pair(centre, block.family)
+        return num_c * pace + 2 * den_c * (gamma - pace), den_c * gamma
+
+    def _advance_body(self, block: Block) -> None:
+        """One interval of the body record's rotation (ALGEBRA.md 9.46 (2)):
+        verb D with the remainder kept, one division; the amplitude bound as
+        the rows'."""
+        body = block.body
+        assert body is not None
+        coefficient, wall = self.body_coefficients(block)
+        total = coefficient * body.now - wall * body.before + body.remainder
+        nxt = total // wall
+        if abs(nxt) > self.world.amplitude_bound:
+            raise RuntimeError(
+                f"{BEAM_LAW}: the body record of measured[{block.number}] reached the level {nxt} "
+                f"at interval {self.tick}, above the world's declared amplitude bound A = "
+                f"{self.world.amplitude_bound}: the run is refused"
+            )
+        body.remainder = total - wall * nxt
+        body.before = body.now
+        body.now = nxt
+
+    def _advance_body_inverse(self, block: Block) -> None:
+        """The rotation one interval back with the same integers (ALGEBRA.md
+        9.50 (8): the wall constant, the remainder's range the same at every
+        interval, one to one): den_c Gamma a_before - r = K a_now - den_c
+        Gamma a_next - r', a_before the ceiling, r the difference."""
+        body = block.body
+        assert body is not None
+        coefficient, wall = self.body_coefficients(block)
+        total = coefficient * body.before - wall * body.now - body.remainder
+        a_before = -((-total) // wall)
+        body.remainder = wall * a_before - total
+        body.now = body.before
+        body.before = a_before
+
+    def body_wheel(self, block: Block) -> tuple[int, int]:
+        """The remainder's step g and the wheel W of the body record's rule
+        (ALGEBRA.md 9.46 (2), 9.22 (4)): g the gcd of the rule's coefficients
+        (K on a, the wall on b and the wall itself), W = wall / g; the pair's
+        own den_c / gcd(num_c, den_c) in the vacuum."""
+        coefficient, wall = self.body_coefficients(block)
+        step = gcd(wall, coefficient)
+        return step, wall // step
+
+    def body_form(self, block: Block) -> int:
+        """The body record's invariant (ALGEBRA.md 9.46 (2), (9) (b)): e = den_c
+        Gamma (a^2 + b^2) - K a b, the two-term rule's own (a' = (K / wall) a
+        - b leaves it fixed), Gamma (den_c (a^2 + b^2) - num_c a b) in the
+        vacuum; constant between the remainders' jitter (GAMEBOARD)."""
+        body = block.body
+        assert body is not None
+        coefficient, wall = self.body_coefficients(block)
+        return (
+            wall * (body.now * body.now + body.before * body.before)
+            - coefficient * body.now * body.before
+        )
+
     def centre_mask(self, block: Block) -> np.ndarray:
         """The excited record's named set (ALGEBRA.md 9.19 (3)): the body's
         centre Node, the lower corner plus the extent // 2 on each axis, one
@@ -1024,7 +1138,7 @@ class DetectorLawSimulation:
         write), the count starting from that interval; every later residue
         is read at the click (`_emit`). Nothing fires while the stock is
         spent: the body's own record continues (9.43 (3))."""
-        own = block.own
+        own: LiveRecord | BodyRotation | None = block.body if block.body is not None else block.own
         emitter = block.definition.emitter
         if own is None or emitter is None or block.emit_now:
             return
@@ -1063,7 +1177,7 @@ class DetectorLawSimulation:
         afterwards: the law advances it."""
         world = self.world
         emitter = block.definition.emitter
-        own = block.own
+        own: LiveRecord | BodyRotation | None = block.body if block.body is not None else block.own
         assert emitter is not None and own is not None
         number = block.number
         family = emitter.family
@@ -1079,7 +1193,13 @@ class DetectorLawSimulation:
         # declared order, read at the click on the body's wheel there
         residue, wheel = self.residue_of(own, block)
         wait = block.wait
-        read_node = self.first_shell_node(block)
+        # the read Node: the first shell Node of the lattice body (item 33),
+        # the seat (the centre Node) of a body record (item 37)
+        read_node = (
+            tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
+            if block.body is not None
+            else self.first_shell_node(block)
+        )
         # the family of clicks' level at the read Node and at its reads as the
         # wheel was read, before the birth lowers the content (item 34; GAMEBOARD)
         read_clocks = [
@@ -1234,7 +1354,12 @@ class DetectorLawSimulation:
             for axis in range(3)
         )
         at_centre = 0
-        if block.own is not None:
+        if block.body is not None:
+            # the body record's rotation (9.46 (2)): its level is the standing
+            # record's coefficient, the sum over the Nodes and the centre alike
+            total += block.body.now
+            at_centre += block.body.now
+        elif block.own is not None:
             total += int(np.sum(block.own.now[block.mask]))
             at_centre += int(block.own.now[centre])
         if block.previous_sum <= 0 < total:
@@ -1250,7 +1375,13 @@ class DetectorLawSimulation:
                         "node": list(block.corner),
                         "measured": block.number,
                         "family": self.families[block.family].name,
-                        "record": None if block.own is None else block.own.identity,
+                        "record": (
+                            block.body.identity
+                            if block.body is not None
+                            else None
+                            if block.own is None
+                            else block.own.identity
+                        ),
                         "cycle": block.count,
                         "clock": block.count,
                     }
@@ -1329,7 +1460,9 @@ class DetectorLawSimulation:
                 continue
             self._advance_inverse(live)
         for block in self.blocks:
-            if block.own is not None:
+            if block.body is not None:
+                self._advance_body_inverse(block)
+            elif block.own is not None:
                 self._advance_inverse(block.own)
         self._advance_inverse(self.clock_record)
         self._advance_inverse(self.charge_record)
@@ -2011,9 +2144,12 @@ class DetectorLawSimulation:
         # (MASSIVE_RECORD.md section 7's massive step first; the coupling's
         # terms HISTORY, the model owner's decision (2) of record 1962).
         for block in self.blocks:
-            if block.own is None:
+            if block.body is not None:
+                self._advance_body(block)
+            elif block.own is not None:
+                self._advance(block.own)
+            else:
                 continue
-            self._advance(block.own)
             if block.definition.emitter is not None:
                 self._excitation_rung(block)
         for identity in list(self.records):
@@ -2241,7 +2377,19 @@ class DetectorLawSimulation:
                         "momentum": list(block.momentum),
                         "emitted": list(block.emitted),
                         "rows": None if block.own is None else block.own.now.ravel().tolist(),
-                        "form": None if block.own is None else form_json(self.record_form(block.own)),
+                        "form": (
+                            form_json(Fraction(self.body_form(block)))
+                            if block.body is not None
+                            else None
+                            if block.own is None
+                            else form_json(self.record_form(block.own))
+                        ),
+                        # the body record's rotation and residue (item 37; GAMEBOARD)
+                        "rotation": (
+                            None
+                            if block.body is None
+                            else [block.body.now, block.body.before, block.body.remainder]
+                        ),
                     }
                     for block in self.blocks
                 ],
