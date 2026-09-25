@@ -8295,7 +8295,8 @@ form and its one quantum, never a part; the amplitude itself is a
 convention of the write and the click is scale-free.
 
 **(3) PERIODICITY TO THE BIT COMES FROM THE CLICK, NOT FROM THE INSIDE
-(PROVED).** The Inside alone never returns a shape to the bit (Niven, 9.26
+(PROVED; HISTORY since 9.43: the reseed is retired, a body's own record is
+never rewritten and is one rotation carried for ever).** The Inside alone never returns a shape to the bit (Niven, 9.26
 (4) (a)) except the exact modes of 9.26 (4a). A body that clicks does: at
 each click its excited record is reseeded from the stock as the same
 integers with the remainder 0 (9.17 (4)), so every cycle starts bit for bit
@@ -8750,8 +8751,9 @@ two ends are this one landing read with the sign of the body's change
 (9.37 (2)): a passing record that lands is cleared on all its cells and
 the body's content rises by one; the body's own record that lands sets
 the born family's levels on the body's cells with the character of the
-declared **K** and lowers the stock, and the body's levels are rewritten
-as its profile with the remainders KEPT (9.34 (A)). Nothing else is read
+declared **K** and lowers the stock; the body's own levels, phase and
+remainders are LEFT AS THEY ARE (no reseed, 9.43; the rewrite as the
+profile is history). Nothing else is read
 and nothing else is written; the record then moves by the step alone
 (9.37).
 
@@ -9078,7 +9080,7 @@ theta with T = P E_S (equivalently t >= (2 u + 1) P / (2 W)), the map
 X_S^T: (a, b, r, M, stock) -> (the born family's rows set to psi_S chi_K
 on S, psi_S the born family's eigenvector on S with the zero row beyond,
 chi_K the character of the declared momentum; the own record's rows
-rewritten as (phi, phi cos omega); r UNCHANGED; M_i - 1 for every i in S
+left as they are, with their phase (no reseed, 9.43); r UNCHANGED; M_i - 1 for every i in S
 by the stock's quantum leaving; stock - 1). A CLICK IS ONE OF THESE TWO
 MAPS, applied once, at one interval, on all the Nodes of one set at
 once, and nothing else is a click. THEOREM T4 (the clock under a
@@ -9098,18 +9100,21 @@ carries them out (9.37).
 
 **D6 (the remainder, and the law that keeps a body a body).** The
 remainder r_i belongs to the Node: D2 moves it, D5 leaves it. THEOREM
-T5 (a body is periodic in its levels and remembers in its remainders):
-after X_S^T the own record's levels are (phi, phi cos omega) exactly as
-at the last reseed, so the body is the same eigenvector on the same
-Nodes, bit for bit in its levels; its remainders are those the last
-cycle left, so the next cycle's remainders are r_i(t) = (c_i(t) + r_i(0)
-+ the carries) mod wall_i with c_i(t) the fixed sequence the profile
-gives at Node i; hence the next residue is a fixed function of the last
-(a deterministic map on the wheel), and the body's REMAINDER is the sum
-of its Nodes' remainders on its wheel, u = (sum over S of r_i mod wall)
-/ g, g = gcd(num, wall), W = wall / g (9.38 (9)). The law that keeps a
-body a body across its clicks is therefore: THE CLICK REWRITES THE
-LEVELS AS THE EIGENVECTOR AND LEAVES THE REMAINDERS; the eigenvector
+T5 (a body is one rotation carried for ever, and remembers in its
+remainders): X_S^T leaves the own record's levels, phase and remainders
+as they are, so the body is the same eigenvector on the same Nodes,
+carried by the step alone between its clicks (the rounding's drift below
+one unit per Node per interval, 8.2); its remainders after a cycle are
+r_i(t) = (c_i(t, phase) + r_i(0) + the carries) mod wall_i with c_i the
+rounding sequence of the profile at Node i AT THE PHASE THE RECORD HAS,
+which advances by the cycle's length modulo the period, an irrational
+number of intervals; hence the next residue is a function of the last
+and of the phase (a map on the wheel whose shift does not repeat, 9.43),
+and the body's REMAINDER is the sum of its Nodes' remainders on its
+wheel, u = (sum over S of r_i mod wall) / g, g = gcd(num, wall), W =
+wall / g (9.38 (9)). The law that keeps a
+body a body across its clicks is therefore: THE CLICK LEAVES THE BODY'S
+OWN RECORD, LEVELS AND REMAINDERS, AS IT IS; the eigenvector
 makes the Nodes one body (T2), the remainders make its next click's
 place (D5), and the content it gave or took sets its clock (T4). Nothing
 is kept at a Node beyond a, b, r and M. THEOREM T6 (the remainder
@@ -9274,3 +9279,71 @@ increments are the currents as booked today times the wall's integer
 factor. The order (2) then (5) is right: without the coupling's scale
 the wall 3 den (Gamma + M) times the amplitude 2^28 is below 2^63 at the
 muon's pair (7.8 x 10^18).
+
+### 9.43 The countdown of the residues, and the reseed retired (Nature24's finding of 2026-09-25 on the tree with decisions (1) and (2): under the kept remainder and no coupling, the light clock's births came in runs of one per interval, twenty-six in a row; the mechanism on the engine's integers; CHECKED on the algebra; the ruling, for the model owner's word under record 1940)
+
+**(1) THE FINDING (Nature24, GAMEBOARD readings, no verdict).** With the
+remainder kept through the reseed and the coupling retired, the excited
+record reseeded at each birth as the profile at phase 0 reads, after its
+first advance, the residue u - 1 where u was the born record's: the
+profile's first-step rounding at the read Node is exactly one unit. A
+residue below W / P (25.6 on the light clock's body) crosses its rung in
+one interval, so the next is u - 1, and the countdown runs to 0: u + 1
+births at one per interval; thirty-two of the sixty-four births of the
+light clock came in two such runs, the mean click interval 270.5 against
+302.2 with the coupling.
+
+**(2) THE MECHANISM, ON THE ALGEBRA.** With the reseed, the residues'
+order is the map u -> u + S(t(u)) mod W, where t(u) = ceil((2 u + 1) P /
+(2 W)) is the cycle's length and S(t) is the rounding accumulated at the
+read Node over t steps FROM PHASE 0, a fixed sequence of the profile. For
+t = 1, S(1) is the profile's first-step rounding at the read Node: a HOST
+CONSTANT, set by the generator's precision and not by the law: -1 unit
+for the generator's profile at its stop (Nature24), -1147 units for a
+float eigenvector rounded at 2^28 and +337 at 2^20 (scratchpad
+countdown2.py). At -1 the map counts down; at -1147 or +337 it does not
+run but turns the wheel by a constant, and the residues fall on a
+lattice (the chi-square 79 and 71 on 20 bins against the bound 30.1).
+Either way the birth statistics of a closed body would depend on the
+profile's rounding, which the law forbids (9.39 (2): the height and the
+precision are not physics). The reseed is the cause: it resets the
+phase to 0 at every birth, so the rounding sequence is the same every
+cycle and the shift is a constant.
+
+**(3) THE RULING: THE RESEED IS RETIRED; A BODY'S OWN RECORD IS NEVER
+REWRITTEN.** The giving end of the click sets the born family's rows on
+the body's Nodes, lowers the stock and the content, and LEAVES THE
+BODY'S OWN LEVELS, PHASE AND REMAINDERS AS THEY ARE; the step alone
+carries the standing record between its clicks. Then the rounding
+sequence runs at the phase the record has, which advances by the
+cycle's length modulo the period, an irrational number of intervals, so
+the shift takes a different value at every cycle and no countdown can
+form. COMPUTED (countdown2.py, the well of side 32, 3000 cycles in
+order, the residue read after the first advance as the engine reads it):
+with the reseed, the centre Node's shift over a one-interval cycle is
+one constant (-1147 at 2^28, +337 at 2^20) and the chi-square 79 and 71;
+the body's sum with the reseed one constant (931, -901), chi-square 19
+and 24; WITHOUT the reseed the shift takes many values (11, 177, 214,
+405, ... at the centre; 136, 158, 217, ... for the sum), the longest run
+of one-interval cycles is 1 or 2 as a fair draw gives, the mean cycle
+46.9 to 47.8 against P / 2 = 46.8, the chi-square 14 to 27 on 20 bins.
+The read point stays as built (the next tick's residue after the first
+advance; the born record's residue at the click), moving to the body's
+sum on the owner's word (9.38 (9)). NEITHER (a) NOR (b) of Nature24's
+question: (a) would pin a host precision as physics; (b), a read after
+a full period, is the same constant map with S(P) in place of S(1).
+
+**(4) WHAT CHANGES IN THE TEXTS.** 9.17 (4) item 1 and 9.33 (3) ("a body
+is periodic to the bit by its clicks; its excited record reseeded from
+the stock as the same integers") are HISTORY: a body is one rotation
+carried for ever within the rounding (Niven, 9.26 (4)), its levels never
+rewritten, its remainders its memory (9.34 (A) unchanged); 9.37 (2), 9.38
+(2) and 9.40 (D5, T5) are corrected in place; the load's seed is the one
+write of a body's record. The three tests: generic (one write fewer);
+vector (nothing new); local (nothing new). No pin moves in form; the
+light clock's mean interval and first click are recomputed by Nature24
+on the engine without the reseed, and I expect 302 +- 9 and 250 +- 8 as
+pinned (the mean cycle P / 2 and no run). In the engine: the emitter's
+click creates no fresh excited record; the block's own record continues;
+the next residue is read after the first advance as now; the stock and M
+move.
