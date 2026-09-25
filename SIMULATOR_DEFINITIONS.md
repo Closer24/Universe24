@@ -92,12 +92,10 @@ in the day's log; nothing of them is a name the engine branches on.
   the operator; a face is its zero row; a receiver is a name (9.19 (5)).
 - **The operator.** The world declares, once, a pair [numerator,
   denominator] per family at every Node (the vacuum's, a body's on its
-  cells), the couplings (g, G) between two families on declared cells, and
-  the axes (a, b) on declared cells; the faces are the zero row beyond the
+  cells), the axes (a, b) on declared cells, and the Node clock (e, f) at every Node from the content of the bodies there (ALGEBRA.md 9.35; the couplings (g, G) between two families retired at the model owner's word of record 1962: the families are coupled by the click alone, 9.34 (B), 9.36); the faces are the zero row beyond the
   border (ALGEBRA.md 9.19 (2); 8.2's matrix). One step of the law is the
   rule per family (8.1: 3 den a_next + r' = num S_6 - 3 den a_before + r,
-  the remainder kept), the coupling (8.5), the axis (9.16 (2)) and the push
-  of the regions (8.11), on every summand alike; no branch on a family, a
+  the remainder kept), the axis (9.16 (2)), on every summand alike (the coupling of 8.5 and the push of 8.11 retired, ALGEBRA.md 9.34 (B) and 9.24 (3)); no branch on a family, a
   body or a name. Its modes are bound (a body) or free; the composed
   operator's largest eigenvalue below 2 is the stability condition, a load
   check (9.19 (2)).
@@ -125,8 +123,7 @@ in the day's log; nothing of them is a name the engine branches on.
 - **The birth.** The other side of a click: a body's own excited record
   (the body's seed, its stock M excitations in turn) clicks at its centre
   cell, and the born record is written ONCE on the body's cells at both
-  levels as the BORN TRAIN, the generator's integer profile of one **K**
-  over at least 8 periods under an envelope (ALGEBRA.md 9.17 (6a); the
+  levels as THE BODY'S OWN MODE times the character of one **K**: the generator's integer profile of the born family's lowest mode on the body's cells with the zero row beyond, as long as the body's extent along **K** (ALGEBRA.md 9.35 (10), the model owner's record 1962; the train under a window of 9.17 (6a) HISTORY; the
   two-integer pair `born: [now, -now]`, a flat pulse, is refused: its
   standing components make the one-way flux exceed the norm, 9.25 (11));
   the next excitation follows while the stock lasts (ALGEBRA.md 9.17 (4)
@@ -223,8 +220,7 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 items (2) and (4a)):
   moves one Link at a time by the drive's accumulators (`_move_block`),
   carries its own massive record on its cells (`seed`), takes what
   reaches its cells where it is `absorbing` or bound to a receiver, and
-  is hit (its response records and its coupling, the keys `coupling.g` and
-  `coupling.G`, the fields `receive` and `source`).
+  is hit (its response records and its coupling, the keys `coupling.g` and `coupling.G`, the fields `receive` and `source`: HISTORY, retired by the model owner's record 1962; a body is coupled to what reaches it by the click alone, ALGEBRA.md 9.36).
   ITS DECLARATION IN THE WORLD FILE, BY THE CUBE'S VERTICES (the owner's
   word of 15:02Z, the Boss's 15:05Z): the loader reads `position`, the
   cube's lower vertex (x0, y0, z0), and `side` s, its edge; the cube's cells
