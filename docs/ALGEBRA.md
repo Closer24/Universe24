@@ -11500,3 +11500,83 @@ mass of one unit over the distance. What is NOT quantised: the phase of
 a record between clicks (an integer of the rows at every Node, whole
 but as fine as the amplitude bound) and the level's walk in the
 rounding; those are the possibilities, not the present (9.55 (7)).
+
+### 9.58 The whole, read from the group of 24: every known formula recovered, and what the group fixes in each (the model owner's word of 2026-09-25: "look at everything we built and say that it all derives known formulas by the algebra of the group of 24"; the mathematician's statement for the record, each line with its section and its mark)
+
+**(1) THE STATEMENT.** Everything built derives from two things and a
+list of declared integers: ONE RULE at the Node (9.57 (1)), which is
+the simplest integer map of a Node's state that is equivariant under
+the cube's rotation group G_24 (chapter 1, the four group objects;
+chapter 7, how the group was reached from one Node and its six
+neighbours), and ONE WRITE, the click (9.53 (1), adopted, record 1139),
+whose form is G_24-invariant (a gather over a set's Ports, a sum over
+an orbit); the declared integers are the families' pairs, the world's
+three constants and the initial state (9.53 (4)). Every known formula
+below is a consequence, marked as the section marks it; none is put in.
+
+**(2) WHAT THE GROUP FIXES, in five lines.** (a) THE READ: the six
+neighbours are one orbit of G_24 acting on the Links at a Node, so the
+one linear read invariant under the group is their sum S_6; the rule's
+form num S_6 - 3 den (a_next + a_before) is forced up to the pair (7.1;
+2.1). (b) THE LONG WAVES ARE ISOTROPIC: the only quadratic invariant of
+G_24 on a vector is k_x^2 + k_y^2 + k_z^2, so every family's dispersion
+at long wavelength is 1 - cos omega = m^2 + k^2 / 2 to the lattice's
+order, one speed in every direction: the light cone, the wave
+equation, and from them Lorentz's factors, Doppler and the dilation
+(5.1; 8.8; 9.24). (c) THE LATTICE'S ONE FINGERPRINT: the first
+invariant beyond the quadratic is k_x^4 + k_y^4 + k_z^4, which is the
+pace fans' anisotropy, k^2 / 48 at the order named (9.22 (8), record
+1894), a diagnostic by construction and the one pin that reads the
+grain (9.57 (6)). (d) THE RECURRENCE: G_24's rotations have the orders
+1, 2, 3 and 4, the crystallographic restriction, so a record returns
+exactly at the periods the group allows and at no other (9.26 (4),
+9.27, the exact-return theorem); the layer and the chain are the
+stabilisers of an axis, the layer lemma (8.2, 8.3), so a cube board, a
+layer and a chain read one rule. (e) THE SCALAR CLOCK: the family of
+clicks' level is a scalar, the group's trivial representation, so
+every family reads it alike, which is the equivalence of all bodies
+(9.52 (2)) and why the clock is one number at a Node; a vector part
+(magnetism, the dragging of frames) would need the group's vector
+representation and is not in the law (9.48, 9.56 (5)).
+
+**(3) THE FORMULAS, each from the rule and the click.** Born's rule,
+the counts in the proportion of the flux through the Ports: PROVED
+(9.25 (3)). Malus's law, cos^2 of the angle, the angle an element of
+the wheel's group Z_N: DERIVED (9.14). The two slits' fringes and their
+spacing, de Broglie's wavelength: DERIVED, COMPUTED on the placements
+(9.22 (8)). Snell's law and the index as a lowered pair: DERIVED (9.31,
+the index rows). Doppler and the crossing rule: DERIVED (9.24; record
+163). Lorentz's factors, the time dilation 1 / gamma from the clicks:
+PROVED (5.1; 9.24, 0.8146 against 0.8165 at the lattice's order). The
+light clock's tick and Sagnac's passage: DERIVED, COMPUTED (9.22 (8),
+9.24 (6)). The equivalence principle and the accelerated detector:
+PROVED (5.4). Newton's second law from the clicks: DERIVED (5.6).
+Newton's gravity, the potential of a body as the clock's slowing, the
+fall the same for every family (Galileo): DERIVED (9.29, 9.45 (2), 9.52
+(2)). The redshift of a clock in a well: DERIVED (9.45 (2), 9.57 (4)).
+Kepler's orbits and their constant: DERIVED (9.52 (3)). Coulomb's form,
+the attraction of unlike and the repulsion of like charges: DERIVED
+(9.48 (4)). Planck's relation, the energy of a body as its action over
+its period, E = h / P, and E = m c^2 as the one line s = (M P_0) div P;
+the mass defect of a bound body: DERIVED (9.51 (3)). The unit of mass
+and the flux pin, Gauss's law on the shell: DERIVED (9.51 (8), (9)).
+Einstein's weak field, the clock's second-order weight and the ruler's
+weight both 1, the bending of light, the Shapiro delay and Mercury
+whole: DERIVED and COMPUTED (9.56 (7), 9.57). The exact backward run
+between clicks and the click as the one deletion, the arrow of time:
+PROVED (9.50 (8), 9.55). The crystallographic recurrence: PROVED (9.26,
+9.27). The quanta of distance, time and rate, and the quantum of
+gravity as the click: DERIVED (9.57 (6)). Newton's constant as three
+declared numbers: DERIVED (9.57 (5)).
+
+**(4) WHAT IS NOT FROM THE GROUP, said plainly.** The values of the
+declared integers (the pairs, the clock's unit, the energy unit, the
+charge's strength, the initial state): declared, never derived. The
+click's threshold form, the rung (2 u + 1) T / (2 W): ADOPTED, its
+consequence Born's rule proved. The pace's form among the equivariant
+choices (the Node's own pace, once and squared; or the Link's product):
+the owner's word, the two equal to first order in the gradient (9.57
+(1)). What needs more than a scalar: magnetism, spin, the dragging of
+frames, the tensor waves, the short-range forces: OPEN (9.48, 9.56 (5)).
+Binding from the law, the atom row: the one seam, OPEN until it runs
+(9.53). Nothing else in the law is declared or put in to come out.
