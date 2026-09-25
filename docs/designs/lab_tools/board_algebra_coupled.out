@@ -1,0 +1,6 @@
+the coupled board 8^3: the well [800, 801] on [800, 809] with lambda_max 1.978065 (< 2), light coupled on its cells with g = 1/1000, G = 1/50
+(3) J over 200 intervals: relative drift at most 9.09e-04 (the remainder's grain; exact before the remainders, 8.5); the well radiates: I_m 1.7941e+08 -> 1.7942e+08, I_l 0.0 -> 1.4128e+04
+(1) equivariance under the 48 of the coupled step over 40 intervals: 48 of 48 identical bit for bit
+(2) translation on the torus, 7 shifts: 7 of 7 identical
+(4) reversibility of the coupled step: 40 forward then 40 inverse return both families bit for bit, remainders included: True
+(5) locality across the coupling: a one-unit change of light at one Node stays inside the Manhattan ball of radius m at interval m, m = 1..7: True

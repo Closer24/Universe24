@@ -1,0 +1,16 @@
+the board: 8^3 torus, N = 64 phase steps
+the well [800, 801] on [800, 809], side 2: largest eigenvalue 1.978065 (< 2: stable), omega_b 0.14824, the vacuum's omega_0 0.14930 (bound: omega_b < omega_0), period 42; the excited record's norm T (one period's one-way flux into the centre) = 297453600
+the seed alone over one period: I 430588257360 -> 430690453632 (relative change 2.37e-04); sign changes at the centre 2 (a rotation at omega_b gives 2)
+emitter clicks (interval, u): [(4, 0), (43, 6), (72, 4)]; the wait for u over W = 8: expected about (2u+1)/(2W) x period = [3, 34, 24]
+receiver clicks (interval, u, born, C, T): [(72, 3, 4, 3662689806, 8317440000), (81, 1, 43, 1757716376, 8317440000), (166, 7, 72, 8442939556, 8317440000)]; the Manhattan distance body->screen is 11 Links
+(1) equivariance under the 48 over 40 intervals: 48 of 48 identical bit for bit
+(2) translation on the torus, 7 shifts: 7 of 7 identical
+(3a) content: photons alive + photons clicked + the stock's excitations, constant at every interval: True (value 3, 6 clicks)
+(3b) the form I of the seed over 120 intervals at the amplitude 4096: largest relative drift 9.74e-04
+(3b) the form I of the seed over 120 intervals at the amplitude 65536: largest relative drift 4.18e-05
+(3c) a plane wave's wave number on the homogeneous board over 60 intervals: the spectral peak stays at (np.int64(1), np.int64(0), np.int64(0)): True
+(4) reversibility: 40 steps forward then 40 of 8.8's inverse return the element bit for bit, remainders included: True
+    with clicks: 6 clicks deleted 6 summands; 0 summands remain; the deleted rows are not recoverable by the inverse (the one deletion)
+(5) locality: a one-unit change at one Node stays inside the Manhattan ball of radius m at interval m (m = 1..7): True; nonzero at every m: True
+(6c) two runs differing only in their residues are identical bit for bit until the first click (at interval 4): True
+(6b) equal seven inputs give equal outputs at two Nodes: 1000 of 1000

@@ -718,6 +718,12 @@ Every PIN row below stands on its declared board; the pins are unchanged.
 
 ## 8. The ramp of a pushed block, declared by the well's relaxation time (row 4a's layer pin world and every pushed block)
 
+RETIRED (the model owner, record 1884, 2026-09-25 on the Israel clock: "no
+acceleration, because that is energy put into the system; it is already
+moving on the board"): a moving entry is written moving at interval 0 as its
+profile times the character of its momentum, no ramp and no `ramp` key;
+ALGEBRA.md 9.22 (2) and 9.24. The section below is history.
+
 A push over a ramp is adiabatic for the record only if the ramp exceeds
 the mode's relaxation time 1 / (omega_0 - omega_b) by a margin; otherwise
 the record lags the cells and the clicks beat (the builder's e4 reading,
