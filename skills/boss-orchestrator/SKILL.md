@@ -34,7 +34,7 @@ the two files of the owner's rule, `docs/ALGEBRA.md` and
 
 The process in force for the engine's stabilisation and the freeze is
 [the shortened process](../workflow.md#the-shortened-process-for-the-engines-features-the-owner-2026-09-24-records-1812-and-1813)
-(one list of fifteen, one agent writes all the code, features by name, one
+(one list of seventeen, one agent writes all the code, features by name, one
 branch and one merge, the reviewer's one read after the merge, a test-run line
 per world, the Boss's three-column status).
 
@@ -112,8 +112,8 @@ never the deliverable. The page is in English, like every artefact.
 **Every experiment is made under the experimenter's skill (model owner,
 2026-09-20: "the GameBoard is not measurable by a human").** Boss gives every
 research run to an agent under [experimenter](../experimenter/SKILL.md),
-which measures only behind a detector or at an external thing and labels
-every number a detector reading or a GameBoard reading.
+which reads an experiment by its detectors' clicks only (records 1875 and
+1876) and labels every number a detector reading or a GameBoard reading.
 
 **Every experiment ends in a results page (model owner, 2026-09-20).** Boss
 adds to every experiment's brief the page contract of the
@@ -248,7 +248,7 @@ and failure analysis to the test owner; Boss coordinates the returned results.
 | Physical-engine validation | [physics-rule-validation](../physics-rule-validation/SKILL.md) |
 | Focused tests | [test-runner](../test-runner/SKILL.md) |
 | Reproducible execution | [simulation-runner](../simulation-runner/SKILL.md) |
-| A real experiment, measured behind a detector or at an external thing | [experimenter](../experimenter/SKILL.md) |
+| A real experiment, read by its detectors' clicks only | [experimenter](../experimenter/SKILL.md) |
 | Regression | [regression-check](../regression-check/SKILL.md) |
 | PR review/merge | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) |
 | The manuscript, with its referee | [paper-coordinator](../paper-coordinator/SKILL.md) |
@@ -403,13 +403,14 @@ the pins declared before the run, `python tools/check.py` before the push.
 
 The owner's word: "From now on do only what the paper needs, nothing else;
 just close things; start from what the paper needs." From this word the
-Boss orders nothing that the thirty-page paper (records 573, 595, 605) does
-not need: the open items in flight are closed (reviewed, merged, their
+Boss orders nothing that the paper does not need: the open items in flight are closed (reviewed, merged, their
 sessions archived) and no new item outside the paper starts, however small,
 until the owner lifts the word. What the paper needs is decided from the
-plan (paper/general_formula/PLAN.md, "The thirty-page plan"): the cut, its
-checks, the detector readings its pages 19 to 21 cite, the references and
-the reproduction appendix; every other proposal waits, written in one line
+audit of its rewrite on the new engine,
+docs/designs/paper_verification/NEW_ENGINE_AUDIT.md, on branch
+`paper-new-engine` (records 1899 and 1900): first the general formula and the
+algebra chapter, then the experiments' rows after their new-engine runs with
+blind pins; every other proposal waits, written in one line
 in the log, not ordered. The owner's remaining points are listed to him
 ordered by the paper's need, each with the Boss's recommendation.
 
@@ -462,17 +463,18 @@ day (their record in `docs/LOG_2026-09-20.md`, the decisions in HIGHLIGHTS 5.4):
 5. **Parallelise what has no shared interface; never the rest.** Parallelised:
    the runs (one session per world at the GO; the 3-D controls on their own
    machines, never a gate), the reviewers of the morning's readings (one per
-   group), a source verifier (docs only), a world-file generator (files apart
-   from the engine), a second builder only on separate modules. Not
+   group), a source verifier (docs only), a second builder only on separate modules. Not
    parallelised, and why: the writer (one document, one storyline; the owner's
    word), the declarations (one writer per interface; a pin must leave one hand
-   before the run), the log and Highlights (the Boss alone; one record, one
+   before the run), the input files (the one generic input-file generator,
+   no world writer; records 1879 and 1882), the log and Highlights (the Boss alone; one record, one
    numbering), the GO (the owner's word), the gate of the declarations (one
    standard). The Boss's own cost, more sessions to coordinate, is met by
    batching the records about once an hour.
 6. **One writer, the storyline from a file.** The writer takes the title, the
-   opening, the order and the limits from `PLAN.md` section 8, not from a
-   conversation; every number a visible blank until its click is read and
+   opening, the order and the limits from
+   `docs/designs/paper_verification/NEW_ENGINE_AUDIT.md` on branch
+   `paper-new-engine` (records 1899 and 1900), not from a conversation; every number a visible blank until its click is read and
    merged; the bounds rows and the derivations final before any run.
 7. **The answer before the record; waits of at most two minutes.** When the
    owner writes, the Boss answers first (three to six short lines, the picture

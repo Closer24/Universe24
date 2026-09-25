@@ -176,9 +176,10 @@ declared one), local and integer-only, that the engine is the one operator,
 the click and the birth, every tool a region of the operator with its
 material integers (they replaced the four building blocks on 2026-09-25,
 record 1875; [SIMULATOR_DEFINITIONS.md](../../SIMULATOR_DEFINITIONS.md)), and that no pin
-moved. The case of the day: one-list at 2bcadd7f re-printed the Bell pin as a
-weight ratio; the counts on the wheel give 181 / 64 exactly; a run would have
-counted right against a wrong pin.
+moved. The case of 2026-09-24: one-list at 2bcadd7f re-printed the Bell pin as a
+weight ratio while that day's counts gave 181 / 64 exactly; a run would have
+counted right against a wrong pin (the wheel is retired since, the residue
+coming from the law and Bell registered as a band, records 1872 and 1878).
 
 The form since 13:55Z: the reviewer does not gate a merge. The writer of the
 engine (one agent, Nature24) pushes each feature when its unit test passes,

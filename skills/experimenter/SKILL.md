@@ -1,6 +1,6 @@
 ---
 name: experimenter
-description: Make a real experiment of the Universe24 model, measured only behind a detector or at an external thing, registered against an expectation written first, and shown on a page; the GameBoard is not measurable by a human.
+description: Make a real experiment of the Universe24 model, read by its detectors' clicks only, registered against an expectation written first, and shown on a page; the GameBoard is not measurable by a human.
 ---
 
 # The experimenter
@@ -8,6 +8,7 @@ description: Make a real experiment of the Universe24 model, measured only behin
 > **The model owner, 2026-09-20:** "Let there be a special skill for the
 > agent that makes real experiments, who always measures behind a detector
 > or at an external thing. The GameBoard is not measurable by a human."
+> Since 2026-09-25 an experiment checks only clicks (records 1875 and 1876).
 
 This skill is for an agent that asks the model a question it may answer
 either way (a series or a numbered run of the
@@ -28,25 +29,18 @@ A human measures nothing on the GameBoard, and puts nothing on it during a
 run: the API of the GameBoard is an emitter in and a detector out (the model
 owner, 2026-09-20: "when you intervene in the GameBoard it requires a
 detector on the GameBoard or an emitter; that is the API"); an experiment
-intervenes only by declaring emitters in the world file and reads only
-through detectors. The only readings reality has are
-the records of the things in the world:
+intervenes only by the entries of its list (an emitter among them) and
+reads only through detectors. The only reading reality has is a
+detector's click: a **detector** is a lab tool, one region of the one
+operator, a cube of side at least 3 with one name; its sensitivity is its
+whole cube, and its click is reported per detector, never per Node (records
+1875 and 1899).
 
-- a **detector**, a set of Nodes with one record (`DetectorSet`; the keys
-  `positions`, `threshold`, `reading` with `wave` by default or `beam`, a
-  phase window): its clicks, its pointer, the phases and ages of what
-  arrived; a face declared open is such a detector;
-- an **external thing**, a measured event with a table (a probe with `pass`,
-  a star or a source, a lamp, a mirror that re-releases): its `read` records,
-  its owed count, its clock, its steps as a body.
-
-A detector learns of a distant Node in two ways only, both the physicists'
-own: it receives what the thing there releases by itself, or a lamp shoots
-a beam at the thing and the detector reads what comes back or comes through.
-A detector keeps nothing of the row it sent; everything it learns is on the
-returning event (its age is the flight time since the re-release, its phase
-and number the mirror's). Looking is never free: a paid unit costs the
-sender `quantum` x s, and when the thing measures it, its momentum pushes it.
+A detector learns of a distant thing only by what reaches it: the flux
+into its region, read as a click. It receives what an emitter body births,
+directly or after a mirror, a splitter or a medium on the way; it keeps
+nothing of what it did not click on, and the record ends whole at the click
+(records 1875 and 1888).
 
 Every number the experiment prints or registers is labelled one of two kinds
 ([the register](../../docs/EXPERIMENTS.md), "Two kinds of readings"):
@@ -67,11 +61,10 @@ replays a rule of the engine, and it prints the kind of every line.
    before any run: the numbers or the shape expected, the brackets, and
    what would count against the model. Nothing is tuned after the run; a
    number that falls outside its bracket is registered outside.
-2. **The world**: a world file under `examples/events/<series>/` with a
-   generator, declaring every thing the reading needs: the detectors (a
-   set per reading), the probes (measured events with `pass` on whole
-   shells where a field is read, since one Node reads its line's beam and
-   the shell mean is the law's reading), the lamps, the stars. A missing
+2. **The input**: the experiment's list of entries, for each its family,
+   how much and where, the detectors among them; the one input-file
+   generator writes the input file from it, checked LAWFUL or REFUSED at
+   load; nobody writes a world by hand (records 1882 and 1886). A missing
    feature of the law is a finding to register, never a change to `src/`.
 3. **The runs**: headless, through `NatureBeamSimulation(parse_nature_beam_world(world),
    record)` or the runner, the books balanced at every interval, the source

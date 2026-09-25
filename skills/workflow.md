@@ -508,8 +508,9 @@ operations with no iteration inside it and gives the rows a closed form,
 generic makes one primitive serve every family (one code path, one table,
 one verification). The number of events is the floor of any exact
 computation. And it follows that a generic system is ruled by small
-conditions: the only free numbers are the family table's declared integers,
-the width and the initial state; a large system has no rule of its own
+conditions: the only free numbers are the integers of the one algebra (each
+family's pair and label module, each region's material integers) and the
+experiment's list (records 1875 and 1882); a large system has no rule of its own
 scale, every known formula is the limit of the small local rule, and a
 change of one small condition moves the registered integers everywhere,
 exactly: a wrong small condition is caught by the large system's pins.
@@ -614,22 +615,23 @@ that GitHub enforces a branch protection rule unless it was actually verified.
 The owner's words of 2026-09-24, 12:36Z to 14:12Z, in force for the
 stabilisation of the engine and the freeze:
 
-1. **One list, sixteen experiments** ([RUN_LIST.md](../docs/designs/detector_law/RUN_LIST.md); the sixteenth, a two-qubit quantum computer, added on 2026-09-25, record 1883);
+1. **One list, seventeen experiments** ([RUN_LIST.md](../docs/designs/detector_law/RUN_LIST.md); the sixteenth, a two-qubit quantum computer, added on 2026-09-25, record 1883; the seventeenth, Mach-Zehnder, record 1891);
    the seven others are OUT, not deferred ("there is no after the paper").
-2. **One agent writes all the engine code, the worlds and the test-run lines**
+2. **One agent writes all the engine code, the input-file generator and the test-run lines**
    (Nature24, the physicist; the owner's word of 17:05Z: "only one writes the
    code, the worlds and the test world: for us Nature24"): the
    three features are one job, making the one operator, the click and the
    birth (which replaced the four building blocks on 2026-09-25, record 1875)
    one code for every body on the board;
-   the experiments are compositions declared in the world file and defined
-   in [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md); the engine
-   knows no lamp, polariser or light clock by name. No builders, no World
-   Generator, no world file before its row's feature is on `main`.
+   an experiment is a list of entries (for each its family, how much and
+   where, the receivers among them), from which the one input-file generator
+   writes its input file (records 1882 and 1886); the engine
+   knows no lamp, polariser or light clock by name. No builders, no world
+   writer, no input file before its row's feature is on `main`.
 3. **Features are named, never numbered:** the receiver by name, the joint
    gather, the lamp's ladder.
 4. **One branch, one merge** for the three features; a feature is pushed
-   when its unit test (on a world that is none of the fifteen) passes; before
+   when its unit test (on a world that is none of the seventeen) passes; before
    a push only the docs gates and the changed modules' tests; the full gate
    once, at the freeze; the docs after the code; the reviewer reads once
    after the merge ([physics-rule-validation](physics-rule-validation/SKILL.md)).
@@ -659,11 +661,12 @@ stabilisation of the engine and the freeze:
    operator, the click and the birth on 2026-09-25, record 1875). The engine
    knows the one operator, the click, the birth and the six verbs. A lab tool
    (the polariser, the splitter, the mirror, the crystal, the well body) is a
-   region of the operator with its material integers, defined once in the
-   tool library (`examples/events/entities/apparatus.json`), with its own section of
+   region of the operator with its material integers, defined once by its
+   card, with its own section of
    algebra and a unit test that checks that algebra exactly. An experiment
-   is a world file that places tools by name at positions on the board,
-   and its pin is computed from the tools' algebra. All the tools are specified in one
+   is a list of entries that places tools by name in their cubes on the
+   board, turned into its input file by the input-file generator (records
+   1882 and 1886), and its pin is computed from the tools' algebra. All the tools are specified in one
    file, `docs/designs/lab_tools/LAB_TOOLS.md` (one section per tool: its
    specification, algebra, timing, cost, engine lines and test values;
    existing design files cited, never copied), linked from ALGEBRA.md. The
