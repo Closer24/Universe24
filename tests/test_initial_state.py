@@ -250,15 +250,19 @@ def test_the_generator_as_the_operator_iterated_in_integers():
     """THE GENERATOR WITH THE STOP (the model owner's word of 2026-09-25, 04:10Z, closing
     record 1898; ALGEBRA.md 9.22 (7); BUILD.md section 26 item 25): on the emitter world's
     chain of 80 (the well [800, 801] in the kind [800, 809]) `iterated_mode` iterates the law's
-    own operator 3 den v' = num S_6(v) + 6 den v + r from the cells' indicator at 2^20, reads
+    own operator 3 den v' = num S_6(v) + 6 den v + r from the cells' indicator at the working
+    amplitude 2^28 (scaled to the declared 2^20), reads
     the clock as the operator's quotient over the board, and stops at the first iteration at which the
-    scaled profile passes the loader's own residual bound with that clock (1817 iterations
-    read, COMPUTATION); the result is bit for bit the same on a second run; the profile it
+    scaled profile passes the loader's own residual bound with that clock (1653 iterations
+    read, COMPUTATION; 1817 at the working amplitude 2^20, which left the muon layer's well
+    hovering at 1.5 times the bound, BUILD.md section 26 item 25 amended); the result is bit
+    for bit the same on a second run; the profile it
     writes passes `mode_residual` (the stop's own condition, read again here) and agrees with
-    the host's eigensolver (ARPACK, a diagnostic now) within 300 units at every Node (193
+    the host's eigensolver (ARPACK, a diagnostic now) within 300 units at every Node (204
     read: the iteration's floor, the rounding noise of every step fed into the next mode and
     damped only by the gap, about 1 / gap units at the amplitude), its clock within 4 units of
-    ARPACK's rounded 2 cos omega at the denominator 2^22 (2 read). The fixed-count iteration
+    ARPACK's rounded 2 cos omega at the denominator 2^22 (0 read; 2 at 2^20). The fixed-count
+    iteration
     (`integer_mode_iteration`, the same step 4000 times) lands within the same 300 units. The
     edge: a limit below the stop refuses, naming the last residual against the bound."""
     document = emitter_world(stock=1)

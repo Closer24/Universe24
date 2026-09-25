@@ -347,7 +347,9 @@ def integer_mode_iteration(
     return levels
 
 
-WORKING_AMPLITUDE = 1 << 20  # the generator's least working amplitude (`iterated_mode`)
+WORKING_AMPLITUDE = (
+    1 << 28
+)  # the generator's least working amplitude (`iterated_mode`); 2^20 left the muon layer's well hovering at 1.5 times the loader's bound
 
 
 def clock_denominator(amplitude: int) -> int:
@@ -380,15 +382,18 @@ def iterated_mode(
     board no more than the rounding floor, the board only rotating (a float
     reading of the residual filters the iterations first; the verdict is
     the loader's integer check alone). THE WORKING AMPLITUDE: the
-    iteration runs at 2^20 or the declared amplitude, whichever is larger
+    iteration runs at 2^28 or the declared amplitude, whichever is larger
     (`WORKING_AMPLITUDE`), and the profile checked and written is its
     rounding at the declared amplitude: the loader's bound is the bound
     for one rounding of an exact mode, while the iteration's own noise (a
     unit per Node per step through the six reads) must sit below it, which
     it does only when the working amplitude is large against the bound's
     1.5 / p relative width (a side-4 well of [850, 800] on the 24-cube at
-    4096 hovered at 1.2 to 1.7 times the bound for ever; at 2^20 it
-    stops). A HOST
+    4096 hovered at 1.2 to 1.7 times the bound for ever and stopped at
+    2^20; the muon layer's well [3200, 3227] of side 14 on the 200 x 200
+    layer hovered at 1.5 times the bound at 2^20 for 2^20 iterations and
+    stops at 36694 iterations at 2^28, the working amplitude
+    since the names' regeneration of 2026-09-25, COMPUTATION). A HOST
     computation of the generator, reproducible bit for bit (the same
     integers in, the same out); the loader reads the written integers alone
     and checks them again. Returns the profile (x-major over the board),

@@ -293,11 +293,14 @@ def test_the_light_record_is_byte_identical_without_the_key():
     births at (2 u + 1) P / (2 W) after their reads; the state at 600 unchanged), then all
     three by the generator as the operator iterated with the stop (the owner's word of
     2026-09-25; item 25: the emitter's seed and clock the iteration's, within the floor of
-    the eigensolver's), the digests read at that head."""
+    the eigensolver's), then all three by the generator's working amplitude 2^28 (the names'
+    regeneration of 2026-09-25, item 25 amended: the muon layer's well hovered at 1.5 times
+    the bound at 2^20; the emitter's profile and clock the iteration's at 2^28), the digests
+    read at that head."""
     assert run_chain_digests() == {
-        "events": "3496296bee92a70a769098681a13fb600ab608f1780ee7f4b0a793241501bd02",
-        "state": "56e556bd2cc73026277f3f119acda2af1fab4c818f34fed804e658ebdd5ad457",
-        "audit": "034c20598f45eb6b617dffd3f0f7c307dd6c2c56c4cbce322ecca7655e7d57fb",
+        "events": "60f059f541b080252333447e12b651b1b190019db6c338d1836042fa5b6a9d1f",
+        "state": "f81fc3c4f3d377bbdcc4b05ca5289d4d259475f9f8a5427974b825b6a5bbe353",
+        "audit": "3379db93c63839326fc07e83573d37bc9be2a2892d2d05fca138368aac23e95d",
     }
 
 
@@ -1301,9 +1304,10 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     named by the emitter: each record clicks ONCE at the screen, at the first interval at
     which 2 W C >= (2 u + 1) T on its pointer there (read through the engine's
     `_ladder_click`; the interval before it below the rung), after the front's flight (84
-    Links at the band's group pace 0.5: between 100 and 250 intervals after the birth), the
-    line's `tick` its `click`, the record deleted whole at it; two gather lines in all, the
-    books balanced at every interval."""
+    Links at the band's group pace 0.5: between 100 and 1000 intervals after the birth, a
+    residue near W waiting for the one-cell birth's slow tail), the line's `tick` its
+    `click`, the record deleted whole at it; two gather lines in all, the books balanced at
+    every interval."""
     document = matter_emitter_world(True, [77, 25], stock=2)
     document["ticks"] = 3000
     # the cube of matter bodies at [184, 186] read as `screen` (record 1899), the
@@ -1357,9 +1361,11 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         assert wheel == 700 and 0 <= u < wheel and u == gather["u"]
         assert 2 * wheel * pointer >= (2 * u + 1) * norm and below[identity] == gather["click"] - 1
         # the flight: the front's 84 Links at the group pace, then as much of the
-        # record as the residue asks (a residue near W waits for the whole front;
-        # the coupling spreads the residues, 9.19 (4e)): read up to 307 here
-        assert 100 < gather["click"] - gather["birth"] < 400
+        # record as the residue asks (a residue near W waits for the one-cell
+        # birth's slow tail; the coupling spreads the residues, 9.19 (4e)): read
+        # 341 at u = 606 and 511 at u = 690 on the generator's profile at the
+        # working amplitude 2^28 (up to 307 at 2^20)
+        assert 100 < gather["click"] - gather["birth"] < 1000
         assert identity not in simulation.records
 
 

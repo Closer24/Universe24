@@ -2309,7 +2309,27 @@ would have found no cell.
    the bound's relative width 1.5 / p (READ: a side-4 well of [850, 800]
    on the 24-cube iterated at 4096 hovered at 1.2 to 1.7 times the bound
    at the well's cells for 20000 iterations, its clock converged; at the
-   working amplitude 2^20 it stops). TWO FINDINGS ON THE 3D WELLS
+   working amplitude 2^20 it stops). AMENDED AT THE NAMES' REGENERATION
+   (2026-09-25, 06:50Z): the muon layer's well [3200, 3227] of side 14 on
+   the 200 x 200 layer hovered at 1.5 times the bound at 2^20 for 2^20
+   iterations (30 minutes, nothing written: the committed generator could
+   not reproduce the muon files it had written from an earlier state of
+   the iteration, a defect of this item's commit found by the
+   regeneration under the names), and stops at 36694 iterations
+   at 2^28 (COMPUTATION, the probe of the residual against the bound at
+   both amplitudes); THE WORKING AMPLITUDE IS 2^28 SINCE (the same rule,
+   one number moved; the deep well's layer, 50003 iterations at 2^20 by
+   the noise's dip, stops at 2746 there), every seeded world regenerated
+   again under it (the
+   emitter chain's profile 204 units from the eigensolver's and its clock
+   exact at 1653 iterations; the chain digests moved with the profiles;
+   the HOST cost of the regeneration about four minutes for both
+   generators, against the 31 of the hovering muon; the profiles moved by
+   the floor, COMPUTATION: the muon's by 1650 units and its clock by 16
+   units of 2^22, the redshift's chain by 380, the fringe layers' by 303
+   to 313, the light clock's by 90, Sagnac's by 87, the boxed and the deep
+   wells' by at most 49 and their clocks by at most 9 units, the index
+   chains' by at most 5). TWO FINDINGS ON THE 3D WELLS
    (COMPUTATION): (i) the property test's small world's body, the side-2
    cube [800, 801] in [800, 809], is bound by its torus, not by its well:
    2 cos omega above the band's top by 9.4 x 10^-5 on the 12-cube, 4.7 x
