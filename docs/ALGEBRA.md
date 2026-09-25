@@ -7135,7 +7135,28 @@ with one of them. THE SMALLEST DETECTOR AND THE SMALLEST SUCH UNIVERSE
 COINCIDE AT SIDE 3 for one reason: three Nodes on an axis are the least
 at which a Node's two neighbours are distinct from it and from each
 other (a detector's interior Node, 9.25 (10); a torus whose reads are
-not its own cell), the grain of the geometry and nothing more. (iii)
+not its own cell), the grain of the geometry and nothing more. THE EXACT-RETURN THEOREM, checked at the owner's word ("that is the
+theorem we were missing"; PROVED and COMPUTED): A RECORD OF ONE SHAPE
+RETURNS TO THE BIT AFTER ITS OWN PERIOD IF AND ONLY IF ITS MULTIPLIER m =
+2 cos omega IS AN INTEGER WITH |m| <= 1 AND ITS PROFILE AN INTEGER
+EIGENVECTOR (the level one step back an integer); THEN THE REMAINDER IS
+0 AT EVERY INTERVAL AND THE PERIOD IS 3, 4 OR 6. Proof: if the two
+levels return exactly after P intervals, the shape's rotation satisfies
+P omega in 2 pi Z, so omega is a rational multiple of pi and by Niven 2
+cos omega is in {0, +-1, +-2}; +-2 carry no form ((1a) (a)), and for m in
+{-1, 0, 1} the recurrence a_next = m a - a_before on integers has the
+period 3, 4 or 6 with no rounding, since num S_6 p = 3 den m p exactly.
+A state of several such shapes returns after the least common multiple
+of their periods (1, 2, 3, 4, 6 or 12); every other integer state
+returns only by the recurrence of the whole ((4) (b)), never by its
+rotation. COMPUTED on light's tori with even eigenvector seeds: the
+three-cube carries all three exact returns (the periods 6, 4 and 3 at
+lambda = 3, 0, -3, the remainder 0, the forms nonzero); the four-cube
+carries the period 4 alone (its other integer multipliers are +-2, the
+static and the alternating levels); the six-cube carries all three
+again; so THE THREE-CUBE IS THE SMALLEST UNIVERSE THAT TURNS EXACTLY IN
+EVERY WAY THE LAW ALLOWS, and its side is the detector's least side for
+the one reason above. (iii)
 PERIODIC AND CLICKING AT ONCE: with the click irreversible one click ends
 the periodicity ((3) (b), (4) (c)); a universe cannot be both exactly
 periodic and clicking unless its click is made reversible, the owner's
