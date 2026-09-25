@@ -9595,10 +9595,11 @@ with a shape.
 
 **(2) ITS STEP.** The rotation moves by the two-term rule with the clock
 of its content: den_c (Gamma + M) a' + r' = (num_c Gamma + 2 den_c M) a
-- den_c (Gamma + M) b + r, 0 <= r' < den_c (Gamma + M) (between clicks;
-at the interval of a click the two walls of 9.50 (6), the produced value
-under the content after the click and the before term under the content
-before it, so that the record's own backward run is exact); this is 2 cos
+- den_c (Gamma + M) b + r, 0 <= r' < den_c (Gamma + M) (the form of the
+wall 3 den (Gamma + M); under the constant wall ruled in 9.50 (8) it is
+den_c Gamma a' + r' = (num_c (Gamma - M) + 2 den_c M) a - den_c Gamma b
++ r, 0 <= r' < den_c Gamma, the same wall at every content and the
+record's own backward run exact through its clicks); this is 2 cos
 omega' = (Gamma / (Gamma + M)) 2 cos omega + 2 M / (Gamma + M), which is
 1 - cos omega' = (Gamma / (Gamma + M))(1 - cos omega), the Node clock's
 rotation of 9.35 (2) in one coordinate; all integers, one division, the
@@ -10015,9 +10016,11 @@ property (4) of 9.20 (B) is restated: the joint step inverts exactly
 wherever the clock has not fallen at a Node with a record, and loses at
 most one remainder's worth of state per unit of fall where it has; the
 tests assert that. [SUPERSEDED by 9.50 on the owner's requirement of
-2026-09-25: the wall belongs to the edge between two intervals, and
-then the inverse is exact where the level falls too; the reason here
-(the content in f, e uniform on the Links) stands and 9.50 keeps it.]
+2026-09-25: the wall is the constant 3 den Gamma and the clock enters
+the numerator, (e, f) = (Gamma - c, Gamma), and the inverse is exact
+where the level falls too; the reason given here, that a per-Node e
+loses T1's conserved form, was WRONG: the form exists with the Node
+terms weighted by 1 / e_i and the Link current unweighted, 9.50 (9).]
 (B) THE FIELD AT UNIT LEVELS. With one unit per
 quantum (9.45 (1), the owner's "the clock as its amplitude") a body of
 1 to 64 quanta makes a field that is the rounding's walk within a few
@@ -10142,7 +10145,7 @@ not needed since 9.50 keeps the inverse with the wall on the edge);
 magnetism, spin, exclusion, the short-range forces (9.48's neighbours).
 Each waits on its own row and its own word.
 
-### 9.50 The backward run exact where the clock falls: the wall belongs to the edge between two intervals, not to the interval (the model owner's requirement of 2026-09-25 through the Boss: "the backward run must be solved; we need to find the right way to solve it"; PROVED and COMPUTED; supersedes the ruling (A) of 9.45 (6); for Nature24's build before 9.49 (2))
+### 9.50 The backward run exact where the clock falls: two exact forms, the wall on the edge between two intervals (2) and the constant wall with the clock in the numerator (8), the constant wall ruled the law's form (the model owner's requirement of 2026-09-25 through the Boss: "the backward run must be solved; we need to find the right way to solve it", and his word "always look in the algebra for the generic solution"; Nature24's proposal and the Boss's check, records 1994 to 1997; PROVED and COMPUTED; supersedes the ruling (A) of 9.45 (6) and corrects its reason; for Nature24's build before 9.49 (2))
 
 **(1) WHERE THE INVERSE IS LOST, EXACTLY.** The step at a Node under the
 Node clock (9.45 (3)): 3 den f a_next + r' = e num S_6(a_now) + 6 den
@@ -10279,3 +10282,125 @@ and backward T, the state bit-equal to the start, T at least the
 world's longest cycle; (b) the static-clock worlds bit-identical to
 today's digests; (c) the assertion of 9.45 (6) (A), "loses at most one
 remainder's worth per unit of fall", retired for "returns bit for bit".
+
+**(8) THE CONSTANT WALL, AND THE RULING (Nature24's proposal and the
+Boss's check of 2026-09-25, records 1996 and 1997; the owner: "always
+look in the algebra for the generic solution").** The second exact
+form: the wall the constant 3 den Gamma and the clock in the numerator,
+the pair (e, f) = (Gamma - c, Gamma):
+
+  3 den Gamma a_next + r' = (Gamma - c) num S_6(a_now) + 6 den c a_now
+  - 3 den Gamma a_before + r,  0 <= r' < 3 den Gamma.
+
+It is the one primitive of 9.45 (3) with another pair; 6 den (f - e) =
+6 den c; nothing new enters the law. The remainder's range is the same
+at every interval, so the split of the inverse is unique whatever the
+level does, with no order in the sweep and no second level read
+(COMPUTED, the scratch script `fixed_wall.py`: the ring of 48 Nodes at
+Gamma = 50 with 4299 falls, 0 of 400 backward steps wrong; the Boss on
+the host: 0 failures in 20000 against 1065 with the wall 3 den (Gamma +
+c)). At c = 0 it is the vacuum's rule term for term: every static
+world, the eighteen today, bit for bit. The rotation: 1 - cos omega' =
+((Gamma - c) / Gamma)(1 - cos omega) in place of (Gamma / (Gamma +
+c))(1 - cos omega); the two agree to first order in c / Gamma, the
+Newton limit and every reading of 9.45 (2) unchanged, and differ at
+second order by (c / Gamma)^2: 10^-12 at c = 1, 4 x 10^-9 at c = 64,
+10^-6 at c = 1000 (COMPUTED); no pin of the eighteen reads the second
+order, and nature's second order (the metric's) is neither of these
+two, so the choice is the law's. THE RULING: THE CONSTANT WALL IS THE
+LAW'S FORM. The reasons, one each: (i) it is the generic statement,
+every family's wall the constant of its declared pair, everything that
+moves in time in the numerator, as the owner asked; (ii) the inverse
+needs no order and no lookahead, the edge wall of (2) needs the family
+of clicks first in the sweep and the level of the next interval; (iii)
+the load bound loses the factor (Gamma + M) and the guard becomes c <
+Gamma, e > 0, so the amplitude bound 2^28 stands with more room (the
+numerator at most Gamma num times 6 times 2^28, the vacuum's own bound;
+under int64 as today); (iv) the reason that put the content in the wall
+was wrong, (9). The edge wall of (2) stays recorded as the exact form
+of the pair (Gamma, Gamma + c), not adopted. WHAT CHANGES WHERE: 9.41
+and 9.45 (1) to (3) read (Gamma - c, Gamma) for (Gamma, Gamma + c) with
+this ruling, the wheel W = 3 den Gamma / gcd((Gamma - c) num, 6 den c,
+3 den Gamma), the pair's own at c = 0; the body record (9.46 (2)) den_c
+Gamma a' + r' = (num_c (Gamma - M) + 2 den_c M) a - den_c Gamma b + r;
+the charge (9.48) the pair (Gamma - c + q Lambda d, Gamma) with the
+bound e > 0; the family of clicks' own step unchanged (e = f = Gamma).
+ONE PHYSICAL DIFFERENCE, at the extreme only: at c = Gamma the numerator
+is 0 and a record's rotation stops, a horizon at a content of Gamma
+quanta at one Node; under the wall 3 den (Gamma + c) the clock never
+stops. It is far outside every world of the eighteen and is stated, not
+used. The test of (7) stands, with (a) on the constant wall.
+
+**(9) THE REASON OF 9.45 (6) (A), CORRECTED (PROVED and COMPUTED).**
+(A) said that a per-Node e makes the neighbour coupling asymmetric and
+loses T1's conserved form, so the content had to sit in the wall. That
+was wrong. Write the static linear step as a_next + a_before = B a_now
+with B_ij = e_i num / W_i on the Links and B_ii = 6 den (f_i - e_i) /
+W_i; B is not symmetric when e_i or W_i differs by Node, but D B is
+symmetric for the diagonal weight D_ii = W_i / e_i, since (D B)_ij =
+num on every Link; and for any such D the form Q = a_next . D a_next +
+a_now . D a_now - a_next . D B a_now is conserved exactly (the
+difference of two consecutive Q is a_next . D a_before - a_before . D
+a_next = 0, D symmetric). So the conserved form on a set is the sum
+over its Nodes of [3 den f_i (now^2 + before^2) - 6 den (f_i - e_i) now
+before] / e_i less num (now . S_6 before) over its Links, with the Link
+current num (now_i before_j - before_i now_j) UNWEIGHTED and the same
+in both forms; T1 holds with the Node terms weighted. In the pair
+(Gamma, Gamma + c) the weight is 1 / Gamma, uniform, so the form is the
+integer E_i of 9.45 (3) with the content in the wall; in the pair (Gamma
+- c, Gamma) the weight is 1 / (Gamma - c_i), a rational per Node, the
+same integer form within a body at one level. COMPUTED in exact
+rationals on the ring at a static level walking by Node: both forms
+conserved exactly, the unweighted sum under (Gamma - c, Gamma) not.
+The share is a GameBoard reading (a diagnostic); the click's taking end
+reads the current, which is the same integer in both forms.
+
+**(10) CONSERVATION, ON THE OWNER'S TWO WORDS (records 1997 and
+Nature24's question: "why did you think another family, gravity or
+energy, is needed for conservation?").** The owner: "the conservation
+must follow from local laws at the Node; these conservations must not
+be laws that we put in so that it comes out that way." The answers, one
+each. (a) No family was ever meant for conservation: 9.45 (5) speaks of
+a COUPLING, the family of clicks reading the records' shares at the
+Node as its source in place of the counted content; the fifth family
+of 9.48 is the charge, another matter. (b) What follows by itself from
+the rule at the Node, with nothing put in: each family's weighted
+share (9) where the clock stands, exactly, from the step's symmetric
+form (D B symmetric); the count of quanta at every click; the exact
+backward run, which is the rule at every Node one to one, (8). (c)
+What does not follow and is not declared: a conserved total of the
+families under a moving clock; the records' share changes by the
+clock's work (5) and nothing balances it, because the family of clicks
+reads no family; 9.45 (5) says so and 9.47 (10) marks it "none, by
+choice"; no rule is written to make a total come out. (d) Is there a
+generic local form in which the family of clicks and the records
+balance with no rule added for it: YES, in principle, and it is
+gravity by energy: one joint local rule from one form at the Node,
+the records stepped with the clock as their index and the clock
+stepped from the records' shares, the same form read both ways (a
+variational step of one local quadratic); then a conserved total
+follows from the form's symmetry under a shift of the interval (the
+discrete Noether identity), not from a rule written for it; its
+integer form and its exact backward run (the source read one edge
+behind, so that the inverse has what it needs) are not derived here
+and stand OPEN under their own identity, as 9.45 (5) placed them. (e)
+Needed or wanted: no pin of the eighteen needs a conserved total with
+gravity; it is wanted for light as a source of the field, the mass
+defect of a bound body and the moving body's weight, none of them a
+row today. (f) The exact backward run is not that conservation: it is
+the rule's one-to-one form, a different property, and it is now exact
+by (8) with nothing added.
+
+**(11) THREE CONVENTIONS OF THE BUILD, STATED (Nature24's head 3715fcb0,
+the reseed retired; the pieces he listed as stated nowhere).** (i) The
+first residue after the load is read after the body's first advance,
+because the seed's remainders are 0 at the write (9.43 (4), 9.19 (4e)):
+a convention of the load, one line. (ii) The shell on a folded axis of
+extent 1 carries no Port, as the flux reading's Ports (the Node reads
+itself there, the read matrix of the chain lemma): a convention of the
+GameBoard's folding, stated. (iii) The count's P is the emitter's
+declared integer, the mode's period at the initial content under the
+clock (9.45 (5)); the clocked period exceeds the plain mode's by about
+M / (2 Gamma) intervals, below one interval at every content of the
+eighteen, so the integer is the same; when it is not, the generator's
+integer under the clock is the one declared.
