@@ -16726,12 +16726,17 @@ as written here.
    symmetry says; the phase pace's anisotropy, which on the cubic
    lattice is + k^2 / 48 between the face diagonal and the axis (the
    pace fans' number, reproduced) and + k^2 / 36 for the body
-   diagonal, is on the Laves graph - k^2 / 384 and - k^2 / 288: one
-   eighth of the cubic lattice's and of the opposite sign (the
-   diagonals slower, not faster); a mirror does not map the net onto
-   itself. So B as a board works: light isotropic, the lattice eight
-   times fainter in its own anisotropy, and chiral; the pace fans' row
-   would read the sign and the eighth.
+   diagonal, is on the Laves graph - k^2 / 48 and - k^2 / 36 PER LINK
+   (a Link its edge, 0.354 of the cubic cell): the same size as the
+   cubic lattice's and of the opposite sign, the diagonals slower, not
+   faster. (My first line here read "one eighth", the number in units
+   of the cubic cell, whose edge is 2.83 Links; the Boss's rerun,
+   record 2142, put it per Link, and per Link the light pace is k^2 /
+   6 on both graphs, the same speed per Link.) A mirror does not map
+   the net onto itself. So B as a board works: light isotropic at the
+   same pace per Link, the lattice's own anisotropy of the same size
+   with the sign reversed, and chiral; the pace fans' row would read
+   the sign.
    (c) The count 3 of the three exits is the vector's three
    components in another arrangement, and a click on the visible cube
    reads them as a direction; so it is not a hidden index and not
@@ -16742,8 +16747,22 @@ as written here.
 7. The price of B: a change of the GameBoard itself. The rule reads
    three neighbours in place of six, its integers w, R and S change,
    every shipped digest changes, and every fourth-order number of this
-   document is recomputed. It is the largest decision for three there
-   is.
+   document is recomputed. THE COMPLICATION (the Boss's record 2142):
+   one Node's three exits lie in one plane (the exits of a Node in
+   eighths of the cell are (-2, 2, 0), (2, 0, -2) and (0, -2, 2), of
+   determinant 0), so a Node and its three neighbours cannot read a
+   direction in three dimensions; the vector and tensor parts, the
+   paces per axis, the twist per Port and the click's direction all
+   read a third direction only through the neighbours' neighbours,
+   which is not the fixed local work of LOCALITY-1 at K = 1. The
+   saving (host): 0.354 Nodes per cubic Link in place of 1, and three
+   neighbour reads in place of six. The bit-for-bit history is not the
+   price: a board is checked by its clicks against the same blind
+   table, the grain-free rows unchanged and the grain rows moved by a
+   known amount (the model owner's word of 2026-09-26). It is the
+   largest decision for three there is; the Boss's view to the owner
+   (record 2142): not now, the host saving to be taken later as an
+   optimisation.
 
 8. Status. Neither A nor B is in the law. A has a test that costs one
    row (item 4); B has a test that costs a new board (item 6 (b)).

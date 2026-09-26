@@ -13,10 +13,14 @@ face diagonal and the axis, k^2 / 48 (reproduced here), and between the body
 diagonal and the axis, k^2 / 36.
 
 Read on 2026-09-26: the Laves graph's second-order tensor is isotropic (0.0625
-times the identity in units of the cubic cell's edge); its fourth-order
-anisotropy is -k^2 / 384 (face diagonal) and -k^2 / 288 (body diagonal), one
-eighth of the cubic lattice's and of the opposite sign (the diagonals slower,
-not faster); a mirror does not map the net to itself (the net is chiral).
+times the identity in units of the cubic cell's edge, which is k^2 / 6 per
+Link with the Link its edge of 0.354 cells: the same light pace per Link as
+the cubic lattice's); its fourth-order anisotropy is -k^2 / 384 (face
+diagonal) and -k^2 / 288 (body diagonal) in units of the cell, which is
+-k^2 / 48 and -k^2 / 36 per Link: the same size as the cubic lattice's and of
+the opposite sign (the diagonals slower, not faster; the Boss's record 2142
+put the numbers per Link); a mirror does not map the net to itself (the net
+is chiral). The printed coefficients are per cell; multiply by 8 for per Link.
 
 Run: python docs/designs/laves_graph/laves_graph_check.py (about one second).
 """
