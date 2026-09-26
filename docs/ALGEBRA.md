@@ -18357,3 +18357,54 @@ finding for me, the run is never adjusted).
    alone. Nothing else in the ledger is beyond the rule; a new row
    answers the same question with the same two words before it is
    built.
+
+### 9.114 Conservation as a declaration: what the rule conserves by itself, what a click conserves by the family's declared integers, the balance the engine checks generically, and the reading that proves it (the model owner's word of 2026-09-26: "the conservation laws a Node must keep are a generic rule we need; a conservation law for a family or a coupling is not in code; after the engine is in, nobody writes code; if something is missing, generic code is added to the engine and used as a generic output")
+
+1. **From the rule, no declaration.** The rule 9.57 (1) is linear,
+   translation-invariant and reversible, so between clicks it conserves,
+   per family and exactly in integers: the form E (the energy, 9.57 (1)
+   "the conserved form"), the form's momentum (9.84 (1)), and a record's
+   norm T (9.25 (12)). No key names these; the trace's lines (9.112 item
+   5) let a reader check each one by hand, and the run may declare a
+   reading of each (item 4).
+
+2. **At a click, by the family's declared integers.** A family's row
+   carries a list of CONSERVED INTEGERS per quantum, each a name and a
+   value: `conserved`: {count: 1, charge: q, ...}, the names the file's
+   (a colour, a lepton number, a baryon number are names in the file and
+   nothing to the code; 9.88 (4) "the conserved integers"). A body's
+   record keeps no separate totals: its total of the integer c is SUM
+   over the families it holds of c_k x M_k, read from M_k (9.51 (8)).
+   THE ONE GENERIC LAW OF THE CLICK: for every declared name, the value
+   the taker gains equals the value the record lost, and in a click with
+   several products (9.88 (4)) the sum over the products of the name's
+   value equals the taken quantum's; the loader refuses a clicks list
+   that does not balance every declared name, naming the name; the
+   click's writes then balance by construction, as Nature24's charge
+   test reads (9.51 (8)). A name that appears on one family and not on
+   another is 0 there. The momentum is the same law with the recoil as
+   its balance (9.111 item 2). No line of the engine knows a name.
+
+3. **A coupling conserves nothing of its own.** A read (9.110 item 7)
+   is a coefficient of the pace; it moves no integer between families,
+   so it conserves what the rule conserves and needs no declaration.
+   Where a coupling must carry a sign per quantum (the charge in the
+   pace, by "sign"), the sign is the declared value q of the family's
+   `conserved` list read by the pace, one declaration for both uses.
+
+4. **The reading that proves it, a GameBoard reading.** A start file
+   may ask, per declared name, the TOTAL over the board at every
+   interval: SUM over the bodies of their totals plus SUM over the
+   records in flight of the name's value times their count; a constant
+   sequence, or the run fails the check naming the name and the
+   interval. The same for the form E and the momentum per family. The
+   check is generic (a sum over the declared names), a diagnostic, read
+   by no word.
+
+5. **After the merge, said once.** A missing conserved quantity is a
+   name in the file, never code. A missing MECHANISM (a balance the six
+   Port words of 9.112 cannot express) is a new generic word of the
+   engine, added once by Coder 3 under the gate, used by every family
+   through a key, and refused as a branch on a family's name. The
+   loader's keys table (9.90 (6)) gains the key `conserved` with this
+   section as its column.
