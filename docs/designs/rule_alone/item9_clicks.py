@@ -72,6 +72,7 @@ POSITION_STEP = 263
 POSITION_START = 100
 QUANTA = 2000
 BOX = 9  # the box of a clicked quantum, about its Node
+VACUUM_COEFFICIENTS: dict = {}  # the kind's (R, S, w) per board shape, for the momentum reading
 EVERY = 50
 
 
@@ -224,10 +225,24 @@ def walk_of(peak: tuple[int, int, int], start: tuple[int, int, int]) -> float:
 
 
 class Record:
-    """One record on the board with its ladder: the running total, its residues, its clicks."""
+    """One record on the board with its ladder: the running total, its residues, its clicks.
+    With `keep_width` set, THE CLICK THAT KEEPS THE MOMENTUM (the Boss's record 2160): the
+    record is re-created at the click's Node as a packet of that rms width carrying the phase
+    gradient read from its currents before the click (sin K_a = sin omega_0 SUM J_a / SUM F, the
+    plane wave's relation), at the same norm; the displacement to the click's Node is booked
+    as the detector's share."""
 
     def __init__(
-        self, now: np.ndarray, before: np.ndarray, t_norm: float, u: int, u_position: int
+        self,
+        now: np.ndarray,
+        before: np.ndarray,
+        t_norm: float,
+        u: int,
+        u_position: int,
+        keep_width: float | None = None,
+        cos_omega: float = 0.0,
+        kind: tuple[int, int] = KIND,
+        born_by: str = "flux",
     ) -> None:
         self.now = now
         self.before = before
@@ -237,6 +252,73 @@ class Record:
         self.u = u
         self.u_position = u_position
         self.clicks: list[dict] = []
+        self.keep_width = keep_width
+        self.cos_omega = cos_omega
+        self.kind = kind
+        # THE CARRIED MOMENTUM (record 2160): the record's K as a label, set from its start and
+        # changed between clicks by what the rule did (the reading now less the reading just
+        # after the last re-creation); the reading alone re-imposed at every click loses a few
+        # percent per click on a narrow packet (the first run: K 0.11 to 0.0000 in 50 clicks)
+        self.k_label = self.momentum() if keep_width is not None else [0.0, 0.0, 0.0]
+        self.k_reference = list(self.k_label)
+        # THE NODE OF THE CLICK, BORN'S RULE BY THE INWARD FLUX (the engine's, 9.25 (3)) OR BY
+        # THE RECORD'S FORM AT THE NODE: a Link's flux is booked to the Node it enters, so a
+        # bath of Node detectors samples a moving packet one Link ahead of its density at
+        # every click (the `flux` run: 0.7 Link forward per click, the body at 2.7 times its
+        # speed); `density` samples the form itself, the cube detectors' limit
+        self.born_by = born_by
+
+    def momentum(self) -> list[float]:
+        """K per axis read from the currents (HOST): sin K_a = sin omega_K SUM J_a / I, I the
+        rule's conserved form at the kind's vacuum coefficients (both SUM J_a and I are exact
+        invariants of the free rule, so the reading holds between clicks; the pair form
+        now^2 + before^2 - 2 now before cos omega_0 is not invariant for a narrow packet and
+        drifted 6 percent per interval in the first run); omega_K from K by two passes of the
+        dispersion."""
+        num, den = self.kind
+        key = (self.now.shape, self.kind)
+        if key not in VACUUM_COEFFICIENTS:
+            numa = np.full(self.now.shape, num, dtype=R.INT)
+            dena = np.full(self.now.shape, den, dtype=R.INT)
+            VACUUM_COEFFICIENTS[key] = R.coefficients(numa, dena, np.zeros(self.now.shape, dtype=R.INT))
+        read, own, wall = VACUUM_COEFFICIENTS[key]
+        invariant = norm(self.now, self.before, read, own, wall, WRAP, num, den) * num / (3.0 * den)
+        if invariant <= 0:
+            return [0.0, 0.0, 0.0]
+        currents = [float(j.sum()) for j in link_currents(self.now, self.before)]
+        k = [0.0, 0.0, 0.0]
+        for _ in range(2):
+            two_cos = (num / den) * sum(2.0 * math.cos(v) for v in k) / 3.0
+            omega_k = math.acos(max(-1.0, min(1.0, two_cos / 2.0)))
+            k = [math.asin(max(-1.0, min(1.0, math.sin(omega_k) * c / invariant))) for c in currents]
+        return k
+
+    def recreate_with_momentum(
+        self,
+        node: tuple[int, int, int],
+        k: list[float],
+        read: np.ndarray,
+        own: np.ndarray,
+        wall: np.ndarray,
+    ) -> None:
+        shape = self.now.shape
+        grids = np.meshgrid(*[np.arange(n, dtype=np.float64) for n in shape], indexing="ij")
+        dx = [(g - c + s / 2) % s - s / 2 for g, c, s in zip(grids, node, shape, strict=True)]
+        r2 = sum(d * d for d in dx)
+        envelope = np.exp(-r2 / (2.0 * self.keep_width**2))
+        num, den = self.kind
+        two_cos = (num / den) * sum(2.0 * math.cos(v) for v in k) / 3.0
+        omega_k = math.acos(max(-1.0, min(1.0, two_cos / 2.0)))
+        phase = sum(kv * d for kv, d in zip(k, dx, strict=True))
+        now = envelope * np.cos(phase - omega_k / 2.0)
+        before = envelope * np.cos(phase + omega_k / 2.0)
+        unit_now = np.rint(now * 1024).astype(R.INT)
+        unit_before = np.rint(before * 1024).astype(R.INT)
+        unit_norm = norm(unit_now, unit_before, read, own, wall, WRAP, num, den)
+        scale = 1024.0 * math.sqrt(self.t_norm / unit_norm) if unit_norm > 0 else 1024.0
+        self.now = np.rint(now * scale).astype(R.INT)
+        self.before = np.rint(before * scale).astype(R.INT)
+        self.remainder = np.zeros(shape, dtype=R.INT)
 
     def step(
         self, read: np.ndarray, own: np.ndarray, wall: np.ndarray, t: int, num: int, den: int
@@ -248,7 +330,13 @@ class Record:
         increment = float(flux.sum())
         threshold = (2 * self.u + 1) * self.t_norm / (2.0 * WHEEL)
         if self.running + increment >= threshold:
-            node = born_node(flux, (2 * self.u_position + 1) / (2.0 * WHEEL))
+            if self.born_by == "density":
+                weight = R.envelope_squared(
+                    self.now, self.before, np.full(self.now.shape, self.cos_omega)
+                )
+                node = born_node(weight, (2 * self.u_position + 1) / (2.0 * WHEEL))
+            else:
+                node = born_node(flux, (2 * self.u_position + 1) / (2.0 * WHEEL))
             self.clicks.append(
                 {
                     "t": t,
@@ -257,12 +345,31 @@ class Record:
                     "increment_over_norm": increment / self.t_norm,
                 }
             )
-            level = one_node_level(self.t_norm, own, wall, num, den)
-            self.now = np.zeros(SHAPE, dtype=R.INT)
-            self.before = np.zeros(SHAPE, dtype=R.INT)
-            self.remainder = np.zeros(SHAPE, dtype=R.INT)
-            self.now[node] = level
-            self.before[node] = level
+            if self.keep_width is not None:
+                read_now = self.momentum()
+                k = [
+                    label + (now_value - reference)
+                    for label, now_value, reference in zip(
+                        self.k_label, read_now, self.k_reference, strict=True
+                    )
+                ]
+                self.k_label = k
+                e2 = R.envelope_squared(self.now, self.before, np.full(self.now.shape, self.cos_omega))
+                centroid = R.centroid(e2)
+                self.clicks[-1]["k_read"] = k
+                self.clicks[-1]["detector_share"] = [
+                    float((n - c + s / 2) % s - s / 2)
+                    for n, c, s in zip(node, centroid, self.now.shape, strict=True)
+                ]
+                self.recreate_with_momentum(node, k, read, own, wall)
+                self.k_reference = self.momentum()
+            else:
+                level = one_node_level(self.t_norm, own, wall, num, den)
+                self.now = np.zeros(SHAPE, dtype=R.INT)
+                self.before = np.zeros(SHAPE, dtype=R.INT)
+                self.remainder = np.zeros(SHAPE, dtype=R.INT)
+                self.now[node] = level
+                self.before[node] = level
             self.running = 0.0
             self.u = (self.u + RESIDUE_STEP) % WHEEL
             self.u_position = (self.u_position + POSITION_STEP) % WHEEL
