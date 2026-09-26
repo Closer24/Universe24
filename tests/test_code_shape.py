@@ -43,7 +43,10 @@ def test_the_tree_is_at_the_baseline_and_keeps_the_import_contracts():
     assert BASELINE["format"] == "code-shape-baseline"
     base = SHAPE.base_baseline(ROOT)
     assert SHAPE.violations(ROOT, BASELINE, base) == []
-    assert set(BASELINE["files"]) == {SHAPE.relative(ROOT, p) for p in SHAPE.python_files(ROOT, "src")}
+    present = {SHAPE.relative(ROOT, p): SHAPE.shape_of(ROOT, p) for p in SHAPE.python_files(ROOT, "src")}
+    beyond = {rel for rel, shape in present.items() if SHAPE.beyond_the_limits(rel, shape)}
+    assert set(BASELINE["files"]) == beyond and "recorded_at" not in BASELINE
+    assert list(BASELINE["files"]) == sorted(BASELINE["files"])
 
 
 def tree(tmp_path: Path, files: dict[str, str]) -> Path:
@@ -130,7 +133,9 @@ def test_a_feature_stub_grown_within_the_limits_passes_and_beyond_them_fails(tmp
         {**SMALL, f"{PACKAGE}/features/__init__.py": "", f"{PACKAGE}/features/stub/__init__.py": stub},
     )
     baseline = SHAPE.record(root)
-    assert baseline["files"][f"{PACKAGE}/features/stub/__init__.py"]["lines"] == 26
+    # a file within the limits has no entry in the baseline (the Boss's word of 21:09Z)
+    assert f"{PACKAGE}/features/stub/__init__.py" not in baseline["files"]
+    assert set(baseline["files"]) == {f"{PACKAGE}/core/a.py"} and "recorded_at" not in baseline
     grown = (
         '"""One line."""\n\nfrom event_universe.core.register import Declaration\n\n\n'
         + "".join(
@@ -145,8 +150,7 @@ def test_a_feature_stub_grown_within_the_limits_passes_and_beyond_them_fails(tmp
     assert SHAPE.violations(root, baseline) == []
     path.write_text(grown.replace('"""One line."""', '"""Two\nlines."""', 1), encoding="utf-8")
     found = SHAPE.violations(root, baseline)
-    assert any("lines grew from 26 to 152" in line for line in found)
-    assert any("docstring lines grew from 1 to 31" in line for line in found)
+    assert any("has 1 docstring(s) beyond one line and is new" in line for line in found)
 
 
 def test_two_functions_with_one_abstracted_body_fail_beyond_the_baseline(tmp_path):
