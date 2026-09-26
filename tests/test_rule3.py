@@ -156,13 +156,15 @@ def test_the_forms_node_term_and_the_load_bound_read_the_same_integers():
 RULE_LINES = (
     r"self_coefficient \* now\b",
     r"wall \* other\b",
-    r"direction \* carry\b",
+    r"direction \* total \+ carry",
+    r"direction \* quotient",
     r"now \* now \+ before \* before",
 )
 RULE_ARITHMETIC = RULE_LINES + (
     r"self_coefficient \* before\b",
     r"wall \* before\b",
     r"wall \* now \+ remainder",
+    r"direction \* carry\b",
 )
 
 
