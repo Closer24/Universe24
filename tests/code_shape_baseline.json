@@ -1,6 +1,6 @@
 {
  "format": "code-shape-baseline",
- "recorded_at": "2870e697",
+ "recorded_at": "8a4ab2b0",
  "files": {
   "src/event_universe/__init__.py": {
    "lines": 27,
@@ -59,8 +59,8 @@
    "level_shift_sites": 0
   },
   "src/event_universe/core/rule3.py": {
-   "lines": 98,
-   "docstring_lines": 10,
+   "lines": 94,
+   "docstring_lines": 6,
    "comment_lines": 3,
    "record_references": 0,
    "rule_arithmetic_sites": 0,

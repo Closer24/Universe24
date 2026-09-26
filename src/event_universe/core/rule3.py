@@ -1,8 +1,4 @@
-"""RULE3, THE RULE IN ONE PLACE (ALGEBRA.md 9.57 (1), 9.50 (8), (9), (13), 9.91 (2)): one function
-steps every record at every Node in either direction, w a_next + r' = SUM_a R_a (arr_a+ + arr_a-) +
-S a_now - w a_before + r with 0 <= r' < w forward and the same line read backward; the form's Node
-term and the integers of the paces come from the same place; integers or the loop's arrays, no numpy.
-"""
+"""Rule3 in one place: one function steps every record at every Node in either direction, w a_next + r' = SUM_a R_a (arr_a+ + arr_a-) + S a_now - w a_before + r with the remainder kept in [0, w); the form's Node term and the integers of the paces beside it (ALGEBRA.md 9.57 (1), 9.50 (8), (9), (13), 9.91 (2))."""
 
 from __future__ import annotations
 
