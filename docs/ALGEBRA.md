@@ -15940,3 +15940,46 @@ and quantum uncertainty, which the engine's clicks show (Born's rule,
 Bell) and the algebra states but does not derive from the rule. The
 owner's sentence stands in this form: the rule is put in; everything
 in the files follows from it; nature judges the rule.
+
+**(12) THE DIPOLE AT A HOP (the Boss's record 2126, commit 3).** As
+built: the hold is written whole at every interval at the body's Nodes
+as they stand after the hop (9.85 (2): after the held families' step),
+and the dipole's six writes are part of that hold, so they land on the
+six neighbours of the body's Node after the hop. Nothing is moved
+within the interval: 9.52 (4) (i)'s permutation moves the FIELD's free
+integers of the covered Nodes to the vacated ones, not the hold, which
+is rewritten. The inverse undoes the hold's writes with the body's
+step back, as 9.78 (2) says.
+
+**(13) THE CONSERVED FORM UNDER THE FOUR PACES (record 2126, commit
+3).** The step of 9.91 (2) is a_next + a_before = M a_now with M_ii =
+S_i / w and, on the Link from i to its neighbour j along axis a, M_ij
+= R_a(i) / w = 2 num p_a(i)^2 / w, the reader's own pace. A quadratic
+invariant of such a step exists exactly when M is symmetric under some
+Node weights G_i (G_i M_ij = G_j M_ji), and then it is
+
+  I = SUM over Nodes i of G_i [ (a_now,i^2 + a_before,i^2) - M_ii a_now,i a_before,i ]
+      - SUM over Links (i, j) of G_i M_ij (a_now,i a_before,j + a_before,i a_now,j),
+
+with G_i M_ij the Link's own weight, one number seen from both ends.
+(a) WITH THE TENSOR ZERO, p_a(i) = p_0(i) for every axis, G_i = w / (2
+num p_0(i)^2) makes every Link weight 1: the Node terms weighted by the
+inverse of the read's coefficient and the plain Link sum, today's form
+exactly (the exact rational the books carry). (b) WITH THE TENSOR
+NONZERO the Link weight along a would be R_a(i) G_i = R_a(j) G_j, and
+one set of Node weights fits every axis only when p_a(i)^2 / p_b(i)^2
+is the same at every Node (the product of the pace ratios around every
+square of four Links equal to 1); a tensor whose diagonal varies across
+the GameBoard breaks it, and then NO exact quadratic invariant of this
+kind exists: the form is conserved to the order of the tensor's
+gradient. That is where it stands: the form is a GameBoard reading
+(9.79 (2) item 9), never the law; the booking reads the plain current,
+the norm T is the record's own on its emitter's world where the tensor
+is zero, and the leak test reads levels, not the form. So commit 3
+builds the form of (a) as the reading and reports it as exact where the
+tensor is zero and as a reading elsewhere. (c) THE ONE WAY TO AN EXACT
+FORM under any paces, named and not built: a read that weighs the Link
+by both ends' paces, R_a(ij) = 2 num p_a(i) p_a(j), which makes M
+symmetric with G = 1 by construction; it is the far-end read of item
+34 (form (B), HISTORY) and it changes the rule, so it waits for a row
+that needs the form exact under a wave, which none of 9.87's does.
