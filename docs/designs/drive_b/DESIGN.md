@@ -7,7 +7,7 @@ before build: the physics-rule reviewer read the note at 6e245ddd and found it
 ADMISSIBLE WITH CORRECTIONS (the Boss, 2026-09-22, 04:15Z); his must-fix M1
 (section 7) and should-fixes S1 (section 3), S2 (section 4) and S3 (section
 2) are folded in here, in the build's first commit. Every number below is a HOST computation
-of the count rule ([drive_b_map.py](drive_b_map.py), its output
+of the count rule (drive_b_map.py (`docs/designs/drive_b/drive_b_map.py`, deleted 2026-09-26), its output
 [drive_b_map.out](drive_b_map.out)) or a derived pin, labelled GAMEBOARD or
 DETECTOR where it names a reading; no run of the engine was made.
 
@@ -246,7 +246,7 @@ detectors. `|p|_1 = 6000` on all three, so the wall is one number, `W =
 | `cube_b` | (2000, 2000, 2000) | on | tick 152 (+- 1), face +x, from Node (40, 40, 40): 21, 20, 20 Links, the pace per axis 0.1388 | tick 65 from (40, 20, 20): y and z never moved, 42 fires lost |
 | `axis_main`, `plane_main`, `cube_main` | the same | off | the refuting readings above as the controls' own DETECTOR pins: 36, 50, 65 from (40, 20, 20), byte for byte the drive `main` runs | |
 
-The derivation of each pin ([drive_b_map.py](drive_b_map.py) (A)): the k-th
+The derivation of each pin (drive_b_map.py (`docs/designs/drive_b/drive_b_map.py`, deleted 2026-09-26) (A)): the k-th
 fire on axis x is at the first n with `n |p_x| Q >= k W`; the 21st x Link
 (the escape from x = 40) is at `ceil(21 W / (|p_x| Q))` = 51, 101, 152; on
 the diagonals x wins every tie (the lowest axis) and is never deferred, y

@@ -40,7 +40,7 @@ GAMEBOARD (the host's view) or COMPUTATION (the algebra's).
 | Rows complete as they stand (nothing needed) | 7: 1a, 1b, 2b, 2c, 5a, 8c, 9 |
 | Rows needing a re-run at head | 6: 3 and 4b (one run serves both), 7a and 7b (one batch), 8a and 8b (one batch); plus 2a after its pin |
 | Rows needing more clicks | 0 (8a and 8b: the criterion does not need more clicks; see the rows) |
-| Rows needing a pin derived for this world | 1: 2a (derived in this commit, before the run: [slits_huygens_pin.py](slits_huygens_pin.py), [its output](slits_huygens_pin.out)) |
+| Rows needing a pin derived for this world | 1: 2a (derived in this commit, before the run: slits_huygens_pin.py (`docs/designs/paper_criteria/slits_huygens_pin.py`, deleted 2026-09-26), [its output](slits_huygens_pin.out)) |
 | Rows marked and left to another writer | 1: 12 (series T, being redeclared in the weak field by the chief physicist) |
 | Readings NOT MADE | 3 rows of the far lamp (11a, 11b, 11c: an engine key not built) and 4 readings the paper names: the two-way c after a detector; the inverse square's decisive reading (form B, a closed orbit's period at two radii); the moving detector's one-way ratio and the velocity's quantum (the cart build in flight); and the detector reading behind row 8a's width (a lamp at the shell counted between the clicks) |
 
@@ -138,7 +138,7 @@ per run, so none waits for the Boss's word.
   (the digital lines' landings: the bright pixels at y = 36 and 84 read
   19 and 20 where their neighbours read 41 and 42) is what the reading
   carries below the ideal. **The pin for this world's fan, derived
-  before the run** (this commit, [slits_huygens_pin.py](slits_huygens_pin.py):
+  before the run** (this commit, slits_huygens_pin.py (`docs/designs/paper_criteria/slits_huygens_pin.py`, deleted 2026-09-26):
   the register's own algebra, `two_slits_map.py`'s walk by the flight
   table's closed form on the world's declared fan and weights, the phase
   of every row by BEAM_LAW note 45, u = ordinal x 2531 mod 4096 with the

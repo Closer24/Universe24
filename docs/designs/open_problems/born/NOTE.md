@@ -10,7 +10,7 @@ click without amplitudes), 24.1 row 12 and 24.3 rows 4 and 20, the
 paper's postulate P10 ("one imported member of a derived family"), the
 register's two-slit bands (record 156), Malus at 22.5 degrees (record
 395, the engine's 219 / 256 and 187 / 256 exactly as pinned) and the
-pair's 27, 5, 5, 27. Every number is from [born_map.py](born_map.py)
+pair's 27, 5, 5, 27. Every number is from born_map.py (`docs/designs/open_problems/born/born_map.py`, deleted 2026-09-26)
 beside this note (host arithmetic on the exact cosines at N = 64; the
 built tables round at 1 / 256) and its output [born_map.out](born_map.out);
 no run, nothing registered, nothing decided. Notation: **f** the
@@ -202,3 +202,5 @@ declaration; a run of seconds.
 [BEAM_LAW note 37](../../../BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (xii);
 [the Malus note](../../malus/NOTE.md); [NATURE](../../../NATURE.md) rows 2c and 9;
 [the three tests](../../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).
+
+> The scripts of this folder (`born_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/open_problems/born/<script>`).

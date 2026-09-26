@@ -12,9 +12,9 @@ intervals and the outward legs 1.08 against 0.73 over 2310. The question:
 why does a reader stepping toward the source read more than its Doppler,
 and stepping away the shell law and not the Doppler-reduced value; is the
 excess the rule's (a double count on the fan) or nature's? Answered
-read-only from [orbit_read_map.py](orbit_read_map.py) and its
+read-only from orbit_read_map.py (`docs/designs/orbit_read/orbit_read_map.py`, deleted 2026-09-26) and its
 [output](orbit_read_map.out): the crossing rule transcribed as
-[crossing_2d.py](../crossing/crossing_2d.py) transcribes it (C1 the swap,
+crossing_2d.py (`docs/designs/crossing/crossing_2d.py`, deleted 2026-09-26) transcribes it (C1 the swap,
 C2 the entered Node's residents against the step, C2' with it, C3 the
 arrivals, C3' came with the body, C3'' the leapfrog), on series D's own
 geometry (the plane, the fan of 120 in-plane directions, one shell of 120
@@ -149,10 +149,12 @@ rule's Doppler on the fan, the two numbers this note predicts as 1.2 to
 
 [The crossing rule](../crossing/DESIGN.md) (section 2, the criterion and
 the proof on the axis; section 5 (c) beyond the axis) and its
-[independent count](../crossing/crossing_2d.py);
+independent count (`docs/designs/crossing/crossing_2d.py`, deleted 2026-09-26);
 [DERIVATIONS_BEAM 3.2](../../DERIVATIONS_BEAM.md#32-the-far-field-a-beam-does-not-dilute-a-shell-does)
 (the shell mean and the ring counts);
 series D (`examples/events/orbit/README.md`, deleted 2026-09-26) and
 its generator (`examples/events/orbit/make_worlds.py`, deleted 2026-09-26);
 [BEAM_LAW section 3](../../BEAM_LAW.md#3-the-nodes-interval-nature_beam)
 step 4 and note 48.
+
+> The scripts of this folder (`orbit_read_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/orbit_read/<script>`).

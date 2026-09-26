@@ -9,7 +9,7 @@ clock." Read against the law on `main` at 1976d8dd (the clock's word
 decided as the age word at 14:01Z, record 394; `clock-age-v1` not yet
 built; form B not on `main`; `optical-v1` designed, reviewed BUILDABLE
 and given the owner's go, not built). Every number is from
-[light_bending_map.py](light_bending_map.py) beside this note (integers,
+light_bending_map.py (`docs/designs/open_problems/light_bending/light_bending_map.py`, deleted 2026-09-26) beside this note (integers,
 the flight rule and the unit label transcribed from BEAM_LAW section 3,
 no engine import) and its output
 [light_bending_map.out](light_bending_map.out); no run, nothing
@@ -388,3 +388,5 @@ Boss:
 the orbit's inward legs (docs/designs/orbit_read/NOTE.md on the branch claude/orbit-read at the time of writing, PR #597: the Manhattan factor of a fan, the same lesson);
 [NATURE](../../../NATURE.md); the lensing README (`examples/events/lensing/README.md`, deleted 2026-09-26);
 [the three tests](../../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).
+
+> The scripts of this folder (`light_bending_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/open_problems/light_bending/<script>`).

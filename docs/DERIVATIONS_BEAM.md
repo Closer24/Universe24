@@ -1817,7 +1817,7 @@ Mach-Zehnder and pair world of the register is blind to them.
 **The question** (the owner's, 2026-09-21: "is there a vector operation
 that replaces the amplitudes?"; the Boss's answer, proved and corrected
 here). The map script beside this document,
-[click_gram.py](designs/derivations_beam/click_gram.py) with its output
+click_gram.py (`docs/designs/derivations_beam/click_gram.py`, deleted 2026-09-26) with its output
 [click_gram.out](designs/derivations_beam/click_gram.out), makes every
 check below on the engine's own tables, a host computation and no run.
 
@@ -2488,7 +2488,7 @@ the product torus advancing linearly between events, and the lattice
 enters through the flight's closed form; what the event form removes is
 the idle intervals and the idle Nodes, and what it cannot remove is the
 events and their order. The host script beside this document,
-[event_count.py](designs/derivations_beam/event_count.py) with its output
+event_count.py (`docs/designs/derivations_beam/event_count.py`, deleted 2026-09-26) with its output
 [event_count.out](designs/derivations_beam/event_count.out), counts the
 events against the intervals and the active Nodes on five registered
 worlds (each run in-process for its own ticks, a reproduction of
@@ -2770,7 +2770,7 @@ things already decided (c as the cap of every body's drive, record 186;
 the push retarded at c, section 5; the pair in motion of section 10) and
 one vector operation to add, the aberration of a moving body's fan. The
 host script beside this document,
-[lorentz_field.py](designs/derivations_beam/lorentz_field.py) with its
+lorentz_field.py (`docs/designs/derivations_beam/lorentz_field.py`, deleted 2026-09-26) with its
 output [lorentz_field.out](designs/derivations_beam/lorentz_field.out),
 makes every check below on the engine's own flight table (the register's
 deuteron fan), a host computation and no run. Throughout, beta (the
@@ -3078,7 +3078,7 @@ theory the magnetic force is exactly the velocity dependence of the read
 flux; (2) the orbit as the bond: a contact Link cannot contract, but
 series D's orbit is a bound pair with a radius set by the push against
 the drive, and the pair in motion is that orbit thrown. The host script
-[orbit_thrown.py](designs/derivations_beam/orbit_thrown.py) with its
+orbit_thrown.py (`docs/designs/derivations_beam/orbit_thrown.py`, deleted 2026-09-26) with its
 output [orbit_thrown.out](designs/derivations_beam/orbit_thrown.out)
 integrates the law's continuum equations for (2) on the registered
 `s32_r24` geometry; no run.
@@ -3277,7 +3277,7 @@ moving body reads by the crossing rule (record 158; sections 2 and 12b.1),
 so its count differs from a rest body's. Does the difference slow the
 mover's counter, by how much against gamma (the Lorentz factor), and at
 what cost? The host script
-[mover_counter.py](designs/derivations_beam/mover_counter.py) with its
+mover_counter.py (`docs/designs/derivations_beam/mover_counter.py`, deleted 2026-09-26) with its
 output [mover_counter.out](designs/derivations_beam/mover_counter.out)
 makes every number below on the derivation's own formulas and on the
 registered fan and readings of series E; no run.
@@ -3809,7 +3809,7 @@ one read-out, section 0). The entropy of the world at a time is
     S = log2 of the number of state vectors s on the product torus consistent with the click list up to that time,
 
 a count of points on the torus, no continuum measure. The host script
-[entropy_clicks.py](designs/derivations_beam/entropy_clicks.py) with its
+entropy_clicks.py (`docs/designs/derivations_beam/entropy_clicks.py`, deleted 2026-09-26) with its
 output [entropy_clicks.out](designs/derivations_beam/entropy_clicks.out)
 evaluates it on the register's click counts; no run.
 
@@ -3974,7 +3974,7 @@ does not grow, what grows is the number of Nodes between places"; and
 his addendum, record 218: "the universe grows, neither closed nor open,
 but keeps a constant total computation; then c must be tied to the size
 of the universe"; the Boss's order (D)). The host script
-[growing_wall.py](designs/derivations_beam/growing_wall.py) with its
+growing_wall.py (`docs/designs/derivations_beam/growing_wall.py`, deleted 2026-09-26) with its
 output [growing_wall.out](designs/derivations_beam/growing_wall.out)
 makes every check below on integer accumulators and the registered
 stars; no run. The periodic universe (no faces) and the rule's entry
@@ -4173,7 +4173,7 @@ the things, all the numbers they measured; try to derive them yourself
 from the groups, like big G, and other numbers known in nature; try to
 reach them yourself, as you reached c"; "so maybe mass is not a free
 parameter: the minimal mass"; the Boss's order). The host script
-[nature_numbers.py](designs/derivations_beam/nature_numbers.py) with its
+nature_numbers.py (`docs/designs/derivations_beam/nature_numbers.py`, deleted 2026-09-26) with its
 output [nature_numbers.out](designs/derivations_beam/nature_numbers.out)
 makes every number below; no run.
 
@@ -4315,7 +4315,7 @@ with the theorem's bound.
 smallest and the quark the smallest, and the quark composes the
 protons and neutrons; try to reach the smallest mass by kind from our
 conditions"; the host script
-[smallest_mass.py](designs/derivations_beam/smallest_mass.py) with its
+smallest_mass.py (`docs/designs/derivations_beam/smallest_mass.py`, deleted 2026-09-26) with its
 output [smallest_mass.out](designs/derivations_beam/smallest_mass.out)).
 The law's own condition that fixes a floor is the charge line: a
 family's charge per unit of content is a reduced pair `rho = [n, d]`
@@ -4408,7 +4408,7 @@ and hbar** (the owner's three questions in conversation, record 266,
 translated: "extract the lattice's length from G, and then you could
 know the size of the universe"; "bring the computation into S and G and
 try to give these numbers"; "maybe G is the one that varies"; the host
-script [units_from_g.py](designs/derivations_beam/units_from_g.py) with
+script units_from_g.py (`docs/designs/derivations_beam/units_from_g.py`, deleted 2026-09-26) with
 its output [units_from_g.out](designs/derivations_beam/units_from_g.out)).
 Three paragraphs, each with its assumptions named.
 
@@ -4594,7 +4594,7 @@ linear block, builds it on Newton (where the law already stands) and
 tries it on Lorentz (where the law does not), naming for each rule of a
 body the reading that would inherit the symmetry, within the six verbs,
 as a candidate and not a build. The host script
-[covariant_readings.py](designs/derivations_beam/covariant_readings.py)
+covariant_readings.py (`docs/designs/derivations_beam/covariant_readings.py`, deleted 2026-09-26)
 with its output
 [covariant_readings.out](designs/derivations_beam/covariant_readings.out)
 makes the numbers; no run. The script is a floating-point consistency
@@ -4816,7 +4816,7 @@ the physics-rule reviewer, 2026-09-21; ADMISSIBLE WITH MUST-FIXES) found
 nine design sentences of 17.3 wrong, absent or unreachable on the engine
 of `main`. Nothing above is rewritten; each fix below replaces the
 sentence it names, marked M1 to M9, with the integers from the host
-script [amended_pins.py](designs/derivations_beam/amended_pins.py) and
+script amended_pins.py (`docs/designs/derivations_beam/amended_pins.py`, deleted 2026-09-26) and
 its output [amended_pins.out](designs/derivations_beam/amended_pins.out).
 Notation, once (S2, and the Boss's decision under record 362 on
 2026-09-21, applied here at this pass): **p** the momentum vector and p
@@ -5181,7 +5181,7 @@ m^2 >= n^2 W`, a comparison of two integer products (verbs 1, 2 and 6),
 the physics the same, `t / n >= sqrt(W) / m = gamma`. This section
 derives what the counters give against the whole-root gate, exactly, on
 the domain `abs(p)_1 <= m` (`gamma <= 2`), with the enumeration
-[root_free_gate.py](designs/covariant_readings/root_free_gate.py) (its
+root_free_gate.py (`docs/designs/covariant_readings/root_free_gate.py`, deleted 2026-09-26) (its
 output [root_free_gate.out](designs/covariant_readings/root_free_gate.out);
 integers only, no root and no float anywhere; a check, not a run).
 
@@ -5326,7 +5326,7 @@ linear block, and a failure closes when a covariant reading exists
 within the six verbs, passes the three tests, and the register's number
 follows from it; it stays open when the reading needs what the six do
 not have. The host script
-[decay_click.py](designs/derivations_beam/decay_click.py) with its
+decay_click.py (`docs/designs/derivations_beam/decay_click.py`, deleted 2026-09-26) with its
 output [decay_click.out](designs/derivations_beam/decay_click.out)
 makes the numbers of 18.2; no run.
 
@@ -5467,7 +5467,7 @@ u against the reader's rung; passes the three tests; not built.
 (the owner, record 271, translated: "what do you mean that a
 background crowd is needed? maybe that solves everything; what is this
 background crowd you need?"; the host script
-[crowd_decay.py](designs/derivations_beam/crowd_decay.py) with its
+crowd_decay.py (`docs/designs/derivations_beam/crowd_decay.py`, deleted 2026-09-26) with its
 output [crowd_decay.out](designs/derivations_beam/crowd_decay.out)).
 
 *What the crowd is.* Nothing new: the field rows every body already
@@ -5731,7 +5731,7 @@ close the whole family; and understand how the quarks bind, the
 binding law, generically"). What the structure gives is stated as
 derived, what it does not as input, with the numbers against nature
 (PDG 2024, CODATA 2022) from the host script
-[masses_chain.py](designs/derivations_beam/masses_chain.py) with its
+masses_chain.py (`docs/designs/derivations_beam/masses_chain.py`, deleted 2026-09-26) with its
 output [masses_chain.out](designs/derivations_beam/masses_chain.out);
 no run. The quarks' design (records 249, 251) is the physicist's and
 is not on `main`; this section states what any design must satisfy
@@ -5891,7 +5891,7 @@ a thousand of its mass (1.0 MeV of 938).
 "try to understand the rest of the masses and reach on your own the
 masses measured in nature, which are of course measured after
 detectors"). The host script
-[rest_of_masses.py](designs/derivations_beam/rest_of_masses.py) with its
+rest_of_masses.py (`docs/designs/derivations_beam/rest_of_masses.py`, deleted 2026-09-26) with its
 output [rest_of_masses.out](designs/derivations_beam/rest_of_masses.out)
 makes the numbers (PDG 2024); no run.
 
@@ -5986,7 +5986,7 @@ order). Two boards, what each predicts for a detector at rest under the
 growing wall of section 15, the measured numbers that decide, the
 verdict in the owner's terms, and expansion-v1's rule stated once so
 that it can be chosen. The host script
-[periodic_images.py](designs/derivations_beam/periodic_images.py) with
+periodic_images.py (`docs/designs/derivations_beam/periodic_images.py`, deleted 2026-09-26) with
 its output
 [periodic_images.out](designs/derivations_beam/periodic_images.out)
 makes the numbers; no run.
@@ -6486,7 +6486,7 @@ the plane's `pi / sqrt 2` and `-105.4`; form B's pace on a heading at n =
 physicist's integrator `-80.6` at the rosette's amplitude, within 0.4
 degrees; today's per-axis pace at n = 9 gives e = 0.780, 134.9 and
 `-90.2`, the integrator's `-90.5`): `-81` is right under form B's pace and
-`-105` was the Newtonian pace's ([kepler_compton.py](designs/derivations_beam/kepler_compton.py)
+`-105` was the Newtonian pace's (kepler_compton.py (`docs/designs/derivations_beam/kepler_compton.py`, deleted 2026-09-26)
 (D)). Under FORM.md 3.1's form (c), if adopted, the pace on the plane's
 diagonal at n = 10 is 13 percent below the heading's and the lamp worlds
 are re-pinned. Record 131's "no closed orbit by D's criterion"
@@ -6561,7 +6561,7 @@ covariant-readings-v1 is built.
 **The owner's direction** (records 291 and 292, translated: "let them
 derive all of Einstein"; "confirm all of them, and also Heisenberg and
 the uncertainty principle, and Bell"). The host script
-[uncertainty_lattice.py](designs/derivations_beam/uncertainty_lattice.py)
+uncertainty_lattice.py (`docs/designs/derivations_beam/uncertainty_lattice.py`, deleted 2026-09-26)
 with its output
 [uncertainty_lattice.out](designs/derivations_beam/uncertainty_lattice.out)
 makes the numbers; no run.
@@ -6701,7 +6701,7 @@ named and not built: a family of massive rows carrying a momentum label
 = E'_0^2 + 3 p . p` (17.6 M3) in place of c, and turning de Broglie's
 `abs(p) N / h` per Link (7.2): row 57's "family of rows whose pace reads
 their phase per Link". The host check
-[massive_rows.py](designs/derivations_beam/massive_rows.py) with its
+massive_rows.py (`docs/designs/derivations_beam/massive_rows.py`, deleted 2026-09-26) with its
 output [massive_rows.out](designs/derivations_beam/massive_rows.out)
 makes the numbers; no run. Nothing enters the law.
 
@@ -7103,7 +7103,7 @@ each, at 512 `91 / 128` twice and `45 / 64` twice, at 4096 and 8192 `725 /
 
 **The closed form, and the plateau's true domain** (the external
 reviewer's F01, 2026-09-21, verified here with exact integers, the host
-script [bell_plateau.py](designs/derivations_beam/bell_plateau.py) with
+script bell_plateau.py (`docs/designs/derivations_beam/bell_plateau.py`, deleted 2026-09-26) with
 its output [bell_plateau.out](designs/derivations_beam/bell_plateau.out);
 no run). The tables at the scale 256 give the exact correlations `E_1 =
 46565 / 65773` at the settings `(0, N / 8)` and `(0, 3 N / 8)` and `E_2 =
@@ -7207,7 +7207,7 @@ missing named as an identity if a rule is needed), its pin (the derived
 integer or closed form and the world that would read it) and its verdict;
 round 2, the derivations of what round 1 finds reachable now, one formula
 per subsection with its error term, the host map
-[lattice_gas.py](designs/derivations_beam/lattice_gas.py) with its output
+lattice_gas.py (`docs/designs/derivations_beam/lattice_gas.py`, deleted 2026-09-26) with its output
 [lattice_gas.out](designs/derivations_beam/lattice_gas.out) (the collision
 table imported as law data, exact rationals, decimal only for checks)
 making round 2's numbers. Nothing enters the law; no run (a
@@ -7396,7 +7396,7 @@ densities, the classical lattice gas's closure (Frisch, d'Humieres,
 Hasslacher, Lallemand, Pomeau and Rivet 1987, Complex Systems 1, 649),
 whose error is the correlation the propagation builds, not bounded here;
 (c) the law's own sector: the parity of the rest count is conserved by
-every class (checked on the 256 binary states, [lattice_gas.py](designs/derivations_beam/lattice_gas.py)
+every class (checked on the 256 binary states, lattice_gas.py (`docs/designs/derivations_beam/lattice_gas.py`, deleted 2026-09-26)
 (A)), so a gas born on the headings holds its rest units in pairs at
 every Node and never one alone; the rest pair is one slot of two units
 with its own density, not two independent slots (the classical closure

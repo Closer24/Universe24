@@ -12,7 +12,7 @@ FAIL by nine to twelve orders. Read against `main` at be194aca and the
 two notes before this one (the light-bending note, PR #602, and the
 Lorentz note, PR #603, under docs/designs/open_problems/, on their
 branches at the time of writing). Every number is from
-[anisotropy_map.py](anisotropy_map.py) beside this note and its output
+anisotropy_map.py (`docs/designs/open_problems/anisotropy/anisotropy_map.py`, deleted 2026-09-26) beside this note and its output
 [anisotropy_map.out](anisotropy_map.out): sections A, B and D closed
 forms; section C a continuum integration in floating point, labelled so
 (the method of DERIVATIONS 12b.2's `orbit_thrown.py`), a check of
@@ -263,3 +263,5 @@ read it). No world for a contact arm is needed: its FAIL is exact.
 [BEAM_LAW note 31](../../../BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (the contact);
 the Lorentz note, docs/designs/open_problems/lorentz/NOTE.md on PR #603 (section 3, the transverse and longitudinal light clocks);
 [the three tests](../../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).
+
+> The scripts of this folder (`anisotropy_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/open_problems/anisotropy/<script>`).

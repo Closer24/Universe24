@@ -141,7 +141,7 @@ arrival Node on Nodes that are detectors).
 | the final `measured` state of `run.json` | its position, momentum, `pushed`, `steps`, `phase_steps`, and under `acc` the three `action` accumulators (the per-axis remainders below h at the end) | GAMEBOARD |
 
 **The reading method, fixed here and implemented in
-[baseline_readings.py](baseline_readings.py) before the run.** (i) The
+baseline_readings.py (`docs/designs/atom_baseline/baseline_readings.py`, deleted 2026-09-26) before the run.** (i) The
 releases: each `face:+x` click (Node y) is paired with the `face:+y` click
 (Node x) of the same release by the flight table's delays, `t1 - f(52 - x)
 = t2 - f(52 - y)` within 3 counts, the same phase and the same z (the z was dropped
@@ -217,7 +217,7 @@ render, no frames; completed, 7500 ticks, the books balanced at every tick,
 fingerprint `state.json` sha256 7664a7129be6322e4a35bcf67aca80f2fd699f60cae421b6bd2b15ce68983c59,
 the ledger e62c4d48ef87294091320b3d7cf54607924ef96bbd6e86b6c3cb6a68e558ed63,
 `events.jsonl` 24e6ae816901cc365193448b9bd69834e6a08664d292f0e6d4566291981b178a.
-The reading by [baseline_readings.py](baseline_readings.py) (the method of
+The reading by baseline_readings.py (`docs/designs/atom_baseline/baseline_readings.py`, deleted 2026-09-26) (the method of
 section 2; two reader fixes after the run, neither a pin: the `escaped`
 list's shape in `run.json`, and the four units of one release landing on
 different Nodes of the set by the Nodes' claims, so the pairing no longer
@@ -289,3 +289,7 @@ dwell of 20 counts per Link where the loop is still near r = 12.
 [ENGINE.md, the readings by type](../../ENGINE.md#the-detectors-readings-by-type);
 [NATURE row 6](../../NATURE.md); [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector)
 (records 281, 721, 754, 762, 817, 881, 884, 886); [the day's log](../../LOG_2026-09-20.md).
+
+> The scripts of this folder (`baseline_readings.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/atom_baseline/<script>`).
+
+> The scripts of this folder (`baseline_readings.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/atom_baseline/<script>`).

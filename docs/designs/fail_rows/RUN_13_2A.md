@@ -23,13 +23,13 @@ is section 9, on the reviewer's read of section 1 and the Boss's GO of
 
 The arithmetic is in two maps beside this file, each importing the
 register's own algebra by its file, one canonical copy, and their
-outputs: [run_13_trend_map.py](run_13_trend_map.py) with
+outputs: run_13_trend_map.py (`docs/designs/fail_rows/run_13_trend_map.py`, deleted 2026-09-26) with
 [run_13_trend_map.out](run_13_trend_map.out) (the Bending Algebraist's
-[step_algebra_map.py](../light_bending/step_algebra_map.py) and the Flow
-Weight Designer's [flow_weight_map.py](../flow_weight/flow_weight_map.py)
-imported), and [run_2a_fan_map.py](run_2a_fan_map.py) with
+step_algebra_map.py (`docs/designs/light_bending/step_algebra_map.py`, deleted 2026-09-26) and the Flow
+Weight Designer's flow_weight_map.py (`docs/designs/flow_weight/flow_weight_map.py`, deleted 2026-09-26)
+imported), and run_2a_fan_map.py (`docs/designs/fail_rows/run_2a_fan_map.py`, deleted 2026-09-26) with
 [run_2a_fan_map.out](run_2a_fan_map.out) (the criteria runner's
-[slits_huygens_pin.py](../paper_criteria/slits_huygens_pin.py) and the
+slits_huygens_pin.py (`docs/designs/paper_criteria/slits_huygens_pin.py`, deleted 2026-09-26) and the
 register's generator
 amplitude/make_worlds.py (`examples/events/amplitude/make_worlds.py`, deleted 2026-09-26)
 imported). Each map first reproduces the registered numbers it extends
@@ -657,6 +657,6 @@ paper from this file; the writer words the row on the Boss's routing.
 - The lamp shell's register (`examples/events/lamp_shell/README.md`, deleted 2026-09-26), its expectations (`examples/events/lamp_shell/expectations.json`, deleted 2026-09-26) and readings (`examples/events/lamp_shell/readings.json`, deleted 2026-09-26) (STEP 2).
 - The ring worlds' register (`examples/events/flow_link/README.md`, deleted 2026-09-26) and expectations.json (`examples/events/flow_link/expectations.json`, deleted 2026-09-26); series K (`examples/events/lensing/README.md`, deleted 2026-09-26) (the age moment 11.4 at b = 6); the optical worlds (`examples/events/optical/README.md`, deleted 2026-09-26) (the age moment 181.8 at b = 6, M = 2^16).
 - [Series X, Poisson after a detector](../../EXPERIMENTS.md) and click_readings/shell_clock.py (`tools/click_readings/shell_clock.py`, deleted 2026-09-26) (series T's reading of a clock from click lines).
-- [CRITERIA.md](../paper_criteria/CRITERIA.md) row 2a and item (b); [slits_huygens_pin.py](../paper_criteria/slits_huygens_pin.py); [TWO_SLITS.md](../fraction_free/TWO_SLITS.md) section 7 (the fan by angle).
+- [CRITERIA.md](../paper_criteria/CRITERIA.md) row 2a and item (b); slits_huygens_pin.py (`docs/designs/paper_criteria/slits_huygens_pin.py`, deleted 2026-09-26); [TWO_SLITS.md](../fraction_free/TWO_SLITS.md) section 7 (the fan by angle).
 - [The paper](../../../paper/general_formula/main.tex), Table 2 rows 13 and 2a.
 - [The log](../../LOG_2026-09-20.md): records 160, 826, 915, 920, 941, 1100, 1126, 1128.

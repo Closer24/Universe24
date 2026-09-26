@@ -10,7 +10,7 @@ exists". The order: read record 230's routes A, B and C and DERIVATIONS
 verbs, with a derivation on the GameBoard or a proof that none can. Read
 against `main` at be194aca (covariant-readings-v1 built on PR #582, open
 at da367405, not merged; form B not on `main`). Every number is from
-[lorentz_map.py](lorentz_map.py) beside this note (the flight rule
+lorentz_map.py (`docs/designs/open_problems/lorentz/lorentz_map.py`, deleted 2026-09-26) beside this note (the flight rule
 transcribed from BEAM_LAW section 3, integers, no engine import) and its
 output [lorentz_map.out](lorentz_map.out); no run, nothing registered,
 nothing decided. Notation as the workflow's rule: gamma the Lorentz
@@ -295,3 +295,5 @@ and [18.1](../../../DERIVATIONS_BEAM.md#181-the-clock-in-motion-rows-4a-4b-5b-cl
 [light_speed/FORM.md](../../light_speed/FORM.md) (form B and lorentz-v1);
 [HYPOTHESES 21](../../../HYPOTHESES.md); [NATURE](../../../NATURE.md) rows 4a, 4b, 5b;
 [the three tests](../../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).
+
+> The scripts of this folder (`lorentz_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/open_problems/lorentz/<script>`).

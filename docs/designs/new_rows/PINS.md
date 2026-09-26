@@ -10,7 +10,7 @@ the chain click to click by kind with its code lines, nature's number with
 its source, the pin as an integer or an exact fraction before any run, the
 falsifier, the world, the HOST cost, and whether the law as built makes it.
 The worlds under existing keys are written beside this file by
-[new_rows_worlds.py](new_rows_worlds.py) into [worlds/](worlds/), validated
+new_rows_worlds.py (`docs/designs/new_rows/new_rows_worlds.py`, deleted 2026-09-26) into [worlds/](worlds/), validated
 at load through the shipped loader and never run; the pins are its print
 [new_rows_pins.out](new_rows_pins.out) and its file
 [new_rows_pins.json](new_rows_pins.json). Nothing here runs, nothing here
@@ -463,6 +463,8 @@ Local: each click reads its own Node's arrivals; nothing kept at a Node.
   [RUN_8BC.md](../fail_rows/RUN_8BC.md) 5 (the lamp's first remainder);
   [the malus note](../malus/NOTE.md) section 3; [WHAT_IS_MISSING.md](../fail_rows/WHAT_IS_MISSING.md)
   0b; [NATURE.md](../../NATURE.md) rows 1a, 1c, 4a, 4b, 5b, 9, 11b.
-- The files beside this one: [new_rows_worlds.py](new_rows_worlds.py),
+- The files beside this one: new_rows_worlds.py (`docs/designs/new_rows/new_rows_worlds.py`, deleted 2026-09-26),
   [new_rows_pins.json](new_rows_pins.json), [new_rows_pins.out](new_rows_pins.out),
   [worlds/](worlds/).
+
+> The scripts of this folder (`new_rows_r2_worlds.py`, `new_rows_readings.py`, `new_rows_worlds.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/new_rows/<script>`).

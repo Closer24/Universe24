@@ -11,7 +11,7 @@ nature's 4.353), DERIVATIONS 16.2 (the minimal mass), 18.3 and 18.4 (the
 strong ratio, the masses), 19 (the mass of a bound set as its total
 content), 24.1 row 18 (the family table, INPUT, none in sight), 24.2 (the
 bilinear rate forced by two additivities), NATURE rows 7a and 7b. Every
-number is from [masses_map.py](masses_map.py) beside this note (the
+number is from masses_map.py (`docs/designs/open_problems/masses/masses_map.py`, deleted 2026-09-26) beside this note (the
 lattice's contact counts and nature's binding energies from AME2020 as
 the register cites them; no engine import) and its output
 [masses_map.out](masses_map.out); no run, nothing registered, nothing
@@ -200,3 +200,5 @@ The masses design (`docs/designs/masses/DESIGN.md`, sections 2, 3 and 7; deleted
 [NATURE](../../../NATURE.md) rows 7a and 7b;
 issue #369 (the mass defect and the masses as inputs);
 [the three tests](../../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).
+
+> The scripts of this folder (`masses_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/open_problems/masses/<script>`).
