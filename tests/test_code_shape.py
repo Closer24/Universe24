@@ -3,10 +3,12 @@
 counts, per file of src/, the lines, the docstring lines, the comment lines, the references to
 records or decisions, the sites of Rule3's arithmetic outside its one function and the sites that
 shift an array across Nodes, and per file of src/, tools/ and tests/ the names imported from the
-loop's module beyond its public entry; it compares them with tests/code_shape_baseline.json. No
-count may grow; a count that went down is re-recorded in the same commit; a new file meets the
-limits from its first commit (one-line docstrings, no record reference, under 400 lines, none of
-the three sites). Two functions of src/ with one abstracted body fail beyond the baseline's
+loop's module beyond its public entry. A file within the limits (one-line docstrings, no record
+reference, under 400 lines, none of the three sites) passes whatever its counts (the Boss's word
+of 18:11Z: the rule never blocks a feature folder that fills within them); a file beyond them is
+compared with tests/code_shape_baseline.json and with the merge base's copy of it: no count may
+grow or stand above the merge base's (a baseline raised in the same commit is refused), a count
+that went down is re-recorded in the same commit, and a new file beyond them fails. Two functions of src/ with one abstracted body fail beyond the baseline's
 groups. The import contracts hold with no baseline. Selected on every pull request."""
 
 from __future__ import annotations
@@ -39,7 +41,8 @@ def test_the_tree_is_at_the_baseline_and_keeps_the_import_contracts():
     """Every count of every file of src/ equals its baseline, no new duplicate, no new import of
     the loop's internals, every feature on core/ alone, core/ on itself alone."""
     assert BASELINE["format"] == "code-shape-baseline"
-    assert SHAPE.violations(ROOT, BASELINE) == []
+    base = SHAPE.base_baseline(ROOT)
+    assert SHAPE.violations(ROOT, BASELINE, base) == []
     assert set(BASELINE["files"]) == {SHAPE.relative(ROOT, p) for p in SHAPE.python_files(ROOT, "src")}
 
 
@@ -54,7 +57,8 @@ def tree(tmp_path: Path, files: dict[str, str]) -> Path:
 SMALL = {
     f"{PACKAGE}/__init__.py": "",
     f"{PACKAGE}/core/__init__.py": "",
-    f"{PACKAGE}/core/a.py": '"""One line."""\n\n\ndef f(x):\n    # a comment\n    y = x + 1\n    return y\n',
+    # a.py is beyond the limits (a two-line docstring), so it ratchets; b.py stays within them
+    f"{PACKAGE}/core/a.py": '"""Two\nlines."""\n\n\ndef f(x):\n    # a comment\n    y = x + 1\n    return y\n',
 }
 
 
@@ -66,12 +70,29 @@ def test_a_grown_count_fails_and_a_lowered_count_asks_for_the_re_record(tmp_path
     path.write_text(path.read_text() + "# one more comment\n", encoding="utf-8")
     found = SHAPE.violations(root, baseline)
     assert any("comment lines grew from 1 to 2" in line for line in found)
-    assert any("lines grew from 7 to 8" in line for line in found)
+    assert any("lines grew from 8 to 9" in line for line in found)
     path.write_text(SMALL[f"{PACKAGE}/core/a.py"].replace("    # a comment\n", ""), encoding="utf-8")
     found = SHAPE.violations(root, baseline)
     assert any("comment lines went down from 1 to 0; re-record" in line for line in found)
     path.unlink()
     assert any("not in the tree; re-record" in line for line in SHAPE.violations(root, baseline))
+
+
+def test_a_baseline_raised_in_the_same_commit_is_refused_against_the_merge_base(tmp_path):
+    """The Boss's hole of 19:33Z: a pull request that grows a file beyond the limits and
+    re-records its own baseline passes against that baseline and fails against the merge base's."""
+    root = tree(tmp_path, SMALL)
+    base = SHAPE.record(root)
+    path = root / PACKAGE / "core" / "a.py"
+    path.write_text(path.read_text() + "# one more comment\n# and another\n", encoding="utf-8")
+    raised = SHAPE.record(root)
+    assert SHAPE.violations(root, raised) == []
+    found = SHAPE.violations(root, raised, base)
+    assert any("comment lines is 3, above the merge base's 1" in line for line in found)
+    assert any("lines is 10, above the merge base's 8" in line for line in found)
+    # a file within the limits is free of the base too; a cut below the base passes
+    path.write_text('"""One line."""\n\n\ndef f(x):\n    return x\n', encoding="utf-8")
+    assert SHAPE.violations(root, SHAPE.record(root), base) == []
 
 
 def test_a_new_file_meets_the_limits_from_its_first_commit(tmp_path):
@@ -86,14 +107,46 @@ def test_a_new_file_meets_the_limits_from_its_first_commit(tmp_path):
         },
     )
     found = SHAPE.violations(root, baseline)
-    assert any("new and has 1 docstring(s) beyond one line" in line for line in found)
-    assert any("new and refers to 1 record(s) or decision(s)" in line for line in found)
-    assert any("new and has 404 lines (the limit 400)" in line for line in found)
-    assert any("new and has 1 rule arithmetic sites" in line for line in found)
-    assert any("new and has 1 level shift sites" in line for line in found)
+    assert any("has 1 docstring(s) beyond one line and is new" in line for line in found)
+    assert any("refers to 1 record(s) or decision(s) and is new" in line for line in found)
+    assert any("has 404 lines (the limit 400) and is new" in line for line in found)
+    assert any("has 1 rule arithmetic sites and is new" in line for line in found)
+    assert any("has 1 level shift sites and is new" in line for line in found)
     good = '"""One line."""\n\n\ndef g(a):\n    return a\n'
     (root / PACKAGE / "core" / "b.py").write_text(good, encoding="utf-8")
     assert SHAPE.violations(root, baseline) == []
+
+
+def test_a_feature_stub_grown_within_the_limits_passes_and_beyond_them_fails(tmp_path):
+    """The Boss's word of 18:11Z: a stub of 26 lines in the baseline grows to 151 lines within
+    the limits and passes; the same file with a two-line docstring is beyond them and ratchets."""
+    stub = (
+        '"""One line."""\n\nfrom event_universe.core.register import Declaration\n\n'
+        + "\n" * 21
+        + "X = 1\n"
+    )
+    root = tree(
+        tmp_path,
+        {**SMALL, f"{PACKAGE}/features/__init__.py": "", f"{PACKAGE}/features/stub/__init__.py": stub},
+    )
+    baseline = SHAPE.record(root)
+    assert baseline["files"][f"{PACKAGE}/features/stub/__init__.py"]["lines"] == 26
+    grown = (
+        '"""One line."""\n\nfrom event_universe.core.register import Declaration\n\n\n'
+        + "".join(
+            f'def f{i}(x):\n    """What f{i} does (ALGEBRA.md 9.1)."""\n    return x + {i}\n\n\n'
+            for i in range(29)
+        )
+        + "X = 1\n"
+    )
+    path = root / PACKAGE / "features" / "stub" / "__init__.py"
+    path.write_text(grown, encoding="utf-8")
+    assert len(grown.splitlines()) == 151
+    assert SHAPE.violations(root, baseline) == []
+    path.write_text(grown.replace('"""One line."""', '"""Two\nlines."""', 1), encoding="utf-8")
+    found = SHAPE.violations(root, baseline)
+    assert any("lines grew from 26 to 152" in line for line in found)
+    assert any("docstring lines grew from 1 to 31" in line for line in found)
 
 
 def test_two_functions_with_one_abstracted_body_fail_beyond_the_baseline(tmp_path):
