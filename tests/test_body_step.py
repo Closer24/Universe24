@@ -12,6 +12,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
+from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_massive_record import emitter_at, massive_generator, matter_emitter_world
@@ -189,15 +190,11 @@ def test_the_self_source_slot_lowers_the_step_by_the_squared_differences_over_th
     record.now[10:12, :, :] += 20000
     record.before[10:12, :, :] += 20000
     now, before = record.now.copy(), record.before.copy()
-    plain, remainder = simulation.one_rule(
-        *simulation.pair_arrays(record.family),
-        1,
-        0,
-        simulation._neighbours(now),
-        now,
-        before,
-        record.remainder.copy(),
-        False,
+    reads, self_coefficient, wall = coefficients(
+        *simulation.pair_arrays(record.family), 1, 0, weak_field=False
+    )
+    plain, remainder = rule3(
+        reads, simulation._axis_sums(now), self_coefficient, wall, now, before, record.remainder.copy()
     )
     sigma = simulation._self_source(record, False)
     assert sigma is not None

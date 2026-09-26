@@ -1,0 +1,370 @@
+{
+ "format": "code-shape-baseline",
+ "recorded_at": "8a4ab2b0",
+ "files": {
+  "src/event_universe/__init__.py": {
+   "lines": 27,
+   "docstring_lines": 7,
+   "comment_lines": 0,
+   "record_references": 0,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/core/__init__.py": {
+   "lines": 1,
+   "docstring_lines": 1,
+   "comment_lines": 0,
+   "record_references": 0,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/core/game_board.py": {
+   "lines": 124,
+   "docstring_lines": 30,
+   "comment_lines": 4,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/core/integer.py": {
+   "lines": 304,
+   "docstring_lines": 137,
+   "comment_lines": 1,
+   "record_references": 5,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/core/phase.py": {
+   "lines": 201,
+   "docstring_lines": 58,
+   "comment_lines": 3,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/core/primitive.py": {
+   "lines": 94,
+   "docstring_lines": 39,
+   "comment_lines": 0,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/core/register.py": {
+   "lines": 272,
+   "docstring_lines": 63,
+   "comment_lines": 16,
+   "record_references": 5,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/core/rule3.py": {
+   "lines": 94,
+   "docstring_lines": 6,
+   "comment_lines": 3,
+   "record_references": 0,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/diagnostics/__init__.py": {
+   "lines": 1,
+   "docstring_lines": 1,
+   "comment_lines": 0,
+   "record_references": 0,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/diagnostics/massive_record_margin.py": {
+   "lines": 849,
+   "docstring_lines": 198,
+   "comment_lines": 40,
+   "record_references": 3,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 1
+  },
+  "src/event_universe/diagnostics/numeric_audit.py": {
+   "lines": 117,
+   "docstring_lines": 22,
+   "comment_lines": 5,
+   "record_references": 0,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/events/__init__.py": {
+   "lines": 24,
+   "docstring_lines": 4,
+   "comment_lines": 2,
+   "record_references": 0,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/events/detector_law.py": {
+   "lines": 4177,
+   "docstring_lines": 701,
+   "comment_lines": 709,
+   "record_references": 46,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 15
+  },
+  "src/event_universe/events/primitives.py": {
+   "lines": 502,
+   "docstring_lines": 74,
+   "comment_lines": 7,
+   "record_references": 3,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/events/world.py": {
+   "lines": 7575,
+   "docstring_lines": 1229,
+   "comment_lines": 1181,
+   "record_references": 107,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/__init__.py": {
+   "lines": 24,
+   "docstring_lines": 24,
+   "comment_lines": 0,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/clicks/__init__.py": {
+   "lines": 33,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/clicks_list/__init__.py": {
+   "lines": 21,
+   "docstring_lines": 6,
+   "comment_lines": 0,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/degree/__init__.py": {
+   "lines": 29,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/feed/__init__.py": {
+   "lines": 21,
+   "docstring_lines": 6,
+   "comment_lines": 0,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/giving/__init__.py": {
+   "lines": 36,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/hand/__init__.py": {
+   "lines": 21,
+   "docstring_lines": 6,
+   "comment_lines": 0,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/hold/__init__.py": {
+   "lines": 36,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/hop/__init__.py": {
+   "lines": 29,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/induction/__init__.py": {
+   "lines": 21,
+   "docstring_lines": 6,
+   "comment_lines": 0,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/internal_representation/__init__.py": {
+   "lines": 21,
+   "docstring_lines": 6,
+   "comment_lines": 0,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/lifetime/__init__.py": {
+   "lines": 21,
+   "docstring_lines": 6,
+   "comment_lines": 0,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/operation/__init__.py": {
+   "lines": 30,
+   "docstring_lines": 7,
+   "comment_lines": 0,
+   "record_references": 0,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/pair/__init__.py": {
+   "lines": 29,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/phase/__init__.py": {
+   "lines": 29,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/receive/__init__.py": {
+   "lines": 29,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/recoils_accumulator/__init__.py": {
+   "lines": 21,
+   "docstring_lines": 6,
+   "comment_lines": 0,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/self_source/__init__.py": {
+   "lines": 29,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/send/__init__.py": {
+   "lines": 29,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/signed_read/__init__.py": {
+   "lines": 34,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/source/__init__.py": {
+   "lines": 26,
+   "docstring_lines": 6,
+   "comment_lines": 0,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/spins_step/__init__.py": {
+   "lines": 36,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/trace/__init__.py": {
+   "lines": 21,
+   "docstring_lines": 6,
+   "comment_lines": 0,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/features/wait/__init__.py": {
+   "lines": 29,
+   "docstring_lines": 7,
+   "comment_lines": 1,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/generator_numbers.py": {
+   "lines": 71,
+   "docstring_lines": 30,
+   "comment_lines": 0,
+   "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/retention.py": {
+   "lines": 613,
+   "docstring_lines": 14,
+   "comment_lines": 3,
+   "record_references": 0,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/world_files.py": {
+   "lines": 95,
+   "docstring_lines": 35,
+   "comment_lines": 0,
+   "record_references": 3,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  }
+ },
+ "duplicates": {
+  "cf6f2dc71514297b": [
+   "src/event_universe/core/integer.py:rational_sum",
+   "src/event_universe/events/detector_law.py:ratio_sum"
+  ]
+ },
+ "loop_internal_imports": {
+  "tests/test_board_properties.py": [
+   "LiveRecord"
+  ],
+  "tests/test_detector_law.py": [
+   "LiveRecord"
+  ],
+  "tests/test_flux_reading.py": [
+   "LiveRecord"
+  ],
+  "tests/test_massive_record.py": [
+   "LiveRecord",
+   "form_json"
+  ],
+  "tests/test_node_clock.py": [
+   "form_json"
+  ],
+  "tests/test_vector_holds.py": [
+   "TENSOR_AXES",
+   "cross_with_axis"
+  ]
+ }
+}
