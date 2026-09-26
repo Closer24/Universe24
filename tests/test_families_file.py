@@ -87,8 +87,15 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     for path in (ROOT / "examples/events").glob("*/*.json"):
         text = json.loads(path.read_text(encoding="utf-8"))
         # a world of the engine; the check-mode worlds (Nature24's generator, ahead of the
-        # audit of ALGEBRA.md 9.90 (3)) carry none of the keys the loader still requires
-        if isinstance(text, dict) and "universe" in text and "check_mode" not in path.parts:
+        # audit of ALGEBRA.md 9.90 (3)) carry none of the keys the loader still requires;
+        # the source verb's worlds declare `readings`, a word the loader does not read yet
+        # (record 2199 items 2 and 3; tests/test_source_worlds.py holds their expectation)
+        if (
+            isinstance(text, dict)
+            and "universe" in text
+            and "check_mode" not in path.parts
+            and "readings" not in text
+        ):
             assert text["universe"] == FILE, path
             assert "node_clock" not in text and "amplitude_bound" not in text, path
             world = parse_nature_beam_world(text)

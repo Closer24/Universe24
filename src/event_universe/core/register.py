@@ -18,7 +18,7 @@ loader's, at load, by name:
 - a term of the files naming a primitive the register lacks, or one the register
   holds without a function (a row of the ledger not built yet);
 - two primitives writing the same value at the same place with no order declared
-  between them;
+  between them (a remainder is the writer's own record and never collides);
 - a primitive called by the loop at a place other than the one it declares.
 
 NO VERSION: a change of a primitive's behaviour keeps every shipped world bit for
@@ -31,7 +31,7 @@ from __future__ import annotations
 
 import importlib
 import pkgutil
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field, replace
 
 # THE FIVE PLACES of the interval (ALGEBRA.md 9.91 (8)): (i) the clicking families'
@@ -49,11 +49,33 @@ WORDS: tuple[str, ...] = ("the right side", "the step", "after the step", "any")
 Binder = Callable[[object], Callable[..., object]]
 
 
+# THE VALUES a body's record holds (ALGEBRA.md 9.117 item 1): a write of one of them
+# left by a click at (ii) is a deferred write, applied at (iv) with the click's other
+# writes (9.111 item 6), so the register orders it among the writers at (iv)
+DEFERRED_VALUES: frozenset[str] = frozenset(
+    {
+        "a body's content M_k",
+        "a body's momentum n",
+        "a body's spin S",
+        "a body's position",
+        "a body's remainders",
+    }
+)
+
+# THE VALUES THAT ARE THE WRITER'S OWN (ALGEBRA.md 9.91 (2), (3); 9.117 item 1: "a body's
+# remainders", one per division of every primitive on the body): a remainder lives on
+# the record of the primitive that divided (core/primitive.py, Own), so two primitives
+# writing it at one place never collide and the register orders no writers of it
+OWN_VALUES: frozenset[str] = frozenset({"a body's remainders", "the record's remainder"})
+
+
 def folder_of(name: str) -> str:
-    """The folder a primitive's name takes: the words joined by underscores, the
-    apostrophe dropped, the hyphen an underscore ("the spin's step" ->
-    "the_spins_step", "the self-source" -> "the_self_source")."""
-    return name.replace("'", "").replace("-", "_").replace(" ", "_")
+    """The folder a primitive's name takes (the mathematician's contract, PRs 1164 and
+    1165): the name without the article "the ", the apostrophe dropped, a space or a
+    hyphen an underscore ("the spin's step" -> "spins_step", "the self-source" ->
+    "self_source", "the recoil's accumulator" -> "recoils_accumulator")."""
+    bare = name[4:] if name.startswith("the ") else name
+    return bare.replace("'", "").replace("-", "_").replace(" ", "_")
 
 
 @dataclass(frozen=True)
@@ -68,17 +90,32 @@ class Declaration:
 
     name: str
     place: str
-    word: str
     reads: tuple[str, ...]
     writes: tuple[str, ...]
-    order: int | None = None
-    section: str = ""
+    order: int | Mapping[str, int] | None = None
     function: Callable[..., object] | None = None
+    section: str = ""
+    word: str = ""
     binder: Binder | None = None
 
     @property
     def built(self) -> bool:
         return self.function is not None or self.binder is not None
+
+    def order_of(self, value: str) -> int | None:
+        """The order among the writers of `value`: one integer for every value the
+        primitive writes, or a mapping value to integer (a primitive that writes two
+        values with different orders, the giving of ALGEBRA.md 9.117 item 2), or None."""
+        if isinstance(self.order, Mapping):
+            return self.order.get(value)
+        return self.order
+
+    def place_of(self, value: str) -> str:
+        """The place at which a write of `value` is ordered: a body's value left by a
+        click at (ii) is a deferred write of (iv) (ALGEBRA.md 9.117 item 1)."""
+        if self.place == "(ii)" and value in DEFERRED_VALUES:
+            return "(iv)"
+        return self.place
 
 
 @dataclass
@@ -96,7 +133,7 @@ class Register:
                 f"the primitive {declaration.name!r} declares the place {declaration.place!r}, "
                 f"which is none of the interval's places {list(PLACES)}"
             )
-        if declaration.word not in WORDS:
+        if declaration.word and declaration.word not in WORDS:
             raise ValueError(
                 f"the primitive {declaration.name!r} declares the word {declaration.word!r}, "
                 f"which is none of {list(WORDS)} (ALGEBRA.md 9.111 item 7)"
@@ -124,11 +161,13 @@ class Register:
         writers: dict[tuple[str, str], list[Declaration]] = {}
         for declaration in self.declarations.values():
             for value in declaration.writes:
-                writers.setdefault((declaration.place, value), []).append(declaration)
+                if value in OWN_VALUES:
+                    continue
+                writers.setdefault((declaration.place_of(value), value), []).append(declaration)
         for (place, value), group in sorted(writers.items()):
             if len(group) < 2:
                 continue
-            orders = [declaration.order for declaration in group]
+            orders = [declaration.order_of(value) for declaration in group]
             if any(order is None for order in orders) or len(set(orders)) != len(orders):
                 names = ", ".join(repr(declaration.name) for declaration in group)
                 raise ValueError(
@@ -172,44 +211,52 @@ class Register:
 
 
 def declaration_of(folder: str, module: object) -> Declaration:
-    """One folder's declaration read from its module: `DECLARATION`, a dict of the
-    declaration's words, and `bind`, its binder or absent (a row not built)."""
+    """One folder's declaration read from its module: `DECLARATION`, a `Declaration`
+    of this register (the mathematician's folders, PRs 1164 and 1165) or a dict of
+    its words (name, place, reads, writes, section, and optionally word and order),
+    and `bind`, the loop's binder, or the declaration's own function (a folder whose
+    body of code has moved in); neither: a row of the ledger not built."""
     declared = getattr(module, "DECLARATION", None)
-    if not isinstance(declared, dict):
-        raise ValueError(
-            f"the features folder {folder!r} declares no DECLARATION (the primitive's name, place, word, reads, writes)"
+    if isinstance(declared, Declaration):
+        declaration = declared
+    elif isinstance(declared, dict):
+        keys = {"name", "place", "reads", "writes", "section"}
+        unknown = set(declared) - keys - {"order", "word"}
+        missing = keys - set(declared)
+        if unknown or missing:
+            raise ValueError(
+                f"the features folder {folder!r}: DECLARATION has unknown keys {sorted(unknown)} "
+                f"or lacks {sorted(missing)}"
+            )
+        order = declared.get("order")
+        declaration = Declaration(
+            str(declared["name"]),
+            str(declared["place"]),
+            tuple(str(value) for value in declared["reads"]),
+            tuple(str(value) for value in declared["writes"]),
+            order if isinstance(order, Mapping) or order is None else int(order),
+            None,
+            str(declared["section"]),
+            word=str(declared.get("word", "")),
         )
-    keys = {"name", "place", "word", "reads", "writes", "section"}
-    unknown = set(declared) - keys - {"order"}
-    missing = keys - set(declared)
-    if unknown or missing:
+    else:
         raise ValueError(
-            f"the features folder {folder!r}: DECLARATION has unknown keys {sorted(unknown)} "
-            f"or lacks {sorted(missing)}"
+            f"the features folder {folder!r} declares no DECLARATION (a Declaration of the register: "
+            "the primitive's name, place, reads, writes, order, section)"
         )
-    name = str(declared["name"])
-    if folder_of(name) != folder:
+    if folder_of(declaration.name) != folder:
         raise ValueError(
-            f"the features folder {folder!r} declares the name {name!r}, whose folder is "
-            f"{folder_of(name)!r}: one folder, one name"
+            f"the features folder {folder!r} declares the name {declaration.name!r}, whose folder is "
+            f"{folder_of(declaration.name)!r}: one folder, one name"
         )
     binder = getattr(module, "bind", None)
     if binder is not None and not callable(binder):
         raise ValueError(
             f"the features folder {folder!r}: bind must be a function of the loop or absent"
         )
-    order = declared.get("order")
-    return Declaration(
-        name,
-        str(declared["place"]),
-        str(declared["word"]),
-        tuple(str(value) for value in declared["reads"]),
-        tuple(str(value) for value in declared["writes"]),
-        int(order) if order is not None else None,
-        str(declared["section"]),
-        None,
-        binder,
-    )
+    if binder is not None:
+        declaration = replace(declaration, binder=binder)
+    return declaration
 
 
 def discover(package: str = "event_universe.features") -> Register:

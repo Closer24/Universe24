@@ -1,9 +1,24 @@
-"""THE FEATURES: one folder per primitive (the model owner's decision of 2026-09-26 through
-the Boss, record 2221 (3); the short procedure, point 5; issue #1154). Each folder declares its
-own name, place, word, reads and writes (`DECLARATION`) and binds its function (`bind`); the
-register (event_universe.core.register.discover) finds the folders and refuses a folder without
-a declaration or with a name not its own. Adding a feature touches no shared file, not even a
-list. A folder without `bind` is a row of the ledger not built: a term naming it is refused at
-load. Cut 2 binds each built primitive to the method of the loop that implements it today; the
-next cuts move the bodies of code into the folders behind apply(term, start, own) -> writes
-(event_universe.core.primitive)."""
+"""THE FEATURES: every primitive of the engine in its own folder (the model owner's
+decision of 2026-09-26, the Boss's records 2221 and 2224; ALGEBRA.md 9.117; issue #1154).
+
+A folder under this package is one primitive: it declares its own name, its place in
+the interval (the five of ALGEBRA.md 9.91 (8)), its word (9.111 item 7), what it reads,
+what it writes (the values named once in 9.117 item 1) and its order among the writers
+of one value at one place (`DECLARATION`, a `Declaration` of the register), and it holds
+the one function the loop calls, `apply(term, start, own) -> writes`: `term` the family's
+or the body's declaration read from the run's files, `start` the values of the interval's
+start the primitive reads, `own` the record the primitive keeps its remainders on, and
+the writes the values it hands back, entered by the loop at the primitive's place
+(event_universe.core.primitive). Until a folder's body of code moves in, `bind(loop)`
+gives the loop's method that implements it today; a folder with neither is a row of the
+ledger not built, and a term naming it is refused at load. The folder's name is the
+primitive's name without the article, the apostrophe dropped, a space or a hyphen an
+underscore ("the spin's step" is spins_step, "the self-source" self_source). The register
+(event_universe.core.register.discover) finds the folders and refuses a folder without a
+declaration, a folder whose name is not its own, and a name declared twice; adding a
+primitive adds a folder and touches no other file. A folder's declaration is the row of
+ALGEBRA.md 9.117 for its name, and a folder whose declaration differs from its row is not
+approved until one moves; a folder's docstring carries the word of 9.113 item 2 for its
+row, FROM THE RULE or BEYOND THE RULE, where the algebra gives one. Integers only: no
+float, no family's name, no number of the universe.
+"""

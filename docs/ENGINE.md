@@ -17,10 +17,12 @@ call at an undeclared place; the seventeen of the table are declared, eleven
 bound to today's methods, the hold and the clicks called through the register;
 no behaviour change, no version. SINCE CUT 2 (record 2221 (3); BUILD.md section
 26 item 77) every primitive is one folder under src/event_universe/features/
-declaring its name, place, word, reads and writes and binding its function;
-the register finds the folders (`discover`), so adding a feature touches no
-shared file; twenty-three folders (the seventeen, the giving at (ii), the feed,
-the induction, the spin's step, the hop and the recoil's accumulator at (v)),
+(the name without the article: spins_step) declaring its name, place, word,
+reads, writes and order, the row of ALGEBRA.md 9.117 for its name, and holding
+its function (`apply`) or binding the loop's method of today (`bind`); the
+register finds the folders (`discover`), so adding a feature touches no shared
+file; twenty-three folders (the seventeen, the giving at (ii), the feed, the
+induction, the spin's step, the hop and the recoil's accumulator at (v)),
 fourteen bound to today's methods; the interface apply(term, start, own) ->
 writes is declared in core/primitive.py for the next cuts. The paragraphs below on the Beam Law
 (`beam-v1`) are the record of the ray law, cancelled (docs/CANCELLED_WORLDS.md;
