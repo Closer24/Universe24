@@ -5,7 +5,7 @@ what the engine implements and what is still to do; the engine is closed when ev
 moved to "implemented" and the "to do" column is empty. One item per generic support and per
 family attribute; each item names where the support lives and the test that proves it. An item
 without a green test stays "to do". The Boss owns the ledger; Nature24 is the second party who
-checks each item; Coder 3 moves an item by landing its build and its test. Read from emitter-click
+checks each item; Main Loop moves an item by landing its build and its test. Read from emitter-click
 01109b05 and stroke-side 2ec28033; the attributes' detail is in FAMILY_ATTRIBUTES.md.
 The ledger stays here until the documents' merge (item 22), then becomes a section of
 docs/ENGINE.md; the table of primitives of record 2179 is its section 3, one file, not two
@@ -61,7 +61,7 @@ generic implementation in the engine for families?": a PRIMITIVE is a kind of at
 engine can apply, written once in the code and applied to any family by its kind, never by
 its name; an ATTRIBUTE is a family's declared value of a primitive, written in the run's
 files, never in the code (HIGHLIGHTS 5.6; ALGEBRA.md 9.110 items 1 and 3). The engine
-implements the rule, the click and this closed set of primitives; Coder 3 (Coder 3 until record 2186) supports exactly this
+implements the rule, the click and this closed set of primitives; Main Loop (Main Loop until record 2186) supports exactly this
 table after the merge; the tests at the end check it. Any experiment is then a change of the
 files and a check-mode run; a kind this table lacks is proposed as a new primitive, never written
 into a step. The keys are the loader's of emitter-click 01109b05 where a primitive is implemented
@@ -145,7 +145,7 @@ can do them afterwards from the generic engine simply, and from there ask for at
 you need for your games you do not do in your local code, the engine supports them; after this
 you write no code, you run the engine; make sure you have the attributes you need: input,
 output, visualizer"). Every knob of the checking code in docs/designs/rule_alone/ mapped to its
-declaration; a knob with no home is a to-do item for Coder 3, never a line of the physicist's
+declaration; a knob with no home is a to-do item for Main Loop, never a line of the physicist's
 code again:
 
 | The knob of my runs | Its declaration in the run's files | State |
@@ -171,6 +171,39 @@ of it is a world file under examples/events/ with universe.json and the start fi
 physicist writes no code: the run files, the small tests and the acceptance tests only (records
 2187, 2190).
 
+THE REGISTER (the Boss's records 2211 and 2212, the model owner's decision of 2026-09-26): a
+primitive's identity is its unique English name, the key of this table, never a number; the
+engine keeps one register of primitives and refuses a name twice at load; every primitive
+declares what it reads, what it writes and its place in the step; the loop refuses two writers
+of one value at one place unless their order is declared. Main Loop builds the register into
+the one interface of a primitive before the cut; until then the finder's rule (skills/workflow.md
+point 11) is not in force. The columns the register adds to every primitive:
+
+| Primitive (its name) | Reads | Writes | Who works on it now |
+| --- | --- | --- | --- |
+| pair | the family's pair and the four paces at the Node | the next level and the remainder of every component (with the operation) | Main Loop (the loop) |
+| degree | `parts` | which components exist and step | Main Loop (the loop) |
+| phase | `phase` | the one level or the two levels of the pair | Main Loop (the loop) |
+| signed read | the read families' t and aa levels at the Node at the interval's start | the four paces and the read's remainder on the reading family's record | Main Loop (the loader's sign; the read itself stands) |
+| hold | the body's count, its held vector n, its spin or moment | the held family's levels at the body's Nodes and the dipole's writes at the six neighbours; the divisions' remainders on the body's record | stands; the count per family (9.111 item 3) Main Loop |
+| source | the record's local count at the interval's start | the sourced family's level at the record's Nodes; the remainder on the record | unassigned (an attribute's function, anyone with the Boss's approval, after the cut) |
+| clicks | the inward flux at the detector's Ports, the ladder, u, T, W | the counts M of taker and giver, the click line, the Port accumulators or the held n (the recoil) | Main Loop (the recoil, 9.111 item 2) |
+| lifetime | a record's age | the border click, booked as an escape | stands (the ray law's form); its entry key unassigned |
+| internal representation | the neighbour's n pairs and the Port's accumulated angle | the arrivals of the step (a value of the interval, kept at no Node) | unassigned |
+| clicks list | the taken quantum's conserved integers, the record's residue | the products' records and their shares | unassigned |
+| hand | the body's spin and momentum | the admission or the refusal of the click | unassigned |
+| self-source | the six neighbours' components | the self term off the step's right side; the remainder on the family's record | Main Loop for the unit (stands); the table waits for the mathematician |
+| send | the level, the pair, the accumulator at the interval's start | the six Ports' sends | Main Loop (the loop, record 2186) |
+| receive | the neighbours' sends and the Port's accumulator | the six arrivals | Main Loop (the loop) |
+| wait | the send of interval t - wait | nothing | Main Loop (the loop) |
+| operation | the arrivals, the level now, the level before, the remainder, the coefficients | the next level and the remainder | Main Loop (the loop) |
+| trace | whatever the files name | the trace file alone; no value of the run | Main Loop (the interface) |
+
+THE ONE COLLISION KNOWN TODAY: the hold and the source both write a family's level at a Node
+in (iv); a family both held and sourced at one Node is refused at load unless the order is
+declared, and today no family is both (the hold's families and the sourced families are
+distinct entries).
+
 THE TERM FORM behind the table (the mathematician's 9.110 item 7): a family is a shape and a
 list of terms [kind, target, of, degree, weight, table], the kind one of four (READ, SOURCE,
 HOLD, CLICK); the shape is `parts`, `phase`, `pair` and the internal representation
@@ -187,11 +220,11 @@ minus w a_before, plus the remainder, divided by w = 6 den Gamma^2 with the rema
 the self-source's term off the right side. Four declarations and the primitives' coefficients;
 no line of code names a family, a force or a number.
 
-THE ROLES (record 2187, the model owner's decision): Coder 3 alone writes the engine's code;
+THE ROLES (record 2187, the model owner's decision): Main Loop alone writes the engine's code;
 the mathematician writes one algebraic line per primitive and gates each build; Nature24 writes
 the run's files, the small tests and the acceptance tests, runs the engine and checks each item
 on main; the Boss owns the ledger and the records; everyone runs the engine locally and debugs
-with the trace, only Coder 3 changes it.
+with the trace, only Main Loop changes it.
 
 BEYOND THE RULE, THE STUDY RUNS (record 2188: "whatever can be built with the rule, let it be
 built with the rule; whatever cannot, let it not be forced, and we will see what happens
@@ -254,8 +287,8 @@ composition's digest. The engine's own tests are the primitives above, one small
 THE ORDER OF THE DAY (the model owner's word of 2026-09-26, 12:50Z): the hard questions (the
 eighth question of record 2140, the well's study runs, the open items of record 2134) are set
 aside until a generic engine stands; now the three work on the generic engine alone and help
-Coder 3 build it; no one but Coder 3 writes code. The physicist's part until then: this ledger's
-tests and run files, the checks of each item on main, the answers to Coder 3's questions from
+Main Loop build it; no one but Main Loop writes code. The physicist's part until then: this ledger's
+tests and run files, the checks of each item on main, the answers to Main Loop's questions from
 the runs already made.
 
 ## 4. The closing condition
