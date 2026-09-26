@@ -72,6 +72,17 @@ and 9.110 item 3's word where it is to do.
 | the clicks: the ladder, the giving, the taking, the recoil | `clicks`, {`gives`, `takes`, `quantum`}; the recoil has no key: it is the click step's own | `gives` and `takes` true or false; `quantum` an integer from 1 | 9.25 (2), (3), 9.91 (4), 9.109 (2), 9.110 item 2 | green: `tests/test_emitter.py` (M excitations give M givings, the quanta conserved), `tests/test_amplitude_click.py` (the offers and the ladder); TO DO for the recoil into the Ports' accumulators: one body keeps its speed across clicks, the ninth question's rerun in the engine (`docs/designs/rule_alone/item9_clicks.py` is the transcription of the bath) |
 | the lifetime: the border a family's records click on at an age | `lifetime` | an integer from 1 through the world's `age_bound`; today admitted on the inline list's family only, not on a universe.json row (the ray law's form) | 9.88 (3) (a lowered pair is the short range; the lifetime a border, not a force), the border's rule in docs/ENGINE.md | green: `tests/test_lifetime.py` (the escape booked as a face does; the reach on the flight table; the refusals); TO DO: the key admitted on a universe.json row, or the row says the border is retired for the lowered pair |
 | the internal representation: n pairs with exact rotation tables and the transport | TO DO: `internal`, {n, the generators' tables} | n an integer from 1; every generator an exact triple or quadruple of the twist table | 9.88 (7) (i), (1), 9.81 (2), 9.96 (2) | draft green: `tests/test_primitives.py` (the identities and the exact product; the transport composes and inverts per Node; the loader's hook refuses the rest); TO DO: the attribute on a row and the hook in the loader, then a family of n pairs transported around a loop returns to itself |
+| the clicks list: several products of one click and the momenta's share | TO DO: `clicks` takes a list of givings, each {`family`, `count`, `sign`}, beside `gives`, `takes`, `quantum` | every product a row's name with an integer count from 1; the conserved integers of the products sum to the taken quantum's or the loader refuses; the share by the record's residue on its own wheel scaled to the wall | 9.88 (4), (7) (iii), 9.99 (6) | draft green: `tests/test_primitives.py` (the list balances the conserved integers or refuses; the momenta shared whole with the sum exact); TO DO: the attribute on a row, then a body giving into two families at its period gives the counts in the declared ratio |
+| the hand: the helicity sign a click takes or gives | TO DO: `hand` on a giving of the clicks list, or on a body's click | -1, 0 (none) or 1; the sign of the body's spin dotted with its momentum, an integer; a wave has none | 9.88 (5), (7) (iv) | draft green: `tests/test_primitives.py` (the helicity's sign and its admission); TO DO: the attribute on a row, then a click with a declared hand refused on a body of the other hand |
+| the self-source as an integer polynomial with a structure table | `self_source` {`unit`} today; TO DO the structure table on the same object | `unit` an integer from 0 (0 off); the table the family's constants, integers, degree two and three | 9.78 (3), 9.88 (2), (7) (ii), 9.91 (5) | green for the unit: the shipped worlds' digests; TO DO for the table: waits for the mathematician's line, then two colour sources under a self-coupled family at a large unit and the field's energy between them read against the algebra's number |
+
+Not a row but a rule of the engine: THE REMAINDERS. Every division of every primitive keeps
+its remainder on the dividing family's record at the Node (the hold's, the read's, the
+source's, the recoil's, the transport's), carried between intervals and inverted with the
+step; nothing else is kept at a Node; every intermediate a bounded integer (9.91 (2), (3),
+9.109 (2) (b); the local integer operation contract of docs/ARCHITECTURE.md). The model owner's
+word of 2026-09-26 (12:00Z, in Nature24's session): "behaviour with remainders where needed;
+everything only in whole numbers".
 
 Not a row but a rule of the engine: THE PACE'S GUARD ON BOTH SIDES. Every pace stays in
 0 < p <= Gamma at run time, for every family and every axis, whatever the reads and the
@@ -86,6 +97,27 @@ declarations of the universe, one copy (9.110 item 5); a body's keys are declara
 body (9.110 item 4); the self-source's unit (`self_source` {`unit`}) is a declared integer
 polynomial whose structure table waits for the mathematician (9.88 (7) (ii)), listed in
 section 1 as provisional.
+
+THE NUCLEAR FORCES AS DECLARATIONS, checked against the table (the model owner's word of
+2026-09-26, 12:00Z: "make sure the options for the additional families, the nuclear force,
+exist, so that everything closes as it should"; 9.88 (7): "with these four the strong and the
+weak forces are declarations"). The strong force as the well: two sourced families with the
+pairs [1000, 1019] and [1000, 1181], one read positive and one negative, the source's table
+(rows 4 and 6; 9.108). The strong force as colour: a family with the internal representation
+n = 3 or 8 and a structure table on its self-source, the clicks list refusing a coloured
+product alone (rows 9, 10, 12). The weak force: a massive vector family (parts [1, 3], a
+lowered pair) with a clicks list of several products and a hand (rows 1, 2, 10, 11). A decay:
+a body giving into several families at its period (row 10). No row names a force; a force
+that needs a thirteenth kind is a new row, proposed before it is written.
+
+THE EXPERIMENT'S TOOLS ARE DECLARATIONS TOO, and each is tested alone (the model owner's word
+of 2026-09-26, 12:00Z: "the engine does not know what you built in the experiment; you compose
+it generically; the crystal can be tested alone, a detector alone, everything alone, not all
+together at large"). A crystal, a polariser, a detector, a screen, a counter, an emitter and
+a receiver are bodies of the world file with their keys (9.110 item 4; the detectors' rule of
+9.92); a tool's test is one world with the tool alone and its one reading; the shipped
+experiment is the composition, run in check mode, and owes no test of its own beyond the
+composition's digest. The engine's own tests are the rows above, one small test per row.
 
 ## 4. The closing condition
 
