@@ -1,4 +1,4 @@
-"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces with the tensor's parts, and 0 < p <= P with P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) at every Node (ALGEBRA.md 9.117 item 2 row 1 and item 5, 9.78 (4), 9.108 item 12); from the rule. `content_of` is this read's one place: the loop's `_effective_content`, its copy today, goes when the loop calls `apply`."""
+"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces with the tensor's parts, and 0 < p <= P with P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) at every Node (ALGEBRA.md 9.117 item 2 row 1 and item 5, 9.78 (4), 9.108 item 12); from the rule. `content_of` is this read's one place: the loop's `_effective_content` calls it."""
 
 from __future__ import annotations
 
@@ -153,5 +153,5 @@ DECLARATION = Declaration(
 
 
 def bind(loop: Any) -> Callable[..., object]:
-    """The loop's method `_effective_content`, which `apply` equals bit for bit, until the loop calls `apply`."""
+    """The loop's method `_effective_content`, which reads through `content_of`, until the loop calls `apply`."""
     return loop._method("_effective_content")  # type: ignore[no-any-return]
