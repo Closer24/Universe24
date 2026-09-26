@@ -54,6 +54,17 @@
     800,
     809
    ],
+   "charge": 0,
+   "spin": [
+    0,
+    0,
+    0
+   ],
+   "moment": [
+    0,
+    0,
+    0
+   ],
    "seed": [
     46,
     47,
@@ -262472,6 +262483,6 @@
  "mode_axis": "x",
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "a99c1554644f51e357c0e2d97d7445bff3e730e319f28ac8b8e318b91690984f"
+  "hash": "31050cea92381a014ba6899f4911bdff9e082776e1f9d76e71ea28281598d0e6"
  }
 }

@@ -65,6 +65,9 @@ def seat(position: list[int]) -> dict:
         "position": position,
         "family": massive.MATTER_FAMILY_NAME,
         "kind": list(KIND),  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+        "charge": 0,  # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2)
+        "spin": [0, 0, 0],
+        "moment": [0, 0, 0],
         "amount": 1,
         "held": {massive.WAVE_FAMILY_NAME: STOCK},  # the stock of light, the charge family's quanta
         "momentum": [0, 0, 0],

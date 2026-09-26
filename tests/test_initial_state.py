@@ -104,6 +104,9 @@ def test_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_roundi
             "start": 0,
             "momentum": [0, 0, 0],
             "side": 12,
+            "charge": 0,
+            "spin": [0, 0, 0],
+            "moment": [0, 0, 0],
             "pair": [800, 801],
             "seed": 1 << 20,
             "margin": "control",
@@ -215,6 +218,9 @@ def test_bodies_are_whole_and_disjoint():
             "start": 0,
             "momentum": [0, 0, 0],
             "side": side,
+            "charge": 0,
+            "spin": [0, 0, 0],
+            "moment": [0, 0, 0],
             "pair": [1, 2],
         }
 
@@ -273,6 +279,9 @@ def test_a_bodys_mode_ends_before_another_body_of_its_family_begins():
             "start": 0,
             "momentum": [0, 0, 0],
             "side": 3,
+            "charge": 0,
+            "spin": [0, 0, 0],
+            "moment": [0, 0, 0],
             "pair": [1, 2],
         }
     )

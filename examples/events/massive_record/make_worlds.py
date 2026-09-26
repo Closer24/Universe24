@@ -232,6 +232,10 @@ def world(
         entry["pair"] = block["pair"]
         if any(item["name"] == family and item.get("pair") == "body" for item in families):
             entry["kind"] = list(block.get("kind", pair))  # the body's rest pair (9.91 (7))
+        # the body's numbers the holds read (ALGEBRA.md 9.91 (3), (7); commit 2), no default
+        entry["charge"] = block.get("charge", 0)
+        entry["spin"] = list(block.get("spin", [0, 0, 0]))
+        entry["moment"] = list(block.get("moment", [0, 0, 0]))
         for key in BLOCK_KEYS:
             if key in block:
                 entry[key] = block[key]

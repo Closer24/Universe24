@@ -56,6 +56,9 @@ def emitter(
         "held": {"light": stock},
         "momentum": [momentum, 0, 0],
         "extents": [32, 1, 1],
+        "charge": 0,
+        "spin": [0, 0, 0],
+        "moment": [0, 0, 0],
         "pair": [800, 801],
         "seed": 50 << 12,
         "emitter": {

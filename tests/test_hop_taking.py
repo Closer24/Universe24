@@ -53,6 +53,9 @@ def cart_world(
         "start": 0,
         "momentum": [momentum, 0, 0],
         "extents": [3, 1, 1],
+        "charge": 0,
+        "spin": [0, 0, 0],
+        "moment": [0, 0, 0],
         "pair": [800, 810],  # a barrier of matter's kind, no seed: light passes it untouched
     }
     document["measured"] = [emitter(20, "cart", 0, stock), cart]

@@ -54,6 +54,17 @@
     1600,
     1618
    ],
+   "charge": 0,
+   "spin": [
+    0,
+    0,
+    0
+   ],
+   "moment": [
+    0,
+    0,
+    0
+   ],
    "seed": [
     13706,
     13780,
@@ -110657,6 +110668,6 @@
  "detectors": [],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "45b9c65a4fdb0a64df31934daa586d05eea419a8a6e750032371e93cf4cfed20"
+  "hash": "6ed12e4a78ac6e652d4610985f802a8bd9039e93c8c1c842eafb4b50e890fdec"
  }
 }

@@ -46,9 +46,13 @@ def wall(position, family="light", **keys):
         **keys,
     }
     if "extents" in entry or "side" in entry:
-        # a block declares its drive's ramp and start (no default, item 57)
+        # a block declares its drive's ramp and start (no default, item 57) and its
+        # numbers, charge, spin and moment (ALGEBRA.md 9.91 (3); item 61)
         entry.setdefault("ramp", 0)
         entry.setdefault("start", 0)
+        entry.setdefault("charge", 0)
+        entry.setdefault("spin", [0, 0, 0])
+        entry.setdefault("moment", [0, 0, 0])
     return entry
 
 
@@ -127,6 +131,9 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
             "start": 0,
             "momentum": [0, 0, 0],
             "extents": [12, 5, 1],
+            "charge": 0,
+            "spin": [0, 0, 0],
+            "moment": [0, 0, 0],
             "pair": [800, 801],
             "seed": 4096,
             "margin": "control",

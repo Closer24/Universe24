@@ -321,6 +321,25 @@ class Block:
     # own remainder at the first shell Node after its first advance; every
     # later residue is read at the click (9.44 (5) (c))
     residue_pending: bool = False
+    # THE HOLDS' REMAINDERS (ALGEBRA.md 9.91 (3); the one stroke, commit 2): per
+    # held family and part, the division's remainder carried between intervals
+    # and the value written, (family, part) for the support's writes and ("d",
+    # family, i, j, sigma) for the dipole's on the Node + sigma e_j; exact and
+    # inverted with the body
+    hold_carry: dict[tuple[object, ...], int] = field(default_factory=dict)
+    hold_value: dict[tuple[object, ...], int] = field(default_factory=dict)
+
+
+# THE COMPONENT ORDER (ALGEBRA.md 9.91 (1)): (t), (x, y, z), (xx, yy, zz, xy, xz,
+# yz); the tensor's component to its two axes
+TENSOR_AXES = ((0, 0), (1, 1), (2, 2), (0, 1), (0, 2), (1, 2))
+
+
+def cross_with_axis(vector: tuple[int, int, int], axis: int) -> tuple[int, int, int]:
+    """D x e_j for the axis j (ALGEBRA.md 9.91 (3)): (0, D_z, -D_y), (-D_z, 0, D_x),
+    (D_y, -D_x, 0)."""
+    x, y, z = vector
+    return ((0, z, -y), (-z, 0, x), (y, -x, 0))[axis]
 
 
 class PairView:
@@ -559,7 +578,12 @@ class DetectorLawSimulation:
         # item 55): a held family no body has ever sourced must be exactly zero
         # everywhere; the hold marks the first nonzero source (HOST, a flag per
         # held family, read by `leaks`)
-        self._sourced_ever: dict[int, bool] = {family: False for family in self.held_families}
+        # per part (9.91 (9) (a)): (family, part), the time part 0
+        self._sourced_ever: dict[tuple[int, int], bool] = {
+            (family, part): False
+            for family in self.held_families
+            for part in range(self.families[family].components)
+        }
         self.span_masks: dict[int, np.ndarray] = {}
         for number, entry in enumerate(world.measured):
             if entry.block is None:
@@ -713,7 +737,7 @@ class DetectorLawSimulation:
         for parts in self.held_parts.values():
             for record in parts:
                 record.silent = True
-        self._hold()
+        self._hold(advance=True)
 
     def _held_part(self, position: int, family: int, part: int) -> LiveRecord:
         """A held family's component record over the board (item 51; 9.91 (1)):
@@ -760,8 +784,9 @@ class DetectorLawSimulation:
             return self._body_charge(number)
         return sum(self.held[number])
 
-    def _hold(self) -> None:
-        """THE HOLD (ALGEBRA.md 9.45 (2), 9.48 (2); item 51): at every body's
+    def _hold(self, advance: bool = False, inverse: bool = False) -> None:
+        """THE HOLD (ALGEBRA.md 9.45 (2), 9.48 (2); item 51; the vector and tensor
+        parts and the dipoles, 9.91 (3), commit 2): at every body's
         Nodes a held family's level is the body's declared source (a block's
         Nodes as they stand this interval, a measured event's span), written
         whole at both levels with the remainder 0: the one place where a
@@ -775,14 +800,186 @@ class DetectorLawSimulation:
             for number in range(len(self.held)):
                 value = self.body_source(number, source)
                 if value:
-                    self._sourced_ever[family] = True
+                    self._sourced_ever[(family, 0)] = True
                 block = self.block_by_number.get(number)
                 mask = block.mask if block is not None else self.span_masks[number]
                 record.now[mask] = value
                 record.before[mask] = value
                 record.remainder[mask] = 0
             self.node_level[family] = record.now
+            # THE VECTOR AND TENSOR PARTS AT THE BODIES (ALGEBRA.md 9.91 (3); commit
+            # 2): the body's numbers times the held factors over the wall, the
+            # remainder carried; then the dipoles on the body's Node's six neighbours
+            for part_record in self.held_parts[family]:
+                for block in self.blocks:
+                    if not advance and not inverse and not any(block.hop):
+                        # the interval's start rewrites a moved body's Nodes alone (the
+                        # values stand from the last hold; a body at rest keeps them)
+                        continue
+                    self._hold_part(block, family, part_record, advance, inverse)
+            if advance or inverse:
+                for block in self.blocks:
+                    self._hold_dipole(block, family, advance and not inverse)
         self._effective.clear()
+
+    def _part_axes(self, family: int, part: int) -> tuple[int, tuple[int, ...]]:
+        """A component's part group (0 the time part, 1 the vector, 2 the tensor)
+        and the axes it multiplies (ALGEBRA.md 9.91 (1), (3): n_a for the vector,
+        n_a n_b for the tensor), by the family's parts list."""
+        offset = 0
+        for group, count in enumerate(self.families[family].parts):
+            if part < offset + count:
+                index = part - offset
+                if group == 0:
+                    return 0, ()
+                if group == 1:
+                    return 1, (index,)
+                return 2, TENSOR_AXES[index]
+            offset += count
+        raise ValueError(f"{BEAM_LAW}: the part {part} is beyond the family's components")
+
+    @staticmethod
+    def _stepped_back(numerator: int, wall: int, value: int, remainder: int) -> tuple[int, int]:
+        """The carried division one interval back (ALGEBRA.md 9.91 (3), exact): from
+        (value_t, r_t) to (value_(t-1), r_(t-1)): r_(t-1) = value_t W + r_t - S, and
+        value_(t-1) = S div W plus one where r_(t-1) is below S mod W (the only two
+        values the sum S + r can reach)."""
+        previous = value * wall + remainder - numerator
+        whole, fraction = divmod(numerator, wall)
+        return whole + (1 if previous < fraction else 0), previous
+
+    def _carried_division(
+        self,
+        block: Block,
+        key: tuple[object, ...],
+        numerator: int,
+        wall: int,
+        advance: bool,
+        inverse: bool,
+    ) -> tuple[int, int]:
+        """THE DIVISION WITH ITS REMAINDER CARRIED (ALGEBRA.md 9.91 (3)): forward,
+        value_t = (S + r_(t-1)) div W and r_t the remainder, kept on the body;
+        backward, the state stepped back exactly (`_stepped_back`). Returns the
+        value of this interval and the value of the one before it (the two
+        levels the hold writes: `now` this interval's, `before` the last one's,
+        so that the fields' inverse reads the level the step read); at the load
+        both are the first value; a hold that neither advances nor inverts (a
+        moved body's rewrite) gives the standing value twice."""
+        if inverse:
+            value, remainder = self._stepped_back(
+                numerator, wall, block.hold_value.get(key, 0), block.hold_carry.get(key, 0)
+            )
+            block.hold_value[key] = value
+            block.hold_carry[key] = remainder
+            before, _ = self._stepped_back(numerator, wall, value, remainder)
+            return value, before
+        if advance:
+            previous = block.hold_value.get(key)
+            value, remainder = divmod(numerator + block.hold_carry.get(key, 0), wall)
+            block.hold_value[key] = value
+            block.hold_carry[key] = remainder
+            return value, (value if previous is None else previous)
+        value = block.hold_value.get(key, 0)
+        return value, value
+
+    def _hold_part(
+        self, block: Block, family: int, record: LiveRecord, advance: bool, inverse: bool
+    ) -> None:
+        """One body's write into one component of a held family beyond the time
+        part (ALGEBRA.md 9.91 (3)): factor x count x n_a (div W) for the vector,
+        factor x count x n_a n_b (div W^2) for the tensor, the count the body's
+        source (s or Q), n its momentum now on its wall W, the factors the
+        families file's; written at every Node of the body's support at both
+        levels with the remainder 0; a part no body ever sources stays silent."""
+        definition = self.families[family]
+        source = definition.held
+        assert source is not None
+        group, axes = self._part_axes(family, record.part)
+        numerator = definition.held_factors[group] * self.body_source(block.number, source)
+        momentum = self._momentum_now(block)
+        for axis in axes:
+            numerator *= int(momentum[axis])
+        wall = block.wall ** len(axes)
+        if numerator:
+            self._sourced_ever[(family, record.part)] = True
+        value, before = self._carried_division(
+            block, (family, record.part), numerator, wall, advance, inverse
+        )
+        if value == 0 and before == 0 and record.silent:
+            return
+        record.silent = False
+        record.now[block.mask] = value
+        record.before[block.mask] = before
+        record.remainder[block.mask] = 0
+
+    def _dipole_writes(
+        self, block: Block, family: int
+    ) -> list[tuple[tuple[object, ...], int, LiveRecord, tuple[int, int, int]]]:
+        """The dipole's terms of one body into a held family's vector part
+        (ALGEBRA.md 9.91 (3)): at the Node + sigma e_j, the component i gains
+        sigma x (D x e_j)_i, D the body's spin or moment by the family's declared
+        dipole, over the family's dipole divisor with the remainder carried;
+        (key, term, the component's record, the Node) per write, none beyond an
+        open face."""
+        definition = self.families[family]
+        if definition.held_dipole is None or len(definition.parts) < 2:
+            return []
+        vector = block.definition.spin if definition.held_dipole == "spin" else block.definition.moment
+        if not any(vector):
+            return []
+        centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
+        wrap = self.kind_wrap[family]
+        found: list[tuple[tuple[object, ...], int, LiveRecord, tuple[int, int, int]]] = []
+        for j in range(3):
+            cross = cross_with_axis(vector, j)
+            for sigma in (1, -1):
+                node = list(centre)
+                node[j] += sigma
+                if wrap[j] or self.shape[j] == 1:
+                    node[j] %= self.shape[j]
+                elif not 0 <= node[j] < self.shape[j]:
+                    continue
+                at = (int(node[0]), int(node[1]), int(node[2]))
+                for i in range(3):
+                    term = sigma * cross[i]
+                    if term == 0:
+                        continue
+                    found.append((("d", family, i, j, sigma), term, self.held_parts[family][i], at))
+        return found
+
+    def _hold_dipole(self, block: Block, family: int, advance: bool) -> None:
+        """The dipole's writes added at the interval's hold: forward (the load's
+        write included) with the carried division advanced; at the inverse with
+        the values `_unhold_dipoles` stepped back (the end of the previous
+        interval's state has them). A hopping body's dipoles at its new Node
+        wait on the next hold (no shipped body carries a spin and moves)."""
+        div = self.families[family].held_dipole_div
+        for key, term, record, node in self._dipole_writes(block, family):
+            if advance:
+                value, before = self._carried_division(block, key, term, div, True, False)
+            else:
+                # the inverse: the state stepped back by `_unhold_dipoles`; the value
+                # before it for the `before` level
+                value = block.hold_value.get(key, 0)
+                before, _ = self._stepped_back(term, div, value, block.hold_carry.get(key, 0))
+            self._sourced_ever[(family, record.part)] = True
+            if value == 0 and before == 0:
+                continue
+            record.silent = False
+            record.now[node] += value
+            record.before[node] += before
+
+    def _unhold_dipoles(self) -> None:
+        """The interval's dipole writes taken back (the inverse, before the fields
+        step back), and their divisions stepped back to the previous interval."""
+        for family in self.held_records:
+            div = self.families[family].held_dipole_div
+            for block in self.blocks:
+                for key, term, record, node in self._dipole_writes(block, family):
+                    # this interval's value off the `now` level alone: the `before`
+                    # level holds the level the step read, which the inverse needs
+                    record.now[node] -= block.hold_value.get(key, 0)
+                    self._carried_division(block, key, term, div, False, True)
 
     def leaks(self) -> list[str]:
         """THE LEAK TEST (the model owner's record 2075 (3): "a family with no
@@ -796,7 +993,7 @@ class DetectorLawSimulation:
         attribute, never by a name; a HOST reading of the state, no line."""
         found: list[str] = []
         for family, record in self.held_records.items():
-            if self._sourced_ever[family]:
+            if self._sourced_ever[(family, 0)]:
                 continue
             if record.now.any() or record.before.any() or record.remainder.any():
                 found.append(self.families[family].name)
@@ -804,7 +1001,7 @@ class DetectorLawSimulation:
         # exactly zero (9.91 (9) (a): the leak test per part)
         for family, parts in self.held_parts.items():
             for record in parts:
-                if record.silent:
+                if self._sourced_ever[(family, record.part)]:
                     continue
                 if record.now.any() or record.before.any() or record.remainder.any():
                     name = f"{self.families[family].name}[{record.part}]"
@@ -853,7 +1050,7 @@ class DetectorLawSimulation:
         where it does not."""
         for record in self.held_component_records():
             self._advance(record)
-        self._hold()
+        self._hold(advance=True)
         # the pace of every family's reads stays positive (ALGEBRA.md 9.45 (3),
         # 9.48 (3); items 34, 35 and 51)
         for family, definition in enumerate(self.families):
@@ -947,7 +1144,9 @@ class DetectorLawSimulation:
         """A body's charge Q (ALGEBRA.md 9.48 (1)): the sum of the signs of the
         quanta it holds, an integer of either sign, moved with the labels at
         the clicks (the held books)."""
-        return sum(
+        block = self.block_by_number.get(number)
+        declared = block.definition.charge if block is not None else 0
+        return declared + sum(
             sign * quanta for sign, quanta in zip(self.family_charge, self.held[number], strict=True)
         )
 
@@ -1782,6 +1981,9 @@ class DetectorLawSimulation:
         for family, record in self.held_records.items():
             self.node_level[family] = record.before
         self._effective.clear()
+        # the interval's dipole writes taken back first (9.91 (3); commit 2): they
+        # were the last writes of the forward interval, after the fields' step
+        self._unhold_dipoles()
         for block in self.blocks:
             if block.window is not None:
                 self._point_window_inverse(block)
@@ -1797,7 +1999,7 @@ class DetectorLawSimulation:
                 self._advance_inverse(block.own)
         for record in reversed(self.held_component_records()):
             self._advance_inverse(record)
-        self._hold()
+        self._hold(inverse=True)
         self.tick -= 1
 
     # The rule

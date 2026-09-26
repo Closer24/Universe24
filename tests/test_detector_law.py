@@ -87,6 +87,9 @@ def emitter_body(
         "held": {family: stock},
         "momentum": [0, 0, 0],
         "extents": extents,
+        "charge": 0,
+        "spin": [0, 0, 0],
+        "moment": [0, 0, 0],
         "pair": list(EMITTER_PAIR),
         "seed": 1 << 20,
         "margin": "control",
@@ -695,6 +698,9 @@ def test_detector_is_one_connected_cube_of_side_three():
                 "start": 0,
                 "momentum": [0, 0, 0],
                 "side": side,
+                "charge": 0,
+                "spin": [0, 0, 0],
+                "moment": [0, 0, 0],
                 "pair": [1, 2],
             }
         )

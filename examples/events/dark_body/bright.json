@@ -39,6 +39,17 @@
     800,
     809
    ],
+   "charge": 0,
+   "spin": [
+    0,
+    0,
+    0
+   ],
+   "moment": [
+    0,
+    0,
+    0
+   ],
    "amount": 1,
    "momentum": [
     0,
@@ -80464,6 +80475,17 @@
    "kind": [
     800,
     809
+   ],
+   "charge": 0,
+   "spin": [
+    0,
+    0,
+    0
+   ],
+   "moment": [
+    0,
+    0,
+    0
    ],
    "amount": 4684,
    "momentum": [
@@ -168288,6 +168310,6 @@
  ],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "5ded4601f47efeb7a13375ea52bb3ceedbf459603b297a0edd82dc259c8e65d7"
+  "hash": "80f97d9eae9ac9c6f6548153665e0d814f5345a713d8d5ec6d2ec2de7297c5e1"
  }
 }

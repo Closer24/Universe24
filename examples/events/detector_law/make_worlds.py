@@ -621,6 +621,10 @@ def mirror_slab(position: list[int], extents: list[int]) -> dict:
     entry = body(position, "charge")
     entry["extents"] = extents
     entry["pair"] = list(WALL_PAIR)
+    # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2): a mirror carries none
+    entry["charge"] = 0
+    entry["spin"] = [0, 0, 0]
+    entry["moment"] = [0, 0, 0]
     # a block declares its drive's ramp and start (record 2089, no default; item 57)
     entry["ramp"] = 0
     entry["start"] = 0

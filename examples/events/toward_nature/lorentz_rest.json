@@ -60,6 +60,17 @@
     800,
     809
    ],
+   "charge": 0,
+   "spin": [
+    0,
+    0,
+    0
+   ],
+   "moment": [
+    0,
+    0,
+    0
+   ],
    "seed": [
     0,
     0,
@@ -14191,6 +14202,17 @@
     1,
     2
    ],
+   "charge": 0,
+   "spin": [
+    0,
+    0,
+    0
+   ],
+   "moment": [
+    0,
+    0,
+    0
+   ],
    "ramp": 0,
    "start": 0
   }
@@ -14204,6 +14226,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "27bc9b7c976d3634c2b356416012c5558b54dfb967f33e1dbce09ec79cc726e3"
+  "hash": "16ae4d6cc4816f0e7626c7c7a6baa8e13f1ab1bd4dee1e882779d9b571337767"
  }
 }

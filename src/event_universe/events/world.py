@@ -1220,6 +1220,11 @@ BLOCK_KEYS = {
     # THE BODY'S KIND (ALGEBRA.md 9.85 (3), 9.91 (7); the one stroke, commit 1):
     # the body's rest pair on a family whose pair is the body's
     "kind",
+    # THE BODY'S NUMBERS the holds read (ALGEBRA.md 9.91 (3), (7); commit 2): its
+    # charge Q, its spin S and its moment mu (the momentum n is `momentum`)
+    "charge",
+    "spin",
+    "moment",
     "coupling",
     "seed",
     # the bound mode's clock [a, b] beside a profile (ALGEBRA.md 9.22 (7))
@@ -1251,6 +1256,9 @@ MEASURED_KEYS = {
     "amount",
     "held",
     "kind",
+    "charge",
+    "spin",
+    "moment",
     "phase",
     "momentum",
     "fixed",
@@ -1892,6 +1900,12 @@ class BlockDefinition:
     proper_clock: tuple[tuple[int, int], ...] | None = None
     ramp: int = 0
     start: int = 0
+    # THE BODY'S NUMBERS (ALGEBRA.md 9.91 (3), (7); the one stroke, commit 2): the
+    # charge Q (the held sign's count at its Nodes), the spin S and the moment mu
+    # (the dipoles on its Node's six neighbours); the momentum n is `momentum`
+    charge: int = 0
+    spin: tuple[int, int, int] = (0, 0, 0)
+    moment: tuple[int, int, int] = (0, 0, 0)
     margin: str = MARGIN_KINDS[0]
     # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
     # 7, the click line): the name of the detector set whose one detector is the
@@ -2918,8 +2932,10 @@ def _node_clock_bound(
     def source_of(family: FamilyDefinition, entry: MeasuredDefinition) -> int:
         quanta = sum(entry.held)
         if family.held == "sign":
+            declared = entry.block.charge if entry.block is not None else 0
             return abs(
-                sum(other.charge[0] * held for other, held in zip(families, entry.held, strict=True))
+                declared
+                + sum(other.charge[0] * held for other, held in zip(families, entry.held, strict=True))
             )
         return quanta
 
@@ -4648,6 +4664,17 @@ def _block(
         )
     ramp = 0 if "ramp" not in obj else _integer(obj["ramp"], f"{label}.ramp", 0)
     start = 0 if "start" not in obj else _integer(obj["start"], f"{label}.start", 0)
+    # THE BODY'S NUMBERS (ALGEBRA.md 9.91 (3), (7); commit 2): charge, spin and moment,
+    # required under the law (no default), integers on the axes (record 2084)
+    if detector_law:
+        _require_under_law(obj, label, {"charge", "spin", "moment"})
+    charge = (
+        0
+        if "charge" not in obj
+        else _integer(obj["charge"], f"{label}.charge", -AMOUNT_BOUND, AMOUNT_BOUND)
+    )
+    spin = _axes_vector(obj.get("spin", [0, 0, 0]), f"{label}.spin")
+    moment = _axes_vector(obj.get("moment", [0, 0, 0]), f"{label}.moment")
     if detector_law and "margin" not in obj and pair[0] * kind[1] > pair[1] * kind[0]:
         # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): a well's
         # margin kind, pin or control, declared (record 2037, per measured
@@ -4759,9 +4786,24 @@ def _block(
         proper_clock=proper_clock,
         ramp=ramp,
         start=start,
+        charge=charge,
+        spin=spin,
+        moment=moment,
         margin=str(margin),
         receiver=receiver,
         emitter=emitter,
+    )
+
+
+def _axes_vector(value: object, label: str) -> tuple[int, int, int]:
+    """An integer vector on the axes (record 2084: every directed thing an integer
+    vector on the axes), three integers."""
+    if not isinstance(value, list) or len(value) != 3:
+        raise ValueError(f"{BEAM_LAW}: {label} must be three integers, a vector on the axes")
+    return (
+        _integer(value[0], f"{label}[0]", -AMOUNT_BOUND, AMOUNT_BOUND),
+        _integer(value[1], f"{label}[1]", -AMOUNT_BOUND, AMOUNT_BOUND),
+        _integer(value[2], f"{label}[2]", -AMOUNT_BOUND, AMOUNT_BOUND),
     )
 
 
@@ -5085,7 +5127,9 @@ def _measured(
     occupied: set[Address3] = set()
     for index, entry in enumerate(value):
         label = f"measured[{index}]"
-        if isinstance(entry, dict) and CHARGE_KEY in entry:
+        # under the law a body's `charge` is its own number Q (ALGEBRA.md 9.91 (3), (7);
+        # commit 2); the ray law's measured charge of 2026-09-20 stays refused without it
+        if isinstance(entry, dict) and CHARGE_KEY in entry and not detector_law:
             raise ValueError(
                 f"{BEAM_LAW}: {label} declares {CHARGE_KEY}, a key removed on 2026-09-20: the "
                 "charge of a measured event is its family's charge per unit of content times "

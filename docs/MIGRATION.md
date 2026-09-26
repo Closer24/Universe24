@@ -6,6 +6,17 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The body's numbers and the holds of every part, on 2026-09-26 (the one stroke, commit 2; no behaviour at rest)
+
+ALGEBRA.md 9.91 (3) and 9.91 (10) 2 (BUILD.md section 26 item 61): every block
+declares `charge` (an integer), `spin` and `moment` (three integers each), no
+default; the hold writes gravity's vector and tensor parts and the charge's
+current at the body's Nodes from its content, its charge and its momentum,
+and the dipoles on its centre Node's six neighbours from its spin and moment.
+A body at rest with no charge, spin or moment writes the time parts alone: the
+rows and the lines are bit for bit those before the change. Add the three keys
+at 0 to every block of a world file, or regenerate it with its generator.
+
 ## The families file's three entries and the body's kind, on 2026-09-26 (the one stroke, commit 1; no behaviour where the new parts are zero)
 
 ALGEBRA.md 9.86 (2), 9.91 (7) and 9.91 (10) 1 (BUILD.md section 26 item 60):

@@ -4452,6 +4452,52 @@ would have found no cell.
    MATHEMATICIAN: the body carries two pairs, its `kind` (the rest rotation)
    and its `pair` (the well at its Nodes); both are built, under two names,
    until his line says one.
+61. THE ONE STROKE, COMMIT 2: GRAVITY'S TEN WITH THE BODY'S HOLDS (ALGEBRA.md
+   9.91 (10) 2; 9.91 (3); 9.86 (2) (a); the Boss's records 2105 and 2106).
+   THE BODY'S NUMBERS in the world file, each required on every block under
+   the law (no default): `charge` Q (an integer), `spin` S and `moment` mu
+   (integer vectors on the axes, record 2084); `momentum` n stands. THE HOLD
+   OF EVERY PART, after the held families' step of the interval (9.85 (2)),
+   at every Node of the body's support: the time part as before (s the
+   body's content for gravity, Q for the charge, Q now the declared charge
+   plus the signs of the held quanta); the vector component a, factor x
+   count x n_a div W; the tensor component ab, factor x count x n_a n_b div
+   W^2; the factors the families file's ((1, 4, 2) gravity, (1, 1) the
+   charge); W THE BODY'S WALL 3 Q S M (9.89 (2); the universe's W of 9.91 (7)
+   is a question to the mathematician); THE DIVISION'S REMAINDER CARRIED
+   between intervals on the body (`Block.hold_carry`, `hold_value`), so the
+   written level steps between the two integers around the exact fraction
+   and their mean is the fraction (COMPUTATION: 4 s n / W = 1.333 on the
+   test body writes 1 and 2); THE DIPOLES on the body's centre Node's six
+   neighbours, the Node + sigma e_j, the vector component i gaining sigma x
+   (D x e_j)_i, D the spin for gravity and the moment for the charge (the
+   family's `held_dipole`), over the family's `held_dipole_div` (1 and 2)
+   with the remainder carried; a write beyond an open face is none. THE TWO
+   LEVELS: `now` takes this interval's value and `before` the last
+   interval's (equal where the source stands; the load writes both the
+   first), so the fields' inverse reads at the body's Nodes the level the
+   step read; the dipole adds to `now` this interval's value and to
+   `before` the last one's. THE INVERSE (`step_inverse`): the dipole's
+   values off `now` first and the divisions stepped back exactly (from
+   (value, r) to the pair before: r' = value W + r - S, value' = S div W plus
+   one where r' is below S mod W, the only two values S + r reaches), then
+   the fields back, then the hold writes the previous values; the backward
+   run restores a spinning body's world exactly (tests/test_vector_holds.py).
+   THE INTERVAL'S START rewrites the parts of a body that hopped alone (the
+   values stand from the last hold); a hopping body's dipoles at its new Node
+   wait on the next hold (no shipped body carries a spin and moves). THE LEAK
+   TEST PER PART: `_sourced_ever` keyed (family, part); a part no body ever
+   sources stays exactly zero and silent, a sourced part may be nonzero. THE
+   GATE: tests/test_vector_holds.py (a moving body's vector and tensor
+   writes with the carried remainder, the charge's current, the unsourced
+   parts silent; a body at rest with spin and moment, the dipoles' signs and
+   halving, the backward run exact; a body with no numbers, every other part
+   silent); every shipped world regenerated with the three numbers at 0 on
+   every block; THE PROOF the five worlds bit for bit (the moving Lorentz
+   clock's rows and lines too: gravity's x part is written at the moving
+   body, 4 s n_x div W = 65, and nothing reads it until the paces of commit
+   3). MISSING LINES for the mathematician: W (the universe's, or the body's
+   wall); the dipole at a hop.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

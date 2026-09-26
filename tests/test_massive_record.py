@@ -540,6 +540,10 @@ def block_world(
             "momentum": block.get("momentum", [0, 0, 0]),
             "side": block["side"],
             "pair": block["pair"],
+            # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2), no loader default
+            "charge": block.get("charge", 0),
+            "spin": block.get("spin", [0, 0, 0]),
+            "moment": block.get("moment", [0, 0, 0]),
         }
         for key in (
             "seed",
@@ -711,6 +715,9 @@ def test_the_blocks_drive_steps_its_cells_and_leaves_the_rows():
                     {
                         "position": [4, 0, 0],
                         "side": 3,
+                        "charge": 0,
+                        "spin": [0, 0, 0],
+                        "moment": [0, 0, 0],
                         "pair": [800, 800],
                         "momentum": momentum,
                         "seed": 5,
@@ -850,6 +857,9 @@ def test_a_seeded_block_at_rest_counts_its_cycles():
                 {
                     "position": [11, 11, 11],
                     "side": 10,
+                    "charge": 0,
+                    "spin": [0, 0, 0],
+                    "moment": [0, 0, 0],
                     "pair": [800, 800],
                     "seed": seed,
                     "margin": "control",
@@ -919,6 +929,9 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
                 {
                     "position": [10, 10, 10],
                     "side": 28,
+                    "charge": 0,
+                    "spin": [0, 0, 0],
+                    "moment": [0, 0, 0],
                     "pair": [1600, 1609],
                     "margin": margin,
                     "seed": 1 << 18,  # below the pair's amplitude bound (9.61 (3))
@@ -1200,6 +1213,9 @@ def test_the_margin_rule_on_a_layer_keeps_the_folded_axis_self_reads():
             {
                 "position": [121, 121, 0],
                 "side": 14,
+                "charge": 0,
+                "spin": [0, 0, 0],
+                "moment": [0, 0, 0],
                 "pair": [3200, 3227],
                 "margin": "control",
                 "seed": 1 << 18,  # below the pair's amplitude bound (9.61 (3))
@@ -1228,6 +1244,9 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     block = {
         "position": [57, 57, 0],
         "side": 14,
+        "charge": 0,
+        "spin": [0, 0, 0],
+        "moment": [0, 0, 0],
         "pair": [3200, 3227],
         "margin": "control",
         "seed": 1 << 18,  # below the pair's amplitude bound (9.61 (3))
@@ -1501,6 +1520,9 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "held": {"light": 1},
             "momentum": [0, 0, 0],
             "extents": [32, 1, 1],
+            "charge": 0,
+            "spin": [0, 0, 0],
+            "moment": [0, 0, 0],
             "pair": [800, 801],
             "seed": 50 << 12,
             "emitter": {"family": "light", "train": {"direction": [1, 0, 0], "periods": 8}},
@@ -1643,6 +1665,9 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
                 "start": 0,
                 "momentum": momentum,
                 "side": 12,
+                "charge": 0,
+                "spin": [0, 0, 0],
+                "moment": [0, 0, 0],
                 "pair": [800, 801],
                 "seed": 50 << 12,
                 "margin": "control",
@@ -1701,6 +1726,9 @@ def test_a_block_that_steps_off_the_board_refuses_the_interval():
                 "start": 0,
                 "momentum": [-64, 0, 0],
                 "side": 12,
+                "charge": 0,
+                "spin": [0, 0, 0],
+                "moment": [0, 0, 0],
                 "pair": [800, 800],
                 "seed": 50 << 12,
                 "margin": "control",
@@ -1748,6 +1776,9 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
                 "start": 0,
                 "momentum": [0, 0, 0],
                 "side": 1,
+                "charge": 0,
+                "spin": [0, 0, 0],
+                "moment": [0, 0, 0],
                 "pair": [1, 2],
             }
         )

@@ -122,6 +122,9 @@ def block(
         "position": list(corner),
         "family": family,
         "kind": list(MATTER),  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+        "charge": 0,  # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2)
+        "spin": [0, 0, 0],
+        "moment": [0, 0, 0],
         "amount": amount,
         "momentum": [0, 0, 0],
         "held": {},
