@@ -108,6 +108,11 @@ def test_every_world_speaks_record_2128_and_declares_its_readings(name):
     # a GameBoard reading (the ledger's run declarations)
     kinds = [line["kind"] for line in doc["readings"]]
     assert set(kinds) <= READING_KINDS
+    # a name per reading, unique in the world, the output's word for it (Main Loop's interface)
+    names = [line["name"] for line in doc["readings"]]
+    assert len(set(names)) == len(names) and all(
+        name.startswith(line["kind"]) for name, line in zip(names, doc["readings"], strict=True)
+    )
     for line in doc["readings"]:
         assert isinstance(line["every"], int) and line["every"] >= 1
         if line["kind"] == "level":
@@ -191,7 +196,7 @@ def test_the_record_count_and_the_table_are_the_algebras_integers():
 
 @pytest.mark.xfail(
     strict=True,
-    reason="the loader reads `readings` (these lines lack a `name`), reads no `sourced` and requires the residue keys "
+    reason="the loader reads `readings`, reads no `sourced` and requires the residue keys "
     "K, N, release (record 2199 items 2 and 3; the ledger's source row); LAWFUL when they land",
 )
 @pytest.mark.parametrize("name", NAMES)

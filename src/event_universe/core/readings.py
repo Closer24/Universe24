@@ -6,6 +6,8 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any
 
+from event_universe.core.game_board import box_centre
+
 # kind -> (label, the keys the kind takes beside name and kind)
 SCHEMA: Mapping[str, tuple[str, tuple[str, ...]]] = {
     "clicks": ("DETECTOR", ("detector",)),
@@ -62,6 +64,8 @@ def declarations(
     found: list[Reading] = []
     for index, item in enumerate(value):
         where = f"readings[{index}]"
+        if isinstance(item, dict) and isinstance(item.get("name"), str) and item["name"]:
+            where = f"the reading {item['name']!r}"
         if not isinstance(item, dict):
             raise ValueError(f"{where} must be an object with a name and a kind")
         kind = item.get("kind")
@@ -180,8 +184,7 @@ def _read(reading: Reading, simulation: Any) -> dict[str, Any]:
         return {"alive": len(simulation.records)}
     if reading.kind == "centre":
         block = simulation.block_by_number[reading.body]
-        extents = block.definition.extents
-        return {"node": [(block.corner[a] + extents[a] // 2) % simulation.shape[a] for a in range(3)]}
+        return {"node": list(box_centre(block.corner, block.definition.extents, simulation.shape))}
     level = _family_level(reading, simulation)
     if reading.kind == "level":
         return {"level": 0 if level is None else int(level[reading.node])}

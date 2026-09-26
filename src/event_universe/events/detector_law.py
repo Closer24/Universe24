@@ -61,13 +61,13 @@ byte (`tests/test_massive_record.py`).
 
 from __future__ import annotations
 
-from collections.abc import Callable, Iterator, Sequence
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
 from math import gcd
 
 import numpy as np
 
-from event_universe.core.game_board import Address3
+from event_universe.core.game_board import box_centre
 from event_universe.core.integer import by_drive
 from event_universe.core.register import Register, discover
 from event_universe.core.rule3 import ISOTROPIC, coefficients, form_term, rule3, rungs
@@ -76,8 +76,6 @@ from event_universe.events.world import (
     TWIST_FINE_BITS,
     BlockDefinition,
     NatureBeamWorld,
-    Vector,
-    body_node_indices,
 )
 
 Record = Callable[[dict[str, object]], None]
@@ -434,15 +432,6 @@ class Ledger:
     # receiver alone
     closed_after_click: list[int]
 
-    def escaped_amount(self, family: int) -> int:
-        return self.transit_escaped[family]
-
-    def escaped_content(self, family: int) -> int:
-        return self.transit_escaped[family]
-
-    def escaped_momentum(self, family: int) -> list[int]:
-        return [0, 0, 0]
-
 
 class DetectorLawLayer:
     """The record's lines the runner writes into run.json (the amplitude law's shape)."""
@@ -451,12 +440,6 @@ class DetectorLawLayer:
         self.gathers: list[dict[str, object]] = []
         self.given = 0
         self.gathered = 0
-
-    def open_records(self) -> list[dict[str, object]]:
-        return []
-
-    def report(self) -> dict[str, object]:
-        return {"given": self.given, "gathered": self.gathered, "open": 0}
 
 
 class DetectorLawSimulation:
@@ -2092,27 +2075,12 @@ class DetectorLawSimulation:
         # so the giving's lowered quanta are held after the held families'
         # step with the takings' (`_advance_fields`), no hold here (the hold
         # at once, item 47, HISTORY: a defect against 9.57 (1))
-        if live.window_open:
-            # THE POINT EMITTER (item 50): the record's norm is T from the open,
-            # the excitation's action the window will reach (9.71 (1) (d)), as the
-            # exact rational norm / norm_denominator, so the ladder reads its
-            # bookings from the first interval (Born's rule's walk as now)
-            assert emitter.norm is not None and emitter.norm_denominator is not None
-            live.norm, live.pace = emitter.norm, emitter.norm_denominator
-        else:  # CANCELLED (commit 7): the train's norm; every giving opens a window
-            live.norm, live.pace = self.given_norm(live)
-            given = emitter.given
-            if given is not None and given.rest_norm != given.norm:
-                # THE THRESHOLD ON THE REST T (ALGEBRA.md 9.74 (3), 9.75 (1);
-                # BUILD.md section 26 item 56): a moving body's boosted rows
-                # carry gamma (1 +- beta) T_rest, the quantum's energy in the
-                # board's frame; the ladder's threshold stays on T_rest, the
-                # record's form at the giving times rest_norm / norm, the exact
-                # rational (the file's two integers, both the vacuum's form)
-                numerator = live.norm * given.rest_norm
-                denominator = live.pace * given.norm
-                common = gcd(numerator, denominator)
-                live.norm, live.pace = numerator // common, denominator // common
+        # THE POINT EMITTER (item 50): the record's norm is T from the open,
+        # the excitation's action the window will reach (9.71 (1) (d)), as the
+        # exact rational norm / norm_denominator, so the ladder reads its
+        # bookings from the first interval (Born's rule's walk as now)
+        assert emitter.norm is not None and emitter.norm_denominator is not None
+        live.norm, live.pace = emitter.norm, emitter.norm_denominator
         self.ledger.transit_released[family] += cost
         block.emitted.append(identity)
         self.records[identity] = live
@@ -2158,37 +2126,11 @@ class DetectorLawSimulation:
                 "cycle": block.count,
                 **({"clock": block.count} if world.clock_stamp else {}),
             }
-            if live.window_open:
-                live.giving_line = giving_line  # named at the close (item 50)
-            else:  # CANCELLED (commit 7): the train's line at the open
-                self.record(giving_line)
-        if live.window_open:
-            # the next excitation and the count wait for the window's close
-            block.emit_now = False
-            block.wait = 0
-            own.u, own.wheel = residue, wheel
-            return
-        # THE NEXT EXCITATION while the stock lasts (9.43 (3), 9.44 (5) (c)):
-        # the body's own record continues as it is, its levels, phase and
-        # remainders untouched by the click; the residue read at this click
-        # at the first shell Node is the given record's and the next
-        # excitation's alike (every Node of the body holds (M, u)); the count
-        # of intervals starts from this click (`_excitation_rung`)
+            live.giving_line = giving_line  # named at the close (item 50)
+        # the next excitation and the count wait for the window's close
         block.emit_now = False
         block.wait = 0
         own.u, own.wheel = residue, wheel
-        if self.stock_of(block) > 0:
-            block.excitations += 1
-
-    def _write_given_train_cancelled(self, live: LiveRecord, block: Block) -> None:
-        """CANCELLED (commit 7; the model owner's record 2102, marked and not deleted):
-        THE GIVEN TRAIN'S WRITE (ALGEBRA.md 9.17 (6a); item 27), the train's two levels
-        written once on the body's Nodes at the open; disconnected, called nowhere: the
-        window is the law's one giving (9.85 (5), 9.71 (1); record 2082 (4))."""
-        emitter = block.definition.emitter
-        assert emitter is not None and emitter.given is not None
-        self.write_levels(live, block, emitter.given.now, emitter.given.before)
-        live.box = self.support_box(live.now, live.before)  # HOST (item 43): the train's own Nodes
 
     def _block_clock(self, block: Block) -> None:
         """The block's clock (MASSIVE_RECORD.md sections 4 and 6): its total
@@ -2201,10 +2143,7 @@ class DetectorLawSimulation:
         # the co-moving centre Node (the design's reading of the clock in
         # motion, MASSIVE_RECORD.md section 8: "the clock read at the
         # co-moving centre"): the total record's value there, on the line
-        centre = tuple(
-            (block.corner[axis] + block.definition.extents[axis] // 2) % self.shape[axis]
-            for axis in range(3)
-        )
+        centre = box_centre(block.corner, block.definition.extents, self.shape)
         at_centre = 0
         if block.node_record is not None:
             # the body's Node's record (9.60 (1)): its level is the standing record's
@@ -2987,25 +2926,6 @@ class DetectorLawSimulation:
                 total += int(np.sum(np.where(port & (flux > 0), flux, 0)))
         return total * wall
 
-    def write_levels(
-        self, live: LiveRecord, block: Block, now: Sequence[int], before: Sequence[int]
-    ) -> None:
-        """The two levels written on the block's Nodes in the box's x-major
-        order (`body_node_indices` on the block's current corner and its
-        family's faces), the one convention of the loader, the generator and
-        the engine (ALGEBRA.md 9.17 (6a))."""
-        nodes = body_node_indices(
-            (int(self.shape[0]), int(self.shape[1]), int(self.shape[2])),
-            (int(block.corner[0]), int(block.corner[1]), int(block.corner[2])),
-            block.definition.extents,
-            self.kind_wrap[block.family],
-        )
-        flat_now = live.now.reshape(-1)
-        flat_before = live.before.reshape(-1)
-        for index, now_value, before_value in zip(nodes, now, before, strict=True):
-            flat_now[index] = now_value
-            flat_before[index] = before_value
-
     def planted_record(
         self,
         family: int,
@@ -3143,17 +3063,6 @@ class DetectorLawSimulation:
         body's Nodes as the hold leaves them) has a rational Q, its world
         energy, and the same reading."""
         return self.conserved_form(live)
-
-    def _half_space(self, origin: Address3, vector: Vector) -> np.ndarray:
-        """The Nodes on the arm's side of the lamp: (node - origin) . vector at
-        least 0 on the board's raw coordinates (the arm's own half-space, the
-        lamp's Node included; the pair's two arms on a bar the two half-lines)."""
-        grids = np.indices(self.shape, dtype=np.int64)
-        dot = np.zeros(self.shape, dtype=np.int64)
-        for axis in range(3):
-            dot += (grids[axis] - int(origin[axis])) * int(vector[axis])
-        mask: np.ndarray = dot >= 0
-        return mask
 
     @staticmethod
     def support_box(*arrays: np.ndarray) -> tuple[tuple[int, int], ...] | None:
@@ -3443,7 +3352,7 @@ class DetectorLawSimulation:
         Ports along the record's own component none, 9.82 (3) (c)), from the
         record's two levels as the interval leaves them, this interval's write in
         `now` and the last one's in `before`; the pair's second level added (9.82
-        (3) (b)). A one-Node body's six Ports are `one_node_outward_flux`, bit for bit.
+        (3) (b)).
         With `tally`, the flux through the Ports on the body's +a side is added to
         tally[a] and through its -a side subtracted (the given quantum's direction,
         ALGEBRA.md 9.91 (4); commit 5 without the recoil), in the same units."""
@@ -3477,51 +3386,6 @@ class DetectorLawSimulation:
                 if tally is not None:
                     tally[axis] += side * outward
         return total
-
-    def one_node_outward_flux(self, live: LiveRecord, centre: tuple[int, int, int]) -> int:
-        """THE OUTWARD FLUX through the body's Node's six Ports this interval (ALGEBRA.md
-        9.71 (1) (c); item 50): the taking's inward booking with the sign
-        reversed, wall (now_j before_i - before_j now_i) where positive over
-        the body's Node's Links (the Link to a Node beyond an open face carries none;
-        a folded axis none; the Ports along the record's own component none,
-        9.82 (3) (c)), from the record's two levels as the interval leaves
-        them, this interval's write in `now` and the last one's in `before`
-        (a flux read across a write would book the write itself); the pair's
-        second level added (9.82 (3) (b))."""
-        wall = self.kind_wall(live.family)
-        wrap = self.kind_wrap[live.family]
-        own_axis = self.booked_axis(live)
-        levels = [(live.now, live.before)]
-        if live.im_now is not None and live.im_before is not None:
-            levels.append((live.im_now, live.im_before))
-        total = 0
-        for axis in range(3):
-            if self.shape[axis] == 1 or axis == own_axis:
-                continue
-            for side in (1, -1):
-                index = list(centre)
-                index[axis] += side
-                if index[axis] < 0 or index[axis] >= self.shape[axis]:
-                    if not wrap[axis]:
-                        continue
-                    index[axis] %= self.shape[axis]
-                j = (index[0], index[1], index[2])
-                flux = sum(
-                    int(now[j]) * int(before[centre]) - int(before[j]) * int(now[centre])
-                    for now, before in levels
-                )
-                if flux > 0:
-                    total += flux * wall
-        return total
-
-    def _node_record_level(self, block: Block) -> int:
-        """The body's Node's rotation's level now (the standing record at the body's Node, item
-        42; the lattice body's centre Node otherwise)."""
-        if block.node_record is not None:
-            return int(block.node_record.now)
-        assert block.own is not None
-        centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
-        return int(block.own.now[centre])
 
     def _point_windows(self) -> None:
         """THE WINDOW, one interval (ALGEBRA.md 9.69 (2), 9.71 (1); BUILD.md
@@ -4065,26 +3929,6 @@ class DetectorLawSimulation:
             }
             for number, entry in enumerate(self.world.measured)
         ]
-
-    def detectors(self) -> list[dict[str, object]]:
-        found = []
-        for detector in self.world.detectors:
-            clicks = 0
-            for gather in self.layer.gathers:
-                chosen = gather["chosen"]
-                if isinstance(chosen, list) and chosen and chosen[0][0] == detector.name:
-                    clicks += 1
-            found.append(
-                {
-                    "name": detector.name,
-                    "positions": [list(p) for p in detector.positions],
-                    "clicks": clicks,
-                }
-            )
-        return found
-
-    def covariant_report(self) -> dict[str, object]:
-        return {}
 
     def snapshot_stream(self) -> Iterator[tuple[str, object]]:
         """The state's (key, value) pairs for state.json: the tick,

@@ -29,46 +29,53 @@
  "face_depth": 1,
  "readings": [
   {
+   "name": "level_field_16_16_16",
    "kind": "level",
    "family": "field",
    "node": [16, 16, 16],
    "every": 1
   },
   {
+   "name": "level_field_28_16_16",
    "kind": "level",
    "family": "field",
    "node": [28, 16, 16],
    "every": 1
   },
   {
+   "name": "support_field",
    "kind": "support",
    "family": "field",
    "every": 1
   },
   {
+   "name": "level_field_table_16_16_16",
    "kind": "level",
    "family": "field_table",
    "node": [16, 16, 16],
    "every": 1
   },
   {
+   "name": "level_field_table_28_16_16",
    "kind": "level",
    "family": "field_table",
    "node": [28, 16, 16],
    "every": 1
   },
   {
+   "name": "support_field_table",
    "kind": "support",
    "family": "field_table",
    "every": 1
   },
   {
+   "name": "total_control",
    "kind": "total",
    "family": "control",
    "every": 1
   }
  ],
  "stamp": {
-  "hash": "b8c94b66df40a5710bf97ff8aca5970593374c1b940d9b9def669972aaf67258"
+  "hash": "a3f9005a80a63f221714ca02d81f62350d598e03f12089ef970c51a4efa92b6a"
  }
 }

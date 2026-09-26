@@ -59,40 +59,43 @@ def test_the_schema_holds_six_kinds_with_their_labels_and_keys():
     [
         ({"kind": "alive"}, "readings must be a list"),
         ([3], r"readings\[0\] must be an object"),
-        ([{"name": "x", "kind": "well"}], r"readings\[0\].kind must be one of"),
+        ([{"name": "x", "kind": "well"}], r"the reading \'x\'.kind must be one of"),
         (
             [{"name": "x", "kind": "alive", "every": 1, "depth": 2}],
-            r"readings\[0\] has unknown keys: depth",
+            r"the reading \'x\' has unknown keys: depth",
         ),
         (
             [{"name": "x", "kind": "level", "family": "matter", "every": 1}],
-            r"readings\[0\] lacks keys: node",
+            r"the reading \'x\' lacks keys: node",
         ),
         ([{"name": "", "kind": "alive", "every": 1}], r"readings\[0\].name must be a nonempty string"),
         (
             [{"name": "x", "kind": "alive", "every": 1}, {"name": "x", "kind": "alive", "every": 2}],
             "two readings named 'x'",
         ),
-        ([{"name": "x", "kind": "alive", "every": 0}], r"readings\[0\].every must be an integer from 1"),
+        (
+            [{"name": "x", "kind": "alive", "every": 0}],
+            r"the reading \'x\'.every must be an integer from 1",
+        ),
         (
             [{"name": "x", "kind": "alive", "every": 2.0}],
-            r"readings\[0\].every must be an integer from 1",
+            r"the reading \'x\'.every must be an integer from 1",
         ),
         (
             [{"name": "x", "kind": "clicks", "detector": "screen", "every": 1}],
-            r"readings\[0\] has unknown keys: every",
+            r"the reading \'x\' has unknown keys: every",
         ),
         (
             [{"name": "x", "kind": "clicks", "detector": "wall"}],
-            r"readings\[0\].detector names no detector",
+            r"the reading \'x\'.detector names no detector",
         ),
         (
             [{"name": "x", "kind": "support", "family": "light", "every": 1}],
-            r"readings\[0\].family names no family",
+            r"the reading \'x\'.family names no family",
         ),
         (
             [{"name": "x", "kind": "centre", "body": 7, "every": 1}],
-            r"readings\[0\].body names no measured entry",
+            r"the reading \'x\'.body names no measured entry",
         ),
         (
             [{"name": "x", "kind": "level", "family": "matter", "node": [80, 0, 0], "every": 1}],
