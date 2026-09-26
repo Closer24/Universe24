@@ -1005,7 +1005,7 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
             "theta_unit = 1 / (4 Gamma 2^16) radians per unit of k (ALGEBRA.md 9.96 (2) (a))"
         )
     parts: list[tuple[tuple[int, int, int], ...]] = []
-    for name, least, most, step in (
+    for name, least, most, _step in (
         ("fine", 1 << TWIST_FINE_BITS, 1 << TWIST_FINE_BITS, 1),
         ("coarse", 1, TWIST_COARSE_MOST, 1 << TWIST_FINE_BITS),
     ):
