@@ -571,7 +571,7 @@ The physics the method keeps:
 The owner's one page, in force now. It governs every other section of this file; where an older line differs, this one stands.
 
 1. `main` is the one version that works. No one pushes to it directly.
-2. Every task is one GitHub issue and one short branch from `main` (`feature/...`, `core/...`, `exp/...`). It is merged within days and the branch is deleted after the merge (this replaces the old word never to delete a branch, for merged branches only).
+2. Every task is one short branch from `main` (`feature/...`, `core/...`, `exp/...`). It is merged within days and the branch is deleted after the merge (this replaces the old word never to delete a branch, for merged branches only).
 3. Only the Boss merges into `main`, and only when CI is green on the pull request's head.
 4. Only Main Loop touches the central loop (`src/event_universe/core/` once the cut of record 2208 makes it). Whoever needs something in the core opens an issue.
 5. A new primitive (the owner's "feature") is one folder under `src/event_universe/features/`, registered under its unique name (point 12 below). It acts only when the run's files declare it; the code holds no flag and no written default (records 2172, 2199 item 7). Several primitives that work together are one composite, registered under one name.
@@ -579,7 +579,7 @@ The owner's one page, in force now. It governs every other section of this file;
 7. The most important test: with the new primitive undeclared, every old run comes out identical to the bit.
 8. After every merge into the engine, the Boss tags `main`: `engine-vX.Y`. The tag lives in git only, never in the code or the run's files (no version in the engine, record 2182).
 9. An experiment runs only on a tagged version, with its pin written before the run; every result names the tag. Comparing a result against a pin waits for the Go (records 2172 to 2174, 2207).
-10. The agents talk in issues only: the task, the finish in two lines and a link. A Routine that wakes a session carries only the issue's link (item 8 of the next section). [docs/PROJECT_STATUS.md](../docs/PROJECT_STATUS.md) is the current state. The owner's words and decisions stay in the day's log and Highlights 5.4.
+10. The agents talk by direct messages (item 8 of the next section): the task, the finish in two lines and a link; waking a session that does not answer is the sender's work (record 2215). No new GitHub issue is opened for a task; the issues already open (#1154 to #1158) are closed as they are done. [docs/PROJECT_STATUS.md](../docs/PROJECT_STATUS.md) is the current state. The owner's words and decisions stay in the day's log and Highlights 5.4.
 
 Set up once: Main Loop, the regression test of every shipped world bit for bit in the CI check (`.github/workflows/check.yml`, the one CI file) until it runs green; the owner, GitHub's protection of `main` (a pull request required, the CI check required green, no force push, no bypass); the Boss, the existing branches merged one by one, the engine first (pull request 1152), and `main` tagged `engine-v1.0` (the owner creates a tag on GitHub while the Boss's session may push its branch only).
 
@@ -636,7 +636,7 @@ The order and the report (the owner's rules of the day, in one place):
    formula and status); its findings are applied in the manuscript or sent
    through the Boss to the file's writer as one bounded fix; the paper never
    changes the tree, and the tree's writers never write the paper.
-8. Messaging between sessions (the model owner, 2026-09-24; corrected 2026-09-26, record 2195): the team's sessions cannot reach one another by SendMessage (ListAgents lists none of them; Nature24's test of record 2195). The channel between sessions is a Routine bound to the receiver's session (create_trigger with the receiver's session, then fire_trigger at once); the message names its sender, its record and its commit, and the receiver answers the same way to the sender's session. Since record 2214 the task and its report live in a GitHub issue, and the Routine carries only the issue's link and one line. SendMessage stays the channel to an agent the sender itself spawned inside its own session. A Routine at a later time (a check-in) stays what it was; a message is fired at once, never left to wait.
+8. Messaging between sessions (the model owner, 2026-09-24; corrected 2026-09-26, record 2195): the team's sessions cannot reach one another by SendMessage (ListAgents lists none of them; Nature24's test of record 2195). The channel between sessions is a Routine bound to the receiver's session (create_trigger with the receiver's session, then fire_trigger at once); the message names its sender, its record and its commit, and the receiver answers the same way to the sender's session. SendMessage stays the channel to an agent the sender itself spawned inside its own session. A Routine at a later time (a check-in) stays what it was; a message is fired at once, never left to wait.
 
 ## The generic engine: the engine supports, the run defines (the model owner, 2026-09-26, records 2172 to 2190)
 

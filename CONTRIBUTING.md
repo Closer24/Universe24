@@ -56,7 +56,7 @@ branch `main`. ZIP files are backups after the project has been uploaded. For ea
 1. Read these instructions and relevant documents from the current repository.
 2. Check `git status`, fetch `origin`, and record the base commit. Never overwrite
    local work belonging to the user or another conversation.
-3. Create a short-lived branch from `origin/main` for one GitHub issue, named
+3. Create a short-lived branch from `origin/main` for one task, named
    `feature/...`, `core/...` or `exp/...`; it is merged within days and deleted
    after the merge (record 2214). Use a separate worktree or clone for concurrent work.
 4. Keep the task focused and commits small, explaining why each change is needed.
