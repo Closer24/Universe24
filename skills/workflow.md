@@ -566,20 +566,18 @@ The physics the method keeps:
 - The backward run is exact everywhere. A lost inverse is a defect, not a choice (record 1994).
 - No conservation is decreed. It follows from the rule at the Node or it does not exist (record 1997).
 
-## How the team works now (the model owner, 2026-09-21, record 309)
+## How the team works now (the model owner, 2026-09-26, records 2134, 2186, 2187 and 2190)
 
-The owner's instruction: the Skills describe the team as he builds it now. The
-roles, as they run today, one writer per document:
+The team is four agents and a paper writer. The Boss leads the four. Only the coder writes the engine's code. The others use the engine's input and output: they run it, debug it with the trace, and ask the coder for a new primitive. One writer per document.
 
-| Role | Writes | Does not write |
-| --- | --- | --- |
-| The Boss (the orchestrator) | the day's log, Highlights 5.4, the Skills, the records of every word of the owner; opens and merges the pull requests | any design, derivation or manuscript |
-| The physicist | the designs under `docs/designs/` (a hypothesis, a candidate, a verdict on the dark sector, item by item), FULL_PICTURE, the far-lamp notes | DERIVATIONS_BEAM, BEAM_LAW, the paper |
-| The derivation mathematician | DERIVATIONS_BEAM (every formula as a limit of one rule; the map 21.2 with its status, order and error term) | the designs, the law's text |
-| The architect | BEAM_LAW's text, the genericity probe, the host-only unifications | the derivations, the designs |
-| The paper coordinator | the manuscript, with its referee ([paper-coordinator](paper-coordinator/SKILL.md)) | the tree's documents; it reports what reaches the tree with its status |
-| The Visualiser | no page (the gallery pages under `docs/pages/` were deleted on 2026-09-22, the owner's word of record 894; the Visual Checker's design folder `docs/designs/visual_check/` when it lands) | any number of the register |
-| The physics-rule reviewer, the implementers, the experimenter | one bounded assignment each, as agents of the Boss: a review file, a branch, a registered run | the shared documents beyond their assignment |
+| Role | Session name | Does | Does not |
+| --- | --- | --- | --- |
+| The Boss | Closer24 | keeps the day's log, Highlights 5.4, the glossary, the ledger and the Skills; relays every word of the owner with the same text to the others; keeps the order of the work | write code or a derivation |
+| The coder | Coder 3 | writes all of the engine's code; adds every support as a generic primitive for every run; opens and merges the engine's pull requests on green checks | write a primitive for one agent or one experiment |
+| The physicist | Nature24 | writes the run's files, the small test of each primitive and the acceptance tests; runs the engine and checks each ledger item on main as the second party; answers the hard questions by runs | change the engine's code |
+| The mathematician | Mathematician | writes docs/ALGEBRA.md: one algebraic line per primitive with its place in the step; gates each build against it | change the engine's code |
+| The paper writer | Paper | writes the one paper from what the tree holds ([paper-coordinator](paper-coordinator/SKILL.md)) | change the tree's documents |
+
 
 The order and the report (the owner's rules of the day, in one place):
 
@@ -633,6 +631,19 @@ The order and the report (the owner's rules of the day, in one place):
    message creates no scheduled task. When the receiver is not on the list
    (its session stopped or unreachable), the sender says so in its report
    and does not fall back to a Routine as a message; the Boss decides.
+
+## The generic engine: the engine supports, the run defines (the model owner, 2026-09-26, records 2172 to 2190)
+
+The owner's word: everything the owner and the Boss close on the way of work enters the files. This is how the engine is built and extended.
+
+1. One engine, no version, no flag, no family name and no number in the code (records 2172, 2174, 2182). Everything a run needs is in its files: the universe file, the world file and the start file.
+2. The engine supports; the run defines (record 2178). The engine implements the rule, the click and a closed set of primitives. The run's files declare the families, their attributes and the step itself: what each Port sends, receives and waits, and the operation on it (record 2186).
+3. The rule first (record 2188). What can be built from the one rule (ALGEBRA.md 9.57 (1)) and the click is built from them. What cannot is marked beyond the rule, kept as its own declaration, and studied.
+4. A new primitive: the agent who needs it asks the coder. The mathematician writes its algebraic line and its place in the step. The coder builds it once, for every run. The physicist writes its small test. It becomes an item of the ledger and is done when its test is green on main (records 2180, 2184, 2186).
+5. The ledger (docs/designs/generic_engine/ENGINE_LEDGER.md until the documents' merge, then a section of docs/ENGINE.md) holds what is implemented and what is to do, one item each with its test. The engine is closed when nothing is to do and every item is tried from the files alone (record 2180).
+6. The trace (record 2187): any primitive can write one line per interval, Node and Port, with the integers read and written and the remainder. The files choose what is traced. A traced run is bit for bit the untraced one. Anyone may run the engine locally and debug with it.
+7. A new word: it enters the glossary (Highlights 5.6) with its definition before it is used (Highlights 0.2 (2)). The Boss adds it with the record of the owner's word. Words already taken are not reused: a field is one family's levels over the Nodes, an attribute is never called a field, and an experiment is never called a row (records 2182, 2189).
+8. Every attribute is algebra. Each has a small test of its own, and the run tests the whole (record 2184).
 
 ## Tools and authority
 

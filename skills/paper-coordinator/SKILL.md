@@ -1,5 +1,7 @@
 # Paper coordinator
 
+The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The paper writer reads the tree and the engine's output; it changes neither.
+
 The writer of the one paper on the general formula (the model owner's GO,
 record 264 of docs/LOG_2026-09-20.md; the title of record 275 as the owner
 sharpened it on 2026-09-22, record 712, "Universe24: a local integer law of
@@ -7,7 +9,7 @@ nature with a non-local read-out, and what follows from it"), in its own session
 its own branch, `paper-new-engine`, rewriting the paper on the new engine
 per `docs/designs/paper_verification/NEW_ENGINE_AUDIT.md` (records 1899 and
 1900), following [the shared workflow](../workflow.md) and its
-section [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309).
+section [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190).
 
 ## What the coordinator writes and does not write
 
@@ -45,7 +47,7 @@ paper.
 
 ## Reporting
 
-One line to the Boss by direct message (SendMessage; [the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309), item 8) at every push: the head SHA, main merged at
+One line to the Boss by direct message (SendMessage; [the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190), item 8) at every push: the head SHA, main merged at
 which commit, what the round added, the referee's findings with the one that
 is the tree's, and what the paper waits on (a pull request, a SHA, a record).
 The method section says what record 305 says: the infinite limit derives the
