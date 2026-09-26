@@ -17573,6 +17573,78 @@ as written here.
    four); the strong force AS COLOUR is a declaration still owed, and
    nothing in the engine's rows reads it.
 
+10. **Nature24's runs of both forms (stroke-side af43d218, 10:25Z): the
+    table stops the runaway but sloshes and drifts; the two families as
+    HELD levels cannot balance; the corrected form, the two families as
+    SOURCED fields; the gap mine again.** His readings: with the table
+    (side 9, K_m = 2, s_cap = 4000) no guard over 1500 intervals, the
+    content at the peak 9500 to 9800 (the ceiling 8000 plus gravity's own
+    share, read with weight 1 on the same s_i), the bound share swinging
+    1.00, 0.95, 0.08, 0.77, 0.62, 0.45 (a slosh to the board's edge from a
+    Gaussian start), the form's mean drifting 0.92 to 1.67, a moving body
+    going 16 to 25.6 Links and back, the pair meeting before 250 and
+    passing through; side 5 at the guard (9000 + 1800). With the two
+    families as held levels, every weight pair either runs away (K_m
+    above K_r) or disperses (K_m at or below K_r). HIS READING IS RIGHT
+    AND IS THE FINDING: a held family is written to the source's level at
+    the source's Nodes whatever its pair, so at the record's own Nodes the
+    hollow is K_m s_i and the hill K_r s_i, the same shape, and their
+    difference has one sign; the range shapes only the tail. A balance by
+    range needs a field whose level at the source grows with the range: a
+    SOURCED field, not a held level.
+
+    (a) THE CORRECTED FORM. The binding and the core are sourced, not held:
+    each interval the record's local count is ADDED into the family's now
+    level at its Nodes, a_b(i) += s_i and a_h(i) += s_i (the giving's own
+    verb, the window's write of 9.71 (1) (b) with no close; "source" is
+    one of the engine's primitives, 9.98 (11) (b)), and each family steps
+    by its plain rule at the Node's pace with its own pair; gravity's t
+    part stays the hold as built. A sourced field with the range lambda
+    (cosh kappa = 3 den / num - 2, lambda = 1 / kappa) has at the centre of
+    a uniform source of radius R the level lambda^2 [1 - (1 + R / lambda)
+    exp(-R / lambda)] per unit source (the continuum's; the lattice's from
+    Nature24's relaxation): the binding (lambda 3) over the core (lambda
+    1) is 1.0 at R = 0.5, 1.5 at R = 1.5, 2.6 at R = 2.5, 4.2 at R = 4.5,
+    and 9 for a body much wider than 3 Links. So with K_r between K_m and
+    4 K_m a body of side 9 is a hollow and a point is a hill: K_m = 2, K_r
+    = 4 gives a net hollow of 4.2 per unit source at R = 4.5 and a net
+    hill at R below 1.2. The body has the size at which the net well per
+    quantum is deepest, read by the run, and a point never forms.
+
+    (b) THE NUMBERS. The pairs [1000, 1019] and [1000, 1181]; K_m = 2, K_r
+    = 4; the sources' scale E_s set by the static response so that K_m b -
+    K_r h at the start's peak is 1500 (with gravity's held 2000 the pace
+    is lowered 3500 at the peak, above both thresholds of 9.98 (10) (h));
+    the guard counts every read, g + K_m b - K_r h below Gamma everywhere,
+    which at 3500 it is by a factor of nearly three. (i) With the table
+    alone, gravity's share counts: the ceiling is (K_m + 1) s_cap below
+    Gamma, s_cap = 3000 at K_m = 2 and 2000 at K_m = 3; the table stays
+    the sharp form's smooth limit, second to (a). THE START: not a
+    Gaussian, which sloshes to an open face; the stationary mode of the
+    rule with its own sources, by iterating the rest step until the
+    residual is below the row's (9.94, 9.98 (10) (f)), or a periodic board
+    of 64.
+
+    (c) THE CONSERVED TOTAL (his ask iii). Under a HOLD nothing is
+    conserved: the hold overwrites the field each interval and injects or
+    removes energy, so his drift is the hold's and no leak of the record.
+    Under the sourced form the coupling is one bilinear energy, K_m SUM_i
+    b_i s_i - K_r SUM_i h_i s_i, whose derivative by the field is the
+    source and by the record the pace's read (s_i quadratic in the
+    record's levels), so the conserved total is the record's form plus
+    the two fields' forms plus that coupling counted once, all in one
+    unit (the fields' forms over E_s); its mean over windows of 300
+    intervals has no drift; the record's form alone sloshes. Gravity's
+    hold stays outside this total as today.
+
+    (d) THE RUNS, the four of item 6 in the sourced form: rest at side 9
+    with K_m = 2, K_r = 4 (bound at a finite width for 3000 intervals, no
+    guard, the equilibrium rms read); moving at v = 0.05 and 0.1 (the
+    distance against v t and the speed ratio); the total of (c) with no
+    drift; the pair 20 Links apart: they meet near 249 and do NOT pass
+    through, binding at about the range, nature's deuteron. A gap in any
+    is mine.
+
 ### 9.109 The click that keeps the momentum, in integers (the model owner's question of 2026-09-26, record 2160: "but one click, is it not received in one click?"; the Boss's ask for the line), and the algebra's numbers for the ninth question's rerun
 
 1. **What the engine's click does and what the bath's construct did.**
