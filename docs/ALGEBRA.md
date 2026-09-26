@@ -11315,7 +11315,31 @@ is this rule's limit at first order in c / Gamma, HISTORY as the law
 from this record, kept as the control of the rows in (5) and as the
 digests' record. THE INVERSE: the same integers, the ceiling and the
 difference, exact at every Node for every clock history (the wall
-constant, 9.50 (8); COMPUTED). THE WHEEL at a Node: 6 den Gamma^2 over
+constant, 9.50 (8); COMPUTED). THE BACKWARD LINE, AND THE ONE LINE WITH
+A DIRECTION (the model owner's word of 2026-09-26 through the Boss,
+record 2240: "the inverse of Rule3 can be Rule3 with a variable for the
+direction; there is no need for two functions"): backward,
+
+  6 den Gamma^2 a_before - r = 2 p^2 num S_6(a_now) + B a_now
+  - 6 den Gamma^2 a_next - r',  0 <= r < 6 den Gamma^2,
+
+B the self coefficient in brackets above; and forward and backward are
+one line with sigma (the direction, +1 forward and -1 backward), w the
+wall, div and mod the floor division and its remainder in [0, w):
+
+  u = sigma (2 p^2 num S_6(x) + B x - w y) + rho,
+  z = sigma (u div w),  rho' = u mod w,
+
+with (x, y, rho) = (a_now, a_before, r) and (z, rho') = (a_next, r')
+forward, (x, y, rho) = (a_now, a_next, r') and (z, rho') = (a_before,
+r) backward; with the four paces of 9.91 (2) the read term is SUM_a R_a
+(x_(+a) + x_(-a)). PROVED: at sigma = -1, u = w a_next - T + r' with T
+the right side's first two terms, so z = -floor(u / w) = ceil((T - w
+a_next - r') / w) = a_before and rho' = u - w floor(u / w) = w a_before
+- (T - w a_next - r') = r, the ceiling and the difference of 9.50 (8);
+COMPUTED against the two functions of PR #1179 on 20,000 random cases,
+bit for bit. So Rule3 is one function with sigma, and the engine's
+backward step is the same call. THE WHEEL at a Node: 6 den Gamma^2 over
 the gcd of 2 p^2 num, the self coefficient and the wall, read from the
 rule, never declared (9.22 (4)). THE GUARD: p > 0 at every Node for
 every declared sign; the pace at or below 0 refused by name. THE
@@ -18747,7 +18771,7 @@ that constancy.
    | Name | Place | Reads | Writes | Order | The algebraic line |
    | --- | --- | --- | --- | --- | --- |
    | the signed read | (i), first on the right side | the read families' arguments at the interval's start (a level, or D_i for a pair); the signed weights; by (plain, or q); the axis contents with their remainders (the four words of the folder's declaration: the argument of a phase-1 family its level, of a phase-2 family its D_i = now^2 - next x before of the last step, formed by the loop; a hollow's weight positive, a hill's negative; the axis contents the tensor's parts of 9.78 (4); the Port angles are the twist's own read, 9.113 row 4, not this primitive's) | the paces | none (the only writer of the paces) | p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces with the tensor's parts (9.78 (4)); THE GUARD, the same primitive's check after its write: 0 < p and p^2 (18 num + 6 den) <= Gamma^2 (18 den + 6 num), the stability edge of 9.108 item 12 (p <= Gamma for a massless family, 1.015 Gamma for [800, 850], 1.0028 Gamma for [800, 809]), compared as p <= P with P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)), one integer per family and no square of a pace (a square of 10^8 wraps 64 bits), else the run ends with the guard's line naming the Node; the arguments of a phase-2 family D_i, never its level (9.108 items 13, 14) |
-   | the source | (iv) | the record's D_i at its Nodes from the step's end (before, now, next of (i)), E_s; with a table s_cap | a family's level at a Node (the sourced family's, at the record's Nodes); the record's remainder | 2 (after the hold, 1) | the level gains D_i div E_s each interval, the remainder on the record, the inverse subtracts it; with the table s_cap D_i div (s_cap E_s + D_i); the stationary response (Delta - kappa^2) a = - sigma / q with kappa^2 = 6 den / num - 6 (9.108 items 3, 10, 11, 13) |
+   | the source | (iv) | the record's D_i at its Nodes from the step's end (before, now, next of (i)), E_s; with a table s_cap | a family's level at a Node (the sourced family's, at the record's Nodes); the record's remainder | 2 (after the hold, 1) | the level gains weight x ((D_i + r_i) div E_s) each interval, the signed weight the declaration's, D_i of either sign floored, the remainder r_i in [0, E_s) on the record, the inverse subtracts the same integers; with the table weight x (s_cap D_i div (s_cap E_s + D_i)), no remainder, the denominator refused by name at or below 0 (PR #1175); the stationary response (Delta - kappa^2) a = - sigma / q with kappa^2 = 6 den / num - 6 (9.108 items 3, 10, 11, 13) |
    | the giving | (ii), with the clicks | the body's own levels (its rotation), the weight g, the outward flux through the body's outer Ports over the window, the quantum's norm T, M, n | a family's level at a Node (the given family's, at the body's outer Ports, each interval of the window); at the open the deferred writes, entered at t + 1: a body's content M_k (the given family's stock) and a body's momentum n | on M_k at (iv): 2 (after the clicks' taking, 1); on n at (iv): 1 (before the recoil, 2) | the window: a_given at the outer Ports += g x a_body each interval until the outward norm through the outer Ports reaches T (9.107); at the open, where the engine moves the quantum (9.107 item 2, commit 7; 9.71 (1) (d)'s "the stock falls by one" at the close is corrected to the open, bit for bit), M_k -= 1 and, THE BULK SHARE, n_a -= sgn(n_a) (|n_a| div M) with M the live quanta before the giving: the quantum carries its whole share and the body keeps the remainder |n_a| mod M inside n_a, no store, symmetric under reflection (the share rounded toward zero on both signs); momentum conserved exactly in integers, the velocity n / (3 Q M) kept within one unit of n on the new wall and exactly where M divides n_a, as on the moving rows (9.116 item 5's note; 9.86 (1)); the two writes at t + 1; the giving line's momentum the sign per axis of the outward tally (9.111 item 1). THE THREE ACTS of one window in one folder, the loop naming the act: the open (at the body's own record's click), the write (after the given record's step, before the bookings read the rows: the interval's last act on them, 9.71 (1) (b)), the close (after the bookings, at the first interval with outward x den >= norm) |
    | the clicks (built; its writes named) | (ii) | as registered | the record's tally; the deferred writes: a body's content M_k (+1 of the taken family) | on M_k at (iv): 1 | 9.25 (2), (3); 9.111 item 6 (the writes at t + 1, in the records' identity order) |
    | the recoil | (iv) | the click's tally (sigma_a, the direction of travel: the flux through the -a face minus the +a face), W, P_body, M, lambda_q; the giving's outward tally with the opposite sign | a body's momentum n (the store, a remainder with its divisor, is its own record) | on n at (iv): 2 (after the giving's bulk share, 1; the clicks write M_k and not n) | n_a += sigma_a x (W x P_body) div (M x lambda_q), the giver with the opposite sign, the remainder on the record WITH ITS DIVISOR in lowest terms (the click's fraction and the store brought to their least common divisor, so clicks of different divisors, another family's lambda_q or another M, add exactly: the whole parts sum to the floor of the sum of the fractions; with W = 3 Q M the fraction is 3 Q P_body / lambda_q and the divisor divides the least common multiple of the world's wavelengths; 9.84 (2), 9.91 (4), 9.111 items 1, 2); a held body's store |
@@ -19018,3 +19042,138 @@ that constancy.
    rows that then lose their own code: the hold's and the source's
    divisions, the feed's, the induction's and the spin's steps, the
    hop's accumulator, the recoil's store, the receive's rotation.
+
+### 9.120 The stable body from Rule3 alone: one generator that declares nothing, the body at rest and in motion one procedure, the stop from the integers, the velocity kept by the clicks (the Boss's records 2243, 2244 and 2248 on the model owner's words of 2026-09-26; supersedes 9.118 item 4's seed-and-stop schema; the count's well COMPUTED; the runs Nature24's, the numbers to stand beside)
+
+1. **What a body is under Rule3, and what is not declared.** A body is
+   its count and its record. The count c_i is the family of clicks'
+   level at the body's Nodes (integers, quanta); it enters Rule3
+   through the pace alone, p_i = Gamma - c_i (9.57 (1)), and it never
+   splits: a quantum moves whole, by the click (POSTULATES.md section
+   10). The record (a, b) of the body's standing family splits by the
+   send and is bound by the count. The world file names the body's
+   family, its Nodes, its count per Node and its momentum n (the
+   attributes of 9.117's rows), and nothing else: no lowered pair on
+   its Nodes, no seed, no stop, no profile, no closed Port. The well of
+   8.3, a declared lowered pair, is HISTORY from this record: it stood
+   for a count (item 3).
+
+2. **The well from the count (COMPUTED).** At a Node with count c
+   Rule3's one-Node rotation rises from cos omega_0 = num / den by
+   (1 - p^2 / Gamma^2)(den - num) / den, and its bonds fall from
+   num / (3 den) to num p_i p_j / (3 den Gamma^2) (the symmetric form
+   of 9.57 (1) with the weights 1 / p_i). The depth is bounded by the
+   family's own 1 - cos omega_0. The top mode of the symmetric form on
+   a periodic box (24^3; 36^3 for the side 12) and its share inside the
+   cube, at Gamma = 10^4: the pair [800, 809] (1 - cos omega_0 =
+   0.011) binds no cube of any side at any count; the kind [800, 1200]
+   (1 / 3) binds a cube of side 12 at 500 quanta per Node (the share
+   0.79), 1000 (0.92), 2000 (0.97), 5000 (0.997), of side 6 at 1000
+   (0.58) and 2000 (0.88), of side 3 at 3000 (0.77), and one Node at
+   5000 (0.65). The bound rotation omega_b against omega_0 = 0.841:
+   side 12 at 500, 0.832; at 1000, 0.812; at 2000, 0.771; one Node at
+   9000, 0.599. So a body's clock is set by its count and its side,
+   from the rule: a body's mass is its count.
+
+3. **Against the shipped bodies (a finding).** The declared well
+   [800, 802] on the kind [800, 1200] has the depth 800 / 802 - 800 /
+   1200 = 0.331, which the count's well reaches at about 0.9 Gamma
+   quanta per Node; the light clock's content 65 on 12^3 Nodes is 0.04
+   per Node, a depth of 1.3 x 10^-5. The shipped bodies are bound by
+   the declaration alone, and the well key stood for a count about
+   10^5 times the declared content. No shipped world is adjusted: the
+   generator builds every world from zero (record 2248).
+
+4. **The generator: Rule3 iterated, nothing beside it, one procedure
+   for the body at rest and in motion (records 2243 and 2244).**
+   (a) THE REGION. The iteration runs on the body's Nodes and their
+   surroundings, out to where the mode's tail falls below one unit of
+   the level; the surroundings come out carrying the record's tail
+   (the matching content of record 2244 is the record's levels around
+   the body, from the rule; the count stays on the body's Nodes).
+   (b) THE ITERATION. Rule3's read act with the before-coefficient 0
+   (the one-Node step's keep, 9.119 item 1): a <- (SUM_a R_a arr_a + S
+   a) div w on the region; then Rule3's division act to the amplitude
+   unit A of the universe (the level multiplied by A and divided by its
+   largest size: a load and a division, both the rule's acts). This is
+   the power iteration of the symmetric form's top mode (the bound
+   mode, above the band, is the eigenvalue of largest size, since
+   2 cos omega_b > 2 num / den, the size of the band's bottom); it
+   converges at the rate cos omega_0 / cos omega_b per step: an e-fold
+   every 99 steps at side 12 and 500 per Node, 32 at 1000, 14 at 2000,
+   21 at side 6 and 2000, 8 at side 3 and 5000, 5 at one Node and 9000
+   (COMPUTED). (c) THE STOP FROM THE INTEGERS. The profile is an
+   integer vector bounded by A, so the iteration is a map on a finite
+   set and enters a cycle; the stop is the first repeat of the
+   profile, exact, with no tolerance and no declared count; the profile
+   at the repeat is the mode within one unit of A. COMPUTED in integers
+   from a flat start (every level A = 2^20, no seed), Rule3's
+   coefficients as the engine's: the iteration reaches a fixed point
+   (a cycle of length 1) at step 196 for side 4 and 3000 per Node on
+   12^3, at 271 for side 6 and 2000 on 18^3, at 395 for side 12 and
+   1000 on 24^3, and the profile's overlap with the float top mode is
+   1.000000 in each case. (d) THE TWO LEVELS
+   AND THE AMPLITUDE FROM THE COUNT. The mode's second level is the
+   read act once more, halved: before = (M now) div 2, since M phi =
+   2 cos omega_b phi; the two levels are scaled together so that the
+   record's conserved form (9.57 (1)) equals c T, c the body's count
+   and T the family's quantum norm, a row of the family in the
+   universe file (today the emitter's `norm` key, which moves to the
+   family's row): the body's record carries exactly its quanta's norm,
+   and nothing of the body is declared. (e) THE MOVING BODY, THE SAME
+   PROCEDURE. The momentum n names the velocity v = n / W (the
+   family's wall). The same iteration runs with the arrivals along the
+   axis of motion read through the rotation act by the phase k per
+   Link (Rule3's one-Node rotation with the pair 2 cos k = a_k / b_k as
+   its coefficient), and its fixed point is the moving mode with the
+   rotation omega_b(k); v(k) is the difference quotient of omega_b over
+   k in exact rationals, and k is the pair at which v(k) is the named
+   velocity, found by bisection on the pairs (exact; no float, record
+   2248). The body at rest is the case k = 0 of the same procedure.
+   PROPOSED: the moving mode's fixed point and its v(k) are the
+   generator's to compute and the run's to confirm (item 5 (d)).
+
+5. **Why the clicks keep the velocity constant (record 2243 (4)), and
+   the number.** (a) Rule3 is translation-invariant, so the record's
+   momentum k is conserved where no pace gradient stands (9.84 (1)):
+   the record's centre moves at v_g(k) exactly, bound or spreading.
+   (b) The count follows the record by the click. At every Port of the
+   body the record's flux is booked on the ladder (9.25 (2)), and a
+   rung crossed moves one quantum along the flux (POSTULATES.md section
+   10: the record ends at the detector and the detector's own record
+   changes; here the body is the detector of its own family). With the
+   record's norm c T, the flux across the body's face is c T v_g per
+   interval, so c v_g quanta cross per interval: the count's centroid
+   moves at v_g, exact up to the ladder's remainder (a continuity
+   equation). The hop of 9.117 item 5 is this click and loses its own
+   code; its accumulator is the ladder's booked flux, a remainder
+   against one declared wall (9.119 item 4, the third word). (c) The
+   well moves with the count one quantum at a time, 1 / c_i of a Link,
+   so the record is never kicked by a whole Link. The leak of a hop of
+   the whole well by one Link, delta = 1 - <phi | T phi>^2 with T the
+   shift by one Link, is 0.031 at side 12 and 1000 per Node (0.021 at
+   500, 0.040 at 2000; 0.099 at side 6 and 2000; 0.38 at side 3 and
+   5000; 0.999 at one Node and 9000); per quantum-hop it is delta /
+   c^2 = 3 x 10^-8 and per Link of travel delta / c = 3 x 10^-5 at side
+   12 and 1000 (COMPUTED from the overlap). So the bound norm, and with
+   it the velocity, falls by 3 x 10^-5 per Link there, 3 x 10^-3 over a
+   run of 100 Links. A one-Node body of one quantum binds nothing (item
+   2) and is a free record: its velocity is v_g(k) with no count to
+   follow it. (d) THE TEST, Nature24's, to record 2243 (4): the cube of
+   side 12 on the kind [800, 1200] at 1000 per Node, generated by item
+   4, at v = 1 / 3 on a periodic box with no other body; read over 10^4
+   intervals the count's centroid against v t and the record's share
+   inside the cube. The algebra's numbers beside the run's: the slope v
+   within the ladder's remainder; the share 0.92 at the start, falling
+   by at most 3 x 10^-5 per Link; the clock's period 2 pi / omega_b(k),
+   7.74 intervals at k = 0. A larger fall, or a slope that drifts,
+   names the missing law (record 2243 (4)); the body's own numbers are
+   never patched (record 2137).
+
+6. **What moves where.** The rows: the hop of 9.117 item 5 to the click
+   (item 5 (b)); the well of 8.3 to HISTORY; the seed and stop keys of
+   9.118 item 4 gone (item 4 (c)); the emitter's `norm` to the family's
+   row of the universe file (item 4 (d)); the shipped worlds rebuilt
+   from zero by the generator and the float generators deleted (record
+   2248). The test of record 2233, "a generated body stands still in
+   the run within the rounding", stands as the gate of item 4 at k = 0.

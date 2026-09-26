@@ -47,8 +47,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.rule import rule_coefficients
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -99,12 +99,12 @@ def reads() -> list[dict]:
 def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
     """The wheel W of the rule at a Node (ALGEBRA.md 9.22 (4), 9.57 (1); BUILD.md section 26
     items 34, 36 and 44; the engine's `wheel_at`): the wall w over the gcd of the rule's three
-    integers, R on the six reads, S at the Node and w itself (`rule_coefficients`, the
+    integers, R on the six reads, S at the Node and w itself (core/rule3.py `coefficients`, the
     weak-field rule at the Node's own pace p = Gamma - c); the pair's own 3 den / gcd(num, 3
     den) in the vacuum (2403 on [800, 801], 700 on [801, 700]: at c = 0 the weak-field rule is
     the plain rule times 2 Gamma^2)."""
     num, den = int(pair[0]), int(pair[1])
-    read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, True)
+    (read, _, _), self_coefficient, wall = coefficients(num, den, gamma, content)
     return wall // math.gcd(wall, self_coefficient, read)
 
 
@@ -132,8 +132,8 @@ def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
     a = now.astype(object)
     b = before.astype(object)
     read = simulation._neighbours(before, simulation.kind_wrap[family]).astype(object)
-    read_coefficient, self_coefficient, wall_at = rule_coefficients(
-        num, den, gamma, levels.astype(object), True
+    (read_coefficient, _, _), self_coefficient, wall_at = coefficients(
+        num, den, gamma, levels.astype(object)
     )
     node = wall * (wall_at * (a * a + b * b) - self_coefficient * a * b)
     total = Fraction(0)
@@ -329,7 +329,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     # num with the pace Gamma - stock at the solitary body's centre
     pace = solitary.node_clock_pair((21, 0, 0), body.family)[0]
     num, den = body.definition.pair
-    read_coefficient = rule_coefficients(int(num), int(den), NODE_CLOCK, NODE_CLOCK - pace, True)[0]
+    read_coefficient = coefficients(int(num), int(den), NODE_CLOCK, NODE_CLOCK - pace)[0][0]
     assert pace == NODE_CLOCK - 5 and action.numerator == norm  # one own quantum and the stock 4
     assert read_coefficient % action.denominator == 0
     # the share's wobble from the seed's rounding: 2.1 parts in a thousand on the

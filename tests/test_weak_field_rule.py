@@ -15,8 +15,8 @@ import math
 import numpy as np
 import pytest
 
+from event_universe.core.rule3 import coefficients, rule_total_bound
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.rule import rule_coefficients, rule_total_bound
 from event_universe.world_files import parse_nature_beam_world
 from tests.test_flux_reading import planted
 from tests.test_node_clock import GAMMA, PERIODIC, content_chain, six_reads
@@ -27,23 +27,25 @@ def test_the_three_integers_are_the_algebras_line_and_the_vacuum_is_the_plain_ru
     for num, den in ((1, 1), (800, 809), (3200, 3227)):
         for c in (0, 64, 2000, 9999):
             p = gamma - c
-            read, self_coefficient, wall = rule_coefficients(num, den, gamma, c, True)
+            (read, _, _), self_coefficient, wall = coefficients(num, den, gamma, c)
             assert read == 2 * p * p * num
             assert (
                 self_coefficient
                 == 12 * den * gamma**2 - 6 * (p * p + gamma**2) * (den - num) - 12 * num * p * p
             )
             assert wall == 6 * den * gamma**2
-            plain = rule_coefficients(num, den, gamma, c, False)
-            assert plain == (p * num, 6 * den * c, 3 * den * gamma)
+            (plain_read, _, _), plain_self, plain_wall = coefficients(
+                num, den, gamma, c, weak_field=False
+            )
+            assert (plain_read, plain_self, plain_wall) == (p * num, 6 * den * c, 3 * den * gamma)
         # the vacuum: 2 Gamma^2 times the plain rule, so the levels agree bit for bit
-        read, self_coefficient, wall = rule_coefficients(num, den, gamma, 0, True)
+        (read, _, _), self_coefficient, wall = coefficients(num, den, gamma, 0)
         assert (read, self_coefficient, wall) == (2 * gamma**2 * num, 0, 2 * gamma**2 * 3 * den)
     # arrays as integers
     num = np.array([1, 800], dtype=object)
     den = np.array([1, 809], dtype=object)
     content = np.array([0, 64], dtype=object)
-    read, self_coefficient, wall = rule_coefficients(num, den, 10_000, content, True)
+    (read, _, _), self_coefficient, wall = coefficients(num, den, 10_000, content)
     assert list(read) == [2 * 10_000**2, 2 * 9936**2 * 800]
     assert list(wall) == [6 * 10_000**2, 6 * 809 * 10_000**2]
     assert self_coefficient[0] == 0
@@ -55,7 +57,7 @@ def test_one_step_on_random_rows_is_the_rule_and_inverts_and_the_vacuum_remainde
     for family, (num, den) in ((0, (1, 1)), (1, (800, 809))):
         rows_now = rng.integers(-(1 << 20), 1 << 20, size=(12, 1, 1), dtype=np.int64)
         rows_before = rng.integers(-(1 << 20), 1 << 20, size=(12, 1, 1), dtype=np.int64)
-        read, self_coefficient, wall = rule_coefficients(num, den, GAMMA, quanta, True)
+        (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, quanta)
         remainder = rng.integers(0, wall, size=(12, 1, 1), dtype=np.int64)
         simulation = DetectorLawSimulation(
             parse_nature_beam_world(content_chain(12, PERIODIC, range(12), quanta))
@@ -91,14 +93,14 @@ def test_the_rotation_and_the_dispersion_carry_the_clocks_second_order_weight():
     for num, den in ((800, 809), (3200, 3227)):
         for c in (0, 500, 2000, 5000):
             f = ((gamma - c) / gamma) ** 2
-            read, self_coefficient, wall = rule_coefficients(num, den, gamma, c, True)
+            (read, _, _), self_coefficient, wall = coefficients(num, den, gamma, c)
             assert (6 * read + self_coefficient) / wall == pytest.approx(
                 2 - (1 + f) * (1 - num / den), abs=1e-12
             )
     # light on a chain (four self reads): cos omega' = 1 - f (1 - cos k) / 3 (9.62 (1))
     for c in (0, 2000):
         f = ((gamma - c) / gamma) ** 2
-        read, self_coefficient, wall = rule_coefficients(1, 1, gamma, c, True)
+        (read, _, _), self_coefficient, wall = coefficients(1, 1, gamma, c)
         for k in (0.302, math.pi / 2):
             s6 = 2 * math.cos(k) + 4
             cos_omega = (read * s6 + self_coefficient) / (2 * wall)

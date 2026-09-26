@@ -16,6 +16,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import TWIST_FINE_BITS
 from event_universe.generator_numbers import light_twist, rotation_twist, twist_triple
@@ -139,10 +140,9 @@ def test_a_planted_vector_part_rotates_the_arriving_pair_and_the_inverse_restore
             c, s, d = composed(k, rows)
             # the arriving pair (re_j, 0) rotated: T_re = c re_j / d to the nearest unit
             reads += (2 * c * int(now[tuple(j)]) + d) // (2 * d)
-    from event_universe.events.rule import rule_coefficients
 
-    read, self_coefficient, wall = rule_coefficients(
-        int(num_all[node]), int(den_all[node]), GAMMA, int(content[node]), True
+    (read, _, _), self_coefficient, wall = coefficients(
+        int(num_all[node]), int(den_all[node]), GAMMA, int(content[node])
     )
     total = read * reads + self_coefficient * int(now[node]) - wall * int(before[node])
     assert int(live.now[node]) == total // wall
@@ -166,8 +166,9 @@ def test_with_every_vector_part_zero_the_step_is_the_plain_path_bit_for_bit():
     assert simulation._port_twists(live, False) is None
     content = simulation._effective_content(matter)
     num, den = simulation.pair_arrays(matter)
-    expected, remainder = simulation.one_rule(
-        num, den, GAMMA, content, simulation._neighbours(now), now, before, np.zeros_like(now), True
+    reads, self_coefficient, wall = coefficients(num, den, GAMMA, content)
+    expected, remainder = rule3(
+        reads, simulation._axis_sums(now), self_coefficient, wall, now, before, np.zeros_like(now)
     )
     simulation._advance(live)
     assert np.array_equal(live.now, expected) and np.array_equal(live.remainder, remainder)

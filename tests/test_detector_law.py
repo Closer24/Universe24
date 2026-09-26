@@ -18,8 +18,8 @@ import math
 import numpy as np
 import pytest
 
+from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
-from event_universe.events.rule import rule_coefficients
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_emitter import (
     CHARGE_FAMILY,
@@ -599,7 +599,7 @@ def test_the_increment_ladder_over_the_named_sets():
         # coefficient at the body's content the giving found
         assert ladder == names and (6 * EMITTER_PAIR[1] * NODE_CLOCK**2) % wheel == 0
         assert 0 <= u < wheel and any(
-            rule_coefficients(EMITTER_PAIR[0], EMITTER_PAIR[1], NODE_CLOCK, c, True)[0] % pace == 0
+            coefficients(EMITTER_PAIR[0], EMITTER_PAIR[1], NODE_CLOCK, c)[0][0] % pace == 0
             for c in range(10)
         )
         assert gather["chosen"][0][0] == chosen_by_the_rule(
