@@ -19,10 +19,12 @@ import pytest
 import scipy.sparse as sparse
 import scipy.sparse.linalg as sparse_linalg
 
+from event_universe.core.integer import MAX_WORK_INT
+from event_universe.core.rule3 import coefficients, rule_total_bound
 from tools.body_generator import (
-    AMPLITUDE_UNIT,
     AT_REST,
     PERIODIC,
+    amplitude_unit,
     bound_mode,
     clock_pair,
     conserved_form,
@@ -77,13 +79,13 @@ def float_top_mode(counts: np.ndarray, pair: tuple[int, int]) -> tuple[float, np
 
 def test_the_iteration_stops_at_the_first_repeat_and_gives_the_bound_mode():
     """The cube of side 4 at 3000 per Node on the kind [800, 1200] in a periodic box of 12:
-    the repeat at iteration 196, a cycle of length 1 (a fixed point), the rotation above the
+    the repeat at iteration 198, a cycle of length 1 (a fixed point), the rotation above the
     band's top 4 / 3 and equal to the float mode's 2 cos omega_b to 10^-6, the profile's
     overlap with the float mode 1 to 10^-6, the share inside the cube 0.76, the clock's
     period 8 by the one-Node rule (2 pi / 0.779)."""
     counts = counted_cube(12, 4, 3000)
     mode = bound_mode(counts, KIND, GAMMA)
-    assert (mode.iterations, mode.cycle) == (196, 1)
+    assert (mode.iterations, mode.cycle) == (198, 1)
     assert mode.rotation > Fraction(2 * KIND[0], KIND[1])
     value, level = float_top_mode(counts, KIND)
     assert abs(float(mode.rotation) - value) < 1e-6
@@ -91,11 +93,36 @@ def test_the_iteration_stops_at_the_first_repeat_and_gives_the_bound_mode():
     profile /= np.linalg.norm(profile)
     assert abs(float(np.sum(profile * level)) - 1) < 1e-6
     assert Fraction(75, 100) < mode.share_inside < Fraction(77, 100)
-    assert int(np.abs(mode.profile).max()) == AMPLITUDE_UNIT
-    clock = clock_pair(mode.rotation)
-    assert clock[1] == AMPLITUDE_UNIT and period_by_the_rule(*clock) == round(
+    assert int(np.abs(mode.profile).max()) == mode.amplitude
+    clock = clock_pair(mode.rotation, mode.amplitude)
+    assert clock[1] == mode.amplitude and period_by_the_rule(*clock) == round(
         2 * math.pi / math.acos(value / 2)
     )
+
+
+def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands_beyond_it():
+    """A is never written: the largest amplitude at which Rule3's total stays inside int64 at
+    every content of the region (the body's content, whose |S| is largest, binds it: (M - w)
+    div (6 R + |S| + w) at 3000 per Node, between 2^22 and 2^23 on [800, 1200] at Gamma
+    10^4), rule_total_bound at A inside the width and at A + 1 beyond; the fixed point does
+    not depend on A beyond its resolution: at A / 2 the profile agrees with the one at A,
+    rescaled, within five units of the coarser (the final scale comes from c T)."""
+    counts = counted_cube(12, 4, 3000)
+    amplitude = amplitude_unit(KIND, GAMMA, counts)
+    reads, self_coefficient, wall = coefficients(KIND[0], KIND[1], GAMMA, 3000)
+    assert amplitude == (MAX_WORK_INT - wall) // (6 * abs(reads[0]) + abs(self_coefficient) + wall)
+    assert (1 << 22) < amplitude < (1 << 23)
+    for content in (0, 3000):
+        assert rule_total_bound(KIND[0], KIND[1], GAMMA, content, amplitude, True) <= MAX_WORK_INT
+    assert rule_total_bound(KIND[0], KIND[1], GAMMA, 3000, amplitude + 1, True) > MAX_WORK_INT
+    mode = bound_mode(counts, KIND, GAMMA)
+    assert mode.amplitude == amplitude
+    coarse = bound_mode(counts, KIND, GAMMA, amplitude // 2)
+    rescaled = (mode.profile * (amplitude // 2)) // amplitude
+    assert int(np.abs(rescaled - coarse.profile).max()) <= 5
+    assert abs(float(coarse.rotation) - float(mode.rotation)) < 1e-6
+    with pytest.raises(ValueError, match="beyond int64"):
+        bound_mode(counts, KIND, GAMMA, 1 << 40)
 
 
 def test_a_pair_whose_count_binds_nothing_is_refused_by_name():
@@ -136,20 +163,20 @@ def test_the_two_levels_and_the_amplitude_from_the_count_and_the_norm():
     doubled = conserved_form(2 * now, 2 * before, self_coefficient, wall, KIND[0], paces, PERIODIC)
     assert doubled == 4 * form
     norm = Fraction(int(np.sum(counts)) * 34026417078243063, 24990001)  # c T, the emitter's T of today
-    scaled_now, scaled_before = scaled_to_norm(now, before, form, norm)
+    scaled_now, scaled_before = scaled_to_norm(now, before, form, norm, mode.amplitude)
     reached = conserved_form(scaled_now, scaled_before, self_coefficient, wall, KIND[0], paces, PERIODIC)
     assert abs(reached / norm - 1) < Fraction(1, 1000)  # the rounding of levels a few tens in size
-    assert 10 < int(np.abs(scaled_now).max()) < AMPLITUDE_UNIT
+    assert 10 < int(np.abs(scaled_now).max()) < mode.amplitude
     assert scaled_now.dtype == np.int64 and scaled_before.dtype == np.int64
 
 
 def envelope_times_sine(mode, triple: tuple[int, int, int]) -> np.ndarray:
     """The quarter-turned part of the moving levels, the envelope times sin(k x) by the rotation act."""
     out = np.empty_like(mode.re)
-    phase_re = np.full(mode.re.shape[1:], AMPLITUDE_UNIT, dtype=np.int64)
+    phase_re = np.full(mode.re.shape[1:], mode.amplitude, dtype=np.int64)
     phase_im = np.zeros(mode.re.shape[1:], dtype=np.int64)
     for x in range(mode.re.shape[0]):
-        out[x] = (mode.re[x] * phase_im + mode.im[x] * phase_re) // AMPLITUDE_UNIT
+        out[x] = (mode.re[x] * phase_im + mode.im[x] * phase_re) // mode.amplitude
         phase_re, phase_im = rotated(phase_re, phase_im, triple, 1)
     return out
 
