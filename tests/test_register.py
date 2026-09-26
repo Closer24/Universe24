@@ -21,6 +21,7 @@ five worlds' comparison of the gate)."""
 
 from __future__ import annotations
 
+import importlib
 import sys
 from pathlib import Path
 
@@ -34,6 +35,7 @@ from event_universe.core.register import (
     WORDS,
     Declaration,
     Register,
+    declaration_of,
     discover,
     folder_of,
 )
@@ -41,50 +43,20 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
 from tests.test_emitter import emitter_world
 
-# the twenty-three of the ledger's table and the mathematician's lines of record 2221 (the
-# giving at (ii); the feed, the induction, the spin's step, the hop and the recoil's
-# accumulator at (v)), in the folders' order (the register's)
-FOLDER_NAMES = (
-    "the clicks",
-    "the clicks list",
-    "the degree",
-    "the feed",
-    "the giving",
-    "the hand",
-    "the hold",
-    "the hop",
-    "the induction",
-    "the internal representation",
-    "the lifetime",
-    "the operation",
-    "the pair",
-    "the phase",
-    "the receive",
-    "the recoil's accumulator",
-    "the self-source",
-    "the send",
-    "the signed read",
-    "the source",
-    "the spin's step",
-    "the trace",
-    "the wait",
-)
-BUILT = {
-    "the pair",
-    "the degree",
-    "the phase",
-    "the signed read",
-    "the hold",
-    "the clicks",
-    "the giving",
-    "the self-source",
-    "the send",
-    "the receive",
-    "the wait",
-    "the operation",
-    "the spin's step",
-    "the hop",
-}
+
+def declared_folders() -> list[tuple[str, str, bool]]:
+    """Every folder of the features package on disk with its declared name and whether it is
+    built (a function or a bind), in the folders' order: the register lists nothing by hand
+    (record 2221 (3)), so a folder added or built touches no shared file."""
+    package = Path(features.__file__).parent
+    found = []
+    for folder in sorted(p for p in package.iterdir() if p.is_dir() and (p / "__init__.py").is_file()):
+        module = importlib.import_module(f"{features.__name__}.{folder.name}")
+        declaration = declaration_of(folder.name, module)
+        found.append((folder.name, declaration.name, declaration.built))
+    return found
+
+
 # the values named once in ALGEBRA.md 9.117 item 1 (and the source row's own word for its
 # remainder): the rows of 9.117 write these and no other
 NAMED_VALUES = {
@@ -112,12 +84,12 @@ ROWS_OF_9_117 = (
     "the hop",
     "the trace",
 )
-# the orders of ALGEBRA.md 9.117 item 3 (the recoil's 2 on n at (iv) lands with its folder),
+# the orders of ALGEBRA.md 9.117 item 3 (the recoil's 2 on n at (iv), after the giving's 1),
 # the lifetime's on the tally at (ii) after the clicks (a row of the ledger, 9.88 (3))
 ORDERS = {
     ("(iv)", "a family's level at a Node"): {"the hold": 1, "the source": 2},
     ("(iv)", "a body's content M_k"): {"the clicks": 1, "the giving": 2, "the clicks list": 3},
-    ("(iv)", "a body's momentum n"): {"the giving": 1},
+    ("(iv)", "a body's momentum n"): {"the giving": 1, "the recoil": 2},
     ("(v)", "a body's momentum n"): {"the feed": 1, "the induction": 2},
     ("(i)", "the arrivals"): {"the receive": 1, "the internal representation": 2},
     ("(ii)", "the record's tally"): {"the clicks": 1, "the lifetime": 2},
@@ -411,9 +383,10 @@ def test_the_register_finds_the_folders_and_refuses_a_folder_without_its_declara
     sys.path.remove(str(tmp_path))
 
 
-def test_the_engine_registers_the_twenty_three_by_their_folders_and_checks_every_term():
-    """On a shipped test world the engine's register holds exactly the twenty-three
-    folders' names in the folders' order, each folder the name's, each with a place, a
+def test_the_engine_registers_every_folder_on_disk_and_checks_every_term():
+    """On a shipped test world the engine's register holds exactly the folders' names in
+    the folders' order, found on disk and listed nowhere by hand (the recoil's folder among
+    them, PR #1165), each folder the name's, each with a place, a
     word and a section, the built ones bound to a function and the rows to do without
     one; the rows of 9.117 write the values named once (item 1) and the writers' orders
     are 9.117 item 3's; every term a family or a body declares (the giving of an emitter
@@ -421,8 +394,10 @@ def test_the_engine_registers_the_twenty_three_by_their_folders_and_checks_every
     register (the shipped worlds bit for bit: the suites' digests)."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=20)))
     register = simulation.register
-    assert register.names == FOLDER_NAMES
-    assert set(register.built_names()) == BUILT
+    folders_found = declared_folders()
+    assert register.names == tuple(name for _folder, name, _built in folders_found)
+    assert set(register.built_names()) == {name for _folder, name, built in folders_found if built}
+    assert "the recoil" in register.built_names() and len(folders_found) == len(register.names)
     folders = Path(features.__file__).parent
     for declaration in register.declarations.values():
         assert declaration.place in PLACES and declaration.word in WORDS and declaration.section
@@ -438,7 +413,7 @@ def test_the_engine_registers_the_twenty_three_by_their_folders_and_checks_every
     register.check_writers()
     terms = simulation.family_terms()
     names = {name for _label, name in terms}
-    assert names <= BUILT
+    assert names <= set(register.built_names())
     assert {
         "the pair",
         "the send",
