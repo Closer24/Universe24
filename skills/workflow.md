@@ -525,6 +525,10 @@ Every report, proposal, review finding or question a role sends to the Boss, and
 
 Every message between roles, to the Boss and to the owner, is written in short sentences, one idea each, with the central ideas first. No long paragraphs. Use short lists where there are several items. Put a question, if there is one, on its own line at the end, asked plainly. Evidence and numbers follow the ideas in the same short form. This covers every report, answer and handoff, including the six lines above; the repository's documents keep their own form. Messages to the owner in Hebrew are written one sentence per line, with no blank lines between them, no bullet points and no full stop at the end of a line, because those are hard for him to read (the model owner, 2026-09-25, record 2029). The important sentences are in bold (the model owner, 2026-09-25, record 2032).
 
+## A big decision takes three: the owner, the Boss and a second party (the model owner, 2026-09-26, record 2136)
+
+A big decision is one that changes what the engine is: a new or removed operation of the law, a rule applied across the whole engine, a family added or removed, or a decision of docs/HIGHLIGHTS.md section 5.4 replaced. It is closed by three, never by one. (1) A second party checks it independently: a read-only reviewer, or Nature24 for the hard questions, rederiving each step and rerunning each number from its own code. (2) The Boss checks that the proposer and the second party agree, and sends the reviewer again on what still differs. (3) The owner decides on the closed plan the Boss brings him. Until the owner's word, the engine is built only in the parts that do not depend on the decision. A derivation the second party confirms and the owner approves becomes one line in section 5.4, with its record.
+
 ## The method of work: from the owner's word to the build (the model owner, 2026-09-25, record 2009)
 
 The owner's word: "put the method of work in the skill". This is the method as it ran on 2026-09-25 (records 1993 to 2008).
