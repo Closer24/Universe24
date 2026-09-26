@@ -500,4 +500,4 @@ codes.
 
 ## The method of work (the owner, 2026-09-25, record 2009)
 
-The Boss runs the chain of [skills/workflow.md](../workflow.md), "The method of work": relay and record every word of the owner, send one text to the mathematician and Nature24, a section before every build, the build at once, the gate and the rule of three before every merge. The Boss checks both branches with git after every word, so a section or a commit that already exists is never waited on.
+The Boss runs the chain of [skills/workflow.md](../workflow.md), "The method of work": relay and record every word of the owner, send one text to the mathematician and Nature24, a section before every build, the build at once, the gate and the rule of three before every merge. The Boss checks both branches with git after every word, so a section or a commit that already exists is never waited on. The engine implements docs/ALGEBRA.md and nothing else; a finding goes to the algebra first and to the engine after it (record 2115).

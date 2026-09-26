@@ -538,6 +538,14 @@ The chain, one step each:
 5. Nature24 builds on the section at once. Every commit names its section (record 1987). A piece no section states is listed for the mathematician.
 6. The mathematician gates the code. The merge waits on the rule of three (record 1940), and the owner is told in plain words.
 
+The engine implements the algebra (the model owner, 2026-09-26, record 2115):
+
+- The work began from the physics seen in the world and reached the algebra. Since then it holds to the algebra.
+- docs/ALGEBRA.md is one proof, from the first step to today: every derivation and formula of the system stands there.
+- The engine is the implementation of that file and nothing else. It is not a physics engine of its own.
+- The loop: the algebra, then the engine, then the experiments' clicks against nature, then back to the algebra. A finding changes the algebra first and the engine after it, never the engine alone.
+- An outside reviewer checks the fixed algebra one to one against the engine's code before the Go (record 2110).
+
 Pace:
 
 - Now, not later (record 2003). The sections are written in parallel. Each item is built as soon as its section lands. No long queue.
@@ -548,7 +556,7 @@ Pace:
 The physics the method keeps:
 
 - The law is written for the Node only. A body is the support of a mode of the Node's rule. The click is the one write at a body's scale (record 2008; ALGEBRA.md 9.53).
-- A host form (a body on one Node, the seat's hop, the tick as a count, the energy count) stands only by its equivalence gate against the law's own run on the GameBoard.
+- A host form (a body on one Node, its hop, the tick as a count, the energy count) stands only by its equivalence gate against the law's own run on the GameBoard.
 - The clock is Einstein's weak field from the Node alone: the Node's own pace entering twice, squared on its six-neighbour sum and on its mass term with the clock's second order; nothing is read from a neighbour's clock, and every level read is the interval's start value (records 2003, 2024 and 2035; ALGEBRA.md 9.57).
 - Look in the algebra for the generic solution. What changes in time enters the numerator; the wall stays constant (records 1996 and 1997).
 - The backward run is exact everywhere. A lost inverse is a defect, not a choice (record 1994).
