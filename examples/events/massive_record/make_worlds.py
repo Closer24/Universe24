@@ -263,8 +263,6 @@ def world(
             entry["fixed"] = True
         measured.append(entry)
     document: dict = {
-        "law": "beam",
-        "model_id": f"beam-massive-record-{name}-v1",
         "shape": shape,
         "boundary": boundary,
         "ticks": ticks,
@@ -275,7 +273,6 @@ def world(
         # the drive wall's width S (3 Q S M; ALGEBRA.md 9.52 (4)), declared (record 2089)
         "width": 1,
         "clock_stamp": True,
-        "detector_law": True,
         "massive_record": True,
         "body_record": False,
         # THE ENGINE START FILE (record 2089; BUILD.md section 26 item 57): the one
@@ -359,12 +356,12 @@ def seed_on_the_mode(document: dict) -> None:
 
 def stamped(document: dict) -> dict:
     """THE INPUT STAMP (record 1886; ALGEBRA.md 9.22 (7) (i)) rewritten for the document's
-    integers as they stand: the law identifier and the hash of every profile, clock and
-    given pair; written before every parse of a document under construction and last of
+    integers as they stand: the hash of the whole file under `stamp` (no law identifier,
+    ALGEBRA.md 9.90 (1)); written before every parse of a document under construction and last of
     all, so that the file carries the stamp of what it holds."""
     from event_universe.events.world import input_stamp
 
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     return document
 
 

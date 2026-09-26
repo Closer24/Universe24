@@ -6,11 +6,12 @@ without a run: for every world file named in a run list (`docs/designs/detector_
 RUN_LIST.md` by default; the backticked `*.json` names in its tables, a brace group such
 as `bell_{a0b0,a0b1}.json` expanded), it resolves the file under `examples/events/`
 (a path as written, or a bare name searched under that tree), decodes and parses it
-with the runner's own loader (`world_loading.load_world`), runs the massive worlds'
-margin rule as the runner does before its first interval (`check_margins`,
-`profile_check`, printed as GAMEBOARD computations) and constructs the world's engine
-(`DetectorLawSimulation` under `detector_law`, `NatureBeamSimulation` otherwise) with no
-interval stepped, and on a world with a pair lamp applies Reviewer 3's two CHECKs of
+with the engine's own loader (`parse_nature_beam_world`; the old runner's loader is
+cancelled), runs the massive worlds' margin rule as the runner does before its first
+interval (`check_margins`, `profile_check`, printed as GAMEBOARD computations) and
+constructs the world's engine (`DetectorLawSimulation`; the ray law's engine is
+cancelled, a ray world is REFUSED by its keys) with no interval stepped, and on a
+world with a pair lamp applies Reviewer 3's two CHECKs of
 DECLARATIONS.md section 2 item 8 (`residue_order` "seed", at least W births within the ticks
 and the stock). It prints one line per world: LOADED (the engine, the shape, the
 ticks, the families and the measured events), REFUSED (the loader's or the engine's
@@ -26,6 +27,7 @@ failure (`--strict` makes it one). Nothing here runs a rule or reads a record.
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from dataclasses import dataclass
@@ -38,9 +40,7 @@ from event_universe.diagnostics.massive_record_margin import (
     profile_check,
 )
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.engine import NatureBeamSimulation
-from event_universe.events.world import NatureBeamWorld
-from event_universe.world_loading import load_world
+from event_universe.events.world import NatureBeamWorld, parse_nature_beam_world
 
 DEFAULT_LIST = Path("docs/designs/detector_law/RUN_LIST.md")
 DEFAULT_ROOT = Path("examples/events")
@@ -127,8 +127,9 @@ def pair_lamp_checks(world: NatureBeamWorld) -> None:
 def load_one(path: Path) -> Outcome:
     """Load one world file and construct its engine without stepping it."""
     try:
-        loaded = load_world(path.read_bytes(), base_dir=path.parent)
-        world = loaded.world
+        # the engine's own loader on the file as written (the old runner's loader and
+        # the ray law's engine are cancelled, docs/CANCELLED_WORLDS.md section 9)
+        world = parse_nature_beam_world(json.loads(path.read_text(encoding="utf-8")))
         notes: list[str] = []
         readings = check_margins(world) if world.massive_record else []
         if world.massive_record:
@@ -140,15 +141,12 @@ def load_one(path: Path) -> Outcome:
                         f"seed (GAMEBOARD): block {reading.number}: the profile against the mode at "
                         f"the amplitude {check[1]}, the largest deviation {check[0]} units"
                     )
-        engine = "detector_law" if world.detector_law else "rays"
-        if world.detector_law:
-            simulation = DetectorLawSimulation(world)
-            # the body's conditions exact in the initial state (the owner's
-            # word of 2026-09-24, 16:48Z), as the runner checks them
-            notes.extend(check_body_conditions(world, simulation, readings))
-            pair_lamp_checks(world)
-        else:
-            NatureBeamSimulation(world)
+        engine = "engine"
+        simulation = DetectorLawSimulation(world)
+        # the body's conditions exact in the initial state (the owner's
+        # word of 2026-09-24, 16:48Z), as the runner checks them
+        notes.extend(check_body_conditions(world, simulation, readings))
+        pair_lamp_checks(world)
     except Exception as error:  # noqa: BLE001 - every refusal is reported, none hidden
         return Outcome(str(path), "REFUSED", f"{type(error).__name__}: {error}")
     detail = (

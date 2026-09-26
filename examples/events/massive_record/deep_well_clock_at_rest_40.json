@@ -1,6 +1,4 @@
 {
- "law": "beam",
- "model_id": "beam-massive-record-deep-well-clock-at-rest-40-v1",
  "shape": [
   128,
   128,
@@ -21,7 +19,6 @@
  ],
  "width": 1,
  "clock_stamp": true,
- "detector_law": true,
  "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
@@ -16458,8 +16455,7 @@
   }
  ],
  "detectors": [],
- "input": {
-  "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "bdb0f89975c6ffedc780dc37c49157872a93308961712bf342547fe98a9111a5"
+ "stamp": {
+  "hash": "36ec32a7d038b79a3618d98bc0590393fe3ab6b5f613c71f48ee66dd7cc38875"
  }
 }

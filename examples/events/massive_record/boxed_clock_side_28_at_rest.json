@@ -1,6 +1,4 @@
 {
- "law": "beam",
- "model_id": "beam-massive-record-boxed-clock-side-28-at-rest-v1",
  "shape": [
   48,
   48,
@@ -21,7 +19,6 @@
  ],
  "width": 1,
  "clock_stamp": true,
- "detector_law": true,
  "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
@@ -110666,8 +110663,7 @@
   }
  ],
  "detectors": [],
- "input": {
-  "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "cabfffebb4e93285b2b2016b9405813617437ced9bf218abcdd3266041a7b019"
+ "stamp": {
+  "hash": "af9b62f2d703c5c30548f957e438e45bfc9555b8cdba2e3966047ef438970eb7"
  }
 }

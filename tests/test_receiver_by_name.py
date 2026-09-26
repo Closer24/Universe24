@@ -1,4 +1,4 @@
-"""The receiver by name and the click line at the rung (`detector-law-v1`,
+"""The receiver by name and the click line at the rung (the engine,
 DECLARATIONS.md section 13 item 7 and section 10 items 9 and 10; BUILD.md section 21;
 Nature24's eight decisions of 2026-09-24, 12:40Z, through the Boss). On a closed chain of
 200 with one emitter body and one named set 60 Links away at wheel 64: (a) exactly one
@@ -173,7 +173,7 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
         document = chain_of_200()
         if reversed_sets:
             document["detectors"] = list(reversed(document["detectors"]))
-            document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
+            document["stamp"] = input_stamp(document)  # the stamp over the whole file (item 28)
         seen: Spy = {}
         simulation, lines = run(document, 500, seen=seen)
         screen = simulation.detector_names.index("screen")
@@ -213,7 +213,7 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
     plain = light_clock_world("closed", True)
     for key in ("emitter", "receiver"):
         plain["measured"][0].pop(key)
-    plain["input"] = input_stamp(plain)  # the stamp without the given pair (record 1886)
+    plain["stamp"] = input_stamp(plain)  # the stamp without the given pair (record 1886)
     simulation, _ = run(plain, 10)
     assert not simulation.has_receiver
     # (c) without `receiver` the ladder is every declared set in the declared order; the
@@ -221,7 +221,7 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
     # its Nodes and its Ports, so the set books nothing from then on)
     resting = chain_of_200(None)
     resting["measured"][0]["momentum"] = [0, 0, 0]
-    resting["input"] = input_stamp(resting)
+    resting["stamp"] = input_stamp(resting)
     unnamed = parse_nature_beam_world(resting)
     assert unnamed.measured[0].block is not None and unnamed.measured[0].block.receiver is None
     simulation, lines = run(resting, 300)  # the first gather past 120 at the seed 50 x 2^12 (item 44)
@@ -236,14 +236,14 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
         parse_nature_beam_world(silent)
     unknown = chain_of_200()
     unknown["measured"][0]["receiver"] = "nowhere"
-    unknown["input"] = input_stamp(unknown)  # the stamp over the whole file (item 28)
+    unknown["stamp"] = input_stamp(unknown)  # the stamp over the whole file (item 28)
     with pytest.raises(
         ValueError, match=r"'nowhere' names no declared detector set.*'screen', 'beside'"
     ):
         parse_nature_beam_world(unknown)
     number = chain_of_200()
     number["measured"][0]["receiver"] = 3
-    number["input"] = input_stamp(number)
+    number["stamp"] = input_stamp(number)
     with pytest.raises(
         ValueError, match=r"measured\[0\]\.receiver must be the name of a declared detector set"
     ):

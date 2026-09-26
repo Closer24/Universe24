@@ -1,6 +1,4 @@
 {
- "law": "beam",
- "model_id": "beam-massive-record-boxed-clock-side-20-moving-v1",
  "shape": [
   64,
   64,
@@ -21,7 +19,6 @@
  ],
  "width": 1,
  "clock_stamp": true,
- "detector_law": true,
  "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
@@ -262480,8 +262477,7 @@
  ],
  "detectors": [],
  "mode_axis": "x",
- "input": {
-  "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "9691e3b9a24bb2dcbb00e8f541263c1b02551449bffe647b2ecefb016e7ce340"
+ "stamp": {
+  "hash": "6f52db98c5f5d3ee47f527d57b075e4d76387174609e48576c1b3094e180fcbb"
  }
 }

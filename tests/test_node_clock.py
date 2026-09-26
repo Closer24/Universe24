@@ -323,19 +323,11 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     Gamma)."""
     document = content_chain(12, PERIODIC, [], 1)
     del document["node_clock"]
-    with pytest.raises(ValueError, match="node_clock is required under `detector_law`"):
+    with pytest.raises(ValueError, match="node_clock is required: Gamma"):
         parse_nature_beam_world(document)
     ray = content_chain(12, PERIODIC, [], 1)
-    ray["detector_law"] = False
-    ray["families"] = ray.pop("universe")  # the ray law's word (record 2128 (3))
-    del ray["engine"]  # the start file is the law's (item 57)
-    ray["massive_record"] = False
-    for family in ray["families"]:
-        family.pop("pair", None)  # the pair is the detector law's declaration (item 57)
-    del ray["amplitude_bound"]
-    del ray["face_depth"]
-    del ray["families"][1]
-    with pytest.raises(ValueError, match="node_clock is refused without `detector_law`"):
+    ray["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
+    with pytest.raises(ValueError, match="the world.detector_law is refused: one engine"):
         parse_nature_beam_world(ray)
     zero = content_chain(12, PERIODIC, [], 1)
     zero["node_clock"] = 0
@@ -537,29 +529,15 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     for key, value in (("clock_family", "clicks"), ("charge_family", "charge"), ("charge_strength", 1)):
         retired = json.loads(json.dumps(good))
         retired[key] = value
-        with pytest.raises(
-            ValueError, match=f"{key} is refused under detector-law-v1: the family genericity"
-        ):
+        with pytest.raises(ValueError, match=f"{key} is refused: the family genericity"):
             parse_nature_beam_world(retired)
     ray = json.loads(json.dumps(good))
-    ray["detector_law"] = False
-    ray["families"] = ray.pop("universe")  # the ray law's word (record 2128 (3))
-    del ray["engine"]  # the start file is the law's (item 57)
-    ray["massive_record"] = False
-    for family in ray["families"]:
-        family.pop("pair", None)  # the pair is the detector law's declaration (item 57)
-    del ray["amplitude_bound"]
-    del ray["face_depth"]
-    del ray["node_clock"]
-    del ray["momentum_unit"]  # the wall's Q is the detector law's (ALGEBRA.md 9.96 (1))
-    del ray["families"][1]
-    with pytest.raises(ValueError, match="declares reads, refused without `detector_law`"):
+    ray["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
+    with pytest.raises(ValueError, match="the world.detector_law is refused: one engine"):
         parse_nature_beam_world(ray)
     unread = json.loads(json.dumps(good))
     del unread["universe"][0]["reads"]
-    with pytest.raises(
-        ValueError, match=r"families\[0\] lacks keys required under `detector_law`: reads"
-    ):
+    with pytest.raises(ValueError, match=r"families\[0\] lacks keys the engine reads: reads"):
         parse_nature_beam_world(unread)
     unknown = json.loads(json.dumps(good))
     unknown["universe"][0]["reads"][0]["family"] = "ticks"
@@ -620,7 +598,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
         parse_nature_beam_world(holding)
     given = emitter_world(stock=1)
     given["measured"][0]["emitter"]["family"] = "clicks"
-    given["input"] = input_stamp(given)
+    given["stamp"] = input_stamp(given)
     with pytest.raises(
         ValueError, match="givings into the held family 'clicks'|the given family is a paid family"
     ):

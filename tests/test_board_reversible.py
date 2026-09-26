@@ -75,7 +75,7 @@ def reversible_world(ticks: int = 400) -> dict:
         }
     )
     massive_generator().seed_on_the_mode(document)
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     return document
 
 

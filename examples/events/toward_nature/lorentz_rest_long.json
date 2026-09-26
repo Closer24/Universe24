@@ -1,6 +1,4 @@
 {
- "law": "beam",
- "model_id": "beam-massive-record-lorentz-rest-long-v1",
  "shape": [
   1500,
   3,
@@ -21,7 +19,6 @@
  ],
  "width": 1,
  "clock_stamp": true,
- "detector_law": true,
  "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
@@ -13675,8 +13672,7 @@
   }
  ],
  "face_depth": 32,
- "input": {
-  "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "50e674fda1b66fe548582558c59e91f6b1d3c5a370f28ce03914d67182391b97"
+ "stamp": {
+  "hash": "a4145c0989f26724e4fd78eba3a83d15fa018e60614c23246dd6005d3b3844b8"
  }
 }

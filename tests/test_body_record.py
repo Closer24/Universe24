@@ -45,7 +45,7 @@ def with_body_record(document: dict, on: bool) -> dict:
     the loader's check under the key reads them)."""
     copy = json.loads(json.dumps(document))
     copy["body_record"] = on
-    copy["input"] = input_stamp(copy)
+    copy["stamp"] = input_stamp(copy)
     return copy
 
 
@@ -264,7 +264,7 @@ def test_the_loader_and_the_state_name_the_body_record():
     document = cube_world(ticks=4)
     bad = with_body_record(document, True)
     bad["body_record"] = "yes"
-    bad["input"] = input_stamp(bad)
+    bad["stamp"] = input_stamp(bad)
     with pytest.raises(ValueError, match="body_record must be true or false"):
         parse_nature_beam_world(bad)
     ray = json.loads(json.dumps(document))

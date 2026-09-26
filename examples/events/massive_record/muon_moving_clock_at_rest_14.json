@@ -1,6 +1,4 @@
 {
- "law": "beam",
- "model_id": "beam-massive-record-muon-moving-clock-at-rest-14-v1",
  "shape": [
   200,
   200,
@@ -21,7 +19,6 @@
  ],
  "width": 1,
  "clock_stamp": true,
- "detector_law": true,
  "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
@@ -40074,8 +40071,7 @@
   }
  ],
  "detectors": [],
- "input": {
-  "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "73f4ca03b492ce8d9f254083546116ad73fb37bce8fbf0a23f77fbfc22bd611c"
+ "stamp": {
+  "hash": "0955ab3341f9a81d9c7691d3f321cf91c01b6e5cdd281b727faac46e6f4900e8"
  }
 }

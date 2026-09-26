@@ -61,7 +61,7 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
     massive_generator().seed_on_the_mode(document)
     document["measured"][0]["emitter"]["weight"] = weight
     document["body_record"] = True
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     return document
 
 
@@ -147,31 +147,31 @@ def test_the_loader_pairs_the_key_with_the_seat_the_weight_and_the_action():
     # and so are the train's keys; the weight and the action are required on every emitter
     no_seat = json.loads(json.dumps(document))
     no_seat["body_record"] = False
-    no_seat["input"] = input_stamp(no_seat)
+    no_seat["stamp"] = input_stamp(no_seat)
     parse_nature_beam_world(no_seat)
     no_weight = json.loads(json.dumps(document))
     del no_weight["measured"][0]["emitter"]["weight"]
-    no_weight["input"] = input_stamp(no_weight)
+    no_weight["stamp"] = input_stamp(no_weight)
     with pytest.raises(ValueError, match="declares no `weight`"):
         parse_nature_beam_world(no_weight)
     no_action = json.loads(json.dumps(document))
     del no_action["measured"][0]["emitter"]["norm_denominator"]
-    no_action["input"] = input_stamp(no_action)
+    no_action["stamp"] = input_stamp(no_action)
     with pytest.raises(ValueError, match="declares no `norm_denominator`"):
         parse_nature_beam_world(no_action)
     for key, value in (("point_emitter", True), ("point_emitter", False)):
         retired = json.loads(json.dumps(document))
         retired[key] = value
-        retired["input"] = input_stamp(retired)
+        retired["stamp"] = input_stamp(retired)
         with pytest.raises(ValueError, match="point_emitter is refused"):
             parse_nature_beam_world(retired)
     with_train = json.loads(json.dumps(document))
     with_train["measured"][0]["emitter"]["train"] = {"direction": [1, 0, 0], "periods": 8}
-    with_train["input"] = input_stamp(with_train)
+    with_train["stamp"] = input_stamp(with_train)
     with pytest.raises(ValueError, match="emitter.train is refused"):
         parse_nature_beam_world(with_train)
     with_given = json.loads(json.dumps(document))
     with_given["measured"][0]["emitter"]["given"] = {"now": [1], "before": [-1], "norm": 1}
-    with_given["input"] = input_stamp(with_given)
+    with_given["stamp"] = input_stamp(with_given)
     with pytest.raises(ValueError, match="emitter.given is refused"):
         parse_nature_beam_world(with_given)

@@ -65,8 +65,6 @@ def small_world(
     the well's `pair` and `well_side` the gate's side-2 cube of [800, 801] unless given (the
     host-cost scaling worlds take a deeper, larger well: `scaled_world`)."""
     document = {
-        "law": "beam",
-        "model_id": "beam-board-properties-v1",
         "shape": [side, side, side],
         "boundary": PERIODIC,
         "ticks": INTERVALS,
@@ -75,7 +73,6 @@ def small_world(
         "N": 64,
         "release": [1, 128],
         "clock_stamp": True,
-        "detector_law": True,
         "width": 1,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
@@ -139,7 +136,7 @@ def small_world(
         assert clock is not None
         document["measured"][0]["clock"] = list(clock)
     # the input stamp (record 1886): the law and the hash of the integers
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     return document
 
 

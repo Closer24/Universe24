@@ -37,7 +37,7 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
     emitter = emitter_world(stock=2, ticks=250)
     chain = chain_world(stock=2)
     chain["ticks"] = 250
-    chain["input"] = input_stamp(chain)  # the stamp over the whole file (item 28)
+    chain["stamp"] = input_stamp(chain)  # the stamp over the whole file (item 28)
     inputs = tmp_path / "inputs"
     inputs.mkdir()
     a = write(inputs, "emitter_small", emitter)
@@ -53,7 +53,7 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
         assert joint == (alone / f"{name}.output.json").read_bytes()
         output = json.loads(joint)
         assert output["format"] == OUTPUT_FORMAT and output["verdict"] == "LAWFUL"
-        assert output["ticks"] == 250 and output["stamp"]["law"]
+        assert output["ticks"] == 250 and output["stamp"]["hash"]
         assert output["counts"]["screen"] >= 1 and output["pins"] == []
         assert all(
             set(click) == {"detector", "interval", "giving", "record"} for click in output["clicks"]
@@ -76,18 +76,18 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     # THE MODE PIN (item 57): the pins are compared under the mode "pin" alone; a start file
     # of that mode, named by its path relative to the repository's root
     start = tmp_path / "start_pin.json"
-    start.write_text(json.dumps({"law": "detector-law-v1", "mode": "pin"}), encoding="utf-8")
+    start.write_text(json.dumps({"mode": "pin"}), encoding="utf-8")
     relative = os.path.relpath(start, Path(__file__).resolve().parents[1])
     bad = emitter_world(stock=2, ticks=200)
     bad["engine"] = relative
     profile = bad["measured"][0]["seed"]
     peak = max(range(len(profile)), key=lambda index: abs(profile[index]))
     profile[peak] *= 2
-    bad["input"] = input_stamp(bad)
+    bad["stamp"] = input_stamp(bad)
     bad_path = write(inputs, "bad", bad)
     good = emitter_world(stock=2, ticks=250)
     good["engine"] = relative
-    good["input"] = input_stamp(good)
+    good["stamp"] = input_stamp(good)
     good_path = write(inputs, "good", good)
     pins = tmp_path / "pins.json"
     pins.write_text(

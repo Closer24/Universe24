@@ -27,7 +27,6 @@ from event_universe.diagnostics.massive_record_margin import (
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord, form_json
 from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import (
-    MASSIVE_RECORD_RULE,
     MASSLESS_PAIR,
     input_stamp,
     parse_nature_beam_world,
@@ -60,8 +59,6 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
     is one Node deep where the board is open (`face_depth`, declared: no default)."""
     matter: dict = {"name": "matter", "quantum": 1, "pair": pair, "charge": 0, "reads": reads()}
     return {
-        "law": "beam",
-        "model_id": "beam-massive-record-rule-v1",
         "shape": shape,
         "boundary": boundary,
         "face_depth": 1,
@@ -69,7 +66,6 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "K": 1073741824,
         "N": 1024,
         "release": [1, 128],
-        "detector_law": True,
         "width": 1,
         "clock_stamp": False,
         "body_record": False,
@@ -411,10 +407,13 @@ def test_the_light_record_is_byte_identical_without_the_key():
     (the events and the audit bit for bit); SINCE THE FOUR-VECTOR CLICK WITHOUT THE RECOIL
     (ALGEBRA.md 9.86 (1), 9.91 (4); commit 5 in part, item 69) the events digest alone moved
     once more, by the `momentum` key of every click and giving line (the sign per axis of the
-    quantum's direction; the rows, the state and the audit bit for bit)."""
+    quantum's direction; the rows, the state and the audit bit for bit); SINCE THE RESIDUE
+    LINES (ALGEBRA.md 9.90 (1); item 70) the state digest alone moved once more, by the
+    state's `law` entry gone (one engine, no law's name; the events and the audit bit for
+    bit)."""
     assert run_chain_digests() == {
         "events": "be458a826af93758056f1a5f845f25ce53787ff63122bc87d1991ffbf96e0467",
-        "state": "6ea11566fb201793d4ff3e866c9f651b1e21cfd5deb9e9329e8b9bcf9cc8d9e9",
+        "state": "67ec38db5e464693a102234d07cb5c652d8f88855c4eaebeec332a95b1122ea7",
         "audit": "9c4eb02e50596a16c05d5a1648f0a80338d460b398c51f04644158f68139790b",
     }
 
@@ -447,11 +446,8 @@ def test_the_loaders_refusals_name_the_key():
     clocked["universe"][1]["phase_per_link"] = [1, 2]
     assert parse_nature_beam_world(clocked).families[1].phase_per_age == (1, 2)
     no_law = json.loads(json.dumps(base))
-    no_law["detector_law"] = False
-    no_law["families"] = no_law.pop("universe")  # the ray law's word (record 2128 (3))
-    del no_law["engine"]  # the start file is the detector law's (item 57)
-    del no_law["face_depth"]  # the face slab is the detector law's (refused without it)
-    with pytest.raises(ValueError, match="massive_record needs detector_law"):
+    no_law["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
+    with pytest.raises(ValueError, match="the world.detector_law is refused: one engine"):
         parse_nature_beam_world(no_law)
     not_bool = json.loads(json.dumps(base))
     not_bool["massive_record"] = 1
@@ -468,7 +464,7 @@ def test_the_loaders_refusals_name_the_key():
             "lamp": {"rate": [1, 40], "wheel": [1, 64], "train": 2},
         }
     ]
-    with pytest.raises(ValueError, match="lamp is refused under detector-law-v1"):
+    with pytest.raises(ValueError, match="lamp is refused"):
         parse_nature_beam_world(lamp_on_kind)
     # light's kind written out, [1, 1], is a value and not a massive kind
     written = json.loads(json.dumps(base))
@@ -485,7 +481,7 @@ def test_the_records_keys_under_the_key_and_none_without_it():
     world = parse_nature_beam_world(
         massive_world([4, 4, 4], {"x": "open", "y": "periodic", "z": "open"}, [2, 3])
     )
-    assert MASSIVE_RECORD_RULE in world.hypotheses
+    assert world.hypotheses == []  # no identity beside the engine (ALGEBRA.md 9.90 (1))
     assert world.families[1].pair == (2, 3) and world.families[1].massive_kind
     assert world.kind_periodic(1) == (False, True, False) == world.kind_periodic(0)
     simulation = DetectorLawSimulation(world)
@@ -499,7 +495,7 @@ def test_the_records_keys_under_the_key_and_none_without_it():
     del without["amplitude_bound"]
     del without["universe"][1]
     plain = parse_nature_beam_world(without)
-    assert MASSIVE_RECORD_RULE not in plain.hypotheses
+    assert plain.hypotheses == []
     assert plain.kind_periodic(0) == plain.periodic
     assert "form" not in DetectorLawSimulation(plain).books()["families"]["light"]
 
@@ -577,8 +573,6 @@ def block_world(
             entry.setdefault("margin", "pin")
         measured.append(entry)
     document: dict = {
-        "law": "beam",
-        "model_id": "beam-massive-record-block-v1",
         "shape": shape,
         "boundary": boundary,
         "face_depth": 1,
@@ -587,7 +581,6 @@ def block_world(
         "N": 1024,
         "release": [1, 128],
         "clock_stamp": True,
-        "detector_law": True,
         "width": 1,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
@@ -615,7 +608,7 @@ def seed_source(document: dict, number: int) -> None:
     if "emitter" in entry:
         generator.emitter_rung(document, number)  # the window's rung (commit 7; the train retired)
     # the input stamp (record 1886): the law and the hash of the integers
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
 
 
 def with_screen(document: dict, x: int) -> dict:
@@ -623,7 +616,7 @@ def with_screen(document: dict, x: int) -> dict:
     item 7): the cube of side 3 of light bodies at [x, x + 2] read as the set `screen`
     (record 1899; no wheel: the rung's wheel is the record's own, ALGEBRA.md 9.22 (4))."""
     receiver_cube(document, "screen", [x, 0, 0])
-    document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
+    document["stamp"] = input_stamp(document)  # the stamp over the whole file (item 28)
     return document
 
 
@@ -1017,7 +1010,7 @@ def test_the_cavity_is_refused_by_name():
         )
         document["age_bound"] = 100000
         document["measured"][0]["cavity"] = value
-        with pytest.raises(ValueError, match=r"measured\[0\]\.cavity is refused .*the cavity retired"):
+        with pytest.raises(ValueError, match=r"measured\[0\]\.cavity is refused: the cavity retired"):
             parse_nature_beam_world(document)
 
 
@@ -1149,7 +1142,7 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
     unbounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
     unbounded["age_bound"] = 100
     del unbounded["amplitude_bound"]
-    with pytest.raises(ValueError, match="amplitude_bound is required under `detector_law`"):
+    with pytest.raises(ValueError, match="amplitude_bound is required with `massive_record`"):
         parse_nature_beam_world(unbounded)
     ceiling = massive_world([6, 6, 6], PERIODIC, [800, 809])
     ceiling["age_bound"] = 100
@@ -1276,7 +1269,7 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     )  # below the pair's amplitude bound 2^19 (9.61 (3))
     seeded = dict(document)
     seeded["measured"] = [dict(document["measured"][0], seed=profile, clock=list(clock))]
-    seeded["input"] = input_stamp(seeded)
+    seeded["stamp"] = input_stamp(seeded)
     world = parse_nature_beam_world(seeded)
     deviation, amplitude = profile_check(world, 0)
     # the diagnostic against the eigensolver's rounded mode reads the iteration's floor:
@@ -1420,7 +1413,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         *(receiver_body(position, "matter") for position in positions[1:]),
     ]
     document["detectors"] = [{"name": "screen", "positions": positions}]
-    document["input"] = input_stamp(document)  # the stamp of the rebuilt list (record 1886)
+    document["stamp"] = input_stamp(document)  # the stamp of the rebuilt list (record 1886)
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
@@ -1502,7 +1495,7 @@ def test_every_declared_wheel_is_refused_by_name():
     ):
         document = json.loads(json.dumps(base))
         mutate(document)
-        document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
+        document["stamp"] = input_stamp(document)  # the stamp over the whole file (item 28)
         with pytest.raises(ValueError, match=message):
             parse_nature_beam_world(document)
 
@@ -1615,29 +1608,22 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         assert all(g["chosen"][0][0] != "far" for g in lines if g["event"] == "gather")
     # the loader's refusals
     bad = light_clock_world("closed", False)
-    bad["detector_law"] = False
-    bad["families"] = bad.pop("universe")  # the ray law's word (record 2128 (3))
-    del bad["engine"]  # the start file is the detector law's (item 57)
-    bad["massive_record"] = False
-    for family in bad["families"]:
-        family.pop("pair", None)  # the pair is admitted under massive_record alone
-    del bad["amplitude_bound"]
-    del bad["face_depth"]  # the face slab is the detector law's (refused without it)
-    with pytest.raises(ValueError, match="closed"):
+    bad["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
+    with pytest.raises(ValueError, match="the world.detector_law is refused: one engine"):
         parse_nature_beam_world(bad)
     on_body = light_clock_world("open", False)
     on_body["detectors"] = [{"name": "A_face", "block": 0, "positions": [[100, 0, 0]]}]
-    on_body["input"] = input_stamp(on_body)  # the stamp over the whole file (item 28)
+    on_body["stamp"] = input_stamp(on_body)  # the stamp over the whole file (item 28)
     with pytest.raises(ValueError, match="names a Node of a measured event"):
         parse_nature_beam_world(on_body)
     two = light_clock_world("open", False)
     two["detectors"] = [{"name": "A_face", "block": 0, "positions": [[132, 0, 0], [133, 0, 0]]}]
-    two["input"] = input_stamp(two)
+    two["stamp"] = input_stamp(two)
     with pytest.raises(ValueError, match=r"is a box of sides \[2, 1, 1\]"):
         parse_nature_beam_world(two)
     no_block = light_clock_world("open", True)
     no_block["detectors"] = [{"name": "B", "block": 1}]
-    no_block["input"] = input_stamp(no_block)
+    no_block["stamp"] = input_stamp(no_block)
     with pytest.raises(ValueError, match="a receiver set on a BODY is `positions`"):
         parse_nature_beam_world(no_block)
     graced = light_clock_world("open", False)
@@ -1712,7 +1698,7 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
         assert np.array_equal(simulation.detector_at_node == detector, block.mask)
     bad = document
     bad["detectors"] = [{"name": "B_nodes", "block": 1, "wheel": 64}]
-    bad["input"] = input_stamp(bad)  # the stamp over the whole file (item 28)
+    bad["stamp"] = input_stamp(bad)  # the stamp over the whole file (item 28)
     with pytest.raises(ValueError, match="wheel is refused"):
         parse_nature_beam_world(bad)
 
@@ -1795,7 +1781,7 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
                 "pair": [1, 2],
             }
         )
-    document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
+    document["stamp"] = input_stamp(document)  # the stamp over the whole file (item 28)
     world = parse_nature_beam_world(document)
     assert [entry.block is not None for entry in world.measured] == [
         True,

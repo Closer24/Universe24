@@ -1,6 +1,4 @@
 {
- "law": "beam",
- "model_id": "beam-massive-record-light-clock-v1",
  "shape": [
   760,
   3,
@@ -21,7 +19,6 @@
  ],
  "width": 1,
  "clock_stamp": true,
- "detector_law": true,
  "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
@@ -7015,8 +7012,7 @@
   }
  ],
  "face_depth": 32,
- "input": {
-  "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "2bc86ef25f6d9dd89ccfc9d3719b5671770f1f07b4a670d03b822557b8918c43"
+ "stamp": {
+  "hash": "062d50b3df172817fb8508e8256b247bf0c9f5ede91a6c9add50064f600daabb"
  }
 }

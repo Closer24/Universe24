@@ -1,6 +1,4 @@
 {
- "law": "beam",
- "model_id": "beam-dark-body-bright-control-v1",
  "shape": [
   400,
   200,
@@ -21,7 +19,6 @@
  ],
  "width": 1,
  "clock_stamp": true,
- "detector_law": true,
  "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
@@ -168043,8 +168040,7 @@
    ]
   }
  ],
- "input": {
-  "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "daf2666eaa0f9edc8648e1086abe2fae9f76e68cb2eb80e0846b8fd5f390f102"
+ "stamp": {
+  "hash": "5b105c71d5e03f3deb76292712eb6ff3a6be2a1bf206362de6c16a4854f614bc"
  }
 }

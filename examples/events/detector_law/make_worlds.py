@@ -115,13 +115,11 @@ def load_massive_generator():
 # template of every ray-law world: its world keys; the light clocks of section 15
 # (the pair on N = 64 per wavelength in Links).
 TEMPLATE_KEYS = {
-    "law": "beam",
     "K": 1073741824,
     "N": 64,
     "release": [1, 128],
     "width": 1,
     "clock_stamp": True,
-    "detector_law": True,
     "body_record": False,
     "point_emitter": False,
     "engine": "examples/events/engine_start.json",
@@ -174,10 +172,10 @@ def light_family(pair: list[int] | None) -> dict:
 
 
 def ray_world(name: str, shape: list[int], boundary: dict, pair: list[int], ticks: int) -> dict:
-    document: dict = {"law": "beam", "model_id": f"beam-detector-law-{name}-v1", "shape": shape}
+    document: dict = {"shape": shape}
     document["boundary"] = boundary
     document["ticks"] = ticks
-    document.update({key: value for key, value in TEMPLATE_KEYS.items() if key != "law"})
+    document.update(TEMPLATE_KEYS)
     document["massive_record"] = True  # the absorbing blocks and the `probes` key live under it
     document["amplitude_bound"] = AMPLITUDE_BOUND  # the emitter body's massive family (M1-10)
     document["node_clock"] = NODE_CLOCK  # the Node clock Gamma (item 31)
@@ -407,8 +405,6 @@ def bell(a: str, b: str) -> dict:
     [2464, 25] on the light family and [1, 1] on the counter family (section 1 item 3 and
     section 15 T-1)."""
     return {
-        "law": "beam",
-        "model_id": f"beam-detector-law-bell-{a}{b}-v1",
         "shape": [21, 1, 1],
         "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
         "ticks": BELL_TICKS,
@@ -417,7 +413,6 @@ def bell(a: str, b: str) -> dict:
         "release": BELL_N2048_RELEASE,
         "suspension": 0,
         "clock_stamp": True,
-        "detector_law": True,
         "families": [
             light_family(BELL_CLOCK),
             {
@@ -481,7 +476,7 @@ def malus(name: str, source: Path, setting: int) -> dict:
     `amount` 256 (the count of 256 givings)."""
     document = json.loads(source.read_text(encoding="utf-8"))
     document = copy.deepcopy(document)
-    rebuilt: dict = {"law": "beam", "model_id": f"beam-detector-law-{name}-v1"}
+    rebuilt: dict = {}
     for key, value in document.items():
         if key in ("law", "model_id", "entity_definitions", "entities", "families"):
             continue
@@ -491,7 +486,6 @@ def malus(name: str, source: Path, setting: int) -> dict:
         rebuilt[key] = MALUS_TICKS if key == "ticks" else value
         if key == "suspension":
             rebuilt["clock_stamp"] = True
-            rebuilt["detector_law"] = True
     rebuilt["families"] = [
         light_family(MALUS_CLOCK),
         {
@@ -799,7 +793,7 @@ def main() -> None:
     ):
         for name, document in worlds.items():
             path = (HELD if name in HELD_NAMES else folder) / f"{name}.json"
-            if document.get("detector_law") and isinstance(document.get("universe"), list):
+            if isinstance(document.get("universe"), list):
                 document = massive.bind_universe_file(document)  # the universe file (item 59)
             path.write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
             print(path.relative_to(EVENTS.parent.parent))

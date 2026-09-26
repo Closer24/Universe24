@@ -1,6 +1,4 @@
 {
- "law": "beam",
- "model_id": "beam-massive-record-muon-moving-clock-speed-third-14-v1",
  "shape": [
   200,
   200,
@@ -21,7 +19,6 @@
  ],
  "width": 1,
  "clock_stamp": true,
- "detector_law": true,
  "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
@@ -40336,8 +40333,7 @@
  ],
  "detectors": [],
  "mode_axis": "x",
- "input": {
-  "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "255fdfc2168e2e69a31ff6860b4a252b4f763b312e7dd247805d39e85b7485f3"
+ "stamp": {
+  "hash": "3b1f676e400eef7e777f2f31be2a0abaa649c7b58b4191972430bbeaca78673b"
  }
 }

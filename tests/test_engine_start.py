@@ -29,52 +29,51 @@ START = "examples/events/engine_start.json"
 
 
 def refused(document: dict, match: str) -> None:
-    document["input"] = input_stamp(document)  # the stamp over the document as edited (item 28)
+    document["stamp"] = input_stamp(document)  # the stamp over the document as edited (item 28)
     with pytest.raises(ValueError, match=match):
         parse_nature_beam_world(document)
 
 
 def test_the_shipped_start_file_says_check_and_every_world_of_the_law_names_it():
     start = json.loads((ROOT / START).read_text(encoding="utf-8"))
-    assert start == {"law": "detector-law-v1", "mode": "check"}
+    assert start == {"mode": "check"}  # no law's name (ALGEBRA.md 9.90 (1))
     document = emitter_world(stock=1, ticks=10)
     assert document["engine"] == START
     world = parse_nature_beam_world(document)
     assert world.start is not None and world.start.mode == "check" and world.start.path == START
     for path in (ROOT / "examples/events").glob("*/*.json"):
         text = json.loads(path.read_text(encoding="utf-8"))
-        if isinstance(text, dict) and text.get("detector_law") is True:
+        if isinstance(text, dict) and "universe" in text:  # a world of the engine
             assert text["engine"] == START, path
 
 
 def test_a_missing_key_of_the_world_or_the_start_file_is_refused_by_name(tmp_path, monkeypatch):
     document = emitter_world(stock=1, ticks=10)
     del document["engine"]
-    refused(document, "the world lacks keys required under `detector_law`: engine")
+    refused(document, "the world lacks keys the engine reads: engine")
     for key in ("boundary", "width", "clock_stamp", "massive_record", "body_record"):
         broken = json.loads(json.dumps(document))
         broken["engine"] = START
         del broken[key]
-        refused(broken, f"the world lacks keys required under `detector_law`: .*{key}")
-    # the start file: a missing key, an unknown key, another law, a wrong mode
+        refused(broken, f"the world lacks keys the engine reads: .*{key}")
+    # the start file: a missing key, an unknown key, a law's name (refused as an unknown
+    # key: no law's name and no version, ALGEBRA.md 9.90 (1)), a wrong mode
     monkeypatch.setattr(loader, "REPOSITORY_ROOT", tmp_path)
     start = tmp_path / "start.json"
     document["engine"] = "start.json"
-    start.write_text(json.dumps({"law": "detector-law-v1"}), encoding="utf-8")
+    start.write_text(json.dumps({}), encoding="utf-8")
     refused(document, "lacks keys: mode")
-    start.write_text(
-        json.dumps({"law": "detector-law-v1", "mode": "check", "jobs": 2}), encoding="utf-8"
-    )
+    start.write_text(json.dumps({"mode": "check", "jobs": 2}), encoding="utf-8")
     refused(document, "unknown keys: jobs")
     start.write_text(json.dumps({"law": "beam-v1", "mode": "check"}), encoding="utf-8")
-    refused(document, "declares law 'beam-v1'")
-    start.write_text(json.dumps({"law": "detector-law-v1", "mode": "maybe"}), encoding="utf-8")
+    refused(document, "unknown keys: law")
+    start.write_text(json.dumps({"mode": "maybe"}), encoding="utf-8")
     refused(document, "declares mode 'maybe'")
     document["engine"] = "missing.json"
     refused(document, "no file at the repository's root")
-    start.write_text(json.dumps({"law": "detector-law-v1", "mode": "pin"}), encoding="utf-8")
+    start.write_text(json.dumps({"mode": "pin"}), encoding="utf-8")
     document["engine"] = "start.json"
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     assert parse_nature_beam_world(document).start.mode == "pin"  # type: ignore[union-attr]
 
 
@@ -85,11 +84,11 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
     assert light["pair"] == [1, 1]
     broken = json.loads(json.dumps(document))
     del broken["universe"][0]["pair"]
-    refused(broken, r"families\[0\] lacks keys required under `detector_law`: pair")
+    refused(broken, r"families\[0\] lacks keys the engine reads: pair")
     for key in ("momentum", "stocks", "ramp", "start"):
         broken = json.loads(json.dumps(document))
         del broken["measured"][0][key]
-        refused(broken, rf"measured\[0\] lacks keys required under `detector_law`: {key}")
+        refused(broken, rf"measured\[0\] lacks keys the engine reads: {key}")
     broken = json.loads(json.dumps(document))
     del broken["measured"][0]["margin"]
     refused(
@@ -100,24 +99,24 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
     for key, value in (("phase", 0), ("directions", [[1, 0, 0]])):
         broken = json.loads(json.dumps(document))
         broken["measured"][0][key] = value
-        refused(broken, rf"measured\[0\] declares {key}, which the detector law never reads")
+        refused(broken, rf"measured\[0\] declares {key}, which the engine never reads")
     # `fixed` is read since the Boss's record 2157 (ALGEBRA.md 9.104 (6) (b)): an apparatus
     # held in place, the feed (when it lands) acting on a body without the word alone
     held_in_place = json.loads(json.dumps(document))
     held_in_place["measured"][0]["fixed"] = True
-    held_in_place["input"] = input_stamp(held_in_place)
+    held_in_place["stamp"] = input_stamp(held_in_place)
     assert parse_nature_beam_world(held_in_place).measured[0].fixed is True
     assert parse_nature_beam_world(document).measured[0].fixed is False
     broken = json.loads(json.dumps(document))
     broken["detectors"][0]["threshold"] = 1
-    refused(broken, r"detectors\[0\] declares threshold, which the detector law never reads")
+    refused(broken, r"detectors\[0\] declares threshold, which the engine never reads")
     for key, value in (("suspension", 0), ("directions", []), ("action", 1)):
         broken = json.loads(json.dumps(document))
         broken[key] = value
-        refused(broken, f"the world declares {key}, which the detector law never reads")
+        refused(broken, f"the world declares {key}, which the engine never reads")
     broken = json.loads(json.dumps(document))
     broken["universe"][0]["lifetime"] = 5
-    refused(broken, r"families\[0\] declares lifetime, which the detector law never reads")
+    refused(broken, r"families\[0\] declares lifetime, which the engine never reads")
 
 
 def test_the_runner_requires_jobs_and_refuses_pins_under_the_mode_check(tmp_path):

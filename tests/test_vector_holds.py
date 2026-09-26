@@ -43,7 +43,7 @@ def parts_world(**body: object) -> dict:
                     "held_dipole_div": 2,
                 }
             )
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     return document
 
 

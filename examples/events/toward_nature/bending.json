@@ -1,6 +1,4 @@
 {
- "law": "beam",
- "model_id": "beam-toward-nature-bending-v1",
  "shape": [
   400,
   200,
@@ -21,7 +19,6 @@
  ],
  "width": 1,
  "clock_stamp": true,
- "detector_law": true,
  "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
@@ -167982,8 +167979,7 @@
    ]
   }
  ],
- "input": {
-  "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "67bce4b73ba05ce7fc48594be28e380a6f206f63d1d2bd54b83efa9e1eb86967"
+ "stamp": {
+  "hash": "ff8117094cb79bd4bad7b88d56de38de65ffd6c70aefdb3b1150744cd9343894"
  }
 }

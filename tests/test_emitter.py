@@ -182,8 +182,6 @@ def emitter_world(
         "weight": 3,
     }
     document = {
-        "law": "beam",
-        "model_id": "beam-detector-law-emitter-unit-v1",
         "shape": [80, 1, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": ticks,
@@ -191,7 +189,6 @@ def emitter_world(
         "N": 1024,
         "release": [1, 128],
         "clock_stamp": True,
-        "detector_law": True,
         "width": 1,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
@@ -309,7 +306,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     del alone["measured"][0]["emitter"]
     alone["measured"] = alone["measured"][:1]
     alone["detectors"] = []
-    alone["input"] = input_stamp(alone)  # the stamp of the body alone (its given pair gone)
+    alone["stamp"] = input_stamp(alone)  # the stamp of the body alone (its given pair gone)
     solitary = DetectorLawSimulation(parse_nature_beam_world(alone))
     body = solitary.block_by_number[0]
     centre = np.zeros(solitary.shape, dtype=bool)
@@ -531,7 +528,7 @@ def test_the_loaders_refusals_name_their_keys():
         mutate(document)
         # the stamp of the changed integers (record 1886): the named refusal,
         # not the hash's, is the one read here
-        document["input"] = input_stamp(document)
+        document["stamp"] = input_stamp(document)
         with pytest.raises(ValueError, match=message):
             DetectorLawSimulation(parse_nature_beam_world(document))
 
@@ -592,7 +589,7 @@ def test_the_loaders_refusals_name_their_keys():
     def no_held_stock(document):
         del document["measured"][0]["stocks"]  # the stock as the given family's content (item 47)
 
-    refused(no_held_stock, "lacks keys required under `detector_law`: stocks")  # item 57: no default
+    refused(no_held_stock, "lacks keys the engine reads: stocks")  # item 57: no default
 
     # the generator's integers (ALGEBRA.md 9.17 (5) item 1): a norm the
     # emitter does not declare refuses the simulation at its first

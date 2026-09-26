@@ -85,7 +85,7 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     assert sum(1 for m in long_bottom if m["family"] == "matter" and "extents" not in m) == 322 * 9
     bending = document("bending")
     emitter, body = bending["measured"][0], bending["measured"][1]
-    assert bending["model_id"] == "beam-toward-nature-bending-v1"
+    assert "model_id" not in bending  # one engine, no identity string (ALGEBRA.md 9.90 (1))
     # the one-Node emitter at the retired beam's head on the beam's line (commit 7; the beam of
     # 32 x 20 Nodes HISTORY)
     assert emitter["extents"] == [1, 1, 1] and emitter["amount"] == 1

@@ -181,7 +181,7 @@ def test_the_self_source_slot_lowers_the_step_by_the_squared_differences_over_th
     for family in document["universe"]:
         if family["name"] == "clicks":
             family["self_unit"] = 24 * amplitude
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     gravity = parts_of(simulation, "clicks")
     record = gravity[0]
@@ -222,7 +222,7 @@ def test_the_loader_refuses_a_self_source_unit_below_24_a_and_admits_one_at_it()
     for family in document["universe"]:
         if family["name"] == "clicks":
             family["self_unit"] = 24 * amplitude
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     parse_nature_beam_world(document)
     # the inline list checks the unit's form; the file's entries check the bound 24 A too
     # (tests/test_families_file.py)

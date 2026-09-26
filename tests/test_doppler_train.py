@@ -71,11 +71,11 @@ def test_the_long_wave_lorentz_pair_carries_the_boosted_train_on_the_moving_emit
     # the loader: the train's clock at rest refused; a wrong extent refused naming the wavelength
     at_rest = json.loads(json.dumps(rest))
     at_rest["measured"][0]["emitter"]["train"]["clock"] = [4096, 13]
-    at_rest["input"] = input_stamp(at_rest)
+    at_rest["stamp"] = input_stamp(at_rest)
     with pytest.raises(ValueError, match="admitted on a moving body alone"):
         parse_nature_beam_world(at_rest)
     wrong = json.loads(json.dumps(moving))
     wrong["measured"][0]["emitter"]["train"]["clock"] = [4096, 21]
-    wrong["input"] = input_stamp(wrong)
+    wrong["stamp"] = input_stamp(wrong)
     with pytest.raises(ValueError, match="8 periods of the wavelength 21 = 168 Nodes"):
         parse_nature_beam_world(wrong)

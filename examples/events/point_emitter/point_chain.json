@@ -1,6 +1,4 @@
 {
- "law": "beam",
- "model_id": "beam-massive-record-point-emitter-chain-v1",
  "shape": [
   1200,
   1,
@@ -21,7 +19,6 @@
  ],
  "width": 1,
  "clock_stamp": true,
- "detector_law": true,
  "massive_record": true,
  "body_record": true,
  "engine": "examples/events/engine_start.json",
@@ -1430,8 +1427,7 @@
   }
  ],
  "face_depth": 32,
- "input": {
-  "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "5793edc7e84702d2a0da42b2e48d54d698924687d1a9fbe66f6294310878d252"
+ "stamp": {
+  "hash": "d57180855a4a7702de34ec5d7b5350fb06a98e9b36210959cc231f73d6d172a3"
  }
 }

@@ -20,9 +20,10 @@ SPEC.loader.exec_module(PREFLIGHT)
 
 def test_the_preflight_loads_every_listed_world_and_runs_none(tmp_path: Path, capsys) -> None:
     """The names of a list (a path as written, a bare name searched under the root, a brace
-    group expanded, `expectations.json` skipped) resolve to files; a registered
-    detector-law world and a ray-law world load with their engines constructed and no
-    interval stepped (the engine's tick 0 is not observed: the tool keeps no engine), a
+    group expanded, `expectations.json` skipped) resolve to files; a registered world of
+    the engine loads with its engine constructed and no interval stepped (the engine's
+    tick 0 is not observed: the tool keeps no engine), a ray-law world (cancelled) is
+    REFUSED by its keys, a
     world refused by the loader is REFUSED with its message, a name without a file is
     MISSING; the exit is 0 with a missing world and 1 with a refused one or under
     `--strict` with a missing one; the real RUN_LIST.md's registered worlds all load."""
@@ -56,8 +57,8 @@ def test_the_preflight_loads_every_listed_world_and_runs_none(tmp_path: Path, ca
         "to_write.json",
     ]
     outcomes = PREFLIGHT.preflight(names, root)
-    assert [o.status for o in outcomes] == ["LOADED", "LOADED", "MISSING", "REFUSED", "MISSING"]
-    assert "detector_law" in outcomes[0].detail and "rays" in outcomes[1].detail
+    assert [o.status for o in outcomes] == ["LOADED", "REFUSED", "MISSING", "REFUSED", "MISSING"]
+    assert "engine" in outcomes[0].detail and "law" in outcomes[1].detail  # the ray world's `law`
     assert "amplitude_bound" in outcomes[3].detail
     assert PREFLIGHT.main(["--list", str(listing), "--root", str(root)]) == 1
     assert PREFLIGHT.main(["--list", str(listing), "--root", str(root), "--strict"]) == 1

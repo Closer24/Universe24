@@ -168,8 +168,6 @@ def world(dark: bool, source_weight: int | None = None) -> dict:
     """The dark world (True) or the bright control (False); the bright control's source carries
     the dark world's source weight (one instrument in both worlds, read by the trial once)."""
     document: dict = {
-        "law": "beam",
-        "model_id": "beam-dark-body-v1" if dark else "beam-dark-body-bright-control-v1",
         "shape": list(SHAPE),
         "boundary": {"x": "closed", "y": "open", "z": "periodic"},
         "face_depth": 1,
@@ -179,7 +177,6 @@ def world(dark: bool, source_weight: int | None = None) -> dict:
         "release": [1, 128],
         "width": 1,
         "clock_stamp": True,
-        "detector_law": True,
         "massive_record": True,
         "body_record": False,
         "engine": "examples/events/engine_start.json",

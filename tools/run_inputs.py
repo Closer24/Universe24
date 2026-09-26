@@ -73,12 +73,10 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
     started = time.monotonic()
     output: dict[str, object] = {"format": OUTPUT_FORMAT, "input": source.name, "name": name}
     document = json.loads(source.read_text(encoding="utf-8"))
-    stamp = document.get("input") if isinstance(document, dict) else None
+    stamp = document.get("stamp") if isinstance(document, dict) else None
     output["stamp"] = stamp if isinstance(stamp, dict) else None
     try:
         world = parse_nature_beam_world(document)
-        if not world.detector_law:
-            raise ValueError("the one command runs the worlds of the detector law alone")
         simulation = DetectorLawSimulation(world)
     except Exception as error:  # noqa: BLE001 - every refusal is written, none hidden
         output["verdict"] = "REFUSED"

@@ -259,8 +259,7 @@ def bending() -> dict:
     light of its own), the reading the emitter's records' centroid over the screen."""
     generator = bending_generator()
     document = generator.world(True)
-    document["model_id"] = "beam-toward-nature-bending-v1"
-    document["input"] = input_stamp(document)  # the stamp renewed over the identity
+    document["stamp"] = input_stamp(document)  # the stamp renewed (no identity string, 9.90 (1))
     return document
 
 

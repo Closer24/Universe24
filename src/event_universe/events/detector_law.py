@@ -1,9 +1,10 @@
-"""The local detector law (`detector-law-v1`; the model owner's words of
-2026-09-23, docs/designs/detector_law/DESIGN.md): the ray splits at every
-free Node inside the board and holds its amplitudes; outside there is no
-board, only clicks, and nothing passes from Node to Node except through a
-detector, at rest or moving. Selected by the world key `detector_law`,
-beside the ray law as built, which stays the default.
+"""The engine (one engine, no law's name and no version, ALGEBRA.md 9.90 (1);
+the model owner's words of 2026-09-23, docs/designs/detector_law/DESIGN.md):
+the record splits at every free Node inside the board and holds its
+amplitudes; outside there is no board, only clicks, and nothing passes from
+Node to Node except through a detector, at rest or moving. Every world is the
+engine's: no world key selects it (the ray law is cancelled,
+docs/CANCELLED_WORLDS.md).
 
 The Inside (DESIGN.md sections 1 and 2): a record's row at a Node holds
 its amplitude now `a_now`, its amplitude one interval ago `a_before`
@@ -70,11 +71,9 @@ import numpy as np
 
 from event_universe.core.game_board import Address3
 from event_universe.core.integer import by_drive
-from event_universe.events.amplitude import rungs
-from event_universe.events.rule import axis_rule_coefficients, rule_coefficients
+from event_universe.events.rule import axis_rule_coefficients, rule_coefficients, rungs
 from event_universe.events.world import (
     AXES,
-    BEAM_LAW,
     TWIST_FINE_BITS,
     BlockDefinition,
     NatureBeamWorld,
@@ -84,7 +83,9 @@ from event_universe.events.world import (
 
 Record = Callable[[dict[str, object]], None]
 
-DETECTOR_LAW_RULE = "detector-law-v1"
+# ONE ENGINE, NO LAW'S NAME AND NO VERSION (ALGEBRA.md 9.90 (1)): the constant
+# that named the law and its version ("detector-law-v1") is CANCELLED; the books
+# and the state carry no law entry
 FACE_NAMES = ("face:-x", "face:+x", "face:-y", "face:+y", "face:-z", "face:+z")
 # The receiver's take (DESIGN.md sections 1 and 5): a Node that receives does
 # not send the wave back (a mirror is a receiver body that re-emits, never a
@@ -430,15 +431,13 @@ class DetectorLawLayer:
         return []
 
     def report(self) -> dict[str, object]:
-        return {"law": DETECTOR_LAW_RULE, "given": self.given, "gathered": self.gathered, "open": 0}
+        return {"given": self.given, "gathered": self.gathered, "open": 0}
 
 
 class DetectorLawSimulation:
-    """One world under the local detector law, stepped interval by interval."""
+    """One world under the engine, stepped interval by interval."""
 
     def __init__(self, world: NatureBeamWorld, observer: Record | None = None) -> None:
-        if not world.detector_law:
-            raise ValueError(f"{BEAM_LAW}: the world does not declare detector_law")
         self.world = world
         self.record = observer
         self.tick = 0
@@ -513,7 +512,7 @@ class DetectorLawSimulation:
                 split is not None for split in entry.splits
             ):
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}].table is refused under {DETECTOR_LAW_RULE}: the "
+                    f"measured[{number}].table is refused: the "
                     "tables (the polariser's two detectors at one Node, the splitter's linear form) "
                     "retired with the flux reading (the given pair on the circle; BUILD.md section 26 item 17); a polariser is "
                     "a body with an axis and two receivers named, a splitter a region of the one "
@@ -581,8 +580,7 @@ class DetectorLawSimulation:
         self.momentum_unit = int(world.momentum_unit)
         if self.momentum_unit < 1:
             raise ValueError(
-                f"{BEAM_LAW}: the world declares no momentum unit (`momentum_unit`, Q from 1; "
-                "ALGEBRA.md 9.96 (1))"
+                "the world declares no momentum unit (`momentum_unit`, Q from 1; ALGEBRA.md 9.96 (1))"
             )
         # THE TWIST TABLE (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c); commit 4): the universe's
         # triples as arrays, (c, s, d) by k_0 (fine) and by k_1 (coarse); None on a world
@@ -598,7 +596,7 @@ class DetectorLawSimulation:
         self.node_clock = int(world.node_clock)
         if self.node_clock < 1:
             raise ValueError(
-                f"{BEAM_LAW}: the world declares no Node clock (`node_clock`, Gamma from 1; "
+                "the world declares no Node clock (`node_clock`, Gamma from 1; "
                 "ALGEBRA.md 9.35 (3); BUILD.md section 26 item 31)"
             )
         # THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25
@@ -769,7 +767,7 @@ class DetectorLawSimulation:
                 continue
             if name not in self.detector_names:
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{block.number}].receiver {name!r} names no detector of the "
+                    f"measured[{block.number}].receiver {name!r} names no detector of the "
                     f"simulation (the detectors: {self.detector_names})"
                 )
             self.receiver_detector[block.number] = self.detector_names.index(name)
@@ -902,7 +900,7 @@ class DetectorLawSimulation:
                     return 1, (index,)
                 return 2, TENSOR_AXES[index]
             offset += count
-        raise ValueError(f"{BEAM_LAW}: the part {part} is beyond the family's components")
+        raise ValueError(f"the part {part} is beyond the family's components")
 
     @staticmethod
     def _stepped_back(numerator: int, wall: int, value: int, remainder: int) -> tuple[int, int]:
@@ -1134,7 +1132,7 @@ class DetectorLawSimulation:
                 most = max(most, *(int(np.max(np.abs(content + t))) for t in axis_contents))
             if most >= self.node_clock:
                 raise RuntimeError(
-                    f"{BEAM_LAW}: the effective content {definition.name!r} reads reached {most} "
+                    f"the effective content {definition.name!r} reads reached {most} "
                     f"in size at interval {self.tick}, at or beyond Gamma = {self.node_clock}: "
                     "the pace Gamma minus the weighted held levels of every read stays positive "
                     "under the fixed wall (ALGEBRA.md 9.45 (3), 9.48 (3); BUILD.md section 26 "
@@ -1299,7 +1297,7 @@ class DetectorLawSimulation:
             definition = self.families[family]
             if definition.pair_on_body:
                 raise ValueError(
-                    f"{BEAM_LAW}: the family {definition.name!r} declares no pair of its own; a "
+                    f"the family {definition.name!r} declares no pair of its own; a "
                     "record's pair is read from the record (ALGEBRA.md 9.85 (3), 9.91 (7))"
                 )
             pair = definition.pair
@@ -1426,7 +1424,7 @@ class DetectorLawSimulation:
             # gone and the books balanced; the margin rule refuses the same
             # block at load, not at a hop, so this is the run's own check.
             raise RuntimeError(
-                f"{BEAM_LAW}: measured[{block.number}] stepped off the board at interval "
+                f"measured[{block.number}] stepped off the board at interval "
                 f"{self.tick} (its corner {list(block.corner)}, extents {list(block.definition.extents)}, "
                 f"{int(np.count_nonzero(block.mask))} of {int(np.count_nonzero(old_mask))} Nodes "
                 "left on the board): a block's Nodes must stay on the board; the run is refused"
@@ -1616,7 +1614,7 @@ class DetectorLawSimulation:
         where = np.nonzero(self.shell_mask(block))
         if len(where[0]) == 0:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{block.number}] has no shell (no Node of it has a Port to "
+                f"measured[{block.number}] has no shell (no Node of it has a Port to "
                 "a Node outside it), so no Node reads its residue (ALGEBRA.md 9.44 (5) (c))"
             )
         return int(where[0][0]), int(where[1][0]), int(where[2][0])
@@ -1663,7 +1661,7 @@ class DetectorLawSimulation:
             # givings (at the engine's construction: the generator parses the
             # world with the scalar seed to compute the profile)
             raise ValueError(
-                f"{BEAM_LAW}: measured[{block.number}].emitter needs the body's `seed` as its "
+                f"measured[{block.number}].emitter needs the body's `seed` as its "
                 "composed mode's profile (one integer per Node, the generator's "
                 "`seed_on_the_mode`; a flat scalar seed is no mode and givings nothing lawful, "
                 "ALGEBRA.md 9.17 (4) item 1)"
@@ -1673,7 +1671,7 @@ class DetectorLawSimulation:
         # weight; the given train is CANCELLED (`_write_given_train_cancelled`, disconnected)
         if emitter.weight is None or emitter.norm_denominator is None:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{block.number}].emitter declares no `weight` or no "
+                f"measured[{block.number}].emitter declares no `weight` or no "
                 "`norm_denominator`: the giving is the window's, the body's rotation written into "
                 "the given row at its Node at the weight g until the outward norm reaches the "
                 "excitation's action norm / norm_denominator (ALGEBRA.md 9.71 (1), 9.85 (5); the "
@@ -1681,14 +1679,14 @@ class DetectorLawSimulation:
             )
         if emitter.norm is None:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{block.number}].emitter declares no `norm`: one period's "
+                f"measured[{block.number}].emitter declares no `norm`: one period's "
                 "action of the body's mode, its conserved form's share at the centre Node summed "
                 "over the period, the generator's integer (ALGEBRA.md 9.17 (7) (e) and (f), 9.19 "
                 "(3); `excite_on_the_mode` of the massive record generator)"
             )
         if emitter.period is None:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{block.number}].emitter declares no `period`: P, the "
+                f"measured[{block.number}].emitter declares no `period`: P, the "
                 "nearest integer to 2 pi / omega_b of the body's mode, the generator's integer "
                 "(ALGEBRA.md 9.17 (7) (f), 9.44 (5) (c): the tick counts intervals against "
                 "(2 u + 1) P / (2 W))"
@@ -1757,7 +1755,7 @@ class DetectorLawSimulation:
         )
         if abs(nxt) > self.world.amplitude_bound:
             raise RuntimeError(
-                f"{BEAM_LAW}: the seat's record of measured[{block.number}] reached the level {nxt} "
+                f"the seat's record of measured[{block.number}] reached the level {nxt} "
                 f"at interval {self.tick}, above the world's declared amplitude bound A = "
                 f"{self.world.amplitude_bound}: the run is refused"
             )
@@ -2260,7 +2258,7 @@ class DetectorLawSimulation:
         for block in self.blocks:
             if block.stepped > 0 or any(block.hop):
                 raise ValueError(
-                    f"{BEAM_LAW}: the inverse map is defined for a body that has not hopped (block "
+                    f"the inverse map is defined for a body that has not hopped (block "
                     f"{block.number} hopped; the hop's inverse, the field moved back through the "
                     "body, ALGEBRA.md 9.52 (4) (i), is not built)"
                 )
@@ -2459,7 +2457,7 @@ class DetectorLawSimulation:
             axis, sigma = port // 2, (1, -1)[port % 2]
             node = np.unravel_index(int(np.argmax(coarse_index)), self.shape)
             raise RuntimeError(
-                f"{BEAM_LAW}: the twist k = {int(k[node])} on the Port toward {'+' if sigma > 0 else '-'}"
+                f"the twist k = {int(k[node])} on the Port toward {'+' if sigma > 0 else '-'}"
                 f"{AXES[axis]} of the Node {[int(i) for i in node]} at interval {self.tick} is beyond the "
                 f"twist table ({'no table' if self.twist_table is None else f'{len(self.twist_table.coarse)} coarse triples'}; "
                 "ALGEBRA.md 9.96 (2) (c)): the run is refused"
@@ -3417,7 +3415,7 @@ class DetectorLawSimulation:
             largest = max(largest, int(np.max(np.abs(im_next))))
         if self.world.massive_record and largest > self.world.amplitude_bound:
             raise RuntimeError(
-                f"{BEAM_LAW}: the record {live.identity} reached the level "
+                f"the record {live.identity} reached the level "
                 f"{largest} at interval {self.tick}, above the world's declared "
                 f"amplitude bound A = {self.world.amplitude_bound} (issue #1085; MUST 3's bound "
                 "holds only below A): the run is refused"
@@ -4155,10 +4153,9 @@ class DetectorLawSimulation:
         return {}
 
     def snapshot_stream(self) -> Iterator[tuple[str, object]]:
-        """The state's (key, value) pairs for state.json: the law, the tick,
+        """The state's (key, value) pairs for state.json: the tick,
         the held content per measured event and the live records (their
         identity, age, train and the detectors' pointers), not their rows."""
-        yield "law", DETECTOR_LAW_RULE
         yield "tick", self.tick
         yield "measured", self.contents()
         # the held families' levels over the board (GAMEBOARD; ALGEBRA.md 9.45,

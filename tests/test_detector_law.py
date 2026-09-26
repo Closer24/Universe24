@@ -1,4 +1,5 @@
-"""The local detector law (`detector-law-v1`, docs/designs/detector_law/DESIGN.md),
+"""The engine (docs/designs/detector_law/DESIGN.md; one engine, no law's name and no
+version, ALGEBRA.md 9.90 (1)),
 the build's first gate: the loader's key and refusals, the rule's step against
 the design's integers, and one chain world run headless (an emitter body at one
 end, a receiver at the other, the open face behind the emitter): one click per
@@ -19,7 +20,7 @@ import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.events.rule import rule_coefficients
-from event_universe.events.world import DETECTOR_LAW_RULE, input_stamp, parse_nature_beam_world
+from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_emitter import (
     CHARGE_FAMILY,
     CLOCK_FAMILY,
@@ -154,8 +155,6 @@ def chain_world(
     toward +x and nothing of it goes back but the tapers' dispersion."""
     length, corner, screen = (140, 34, 100) if faces == "open" else (80, 2, 70)
     document = {
-        "law": "beam",
-        "model_id": "beam-detector-law-chain-v1",
         "shape": [length, 1, 1],
         "boundary": {"x": faces, "y": "periodic", "z": "periodic"},
         "face_depth": 1,
@@ -164,7 +163,6 @@ def chain_world(
         "N": PHASE_STEPS,
         "release": [1, 128],
         "clock_stamp": clock_stamp,
-        "detector_law": True,
         "width": 1,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
@@ -198,8 +196,7 @@ def chain_world(
 
 def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
     world = parse_nature_beam_world(chain_world())
-    assert world.detector_law
-    assert DETECTOR_LAW_RULE in world.hypotheses
+    assert world.hypotheses == []  # no identity beside the engine (ALGEBRA.md 9.90 (1))
     block = world.measured[0].block
     assert block is not None and block.emitter is not None and block.emitter.family == 0
     # the lamp is refused under the detector law (ALGEBRA.md 9.17): a giving
@@ -213,7 +210,7 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
         "momentum": [0, 0, 0],
         "lamp": {"rate": [1, 40], "wheel": [1, 64], "directions": [[1, 0, 0]], "train": 4},
     }
-    with pytest.raises(ValueError, match="lamp is refused under detector-law-v1"):
+    with pytest.raises(ValueError, match="lamp is refused"):
         parse_nature_beam_world(with_lamp)
     for key in ("emits", "own_grace"):
         retired = chain_world()
@@ -347,7 +344,7 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
         parse_nature_beam_world(world_wheel)
     set_wheel = chain_world()
     set_wheel["detectors"][0]["wheel"] = 64
-    set_wheel["input"] = input_stamp(set_wheel)  # the stamp over the whole file (item 28)
+    set_wheel["stamp"] = input_stamp(set_wheel)  # the stamp over the whole file (item 28)
     with pytest.raises(ValueError, match=r"detectors\[0\]\.wheel is refused"):
         parse_nature_beam_world(set_wheel)
     on_light = chain_world()
@@ -370,8 +367,6 @@ def layer_world(receiver: object = None) -> dict:
     (ALGEBRA.md 9.19 (3) (b))."""
     measured = [emitter_body([2, 0, 0], 8, receiver=receiver, extents=[32, 9, 1])]
     document = {
-        "law": "beam",
-        "model_id": "beam-detector-law-layer-v1",
         "shape": [80, 9, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": 400,
@@ -379,7 +374,6 @@ def layer_world(receiver: object = None) -> dict:
         "N": PHASE_STEPS,
         "release": [1, 128],
         "clock_stamp": True,
-        "detector_law": True,
         "width": 1,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
@@ -644,7 +638,7 @@ def test_the_increment_ladder_over_the_named_sets():
         parse_nature_beam_world(layer_world([]))
     coupled = layer_world("s1")
     coupled["measured"][0]["coupling"] = {"G": [1, 50], "g": [1, 1000]}
-    with pytest.raises(ValueError, match=r"measured\[0\]\.coupling is refused .*the coupling retired"):
+    with pytest.raises(ValueError, match=r"measured\[0\]\.coupling is refused: the coupling retired"):
         parse_nature_beam_world(coupled)
 
 
@@ -673,7 +667,7 @@ def test_detector_is_one_connected_cube_of_side_three():
         document = layer_world()
         document["measured"].extend(receiver_body(position) for position in positions)
         document["detectors"].append({"name": "cube", "positions": positions})
-        document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
+        document["stamp"] = input_stamp(document)  # the stamp over the whole file (item 28)
         if refusal is None:
             simulation = DetectorLawSimulation(parse_nature_beam_world(document))
             detector = simulation.detector_names.index("cube")
@@ -704,7 +698,7 @@ def test_detector_is_one_connected_cube_of_side_three():
             }
         )
         document["detectors"].append({"name": "on_block", "block": len(document["measured"]) - 1})
-        document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
+        document["stamp"] = input_stamp(document)  # the stamp over the whole file (item 28)
         if refusal is None:
             parse_nature_beam_world(document)
         else:

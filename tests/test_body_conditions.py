@@ -68,7 +68,7 @@ def seeded(
     profile, clock, _ = iterated_mode(parse_nature_beam_world(document), 0, AMPLITUDE)
     entry["seed"] = profile
     entry["clock"] = list(clock)
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     return document
 
 
@@ -152,7 +152,7 @@ def test_one_unit_off_the_mode_is_admitted_and_the_peak_doubled_is_refused_namin
     document = seeded([48, 48, 48], [14, 14, 14], 20)
     index = (14 * 48 + 14) * 48 + 14
     document["measured"][0]["seed"][index] += 1
-    document["input"] = input_stamp(document)  # the stamp of the changed integers
+    document["stamp"] = input_stamp(document)  # the stamp of the changed integers
     lines = checked(document)
     assert any("the initial state is the file's profile" in line for line in lines)
     doubled = seeded([48, 48, 48], [14, 14, 14], 20)
@@ -160,7 +160,7 @@ def test_one_unit_off_the_mode_is_admitted_and_the_peak_doubled_is_refused_namin
         range(len(doubled["measured"][0]["seed"])), key=doubled["measured"][0]["seed"].__getitem__
     )
     doubled["measured"][0]["seed"][peak] *= 2
-    doubled["input"] = input_stamp(doubled)
+    doubled["stamp"] = input_stamp(doubled)
     with pytest.raises(ValueError, match="residual") as found:
         checked(doubled)
     assert "the bound" in str(found.value)

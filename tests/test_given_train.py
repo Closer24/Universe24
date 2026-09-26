@@ -87,7 +87,7 @@ def test_the_generators_train_is_the_character_under_the_tapers_and_the_window()
     vacuum = json.loads(json.dumps(document))
     vacuum["measured"] = []
     vacuum["detectors"] = []
-    vacuum.pop("input", None)
+    vacuum.pop("stamp", None)
     world = parse_nature_beam_world(vacuum)
     simulation = DetectorLawSimulation(world)
     shape = (int(world.shape[0]), 1, 1)

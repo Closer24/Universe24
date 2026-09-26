@@ -292,7 +292,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     for key, value in (("charge_family", CHARGE_FAMILY_NAME), ("charge_strength", 1)):
         retired = copy()
         retired[key] = value
-        refused(retired, f"{key} is refused under detector-law-v1: the family genericity")
+        refused(retired, f"{key} is refused: the family genericity")
     weak = copy()
     set_strength(weak, 0)
     refused(weak, r"reads\[1\].weight")
@@ -304,7 +304,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     refused(twice, "reads names 'charge' twice")
     unlabelled = copy()
     del unlabelled["universe"][MATTER]["charge"]
-    refused(unlabelled, r"families\[1\] lacks keys required under `detector_law`: charge")
+    refused(unlabelled, r"families\[1\] lacks keys the engine reads: charge")
     strong = copy()
     strong["universe"][MATTER]["charge"] = 2
     refused(strong, r"families\[1\].charge \[2, 1\]: under")

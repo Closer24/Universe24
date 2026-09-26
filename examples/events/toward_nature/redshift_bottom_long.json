@@ -1,6 +1,4 @@
 {
- "law": "beam",
- "model_id": "beam-massive-record-redshift-bottom-long-v1",
  "shape": [
   760,
   3,
@@ -21,7 +19,6 @@
  ],
  "width": 1,
  "clock_stamp": true,
- "detector_law": true,
  "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
@@ -53383,8 +53380,7 @@
   }
  ],
  "face_depth": 32,
- "input": {
-  "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "b710204a753b6dfd7ccc426e0f5e1af3bf07e84f1032cab65abd3d1e0b7a339c"
+ "stamp": {
+  "hash": "6e2778ef27efa9fa45f0a6c11c4a231dda0756fbf05392b4ebcc499cff1c2a2b"
  }
 }

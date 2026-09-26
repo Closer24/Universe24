@@ -19,6 +19,7 @@ float, no root (the three tests of every rule, skills/workflow.md).
 
 from __future__ import annotations
 
+from math import gcd, lcm
 from typing import overload
 
 import numpy as np
@@ -99,3 +100,29 @@ def rule_total_bound(
     is refused."""
     read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, weak_field)
     return 6 * amplitude * abs(read) + amplitude * abs(self_coefficient) + wall * (amplitude + 1)
+
+
+def rungs(weights: list[tuple[int, int]], steps: int) -> tuple[list[int], tuple[int, int]]:
+    """THE LADDER'S RUNGS (the record's click, ALGEBRA.md 9.25 (2); the design's
+    section 3.3; moved here from the cancelled ray law's amplitude module, its
+    living home since the residue lines of docs/CANCELLED_WORLDS.md section 9):
+    the cells' weights as pairs (numerator, multiplicity), the cumulative C_k
+    over the common denominator D and the rungs b_k = (2 W C_k + Total) // (2
+    Total) at the nearest integer on the wheel `steps` = W (N under [1, N]),
+    b_K = W; returns the rungs and the total as the reduced pair. Every u = 0
+    .. W - 1 falls in exactly one cell; an offer below Total / 2W may get an
+    empty cell. Integers alone: sums, products and one floor division."""
+    denominator = 1
+    for _, m in weights:
+        denominator = lcm(denominator, m)
+    scaled = [n * (denominator // m) for n, m in weights]
+    total = sum(scaled)
+    if total == 0:
+        return [0] * len(weights), (0, 1)
+    found = []
+    cumulative = 0
+    for value in scaled:
+        cumulative += value
+        found.append((2 * steps * cumulative + total) // (2 * total))
+    common = gcd(total, denominator) or 1
+    return found, (total // common, denominator // common)

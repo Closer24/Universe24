@@ -113,7 +113,7 @@ def finish(  # type: ignore[no-untyped-def]
     if receiver:
         detector.receiver_set(document, "at_well", 0)
         detector.named_receiver(document, {0: "at_well"})
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     if weight is None:
         massive.point_weight(document, 0, PERIODS)
     else:
@@ -125,7 +125,7 @@ def finish(  # type: ignore[no-untyped-def]
         emitter["window_read"] = read  # HOST: the trial's window at the row's weight
     window = int(document["measured"][0]["emitter"]["window_read"])
     document["ticks"] = ticks_of_window(window)
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     return document
 
 

@@ -24,7 +24,6 @@ from event_universe.diagnostics.massive_record_margin import (
     iterated_mode,
 )
 from event_universe.events.world import (
-    LAW_IDENTIFIER,
     MOST_FAMILIES,
     input_stamp,
     mode_residual,
@@ -43,7 +42,7 @@ def peak_of(profile: list[int]) -> int:
 def restamped(document: dict) -> dict:
     """The document with its `input` stamp rewritten for its integers as they stand, so
     that the check under test speaks and not the hash's."""
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     return document
 
 
@@ -60,8 +59,8 @@ def test_a_generated_world_is_lawful_and_carries_its_clock_and_stamp():
         (emitter_world(stock=2), 100),
         (light_clock_world("closed", False), 50 << 12),
     ):
-        assert document["input"] == input_stamp(document)
-        assert document["input"]["law"] == LAW_IDENTIFIER and len(document["input"]["hash"]) == 64
+        assert document["stamp"] == input_stamp(document)
+        assert set(document["stamp"]) == {"hash"} and len(document["stamp"]["hash"]) == 64
         world = parse_nature_beam_world(document)
         block = world.measured[0].block
         assert block is not None and block.profile is not None and block.clock is not None
@@ -295,21 +294,21 @@ def test_the_six_neighbour_read_in_integers():
 
 
 def test_the_input_stamp_the_law_and_the_hash():
-    """THE FILE'S HASH AND THE LAW IT WAS MADE UNDER (9.22 (7) (i)): a seeded world without
-    its `input` stamp is refused naming the key; a stamp under another law is refused naming
-    both laws; a stamp whose hash is not the digest of the whole file (the profile changed by
+    """THE FILE'S HASH (9.22 (7) (i); 9.90 (3) (c)): a seeded world without its `stamp` is
+    refused naming the key; a stamp carrying a law's name is refused naming the key (no law
+    identifier, 9.90 (1)); a stamp whose hash is not the digest of the whole file (the profile changed by
     one unit without restamping, the clock changed, the given pair changed, the ticks changed:
     the stamp covers every key, BUILD.md section 26 item 28) is refused as not the file the
     generator wrote; a world with no profile needs no stamp (the emitter
     world on its scalar seed, its emitter removed); the stamp is the same from the raw
     document and from the parsed integers (the generated world loads, test a)."""
     missing = emitter_world(stock=2)
-    del missing["input"]
-    with pytest.raises(ValueError, match="declares a seeded body and no `input` stamp"):
+    del missing["stamp"]
+    with pytest.raises(ValueError, match="declares a seeded body and no `stamp`"):
         parse_nature_beam_world(missing)
     other = emitter_world(stock=2)
-    other["input"]["law"] = "another law"
-    with pytest.raises(ValueError, match="input.law is 'another law'; this loader's law is"):
+    other["stamp"]["law"] = "another law"
+    with pytest.raises(ValueError, match="stamp has unknown keys: law"):
         parse_nature_beam_world(other)
 
     def unit(document):
@@ -333,7 +332,7 @@ def test_the_input_stamp_the_law_and_the_hash():
         with pytest.raises(ValueError, match="is not the digest of the file"):
             parse_nature_beam_world(changed)
     unseeded = emitter_world(stock=2, on_mode=False)
-    assert "input" not in unseeded
+    assert "stamp" not in unseeded
     del unseeded["measured"][0]["emitter"]
     parse_nature_beam_world(unseeded)
 

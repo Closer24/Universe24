@@ -4851,6 +4851,50 @@ would have found no cell.
    point_light_clock 1500 intervals compared interval by interval), the
    click and giving lines moved by the key alone; the chain world's events
    digest moved by it and re-read.
+70. THE RESIDUE LINES OF THE CANCELLED PATHS INSIDE THE ENGINE'S FILES
+   (docs/CANCELLED_WORLDS.md section 9, Nature24's list; ALGEBRA.md 9.90 (1);
+   the Boss's record 2138 (1); the model owner's records 2102, 2103, 2107).
+   ONE ENGINE, NO LAW'S NAME AND NO VERSION: (i) the loader's constants
+   BEAM_LAW ("beam-v1"), LAW_VALUE, OLD_LAW_VALUE and the seventeen rule
+   constants ending in "-v1" (BECOME_RULE to MASSIVE_ROWS_RULE, DETECTOR_LAW_RULE
+   and MASSIVE_RECORD_RULE among them) are gone; every refusal names the file
+   and the key and no law (the "beam-v1: " prefix of 399 messages of the
+   loader, 18 of the engine and 16 of the margin diagnostic dropped); the
+   engine's books and state carry no `law` entry (the chain world's state
+   digest moves by it); `hypotheses` names no identity beside the engine (an
+   empty list on every world). (ii) THE WORLD KEYS `law`, `model_id` and
+   `detector_law` are refused by name (RETIRED_KEYS): the flag `detector_law`
+   was the law's name (record 2103); every world is the engine's, and every
+   branch of the loader on the flag's absence (the ray law's parse: its
+   sixteen keys, the columns, the legacy charge key, the lamps', tables' and
+   transits' keys) is CANCELLED and unreachable behind the constant, nothing
+   deleted; a ray-law world is REFUSED by its `law` key (the preflight reads
+   the file with the engine's own loader; the old runner's loader and the ray
+   law's engine are no longer imported). (iii) THE STAMP: the world's
+   `input` {law, hash} is `stamp` {hash} (9.90 (3) (c)), the digest of the
+   whole file alone; LAW_IDENTIFIER gone; the key `input` refused by name.
+   (iv) THE START FILE holds `mode` alone (examples/events/engine_start.json;
+   START_KEYS = {"mode"}); a `law` key in it is an unknown key. (v) `rungs`
+   (the ladder's rungs) lives in rule.py, the engine's living home; the
+   cancelled amplitude module imports it from there (one copy); the engine no
+   longer imports the ray law's amplitude module. (vi) The package markers
+   export no law's name and load no ray engine lazily (an AttributeError
+   naming the cancel). (vii) The six living generators write no `law`,
+   `model_id` or `detector_law` and stamp under `stamp`; every shipped world
+   regenerated (the words and the hash alone; every run bit for bit). THE
+   CANCELLED MODULES that imported the law's name from the loader
+   (engine.py, nature_beam.py, measured.py, meeting.py, run.py, the old
+   runner, configuration_validation.py) no longer import: they are cancelled
+   and collected by no gate (docs/CANCELLED_WORLDS.md section 7 to record it,
+   Nature24's file). NOT HERE: the audit of 9.90 (3) (K, N, release, width,
+   clock_stamp, massive_record, body_record, face_depth, side, phase and the
+   keys table of 9.90 (6)) and the module's and folder's names (the seat's
+   names push); the check-mode worlds already carry none of the deleted keys
+   and none of the keys the loader still requires (Nature24's generator ahead
+   of the audit). PROOF: the living suites in the words (the fixtures without
+   the three keys, the stamp under `stamp`, the refusal regexes, the ray-law
+   flips as refusals of the retired flag); the gate; the five worlds' rows
+   bit for bit.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

@@ -31,7 +31,7 @@ def small_layer() -> dict:
     document["shape"] = [24, 9, 1]
     document["measured"] = []
     document["detectors"] = []
-    document.pop("input", None)
+    document.pop("stamp", None)
     return document
 
 
@@ -107,10 +107,10 @@ def test_the_extents_refusals_and_the_fit_per_axis():
     document = emitter_world(stock=1)
     document["measured"].append(wall([40, 0, 0], extents=[12, 1, 1]))
     document["detectors"].append({"name": "slab", "block": len(document["measured"]) - 1})
-    document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
+    document["stamp"] = input_stamp(document)  # the stamp over the whole file (item 28)
     parse_nature_beam_world(document)
     document["measured"][-1]["extents"] = [2, 1, 1]
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     # SINCE COMMIT 7 a body is its own detector whatever its support (ALGEBRA.md 9.92, record
     # 2109): the slab of two Nodes bound as its own set is admitted
     parse_nature_beam_world(document)
@@ -164,22 +164,22 @@ def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
     The stamp is rewritten for every changed key (the stamp over the whole file)."""
     document = emitter_world(stock=1)
     document["boundary"] = {"x": "open", "y": "periodic", "z": "periodic"}
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     with pytest.raises(ValueError, match="face_depth is required on a GameBoard open on x"):
         parse_nature_beam_world(document)
     document["face_depth"] = 1
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     face = simulation.detector_names.index("face")
     assert int((simulation.detector_at_node == face).sum()) == 2
     document["face_depth"] = 4
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     face = simulation.detector_names.index("face")
     nodes = sorted(int(x) for x in np.nonzero(simulation.detector_at_node[:, 0, 0] == face)[0])
     assert nodes == [0, 1, 2, 3, 76, 77, 78, 79]
     document["face_depth"] = 40
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     with pytest.raises(ValueError, match="face_depth 40 leaves no interior on the open axis x"):
         parse_nature_beam_world(document)
     # a periodic chain (no body: the emitter's mode is the closed chain's, one border for

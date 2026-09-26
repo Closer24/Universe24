@@ -33,7 +33,7 @@ ATTRIBUTES = {"name", "parts", "phase", "pair", "reads", "self_source"}
 
 
 def refused(document: dict, match: str) -> None:
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     with pytest.raises(ValueError, match=match):
         parse_nature_beam_world(document)
 
@@ -86,7 +86,9 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     assert entries[2]["reads"][1] == {"family": "charge", "weight": 1, "by": "sign", "twist": "own"}
     for path in (ROOT / "examples/events").glob("*/*.json"):
         text = json.loads(path.read_text(encoding="utf-8"))
-        if isinstance(text, dict) and text.get("detector_law") is True:
+        # a world of the engine; the check-mode worlds (Nature24's generator, ahead of the
+        # audit of ALGEBRA.md 9.90 (3)) carry none of the keys the loader still requires
+        if isinstance(text, dict) and "universe" in text and "check_mode" not in path.parts:
             assert text["universe"] == FILE, path
             assert "node_clock" not in text and "amplitude_bound" not in text, path
             world = parse_nature_beam_world(text)
@@ -127,7 +129,7 @@ def on_the_file(document: dict, clock: list[int]) -> dict:
                 entry["emitter"]["family"] = "charge"
             # the light's component along the body's moment (ALGEBRA.md 9.82 (3) (d); commit 4)
             entry["moment"] = [0, 0, 1]
-    moved["input"] = input_stamp(moved)
+    moved["stamp"] = input_stamp(moved)
     return moved
 
 
@@ -139,15 +141,13 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     document["integers"]["node_clock"] = inline["node_clock"]
     document["integers"]["amplitude_bound"] = inline["amplitude_bound"]
     (tmp_path / "universe.json").write_text(json.dumps(document), encoding="utf-8")
-    (tmp_path / "start.json").write_text(
-        json.dumps({"law": "detector-law-v1", "mode": "check"}), encoding="utf-8"
-    )
+    (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
     a = DetectorLawSimulation(parse_nature_beam_world(inline))
     monkeypatch.setattr(loader, "REPOSITORY_ROOT", tmp_path)
     moved = on_the_file(inline, [512, 1])
     moved["universe"] = "universe.json"
     moved["engine"] = "start.json"
-    moved["input"] = input_stamp(moved)
+    moved["stamp"] = input_stamp(moved)
     b = DetectorLawSimulation(parse_nature_beam_world(moved))
     assert b.world.universe_file == "universe.json" and a.world.universe_file is None
     names_a = [family.name for family in a.families]
@@ -198,9 +198,7 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
         for read in entry["reads"]:
             read["family"] = rename[read["family"]]
     (tmp_path / "universe.json").write_text(json.dumps(universe), encoding="utf-8")
-    (tmp_path / "start.json").write_text(
-        json.dumps({"law": "detector-law-v1", "mode": "check"}), encoding="utf-8"
-    )
+    (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
     clock = json.loads((ROOT / "examples/events/massive_record/light_clock.json").read_text())
     a = DetectorLawSimulation(parse_nature_beam_world(clock))
     renamed = json.loads(json.dumps(clock))
@@ -213,7 +211,7 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
     monkeypatch.setattr(loader, "REPOSITORY_ROOT", tmp_path)
     renamed["universe"] = "universe.json"
     renamed["engine"] = "start.json"
-    renamed["input"] = input_stamp(renamed)
+    renamed["stamp"] = input_stamp(renamed)
     b = DetectorLawSimulation(parse_nature_beam_world(renamed))
     assert [family.name for family in b.families] == [rename[f.name] for f in a.families]
     lines_a: list[dict] = []
@@ -247,20 +245,17 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     document = on_the_file(emitter_world(stock=1, ticks=10), [512, 1])
     second = json.loads(json.dumps(document))
     second["node_clock"] = 10000
-    refused(second, "the world declares node_clock, which the detector law never reads")
+    refused(second, "the world declares node_clock, which the engine never reads")
     ray = json.loads(json.dumps(document))
-    ray["detector_law"] = False
-    del ray["engine"]
-    refused(ray, "a universe file's path is admitted under `detector_law` alone")
+    ray["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
+    refused(ray, "the world.detector_law is refused: one engine")
     missing = json.loads(json.dumps(document))
     missing["universe"] = "examples/events/nowhere.json"
     refused(missing, "no file at the repository's root")
     # the file's own defects, one at a time
     good = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
     monkeypatch.setattr(loader, "REPOSITORY_ROOT", tmp_path)
-    (tmp_path / "start.json").write_text(
-        json.dumps({"law": "detector-law-v1", "mode": "check"}), encoding="utf-8"
-    )
+    (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
     document["engine"] = "start.json"
     document["universe"] = "universe.json"
 
@@ -292,7 +287,7 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     )
     refuses(lambda d: d.__setitem__("law", "beam-v1"), "the universe file .* has unknown keys: law")
     (tmp_path / "universe.json").write_text(json.dumps(good), encoding="utf-8")
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     assert parse_nature_beam_world(document).universe_file == "universe.json"
 
 

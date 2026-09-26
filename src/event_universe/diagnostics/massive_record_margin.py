@@ -42,7 +42,7 @@ from typing import Any
 import numpy as np
 from scipy.sparse.linalg import LinearOperator, eigsh  # type: ignore[import-untyped]
 
-from event_universe.events.world import BEAM_LAW, MARGIN_KINDS, NatureBeamWorld, body_node_indices
+from event_universe.events.world import MARGIN_KINDS, NatureBeamWorld, body_node_indices
 
 # The ramp of a pushed body at least this many relaxation times 1 / (omega_0
 # - omega_b) of its own well (DECLARATIONS.md section 8, the rule for any
@@ -266,7 +266,7 @@ def accurate_mode(world: NatureBeamWorld, number: int) -> tuple[float, np.ndarra
     entry = world.measured[number]
     definition = entry.block
     if definition is None:
-        raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
+        raise ValueError(f"measured[{number}] is no block")
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
@@ -405,7 +405,7 @@ def iterated_mode(
     entry = world.measured[number]
     definition = entry.block
     if definition is None:
-        raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
+        raise ValueError(f"measured[{number}] is no block")
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
@@ -451,7 +451,7 @@ def iterated_mode(
         if residual <= bound:
             return flat, (a, b), iteration
     raise ValueError(
-        f"{BEAM_LAW}: the generator's iteration for measured[{number}] did not stop within "
+        f"the generator's iteration for measured[{number}] did not stop within "
         f"{limit} iterations: the last residual {residual} against the bound {bound} (the "
         f"amplitude {amplitude}; the iteration's floor or a generator fault; nothing written)"
     )
@@ -492,7 +492,7 @@ def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     entry = world.measured[number]
     definition = entry.block
     if definition is None:
-        raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
+        raise ValueError(f"measured[{number}] is no block")
     family = world.families[entry.family]
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
@@ -568,7 +568,7 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
         found.append(reading)
         if reading.runaway:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{number}]: the block's mode is a runaway (2 cos omega_b = "
+                f"measured[{number}]: the block's mode is a runaway (2 cos omega_b = "
                 f"{reading.lambda_max:.6f} at or above 2: no oscillation, a level growing by "
                 f"{reading.lambda_max / 2 + math.sqrt(reading.lambda_max**2 / 4 - 1):.4f} per "
                 "interval; the well is too deep for its board, the folded axes' self-reads "
@@ -576,7 +576,7 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
             )
         if not reading.bound:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{number}]: the block's mode is not bound (2 cos omega_b = "
+                f"measured[{number}]: the block's mode is not bound (2 cos omega_b = "
                 f"{reading.lambda_max:.6f} at or below the gap's 2 num / den = "
                 f"{2 * kind[0] / kind[1]:.6f}; "
                 "the well is too shallow or the side too small for its pair, MASSIVE_RECORD.md "
@@ -585,7 +585,7 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
         for axis, periodic, have, need in reading.axes:
             if have < need:
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}]: below the margin rule on {axis} for a "
+                    f"measured[{number}]: below the margin rule on {axis} for a "
                     f"{reading.kind} world (the mode's extent {reading.extent:.2f} Links): "
                     + (
                         f"the periodic side {have:.0f} is less than the block's side "
@@ -629,7 +629,7 @@ def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
     entry = world.measured[number]
     definition = entry.block
     if definition is None:
-        raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
+        raise ValueError(f"measured[{number}] is no block")
     alone = dataclasses.replace(
         world,
         measured=(
@@ -667,7 +667,7 @@ def excitation_action(world: NatureBeamWorld, number: int, period: int) -> Fract
     entry = world.measured[number]
     definition = entry.block
     if definition is None:
-        raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
+        raise ValueError(f"measured[{number}] is no block")
     alone = dataclasses.replace(
         world,
         measured=(
@@ -750,7 +750,7 @@ def check_body_conditions(
     for (index, kind), largest in composed_largest_eigenvalues(world).items():
         if largest >= 2.0:
             raise ValueError(
-                f"{BEAM_LAW}: the family {world.families[index].name!r} at the kind {list(kind)}: the "
+                f"the family {world.families[index].name!r} at the kind {list(kind)}: the "
                 f"composed operator's largest eigenvalue {largest:.6f} is at or above 2 (ALGEBRA.md "
                 "9.19 (2): a mode of the whole board grows without bound; the bodies' wells together "
                 "are too deep for the board)"
@@ -767,13 +767,11 @@ def check_body_conditions(
         assert definition is not None
         own = blocks[number].own
         if own is None:
-            raise ValueError(
-                f"{BEAM_LAW}: measured[{number}]: a bound body without its own record at load"
-            )
+            raise ValueError(f"measured[{number}]: a bound body without its own record at load")
         amplitude = int(definition.seed)
         if definition.profile is None:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{number}]: a bound body declares its seed as the "
+                f"measured[{number}]: a bound body declares its seed as the "
                 "generator's profile (the operator iterated with the stop, `mode_profile` of the "
                 "massive record generator); a flat scalar seed is no mode"
             )
@@ -787,7 +785,7 @@ def check_body_conditions(
             if differing[0].size:
                 x, y, z = (int(differing[axis][0]) for axis in range(3))
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}]: the body's initial state is not the file's "
+                    f"measured[{number}]: the body's initial state is not the file's "
                     f"profile at the amplitude {amplitude}: at the Node ({x}, {y}, {z}) the level "
                     f"`{level_name}` holds {int(found[x, y, z])} where the profile gives "
                     f"{int(expected[x, y, z])} ({int(differing[0].size)} Nodes differ; ALGEBRA.md "
@@ -808,7 +806,7 @@ def check_body_conditions(
             # against the module's 2 pi / omega_b (COMPUTATION)
             if emitter.period is None or emitter.norm is None:
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}].emitter declares no `period` and `norm`: the "
+                    f"measured[{number}].emitter declares no `period` and `norm`: the "
                     "excited record's period P (the nearest integer to 2 pi / omega_b) and the "
                     "one-way flux into the body's centre Node over P intervals, the generator's "
                     "integers (ALGEBRA.md 9.17 (5) item 1; `excite_on_the_mode` of the massive "
@@ -817,7 +815,7 @@ def check_body_conditions(
             recomputed = excitation_norm(world, number, emitter.period)
             if recomputed != emitter.norm:
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}].emitter.norm {emitter.norm} is not the one-way "
+                    f"measured[{number}].emitter.norm {emitter.norm} is not the one-way "
                     f"flux into the body's centre Node over its period {emitter.period} advanced "
                     f"alone, {recomputed} (ALGEBRA.md 9.17 (5) item 1: the generator's integer, "
                     "recomputed at load)"
@@ -839,7 +837,7 @@ def check_body_conditions(
             need = RELAXATION_TIMES * relaxation
             if definition.ramp < need:
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}]: the ramp {definition.ramp} is below "
+                    f"measured[{number}]: the ramp {definition.ramp} is below "
                     f"{RELAXATION_TIMES} relaxation times of its own well (1 / (omega_0 - omega_b) = "
                     f"{relaxation:.1f} intervals, {RELAXATION_TIMES} times {need:.0f}; "
                     "DECLARATIONS.md section 8): a pushed body declares `ramp` at least that"

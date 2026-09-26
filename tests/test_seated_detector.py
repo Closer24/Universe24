@@ -53,7 +53,7 @@ def seated_layer(stock: int = STOCK, seats: bool = True) -> dict:
                 }
             )
             document["detectors"].append({"name": name, "positions": [[71, row, 0]]})
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     return with_body_record(document, True)
 
 
@@ -140,7 +140,7 @@ def test_the_loader_admits_a_seat_under_body_record_alone():
     # record 2109: several bodies on one Node each are several detectors), the lattice body's too
     lattice = json.loads(json.dumps(document))
     lattice["body_record"] = False
-    lattice["input"] = input_stamp(lattice)
+    lattice["stamp"] = input_stamp(lattice)
     parse_nature_beam_world(lattice)
     pair = json.loads(json.dumps(document))
     pair["measured"].append(
@@ -153,6 +153,6 @@ def test_the_loader_admits_a_seat_under_body_record_alone():
         }
     )
     pair["detectors"][0]["positions"] = [[71, 1, 0], [72, 1, 0]]
-    pair["input"] = input_stamp(pair)
+    pair["stamp"] = input_stamp(pair)
     with pytest.raises(ValueError, match="one Node .a body's. or a cube of three or more"):
         parse_nature_beam_world(pair)

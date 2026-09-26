@@ -52,7 +52,7 @@ def twisted_world() -> dict:
                 {"parts": [1, 3], "held_factors": [1, 1], "held_dipole": "moment", "held_dipole_div": 2}
             )
     document["twist_table"] = table()
-    document["input"] = input_stamp(document)
+    document["stamp"] = input_stamp(document)
     return document
 
 
@@ -214,11 +214,11 @@ def test_the_loader_refuses_a_light_emitter_without_one_moment_axis_and_a_bad_ta
     document = on_the_file(emitter_world(stock=1, ticks=10), [512, 1])
     flat = json.loads(json.dumps(document))
     flat["measured"][0]["moment"] = [0, 0, 0]
-    flat["input"] = input_stamp(flat)
+    flat["stamp"] = input_stamp(flat)
     refused(flat, "lies on 0 axes")
     diagonal = json.loads(json.dumps(document))
     diagonal["measured"][0]["moment"] = [1, 1, 0]
-    diagonal["input"] = input_stamp(diagonal)
+    diagonal["stamp"] = input_stamp(diagonal)
     refused(diagonal, "lies on 2 axes")
     # the table on an inline world: the unit, the identities and the nearest triple checked
     good = twisted_world()
@@ -231,7 +231,7 @@ def test_the_loader_refuses_a_light_emitter_without_one_moment_axis_and_a_bad_ta
     ):
         broken = json.loads(json.dumps(good))
         change(broken["twist_table"])
-        broken["input"] = input_stamp(broken)
+        broken["stamp"] = input_stamp(broken)
         with pytest.raises(ValueError, match=match):
             parse_nature_beam_world(broken)
 
