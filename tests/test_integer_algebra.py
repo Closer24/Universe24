@@ -55,7 +55,9 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/world.py": "the world file's parse and the load-time constants (the flight table, the labels)",
     "events/measured.py": "the measured event's record and the ledger of an interval",
     "events/amplitude.py": "the click's ledger: the offer, the evaluation, the Gram form, the rungs",
-    "events/detector_law.py": "the local detector law under its key: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click",
+    "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md 9.90 (1))",
+    "events/rule.py": "the one rule's coefficients per Node and per axis (ALGEBRA.md 9.57 (1), 9.91 (2)) and the ladder's rungs (9.25 (2))",
+    "events/primitives.py": "the primitives of the freeze (ALGEBRA.md 9.88 (7)): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
     "core/phase.py": "the phase circle and its cosine and sine tables in bounded integers",
     "core/game_board.py": "the GameBoard's addresses, the six headings, the cube's group of 48",
@@ -135,10 +137,9 @@ ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
         "events/engine.py",
         "__init__",
     ): "at load: E' = integer_root(W) once under `covariant_readings`, the declared rounding of DERIVATIONS_BEAM 17.6 M3; comparisons from then on",
-    (
-        "events/detector_law.py",
-        "__init__",
-    ): "a predicate at load under `detector_law`: a splitter's row norm is a perfect square (the root squared back and compared, the row refused otherwise), the root R the isometry's exact divisor of the outputs' levels (build 2, component 3); no rounded number enters the state",
+    # the engine's `__init__` held a root once (a splitter's row norm a perfect square, build 2,
+    # component 3); the tables retired with the flux reading (item 17) and no root stands in
+    # the engine module: none listed (BUILD.md section 26 item 73)
     (
         "events/amplitude.py",
         "common_denominator",

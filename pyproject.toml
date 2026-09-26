@@ -11,7 +11,7 @@ requires-python = ">=3.14"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Alon Gonen", email = "alon@defounder.ai" }]
-dependencies = ["numpy>=2.5.3,<3"]
+dependencies = ["numpy>=2.5.3,<3", "scipy>=1.14,<2"]
 
 [project.optional-dependencies]
 render = ["matplotlib>=3.8,<4", "Pillow>=10,<13", "playwright>=1.45,<2"]
@@ -57,3 +57,25 @@ files = ["src/event_universe"]
 [[tool.mypy.overrides]]
 module = ["matplotlib.*", "mpl_toolkits.*", "PIL.*"]
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# The ray law's modules cancelled whole (docs/CANCELLED_WORLDS.md section 4, the list of
+# tools/cancelled_paths.py): kept on disk, imported by nothing live, not type-checked; the
+# test tests/test_gate_configuration.py keeps this list equal to the document's.
+module = [
+    "event_universe.__main__",
+    "event_universe.configuration_validation",
+    "event_universe.diagnostics.shell_readings",
+    "event_universe.events.engine",
+    "event_universe.events.measured",
+    "event_universe.events.meeting",
+    "event_universe.events.nature_beam",
+    "event_universe.events.run",
+    "event_universe.json_documents",
+    "event_universe.runner",
+    "event_universe.snapshot_writer",
+    "event_universe.trimmed_record",
+    "event_universe.world_loading",
+    "event_universe.register_map",
+]
+ignore_errors = true

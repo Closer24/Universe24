@@ -1,0 +1,28 @@
+The one stroke, commit 2: gravity's ten with the body's holds, the vector and tensor parts written at every body from its content, charge, momentum, spin and moment with the divisions' remainders carried and inverted exactly, the dipoles on the body's Node's six neighbours, the leak test per part (ALGEBRA.md 9.91 (10) 2; 9.91 (3); 9.86 (2) (a); the Boss's records 2105 and 2106 of 2026-09-26; BUILD.md section 26 item 61)
+
+Every block declares `charge`, `spin` and `moment` (no default). The hold, after
+the held families' step, writes at the body's support: the time part as before
+(the content; the declared charge plus the held quanta's signs), the vector
+component a factor x count x n_a div W, the tensor component ab factor x count
+x n_a n_b div W^2, the factors the families file's, W the body's wall 3 Q S M;
+the division's remainder is carried on the body between intervals, so the
+written level steps between the two integers around the exact fraction; `now`
+takes this interval's value and `before` the last one's, so the fields'
+inverse reads the level the step read. The dipoles: the vector component i at
+the centre Node + sigma e_j gains sigma x (D x e_j)_i, D the spin (gravity) or
+the moment (the charge, halved with the remainder carried). The inverse takes
+the dipoles off `now`, steps the divisions back exactly, inverts the fields and
+writes the previous values. A part no body sources stays exactly zero and
+silent; the leak test reads every part.
+
+tests/test_vector_holds.py: the moving body's writes and carried remainder,
+the charge's current, the dipoles' signs and halving, the backward run exact
+with a spinning body, every other part silent. Every shipped world regenerated
+with the three numbers at 0; the five worlds bit for bit (the moving Lorentz
+clock included: gravity's x part is written and nothing reads it yet).
+
+Open for the mathematician: W (the universe's integer of 9.91 (7), or the
+body's wall); the dipole at a hop.
+
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01FiGGiQ6ee5yyFwBih4fdeE

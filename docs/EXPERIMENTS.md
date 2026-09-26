@@ -3217,7 +3217,7 @@ states "exactly" and means integer equality at every tick.
   lines only, binned by the window they carry.
 - **Features.** One additive engine key
   ([BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
-  [ENGINE, the world](ENGINE.md#the-beam-law-beam-v1)): a table entry's
+  [ENGINE, the world](ENGINE.md#the-beam-law-beam-v1-the-ray-laws-record-cancelled-docscancelled_worldsmd-the-engine-has-no-laws-name-item-70)): a table entry's
   `phase_window` as `{"reads": "<family>", "offset": s}`, the centre the
   phase of the coherent pointer of the named family's rows present at the
   set plus the offset, the width the law's, a `pass` naming `window` None

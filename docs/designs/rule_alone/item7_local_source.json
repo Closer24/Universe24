@@ -1,0 +1,60 @@
+{
+ "clock": [
+  1979567,
+  1048576
+ ],
+ "rows": [
+  {
+   "v": 0.05,
+   "K": 0.05270336650963607,
+   "support_nodes": 14869,
+   "well_nodes_pace_median": 0.05060942669249016,
+   "well_nodes_pace_min_max": [
+    0.03557912457067355,
+    0.06433602163749898
+   ],
+   "support_pace_median": 0.04974270410415395,
+   "support_pace_quartiles": [
+    0.04577391990620949,
+    0.05428072868886803
+   ],
+   "sum_local_source_over_4s": 0.050374933842417056,
+   "at_rest_current_max": null
+  },
+  {
+   "v": 0.1,
+   "K": 0.10677904835317234,
+   "support_nodes": 15005,
+   "well_nodes_pace_median": 0.1036615137447999,
+   "well_nodes_pace_min_max": [
+    0.07273414554797938,
+    0.1316484302120022
+   ],
+   "support_pace_median": 0.10193970031742351,
+   "support_pace_quartiles": [
+    0.09289854488457365,
+    0.11016707180165662
+   ],
+   "sum_local_source_over_4s": 0.10281778524497961,
+   "at_rest_current_max": null
+  },
+  {
+   "v": 0.2,
+   "K": 0.2258301407661082,
+   "support_nodes": 15681,
+   "well_nodes_pace_median": 0.22952417618266727,
+   "well_nodes_pace_min_max": [
+    0.15691328860617687,
+    0.28394648515374715
+   ],
+   "support_pace_median": 0.2173341488810204,
+   "support_pace_quartiles": [
+    0.1868330208796265,
+    0.22741436835067508
+   ],
+   "sum_local_source_over_4s": 0.21891947160069647,
+   "at_rest_current_max": null
+  }
+ ],
+ "at_rest_current_max": 0.0
+}
