@@ -16462,6 +16462,78 @@ Gamma the Node freezes (R = 0) rather than binds.
    rotation. 9.96 (4)'s separation rule was retired already. A test,
    not a decision.
 
+**(11) A GENERIC SOLUTION FOR THE WELL (the Boss's record 2155 on the
+model owner's word, "we must have a generic solution for the well";
+the four tests: one primitive for every body and every family; local,
+the Node and its six neighbours; no per-body tally and no seam; moved
+by the rule).** The owner's words to me before it (about 08:00Z):
+"there IS self-binding; the objection came from the old picture of a
+field and a particle, which we no longer have, since a ray splits in
+all directions", and (record 2154) "the body's Nodes split, not the
+body". One line on each candidate, then the generic line.
+(a) NO WELL, a body held by its clicks: it holds a body's width only
+where something clicks on it, and the engine's click needs a detector
+with a rung ((10) (i) line 2), so in empty space nothing clicks and
+the body's Nodes disperse as a cloud (a quantum of width 5 spreads
+in 6 intervals); it holds the position only as M records, the owner's
+picture of record 2154; it explains why a body does not interfere,
+not why it stays together. So (a) is not a well and does not replace
+one; nature has both: binding holds the Nodes together, clicks hold
+the phase. It fails the fourth test alone by needing a declared
+environment.
+(b) THE WELL AS A LOCAL READING OF THE RECORD, the pair at each Node
+following the record's presence there: local, no tally, no seam,
+moved by the rule; it passes the four tests. Its one fault is the
+form: a pair that is a function of the record's own level is a new
+operation on the pair, outside the primitive the engine has (sources,
+holds, reads, the pace).
+(c) THE BINDING AS A FAMILY, the same physics as (b) through the
+primitive the engine already has, and my generic line:
+
+  every record writes at every Node of its support its local count,
+    s_i = F_i div E_s (F_i its form at the Node, 9.97 (3); E_s the
+    form of one count, a universe integer), into the t part of every
+    family it sources: gravity, and the binding family;
+  every matter record reads gravity with the weight 1 and the binding
+    family with the weight K_m, so its pace at the Node is
+    p_0,i = Gamma - g_i - K_m b_i (g and b the two families' levels
+    there), the rule's own line 9.91 (2), no other;
+  the binding family is a held family of degree 0 with its own pair
+    [num_b, den_b] below [1, 1], which gives it a gap and a range of a
+    few Links (nature's strong force is short-range; gravity's [1, 1]
+    is long-range), and it steps by the plain rule as every held
+    family does;
+  nothing else: no `pair` well on Nodes, no hop, no drive, no tally.
+
+  The four tests: one primitive for every body and every family (a
+  source in count units and a read with a weight, the lines the
+  engine has); local (F_i is the Node's own record and its six
+  neighbours, the fields' plain step is local); no tally and no seam
+  (the source is rewritten each interval where the record is); moved
+  by the rule (the record moves as a free packet, (7) and item 1, and
+  its source with it). THE NUMBERS: K_m from my table of (10) (h): a
+  body of s = 2000 at its Nodes binds at side 5 with K_m = 2 (the
+  tail 12 Links) and at side 9 with K_m = 1 at the heavier kind, side
+  9 with K_m near 3 at the shipped kind; the guard bounds K_m s below
+  Gamma, so K_m is 2 to 4 for the shipped bodies: one small integer,
+  and the range's pair: two numbers of the universe file, in place of
+  the mass table (the mass is the bound rotation, read). THE DIVIDE:
+  one quantum has s_i = 0 (9.96 (3), 9.98 (4)) and sources nothing,
+  so it stays linear and interferes, and Born's rule at the click is
+  untouched; a body of a thousand P quanta binds. REVERSIBLE if F_i
+  reads the record's now level alone ((10) (h) line 2). WHAT IT
+  CHANGES AT REST: today's hold writes s at every Node of the
+  support; the source writes s_i as the record's own form says, more
+  at the centre, so the rest rows are not bit for bit and their blind
+  values are recomputed. WHAT IS OWED, runs for Nature24 with these
+  numbers held by the Boss: (1) a body of s = 2000 with the binding
+  family at K_m = 2 and 3 and a range of 3 Links, side 5 and 9: bound,
+  at what width and rotation; (2) given a phase gradient, does it move
+  freely and from what width (a narrow lump can be pinned by the
+  lattice); (3) the norm's leak test; (4) two such bodies attract
+  (item 2) and a moving one keeps its shape (item 3). A big decision
+  for three; nothing is built until the owner's word.
+
 ### 9.99 The families derived in structure: the symmetric algebra of the four directions, and why the tower stops at gravity (the model owner's question of 2026-09-26, "can you think of something that derives the unification?", and his word "write it all")
 
 **(1) THE CLAIM.** The three families are not three declarations. They
