@@ -55,6 +55,7 @@ def wall(position, family="light", **keys):
         entry.setdefault("q", 0)
         entry.setdefault("spin", [0, 0, 0])
         entry.setdefault("moment", [0, 0, 0])
+        entry.setdefault("twist", 0)  # the generator's number; 0 where no read by "own" (item 73)
     return entry
 
 
@@ -136,6 +137,7 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
             "extents": [12, 5, 1],
             "q": 0,
             "spin": [0, 0, 0],
+            "twist": 0,
             "moment": [0, 0, 0],
             "pair": [800, 801],
             "seed": 4096,

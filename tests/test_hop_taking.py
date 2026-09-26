@@ -58,6 +58,7 @@ def cart_world(
         "extents": [3, 1, 1],
         "q": 0,
         "spin": [0, 0, 0],
+        "twist": 0,
         "moment": [0, 0, 0],
         "pair": [800, 810],  # a barrier of matter's kind, no seed: light passes it untouched
     }

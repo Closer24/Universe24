@@ -80119,11 +80119,13 @@
      1
     ],
     "weight": 19,
+    "twist": 54543,
     "period": 8,
     "norm": 21408851908391381288,
     "norm_denominator": 97990201,
     "window_read": 11
    },
+   "twist": 54543,
    "clock": [
     1411805,
     1048576
@@ -160173,6 +160175,7 @@
     0
    ],
    "margin": "control",
+   "twist": 9174,
    "clock": [
     2076636,
     1048576
@@ -160214,7 +160217,8 @@
     0
    ],
    "ramp": 0,
-   "start": 0
+   "start": 0,
+   "twist": 0
   },
   {
    "position": [
@@ -167980,6 +167984,6 @@
   }
  ],
  "stamp": {
-  "hash": "ff8117094cb79bd4bad7b88d56de38de65ffd6c70aefdb3b1150744cd9343894"
+  "hash": "0ab5cb4345fc1b7eac52246cb040e7cda83155cd1379fbe02617573657f5a46d"
  }
 }

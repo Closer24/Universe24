@@ -27,7 +27,7 @@ from event_universe.diagnostics.massive_record_margin import (
 )
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_massive_record import block_world
+from tests.test_massive_record import block_world, massive_generator
 
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 # the world open on x: a zero face there for every family (one border, BUILD.md section 26 item 28)
@@ -68,6 +68,7 @@ def seeded(
     profile, clock, _ = iterated_mode(parse_nature_beam_world(document), 0, AMPLITUDE)
     entry["seed"] = profile
     entry["clock"] = list(clock)
+    massive_generator().declare_twists(document)  # the twist "own" from the mode's clock (item 73)
     document["stamp"] = input_stamp(document)
     return document
 

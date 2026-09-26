@@ -58,6 +58,7 @@ def emitter(
         "extents": [32, 1, 1],
         "q": 0,
         "spin": [0, 0, 0],
+        "twist": 0,
         "moment": [0, 0, 0],
         "pair": [800, 801],
         "seed": 1
@@ -65,6 +66,7 @@ def emitter(
         "emitter": {
             "family": "light",
             "weight": 3,  # the window's weight (commit 7; the train retired)
+            "twist": 0,  # the given record's twist "own", the generator's number (item 73)
         },
         "margin": "control",
     }

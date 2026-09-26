@@ -180,6 +180,7 @@ def emitter_world(
         "family": "light",
         "receiver": ["screen"],
         "weight": 3,
+        "twist": 0,  # the given record's twist "own", the generator's number (item 73)
     }
     document = {
         "shape": [80, 1, 1],
@@ -221,6 +222,7 @@ def emitter_world(
                 "extents": [32, 1, 1],
                 "q": 0,
                 "spin": [0, 0, 0],
+                "twist": 0,
                 "moment": [0, 0, 0],
                 "pair": [800, 801],
                 "seed": 1 << 10,  # the window's writes pile up at the body's Nodes (commit 7)

@@ -25,8 +25,8 @@ from event_universe.events.world import (  # noqa: E402
     TWIST_COARSE_MOST,
     TWIST_FINE_BITS,
     TWIST_UNIT_SCALE,
-    twist_triple,
 )
+from event_universe.generator_numbers import twist_triple  # noqa: E402
 
 FAMILIES_FILE = ROOT / "examples" / "events" / "universe.json"  # the universe file (record 2128 (3))
 

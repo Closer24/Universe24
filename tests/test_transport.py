@@ -17,12 +17,8 @@ import numpy as np
 import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import (
-    TWIST_FINE_BITS,
-    light_twist,
-    rotation_twist,
-    twist_triple,
-)
+from event_universe.events.world import TWIST_FINE_BITS
+from event_universe.generator_numbers import light_twist, rotation_twist, twist_triple
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_axis_paces import SHAPE, paces_world
 from tests.test_families_file import FILE, emitter_world, on_the_file, refused
@@ -219,13 +215,15 @@ def test_the_loader_refuses_a_light_emitter_without_one_moment_axis_and_a_bad_ta
     diagonal["measured"][0]["moment"] = [1, 1, 0]
     diagonal["stamp"] = input_stamp(diagonal)
     refused(diagonal, "lies on 2 axes")
-    # the table on an inline world: the unit, the identities and the nearest triple checked
+    # the table on an inline world: the unit, the identities and the angles' order checked (the
+    # nearest triple the generator's, `generator_numbers.twist_triple`, item 73)
     good = twisted_world()
     parse_nature_beam_world(good)
     for change, match in (
         (lambda t: t.__setitem__("unit", 7), "is not 4 Gamma 2\\^16"),
         (lambda t: t["coarse"].__setitem__(200, [3, 4, 6]), "is no triple of the table"),
-        (lambda t: t["coarse"].__setitem__(200, [3, 4, 5]), "is not the nearest triple"),
+        # a triple planted out of order: the loader checks the angles' order in integers (item 73)
+        (lambda t: t["coarse"].__setitem__(200, [3, 4, 5]), "turns back below the entry before it"),
         (lambda t: t["fine"].pop(), "must be a list of 1024 to 1024 triples"),
     ):
         broken = json.loads(json.dumps(good))

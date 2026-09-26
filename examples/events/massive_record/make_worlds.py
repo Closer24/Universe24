@@ -222,6 +222,8 @@ def world(
     # every emitter, ALGEBRA.md 9.85 (3))
     families, integers = families_entries()
     clock = list(MASSIVE_GIVEN_CLOCK if given_clock is None else given_clock)
+    from event_universe.generator_numbers import body_twist, emitter_twist
+
     measured: list[dict] = []
     for block in blocks:
         # EVERY KEY THE DETECTOR LAW READS, WRITTEN (the model owner's record 2089;
@@ -254,8 +256,14 @@ def world(
         for key in BLOCK_KEYS:
             if key in block:
                 entry[key] = block[key]
+        # THE TWIST "OWN" (ALGEBRA.md 9.96 (2) (a); item 73): the kind's rest rotation here,
+        # the mode's rotation once the body is seeded (`declare_twists` at every stamp)
+        entry["twist"] = block.get("twist", body_twist(block.get("clock"), entry.get("kind", pair)))
         if "emitter" in entry:
             entry["emitter"].setdefault("clock", list(clock))
+            entry["emitter"].setdefault(
+                "twist", emitter_twist(entry["emitter"].get("pair"), block.get("clock"))
+            )
         # A TOOL IS APPARATUS HELD IN PLACE (ALGEBRA.md 9.104 (6) (b); the Boss's record
         # 2157): every resting body of a shipped world declares `fixed: true` (the feed, when
         # it lands, acts on a body without the word alone); a body with a momentum is free
@@ -361,8 +369,25 @@ def stamped(document: dict) -> dict:
     all, so that the file carries the stamp of what it holds."""
     from event_universe.world_files import input_stamp
 
+    declare_twists(document)
     document["stamp"] = input_stamp(document)
     return document
+
+
+def declare_twists(document: dict) -> None:
+    """THE TWIST "OWN" DECLARED (ALGEBRA.md 9.96 (2) (a); BUILD.md section 26 item 73): on
+    every body (a block) round(2^16 omega_0) of its mode's rotation (`clock`) or of its
+    kind's rest rotation, and on every emitter the given record's (the emitter's own `pair`
+    on a body giving its own family, else the body's rotation where the window writes it);
+    the generator's HOST number, an integer the loader reads under `twist`, no default."""
+    from event_universe.generator_numbers import body_twist, emitter_twist
+
+    for entry in document["measured"]:
+        if "side" in entry or "extents" in entry:
+            entry["twist"] = body_twist(entry.get("clock"), kind_of(document, entry))
+        if "emitter" in entry:
+            emitter = entry["emitter"]
+            emitter["twist"] = emitter_twist(emitter.get("pair"), entry.get("clock"))
 
 
 GIVEN_AMPLITUDE = 1 << 16  # the given train's amplitude A (ALGEBRA.md 9.17 (6a))

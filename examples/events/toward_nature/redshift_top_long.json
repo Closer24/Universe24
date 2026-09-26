@@ -6916,6 +6916,7 @@
      21
     ],
     "weight": 3,
+    "twist": 11695,
     "period": 35,
     "norm": 180255439696889394,
     "norm_denominator": 3948169,
@@ -6923,6 +6924,7 @@
    },
    "fixed": true,
    "receiver": "at_well",
+   "twist": 11695,
    "clock": [
     2063848,
     1048576
@@ -6964,7 +6966,8 @@
     0
    ],
    "ramp": 0,
-   "start": 0
+   "start": 0,
+   "twist": 0
   },
   {
    "position": [
@@ -7002,7 +7005,8 @@
     0
    ],
    "ramp": 0,
-   "start": 0
+   "start": 0,
+   "twist": 0
   }
  ],
  "detectors": [
@@ -7013,6 +7017,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "7048f68753ada9faef391340fe5234f46ef16c32b917e8e26269c56fc6aa3c81"
+  "hash": "ad7e919413b1901b385474217bae98aab8e1dae98f1d7a3f1ccbf97c68e0bbe9"
  }
 }

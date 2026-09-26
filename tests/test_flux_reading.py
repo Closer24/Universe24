@@ -217,6 +217,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             "side": 1,
             "q": 0,
             "spin": [0, 0, 0],
+            "twist": 0,
             "moment": [0, 0, 0],
             "pair": [8, 7],
             "seed": 0,

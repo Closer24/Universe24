@@ -105,6 +105,7 @@ def small_world(
                 "side": well_side,
                 "q": 0,
                 "spin": [0, 0, 0],
+                "twist": 0,
                 "moment": [0, 0, 0],
                 "pair": list(pair),
                 "seed": AMPLITUDE,

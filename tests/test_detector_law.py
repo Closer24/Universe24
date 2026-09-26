@@ -73,6 +73,7 @@ def emitter_body(
     emitter: dict = {
         "family": family,
         "weight": 3,  # the window's weight (commit 7; the train retired)
+        "twist": 0,  # the given record's twist "own", the generator's number (item 73)
     }
     if receiver is not None:
         emitter["receiver"] = receiver
@@ -90,6 +91,7 @@ def emitter_body(
         "extents": extents,
         "q": 0,
         "spin": [0, 0, 0],
+        "twist": 0,
         "moment": [0, 0, 0],
         "pair": list(EMITTER_PAIR),
         "seed": 1
@@ -693,6 +695,7 @@ def test_detector_is_one_connected_cube_of_side_three():
                 "side": side,
                 "q": 0,
                 "spin": [0, 0, 0],
+                "twist": 0,
                 "moment": [0, 0, 0],
                 "pair": [1, 2],
             }

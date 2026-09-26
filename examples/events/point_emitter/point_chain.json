@@ -1277,11 +1277,13 @@
      25
     ],
     "weight": 1,
+    "twist": 11695,
     "period": 35,
     "norm": 180255439696889394,
     "norm_denominator": 3948169,
     "window_read": 1008
    },
+   "twist": 11695,
    "clock": [
     2063848,
     1048576
@@ -1428,6 +1430,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "d57180855a4a7702de34ec5d7b5350fb06a98e9b36210959cc231f73d6d172a3"
+  "hash": "79d3e798f9a68a62dea6982ba00c4c4717fc14fc30a28ca6dccce9497f9c2c0d"
  }
 }

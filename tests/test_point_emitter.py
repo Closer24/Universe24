@@ -50,11 +50,12 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
             "extents": [1, 1, 1],
             "q": 0,
             "spin": [0, 0, 0],
+            "twist": 0,
             "moment": [0, 0, 0],
             "pair": list(WELL),
             "seed": 1 << 12,
             "margin": "control",
-            "emitter": {"family": "light"},
+            "emitter": {"family": "light", "twist": 0},  # rewritten by the seeding (item 73)
         }
     ]
     document["detectors"] = []

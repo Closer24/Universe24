@@ -103,6 +103,7 @@ def test_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_roundi
             "side": 12,
             "q": 0,
             "spin": [0, 0, 0],
+            "twist": 0,
             "moment": [0, 0, 0],
             "pair": [800, 801],
             "seed": 1 << 20,
@@ -217,6 +218,7 @@ def test_bodies_are_whole_and_disjoint():
             "side": side,
             "q": 0,
             "spin": [0, 0, 0],
+            "twist": 0,
             "moment": [0, 0, 0],
             "pair": [1, 2],
         }
@@ -277,6 +279,7 @@ def test_two_wells_of_one_family_may_stand_anywhere():
             "side": 3,
             "q": 0,
             "spin": [0, 0, 0],
+            "twist": 0,
             "moment": [0, 0, 0],
             "pair": [1, 2],
         }

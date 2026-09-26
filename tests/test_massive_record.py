@@ -552,6 +552,7 @@ def block_world(
             "q": block.get("q", 0),
             "spin": block.get("spin", [0, 0, 0]),
             "moment": block.get("moment", [0, 0, 0]),
+            "twist": block.get("twist", 0),  # the generator's number; 0 where no read by "own" (item 73)
         }
         for key in (
             "seed",
@@ -722,6 +723,7 @@ def test_the_blocks_drive_steps_its_cells_and_leaves_the_rows():
                         "side": 3,
                         "q": 0,
                         "spin": [0, 0, 0],
+                        "twist": 0,
                         "moment": [0, 0, 0],
                         "pair": [800, 800],
                         "momentum": momentum,
@@ -864,6 +866,7 @@ def test_a_seeded_block_at_rest_counts_its_cycles():
                     "side": 10,
                     "q": 0,
                     "spin": [0, 0, 0],
+                    "twist": 0,
                     "moment": [0, 0, 0],
                     "pair": [800, 800],
                     "seed": seed,
@@ -936,6 +939,7 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
                     "side": 28,
                     "q": 0,
                     "spin": [0, 0, 0],
+                    "twist": 0,
                     "moment": [0, 0, 0],
                     "pair": [1600, 1609],
                     "margin": margin,
@@ -1220,6 +1224,7 @@ def test_the_margin_rule_on_a_layer_keeps_the_folded_axis_self_reads():
                 "side": 14,
                 "q": 0,
                 "spin": [0, 0, 0],
+                "twist": 0,
                 "moment": [0, 0, 0],
                 "pair": [3200, 3227],
                 "margin": "control",
@@ -1251,6 +1256,7 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
         "side": 14,
         "q": 0,
         "spin": [0, 0, 0],
+        "twist": 0,
         "moment": [0, 0, 0],
         "pair": [3200, 3227],
         "margin": "control",
@@ -1526,11 +1532,12 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "extents": [32, 1, 1],
             "q": 0,
             "spin": [0, 0, 0],
+            "twist": 0,
             "moment": [0, 0, 0],
             "pair": [800, 801],
             "seed": 1
             << 10,  # the window's writes at the body's Nodes pile up about 300-fold and stay under the bound (commit 7)
-            "emitter": {"family": "light", "weight": 3},  # the window (commit 7)
+            "emitter": {"family": "light", "weight": 3, "twist": 0},  # the window (commit 7)
             "margin": "control",
             # the receiver by name (section 13 item 7): A's own bound set
             "receiver": "A_face",
@@ -1666,6 +1673,7 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
                 "side": 12,
                 "q": 0,
                 "spin": [0, 0, 0],
+                "twist": 0,
                 "moment": [0, 0, 0],
                 "pair": [800, 801],
                 "seed": 50 << 12,
@@ -1727,6 +1735,7 @@ def test_a_block_that_steps_off_the_board_refuses_the_interval():
                 "side": 12,
                 "q": 0,
                 "spin": [0, 0, 0],
+                "twist": 0,
                 "moment": [0, 0, 0],
                 "pair": [800, 800],
                 "seed": 50 << 12,
@@ -1777,6 +1786,7 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
                 "side": 1,
                 "q": 0,
                 "spin": [0, 0, 0],
+                "twist": 0,
                 "moment": [0, 0, 0],
                 "pair": [1, 2],
             }

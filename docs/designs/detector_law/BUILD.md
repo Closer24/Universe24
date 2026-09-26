@@ -4938,6 +4938,33 @@ would have found no cell.
    package the host's read. STILL RED of the six: the loader's floats (item
    71's (a)): the next push. PROOF: the gate; the five worlds bit for bit
    (the compare reading through the host module).
+73. THE TWIST "OWN" DECLARED (ALGEBRA.md 9.96 (2) (a), 9.81 (2) (b); the integer
+   rule, record 2071; tests/test_integer_algebra.py, tests/test_architecture.py;
+   the Boss's record 2138 (2), the last of the six). The loader computed two
+   floats at load: round(2^16 omega_0), the twist "own" of every body's record
+   and of every given record (acos), and the nearest Pythagorean triple of an
+   angle for the twist table's check (tan, a Fraction). Both are the generators'
+   numbers now (`event_universe.generator_numbers`, a host module): (i) `twist`
+   is a key on every body (a block) and on every emitter, the generator's
+   integer under the stamp (`declare_twists` in the massive generator, called
+   before every stamp: a body's from its mode's rotation `clock` or its kind's
+   rest rotation, an emitter's from its own `pair` on a body giving its own
+   family, else the body's rotation where the window writes it, else 0), and
+   the loader reads it (no default; a unit fixture declares 0 where no read by
+   "own" exists in its inline universe, the seeded fixtures rewritten by the
+   generator); (ii) the twist table is checked in integers: the identities,
+   the bound, the first triple [1, 0, 1] and the angles never falling along
+   the table (s_i c_(i+1) <= s_(i+1) c_i), the nearest-triple property the
+   generator's, checked by tests/test_transport.py against
+   `generator_numbers.twist_triple`. The loader holds no `fractions`, no
+   `math` beyond gcd and isqrt; the physical-module audit and the roots'
+   inventory are green (the engine's `__init__` holds no root any more: the
+   splitter's norm check retired with the tables, the list's entry withdrawn).
+   Every shipped world regenerated (the `twist` keys and the stamp alone;
+   every run bit for bit, the declared integers the loader's former ones).
+   9.96 (2) (a)'s "the loader writes it once" is the generator's write and
+   the loader's read (report 9's question to the mathematician). PROOF: the
+   gate; the five worlds bit for bit.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

@@ -304,7 +304,6 @@ from __future__ import annotations
 import math
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, replace
-from fractions import Fraction
 from functools import cached_property
 from typing import NamedTuple
 
@@ -984,38 +983,20 @@ class TwistTable:
     coarse: tuple[tuple[int, int, int], ...]
 
 
-def twist_triple(k: int, unit: int) -> tuple[int, int, int]:
-    """THE NEAREST TRIPLE of the angle k / unit radians (ALGEBRA.md 9.81 (2) (b), 9.96
-    (2) (c); the generator's procedure, the loader's check): n / m nearest tan(angle
-    / 2) with m at most the root of the d bound, the triple (m^2 - n^2, 2 m n, m^2 +
-    n^2) in lowest terms, (1, 0, 1) at angle 0. HOST, at the generation and the load."""
-    ratio = Fraction(math.tan(k / (2 * unit))).limit_denominator(math.isqrt(TWIST_TRIPLE_BOUND))
-    n, m = ratio.numerator, ratio.denominator
-    c, s, d = m * m - n * n, 2 * m * n, m * m + n * n
-    g = math.gcd(math.gcd(c, s), d)
-    return c // g, s // g, d // g
-
-
-def rotation_twist(cosine_numerator: int, cosine_denominator: int) -> int:
-    """THE TWIST "OWN" of a record (ALGEBRA.md 9.96 (2) (a)): round(2^16 omega_0), omega_0
-    the record's rest rotation in radians per interval, cos omega_0 the pair's num / den
-    (a matter record's pair) or a / (2 b) of a body's clock [a, b] (2 cos omega); the
-    loader's one computation (HOST), an integer the engine reads."""
-    return round(TWIST_UNIT_SCALE * math.acos(cosine_numerator / cosine_denominator))
-
-
-def light_twist(wavelength: int) -> int:
-    """THE TWIST "OWN" of a light record from its wavelength in Links on light's dispersion
-    (ALGEBRA.md 9.96 (2) (a)): cos omega = (cos(2 pi / lambda) + 2) / 3, round(2^16 omega)."""
-    return round(TWIST_UNIT_SCALE * math.acos((math.cos(2 * math.pi / wavelength) + 2) / 3))
+# THE TWIST "OWN" AND THE NEAREST TRIPLE are the generators' numbers since item 73
+# (`event_universe.generator_numbers`: round(2^16 omega_0) written under `twist` on
+# every body and every emitter, the triples written into the universe file); the
+# loader computes no float (the integer rule, record 2071) and reads the integers.
 
 
 def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: int) -> TwistTable:
-    """The twist table read and checked (ALGEBRA.md 9.96 (2) (c), (d): every identity,
-    every angle): {unit, fine, coarse}; unit = 4 Gamma 2^16; fine 2^10 triples, coarse
-    from 1 to 2^15; each triple three integers, c from 1, s from 0, d from 1 to 10^9 with
-    c^2 + s^2 = d^2, and the nearest triple of its angle (`twist_triple`); the product of
-    the largest d of each part times 3 A inside int64 (the transport's total)."""
+    """The twist table read and checked in integers (ALGEBRA.md 9.96 (2) (c), (d)):
+    {unit, fine, coarse}; unit = 4 Gamma 2^16; fine 2^10 triples, coarse from 1 to 2^15;
+    each triple three integers, c from 1, s from 0, d from 1 to 10^9 with c^2 + s^2 = d^2,
+    the first the angle 0's and the angles never falling along the table (the nearest
+    triple of each angle is the generator's number, `generator_numbers.twist_triple`,
+    checked by its own test); the product of the largest d of each part times 3 A inside
+    int64 (the transport's total)."""
     obj = _object(value, label, {"unit", "fine", "coarse"}, {"unit", "fine", "coarse"})
     unit = _integer(obj["unit"], f"{label}.unit", 1)
     if unit != 4 * node_clock * TWIST_UNIT_SCALE:
@@ -1045,11 +1026,15 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
                     f"{where} [{c}, {s}, {d}] is no triple of the table: c from 1, s from 0, "
                     f"d from 1 to {TWIST_TRIPLE_BOUND}, c^2 + s^2 = d^2 exactly (ALGEBRA.md 9.81 (2) (b))"
                 )
-            if (c, s, d) != twist_triple(index * step, unit):
+            if index == 0 and (c, s, d) != (1, 0, 1):
+                raise ValueError(f"{where} [{c}, {s}, {d}] is not the angle 0's triple [1, 0, 1]")
+            if triples and s * triples[-1][0] < triples[-1][1] * c:
+                # the angles in order: tan (s / c) never falls from one entry to the next
+                # (the nearest-triple property is the generator's, checked by its own test)
                 raise ValueError(
-                    f"{where} [{c}, {s}, {d}] is not the nearest triple of the angle "
-                    f"{index * step} / {unit} radians, {list(twist_triple(index * step, unit))} "
-                    "(ALGEBRA.md 9.96 (2) (c); the generator writes it, the loader checks it)"
+                    f"{where} [{c}, {s}, {d}] turns back below the entry before it: the table's "
+                    "angles rise with k (ALGEBRA.md 9.96 (2) (c); the generator writes the "
+                    "nearest triples, the loader checks the identities, the bound and the order)"
                 )
             triples.append((c, s, d))
         parts.append(tuple(triples))
@@ -1322,6 +1307,8 @@ BLOCK_KEYS = {
     "charge",
     "spin",
     "moment",
+    # the body's own record's twist "own", the generator's integer (item 73)
+    "twist",
     "coupling",
     "seed",
     # the bound mode's clock [a, b] beside a profile (ALGEBRA.md 9.22 (7))
@@ -1359,6 +1346,7 @@ MEASURED_KEYS = {
     "q",  # the body's signed number (record 2128 (1); `charge` the family's word alone)
     "spin",
     "moment",
+    "twist",  # the body's own record's twist "own", the generator's integer (item 73)
     "phase",
     "momentum",
     "fixed",
@@ -4769,7 +4757,7 @@ def _block(
     # THE BODY'S NUMBERS (ALGEBRA.md 9.91 (3), (7); commit 2): charge, spin and moment,
     # required under the law (no default), integers on the axes (record 2084)
     if detector_law:
-        _require_under_law(obj, label, {"q", "spin", "moment"})
+        _require_under_law(obj, label, {"q", "spin", "moment", "twist"})
     charge = 0 if "q" not in obj else _integer(obj["q"], f"{label}.q", -AMOUNT_BOUND, AMOUNT_BOUND)
     spin = _axes_vector(obj.get("spin", [0, 0, 0]), f"{label}.spin")
     moment = _axes_vector(obj.get("moment", [0, 0, 0]), f"{label}.moment")
@@ -4908,15 +4896,10 @@ def _block(
         q=charge,
         spin=spin,
         moment=moment,
-        # the body's own record's twist "own" (ALGEBRA.md 9.96 (2) (a)): its mode's
-        # rotation, or its kind's rest rotation on a body without a mode
-        twist=(
-            rotation_twist(clock[0], 2 * clock[1])
-            if clock is not None
-            else rotation_twist(kind[0], kind[1])
-            if kind[1] > kind[0]
-            else 0
-        ),
+        # THE BODY'S OWN RECORD'S TWIST "OWN" (ALGEBRA.md 9.96 (2) (a); item 73): the
+        # generator's integer round(2^16 omega_0) declared under `twist` (its mode's
+        # rotation, or its kind's rest rotation on a body without a mode), no default
+        twist=_integer(obj["twist"], f"{label}.twist", 0),
         margin=str(margin),
         receiver=receiver,
         emitter=emitter,
@@ -4974,6 +4957,7 @@ def _emitter(
             "window_read",
             "clock",
             "pair",
+            "twist",
         },
         {"family"},
     )
@@ -5098,17 +5082,11 @@ def _emitter(
                 "moment gives no direction to write)"
             )
         part = 1 + axes[0]
-    # THE GIVEN RECORD'S TWIST "OWN" (ALGEBRA.md 9.96 (2) (a)): a massive kind's rest
-    # rotation from its pair; a wave's from its train's wavelength on light's dispersion,
-    # or from the emitting body's own rotation where the window writes it (9.85 (5))
-    if given_pair[1] > given_pair[0]:
-        twist = rotation_twist(given_pair[0], given_pair[1])
-    elif train is not None:
-        twist = light_twist(train.wavelength)
-    elif clock_pair is not None:
-        twist = rotation_twist(clock_pair[0], 2 * clock_pair[1])
-    else:
-        twist = 0
+    # THE GIVEN RECORD'S TWIST "OWN" (ALGEBRA.md 9.96 (2) (a); item 73): the generator's
+    # integer declared under `twist` (a massive kind's rest rotation from its pair, or
+    # the emitting body's own rotation where the window writes it, 9.85 (5)), no default
+    _require_under_law(obj, label, {"twist"})
+    twist = _integer(obj["twist"], f"{label}.twist", 0)
     return EmitterDefinition(
         names[name],
         branches,
