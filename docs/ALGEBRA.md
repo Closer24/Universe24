@@ -17331,9 +17331,9 @@ as written here.
 
    | w (Links) | tau_w (intervals) | the velocity noise per click, omega'' / (2 w) (Links per interval) | intervals before a fall at a = 1.25e-5 shows through the noise |
    | --- | --- | --- | --- |
-   | 5 | 54 | 0.093 | 4.3e5 |
+   | 5 | 54 | 0.092 | 1.0e6 |
    | 7.1 | 109 | 0.065 | 2.5e5 |
-   | 9 | 175 | 0.051 | 1.3e5 |
+   | 9 | 175 | 0.051 | 9.7e4 |
 
    (b) THE RATE THAT KEEPS A FALL. A click that re-creates the record
    with no phase gradient resets its speed, so a body clicked every tau
