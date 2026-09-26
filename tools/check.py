@@ -186,8 +186,12 @@ def select(changed, sources):
                 if p.startswith("tests/test_") and "event_universe" in text
             )
     if changed:
-        # THE SHAPE OF THE CODE is held at its baseline on every pull request, whatever it
-        # changes (the model owner's decisions, records 2239 and 2241)
+        # EVERY SHIPPED WORLD BIT FOR BIT on every pull request, whatever it changes (the model
+        # owner's short procedure, record 2214 point 7; the Boss's records 2216 (2) and 2230):
+        # the regression record of tests/shipped_worlds.json is compared on any change at all
+        tests.add("tests/test_shipped_worlds.py")
+        # and THE SHAPE OF THE CODE is held at its baseline (the model owner's decisions,
+        # records 2239 and 2241)
         tests.add("tests/test_code_shape.py")
     return sorted(tests), sorted(
         p for p in impacted if p.startswith("src/") and p.endswith(".py") and p in sources
