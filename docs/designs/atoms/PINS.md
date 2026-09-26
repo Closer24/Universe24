@@ -10,7 +10,7 @@ axis). Written by the mathematician, read-only, on the law as it stands on
 `helium_r12.json` are written by their generator (`examples/events/atoms/make_worlds.py`, deleted 2026-09-26),
 which imports series H's fan, flux count and orbit arithmetic
 (`examples/events/bohr/make_worlds.py`) as its one source; every number
-here is printed by the host script [atoms_map.py](atoms_map.py) from that
+here is printed by the host script atoms_map.py (`docs/designs/atoms/atoms_map.py`, deleted 2026-09-26) from that
 generator, with its output [atoms_map.out](atoms_map.out). No run; nothing
 here is a rule. Notation per record 184; rows and bodies, not light and
 matter. Every number is labelled by kind: GAMEBOARD (the host's view of the
@@ -253,4 +253,8 @@ Visualiser's page after them.
 - The worlds: examples/events/atoms/README.md (`examples/events/atoms/README.md`, deleted 2026-09-26), the generator make_worlds.py (`examples/events/atoms/make_worlds.py`, deleted 2026-09-26); series H's base examples/events/bohr/README.md (`examples/events/bohr/README.md`, deleted 2026-09-26); binding-v1's square examples/events/binding/README.md (`examples/events/binding/README.md`, deleted 2026-09-26).
 - The register: [H, Bohr's lines behind the detector](../../EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20), [I, the nucleus](../../EXPERIMENTS.md#i-the-nucleus-2026-09-20); [NATURE row 6](../../NATURE.md).
 - The derivations: [DERIVATIONS_BEAM 7.2](../../DERIVATIONS_BEAM.md#72-bohrs-levels) (the closure), [5.3](../../DERIVATIONS_BEAM.md#53-bodies-newtons-geodesics-retarded) (no post-Newtonian term), [12.1](../../DERIVATIONS_BEAM.md#121-the-field-of-a-moving-source-the-laws-push-in-the-continuum-limit) (the retarded drag), [12b.1](../../DERIVATIONS_BEAM.md#12b1-the-readers-velocity-term) (the reader's term); form B, [light_speed/FORM.md section 3](../light_speed/FORM.md#3-the-vector-form-that-inserts-c-into-the-bodies-one-flight-primitive-for-rows-and-bodies).
-- The map: [atoms_map.py](atoms_map.py), [atoms_map.out](atoms_map.out).
+- The map: atoms_map.py (`docs/designs/atoms/atoms_map.py`, deleted 2026-09-26), [atoms_map.out](atoms_map.out).
+
+> The scripts of this folder (`atoms_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/atoms/<script>`).
+
+> The scripts of this folder (`atoms_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/atoms/<script>`).

@@ -5438,7 +5438,7 @@ The engine's test of 9.20 runs the same six on the engine; this prototype
 is the algebra's own reading of them, not a run of the engine.
 
 THE FAMILIES TOGETHER (COMPUTATION,
-[docs/designs/lab_tools/board_algebra_coupled.py](designs/lab_tools/board_algebra_coupled.py),
+docs/designs/lab_tools/board_algebra_coupled.py (`docs/designs/lab_tools/board_algebra_coupled.py`, deleted 2026-09-26),
 its record beside it): the same torus with the massive kind [800, 809],
 its well [800, 801] of side 2 seeded on the composed operator's bound
 mode, and light [1, 1] coupled on the well's Nodes with g = 1 / 1000 and G

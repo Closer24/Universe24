@@ -316,3 +316,5 @@ as 17.6 says: the contraction and the magnetic push (M4, M5), the arms'
 anisotropy (the open-problems note on the anisotropy, PR #606), and any
 speed beyond gamma 2 until form B lands. The verdict is ADMISSIBLE WITH
 CORRECTIONS; the corrections are documents only, none touches the engine.
+
+> The scripts of this folder (`root_free_gate.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/covariant_readings/<script>`).

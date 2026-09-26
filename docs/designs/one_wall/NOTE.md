@@ -18,7 +18,7 @@ with care: the three tests of record 202, one motion primitive for a body
 as for a row of record 183, the covariant readings of record 270,
 `optical-v1`'s go of record 303, only a detector's reading is a
 measurement of record 281; PR #581's lines for records 386, 394 and 396).
-Every number is from [one_wall_map.py](one_wall_map.py) beside this note
+Every number is from one_wall_map.py (`docs/designs/one_wall/one_wall_map.py`, deleted 2026-09-26) beside this note
 (integers; the flight rule, the unit label and the Bresenham order
 transcribed from BEAM_LAW section 3 as the light-bending map transcribed
 them; the push transcribed from step 4; no engine import) and its output

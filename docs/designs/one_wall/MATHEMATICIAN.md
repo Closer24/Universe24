@@ -7,7 +7,7 @@ of 15:45Z. Nothing here is built or decided; the law on `main`
 before the run), the numbers of the lattice are the light-bending map's
 ([NOTE.md](../open_problems/light_bending/NOTE.md) sections 3 to 5 and
 `light_bending_map.out`), and the arithmetic of the closed forms is in
-[one_wall_check.py](one_wall_check.py) (its output [one_wall_check.out](one_wall_check.out)).
+one_wall_check.py (`docs/designs/one_wall/one_wall_check.py`, deleted 2026-09-26) (its output [one_wall_check.out](one_wall_check.out)).
 Every symbol is named at its first use.
 
 **The verdict in one line: REFUTED.** The claim of issue #605, "the wall

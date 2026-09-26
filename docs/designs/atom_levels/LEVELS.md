@@ -39,9 +39,9 @@ declared integers of the registered world
 `examples/events/atoms/hydrogen_r12_centred.json`, from the atoms
 generator's arithmetic at the three radii, or from the readings
 RUN_CENTRED.md already made, each labelled with its kind; the scripts
-that print them are beside this file ([levels_map.py](levels_map.py),
+that print them are beside this file (levels_map.py (`docs/designs/atom_levels/levels_map.py`, deleted 2026-09-26),
 [levels_map.out](levels_map.out): the ladder, the two forms' lines, the
-momentum form's diagnostic; [rungs_map.py](rungs_map.py),
+momentum form's diagnostic; rungs_map.py (`docs/designs/atom_levels/rungs_map.py`, deleted 2026-09-26),
 [rungs_map.out](rungs_map.out): the three rungs from the generator, the
 levels, the ratio, the fan's departure).
 
@@ -772,6 +772,10 @@ the paper's "Planck and de Broglie, as identities" and its sentence on
 row 6 (paper/general_formula/main.tex); [the three tests](../../../skills/workflow.md);
 [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector) (records 281, 754,
 817, 844, 881, 886, 910, 941, 955, 972); records 874, 899, 972 and 973
-of [the log](../../LOG_2026-09-20.md); [levels_map.py](levels_map.py) and
-[its output](levels_map.out); [rungs_map.py](rungs_map.py) and
+of [the log](../../LOG_2026-09-20.md); levels_map.py (`docs/designs/atom_levels/levels_map.py`, deleted 2026-09-26) and
+[its output](levels_map.out); rungs_map.py (`docs/designs/atom_levels/rungs_map.py`, deleted 2026-09-26) and
 [its output](rungs_map.out).
+
+> The scripts of this folder (`level_readings.py`, `levels_map.py`, `rungs_map.py`, `scaled_coupling_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/atom_levels/<script>`).
+
+> The scripts of this folder (`level_readings.py`, `levels_map.py`, `rungs_map.py`, `scaled_coupling_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/atom_levels/<script>`).

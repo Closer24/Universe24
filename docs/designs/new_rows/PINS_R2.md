@@ -22,7 +22,7 @@ body each, and no post.
 This file: the chain click to click by kind with its code lines, the
 closed forms per end, the pins as exact fractions, the band, the
 falsifiers, the four worlds validated at load and NEVER run, the HOST
-cost. Written by [new_rows_r2_worlds.py](new_rows_r2_worlds.py) into
+cost. Written by new_rows_r2_worlds.py (`docs/designs/new_rows/new_rows_r2_worlds.py`, deleted 2026-09-26) into
 [worlds/](worlds/) (`sagnac2_k3`, `k5`, `k9`, `k17`), the pins in
 [new_rows_r2_pins.out](new_rows_r2_pins.out) and
 [new_rows_r2_pins.json](new_rows_r2_pins.json). Notation and kinds as in
@@ -215,7 +215,7 @@ click reads its own Node's arrivals; nothing kept at a Node.
 
 - [RUNS.md](RUNS.md) section 4 (the first arrangement's three findings
   and the reviewer's rule); [PINS.md](PINS.md) section 2 (the row, nature's
-  number, the claim it stands beside); [new_rows_r2_worlds.py](new_rows_r2_worlds.py),
+  number, the claim it stands beside); new_rows_r2_worlds.py (`docs/designs/new_rows/new_rows_r2_worlds.py`, deleted 2026-09-26),
   [new_rows_r2_pins.out](new_rows_r2_pins.out), [new_rows_r2_pins.json](new_rows_r2_pins.json),
   [worlds/](worlds/).
 - [RUN_4AB.md](../fail_rows/RUN_4AB.md) 6.3 (the meeting remainder);

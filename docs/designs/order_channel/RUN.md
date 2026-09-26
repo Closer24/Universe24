@@ -6,7 +6,7 @@ Bob's outcome ORDER after a detector under Alice's setting sequence, read
 against the pins declared before the run. No pin moved after the run; no
 engine code, registered pin, rule or world changed. Every number is
 labelled by kind: DETECTOR (read off `events.jsonl` by
-[order_reading.py](order_reading.py), its output [order_reading.out](order_reading.out)),
+order_reading.py (`docs/designs/order_channel/order_reading.py`, deleted 2026-09-26), its output [order_reading.out](order_reading.out)),
 COMPUTATION (the pins, [order_pins.out](order_pins.out)), or nature (the
 thing compared with).
 
