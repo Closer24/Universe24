@@ -17937,3 +17937,40 @@ as written here.
    NOT in the dictionary is not in the engine: colour (a declared internal
    family, owed), a decay with two daughters, a conserved total across
    families.
+
+7. **The term form that closes the attribute set (the Boss's record
+   2180 on the owner's closing test: "if trying a thing needs a line of
+   code, the engine is not closed"; Nature24's inventory,
+   docs/designs/generic_engine/FAMILY_ATTRIBUTES.md).** The generic term
+   [degree, weight, table] of 9.88 (7) (ii) is the ARGUMENT'S form (a
+   polynomial of levels with a structure table) and covers the
+   self-source alone; it says neither where a term goes nor whose levels
+   it reads. A FAMILY IS A SHAPE AND A LIST OF TERMS, and a term is
+
+     [kind, target, of, degree, weight, table],
+
+   kind one of FOUR: READ (into the pace of the family that declares it),
+   SOURCE (into a family's level at the argument's Nodes), HOLD (a
+   body's numbers written whole into a family's level at the body's
+   Nodes), CLICK (the ladder); target the family or the pace or the
+   ladder; of the family or body whose levels or count are the argument;
+   degree, weight (signed) and table as in 9.88 (7) (ii). Every attribute
+   of the inventory is one of these or the shape:
+
+   | Attribute | Term or shape | kind, target, of, degree, weight |
+   | --- | --- | --- |
+   | `parts`, `phase`, `pair`, the internal representation | the SHAPE of the state: the components, one level or a pair, the step's coefficients, the n pairs with their tables | not a term |
+   | `reads` (weight, by, twist) | READ into this family's pace, of family f, degree 1, weight signed (a hollow positive, a hill negative), by plain or sign; the twist the transport of a pair through the Port's accumulator | a term |
+   | `held` (count, factors, dipole) | HOLD into family f at the body's Nodes, of the body's count (degree 1), weight the factor (4 for the current, 2 for the tensor), the dipole on the six neighbours | a term |
+   | the source (F_i div E) | SOURCE into family f at the record's Nodes, of the record's own levels, degree 2 (its form), weight 1 / E | a term |
+   | `self_source` (unit, structure table) | SOURCE into its own step, of its own levels, degree 2 or 3, weight 1 / P_2, the table | a term |
+   | `clicks` (gives, takes, quantum, the momentum kept) | CLICK: the ladder on the inward flux (degree 2, the current), the quantum, the recoil into the Ports | a term |
+   | `lifetime` | CLICK: a border in intervals | a term |
+
+   So the four kinds cover every attribute, and the twenty-first family
+   or an attribute that did not exist yesterday is a term of an existing
+   kind, a line in the file; the loader reads terms by kind and refuses
+   a kind it does not have. What stays code, said honestly: a NEW KIND
+   (a fifth verb) and a new shape; the closing test is that no row of
+   the check-mode table needs either. The twist table's precision is
+   given by 9.96 (2) (e) and waits on the Boss's word to be built.
