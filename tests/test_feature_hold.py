@@ -15,8 +15,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe.core.carried import division_back, division_forward
 from event_universe.core.register import folder_of
+from event_universe.core.rule3 import division_back, division_forward
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.hold import (
     ACTS,

@@ -1,6 +1,6 @@
 """THE SPIN'S STEP, its own folder (ALGEBRA.md 9.117 the row "the spin's step"; 9.78 (5); 9.104
 (2); 9.119 item 2; the Boss's record 2250): the curls and the gradient are the loop's reads at
-the body's Node, Omega x S and mu x B_q bookings, every division through core.carried; on the
+the body's Node, Omega x S and mu x B_q bookings, every division through core.rule3; on the
 shipped moving Lorentz world and on the resting one with a spin given to its emitter the
 folder's step gives the loop's own spin, spin before, values and carries over thirty intervals
 bit for bit; the inverse undoes the advance exactly; the refusals; the declaration."""
@@ -13,8 +13,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe.core.carried import THE_ADVANCE, THE_INVERSE
 from event_universe.core.register import folder_of
+from event_universe.core.rule3 import THE_ADVANCE, THE_INVERSE
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.spins_step import (
     DECLARATION,
@@ -32,6 +32,8 @@ from tests.test_emitter import emitter_world
 ROOT = Path(__file__).resolve().parents[1]
 TOWARD = ROOT / "examples" / "events" / "toward_nature"
 KEYS = ("gradc", "omega", "bq", "spin")
+# the family's row's weights of the spin's turn, Schiff's 1 / 2 and 3 / 2 in the levels' unit (ALGEBRA.md 9.78 (5))
+CURL_WEIGHT, TIDAL_WEIGHT = (1, 4), (3, 4)
 
 
 def gradient_at(
@@ -95,7 +97,7 @@ def replay(document: dict, intervals: int) -> tuple[DetectorLawSimulation, SpinS
     """Run the world, and after every interval give the folder the loop's own integers; the folder's spin, spin before, values and carries must be the loop's."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     block = simulation.block_by_number[0]
-    term = SpinStepTerm(tuple(block.definition.moment), simulation.node_clock)
+    term = SpinStepTerm(tuple(block.definition.moment), simulation.node_clock, CURL_WEIGHT, TIDAL_WEIGHT)
     spin, before = tuple(block.spin), tuple(block.spin_before)
     own = SpinStepOwn({}, {})
     for _ in range(intervals):
@@ -149,7 +151,7 @@ def test_the_inverse_undoes_the_advance_exactly():
     """On synthetic integers an advance then an inverse returns the spin, the spin before and the
     carries (the state before the advance); the omega, torque and steps of the inverse are the
     advance's, so the inverse subtracts what the step added."""
-    term = SpinStepTerm((0, 0, 1), 10_000)
+    term = SpinStepTerm((0, 0, 1), 10_000, CURL_WEIGHT, TIDAL_WEIGHT)
     reads = (
         SpinRead(0, "spin", 1, 1, (3, -7, 11), (2, 0, -1)),
         SpinRead(1, "moment", -1, 1, (5, 4, -9), None),
@@ -172,7 +174,7 @@ def test_the_inverse_undoes_the_advance_exactly():
 
 
 def test_the_refusals_by_name():
-    term = SpinStepTerm((0, 0, 0), 10_000)
+    term = SpinStepTerm((0, 0, 0), 10_000, CURL_WEIGHT, TIDAL_WEIGHT)
     with pytest.raises(ValueError, match="act is one of"):
         apply(
             term, SpinStepStart("the hop", (), (0, 0, 0), 1, (0, 0, 0), (0, 0, 0)), SpinStepOwn({}, {})
