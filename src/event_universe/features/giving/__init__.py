@@ -21,26 +21,6 @@ THE_WORD = (
     "the window's write beyond (H)"
 )
 
-# THE SCHEMA: the emitter's keys as the loader checks them, each (key, kind,
-# low, high, required); the kinds: "name" a family's name, "names" a list of set names,
-# "integer" one integer in [low, high], "integers" a list of integers each in [low, high]
-# (the branches' pairs, the given clock's pair). The bounds are the loader's of today
-# (world.py: `weight`, `period` and `norm_denominator` from 1, `twist` from 0, each to
-# 2^62 - 1; `norm` from 1 to 2^126 - 1).
-NORM_BOUND = (1 << 126) - 1  # the loader's bound on `norm` (world.py NORM_BOUND)
-AMOUNT_BOUND = (1 << 62) - 1  # the loader's bound on every other integer (world.py AMOUNT_BOUND)
-SCHEMA: tuple[tuple[str, str, int, int, bool], ...] = (
-    ("family", "name", 0, 0, True),
-    ("weight", "integer", 1, AMOUNT_BOUND, True),
-    ("period", "integer", 1, AMOUNT_BOUND, True),
-    ("norm", "integer", 1, NORM_BOUND, True),
-    ("norm_denominator", "integer", 1, AMOUNT_BOUND, False),
-    ("twist", "integer", 0, AMOUNT_BOUND, True),
-    ("receiver", "names", 0, 0, False),
-    ("branches", "integers", 0, AMOUNT_BOUND, False),
-    ("clock", "integers", 1, AMOUNT_BOUND, False),
-)
-
 
 @dataclass(frozen=True)
 class GivingTerm:
@@ -54,23 +34,23 @@ class GivingTerm:
 
 @dataclass(frozen=True)
 class GivingStart:
-    """The interval's reading for one act: the act's word; at the open the body's quanta M and momentum n; at the write the body's levels at its shell; at the close this interval's outward flux and its tally."""
+    """The interval's reading for one act, every field named by the loop: the act's word; at the open the body's quanta M and momentum n; at the write the body's levels at its shell (None at the other acts); at the close this interval's outward flux and its tally."""
 
     act: str
-    quanta: int = 0
-    momentum: tuple[int, int, int] = (0, 0, 0)
-    body_levels: np.ndarray | None = None
-    outward_flux: int = 0
-    outward_tally: tuple[int, int, int] = (0, 0, 0)
+    quanta: int
+    momentum: tuple[int, int, int]
+    body_levels: np.ndarray | None
+    outward_flux: int
+    outward_tally: tuple[int, int, int]
 
 
 @dataclass(frozen=True)
 class GivingOwn:
     """The window on the body's record: the intervals written so far (None when closed), the outward norm summed, its tally per axis."""
 
-    window: int | None = None
-    outward: int = 0
-    tally: tuple[int, int, int] = (0, 0, 0)
+    window: int | None
+    outward: int
+    tally: tuple[int, int, int]
 
 
 @dataclass(frozen=True)
@@ -78,11 +58,11 @@ class GivingWrites:
     """The act's writes: the level write at the shell, the deferred count and momentum, the close with its direction, and the window's record after the act."""
 
     own: GivingOwn
-    level: np.ndarray | None = None
-    count: int = 0
-    momentum: tuple[int, int, int] | None = None
-    closed: bool = False
-    direction: tuple[int, int, int] | None = None
+    level: np.ndarray | None
+    count: int
+    momentum: tuple[int, int, int] | None
+    closed: bool
+    direction: tuple[int, int, int] | None
 
 
 def sign_of(value: int) -> int:
@@ -122,13 +102,15 @@ def apply(term: GivingTerm, start: GivingStart, own: GivingOwn) -> GivingWrites:
     check(term, start, own)
     if start.act == THE_OPEN:
         return GivingWrites(
-            GivingOwn(0, 0, (0, 0, 0)), count=-1, momentum=bulk_share(start.momentum, start.quanta)
+            GivingOwn(0, 0, (0, 0, 0)), None, -1, bulk_share(start.momentum, start.quanta), False, None
         )
     assert own.window is not None
     if start.act == THE_WRITE:
         assert start.body_levels is not None
         level = term.weight * np.asarray(start.body_levels, dtype=np.int64)
-        return GivingWrites(GivingOwn(own.window + 1, own.outward, own.tally), level=level)
+        return GivingWrites(
+            GivingOwn(own.window + 1, own.outward, own.tally), level, 0, None, False, None
+        )
     outward = own.outward + start.outward_flux
     tally = (
         own.tally[0] + start.outward_tally[0],
@@ -138,10 +120,13 @@ def apply(term: GivingTerm, start: GivingStart, own: GivingOwn) -> GivingWrites:
     if outward * term.norm_denominator >= term.norm:
         return GivingWrites(
             GivingOwn(None, outward, tally),
-            closed=True,
-            direction=(sign_of(tally[0]), sign_of(tally[1]), sign_of(tally[2])),
+            None,
+            0,
+            None,
+            True,
+            (sign_of(tally[0]), sign_of(tally[1]), sign_of(tally[2])),
         )
-    return GivingWrites(GivingOwn(own.window, outward, tally))
+    return GivingWrites(GivingOwn(own.window, outward, tally), None, 0, None, False, None)
 
 
 DECLARATION = Declaration(

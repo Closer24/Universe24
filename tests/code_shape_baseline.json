@@ -1,6 +1,6 @@
 {
  "format": "code-shape-baseline",
- "recorded_at": "38a729a4",
+ "recorded_at": "e6a2cf43",
  "files": {
   "src/event_universe/__init__.py": {
    "lines": 27,
@@ -163,10 +163,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/features/giving/__init__.py": {
-   "lines": 36,
-   "docstring_lines": 7,
-   "comment_lines": 1,
-   "record_references": 1,
+   "lines": 154,
+   "docstring_lines": 9,
+   "comment_lines": 2,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
