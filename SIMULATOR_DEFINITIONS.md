@@ -1,22 +1,28 @@
 # Event Universe — active modular 3D integer simulator
 
-## The Beam Law: RAYS-1 (2026-09-19)
+## The detector law: the law in force (adopted 2026-09-24, record 1875)
 
-A world selecting `"law": "beam"` runs the Beam Law
-([docs/BEAM_LAW.md](docs/BEAM_LAW.md)): a row with a record on the digital line
-of its momentum at one speed, the collision table a bijection inside its
-invariant classes, the detector's record the squared coherent sum of what it
-clicked, the click the one one-way border and the one measurement: an
-action of the law on the state, the record ended at the detector and the
-detector's own record changed (the model owner, 2026-09-23, record 1139;
+A world runs the detector law (`src/event_universe/events/detector_law.py`;
+the engine's steps in [docs/ENGINE.md](docs/ENGINE.md); the algebra in
+[docs/ALGEBRA.md](docs/ALGEBRA.md) chapter 9, the rule 9.57 (1)): every Node
+steps its own record's two levels from its six neighbours' reads by the plain
+rule with its remainder kept, a record's rows are on the GameBoard, a detector
+books the one-way flux through its Ports and clicks at its rung, and the click
+is the one one-way border and the one measurement: an action of the law on
+the state, the record ended at the detector and the detector's own record
+changed (the model owner, 2026-09-23, record 1139;
 [POSTULATES.md](POSTULATES.md) section 10). Coverage (a detector's Nodes), the
-threshold and the `reads` component are independent data. No audit record or
+rung and the `reads` component are independent data. No audit record or
 whole-GameBoard sum supplies memory, routing or a physical result; the readings
 of the engine (`cube_flux`) and of the host (`diagnostics/shell_readings`, the
-shell means, outside the engine since 2026-09-21) are read-only. The
-`reversible-detector-v1` candidate of the same day is absorbed and deleted
-([migration](docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1));
-quantum uncertainty and Born behavior remain separate unproved goals.
+shell means, outside the engine since 2026-09-21) are read-only. HISTORY: the
+ray law of 2026-09-19 (`beam-v1`, a row on the digital line of its momentum
+with a collision table; [docs/BEAM_LAW.md](docs/BEAM_LAW.md) is its record) was
+retired by record 1875 (ALGEBRA.md 9.18); the `reversible-detector-v1`
+candidate of the same day is absorbed and deleted
+([migration](docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1)).
+Born's rule is a row's pin under the law (ALGEBRA.md 9.25 (3)); quantum
+uncertainty remains a separate unproved goal.
 
 ### The couplings on the GameBoard are the six verbs (2026-09-22)
 
@@ -625,11 +631,13 @@ belong to their dated models, not an implicit events-world default.
 ## Historical generic disturbance model (deleted on 2026-09-19)
 
 History marker (2026-09-19): the generic disturbance simulator this section
-describes was deleted on 2026-09-19 with the engines before the Beam Law
-([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+describes was deleted on 2026-09-19 with the engines before the ray law of that
+day ([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted);
+the ray law itself retired by record 1875);
 its schema document, docs/DISTURBANCES.md, is in git at any commit before that
-deletion. The active contract is [the Beam Law](docs/BEAM_LAW.md) with
-[the engine's bookkeeping](docs/ENGINE.md). The text below is kept as written,
+deletion. The active contract is the detector law
+([docs/ENGINE.md](docs/ENGINE.md), [docs/ALGEBRA.md](docs/ALGEBRA.md) chapter
+9). The text below is kept as written,
 the record of that model; it defines nothing in the engine.
 
 Initialization accepts only `sampling_profile: "detector-only-v1"` under the

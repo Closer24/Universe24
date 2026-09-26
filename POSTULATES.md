@@ -22,8 +22,8 @@ reverse.)
 
 (History, marked 2026-09-23: the generic disturbance simulator the next paragraph
 describes, its execution profile and its reaction contract were deleted on
-2026-09-19 with the engines before the Beam Law; the law in force is
-docs/ALGEBRA.md chapter 2.)
+2026-09-19 with the engines before the ray law of that day, itself retired by
+record 1875; the law in force is the detector law, docs/ALGEBRA.md chapter 9.)
 
 The user-authorized Node execution profile
 declares h as one adjacent-node transit step and each interaction's k as an
@@ -63,14 +63,16 @@ thing compared with in the limit. The owner's
 hypothesis is that Node sensitivity together with on-board information retention
 can produce Heisenberg uncertainty; this remains a research target (history,
 superseded on 2026-09-23 by ALGEBRA.md 4.11).
-Under the Beam Law (`beam-v1`, 2026-09-19) the interval is a bijection
+Under the detector law (record 1875; the ray law of 2026-09-19 before it,
+history) the interval is a bijection
 on a GameBoard without a measured event and the click is the one one-way border;
-the detector's record is the squared coherent sum of the rows it clicked,
-read at the detector, a DETECTOR reading (ALGEBRA.md 3.2), never on the GameBoard
+the detector's record is the one-way flux it booked through its Ports,
+read at the detector, a DETECTOR reading (ALGEBRA.md 3.2, 9.25 (2)), never on the GameBoard
 (the earlier words "read on the GameBoard": history, superseded on 2026-09-23 by
 ALGEBRA.md 3.2). This inserts no quantum bound and does not claim that a
 world with clicks is reversible. The law and its open limits are in
-[the Beam Law](docs/BEAM_LAW.md) and
+[docs/ENGINE.md](docs/ENGINE.md) with [docs/ALGEBRA.md](docs/ALGEBRA.md)
+chapter 9 and
 [the detector requirements](docs/DETECTOR_REQUIREMENTS.md), following
 [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector).
 
@@ -98,11 +100,12 @@ belong to their dated models, not an implicit events-world default.
 ## Initialization-defined model (history: deleted on 2026-09-19)
 
 History marker (2026-09-19): the generic disturbance simulator this section
-describes was deleted on 2026-09-19 with the engines before the Beam Law
-([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
-the active contract is [the Beam Law](docs/BEAM_LAW.md) with
+describes was deleted on 2026-09-19 with the engines before the ray law of that
+day ([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted);
+the ray law itself retired by record 1875);
+the active contract is the detector law,
 [the engine's bookkeeping](docs/ENGINE.md) and its algebra
-[docs/ALGEBRA.md](docs/ALGEBRA.md). The text is kept as written.
+[docs/ALGEBRA.md](docs/ALGEBRA.md) chapter 9. The text is kept as written.
 
 The canonical Detector-owned sampling contract
 allows draws only at an actual external Detector encounter. Ordinary evolution
@@ -305,7 +308,7 @@ Global consistency emerges from consistent local updates. New information does
 not rewrite completed events; it becomes causal input to future events.
 
 **Contract of the generic disturbance simulator (history: deleted on
-2026-09-19; the active contract is [the Beam Law](docs/BEAM_LAW.md)):**
+2026-09-19; the active contract is the detector law, [docs/ENGINE.md](docs/ENGINE.md)):**
 disturbance transfers cross one neighbor link after its fixed transit time;
 updates use already available local records. Extra node delay can make
 propagation slower. There is no global correction at the end of a tick.
@@ -1811,8 +1814,8 @@ there is, 0 is what is said; what is said returns, as a field, and what
 there is stays.
 
 The identities named below were deleted on 2026-09-19 with the engines before the
-Beam Law (docs/MIGRATION.md); the law in force is the Beam Law, ALGEBRA.md
-chapter 2.
+ray law of that day (docs/MIGRATION.md; the ray law itself retired by record
+1875); the law in force is the detector law, ALGEBRA.md chapter 9.
 
 **Implementation.** `bit-law-v1`, `node-mixing-v1`, `clock-readings-v1`,
 `node-is-ports-v1` and `lanes-v1` (feature 18, the lanes of point 25) are
