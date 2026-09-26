@@ -17775,6 +17775,94 @@ as written here.
     250 against a null of exactly 0): WORKS as the fall's reading; the
     meeting is hidden by the records' walk, as 9.98 (10) (i) says.
 
+13. **Nature24's rerun of item 12 with the four corrections (stroke-side,
+    12:28Z; GameBoard readings of his runner): the sourced form FAILS,
+    the gap is the source's argument, mine (record 2137), and its line
+    is corrected here; the fallback binds at the table's ceiling and
+    fails moving.** HIS READINGS: at rest, 1500 intervals, side 9, K_m =
+    2, K_r = 4, E_s = 12,454,244, the stationary start converged (the
+    mode's omega 0.3372 against the vacuum's 0.3447): the ringing at the
+    start's peak Node per 300 intervals, (max - min) / (2 |mean|), the
+    binding 0.41, 1.35, 0.96, 0.89, 2.01, the core 0.79, 2.47, 3.42,
+    2.07, 8.51 (the deciding reading under 0.05 FAILS, and it grows);
+    the bound share 0.80 falls to 0.23, the rms 5.65 grows to 10.6; the
+    hill's excess (the pace's content cut at 0) 2136 Nodes at 0, 169,507
+    (max 185) at 1000, far from the record; the record's form 0.955 falls
+    to 0.333 (radiated into the sponge). Moving at v = 0.05 the guard at
+    294 (the content 10808 at Gamma): the record concentrates (rms 5.6 to
+    4.5, the peak's content 2584 to 4346) and the fields run away. The
+    fallback (the hold with the table, s_cap 3000, the ceiling 9000) at
+    rest BINDS at the ceiling (the ringing 0.44 then 0.024, 0.010, 0.008;
+    the bound share 0.99; the size the table's, rms 2, not the mode's;
+    half the record radiated); moving, the guard at 340, 7 Links in 250
+    against 12.5.
+
+    THE GAP, FOUND IN HIS SOURCE'S ARGUMENT AND IN MY LINE: his runner
+    (binding_family.py, form_of) sources with F_i = now^2 + before^2 - 2
+    now before cos omega_i, cos omega_i THE NODE'S REST ROTATION AT ITS
+    PACE (from item 11's "the record's form at the Node"); the bound mode
+    rotates at ONE omega_psi = 0.3372 at every Node, while the local rest
+    rotation varies with the pace across the well (at the peak's content
+    2553, cos omega_i = 1 - (p^2 + Gamma^2)(den - num) / (2 den Gamma^2)
+    = 0.9534, omega_i = 0.306; at the edge 0.9412), so F_i is not the
+    mode's invariant: it carries a part at 2 omega_psi = 0.674 per
+    interval of relative depth m = (cos omega_psi - cos omega_i) / sin^2
+    omega_psi, 0.089 at the centre and -0.023 at the edge, changing sign
+    across the well. THAT PART DRIVES BOTH FIELDS ABOVE THEIR GAPS (the
+    binding's omega_0 = 0.193, the core's 0.559, both below 0.674): the
+    driven response over the static one is m x (kappa^2 + q^2) / |omega_0^2
+    + c^2 q^2 - (2 omega_psi)^2| with q = 1 / rms = 0.18 and c^2 = 1 / 3:
+    the binding 0.36 m, the core 8.5 m (the core NEAR RESONANCE, 0.559
+    against 0.674): 0.03 and 0.75 at m = 0.089, against his 0.41 and 0.79
+    in the first window (the core's number matches; the binding's is
+    larger in his run, the ringing feeding back through the pace on the
+    record, whose sidebands at omega_psi +- 2 omega_psi deepen m: the
+    growth to 2.0 and 8.5 is that feedback, a parametric runaway, not a
+    transient, as he read (finding (a)); the hill's excess far away is
+    the radiated ringing, finding (b), not the static balance). So the
+    absorbing faces could not carry it away: the drive is inside.
+
+    THE LINE, CORRECTED: the source's argument is the rotation's own
+    invariant at the Node, which needs no omega:
+
+      D_i = now_i^2 - next_i x before_i,
+
+    exact for any single rotation (a_t = A cos(omega t + phi) gives a_t^2
+    - a_(t+1) a_(t-1) = A^2 sin^2 omega, PROVED by the product formula),
+    the same value as item 11's form where the rest rotation and the
+    mode's agree and the invariant where they do not; read at the end of
+    the step from the three levels the Node has at that moment (before,
+    now and the step's output next), nothing stored beyond the state,
+    the interval-start value of the next interval (9.111 item 6); in
+    integers exact, the step's remainder moving it by under one level
+    unit; negative only for a growing level, which the guard ends. A
+    packet of a band of rotations gives D_i a slow beat at the band's
+    width (v / rms = 0.009 per interval at v = 0.05, a period of 700
+    intervals), below every field's gap: no drive. E_s unchanged (the
+    peak's D equals the peak's F at the start). Item 11's "F_i, the
+    record's form at the Node" and 9.110 item 7's "of the record's own
+    levels, degree 2 (its form)" mean D_i from here; the SOURCE word of
+    9.112 takes D_i as its argument.
+
+    THE RERUN, his, with D_i alone changed (the four corrections kept),
+    and my numbers beside (record 2137): at rest, the ringing at the peak
+    Node below 0.01 in every window (the rounding over E_s), the bound
+    share above 0.7 at 1500 and the rms within 10 percent of 5.65; moving
+    at v = 0.05, the centroid 12.5 +- 1 Links per 250 intervals, the
+    peak's content within 1.2 of its rest value, no guard; if the content
+    still runs to Gamma moving, that is a second gap and mine. THE
+    FALLBACK, his question: yes, s_cap 1500 (the ceiling 4500, under half
+    of Gamma), moving at v = 0.05, the speed's decay read against the lag
+    drag omega_t^2 = 0.00107 per interval (omega_t = 0.0327 of 9.105
+    applied here, a prediction to test): the centroid 0.05 x (1 -
+    exp(-0.00107 t)) / 0.00107 Links, 11.0 at 250 and 37 at 1500. HIS
+    FIRST QUESTION ANSWERED: the study does not close on this run; it
+    closes on the rerun with D_i: if the sourced form then binds and
+    moves within the numbers above, the well is the two families sourced
+    by D_i, beyond the rule as a balance (9.113 item 3 (a)) and built as
+    a declaration; if it rings again, the well stays a study and the
+    fallback with the lower ceiling is the declaration of the day.
+
 ### 9.109 The click that keeps the momentum, in integers (the model owner's question of 2026-09-26, record 2160: "but one click, is it not received in one click?"; the Boss's ask for the line), and the algebra's numbers for the ninth question's rerun
 
 1. **What the engine's click does and what the bath's construct did.**
