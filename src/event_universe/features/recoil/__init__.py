@@ -1,4 +1,4 @@
-"""The recoil of a click on a held body's momentum: n_a += sigma_a x (W x P_body) div (M x lambda_q) per axis, the giver with the opposite sign, the store a remainder with its divisor in lowest terms so that clicks of different divisors add exactly (ALGEBRA.md 9.117 item 2 the row "the recoil" and item 5, 9.84 (2), 9.91 (4)); the amount from the rule, the store beyond (S)."""
+"""The recoil of a click on a held body's momentum: n_a += sigma_a x (W x P_body) div (M x lambda_q) per axis, the giver with the opposite sign, the store a remainder with its divisor in lowest terms so that clicks of different divisors add exactly (ALGEBRA.md 9.117 item 2 the row "the recoil" and item 5, 9.84 (2), 9.91 (4)); from the rule, the store the record's own remainder."""
 
 from __future__ import annotations
 
@@ -13,8 +13,8 @@ PRODUCT_BOUND = 10**9
 TAKING = 1
 GIVING = -1
 
-# the two words of ALGEBRA.md 9.113 item 1 and 9.117 item 5, one per piece of this primitive
-THE_WORD = "the amount from the rule 9.57 (1) and the click, the store below one integer beyond (S)"
+# the word of ALGEBRA.md 9.117 item 5 for this primitive
+THE_WORD = "from the rule 9.57 (1) and the click, the store a remainder of the division on the record"
 
 Store = tuple[int, int]  # a remainder with its divisor, in lowest terms, 0 <= remainder < divisor
 NO_STORE: Store = (0, 1)
@@ -27,7 +27,7 @@ class RecoilTerm:
     period: int
     quanta: int
     wavelength: int
-    sense: int = TAKING
+    sense: int
 
 
 @dataclass(frozen=True)
@@ -43,7 +43,7 @@ class RecoilOwn:
     """The body's record: its momentum n per axis and the store per axis, a remainder with its divisor in lowest terms."""
 
     momentum: tuple[int, int, int]
-    remainders: tuple[Store, Store, Store] = (NO_STORE, NO_STORE, NO_STORE)
+    remainders: tuple[Store, Store, Store]
 
 
 @dataclass(frozen=True)

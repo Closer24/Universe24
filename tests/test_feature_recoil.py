@@ -31,7 +31,7 @@ from tests.test_emitter import emitter_world
 
 # the moving row's body (issue #1156): W = 12480 at M = 65 (Q = 64), its period 21, the
 # given light's wavelength 4 Links
-TERM = RecoilTerm(period=21, quanta=65, wavelength=4)
+TERM = RecoilTerm(period=21, quanta=65, wavelength=4, sense=TAKING)
 START = RecoilStart(tally=(+9, 0, -4), wall=12_480)
 NONE = (NO_STORE, NO_STORE, NO_STORE)
 
@@ -47,7 +47,7 @@ def exact_floor(clicks: list[tuple[int, int, int, int, int]]) -> int:
 
 
 def run_clicks(clicks: list[tuple[int, int, int, int, int, int]]) -> RecoilOwn:
-    own = RecoilOwn((0, 0, 0))
+    own = RecoilOwn((0, 0, 0), NONE)
     for sense, sigma, wall, period, quanta, wavelength in clicks:
         writes = apply(
             RecoilTerm(period, quanta, wavelength, sense), RecoilStart((sigma, 0, 0), wall), own
@@ -60,7 +60,7 @@ def test_the_line_on_the_moving_rows_numbers():
     """n_a += sigma_a x (W x P_body) div (M x lambda_q): 12480 x 21 = 262080 over 65 x 4 =
     260 gives 1008 exactly on x (the tally positive, toward +x) and -1008 on z (the tally
     negative), nothing on y (no tally); the stores empty."""
-    writes = apply(TERM, START, RecoilOwn((100, 200, 300)))
+    writes = apply(TERM, START, RecoilOwn((100, 200, 300), NONE))
     assert writes.momentum == (1108, 200, -708)
     assert writes.remainders == NONE
 
@@ -133,10 +133,12 @@ def test_the_direction_of_travel_and_the_givers_opposite_sign():
     """sigma is the tally's sign, never its size: a tally of +1 and of +10^6 recoil the same;
     a giving with the same tally recoils the other way; a symmetric emitter (the tallies
     0) recoils by nothing and keeps its stores (9.84 (2))."""
-    small = apply(TERM, RecoilStart((1, 0, 0), 12_480), RecoilOwn((0, 0, 0)))
-    large = apply(TERM, RecoilStart((10**6, 0, 0), 12_480), RecoilOwn((0, 0, 0)))
+    small = apply(TERM, RecoilStart((1, 0, 0), 12_480), RecoilOwn((0, 0, 0), NONE))
+    large = apply(TERM, RecoilStart((10**6, 0, 0), 12_480), RecoilOwn((0, 0, 0), NONE))
     assert small.momentum == large.momentum == (1008, 0, 0)
-    giving = apply(RecoilTerm(21, 65, 4, GIVING), RecoilStart((1, 0, 0), 12_480), RecoilOwn((0, 0, 0)))
+    giving = apply(
+        RecoilTerm(21, 65, 4, GIVING), RecoilStart((1, 0, 0), 12_480), RecoilOwn((0, 0, 0), NONE)
+    )
     assert giving.momentum == (-1008, 0, 0) and giving.remainders == NONE
     kept = ((1, 2), (2, 3), (3, 5))
     symmetric = apply(TERM, RecoilStart((0, 0, 0), 12_480), RecoilOwn((7, 8, 9), kept))
@@ -149,15 +151,15 @@ def test_the_bounds_and_the_terms_are_refused_by_name():
     wall from 1; the sense +1 or -1; a store a remainder below its divisor in lowest terms;
     a store's divisor beyond the bound."""
     with pytest.raises(ValueError, match="products exceed the bound: W x P_body = 12480000000"):
-        apply(RecoilTerm(1_000_000, 65, 4), START, RecoilOwn((0, 0, 0)))
+        apply(RecoilTerm(1_000_000, 65, 4, TAKING), START, RecoilOwn((0, 0, 0), NONE))
     with pytest.raises(ValueError, match="M x lambda_q = 6500000000"):
-        apply(RecoilTerm(21, 65, 100_000_000), START, RecoilOwn((0, 0, 0)))
+        apply(RecoilTerm(21, 65, 100_000_000, TAKING), START, RecoilOwn((0, 0, 0), NONE))
     with pytest.raises(ValueError, match="from 1, got P_body = 0"):
-        apply(RecoilTerm(0, 65, 4), START, RecoilOwn((0, 0, 0)))
+        apply(RecoilTerm(0, 65, 4, TAKING), START, RecoilOwn((0, 0, 0), NONE))
     with pytest.raises(ValueError, match="needs a wall from 1, got W = 0"):
-        apply(TERM, RecoilStart((1, 0, 0), 0), RecoilOwn((0, 0, 0)))
+        apply(TERM, RecoilStart((1, 0, 0), 0), RecoilOwn((0, 0, 0), NONE))
     with pytest.raises(ValueError, match=r"sense is \+1 \(a taking\) or -1 \(a giving\), got 2"):
-        apply(RecoilTerm(21, 65, 4, 2), START, RecoilOwn((0, 0, 0)))
+        apply(RecoilTerm(21, 65, 4, 2), START, RecoilOwn((0, 0, 0), NONE))
     with pytest.raises(ValueError, match="store on axis 1 is 2 / 4: a remainder below its divisor"):
         apply(TERM, START, RecoilOwn((0, 0, 0), (NO_STORE, (2, 4), NO_STORE)))
     with pytest.raises(ValueError, match="store on axis 2 is 7 / 7"):
@@ -166,7 +168,7 @@ def test_the_bounds_and_the_terms_are_refused_by_name():
         ValueError, match=r"would need the divisor 999999937000000000 .* beyond the bound"
     ):
         apply(
-            RecoilTerm(1, 1, 999_999_937),
+            RecoilTerm(1, 1, 999_999_937, TAKING),
             RecoilStart((1, 0, 0), 1),
             RecoilOwn((0, 0, 0), ((1, 10**9), NO_STORE, NO_STORE)),
         )
@@ -195,7 +197,7 @@ def test_the_trace_hand_identity_on_the_emitters_run():
     body = simulation.block_by_number[0]
     assert body.momentum == [0, 0, 0]  # the run's own n untouched
     clicks = []
-    own = RecoilOwn((0, 0, 0))
+    own = RecoilOwn((0, 0, 0), NONE)
     for line in givings:
         wall, quanta = simulation.wall_of(body), sum(simulation.held[line["measured"]])
         assert wall == 3 * document["momentum_unit"] * quanta
@@ -212,7 +214,7 @@ def test_the_trace_hand_identity_on_the_emitters_run():
 def test_the_declaration_is_the_ledgers_row():
     """The folder declares the row of ALGEBRA.md 9.117: "the recoil" at (iv), writing a
     body's momentum n and its remainders, order 2 after the giving's bulk share, its
-    function `apply`, and its section with the two words of 9.117 item 5."""
+    function `apply`, and its section with the word of 9.117 item 5, from the rule."""
     assert DECLARATION.name == "the recoil" and DECLARATION.place == "(iv)"
     assert DECLARATION.writes == ("a body's momentum n", "a body's remainders")
     assert DECLARATION.order == 2
@@ -227,5 +229,5 @@ def test_the_declaration_is_the_ledgers_row():
         registered.order_of("a body's momentum n") == 2
         and registered.place_of("a body's momentum n") == "(iv)"
     )
-    assert "from the rule" in THE_WORD and "beyond (S)" in THE_WORD
+    assert THE_WORD.startswith("from the rule") and "beyond" not in THE_WORD
     assert "9.117" in DECLARATION.section and "9.84 (2)" in DECLARATION.section
