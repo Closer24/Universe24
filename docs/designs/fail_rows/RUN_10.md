@@ -439,9 +439,9 @@ named beside it.
   `docs/designs/derivations_beam/uncertainty_lattice.py` and output.
 - [NATURE.md](../../NATURE.md) row 10: the single-opening spread, NOT YET
   under the one click; the register's crowd-form 1.08 kept as history.
-- [examples/events/heisenberg/README.md](../../../examples/events/heisenberg/README.md):
+- examples/events/heisenberg/README.md (`examples/events/heisenberg/README.md`, deleted 2026-09-26):
   A10, the registered geometry and its readings (`w27_wave`).
-- [examples/events/amplitude/README.md](../../../examples/events/amplitude/README.md):
+- examples/events/amplitude/README.md (`examples/events/amplitude/README.md`, deleted 2026-09-26):
   `slits_huygens`, the record-form two-slit world, its run of 2026-09-21
   (4300 intervals in 1334 s) and the pin it met bit for bit;
   [slits_huygens_pin.py](../paper_criteria/slits_huygens_pin.py), the

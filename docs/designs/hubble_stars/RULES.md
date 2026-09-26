@@ -1,7 +1,7 @@
 # Two rule changes for a readable Hubble diagram of gravitating stars: the physicist's design
 
 The model owner, 2026-09-20, on the two findings of series G2
-([DESIGN.md](DESIGN.md) section 5, the worlds' [README](../../../examples/events/hubble_stars/README.md)
+([DESIGN.md](DESIGN.md) section 5, the worlds' README (`examples/events/hubble_stars/README.md`, deleted 2026-09-26)
 "What the law lacked"): "1 and 2 are very important for a solution and a
 new run." This is the read-only design of the two rule changes, for the
 engine's implementation under [physics-rule validation](../../../skills/physics-rule-validation/SKILL.md)

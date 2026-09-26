@@ -1,26 +1,10 @@
-"""Test session options: the cancelled suites never collected, explicit visualization opt-in
-and result-file leases."""
+"""Test session options: explicit visualization opt-in and result-file leases. The ray law's
+test files were deleted on 2026-09-26 (docs/CANCELLED_WORLDS.md); every test file here is
+collected, a living test is never skipped."""
 
-import importlib.util
 from pathlib import Path
 
 import pytest
-
-ROOT = Path(__file__).resolve().parents[1]
-
-
-def _cancelled_tests() -> list[str]:
-    """The ray law's test files (docs/CANCELLED_WORLDS.md section 3, read by
-    tools/cancelled_paths.py): the gate never collects them; a living test is never skipped
-    (the Boss's records 2102 and 2133)."""
-    spec = importlib.util.spec_from_file_location("cancelled_paths", ROOT / "tools/cancelled_paths.py")
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    spec.loader.exec_module(module)
-    return [path.removeprefix("tests/") for path in module.cancelled_paths("tests")]
-
-
-collect_ignore = _cancelled_tests()
 
 
 def pytest_addoption(parser):

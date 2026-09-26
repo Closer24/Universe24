@@ -7,7 +7,7 @@ rule. The rule (BEAM_LAW note 48, PR #468) moved the ticks of series R; the
 architect's PR #554 re-registered every world's first 100 intervals in
 `examples/events/quarks/expectations.json` (the `replay` blocks: the steps
 and the hand-overs GAMEBOARD, the face clicks DETECTOR) and the folder's
-[README](../../../examples/events/quarks/README.md). The pushes at the
+README (`examples/events/quarks/README.md`, deleted 2026-09-26). The pushes at the
 reference tick are unchanged. The 3000-interval fates (q4's first step at
 176, q6's pair breaking at about 1190) are of the run before the rule and
 are not re-registered beyond 100 intervals.

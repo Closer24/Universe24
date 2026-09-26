@@ -249,7 +249,7 @@ identity under `hypotheses` when it is true, the books the `waiting`
 lines and the rows' record `acc_turn`; the inverse interval is refused
 with the key; absent, no world changes by a byte
 (`tests/test_massive_rows.py` (a)); the pin `slits_matter` and its run
-are in [examples/events/massive_rows/README.md](../examples/events/massive_rows/README.md). Added on 2026-09-21 (the model owner's record 270 of
+are in examples/events/massive_rows/README.md (`examples/events/massive_rows/README.md`, deleted 2026-09-26). Added on 2026-09-21 (the model owner's record 270 of
 the log of 2026-09-20; a hypothesis beside the law, not a rule of it): the
 world key `covariant_readings`, one object `{"c2": [1, d], "grain": g,
 "books": false}` (absent by default; refused with `action`), the identity
@@ -271,7 +271,7 @@ per lattice interval at the rate held x E' over E'_0 x d; the domain |p|_1
 record carries the `energy` lines and the key's block
 ([ENGINE.md, the readings by type](ENGINE.md#the-detectors-readings-by-type));
 absent, nothing of it is computed and no world changes by a byte (series
-S, [examples/events/covariant/README.md](../examples/events/covariant/README.md)).
+S, examples/events/covariant/README.md (`examples/events/covariant/README.md`, deleted 2026-09-26)).
 Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
 `suspension`, `families`, `measured` (`table` with `read`, `measure`,
 `rerelease`, `pass` and `phase_window`, since 2026-09-20 with its width

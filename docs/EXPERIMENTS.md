@@ -544,7 +544,7 @@ states "exactly" and means integer equality at every tick.
   (`phase_window`, `tests/test_phase_window.py`). Nothing of the ray-event
   list above: no draw, no return, no splitter, no polarization.
 - **Run.** `examples/events/bell/` (ten worlds written by `make_worlds.py`,
-  the dictionary in the [README](../examples/events/bell/README.md)), one
+  the dictionary in the README (`examples/events/bell/README.md`, deleted 2026-09-26)), one
   base world with the settings the only difference: `"law": "events"`, a
   bar of 21 x 1 x 1, open, K 2^20, N 64 (the phase tables read a single
   arrival's step exactly only up to N = 64), `release` [0, 1],
@@ -724,7 +724,7 @@ states "exactly" and means integer equality at every tick.
   weights 4 : 1 : 1 : 1 : 1 : 1 reduced to 28 bits, the floors, the units
   left to the largest remainders in the tick's Port order, a group with no
   whole share going whole by its momentum; the table with its steps in the
-  [README](../examples/events/coupling/README.md)): on +x r = 1..6 at tick
+  README (`examples/events/coupling/README.md`, deleted 2026-09-26)): on +x r = 1..6 at tick
   r + 1: 131072, 14563, 1618, 180, 20, 3, then exhausted (the three units
   at r = 6 leave on -x and +y); on -x the same to r = 6 and (r + 1, 1) from
   r = 7; on +y 131072, 14564, 1618, 179, 20 and (r + 1, 2) from r = 6; on
@@ -795,7 +795,7 @@ states "exactly" and means integer equality at every tick.
   `shell_readings` and `cube_flux`. Nothing of the ray-event list above.
 - **Run.** `examples/events/coupling/` (twenty-one worlds written by
   `make_worlds.py`, the dictionary in the
-  [README](../examples/events/coupling/README.md), model ids
+  README (`examples/events/coupling/README.md`, deleted 2026-09-26), model ids
   `events-coupling-<name>-plane-v1`): `1a_m1`, `1a_m4`, `1a_m16`, `1b_m1`,
   `1b_m4`, `1b_m16`, `2`, `3`, `3a`, `3b`, `4`, `5` (300 intervals), `5p`,
   `6`, `7_00`, `7_pp`, `7_pm`, `7_mp`, `7_mm`, `7_pp_m4`, every one 200
@@ -992,7 +992,7 @@ states "exactly" and means integer equality at every tick.
   on them; the detector reading of Newton's law, a thrown or falling
   body's clicks at a detector set (record 564), is not made here; no
   number, pin or standing of this entry moves
-  ([the worlds' README](../examples/events/coupling/README.md)).
+  (the worlds' README (`examples/events/coupling/README.md`, deleted 2026-09-26)).
 
 ### A2, under the Beam Law (2026-09-19)
 
@@ -1019,7 +1019,7 @@ states "exactly" and means integer equality at every tick.
   direction, no collision on the bar (rays of one number on one line never
   meet head-on), no suspension.
 - **Run.** `examples/events/bell/` (ten worlds written by `make_worlds.py`,
-  the dictionary in the [README](../examples/events/bell/README.md)): the
+  the dictionary in the README (`examples/events/bell/README.md`, deleted 2026-09-26)): the
   base of the entry above with `"law": "rays"`, `ticks` 160, the model ids
   `rays-bell-a{a}-b{b}-v1`; the same ten settings; the analysis
   `tools/click_readings/bell.py` unchanged in its criteria (the `record` line admitted
@@ -1123,7 +1123,7 @@ states "exactly" and means integer equality at every tick.
   never collide).
 - **Run.** `examples/events/coupling/` (twenty-one worlds written by
   `make_worlds.py`, the dictionary in the
-  [README](../examples/events/coupling/README.md)), the model ids
+  README (`examples/events/coupling/README.md`, deleted 2026-09-26)), the model ids
   `rays-coupling-<name>-plane-v1`; `tools/run_series.py --jobs 4`;
   `tools/click_readings/coupling.py` rewritten for the ray record (the replay of
   world 5 reading the count, the presence and the flow at every tick, the
@@ -1291,7 +1291,7 @@ states "exactly" and means integer equality at every tick.
   age moment, 917312 to 8912765 intervals at r = 4 to 40 (the presence's
   130880 to 130941, the same at every r): on the axis the age moment grows
   with r as the rows' age; GameBoard readings, the tool's item 6 replaying
-  the age moment since this day ([the worlds' README](../examples/events/coupling/README.md#re-read-under-clock-age-v1-2026-09-21)).
+  the age moment since this day (the worlds' README (`examples/events/coupling/README.md`, deleted 2026-09-26)).
 - **The kinds of the readings (2026-09-22; the model owner's words of
   records 562, 564 and 569).** A probe's own records (its `read` and
   `contact` records, its clock's (age, waited, owed)) are DETECTOR readings
@@ -1302,7 +1302,7 @@ states "exactly" and means integer equality at every tick.
   on them; the detector reading of Newton's law, a thrown or falling
   body's clicks at a detector set (record 564), is not made here; no
   number, pin or standing of this entry moves
-  ([the worlds' README](../examples/events/coupling/README.md)).
+  (the worlds' README (`examples/events/coupling/README.md`, deleted 2026-09-26)).
 
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
@@ -1319,7 +1319,7 @@ states "exactly" and means integer equality at every tick.
   flight's anisotropy (the speed per axis, x before y) were named before
   the run as what could break the orbit.
 - **Model prediction, pinned before the runs
-  ([the derivation](../examples/events/orbit/README.md#the-derivation-of-p-before-the-runs);
+  (the derivation (`examples/events/orbit/README.md`, deleted 2026-09-26);
   re-derived the night of 2026-09-19 for the label the law reads).** The
   push a free probe takes from an arriving fan ray is its label, -m x
   amount x D[direction] ([BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)),
@@ -1444,7 +1444,7 @@ states "exactly" and means integer equality at every tick.
   PROJECT_STATUS, "What is open"). Nothing was tuned; the widths and radii
   are the assignment's; the label's magnitude was not changed.
 - **Model prediction re-derived under the label along the unit vector
-  (2026-09-19, pinned before the runs; [the derivation](../examples/events/orbit/README.md#the-derivation-of-p-before-the-runs)).**
+  (2026-09-19, pinned before the runs; the derivation (`examples/events/orbit/README.md`, deleted 2026-09-26)).**
   The model owner decided the label along u_d, the unit vector of the
   direction at the flight table's scale Q = 64 ([BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
   and note 23), so the push a free probe takes from any arriving ray is
@@ -1743,7 +1743,7 @@ states "exactly" and means integer equality at every tick.
   uncertain), under both readings a detector may declare, `wave` and
   `beam` ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
 - **Model prediction, pinned before the runs
-  ([the derivation](../examples/events/heisenberg/README.md#the-derivation-before-the-runs)).**
+  (the derivation (`examples/events/heisenberg/README.md`, deleted 2026-09-26)).**
   lambda = c x period = 8 / sqrt 3 = 4.619 Links (the lamp's turn 8 of
   64 per interval, the flight at 1 / sqrt 3). Under `wave` the record
   of w emitters one Link apart is the array factor [sin(pi w s / lambda)
@@ -1868,7 +1868,7 @@ states "exactly" and means integer equality at every tick.
   price of series C item 6 (the clock reads the presence, M / r^2) is
   confronted in space, where the fan dilutes as 4 pi r^2 and not as a ring.
 - **Model prediction, pinned before the runs
-  ([the derivation](../examples/events/redshift/README.md#the-derivation-before-the-runs)).**
+  (the derivation (`examples/events/redshift/README.md`, deleted 2026-09-26)).**
   An open 31^3 cube, a fixed source of content 2^12 at the centre
   releasing one ray per self-creation on the 290 primitive directions with
   |a| + |b| + |c| <= 6 (q = 290 per interval), probes of content 1 that
@@ -1964,7 +1964,7 @@ states "exactly" and means integer equality at every tick.
   `age` world's 36.18, the two widths' ratio; the `age` world is
   byte-identical (record 409); GameBoard readings, 11 inside and 3 outside
   as registered; the table with the old values beside the new in
-  [the worlds' README](../examples/events/redshift/README.md#re-read-under-clock-age-v1-2026-09-21).
+  the worlds' README (`examples/events/redshift/README.md`, deleted 2026-09-26).
 - **The kinds of the readings (2026-09-22; the model owner's words of
   records 562, 564 and 569).** Each probe's own owed count is a DETECTOR
   reading at its Node within its limits (record 569); the shell means, the
@@ -1975,7 +1975,7 @@ states "exactly" and means integer equality at every tick.
   of a clock's rate at two distances is series T's (NATURE row 12), and
   the detector reading of Poisson's equation is not made here; no number,
   pin or standing of this entry moves
-  ([the worlds' README](../examples/events/redshift/README.md)).
+  (the worlds' README (`examples/events/redshift/README.md`, deleted 2026-09-26)).
 
 ### G, the Hubble diagram behind the detector (2026-09-20)
 
@@ -2001,7 +2001,7 @@ states "exactly" and means integer equality at every tick.
   position, steps, momentum, the books); the diagram and its fits are
   detector readings only.
 - **Model prediction, pinned before the runs
-  ([the derivation](../examples/events/hubble/README.md#the-derivation-before-the-runs)).**
+  (the derivation (`examples/events/hubble/README.md`, deleted 2026-09-26)).**
   An open 301^3 cube, twenty-four free sources (a family each) on chains
   of four along the six axes at r_0 = 3, 5, 7, 9 Links, the speeds v = c x
   V(axis) x (2 i - 1) / 7 with V = 0.6 .. 0.35 (0.05 c to 0.6 c, c = 32 /
@@ -2190,7 +2190,7 @@ states "exactly" and means integer equality at every tick.
   worlds' clocks read a crowd that changes; under the accumulator the two
   coasting worlds are identical to the registered runs (their lamps'
   contents stay above K and no clock is slowed) and the two pushing
-  worlds move by little: the near fit's H t_0 in the windows [100, 200),
+  worlds move by little: the near fit's H t_0 in the windows 100, 200),
   [200, 300), [300, 400) and [200, 400) reads 1.176, 1.302, 1.324, 1.301
   in `pushing_scalar` (1.144, 1.182, 1.305, 1.292 under the signed
   drive) and 0.848, 1.018, 1.086, 1.035 in `pushing_age` (0.866, 0.932,
@@ -2211,7 +2211,7 @@ states "exactly" and means integer equality at every tick.
   9.1890 and 8.1459 (1.1820, 1.3220, 1.3900 and 1.3499); the two `age`
   worlds byte-identical (record 409); DETECTOR readings, 303 inside and 33
   outside over the four; the table with the forms and the detectors' own
-  clocks in [the worlds' README](../examples/events/hubble/README.md#re-read-under-clock-age-v1-2026-09-21).
+  clocks in [the worlds' README (`examples/events/hubble/README.md`, deleted 2026-09-26).
 
 - **Re-read in the detector's own clock (2026-09-22; the model owner's
   word of records 678, 707 and 709 of docs/LOG_2026-09-20.md: the GameBoard
@@ -2257,7 +2257,7 @@ states "exactly" and means integer equality at every tick.
   24 (the threshold v / c < 0.333, 0, 1.941, 0.042); H_d t_0 = 1.1770
   (outside 1 +- 10 %; the lattice's clock 1.5693, outside), 1.0123
   (inside; 1.0123, inside), 3.1243 (outside H t_0 < 1; 9.1890, outside),
-  1.0425 (outside; 1.0860, outside); the earlier windows [100, 200) and
+  1.0425 (outside; 1.0860, outside); the earlier windows 100, 200) and
   [200, 300): r_w = 0.8600 and 0.8000, 1.0000 and 1.0000, 0.4200 and
   0.4000, 0.9800 and 0.9700; H_d t_0 = 0.8898 and 1.0148 in
   `coasting_scalar` (the lattice's 1.0346 and 1.2685: the first window
@@ -2319,7 +2319,7 @@ states "exactly" and means integer equality at every tick.
   applied: one point, H free, the criterion validated on the exact form and
   the grain's effect on q measured before the brackets were set.
 - **Model prediction, pinned before the runs
-  ([the derivation](../examples/events/hubble_stars/README.md#the-derivation-before-the-runs),
+  ([the derivation (`examples/events/hubble_stars/README.md`, deleted 2026-09-26),
   `examples/events/hubble_stars/expectations.json`).** The coasting crowd the exact Milne form, q within
   +- 0.25 and H (t_0 + T_0) = 1 within 10 %; the gravity crowd q = +0.25
   (+0.04 .. +0.44) and the double crowd q = +0.59 (+0.30 .. +0.89) by the
@@ -2419,7 +2419,7 @@ states "exactly" and means integer equality at every tick.
   while its momenta match. Registered on the owner's decision of record
   128 ("series G2 registered after its second run"); the runs and the
   pages in the worlds'
-  [README](../examples/events/hubble_stars/README.md).
+  README (`examples/events/hubble_stars/README.md`, deleted 2026-09-26).
 
 - **Re-read under the fraction-free law (2026-09-20; measured, nothing
   pinned; [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
@@ -2545,7 +2545,7 @@ states "exactly" and means integer equality at every tick.
   closes). The owner's rule of the page: to show atoms no detector is
   needed; a detector receives their radiation, if it comes out.
 - **Model prediction, pinned before the runs
-  ([the derivation](../examples/events/bohr/README.md#the-derivation-before-the-runs-gameboard-readings-of-the-design)).**
+  (the derivation (`examples/events/bohr/README.md`, deleted 2026-09-26)).**
   Two free families, `p` (content 1836, `charge` [1, 1], fixed at the
   centre of an open cube of 2 (r + 14) + 1 Nodes a side, releasing one
   ray per direction of the physicist's shell of 2616 primitive directions
@@ -2906,7 +2906,7 @@ states "exactly" and means integer equality at every tick.
   whose `read` and `contact` records and steps are the readings; no
   detector is declared on these GameBoards.
 - **Model prediction, pinned before the runs
-  ([the expectations](../examples/events/nucleus/README.md#the-expectations-pinned-before-the-runs-the-physicists-integers)).**
+  (the expectations (`examples/events/nucleus/README.md`, deleted 2026-09-26)).**
   Three free families without a phase circle, `p` (charge 4), `n` and
   `nuclear` (the column `strong` with the value G = 10000 and the sign
   minus, `lifetime` 3); a proton 1836 of `p` holding one unit of `nuclear`
@@ -3076,7 +3076,7 @@ states "exactly" and means integer equality at every tick.
   labelled a detector reading or a GameBoard reading; the comparison with
   nature uses detector readings only.
 - **Model prediction, pinned before the runs
-  ([the derivation](../examples/events/lensing/README.md#the-derivation-before-the-runs)).**
+  (the derivation (`examples/events/lensing/README.md`, deleted 2026-09-26)).**
   An open 57 x 41 x 41 box, a lamp of the paid family `light` at
   (2, 20 + b, 20) (the turn 8, lambda = 4.65 Links) releasing one unit
   per interval on each of five directions within 5 degrees of (1, 0, 0),
@@ -3240,7 +3240,7 @@ states "exactly" and means integer equality at every tick.
 - **Run.** `examples/events/bell/` (seven worlds by
   `make_chooser_worlds.py`, whose docstring derives the design from the
   engine's flight table and `by_clock` before the run; the dictionary in
-  the [README](../examples/events/bell/README.md#the-choosers-on-the-gameboard-issue-363-2026-09-20)):
+  the README (`examples/events/bell/README.md`, deleted 2026-09-26)):
   A2's bar and pair lamp (K = 15 x 2^20 so that the pair lamp's turn stays
   exactly 1 over the run), Alice's counters at 7 Links (plus, x = 7) and
   4 Links (minus, x = 4) from her lamp at x = 0, one `sa` row at each
@@ -3522,7 +3522,7 @@ states "exactly" and means integer equality at every tick.
 change of law).**
 
 - **Model prediction, pinned before the runs
-  ([the expectations](../examples/events/weak/README.md#the-expectations-pinned-before-the-runs-the-physicists-integers)).**
+  (the expectations (`examples/events/weak/README.md`, deleted 2026-09-26)).**
   A window admits the w consecutive steps of the circle about its setting
   whatever the ray's amount, content or emitter's rate, so the fraction
   admitted of a source of stride s coprime to N is exactly w / N (WEAK.md
@@ -3589,7 +3589,7 @@ change of law).**
 neutron (the transformation `become`, the identity `weak-v1`).**
 
 - **Model prediction, pinned before the runs
-  ([the expectations](../examples/events/weak/README.md#j1-and-j3-the-neutrons-decay-against-its-clock),
+  (the expectations (`examples/events/weak/README.md`, deleted 2026-09-26),
   `examples/events/weak/expectations.json`, written by the generator).**
   The clock trigger fires at the self-creation whose clock reaches `at`
   (BEAM_LAW note 36 (iii)); at the suspension [1, 2^20] a clock that
@@ -3736,7 +3736,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
 **The W world, the exchange form at one Link (no key added).**
 
 - **Model prediction, pinned before the run
-  ([the expectations](../examples/events/weak/README.md#the-w-world-the-exchange-at-one-link),
+  (the expectations (`examples/events/weak/README.md`, deleted 2026-09-26),
   `expectations.json` under `w`).** The W is a paid family with a whole
   charge per unit of amount and the lifetime 1 (BEAM_LAW note 36 (iv)):
   a row born at a self-creation is at one Link at the age 1 (m(1) = 1)
@@ -3864,7 +3864,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   against 3.17) but its numbers were read on 64 clicks and the age word's
   on 20 and 8, the rest firing at or after the run's end: whether the row
   is re-read on a longer run is the model owner's question, flagged
-  ([the worlds' README](../examples/events/weak/README.md#re-read-under-clock-age-v1-2026-09-21)).
+  (the worlds' README (`examples/events/weak/README.md`, deleted 2026-09-26)).
 
 - **Re-read in the detector's own clock (2026-09-22; the model owner's
   word of records 678, 707 and 709 of docs/LOG_2026-09-20.md; the clock
@@ -3974,7 +3974,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
 section 3.4; the acceptance tests 1, 3 and 8).**
 
 - **Model prediction, pinned before the runs
-  ([the expectations](../examples/events/amplitude/README.md#l1-the-mach-zehnder-interferometer-and-elitzur-vaidman),
+  (the expectations (`examples/events/amplitude/README.md`, deleted 2026-09-26),
   `examples/events/amplitude/expectations.json`, written by the
   generator from the design's `mz.txt`).** A plane of 5 x 5, K 2^20, N 64,
   75 intervals; the source at (0, 0) births one record per self-creation
@@ -4047,7 +4047,7 @@ section 3.4; the acceptance tests 1, 3 and 8).**
 - **The (3, 4) split at N = 32 and 128, the power window of
   [DERIVATIONS_BEAM 6.5](DERIVATIONS_BEAM.md#65-the-uniqueness-of-the-clicks-square-a-lattice-gleason)
   pinned from above (2026-09-21; the Boss's order on the auditor's round
-  4; [the README's section](../examples/events/amplitude/README.md#the-3-4-split-at-n--32-and-128-the-power-window-of-65-pinned-from-above);
+  4; the README's section (`examples/events/amplitude/README.md`, deleted 2026-09-26);
   `expectations.json` under `mz_345_n`).** Pinned before the run from the
   engine's own tables and ladder (`core/phase.py`, `amplitude.rungs`,
   `amplitude.cell_of`) on the rows the world's turns put at the ports (7 at
@@ -4241,7 +4241,7 @@ and 9).**
 - **Bell at N = 512 and 4096 under the click and the wheel, the pin of
   [DERIVATIONS_BEAM 24.4](DERIVATIONS_BEAM.md#244-the-one-prediction-the-paper-can-carry)
   (2026-09-21; the Boss's order under the model owner's record 337;
-  [the README's section](../examples/events/amplitude/README.md#bell-at-n--512-and-4096-under-the-click-and-the-wheel-the-pin-of-244);
+  the README's section (`examples/events/amplitude/README.md`, deleted 2026-09-26);
   `expectations.json` under `bell_24_4`).** Pinned before the run: S =
   181 / 64 exactly at N = 512 (`bell_n512_*`, added by the generator, 532
   intervals, every other shipped world byte-identical) and at N = 4096
@@ -4261,7 +4261,7 @@ and 9).**
 - **The pair at N = 2048 and N = 8192, the plateau of 24.4 measured
   (2026-09-22; the Boss's order on the model owner's word of 2026-09-22
   through the paper's writer;
-  [the README's section](../examples/events/amplitude/README.md#bell-at-n--2048-8192-and-16384-the-plateau-of-244-and-its-end);
+  the README's section (`examples/events/amplitude/README.md`, deleted 2026-09-26);
   `expectations.json` under `bell_24_4`, the block `run_2048_8192_16384`).**
   The Bell world above with the one declared integer N changed by the
   generator (`bell_n2048_*`, 2068 intervals; `bell_n8192_*`, 8221). Pinned
@@ -4428,7 +4428,7 @@ end, every one of the records 1 to 4096 gathered): dark
   32 distinct cells, 69 by 256, 101 by 1024. Verdict: the wheel turns the
   weights into counts, the fringes in the clicks as in the weights; the
   0.96 pin was the screen's fan's, not this world's. The numbers beside the
-  world in [its README](../examples/events/amplitude/README.md#l2-the-two-slits-at-a-low-rate).
+  world in its README (`examples/events/amplitude/README.md`, deleted 2026-09-26).
   DETECTOR.
 - **Re-run at head `4028b020` (2026-09-22, the criteria runner on the paper's referee point 6, the branch `paper-criteria-runs`; the source sha256 `d537d4435b921895`, the initialization `b75b611959ec3dfe`; 4300 intervals in 1152.9 s through `tools/run_series.py`, completed and conserved; the pin for this world's own fan derived before the run by the register's algebra in [docs/designs/paper_criteria/slits_huygens_pin.py](designs/paper_criteria/slits_huygens_pin.py) (the counts per cell bit for bit, the clicks' visibility 0.9659; [CRITERIA.md](designs/paper_criteria/CRITERIA.md) row 2a).** DETECTOR, the gathers of the records 1 to 4096 off `run.json`'s world list: wall 882, screen 1711 on 107 pixels, faces 1503, every pixel's count equal to the pin's and to the run of 2026-09-21 above, the visibility 0.9659; the pin met bit for bit, NATURE row 2a's FAIL stands by the algebra and the run alike (the digests state `9eef5f81f610`, audit `8ad36b7f1b63`, events `ee441d9ba8c9`). A finding for the tool's owner, not a reading: `tools/amplitude_path.py --check` reports the layer's replay differing from the world list on this run and on `slits_low` at head (80 against 80) while equal on `mz_equal`. No number re-registered; this line dated.
 
@@ -4506,7 +4506,7 @@ sequential gates on an entangled record, the full register replay.
   quantum to one Node. The claim: de Broglie's wavelength h / p and the
   two-slit fringes of matter from the same law and apparatus as light's.
 - **Model prediction, pinned before the run
-  ([the expectations](../examples/events/massive_rows/README.md),
+  (the expectations (`examples/events/massive_rows/README.md`, deleted 2026-09-26),
   `examples/events/massive_rows/expectations.json`; the design's section
   4, re-derived by the accumulator rule on the engine's own lines).**
   `slits_matter`: `slits_huygens`' plane and Farey fan with `matter` (M
@@ -4573,7 +4573,7 @@ sequential gates on an entangled record, the full register replay.
   (the `bond` clicks); a control with a lamp beside a lone proton (I7's
   lamp, record 123) reads the crowd blind to the held content.
 - **Model prediction, pinned before the run
-  ([the expectations](../examples/events/binding/README.md#the-expectations-pinned-before-the-run-design-section-4)).**
+  (the expectations (`examples/events/binding/README.md`, deleted 2026-09-26)).**
   Series I's base with the paid family `bond` (h 1, L 3, no column, no
   phase circle) held 2 per nucleon, the free totals kept (p 1834 `p` + 1
   `nuclear` + 2 `bond` = 1837, n 1837 + 1 + 2 = 1840, the sum 3677). B1
@@ -4601,7 +4601,7 @@ sequential gates on an entangled record, the full register replay.
   digests and the gate set's byte-identity in
   [VALIDATION](VALIDATION.md#series-n-the-binding-that-costs-content-three-runs-and-the-gate-set-replayed---2026-09-20);
   the readings beside the pins in
-  [the worlds' README](../examples/events/binding/README.md#what-was-measured-2026-09-20)).**
+  the worlds' README (`examples/events/binding/README.md`, deleted 2026-09-26)).**
   Every reading of DESIGN section 4's table inside its pin; one pin of
   DESIGN section 2 outside (the momentum sum, below). B1: the first contact
   of both bodies at tick 16 with `given` 2 each and 0 on the 346 later
@@ -4676,7 +4676,7 @@ sequential gates on an entangled record, the full register replay.
   own table; the click record carries no age and no direction, the age
   being the tick less the lamp's own `birth` tick).
 - **Model prediction, pinned before the run
-  ([the expectations](../examples/events/c_measured/README.md#the-expectation-written-before-the-run),
+  (the expectations (`examples/events/c_measured/README.md`, deleted 2026-09-26),
   `examples/events/c_measured/expectations.json` and `derived.csv`, written
   by `make_world.py` from the closed form).** One open cube of 65^3 (the
   half-width 32), Q 64, N 64, one lamp of `light` at the centre with the
@@ -4714,7 +4714,7 @@ sequential gates on an entangled record, the full register replay.
   `face:+z` 41, `face:-z` 41), 290 of 290 at the derived tick, Node and
   face, none differing; the pace over the fan min 0.5718, max 0.5893,
   mean 0.5810, every class as pinned
-  ([the table](../examples/events/c_measured/README.md#what-was-measured-2026-09-21));
+  (the table (`examples/events/c_measured/README.md`, deleted 2026-09-26));
   one gather at the end; the two properties of the grain confirmed by the
   clicks. Inside on every reading, nothing moved. No rule touched (the
   flight rule read against the three tests: generic, vector, local). The
@@ -6496,7 +6496,7 @@ sequential gates on an entangled record, the full register replay.
   counters and the which-path world of L3 use; the absorbed rows click in
   their own cells, no body sinks them. **The worlds** (`malus_a`,
   `malus_b`, `malus_c`, written by the generator of series L;
-  [the README](../examples/events/amplitude/README.md#a12-under-the-click-maluss-law-from-the-table-entries-in-force)):
+  the README (`examples/events/amplitude/README.md`, deleted 2026-09-26)):
   one bar of 7, N = 256, the lamp at x = 0 on the wheel [159, 256] with no
   `branches` (every row born on the label 0), the rotate 64 at x = 2
   (`malus_c` alone), the `read` at x = 4 (the detector `first`), the
@@ -6616,7 +6616,7 @@ sequential gates on an entangled record, the full register replay.
   by declaration). Read at the bodies (their `read` and `contact` records,
   their steps) and at the border `lifetime` (the glue's clicks).
 - **Model prediction, pinned before the run
-  ([the expectations](../examples/events/quarks/README.md#the-expectations-pinned-before-the-run-the-designs-section-47-expectationsjson);
+  (the expectations (`examples/events/quarks/README.md`, deleted 2026-09-26);
   `examples/events/quarks/expectations.json`, derived by the design's
   `quark_numbers.py` and compared entry by entry by
   `tests/test_quarks_expectations.py`).** The push per body at tick 20
@@ -6651,7 +6651,7 @@ sequential gates on an entangled record, the full register replay.
   `tools/click_readings/quarks.py`: 0 record checks failed, 55 readings inside
   among the tool's pins, 0 outside; two of the page's pins on the kicked
   world outside, reported, not moved
-  ([the page](../examples/events/quarks/README.md#what-was-measured-2026-09-21)).
+  (the page (`examples/events/quarks/README.md`, deleted 2026-09-26)).
 
   | World | Expected | Measured | Verdict |
   | --- | --- | --- | --- |
@@ -6705,7 +6705,7 @@ sequential gates on an entangled record, the full register replay.
   of the coasting world (the pointer's z, DETECTOR); the `become` lines and
   the `energy` lines GAMEBOARD.
 - **Model prediction, pinned before the run
-  ([the expectations](../examples/events/covariant/README.md#the-expectations-pinned-before-the-runs-expectationsjson);
+  (the expectations (`examples/events/covariant/README.md`, deleted 2026-09-26);
   `examples/events/covariant/expectations.json`, derived by the generator
   from the engine's own rules beside the design's numbers).** The muon
   (content 207, Q S M = 13 248) at rest, at p = 3640 and at 12 856 (E' at
@@ -6738,7 +6738,7 @@ sequential gates on an entangled record, the full register replay.
   completed with the books balanced at every tick; the tool: 0 record
   checks failed, 24 readings inside, 1 outside, nothing moved; the one
   outside is outside the continuum's number alone and inside the design's own integer pin 124 (DERIVATIONS_BEAM 17.6 M2: the 64th self-creation "at the integers 70 and 124 by the primitive's own count"; the continuum's 64 gamma = 125.2 is the limit, one gamma - 1 above the cadence from an empty accumulator; the physics-rule review REVIEW_3, must-fix 3: a relabel, nothing moved)
-  ([the page](../examples/events/covariant/README.md#what-was-measured-2026-09-21)).
+  (the page (`examples/events/covariant/README.md`, deleted 2026-09-26)).
 
   | World | Expected | Measured | Verdict |
   | --- | --- | --- | --- |
@@ -6785,7 +6785,7 @@ sequential gates on an entangled record, the full register replay.
   the distance. Run under beam-v1 as declared (`reads: "age"` is a world
   key, series E's precedent); no change under `src/`.
 - **Model prediction, pinned before the run
-  ([the folder](../examples/events/clock_word/README.md),
+  (the folder (`examples/events/clock_word/README.md`, deleted 2026-09-26),
   `examples/events/clock_word/expectations.json` with its `derivations`
   map, written by `make_worlds.py`; the `replicated` map absent: measured
   once, awaiting replication).** Series U's geometry: the lamp `s_px1` at
@@ -6884,7 +6884,7 @@ sequential gates on an entangled record, the full register replay.
   body outrunning its own family's rows). Read at the faces of an open
   41^3 box (the body's click, DETECTOR); the `step` lines GAMEBOARD.
 - **Model prediction, pinned before the run
-  ([the expectations](../examples/events/drive_b/README.md#the-expectations-pinned-before-the-runs-expectationsjson);
+  (the expectations (`examples/events/drive_b/README.md`, deleted 2026-09-26);
   `examples/events/drive_b/expectations.json`, derived by the generator
   from the rule's own integers).** A body of content 64 (Q S M = 4096) at
   |**p**|_1 = 6000 (the wall 922144) from the centre (20, 20, 20): under
@@ -6909,7 +6909,7 @@ sequential gates on an entangled record, the full register replay.
   fingerprint `fcaf6f194e62...`; 0.10 to 0.11 s per world, 43 MB peak;
   every run completed with the books balanced at every tick; the tool: 0
   record checks failed, 19 readings inside, 0 outside, nothing moved
-  ([the page](../examples/events/drive_b/README.md#what-was-measured-2026-09-22)).
+  (the page (`examples/events/drive_b/README.md`, deleted 2026-09-26)).
 
   | World | Expected | Measured | Verdict |
   | --- | --- | --- | --- |
@@ -6946,13 +6946,13 @@ sequential gates on an entangled record, the full register replay.
   chief physicist's design of 2026-09-22 ([record 574](LOG_2026-09-20.md),
   part 2, POISSON AFTER A DETECTOR) under the model owner's word of that
   day ("build them", records 574 and 581); the folder
-  [examples/events/shell_clock/](../examples/events/shell_clock/README.md).
+  examples/events/shell_clock/ (`examples/events/shell_clock/README.md`, deleted 2026-09-26).
   What a shell asks that no point source can: inside it the potential is
   flat (the shell theorem) and the flux is not, so the interior tells the
   clock's two words apart at a source term, where outside a source they
   differ only in how fast they fall.
 - **Model prediction, pinned before the run** (the folder's
-  [README](../examples/events/shell_clock/README.md),
+  README (`examples/events/shell_clock/README.md`, deleted 2026-09-26),
   `examples/events/shell_clock/expectations.json` with its `derivations`
   map, written by `make_worlds.py`; every number of it from section E of
   [docs/designs/clock_age/clock_age_map.py](designs/clock_age/clock_age_map.py),
@@ -7142,7 +7142,7 @@ sequential gates on an entangled record, the full register replay.
   arrives. The design decision on verb 3's form (the label's Bresenham on
   the line of **P**, the physicist's recommendation, or a denser fan) is
   on the model owner's return list; nothing of it built. The readings with
-  every column in [the worlds' README](../examples/events/optical/README.md);
+  every column in the worlds' README (`examples/events/optical/README.md`, deleted 2026-09-26);
   the gate set byte identical without the key.
 - **Re-read after M1 of the physics-rule review** (2026-09-21; the review
   of 408cf719, record 494, found the walk's count capped after the
@@ -7306,7 +7306,7 @@ sequential gates on an entangled record, the full register replay.
   held mass, every number a detector's click or a labelled GameBoard
   diagnostic (record 281). A run under the [experimenter skill](../skills/experimenter/SKILL.md).
 - **Model prediction, pinned before the runs
-  ([the pins](../examples/events/orbit_lamp/README.md#the-pins-written-before-the-runs-expectationsjson)).**
+  (the pins (`examples/events/orbit_lamp/README.md`, deleted 2026-09-26)).**
   Series D's plane (121 x 121 x 1, z periodic, S = 32, the fan source of
   q = 12 units per interval at the centre), the probe a body of the paid
   family `probe` of amount 2^12 (the lamp's reservoir) holding the free
@@ -7437,7 +7437,7 @@ sequential gates on an entangled record, the full register replay.
   similar figures; the scale symmetry of the 1 / r force is the claim it
   tests; not closed. A circle's period, amplitude and omega^2 outside:
   the grain of the push and the per-axis drive's anisotropy, both named.
-- **Under the one constant (flow-link-v1; the owner's decision of 2026-09-22, record 915; the pins before any run, [the one-constant worlds](../examples/events/orbit_lamp/README.md#the-one-constant-worlds-flow-link-v1-2026-09-22-the-pins-before-any-run)).** Four worlds by the same generator (`worlds(flow=True)`, `expectations_flow.json`): `r12_flow`, `r24_flow` and their controls, the registered worlds with the key `flow_link: true` and the probe's momentum at the whole n = 8 of the circle under the key, nothing else changed, the registered five untouched. The generator's own derivation: the plane fan's mean of S_1 / |D|, F_plane = 1.2871 (4 / pi in the limit), divides the circular balance q L C / (2 pi) = 1.910 to 1.484, the real root n = 7.672, the whole 8 (the design's 7.818 divides the whole 9's balance; the same whole). Pinned, GAMEBOARD by formula until the run: T = 2 pi r (S + n) / n = 377 and 754 at the pace 8 / 40 within the register's 9 percent (343 to 411; 686 to 822; the design's 384 and 768 at 7.818); T(24) / T(12) = 2.00 +- 0.18 unchanged (the factor a constant of the line, cancelling in the ratio); omega^2 = 2.78e-4 and 6.94e-5 within T's brackets; the amplitude r - 1 to r + 2; the controls' x = 60 + r on every click and the escape at the 61st step, 305 +- 6. DETECTOR when run: the lamp's rows' clicks (x, tick, age), T the recurrence of x as in the registered run; Newton's and Kepler's forms on the comparison side only (record 817). Refuted if T leaves its band, the ratio leaves its bracket, or a control moves under the key (a click off x = 60 + r, the escape off its bracket). Not pinned: the equivalence (no constant in it; closed above), the byte identity of a flow control with a keyless control at n = 8 (the design's section 3 (d), by formula). The world files shipped at `485a57dc` (the key merged from `origin/flow-link-build` at `a3be9ba13f08`), the pins first. **The run (2026-09-22, the Boss's order of record 962; [the run's section](../examples/events/orbit_lamp/README.md#the-run-under-the-key-2026-09-22-measured-against-the-pins-of-expectations_flowjson-none-moved), [run_flow.out](../examples/events/orbit_lamp/run_flow.out)):** source fingerprint `00fda864cf1bb868`, Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every world completed at 4000 intervals (18.5 to 9.4 s) with the books balanced, every record `flow_link: true` (HOST: the key in the run); 0 record checks failed, 4 readings inside, 7 outside, none moved. DETECTOR (the radius at the births a CONVERSION of the age click by the flight table; the reviewer's kinds): `r12_flow` 145 clicks, x 31 to 96, the radius at the births 3.2 to 68.3 about 24.3, T = 588.7 (343 to 411): outside, omega^2 7.78e-5: outside, the amplitude 32.5: outside, the escape through `face:+y` at the tick 1208 after touching the detector line at 808; `r24_flow` 288 clicks, x 0 to 90, the radius 17.0 to 71.0 about 37.6, T = 987.3 (686 to 822): outside, omega^2 3.11e-5: outside, the amplitude 45: outside, the escape through `face:-x` at 2452 after touching the line at 633 (the register's first record of this run said no escape: corrected from the registered events on the Newton Diagnostician's finding, record 1022, the tool printing every world's escape and contacts since; the periods the means of two and three spacings of loops that never closed; no other number moved); the ratio T(24) / T(12) = 1.677 (1.82 to 2.18), COMPUTATION from two DETECTOR periods of two records: outside; the controls every click at x = 60 + r and the escape at 305 (299 to 311): inside, both. The verdict by the pins as written: the controls inside; the periods and the ratio outside, the two refuting readings both read; what is refuted is the circle's period at the whole 8 under the key and the ratio of two loops that are not similar figures (the mean radii 24.3 and 37.6, the ratio 1.55; T / the mean radius 24.2 and 26.3, COMPUTATION, not pinned). Three causes named, none moved: the loops not circles (two or three unequal recurrences each); the whole-n grain of the launch (n = 8 sits 7.8 percent above the balance under the key, twice the registered 3.4 percent as built); the push's grain and the drive's anisotropy, as registered. On flow-link-v1 the run decides nothing: no world as built at n = 8 was run to separate the constant from the grain (named, not run, not proposed); the hypothesis's own reading is the ring's, stated beside this row when it comes. Status: run once, registered, none moved.
+- **Under the one constant (flow-link-v1; the owner's decision of 2026-09-22, record 915; the pins before any run, the one-constant worlds (`examples/events/orbit_lamp/README.md`, deleted 2026-09-26)).** Four worlds by the same generator (`worlds(flow=True)`, `expectations_flow.json`): `r12_flow`, `r24_flow` and their controls, the registered worlds with the key `flow_link: true` and the probe's momentum at the whole n = 8 of the circle under the key, nothing else changed, the registered five untouched. The generator's own derivation: the plane fan's mean of S_1 / |D|, F_plane = 1.2871 (4 / pi in the limit), divides the circular balance q L C / (2 pi) = 1.910 to 1.484, the real root n = 7.672, the whole 8 (the design's 7.818 divides the whole 9's balance; the same whole). Pinned, GAMEBOARD by formula until the run: T = 2 pi r (S + n) / n = 377 and 754 at the pace 8 / 40 within the register's 9 percent (343 to 411; 686 to 822; the design's 384 and 768 at 7.818); T(24) / T(12) = 2.00 +- 0.18 unchanged (the factor a constant of the line, cancelling in the ratio); omega^2 = 2.78e-4 and 6.94e-5 within T's brackets; the amplitude r - 1 to r + 2; the controls' x = 60 + r on every click and the escape at the 61st step, 305 +- 6. DETECTOR when run: the lamp's rows' clicks (x, tick, age), T the recurrence of x as in the registered run; Newton's and Kepler's forms on the comparison side only (record 817). Refuted if T leaves its band, the ratio leaves its bracket, or a control moves under the key (a click off x = 60 + r, the escape off its bracket). Not pinned: the equivalence (no constant in it; closed above), the byte identity of a flow control with a keyless control at n = 8 (the design's section 3 (d), by formula). The world files shipped at `485a57dc` (the key merged from `origin/flow-link-build` at `a3be9ba13f08`), the pins first. **The run (2026-09-22, the Boss's order of record 962; the run's section (`examples/events/orbit_lamp/README.md`, deleted 2026-09-26), run_flow.out (`examples/events/orbit_lamp/run_flow.out`, deleted 2026-09-26)):** source fingerprint `00fda864cf1bb868`, Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every world completed at 4000 intervals (18.5 to 9.4 s) with the books balanced, every record `flow_link: true` (HOST: the key in the run); 0 record checks failed, 4 readings inside, 7 outside, none moved. DETECTOR (the radius at the births a CONVERSION of the age click by the flight table; the reviewer's kinds): `r12_flow` 145 clicks, x 31 to 96, the radius at the births 3.2 to 68.3 about 24.3, T = 588.7 (343 to 411): outside, omega^2 7.78e-5: outside, the amplitude 32.5: outside, the escape through `face:+y` at the tick 1208 after touching the detector line at 808; `r24_flow` 288 clicks, x 0 to 90, the radius 17.0 to 71.0 about 37.6, T = 987.3 (686 to 822): outside, omega^2 3.11e-5: outside, the amplitude 45: outside, the escape through `face:-x` at 2452 after touching the line at 633 (the register's first record of this run said no escape: corrected from the registered events on the Newton Diagnostician's finding, record 1022, the tool printing every world's escape and contacts since; the periods the means of two and three spacings of loops that never closed; no other number moved); the ratio T(24) / T(12) = 1.677 (1.82 to 2.18), COMPUTATION from two DETECTOR periods of two records: outside; the controls every click at x = 60 + r and the escape at 305 (299 to 311): inside, both. The verdict by the pins as written: the controls inside; the periods and the ratio outside, the two refuting readings both read; what is refuted is the circle's period at the whole 8 under the key and the ratio of two loops that are not similar figures (the mean radii 24.3 and 37.6, the ratio 1.55; T / the mean radius 24.2 and 26.3, COMPUTATION, not pinned). Three causes named, none moved: the loops not circles (two or three unequal recurrences each); the whole-n grain of the launch (n = 8 sits 7.8 percent above the balance under the key, twice the registered 3.4 percent as built); the push's grain and the drive's anisotropy, as registered. On flow-link-v1 the run decides nothing: no world as built at n = 8 was run to separate the constant from the grain (named, not run, not proposed); the hypothesis's own reading is the ring's, stated beside this row when it comes. Status: run once, registered, none moved.
 
 ## B. Proof for the paper
 
@@ -10043,7 +10043,7 @@ sign rule, and its other couplings are catalog entries.
 
 ### E15. The click of one record, shown (2026-09-21)
 
-- **The page** [examples/events/amplitude/pages/click.html](../examples/events/amplitude/pages/click.html)
+- **The page** examples/events/amplitude/pages/click.html (`examples/events/amplitude/pages/click.html`, deleted 2026-09-26)
   (visualisation requested by the model owner, 2026-09-21; built by
   `examples/events/amplitude/pages/build_pages.py` from the registered
   world `slits_low` of L2, the runner's `run.json` and `events.jsonl`, the
@@ -10059,7 +10059,7 @@ sign rule, and its other couplings are catalog entries.
 
 ### E16. The pair's two clicks, shown (2026-09-21)
 
-- **The page** [examples/events/amplitude/pages/bell.html](../examples/events/amplitude/pages/bell.html)
+- **The page** examples/events/amplitude/pages/bell.html (`examples/events/amplitude/pages/bell.html`, deleted 2026-09-26)
   (the same builder; the registered worlds `bell_0_8`, `bell_0_24`,
   `bell_16_8`, `bell_16_24` of L3): the first record (u = 0) born as one
   record with two arms, its rows ending at `alice_plus` at tick 6 and at

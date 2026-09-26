@@ -1160,7 +1160,7 @@ couplings.
   apparatus as light's. Not claimed: the potential (23.4, the standing
   record under V), the transition of a body back to a record, Klein-Gordon
   or Schrodinger reached beyond the linear block (23.2).
-- **The pin (`slits_matter`, [examples/events/massive_rows/README.md](../examples/events/massive_rows/README.md);
+- **The pin (`slits_matter`, examples/events/massive_rows/README.md (`examples/events/massive_rows/README.md`, deleted 2026-09-26);
   the design's section 4, every number with its line, pinned before the
   run).** `slits_huygens`' plane, apparatus and Farey fan with `matter`
   (M 64, p 220, S 1, h 1024: E'_0 = 4096, E' = 4113, the pace 220 / 4113

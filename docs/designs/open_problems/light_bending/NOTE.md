@@ -59,7 +59,7 @@ the clock cannot give.
   Tortora 2003).
 - **The register.** Series K on `main`: the deflection 0.000 pixel and
   the delay 0.00 interval in every world, at a crowd where nature would
-  capture the beam ([the lensing README](../../../../examples/events/lensing/README.md),
+  capture the beam (the lensing README (`examples/events/lensing/README.md`, deleted 2026-09-26),
   [EXPERIMENTS K](../../../EXPERIMENTS.md#k-light-beside-a-mass-2026-09-20)).
   Series K under `meeting-v1`: the centroid toward the mass by -1.79,
   -4.36 and -2.30 pixels at (M, b) = (2^12, 6), (2^13, 6), (2^12, 3),
@@ -386,5 +386,5 @@ Boss:
 [second review](../../gr_rows/REVIEW_ROUND2.md);
 [the clock's word](../../clock_age/NOTE.md);
 the orbit's inward legs (docs/designs/orbit_read/NOTE.md on the branch claude/orbit-read at the time of writing, PR #597: the Manhattan factor of a fan, the same lesson);
-[NATURE](../../../NATURE.md); [the lensing README](../../../../examples/events/lensing/README.md);
+[NATURE](../../../NATURE.md); the lensing README (`examples/events/lensing/README.md`, deleted 2026-09-26);
 [the three tests](../../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).

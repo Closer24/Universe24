@@ -1,5 +1,7 @@
 # Test inputs and expected results
 
+> The ray law's test files, worlds and tools named below were deleted on 2026-09-26 (docs/CANCELLED_WORLDS.md, the restore commit named there); their rows stay as history of what each test pinned.
+
 Since 2026-09-17, by the model owner's decision in
 [Highlights 5.5](HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions), a test
 exercises one generic rule in isolation on a minimal GameBoard and nothing else: one

@@ -79,7 +79,7 @@ owner admits it.
 
 Per direction **D** = (a, b, c) of the world's table, formed once at load
 and read as constants (BEAM_LAW note 41 (viii)), in
-[nature_beam.py](../../../src/event_universe/events/nature_beam.py):
+nature_beam.py (`src/event_universe/events/nature_beam.py`, deleted 2026-09-26):
 
 | Integer | Where | What |
 | --- | --- | --- |

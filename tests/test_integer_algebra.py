@@ -49,12 +49,7 @@ SRC = ROOT / "src" / "event_universe"
 # The physical modules: every module that runs a physical step of the
 # interval or forms the tables it reads, one line each why.
 PHYSICAL_MODULES: dict[str, str] = {
-    "events/nature_beam.py": "the Node's interval: the walk, the collision, the click's plan, the release, the border, the merge",
-    "events/meeting.py": "the meeting under its key: the crowd's flow, the arc permutation, the norm",
-    "events/engine.py": "the frame of the interval: the clocks, the drive, the books, the readings",
     "events/world.py": "the world file's parse and the load-time constants (the flight table, the labels)",
-    "events/measured.py": "the measured event's record and the ledger of an interval",
-    "events/amplitude.py": "the click's ledger: the offer, the evaluation, the Gram form, the rungs",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md 9.90 (1))",
     "events/rule.py": "the one rule's coefficients per Node and per axis (ALGEBRA.md 9.57 (1), 9.91 (2)) and the ladder's rungs (9.25 (2))",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md 9.88 (7)): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
@@ -113,38 +108,8 @@ ROOT_NAMES = {"isqrt", "integer_root"}
 # Every root in the physical modules today, by (module, function), with its
 # reason; `None` is the module level. The set found must equal this set.
 ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
-    (
-        "events/nature_beam.py",
-        "unit_label",
-    ): "at load: the unit vector u_D rounded to the nearest integer vector",
-    (
-        "events/nature_beam.py",
-        "direction_flight",
-    ): "at load: the flight table's resolution T_D = isqrt(3 |D|^2 Q^2), a declared rounding",
-    (
-        "events/nature_beam.py",
-        "flight_triple",
-    ): "at load: a massive family's E'_D = isqrt(E'_0^2 + 3 p_D . p_D) per direction, a declared rounding",
-    (
-        "events/nature_beam.py",
-        "unit_energies",
-    ): "at load: the per-direction energies of the flight triple, the same rounding",
-    ("events/meeting.py", "arc_shift"): "at load: the bound of the arc table from the momentum bound",
-    (
-        "events/meeting.py",
-        "meet",
-    ): "AT RUN TIME under the key `meeting`: the norm of the crowd's target |t| = isqrt(t . t); the seventh verb named in LAW.md 4.3 (the one root at run time since the optical key's wall became the ladder of comparisons `split_ladder`, PR #855)",
-    (
-        "events/engine.py",
-        "__init__",
-    ): "at load: E' = integer_root(W) once under `covariant_readings`, the declared rounding of DERIVATIONS_BEAM 17.6 M3; comparisons from then on",
-    # the engine's `__init__` held a root once (a splitter's row norm a perfect square, build 2,
-    # component 3); the tables retired with the flux reading (item 17) and no root stands in
-    # the engine module: none listed (BUILD.md section 26 item 73)
-    (
-        "events/amplitude.py",
-        "common_denominator",
-    ): "a predicate at a join of two multiplicities: is the ratio a perfect square (the root squared back and compared); no rounded number enters a reading",
+    # the ray law's modules (nature_beam.py, meeting.py, engine.py) and their roots were
+    # deleted on 2026-09-26 (docs/CANCELLED_WORLDS.md)
     ("events/world.py", None): "at load: T_HEADING = isqrt(3 Q^2), the flight's resolution on a heading",
     (
         "events/world.py",
