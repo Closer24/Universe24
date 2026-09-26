@@ -1,0 +1,118 @@
+"""THE FOUR PACES (ALGEBRA.md 9.91 (2); the one stroke of record 2106, commit 3; BUILD.md
+section 26 item 62): a reading family's pace on the axis a is p_a = p_0 - t_a, p_0 = Gamma - c
+(the reads' time components) and t_a the reads' aa components halved with the remainder kept at
+the Node; the rule's reads along the axis a weigh 2 p_a^2 num and its own term carries the
+three axis paces; with every tensor part zero the paces are one and the rule is the isotropic
+one bit for bit; the inverse reads the paces the step read. HOST; no pin."""
+
+from __future__ import annotations
+
+import numpy as np
+
+from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.events.rule import axis_rule_coefficients, rule_coefficients
+from event_universe.events.world import input_stamp, parse_nature_beam_world
+from tests.test_massive_record import block_world
+from tests.test_vector_holds import KIND, WELL, parts_of
+
+SHAPE = [10, 6, 6]
+GAMMA = 10_000
+
+
+def paces_world() -> dict:
+    """A periodic board with a body of matter at rest and the families with parts (gravity
+    [1, 3, 6] holding the content); the matter family reads gravity's time part at 1."""
+    block = {"position": [3, 2, 2], "side": 3, "pair": WELL, "margin": "control"}
+    periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
+    document = block_world(SHAPE, periodic, KIND, [block], ticks=20)
+    document["age_bound"] = 100000
+    for family in document["families"]:
+        if family["name"] == "clicks":
+            family.update({"parts": [1, 3, 6], "held_factors": [1, 4, 2], "held_dipole": "spin"})
+    document["input"] = input_stamp(document)
+    return document
+
+
+def axis_sums(a: np.ndarray) -> list[np.ndarray]:
+    return [np.roll(a, 1, axis=axis) + np.roll(a, -1, axis=axis) for axis in range(3)]
+
+
+def test_the_coefficients_with_equal_paces_are_the_isotropic_rules():
+    reads, self_coefficient, wall = axis_rule_coefficients(800, 809, GAMMA, 250, (0, 0, 0))
+    read, self_iso, wall_iso = rule_coefficients(800, 809, GAMMA, 250, True)
+    assert reads == (read, read, read) and self_coefficient == self_iso and wall == wall_iso
+    # a tensor along x alone slows the x reads and the own term by 4 num (p_x^2 - p_0^2)
+    reads_x, self_x, _ = axis_rule_coefficients(800, 809, GAMMA, 250, (20, 0, 0))
+    p0, px = GAMMA - 250, GAMMA - 250 - 20
+    assert reads_x == (2 * px * px * 800, read, read)
+    assert self_x == self_iso - 4 * 800 * (px * px - p0 * p0)
+
+
+def test_a_planted_tensor_part_bends_the_rule_per_axis_and_the_inverse_reads_the_same_paces():
+    """Gravity's xx part set to 40 at every Node of a slab (a sourced part, not silent): a
+    matter record's step is the rule with p_x = p_0 - 20 there and p_y = p_z = p_0, the
+    isotropic rule elsewhere, the remainder in [0, w); the wheel at a Node of the slab reads
+    the five coefficients; one interval back restores the rows exactly."""
+    simulation = DetectorLawSimulation(parse_nature_beam_world(paces_world()))
+    gravity = parts_of(simulation, "clicks")
+    matter = [family.name for family in simulation.families].index("matter")
+    assert simulation._axis_contents(matter) is None  # every tensor part silent: isotropic
+    xx = gravity[4]
+    assert xx.part == 4 and xx.silent
+    xx.now[7:9, :, :] = 40
+    xx.before[7:9, :, :] = 40
+    xx.silent = False
+    simulation._sourced_ever[(gravity[0].family, 4)] = True
+    simulation._axis_effective.clear()
+    rng = np.random.default_rng(3)
+    now = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
+    before = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
+    live = simulation.planted_record(matter, now.copy(), before.copy())
+    content = simulation._effective_content(matter).copy()
+    axis_contents = simulation._axis_contents(matter)
+    assert axis_contents is not None
+    assert int(axis_contents[0][7, 0, 0]) == 20 and int(axis_contents[0][2, 0, 0]) == 0
+    assert not axis_contents[1].any() and not axis_contents[2].any()
+    simulation._advance(live)
+    sums = axis_sums(now)
+    num_all, den_all = simulation.pair_arrays(matter)  # the well's pair at the body's Nodes
+    for node in ((7, 2, 2), (8, 5, 1), (2, 3, 3), (4, 4, 4)):
+        t = (int(axis_contents[0][node]), 0, 0)
+        c = int(content[node])
+        num, den = int(num_all[node]), int(den_all[node])
+        reads, self_coefficient, wall = axis_rule_coefficients(num, den, GAMMA, c, t)
+        total = sum(reads[a] * int(sums[a][node]) for a in range(3))
+        total += self_coefficient * int(now[node]) - wall * int(before[node])
+        expected = total // wall
+        assert int(live.now[node]) == expected, node
+        assert 0 <= int(live.remainder[node]) == total - wall * expected < wall, node
+    # the wheel at a slab Node reads the five coefficients' gcd
+    step, wheel = simulation.wheel_at(matter, (7, 2, 2))
+    reads, self_coefficient, wall = axis_rule_coefficients(
+        800, 809, GAMMA, int(content[7, 2, 2]), (20, 0, 0)
+    )
+    from math import gcd
+
+    assert step == gcd(wall, self_coefficient, *reads) and wheel == wall // step
+    # the inverse reads the same paces (the tensor's before level, the remainder stepped back)
+    simulation._advance_inverse(live)
+    assert np.array_equal(live.now, now) and np.array_equal(live.before, before)
+    assert not live.remainder.any()
+    assert simulation.leaks() == []
+
+
+def test_with_the_tensor_zero_the_engine_is_the_isotropic_one_bit_for_bit():
+    simulation = DetectorLawSimulation(parse_nature_beam_world(paces_world()))
+    matter = [family.name for family in simulation.families].index("matter")
+    rng = np.random.default_rng(5)
+    now = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
+    before = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
+    live = simulation.planted_record(matter, now.copy(), before.copy())
+    content = simulation._effective_content(matter)
+    num, den = simulation.pair_arrays(matter)
+    expected, remainder = simulation.one_rule(
+        num, den, GAMMA, content, simulation._neighbours(now), now, before, np.zeros_like(now), True
+    )
+    simulation._advance(live)
+    assert np.array_equal(live.now, expected) and np.array_equal(live.remainder, remainder)
+    assert simulation._axis_contents(matter) is None

@@ -71,7 +71,7 @@ import numpy as np
 from event_universe.core.game_board import Address3
 from event_universe.core.integer import by_drive
 from event_universe.events.amplitude import rungs
-from event_universe.events.rule import rule_coefficients
+from event_universe.events.rule import axis_rule_coefficients, rule_coefficients
 from event_universe.events.world import (
     AXES,
     BEAM_LAW,
@@ -574,6 +574,13 @@ class DetectorLawSimulation:
             family: np.zeros(self.shape, dtype=np.int64) for family in self.held_families
         }
         self._effective: dict[int, np.ndarray] = {}  # HOST: per interval, cleared by the hold
+        # THE FOUR PACES (ALGEBRA.md 9.91 (2); commit 3): per reading family the
+        # three axis contents t_a (the reads' aa components halved, the division's
+        # remainder carried per Node, `_pace_carry` keyed (family, read, axis)),
+        # computed once per interval (HOST cache by tick); None where every read's
+        # tensor part is silent (the isotropic rule, bit for bit)
+        self._pace_carry: dict[tuple[int, int, int], np.ndarray] = {}
+        self._axis_effective: dict[int, tuple[int, bool, tuple[np.ndarray, ...] | None]] = {}
         # THE LEAK TEST (the model owner's record 2075 (3); BUILD.md section 26
         # item 55): a held family no body has ever sourced must be exactly zero
         # everywhere; the hold marks the first nonzero source (HOST, a flag per
@@ -1057,6 +1064,11 @@ class DetectorLawSimulation:
             if not definition.reads:
                 continue
             most = int(np.max(np.abs(self._effective_content(family))))
+            axis_contents = self._axis_contents(family)
+            if axis_contents is not None:
+                # every axis pace p_a = Gamma - c - t_a stays positive too (9.91 (2))
+                content = self._effective_content(family)
+                most = max(most, *(int(np.max(np.abs(content + t))) for t in axis_contents))
             if most >= self.node_clock:
                 raise RuntimeError(
                     f"{BEAM_LAW}: the effective content {definition.name!r} reads reached {most} "
@@ -1104,8 +1116,15 @@ class DetectorLawSimulation:
         # the rule's three integers at the Node (9.57 (1); item 44): the
         # coefficient on the six reads, the coefficient at the Node and the
         # wall; the remainder moves on the multiples of their gcd
-        read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, True)
-        step = gcd(wall, self_coefficient, read)
+        axis_contents = self._axis_contents(family)
+        if axis_contents is None:
+            read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, True)
+            step = gcd(wall, self_coefficient, read)
+        else:
+            reads, self_coefficient, wall = axis_rule_coefficients(
+                num, den, gamma, content, tuple(int(t[node]) for t in axis_contents)
+            )
+            step = gcd(wall, self_coefficient, *reads)
         return step, wall // step
 
     def node_clock_pair(self, node: tuple[int, ...], family: int) -> tuple[int, int]:
@@ -1931,7 +1950,20 @@ class DetectorLawSimulation:
         # HOST (item 43): the record's box holds the reach of `before`'s rows
         # (it was the window of the step that wrote `now`), so the inverse is
         # read on the box itself, zeros elsewhere; the box stays (a superset)
-        if live.box is None or self._window(live.box, self.kind_wrap[live.family]) is None:
+        axis_contents = None if field else self._axis_contents(live.family, inverse=True)
+        if axis_contents is not None:
+            a_before, live.remainder = self.one_rule_axes_inverse(
+                num,
+                den,
+                gamma,
+                content,
+                axis_contents,
+                self._axis_neighbours(live.before, self.kind_wrap[live.family]),
+                live.now,
+                live.before,
+                live.remainder,
+            )
+        elif live.box is None or self._window(live.box, self.kind_wrap[live.family]) is None:
             neighbours = self._neighbours(live.before, self.kind_wrap[live.family])
             a_before, live.remainder = self.one_rule_inverse(
                 num, den, gamma, content, neighbours, live.now, live.before, live.remainder, not field
@@ -2044,6 +2076,66 @@ class DetectorLawSimulation:
             for sign in (1, -1):
                 total += self._shift(a, axis, sign, wrap=wrap)
         return total
+
+    def _axis_neighbours(
+        self, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """The two reads along each axis summed, (a_(+x) + a_(-x), ...), as
+        `_neighbours` reads them (ALGEBRA.md 9.91 (2): the rule's R_a on the
+        axis a's two reads)."""
+        sums: list[np.ndarray] = []
+        for axis in range(3):
+            if self.shape[axis] == 1:
+                sums.append(2 * a)
+                continue
+            sums.append(self._shift(a, axis, 1, wrap=wrap) + self._shift(a, axis, -1, wrap=wrap))
+        return sums[0], sums[1], sums[2]
+
+    def _axis_contents(self, family: int, inverse: bool = False) -> tuple[np.ndarray, ...] | None:
+        """THE AXIS CONTENTS t_a of a reading family (ALGEBRA.md 9.91 (2); commit
+        3): SUM over its reads of weight x by x (the read family's aa component
+        div 2), one division per read per axis with the remainder kept at the
+        Node (`_pace_carry`), advanced once per interval; backward the same
+        values with the remainder stepped back (r_(t-1) = (r_t - S) mod 2, the
+        value (S + r_(t-1)) div 2), so the inverse reads the paces the step
+        read. None where no read's tensor part was ever sourced: the rule is
+        then isotropic, p_a = p_0, bit for bit."""
+        cached = self._axis_effective.get(family)
+        if cached is not None and cached[0] == self.tick and cached[1] == inverse:
+            return cached[2]
+        sign = self.family_charge[family]
+        found: list[np.ndarray] | None = None
+        for other, weight, by, _ in self.families[family].reads:
+            parts = self.families[other].parts
+            if len(parts) < 3:
+                continue
+            diagonal = self.held_parts[other][parts[1] : parts[1] + 3]  # xx, yy, zz
+            if all(record.silent for record in diagonal):
+                continue
+            factor = weight if by == "plain" else -sign * weight
+            if factor == 0:
+                continue
+            if found is None:
+                found = [np.zeros(self.shape, dtype=np.int64) for _ in range(3)]
+            for axis, record in enumerate(diagonal):
+                key = (family, other, axis)
+                carry = self._pace_carry.get(key)
+                if carry is None:
+                    carry = np.zeros(self.shape, dtype=np.int64)
+                level = record.before if inverse else record.now
+                numerator = factor * level
+                if inverse:
+                    carry = np.mod(carry - numerator, 2)
+                    value = np.floor_divide(numerator + carry, 2)
+                else:
+                    total = numerator + carry
+                    value = np.floor_divide(total, 2)
+                    carry = total - 2 * value
+                self._pace_carry[key] = carry
+                found[axis] += value
+        result = None if found is None else (found[0], found[1], found[2])
+        self._axis_effective[family] = (self.tick, inverse, result)
+        return result
 
     # The flux reading (ALGEBRA.md 9.19 (3), the mathematician's derivation
     # of 2026-09-24 from 8.2; BUILD.md section 26 item 13): the flux into a
@@ -2577,6 +2669,56 @@ class DetectorLawSimulation:
         )
         return a_before, wall * a_before - total
 
+    @staticmethod
+    def one_rule_axes(
+        num: np.ndarray,
+        den: np.ndarray,
+        gamma: int,
+        content: np.ndarray | int,
+        axis_contents: tuple[np.ndarray, ...],
+        axis_neighbours: tuple[np.ndarray, np.ndarray, np.ndarray],
+        now: np.ndarray,
+        before: np.ndarray,
+        remainder: np.ndarray,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """THE ONE RULE WITH THE FOUR PACES (ALGEBRA.md 9.91 (2); commit 3): w a_next
+        + r' = SUM_a R_a (a_(+a) + a_(-a)) + S a_now - w a_before + r with (R_a, S,
+        w) of `axis_rule_coefficients`; at t_a = 0 the one rule bit for bit."""
+        reads, self_coefficient, wall = axis_rule_coefficients(num, den, gamma, content, axis_contents)
+        total = reads[0] * axis_neighbours[0]
+        total += reads[1] * axis_neighbours[1]
+        total += reads[2] * axis_neighbours[2]
+        total += self_coefficient * now
+        total -= wall * before
+        total += remainder
+        nxt = np.floor_divide(total, wall) if isinstance(total, np.ndarray) else total // wall
+        return nxt, total - wall * nxt
+
+    @staticmethod
+    def one_rule_axes_inverse(
+        num: np.ndarray,
+        den: np.ndarray,
+        gamma: int,
+        content: np.ndarray | int,
+        axis_contents: tuple[np.ndarray, ...],
+        axis_neighbours_of_before: tuple[np.ndarray, np.ndarray, np.ndarray],
+        now: np.ndarray,
+        before: np.ndarray,
+        remainder: np.ndarray,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """The rule with the four paces one interval back, the same integers
+        (ALGEBRA.md 9.50 (8); 9.91 (2))."""
+        reads, self_coefficient, wall = axis_rule_coefficients(num, den, gamma, content, axis_contents)
+        total = reads[0] * axis_neighbours_of_before[0]
+        total += reads[1] * axis_neighbours_of_before[1]
+        total += reads[2] * axis_neighbours_of_before[2]
+        total += self_coefficient * before
+        total -= wall * now + remainder
+        a_before = (
+            -np.floor_divide(-total, wall) if isinstance(total, np.ndarray) else -((-total) // wall)
+        )
+        return a_before, wall * a_before - total
+
     def _advance(self, live: LiveRecord) -> None:
         # THE EMITTER'S NODES ARE NODES LIKE EVERY OTHER (ALGEBRA.md 9.17; the
         # Boss's line of 2026-09-24 on the knot): no grace, no exemption, no
@@ -2633,8 +2775,24 @@ class DetectorLawSimulation:
         # S_6(a_now)_i + 6 den c_i a_now - 3 den Gamma a_before + r; the
         # Node steps the vacuum's rule at its own pace (the pace on each
         # read's far end, form (B) of item 34, HISTORY)
+        axis_contents = None if field else self._axis_contents(live.family)
         window = self._window(live.box, self.kind_wrap[live.family])
-        if window is None:
+        if axis_contents is not None:
+            # THE FOUR PACES (ALGEBRA.md 9.91 (2); commit 3): the rule per axis on the
+            # whole board (the tensor's diagonal read; HOST: no window shortcut here)
+            nxt, live.remainder = self.one_rule_axes(
+                num,
+                den,
+                gamma,
+                content,
+                axis_contents,
+                self._axis_neighbours(live.now, self.kind_wrap[live.family]),
+                live.now,
+                live.before,
+                live.remainder,
+            )
+            live.box = None
+        elif window is None:
             neighbours = self._neighbours(live.now, self.kind_wrap[live.family])
             nxt, live.remainder = self.one_rule(
                 num, den, gamma, content, neighbours, live.now, live.before, live.remainder, not field

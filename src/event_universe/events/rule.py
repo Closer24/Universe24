@@ -54,6 +54,42 @@ def rule_coefficients(num, den, gamma, content, weak_field):  # type: ignore[no-
     return read, self_coefficient, 6 * den * gamma_squared
 
 
+@overload
+def axis_rule_coefficients(
+    num: int, den: int, gamma: int, content: int, axis_contents: tuple[int, ...]
+) -> tuple[tuple[int, int, int], int, int]: ...
+
+
+@overload
+def axis_rule_coefficients(
+    num: np.ndarray,
+    den: np.ndarray,
+    gamma: int,
+    content: np.ndarray | int,
+    axis_contents: tuple[np.ndarray, ...],
+) -> tuple[tuple[np.ndarray, np.ndarray, np.ndarray], np.ndarray, np.ndarray]: ...
+
+
+def axis_rule_coefficients(num, den, gamma, content, axis_contents):  # type: ignore[no-untyped-def]
+    """THE FOUR PACES (ALGEBRA.md 9.91 (2); the one stroke, commit 3): p_0 = Gamma -
+    c (c the reads' time components) and p_a = p_0 - t_a (t_a the reads' aa
+    components halved, `axis_contents`), and the rule's integers with them:
+    R_a = 2 p_a^2 num on the two reads along the axis a, S = 12 den Gamma^2 - 6
+    (p_0^2 + Gamma^2)(den - num) - 4 num (p_x^2 + p_y^2 + p_z^2), w = 6 den
+    Gamma^2. At p_a = p_0 the isotropic rule term for term (`rule_coefficients`
+    with the weak field). Returns ((R_x, R_y, R_z), S, w); integers or integer
+    arrays alike."""
+    pace = gamma - content
+    paces = [pace - axis_contents[axis] for axis in range(3)]
+    gamma_squared = gamma * gamma
+    reads = (2 * paces[0] * paces[0] * num, 2 * paces[1] * paces[1] * num, 2 * paces[2] * paces[2] * num)
+    squares = paces[0] * paces[0] + paces[1] * paces[1] + paces[2] * paces[2]
+    self_coefficient = (
+        12 * den * gamma_squared - 6 * (pace * pace + gamma_squared) * (den - num) - 4 * num * squares
+    )
+    return reads, self_coefficient, 6 * den * gamma_squared
+
+
 def rule_total_bound(
     num: int, den: int, gamma: int, content: int, amplitude: int, weak_field: bool
 ) -> int:

@@ -4498,6 +4498,44 @@ would have found no cell.
    body, 4 s n_x div W = 65, and nothing reads it until the paces of commit
    3). MISSING LINES for the mathematician: W (the universe's, or the body's
    wall); the dipole at a hop.
+62. THE ONE STROKE, COMMIT 3: THE FOUR PACES (ALGEBRA.md 9.91 (10) 3; 9.91 (2);
+   9.78 (4)). A reading family's pace at a Node is four integers: p_0 = Gamma
+   - c, c the sum over its reads of weight x by x the read family's time
+   component (the effective content as built, items 35 and 51), and p_a = p_0
+   - t_a on the axis a, t_a the sum over its reads of weight x by x the read
+   family's aa component div 2, ONE DIVISION PER READ PER AXIS WITH THE
+   REMAINDER KEPT AT THE NODE (`_pace_carry`, keyed reading family, read,
+   axis; advanced once per interval, HOST cache by tick), stepped back
+   exactly at the inverse (r_(t-1) = (r_t - S) mod 2, the value (S + r_(t-1))
+   div 2, the paces the step read). THE RULE WITH THEM (`axis_rule_coefficients`
+   in the rule module, `one_rule_axes` and its inverse in the engine): w
+   a_next + r' = SUM_a R_a (a_(+a) + a_(-a)) + S a_now - w a_before + r with
+   R_a = 2 p_a^2 num on the axis a's two reads, S = 12 den Gamma^2 - 6 (p_0^2
+   + Gamma^2)(den - num) - 4 num (p_x^2 + p_y^2 + p_z^2), w = 6 den Gamma^2;
+   at p_a = p_0 the one rule term for term (`rule_coefficients`), and where
+   no read's tensor part was ever sourced the engine takes the isotropic path
+   untouched (the axis contents None): BIT FOR BIT on the four resting
+   worlds (every tensor part zero). THE MOVING ROW (GAMEBOARD, the long
+   Lorentz clock in motion): since item 61 the moving body holds gravity's
+   xx part 8 at its Nodes, so the matter record reads t_x = 8 div 2 = 4
+   there and steps with p_x = p_0 - 4, p_y = p_z = p_0; its rows move from
+   the first interval (the record's remainder), by this read alone: with the
+   tensor read silenced the world is bit for bit with the old engine
+   (9.91 (9) (a): the moving rows' digests move only by the vector hold; a
+   check-mode digest, not a defect). The wheel at a Node reads the
+   five coefficients' gcd; the run's guard keeps every p_a positive (Gamma -
+   c - t_a > 0). The held families step plain as before (9.91 (2)'s line to
+   build: a field reading itself is the self-source's place). THE GATE
+   tests/test_axis_paces.py: the coefficients at equal paces the isotropic
+   rule's, a tensor along x alone slowing the x reads and the own term by 4
+   num (p_x^2 - p_0^2); gravity's xx part planted at 40 on a slab bends a
+   matter record's step per axis (p_x = p_0 - 20 there, p_y = p_z = p_0) at
+   Nodes in and out of the well, the wheel's gcd, the inverse exact; with the
+   tensor zero the step is the one rule's arrays bit for bit. NOT BUILT, for
+   the mathematician: the conserved form and the density under anisotropic
+   paces (`form_share`, `node_density` read the isotropic coefficients; 9.91
+   gives the rule per axis, not the form's Link terms per axis); the window
+   shortcut on the anisotropic path (the whole board is stepped, HOST).
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
