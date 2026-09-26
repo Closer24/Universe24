@@ -32,56 +32,65 @@
  "face_depth": 1,
  "readings": [
   {
+   "name": "level_field_10_16_16",
    "kind": "level",
    "family": "field",
    "node": [10, 16, 16],
    "every": 1
   },
   {
+   "name": "level_field_22_16_16",
    "kind": "level",
    "family": "field",
    "node": [22, 16, 16],
    "every": 1
   },
   {
+   "name": "support_field",
    "kind": "support",
    "family": "field",
    "every": 1
   },
   {
+   "name": "level_field_table_10_16_16",
    "kind": "level",
    "family": "field_table",
    "node": [10, 16, 16],
    "every": 1
   },
   {
+   "name": "level_field_table_22_16_16",
    "kind": "level",
    "family": "field_table",
    "node": [22, 16, 16],
    "every": 1
   },
   {
+   "name": "support_field_table",
    "kind": "support",
    "family": "field_table",
    "every": 1
   },
   {
+   "name": "total_control",
    "kind": "total",
    "family": "control",
    "every": 1
   },
   {
+   "name": "centre_field",
    "kind": "centre",
    "family": "field",
    "every": 10
   },
   {
+   "name": "centre_body_0",
    "kind": "centre",
    "body": 0,
    "every": 10
   }
  ],
  "stamp": {
-  "hash": "ea76dcfd2364f1868c2d64f370397d74da24312e329e2f9448f165e04c46b11d"
+  "hash": "f10e90948b771cb4eba705a0618b752730f709660d1407a73262a0457d6a4250"
  }
 }
