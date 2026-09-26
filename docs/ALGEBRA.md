@@ -15752,3 +15752,94 @@ entering twice) is not that road either; it is the rule's own, and the
 perihelion reads it. THE WORDS FOR THE OWNER: the rule is put in; from
 it come Lorentz, Newton and Einstein's linear form with every factor;
 Einstein's strong field stays outside as one declared number.
+
+### 9.96 Five lines that hold the stroke (the Boss's record 2124 of 2026-09-26 and Nature24's three questions on commit 1, 134e017e): the wall, the twist table with Lambda_v derived away, P_0 and the tools' quanta, the separation rule retired, a body giving its own family
+
+**(1) WHICH WALL.** One wall per body, the one its hop uses: W = 3 Q M
+with Q the momentum's unit and M the body's quanta (9.89 (2), S = 1
+gone). The momentum's whole part n on that wall is the body's velocity
+in Links per interval, v = n / W, and the writes of 9.91 (3) read that
+v: 4 s n div W and 2 s n n div W^2 with this W. The recoil of 9.84 (2)
+adds to n on the same wall. There is no second wall; 9.52 (4)'s "W = 2
+Gamma L" named the accumulator's scale under the first-order rule and
+is history. The hold's divisions keep their remainders on the body's
+record as written.
+
+**(2) THE TWIST TABLE, AND Lambda_v DERIVED AWAY.** (a) THE ANGLE. On a
+matter record of rest rotation omega_0 (radians per interval) gravity's
+vector part turns the pair, per Link along axis a, by omega_0 x A_a /
+(2 Gamma) (the dragging phase of a matter wave: the coupling 4 U v_s of
+9.95 (4) with A / Gamma = 8 U v_s, times the record's own frequency);
+with k = sigma x by x twist x (A_here + A_arrived) of 9.81 (2) (a), the
+angle k theta_unit must equal omega_0 (A_here + A_arrived) / (4 Gamma),
+so
+
+  theta_unit = 1 / (4 Gamma x 2^16) radians per unit of k,
+  twist "own" = round(2^16 omega_0), an integer the loader writes once
+  from the record's pair (matter) or from its wavelength on light's
+  dispersion, cos omega = (cos(2 pi / lambda) + 2) / 3 (light).
+
+(b) Lambda_v IS Lambda. The charge's vector on a charged record turns
+the pair by omega_0 q Lambda A_a / (2 Gamma) (the (1, 1) of 9.95 (4): the
+vector couples with the same Lambda as the scalar, u . A), so the read's
+twist is Lambda x "own" and no separate number exists: `charge_twist`
+leaves the integers block; the read entry of matter on the charge is
+{family charge, weight Lambda, twist "own", by q} with the loader
+multiplying Lambda in. (c) THE TABLE IN TWO PARTS. |k| reaches 2^16 x
+0.3 x 2 A = 4 x 10^10, beyond any table; so the angle is composed of a
+coarse and a fine part, k = k_1 2^10 + k_0 with 0 <= k_0 < 2^10: a FINE
+table of 2^10 triples for the angles k_0 theta_unit and a COARSE table
+for the angles k_1 (2^10 theta_unit) up to the world's bound, each
+triple (c, s, d) with c^2 + s^2 = d^2 exactly whose angle is within
+theta_unit / 2^10 of its target (the generator's n / m nearest tan(angle /
+2), d at most 10^9); the transport's triple is their exact product
+(c_1 c_0 - s_1 s_0, s_1 c_0 + c_1 s_0, d_1 d_0), one rotation and one
+division per Port with the remainder of 9.81 (2) (c) on d_1 d_0. The
+coarse bound: the largest angle per Link a row needs, 10^-2 radians
+(the ring's loop), is k_1 of 2^6 x 10^4 x 10^-2 / 2^10 x ... in short a
+coarse table of at most 2^15 entries; the loader refuses a k beyond it
+naming the Port. (d) THE VALUE FOR THE CHECK ROWS: theta_unit as
+above; the tables generated once into the families file's integers
+block by the generator, checked by the loader (every identity, every
+angle).
+
+**(3) P_0 AND THE TOOLS' QUANTA.** The count s = M P_0 div P (9.51 (3))
+is the body's energy in units of 1 / interval when P_0 = 1: a quantum's
+energy is its own frequency 1 / P, Planck's E = h f with h = 1 in the
+engine's units. To let a tool be fixed by its mass while its well stays
+(9.84 (3)), P_0 is the rational [1, 1000]: s = M div (1000 P). THE
+TOOLS: the generator writes every shipped body's quanta as M = 1000 s P
+from its declared count s and its period P, so s and every level are
+unchanged, bit for bit; the recoil per click is then Delta v = 3 Q P /
+(lambda_q x 3 Q M) = 1 / (1000 s lambda_q) Links per interval, 2 x
+10^-8 for a tool of s = 2000 at lambda 21: below every band. THE
+MOMENTUM: the wall of (1) grows with M, so the generator rewrites each
+moving body's momentum label as n = v x 3 Q M with its unchanged v:
+bit for bit in the rows, a larger integer on the record. A FREE BODY
+declares its true M; a nucleus of 64 quanta has s = 0 (it gravitates
+by nothing, as nature's) and recoils by 1 / (64 lambda_q) per click,
+the row 9.84 (5) (a).
+
+**(4) THE SEPARATION RULE OF 9.35, RETIRED.** It was written for
+bodies sharing one family's pair field: a body's mode had to vanish on
+every other body's Nodes. With the pair on the record (9.91 (11)) each
+body's record is its own array, steps by its own pair at every Node
+(its well on its Nodes, its vacuum elsewhere), and meets another body
+only through the held families at the Node: gravity's t part (the
+content the other body holds), its vector and tensor, the charge. A
+body's tail on another body's Nodes is a record in a well of the held
+families, nothing else. So two bodies of matter may stand anywhere,
+10 Links apart in the all-families world or adjacent; the generator's
+eigenproblem is per body on its own world (9.94 (2)) with the other
+bodies absent, as 9.94 says; and the redshift's bottom clock keeps its
+holder as Nature24 rebuilt it or as a well, both allowed.
+
+**(5) A BODY GIVING ITS OWN FAMILY.** Under one matter family a matter
+emitter gives its own quanta: its stock is `stock`, a count of its own
+quanta set aside for giving, at most M; each giving lowers M by one
+(and s with it by (3)), and the given record carries the emitter's
+declared `pair` (its rest rotation in the medium, 9.91 (11)) as its
+own. The loader's refusal of a stock of the body's own family goes;
+`held` keeps the stocks of OTHER families a body gives (a matter body
+giving light, as today). A body that gives itself loses mass, as an
+emitter of matter waves does in nature.
