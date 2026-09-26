@@ -1,13 +1,4 @@
-"""THE SOURCE, its own folder (ALGEBRA.md 9.117 item 2, the row "the source"; 9.108 items 3,
-11, 13; 9.116 item 4b; the Boss's record 2217; the run files of examples/events/source/): the
-line's integers on the run files' numbers (D_peak 1,891,072 at E_s 18,910 gives the count 100
-and the remainder 72; the table at cap 60 gives 37), the remainder carried so the sum of the
-counts over intervals is the exact floor of the sum of D_i / E_s, the table form keeping no
-remainder, the write only where the count is nonzero (the source's locality), the inverse
-returning the start bit for bit, the refusals by name, the trace's hand identity, the run
-file's record giving the README's counts (COMPUTATION: 100 at the peak, 14,887 in all), and
-the folder's declaration the ledger's row, found by the register as a row not yet called by
-the loop."""
+"""The source's folder (ALGEBRA.md 9.117 row "the source"; 9.108 items 3, 11, 13): the line's integers on the run files' numbers, the carried remainder's exact floor, the table form, the write's locality, the inverse bit for bit, the refusals by name, the hand identity, the run file's record against the README's counts, the declaration the ledger's row."""
 
 from __future__ import annotations
 
@@ -120,8 +111,15 @@ def test_the_refusals_by_name():
         apply(SourceTerm(3, 2, 0, SCALE), start, zeros())
     with pytest.raises(ValueError, match="cap s_cap is 0"):
         apply(SourceTerm(3, 2, 1, SCALE, cap=0), start, zeros())
-    with pytest.raises(ValueError, match="growing level"):
-        apply(PLAIN, SourceStart(SHAPE, argument(1, -1, 0, 0, 0, 0)), zeros())
+    # a negative D_i is admitted (no refusal beyond the ledger's row): the plain form floors it
+    negative = apply(PLAIN, SourceStart(SHAPE, argument(1, -1, 0, 0, 0, 0)), zeros())
+    assert int(negative.counts.ravel()[1]) == -1 and int(negative.remainders.ravel()[1]) == SCALE - 1
+    with pytest.raises(ValueError, match="weight x count"):
+        apply(
+            SourceTerm(3, 2, 1 << 40, 1),
+            SourceStart(SHAPE, argument(1 << 30, 0, 0, 0, 0, 0)),
+            zeros(),
+        )
     with pytest.raises(ValueError, match="shaped by the GameBoard"):
         apply(PLAIN, SourceStart((3, 2, 1), argument(1, 2, 3, 4, 5, 6)), zeros())
     with pytest.raises(ValueError, match="int64"):
