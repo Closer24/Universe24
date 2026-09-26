@@ -105,6 +105,18 @@ checking code becomes a key of the run's files):
 | the readings a world file declares and the run writes, each labelled a GameBoard reading | TO DO: `readings`, a list of {kind, where, when}: a level's amplitude at a Node over intervals, a body's centre against a well's centre, the band-averaged speed of a body, the exact K reading as the neighbours' phase difference and the flux click half a Link ahead, the host cost beside | every reading one of the kinds above, by name, on declared Nodes and intervals | after the interval, read only, written to the run's output under its label | 9.108 item 12, 9.109 items 3 and 4, docs/ENGINE.md (the readings by type) | TO DO: every reading of docs/designs/rule_alone/ reproduced from a world file with no line of code |
 | the residue keys of every run | the keys table of 9.90 (6): a key read and not in the table, or in the table and never read, fails | the shipped worlds' `law`, `model_id`, `engine`, `K`, `N`, `release`, `width`, `age_bound`, `clock_stamp` gone | at load | 9.90 (6), 9.107 item 6 (b) | TO DO: the walking test of the keys table; `tests/test_engine_acceptance.py` test (e3) |
 
+THE OUTPUT IS A DECLARATION TOO (the model owner's word of 2026-09-26, 12:20Z: "how is the
+experiment's output made fully generic: how the clicks are counted, at which Node, whatever each
+one asks to be written in the output; the output is generic, the input is generic, and the
+engine implements what is between them"). The run writes nothing of its own choosing: every
+line of the output is a reading the world file declares (the `readings` declaration above: the
+detector's clicks with their Node and interval, a body's centre, a level at a Node, a count on
+a face), each labelled by its kind (DETECTOR, GAMEBOARD, HOST), in one format for every
+experiment; the engine knows no experiment's name and no reading's purpose. The visualizer
+renders the output file alone, never the engine's state: "what the visualizer does is make the
+output runnable on a screen" (the owner, the same word); a new display is a reader of the
+output, not a line of the engine.
+
 THE TERM FORM behind the table (the mathematician's 9.110 item 7): a family is a shape and a
 list of terms [kind, target, of, degree, weight, table], the kind one of four (READ, SOURCE,
 HOLD, CLICK); the shape is `parts`, `phase`, `pair` and the internal representation
