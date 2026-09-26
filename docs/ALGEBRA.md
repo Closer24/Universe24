@@ -17243,3 +17243,64 @@ as written here.
    packet's fall of 9.98 (10) 1 was measured against it). In general
    D_a is the Link distance between the two read planes; with D_a the
    body's width the fall is twice the law's.
+
+### 9.105 A bound record in a declared pair well that moves with it: the algebra's number beside the reviewer's (the Boss's record 2157 of 2026-09-26: the fall at 0.45 of the prediction, the speed at 0.70 of the set speed; "is 0.45 the factor X, the effective mass, or the well's lag?")
+
+1. **The reviewer's prediction is the algebra's own construction.** For a
+   mode bound in a pair well (the kind [800, 850], the well [800, 801] on
+   a cube of side 5, Nature24's `bodies.py`), the force in a content
+   gradient g is |d omega_b / d c| g, the mode's rotation's response to a
+   uniform content, and X = 2 Gamma |d omega_b / d c| is that response
+   against the clock's; the inertia is the Rayleigh mass m* = 2 sin
+   omega_b / Q, Q the mode's x-hop expectation, since the mode times the
+   character of K carries the current Q sin K and so moves at K / m* at
+   the start, by the rule's continuity. So a = X g / (2 Gamma m*). X
+   exceeds the clock's omega_b because the mode of a shallow-mass well is
+   mostly hop energy, which scales as the pace squared while the mass
+   term scales as (1 + (p / Gamma)^2) / 2 (9.97 (2)). HOST readings on
+   the rest operator of an open cube of side 31
+   (`docs/designs/content_well/pair_well_fall_check.py`), beside the
+   reviewer's (his mode the generator's on his board):
+
+   | Reading | the mathematician | the reviewer |
+   | --- | --- | --- |
+   | omega_b (per interval) | 0.3373 | 0.3148 |
+   | X | 0.443 | 0.5095 |
+   | m* | 1.052 | 1.2154 |
+   | X / m* | 0.421 | 0.419 |
+   | a at g = 4 (Links per interval^2) | 8.4e-5 | 7.38e-5 |
+
+   The ratio X / m*, which the fall reads, agrees within half a percent
+   between the two modes; the free packet's a at the same g is 6.27e-5
+   (9.98 (7) at U = 0). So 0.45 is neither X nor m*.
+
+2. **0.45 and 0.70 are the seam's.** The smooth well is placed at the
+   centroid of the interval's start, so it sits one interval behind the
+   record, by v Links, and its restoring pull is a drag on the record:
+   F = -m* omega_t^2 v with omega_t = omega_1 - omega_b the mode's
+   oscillation rate in the well (0.0327 per interval on the cube above),
+   the drag's rate gamma = omega_t^2 = 1.07e-3 per interval. The
+   algebra's numbers beside the run's: the mean speed over T intervals
+   is v_0 (1 - e^(-gamma T)) / (gamma T), 0.50 at T = 1500 (the run
+   0.70); the fall over T is the fraction 2 (gamma T - 1 + e^(-gamma T))
+   / (gamma T)^2 of a T^2 / 2, 0.68 at T = 1200 (the run 0.45) and 0.44 at
+   T = 3000. The lag's drag is of the size of both shortfalls and fits
+   neither exactly with one rate, so the well's placement rule and the
+   corrugation of a well interpolated across Nodes (a pair profile that
+   changes shape as its centre crosses a Node) carry the rest. Two
+   readings that decide: (a) place the well at the centroid extrapolated
+   by one interval (x + v): with the lag gone the fall returns to a and
+   the speed to K / m*; (b) read v(t) of the moving body: a drag decays
+   as e^(-gamma t), a corrugation modulates with the Link's period, a
+   wrong inertia gives a constant speed away from K / m*.
+
+3. **Line (c) of 9.98 (11) has no seam and expects no 0.45.** The
+   binding family is sourced by the record where it is at every
+   interval and steps by its own plain rule; a uniformly moving source's
+   field is the boosted static field, symmetric front and back (9.52 (4)
+   (ii)), so there is no lag's drag, and a body's fall is a = X g / (2
+   Gamma m*) with X and m* read from the self-bound mode's own
+   eigenproblem, the construction of item 1; for a well that is a
+   content in the pace, as (c)'s is, the same script gives X and m* once
+   the mode is the run's. A run that reads less than that number is a
+   finding for the mathematician (record 2137).
