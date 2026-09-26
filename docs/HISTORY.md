@@ -12,7 +12,8 @@ Quotations first written in Hebrew are given in English.
 
 ## 1. Before the repository
 
-The project began on the model owner's own machine, before this repository existed; its first date is not recorded in the repository.
+The project began on the model owner's own machine, before this repository existed; by the owner's reckoning it began on 2026-09-10 itself ([record 2121](LOG_2026-09-20.md#2121-the-owner-the-project-likely-began-on-2026-09-10)).
+If so, everything in this section happened in the hours before the first commit at 08:53Z; the repository records no earlier date.
 It lived as a ZIP archive, `event-universe.zip`, passed between conversations with a version guard (`14174f04`, AGENTS.md).
 Its oldest code was one Python file, a strict integer simulator whose first line reads: "Strict integer-only 3D local event-field simulator core (v7)." (`84619942`, tests/reference/legacy_v10.py).
 Its hard invariants were already the project's: integers only, no roots or trigonometry, six nearest neighbours, a fixed state per location, one speed cap for every speed, and a field change moving at most one edge per tick.
