@@ -16737,6 +16737,19 @@ as written here.
    same pace per Link, the lattice's own anisotropy of the same size
    with the sign reversed, and chiral; the pace fans' row would read
    the sign.
+   (e) THE SIDE CHECK, on the owner's word ("try, yes"): the rule in
+   integers on a Laves box, docs/designs/laves_graph/laves_side_check.py,
+   with the three reads weighed 2 R so that the long-wave line per
+   Link is the cubic lattice's. Light: a plane wave's rotation per
+   interval from the integer run within 0.13 percent of the Bloch
+   dispersion on the axis and 0.08 percent on the body diagonal (a
+   12^3-cell box, 400 intervals). The fall: a matter packet of width
+   57 Links on a tube of 500 x 2 x 2 cells in a content gradient runs
+   at 0.94 to 1.03 of 9.98 (7)'s prediction per Link over five windows
+   (1.6 x 10^-6 cells per interval squared at U = 0.0575), the control
+   still to three decimals: GameBoard readings of the host. So the
+   rows that read long waves give the same clicks on the Laves board
+   as on the cubic one, as (b) says; only the grain rows move.
    (c) The count 3 of the three exits is the vector's three
    components in another arrangement, and a click on the visible cube
    reads them as a direction; so it is not a hidden index and not
