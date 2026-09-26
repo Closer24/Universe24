@@ -15316,3 +15316,52 @@ one keys table if the owner takes 9.90 (6). 10. The check-mode rows of
 9.87 (the dragging, gravity's wave, magnetism, the recoil), blind, read
 and recorded. The engine is stable when 1 to 10 stand together with
 the gate green; not frozen.
+
+### 9.92 The detectors' rule applied to the check-mode table (the Boss's record 2109 of 2026-09-26, approved by the model owner: a body of several Nodes is one detector, several bodies on one Node each are several detectors; a screen is pixels, a counter is one body with the support its sensitivity needs, one Node by default where the one-Node equivalence passes)
+
+**(1) THE TABLE OF 9.87 (4), ROW BY ROW, screen or counter.** Newton
+and Kepler: no detector; the meeting and the period are readings of
+the bodies' hops. Einstein's rows: the redshift and the light clock are
+COUNTERS, the emitter's own detector on one Node (the mirror returns
+the whole train, so the one-Node equivalence passes); the bending is a
+SCREEN, pixels each on one Node; Shapiro's delay a counter on one
+Node. The vector part: the ring's precession and the gyroscope are
+readings of the body's hops and spin, no detector; the matter wave
+around the ring is a screen (a fringe). The tensor part: the
+interferometer's two arms are two counters, each one body whose
+support is the arm's beam (the count itself is compared: one tick
+apart at the peak), as row 17's exits. Magnetism: the deflections are
+hop readings; "a body and a wave curve the same way" reads the wave on
+a screen. The recoil: hop readings; its detector of a million quanta
+is a counter (its size is its mass, not its sensitivity: one Node).
+The point emitter: the tick is the emitter's own counter on one Node;
+the two sides are the two face receivers, counters as the faces
+declare them. Aharonov and Bohm, the two slits, Coulomb's deflection:
+screens. The atom's binding: a counter. Every blind expectation of
+9.87 (4) is already a pattern for a screen and a count or a tick for a
+counter; none moves.
+
+**(2) THE ONE CHANGE: THE ALL-FAMILIES WORLD'S DETECTOR D (9.87 (5)).**
+D was one body of a million quanta at 60 Links from a point emitter.
+A point emitter gives in every direction, so the share of a quantum
+that reaches a detector is its cross-section over 4 pi R^2: at R = 60
+a cube of side 9 faces 81 Nodes of 45239, 0.18 percent, so 200 quanta
+give 0.4 clicks at D; a cube of side 21 gives 2. The row's channel (e)
+(the redshift and the Doppler on the giving intervals) cannot be read
+at D as designed. BY RECORD 2109 the counters are THE FACES: the six
+face receivers of the 48^3 GameBoard take every quantum (about 33
+each), and the +x and -x faces in the orbit's plane read channel (e)
+in full: the arrival intervals at +x modulated by -17 percent and at
+-x by +17 percent at the orbital period (the Doppler of A's motion
+along the line of sight), the mean interval at every face 1.2 percent
+above A's own period (the well's redshift), each a count in time, no
+size to declare. D is deleted from the world; its role in channel (f)
+(a million-quanta taker that does not move) is played by any face,
+which has no accumulator at all. Nothing else in 9.87 (5) changes.
+
+**(3) THE WORLD FILE'S LINE, per record 2109 item 5.** A screen: "pixels,
+one body per Node: the pattern is compared". A counter of one Node:
+"one Node: the one-Node equivalence passes". A counter with support:
+"the support is the beam's cross-section: the count is compared". A
+face: "the world's receiver face". The expectation in the row's README
+names the same kind.
