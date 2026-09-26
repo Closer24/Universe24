@@ -17504,3 +17504,30 @@ as written here.
    the record's form's mean over windows of 300 intervals: no drift;
    (4) the pair 20 Links apart with the binding family stepping at the
    pace and plain: the meeting against 249. A gap in any is mine.
+
+7. **The algebra's own form of the stop: two families, no table (the
+   model owner's question of 2026-09-26, "what does the algebra say the
+   solution is: another law, a family, or another coupling?").** A
+   family, the same coupling; and the stop that nature has. Attraction
+   alone collapses in three dimensions, in the rule as in nature; what
+   holds nature's nucleus is a repulsion at shorter range (the scalar
+   meson attracts, the vector meson repels: the saturation of nuclear
+   matter). In this engine that is the same primitive twice: two held
+   families sourced by the record's form, s_i = F_i div E_s into both,
+   the BINDING family with a range of 3 Links read with the weight +K_m
+   (a hollow, like gravity), and the CORE family with a range of 1 Link
+   read with the weight -K_r (a hill, as the charge repels like signs:
+   the read's sign, 9.78 (4)); at short distance the core wins, at long
+   the binding, and a body has the size at which they balance and cannot
+   shrink below it. No table, no ceiling, no new operation: one
+   primitive twice with a sign, and the collapse is stopped by structure
+   and not by a declared number. The pairs: the range 1 Link is [1000,
+   1181] (cosh kappa = 3 den / num - 2 with kappa = 1), the range 3
+   Links [1000, 1019]. The universe's numbers: K_m, K_r and the two
+   ranges, in place of E_s, K_m, s_cap and one range. THE RUN beside the
+   table's: the same four of item 6 with the core family in place of the
+   table, K_r chosen so that the well's floor at the start's peak is
+   the table's (K_m b - K_r h at the peak equal to 2666 at side 9):
+   bound at a finite width, moving, the form's mean constant, the pair
+   at 249 with both families at the pace. Between the two forms the
+   runs decide; the algebra's preference is this one.
