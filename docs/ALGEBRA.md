@@ -16074,3 +16074,32 @@ declaration that must follow it); the files. What is gained: the
 equations of motion, the dilation of a moving clock, the precession
 of a spin and the recoil are no longer coded; the rule does them, and
 the rows read whether it does them as nature does.
+
+**(7) THE CHECK THAT THE RULE MOVES A BODY, computed (the model
+owner's word of 2026-09-26: "check that what comes out of the rule is
+not an error, and that the rule really sorts it out").** HOST
+COMPUTATION on the rule 9.57 (1) in integers with the remainder kept,
+no motion rule of any kind: a chain of 2600 Nodes, a matter packet
+[800, 809] at rest (a Gaussian envelope of width 40 Nodes at the
+amplitude 2^16, its standing rotation as its before level), in a
+content that rises by g = 1 per Link (U from 0.05 to 0.18), 3000
+intervals. The algebra's prediction for the fall, from the rule's own
+dispersion (9.95 (2): the rest rotation's dependence on the pace gives
+d k / d t = omega_0 g / (2 Gamma), the group pace gives the rest):
+
+  a = (num / den) g / (6 Gamma) = 1.65 x 10^-5 Links per interval^2,
+
+which is Newton's a = c_l^2 dU / dx with c_l^2 = 1 / 3 (9.59 (5)).
+READ: the control (g = 0) does not move, the centroid at 600.00 at
+every interval; with g = 1 the centroid falls toward the content,
+600.0, 599.3, 604.7, 627.4 at t = 0, 1000, 2000, 3000, and the
+acceleration read by second differences over windows of 500 intervals
+is 0.85, 1.16 and 1.06 of the prediction at t = 1500, 2000 and 2500
+(the first window, 0.34, is the start's transient: the packet begins at
+rest and takes its momentum from the gradient). So the rule alone
+moves a bound record as the algebra says, at the predicted
+acceleration within a tenth (the windows and the packet's spreading),
+and the equations of motion coded in item 10 are redundant with it;
+the script is `fall_from_rule_check.py` in the session's scratchpad,
+and the row for the engine is the same packet under the stable engine
+in check mode. This is the evidence for (2)'s row on item 10.
