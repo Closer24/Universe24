@@ -1,8 +1,7 @@
-"""RULE3, THE RULE IN ONE PLACE (ALGEBRA.md 9.57 (1), 9.50 (8), (9), (13), 9.91 (2); the model
-owner's decisions of 2026-09-26 through the Boss, records 2237 and 2238, and his question of
-16:33Z): one function steps every record at every Node, w a_next + r' = SUM_a R_a (arr_a+ +
-arr_a-) + S a_now - w a_before + r, 0 <= r' < w; its inverse beside it; the form's Node term
-and the integers of the paces from the same place; integers or the loop's arrays, no numpy here.
+"""RULE3, THE RULE IN ONE PLACE (ALGEBRA.md 9.57 (1), 9.50 (8), (9), (13), 9.91 (2)): one function
+steps every record at every Node in either direction, w a_next + r' = SUM_a R_a (arr_a+ + arr_a-) +
+S a_now - w a_before + r with 0 <= r' < w forward and the same line read backward; the form's Node
+term and the integers of the paces come from the same place; integers or the loop's arrays, no numpy.
 """
 
 from __future__ import annotations
@@ -51,37 +50,19 @@ def rule3(
     self_coefficient: Any,
     wall: Any,
     now: Any,
-    before: Any,
-    remainder: Any,
+    other: Any,
+    carry: Any,
+    direction: int = 1,
 ) -> tuple[Any, Any]:
-    """One interval forward: w a_next + r' = SUM_a R_a arr_a + S a_now - w a_before + r, the remainder in [0, w); returns (a_next, r') (ALGEBRA.md 9.57 (1); the body's Node record's six reads are (2 a, 2 a, 2 a), 9.60 (2))."""
+    """One interval of Rule3 in `direction`: +1 from (a_now, a_before = other, r = carry) to (a_next, r'), -1 from (a_now, a_next = other, r' = carry) back to (a_before, r), the remainder kept in [0, w) both ways (ALGEBRA.md 9.57 (1), 9.50 (8), (9))."""
     total = reads[0] * arrivals[0]
     total += reads[1] * arrivals[1]
     total += reads[2] * arrivals[2]
     total += self_coefficient * now
-    total -= wall * before
-    total += remainder
-    nxt = total // wall
-    return nxt, total - wall * nxt
-
-
-def rule3_inverse(
-    reads: Reads,
-    arrivals_of_before: tuple[Any, ...],
-    self_coefficient: Any,
-    wall: Any,
-    now: Any,
-    before: Any,
-    remainder: Any,
-) -> tuple[Any, Any]:
-    """One interval back with the same integers, a_before the ceiling of (SUM_a R_a arr_a(before) + S a_now - w a_next - r') / w and r the difference, exact; returns (a_before, r) (ALGEBRA.md 9.50 (8), (9))."""
-    total = reads[0] * arrivals_of_before[0]
-    total += reads[1] * arrivals_of_before[1]
-    total += reads[2] * arrivals_of_before[2]
-    total += self_coefficient * before
-    total -= wall * now + remainder
-    a_before = -((-total) // wall)
-    return a_before, wall * a_before - total
+    total -= wall * other
+    total += direction * carry
+    result = total // wall if direction == 1 else -((-total) // wall)
+    return result, direction * (total - wall * result)
 
 
 def form_term(self_coefficient: Any, wall: Any, now: Any, before: Any) -> Any:

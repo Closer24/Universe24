@@ -2,8 +2,8 @@
 ALGEBRA.md 9.57 (1), 9.50 (8), (9) and (13), 9.91 (2); the operation's cut of issue #1154;
 src/event_universe/core/rule3.py).
 
-One function steps every record at every Node, the body's Node record included; its inverse
-stands beside it; the conserved form's Node term is read from the same integers; the isotropic
+One function steps every record at every Node in either direction, the body's Node record
+included; the conserved form's Node term is read from the same integers; the isotropic
 rule is the same call with the three paces equal (the axis contents zero); the coefficients are
 the two functions of the engine before the cut, term for term; no other file of src/ writes this
 arithmetic; the operation primitive of the register is rule3 itself. Bit for bit on every
@@ -22,7 +22,6 @@ from event_universe.core.rule3 import (
     coefficients,
     form_term,
     rule3,
-    rule3_inverse,
     rule_total_bound,
 )
 from event_universe.events import detector_law
@@ -118,7 +117,7 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
         )
         nxt, carried = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
         assert (nxt, carried) == (total // wall, total % wall) and 0 <= carried < wall
-        assert rule3_inverse(reads, arrivals, self_coefficient, wall, nxt, now, carried) == (
+        assert rule3(reads, arrivals, self_coefficient, wall, now, nxt, carried, -1) == (
             before,
             remainder,
         )
@@ -137,7 +136,7 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     total = reads[0] * six_sum + self_coefficient * now - wall * before + remainder
     assert nxt.dtype == np.int64 and np.array_equal(nxt, np.floor_divide(total, wall))
     assert np.array_equal(carried, total - wall * nxt)
-    back, remainder_back = rule3_inverse(reads, arrivals, self_coefficient, wall, nxt, now, carried)
+    back, remainder_back = rule3(reads, arrivals, self_coefficient, wall, now, nxt, carried, -1)
     assert np.array_equal(back, before) and np.array_equal(remainder_back, remainder)
 
 
@@ -152,12 +151,18 @@ def test_the_forms_node_term_and_the_load_bound_read_the_same_integers():
     ) + amplitude * abs(self_coefficient) + wall * (amplitude + 1)
 
 
-# the rule's own lines: the Node's term, the step's second level, the inverse's and the form's
-RULE_ARITHMETIC = (
-    r"self_coefficient \* (now|before)\b",
+# the rule's own lines in core/rule3.py: the Node's term, the far level's, the carry's and the
+# form's; the second set is the old two-function form, refused anywhere in src/ as well
+RULE_LINES = (
+    r"self_coefficient \* now\b",
+    r"wall \* other\b",
+    r"direction \* carry\b",
+    r"now \* now \+ before \* before",
+)
+RULE_ARITHMETIC = RULE_LINES + (
+    r"self_coefficient \* before\b",
     r"wall \* before\b",
     r"wall \* now \+ remainder",
-    r"now \* now \+ before \* before",
 )
 
 
@@ -175,35 +180,29 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
                 offenders.append(f"{path.relative_to(ROOT)}:{line} {match.group(0)}")
     assert not offenders, offenders
     own = (SOURCE / "core" / "rule3.py").read_text(encoding="utf-8")
-    assert all(re.search(pattern, own) for pattern in RULE_ARITHMETIC)
+    assert all(re.search(pattern, own) for pattern in RULE_LINES)
 
 
 def test_every_step_of_the_engine_goes_through_the_one_rule(monkeypatch):
-    """The engine's records step and step back through core.rule alone (a spy on the two names
-    the engine imports), and the operation primitive of the register is rule3 itself."""
-    calls = {"rule": 0, "rule3_inverse": 0}
-    real_rule, real_inverse = detector_law.rule3, detector_law.rule3_inverse
+    """The engine's records step and step back through rule3 alone, forward with the direction
+    +1 and back with -1 (a spy on the one name the engine imports), and the operation primitive
+    of the register is rule3 itself."""
+    calls = {"forward": 0, "backward": 0}
+    real_rule = detector_law.rule3
 
     def spy_rule(*args: object) -> object:
-        calls["rule"] += 1
+        calls["forward" if len(args) < 8 or args[7] == 1 else "backward"] += 1
         return real_rule(*args)
 
-    def spy_inverse(*args: object) -> object:
-        calls["rule3_inverse"] += 1
-        return real_inverse(*args)
-
     monkeypatch.setattr(detector_law, "rule3", spy_rule)
-    monkeypatch.setattr(detector_law, "rule3_inverse", spy_inverse)
     simulation = detector_law.DetectorLawSimulation(
         parse_nature_beam_world(emitter_world(stock=1, ticks=4))
     )
     assert simulation.register.at("the operation", "(i)") is rule3
     simulation.step()
-    stepped = calls["rule"]
-    assert stepped >= len(simulation.held_component_records())
-    if hasattr(simulation, "step_inverse"):
-        simulation.step_inverse()
-        assert calls["rule3_inverse"] >= 1
+    assert calls["forward"] >= len(simulation.held_component_records()) and calls["backward"] == 0
+    simulation.step_inverse()
+    assert calls["backward"] >= 1
     assert simulation.books()["balanced"]
 
 
@@ -257,3 +256,27 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
         for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
             if isinstance(node, ast.FunctionDef):
                 assert "split" not in node.name.lower(), f"{path.name}: {node.name}"
+
+
+def test_a_run_stepped_forward_and_back_returns_bit_for_bit():
+    """Rule3 with the direction -1 undoes the direction +1 exactly: the emitter world stepped
+    eight intervals forward and eight back returns every record's levels and remainders and
+    the held levels bit for bit (ALGEBRA.md 9.50 (8), (9))."""
+    simulation = detector_law.DetectorLawSimulation(
+        parse_nature_beam_world(emitter_world(stock=1, ticks=8))
+    )
+    start = {
+        key: (live.now.copy(), live.before.copy(), live.remainder.copy())
+        for key, live in simulation.records.items()
+    }
+    held = {key: record.now.copy() for key, record in simulation.held_records.items()}
+    for _ in range(8):
+        simulation.step()
+    for _ in range(8):
+        simulation.step_inverse()
+    for key, (now, before, remainder) in start.items():
+        live = simulation.records[key]
+        assert np.array_equal(live.now, now) and np.array_equal(live.before, before)
+        assert np.array_equal(live.remainder, remainder)
+    for key, level in held.items():
+        assert np.array_equal(simulation.held_records[key].now, level)

@@ -5109,15 +5109,18 @@ would have found no cell.
    `one_rule_inverse`, `one_rule_axes`, `one_rule_axes_inverse`) and the form's
    Node term twice (`form_share` and the booking's read). AFTER:
    src/event_universe/core/rule3.py, ONE FUNCTION `rule3(reads, arrivals, S, w,
-   now, before, r)`: w a_next + r' = SUM_a R_a (arr_a+ + arr_a-) + S a_now - w
-   a_before + r, its inverse `rule3_inverse` beside it (the ceiling form), the
-   form's Node term `form_term(S, w, now, before)` read by both copies, and the
+   now, other, carry, direction)`: w a_next + r' = SUM_a R_a (arr_a+ + arr_a-) + S
+   a_now - w a_before + r, the direction +1 forward and -1 backward (the same
+   line read the other way, the remainder kept in [0, w) both ways; record
+   2240: no inverse function of its own), the form's Node term `form_term(S, w,
+   now, before)` read by both copies, and the
    integers from one function of the paces, `coefficients(num, den, gamma, c,
    axis_contents=ISOTROPIC, weak_field=True)` -> ((R_x, R_y, R_z), S, w); THE
    ISOTROPIC RULE is the same call with the three paces equal (the axis contents
    zero: 4 num x 3 p^2 = 12 num p^2, term for term). Every record, the body's
    Node record (its six reads returning its own level as (2 a, 2 a, 2 a)), every
-   inverse (`step_inverse`, the Node record's) and both form reads call it; the
+   step back (`step_inverse`; `_advance_node_record` and `_level_step` carry the
+   direction, their inverse twins gone) and both form reads call it; the
    plain and the boxed paths read the arrivals per axis (`_axis_sums`, the
    per-axis form of `_neighbours`); the operation folder binds the rule itself.
    BIT FOR BIT: in the ring of int64 the sum over the axes of R x arr_a equals R
@@ -5132,9 +5135,12 @@ would have found no cell.
    contents; the step and its inverse exact on integers and int64 arrays, the
    axes' sum equal to R times the six-sum; the form's term and the load bound;
    the scan of src/ refusing the rule's arithmetic anywhere but core/rule3.py;
-   a spy showing the engine's steps go through core.rule3 and the operation
-   primitive of the register is the rule itself); the twelve suites that read
-   the coefficients moved with the provider.
+   a spy showing the engine's steps forward and back go through rule3 and the
+   operation primitive of the register is rule3 itself; record 2234's test that
+   no other code moves a level from one Node to another; the emitter world
+   stepped eight intervals forward and eight back bit for bit); the twelve
+   suites that read the coefficients moved with the provider. The files this
+   cut adds carry no record number (record 2239: the log and git keep them).
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
