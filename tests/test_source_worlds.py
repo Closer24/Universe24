@@ -108,6 +108,11 @@ def test_every_world_speaks_record_2128_and_declares_its_readings(name):
     # a GameBoard reading (the ledger's run declarations)
     kinds = [line["kind"] for line in doc["readings"]]
     assert set(kinds) <= READING_KINDS
+    # a name per reading, unique in the world, the output's word for it (Main Loop's interface)
+    names = [line["name"] for line in doc["readings"]]
+    assert len(set(names)) == len(names) and all(
+        name.startswith(line["kind"]) for name, line in zip(names, doc["readings"], strict=True)
+    )
     for line in doc["readings"]:
         assert isinstance(line["every"], int) and line["every"] >= 1
         if line["kind"] == "level":
