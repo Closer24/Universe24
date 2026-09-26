@@ -470,3 +470,5 @@ reversible where the law was (the walk and the collision untouched; the
 reading the one-way border as before); exact on the axis and transverse,
 a sign-correct encounter count on a fan direction, one row per crossing for
 a body at most one Link per two intervals.
+
+> The scripts of this folder (`crossing_2d.py`, `crossing_sim.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/crossing/<script>`).

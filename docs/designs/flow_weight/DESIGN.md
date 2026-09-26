@@ -6,7 +6,7 @@ record 886 to the Boss's recommendation (c) of record 884 of
 that makes the law's two constants of gravity one, so that the light
 bending's comparison has one ground; the ring world runs on it only after
 the physics-rule reviewer's gate and on the owner's go. A design only:
-this file, the map [flow_weight_map.py](flow_weight_map.py) with its
+this file, the map flow_weight_map.py (`docs/designs/flow_weight/flow_weight_map.py`, deleted 2026-09-26) with its
 output [flow_weight_map.out](flow_weight_map.out) (no engine import,
 nothing run on the engine; the Algebraist's step algebra reused by
 import, not copied), and one index row. Base commit
@@ -79,7 +79,7 @@ owner admits it.
 
 Per direction **D** = (a, b, c) of the world's table, formed once at load
 and read as constants (BEAM_LAW note 41 (viii)), in
-[nature_beam.py](../../../src/event_universe/events/nature_beam.py):
+nature_beam.py (`src/event_universe/events/nature_beam.py`, deleted 2026-09-26):
 
 | Integer | Where | What |
 | --- | --- | --- |
@@ -496,7 +496,7 @@ added; it enters when the design is gated):
 
 ## 7. Links
 
-- [flow_weight_map.py](flow_weight_map.py), [flow_weight_map.out](flow_weight_map.out): the arithmetic of this file (no engine import; the Algebraist's [step_algebra_map.py](../light_bending/step_algebra_map.py) imported, its `walk`, `Table`, `Crowd` and `ring_starts` reused).
+- flow_weight_map.py (`docs/designs/flow_weight/flow_weight_map.py`, deleted 2026-09-26), [flow_weight_map.out](flow_weight_map.out): the arithmetic of this file (no engine import; the Algebraist's step_algebra_map.py (`docs/designs/light_bending/step_algebra_map.py`, deleted 2026-09-26) imported, its `walk`, `Table`, `Crowd` and `ring_starts` reused).
 - [ALGEBRA.md](ALGEBRA.md): the algebraic check under the rule, in the Algebraist's manner (the owner's word of record 888).
 - [STEP_ALGEBRA.md](../light_bending/STEP_ALGEBRA.md) sections 9 and 10 at `23ef9ce9` (PR #821): the ring, `F_L1`, the two constants, the question.
 - [one_wall/NOTE.md](../one_wall/NOTE.md) section 5: the one constant, `32.79` against `23.08`.

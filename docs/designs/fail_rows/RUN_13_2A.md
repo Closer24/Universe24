@@ -23,15 +23,15 @@ is section 9, on the reviewer's read of section 1 and the Boss's GO of
 
 The arithmetic is in two maps beside this file, each importing the
 register's own algebra by its file, one canonical copy, and their
-outputs: [run_13_trend_map.py](run_13_trend_map.py) with
+outputs: run_13_trend_map.py (`docs/designs/fail_rows/run_13_trend_map.py`, deleted 2026-09-26) with
 [run_13_trend_map.out](run_13_trend_map.out) (the Bending Algebraist's
-[step_algebra_map.py](../light_bending/step_algebra_map.py) and the Flow
-Weight Designer's [flow_weight_map.py](../flow_weight/flow_weight_map.py)
-imported), and [run_2a_fan_map.py](run_2a_fan_map.py) with
+step_algebra_map.py (`docs/designs/light_bending/step_algebra_map.py`, deleted 2026-09-26) and the Flow
+Weight Designer's flow_weight_map.py (`docs/designs/flow_weight/flow_weight_map.py`, deleted 2026-09-26)
+imported), and run_2a_fan_map.py (`docs/designs/fail_rows/run_2a_fan_map.py`, deleted 2026-09-26) with
 [run_2a_fan_map.out](run_2a_fan_map.out) (the criteria runner's
-[slits_huygens_pin.py](../paper_criteria/slits_huygens_pin.py) and the
+slits_huygens_pin.py (`docs/designs/paper_criteria/slits_huygens_pin.py`, deleted 2026-09-26) and the
 register's generator
-[amplitude/make_worlds.py](../../../examples/events/amplitude/make_worlds.py)
+amplitude/make_worlds.py (`examples/events/amplitude/make_worlds.py`, deleted 2026-09-26)
 imported). Each map first reproduces the registered numbers it extends
 (row 13: `C_ring` 3.652 / 3.918 and the shifts 0.731 / 0.128 at b = 6
 and 8; row 2a: the visibility 0.9659 with every pixel's count at P = 48)
@@ -145,7 +145,7 @@ widest option the loader takes, its counts per cell in the .out.
 ## 1. Row 13: the steps between clicks, numbered, each tagged
 
 The world is the ring world `flow_link/ring_b6_g1` with its control
-`ring_b6_control_g1` ([the register's README](../../../examples/events/flow_link/README.md)):
+`ring_b6_control_g1` (the register's README (`examples/events/flow_link/README.md`, deleted 2026-09-26)):
 series K's open box 57 x 41 x 41, the mass at (28, 20, 20), the ring of
 40 lamps on the plane x = 2 at every (y, z) with |sqrt(y^2 + z^2) - 6| <=
 1 / 2 about the mass's line, the screen x = 54 of 1681 one-Node `wave`
@@ -289,7 +289,7 @@ either) and is not ordered. Every declaration is an existing world key
 The reading, DETECTOR: per lamp, the click lines of the detector its
 rows reach (a face's `click` lines, `detector` the face's name, or the
 screen pixel's), the birth ordinal (`record & 0xFFFFFFFF`) against the
-click's tick over the window [200, 1200), 1 + k_i the inverse slope
+click's tick over the window 200, 1200), 1 + k_i the inverse slope
 (series T's reading, `tools/click_readings/shell_clock.py` applied
 per lamp, the one tool line changed being the detector's selection);
 the control's 1 + k_i = 1.0000 exactly per lamp. The computations on
@@ -332,10 +332,10 @@ crosses another shell lamp's Node (a step along the largest axis from
 r = 5.74 to 6.48, for instance (4, 4, 1) to (5, 4, 1)), the family's
 default rule at a measured event measures it there (`world.py` 995-999,
 a paid family is measured): a click at that lamp, carrying the emitter's `number` and the `record`, read like any other; the content joins the lamp's amount, 8 against 8.6 x 10^9; the row is counted by that lamp's clock at its arrival (the age moment sums every ray of another number at the Node: one unit at age 1 per arrival, about +1 n / d over the window at a lamp one Link downstream of another's heading), which section 9 reads at eight lamps and the per-lamp pin did not carry. The worlds are
-written by [lamp_shell/make_worlds.py](../../../examples/events/lamp_shell/make_worlds.py)
+written by [lamp_shell/make_worlds.py (`examples/events/lamp_shell/make_worlds.py`, deleted 2026-09-26)
 with their pins in `expectations.json` before the run (the folder's
-[README](../../../examples/events/lamp_shell/README.md)); the reading
-tool [read_lamps.py](../../../examples/events/lamp_shell/read_lamps.py)
+README (`examples/events/lamp_shell/README.md`, deleted 2026-09-26)); the reading
+tool read_lamps.py (`examples/events/lamp_shell/read_lamps.py`, deleted 2026-09-26)
 reads the click lines alone, per emitter number, series T's inverse
 slope over the window.
 
@@ -563,10 +563,10 @@ above before the run: (i) the two open items closed at load (section 2
 (a)); (ii) and (iii) the trend's wording and the row's word (sections 0
 and 3). Row 2a: NO RUN (the Boss's word; section 6). The worlds and their
 pins were written by
-[lamp_shell/make_worlds.py](../../../examples/events/lamp_shell/make_worlds.py)
+lamp_shell/make_worlds.py (`examples/events/lamp_shell/make_worlds.py`, deleted 2026-09-26)
 before the run (`expectations.json`, every pin from the step algebra's
 crowd, no number typed by hand); the folder's
-[README](../../../examples/events/lamp_shell/README.md) is the register's
+README (`examples/events/lamp_shell/README.md`, deleted 2026-09-26) is the register's
 entry. The run: `tools/run_series.py --jobs 2`, 1200 intervals, headless
 (Python 3.14.0rc2, numpy 2.5.3; this host 4 cores, 15 GB); the source
 sha256 of the world files `bc994db7456a7907` (`shell_b6_g1`) and
@@ -577,13 +577,13 @@ events `27059403ac50` and `425631a6b854` / `c2c43cd7234d` /
 MB (the control); the estimate of section 2 (a) was 6 to 10 minutes and
 about 1 GB, the time inside it and the memory twice it (the record of
 540 000 records). Read by
-[read_lamps.py](../../../examples/events/lamp_shell/read_lamps.py) from
+read_lamps.py (`examples/events/lamp_shell/read_lamps.py`, deleted 2026-09-26) from
 the click lines alone (per lamp, `record & 0xFFFFFFFF` against the
-click's tick over [200, 1200), the inverse slope), the lamps' own
+click's tick over 200, 1200), the inverse slope), the lamps' own
 `birth` lines read beside them (a detector's own record, DETECTOR) so
 that the click ticks' jitter can be told from the clock; the per-lamp
 readings in
-[readings.json](../../../examples/events/lamp_shell/readings.json), the
+[readings.json (`examples/events/lamp_shell/readings.json`, deleted 2026-09-26), the
 run block under `runs_2026_09_23` of `expectations.json`; no pin moved.
 One test line beside the worlds: `tests/test_flow_link.py` (a), which
 asserts the key absent in every registered world outside the ring
@@ -654,9 +654,9 @@ paper from this file; the writer words the row on the Boss's routing.
 - [GENERIC_BENDING_PRICE.md](../one_wall/GENERIC_BENDING_PRICE.md); [one_wall/MATHEMATICIAN.md](../one_wall/MATHEMATICIAN.md) section 4 (the space part no verb reads).
 - [gr_rows/DESIGN.md](../gr_rows/DESIGN.md) section 4 (the pin world's k_a(b) = 0.0445 at [1, 4096]); [REVIEW_ROUND2.md](../gr_rows/REVIEW_ROUND2.md) (182.4 / 4096).
 - [NEWTON_ON_THE_SIDE.md](../newton_clicks/NEWTON_ON_THE_SIDE.md) section 1 step 1 and 3 (d); [NEWTON_FROM_CLICKS.md](../newton_clicks/NEWTON_FROM_CLICKS.md) section 3.
-- [The lamp shell's register](../../../examples/events/lamp_shell/README.md), its [expectations](../../../examples/events/lamp_shell/expectations.json) and [readings](../../../examples/events/lamp_shell/readings.json) (STEP 2).
-- [The ring worlds' register](../../../examples/events/flow_link/README.md) and [expectations.json](../../../examples/events/flow_link/expectations.json); [series K](../../../examples/events/lensing/README.md) (the age moment 11.4 at b = 6); [the optical worlds](../../../examples/events/optical/README.md) (the age moment 181.8 at b = 6, M = 2^16).
-- [Series X, Poisson after a detector](../../EXPERIMENTS.md) and [click_readings/shell_clock.py](../../../tools/click_readings/shell_clock.py) (series T's reading of a clock from click lines).
-- [CRITERIA.md](../paper_criteria/CRITERIA.md) row 2a and item (b); [slits_huygens_pin.py](../paper_criteria/slits_huygens_pin.py); [TWO_SLITS.md](../fraction_free/TWO_SLITS.md) section 7 (the fan by angle).
+- The lamp shell's register (`examples/events/lamp_shell/README.md`, deleted 2026-09-26), its expectations (`examples/events/lamp_shell/expectations.json`, deleted 2026-09-26) and readings (`examples/events/lamp_shell/readings.json`, deleted 2026-09-26) (STEP 2).
+- The ring worlds' register (`examples/events/flow_link/README.md`, deleted 2026-09-26) and expectations.json (`examples/events/flow_link/expectations.json`, deleted 2026-09-26); series K (`examples/events/lensing/README.md`, deleted 2026-09-26) (the age moment 11.4 at b = 6); the optical worlds (`examples/events/optical/README.md`, deleted 2026-09-26) (the age moment 181.8 at b = 6, M = 2^16).
+- [Series X, Poisson after a detector](../../EXPERIMENTS.md) and click_readings/shell_clock.py (`tools/click_readings/shell_clock.py`, deleted 2026-09-26) (series T's reading of a clock from click lines).
+- [CRITERIA.md](../paper_criteria/CRITERIA.md) row 2a and item (b); slits_huygens_pin.py (`docs/designs/paper_criteria/slits_huygens_pin.py`, deleted 2026-09-26); [TWO_SLITS.md](../fraction_free/TWO_SLITS.md) section 7 (the fan by angle).
 - [The paper](../../../paper/general_formula/main.tex), Table 2 rows 13 and 2a.
 - [The log](../../LOG_2026-09-20.md): records 160, 826, 915, 920, 941, 1100, 1126, 1128.

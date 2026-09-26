@@ -685,7 +685,7 @@ written when the owner admits the rule and not before).
 [DESIGN.md](DESIGN.md) (atom-give-v1, the give of content, its finding,
 its sections 1 (a) and (b), 2, 3, 4 (b) and 5 that this file amends);
 [ALGEBRA.md](../atom_algebra/ALGEBRA.md) (sections 1, 2 and 3 (c)); [the
-atoms pins](../atoms/PINS.md) section 2 and [their generator](../../../examples/events/atoms/make_worlds.py);
+atoms pins](../atoms/PINS.md) section 2 and their generator (`examples/events/atoms/make_worlds.py`, deleted 2026-09-26);
 the baseline run (`atom-baseline-run` at
 01e8618379c1d54e696ce3c7d6a8f9bb2fd1fe21, `docs/designs/atom_baseline/RUN.md`
 sections 3 and 4, record 886; the register's `r8` in EXPERIMENTS.md,

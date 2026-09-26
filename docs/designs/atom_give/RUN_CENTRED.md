@@ -10,8 +10,8 @@ model id, nothing else (the test `test_centred_step.py` (e) asserts it
 integer for integer). The pins are those of
 [CENTRED_STEP.md](CENTRED_STEP.md) section 4, declared before the run
 from the kick map; NO PIN WAS MOVED AFTER THE RUN. The reading is the
-Atom Baseline Runner's method ([baseline_readings.py](../atom_baseline/baseline_readings.py),
-imported by [centred_readings.py](centred_readings.py), nothing copied),
+Atom Baseline Runner's method (baseline_readings.py (`docs/designs/atom_baseline/baseline_readings.py`, deleted 2026-09-26),
+imported by centred_readings.py (`docs/designs/atom_give/centred_readings.py`, deleted 2026-09-26), nothing copied),
 its printout [centred_readings.out](centred_readings.out); every number
 DETECTOR (the faces' clicks, the arrival Nodes, the crossings) or
 GAMEBOARD (the step lines, the host's tick) as the runner labels them.
@@ -133,10 +133,10 @@ and reports; C6 the build's.
 ## Links
 
 [CENTRED_STEP.md](CENTRED_STEP.md) (the pins, section 4); [CAUSE.md](CAUSE.md);
-[centred_readings.py](centred_readings.py) and [centred_readings.out](centred_readings.out);
+centred_readings.py (`docs/designs/atom_give/centred_readings.py`, deleted 2026-09-26) and [centred_readings.out](centred_readings.out);
 [the baseline run](../atom_baseline/RUN.md) and [its readings](../atom_baseline/baseline_readings.out);
-[the world](../../../examples/events/atoms/hydrogen_r12_centred.json) and
-[the atoms README](../../../examples/events/atoms/README.md);
-[tests/test_centred_step.py](../../../tests/test_centred_step.py);
+the world (`examples/events/atoms/hydrogen_r12_centred.json`, deleted 2026-09-26) and
+the atoms README (`examples/events/atoms/README.md`, deleted 2026-09-26);
+tests/test_centred_step.py (`tests/test_centred_step.py`, deleted 2026-09-26);
 [the retention policy](../../RETENTION.md); records 953, 955 and 958 of
 [the log](../../LOG_2026-09-20.md).

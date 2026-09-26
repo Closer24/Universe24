@@ -8,7 +8,7 @@ read-only, on the paper as it stands on `main`
 (`paper/general_formula/main.tex`) and on the register's one source of
 the families (`examples/events/entities/families.json` and the worlds
 under `examples/events/`), compiled by the host script
-[family_table.py](family_table.py) with its output
+family_table.py (`docs/designs/paper_families/family_table.py`, deleted 2026-09-26) with its output
 [family_table.out](family_table.out): no run, nothing here is a rule.
 The paper's writer owns the manuscript; this note is the audit and the
 material, not an edit of the paper.
@@ -126,4 +126,6 @@ measurement.
 
 - The paper: `paper/general_formula/main.tex` (Section 2: P8, "The state", "The components", "The symmetries"; Table 1; the glossary); its plan `paper/general_formula/PLAN.md`.
 - The one source: `examples/events/entities/families.json` (the definitions), the worlds under `examples/events/` (the inline declarations and the contents); [ENGINE.md](../../ENGINE.md) (the family keys); [PREDICTIONS.md](../../PREDICTIONS.md) entry 26 (what is quantised and what is free); [DERIVATIONS_BEAM.md](../../DERIVATIONS_BEAM.md) sections 16.2 and 19 (the minimal mass, the masses); [LAW.md](../vector_form/LAW.md) section 1 (the state: three vectors).
-- The script and its output: [family_table.py](family_table.py), [family_table.out](family_table.out).
+- The script and its output: family_table.py (`docs/designs/paper_families/family_table.py`, deleted 2026-09-26), [family_table.out](family_table.out).
+
+> The scripts of this folder (`family_table.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/paper_families/<script>`).

@@ -439,16 +439,16 @@ named beside it.
   `docs/designs/derivations_beam/uncertainty_lattice.py` and output.
 - [NATURE.md](../../NATURE.md) row 10: the single-opening spread, NOT YET
   under the one click; the register's crowd-form 1.08 kept as history.
-- [examples/events/heisenberg/README.md](../../../examples/events/heisenberg/README.md):
+- examples/events/heisenberg/README.md (`examples/events/heisenberg/README.md`, deleted 2026-09-26):
   A10, the registered geometry and its readings (`w27_wave`).
-- [examples/events/amplitude/README.md](../../../examples/events/amplitude/README.md):
+- examples/events/amplitude/README.md (`examples/events/amplitude/README.md`, deleted 2026-09-26):
   `slits_huygens`, the record-form two-slit world, its run of 2026-09-21
   (4300 intervals in 1334 s) and the pin it met bit for bit;
-  [slits_huygens_pin.py](../paper_criteria/slits_huygens_pin.py), the
+  slits_huygens_pin.py (`docs/designs/paper_criteria/slits_huygens_pin.py`, deleted 2026-09-26), the
   machinery reused here.
 - [BEAM_LAW.md note 45](../../BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
   the exact phase at the click; note 46, the birth wheel.
-- [two_slits_map.py](../fraction_free/two_slits_map.py): the walk on the
+- two_slits_map.py (`docs/designs/fraction_free/two_slits_map.py`, deleted 2026-09-26): the walk on the
   engine's digital line and flight table.
 - [RUN_8BC.md](RUN_8BC.md): the form of this file (rows 8b and 8c by the
   algebra) and the lamp's skipped tick (its section 5).

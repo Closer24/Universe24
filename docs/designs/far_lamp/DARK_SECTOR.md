@@ -7,7 +7,7 @@ and that is what makes their shifts; check that it fits and then say
 hypothesis or not: that with us there is no dark energy and no dark
 matter, and that closes things nicely and cleanly." Written by the
 mathematician, read-only, on the law as it stands on main; every number
-made by the host script [dark_sector_map.py](dark_sector_map.py) with its
+made by the host script dark_sector_map.py (`docs/designs/far_lamp/dark_sector_map.py`, deleted 2026-09-26) with its
 output [dark_sector_map.out](dark_sector_map.out); no run; nothing here is
 a rule. Notation per record 184; rows and bodies, not light and matter.
 
@@ -169,4 +169,4 @@ derived and whether the push's rounding is that floor, is
 - The Doppler of the receiver and the source: [DERIVATIONS_BEAM.md](../../DERIVATIONS_BEAM.md) section 2; the shell mean and what departs: 3.2, 3.5, 3.6; the rows beside a mass: 5.4; the moving reader: 12b; the growing wall: 15.
 - The register's own dark sector: [HYPOTHESES.md](../../HYPOTHESES.md) entries 6 and 7; [HIGHLIGHTS.md](../../HIGHLIGHTS.md) section 5.4, series G2 (record 124).
 - The far lamp after a detector: [BRIGHTNESS.md](BRIGHTNESS.md).
-- The map: [dark_sector_map.py](dark_sector_map.py), [dark_sector_map.out](dark_sector_map.out).
+- The map: dark_sector_map.py (`docs/designs/far_lamp/dark_sector_map.py`, deleted 2026-09-26), [dark_sector_map.out](dark_sector_map.out).

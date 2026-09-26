@@ -966,3 +966,7 @@ without any other change of the law, and are the ones to decide on:
 Everything else that is fixed is the law's identity (the speed, the
 line, the collision, the clock, the window, the pointer, the ladder), and
 making it data would be a change of the law, not of the engine.
+
+> The scripts of this folder (`rename_probe.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/architecture_2026-09-20/<script>`).
+
+> The scripts of this folder (`rename_probe.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/architecture_2026-09-20/<script>`).

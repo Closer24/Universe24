@@ -225,7 +225,7 @@ enters here before it is used.
 
 | The closed name | The definition | Not this | Source |
 | --- | --- | --- | --- |
-| the rule | The one line every family steps by at every Node, ALGEBRA.md 9.57 (1) with the four paces of 9.91 (2); whatever can be built from it is built from it. | "the law" as a second thing; a version name | [ALGEBRA.md 9.57](ALGEBRA.md); the Boss's record 2188, "The rule first" |
+| Rule3 (the rule) | The one line every family steps by at every Node, ALGEBRA.md 9.57 (1) with the four paces of 9.91 (2); whatever can be built from it is built from it. Its name from 2026-09-26 is Rule3 (record 2237); "the rule" in earlier text means Rule3. | "the law" as a second thing; a version name | [ALGEBRA.md 9.57](ALGEBRA.md); the Boss's records 2188, "The rule first", and 2237 |
 | the engine | The implementation of ALGEBRA.md and nothing else: the rule, the click and a closed set of primitives, with no family name, no force, no number, no flag and no version in its code; `src/event_universe`. | a model, a hypothesis, an experiment | records 2135, 2172 to 2174, 2182 |
 | a family | A kind of record declared by one entry of universe.json: its shape and its attributes. | a field; a force; a particle's name in the code | [ALGEBRA.md 9.110 item 3](ALGEBRA.md); Highlights 5.6 |
 | a field | One family's levels over the Nodes, the wave; the word names nothing else. | an attribute; a family; a force | Highlights 5.6 (record 2182) |

@@ -13,13 +13,13 @@ and [its algebra](../flow_weight/ALGEBRA.md) (section 5, Newton's rows by
 formula), [the click frame's section 8](../click_frame/DERIVATION.md)
 (Newton Outside, PARTLY), [DERIVATIONS_BEAM 3.3](../../DERIVATIONS_BEAM.md)
 (Newton's law and G's place), [the line drive's default](../drive_b/DEFAULT.md),
-the register of series D3 ([the README](../../../examples/events/orbit_lamp/README.md),
-[the pins](../../../examples/events/orbit_lamp/expectations_flow.json),
-[the readings](../../../examples/events/orbit_lamp/run_flow.out)), the
+the register of series D3 (the README (`examples/events/orbit_lamp/README.md`, deleted 2026-09-26),
+the pins (`examples/events/orbit_lamp/expectations_flow.json`, deleted 2026-09-26),
+the readings (`examples/events/orbit_lamp/run_flow.out`, deleted 2026-09-26)), the
 same README on the branch `drive-default` (PR #907, the line drive's
-re-run), the engine ([nature_beam.py](../../../src/event_universe/events/nature_beam.py):
+re-run), the engine (nature_beam.py (`src/event_universe/events/nature_beam.py`, deleted 2026-09-26):
 `push_form`, `CrowdMoments`, `optical_turn`, the flight's `walk_step`;
-[engine.py](../../../src/event_universe/events/engine.py): `step_axis`,
+engine.py (`src/event_universe/events/engine.py`, deleted 2026-09-26): `step_axis`,
 `_move`; [world.py](../../../src/event_universe/events/world.py):
 `step_divisor`, `bresenham_line`; BEAM_LAW notes 17 and 48), and the two
 flow worlds replayed once on the engine at head (section 3).
@@ -272,7 +272,7 @@ falling in feeds the fall.
 
 ### 2.5 The map: the law's continuum algebra integrated, no lattice (COMPUTATION)
 
-[newton_map.py](newton_map.py) integrates the ring-mean push with the
+newton_map.py (`docs/designs/newton_diagnosis/newton_map.py`, deleted 2026-09-26) integrates the ring-mean push with the
 per-axis (or line) drive, with and without the factor, in the engine's
 order, one interval per step, from the register's launch, and reads the
 period as the tool reads it (the mean spacing of the centre column's
@@ -318,7 +318,7 @@ byte for byte to the registered run's** (run_flow.out, record 966). No
 world changed, nothing pinned, the run made to read the record's
 `step`, `read`, `contact` and face `click` lines, which the register
 did not keep (the 24-hour retention). The reader is
-[newton_records.py](newton_records.py), its output
+newton_records.py (`docs/designs/newton_diagnosis/newton_records.py`, deleted 2026-09-26), its output
 [newton_records.out](newton_records.out).
 
 **The escapes, DETECTOR (a face click of the probe, `measured` its
@@ -631,7 +631,7 @@ as today (`read`) and are not clicks.
 
 **The pins it needs before any run (GAMEBOARD by formula until run; the
 cart's clicks the measurement; the reviewer's read P folded, lines (i)
-to (iii)).** The map of 2.5 ([newton_map.py](newton_map.py), the law as
+to (iii)).** The map of 2.5 (newton_map.py (`docs/designs/newton_diagnosis/newton_map.py`, deleted 2026-09-26), the law as
 it stands: the ring mean with the arrival rate's factor, the per-axis
 drive, the launch at the whole 8 under the key or 9 as built) now
 prints the recurrence of theta through 2 pi, 4 pi and 6 pi on the count
@@ -761,9 +761,11 @@ form only if the cart's reading shows the velocity term's signature.
 
 ## 7. Links
 
-- [newton_map.py](newton_map.py), [newton_map.out](newton_map.out): the continuum map (COMPUTATION).
-- [newton_records.py](newton_records.py), [newton_records.out](newton_records.out): the replay's record read (GAMEBOARD, DETECTOR the face clicks).
+- newton_map.py (`docs/designs/newton_diagnosis/newton_map.py`, deleted 2026-09-26), [newton_map.out](newton_map.out): the continuum map (COMPUTATION).
+- newton_records.py (`docs/designs/newton_diagnosis/newton_records.py`, deleted 2026-09-26), [newton_records.out](newton_records.out): the replay's record read (GAMEBOARD, DETECTOR the face clicks).
 - PR #834's design and register on the branch `moving-detector-build` at `8f5b42fb`: `docs/designs/moving_detector/DESIGN.md`, `examples/events/moving_detector/README.md` (read there; not on main).
 - [The flow weight design](../flow_weight/DESIGN.md) and [algebra](../flow_weight/ALGEBRA.md) section 5; [the click frame](../click_frame/DERIVATION.md) section 8; [the line drive's default](../drive_b/DEFAULT.md); [DERIVATIONS_BEAM 3.3](../../DERIVATIONS_BEAM.md).
-- [Series D3's register](../../../examples/events/orbit_lamp/README.md), [run_flow.out](../../../examples/events/orbit_lamp/run_flow.out), [expectations_flow.json](../../../examples/events/orbit_lamp/expectations_flow.json); the branch `drive-default` (PR #907) for the line drive's rows.
+- Series D3's register (`examples/events/orbit_lamp/README.md`, deleted 2026-09-26), run_flow.out (`examples/events/orbit_lamp/run_flow.out`, deleted 2026-09-26), expectations_flow.json (`examples/events/orbit_lamp/expectations_flow.json`, deleted 2026-09-26); the branch `drive-default` (PR #907) for the line drive's rows.
 - [The log](../../LOG_2026-09-20.md): records 574, 594, 630, 648, 655 (series D3 and its causes), 816, 824, 872, 886, 915, 923, 962, 966, 981, 991, 1006, 1007, 1014, 1016.
+
+> The scripts of this folder (`newton_map.py`, `newton_records.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/newton_diagnosis/<script>`).

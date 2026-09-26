@@ -17,7 +17,7 @@ def test_all_physical_modules_pass_integer_audit():
     and `events/` integer numpy and nothing that leaves the integers."""
     audit = audit_physical_modules()
     assert {Path(name).parts[0] for name in audit} == {"core", "features", "events"}
-    assert "events/run.py" not in audit and "events/engine.py" in audit
+    assert "events/run.py" not in audit and "events/detector_law.py" in audit
     assert {name for name, found in audit.items() if found} == set()
 
 

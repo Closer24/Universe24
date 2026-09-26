@@ -12,7 +12,7 @@ entries (A2 under the Beam Law, S = 2 exactly with local windows; the
 pair under the one click, 27, 5, 5, 27 and S = 176 / 64; the choosers on
 the GameBoard), DERIVATIONS 6.2, 6.5, 6.7, 22.3 and 24.3 rows 1 to 3, and
 the two papers' causal sections. Every number is from
-[bell_map.py](bell_map.py) beside this note (the click's own forms on
+bell_map.py (`docs/designs/open_problems/bell/bell_map.py`, deleted 2026-09-26) beside this note (the click's own forms on
 the exact half-angle cosines, the rungs at the nearest integer; the
 built click's tables round them at 1 / 256 and give the same cells) and
 its output [bell_map.out](bell_map.out); no run, nothing registered,
@@ -222,3 +222,5 @@ statement is the end: a theorem, not a gap".
 [A2 with the choosers](../../../EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20);
 [NATURE](../../../NATURE.md) row 1a;
 [the three tests](../../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).
+
+> The scripts of this folder (`bell_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/open_problems/bell/<script>`).

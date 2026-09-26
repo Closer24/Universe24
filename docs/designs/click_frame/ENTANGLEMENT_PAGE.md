@@ -3,8 +3,8 @@
 The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 3.6; this file is kept as the record of 2026-09-22.
 
 For a reader who knows physics and not this repository. Sources: the
-registered Bell worlds ([bell](../../../examples/events/bell/README.md),
-[amplitude](../../../examples/events/amplitude/README.md), `bell_0_8.json`
+registered Bell worlds (bell (`examples/events/bell/README.md`, deleted 2026-09-26),
+amplitude (`examples/events/amplitude/README.md`, deleted 2026-09-26), `bell_0_8.json`
 and its siblings with their `expectations.json`), [NATURE.md](../../NATURE.md)
 row 1a, the paper's figure of S(N), and section 10 of the click frame's
 [derivation](DERIVATION.md) (B1 to B4, the theorem, the table, the locality

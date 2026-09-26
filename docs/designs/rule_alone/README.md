@@ -412,3 +412,5 @@ periodic board by 200 intervals (rms 24 at 200, 30 after), so the readings stop 
     PYTHONPATH=src python docs/designs/rule_alone/item9_many.py pair|null 100 1500
 
 The readings are written beside the scripts as JSON (the runs of 2026-09-26).
+
+> The scripts of this folder (`binding_family.py`, `bodies.py`, `item1_fall.py`, `item2_algebra.py`, `item2_pair.py`, `item3_moving.py`, `item5_winding.py`, `item6_recoil_write.py`, `item7_local_source.py`, `item8_dense.py`, `item8_rate_read.py`, `item8_rate_worlds.py`, `item8_spectrum.py`, `item9_clicks.py`, `item9_many.py`, `item9_pair.py`, `packet_speed.py`, `send_ports.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/rule_alone/<script>`).

@@ -180,3 +180,5 @@ THE COUNT by first word: APPARATUS_INPUT 4; DERIVED_BLIND 16; CALIBRATED_FROM_TA
 row from this section (the writer, on the merge); Reviewer 3's own words on
 1a, 2a, 2b, 9, 13 and R2 under the same test are asked independently and
 decide where they differ from mine.
+
+> The scripts of this folder (`detector_law_pins.py`, `light_clock_60_receiver.py`, `light_clock_60_receiver_173.py`, `light_clock_motion_pins.py`, `light_dispersion_bound.py`, `light_held_pair_pins.py`, `massive_block_clock_motion.py`, `massive_c_derivation.py`, `massive_conserved_form.py`, `massive_cube_threshold.py`, `massive_dielectric_index.py`, `massive_light_clock_relay.py`, `massive_light_self_trapping.py`, `massive_moving_index_k4.py`, `massive_time_reversal.py`, `massive_well_spectrum.py`, `matter_wave_pins.py`, `matter_waves_2048.py`, `order_channel_hidden_pins.py`, `order_channel_pins.py`, `order_channel_sequential_pins.py`, `pair_field_pins.py`, `two_slits_1024.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/detector_law/<script>`).

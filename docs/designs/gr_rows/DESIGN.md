@@ -29,7 +29,7 @@ covariant readings cannot give are those that need a rule on the LINEAR
 block, a row's pace or turn read off what arrives at its Node. Written by
 the mathematician, read-only; the pins before any run and before the
 rule's numbers; every number made by the host script
-[gr_rows_map.py](gr_rows_map.py) with its output
+gr_rows_map.py (`docs/designs/gr_rows/gr_rows_map.py`, deleted 2026-09-26) with its output
 [gr_rows_map.out](gr_rows_map.out); no run, no fit, no build. The
 derivation mathematician states the status of each of Einstein's formulas
 in section 21.2 of DERIVATIONS_BEAM.md; this note designs the rule and
@@ -50,7 +50,7 @@ One source per number.
   Lambert and Le Poncin-Lafitte 2011, A&A 529, A70, to verify against the
   source). The two references in the register: series K on main, the
   deflection 0.000 pixel in every world (the flight blind to the crowd,
-  [the lensing README](../../../examples/events/lensing/README.md)); series
+  the lensing README (`examples/events/lensing/README.md`, deleted 2026-09-26)); series
   K under `meeting-v1`, the centroid toward the mass by -1.79, -4.36 and
   -2.30 pixels at (M, b) = (2^12, 6), (2^13, 6), (2^12, 3), the form `M / b`
   with a constant that is a grain of the fan (5.4). The comparison with
@@ -553,7 +553,9 @@ crowd.
 ## 9. Links
 
 - The delay field and the clock: [DERIVATIONS_BEAM.md](../../DERIVATIONS_BEAM.md) sections 5.1, 5.2, 5.4, 5.5; the covariant readings' limit: 17.4; the growing wall's feedback form: 15.2, 15.6; the derivation map: 21.2.
-- The meeting key and the crowd audit: [BEAM_LAW.md](../../BEAM_LAW.md) notes 35, 47 and 48; the register: [the lensing README](../../../examples/events/lensing/README.md), [EXPERIMENTS.md](../../EXPERIMENTS.md) series K.
+- The meeting key and the crowd audit: [BEAM_LAW.md](../../BEAM_LAW.md) notes 35, 47 and 48; the register: the lensing README (`examples/events/lensing/README.md`, deleted 2026-09-26), [EXPERIMENTS.md](../../EXPERIMENTS.md) series K.
 - The fan by angle and the exact phase at the click: [designs/fraction_free/TWO_SLITS.md](../fraction_free/TWO_SLITS.md) sections 2, 7 and 10.
 - The vector form, the six verbs and the roundings at load: [designs/vector_form/LAW.md](../vector_form/LAW.md) sections 4.1, 5 and 6; the three tests: [skills/workflow.md](../../../skills/workflow.md).
-- The map: [gr_rows_map.py](gr_rows_map.py), [gr_rows_map.out](gr_rows_map.out).
+- The map: gr_rows_map.py (`docs/designs/gr_rows/gr_rows_map.py`, deleted 2026-09-26), [gr_rows_map.out](gr_rows_map.out).
+
+> The scripts of this folder (`gr_rows_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/gr_rows/<script>`).

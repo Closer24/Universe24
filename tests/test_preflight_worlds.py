@@ -34,11 +34,6 @@ def test_the_preflight_loads_every_listed_world_and_runs_none(tmp_path: Path, ca
     (root / "massive_record/muon_moving_clock_at_rest_14.json").write_bytes(good.read_bytes())
     ray = ROOT / "examples/events/one_content.json"
     (root / "bell/bell_a0b0.json").write_bytes(ray.read_bytes())
-    # the ray world's entity definitions, referenced relative to its own file
-    (root / "bell/entities").mkdir()
-    (root / "bell/entities/families.json").write_bytes(
-        (ROOT / "examples/events/entities/families.json").read_bytes()
-    )
     bad = json.loads(good.read_text(encoding="utf-8"))
     bad["amplitude_bound"] = 1 << 20  # a second copy of the families file's integer (item 59)
     (root / "massive_record/unbounded.json").write_text(json.dumps(bad), encoding="utf-8")

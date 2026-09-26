@@ -134,7 +134,7 @@ Doppler; their verdicts are in the log and Highlights 5.4). No key, hypothesis o
 rule of the engine moves; TERMINOLOGY.md's retired rows stay as history.
 
 The readings of a click under one boundary (the third commit): the package
-`tools/click_readings/` ([its README](../tools/click_readings/README.md)) holds the
+`tools/click_readings/` (its README (`tools/click_readings/README.md`, deleted 2026-09-26)) holds the
 readings tools, one module per series, renamed by the series' subject and moved
 byte for byte but for their root path: `tools/bell_chsh.py` -> `bell.py`,
 `tools/bell_choosers.py` -> `bell_choosers.py`, `tools/<series>_readings.py` ->
@@ -239,7 +239,7 @@ the gate set's lamp-free worlds at their caps, `mz_345`, `bell_0_8` and
 registered from the base tree in `examples/events/massive_rows/expectations.json`).
 The worlds of the pin, `slits_matter` (4096 births) and `slits_matter_1024`,
 and the small replay world are in `examples/events/massive_rows/`
-([README](../examples/events/massive_rows/README.md)); the identity's entry is
+(README (`examples/events/massive_rows/README.md`, deleted 2026-09-26)); the identity's entry is
 [HYPOTHESES section 26](HYPOTHESES.md#26-the-free-particle-as-a-record-of-massive-rows-de-broglies-fringes-from-h--p-stated-so-that-it-can-fail).
 ## The clock's word, on 2026-09-21: clock-age-v1, the age moment as the clock's default
 
@@ -307,10 +307,10 @@ and note 25](BEAM_LAW.md#3-the-nodes-interval-nature_beam).
   a word) and its digests re-pinned. The re-registrations, each with the
   old value beside the new and the date, every number labelled DETECTOR
   or GAMEBOARD: series E's `scalar` world (its k x r the constant now,
-  the mean 72.19, twice the `age` world's 36.18; [the README](../examples/events/redshift/README.md#re-read-under-clock-age-v1-2026-09-21)),
-  series C item 6 (the identity replayed on the age moment; [the README](../examples/events/coupling/README.md#re-read-under-clock-age-v1-2026-09-21)),
-  series G's two `scalar` worlds ([the README](../examples/events/hubble/README.md#re-read-under-clock-age-v1-2026-09-21)),
-  series J's five ([the README](../examples/events/weak/README.md#re-read-under-clock-age-v1-2026-09-21);
+  the mean 72.19, twice the `age` world's 36.18; the README (`examples/events/redshift/README.md`, deleted 2026-09-26)),
+  series C item 6 (the identity replayed on the age moment; the README (`examples/events/coupling/README.md`, deleted 2026-09-26)),
+  series G's two `scalar` worlds (the README (`examples/events/hubble/README.md`, deleted 2026-09-26)),
+  series J's five (the README (`examples/events/weak/README.md`, deleted 2026-09-26);
   the J1 decay ticks move from 522 to 525 to 602 to 642 and beyond the
   run, NATURE row 8a's FAIL standing in form, its population truncated:
   a question for the model owner), series U's eight, V's two and S's five
@@ -660,7 +660,7 @@ forms.
 The families `u` (`quantum` 0, `charge` 1224, `phase` false) and `glue`
 (`quantum` 0, `columns` `{"strong": {"value": 10000, "sign": -1}}`,
 `lifetime` 3, `phase` false) that the seven worlds of series R declare
-([the quarks](../examples/events/quarks/README.md), the design
+(the quarks (`examples/events/quarks/README.md`, deleted 2026-09-26), the design
 [QUARKS.md](designs/quarks/QUARKS.md)) are defined once in
 `examples/events/entities/families.json` (written by `make_definitions.py`:
 the definitions `up_quark` and `glue_family`, the rows of

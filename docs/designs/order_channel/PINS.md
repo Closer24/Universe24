@@ -10,7 +10,7 @@ has made. Written before any run of the protocol; no pin here moves after
 the run (`RUN.md`, step 2, reads against it). Every number is labelled by
 kind: DETECTOR (a click outcome, its order, a window read at a counter, the
 wheel value on a line of `events.jsonl`), COMPUTATION (a pin from the law's
-algebra, printed by [order_pins.py](order_pins.py) into
+algebra, printed by order_pins.py (`docs/designs/order_channel/order_pins.py`, deleted 2026-09-26) into
 [order_pins.out](order_pins.out)), or nature (the value compared with;
 record 817's rule: Einstein's, Bell's and nature's numbers appear only as
 the thing compared with). Notation per skills/workflow.md: rows and
@@ -168,3 +168,5 @@ the fractions are exact; a deviation of one birth is a NO MATCH.
 - The counts' no-signalling (Theorem 5) is not at stake here and is not
   refuted by a FAIL in the order; the paper's claim "no signalling" is
   what the row candidate of RUN.md's last section narrows.
+
+> The scripts of this folder (`order_pins.py`, `order_reading.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/order_channel/<script>`).

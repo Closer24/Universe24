@@ -9,9 +9,9 @@ Bending Algebraist's [STEP_ALGEBRA.md](../light_bending/STEP_ALGEBRA.md)
 (record 839: an algebra of steps can simulate a board): the law's integer
 steps applied exactly, under the rule, to one row of light on each line,
 read at a screen of Nodes. The arithmetic is
-[flow_weight_map.py](flow_weight_map.py) beside this file, its output
+flow_weight_map.py (`docs/designs/flow_weight/flow_weight_map.py`, deleted 2026-09-26) beside this file, its output
 [flow_weight_map.out](flow_weight_map.out); the map IMPORTS the
-Algebraist's [step_algebra_map.py](../light_bending/step_algebra_map.py)
+Algebraist's step_algebra_map.py (`docs/designs/light_bending/step_algebra_map.py`, deleted 2026-09-26)
 (one canonical copy) and reuses its `walk` (the three rules of the key
 `optical` interval by interval, integer for integer as `nature_beam.py`
 computes them), its `Table`, `Crowd`, `primitive_fan`, `unit_label`,
@@ -246,8 +246,10 @@ stated factor would refute the algebra's walk of the rule.
 ## 7. Links
 
 - [DESIGN.md](DESIGN.md): the rule, the three tests, what moves, the key.
-- [flow_weight_map.py](flow_weight_map.py), [flow_weight_map.out](flow_weight_map.out): the arithmetic (the Algebraist's map imported).
-- [STEP_ALGEBRA.md](../light_bending/STEP_ALGEBRA.md), [step_algebra_map.py](../light_bending/step_algebra_map.py): the step algebra reused, sections 5, 9 and 10.
-- [examples/events/optical/README.md](../../../examples/events/optical/README.md): the registered worlds (DETECTOR).
+- flow_weight_map.py (`docs/designs/flow_weight/flow_weight_map.py`, deleted 2026-09-26), [flow_weight_map.out](flow_weight_map.out): the arithmetic (the Algebraist's map imported).
+- [STEP_ALGEBRA.md](../light_bending/STEP_ALGEBRA.md), step_algebra_map.py (`docs/designs/light_bending/step_algebra_map.py`, deleted 2026-09-26): the step algebra reused, sections 5, 9 and 10.
+- examples/events/optical/README.md (`examples/events/optical/README.md`, deleted 2026-09-26): the registered worlds (DETECTOR).
 - [docs/EXPERIMENTS.md](../../EXPERIMENTS.md), D3: Newton after a detector, the pins that would move.
 - [the log](../../LOG_2026-09-20.md) records 817, 862, 872, 878, 880, 884, 888.
+
+> The scripts of this folder (`flow_weight_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/flow_weight/<script>`).

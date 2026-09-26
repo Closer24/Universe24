@@ -527,3 +527,5 @@ centred step flips in the same campaign now or at the paper's close
 (record 955: one decision; this note's generators carry both columns
 either way); (5) PRs #855, #854 and #879 on main, and PR #860's
 deletions if they go first.
+
+> The scripts of this folder (`drive_b_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/drive_b/<script>`).

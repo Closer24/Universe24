@@ -642,7 +642,7 @@ enters the paper from this file.
   identity's keys, the flight and the turn of a massive row, the completion.
 - [BEAM_LAW.md note 36 (i)](../../BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
   the window's width, the filter that is not an attenuation.
-- [examples/events/weak/README.md](../../../examples/events/weak/README.md),
+- examples/events/weak/README.md (`examples/events/weak/README.md`, deleted 2026-09-26),
   J2: the registered worlds and their expectations.
 - The paper's Table 2 rows 8b and 8c (`paper/general_formula/main.tex`);
   [CRITERIA.md](../paper_criteria/CRITERIA.md) rows 8b and 8c.

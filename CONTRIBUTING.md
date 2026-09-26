@@ -98,7 +98,7 @@ The executed selection is saved in `artifacts/check-scope.json`.
 
 A clean selection avoids source-tree scans; explicit `--tests` still run. Changed
 selections batch-read prior Git blobs while retaining both old and current import
-graphs. Shared test builders belong in focused `tests/support/` modules so edits
+graphs. Shared test builders belong in focused helper modules under `tests/` so edits
 to an assertion do not implicitly change the fixtures of unrelated consumers.
 Reuse immutable recorded baselines, never a mutable Simulation across tests.
 

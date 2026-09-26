@@ -232,3 +232,5 @@ column per axis per interval.
    mod N. Recommendation: one unification after the four merges, a new
    note under `beam-v1`, the pushed worlds re-registered once in one
    batch.
+
+> The scripts of this folder (`accumulator_map.py`, `fan_sphere_map.py`, `two_slits_map.py`, `wheel_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/fraction_free/<script>`).

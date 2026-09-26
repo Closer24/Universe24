@@ -84,10 +84,10 @@ at which a row on a heading has made L Manhattan steps (the engine's own
 
 ## 1. The world as registered (nothing changed)
 
-The file: [examples/events/atoms/hydrogen_r12.json](../../../examples/events/atoms/hydrogen_r12.json),
+The file: examples/events/atoms/hydrogen_r12.json (`examples/events/atoms/hydrogen_r12.json`, deleted 2026-09-26),
 `model_id` `rays-atoms-hydrogen-r12-form-b-v1`, written by
-[make_worlds.py](../../../examples/events/atoms/make_worlds.py) on series
-H's base ([the atoms README](../../../examples/events/atoms/README.md);
+make_worlds.py (`examples/events/atoms/make_worlds.py`, deleted 2026-09-26) on series
+H's base (the atoms README (`examples/events/atoms/README.md`, deleted 2026-09-26);
 [atoms/PINS.md](../atoms/PINS.md) section 1).
 
 | The key | As declared | Kind |
@@ -97,7 +97,7 @@ H's base ([the atoms README](../../../examples/events/atoms/README.md);
 | `K`, `N` | K = 2^30 = 1 073 741 824 (the clock's pair [1, K]: the electron's own clock turns 0 within the run); N = 64 | declared |
 | `release`, `suspension`, `width`, `action` | the release pair [1, 18360] (one unit per 10 self-creations for a content of 1836: `by_clock(age, 1836, 18360)`); `suspension` 0 (no owed count: the push alone moves the electron, and every detector's count is one per interval, r = 1, record 754); S = 45120; h = 5 536 242 544 (h_B = 16 p_B(8), the action re-fixed under form B by series H's rule, atoms/PINS.md section 2) | declared |
 | `directions` | the fan of 2616 primitive directions with 1016 <= abs(D)^2 <= 1032 | declared |
-| the families ([families.json](../../../examples/events/entities/families.json)) | `p` the proton: quantum 0 (free), `charge` [1, 1], no phase circle; `e` the electron: quantum 0 (free), `charge` -15, a phase circle | declared |
+| the families (families.json (`examples/events/entities/families.json`, deleted 2026-09-26)) | `p` the proton: quantum 0 (free), `charge` [1, 1], no phase circle; `e` the electron: quantum 0 (free), `charge` -15, a phase circle | declared |
 | the proton (measured event 1) | family `p`, amount 1836, `fixed`, at c, releasing on the whole fan; its table the default of the keys: a free family's rows are `read` (the push taken, the row goes on; `world.default_rule`); it declares no `rerelease` and no `measure` | declared |
 | the electron (measured event 2) | family `e`, amount 1836, phase 0, at (38, 26, 26) = (c + 12, c, c), **p** = (0, 293 783 192, 0), `span` [1, 1, 3] (the Nodes z = 25, 26, 27), `phase_by_momentum` under h, `directions` the four in-plane headings +-X, +-Y; its table the default (`read`) | declared |
 | `detectors` | `at_proton`: the proton's Node (26, 26, 26), `wave`, threshold 1 | declared |
@@ -141,7 +141,7 @@ arrival Node on Nodes that are detectors).
 | the final `measured` state of `run.json` | its position, momentum, `pushed`, `steps`, `phase_steps`, and under `acc` the three `action` accumulators (the per-axis remainders below h at the end) | GAMEBOARD |
 
 **The reading method, fixed here and implemented in
-[baseline_readings.py](baseline_readings.py) before the run.** (i) The
+baseline_readings.py (`docs/designs/atom_baseline/baseline_readings.py`, deleted 2026-09-26) before the run.** (i) The
 releases: each `face:+x` click (Node y) is paired with the `face:+y` click
 (Node x) of the same release by the flight table's delays, `t1 - f(52 - x)
 = t2 - f(52 - y)` within 3 counts, the same phase and the same z (the z was dropped
@@ -217,7 +217,7 @@ render, no frames; completed, 7500 ticks, the books balanced at every tick,
 fingerprint `state.json` sha256 7664a7129be6322e4a35bcf67aca80f2fd699f60cae421b6bd2b15ce68983c59,
 the ledger e62c4d48ef87294091320b3d7cf54607924ef96bbd6e86b6c3cb6a68e558ed63,
 `events.jsonl` 24e6ae816901cc365193448b9bd69834e6a08664d292f0e6d4566291981b178a.
-The reading by [baseline_readings.py](baseline_readings.py) (the method of
+The reading by baseline_readings.py (`docs/designs/atom_baseline/baseline_readings.py`, deleted 2026-09-26) (the method of
 section 2; two reader fixes after the run, neither a pin: the `escaped`
 list's shape in `run.json`, and the four units of one release landing on
 different Nodes of the set by the Nodes' claims, so the pairing no longer
@@ -284,8 +284,12 @@ dwell of 20 counts per Link where the loop is still near r = 12.
 ## Links
 
 [The atom's algebra](https://github.com/Closer24/Universe24/blob/643b7ae7d4aeac2062518146aeb6e8b6f2998148/docs/designs/atom_algebra/ALGEBRA.md) (sections 1, 2, 3, 6 and
-7); [the atoms pins](../atoms/PINS.md); [the atoms README](../../../examples/events/atoms/README.md);
+7); [the atoms pins](../atoms/PINS.md); the atoms README (`examples/events/atoms/README.md`, deleted 2026-09-26);
 [series H](../../EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20);
 [ENGINE.md, the readings by type](../../ENGINE.md#the-detectors-readings-by-type);
 [NATURE row 6](../../NATURE.md); [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector)
 (records 281, 721, 754, 762, 817, 881, 884, 886); [the day's log](../../LOG_2026-09-20.md).
+
+> The scripts of this folder (`baseline_readings.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/atom_baseline/<script>`).
+
+> The scripts of this folder (`baseline_readings.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/atom_baseline/<script>`).

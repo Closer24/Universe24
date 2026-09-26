@@ -363,7 +363,7 @@ by the linear scaling of the gr_rows pin world's GAMEBOARD age moment,
 DETECTOR only when a lamp at b reads it against a control (series T's
 method); a read k_a(b) re-derives every conditional number by the same
 forms and refutes nothing. The register beside the worlds:
-[expectations.json](../../../examples/events/newton_side/expectations.json).
+expectations.json (`examples/events/newton_side/expectations.json`, deleted 2026-09-26).
 
 | The reading | The control | The mass world | The light world | Kind | PASS | FAIL |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -461,7 +461,7 @@ beyond the identity the design declares).
 
 ## 5. The world files of Side A
 
-`examples/events/newton_side/` ([README.md](../../../examples/events/newton_side/README.md)):
+`examples/events/newton_side/` (README.md (`examples/events/newton_side/README.md`, deleted 2026-09-26)):
 `control.json`, `mass.json`, `light.json`, written by `make_worlds.py`
 from series K's generator (the box, the fan, the definitions the
 families come from) with the design's section 4.3 keys, and byte-checked
@@ -758,7 +758,7 @@ pixels; agreement within the grain confirms the push's and the wall's
 forms at the comb (Newton's form in the crowd the world has),
 disagreement names a second cause. A COMPUTATION labelled a CHECK: no
 world, no key, no run of a pin, no pin moved. The script and its output
-are beside this file: [run_14_check.py](run_14_check.py),
+are beside this file: run_14_check.py (`docs/designs/fail_rows/run_14_check.py`, deleted 2026-09-26),
 [run_14_check.out](run_14_check.out), the two JSON records
 `run_14_check_mass.json` and `run_14_check_light.json`. Written on
 `main` at bf8330f1 (PR #987 merged), the reviewer's reading (1) as the
@@ -957,10 +957,10 @@ owner's word.
   readings by type; [TERMINOLOGY.md](../../TERMINOLOGY.md), the readings
   (a detector's clock, Inside and Outside); `src/event_universe/events/measured.py`,
   `count_component` (what a clock counts by its entry's `reads`).
-- The worlds [examples/events/newton_side/](../../../examples/events/newton_side/README.md);
+- The worlds examples/events/newton_side/ (`examples/events/newton_side/README.md`, deleted 2026-09-26);
   the tool `tools/newton_side_readings.py`; the test
   `tests/test_newton_side_readings.py`; Side B's generator
   `examples/events/orbit_lamp/make_worlds.py`; the check of section 10,
-  [run_14_check.py](run_14_check.py) and [run_14_check.out](run_14_check.out).
+  run_14_check.py (`docs/designs/fail_rows/run_14_check.py`, deleted 2026-09-26) and [run_14_check.out](run_14_check.out).
 - The log: records 768, 1043, 1044, 1046, 1047, 1050, 1053, 1095, 1098,
   1113, 1117, 1122 and 1128.

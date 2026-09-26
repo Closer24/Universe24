@@ -96,7 +96,7 @@ The GameBoard is open (`"boundary": "open"`): what leaves is booked as escaped, 
 the momentum it carried; a closed GameBoard is refused. An axis may be declared
 periodic (`"boundary": {"z": "periodic"}`): its departures wrap to the opposite
 face and nothing escapes on that axis. Run several worlds one
-process per core with `tools/run_series.py`.
+process per core with `tools/run_inputs.py`.
 
 | Output | When written |
 | --- | --- |
@@ -132,24 +132,15 @@ active contracts, explicit experiments and revision-specific evidence.
 | Path | Responsibility |
 | --- | --- |
 | `src/event_universe/events/world.py` | The world file: its keys, their bounds and the refusals, named |
-| `src/event_universe/events/nature_beam.py` | The Beam Law (`beam-v1`): the record `NatureBeam`, the one reading `read_arrivals`, the flight rule, the collision table, the store of records per family and the one function `nature_beam`, a Node's whole interval (the walk, the reading, the collision, the measured event's table, the detector's record, the self-creations, the merge) |
-| `src/event_universe/events/meeting.py` | The meeting (`meeting-v1`, the world key `meeting`): the arc permutation of the direction table, a paid unit's reading of the free crowd at a free-space Node, its turn by its phase register and the inverse |
-| `src/event_universe/events/measured.py` | The measured event's record (`Measured`) and the ledger of an interval |
-| `src/event_universe/events/engine.py` | The frame around the law: the clocks, the owed count off the clock, the steps by the momentum, the books, the readings, the inverse interval, the snapshot; it computes no physics |
-| `src/event_universe/events/run.py` | The artifacts of a run: the input, the events, the state, the record |
 | `src/event_universe/core/integer.py` | Shared bounded integer primitives |
 | `src/event_universe/core/game_board.py` | The GameBoard's addresses, the six Port headings, the cube's group of 48 with its hand, and the bound of a declared charge and quantum |
 | `src/event_universe/core/phase.py` | The phase circle, the cyclic group of N steps with its unit vectors, and its cosine and sine tables in bounded integers |
-| `src/event_universe/runner.py` | `python -m event_universe`: a world file to headless artifacts |
-| `src/event_universe/configuration_validation.py` | Read-only preflight of a world file |
-| `src/event_universe/snapshot_writer.py` | `state.json` written Node by Node, byte for byte the snapshot's JSON |
 | `src/event_universe/retention.py`, `docs/RETENTION.md` | Registered output ownership, active writer protection and 24-hour cleanup |
 | `src/event_universe/diagnostics/numeric_audit.py` | The two static audits: `core/` holds integer arithmetic only, `events/` integer numpy and nothing that leaves the integers |
-| `src/event_universe/diagnostics/shell_readings.py` | The shell means of the engine's readings, a read-only host diagnostic in floating point |
-| `tools/run_series.py` | The worlds of a series run one process per core, each with its log and artifacts, a summary table at the end; `--wall-seconds` and `--memory-mb` stop a run past the host's budget and report it not completed |
 | `tools/check.py` | The affected-check: changed files and their consumers; `--full` for everything |
+| `tools/record_shipped_worlds.py`, `tests/shipped_worlds.json`, `tests/test_shipped_worlds.py` | Every shipped world bit for bit (record 2214 point 7; issue #1155): the recorder writes one SHA-256 digest of the engine's whole state per world after a recorded number of intervals; the test replays them and is selected by `tools/check.py` on every pull request |
+| `tests/test_genericity.py` | The genericity test (the Boss's record 2234): a seeded generator draws one to twenty families with random English names and random admitted attribute combinations; every draw loads and runs, and five properties hold on each (rename bit for bit, reorder bit for bit, no source stays zero, Rule3's conserved form where no click and no load acts, backward returns the start); a failing draw is kept with its seed; selected by `tools/check.py` on every pull request |
 | `tools/preflight_worlds.py` | The pre-GO check of the world files: every world a run list names (`docs/designs/detector_law/RUN_LIST.md` by default) is resolved, loaded by the runner's own loader, its margin rule read and its engine constructed, no interval stepped; one line per world, LOADED, REFUSED or MISSING; nothing here runs a rule |
-| `tools/click_readings/` | The readings of the register's series from a run's record, one module per series: the clicks alone (DETECTOR) with the GameBoard's lines labelled (GAMEBOARD); nothing here runs a rule |
 | `examples/events/` | The worlds of the Beam Law: one content, two contents, two slits with a detector and the one-slit control; the Bell worlds, the coupling, orbit, redshift and Hubble series and the detector definitions |
 | `tests/` | One module per generic rule on a minimal GameBoard (the one reading, the flight, the collision table, the bijection, the detector's record, the re-emission, the clock, the phase window, the world file, the worlds, the preflight, the decoder, retention, the repository gates) |
 | `docs/HIGHLIGHTS.md` | The specification, edited by the model owner |

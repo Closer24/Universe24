@@ -35,7 +35,7 @@ def test_every_resource_consumer_row_names_an_existing_test():
             assert (root / consumer).exists(), consumer
 
 
-@pytest.mark.parametrize("name", ["check.py", "run_series.py"])
+@pytest.mark.parametrize("name", ["check.py", "preflight_worlds.py"])
 def test_tool_changes_select_the_scope_test(name):
     tests, typed = CHECK.select(["tools/" + name], {})
     assert "tests/test_check_scope.py" in tests
@@ -45,16 +45,16 @@ def test_tool_changes_select_the_scope_test(name):
 @pytest.mark.parametrize(
     "name,consumer",
     [
-        ("click_readings/coupling.py", "tests/test_coupling_readings.py"),
-        ("click_readings/orbit.py", "tests/test_orbit_readings.py"),
-        ("click_readings/heisenberg.py", "tests/test_heisenberg_readings.py"),
+        ("preflight_worlds.py", "tests/test_preflight_worlds.py"),
+        ("run_inputs.py", "tests/test_run_inputs.py"),
+        ("twist_table.py", "tests/test_primitives.py"),
     ],
 )
 def test_tool_changes_select_the_test_that_loads_the_tool_by_its_path(name, consumer):
-    """A readings tool is loaded by its path, never imported: the test that
+    """A tool is loaded by its path, never imported: the test that
     names the file is its consumer, the tests that do not are not."""
     sources = {
-        "tests/test_names_it.py": f'TOOL = ROOT / "tools" / "click_readings" / "{Path(name).name}"',
+        "tests/test_names_it.py": f'TOOL = ROOT / "tools" / "{Path(name).name}"',
         "tests/test_other.py": "def test_other(): pass",
     }
     tests, typed = CHECK.select(["tools/" + name], sources)
@@ -110,11 +110,24 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
     tests, typed = CHECK.select(["AGENTS.md", "tools/check.py", ".github/workflows/check.yml"], {})
     assert tests == [
         "tests/test_check_scope.py",
+        "tests/test_genericity.py",
         "tests/test_repository_hygiene.py",
         "tests/test_repository_language.py",
         "tests/test_repository_navigation.py",
+        "tests/test_shipped_worlds.py",
     ]
     assert not typed
+
+
+def test_every_change_selects_the_shipped_worlds_regression_and_no_change_selects_nothing():
+    """The regression record of every shipped world is compared and the genericity test draws
+    its universes on any change at all (record 2214 point 7; record 2234); with nothing changed
+    nothing is selected."""
+    tests, _ = CHECK.select(["docs/GLOSSARY.md"], {})
+    assert "tests/test_shipped_worlds.py" in tests and "tests/test_genericity.py" in tests
+    tests, _ = CHECK.select(["tests/shipped_worlds.json"], {})
+    assert "tests/test_shipped_worlds.py" in tests
+    assert CHECK.select([], {}) == ([], [])
 
 
 def test_example_selects_its_consumers_and_not_other_collision_candidates():

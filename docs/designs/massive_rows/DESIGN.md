@@ -9,16 +9,16 @@ record 336: REACHED ONLY IN PART, the design ordered for the free
 particle). This is that design, written by the mathematician, read-only,
 on the law as it stands on `main`: the identity `massive-rows-v1`, named
 and not built; its numbers from the host map
-[massive_rows_design_map.py](massive_rows_design_map.py) with its output
+massive_rows_design_map.py (`docs/designs/massive_rows/massive_rows_design_map.py`, deleted 2026-09-26) with its output
 [massive_rows_design_map.out](massive_rows_design_map.out) (the pin
 world's fan read from `examples/events/amplitude/slits_huygens.json`, the
 integer root the engine's own), from the round-2 map
-[massive_rows_round2_map.py](massive_rows_round2_map.py) with its output
+massive_rows_round2_map.py (`docs/designs/massive_rows/massive_rows_round2_map.py`, deleted 2026-09-26) with its output
 [massive_rows_round2_map.out](massive_rows_round2_map.out) (the
 primitive's identity on the table, the arrivals by the accumulator rule
 on the engine's own Bresenham lines, Pearson on the declared Farey fan,
 the bounds, the host cost; the one import `direction_flight`) and from
-section 23's [massive_rows.py](../derivations_beam/massive_rows.py); no
+section 23's massive_rows.py (`docs/designs/derivations_beam/massive_rows.py`, deleted 2026-09-26); no
 run; nothing here is a rule until the build beside the law. Round 2
 (2026-09-21) answers the physics-rule review of the first round
 (ADMISSIBLE WITH CORRECTIONS, M1 to M5 and S1 to S6) in section 8, each
@@ -680,5 +680,7 @@ own).
 
 - The check on paper: [DERIVATIONS_BEAM section 23](../../DERIVATIONS_BEAM.md#23-schrodingers-equation-the-massive-row-and-what-its-linear-block-reaches) ([23.1](../../DERIVATIONS_BEAM.md#231-the-massive-row-and-the-three-tests) the row, [23.3](../../DERIVATIONS_BEAM.md#233-the-pin-before-any-run) the pin, [23.5](../../DERIVATIONS_BEAM.md#235-the-price-stated-plainly-for-the-owner) the price); the turn by momentum, [7.2](../../DERIVATIONS_BEAM.md#72-bohrs-levels); the covariant readings, section 17.6 (M3, the integers of E).
 - The engine as built: [ENGINE.md](../../ENGINE.md) (the `lamp`, `rerelease` with `weights`, `held`, `momentum`, the `click` and `gather` lines); [BEAM_LAW notes 41, 45 and 46](../../BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (the accumulator, the exact phase, the wheel); the rows reading the crowd, [optical-v1](../gr_rows/DESIGN.md#3-the-rule-optical-v1) (the precedent of a gated key and of a row's fields).
-- The worlds: [the amplitude README](../../../examples/events/amplitude/README.md) (`slits_low`, `slits_huygens`, the openings' fan); the Malus pin's test pattern, `tests/test_amplitude_malus.py`.
-- The maps: [massive_rows_design_map.py](massive_rows_design_map.py), [massive_rows_design_map.out](massive_rows_design_map.out) (round 1: the table, the label, the budget); [massive_rows_round2_map.py](massive_rows_round2_map.py), [massive_rows_round2_map.out](massive_rows_round2_map.out) (round 2: the identity, the arrivals, Pearson, the bounds, the cost); section 23's [massive_rows.py](../derivations_beam/massive_rows.py), [massive_rows.out](../derivations_beam/massive_rows.out).
+- The worlds: the amplitude README (`examples/events/amplitude/README.md`, deleted 2026-09-26) (`slits_low`, `slits_huygens`, the openings' fan); the Malus pin's test pattern, `tests/test_amplitude_malus.py`.
+- The maps: massive_rows_design_map.py (`docs/designs/massive_rows/massive_rows_design_map.py`, deleted 2026-09-26), [massive_rows_design_map.out](massive_rows_design_map.out) (round 1: the table, the label, the budget); massive_rows_round2_map.py (`docs/designs/massive_rows/massive_rows_round2_map.py`, deleted 2026-09-26), [massive_rows_round2_map.out](massive_rows_round2_map.out) (round 2: the identity, the arrivals, Pearson, the bounds, the cost); section 23's massive_rows.py (`docs/designs/derivations_beam/massive_rows.py`, deleted 2026-09-26), [massive_rows.out](../derivations_beam/massive_rows.out).
+
+> The scripts of this folder (`massive_rows_design_map.py`, `massive_rows_round2_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/massive_rows/<script>`).

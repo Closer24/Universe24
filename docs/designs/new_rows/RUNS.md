@@ -37,7 +37,7 @@ under `artifacts/` expire by the retention policy, the readings are kept
 here in [new_rows_readings.out](new_rows_readings.out) and
 [new_rows_readings.json](new_rows_readings.json) with the digests of
 every `state.json` and `events.jsonl`, written by
-[new_rows_readings.py](new_rows_readings.py) against
+new_rows_readings.py (`docs/designs/new_rows/new_rows_readings.py`, deleted 2026-09-26) against
 [new_rows_pins.json](new_rows_pins.json), untouched.
 
 ## 2. R1, the no-signalling marginals: no run
@@ -191,7 +191,7 @@ row outside the count until a nature source with a number is named).
   and 3 for R2 and R3); [new_rows_pins.out](new_rows_pins.out);
   [new_rows_readings.out](new_rows_readings.out) and
   [new_rows_readings.json](new_rows_readings.json);
-  [new_rows_readings.py](new_rows_readings.py); [worlds/](worlds/).
+  new_rows_readings.py (`docs/designs/new_rows/new_rows_readings.py`, deleted 2026-09-26); [worlds/](worlds/).
 - [RUN_4AB.md](../fail_rows/RUN_4AB.md) 1.2 and 6.3 (the transponder's
   returns and the meeting remainder); [ENGINE.md](../../ENGINE.md), the
   self-creation and what comes home; [ALGEBRA.md](../../ALGEBRA.md) 4.7
