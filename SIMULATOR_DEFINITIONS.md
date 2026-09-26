@@ -1,22 +1,29 @@
 # Event Universe — active modular 3D integer simulator
 
-## The Beam Law: RAYS-1 (2026-09-19)
+## The engine (adopted 2026-09-24, record 1875; one engine and no named law, the model owner's record 2103 of 2026-09-26)
 
-A world selecting `"law": "beam"` runs the Beam Law
-([docs/BEAM_LAW.md](docs/BEAM_LAW.md)): a row with a record on the digital line
-of its momentum at one speed, the collision table a bijection inside its
-invariant classes, the detector's record the squared coherent sum of what it
-clicked, the click the one one-way border and the one measurement: an
-action of the law on the state, the record ended at the detector and the
-detector's own record changed (the model owner, 2026-09-23, record 1139;
+A world runs the engine (`src/event_universe/events/detector_law.py`, the module
+to take the engine's name;
+the engine's steps in [docs/ENGINE.md](docs/ENGINE.md); the algebra in
+[docs/ALGEBRA.md](docs/ALGEBRA.md) chapter 9, the rule 9.57 (1)): every Node
+steps its own record's two levels from its six neighbours' reads by the plain
+rule with its remainder kept, a record's rows are on the GameBoard, a detector
+books the one-way flux through its Ports and clicks at its rung, and the click
+is the one one-way border and the one measurement: an action of the law on
+the state, the record ended at the detector and the detector's own record
+changed (the model owner, 2026-09-23, record 1139;
 [POSTULATES.md](POSTULATES.md) section 10). Coverage (a detector's Nodes), the
-threshold and the `reads` component are independent data. No audit record or
+rung and the `reads` component are independent data. No audit record or
 whole-GameBoard sum supplies memory, routing or a physical result; the readings
 of the engine (`cube_flux`) and of the host (`diagnostics/shell_readings`, the
-shell means, outside the engine since 2026-09-21) are read-only. The
-`reversible-detector-v1` candidate of the same day is absorbed and deleted
-([migration](docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1));
-quantum uncertainty and Born behavior remain separate unproved goals.
+shell means, outside the engine since 2026-09-21) are read-only. HISTORY: the
+ray law of 2026-09-19 (`beam-v1`, a row on the digital line of its momentum
+with a collision table; [docs/BEAM_LAW.md](docs/BEAM_LAW.md) is its record) was
+retired by record 1875 (ALGEBRA.md 9.18); the `reversible-detector-v1`
+candidate of the same day is absorbed and deleted
+([migration](docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1)).
+Born's rule is a row's pin under the law (ALGEBRA.md 9.25 (3)); quantum
+uncertainty remains a separate unproved goal.
 
 ### The couplings on the GameBoard are the six verbs (2026-09-22)
 
@@ -70,12 +77,12 @@ COUPLINGS.md (section 3) for that gate: the meeting's norm
 (`meeting.py:359-361`) and the pair of a pushed row
 (`nature_beam.py:3549`).
 
-### The one operator, the click and the birth (2026-09-24, adopted; the four building blocks of 13:36Z are history)
+### The one operator, the click and the giving click (2026-09-24, adopted; the four building blocks of 13:36Z are history)
 
 THE MODEL OWNER'S RULE (2026-09-24, 22:39Z, through the Boss, record 1875;
 Highlights 5.4: "adopt; everything is algebra"): the whole board is ONE
 ELEMENT of one module and the law is ONE MAP of it; the engine knows that
-map, the click and the birth, and nothing else ([ALGEBRA.md](docs/ALGEBRA.md)
+map, the click and the giving click, and nothing else ([ALGEBRA.md](docs/ALGEBRA.md)
 9.18 to 9.22, the derivation and the marks; [the lab tools'
 specification](docs/designs/lab_tools/LAB_TOOLS.md) part A, the tools as
 integers on the one object). The four building blocks of the owner's rule
@@ -92,12 +99,10 @@ in the day's log; nothing of them is a name the engine branches on.
   the operator; a face is its zero row; a receiver is a name (9.19 (5)).
 - **The operator.** The world declares, once, a pair [numerator,
   denominator] per family at every Node (the vacuum's, a body's on its
-  cells), the couplings (g, G) between two families on declared cells, and
-  the axes (a, b) on declared cells; the faces are the zero row beyond the
+  Nodes), the axes (a, b) on declared Nodes, and the Node clock (e, f) at every Node from the content of the bodies there (ALGEBRA.md 9.35; the couplings (g, G) between two families retired at the model owner's word of record 1962: the families are coupled by the click alone, 9.34 (B), 9.36); the faces are the zero row beyond the
   border (ALGEBRA.md 9.19 (2); 8.2's matrix). One step of the law is the
   rule per family (8.1: 3 den a_next + r' = num S_6 - 3 den a_before + r,
-  the remainder kept), the coupling (8.5), the axis (9.16 (2)) and the push
-  of the regions (8.11), on every summand alike; no branch on a family, a
+  the remainder kept), the axis (9.16 (2)), on every summand alike (the coupling of 8.5 and the push of 8.11 retired, ALGEBRA.md 9.34 (B) and 9.24 (3)); no branch on a family, a
   body or a name. Its modes are bound (a body) or free; the composed
   operator's largest eigenvalue below 2 is the stability condition, a load
   check (9.19 (2)).
@@ -108,11 +113,11 @@ in the day's log; nothing of them is a name the engine branches on.
   I (8.2); the rung 2 T u + T <= 2 W C fires the click, u the record's
   residue and W its wheel; the ladder of several sets is read cumulatively
   in its declared order at every interval as the INCREMENT LADDER: the
-  running total crosses the threshold at one interval, and the cell is
+  running total crosses the threshold at one interval, and the Node is
   the one whose segment of that interval's increment, in the ladder's
-  order, holds the threshold; Born's rule, the share of a cell equal to
+  order, holds the threshold; Born's rule, the share of a Node equal to
   its share of the record's inward flux, is then a theorem (ALGEBRA.md
-  9.19 (3), 9.25 (2) and (3)); a cell of the ladder is one DETECTOR, a
+  9.19 (3), 9.25 (2) and (3)); a detector of the ladder is one DETECTOR, a
   cube of side 3 or more (cut by the GameBoard on a thin axis), one
   connected region, its sensitivity its whole cube and the click the
   detector's, never a Node's; a box below side 3 is refused at load;
@@ -121,26 +126,32 @@ in the day's log; nothing of them is a name the engine branches on.
   (8.8), its content and its push handed to the clicking body. There is no
   take, no grace, no exemption, no own take, no close and no sponge: an
   open face is a receiver `face` at the border, last on every ladder, and
-  what leaves clicks there (Highlights' record 15, kept).
-- **The birth.** The other side of a click: a body's own excited record
+  what leaves clicks there (Highlights' record 15, kept). THE CLICK GOES ONLY FORWARD IN TIME (the model owner, record 2011):
+  it is what happened in the world, the one irreversible act of the
+  law; the taken record's rows are the one thing lost, the line keeps
+  the count, the residue, the Node and the interval, and no rule undoes
+  a click; between clicks the board runs backward exactly (ALGEBRA.md
+  9.55 (1), (6), (7)).
+- **The giving click.** The other side of a click: a body's own excited record
   (the body's seed, its stock M excitations in turn) clicks at its centre
-  cell, and the born record is written ONCE on the body's cells at both
-  levels, the world's two integers `born: [now, before]` with before =
-  -now (the generator's, round(A x 256 sin(pi s / N)), checked at load)
-  or the generator's born profile along a line; the next
-  excitation follows while the stock lasts (ALGEBRA.md 9.17 (4) to (6)).
-  A crystal births a record of rank 2 at an arriving record's click on
-  its cells (9.7 (b), 9.13). Nothing drives a record after its birth.
+  Node, and the given record is written ONCE on the body's Nodes at both
+  levels as THE BODY'S OWN MODE times the character of one **K**: the generator's integer profile of the given family's lowest mode on the body's Nodes with the zero row beyond, as long as the body's extent along **K** (ALGEBRA.md 9.35 (10), the model owner's record 1962; the train under a window of 9.17 (6a) HISTORY; the
+  two-integer pair `born: [now, -now]`, a flat pulse, is refused: its
+  standing components make the one-way flux exceed the norm, 9.25 (11));
+  the next excitation follows while the stock lasts (ALGEBRA.md 9.17 (4)
+  to (7)).
+  A crystal giving clicks a record of rank 2 at an arriving record's click on
+  its Nodes (9.7 (b), 9.13). Nothing drives a record after its giving click.
 - **No table in the engine** (the model owner, 2026-09-24, 23:00Z: "if
   it is not used, throw it out; no formulas on the board"): the reading
-  is the flux, the axes are integers, the born pairs and profiles and the
+  is the flux, the axes are integers, the given pairs and profiles and the
   seeds are the world's integers written by the generator; `core.phase`
   is read by the generator and by the host's phase readers only, never
   by the engine's step or click.
-- **The residue.** A record's u is the rule's remainder at its birth's
-  centre cell at the birthing click, and its wheel is 3 x denominator /
-  gcd(numerator, 3) of that cell's pair; no residue, wheel or seed is
-  declared, and a birth cell's pair gives at least 500 remainder values
+- **The residue.** A record's u is the rule's remainder at its giving click's
+  centre Node at the giving click, and its wheel is 3 x denominator /
+  gcd(numerator, 3) of that Node's pair; no residue, wheel or seed is
+  declared, and a giving Node's pair gives at least 500 remainder values
   (ALGEBRA.md 9.19 (4), adopted).
 - **The families.** At most three per world: light [1, 1], the
   experiment's matter, and the HOLDER family of the tools' bodies, which
@@ -168,21 +179,21 @@ in the day's log; nothing of them is a name the engine branches on.
   tensor is the pair, a record of fixed rank 2 in Z^2 (x) Z^2, four
   integer weights on the joint labels, each arm's rows over the Nodes as
   any record's; it is required only where entanglement is measured
-  (Bell: a product state gives S at most 2); it is born only by the
+  (Bell: a product state gives S at most 2); it is given only by the
   crystal during the run, never written at interval 0, and two
-  separately born records are never joined. So the board generator
+  separately given records are never joined. So the board generator
   writes only vectors (each occupied mode's integer profile with its
-  labels, the born pairs and profiles) and no tensor; the tensor's
-  operations (the crystal's birth writing the four weights, a body's
+  labels, the given pairs and profiles) and no tensor; the tensor's
+  operations (the crystal's giving click writing the four weights, a body's
   label matrix on one arm, the partial trace at one arm's click, the
-  joint weights at the pair's click) live in the birth and the click,
+  joint weights at the pair's click) live in the giving click and the click,
   under the declared contract of docs/ARCHITECTURE.md (fixed rank and
   dimensions, integer components) (ALGEBRA.md 9.22 (6)).
 - **What an experiment declares, and nothing else** (ALGEBRA.md 9.22
   (2)): the board's extents and per axis periodic or open; the families;
   the material map (the regions with their pairs, couplings and axes, as
   cubes by vertex and edge); the occupation (the quanta, amplitudes,
-  stocks, born clocks and profiles, the crystal's branches, the joint
+  stocks, given clocks and profiles, the crystal's branches, the joint
   body's matrix, which is OPTIONAL: the generator folds a circuit into
   the crystal's branches, record 1890); the momentum of every entry, the integer wave vector
   **K** of its character, 0 at rest (record 1885; a packet moves by it
@@ -197,7 +208,7 @@ in the day's log; nothing of them is a name the engine branches on.
   of a region is outside the one algebra and is carried, named so, until
   it goes; a moving receiver or emitter as a NAME that translates with its
   packet is derived as lawful and ADOPTED (record 1889, 2026-09-25): a set
-  translating at v_g(**K**), the verb T on a name (9.24 (4)).
+  translating at v_g(**K**), the translation (verb T) on a name (9.24 (4)).
 - **What is compared with nature.** The clicks alone: the counts and the
   first rungs on the receivers' names (the owner's word of 22:39Z, "check
   clicks only in the experiment"); every other property of the run is
@@ -205,27 +216,197 @@ in the day's log; nothing of them is a name the engine branches on.
   (9.20 (C)) and checked at load (9.22 (3)); a GameBoard reading is a
   diagnostic and never a result.
 - **The property test** of the one operator (ALGEBRA.md 9.20): equivariance
-  under the 48, translation on the torus, conservation of the content and
+    under the cube group, translation on the torus, conservation of the content and
   of the form I (J for the families together) between clicks, reversibility
   except the click, locality, only the click reads; verified in the algebra
   first, met on the planted boards of `docs/designs/lab_tools/`, and built
   on the engine from that section as the gate of the cleanup (9.21 (3)).
 
+A BODY (the model owner's word of 2026-09-25 through the Boss, record 2008:
+"only in the definitions, add what a body is, algebraically and practically,
+for us; we have no laws written for a body, they were written for the Node,
+and where they can, they become a body; and a body can be on one Node";
+ALGEBRA.md 9.40 D1, 9.46, 9.51, 9.53).
+
+- **Algebraically.** No step law is written for a body. The one rule is
+  written for the Node, and every Node steps every family by it at its own
+  pace, p_i = Gamma - c_i + q Lambda d_i, with c_i and d_i the levels of the
+  family of clicks and the family of charge there (ALGEBRA.md 9.50 (8),
+  (13); 9.48 (3)). A body is the support of a mode of that rule: the set S
+  of Nodes where the mode's rows are nonzero, its Nodes one time, no current
+  across its Links, a constant share (9.40 D1). Its record is what the
+  click writes and nothing else: the content per family M_k, the charge Q
+  (the signed sum), the energy count s = SUM_k (M_k P_0) div P_k with one
+  remainder per family, the residue u, the stock, the norm T (9.51 (3),
+  (8)); and the levels of the two fields at its Nodes ARE that record, s and
+  Q, held there and free elsewhere (9.51 (1)). The click is the one act at
+  the body's scale and the one write on it: the taking end gathers the flux
+  through the body's Ports and sets the taken rows to 0 with M_k + 1, Q + q
+  and s recomputed; the giving end sets the given family's rows on S with
+  M_k - 1 of the given family, u read at the first shell Node, s recomputed;
+  the body's own levels, phase and remainders are left as they are (9.40
+  T3, 9.43 (3), 9.44 (5) (c), 9.51 (8)). A click goes only forward in
+  time: it is what happened in the world, the one irreversible act, and
+  no rule undoes it; everything between clicks is the possibilities and
+  runs backward exactly (the model owner, record 2011; ALGEBRA.md 9.55
+  (7)). Between its clicks a body moves
+  only by the first sentence: its mode drifts down the pace by the ray
+  equation, the same for every family (9.52). So the owner's sentence is
+  right with one precision: the rule never becomes a body's law; only the
+  click is written at the body's scale, through its Ports and its shape.
+- **Practically, for us.** Today a world declares a body by a region of
+  Nodes (the cube by its lower vertex and its edge, below), a declared well
+  (the material pair on those Nodes, which binds the mode), a stock (the
+  given family's quanta it holds), a content per family, a charge per
+  family's quantum, a `period` P (the generator's integer, the mode's
+  turn at the body's Nodes) and, for a moving body, a momentum. A body on
+  ONE NODE is the body record (ALGEBRA.md 9.46): its parameters (the family,
+  the pair, S with the stored profile, the clock pair, P, T, the stock, M_k,
+  Q, u, s) and one rotation (a, b, r) at the body's Node; it holds, it takes
+  through its six Ports, it falls by its accumulators (9.52), and it gives
+  only with a declared giving extent (9.46 (8)); it is a host form, valid
+  only by its equivalence gate against the lattice body (9.46 (4): the
+  ticks in distribution, the rotation bit for bit, the given rows bit-equal,
+  the taking and the field identical), under the world key `body_record`,
+  off by default. A body's faces are its Nodes with a Port, a Link to a Node
+  outside it (the shell, 9.38 (2)); the first shell Node in the engine's
+  x-major order reads its residue; a body with no shell is refused. WHAT IS
+  A BODY AND WHAT IS NOT: a body holds a record and clicks (an emitter, a
+  detector, a body on one Node, a composite of bodies, a dark body that never
+  clicks, 9.54); a tool is a region of the vacuum's pair with no record
+  and no click (a mirror, a splitter, a gap, a slab, a layer of one Node)
+  and is never a body; a declared well is today's way to hold a body's
+  mode and is not the body: when binding comes from the law through the
+  charge (the atom row, 9.48 (4), 9.53 (4)), a body is the support of its
+  own bound mode and the declared wells remain tools only.
+
+A CLICK (the model owner's word of 2026-09-25: "let it be in the definitions
+of a click"; his rulings of records 1139, 1967 and 2011; ALGEBRA.md 9.40 T3,
+9.44 (5), 9.53 (1), 9.55).
+
+- **Algebraically.** The click is the one write of the law and its one
+  irreversible act; everything else is the Node's rule, which runs backward
+  exactly. It has two ends, at a body. THE TAKING END: the flux through the
+  body's Ports, gathered one way inward over the intervals (the reading E
+  of the click item above), reaches the record's rung at one interval and
+  one Node of the body's ladder; then X_S ends the taken record's rows at
+  once and the body's record moves: M_k + 1 for the taken family, Q + q, s
+  recomputed (9.40 T3, 9.51 (8)). THE GIVING END: the body's own record's
+  fraction becomes whole, the count of intervals since the residue's read
+  reaching ceil((2 u + 1) P / (2 W)) (record 1967; 9.43 (4), 9.44 (5) (c));
+  then X_S^T sets the given family's rows on the body's Nodes, the
+  eigenvector times the character, and the body's record moves: M_k - 1 of
+  the given family, the stock down one, u read anew at the first shell Node,
+  s recomputed; the body's own levels, phase and remainders are left as
+  they are (9.43 (3)). THE LINE the click leaves is four integers and the
+  record's data: the count, the residue u, the Node, the interval (with the
+  given record's norm, wheel and clock pair as GameBoard readings). THE
+  CLICK GOES ONLY FORWARD IN TIME (record 2011): it is what happened in the
+  world; the taken record's rows are the one thing lost; the line is its
+  whole trace; no rule undoes a click, the inverse map fires no rung and
+  writes no line; between clicks everything is the possibilities and
+  returns bit for bit (9.55 (1), (6), (7)). The click is the present: the
+  one interval at which the state at the Nodes is written into a record
+  and made permanent; the future is the state at the Nodes and nothing
+  else, fixed by the deterministic law; the past is the lines and the
+  state back to the last taking.
+- **Practically, for us.** A click is read on the engine as a line in the
+  run's record (the giving click's line, the click line), never as a level: the
+  taking end at the Node the increment ladder names in the ladder's
+  declared order (9.25 (2)), the giving end at the body's first shell Node
+  in x-major order; a click passes one whole quantum with its family and
+  its charge; the counts per family, the total charge and the energy
+  count are conserved at every click (9.55 (2)); a detector's pixel is one
+  connected region across an exit, a click names one Node of it, nothing
+  below one Node is claimed (9.25 (9)). WHAT IS COMPARED WITH NATURE is the
+  clicks alone: their counts, their Nodes, their intervals, their
+  centroids and their ticks; a level, a share or a field is a GameBoard
+  reading, a diagnostic, and never a result (docs/ENGINE.md, the readings
+  by type). A test that passes in the levels and not in the clicks is a
+  finding, not a pass (9.51 (7)).
+
+THE CLOCK AND THE RULER (the model owner's word of 2026-09-25 through the
+Boss, records 2024, 2027 and 2028: "switch" to Einstein's weak field; "is the
+speed c slowed between Nodes, or is the distance between them lengthened?";
+"to Highlights and to the definitions; show the algebra too"; ALGEBRA.md
+9.56 (7), 9.57).
+
+- **The rule.** At every Node, for every family, with p = Gamma - c + q Lambda
+  d the Node's own PACE (Gamma the clock's unit declared per world, c the
+  family of clicks' level at the Node, d the family of charge's level there,
+  q the record's charge in {-1, 0, +1}, Lambda the charge's strength), num
+  and den the family's declared pair, S_6 the sum of the six neighbours'
+  rows at the interval's start, and the wall the constant 6 den Gamma^2:
+  6 den Gamma^2 a_next + r' = 2 p^2 num S_6(a_now) + [12 den Gamma^2 - 6 (p^2
+  + Gamma^2)(den - num) - 12 num p^2] a_now - 6 den Gamma^2 a_before + r,
+  with 0 <= r' < 6 den Gamma^2 (a_before, a_now, a_next the record's row at
+  the Node at three intervals, r and r' the division's remainder kept at the
+  Node). Every level the rule reads is the level at the interval's start; the
+  click's writes enter at the next interval (ALGEBRA.md 9.57 (1)). At c = 0
+  and d = 0 the rule is the vacuum's term for term. The inverse is exact
+  (the wall constant). The two field families step plain, as before.
+- **The rotation, and its two halves.** At a uniform level the rule turns a
+  mode by the angle omega' with
+  1 - cos omega' = ((p^2 + Gamma^2) / (2 Gamma^2)) (1 - num / den)
+  + (p / Gamma)^2 num (6 - sigma) / (6 den),
+  sigma the six reads' factor of the mode (6 for a mode at rest, less for a
+  moving one). The first half is the MASS TERM, the family's rest rotation 1
+  - num / den, scaled once by the TIME FACTOR (p^2 + Gamma^2) / (2 Gamma^2) =
+  1 - 2 U + 2 U^2 with U = c / (2 Gamma) the potential in nature's units:
+  this is THE CLOCK, slowed at the Node. The second half is the LINK TERM,
+  the six reads, scaled by (p / Gamma)^2 = 1 - 4 U + 4 U^2: this is THE
+  CLOCK AND THE RULER together, the reads slowed once more than the mass
+  term. The time factor is p / Gamma at first order; light (num = den) has
+  no mass term and runs at the speed p / Gamma. The two weights of the weak
+  field, the clock's second-order weight and the ruler's weight, are both 1
+  exactly, as in general relativity (ALGEBRA.md 9.56 (2), (7)).
+- **The GameBoard's count, and the observer's reading: one algebra, two
+  readings of the owner's question.** Counted on the GameBoard, in Links and
+  intervals: near a body light crosses about 1 - 2 U Links per interval (its
+  speed p / Gamma), and a clock of any family ticks about 1 - U times per
+  interval of the world's (the root of the time factor). So on the board's
+  count THE SPEED OF LIGHT IS SLOWED BETWEEN THE NODES, and the Link's length
+  is one Link. Read by an observer in the well, with his own clock and his
+  own ruler: his clock is slower by 1 - U, and light crosses (1 - 2 U) / (1 -
+  U), about 1 - U, Links per tick of his; for him the speed of light is 1,
+  as everywhere, so each Link measures about 1 + U of his ruler's units: FOR
+  HIM THE DISTANCE BETWEEN THE NODES IS LENGTHENED and c is unchanged. Both
+  are the one rule above; the first is the world's reading, the second the
+  well's. Without the ruler (the first-order rule, history as the law,
+  ALGEBRA.md 9.50 (13)) light crossed 1 - U Links per interval, half the
+  slowing, and an observer in the well would have found his Links unchanged
+  and light slowed: nature's light past the Sun says otherwise.
+- **The row that reads it, by a detector's clicks.** THE SHAPIRO DELAY
+  (ALGEBRA.md 9.56 (6) (c), 9.57 (4) (c)): a record sent past a heavy body
+  and back, the click at the receiver delayed against the same path with no
+  body by 4 U_b times the path's length within the well's reach, U_b the
+  potential at the closest distance; the first-order rule gives 2 U_b, half;
+  nature's 200 microseconds past the Sun. Beside it THE BENDING (the beam's
+  centroid at the receiver, 4 U_b L against the first-order 2 U_b L; nature's
+  1.75 seconds of arc) and THE REDSHIFT (two light clocks at two heights,
+  the tick ratio the root of the time factors). The level and the pace at a
+  Node are GameBoard readings beside the clicks, diagnostics, never results.
+- **The integers.** The world declares Gamma and the amplitude bound A under
+  one bound: the rule's total at a Node below 2^63; the eighteen's choice
+  Gamma = 10^4 and A = 2^20 (ALGEBRA.md 9.57 (2)); a world outside the bound
+  is refused by the loader naming the total. Newton's constant is not
+  declared: it is the reference flux over twice Gamma per unit of energy
+  count (ALGEBRA.md 9.57 (5)).
+
 THE BODY'S LOAD CONDITIONS, kept from the four-block text as the loader's
-checks (its "takes what reaches its cells" and the table body are history;
-the cells of every two bodies are disjoint, the seed is the COMPOSED
+checks (its "takes what reaches its Nodes" and the table body are history;
+the Nodes of every two bodies are disjoint, the seed is the COMPOSED
 operator's mode, the composed operator's largest eigenvalue is below 2,
-and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
-- **The body.** A block of cells with a pair on the six-neighbour term
+and a giving Node's pair is rich, ALGEBRA.md 9.9, 9.19 items (2) and (4a)):
+- **The body.** A block of Nodes with a pair on the six-neighbour term
   (a well of a massive kind, a gap of light's kind) and a momentum: it
   moves one Link at a time by the drive's accumulators (`_move_block`),
-  carries its own massive record on its cells (`seed`), takes what
-  reaches its cells where it is `absorbing` or bound to a receiver, and
-  is hit (its response records and its coupling, the keys `coupling.g` and
-  `coupling.G`, the fields `receive` and `source`).
+  carries its own massive record on its Nodes (`seed`), takes what
+  reaches its Nodes where it is `absorbing` or bound to a receiver, and
+  is hit (its response records and its coupling, the keys `coupling.g` and `coupling.G`, the fields `receive` and `source`: HISTORY, retired by the model owner's record 1962; a body is coupled to what reaches it by the click alone, ALGEBRA.md 9.36).
   ITS DECLARATION IN THE WORLD FILE, BY THE CUBE'S VERTICES (the owner's
   word of 15:02Z, the Boss's 15:05Z): the loader reads `position`, the
-  cube's lower vertex (x0, y0, z0), and `side` s, its edge; the cube's cells
+  cube's lower vertex (x0, y0, z0), and `side` s, its edge; the cube's Nodes
   are [x0, x0 + s) on each axis, its opposite vertex (x0 + s - 1, y0 + s -
   1, z0 + s - 1), cut to the board on an open axis and wrapped on a periodic
   one (`_cube`); its `pair` is its well or gap, its `momentum` its drive.
@@ -235,32 +416,33 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   ON A LAYER a body is the cube's square section: a layer of extent 1 on
   one axis is the 3-D rule with that axis folded (ALGEBRA.md 8.2 and 8.3,
   the layer lemma; a body a G_48-set, on the layer the stabiliser's square),
-  so a body of side s declared on a layer is the square of s x s cells on
+  so a body of side s declared on a layer is the square of s x s Nodes on
   the layer's one z, a square and not a cube put on one z; ON A CHAIN it is
   the segment [x0, x0 + s) (the light clock's A at [600, 612), sagnac's
   blocks at 700 and 772 of side 12, the index's block of side 24). THE
-  FIFTEEN WORLDS' BODIES of that day (SEVENTEEN since 2026-09-25, with
-  the two-qubit computer and Mach-Zehnder, LAB_TOOLS.md part B rows 16
-  and 17), checked against this (15:20Z): 4a's block of side
+  MEASURED EXPERIMENTS' BODIES of that day (eighteen since 2026-09-25,
+  with the two-qubit computer, Mach-Zehnder and Sorkin's three openings,
+  the placed experiments of LAB_TOOLS.md), checked against this (15:20Z):
+  the muon's moving clock's block of side
   14 at [93, 93] on the 200 x 200 layer and the deep well's of side 40 at
   [44, 44] on 128 x 128, squares; the boxes' blocks of side 20 and 28 in
   64^3 and 48^3, cubes; the light clock's, sagnac's, redshift's and the
   index's blocks on chains, segments of 12 and 24; the mirror line's and
-  the take lines' blocks of side 1 on the two_slits and M1 layers, single
-  cells; Bell's and Malus's polarisers, bodies of one Node with a table
+  the take lines' blocks of side 1 on the two slits' and de Broglie's fringes' layers, single
+  Nodes; Bell's and Malus's polarisers, bodies of one Node with a table
   (HISTORY: no table, record 1878; a polariser is a body with an axis and
-  two receiver cubes, ALGEBRA.md 9.18); the fans, M2 and the cart have no
+  two receiver cubes, ALGEBRA.md 9.18); the pace fans, the moving mass's energy and the cart have no
   block (a lamp and receiver bodies of one Node: HISTORY, a detector is a
   cube of side 3 or more, record 1899): every file declares its body by
   the lower vertex and the edge
   as the loader reads it; none fails; no world line owed.
   ITS NODES ARE ORDINARY NODES (the owner's word of 15:38Z through the
-  Boss, 15:40Z): a body's cells are Nodes under the same six verbs every
+  Boss, 15:40Z): a body's Nodes are Nodes under the same six verbs every
   interval as every Node of the GameBoard, differing only in the declared
-  lowered pair on its cells (ALGEBRA.md 8.3: the well); nothing else is
+  lowered pair on its Nodes (ALGEBRA.md 8.3: the well); nothing else is
   kept at them and no rule branches on them.
   THE CONDITIONS A BODY MUST SATISFY TO BE A BODY, and where each is
-  checked as the code stands on `main` (Reviewer 3's preview of 16:15Z,
+  checked as the code stands on `main` (the gate reviewer's preview of 16:15Z,
   read against world.py, detector_law.py and the margin module
   `src/event_universe/diagnostics/massive_record_margin.py`; the owner's
   word of 16:35Z, "the experimenter must be able to put the cube exactly
@@ -269,7 +451,7 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   1. THE SHAPE: a cube of edge s from its lower vertex, whole on the
      board (a square on a layer, a segment on a chain: the folded axis of
      extent 1). As built: the loader reads `position` and `side` and
-     forms no cells; the cells are formed at the simulation's start
+     forms no Nodes; the Nodes are formed at the simulation's start
      (`_cube`), wrapped on a periodic axis and, before body-check, CUT on
      an open one (not refused: cut to fit, the defect under the owner's
      word of 16:35Z). CHECKED AT LOAD since body-check (`_body_fit_check`
@@ -301,7 +483,7 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
      (world.py); its values are the FILE'S integers, COMPARED with the
      module's mode at the runner's start (`profile_check`, the largest
      deviation printed as GAMEBOARD) and NEVER REFUSED; a scalar seed is
-     the flat value on the cells and 0 outside, which is not the mode (the
+     the flat value on the Nodes and 0 outside, which is not the mode (the
      record relaxes from it); the standing start (`now` = `before`) is
      exact by construction (`DetectorLawSimulation.__init__`). CHECKED AT
      LOAD since body-check, on the owner's word of 16:48Z
@@ -333,7 +515,7 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
      the sentence "the ramp r is below 10 relaxation times of its own well
      (1 / (omega_0 - omega_b) = t intervals, 10 times 10 t)"; at or above
      it the ramp's line is printed as COMPUTATION (test f). THE SILENT
-     BODY'S EXCEPTION (Reviewer 3's line F, 14:45Z): a body with seed 0 and
+     BODY'S EXCEPTION (the gate reviewer's line on the seed-0 body, 14:45Z): a body with seed 0 and
      no own record (the receding index's medium body, pushed at `start`
      3000 with a momentum and no ramp) has no mode to lag, no margin
      reading and no ramp check, as the margin module skips it; test g on
@@ -351,10 +533,10 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   Conditions 3 and 4 stay the margin module's at the runner's start (the
   same call, before the first interval); the owner's word of 16:48Z
   answered conditions 1, 5 and 7 and they are built on body-check, read by
-  Reviewer 3 on main.
-  THE FIFTEEN WORLDS' BODIES OF 2026-09-24 AGAINST THE LIST (the scan of
-  that day, HISTORY since the unification and the seventeen of
-  2026-09-25; read from the files on `main` 8b9a2897 through the loader;
+    the gate reviewer on main.
+  THE MEASURED EXPERIMENTS' BODIES OF 2026-09-24 AGAINST THE LIST (the scan
+  of that day, HISTORY since the unification and the eighteen measured
+  experiments of 2026-09-25; read from the files on `main` 8b9a2897 through the loader;
   with the vertex check of 15:20Z above):
   the muon's form, the layer pin world at rest (`layer_pin_rest_14.json`):
   the square of edge 14 at [93, 93] on the 200 x 200 periodic layer, whole;
@@ -363,7 +545,7 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   refused, at the runner's start); at rest, no ramp: every condition met.
   The deep well in motion (`deep_well_clock_speed_third_40.json`): the square of edge 40
   at [44, 44] on 128 x 128 periodic, whole; the well [800, 800] on [800,
-  809]; `margin` control; the seed FLAT, 1048576 on the cells (condition 5
+  809]; `margin` control; the seed FLAT, 1048576 on the Nodes (condition 5
   NOT met as the owner's word reads it: the record relaxes from the flat
   seed); the ramp 1500 against the relaxation 11 (136 times): met.
   The bound clock's second term, the boxes (`boxed_clock_side_20_moving.json` and its rest
@@ -399,7 +581,7 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   apply (the margin module skips it); pushed at `start` 3000 with no ramp,
   which the ramp rule does not reach (no record to lag). The two slits
   (`two_slits.json`): the mirror line, blocks of edge 1 of light's kind
-  with the gap [1, 2], single cells, no seed and no clock: conditions 3 to
+  with the gap [1, 2], single Nodes, no seed and no clock: conditions 3 to
   7 do not apply. De Broglie's fringes (`matter_waves_12.json`): the take
   lines and the barrier line, blocks of edge 1 of the matter kind, silent
   (the silent body: HISTORY, tool bodies are bound and of the holder
@@ -420,20 +602,20 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   own number); on the owner's word "regenerate" (records 1817 and 1818;
   16:48Z: the whole board carries the mode's values) the eleven are
   REGENERATED with the seed on the mode (the declaration of the body's
-  seed on its mode, DECLARATIONS.md section 15 M1-11; the generators'
+  seed on its mode, the seed-on-the-mode declaration (DECLARATIONS.md section 15, item M1-11); the generators'
   `seed_on_the_mode`) and the muon's form in motion with the ramp 12000
   (the ramp's declaration, section 8; HISTORY, the ramp retired by record
   1884); every listed massive world now
   loads clean under the check (test g of tests/test_body_conditions.py).
   The readings declared on the flat-seeded worlds are re-derived blind
-  before their preliminaries (M1-11).
+  before their preliminaries (the seed-on-the-mode declaration).
   A wall is a body: a MIRROR LINE is a line of blocks of light's kind with
-  the gap pair [1, 2] (DECLARATIONS.md section 15 L-1); a matter kind's
+  the gap pair [1, 2] (the gap pair's declaration, DECLARATIONS.md section 15, item L-1); a matter kind's
   zero face is the kind's own `faces` declaration, not a body. HISTORY
   (no table in the engine, ALGEBRA.md 9.14 (b) and 9.17 (6)): a
   polariser WAS a body WITH A TABLE (a measured event whose table entry
   carried an integer `phase_window`, the setting), under the joint gather
-  a table body of two cells, its own Node and the next Node on the arm's
+  a table body of two Nodes, its own Node and the next Node on the arm's
   line; it is a body with an integer axis (a, b) and no table.
 
 ## GameBoard topology (2026-09-19)
@@ -450,11 +632,13 @@ belong to their dated models, not an implicit events-world default.
 ## Historical generic disturbance model (deleted on 2026-09-19)
 
 History marker (2026-09-19): the generic disturbance simulator this section
-describes was deleted on 2026-09-19 with the engines before the Beam Law
-([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+describes was deleted on 2026-09-19 with the engines before the ray law of that
+day ([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted);
+the ray law itself retired by record 1875);
 its schema document, docs/DISTURBANCES.md, is in git at any commit before that
-deletion. The active contract is [the Beam Law](docs/BEAM_LAW.md) with
-[the engine's bookkeeping](docs/ENGINE.md). The text below is kept as written,
+deletion. The active contract is the engine
+([docs/ENGINE.md](docs/ENGINE.md), [docs/ALGEBRA.md](docs/ALGEBRA.md) chapter
+9). The text below is kept as written,
 the record of that model; it defines nothing in the engine.
 
 Initialization accepts only `sampling_profile: "detector-only-v1"` under the
@@ -1331,9 +1515,9 @@ finite allowances and locally applied nulls cannot use remote generation status
 to choose ordinary field values or clocks. See the linked contract for exact
 schema, cost, capacity and representation limits.
 
-## Historical quantum origin cells in event spacetime - Q-ORIGINS-3 (deleted on 2026-09-17)
+## Historical quantum origin Nodes in event spacetime - Q-ORIGINS-3 (deleted on 2026-09-17)
 
-The origin cells and their document were deleted on 2026-09-17 with the shared
+The origin Nodes and their document were deleted on 2026-09-17 with the shared
 quantum resource. The contract below is history.
 
 The explicit native v3 candidate gave every participating physical Node
