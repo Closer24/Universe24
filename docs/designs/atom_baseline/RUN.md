@@ -116,11 +116,11 @@ is a declaration of the register, not a pin, and is not changed.
 that set is used with no change to the world file: `at_proton` (one Node,
 `wave`) and the six face detectors of the open cube (`face:+x`, `face:-x`,
 `face:+y`, `face:-y`, `face:+z`, `face:-z`, `wave`, [ENGINE.md, "An open
-face is a detector"](../../ENGINE.md#per-axis-gameboard-topology-2026-09-19-implementation-amendment)).
+face is a detector"](../../ENGINE.md#1-the-words)).
 A passive detector at every Node (record 721) is not a declaration the
 world file can carry today: the validator refuses "a detector on a Node
 without a measured event" and "a Node in two detectors" ([ENGINE.md, the
-world file's refusals](../../ENGINE.md#the-beam-law-beam-v1-the-ray-laws-record-cancelled-docscancelled_worldsmd-the-engine-has-no-laws-name-item-70)), and record 721
+world file's refusals](../../ENGINE.md)), and record 721
 is the owner's idea put to him with no engine line; so the order's
 "whichever the world file already declares" is the register's set, and
 nothing is added. The faces are the per-Node reading this world has: every
@@ -128,7 +128,7 @@ row the electron releases ends at a face Node, and the face Node's
 coordinates are the electron's own across the flight (record 839: the
 arrival Node on Nodes that are detectors).
 
-**What a click reads (the readings by type, [ENGINE.md](../../ENGINE.md#the-detectors-readings-by-type)).**
+**What a click reads (the readings by type, [ENGINE.md](../../ENGINE.md#the-output)).**
 
 | The line | What it carries | Kind |
 | --- | --- | --- |
@@ -286,7 +286,7 @@ dwell of 20 counts per Link where the loop is still near r = 12.
 [The atom's algebra](https://github.com/Closer24/Universe24/blob/643b7ae7d4aeac2062518146aeb6e8b6f2998148/docs/designs/atom_algebra/ALGEBRA.md) (sections 1, 2, 3, 6 and
 7); [the atoms pins](../atoms/PINS.md); the atoms README (`examples/events/atoms/README.md`, deleted 2026-09-26);
 [series H](../../EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20);
-[ENGINE.md, the readings by type](../../ENGINE.md#the-detectors-readings-by-type);
+[ENGINE.md, the readings by type](../../ENGINE.md#the-output);
 [NATURE row 6](../../NATURE.md); [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector)
 (records 281, 721, 754, 762, 817, 881, 884, 886); [the day's log](../../LOG_2026-09-20.md).
 
