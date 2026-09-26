@@ -5,7 +5,8 @@ trace's hand identity p_0 = Gamma - SUM of the products holds on that run from t
 the guard's edge is where the rule's own checkerboard factor crosses -2, a like-charge hill is
 admitted up to the edge and refused beyond it naming the Node, a massless family admits no
 hill, the guard never squares a pace (10^8 refused), the argument of a pair is D_i as handed
-in, a multi-read sum, and the folder's declaration is the ledger's row."""
+in, a multi-read sum, a read by an unknown word and a sum that could leave int64 refused by
+name, and the folder's declaration is the ledger's row."""
 
 from __future__ import annotations
 
@@ -146,7 +147,7 @@ def test_the_guard_refuses_a_hill_beyond_the_stability_edge_naming_the_node():
     def hill(depth: int) -> SignedReadStart:
         level = np.zeros(SHAPE, dtype=np.int64)
         level[1, 1, 1] = depth
-        return SignedReadStart(SHAPE, {1: level})
+        return SignedReadStart(SHAPE, {1: level}, None)
 
     passing = apply(term, hill(152), own)
     assert int(passing.content[1, 1, 1]) == -152 and int(passing.content[0, 0, 0]) == 0
@@ -175,13 +176,15 @@ def test_a_massless_family_admits_no_hill_and_every_family_needs_a_pace_above_ze
     hollow = np.zeros(shape, dtype=np.int64)
     hollow[0, 1, 0] = -1
     with pytest.raises(RuntimeError, match=r"is 10001 at the Node \(0, 1, 0\) at interval 3, above"):
-        apply(massless, SignedReadStart(shape, {1: hollow}), own)
+        apply(massless, SignedReadStart(shape, {1: hollow}, None), own)
     deep = np.zeros(shape, dtype=np.int64)
     deep[1, 1, 1] = GAMMA
     with pytest.raises(RuntimeError, match=r"is 0 at the Node \(1, 1, 1\) at interval 3: the pace"):
-        apply(massless, SignedReadStart(shape, {1: deep}), own)
+        apply(massless, SignedReadStart(shape, {1: deep}, None), own)
     deep[1, 1, 1] = GAMMA - 1
-    assert int(apply(massless, SignedReadStart(shape, {1: deep}), own).content[1, 1, 1]) == GAMMA - 1
+    assert (
+        int(apply(massless, SignedReadStart(shape, {1: deep}, None), own).content[1, 1, 1]) == GAMMA - 1
+    )
 
 
 def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
@@ -199,10 +202,10 @@ def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
         (800, 850),
         GAMMA,
     )
-    writes = apply(term, SignedReadStart(shape, {1: a, 2: b, 3: c}), SignedReadOwn(0, "matter", 0))
+    writes = apply(term, SignedReadStart(shape, {1: a, 2: b, 3: c}, None), SignedReadOwn(0, "matter", 0))
     assert writes.content.tolist() == [[[2 * 5 - 3 * 1 + 4 * 3]], [[2 * 7 + 3 * 2]]]
     silent = apply(
-        SignedReadTerm((), 0, (1, 1), GAMMA), SignedReadStart(shape, {}), SignedReadOwn(1, "x", 0)
+        SignedReadTerm((), 0, (1, 1), GAMMA), SignedReadStart(shape, {}, None), SignedReadOwn(1, "x", 0)
     )
     assert not silent.content.any() and silent.content.shape == shape
     before = np.array([[[3]], [[-4]]], dtype=np.int64)
@@ -211,8 +214,45 @@ def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
     invariant = now * now - after * before  # formed by the loop from the last step's three levels
     assert invariant.tolist() == [[[25 - 21]], [[36 + 8]]]
     sourced = SignedReadTerm(((5, -2, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA)
-    writes = apply(sourced, SignedReadStart(shape, {5: invariant}), SignedReadOwn(0, "matter", 1))
+    writes = apply(sourced, SignedReadStart(shape, {5: invariant}, None), SignedReadOwn(0, "matter", 1))
     assert writes.content.tolist() == [[[-8]], [[-88]]]
+
+
+def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_by_name():
+    """A read by a word other than plain or sign is refused naming the family and the word,
+    never read as sign; a read whose weight times the argument's size reaches beyond int64
+    (D_i near 10^16 at the weight 1000) is refused before any product is formed; two reads
+    whose reach together leaves int64 are refused on the second, each admitted alone."""
+    shape = (2, 1, 1)
+    level = np.array([[[3]], [[-4]]], dtype=np.int64)
+    own = SignedReadOwn(0, "matter", 0)
+    with pytest.raises(ValueError, match="the read of family 1 is by 'signed': by 'plain' or by 'sign'"):
+        apply(
+            SignedReadTerm(((1, 1, "signed"),), 1, (800, 850), GAMMA),
+            SignedReadStart(shape, {1: level}, None),
+            own,
+        )
+    huge = np.array([[[10**16]], [[-(10**16)]]], dtype=np.int64)
+    with pytest.raises(
+        ValueError, match=r"family 1 at the weight 1000 reaches 10000000000000000000 .*int64"
+    ):
+        apply(
+            SignedReadTerm(((1, 1000, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA),
+            SignedReadStart(shape, {1: huge}, None),
+            own,
+        )
+    half = np.array([[[5 * 10**18]], [[0]]], dtype=np.int64)
+    two = SignedReadTerm(
+        ((1, 1, signed_read.BY_PLAIN), (2, -1, signed_read.BY_PLAIN)), 0, (800, 850), GAMMA
+    )
+    assert signed_read.content_of(
+        SignedReadTerm(two.reads[1:], 0, (800, 850), GAMMA), SignedReadStart(shape, {2: half}, None)
+    ).tolist() == [[[-(5 * 10**18)]], [[0]]]
+    with pytest.raises(
+        ValueError, match=r"the read of family 2 at the weight -1 reaches 10000000000000000000"
+    ):
+        signed_read.content_of(two, SignedReadStart(shape, {1: half, 2: half}, None))
+    assert signed_read.TOTAL_BOUND == 2**63 - 1
 
 
 def test_the_declaration_is_the_ledgers_row():

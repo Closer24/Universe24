@@ -1,6 +1,6 @@
 {
  "format": "code-shape-baseline",
- "recorded_at": "38a729a4",
+ "recorded_at": "f72e7955",
  "files": {
   "src/event_universe/__init__.py": {
    "lines": 27,
@@ -275,10 +275,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/features/signed_read/__init__.py": {
-   "lines": 34,
-   "docstring_lines": 7,
-   "comment_lines": 1,
-   "record_references": 1,
+   "lines": 157,
+   "docstring_lines": 11,
+   "comment_lines": 4,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },

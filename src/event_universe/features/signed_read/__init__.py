@@ -1,4 +1,4 @@
-"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces with the tensor's parts, and 0 < p <= P with P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) at every Node (ALGEBRA.md 9.117 item 2 row 1 and item 5, 9.78 (4), 9.108 item 12); from the rule."""
+"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces with the tensor's parts, and 0 < p <= P with P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) at every Node (ALGEBRA.md 9.117 item 2 row 1 and item 5, 9.78 (4), 9.108 item 12); from the rule. `content_of` is this read's one place: the loop's `_effective_content`, its copy today, goes when the loop calls `apply`."""
 
 from __future__ import annotations
 
@@ -14,6 +14,9 @@ from event_universe.core.register import Declaration
 # by "plain" reads the level as it is; by "sign" reads it with the reading family's own sign q
 BY_PLAIN = "plain"
 BY_SIGN = "sign"
+
+# the sum of the reads stays within int64: the reach of the products is bounded before any is formed
+TOTAL_BOUND = (1 << 63) - 1
 
 # the two words of ALGEBRA.md 9.113 item 1 and 9.117 item 5: this primitive is the rule's own
 THE_WORD = "from the rule 9.57 (1) and the click"
@@ -35,7 +38,7 @@ class SignedReadStart:
 
     shape: tuple[int, ...]
     arguments: Mapping[int, np.ndarray]
-    axis_contents: tuple[np.ndarray, ...] | None = None
+    axis_contents: tuple[np.ndarray, ...] | None
 
 
 @dataclass(frozen=True)
@@ -68,14 +71,28 @@ def pace_bound(pair: tuple[int, int], gamma: int) -> int:
 
 
 def content_of(term: SignedReadTerm, start: SignedReadStart) -> np.ndarray:
-    """c = SUM over the reads of (weight x by x argument) at every Node; a single plain read at weight 1 is the argument itself."""
+    """c = SUM over the reads of (weight x by x argument) at every Node, a single plain read at weight 1 the argument itself; a read by another word, or a sum whose reach leaves int64, is refused by name before any product is formed."""
     if len(term.reads) == 1 and term.reads[0][1] == 1 and term.reads[0][2] == BY_PLAIN:
         return start.arguments[term.reads[0][0]]
     content = np.zeros(start.shape, dtype=np.int64)
+    reach = 0
     for other, weight, by in term.reads:
+        if by not in (BY_PLAIN, BY_SIGN):
+            raise ValueError(
+                f"the read of family {other} is by {by!r}: by {BY_PLAIN!r} or by {BY_SIGN!r} "
+                "(ALGEBRA.md 9.48 (3))"
+            )
         factor = weight if by == BY_PLAIN else -term.q * weight
         if factor:
-            content = content + factor * start.arguments[other]
+            argument = start.arguments[other]
+            reach += abs(factor) * int(np.max(np.abs(argument)))
+            if reach > TOTAL_BOUND:
+                raise ValueError(
+                    f"the read of family {other} at the weight {weight} reaches {reach} with the "
+                    f"argument's size {int(np.max(np.abs(argument)))}, beyond int64 {TOTAL_BOUND} "
+                    "(ALGEBRA.md 9.61 (3))"
+                )
+            content = content + factor * argument
     return content
 
 
