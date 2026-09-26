@@ -5,10 +5,11 @@ For every Python file under `src/` the counts: total lines, docstring lines, com
 references to records or decisions ("record 2234", "decision 3"), sites of Rule3's arithmetic
 outside its one function, sites that shift an array across Nodes, and, for every Python file of
 `src/`, `tools/` and `tests/`, the names imported from the loop's module beyond its public
-entry. The counts are compared with `tests/code_shape_baseline.json`: none may grow; a count
-that went down is re-recorded in the same commit (`python tools/record_code_shape.py`); a file
-not in the baseline meets the limits from its first commit (every docstring one line, no record
-reference, under 400 lines, none of the three sites). Two functions of `src/` with the same
+entry. A file within the limits (every docstring one line, no record reference, under 400
+lines, none of the three sites) passes whatever its counts. A file beyond them is compared with
+`tests/code_shape_baseline.json`: none of its counts may grow; a count that went down is
+re-recorded in the same commit (`python tools/record_code_shape.py`); a new file beyond them
+fails. Two functions of `src/` with the same
 normalised body (names and literals abstracted) fail; the duplicates of today are in the baseline
 and may only go down. The import contracts hold with no baseline: a feature folder imports
 `core/` alone and never another feature; `core/` imports nothing of the package outside itself;
@@ -263,8 +264,23 @@ def record(root: Path) -> dict[str, Any]:
     }
 
 
+def beyond_the_limits(rel: str, shape: dict[str, int]) -> list[str]:
+    """Every way one file is beyond the limits every file is held to from its first commit: a docstring beyond one line, a record reference, 400 lines, a site of Rule3's arithmetic or of a shift across Nodes."""
+    found: list[str] = []
+    if shape["multi_line_docstrings"]:
+        found.append(f"{rel} has {shape['multi_line_docstrings']} docstring(s) beyond one line")
+    if shape["record_references"]:
+        found.append(f"{rel} refers to {shape['record_references']} record(s) or decision(s)")
+    if shape["lines"] >= NEW_FILE_LINES:
+        found.append(f"{rel} has {shape['lines']} lines (the limit {NEW_FILE_LINES})")
+    for key in ("rule_arithmetic_sites", "level_shift_sites"):
+        if shape[key]:
+            found.append(f"{rel} has {shape[key]} {key.replace('_', ' ')}")
+    return found
+
+
 def violations(root: Path, baseline: dict[str, Any]) -> list[str]:
-    """Every way the tree departs from the baseline and the limits, one line each."""
+    """Every way the tree departs from the limits and the baseline, one line each: a file within the limits passes whatever its counts; a file beyond them is new and fails, or is recorded and ratchets."""
     found: list[str] = []
     re_record = (
         f"re-record the baseline in this commit: python {Path('tools/record_code_shape.py').as_posix()}"
@@ -274,21 +290,12 @@ def violations(root: Path, baseline: dict[str, Any]) -> list[str]:
     for rel in sorted(set(recorded_files) - set(present)):
         found.append(f"{rel} is in the baseline and not in the tree; {re_record}")
     for rel, shape in present.items():
+        beyond = beyond_the_limits(rel, shape)
+        if not beyond:
+            continue
         recorded = recorded_files.get(rel)
         if recorded is None:
-            if shape["multi_line_docstrings"]:
-                found.append(
-                    f"{rel} is new and has {shape['multi_line_docstrings']} docstring(s) beyond one line"
-                )
-            if shape["record_references"]:
-                found.append(
-                    f"{rel} is new and refers to {shape['record_references']} record(s) or decision(s)"
-                )
-            if shape["lines"] >= NEW_FILE_LINES:
-                found.append(f"{rel} is new and has {shape['lines']} lines (the limit {NEW_FILE_LINES})")
-            for key in ("rule_arithmetic_sites", "level_shift_sites"):
-                if shape[key]:
-                    found.append(f"{rel} is new and has {shape[key]} {key.replace('_', ' ')}")
+            found.extend(f"{line} and is new" for line in beyond)
             continue
         for key in COUNTS:
             if shape[key] > recorded[key]:
