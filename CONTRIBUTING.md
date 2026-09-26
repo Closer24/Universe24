@@ -56,8 +56,9 @@ branch `main`. ZIP files are backups after the project has been uploaded. For ea
 1. Read these instructions and relevant documents from the current repository.
 2. Check `git status`, fetch `origin`, and record the base commit. Never overwrite
    local work belonging to the user or another conversation.
-3. Create a short-lived branch from `origin/main`, such as `fix/field-bounds` or
-   `feat/volume-controls`. Use a separate worktree or clone for concurrent work.
+3. Create a short-lived branch from `origin/main` for one GitHub issue, named
+   `feature/...`, `core/...` or `exp/...`; it is merged within days and deleted
+   after the merge (record 2214). Use a separate worktree or clone for concurrent work.
 4. Keep the task focused and commits small, explaining why each change is needed.
    Do not mix physical changes with display changes or architecture cleanup.
 5. Before pushing, inspect `git diff --check`, the diff and changed-file list.
@@ -76,7 +77,8 @@ branch `main`. ZIP files are backups after the project has been uploaded. For ea
    in `docs/EXPERIMENTS.md`. Do not copy a record into a second document; link to it.
 9. If `main` advances, integrate its changes and recheck the resulting risks.
    Merge only after successful CI and within the user's authorization; never bypass
-   a failing check.
+   a failing check. Only the Boss merges into `main` and tags each engine merge
+   `engine-vX.Y` (record 2214).
 
 Do not push directly to `main` during routine work or force-push a shared branch.
 An initial upload to an empty repository is allowed when the user requests it.
