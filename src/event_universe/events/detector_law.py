@@ -192,6 +192,20 @@ class LiveRecord:
     # booking below one unit of the flux, carried to the next interval's
     # booking (a remainder kept on the record, exact); empty at rest
     carry: dict[int, Fraction] = field(default_factory=dict)
+    # THE FOUR-VECTOR CLICK'S SPACE PART (ALGEBRA.md 9.86 (1), 9.91 (4), 9.84 (2),
+    # 9.25 (12); commit 5 without the recoil, record 2135): per detector, per
+    # axis, the flux booked through the detector's Ports on its -a side minus
+    # the flux booked through those on its +a side, summed over the record's
+    # walk (the taken quantum's direction of travel: a quantum moving toward
+    # +a enters through the -a face); the sign per axis is sigma_a on the
+    # click line. Nothing is added to any body's momentum: the recoil of
+    # 9.84 (2) waits on the closing of record 2135 (the click that keeps the
+    # momentum, 9.109, is a decision of three).
+    momentum_tally: dict[int, list[int]] = field(default_factory=dict)
+    # THE GIVEN QUANTUM'S DIRECTION (9.91 (4), the giving's tally): per axis, the
+    # outward flux through the body's +a Ports minus through its -a Ports over
+    # the window, the sign per axis on the giving line at the close
+    outward_tally: list[int] = field(default_factory=lambda: [0, 0, 0])
     # THE POINT EMITTER'S WINDOW (ALGEBRA.md 9.71 (1); BUILD.md section 26 item
     # 50): open from the giving click until the outward norm through the
     # seat's six Ports reaches T; the intervals written and the outward norm
@@ -2771,9 +2785,16 @@ class DetectorLawSimulation:
         moving = self._moving_sets() if self.set_block else {}
         offers: dict[int, int] = {}
         if not moving:
-            for value, detector in zip(flux.tolist(), port_detector.tolist(), strict=True):
+            for value, detector, axis, side in zip(
+                flux.tolist(),
+                port_detector.tolist(),
+                port_axis.tolist(),
+                port_side.tolist(),
+                strict=True,
+            ):
                 if value > 0:
                     offers[detector] = offers.get(detector, 0) + int(value) * wall
+                    self._tally_direction(live, detector, axis, side, int(value) * wall)
             return offers
         # THE BOOKING IN THE BODY'S FRAME (ALGEBRA.md 9.74 (2); BUILD.md section
         # 26 item 56): a face of a body moving at v with outward normal n books
@@ -2812,6 +2833,11 @@ class DetectorLawSimulation:
             strict=True,
         ):
             bound = moving.get(detector)
+            if value > 0:
+                # the direction from the Port booking in the board's frame, for a
+                # set at rest and for a moving one alike (the body-frame correction
+                # below moves the booked share, not the Port it entered by)
+                self._tally_direction(live, detector, axis, side, int(value) * wall)
             if bound is None:
                 if value > 0:
                     offers[detector] = offers.get(detector, 0) + int(value) * wall
@@ -2829,6 +2855,24 @@ class DetectorLawSimulation:
             if whole > 0:
                 offers[detector] = offers.get(detector, 0) + whole
         return offers
+
+    @staticmethod
+    def _tally_direction(live: LiveRecord, detector: int, axis: int, side: int, booked: int) -> None:
+        """THE FOUR-VECTOR CLICK'S TALLY (ALGEBRA.md 9.91 (4), 9.25 (12); commit 5
+        without the recoil): the flux booked through a Port of the detector whose
+        outward normal is `side` along `axis` counts toward -side on that axis (a
+        quantum that enters through the -a face travels toward +a); kept per
+        detector on the record, in the flux's units."""
+        tally = live.momentum_tally.get(detector)
+        if tally is None:
+            tally = live.momentum_tally[detector] = [0, 0, 0]
+        tally[axis] -= side * booked
+
+    @staticmethod
+    def direction_of(tally: list[int]) -> list[int]:
+        """The sign per axis of a tally, sigma_a of ALGEBRA.md 9.84 (2) and 9.91 (4):
+        -1, 0 or 1 (DETECTOR: the quantum's direction of travel, not its size)."""
+        return [(value > 0) - (value < 0) for value in tally]
 
     def inward_flux(self, live: LiveRecord, mask: np.ndarray) -> int:
         """The one-way inward flux into the Nodes of `mask` through the Links
@@ -3436,7 +3480,7 @@ class DetectorLawSimulation:
         if emitter is None or emitter.weight is None:
             return
         live.now[block.mask] += emitter.weight * self._body_levels(block)
-        live.outward += self.body_outward_flux(live, block)
+        live.outward += self.body_outward_flux(live, block, live.outward_tally)
         live.window += 1
         if live.box is not None:
             live.box = tuple(
@@ -3459,7 +3503,7 @@ class DetectorLawSimulation:
         assert block.own is not None
         return np.asarray(block.own.now[block.mask], dtype=np.int64)
 
-    def body_outward_flux(self, live: LiveRecord, block: Block) -> int:
+    def body_outward_flux(self, live: LiveRecord, block: Block, tally: list[int] | None = None) -> int:
         """THE OUTWARD FLUX through the body's outer Ports this interval (ALGEBRA.md
         9.71 (1) (c); record 2082 (2); item 50; commit 7): over every Port from a
         Node of the body to a Node outside it, the taking's inward booking with the
@@ -3468,7 +3512,10 @@ class DetectorLawSimulation:
         Ports along the record's own component none, 9.82 (3) (c)), from the
         record's two levels as the interval leaves them, this interval's write in
         `now` and the last one's in `before`; the pair's second level added (9.82
-        (3) (b)). A one-Node body's six Ports are `seat_outward_flux`, bit for bit."""
+        (3) (b)). A one-Node body's six Ports are `seat_outward_flux`, bit for bit.
+        With `tally`, the flux through the Ports on the body's +a side is added to
+        tally[a] and through its -a side subtracted (the given quantum's direction,
+        ALGEBRA.md 9.91 (4); commit 5 without the recoil), in the same units."""
         wall = self.kind_wall(live.family)
         wrap = self.kind_wrap[live.family]
         own_axis = self.booked_axis(live)
@@ -3494,7 +3541,10 @@ class DetectorLawSimulation:
                     now_j = np.roll(now, -side, axis=axis)[ports]
                     before_j = np.roll(before, -side, axis=axis)[ports]
                     flux += now_j * before[ports] - before_j * now[ports]
-                total += int(flux[flux > 0].sum()) * wall
+                outward = int(flux[flux > 0].sum()) * wall
+                total += outward
+                if tally is not None:
+                    tally[axis] += side * outward
         return total
 
     def seat_outward_flux(self, live: LiveRecord, centre: tuple[int, int, int]) -> int:
@@ -3594,6 +3644,11 @@ class DetectorLawSimulation:
             line["window"] = live.window
             line["outward"] = live.outward
             line["opened"] = self.tick - live.window  # the open's interval (HOST)
+            # THE GIVEN QUANTUM'S FOUR-VECTOR (ALGEBRA.md 9.86 (1), 9.91 (4); commit 5
+            # without the recoil): the count 1, the space part the sign per axis of
+            # the outward flux through the body's Ports over the window (DETECTOR);
+            # a symmetric emitter's tallies cancel (9.84 (2)); no body's momentum moves
+            line["momentum"] = self.direction_of(live.outward_tally)
             self.record(line)
         live.giving_line = None
         block.wait = 0
@@ -3610,7 +3665,9 @@ class DetectorLawSimulation:
         emitter = block.definition.emitter
         if live is None or emitter is None or emitter.weight is None or live.window <= 0:
             return
-        live.outward -= self.body_outward_flux(live, block)
+        undone = [0, 0, 0]
+        live.outward -= self.body_outward_flux(live, block, undone)
+        live.outward_tally = [kept - gone for kept, gone in zip(live.outward_tally, undone, strict=True)]
         live.now[block.mask] -= emitter.weight * self._body_levels(block)
         live.window -= 1
 
@@ -3812,7 +3869,15 @@ class DetectorLawSimulation:
             "node": [],
             "windows": [],
             "content": live.content,
-            "momentum": [0, 0, 0],
+            # THE FOUR-VECTOR (ALGEBRA.md 9.86 (1); commit 5 without the recoil): the
+            # count is `content`, the space part the sign per axis of the chosen
+            # detector's tally, the taken quantum's direction of travel (DETECTOR);
+            # [0, 0, 0] with no detector chosen. No body's momentum moves (record 2135)
+            "momentum": (
+                self.direction_of(live.momentum_tally.get(chosen, [0, 0, 0]))
+                if chosen is not None
+                else [0, 0, 0]
+            ),
             "weight": [live.pointers[chosen] if chosen is not None else 0, 1],
             "total": list(total),
             "T": live.absorbed,

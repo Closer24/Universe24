@@ -408,9 +408,12 @@ def test_the_light_record_is_byte_identical_without_the_key():
     at the weight 3 (its seed 2^10, the train's profile and its keys retired), every giving
     line named at the close with the window's length; SINCE RECORD 2157 (ALGEBRA.md 9.104
     (6) (b); item 67) the state digest alone moved once more, by the block entry's `fixed`
-    (the events and the audit bit for bit)."""
+    (the events and the audit bit for bit); SINCE THE FOUR-VECTOR CLICK WITHOUT THE RECOIL
+    (ALGEBRA.md 9.86 (1), 9.91 (4); commit 5 in part, item 69) the events digest alone moved
+    once more, by the `momentum` key of every click and giving line (the sign per axis of the
+    quantum's direction; the rows, the state and the audit bit for bit)."""
     assert run_chain_digests() == {
-        "events": "1436ff63ac0669faa8eaa9ff26d2a37fb5ae1bdd18f8e1da6ae857979b1f57c3",
+        "events": "be458a826af93758056f1a5f845f25ce53787ff63122bc87d1991ffbf96e0467",
         "state": "6ea11566fb201793d4ff3e866c9f651b1e21cfd5deb9e9329e8b9bcf9cc8d9e9",
         "audit": "9c4eb02e50596a16c05d5a1648f0a80338d460b398c51f04644158f68139790b",
     }

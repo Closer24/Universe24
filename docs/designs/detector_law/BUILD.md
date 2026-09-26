@@ -4813,6 +4813,44 @@ would have found no cell.
    law", `law`, `model_id` and "-v1" (the residue lines of
    docs/CANCELLED_WORLDS.md section 9, the next push with the eight failing
    tests), the seat's names (the push after).
+69. THE ONE STROKE, COMMIT 5 IN PART: THE FOUR-VECTOR CLICK WITHOUT THE RECOIL
+   (ALGEBRA.md 9.91 (10) 5; 9.86 (1); 9.91 (4); 9.84 (2); 9.25 (12); the Boss's
+   records 2135 and 2161). (i) THE TALLY: per record and per detector, the flux
+   booked through the detector's Ports on its -a side minus the flux booked
+   through its +a side, summed over the record's walk (`LiveRecord.
+   momentum_tally`, in the flux's units; the Port booking in the board's frame
+   for a set at rest and a moving one alike). (ii) THE CLICK LINE'S FOUR-VECTOR:
+   `content` the count, `momentum` the sign per axis of the chosen detector's
+   tally, the taken quantum's direction of travel (DETECTOR; [0, 0, 0] with no
+   detector chosen). (iii) THE GIVING'S TALLY: the outward flux through the
+   body's +a Ports minus through its -a Ports over the window
+   (`LiveRecord.outward_tally`, undone by the window's inverse), its sign per
+   axis on the giving line at the close as `momentum`; a symmetric emitter's
+   tallies cancel (9.84 (2): the unit test's point emitter at the middle of an
+   open chain reads [0, 0, 0]; every shipped one-Node emitter with the mirror
+   behind reads +1 toward its arm). (iv) NO RECOIL: no body's momentum moves;
+   the recoil of 9.84 (2) and 9.91 (4) waits on the closing of record 2135,
+   the click that keeps the momentum (9.109, record 2160) being a decision of
+   three (record 2136). NOT HERE: P_0 = [1, 1000] and the tools' quanta M =
+   1000 s P (9.96 (3)): under s = M P_0 div P a held light quantum weighs 0 and
+   a giving no longer moves the tool's count, so the giving worlds cannot be
+   bit for bit as 9.96 (3) says, and the count per family (9.51 (8)'s P_k, an
+   integer the generator would write on every body) is not stated for the
+   engine; the question of report 1 (2026-09-26 05:42Z) stands with the
+   mathematician and nothing of it is built. THE SIGN read from 9.84 (2)'s
+   "Port +a minus Port -a": the direction of travel (a quantum that enters
+   through the -a face travels toward +a), so that the recoil, when built,
+   pushes the taker along the quantum's travel and the giver against it; a
+   question to the mathematician if the Ports' names mean the other sign.
+   PROOF: tests/test_four_vector_click.py (the emitter's unit world and its
+   mirror image: every click [+-1, 0, 0] with its count 1, every giving the
+   same sign, no body's momentum moved, the quanta moved by the content
+   alone; the point emitter's givings [0, 0, 0]; the window's tally undone by
+   the inverse over ten intervals; the sign per axis); every shipped world's
+   rows and held levels bit for bit against 4ec9d2ae (light_clock 400,
+   point_light_clock 1500 intervals compared interval by interval), the
+   click and giving lines moved by the key alone; the chain world's events
+   digest moved by it and re-read.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
