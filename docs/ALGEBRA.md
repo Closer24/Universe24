@@ -17666,6 +17666,49 @@ as written here.
     through, binding at about the range, nature's deuteron. A gap in any
     is mine.
 
+11. **The two generic primitives, one line each, and the numbers for
+    universe.json (the Boss's record 2173 on the owner's decision: the
+    engine follows the algebra to the end; families and numbers in the
+    file, never in the engine).**
+    (P1) A FAMILY SOURCED BY A RECORD'S LOCAL COUNT: a field family f
+    declared `sourced` by a record family r with the scale E and the
+    weight w gains, at every interval after its own step, at every Node
+    i of r's support, f.now(i) += w x (F_r(i) div E), F_r(i) the record's
+    form at the Node from its own levels (now^2 + before^2 - 2 now before
+    cos omega_i at the Node's rest rotation); the inverse subtracts the
+    same from the before level; the window's write of 9.71 (1) (b) with
+    no close: one verb, integers, the record's own Nodes. Its stationary
+    level solves (Delta - kappa^2) a = -sigma / q with q = num / (3 den)
+    and kappa^2 = 6 den / num - 6 (the plain rule at rest with the write
+    each interval), so a family's level at its source grows with its
+    range, which a held level does not.
+    (P2) THE PACE'S SIGNED READ: a record family r declares its reads
+    [[f, w_f, by]] with w_f a signed integer; its pace at Node i is
+    p_0(i) = Gamma - SUM_f w_f x level_f(i) (by "sign", w_f times the
+    record's q), the axes' paces with the tensor's parts as 9.91 (2), the
+    guard p > 0; a hollow is a positive weight, a hill a negative one;
+    the engine names no family.
+    THE NUMBERS FOR universe.json: the binding family, pair [1000, 1019]
+    (kappa^2 = 0.114, the range 2.96 Links, 1 / q = 3.06); the core
+    family, pair [1000, 1181] (kappa^2 = 1.086, the range 0.96 Links, 1 /
+    q = 3.54); both scalar, held after their step, stepping at the Node's
+    pace, sourced by every matter record with the weight 1 and the scale
+    E_s; the matter family reads gravity +1, the binding +2 (K_m), the
+    core -4 (K_r); gravity's t part the hold as built. The static levels
+    per unit source at the centre of a body of radius 4.5 Links: the
+    binding 12.2, the core 3.33, the net at (2, -4) +11.1; at a point
+    (radius 0.5) +0.69 and -1.27, a hill. E_s: the net well at the start's
+    peak is 1500 when the source at the peak is sigma = 135 per Node, so
+    E_s = F_peak(0) div 135 for the shipped body (s = 2000 at 2^17, side
+    9, the kind [800, 850]): Nature24 reads F_peak(0) on his runner and
+    writes the integer; thereafter E_s is the universe's. THE START: the
+    stationary state of the record AND its fields together: the record's
+    rest mode under the pace of the fields, the fields at their static
+    levels from the record's source (relaxation), iterated until
+    stationary; a field switched on from zero under an undamped rule
+    rings at twice its static level, so the start writes the static
+    levels, never zero.
+
 ### 9.109 The click that keeps the momentum, in integers (the model owner's question of 2026-09-26, record 2160: "but one click, is it not received in one click?"; the Boss's ask for the line), and the algebra's numbers for the ninth question's rerun
 
 1. **What the engine's click does and what the bath's construct did.**
