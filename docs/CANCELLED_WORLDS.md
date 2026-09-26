@@ -77,3 +77,9 @@ Reported, not changed here; the engine's files are Main Loop's:
 | `src/event_universe/core/game_board.py` | 124 | `adjacent_node` and `cube_symmetries` are called by nothing (59 lines) |
 | `src/event_universe/events/world.py` | | `default_width` is called by nothing |
 | `docs/designs/**/*.py` | 36,049 | the design scripts, records; many import deleted modules and do not run |
+
+## 5. The earlier pages
+
+The full cancel list of 2026-09-26 (the nine sections read by the deleted `tools/cancelled_paths.py`)
+and the earlier page of 2026-09-25 (records 1868 to 1870, the world folders outside the fifteen
+experiments) are in git history at `02b67b7e`, this document's last version before the deletion.

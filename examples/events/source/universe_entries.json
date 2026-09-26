@@ -1,0 +1,45 @@
+{
+ "families": [
+  {
+   "name": "field",
+   "parts": [1],
+   "phase": 2,
+   "pair": [1000, 1019],
+   "reads": [],
+   "self_source": {
+    "unit": 0
+   },
+   "sourced": {
+    "of": "matter",
+    "weight": 1,
+    "scale": 18910
+   }
+  },
+  {
+   "name": "field_table",
+   "parts": [1],
+   "phase": 2,
+   "pair": [1000, 1019],
+   "reads": [],
+   "self_source": {
+    "unit": 0
+   },
+   "sourced": {
+    "of": "matter",
+    "weight": 1,
+    "scale": 18910,
+    "cap": 60
+   }
+  },
+  {
+   "name": "control",
+   "parts": [1],
+   "phase": 2,
+   "pair": [1000, 1019],
+   "reads": [],
+   "self_source": {
+    "unit": 0
+   }
+  }
+ ]
+}

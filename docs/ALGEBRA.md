@@ -18679,7 +18679,7 @@ and 6) so that nothing waits on me.
 | 3. the loader reads every declaration as a generic term, the step's four included | a family is a shape and a list of terms [kind, target, of, degree, weight, table] with the four kinds (9.110 item 7); the step is the four words SEND, RECEIVE, WAIT, COMBINE with their integers (9.112 items 1, 2); a key with no section in the keys table is refused by name (9.90 (6)); `conserved` a list of names and values (9.114 item 2) | the loader |
 | 4a. the signed read | p_0 = Gamma - SUM over the reads of (signed weight x the argument), the argument a phase-1 family's level or a phase-2 family's D_i = now^2 - next x before, by "sign" the weight times q; a hollow positive, a hill negative (9.78 (4), 9.108 items 8, 13, 14) | the right side, first |
 | 4b. the source verb | the sourced family's level at the record's Nodes gains D_i div E_s each interval, the remainder on the record, the inverse subtracts it; with a table s_cap D_i div (s_cap E_s + D_i) (9.108 items 3, 11, 13) | the right side, after the hold |
-| 4c. the two-sided guard | 0 < p <= Gamma at every Node and axis at run time, the run ended with the guard's line naming the Node; the reason: the stability factor (S - 6 R) / w crosses -2 at p = 1.015 Gamma (9.108 item 12) | after the pace's read, before the step |
+| 4c. the two-sided guard | 0 < p and p^2 (18 num + 6 den) <= Gamma^2 (18 den + 6 num) at every Node and axis at run time (the stability edge of 9.108 item 12, where the factor (S - 6 R) / w = -2: p <= Gamma exactly for a massless family, p <= 1.015 Gamma for [800, 850]), the run ended with the guard's line naming the Node; the first wording "p <= Gamma" refused every hill, which nature's like charges are, and is corrected here (the folder features/signed_read builds it) | after the pace's read, before the step |
 | 5. the click that keeps the momentum, with its recoil's store | the taking lowers the record's count by one quantum and keeps its phase (9.109 item 2 (a)); the recoil sigma_a x (W x P_body) div (M x lambda_q) into a held body's n_a, or sigma_a x (k_q div M) into a sourced body's Port angle accumulators, sigma_a the quantum's direction of travel (the booked flux through the -a face minus the +a face), the giver with the opposite sign, the remainder on the record (9.111 items 1, 2; 9.84 (2), 9.91 (4)) | after the step, with the click; its writes at t + 1 |
 | 6a. a click's change after all advances | every read of interval t is the interval's start, the body's content and wall included; the clicks of t are gathered and their writes applied after all advances, in the records' identity order, read from t + 1 (9.111 item 6; 9.57 (1)) | after the step |
 | 6b. a run-time overflow bound | at load: the rule's total at a Node under the amplitude bound A, 12 Gamma^2 num A + abs(B) A + 6 den Gamma^2 (A + 1), below 2^63, refused by name otherwise (9.57 (2); the pick Gamma = 10^4, A = 2^20); at run time: abs(now) <= A at every Node after the step, the run ended with the bound's line naming the Node (the guard's second half; nothing wraps silently); the flux, the tally and the ladder in unbounded integers (9.25 (2), the host's) | the loader; after the step |
@@ -18710,3 +18710,68 @@ holds between recoils" is refused, it would break the hold's writes 4
 s n div W. The writes at t + 1 (item 6a). The moving row's v is then
 constant bit for bit through its givings; the test's expectation is
 that constancy.
+
+### 9.117 The declarations of the primitives still to build, in the register's form (name, place of 9.91 (8), reads, writes, order among the writers of one value at one place) with each one's algebraic line, and the values behind the click's deferred writes named (the Boss's record 2223 on the model owner's word; the register of PR #1159, src/event_universe/core/register.py; the four lines of the APPROVED-MATH of 2026-09-26, 14:37Z)
+
+1. **The values, named once.** A declaration writes one of these words
+   and no other, so the register's check of two writers at one place
+   sees every collision (record 2212 (3)):
+
+   | Value | What it is | Where it lives |
+   | --- | --- | --- |
+   | a family's level at a Node | the family's `now` level of one component at one Node, which the loads add into and the operation replaces | the Node |
+   | the level next, the remainder | the operation's output at the Node (the same level, written at (i)) | the Node |
+   | the paces | p_0 and the axes' paces at a Node, this interval | the Node, the interval |
+   | a Port's accumulator | rho, the one integer of a Port (the twist and the recoil), in units of theta_unit | the Port |
+   | a body's content M_k | the body's quanta of family k (its own and its stocks, 9.51 (8)) | the body's record |
+   | a body's momentum n | the three integers n_a on the wall W = 3 Q M | the body's record |
+   | a body's spin S | the three integers of 9.78 (5) | the body's record |
+   | a body's position | its Nodes, and the hop's remainder | the body's record |
+   | a body's remainders | one per division of every primitive on the body (the hold's, the recoil's, the bulk share's, the spin's, the hop's) | the body's record |
+   | the record's tally | the flux booked per detector and per axis over the record's walk (9.111 item 1) | the record |
+   | the click's deferred writes | not a value: the list of writes of (iv) a click leaves at (ii), each on one of the values above; the register orders them by value | the interval |
+
+   A body's charge Q is no value: it is SUM over k of q_k M_k, read from
+   M_k (9.114 item 2), so nothing writes it. "The level next" at (i) and
+   "a family's level at a Node" at (ii) and (iv) are one value at three
+   places; the register's check is per place, so the operation, the
+   giving's write and the loads need no order among them, only their
+   places (9.111 item 6: every read of an interval is the interval's
+   start).
+
+2. **The declarations.** The form is the register's: name; place;
+   reads; writes; order (an integer among the writers of one value at
+   one place, none where the writer is alone); the line.
+
+   | Name | Place | Reads | Writes | Order | The algebraic line |
+   | --- | --- | --- | --- | --- | --- |
+   | the signed read | (i), first on the right side | for each read of the family's row: the read family's argument at the Node at the interval's start (a phase-1 family its level; a phase-2 family its D_i = now^2 - next x before of the last step), the signed weight (a hollow positive, a hill negative), by (plain, or q per quantum), the Port angles for the twist | the paces | none (the only writer of the paces) | p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces with the tensor's parts (9.78 (4)); THE GUARD, the same primitive's check after its write: 0 < p and p^2 (18 num + 6 den) <= Gamma^2 (18 den + 6 num), the stability edge of 9.108 item 12 (p <= Gamma for a massless family, 1.015 Gamma for [800, 850]), else the run ends with the guard's line naming the Node; the arguments of a phase-2 family D_i, never its level (9.108 items 13, 14) |
+   | the source | (iv) | the record's D_i at its Nodes from the step's end (before, now, next of (i)), E_s; with a table s_cap | a family's level at a Node (the sourced family's, at the record's Nodes); the record's remainder | 2 (after the hold, 1) | the level gains D_i div E_s each interval, the remainder on the record, the inverse subtracts it; with the table s_cap D_i div (s_cap E_s + D_i); the stationary response (Delta - kappa^2) a = - sigma / q with kappa^2 = 6 den / num - 6 (9.108 items 3, 10, 11, 13) |
+   | the giving | (ii), with the clicks | the body's own levels (its rotation), the weight g, the outward flux through the body's outer Ports over the window, the quantum's norm T, M, n | a family's level at a Node (the given family's, at the body's outer Ports, each interval of the window); at the window's close the deferred writes: a body's content M_k (the given family's stock) and a body's momentum n | on M_k at (iv): 2 (after the clicks' taking, 1); on n at (iv): 1 (before the recoil, 2) | the window: a_given at the outer Ports += g x a_body each interval until the outward norm through the outer Ports reaches T (9.107); at the close M_k -= 1 and, THE BULK SHARE, n_a -= n_a div M with the remainder on the record, so the velocity n / (3 Q M) is kept (9.116 item 5's note; 9.86 (1)); the giving line's momentum the sign per axis of the outward tally (9.111 item 1) |
+   | the clicks (built; its writes named) | (ii) | as registered | the record's tally; the deferred writes: a body's content M_k (+1 of the taken family) | on M_k at (iv): 1 | 9.25 (2), (3); 9.111 item 6 (the writes at t + 1, in the records' identity order) |
+   | the recoil | (iv) | the click's tally (sigma_a, the direction of travel: the flux through the -a face minus the +a face), W, P_body, M, lambda_q; the giving's outward tally with the opposite sign | a body's momentum n; a body's remainders | on n at (iv): 2 (after the giving's bulk share, 1) | n_a += sigma_a x (W x P_body) div (M x lambda_q), the giver with the opposite sign, the remainder on the record (9.84 (2), 9.91 (4), 9.111 items 1, 2); a held body's store |
+   | the recoil's accumulator | (v) | the click's tally (sigma_a), k_q, M | a Port's accumulator (the six of the body's Nodes along the axis) | none at (v) on the accumulator (the twist writes it at (i)) | sigma_a x (k_q div M) into the Port angle accumulators, in units of theta_unit, the taker and the giver with opposite signs; a sourced body's store (9.109 item 2 (b); 9.96 (2) (e)); the remainder on the record |
+   | the feed | (v) | the paces at the two faces of each axis of the body's Node (the contraction p_0 = Gamma - SUM by x weight x [t level - (n_a V_a) div W + (n_a n_b h_ab) div W^2]), W | a body's momentum n; a body's remainders | on n at (v): 1 | n_a += the difference of the contraction across the two faces of axis a, the remainder on the record (9.78 (4); 9.91 (8) (v)); retired when the rule moves bodies (9.104 item 6) |
+   | the induction | (v) | the momentum part of the contraction at the body's Node this interval and the last | a body's momentum n; a body's remainders | on n at (v): 2 | n_a -= the change of (n_b V_b) div W over the interval (9.78 (4); 9.91 (8) (v)) |
+   | the spin's step | (v) | S_now, the curls at the body's Node (V gravity's vector part and c its t part at the six neighbours; B_q the charge's curl), mu, n, W, Gamma | a body's spin S; a body's remainders | none (the only writer of S) | S_next = S_now + [(Omega x S_now) + mu x B_q] div (W Gamma), Omega_x = [(V_z(+y) - V_z(-y) - V_y(+z) + V_y(-z)) + 3 ((c(+y) - c(-y)) n_z - (c(+z) - c(-z)) n_y) div W] div 8 and cyclic, the remainder on the record (9.78 (5); 9.104) |
+   | the hop | (v) | n, W, the hop's remainder, `fixed` | a body's position; a body's remainders | none (the only writer of the position) | the position's accumulator += n each interval; at W the body's Nodes move one Link along the axis and the accumulator keeps the rest; a body with `fixed` does not hop (9.52; 9.104 item 6); retired when the rule moves bodies |
+   | the trace (built as a name) | any | every word's integers | nothing | none | 9.112 item 5 |
+
+3. **The orders, in one place.** At (iv): on "a family's level at a
+   Node" the hold 1, the source 2; on "a body's content M_k" the clicks
+   1, the giving 2; on "a body's momentum n" the giving (the bulk share)
+   1, the recoil 2. At (v): on "a body's momentum n" the feed 1, the
+   induction 2. At (i): on "the arrivals" the receive 1, the internal
+   representation 2 (as registered). Every other value has one writer
+   per place. The inverse runs the writers of a place in the reverse
+   order (9.91 (8), backward).
+
+4. **What each declaration promises to the gate.** Each primitive is a
+   folder under src/event_universe/features/<name>/ (record 2221) that
+   declares exactly the row above; its small test (Nature24's) checks
+   the line's hand identity of 9.112 item 5 on a traced run; a folder
+   whose declaration differs from its row here is NOT APPROVED-MATH
+   until the row or the folder moves, and the row moves only by a line
+   of the algebra with its section. Nothing here is a family's name, a
+   number of the universe or a default: the weights, the scales and the
+   tables are the files'.

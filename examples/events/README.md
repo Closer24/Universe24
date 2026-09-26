@@ -692,6 +692,20 @@ its tail, written by the generator at the wave number K of its pace). No
 words, the files load in no loader; `tests/test_check_mode_worlds.py` reads their
 structure.
 
+## The run files of the source verb
+
+The folder [source/](source/README.md) holds the run files of the ledger's
+primitive "source" (the Boss's record 2217 of 2026-09-26; ALGEBRA.md 9.108
+items 11 and 13, 9.116 item 4b): one record of matter at rest and one moving,
+each sourcing two scalar field families that nothing reads back (the plain count
+and the saturating table), with the unsourced family beside as the leak test,
+the static response computed beside each in the README, the readings declared on
+the world file and the source on the families' entries, written as the fragment
+`source/universe_entries.json` to append to the one universe file the day the
+loader reads it (record 2075: every world names the shipped universe). No well,
+no pin. Until the loader reads `readings`, `sourced` and drops the residue keys,
+the files load in no loader; `tests/test_source_worlds.py` reads their structure.
+
 ## The massive record kind
 
 The folder [massive_record/](massive_record/README.md) holds the check worlds
