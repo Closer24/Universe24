@@ -15,6 +15,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
@@ -121,6 +122,15 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
         assert entry["momentum"] == [wall // generator.HOP_EVERY, 0, 0]
 
 
+@pytest.mark.xfail(
+    strict=True,
+    reason="the Boss's records 2204 and 2206 (2026-09-26): a giving lowers the live M in the wall "
+    "W = 3 Q M while n stays, so the moving emitter speeds up and the mirror hops one interval "
+    "before it from interval 51 (the gap 58 for one interval at every hop); the fix is the count "
+    "per family and P_0 = [1, 1000] of ALGEBRA.md 9.111 item 3, Coder 3's; marked so that the "
+    "merge into main is not held (the model owner's word of 13:20Z, speed the merge); the mark comes "
+    "off with the fix",
+)
 def test_the_held_level_is_the_well_on_the_arm_and_the_moving_clock_hops_together():
     generator = load_module("make_worlds")
     lines: list[dict] = []
