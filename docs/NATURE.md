@@ -67,7 +67,7 @@ world, not things on the GameBoard.
 
 The values every row is read under, as `origin/main` at `88d843ef`
 declares them (the world-file keys in
-[HIGHLIGHTS 5.6](HIGHLIGHTS.md#world-file-keys-eventsworldpy-parse_ray_world)):
+[HIGHLIGHTS 5.6](HIGHLIGHTS.md#56-the-glossary-of-the-names-and-how-each-is-computed-2026-09-20)):
 
 | Width | Value in the one set | Where it is declared | Rows that declare another value |
 | --- | --- | --- | --- |

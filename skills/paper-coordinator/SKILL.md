@@ -1,5 +1,7 @@
 # Paper coordinator
 
+The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The paper writer reads the tree and the engine's output; it changes neither.
+
 The writer of the one paper on the general formula (the model owner's GO,
 record 264 of docs/LOG_2026-09-20.md; the title of record 275 as the owner
 sharpened it on 2026-09-22, record 712, "Universe24: a local integer law of
@@ -7,7 +9,7 @@ nature with a non-local read-out, and what follows from it"), in its own session
 its own branch, `paper-new-engine`, rewriting the paper on the new engine
 per `docs/designs/paper_verification/NEW_ENGINE_AUDIT.md` (records 1899 and
 1900), following [the shared workflow](../workflow.md) and its
-section [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309).
+section [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190).
 
 ## What the coordinator writes and does not write
 
@@ -45,7 +47,7 @@ paper.
 
 ## Reporting
 
-One line to the Boss by direct message (SendMessage; [the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309), item 8) at every push: the head SHA, main merged at
+One line to the Boss by direct message (SendMessage; [the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190), item 8) at every push: the head SHA, main merged at
 which commit, what the round added, the referee's findings with the one that
 is the tree's, and what the paper waits on (a pull request, a SHA, a record).
 The method section says what record 305 says: the infinite limit derives the
@@ -53,14 +55,14 @@ form, the run confirms the number, the pin orders that the first be written
 before the second; every derived formula to the six-point standard of record
 300.
 
-## The no-circularity check of every formula, and the road from the cells to the algebra (the model owner, 2026-09-22, to the writer)
+## The no-circularity check of every formula, and the road from the Nodes to the algebra (the model owner, 2026-09-22, to the writer)
 
 The owner's word (translated): "For everything that comes in, check it
 and think about it, so that there is no circularity: not 'we put Lorentz
 in to reach Lorentz', but understand how we arrived at Lorentz, and then
 say Lorentz is good. For all our formulas, understand how we reached them
 and make sure there is no circularity in them. And show how we arrived at
-modern algebra from the physical laws we put into the cells."
+modern algebra from the physical laws we put into the Nodes."
 
 The check, run on every formula before it enters the paper and recorded
 on branch `paper-new-engine` as the paper's circularity audit:
@@ -89,8 +91,8 @@ on branch `paper-new-engine` as the paper's circularity audit:
    the click frame for Eq. 14), the paper waits for the merged text and
    says "declared" until then.
 
-The road from the cells to the algebra, an account the paper carries in
-Section 2 and the discussion: the rules put into the cells (an amount
+The road from the Nodes to the algebra, an account the paper carries in
+Section 2 and the discussion: the rules put into the Nodes (an amount
 conserved on its line; a phase on a bounded circle; arrivals that add
 and opposite phases that cancel; a splitter that conserves the total; a
 rotation of labels; a read-out that counts; six neighbours and one Link
@@ -100,7 +102,7 @@ matrix with the sum of squares as its multiplicity, an orthogonal
 integer matrix of the labels, the evaluation at the roots of unity
 with its norm, and the translation group's shift. So the state is a free
 Z-module, the interval a Z-linear map on it, and the click one bilinear
-form: modern algebra is not assumed, it is what the cell rules are when
+form: modern algebra is not assumed, it is what the Node rules are when
 written down, and the theorems of the paper (the isometry, the
 injectivity, the lattice Gleason, the exact marginals, S(N)) are
 properties of that algebra; the passage Outside is a group (the click

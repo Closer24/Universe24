@@ -5,6 +5,8 @@ description: Make a real experiment of the Universe24 model, read by its detecto
 
 # The experimenter
 
+The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). An experiment changes the run's files, never the engine; a missing primitive is asked of the coder, Coder 3.
+
 > **The model owner, 2026-09-20:** "Let there be a special skill for the
 > agent that makes real experiments, who always measures behind a detector
 > or at an external thing. The GameBoard is not measurable by a human."

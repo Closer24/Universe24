@@ -30,18 +30,18 @@ Boss: "make sure we have no such thing at all as Nodes with a table; it
 should not exist at all"). A Node carries only its NodeState and the one
 rule acts; every tool is a BODY OF MATERIAL whose Nodes carry only
 material integers. THE MATERIAL, one form for every tool (HISTORY in its angle and its
-take, superseded by part A: the angle is the integer axis (a, b) of
+take, superseded by the tool cards (part A): the angle is the integer axis (a, b) of
 ALGEBRA.md 9.14 (b), ADOPTED, and the take is removed, 9.12): per LABEL,
 the label matrix **M**_u = [[a, b], [-b, a]] of the body's axis on the
 record's label rows (ALGEBRA.md 9.16 (2); never a Node's table), and per
 FAMILY where two families meet (the crystal), an INDEX PAIR (the
 coefficient [num, den] = 1 / n^2 of DESIGN.md 4.1); the rotation is a 2
-x 2 over the labels (verb B). THE ONE ENABLING ENGINE LINE for all of it:
+x 2 over the labels (the bilinear form). THE ONE ENABLING ENGINE LINE for all of it:
 ONE AMPLITUDE PER LABEL VALUE on every record (two fields, H and V,
 each stepped by the split with its own pair), which the crystal needs
 anyway; a record of rank 2 keeps its joint label state for the gather,
 and each arm's amplitudes per label carry its timing and its books. WHAT
-RETIRES on main: the table body of two cells (`TableBody`, the split by
+RETIRES on main: the table body of two Nodes (`TableBody`, the split by
 declared weights), the splitter of the table form (`Splitter`, declared
 inputs, weights and outputs, with the linear form it reads), and the
 rules by family name (the old transponder's `rerelease`); the setting's
@@ -66,10 +66,10 @@ it), or DECLARATION. Existing design files are cited, never copied.
 Nothing here is code; the physicist writes the code, the worlds and the
 test-run lines, each tool's code after its section is agreed.
 
-THE SYMBOLS USED IN SEVERAL SECTIONS (HISTORY where marked; part A
-holds). N = 2048 the phase circle's steps (W = 2048 the birth wheel:
+THE SYMBOLS USED IN SEVERAL SECTIONS (HISTORY where marked; the tool cards (part A)
+holds). N = 2048 the phase circle's steps (W = 2048 the giving wheel:
 HISTORY, no wheel is declared, ALGEBRA.md 9.19 (4)); a clock pair [p, q]
-is the born character's PHASE PER LINK, k = 2 pi p / (q N) (ALGEBRA.md
+is the given character's PHASE PER LINK, k = 2 pi p / (q N) (ALGEBRA.md
 9.17 (4)), and its frequency omega (per interval, an Outside reading)
 follows from the band along a lattice axis, 3 cos omega = cos k + 2:
 the light family's clock [2464, 25] has k = 0.302378 per Link, omega =
@@ -85,7 +85,7 @@ per interval; a label is an integer whose bit j is the value on arm j
 labels with integer weights from 1; C'[s], S'[s] and **U**_s = [[C'[s],
 S'[s]], [-S'[s], C'[s]]] (the half-angle tables at the setting s, bold
 uppercase a matrix): HISTORY, the axis (a, b) and **M**_u replace them
-(ALGEBRA.md 9.14 (b)); R a cell's weight; E(a, b) a correlation and S
+(ALGEBRA.md 9.14 (b)); R a Node's weight; E(a, b) a correlation and S
 the CHSH sum.
 
 ---
@@ -100,17 +100,17 @@ part, they are history. Every line cites the section of
 **A.0 The generic primitives: the law's components, with no family name
 and no tool name.** Every tool is built from these alone.
 - **R**, THE RULE: the split at every Node, with that Node's pair per
-  family (8.1). A tool's material is its pair per family on its cells.
+  family (8.1). A tool's material is its pair per family on its Nodes.
 - **E** then **D**, THE CLICK: the evaluation of a record's offer at the
-  cells its ladder names, then the rung 2 T u + T <= 2 W C_k (2.5, 3.1,
-  8.6). Only a record that names the cells is read (9.7).
+  Nodes its ladder names, then the rung 2 T u + T <= 2 W C_k (2.5, 3.1,
+  8.6). Only a record that names the Nodes is read (9.7).
 - **X**, THE CLICK'S ACTION: the record ends, all its rows, at its click
   (9.12; the close of the first reading is superseded by 9.19 (3) (a):
   the ladder is read at every interval and the face receiver is last on
   it). There is no take.
-- **E**^T, THE BIRTH: a record written at the cells by its own clock
+- **E**^T, THE GIVING CLICK: a record written at the Nodes by its own clock
   (9.13).
-- **B**_u, THE LABEL MATRIX: verb B with the integers of an axis on a
+- **B**_u, THE LABEL MATRIX: the bilinear form with the integers of an axis on a
   record's label rows (9.16 (2); section 12.2).
 - THE LOADER'S CHECKS: integer checks at load, never the law's (9.5).
 - THE FACES: the segment's border, the row beyond read as 0, with the
@@ -124,19 +124,19 @@ and no tool name.** Every tool is built from these alone.
 **A.1 The emitter.**
 - Its group element: **E**^T. The orbit sum of a Port, the projector onto
   G_48's trivial representation (9.4, 9.13).
-- A direction: NONE. A beam is a line of emitter cubes born in phase, a
+- A direction: NONE. A beam is a line of emitter cubes given in phase, a
   placement (9.6).
 - Its primitive: its own record's click (**E**, **D**, **X**), then
-  **E**^T, which writes the born record's two levels once on its cells
+  **E**^T, which writes the given record's two levels once on its Nodes
   (ALGEBRA.md 9.17). There is no drive: `_drive`, the block's source
   term and the lamp's rate accumulator retire. The body holds M excited
-  records IN TURN, each clicking at its own rung, each click birthing the
-  photon and the next excitation (9.17 (4)). A narrow train is a line of emitter cells n
+  records IN TURN, each clicking at its own rung, each click giving the
+  photon and the next excitation (9.17 (4)). A narrow train is a line of emitter Nodes n
   wavelengths long.
 - Its material integers: its body's (a block of a massive kind with its
-  own record, 8.3); the born family and its clock [p, q]; the amplitude
+  own record, 8.3); the given family and its clock [p, q]; the amplitude
   A; the line's length in wavelengths; the label state (branches). No
-  wheel and no residue order: u is the law's remainder at the centre cell
+  wheel and no residue order: u is the law's remainder at the centre Node
   (ALGEBRA.md 9.19 (4)), so the body's well pair is rich, 3 x denominator
   / gcd(numerator, 3) >= 500 ([800, 801], never [800, 800] or [8, 7]).
 - Its momentum: the integer wave vector **K** of its character, 0 at
@@ -144,17 +144,17 @@ and no tool name.** Every tool is built from these alone.
   material carries **K** = 0 in the one algebra, a packet its **K**, written
   moving at interval 0 with no ramp (9.24 (2), (3); record 1884).
 - On the board at interval 0: its first excited record, the body's
-  composed mode (9.17 (4), 9.22 (3)); the births come later.
-- Its load check: every birth has a clicking record behind it (9.17);
+  composed mode (9.17 (4), 9.22 (3)); the giving clicks come later.
+- Its load check: every giving click has a clicking record behind it (9.17);
   `arms` is refused; a declared wheel or residue is refused; the centre
-  cell's pair is rich (9.19 (4a)).
-- Its unit tests: the excited record's norm per period and the born
+  Node's pair is rich (9.19 (4a)).
+- Its unit tests: the excited record's norm per period and the given
   pair's check (9.17 (5)); the six tests of 9.20 (B) on the planted
   board; nothing reaches Manhattan distance m before age m. HISTORY (the
   drive's era, COMPUTATION on main's `_births` and `_phase`): at [2464,
   25] and 128 periods the train lasted 3200 intervals; at one Node, N =
   2048, the norm was 9517232; the share of its own record's norm that
-  its own cells book (9.10 item 1) is RETIRED with the take (9.12), the
+  its own Nodes book (9.10 item 1) is RETIRED with the take (9.12), the
   emitter's own record clicking at its own rung by the flux (9.19 (3)).
 
 **A.2 The receiver.**
@@ -163,10 +163,10 @@ and no tool name.** Every tool is built from these alone.
 - A direction: NONE.
 - Its primitive: **E**, **D**, **X**.
 - Its material integers: its name in the ladders of the records it reads
-  (the ladder by name), and its cells' declared order (ALGEBRA.md 9.25
+  (the ladder by name), and its Nodes' declared order (ALGEBRA.md 9.25
   (4)). No take pair (9.12) and no wheel: the rung's wheel is the
-  record's own (ALGEBRA.md 9.19 (4)). ITS CLICK over several cells is the
-  INCREMENT LADDER (9.25 (2)): Born's rule exact, the cell's share of the
+  record's own (ALGEBRA.md 9.19 (4)). ITS CLICK over several Nodes is the
+  INCREMENT LADDER (9.25 (2)): Born's rule exact, the Node's share of the
   record's inward flux. It is ONE CONNECTED REGION; separate places are
   separate names (9.25 (7); the load check refuses a name on
   disconnected pieces).
@@ -190,7 +190,7 @@ and no tool name.** Every tool is built from these alone.
 - Its group element: the reflection, -I times the half-turn of V_4 about
   the normal of the face met, realised by a gap (9.2, 9.4).
 - A direction: none of its own on a cube; a slab's unoriented normal.
-- Its primitive: **R**, with the gap pair on its cells.
+- Its primitive: **R**, with the gap pair on its Nodes.
 - Its material integers: the gap pair [num, den] for light; the side
   (its depth).
 - Its momentum: the integer wave vector **K** of its character, 0 at
@@ -214,13 +214,13 @@ and no tool name.** Every tool is built from these alone.
     3.467: +0.506.
   - A DIAGONAL slab met at 45 degrees (the Mach-Zehnder's mirrors, row
     17; COMPUTED 2026-09-25 by the reduction of A.4): at k = pi / 2 (the
-    born clock [512, 1] on light [1, 1], cos omega = 2 / 3) the gap [1, 2]
+    given clock [512, 1] on light [1, 1], cos omega = 2 / 3) the gap [1, 2]
     transmits 2.0 x 10^-1 at depth 1 (the same at both incidences, the
     one-Node identity of A.4), 1.4 x 10^-2 at depth 2 (1.5 x 10^-2 met
     squarely), 8.6 x 10^-4 at depth 3, 5.4 x 10^-5 at depth 4 (8.0 x 10^-5
     squarely), 3.4 x 10^-6 at depth 5; a slab of depth 2 or more has no
     incidence identity (its two sites see the reduced chain's hopping 2
-    cos(k / 2) twice). Row 17 takes depth 4.
+    cos(k / 2) twice). Mach-Zehnder takes depth 4.
 
 **A.4 The splitter.**
 - Its group element: the mirror's reflection weighted by r and the
@@ -247,7 +247,7 @@ and no tool name.** Every tool is built from these alone.
   [0.4845, 0.5159]; [377, 396] reflects 0.50004 at omega = 0.08723 with
   the same band. (The first draft's 0.49987 / 0.50013 and [0.4901,
   0.5098] were [91, 107]'s at the old reading: HISTORY.)
-- AT 45 DEGREES, the diagonal line of one-Node layers (row 17), PROVED
+- AT 45 DEGREES, the diagonal line of one-Node layers (Mach-Zehnder), PROVED
   2026-09-25: a beam along an axis meeting the line x - y = const
   reduces, by the layer's invariance under the step (1, 1), to a chain
   in n = x - y with the hopping h = 2 cos(k / 2), the wave number q = k /
@@ -259,8 +259,8 @@ and no tool name.** Every tool is built from these alone.
   INCIDENCE for every k and every pair (checked numerically to 6 x 10^-15
   over 150 cases), and r / t = -i delta / (2 h sin q) is a quarter turn
   at both. The reflected beam leaves along the other axis (the reflection
-  across the line, one of the 48, maps (k, 0) to (0, k)).
-- THE EXACT HALF at k = pi / 2 (the born clock [512, 1] on the world's
+  across the line, one of the cube group's elements, maps (k, 0) to (0, k)).
+- THE EXACT HALF at k = pi / 2 (the given clock [512, 1] on the world's
   circle of 2048 steps: the wavelength 4 Links, cos omega = 2 / 3, v_g =
   0.4472, the period 7.470 intervals): delta = 4 (d / p - 1) and 2 sin k
   = 2, so |r|^2 = 1 / 2 EXACTLY for d / p = 3 / 2, the pair [2, 3]
@@ -268,7 +268,7 @@ and no tool name.** Every tool is built from these alone.
   packet's band the reflected share runs 0.5152 to 0.4858 for a train of
   32 periods; the dark port's share of two such splitters, averaged over
   the band, is 1.15 x 10^-3 for a train of 16 periods, 2.9 x 10^-4 for
-  32, 7.2 x 10^-5 for 64 (COMPUTED). Row 17 takes [2, 3] at [512, 1].
+  32, 7.2 x 10^-5 for 64 (COMPUTED). Mach-Zehnder takes [2, 3] at [512, 1].
 
 **A.5 The polariser.**
 - Its group element: the rational projector **P**_u = **u** **u**^T /
@@ -301,11 +301,11 @@ and no tool name.** Every tool is built from these alone.
 - A direction: NONE of its own. The headings are the placement's (9.3,
   9.16 (6)).
 - Its primitive: **E**, **D**, **X** on the arriving record (the crystal
-  is its named receiver), then **E**^T: the pair record born on its cells
+  is its named receiver), then **E**^T: the pair record given on its Nodes
   by its own clocks, carrying the arriving record's residue u (9.7 (b)).
-- Its material integers: the born clocks p_1 + p_2 = p (one split, or the
+- Its material integers: the given clocks p_1 + p_2 = p (one split, or the
   window of section 12.1); the branches [[1, 1], [2, 1]], which are a =
-  b = 0 and c = 1 (9.16 (5)); `label_hands`; the born amplitude.
+  b = 0 and c = 1 (9.16 (5)); `label_hands`; the given amplitude.
 - Its momentum: the integer wave vector **K** of its character, 0 at
   rest (the model owner's record 1885; ALGEBRA.md 9.22 (2)); a region of
   material carries **K** = 0 in the one algebra, a packet its **K**, written
@@ -327,7 +327,7 @@ and no tool name.** Every tool is built from these alone.
 - Its primitive: **R**, with the lowered pair; **E**, **D** on its own
   record at its own block (8.6).
 - Its material integers: the pair, the side, the momentum with its ramp,
-  the coupling, a stock where it births (9.17 (4)); the seed is the
+  a stock where it giving clicks (9.17 (4); the coupling retired, record 1962, ALGEBRA.md 9.34 (B)); the seed is the
   generator's, not a declaration (9.22 (3)); no wheel and no `emits`
   (9.19 (4), 9.17).
 - Its momentum: the integer wave vector **K** of its character, 0 at
@@ -337,7 +337,7 @@ and no tool name.** Every tool is built from these alone.
 - On the board at interval 0: its record, carrying its seed, the mode of
   the COMPOSED world (9.9).
 - Its load check: the body check (8.7), extended by 9.9: the bodies'
-  cells disjoint; the seed recomputed on the composed operator, bit for
+  Nodes disjoint; the seed recomputed on the composed operator, bit for
   bit; the hybrids' share within the band.
 - Its unit tests: section 4.1 and the rest worlds' pins (B).
 
@@ -345,7 +345,7 @@ and no tool name.** Every tool is built from these alone.
 - Its group element: a well that also carries light's gap: the mirror's
   reflection in the moving body's frame (section 8).
 - A direction: its declared momentum.
-- Its primitive: **R**, with two families' pairs on the same cells.
+- Its primitive: **R**, with two families' pairs on the same Nodes.
 - Its material integers: the well's, plus the gap [1, 2] for light.
 - Its momentum: the integer wave vector **K** of its character, 0 at
   rest (the model owner's record 1885; ALGEBRA.md 9.22 (2)); a region of
@@ -378,22 +378,22 @@ and no tool name.** Every tool is built from these alone.
   3.547 was the old reading's: HISTORY).
 
 **A.13 The joint body (the two-qubit gate; the model owner's record 1883,
-2026-09-25 on the Israel clock: the sixteenth experiment).**
+2026-09-25 on the Israel clock: the two-qubit computer).**
 - Its group element: the crystal's form with a matrix (ALGEBRA.md 9.23
   (3)): **E**, **D**, **X** on the arriving PAIR (both arms named on its
   ladder), then **E**^T with the four joint weights transformed, c' =
-  **G** c, **G** a declared 4 x 4 integer matrix (verb B) or a permutation
-  (verb P) on Z^2 (x) Z^2 (the label index a + 2 b, bit j the label on
+  **G** c, **G** a declared 4 x 4 integer matrix (the bilinear form) or a permutation
+  (the permutation) on Z^2 (x) Z^2 (the label index a + 2 b, bit j the label on
   arm j). Equivariant under all 48 on a cube (the labels are not spatial).
-- A direction: NONE of its own; the born pair spreads from its cells and
+- A direction: NONE of its own; the given pair spreads from its Nodes and
   the readouts are placed where it goes (9.6).
 - Its primitive: the crystal's (A.6): the pair clicks at its rung on the
-  body's cells (the ladder sums both arms' offers; nothing waits for the
+  body's Nodes (the ladder sums both arms' offers; nothing waits for the
   arms to arrive together, the first draft's equal-time condition and its
-  mirrors' routing are withdrawn), the body births a pair on its cells
+  mirrors' routing are withdrawn), the body giving clicks a pair on its Nodes
   with the weights **G** c, the residue the law's remainder at its centre
-  cell (9.19 (4)), the born rows written once at both levels (9.17 (6)).
-  Two quanta end, two are born.
+  Node (9.19 (4)), the given rows written once at both levels (9.17 (6)).
+  Two quanta end, two are given.
 - Its material integers: the matrix **G** (16 integers, or a permutation
   of four); its light pair, an index rich in remainders (A.11 (2)); its
   body's (the holder family, bound). No arm is declared: the arms are the
@@ -407,22 +407,22 @@ and no tool name.** Every tool is built from these alone.
   light pair rich.
 - Its unit tests (on the planted board of ALGEBRA.md 9.20 (B), 12^3, the
   harness's residues; expected values):
-  - a pair born at (3, 4, 5) with the weights (1, 1, 1, -1) and the joint
+  - a pair given at (3, 4, 5) with the weights (1, 1, 1, -1) and the joint
     body **G** = diag(1, -1, -1, -1) of side 2 at (8, 2, 7) named first:
     the pair clicks there once (the content 2 quanta before and after),
-    and the born pair's weights are (1, -1, -1, 1) bit for bit;
+    and the given pair's weights are (1, -1, -1, 1) bit for bit;
   - **G** = the identity: the readout counts equal the counts without the
     joint body, 1000 of 1000 records (a transparent body);
   - **G** = the permutation of CNOT (a + 2 b -> a + 2 (a + b mod 2)) on
-    (1, 0, 0, 0), (0, 1, 0, 0): the born weights (1, 0, 0, 0), (0, 0, 0,
+    (1, 0, 0, 0), (0, 1, 0, 0): the given weights (1, 0, 0, 0), (0, 0, 0,
     1);
   - the six tests of 9.20 (B) with the joint body in place: equivariance
-    under the 48 with **G** unchanged (48 of 48), translation (7 of 7),
+    under the cube group with **G** unchanged (48 of 48), translation (7 of 7),
     the content exact, reversibility except the two clicks, locality,
     residue-blind until the first click;
-  - Grover as placed (part B, row 16): 100 of 100 records at (-, -).
-- What is new for the engine: the birth's weights as a matrix applied to
-  the arriving pair's weights (the crystal births fixed branches today);
+  - Grover as placed (the placed experiments, the two-qubit computer): 100 of 100 records at (-, -).
+- What is new for the engine: the giving click's weights as a matrix applied to
+  the arriving pair's weights (the crystal giving clicks fixed branches today);
   nothing else.
 - OPTIONAL under the model owner's reading (ALGEBRA.md 9.23 (7)): the
   board computes nothing; the generator iterates the circuit's gates on
@@ -433,19 +433,19 @@ and no tool name.** Every tool is built from these alone.
 **A.14 The moving name (a detector or emitter carried by a moving body;
 the model owner's record 1889, 2026-09-25 on the Israel clock: ADOPTED;
 ALGEBRA.md 9.24 (4)).**
-- Its group element: the click's **E**, **D**, **X** and the birth's
-  **E**^T on a set of cells S(t) that TRANSLATES: S(t) = S(0) plus the
+- Its group element: the click's **E**, **D**, **X** and the giving click's
+  **E**^T on a set of Nodes S(t) that TRANSLATES: S(t) = S(0) plus the
   steps of an accumulator advanced by the body's group velocity
   v_g(**K**) as an integer pair per axis [Links, intervals] with the
-  remainder kept (verb T: the push's stepping applied to a NAME, never to
+  remainder kept (the translation: the push's stepping applied to a NAME, never to
   material). No material moves and the operator is unchanged, so every
   proof of 9.20 (A) stands.
 - A direction: its body's **K**.
 - Its primitive: the receiver's (A.2) or the emitter's (A.1) with S(t) in
-  place of fixed cells: the flux read into S(t) by the increment ladder,
-  the rung, the deletion; the birth written on S(t).
+  place of fixed Nodes: the flux read into S(t) by the increment ladder,
+  the rung, the deletion; the giving click written on S(t).
 - Its material integers: none of its own; its body's **K**; its name; a
-  stock where it births.
+  stock where it giving clicks.
 - Its momentum: **K**, its body's.
 - On the board at interval 0: the packet it follows, the profile times
   the character of **K** (the generator's integers, no ramp).
@@ -456,12 +456,12 @@ ALGEBRA.md 9.24 (4)).**
   beyond **K** (refused); the set connected (9.25 (7)).
 - Its unit tests (expected values, ALGEBRA.md 9.24 (2)): a packet of
   [800, 809] on a chain with **K** = 0.18556 per Link (v = 1 / 3) and its
-  co-moving name of one cell at its centre: the one-way inward flux per
-  period into the moving cell equals the rest packet's per period into
-  its resting cell within the anisotropy (0.1 percent) and the grain,
+  co-moving name of one Node at its centre: the one-way inward flux per
+  period into the moving Node equals the rest packet's per period into
+  its resting Node within the anisotropy (0.1 percent) and the grain,
   and the click intervals at the co-moving name are the rest packet's
   times 1 / 0.81457 = 1.2276; a name at rest in the packet's frame reads
-  the same. A packet with a co-moving name and a stock of 3 births three
+  the same. A packet with a co-moving name and a stock of 3 giving clicks three
   photons at intervals 1.2276 times the rest emitter's, from positions
   one third of a Link apart per interval (the redshift's mechanism).
 
@@ -476,27 +476,27 @@ it drifts less than one Link over the run.
 
 | Tool | Click? | Its group element: the rotation of its shape | A direction? | Its generic primitive | Its material integers |
 | --- | --- | --- | --- | --- | --- |
-| Emitter | YES: its own record clicks, and the birth is the click's other side | **E**^T, the projector onto G_48's trivial representation (the orbit sum of a Port) | none on a cube; a line of cells gives a line's (a placement) | its own record's **E**, **D**, **X**, then **E**^T once | the block's pair, side and seed; the born clock [p, q]; A; the line's length; the branches; a stock M (no wheel, 9.19 (4)) |
+| Emitter | YES: its own record clicks, and the giving click is the click's other side | **E**^T, the projector onto G_48's trivial representation (the orbit sum of a Port) | none on a cube; a line of Nodes gives a line's (a placement) | its own record's **E**, **D**, **X**, then **E**^T once | the block's pair, side and seed; the given clock [p, q]; A; the line's length; the branches; a stock M (no wheel, 9.19 (4)) |
 | Receiver | YES | **E** then the rung: a scalar, the trivial representation | none | **E**, **D**, **X** | its name in the ladders (no wheel) |
 | Mirror | no | the reflection -I x (the half-turn of V_4 about the face's normal), arising from the gap | none on a cube; a slab's unoriented normal | **R** with the gap | the gap [num, den], the side |
 | Splitter | no | the reflection weighted by r, the identity by t | the layer's normal | **R** with the layer's pair | [129, 142] at [2464, 25] ([91, 107] HISTORY) |
 | Polariser | no of its own; its two receivers click | the rational projector **P**_u in Q[G_48]'s image M_2(Q), not in G_48; chiral: (a, b) -> (a, -b) | no spatial direction | **B**_u on the label rows | the axis [a, b], gcd 1; its two receivers |
-| Crystal | YES: the arriving record clicks at it, and the pair is born | **E**, then m^T, then **E**^T; all 48 on a cube | none; the headings are the placement's | **E**, **D**, **X** on the arriving record, then **E**^T | the born clocks p_1 + p_2 = p; the branches [[1, 1], [2, 1]]; `label_hands` (no wheel, 9.19 (4)) |
+| Crystal | YES: the arriving record clicks at it, and the pair is given | **E**, then m^T, then **E**^T; all 48 on a cube | none; the headings are the placement's | **E**, **D**, **X** on the arriving record, then **E**^T | the given clocks p_1 + p_2 = p; the branches [[1, 1], [2, 1]]; `label_hands` (no wheel, 9.19 (4)) |
 | Well | YES: its own record's clicks (its clock) | the bound mode, a character of the time translation at **k** = 0 | none at rest; its momentum in motion | **R** with the lowered pair; its own **E**, **D** | the pair, the side, the momentum and ramp, the coupling (no wheel; the seed is the generator's) |
 | Transponder | its own record's clicks; the reflection itself does not click | the well's, plus the mirror's reflection in its moving frame | its momentum | **R** with two families' pairs | the well's, plus the gap [1, 2] for light |
 | Faces | no | the segment's border, the row beyond read as 0 | the axis's normal | **R** | none (per axis periodic, or open with the receiver `face`; A.9) |
-| Joint body (A.13) | YES: the arriving pair clicks at it, and a pair is born with the weights **G** c | the crystal's, with the matrix **G** on the joint label module; all 48 on a cube | none; the readouts are placed where the born pair goes | **E**, **D**, **X** on the pair, then **E**^T with **G** c | the matrix **G** (or a permutation); its light pair; the branches are the arriving pair's |
+| Joint body (A.13) | YES: the arriving pair clicks at it, and a pair is given with the weights **G** c | the crystal's, with the matrix **G** on the joint label module; all 48 on a cube | none; the readouts are placed where the given pair goes | **E**, **D**, **X** on the pair, then **E**^T with **G** c | the matrix **G** (or a permutation); its light pair; the branches are the arriving pair's |
 
 **A.11 The crystal's keys for its world file (the physicist's two
 questions of 18:50Z).**
 - (1) THERE IS NO TAKE PAIR: the take is removed (ALGEBRA.md 9.12). The
-  crystal's cells are the arriving record's NAMED RECEIVER, and its
+  crystal's Nodes are the arriving record's NAMED RECEIVER, and its
   material is its light pair (the vacuum's [1, 1] unless an index is
   declared) and its massive body's pair.
 - (2) THERE IS NO WHEEL KEY (ALGEBRA.md 9.19 (4), ADOPTED): the pair's
   residue u is the arriving record's remainder at the crystal's centre
-  cell at its click, and its wheel is 3 x denominator / gcd(numerator, 3)
-  of the crystal's LIGHT pair there; so the crystal declares on its cells
+  Node at its click, and its wheel is 3 x denominator / gcd(numerator, 3)
+  of the crystal's LIGHT pair there; so the crystal declares on its Nodes
   a light pair rich enough, an index such as [800, 801] (2403 values),
   never the vacuum's [1, 1] (3 values).
 - (3) No residue order and no seed anywhere: the loader refuses them.
@@ -507,7 +507,7 @@ questions of 18:50Z).**
 
 **A.12 THE UNIFICATION, ADOPTED (ALGEBRA.md 9.18; the model owner,
 record 1875, 2026-09-25 on the Israel clock).** The nine tools of A.10 are ONE OBJECT: a body, a cube of
-a massive family whose cells carry optional integers. The emitter, the
+a massive family whose Nodes carry optional integers. The emitter, the
 receiver and the clock of the definitions' four building blocks become
 options and readings of that one body.
 
@@ -516,12 +516,12 @@ options and readings of that one body.
 | nothing more | the well |
 | a light pair | the mirror, the splitter, an index slab |
 | an axis (a, b) | the polariser |
-| a coupling (g, G) | the index rows' medium |
-| a birth triggered by its own excited record, and a stock M | the emitter |
-| a birth triggered by a named arriving record | the crystal |
+| a lowered light pair on a slab | the index rows' medium (ALGEBRA.md 9.31 (8); the coupling (g, G) retired, record 1962) |
+| a giving click triggered by its own excited record, and a stock M | the emitter |
+| a giving click triggered by a named arriving record | the crystal |
 | its name in ladders | the receiver |
 | a light pair and a momentum | the transponder |
-| a birth triggered by a named arriving pair, with a 4 x 4 integer matrix on its weights | the joint body (A.13) |
+| a giving click triggered by a named arriving pair, with a 4 x 4 integer matrix on its weights | the joint body (A.13) |
 
 - A body is BOUND: its own record, of the holder family, its momentum by
   the push and its seed the composed mode (ADOPTED, record 1875); the
@@ -533,13 +533,13 @@ options and readings of that one body.
   reads, because a Node carries one pair per family (ALGEBRA.md 9.18 (2)).
   At most three families, with no duplicate.
 - THE GENERIC PRIMITIVES: the rule, the coupling, the label matrix, the
-  click, the click's action, the birth, the push, a count on a record's
+  click, the click's action, the giving click, the push, a count on a record's
   own age, and the loader's checks (ALGEBRA.md 9.18 (4)).
 - THE LAW USES NO TABLE, NO ROOT AND NO FLOAT once the retirements of
   9.18 (5) are made. The tables stay only in the readers and in the
   generator.
 
-## B. THE FIFTEEN EXPERIMENTS AS PLACED TOOLS (cubes on a torus; RUN_LIST.md's rows; the pins blind, written before any run)
+## B. THE MEASURED EXPERIMENTS AS PLACED TOOLS (cubes on a torus; RUN_LIST.md's rows; the pins blind, written before any run)
 
 THE NEGLECTED SPACE BETWEEN THE TOOLS (the model owner's word,
 2026-09-25: "in the real world there is air between the emitter and the
@@ -579,7 +579,7 @@ each with its number against its band:
   the sent and the received; ratios of intervals; the Sagnac phase is
   independent of the medium's index to first order (Fizeau's drag
   cancels on a closed loop): no count moves.
-- M1 and M2 (matter waves): a vacuum chamber in nature, residual gas at
+- de Broglie's fringes and the moving mass's energy (matter waves): a vacuum chamber in nature, residual gas at
   10^-6 mbar with a mean free path above 100 metres against a path of
   a metre: fewer than 1 in 10^4 quanta scattered; no count moves.
 - The boxes and the deep well: a bound clock at rest, nothing between
@@ -596,7 +596,7 @@ air as a material region.
 
 THE TIMING'S FORM, in every row: nothing reaches a receiver at Manhattan
 distance m before age m (the causal bound). The front's K form is
-distance / v_g. For light at the born clocks [2464, 25] (N = 2048), [77,
+distance / v_g. For light at the given clocks [2464, 25] (N = 2048), [77,
 25] (N = 64) and [308, 25] (N = 256), the same k = 0.3024 per Link, so v_g = 0.5729 Links per interval and the period is
 36.08 intervals. For the chains' light at [1, 1] on N = 64, v_g = 0.5769
 and the period is 110.9. For the index clocks, v_g = 0.5773 (COMPUTATION
@@ -614,28 +614,28 @@ where a shift common to every record cancels.
 
 | Row | The board and its faces | The placed tools (vertex, side, material) | The pin (kind) | When the clicks come |
 | --- | --- | --- | --- | --- |
-| Bell, four settings (1a to 1d) | a layer [30, 33, 1], periodic (11.3); its shell of receiver cubes retires with the take (9.12) | an emitter at (2, 16); the crystal, side 3, at vertex (13, 15), clocks p_1 + p_2 = p, branches [[1, 1], [2, 1]]; Alice's polariser at (26, 28) with its two receivers, cubes of 3 x 3 beside it (record 1899; the placement per A.5 at the rebuild), axes (1, 0) or (1, 1); Bob's polariser at (26, 4) with its two cubes, axes (1, 2) or (3, 1); no wheel: the residues are the law's remainders (ALGEBRA.md 9.19 (4), ADOPTED; the exact W = 20 pin HISTORY) | n = 100 pair records per setting: the expected counts 40/10/10/40, 5/45/45/5, 45/5/5/45, 40/10/10/40 with the standard deviations 4.9, 3.0, 3.0, 4.9 and 2.2, 5.0, 5.0, 2.2; S = 2.80, standard deviation 0.141, the pin S in [2.38, 3.22], the falsifier S <= 2 (K, DETECTOR; ALGEBRA.md 9.19 (4b)) | birth at t_e + 11 or later; each arm's first rung at the birth + 22 or later; the two arms equal exactly (11.3); the first rung is the direct front's, before any wrapped field returns (ALGEBRA.md 9.12), and the counts are computed weights |
-| Malus, four settings (9) | the bar of 11 (a chain; 8 HISTORY) with the face receivers | an emitter body at x = 0 (H, a stock of 256; the wheel and the train are HISTORY, 9.22 (2)); the polariser at x = 6 with the axis (1, 1), (5, 1), (15, 8) or (3, 2), its + receiver the cube [7, 9] (record 1899; x = 7 HISTORY) | at 256 records on the + cell: 128 +- 24, 246 +- 9, 199 +- 20, 177 +- 22 (3 standard deviations; the expected 128.0, 246.2, 199.3, 177.2) (K, DETECTOR; ALGEBRA.md 9.19 (4b)) | the front at 6 / 0.5729 = 10.5 intervals from each birth; the reading is the computed weights, which a face does not move (9.12) |
-| The two slits (2a) | the layer [241, 320, 1], every face a RECEIVER SLAB OF DEPTH 32 (ALGEBRA.md 9.25 (10): a face one Node deep books 0.15 of a packet and reflects the rest, and the records then click on reflected light; the slab as deep as the packet books 0.96; the first draft's 160 x 256 with the lamp's train of 32 periods and the margin to x >= 485 HISTORY, 2026-09-25: under the unification a one-cell birth is one pulse, broadband, so the emitter is a slab with a travelling born profile, row 17's form) | light [1, 1] with the born clock [512, 1] (the wavelength 4), a holder family; the emitter a holder slab from (40, 128, 0) with the extents 32 x 64 x 1, its coupling to light, a stock of 1024, its born profile the travelling character along +x over 8 periods with the Hann envelope across y; the wall a slab of the gap [1, 2] of DEPTH 4 at x = 92 to 95, y = 32 to 287 (at the wavelength 4 a gap one deep transmits 0.2 and swamps the openings' pattern, A.3; depth 4 transmits 5.4 x 10^-5) with two openings of width 5 centred at y = 154 and y = 167 (d = 13; width 3 passed one sixth of the record to the screen, too little for the pixels' counts) cut through its depth; the screen of 67 receiver cubes of side 3 at x = 206 to 208, y = 60 to 260 (record 1899); the face slabs x = 0 to 31, x = 209 to 240, y = 0 to 31, y = 288 to 319 | THE FRINGE SPACING ON THE LATTICE 2 pi L / (d sin k) = 2 pi x 110 / 13 = 53.2 cells (ALGEBRA.md 9.25 (10), PROVED: the ray's direction is the group velocity's; the continuum's lambda L / d = 33.8 is the same at k / sin k = 1.571, a grain term; the pixel of 3 scales the visibility by sin(3 pi / 53.2) / (3 pi / 53.2) = 0.995); the visibility read as the Fourier component of the pixels' counts at that spacing about the centre (a Gaussian window of 45 cells): COMPUTED by the generator's run of this placement (2026-09-25; the rule in floats with the engine's flux reading and the increment ladder over 2403 residues): the screen's share 0.2626 of the records (the rest at the face slabs, the wall's reflection), the visibility 0.950 at the spacing 53.2 (0.053 at the continuum's 34.2), the spacing read from the pattern 52.5, the centroid 159.1; THE PIN at a stock of 4096: the screen 1076 +- 84 clicks, the visibility 0.95 +- 0.13 (3 standard deviations of the Fourier component on 1076 clicks), the spacing 53 +- 2, the centroid 160.5 +- 2 (K, DETECTOR, blind; the first draft's 0.96 +- 0.02 of `two_slits_1024.py` at the wavelength 20.78 HISTORY) | the front at the screen (206 - 71) / 0.4472 = 302 intervals after a birth; the packet's 32 Links are booked whole by the face slabs on its first passage, so every record clicks on the direct light: no margin rule |
-| The two slits, one opening closed (2a's CONTROL, the paper's row 10) | as row 2a | as row 2a with the opening at y = 167 filled by the wall's gap slab | no fringe: an opening of 5 cells at the wavelength 4 radiates over the whole screen; COMPUTED by the same run: the screen's share 0.158, the Fourier component at the spacing 53.2 0.022 (0.018 to 0.037 over the four single openings run, the ladder's grain on 2403 residues); THE PIN at 4096 records: the screen 647 +- 74, the component at 53.2 below 0.2 (3 standard deviations on 647 clicks), against row 2a's 0.95 (K, DETECTOR, blind) | as row 2a |
-| The pace fans (5a) | 128 x 128 layer with the face receivers and the margin | an emitter at (64, 64); probes at 40 and 36 Links on each ray | the axis's k above the diagonal's by k^2 / 48 at the same omega (K; GAMEBOARD by declaration; from 3 cos omega = SUM cos k_i: the axis's k above the continuum's sqrt(3) omega by k^2 / 36, the diagonal's by k^2 / 144, their difference the k^2 / 48; the GROUP velocities differ by k^2 / 16; the paper's k^2 / 36 is the axis against the continuum, this row's the axis against the diagonal: both right, named apart 2026-09-25) | the front at 40 / 0.5729 = 70 intervals; FACE MARGIN 23 Links, a reflection 80 intervals after the front, so the settled reading must end before it or the board grows (OWED on regeneration) |
-| The muon's form (4a) | 200 x 200 layer, periodic | at rest one well, side 14, pair [3200, 3227], at (93, 93), K = 0; in motion a PACKET of [3200, 3236] about 100 Links wide with K = 0.18556 per Link (v = 1 / 3) written at interval 0 with no ramp (record 1884) and a co-moving name (A.14, record 1889) | at rest the mode's period 42.33 (omega_b 0.14845); in motion f / f_0 = 0.8146 from the dispersion (ALGEBRA.md 9.24 (2); the well form's 0.8116 HISTORY), band 0.3 percent (K, blind) | its own record's clicks at its name over the hold (the block at rest, the co-moving name in motion); no face |
-| The redshift (4b) | chain 4096 with the face receivers | at rest the well, side 12, pair [314, 315], at 2994 with the coupling and a stock; in motion the emitter a PACKET of [156, 157] with K = 0.13946 per Link (v = 1 / 3) and a co-moving name with its stock (A.14); the receiver the cube [4092, 4094] (record 1899; 4094 HISTORY), its first rung at its near face | 1 + z = (1 + v / c_l) / (the tick ratio) = 1.935 at v = 1 / 3 with c_l = 0.57689 and the tick ratio 0.8154 (ALGEBRA.md 9.24 (5); the design's 1.9889 on the pushed well HISTORY), band 0.3 percent (K, blind) | the ratio of the receiver's click intervals to the emitter's; FACE MARGIN 1 Link: a shift common to every record, which cancels in the ratio |
-| The round trip (4c) | a chain with the face receivers | the mirror (A.3, the gap [1, 2]) at rest; the emitter and its receiver (a cube of three Nodes, record 1899) ONE co-moving name on a holder packet with K (v = 1 / 3) receding from the mirror (A.14) | (1 + beta) / (1 - beta) = 3.7373 at beta = v / c_l = 0.5778 (ALGEBRA.md 9.24 (5); the design's 3.7733 on the moving mirror HISTORY; the continuum 3.732), band 0.3 percent (K, blind) | the sent over the received click intervals at the moving name; `cart_k3.json` is REBUILT in this form |
-| Sagnac (R2) | chain 3000 with the face receivers | at rest two wells, side 12, pair [800, 801] ([800, 800] HISTORY), at 700 and 772, with couplings and stocks, receivers by name (at_a, at_b, the wells' own cells of side 12: detectors of side 3 or more, record 1899); co-moving at k = 3 two PACKETS of [800, 809] with K = 0.18556 and two co-moving names with their stocks (A.14) | at rest the first rung 108 +- 2 (K): OWED on the flux form and [800, 801]; in motion the first rungs scale by c_l / (c_l -+ v) = 2.369 toward the name ahead and 0.634 toward the name behind (about 256 and 68 against the design's 247 and 72), the exact rungs OWED on the flux form; the ratio 0.5774 +- 0.01 | the first rung from each birth at the moving names; the two wells hybridise by 3.2 x 10^-6 over the run at rest (ALGEBRA.md 9.9) |
-| de Broglie's fringes (M1) | the layer [241, 128, 1], the x faces receiver slabs of depth 32 (9.25 (10)), y periodic (the take lines and the 128 x 128 layer HISTORY) | matter [800, 809] and a holder family; the emitter a matter slab [800, 801] from (40, 32, 0) with the extents 32 x 64 x 1, its born profile the travelling character of the matter family at **K** = pi / 2 (the de Broglie wavelength 4 Links) over 8 periods with the Hann envelope across y, a stock of 2048; the barrier, holder bodies carrying the matter pair [1, 2] as a slab of depth 4 at x = 92 to 95 with two openings of width 5 centred at y = 58 and y = 71 (d = 13) cut through its depth; the screen of 41 receiver cubes of side 3 at x = 206 to 208, y = 3 to 125 (record 1899; the 121 one-Node receivers HISTORY) | the fringe spacing on the lattice 2 pi L / (d sin K) = 53.2 cells (the continuum's lambda_dB L / d = 33.8 at K / sin K = 1.571, ALGEBRA.md 9.25 (10)); the pattern read on the 41 pixels' counts: COMPUTED by the generator's run of this placement (2026-09-25, the matter family's rule in floats with the flux reading and the ladder): the screen's share 0.2514, the visibility 0.92 at the spacing 53.2 (the spacing read 51.0; 0.12 at the continuum's 34.2), the central lobe's centroid 64.4 (the openings' centre 64.5), the side lobes at 64.5 -+ 53.2 (the pixels 7 to 22 and 106 to 124); THE PIN at a stock of 2048: the screen 515 +- 58, the visibility 0.92 +- 0.19, the central lobe's centroid 64.5 +- 2, the side lobes' centroids 11 +- 3 and 118 +- 3 (K, DETECTOR, blind; the design's 64 + 27.4 on the take lines HISTORY) | the matter front's pace v_g = (800 / 809) sin(pi / 2) / (3 sin omega) = 0.4384 at cos omega = (800 / 809) x 2 / 3, so the front at the screen (206 - 71) / 0.4384 = 308 intervals after a birth; the face slabs book the packet whole on its first passage: no margin rule |
-| The moving mass's energy (M2) | chain 200 with the face receivers | a matter emitter body at 20 with a stock (the train is HISTORY); the receiver the cube [104, 106] (record 1899), its first rung at the near face 104 | 169 +- 2 (K): OWED, re-derived blind on the flux form before any run | the first rung from the birth; FACE MARGIN 95 Links, so a reflection returns long after the first rung |
-| The bound clock's second term (ii-a, ii-b) | cubes 64^3 and 48^3, periodic | ii-a: one well, side 20, pair [800, 801] ([800, 800] HISTORY), at rest; ii-b: a PACKET of [800, 809] with K = 0.18556 (v = 1 / 3), no ramp, with a co-moving name (A.14): about 40 Links wide for a hold of 1000 intervals in 64^3 (its spreading time 1444), or 100 Links wide on 128^3 for the hold of 8000 (ALGEBRA.md 9.24 (2)) | ii-a the mode's clock (omega_b 0.1193); ii-b f / f_0 = 0.8146 from the dispersion (the well form's 0.7814 and 0.8032 HISTORY), band 0.3 percent (P, blind) | its own clicks at its name over the hold; no face |
-| The deep well (control) | 128 x 128 layer, periodic | at rest one well, side 40, pair [800, 801] ([800, 800] HISTORY), at (44, 44); in motion (the control at k = 3) a PACKET as ii-b with a co-moving name | at rest omega_b 0.0729 (the mode); in motion f / f_0 = 0.8146 (the design's 0.7531 HISTORY) (CONTROL, blind) | its own clicks at its name over the hold; no face |
-| The light clock | chain 674 with the face receivers | a well A, side 12, pair [800, 801], at 600, with a stock (`emits` HISTORY), receiver at_a the cube [612, 614] of free Nodes beside A (record 1899), its first rung at the near face 612; the mirror body, gap [1, 2], at [672, 674) | 214 +- 1 (K; OWED, re-derived blind on the flux form and [800, 801] before any run; the physicist's blind map with the material mirror [1, 2] at [672, 674) on the chain of 674; 213 on the closed face HISTORY) | the first cycle's first rung at 612 from its birth, after one reflection |
-| The receding index at k = 3 (v-m) | chain 4000 with the face receivers | the medium body, side 24, pair [314, 315], at 1500, BOUND (the holder family) and AT REST (material does not move, ALGEBRA.md 9.24 (3)); the light emitter at 800 (the clock [3565, 10000]) and the probe at 2400 as ONE co-moving name on a holder packet with K (v = 1 / 3) receding from the medium (A.14); the rest and reference worlds beside | the probe's phase is a GAMEBOARD reading, a diagnostic and not a result (9.21 (4)); in the frame form the medium reads the receding source at omega' = 0.0181 with the rest index n = 1.2519 (the design's rest number) and the moving probe sees the delay (n - 1) x 24 / c_l shifted by its own motion: COMPUTATION owed on the bound medium before any run; the design's +1.0144 rad and its drift, read on the pushed medium, HISTORY | the probe's window [3800, 5400]; FACE MARGIN checked by the generator against the window (OWED) |
+| Bell's four settings | a layer [30, 33, 1], periodic (11.3); its shell of receiver cubes retires with the take (9.12) | an emitter at (2, 16); the crystal, side 3, at vertex (13, 15), clocks p_1 + p_2 = p, branches [[1, 1], [2, 1]]; Alice's polariser at (26, 28) with its two receivers, cubes of 3 x 3 beside it (record 1899; the placement per A.5 at the rebuild), axes (1, 0) or (1, 1); Bob's polariser at (26, 4) with its two cubes, axes (1, 2) or (3, 1); no wheel: the residues are the law's remainders (ALGEBRA.md 9.19 (4), ADOPTED; the exact W = 20 pin HISTORY) | n = 100 pair records per setting: the expected counts 40/10/10/40, 5/45/45/5, 45/5/5/45, 40/10/10/40 with the standard deviations 4.9, 3.0, 3.0, 4.9 and 2.2, 5.0, 5.0, 2.2; S = 2.80, standard deviation 0.141, the pin S in [2.38, 3.22], the falsifier S <= 2 (K, DETECTOR; ALGEBRA.md 9.19 (4b)) | giving click at t_e + 11 or later; each arm's first rung at the giving click + 22 or later; the two arms equal exactly (11.3); the first rung is the direct front's, before any wrapped field returns (ALGEBRA.md 9.12), and the counts are computed weights |
+| Malus's four axes | the bar of 11 (a chain; 8 HISTORY) with the face receivers | an emitter body at x = 0 (H, a stock of 256; the wheel and the train are HISTORY, 9.22 (2)); the polariser at x = 6 with the axis (1, 1), (5, 1), (15, 8) or (3, 2), its + receiver the cube [7, 9] (record 1899; x = 7 HISTORY) | at 256 records on the + Node: 128 +- 24, 246 +- 9, 199 +- 20, 177 +- 22 (3 standard deviations; the expected 128.0, 246.2, 199.3, 177.2) (K, DETECTOR; ALGEBRA.md 9.19 (4b)) | the front at 6 / 0.5729 = 10.5 intervals from each giving click; the reading is the computed weights, which a face does not move (9.12) |
+| The two slits: RE-PLACED 2026-09-25 on the given record (the body's own mode, record 1962) and the face slab's placement rule (ALGEBRA.md 9.17 (6a), 9.25 (11); the placement and the pin of record are in ALGEBRA.md 9.22 (8); the numbers of this row are the first placement's, HISTORY) | the layer [241, 320, 1], every face a RECEIVER SLAB OF DEPTH 32 (ALGEBRA.md 9.25 (10): a face one Node deep books 0.15 of a packet and reflects the rest, and the records then click on reflected light; the slab as deep as the packet books 0.96; the first draft's 160 x 256 with the lamp's train of 32 periods and the margin to x >= 485 HISTORY, 2026-09-25: under the unification a one-Node giving click is one pulse, broadband, so the emitter is a slab with a travelling given profile, Mach-Zehnder's form) | light [1, 1] with the given clock [512, 1] (the wavelength 4), a holder family; the emitter a holder slab from (40, 128, 0) with the extents 32 x 64 x 1, its coupling to light, a stock of 1024, its given profile the travelling character along +x over 8 periods with the Hann envelope across y; the wall a slab of the gap [1, 2] of DEPTH 4 at x = 92 to 95, y = 32 to 287 (at the wavelength 4 a gap one deep transmits 0.2 and swamps the openings' pattern, A.3; depth 4 transmits 5.4 x 10^-5) with two openings of width 5 centred at y = 154 and y = 167 (d = 13; width 3 passed one sixth of the record to the screen, too little for the pixels' counts) cut through its depth; the screen of 67 receiver cubes of side 3 at x = 206 to 208, y = 60 to 260 (record 1899); the face slabs x = 0 to 31, x = 209 to 240, y = 0 to 31, y = 288 to 319 | THE FRINGE SPACING ON THE LATTICE 2 pi L / (d sin k) = 2 pi x 110 / 13 = 53.2 Nodes (ALGEBRA.md 9.25 (10), PROVED: the ray's direction is the group velocity's; the continuum's lambda L / d = 33.8 is the same at k / sin k = 1.571, a grain term; the pixel of 3 scales the visibility by sin(3 pi / 53.2) / (3 pi / 53.2) = 0.995); the visibility read as the Fourier component of the pixels' counts at that spacing about the centre (a Gaussian window of 45 Nodes): COMPUTED by the generator's run of this placement (2026-09-25; the rule in floats with the engine's flux reading and the increment ladder over 2403 residues): the screen's share 0.2626 of the records (the rest at the face slabs, the wall's reflection), the visibility 0.950 at the spacing 53.2 (0.053 at the continuum's 34.2), the spacing read from the pattern 52.5, the centroid 159.1; THE PIN at a stock of 4096: the screen 1076 +- 84 clicks, the visibility 0.95 +- 0.13 (3 standard deviations of the Fourier component on 1076 clicks), the spacing 53 +- 2, the centroid 160.5 +- 2 (K, DETECTOR, blind; the first draft's 0.96 +- 0.02 of `two_slits_1024.py` at the wavelength 20.78 HISTORY) | the front at the screen (206 - 71) / 0.4472 = 302 intervals after a giving click; the packet's 32 Links are booked whole by the face slabs on its first passage, so every record clicks on the direct light: no margin rule |
+| The two slits with one opening closed (the two slits' control): RE-PLACED 2026-09-25 on the given record (the body's own mode, record 1962) and the face slab's placement rule (ALGEBRA.md 9.17 (6a), 9.25 (11); the placement and the pin of record are in ALGEBRA.md 9.22 (8); the numbers of this row are the first placement's, HISTORY) | as the two slits | as the two slits with the opening at y = 167 filled by the wall's gap slab | no fringe: an opening of 5 Nodes at the wavelength 4 radiates over the whole screen; COMPUTED by the same run: the screen's share 0.158, the Fourier component at the spacing 53.2 0.022 (0.018 to 0.037 over the four single openings run, the ladder's grain on 2403 residues); THE PIN at 4096 records: the screen 647 +- 74, the component at 53.2 below 0.2 (3 standard deviations on 647 clicks), against the two slits' 0.95 (K, DETECTOR, blind) | as the two slits |
+| The pace fans | 128 x 128 layer with the face receivers and the margin | an emitter at (64, 64); probes at 40 and 36 Links on each ray | the axis's k above the diagonal's by k^2 / 48 at the same omega (K; GAMEBOARD by declaration; from 3 cos omega = SUM cos k_i: the axis's k above the continuum's sqrt(3) omega by k^2 / 36, the diagonal's by k^2 / 144, their difference the k^2 / 48; the GROUP velocities differ by k^2 / 16; the paper's k^2 / 36 is the axis against the continuum, this row's the axis against the diagonal: both right, named apart 2026-09-25) | the front at 40 / 0.5729 = 70 intervals; FACE MARGIN 23 Links, a reflection 80 intervals after the front, so the settled reading must end before it or the board grows (OWED on regeneration) |
+| The muon's moving clock | 200 x 200 layer, periodic | at rest one well, side 14, pair [3200, 3227], at (93, 93), K = 0; in motion a PACKET of [3200, 3236] about 100 Links wide with K = 0.18556 per Link (v = 1 / 3) written at interval 0 with no ramp (record 1884) and a co-moving name (A.14, record 1889) | at rest the mode's period 42.33 (omega_b 0.14845); in motion f / f_0 = 0.8146 from the dispersion (ALGEBRA.md 9.24 (2); the well form's 0.8116 HISTORY), band 0.3 percent (K, blind) | its own record's clicks at its name over the hold (the block at rest, the co-moving name in motion); no face |
+| The moving emitter's redshift | chain 4096 with the face receivers | at rest the well, side 12, pair [314, 315], at 2994 with the coupling and a stock; in motion the emitter a PACKET of [156, 157] with K = 0.13946 per Link (v = 1 / 3) and a co-moving name with its stock (A.14); the receiver the cube [4092, 4094] (record 1899; 4094 HISTORY), its first rung at its near face | 1 + z = (1 + v / c_l) / (the tick ratio) = 1.935 at v = 1 / 3 with c_l = 0.57689 and the tick ratio 0.8154 (ALGEBRA.md 9.24 (5); the design's 1.9889 on the pushed well HISTORY), band 0.3 percent (K, blind) | the ratio of the receiver's click intervals to the emitter's; FACE MARGIN 1 Link: a shift common to every record, which cancels in the ratio |
+| The round trip off a receding mirror | a chain with the face receivers | the mirror (A.3, the gap [1, 2]) at rest; the emitter and its receiver (a cube of three Nodes, record 1899) ONE co-moving name on a holder packet with K (v = 1 / 3) receding from the mirror (A.14) | (1 + beta) / (1 - beta) = 3.7373 at beta = v / c_l = 0.5778 (ALGEBRA.md 9.24 (5); the design's 3.7733 on the moving mirror HISTORY; the continuum 3.732), band 0.3 percent (K, blind) | the sent over the received click intervals at the moving name; `cart_k3.json` is REBUILT in this form |
+| Sagnac's two-way light times | chain 3000 with the face receivers | at rest two wells, side 12, pair [800, 801] ([800, 800] HISTORY), at 700 and 772, with couplings and stocks, receivers by name (at_a, at_b, the wells' own Nodes of side 12: detectors of side 3 or more, record 1899); co-moving at k = 3 two PACKETS of [800, 809] with K = 0.18556 and two co-moving names with their stocks (A.14) | at rest the first rung 108 +- 2 (K): OWED on the flux form and [800, 801]; in motion the first rungs scale by c_l / (c_l -+ v) = 2.369 toward the name ahead and 0.634 toward the name behind (about 256 and 68 against the design's 247 and 72), the exact rungs OWED on the flux form; the ratio 0.5774 +- 0.01 | the first rung from each giving click at the moving names; the two wells hybridise by 3.2 x 10^-6 over the run at rest (ALGEBRA.md 9.9) |
+| De Broglie's fringes: RE-PLACED 2026-09-25 on the given record (the body's own mode, record 1962) and the face slab's placement rule (ALGEBRA.md 9.17 (6a), 9.25 (11); the placement and the pin of record are in ALGEBRA.md 9.22 (8); the numbers of this row are the first placement's, HISTORY) (the y-periodic layer wraps the pattern and cuts the visibility to 0.43: the row now stands on the two slits' layer [305, 320, 1] in the matter family) | the layer [241, 128, 1], the x faces receiver slabs of depth 32 (9.25 (10)), y periodic (the take lines and the 128 x 128 layer HISTORY) | matter [800, 809] and a holder family; the emitter a matter slab [800, 801] from (40, 32, 0) with the extents 32 x 64 x 1, its given profile the travelling character of the matter family at **K** = pi / 2 (the de Broglie wavelength 4 Links) over 8 periods with the Hann envelope across y, a stock of 2048; the barrier, holder bodies carrying the matter pair [1, 2] as a slab of depth 4 at x = 92 to 95 with two openings of width 5 centred at y = 58 and y = 71 (d = 13) cut through its depth; the screen of 41 receiver cubes of side 3 at x = 206 to 208, y = 3 to 125 (record 1899; the 121 one-Node receivers HISTORY) | the fringe spacing on the lattice 2 pi L / (d sin K) = 53.2 Nodes (the continuum's lambda_dB L / d = 33.8 at K / sin K = 1.571, ALGEBRA.md 9.25 (10)); the pattern read on the 41 pixels' counts: COMPUTED by the generator's run of this placement (2026-09-25, the matter family's rule in floats with the flux reading and the ladder): the screen's share 0.2514, the visibility 0.92 at the spacing 53.2 (the spacing read 51.0; 0.12 at the continuum's 34.2), the central lobe's centroid 64.4 (the openings' centre 64.5), the side lobes at 64.5 -+ 53.2 (the pixels 7 to 22 and 106 to 124); THE PIN at a stock of 2048: the screen 515 +- 58, the visibility 0.92 +- 0.19, the central lobe's centroid 64.5 +- 2, the side lobes' centroids 11 +- 3 and 118 +- 3 (K, DETECTOR, blind; the design's 64 + 27.4 on the take lines HISTORY) | the matter front's pace v_g = (800 / 809) sin(pi / 2) / (3 sin omega) = 0.4384 at cos omega = (800 / 809) x 2 / 3, so the front at the screen (206 - 71) / 0.4384 = 308 intervals after a giving click; the face slabs book the packet whole on its first passage: no margin rule |
+| The moving mass's energy | chain 200 with the face receivers | a matter emitter body at 20 with a stock (the train is HISTORY); the receiver the cube [104, 106] (record 1899), its first rung at the near face 104 | 169 +- 2 (K): OWED, re-derived blind on the flux form before any run | the first rung from the giving click; FACE MARGIN 95 Links, so a reflection returns long after the first rung |
+| The boxed clocks, the box of side 20 and the box of side 28 | cubes 64^3 and 48^3, periodic | the box of side 20, at rest: one well, side 20, pair [800, 801] ([800, 800] HISTORY), at rest; the box of side 28, in motion: a PACKET of [800, 809] with K = 0.18556 (v = 1 / 3), no ramp, with a co-moving name (A.14): about 40 Links wide for a hold of 1000 intervals in 64^3 (its spreading time 1444), or 100 Links wide on 128^3 for the hold of 8000 (ALGEBRA.md 9.24 (2)) | the box of side 20 at rest, the mode's clock (omega_b 0.1193); ii-b f / f_0 = 0.8146 from the dispersion (the well form's 0.7814 and 0.8032 HISTORY), band 0.3 percent (P, blind) | its own clicks at its name over the hold; no face |
+| The deep well's clock | 128 x 128 layer, periodic | at rest one well, side 40, pair [800, 801] ([800, 800] HISTORY), at (44, 44); in motion (the control at k = 3) a PACKET as the box of side 28 in motion with a co-moving name | at rest omega_b 0.0729 (the mode); in motion f / f_0 = 0.8146 (the design's 0.7531 HISTORY) (CONTROL, blind) | its own clicks at its name over the hold; no face |
+| The light clock | chain 674 with the face receivers | a well A, side 12, pair [800, 801], at 600, with a stock (`emits` HISTORY), receiver at_a the cube [612, 614] of free Nodes beside A (record 1899), its first rung at the near face 612; the mirror body, gap [1, 2], at [672, 674) | 214 +- 1 (K; OWED, re-derived blind on the flux form and [800, 801] before any run; the physicist's blind map with the material mirror [1, 2] at [672, 674) on the chain of 674; 213 on the closed face HISTORY) | the first cycle's first rung at 612 from its giving click, after one reflection |
+| The receding index at one third of a Link per interval | chain 4000 with the face receivers | the medium body, side 24, pair [314, 315], at 1500, BOUND (the holder family) and AT REST (material does not move, ALGEBRA.md 9.24 (3)); the light emitter at 800 (the clock [3565, 10000]) and the probe at 2400 as ONE co-moving name on a holder packet with K (v = 1 / 3) receding from the medium (A.14); the rest and reference worlds beside | the probe's phase is a GAMEBOARD reading, a diagnostic and not a result (9.21 (4)); in the frame form the medium reads the receding source at omega' = 0.0181 with the rest index n = 1.2519 (the design's rest number) and the moving probe sees the delay (n - 1) x 24 / c_l shifted by its own motion: COMPUTATION owed on the bound medium before any run; the design's +1.0144 rad and its drift, read on the pushed medium, HISTORY | the probe's window [3800, 5400]; FACE MARGIN checked by the generator against the window (OWED) |
 | The receding index at k = 4 | as at k = 3 | as at k = 3 with K for v = 1 / 4 (beta = 0.433) | as at k = 3 with omega' = 0.02202 and n = 1.2577 (the design's rest number); the design's +0.6103 rad and its drift HISTORY | as at k = 3 |
-| The two-qubit computer (16; the model owner's record 1883; ALGEBRA.md 9.23) | a layer [40, 40, 1], periodic; light [1, 1] with its born clock, a holder family | the emitter body at (4, 19) with a stock of 100 per setting; the crystal, side 3, at vertex (18, 18) with its light index, births the pair in the state the circuit has reached at its entangling gate: GROVER the branches [[0, 1], [1, 1], [2, 1], [3, -1]] (the uniform state after the oracle marking |11>); DEUTSCH-JOZSA [[0, 1], [1, 1], [2, -1], [3, -1]] (|+> on the query arm 0, |-> on the ancilla arm 1; the label index a + 2 b); ONE joint body (A.13), side 3, at vertex (28, 18), named first on the pair's ladder for both arms: GROVER **G** = diag(1, -1, -1, -1) (the diffusion's centre); DEUTSCH-JOZSA the four oracles, **G** = I, -I (constant), diag(1, -1, 1, -1) and its negative (balanced); the readout polarisers at (34, 30) and (34, 6) with their receivers at (35, 31) and (35, 5), the axes carrying the last one-qubit gates: GROVER both (1, 1) (the Hadamard then the axis (1, 0)); DEUTSCH-JOZSA the query arm's (1, 1), the ancilla's (1, 0); the ladders arm 0 -> the first polariser's receivers, arm 1 -> the second's | GROVER: the born weights (1, -1, -1, 1) = (1, -1) (x) (1, -1), every record clicks (-, -): 0 / 0 / 0 / 100 at n = 100, the band 0 (K, DETECTOR; one click elsewhere is an engine defect). DEUTSCH-JOZSA: the query arm clicks + for a constant oracle and - for a balanced one, 100 / 0 and 0 / 100 per oracle at n = 100, the band 0; the ancilla clicks - always, 100 of 100 (a check). Bell as row 1. The records: Grover 100, Deutsch-Jozsa 4 x 100, Bell 400 | the light record's first rung at the crystal, the pair's first rung at the joint body, the born pair's first rungs at the two readouts, equal by the placement's mirror symmetry (the mirror theorem, 11.3); on the periodic layer every record clicks (no face), the counts are computed weights |
+| The two-qubit computer (the model owner's record 1883; ALGEBRA.md 9.23) | a layer [40, 40, 1], periodic; light [1, 1] with its given clock, a holder family | the emitter body at (4, 19) with a stock of 100 per setting; the crystal, side 3, at vertex (18, 18) with its light index, giving clicks the pair in the state the circuit has reached at its entangling gate: GROVER the branches [[0, 1], [1, 1], [2, 1], [3, -1]] (the uniform state after the oracle marking |11>); DEUTSCH-JOZSA [[0, 1], [1, 1], [2, -1], [3, -1]] (|+> on the query arm 0, |-> on the ancilla arm 1; the label index a + 2 b); ONE joint body (A.13), side 3, at vertex (28, 18), named first on the pair's ladder for both arms: GROVER **G** = diag(1, -1, -1, -1) (the diffusion's centre); DEUTSCH-JOZSA the four oracles, **G** = I, -I (constant), diag(1, -1, 1, -1) and its negative (balanced); the readout polarisers at (34, 30) and (34, 6) with their receivers at (35, 31) and (35, 5), the axes carrying the last one-qubit gates: GROVER both (1, 1) (the Hadamard then the axis (1, 0)); DEUTSCH-JOZSA the query arm's (1, 1), the ancilla's (1, 0); the ladders arm 0 -> the first polariser's receivers, arm 1 -> the second's | GROVER: the given weights (1, -1, -1, 1) = (1, -1) (x) (1, -1), every record clicks (-, -): 0 / 0 / 0 / 100 at n = 100, the band 0 (K, DETECTOR; one click elsewhere is an engine defect). DEUTSCH-JOZSA: the query arm clicks + for a constant oracle and - for a balanced one, 100 / 0 and 0 / 100 per oracle at n = 100, the band 0; the ancilla clicks - always, 100 of 100 (a check). Bell as in Bell's four settings. The records: Grover 100, Deutsch-Jozsa 4 x 100, Bell 400 | the light record's first rung at the crystal, the pair's first rung at the joint body, the given pair's first rungs at the two readouts, equal by the placement's mirror symmetry (the mirror theorem, 11.3); on the periodic layer every record clicks (no face), the counts are computed weights |
 
-| Mach-Zehnder (17; the model owner's approval of 2026-09-25 through the Boss; the placement of the first draft (a 48-layer at the born clock [2464, 25], 5-cell beams, the second mirror and the second splitter off the arms' rectangle) is HISTORY, withdrawn 2026-09-25 by the generator's float run of it: no beam of 5 cells exists at the wavelength 20.8 Links, and the arms met the second splitter 4 cells apart) | a layer [416, 416, 1] with the face receivers on both axes (no periodic axis; one border for every family) | light [1, 1] with its born clock [512, 1] (k = pi / 2 on the world's circle of 2048 steps: the wavelength 4 Links, cos omega = 2 / 3, v_g = 0.4472, the period 7.470 intervals), a holder family; the emitter body (A.1), a slab of the holder family from (8, 76, 0) with the extents 64 x 64 x 1, its coupling (g, G) to light (ALGEBRA.md 9.19 (4e)), a stock of 100, its born profile the generator's integers at both levels (9.17 (5) item 3, (6)): the travelling character at k = pi / 2 along +x (before = the character one interval earlier), a Hann envelope across y and a flat top with cosine tapers of 16 cells along x (16 periods), so that it radiates along +x alone (the back face's share 3 x 10^-4, COMPUTED); the first splitter (A.4), the diagonal line of one-Node layers of the pair [2, 3] from (70, 70) to (146, 146) (on x = y, 77 cells; EXACT 1 / 2 at both incidences); two mirrors (A.3), diagonal slabs of the gap [1, 2] of depth 4: the lines x - y = 96 to 99 for y = 70 to 146 (from (166, 70) to (242, 146) and three lines beside), turning the +x arm to +y, and the lines x - y = -96 to -99 for x = 70 to 146 (from (70, 166) to (146, 242)), turning the +y arm to +x; the second splitter of the same pair on the same line x = y from (166, 166) to (242, 242); two receivers, each ONE connected region and a box of sides 3 or more, cut on z (9.25 (7) and (10), record 1899): the bright from (324, 148, 0) with the extents 5 x 113 x 1 across the +x exit, the dark from (148, 324, 0) with the extents 81 x 5 x 1 across the +y exit (trimmed on the bright's side, to x = 228, against the bright beam's diffracted wing), the far faces 90 Links behind them (so that the face books the packet's head only after its tail has entered the receiver); the arms equal for EVERY ray (PROVED: a ray entering the first splitter at (a, a) meets the second at (a + 96, a + 96) by both arms, each of length 192); the ladders: the bright, the dark, then the faces | at 100 records (K, DETECTOR, blind; the shares COMPUTED by the generator's float run of this very placement, the rule in floats with the engine's flux reading and the increment ladder walked over 2403 residues): the bright 97 +- 5 (its share 0.969), the dark 0 or 1 (its share 0.0062, 0.62 expected: one dark click is within the algebra at the 46 percent level, two at the 12 percent level, three or more a defect), the faces 3 (0 to 7; their share 0.025, the spill). WHAT THE DARK SHARE IS: the dark port's own residual, the splitters' imbalance over the packet's band (1.2 x 10^-3 for 16 periods on the exact harmonic solution, A.4; 2.6 x 10^-3 in the run's own window at the exit's axis), plus the bright beam's diffracted wing at the receivers' corner (the rest): the lattice's diffraction at 4 Links per wavelength, a part that depends on the grain (9.25 (9)) and shrinks with a wider beam and a longer board. THE NEGLECTED SPACE: air or fibre common to both arms, cancels (part B's clause) | the births in turn at the emitter's rungs; the front at the bright detector 795 intervals after a birth (349 Links at v_g = 0.4472), the bright's booking at half its norm at 852 and at 0.95 at 936; every record's click by its increment ladder; the light passing a receiver is not absorbed by it (only the click ends a record), so the far faces book the passing packet after the receiver has, which the 90 Links behind the receivers keep below the bright's 0.97; HOST: 173,056 Nodes, about 1,000 intervals per record |
-| Mach-Zehnder, one arm blocked (17's CONTROL) | as row 17 | as row 17 with a slab of the gap [1, 2] of depth 4 across the +y arm with its normal along y, from (70, 156) to (146, 159), between the first splitter and its mirror: the arm returns through the first splitter and leaves by the faces at x = 0 and y = 0 (a receiver cannot block an arm: it books the flux and leaves the amplitude, only a click ends a record; a mirror across the arm is the board's beam block) | at 100 records (K, DETECTOR, blind; COMPUTED as row 17's): the bright 47 +- 15 (its share 0.466), the dark 39 +- 15 (0.392; the trimmed receiver catches less of the one arm's beam, which is wider without the interference), the faces 14 +- 10 (0.142: the blocked arm's light at the near faces, booked first in time); the two detectors lit alike within their bands against row 17's 97 to 0.6: the two detectors read together by the increment ladder (ALGEBRA.md 9.25 (2)), NOT HELD | as row 17; the blocked arm's records click at the near faces early (their bookings precede the detectors' by about 400 intervals), the rest at the two detectors in the interval's walk, bright first |
-| Sorkin's three openings (18, THE EIGHTEENTH by the model owner's record 1911 of 2026-09-25, its seven worlds on the two slits' placement; the paper's row 2c, Born's exponent; nature 0.0064 +- 0.0119 of the central count, Sinha et al. 2010) | as row 2a, the emitter 128 wide from (40, 96, 0) | as row 2a with THREE openings of width 5 centred at y = 147, 160 and 173 (d = 13) and SEVEN worlds: the openings A, B, C open alone, in pairs AB, AC, BC, and all three ABC, the closed ones filled by the wall's gap cubes; the screen as row 2a | the Sorkin sum per pixel, kappa = P_ABC - P_AB - P_AC - P_BC + P_A + P_B + P_C, over the counts' shares, normalised by the central pixel's count in ABC: the algebra's flux is bilinear in the record's levels and the levels are linear in the openings' fields, so the third-order term vanishes EXACTLY for a fixed operator (PROVED); the seven worlds are seven operators (an opening closed is a changed region), so kappa is the openings' mutual scattering through the wall plus the click's rectification (max(G, 0) is not bilinear), COMPUTED by the generator's runs of the seven placements at d = 13 (2026-09-25): NOT SMALL: the Sorkin sum of the screen's shares is +0.108 against the three-opening share 0.294, and per pixel its mean is +0.16 of the central pixel's share (rms 0.26); the pairs and the triple each show the lattice fringes (the visibility 0.94 to 0.96 at 53.2; 0.84 for the pair at d = 26); so openings 3.25 wavelengths apart in a wall four deep COUPLE THROUGH THE WALL (the field at one opening depends on whether its neighbours are open), the geometry's term, which nature's slits, a hundred wavelengths apart, do not have. THE ROW IS RE-PLACED with the openings at d = 39 (y = 121, 160, 199; the fringe spacing 2 pi L / (d sin k) = 17.7 cells, six pixels; the emitter 128 wide at 160) and a THREE-SOURCE VARIANT on the one wall with all three open, each opening lit by its own narrow emitter of 12 cells, the seven combinations of sources: there the fields superpose exactly (one operator), and any kappa is the click's rectification alone, the algebra's own term. COMPUTED on the booked flux itself (grain-free), the Sorkin sum of the screen's totals as a share of the three-opening screen flux: the seven walls at d = 39, +0.011 (per pixel, normalised by the brightest pixel: mean +0.008, rms 0.019); the three sources at d = 39, +0.022 (mean +0.019, rms 0.031, largest 0.073); the three sources at d = 13, +0.005 (mean +0.002, rms 0.004, largest 0.011). THE CLICK'S OWN TERM, DERIVED: the one-way flux max(G, 0) clips the intervals at which the superposed field's local flux runs backward near the fringes' minima, so the reading exceeds the bilinear value and kappa is POSITIVE, of the order (lambda / the fringe spacing)^2: 0.0057 at the spacing 53 and 0.051 at 17.7 against the computed +0.005 and +0.022; in nature's regime (a wavelength of a micron, fringes of a millimetre) it is 10^-6, below every bound (Sinha 2010: 0.006 +- 0.012 of the central maximum), so the model's Sorkin parameter is a GRAIN term (9.25 (9)) that vanishes with the board's coarseness and is not a falsifier of the law in nature's regime; on the board it is a prediction of the click rule at the percent level where the fringes span a few wavelengths. THE PIN IN CLICKS (K, DETECTOR, blind; the seven walls at d = 39, a stock of 16384 per world): S = N_ABC - N_AB - N_AC - N_BC + N_A + N_B + N_C = +80 +- 400 (the model's +0.0049 per record against the binomial spread 1.04 sqrt(n)), so S within 400 of 0 and each world's screen count within 3 sqrt(n p (1 - p)) of n p on the shares A 0.037, B 0.336, C 0.033, AB 0.395, AC 0.072, BC 0.388, ABC 0.454; telling the model's value from 0 at 5 standard deviations needs 1.1 x 10^6 records per world, not feasible on the board, so the click's own term (+0.022 of the screen flux on the three-source variant, a computation) is read on the flux and not on clicks | as row 2a, seven runs |
-| The receding index at rest (14's CONTROL, the paper's row v) | as row 14 | as row 14 with the emitter and the receiver at rest (K = 0) and the reference world without the medium | the receiver's first rung behind the medium later than the reference world's by (n - 1) L / c_l = 0.2519 x 24 / 0.577 = 10.5 intervals at the design's rest index n = 1.2519 (OWED on the bound medium: n^2 = 1 + G g / (omega_0^2 - omega^2) re-derived blind), band 1 interval (K, DETECTOR, blind) | as row 14 at rest |
+| Mach-Zehnder (the model owner's approval of 2026-09-25 through the Boss; the first draft (a 48-layer at [2464, 25]) and the 416 layer with the emitter at the slab and the far slabs 23 Links behind the receivers are HISTORY, withdrawn by the generator's float runs: no beam of 5 Nodes exists at the wavelength 20.8, and a face slab returns what it books, ALGEBRA.md 9.25 (11) (b)) | a layer [576, 576, 1] with every face a receiver slab of depth 64 (the train's 16 periods; no periodic axis) | light [1, 1] with its given clock [512, 1] (k = pi / 2, the wavelength 4, cos omega = 2 / 3, v_g = 0.4472, the period 7.470 intervals), a holder family; the emitter body (A.1), a holder slab [699, 700] from (96, 164, 0) with the extents 64 x 64 x 1, 32 Links from the x = 0 slab, its coupling (g, G) to light, a stock of 100, its given train (ALGEBRA.md 9.17 (6a)): the travelling character at k = pi / 2 along +x at both levels (before = the character one interval earlier), a Hann window across y and the tapers of 16 Nodes along x (16 periods), so that it radiates along +x alone (the x = 0 slab's share 0.008, COMPUTED); the first splitter (A.4), the diagonal line of one-Node layers of the pair [2, 3] from (158, 158) to (234, 234) (on x = y, 77 Nodes; EXACT 1 / 2 at both incidences); two mirrors (A.3), diagonal slabs of the gap [1, 2] of depth 4: the lines x - y = 96 to 99 for y = 158 to 234, turning the +x arm to +y, and x - y = -96 to -99 for x = 158 to 234, turning the +y arm to +x; the second splitter of the same pair on x = y from (254, 254) to (330, 330); two receivers, each ONE connected region and a box of sides 3 or more, cut on z (9.25 (7) and (10)): the bright from (412, 236, 0) with the extents 5 x 113 x 1 across the +x exit, the dark from (236, 412, 0) with the extents 81 x 5 x 1 across the +y exit (trimmed on the bright's side against the bright beam's diffracted wing), the far slabs 100 Links behind them (a receiver's booking of a train completes before the slab's begins); the arms equal for EVERY ray (PROVED: a ray entering the first splitter at (a, a) meets the second at (a + 96, a + 96) by both arms, each of length 192); the ladders: the bright, the dark, then the faces | at 100 records (K, DETECTOR, blind; the shares COMPUTED by the generator's float run of this very placement, the rule in floats with the engine's flux reading and the increment ladder walked over 2403 residues): the bright 97 +- 5 (its share 0.968), the dark 0 or 1 (its share 0.0054, 0.54 expected: one dark click in 100 is within the algebra, two at the 10 percent level, three or more a defect), the faces 3 (0 to 7; their share 0.027, the spill past the receivers). WHAT THE DARK SHARE IS: the splitters' imbalance over the train's band (1.2 x 10^-3 for 16 periods on the exact harmonic solution, A.4) plus the bright beam's diffracted wing at the receivers' corner: the lattice's diffraction at 4 Links per wavelength, a part that depends on the grain (9.25 (9)) and shrinks with a wider beam. THE NEGLECTED SPACE: air or fibre common to both arms, cancels (the placed experiments' clause) | the giving clicks in turn at the emitter's rungs; the front at the bright detector 795 intervals after a giving click (349 Links at v_g = 0.4472), the bright's booking at half its norm at 852 and at 0.95 at 937; every record's click by its increment ladder; the light passing a receiver is not absorbed by it (only the click ends a record), so the far slabs book the passing train after the receiver has, which the 100 Links behind the receivers keep out of the ladder; HOST: 331,776 Nodes, about 1,000 intervals per record |
+| Mach-Zehnder with one arm blocked (Mach-Zehnder's control) | as Mach-Zehnder | as Mach-Zehnder with a slab of the gap [1, 2] of depth 4 across the +y arm with its normal along y, at y = 244 to 247 for x = 158 to 234, between the first splitter and its mirror: the arm returns through the first splitter and leaves by the slabs at x = 0 and y = 0 (a receiver cannot block an arm: it books the flux and leaves the amplitude, only a click ends a record; a mirror across the arm is the board's beam block) | at 100 records (K, DETECTOR, blind; COMPUTED as Mach-Zehnder's): the bright 25 +- 13 (its share 0.248), the dark 22 +- 12 (0.219; the trimmed receiver catches less of the one arm's beam, which is wider without the interference), the faces 53 +- 15 (0.534: the blocked arm's half, booked by the near slabs); the two detectors lit alike within their bands against Mach-Zehnder's 97 to 0.5: the two detectors read together by the increment ladder (ALGEBRA.md 9.25 (2)), NOT HELD; the earlier 47 / 39 / 14 was one-Node faces reflecting the blocked arm back into the interferometer (HISTORY) | as Mach-Zehnder; the blocked arm's records click at the near slabs early, the rest at the two detectors in the interval's walk, bright first |
+| Sorkin's three openings (RE-PLACED 2026-09-25 on the given record (the body's own mode, record 1962) and the face slab's placement rule (ALGEBRA.md 9.17 (6a), 9.25 (11); the placement and the pin of record are in ALGEBRA.md 9.22 (8); the numbers of this row are the first placement's, HISTORY) by the model owner's record 1911 of 2026-09-25, its seven worlds on the two slits' placement; Born's exponent, Born's exponent; nature 0.0064 +- 0.0119 of the central count, Sinha et al. 2010) | as the two slits, the emitter 128 wide from (40, 96, 0) | as the two slits with THREE openings of width 5 centred at y = 147, 160 and 173 (d = 13) and SEVEN worlds: the openings A, B, C open alone, in pairs AB, AC, BC, and all three ABC, the closed ones filled by the wall's gap cubes; the screen as the two slits | the Sorkin sum per pixel, kappa = P_ABC - P_AB - P_AC - P_BC + P_A + P_B + P_C, over the counts' shares, normalised by the central pixel's count in ABC: the algebra's flux is bilinear in the record's levels and the levels are linear in the openings' fields, so the third-order term vanishes EXACTLY for a fixed operator (PROVED); the seven worlds are seven operators (an opening closed is a changed region), so kappa is the openings' mutual scattering through the wall plus the click's rectification (max(G, 0) is not bilinear), COMPUTED by the generator's runs of the seven placements at d = 13 (2026-09-25): NOT SMALL: the Sorkin sum of the screen's shares is +0.108 against the three-opening share 0.294, and per pixel its mean is +0.16 of the central pixel's share (rms 0.26); the pairs and the triple each show the lattice fringes (the visibility 0.94 to 0.96 at 53.2; 0.84 for the pair at d = 26); so openings 3.25 wavelengths apart in a wall four deep COUPLE THROUGH THE WALL (the field at one opening depends on whether its neighbours are open), the geometry's term, which nature's slits, a hundred wavelengths apart, do not have. THE ROW IS RE-PLACED with the openings at d = 39 (y = 121, 160, 199; the fringe spacing 2 pi L / (d sin k) = 17.7 Nodes, six pixels; the emitter 128 wide at 160) and a THREE-SOURCE VARIANT on the one wall with all three open, each opening lit by its own narrow emitter of 12 Nodes, the seven combinations of sources: there the fields superpose exactly (one operator), and any kappa is the click's rectification alone, the algebra's own term. COMPUTED on the booked flux itself (grain-free), the Sorkin sum of the screen's totals as a share of the three-opening screen flux: the seven walls at d = 39, +0.011 (per pixel, normalised by the brightest pixel: mean +0.008, rms 0.019); the three sources at d = 39, +0.022 (mean +0.019, rms 0.031, largest 0.073); the three sources at d = 13, +0.005 (mean +0.002, rms 0.004, largest 0.011). THE CLICK'S OWN TERM, DERIVED: the one-way flux max(G, 0) clips the intervals at which the superposed field's local flux runs backward near the fringes' minima, so the reading exceeds the bilinear value and kappa is POSITIVE, of the order (lambda / the fringe spacing)^2: 0.0057 at the spacing 53 and 0.051 at 17.7 against the computed +0.005 and +0.022; in nature's regime (a wavelength of a micron, fringes of a millimetre) it is 10^-6, below every bound (Sinha 2010: 0.006 +- 0.012 of the central maximum), so the model's Sorkin parameter is a GRAIN term (9.25 (9)) that vanishes with the board's coarseness and is not a falsifier of the law in nature's regime; on the board it is a prediction of the click rule at the percent level where the fringes span a few wavelengths. THE PIN IN CLICKS (K, DETECTOR, blind; the seven walls at d = 39, a stock of 16384 per world): S = N_ABC - N_AB - N_AC - N_BC + N_A + N_B + N_C = +80 +- 400 (the model's +0.0049 per record against the binomial spread 1.04 sqrt(n)), so S within 400 of 0 and each world's screen count within 3 sqrt(n p (1 - p)) of n p on the shares A 0.037, B 0.336, C 0.033, AB 0.395, AC 0.072, BC 0.388, ABC 0.454; telling the model's value from 0 at 5 standard deviations needs 1.1 x 10^6 records per world, not feasible on the board, so the click's own term (+0.022 of the screen flux on the three-source variant, a computation) is read on the flux and not on clicks | as the two slits, seven runs |
+| The medium's index at rest (the receding index's control) | as the receding index at one third | as the receding index at one third with the emitter and the receiver at rest (K = 0) and the reference world without the medium | the receiver's first rung behind the medium later than the reference world's by (n - 1) L / c_l = 0.2519 x 24 / 0.577 = 10.5 intervals at the design's rest index n = 1.2519 (OWED on the bound medium: n^2 = 1 + G g / (omega_0^2 - omega^2) re-derived blind), band 1 interval (K, DETECTOR, blind) | as the receding index at one third at rest |
 
 THE MINIMAL FORM (the model owner's reading, ALGEBRA.md 9.23 (7)): the
 generator folds the whole circuit up to the readout into the crystal's
@@ -645,14 +645,14 @@ polarisers with the axis (1, 0) and their receivers, no joint body; the
 board carries the entangled pair and clicks, and the pins are the same.
 The form with the joint body above tests the gate as a body.
 
-THE SIXTEENTH ROW'S TOOLS: it REUSES the emitter (A.1), the crystal (A.6,
+THE TWO-QUBIT COMPUTER'S TOOLS: it REUSES the emitter (A.1), the crystal (A.6,
 its branches the prepared state), the polariser (A.5, its axis carrying
 the last gate) and the receiver (A.2), all as they stand; NEW is the
 joint body alone (A.13, the crystal's form with a matrix on the arriving
 pair's weights). The one-qubit gate bodies (the rotator, a polariser body
 without receivers; the mirror, whose reflection acts on the label rows
 as Z or X by its orientation, A.3 and ALGEBRA.md 9.23 (2); the retarder,
-a pair per label) are not placed in it: between a birth and a readout
+a pair per label) are not placed in it: between a giving click and a readout
 the algebra composes them into the branches and the axes exactly
 (ALGEBRA.md 9.23 (5)); their unit tests are on a bar with single records.
 
@@ -663,10 +663,10 @@ that click comes when the record's offer at the border reaches its
 rung, up to the whole packet's length after its front arrives, so the
 margin stands), stated once:
 - The rows whose reading is a steady field at a receiver near a face
-  (the two slits, the pace fans, M1 and the index rows' probe windows)
+  (the two slits, the pace fans, de Broglie's fringes and the receding index's probe windows)
   need a margin of half the train's length behind every receiver, or a
   shorter train.
-- The rows whose reading is a first rung (M2, Sagnac, the light clock)
+- The rows whose reading is a first rung (the moving mass's energy, Sagnac's two-way light times, the light clock)
   or a ratio of intervals (the redshift) are unmoved.
 - The clock rows are on periodic boards and have no face.
 - Bell and Malus read computed weights and are unmoved.
@@ -684,11 +684,11 @@ polar or not polar by its action on the hands; and what follows there,
 not chosen: the crystal's mixed channels HV + VH with equal weights and
 phase 0 (a theorem of the crystal's mirror), the hands' indices equal (no
 birefringence: the cone from the families' dispersion), the Bell
-experiment needing a crystal of one cell, the splitter a material layer.
+experiment needing a crystal of one Node, the splitter a material layer.
 This section is the summary table beside it; where they differ, chapter 9
 holds. In particular chapter 9.7 replaces the crystal's start "at the
 first rising zero after the Node's first rung" (1.1a item 2), a read of a
-cell to decide, by THE CLICK, THEN A BIRTH (the bilinear coupling with a
+Node to decide, by THE CLICK, THEN A GIVING CLICK (the bilinear coupling with a
 seed weighed and rejected there): the crystal a receiver for the arriving
 record and, on its click, an emitter of the pair, no cone (section 11); and 9.8 makes the
 faces shells of receiver cubes, an experiment only cubes on a torus.
@@ -732,23 +732,23 @@ conservation is m^T's support, not a check. The same transpose on the
 translations' characters gives momentum. The consequences:
 - m^T of one arriving clock is the sum of ALL its splits (a, p - a),
   equally weighted. A record on main carries ONE clock per family, so
-  the born record takes one split: the born family's clock is the
+  the given record takes one split: the given family's clock is the
   crystal's material, a declaration (MISSING: a record carrying the whole
   sum of splits; nature's broad spectrum of the pair is that sum).
 - The degenerate split [p / 2] (x) [p / 2] exists on Z_N only for p even;
   on the circle of 2N it exists for every p (the doubling Z_N -> Z_2N, p
   -> 2 p; the half-angle tables of 2N, 3.6): EXACT (IN THE ALGEBRA, 3.6's
   tables).
-- On the translations the transpose is realised by the drive: the born
+- On the translations the transpose is realised by the drive: the given
   amplitudes at every crystal Node carry the arriving character's own
   phase there, halved (1.1a item 2), so the sum over the crystal's Nodes
   is m^T's momentum part; the arms' headings follow with nothing
-  declared, given the born family's pace (1.1a item 3; DERIVED there).
+  declared, given the given family's pace (1.1a item 3; DERIVED there).
 - The pace per family is IN THE ALGEBRA: the index form for light, the
-  pair on light's record at the cells with D_i >= 1 (8.3, "light cannot
+  pair on light's record at the Nodes with D_i >= 1 (8.3, "light cannot
   be a body"), D = n^2; the crystal carries no bound mode (PROVED in 8.3:
   the norm bound).
-- The halving's start at each Node is an event of that Node's cell (the
+- The halving's start at each Node is an event of that Node's Node (the
   first rising zero after its first rung), no count kept: DERIVED HERE
   from 1.7's pair (the zero of a_now with a_before below it is a
   comparison, verb D).
@@ -758,9 +758,9 @@ translations' characters gives momentum. The consequences:
 | Tool | (1) The operation | (2) The body that carries it | (3) What is written on the board | (4) The load-time check |
 | --- | --- | --- | --- | --- |
 | The body | a G_48-set of Nodes with a lowered pair, its clock the bound mode (IN, 8.3) | a cube by its vertices, its stabiliser the cube's (IN, 8.3) | the pair and the seed, the bound mode's integer profile computed by the generator (IN, 8.7) | the body check: whole on the board, the profile bit for bit, the ramp at ten relaxation times (IN, 8.7; record 1817) |
-| The emitter | a birth whose headings are the G_48-orbit of one Port: the 48 act transitively on the six Ports (1.1), so the orbit is all six and the source is isotropic; a direction can only come from the body's shape, a set of cells with a smaller stabiliser driven in phase (DERIVED HERE) | a cube by its vertices (isotropic); a beam is a line of cells, its stabiliser the line's | the clock pair (the time character), the amplitude, the train, the label state (IN, 1.7 and 4.11) | the train ends at the clock's zero (the quarter rule), exact; `arms` refused |
-| The receiver | the evaluation of the record on its cells (E), the norm (B), the rung (D): the click (IN, 2.5 and 8.6); the TAKE is a declaration of the world, not an operation of the law (IN as a declaration, 8.6) | a cube by its vertices, no orientation | the take pair and the wheel W | W >= 1; the take pair [n, d] with 0 <= n <= d |
-| The crystal | the transpose m^T of the ring's product on the clocks and on the translations (DERIVED, 0.2); in the blocks, a receiver and an emitter at the same Nodes (1.1a) | a cube (a square on a layer) by its vertices; its stabiliser about the arriving axis fixes the cone's symmetry | the born family's clock (one split of m^T), the born family's index pair D = [a^2 + 2 b^2] / [a^2 + b^2] for the cone's heading (a, b, 0) (DERIVED, 1.1a item 3), the coupling pair (the share taken), a Pythagorean pair | the born clocks' product equal to the arriving clock (the group law, an integer identity); the index's D - 1 equal to b^2 / (a^2 + b^2) exactly; the coupling pair Pythagorean |
+| The emitter | a giving click whose headings are the G_48-orbit of one Port: the 48 act transitively on the six Ports (1.1), so the orbit is all six and the source is isotropic; a direction can only come from the body's shape, a set of Nodes with a smaller stabiliser driven in phase (DERIVED HERE) | a cube by its vertices (isotropic); a beam is a line of Nodes, its stabiliser the line's | the clock pair (the time character), the amplitude, the train, the label state (IN, 1.7 and 4.11) | the train ends at the clock's zero (the quarter rule), exact; `arms` refused |
+| The receiver | the evaluation of the record on its Nodes (E), the norm (B), the rung (D): the click (IN, 2.5 and 8.6); the TAKE is a declaration of the world, not an operation of the law (IN as a declaration, 8.6) | a cube by its vertices, no orientation | the take pair and the wheel W | W >= 1; the take pair [n, d] with 0 <= n <= d |
+| The crystal | the transpose m^T of the ring's product on the clocks and on the translations (DERIVED, 0.2); in the blocks, a receiver and an emitter at the same Nodes (1.1a) | a cube (a square on a layer) by its vertices; its stabiliser about the arriving axis fixes the cone's symmetry | the given family's clock (one split of m^T), the given family's index pair D = [a^2 + 2 b^2] / [a^2 + b^2] for the cone's heading (a, b, 0) (DERIVED, 1.1a item 3), the coupling pair (the share taken), a Pythagorean pair | the given clocks' product equal to the arriving clock (the group law, an integer identity); the index's D - 1 equal to b^2 / (a^2 + b^2) exactly; the coupling pair Pythagorean |
 | The mirror | a reflection of the det = -1 coset of G_48 (IN, 1.1) acting on the characters, k_perp -> -k_perp; REALISED by a gap: the band cos omega = (num / den) cos omega_l(k) (IN, 8.1) carries no clock with cos omega > num / den, so below the gap the amplitude decays inside and the reflection arises with the tangential character kept (DERIVED, 3.3) | a slab of cubes whose plane is the reflection's fixed set; its stabiliser the plane's | the gap pair [num, den], the depth D | every family clock that reaches it below its gap, C[k] > 256 num / den on the tables (an integer comparison); the depth such that the transmitted share is below the declared bound (computed, 3.3) |
 | The splitter | the mirror's operation at a finite depth: the reflection sigma weighted by the layer's r and the identity by t; NOT a separate operation (DERIVED HERE: the same band, a thinner layer) | a one-Node layer of cubes; its plane | the gap pair of the share (computed, 7.2) | the share computed from the pair at the declared clock (7.2), printed at load as GAMEBOARD |
 | The polariser | the rotation U_s on the label module Z^2 (IN, 3.6), then the receiver's take on one component: a receiver acting in the rotated label basis, NOT a separate operation (DERIVED HERE); U_s at a general s lies outside G_48 (the 48 give only quarter turns of the label plane about an axis) but inside the wheel's group: the relative translation x^s of the two hands, rows (x^0, x^(-s)) and (x^0, x^(N/2 - s)), no table (ALGEBRA.md 9.14) | a cube or a slab of cubes; the label plane is not a spatial direction, so the body's shape is free (its through-line the arriving path's) | the angle s and the take pairs, [1, 1] across the axis and [0, 1] along it | each row's norm 2 at every s, exactly (ALGEBRA.md 9.14) |
@@ -779,7 +779,7 @@ stabiliser (its shape), and the tools' operations are: the group law of
 the dual group (the crystal), an element of the det = -1 coset (the
 mirror, realised by a gap), the orbit of a Port (the emitter), the
 evaluation (the receiver) and a declared rotation of the label module
-(the polariser's angle, the one tool quantity outside the cells'
+(the polariser's angle, the one tool quantity outside the Nodes'
 group).
 
 **0.5 What is MISSING in the algebra, for the owner.** (1) A record
@@ -789,7 +789,7 @@ weights on the record, not as one amplitude per label value (the head's
 enabling line). (3) The take is a declaration of the world, not an
 operation (8.6 says so); the receiver's loss is therefore the one input
 of the tools that the algebra does not produce. (4) The polariser's angle
-at a general s is a declared rotation, not an element of the cells'
+at a general s is a declared rotation, not an element of the Nodes'
 group.
 
 ---
@@ -819,11 +819,11 @@ broken where it breaks). Sections 1.2 to 1.10 below are the alternative
 
 1. THE BODY AND ITS KIND. One body of light's kind declared by its
    vertex and edge, a square of side L on a layer (a cube on a board),
-   each of its Nodes its own cell; A MATERIAL, NO BOUND MODE; `seed` 0.
-   Its ORIENTATION: none beyond its cells; its dispersion is its one
+   each of its Nodes its own Node; A MATERIAL, NO BOUND MODE; `seed` 0.
+   Its ORIENTATION: none beyond its Nodes; its dispersion is its one
    declared property about pace: ONE COEFFICIENT PAIR PER FAMILY at its
-   cells, [1, 1] for the arriving record's family and [num, den] = 1 /
-   n_b^2 for the born pair's family (on main the pace is already held per
+   Nodes, [1, 1] for the arriving record's family and [num, den] = 1 /
+   n_b^2 for the given pair's family (on main the pace is already held per
    family per Node, `kind_num` and `kind_den`; a body writes only its own
    family's arrays today, so the extension is a body carrying a pair for
    each of two families). Two families of light's kind: the emitter's,
@@ -831,25 +831,25 @@ broken where it breaks). Sections 1.2 to 1.10 below are the alternative
    polarisers and the receivers read the pair's family.
 2. ITS ACTION (the receiver's form, then the emitter's, at the same
    Node; the fraction is the body's COUPLING PAIR between the arriving
-   family and the born family, a material integer, no table). At each of its Nodes it TAKES the declared fraction of the
+   family and the given family, a material integer, no table). At each of its Nodes it TAKES the declared fraction of the
    arriving record's amplitude (booked on no pointer: the taken part is
    the pair's, one quantum, one click) and with it DRIVES the pair's
    record at that Node, with no heading. THE PHASE HALVED: the pair's
    drive at a Node starts at the first rising zero of the arriving
    amplitude after the Node's first rung, on the pair's own clock, so its
    phase is half the arriving phase there without a sign ambiguity (the
-   start is an event of that Node's cell; the halving is exact on the
+   start is an event of that Node's Node; the halving is exact on the
    circle of 2N steps). BOTH CHANNELS (H on the first arm and V on the
    second; V on the first and H on the second) are driven at the same
-   Nodes, with the same phase and the same index: the record is born
-   with the branches [[1, 1], [2, 1]] directly (verb G at the birth), its
+   Nodes, with the same phase and the same index: the record is given
+   with the branches [[1, 1], [2, 1]] directly (verb G at the giving click), its
    relative phase 0 EXACTLY (PROVED HERE: the two channels' drives are one
    drive), and ONE FIELD of amplitudes per label serves both arms (the
    head's one amplitude per label on every record) (the arms differ
    only by the body each is gathered at, as on main).
 3. WHAT ARISES (PROVED HERE in the continuum; COMPUTATION on the board's
    own dispersion). The drive's phase along the crystal is the arriving
-   record's own, halved, so the born amplitudes of all the crystal's
+   record's own, halved, so the given amplitudes of all the crystal's
    Nodes add in phase only where the pair's wave vector (Outside
    reading) has the component k_p / 2 along the axis: inside cos
    theta_in = n_a / n_b, outside sin theta_out = sqrt(n_b^2 - n_a^2) with
@@ -868,17 +868,17 @@ broken where it breaks). Sections 1.2 to 1.10 below are the alternative
    103, the far field about 1130 and 3565 Links. THE PRICE: a formed cone
    needs a crystal of about 60 to 180 Nodes and a board of a few thousand
    Links on a side; the Bell pin does not need it (item 6).
-4. THE ENTANGLEMENT AND THE ANALOGY. Both channels see the SAME born index,
+4. THE ENTANGLEMENT AND THE ANALOGY. Both channels see the SAME given index,
    so their cones coincide everywhere and the channels' amplitudes add on
    the whole cone: HV + VH on every direction of it, with no amplitude per
    label needed for the entanglement itself (the head's amplitudes per label
-   serve the polarisers) (the Boss's point 5 CONFIRMED). BIREFRINGENCE AMONG THE BORN
+   serve the polarisers) (the Boss's point 5 CONFIRMED). BIREFRINGENCE AMONG THE GIVEN
    LABELS WOULD BREAK IT (PROVED HERE): with n_H different from n_V the H
    arms' cone and the V arms' cone on a layer are two different pairs of
    headings (+-theta_H, +-theta_V) with no heading in common, so no
    direction carries both channels and the state is a mixture of products
    (abs(S) <= 2). The pace difference that makes the cone is the
-   dispersion between the arriving family and the born one, not a
+   dispersion between the arriving family and the given one, not a
    birefringence. THE ANALOGY: the geometry is that of the source of Kwiat
    and others, 1999 (two cones made to coincide, entangled everywhere on
    them); the labels HV + VH are those of the type II source of 1995,
@@ -886,7 +886,7 @@ broken where it breaks). Sections 1.2 to 1.10 below are the alternative
    two crossings. So the analogy holds for the geometry, not for the
    crystal's physics: in nature the coincidence of the two cones is bought
    by two crystals of type I (HH + VV), which this body gives by one
-   variant, the conversion entries V to HH and H to VV at the same born
+   variant, the conversion entries V to HH and H to VV at the same given
    index with the arriving record polarised at 45 degrees (the state HH +
    VV, the cancelled worlds' pin with the old roles).
 5. THE ARMS AND THE GATHER (PROVED HERE). One field serves both arms, so
@@ -913,8 +913,8 @@ broken where it breaks). Sections 1.2 to 1.10 below are the alternative
    change S (5 (iii)). The pairing as a law of the click (optional, for
    the owner): main's joint gather already binds each arm to one body,
    which IS the pairing; stated as a law, "the two clicks of a pair are
-   at two cells mirror images through the crystal's axis" is a
-   permutation of cells by the body's own mirror (verb P) inside the
+   at two Nodes mirror images through the crystal's axis" is a
+   permutation of Nodes by the body's own mirror (verb P) inside the
    gather: generic (the crystal's own symmetry, no name), vector (P, then
    the ladder's D), and not local, as the gather is not: it adds nothing
    to the law's one declared non-local step (POSTULATES.md section 10).
@@ -925,7 +925,7 @@ broken where it breaks). Sections 1.2 to 1.10 below are the alternative
    1 / 4 ([7, 25], the passing numerator 24), the bodies at 45 degrees
    (their placement the experimenter's), the smallest layer about 32 x 33
    (the page of the branch crystal-algebra, 3.6, with the crystal's side
-   added). THE TIMING: the arriving train 3200 intervals; the first birth
+   added). THE TIMING: the arriving train 3200 intervals; the first giving click
    at the crystal's first Node t_e + L0 / c plus at most one arriving
    period (20.8 intervals) for the rising zero after the first rung
    (bound t_e + L0); each arm's first rung at its body t_birth + d / c (K
@@ -946,15 +946,15 @@ broken where it breaks). Sections 1.2 to 1.10 below are the alternative
    each crystal Node, fired at the rising zero after the Node's first
    rung (generic: a declared conversion entry; vector: B the linear form,
    D the division with the remainder kept, E the clock's table; local:
-   the Node's own amplitudes and the arriving record's own pair; no birth
+   the Node's own amplitudes and the arriving record's own pair; no giving click
    fires on an arrival on main); (iii) a record of rank 2 with ONE field
    for both arms (the gather's offers at the two bodies read on the same
    field); (iv) the pair's residue from the crystal's own count. Cost:
    one field per pair, one linear form per crystal Node per interval.
 9. THE UNIT TESTS: (a) one channel only (the branches [[2, 1]]): at (0,
-   0) 0, 2048, 0, 0; at (512, 512) 512 in each cell; (b) both channels:
+   0) 0, 2048, 0, 0; at (512, 512) 512 in each Node; (b) both channels:
    at (0, 0) 0, 1024, 1024, 0; at (512, 512) 1024, 0, 0, 1024 (the
-   entanglement test against (a)'s 512 each); (c) the born family's pace
+   entanglement test against (a)'s 512 each); (c) the given family's pace
    in the crystal c / n_b (a slab test as 1.9 test 1, the family in place
    of the label); (d) the same counts with the two bodies' arms exchanged
    (5 (i)); (e) the refusals: the pair's clocks not summing to the
@@ -964,21 +964,21 @@ broken where it breaks). Sections 1.2 to 1.10 below are the alternative
 
 10. THE COUPLING WITHOUT A DECLARED HALVING (for the owner and the
    physicist; not this file's recommendation). The engine's coupling
-   between records at a body's cells (the massive coupling, ALGEBRA.md
+   between records at a body's Nodes (the massive coupling, ALGEBRA.md
    8.5) is linear in the arriving amplitude, and a linear coupling
    invariant in time keeps the clock (the crystal page 3.2): it cannot
    make [1232, 25] from [2464, 25]. The coupling that makes the halved
-   clock ARISE is BILINEAR, the born family's source g a_arriving
+   clock ARISE is BILINEAR, the given family's source g a_arriving
    a_born at each crystal Node (verb B, a rate bilinear in the state,
    within the vector test): the product's difference frequency is
    resonant at half the arriving clock, the parametric resonance of
-   nature's down-conversion. Its conditions, PROVED HERE: (i) from a born
-   amplitude of 0 it makes nothing (the product is 0), so the born family
-   needs a SEED on the crystal's cells (the body's `seed`, the stand-in
-   of nature's vacuum); (ii) the born amplitude then grows as sinh(g A t),
+   nature's down-conversion. Its conditions, PROVED HERE: (i) from a given
+   amplitude of 0 it makes nothing (the product is 0), so the given family
+   needs a SEED on the crystal's Nodes (the body's `seed`, the stand-in
+   of nature's vacuum); (ii) the given amplitude then grows as sinh(g A t),
    A the arriving amplitude, so the converted share is set by g, the seed
    and the length, not by a declared fraction; (iii) the arriving record
-   must lose what the born one gains (a back-coupling -g a_born^2 on it),
+   must lose what the given one gains (a back-coupling -g a_born^2 on it),
    and the conserved form of the coupled scheme with that cubic term is
    still to be written. Item 2's take-and-drive (the start at the rising
    zero) is its first-order form with the seed and the gain folded into
@@ -991,10 +991,10 @@ alone causes this ... confirm whether I am right") (PROVED HERE).**
   from Node to Node by the split, and a medium sets the pace per Node by
   its coefficient (DESIGN.md 4.1); a crystal of one index needs nothing
   new.
-- RIGHT for the directions in the TYPE I form. Let the pair be born at
+- RIGHT for the directions in the TYPE I form. Let the pair be given at
   every crystal Node with each arm's clock started so that its phase is
   HALF the arriving record's phase there (the arms' clocks summing to the
-  arriving clock and nothing else declared). The arms' amplitudes born
+  arriving clock and nothing else declared). The arms' amplitudes given
   along the arriving axis then carry the phase step k_p / 2 per Link, and
   the split adds them constructively only in the headings where each
   arm's own wave vector (Outside reading) has the component k_p / 2 along
@@ -1009,7 +1009,7 @@ alone causes this ... confirm whether I am right") (PROVED HERE).**
   n_p is n_H or n_V and that label's arm is collinear; mirror arms would
   need n_H = n_V, which is no birefringence. The page on the branch
   crystal-algebra reached type II only by DECLARING each arm's source
-  phase across the crystal's cells (its section 8.2), which record 1830
+  phase across the crystal's Nodes (its section 8.2), which record 1830
   forbids.
 
 THE ALTERNATIVE (B), superseded by 1.1a as this file's recommendation (its
@@ -1062,17 +1062,17 @@ the lattice numbers COMPUTATION on the Outside reading).**
   one amplitude per Node, as on main.
 - In the first crystal, at every Node the arriving record reaches, the
   converting label's share (V) is converted: the pair's record of the
-  channel V to HH is born there with the fraction n / d of the local
+  channel V to HH is given there with the fraction n / d of the local
   amplitude and each arm's clock started at the arriving amplitude's
   rising zero at that Node (so the half phase is taken without a sign
   ambiguity); the arriving record keeps m / d there. The H share passes
   unconverted. In the second crystal likewise for H to VV.
-- Each channel's record is born with ONE label per arm (H, H or V, V),
+- Each channel's record is given with ONE label per arm (H, H or V, V),
   so it moves at one pace in every crystal Node it crosses (the HH
   record at [2, 3] in the first crystal and [1, 1] in the second; the VV
   record at [2, 3] in the second): one amplitude per Node per record.
-- THE ADDITION (verb G): the two channels' records are born of ONE
-  arriving quantum (one birth stamp, one residue); at the second
+- THE ADDITION (verb G): the two channels' records are given of ONE
+  arriving quantum (one giving stamp, one residue); at the second
   crystal's exit face, where the medium is label-blind again, they are
   added into ONE record of rank 2 with the branches [[0, 1], [3, 1]] and
   its arms' amplitudes the sums of the two channels' amplitudes per Node
@@ -1112,7 +1112,7 @@ the lattice numbers COMPUTATION on the Outside reading).**
   / j (at L = 24: [49, 1201], the passing numerator 1200).
 - Every Port of a crystal Node reads the split as every Node does; the
   crystal takes nothing (it is no receiver) and books nothing but the
-  births.
+  giving clicks.
 
 **1.5 One quantum, one click, one residue (PROVED HERE).** The arriving
 record's quantum ends in one click: the pair and the passing part are
@@ -1150,7 +1150,7 @@ than the table's an engine defect to name.
 **1.7 The engine lines (each new; the physicist writes them after this
 section is agreed).**
 
-1. THE INDEX PER LABEL AND PER CLOCK. Inside a crystal's cells a
+1. THE INDEX PER LABEL AND PER CLOCK. Inside a crystal's Nodes a
    record's amplitudes step by the coefficient form of DESIGN.md 4.1
    with the pair its table gives for the record's clock and label:
    3 den a_next + r' = num S_6 + 6 (den - num) a_now - 3 den a_before + r,
@@ -1166,17 +1166,17 @@ section is agreed).**
    channel record's two arms with the fraction n / d of the arriving
    amplitude (the linear form of DECLARATIONS.md section 14 reading the
    arriving pair (a_before, a_now)) on the arms' clock started at that
-   interval, and the arriving record keeps m / d there. No birth fires on
+   interval, and the arriving record keeps m / d there. No giving click fires on
    an arrival on main (Nature24's point 4): this is new, with its test.
    Generic (a declared conversion entry, no family name); vector (B the
    linear form, D the division by d with the remainder kept, E the
    clock's table); local (the Node's own amplitudes and the arriving
    record's own pair).
-3. THE ADDITION AT THE EXIT FACE. Two records of one birth whose arms
+3. THE ADDITION AT THE EXIT FACE. Two records of one giving click whose arms
    carry different labels are summed into one record of rank 2 once both
-   have left the crystals' cells: the branches' union with their weights
+   have left the crystals' Nodes: the branches' union with their weights
    (verb G) and the arms' amplitudes added per Node. Generic (by the
-   birth stamp and the arms, no name); vector (G); local (per Node, the
+   giving stamp and the arms, no name); vector (G); local (per Node, the
    two records' own amplitudes). Until the addition the two records
    share the residue and the one gather (as the arms of a pair do on
    main, `_click_pair`).
@@ -1236,7 +1236,7 @@ fifteen, with their exact expected values.**
 4. TWO CROSSED CRYSTALS, ARRIVING H + V: the branches [[0, 1], [3, 1]]
    after the exit face; at (0, 0): 1024, 0, 0, 1024; at (512, 512): 1024,
    0, 0, 1024 (the entanglement test: the product of test 2 gives 512 in
-   each cell there); at (0, 512): 512, 512, 512, 512; the Bell table of
+   each Node there); at (0, 512): 512, 512, 512, 512; the Bell table of
    1.6.
 5. THE LOBE (a large layer, L = 96, receivers on a ring in the far field,
    GAMEBOARD by declaration): the arms' offer peaked at 44.3 degrees, the
@@ -1263,7 +1263,7 @@ world itself stays small (L = 24).
 **2.1 What it is.** In the laboratory an absorbing polariser (a sheet)
 takes the polarisation across its axis and passes the one along it; a
 polarising beam splitter reflects the one and passes the other to two
-detectors. The former table form (a body of two cells splitting a booked
+detectors. The former table form (a body of two Nodes splitting a booked
 offer by declared weights; [the Malus note](../malus/NOTE.md),
 DECLARATIONS.md section 14) RETIRES.
 
@@ -1277,9 +1277,9 @@ a_par = (C'[s] a_H + S'[s] a_V) / 256 and the one across it a_perp =
 (-S'[s] a_H + C'[s] a_V) / 256, each division with its remainder kept):
 - THE ABSORBING FORM: along the axis the index pair [1, 1] and the take
   pair [0, 1] (it passes); across it the take pair [1, 1] (it takes and
-  books); a plain receiver beyond it books what passes. The two cells of
-  the click are the polariser's own (the - cell) and the receiver beyond
-  (the + cell): no exit cell is declared from any arm.
+  books); a plain receiver beyond it books what passes. The two Nodes of
+  the click are the polariser's own (the - Node) and the receiver beyond
+  (the + Node): no exit Node is declared from any arm.
 - THE SPLITTING FORM (a polarising splitter layer, one Node thick):
   across the axis a gap pair (the mirror's [1, 2], section 3), along it
   [1, 1]: the across part is reflected and the along part passes, each to
@@ -1301,7 +1301,7 @@ Malus 128, 246, 199, 177). In 2.3 below read C' and S' as these rows.
 
 **2.3 Its action (PROVED HERE).** A record of one arm whose label state
 is SUM over l of w_l (l) has the amplitudes per label a_l = w_l a (one
-field a, born by the emitter, times the label's weight), so along the
+field a, given by the emitter, times the label's weight), so along the
 axis a_par = (C' w_H + S' w_V) a / 256 and across it a_perp = (-S' w_H +
 C' w_V) a / 256: the two parts' booked motions stand in the ratio R(+) :
 R(-) = (C' w_H + S' w_V)^2 : (-S' w_H + C' w_V)^2, THE PROJECTION OF THE
@@ -1316,18 +1316,18 @@ books) and the joint gather computes R = J^2 from the record's joint
 label state and the two bodies' axes (ALGEBRA.md 3.6), unchanged.
 
 **2.4 Timing (PROVED HERE).** The first rung of the click is the first
-interval at which the record's offer booked at the two cells together
+interval at which the record's offer booked at the two Nodes together
 times W reaches the norm; the rotation redistributes the offer between
 the two parts, the parts' amplitudes step by the same pair [1, 1] up to
 the polariser, and the receiver beyond sits one Link further: in the
-absorbing form the + cell's first rung lags the - cell's by the one Link
+absorbing form the + Node's first rung lags the - Node's by the one Link
 (a K form of 1 / c = 1.73 intervals, MEASURED ONLY); the joint click's
-stamp is the later arm's first rung at its body's two cells, the same at
+stamp is the later arm's first rung at its body's two Nodes, the same at
 every setting.
 
 **2.5 The engine lines.** (1) One amplitude per label on every record
 (the head); (2) the rotation of a record's label amplitudes by a body's
-axis at its cells and the per-part pairs (verb B, the 2 x 2; generic:
+axis at its Nodes and the per-part pairs (verb B, the 2 x 2; generic:
 the body's declared angle and pairs, no name; vector: B, then T and D
 per part; local: the Node's own amplitudes); (3) the click's weights
 from the record's label state and the body's axis (the gather's
@@ -1342,7 +1342,7 @@ of his notes). RETIRES: `TableBody` and its split of a booked offer.
 | label V, [[1, 1]] | 0, 2048 | 299, 1749 | 1024, 1024 | 1749, 299 | 2048, 0 |
 | 45 degrees, H + V, [[0, 1], [1, 1]] | 1024, 1024 | 1747, 301 | 2048, 0 | 1747, 301 | 1024, 1024 |
 
-(+, - counts over one wheel of births). MALUS'S FOUR WORLDS under the
+(+, - counts over one wheel of giving clicks). MALUS'S FOUR WORLDS under the
 material form (label H, N = 256, W = 256): 128, 246, 199, 177 at s = 64,
 16, 40, 48, UNCHANGED (the weights (32761, 32761), (63001, 2500), (51076,
 14641), (45369, 20164)); their rung margins 0.500, 0.271, 0.466 and 0.269
@@ -1353,10 +1353,10 @@ UNCHANGED (the gather's weights); the margins 0.0218 of a count at (0,
 256) and (0, 768), 0.0986 at the other two: a book-based count would
 need agreement to about 1 part in 100000. The pins are re-derived before
 any run on the owner's word; under this form none moves. The books test:
-the - cell's booked motion over the + cell's equal to R(-) / R(+) within
+the - Node's booked motion over the + Node's equal to R(-) / R(+) within
 the margins above (MEASURED ONLY). The axis test: the counts at the same
 setting with the body's line turned by 90 degrees on the layer
-unchanged (no exit cell from any arm).
+unchanged (no exit Node from any arm).
 
 ---
 
@@ -1377,7 +1377,7 @@ by its vertex, or a line of such cubes; light's kind with the pair [1,
 2]; a MATERIAL, NO BOUND MODE (a gap lowers the pair, and for light's
 kind below the gap the Node's amplitudes decay inside, PROVED on the
 band's Outside reading, ALGEBRA.md 8.1); not `absorbing`; the face
-behind it open. Its orientation: its cells' own plane; nothing else.
+behind it open. Its orientation: its Nodes' own plane; nothing else.
 
 **3.3 Its action (COMPUTATION: the exact harmonic solution of the split
 on a chain, in complex floating point; no rule stepped).** Off the pair
@@ -1427,7 +1427,7 @@ closed face's by the delay difference (K form above, MEASURED ONLY).
 
 A body declared by its vertex and edge (a cube; a square on a layer; a
 segment on a chain), of a massive kind: A WELL, its pair lowered on its
-cells trapping a BOUND MODE, the foreign body of the algebra, with the
+Nodes trapping a BOUND MODE, the foreign body of the algebra, with the
 load-time conditions of the physicist's body check (whole on the board;
 the bound mode's integer profile compared bit for bit; the ramp at ten
 relaxation times or more; record 1817). Its orientation: none (a cube
@@ -1485,7 +1485,7 @@ every Port). Its action on every label: it books the sum of the record's
 label amplitudes' motions and reads no label (a polariser does). A take
 pair below [1, 1] is a partial absorber (a grey filter), the untaken
 share passing on by the split. Its timing: the first rung. Its cost: one
-pointer per record per cell. The engine line: the take pair as a
+pointer per record per Node. The engine line: the take pair as a
 material integer (today a receiver's take is complete by construction;
 [1, 1] keeps every registered world unchanged). The unit tests added: a
 record of branches [[0, 1], [1, 1]] booked as one record of the same norm,
@@ -1498,7 +1498,7 @@ the K form).
 ## 6. (HISTORY) The emitter with no heading
 
 **6.1 What it is.** A source whose Nodes insert its family's train by
-its clock, one record per birth: its amplitude at its own Nodes driven
+its clock, one record per giving click: its amplitude at its own Nodes driven
 by the clock, the split carrying it outward to every neighbour
 (SIMULATOR_DEFINITIONS.md, the emitter). A beam is several emitter
 Nodes driven in phase (DESIGN.md section 2, "The source"), never a
@@ -1578,10 +1578,10 @@ momentum label and a `rerelease` by family name): it RETIRES.
 
 **8.2 Its body, its kind, its orientation.** The massive body of
 section 4 (a WELL, its bound mode and its body check), carried at k = 3
-(one Link per three intervals), whose cells carry ALSO the mirror
+(one Link per three intervals), whose Nodes carry ALSO the mirror
 material for light's family: the gap pair [1, 2] (section 3). This is the
 crystal's extension (1.1a item 1): a body carrying a pair for each of
-two families. Its orientation: its cells' plane. A lamp with its own
+two families. Its orientation: its Nodes' plane. A lamp with its own
 receiver at rest (sections 5 and 6) sends and receives.
 
 **8.3 Its action (PROVED HERE on the band; COMPUTATION for the
@@ -1598,9 +1598,9 @@ hops, one Link every three intervals, so the reflected train carries
 sidebands at the hop's clock beside the mean (MEASURED ONLY); the
 pin's reading is the mean.
 
-**8.4 Timing.** The round trip from the lamp's birth to the first rung
+**8.4 Timing.** The round trip from the lamp's giving click to the first rung
 at its own receiver: 2 D / (c (1 - beta)) in the continuum for a mirror
-at the distance D at the birth, receding; the reflection's own delay
+at the distance D at the giving click, receding; the reflection's own delay
 (section 3.4, 4.09 intervals at rest) stretched by the motion (MEASURED
 ONLY).
 
@@ -1642,7 +1642,7 @@ HV and VH (the pin with Bob's settings exchanged), or its variant HH + VV
 (the old roles), or the alternative (B); the bilinear coupling of 1.1a
 item 10 named, with its seed and its unwritten conserved form, as the
 form in which the halving itself arises; (3) the cone from the dispersion
-between the families, birefringence among the born labels removing the
+between the families, birefringence among the given labels removing the
 entanglement on a layer; (4) a formed cone's cost; (5) Malus's and Bell's
 counts unchanged under the material polariser (the click's weights the
 projection of the label state on the material's axis), the books a
@@ -1665,9 +1665,9 @@ confirmed every count of 2.6, 1.6 and 1.1a items 7 and 9 exactly.
 **11.1 The amplitude per label: withdrawn as the head's enabling line
 (his point 1, AGREED).** A one-arm record's label amplitudes are w_l times
 ONE field, so the ABSORBING polariser is performed on one field by the
-projection: at its cell the passing amplitude J(+) a / 256 with the
+projection: at its Node the passing amplitude J(+) a / 256 with the
 record's label state set to the along label, and J(-) a / 256 taken and
-booked at the - cell (for an arm of a record of rank 2 the weights are the
+booked at the - Node (for an arm of a record of rank 2 the weights are the
 partial trace of ALGEBRA.md 9.11 (d), not the coherent sum). One amplitude
 per label is needed ONLY by the polariser's SPLITTING form (the two parts
 leave in different directions) and by a birefringent crystal (rejected,
@@ -1679,41 +1679,41 @@ paragraph "THE ONE ENABLING ENGINE LINE" is superseded by this item.
 ALGEBRA.md 9.7 (b): the crystal is the arriving record's NAMED receiver;
 the arriving record clicks at its first rung at the crystal and ends
 there (its remaining field energy to the sinks, content 0); at that
-interval the crystal births the pair by its own clocks, the pair carrying
+interval the crystal giving clicks the pair by its own clocks, the pair carrying
 the arriving record's residue u. Every arriving record that reaches the
-crystal's rung gives one pair, so the emitter's W births over its wheel
+crystal's rung gives one pair, so the emitter's W giving clicks over its wheel
 (its residue order "seed") give W pairs, and the pairs' joint counts are
 exact: at (0, 256), (0, 768), (512, 256), (512, 768), 150, 874, 874, 150
 and 874, 150, 150, 874 thrice (HV + VH), S = 181 / 64 with Bob's settings
 exchanged. The "fraction converted" is the share of the arriving norm the
-crystal's cells book, which must reach the rung (at least 1 / W; about 3
-cells over 2 pi 11 Links on the layer, some 4 percent, COMPUTATION of the
+crystal's Nodes book, which must reach the rung (at least 1 / W; about 3
+Nodes over 2 pi 11 Links on the layer, some 4 percent, COMPUTATION of the
 order); the crystal's own wheel is not needed.
 
 **11.3 The Bell world's placement and its timing as integers (his points 3
 and 6).** The layer [30, 33, 1], periodic on both axes with a shell of
 receiver cubes of side 1 (take [1, 1]) on x = 0, x = 29, y = 0 and y = 32
 (ALGEBRA.md 9.8); the mirror line y = 16. The emitter: a cube of side 1 at
-(2, 16, 0). The crystal: a cube of side 3 at the vertex (13, 15, 0) (cells
+(2, 16, 0). The crystal: a cube of side 3 at the vertex (13, 15, 0) (Nodes
 x 13 to 15, y 15 to 17, centred on the mirror line). Alice's polariser: a
 cube of side 1 at (26, 28, 0), its + receiver a cube of side 1 at (27, 29,
 0); Bob's: (26, 4, 0) and (27, 3, 0) (mirror images through y = 16). THE
 INTEGERS THE UNIT TEST ASSERTS AS BOUNDS: the crystal's click, the arriving record's first rung there (the pair's
-birth) at t_e + 11 or later (the Manhattan distance from (2, 16) to (13,
-16)); each arm's first rung at its polariser at the birth + 22 or later
+giving click) at t_e + 11 or later (the Manhattan distance from (2, 16) to (13,
+16)); each arm's first rung at its polariser at the giving click + 22 or later
 (the Manhattan distance from (15, 17) to (26, 28), and from (15, 15) to
 (26, 4)); THE TWO ARMS' FIRST RUNGS EQUAL EXACTLY (the mirror theorem, one
 field, a mirror-symmetric placement); the gather's stamp that common
-interval. The K forms beside, never asserted: the birth near t_e + 11 / c
-= t_e + 19.05, each arm's first rung near the birth + 12 sqrt 2 / c = +
+interval. The K forms beside, never asserted: the giving click near t_e + 11 / c
+= t_e + 19.05, each arm's first rung near the giving click + 12 sqrt 2 / c = +
 29.39 (from the crystal's centre (14, 16)). The pair's train: 77 periods
 of [1232, 25], 3200 intervals, the common zero with the arriving train.
 
-**11.4 The crystal's cells (his point 4).** Under 11.2 the crystal is ONE
-receiver set (its cells), the arriving record's receiver by name, NOT a
+**11.4 The crystal's Nodes (his point 4).** Under 11.2 the crystal is ONE
+receiver set (its Nodes), the arriving record's receiver by name, NOT a
 sink; its first rung is taken over the arriving record's norm with the
-set's wheel (the world's W unless declared); no per-Node cells. The open
-faces stay faces (ALGEBRA.md 9.8: the face's cell admitted as the shell's
+set's wheel (the world's W unless declared); no per-Node Nodes. The open
+faces stay faces (ALGEBRA.md 9.8: the face's Node admitted as the shell's
 shorthand), so the Bell world's layer is [30, 33, 1] with open faces in
 place of the shell of 11.3, the Nodes unchanged.
 
@@ -1754,10 +1754,10 @@ at interval 0 is exactly the bodies' own.
 The form:
 - A record's clock is a list of components [[a, n_a], ...]: arm 0 at the
   clock a, arm 1 at p - a, with the integer weight n_a >= 1.
-- A crystal's birth writes the components of its declared window [a_lo,
+- A crystal's giving click writes the components of its declared window [a_lo,
   a_hi] (the material key `window`), with weight 1 each.
 - Each component is propagated by the one rule at its own clock. The
-  record's offer at a cell is the sum of the components' offers.
+  record's offer at a Node is the sum of the components' offers.
 - The joint gather's weights are unchanged, because they read the label
   state only.
 - Default: one component, which is main's record byte for byte.
@@ -1785,7 +1785,7 @@ The form:
 - A record carries two rows per arm, one per label value (bit 0 and bit
   1).
 - The one rule acts on each row alike.
-- A polar body's cells apply **M**_u = [[a, b], [-b, a]] to the arriving
+- A polar body's Nodes apply **M**_u = [[a, b], [-b, a]] to the arriving
   pair of rows (verb B). The + row (along the axis) and the - row (across
   it) continue to the body's two receivers.
 - The record's norm scale is multiplied by abs(**u**)^2. There is no
@@ -1808,7 +1808,7 @@ The unit tests:
    (1, 1) and 289 and 289 at (15, 8). The code on polariser-fix booked all
    of it on + at s = 512; the per-label rows remove that case.
 4. Label blindness: a record with the rows (x, 0) and one with (0, x),
-   from the same emitter, book the same offer at every cell at every
+   from the same emitter, book the same offer at every Node at every
    interval until a polar body.
 5. The default: a world with one label replays main's record byte for
    byte.
