@@ -10,7 +10,7 @@ from event_universe.core.register import Declaration
 from event_universe.core.schema import Integer, Name, ObjectOf, Schema
 
 THE_WORD = "the field's shape from the rule 9.57 (1), the write beyond (H)"
-PRODUCT_BOUND = 1 << 62
+PRODUCT_BOUND = (int(np.iinfo(np.int64).max) + 1) // 2  # half the integer width, no number of its own
 
 
 @dataclass(frozen=True)
