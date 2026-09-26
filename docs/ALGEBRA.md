@@ -16153,6 +16153,25 @@ band at the width 80. This is the evidence for (2)'s row on item 10, in
 one dimension for the scalar; the vector rows and three dimensions are
 Nature24's items 1 to 5 of record 2134.
 
+**(8) THE ENGINE'S LOGIC IN ONE LINE (the Boss's record 2136 on the
+model owner's word, "one function that the whole engine calls; it is
+the logic gate of the whole engine").** The engine's logic is one
+function, the rule 9.57 (1) with the four paces of 9.91 (2), called at
+every Node at every interval and nowhere copied; beside it the click,
+the one one-way act (a record ends at a detector and the detector's
+count moves, 9.25 (2)); and the well's hop, the one seam: a body's well
+follows its record's centroid over its support, a per-body tally that
+is HOST work and not the rule's, named here as the one exception to
+locality until a local form replaces it. Everything else adds no
+logic: the holds write numbers (a body's declared count, and the
+record's own current and stress, (4)) and the readings (the booking,
+the form, the flux) read the rule's integers. THE LOCAL FORM OF THE
+HOP, named and not decided: the well as the set of Nodes where the
+record's own density passes a declared level, decided at each Node
+from itself and its six neighbours; that is a self-binding term of
+matter (a nonzero P_2 for matter, which (6) has at 0), so it is a big
+decision for three (record 2136), not a line of this section.
+
 ### 9.99 The families derived in structure: the symmetric algebra of the four directions, and why the tower stops at gravity (the model owner's question of 2026-09-26, "can you think of something that derives the unification?", and his word "write it all")
 
 **(1) THE CLAIM.** The three families are not three declarations. They
