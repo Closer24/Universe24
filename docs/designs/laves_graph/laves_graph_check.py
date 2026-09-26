@@ -21,7 +21,9 @@ not faster); a mirror does not map the net to itself (the net is chiral).
 Run: python docs/designs/laves_graph/laves_graph_check.py (about one second).
 """
 
-import numpy as np, itertools
+import itertools
+
+import numpy as np
 
 # srs net: 8 Nodes in the cubic cell (units of the cell edge), Wyckoff 8a of I4_1 32
 base = np.array([[1, 1, 1], [3, 7, 5], [7, 5, 3], [5, 3, 7]]) / 8.0
@@ -40,7 +42,7 @@ for i in range(n):
     cands.sort(key=lambda c: c[0])
     near = [c for c in cands if abs(c[0] - cands[0][0]) < 1e-9]
     assert len(near) == 3, (i, len(near))
-    for r, j, sh, d in near:
+    for _r, j, sh, d in near:
         links.append((i, j, sh, d))
     # the three exits at 120 degrees in one plane
     ds = [c[3] for c in near]
@@ -58,7 +60,7 @@ print(
 
 def bloch_srs(k):
     H = np.zeros((n, n), dtype=complex)
-    for i, j, sh, d in links:
+    for i, j, _sh, d in links:
         H[i, j] += np.exp(1j * np.dot(k, d))
     return H
 

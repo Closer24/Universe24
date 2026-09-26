@@ -16689,9 +16689,19 @@ as written here.
    two mirror forms, a possible origin of the weak force's handedness,
    which nothing in this engine gives today. What changes is the
    fourth-order term, the lattice's own anisotropy, which the pace
-   fans' diagnostic reads: k^2 / 48 on the cubic lattice becomes
-   another number on the Laves graph (owed if the direction is taken;
-   a host computation of the rule's dispersion on the four-Node cell).
+   fans' diagnostic reads. COMPUTED (the owner's question "does B
+   work?"; docs/designs/laves_graph/laves_graph_check.py, a host
+   computation on the Bloch adjacency of the eight-Node cubic cell):
+   the second-order tensor is isotropic to the last digit, as the
+   symmetry says; the phase pace's anisotropy, which on the cubic
+   lattice is + k^2 / 48 between the face diagonal and the axis (the
+   pace fans' number, reproduced) and + k^2 / 36 for the body
+   diagonal, is on the Laves graph - k^2 / 384 and - k^2 / 288: one
+   eighth of the cubic lattice's and of the opposite sign (the
+   diagonals slower, not faster); a mirror does not map the net onto
+   itself. So B as a board works: light isotropic, the lattice eight
+   times fainter in its own anisotropy, and chiral; the pace fans' row
+   would read the sign and the eighth.
    (c) The count 3 of the three exits is the vector's three
    components in another arrangement, and a click on the visible cube
    reads them as a direction; so it is not a hidden index and not
