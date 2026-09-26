@@ -184,15 +184,20 @@ def readings(centre: list[int], far: list[int], moving: bool) -> list[dict]:
     the kinds by the ledger's words, bent to Main Loop's interface when it lands): a family's
     level at a Node over intervals, a family's sum of absolute levels (the leak), the count of
     Nodes with a nonzero level (the locality), a family's and a body's centre."""
+    # every reading carries its own name (the output's word for it, Main Loop's interface of
+    # record 2199 item 1): the kind, the family and the Node joined by underscores
     lines: list[dict] = []
     for family in ("field", "field_table"):
-        lines.append({"kind": "level", "family": family, "node": list(centre), "every": EVERY})
-        lines.append({"kind": "level", "family": family, "node": list(far), "every": EVERY})
-        lines.append({"kind": "support", "family": family, "every": EVERY})
-    lines.append({"kind": "total", "family": "control", "every": EVERY})
+        for node in (centre, far):
+            name = "_".join(["level", family, *map(str, node)])
+            lines.append(
+                {"name": name, "kind": "level", "family": family, "node": list(node), "every": EVERY}
+            )
+        lines.append({"name": f"support_{family}", "kind": "support", "family": family, "every": EVERY})
+    lines.append({"name": "total_control", "kind": "total", "family": "control", "every": EVERY})
     if moving:
-        lines.append({"kind": "centre", "family": "field", "every": 10})
-        lines.append({"kind": "centre", "body": 0, "every": 10})
+        lines.append({"name": "centre_field", "kind": "centre", "family": "field", "every": 10})
+        lines.append({"name": "centre_body_0", "kind": "centre", "body": 0, "every": 10})
     return lines
 
 
