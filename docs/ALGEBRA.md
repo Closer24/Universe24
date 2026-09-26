@@ -16199,7 +16199,9 @@ each checked alone (9.98, the owner's word of 04:5xZ). The families'
 structure derived (9.99), written on his word.
 
 **(3) WHAT STAYS ASSUMED.** The rule 9.57 (1). The internal group of
-the strong and weak forces, declared. Nothing else.
+the strong and weak forces, declared (narrowed in 9.101: the group of
+a family of n pairs is U(n), derived from the click; the counts of
+pairs 1, 2, 3 stay declared, with a candidate). Nothing else.
 
 **(4) WHAT THE BOSS CHECKS INDEPENDENTLY, and then records.** The five
 derivations of (1) by their steps; the two computations (9.97 (3),
@@ -16209,3 +16211,136 @@ as changed (9.98 (5) and the owner's word) is what Nature24's fresh
 session builds. On approval: Highlights 5.4 takes the decisions of
 (2) as lines, this section is their record, and everything proceeds
 as written here.
+
+### 9.101 The internal group from the click, and the count of the universe's numbers (the model owner's words of 2026-09-26: "these forces are read in clicks; can the unification be done above the clicks, in the world of Nodes?", and "send it to the Boss to review, and let him try item 4 too; how many degrees of freedom does our universe have, is everything derived from one number or from several?")
+
+1. The question. 9.99 (6) left the internal group of the strong and
+   weak forces declared: which group, how many pairs, which structure
+   table. The owner's remark: a force is a name for a pattern of
+   clicks, and above the clicks, in the world of Nodes, there is the
+   rule. This section narrows the declaration. The result: the group
+   is derived once the count of pairs is given; the count is not
+   derived here; item 8 is the attempt at it, with its test.
+
+2. The world of Nodes has one transport. A phase-2 family of n pairs
+   carries at each Node a vector of n pairs of levels (re, im), each
+   level with its now and its before; the rule steps every level by
+   the same line (9.91 (2)); at each Port the transport rotates the
+   vector of pairs by one rotation of the twist table (9.88 (7), 9.96).
+   Nothing at a Node is called strong, weak or charge. A force is the
+   reading of that one rotation by clicks.
+
+3. The symmetry of the rule and of the pairing. The rule is one
+   integer line applied to each of the 2n levels, so any rotation of
+   the 2n levels that keeps the norm I (9.19) commutes with it: the
+   symmetry of the rule alone is the orthogonal group O(2n). The
+   pairing of the levels into (re, im), which the transport's twist
+   uses, is kept by the rotations that commute with the pairing's
+   quarter turn J: they form the unitary group U(n) (the rotations of
+   O(2n) that are complex-linear). The twist table lists rational
+   rotations (exact products of triples, 9.96); with n pairs rotated
+   together at a Port its rotations generate U(n) and prefer no proper
+   subgroup: this is 9.99 (6)'s "any rational rotation table".
+
+4. What a click reads. A click is a detector's rung reached by the
+   flux into its Nodes (9.25 (2)); the flux is quadratic in the levels
+   and summed over the family's levels (9.19 (3)). Bodies meet only
+   through held families (9.96), and a hold's sources are the record's
+   current and stress (9.98 (4)), quadratic in the levels and summed
+   over the pairs. So every quantity a click reads is unchanged when
+   one constant rotation of U(n) is applied to the family's vector of
+   pairs at every Node, and a twist at a Port is read only through the
+   product of the twists around a closed path (two paths interfering,
+   9.28). Therefore no click distinguishes two states related by a
+   constant rotation of U(n). The group of the internal transport of a
+   family of n pairs is U(n), derived from the click and the pairing,
+   not declared. What a world declares is the twist table, the field
+   on the Links, never the group.
+
+5. The common phase and the traceless part. U(n) is the scalars
+   e^(i phi) on all n pairs (U(1)) times the rotations of determinant
+   1 (SU(n)), joined along their common centre Z_n. The scalars are the
+   twist every pair-family already carries, the phase per Link that
+   reads the charge's potential (9.48, 9.88 (7)): the common phase is
+   the charge. The traceless part SU(n) mixes the n pairs and reads no
+   potential of the charge: for n = 3 it is what nature calls colour,
+   for n = 2 the weak isospin. With three pair-families of 1, 2 and 3
+   pairs and one common phase for every pair of every family, the
+   group generated is U(1) x SU(2) x SU(3), nature's. Nature's group
+   also carries a discrete quotient by Z_6 (it is S(U(2) x U(3))), and
+   the quarks' charges are thirds of the electron's: both hold here if
+   the charge unit a click reads on a 3-pair family is the family's
+   determinant phase (3 phi) and not one pair's phase (phi). That is
+   one line to derive from the click's rung on such a family, not
+   derived here; my line to the owner that the thirds "come out with
+   no declaration" is corrected to this.
+
+6. What stays declared, one line each.
+
+   | Item | Status | What would derive it |
+   | --- | --- | --- |
+   | The group of a family of n pairs | derived, U(n) (item 4) | |
+   | The common phase is the charge | derived (item 5) | |
+   | The count of pairs per family, 1, 2, 3 | declared | item 8's candidate |
+   | One common phase for all families, not one per family | declared | item 8's candidate (one pairing) |
+   | The thirds and the Z_6 quotient | conditional (item 5) | the charge unit read on a 3-pair family |
+   | The weak force acting on one hand only (its chirality) | not in the algebra | |
+   | The masses, the bodies' pairs, one per species | declared per body | not derived here, as in nature |
+   | The bodies' families and charges q | declared per body | |
+
+7. The count of the universe's numbers (the owner's reframing). The
+   rule 9.57 (1) has no number of its own: its integers are the pair
+   [num, den] at the Node and the Node clock Gamma. The universe
+   file's integers (9.91 (7), 9.96) by kind:
+
+   | Number | Kind | Physical or host |
+   | --- | --- | --- |
+   | Gamma, the Node clock | resolution | host: every measurement must be unchanged under Gamma to 2 Gamma with the pairs rescaled (9.62 (2)); that is a test of every row |
+   | A, the amplitude bound; Q, the momentum unit; W = 3 Q M, the wall | room and resolution | host: the same test |
+   | P_0 = [1, 1000], the energy unit | a unit | a choice of unit, no freedom |
+   | Lambda, the charge's weight per quantum | physical | the one coupling: it enters as the source's weight and as the reader's (9.78 (4)), so the charge's action between two unit quanta stands to gravity's as Lambda squared to 1; nature's analogue is the ratio of the electric to the gravitational force between two quanta |
+   | The bodies' pairs [num, den], their rest rotations | physical | the mass table, one per species |
+   | The counts of pairs per family, 1, 2, 3 | physical, structure | declared; item 8 |
+   | The held factors (1, 4, 2) and (1, 1); the degrees 0, 1, 2; the twist unit; P_2 = 0 | derived | 9.95, 9.99, 9.96, 9.97 |
+
+   So the honest count: with item 8 open, the universe's physics is
+   Lambda, the mass table and the counts 1, 2, 3. If item 8 holds, it
+   is Lambda and the mass table: one number and the masses. Whether
+   Lambda can be derived is not known to me; nature has not derived
+   its analogue either.
+
+8. The attempt at the counts: a candidate, not a derivation.
+   (a) The spacetime families are the degrees 0, 1, 2 of the symmetric
+   algebra of the four directions, and the tower stops at 2 because a
+   second-order rule reads a record's value, its first differences and
+   its second differences and nothing higher (9.99).
+   (b) The internal side has a doublet of its own. For a pair-family
+   each component's local state is two complex numbers, now and before
+   (four integers), and what the rule and the click read of them are
+   their quadratic forms: the two norms and the cross term now times
+   the conjugate of before, whose phase is the local pace and whose
+   antisymmetric part across a Link is the flux (9.19 (3)). The
+   Hermitian forms of a doublet are four real numbers and split 1 + 3
+   under the doublet's SU(2), as the four directions split 1 + 3 under
+   the cube group (9.99).
+   (c) The candidate: the count of pairs of a family is the dimension
+   of the symmetric power of degree m of that doublet, n = m + 1 with
+   m = 0, 1, 2 by the same second-order truncation: 1, 2, 3, and no
+   family with 4 pairs, for the reason the spacetime tower has no
+   degree 3. The common phase is one because the pairing J is one for
+   the whole GameBoard.
+   (d) What makes it a derivation, and its test: show on 9.19 (3) with
+   the twist of 9.88 (7) that the flux's density and current through a
+   Link are exactly the degree-2 forms of the (now, before) doublet,
+   Link by Link; then the degree-m objects of the doublet are what the
+   rule can carry as a family's internal index, as the degree-d objects
+   of the directions are what it carries as components. If the flux is
+   not that bilinear, the candidate fails and the counts stay declared.
+   (e) The status, said once: the coincidence 1, 2, 3 = m + 1 for m at
+   most 2 is exactly as strong as 9.99's 1, 4, 10 was before its
+   argument was written; the argument is owed. The Boss is asked to
+   try this item independently, by another route if he has one.
+
+9. For the Boss's review: items 3, 4 and 5 are derivations, to be
+   checked step by step; item 7 is a count, to be checked against the
+   universe file; item 8 is open, to be tried by both.
