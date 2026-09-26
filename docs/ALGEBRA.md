@@ -17872,3 +17872,68 @@ as written here.
    detector of the engine does, since a click ends the record. The wide
    cut body (side 13) pinning after 9 Links as side 9 did is the cut's
    snapping again (9.108 item 5); the two families' run decides.
+
+### 9.110 The engine's dictionary: every verb a generic step of the engine, every property a declaration of a family, a body or the universe (the model owner's word of 2026-09-26: "everything you say, a property, an operation or a logic, must be defined in the engine generically: as a family that needs it or as a step; sync with Nature and the Boss on what we are doing")
+
+1. **The rule of the dictionary.** A thing is in exactly one column. A
+   STEP is a verb of the engine, one function with no family name and no
+   number in it, applied to every family that declares the attribute it
+   reads. A DECLARATION is a row or a key of universe.json or a world
+   file; adding or removing a family changes no step. A LOGIC is a rule
+   of reading (what counts as a measurement), in the documents and the
+   generators, never in a step. The one keys table of 9.90 (6) is this
+   dictionary's index in the loader: a key read and not here fails.
+
+2. **The steps of the engine (generic verbs), in the interval's order.**
+
+   | Step | What it does, once for every family | Section |
+   | --- | --- | --- |
+   | The rule's step | one function of a Node's integers (now, before, the remainder, the six neighbours, the four paces, the pair) to the next level and remainder; its exact inverse | 9.57 (1), 9.91 (2), 9.98 (8) |
+   | The pace's read | p_0 = Gamma - SUM over the family's reads of (signed weight x level), the axes' paces with the tensor's parts; the guard 0 < p <= Gamma | 9.78 (4), 9.108 items 11, 12 |
+   | The hold | a body's count written whole at its Nodes each interval into every family it holds, in that family's representation (the scalar s, the current, the dipole on the six neighbours) | 9.45 (2), 9.78 (2) |
+   | The source | a record's local count F_i div E added into a family's level at the record's Nodes each interval; the inverse subtracts it | 9.71 (1) (b), 9.108 item 11 |
+   | The self-source | the six squared differences summed over the family's components, div its unit, off the step's right side | 9.78 (3), 9.91 (5) |
+   | The transport | a neighbour's pair rotated by the Port's angle accumulator through the one table of triples as it is read | 9.96 (2) (e) |
+   | The click | the ladder on the inward flux at a detector's Ports; the Node by the shares; the record ends or its count lowers by one quantum; the recoil into the Ports' accumulators of taker and giver | 9.25 (2), (3), 9.109 |
+   | The giving's window | a body's rotation written into the given family at its weight until the outward norm through its outer Ports reaches the quantum | 9.71 (1), 9.107 |
+   | The spin's step | the leapfrog of a body's two spin integers by the curls at its Node | 9.78 (5), 9.104 |
+   | The hop and its feed | a body without `fixed` moved by the pace across its faces; retired when the rule moves bodies | 9.52, 9.104 item 6 |
+   | The loader | one keys table; a key not in it refused by name; no default | 9.90 (6) |
+
+3. **The declarations of a family (a row of universe.json).**
+
+   | Attribute | Meaning | Read by which step |
+   | --- | --- | --- |
+   | `name` | a word, never read by a step | the loader |
+   | `parts` | the representation: 1 (scalar), 3 (vector), 6 (tensor) | the rule's step, the hold, the pace's read |
+   | `phase` | 1 or 2: one level or a pair (now, before) | the rule's step |
+   | `pair` | [num, den]: the range and the rest rotation; "body" for a record with its own | the rule's step |
+   | `held` | by which bodies, with which holds (the count, the current, the dipole) | the hold |
+   | `sourced` | by which records, with the weight and the scale E | the source |
+   | `reads` | [[family, signed weight, by]]: the couplings, a hollow positive and a hill negative | the pace's read |
+   | `self_source` | the unit P_2 (0 off) | the self-source |
+   | `sign` | one sign, or q per quantum | the pace's read, the click |
+   | `clicks` | gives, takes, the quantum | the click, the window |
+   | `held_dipole` | spin or moment | the hold, the spin's step |
+
+4. **The declarations of a body (a world file's entry).** `position`,
+   `extents`, `family`, `amount` (M), `q`, `stocks` (of other families),
+   `stock` (of its own), `pair` (its rest rotation), `kind`, `seed`,
+   `spin`, `moment`, `momentum`, `fixed` (an apparatus held in place),
+   `emitter` (the family, the weight, the norm), `receiver`, `margin`,
+   `ramp`, `start`, `clock`. A body is one word (record 2128); its
+   roles are its keys.
+
+5. **The integers of the universe.** `node_clock` (Gamma),
+   `amplitude_bound` (A), `Lambda`, `momentum_unit`, the twist table (its
+   unit and its triples), and, with the binding, the source's scale E_s;
+   the binding's weights are reads of the matter family's row and its
+   ranges are pairs, so they add no integer beyond E_s.
+
+6. **The logic, outside every step.** A measurement is a click; a
+   GameBoard reading is a diagnostic (docs/ENGINE.md); a number whose kind
+   is not named is not a result; the rule of three on every row (record
+   2137); the three tests of every rule (generic, vector, local). What is
+   NOT in the dictionary is not in the engine: colour (a declared internal
+   family, owed), a decay with two daughters, a conserved total across
+   families.
