@@ -18187,3 +18187,76 @@ finding for me, the run is never adjusted).
    two-sided guard (0 < p <= Gamma at run time, 9.108 item 12). The
    twelve lines are the algebra's; the table's two new columns (the
    place and the expression, record 2182) take them as written.
+
+### 9.112 The step as a declaration of the run file: the smallest set of Port primitives, each in one line with its place in the interval; the rule 9.57 (1) and the click as two declarations; the six verbs of HIGHLIGHTS 5.7 are the alphabet the Port words are made of, not the set of words (the Boss's record 2186, the model owner: "the run file defines what a step is: what is put on each Port, what is received on each Port, how long each Port waits, what operation combines them at the Node")
+
+1. **The set, six words, one line each.** A Node holds its state
+   (the levels now and before per component, the remainder) and nothing
+   else; a Port holds one integer (its accumulator) and nothing else; a
+   Link carries one value per interval each way. The interval is three
+   places, as in 9.111 item 7: the right side (read from the interval's
+   start), the step, and after the step (the writes enter at t + 1).
+
+   | Word | The line | The place |
+   | --- | --- | --- |
+   | SEND | the Port puts on its Link a declared integer image of the Node's start state: weight x the component's level (weight 1 today; p_i in the Link form of 9.57 (1); a pair's two levels as one value) | the interval's start |
+   | RECEIVE | the Port takes the value the other end put on the Link at the same start, rotated by the Port's accumulator through the one table of triples where the family is a pair (the transport, 9.96 (2) (e)); the six received values are what the Node combines | the right side |
+   | WAIT | one interval, for every Port, always: a value sent at the start of t is combined in t and nothing is read in zero time (9.57 (1), the order of reading; the locality law). A wait of d > 1 would keep d values at the Port, which nothing keeps; "how long a Port waits" is therefore not a delay but the pace's weight: a slowed Link sends less per interval (2 p_i p_j num in place of 2 num), the light in a material, declared by the reads of 9.78 (4) | the constant 1 |
+   | KEEP | the Port's one integer, the angle accumulator rho, translated each interval by its declared rate (the twist) and moved by a click's recoil (9.109 item 2 (b)); applied at RECEIVE, never read by the Node's own step | the right side (the twist), after the step (the recoil) |
+   | COMBINE | at the Node: a_next = (SUM over the six Ports of w_port x received + B x now - W x before + the loads + r) div W with the remainder r' kept, w_port, B, W declared integers of the family (w = 2 p^2 num, B the self coefficient, W = 6 den Gamma^2 of 9.57 (1)); the loads (the hold, the source, the self-source) declared additions into the same sum | the step |
+   | BOOK | at each Port of a detector: the current num x (now_i before_j - before_i now_j) inward, its positive part added to the record's tally for that detector; the ladder compares the running total with the record's rung (2 u + 1) T / (2 W) and the first crossing is the click (9.25 (2)); the click's writes (the content, the recoil into KEEP) enter at t + 1 | after the step |
+
+   Nothing else touches a Port. Every wait in the algebra is a count
+   compared with a threshold on an accumulator, declared as integers in
+   the file: the giving's window (the outward norm reaching the quantum,
+   9.107), the lifetime (a border at age L, 9.88 (3)), the ladder (the
+   running total reaching the rung); no Port waits more than one
+   interval for a value.
+
+2. **The rule 9.57 (1) is one declaration.** SEND with weight 1 (or
+   p_i, the Link form); RECEIVE plain (a rotation for a pair); WAIT 1;
+   COMBINE with w = 2 p^2 num, B = 12 den Gamma^2 - 6 (p^2 + Gamma^2)
+   (den - num) - 12 num p^2, W = 6 den Gamma^2, the loads the family's
+   hold, source and self-source rows; the inverse the same words read
+   backward (the ceiling and the difference). The integers num, den,
+   Gamma and the paces p are the file's (the family's pair, the
+   universe's clock, the reads); the words are the engine's. A family
+   with another declaration (another w, B, W of its own pair; the
+   first-order rule as the limit) is a line in the file, no code.
+
+3. **The click is one declaration.** BOOK with the current's form and
+   the ladder's rungs on the record's wheel W (9.25 (2)); the Node by
+   the shares (Born's rule, 9.25 (3)); the writes: the record's count
+   lowered by one quantum with its phase kept (9.109 item 2 (a)), the
+   taker's content raised, the recoil sigma_a x (k_q div M) into the
+   Ports' accumulators of taker and giver with opposite signs (9.111
+   item 2), all at t + 1 (9.111 item 6). The giving is the same word
+   read outward (the outward tally through the body's Ports, the
+   window's threshold, 9.107). A click with several products (the
+   clicks list, 9.88 (4)) and a hand (9.88 (5)) are lines of the same
+   declaration.
+
+4. **The six verbs of HIGHLIGHTS 5.7 are the alphabet, the Port words
+   are the words.** The six verbs (the translation of an accumulator by
+   its rate; the bilinear form with a declared matrix; the group-ring
+   addition; the permutation; the evaluation at the table; the
+   Euclidean division with the remainder kept) say what a number may be
+   made of; the Port words say where a number goes and when. Each word
+   is made of the verbs and of nothing else: SEND is one row of a
+   bilinear form; RECEIVE the evaluation (the table at the accumulator's
+   angle) and the group-ring addition of the six; KEEP the translation;
+   COMBINE the bilinear form and the Euclidean division (the carry);
+   BOOK the bilinear form (the current, an antisymmetric matrix) and
+   the threshold (the division's comparison); the permutation appears in
+   the clicks list's sorted rungs (9.88 (4)) and in no other word; WAIT
+   is no verb but the locality law. So the answer to the Boss's
+   question is NO AND YES: the six verbs are not the set of Port
+   primitives, they are the closed set every Port primitive is written
+   in; the smallest set of Port primitives is the six words of item 1,
+   and both sets are closed: a declaration of the run file names, per
+   Port and per family, a word with its integers; a word outside the
+   six words, or a verb outside the six verbs (a root, a float, a draw:
+   the seventh verb, 2.6), is code, and the engine has none. What stays
+   in the engine, said once: the six words, the loader and the keys
+   table; every integer, every coefficient and every family in the
+   files.
