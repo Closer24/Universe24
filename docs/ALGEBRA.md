@@ -16610,3 +16610,103 @@ as written here.
     commit 4, the four-vector click without the recoil, and commit 7;
     9.98 (5)'s stages wait for Nature24's verdicts and the owner's
     word on the closed plan.
+
+### 9.103 Two readings of the model owner on the strong force (2026-09-26): "the strong force is the well" and "a base of three exits per Node", each a hypothesis under its own identity, each a big decision for three (record 2136)
+
+1. The owner's words, in order: "it seems to me a good direction that
+   there is really no strong force, only something derived in clicks";
+   and "could the base be simply that every Node has three exits, and
+   the transformation to clicks is the cubes we see?" Both are
+   hypotheses outside the law. Neither changes a line of the rule.
+   The Boss records them and routes their tests.
+
+2. Hypothesis A, "the strong force is the well". The statement: what
+   nature calls the strong force is a body's well (its lowered pair on
+   its Nodes, 9.35, 9.96) read through clicks, and no internal family
+   of three pairs exists. What the well already does with no
+   declaration:
+
+   | Nature's reading of the strong force | The well |
+   | --- | --- |
+   | Confinement: no free quark | A record does not leave its well |
+   | Mass from binding: the proton's mass is 99 percent binding | The bound mode's rotation is the mass (9.94) |
+   | Short range, a Yukawa tail | The bound mode's tail of length 1 / kappa (the margin computation) |
+
+3. The price of A: five readings of nature that count to 3 or 8, and a
+   well carries no count.
+
+   | Reading | The count it needs |
+   | --- | --- |
+   | The ratio R of e+ e- to hadrons over e+ e- to muons | 3 times the sum of the squared charges |
+   | The rate of the neutral pion to two photons | 3 squared |
+   | Three-jet events and the angular correlations of four jets | eight fields, the ratio 9 / 4 of the SU(3) Casimirs |
+   | Asymptotic freedom: the coupling weakens with the energy | the non-abelian running |
+   | The Delta++ (three identical quarks in a symmetric state) | a hidden antisymmetric index for Fermi statistics |
+
+   The last is larger than the strong force: the records of this
+   engine have no statistics yet; that is an open matter of the whole
+   programme, not of A.
+
+4. A mechanism to test, not an answer. A well's bound modes are
+   labelled by the cube group: one s-like mode and three p-like modes,
+   one per axis (1 + 3), and higher. Three states a click does not
+   distinguish (it reads the total flux) multiply a rate by 3. THE
+   EIGHTH HARD QUESTION for Nature24 (record 2134's list, through the
+   Boss): a rate row, an emitter feeding a well, the count of distinct
+   bound states per energy and the rate of clicks against that count.
+   The algebra's number: the multiplicity of the well's levels under
+   the cube group, computed from the margin operator's spectrum (a
+   host computation, the Lanczos of the margin rule on the well's own
+   board). The run's number: the clicks' rate, read without the
+   algebra's number in view (record 2137). If the rates read the
+   multiplicities, A has its first evidence; the other four readings
+   of item 3 stay owed.
+
+5. What A changes if it holds: 9.101 item 13 (c) reverses (the well
+   is the strong force, not what it binds with); the universe's
+   numbers of 9.101 item 14 become Lambda, the mass table, and the
+   size of one internal primitive (the weak's two pairs), or none if
+   the weak follows B's handedness.
+
+6. Hypothesis B, "a base of three exits per Node". The statement: the
+   GameBoard is a graph in which every Node is joined to three others,
+   and the cubic lattice with six Ports is what the clicks see, a
+   contraction of the base. CHECKED today by reasoning on the graphs
+   (host; no run):
+   (a) The direct form, every cubic Node split into a Node "+" with
+   the exits +x, +y, +z and a Node "-" with -x, -y, -z, contracts back
+   to the cubic lattice exactly; but a step from "+" to "-" raises x +
+   y + z by one and every step back lowers it by one, so no path moves
+   along (1, 1, 1): the base is a stack of two-dimensional honeycomb
+   layers, each alone; it carries no wave between layers, and only
+   the contraction joins them. It is not a three-dimensional world.
+   (b) The Laves graph (the srs net) is a connected three-dimensional
+   base with three exits per Node: four Nodes per primitive cell,
+   eight per cubic cell, the three exits at 120 degrees in a plane
+   that turns from Node to Node. Its point group is 432, so its
+   second-order tensor is isotropic and the long-wave physics of 9.67,
+   9.95 and 9.97 stands at second order unchanged. It is chiral, with
+   two mirror forms, a possible origin of the weak force's handedness,
+   which nothing in this engine gives today. What changes is the
+   fourth-order term, the lattice's own anisotropy, which the pace
+   fans' diagnostic reads: k^2 / 48 on the cubic lattice becomes
+   another number on the Laves graph (owed if the direction is taken;
+   a host computation of the rule's dispersion on the four-Node cell).
+   (c) The count 3 of the three exits is the vector's three
+   components in another arrangement, and a click on the visible cube
+   reads them as a direction; so it is not a hidden index and not
+   colour. A colour-like index would need the click to read a cluster
+   whose internal exits are not directions, possible in the Laves
+   cell of eight and not shown.
+
+7. The price of B: a change of the GameBoard itself. The rule reads
+   three neighbours in place of six, its integers w, R and S change,
+   every shipped digest changes, and every fourth-order number of this
+   document is recomputed. It is the largest decision for three there
+   is.
+
+8. Status. Neither A nor B is in the law. A has a test that costs one
+   row (item 4); B has a test that costs a new board (item 6 (b)).
+   Both are written here as the owner's readings of 2026-09-26 for the
+   Boss's record; the eighth question goes to Nature24 through the
+   Boss (record 2133).
