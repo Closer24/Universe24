@@ -145,8 +145,8 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
                 "sign",
             ]
             assert simulation.families[MATTER].reads == (
-                (CLICKS, 1, "plain"),
-                (CHARGE, strength, "sign"),
+                (CLICKS, 1, "plain", 0),
+                (CHARGE, strength, "sign", 0),
             )
             assert simulation.family_charge == [1, matter_charge, 0, 0, 0]
             assert [int(v) for v in simulation.level_of("sign")[:, 0, 0]] == slab
@@ -280,7 +280,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     world = parse_nature_beam_world(good)
     assert world.held_families == (CLICKS, CHARGE) and world.families[CHARGE].held == "sign"
     assert world.families[CHARGE].name == CHARGE_FAMILY_NAME
-    assert world.families[MATTER].reads == ((CLICKS, 1, "plain"), (CHARGE, 1, "sign"))
+    assert world.families[MATTER].reads == ((CLICKS, 1, "plain", 0), (CHARGE, 1, "sign", 0))
 
     def copy() -> dict:
         return json.loads(json.dumps(good))

@@ -34,10 +34,14 @@
     0,
     0
    ],
-   "family": "point",
+   "family": "matter",
+   "kind": [
+    800,
+    813
+   ],
    "amount": 1,
    "held": {
-    "light": 64
+    "charge": 64
    },
    "momentum": [
     0,
@@ -459,7 +463,7 @@
    ],
    "margin": "control",
    "emitter": {
-    "family": "light",
+    "family": "charge",
     "clock": [
      77,
      25
@@ -482,7 +486,7 @@
     0,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -512,6 +516,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "9e3d770851ac0ab29303ebcb7f68759492bea6b35610a0cd7209169aef2e95e9"
+  "hash": "534c8c70055815ba2b1baf5d7ca4f20414ee55b0a9090a946006f7284643f08f"
  }
 }

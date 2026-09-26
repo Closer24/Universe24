@@ -35,6 +35,10 @@
     0
    ],
    "family": "matter",
+   "kind": [
+    800,
+    809
+   ],
    "amount": 1,
    "momentum": [
     0,
@@ -42,7 +46,7 @@
     0
    ],
    "held": {
-    "light": 30
+    "charge": 30
    },
    "ramp": 0,
    "start": 0,
@@ -80059,7 +80063,7 @@
    ],
    "margin": "control",
    "emitter": {
-    "family": "light",
+    "family": "charge",
     "receiver": [
      "at_body",
      "screen_40",
@@ -80457,6 +80461,10 @@
     0
    ],
    "family": "matter",
+   "kind": [
+    800,
+    809
+   ],
    "amount": 4684,
    "momentum": [
     0,
@@ -80464,7 +80472,7 @@
     0
    ],
    "held": {
-    "light": 128
+    "charge": 128
    },
    "ramp": 0,
    "start": 0,
@@ -160481,7 +160489,7 @@
    ],
    "margin": "control",
    "emitter": {
-    "family": "light",
+    "family": "charge",
     "receiver": [
      "screen_40",
      "screen_43",
@@ -160877,7 +160885,7 @@
     40,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -160892,7 +160900,7 @@
     41,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -160907,7 +160915,7 @@
     42,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -160922,7 +160930,7 @@
     40,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -160937,7 +160945,7 @@
     41,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -160952,7 +160960,7 @@
     42,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -160967,7 +160975,7 @@
     40,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -160982,7 +160990,7 @@
     41,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -160997,7 +161005,7 @@
     42,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161012,7 +161020,7 @@
     43,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161027,7 +161035,7 @@
     44,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161042,7 +161050,7 @@
     45,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161057,7 +161065,7 @@
     43,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161072,7 +161080,7 @@
     44,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161087,7 +161095,7 @@
     45,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161102,7 +161110,7 @@
     43,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161117,7 +161125,7 @@
     44,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161132,7 +161140,7 @@
     45,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161147,7 +161155,7 @@
     46,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161162,7 +161170,7 @@
     47,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161177,7 +161185,7 @@
     48,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161192,7 +161200,7 @@
     46,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161207,7 +161215,7 @@
     47,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161222,7 +161230,7 @@
     48,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161237,7 +161245,7 @@
     46,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161252,7 +161260,7 @@
     47,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161267,7 +161275,7 @@
     48,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161282,7 +161290,7 @@
     49,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161297,7 +161305,7 @@
     50,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161312,7 +161320,7 @@
     51,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161327,7 +161335,7 @@
     49,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161342,7 +161350,7 @@
     50,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161357,7 +161365,7 @@
     51,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161372,7 +161380,7 @@
     49,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161387,7 +161395,7 @@
     50,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161402,7 +161410,7 @@
     51,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161417,7 +161425,7 @@
     52,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161432,7 +161440,7 @@
     53,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161447,7 +161455,7 @@
     54,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161462,7 +161470,7 @@
     52,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161477,7 +161485,7 @@
     53,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161492,7 +161500,7 @@
     54,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161507,7 +161515,7 @@
     52,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161522,7 +161530,7 @@
     53,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161537,7 +161545,7 @@
     54,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161552,7 +161560,7 @@
     55,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161567,7 +161575,7 @@
     56,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161582,7 +161590,7 @@
     57,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161597,7 +161605,7 @@
     55,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161612,7 +161620,7 @@
     56,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161627,7 +161635,7 @@
     57,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161642,7 +161650,7 @@
     55,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161657,7 +161665,7 @@
     56,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161672,7 +161680,7 @@
     57,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161687,7 +161695,7 @@
     58,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161702,7 +161710,7 @@
     59,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161717,7 +161725,7 @@
     60,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161732,7 +161740,7 @@
     58,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161747,7 +161755,7 @@
     59,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161762,7 +161770,7 @@
     60,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161777,7 +161785,7 @@
     58,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161792,7 +161800,7 @@
     59,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161807,7 +161815,7 @@
     60,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161822,7 +161830,7 @@
     61,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161837,7 +161845,7 @@
     62,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161852,7 +161860,7 @@
     63,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161867,7 +161875,7 @@
     61,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161882,7 +161890,7 @@
     62,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161897,7 +161905,7 @@
     63,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161912,7 +161920,7 @@
     61,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161927,7 +161935,7 @@
     62,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161942,7 +161950,7 @@
     63,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161957,7 +161965,7 @@
     64,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161972,7 +161980,7 @@
     65,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -161987,7 +161995,7 @@
     66,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162002,7 +162010,7 @@
     64,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162017,7 +162025,7 @@
     65,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162032,7 +162040,7 @@
     66,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162047,7 +162055,7 @@
     64,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162062,7 +162070,7 @@
     65,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162077,7 +162085,7 @@
     66,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162092,7 +162100,7 @@
     67,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162107,7 +162115,7 @@
     68,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162122,7 +162130,7 @@
     69,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162137,7 +162145,7 @@
     67,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162152,7 +162160,7 @@
     68,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162167,7 +162175,7 @@
     69,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162182,7 +162190,7 @@
     67,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162197,7 +162205,7 @@
     68,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162212,7 +162220,7 @@
     69,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162227,7 +162235,7 @@
     70,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162242,7 +162250,7 @@
     71,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162257,7 +162265,7 @@
     72,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162272,7 +162280,7 @@
     70,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162287,7 +162295,7 @@
     71,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162302,7 +162310,7 @@
     72,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162317,7 +162325,7 @@
     70,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162332,7 +162340,7 @@
     71,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162347,7 +162355,7 @@
     72,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162362,7 +162370,7 @@
     73,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162377,7 +162385,7 @@
     74,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162392,7 +162400,7 @@
     75,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162407,7 +162415,7 @@
     73,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162422,7 +162430,7 @@
     74,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162437,7 +162445,7 @@
     75,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162452,7 +162460,7 @@
     73,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162467,7 +162475,7 @@
     74,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162482,7 +162490,7 @@
     75,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162497,7 +162505,7 @@
     76,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162512,7 +162520,7 @@
     77,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162527,7 +162535,7 @@
     78,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162542,7 +162550,7 @@
     76,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162557,7 +162565,7 @@
     77,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162572,7 +162580,7 @@
     78,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162587,7 +162595,7 @@
     76,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162602,7 +162610,7 @@
     77,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162617,7 +162625,7 @@
     78,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162632,7 +162640,7 @@
     79,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162647,7 +162655,7 @@
     80,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162662,7 +162670,7 @@
     81,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162677,7 +162685,7 @@
     79,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162692,7 +162700,7 @@
     80,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162707,7 +162715,7 @@
     81,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162722,7 +162730,7 @@
     79,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162737,7 +162745,7 @@
     80,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162752,7 +162760,7 @@
     81,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162767,7 +162775,7 @@
     82,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162782,7 +162790,7 @@
     83,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162797,7 +162805,7 @@
     84,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162812,7 +162820,7 @@
     82,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162827,7 +162835,7 @@
     83,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162842,7 +162850,7 @@
     84,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162857,7 +162865,7 @@
     82,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162872,7 +162880,7 @@
     83,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162887,7 +162895,7 @@
     84,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162902,7 +162910,7 @@
     85,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162917,7 +162925,7 @@
     86,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162932,7 +162940,7 @@
     87,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162947,7 +162955,7 @@
     85,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162962,7 +162970,7 @@
     86,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162977,7 +162985,7 @@
     87,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -162992,7 +163000,7 @@
     85,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163007,7 +163015,7 @@
     86,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163022,7 +163030,7 @@
     87,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163037,7 +163045,7 @@
     88,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163052,7 +163060,7 @@
     89,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163067,7 +163075,7 @@
     90,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163082,7 +163090,7 @@
     88,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163097,7 +163105,7 @@
     89,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163112,7 +163120,7 @@
     90,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163127,7 +163135,7 @@
     88,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163142,7 +163150,7 @@
     89,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163157,7 +163165,7 @@
     90,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163172,7 +163180,7 @@
     91,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163187,7 +163195,7 @@
     92,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163202,7 +163210,7 @@
     93,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163217,7 +163225,7 @@
     91,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163232,7 +163240,7 @@
     92,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163247,7 +163255,7 @@
     93,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163262,7 +163270,7 @@
     91,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163277,7 +163285,7 @@
     92,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163292,7 +163300,7 @@
     93,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163307,7 +163315,7 @@
     94,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163322,7 +163330,7 @@
     95,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163337,7 +163345,7 @@
     96,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163352,7 +163360,7 @@
     94,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163367,7 +163375,7 @@
     95,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163382,7 +163390,7 @@
     96,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163397,7 +163405,7 @@
     94,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163412,7 +163420,7 @@
     95,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163427,7 +163435,7 @@
     96,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163442,7 +163450,7 @@
     97,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163457,7 +163465,7 @@
     98,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163472,7 +163480,7 @@
     99,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163487,7 +163495,7 @@
     97,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163502,7 +163510,7 @@
     98,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163517,7 +163525,7 @@
     99,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163532,7 +163540,7 @@
     97,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163547,7 +163555,7 @@
     98,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163562,7 +163570,7 @@
     99,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163577,7 +163585,7 @@
     100,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163592,7 +163600,7 @@
     101,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163607,7 +163615,7 @@
     102,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163622,7 +163630,7 @@
     100,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163637,7 +163645,7 @@
     101,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163652,7 +163660,7 @@
     102,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163667,7 +163675,7 @@
     100,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163682,7 +163690,7 @@
     101,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163697,7 +163705,7 @@
     102,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163712,7 +163720,7 @@
     103,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163727,7 +163735,7 @@
     104,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163742,7 +163750,7 @@
     105,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163757,7 +163765,7 @@
     103,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163772,7 +163780,7 @@
     104,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163787,7 +163795,7 @@
     105,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163802,7 +163810,7 @@
     103,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163817,7 +163825,7 @@
     104,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163832,7 +163840,7 @@
     105,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163847,7 +163855,7 @@
     106,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163862,7 +163870,7 @@
     107,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163877,7 +163885,7 @@
     108,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163892,7 +163900,7 @@
     106,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163907,7 +163915,7 @@
     107,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163922,7 +163930,7 @@
     108,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163937,7 +163945,7 @@
     106,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163952,7 +163960,7 @@
     107,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163967,7 +163975,7 @@
     108,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163982,7 +163990,7 @@
     109,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -163997,7 +164005,7 @@
     110,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164012,7 +164020,7 @@
     111,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164027,7 +164035,7 @@
     109,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164042,7 +164050,7 @@
     110,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164057,7 +164065,7 @@
     111,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164072,7 +164080,7 @@
     109,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164087,7 +164095,7 @@
     110,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164102,7 +164110,7 @@
     111,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164117,7 +164125,7 @@
     112,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164132,7 +164140,7 @@
     113,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164147,7 +164155,7 @@
     114,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164162,7 +164170,7 @@
     112,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164177,7 +164185,7 @@
     113,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164192,7 +164200,7 @@
     114,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164207,7 +164215,7 @@
     112,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164222,7 +164230,7 @@
     113,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164237,7 +164245,7 @@
     114,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164252,7 +164260,7 @@
     115,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164267,7 +164275,7 @@
     116,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164282,7 +164290,7 @@
     117,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164297,7 +164305,7 @@
     115,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164312,7 +164320,7 @@
     116,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164327,7 +164335,7 @@
     117,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164342,7 +164350,7 @@
     115,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164357,7 +164365,7 @@
     116,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164372,7 +164380,7 @@
     117,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164387,7 +164395,7 @@
     118,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164402,7 +164410,7 @@
     119,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164417,7 +164425,7 @@
     120,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164432,7 +164440,7 @@
     118,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164447,7 +164455,7 @@
     119,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164462,7 +164470,7 @@
     120,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164477,7 +164485,7 @@
     118,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164492,7 +164500,7 @@
     119,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164507,7 +164515,7 @@
     120,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164522,7 +164530,7 @@
     121,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164537,7 +164545,7 @@
     122,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164552,7 +164560,7 @@
     123,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164567,7 +164575,7 @@
     121,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164582,7 +164590,7 @@
     122,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164597,7 +164605,7 @@
     123,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164612,7 +164620,7 @@
     121,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164627,7 +164635,7 @@
     122,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164642,7 +164650,7 @@
     123,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164657,7 +164665,7 @@
     124,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164672,7 +164680,7 @@
     125,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164687,7 +164695,7 @@
     126,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164702,7 +164710,7 @@
     124,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164717,7 +164725,7 @@
     125,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164732,7 +164740,7 @@
     126,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164747,7 +164755,7 @@
     124,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164762,7 +164770,7 @@
     125,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164777,7 +164785,7 @@
     126,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164792,7 +164800,7 @@
     127,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164807,7 +164815,7 @@
     128,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164822,7 +164830,7 @@
     129,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164837,7 +164845,7 @@
     127,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164852,7 +164860,7 @@
     128,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164867,7 +164875,7 @@
     129,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164882,7 +164890,7 @@
     127,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164897,7 +164905,7 @@
     128,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164912,7 +164920,7 @@
     129,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164927,7 +164935,7 @@
     130,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164942,7 +164950,7 @@
     131,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164957,7 +164965,7 @@
     132,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164972,7 +164980,7 @@
     130,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -164987,7 +164995,7 @@
     131,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165002,7 +165010,7 @@
     132,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165017,7 +165025,7 @@
     130,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165032,7 +165040,7 @@
     131,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165047,7 +165055,7 @@
     132,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165062,7 +165070,7 @@
     133,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165077,7 +165085,7 @@
     134,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165092,7 +165100,7 @@
     135,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165107,7 +165115,7 @@
     133,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165122,7 +165130,7 @@
     134,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165137,7 +165145,7 @@
     135,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165152,7 +165160,7 @@
     133,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165167,7 +165175,7 @@
     134,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165182,7 +165190,7 @@
     135,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165197,7 +165205,7 @@
     136,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165212,7 +165220,7 @@
     137,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165227,7 +165235,7 @@
     138,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165242,7 +165250,7 @@
     136,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165257,7 +165265,7 @@
     137,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165272,7 +165280,7 @@
     138,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165287,7 +165295,7 @@
     136,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165302,7 +165310,7 @@
     137,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165317,7 +165325,7 @@
     138,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165332,7 +165340,7 @@
     139,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165347,7 +165355,7 @@
     140,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165362,7 +165370,7 @@
     141,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165377,7 +165385,7 @@
     139,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165392,7 +165400,7 @@
     140,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165407,7 +165415,7 @@
     141,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165422,7 +165430,7 @@
     139,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165437,7 +165445,7 @@
     140,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165452,7 +165460,7 @@
     141,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165467,7 +165475,7 @@
     142,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165482,7 +165490,7 @@
     143,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165497,7 +165505,7 @@
     144,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165512,7 +165520,7 @@
     142,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165527,7 +165535,7 @@
     143,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165542,7 +165550,7 @@
     144,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165557,7 +165565,7 @@
     142,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165572,7 +165580,7 @@
     143,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165587,7 +165595,7 @@
     144,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165602,7 +165610,7 @@
     145,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165617,7 +165625,7 @@
     146,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165632,7 +165640,7 @@
     147,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165647,7 +165655,7 @@
     145,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165662,7 +165670,7 @@
     146,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165677,7 +165685,7 @@
     147,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165692,7 +165700,7 @@
     145,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165707,7 +165715,7 @@
     146,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165722,7 +165730,7 @@
     147,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165737,7 +165745,7 @@
     148,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165752,7 +165760,7 @@
     149,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165767,7 +165775,7 @@
     150,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165782,7 +165790,7 @@
     148,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165797,7 +165805,7 @@
     149,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165812,7 +165820,7 @@
     150,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165827,7 +165835,7 @@
     148,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165842,7 +165850,7 @@
     149,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165857,7 +165865,7 @@
     150,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165872,7 +165880,7 @@
     151,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165887,7 +165895,7 @@
     152,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165902,7 +165910,7 @@
     153,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165917,7 +165925,7 @@
     151,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165932,7 +165940,7 @@
     152,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165947,7 +165955,7 @@
     153,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165962,7 +165970,7 @@
     151,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165977,7 +165985,7 @@
     152,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -165992,7 +166000,7 @@
     153,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166007,7 +166015,7 @@
     154,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166022,7 +166030,7 @@
     155,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166037,7 +166045,7 @@
     156,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166052,7 +166060,7 @@
     154,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166067,7 +166075,7 @@
     155,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166082,7 +166090,7 @@
     156,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166097,7 +166105,7 @@
     154,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166112,7 +166120,7 @@
     155,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166127,7 +166135,7 @@
     156,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166142,7 +166150,7 @@
     157,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166157,7 +166165,7 @@
     158,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166172,7 +166180,7 @@
     159,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166187,7 +166195,7 @@
     157,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166202,7 +166210,7 @@
     158,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166217,7 +166225,7 @@
     159,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166232,7 +166240,7 @@
     157,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166247,7 +166255,7 @@
     158,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -166262,7 +166270,7 @@
     159,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -168280,6 +168288,6 @@
  ],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "1d524e3da798736fdbbf96dfeedc17e8a913ee4bea4f79dfd7b3af76758848a1"
+  "hash": "5ded4601f47efeb7a13375ea52bb3ceedbf459603b297a0edd82dc259c8e65d7"
  }
 }

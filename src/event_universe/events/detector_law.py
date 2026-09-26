@@ -209,6 +209,26 @@ class LiveRecord:
     # pointer's unit): what the faces and every set but the receiver took,
     # inside `absorbed` (the completion's measure) and on no pointer.
     escaped: int = 0
+    # THE RECORD'S PAIR (ALGEBRA.md 9.85 (3), 9.91 (7); the one stroke, commit
+    # 1): the rest pair its rows step with, its family's declared pair or, on
+    # a family whose pair is the body's, the body's `kind` or the emitter's
+    # `pair`; the board's pair arrays are read by (family, pair); None reads
+    # the family's declared pair (a record made without one, the tests')
+    pair: tuple[int, int] | None = None
+    # THE COMPONENT (ALGEBRA.md 9.86 (2), 9.91 (1)): the index of the record's
+    # component in its family's parts (0 the time part; a wave of light in
+    # one transverse component of the charge family, commit 4)
+    part: int = 0
+    # THE HELD PART (item 51; 9.91 (2), (3)): a field family's component
+    # record, stepped plain at the pace 1, written by the hold at the bodies'
+    # Nodes, booked by no detector; marked on the record, not on its family
+    # (the charge family is held and has waves, 9.86 (2) (b))
+    held_part: bool = False
+    # HOST (record 2039 (b); 9.91 (1) "the support-box shortcut keeps a zero
+    # part free of work"): a held part never written nonzero: its two levels
+    # and remainder are zero everywhere and step to zero exactly, so the step
+    # is skipped; cleared by the first nonzero hold
+    silent: bool = False
     # THE NORM'S DENOMINATOR (ALGEBRA.md 9.50 (13); BUILD.md section 26 item
     # 36): the record's conserved form is the exact rational norm / pace (the
     # Node's terms weighted by 1 / p_i); at one level p times the form is
@@ -301,6 +321,19 @@ class Block:
     # own remainder at the first shell Node after its first advance; every
     # later residue is read at the click (9.44 (5) (c))
     residue_pending: bool = False
+
+
+class PairView:
+    """The tests' view of a family's pair arrays by its own declared pair
+    (`kind_num[family]`, `kind_den[family]`; item 51's form): one array of
+    the two, from `pair_arrays`."""
+
+    def __init__(self, simulation: DetectorLawSimulation, index: int) -> None:
+        self.simulation = simulation
+        self.index = index
+
+    def __getitem__(self, family: int) -> np.ndarray:
+        return self.simulation.pair_arrays(family)[self.index]
 
 
 @dataclass
@@ -535,7 +568,8 @@ class DetectorLawSimulation:
                     span[node] = True
                 self.span_masks[number] = span
         self.records: dict[int, LiveRecord] = {}
-        self._kind_walls: dict[int, int] = {}  # HOST: `kind_wall` per family, cleared by `_write_pair`
+        # HOST: `kind_wall` per (family, pair), cleared by `_write_pair`
+        self._kind_walls: dict[tuple[int, int, int], int] = {}
         # the records clicked this interval, deleted whole after the advances
         self.dead: list[int] = []
         self.blocks: list[Block] = []
@@ -549,12 +583,15 @@ class DetectorLawSimulation:
         # declared pair; a block's Nodes a lowered pair there, the build's
         # step 3) and the faces its rows read (the world's `boundary`, one
         # border for every family, BUILD.md section 26 item 28).
-        self.kind_num: list[np.ndarray] = [
-            np.full(self.shape, family.pair[0], dtype=np.int64) for family in world.families
-        ]
-        self.kind_den: list[np.ndarray] = [
-            np.full(self.shape, family.pair[1], dtype=np.int64) for family in world.families
-        ]
+        # THE PAIR ARRAYS BY (FAMILY, PAIR) (ALGEBRA.md 9.85 (3), 9.91 (7); the
+        # one stroke, commit 1): a record's rows step with its own rest pair
+        # everywhere but at the bodies of its family, whose wells (the lowered
+        # pair) are written into every array of the family; the arrays are made
+        # once per (family, pair) on first use (`pair_arrays`); `kind_num` and
+        # `kind_den` read a family's own declared pair (the tests' view)
+        self._pairs: dict[tuple[int, int, int], tuple[np.ndarray, np.ndarray]] = {}
+        self.kind_num = PairView(self, 0)
+        self.kind_den = PairView(self, 1)
         self.kind_wrap: list[tuple[bool, bool, bool]] = [
             world.kind_periodic(index) for index in range(len(world.families))
         ]
@@ -598,7 +635,9 @@ class DetectorLawSimulation:
                 if definition.emitter is not None:
                     self._excite(block, block.seat)
             elif definition.seed > 0:
-                own_record = self._massive_record(number * (1 << 32), number, entry.family)
+                own_record = self._massive_record(
+                    number * (1 << 32), number, entry.family, definition.kind
+                )
                 if definition.profile is not None:
                     # the declared integer profile over the whole board at both
                     # levels (a standing start on the bound mode: MASSIVE_RECORD.md
@@ -657,27 +696,58 @@ class DetectorLawSimulation:
         # declared source held at every body's Nodes and 0 elsewhere (ALGEBRA.md
         # 9.45 (2), 9.48 (2)); the identities below 0, one per held family
         self.held_records: dict[int, LiveRecord] = {
-            family: LiveRecord(
-                -1 - position,
-                -1 - position,
-                family,
-                0,
-                0,
-                self.tick,
-                0,
-                1,
-                1,
-                0,
-                1,
-                np.zeros(self.shape, dtype=np.int64),
-                np.zeros(self.shape, dtype=np.int64),
-                np.zeros(self.shape, dtype=np.int64),
-                pointers=[0] * len(self.detector_names),
-                first_rung=[None] * len(self.detector_names),
-            )
+            family: self._held_part(position, family, 0)
             for position, family in enumerate(self.held_families)
         }
+        # THE OTHER PARTS of a held family (ALGEBRA.md 9.86 (2), 9.91 (1); commit
+        # 1): one record per component beyond the time part (gravity's nine,
+        # the charge's three), zero and silent until a hold writes them (the
+        # vector and tensor holds, commit 2); stepped with the time part
+        self.held_parts: dict[int, list[LiveRecord]] = {
+            family: [
+                self._held_part(position, family, part)
+                for part in range(1, self.families[family].components)
+            ]
+            for position, family in enumerate(self.held_families)
+        }
+        for parts in self.held_parts.values():
+            for record in parts:
+                record.silent = True
         self._hold()
+
+    def _held_part(self, position: int, family: int, part: int) -> LiveRecord:
+        """A held family's component record over the board (item 51; 9.91 (1)):
+        the identities below 0, one per held family and part; the pair [1, 1]
+        (a held family is massless, the loader's check)."""
+        return LiveRecord(
+            -1 - position - 100 * part,
+            -1 - position,
+            family,
+            0,
+            0,
+            self.tick,
+            0,
+            1,
+            1,
+            0,
+            1,
+            np.zeros(self.shape, dtype=np.int64),
+            np.zeros(self.shape, dtype=np.int64),
+            np.zeros(self.shape, dtype=np.int64),
+            pointers=[0] * len(self.detector_names),
+            first_rung=[None] * len(self.detector_names),
+            part=part,
+            held_part=True,
+        )
+
+    def held_component_records(self) -> list[LiveRecord]:
+        """Every held family's component records in the declared order, the
+        time part first, then the other parts (the interval's field step)."""
+        found: list[LiveRecord] = []
+        for family, record in self.held_records.items():
+            found.append(record)
+            found.extend(self.held_parts[family])
+        return found
 
     # The held families (ALGEBRA.md 9.35 (2), 9.45, 9.48; BUILD.md section 26
     # items 31, 32, 35 and 51): the operations, written once for any family
@@ -730,6 +800,16 @@ class DetectorLawSimulation:
                 continue
             if record.now.any() or record.before.any() or record.remainder.any():
                 found.append(self.families[family].name)
+        # every other part of a held family with no source of its own stays
+        # exactly zero (9.91 (9) (a): the leak test per part)
+        for family, parts in self.held_parts.items():
+            for record in parts:
+                if record.silent:
+                    continue
+                if record.now.any() or record.before.any() or record.remainder.any():
+                    name = f"{self.families[family].name}[{record.part}]"
+                    if name not in found:
+                        found.append(name)
         sourced = set(self.held_families)
         for number, entry in enumerate(self.world.measured):
             sourced.add(entry.family)
@@ -771,7 +851,7 @@ class DetectorLawSimulation:
         content) stays positive at every Node and the content above -Gamma
         (the loader's bound on twice the world's sources); the run is refused
         where it does not."""
-        for record in self.held_records.values():
+        for record in self.held_component_records():
             self._advance(record)
         self._hold()
         # the pace of every family's reads stays positive (ALGEBRA.md 9.45 (3),
@@ -807,7 +887,9 @@ class DetectorLawSimulation:
                 nodes.append((int(j[0]), int(j[1]), int(j[2])))
         return nodes
 
-    def wheel_at(self, family: int, node: tuple[int, ...]) -> tuple[int, int]:
+    def wheel_at(
+        self, family: int, node: tuple[int, ...], pair: tuple[int, int] | None = None
+    ) -> tuple[int, int]:
         """The remainder's step g and the wheel W of the family's rule at a
         Node under the fixed wall (ALGEBRA.md 9.22 (4), 9.50 (8) and (13);
         BUILD.md section 26 items 34 and 36): the wall 3 den Gamma, the step
@@ -816,8 +898,9 @@ class DetectorLawSimulation:
         multiples of g), W = wall / g values; the pair's own 3 den / gcd(num, 3 den) in
         the vacuum (2403 on [800, 801]), content-dependent at and beside a
         body; read from the rule, never declared."""
-        num = int(self.kind_num[family][node])
-        den = int(self.kind_den[family][node])
+        num_all, den_all = self.pair_arrays(family, pair)
+        num = int(num_all[node])
+        den = int(den_all[node])
         gamma = self.node_clock
         effective = self._effective_content(family)
         content = int(effective[node])
@@ -853,7 +936,7 @@ class DetectorLawSimulation:
             content = self.node_level[reads[0][0]]
         else:
             content = np.zeros(self.shape, dtype=np.int64)
-            for other, weight, by in reads:
+            for other, weight, by, _ in reads:
                 factor = weight if by == "plain" else -sign * weight
                 if factor:
                     content = content + factor * self.node_level[other]
@@ -921,26 +1004,59 @@ class DetectorLawSimulation:
             mask[np.ix_(ranges[0], ranges[1], ranges[2])] = True
         return mask
 
-    def _write_pair(self, block: Block) -> None:
-        """The block's pair written on its Nodes into its kind's arrays; the
-        kind's own pair elsewhere on the Nodes the block left."""
-        self._kind_walls.pop(block.family, None)  # the family's wall read anew (`kind_wall`)
-        family = self.families[block.family]
-        num = self.kind_num[block.family]
-        num[~block.mask] = family.pair[0]
-        den_all = self.kind_den[block.family]
-        den_all[~block.mask] = family.pair[1]
-        den = self.kind_den[block.family]
-        num[block.mask] = block.definition.pair[0]
-        den[block.mask] = block.definition.pair[1]
-        for other in self.blocks:
-            if other is not block and other.family == block.family:
-                num[other.mask & ~block.mask] = other.definition.pair[0]
-                den[other.mask & ~block.mask] = other.definition.pair[1]
+    def pair_arrays(
+        self, family: int, pair: tuple[int, int] | None = None
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """THE PAIR ARRAYS of a record of `family` at its rest pair (ALGEBRA.md
+        9.85 (3), 9.91 (7); commit 1): num and den over the board, the pair
+        everywhere but at the family's bodies, whose declared pairs (the wells
+        and the gaps) are written at their Nodes; made once per (family, pair)
+        and kept up with the bodies' steps (`_write_pair`). `pair` None reads
+        the family's own declared pair (refused on a family whose pair is the
+        body's: every record of it carries its own)."""
+        if pair is None:
+            definition = self.families[family]
+            if definition.pair_on_body:
+                raise ValueError(
+                    f"{BEAM_LAW}: the family {definition.name!r} declares no pair of its own; a "
+                    "record's pair is read from the record (ALGEBRA.md 9.85 (3), 9.91 (7))"
+                )
+            pair = definition.pair
+        key = (family, int(pair[0]), int(pair[1]))
+        found = self._pairs.get(key)
+        if found is None:
+            num = np.full(self.shape, key[1], dtype=np.int64)
+            den = np.full(self.shape, key[2], dtype=np.int64)
+            for block in self.blocks:
+                if block.family == family:
+                    num[block.mask] = block.definition.pair[0]
+                    den[block.mask] = block.definition.pair[1]
+            found = (num, den)
+            self._pairs[key] = found
+        return found
 
-    def _massive_record(self, identity: int, number: int, family: int) -> LiveRecord:
-        """A record of the massive kind on the board: a block's own record or
-        its response to a light record; no train, no clock, no Ports."""
+    def _write_pair(self, block: Block) -> None:
+        """The block's pair written on its Nodes into every pair array of its
+        family; the array's own pair elsewhere on the Nodes the block left."""
+        for key in [key for key in self._kind_walls if key[0] == block.family]:
+            del self._kind_walls[key]  # the family's walls read anew (`kind_wall`)
+        for (family, rest_num, rest_den), (num, den) in self._pairs.items():
+            if family != block.family:
+                continue
+            num[~block.mask] = rest_num
+            den[~block.mask] = rest_den
+            num[block.mask] = block.definition.pair[0]
+            den[block.mask] = block.definition.pair[1]
+            for other in self.blocks:
+                if other is not block and other.family == block.family:
+                    num[other.mask & ~block.mask] = other.definition.pair[0]
+                    den[other.mask & ~block.mask] = other.definition.pair[1]
+
+    def _massive_record(
+        self, identity: int, number: int, family: int, pair: tuple[int, int]
+    ) -> LiveRecord:
+        """A record of the massive kind on the board: a block's own record at
+        the body's kind (its rest pair); no train, no clock, no Ports."""
         return LiveRecord(
             identity,
             number,
@@ -958,6 +1074,7 @@ class DetectorLawSimulation:
             np.zeros(self.shape, dtype=np.int64),
             pointers=[0] * len(self.detector_names),
             first_rung=[None] * len(self.detector_names),
+            pair=(int(pair[0]), int(pair[1])),
         )
 
     def _momentum_now(self, block: Block) -> list[int]:
@@ -1088,7 +1205,7 @@ class DetectorLawSimulation:
             step, wheel = self.seat_wheel(block)
             return live.remainder // step, wheel
         node = self.first_shell_node(block)
-        step, wheel = self.wheel_at(live.family, node)
+        step, wheel = self.wheel_at(live.family, node, live.pair)
         return int(live.remainder[node]) // step, wheel
 
     def _excite(self, block: Block, own_record: LiveRecord | SeatRecord) -> None:
@@ -1381,6 +1498,7 @@ class DetectorLawSimulation:
             wheel=wheel,
             labels=tuple(emitter.branches),
             emitter=number,
+            pair=(int(emitter.pair[0]), int(emitter.pair[1])),
         )
         # E^T: the given clock's character on the body's Nodes, written once at
         # both levels, every Node at the vertex's phase (the one-Node broadband
@@ -1603,9 +1721,10 @@ class DetectorLawSimulation:
         r the difference; exact at every Node for every clock history, since
         the remainder's range is the wall's, constant (board_algebra.py's
         `step_inverse`)."""
-        num = self.kind_num[live.family]
-        den = self.kind_den[live.family]
-        field = self.families[live.family].held is not None
+        if live.silent:
+            return  # a zero held part steps to zero exactly (HOST; 9.91 (1))
+        num, den = self.pair_arrays(live.family, live.pair)
+        field = live.held_part
         gamma = 1 if field else self.node_clock
         content = 0 if field else self._effective_content(live.family)
         # the same integers as the forward step's: the pace on the Node's own
@@ -1676,7 +1795,7 @@ class DetectorLawSimulation:
                 self._advance_seat_inverse(block)
             elif block.own is not None:
                 self._advance_inverse(block.own)
-        for record in self.held_records.values():
+        for record in reversed(self.held_component_records()):
             self._advance_inverse(record)
         self._hold()
         self.tick -= 1
@@ -1734,7 +1853,7 @@ class DetectorLawSimulation:
     # wall, wall the family's common wall (the least common multiple of its
     # pairs' numerators over the board).
 
-    def kind_wall(self, family: int) -> int:
+    def kind_wall(self, family: int, pair: tuple[int, int] | None = None) -> int:
         """The family's common wall: the least common multiple of the
         numerators of its pair over the board (the vacuum's and every body's),
         so that wall x den_i / num_i is an integer at every Node. HOST: read
@@ -1742,13 +1861,16 @@ class DetectorLawSimulation:
         written (`_write_pair`, the load and a hop); the same integer at every
         call, bit for bit (record 2039: the distinct numerators were gathered
         anew for every record at every interval, a fifth of the run)."""
-        wall = self._kind_walls.get(family)
+        num_all, _ = self.pair_arrays(family, pair)
+        rest = self.families[family].pair if pair is None else (int(pair[0]), int(pair[1]))
+        key = (family, rest[0], rest[1])
+        wall = self._kind_walls.get(key)
         if wall is None:
             wall = 1
-            for value in np.unique(self.kind_num[family]).tolist():
+            for value in np.unique(num_all).tolist():
                 value = int(value)
                 wall = wall * value // gcd(wall, value)
-            self._kind_walls[family] = wall
+            self._kind_walls[key] = wall
         return wall
 
     def _flux_ports(self, family: int) -> list[tuple[int, int, np.ndarray]]:
@@ -1964,7 +2086,12 @@ class DetectorLawSimulation:
             flat_before[index] = before_value
 
     def planted_record(
-        self, family: int, now: np.ndarray, before: np.ndarray, norm: int = 0
+        self,
+        family: int,
+        now: np.ndarray,
+        before: np.ndarray,
+        norm: int = 0,
+        pair: tuple[int, int] | None = None,
     ) -> LiveRecord:
         """A record of the family given to the rule directly, its two levels
         as given and its remainder 0 (the generator's checks of the given
@@ -1989,6 +2116,7 @@ class DetectorLawSimulation:
             pointers=[0] * len(self.detector_names),
             first_rung=[None] * len(self.detector_names),
             norm=norm,
+            pair=self.families[family].pair if pair is None else (int(pair[0]), int(pair[1])),
         )
 
     def conserved_form(self, live: LiveRecord) -> Fraction:
@@ -2013,7 +2141,7 @@ class DetectorLawSimulation:
         plain currents through the Node's Links plus the remainders' term,
         so a bound mode's share is constant where nothing flows."""
         family = live.family
-        wall = self.kind_wall(family)
+        wall = self.kind_wall(family, live.pair)
         # THE SHARE UNDER THE NODE'S OWN PACE (ALGEBRA.md 9.50 (9) and (13);
         # BUILD.md section 26 item 36; the form's units, the plain share in
         # the vacuum): with the pace p_i at every Node, e_i = [3 wall (den_i
@@ -2026,13 +2154,14 @@ class DetectorLawSimulation:
         # through the Node's Links plus the remainders' term (wall / (num_i
         # p_i)) (a_next - a_before)(r - r'), an exact rational per Node (the
         # weights p_i p_j at one integer scale, form (B) of item 34, HISTORY)
-        field = self.families[live.family].held is not None
+        field = live.held_part
         gamma = 1 if field else self.node_clock
         content = (
             np.zeros(self.shape, dtype=object)
             if field
             else self._effective_content(live.family).astype(object)
         )
+        num_all, den_all = self.pair_arrays(family, live.pair)
         # THE FORM FROM THE RULE'S OWN INTEGERS (ALGEBRA.md 9.57 (1); item 44):
         # with (R_i, S_i, w_i) the rule's coefficients at the Node, the Node's
         # term is L [w_i (now^2 + before^2) - S_i now before] / R_i and the
@@ -2042,8 +2171,8 @@ class DetectorLawSimulation:
         # of item 36, [3 den Gamma (a^2 + b^2) - 6 den c a b] / (p num), is
         # this at R = p num, S = 6 den c, w = 3 den Gamma
         read_coefficient, self_coefficient, wall_at = rule_coefficients(
-            self.kind_num[family].astype(object),
-            self.kind_den[family].astype(object),
+            num_all.astype(object),
+            den_all.astype(object),
             gamma,
             content,
             not field,
@@ -2259,14 +2388,15 @@ class DetectorLawSimulation:
         # THE BOOKING BY ATTRIBUTE (item 51; item 53): a held family's record
         # and a body's own standing record are read by no detector; every other
         # record is booked at the Ports (nothing declared: derived from `held`)
-        field = self.families[live.family].held is not None
+        if live.silent:
+            return  # a zero held part steps to zero exactly (HOST; 9.91 (1))
+        field = live.held_part
         booked = not field and not live.standing
-        # The rule with the kind's pair on the six-neighbour term
+        # The rule with the record's pair on the six-neighbour term
         # (massive-record-v1, MASSIVE_RECORD.md section 1): G over the six
         # neighbours, then D by 3 den with the remainder kept, then T; at
         # light's pair [1, 1] the first build's integers bit for bit.
-        num = self.kind_num[live.family]
-        den = self.kind_den[live.family]
+        num, den = self.pair_arrays(live.family, live.pair)
         # THE COUPLING IS THE CLICK ALONE (the model owner's decision (2) of
         # record 1962; ALGEBRA.md 9.34 (B); BUILD.md section 26 item 30): no
         # coupling's term and no folded denominator (MASSIVE_RECORD.md
@@ -2539,12 +2669,13 @@ class DetectorLawSimulation:
         units; read on the Nodes outside a moving set's faces (ALGEBRA.md 9.74
         (2); item 56; the hop's reading of item 48 HISTORY)."""
         family = live.family
-        wall = self.kind_wall(family)
-        field = self.families[family].held is not None
+        wall = self.kind_wall(family, live.pair)
+        field = live.held_part
         gamma = 1 if field else self.node_clock
         content = self._effective_content(family) if not field else np.zeros(self.shape, dtype=np.int64)
-        num = self.kind_num[family].ravel()[nodes]
-        den = self.kind_den[family].ravel()[nodes]
+        num_all, den_all = self.pair_arrays(family, live.pair)
+        num = num_all.ravel()[nodes]
+        den = den_all.ravel()[nodes]
         level = content.ravel()[nodes]
         now = live.now.ravel()[nodes]
         before = live.before.ravel()[nodes]
@@ -2907,10 +3038,17 @@ class DetectorLawSimulation:
                         ),
                         Fraction(0),
                     )
-                    + (
-                        self.record_form(self.held_records[index])
-                        if index in self.held_records
-                        else Fraction(0)
+                    + sum(
+                        (
+                            self.record_form(record)
+                            for record in (
+                                [self.held_records[index], *self.held_parts[index]]
+                                if index in self.held_records
+                                else []
+                            )
+                            if not record.silent
+                        ),
+                        Fraction(0),
                     )
                 )
             families[family.name] = lines

@@ -50,6 +50,10 @@
     800,
     800
    ],
+   "kind": [
+    800,
+    809
+   ],
    "seed": [
     1135,
     1148,
@@ -110653,6 +110657,6 @@
  "detectors": [],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "7bb2c3fb37796a5d261b33f5222255dc3eb1be1a7ca0f0601882d682b3fd778e"
+  "hash": "bcdf516812c843b3b0a7ebf499bce9bbbc9b1e89ae529f81d4ac6efab9228e20"
  }
 }

@@ -6,6 +6,24 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The families file's three entries and the body's kind, on 2026-09-26 (the one stroke, commit 1; no behaviour where the new parts are zero)
+
+ALGEBRA.md 9.86 (2), 9.91 (7) and 9.91 (10) 1 (BUILD.md section 26 item 60):
+`examples/events/families.json` holds three families, gravity (parts [1, 3,
+6]), the charge (parts [1, 3], light its wave) and matter (parts [1], the
+pair on every body), and the universe's integers node_clock, amplitude_bound
+and charge_weight. In a world file the family named "light" is "charge"
+(every light record, mirror of light's kind, receiver of light and stock of
+light), and every body of a massive kind is of the family "matter" with its
+rest pair declared as `kind` [num, den] (the families matter, well, dark,
+heavy, muon and point of item 59 are kinds now); an emitter giving matter
+declares the given record's `pair`. An inline families list (the unit tests')
+stays admitted with the scalar's attributes by default; an entry may declare
+`parts`, `levels`, `self_unit`, `clicks`, `held_factors`, `held_dipole` and
+`held_dipole_div`; `components` is refused. Regenerate a world with its
+generator; the rows, the held levels and the lines are bit for bit those
+before the change, the name "light" read as "charge".
+
 ## The one families file, on 2026-09-26 (the families and the universe's integers in one file; no behaviour)
 
 ALGEBRA.md 9.83 (2) and 9.85 (3), the model owner's record 2075 (BUILD.md

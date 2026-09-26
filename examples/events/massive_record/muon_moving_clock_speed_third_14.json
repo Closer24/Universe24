@@ -34,7 +34,7 @@
     93,
     0
    ],
-   "family": "muon",
+   "family": "matter",
    "amount": 1,
    "momentum": [
     64,
@@ -49,6 +49,10 @@
    "pair": [
     3200,
     3227
+   ],
+   "kind": [
+    3200,
+    3236
    ],
    "seed": [
     2456,
@@ -40324,6 +40328,6 @@
  "mode_axis": "x",
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "91a625776c001a829f02eef8ef522caab73af863d83fac5dab6b9936fc33a6e5"
+  "hash": "4123d84a6756a46c93d9aa3c2958f806328c8ab9add33a7845e2083332c5d59c"
  }
 }

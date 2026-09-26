@@ -221,7 +221,8 @@ def test_the_light_clock_in_the_tables_form_and_the_generators_checks(capsys):
     a = document["measured"][0]
     assert a["extents"] == [32, 3, 3] and a["position"] == [600, 0, 0] and a["pair"] == [800, 801]
     # the stock as the given family's content held at the body (item 47): one own quantum
-    assert a["amount"] == 1 and a["held"] == {"light": 64} and a["receiver"] == "at_well"
+    assert a["amount"] == 1 and a["held"] == {"charge": 64} and a["receiver"] == "at_well"
+    assert a["family"] == "matter" and a["kind"] == [800, 809]  # the body's rest pair (9.91 (7))
     assert a["emitter"]["train"] == {"direction": [1, 0, 0], "periods": 8}
     assert a["emitter"]["clock"] == [512, 1]
     train = profile_of(document)
@@ -229,7 +230,7 @@ def test_the_light_clock_in_the_tables_form_and_the_generators_checks(capsys):
         train["now"][i] == train["now"][i - i % 9] for i in range(288)
     )
     mirror = document["measured"][1]
-    assert mirror["family"] == "light" and mirror["pair"] == [1, 2]
+    assert mirror["family"] == "charge" and mirror["pair"] == [1, 2]  # light's kind, the charge's
     assert mirror["extents"] == [4, 3, 3] and mirror["position"] == [690, 0, 0]
     assert document["detectors"] == [{"name": "at_well", "block": 0}]
     world = parse_nature_beam_world(document)

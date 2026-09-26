@@ -63,9 +63,10 @@ FLIGHTS = 2  # the run's length: the stock's windows and rungs plus two flights
 def seat(position: list[int]) -> dict:
     return {
         "position": position,
-        "family": massive.KIND_NAMES[(KIND[0], KIND[1])],  # the kind's name in the families file
+        "family": massive.MATTER_FAMILY_NAME,
+        "kind": list(KIND),  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
         "amount": 1,
-        "held": {"light": STOCK},
+        "held": {massive.WAVE_FAMILY_NAME: STOCK},  # the stock of light, the charge family's quanta
         "momentum": [0, 0, 0],
         "ramp": 0,
         "start": 0,
@@ -73,14 +74,14 @@ def seat(position: list[int]) -> dict:
         "pair": list(WELL),
         "seed": SEED,
         "margin": "control",
-        "emitter": {"family": "light", "clock": list(massive.MASSIVE_GIVEN_CLOCK)},
+        "emitter": {"family": massive.WAVE_FAMILY_NAME, "clock": list(massive.MASSIVE_GIVEN_CLOCK)},
     }
 
 
 def body(x: int) -> dict:
     return {
         "position": [x, 0, 0],
-        "family": "light",
+        "family": massive.WAVE_FAMILY_NAME,  # a receiver of light's kind (9.86 (2) (b))
         "amount": 1,
         "momentum": [0, 0, 0],
         "held": {},

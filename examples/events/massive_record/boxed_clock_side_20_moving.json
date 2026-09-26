@@ -50,6 +50,10 @@
     800,
     800
    ],
+   "kind": [
+    800,
+    809
+   ],
    "seed": [
     46,
     47,
@@ -262468,6 +262472,6 @@
  "mode_axis": "x",
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "3611ed06d46460a3cd793f3d699b6a7d9f4f469572e22c5a5f6cc937679e99d6"
+  "hash": "a99c1554644f51e357c0e2d97d7445bff3e730e319f28ac8b8e318b91690984f"
  }
 }

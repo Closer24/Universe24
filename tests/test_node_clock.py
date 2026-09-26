@@ -357,14 +357,19 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     simulation = DetectorLawSimulation(world)
     block = simulation.blocks[0]
     centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))
+    # the registered world's matter family (the families file's third entry, item 60) at the
+    # body's kind [800, 809] (the pair on the body, 9.91 (7))
+    matter = [family.name for family in world.families].index("matter")
+    kind = block.definition.kind
+    assert kind == (800, 809) and world.families[matter].pair_on_body
     # A's level 65: its one own quantum beside its stock of 64 light quanta (item 47)
-    assert simulation.node_clock_pair(centre, 1) == (NODE_CLOCK - 65, NODE_CLOCK)
-    assert simulation.node_clock_pair((100, 0, 0), 1) == (NODE_CLOCK, NODE_CLOCK)
+    assert simulation.node_clock_pair(centre, matter) == (NODE_CLOCK - 65, NODE_CLOCK)
+    assert simulation.node_clock_pair((100, 0, 0), matter) == (NODE_CLOCK, NODE_CLOCK)
     # the wheel from the weak-field rule's integers (item 44): (g, W) = (50, 9612000000) at the
     # emitter's level 65 (its one own quantum beside the stock of 64, item 47; (1536,
     # 312890625) at 64), the kind's own in the vacuum
-    assert simulation.wheel_at(1, centre) == (50, 9612000000)
-    assert simulation.wheel_at(1, (100, 0, 0)) == VACUUM_WHEEL
+    assert simulation.wheel_at(matter, centre, kind) == (50, 9612000000)
+    assert simulation.wheel_at(matter, (100, 0, 0), kind) == VACUUM_WHEEL
 
 
 def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
@@ -595,7 +600,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
         parse_nature_beam_world(source)
     components = json.loads(json.dumps(good))
     components["families"][0]["components"] = 3
-    with pytest.raises(ValueError, match="components 3: one component alone is built"):
+    with pytest.raises(ValueError, match="components is refused: the representation is `parts`"):
         parse_nature_beam_world(components)
     body = json.loads(json.dumps(good))
     body["measured"] = [dict(light_body(3, 1), family="clicks")]

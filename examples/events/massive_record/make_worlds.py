@@ -103,9 +103,12 @@ AMPLITUDE_BOUND = (
 # this generator is built with the file's entries and written with the file's path
 FAMILIES_FILE = "examples/events/families.json"
 MASSIVE_GIVEN_CLOCK = [77, 25]  # this generator's light clock (the pair form on N = 64)
-# the massive kinds' names in the families file, by pair (one law of matter per pair today;
-# the one matter family with the pair on the body waits on the mathematician's vacuum pair)
-KIND_NAMES = {(800, 809): "matter", (1600, 1618): "heavy", (3200, 3236): "muon", (800, 813): "point"}
+# THE THREE FAMILIES (ALGEBRA.md 9.86 (2), 9.91 (7); the one stroke, commit 1): gravity (the
+# held content, the Node clock), the charge (the held sign; light is its wave, so a light
+# record, a mirror of light's kind and a stock of light are the charge family's), and matter
+# (one family, every body with its own rest pair `kind`)
+MATTER_FAMILY_NAME = "matter"
+WAVE_FAMILY_NAME = "charge"
 
 
 def families_entries() -> tuple[list[dict], dict[str, int]]:
@@ -136,41 +139,27 @@ def families_of(document: dict) -> list[dict]:
     return list(families)
 
 
+def pair_on_body(document: dict, family: str) -> bool:
+    """Whether the family declares no pair of its own, every body and record of it declaring
+    theirs (`pair` "body"; ALGEBRA.md 9.85 (3), 9.91 (7))."""
+    entry = next(item for item in families_of(document) if item["name"] == family)
+    return entry.get("pair") == "body"
+
+
+def kind_of(document: dict, entry: dict) -> list[int]:
+    """A body's rest pair (its kind): its family's declared pair, or its own `kind` on a family
+    whose pair is the body's; [1, 1] for a family declaring none (light's kind)."""
+    if pair_on_body(document, entry["family"]):
+        return [int(entry["kind"][0]), int(entry["kind"][1])]
+    family = next(item for item in families_of(document) if item["name"] == entry["family"])
+    pair = family.get("pair", [1, 1])
+    return [int(pair[0]), int(pair[1])]
+
+
 FAMILIES_INTEGERS = families_entries()[1]
 # Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44; the eighteen's 10^6 under
 # the first-order rule HISTORY); the families file's integer
 NODE_CLOCK = FAMILIES_INTEGERS["node_clock"]
-# THE FAMILY OF CLICKS (the model owner's record 1982; ALGEBRA.md 9.45; BUILD.md
-# section 26 item 32): the fourth family, whose level at a Node is the Node
-# clock; its pair [1, 1] (light's kind, the default), its unit the quantum, no
-# clock of its own; declared in every world as the family holding the content (the family
-# genericity, the model owner's record 2066; BUILD.md section 26 item 51)
-CLOCK_FAMILY_NAME = "clicks"
-CLOCK_FAMILY = {
-    "name": CLOCK_FAMILY_NAME,
-    "quantum": 1,
-    "pair": [1, 1],
-    "charge": 0,
-    "held": "content",
-    "reads": [],
-}
-# THE FAMILY OF CHARGE (ALGEBRA.md 9.48; BUILD.md section 26 item 35): the fifth family,
-# holding the signed charge at every body's Nodes; Lambda the weight of the read on it;
-# every registered family's charge is 0, so the field stays 0 and no row moves
-CHARGE_FAMILY_NAME = "charge"
-CHARGE_FAMILY = {
-    "name": CHARGE_FAMILY_NAME,
-    "quantum": 1,
-    "pair": [1, 1],
-    "charge": 0,
-    "held": "sign",
-    "reads": [],
-}
-CHARGE_STRENGTH = 1
-READS = [
-    {"family": CLOCK_FAMILY_NAME, "weight": 1},
-    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "sign"},
-]  # every reading family's `reads` (item 51): the content plainly, the charge by its own sign
 MOMENTUM_SPEED_THIRD = 64
 MOMENTUM_SPEED_QUARTER = 48
 # The layer pin world's push (DECLARATIONS.md section 8): the ramp ten relaxation times of
@@ -206,16 +195,17 @@ def world(
     mode_axis: str | None = None,
     seed_profile: bool = True,
 ) -> dict:
-    """One world file: light's family with its clock, the massive kind `matter` with
-    its pair (its faces the world's `boundary`, one border for every family), the blocks as measured
-    events with `side` or `extents`, the probes; every bound body's
-    seed on its mode (`seed_on_the_mode`) unless `seed_profile` is off, for a caller that
-    completes the document first (the detector-law generator's emitters) and calls it then."""
-    # THE ONE FAMILIES FILE (item 59): every family of the universe in every world, the
-    # file's entries; the massive kind of this world named by its pair; the light record's
-    # clock the emitter's (`clock` on every emitter, ALGEBRA.md 9.85 (3))
+    """One world file: the families file's three families, the bodies of matter with the
+    world's kind `pair` as their rest pair `kind` (its faces the world's `boundary`, one
+    border for every family), the blocks as measured events with `side` or `extents`, the
+    probes; every bound body's seed on its mode (`seed_on_the_mode`) unless `seed_profile` is
+    off, for a caller that completes the document first (the detector-law generator's
+    emitters) and calls it then."""
+    # THE ONE FAMILIES FILE (item 59; the three entries of ALGEBRA.md 9.91 (7), commit 1):
+    # every family of the universe in every world, the file's entries; a body of matter
+    # declares its rest pair `kind`; the light record's clock the emitter's (`clock` on
+    # every emitter, ALGEBRA.md 9.85 (3))
     families, integers = families_entries()
-    kind_name = KIND_NAMES[(int(pair[0]), int(pair[1]))]
     clock = list(MASSIVE_GIVEN_CLOCK if given_clock is None else given_clock)
     measured: list[dict] = []
     for block in blocks:
@@ -223,9 +213,10 @@ def world(
         # BUILD.md section 26 item 57): the momentum, the held quanta, the drive's
         # ramp and start and the margin kind on every measured event; the ray
         # law's `phase`, `fixed` and `directions` no longer written (never read)
+        family = block.get("family", MATTER_FAMILY_NAME)
         entry: dict = {
             "position": block["position"],
-            "family": block.get("family", kind_name),
+            "family": family,
             "amount": block.get("amount", 1),
             "momentum": block.get("momentum", [0, 0, 0]),
             "held": {},
@@ -239,6 +230,8 @@ def world(
         else:
             entry["extents"] = block["extents"]  # a box (BUILD.md section 26 item 23)
         entry["pair"] = block["pair"]
+        if any(item["name"] == family and item.get("pair") == "body" for item in families):
+            entry["kind"] = list(block.get("kind", pair))  # the body's rest pair (9.91 (7))
         for key in BLOCK_KEYS:
             if key in block:
                 entry[key] = block[key]
@@ -300,11 +293,10 @@ def seed_on_the_mode(document: dict) -> None:
     gets `seed` the profile of `mode_profile` at that scalar, its `margin` made explicit
     (the loader admits a profile with `margin` declared; "pin" is the loader's default). A
     silent block (seed 0) and a barrier (a raised pair) keep their keys."""
-    kinds = {family["name"]: family["pair"] for family in families_of(document) if "pair" in family}
     for number, entry in enumerate(document["measured"]):
-        if ("side" not in entry and "extents" not in entry) or entry.get("family") not in kinds:
+        if "side" not in entry and "extents" not in entry:
             continue
-        kind = kinds[entry["family"]]
+        kind = kind_of(document, entry)
         pair = entry["pair"]
         if pair[0] * kind[1] <= pair[1] * kind[0]:
             continue
@@ -431,8 +423,7 @@ def given_train(document: dict, number: int) -> None:
             f"measured[{number}].emitter declares no `train` (the direction and the periods): "
             "every giving is a travelling train (ALGEBRA.md 9.17 (6a)); nothing written"
         )
-    given_family = world.families[definition.emitter.family]
-    num, den = int(given_family.pair[0]), int(given_family.pair[1])
+    num, den = int(definition.emitter.pair[0]), int(definition.emitter.pair[1])
     p, q = train.clock
     steps = int(world.phase_steps)
     extents = tuple(int(v) for v in definition.extents)
@@ -675,6 +666,7 @@ def train_run(
     now: list[int],
     before: list[int],
     clock: tuple[int, int],
+    pair: tuple[int, int] | None = None,
 ) -> int:
     """THE GENERATOR'S RUN OF A TRAIN (HOST; ALGEBRA.md 9.25 (11) (a)): the train's two
     levels planted on the given family's VACUUM of the world's families, on a check board of
@@ -735,7 +727,13 @@ def train_run(
     index_slice[axis] = at(plane_t)
     plane[tuple(index_slice)] = True
     family_entry = families_of(document)[given]
-    pair = (int(family_entry["pair"][0]), int(family_entry["pair"][1]))
+    declared = family_entry.get("pair", [1, 1]) if pair is None else list(pair)
+    if declared == "body":
+        raise ValueError(
+            f"the family {family!r} declares no pair; the train's pair is the emitter's (ALGEBRA.md "
+            "9.85 (3)); nothing written"
+        )
+    pair = (int(declared[0]), int(declared[1]))
     p, q = clock  # the given record's clock, the emitter's (ALGEBRA.md 9.85 (3); item 59)
     k = 2.0 * math.pi * p / (2.0 * int(document["N"]) * q)
     window = math.ceil((TRAIN_FLUX_DISTANCE + 6 * length) / group_pace(pair, k))
@@ -771,6 +769,7 @@ def train_passage_flux(document: dict, number: int, now: list[int], before: list
     sign = 1 if direction[axis] > 0 else -1
     corner = (int(entry["position"][0]), int(entry["position"][1]), int(entry["position"][2]))
     clock = given_clock_of(document, number)
+    given_pair = entry["emitter"].get("pair")
     return train_run(
         document,
         entry["emitter"]["family"],
@@ -781,6 +780,7 @@ def train_passage_flux(document: dict, number: int, now: list[int], before: list
         now,
         before,
         clock,
+        pair=None if given_pair is None else (int(given_pair[0]), int(given_pair[1])),
     )
 
 
@@ -989,12 +989,12 @@ def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
     entry = world.measured[number]
     block = entry.block
     assert block is not None
-    family = world.families[entry.family]
+    kind = block.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
     count = shape[0] * shape[1] * shape[2]
-    num, den = [family.pair[0]] * count, [family.pair[1]] * count
+    num, den = [kind[0]] * count, [kind[1]] * count
     for index in body_node_indices(shape, corner, block.extents, wrap):
         num[index], den[index] = block.pair[0], block.pair[1]
     residual, bound, node = mode_residual(flat, num, den, clock, shape, wrap)
@@ -1023,8 +1023,7 @@ def mode_dispersion(document: dict, number: int, axis: int) -> tuple[Fraction, F
     entry = document["measured"][number]
     shape = [int(extent) for extent in document["shape"]]
     profile = np.array(entry["seed"], dtype=object).reshape(shape)
-    kinds = {family["name"]: family["pair"] for family in families_of(document) if "pair" in family}
-    kind = kinds[entry["family"]]
+    kind = kind_of(document, entry)
     num = np.full(shape, int(kind[0]), dtype=object)
     den = np.full(shape, int(kind[1]), dtype=object)
     corner = [int(component) for component in entry["position"]]

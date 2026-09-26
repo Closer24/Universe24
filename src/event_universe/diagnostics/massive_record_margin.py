@@ -267,12 +267,12 @@ def accurate_mode(world: NatureBeamWorld, number: int) -> tuple[float, np.ndarra
     definition = entry.block
     if definition is None:
         raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
-    family = world.families[entry.family]
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
     nodes = body_node_mask(shape, corner, definition.extents, wrap)
-    ratio = np.where(nodes, definition.pair[1] / definition.pair[0], family.pair[1] / family.pair[0])
+    kind = definition.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+    ratio = np.where(nodes, definition.pair[1] / definition.pair[0], kind[1] / kind[0])
     scale = 1.0 / np.sqrt(ratio)
     count = int(np.prod(shape))
 
@@ -406,13 +406,13 @@ def iterated_mode(
     definition = entry.block
     if definition is None:
         raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
-    family = world.families[entry.family]
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
     nodes = body_node_mask(shape, corner, definition.extents, wrap)
-    num = np.where(nodes, definition.pair[0], family.pair[0]).astype(np.int64)
-    den = np.where(nodes, definition.pair[1], family.pair[1]).astype(np.int64)
+    kind = definition.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+    num = np.where(nodes, definition.pair[0], kind[0]).astype(np.int64)
+    den = np.where(nodes, definition.pair[1], kind[1]).astype(np.int64)
     num_flat = [int(value) for value in num.ravel()]
     den_flat = [int(value) for value in den.ravel()]
     b = clock_denominator(amplitude)
@@ -498,12 +498,13 @@ def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
     nodes = body_node_mask(shape, corner, definition.extents, wrap)
-    ratio_out = family.pair[1] / family.pair[0]
+    kind = definition.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+    ratio_out = kind[1] / kind[0]
     ratio_in = definition.pair[1] / definition.pair[0]
     ratio = np.where(nodes, ratio_in, ratio_out)
     seed = np.where(nodes, 1.0, 0.0) + 1e-3 * np.random.default_rng(0).standard_normal(shape)
     lambda_max, iterations = largest_eigenvalue(ratio, wrap, seed)
-    omega_0 = math.acos(min(1.0, family.pair[0] / family.pair[1]))
+    omega_0 = math.acos(min(1.0, kind[0] / kind[1]))
     cosine = lambda_max / 2.0
     omega_b = math.acos(max(-1.0, min(1.0, cosine)))
     eps = 1.0 - (omega_b / omega_0) ** 2 if omega_0 > 0 else 0.0
@@ -558,7 +559,7 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
             # takes at its Nodes and carries no mode, so the threshold and
             # the extent have no record to read.
             continue
-        kind = world.families[entry.family].pair
+        kind = entry.block.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
         if entry.block.pair[0] * kind[1] < entry.block.pair[1] * kind[0]:
             # A barrier (a raised pair, the matter wall of DECLARATIONS.md
             # section 15 M1-6) binds nothing: no mode, no margin.
@@ -577,7 +578,7 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
             raise ValueError(
                 f"{BEAM_LAW}: measured[{number}]: the block's mode is not bound (2 cos omega_b = "
                 f"{reading.lambda_max:.6f} at or below the gap's 2 num / den = "
-                f"{2 * world.families[entry.family].pair[0] / world.families[entry.family].pair[1]:.6f}; "
+                f"{2 * kind[0] / kind[1]:.6f}; "
                 "the well is too shallow or the side too small for its pair, MASSIVE_RECORD.md "
                 "section 4's threshold table)"
             )
@@ -687,31 +688,38 @@ def excitation_action(world: NatureBeamWorld, number: int, period: int) -> Fract
     return total
 
 
-def composed_largest_eigenvalues(world: NatureBeamWorld) -> dict[int, float]:
+def composed_largest_eigenvalues(world: NatureBeamWorld) -> dict[tuple[int, tuple[int, int]], float]:
     """The largest eigenvalue of the COMPOSED operator of each massive family
-    (ALGEBRA.md 9.19 (2)): every body's well of the family in one read
-    matrix on the world's faces; the stability condition is read on it,
-    below 2, refused at or above (a runaway mode of the whole board)."""
-    found: dict[int, float] = {}
+    at each of its bodies' kinds (ALGEBRA.md 9.19 (2); 9.91 (7): the bodies of
+    one kind of a family share the operator, their rest pair outside and every
+    body's well of the family in one read matrix on the world's faces); the
+    stability condition is read on it, below 2, refused at or above (a
+    runaway mode of the whole board)."""
+    found: dict[tuple[int, tuple[int, int]], float] = {}
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     for index, family in enumerate(world.families):
         if not family.massive_kind:
             continue
-        ratio = np.full(shape, family.pair[1] / family.pair[0])
-        seed = 1e-3 * np.random.default_rng(0).standard_normal(shape)
-        bodies = False
+        kinds: list[tuple[int, int]] = []
         for entry in world.measured:
-            definition = entry.block
-            if definition is None or entry.family != index or definition.seed == 0:
+            if entry.block is not None and entry.family == index and entry.block.kind not in kinds:
+                kinds.append(entry.block.kind)
+        for kind in kinds:
+            ratio = np.full(shape, kind[1] / kind[0])
+            seed = 1e-3 * np.random.default_rng(0).standard_normal(shape)
+            bodies = False
+            for entry in world.measured:
+                definition = entry.block
+                if definition is None or entry.family != index or definition.seed == 0:
+                    continue
+                corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
+                nodes = body_node_mask(shape, corner, definition.extents, world.kind_periodic(index))
+                ratio = np.where(nodes, definition.pair[1] / definition.pair[0], ratio)
+                seed = seed + np.where(nodes, 1.0, 0.0)
+                bodies = True
+            if not bodies:
                 continue
-            corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-            nodes = body_node_mask(shape, corner, definition.extents, world.kind_periodic(index))
-            ratio = np.where(nodes, definition.pair[1] / definition.pair[0], ratio)
-            seed = seed + np.where(nodes, 1.0, 0.0)
-            bodies = True
-        if not bodies:
-            continue
-        found[index], _ = largest_eigenvalue(ratio, world.kind_periodic(index), seed)
+            found[(index, kind)], _ = largest_eigenvalue(ratio, world.kind_periodic(index), seed)
     return found
 
 
@@ -739,17 +747,18 @@ def check_body_conditions(
     COMPUTATION."""
     lines: list[str] = []
     blocks = simulation.block_by_number
-    for index, largest in composed_largest_eigenvalues(world).items():
+    for (index, kind), largest in composed_largest_eigenvalues(world).items():
         if largest >= 2.0:
             raise ValueError(
-                f"{BEAM_LAW}: the family {world.families[index].name!r}: the composed operator's "
-                f"largest eigenvalue {largest:.6f} is at or above 2 (ALGEBRA.md 9.19 (2): a mode of "
-                "the whole board grows without bound; the bodies' wells together are too deep for "
-                "the board)"
+                f"{BEAM_LAW}: the family {world.families[index].name!r} at the kind {list(kind)}: the "
+                f"composed operator's largest eigenvalue {largest:.6f} is at or above 2 (ALGEBRA.md "
+                "9.19 (2): a mode of the whole board grows without bound; the bodies' wells together "
+                "are too deep for the board)"
             )
         lines.append(
-            f"operator (COMPUTATION): the family {world.families[index].name!r}: the composed "
-            f"operator's largest eigenvalue 2 cos omega = {largest:.6f}, below 2"
+            f"operator (COMPUTATION): the family {world.families[index].name!r} at the kind "
+            f"{list(kind)}: the composed operator's largest eigenvalue 2 cos omega = {largest:.6f}, "
+            "below 2"
         )
     for reading in readings:
         number = reading.number

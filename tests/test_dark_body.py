@@ -40,17 +40,9 @@ def test_the_files_are_the_generators_and_the_pins_are_declared_blind():
         assert document["families"] == "examples/events/families.json"  # item 59
         world = parse_nature_beam_world(document)
         assert world.node_clock == 10_000 and world.body_record is False
-        assert [family.name for family in world.families] == [
-            "light",
-            "matter",
-            "well",
-            "dark",
-            "heavy",
-            "muon",
-            "point",
-            "clicks",
-            "charge",
-        ]
+        # the three families of ALGEBRA.md 9.86 (2) (the one stroke, commit 1)
+        assert [family.name for family in world.families] == ["gravity", "charge", "matter"]
+        assert [family.parts for family in world.families] == [(1, 3, 6), (1, 3), (1,)]
         assert all(family.charge == (0, 1) for family in world.families)
     pins = json.loads((FOLDER / "expectations.json").read_text(encoding="utf-8"))
     assert "before any run" in pins["declared"]
@@ -74,12 +66,15 @@ def test_the_dark_body_is_dark_by_declaration_and_the_bright_one_is_not():
     # its stock of light held (item 47)
     assert dark["measured"][DARK_NUMBER]["amount"] == 4812
     assert bright["measured"][DARK_NUMBER]["amount"] == 4812 - 128
-    assert bright["measured"][DARK_NUMBER]["held"] == {"light": 128}
-    assert dark["measured"][DARK_NUMBER]["family"] == "dark"
+    # light is the charge family's wave (9.86 (2) (b)): the stock and the giving are its
+    assert bright["measured"][DARK_NUMBER]["held"] == {"charge": 128}
+    # the dark body is dark by declaration, one family of matter (9.86 (2) (c)), no emitter
+    assert dark["measured"][DARK_NUMBER]["family"] == "matter"
+    assert dark["measured"][DARK_NUMBER]["kind"] == [800, 809]
     assert "emitter" not in dark["measured"][DARK_NUMBER]
     assert all("block" not in detector for detector in dark["detectors"])
     assert bright["measured"][DARK_NUMBER]["family"] == "matter"
-    assert bright["measured"][DARK_NUMBER]["emitter"]["family"] == "light"
+    assert bright["measured"][DARK_NUMBER]["emitter"]["family"] == "charge"
     assert {"name": "at_body", "block": DARK_NUMBER} in bright["detectors"]
     assert bright["measured"][0]["emitter"]["receiver"][0] == "at_body"
     assert "at_body" not in dark["measured"][0]["emitter"]["receiver"]

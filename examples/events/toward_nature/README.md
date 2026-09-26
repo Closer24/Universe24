@@ -27,9 +27,16 @@ Two light clocks on the chain [760, 3, 3], the arm 558 Links (the emitter A at
 [100, 132) with its train along +x, the mirror at [690, 694), the set `at_well`
 A's own Nodes): `redshift_top.json` with the arm at the level 0 and
 `redshift_bottom.json` with the arm's free Nodes [132, 690) held at the uniform
-level c_1 = 2000 by a holder body of a fifth family (`well`, the matter kind's
-pair; the hold of 9.45 (2): the level at a body's Nodes is its content), so
-U_1 = c_1 / (2 Gamma) = 0.1. The emitter's own Nodes read its one own quantum
+level c_1 = 2000 by holder bodies of matter on one Node each, content 2000
+apiece (the hold of 9.45 (2): the level at a body's Nodes is its content), so
+U_1 = c_1 / (2 Gamma) = 0.1. SINCE THE ONE FAMILY OF MATTER (ALGEBRA.md 9.86
+(2) (c); the one stroke of record 2106, commit 1; BUILD.md section 26 item 60)
+the holder is no well: the holder well of a fifth family (`well`, item 41) is
+HISTORY, since a second well of the emitter's family on its chain is refused by
+the separation rule of 9.35 (the emitter's mode is nonzero on every Node of the
+chain); the arm is held by content alone, the light's pace on it as before. The
+readings below were taken on the holder well of item 41; the row is reread on
+the stable engine (record 2067). The emitter's own Nodes read its one own quantum
 plus its stock (the given family's content held at the body, BUILD.md section 26
 item 47) and the mirror's its content in both worlds alike. 6000 intervals each.
 

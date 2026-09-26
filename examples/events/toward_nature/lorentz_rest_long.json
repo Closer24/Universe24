@@ -42,7 +42,7 @@
     0
    ],
    "held": {
-    "light": 64
+    "charge": 64
    },
    "ramp": 0,
    "start": 0,
@@ -55,6 +55,10 @@
    "pair": [
     800,
     801
+   ],
+   "kind": [
+    800,
+    809
    ],
    "seed": [
     0,
@@ -13559,7 +13563,7 @@
     0
    ],
    "emitter": {
-    "family": "light",
+    "family": "charge",
     "train": {
      "direction": [
       1,
@@ -16618,7 +16622,7 @@
     0,
     0
    ],
-   "family": "light",
+   "family": "charge",
    "amount": 1,
    "momentum": [
     0,
@@ -16648,6 +16652,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "7a0adfea9c106ce758346de1b56e0443ebe53450f65caffbb614079da40c533e"
+  "hash": "29deeec561f52df44deba4130c40884da8b9c022b414239a3bc228034ac3e0a8"
  }
 }

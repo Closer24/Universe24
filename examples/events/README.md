@@ -640,15 +640,22 @@ outside the mathematician's band goes to him before any word (9.59 (6)).
 
 ## The point emitter
 
-THE ONE FAMILIES FILE (ALGEBRA.md 9.83 (2), 9.85 (3); the model owner's record 2075;
-BUILD.md section 26 item 59): `families.json` in this folder is the one canonical copy
-of the universe's families as laws (each with name, quantum, charge, pair, reads,
-representation, phase, self_unit, booked, and held or clicks) and of the universe's
-integers (node_clock Gamma = 10^4, amplitude_bound A = 2^20). Every world of the detector
-law names it (`"families": "examples/events/families.json"`), declares no integers of its
-own, and every family is on in every world; a family with no source stays exactly zero (the
-leak test). The light record's clock is its emitter's (`clock` on every emitter). The unit
-tests keep their small inline lists.
+THE ONE FAMILIES FILE (ALGEBRA.md 9.83 (2), 9.85 (3), 9.86 (2), 9.91 (7); the model
+owner's record 2075; the one stroke of record 2106, commit 1; BUILD.md section 26 items 59
+and 60): `families.json` in this folder is the one canonical copy of the universe's three
+families as laws and of the universe's integers (node_clock Gamma = 10^4, amplitude_bound
+A = 2^20, charge_weight Lambda = 1). GRAVITY, parts [1, 3, 6] (the time part the Node
+clock's content, the vector the momentum's field, the tensor), held content with the
+factors [1, 4, 2] and the spin's dipole; THE CHARGE, parts [1, 3], held sign with the
+moment's dipole, reading gravity, with clicks: light is its wave, so every light record,
+mirror, receiver and stock in a world file is of the family "charge"; MATTER, parts [1],
+the pair on every body (`kind` [num, den] on each body, the families matter, well, dark,
+heavy, muon and point of item 59 its kinds), reading gravity and the charge at Lambda by
+q, with clicks. Every world of the detector law names the file (`"families":
+"examples/events/families.json"`), declares no integers of its own, and every family is on
+in every world; a component with no source stays exactly zero (the leak test per part).
+The light record's clock is its emitter's (`clock` on every emitter). The unit tests keep
+their small inline lists.
 
 THE ENGINE START FILE (the model owner's record 2089 of 2026-09-25 through the
 Boss; BUILD.md section 26 item 57): `engine_start.json` in this folder is the one

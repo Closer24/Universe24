@@ -4372,6 +4372,86 @@ would have found no cell.
    pair of a free matter record), the vector and tensor entries (9.86),
    Lambda_v and the twist table (9.81), P_0 and the momentum's unit Q (still
    the loader's constant LABEL_SCALE), the self-source, the recoil.
+60. THE ONE STROKE, COMMIT 1: THE REPRESENTATION AS A LIST OF PARTS AND THE
+   FAMILIES FILE'S THREE ENTRIES (ALGEBRA.md 9.91 (10) 1; 9.86 (2), (3); 9.91
+   (1), (7); 9.85 (3); the Boss's records 2105 and 2106 of 2026-09-26, the
+   model owner: "the vector and the tensor must enter the complete engine,
+   top priority"; "everything truly in one stroke, and then one stable engine
+   that everyone works with"). THE FILE: three families and the universe's
+   integers (node_clock Gamma = 10^4, amplitude_bound A = 2^20, charge_weight
+   Lambda = 1, the word "Lambda" on a read's weight). GRAVITY: parts [1, 3,
+   6], phase 1, pair [1, 1], held {count "content", factors [1, 4, 2], dipole
+   "spin"}, no reads, no clicks: its time part is the family of clicks as
+   built (the Node clock's c), its nine other components the momentum's
+   field and the tensor, zero and silent until the holds of commit 2. THE
+   CHARGE: parts [1, 3], phase 2, pair [1, 1], held {count "sign", factors
+   [1, 1], dipole "moment", dipole_div 2}, reads gravity (weight 1, twist
+   "own", by 1), clicks {gives, takes, quantum 1}: a family both held and
+   clicking; LIGHT IS ITS WAVE (9.86 (2) (b)), so every light record, every
+   mirror of light's kind, every receiver of light and every stock of light
+   is the charge family's, the world files say "charge" where they said
+   "light", and the engine's light family is gone. MATTER: parts [1], phase
+   2, pair "body", reads gravity (1, "own", 1) and the charge (Lambda,
+   "Lambda_v", "q"), clicks: ONE FAMILY OF MATTER (9.86 (2) (c)); every body
+   of it declares its rest pair `kind` [num, den] (required, refused where a
+   family declares its pair), every emitter giving matter the given record's
+   `pair`; the families matter, well, dark, heavy, muon and point of item 59
+   are its bodies' kinds. `booked` is not written: derived, true exactly for
+   a family with clicks (item 53). THE ATTRIBUTES ON THE FAMILY (the loader):
+   `parts` (a tuple, the components its sum), `levels` (1 or 2), `held`
+   with `held_factors`, `held_dipole`, `held_dipole_div`, `self_unit` (0),
+   `clicks`, `pair_on_body`, and the reads as (family, weight, by, twist);
+   an inline list (the tests') declares them or takes the scalar's (parts
+   [1], levels 2, factors (1,), clicks derived from held); `components` as a
+   key is refused. THE ENGINE: a record carries its own `pair` (the family's
+   or the body's `kind`, or the emitter's), its `part` and whether it is a
+   `held_part`; the board's pair arrays are made once per (family, pair)
+   with every body of the family's well written into every array of the
+   family (`pair_arrays`, `_write_pair`), the wall and the wheel read by
+   (family, pair) (`kind_wall`, `wheel_at`); a held family has one record
+   per component (`held_records` the time part, `held_parts` the rest),
+   stepped plain with the time part and inverted with it, the hold writing
+   the time part alone in this commit; a part never written nonzero is
+   SILENT (HOST, 9.91 (1): a zero part steps to zero exactly, so its step is
+   skipped) and the leak test reads every part; the booking and the field
+   step are decided by the record (`held_part`), not by its family, since
+   the charge is both. THE WORLD FILES: the 22 worlds regenerated, "charge"
+   for "light" on every record family, mirror and stock, "matter" with
+   `kind` on every body of a massive kind; the world's content otherwise as
+   it was. THE PROOF: the rows, the held levels and the lines bit for bit
+   those of 96d58266 on the five worlds of the item-51 method (the family
+   name "light" read as "charge" on the lines and the held quanta; the point
+   emitter's seat under its kind [800, 813]); the extra components zero and
+   silent at every interval. ONE WORLD DESIGN MOVED: the redshift's bottom
+   clock (toward_nature, item 41) held its arm's content with a well body of a
+   fifth family; under one family of matter that well is a second well of the
+   emitter's family on its chain, and the separation rule of 9.35 (the
+   mathematician's 86e1df43; item 28) refuses it, the emitter's mode being
+   nonzero on every Node of the chain; the arm is now held by bodies of matter
+   on one Node each (content 2000 apiece, no well, no record), the light's
+   pace on the arm as before. THE SAME RULE meets the all-families world of
+   9.87 (5) (two bodies of matter 10 Links apart) and every world with two
+   wells of matter on one small GameBoard: a question for the mathematician
+   (the mode on the composed operator, or the rule). THE GATE
+   tests/test_families_file.py rewritten
+   on the three entries: the file's shape, every shipped world naming it
+   with the three families and their parts, the file and the tests'
+   four-family inline list bit for bit over 300 intervals of the emitter
+   world (the names light and clicks read as charge and gravity), the
+   refusals (a missing integer or attribute, a wrong parts list, a phase
+   other than 1 or 2, a self-source unit other than 0, neither held nor
+   clicks, a pair word other than "body", a weight word the universe does
+   not name, a `by` other than 1 or "q", wrong held factors or dipole), the
+   emitter's clock and pair and the body's kind required and refused each
+   way. WHAT WAITS ON THE LATER COMMITS: the vector and tensor holds (2), the
+   four paces (3), the second level, the transverse booking and the
+   transport with the twist table (4; `twist` is stored and read by
+   nothing yet), the four-vector click and P_0 (5), the body's contraction
+   and the spin step (6), the point emitter as a declaration (7), the four
+   primitives (8), the names (9), the check rows (10). A QUESTION FOR THE
+   MATHEMATICIAN: the body carries two pairs, its `kind` (the rest rotation)
+   and its `pair` (the well at its Nodes); both are built, under two names,
+   until his line says one.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

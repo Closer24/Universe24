@@ -68,34 +68,42 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
         assert doc["measured"][0]["emitter"]["clock"] == generator.LONG_GIVEN_CLOCK == [4096, 21]
         assert doc["measured"][0]["extents"] == [generator.LONG_TRAIN_LENGTH, 3, 3] == [168, 3, 3]
         assert doc["measured"][0]["position"] == [generator.LONG_REDSHIFT_EMITTER_X, 0, 0]
-    long_holder = document("redshift_bottom_long")["measured"][1]
-    assert long_holder["family"] == "well" and long_holder["amount"] == 2000
-    assert long_holder["position"] == [368, 0, 0] and long_holder["extents"] == [322, 3, 3]
+    # THE ARM'S HOLDERS UNDER ONE FAMILY OF MATTER (ALGEBRA.md 9.86 (2) (c); the one stroke,
+    # commit 1): bodies of matter on one Node each, content 2000 apiece, no well and no
+    # record (a second well of the emitter's family on its chain is refused by the
+    # separation rule of 9.35); the first at the arm's start, 322 x 3 x 3 of them
+    long_bottom = document("redshift_bottom_long")["measured"]
+    long_holder = long_bottom[1]
+    assert long_holder["family"] == "matter" and long_holder["amount"] == 2000
+    assert long_holder["position"] == [368, 0, 0]
+    assert "extents" not in long_holder and "kind" not in long_holder and "pair" not in long_holder
+    assert sum(1 for m in long_bottom if m["family"] == "matter" and "extents" not in m) == 322 * 9
     bending = document("bending")
     emitter, body = bending["measured"][0], bending["measured"][1]
     assert bending["model_id"] == "beam-toward-nature-bending-v1"
     assert emitter["extents"] == [32, 20, 1] and emitter["amount"] == 1
-    assert emitter["held"] == {"light": generator.BENDING_STOCK} and generator.BENDING_STOCK == 100
+    assert emitter["held"] == {"charge": generator.BENDING_STOCK} and generator.BENDING_STOCK == 100
     assert (
-        body["family"] == "dark"
+        body["family"] == "matter"
         and body["amount"] == generator.BENDING_BODY_CONTENT
         and "emitter" not in body
     )
     assert bending["ticks"] == generator.BENDING_TICKS
     assert sum(1 for d in bending["detectors"] if d["name"].startswith("screen_")) == 40
     top, bottom = document("redshift_top"), document("redshift_bottom")
-    assert [m["family"] for m in top["measured"]] == ["matter", "light"]
-    assert [m["family"] for m in bottom["measured"]] == ["matter", "well", "light"]
-    holder = bottom["measured"][1]
+    assert [m["family"] for m in top["measured"]] == ["matter", "charge"]
     arm_start = (
         generator.REDSHIFT_EMITTER_X + generator.TRAIN_LENGTH
         if hasattr(generator, "TRAIN_LENGTH")
         else 132
     )
+    arm_nodes = (generator.REDSHIFT_MIRROR_X - arm_start) * 9
+    assert [m["family"] for m in bottom["measured"]] == ["matter"] * (1 + arm_nodes) + ["charge"]
+    holder = bottom["measured"][1]
     assert holder["position"] == [arm_start, 0, 0]
-    assert holder["extents"] == [generator.REDSHIFT_MIRROR_X - arm_start, 3, 3]
     assert holder["amount"] == generator.WELL_LEVEL == 2000
-    assert "emitter" not in holder
+    assert "emitter" not in holder and "extents" not in holder
+    assert bottom["measured"][-1]["pair"] == [1, 2]  # the mirror, of light's kind, the charge's
     rest, moving = document("lorentz_rest"), document("lorentz_moving")
     assert all(m["momentum"] == [0, 0, 0] for m in rest["measured"])
     for entry in moving["measured"]:

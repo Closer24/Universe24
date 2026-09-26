@@ -18,8 +18,12 @@ the mathematician's band goes to him before any word.
 (1) THE REDSHIFT. Two light clocks on the chain [760, 3, 3], the arm 558 Links
 (A at [100, 132), the mirror at [690, 694)): `redshift_top.json` at the level 0
 and `redshift_bottom.json` with the arm's free Nodes held at the uniform level
-c_1 = 2000 by a holder body of content 2000 over the whole arm ([132, 690), the
-hold of 9.45 (2): the level at a body's Nodes is its content). The level is
+c_1 = 2000 by holder bodies of matter on one Node each, content 2000 apiece,
+over the whole arm ([132, 690), the hold of 9.45 (2): the level at a body's
+Nodes is its content; SINCE THE ONE FAMILY OF MATTER, ALGEBRA.md 9.86 (2) (c),
+the holder is no well: a second well of the emitter's family on its chain is
+refused by the separation rule of 9.35, the emitter's mode reaching every Node
+of the chain, so the holder holds content and nothing else). The level is
 held only on the arm's free Nodes; the emitter's own Nodes read its stock and
 the mirror's its content in both worlds alike, so the ratio of the two mean
 click intervals reads the flight in the well over the flight at 0: today's
@@ -108,13 +112,6 @@ LONG_LORENTZ_TICKS = 3600
 HOP_EVERY = 4  # v = 1 / HOP_EVERY Link per interval
 DRIVE_WALL_WIDTH = 1  # the massive worlds' window width (`world.width`), read back at load
 LABEL_SCALE = 64  # Q, the drive wall's scale (world.py LABEL_SCALE)
-HOLDER_FAMILY = {
-    "name": "well",
-    "quantum": 1,
-    "pair": list(detector.KIND),
-    "charge": 0,
-    "reads": [dict(read) for read in detector.READS],
-}  # the fifth family
 
 
 def drive_wall(amount: int) -> int:
@@ -128,7 +125,7 @@ def clock_world(
     emitter_x: int,
     mirror_x: int,
     ticks: int,
-    holder: dict | None = None,
+    holder: list[dict] | None = None,
     hop_every: int | None = None,
     given_clock: list[int] | None = None,
     phase_steps: int | None = None,
@@ -137,7 +134,7 @@ def clock_world(
     arm: int | None = None,
 ) -> dict:
     """The light clock's form (`detector.light_clock`) with the arm's ends and the
-    ticks as given, Gamma = NODE_CLOCK, an optional holder block and an optional
+    ticks as given, Gamma = NODE_CLOCK, optional holder bodies and an optional
     hop of the whole clock along +x every `hop_every` intervals; the given clock,
     its circle N and the train's length the light clock's unless given (the
     long-wave rows of 9.62 (1) give theirs). DOPPLER (ALGEBRA.md 9.62 (4); item 49):
@@ -161,8 +158,6 @@ def clock_world(
     blocks = [detector.emitter([emitter_x, 0, 0], [train_length, 3, 3], detector.WELL_FULL, [1, 0, 0])]
     if train_clock is not None:
         blocks[0]["emitter"]["train"]["clock"] = train_clock
-    if holder is not None:
-        blocks.append(holder)
     document = massive.world(
         name,
         "PIN",
@@ -174,7 +169,8 @@ def clock_world(
         given_clock=list(given_clock),
         seed_profile=False,
     )
-    # the holder's family `well` is the families file's (item 59): nothing appended
+    if holder is not None:
+        document["measured"].extend(holder)  # the arm's holders, bodies of matter on one Node each
     document["N"] = phase_steps
     document["face_depth"] = detector.FACE_DEPTH
     detector.bounded(document)
@@ -195,20 +191,26 @@ def clock_world(
     return document
 
 
-def holder_block(position: list[int], extents: list[int], amount: int) -> dict:
-    """A holder of its own family (the kind of the matter family, so that its mode and
-    the emitter's need not be apart: the separation rule is per family) over a box,
-    fixed, its content `amount` the level the hold writes at its Nodes (ALGEBRA.md
-    9.45 (2)); no emitter, as the dark body's (`../dark_body/make_worlds.py`)."""
-    return {
-        "position": position,
-        "family": HOLDER_FAMILY["name"],
-        "extents": extents,
-        "pair": detector.WELL_FULL,
-        "amount": amount,
-        "seed": detector.EMITTER_SEED,
-        "margin": "control",
-    }
+def holder_nodes(position: list[int], extents: list[int], amount: int) -> list[dict]:
+    """The arm's holders: a body of matter on each Node of the box, content `amount` apiece,
+    the level the hold writes at its Node (ALGEBRA.md 9.45 (2)); no well, no record, no
+    emitter. UNDER ONE FAMILY OF MATTER (ALGEBRA.md 9.86 (2) (c); the one stroke, commit 1)
+    the holder well of a fifth family (item 41, HISTORY) is refused: a second well of the
+    emitter's family on its chain fails the separation rule of 9.35 (the emitter's mode is
+    nonzero on every Node of the chain), so the arm is held by content alone. Every key the
+    engine reads on a measured event is written (record 2089)."""
+    return [
+        {
+            "position": [position[0] + dx, position[1] + dy, position[2] + dz],
+            "family": "matter",
+            "amount": amount,
+            "momentum": [0, 0, 0],
+            "held": {},
+        }
+        for dx in range(extents[0])
+        for dy in range(extents[1])
+        for dz in range(extents[2])
+    ]
 
 
 BENDING_NODE_CLOCK = NODE_CLOCK
@@ -257,7 +259,7 @@ def worlds() -> dict[str, dict]:
             REDSHIFT_EMITTER_X,
             REDSHIFT_MIRROR_X,
             REDSHIFT_TICKS,
-            holder=holder_block([arm_start, 0, 0], arm, WELL_LEVEL),
+            holder=holder_nodes([arm_start, 0, 0], arm, WELL_LEVEL),
         ),
         "lorentz_rest": clock_world(
             "lorentz-rest", LORENTZ_SHAPE, LORENTZ_EMITTER_X, LORENTZ_MIRROR_X, LORENTZ_TICKS
@@ -311,7 +313,7 @@ def worlds() -> dict[str, dict]:
             LONG_REDSHIFT_EMITTER_X,
             LONG_REDSHIFT_MIRROR_X,
             LONG_REDSHIFT_TICKS,
-            holder=holder_block(
+            holder=holder_nodes(
                 [LONG_REDSHIFT_EMITTER_X + LONG_TRAIN_LENGTH, 0, 0],
                 [LONG_REDSHIFT_MIRROR_X - LONG_REDSHIFT_EMITTER_X - LONG_TRAIN_LENGTH, 3, 3],
                 WELL_LEVEL,

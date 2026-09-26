@@ -34,7 +34,7 @@
     18,
     18
    ],
-   "family": "heavy",
+   "family": "matter",
    "amount": 1,
    "momentum": [
     64,
@@ -49,6 +49,10 @@
    "pair": [
     1600,
     1609
+   ],
+   "kind": [
+    1600,
+    1618
    ],
    "seed": [
     1834,
@@ -262468,6 +262472,6 @@
  "mode_axis": "x",
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "055e71cf6f167093241313656cec4e5d52623cb5e72a7f3d324f88e0df869e14"
+  "hash": "4b66d9c058d65440c32c93069bcc8bc3100da9bce6aadffb094da2b00f171ea4"
  }
 }

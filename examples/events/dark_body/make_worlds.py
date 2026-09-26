@@ -67,10 +67,6 @@ WELL = [800, 801]  # the emitter's well, the light clock's
 BODY_WELL = WELL  # the body's well the emitter's: 32 by 5 binds its mode in [800, 801]
 SEED = 1 << 18  # below the amplitude bound 2^20 (9.61 (3))
 GIVEN_CLOCK = [512, 1]
-READS = [
-    {"family": "clicks", "weight": 1},
-    {"family": "charge", "weight": 1, "by": "sign"},
-]  # every reading family's `reads` (BUILD.md section 26 item 51): the content plainly, the charge by its own sign
 DETECTOR_SIDE = 3
 
 
@@ -103,7 +99,7 @@ def cube(document: dict, name: str, corner: list[int]) -> str:
         document["measured"].append(
             {
                 "position": position,
-                "family": "light",
+                "family": "charge",  # a receiver of light's kind: the charge family's (9.86 (2) (b))
                 "amount": 1,
                 "momentum": [0, 0, 0],
                 "held": {},
@@ -125,6 +121,7 @@ def block(
     entry: dict = {
         "position": list(corner),
         "family": family,
+        "kind": list(MATTER),  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
         "amount": amount,
         "momentum": [0, 0, 0],
         "held": {},
@@ -184,7 +181,7 @@ def world(dark: bool) -> dict:
             "matter",
             STOCK,
             {
-                "family": "light",
+                "family": "charge",  # light, the charge family's wave (ALGEBRA.md 9.86 (2) (b))
                 "receiver": ladder,
                 "clock": list(GIVEN_CLOCK),
                 "train": {"direction": [1, 0, 0], "periods": 8},
@@ -192,8 +189,9 @@ def world(dark: bool) -> dict:
         )
     )
     if dark:
+        # the dark body: one family of matter (9.86 (2) (c)); dark by declaration, no emitter
         document["measured"].append(
-            block(BODY_CORNER, BODY_EXTENTS, "dark", BODY_CONTENT, None, BODY_WELL)
+            block(BODY_CORNER, BODY_EXTENTS, "matter", BODY_CONTENT, None, BODY_WELL)
         )
     else:
         document["measured"].append(
@@ -203,7 +201,7 @@ def world(dark: bool) -> dict:
                 "matter",
                 BODY_CONTENT,
                 {
-                    "family": "light",
+                    "family": "charge",
                     "receiver": screen_names,
                     "clock": list(GIVEN_CLOCK),
                     "train": {"direction": [1, 0, 0], "periods": 8},

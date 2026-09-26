@@ -2,240 +2,42 @@
  "law": "detector-law-v1",
  "integers": {
   "node_clock": 10000,
-  "amplitude_bound": 1048576
+  "amplitude_bound": 1048576,
+  "charge_weight": 1
  },
  "families": [
   {
-   "name": "light",
-   "quantum": 1,
-   "charge": 0,
-   "pair": [
-    1,
-    1
-   ],
-   "representation": "scalar",
-   "phase": 2,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ],
-   "self_unit": 0,
-   "clicks": {
-    "gives": true,
-    "takes": true
-   },
-   "booked": true
-  },
-  {
-   "name": "matter",
-   "quantum": 1,
-   "charge": 0,
-   "pair": [
-    800,
-    809
-   ],
-   "representation": "scalar",
-   "phase": 2,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ],
-   "self_unit": 0,
-   "clicks": {
-    "gives": true,
-    "takes": true
-   },
-   "booked": true
-  },
-  {
-   "name": "well",
-   "quantum": 1,
-   "charge": 0,
-   "pair": [
-    800,
-    809
-   ],
-   "representation": "scalar",
-   "phase": 2,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ],
-   "self_unit": 0,
-   "clicks": {
-    "gives": true,
-    "takes": true
-   },
-   "booked": true
-  },
-  {
-   "name": "dark",
-   "quantum": 1,
-   "charge": 0,
-   "pair": [
-    800,
-    809
-   ],
-   "representation": "scalar",
-   "phase": 2,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ],
-   "self_unit": 0,
-   "clicks": {
-    "gives": true,
-    "takes": true
-   },
-   "booked": true
-  },
-  {
-   "name": "heavy",
-   "quantum": 1,
-   "charge": 0,
-   "pair": [
-    1600,
-    1618
-   ],
-   "representation": "scalar",
-   "phase": 2,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ],
-   "self_unit": 0,
-   "clicks": {
-    "gives": true,
-    "takes": true
-   },
-   "booked": true
-  },
-  {
-   "name": "muon",
-   "quantum": 1,
-   "charge": 0,
-   "pair": [
-    3200,
-    3236
-   ],
-   "representation": "scalar",
-   "phase": 2,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ],
-   "self_unit": 0,
-   "clicks": {
-    "gives": true,
-    "takes": true
-   },
-   "booked": true
-  },
-  {
-   "name": "point",
-   "quantum": 1,
-   "charge": 0,
-   "pair": [
-    800,
-    813
-   ],
-   "representation": "scalar",
-   "phase": 2,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ],
-   "self_unit": 0,
-   "clicks": {
-    "gives": true,
-    "takes": true
-   },
-   "booked": true
-  },
-  {
-   "name": "clicks",
-   "quantum": 1,
-   "charge": 0,
-   "pair": [
-    1,
-    1
-   ],
-   "representation": "scalar",
-   "phase": 2,
+   "name": "gravity",
+   "parts": [1, 3, 6],
+   "phase": 1,
+   "pair": [1, 1],
+   "held": {"count": "content", "factors": [1, 4, 2], "dipole": "spin"},
    "reads": [],
-   "held": {
-    "count": "content",
-    "factor": 1
-   },
-   "self_unit": 0,
-   "booked": false
+   "self_source": {"unit": 0}
   },
   {
    "name": "charge",
-   "quantum": 1,
-   "charge": 0,
-   "pair": [
-    1,
-    1
-   ],
-   "representation": "scalar",
+   "parts": [1, 3],
    "phase": 2,
-   "reads": [],
-   "held": {
-    "count": "sign",
-    "factor": 1
-   },
-   "self_unit": 0,
-   "booked": false
+   "pair": [1, 1],
+   "held": {"count": "sign", "factors": [1, 1], "dipole": "moment", "dipole_div": 2},
+   "reads": [
+    {"family": "gravity", "weight": 1, "twist": "own", "by": 1}
+   ],
+   "self_source": {"unit": 0},
+   "clicks": {"gives": true, "takes": true, "quantum": 1}
+  },
+  {
+   "name": "matter",
+   "parts": [1],
+   "phase": 2,
+   "pair": "body",
+   "reads": [
+    {"family": "gravity", "weight": 1, "twist": "own", "by": 1},
+    {"family": "charge", "weight": "Lambda", "twist": "Lambda_v", "by": "q"}
+   ],
+   "self_source": {"unit": 0},
+   "clicks": {"gives": true, "takes": true, "quantum": 1}
   }
  ]
 }
