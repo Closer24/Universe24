@@ -568,14 +568,14 @@ The physics the method keeps:
 
 ## How the team works now (the model owner, 2026-09-26, records 2134, 2186, 2187 and 2190)
 
-The team is four agents and a paper writer. The Boss leads the four. Only the coder writes the engine's code. The others use the engine's input and output: they run it, debug it with the trace, and ask the coder for a new primitive. One writer per document.
+The team is four agents and a paper writer. The Boss leads the four. Until the engine is merged and generic, only the coder writes the engine's code; from then on, point 11 of the next section lets a finder add an attribute or fix a bug (record 2203). Every run is a run of the engine on main, through its input and output; no side runner. The others run it, debug it with the trace, and ask for a new primitive or report a bug. One writer per document.
 
 | Role | Session name | Does | Does not |
 | --- | --- | --- | --- |
-| The Boss | Closer24 | keeps the day's log, Highlights 5.4, the glossary, the ledger and the Skills; relays every word of the owner with the same text to the others; keeps the order of the work | write code or a derivation |
-| The coder | Coder 3 | writes all of the engine's code; adds every support as a generic primitive for every run; opens and merges the engine's pull requests on green checks | write a primitive for one agent or one experiment |
-| The physicist | Nature24 | writes the run's files, the small test of each primitive and the acceptance tests; runs the engine and checks each ledger item on main as the second party; answers the hard questions by runs | change the engine's code |
-| The mathematician | Mathematician | writes docs/ALGEBRA.md: one algebraic line per primitive with its place in the step; gates each build against it | change the engine's code |
+| The Boss | Closer24 | keeps the day's log, Highlights 5.4, the glossary, the ledger and the Skills; approves each finder's change of point 11; relays every word of the owner with the same text to the others; keeps the order of the work | write code or a derivation |
+| The coder | Coder 3 | writes the engine's code (the step and the loader always); adds every support as a generic primitive for every run; opens and merges the engine's pull requests on green checks | write a primitive for one agent or one experiment |
+| The physicist | Nature24 | writes the run's files, the small test of each primitive and the acceptance tests; runs the engine and checks each ledger item on main as the second party; answers the hard questions by runs | change the engine's code, except by point 11 of the next section |
+| The mathematician | Mathematician | writes docs/ALGEBRA.md: one algebraic line per primitive with its place in the step; gates each build against it | change the engine's code, except by point 11 of the next section |
 | The paper writer | Paper | writes the one paper from what the tree holds ([paper-coordinator](paper-coordinator/SKILL.md)) | change the tree's documents |
 
 
@@ -635,6 +635,7 @@ The owner's word: everything the owner and the Boss close on the way of work ent
 8. Every attribute is algebra. Each has a small test of its own, and the run tests the whole (record 2184).
 9. The output is generic like the input (record 2191). Every reading the run writes is declared in the world file and labelled by its kind; one output format for every experiment; the visualizer reads the output alone, never the engine's state.
 10. The pins are outside the code (record 2191). A pin is a line of a pins file beside the world file, on a detector reading only; one generic reader outside the engine compares a run's output with it after the run; the engine never reads a pin. Nothing is compared against a pin before the Go.
+11. A finder adds an attribute or fixes a bug (record 2203). In force once the engine is merged and generic: items 1 to 3 of record 2199 have landed (the merge, the output declared in one format, the loader reading every declaration as a generic term). A finder who needs an attribute writes it as its own primitive in its own file and pushes it. A finder who finds a bug pushes the red test that shows it with the fix that turns it green. The Boss approves each change. It is approved only with: the three tests passed; its word in the glossary; the mathematician's algebraic line; its small test; its ledger line; every shipped world bit for bit, or the moved world named with its reason. The step and the loader stay the coder's: a change there is announced to the Boss first and waits for any open change on the same file.
 
 ## Tools and authority
 
