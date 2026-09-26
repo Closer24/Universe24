@@ -139,6 +139,38 @@ Nature24's design, for the Boss's word; nothing of it runs before the Go:
 A new pin is a line in a pins file; a new comparison kind is a line of the reader, not of the
 engine; the engine is closed the same day with or without pins.
 
+THE PHYSICIST'S RUNS AS RUN FILES (the model owner's word of 2026-09-26, 12:40Z: "all the
+experiments you make on the well, a low ceiling, a high ceiling, all those things: make sure you
+can do them afterwards from the generic engine simply, and from there ask for attributes; what
+you need for your games you do not do in your local code, the engine supports them; after this
+you write no code, you run the engine; make sure you have the attributes you need: input,
+output, visualizer"). Every knob of the checking code in docs/designs/rule_alone/ mapped to its
+declaration; a knob with no home is a to-do item for Coder 3, never a line of the physicist's
+code again:
+
+| The knob of my runs | Its declaration in the run's files | State |
+| --- | --- | --- |
+| a record at rest, moving at v, or two records (`rest`, `moving`, `pair`; `v=`) | bodies of the world file: `position`, `family`, `amount`, `momentum`; two entries for the pair; a record without `fixed` moves by the rule | the keys exist; the free body by the rule is the to-do item of section 2 |
+| the record's width (`side=`) and the start's shape | the body's extents and `start` (a Gaussian or the stationary mode) | the extents exist; `start` is the run's declaration above, to do |
+| the weights of the hollow and the hill (`km=`, `kr=`) | the `reads` of the matter family, signed (primitive 4) | the sign to do |
+| the well's two families, [1000, 1019] and [1000, 1181] | two entries of universe.json with their pairs, parts [1], phase 1 | exists |
+| the source's form and scale (`source=level|count|cap|table`, `scap=`, `floor=`, E_s) | the `sourced` primitive with its scale E_s and its table's cap in universe.json (primitive 6) | to do |
+| the fields at the pace or plain (`pace=`) | the field families' own `reads` (a field at the pace reads what the matter reads) | exists as a read |
+| the board's size and its faces (`n=`, `wrap=`, `sponge=`) | the world's shape; `faces` closed, periodic or absorbing; an absorbing face is the face detector of the engine (`face:+x` .. `face:-z`), so the sponge is not needed there | the shape and the face detectors exist; `faces` as one word to do |
+| the stationary start (`passes=`) | `start` "stationary": the record's mode and the fields' levels iterated at the pace (the run's declaration) | to do |
+| the pace bounded on both sides, the cut Nodes counted | the engine's rule of the guard and a GameBoard reading of the cut Nodes | to do (section 2) |
+| the run's length (`t=`) and the readings' cadence (`EVERY`) | the run's length and the `readings` intervals | to do (the run's declaration) |
+| the readings: the centroid, the rms width, the peak and its Node, the count's sum and peak, the content at the peak, the rotation, the bound share, the tail, the record's form, a field's form, the ringing at a Node per window, the coupling and the total | the `readings` declaration, by kind: a body's centre and rms; a level and a count at a Node over intervals; a family's form (GameBoard); a window's amplitude at a Node; the conserved total | to do: these kinds join the `readings` line above |
+| the every-Node detector bath and the momentum-keeping click (item9_clicks.py, item9_pair.py, item9_many.py) | detectors as bodies on every Node of a region; the click's recoil (primitive 7); a body of M records as `amount` M | the detectors exist; the recoil to do |
+| the emitter, the receivers and the click counts (item8_rate_worlds.py) | the emitter body, receiver bodies, the face detectors, the clicks in the output | exists: these worlds already ran in the engine |
+| a free packet's speed against its rms (packet_speed.py) | a body with `momentum` and the centre reading | exists but for the reading |
+| the visualizer | a reader of the output's declared readings: a body's centre over intervals, a level at a Node, the clicks by Node and interval | to do, outside the engine |
+
+When every line of this table reads "exists", docs/designs/rule_alone/ is history, every run
+of it is a world file under examples/events/ with universe.json and the start file, and the
+physicist writes no code: the run files, the small tests and the acceptance tests only (records
+2187, 2190).
+
 THE TERM FORM behind the table (the mathematician's 9.110 item 7): a family is a shape and a
 list of terms [kind, target, of, degree, weight, table], the kind one of four (READ, SOURCE,
 HOLD, CLICK); the shape is `parts`, `phase`, `pair` and the internal representation
