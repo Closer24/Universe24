@@ -17863,6 +17863,83 @@ as written here.
     a declaration; if it rings again, the well stays a study and the
     fallback with the lower ceiling is the declaration of the day.
 
+14. **The well as replicated events (the Boss's record 2197 on the
+    model owner's word: "motion is the replication of events at the
+    Nodes; a body that moves does not know that it moves; an event
+    replicates in all directions; whether it does is an attribute of
+    the run"): YES, in two reads and nothing else; its declaration in
+    the four step primitives; what the rule gives and what stays the
+    balance; the numbers for Nature24's run.** THE LINE: the well is a
+    RECORD of a massive family (the well family, pair [1000, 1019],
+    omega_0 = 0.193, range 2.96), born once with the body as the bound
+    mode of the body's hollow, and from then on stepped by the rule on
+    all six Ports like every record, carried by its own phases; the body
+    and the well record READ each other's invariant density D_i (item
+    13) into their paces, the body's pace lowered by the well record's
+    D and the well record's pace lowered by the body's D; NO SOURCE (no
+    count injected per interval), NO HOLD (nothing written in place):
+    two standing rotations, each bound in the hollow the other makes,
+    a mutual bound pair. A massive record bound in a hollow is 9.105's
+    computation (the pair well), applied twice with the roles swapped.
+    THE DECLARATION in 9.112's words: SEND every family's levels on all
+    six Ports (the law's own, symmetric); WAIT 1; RECEIVE plain (a
+    rotation for a pair); COMBINE the rule with the paces
+      p_body(i)  = Gamma - K_m x D_well(i) div E_w,
+      p_well(i)  = Gamma - K_w x D_body(i) div E_m,
+    the reads of D (a READ term "of" a phase-2 family reads its D_i,
+    never its level, which turns at omega_0 and would drive at 2
+    omega_0 as item 13 found); no loads. ONE COUPLING: momentum's
+    conservation needs the cross term to be one number, so K_m / E_w =
+    K_w / E_m in the form's units (the loader checks the equality as
+    declared; the total momentum of the pair, a CONSTANT reading of
+    9.115, checks it in the run). MOTION: both records carry K in their
+    phases and move at their group speeds; the same speed v needs each
+    its own K, K = omega v / c^2 per record, so the well record's phase
+    gradient is K_w = (0.193 / 0.3447) K_m = 0.56 K_m (the same K on both
+    would separate them at v ratio 1.8); a moving pair is two
+    replications with two gradients, nothing else, and the body does
+    not know it moves. FROM THE RULE AND BEYOND IT (9.113): the mutual
+    binding is from the rule (two reads, their coefficients); the SIZE
+    is not: a contact attraction between two fields in three dimensions
+    has no scale (E(lambda) = lambda^2 T - lambda^3 V under the scaling
+    psi -> lambda^(3/2) psi(lambda x), unbounded below), so the pair
+    shrinks to the grain, where the lattice's bounded band arrests it
+    (the fallback's rms 2 is that end); the finite size is the balance
+    beyond the rule (9.113 item 3 (a)): a third read of the opposite
+    sign at a shorter range (the core family, also a record born once)
+    or the self-source's repulsion (9.88 (2)), declared and tested after
+    the pair binds. THE NUMBERS FOR THE RUN (HOST, from the 3D square
+    well's threshold depth pi^2 c^2 / (8 R^2) in omega^2 with c^2 = 1 / 3
+    and R = 8 Links, the hollow's radius at rms 5.65; the pace's local
+    rest rotation cos omega_i = 1 - (p^2 + Gamma^2)(den - num) / (2 den
+    Gamma^2)): the body ([800, 850]) binds in the well record's hollow
+    above a depth of 0.055 Gamma at the peak, the well record ([1000,
+    1019]) in the body's hollow above 0.2 Gamma (a lighter rotation
+    needs a deeper hollow at the same size); declare twice the
+    threshold, the body's pace at the peak 0.89 Gamma and the well
+    record's 0.6 Gamma, both inside the guard 0 < p <= Gamma and away
+    from the hill's edge 1.015 Gamma; E_w and E_m from the two peak D's
+    (D = A^2 sin^2 omega at the peak) so that K_m D_w div E_w = 0.11
+    Gamma and K_w D_m div E_m = 0.4 Gamma there, with K_m = K_w = 2 and
+    E's in that ratio (the one coupling: E_w / E_m = D_w,peak / (3.6
+    D_m,peak)); the start the self-consistent pair of ground modes (two
+    eigenproblems iterated together, as his stationary start did for
+    one); absorbing faces kept; the run 1500 intervals. THE READINGS
+    (GameBoard): the ringing at each record's peak Node under 0.01 in
+    every window (both D's invariant: no drive); the bound shares of
+    both above 0.7 at 250; the rms of both at 0, 250, 500, 1000, 1500:
+    steady within 10 percent means bound at a finite size from the rule
+    alone and item 3 (a)'s balance is not needed; falling monotonically
+    toward 2 with the peak's content rising to the guard means the
+    collapse the scaling predicts (my expectation, on the time scale R /
+    (c sqrt(Delta omega / omega)) of about 100 intervals) and the
+    balance is owed as declared. MOVING at v = 0.05 with K_m = 0.0517
+    and K_w = 0.0289 per Link: the two centroids together within 1 Link,
+    12.5 +- 1 Links per 250 intervals, the total momentum constant. A
+    run that binds and moves closes the well as replicated events with
+    its size the declared balance; the SOURCE word is then not needed
+    for the well and stays on the ledger for what else sources.
+
 ### 9.109 The click that keeps the momentum, in integers (the model owner's question of 2026-09-26, record 2160: "but one click, is it not received in one click?"; the Boss's ask for the line), and the algebra's numbers for the ninth question's rerun
 
 1. **What the engine's click does and what the bath's construct did.**
