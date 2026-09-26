@@ -805,7 +805,8 @@ class DetectorLawSimulation:
         # seventeen primitives declared by name with their place, reads, writes
         # and order, the families' terms checked against it at load
         self.register = self._engine_register()
-        self.register.check_writers()
+        self.register.check_step(world.step)
+        self.register.check_writers(world.step)
         self.register.check_terms(self.family_terms())
         self.register.at("the hold", "(iv)")(advance=True)
 
@@ -837,11 +838,7 @@ class DetectorLawSimulation:
         return call
 
     def _engine_register(self) -> Register:
-        """The register filled from the features' folders (event_universe.features, one
-        folder per primitive with its DECLARATION and bind; record 2221 (3); cut 2) and
-        bound to this loop: every built primitive's function is the loop's method that
-        implements it today, resolved at each call; a row of the ledger not built has
-        none, and a term naming it is refused at load."""
+        """The register filled from the features' folders and bound to this loop: a built primitive's function is its folder's or the loop's method of today; a row not built has none."""
         register = discover()
         register.bind(self)
         return register

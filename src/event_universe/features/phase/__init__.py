@@ -13,14 +13,7 @@ from typing import Any
 from event_universe.core.register import Declaration
 
 DECLARATION = Declaration(
-    "the phase",
-    "(i)",
-    ("levels",),
-    ("the second level",),
-    None,
-    None,
-    "9.91 (2)",
-    word="the step",
+    "the phase", "(i)", ("levels",), ("the second level",), None, "9.91 (2)", word="the step"
 )
 
 

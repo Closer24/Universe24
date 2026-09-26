@@ -657,6 +657,12 @@ in every world; a component with no source stays exactly zero (the leak test per
 The light record's clock is its emitter's (`clock` on every emitter). The unit tests keep
 their small inline lists.
 
+THE STEP FILE: `law/step.json` at the
+repository's root holds the interval's order for every world, the places (i) to (v) and "any"
+with the ordered names of the register's primitives (the order among the writers of one value,
+ALGEBRA.md 9.117 item 3, is the file's); no world names it and no code holds an order; a run's
+output carries its digest under `step.hash`; to reorder the step, edit the file.
+
 THE ENGINE START FILE (the model owner's record 2089 of 2026-09-25 through the
 Boss; BUILD.md section 26 item 57): `engine_start.json` in this folder is the one
 canonical copy of the run's parameters, {"law": "detector-law-v1", "mode": "check"};

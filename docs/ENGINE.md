@@ -24,7 +24,17 @@ register finds the folders (`discover`), so adding a feature touches no shared
 file; twenty-three folders (the seventeen, the giving at (ii), the feed, the
 induction, the spin's step, the hop and the recoil's accumulator at (v)),
 fourteen bound to today's methods; the interface apply(term, start, own) ->
-writes is declared in core/primitive.py for the next cuts. The paragraphs below on the Beam Law
+writes is declared in core/primitive.py for the next cuts. SINCE THE STEP FILE the
+interval's order lives in one data file shared by every world, `law/step.json`: the places (i)
+to (v) and "any", each with the ordered names of the register's primitives; the host reads it
+(`world_files`), the loader carries it on the world (`step`), and the register refuses a file
+naming an unknown primitive, listing one at a place it does not declare or leaving out a built
+one, orders the writers of one value at one place by the file (a write deferred from (ii) to
+(iv) first; ALGEBRA.md 9.117 item 3 transcribed), and refuses the loop's call of a primitive at
+a place the file does not list; a folder's card carries no order; every run's output carries
+the file's digest (`step.hash`); today's order is transcribed from `step()`, every shipped
+world bit for bit, and each folder bound to its apply moves its call under the file's order.
+The paragraphs below on the Beam Law
 (`beam-v1`) are the record of the ray law, cancelled (docs/CANCELLED_WORLDS.md;
 [Highlights 5.4](HIGHLIGHTS.md#54-the-detector), "DECIDED: the law of the
 ray", the model owner, 2026-09-19). Its design and implementation contract was

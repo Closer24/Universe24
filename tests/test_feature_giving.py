@@ -192,8 +192,6 @@ def test_the_declaration_is_the_ledgers_row():
         "a body's content M_k",
         "a body's momentum n",
     )
-    assert DECLARATION.order_of("a body's content M_k") == 2
-    assert DECLARATION.order_of("a body's momentum n") == 1
     assert DECLARATION.place_of("a body's momentum n") == "(iv)"
     assert DECLARATION.place_of("a family's level at a Node") == "(ii)"
     assert DECLARATION.function is apply

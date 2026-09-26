@@ -18,7 +18,6 @@ DECLARATION = Declaration(
     ("parts",),
     ("the components' axes",),
     None,
-    None,
     "9.86 (2); 9.91 (2)",
     word="the step",
 )

@@ -18,7 +18,6 @@ DECLARATION = Declaration(
     ("the family's own levels", "P_2", "the structure table"),
     ("a family's level at a Node",),
     None,
-    None,
     "9.78 (3); 9.88 (2); 9.91 (5)",
     word="the right side",
 )

@@ -127,7 +127,6 @@ DECLARATION = Declaration(
         "the record's remainder, kept in Own",
     ),
     ("a family's level at a Node", "the record's remainder"),
-    2,
     None,
     THE_WORD + " (9.113 item 2; 9.117 item 5); 9.117 item 2; 9.108 items 3, 10, 11, 13; 9.116 item 4b",
     word="the right side",

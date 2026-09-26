@@ -18,7 +18,6 @@ DECLARATION = Declaration(
     ("the family's pair", "a body's pair at its Nodes"),
     ("the rule's coefficients",),
     None,
-    None,
     "9.57 (1); 9.111 item 7 row 1",
     word="the step",
 )

@@ -21,7 +21,6 @@ DECLARATION = Declaration(
         "the ladder",
     ),
     ("the record's tally", "a body's content M_k"),
-    1,
     None,
     "9.25 (2), (3); 9.111 items 1, 2 and 6; 9.117 items 2 and 3",
     word="after the step",

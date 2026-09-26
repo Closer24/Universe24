@@ -1,0 +1,37 @@
+{
+ "(i)": [
+  "the pair",
+  "the degree",
+  "the signed read",
+  "the send",
+  "the wait",
+  "the receive",
+  "the internal representation",
+  "the self-source",
+  "the phase",
+  "the operation"
+ ],
+ "(ii)": [
+  "the clicks",
+  "the lifetime",
+  "the giving",
+  "the clicks list",
+  "the hand"
+ ],
+ "(iii)": [],
+ "(iv)": [
+  "the hold",
+  "the source",
+  "the recoil"
+ ],
+ "(v)": [
+  "the feed",
+  "the induction",
+  "the spin's step",
+  "the hop",
+  "the recoil's accumulator"
+ ],
+ "any": [
+  "the trace"
+ ]
+}
