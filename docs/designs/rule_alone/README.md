@@ -305,7 +305,52 @@ intervals). `null`: the same with no content. The runs of 2026-09-26, 10:33Z (27
 | the mean momentum label of each body's records along x: +0.041 and -0.028 at 250, +0.055 and -0.018 at 500 (the bodies fall toward each other), then mixed as the clouds pass; in `null` exactly 0 throughout | item 2's meeting at 249; 9.109 (3): the fall accrues in the phase between clicks and is re-read at each click | the FALL is read in the momentum: WORKS |
 | the clouds: each body's records walk apart from one another (the walk of one record 20 to 30 Links by 1500, 9.98 (10) (i)), so a body's records spread over the board and the centroid read about one record wraps (the separations 20, 11.5, 29.5, -23, -3, 23, 1.3 and, in `null`, 20, 17, 54, -4, 20, 19, 56 are the wrap's, not a motion); 28,000 clicks per body, the leak 5e-4 | the centroid's walk over sqrt M; the cloud's size the walk itself | the MEETING is not readable: the clicks hold each record's phase and position, not the records together; without a binding the body is a cloud of the walk's size by 1500 |
 
-## 12. The commands
+## 12. The sourced form run again with the four corrections (ALGEBRA.md 9.108 item 12; the Boss's record 2188, the study run of the well)
+
+The mathematician's four corrections, each an option of `binding_family.py` so the earlier runs
+stand: (i) the pace bounded on both sides, 0 < p <= Gamma (a content below 0 is cut at 0 and
+the cut Nodes counted, `hill_excess`; a content at Gamma ends the run); (ii) the stationary
+start at the pace, `passes=8`: the record's ground mode (the eigenvector of the step operator
+M(content) with the largest 2 cos omega, a shifted power iteration, HOST floats) and the fields'
+static levels iterated together, the fields at the pace of the content of the pass before; (iii)
+absorbing faces as a sponge of 8 Nodes on an open board of 64^3 (`sponge=8 n=64`, the damping
+0.12 ((8 - d) / 8)^2 per interval on every stepping level, the record's tails included); (iv)
+v = 0.05 (v / w = 0.011 against the fields' rotations 0.19 and 0.56). Side 9, K_m = 2, K_r = 4,
+the floor 1500 at the Gaussian (E_s 12,454,244); the fallback the hold with the table, s_cap
+3000, the ceiling (K_m + 1) s_cap = 9000 (E_s 980,857). The runs of 2026-09-26, 12:00Z to 12:30Z.
+The deciding reading, the mathematician's: the ringing amplitude of each field at the start's
+peak Node over windows of 300 intervals, (max - min) / (2 |mean|), under 0.05.
+
+The stationary start converged in both forms (the content's change at the peak per pass: 1637,
+1355, 524, 213, 103, 15, 23, 12 for the sourced; 3600, 801, 447, 24, 15, 9, 3, 3 for the table;
+the mode's omega 0.3372 and 0.3396 against the vacuum's 0.3447; the peak content 2553 and 3003).
+
+| Run (GAMEBOARD of the runner) | Reading | Algebra beside | Verdict |
+| --- | --- | --- | --- |
+| (1) sourced, at rest, 1500 intervals | the record disperses: rms 5.65, 6.07, 10.6, 11.0, 9.6, 11.1, 10.6 at 0, 250, 500, 750, 1000, 1250, 1500; the bound share 0.80, 0.74, 0.24, 0.21, 0.32, 0.20, 0.23; the content at the peak 2591, 1450, 228, 36, 102, 16, 340; the ringing of the binding per 300: 0.41, 1.35, 0.96, 0.89, 2.01; of the core: 0.79, 2.47, 3.42, 2.07, 8.51; the hill's excess (the content cut at 0) at 2136 Nodes (max 2) at 0, 89,919 (78) at 250, 169,507 (185) at 1000; the record's form means per 300: 0.955, 0.931, 0.631, 0.471, 0.333 (the sponge takes what leaves) | the ringing under 0.05 decides | FAILS: 0.41 in the first window and growing; the body is not held |
+| (2) sourced, moving v = 0.05 | the guard at 294 (the content 10808 at Gamma); at 250 the centroid 10.5 Links on (12.5 expected), rms 5.6 to 4.5, the content at the peak 2584 to 4346: the record concentrates and the fields run away | v t = 12.5 at 250 | FAILS |
+| (3) the fallback, the hold with the table, at rest, 1500 intervals | the record collapses onto the table's ceiling: rms 5.76, 5.77, 6.80, 3.33, 2.87, 2.30, 1.98; the count at the peak 1001, 2820, 2883, 2895, 2882, 2888, 2909 (the cap 3000); the content at the peak 3003, 8460, 8649, 8685, 8646, 8664, 8727; the bound share 0.79 to 0.99; the ringing of the binding per 300: 0.44, 0.024, 0.010, 0.008, 0.008; the record's form means 0.67, 0.29, 0.31, 0.40, 0.50 | the ringing under 0.05; 9.108 item 12: "the stable size is where the net well per quantum is deepest, finite" | BOUND, at the ceiling: the ringing under 0.05 after the first window; the size is the table's (rms 2), not the mode's; half the record radiated into the sponge |
+| (4) the fallback, moving v = 0.05, ceiling 9000 | the guard at 340 (the content 10673 at Gamma); 7 Links in 250 intervals against 12.5 (0.55 of v); the form 0.65 at 250 | v t | FAILS: the held fields at the pace overshoot the ceiling 9000 near Gamma when the body moves |
+
+1. **Findings for the algebra (record 2137: a gap is the algebra's, the run is not adjusted).**
+   (a) With the stationary start, the sponge and the bounded pace, the sourced form still
+   disperses at rest, and the two fields' ringing GROWS (0.41 to 2.0 and 0.79 to 8.5 relative
+   over 1500 intervals): it is not a transient of the start that the faces would carry away; the
+   source moves as the record spreads, the fields follow with their own rotations, and the
+   coupled system runs away in integers at this floor. (b) The hill's excess is not a rounding
+   of the tails: the core's ringing exceeds the binding's over 10^5 Nodes far from the record,
+   where both are small; the bound at Gamma acts on a large region, so "a hill lessens a hollow
+   and never exceeds it" is not what the integer fields do once they ring. (c) The fallback
+   holds the body by collapsing it onto the table's ceiling; the ceiling 9000 at 0.9 Gamma is
+   unstable under the paced held fields when the body moves (the guard at 340), and at rest the
+   record radiates half its form while it collapses. (d) On a board with a sponge the record's
+   form means are not a leak test; the leak reading is the sponge's.
+2. **The runner's changes (checking code, record 2135):** the two-sided bound with the count of
+   the cut Nodes; the stationary start's passes with their report; the ground mode by a shifted
+   power iteration; the sponge; the ringing reading; `n=` for the board's side. Outputs
+   `binding_*_n64_sponge8_passes8_*.json`.
+
+## 13. The commands
 
     PYTHONPATH=src python docs/designs/rule_alone/item1_fall.py 1 2100
     PYTHONPATH=src python docs/designs/rule_alone/item1_fall.py 0 2100

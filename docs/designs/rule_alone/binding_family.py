@@ -38,6 +38,25 @@ THE FORMS OF THE SOURCE (`source=`):
   K_m SUM b_i s_i - K_r SUM h_i s_i, is read beside its pieces. `wrap=1` puts the run on a
   periodic board of 64 (the start a Gaussian, as (b) allows).
 The guard p > 0 (the content reaching Gamma) ends a run and is reported with its interval.
+THE FOUR CORRECTIONS OF 9.108 item 12 (the mathematician, 2026-09-26), each an option so the
+earlier runs stand unchanged:
+- (i) the guard is two-sided: a content below 0 (a pace above Gamma) ends the run as well, with
+  the side named (`guard_side`).
+- (ii) `passes=N` (0 off): THE STATIONARY START AT THE PACE. The record's ground mode and the
+  fields' static levels are iterated together N times: the record's standing mode is the
+  eigenvector of the rule's step operator M(content) with the largest 2 cos omega (a power
+  iteration shifted by 2, HOST floats, `MODE_SWEEPS` sweeps), the sources are its counts, the
+  fields' static response (or the held fields' exterior, relaxed with the support's levels held)
+  at the pace of the content gives the next content. The passes' report is in the output.
+- (iii) `sponge=L` (0 off): ABSORBING FACES as a layer of L Nodes at every face where every
+  stepping level is damped each interval by (1 - d), d = SPONGE_STRENGTH x ((L - distance) / L)^2,
+  in integers (the damped part rounded); a HOST device standing in for the receiver faces the
+  engine will declare; it touches the record's tails too and the leak reading shows it.
+- (iv) the adiabatic condition is a choice of v (v / w against the fields' rotations).
+- THE RINGING READING: the level of each sourced field at the start's peak Node every interval;
+  per window of 300 the amplitude (max - min) / (2 |mean|) (`ringing_300`); under 5 percent is the
+  reading that decides (9.108 item 12).
+- `n=` the side of the open board (48 by default).
 
 THE READINGS (GAMEBOARD of the runner) every 25 intervals: the centroid of F, the rms width about
 it, the peak level and Node, the count SUM s_i and the peak's s_i, the content at the peak, the
@@ -79,6 +98,9 @@ EVERY = 25
 BOUND_RADIUS = 12
 PAIR_SEPARATION = 20
 WINDOW = 300
+MODE_SWEEPS = 1200
+MODE_SWEEPS_WARM = 400
+SPONGE_STRENGTH = 0.12
 
 
 def wave_number(speed: float, num: int, den: int) -> tuple[float, float]:
@@ -151,9 +173,76 @@ class Field:
         self.before = level.copy()
         self.remainder = np.zeros(SHAPE, dtype=R.INT)
 
+    def static_hold(
+        self,
+        support: np.ndarray,
+        level: np.ndarray,
+        content: np.ndarray | None = None,
+        sweeps: int = 4000,
+    ) -> None:
+        """The steady exterior of a held field: (2 - M) a = 0 outside the support with a held
+        at the support's levels, by relaxation (HOST floats); the start of a held family."""
+        coefficients = None if content is None else R.coefficients(self.num, self.den, content)
+        read, own, wall = self.plain if coefficients is None else coefficients
+        r = read.astype(np.float64) / wall.astype(np.float64)
+        s_over_w = own.astype(np.float64) / wall.astype(np.float64)
+        a = np.zeros(SHAPE, dtype=np.float64)
+        held = level.astype(np.float64)
+        for _ in range(sweeps):
+            a = 0.5 * (r * R.neighbour_sum(a, WRAP) + s_over_w * a)
+            a[support] = held[support]
+        self.coefficients = self.plain if coefficients is None else coefficients
+        self.now = np.rint(a).astype(R.INT)
+        self.before = self.now.copy()
+        self.remainder = np.zeros(SHAPE, dtype=R.INT)
+
+    def sponge(self, damping: np.ndarray | None) -> None:
+        if damping is not None:
+            self.now = self.now - np.rint(self.now * damping).astype(R.INT)
+            self.before = self.before - np.rint(self.before * damping).astype(R.INT)
+
     def form(self) -> float:
         read, own, wall = self.coefficients
         return conserved(self.now, self.before, read, own, wall)
+
+
+def damping_profile(layer: int) -> np.ndarray | None:
+    """The sponge of 9.108 item 12 (iii): d = SPONGE_STRENGTH ((L - distance) / L)^2 within L
+    Nodes of an open face, 0 elsewhere (HOST)."""
+    if layer <= 0:
+        return None
+    grids = np.meshgrid(*[np.arange(n, dtype=np.float64) for n in SHAPE], indexing="ij")
+    distance = np.full(SHAPE, np.inf)
+    for axis, g in enumerate(grids):
+        if not WRAP[axis]:
+            distance = np.minimum(distance, np.minimum(g, SHAPE[axis] - 1 - g))
+    inside = np.clip((layer - distance) / layer, 0.0, 1.0)
+    return SPONGE_STRENGTH * inside * inside
+
+
+def ground_mode(
+    coefficients: tuple[np.ndarray, np.ndarray, np.ndarray],
+    warm: np.ndarray,
+    sweeps: int,
+) -> tuple[np.ndarray, float, float]:
+    """The record's standing mode under the content: the eigenvector of M = (R N + S) / w with
+    the largest eigenvalue 2 cos omega, by a power iteration on M + 2 (the shift puts the K = pi
+    modes, 2 cos omega near -2, at the bottom); HOST floats. Returns (phi with max 1, 2 cos omega,
+    the residual |(M + 2) phi - (lambda + 2) phi| over |phi|)."""
+    read, own, wall = coefficients
+    r = read.astype(np.float64) / wall.astype(np.float64)
+    s_over_w = own.astype(np.float64) / wall.astype(np.float64)
+    phi = warm.astype(np.float64)
+    phi = phi / np.sqrt((phi * phi).sum())
+    lam = 0.0
+    for _ in range(sweeps):
+        m_phi = r * R.neighbour_sum(phi, WRAP) + s_over_w * phi + 2.0 * phi
+        norm = float(np.sqrt((m_phi * m_phi).sum()))
+        phi = m_phi / norm
+    m_phi = r * R.neighbour_sum(phi, WRAP) + s_over_w * phi
+    lam = float((phi * m_phi).sum())
+    residual = float(np.sqrt(((m_phi - lam * phi) ** 2).sum()))
+    return phi / phi.max(), lam, residual
 
 
 class Record:
@@ -261,9 +350,14 @@ def run(options: dict) -> dict:
     core_scale = Fraction(options.get("corescale", "1"))
     at_pace = options.get("pace", "0") == "1"
     floor = int(options.get("floor", 1500))
+    passes = int(options.get("passes", 0))
+    sponge_layer = int(options.get("sponge", 0))
     global SHAPE, WRAP
     if options.get("wrap", "0") == "1":
         SHAPE, WRAP = PERIODIC_SHAPE, (True, True, True)
+    elif "n" in options:
+        SHAPE, WRAP = (int(options["n"]),) * 3, (False, False, False)
+    damping = damping_profile(sponge_layer)
     num = np.full(SHAPE, KIND[0], dtype=R.INT)
     den = np.full(SHAPE, KIND[1], dtype=R.INT)
     read0, own0, wall0 = R.coefficients(num, den, np.zeros(SHAPE, dtype=R.INT))
@@ -320,8 +414,86 @@ def run(options: dict) -> dict:
             core.start_static(start_source, start_content)
         static_peak = k_m * int(binding.now[peak]) - k_r * int(core.now[peak])
     e_core = max(1, int(records[0].e_s * core_scale))
+    passes_report: list[dict] = []
+    if passes > 0:
+        # 9.108 item 12 (ii): the record's mode and the fields' static levels iterated together
+        # under the pace the fields make; E_s as set above (the floor rule at the Gaussian)
+        start_content = np.zeros(SHAPE, dtype=R.INT)
+        modes: list[np.ndarray] = [form_of(r) ** 0.5 for r in records]
+        grids = np.meshgrid(*[np.arange(n, dtype=np.float64) for n in SHAPE], indexing="ij")
+        for index_pass in range(passes):
+            # the fields' static levels from the records as they stand (the Gaussian at the
+            # first pass), at the pace of the content of the pass before
+            level_start = np.zeros(SHAPE, dtype=R.INT)
+            level_core_start = np.zeros(SHAPE, dtype=R.INT)
+            for record in records:
+                form = form_of(record)
+                level_start += source_counts(form, record.e_s, source, s_cap)
+                if core is not None:
+                    level_core_start += (form.astype(np.int64) // e_core).astype(R.INT)
+            support_start = level_start > 0
+            pace_start = start_content if (at_pace and index_pass > 0) else None
+            gravity.static_hold(support_start, level_start, pace_start)
+            if sourced and core is not None:
+                binding.start_static(level_start, pace_start)
+                core.start_static(level_start, pace_start)
+            else:
+                binding.static_hold(support_start, level_start, pace_start)
+                if core is not None:
+                    core.static_hold(support_start, level_core_start, pace_start)
+            new_content = gravity.now + k_m * binding.now
+            if core is not None:
+                new_content = new_content - k_r * core.now
+            excess_nodes = int((new_content < 0).sum())
+            excess_max = int(-new_content.min()) if excess_nodes else 0
+            new_content = np.maximum(new_content, 0)
+            change = int(np.abs(new_content - start_content).max())
+            start_content = new_content
+            peak_now = np.unravel_index(int(np.argmax(level_start)), SHAPE)
+            # the record's standing mode under that content
+            coefficients = R.coefficients(num, den, start_content)
+            cos_local_start = R.rest_rotation(*coefficients)
+            omegas, residuals = [], []
+            for index, record in enumerate(records):
+                phi, lam, residual = ground_mode(
+                    coefficients, modes[index], MODE_SWEEPS if index_pass == 0 else MODE_SWEEPS_WARM
+                )
+                modes[index] = phi
+                omegas.append(math.acos(max(-1.0, min(1.0, lam / 2.0))))
+                residuals.append(residual)
+                envelope = AMPLITUDE * phi
+                if mode == "moving":
+                    k, omega_k = wave_number(speed, *KIND)
+                    centre_x = R.centroid(phi * phi)[0]
+                    dx = grids[0] - centre_x
+                    record.now = np.rint(envelope * np.cos(k * dx - omega_k / 2.0)).astype(R.INT)
+                    record.before = np.rint(envelope * np.cos(k * dx + omega_k / 2.0)).astype(R.INT)
+                else:
+                    record.now = np.rint(envelope).astype(R.INT)
+                    record.before = np.rint(envelope * (lam / 2.0)).astype(R.INT)
+                record.remainder = np.zeros(SHAPE, dtype=R.INT)
+                record.cos_omega = cos_local_start
+            passes_report.append(
+                {
+                    "pass": index_pass,
+                    "omega_mode": omegas,
+                    "mode_residual": residuals,
+                    "content_peak": int(start_content[peak_now]),
+                    "content_max": int(start_content.max()),
+                    "hill_excess_nodes": excess_nodes,
+                    "hill_excess_max": excess_max,
+                    "count_sum": int(level_start.sum()),
+                    "count_peak": int(level_start[peak_now]),
+                    "content_change_max": change,
+                }
+            )
+        static_peak = int(start_content[peak_now])
     guard_interval = None
     guard_content = 0
+    guard_side = None
+    ring_node = np.unravel_index(int(np.argmax(sum(form_of(r) for r in records))), SHAPE)
+    ring_levels: dict[str, list[int]] = {"binding": [], "core": []}
+    ringing: dict[str, list[float]] = {"binding": [], "core": []}
     i_start: list[float] | None = None
     windows: list[list[float]] = [[] for _ in records]
     readings: list[dict] = []
@@ -356,13 +528,33 @@ def run(options: dict) -> dict:
             if core is not None:
                 core.step(pace_content)
                 core.hold(support, level_core)
+        binding.sponge(damping)
+        if core is not None:
+            core.sponge(damping)
         content = gravity.now + k_m * binding.now
         if core is not None:
             content = content - k_r * core.now
+        # 9.108 item 12 (i): the pace bounded on both sides, 0 < p <= Gamma: a content below 0 (a
+        # hill exceeding the hollow, here by the integer tails) is cut at 0 and counted; a content
+        # at or above Gamma ends the run
+        hill_excess_nodes = int((content < 0).sum())
+        hill_excess_max = int(-content.min()) if hill_excess_nodes else 0
+        content = np.maximum(content, 0)
         if int(content.max()) >= R.GAMMA:
             guard_interval = t
+            guard_side = "pace at or below 0"
             guard_content = int(content.max())
             break
+        for name, field in (("binding", binding), ("core", core)):
+            if field is not None:
+                ring_levels[name].append(int(field.now[ring_node]))
+                if len(ring_levels[name]) == WINDOW:
+                    values = np.array(ring_levels[name], dtype=np.float64)
+                    mean = abs(float(values.mean()))
+                    ringing[name].append(
+                        float((values.max() - values.min()) / (2.0 * mean)) if mean > 0 else float("inf")
+                    )
+                    ring_levels[name] = []
         read, own, wall = R.coefficients(num, den, content)
         cos_local = R.rest_rotation(read, own, wall)
         forms = [conserved(r.now, r.before, read, own, wall) for r in records]
@@ -391,6 +583,8 @@ def run(options: dict) -> dict:
                 row["total"] = sum(forms) + (row["binding_form"] + row["core_form"]) / e_s + coupling
                 row["content_max"] = int(content.max())
                 row["content_min"] = int(content.min())
+            row["hill_excess_nodes"] = hill_excess_nodes
+            row["hill_excess_max"] = hill_excess_max
             for index, record in enumerate(records):
                 reading = readings_of(record, form_of(record), content, counts[index], windows[index])
                 reading["leak"] = (
@@ -414,6 +608,9 @@ def run(options: dict) -> dict:
             record.now, record.before, record.remainder = R.step(
                 record.now, record.before, record.remainder, read, own, wall, WRAP
             )
+            if damping is not None:
+                record.now = record.now - np.rint(record.now * damping).astype(R.INT)
+                record.before = record.before - np.rint(record.before * damping).astype(R.INT)
             record.cos_omega = cos_local
     return {
         "options": options,
@@ -435,6 +632,13 @@ def run(options: dict) -> dict:
         "amplitude": AMPLITUDE,
         "guard_interval": guard_interval,
         "guard_content": guard_content if guard_interval is not None else None,
+        "guard_side": guard_side,
+        "passes": passes,
+        "passes_report": passes_report,
+        "sponge_layer": sponge_layer,
+        "sponge_strength": SPONGE_STRENGTH if sponge_layer > 0 else None,
+        "ringing_300": ringing,
+        "ring_node": [int(v) for v in ring_node],
         "e_s": [r.e_s for r in records],
         "e_core": e_core if core is not None else None,
         "static_floor_at_peak": static_peak,
@@ -456,7 +660,7 @@ def main() -> None:
     result = run(options)
     name = "binding_" + "_".join(f"{k}{v}".replace("/", "over") for k, v in options.items())
     guard = (
-        f"; THE GUARD at interval {result['guard_interval']} (content {result['guard_content']})"
+        f"; THE GUARD at interval {result['guard_interval']} ({result['guard_side']}, content {result['guard_content']})"
         if result["guard_interval"] is not None
         else ""
     )
@@ -476,6 +680,21 @@ def main() -> None:
     print(
         f"  the record's form's means over windows of {WINDOW}: {[round(v, 4) for v in result['form_means_300'][0]]}"
     )
+    for row in result["passes_report"]:
+        print(
+            f"  pass {row['pass']}: omega_mode {[round(v, 4) for v in row['omega_mode']]}, residual {[f'{v:.1e}' for v in row['mode_residual']]}, "
+            f"content peak {row['content_peak']} max {row['content_max']}, the hill's excess at {row['hill_excess_nodes']} Nodes (max {row['hill_excess_max']}), "
+            f"count sum {row['count_sum']} peak {row['count_peak']}, change {row['content_change_max']}"
+        )
+    if result["sponge_layer"]:
+        print(
+            f"  the sponge: {result['sponge_layer']} Nodes at strength {result['sponge_strength']} (HOST)"
+        )
+    for family_name, values in result["ringing_300"].items():
+        if values:
+            print(
+                f"  the ringing of {family_name} at the peak Node {result['ring_node']}, per 300: {[round(v, 4) for v in values]}"
+            )
     if result["source"] == "sourced":
         print(
             f"  the static floor at the peak {result['static_floor_at_peak']} (asked {result['floor_asked']}); E_s {result['e_s']}"
@@ -483,7 +702,8 @@ def main() -> None:
         for row in result["readings"]:
             if row["t"] % 250 == 0:
                 print(
-                    f"  t {row['t']:5d}: total {row['total']:.4e}, coupling {row['coupling']:.4e}, content max {row['content_max']} min {row['content_min']}"
+                    f"  t {row['t']:5d}: total {row['total']:.4e}, coupling {row['coupling']:.4e}, content max {row['content_max']}, "
+                    f"the hill's excess at {row['hill_excess_nodes']} Nodes (max {row['hill_excess_max']})"
                 )
     (Path(__file__).resolve().parent / f"{name}.json").write_text(
         json.dumps(result, indent=1) + "\n", encoding="utf-8"
