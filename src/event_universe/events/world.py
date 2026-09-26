@@ -316,6 +316,7 @@ from event_universe.core.integer import (
     rational_sum,
 )
 from event_universe.core.phase import MAX_PHASE_STEPS
+from event_universe.core.readings import Reading, declarations
 from event_universe.events.rule import rule_total_bound
 
 # ONE ENGINE, NO LAW'S NAME AND NO VERSION (ALGEBRA.md 9.90 (1); the model owner's
@@ -448,6 +449,9 @@ WORLD_KEYS = {
     # record writes per interval (a GAMEBOARD reading of the rows), a list
     # of Nodes, admitted under `massive_record` alone.
     "probes",
+    # the run's readings, declared by name and kind (core/readings.py; docs/ENGINE.md, the
+    # readings by type): a list, absent means none
+    "readings",
     # massive-record-v1: `mode_axis`, the axis ("x", "y" or "z") along which
     # the record writes the `mode` line per interval (the three sums of
     # light's total field over the Nodes of each residue class of that
@@ -2197,6 +2201,7 @@ class NatureBeamWorld:
     measured: tuple[MeasuredDefinition, ...]
     in_transit: tuple[TransitDefinition, ...]
     detectors: tuple[DetectorDefinition, ...]
+    readings: tuple[Reading, ...]
     action: int | None = None
     # The meeting (the world key `meeting`, false by default): a paid unit in
     # transit reads the free crowd at every free-space Node after the
@@ -7489,6 +7494,17 @@ def parse_world_document(
             )
         if drive_b:
             body_weight(entry.momentum, sum(entry.held), width, optical)
+    readings = (
+        declarations(
+            obj["readings"],
+            shape,
+            [detector.name for detector in detectors],
+            [family.name for family in families],
+            [number for number, entry in enumerate(measured) if entry.block is not None],
+        )
+        if "readings" in obj
+        else ()
+    )
     world = NatureBeamWorld(
         shape,
         boundary,
@@ -7507,6 +7523,7 @@ def parse_world_document(
         measured,
         in_transit,
         detectors,
+        readings,
         action,
         meeting=meeting,
         massive_rows=massive_rows,
