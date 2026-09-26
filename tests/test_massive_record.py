@@ -19,6 +19,7 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
+from event_universe.core.rule3 import coefficients
 from event_universe.diagnostics.massive_record_margin import (
     block_margin,
     check_margins,
@@ -26,7 +27,6 @@ from event_universe.diagnostics.massive_record_margin import (
     profile_check,
 )
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord, form_json
-from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import (
     MASSLESS_PAIR,
 )
@@ -200,8 +200,8 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     assert np.array_equal(a_next[free], expected_next[free])
     assert np.array_equal(r_next[free], expected_remainder[free])
     # the weak-field rule at every Node from its three integers (ALGEBRA.md 9.57 (1); item 44)
-    read, self_coefficient, wall = rule_coefficients(
-        simulation.kind_num[0], simulation.kind_den[0], NODE_CLOCK, content, True
+    (read, _, _), self_coefficient, wall = coefficients(
+        simulation.kind_num[0], simulation.kind_den[0], NODE_CLOCK, content
     )
     clocked = read * simulation._neighbours(now, simulation.kind_wrap[0])
     clocked += self_coefficient * now - wall * before + remainder
@@ -283,7 +283,7 @@ def test_every_family_reads_the_worlds_border_and_a_zero_face_when_open():
         a_next, r_next = step_once(simulation, live)
         # at Node 0: the total R S_6 = R (a_W + a_E + 4 x 0) = R a_W over the vacuum's wall w
         # (the weak-field rule's integers at c = 0, item 44)
-        read, _self, wall = rule_coefficients(1, 2, NODE_CLOCK, 0, True)
+        (read, _, _), _self, wall = coefficients(1, 2, NODE_CLOCK, 0)
         total = wall * int(a_next[0, 0, 0]) + int(r_next[0, 0, 0])
         assert total == read * expected
     assert world.kind_periodic(1) == (False, True, True)
@@ -1205,7 +1205,7 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
                 np.sum((live.now.astype(object) - a_before) * (r - live.remainder.astype(object)))
             )
             # the vacuum's R = 2 Gamma^2 num at every Node: R (I(t) - I(t - 1)) = L x the sum
-            read = rule_coefficients(2, 3, NODE_CLOCK, 0, True)[0]
+            read = coefficients(2, 3, NODE_CLOCK, 0)[0][0]
             assert read * (current - previous) == simulation.kind_wall(1) * remainders, boundary
             previous = current
 

@@ -24,8 +24,8 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
+from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.rule import rule_coefficients
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_emitter import emitter_world, massive_generator
 from tests.test_flux_reading import planted
@@ -109,11 +109,17 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
     assert (pace, gamma) == (gamma - 1, gamma)
     assert one_node.node_record_rule(one_node_block) == (num_c, 2 * den_c, gamma, 1)
     coefficient, wall = one_node.node_record_coefficients(one_node_block)
-    read, self_coefficient, wall_rule = rule_coefficients(num_c, 2 * den_c, gamma, 1, True)
+    (read, _, _), self_coefficient, wall_rule = coefficients(num_c, 2 * den_c, gamma, 1)
     assert wall == wall_rule == 12 * den_c * gamma**2
     assert coefficient == 6 * read + self_coefficient
-    assert one_node.one_rule(
-        num_c, 2 * den_c, gamma, 1, 6 * body.now, body.now, body.before, 0, True
+    assert rule3(
+        (read, read, read),
+        (2 * body.now, 2 * body.now, 2 * body.now),
+        self_coefficient,
+        wall_rule,
+        body.now,
+        body.before,
+        0,
     ) == (
         (coefficient * body.now - wall * body.before) // wall,
         (coefficient * body.now - wall * body.before) % wall,

@@ -1,6 +1,6 @@
 {
  "format": "code-shape-baseline",
- "recorded_at": "f72e7955",
+ "recorded_at": "44558520",
  "files": {
   "src/event_universe/__init__.py": {
    "lines": 27,
@@ -58,6 +58,14 @@
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
+  "src/event_universe/core/rule3.py": {
+   "lines": 94,
+   "docstring_lines": 6,
+   "comment_lines": 3,
+   "record_references": 0,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
   "src/event_universe/diagnostics/__init__.py": {
    "lines": 1,
    "docstring_lines": 1,
@@ -91,26 +99,18 @@
    "level_shift_sites": 0
   },
   "src/event_universe/events/detector_law.py": {
-   "lines": 4377,
-   "docstring_lines": 732,
-   "comment_lines": 711,
-   "record_references": 47,
-   "rule_arithmetic_sites": 10,
-   "level_shift_sites": 13
+   "lines": 4177,
+   "docstring_lines": 701,
+   "comment_lines": 709,
+   "record_references": 46,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 15
   },
   "src/event_universe/events/primitives.py": {
    "lines": 502,
    "docstring_lines": 74,
    "comment_lines": 7,
    "record_references": 3,
-   "rule_arithmetic_sites": 0,
-   "level_shift_sites": 0
-  },
-  "src/event_universe/events/rule.py": {
-   "lines": 128,
-   "docstring_lines": 42,
-   "comment_lines": 3,
-   "record_references": 1,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
@@ -219,10 +219,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/features/operation/__init__.py": {
-   "lines": 29,
+   "lines": 30,
    "docstring_lines": 7,
-   "comment_lines": 1,
-   "record_references": 1,
+   "comment_lines": 0,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
@@ -340,10 +340,6 @@
   }
  },
  "duplicates": {
-  "808d84128e840291": [
-   "src/event_universe/events/detector_law.py:_level_inverse",
-   "src/event_universe/events/detector_law.py:_level_step"
-  ],
   "cf6f2dc71514297b": [
    "src/event_universe/core/integer.py:rational_sum",
    "src/event_universe/events/detector_law.py:ratio_sum"

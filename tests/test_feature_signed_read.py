@@ -15,7 +15,7 @@ import pytest
 
 from event_universe.core.register import folder_of
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.rule import rule_coefficients
+from event_universe.core.rule3 import coefficients
 from event_universe.features import signed_read
 from event_universe.features.signed_read import (
     DECLARATION,
@@ -105,7 +105,7 @@ def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
         left, right = stability_bound(pair, CHAIN_GAMMA)
         assert bound * bound * left <= right < (bound + 1) * (bound + 1) * left
         for pace, admitted in ((bound, True), (bound + 1, False)):
-            read, self_coefficient, wall = rule_coefficients(
+            (read, _, _), self_coefficient, wall = coefficients(
                 pair[0], pair[1], CHAIN_GAMMA, CHAIN_GAMMA - pace, True
             )
             assert (self_coefficient - 6 * read + 2 * wall >= 0) is admitted
