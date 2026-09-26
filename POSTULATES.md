@@ -22,8 +22,8 @@ reverse.)
 
 (History, marked 2026-09-23: the generic disturbance simulator the next paragraph
 describes, its execution profile and its reaction contract were deleted on
-2026-09-19 with the engines before the Beam Law; the law in force is
-docs/ALGEBRA.md chapter 2.)
+2026-09-19 with the engines before the ray law of that day, itself retired by
+record 1875; the law in force is the engine, docs/ALGEBRA.md chapter 9.)
 
 The user-authorized Node execution profile
 declares h as one adjacent-node transit step and each interaction's k as an
@@ -50,9 +50,9 @@ The detector itself is ordinary Nodes and Events. (AGREES with the algebra on th
 model owner's word of 2026-09-23, record 1425: every thing on the board is an
 algebraic object declared under the algebraic laws; ALGEBRA.md 3.4, chapter 2.11
 as rewritten on the branch algebra-chapter-2-11, and
-docs/designs/detector_law/MASSIVE_RECORD.md section 4: a declared set of cells
+docs/designs/detector_law/MASSIVE_RECORD.md section 4: a declared set of Nodes
 running the one map with one declared pair, read by the evaluation E across its
-cells.) Its complete physical state
+Nodes.) Its complete physical state
 is definite; a common visible result is formed by local physical interactions.
 Information preservation is a separate requirement from determinism. The
 uncertainty relation is an identity of the click: the record's element of Z[Z_N]
@@ -60,17 +60,19 @@ uncertainty relation is an identity of the click: the record's element of Z[Z_N]
 (ALGEBRA.md 2.5), and on the phase circle the supports of a record and of its
 transform obey abs(supp f) x abs(supp f_hat) >= N (4.11), Kennard's relation the
 thing compared with in the limit. The owner's
-hypothesis is that cell sensitivity together with on-board information retention
+hypothesis is that Node sensitivity together with on-board information retention
 can produce Heisenberg uncertainty; this remains a research target (history,
 superseded on 2026-09-23 by ALGEBRA.md 4.11).
-Under the Beam Law (`beam-v1`, 2026-09-19) the interval is a bijection
+Under the engine (record 1875; the ray law of 2026-09-19 before it,
+history) the interval is a bijection
 on a GameBoard without a measured event and the click is the one one-way border;
-the detector's record is the squared coherent sum of the rows it clicked,
-read at the detector, a DETECTOR reading (ALGEBRA.md 3.2), never on the GameBoard
+the detector's record is the one-way flux it booked through its Ports,
+read at the detector, a DETECTOR reading (ALGEBRA.md 3.2, 9.25 (2)), never on the GameBoard
 (the earlier words "read on the GameBoard": history, superseded on 2026-09-23 by
 ALGEBRA.md 3.2). This inserts no quantum bound and does not claim that a
 world with clicks is reversible. The law and its open limits are in
-[the Beam Law](docs/BEAM_LAW.md) and
+[docs/ENGINE.md](docs/ENGINE.md) with [docs/ALGEBRA.md](docs/ALGEBRA.md)
+chapter 9 and
 [the detector requirements](docs/DETECTOR_REQUIREMENTS.md), following
 [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector).
 
@@ -98,11 +100,12 @@ belong to their dated models, not an implicit events-world default.
 ## Initialization-defined model (history: deleted on 2026-09-19)
 
 History marker (2026-09-19): the generic disturbance simulator this section
-describes was deleted on 2026-09-19 with the engines before the Beam Law
-([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
-the active contract is [the Beam Law](docs/BEAM_LAW.md) with
+describes was deleted on 2026-09-19 with the engines before the ray law of that
+day ([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted);
+the ray law itself retired by record 1875);
+the active contract is the engine,
 [the engine's bookkeeping](docs/ENGINE.md) and its algebra
-[docs/ALGEBRA.md](docs/ALGEBRA.md). The text is kept as written.
+[docs/ALGEBRA.md](docs/ALGEBRA.md) chapter 9. The text is kept as written.
 
 The canonical Detector-owned sampling contract
 allows draws only at an actual external Detector encounter. Ordinary evolution
@@ -235,7 +238,7 @@ right, left, forward, backward, up and down. A connection reaches one nearest
 neighbor, or exits the simulated domain at an explicitly open boundary.
 
 An event is a wall crossed by an accumulator of the state vector at a Node: a Link
-crossed, a phase step taken, a count completed, a birth, a push, and the click that
+crossed, a phase step taken, a count completed, a giving click, a push, and the click that
 ends a record; nothing else happens (ALGEBRA.md chapter 2, the one central
 formula; 3.1). An event is a local change in a node at a particular time: a field update, a particle
 momentum change, a move to a neighbor or a blocked move attempt (history,
@@ -262,7 +265,7 @@ hypotheses (chapter 5) and are the things compared with, never inserted and neve
 called emergent. (Re-read on 2.11's landing: the derived law adds the mass of a
 foreign object as the pair [num, den] on the six-neighbour term of its record's
 rule, the dictionary row of MASSIVE_RECORD.md section 1 on the branch
-detector-law-design; Reviewer 3's PUSH_BALANCE.md 12.6 (c).) The simulator does not assume every familiar physical phenomenon is fundamental.
+detector-law-design; the gate reviewer's PUSH_BALANCE.md 12.6 (c).) The simulator does not assume every familiar physical phenomenon is fundamental.
 Mass, gravity, curvature or a known particle can count as an emergent result only
 if they arise from local events and laws, rather than being inserted under another name
 (history, superseded on 2026-09-23 by ALGEBRA.md 1.2).
@@ -305,7 +308,7 @@ Global consistency emerges from consistent local updates. New information does
 not rewrite completed events; it becomes causal input to future events.
 
 **Contract of the generic disturbance simulator (history: deleted on
-2026-09-19; the active contract is [the Beam Law](docs/BEAM_LAW.md)):**
+2026-09-19; the active contract is the engine, [docs/ENGINE.md](docs/ENGINE.md)):**
 disturbance transfers cross one neighbor link after its fixed transit time;
 updates use already available local records. Extra node delay can make
 propagation slower. There is no global correction at the end of a tick.
@@ -313,8 +316,8 @@ propagation slower. There is no global correction at the end of a tick.
 Established in the algebra: entanglement is a record of tensor rank 2 carried by
 local verbs on two arms and read by one gather at two clicks (ALGEBRA.md 3.6);
 the marginals are no-signalling exactly and the Bell value an exact rational of
-N, met by series L and L6 (DETECTOR) (4.9, 4.10); the one failure is the order
-channel, a RULE the law lacks (chapter 6, row 1c). **Not established:** that these local laws suffice for every kind of physical
+N, met by the amplitude series and its Bell worlds at N = 1024 and 4096 (DETECTOR) (4.9, 4.10); the one failure is the order
+channel, a RULE the law lacks (the order channel, chapter 6). **Not established:** that these local laws suffice for every kind of physical
 consistency, particularly quantum consistency and entanglement (history,
 superseded on 2026-09-23 by ALGEBRA.md 3.6, 4.9 and 4.10).
 
@@ -353,7 +356,7 @@ influence in the simulator.
 
 Adopted direction (model owner, 2026-09-17): the bound has no exception. The
 joint outcome of a pair travels on the returning ray itself, one Link per
-step, back to the birth event and on to the partner ray
+step, back to the giving click event and on to the partner ray
 ([section 23](#23-the-ray-event-model)) (history: the returning ray of
 2026-09-17; superseded on 2026-09-19 by the law of the ray; the pair's click is one
 gather, ALGEBRA.md 3.6). The registry exception described in
@@ -369,9 +372,9 @@ the same day, issue #164 buckets B.1 and B.5): the bound was split in two, as th
 matter and every message that a record can control move at most one Node per
 step, without exception. The joint outcome of a bonded pair, two rays emitted
 together, is the one thing that does not: each ray carries the Node and tick
-of its birth through the GameBoard at link speed, and when either end is
+of its giving click through the GameBoard at link speed, and when either end is
 measured, the bond registry answers for both ends at once, at any distance (the
-bonded ray field). Its successor is the pair record of rank 2 born by the
+bonded ray field). Its successor is the pair record of rank 2 given by the
 crystal, whose one click carries the outcome to both arms (ALGEBRA.md 3.6, 9.25
 (6); the model owner's record 1888 of 2026-09-25).
 That answer carries no energy, no momentum and no message: each end alone sees
@@ -386,7 +389,7 @@ measured as an outcome that moves with the other end's setting at fixed
 hidden variable. It is a nonlocal resource, not a local explanation of the
 Bell value, and the unmoved plus rates are no-signalling, not locality. The
 registry keeps a bounded bank of
-open pairs, one identity per pair from its birth Node and tick, releases a
+open pairs, one identity per pair from its giving Node and tick, releases a
 pair at its second answer, and answers a repeated question the same way, so
 it is bounded and idempotent like every other owner. A world with no bonded
 field has no exception at all.
@@ -421,7 +424,7 @@ of motion: there is no kinematic rule, and the slower ticking of a moving
 group, if it appears, must emerge from its rays spending intervals on Links
 instead of resident
 ([hypothesis 15](docs/HYPOTHESES.md#15-time-dilation-from-transit-a-moving-bound-groups-clock-runs-at-1--v),
-experiment A14 of [docs/EXPERIMENTS.md](docs/EXPERIMENTS.md)). Mass, time
+the kinematic time dilation of a moving bound group, [docs/EXPERIMENTS.md](docs/EXPERIMENTS.md)). Mass, time
 dilation and gravity are therefore one bookkeeping of integer delays read
 from different tables, and the tables, not the engine, are what the
 confrontation runs test. Superseded on 2026-09-18 (section 25; Highlights
@@ -458,9 +461,9 @@ normalization, with one declared exception on main: the run-time roots under the
 keys `meeting` and `optical` (ALGEBRA.md 2.7, the seventh verb, not admitted to
 the law, each declared by its design); the cosine and sine tables at the scale
 256 of the first engine are HISTORY (no table in the engine, the model owner's
-record 1878 of 2026-09-25: the born pair and every profile are the world's
+record 1878 of 2026-09-25: the given train and every profile are the world's
 integers, written by the generator on the host and read by the law as integers
-alone, ALGEBRA.md 9.17 (6)). Conservation-preserving division retains the missing fraction as
+alone, ALGEBRA.md 9.17 (6) and (6a); every giving click is the given family's own lowest mode on the body's Nodes with the zero row beyond, times the character of its momentum, at both levels, as long as the body's extent (ALGEBRA.md 9.35 (10), the model owner's record 1962; the earlier train under a window HISTORY), a flat pulse being refused, 9.25 (11)). Conservation-preserving division retains the missing fraction as
 an integer remainder carried into the next calculation.
 
 (History, marked 2026-09-23: the finite-attenuation candidate of the next
@@ -518,7 +521,7 @@ all six. On the GameBoard the field spreads as a diamond at the scale of
 Links and as a sphere at large scale, because the number of paths to a node
 after k steps is the multinomial count, which is rotationally symmetric to
 leading order; whether the bending of a passing ray is the same on an axis
-and on a diagonal is a measurable prediction (experiment A6 of
+and on a diagonal is a measurable prediction (the light bending by a bound group, of
 [docs/EXPERIMENTS.md](docs/EXPERIMENTS.md)), not an assumption. Superseded
 on 2026-09-18 (section 25; Highlights 5.4, "A thing does not emit"): a
 thing does not release shadows interval after interval; its shadows are
@@ -564,7 +567,7 @@ of the source's charge travels on the field ray as a visible property,
 like the Detector's bit, read by the coupling that meets it and never
 encoded in the phase, which is reserved for interference; feature 12
 carries it, and the catalog's open entry on the attraction of opposite
-charges closes with it (experiment A5). Since 2026-09-18 the message is the
+charges closes with it (the electron-electron repulsion through released fields, docs/EXPERIMENTS.md). Since 2026-09-18 the message is the
 shadow: it carries its owner's identity, charge and content, is read by
 content or by charge (Highlights 5.4, point 16), has no mass and no clock,
 and returns as a field (point 3). (And on 2026-09-19 by the law of the ray,
@@ -600,7 +603,7 @@ remain recorded in `SIMULATOR_DEFINITIONS.md`.
 
 ## 8. Momentum is exchanged at the event location
 
-For a paid family the label leaves the emitter at the birth (the recoil) and
+For a paid family the label leaves the emitter at the giving click (the recoil) and
 enters the reader at the click, so the third law holds message by message and
 the books balance at every tick; for a free family the release costs no recoil
 and the third law is a symmetry between two readers at rest, not shown in motion
@@ -618,7 +621,7 @@ The books are exact at every tick in amount and content, and in momentum for
 every paid message (ALGEBRA.md 4.3); a click's content is E = h s, the
 release's identity (h the action per Link, s the lamp's turn; 4.11); a body's
 energy of motion is not on the law (E = E_0 at every speed, 5.3, the FAIL rows
-4a and 4b), reached only under the identity covariant-readings-v1 beside the
+the muon's moving clock and the moving emitter's redshift), reached only under the identity covariant-readings-v1 beside the
 law (5.10). (Re-read on 2.11's landing: a body's energy of motion under the
 massive record kind is its dispersion and its conserved form I,
 MASSIVE_RECORD.md sections 2, 3 and 9 on the branch detector-law-design.)
@@ -642,8 +645,8 @@ old tests merely to make a new law appear successful.
 
 Addition (model owner, 2026-09-17; Highlights 5.5, "the constants: what is
 derived and what is an input"): mass ratios are derivable, the ladder of
-hypothesis 12 being the set of loop-closing contents under the catalog's
-binding table, which experiment A10 counts against the known spectrum, the
+the one-mass-ladder hypothesis (HYPOTHESES.md) being the set of loop-closing contents under the catalog's
+binding table, which the mass ladder against the known spectrum (docs/EXPERIMENTS.md) counts, the
 proton-to-electron ratio first; the strength of the electric coupling and
 the strength of gravity are inputs today, the release ratio n/d of a field
 family and the modulus N of the lag register (Highlights 3.28) being
@@ -771,10 +774,10 @@ per link may come from its emitter's momentum, `|p| / D`, the de Broglie
 hypothesis: measured as a fringe period inverse to momentum, not derived.
 
 A record lands whole at one detector: one click per record, the ladder choosing
-one cell and deleting the offers, the completion the host's one non-local step
+one Node and deleting the offers, the completion the host's one non-local step
 and no signal on the board (ALGEBRA.md 3.1, 4.12); the fringes follow the
 Euclidean path difference, C(y) / W as 5.7 gives it (C(y) the count at the
-pixel y over W births); a mirror's reflections are the 48's, the signed
+pixel y over W giving clicks); a mirror's reflections are the cube group's, the signed
 permutations of the axes (1.1). (The next paragraph: history, the ray candidate
 of 2026-09-14 to 2026-09-17, superseded on 2026-09-23 by ALGEBRA.md 3.1, 4.12
 and 5.7.)
@@ -826,7 +829,7 @@ gather, ALGEBRA.md 3.6).
 
 The law's joint results are the pair's record of tensor rank 2 read by one gather
 (ALGEBRA.md 3.6); the marginals are no-signalling exactly (4.9); the one signal
-is in the order of the clicks, a RULE the law lacks (chapter 6, row 1c). A future full quantum layer must preserve both consistent joint results and the
+is in the order of the clicks, a RULE the law lacks (the order channel, chapter 6). A future full quantum layer must preserve both consistent joint results and the
 inability to use those correlations to send information faster than c (history,
 superseded on 2026-09-23 by ALGEBRA.md 3.6, 4.9 and 4.10).
 
@@ -843,7 +846,7 @@ The ray explains the shared origin, the no-signaling and the collapse's
 timing; it cannot explain the correlations beyond the bound, and no local
 rule on this GameBoard can. Replacing the lottery by deterministic hidden
 variables (the `threshold` capture) raises S to exactly 2 and no further, as
-the theorem says. The excess is reached by the pair record of rank 2, born by
+the theorem says. The excess is reached by the pair record of rank 2, given by
 the crystal, whose ONE CLICK carries the pair's one outcome to both arms at once
 (ALGEBRA.md 3.6, 9.25 (6); the model owner's record 1888 of 2026-09-25): no
 energy, momentum or message passes through it, by the no-signalling theorem,
@@ -864,9 +867,9 @@ with claim-gather) recorded it: the
 GameBoard has no focusing that mimics unseen mass.
 
 What the law claims on entanglement is the exact identities of ALGEBRA.md 4.9,
-4.10 and 4.12, met by series L and L6 (DETECTOR); a click is one comparison and
+4.10 and 4.12, met by the amplitude series and its Bell worlds at N = 1024 and 4096 (DETECTOR); a click is one comparison and
 one deletion per record (3.1, 4.7), and no other "collapse" is claimed; the one
-failure is the order channel (chapter 6, row 1c). Until these requirements have been tested for the proposed laws, do not claim that
+failure is the order channel (the order channel, chapter 6). Until these requirements have been tested for the proposed laws, do not claim that
 the simulator solves quantum collapse or entanglement consistency (history,
 superseded on 2026-09-23 by ALGEBRA.md 4.9 to 4.12).
 
@@ -1003,9 +1006,9 @@ direct oracle ticks remain unchanged. This is a representation/channel extension
 not a new collapse law or a derived physical species Hamiltonian. Its
 implementation and document were deleted on 2026-09-17.
 
-## 18. Event-spacetime origin cells - Q-ORIGINS-3
+## 18. Event-spacetime origin Nodes - Q-ORIGINS-3
 
-The user-selected origin-cell candidate keeps history solely in immutable event
+The user-selected origin-Node candidate keeps history solely in immutable event
 spacetime, with no separate linked list per Node or wave. A participating Node
 holds at most six origin IDs. Configured local operations propagate possible
 causal support; they do not sample a hidden particle path. Current virtual
@@ -1032,7 +1035,7 @@ Resolution status is quantum-owner bookkeeping associated with the source event,
 not a mutation of its historical physical data or an ordinary remote field read.
 The finite candidate, initialization requirements, cost distinctions and open
 physical questions were defined in a document deleted on 2026-09-17 with the
-origin cells themselves.
+origin Nodes themselves.
 Bounded local lookup does not make total host evaluation or memory constant.
 
 ## 19. Localized quantum contact candidate
@@ -1128,7 +1131,7 @@ one bit per arriving transfer, and the bit is all the Detector adds
 [section 23](#23-the-ray-event-model)). A pair's bit is drawn at the first
 Detector and carried by the returning ray, which walks back the same number
 of steps it has made since its event and transmits it by the inverse split
-at the birth event to the partner ray's line, and the second Detector
+at the giving click event to the partner ray's line, and the second Detector
 receives it on the ray that reaches it and draws its own bit on that
 arrival like on any other; a Detector sees nothing of the ray, only its
 own value, the received value is information on the ray, not an input to
@@ -1150,17 +1153,18 @@ measurement repeated in the same basis repeats its result, a ray carrying
 0 is a transmission and is never drawn, and only a ray carrying no bit is
 drawn, how a marked Node meets each bit being its declared coupling in the
 catalog with this as the default and the draw on every arrival, as before,
-the declarable alternative (feature 2b of the ray-event model, after
-feature 10, implements both; until it lands the engine draws on every
+the declarable alternative (the ray-event model's declarable draw, its feature list's entry 2b, after
+its entry 10, implements both; until it lands the engine draws on every
 arrival). The price of Highlights 5.4 is to be re-derived under this rule
-by hypothesis 11 and experiment A13 before it is quoted again. With two
+by the Bell prediction of the ray-event model (HYPOTHESES.md) and the Bell
+test with polarization settings (docs/EXPERIMENTS.md) before it is quoted again. With two
 Detectors, Alice's and Bob's, whichever returns first sends its value
-through the birth
+through the giving click
 event and the other receives it; sometimes it is Alice's information,
 sometimes Bob's. To Alice and Bob the correlation feels as if it were decided
 at time zero, but nothing happened at time zero: the value was carried
-through the birth event in event spacetime, one Link per interval.
-For two Detectors at equal distance from the birth the CHSH value is at most 2,
+through the giving click event in event spacetime, one Link per interval.
+For two Detectors at equal distance from the giving click the CHSH value is at most 2,
 and the joint law's value appears only when the second ray's path exceeds the
 round trip through the first Detector. This price is accepted. The text below
 describes the historical candidates, including the shared registry, and their
@@ -1168,7 +1172,7 @@ measurements; the lottery capture, the bond registry, the Bell probes and the
 `historical-autonomous-v1` profile were deleted on 2026-09-17 (issue #164,
 bucket B.5), and the measurements stay in the validation log. Superseded on
 2026-09-18 by the law of the bit (section 25): nothing draws, what arrives
-at a mark is a thing or its shadow and that was decided at birth; a mark
+at a mark is a thing or its shadow and that was decided at giving click; a mark
 absorbs a thing and returns a shadow, and a shadow's return is a field, not
 a walk back by a step count. (And on 2026-09-19 by the law of the ray: no draw,
 ALGEBRA.md 2.7; the pair's click one gather, 3.6; the price of the round trip is
@@ -1191,7 +1195,7 @@ the same run drawn as clicks only is the physical picture.
 
 (History, marked 2026-09-23: the sequence of tickets of the next three
 paragraphs was deleted on 2026-09-17; the law has no draw, ALGEBRA.md 2.7; the
-one selector is the birth wheel, a counter on Z_W, 3.6 and 6.1.)
+one selector is the giving wheel, a counter on Z_W, 3.6 and 6.1.)
 
 Every interaction whose outcome is not certain consumes exactly one bounded
 integer from a configured sequence, and nothing else decides it: the record's
@@ -1204,7 +1208,7 @@ the probabilities.
 
 A bonded pair is one interaction and draws one number, whichever end asks
 first, Alice's or Bob's. The number is a fixed function of the registry seed
-and the pair's birth code. Its upper half is the first end's even coin; its
+and the pair's giving click code. Its upper half is the first end's even coin; its
 lower half, read against the difference of the two settings, decides whether
 the second end agrees, with the singlet's probability
 `(1 - cos(difference)) / 2`. Neither end can read the number: each sees an even
@@ -1244,7 +1248,8 @@ and that law is configured. The [hypotheses page](docs/HYPOTHESES.md) states the
 (History, marked 2026-09-23: the ray-event model of 2026-09-17; superseded on
 2026-09-19 by the law of the ray, ALGEBRA.md chapter 2; its document was deleted
 on 2026-09-19. The whole section is history; the algebra's lines it touches are
-in docs/designs/detector_law/POSTULATES_BY_ALGEBRA.md, rows 23a to 23l.)
+in docs/designs/detector_law/POSTULATES_BY_ALGEBRA.md, the ray-event model's
+rows, 23a to 23l.)
 
 Adopted as the target direction by the model owner on 2026-09-17 and recorded
 in [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) (sections 3.3, 3.4, 3.5, 3.15,
@@ -1364,13 +1369,14 @@ Ports; a group therefore lives on a ring of nodes, not at one node, its
 size is the ring, its clock is the period of the loop and its mass is its
 content (Highlights 3.28); its field is released by rays in motion, five
 headings each, and its motion as a whole comes from its loop, the corners
-shifting, not from a register on a node. The ladder of hypothesis 12 is
+shifting, not from a register on a node. The ladder of the one-mass-ladder hypothesis is
 the set of contents and phases that close a loop under the table, which
-experiment A10 counts. The held-ray binding of feature 8 (a rule with
+the mass ladder against the known spectrum counts. The held-ray binding (the
+ray-event model's feature list, entry 8; a rule with
 delay 1 and no outputs, and its ray_delay wait), which holds any content
 and therefore has no ladder, and the register-driven motion of feature 8c
-are the interim forms, superseded by feature 14, binding as a loop, after
-features 12, 8c, 2b and 8b; the sentences of this section that speak of
+are the interim forms, superseded by binding as a loop (that list's entry 14), after
+its entries 12, 8c, 2b and 8b; the sentences of this section that speak of
 rays that stay at the node describe the interim form.
 
 Every node carries one bit, Detector or not; the mark is bounded node
@@ -1378,7 +1384,7 @@ metadata (bit, setting, ticket seed), not a record and not an external
 device, and Detector behavior is how a node behaves when the bit is set. A
 source is a Detector: whatever emits a ray of a known family is a marked
 node, because knowing the family of what it emits is a measurement; the
-birth event of a pair therefore happens at a marked node, which draws on
+giving click event of a pair therefore happens at a marked node, which draws on
 every arrival like any other. A
 marked node does one very simple thing. What arrives is a wave ray carrying
 information; every ray is a wave ray, so the kind makes no difference. For
@@ -1399,16 +1405,16 @@ for what the return brings back; nothing is measured or recorded as an
 outcome. A
 Detector sees nothing of the ray, on 1 or on 0: it sees only its own
 value, except the bit a ray already carries, which it reads since
-2026-09-17 (Highlights 5.4, feature 2b): a ray carrying 1 passes without a
+2026-09-17 (Highlights 5.4, the ray-event model's declarable draw, its list's entry 2b): a ray carrying 1 passes without a
 draw, a ray carrying 0 is a transmission and is never drawn.
 When it returned a ray with 0, that value travels with the ray, and the
 second Detector of the pair receives it on the ray that reaches it.
 A returning ray retraces its own trajectory by its step count, reaches its
-birth interaction with certainty and there performs the inverse split of its
+giving click interaction with certainty and there performs the inverse split of its
 share: it transmits what happened at the event, with its bit, to the same
 places the event sent to, the partner ray's line among them, so the
 partner's Detector is not missing it: it receives that value on the ray
-that reaches it. Pair identity is the trajectory, not the birth node and
+that reaches it. Pair identity is the trajectory, not the giving click node and
 tick. Superseded on 2026-09-18 (section 25): the mark has no seed and draws
 nothing; a thing that arrives is absorbed or passed by the mark's declared
 table, a shadow is returned as a field with no step count, and a returning
@@ -1416,7 +1422,7 @@ shadow performs no inverse split.
 
 A ray has a field: the field is the ray's own information spreading in ray
 form to the nodes around it, without an event; a field ray is not a second
-kind and is not born at an event. The field's presence at a node is an
+kind and is not given at an event. The field's presence at a node is an
 interaction that makes no event. A field never makes an event unless it
 meets something it changes; the first event a field is involved in is that
 meeting, and the returning ray that carries the recoil is split off from
@@ -1433,7 +1439,7 @@ and the release does not wait for the clock (model owner, 2026-09-17;
 Highlights 3.5, section 6): resident content releases every interval on all
 six headings, a traveling ray on the five headings other than its own, and
 the output clock delays only what leaves as matter, never the field.
-A ray traveling straight never meets its own field: the field is born where
+A ray traveling straight never meets its own field: the field is given where
 the ray is and leaves at the causal speed, ahead of the ray or away from it,
 and the ray is never faster than its field, at any output-clock delay; no
 exclusion rule is needed. Only after a change of trajectory can a ray cross
@@ -1487,7 +1493,7 @@ the electron family (spin), read by the declared couplings at a meeting; a
 circular polarization is not defined and, if wanted, would be a transverse
 direction that turns with the phase plus one handedness bit, again a catalog
 choice. Pauli exclusion is a binding coupling that does not fire for two
-electrons in the same state with the same spin. Polarization is feature 11
+electrons in the same state with the same spin. Polarization is the ray-event model's polarization feature (its list's entry 11)
 of the ray-event migration (issue #169), after its ten features; none of
 them needs it. The strong interaction is the same pattern: quark families,
 colour a property with three values, the gluon the quark's own field in ray
@@ -1519,7 +1525,7 @@ is confinement as a closure condition; and a string stretched to the
 content at which a new loop closes with a quark and an antiquark breaks
 into two hadrons, which is hadronization. None of this is inserted:
 hypothesis 13 says whether the two catalog lines produce it, in a research
-run after feature 14.
+run after binding as a loop (the ray-event model's list, entry 14).
 
 Addition (model owner, 2026-09-17; Highlights 3.19; named "fixed body"
 earlier that day, renamed the external body the same day with the same
@@ -1543,7 +1549,7 @@ the body's content never changes. Absorption into an explicitly accounted
 sink is the default coupling, and the other couplings make the apparatus: a
 reversed heading is a mirror, a split by a declared table is a beam
 splitter, a phase offset is a phase plate, a polarization read is a
-polarizer once feature 11 exists; a wall, a screen and a beam stop are the
+polarizer once the polarization feature exists; a wall, a screen and a beam stop are the
 default. Its motion is caused by fields only (model owner, 2026-09-17,
 replacing the declared trajectory, never caused, of earlier that day): it
 starts with its declared momentum, an arriving field ray of a family its
@@ -1719,7 +1725,7 @@ no mass and no clock, and returns as a field. "Thing" is the noun for a
 real ray, and the word register leaves the model with the stores it named
 (point 22).
 
-**Birth and motion (points 1, 2, 10, 21).** What is born from content is a
+**Giving click and motion (points 1, 2, 10, 21).** What is given from content is a
 thing; what is given as field is a shadow, and a shadow releases nothing.
 A thing moves whole on its line, one Link per interval, and turns by its
 momentum: every push adds to it, and when its component on an axis reaches
@@ -1764,12 +1770,12 @@ one step.
 **The mark (points 6, 8, 14, 20).** A thing that arrives at a marked node
 is absorbed into the mark's resident thing and counted, with its momentum,
 or passes if the mark's declared coupling for its family says pass, and a
-thing the mark misses is sent back on its steps to its birth event by the
+thing the mark misses is sent back on its steps to its giving click event by the
 mark's declared table (a thing has steps: it has one path and counts it,
 the real counts and the shadow does not; the model owner, 2026-09-18); a
 shadow is returned as at any thing and counted by nothing. There is no
 lottery: what a mark "draws" is whether a 0 or a 1 arrived, decided at the
-ray's birth and along its one path; an imperfect mark is a declared table,
+ray's giving click and along its one path; an imperfect mark is a declared table,
 and the seed is retired. A decay is a table on the group's own state, not a
 draw. The only thing not known at a node is whether a 0 or a 1 comes next.
 
@@ -1808,8 +1814,8 @@ there is, 0 is what is said; what is said returns, as a field, and what
 there is stays.
 
 The identities named below were deleted on 2026-09-19 with the engines before the
-Beam Law (docs/MIGRATION.md); the law in force is the Beam Law, ALGEBRA.md
-chapter 2.
+ray law of that day (docs/MIGRATION.md; the ray law itself retired by record
+1875); the law in force is the engine, ALGEBRA.md chapter 9.
 
 **Implementation.** `bit-law-v1`, `node-mixing-v1`, `clock-readings-v1`,
 `node-is-ports-v1` and `lanes-v1` (feature 18, the lanes of point 25) are
@@ -1898,7 +1904,7 @@ is one deterministic state with many rows; there is no draw at a Node
 (section 25, "The mark": there is no lottery; nothing at a Node, Highlights
 item 2, record 155; the paper's P4 as a cross-reference); the fan carries
 every declared direction (the fan's width a DECLARATION of the world, ALGEBRA.md
-6.2 row 2a; under chapter 2.11 as rewritten on the branch algebra-chapter-2-11 the
+the two-slit visibility (6.2); under chapter 2.11 as rewritten on the branch algebra-chapter-2-11 the
 splitting at every free Node carries every direction and the fan is gone); "all
 the possibilities" are the rows that could
 click, and the Outside is the subset that clicked. Record 1201 (no passage
@@ -1920,12 +1926,13 @@ Outside is compared with Einstein's spacetime; what is compared with
 Einstein's spacetime is determined from the Inside and read by clicks. The
 click theorem
 ([docs/designs/click_frame/DERIVATION.md, section 0](docs/designs/click_frame/DERIVATION.md#0-the-click-theorem-the-owners-word-records-745-and-749-the-assumptions-the-theorem-the-proof-sketch-the-papers-frame))
-gives Lorentz's form under its two assumptions together, A1 (a click
-passes information at most one Node per interval) and A2 (a click's
-content is an amplitude with a phase that splits each interval between
-staying and hopping), up to a correction of relative order m^2 v^2 (m the
+gives Lorentz's form under its two assumptions together, the one-Node-per-interval assumption (a click
+passes information at most one Node per interval) and the split-phase
+assumption (a click's content is an amplitude with a phase that splits each
+interval between staying and hopping), up to a correction of relative order m^2 v^2 (m the
 mass angle of the amplitude and v the velocity, as the theorem defines
-them), exact in the continuum limit. The law as built meets A1 and not A2:
+them), exact in the continuum limit. The law as built meets the one-Node-per-interval assumption and not the
+split-phase assumption:
 its rows hop whole and on the board no clock slows by motion
 ([docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md), the head, item 8; records 687
 and 749), and the tick algebra finds that the law as built departs from
@@ -1963,7 +1970,8 @@ so the paper's test is double (the owner, confirmed, record 1245): that
 level 3 gives level 2's form, and that level 3's numbers, read by clicks,
 match level 1, the comparison table. "Gives level 2's form" is read as the
 comparison of 26.6, tested by the light clock: the click theorem gives
-that form under A1 and A2 together, the law as built meets A1 and not A2,
+that form under the two assumptions together, the law as built meets the
+one-Node-per-interval assumption and not the split-phase assumption,
 and no derivation is claimed for the law as built until the light clock
 passes. The light clock at rest is the test that runs (ALGEBRA.md 9.24 (6):
 211.98 intervals plus the rung's offset at the true clock); the longitudinal
