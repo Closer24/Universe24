@@ -1,0 +1,212 @@
+"""THE SOURCE, its own folder (ALGEBRA.md 9.117 item 2, the row "the source"; 9.108 items 3,
+11, 13; 9.116 item 4b; the Boss's record 2217; the run files of examples/events/source/): the
+line's integers on the run files' numbers (D_peak 1,891,072 at E_s 18,910 gives the count 100
+and the remainder 72; the table at cap 60 gives 37), the remainder carried so the sum of the
+counts over intervals is the exact floor of the sum of D_i / E_s, the table form keeping no
+remainder, the write only where the count is nonzero (the source's locality), the inverse
+returning the start bit for bit, the refusals by name, the trace's hand identity, the run
+file's record giving the README's counts (COMPUTATION: 100 at the peak, 14,887 in all), and
+the folder's declaration the ledger's row, found by the register as a row not yet called by
+the loop."""
+
+from __future__ import annotations
+
+import importlib.util
+import json
+import sys
+from fractions import Fraction
+from pathlib import Path
+
+import numpy as np
+import pytest
+
+from event_universe.core.register import discover, folder_of
+from event_universe.features.source import (
+    DECLARATION,
+    THE_WORD,
+    SourceOwn,
+    SourceStart,
+    SourceTerm,
+    apply,
+    hand_identity,
+    invert,
+)
+
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE = ROOT / "examples" / "events" / "source"
+SHAPE = (2, 3, 1)
+SCALE = 18_910  # E_s of the run files (D_peak 1,891,072 div 100)
+PEAK = 1_891_072
+PLAIN = SourceTerm(target=3, of=2, weight=1, scale=SCALE)
+TABLE = SourceTerm(target=4, of=2, weight=1, scale=SCALE, cap=60)
+
+
+def argument(*values: int) -> np.ndarray:
+    return np.array(values, dtype=np.int64).reshape(SHAPE)
+
+
+def zeros() -> SourceOwn:
+    return SourceOwn(np.zeros(SHAPE, dtype=np.int64))
+
+
+def test_the_line_on_the_run_files_numbers():
+    """s_i = D_i div E_s at the peak: 1,891,072 div 18,910 = 100 with the remainder 72; a Node
+    with D_i below E_s adds nothing and keeps D_i as its remainder; a Node with D_i = 0 adds
+    nothing and is outside the write."""
+    start = SourceStart(SHAPE, argument(PEAK, 18_909, 0, 37_820, 1, 18_910))
+    writes = apply(PLAIN, start, zeros())
+    assert writes.counts.ravel().tolist() == [100, 0, 0, 2, 0, 1]
+    assert writes.remainders.ravel().tolist() == [72, 18_909, 0, 0, 1, 0]
+    assert writes.at.ravel().tolist() == [True, False, False, True, False, True]
+    assert writes.integers.ravel().tolist() == [100, 0, 0, 2, 0, 1]
+    weighted = apply(SourceTerm(3, 2, -3, SCALE), start, zeros())
+    assert weighted.integers.ravel().tolist() == [-300, 0, 0, -6, 0, -3]
+    assert weighted.counts.ravel().tolist() == writes.counts.ravel().tolist()
+
+
+def test_the_remainder_is_carried_so_the_sum_of_the_counts_is_the_exact_floor():
+    """Over k intervals with the same D_i the counts sum to floor(k D_i / E_s), never less: at
+    the peak 100 per interval plus one more every 263 intervals (72 x 263 = 18,936 > 18,910);
+    on a Node with D_i = 7 the first count comes at the 2702nd interval."""
+    start = SourceStart(SHAPE, argument(PEAK, 7, 0, 0, 0, 0))
+    own = zeros()
+    total = np.zeros(SHAPE, dtype=np.int64)
+    for k in range(1, 3001):
+        writes = apply(PLAIN, start, own)
+        total += writes.counts
+        own = SourceOwn(writes.remainders)
+        for node, d in ((0, PEAK), (1, 7)):
+            expected = Fraction(k * d, SCALE)
+            assert int(total.ravel()[node]) == expected.numerator // expected.denominator
+        assert 0 <= int(own.remainders.min()) and int(own.remainders.max()) < SCALE
+    assert int(total.ravel()[0]) == 300_000 + 11 and int(total.ravel()[1]) == 1
+
+
+def test_the_table_form_saturates_and_keeps_no_remainder():
+    """s_i = s_cap D_i div (s_cap E_s + D_i): 60 x 1,891,072 div (60 x 18,910 + 1,891,072) = 37
+    (the README's number); the count never reaches the cap; twice the argument gives 46, not
+    74; the remainder stays zero whatever the start's remainder says."""
+    start = SourceStart(SHAPE, argument(PEAK, 2 * PEAK, 18_910, 0, 10**12, 1))
+    own = SourceOwn(argument(5, 5, 5, 5, 5, 5))
+    writes = apply(TABLE, start, own)
+    assert writes.counts.ravel().tolist() == [37, 46, 0, 0, 59, 0]
+    assert writes.remainders.ravel().tolist() == [0] * 6
+    assert int(writes.counts.max()) < TABLE.cap
+
+
+def test_the_inverse_returns_the_start_bit_for_bit():
+    """The same integers subtracted and the remainder before restored, for both forms and for
+    a carried remainder."""
+    start = SourceStart(SHAPE, argument(PEAK, 7, 0, 37_820, 18_909, 1))
+    for term in (PLAIN, TABLE, SourceTerm(3, 2, -2, 977)):
+        own = SourceOwn(
+            argument(72, 3, 0, 500, 0, 976) if term.cap is None else argument(0, 0, 0, 0, 0, 0)
+        )
+        level = argument(10, -20, 30, 0, 5, 6)
+        writes = apply(term, start, own)
+        after = level.copy()
+        after[writes.at] += writes.integers[writes.at]
+        undo, before = invert(term, start, SourceOwn(writes.remainders), writes)
+        restored = after.copy()
+        restored[writes.at] += undo[writes.at]
+        assert np.array_equal(restored, level) and np.array_equal(before.remainders, own.remainders)
+
+
+def test_the_refusals_by_name():
+    start = SourceStart(SHAPE, argument(1, 2, 3, 4, 5, 6))
+    with pytest.raises(ValueError, match="scale E_s is 0"):
+        apply(SourceTerm(3, 2, 1, 0), start, zeros())
+    with pytest.raises(ValueError, match="weight is 0"):
+        apply(SourceTerm(3, 2, 0, SCALE), start, zeros())
+    with pytest.raises(ValueError, match="cap s_cap is 0"):
+        apply(SourceTerm(3, 2, 1, SCALE, cap=0), start, zeros())
+    with pytest.raises(ValueError, match="growing level"):
+        apply(PLAIN, SourceStart(SHAPE, argument(1, -1, 0, 0, 0, 0)), zeros())
+    with pytest.raises(ValueError, match="shaped by the GameBoard"):
+        apply(PLAIN, SourceStart((3, 2, 1), argument(1, 2, 3, 4, 5, 6)), zeros())
+    with pytest.raises(ValueError, match="int64"):
+        apply(PLAIN, SourceStart(SHAPE, np.zeros(SHAPE, dtype=np.int32)), zeros())
+    with pytest.raises(ValueError, match="leave the bound"):
+        apply(
+            SourceTerm(3, 2, 1, SCALE, cap=1 << 40),
+            SourceStart(SHAPE, argument(1 << 30, 0, 0, 0, 0, 0)),
+            zeros(),
+        )
+
+
+def test_the_trace_hand_identity_at_a_node():
+    assert hand_identity(PLAIN, PEAK, 0, 596, 696)
+    assert hand_identity(PLAIN, PEAK, 18_900, 596, 697)  # the carried remainder tips one more
+    assert not hand_identity(PLAIN, PEAK, 0, 596, 697)
+    assert hand_identity(TABLE, PEAK, 0, 300, 337)
+    assert hand_identity(SourceTerm(3, 2, -3, SCALE), PEAK, 72, 0, -300)
+
+
+def generator():  # type: ignore[no-untyped-def]
+    spec = importlib.util.spec_from_file_location("source_make_worlds", SOURCE / "make_worlds.py")
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    sys.modules["source_make_worlds"] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_the_run_files_record_gives_the_readmes_counts():
+    """The rest world's seed at its clock gives D_i = p_i^2 (2 b - a) div b (the generator's
+    COMPUTATION, README section 4); the folder's first interval from zero remainders counts 100
+    at the peak Node and 14,887 in all on 2,169 Nodes for the plain form, 37 and 10,431 on
+    2,109 Nodes for the table (the fragment's E_s and cap)."""
+    module = generator()
+    world = json.loads((SOURCE / "source_rest.json").read_text(encoding="utf-8"))
+    entries = json.loads((SOURCE / "universe_entries.json").read_text(encoding="utf-8"))["families"]
+    field, table, control = entries
+    assert (
+        field["sourced"]["scale"] == SCALE and table["sourced"]["cap"] == 60 and "sourced" not in control
+    )
+    body = world["measured"][0]
+    shape = tuple(world["shape"])
+    profile = np.array(body["seed"], dtype=np.int64).reshape(shape)
+    record = np.array(
+        [int(v) for v in module.record_count(profile, body["clock"]).ravel()], dtype=np.int64
+    ).reshape(shape)
+    centre = (16, 16, 16)
+    plain = apply(
+        SourceTerm(3, 2, field["sourced"]["weight"], field["sourced"]["scale"]),
+        SourceStart(shape, record),
+        SourceOwn(np.zeros(shape, dtype=np.int64)),
+    )
+    assert (
+        int(plain.counts[centre]) == 100
+        and int(plain.counts.sum()) == 14_887
+        and int(plain.at.sum()) == 2_169
+    )
+    saturated = apply(
+        SourceTerm(4, 2, 1, table["sourced"]["scale"], table["sourced"]["cap"]),
+        SourceStart(shape, record),
+        SourceOwn(np.zeros(shape, dtype=np.int64)),
+    )
+    assert (
+        int(saturated.counts[centre]) == 37
+        and int(saturated.counts.sum()) == 10_431
+        and int(saturated.at.sum()) == 2_109
+    )
+    assert not plain.at[28, 16, 16] and not plain.at[0, 0, 0]  # 12 Links out: no count; the corner: none
+
+
+def test_the_declaration_is_the_ledgers_row_and_the_register_finds_it_unbuilt():
+    assert DECLARATION.name == "the source" and folder_of(DECLARATION.name) == "source"
+    assert (
+        DECLARATION.place == "(iv)" and DECLARATION.word == "the right side" and DECLARATION.order == 2
+    )
+    assert DECLARATION.writes == ("a family's level at a Node", "the record's remainder")
+    assert (
+        "D_i" in DECLARATION.reads[0] and "E_s" in DECLARATION.reads and "s_cap" in DECLARATION.reads[2]
+    )
+    assert THE_WORD in DECLARATION.section and "9.117" in DECLARATION.section
+    register = discover()
+    declaration = register.declarations["the source"]
+    assert declaration.section == DECLARATION.section and not declaration.built
+    assert (
+        declaration.order_of("a family's level at a Node") == 2
+        and register.declarations["the hold"].order_of("a family's level at a Node") == 1
+    )

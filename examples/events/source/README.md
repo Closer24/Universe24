@@ -144,6 +144,11 @@ the function, not these files):
   lands, so the fragment is appended to the shipped file that day and not before (every shipped
   world would be refused). `tests/test_source_worlds.py` reads the structure and holds the load
   as an expected failure (strict) that turns green with the words.
-- The function of the source is not written here: it waits for Main Loop's interface (record
-  2217 (2)); its red test is tests/test_ledger_items.py test 3a; APPROVED-MATH and the Boss's
-  merge follow the cut.
+- The function of the source is `src/event_universe/features/source/` (the folder of the
+  register, ALGEBRA.md 9.117; `apply`, its inverse and the trace's hand identity), with its small
+  test `tests/test_feature_source.py`, which also checks that the run file's record gives the
+  counts of section 4. The loop's call at (iv) and the loader's word `sourced` are Main Loop's
+  cut; until then the red test tests/test_ledger_items.py test 3a stays an expected failure.
+  Questions 1 to 4 of section 6 are answered in the folder's line as it stands (whole, not
+  divided; the remainder carried; the write entering at t + 1; no remainder under the table) and
+  wait for the mathematician's word; question 5 waits for the run.
