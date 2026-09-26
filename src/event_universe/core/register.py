@@ -1,16 +1,19 @@
 """THE REGISTER OF PRIMITIVES (the model owner's decisions of 2026-09-26 through the
-Boss, records 2208 and 2212; the short procedure of skills/workflow.md, point 5;
+Boss, records 2208, 2212 and 2221; the short procedure of skills/workflow.md, point 5;
 issue #1154; ALGEBRA.md 9.110 item 7, 9.111 item 7, 9.112 item 1).
 
 A PRIMITIVE is a kind of attribute the engine can apply, written once and applied
 to any family by its declaration in the run's files, never by a family's name. Its
 IDENTITY is its unique English name, the key of the ledger's table of primitives
-(docs/designs/generic_engine/ENGINE_LEDGER.md section 3). The engine holds ONE
-register, name to function, read by the central loop alone; every primitive
-DECLARES what it reads, what it writes, its place in the interval and its order
-among the writers of the same value at the same place. The refusals are the
+(docs/designs/generic_engine/ENGINE_LEDGER.md section 3). Every primitive is ONE
+FOLDER under src/event_universe/features/<name>/, which declares its own name,
+place, reads and writes (`DECLARATION`) and binds its function (`bind`); the
+register FINDS THE FEATURES BY THEIR FOLDERS (`discover`), so adding a feature
+touches no shared file, not even a list (record 2221 (3)). The engine holds ONE
+register, name to function, read by the central loop alone. The refusals are the
 loader's, at load, by name:
 
+- a folder without a declaration, or whose name is not its declared name's;
 - a name registered twice;
 - a term of the files naming a primitive the register lacks, or one the register
   holds without a function (a row of the ledger not built yet);
@@ -26,45 +29,63 @@ the universe.
 
 from __future__ import annotations
 
+import importlib
+import pkgutil
 from collections.abc import Callable, Iterable
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
-# THE FIVE PLACES of the interval (ALGEBRA.md 9.91 (8); 9.111 item 7's three places
-# read as: (i) the step from the interval's start, (ii) after the step, (iii) to
-# (v) the writes that enter at t + 1): (i) the clicking families' step with the
-# transport, every component; (ii) the bookings at the Ports, the ladder, the
-# takings and the givings; (iii) the held families' step; (iv) the holds written,
-# the clicks' changes of M, Q and n included; (v) the bodies on one Node, the feed,
-# the induction, the spin's step, the recoil's accumulator. "any" is the trace's,
-# a read-only line at every place.
+# THE FIVE PLACES of the interval (ALGEBRA.md 9.91 (8)): (i) the clicking families'
+# step with the transport, every component; (ii) the bookings at the Ports, the
+# ladder, the takings and the givings; (iii) the held families' step; (iv) the holds
+# written, the clicks' changes of M, Q and n included; (v) the bodies on one Node,
+# the feed, the induction, the spin's step, the recoil's accumulator. "any" is the
+# trace's, a read-only line at every place.
 PLACES: tuple[str, ...] = ("(i)", "(ii)", "(iii)", "(iv)", "(v)", "any")
+# THE THREE WORDS of 9.111 item 7, the mathematician's reading of the same interval:
+# the right side (read from the interval's start), the step (the rule), after the
+# step (the clicks, whose writes enter at t + 1); "any" the trace's.
+WORDS: tuple[str, ...] = ("the right side", "the step", "after the step", "any")
+
+Binder = Callable[[object], Callable[..., object]]
+
+
+def folder_of(name: str) -> str:
+    """The folder a primitive's name takes: the words joined by underscores, the
+    apostrophe dropped, the hyphen an underscore ("the spin's step" ->
+    "the_spins_step", "the self-source" -> "the_self_source")."""
+    return name.replace("'", "").replace("-", "_").replace(" ", "_")
 
 
 @dataclass(frozen=True)
 class Declaration:
-    """What one primitive declares: its name, its place, the values it reads and
-    writes (the words of the ledger's columns, one string each), its order among
-    the writers of the same value at the same place (an integer, or None where it
-    is the only writer), and its function (None on a row of the ledger not built:
-    the name is known, a term naming it is refused as not built)."""
+    """What one primitive declares: its name; its place (a code of 9.91 (8)) and its
+    word (9.111 item 7); the values it reads and writes (the words of the ledger's
+    columns, one string each); its order among the writers of the same value at
+    the same place (an integer, or None where it is the only writer); its ALGEBRA.md
+    line; its function once bound (None on a row of the ledger not built: the name
+    is known, a term naming it is refused as not built); and its binder, the
+    folder's `bind(loop)` that gives the function at load."""
 
     name: str
     place: str
+    word: str
     reads: tuple[str, ...]
     writes: tuple[str, ...]
     order: int | None = None
+    section: str = ""
     function: Callable[..., object] | None = None
-    section: str = ""  # the ALGEBRA.md line of the primitive, for the trace and the ledger
+    binder: Binder | None = None
 
     @property
     def built(self) -> bool:
-        return self.function is not None
+        return self.function is not None or self.binder is not None
 
 
 @dataclass
 class Register:
-    """The one register: name to declaration, filled by the loop at load and read
-    by it at every interval; nothing else registers and nothing else reads it."""
+    """The one register: name to declaration, filled from the features' folders at
+    load and read by the loop at every interval; nothing else registers and nothing
+    else reads it."""
 
     declarations: dict[str, Declaration] = field(default_factory=dict)
 
@@ -74,6 +95,11 @@ class Register:
             raise ValueError(
                 f"the primitive {declaration.name!r} declares the place {declaration.place!r}, "
                 f"which is none of the interval's places {list(PLACES)}"
+            )
+        if declaration.word not in WORDS:
+            raise ValueError(
+                f"the primitive {declaration.name!r} declares the word {declaration.word!r}, "
+                f"which is none of {list(WORDS)} (ALGEBRA.md 9.111 item 7)"
             )
         if declaration.name in self.declarations:
             raise ValueError(
@@ -85,6 +111,12 @@ class Register:
     @property
     def names(self) -> tuple[str, ...]:
         return tuple(self.declarations)
+
+    def bind(self, loop: object) -> None:
+        """Every declared binder gives its function for this loop (at load, once)."""
+        for name, declaration in list(self.declarations.items()):
+            if declaration.binder is not None:
+                self.declarations[name] = replace(declaration, function=declaration.binder(loop))
 
     def check_writers(self) -> None:
         """Two primitives writing the same value at the same place without an order
@@ -137,3 +169,57 @@ class Register:
 
     def built_names(self) -> tuple[str, ...]:
         return tuple(name for name, declaration in self.declarations.items() if declaration.built)
+
+
+def declaration_of(folder: str, module: object) -> Declaration:
+    """One folder's declaration read from its module: `DECLARATION`, a dict of the
+    declaration's words, and `bind`, its binder or absent (a row not built)."""
+    declared = getattr(module, "DECLARATION", None)
+    if not isinstance(declared, dict):
+        raise ValueError(
+            f"the features folder {folder!r} declares no DECLARATION (the primitive's name, place, word, reads, writes)"
+        )
+    keys = {"name", "place", "word", "reads", "writes", "section"}
+    unknown = set(declared) - keys - {"order"}
+    missing = keys - set(declared)
+    if unknown or missing:
+        raise ValueError(
+            f"the features folder {folder!r}: DECLARATION has unknown keys {sorted(unknown)} "
+            f"or lacks {sorted(missing)}"
+        )
+    name = str(declared["name"])
+    if folder_of(name) != folder:
+        raise ValueError(
+            f"the features folder {folder!r} declares the name {name!r}, whose folder is "
+            f"{folder_of(name)!r}: one folder, one name"
+        )
+    binder = getattr(module, "bind", None)
+    if binder is not None and not callable(binder):
+        raise ValueError(
+            f"the features folder {folder!r}: bind must be a function of the loop or absent"
+        )
+    order = declared.get("order")
+    return Declaration(
+        name,
+        str(declared["place"]),
+        str(declared["word"]),
+        tuple(str(value) for value in declared["reads"]),
+        tuple(str(value) for value in declared["writes"]),
+        int(order) if order is not None else None,
+        str(declared["section"]),
+        None,
+        binder,
+    )
+
+
+def discover(package: str = "event_universe.features") -> Register:
+    """The register filled from the features' folders: every subpackage of `package`
+    in the folders' order, each read by `declaration_of`; nothing else registers."""
+    root = importlib.import_module(package)
+    register = Register()
+    for info in sorted(pkgutil.iter_modules(root.__path__), key=lambda found: found.name):
+        if not info.ispkg:
+            continue
+        module = importlib.import_module(f"{package}.{info.name}")
+        register.add(declaration_of(info.name, module))
+    return register

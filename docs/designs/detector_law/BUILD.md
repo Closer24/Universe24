@@ -5032,6 +5032,48 @@ would have found no cell.
    source and the step's four words read from the file. PROOF:
    tests/test_register.py (the refusals, the seventeen on a shipped test world,
    the terms checked, the wait 1, twenty intervals balanced).
+77. THE FEATURES FOUND BY THEIR FOLDERS, CUT 2 (issue #1154; the model owner's
+   decision of 2026-09-26 through the Boss, record 2221 (3): separation in the
+   files; the mathematician's four lines of record 2221 (2); the short
+   procedure, point 5). EVERY PRIMITIVE IS ONE FOLDER,
+   src/event_universe/features/<name>/__init__.py, declaring its own name,
+   place (a code of 9.91 (8)), word (9.111 item 7's three: the right side, the
+   step, after the step), reads, writes, order and ALGEBRA.md line
+   (`DECLARATION`) and binding its function (`bind(loop)`); the register
+   (core/register.py `discover`) finds the folders and refuses, by name, a
+   folder without a declaration, a folder whose name is not its declared
+   name's (`folder_of`: "the spin's step" is the_spins_step, "the
+   self-source" the_self_source), a declaration with an unknown key, and a
+   name declared twice; adding a feature touches no shared file, not even a
+   list (the audits find the folders too: tests/test_integer_algebra.py's
+   feature test and diagnostics/numeric_audit.py's third layer). TWENTY-THREE
+   FOLDERS: the seventeen of the ledger's table, plus the mathematician's:
+   "the giving" at (ii) (the window's open, write and close; today `_emit`),
+   and at (v) "the feed", "the induction", "the spin's step" (today
+   `_body_step`), "the hop" (today `_move_block`) and "the recoil's
+   accumulator"; "the source" declared at (iv) reading the record's form D_i
+   at the step's end and writing "the sourced level"; "the hold" writing "the
+   held level"; the clicks' deferred writes named as four values, "the body's
+   count M_k", "the body's charge Q", "the body's momentum n" and "the stock",
+   the writers ordered (the clicks 1, the giving 2, the clicks list 3; the
+   feed 1 and the induction 2 on the momentum at (v); the receive 1 and the
+   internal representation 2 on the arrivals). Fourteen folders bind (the
+   loop's methods of today, resolved at each call), nine are rows not built.
+   THE ENGINE'S ninety declaration lines are gone (`_engine_register` is
+   `discover()` and `bind(self)`; detector_law.py 4,520 to 4,377 lines);
+   `family_terms` names "the giving" for every emitting body. THE INTERFACE
+   (core/primitive.py): Term [name, target, of, degree, weight, table], Start
+   (the interval's start, read-only), Own (the primitive's record and its
+   remainders), Write and Writes; apply(term, start, own) -> writes, declared
+   for cut 3 (the hold's body into its folder); core holds no numpy, the
+   arrays named as the loop's. THE LAYERS (tests/architecture_rules.py):
+   features imports core and features; the engine imports core, features and
+   events. NO BEHAVIOUR CHANGE: every shipped world bit for bit (the suites'
+   digests; the five worlds' comparison). PROOF: tests/test_register.py (the
+   refusals, discovery on a temporary package with a folder without a
+   declaration, a mismatched name, an unknown key; the twenty-three on a
+   shipped test world in the folders' order, fourteen built; the giving among
+   a body's terms).
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

@@ -59,7 +59,8 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/rule.py": "the one rule's coefficients per Node and per axis (ALGEBRA.md 9.57 (1), 9.91 (2)) and the ladder's rungs (9.25 (2))",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md 9.88 (7)): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
-    "core/register.py": "the register of primitives: one name to one function, each with its place, reads, writes and order (record 2212; issue #1154)",
+    "core/register.py": "the register of primitives: one name to one function, found by the features' folders, each with its place, word, reads, writes and order (records 2212 and 2221; issue #1154)",
+    "core/primitive.py": "the interface of a primitive: the term of the files, the interval's start, the primitive's own record, its writes; apply(term, start, own) -> writes (records 2212 and 2221; issue #1154)",
     "core/phase.py": "the phase circle and its cosine and sine tables in bounded integers",
     "core/game_board.py": "the GameBoard's addresses, the six headings, the cube's group of 48",
 }
@@ -383,6 +384,23 @@ def test_every_root_is_listed_with_its_reason_and_the_list_is_the_inventory() ->
         assert reason.startswith(("at load", "AT RUN TIME", "a predicate", "the integer square root")), (
             key
         )
+
+
+def features_modules() -> list[str]:
+    """Every feature's module, found by its folder (no list to keep: record 2221 (3))."""
+    return sorted(path.relative_to(SRC).as_posix() for path in (SRC / "features").glob("*/__init__.py"))
+
+
+@pytest.mark.parametrize("name", features_modules())
+def test_a_feature_holds_integer_mathematics_only(name: str) -> None:
+    """A feature's folder is a physical module under the same gate as the engine's
+    (issue #1154 cut 2), found by its folder and never listed."""
+    source = (SRC / name).read_text(encoding="utf-8")
+    tree = ast.parse(source)
+    assert float_literals(source) == [], (name, float_literals(source))
+    assert true_divisions(source) == [], (name, true_divisions(source))
+    assert forbidden_imports(tree) == [], (name, forbidden_imports(tree))
+    assert numpy_violations(tree) == [], (name, numpy_violations(tree))
 
 
 def test_the_module_list_names_every_module_that_runs_a_step() -> None:
