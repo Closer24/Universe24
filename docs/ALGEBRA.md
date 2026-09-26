@@ -16320,22 +16320,32 @@ as written here.
    their quadratic forms: the two norms and the cross term now times
    the conjugate of before, whose phase is the local pace and whose
    antisymmetric part across a Link is the flux (9.19 (3)). The
-   Hermitian forms of a doublet are four real numbers and split 1 + 3
-   under the doublet's SU(2), as the four directions split 1 + 3 under
-   the cube group (9.99).
+   doublet's own group is the rule's: per mode the step (now, before)
+   to (next, now) is a real 2 x 2 matrix of determinant 1 (SL(2, R)),
+   and the flux 3 G_ij = A_ij (now_i before_j - before_i now_j), summed
+   over re and im, is exactly its invariant antisymmetric form, the
+   pairing of the doublet at i with the conjugate doublet at j
+   (CHECKED on 9.19 (3) as written: z_i conj(w_j) - w_i conj(z_j) with
+   z the now and w the before as complex numbers; the common phase of
+   the pair leaves it unchanged, a phase between now and before does
+   not). The four bilinear forms of a real doublet split 1 + 3 under
+   SL(2, R): the 1 is that antisymmetric form, the flux, and the 3 are
+   the symmetric forms (the two norms and the cross term), as the four
+   directions split 1 + 3 under the cube group (9.99).
    (c) The candidate: the count of pairs of a family is the dimension
    of the symmetric power of degree m of that doublet, n = m + 1 with
    m = 0, 1, 2 by the same second-order truncation: 1, 2, 3, and no
    family with 4 pairs, for the reason the spacetime tower has no
    degree 3. The common phase is one because the pairing J is one for
    the whole GameBoard.
-   (d) What makes it a derivation, and its test: show on 9.19 (3) with
-   the twist of 9.88 (7) that the flux's density and current through a
-   Link are exactly the degree-2 forms of the (now, before) doublet,
-   Link by Link; then the degree-m objects of the doublet are what the
-   rule can carry as a family's internal index, as the degree-d objects
-   of the directions are what it carries as components. If the flux is
-   not that bilinear, the candidate fails and the counts stay declared.
+   (d) What makes it a derivation, and its test: (b) shows that the
+   flux through a Link is the degree-2 invariant of the (now, before)
+   doublet; what is owed is the step from there to the count: that the
+   degree-m objects of the doublet are what the rule can carry as a
+   family's internal index, as the degree-d objects of the directions
+   are what it carries as components (9.99's argument, repeated on the
+   doublet), and that a twist of 9.88 (7) on such a family is a
+   rotation of that index. Without that step the counts stay declared.
    (e) The status, said once: the coincidence 1, 2, 3 = m + 1 for m at
    most 2 is exactly as strong as 9.99's 1, 4, 10 was before its
    argument was written; the argument is owed. The Boss is asked to
