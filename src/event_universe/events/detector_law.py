@@ -64,14 +64,13 @@ from __future__ import annotations
 from collections.abc import Callable, Iterator, Sequence
 from dataclasses import dataclass, field
 from math import gcd
-from typing import overload
 
 import numpy as np
 
 from event_universe.core.game_board import Address3
 from event_universe.core.integer import by_drive
 from event_universe.core.register import Register, discover
-from event_universe.events.rule import axis_rule_coefficients, rule_coefficients, rungs
+from event_universe.core.rule3 import ISOTROPIC, coefficients, form_term, rule3, rungs
 from event_universe.events.world import (
     AXES,
     TWIST_FINE_BITS,
@@ -298,7 +297,7 @@ class NodeRecord:
     be represented somehow in the Node?"): the standing record of the body's
     own standing family on the body's Node alone (the body's centre Node,
     `centre_mask`), two integer levels and one remainder (a, b, r) at that
-    Node, stepped by the engine's one rule (`one_rule`, ALGEBRA.md 9.50 (13))
+    Node, stepped by rule3 (core/rule3.py, ALGEBRA.md 9.50 (13))
     with the standing family's six Ports closed on the body's Node, so that the six
     reads return the body's Node itself, S_6 = 6 a, with the declared pair [num_c,
     2 den_c] (the body's clock pair in the rule's convention) and the body's Node's
@@ -1282,14 +1281,14 @@ class DetectorLawSimulation:
         # coefficient on the six reads, the coefficient at the Node and the
         # wall; the remainder moves on the multiples of their gcd
         axis_contents = self._axis_contents(family)
-        if axis_contents is None:
-            read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, True)
-            step = gcd(wall, self_coefficient, read)
-        else:
-            reads, self_coefficient, wall = axis_rule_coefficients(
-                num, den, gamma, content, tuple(int(t[node]) for t in axis_contents)
-            )
-            step = gcd(wall, self_coefficient, *reads)
+        reads, self_coefficient, wall = coefficients(
+            num,
+            den,
+            gamma,
+            content,
+            ISOTROPIC if axis_contents is None else tuple(int(t[node]) for t in axis_contents),
+        )
+        step = gcd(wall, self_coefficient, *reads)
         return step, wall // step
 
     def node_clock_pair(self, node: tuple[int, ...], family: int) -> tuple[int, int]:
@@ -1843,59 +1842,41 @@ class DetectorLawSimulation:
         six times 9.46 (2)'s (K, den_c Gamma): the same rotation as rationals
         (9.60 (2))."""
         num, den, gamma, content = self.node_record_rule(block)
-        read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, True)
-        return 6 * read + self_coefficient, wall
+        reads, self_coefficient, wall = coefficients(num, den, gamma, content)
+        return 6 * reads[0] + self_coefficient, wall
 
-    def _advance_node_record(self, block: Block) -> None:
-        """One interval of the body's Node's record (ALGEBRA.md 9.60 (2)): the engine's
-        one rule (`one_rule`, the same integers as every record's step) with
-        the standing family's Ports closed on the body's Node, the six reads the body's Node
-        itself (S_6 = 6 a); the amplitude bound as the rows'."""
+    def _advance_node_record(self, block: Block, direction: int = 1) -> None:
+        """One interval of the body's Node record by rule3 in `direction`, its six reads its own level, (2 a, 2 a, 2 a); the amplitude bound as the rows' (ALGEBRA.md 9.60 (2), 9.50 (8))."""
         node_record = block.node_record
         assert node_record is not None
         num, den, gamma, content = self.node_record_rule(block)
-        nxt, remainder = self.one_rule(
-            num,
-            den,
-            gamma,
-            content,
-            6 * node_record.now,
-            node_record.now,
-            node_record.before,
-            node_record.remainder,
-            True,
+        reads, self_coefficient, wall = coefficients(num, den, gamma, content)
+        now, other = (
+            (node_record.now, node_record.before)
+            if direction == 1
+            else (node_record.before, node_record.now)
         )
-        if abs(nxt) > self.world.amplitude_bound:
+        result, remainder = rule3(
+            reads,
+            (2 * now, 2 * now, 2 * now),
+            self_coefficient,
+            wall,
+            now,
+            other,
+            node_record.remainder,
+            direction,
+        )
+        if direction == 1 and abs(result) > self.world.amplitude_bound:
             raise RuntimeError(
-                f"the body's Node record of measured[{block.number}] reached the level {nxt} "
+                f"the body's Node record of measured[{block.number}] reached the level {result} "
                 f"at interval {self.tick}, above the world's declared amplitude bound A = "
                 f"{self.world.amplitude_bound}: the run is refused"
             )
         node_record.remainder = remainder
-        node_record.before = node_record.now
-        node_record.now = nxt
-
-    def _advance_node_record_inverse(self, block: Block) -> None:
-        """The body's Node's record one interval back with the same integers
-        (`one_rule_inverse`; ALGEBRA.md 9.50 (8): the wall constant, the
-        remainder's range the same at every interval, one to one)."""
-        node_record = block.node_record
-        assert node_record is not None
-        num, den, gamma, content = self.node_record_rule(block)
-        a_before, remainder = self.one_rule_inverse(
-            num,
-            den,
-            gamma,
-            content,
-            6 * node_record.before,
-            node_record.now,
-            node_record.before,
-            node_record.remainder,
-            True,
-        )
-        node_record.remainder = remainder
-        node_record.now = node_record.before
-        node_record.before = a_before
+        if direction == 1:
+            node_record.before, node_record.now = node_record.now, result
+        else:
+            node_record.now, node_record.before = node_record.before, result
 
     def node_record_wheel(self, block: Block) -> tuple[int, int]:
         """The remainder's step g and the wheel W of the one rule at the body's Node
@@ -2310,41 +2291,44 @@ class DetectorLawSimulation:
         plain = axis_contents is None and twists is None and live.im_now is None and sigma_self is None
         if not plain:
             reads_re, reads_im = self._arrivals(live, twists, True)
-            a_before, live.remainder = self._level_inverse(
+            a_before, live.remainder = self._level_step(
                 num,
                 den,
                 gamma,
                 content,
                 axis_contents,
                 reads_re,
-                live.now,
                 live.before,
+                live.now,
                 live.remainder,
                 not field,
+                -1,
             )
             if sigma_self is not None:
                 a_before -= sigma_self  # the same multiple of the wall off (9.91 (5))
             if live.im_now is not None:
                 assert live.im_before is not None and live.im_remainder is not None
                 im_reads = [np.zeros_like(live.now) for _ in range(3)] if reads_im is None else reads_im
-                im_a_before, live.im_remainder = self._level_inverse(
+                im_a_before, live.im_remainder = self._level_step(
                     num,
                     den,
                     gamma,
                     content,
                     axis_contents,
                     im_reads,
-                    live.im_now,
                     live.im_before,
+                    live.im_now,
                     live.im_remainder,
                     not field,
+                    -1,
                 )
                 live.im_now = live.im_before
                 live.im_before = im_a_before
         elif live.box is None or self._window(live.box, self.kind_wrap[live.family]) is None:
-            neighbours = self._neighbours(live.before, self.kind_wrap[live.family])
-            a_before, live.remainder = self.one_rule_inverse(
-                num, den, gamma, content, neighbours, live.now, live.before, live.remainder, not field
+            arrivals = self._axis_sums(live.before, self.kind_wrap[live.family])
+            reads, self_coefficient, wall = coefficients(num, den, gamma, content, ISOTROPIC, not field)
+            a_before, live.remainder = rule3(
+                reads, arrivals, self_coefficient, wall, live.before, live.now, live.remainder, -1
             )
         else:
             slices = tuple(slice(lo, hi) for lo, hi in live.box)
@@ -2353,17 +2337,19 @@ class DetectorLawSimulation:
                 for axis, (lo, hi) in enumerate(live.box)
             )
             content_w = content[slices] if isinstance(content, np.ndarray) else content
-            neighbours = self._neighbours(live.before[slices], (wraps[0], wraps[1], wraps[2]))
-            a_before_w, remainder_w = self.one_rule_inverse(
-                num[slices],
-                den[slices],
-                gamma,
-                content_w,
-                neighbours,
-                live.now[slices],
+            arrivals = self._axis_sums(live.before[slices], (wraps[0], wraps[1], wraps[2]))
+            reads, self_coefficient, wall = coefficients(
+                num[slices], den[slices], gamma, content_w, ISOTROPIC, not field
+            )
+            a_before_w, remainder_w = rule3(
+                reads,
+                arrivals,
+                self_coefficient,
+                wall,
                 live.before[slices],
+                live.now[slices],
                 live.remainder[slices],
-                not field,
+                -1,
             )
             a_before = np.zeros_like(live.now)
             a_before[slices] = a_before_w
@@ -2410,7 +2396,7 @@ class DetectorLawSimulation:
             self._advance_inverse(live)
         for block in self.blocks:
             if block.node_record is not None:
-                self._advance_node_record_inverse(block)
+                self._advance_node_record(block, -1)
             elif block.own is not None:
                 self._advance_inverse(block.own)
         for record in reversed(self.held_component_records()):
@@ -2465,6 +2451,18 @@ class DetectorLawSimulation:
             for sign in (1, -1):
                 total += self._shift(a, axis, sign, wrap=wrap)
         return total
+
+    def _axis_sums(
+        self, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """The two neighbours\' levels summed per axis at every Node, the three arrival sums rule3 reads; their sum is `_neighbours` (verb G; ALGEBRA.md 9.57 (1))."""
+        sums = []
+        for axis in range(3):
+            if self.shape[axis] == 1:
+                sums.append(2 * a)
+                continue
+            sums.append(self._shift(a, axis, 1, wrap=wrap) + self._shift(a, axis, -1, wrap=wrap))
+        return sums[0], sums[1], sums[2]
 
     def _axis_contents(self, family: int, inverse: bool = False) -> tuple[np.ndarray, ...] | None:
         """THE AXIS CONTENTS t_a of a reading family (ALGEBRA.md 9.91 (2); commit
@@ -2643,74 +2641,24 @@ class DetectorLawSimulation:
         axis_contents: tuple[np.ndarray, ...] | None,
         reads: list[np.ndarray],
         now: np.ndarray,
-        before: np.ndarray,
+        other: np.ndarray,
         remainder: np.ndarray,
         weak_field: bool,
+        direction: int = 1,
     ) -> tuple[np.ndarray, np.ndarray]:
-        """One level's step from its three per-axis arrival sums (ALGEBRA.md 9.91 (2)):
-        the rule with the four paces where a tensor part is read, else the one rule on
-        their sum; the same integers as the plain paths, bit for bit."""
-        if axis_contents is None:
-            return DetectorLawSimulation.one_rule(
-                num,
-                den,
-                gamma,
-                content,
-                reads[0] + reads[1] + reads[2],
-                now,
-                before,
-                remainder,
-                weak_field,
-            )
-        return DetectorLawSimulation.one_rule_axes(
-            num,
-            den,
-            gamma,
-            content,
-            axis_contents,
-            (reads[0], reads[1], reads[2]),
-            now,
-            before,
-            remainder,
+        """One level's step by rule3 in `direction` from its three per-axis arrival sums, `now` the level read and `other` the far level (ALGEBRA.md 9.91 (2), 9.50 (8))."""
+        integers, self_coefficient, wall = coefficients(
+            num, den, gamma, content, ISOTROPIC if axis_contents is None else axis_contents, weak_field
         )
-
-    @staticmethod
-    def _level_inverse(
-        num: np.ndarray,
-        den: np.ndarray,
-        gamma: int,
-        content: np.ndarray | int,
-        axis_contents: tuple[np.ndarray, ...] | None,
-        reads: list[np.ndarray],
-        now: np.ndarray,
-        before: np.ndarray,
-        remainder: np.ndarray,
-        weak_field: bool,
-    ) -> tuple[np.ndarray, np.ndarray]:
-        """One level's step back from the per-axis sums of the arrivals its step read
-        (ALGEBRA.md 9.50 (8), 9.91 (2)), the same integers."""
-        if axis_contents is None:
-            return DetectorLawSimulation.one_rule_inverse(
-                num,
-                den,
-                gamma,
-                content,
-                reads[0] + reads[1] + reads[2],
-                now,
-                before,
-                remainder,
-                weak_field,
-            )
-        return DetectorLawSimulation.one_rule_axes_inverse(
-            num,
-            den,
-            gamma,
-            content,
-            axis_contents,
+        return rule3(
+            integers,
             (reads[0], reads[1], reads[2]),
+            self_coefficient,
+            wall,
             now,
-            before,
+            other,
             remainder,
+            direction,
         )
 
     def _self_source(self, live: LiveRecord, inverse: bool) -> np.ndarray | None:
@@ -3148,12 +3096,8 @@ class DetectorLawSimulation:
         # weight 1 / R_i), the work term where it moves; the first-order form
         # of item 36, [3 den Gamma (a^2 + b^2) - 6 den c a b] / (p num), is
         # this at R = p num, S = 6 den c, w = 3 den Gamma
-        read_coefficient, self_coefficient, wall_at = rule_coefficients(
-            num_all.astype(object),
-            den_all.astype(object),
-            gamma,
-            content,
-            not field,
+        (read_coefficient, _, _), self_coefficient, wall_at = coefficients(
+            num_all.astype(object), den_all.astype(object), gamma, content, ISOTROPIC, not field
         )
         # the pair's two levels summed (9.91 (1); commit 4): the form of each level, the
         # plain Link term (exact where every twist is 0, a reading elsewhere)
@@ -3165,7 +3109,7 @@ class DetectorLawSimulation:
             now = level_now.astype(object)
             before = level_before.astype(object)
             reads = self._neighbours(level_before, self.kind_wrap[family]).astype(object)
-            node = wall * (wall_at * (now * now + before * before) - self_coefficient * now * before)
+            node = wall * form_term(self_coefficient, wall_at, now, before)
             links = wall * now * reads
             total = ratio_sum(
                 [total, self._weighted_sum(node, read_coefficient, mask), (-int(np.sum(links[mask])), 1)]
@@ -3267,152 +3211,6 @@ class DetectorLawSimulation:
         if whole:
             return None
         return tuple(slices), (wraps[0], wraps[1], wraps[2]), tuple(grown)
-
-    @overload
-    @staticmethod
-    def one_rule(
-        num: np.ndarray,
-        den: np.ndarray,
-        gamma: int,
-        content: np.ndarray | int,
-        neighbours: np.ndarray,
-        now: np.ndarray,
-        before: np.ndarray,
-        remainder: np.ndarray,
-        weak_field: bool,
-    ) -> tuple[np.ndarray, np.ndarray]: ...
-
-    @overload
-    @staticmethod
-    def one_rule(
-        num: int,
-        den: int,
-        gamma: int,
-        content: int,
-        neighbours: int,
-        now: int,
-        before: int,
-        remainder: int,
-        weak_field: bool,
-    ) -> tuple[int, int]: ...
-
-    @staticmethod
-    def one_rule(num, den, gamma, content, neighbours, now, before, remainder, weak_field):  # type: ignore[no-untyped-def]
-        """THE ONE RULE (ALGEBRA.md 9.57 (1), the law's rule with Einstein's weak
-        field, the model owner's "switch" of record 2024; BUILD.md section 26
-        item 44), the same integers for every record at every Node and for
-        the body's Node's record with its six reads returning the body's Node (9.60 (2);
-        item 42): w a_next + r' = R S_6(a_now) + S a_now - w a_before + r, the
-        remainder in [0, w), with (R, S, w) the rule's integers at the Node
-        (`rule_coefficients`: R = 2 p^2 num, S = 12 den Gamma^2 - 6 (p^2 +
-        Gamma^2)(den - num) - 12 num p^2, w = 6 den Gamma^2, p = Gamma - c the
-        Node's own pace; the first-order rule of 9.50 (13), R = p num, S = 6
-        den c, w = 3 den Gamma, is the field families' plain step at pace 1
-        and the control, `weak_field` False); on the board's arrays or on one
-        Node's integers alike (verbs G, D, T). Returns (a_next, r')."""
-        read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, weak_field)
-        total = read * neighbours
-        total += self_coefficient * now
-        total -= wall * before
-        total += remainder
-        nxt = np.floor_divide(total, wall) if isinstance(total, np.ndarray) else total // wall
-        return nxt, total - wall * nxt
-
-    @overload
-    @staticmethod
-    def one_rule_inverse(
-        num: np.ndarray,
-        den: np.ndarray,
-        gamma: int,
-        content: np.ndarray | int,
-        neighbours_of_before: np.ndarray,
-        now: np.ndarray,
-        before: np.ndarray,
-        remainder: np.ndarray,
-        weak_field: bool,
-    ) -> tuple[np.ndarray, np.ndarray]: ...
-
-    @overload
-    @staticmethod
-    def one_rule_inverse(
-        num: int,
-        den: int,
-        gamma: int,
-        content: int,
-        neighbours_of_before: int,
-        now: int,
-        before: int,
-        remainder: int,
-        weak_field: bool,
-    ) -> tuple[int, int]: ...
-
-    @staticmethod
-    def one_rule_inverse(  # type: ignore[no-untyped-def]
-        num, den, gamma, content, neighbours_of_before, now, before, remainder, weak_field
-    ):
-        """The one rule one interval back with the same integers (ALGEBRA.md
-        9.50 (8), (9), 9.57 (1); item 34): w a_before - r = R S_6(a_now) + S
-        a_now - (w a_next + r'), a_before the ceiling of that quotient, r the
-        difference, exact for every clock history since the remainder's range
-        is the wall's, constant. Returns (a_before, r)."""
-        read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, weak_field)
-        total = read * neighbours_of_before
-        total += self_coefficient * before
-        total -= wall * now + remainder
-        a_before = (
-            -np.floor_divide(-total, wall) if isinstance(total, np.ndarray) else -((-total) // wall)
-        )
-        return a_before, wall * a_before - total
-
-    @staticmethod
-    def one_rule_axes(
-        num: np.ndarray,
-        den: np.ndarray,
-        gamma: int,
-        content: np.ndarray | int,
-        axis_contents: tuple[np.ndarray, ...],
-        axis_neighbours: tuple[np.ndarray, np.ndarray, np.ndarray],
-        now: np.ndarray,
-        before: np.ndarray,
-        remainder: np.ndarray,
-    ) -> tuple[np.ndarray, np.ndarray]:
-        """THE ONE RULE WITH THE FOUR PACES (ALGEBRA.md 9.91 (2); commit 3): w a_next
-        + r' = SUM_a R_a (a_(+a) + a_(-a)) + S a_now - w a_before + r with (R_a, S,
-        w) of `axis_rule_coefficients`; at t_a = 0 the one rule bit for bit."""
-        reads, self_coefficient, wall = axis_rule_coefficients(num, den, gamma, content, axis_contents)
-        total = reads[0] * axis_neighbours[0]
-        total += reads[1] * axis_neighbours[1]
-        total += reads[2] * axis_neighbours[2]
-        total += self_coefficient * now
-        total -= wall * before
-        total += remainder
-        nxt = np.floor_divide(total, wall) if isinstance(total, np.ndarray) else total // wall
-        return nxt, total - wall * nxt
-
-    @staticmethod
-    def one_rule_axes_inverse(
-        num: np.ndarray,
-        den: np.ndarray,
-        gamma: int,
-        content: np.ndarray | int,
-        axis_contents: tuple[np.ndarray, ...],
-        axis_neighbours_of_before: tuple[np.ndarray, np.ndarray, np.ndarray],
-        now: np.ndarray,
-        before: np.ndarray,
-        remainder: np.ndarray,
-    ) -> tuple[np.ndarray, np.ndarray]:
-        """The rule with the four paces one interval back, the same integers
-        (ALGEBRA.md 9.50 (8); 9.91 (2))."""
-        reads, self_coefficient, wall = axis_rule_coefficients(num, den, gamma, content, axis_contents)
-        total = reads[0] * axis_neighbours_of_before[0]
-        total += reads[1] * axis_neighbours_of_before[1]
-        total += reads[2] * axis_neighbours_of_before[2]
-        total += self_coefficient * before
-        total -= wall * now + remainder
-        a_before = (
-            -np.floor_divide(-total, wall) if isinstance(total, np.ndarray) else -((-total) // wall)
-        )
-        return a_before, wall * a_before - total
 
     def _advance(self, live: LiveRecord) -> None:
         # THE EMITTER'S NODES ARE NODES LIKE EVERY OTHER (ALGEBRA.md 9.17; the
@@ -3517,9 +3315,10 @@ class DetectorLawSimulation:
                 )
             live.box = None
         elif window is None:
-            neighbours = self._neighbours(live.now, self.kind_wrap[live.family])
-            nxt, live.remainder = self.one_rule(
-                num, den, gamma, content, neighbours, live.now, live.before, live.remainder, not field
+            arrivals = self._axis_sums(live.now, self.kind_wrap[live.family])
+            reads, self_coefficient, wall = coefficients(num, den, gamma, content, ISOTROPIC, not field)
+            nxt, live.remainder = rule3(
+                reads, arrivals, self_coefficient, wall, live.now, live.before, live.remainder
             )
             live.box = None
         else:
@@ -3527,17 +3326,18 @@ class DetectorLawSimulation:
             # by one, zeros elsewhere; the same integers at every Node
             slices, wraps, grown = window
             content_w = content[slices] if isinstance(content, np.ndarray) else content
-            neighbours = self._neighbours(live.now[slices], wraps)
-            nxt_w, remainder_w = self.one_rule(
-                num[slices],
-                den[slices],
-                gamma,
-                content_w,
-                neighbours,
+            arrivals = self._axis_sums(live.now[slices], wraps)
+            reads, self_coefficient, wall = coefficients(
+                num[slices], den[slices], gamma, content_w, ISOTROPIC, not field
+            )
+            nxt_w, remainder_w = rule3(
+                reads,
+                arrivals,
+                self_coefficient,
+                wall,
                 live.now[slices],
                 live.before[slices],
                 live.remainder[slices],
-                not field,
             )
             nxt = np.zeros_like(live.now)
             nxt[slices] = nxt_w
@@ -3850,11 +3650,11 @@ class DetectorLawSimulation:
             before = level_before.ravel()[nodes]
             reads = self._reads_at(level_before, nodes, self.kind_wrap[family])
             for index in range(len(nodes)):
-                read_coefficient, self_coefficient, wall_at = rule_coefficients(
-                    int(num[index]), int(den[index]), gamma, int(level[index]), not field
+                (read_coefficient, _, _), self_coefficient, wall_at = coefficients(
+                    int(num[index]), int(den[index]), gamma, int(level[index]), ISOTROPIC, not field
                 )
                 a, b = int(now[index]), int(before[index])
-                node = wall * (wall_at * (a * a + b * b) - self_coefficient * a * b)
+                node = wall * form_term(self_coefficient, wall_at, a, b)
                 out[index] = ratio_sum(
                     [
                         out[index],

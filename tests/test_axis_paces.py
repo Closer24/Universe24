@@ -9,8 +9,8 @@ from __future__ import annotations
 
 import numpy as np
 
+from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.rule import axis_rule_coefficients, rule_coefficients
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_massive_record import block_world
 from tests.test_vector_holds import KIND, WELL, parts_of
@@ -38,11 +38,11 @@ def axis_sums(a: np.ndarray) -> list[np.ndarray]:
 
 
 def test_the_coefficients_with_equal_paces_are_the_isotropic_rules():
-    reads, self_coefficient, wall = axis_rule_coefficients(800, 809, GAMMA, 250, (0, 0, 0))
-    read, self_iso, wall_iso = rule_coefficients(800, 809, GAMMA, 250, True)
+    reads, self_coefficient, wall = coefficients(800, 809, GAMMA, 250, (0, 0, 0))
+    (read, _, _), self_iso, wall_iso = coefficients(800, 809, GAMMA, 250)
     assert reads == (read, read, read) and self_coefficient == self_iso and wall == wall_iso
     # a tensor along x alone slows the x reads and the own term by 4 num (p_x^2 - p_0^2)
-    reads_x, self_x, _ = axis_rule_coefficients(800, 809, GAMMA, 250, (20, 0, 0))
+    reads_x, self_x, _ = coefficients(800, 809, GAMMA, 250, (20, 0, 0))
     p0, px = GAMMA - 250, GAMMA - 250 - 20
     assert reads_x == (2 * px * px * 800, read, read)
     assert self_x == self_iso - 4 * 800 * (px * px - p0 * p0)
@@ -80,7 +80,7 @@ def test_a_planted_tensor_part_bends_the_rule_per_axis_and_the_inverse_reads_the
         t = (int(axis_contents[0][node]), 0, 0)
         c = int(content[node])
         num, den = int(num_all[node]), int(den_all[node])
-        reads, self_coefficient, wall = axis_rule_coefficients(num, den, GAMMA, c, t)
+        reads, self_coefficient, wall = coefficients(num, den, GAMMA, c, t)
         total = sum(reads[a] * int(sums[a][node]) for a in range(3))
         total += self_coefficient * int(now[node]) - wall * int(before[node])
         expected = total // wall
@@ -88,9 +88,7 @@ def test_a_planted_tensor_part_bends_the_rule_per_axis_and_the_inverse_reads_the
         assert 0 <= int(live.remainder[node]) == total - wall * expected < wall, node
     # the wheel at a slab Node reads the five coefficients' gcd
     step, wheel = simulation.wheel_at(matter, (7, 2, 2))
-    reads, self_coefficient, wall = axis_rule_coefficients(
-        800, 809, GAMMA, int(content[7, 2, 2]), (20, 0, 0)
-    )
+    reads, self_coefficient, wall = coefficients(800, 809, GAMMA, int(content[7, 2, 2]), (20, 0, 0))
     from math import gcd
 
     assert step == gcd(wall, self_coefficient, *reads) and wheel == wall // step
@@ -110,8 +108,9 @@ def test_with_the_tensor_zero_the_engine_is_the_isotropic_one_bit_for_bit():
     live = simulation.planted_record(matter, now.copy(), before.copy())
     content = simulation._effective_content(matter)
     num, den = simulation.pair_arrays(matter)
-    expected, remainder = simulation.one_rule(
-        num, den, GAMMA, content, simulation._neighbours(now), now, before, np.zeros_like(now), True
+    reads, self_coefficient, wall = coefficients(num, den, GAMMA, content)
+    expected, remainder = rule3(
+        reads, simulation._axis_sums(now), self_coefficient, wall, now, before, np.zeros_like(now)
     )
     simulation._advance(live)
     assert np.array_equal(live.now, expected) and np.array_equal(live.remainder, remainder)
