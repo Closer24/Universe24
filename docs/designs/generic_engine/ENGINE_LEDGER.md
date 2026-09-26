@@ -251,6 +251,13 @@ a receiver are bodies of the world file with their keys (9.110 item 4; the detec
 experiment is the composition, run in check mode, and owes no test of its own beyond the
 composition's digest. The engine's own tests are the primitives above, one small test per primitive.
 
+THE ORDER OF THE DAY (the model owner's word of 2026-09-26, 12:50Z): the hard questions (the
+eighth question of record 2140, the well's study runs, the open items of record 2134) are set
+aside until a generic engine stands; now the three work on the generic engine alone and help
+Coder 3 build it; no one but Coder 3 writes code. The physicist's part until then: this ledger's
+tests and run files, the checks of each item on main, the answers to Coder 3's questions from
+the runs already made.
+
 ## 4. The closing condition
 
 The engine is closed when section 2 is empty, every item of section 1 has its green test on

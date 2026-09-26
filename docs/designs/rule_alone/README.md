@@ -8,6 +8,13 @@ number beside the run's, the run written before the algebra's number is looked a
 Every number is HOST (the runner's own computation) or GAMEBOARD (a reading of the runner's
 board). Nothing here is engine code: the runner is checking code (record 2135).
 
+PARKED (the model owner's word of 2026-09-26, 12:50Z, in Nature24's session): the eighth
+question of record 2140 (its sixth engine world was stopped unfinished; the five finished
+outputs and the click rates of section 5 stand as read), the hard question's open items and
+the well's study runs wait until a generic engine stands; until then the physicist works on the
+generic engine alone with Coder 3, and writes no code. Nothing here is a result; every number
+is a GAMEBOARD reading of the runner unless labelled otherwise.
+
 ## 1. The runner
 
 1. `rule_alone.py`: one integer rule, transcribed from ALGEBRA.md 9.91 (2) and 9.57 (1):
@@ -350,7 +357,36 @@ the mode's omega 0.3372 and 0.3396 against the vacuum's 0.3447; the peak content
    power iteration; the sponge; the ringing reading; `n=` for the board's side. Outputs
    `binding_*_n64_sponge8_passes8_*.json`.
 
-## 13. The commands
+## 13. The send on fewer than six Ports (the Boss's record 2197; the model owner: "motion is the replication of events at the Nodes")
+
+`send_ports.py`: a free packet of the kind [800, 850] (rms 4.2, amplitude 2^11) at rest and
+moving at the group pace 0.1 along +x, on [160, 48, 48] periodic, 200 intervals, with THE SEND
+DECLARED ON A SET OF PORTS (the step's send, the ledger's primitive 13): the arrival at a Node
+through its Port -a is the neighbour's send through its Port +a, and a neighbour that does not
+send there delivers nothing; the own term and the wall are the six-Port rule's. Readings every
+25 intervals (GAMEBOARD of the runner): the envelope's centroid, its rms, the total norm over
+its start, the level's maximum. A first run of 600 intervals showed the free packet filling the
+periodic board by 200 intervals (rms 24 at 200, 30 after), so the readings stop at 200.
+
+| The send | At rest | Moving (0.1 expected) | Verdict |
+| --- | --- | --- | --- |
+| all six Ports (the law's own) | the centroid at 40.0 through 75 intervals, then the board's filling moves it (43.3, 47.1, 51.7 at 150 to 200 as the rms passes 18); rms 3.0 to 13.4 at 100; the level's maximum 236 | the centroid 40.0, 41.2, 43.4, 46.3, 48.4, ... 59.6: the speed 0.098 over 200 | the control: the packet moves at the group pace and disperses, nothing grows |
+| five Ports, no send toward +x | the centroid drifts toward -x, 40.0, 37.3, 33.0, 27.8, 22.5 at 0 to 100 (-0.17 per interval) while the norm grows 3.7, 540, 5.7e5, 2.5e9 times its start; by 125 the board is full at a level of 1.8e7 everywhere | the same drift and the same growth, the declared momentum makes no difference | UNSTABLE and asymmetric: a one-sided send is a gain, the rule's step amplifies without bound and the pattern runs toward the side it does not send to |
+| four Ports, no send along x | the centroid exactly 40.0 at every reading; rms grows in y and z only (3.0 to 10.0 at 200); the norm 0.43 to 0.77 of its start (the standing pair's oscillation); the level's maximum 485 | the centroid 40.0 to 40.3 and back to 40.0: the speed -0.0001 against 0.1 expected; the momentum along x does nothing | STABLE and STILL: with no replication along x there is no motion along x, whatever the phases declare |
+| three Ports, +x, +y, +z only | the centroid runs toward +x, 40.0, 43.3, 47.5, 55.2, 66.6 at 0 to 100 (+0.27 per interval) while the norm grows 64, 3.4e9, 9.2e9, 1.3e10 times its start | the same | UNSTABLE and asymmetric, the run toward the side that is sent to |
+
+1. **The reading for the owner's word (record 2197).** Motion is the replication of events
+   through the Ports and nothing else: with the sends along an axis removed the packet does not
+   move along it even when its phases carry the momentum (the four-Port run), and the six-Port
+   rule moves the moving packet at the group pace (the control). A send that is not symmetric
+   (five Ports, three Ports) is not a slower or a one-sided motion: the rule's step loses its
+   conserved form and amplifies without bound, the pattern running toward the side of the
+   missing or the present sends. So the law's own send is all six Ports, symmetric, and the
+   step's send declaration admits a symmetric set (an axis on or off) and refuses a one-sided
+   one, or the guard ends the run. The mathematician's line on the asymmetric operator's
+   spectrum is owed; the run is the reading. Output `send_ports.json`.
+
+## 14. The commands
 
     PYTHONPATH=src python docs/designs/rule_alone/item1_fall.py 1 2100
     PYTHONPATH=src python docs/designs/rule_alone/item1_fall.py 0 2100
