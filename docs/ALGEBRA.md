@@ -16201,8 +16201,9 @@ structure derived (9.99), written on his word.
 **(3) WHAT STAYS ASSUMED.** The rule 9.57 (1). The internal group of
 the strong and weak forces, declared (narrowed in 9.101: the group of
 a family of n pairs is U(n), derived from the click; the internal
-tower's grading and its stop derived with 9.99's premise; what the
-three multiplets are, open at the fork of 9.101 item 11). Nothing else.
+tower's grading and its stop derived with 9.99's premise; the counts
+of pairs 1, 2, 3 are the sizes of declared primitives, which the rule
+bounds by nothing, 9.101 item 13). Nothing else.
 
 **(4) WHAT THE BOSS CHECKS INDEPENDENTLY, and then records.** The five
 derivations of (1) by their steps; the two computations (9.97 (3),
@@ -16282,7 +16283,7 @@ as written here.
    | --- | --- | --- |
    | The group of a family of n pairs | derived, U(n) (item 4) | |
    | The common phase is the charge | derived (item 5) | |
-   | The count of pairs per family, 1, 2, 3 | the tower and its stop at three derived with 9.99's premise (item 10); what the three multiplets are, open (item 11) | the fork of item 11 |
+   | The count of pairs per family, 1, 2, 3 | declared: the size of the transport's primitive, which the rule bounds by nothing (item 13) | nothing in the rule; nature's reading |
    | One common phase for all families, not one per family | derived with 9.99's premise (item 10 (c)) | |
    | The thirds and the Z_6 quotient | conditional (item 5) | the charge unit read on a 3-pair family |
    | The weak force acting on one hand only (its chirality) | not in the algebra | |
@@ -16423,3 +16424,48 @@ as written here.
     (item 11), and with it whether the counts 1, 2, 3 are derived.
     The count of item 7 stands: Lambda, the mass table, and the
     multiplets' identity.
+
+13. The try at the fork (the owner's word, "try"), and its result: the
+    fork closes on the side of the declaration, with the reason.
+    (a) Reading (a) of item 11 is out. The rule reads of a neighbour
+    its now level only (the arrivals a_(+a), a_(-a) of 9.91 (2) are
+    the neighbour's now, transported); no Link carries a neighbour's
+    before. So no transport can mix now and before, and the doublet's
+    three symmetric forms, the record's own rest rotation, are touched
+    by no field: they are the mass, counted once at spacetime degree
+    0 (9.99 (2)), and they give no internal family. (I had written in
+    item 8 that the transport acts on the doublet linearly; it acts on
+    the pair (re, im) of the now level, and on nothing else.)
+    (b) The rule's own transport primitive is one rotation per Port of
+    the pair (re, im) (9.88 (7), 9.96). With n pairs sharing that one
+    angle the group is U(1) again, n copies of the same twist, and
+    nothing non-abelian. A non-abelian transport needs a matrix per
+    Port, n squared angles in place of one: an enlargement of the
+    primitive, declared (this is 9.99 (6)'s "structure table"). Its
+    size n is the declaration, and the rule bounds it by nothing:
+    the tower of item 10 grades the doublet, which by (a) no transport
+    reaches, so it does not grade the internal families. Reading (b)
+    of item 11 is not derived either.
+    (c) What nature reads and our engine has: the well (a body's pair
+    lowered on its Nodes, 9.35, 9.96) confines a record and gives its
+    mass by the bound mode, which is what nature's strong force does
+    to quarks; but nature also reads a colour count of 3 (rates that
+    need it), and a well carries no count. So the strong force's
+    triplet is a declared 3-pair primitive, as the weak force's pair
+    is a declared 2-pair primitive; the well is the confinement they
+    bind with, not their replacement.
+    (d) The result, said once: item 4 of my message to the owner does
+    not derive; it is a declaration of the universe file, one integer
+    per internal family (the size of its primitive), and the reason
+    is that the rule's own primitive is one angle per Port and no
+    quantity of the rule counts to 2 or 3 where a transport can reach
+    it. Derived and standing: the group U(n) of a declared n-pair
+    primitive (item 4), the one common phase as the charge (item 10
+    (c)), every internal field a vector family (item 10 (d)).
+
+14. The count of the universe's numbers, final for today: Lambda; the
+    mass table (one pair per species); the sizes of the internal
+    primitives (1, 2, 3, one integer per internal family). Three kinds
+    of numbers and nothing else. The owner's question "one number or
+    several" has this answer: several, of three kinds, and every one
+    of them is a number nature has not derived either.
