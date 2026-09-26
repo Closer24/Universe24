@@ -145,6 +145,185 @@ def bound_mode(
     return BoundMode(a, step, step - seen[key], rotation, share)
 
 
+Triple = tuple[int, int, int]  # (a, b, c) with a^2 + b^2 = c^2: cos k = a / c, sin k = b / c, exact
+AT_REST: Triple = (1, 0, 1)
+
+
+def check_triple(triple: Triple) -> None:
+    """The refusals by name: the rotation per Link is a Pythagorean triple (a, b, c) with c from 1 and a^2 + b^2 = c^2, so cos k and sin k are exact rationals (ALGEBRA.md 9.96 (2))."""
+    a, b, c = triple
+    if c < 1 or a * a + b * b != c * c:
+        raise ValueError(
+            f"the rotation per Link {triple} is no Pythagorean triple: c from 1 and a^2 + b^2 = c^2"
+        )
+
+
+def rotated(re: np.ndarray, im: np.ndarray, triple: Triple, sign: int) -> tuple[np.ndarray, np.ndarray]:
+    """The rotation act by k per Link on a level's two parts, (re + i im) x (a + i sign b) div c, the division act with its rounding (ALGEBRA.md 9.120 item 4 (e))."""
+    a, b, c = triple
+    b = sign * b
+    return (a * re - b * im) // c, (a * im + b * re) // c
+
+
+def twisted_sums(
+    re: np.ndarray, im: np.ndarray, triple: Triple, wrap: Wrap
+) -> tuple[np.ndarray, np.ndarray]:
+    """The six arrivals summed on the moving body's envelope: the two along x rotated by +k and -k per Link (the rotation act), the four across as at rest (ALGEBRA.md 9.120 item 4 (e))."""
+    if re.shape[0] == 1:
+        along_re, along_im = 2 * re, 2 * im
+    else:
+        forward_re, forward_im = rotated(np.roll(re, -1, axis=0), np.roll(im, -1, axis=0), triple, 1)
+        backward_re, backward_im = rotated(np.roll(re, 1, axis=0), np.roll(im, 1, axis=0), triple, -1)
+        if not wrap[0]:
+            forward_re[-1] = forward_im[-1] = 0
+            backward_re[0] = backward_im[0] = 0
+        along_re, along_im = forward_re + backward_re, forward_im + backward_im
+    sums = []
+    for part, along in ((re, along_re), (im, along_im)):
+        across = np.zeros_like(part)
+        for axis in (1, 2):
+            if part.shape[axis] == 1:
+                across += 2 * part
+                continue
+            for sign in (1, -1):
+                shifted = np.roll(part, sign, axis=axis)
+                if not wrap[axis]:
+                    edge: list[slice | int] = [slice(None)] * 3
+                    edge[axis] = 0 if sign == 1 else -1
+                    shifted[tuple(edge)] = 0
+                across += shifted
+        sums.append(along + across)
+    return sums[0], sums[1]
+
+
+def twisted_read_act(
+    re: np.ndarray,
+    im: np.ndarray,
+    read: np.ndarray,
+    self_coefficient: np.ndarray,
+    wall: int,
+    triple: Triple,
+    wrap: Wrap,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Rule3's read act on the moving body's envelope, (R x the twisted sums + S a) div w on each part, the total kept inside int64 or refused (ALGEBRA.md 9.120 item 4 (e))."""
+    size = max(int(np.abs(re).max()), int(np.abs(im).max()))
+    reach = 6 * int(np.abs(read).max()) * size + int(np.abs(self_coefficient).max()) * size
+    if reach > INT64_BOUND:
+        raise ValueError(f"the read act reaches {reach} at the level {size}, beyond int64 {INT64_BOUND}")
+    sum_re, sum_im = twisted_sums(re, im, triple, wrap)
+    return (read * sum_re + self_coefficient * re) // wall, (
+        read * sum_im + self_coefficient * im
+    ) // wall
+
+
+def to_amplitude_pair(re: np.ndarray, im: np.ndarray, amplitude: int) -> tuple[np.ndarray, np.ndarray]:
+    """Rule3's division act to the amplitude unit on the two parts together, by the larger size (ALGEBRA.md 9.120 item 4 (b))."""
+    size = max(int(np.abs(re).max()), int(np.abs(im).max()))
+    if size == 0:
+        raise ValueError("the read act gives 0 at every Node: no mode")
+    return (re * amplitude) // size, (im * amplitude) // size
+
+
+@dataclass(frozen=True)
+class MovingMode:
+    """The moving body's envelope at the rotation k per Link: its two parts at the amplitude unit, the iterations to the repeat, the cycle's length, the rotation 2 cos omega_b(k) as an exact fraction, the share inside the counted Nodes (ALGEBRA.md 9.120 item 4 (e))."""
+
+    re: np.ndarray
+    im: np.ndarray
+    iterations: int
+    cycle: int
+    rotation: Fraction
+    share_inside: Fraction
+
+
+def moving_mode(
+    counts: np.ndarray,
+    pair: tuple[int, int],
+    gamma: int,
+    triple: Triple,
+    amplitude: int = AMPLITUDE_UNIT,
+    wrap: Wrap = PERIODIC,
+) -> MovingMode:
+    """The bound mode of the count's well moving along x at the rotation k per Link: the same iteration as at rest with the twisted read act, from a flat start, each iterate mirrored (the real part even and the imaginary part odd about the centre, the envelope's one gauge), the stop at the first repeat of the two parts; at the triple (1, 0, 1) it is the resting mode (ALGEBRA.md 9.120 item 4 (e))."""
+    check_counts(counts, gamma)
+    check_triple(triple)
+    if not np.array_equal(counts, counts[::-1]):
+        raise ValueError(
+            "the moving body's counts are mirrored along x about the box's centre (the gauge of its envelope)"
+        )
+    read, self_coefficient, wall = rule_integers(pair, gamma, counts)
+    re = np.full(counts.shape, amplitude, dtype=np.int64)
+    im = np.zeros(counts.shape, dtype=np.int64)
+    seen: dict[bytes, int] = {}
+    for step in range(REPEAT_LIMIT):
+        key = re.tobytes() + im.tobytes()
+        if key in seen:
+            break
+        seen[key] = step
+        re, im = to_amplitude_pair(
+            *twisted_read_act(re, im, read, self_coefficient, wall, triple, wrap), amplitude
+        )
+        re, im = (re + re[::-1]) // 2, (im - im[::-1]) // 2
+    else:
+        raise ValueError(f"the profile repeats within no {REPEAT_LIMIT} iterations")
+    paces = gamma - counts
+    sum_re, sum_im = twisted_sums(re, im, triple, wrap)
+    t_re = read.astype(object) * sum_re.astype(object) + self_coefficient.astype(object) * re.astype(
+        object
+    )
+    t_im = read.astype(object) * sum_im.astype(object) + self_coefficient.astype(object) * im.astype(
+        object
+    )
+    levels_re, levels_im = re.astype(object), im.astype(object)
+    numerator, denominator = Fraction(0), Fraction(0)
+    for pace in {int(p) for p in paces.ravel()}:
+        where = paces == pace
+        numerator += Fraction(
+            int(np.sum(levels_re[where] * t_re[where] + levels_im[where] * t_im[where])), pace * pace
+        )
+        denominator += Fraction(
+            int(np.sum(levels_re[where] * levels_re[where] + levels_im[where] * levels_im[where])),
+            pace * pace,
+        )
+    rotation = numerator / (wall * denominator)
+    weights = levels_re * levels_re + levels_im * levels_im
+    share = Fraction(int(np.sum(weights[counts > 0])), int(np.sum(weights)))
+    fraction = Fraction(int(np.count_nonzero(counts)), counts.size)
+    if rotation <= Fraction(2 * pair[0], pair[1]) or share <= 2 * fraction:
+        raise ValueError(
+            f"the count binds no moving mode of the family [{pair[0]}, {pair[1]}] at {triple}: the rotation "
+            f"{rotation} against the band's top {Fraction(2 * pair[0], pair[1])}, the share inside "
+            f"{share.numerator}/{share.denominator} against the fraction {fraction} (ALGEBRA.md 9.120 item 2)"
+        )
+    return MovingMode(re, im, step, step - seen[key], rotation, share)
+
+
+def moving_levels(
+    mode: MovingMode, triple: Triple, amplitude: int = AMPLITUDE_UNIT
+) -> tuple[np.ndarray, np.ndarray]:
+    """The moving body's two real levels: now the envelope times cos(k x) per Link (the rotation act along x), before the same one interval earlier, cos omega_b(k) now - sin omega_b(k) x the quarter-turned part, sin from the exact cosine by the integer square root at the amplitude unit (ALGEBRA.md 9.120 item 4 (e); 9.113 item 3 (c))."""
+    re, im = mode.re.copy(), mode.im.copy()
+    phase_re, phase_im = (
+        np.full(re.shape[1:], amplitude, dtype=np.int64),
+        np.zeros(re.shape[1:], dtype=np.int64),
+    )
+    now_re = np.empty_like(re)
+    now_im = np.empty_like(im)
+    for x in range(re.shape[0]):
+        now_re[x] = (re[x] * phase_re - im[x] * phase_im) // amplitude
+        now_im[x] = (re[x] * phase_im + im[x] * phase_re) // amplitude
+        phase_re, phase_im = rotated(phase_re, phase_im, triple, 1)
+    cosine = mode.rotation / 2
+    sine = isqrt(
+        ((1 - cosine * cosine) * amplitude * amplitude).numerator
+        // ((1 - cosine * cosine) * amplitude * amplitude).denominator
+    )
+    before = (now_re.astype(object) * cosine.numerator) // cosine.denominator - (
+        now_im.astype(object) * sine
+    ) // amplitude
+    return now_re, before.astype(np.int64)
+
+
 def clock_pair(rotation: Fraction, denominator: int = AMPLITUDE_UNIT) -> tuple[int, int]:
     """The clock [a, b] with 2 cos omega_b = a / b on the declared denominator, a the nearest integer (exact rational rounding)."""
     scaled = rotation * denominator
