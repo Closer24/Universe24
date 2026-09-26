@@ -22,7 +22,7 @@ Three files define everything. No other living file exists without the owner's w
 | docs/ALGEBRA.md | the rule at the Node, the families, the bodies, the clicks, the lab tools; each experiment's formula and blind expectation | code places, run readings, process | the mathematician |
 | docs/ENGINE.md | the families file, the world file and the start file with every key allowed in them; the table from each section of the algebra to its operation and its code place; each experiment's world file, detector and check-mode reading | a rule not in the algebra, derivations | Nature24 |
 
-Four files define nothing and stay beside them.
+Five files define nothing and stay beside them.
 
 | File | What it holds | Owner |
 | --- | --- | --- |
@@ -30,6 +30,7 @@ Four files define nothing and stay beside them.
 | README.md | the map: where each thing is, how to install and run | the Boss |
 | docs/LOG_<date>.md | the day's records, numbered, appended, never rewritten | the Boss |
 | CHANGELOG.md | the releases | the one who releases |
+| docs/HISTORY.md | the story of the system from its first code to today, in numbered sections, with dates and the records that mark each step | the Boss |
 
 Everything else lives in docs/history/, marked as a record, and is never cited as a rule.
 
@@ -38,7 +39,7 @@ Everything else lives in docs/history/, marked as a record, and is never cited a
 1. Every file is written in English, in short and simple sentences, one idea to a sentence.
 2. Every thing has one word, the glossary's; a new word enters the glossary before it is used.
 3. A place on the GameBoard is a Node and nothing else.
-4. There is one engine and it has no name and no version; a retired name appears only in docs/history/ and in the dated logs.
+4. There is one engine and it has no name and no version; a retired name appears only in docs/history/, in the dated logs and in docs/HISTORY.md, and there it is marked retired.
 5. A date is written YYYY-MM-DD and a time in UTC with Z.
 
 ## 0.3 Numbers and headings

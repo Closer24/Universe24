@@ -30,6 +30,7 @@ Since 2026-09-19 there is one engine, the engine of the Beam Law
 | Document | Responsibility |
 | --- | --- |
 | [Highlights specification](HIGHLIGHTS.md) | The Universe 24 Highlights specification, edited directly by the model owner since 2026-09-17; every decision dated, in the owner's words; nothing deleted; the decisions of each day one line each in 5.4, the records in the dated logs |
+| [The history of Universe24](HISTORY.md) | The story of the system from its first code to today, in numbered sections, with dates and the records that mark each step; it defines nothing (the model owner, 2026-09-26, record 2117) |
 | [Highlights log, 2026-09-17 and 2026-09-18](LOG_2026-09-18.md) | The records of the law of the bit and the law of the shadow, moved verbatim from Highlights 5.4; superseded on 2026-09-19, kept as history |
 | [Highlights log, 2026-09-19](LOG_2026-09-19.md) | The records of the law of events and of the law of the ray, moved verbatim from Highlights 5.4; the decisions stand in 5.4 as one line each |
 | [Highlights log, 2026-09-20](LOG_2026-09-20.md) | The records of 2026-09-20 (the four forces, the detector, the experiments, the amplitude), moved verbatim from Highlights 5.4; the decisions stand in 5.4 |
