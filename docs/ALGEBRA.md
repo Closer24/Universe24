@@ -18690,3 +18690,23 @@ and 6) so that nothing waits on me.
 On each commit of Coder 3 from here: one line to the Boss, CONFIRMED or
 the line that differs (9.5; record 2199 (b)); no section for a gate,
 a note under the item's row here only when a line moves.
+
+Note under item 5 (the Boss's record 2204, the merge's question: the
+hop's wall W = 3 Q M with the live M, a giving lowering M by one while
+n stays, so v = n / W rose, M 65 to 63 at interval 51 of the moving
+row): A GIVING AT REST IN THE BODY'S FRAME KEEPS THE VELOCITY, and the
+line the engine lacked is the bulk share. The given quantum is a
+four-vector (9.86 (1)); in the lab frame it carries the body's
+velocity times its count, n div M on the wall, beside its own k_q in
+the body's frame (the recoil, 9.84 (2), zero net for a symmetric
+emitter). So at a giving n_a -= n_a div M (the remainder on the
+record) and M -= 1, with the recoil's sigma_a x (W P_body) div (M
+lambda_q) beside when built; the velocity (n - n div M) / (3 Q (M - 1))
+= n / (3 Q M) is kept exactly up to the remainder. At a taking n_a
+gains the taken quantum's lab momentum (the recoil line; nothing for a
+quantum at rest in the lab) and M += 1, so a body slows as M + 1,
+which is nature's. The wall stays one and live (9.96 (1)); "the wall
+holds between recoils" is refused, it would break the hold's writes 4
+s n div W. The writes at t + 1 (item 6a). The moving row's v is then
+constant bit for bit through its givings; the test's expectation is
+that constancy.
