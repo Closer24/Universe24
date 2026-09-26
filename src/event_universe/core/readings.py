@@ -1,9 +1,4 @@
-"""THE READINGS OF A RUN, declared in the world file under `readings` and written in one
-format (ALGEBRA.md 9.115; docs/ENGINE.md, the readings by type): each a kind with its label,
-DETECTOR for a declared detector's clicks, GAMEBOARD for the host's view of a family's levels,
-support, total or a body's centre, HOST for the host's own count; a reading reads state at the
-declared intervals and writes nothing into the run.
-"""
+"""The readings of a run, declared in the world file under `readings` and written in one format, each labelled DETECTOR (a declared detector's clicks), GAMEBOARD (a family's level, support or total, a body's centre) or HOST (the records alive); a reading reads state at the declared intervals and writes nothing into the run (ALGEBRA.md 9.115; docs/ENGINE.md, the readings by type)."""
 
 from __future__ import annotations
 
@@ -104,6 +99,22 @@ def declarations(
         node = _node(item["node"], where, shape) if "node" in keys else None
         found.append(Reading(name, kind, label, every, detector, family, body, node))
     return tuple(found)
+
+
+def world_readings(
+    obj: Mapping[str, Any],
+    shape: Sequence[int],
+    detectors: Sequence[Any],
+    families: Sequence[Any],
+    measured: Sequence[Any],
+) -> tuple[Reading, ...]:
+    """The world file's readings as declarations, an empty tuple where the file declares none; the detectors', families' names and the bodies' numbers resolved from the loaded definitions."""
+    if "readings" not in obj:
+        return ()
+    bodies = [number for number, entry in enumerate(measured) if entry.block is not None]
+    return declarations(
+        obj["readings"], shape, [d.name for d in detectors], [f.name for f in families], bodies
+    )
 
 
 class Readings:

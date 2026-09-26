@@ -1,6 +1,6 @@
 {
  "format": "code-shape-baseline",
- "recorded_at": "38a729a4",
+ "recorded_at": "72dd60c1",
  "files": {
   "src/event_universe/__init__.py": {
    "lines": 27,
@@ -47,6 +47,14 @@
    "docstring_lines": 39,
    "comment_lines": 0,
    "record_references": 1,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/core/readings.py": {
+   "lines": 190,
+   "docstring_lines": 12,
+   "comment_lines": 1,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
@@ -115,9 +123,9 @@
    "level_shift_sites": 0
   },
   "src/event_universe/events/world.py": {
-   "lines": 7575,
+   "lines": 7554,
    "docstring_lines": 1229,
-   "comment_lines": 1181,
+   "comment_lines": 1177,
    "record_references": 107,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0

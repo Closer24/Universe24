@@ -316,7 +316,7 @@ from event_universe.core.integer import (
     rational_sum,
 )
 from event_universe.core.phase import MAX_PHASE_STEPS
-from event_universe.core.readings import Reading, declarations
+from event_universe.core.readings import Reading, world_readings
 from event_universe.events.rule import rule_total_bound
 
 # ONE ENGINE, NO LAW'S NAME AND NO VERSION (ALGEBRA.md 9.90 (1); the model owner's
@@ -449,8 +449,6 @@ WORLD_KEYS = {
     # record writes per interval (a GAMEBOARD reading of the rows), a list
     # of Nodes, admitted under `massive_record` alone.
     "probes",
-    # the run's readings, declared by name and kind (core/readings.py; docs/ENGINE.md, the
-    # readings by type): a list, absent means none
     "readings",
     # massive-record-v1: `mode_axis`, the axis ("x", "y" or "z") along which
     # the record writes the `mode` line per interval (the three sums of
@@ -2109,32 +2107,6 @@ class MeasuredDefinition:
     # The block (massive-record-v1): the measured event's Nodes, pair,
     # seed and the rest, or None (a body of one Node or a span as before).
     block: BlockDefinition | None = None
-
-    def __post_init__(self) -> None:
-        if not self.hands:
-            object.__setattr__(self, "hands", (NO_HAND,) * len(self.table))
-        if not self.splits:
-            object.__setattr__(self, "splits", (None,) * len(self.table))
-        if not self.label_turns:
-            object.__setattr__(self, "label_turns", (0,) * len(self.table))
-        if not self.rotations:
-            object.__setattr__(self, "rotations", (None,) * len(self.table))
-        if not self.gates:
-            object.__setattr__(self, "gates", (None,) * len(self.table))
-        # A definition made without `held` (the tests' bare definitions)
-        # holds its amount under its own family alone, and without
-        # `widths` or `transforms` declares none.
-        if not self.held:
-            found = [0] * (self.family + 1)
-            found[self.family] = self.amount
-            object.__setattr__(self, "held", tuple(found))
-        if not self.widths:
-            object.__setattr__(self, "widths", (None,) * len(self.table))
-        if not self.transforms:
-            object.__setattr__(self, "transforms", (None,) * len(self.table))
-        # A definition made without `window_reads` reads no window.
-        if not self.window_reads:
-            object.__setattr__(self, "window_reads", (None,) * len(self.table))
 
 
 @dataclass(frozen=True)
@@ -7494,17 +7466,7 @@ def parse_world_document(
             )
         if drive_b:
             body_weight(entry.momentum, sum(entry.held), width, optical)
-    readings = (
-        declarations(
-            obj["readings"],
-            shape,
-            [detector.name for detector in detectors],
-            [family.name for family in families],
-            [number for number, entry in enumerate(measured) if entry.block is not None],
-        )
-        if "readings" in obj
-        else ()
-    )
+    readings = world_readings(obj, shape, detectors, families, measured)
     world = NatureBeamWorld(
         shape,
         boundary,
