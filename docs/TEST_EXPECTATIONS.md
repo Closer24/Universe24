@@ -3860,6 +3860,7 @@ See [RETENTION.md](RETENTION.md) for ownership and expiry policy.
 | --- | --- |
 | `test_retention.py` | Registered generations expire at 24 hours; later writes extend age; active and dependent writer locks survive future cleanup; unregistered, protected, linked and replaced files survive; interrupted quarantine resumes without deleting replacement data; expected adoption identity rejects stale inventory; concurrent catalog use waits; duplicate watchers share one lock |
 | `test_check_scope.py` | Explicit non-import edges retain the kept resource consumers and every row names an existing test; the exact scope report expires while unrelated files survive; dry-run creates no output |
+| `test_cancelled_paths.py` | THE CANCELLED PATHS (docs/CANCELLED_WORLDS.md; records 2102 and 2133): every section of the document has rows and every listed path exists (nothing deleted, HOST counts); a section without rows is refused; a path under a cancelled folder or listed whole is cancelled, a module cancelled in part is not; no cancelled test is collected by the gate and the selector `tools/check.py` names none whatever changed; no living module under `src/` imports a wholly cancelled module beyond the lines named in the document's section 9. |
 
 Ordinary test execution leases its JUnit report. Neither test collection nor
 cleanup enables rendering.
