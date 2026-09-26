@@ -28,6 +28,15 @@ THE FORMS OF THE SOURCE (`source=`):
 - `table`: s_i = s_cap F_i div (s_cap E_s + F_i), the saturating divide of 9.108 (3), `scap=`.
 - `core`: `level` into the binding family and, scaled by `corescale=a/b` (E_core = E_s a / b),
   into the core family read with -K_r (`kr=`), 9.108 (7).
+- `sourced`: the binding and the core SOURCED, not held (9.108 (10) (a) to (d)): each interval
+  the record's local count s_i = F_i div E_s is ADDED into each family's now level at its Nodes,
+  and each family steps by the rule at the Node's pace with its own pair; gravity stays the
+  hold. The fields start at the static response to the start's source (the screened Poisson
+  solution of the plain rule, (2 - M) a = s, by relaxation, HOST), and E_s is set by that
+  response so that K_m b - K_r h at the start's peak is 1500 (`floor=`). The conserved total
+  of 9.108 (10) (c), the record's form plus the two fields' forms over E_s plus the coupling
+  K_m SUM b_i s_i - K_r SUM h_i s_i, is read beside its pieces. `wrap=1` puts the run on a
+  periodic board of 64 (the start a Gaussian, as (b) allows).
 The guard p > 0 (the content reaching Gamma) ends a run and is reported with its interval.
 
 THE READINGS (GAMEBOARD of the runner) every 25 intervals: the centroid of F, the rms width about
@@ -59,6 +68,7 @@ import rule_alone as R  # noqa: E402
 
 SHAPE = (48, 48, 48)
 WRAP = (False, False, False)
+PERIODIC_SHAPE = (64, 64, 64)
 KIND = (800, 850)
 GRAVITY_PAIR = (1, 1)
 BINDING_PAIR = (1000, 1019)  # cosh kappa = 3 den / num - 2 = 1.057: the range 3 Links
@@ -111,6 +121,35 @@ class Field:
     def hold(self, support: np.ndarray, level: np.ndarray) -> None:
         self.now[support] = level[support]
         self.before[support] = level[support]
+
+    def inject(self, level: np.ndarray) -> None:
+        """The source: the count added into the now level at the record's Nodes."""
+        self.now = self.now + level
+
+    def static_response(
+        self,
+        source: np.ndarray,
+        sweeps: int = 4000,
+        coefficients: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None,
+    ) -> np.ndarray:
+        """The steady level of the sourced field, (2 - M) a = s with M the rule's operator
+        at the given coefficients (a_next = M a - a_before + s): Jacobi relaxation, HOST floats."""
+        read, own, wall = self.plain if coefficients is None else coefficients
+        r = read.astype(np.float64) / wall.astype(np.float64)
+        s_over_w = own.astype(np.float64) / wall.astype(np.float64)
+        a = np.zeros(SHAPE, dtype=np.float64)
+        src = source.astype(np.float64)
+        for _ in range(sweeps):
+            a = 0.5 * (r * R.neighbour_sum(a, WRAP) + s_over_w * a) + 0.5 * src
+        return a
+
+    def start_static(self, source: np.ndarray, content: np.ndarray | None = None) -> None:
+        coefficients = None if content is None else R.coefficients(self.num, self.den, content)
+        level = np.rint(self.static_response(source, coefficients=coefficients)).astype(R.INT)
+        self.coefficients = self.plain if coefficients is None else coefficients
+        self.now = level.copy()
+        self.before = level.copy()
+        self.remainder = np.zeros(SHAPE, dtype=R.INT)
 
     def form(self) -> float:
         read, own, wall = self.coefficients
@@ -221,13 +260,19 @@ def run(options: dict) -> dict:
     s_cap = int(options.get("scap", 4000))
     core_scale = Fraction(options.get("corescale", "1"))
     at_pace = options.get("pace", "0") == "1"
+    floor = int(options.get("floor", 1500))
+    global SHAPE, WRAP
+    if options.get("wrap", "0") == "1":
+        SHAPE, WRAP = PERIODIC_SHAPE, (True, True, True)
     num = np.full(SHAPE, KIND[0], dtype=R.INT)
     den = np.full(SHAPE, KIND[1], dtype=R.INT)
     read0, own0, wall0 = R.coefficients(num, den, np.zeros(SHAPE, dtype=R.INT))
     cos_vacuum = float(R.rest_rotation(read0, own0, wall0)[0, 0, 0])
     middle = SHAPE[1] / 2.0
     gravity, binding = Field(GRAVITY_PAIR), Field(BINDING_PAIR)
-    core = Field(CORE_PAIR) if source == "core" else None
+    core = Field(CORE_PAIR) if source in ("core", "sourced") else None
+    sourced = source == "sourced"
+    static_peak = None
     sigma = side / 2.0
     records: list[Record] = []
     x_start = SHAPE[0] / 2.0 - 8 if mode == "moving" else SHAPE[0] / 2.0
@@ -245,6 +290,35 @@ def run(options: dict) -> dict:
         record.e_s = (
             max(1, int(form.sum()) // COUNT) if source == "count" else max(1, int(form.max()) // COUNT)
         )
+    if sourced and core is not None:
+        # E_s by the static response (9.108 (10) (b)): the unit source is the start's form over
+        # its peak; the peak's count makes K_m b - K_r h at the peak equal to the floor
+        unit = sum(form_of(r) for r in records)
+        unit = unit / unit.max()
+        b_unit = binding.static_response(unit)
+        h_unit = core.static_response(unit)
+        peak = np.unravel_index(int(np.argmax(unit)), SHAPE)
+        per_count = k_m * float(b_unit[peak]) - k_r * float(h_unit[peak])
+        if per_count <= 0:
+            raise ValueError(f"the net well per unit count at the peak is {per_count:.3f}: no hollow")
+        s_peak = floor / per_count
+        for record in records:
+            record.e_s = max(1, int(form_of(record).max() / s_peak))
+        start_source = np.zeros(SHAPE, dtype=R.INT)
+        for record in records:
+            start_source += (form_of(record).astype(np.int64) // record.e_s).astype(R.INT)
+        # two passes: the plain static response gives the content, and the fields' static
+        # response at the Node's pace of that content is the start (the paced step's own
+        # stationary state, else the well falls fourfold in 25 intervals: the first run)
+        binding.start_static(start_source)
+        core.start_static(start_source)
+        if at_pace:
+            gravity_start = np.zeros(SHAPE, dtype=R.INT)
+            gravity_start[start_source > 0] = start_source[start_source > 0]
+            start_content = gravity_start + k_m * binding.now - k_r * core.now
+            binding.start_static(start_source, start_content)
+            core.start_static(start_source, start_content)
+        static_peak = k_m * int(binding.now[peak]) - k_r * int(core.now[peak])
     e_core = max(1, int(records[0].e_s * core_scale))
     guard_interval = None
     guard_content = 0
@@ -268,12 +342,20 @@ def run(options: dict) -> dict:
                 level_core += (form.astype(np.int64) // e_core).astype(R.INT)
         pace_content = content if at_pace and t > 0 else None
         gravity.step(pace_content)
-        binding.step(pace_content)
         gravity.hold(support, level)
-        binding.hold(support, level)
-        if core is not None:
+        if sourced and core is not None:
+            # the sourced fields: the step at the Node's pace, then the count added (the
+            # static start makes a constant source stationary: a = M a - a + s)
+            binding.step(pace_content)
+            binding.inject(level)
             core.step(pace_content)
-            core.hold(support, level_core)
+            core.inject(level)
+        else:
+            binding.step(pace_content)
+            binding.hold(support, level)
+            if core is not None:
+                core.step(pace_content)
+                core.hold(support, level_core)
         content = gravity.now + k_m * binding.now
         if core is not None:
             content = content - k_r * core.now
@@ -297,6 +379,18 @@ def run(options: dict) -> dict:
             row: dict = {"t": t, "binding_form": binding.form()}
             if core is not None:
                 row["core_form"] = core.form()
+            if sourced and core is not None:
+                # the conserved total of 9.108 (10) (c): the record's form, the fields' forms
+                # over E_s, the coupling K_m SUM b s - K_r SUM h s, counted once
+                s_total = level.astype(np.float64)
+                coupling = k_m * float((binding.now * s_total).sum()) - k_r * float(
+                    (core.now * s_total).sum()
+                )
+                e_s = records[0].e_s
+                row["coupling"] = coupling
+                row["total"] = sum(forms) + (row["binding_form"] + row["core_form"]) / e_s + coupling
+                row["content_max"] = int(content.max())
+                row["content_min"] = int(content.min())
             for index, record in enumerate(records):
                 reading = readings_of(record, form_of(record), content, counts[index], windows[index])
                 reading["leak"] = (
@@ -343,6 +437,9 @@ def run(options: dict) -> dict:
         "guard_content": guard_content if guard_interval is not None else None,
         "e_s": [r.e_s for r in records],
         "e_core": e_core if core is not None else None,
+        "static_floor_at_peak": static_peak,
+        "floor_asked": floor if sourced else None,
+        "wrap": WRAP,
         "cos_omega_vacuum": cos_vacuum,
         "omega_vacuum": math.acos(cos_vacuum),
         "form_means_300": [r.form_means for r in records],
@@ -379,6 +476,15 @@ def main() -> None:
     print(
         f"  the record's form's means over windows of {WINDOW}: {[round(v, 4) for v in result['form_means_300'][0]]}"
     )
+    if result["source"] == "sourced":
+        print(
+            f"  the static floor at the peak {result['static_floor_at_peak']} (asked {result['floor_asked']}); E_s {result['e_s']}"
+        )
+        for row in result["readings"]:
+            if row["t"] % 250 == 0:
+                print(
+                    f"  t {row['t']:5d}: total {row['total']:.4e}, coupling {row['coupling']:.4e}, content max {row['content_max']} min {row['content_min']}"
+                )
     (Path(__file__).resolve().parent / f"{name}.json").write_text(
         json.dumps(result, indent=1) + "\n", encoding="utf-8"
     )

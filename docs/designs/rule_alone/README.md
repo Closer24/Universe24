@@ -260,7 +260,52 @@ the runs take integer weights and the core's source scaled by 3 / 2 (K_m = 2, K_
    added to the ceiling. The two-family stop does not work with held fields. A gap in these
    is the mathematician's (9.108 (6)).
 
-## 10. The commands
+## 10. The sourced two families (ALGEBRA.md 9.108 item 10 (a) to (d); the Boss's record 2171)
+
+The binding [1000, 1019] read +K_m = 2 and the core [1000, 1181] read -K_r = 4, SOURCED: each
+interval the record's count s_i is added into each family's now level at its Nodes and each
+steps by the rule at the Node's pace (`pace=1`) or plain (`pace=0`); gravity the hold as built;
+the fields start at the static response to the start's source ((2 - M) a = s by relaxation,
+HOST; at the pace, two passes); E_s set by that response so that K_m b - K_r h at the start's
+peak is the floor asked (`floor=`); the board 64^3 periodic (`wrap=1`), the start a Gaussian
+of sigma 4.5 (the runs of 2026-09-26, 10:50Z). `binding_family.py ... source=sourced`.
+
+| Run | Reading (GAMEBOARD of the runner) | Algebra beside | Verdict |
+| --- | --- | --- | --- |
+| the static start | the plain response gives the floor asked within the counts' rounding (1480 for 1500, 2484 for 2500, 3482 for 3500); at the pace the response is larger and grows with the depth: 1924 for 1500, 6944 for 3500, 23804 for 6000 (the guard at interval 0) | K_m b - K_r h = 1500 at the peak, with gravity's 2000 the pace lowered 3500 | the peak's count is 157 at the floor 1500 (the response per count is 9.5), so gravity's hold there is 157, not 2000; the paced response feeds on its own depth |
+| (1) at rest, side 9, the floor 1500, fields at the pace | rms 3.2, 4.1, 5.9, 8.1, 10.6, 13.0, 15.1, 16.8 at 0 to 175; the count at the peak 157, 98, 26, 9, 3, 1; the content at the peak 2117, 850, 542, 283, 159, 81; the bound share 1.00 to 0.06; then the guard at 198 | bound at a finite width for 3000 intervals | FAILS: disperses within 100 intervals; the well flickers and fades with the counts |
+| (1) at rest, plain fields, the floors 1500, 2500, 3500 | the same dispersal (rms 3.2 to 15 by 150 to 200); the content at the peak flickers (3853, 1083, 1949, 993, 527 at 0, 25, 50, 75, 100 for the floor 3500); then the guard at 155 to 213 with contents of 3e7 to 3e12 | | FAILS, and the guard is the rule's instability, below |
+| (2), (3), (4) moving and the pair, the floor 1500, at the pace | the guard at 176 to 191, the same dispersal first | | not reached |
+
+1. **Why it fails, two findings for the algebra.** (a) A sourced massive field rings: the
+   injected count balances the static level only while the source is constant; when the record
+   spreads or moves, the fields oscillate at their own rest rotations (the binding's period 33
+   intervals, the core's 11) with no damping and no propagation of the K = 0 part, so the net
+   well, a small difference of two ringing fields, flickers (3853 to 1083 to 1949 in 50
+   intervals) and the record is not held. (b) A hill can drive the pace above Gamma. Where the
+   core's level exceeds the binding's and gravity's, the content is negative (-44 at 50, -227 at
+   145, -3149 at 155 in the plain run) and the pace exceeds Gamma; the rule's step is stable
+   only while the pace stays below about 1.25 Gamma (the K = pi mode's factor (S - 6 R) / w
+   against -2), so at -3149 the record grows exponentially (its level 9139 to 17,889,190 in 20
+   intervals), its counts and the fields with it, and the guard fires on the overflow. The
+   engine's guard is one-sided (p > 0); a repulsive read needs the other side too (p <= Gamma),
+   and with it the hill can only lessen a hollow, never exceed it.
+
+## 11. The pair in the many-record form (the Boss's record 2167)
+
+`item9_many.py`: two bodies of M = 100 records each (one per quantum), 20 Links apart on [96, 48,
+48] periodic, each record on its own box of side 25 with the click that keeps the momentum (the
+label carried, the re-creation at rms 3.5 by Born's rule on the form); each record reads the
+other body's content, item 2's cube of side 5 at level 2000 about the other body's centroid (a
+one-Node source, the first run, is 125 times weaker and its fall is unreadable in 1500
+intervals). `null`: the same with no content. The runs of 2026-09-26, 10:33Z (27 minutes each).
+
+| Reading (GAMEBOARD of the runner) | Algebra beside | Verdict |
+| --- | --- | --- |
+| the mean momentum label of each body's records along x: +0.041 and -0.028 at 250, +0.055 and -0.018 at 500 (the bodies fall toward each other), then mixed as the clouds pass; in `null` exactly 0 throughout | item 2's meeting at 249; 9.109 (3): the fall accrues in the phase between clicks and is re-read at each click | the FALL is read in the momentum: WORKS |
+| the clouds: each body's records walk apart from one another (the walk of one record 20 to 30 Links by 1500, 9.98 (10) (i)), so a body's records spread over the board and the centroid read about one record wraps (the separations 20, 11.5, 29.5, -23, -3, 23, 1.3 and, in `null`, 20, 17, 54, -4, 20, 19, 56 are the wrap's, not a motion); 28,000 clicks per body, the leak 5e-4 | the centroid's walk over sqrt M; the cloud's size the walk itself | the MEETING is not readable: the clicks hold each record's phase and position, not the records together; without a binding the body is a cloud of the walk's size by 1500 |
+
+## 12. The commands
 
     PYTHONPATH=src python docs/designs/rule_alone/item1_fall.py 1 2100
     PYTHONPATH=src python docs/designs/rule_alone/item1_fall.py 0 2100
@@ -282,5 +327,7 @@ the runs take integer weights and the core's source scaled by 3 / 2 (K_m = 2, K_
     PYTHONPATH=src python docs/designs/rule_alone/binding_family.py pair side=9 km=2 source=table scap=4000 pace=1
     PYTHONPATH=src python docs/designs/rule_alone/binding_family.py rest side=9 km=2 kr=1 source=core corescale=3/2
     PYTHONPATH=src python docs/designs/rule_alone/item9_pair.py moving 1500 keep density width 1
+    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py rest side=9 km=2 kr=4 source=sourced pace=1 wrap=1 t=3000 floor=1500
+    PYTHONPATH=src python docs/designs/rule_alone/item9_many.py pair|null 100 1500
 
 The readings are written beside the scripts as JSON (the runs of 2026-09-26).

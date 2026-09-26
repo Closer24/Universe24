@@ -1,0 +1,94 @@
+{
+ "options": {
+  "mode": "rest",
+  "side": "9",
+  "km": "2",
+  "kr": "4",
+  "source": "sourced",
+  "pace": "1",
+  "wrap": "1",
+  "t": "1500",
+  "floor": "3500"
+ },
+ "mode": "rest",
+ "side": 9,
+ "k_m": 2,
+ "k_r": 4,
+ "speed": 0.0,
+ "intervals": 1500,
+ "source": "sourced",
+ "s_cap": null,
+ "core_scale": "1",
+ "fields_at_pace": true,
+ "shape": [
+  64,
+  64,
+  64
+ ],
+ "kind": [
+  800,
+  850
+ ],
+ "binding_pair": [
+  1000,
+  1019
+ ],
+ "core_pair": [
+  1000,
+  1181
+ ],
+ "count": 2000,
+ "amplitude": 131072,
+ "guard_interval": 16,
+ "guard_content": 10914,
+ "e_s": [
+  5337533
+ ],
+ "e_core": 5337533,
+ "static_floor_at_peak": 6944,
+ "floor_asked": 3500,
+ "wrap": [
+  true,
+  true,
+  true
+ ],
+ "cos_omega_vacuum": 0.9411764705882353,
+ "omega_vacuum": 0.34470117979864606,
+ "form_means_300": [
+  []
+ ],
+ "readings": [
+  {
+   "t": 0,
+   "binding_form": 793981190.0402374,
+   "core_form": 123605419.01862812,
+   "coupling": 652576326.0,
+   "total": 772739035638.0566,
+   "content_max": 7397,
+   "content_min": -2,
+   "record_0": {
+    "centroid": [
+     31.999999999999993,
+     32.0,
+     31.999999999999993
+    ],
+    "width_rms": 3.1819822685039663,
+    "peak": 44291,
+    "peak_node": [
+     32,
+     32,
+     32
+    ],
+    "count_sum": 182411,
+    "count_peak": 367,
+    "content_peak": 7397,
+    "bound_share_12": 0.9972333250871386,
+    "tail_links": 2.382379213279578,
+    "cos_omega_eff": NaN,
+    "omega_eff": NaN,
+    "leak": 1.0
+   }
+  }
+ ],
+ "host_seconds": 1.282794713973999
+}
