@@ -70,6 +70,7 @@ import numpy as np
 
 from event_universe.core.game_board import Address3
 from event_universe.core.integer import by_drive
+from event_universe.core.register import Declaration, Register
 from event_universe.events.rule import axis_rule_coefficients, rule_coefficients, rungs
 from event_universe.events.world import (
     AXES,
@@ -818,7 +819,228 @@ class DetectorLawSimulation:
         for parts in self.held_parts.values():
             for record in parts:
                 record.silent = True
-        self._hold(advance=True)
+        # THE REGISTER (issue #1154, cut 1; the model owner's record 2212): the
+        # seventeen primitives declared by name with their place, reads, writes
+        # and order, the families' terms checked against it at load
+        self.register = self._engine_register()
+        self.register.check_writers()
+        self.register.check_terms(self.family_terms())
+        self.register.at("the hold", "(iv)")(advance=True)
+
+    # THE REGISTER OF PRIMITIVES (issue #1154, cut 1; records 2208 and 2212; the
+    # short procedure, point 5): the identity of a primitive is its unique English
+    # name, the key of the ledger's table (ENGINE_LEDGER.md section 3); one
+    # register, name to function, read by the loop alone; each declares its place
+    # in the interval (9.91 (8)), what it reads, what it writes and its order
+    # among the writers of one value at one place. CUT 1 binds the names to the
+    # methods that implement them today and moves no body of code: the next cuts
+    # move each into its own folder behind apply(term, start, own) -> writes.
+
+    def _wait(self) -> int:
+        """WAIT is one interval, always (ALGEBRA.md 9.112 item 1): a value sent at the
+        start of t is combined in t; nothing is read in zero time."""
+        return 1
+
+    def _method(self, name: str) -> Callable[..., object]:
+        """The loop's method `name` resolved at each call (cut 1 binds the names to
+        today's methods; a test's spy set on the instance, `simulation._ladder_click =
+        spy`, is honoured as before the register). The next cuts bind module-level
+        functions of the primitives' own folders and this resolver goes."""
+
+        def call(*args: object, **kwargs: object) -> object:
+            return getattr(self, name)(*args, **kwargs)
+
+        return call
+
+    def _engine_register(self) -> Register:
+        """The seventeen primitives of the ledger's table, declared (ALGEBRA.md 9.111
+        item 7's rows, 9.112 item 1's words, 9.116 item 3). A row of the ledger not
+        built has no function: a term naming it is refused at load until it lands."""
+        register = Register()
+        for declaration in (
+            Declaration(
+                "the pair",
+                "(i)",
+                ("the family's pair", "a body's pair at its Nodes"),
+                ("the rule's coefficients",),
+                None,
+                self._method("pair_arrays"),
+                "9.57 (1); 9.111 item 7 row 1",
+            ),
+            Declaration(
+                "the degree",
+                "(i)",
+                ("parts",),
+                ("the components' axes",),
+                None,
+                self._method("_part_axes"),
+                "9.86 (2); 9.91 (2)",
+            ),
+            Declaration(
+                "the phase",
+                "(i)",
+                ("levels",),
+                ("the second level",),
+                None,
+                self._method("_level_step"),
+                "9.91 (2)",
+            ),
+            Declaration(
+                "the signed read",
+                "(i)",
+                ("the read families' levels", "the signed weights", "q", "the Port angles"),
+                ("the paces",),
+                None,
+                self._method("_effective_content"),
+                "9.78 (4); 9.108 items 11 and 12; 9.116 item 4a",
+            ),
+            Declaration(
+                "the hold",
+                "(iv)",
+                ("a body's count M_k", "the wall W", "the momentum n", "the held factors", "the dipole"),
+                ("the held family's level at the body's Nodes",),
+                None,
+                self._method("_hold"),
+                "9.45 (2); 9.91 (3); 9.111 item 3",
+            ),
+            Declaration(
+                "the source",
+                "(i)",
+                ("a record's form", "E_s"),
+                ("the sourced family's level at the record's Nodes",),
+                None,
+                None,
+                "9.108 item 10; 9.116 item 4b",
+            ),
+            Declaration(
+                "the clicks",
+                "(ii)",
+                (
+                    "the inward flux at the detectors' Ports",
+                    "the record's residue u, wheel W and norm T",
+                    "the ladder",
+                ),
+                ("the record's tally", "the click's deferred writes"),
+                1,
+                self._method("_ladder_click"),
+                "9.25 (2), (3); 9.111 items 1, 2 and 6",
+            ),
+            Declaration(
+                "the lifetime",
+                "(ii)",
+                ("the record's age", "L", "the face"),
+                ("the click's deferred writes",),
+                2,
+                None,
+                "9.88 (3)",
+            ),
+            Declaration(
+                "the internal representation",
+                "(i)",
+                ("n pairs", "the generators' tables", "the Ports' accumulators"),
+                ("the arrivals",),
+                2,
+                None,
+                "9.88 (7) (i); 9.101",
+            ),
+            Declaration(
+                "the clicks list",
+                "(ii)",
+                ("the record's remainders at the Node", "the wheels"),
+                ("the click's deferred writes",),
+                3,
+                None,
+                "9.88 (4)",
+            ),
+            Declaration(
+                "the hand",
+                "(ii)",
+                ("the body's spin S", "its momentum n"),
+                ("the click's admission",),
+                None,
+                None,
+                "9.88 (5)",
+            ),
+            Declaration(
+                "the self-source",
+                "(i)",
+                ("the family's own levels", "P_2", "the structure table"),
+                ("the step's load",),
+                None,
+                self._method("_self_source"),
+                "9.78 (3); 9.88 (2); 9.91 (5)",
+            ),
+            Declaration(
+                "the send",
+                "(i)",
+                ("the level now", "the weight"),
+                ("the Link's value",),
+                None,
+                self._method("_neighbours"),
+                "9.112 item 1",
+            ),
+            Declaration(
+                "the receive",
+                "(i)",
+                ("the Link's value", "the Port's accumulator", "the twist table"),
+                ("the arrivals",),
+                1,
+                self._method("_arrivals"),
+                "9.112 item 1; 9.96 (2) (e)",
+            ),
+            Declaration("the wait", "(i)", (), (), None, self._method("_wait"), "9.112 item 1"),
+            Declaration(
+                "the operation",
+                "(i)",
+                (
+                    "the six arrivals",
+                    "now",
+                    "before",
+                    "the remainder",
+                    "the family's integers w, B, W",
+                    "the loads",
+                ),
+                ("the level next", "the remainder"),
+                None,
+                self._method("one_rule"),
+                "9.57 (1); 9.112 items 1 and 2",
+            ),
+            Declaration("the trace", "any", ("every word's integers",), (), None, None, "9.112 item 5"),
+        ):
+            register.add(declaration)
+        return register
+
+    def family_terms(self) -> list[tuple[str, str]]:
+        """The primitives each family of the run declares, as (label, name) pairs
+        read from its attributes (the loader's words of today; the term form
+        [name, target, of, degree, weight, table] of 9.110 item 7 is the loader's
+        next cut): every family the shape and the step's four words; `reads` the
+        signed read; `held` the hold; `self_source.unit` the self-source; `clicks`
+        the clicks; `lifetime` the lifetime."""
+        terms: list[tuple[str, str]] = []
+        for index, family in enumerate(self.families):
+            label = f"universe.families[{index}]"
+            for name in (
+                "the pair",
+                "the degree",
+                "the phase",
+                "the send",
+                "the receive",
+                "the wait",
+                "the operation",
+            ):
+                terms.append((label, name))
+            if family.reads:
+                terms.append((f"{label}.reads", "the signed read"))
+            if family.held is not None:
+                terms.append((f"{label}.held", "the hold"))
+            if family.self_unit > 0:
+                terms.append((f"{label}.self_source", "the self-source"))
+            if family.clicks is not None:
+                terms.append((f"{label}.clicks", "the clicks"))
+            if family.lifetime is not None:
+                terms.append((f"{label}.lifetime", "the lifetime"))
+        return terms
 
     def wall_of(self, block: Block) -> int:
         """THE ONE WALL OF A BODY (ALGEBRA.md 9.96 (1), 9.89 (2)): W = 3 Q M, Q the
@@ -1143,7 +1365,7 @@ class DetectorLawSimulation:
         where it does not."""
         for record in self.held_component_records():
             self._advance(record)
-        self._hold(advance=True)
+        self.register.at("the hold", "(iv)")(advance=True)
         # the pace of every family's reads stays positive (ALGEBRA.md 9.45 (3),
         # 9.48 (3); items 34, 35 and 51)
         for family, definition in enumerate(self.families):
@@ -3507,7 +3729,7 @@ class DetectorLawSimulation:
             live.absorbed += value
         # this interval's increment per detector
         increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
-        self._ladder_click(live, increments)
+        self.register.at("the clicks", "(ii)")(live, increments)
 
     def _window_centre(self, block: Block) -> tuple[int, int, int]:
         """The body's Node of a block with a window (its centre Node)."""
@@ -4010,7 +4232,7 @@ class DetectorLawSimulation:
             self._move_block(block)
         # the held levels as the interval begins: the hold follows the bodies'
         # steps (a stepping body's Nodes), ALGEBRA.md 9.45 (2)
-        self._hold()
+        self.register.at("the hold", "(iv)")()
         # The massive records first (each block's own record by the rule
         # alone), then the light records: the order of the interval
         # (MASSIVE_RECORD.md section 7's massive step first; the coupling's

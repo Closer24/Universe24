@@ -4,7 +4,18 @@ The one engine of Universe24 has no law's name and no version (ALGEBRA.md
 9.90 (1); the model owner's records 2103 and 2107; BUILD.md section 26 item
 70): the world keys `law`, `model_id` and `detector_law` are refused by name,
 the file's stamp is `stamp` {hash}, the start file holds `mode` alone, and a
-refusal names the file and the key. The paragraphs below on the Beam Law
+refusal names the file and the key. SINCE ISSUE #1154'S CUT 1 (the model
+owner's records 2208 and 2212; BUILD.md section 26 item 76) the engine holds
+one REGISTER of primitives (src/event_universe/core/register.py): a
+primitive's identity is its unique English name, the key of the ledger's table
+(docs/designs/generic_engine/ENGINE_LEDGER.md section 3); each declares its
+place in the interval (the five of ALGEBRA.md 9.91 (8)), what it reads, what it
+writes and its order among the writers of one value at one place; the loader
+refuses by name a name registered twice, a term naming a primitive the
+register lacks or a row not built, two writers with no declared order, and a
+call at an undeclared place; the seventeen of the table are declared, eleven
+bound to today's methods, the hold and the clicks called through the register;
+no behaviour change, no version. The paragraphs below on the Beam Law
 (`beam-v1`) are the record of the ray law, cancelled (docs/CANCELLED_WORLDS.md;
 [Highlights 5.4](HIGHLIGHTS.md#54-the-detector), "DECIDED: the law of the
 ray", the model owner, 2026-09-19). Its design and implementation contract was
