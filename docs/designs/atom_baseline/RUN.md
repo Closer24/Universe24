@@ -120,7 +120,7 @@ face is a detector"](../../ENGINE.md#per-axis-gameboard-topology-2026-09-19-impl
 A passive detector at every Node (record 721) is not a declaration the
 world file can carry today: the validator refuses "a detector on a Node
 without a measured event" and "a Node in two detectors" ([ENGINE.md, the
-world file's refusals](../../ENGINE.md#the-beam-law-beam-v1)), and record 721
+world file's refusals](../../ENGINE.md#the-beam-law-beam-v1-the-ray-laws-record-cancelled-docscancelled_worldsmd-the-engine-has-no-laws-name-item-70)), and record 721
 is the owner's idea put to him with no engine line; so the order's
 "whichever the world file already declares" is the register's set, and
 nothing is added. The faces are the per-Node reading this world has: every

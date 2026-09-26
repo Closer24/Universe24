@@ -1,0 +1,121 @@
+{
+ "law": "beam",
+ "model_id": "beam-detector-law-malus-33-75-v1",
+ "shape": [
+  8,
+  1,
+  1
+ ],
+ "boundary": {
+  "z": "periodic"
+ },
+ "ticks": 3800,
+ "K": 1125899906842624,
+ "N": 256,
+ "release": [
+  0,
+  1
+ ],
+ "suspension": 0,
+ "clock_stamp": true,
+ "detector_law": true,
+ "measured": [
+  {
+   "position": [
+    0,
+    0,
+    0
+   ],
+   "family": "matter",
+   "amount": 256,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "side": 1,
+   "pair": [
+    801,
+    700
+   ],
+   "seed": [
+    100,
+    50,
+    25,
+    15,
+    12,
+    15,
+    25,
+    50
+   ],
+   "margin": "control",
+   "emitter": {
+    "family": "light",
+    "period": 20,
+    "norm": 7266672,
+    "born": [
+     157930,
+     -157930
+    ]
+   }
+  },
+  {
+   "position": [
+    6,
+    0,
+    0
+   ],
+   "family": "counter",
+   "amount": 1,
+   "fixed": true,
+   "table": {
+    "light": {
+     "phase_window": 48
+    }
+   }
+  }
+ ],
+ "detectors": [
+  {
+   "name": "second",
+   "positions": [
+    [
+     6,
+     0,
+     0
+    ]
+   ],
+   "reading": "sum"
+  }
+ ],
+ "families": [
+  {
+   "name": "light",
+   "quantum": 1,
+   "phase_per_link": [
+    308,
+    25
+   ]
+  },
+  {
+   "name": "counter",
+   "quantum": 1,
+   "phase_per_link": [
+    1,
+    1
+   ]
+  },
+  {
+   "name": "matter",
+   "quantum": 1,
+   "pair": [
+    7,
+    8
+   ]
+  }
+ ],
+ "massive_record": true,
+ "amplitude_bound": 4294967296
+}

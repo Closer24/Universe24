@@ -4,8 +4,10 @@ THE RULE (the owner, 13:18Z, in substance): whoever writes the world also
 writes, for each one, what a test run must show. Each section below says
 (1) the world file(s) by path and the engine commit they load on, or the
 feature they wait on (the receiver by name, the joint gather, the lamp's
-ladder; the four building blocks and the features are
-defined in [SIMULATOR_DEFINITIONS.md](../../../SIMULATOR_DEFINITIONS.md)); (2)
+ladder; the four building blocks and the features were
+defined in [SIMULATOR_DEFINITIONS.md](../../../SIMULATOR_DEFINITIONS.md) and are
+history since the adoption of the unification, record 1875: the one operator,
+the click and the birth); (2)
 what a CLEAN run must show, in words and counts, with no pin and no target
 number: the load line VALID, the emitter emitting (which record, from which
 interval), the clicks arriving at the declared detector (which set, at
@@ -40,6 +42,15 @@ and prints every field named below; the peak memory below 2 GB. Not clean:
 any of these missing. The numbers below (intervals, counts) are the
 declarations' geometry (the transit at c = 0.577 Links per interval, the
 train's length, the hold), not pins.
+
+SINCE BUILD.md SECTION 26 (2026-09-24): the lamp is refused under the
+detector law and every world below is regenerated onto an emitter body
+(the kind [7, 8], the well [8, 7], seeded on its mode; the Malus bar's
+ticks 3200 for its wheel of 256); a section's "births from tick n at one
+per m intervals" reads on the emitter as the u-th residue's click about
+(2 u + 1) P / (2 W) intervals after its excitation, P the mode's period (section 26 item
+8); its "clean" lines on the lamp's train stand as written until the
+preliminary on the emitter, which this file records before the run.
 
 ## 1. The pace fans, row 5a (three worlds, on main)
 
@@ -251,8 +262,14 @@ train's length, the hold), not pins.
 3. Not clean: a line at the -x face; fewer than 10 lines; the block off
    the board before the ticks' end (a refusal).
 
-## 12. Malus, row 9 and the three settings (four worlds, wait on the joint gather and the regeneration)
+## 12. Malus, row 9 and the three settings (four worlds, HELD with the Bell four)
 
+0. HELD (BUILD.md section 26 item 14): the four files are in
+   `docs/designs/detector_law/held_worlds/` since the flux reading; under
+   the cumulative ladder as written the polariser's two cells at one Node
+   give no distribution (the finding in tests/test_detector_law.py), so
+   the counts below wait on the polariser body with an axis (the
+   mathematician's step 3) and are re-derived on it.
 1. `examples/events/detector_law/malus_45.json`, `malus_11.25.json`,
    `malus_28.125.json`, `malus_33.75.json`: on main at 88b3752 they carry
    the bar of 7 and the read body at x = 4, which the joint gather's loader refuses (the

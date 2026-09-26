@@ -37,7 +37,7 @@
   }
  },
  "worlds": {
-  "rest_20": {
+  "boxed_clock_side_20_at_rest": {
    "kind": "CONTROL",
    "reads": "the block's own clock at rest: its count over the run and the spectral peak of its record's sum (GAMEBOARD) against omega_b",
    "pin": {
@@ -54,7 +54,7 @@
     "source": "massive_board_margin.out on a 96^3 box; the world's own 48^3 number is the pin (the periodic image's shift)"
    }
   },
-  "rest_28": {
+  "boxed_clock_side_28_at_rest": {
    "kind": "CONTROL",
    "reads": "the block's own clock at rest: its count over the run and the spectral peak of its record's sum (GAMEBOARD) against omega_b",
    "pin": {
@@ -71,7 +71,7 @@
     "source": "massive_board_margin.out on a 96^3 box; the world's own 48^3 number is the pin (the periodic image's shift)"
    }
   },
-  "moving_20": {
+  "boxed_clock_side_20_moving": {
    "kind": "PREDICTION",
    "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over the hold [1500, 9500] against the rest world's; the spectral peak of the record's sum over the hold a GAMEBOARD diagnostic beside; light's energy drift and the mode k = 2 pi / 3 on x (the pump's signature; no light and no coupling declared, so both read 0)",
    "pin": {
@@ -122,7 +122,7 @@
     "source": "MASSIVE_RECORD.md section 8 at the design's 14e3657e (main e821129a): the one formula with gamma at the exact cone c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2, the second order (c_m) and light's gamma the CONTROLS beside; massive_moving_pins.out the light-gamma numbers"
    }
   },
-  "moving_28": {
+  "boxed_clock_side_28_moving": {
    "kind": "PREDICTION",
    "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over the hold [1500, 9500] against the rest world's; the spectral peak of the record's sum over the hold a GAMEBOARD diagnostic beside; light's energy drift and the mode k = 2 pi / 3 on x (the pump's signature; no light and no coupling declared, so both read 0)",
    "pin": {
@@ -173,7 +173,7 @@
     "source": "MASSIVE_RECORD.md section 8 at the design's 14e3657e (main e821129a): the one formula with gamma at the exact cone c_eff^2 = cos omega_0 (omega_0 / sin omega_0) c^2, the second order (c_m) and light's gamma the CONTROLS beside; massive_moving_pins.out the light-gamma numbers"
    }
   },
-  "layer_pin_rest_14": {
+  "muon_moving_clock_at_rest_14": {
    "kind": "PIN (layer)",
    "reads": "THE CLICKS (DETECTOR, the reader of record): the count between clicks on the block's own record over the hold [10200, 18200] (the same window as the k = 3 world's, DECLARATIONS.md section 8) against the mode's period; the clicks' own spectrum the finer COMPUTATION; the summed record's and the centre cell's spectral peaks GAMEBOARD diagnostics beside",
    "pin": {
@@ -189,7 +189,7 @@
     "source": "massive_layer_pins.out (a 256^2 layer)"
    }
   },
-  "layer_pin_k3_14": {
+  "muon_moving_clock_speed_third_14": {
    "kind": "PIN (layer)",
    "reads": "THE CLICKS (DETECTOR): the count between clicks over the hold [10200, 18200] after the ramp of 10000 (DECLARATIONS.md section 8) against the rest world's, f / f_0; the peaks GAMEBOARD diagnostics beside; a row whose clicks still beat after the ramp is a diagnostic until they read the mode (then a longer ramp)",
    "pin": {
@@ -267,9 +267,9 @@
     "source": "massive_block_clock_motion.out"
    }
   },
-  "index_50": {
+  "medium_index_at_rest_50": {
    "kind": "CONTROL",
-   "reads": "light's phase delay at the probe against index_reference over the block's 12 cells (GAMEBOARD): n = 1 + delay / (k s), k = omega / c",
+   "reads": "light's phase delay at the probe against medium_index_reference over the block's 12 cells (GAMEBOARD): n = 1 + delay / (k s), k = omega / c",
    "pin": {
     "omega": 0.150207398749762,
     "omega_0": 0.5053605102841573,
@@ -282,9 +282,9 @@
     "source": "massive_dielectric_index.out at its omega_0 = 0.5000; the chain's own 1.034, 1.083, 1.159 the lattice's band, 0.8 to 3.4 percent below the closed form"
    }
   },
-  "index_20": {
+  "medium_index_at_rest_20": {
    "kind": "CONTROL",
-   "reads": "light's phase delay at the probe against index_reference over the block's 12 cells (GAMEBOARD): n = 1 + delay / (k s), k = omega / c",
+   "reads": "light's phase delay at the probe against medium_index_reference over the block's 12 cells (GAMEBOARD): n = 1 + delay / (k s), k = omega / c",
    "pin": {
     "omega": 0.150207398749762,
     "omega_0": 0.5053605102841573,
@@ -297,9 +297,9 @@
     "source": "massive_dielectric_index.out at its omega_0 = 0.5000; the chain's own 1.034, 1.083, 1.159 the lattice's band, 0.8 to 3.4 percent below the closed form"
    }
   },
-  "index_10": {
+  "medium_index_at_rest_10": {
    "kind": "CONTROL",
-   "reads": "light's phase delay at the probe against index_reference over the block's 12 cells (GAMEBOARD): n = 1 + delay / (k s), k = omega / c",
+   "reads": "light's phase delay at the probe against medium_index_reference over the block's 12 cells (GAMEBOARD): n = 1 + delay / (k s), k = omega / c",
    "pin": {
     "omega": 0.150207398749762,
     "omega_0": 0.5053605102841573,
@@ -312,9 +312,9 @@
     "source": "massive_dielectric_index.out at its omega_0 = 0.5000; the chain's own 1.034, 1.083, 1.159 the lattice's band, 0.8 to 3.4 percent below the closed form"
    }
   },
-  "index_moving_k3_toward": {
+  "receding_index_short_speed_third_toward": {
    "kind": "PREDICTION",
-   "reads": "light's phase delay at the probe over the window [3400, 4300] against the reference at omega (GAMEBOARD), as the ratio to the covariant expectation (n(omega') - 1) omega' gamma_m s / c with n(omega') from the engine's own rest world at omega' (index_moving_rest_k3_toward against its reference); light's energy drift and the mode k = 2 pi / 3 on x over the window (the pump's signature)",
+   "reads": "light's phase delay at the probe over the window [3400, 4300] against the reference at omega (GAMEBOARD), as the ratio to the covariant expectation (n(omega') - 1) omega' gamma_m s / c with n(omega') from the engine's own rest world at omega' (receding_index_short_speed_third_toward_rest against its reference); light's energy drift and the mode k = 2 pi / 3 on x over the window (the pump's signature)",
    "pin": {
     "k": 3,
     "beta_c": 0.5773502691896256,
@@ -333,9 +333,9 @@
     "source": "massive_moving_index.out at the design's head (the same-Node form on the chain of 2200, the rows re-forming); the engine carries the drive's pair, so the pin is the drive-pair ratio; a PREDICTION of the model as built, never Fizeau's"
    }
   },
-  "index_moving_k3_away": {
+  "receding_index_short_speed_third_away": {
    "kind": "PREDICTION",
-   "reads": "light's phase delay at the probe over the window [3400, 4300] against the reference at omega (GAMEBOARD), as the ratio to the covariant expectation (n(omega') - 1) omega' gamma_m s / c with n(omega') from the engine's own rest world at omega' (index_moving_rest_k3_away against its reference); light's energy drift and the mode k = 2 pi / 3 on x over the window (the pump's signature)",
+   "reads": "light's phase delay at the probe over the window [3400, 4300] against the reference at omega (GAMEBOARD), as the ratio to the covariant expectation (n(omega') - 1) omega' gamma_m s / c with n(omega') from the engine's own rest world at omega' (receding_index_short_speed_third_away_rest against its reference); light's energy drift and the mode k = 2 pi / 3 on x over the window (the pump's signature)",
    "pin": {
     "k": 3,
     "beta_c": 0.5773502691896256,
@@ -354,9 +354,9 @@
     "source": "massive_moving_index.out at the design's head (the same-Node form on the chain of 2200, the rows re-forming); the engine carries the drive's pair, so the pin is the drive-pair ratio; a PREDICTION of the model as built, never Fizeau's"
    }
   },
-  "index_moving_long_k3_away": {
+  "receding_index_speed_third_away": {
    "kind": "PREDICTION",
-   "reads": "the receding case on the longer chain REGENERATED on DECLARATIONS.md section 11's geometry (n = 4000, the source at 800, the probe at 2400, the block from x = 1500 stepping away from interval 3000, the window [3800, 5400]): the window's lab phase delay against the reference at omega (GAMEBOARD, the row's own reader) and its drift rate (the two halves), each against the script's number on the same geometry, the bands +- 0.04 rad and +- 10 percent of the rate; the ratio to the covariant expectation with n(omega') from index_moving_long_rest_k3_away against its reference beside; the pump's signature over the window",
+   "reads": "the receding case on the longer chain REGENERATED on DECLARATIONS.md section 11's geometry (n = 4000, the source at 800, the probe at 2400, the block from x = 1500 stepping away from interval 3000, the window [3800, 5400]): the window's lab phase delay against the reference at omega (GAMEBOARD, the row's own reader) and its drift rate (the two halves), each against the script's number on the same geometry, the bands +- 0.04 rad and +- 10 percent of the rate; the ratio to the covariant expectation with n(omega') from receding_index_speed_third_away_rest against its reference beside; the pump's signature over the window",
    "pin": {
     "k": 3,
     "beta_c": 0.5773502691896256,
@@ -384,9 +384,9 @@
     "source": "DECLARATIONS.md section 11 (massive_moving_index.py's next record prints the numbers; the scratch of 00:20Z)"
    }
   },
-  "index_moving_k4_toward": {
+  "receding_index_short_speed_quarter_toward": {
    "kind": "PREDICTION",
-   "reads": "light's phase delay at the probe over the window [3400, 4300] against the reference at omega (GAMEBOARD), as the ratio to the covariant expectation (n(omega') - 1) omega' gamma_m s / c with n(omega') from the engine's own rest world at omega' (index_moving_rest_k4_toward against its reference); light's energy drift and the mode k = 2 pi / 3 on x over the window (the pump's signature)",
+   "reads": "light's phase delay at the probe over the window [3400, 4300] against the reference at omega (GAMEBOARD), as the ratio to the covariant expectation (n(omega') - 1) omega' gamma_m s / c with n(omega') from the engine's own rest world at omega' (receding_index_short_speed_quarter_toward_rest against its reference); light's energy drift and the mode k = 2 pi / 3 on x over the window (the pump's signature)",
    "pin": {
     "k": 4,
     "beta_c": 0.43301270189221924,
@@ -402,9 +402,9 @@
     "source": "no number declared at K = 4 (MASSIVE_RECORD.md section 11 item 4: read beside K = 3 to say how much of the same-Node numbers is the degenerate resonance's, exact at K = 3)"
    }
   },
-  "index_moving_k4_away": {
+  "receding_index_short_speed_quarter_away": {
    "kind": "PREDICTION",
-   "reads": "light's phase delay at the probe over the window [3400, 4300] against the reference at omega (GAMEBOARD), as the ratio to the covariant expectation (n(omega') - 1) omega' gamma_m s / c with n(omega') from the engine's own rest world at omega' (index_moving_rest_k4_away against its reference); light's energy drift and the mode k = 2 pi / 3 on x over the window (the pump's signature)",
+   "reads": "light's phase delay at the probe over the window [3400, 4300] against the reference at omega (GAMEBOARD), as the ratio to the covariant expectation (n(omega') - 1) omega' gamma_m s / c with n(omega') from the engine's own rest world at omega' (receding_index_short_speed_quarter_away_rest against its reference); light's energy drift and the mode k = 2 pi / 3 on x over the window (the pump's signature)",
    "pin": {
     "k": 4,
     "beta_c": 0.43301270189221924,
@@ -420,9 +420,9 @@
     "source": "no number declared at K = 4 (MASSIVE_RECORD.md section 11 item 4: read beside K = 3 to say how much of the same-Node numbers is the degenerate resonance's, exact at K = 3)"
    }
   },
-  "index_moving_long_k4_away": {
+  "receding_index_speed_quarter_away": {
    "kind": "PREDICTION",
-   "reads": "the receding case on the longer chain REGENERATED on DECLARATIONS.md section 11's geometry (n = 4000, the source at 800, the probe at 2400, the block from x = 1500 stepping away from interval 3000, the window [3800, 5400]): the window's lab phase delay against the reference at omega (GAMEBOARD, the row's own reader) and its drift rate (the two halves), each against the script's number on the same geometry, the bands +- 0.04 rad and +- 10 percent of the rate; the ratio to the covariant expectation with n(omega') from index_moving_long_rest_k4_away against its reference beside; the pump's signature over the window",
+   "reads": "the receding case on the longer chain REGENERATED on DECLARATIONS.md section 11's geometry (n = 4000, the source at 800, the probe at 2400, the block from x = 1500 stepping away from interval 3000, the window [3800, 5400]): the window's lab phase delay against the reference at omega (GAMEBOARD, the row's own reader) and its drift rate (the two halves), each against the script's number on the same geometry, the bands +- 0.04 rad and +- 10 percent of the rate; the ratio to the covariant expectation with n(omega') from receding_index_speed_quarter_away_rest against its reference beside; the pump's signature over the window",
    "pin": {
     "k": 4,
     "beta_c": 0.43301270189221924,
@@ -438,7 +438,7 @@
     "source": "no number declared at K = 4 (read beside K = 3)"
    }
   },
-  "deep_well_rest_40": {
+  "deep_well_clock_at_rest_40": {
    "kind": "CONTROL",
    "reads": "the deep well at rest: the clicks over [200, 3000] against the mode (DETECTOR); the peaks GAMEBOARD",
    "pin": {
@@ -448,7 +448,7 @@
     "extent": 4.134179988261121
    }
   },
-  "deep_well_k3_40": {
+  "deep_well_clock_speed_third_40": {
    "kind": "CONTROL (the cavity row's)",
    "reads": "the deep well pushed to k = 3: the clicks' mean interval over the hold [1500, 9500] over the rest world's (DETECTOR, read_runs.py), f / f_0 against the one formula at the exact cone",
    "pin": {

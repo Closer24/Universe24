@@ -6,6 +6,88 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The body's numbers and the holds of every part, on 2026-09-26 (the one stroke, commit 2; no behaviour at rest)
+
+ALGEBRA.md 9.91 (3) and 9.91 (10) 2 (BUILD.md section 26 item 61): every block
+declares `charge` (an integer), `spin` and `moment` (three integers each), no
+default; the hold writes gravity's vector and tensor parts and the charge's
+current at the body's Nodes from its content, its charge and its momentum,
+and the dipoles on its centre Node's six neighbours from its spin and moment.
+A body at rest with no charge, spin or moment writes the time parts alone: the
+rows and the lines are bit for bit those before the change. Add the three keys
+at 0 to every block of a world file, or regenerate it with its generator.
+
+## The families file's three entries and the body's kind, on 2026-09-26 (the one stroke, commit 1; no behaviour where the new parts are zero)
+
+ALGEBRA.md 9.86 (2), 9.91 (7) and 9.91 (10) 1 (BUILD.md section 26 item 60):
+`examples/events/families.json` holds three families, gravity (parts [1, 3,
+6]), the charge (parts [1, 3], light its wave) and matter (parts [1], the
+pair on every body), and the universe's integers node_clock, amplitude_bound
+and charge_weight. In a world file the family named "light" is "charge"
+(every light record, mirror of light's kind, receiver of light and stock of
+light), and every body of a massive kind is of the family "matter" with its
+rest pair declared as `kind` [num, den] (the families matter, well, dark,
+heavy, muon and point of item 59 are kinds now); an emitter giving matter
+declares the given record's `pair`. An inline families list (the unit tests')
+stays admitted with the scalar's attributes by default; an entry may declare
+`parts`, `levels`, `self_unit`, `clicks`, `held_factors`, `held_dipole` and
+`held_dipole_div`; `components` is refused. Regenerate a world with its
+generator; the rows, the held levels and the lines are bit for bit those
+before the change, the name "light" read as "charge".
+
+## The one families file, on 2026-09-26 (the families and the universe's integers in one file; no behaviour)
+
+ALGEBRA.md 9.83 (2) and 9.85 (3), the model owner's record 2075 (BUILD.md
+section 26 item 59): every world of the detector law names
+`"families": "examples/events/families.json"`, the one canonical copy of the
+universe's families as laws (with representation, phase, self_unit, booked,
+held or clicks beside name, quantum, charge, pair and reads) and of the
+universe's integers (node_clock, amplitude_bound); a world with the file
+declares no node_clock and no amplitude_bound of its own, and every emitter
+declares `clock`, the given record's clock, since the light family declares
+none. An inline families list stays admitted (the unit tests' small lists) with
+the family's own `phase_per_link` as the given clock, the emitter's `clock` then
+refused. Regenerate a world with its generator; the rows, the held levels and
+the lines are bit for bit those before the change.
+
+## The engine start file and no default under the detector law, on 2026-09-26 (keys required and refused; no behaviour)
+
+The model owner's record 2089 through the Boss (BUILD.md section 26 item 57):
+every flag the engine needs for a run leaves the code. A world of the
+detector law names the one engine start file by its repository path,
+`"engine": "examples/events/engine_start.json"` (the file holds the run's
+`mode`, "check" until the Go), and declares every key the law's path reads:
+`boundary`, `width`, `clock_stamp`, `massive_record`, `body_record`,
+`point_emitter`, `measured`, `detectors` (and `amplitude_bound` with
+`massive_record`); on every family `pair`, `charge` and `reads`; on every
+measured event `momentum` and `held`; on every block `ramp` and `start`; on
+every well `margin`. A key the law never reads is refused by name: the
+world's `suspension`, `direction_bound`, `directions`, `action`, `meeting`,
+`massive_rows`; a family's `phase`, `lifetime`, `hand`, `columns`, `massive`;
+a measured event's `fixed`, `phase`, `directions`, `phase_by_momentum`,
+`span`, `books`, `table`; a detector's `threshold` and `reading`. The runner
+requires `--jobs` and refuses `--pins` under the mode check. The engine's
+constant UNIT and its output entry `unit` are gone; the ceiling 2^28 on
+`amplitude_bound` is retired. Rewrite a world file by regenerating it with
+its generator (every generator writes the keys); the rows, the held levels
+and the lines are bit for bit those before the change.
+
+## The family genericity, on 2026-09-25 (three world keys retired; no behaviour)
+
+The model owner's record 2066 through the Boss (BUILD.md section 26 item 51):
+the engine knows no family's name or role. The world keys `clock_family`,
+`charge_family` and `charge_strength` are refused by name. Their content moves
+into the families: the family of clicks declares `"held": "content"` and
+`"reads": []`, the family of charge `"held": "sign"` (the word "charge" for the source and the read mode was renamed "sign" the same day, BUILD.md item 53; a key `booked` is refused as unknown, the booking derived) and `"reads": []`, and
+every other family under `detector_law` declares `"reads": [{"family":
+"clicks", "weight": 1}, {"family": "charge", "weight": Lambda, "by":
+"charge"}]` (Lambda the former `charge_strength`). The state's `clock` and
+`charge` entries are one `held_fields` list (every held family by its declared
+name and source) beside `node_clock`. Every shipped world of the detector law
+is regenerated by its generator; the rows and the lines are bit for bit those
+before (the events and the audit digests unchanged; the state digest moved
+by its entries).
+
 ## The register's sources are the paper's, on 2026-09-22 (deletions; no behaviour)
 
 The model owner's word of 2026-09-22 (record 871 of docs/LOG_2026-09-20.md:
@@ -2110,7 +2192,7 @@ byte-identical in `events.jsonl` and `state.json`.
 ## A table entry's window read from a reading, on 2026-09-20 (`phase_window` as `{"reads": ..., "offset": ...}`; issue #363)
 
 An additive key of the world file ([BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
-[ENGINE, the world](ENGINE.md#the-beam-law-beam-v1);
+[ENGINE, the world](ENGINE.md#the-beam-law-beam-v1-the-ray-laws-record-cancelled-docscancelled_worldsmd-the-engine-has-no-laws-name-item-70);
 [expectations](TEST_EXPECTATIONS.md#a-window-read-from-a-reading)): a
 measured event's table entry may declare `"phase_window": {"reads":
 "<family>", "offset": s}` in place of the number. The centre of the window
