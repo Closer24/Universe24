@@ -15049,3 +15049,267 @@ the bodies' and detectors' entries of (f) to (h); two integers move to
 the families file; one word to the start file; everything else goes.
 The loader's key sets shrink to what (3) keeps, and a key outside them
 is refused by name, as now.
+
+**(6) THE ONE KEYS TABLE (the model owner's question of 2026-09-26,
+"where can a flag be? can it be more generic and smarter, simply
+centralised, so there are no bugs?"; the mathematician's answer,
+awaiting the owner's word).** The three files of (2) are right; the
+reading of them is not yet generic. Item 57 wrote the required and the
+refused keys as lists by hand in the loader, one list per object, so
+three places must agree (the list, the read in the engine, the
+document) and every disagreement is a bug: that is how the deleted
+defaults were born. THE FORM: one table of keys in one place in the
+repository, one row per key: the name, the file it belongs to
+(families, world, start), its kind (integer, pair, name, list, object
+of what), its bounds, and the section of this document that gives it
+meaning. The loader is one function that reads the table: a key not in
+the table is refused by name, a key in the table with no value is
+refused by name, and there is nowhere to write a default or a hand
+list. THE GATE: one test walks every key the engine reads (every
+attribute read off the world and the families) and compares it with
+the table; a key read and not in the table, or in the table and never
+read, fails the test. THE RULE BEHIND IT: a flag is a number the
+algebra names; with no section it does not exist.
+
+### 9.91 The build sheet for the one stroke (the Boss's records 2105 and 2106 of 2026-09-26, the model owner: "the vector and the tensor must enter the complete engine, top priority"; "everything truly in one stroke, and then one stable engine that everyone works with, not yet frozen"): every integer line Nature24 needs for one pass, the families file's three entries, the interval's order, the bit-for-bit invariants and the order of the commits with the gate of each
+
+**(0) WHAT THIS IS.** The one stroke is 9.86 (the representation as a
+list of parts, gravity of ten components, the charge of four with
+light as its wave, the click moving a four-vector, the recoil), 9.85
+(3) (the families file), 9.85 (7) (the body declares what it writes),
+9.85 (5) (the point emitter as a declaration, row (iv) fixed), 9.88
+(7) (the four primitives as declared attributes), the ray law
+cancelled and the name "the engine". This section gathers every line
+of those sections that a build needs, in the engine's terms, with
+nothing new in the physics; where two earlier lines differ, the line
+here is the one to build, and says so. The gate: 9.79 (3)'s bit for
+bit on every shipped world where the new parts are zero, the leak
+test per part, and the check-mode rows of 9.87 read blind.
+
+**(1) THE STATE AT A NODE.** Per family, per component: phase 1 gives
+(a_now, a_before, r), three integers; phase 2 gives the pair, six
+integers (two levels, each with now and before, and two remainders),
+plus twelve Port remainders per Node for the transport (six Ports, two
+per pair). Gravity: ten components, phase 1: thirty integers. The
+charge: four components, phase 2: twenty-four plus twelve. Matter:
+one component, phase 2: six plus twelve. Eighty-four integers per Node
+where every family is nonzero; the support-box shortcut (record 2039)
+keeps a zero part free of work. The component order, fixed once:
+gravity (t, x, y, z, xx, yy, zz, xy, xz, yz); the charge (t, x, y, z);
+matter (1). The group G_48 acts on the index alone: a signed
+permutation of the axes permutes x, y, z with signs, and the pairs as
+g h g^T; t is fixed.
+
+**(2) THE STEP, ONE INTEGER TABLE FOR EVERY COMPONENT (9.78 (4)).**
+For a component with the family's pair [num, den] at a Node with the
+four paces p_0, p_x, p_y, p_z:
+
+  w   = 6 den Gamma^2,
+  R_a = 2 num p_a^2                              (a = x, y, z),
+  S   = 12 den Gamma^2 - 6 (p_0^2 + Gamma^2)(den - num) - 4 num (p_x^2 + p_y^2 + p_z^2),
+  w a_next + r' = SUM_a R_a (a_{+a} + a_{-a}) + S a_now - w a_before + r - w Sigma_self,
+  0 <= r' < w,
+
+Sigma_self from (5), 0 when P_2 = 0. At p_x = p_y = p_z = p_0 this is
+9.57 (1) term for term, bit for bit. For a phase-2 family the same
+line runs on each of the two levels, with a_{+a} and a_{-a} the
+ARRIVALS through the Ports after the transport of (6); with no twist
+the arrival is the neighbour's level and the second level stays
+exactly zero when it starts zero. The inverse: a_before by the
+ceiling, the same integers, per Node, as 9.50 (8). THE FOUR PACES
+from the family's reads (the entry form in (7)):
+
+  p_0 = Gamma - SUM over reads of weight x by x (the read family's t component at the Node),
+  p_a = p_0  - SUM over reads of weight x by x (the read family's aa component div 2),
+
+one division per read per axis with the remainder kept at the Node on
+the reading family's record of remainders; a family with no reads
+steps at p_0 = p_a = Gamma, the plain rule. THE LINE TO BUILD WHERE
+TWO DIFFER: the held families (gravity, the charge's static part)
+have the empty reads list and step plain, bit for bit with today
+(9.79 (2) item 1, ENGINE.md item 51); 9.78 (4)'s clause "the field
+instances included, charge 1 under gravity" is not built: a field
+reading itself is the self-action, whose place is P_2, declared 0.
+The charge family's WAVE (light) reads gravity, so its rows step at
+p_0 = Gamma - c as light does today; its static part is the same
+family and steps the same way, which is Maxwell in the weak field and
+costs nothing (the shipped worlds carry Q = 0 everywhere).
+
+**(3) THE HOLD, THE BODY'S WRITES (9.78 (2), 9.85 (7)).** A body of
+quanta M, count s = M P_0 div P (9.51 (3)), charge Q, momentum's
+whole part n = (n_x, n_y, n_z) on the wall W, spin S and moment mu
+writes at every Node of its support, both levels, remainder 0, after
+the held families' step of the interval (9.85 (2)):
+
+  gravity t:    s
+  gravity a:    (4 s n_a) div W                       (a = x, y, z)
+  gravity ab:   (2 s n_a n_b) div W^2                 (aa and ab alike, six)
+  charge t:     Q
+  charge a:     (Q n_a) div W
+
+the divisions' remainders on the body's record (three for the vector,
+six for the tensor, three for the charge's current), carried between
+intervals and inverted with the body. THE DIPOLES on the seat's six
+neighbours (seat + sigma e_j, sigma = +1 or -1, j = x, y, z), added
+to the component i of the vector part:
+
+  gravity i at seat + sigma e_j:  += sigma x (S x e_j)_i
+  charge  i at seat + sigma e_j:  += (sigma x (mu x e_j)_i) div 2
+
+(S x e_x = (0, S_z, -S_y), S x e_y = (-S_z, 0, S_x), S x e_z = (S_y,
+-S_x, 0); the div 2 with its remainder on the body's record). The
+held factors (1, 4, 2) and (1, 1) are the families file's numbers,
+not the code's. At a hop the field's integers of the covered Nodes
+move to the vacated ones as today (9.52 (4) (i)); the dipole's six
+writes move with the seat.
+
+**(4) THE FOUR-VECTOR CLICK AND THE RECOIL (9.86 (1), 9.84 (2)).** A
+taking at a body: the content M += quantum (as today, 9.45 (2)) and,
+per axis,
+
+  n_a += sigma_a x (W x P_body) div (M x lambda_q),
+
+sigma_a the sign of (the booked flux through Port +a minus through
+Port -a) over the click's ladder walk (9.25 (12)), P_body the body's
+period in intervals, lambda_q the record's wavelength in Links (the
+emitter's declared `wavelength`, 9.90 (3) (e)), the remainder on the
+body's record. A giving: the same with the opposite sign, the tally
+the outward flux of the given record through the emitter's Ports over
+its window. The hold of (3) then writes the new n at the next
+interval: the gravity vector carries the momentum's field, nothing
+else records anything. The tools keep their true quanta with P_0
+lowered in the same ratio (9.84 (3), (4)): s and every level
+unchanged, the recoil below 10^-6 of a hop per quantum. Bounds: W P
+at most 10^9, M lambda at most 10^9, one division.
+
+**(5) THE SELF-SOURCE'S SLOT (9.78 (3); 9.88 (7) (ii)).** Per family,
+per Node, from the levels at the interval's start:
+
+  Sigma_self = (SUM over the six Links of SUM over the components (a_j - a_i)^2) div P_2,
+
+subtracted from the step's right side as (2) shows; P_2 = 0 turns it
+off and the line is not evaluated. The attribute admits the primitive
+of 9.88 (7) (ii): `self_source` {unit P_2, terms [[degree, weight,
+table]]}, the degree-2 term with the empty table being the line above
+and the only one exercised in the stroke; the loader checks P_2 >= 24
+A when nonzero and refuses a term of degree above 3. Bit for bit at
+P_2 = 0 on every world.
+
+**(6) THE TRANSPORT (9.81 (2), (3)).** For a phase-2 family at a Node,
+on each Port along axis a in the sense sigma, for each read with a
+nonzero twist:
+
+  k = sigma x by x twist x (V_a here + V_a arrived),
+
+V the read family's vector part (its a component at this Node and at
+the neighbour); the twist table gives (c_k, s_k, d_k) for |k| up to
+the table's bound, (c, -s, d) for k < 0, (1, 0, 1) at k = 0; the
+arrival's pair (re, im) is rotated with the Port's two remainders:
+
+  T_re d_k + rho_re' = c_k re - s_k im + rho_re,
+  T_im d_k + rho_im' = s_k re + c_k im + rho_im,   0 <= rho' < d_k,
+
+T the arrival (2) reads; the inverse per Node as 9.81 (2) (d). THE
+TWIST WEIGHTS: a read's `twist` is an integer or the word "own":
+"own" means the reading record's own rotation in the table's unit,
+which the loader computes once per record from its pair (a matter
+record's rest rotation) or from its emitter's wavelength on light's
+dispersion (a light record); so no per-world number is declared. The
+charge's twist on a charged family is Lambda_v, by q. With every
+vector part zero every k is 0 and the transport is the identity, bit
+for bit.
+
+**(7) THE FAMILIES FILE, THE THREE ENTRIES AND THE UNIVERSE (9.85 (3),
+9.86 (2), 9.83 (2)).** Written here as the file reads, the words the
+loader's:
+
+  universe: gamma 10000; amplitude 1048576; energy_unit P_0;
+            charge_weight Lambda; charge_twist Lambda_v;
+            accumulator_wall W; twist_table {unit, bound, triples}.
+  gravity:  parts [1, 3, 6]; phase 1; pair [1, 1];
+            held {count "content", factors [1, 4, 2], dipole "spin"};
+            reads []; self_source {unit 0}; clicks none.
+  charge:   parts [1, 3]; phase 2; pair [1, 1];
+            held {count "charge", factors [1, 1], dipole "moment", dipole_div 2};
+            reads [{family gravity, weight 1, twist "own", by 1}];
+            self_source {unit 0}; clicks {gives, takes, quantum 1}.
+  matter:   parts [1]; phase 2; pair "body's" (each body and record declares its own);
+            held none;
+            reads [{family gravity, weight 1, twist "own", by 1},
+                   {family charge, weight Lambda, twist Lambda_v, by "q"}];
+            self_source {unit 0}; clicks {gives, takes, quantum 1}.
+
+`booked` is not written: it is derived, true exactly for a family with
+clicks (the item 53 line). A read's `weight` acts on the time and
+space-space parts (the paces), its `twist` on the time-space part (the
+transport), `by` is 1 or the reading record's charge sign q. THE
+BODY'S NUMBERS in the world file (9.69 (6), 9.85 (7)): quanta,
+charge, momentum, spin, moment, pair, extents, held (the stock),
+period, weight g, wavelength, receiver; each read by one operation
+above; a number no operation reads is refused.
+
+**(8) THE INTERVAL'S ORDER (9.85 (2)) and the inverse.** Forward: (i)
+the families with clicks step (matter, the charge) with the transport
+of (6), every component; (ii) the bookings at the Ports (the one-way
+flux summed over the booked components: for the charge's waves the
+components transverse to the Port's axis, 9.82 (3); the t component
+never), the ladder, the takings and the givings of (4); (iii) the
+held family steps (gravity's ten, plain); (iv) the holds of (3) are
+written, the clicks' changes of M, Q and n included; (v) the seats:
+the feed and the induction from the contraction
+
+  p_0 at the seat = Gamma - SUM over reads of by x weight x
+      [ t level - (n_a V_a) div W + (n_a n_b h_ab) div W^2 ],
+
+the feed the difference of this across the two faces of each axis,
+the induction minus the change of its momentum part over the interval
+(9.78 (4)); the spin's step
+
+  S_next = S_now + [ (Omega x S_now) + mu x B_q ] div (W Gamma),
+  Omega_x = [ (V_z(+y) - V_z(-y) - V_y(+z) + V_y(-z))
+            + 3 ((c(+y) - c(-y)) n_z - (c(+z) - c(-z)) n_y) div W ] div 8,
+
+and cyclic for y and z (V gravity's vector part, c its t part; B_q
+the same curl on the charge's vector part without the second term,
+div 2), the remainder on the body's record (9.78 (5)); the recoil's
+accumulator of (4). Backward: the seats first, then the fields, the
+families in the reverse order, per Node, the clicks read from the
+run's events output (9.80 (4)).
+
+**(9) THE INVARIANTS FOR THE GATE, bit for bit.** (a) Every shipped
+world: gravity's t component carries today's clicks family's integers
+exactly; its nine other components are exactly zero at every interval
+wherever no body has momentum or spin (the leak test per part reads
+each); the charge's four are exactly zero (Q = 0 in every shipped
+world); a light train given into one transverse component with the
+second level zero steps and books as today's light family (9.82 (4));
+a matter record at phase 2 with the second level zero as today's; so
+every digest of a world at rest stands, and the moving rows' digests
+move only by the vector hold 4 s n div W of the moving body (9.87's
+dragging row reads that). (b) The paces: with the tensor zero p_a =
+p_0 everywhere. (c) The transport: every k = 0 where the vector parts
+are zero, the identity, the Port remainders 0. (d) The recoil: with
+true quanta and P_0 lowered, no hop in any shipped row (9.84 (5)
+(c)). (e) The backward run exact over every run, the clicks included.
+
+**(10) THE COMMITS, IN ORDER, WITH THE GATE OF EACH.** 1. The parts
+list and the families file with `booked` derived: bit for bit, the
+three entries of (7) loaded, the world file naming its families. 2.
+Gravity's ten with the holds of (3) and the leak test per part: bit
+for bit at rest; the moving rows' new digests recorded as check-mode.
+3. The four paces of (2): bit for bit (the tensor zero). 4. The
+charge's four at phase 2 with light as its wave, the transverse
+booking and the transport of (6) with the twist table: bit for bit
+(k = 0). 5. The four-vector click of (4), the tools at true quanta:
+bit for bit but the recoil below the band, the leak test the only
+reader. 6. The seat's contraction, the feed, the induction and the
+spin step of (8): bit for bit where every vector and tensor part is
+zero; the check rows read the rest. 7. The point emitter as the
+declaration (the train retired, row (iv)'s fix of 9.85 (5)), the body
+declaring what it writes. 8. The four primitives of 9.88 (7) as
+attributes with their loaders and unit tests, exercised by no shipped
+row. 9. The names: the ray law cancelled, "the engine", no version, the
+one keys table if the owner takes 9.90 (6). 10. The check-mode rows of
+9.87 (the dragging, gravity's wave, magnetism, the recoil), blind, read
+and recorded. The engine is stable when 1 to 10 stand together with
+the gate green; not frozen.
