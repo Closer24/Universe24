@@ -1,45 +1,4 @@
-"""THE RECOIL, THE CLICK'S STORE OF A HELD BODY'S MOMENTUM (ALGEBRA.md 9.117 item 2,
-the row "the recoil"; 9.117 item 5; 9.84 (2); 9.91 (4); 9.111 items 1 and 2; 9.116
-item 5; the Boss's record 2224).
-
-THE AMOUNT IS FROM THE RULE 9.57 (1) AND THE CLICK: the rule is translation-invariant,
-so its form's momentum is conserved (9.84 (1)), and the taker gains what the record
-lost; THE STORE BELOW ONE INTEGER IS BEYOND THE RULE (S): the rule keeps at a Node its
-two levels and one remainder and nothing on a body, so the fraction of a hop a click
-leaves is a declared store on the body's record (9.113 item 3 (b)).
-
-THE LINE. At a click the body's momentum gains, per axis, the taken quantum's
-momentum over the body's own energy, on the body's wall:
-
-  n_a += sigma_a x (W x P_body) div (M x lambda_q),
-
-sigma_a the sign of the click's tally on axis a (the flux booked through the
-detector's -a face minus through its +a face: the taken quantum's direction of
-travel, 9.111 item 1), W = 3 Q M the body's wall, P_body the body's rotation
-period in intervals, M its quanta, lambda_q the quantum's wavelength in Links.
-THE STORE: the remainder is kept on the body's record WITH ITS DIVISOR, the two
-in lowest terms, so that clicks whose divisors differ (another family's lambda_q,
-another M) add exactly: the store r / e and the click's a / d are brought to the
-least common divisor L, n gains (a L / d + r L / e) div L and the store keeps the
-remainder over L in lowest terms; the sum of the whole parts over any clicks is
-the exact floor of the sum of the fractions. With W = 3 Q M the click's fraction
-reduces to 3 Q P_body / lambda_q, so the store's divisor divides the least common
-multiple of the wavelengths the world declares, a fixed integer of the world; a
-divisor beyond the bound is refused by name. A GIVING is the same line with the
-opposite sign, its tally the outward flux through the body's Ports over the
-window; a symmetric emitter's tallies cancel. The body knows nothing: not whether
-it rests or moves, not whether it is a tool (a tool declares its true quanta and
-recoils below every band, 9.84 (3)).
-
-The place: (iv), the word after the step, with the click's other writes, entered at
-t + 1 (9.111 item 6). Writes: a body's momentum n and a body's remainders (the store,
-the writer's own record, colliding with no one). Order on n at (iv): 2, after the
-giving's bulk share (1). No `bind`: the loop has no recoil today, so the register holds
-the row with its `apply` and a term naming it waits for the loop's cut to call it. The bounds of 9.91 (4): W x P_body, M x lambda_q and
-the store's divisor at most 10^9, the wall from 1; a term outside is refused by
-name. A sourced body's store is another primitive, the recoil's accumulator at (v)
-(9.109 item 2 (b)). Integers only.
-"""
+"""The recoil of a click on a held body's momentum: n_a += sigma_a x (W x P_body) div (M x lambda_q) per axis, the giver with the opposite sign, the store a remainder with its divisor in lowest terms so that clicks of different divisors add exactly (ALGEBRA.md 9.117 item 2 the row "the recoil" and item 5, 9.84 (2), 9.91 (4)); the amount from the rule, the store beyond (S)."""
 
 from __future__ import annotations
 
@@ -63,10 +22,7 @@ NO_STORE: Store = (0, 1)
 
 @dataclass(frozen=True)
 class RecoilTerm:
-    """The click's declaration for the recoil: the body's period P_body (its
-    `period`, the generator's integer), its quanta M (the live content, the sum of
-    its M_k), the record's wavelength lambda_q in Links (the emitter's declared
-    `wavelength`) and the sense, TAKING (+1) or GIVING (-1)."""
+    """The click's declaration: the body's period P_body, its quanta M, the record's wavelength lambda_q, the sense (a taking +1, a giving -1)."""
 
     period: int
     quanta: int
@@ -76,9 +32,7 @@ class RecoilTerm:
 
 @dataclass(frozen=True)
 class RecoilStart:
-    """What the click booked: the tally per axis (the -a face minus the +a face of
-    the detector for a taking; the outward flux through the +a Ports minus the -a
-    Ports for a giving) and the body's wall W = 3 Q M."""
+    """What the click booked: the tally per axis and the body's wall W = 3 Q M."""
 
     tally: tuple[int, int, int]
     wall: int
@@ -86,8 +40,7 @@ class RecoilStart:
 
 @dataclass(frozen=True)
 class RecoilOwn:
-    """The body's record: its momentum n per axis and the recoil's store per axis,
-    a remainder with its divisor in lowest terms, kept between clicks."""
+    """The body's record: its momentum n per axis and the store per axis, a remainder with its divisor in lowest terms."""
 
     momentum: tuple[int, int, int]
     remainders: tuple[Store, Store, Store] = (NO_STORE, NO_STORE, NO_STORE)
@@ -102,14 +55,12 @@ class RecoilWrites:
 
 
 def sign_of(value: int) -> int:
-    """sigma: -1, 0 or 1, the direction of travel, never the size (9.111 item 1)."""
+    """sigma: -1, 0 or 1, the direction of travel and never the size (ALGEBRA.md 9.111 item 1)."""
     return (value > 0) - (value < 0)
 
 
 def check(term: RecoilTerm, start: RecoilStart, own: RecoilOwn) -> None:
-    """The refusals by name: the period, the quanta, the wavelength and the wall from 1,
-    the sense +1 or -1, the two products within the bound of 9.91 (4), each store a
-    remainder below its divisor in lowest terms."""
+    """The refusals by name: the period, the quanta, the wavelength and the wall from 1, the sense +1 or -1, the products within the bound of ALGEBRA.md 9.91 (4), each store a remainder below its divisor in lowest terms."""
     if term.period < 1 or term.quanta < 1 or term.wavelength < 1:
         raise ValueError(
             f"the recoil needs a period, quanta and a wavelength from 1, got P_body = {term.period}, "
@@ -134,10 +85,7 @@ def check(term: RecoilTerm, start: RecoilStart, own: RecoilOwn) -> None:
 
 
 def add_to_store(amount: int, divisor: int, store: Store) -> tuple[int, Store]:
-    """The exact sum amount / divisor + store: the whole part (the floor) and the new
-    store in lowest terms. The click's fraction is reduced first, so with W = 3 Q M its
-    divisor divides lambda_q; the two fractions are brought to their least common
-    divisor L, which is refused beyond the bound."""
+    """The exact sum amount / divisor + store: the whole part and the new store in lowest terms, the two fractions brought to their least common divisor, which is refused beyond the bound."""
     reduce = gcd(abs(amount), divisor)
     amount, divisor = amount // reduce, divisor // reduce
     remainder, kept = store
@@ -153,9 +101,7 @@ def add_to_store(amount: int, divisor: int, store: Store) -> tuple[int, Store]:
 
 
 def apply(term: RecoilTerm, start: RecoilStart, own: RecoilOwn) -> RecoilWrites:
-    """The primitive: per axis, n_a += sense x sigma_a x (W x P_body) div (M x lambda_q)
-    with the store carried on the body's record; an axis with no tally is untouched,
-    its store kept."""
+    """The primitive: per axis with a tally, n_a += sense x sigma_a x (W x P_body) div (M x lambda_q) with the store carried (ALGEBRA.md 9.84 (2))."""
     check(term, start, own)
     divisor = term.quanta * term.wavelength
     momentum = list(own.momentum)
