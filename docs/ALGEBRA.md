@@ -14935,3 +14935,114 @@ continuum mirror, and a reflected train whose norm is off is a train
 whose length is off; the seam of 9.67 (1) (the declared hop does no
 work) is where it sits. Not a pin; the direction holds (1.16 against
 1.0), and the number waits on the two readings.
+
+### 9.90 One engine, no law's name, no version; the audit of every flag outside it (the model owner's words of 2026-09-26 to the mathematician: "there is no ray law any more; it is part of the engine; it must not be anywhere, 'v1', 'version 1', all such things; there is one engine, that is all; and if there are flags, they are outside, and you can see the flags, what we need and what we do not")
+
+**(1) THE WORD.** The engine is the law; there is no named law and no
+version. The words are "the engine" and "the rule" (9.57 (1)). Every
+identity string goes: the world key `law` and its value, `model_id`,
+`input.law`, the seventeen constants of the loader ending in "-v1"
+(`beam-v1`, `amplitude-v1`, `drive-b-v1`, `centred-step-v1`,
+`atom-level-v1`, `covariant-readings-v1`, `bohr-v1`, `columns-v1`,
+`weak-v1`, `meeting-v1`, `optical-v1`, `flow-link-v1`, `hand-v1`,
+`binding-v1`, `detector-law-v1`, `massive-record-v1`,
+`massive-rows-v1`), the heading "The Beam Law (beam-v1)" of ENGINE.md
+and docs/BEAM_LAW.md. A refusal names the file and the key, never a
+law. A hypothesis outside the engine (9.88 (7)'s primitives before
+they enter, a row's declared idealisation) is named by its section
+here, not by a version. My proposal of "detector" and `detector-v1`
+(2026-09-26, 00:40Z) is withdrawn. "The detector law" stays only as
+the name of the existing module and design folder until Nature24
+renames them in the deletion.
+
+**(2) WHERE A FLAG MAY LIVE.** Three files and nothing else: the
+FAMILIES FILE (the families' seven attributes of 9.79 (1) and the
+universe's integers, 9.83 (2) (a)); the WORLD FILE (the GameBoard, its
+faces, the bodies and records, the detectors, the run's length: what
+an experiment declares); the START FILE (the run's mode, the outputs
+and readings asked, the backward test, the digests). No flag in the
+code: a constant of the law is one integer in the rule with its
+section; a number that differs between worlds is declared; a key
+with one value in every world is a default and goes (record 2089).
+
+**(3) THE AUDIT OF THE WORLD FILE, one verdict per key (the twenty-two
+worlds under the engine on emitter-click, every key path read with its
+distinct values; the loader's key sets).** The verdicts: KEEP (an
+experiment's declaration), FAMILIES (moves to the families file),
+START (moves to the start file), DELETE (the ray law's, or one value
+in every world).
+(a) The GameBoard: `shape` KEEP. `boundary` per axis KEEP, with three
+values, periodic, a mirror (today's "closed", the zero face) and a
+receiver (today's "open" with `face_depth`); `face_depth` (32 in
+eleven worlds, 1 in three) folds into the receiver face's declaration,
+`"x": {"receiver": 32}`, one declaration per face (9.85 (5) (c)).
+`ticks` KEEP (the run's length is the experiment's).
+(b) The ray law's, one value in every world: `K` (2^30 in all
+twenty-two; the engine's clock is Gamma), `release` [1, 128],
+`suspension` 0, `age_bound` 2^20, `directions` [], `width`, `action`,
+`meeting`, `massive_rows`, `in_transit`, `direction_bound`,
+`covariant_readings`, `optical`, `drive_b`, `flow_link`, `atom_level`,
+`centred_step`: DELETE. `N` (64, 1024, 2048) DELETE with (d) below.
+(c) The engine's own switches, true in every world: `detector_law`,
+`massive_record`, `clock_stamp` (the Boss's word: always written),
+`body_record` (the support decides, 9.89 (3)), `point_emitter` (in the
+law, record 2081): DELETE. `input` {law, hash}: the law goes; the
+hash stays as the file's stamp (a generated file's integers against a
+hand edit), the key `stamp`.
+(d) The universe's integers: `node_clock` 10^4 (Gamma) and
+`amplitude_bound` 2^20 (A): FAMILIES (9.83 (2) (a)).
+(e) `families[]`: the whole list FAMILIES. The world names its
+families and declares nothing of them (9.85 (3)). Inside the entries:
+`name`, `pair`, `held`, `reads`, `charge` (the sign q) are the
+attributes of 9.79 (1) and go to the families file; `quantum` (1 in
+all ninety-three) DELETE; `phase_per_link` ([77, 25], [512, 1],
+[4096, 21]) is not a family's number, it is a row's wave number: it
+moves to the record that carries it, see (g); with it and `N` gone the
+wave number is declared once, as the train's wavelength in Links, a
+whole number (21, 13, 34 in the shipped worlds), and light's
+dispersion (9.62 (1)) gives the rest; a train whose wavelength is not
+whole is refused at load, as now.
+(f) `measured[]`, the bodies and records: `position`, `family`,
+`amount`, `momentum`, `pair` (the well or the gap at its Nodes),
+`seed` (the profile), `clock` (the mode's rotation pair), `extents`,
+`held` (the stock), `receiver`, `ramp` with `start` (the pushing
+agent's declaration, a moving body's row), `proper_clock` (a moving
+seat's rotations, 9.63 (3)): KEEP. `side` DELETE (`extents` [s, s, s]
+is the cube; one form). `fixed` (true on all 1123) DELETE: a body
+moves by its momentum, none by a key. `phase` (0 on all 1123) DELETE.
+`directions` on a body (three worlds, the ray law's release
+directions) DELETE. `margin` ("pin" or "control"): START, as the
+run's mode; the margin check itself runs on every seeded body with
+its extents, no kind (this corrects 9.83 (2) (a)'s "a measured event's
+margin is the world file's": the extents are, the kind is not).
+(g) `emitter`: `family`, `norm` (T, as the exact rational: `norm`
+[n, d], folding `norm_denominator` in), `period`, `weight` (g, the
+point emitter's coupling), `receiver`: KEEP. `train` {direction,
+periods, clock} and `given` {now, before, norm, rest_norm}: DELETE
+when the point emitter lands (the train retired, 9.83 (2) (a); the
+window writes the rows); until then `train.clock` is the wavelength
+of (e). `window_read` (the generator's reading, HOST) DELETE from the
+world: a README number.
+(h) `detectors[]`: `name`, `positions` (a set of free Nodes), `block`
+(a set bound to a body): KEEP. `threshold` (1 on all 131) DELETE: the
+rung is the record's (9.25 (2)). `reading` ("wave" or "beam", the ray
+law's) DELETE; `wheel` retired already.
+(i) Readings asked of the host: `probes` (in no shipped world) and
+`mode_axis` (four worlds; the hop pump's signature, HISTORY) DELETE;
+a reading a row needs is asked in the start file, never declared in
+the world.
+
+**(4) THE START FILE'S KEYS, the whole list.** The mode ("check" until
+the Go, "pin" after it); the outputs (the events output, the state at
+the end, the books); the readings asked (GameBoard diagnostics by
+name, 9.87 (4)); the backward test (on or off, the interval it turns
+at); the digests to compare. Nothing physical. A missing key is
+refused by name.
+
+**(5) THE COUNT.** Of the fifty-odd keys the loader admits, the world
+file keeps eleven at the top (`shape`, `boundary` with its faces,
+`ticks`, `stamp`, the families' names, `measured`, `detectors`) and
+the bodies' and detectors' entries of (f) to (h); two integers move to
+the families file; one word to the start file; everything else goes.
+The loader's key sets shrink to what (3) keeps, and a key outside them
+is refused by name, as now.
