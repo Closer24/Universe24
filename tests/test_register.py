@@ -60,6 +60,7 @@ FOLDER_NAMES = (
     "the pair",
     "the phase",
     "the receive",
+    "the recoil",
     "the recoil's accumulator",
     "the self-source",
     "the send",
@@ -71,6 +72,7 @@ FOLDER_NAMES = (
 )
 BUILT = {
     "the pair",
+    "the recoil",
     "the degree",
     "the phase",
     "the signed read",
@@ -411,8 +413,8 @@ def test_the_register_finds_the_folders_and_refuses_a_folder_without_its_declara
     sys.path.remove(str(tmp_path))
 
 
-def test_the_engine_registers_the_twenty_three_by_their_folders_and_checks_every_term():
-    """On a shipped test world the engine's register holds exactly the twenty-three
+def test_the_engine_registers_the_twenty_four_by_their_folders_and_checks_every_term():
+    """On a shipped test world the engine's register holds exactly the twenty-four
     folders' names in the folders' order, each folder the name's, each with a place, a
     word and a section, the built ones bound to a function and the rows to do without
     one; the rows of 9.117 write the values named once (item 1) and the writers' orders
