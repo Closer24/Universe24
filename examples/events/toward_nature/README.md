@@ -186,6 +186,30 @@ on average): 460 (COMPUTATION), read 459. The moving clock's spread is the rest 
 The blind numbers for this pair are asked of the mathematician; the ratio stands beside the
 longitudinal form's gamma^2 as a check-mode reading, no verdict.
 
+THE SAME PAIR ON THE HEAD OF ITEM 56 (ALGEBRA.md 9.74 (2) and (3): the booking in the body's
+frame at every face, one rule, and the ladder's threshold on the rest T under the boosted
+rows; `lorentz_moving_long.json` regenerated with `rest_norm` alone, the rows unchanged;
+check mode, DETECTOR unless marked; no pin):
+
+| Reading | Rest | Moving |
+| --- | --- | --- |
+| Clicks at `at_well` | 51 | 50 |
+| Mean wait, rms, standard error, least, most | 459.0, 58.2, 8.1, 366, 573 | 532.4, 40.0, 5.7, 443, 594 |
+| Ratio moving / rest of the means (COMPUTATION) | | 1.160 +- 0.024 |
+| The mathematician's blind ticks (9.74 (5), the arm L = 60 with the rung's offset 88) | 297 | 356; the ratio 1.198 on the whole tick (1.235 on the flight alone, gamma^2; the transverse clock 1.111) |
+
+The rest clock is untouched by the head (the rule is the Port booking at rest, bit for bit).
+The moving clock's mean fell from 569.6 to 532.4 with the threshold on the rest T (the late
+clicks of item 49's head gone: the most 594 against 700 before) and its spread narrowed (rms
+40 against 60). The ratio 1.160 +- 0.024 stands 1.6 standard errors below his 1.198 for the
+whole tick and above nature's gamma 1.111; his ticks are computed on the arm L = 60 with the
+rung's offset 88, this pair's arm is 90 Links beyond the train's head with the passage into
+the 168-Node body (the rest tick 460 computed, 459 read), so the ratio is the number set
+beside his, the ticks themselves are not the same clock. The boosted train's norm as
+written (COMPUTATION on the files' integers): 1.577 of the rest train's against D = 1.596
+(9.75 (1)'s reading: the rows at the rest amplitude carry it already; no amplitude factor).
+A reading for the mathematician; no verdict.
+
 ## Row (3): the bending on today's law
 
 Two forms. FIRST, the dark body's two worlds (`../dark_body/dark.json` and

@@ -1449,6 +1449,9 @@ class TrainDefinition:
     clock: tuple[int, int]
     periods: int
     wavelength: int
+    # DOPPLER (item 49): the train declares its own boosted clock (a moving
+    # body's); its `given` then carries the rest norm too (ALGEBRA.md 9.74 (3))
+    boosted: bool = False
 
     @property
     def direction(self) -> tuple[int, int, int]:
@@ -1473,11 +1476,22 @@ class GivenTrain:
     record's conserved form on the given family's VACUUM in the flux's units
     (9.19 (3)), the generator's integer checked at load (`given_train_norm`):
     the ladder's T. The two-integer pair [now, before] (the one-Node giving,
-    a flat pulse of the body's length, broadband) is refused by name."""
+    a flat pulse of the body's length, broadband) is refused by name. THE
+    BOOSTED NORM (ALGEBRA.md 9.74 (3), 9.75 (1); BUILD.md section 26 item 56):
+    a moving body's boosted train carries the quantum's energy in the board's
+    frame, gamma (1 + beta) T_rest forward and gamma (1 - beta) T_rest
+    backward (the rows at the rest amplitude carry it already: the form is
+    quadratic in the wave number, the generator's reading), and declares
+    "rest_norm": T_rest, the same train's norm at the body's own clock and
+    the same amplitude, the ladder's threshold (the record's form at the
+    giving times rest_norm / norm);
+    REQUIRED on a train with its own `clock`, refused at rest (the rest
+    train's norm is `norm` itself); `rest_norm` equals `norm` at rest."""
 
     now: tuple[int, ...]
     before: tuple[int, ...]
     norm: int
+    rest_norm: int
 
 
 @dataclass(frozen=True)
@@ -4377,7 +4391,7 @@ def _train(
             f"{AXES[axis]} is not the train's length, {periods} periods of the wavelength "
             f"{wavelength} = {periods * wavelength} Nodes (ALGEBRA.md 9.17 (6a))"
         )
-    return TrainDefinition(axis, sign, (p, q), periods, wavelength)
+    return TrainDefinition(axis, sign, (p, q), periods, wavelength, "clock" in obj)
 
 
 def _given_train(
@@ -4394,7 +4408,7 @@ def _given_train(
     x-major), a motion, the flux sign along the train's way positive, and
     the norm the conserved form on the given family's vacuum (the box at the
     board's origin: the vacuum is the same wherever the box stands)."""
-    obj = _object(value, label, {"now", "before", "norm"}, {"now", "before", "norm"})
+    obj = _object(value, label, {"now", "before", "norm", "rest_norm"}, {"now", "before", "norm"})
     count = extents[0] * extents[1] * extents[2]
     levels: list[tuple[int, ...]] = []
     for key in ("now", "before"):
@@ -4422,7 +4436,23 @@ def _given_train(
             f"{BEAM_LAW}: {label}.norm {norm} is not the given record's conserved form on the "
             f"vacuum, {expected} (ALGEBRA.md 9.17 (6a), 9.19 (3); the generator's `given_train`)"
         )
-    return GivenTrain(now, before, norm)
+    # THE BOOSTED NORM (ALGEBRA.md 9.74 (3); item 56): the rest train's norm,
+    # the ladder's threshold, declared with the boosted train alone
+    if train.boosted and "rest_norm" not in obj:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.rest_norm is required with the train's own `clock`: the rest "
+            "train's norm T_rest, the ladder's threshold under the boosted rows (ALGEBRA.md 9.74 "
+            "(3), 9.75 (1); the generator's `given_train`)"
+        )
+    if not train.boosted and "rest_norm" in obj:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.rest_norm is refused on a train at the given family's clock: the "
+            "rest train's norm is `norm` itself (ALGEBRA.md 9.74 (3))"
+        )
+    rest_norm = (
+        _integer(obj["rest_norm"], f"{label}.rest_norm", 1, NORM_BOUND) if train.boosted else norm
+    )
+    return GivenTrain(now, before, norm, rest_norm)
 
 
 def _measured(

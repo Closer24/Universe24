@@ -15505,7 +15505,8 @@
       59,
       59
      ],
-     "norm": 622631060037
+     "norm": 622631060037,
+     "rest_norm": 394826125248
     }
    },
    "receiver": "at_well",
@@ -28037,6 +28038,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "69b59abe49e37e26108c4066cfa436e201d430c462ca96e1137b5dda9562ce19"
+  "hash": "0ad8ee5f4a81304ecbea1abd2bedbb83489d977ea1e5f7b84399d9e51db335b5"
  }
 }

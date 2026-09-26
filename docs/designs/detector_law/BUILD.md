@@ -3898,7 +3898,10 @@ would have found no cell.
    550 to 700); (c) over the return passage the Port and the hop bookings
    reach about half of the returned norm on the [32, 3, 3] body (0.25 and
    0.085 of Q against 0.47 and 0.26 expected), to be read further. THE ROW's
-   table is in the README of the rows toward nature.
+   table is in the README of the rows toward nature. HISTORY SINCE ITEM 56
+   (ALGEBRA.md 9.74 (2)): the hop booking is one rule with the Port booking,
+   the booking in the body's frame at every face; finding (a) resolved there,
+   (b) and (c) by 9.74 (3) and (5).
 
 49. DOPPLER, THE GIVEN ROWS OF A MOVING BODY CARRY ITS MOTION (ALGEBRA.md 9.62
    (4), the mathematician's ruling on Nature24's finding 3 of row 2, adopted
@@ -3926,7 +3929,9 @@ would have found no cell.
    loader's admission and refusals, the written train's crossings); the
    pair's check-mode reading in the README of the rows toward nature. What
    waits on the mathematician: the transverse boost (a train across the
-   motion), the blind numbers of the long-wave pair.
+   motion), the blind numbers of the long-wave pair. SINCE ITEM 56 the
+   boosted train's `given` carries `rest_norm` and the ladder's threshold
+   stays on the rest T (ALGEBRA.md 9.74 (3)).
 
 50. THE POINT EMITTER (ALGEBRA.md 9.69 (2), the mathematician's proposal
    under its own identity; 9.71 (1), the build's reference; the model owner's
@@ -4159,6 +4164,58 @@ would have found no cell.
    leak at every interval, and a row planted in the never-sourced sign
    family is named; tests/test_run_inputs.py: the verdict LEAK on such a
    world.
+
+56. THE BOOKING IN THE BODY'S FRAME, ONE RULE, AND THE THRESHOLD ON THE REST T
+   (ALGEBRA.md 9.74 (2) and (3), 9.75 (1), the mathematician's ruling on item
+   48's three findings; the model owner's record 2060 through the Boss, "the
+   one-rule booking before the law is frozen"). THE RULE (9.74 (2)): a face of
+   a body moving at v with outward normal n books per interval (G_in + (v . n)
+   e_out) cut at zero AFTER the sum: G_in the board's inward current through
+   the face's Link (the Port booking of 9.25 (2) as before), e_out the
+   record's density on the Node outside the face (`node_density`, the
+   per-Node term of the conserved form, the same units), v . n = side x
+   momentum / wall along the face's axis, positive at a face advancing into
+   the outside (the front) and negative at a face receding from it (the
+   back); one rule for every face of every moving set, per interval, not per
+   hop. At the front an oncoming record books G_in + v e_out (the Port and the
+   hop of item 48 together), a standing or transverse one v e_out, a record
+   outrunning the body nothing (item 48's cut c W < e p is this face's cut);
+   at the back a record overtaking from behind books G_in - v e_out, the norm
+   once and not c / (c - v) times (finding (a) RESOLVED), with no negative
+   booking. THE BUILD: `detector_inflow_tally` reads every Port's face
+   (`_inflow_port_faces`, cached beside the pairs and cleared at a hop) and
+   the moving sets (`_moving_sets`: the detectors bound to a block whose
+   momentum is not zero at the interval); at their Ports the term is formed
+   with the density of the outside Node read at the Ports alone (`_reads_at`:
+   the six reads at the Nodes asked, not over the board; HOST, fixed work per
+   face); the whole part booked, the fraction carried on the record per
+   detector (`LiveRecord.carry`, exact); with no moving set the Port booking
+   of item 36 runs bit for bit as before. THE HOP BOOKING OF ITEM 48 IS
+   HISTORY: `_hop_takings`, `Block.covered` and `hop_carry` are gone; the
+   detectors' Port pairs are still re-read at every hop. THE THRESHOLD (9.74
+   (3), 9.75 (1)): a moving body's boosted train (item 49) carries the
+   quantum's energy in the board's frame, D T_rest forward and T_rest / D
+   backward, D = sqrt((1 + beta) / (1 - beta)); THE READING asked in 9.75 (1)
+   (COMPUTATION on the files' integers): the long-wave pair's boosted train at
+   the rest amplitude ALREADY carries 1.577 T_rest against D = 1.596, so no
+   amplitude factor enters (the form is quadratic in the wave number as in
+   the amplitude: k by D and the length by 1 / D give D); the ladder's
+   threshold stays on T_rest: the emitter's `given` declares `rest_norm`, the
+   same train's norm at the family's own clock (REQUIRED with the train's own
+   `clock`, refused at rest, where the rest norm is `norm` itself), the
+   generator writing it (`doppler_factor`, the ratio checked against D within
+   3 percent) and the engine's ladder reading the record's form at the giving
+   times rest_norm / norm (the exact rational; at rest unchanged by one bit).
+   THE GATE tests/test_hop_taking.py, rewritten on the one rule (COMPUTATION
+   on the engine's integers, no pin): the cart toward the light books 0.9991
+   of the norm over the pass in the body's frame against 0.6394 in the
+   board's (the control, the Port booking alone); both records click at the
+   moving cart on the first pass; at rest the rule is the Port booking bit
+   for bit with nothing carried; the record overtaking the cart from behind
+   books 1.0109 in the body's frame against 2.2936 in the board's. The
+   Lorentz pair's rerun in check mode beside the blind ticks of 9.74 (5) is
+   in the README of the rows toward nature. Findings (b) and (c) of item 48
+   are answered by 9.74 (3) and (5).
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

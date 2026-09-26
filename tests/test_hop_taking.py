@@ -1,14 +1,17 @@
-"""THE TAKING AT A HOP (ALGEBRA.md 9.62 (3), the mathematician's ruling on Nature24's finding 2
-of the run toward nature, row 2; BUILD.md section 26 item 48): at a hop the rows of every
-record on the Nodes a body newly covers are booked to the set bound to the body at their share
-of the norm, after the interval's step and the Port booking. On a closed chain of 300 an emitter
-at [20, 52) gives light along +x (two records) and a cart, a silent block of three Nodes with
-its set bound to it, moves toward it at one Link every four intervals: (1) over the record's
-passage through the cart the booked total reaches the record's norm over its pace within a
-few percent with the hop's booking, and falls short by about the hop's share v / (v + c_l)
-without it (the clicks held off); (2) with the ladder live both records click at the cart on
-the first pass; (3) at rest nothing here runs: the pointers bit for bit with the booking and
-without, no Node ever newly covered. GAMEBOARD and COMPUTATION on the engine's integers; no pin."""
+"""THE BOOKING IN THE BODY'S FRAME, ONE RULE (ALGEBRA.md 9.74 (2), the mathematician's ruling
+on the taking at a hop of item 48; BUILD.md section 26 item 56): a face of a body moving at v
+with outward normal n books per interval (G_in + (v . n) e_out) cut at zero after the sum, G_in
+the board's inward current through the face's Link, e_out the record's density on the Node
+outside the face; no separate hop booking. On a closed chain of 300 an emitter at [20, 52)
+gives light along +x (two records) and a cart, a silent block of three Nodes with its set bound
+to it, moves at one Link every four intervals: (1) toward the light: over the record's passage
+the booked total reaches the record's norm over its pace within a few percent, and the board's
+frame alone (the Port booking, the control) falls short by about the hop's share v / (v + c_l);
+(2) with the ladder live both records click at the cart on the first pass; (3) at rest the rule
+is the Port booking bit for bit, no carry; (4) away from the light, the record overtaking the
+cart from behind: the back face books the norm once (finding (a) of item 48 resolved), where
+the board's frame books c / (c - v) = 2.27 of it. GAMEBOARD and COMPUTATION on the engine's
+integers; no pin."""
 
 from __future__ import annotations
 
@@ -58,12 +61,14 @@ def cart_world(
 
 
 def run(
-    document: dict, hops: bool, clicks: bool, ticks: int
+    document: dict, frame: bool, clicks: bool, ticks: int
 ) -> tuple[DetectorLawSimulation, list[dict]]:
+    """`frame` False: the control, the board's frame alone (no set moving as far as the
+    booking reads, the Port booking of 9.25 (2) at the set's Nodes as they stand)."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    if not hops:
-        simulation._hop_takings = lambda: None  # type: ignore[method-assign]
+    if not frame:
+        simulation._moving_sets = lambda: {}  # type: ignore[method-assign]
     if not clicks:
         simulation._ladder_click = lambda live, increments: None  # type: ignore[method-assign]
     for _ in range(ticks):
@@ -72,28 +77,36 @@ def run(
     return simulation, lines
 
 
-def test_the_hop_books_the_covered_rows_so_the_whole_record_is_taken_over_a_pass():
-    document = cart_world(stock=1)
-    with_hops, _ = run(document, hops=True, clicks=False, ticks=600)
-    without, _ = run(document, hops=False, clicks=False, ticks=600)
-    cart = with_hops.detector_names.index("cart")
-    (live,) = [live for live in with_hops.records.values() if live.family == 0]
-    (other,) = [live for live in without.records.values() if live.family == 0]
+def booked_share(
+    simulation: DetectorLawSimulation, control: DetectorLawSimulation
+) -> tuple[Fraction, Fraction]:
+    """The one light record's booking at the cart over its norm, in the body's frame and in
+    the board's (the control), the carry counted."""
+    cart = simulation.detector_names.index("cart")
+    (live,) = [live for live in simulation.records.values() if live.family == 0]
+    (other,) = [live for live in control.records.values() if live.family == 0]
     assert live.identity == other.identity and live.norm == other.norm and live.pace == other.pace
     norm = Fraction(live.norm, live.pace)
-    booked = Fraction(live.pointers[cart]) + live.hop_carry
-    plain = Fraction(other.pointers[cart])
-    assert 0 <= live.hop_carry < 1 and other.hop_carry == 0
+    carry = live.carry.get(cart, Fraction(0))
+    assert 0 <= carry < 1 and not other.carry
+    return (Fraction(live.pointers[cart]) + carry) / norm, Fraction(other.pointers[cart]) / norm
+
+
+def test_the_front_face_books_the_oncoming_record_whole_over_a_pass():
+    document = cart_world(stock=1)
+    frame, _ = run(document, frame=True, clicks=False, ticks=600)
+    board, _ = run(document, frame=False, clicks=False, ticks=600)
     # the cart passed through the whole record (its 32 Nodes at 0.447 against the cart's 0.25)
-    assert with_hops.blocks[1].corner[0] < CART_START - 100
-    assert abs(booked / norm - 1) < 0.08, float(booked / norm)
+    assert frame.blocks[1].corner[0] < CART_START - 100
+    booked, plain = booked_share(frame, board)
+    assert abs(float(booked) - 1) < 0.08, float(booked)
     share = CART_MOMENTUM / 192 / (CART_MOMENTUM / 192 + LIGHT_PACE)  # the hop's share, 0.36
-    assert abs(float((booked - plain) / norm) - share) < 0.1, float((booked - plain) / norm)
+    assert abs(float(booked - plain) - share) < 0.1, float(booked - plain)
     assert plain < booked
 
 
 def test_both_records_click_at_the_moving_cart_on_the_first_pass():
-    simulation, lines = run(cart_world(stock=2), hops=True, clicks=True, ticks=700)
+    simulation, lines = run(cart_world(stock=2), frame=True, clicks=True, ticks=700)
     gathers = [line for line in lines if line["event"] == "gather"]
     assert len(gathers) == 2
     assert all(line["chosen"] and line["chosen"][0][0] == "cart" for line in gathers)
@@ -103,37 +116,29 @@ def test_both_records_click_at_the_moving_cart_on_the_first_pass():
     assert simulation.held[1][0] == 2  # two light quanta taken by the cart
 
 
-def test_at_rest_the_rule_is_void_and_nothing_is_newly_covered():
+def test_at_rest_the_rule_is_the_port_booking_bit_for_bit_and_nothing_is_carried():
     document = cart_world(momentum=0, stock=1)
-    with_hops, lines_a = run(document, hops=True, clicks=True, ticks=300)
-    without, lines_b = run(document, hops=False, clicks=True, ticks=300)
-    assert with_hops.blocks[1].covered is None and with_hops.blocks[1].stepped == 0
+    frame, lines_a = run(document, frame=True, clicks=True, ticks=300)
+    board, lines_b = run(document, frame=False, clicks=True, ticks=300)
+    assert not frame._moving_sets() and frame.blocks[1].stepped == 0
     assert lines_a == lines_b
-    for identity, live in with_hops.records.items():
-        other = without.records[identity]
-        assert live.pointers == other.pointers and live.hop_carry == 0
+    for identity, live in frame.records.items():
+        other = board.records[identity]
+        assert live.pointers == other.pointers and not live.carry
         assert np.array_equal(live.now, other.now)
 
 
-def test_a_record_outrunning_the_cart_books_nothing_at_its_hops_and_the_back_face_re_enters_it():
-    """IN THE BODY'S FRAME (item 48): the cart moving along +x at one Link every four intervals,
-    the record given along +x at 0.447 overtakes it from behind. The rows the front face
-    overtakes at a hop recede faster than the cart, so the hop books nothing of them (below one
-    percent of the norm). A FINDING FOR THE MATHEMATICIAN, stated as the engine reads it: the
-    Port booking in the board's frame books the record c / (c - v) = 2.27 times its norm over
-    the passage, since the rows the back face uncovers at each hop re-enter through the back
-    Port and are booked again (the ruling of 9.62 (3) books nothing at the back, one-way
-    inward); the body-frame reading would book the norm once. COMPUTATION; no pin."""
+def test_the_back_face_books_a_record_overtaking_the_cart_once_and_not_c_over_c_minus_v():
+    """AT THE BACK (9.74 (2)): the cart moving along +x at one Link every four intervals, the
+    record given along +x at 0.447 overtakes it from behind and books G_in - v e_out at the back
+    face, cut at zero: the norm once. THE CONTROL, the board's frame: the rows the back face
+    uncovers at each hop re-enter through the back Port and are booked again, c / (c - v) = 2.27
+    of the norm (finding (a) of item 48, resolved by the one rule). COMPUTATION; no pin."""
     document = cart_world(momentum=CART_MOMENTUM, stock=1, ticks=700, start=60)
-    with_hops, _ = run(document, hops=True, clicks=False, ticks=700)
-    without, _ = run(document, hops=False, clicks=False, ticks=700)
-    cart = with_hops.detector_names.index("cart")
-    (live,) = [live for live in with_hops.records.values() if live.family == 0]
-    (other,) = [live for live in without.records.values() if live.family == 0]
-    norm = Fraction(live.norm, live.pace)
-    booked = Fraction(live.pointers[cart]) + live.hop_carry
-    plain = Fraction(other.pointers[cart])
-    assert with_hops.blocks[1].stepped > 150  # the cart moved on; the record passed it
-    assert abs(float((booked - plain) / norm)) < 0.01  # the hop books nothing of receding rows
+    frame, _ = run(document, frame=True, clicks=False, ticks=700)
+    board, _ = run(document, frame=False, clicks=False, ticks=700)
+    assert frame.blocks[1].stepped > 150  # the cart moved on; the record passed it
+    booked, plain = booked_share(frame, board)
+    assert abs(float(booked) - 1) < 0.1, float(booked)
     re_entry = LIGHT_PACE / (LIGHT_PACE - CART_MOMENTUM / 192)  # c / (c - v) = 2.27
-    assert abs(float(plain / norm) - re_entry) < 0.1, float(plain / norm)
+    assert abs(float(plain) - re_entry) < 0.1, float(plain)

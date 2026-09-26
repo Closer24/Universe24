@@ -189,10 +189,11 @@ class LiveRecord:
     # whether the record's line was written (the record is deleted whole at
     # that interval, ALGEBRA.md 8.8, record 1888)
     clicked: bool = False
-    # THE TAKING AT A HOP (ALGEBRA.md 9.62 (3); BUILD.md section 26 item 48):
-    # the fraction of a hop's booking below one unit of the flux, carried to
-    # the next hop's booking (a remainder kept on the record, exact)
-    hop_carry: Fraction = Fraction(0)
+    # THE BOOKING IN THE BODY'S FRAME (ALGEBRA.md 9.74 (2); BUILD.md section
+    # 26 item 56): per detector of a moving set, the fraction of the face's
+    # booking below one unit of the flux, carried to the next interval's
+    # booking (a remainder kept on the record, exact); empty at rest
+    carry: dict[int, Fraction] = field(default_factory=dict)
     # THE POINT EMITTER'S WINDOW (ALGEBRA.md 9.71 (1); BUILD.md section 26 item
     # 50): open from the giving click until the outward norm through the
     # seat's six Ports reaches T; the intervals written and the outward norm
@@ -280,9 +281,6 @@ class Block:
     current: int | None = None
     givings: int = 0
     hop: tuple[int, int, int] = (0, 0, 0)
-    # THE TAKING AT A HOP (ALGEBRA.md 9.62 (3); item 48): the Nodes the body
-    # newly covers at this interval's hop, None when it did not hop
-    covered: np.ndarray | None = None
     # THE POINT EMITTER (item 50): the identity of the given record whose
     # window is open at this body, None when none is
     window: int | None = None
@@ -398,6 +396,8 @@ class DetectorLawSimulation:
         self.detector_at_node = np.full(self.shape, -1, dtype=np.int64)
         # the Port pairs per family for the detectors' inflow, listed once on first use
         self._inflow_port_pairs: dict[int, tuple[np.ndarray, np.ndarray, np.ndarray]] = {}
+        # the Ports' faces beside the pairs (axis, side), item 56
+        self._inflow_port_faces: dict[int, tuple[np.ndarray, np.ndarray]] = {}
         for number, entry in enumerate(world.measured):
             nodes = self._span_nodes(entry.position, entry.span)
             own = self._detector(f"measured:{number}", number, False)
@@ -991,7 +991,6 @@ class DetectorLawSimulation:
                 hop[axis] = count
                 stepped = True
         block.hop = (hop[0], hop[1], hop[2])
-        block.covered = None
         if not stepped:
             return
         for axis in range(3):
@@ -1001,15 +1000,13 @@ class DetectorLawSimulation:
                     block.corner[axis] %= self.shape[axis]
         old_mask = block.mask
         block.mask = self._box(block.corner, block.definition.extents, block.family)
-        # the Nodes newly covered by the hop, the taking's face (ALGEBRA.md 9.62
-        # (3); item 48); the Nodes uncovered at the back are booked nowhere
-        block.covered = block.mask & ~old_mask
         # HOST (item 48, the bug behind finding 2 of the run toward nature, row 2):
         # the detectors' Port pairs are cached per family (`_inflow_ports`) and
         # were never re-read after a hop, so a moving set's Ports stayed at its
         # place of the load; the cache is cleared at every hop, the Ports read
         # again from the Nodes as they stand (at rest bit for bit as before)
         self._inflow_port_pairs.clear()
+        self._inflow_port_faces.clear()
         if int(np.count_nonzero(block.mask)) < int(np.count_nonzero(old_mask)):
             # Reviewer 3's line from the redshift dry run (the Boss's 09:45Z): a
             # stepping block whose Nodes would leave the board by a zero face
@@ -1448,6 +1445,18 @@ class DetectorLawSimulation:
             live.norm, live.pace = emitter.norm, emitter.norm_denominator
         else:
             live.norm, live.pace = self.given_norm(live)
+            given = emitter.given
+            if given is not None and given.rest_norm != given.norm:
+                # THE THRESHOLD ON THE REST T (ALGEBRA.md 9.74 (3), 9.75 (1);
+                # BUILD.md section 26 item 56): a moving body's boosted rows
+                # carry gamma (1 +- beta) T_rest, the quantum's energy in the
+                # board's frame; the ladder's threshold stays on T_rest, the
+                # record's form at the giving times rest_norm / norm, the exact
+                # rational (the file's two integers, both the vacuum's form)
+                numerator = live.norm * given.rest_norm
+                denominator = live.pace * given.norm
+                common = gcd(numerator, denominator)
+                live.norm, live.pace = numerator // common, denominator // common
         self.ledger.transit_released[family] += cost
         block.emitted.append(identity)
         self.records[identity] = live
@@ -1785,17 +1794,40 @@ class DetectorLawSimulation:
         flat = np.arange(count, dtype=np.int64).reshape(self.shape)
         nodes: list[np.ndarray] = []
         neighbours: list[np.ndarray] = []
+        axes: list[np.ndarray] = []
+        sides: list[np.ndarray] = []
         for axis, side, mask in self._flux_ports(family):
             across = self._shift(flat, axis, -side, fill=-1, wrap=wrap)
             where = mask & (across >= 0)
             nodes.append(flat[where])
             neighbours.append(across[where])
+            axes.append(np.full(int(np.count_nonzero(where)), axis, dtype=np.int64))
+            sides.append(np.full(int(np.count_nonzero(where)), side, dtype=np.int64))
         port_i = np.concatenate(nodes) if nodes else np.zeros(0, dtype=np.int64)
         port_j = np.concatenate(neighbours) if neighbours else np.zeros(0, dtype=np.int64)
         port_detector = self.detector_at_node.ravel()[port_i]
         pairs = (port_i, port_j, port_detector)
         self._inflow_port_pairs[family] = pairs
+        # the face of every Port, (axis, side): the outward normal of the Node
+        # i's face toward j is side along the axis (ALGEBRA.md 9.74 (2))
+        self._inflow_port_faces[family] = (
+            np.concatenate(axes) if axes else np.zeros(0, dtype=np.int64),
+            np.concatenate(sides) if sides else np.zeros(0, dtype=np.int64),
+        )
         return pairs
+
+    def _moving_sets(self) -> dict[int, tuple[Block, list[int]]]:
+        """The detectors bound to a block whose momentum is not zero at this
+        interval, each with its block and the momentum (ALGEBRA.md 9.74 (2)):
+        the faces of these sets book in the body's frame; empty on a board at
+        rest, where the rule is the Port booking alone."""
+        moving: dict[int, tuple[Block, list[int]]] = {}
+        for detector, number in self.set_block.items():
+            block = self.block_by_number[number]
+            momentum = self._momentum_now(block)
+            if any(momentum):
+                moving[detector] = (block, momentum)
+        return moving
 
     def detector_inflow_tally(self, live: LiveRecord) -> dict[int, int]:
         """THE DETECTORS' INFLOW, PER RECORD, OVER THE PORTS ALONE (ALGEBRA.md
@@ -1824,10 +1856,65 @@ class DetectorLawSimulation:
         now_j = now[port_j].astype(object)
         before_j = before[port_j].astype(object)
         flux = now_i * before_j - before_i * now_j
+        moving = self._moving_sets() if self.set_block else {}
         offers: dict[int, int] = {}
-        for value, detector in zip(flux.tolist(), port_detector.tolist(), strict=True):
-            if value > 0:
-                offers[detector] = offers.get(detector, 0) + int(value) * wall
+        if not moving:
+            for value, detector in zip(flux.tolist(), port_detector.tolist(), strict=True):
+                if value > 0:
+                    offers[detector] = offers.get(detector, 0) + int(value) * wall
+            return offers
+        # THE BOOKING IN THE BODY'S FRAME (ALGEBRA.md 9.74 (2); BUILD.md section
+        # 26 item 56): a face of a body moving at v with outward normal n books
+        # per interval (G_in + (v . n) e_out) cut at zero AFTER the sum: G_in
+        # the board's inward current through the face's Link (the Port booking
+        # above), e_out the record's density on the Node outside the face
+        # (`node_density`, the same units), v . n = side x momentum / wall along
+        # the face's axis, positive at a face advancing into the outside (the
+        # front) and negative at a face receding from it (the back). One rule
+        # for every face of every moving set, per interval, not per hop: at
+        # the front an oncoming record books G_in + v e_out, a standing or
+        # transverse one v e_out, a record outrunning the body nothing; at the
+        # back a record overtaking from behind books G_in - v e_out, the norm
+        # once, with no negative booking. The whole part is booked, the
+        # fraction carried on the record per detector (`carry`, exact). The
+        # three tests: the face's Link, the outside Node's density and the
+        # body's own pace, fixed work; sums and products; no name. At v = 0
+        # the rule is the Port booking above, bit for bit.
+        port_axis, port_side = self._inflow_port_faces[live.family]
+        outside = sorted(
+            set(
+                int(node)
+                for node, detector in zip(port_j.tolist(), port_detector.tolist(), strict=True)
+                if detector in moving
+            )
+        )
+        density = dict(
+            zip(outside, self.node_density(live, np.array(outside, dtype=np.int64)), strict=True)
+        )
+        frame: dict[int, Fraction] = {}
+        for value, detector, node, axis, side in zip(
+            flux.tolist(),
+            port_detector.tolist(),
+            port_j.tolist(),
+            port_axis.tolist(),
+            port_side.tolist(),
+            strict=True,
+        ):
+            bound = moving.get(detector)
+            if bound is None:
+                if value > 0:
+                    offers[detector] = offers.get(detector, 0) + int(value) * wall
+                continue
+            block, momentum = bound
+            term = int(value) * wall + Fraction(side * momentum[axis], block.wall) * density[node]
+            if term > 0:
+                frame[detector] = frame.get(detector, Fraction(0)) + term
+        for detector, share in frame.items():
+            share += live.carry.get(detector, Fraction(0))
+            whole = share.numerator // share.denominator
+            live.carry[detector] = share - whole
+            if whole > 0:
+                offers[detector] = offers.get(detector, 0) + whole
         return offers
 
     def inward_flux(self, live: LiveRecord, mask: np.ndarray) -> int:
@@ -2424,12 +2511,36 @@ class DetectorLawSimulation:
         live.now[centre] -= emitter.weight * self._seat_level(block)
         live.window -= 1
 
-    def hop_density(self, live: LiveRecord, nodes: np.ndarray) -> list[Fraction]:
+    def _reads_at(self, a: np.ndarray, nodes: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:
+        """The sum of the six neighbours' amplitudes at the Nodes (flat
+        indices) alone, as `_neighbours` reads them over the board (the wrap
+        on a periodic axis, 0 beyond a zero face, the row itself on an axis
+        of one layer); HOST: the cost is the Nodes asked, not the board."""
+        coordinates = np.stack(np.unravel_index(nodes, self.shape), axis=0)
+        total = np.zeros(nodes.shape[0], dtype=object)
+        for axis in range(3):
+            if self.shape[axis] == 1:
+                total += 2 * a.ravel()[nodes].astype(object)
+                continue
+            for sign in (1, -1):
+                shifted = coordinates.copy()
+                shifted[axis] = shifted[axis] - sign
+                if wrap[axis]:
+                    shifted[axis] %= self.shape[axis]
+                    inside = np.ones(nodes.shape[0], dtype=bool)
+                else:
+                    inside = (shifted[axis] >= 0) & (shifted[axis] < self.shape[axis])
+                    shifted[axis] = np.clip(shifted[axis], 0, self.shape[axis] - 1)
+                values = a[tuple(shifted)].astype(object)
+                total += np.where(inside, values, 0)
+        return total
+
+    def node_density(self, live: LiveRecord, nodes: np.ndarray) -> list[Fraction]:
         """The record's density e at each of the Nodes (flat indices), the
         per-Node terms of `form_share` (the Node's term over the rule's read
         coefficient there, less its Link term), exact rationals in the form's
-        units; read at a hop on the newly covered Nodes (ALGEBRA.md 9.62 (3);
-        item 48)."""
+        units; read on the Nodes outside a moving set's faces (ALGEBRA.md 9.74
+        (2); item 56; the hop's reading of item 48 HISTORY)."""
         family = live.family
         wall = self.kind_wall(family)
         field = self.families[family].held is not None
@@ -2440,7 +2551,7 @@ class DetectorLawSimulation:
         level = content.ravel()[nodes]
         now = live.now.ravel()[nodes]
         before = live.before.ravel()[nodes]
-        reads = self._neighbours(live.before, self.kind_wrap[family]).ravel()[nodes]
+        reads = self._reads_at(live.before, nodes, self.kind_wrap[family])
         out: list[Fraction] = []
         for index in range(len(nodes)):
             read_coefficient, self_coefficient, wall_at = rule_coefficients(
@@ -2450,108 +2561,6 @@ class DetectorLawSimulation:
             node = wall * (wall_at * (a * a + b * b) - self_coefficient * a * b)
             out.append(Fraction(node, read_coefficient) - wall * a * int(reads[index]))
         return out
-
-    def _hop_takings(self) -> None:
-        """THE TAKING AT A HOP (ALGEBRA.md 9.62 (3), the mathematician's ruling
-        on Nature24's finding 2 of the run toward nature, row 2: the moving
-        detector took nothing on the first pass, a hop covering the rows in
-        front of the body with no Port crossing; BUILD.md section 26 item 48).
-        A hop is a translation of the body by one Link, and in the body's
-        frame the rows it newly covers crossed its face: at a hop, the rows of
-        every record on the Nodes the body newly covers are booked to the set
-        bound to the body as inward flux, at their share of the norm (the
-        invariant's density e on those Nodes, `hop_density`, the quantity the
-        Port booking sums to over a passage, in the units the ladder's running
-        total is compared in), read after the interval's step and the
-        interval's Port booking; the two bookings are disjoint (the Port
-        booking reads the rows crossing the old boundary during the step, this
-        one the rows standing on the newly covered Nodes after it); the rows
-        the body uncovers at its back are booked nowhere (one-way inward, a
-        booking never undone). IN THE BODY'S FRAME: rows receding ahead of the
-        body faster than it moves did not cross its face, the lattice's hop
-        overtook them by one Link and they leave again through the front Port
-        within a few intervals (the emitter's own outgoing train; a booking of
-        them would be the emitter taking its own light as it leaves), so a
-        covered Node's density is booked only where the record's plain current
-        through the Link ahead, from the covered Node to its outside neighbour
-        in the hop's direction, is below the body's own pace in the density's
-        units: c W < e p with c the current, e the density, p the momentum's
-        component along the hop and W the drive's wall (the rows' own speed
-        along the hop below the body's; an oncoming, standing or transverse
-        record is booked whole, a record outrunning the body not at all; an
-        exact comparison of integers and rationals, local to the Node, its
-        Link and the body's declared momentum). The whole part of the booked
-        share is added to the pointer, the fraction carried on the record to
-        its next hop booking (a remainder kept, exact); a share at or below
-        zero books nothing. At v = 0 the rule is void: nothing here runs, the
-        resting worlds bit for bit as before. Fixed work per hop: the newly
-        covered Nodes are one face of the body, fixed K."""
-        count = int(np.prod(self.shape))
-        flat = np.arange(count, dtype=np.int64).reshape(self.shape)
-        for block in self.blocks:
-            covered = block.covered
-            if covered is None or not covered.any():
-                continue
-            axis = next((index for index in range(3) if block.hop[index] != 0), None)
-            if axis is None:
-                continue
-            sign = 1 if block.hop[axis] > 0 else -1
-            pace = abs(int(self._momentum_now(block)[axis]))
-            nodes = flat[covered]
-            # the outside neighbour ahead of every covered Node in the hop's
-            # direction (-1 beyond an open face: no Node, no current)
-            ahead = self._shift(flat, axis, -sign, fill=-1, wrap=self.kind_wrap[block.family]).ravel()[
-                nodes
-            ]
-            at_nodes = self.detector_at_node.ravel()[nodes]
-            detectors = sorted(set(int(index) for index in at_nodes.tolist() if index >= 0))
-            if not detectors:
-                continue
-            for identity in list(self.records):
-                live = self.records[identity]
-                if live.clicked or live.arm_done or live.norm <= 0:
-                    continue
-                if live.standing:
-                    continue  # a block's own standing record is taken by no set
-                wall = self.kind_wall(live.family)
-                now = live.now.ravel()
-                before = live.before.ravel()
-                densities = self.hop_density(live, nodes)
-                shares: dict[int, Fraction] = {}
-                for index, node in enumerate(nodes.tolist()):
-                    detector = int(at_nodes[index])
-                    if detector < 0:
-                        continue
-                    density = densities[index]
-                    if density <= 0:
-                        continue
-                    neighbour = int(ahead[index])
-                    current = 0
-                    if neighbour >= 0:
-                        # the plain current from the covered Node into its neighbour
-                        # ahead (the flux into j from i: now_j before_i - before_j now_i)
-                        current = wall * (
-                            int(now[neighbour]) * int(before[node])
-                            - int(before[neighbour]) * int(now[node])
-                        )
-                    if current * block.wall < density * pace:
-                        shares[detector] = shares.get(detector, Fraction(0)) + density
-                if not shares:
-                    continue
-                increments = [0] * len(self.detector_names)
-                booked = False
-                for detector, share in shares.items():
-                    share += live.hop_carry
-                    whole = share.numerator // share.denominator
-                    live.hop_carry = share - whole
-                    if whole <= 0:
-                        continue
-                    live.pointers[detector] += whole
-                    live.absorbed += whole
-                    increments[detector] = whole
-                    booked = True
-                if booked:
-                    self._ladder_click(live, increments)
 
     def _ladder_of(self, live: LiveRecord) -> list[int]:
         """The record's ladder in its declared order (ALGEBRA.md 9.19 (3)
@@ -2800,9 +2809,6 @@ class DetectorLawSimulation:
                 # decision (2) of record 1962), its faces the world's.
                 continue
             self._advance(live)
-        # THE TAKING AT A HOP (ALGEBRA.md 9.62 (3); item 48), after the interval's
-        # step and its Port booking
-        self._hop_takings()
         # THE POINT EMITTER'S WINDOWS (ALGEBRA.md 9.71 (1); item 50): the
         # closes, after the interval's bookings (the writes came with the
         # records' own steps, `_window_write`)

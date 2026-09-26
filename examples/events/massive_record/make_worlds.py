@@ -339,8 +339,18 @@ def given_train(document: dict, number: int) -> None:
     record must enter to be read: the emitter itself where its light returns, another well,
     a medium) passes the train run through it alone on the vacuum with 0.99 of T booked 40
     Links beyond, refused below. The emitter's `period` and `norm` (the excited record's) are
-    the mode's as before (`excitation_norm`)."""
+    the mode's as before (`excitation_norm`). THE BOOSTED NORM (ALGEBRA.md 9.74 (3), 9.75 (1);
+    BUILD.md section 26 item 56): a moving body's train at its own boosted clock (item 49),
+    written at the rest amplitude A, ALREADY carries the quantum's energy in the board's frame,
+    D T_rest forward and T_rest / D backward, D = sqrt((1 + beta) / (1 - beta)), beta = v / c_l
+    (`doppler_factor`): the form is quadratic in the wave number as in the amplitude (the
+    energy of a wave A^2 k^2 L; k by D and the length by 1 / D), so no amplitude factor enters
+    (the reading asked in 9.75 (1): the long-wave pair's ratio 1.577 against D = 1.596,
+    COMPUTATION on the files' integers). `rest_norm`, the same train's norm at the family's
+    own clock, is written beside `norm` (the ladder's threshold); the ratio norm / rest_norm
+    is checked against D (1 / D backward) within 3 percent, else refused."""
     from event_universe.events.world import (
+        LABEL_SCALE,
         given_train_flux_sign,
         given_train_norm,
     )
@@ -365,38 +375,41 @@ def given_train(document: dict, number: int) -> None:
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(definition.emitter.family)
     axis, sign = train.axis, train.sign
-    length = extents[axis]
-    taper = length // 4
     k = 2.0 * math.pi * p / (2.0 * steps * q)
     omega = math.acos((num / den) * (math.cos(k) + 2.0) / 3.0)
     spanned = tuple(extents[a] == shape[a] and wrap[a] for a in range(3))
-
-    def envelope(i: int) -> float:
-        if i < taper:
-            return math.sin(math.pi * (i + 0.5) / (2.0 * taper)) ** 2
-        if i >= length - taper:
-            return envelope(length - 1 - i)
-        return 1.0
-
-    def window(index: int, extent: int, uniform: bool) -> float:
-        if extent <= 1 or uniform:
-            return 1.0
-        return math.sin(math.pi * (index + 0.5) / extent) ** 2
-
-    now: list[int] = []
-    before: list[int] = []
-    for x in range(extents[0]):
-        for y in range(extents[1]):
-            for z in range(extents[2]):
-                position = (x, y, z)
-                along = position[axis] if sign > 0 else length - 1 - position[axis]
-                shape_factor = envelope(along)
-                for other in range(3):
-                    if other != axis:
-                        shape_factor *= window(position[other], extents[other], spanned[other])
-                amplitude = GIVEN_AMPLITUDE * shape_factor
-                now.append(int(round(amplitude * math.cos(k * along))))
-                before.append(int(round(amplitude * math.cos(k * along + omega))))
+    # THE BOOSTED NORM (9.74 (3), 9.75 (1); item 56): the rest train (the
+    # family's clock, the same amplitude and periods) written beside a boosted
+    # train for its norm; the boosted rows' norm is read against D T_rest
+    expected = 1.0
+    rest_norm: int | None = None
+    if train.boosted:
+        assert given_family.phase_per_age is not None
+        rest_clock = [int(given_family.phase_per_age[0]), int(given_family.phase_per_age[1])]
+        entry = world.measured[number]
+        wall = 3 * LABEL_SCALE * int(world.width) * sum(int(value) for value in entry.held)
+        momentum = int(entry.momentum[axis])
+        if momentum == 0:
+            raise ValueError(
+                f"measured[{number}]: the train's own clock along {['x', 'y', 'z'][axis]} on a body "
+                "with no momentum along it (ALGEBRA.md 9.62 (4)); nothing written"
+            )
+        forward = sign * momentum > 0
+        doppler = doppler_factor(rest_clock, steps, [num, den], Fraction(abs(momentum), wall))
+        expected = doppler if forward else 1.0 / doppler
+        rest_wavelength = (2 * steps * rest_clock[1]) // rest_clock[0]
+        rest_extents = list(extents)
+        rest_extents[axis] = train.periods * rest_wavelength
+        rest_k = 2.0 * math.pi * rest_clock[0] / (2.0 * steps * rest_clock[1])
+        rest_omega = math.acos((num / den) * (math.cos(rest_k) + 2.0) / 3.0)
+        rest_now, rest_before = train_rows(
+            tuple(rest_extents), axis, sign, rest_k, rest_omega, float(GIVEN_AMPLITUDE), spanned
+        )
+        rest_shape = tuple(max(shape[a], rest_extents[a]) for a in range(3))
+        rest_norm = given_train_norm(
+            rest_now, rest_before, rest_shape, (0, 0, 0), tuple(rest_extents), (num, den), wrap
+        )
+    now, before = train_rows(extents, axis, sign, k, omega, float(GIVEN_AMPLITUDE), spanned)
     if given_train_flux_sign(now, before, extents, axis, sign) <= 0:
         raise ValueError(
             f"measured[{number}]: the train's flux along its way is not positive; nothing written"
@@ -421,6 +434,78 @@ def given_train(document: dict, number: int) -> None:
             "nothing written"
         )
     emitter["given"] = {"now": now, "before": before, "norm": norm}
+    if rest_norm is not None:
+        ratio = norm / rest_norm
+        if not 0.97 * expected <= ratio <= 1.03 * expected:
+            raise ValueError(
+                f"measured[{number}]: the boosted train's norm {norm} over the rest train's "
+                f"{rest_norm} is {ratio:.4f}, not the Doppler factor {expected:.4f} within 3 percent "
+                "(ALGEBRA.md 9.74 (3), 9.75 (1)); nothing written"
+            )
+        emitter["given"]["rest_norm"] = rest_norm
+
+
+def train_rows(
+    extents: tuple[int, ...],
+    axis: int,
+    sign: int,
+    k: float,
+    omega: float,
+    amplitude: float,
+    spanned: tuple[bool, ...],
+) -> tuple[list[int], list[int]]:
+    """The train's two levels over a box (`given_train`): the character of **K** under the
+    Hann window across the transverse extents and the tapers over a quarter of the length at
+    each end, at the amplitude, x-major (HOST, the generator's floats rounded once)."""
+    length = extents[axis]
+    taper = length // 4
+
+    def envelope(i: int) -> float:
+        if i < taper:
+            return math.sin(math.pi * (i + 0.5) / (2.0 * taper)) ** 2
+        if i >= length - taper:
+            return envelope(length - 1 - i)
+        return 1.0
+
+    def window(index: int, extent: int, uniform: bool) -> float:
+        if extent <= 1 or uniform:
+            return 1.0
+        return math.sin(math.pi * (index + 0.5) / extent) ** 2
+
+    now: list[int] = []
+    before: list[int] = []
+    for x in range(extents[0]):
+        for y in range(extents[1]):
+            for z in range(extents[2]):
+                position = (x, y, z)
+                along = position[axis] if sign > 0 else length - 1 - position[axis]
+                shape_factor = envelope(along)
+                for other in range(3):
+                    if other != axis:
+                        shape_factor *= window(position[other], extents[other], spanned[other])
+                scaled = amplitude * shape_factor
+                now.append(int(round(scaled * math.cos(k * along))))
+                before.append(int(round(scaled * math.cos(k * along + omega))))
+    return now, before
+
+
+def doppler_factor(
+    given_clock: list[int], phase_steps: int, given_pair: list[int], pace: Fraction
+) -> float:
+    """D = sqrt((1 + beta) / (1 - beta)), beta = v / c_l, the Doppler factor of a light train
+    given along the motion (ALGEBRA.md 9.74 (3), 9.75 (1)): the boosted norm D T_rest forward
+    and T_rest / D backward; c_l the given family's group pace at the rest clock's k
+    (`group_pace`). HOST, the generator's float; the file carries integers."""
+    p, q = int(given_clock[0]), int(given_clock[1])
+    k = 2.0 * math.pi * p / (2.0 * phase_steps * q)
+    speed = group_pace((int(given_pair[0]), int(given_pair[1])), k)
+    beta = float(pace) / speed
+    if not 0 < beta < 1:
+        raise ValueError(
+            f"the body's pace {float(pace):.4f} is not between 0 and the given family's pace "
+            f"{speed:.4f} at k = {k:.4f}: no boost (ALGEBRA.md 9.62 (4))"
+        )
+    return math.sqrt((1.0 + beta) / (1.0 - beta))
 
 
 def names_of(document: dict) -> dict[str, int]:
