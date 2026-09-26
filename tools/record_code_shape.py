@@ -7,9 +7,11 @@ outside its one function, sites that shift an array across Nodes, and, for every
 `src/`, `tools/` and `tests/`, the names imported from the loop's module beyond its public
 entry. A file within the limits (every docstring one line, no record reference, under 400
 lines, none of the three sites) passes whatever its counts. A file beyond them is compared with
-`tests/code_shape_baseline.json`: none of its counts may grow; a count that went down is
-re-recorded in the same commit (`python tools/record_code_shape.py`); a new file beyond them
-fails. Two functions of `src/` with the same
+`tests/code_shape_baseline.json` and with the same file at the merge base (the ref CI checks
+against, else origin/main): none of its counts may grow, and none may stand above the merge
+base's (a baseline raised in the same commit is refused); a count that went down is re-recorded
+in the same commit (`python tools/record_code_shape.py`); a new file beyond them fails. Two
+functions of `src/` with the same
 normalised body (names and literals abstracted) fail; the duplicates of today are in the baseline
 and may only go down. The import contracts hold with no baseline: a feature folder imports
 `core/` alone and never another feature; `core/` imports nothing of the package outside itself;
@@ -24,6 +26,7 @@ import ast
 import hashlib
 import io
 import json
+import os
 import re
 import subprocess
 import sys
@@ -279,7 +282,24 @@ def beyond_the_limits(rel: str, shape: dict[str, int]) -> list[str]:
     return found
 
 
-def violations(root: Path, baseline: dict[str, Any]) -> list[str]:
+def base_baseline(root: Path, ref: str | None = None) -> dict[str, Any] | None:
+    """The baseline as the merge base holds it (the ref CI checks against, else origin/main), or None where git cannot show it; a baseline raised in the same commit never passes the ratchet."""
+    ref = ref or os.environ.get("CHECK_BASE") or "origin/main"
+    try:
+        shown = subprocess.run(
+            ["git", "show", f"{ref}:{BASELINE.as_posix()}"],
+            capture_output=True,
+            text=True,
+            cwd=root,
+            check=True,
+        ).stdout
+    except OSError, subprocess.CalledProcessError:
+        return None
+    loaded: dict[str, Any] = json.loads(shown)
+    return loaded
+
+
+def violations(root: Path, baseline: dict[str, Any], base: dict[str, Any] | None = None) -> list[str]:
     """Every way the tree departs from the limits and the baseline, one line each: a file within the limits passes whatever its counts; a file beyond them is new and fails, or is recorded and ratchets."""
     found: list[str] = []
     re_record = (
@@ -330,6 +350,36 @@ def violations(root: Path, baseline: dict[str, Any]) -> list[str]:
     for rel in set(recorded_imports) - set(imports):
         found.append(f"{rel} no longer imports the loop's internals; {re_record}")
     found.extend(contract_violations(root))
+    if base is not None:
+        found.extend(above_the_base(root, present, groups, imports, base))
+    return found
+
+
+def above_the_base(
+    root: Path,
+    present: dict[str, dict[str, int]],
+    groups: dict[str, list[str]],
+    imports: dict[str, list[str]],
+    base: dict[str, Any],
+) -> list[str]:
+    """Every count of a file beyond the limits, every duplicate group and every import of the loop's internals that stands higher than the merge base's baseline: raising the baseline in the same commit is refused."""
+    found: list[str] = []
+    for rel, shape in present.items():
+        recorded = base["files"].get(rel)
+        if recorded is None or not beyond_the_limits(rel, shape):
+            continue
+        for key in COUNTS:
+            if shape[key] > recorded[key]:
+                found.append(
+                    f"{rel}: {key.replace('_', ' ')} is {shape[key]}, above the merge base's {recorded[key]}"
+                )
+    for digest, names in groups.items():
+        if len(names) > len(base["duplicates"].get(digest, [])):
+            found.append(f"duplicate functions above the merge base: {', '.join(names)}")
+    for rel, names in imports.items():
+        grew = sorted(set(names) - set(base["loop_internal_imports"].get(rel, [])))
+        if grew:
+            found.append(f"{rel} imports the loop's internals {', '.join(grew)} above the merge base")
     return found
 
 

@@ -6,8 +6,9 @@ shift an array across Nodes, and per file of src/, tools/ and tests/ the names i
 loop's module beyond its public entry. A file within the limits (one-line docstrings, no record
 reference, under 400 lines, none of the three sites) passes whatever its counts (the Boss's word
 of 18:11Z: the rule never blocks a feature folder that fills within them); a file beyond them is
-compared with tests/code_shape_baseline.json: no count may grow, a count that went down is
-re-recorded in the same commit, and a new file beyond them fails. Two functions of src/ with one abstracted body fail beyond the baseline's
+compared with tests/code_shape_baseline.json and with the merge base's copy of it: no count may
+grow or stand above the merge base's (a baseline raised in the same commit is refused), a count
+that went down is re-recorded in the same commit, and a new file beyond them fails. Two functions of src/ with one abstracted body fail beyond the baseline's
 groups. The import contracts hold with no baseline. Selected on every pull request."""
 
 from __future__ import annotations
@@ -40,7 +41,8 @@ def test_the_tree_is_at_the_baseline_and_keeps_the_import_contracts():
     """Every count of every file of src/ equals its baseline, no new duplicate, no new import of
     the loop's internals, every feature on core/ alone, core/ on itself alone."""
     assert BASELINE["format"] == "code-shape-baseline"
-    assert SHAPE.violations(ROOT, BASELINE) == []
+    base = SHAPE.base_baseline(ROOT)
+    assert SHAPE.violations(ROOT, BASELINE, base) == []
     assert set(BASELINE["files"]) == {SHAPE.relative(ROOT, p) for p in SHAPE.python_files(ROOT, "src")}
 
 
@@ -74,6 +76,23 @@ def test_a_grown_count_fails_and_a_lowered_count_asks_for_the_re_record(tmp_path
     assert any("comment lines went down from 1 to 0; re-record" in line for line in found)
     path.unlink()
     assert any("not in the tree; re-record" in line for line in SHAPE.violations(root, baseline))
+
+
+def test_a_baseline_raised_in_the_same_commit_is_refused_against_the_merge_base(tmp_path):
+    """The Boss's hole of 19:33Z: a pull request that grows a file beyond the limits and
+    re-records its own baseline passes against that baseline and fails against the merge base's."""
+    root = tree(tmp_path, SMALL)
+    base = SHAPE.record(root)
+    path = root / PACKAGE / "core" / "a.py"
+    path.write_text(path.read_text() + "# one more comment\n# and another\n", encoding="utf-8")
+    raised = SHAPE.record(root)
+    assert SHAPE.violations(root, raised) == []
+    found = SHAPE.violations(root, raised, base)
+    assert any("comment lines is 3, above the merge base's 1" in line for line in found)
+    assert any("lines is 10, above the merge base's 8" in line for line in found)
+    # a file within the limits is free of the base too; a cut below the base passes
+    path.write_text('"""One line."""\n\n\ndef f(x):\n    return x\n', encoding="utf-8")
+    assert SHAPE.violations(root, SHAPE.record(root), base) == []
 
 
 def test_a_new_file_meets_the_limits_from_its_first_commit(tmp_path):
