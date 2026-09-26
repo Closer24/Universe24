@@ -111,6 +111,7 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
     assert tests == [
         "tests/test_check_scope.py",
         "tests/test_code_shape.py",
+        "tests/test_genericity.py",
         "tests/test_repository_hygiene.py",
         "tests/test_repository_language.py",
         "tests/test_repository_navigation.py",
@@ -120,10 +121,11 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
 
 
 def test_every_change_selects_the_shipped_worlds_regression_and_no_change_selects_nothing():
-    """The regression record of every shipped world is compared on any change at all (record
-    2214 point 7); with nothing changed nothing is selected."""
+    """The regression record of every shipped world is compared and the genericity test draws
+    its universes on any change at all (record 2214 point 7; record 2234); with nothing changed
+    nothing is selected."""
     tests, _ = CHECK.select(["docs/GLOSSARY.md"], {})
-    assert "tests/test_shipped_worlds.py" in tests
+    assert "tests/test_shipped_worlds.py" in tests and "tests/test_genericity.py" in tests
     tests, _ = CHECK.select(["tests/shipped_worlds.json"], {})
     assert "tests/test_shipped_worlds.py" in tests
 

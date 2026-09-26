@@ -1,6 +1,6 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "eeaf8a5e",
+ "recorded_at": "957a9709",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
@@ -8,7 +8,7 @@
    },
    "ticks": 15156,
    "intervals": 200,
-   "digest": "4839b7918f8e233126db1a5922f44c2bee9bde3eece9f6415e1eb49a41870c7a",
+   "digest": "5951df1ddb735e99aa5eeadba8f0498ccae94ab51100d0f845705471812cc69d",
    "records": 18,
    "clicks": 0,
    "lines": 644
@@ -19,7 +19,7 @@
    },
    "ticks": 2400,
    "intervals": 200,
-   "digest": "3602c4cbba572b5af0e2655159c4e03e10073edada70a318f552de4e315a11a9",
+   "digest": "f61291b6cbffab68af043432d09bc0bac0be0b18b50cc0cde530fd4e010ea0a4",
    "records": 14,
    "clicks": 0,
    "lines": 640
@@ -30,7 +30,7 @@
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "ae43213ac0f282f731ff6205bec127683832f3b1e8c5967754e71a3635592177",
+   "digest": "1685a2c18f90b824dd673be2f35d6eb97dc07e48b39b7f1b54c60d557f6321f6",
    "records": 1,
    "clicks": 0,
    "lines": 203
@@ -41,7 +41,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "58551c3d659edd3bf076829cbb7a58367da343da0cba79338b55e439acb9cf62",
+   "digest": "eb238733d4ae6230bbaa99ca94f065474bb88e350196929ab31efa909d27370d",
    "records": 1,
    "clicks": 0,
    "lines": 403
@@ -52,7 +52,7 @@
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "1d544c9f28322b154d29b74c1684d7e22f14f200315dd73cc998dacaf85a75d2",
+   "digest": "18c73943a17c8fb5ab554402f794a1e2c9f6752a6bcccdee9ed6f37b08caec18",
    "records": 1,
    "clicks": 0,
    "lines": 204
@@ -63,7 +63,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "7ecf3bcea5a343e5b748f4d4b4dacade1969db5d0c6d23354ccc19851216dceb",
+   "digest": "6db124ced3ea13a2f3b2c6cb44402d5606141e07528aabc653eecfda982caa77",
    "records": 1,
    "clicks": 0,
    "lines": 404
@@ -74,7 +74,7 @@
    },
    "ticks": 3500,
    "intervals": 200,
-   "digest": "5e81ca88b064bcbd1cd79392f079a9e25fe9b6133db7f4a779cb97fe7f582bab",
+   "digest": "7462d9a642336d0696598f6ee77b41cb22f0045e5cabcc20bb7abb2d860cf22a",
    "records": 1,
    "clicks": 0,
    "lines": 201
@@ -85,7 +85,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "3699691a58ae1142e16ea99b0cd18c9630f9d5efda64e37eb21e158684441438",
+   "digest": "7ce1c6d7e46628a47e067227143bf39c2ca57700b6cfbab7a7a0e6b3f4d285e9",
    "records": 1,
    "clicks": 0,
    "lines": 401
@@ -96,7 +96,7 @@
    },
    "ticks": 4800,
    "intervals": 1500,
-   "digest": "170fafcbdbff12c49881b2ed53dce874c38b8c6c81c2e99a55f21d422adbcdc5",
+   "digest": "c16b059a12a6359d03b62e82ac7bcd2c3db78d9551b88205be0090d09ca3a4b1",
    "records": 16,
    "clicks": 42,
    "lines": 4756
@@ -107,7 +107,7 @@
    },
    "ticks": 20500,
    "intervals": 200,
-   "digest": "444cb94e80e071fdb7f7b2af3601ab21e84a1f5338961941ceedea745d395798",
+   "digest": "fbe997f88f2d03ac86a14eab376fc97e308288e6766913b1d47d00d9537bc80c",
    "records": 1,
    "clicks": 0,
    "lines": 204
@@ -118,7 +118,7 @@
    },
    "ticks": 20500,
    "intervals": 200,
-   "digest": "37fac0a30e594df3a2f2a49f54f47329194e4345fa95b47c722e48600c9ba058",
+   "digest": "c45701a55cb416154b978b3299c66c8e81a191c50a982fa58d60daed63da2c6d",
    "records": 1,
    "clicks": 0,
    "lines": 404
@@ -129,7 +129,7 @@
    },
    "ticks": 70992,
    "intervals": 200,
-   "digest": "c588f05ad00555eaf7c6c2ed103edd3730cf503e29390a307658102146d81949",
+   "digest": "8f04cced6d145c8d2d273222c2a120c5542996713e55dbc5ccc98adf55f27782",
    "records": 1,
    "clicks": 0,
    "lines": 205
@@ -140,7 +140,7 @@
    },
    "ticks": 35304,
    "intervals": 3000,
-   "digest": "ffd0e2310fc77b7027a54be86ea0efeb0fc410571e264ba084e79290d3c5b642",
+   "digest": "b8691cd68f3acc7434d037160dc45c6e7b861a9e6e5d353fd370bd9df1f93c4e",
    "records": 2,
    "clicks": 11,
    "lines": 9108
@@ -151,7 +151,7 @@
    },
    "ticks": 5600,
    "intervals": 200,
-   "digest": "0ee0fec35d1646bec16023865bc1b7c160dc4eba6068851752c5cd41745d4b32",
+   "digest": "133a03d0eda7607409d497c37d2db50e41fcfbbde7fc8dc8f633729fb219f00e",
    "records": 15,
    "clicks": 0,
    "lines": 641
@@ -162,7 +162,7 @@
    },
    "ticks": 3600,
    "intervals": 200,
-   "digest": "2655af87c0e4d6ea927634f4a88e884c5a8bb33fe21d332236fa1614ea351c21",
+   "digest": "11669ce22b464f72d55ba317909561c8e215202fff3e18fd5141e774ffc1140f",
    "records": 3,
    "clicks": 0,
    "lines": 625
@@ -173,7 +173,7 @@
    },
    "ticks": 5966,
    "intervals": 200,
-   "digest": "4bc9102832f77cdcb22d685ec949c4fd22143aeaa6d9884a1257cd8b69c707c5",
+   "digest": "fd13979e2bffa12dfbb07bc57ddc3d6fad2b7ccb9ffc18ad14502538e4046fd6",
    "records": 4,
    "clicks": 1,
    "lines": 610
@@ -184,7 +184,7 @@
    },
    "ticks": 3600,
    "intervals": 1500,
-   "digest": "675123d062f1bc417e8304dd0bd886c02dde2081581d3bbcee65c26752afc708",
+   "digest": "1fddd33a62fb4ea854ca5127df5ccf0c57ca53a98033cec1013357e50866f987",
    "records": 17,
    "clicks": 39,
    "lines": 4751
@@ -195,7 +195,7 @@
    },
    "ticks": 8206,
    "intervals": 200,
-   "digest": "5bf9089f6d05139065cbf1358363be67a9b305185d6b221052ab1cffec53a0ae",
+   "digest": "5903e3b94bf990118dfc32d6fcd8a8341c327eff6aae8044ddd695b120f74140",
    "records": 4,
    "clicks": 0,
    "lines": 607
@@ -206,7 +206,7 @@
    },
    "ticks": 6534,
    "intervals": 200,
-   "digest": "fcc81804af45b3252287c5cda27cab77e4eb9409fadb49a8b6dedc24bb5b1343",
+   "digest": "bfb7859c9fe533f55c04df42d8440c19cf2a4a2792c27d1e63e66b93f686f23d",
    "records": 8,
    "clicks": 0,
    "lines": 627
@@ -217,7 +217,7 @@
    },
    "ticks": 10558,
    "intervals": 200,
-   "digest": "9c90765a7ecc7e18506653515d2960071e12b68b21618b2aab76af272908f8c8",
+   "digest": "5825e8b20667ecdf52a9a3d75eacb957b4d0bddbd6177e7fe6eacff2d7f73455",
    "records": 3,
    "clicks": 0,
    "lines": 606
@@ -228,7 +228,7 @@
    },
    "ticks": 6150,
    "intervals": 200,
-   "digest": "c5dab5c890a6fee7625ddf0eed7efe3275da2acc186fd9bf3b790ee42fc58b5f",
+   "digest": "cb1276c901c25fb1dea7a6b5e2f07916fa62df417bb4c4b0949c3ffac739a4b7",
    "records": 9,
    "clicks": 0,
    "lines": 628
@@ -239,7 +239,7 @@
    },
    "ticks": 9598,
    "intervals": 200,
-   "digest": "86ed8b2afafe08da8a6c30b76553615cf1004056aa6be9bfb032d2d891a1ac9c",
+   "digest": "8b3d88735a7f00966ba52651fcde9f6b96356ce196313cd5682b67094d5e1bf5",
    "records": 4,
    "clicks": 0,
    "lines": 607

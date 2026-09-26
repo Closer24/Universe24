@@ -188,8 +188,10 @@ def select(changed, sources):
     if changed:
         # EVERY SHIPPED WORLD BIT FOR BIT on every pull request, whatever it changes (the model
         # owner's short procedure, record 2214 point 7; the Boss's records 2216 (2) and 2230):
-        # the regression record of tests/shipped_worlds.json is compared on any change at all
+        # the regression record of tests/shipped_worlds.json is compared on any change at all,
+        # and the genericity test draws its seeded universes (the Boss's record 2234)
         tests.add("tests/test_shipped_worlds.py")
+        tests.add("tests/test_genericity.py")
         # and THE SHAPE OF THE CODE is held at its baseline (the model owner's decisions,
         # records 2239 and 2241)
         tests.add("tests/test_code_shape.py")
