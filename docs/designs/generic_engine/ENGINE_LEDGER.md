@@ -61,7 +61,7 @@ generic implementation in the engine for families?": a PRIMITIVE is a kind of at
 engine can apply, written once in the code and applied to any family by its kind, never by
 its name; an ATTRIBUTE is a family's declared value of a primitive, written in the run's
 files, never in the code (HIGHLIGHTS 5.6; ALGEBRA.md 9.110 items 1 and 3). The engine
-implements the rule, the click and this closed set of primitives; Coder 3 (Coder 3 until record 2186) supports exactly this
+implements the rule, the click and this closed set of primitives; Main Loop (The 3 until record 2186, Coder 3 until record 2209) supports exactly this
 table after the merge; the tests at the end check it. Any experiment is then a change of the
 files and a check-mode run; a kind this table lacks is proposed as a new primitive, never written
 into a step. The keys are the loader's of emitter-click 01109b05 where a primitive is implemented
@@ -79,6 +79,16 @@ and the engine has no flag and no version. An EXPERIMENT is one world of the che
 table with its blind expectation; the word "row" is not used for it, nor for a primitive of this
 table or a family's entry (the model owner's word of 2026-09-26, 12:10Z: "rows are the
 experiments; say experiment").
+
+THE REGISTER (the model owner's decision, record 2212 of docs/LOG_2026-09-20.md): a
+primitive's identity is its key in this table, a unique English name, never a number. The
+engine keeps one register, name to function, read by the central loop; a name registered
+twice is refused when the engine loads. Every primitive declares what it reads, what it
+writes and its place in the step; the loop refuses two primitives that write the same value
+at the same place unless their order is declared. Three columns join this table with Main
+Loop's interface (record 2208): reads, writes, and the one agent working on the primitive now.
+A change of behaviour keeps every shipped world bit for bit or takes a new name; there is no
+version.
 
 | Primitive | Key (a family's entry of universe.json unless said) | Allowed values | Its place in the interval's step (9.91 (8)) | Its algebraic expression, written out | ALGEBRA.md | The test (green today, or to do) | From the rule, or beyond the rule (record 2188) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
