@@ -8,6 +8,73 @@ How to read this document (2026-09-23). Sections 1, 2 and 5.1 to 5.3 state the s
 
 *Sole author: Alon Gonen*
 
+# 0. How every document is written
+
+The model owner's rules for every file of the repository (2026-09-26, [record 2113](LOG_2026-09-20.md#2113-the-owner-one-set-of-writing-rules-for-every-document-at-the-head-of-the-highlights)). A file that breaks them is corrected, not excused. The files move to this form as item 22 of the acceptance list ([record 2112](LOG_2026-09-20.md#2112-the-owner-three-files-define-everything-the-agents-instructions-unified)).
+
+## 0.1 The files and what each may hold
+
+Three files define everything. No other living file exists without the owner's word.
+
+| File | What it defines | What it never holds | Owner |
+| --- | --- | --- | --- |
+| docs/HIGHLIGHTS.md | these writing rules; the rules of work; the owner's decisions, one line each with its record (5.4); the glossary, one word per term | derivations, code places, run readings | the Boss |
+| docs/ALGEBRA.md | the rule at the Node, the families, the bodies, the clicks, the lab tools; each experiment's formula and blind expectation | code places, run readings, process | the mathematician |
+| docs/ENGINE.md | the families file, the world file and the start file with every key allowed in them; the table from each section of the algebra to its operation and its code place; each experiment's world file, detector and check-mode reading | a rule not in the algebra, derivations | Nature24 |
+
+Four files define nothing and stay beside them.
+
+| File | What it holds | Owner |
+| --- | --- | --- |
+| AGENTS.md | the instructions for every agent: the workflow, the roles, the checks, Git; each Skill is a short role card pointing to it | the Boss |
+| README.md | the map: where each thing is, how to install and run | the Boss |
+| docs/LOG_<date>.md | the day's records, numbered, appended, never rewritten | the Boss |
+| CHANGELOG.md | the releases | the one who releases |
+
+Everything else lives in docs/history/, marked as a record, and is never cited as a rule.
+
+## 0.2 Language and words
+
+1. Every file is written in English, in short and simple sentences, one idea to a sentence.
+2. Every thing has one word, the glossary's; a new word enters the glossary before it is used.
+3. A place on the GameBoard is a Node and nothing else.
+4. There is one engine and it has no name and no version; a retired name appears only in docs/history/ and in the dated logs.
+5. A date is written YYYY-MM-DD and a time in UTC with Z.
+
+## 0.3 Numbers and headings
+
+A Markdown file has no font sizes; the heading level is the size.
+
+1. `#` is used once, for the file's title.
+2. `##` opens a numbered section: `## N. Title`.
+3. `###` opens a numbered subsection: `### N.M Title`. No level below it.
+4. Items inside a subsection are numbered (1), (2), (3), or listed 1., 2., 3.
+5. A number is never reused; a deleted section keeps its number and says "Deleted on YYYY-MM-DD".
+6. A record in a log is `### <number>. <title>`, the numbers running on without a gap.
+
+## 0.4 Emphasis
+
+1. Bold marks a term at the place it is defined, and the one sentence of a decision that must not be missed. Nothing else is bold.
+2. Italics are not used, except for the title of an outside work.
+3. Code spans mark a file, a key, an identifier or a value exactly as written.
+
+## 0.5 Symbols and numbers
+
+1. Every symbol is named in English at its first use and never stands alone as a Greek letter.
+2. A scalar is plain, a vector bold lowercase (**p**), a tensor, a matrix or an operator bold uppercase (**C**).
+3. Every number states its kind: a measurement (a detector's click, compared with nature), a GameBoard reading (a diagnostic), or a host cost.
+4. Every rule cites its section or its record; a rule is stated once, in its one file, and every other place links to it.
+
+## 0.6 Tables and lists
+
+1. Like things are a table, one row each.
+2. A list is numbered when its order matters.
+
+## 0.7 The checks
+
+1. The language test and the navigation test run on every change.
+2. A check of the heading levels and numbering is Nature24's to add (the Boss writes no code).
+
 # 1. Purpose and navigation
 
 This file is the head of the specification: what the system is, what it measures, how a measurement connects to the world, and where each rule lives. Adopted decisions, proposed profiles, implemented mechanisms and tested results stay distinct; an implementation gap does not reopen a decision, and no document invents a missing physical law. The law's contract is [BEAM_LAW.md](BEAM_LAW.md); the names are [TERMINOLOGY.md](TERMINOLOGY.md); the engine's steps and record are [ENGINE.md](ENGINE.md); the decisions are section 5.4; the mathematics is [DERIVATIONS_BEAM.md](DERIVATIONS_BEAM.md); the connection of clicks from Inside to Outside is [the click frame](designs/click_frame/DERIVATION.md); the registered readings are [EXPERIMENTS.md](EXPERIMENTS.md) and [NATURE.md](NATURE.md).
