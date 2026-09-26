@@ -69,6 +69,17 @@ record is refused plainly by the reading tools that need the per-row lines
 (docs/ENGINE.md, "The trimmed record"). Every registered digest is of the
 whole record, replayed under the option.
 
+## The readings a world declares
+
+A world file may declare `readings`, a list of objects each with a `name`, a `kind` and the
+kind's keys (docs/ENGINE.md, "The run's readings, declared"): `{"name": "screen_clicks",
+"kind": "clicks", "detector": "screen"}` is the detector's clicks (DETECTOR); `{"name":
+"matter_total", "kind": "total", "family": "matter", "every": 10}` the sum of the family's
+absolute levels every ten intervals (GAMEBOARD); `level` at a `node`, `support`, a body's
+`centre` and the records `alive` are the other kinds. The one command writes them into the
+output file's `readings`, in the declared order and labelled by kind, beside today's keys; a
+world without the key writes an empty list. A reading reads and never changes the run.
+
 ## Writing and running a new series: what the experimenter of 2026-09-21 had to find out by refusals
 
 The rules below are the engine's (docs/ENGINE.md and the refusals of

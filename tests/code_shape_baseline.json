@@ -16,10 +16,10 @@
   },
   "src/event_universe/core/game_board.py": {
    "comment_lines": 4,
-   "docstring_lines": 30,
+   "docstring_lines": 22,
    "level_shift_sites": 0,
-   "lines": 124,
-   "record_references": 1,
+   "lines": 122,
+   "record_references": 0,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/core/integer.py": {
@@ -82,7 +82,7 @@
    "comment_lines": 694,
    "docstring_lines": 667,
    "level_shift_sites": 15,
-   "lines": 4011,
+   "lines": 4009,
    "record_references": 43,
    "rule_arithmetic_sites": 0
   },
@@ -95,10 +95,10 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/world.py": {
-   "comment_lines": 1181,
+   "comment_lines": 1177,
    "docstring_lines": 1221,
    "level_shift_sites": 0,
-   "lines": 7575,
+   "lines": 7554,
    "record_references": 105,
    "rule_arithmetic_sites": 0
   },

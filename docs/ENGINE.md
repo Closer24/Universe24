@@ -1312,6 +1312,27 @@ before; the readers of the `gather` and `record` lines
 (`tools/click_readings/covariant.py`, `tools/click_readings/quarks.py`)
 read a trimmed record as any.
 
+### The run's readings, declared
+
+The output is a declaration too (ENGINE_LEDGER.md section 3; record 2199 item 1): every line
+the one command writes beyond its verdict is a reading the world file declares under
+`readings`, a list of objects each with a `name`, a `kind` and the kind's own keys, read by
+`src/event_universe/core/readings.py` and written into the output file's `readings` in the
+declared order, each entry {name, kind, label, the target, every, lines}. The six kinds and
+their labels: `clicks` of a declared `detector`, DETECTOR, one line per click with the
+interval, the record, its giving, content, momentum and the detector's Nodes; `level` of a
+`family` at a `node`, `support` (the count of Nodes whose level is nonzero) and `total` (the
+sum of absolute levels) of a `family`, and `centre` of a `body` (the Node at the middle of its
+box), GAMEBOARD; `alive` (the records alive), HOST. A periodic kind takes `every`, the stride
+from 1: it is read at the interval 0, the loaded state, and at every interval that is a
+multiple of the stride up to the run's ticks; a reading reads state and writes nothing into
+the run, so the run's lines, levels and remainders are the same with and without readings, bit
+for bit. A world without the key writes `"readings": []`; today's keys (`clicks`, `counts`,
+`records_alive`, `pins`) stay beside it until the pins reader names a reading. The refusals at
+load name the reading and the key: an unknown or missing key, an unknown kind, a name empty or
+declared twice, a stride below 1, a detector, family or body the world lacks, a Node outside the
+shape.
+
 ### The detector's readings by type
 
 The model owner, 2026-09-21 (record 205): "after the detector, name the

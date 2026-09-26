@@ -39,6 +39,7 @@ from multiprocessing import get_context
 from pathlib import Path
 from typing import Any
 
+from event_universe.core.readings import Readings
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
 
@@ -86,6 +87,8 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
     output["verdict"] = "LAWFUL"
     output["step"] = {"hash": world.step.digest}
     output["ticks"] = world.ticks
+    readings = Readings(world.readings)
+    readings.read(simulation)
     output["mode"] = world.start.mode if world.start is not None else None
     clicks: list[dict[str, object]] = []
     for _ in range(world.ticks):
@@ -102,6 +105,8 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
             )
             write_output(Path(out_dir), name, output)
             return {"name": name, "verdict": "LEAK", "seconds": time.monotonic() - started}
+        readings.read(simulation)
+    readings.clicks(simulation.layer.gathers, world.detectors)
     for gather in simulation.layer.gathers:
         chosen = gather["chosen"]
         detector = chosen[0][0] if isinstance(chosen, list) and chosen else None
@@ -119,6 +124,7 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
         if isinstance(detector, str):
             counts[detector] = counts.get(detector, 0) + 1
     output["clicks"] = clicks
+    output["readings"] = readings.output()
     output["counts"] = counts
     output["records_alive"] = len(simulation.records)
     verdicts = []
