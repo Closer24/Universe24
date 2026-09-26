@@ -16172,6 +16172,36 @@ from itself and its six neighbours; that is a self-binding term of
 matter (a nonzero P_2 for matter, which (6) has at 0), so it is a big
 decision for three (record 2136), not a line of this section.
 
+**(9) FOUR LINES TO NATURE24'S CHECK-MODE WORLDS (his questions of
+2026-09-26 06:40Z on stroke-side b80ba852).** (a) THE BOUND MODE IN
+THREE DIMENSIONS: the body's rest pair is its species (9.101 item 7)
+and a well must bind by the margin rule; the shipped kind [800, 809]
+has the depth ceiling 2 - 2 x 800 / 809 = 0.022 (his host reading:
+sides 5, 7, 9 bind no mode, side 13 binds), so a small body is a
+heavier species, [800, 850] on the well [800, 801] of side 5 (bound at
+1.8874), and every check-mode blind value is recomputed where omega_0
+enters (the clocks' ticks, the rung; not the fall's line of (7)); the
+content's own well, p_0 = Gamma - s at the body's Nodes, is ten times
+shallower (0.002 at s = 1000) and binds nothing; a one-Node body is a
+hold at rest or a detector, with no record (record 2130 item 5). (b)
+THE MOVING RECORD'S TWO LEVELS: the symmetric split about the standing
+start is right, with the later sample as now: now = round(p cos(K dx -
+omega_K / 2)), before = round(p cos(K dx + omega_K / 2)) for motion
+along + K (the phase K x - omega t grows with t); at K = 0 both are p
+cos(omega_K / 2). (c) THE WINDING: a record of M quanta (M = 1000 s P,
+9.96 (3)) with the winding number m carries the angular momentum m M
+in quanta of action, so m = S div M and a spin S that is not a
+multiple of M is refused at load (the phase is single-valued); A's S =
+1000 at M = 1000 is m = 1; the write is the pair's phase m theta,
+theta the azimuth about the declared axis, added at every Node of the
+support to the standing rotation on both levels, the profile the
+well's bound mode in the sector of angular momentum m (a host
+computation of the generator), which vanishes on the axis as r^m, so
+the support is a ring. (d) THE HEAVY TOOL: the content at a Node is
+the count s = M div (1000 P) (9.96 (3)), 55 for a million quanta at
+P = 18, below the pace guard; the row waits for the commit that brings
+P_0.
+
 ### 9.99 The families derived in structure: the symmetric algebra of the four directions, and why the tower stops at gravity (the model owner's question of 2026-09-26, "can you think of something that derives the unification?", and his word "write it all")
 
 **(1) THE CLAIM.** The three families are not three declarations. They
