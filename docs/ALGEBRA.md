@@ -15618,3 +15618,137 @@ loader's constant 64 leaves the code), accumulator_wall W, the
 twist_table; the generator's working amplitude, a number of the
 generator and not of the law, goes to the start file or is derived
 from A by a stated rule.
+
+### 9.95 The holds' factors derived: (1, 4, 2) for gravity and (1, 1) for the charge from the rule and its own Lorentz symmetry, nothing from nature (the model owner's question of 2026-09-26, "can we reach Lorentz, Einstein's special and general relativity from our formulas alone, without assuming them?", and his word "go for it")
+
+**(1) THE QUESTION AND THE ANSWER.** Until now the factors (1, 4, 2)
+on the body's three writes (9.78 (2)) and (1, 1) on the charge's two
+were "nature's once": numbers in the families file taken from the
+linear form of Einstein's equations. Here they are derived. The inputs
+are four, none of them a number of nature: (I) the rule 9.57 (1); (II)
+its long-wave symmetry, DERIVED in 9.67 (1): the rule is the wave
+equation with one pace c_l = 1 / sqrt 3 for every family, invariant
+under the Lorentz boosts of that pace, gamma (the Lorentz factor) = 1 /
+sqrt(1 - 3 v^2); (III) the engine's own construction: one rule and one
+normalisation for every component of a family (9.86 (2), 9.91 (2)); (IV)
+the reading of a body is the one scalar of the field and the reader's
+motion that the symmetry allows at this order. The result: (1, 4, 2) =
+2 x (1/2, 2, 1) and (1, 1), computed; the trace's coefficient 1/2 in
+(IV) is fixed by the rule itself, not by the bending's "twice Newton";
+the dipoles' coefficients of 9.78 (2) come out doubled, a correction.
+
+**(2) WHAT THE RULE GIVES BEFORE ANY WRITE: THE SCALAR'S TWO COUPLINGS.**
+Let c be gravity's t component (the content's level) at a Node and
+p = Gamma - c the pace. (a) A slow body's rotation at that Node, from
+9.57 (1) at k = 0: 1 - cos omega = (1 - num / den)(1 + p^2 / Gamma^2)
+/ 2, so its rate against the vacuum's is sqrt((1 + (1 - c / Gamma)^2)
+/ 2), which is 1 - c / (2 Gamma) at first order. A clock's rate is its
+energy, so the potential of a slow body per unit of its mass is minus
+U with U := c / (2 Gamma): the definition of U, and Newton. (b) Light's
+pace at that Node, from 9.57 (1) at [1, 1] and long wavelength: omega^2
+= (p / Gamma)^2 k^2 / 3, so light's speed is (1 - c / Gamma) c_l = (1 -
+2 U) c_l: light couples to the same c TWICE as strongly as a slow body,
+per unit of energy. This ratio 2 is the rule's own (the pace enters the
+read term as p^2 and the mass term as p^2 + Gamma^2); it is what gives
+the bending 4 G M / b and Shapiro's delay in 9.57 (4), and it was never
+put in.
+
+**(3) THE READING IS ONE LORENTZ SCALAR, AND THE RULE FIXES ITS ONE
+FREE NUMBER.** By (III) gravity's ten components f_(mu nu) (t, x, y, z,
+xx, ...) step by one rule from one normalisation, so in the long-wave
+limit f is a symmetric tensor field sourced by the body's numbers with
+ONE coefficient for all ten. By (II) the reading of a body moving with
+the four-velocity u = gamma (1, v) must be a Lorentz scalar built from f
+and u; at first order in f there are exactly two, f_(mu nu) u^mu u^nu and
+the trace tr f = f_tt - f_xx - f_yy - f_zz (times u . u = 1), so the
+reading is
+
+  R = f_(mu nu) u^mu u^nu - b x tr f,     b a number.
+
+For LIGHT u is null, u . u = 0, so light reads f_(mu nu) k^mu k^nu alone:
+the static field f_tt with weight 1. For a SLOW BODY at rest R = (1 - b)
+f_tt. By (2) light's coupling per unit of energy is twice the slow
+body's: 1 = 2 (1 - b), so b = 1/2. The reading is the trace-reversed
+one, and the 1/2 is the rule's, from (2) (b).
+
+**(4) THE FACTORS.** Write the body's covariant source as its rest
+number boosted: the t part s, the i part s v_i, the ij part s v_i v_j
+(the stress-energy of a body of count s at velocity v, gamma = 1 at
+this order), the SAME coefficient on all ten by (III); call the field it
+makes f = K s (1, v_s, v_s v_s) with one K. Expand R of (3) for a
+reader at velocity v, with the metric's signs (the cross term counts
+twice, once for each of its two slots):
+
+  R = f_tt - 2 v_i f_ti + v_i v_j f_ij - (1/2)(f_tt - f_ii)
+    = (1/2) f_tt - 2 v . f_t + v v : f + (1/2) f_ii.
+
+The raw t level is c = f_tt, and by (2) (a) the potential per unit
+mass is U = c / (2 Gamma), while R's static value is (1/2) f_tt: so the
+potential is R / Gamma, one conversion for every term. The three terms
+of R carry the weights on the raw levels
+
+  t part:  (1/2) f_tt,              weight 1/2   (1 less the trace's 1/2),
+  i part:  2 v . f_t,               weight 2     (the cross term's two slots),
+  ij part: v v : f,                 weight 1     (one slot, no trace),
+
+and the term (1/2) f_ii is the trace's static piece that the ruler
+carries (the scalar in every axis's pace, 9.78 (4)'s "1 - 4 U"). With
+f = K s (1, v_s, v_s v_s) and c / Gamma = 2 U the potential R / Gamma
+reads U - 4 U (v . v_s) + 2 U (v . v_s)^2 in sign and size. The engine's
+contraction (9.78 (4)) reads the three parts with the weights (1, -1,
+1) on the levels as written, and the writes carry the factors: so the
+factors are the weights of R divided by the t part's, (1/2, 2, 1) /
+(1/2) = (1, 4, 2). Term for term: the vector's 4
+is 2 (the two slots of the cross term) times 2 (the t part's own weight
+is halved by the trace, the vector's is not); the tensor's 2 is 1 (one
+slot) times 2 (the same halving); the scalar's 1 is the unit. The
+potential read at a body's Node is then -U + 4 U (v . v_s) - 2 U (v .
+v_s)^2 + (the ruler's U v^2), exactly 9.78 (4)'s line, which was written
+from Einstein's linear form: here it is written from the rule. THE
+CHARGE: a vector field A_mu with one coefficient on its two parts (Q, Q
+v_s); the one Lorentz scalar of a vector and a worldline is u . A = A_t -
+v . A, one slot and no trace, so the factors are (1, 1): Maxwell's, as
+9.78 (2) has them, now derived.
+
+**(5) THE DIPOLES, CORRECTED.** The same source rule fixes a spinning
+body's write. A body at rest with spin S (its angular momentum in
+quanta of action) has the current density (1/2) curl (S delta), the
+half because S is half the first moment of the current; on the
+GameBoard the derivative of a point source along axis j is the pair of
+weights -sigma / 2 at the Node sigma e_j (the central difference: a
+unit dipole is +1/2 at -e_j and -1/2 at +e_j), so the current's i
+component at the Node sigma e_j is sigma (S x e_j)_i / 2, and with the
+vector's factor 4 the WRITE is
+
+  gravity i at the body's Node + sigma e_j:  += 2 sigma (S x e_j)_i,
+
+twice 9.78 (2)'s and 9.91 (3)'s "sigma (S x e_j)_i". For the charge the
+moment mu is the first moment of the current itself (no half), the
+current at sigma e_j is sigma (mu x e_j)_i, the factor 1, so the write is
+
+  charge i at the body's Node + sigma e_j:  += sigma (mu x e_j)_i,
+
+twice 9.78 (2)'s "div 2". Both earlier lines carried the half twice.
+THE ROW THAT DECIDES is 9.78 (9) (h) as designed: a spinning body on one
+Node against a ring of moving bodies of the same angular momentum; the
+ring's field comes from the moving bodies' writes 4 s v alone, so the
+ring is the derivation's own witness, and a spinning body written with
+the old coefficient would drag at half the ring's rate. The correction
+enters the one stroke's commit 2 (9.91 (10)); the sense of sigma stays
+the row's.
+
+**(6) WHAT IS NOW ASSUMED, AND WHAT IS NOT.** Assumed: the rule 9.57
+(1) and the engine's construction (one rule for every component, the
+reading a contraction). Derived from them: Lorentz (9.67 (1)), Newton
+(2) (a), light's double coupling (2) (b), the trace reversal (3), the
+factors (1, 4, 2) and (1, 1) (4), the dipoles (5); so every number in
+the families file's held entries is computed by the loader from the
+representation, and the file keeps none of them. Not derived: the
+field's own energy as its own source with the same coupling, which is
+the road from the linear form to Einstein's full equations; in this
+engine it is the slot P_2 (9.78 (3)), declared 0 until a row reads it.
+The engine's own second-order clock (1 - 2 U + 2 U^2, from the pace
+entering twice) is not that road either; it is the rule's own, and the
+perihelion reads it. THE WORDS FOR THE OWNER: the rule is put in; from
+it come Lorentz, Newton and Einstein's linear form with every factor;
+Einstein's strong field stays outside as one declared number.
