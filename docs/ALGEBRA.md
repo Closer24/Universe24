@@ -16849,11 +16849,20 @@ as written here.
    | The cost | 10 sub-Nodes and 30 neighbour reads per Node in place of 1 and 6 |
 
    For hypothesis A's counts: the two T_2 triplets are vectors under
-   T_d, which a click reads as directions, so they are not hidden; the
-   E doublet is the one hidden index the cluster offers (it is not a
-   vector; a tensor reading would see it), a 2 and not a 3; the A_1 is
-   a singlet. At k = 0 the nine internal modes are orthogonal to the
-   uniform mode, so a click that sums the cluster does not see them;
-   away from k = 0 they mix with the long wave and propagate. A
-   hypothesis, not a decision (the Boss's word); B's first form is
+   T_d, which a click reads as directions, and the E doublet is the
+   quadrupole pair (x^2 - y^2, 2 z^2 - x^2 - y^2), a shape that a
+   rotation turns within the pair; the A_1 is a singlet. THE VERDICT
+   (the Boss's independent check, record 2145, on the owner's word
+   "check the hypothesis"; and this line): every internal mode of the
+   cluster is a direction or a shape, and a rotation turns one into
+   another, while colour must stay unchanged under every rotation; no
+   eight-fold level appears; so the cluster FAILS as colour, as
+   9.101 item 13 and 9.103 item 6 (c) said of the three exits. Colour
+   would need an internal symmetry that commutes with every rotation,
+   three identical copies permuted, which is a declaration. (My first
+   line here, "the E doublet is the one hidden index", is corrected:
+   a shape is not hidden from a tensor reading, and it is not a
+   rotation scalar.) At k = 0 the nine internal modes are orthogonal
+   to the uniform mode; away from k = 0 they mix with the long wave
+   and propagate. A hypothesis, not a decision; B's first form is
    closed (item 8) and this form is recorded beside it with its cost.
