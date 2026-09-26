@@ -4,7 +4,8 @@ ENGINE_LEDGER.md): the engine supports generic primitives and the run defines th
 every attribute is read by its kind and never by its name; a new family or attribute is a line
 in the files, with the engine never rebuilt. Six tests, checking code (record 2135): (a) the
 adversarial universe, (b) the cap of twenty families, (c) the null family, (d) the added
-attribute (a hill), (e) the closed engine, (f) the rule as one function. A test of a support the
+attribute (a hill), (e) the closed engine (no family name, no universe integer, no default,
+no flag and no version in the code; record 2182), (f) the rule as one function. A test of a support the
 ledger lists as to do is marked xfail strict: it turns green the day the support lands and then
 must lose its mark (the ledger's row moves)."""
 
@@ -14,6 +15,7 @@ import ast
 import importlib.util
 import json
 import random
+import re
 import string
 from pathlib import Path
 
@@ -266,6 +268,31 @@ def test_e3_no_key_of_the_files_has_a_default_written_in_the_engine():
     world file), never of the code (record 2089, records 2172 to 2174)."""
     defaults = world_key_defaults()
     assert defaults == [], defaults
+
+
+VERSION_STRING = re.compile(r"-v[0-9]+$")
+FLAG_WORDS = {"flag", "flags", "version", "schema_version"}
+
+
+@pytest.mark.xfail(
+    strict=True,
+    reason="the ledger's row 'no flag, family name, number or version in the code' (records 2172 "
+    "to 2174, 2182): the loader still holds the identities' version strings ('beam-v1', "
+    "'amplitude-v1', 'bohr-v1', 'columns-v1', 'weak-v1', 'meeting-v1', 'optical-v1', 'hand-v1', "
+    "'binding-v1') and the key 'schema_version'; the review after the merge takes them out and the "
+    "mark comes off",
+)
+def test_e4_no_flag_and_no_version_is_a_constant_of_the_engine():
+    """(e) The engine has no flag and no version (the Boss's record 2182, the model owner: "in the
+    code there will be no flags; they are in the run file only; there is no version in the
+    engine"; HIGHLIGHTS 5.6): no string constant of the engine's code names a version
+    (`<name>-v<digits>`) and none is the word of a flag or a version key."""
+    offending = []
+    for path in python_files():
+        for line, value in constants(ast.parse(path.read_text(encoding="utf-8"))):
+            if isinstance(value, str) and (VERSION_STRING.search(value) or value in FLAG_WORDS):
+                offending.append(f"{path.relative_to(ROOT)}:{line} {value!r}")
+    assert offending == [], offending
 
 
 def test_f_one_step_of_the_engine_is_the_rules_transcription_bit_for_bit():
