@@ -15585,3 +15585,36 @@ function that does each (today `iterated_mode` and `_operator_step`,
 loader's `mode_residual`), so that the outside reviewer of record 2110
 reads one equation in two places. A generator line that is not one of
 these five is a check or a reading and says so.
+
+**(11) THE PAIR IS THE RECORD'S, AND THE PHASE IS THE PAIR'S COUNT
+(Nature24's questions on item 59, 2026-09-26, 02:59Z).** (a) THE PAIR.
+One matter family, no pair on the family (a pair on a family is
+refused). A BODY declares two pairs: `pair`, its well, the rotation of
+its record on its own Nodes, and `vacuum`, its record's rest rotation
+outside its Nodes (today's kind pair: [800, 813] for the point body's
+[800, 802], [3200, 3236] for the muon's [3200, 3227]); the generator's
+eigenproblem (9.94 (2)) takes the body's pair on its Nodes and its
+vacuum elsewhere, as today with the kind. A FREE RECORD (a matter wave
+given by an emitter) declares its `pair` on its emitter: its rest
+rotation in the medium. Every record steps by its own pair at every
+Node, so two bodies of different vacua on one GameBoard never share a
+pair at a Node: the pair is a number on the record, the rule is one.
+With this the nine entries of item 59 (light, matter, well, dark,
+heavy, muon, point, clicks, charge) are the three of (7): gravity, the
+charge with light as its wave, matter. (b) THE PHASE. `phase` is the
+pair's count of 9.81 (4): 1 for a real level (gravity, every held
+part), 2 for a rotated pair (the charge and light, matter), the second
+level its own array with its own remainder, exactly zero until a twist
+rotates it; it is not the rule's two levels (now and before), which
+every family has. A loader that refuses phase 1 has read the word
+wrong. Bit for bit today holds because every second level starts at
+zero and every twist is zero. (c) THE COMPONENT ORDER is the engine's
+convention, written once in ENGINE.md and not in the file: gravity (t,
+x, y, z, xx, yy, zz, xy, xz, yz), the charge (t, x, y, z); the file
+lists `parts` alone. (d) THE INTEGERS BLOCK of the families file holds
+every number of the law: gamma, amplitude, energy_unit P_0,
+charge_weight Lambda, charge_twist Lambda_v, momentum_unit Q (the
+loader's constant 64 leaves the code), accumulator_wall W, the
+twist_table; the generator's working amplitude, a number of the
+generator and not of the law, goes to the start file or is derived
+from A by a stated rule.
