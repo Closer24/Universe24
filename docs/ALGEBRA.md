@@ -18804,3 +18804,103 @@ that constancy.
    The well, 9.113 item 3 (a), is no declaration here: it is two sourced
    families with opposite reads (the source's row twice), and its
    balance is under its own name (9.108 item 14).
+
+### 9.118 The generator by the rule: a body's integers as the rule iterated with a stop (the Boss's record 2233 on the model owner's word; record 1924, "the generator is the operator iterated, with its stop"; 9.22 (7); 8.7; 9.63 (3); 9.96 (2))
+
+1. **What the generator already does by the rule, and what it still
+   does by a formula (a finding for record 2233).** The body's levels:
+   since record 1898 the profile is the rule's own spatial operator
+   iterated in integers from the body's Nodes' indicator, scaled at the
+   peak, with the stop the loader's residual bound (`iterated_mode`;
+   9.22 (7) (ii)); the levels come from no formula. What still comes
+   from cos, acos, sin and sqrt, rounded, is (a) the period P =
+   round(2 pi / omega_b) from a float omega_b; (b) the twist "own" =
+   round(2^16 omega) with omega = acos(a / 2 b) (9.96 (2) (a)); (c) a
+   moving body's proper pairs, a bisection on the mode's dispersion in
+   floats (9.63 (3)); (d) the twist table's triples from tan (9.96 (2)
+   (c)); (e) two diagnostics' readings written as floats (the source
+   worlds' numbers, the dark body's ray). The forty-six lines are
+   these. The norm T is already the engine's run over P intervals, in
+   integers.
+
+2. **The one-Node rule is the rotation, and every angle's integer
+   comes from it.** At one Node whose neighbours do not move the rule
+   is a_next + a_before = (a / b) a_now (a / b = 2 num / den for the
+   pair at k = 0; a mode's clock a / b in general). Iterated from
+   (1, a / 2 b) it gives cos(t omega) exactly, the rational recurrence
+   c_(t+1) = (a / b) c_t - c_(t-1) with c_0 = 1 and c_1 = a / (2 b)
+   (Chebyshev's, the rule's own). Every integer the generator writes
+   about an angle is a question about this sequence with a stop:
+
+   (a) THE PERIOD P: the first t from 1 at which the rotation has
+   passed half a turn (some c_s < 0 before t) and returned within half
+   a step of its start, c_t >= 0 and c_t^2 >= (2 b + a) / (4 b) (that
+   is cos^2(omega / 2) = (1 + cos omega) / 2). That t is the nearest
+   integer to 2 pi / omega exactly (a tie excepted), with no pi: the
+   state repeats up to its phase, the stop of record 2233.
+
+   (b) A MOVING BODY'S PROPER PAIR (9.63 (3)): 2 cos phi per interval
+   with k phi = k omega_K - K over a hop period of k intervals. The two
+   angles are the moving mode's, K the wavenumber and omega_K its
+   rotation, read from the rule iterated on the whole board in the
+   sector of K (a character along a periodic axis of L Nodes, K = 2 pi
+   m / L, a fraction of a turn the rule's iteration keeps exactly); the
+   per-interval pair then comes from the k-interval rotation by the
+   one-Node rule iterated k times and bisected in rationals: T_k(x) =
+   cos(k phi) with T_k the one-Node rule iterated k times from (1, x),
+   x to the denominator b. No acos and no bisection in floats. Until
+   built, the float bisection stands under its own name (a generator's
+   number, HOST), not a formula of the law.
+
+   (c) THE TWIST "OWN" AND THE TABLE: the unit theta_unit = 1 / (4 Gamma
+   2^16) radians is a fraction of a radian, and a radian is no
+   rotation the rule makes, so round(2^16 omega) needs acos (or the
+   cosine's series in rationals, exact but a formula beside the rule).
+   The way by the rule: declare the unit by its cosine, a pair of the
+   universe [c_u, d_u] with cos theta_unit = c_u / d_u, as every pair
+   is declared; every multiple k theta_unit is the one-Node rule
+   iterated k times from it; the twist "own" is the k nearest to omega,
+   found by comparing a / (2 b) with the iteration's cos((k +- 1/2)
+   theta_unit) (squares, exact); the table's triples the same rotations
+   composed (9.96 (2) (e)). This changes a declared integer of the
+   universe file (the unit) and is the model owner's decision (record
+   2136); the rows' twists move by the unit's rounding, one part in
+   2^16, below every band.
+
+3. **The profile's operator, a finding.** The iteration and the
+   loader's residual (9.22 (7) (ii)) use the rule at the vacuum's pace,
+   c = 0 at every Node. In the run the body's own record reads the
+   content at its Nodes (its own quanta M, the clicks family's level)
+   and steps at the pace Gamma - c there (9.35 (2)); the run's spatial
+   operator at the body's Nodes differs from the generator's by the
+   share c / Gamma: 2 x 10^-4 on the emitter's unit world (M = 2, Gamma
+   = 10^4; the mode's 2 cos omega moves by 1.4 x 10^-6, one unit of
+   b), a tenth for a body of 10^3 quanta at Gamma = 10^4 (the muon's
+   well). So the shipped profiles are the modes of the rule WITHOUT the
+   body's content. A generator that iterates the engine's own rule
+   (`rule_coefficients` with the content's pace at every Node, the
+   integers (R, S, w) of 9.57 (1)) gives the run's own mode, and its
+   residual is checked on the same integers, |b (R_i (S_6 p)_i + S_i
+   p_i) - w_i a p_i| <= b (3 R_i + |S_i|) + w_i (the bound of one
+   rounding, derived as 9.22 (7) derives its own). Every seeded world
+   then moves by the content's share, the light ones by a unit of b,
+   the heavy ones visibly: that is "the world that moved and why" of
+   record 2233, known before any regeneration, and the loader's
+   residual (`mode_residual`, Main Loop's) moves with it. Which mode
+   the run stands on is the model owner's word: the run's own is the
+   law's, the vacuum's is a declaration. MY LINE: the run's own.
+
+4. **The seeds and the stops, the generator's schema.** The world file
+   declares per body a seed, one of: a Node (the indicator of one
+   Node), a packet (a character of K along an axis over the body's
+   Nodes, the moving mode's sector), a box (the body's Nodes'
+   indicator, today's); and a stop, one of: the mode (the state repeats
+   up to its phase: the residual bound with the run's rule), the growth
+   (the projection's quotient a / b changes by less than one unit of b
+   over an iteration, the power iteration's own stop). The generator
+   writes `seed` (the profile at both levels), `clock` [a, b], `period`
+   P by 2 (a), and the norm by the engine's run; the twist and the
+   proper pairs by their present numbers until 2 (b) and (c) are
+   decided. One tool, tools/body_generator.py, called by every world's
+   generator; the worlds' generators keep their declarations and lose
+   their dispersion lines.
