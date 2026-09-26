@@ -35,14 +35,14 @@ docs/ENGINE.md; the table of primitives of record 2179 is its section 3, one fil
 
 | Support | What is missing | The test that will prove it |
 | --- | --- | --- |
-| a signed read weight, a hill (9.108 (8)) | the loader bounds the weight from 1 | a family with a hill on gravity behaves as a hill against the algebra's number, no code touched |
+| a signed read weight, a hill (9.108 (8)) | the signed read's row bounds the weight from 1 (`features/signed_read`, `low=1`, since cut 3); the loader has no line of its own | a family with a hill on gravity behaves as a hill against the algebra's number, no code touched |
 | the source verb of a record (9.98 (11) (b), 9.108 (10) (a)) | no record adds its count into a family's level; only the body's hold and the field's self source | a sourced family's level equals the static response to a held record, in integers |
 | the guard on both sides of the pace, at run time | the load's guard alone, from below | a world whose content reaches Gamma or 0 at run time stops with the guard's line |
 | the click that keeps the momentum (9.109 (2)) | the recoil's store in the Ports' accumulators | one body keeps its speed across clicks; the ninth question's rerun in the engine |
 | a free body moving by the rule (record 2168 (3)) | the pair well and the hop still there | the falling body of item 1 as a world file, no `fixed` |
 | the internal representation as a family attribute (9.88 (7) (i)) | the primitives are a draft with no attribute and no hook | a family of n pairs transported around a loop returns to itself |
 | the twist table's precision (9.96 (2) (c)) | the fine table all identities | the mathematician's line and its test |
-| the attribute set as generic terms (9.88 (7) (ii)) | the loader admits a fixed set of keys | an attribute declared only in the file gives its effect with no code change |
+| the attribute set as generic terms (9.88 (7) (ii)) | since cut 3 the universe file's keys are the folders' `SCHEMA` rows read by `core/loader.py` (no fixed set in the loader); the world and start files and the Term form follow | an attribute declared only in the file gives its effect with no code change |
 | universe.json and the words of record 2128 | the words in part | the loader reads `universe`, `q`, `stocks` and refuses the old words |
 | the residue lines and the eight failing tests | listed in docs/CANCELLED_WORLDS.md section 9 | the gate green |
 | commit 10, the convergence test | not run | the check-mode table blind with everything on, the rule of three per experiment |

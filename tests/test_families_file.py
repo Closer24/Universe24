@@ -64,7 +64,12 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     # gravity: ten components, one level, held content with the factors (1, 4, 2) and the spin's
     # dipole, no reads, no clicks (9.91 (7))
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and gravity["pair"] == [1, 1]
-    assert gravity["held"] == {"count": "content", "factors": [1, 4, 2], "dipole": "spin"}
+    assert gravity["held"] == {
+        "count": "content",
+        "factors": [1, 4, 2],
+        "dipole": "spin",
+        "dipole_div": 1,
+    }
     assert gravity["reads"] == [] and "clicks" not in gravity
     # the charge: four components, two levels, held sign with the moment's dipole halved, reads
     # gravity, and clicks: light is its wave
@@ -270,14 +275,17 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
         (tmp_path / "universe.json").write_text(json.dumps(broken), encoding="utf-8")
         refused(json.loads(json.dumps(document)), match)
 
-    refuses(lambda d: d["integers"].pop("node_clock"), "integers must hold exactly")
-    refuses(lambda d: d["integers"].pop("Lambda"), "integers must hold exactly")
+    refuses(lambda d: d["integers"].pop("node_clock"), "integers lacks keys: node_clock")
+    refuses(lambda d: d["integers"].pop("Lambda"), "integers lacks keys: Lambda")
     refuses(lambda d: d["families"][0].pop("parts"), r"families\[0\] lacks keys: parts")
     refuses(lambda d: d["families"][0].__setitem__("parts", [3]), "parts must be one of")
-    refuses(lambda d: d["families"][0].__setitem__("phase", 3), "phase must be 1 or 2")
+    refuses(lambda d: d["families"][0].__setitem__("phase", 3), r"phase must be one of \[1, 2\]")
     # the self-source's unit (9.91 (5); commit 6): 0, or at least 24 A
-    refuses(lambda d: d["families"][0]["self_source"].__setitem__("unit", 24), "is below 24 A")
-    refuses(lambda d: d["families"][0].pop("held"), "declares neither held")
+    refuses(
+        lambda d: d["families"][0]["self_source"].__setitem__("unit", 24),
+        r"self_source\.unit must be an integer from 24 x amplitude_bound = 25165824",
+    )
+    refuses(lambda d: d["families"][0].pop("held"), r"declares neither .*: a family does at least one")
     refuses(
         lambda d: d["families"][2].__setitem__("pair", "mine"), r"pair must be \[num, den\] or the word"
     )
@@ -285,11 +293,12 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
         lambda d: d["families"][2]["reads"][1].__setitem__("weight", "Mu"),
         "names no integer of the universe",
     )
-    refuses(lambda d: d["families"][2]["reads"][1].__setitem__("by", 2), r'by must be 1 or "q"')
+    refuses(lambda d: d["families"][2]["reads"][1].__setitem__("by", 2), r"by must be one of \[1, 'q'\]")
     refuses(lambda d: d["families"][0]["held"].__setitem__("factors", [1, 4]), "held_factors must be 3")
     refuses(
-        lambda d: d["families"][0]["held"].__setitem__("dipole", "twist"), "held_dipole must be one of"
+        lambda d: d["families"][0]["held"].__setitem__("dipole", "twist"), "held.dipole must be one of"
     )
+    refuses(lambda d: d["families"][0]["held"].pop("dipole_div"), "held lacks keys: dipole_div")
     refuses(lambda d: d.__setitem__("law", "beam-v1"), "the universe file .* has unknown keys: law")
     (tmp_path / "universe.json").write_text(json.dumps(good), encoding="utf-8")
     document["stamp"] = input_stamp(document)

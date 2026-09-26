@@ -1,6 +1,6 @@
 {
  "format": "code-shape-baseline",
- "recorded_at": "38a729a4",
+ "recorded_at": "13623ccf",
  "files": {
   "src/event_universe/__init__.py": {
    "lines": 27,
@@ -34,6 +34,14 @@
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
+  "src/event_universe/core/loader.py": {
+   "lines": 62,
+   "docstring_lines": 4,
+   "comment_lines": 0,
+   "record_references": 0,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
   "src/event_universe/core/phase.py": {
    "lines": 201,
    "docstring_lines": 58,
@@ -51,10 +59,18 @@
    "level_shift_sites": 0
   },
   "src/event_universe/core/register.py": {
-   "lines": 272,
-   "docstring_lines": 63,
-   "comment_lines": 16,
-   "record_references": 5,
+   "lines": 266,
+   "docstring_lines": 34,
+   "comment_lines": 4,
+   "record_references": 3,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/core/schema.py": {
+   "lines": 186,
+   "docstring_lines": 13,
+   "comment_lines": 1,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
@@ -115,10 +131,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/events/world.py": {
-   "lines": 7575,
-   "docstring_lines": 1229,
-   "comment_lines": 1181,
-   "record_references": 107,
+   "lines": 7436,
+   "docstring_lines": 1216,
+   "comment_lines": 1158,
+   "record_references": 104,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
@@ -131,10 +147,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/features/clicks/__init__.py": {
-   "lines": 33,
-   "docstring_lines": 7,
-   "comment_lines": 1,
-   "record_references": 1,
+   "lines": 27,
+   "docstring_lines": 2,
+   "comment_lines": 0,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
@@ -147,10 +163,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/features/degree/__init__.py": {
-   "lines": 29,
-   "docstring_lines": 7,
-   "comment_lines": 1,
-   "record_references": 1,
+   "lines": 22,
+   "docstring_lines": 2,
+   "comment_lines": 0,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
@@ -179,10 +195,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/features/hold/__init__.py": {
-   "lines": 36,
-   "docstring_lines": 7,
-   "comment_lines": 1,
-   "record_references": 1,
+   "lines": 34,
+   "docstring_lines": 2,
+   "comment_lines": 0,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
@@ -227,18 +243,18 @@
    "level_shift_sites": 0
   },
   "src/event_universe/features/pair/__init__.py": {
-   "lines": 29,
-   "docstring_lines": 7,
-   "comment_lines": 1,
-   "record_references": 1,
+   "lines": 21,
+   "docstring_lines": 2,
+   "comment_lines": 0,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
   "src/event_universe/features/phase/__init__.py": {
-   "lines": 29,
-   "docstring_lines": 7,
-   "comment_lines": 1,
-   "record_references": 1,
+   "lines": 21,
+   "docstring_lines": 2,
+   "comment_lines": 0,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
@@ -259,10 +275,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/features/self_source/__init__.py": {
-   "lines": 29,
-   "docstring_lines": 7,
-   "comment_lines": 1,
-   "record_references": 1,
+   "lines": 22,
+   "docstring_lines": 2,
+   "comment_lines": 0,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
@@ -275,10 +291,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/features/signed_read/__init__.py": {
-   "lines": 34,
-   "docstring_lines": 7,
-   "comment_lines": 1,
-   "record_references": 1,
+   "lines": 32,
+   "docstring_lines": 2,
+   "comment_lines": 0,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },

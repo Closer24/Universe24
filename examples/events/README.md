@@ -655,7 +655,12 @@ q, with clicks. Every world of the detector law names the file (`"families":
 "examples/events/families.json"`), declares no integers of its own, and every family is on
 in every world; a component with no source stays exactly zero (the leak test per part).
 The light record's clock is its emitter's (`clock` on every emitter). The unit tests keep
-their small inline lists.
+their small inline lists. SINCE CUT 3 of issue #1154 (record 2226) the file is read by the
+generic loader (`src/event_universe/core/loader.py`) against the folders' schemas: every key
+of a family is a `SCHEMA` row of the folder that reads it (`clicks`, `parts`, `held`, `pair`,
+`phase`, `self_source`, `reads`; `name` core's), `held` declares `dipole_div` (no default in
+the code), and a defect is refused naming the path in the file ("the universe file
+'examples/events/universe.json'.families[0].held lacks keys: dipole_div").
 
 THE ENGINE START FILE (the model owner's record 2089 of 2026-09-25 through the
 Boss; BUILD.md section 26 item 57): `engine_start.json` in this folder is the one

@@ -54,6 +54,8 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/rule.py": "the one rule's coefficients per Node and per axis (ALGEBRA.md 9.57 (1), 9.91 (2)) and the ladder's rungs (9.25 (2))",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md 9.88 (7)): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
+    "core/schema.py": "the schema language of the run's files: a key's kind, bounds and admitted words, one reader that refuses by name, no default (cut 3 of issue #1154)",
+    "core/loader.py": "the generic loader of the universe file: core's integers block and the folders' keys under the word family, read through core/schema (cut 3 of issue #1154)",
     "core/register.py": "the register of primitives: one name to one function, found by the features' folders, each with its place, word, reads, writes and order (records 2212 and 2221; issue #1154)",
     "core/primitive.py": "the interface of a primitive: the term of the files, the interval's start, the primitive's own record, its writes; apply(term, start, own) -> writes (records 2212 and 2221; issue #1154)",
     "core/phase.py": "the phase circle and its cosine and sine tables in bounded integers",

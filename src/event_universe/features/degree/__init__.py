@@ -1,29 +1,22 @@
-"""THE DEGREE (ALGEBRA.md 9.86 (2); 9.91 (2)): the representation as parts (1, 3 or 6 components), the same rule on each component. 9.113 item 2: from the rule.
+"""THE DEGREE (ALGEBRA.md 9.86 (2); 9.91 (2)): the representation as parts (1, 3 or 6 components), the same rule on each component. 9.113 item 2: from the rule."""
 
-One folder, one primitive (record 2221 (3)); the register finds it by this folder and reads
-DECLARATION, the row of ALGEBRA.md 9.117 for this name (cut 2: bind gives the loop's method that
-implements it today, resolved at each call; the next cut moves the body of code here).
-"""
-
-from __future__ import annotations
-
-from collections.abc import Callable
 from typing import Any
 
-from event_universe.core.register import Declaration
+from event_universe.core.register import Declaration, Key
 
+PARTS = ([1], [1, 3], [1, 3, 6])
+SCHEMA = {"family": (Key("parts", "one", values=PARTS, section="9.86 (2); 9.91 (1)"),)}
 DECLARATION = Declaration(
     "the degree",
     "(i)",
     ("parts",),
     ("the components' axes",),
     None,
-    None,
-    "9.86 (2); 9.91 (2)",
+    section="9.86 (2); 9.91 (2)",
     word="the step",
 )
 
 
-def bind(loop: Any) -> Callable[..., object]:
+def bind(loop: Any) -> Any:
     """The loop's method `_part_axes`, resolved at each call (cut 2)."""
-    return loop._method("_part_axes")  # type: ignore[no-any-return]
+    return loop._method("_part_axes")

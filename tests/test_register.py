@@ -411,6 +411,75 @@ def test_the_register_finds_the_folders_and_refuses_a_folder_without_its_declara
     sys.path.remove(str(tmp_path))
 
 
+def test_a_folder_declares_the_keys_of_the_files_it_reads_and_the_register_hands_them_on(tmp_path):
+    """Cut 3: a folder writes SCHEMA beside DECLARATION, the keys of the files it reads under each
+    object's word (a tuple of Keys of core/schema.py, each with its ALGEBRA.md section); the
+    register hands the loader every folder's keys under one word in the folders' order
+    (`keys`), and refuses at discover a SCHEMA that is not word to tuple of Keys, a key with no
+    section and, at add, two folders reading one key of one object."""
+    hold = (
+        "from event_universe.core.register import Declaration, Key\n"
+        'DECLARATION = Declaration("the hold", "(iv)", (), ("a family\'s level at a Node",), 1, None, '
+        '"9.91 (3)")\n'
+        'SCHEMA = {"family": (Key("held", "object", role="a field family", section="9.91 (3)", '
+        'keys=(Key("count", "one", values=("content", "sign")),)),)}\n'
+        "def bind(loop):\n    return loop\n"
+    )
+    pair = (
+        "from event_universe.core.register import Declaration, Key\n"
+        'DECLARATION = Declaration("the pair", "(i)", ("the family\'s pair",), (), None, None, "9.57 (1)")\n'
+        'SCHEMA = {"family": (Key("pair", "pair", low=1, also=("body",), section="9.57 (1)"),)}\n'
+        "def bind(loop):\n    return loop\n"
+    )
+    package = write_package(tmp_path, {"hold": hold, "pair": pair})
+    forget(package)
+    register = discover(package)
+    keys = register.keys("family")
+    assert [key.name for key in keys] == ["held", "pair"] and register.keys("body") == ()
+    assert keys[0].role == "a field family" and keys[0].keys[0].values == ("content", "sign")
+    assert keys[1].also == ("body",) and keys[1].low == 1
+    assert register.declarations["the pair"].schema == {"family": (keys[1],)}
+    cases = (
+        (
+            "well",
+            'DECLARATION = {"name": "the well", "place": "(iv)", "reads": (), "writes": (), "section": ""}\n'
+            "SCHEMA = 3\n",
+            "SCHEMA must map a word of the files to a tuple of Keys",
+        ),
+        (
+            "well",
+            'DECLARATION = {"name": "the well", "place": "(iv)", "reads": (), "writes": (), "section": ""}\n'
+            "from event_universe.core.register import Key\n"
+            'SCHEMA = {"family": [Key("well", "int", section="9.1")]}\n',
+            "SCHEMA must map a word of the files to a tuple of Keys",
+        ),
+        (
+            "well",
+            'DECLARATION = {"name": "the well", "place": "(iv)", "reads": (), "writes": (), "section": ""}\n'
+            "from event_universe.core.register import Key\n"
+            'SCHEMA = {"family": (Key("well", "int"),)}\n',
+            "the key 'well' of family names no ALGEBRA.md section",
+        ),
+        (
+            "well",
+            'DECLARATION = {"name": "the well", "place": "(iv)", "reads": (), "writes": (), "section": ""}\n'
+            "from event_universe.core.register import Key\n"
+            'SCHEMA = {"family": (Key("held", "int", section="9.1"),)}\n',
+            "the primitives 'the hold' and 'the well' both read the key 'held' of family: one key, one reader",
+        ),
+    )
+    for number, (folder, source, message) in enumerate(cases):
+        bad_root = tmp_path / f"schema_case_{number}" / "root"
+        bad_root.mkdir(parents=True)
+        bad_package = write_package(bad_root, {"hold": hold, folder: source})
+        forget(bad_package)
+        with pytest.raises(ValueError, match=message):
+            discover(bad_package)
+        sys.path.remove(str(bad_root))
+    forget(package)
+    sys.path.remove(str(tmp_path))
+
+
 def test_the_engine_registers_the_twenty_three_by_their_folders_and_checks_every_term():
     """On a shipped test world the engine's register holds exactly the twenty-three
     folders' names in the folders' order, each folder the name's, each with a place, a

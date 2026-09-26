@@ -1,31 +1,4 @@
-"""THE REGISTER OF PRIMITIVES (the model owner's decisions of 2026-09-26 through the
-Boss, records 2208, 2212 and 2221; the short procedure of skills/workflow.md, point 5;
-issue #1154; ALGEBRA.md 9.110 item 7, 9.111 item 7, 9.112 item 1).
-
-A PRIMITIVE is a kind of attribute the engine can apply, written once and applied
-to any family by its declaration in the run's files, never by a family's name. Its
-IDENTITY is its unique English name, the key of the ledger's table of primitives
-(docs/designs/generic_engine/ENGINE_LEDGER.md section 3). Every primitive is ONE
-FOLDER under src/event_universe/features/<name>/, which declares its own name,
-place, reads and writes (`DECLARATION`) and binds its function (`bind`); the
-register FINDS THE FEATURES BY THEIR FOLDERS (`discover`), so adding a feature
-touches no shared file, not even a list (record 2221 (3)). The engine holds ONE
-register, name to function, read by the central loop alone. The refusals are the
-loader's, at load, by name:
-
-- a folder without a declaration, or whose name is not its declared name's;
-- a name registered twice;
-- a term of the files naming a primitive the register lacks, or one the register
-  holds without a function (a row of the ledger not built yet);
-- two primitives writing the same value at the same place with no order declared
-  between them (a remainder is the writer's own record and never collides);
-- a primitive called by the loop at a place other than the one it declares.
-
-NO VERSION: a change of a primitive's behaviour keeps every shipped world bit for
-bit or the primitive takes a new English name; the old keeps its function. This
-module holds integers and names alone: no float, no family's name, no number of
-the universe.
-"""
+"""The register of primitives: one name to one declaration and function, found by the features' folders (each declaring its name, place, word, reads, writes, order and the keys of the files it reads), read by the loop and the loader alone; the refusals at load by name; integers and names only."""
 
 from __future__ import annotations
 
@@ -34,24 +7,17 @@ import pkgutil
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field, replace
 
-# THE FIVE PLACES of the interval (ALGEBRA.md 9.91 (8)): (i) the clicking families'
-# step with the transport, every component; (ii) the bookings at the Ports, the
-# ladder, the takings and the givings; (iii) the held families' step; (iv) the holds
-# written, the clicks' changes of M, Q and n included; (v) the bodies on one Node,
-# the feed, the induction, the spin's step, the recoil's accumulator. "any" is the
-# trace's, a read-only line at every place.
+from event_universe.core.schema import Key as Key
+
+# the five places of the interval (ALGEBRA.md 9.91 (8)) and "any", the trace's read-only line
 PLACES: tuple[str, ...] = ("(i)", "(ii)", "(iii)", "(iv)", "(v)", "any")
-# THE THREE WORDS of 9.111 item 7, the mathematician's reading of the same interval:
-# the right side (read from the interval's start), the step (the rule), after the
-# step (the clicks, whose writes enter at t + 1); "any" the trace's.
+# the three words of ALGEBRA.md 9.111 item 7 (the right side, the step, after the step) and "any"
 WORDS: tuple[str, ...] = ("the right side", "the step", "after the step", "any")
 
 Binder = Callable[[object], Callable[..., object]]
 
 
-# THE VALUES a body's record holds (ALGEBRA.md 9.117 item 1): a write of one of them
-# left by a click at (ii) is a deferred write, applied at (iv) with the click's other
-# writes (9.111 item 6), so the register orders it among the writers at (iv)
+# a body's values (ALGEBRA.md 9.117 item 1): a click's write of one at (ii) is applied at (iv)
 DEFERRED_VALUES: frozenset[str] = frozenset(
     {
         "a body's content M_k",
@@ -62,18 +28,12 @@ DEFERRED_VALUES: frozenset[str] = frozenset(
     }
 )
 
-# THE VALUES THAT ARE THE WRITER'S OWN (ALGEBRA.md 9.91 (2), (3); 9.117 item 1: "a body's
-# remainders", one per division of every primitive on the body): a remainder lives on
-# the record of the primitive that divided (core/primitive.py, Own), so two primitives
-# writing it at one place never collide and the register orders no writers of it
+# a remainder is the dividing primitive's own record (ALGEBRA.md 9.117 item 1): no two writers collide
 OWN_VALUES: frozenset[str] = frozenset({"a body's remainders", "the record's remainder"})
 
 
 def folder_of(name: str) -> str:
-    """The folder a primitive's name takes (the mathematician's contract, PRs 1164 and
-    1165): the name without the article "the ", the apostrophe dropped, a space or a
-    hyphen an underscore ("the spin's step" -> "spins_step", "the self-source" ->
-    "self_source", "the recoil's accumulator" -> "recoils_accumulator")."""
+    """The folder of a primitive's name: no article, no apostrophe, a space or a hyphen an underscore ("the spin's step" -> "spins_step")."""
     bare = name[4:] if name.startswith("the ") else name
     return bare.replace("'", "").replace("-", "_").replace(" ", "_")
 
@@ -86,7 +46,8 @@ class Declaration:
     the same place (an integer, or None where it is the only writer); its ALGEBRA.md
     line; its function once bound (None on a row of the ledger not built: the name
     is known, a term naming it is refused as not built); and its binder, the
-    folder's `bind(loop)` that gives the function at load."""
+    folder's `bind(loop)` that gives the function at load; and its schema, the keys of the
+    files it reads under each object's word ("family"), read by the loader."""
 
     name: str
     place: str
@@ -97,6 +58,7 @@ class Declaration:
     section: str = ""
     word: str = ""
     binder: Binder | None = None
+    schema: Mapping[str, tuple[Key, ...]] = field(default_factory=dict)
 
     @property
     def built(self) -> bool:
@@ -120,14 +82,13 @@ class Declaration:
 
 @dataclass
 class Register:
-    """The one register: name to declaration, filled from the features' folders at
-    load and read by the loop at every interval; nothing else registers and nothing
-    else reads it."""
+    """The one register, name to declaration, filled from the features' folders at load and read by the loop and the loader."""
 
     declarations: dict[str, Declaration] = field(default_factory=dict)
+    owners: dict[tuple[str, str], str] = field(default_factory=dict)
 
     def add(self, declaration: Declaration) -> None:
-        """Register one primitive; a name registered twice is refused at load."""
+        """Register one primitive; a name registered twice, or a key of the files read by two, is refused at load."""
         if declaration.place not in PLACES:
             raise ValueError(
                 f"the primitive {declaration.name!r} declares the place {declaration.place!r}, "
@@ -143,11 +104,25 @@ class Register:
                 f"the primitive {declaration.name!r} is registered twice: one register, one "
                 "name to one function (the model owner's decision, record 2212)"
             )
+        for word, keys in declaration.schema.items():
+            for key in keys:
+                owner = self.owners.setdefault((word, key.name), declaration.name)
+                if owner != declaration.name:
+                    raise ValueError(
+                        f"the primitives {owner!r} and {declaration.name!r} both read the key "
+                        f"{key.name!r} of {word}: one key, one reader"
+                    )
         self.declarations[declaration.name] = declaration
 
     @property
     def names(self) -> tuple[str, ...]:
         return tuple(self.declarations)
+
+    def keys(self, word: str) -> tuple[Key, ...]:
+        """Every primitive's keys of the files under one object's word, in the register's order."""
+        return tuple(
+            key for declaration in self.declarations.values() for key in declaration.schema.get(word, ())
+        )
 
     def bind(self, loop: object) -> None:
         """Every declared binder gives its function for this loop (at load, once)."""
@@ -215,7 +190,8 @@ def declaration_of(folder: str, module: object) -> Declaration:
     of this register (the mathematician's folders, PRs 1164 and 1165) or a dict of
     its words (name, place, reads, writes, section, and optionally word and order),
     and `bind`, the loop's binder, or the declaration's own function (a folder whose
-    body of code has moved in); neither: a row of the ledger not built."""
+    body of code has moved in); neither: a row of the ledger not built; `SCHEMA` beside it,
+    the keys of the files it reads, word to tuple of Keys, each with its section."""
     declared = getattr(module, "DECLARATION", None)
     if isinstance(declared, Declaration):
         declaration = declared
@@ -256,7 +232,25 @@ def declaration_of(folder: str, module: object) -> Declaration:
         )
     if binder is not None:
         declaration = replace(declaration, binder=binder)
-    return declaration
+    schema = getattr(module, "SCHEMA", None)
+    if schema is None:
+        return declaration
+    rows = isinstance(schema, dict) and all(
+        isinstance(word, str) and isinstance(keys, tuple) and all(isinstance(key, Key) for key in keys)
+        for word, keys in schema.items()
+    )
+    if not rows:
+        raise ValueError(
+            f"the features folder {folder!r}: SCHEMA must map a word of the files to a tuple of Keys"
+        )
+    for word, keys in schema.items():
+        for key in keys:
+            if not key.section:
+                raise ValueError(
+                    f"the features folder {folder!r}: the key {key.name!r} of {word} names no ALGEBRA.md "
+                    "section (an attribute with no section does not exist)"
+                )
+    return replace(declaration, schema=dict(schema))
 
 
 def discover(package: str = "event_universe.features") -> Register:
