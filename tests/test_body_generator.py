@@ -25,6 +25,7 @@ from tools.body_generator import (
     AT_REST,
     PERIODIC,
     amplitude_unit,
+    arrivals,
     bound_mode,
     clock_pair,
     conserved_form,
@@ -35,7 +36,8 @@ from tools.body_generator import (
     rotated,
     rule_integers,
     scaled_to_norm,
-    six_sum,
+    to_amplitude,
+    twisted_arrivals,
     two_levels,
 )
 
@@ -199,15 +201,32 @@ def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
     long_rest = bound_mode(long_counts, KIND, GAMMA)
     triple = (99, 20, 101)
     moving = moving_mode(long_counts, KIND, GAMMA, triple)
-    assert moving.cycle <= 2 and Fraction(2 * KIND[0], KIND[1]) < moving.rotation < long_rest.rotation
+    assert Fraction(2 * KIND[0], KIND[1]) < moving.rotation < long_rest.rotation
+    # the stop is a two-cycle of the rounding: one more iteration returns a profile one unit away at most
+    assert moving.cycle == 2
+    read, self_coefficient, wall = rule_integers(KIND, GAMMA, long_counts)
+    again = to_amplitude(
+        read_act(
+            (moving.re, moving.im),
+            twisted_arrivals(moving.re, moving.im, triple, PERIODIC),
+            read,
+            self_coefficient,
+            wall,
+        ),
+        moving.amplitude,
+    )
+    again = (again[0] + again[0][::-1]) // 2, (again[1] - again[1][::-1]) // 2
+    assert int(np.abs(again[0] - moving.re).max()) <= 1 and int(np.abs(again[1] - moving.im).max()) <= 1
     assert Fraction(70, 100) < moving.share_inside < Fraction(80, 100)
     now, before = moving_levels(moving, triple)
     read, self_coefficient, wall = rule_integers(KIND, GAMMA, long_counts)
-    acted = read_act(now, read, self_coefficient, wall, PERIODIC).astype(float)
+    acted = read_act((now,), (arrivals(now, PERIODIC),), read, self_coefficient, wall)[0].astype(float)
     inner = slice(2, 22)
     scale = float(moving.rotation)
     assert np.linalg.norm(acted[inner] - scale * now[inner]) < 1e-4 * np.linalg.norm(now[inner])
-    stepped = ((read * six_sum(now, PERIODIC) + self_coefficient * now) // wall - before).astype(float)
+    stepped = ((read * sum(arrivals(now, PERIODIC)) + self_coefficient * now) // wall - before).astype(
+        float
+    )
     cosine = scale / 2
     sine = math.sqrt(1 - cosine * cosine)
     expected = cosine * now + sine * envelope_times_sine(moving, triple)
