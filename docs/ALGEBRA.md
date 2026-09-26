@@ -14285,8 +14285,12 @@ the body's own energy, on the accumulator's wall:
 
   n_a += sigma_a x (W x P_body) div (M x lambda_q),
 
-sigma_a the sign of the per-Port tally on axis a (Port +a minus Port
--a of the booked flux, 9.25 (12)), P_body the body's rotation period
+sigma_a the sign of the per-Port tally on axis a (the booked flux through
+the Port on the body's -a face minus through the Port on its +a face,
+the quantum's direction of travel; the Ports named by their outward
+normal as the engine names them; the first wording "Port +a minus
+Port -a" named a Port by the direction of the flux through it and is
+corrected in 9.111 item 1; 9.25 (12)), P_body the body's rotation period
 in intervals (its record's `period`, 9.51 (3)), M its quanta, lambda_q
 the quantum's wavelength in Links (the emitter's declared given clock,
 9.62 (1)), the remainder kept on the body's record; the giving the
@@ -15189,8 +15193,10 @@ per axis,
 
   n_a += sigma_a x (W x P_body) div (M x lambda_q),
 
-sigma_a the sign of (the booked flux through Port +a minus through
-Port -a) over the click's ladder walk (9.25 (12)), P_body the body's
+sigma_a the sign of (the booked flux through the Port on the body's -a
+face minus through the Port on its +a face, the quantum's direction of
+travel; the Ports named by their outward normal, corrected in 9.111 item
+1) over the click's ladder walk (9.25 (12)), P_body the body's
 period in intervals, lambda_q the record's wavelength in Links (the
 emitter's declared `wavelength`, 9.90 (3) (e)), the remainder on the
 body's record. A giving: the same with the opposite sign, the tally
@@ -15883,7 +15889,8 @@ engine's units. To let a tool be fixed by its mass while its well stays
 (9.84 (3)), P_0 is the rational [1, 1000]: s = M div (1000 P). THE
 TOOLS: the generator writes every shipped body's quanta as M = 1000 s P
 from its declared count s and its period P, so s and every level are
-unchanged, bit for bit; the recoil per click is then Delta v = 3 Q P /
+unchanged, bit for bit (the held level between givings; its step at a
+giving is not bit for bit, 9.111 item 3); the recoil per click is then Delta v = 3 Q P /
 (lambda_q x 3 Q M) = 1 / (1000 s lambda_q) Links per interval, 2 x
 10^-8 for a tool of s = 2000 at lambda 21: below every band. THE
 MOMENTUM: the wall of (1) grows with M, so the generator rewrites each
@@ -17991,3 +17998,142 @@ as written here.
    (a fifth verb) and a new shape; the closing test is that no row of
    the check-mode table needs either. The twist table's precision is
    given by 9.96 (2) (e) and waits on the Boss's word to be built.
+
+### 9.111 The gate of The 3's heads 01109b05 (commit 5 in part, the four-vector click without the recoil) and 499a712a (the residue lines): the click's sign corrected in the algebra, the recoil's one target, the count per family for the engine; the one list for The 3 as Nature24's table with three rows added (records 2137, 2173, 2176, 2180)
+
+Read line by line on 2026-09-26 (11:40Z to 12:30Z) against the diffs
+4ec9d2ae..499a712a on emitter-click; the verdicts by the routine of
+skills/mathematical-validation/SKILL.md. Three gaps of the algebra
+found by the reading, fixed here and in place (record 2137: a gap is a
+finding for me, the run is never adjusted).
+
+1. **The click's sign: CONFIRMED, the algebra's wording corrected.**
+   The 3 built sigma_a as the sign of (the flux booked through the
+   detector's Ports on its -a face minus through those on its +a face),
+   the taken quantum's direction of travel (a quantum travelling toward
+   +a enters through the -a face), and asked which sign the algebra's
+   "Port +a minus Port -a" means. THE ALGEBRA MEANT THE DIRECTION OF
+   TRAVEL: 9.84 (1) says the taker gains the quantum's momentum and the
+   giver loses it, and that fixes the sign; the wording of 9.84 (2) and
+   9.91 (4) named a Port by the direction of the flux through it, while
+   the engine names a Port by its outward normal (the Port +a of a Node
+   is its Link toward +a). The two wordings are corrected in place to
+   the engine's naming: sigma_a = sign(booked through the -a face minus
+   booked through the +a face). The 3's `_tally_direction` (tally[a] -=
+   side x booked) and `direction_of` (the sign per axis, -1, 0, 1) are
+   this line bit for bit; the giving's tally (the outward flux through
+   the +a Ports minus the -a Ports, the given quantum's direction) the
+   same; the two cancel for a symmetric emitter (9.84 (2)); the window's
+   inverse undoes the tally. CONFIRMED.
+
+2. **The recoil: NOT CONFIRMED as complete; nothing waits on a
+   decision.** The 3 leaves every body's momentum unmoved "waiting on
+   the closing of record 2135, the click that keeps the momentum being
+   a decision of three". The algebra's reading: the click that keeps
+   the momentum is the model owner's word (the Boss's record 2160), and
+   the engine follows the algebra to the end (record 2173); the recoil
+   is the law's, not a hypothesis (9.84 (1)), so it is built, not
+   awaited. ONE VERB, THE TARGET DECLARED: the recoil writes the taken
+   quantum's momentum over the body's energy into the store the body's
+   own declaration names, and that store is the CLICK term's `target`
+   (9.110 item 7), not a branch of the engine:
+   (a) a held body (its momentum the held vector n of 9.91 (3)):
+   n_a += sigma_a x (W x P_body) div (M x lambda_q), the remainder on
+   the body's record (9.91 (4) with the sign of item 1);
+   (b) a sourced body (its momentum the phase gradient of its pair,
+   9.109 item 1): sigma_a x (k_q div M) into the Port angle
+   accumulators of the body's Nodes along the axis, in units of
+   theta_unit (9.109 item 2 (b); the accumulator of 9.96 (2) (e));
+   the giver with the opposite sign in both. The two are the same
+   number: k_q = 2 pi / lambda_q per quantum, the body's momentum per
+   quantum M v = 2 pi n / (W P_body) in the held form (9.63 (3)), so
+   Delta v = P_body / (M lambda_q) in (a) and k_q / (M omega_body) in
+   (b), equal (9.84 (2)). The engine of today has held bodies alone,
+   so (a) is what commit 5 completes; (b) enters with the source (the
+   list of item 4). What the Boss's record says of a decision of three
+   is the Boss's to say; the algebra has one line and it is here.
+
+3. **P_0, the tools' quanta and the count per family: the algebra's
+   gap closed (The 3's report 1 of 05:42Z).** The 3's finding: under
+   s = M div (1000 P) a held light quantum weighs 0 in s, so a giving
+   no longer lowers the tool's count by one, and 9.96 (3)'s "every
+   level bit for bit" cannot hold at a giving; and the count per family
+   (9.51 (8)) is not stated for the engine. RIGHT ON BOTH. (a) THE
+   COUNT PER FAMILY FOR THE ENGINE: s = SUM over the families k the
+   body holds of (M_k x P_0) div P_k, one remainder per family on the
+   body's record (9.51 (8)); M_k the body's content of family k (its
+   own family's M_own = 1000 s P_own written by the generator, 9.96
+   (3); a stock's M_light the declared count of givings, one quantum
+   per giving, 9.51 (8)); P_k the period of family k's quantum at the
+   body: the body's `period` for its own family, the family's rest
+   period at the body's level for held quanta of another family, an
+   integer of universe.json per family under the stamp. (b) THE GIVING
+   under P_0 = [1, 1000]: M_light falls by one (the unit of content,
+   whole) and s falls by P_0 / P_light = 1 / (1000 P_light), kept in
+   the light family's remainder: one unit of s per 1000 P_light
+   givings, 21000 givings at lambda 21. So the held level does not move
+   at a giving, and that is nature's: a tool's well is its mass, not
+   its lamp (9.84 (3)); the count of today lowered the emitter's well
+   by 1 in s = 2000 per giving, 0.05 percent, an artefact of P_0 = P_k.
+   (c) 9.96 (3) CORRECTED in place: bit for bit holds for the held
+   level between givings and for every row read from clicks; the held
+   level's step at a giving goes from 1 to 0 (with the remainder), so
+   every shipped row that read that step moves by it, and The 3 names
+   those rows (a GameBoard reading, not a measurement; no pin of
+   LAB_TOOLS.md reads the emitter's well). (d) THE BOUNDS with M_own
+   = 1000 s P: M x lambda_q <= 10^9 needs s x P x lambda_q <= 10^6
+   (8.8 x 10^5 for s = 2000, P = 21, lambda 21: inside), W x P_body <=
+   10^9 as before; the generator refuses a body outside them by the
+   key. With (a) to (d) the question of report 1 is closed and 9.96 (3)
+   is built as written, with (a) as the count.
+
+4. **The residue lines (499a712a): CONFIRMED, one residue noted for
+   the names push.** The loader's constants of the law's name gone,
+   every refusal naming the file and the key, no `law` entry in the
+   books and the state, `hypotheses` empty, the world keys `law`,
+   `model_id` and `detector_law` refused by name with the reason, the
+   stamp `stamp` {hash} in place of `input` {law, hash} (9.90 (3)
+   (c)), the start file with `mode` alone, `rungs` in rule.py as one
+   copy (the ladder of 9.25 (2), the same integers: the common
+   denominator, the cumulative C_k, b_k = (2 W C_k + Total) div (2
+   Total)), the six generators and every shipped world regenerated
+   bit for bit: all as 9.90 (1) and (2) say. CONFIRMED. THE RESIDUE:
+   the field `detector_law: bool = True` and the refusals "refused
+   without `detector_law`" (world.py near lines 1250 and 3204) still
+   name the retired flag, on branches the constant makes unreachable;
+   dead text, not a behaviour, for the names push of 9.90 (1) (the
+   module's and the folder's names) with the audit of 9.90 (3). Not
+   blocking.
+
+5. **The one list for The 3 (the model owner's word of 2026-09-26,
+   through the Boss: what needs a line of code is added to the engine;
+   the three close one list; every check of ours a run file).**
+   Nature24's table of primitives (docs/designs/generic_engine/
+   ENGINE_LEDGER.md section 3, stroke-side 274adb33: twelve rows with
+   their keys, their allowed values, their section here and their
+   test, green or to do; the remainders and the two-sided guard as
+   rules of the engine; the universe's integers and a body's keys as
+   declarations) IS THE LIST, and my draft (a) to (g) sent to the Boss
+   at 11:35Z maps onto it: (a) the loader by kind is his table's
+   frame with the keys table's section column (9.90 (6)); (b) his rows
+   4 and 6 with the guard; (c) his row 6's table; (d) his row 7 with
+   item 2 here; (g) the residue keys of 9.107 item 6. THREE ROWS HIS
+   TABLE LACKS, of the world file and the start file, not of a family:
+   (i) THE RUN'S WORDS, what is today a line of Nature24's checking
+   code: the start (a body's records at the stationary pace with the
+   sourced fields at their static levels, 9.108 item 12 (ii)), the
+   faces (closed, periodic or absorbing, 9.108 item 12 (iii)), the
+   run's length and the seed; (ii) THE READINGS a world file declares
+   and the run writes, every one labelled a GameBoard reading: a
+   level's amplitude at a Node over intervals (the ringing, the
+   deciding reading of 9.108 item 12: under 5 percent), a body's
+   centre against a well's centre (bound or not), the band-averaged
+   speed of a body (9.109 item 3), the exact K reading as the
+   neighbours' phase difference and the flux click half a Link ahead
+   (9.109 item 4), and the host cost beside; (iii) THE RESIDUE KEYS of
+   every run (9.107 item 6). With these three rows the table is the
+   list of record 2180: after The 3 builds it, every run of
+   docs/designs/rule_alone/ is a world file under examples/events/
+   with universe.json, and the code there is history; a check that
+   still needs a line names the missing row, and the row joins the
+   table before the line is written.
