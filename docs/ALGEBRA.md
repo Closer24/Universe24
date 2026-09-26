@@ -15365,3 +15365,61 @@ one body per Node: the pattern is compared". A counter of one Node:
 "the support is the beam's cross-section: the count is compared". A
 face: "the world's receiver face". The expectation in the row's README
 names the same kind.
+
+### 9.93 The correspondence: section in force, operation, code place (the Boss's record 2110 of 2026-09-26, the model owner: "an outside reviewer says the algebra matches one to one how the engine is written; the algebra file must be fixed first"; the frame written now, the code column filled by Nature24 the hour the one stroke lands, the history marking of chapter 9 made then)
+
+**(1) WHAT THE ENGINE IS, in one statement.** A GameBoard of Nodes,
+each with its six Ports. At every Node, per family, per component, a
+record: two levels and a remainder (phase 1), or a pair of levels with
+their remainders and twelve Port remainders (phase 2). One rule steps
+every component from its own two levels and the six arrivals through
+the Ports, at four paces read from the held families at the Node, with
+the remainder kept (9.57 (1), 9.78 (4)); the same integers run it
+backward. A body on one or several Nodes writes its ten and four
+numbers into the held families at its Nodes each interval; a detector
+books the one-way flux through its Ports and clicks at its rung; a
+click moves one quantum with its four-vector. Three files declare
+everything: the families, the world, the start; the code holds no
+number of the law but the rule's own.
+
+**(2) THE TABLE.** One row per operation; the sections in force that
+define it; the code place, to be written by Nature24 as file and
+function when the stroke lands ("owed" until then). A section not in
+this table is history or a reading, and chapter 9's superseded
+sections are marked so in place when the engine is declared stable.
+
+| Operation | Sections in force | Code place |
+| --- | --- | --- |
+| The state at a Node (components, phases, remainders) | 9.91 (1); 9.79 (1); 9.86 (2) | owed |
+| The step, the four paces, the integer table | 9.57 (1), (2); 9.78 (4); 9.91 (2) | owed |
+| The inverse per Node, the order backward | 9.50 (8); 9.79 (2) item 2; 9.91 (8) | owed |
+| The hold, the body's writes and the dipoles | 9.78 (2); 9.85 (2), (7); 9.91 (3) | owed |
+| The pace from the reads (weight, by) | 9.78 (4); 9.79 (2) item 4; 9.91 (2) | owed |
+| The self-source's slot | 9.78 (3); 9.88 (7) (ii); 9.91 (5) | owed |
+| The transport on the Port, the twist table, "own" | 9.81 (2), (3); 9.91 (6) | owed |
+| The booking at the Ports, the transverse components | 9.25 (2), (12); 9.82 (3); 9.79 (2) item 7 | owed |
+| The booking in the body's frame at a moving face | 9.74 (2) | owed |
+| Born's rule, one detector on several Nodes | 9.25 (3), (7); record 2109; 9.92 | owed |
+| Born's rule, several detectors on one Node each | 9.25 (3); record 2109; 9.92 | owed |
+| The ladder, the rung, the residue and the wheel | 9.25 (2); 9.22 (4); 9.19 (4) | owed |
+| The taking click, the four-vector, the recoil | 9.86 (1); 9.84 (2); 9.91 (4) | owed |
+| The giving click, the window of the point emitter | 9.71 (1); 9.85 (5); 9.85 (2) | owed |
+| The threshold on the rest norm of a boosted train | 9.74 (3); 9.75 (1) as corrected in 9.89 (4) | owed, retired with the train |
+| The contraction at a body's Node, the feed, the induction | 9.78 (4); 9.52 (4); 9.91 (8) | owed |
+| The spin's step | 9.78 (5); 9.91 (8) | owed |
+| The interval's order, forward and backward | 9.85 (2); 9.91 (8) | owed |
+| The leak test per part | 9.85 (3); 9.87 (1); 9.91 (9) | owed |
+| The backward test across clicks from the events output | 9.80 (4); 9.85 (1) | owed |
+| The families file and the universe's integers | 9.83 (2); 9.85 (3); 9.91 (7) | owed |
+| The world file's keys and the bodies' numbers | 9.90 (3); 9.69 (6); 9.85 (7) | owed |
+| The start file | 9.90 (4); the owner's ruling in 9.90 (6) | owed |
+| The one keys table and its test | 9.90 (6) | owed |
+| The four primitives of the freeze, declared | 9.88 (7) | owed |
+| The faces: periodic, mirror, receiver with depth | 9.85 (5) (c); 9.90 (3) (a) | owed |
+
+**(3) WHAT THE REVIEWER CHECKS, one line each (record 2110 item 3).**
+Every section in force implemented; every operation of the code backed
+by a row; integers only, every division with its remainder kept at its
+place; the order of the step as 9.91 (8); the booking and Born's rule
+in both forms of record 2109; no name of a family, a law or a version
+anywhere in the code; no number of the law in the code.
