@@ -98,3 +98,25 @@ as a body's seed is, and checked at load. A consequence (a state, a
 cause, a length, a form) is derived with its proof and never put to the
 owner as a choice. LAB_TOOLS.md cites the section for the engine lines and
 the tests.
+
+## Every head of the engine is gated against the algebra, line by line (the owner, 2026-09-25 and 2026-09-26, records 1940, 2129, 2135 and 2137)
+
+The rule of three (record 1940): the algebra's line, the head gated against
+it, the Boss's record; nothing is merged and no pin compared before the
+owner's Go. The mathematician gates every commit of the engine's writer
+(record 2135: one writer of the engine, everyone else writes checking code
+outside it) by reading its diff against the sections of docs/ALGEBRA.md it
+cites and answering CONFIRMED or NOT CONFIRMED per line, with the exact
+line that differs; the verdict goes to the writer with a copy to the Boss
+(record 2129) and is written in docs/ALGEBRA.md as a numbered item so the
+gate is a record and not a message. A run's number stands beside the
+algebra's number, the run never adjusted; a gap is a finding for the
+mathematician first (record 2137): the algebra is corrected in place, with
+what was wrong said plainly, and the run is asked again. A writer's finding
+on the way (a pile-up, a lag, a collapse) is answered with the algebra's
+own expectation and a reading that decides between causes, never with a
+guess. The mathematician keeps a timed check-in (once an hour): fetch the
+writers' branches, gate any head after the last gated one, read any new run
+under docs/designs/, check the open pull request's CI and mergeability, and
+re-arm silently when nothing changed, so that no head passes ungated while
+no one is writing.
