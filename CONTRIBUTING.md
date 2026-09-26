@@ -77,8 +77,8 @@ branch `main`. ZIP files are backups after the project has been uploaded. For ea
    in `docs/EXPERIMENTS.md`. Do not copy a record into a second document; link to it.
 9. If `main` advances, integrate its changes and recheck the resulting risks.
    Merge only after successful CI and within the user's authorization; never bypass
-   a failing check. Only the Boss merges into `main` and tags each engine merge
-   `engine-vX.Y` (record 2214).
+   a failing check. Only the Boss merges into `main`; a result names the `main` commit
+   it ran on, and the owner tags engine milestones `engine-vX.Y` (records 2214, 2216).
 
 Do not push directly to `main` during routine work or force-push a shared branch.
 An initial upload to an empty repository is allowed when the user requests it.
