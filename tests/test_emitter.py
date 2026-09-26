@@ -49,7 +49,7 @@ import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.rule import rule_coefficients
-from event_universe.events.world import input_stamp, parse_nature_beam_world
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
 # THE NODE CLOCK (the model owner's decision (5) of record 1962; ALGEBRA.md 9.35 (2), (3);

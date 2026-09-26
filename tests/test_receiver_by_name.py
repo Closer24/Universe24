@@ -24,7 +24,7 @@ from pathlib import Path
 import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import input_stamp, parse_nature_beam_world
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_emitter import lawful_wheel
 from tests.test_massive_record import light_clock_world, massive_world, seed_source
 

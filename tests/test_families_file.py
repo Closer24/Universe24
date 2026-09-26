@@ -22,9 +22,9 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe.events import world as loader
+from event_universe import world_files
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import families_file_entries, input_stamp, parse_nature_beam_world
+from event_universe.world_files import families_file_entries, input_stamp, parse_nature_beam_world
 from tests.test_emitter import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -143,7 +143,7 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     (tmp_path / "universe.json").write_text(json.dumps(document), encoding="utf-8")
     (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
     a = DetectorLawSimulation(parse_nature_beam_world(inline))
-    monkeypatch.setattr(loader, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     moved = on_the_file(inline, [512, 1])
     moved["universe"] = "universe.json"
     moved["engine"] = "start.json"
@@ -208,7 +208,7 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
             entry["stocks"] = {rename[k]: v for k, v in entry["stocks"].items()}
         if "emitter" in entry:
             entry["emitter"]["family"] = rename[entry["emitter"]["family"]]
-    monkeypatch.setattr(loader, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     renamed["universe"] = "universe.json"
     renamed["engine"] = "start.json"
     renamed["stamp"] = input_stamp(renamed)
@@ -254,7 +254,7 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     refused(missing, "no file at the repository's root")
     # the file's own defects, one at a time
     good = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
-    monkeypatch.setattr(loader, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
     document["engine"] = "start.json"
     document["universe"] = "universe.json"

@@ -25,11 +25,10 @@ from event_universe.diagnostics.massive_record_margin import (
 )
 from event_universe.events.world import (
     MOST_FAMILIES,
-    input_stamp,
     mode_residual,
-    parse_nature_beam_world,
     six_neighbours_flat,
 )
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_emitter import emitter_world, massive_generator, reads
 from tests.test_massive_record import light_clock_world, massive_world
 from tests.test_receiver_by_name import CLOSED_CHAIN, emitter

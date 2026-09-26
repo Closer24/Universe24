@@ -26,7 +26,7 @@ from event_universe.diagnostics.massive_record_margin import (
     relaxation_time,
 )
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import input_stamp, parse_nature_beam_world
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_massive_record import block_world
 
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}

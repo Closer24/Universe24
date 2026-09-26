@@ -14,7 +14,7 @@ from __future__ import annotations
 import numpy as np
 
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import parse_nature_beam_world
+from event_universe.world_files import parse_nature_beam_world
 from tests.test_body_record import PERIODIC
 from tests.test_emitter import emitter_world
 from tests.test_flux_reading import planted

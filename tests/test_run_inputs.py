@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 from run_inputs import OUTPUT_FORMAT, main, run_input  # noqa: E402
 
-from event_universe.events.world import input_stamp  # noqa: E402
+from event_universe.world_files import input_stamp  # noqa: E402
 from tests.test_detector_law import chain_world  # noqa: E402
 from tests.test_emitter import emitter_world  # noqa: E402
 

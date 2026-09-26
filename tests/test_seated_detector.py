@@ -24,7 +24,7 @@ import json
 import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import input_stamp, parse_nature_beam_world
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_body_record import with_body_record
 from tests.test_detector_law import Seen, chosen_by_the_rule, layer_world, spy_on
 

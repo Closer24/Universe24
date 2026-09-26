@@ -28,7 +28,7 @@ import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation, form_json
 from event_universe.events.rule import rule_coefficients
-from event_universe.events.world import input_stamp, parse_nature_beam_world
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_emitter import NODE_CLOCK, emitter_world, lawful_wheel, reads
 from tests.test_flux_reading import planted
 from tests.test_massive_record import massive_world

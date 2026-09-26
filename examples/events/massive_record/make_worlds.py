@@ -118,7 +118,7 @@ LIGHT_MOMENT = [0, 0, 1]
 
 def families_entries() -> tuple[list[dict], dict[str, int]]:
     """The universe file's entries in the loader's list form and the universe's integers."""
-    from event_universe.events.world import families_file_entries
+    from event_universe.world_files import families_file_entries
 
     entries, integers = families_file_entries(UNIVERSE_FILE)
     return [dict(entry) for entry in entries], dict(integers)
@@ -149,7 +149,7 @@ def families_of(document: dict) -> list[dict]:
     file's entries when the world names the file (ALGEBRA.md 9.85 (3); item 59)."""
     families = document["universe"]
     if isinstance(families, str):
-        from event_universe.events.world import families_file_entries
+        from event_universe.world_files import families_file_entries
 
         return [dict(entry) for entry in families_file_entries(families)[0]]
     return list(families)
@@ -359,7 +359,7 @@ def stamped(document: dict) -> dict:
     integers as they stand: the hash of the whole file under `stamp` (no law identifier,
     ALGEBRA.md 9.90 (1)); written before every parse of a document under construction and last of
     all, so that the file carries the stamp of what it holds."""
-    from event_universe.events.world import input_stamp
+    from event_universe.world_files import input_stamp
 
     document["stamp"] = input_stamp(document)
     return document
@@ -383,7 +383,7 @@ def emitter_rung(document: dict, number: int):  # type: ignore[no-untyped-def]
         excitation_norm,
         period_of,
     )
-    from event_universe.events.world import parse_nature_beam_world
+    from event_universe.world_files import parse_nature_beam_world
 
     emitter = document["measured"][number]["emitter"]
     for key in ("period", "norm", "norm_denominator"):
@@ -650,7 +650,7 @@ def window_reading(document: dict, number: int, weight: int, limit: int) -> tupl
     for a row above the world's amplitude bound (a body of several Nodes writing at all its
     Nodes piles the given row up inside itself; the weight is then too high)."""
     from event_universe.events.detector_law import DetectorLawSimulation
-    from event_universe.events.world import parse_nature_beam_world
+    from event_universe.world_files import parse_nature_beam_world
 
     trial = json.loads(json.dumps(document))
     trial["measured"][number]["emitter"]["weight"] = weight
@@ -760,7 +760,8 @@ def train_run(
     import numpy as np
 
     from event_universe.events.detector_law import DetectorLawSimulation
-    from event_universe.events.world import body_node_indices, parse_nature_beam_world
+    from event_universe.events.world import body_node_indices
+    from event_universe.world_files import parse_nature_beam_world
 
     length = train_extents[axis]
     far = 12 * length + TRAIN_FLUX_DISTANCE
@@ -1059,7 +1060,8 @@ def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
     residual bound before it is written: a profile that fails is a generator fault, raised,
     never written."""
     from event_universe.diagnostics.massive_record_margin import iterated_mode
-    from event_universe.events.world import body_node_indices, mode_residual, parse_nature_beam_world
+    from event_universe.events.world import body_node_indices, mode_residual
+    from event_universe.world_files import parse_nature_beam_world
 
     world = parse_nature_beam_world(stamped(document))
     flat, clock, _ = iterated_mode(world, number, amplitude)

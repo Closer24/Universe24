@@ -8,7 +8,8 @@ export of the ray law's `NatureBeamSimulation` is CANCELLED
 
 from __future__ import annotations
 
-from event_universe.events import NatureBeamWorld, parse_nature_beam_world
+from event_universe.events import NatureBeamWorld
+from event_universe.world_files import parse_nature_beam_world
 
 __version__ = "0.3.1"
 __all__ = [

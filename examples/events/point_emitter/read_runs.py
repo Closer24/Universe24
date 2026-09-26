@@ -66,7 +66,7 @@ def wavelength(path: Path, at: int | None = None) -> None:
     import numpy as np
 
     from event_universe.events.detector_law import DetectorLawSimulation
-    from event_universe.events.world import parse_nature_beam_world
+    from event_universe.world_files import parse_nature_beam_world
 
     document = json.loads(path.read_text(encoding="utf-8"))
     window = int(document["measured"][0]["emitter"]["window_read"])

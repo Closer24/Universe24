@@ -40,7 +40,7 @@ from pathlib import Path
 from typing import Any
 
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import parse_nature_beam_world
+from event_universe.world_files import parse_nature_beam_world
 
 OUTPUT_FORMAT = "one-command-output-v1"
 

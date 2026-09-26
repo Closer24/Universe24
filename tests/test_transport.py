@@ -19,12 +19,11 @@ import pytest
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import (
     TWIST_FINE_BITS,
-    input_stamp,
     light_twist,
-    parse_nature_beam_world,
     rotation_twist,
     twist_triple,
 )
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_axis_paces import SHAPE, paces_world
 from tests.test_families_file import FILE, emitter_world, on_the_file, refused
 from tests.test_vector_holds import parts_of

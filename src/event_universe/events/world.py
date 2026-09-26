@@ -301,14 +301,11 @@ family or a content that is not a positive integer.
 
 from __future__ import annotations
 
-import hashlib
-import json
 import math
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, replace
 from fractions import Fraction
 from functools import cached_property
-from pathlib import Path
 from typing import NamedTuple
 
 from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
@@ -1068,7 +1065,9 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
 READ_BY_WORDS = {1: "plain", "q": "sign", "plain": "plain", "sign": "sign"}
 
 
-def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str, object]]:
+def universe_file_entries(
+    value: str, files: Mapping[str, object]
+) -> tuple[list[dict[str, object]], dict[str, object]]:
     """The universe file read and translated to the families list the parse
     reads (item 51's attributes and the one stroke's, ALGEBRA.md 9.91 (7);
     record 2128 (3): the file examples/events/universe.json, the world's key
@@ -1083,10 +1082,9 @@ def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str
     family without clicks (a held family, one click one unit); `charge` 0
     on every family (a body's charge is the body's number, 9.91 (7); the
     hold writes it, commit 2)."""
-    path = REPOSITORY_ROOT / value
-    if not path.is_file():
+    if value not in files:
         raise ValueError(f"universe names {value!r}, no file at the repository's root")
-    document = json.loads(path.read_text(encoding="utf-8"))
+    document = files[value]  # read by the host module event_universe.world_files
     label = f"the universe file {value!r}"
     if not isinstance(document, dict):
         raise ValueError(f"{label} must be a JSON object")
@@ -1229,7 +1227,8 @@ def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str
 # owner's Go, records 2050 and 2054) or "pin" (the pins compared).
 START_KEYS = {"mode"}
 START_MODES = ("check", "pin")
-REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
+# THE REPOSITORY'S ROOT and every file read live in the host module
+# event_universe.world_files (the loader reads no file; tests/test_architecture.py)
 
 
 @dataclass(frozen=True)
@@ -1240,7 +1239,7 @@ class EngineStart:
     mode: str
 
 
-def _engine_start(value: object, detector_law: bool) -> EngineStart | None:
+def _engine_start(value: object, files: Mapping[str, object], detector_law: bool) -> EngineStart | None:
     """The world key `engine`: the repository path of the start file, required
     (the ray law's branch below CANCELLED, 9.90 (1)); the file a JSON object with
     exactly the keys of START_KEYS (`mode`, one of START_MODES; no law's name,
@@ -1257,10 +1256,9 @@ def _engine_start(value: object, detector_law: bool) -> EngineStart | None:
         )
     if not isinstance(value, str) or not value:
         raise ValueError("engine must be the start file's repository path, a string")
-    path = REPOSITORY_ROOT / value
-    if not path.is_file():
+    if value not in files:
         raise ValueError(f"engine names {value!r}, no file at the repository's root")
-    start = json.loads(path.read_text(encoding="utf-8"))
+    start = files[value]  # read by the host module event_universe.world_files
     if not isinstance(start, dict):
         raise ValueError(f"the engine start file {value!r} must be a JSON object")
     unknown = set(start) - START_KEYS
@@ -6561,33 +6559,14 @@ def mode_residual(
     return worst_residual, worst_bound, node
 
 
-def input_digest(document: dict[str, object]) -> str:
-    """THE FILE'S DIGEST (ALGEBRA.md 9.22 (7) (i); the model owner's rule of
-    2026-09-25 through the Boss, BUILD.md section 26 item 28: the stamp over
-    the whole file): SHA-256 of the canonical JSON (the keys sorted, no
-    spaces, ASCII) of the document without its `stamp` key; the same from
-    the raw document (`input_stamp`) and at load (`_input_stamp_check`), so
-    that a file the generator wrote runs as written and a file changed by
-    hand, in any key, is refused."""
-    canonical = json.dumps(
-        {key: value for key, value in document.items() if key != "stamp"},
-        sort_keys=True,
-        separators=(",", ":"),
-        ensure_ascii=True,
-    )
-    return hashlib.sha256(canonical.encode("ascii")).hexdigest()
+# THE FILE'S DIGEST AND THE STAMP the generator writes (`input_digest`, `input_stamp`)
+# live in the host module event_universe.world_files since item 72: the loader
+# compares the stamp with the digest handed to it and computes none.
 
 
-def input_stamp(document: dict[str, object]) -> dict[str, str]:
-    """THE STAMP the generator writes into a world file under `stamp` (record 1886;
-    ALGEBRA.md 9.22 (7) (i), 9.90 (3) (c); BUILD.md section 26 item 28): the
-    digest of the whole document (`input_digest`) and nothing else (no law
-    identifier, 9.90 (1)). The loader recomputes the digest from the document
-    as loaded and refuses a file that is not the one the generator wrote."""
-    return {"hash": input_digest(document)}
-
-
-def _input_stamp_check(document: dict[str, object], measured: tuple[MeasuredDefinition, ...]) -> None:
+def _input_stamp_check(
+    document: dict[str, object], measured: tuple[MeasuredDefinition, ...], digest: str | None
+) -> None:
     """THE FILE'S HASH (the model owner's record 1886; ALGEBRA.md 9.22 (7) (i),
     9.90 (3) (c); BUILD.md section 26 item 28): a world with a seeded body
     carries `stamp` {hash}, the digest of the WHOLE document without `stamp`
@@ -6605,14 +6584,18 @@ def _input_stamp_check(document: dict[str, object], measured: tuple[MeasuredDefi
             "ALGEBRA.md 9.22 (7) (i); BUILD.md section 26 item 28)"
         )
     stamp = _object(value, "stamp", STAMP_KEYS, STAMP_KEYS)
-    digest = stamp["hash"]
-    if not isinstance(digest, str):
+    written = stamp["hash"]
+    if not isinstance(written, str):
         raise ValueError("stamp.hash must be a string")
-    expected = input_digest(document)
-    if digest != expected:
+    if digest is None:
         raise ValueError(
-            f"stamp.hash {digest[:12]}... is not the digest of the file "
-            f"{expected[:12]}...: the document is not the one the generator stamped (a key changed "
+            "the stamp's check needs the file's digest, computed by the host module "
+            "event_universe.world_files (the loader reads no file and hashes nothing)"
+        )
+    if written != digest:
+        raise ValueError(
+            f"stamp.hash {written[:12]}... is not the digest of the file "
+            f"{digest[:12]}...: the document is not the one the generator stamped (a key changed "
             "after the stamp; the stamp covers the whole file, BUILD.md section 26 item 28; record "
             "1886); regenerate the file"
         )
@@ -7030,8 +7013,17 @@ def _body_fit_check(world: NatureBeamWorld) -> None:
                 )
 
 
-def parse_nature_beam_world(document: object) -> NatureBeamWorld:
-    """Reject anything but a lawful world of the Beam Law."""
+def parse_world_document(
+    document: object, files: Mapping[str, object], digest: str | None
+) -> NatureBeamWorld:
+    """Reject anything but a lawful world. THE LOADER READS NO FILE (tests/
+    test_architecture.py: physical code imports no storage; the integer rule,
+    record 2071): `files` holds the documents the world names by a repository
+    path (the universe file under `universe`, the start file under `engine`),
+    read by the host module event_universe.world_files, and `digest` the file's
+    digest computed there for the stamp's check; every check is this loader's.
+    `event_universe.world_files.parse_nature_beam_world(document)` is the whole
+    read."""
     if not isinstance(document, dict):
         raise ValueError("a world is a JSON object")
     old = [key for key in OLD_KEYS if key in document]
@@ -7126,7 +7118,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             "the world",
             {"suspension", "direction_bound", "directions", "action", "meeting", "massive_rows"},
         )
-    start = _engine_start(obj["engine"] if "engine" in obj else None, early_law)
+    start = _engine_start(obj["engine"] if "engine" in obj else None, files, early_law)
     families_file: str | None = None
     as_written = obj  # the document as the generator stamped it (the universe's path, item 59)
     universe = obj[word]
@@ -7138,7 +7130,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         # (the path reaches here under `detector_law` alone: the ray law's word is `families`)
         families_file = universe
         _refuse_under_law(obj, "the world", FAMILIES_INTEGERS | FAMILIES_TABLES)
-        entries, integers = families_file_entries(families_file)
+        entries, integers = universe_file_entries(families_file, files)
         obj["families"] = entries
         obj.update(integers)
     else:
@@ -7456,7 +7448,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                     "momentum, the moving mode's rotation at its moving centre, the generator's "
                     "(ALGEBRA.md 9.63 (3); `seed_on_the_mode`)"
                 )
-    _input_stamp_check(as_written, measured)
+    _input_stamp_check(as_written, measured, digest)
     _initial_state_checks(shape, periodic, families, measured)
     families = _massive_families(families, measured, table, width, phase_steps, action)
     # The covariant readings (`covariant-readings-v1`): the key as declared,

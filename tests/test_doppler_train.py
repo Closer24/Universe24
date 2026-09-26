@@ -22,7 +22,7 @@ from pathlib import Path
 
 import pytest
 
-from event_universe.events.world import input_stamp, parse_nature_beam_world
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_emitter import massive_generator
 from tests.test_toward_nature import document, load_module
 

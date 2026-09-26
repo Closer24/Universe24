@@ -20,7 +20,7 @@ from fractions import Fraction
 import numpy as np
 
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import parse_nature_beam_world
+from event_universe.world_files import parse_nature_beam_world
 from tests.test_emitter import reads
 from tests.test_massive_record import massive_world, seed_source
 from tests.test_receiver_by_name import CLOSED_CHAIN, emitter

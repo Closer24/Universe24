@@ -11,7 +11,7 @@ import numpy as np
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.rule import axis_rule_coefficients, rule_coefficients
-from event_universe.events.world import input_stamp, parse_nature_beam_world
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_massive_record import block_world
 from tests.test_vector_holds import KIND, WELL, parts_of
 

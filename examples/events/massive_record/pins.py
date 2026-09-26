@@ -44,9 +44,8 @@ from event_universe.diagnostics.massive_record_margin import (
     body_nodes,
     largest_eigenvalue,
 )
-from event_universe.events.world import parse_nature_beam_world
+from event_universe.world_files import parse_nature_beam_world
 
-# the drives' names in the worlds' names, the generator's `SPEED_NAME` (make_worlds.py)
 SPEED_NAME = {3: "speed_third", 4: "speed_quarter"}
 
 HERE = Path(__file__).resolve().parent

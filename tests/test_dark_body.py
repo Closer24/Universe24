@@ -18,7 +18,7 @@ import json
 from pathlib import Path
 
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import parse_nature_beam_world
+from event_universe.world_files import parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
 FOLDER = ROOT / "examples/events/dark_body"

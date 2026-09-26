@@ -4921,6 +4921,23 @@ would have found no cell.
    generator and read by the loader, the files read by a host module. PROOF:
    the gate; the five worlds' rows and lines bit for bit; tests/
    test_hop_taking.py (the carry as the pair) green.
+72. THE LOADER READS NO FILE (tests/test_architecture.py: physical code imports
+   no storage; the integer rule, record 2071; the Boss's record 2138 (2)). The
+   host module `event_universe.world_files` reads the three files of ALGEBRA.md
+   9.90 (2): the world file, the universe file it names under `universe` and
+   the start file it names under `engine`; it hands the loader
+   (`parse_world_document(document, files, digest)`) the documents by their
+   paths and the file's digest, and the loader keeps every check (a path with
+   no file refused naming the key, the universe file's and the start file's
+   keys, the stamp compared with the digest handed to it). The generators'
+   stamp (`input_stamp`, `input_digest`) and the repository's root live in the
+   host module; `parse_nature_beam_world(document)` there is the whole read,
+   `load_world(path)` the file's; the loader holds no json, hashlib or pathlib.
+   Every living import of the four names moved (37 files; the cancelled paths
+   untouched); the engine's package exports the loader's parse, the root
+   package the host's read. STILL RED of the six: the loader's floats (item
+   71's (a)): the next push. PROOF: the gate; the five worlds bit for bit
+   (the compare reading through the host module).
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

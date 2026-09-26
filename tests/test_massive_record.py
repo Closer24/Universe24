@@ -29,9 +29,8 @@ from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import (
     MASSLESS_PAIR,
-    input_stamp,
-    parse_nature_beam_world,
 )
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_detector_law import (
     chain_world,
     cube_positions,

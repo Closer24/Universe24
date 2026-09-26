@@ -33,7 +33,7 @@ import json
 import sys
 from pathlib import Path
 
-from event_universe.events.world import input_stamp
+from event_universe.world_files import input_stamp
 
 HERE = Path(__file__).resolve().parent
 EVENTS = HERE.parent
