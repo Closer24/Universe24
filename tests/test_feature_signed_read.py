@@ -14,8 +14,8 @@ import numpy as np
 import pytest
 
 from event_universe.core.register import folder_of
-from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.core.rule3 import coefficients
+from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features import signed_read
 from event_universe.features.signed_read import (
     DECLARATION,
