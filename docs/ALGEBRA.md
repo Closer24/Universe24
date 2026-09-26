@@ -17709,6 +17709,61 @@ as written here.
     rings at twice its static level, so the start writes the static
     levels, never zero.
 
+12. **Nature24's run of the sourced form (stroke-side cf2990d0, 11:05Z):
+    FAILS; his two findings on the rule are right and enter the line;
+    the corrections; the fallback that already bound.** His run: the
+    fields started at the PLAIN rule's static response and stepped at
+    the pace, where the response feeds on its own depth (1924 for the
+    floor 1500, 6944 for 3500), so they rang from the start; a Gaussian
+    start; a periodic board of 64; the record dispersed by 175 intervals
+    and the guard came at 198. THE TWO FINDINGS. (a) A SOURCED MASSIVE
+    FIELD RINGS: each family oscillates at its own rest rotation (the
+    binding 0.194 per interval, period 32; the core 0.560, period 11),
+    undamped, and its k = 0 part does not propagate; the net well, the
+    difference of two ringing fields, flickers. (b) A HILL DRIVES THE
+    PACE ABOVE GAMMA, where the rule's step is unstable: the K = pi
+    mode's factor (S - 6 R) / w falls below -2 near p = 1.25 Gamma (the
+    kind [800, 850]: -1.4 at 1.2 Gamma, -2.3 at 1.3 Gamma) and the record
+    grows exponentially; the engine's guard is one-sided.
+
+    THE LINE, CORRECTED. (i) THE GUARD IS TWO-SIDED: the pace read is
+    bounded, 0 < p <= Gamma; a hill lessens a hollow and never exceeds
+    it. "A point is a hill" (item 10) is withdrawn: at a point the net
+    well is ZERO, not a hill, and a body shrinking below the core's range
+    loses its well and disperses, so the stable size is where the net
+    well per quantum is deepest, finite, as before. (ii) THE START is
+    the stationary state AT THE PACE: the record's mode and the fields'
+    static levels iterated together under the pace the fields make (the
+    plain response is 30 percent off at the floor 1500 and rings by
+    that much); a field switched on off its stationary level rings at
+    the difference. (iii) THE TRANSIENTS MUST LEAVE: a massive field's
+    ringing at k above 0 propagates at its group speed and is radiation;
+    on a periodic board it returns forever, so the field families' faces
+    are receivers (absorbing) or the board is large; the k = 0 part is
+    driven only by a change of the TOTAL source, which for a linear
+    source s_i = F_i div E_s is the record's conserved form and does not
+    change, so it is not driven once the start is stationary. (iv) THE
+    ADIABATIC CONDITION, why a moving body does not ring: the source of
+    a body of rms w moving at v changes at the rate v / w, 0.011 per
+    interval at v = 0.05 and w = 4.5, against the fields' rotations 0.19
+    and 0.56: the fields follow their source; the breathing of a wrong
+    start (0.03) is what rings. With (i) to (iv) the sourced form is
+    run again: the ringing amplitude of each field at the peak over 300
+    intervals below 5 percent is the reading that decides it.
+
+    THE FALLBACK THAT ALREADY BOUND: the self-reading through the hold
+    with the saturating table (items 3 and 10's table runs, bound at
+    side 9): the record reads its own local count written one interval
+    before, no field, no ringing, exactly reversible; its price is the
+    one-interval lag, a drag of the rate omega_t^2 per interval (1e-3 at
+    rms 3, 1e-5 at rms 9, by 9.105), and no conserved total (the hold
+    injects). Run beside the sourced form with the stationary start and
+    the ceiling (K_m + 1) s_cap = 9000, side 9: the speed's decay rate
+    against omega_t^2 is its reading. The many-record pair (item9_many):
+    the attraction is read in the momentum labels (+0.041 and -0.028 at
+    250 against a null of exactly 0): WORKS as the fall's reading; the
+    meeting is hidden by the records' walk, as 9.98 (10) (i) says.
+
 ### 9.109 The click that keeps the momentum, in integers (the model owner's question of 2026-09-26, record 2160: "but one click, is it not received in one click?"; the Boss's ask for the line), and the algebra's numbers for the ninth question's rerun
 
 1. **What the engine's click does and what the bath's construct did.**
