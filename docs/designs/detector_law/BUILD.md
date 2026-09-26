@@ -3720,7 +3720,7 @@ would have found no cell.
    a_next + r' = R S_6(a_now) + S a_now - w a_before + r with the Node's own
    pace p = Gamma - c (c the effective content, 9.48 (3)): R = 2 p^2 num, S =
    12 den Gamma^2 - 6 (p^2 + Gamma^2)(den - num) - 12 num p^2, w = 6 den
-   Gamma^2 (`event_universe.events.rule.rule_coefficients`, the one place the
+   Gamma^2 (`event_universe.core.rule3.coefficients`, since the operation's cut; `event_universe.events.rule.rule_coefficients` before it, the one place the
    three integers are written; `one_rule` and `one_rule_inverse` read them,
    so the step, its exact inverse, the seat's record (item 42; its six reads
    the seat) and the support box (item 43) all carry the weak field with no
@@ -5097,6 +5097,44 @@ would have found no cell.
    that is no function; the twenty-three on a shipped test world in the
    folders' order, fourteen built, the rows of 9.117 writing the named values
    with item 3's orders; the giving among a body's terms).
+
+78. RULE3, THE RULE IN ONE PLACE, THE OPERATION'S CUT (issue #1154; the model
+   owner's question of 2026-09-26 through the Boss, 16:33Z: does the rule sit in
+   one place, called by everyone through one call; his records 2237, the name
+   Rule3, 2238, one-line docstrings and the line counts, and 2234, the split
+   built from the rule; ALGEBRA.md 9.57 (1), 9.50 (8),
+   (9) and (13), 9.91 (2)). BEFORE: events/rule.py held the coefficients only
+   (`rule_coefficients` R, S, w; `axis_rule_coefficients` R_a, S, w, two
+   formulas); detector_law.py held the step four times (`one_rule`,
+   `one_rule_inverse`, `one_rule_axes`, `one_rule_axes_inverse`) and the form's
+   Node term twice (`form_share` and the booking's read). AFTER:
+   src/event_universe/core/rule3.py, ONE FUNCTION `rule3(reads, arrivals, S, w,
+   now, before, r)`: w a_next + r' = SUM_a R_a (arr_a+ + arr_a-) + S a_now - w
+   a_before + r, its inverse `rule3_inverse` beside it (the ceiling form), the
+   form's Node term `form_term(S, w, now, before)` read by both copies, and the
+   integers from one function of the paces, `coefficients(num, den, gamma, c,
+   axis_contents=ISOTROPIC, weak_field=True)` -> ((R_x, R_y, R_z), S, w); THE
+   ISOTROPIC RULE is the same call with the three paces equal (the axis contents
+   zero: 4 num x 3 p^2 = 12 num p^2, term for term). Every record, the body's
+   Node record (its six reads returning its own level as (2 a, 2 a, 2 a)), every
+   inverse (`step_inverse`, the Node record's) and both form reads call it; the
+   plain and the boxed paths read the arrivals per axis (`_axis_sums`, the
+   per-axis form of `_neighbours`); the operation folder binds the rule itself.
+   BIT FOR BIT: in the ring of int64 the sum over the axes of R x arr_a equals R
+   times the six-sum, so every shipped world's rows, held levels and lines are
+   unchanged (the five worlds' comparison; the suites' digests); the host pays
+   two more multiplications per Node and three arrays where the six-sum was one
+   (a host cost, reported, not the model's). The module moved (git mv) with the
+   ladder's `rungs` and `rule_total_bound`, which read it; core imports no numpy
+   (the same operators on integers and arrays). detector_law.py 4,377 to 4,213
+   lines. PROOF: tests/test_rule3.py (the coefficients against the two
+   old functions written out as the oracle and the isotropic ones at zero axis
+   contents; the step and its inverse exact on integers and int64 arrays, the
+   axes' sum equal to R times the six-sum; the form's term and the load bound;
+   the scan of src/ refusing the rule's arithmetic anywhere but core/rule3.py;
+   a spy showing the engine's steps go through core.rule3 and the operation
+   primitive of the register is the rule itself); the twelve suites that read
+   the coefficients moved with the provider.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
