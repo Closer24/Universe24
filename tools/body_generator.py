@@ -1,29 +1,4 @@
-"""THE GENERATOR BY THE RULE (ALGEBRA.md 9.118; the Boss's record 2233 on the model
-owner's word; record 1924: "the generator is the operator iterated, with its stop").
-
-A body's integers as the rule iterated with a stop, one tool for every world's
-generator (a HOST tool: it writes integers into the world file under the stamp, and the
-engine reads integers alone):
-
-- THE PROFILE (9.118 item 1; record 1898; 9.22 (7)): the rule's spatial operator
-  iterated in integers from the body's Nodes' indicator, the stop the loader's
-  residual bound (`iterated_mode` of the margin module, the one copy of the step).
-  Today's profile is the mode of the rule at the vacuum's pace (c = 0 everywhere).
-- THE PERIOD (9.118 item 2 (a)): the one-Node rule is the rotation, c_(t+1) = (a / b)
-  c_t - c_(t-1) from c_0 = 1 and c_1 = a / (2 b), exact rationals; P is the first t at
-  which the rotation has passed half a turn and returned within half a step of its
-  start, the nearest integer to 2 pi / omega with no pi.
-- THE RUN'S RULE (9.118 item 3, a finding): the run steps the body's record at the pace
-  Gamma - c with its own content, so the run's spatial operator at the body's Nodes
-  differs from the vacuum's by the content's share; `run_rule_reading` reads, for a
-  shipped body, the run's own 2 cos omega (the quotient of the profile on the engine's
-  integers (R, S, w) of 9.57 (1)) against the file's clock, the world's move before any
-  regeneration. The profile by the run's rule waits for the model owner's word.
-- The twist "own" and a moving body's proper pairs keep their present numbers until
-  9.118 items 2 (b) and (c) are decided.
-
-Integers and exact rationals only; no float in any number written.
-"""
+"""The generator by the rule: the period by the one-Node rule, today's profile iteration wrapped, and the run's rule's reading of a shipped body (ALGEBRA.md 9.118); integers and exact rationals only."""
 
 from __future__ import annotations
 
@@ -46,10 +21,7 @@ RETURN_LIMIT = 1 << 24  # intervals; a rotation slower than this is no mode of a
 
 
 def period_by_the_rule(a: int, b: int) -> int:
-    """THE PERIOD BY THE ONE-NODE RULE (ALGEBRA.md 9.118 item 2 (a)): the clock a / b = 2 cos
-    omega; the rotation c_t = cos(t omega) by the rule's own recurrence; P the first t from 1
-    with some c_s < 0 before it, c_t >= 0 and c_t^2 >= (2 b + a) / (4 b), that is cos(t omega)
-    >= cos(omega / 2): the nearest integer to 2 pi / omega, exactly (a tie excepted)."""
+    """The period by the one-Node rule c_(t+1) = (a / b) c_t - c_(t-1) from (1, a / 2 b): the first t with a negative c before it, c_t >= 0 and c_t^2 >= (2 b + a) / (4 b), the nearest integer to 2 pi / omega with no pi (ALGEBRA.md 9.118 item 2 (a))."""
     if b < 1 or not -2 * b < a < 2 * b:
         raise ValueError(f"the clock [{a}, {b}] is no rotation: b from 1 and |a| below 2 b")
     ratio = Fraction(a, b)
@@ -70,9 +42,7 @@ def period_by_the_rule(a: int, b: int) -> int:
 def vacuum_profile(
     document: dict[str, Any], number: int, amplitude: int
 ) -> tuple[list[int], tuple[int, int], int]:
-    """The profile by the rule at the vacuum's pace, today's (record 1898): the iteration
-    with the stop, from the parsed document; the profile (x-major), the clock and the
-    iterations taken."""
+    """The profile by the rule at the vacuum's pace, the iteration with the stop of ALGEBRA.md 9.22 (7): the profile, the clock and the iterations taken."""
     world = parse_nature_beam_world(document)
     flat, clock, iterations = iterated_mode(world, number, amplitude)
     return [int(v) for v in flat], (int(clock[0]), int(clock[1])), int(iterations)
@@ -80,10 +50,7 @@ def vacuum_profile(
 
 @dataclass(frozen=True)
 class RunRuleReading:
-    """The reading of 9.118 item 3 on one shipped body: its clock; the content at its
-    Nodes; the mode's 2 cos omega as the exact quotient under the vacuum's rule and under
-    the run's; the run's shift in units of b; the file's clock against the vacuum's quotient
-    in units of b; the worst residual ratio of the file's profile under each rule."""
+    """The reading of ALGEBRA.md 9.118 item 3 on one shipped body: its clock, the content at its Nodes, the mode's 2 cos omega under the vacuum's rule and the run's, the shift in units of b, the file's clock against the vacuum's quotient, the worst residual ratio under each rule."""
 
     clock: tuple[int, int]
     content_at_body: int
@@ -96,12 +63,7 @@ class RunRuleReading:
 
 
 def run_rule_reading(document: dict[str, Any], number: int) -> RunRuleReading:
-    """THE FINDING OF 9.118 ITEM 3, read on a shipped body: the profile p and the clock
-    [a, b] of the file; the engine's integers (R, S, w) at every Node under the run's own
-    pace (the content the body's family reads at load, `_effective_content`); the run's
-    2 cos omega as the exact quotient (p . (R S_6 p + S p)) / (p . w p); the vacuum's as the
-    same quotient at c = 0; their difference in units of b; and the worst residual of the
-    file's profile under the run's integers against the vacuum's, as a ratio."""
+    """The engine's integers (R, S, w) at the run's own pace on the file's profile against the vacuum's: the quotient p . (R S_6 p + S p) / p . w p under each and the residuals (ALGEBRA.md 9.118 item 3)."""
     world = parse_nature_beam_world(document)
     simulation = DetectorLawSimulation(world)
     block = simulation.block_by_number[number]
@@ -148,8 +110,7 @@ def run_rule_reading(document: dict[str, Any], number: int) -> RunRuleReading:
 
 
 def check_world(path: Path) -> list[str]:
-    """One line per seeded body of the world: the period by the rule against the file's,
-    and the run's rule's shift of the mode (9.118 items 2 (a) and 3)."""
+    """One line per seeded body of a world: the period by the rule against the file's, and the run's rule's shift of the mode; a world the loader refuses is named and skipped."""
     document = json.loads(path.read_text(encoding="utf-8"))
     lines: list[str] = []
     if not isinstance(document, dict) or "measured" not in document:
