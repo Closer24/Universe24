@@ -16200,8 +16200,9 @@ structure derived (9.99), written on his word.
 
 **(3) WHAT STAYS ASSUMED.** The rule 9.57 (1). The internal group of
 the strong and weak forces, declared (narrowed in 9.101: the group of
-a family of n pairs is U(n), derived from the click; the counts of
-pairs 1, 2, 3 stay declared, with a candidate). Nothing else.
+a family of n pairs is U(n), derived from the click; the internal
+tower's grading and its stop derived with 9.99's premise; what the
+three multiplets are, open at the fork of 9.101 item 11). Nothing else.
 
 **(4) WHAT THE BOSS CHECKS INDEPENDENTLY, and then records.** The five
 derivations of (1) by their steps; the two computations (9.97 (3),
@@ -16281,8 +16282,8 @@ as written here.
    | --- | --- | --- |
    | The group of a family of n pairs | derived, U(n) (item 4) | |
    | The common phase is the charge | derived (item 5) | |
-   | The count of pairs per family, 1, 2, 3 | declared | item 8's candidate |
-   | One common phase for all families, not one per family | declared | item 8's candidate (one pairing) |
+   | The count of pairs per family, 1, 2, 3 | the tower and its stop at three derived with 9.99's premise (item 10); what the three multiplets are, open (item 11) | the fork of item 11 |
+   | One common phase for all families, not one per family | derived with 9.99's premise (item 10 (c)) | |
    | The thirds and the Z_6 quotient | conditional (item 5) | the charge unit read on a 3-pair family |
    | The weak force acting on one hand only (its chirality) | not in the algebra | |
    | The masses, the bodies' pairs, one per species | declared per body | not derived here, as in nature |
@@ -16354,3 +16355,71 @@ as written here.
 9. For the Boss's review: items 3, 4 and 5 are derivations, to be
    checked step by step; item 7 is a count, to be checked against the
    universe file; item 8 is open, to be tried by both.
+
+10. The argument of 9.99 repeated on the doublet (the owner's word,
+    "try to solve item 4, finally; see how the rule helps and how the
+    families solve it").
+    (a) The premise, the same as 9.99 (2)'s: a field acts on a record
+    only through the record's own quantities, and the rule's second
+    order admits those quantities up to degree 2. In spacetime the
+    record's own quantity is its four-velocity u, and the fields that
+    couple are the symmetric tensors of degree 0, 1, 2 over the four
+    directions: 1, 4, 10 (9.99). On the internal side the record's own
+    quantity is its doublet, the (now, before) pair of each component
+    (item 8 (b)): the transport acts on it linearly (the twist rotates
+    it) and the click reads it through its degree-2 forms (the norm
+    and the flux). A cubic term in the doublet does not exist in a
+    second-order rule, as a cubic term in u does not.
+    (b) Hence the internal tower is graded by the degree in the
+    doublet and stops at degree 2: the internal objects are the
+    degree-0, degree-1 and degree-2 objects over the two levels, and
+    nothing of degree 3. This is derived exactly as far as 9.99 is: on
+    the one premise and the rule's order.
+    (c) The common phase is one: the degree-0 internal object is the
+    scalar rotation of every pair, and there is one family that
+    sources it, the charge (one family per degree, 9.99 (5)); every
+    pair reads its potential with its own q (9.88 (7)). So one U(1)
+    for all pair-families, not one per family: derived, and nature's
+    one electric charge is its reading.
+    (d) The internal fields live on the Links (a twist is per Port),
+    so every internal field is a degree-1 family in spacetime, a
+    vector, as nature's gauge fields are; gravity (degree 2) carries no
+    twist and matter (degree 0) carries the pairs the twists rotate.
+
+11. The fork that item 10 does not close, said once. The premise fixes
+    the degrees; it does not say which objects the degrees count. Two
+    readings, each with one fact for it and one against:
+    (a) The forms on the doublet. The bilinear forms of the real
+    doublet are 1 + 3 under the rule's SL(2, R): the flux and the
+    three symmetric forms. For: the three symmetric forms are the
+    record's own rotation, its pace and its pair (the mass), which
+    picks a direction in the doublet and so breaks any rotation of
+    (now, before) down to the common phase, as nature's weak force is
+    broken down to the charge; and the 1 + 3 is U(2), nature's
+    electroweak group. Against: this reading has no place for a third
+    internal family, nature's strong SU(3); and its 3 is the mass
+    already counted at spacetime degree 0 (9.99 (2)), so it may be
+    nothing new.
+    (b) The symmetric powers of the doublet. The multiplets are Sym^0,
+    Sym^1, Sym^2 of the doublet: 1, 2, 3 pairs, with the groups U(1),
+    U(2), U(3) of item 4. For: the counts 1, 2, 3 and the stop at 3 are
+    nature's U(1), SU(2), SU(3), and there is no fourth. Against: if
+    the common phase turns the doublet by phi, it turns Sym^m by m
+    phi, so the three-pair family would carry the charge 2 and the
+    one-pair family 0, while nature's gluons carry no charge; the
+    reading needs the multiplets' phases to be assigned otherwise, and
+    that is a declaration again.
+    (c) What decides: the strong force. A derivation of a third
+    internal family with three pairs and no charge, from the rule,
+    would close (b); a derivation that the strong force is not an
+    internal rotation at all would close (a). I have neither. Item 4
+    of my message to the owner is therefore not solved; it is
+    narrowed to this fork.
+
+12. The status after the attempt. Derived with 9.99's premise: the
+    internal tower is graded by the doublet's degree and stops at 2;
+    the common phase is one and is the charge; the internal fields are
+    vector families. Open: which objects the three degrees count
+    (item 11), and with it whether the counts 1, 2, 3 are derived.
+    The count of item 7 stands: Lambda, the mass table, and the
+    multiplets' identity.
