@@ -640,6 +640,16 @@ outside the mathematician's band goes to him before any word (9.59 (6)).
 
 ## The point emitter
 
+THE ONE FAMILIES FILE (ALGEBRA.md 9.83 (2), 9.85 (3); the model owner's record 2075;
+BUILD.md section 26 item 59): `families.json` in this folder is the one canonical copy
+of the universe's families as laws (each with name, quantum, charge, pair, reads,
+representation, phase, self_unit, booked, and held or clicks) and of the universe's
+integers (node_clock Gamma = 10^4, amplitude_bound A = 2^20). Every world of the detector
+law names it (`"families": "examples/events/families.json"`), declares no integers of its
+own, and every family is on in every world; a family with no source stays exactly zero (the
+leak test). The light record's clock is its emitter's (`clock` on every emitter). The unit
+tests keep their small inline lists.
+
 THE ENGINE START FILE (the model owner's record 2089 of 2026-09-25 through the
 Boss; BUILD.md section 26 item 57): `engine_start.json` in this folder is the one
 canonical copy of the run's parameters, {"law": "detector-law-v1", "mode": "check"};

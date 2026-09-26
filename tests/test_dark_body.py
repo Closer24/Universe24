@@ -36,12 +36,18 @@ def test_the_files_are_the_generators_and_the_pins_are_declared_blind():
     expectations file declares every pin with its kind (DETECTOR) and the bend's band from the
     ray's COMPUTATION, positive toward the body, before any run."""
     for name in ("dark", "bright"):
-        world = parse_nature_beam_world(load(name))
+        document = load(name)
+        assert document["families"] == "examples/events/families.json"  # item 59
+        world = parse_nature_beam_world(document)
         assert world.node_clock == 10_000 and world.body_record is False
         assert [family.name for family in world.families] == [
             "light",
             "matter",
+            "well",
             "dark",
+            "heavy",
+            "muon",
+            "point",
             "clicks",
             "charge",
         ]

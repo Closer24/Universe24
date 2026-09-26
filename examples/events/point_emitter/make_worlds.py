@@ -63,7 +63,7 @@ FLIGHTS = 2  # the run's length: the stock's windows and rungs plus two flights
 def seat(position: list[int]) -> dict:
     return {
         "position": position,
-        "family": "matter",
+        "family": massive.KIND_NAMES[(KIND[0], KIND[1])],  # the kind's name in the families file
         "amount": 1,
         "held": {"light": STOCK},
         "momentum": [0, 0, 0],
@@ -73,7 +73,7 @@ def seat(position: list[int]) -> dict:
         "pair": list(WELL),
         "seed": SEED,
         "margin": "control",
-        "emitter": {"family": "light"},
+        "emitter": {"family": "light", "clock": list(massive.MASSIVE_GIVEN_CLOCK)},
     }
 
 
@@ -161,7 +161,9 @@ def worlds() -> dict[str, dict]:
 def main() -> None:
     for name, document in worlds().items():
         path = HERE / f"{name}.json"
-        path.write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
+        path.write_text(
+            json.dumps(massive.bind_families_file(document), indent=1) + "\n", encoding="utf-8"
+        )
         e = document["measured"][0]["emitter"]
         print(path.name, "weight", e["weight"], "window", e["window_read"], "ticks", document["ticks"])
 

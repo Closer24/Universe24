@@ -26,76 +26,7 @@
  "body_record": false,
  "point_emitter": false,
  "engine": "examples/events/engine_start.json",
- "amplitude_bound": 1048576,
- "node_clock": 10000,
- "families": [
-  {
-   "name": "light",
-   "quantum": 1,
-   "pair": [
-    1,
-    1
-   ],
-   "phase_per_link": [
-    77,
-    25
-   ],
-   "charge": 0,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ]
-  },
-  {
-   "name": "matter",
-   "quantum": 1,
-   "pair": [
-    1600,
-    1618
-   ],
-   "charge": 0,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ]
-  },
-  {
-   "name": "clicks",
-   "quantum": 1,
-   "pair": [
-    1,
-    1
-   ],
-   "charge": 0,
-   "held": "content",
-   "reads": []
-  },
-  {
-   "name": "charge",
-   "quantum": 1,
-   "pair": [
-    1,
-    1
-   ],
-   "charge": 0,
-   "held": "sign",
-   "reads": []
-  }
- ],
+ "families": "examples/events/families.json",
  "measured": [
   {
    "position": [
@@ -103,7 +34,7 @@
     10,
     10
    ],
-   "family": "matter",
+   "family": "heavy",
    "amount": 1,
    "momentum": [
     0,
@@ -110722,6 +110653,6 @@
  "detectors": [],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "af386be7b0a0a4ae0802cd61caab6555ef2b0fe1ceb9b98f5f24760c09ffbbb8"
+  "hash": "c00da0a0af00bc36f690c04921f77f1b95e01e50d80606296a305682d18cd9d7"
  }
 }

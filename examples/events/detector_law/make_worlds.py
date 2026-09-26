@@ -688,7 +688,7 @@ def light_clock(massive) -> dict:
         KIND,
         [emitter([600, 0, 0], [TRAIN_LENGTH, 3, 3], WELL_FULL, [1, 0, 0])],
         LIGHT_CLOCK_TICKS,
-        light=light_family(GIVEN_CLOCK),
+        given_clock=list(GIVEN_CLOCK),
         seed_profile=False,
     )
     document["N"] = PHASE_STEPS
@@ -717,6 +717,8 @@ def main() -> None:
     ):
         for name, document in worlds.items():
             path = (HELD if name in HELD_NAMES else folder) / f"{name}.json"
+            if document.get("detector_law") and isinstance(document.get("families"), list):
+                document = massive.bind_families_file(document)  # the families file (item 59)
             path.write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
             print(path.relative_to(EVENTS.parent.parent))
 

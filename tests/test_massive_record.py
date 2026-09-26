@@ -1283,7 +1283,8 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
     `phase_per_link` (the pair form: the matter train at K = pi / 2, cos omega = 0.6624),
     and, when asked, an emitter body of the source kind at [100, 132) whose given family is
     `matter` (`stock` givings, the train along +x); no detector; `clock` None declares no
-    clock on the kind (the refusal's edge case); every emitter body seeded on its mode."""
+    clock on the kind and none on the emitter (the refusal's edge case, item 59); every
+    emitter body seeded on its mode."""
     document = chain_world(on_mode=False)
     document["shape"] = [200, 1, 1]
     document["ticks"] = 160
@@ -1360,7 +1361,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     behind = int(np.max(np.abs(live.now[40:90, 0, 0])))
     # the matter train's tapers disperse more than light's: 3.9 percent behind (COMPUTATION)
     assert ahead > 1000 and behind * 10 < ahead, (ahead, behind)
-    with pytest.raises(ValueError, match="pair form of its clock"):
+    with pytest.raises(ValueError, match="clock is required: the given family 'matter' declares no"):
         parse_nature_beam_world(matter_emitter_world(True))
 
 

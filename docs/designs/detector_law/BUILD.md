@@ -4311,6 +4311,68 @@ would have found no cell.
    the hold's; the form on the board after the interval differs), the chain's
    digests; the rest of the gate untouched.
 
+59. THE ONE FAMILIES FILE (ALGEBRA.md 9.83 (2), 9.85 (3), 9.79 (1); the model
+   owner's record 2075 through the Boss, "in every experiment we put all the
+   families into action with the right couplings, not only some, as if we are
+   in the real world; what we want in the families' definitions file is the
+   vector, tensor or scalar action of each thing"; the Boss's records 2079 and
+   2096). THE FILE: examples/events/families.json, one canonical copy: the
+   universe's integers (node_clock Gamma = 10^4, amplitude_bound A = 2^20;
+   9.83 (2) (a)) and every family of the universe as a LAW with its
+   attributes (9.79 (1)): name, quantum, charge, pair, reads, representation
+   ("scalar"; the vector and tensor parts ride on 9.86), phase (2, the rule's
+   two levels), self_unit (0, the self-source not built), booked, and either
+   held {"count": "content" or "sign", "factor": 1} (a field family) or
+   clicks {"gives", "takes"} (a family of records); every key required,
+   refused by name when missing; booked checked against the derivation
+   (false for a held family, true otherwise). THE ENTRIES, nine: light [1, 1]
+   (no clock of its own), the matter kinds by pair under one name each
+   (matter [800, 809], well [800, 809], dark [800, 809], heavy [1600, 1618],
+   muon [3200, 3236], point [800, 813]; one law of matter per pair today: the
+   ONE matter family with the pair on every body waits on the mathematician's
+   line for the free record's vacuum pair), clicks and charge (held). EVERY
+   WORLD OF THE LAW NAMES THE FILE: `families` is the file's repository path;
+   the loader translates the entries to the families list it reads
+   (`families_file_entries`), takes the universe's integers from the file
+   alone and refuses the world's own node_clock and amplitude_bound (one copy);
+   every family is on in every world, none turned off; a family with no source
+   stays exactly zero (the leak test, item 55). THE UNIT TESTS keep their small
+   inline lists (the owner's decision 2 of record 2081); the inline list's
+   attribute set is the tests' own declaration. THE LIGHT RECORD'S CLOCK IS
+   ITS EMITTER'S (9.85 (3)): the emitter declares `clock` [p, q], required
+   when the given family declares none and refused when it does; the loader
+   carries it on the emitter (`EmitterDefinition.clock`), the train's rest
+   clock and the engine's excitation period read it; the family-level demand
+   for a clock is gone; the integer form of `phase_per_link` (the ray law's
+   turn per Link) is refused under the law on every family, and a giving into
+   a held family is refused at the emitter before its clock is asked for. THE
+   GENERATORS read a file-bound world through `families_of` (the flux check
+   and the kinds by pair); they build with the file's entries and write
+   the file's path (`bind_families_file`), every emitter with its clock, the
+   massive kind named by its pair; every shipped world regenerated (nine
+   families in every world). THE PROOF: the rows, the held levels and the
+   lines bit for bit those of 96d58266 on the five worlds of the item-51
+   method (the extra families carry no record and no source; the held quanta
+   lists are longer by the new families, at zero; the point emitter's seat
+   family is read under its new name). THE POINT EMITTER'S WINDOW in its two
+   files moved (1503 to 1498 and 1009 to 1008, HOST readings of the
+   generator's trial run) at this regeneration: the files were last written
+   at item 57 and item 58's click order shortened the window; the engine of
+   96d58266 on the old file and this engine on the new one give the same
+   giving line at the same interval. THE GATE
+   tests/test_families_file.py: the file's integers and entries, every world
+   naming it with no integers of its own; the file and an inline list bit for
+   bit over 300 intervals of the emitter world; the loader's refusals (a
+   missing integer, a missing attribute, a wrong representation, a phase other
+   than 2, a self-unit other than 0, both or neither of held and clicks, a
+   booked flag against the derivation, a held factor other than 1, another
+   law, a missing file, a world with a second copy of an integer, the path
+   under the ray law); the emitter's clock required and refused. WHAT THE FILE
+   CANNOT YET HOLD, for the mathematician: the one matter family (the vacuum
+   pair of a free matter record), the vector and tensor entries (9.86),
+   Lambda_v and the twist table (9.81), P_0 and the momentum's unit Q (still
+   the loader's constant LABEL_SCALE), the self-source, the recoil.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

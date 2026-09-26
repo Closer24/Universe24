@@ -11,7 +11,7 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 71056,
+ "ticks": 70992,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
@@ -23,79 +23,10 @@
  "clock_stamp": true,
  "detector_law": true,
  "massive_record": true,
- "amplitude_bound": 1048576,
- "node_clock": 10000,
  "body_record": true,
  "point_emitter": true,
  "engine": "examples/events/engine_start.json",
- "families": [
-  {
-   "name": "light",
-   "quantum": 1,
-   "pair": [
-    1,
-    1
-   ],
-   "phase_per_link": [
-    77,
-    25
-   ],
-   "charge": 0,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ]
-  },
-  {
-   "name": "matter",
-   "quantum": 1,
-   "pair": [
-    800,
-    813
-   ],
-   "charge": 0,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ]
-  },
-  {
-   "name": "clicks",
-   "quantum": 1,
-   "pair": [
-    1,
-    1
-   ],
-   "charge": 0,
-   "held": "content",
-   "reads": []
-  },
-  {
-   "name": "charge",
-   "quantum": 1,
-   "pair": [
-    1,
-    1
-   ],
-   "charge": 0,
-   "held": "sign",
-   "reads": []
-  }
- ],
+ "families": "examples/events/families.json",
  "measured": [
   {
    "position": [
@@ -103,7 +34,7 @@
     0,
     0
    ],
-   "family": "matter",
+   "family": "point",
    "amount": 1,
    "held": {
     "light": 64
@@ -1329,11 +1260,15 @@
    "margin": "control",
    "emitter": {
     "family": "light",
+    "clock": [
+     77,
+     25
+    ],
     "period": 35,
     "norm": 180255439696889394,
     "norm_denominator": 3948169,
     "weight": 1,
-    "window_read": 1009
+    "window_read": 1008
    },
    "clock": [
     2063848,
@@ -1476,6 +1411,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "0250cea0750e15171c880d0e1fd82aeea41d99548634096be6e093199a497b11"
+  "hash": "19cd78c3cb7f9aff26de4a80f00ef75eaa0af2d8d24e74ee17f408b571d89417"
  }
 }

@@ -6,6 +6,21 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The one families file, on 2026-09-26 (the families and the universe's integers in one file; no behaviour)
+
+ALGEBRA.md 9.83 (2) and 9.85 (3), the model owner's record 2075 (BUILD.md
+section 26 item 59): every world of the detector law names
+`"families": "examples/events/families.json"`, the one canonical copy of the
+universe's families as laws (with representation, phase, self_unit, booked,
+held or clicks beside name, quantum, charge, pair and reads) and of the
+universe's integers (node_clock, amplitude_bound); a world with the file
+declares no node_clock and no amplitude_bound of its own, and every emitter
+declares `clock`, the given record's clock, since the light family declares
+none. An inline families list stays admitted (the unit tests' small lists) with
+the family's own `phase_per_link` as the given clock, the emitter's `clock` then
+refused. Regenerate a world with its generator; the rows, the held levels and
+the lines are bit for bit those before the change.
+
 ## The engine start file and no default under the detector law, on 2026-09-26 (keys required and refused; no behaviour)
 
 The model owner's record 2089 through the Boss (BUILD.md section 26 item 57):

@@ -53,7 +53,9 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     for name in NAMES:
         doc = document(name)
         world = parse_nature_beam_world(doc)
-        assert doc["node_clock"] == generator.NODE_CLOCK == 10_000
+        # the integers from the families file alone (item 59)
+        assert doc["families"] == "examples/events/families.json" and "node_clock" not in doc
+        assert world.node_clock == generator.NODE_CLOCK == 10_000
         if name == "bending":
             continue
         assert doc["detectors"][0]["name"] == "at_well" and doc["detectors"][0]["block"] == 0
@@ -63,7 +65,7 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     for name in ("redshift_top_long", "redshift_bottom_long"):
         doc = document(name)
         assert doc["N"] == generator.LONG_PHASE_STEPS == 2048
-        assert doc["families"][0]["phase_per_link"] == generator.LONG_GIVEN_CLOCK == [4096, 21]
+        assert doc["measured"][0]["emitter"]["clock"] == generator.LONG_GIVEN_CLOCK == [4096, 21]
         assert doc["measured"][0]["extents"] == [generator.LONG_TRAIN_LENGTH, 3, 3] == [168, 3, 3]
         assert doc["measured"][0]["position"] == [generator.LONG_REDSHIFT_EMITTER_X, 0, 0]
     long_holder = document("redshift_bottom_long")["measured"][1]

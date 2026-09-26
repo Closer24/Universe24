@@ -60,7 +60,8 @@ BRIGHT_STOCK = 128
 SCREEN_X = 380  # the screen's column, cubes of side 3 from y = 40 to 160
 SCREEN_YS = range(40, 160)
 TICKS = 2400  # the last giving near 30 x P / 2 intervals, the flight 340 Links at 0.447
-NODE_CLOCK = 10_000  # Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44)
+
+
 MATTER = [800, 809]
 WELL = [800, 801]  # the emitter's well, the light clock's
 BODY_WELL = WELL  # the body's well the emitter's: 32 by 5 binds its mode in [800, 801]
@@ -80,6 +81,17 @@ def load_generator(path: Path, name: str):
     sys.modules[name] = module
     spec.loader.exec_module(module)
     return module
+
+
+def massive_generator():
+    """The massive record's generator, the families file's reader (item 59)."""
+    return load_generator(
+        HERE.parent / "massive_record" / "make_worlds.py", "massive_record_make_worlds"
+    )
+
+
+FAMILIES_ENTRIES, FAMILIES_INTEGERS = massive_generator().families_entries()
+NODE_CLOCK = FAMILIES_INTEGERS["node_clock"]  # Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44)
 
 
 def cube(document: dict, name: str, corner: list[int]) -> str:
@@ -154,41 +166,12 @@ def world(dark: bool) -> dict:
         "body_record": False,
         "point_emitter": False,
         "engine": "examples/events/engine_start.json",
-        "amplitude_bound": 1 << 20,  # the integers of 9.61 (3) (item 44)
-        "node_clock": NODE_CLOCK,
-        "families": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": list(GIVEN_CLOCK),
-                "charge": 0,
-                "reads": [dict(read) for read in READS],
-            },
-            {
-                "name": "matter",
-                "quantum": 1,
-                "pair": list(MATTER),
-                "charge": 0,
-                "reads": [dict(read) for read in READS],
-            },
-            {
-                "name": "dark",
-                "quantum": 1,
-                "pair": list(MATTER),
-                "charge": 0,
-                "reads": [dict(read) for read in READS],
-            },
-            {
-                "name": "clicks",
-                "quantum": 1,
-                "pair": [1, 1],
-                "charge": 0,
-                "held": "content",
-                "reads": [],
-            },
-            {"name": "charge", "quantum": 1, "pair": [1, 1], "charge": 0, "held": "sign", "reads": []},
-        ],
+        # THE ONE FAMILIES FILE (item 59): the universe's integers and every family, the
+        # file's entries (the list during the build, the path as written); the light
+        # record's clock on the emitter (`clock`)
+        "amplitude_bound": FAMILIES_INTEGERS["amplitude_bound"],
+        "node_clock": FAMILIES_INTEGERS["node_clock"],
+        "families": [dict(entry) for entry in FAMILIES_ENTRIES],
         "measured": [],
         "detectors": [],
     }
@@ -203,6 +186,7 @@ def world(dark: bool) -> dict:
             {
                 "family": "light",
                 "receiver": ladder,
+                "clock": list(GIVEN_CLOCK),
                 "train": {"direction": [1, 0, 0], "periods": 8},
             },
         )
@@ -221,6 +205,7 @@ def world(dark: bool) -> dict:
                 {
                     "family": "light",
                     "receiver": screen_names,
+                    "clock": list(GIVEN_CLOCK),
                     "train": {"direction": [1, 0, 0], "periods": 8},
                 },
                 BODY_WELL,
@@ -355,7 +340,7 @@ def expectations(bend: float) -> dict:
 
 def main() -> None:
     for name, dark in (("dark", True), ("bright", False)):
-        document = world(dark)
+        document = massive_generator().bind_families_file(world(dark))
         (HERE / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
         print(name, flush=True)
     bend = ray_bend(static_field())

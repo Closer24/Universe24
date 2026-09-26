@@ -1321,8 +1321,7 @@ class DetectorLawSimulation:
         number = block.number
         family = emitter.family
         definition = self.families[family]
-        assert definition.phase_per_age is not None
-        numerator, denominator = definition.phase_per_age
+        numerator, denominator = emitter.clock  # the given clock, the emitter's (item 59)
         steps = world.phase_steps
         period = (steps * denominator + numerator - 1) // numerator
         cost = definition.quantum

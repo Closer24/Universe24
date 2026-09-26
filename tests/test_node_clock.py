@@ -349,9 +349,11 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     registered = json.loads(
         (ROOT / "examples/events/massive_record/light_clock.json").read_text(encoding="utf-8")
     )
-    assert registered["node_clock"] == NODE_CLOCK == 10**4  # the integers of 9.61 (3)
+    # the integers of 9.61 (3) from the families file alone (item 59)
+    assert registered["families"] == "examples/events/families.json"
+    assert "node_clock" not in registered and "amplitude_bound" not in registered
     world = parse_nature_beam_world(registered)
-    assert world.node_clock == NODE_CLOCK
+    assert world.node_clock == NODE_CLOCK == 10**4
     simulation = DetectorLawSimulation(world)
     block = simulation.blocks[0]
     centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))

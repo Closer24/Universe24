@@ -39,7 +39,7 @@ def test_the_preflight_loads_every_listed_world_and_runs_none(tmp_path: Path, ca
         (ROOT / "examples/events/entities/families.json").read_bytes()
     )
     bad = json.loads(good.read_text(encoding="utf-8"))
-    del bad["amplitude_bound"]
+    bad["amplitude_bound"] = 1 << 20  # a second copy of the families file's integer (item 59)
     (root / "massive_record/unbounded.json").write_text(json.dumps(bad), encoding="utf-8")
     listing = tmp_path / "RUN_LIST.md"
     listing.write_text(

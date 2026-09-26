@@ -98,7 +98,48 @@ AMPLITUDE_BOUND = (
 # content held there; the eighteen declare 10^6 (a clock body of 64 quanta slows
 # by 6 x 10^-5, a well of one quantum by 10^-6, the mathematician's reading: no
 # pin of the eighteen moves beyond its band)
-NODE_CLOCK = 10_000  # Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44; the eighteen's 10^6 under the first-order rule HISTORY)
+# THE ONE FAMILIES FILE (ALGEBRA.md 9.83 (2), 9.85 (3); BUILD.md section 26 item 59): the
+# universe's families as laws and the universe's integers, one canonical copy; every world of
+# this generator is built with the file's entries and written with the file's path
+FAMILIES_FILE = "examples/events/families.json"
+MASSIVE_GIVEN_CLOCK = [77, 25]  # this generator's light clock (the pair form on N = 64)
+# the massive kinds' names in the families file, by pair (one law of matter per pair today;
+# the one matter family with the pair on the body waits on the mathematician's vacuum pair)
+KIND_NAMES = {(800, 809): "matter", (1600, 1618): "heavy", (3200, 3236): "muon", (800, 813): "point"}
+
+
+def families_entries() -> tuple[list[dict], dict[str, int]]:
+    """The families file's entries in the loader's list form and the universe's integers."""
+    from event_universe.events.world import families_file_entries
+
+    entries, integers = families_file_entries(FAMILIES_FILE)
+    return [dict(entry) for entry in entries], dict(integers)
+
+
+def bind_families_file(document: dict) -> dict:
+    """The world as written: the families file's path in place of the list, the universe's
+    integers the file's alone (the world's copies removed), the stamp over the file."""
+    document["families"] = FAMILIES_FILE
+    document.pop("node_clock", None)
+    document.pop("amplitude_bound", None)
+    return stamped(document)
+
+
+def families_of(document: dict) -> list[dict]:
+    """The world's families in the loader's list form: the list as written, or the families
+    file's entries when the world names the file (ALGEBRA.md 9.85 (3); item 59)."""
+    families = document["families"]
+    if isinstance(families, str):
+        from event_universe.events.world import families_file_entries
+
+        return [dict(entry) for entry in families_file_entries(families)[0]]
+    return list(families)
+
+
+FAMILIES_INTEGERS = families_entries()[1]
+# Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44; the eighteen's 10^6 under
+# the first-order rule HISTORY); the families file's integer
+NODE_CLOCK = FAMILIES_INTEGERS["node_clock"]
 # THE FAMILY OF CLICKS (the model owner's record 1982; ALGEBRA.md 9.45; BUILD.md
 # section 26 item 32): the fourth family, whose level at a Node is the Node
 # clock; its pair [1, 1] (light's kind, the default), its unit the quantum, no
@@ -160,7 +201,7 @@ def world(
     pair: list[int],
     blocks: list[dict],
     ticks: int,
-    light: dict | None = None,
+    given_clock: list[int] | None = None,
     probes: list[list[int]] | None = None,
     mode_axis: str | None = None,
     seed_profile: bool = True,
@@ -170,24 +211,12 @@ def world(
     events with `side` or `extents`, the probes; every bound body's
     seed on its mode (`seed_on_the_mode`) unless `seed_profile` is off, for a caller that
     completes the document first (the detector-law generator's emitters) and calls it then."""
-    matter: dict = {"name": "matter", "quantum": 1, "pair": pair}
-    families = [
-        light or {"name": "light", "quantum": 1, "pair": [1, 1], "phase_per_link": [77, 25]},
-        matter,
-    ]
-    if any(block.get("family") == "source" for block in blocks):
-        # the emitter bodies' own family (`emitter_at`): the kind SOURCE_KIND
-        families.append({"name": "source", "quantum": 1, "pair": list(SOURCE_KIND)})
-    for family in families:
-        # the sign on the quantum (ALGEBRA.md 9.48 (1)): 0 on every registered family;
-        # the reads (item 51): the held content plainly, the held charge by the sign
-        family.setdefault("charge", 0)
-        family.setdefault("reads", [dict(read) for read in READS])
-        # THE PAIR ON EVERY FAMILY (record 2089, no default; ALGEBRA.md 9.83 (2)
-        # (a): light's pair [1, 1] written, never a constant of the loader)
-        family.setdefault("pair", [1, 1])
-    families.append(dict(CLOCK_FAMILY))  # the family holding the content, the Node clock (item 32)
-    families.append(dict(CHARGE_FAMILY))  # the family holding the charge (item 35)
+    # THE ONE FAMILIES FILE (item 59): every family of the universe in every world, the
+    # file's entries; the massive kind of this world named by its pair; the light record's
+    # clock the emitter's (`clock` on every emitter, ALGEBRA.md 9.85 (3))
+    families, integers = families_entries()
+    kind_name = KIND_NAMES[(int(pair[0]), int(pair[1]))]
+    clock = list(MASSIVE_GIVEN_CLOCK if given_clock is None else given_clock)
     measured: list[dict] = []
     for block in blocks:
         # EVERY KEY THE DETECTOR LAW READS, WRITTEN (the model owner's record 2089;
@@ -196,7 +225,7 @@ def world(
         # law's `phase`, `fixed` and `directions` no longer written (never read)
         entry: dict = {
             "position": block["position"],
-            "family": block.get("family", "matter"),
+            "family": block.get("family", kind_name),
             "amount": block.get("amount", 1),
             "momentum": block.get("momentum", [0, 0, 0]),
             "held": {},
@@ -213,6 +242,8 @@ def world(
         for key in BLOCK_KEYS:
             if key in block:
                 entry[key] = block[key]
+        if "emitter" in entry:
+            entry["emitter"].setdefault("clock", list(clock))
         measured.append(entry)
     document: dict = {
         "law": "beam",
@@ -237,12 +268,13 @@ def world(
         # the amplitude bound A every row stays below (BUILD.md section 26 item
         # 31; the ceiling 2^28 retired, ALGEBRA.md 9.83 (2) (a); the rows
         # asserted below A at run time)
-        "amplitude_bound": AMPLITUDE_BOUND,
+        "amplitude_bound": integers["amplitude_bound"],
         # the Node clock Gamma (ALGEBRA.md 9.35 (3); item 31): (e, f) = (Gamma,
         # Gamma + M) at every Node, M the content held there; required, no default
-        "node_clock": NODE_CLOCK,
+        "node_clock": integers["node_clock"],
         # the families' roles stand on the families (`held`, `reads`; the family
-        # genericity, BUILD.md section 26 item 51)
+        # genericity, BUILD.md section 26 item 51); the list during the build, the
+        # file's path as written (`bind_families_file`)
         "families": families,
         "measured": measured,
         "detectors": [],
@@ -268,7 +300,7 @@ def seed_on_the_mode(document: dict) -> None:
     gets `seed` the profile of `mode_profile` at that scalar, its `margin` made explicit
     (the loader admits a profile with `margin` declared; "pin" is the loader's default). A
     silent block (seed 0) and a barrier (a raised pair) keep their keys."""
-    kinds = {family["name"]: family["pair"] for family in document["families"] if "pair" in family}
+    kinds = {family["name"]: family["pair"] for family in families_of(document) if "pair" in family}
     for number, entry in enumerate(document["measured"]):
         if ("side" not in entry and "extents" not in entry) or entry.get("family") not in kinds:
             continue
@@ -416,8 +448,9 @@ def given_train(document: dict, number: int) -> None:
     expected = 1.0
     rest_norm: int | None = None
     if train.boosted:
-        assert given_family.phase_per_age is not None
-        rest_clock = [int(given_family.phase_per_age[0]), int(given_family.phase_per_age[1])]
+        # the rest clock is the given record's clock, the family's own or the
+        # emitter's declared `clock` (ALGEBRA.md 9.85 (3); item 59)
+        rest_clock = [int(definition.emitter.clock[0]), int(definition.emitter.clock[1])]
         entry = world.measured[number]
         wall = 3 * LABEL_SCALE * int(world.width) * sum(int(value) for value in entry.held)
         momentum = int(entry.momentum[axis])
@@ -541,7 +574,7 @@ def doppler_factor(
 
 
 def names_of(document: dict) -> dict[str, int]:
-    return {family["name"]: index for index, family in enumerate(document["families"])}
+    return {family["name"]: index for index, family in enumerate(families_of(document))}
 
 
 def group_pace(pair: tuple[int, int], k: float) -> float:
@@ -641,6 +674,7 @@ def train_run(
     transverse_corner: tuple[int, int, int],
     now: list[int],
     before: list[int],
+    clock: tuple[int, int],
 ) -> int:
     """THE GENERATOR'S RUN OF A TRAIN (HOST; ALGEBRA.md 9.25 (11) (a)): the train's two
     levels planted on the given family's VACUUM of the world's families, on a check board of
@@ -700,9 +734,9 @@ def train_run(
     index_slice: list[object] = [slice(None)] * 3
     index_slice[axis] = at(plane_t)
     plane[tuple(index_slice)] = True
-    family_entry = document["families"][given]
-    pair = (int(family_entry.get("pair", [1, 1])[0]), int(family_entry.get("pair", [1, 1])[1]))
-    p, q = (int(v) for v in family_entry["phase_per_link"])
+    family_entry = families_of(document)[given]
+    pair = (int(family_entry["pair"][0]), int(family_entry["pair"][1]))
+    p, q = clock  # the given record's clock, the emitter's (ALGEBRA.md 9.85 (3); item 59)
     k = 2.0 * math.pi * p / (2.0 * int(document["N"]) * q)
     window = math.ceil((TRAIN_FLUX_DISTANCE + 6 * length) / group_pace(pair, k))
     booked = 0
@@ -710,6 +744,22 @@ def train_run(
         simulation._advance(live)
         booked += simulation.inward_flux(live, plane)
     return booked
+
+
+def given_clock_of(document: dict, number: int) -> tuple[int, int]:
+    """THE GIVEN CLOCK of measured[`number`]'s emitter (ALGEBRA.md 9.85 (3); item 59): the
+    emitter's declared `clock` [p, q], else the given family's own (`phase_per_link` on an
+    inline families list)."""
+    emitter = document["measured"][number]["emitter"]
+    if "clock" in emitter:
+        return int(emitter["clock"][0]), int(emitter["clock"][1])
+    family_entry = families_of(document)[names_of(document)[emitter["family"]]]
+    if "phase_per_link" not in family_entry:
+        raise ValueError(
+            f"measured[{number}].emitter declares no `clock` and the given family "
+            f"{emitter['family']!r} declares none (ALGEBRA.md 9.85 (3)); nothing written"
+        )
+    return int(family_entry["phase_per_link"][0]), int(family_entry["phase_per_link"][1])
 
 
 def train_passage_flux(document: dict, number: int, now: list[int], before: list[int]) -> int:
@@ -720,8 +770,17 @@ def train_passage_flux(document: dict, number: int, now: list[int], before: list
     axis = next(index for index, v in enumerate(direction) if v != 0)
     sign = 1 if direction[axis] > 0 else -1
     corner = (int(entry["position"][0]), int(entry["position"][1]), int(entry["position"][2]))
+    clock = given_clock_of(document, number)
     return train_run(
-        document, entry["emitter"]["family"], axis, sign, block_extents_of(entry), corner, now, before
+        document,
+        entry["emitter"]["family"],
+        axis,
+        sign,
+        block_extents_of(entry),
+        corner,
+        now,
+        before,
+        clock,
     )
 
 
@@ -964,7 +1023,7 @@ def mode_dispersion(document: dict, number: int, axis: int) -> tuple[Fraction, F
     entry = document["measured"][number]
     shape = [int(extent) for extent in document["shape"]]
     profile = np.array(entry["seed"], dtype=object).reshape(shape)
-    kinds = {family["name"]: family["pair"] for family in document["families"] if "pair" in family}
+    kinds = {family["name"]: family["pair"] for family in families_of(document) if "pair" in family}
     kind = kinds[entry["family"]]
     num = np.full(shape, int(kind[0]), dtype=object)
     den = np.full(shape, int(kind[1]), dtype=object)
@@ -1058,7 +1117,7 @@ def proper_clock(document: dict, number: int) -> list[list[int]]:
 def main() -> None:
     for name, document in worlds().items():
         path = HERE / f"{name}.json"
-        path.write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
+        path.write_text(json.dumps(bind_families_file(document), indent=1) + "\n", encoding="utf-8")
         print(path.name)
 
 

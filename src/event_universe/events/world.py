@@ -907,6 +907,137 @@ NO_CHARGE = (0, 1)
 # 20": every family works in every experiment; record 1875's three, 1982's
 # four and 9.48's five HISTORY; BUILD.md section 26 item 54)
 MOST_FAMILIES = 20
+# THE ONE FAMILIES FILE (ALGEBRA.md 9.83 (2), 9.85 (3), 9.79 (1); the model owner's
+# record 2075 through the Boss; BUILD.md section 26 item 59): the universe's
+# families as laws and the universe's integers, one canonical copy at
+# examples/events/families.json, referenced by every world of the detector law
+# as the value of `families` (its repository path); a world may instead list
+# its families inline (the unit tests' small lists, the owner's decision 2 of
+# record 2081). The file: {"law", "integers": {"node_clock", "amplitude_bound"},
+# "families": [entries]}; an entry: name, quantum, charge, pair, reads,
+# representation ("scalar"; the vector and tensor parts ride on 9.86), phase
+# (2, the two levels), self_unit (0, the self-source off), booked, and either
+# held {"count": "content" | "sign", "factor": 1} (a field family) or clicks
+# {"gives", "takes"} (a family of records); every key required, refused by
+# name when missing; booked must be the derivation's (false for a held
+# family, true otherwise). Under the file the world declares no node_clock and
+# no amplitude_bound (the universe's integers, one copy) and every emitter
+# declares its given clock (a light record's clock is its emitter's, 9.85 (3)).
+FAMILIES_FILE_KEYS = {"law", "integers", "families"}
+FAMILIES_INTEGERS = {"node_clock", "amplitude_bound"}
+FAMILY_ENTRY_KEYS = {
+    "name",
+    "quantum",
+    "charge",
+    "pair",
+    "reads",
+    "representation",
+    "phase",
+    "self_unit",
+    "booked",
+    "held",
+    "clicks",
+}
+FAMILY_ENTRY_REQUIRED = {
+    "name",
+    "quantum",
+    "charge",
+    "pair",
+    "reads",
+    "representation",
+    "phase",
+    "self_unit",
+    "booked",
+}
+REPRESENTATIONS = ("scalar",)
+HELD_COUNTS = ("content", "sign")
+
+
+def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str, int]]:
+    """The families file read and translated to the families list the parse
+    reads (item 51's attributes), with the universe's integers; every key
+    required and refused by name."""
+    path = REPOSITORY_ROOT / value
+    if not path.is_file():
+        raise ValueError(f"{BEAM_LAW}: families names {value!r}, no file at the repository's root")
+    document = json.loads(path.read_text(encoding="utf-8"))
+    label = f"the families file {value!r}"
+    if not isinstance(document, dict):
+        raise ValueError(f"{BEAM_LAW}: {label} must be a JSON object")
+    unknown = set(document) - FAMILIES_FILE_KEYS
+    if unknown:
+        raise ValueError(f"{BEAM_LAW}: {label} has unknown keys: {', '.join(sorted(unknown))}")
+    missing = FAMILIES_FILE_KEYS - set(document)
+    if missing:
+        raise ValueError(f"{BEAM_LAW}: {label} lacks keys: {', '.join(sorted(missing))}")
+    if document["law"] != DETECTOR_LAW_RULE:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} declares law {document['law']!r}, not {DETECTOR_LAW_RULE!r}"
+        )
+    integers = document["integers"]
+    if not isinstance(integers, dict) or set(integers) != FAMILIES_INTEGERS:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.integers must hold exactly {sorted(FAMILIES_INTEGERS)} (the "
+            "universe's integers, ALGEBRA.md 9.83 (2) (a); no default)"
+        )
+    node_clock = _integer(integers["node_clock"], f"{label}.integers.node_clock", 1, AMOUNT_BOUND)
+    amplitude_bound = _integer(
+        integers["amplitude_bound"], f"{label}.integers.amplitude_bound", 1, AMOUNT_BOUND
+    )
+    entries = document["families"]
+    if not isinstance(entries, list) or not entries:
+        raise ValueError(f"{BEAM_LAW}: {label}.families must be a nonempty list")
+    translated: list[dict[str, object]] = []
+    for index, entry in enumerate(entries):
+        where = f"{label}.families[{index}]"
+        obj = _object(entry, where, FAMILY_ENTRY_KEYS, FAMILY_ENTRY_REQUIRED)
+        if obj["representation"] not in REPRESENTATIONS:
+            raise ValueError(
+                f"{BEAM_LAW}: {where}.representation must be one of {list(REPRESENTATIONS)} (the "
+                "vector and tensor parts ride on ALGEBRA.md 9.86)"
+            )
+        if obj["phase"] != 2:
+            raise ValueError(f"{BEAM_LAW}: {where}.phase must be 2, the rule's two levels (9.57 (1))")
+        if obj["self_unit"] != 0:
+            raise ValueError(
+                f"{BEAM_LAW}: {where}.self_unit must be 0: the self-source (ALGEBRA.md 9.78 (3)) is "
+                "not built"
+            )
+        if type(obj["booked"]) is not bool:
+            raise ValueError(f"{BEAM_LAW}: {where}.booked must be true or false")
+        if ("held" in obj) == ("clicks" in obj):
+            raise ValueError(
+                f"{BEAM_LAW}: {where} declares exactly one of held (a field family) and clicks (a "
+                "family of records)"
+            )
+        legacy: dict[str, object] = {
+            key: obj[key] for key in ("name", "quantum", "charge", "pair", "reads")
+        }
+        if "held" in obj:
+            source = _object(obj["held"], f"{where}.held", {"count", "factor"}, {"count", "factor"})
+            if source["count"] not in HELD_COUNTS:
+                raise ValueError(f"{BEAM_LAW}: {where}.held.count must be one of {list(HELD_COUNTS)}")
+            if source["factor"] != 1:
+                raise ValueError(
+                    f"{BEAM_LAW}: {where}.held.factor must be 1 (the momentum's powers ride on "
+                    "ALGEBRA.md 9.86)"
+                )
+            if obj["booked"] is not False:
+                raise ValueError(f"{BEAM_LAW}: {where}.booked must be false on a held family")
+            legacy["held"] = source["count"]
+        else:
+            clicks = _object(obj["clicks"], f"{where}.clicks", {"gives", "takes"}, {"gives", "takes"})
+            if clicks["gives"] is not True or clicks["takes"] is not True:
+                raise ValueError(
+                    f"{BEAM_LAW}: {where}.clicks.gives and .takes must be true: a family of records is "
+                    "given and taken at clicks (ALGEBRA.md 9.79 (1))"
+                )
+            if obj["booked"] is not True:
+                raise ValueError(f"{BEAM_LAW}: {where}.booked must be true on a family of records")
+        translated.append(legacy)
+    return translated, {"node_clock": node_clock, "amplitude_bound": amplitude_bound}
+
+
 # THE ENGINE START FILE (record 2089; records 2092 and 2094; ALGEBRA.md 9.83 (2)
 # (a); BUILD.md section 26 item 57): one canonical copy at
 # examples/events/engine_start.json, referenced by every world of the detector
@@ -1508,6 +1639,9 @@ class EmitterDefinition:
     branches: tuple[tuple[int, int], ...]
     label_hands: tuple[int, int] | None
     receiver: tuple[str, ...] | None
+    # THE GIVEN CLOCK (ALGEBRA.md 9.85 (3); item 59): the given record's clock
+    # [p, q], the family's own or the emitter's `clock`
+    clock: tuple[int, int]
     period: int | None = None
     norm: int | None = None
     train: TrainDefinition | None = None
@@ -1898,6 +2032,9 @@ class NatureBeamWorld:
     # THE ENGINE START FILE (record 2089; BUILD.md section 26 item 57): the
     # world's `engine` as read, None on a world without the detector law
     start: EngineStart | None = None
+    # THE ONE FAMILIES FILE (item 59): the world's `families` as a repository
+    # path, None when the world lists its families inline
+    families_file: str | None = None
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -2875,6 +3012,14 @@ def _families(
         hand = _hand(obj["hand"], f"families[{index}].hand") if "hand" in obj else NO_HAND
         massive = _massive(obj, f"families[{index}]", massive_rows, action, quantum, phase, name)
         pair = _kind_pair(obj, f"families[{index}]", massive_record, amplitude_bound)
+        if detector_law and "phase_per_link" in obj and not isinstance(obj["phase_per_link"], list):
+            # under the law a family's clock is the pair form (ALGEBRA.md 9.17 (6));
+            # the integer form is the ray law's turn per Link
+            raise ValueError(
+                f"{BEAM_LAW}: families[{index}].phase_per_link is an integer: under `detector_law` a "
+                "family declares the pair form of its clock [p, q] or none, the given record's "
+                "clock then its emitter's (ALGEBRA.md 9.17 (6), 9.85 (3))"
+            )
         _refuse_family_faces(obj, f"families[{index}]")
         generic.append(_family_generic(obj, f"families[{index}]", detector_law))
         found.append(
@@ -4372,6 +4517,7 @@ def _emitter(
             "weight",
             "norm_denominator",
             "window_read",
+            "clock",
         },
         {"family"},
     )
@@ -4384,12 +4530,35 @@ def _emitter(
             f"{BEAM_LAW}: {label}.family is the body's own family (the given record is of another "
             "family, the photon of the excited body)"
         )
-    if given_family.free or given_family.phase_per_age is None:
+    if given_family.free:
         raise ValueError(
-            f"{BEAM_LAW}: {label}.family {name!r}: the given family is a paid family with the pair "
-            "form of its clock (light's kind, or a massive kind with a declared clock)"
+            f"{BEAM_LAW}: {label}.family {name!r}: the given family is a paid family (light's kind, "
+            "or a massive kind)"
         )
-    step = given_family.phase_per_age[0] // given_family.phase_per_age[1]
+    if given_family.held is not None:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} givings into the held family {name!r}: it takes and gives "
+            "nothing (ALGEBRA.md 9.45 (1))"
+        )
+    # THE GIVEN CLOCK (ALGEBRA.md 9.85 (3); item 59): a light record's clock is its
+    # emitter's, `clock` [p, q] on the emitter, REQUIRED when the given family
+    # declares none (the families file's light) and refused when it does (one copy)
+    if "clock" in obj:
+        if given_family.phase_per_age is not None:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.clock is refused: the given family {name!r} declares its own "
+                "clock (phase_per_link); one copy (ALGEBRA.md 9.85 (3))"
+            )
+        clock = _ratio(obj["clock"], f"{label}.clock", zero=False)
+    elif given_family.phase_per_age is not None:
+        clock = (int(given_family.phase_per_age[0]), int(given_family.phase_per_age[1]))
+    else:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.clock is required: the given family {name!r} declares no clock, so "
+            "the emitter declares the given record's clock [p, q] (ALGEBRA.md 9.85 (3); BUILD.md "
+            "section 26 item 59)"
+        )
+    step = clock[0] // clock[1]
     if step % 2 == 1 and 2 * phase_steps > MAX_PHASE_STEPS:
         raise ValueError(
             f"{BEAM_LAW}: {label}.family {name!r}: the given clock's step floor(n / d) = {step} is "
@@ -4413,7 +4582,9 @@ def _emitter(
     norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
     train: TrainDefinition | None = None
     if "train" in obj:
-        train = _train(obj["train"], f"{label}.train", given_family, phase_steps, extents, momentum)
+        train = _train(
+            obj["train"], f"{label}.train", given_family, phase_steps, extents, momentum, clock
+        )
     given: GivenTrain | None = None
     if "given" in obj:
         # THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a)): the profile of the train's
@@ -4440,6 +4611,7 @@ def _emitter(
         branches,
         label_hands,
         receiver,
+        clock,
         period,
         norm,
         train,
@@ -4455,7 +4627,8 @@ def _train(
     given_family: FamilyDefinition,
     phase_steps: int,
     extents: tuple[int, int, int],
-    momentum: tuple[int, ...] = (0, 0, 0),
+    momentum: tuple[int, ...],
+    rest_clock: tuple[int, int],
 ) -> TrainDefinition:
     """The emitter's `train` (ALGEBRA.md 9.17 (6a)): one signed unit axis
     vector and the periods n >= 8; the given clock the given family's
@@ -4480,8 +4653,7 @@ def _train(
     axis = next(index for index, v in enumerate(direction) if v != 0)
     sign = 1 if int(direction[axis]) > 0 else -1
     periods = _integer(obj["periods"], f"{label}.periods", 8)
-    assert given_family.phase_per_age is not None  # the emitter parse checked the clock
-    p, q = int(given_family.phase_per_age[0]), int(given_family.phase_per_age[1])
+    p, q = rest_clock  # the given clock, the family's or the emitter's (item 59)
     if "clock" in obj:
         # DOPPLER (ALGEBRA.md 9.62 (4); item 49): the moving body's train at its
         # own boosted wave number, declared for the declared momentum
@@ -5140,19 +5312,9 @@ def _detector_law_load_checks(
                             f"axis {AXES[axis]}, which has no half-space (an arm's row lives on its "
                             "own side of the lamp's Node on an open axis)"
                         )
-    for index, family in enumerate(families):
-        # A massive kind (massive-record-v1) needs no declared clock (a
-        # block's kind: its clock is its gap; a matter lamp's kind declares
-        # one, checked below); a held family givings nothing and has no
-        # clock of its own (ALGEBRA.md 9.45 (1); item 51); every other paid
-        # family declares the pair form.
-        if family.held is not None:
-            continue
-        if family.quantum != FREE_QUANTUM and family.phase_per_age is None and not family.massive_kind:
-            raise ValueError(
-                f"{BEAM_LAW}: families[{index}] needs the pair form of phase_per_link under "
-                f"{DETECTOR_LAW_RULE} (the family's clock)"
-            )
+    # A family of records may declare no clock of its own (ALGEBRA.md 9.85 (3);
+    # item 59): its emitters declare the given record's clock (`_emitter`); a
+    # held family gives nothing and has no clock (9.45 (1); item 51)
     for number, entry in enumerate(measured):
         # A matter lamp (a lamp on a massive kind): the lamp verb is the same
         # verb, the family's clock the pair form; a massive kind without a
@@ -6465,6 +6627,21 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             {"suspension", "direction_bound", "directions", "action", "meeting", "massive_rows"},
         )
     start = _engine_start(obj["engine"] if "engine" in obj else None, early_law)
+    families_file: str | None = None
+    as_written = obj  # the document as the generator stamped it (the families' path, item 59)
+    if isinstance(obj["families"], str):
+        # THE ONE FAMILIES FILE (item 59): the path in place of the list; the
+        # universe's integers from the file alone, the world's own refused
+        if not early_law:
+            raise ValueError(
+                f"{BEAM_LAW}: families as a file path is admitted under `detector_law` alone"
+            )
+        families_file = obj["families"]
+        _refuse_under_law(obj, "the world", set(FAMILIES_INTEGERS))
+        entries, integers = families_file_entries(families_file)
+        obj = dict(obj)
+        obj["families"] = entries
+        obj.update(integers)
     model_id = obj["model_id"]
     if not isinstance(model_id, str) or not model_id:
         raise ValueError(f"{BEAM_LAW}: model_id must be a nonempty string")
@@ -6785,7 +6962,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                     "momentum, the moving mode's rotation at its moving centre, the generator's "
                     "(ALGEBRA.md 9.63 (3); `seed_on_the_mode`)"
                 )
-    _input_stamp_check(obj, measured)
+    _input_stamp_check(as_written, measured)
     _initial_state_checks(shape, periodic, families, measured)
     families = _massive_families(families, measured, table, width, phase_steps, action)
     # The covariant readings (`covariant-readings-v1`): the key as declared,
@@ -6891,6 +7068,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         amplitude_bound=amplitude_bound,
         node_clock=node_clock,
         start=start,
+        families_file=families_file,
     )
     if detector_law:
         _detector_law_load_checks(measured, families, table, periodic, phase_steps)

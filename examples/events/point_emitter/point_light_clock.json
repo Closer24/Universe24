@@ -11,7 +11,7 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 117032,
+ "ticks": 116712,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
@@ -23,79 +23,10 @@
  "clock_stamp": true,
  "detector_law": true,
  "massive_record": true,
- "amplitude_bound": 1048576,
- "node_clock": 10000,
  "body_record": true,
  "point_emitter": true,
  "engine": "examples/events/engine_start.json",
- "families": [
-  {
-   "name": "light",
-   "quantum": 1,
-   "pair": [
-    1,
-    1
-   ],
-   "phase_per_link": [
-    77,
-    25
-   ],
-   "charge": 0,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ]
-  },
-  {
-   "name": "matter",
-   "quantum": 1,
-   "pair": [
-    800,
-    813
-   ],
-   "charge": 0,
-   "reads": [
-    {
-     "family": "clicks",
-     "weight": 1
-    },
-    {
-     "family": "charge",
-     "weight": 1,
-     "by": "sign"
-    }
-   ]
-  },
-  {
-   "name": "clicks",
-   "quantum": 1,
-   "pair": [
-    1,
-    1
-   ],
-   "charge": 0,
-   "held": "content",
-   "reads": []
-  },
-  {
-   "name": "charge",
-   "quantum": 1,
-   "pair": [
-    1,
-    1
-   ],
-   "charge": 0,
-   "held": "sign",
-   "reads": []
-  }
- ],
+ "families": "examples/events/families.json",
  "measured": [
   {
    "position": [
@@ -103,7 +34,7 @@
     0,
     0
    ],
-   "family": "matter",
+   "family": "point",
    "amount": 1,
    "held": {
     "light": 64
@@ -529,11 +460,15 @@
    "margin": "control",
    "emitter": {
     "family": "light",
+    "clock": [
+     77,
+     25
+    ],
     "period": 35,
     "norm": 180255439696889394,
     "norm_denominator": 3948169,
     "weight": 1,
-    "window_read": 1503
+    "window_read": 1498
    },
    "clock": [
     2063848,
@@ -577,6 +512,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "6b3cedf3c7100b1c9e445b0d3f81e1f9e5fe8de97b478478806d9b9bca125338"
+  "hash": "9e3d770851ac0ab29303ebcb7f68759492bea6b35610a0cd7209169aef2e95e9"
  }
 }

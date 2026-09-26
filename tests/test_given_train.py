@@ -148,7 +148,9 @@ def test_the_passage_books_the_norm_and_a_short_train_does_not(capsys):
     norm = given_train_norm(
         now, before, (80, 1, 1), (0, 0, 0), (short, 1, 1), (1, 1), (False, True, True)
     )
-    booked = generator.train_run(document, "light", 0, 1, (short, 1, 1), (5, 0, 0), now, before)
+    booked = generator.train_run(
+        document, "light", 0, 1, (short, 1, 1), (5, 0, 0), now, before, (512, 1)
+    )  # the given clock, the emitter's (item 59)
     print(f"the 3-period train books {booked / (NODE_CLOCK**2 * norm):.4f} of its norm (HOST)")
     assert booked / norm > 1.002
 
@@ -202,8 +204,8 @@ def test_the_engine_writes_the_train_and_a_receiver_ahead_reads_its_passage():
 def test_the_light_clock_in_the_tables_form_and_the_generators_checks(capsys):
     """THE LIGHT CLOCK (ALGEBRA.md 9.22 (8), its row; the one table of 9.30; the module
     docstring of the detector-law generator): the registered file carries the board
-    [760, 3, 3] with x open and the face slabs 32 deep, N = 1024 and light's given clock
-    [512, 1], A [800, 801] of the extents [32, 3, 3] at [600, 632) with its train along +x
+    [760, 3, 3] with x open and the face slabs 32 deep, N = 1024 and the emitter's given clock
+    [512, 1] (the families file's light declares none; item 59), A [800, 801] of the extents [32, 3, 3] at [600, 632) with its train along +x
     uniform across y and z, its stock 64 and its `receiver` at_well, the set at_well bound
     to A without positions, the mirror of light's kind with the gap [1, 2] over [4, 3, 3] at
     [690, 694); it loads and constructs. The generator's readings on it (HOST): the passage
@@ -214,12 +216,14 @@ def test_the_light_clock_in_the_tables_form_and_the_generators_checks(capsys):
     one train's length to the high slab likewise."""
     document = json.loads(LIGHT_CLOCK.read_text(encoding="utf-8"))
     assert document["shape"] == [760, 3, 3] and document["face_depth"] == 32
-    assert document["N"] == 1024 and document["families"][0]["phase_per_link"] == [512, 1]
+    # the families file names the world's families; light's clock is the emitter's (item 59)
+    assert document["N"] == 1024 and document["families"] == "examples/events/families.json"
     a = document["measured"][0]
     assert a["extents"] == [32, 3, 3] and a["position"] == [600, 0, 0] and a["pair"] == [800, 801]
     # the stock as the given family's content held at the body (item 47): one own quantum
     assert a["amount"] == 1 and a["held"] == {"light": 64} and a["receiver"] == "at_well"
     assert a["emitter"]["train"] == {"direction": [1, 0, 0], "periods": 8}
+    assert a["emitter"]["clock"] == [512, 1]
     train = profile_of(document)
     assert len(train["now"]) == 288 and all(
         train["now"][i] == train["now"][i - i % 9] for i in range(288)

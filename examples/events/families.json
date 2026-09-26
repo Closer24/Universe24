@@ -1,0 +1,241 @@
+{
+ "law": "detector-law-v1",
+ "integers": {
+  "node_clock": 10000,
+  "amplitude_bound": 1048576
+ },
+ "families": [
+  {
+   "name": "light",
+   "quantum": 1,
+   "charge": 0,
+   "pair": [
+    1,
+    1
+   ],
+   "representation": "scalar",
+   "phase": 2,
+   "reads": [
+    {
+     "family": "clicks",
+     "weight": 1
+    },
+    {
+     "family": "charge",
+     "weight": 1,
+     "by": "sign"
+    }
+   ],
+   "self_unit": 0,
+   "clicks": {
+    "gives": true,
+    "takes": true
+   },
+   "booked": true
+  },
+  {
+   "name": "matter",
+   "quantum": 1,
+   "charge": 0,
+   "pair": [
+    800,
+    809
+   ],
+   "representation": "scalar",
+   "phase": 2,
+   "reads": [
+    {
+     "family": "clicks",
+     "weight": 1
+    },
+    {
+     "family": "charge",
+     "weight": 1,
+     "by": "sign"
+    }
+   ],
+   "self_unit": 0,
+   "clicks": {
+    "gives": true,
+    "takes": true
+   },
+   "booked": true
+  },
+  {
+   "name": "well",
+   "quantum": 1,
+   "charge": 0,
+   "pair": [
+    800,
+    809
+   ],
+   "representation": "scalar",
+   "phase": 2,
+   "reads": [
+    {
+     "family": "clicks",
+     "weight": 1
+    },
+    {
+     "family": "charge",
+     "weight": 1,
+     "by": "sign"
+    }
+   ],
+   "self_unit": 0,
+   "clicks": {
+    "gives": true,
+    "takes": true
+   },
+   "booked": true
+  },
+  {
+   "name": "dark",
+   "quantum": 1,
+   "charge": 0,
+   "pair": [
+    800,
+    809
+   ],
+   "representation": "scalar",
+   "phase": 2,
+   "reads": [
+    {
+     "family": "clicks",
+     "weight": 1
+    },
+    {
+     "family": "charge",
+     "weight": 1,
+     "by": "sign"
+    }
+   ],
+   "self_unit": 0,
+   "clicks": {
+    "gives": true,
+    "takes": true
+   },
+   "booked": true
+  },
+  {
+   "name": "heavy",
+   "quantum": 1,
+   "charge": 0,
+   "pair": [
+    1600,
+    1618
+   ],
+   "representation": "scalar",
+   "phase": 2,
+   "reads": [
+    {
+     "family": "clicks",
+     "weight": 1
+    },
+    {
+     "family": "charge",
+     "weight": 1,
+     "by": "sign"
+    }
+   ],
+   "self_unit": 0,
+   "clicks": {
+    "gives": true,
+    "takes": true
+   },
+   "booked": true
+  },
+  {
+   "name": "muon",
+   "quantum": 1,
+   "charge": 0,
+   "pair": [
+    3200,
+    3236
+   ],
+   "representation": "scalar",
+   "phase": 2,
+   "reads": [
+    {
+     "family": "clicks",
+     "weight": 1
+    },
+    {
+     "family": "charge",
+     "weight": 1,
+     "by": "sign"
+    }
+   ],
+   "self_unit": 0,
+   "clicks": {
+    "gives": true,
+    "takes": true
+   },
+   "booked": true
+  },
+  {
+   "name": "point",
+   "quantum": 1,
+   "charge": 0,
+   "pair": [
+    800,
+    813
+   ],
+   "representation": "scalar",
+   "phase": 2,
+   "reads": [
+    {
+     "family": "clicks",
+     "weight": 1
+    },
+    {
+     "family": "charge",
+     "weight": 1,
+     "by": "sign"
+    }
+   ],
+   "self_unit": 0,
+   "clicks": {
+    "gives": true,
+    "takes": true
+   },
+   "booked": true
+  },
+  {
+   "name": "clicks",
+   "quantum": 1,
+   "charge": 0,
+   "pair": [
+    1,
+    1
+   ],
+   "representation": "scalar",
+   "phase": 2,
+   "reads": [],
+   "held": {
+    "count": "content",
+    "factor": 1
+   },
+   "self_unit": 0,
+   "booked": false
+  },
+  {
+   "name": "charge",
+   "quantum": 1,
+   "charge": 0,
+   "pair": [
+    1,
+    1
+   ],
+   "representation": "scalar",
+   "phase": 2,
+   "reads": [],
+   "held": {
+    "count": "sign",
+    "factor": 1
+   },
+   "self_unit": 0,
+   "booked": false
+  }
+ ]
+}

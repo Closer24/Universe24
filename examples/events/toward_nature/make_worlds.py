@@ -171,15 +171,13 @@ def clock_world(
         detector.KIND,
         blocks,
         ticks,
-        light=detector.light_family(given_clock),
+        given_clock=list(given_clock),
         seed_profile=False,
     )
-    if holder is not None:
-        document["families"].append(dict(HOLDER_FAMILY))
+    # the holder's family `well` is the families file's (item 59): nothing appended
     document["N"] = phase_steps
     document["face_depth"] = detector.FACE_DEPTH
     detector.bounded(document)
-    document["node_clock"] = NODE_CLOCK
     document["measured"].append(detector.mirror_slab([mirror_x, 0, 0], [detector.MIRROR_DEPTH, 3, 3]))
     if hop_every is not None:
         for entry in document["measured"]:
@@ -328,7 +326,9 @@ def worlds() -> dict[str, dict]:
 def main() -> None:
     for name, document in worlds().items():
         path = HERE / f"{name}.json"
-        path.write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
+        path.write_text(
+            json.dumps(massive.bind_families_file(document), indent=1) + "\n", encoding="utf-8"
+        )
         print(path.name, flush=True)
 
 
