@@ -14959,8 +14959,12 @@ take the engine's name; the living documents say "the engine"; the
 dated records stay as written.
 
 **(2) WHERE A FLAG MAY LIVE.** Three files and nothing else: the
-FAMILIES FILE (the families' seven attributes of 9.79 (1) and the
-universe's integers, 9.83 (2) (a)); the WORLD FILE (the GameBoard, its
+UNIVERSE FILE (`examples/events/universe.json`, one shipped file that
+every world names under the key `universe`; the Boss's record 2128 of
+2026-09-26 on the model owner's word "perhaps one universe file, since
+every experiment runs on the same families": the families' seven
+attributes of 9.79 (1) and the universe's integers, 9.83 (2) (a); a
+world of one family exists only inline in a unit test); the WORLD FILE (the GameBoard, its
 faces, the bodies and records, the detectors, the run's length: what
 an experiment declares); the START FILE (the run's mode, the outputs
 and readings asked, the backward test, the digests). No flag in the
@@ -14971,7 +14975,7 @@ with one value in every world is a default and goes (record 2089).
 **(3) THE AUDIT OF THE WORLD FILE, one verdict per key (the twenty-two
 worlds under the engine on emitter-click, every key path read with its
 distinct values; the loader's key sets).** The verdicts: KEEP (an
-experiment's declaration), FAMILIES (moves to the families file),
+experiment's declaration), UNIVERSE (moves to the universe file),
 START (moves to the start file), DELETE (the ray law's, or one value
 in every world).
 (a) The GameBoard: `shape` KEEP. `boundary` per axis KEEP, with three
@@ -14993,11 +14997,11 @@ law, record 2081): DELETE. `input` {law, hash}: the law goes; the
 hash stays as the file's stamp (a generated file's integers against a
 hand edit), the key `stamp`.
 (d) The universe's integers: `node_clock` 10^4 (Gamma) and
-`amplitude_bound` 2^20 (A): FAMILIES (9.83 (2) (a)).
-(e) `families[]`: the whole list FAMILIES. The world names its
+`amplitude_bound` 2^20 (A): UNIVERSE (9.83 (2) (a)).
+(e) `families[]`: the whole list UNIVERSE. The world names its
 families and declares nothing of them (9.85 (3)). Inside the entries:
-`name`, `pair`, `held`, `reads`, `charge` (the sign q) are the
-attributes of 9.79 (1) and go to the families file; `quantum` (1 in
+`name`, `pair`, `held`, `reads`, `charge` (the family's sign) are the
+attributes of 9.79 (1) and go to the universe file; `quantum` (1 in
 all ninety-three) DELETE; `phase_per_link` ([77, 25], [512, 1],
 [4096, 21]) is not a family's number, it is a row's wave number: it
 moves to the record that carries it, see (g); with it and `N` gone the
@@ -15008,7 +15012,10 @@ whole is refused at load, as now.
 (f) `measured[]`, the bodies and records: `position`, `family`,
 `amount`, `momentum`, `pair` (the well or the gap at its Nodes),
 `seed` (the profile), `clock` (the mode's rotation pair), `extents`,
-`held` (the stock), `receiver`, `ramp` with `start` (the pushing
+`stocks` (the body's quanta of other families, today's `held`; its
+own family's are `stock`, 9.96 (5)), `q` (the body's number, today's
+`charge`; record 2128: one meaning per word, `q` the body's number,
+`Lambda` the integer, `stocks` the quanta held), `receiver`, `ramp` with `start` (the pushing
 agent's declaration, a moving body's row), `proper_clock` (a moving
 body's rotations on its Node, 9.63 (3)): KEEP. `side` DELETE (`extents` [s, s, s]
 is the cube; one form). `fixed` (true on all 1123) DELETE: a body
@@ -15046,7 +15053,7 @@ refused by name.
 file keeps eleven at the top (`shape`, `boundary` with its faces,
 `ticks`, `stamp`, the families' names, `measured`, `detectors`) and
 the bodies' and detectors' entries of (f) to (h); two integers move to
-the families file; one word to the start file; everything else goes.
+the universe file; one word to the start file; everything else goes.
 The loader's key sets shrink to what (3) keeps, and a key outside them
 is refused by name, as now.
 
@@ -15063,7 +15070,7 @@ three places must agree (the list, the read in the engine, the
 document) and every disagreement is a bug: that is how the deleted
 defaults were born. THE FORM: one table of keys in one place in the
 repository, one row per key: the name, the file it belongs to
-(families, world, start), its kind (integer, pair, name, list, object
+(universe, world, start), its kind (integer, pair, name, list, object
 of what), its bounds, and the section of this document that gives it
 meaning. The loader is one function that reads the table: a key not in
 the table is refused by name, a key in the table with no value is
@@ -15074,12 +15081,12 @@ the table; a key read and not in the table, or in the table and never
 read, fails the test. THE RULE BEHIND IT: a flag is a number the
 algebra names; with no section it does not exist.
 
-### 9.91 The build sheet for the one stroke (the Boss's records 2105 and 2106 of 2026-09-26, the model owner: "the vector and the tensor must enter the complete engine, top priority"; "everything truly in one stroke, and then one stable engine that everyone works with, not yet frozen"): every integer line Nature24 needs for one pass, the families file's three entries, the interval's order, the bit-for-bit invariants and the order of the commits with the gate of each
+### 9.91 The build sheet for the one stroke (the Boss's records 2105 and 2106 of 2026-09-26, the model owner: "the vector and the tensor must enter the complete engine, top priority"; "everything truly in one stroke, and then one stable engine that everyone works with, not yet frozen"): every integer line Nature24 needs for one pass, the universe file's three entries, the interval's order, the bit-for-bit invariants and the order of the commits with the gate of each
 
 **(0) WHAT THIS IS.** The one stroke is 9.86 (the representation as a
 list of parts, gravity of ten components, the charge of four with
 light as its wave, the click moving a four-vector, the recoil), 9.85
-(3) (the families file), 9.85 (7) (the body declares what it writes),
+(3) (the universe file), 9.85 (7) (the body declares what it writes),
 9.85 (5) (the point emitter as a declaration, row (iv) fixed), 9.88
 (7) (the four primitives as declared attributes), the ray law
 cancelled and the name "the engine". This section gathers every line
@@ -15161,7 +15168,7 @@ to the component i of the vector part:
 
 (S x e_x = (0, S_z, -S_y), S x e_y = (-S_z, 0, S_x), S x e_z = (S_y,
 -S_x, 0); the div 2 with its remainder on the body's record). The
-held factors (1, 4, 2) and (1, 1) are the families file's numbers,
+held factors (1, 4, 2) and (1, 1) are the universe file's numbers,
 not the code's. At a hop the field's integers of the covered Nodes
 move to the vacated ones as today (9.52 (4) (i)); the dipole's six
 writes move with the body's Node.
@@ -15222,18 +15229,18 @@ charge's twist on a charged family is Lambda_v, by q. With every
 vector part zero every k is 0 and the transport is the identity, bit
 for bit.
 
-**(7) THE FAMILIES FILE, THE THREE ENTRIES AND THE UNIVERSE (9.85 (3),
+**(7) THE UNIVERSE FILE, THE THREE ENTRIES AND THE UNIVERSE'S INTEGERS (9.85 (3),
 9.86 (2), 9.83 (2)).** Written here as the file reads, the words the
 loader's:
 
   universe: gamma 10000; amplitude 1048576; energy_unit P_0;
-            charge_weight Lambda; charge_twist Lambda_v;
+            Lambda (today's charge_weight, record 2128); charge_twist gone (Lambda_v = Lambda, 9.96);
             accumulator_wall W; twist_table {unit, bound, triples}.
   gravity:  parts [1, 3, 6]; phase 1; pair [1, 1];
             held {count "content", factors [1, 4, 2], dipole "spin"};
             reads []; self_source {unit 0}; clicks none.
   charge:   parts [1, 3]; phase 2; pair [1, 1];
-            held {count "charge", factors [1, 1], dipole "moment", dipole_div 2};
+            held {count "q", factors [1, 1], dipole "moment", dipole_div 2};
             reads [{family gravity, weight 1, twist "own", by 1}];
             self_source {unit 0}; clicks {gives, takes, quantum 1}.
   matter:   parts [1]; phase 2; pair "body's" (each body and record declares its own);
@@ -15296,7 +15303,7 @@ true quanta and P_0 lowered, no hop in any shipped row (9.84 (5)
 (c)). (e) The backward run exact over every run, the clicks included.
 
 **(10) THE COMMITS, IN ORDER, WITH THE GATE OF EACH.** 1. The parts
-list and the families file with `booked` derived: bit for bit, the
+list and the universe file with `booked` derived: bit for bit, the
 three entries of (7) loaded, the world file naming its families. 2.
 Gravity's ten with the holds of (3) and the leak test per part: bit
 for bit at rest; the moving rows' new digests recorded as check-mode.
@@ -15410,7 +15417,7 @@ sections are marked so in place when the engine is declared stable.
 | The interval's order, forward and backward | 9.85 (2); 9.91 (8) | owed |
 | The leak test per part | 9.85 (3); 9.87 (1); 9.91 (9) | owed |
 | The backward test across clicks from the events output | 9.80 (4); 9.85 (1) | owed |
-| The families file and the universe's integers | 9.83 (2); 9.85 (3); 9.91 (7) | owed |
+| The universe file: the families and the universe's integers | 9.83 (2); 9.85 (3); 9.91 (7); record 2128 | owed |
 | The world file's keys and the bodies' numbers | 9.90 (3); 9.69 (6); 9.85 (7) | owed |
 | The start file | 9.90 (4); the owner's ruling in 9.90 (6) | owed |
 | The one keys table and its test | 9.90 (6) | owed |
@@ -15611,9 +15618,9 @@ wrong. Bit for bit today holds because every second level starts at
 zero and every twist is zero. (c) THE COMPONENT ORDER is the engine's
 convention, written once in ENGINE.md and not in the file: gravity (t,
 x, y, z, xx, yy, zz, xy, xz, yz), the charge (t, x, y, z); the file
-lists `parts` alone. (d) THE INTEGERS BLOCK of the families file holds
+lists `parts` alone. (d) THE INTEGERS BLOCK of the universe file holds
 every number of the law: gamma, amplitude, energy_unit P_0,
-charge_weight Lambda, charge_twist Lambda_v, momentum_unit Q (the
+Lambda (today's charge_weight), momentum_unit Q (the
 loader's constant 64 leaves the code), accumulator_wall W, the
 twist_table; the generator's working amplitude, a number of the
 generator and not of the law, goes to the start file or is derived
@@ -15623,7 +15630,7 @@ from A by a stated rule.
 
 **(1) THE QUESTION AND THE ANSWER.** Until now the factors (1, 4, 2)
 on the body's three writes (9.78 (2)) and (1, 1) on the charge's two
-were "nature's once": numbers in the families file taken from the
+were "nature's once": numbers in the universe file taken from the
 linear form of Einstein's equations. Here they are derived. The inputs
 are four, none of them a number of nature: (I) the rule 9.57 (1); (II)
 its long-wave symmetry, DERIVED in 9.67 (1): the rule is the wave
@@ -15742,7 +15749,7 @@ the row's.
 reading a contraction). Derived from them: Lorentz (9.67 (1)), Newton
 (2) (a), light's double coupling (2) (b), the trace reversal (3), the
 factors (1, 4, 2) and (1, 1) (4), the dipoles (5); so every number in
-the families file's held entries is computed by the loader from the
+the universe file's held entries is computed by the loader from the
 representation, and the file keeps none of them. Not derived: the
 field's own energy as its own source with the same coupling, which is
 the road from the linear form to Einstein's full equations; in this
@@ -15799,7 +15806,7 @@ coarse bound: the largest angle per Link a row needs, 10^-2 radians
 (the ring's loop), is k_1 of 2^6 x 10^4 x 10^-2 / 2^10 x ... in short a
 coarse table of at most 2^15 entries; the loader refuses a k beyond it
 naming the Port. (d) THE VALUE FOR THE CHECK ROWS: theta_unit as
-above; the tables generated once into the families file's integers
+above; the tables generated once into the universe file's integers
 block by the generator, checked by the loader (every identity, every
 angle).
 
@@ -15847,7 +15854,7 @@ emitter of matter waves does in nature.
 ### 9.97 The last number derived: P_2, the field's own energy as its source, and the strong field as the rule's own (the model owner's word of 2026-09-26, "start it, it closes the whole algebra")
 
 **(1) THE CLAIM.** After 9.95 one declared number remained in the
-families file's laws: the self-unit P_2 of 9.78 (3), the weight at
+universe file's laws: the self-unit P_2 of 9.78 (3), the weight at
 which a field's own energy at a Node sources the field, declared 0.
 Here P_2 is derived from the rule and the units already in the engine,
 and the strong field is shown to be the rule's own statement, with no
@@ -15926,7 +15933,7 @@ to tune: if the row reads Einstein's form, the rule is refuted at
 third order; if it reads the rule's, Einstein's is.
 
 **(5) WHAT THIS CLOSES, AND WHAT IT DOES NOT.** Closed: every number
-of the laws in the families file is now computed from the rule, the
+of the laws in the universe file is now computed from the rule, the
 representation and the units: the factors (9.95), the twist (9.96
 (2)), Lambda_v (9.96 (2) (b)), P_2 ((3) here); the file declares the
 universe's integers (Gamma, A, P_0, Lambda, Q, the twist table) and the
@@ -16155,7 +16162,7 @@ one number, 9.83 (2)) and the universe's integers.
 fixes its parts, its holds and its reads by 9.95; its charge sign q
 per record (degree 1's coupling); its clicks (whether it gives and
 takes); its pair per record (degree 0's coupling); its phase (2 where
-a transport reads it). The families file's three entries of 9.91 (7)
+a transport reads it). The universe file's three entries of 9.91 (7)
 are these words, and the loader computes the rest.
 
 **(6) WHAT IS NOT DERIVED, said once.** The internal representations
