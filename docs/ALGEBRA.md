@@ -15843,3 +15843,100 @@ own. The loader's refusal of a stock of the body's own family goes;
 `held` keeps the stocks of OTHER families a body gives (a matter body
 giving light, as today). A body that gives itself loses mass, as an
 emitter of matter waves does in nature.
+
+### 9.97 The last number derived: P_2, the field's own energy as its source, and the strong field as the rule's own (the model owner's word of 2026-09-26, "start it, it closes the whole algebra")
+
+**(1) THE CLAIM.** After 9.95 one declared number remained in the
+families file's laws: the self-unit P_2 of 9.78 (3), the weight at
+which a field's own energy at a Node sources the field, declared 0.
+Here P_2 is derived from the rule and the units already in the engine,
+and the strong field is shown to be the rule's own statement, with no
+number to declare. After this section the only thing assumed in the
+engine is the rule 9.57 (1).
+
+**(2) THE SECOND ORDER IS ALREADY IN THE READING, so the t part's P_2
+is 0 by derivation, not by choice.** In nature the field's own energy
+gravitates, and that is what makes Einstein's equations nonlinear; at
+second order it is read as the U^2 term of the clock, g_tt = 1 - 2 U
++ 2 beta U^2 with beta = 1 (the PPN form in isotropic coordinates). In
+this engine a record's rotation at a Node with the content level c is
+(9.57 (1) at k = 0, 9.95 (2) (a))
+
+  (rate / rest rate)^2 = (1 + (1 - c / Gamma)^2) / 2 = 1 - 2 U + 2 U^2,   U = c / (2 Gamma),
+
+exactly, at every U: the reading of a linear field through the pace
+that enters twice carries beta = 1 whole. A self-source on the t part
+would add a second U^2 term on top of it and move beta off 1 in the
+perihelion (9.57 (4)): so for gravity's t part P_2 = 0 is forced by
+the rule's own second order, and 9.78 (3)'s "declared 0" becomes
+"derived 0". The field stays linear; the nonlinearity nature shows at
+this order sits in the reading.
+
+**(3) THE VALUE OF P_2 FOR THE PARTS THE PACE DOES NOT CARRY, computed
+from the engine's units.** The waves' parts (gravity's vector and
+tensor) enter no reader's pace quadratically, so their own energy is
+not in any reading and the self-source is the only place it can
+gravitate. Its weight is fixed by one requirement, the same as 9.95's:
+the field's energy gravitates with the coupling of matter's. THE
+UNITS: a record's conserved form I is its energy in units of one over
+an interval (9.94 (4): the norm T is one period's action, T = E P, and
+the form's share per interval e_c = T / P = E); with P_0 = [1, 1000]
+(9.96 (3)) one unit of the count s is 1000 of those units. The form's
+density at a Node is the rule's own quadratic in the six differences,
+F_i = (w_6 / 12) SUM over the six Ports (a_j - a_i)^2 plus its time
+term, with w_6 the form's integer weight on the differences that 9.57
+(1)'s form gives (Gamma^2 times the plain form's in the vacuum, 9.57
+(2)). So the field's energy at a Node in count units is F_i / (1000
+E_1), E_1 the form's value of one unit of energy (the numerator of a
+one-quantum record's norm over its period, about 1.7 x 10^20 in the
+shipped worlds: HOST reading of the files), and
+
+  P_2 = 12 x 1000 x E_1 / w_6,
+
+a number the loader computes from Gamma, P_0 and the form, about 10^17
+at Gamma = 10^4. Nothing of nature enters. ITS EFFECT: the six squared
+differences of any field on the GameBoard at A = 2^20 sum to at most 6
+(2 A)^2 = 2^45 = 3.5 x 10^13 per Node, and 3.5 x 10^13 div 10^17 = 0:
+the self-source is exactly zero in integers at every Node of every
+shipped world. So the computed P_2 is bit for bit with P_2 = 0 today,
+the term costs nothing (a quotient that is 0 is not evaluated), and
+the loader's bound P_2 >= 24 A holds by a factor of 4 x 10^9. The
+waves' energy would first move a level when a wave's amplitude reaches
+sqrt(10^17 / 6) = 4 x 10^8, four hundred times A: nature's waves at
+10^-20 of a level are as far below it as 9.78 (3) said.
+
+**(4) THE STRONG FIELD IS THE RULE'S OWN.** With the field linear and
+the reading exact, what the engine says beyond second order is fixed
+by the rule and by nothing declared: a clock body's rate sqrt(1 - 2 U
++ 2 U^2) at every U, light's coordinate speed (1 - 2 U) c_l exactly
+(9.95 (2) (b)), and the pace p = Gamma - c reaching 0 at 2 U = 1,
+where the loader's guard p > 0 refuses the world: the rule has no
+horizon and no interior. Against Einstein in isotropic coordinates,
+whose clock is (1 - U / 2) / (1 + U / 2) and whose light speed is (1 -
+U / 2) / (1 + U / 2)^3, the two agree through second order and part
+at the third: at U = 0.1 the clocks differ by 0.1 percent and light by
+2.5 percent; at U = 0.3 the clocks by 3.7 percent (0.762 against
+0.735) and light by 28 percent (0.40 against 0.56). THE ROW that reads
+it: a deep well at U = 0.3 at the reading Node (a body of count s = 6000
+on a chain, c / Gamma = 0.6), a clock body and a light clock with a
+declared arm across it, in check mode against both closed forms; and
+nature's own strong-field numbers (a neutron star's surface redshift
+1.2 to 1.35 at U = 0.15 to 0.25) as the comparison. There is no number
+to tune: if the row reads Einstein's form, the rule is refuted at
+third order; if it reads the rule's, Einstein's is.
+
+**(5) WHAT THIS CLOSES, AND WHAT IT DOES NOT.** Closed: every number
+of the laws in the families file is now computed from the rule, the
+representation and the units: the factors (9.95), the twist (9.96
+(2)), Lambda_v (9.96 (2) (b)), P_2 ((3) here); the file declares the
+universe's integers (Gamma, A, P_0, Lambda, Q, the twist table) and the
+families' attributes, which are the representation and not numbers
+of nature. Assumed: the rule 9.57 (1), alone. Not closed, and not the
+algebra's to close: whether the rule is nature's, which the rows
+decide (the strong-field row of (4), the lattice's own terms of order
+k^4 in the pace fans, the third order of the clock); the strong and
+weak forces, which stay declarations on the four primitives (9.88 (7));
+and quantum uncertainty, which the engine's clicks show (Born's rule,
+Bell) and the algebra states but does not derive from the rule. The
+owner's sentence stands in this form: the rule is put in; everything
+in the files follows from it; nature judges the rule.
