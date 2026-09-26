@@ -44,19 +44,19 @@ def cart_world(
     document["clock_stamp"] = True
     # the cart's own massive family (its Nodes apart from the emitter's mode, which spans the
     # chain), the kind's pair [800, 809], the cart a barrier of it
-    document["families"].append(
+    document["universe"].append(
         {"name": "cart", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()}
     )
     cart = {
         "position": [start, 0, 0],
         "family": "cart",
         "amount": 1,
-        "held": {},
+        "stocks": {},
         "ramp": 0,
         "start": 0,
         "momentum": [momentum, 0, 0],
         "extents": [3, 1, 1],
-        "charge": 0,
+        "q": 0,
         "spin": [0, 0, 0],
         "moment": [0, 0, 0],
         "pair": [800, 810],  # a barrier of matter's kind, no seed: light passes it untouched

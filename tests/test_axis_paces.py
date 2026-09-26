@@ -26,7 +26,7 @@ def paces_world() -> dict:
     periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
     document = block_world(SHAPE, periodic, KIND, [block], ticks=20)
     document["age_bound"] = 100000
-    for family in document["families"]:
+    for family in document["universe"]:
         if family["name"] == "clicks":
             family.update({"parts": [1, 3, 6], "held_factors": [1, 4, 2], "held_dipole": "spin"})
     document["input"] = input_stamp(document)

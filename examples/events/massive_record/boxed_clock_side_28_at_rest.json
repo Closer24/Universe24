@@ -25,7 +25,7 @@
  "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
- "families": "examples/events/families.json",
+ "universe": "examples/events/universe.json",
  "measured": [
   {
    "position": [
@@ -40,7 +40,7 @@
     0,
     0
    ],
-   "held": {},
+   "stocks": {},
    "ramp": 0,
    "start": 0,
    "margin": "control",
@@ -53,7 +53,7 @@
     1600,
     1618
    ],
-   "charge": 0,
+   "q": 0,
    "spin": [
     0,
     0,
@@ -110668,6 +110668,6 @@
  "detectors": [],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "f9ec18a3523ed0e2f1f24906fc14792fab886f99c20a6e8968471b8d30227c8d"
+  "hash": "cabfffebb4e93285b2b2016b9405813617437ced9bf218abcdd3266041a7b019"
  }
 }

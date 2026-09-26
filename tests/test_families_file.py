@@ -28,7 +28,7 @@ from event_universe.events.world import families_file_entries, input_stamp, pars
 from tests.test_emitter import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
-FILE = "examples/events/families.json"
+FILE = "examples/events/universe.json"
 ATTRIBUTES = {"name", "parts", "phase", "pair", "reads", "self_source"}
 
 
@@ -40,12 +40,12 @@ def refused(document: dict, match: str) -> None:
 
 def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_names_it():
     document = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
-    assert document["law"] == "detector-law-v1"
+    assert "law" not in document  # one engine, no name and no version (record 2128)
     table = document["integers"].pop("twist_table")
     assert document["integers"] == {
         "node_clock": 10000,
         "amplitude_bound": 1 << 20,
-        "charge_weight": 1,
+        "Lambda": 1,
         "momentum_unit": 64,
     }
     # the twist table (ALGEBRA.md 9.96 (2) (c); commit 4): the unit 4 Gamma 2^16, 2^10 fine
@@ -87,10 +87,10 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     for path in (ROOT / "examples/events").glob("*/*.json"):
         text = json.loads(path.read_text(encoding="utf-8"))
         if isinstance(text, dict) and text.get("detector_law") is True:
-            assert text["families"] == FILE, path
+            assert text["universe"] == FILE, path
             assert "node_clock" not in text and "amplitude_bound" not in text, path
             world = parse_nature_beam_world(text)
-            assert world.families_file == FILE and world.node_clock == 10000
+            assert world.universe_file == FILE and world.node_clock == 10000
             assert [family.name for family in world.families] == names
             gravity_family, charge_family, matter_family = world.families
             assert gravity_family.parts == (1, 3, 6) and gravity_family.components == 10
@@ -109,8 +109,8 @@ def on_the_file(document: dict, clock: list[int]) -> dict:
     given clock on the emitter; light is the charge family (9.86 (2) (b)), the emitter body of
     matter with its kind (9.91 (7))."""
     moved = json.loads(json.dumps(document))
-    names = {family["name"]: family for family in moved["families"]}
-    moved["families"] = FILE
+    names = {family["name"]: family for family in moved["universe"]}
+    moved["universe"] = FILE
     del moved["node_clock"]
     del moved["amplitude_bound"]
     del moved["momentum_unit"]
@@ -119,8 +119,8 @@ def on_the_file(document: dict, clock: list[int]) -> dict:
             entry["family"] = "charge"
         if entry["family"] == "matter":
             entry["kind"] = list(names["matter"]["pair"])
-        if "light" in entry.get("held", {}):
-            entry["held"] = {"charge": entry["held"]["light"]}
+        if "light" in entry.get("stocks", {}):
+            entry["stocks"] = {"charge": entry["stocks"]["light"]}
         if "emitter" in entry:
             entry["emitter"]["clock"] = clock
             if entry["emitter"]["family"] == "light":
@@ -138,18 +138,18 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     document = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
     document["integers"]["node_clock"] = inline["node_clock"]
     document["integers"]["amplitude_bound"] = inline["amplitude_bound"]
-    (tmp_path / "families.json").write_text(json.dumps(document), encoding="utf-8")
+    (tmp_path / "universe.json").write_text(json.dumps(document), encoding="utf-8")
     (tmp_path / "start.json").write_text(
         json.dumps({"law": "detector-law-v1", "mode": "check"}), encoding="utf-8"
     )
     a = DetectorLawSimulation(parse_nature_beam_world(inline))
     monkeypatch.setattr(loader, "REPOSITORY_ROOT", tmp_path)
     moved = on_the_file(inline, [512, 1])
-    moved["families"] = "families.json"
+    moved["universe"] = "universe.json"
     moved["engine"] = "start.json"
     moved["input"] = input_stamp(moved)
     b = DetectorLawSimulation(parse_nature_beam_world(moved))
-    assert b.world.families_file == "families.json" and a.world.families_file is None
+    assert b.world.universe_file == "universe.json" and a.world.universe_file is None
     names_a = [family.name for family in a.families]
     names_b = [family.name for family in b.families]
     rename = {"light": "charge", "clicks": "gravity"}
@@ -182,6 +182,67 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     assert b.leaks() == []
 
 
+def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_for_bit(
+    tmp_path, monkeypatch
+):
+    """ITEM 53's ADVERSARIAL TEST OVER THE WHOLE UNIVERSE FILE (the Boss's record 2128 (1)): a copy
+    of examples/events/universe.json with every family renamed to another family's word (gravity
+    to "matter", the charge to "gravity", matter to "charge") and every read, body, stock,
+    emitter and detector of the shipped light clock renamed with it runs 120 intervals bit for
+    bit with the original: the rows, the remainders, the held levels and every line (the
+    family's word on a line the renamed one). The engine reads no family's name (HOST; no pin)."""
+    rename = {"gravity": "matter", "charge": "gravity", "matter": "charge"}
+    universe = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
+    for entry in universe["families"]:
+        entry["name"] = rename[entry["name"]]
+        for read in entry["reads"]:
+            read["family"] = rename[read["family"]]
+    (tmp_path / "universe.json").write_text(json.dumps(universe), encoding="utf-8")
+    (tmp_path / "start.json").write_text(
+        json.dumps({"law": "detector-law-v1", "mode": "check"}), encoding="utf-8"
+    )
+    clock = json.loads((ROOT / "examples/events/massive_record/light_clock.json").read_text())
+    a = DetectorLawSimulation(parse_nature_beam_world(clock))
+    renamed = json.loads(json.dumps(clock))
+    for entry in renamed["measured"]:
+        entry["family"] = rename[entry["family"]]
+        if "stocks" in entry:
+            entry["stocks"] = {rename[k]: v for k, v in entry["stocks"].items()}
+        if "emitter" in entry:
+            entry["emitter"]["family"] = rename[entry["emitter"]["family"]]
+    monkeypatch.setattr(loader, "REPOSITORY_ROOT", tmp_path)
+    renamed["universe"] = "universe.json"
+    renamed["engine"] = "start.json"
+    renamed["input"] = input_stamp(renamed)
+    b = DetectorLawSimulation(parse_nature_beam_world(renamed))
+    assert [family.name for family in b.families] == [rename[f.name] for f in a.families]
+    lines_a: list[dict] = []
+    lines_b: list[dict] = []
+    a.record, b.record = lines_a.append, lines_b.append
+    for _ in range(120):
+        a.step()
+        b.step()
+    assert (
+        lines_a
+        and [
+            {**line, "family": rename[line["family"]]} if "family" in line else line for line in lines_a
+        ]
+        == lines_b
+    )
+    assert set(a.records) == set(b.records)
+    for identity, live in a.records.items():
+        other = b.records[identity]
+        assert np.array_equal(live.now, other.now) and np.array_equal(live.before, other.before)
+        assert np.array_equal(live.remainder, other.remainder)
+    for family_a, record in a.held_records.items():
+        family_b = [f.name for f in b.families].index(rename[a.families[family_a].name])
+        assert np.array_equal(record.now, b.held_records[family_b].now)
+    books_a, books_b = a.books(), b.books()
+    assert a.held == b.held
+    assert {rename[k]: v for k, v in books_a.pop("families").items()} == books_b.pop("families")
+    assert books_a == books_b
+
+
 def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_path, monkeypatch):
     document = on_the_file(emitter_world(stock=1, ticks=10), [512, 1])
     second = json.loads(json.dumps(document))
@@ -190,9 +251,9 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     ray = json.loads(json.dumps(document))
     ray["detector_law"] = False
     del ray["engine"]
-    refused(ray, "families as a file path is admitted under `detector_law` alone")
+    refused(ray, "a universe file's path is admitted under `detector_law` alone")
     missing = json.loads(json.dumps(document))
-    missing["families"] = "examples/events/nowhere.json"
+    missing["universe"] = "examples/events/nowhere.json"
     refused(missing, "no file at the repository's root")
     # the file's own defects, one at a time
     good = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
@@ -201,16 +262,16 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
         json.dumps({"law": "detector-law-v1", "mode": "check"}), encoding="utf-8"
     )
     document["engine"] = "start.json"
-    document["families"] = "families.json"
+    document["universe"] = "universe.json"
 
     def refuses(change, match):
         broken = json.loads(json.dumps(good))
         change(broken)
-        (tmp_path / "families.json").write_text(json.dumps(broken), encoding="utf-8")
+        (tmp_path / "universe.json").write_text(json.dumps(broken), encoding="utf-8")
         refused(json.loads(json.dumps(document)), match)
 
     refuses(lambda d: d["integers"].pop("node_clock"), "integers must hold exactly")
-    refuses(lambda d: d["integers"].pop("charge_weight"), "integers must hold exactly")
+    refuses(lambda d: d["integers"].pop("Lambda"), "integers must hold exactly")
     refuses(lambda d: d["families"][0].pop("parts"), r"families\[0\] lacks keys: parts")
     refuses(lambda d: d["families"][0].__setitem__("parts", [3]), "parts must be one of")
     refuses(lambda d: d["families"][0].__setitem__("phase", 3), "phase must be 1 or 2")
@@ -229,10 +290,10 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     refuses(
         lambda d: d["families"][0]["held"].__setitem__("dipole", "twist"), "held_dipole must be one of"
     )
-    refuses(lambda d: d.__setitem__("law", "beam-v1"), "declares law 'beam-v1'")
-    (tmp_path / "families.json").write_text(json.dumps(good), encoding="utf-8")
+    refuses(lambda d: d.__setitem__("law", "beam-v1"), "the universe file .* has unknown keys: law")
+    (tmp_path / "universe.json").write_text(json.dumps(good), encoding="utf-8")
     document["input"] = input_stamp(document)
-    assert parse_nature_beam_world(document).families_file == "families.json"
+    assert parse_nature_beam_world(document).universe_file == "universe.json"
 
 
 def test_the_given_clock_is_the_emitters_when_the_family_declares_none():
@@ -273,9 +334,9 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
     # an inline list, a body of a second massive kind giving matter (under the three entries a
     # body of matter cannot give matter, its own family; ALGEBRA.md 9.85 (7) waits)
     giving_matter = emitter_world(stock=1, ticks=10)
-    names = {family["name"]: family for family in giving_matter["families"]}
+    names = {family["name"]: family for family in giving_matter["universe"]}
     names["matter"]["pair"] = "body"
-    giving_matter["families"].append(
+    giving_matter["universe"].append(
         {
             "name": "heavy",
             "quantum": 1,
@@ -286,7 +347,7 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
     )
     body = giving_matter["measured"][0]
     body["family"] = "heavy"
-    body["held"] = {"matter": 1}
+    body["stocks"] = {"matter": 1}
     body["emitter"]["family"] = "matter"
     body["emitter"]["clock"] = [512, 1]
     refused(giving_matter, r"measured\[0\]\.emitter\.pair is required: the given family 'matter'")

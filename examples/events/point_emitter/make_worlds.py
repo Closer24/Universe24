@@ -71,11 +71,11 @@ def seat(position: list[int]) -> dict:
         "position": position,
         "family": massive.MATTER_FAMILY_NAME,
         "kind": list(KIND),  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
-        "charge": 0,  # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2)
+        "q": 0,  # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2; the word `q`, record 2128)
         "spin": [0, 0, 0],
         "moment": list(massive.LIGHT_MOMENT),  # the given light's component (9.82 (3) (d))
         "amount": 1,
-        "held": {massive.WAVE_FAMILY_NAME: STOCK},  # the stock of light, the charge family's quanta
+        "stocks": {massive.WAVE_FAMILY_NAME: STOCK},  # the stock of light, the charge family's quanta
         "momentum": [0, 0, 0],
         "fixed": True,  # a tool held in place (ALGEBRA.md 9.104 (6) (b); record 2157)
         "ramp": 0,
@@ -94,7 +94,7 @@ def body(x: int) -> dict:
         "family": massive.WAVE_FAMILY_NAME,  # a receiver of light's kind (9.86 (2) (b))
         "amount": 1,
         "momentum": [0, 0, 0],
-        "held": {},
+        "stocks": {},
         "fixed": True,  # a tool held in place (ALGEBRA.md 9.104 (6) (b); record 2157)
     }
 
@@ -191,7 +191,7 @@ def main() -> None:
     for name, document in worlds().items():
         path = HERE / f"{name}.json"
         path.write_text(
-            json.dumps(massive.bind_families_file(document), indent=1) + "\n", encoding="utf-8"
+            json.dumps(massive.bind_universe_file(document), indent=1) + "\n", encoding="utf-8"
         )
         e = document["measured"][0]["emitter"]
         print(path.name, "weight", e["weight"], "window", e["window_read"], "ticks", document["ticks"])

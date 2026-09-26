@@ -37,7 +37,7 @@ def test_the_files_are_the_generators_and_the_pins_are_declared_blind():
     ray's COMPUTATION, positive toward the body, before any run."""
     for name in ("dark", "bright"):
         document = load(name)
-        assert document["families"] == "examples/events/families.json"  # item 59
+        assert document["universe"] == "examples/events/universe.json"  # item 59
         world = parse_nature_beam_world(document)
         assert world.node_clock == 10_000 and world.body_record is False
         # the three families of ALGEBRA.md 9.86 (2) (the one stroke, commit 1)
@@ -67,7 +67,7 @@ def test_the_dark_body_is_dark_by_declaration_and_the_bright_one_is_not():
     assert dark["measured"][DARK_NUMBER]["amount"] == 4812
     assert bright["measured"][DARK_NUMBER]["amount"] == 4812 - 128
     # light is the charge family's wave (9.86 (2) (b)): the stock and the giving are its
-    assert bright["measured"][DARK_NUMBER]["held"] == {"charge": 128}
+    assert bright["measured"][DARK_NUMBER]["stocks"] == {"charge": 128}
     # the dark body is dark by declaration, one family of matter (9.86 (2) (c)), no emitter
     assert dark["measured"][DARK_NUMBER]["family"] == "matter"
     assert dark["measured"][DARK_NUMBER]["kind"] == [800, 809]

@@ -56,7 +56,7 @@ def light_body(x: int, amount: int) -> dict:
         "position": [x, 0, 0],
         "family": "light",
         "amount": amount,
-        "held": {},
+        "stocks": {},
         "momentum": [0, 0, 0],
     }
 
@@ -327,6 +327,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
         parse_nature_beam_world(document)
     ray = content_chain(12, PERIODIC, [], 1)
     ray["detector_law"] = False
+    ray["families"] = ray.pop("universe")  # the ray law's word (record 2128 (3))
     del ray["engine"]  # the start file is the law's (item 57)
     ray["massive_record"] = False
     for family in ray["families"]:
@@ -350,7 +351,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
         (ROOT / "examples/events/massive_record/light_clock.json").read_text(encoding="utf-8")
     )
     # the integers of 9.61 (3) from the families file alone (item 59)
-    assert registered["families"] == "examples/events/families.json"
+    assert registered["universe"] == "examples/events/universe.json"
     assert "node_clock" not in registered and "amplitude_bound" not in registered
     world = parse_nature_beam_world(registered)
     assert world.node_clock == NODE_CLOCK == 10**4
@@ -542,6 +543,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
             parse_nature_beam_world(retired)
     ray = json.loads(json.dumps(good))
     ray["detector_law"] = False
+    ray["families"] = ray.pop("universe")  # the ray law's word (record 2128 (3))
     del ray["engine"]  # the start file is the law's (item 57)
     ray["massive_record"] = False
     for family in ray["families"]:
@@ -554,58 +556,58 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     with pytest.raises(ValueError, match="declares reads, refused without `detector_law`"):
         parse_nature_beam_world(ray)
     unread = json.loads(json.dumps(good))
-    del unread["families"][0]["reads"]
+    del unread["universe"][0]["reads"]
     with pytest.raises(
         ValueError, match=r"families\[0\] lacks keys required under `detector_law`: reads"
     ):
         parse_nature_beam_world(unread)
     unknown = json.loads(json.dumps(good))
-    unknown["families"][0]["reads"][0]["family"] = "ticks"
+    unknown["universe"][0]["reads"][0]["family"] = "ticks"
     with pytest.raises(ValueError, match="reads names 'ticks', which no family declares"):
         parse_nature_beam_world(unknown)
     unheld = json.loads(json.dumps(good))
-    unheld["families"][0]["reads"][0]["family"] = "matter"
+    unheld["universe"][0]["reads"][0]["family"] = "matter"
     with pytest.raises(ValueError, match="reads names 'matter', which is not held"):
         parse_nature_beam_world(unheld)
     massive = json.loads(json.dumps(good))
-    massive["families"][1]["held"] = "content"
-    massive["families"][1]["reads"] = []
+    massive["universe"][1]["held"] = "content"
+    massive["universe"][1]["reads"] = []
     with pytest.raises(
         ValueError, match="is held with the pair \\[800, 809\\]: a held family is massless"
     ):
         parse_nature_beam_world(massive)
     quantum = json.loads(json.dumps(good))
-    quantum["families"][2]["quantum"] = 2
+    quantum["universe"][2]["quantum"] = 2
     with pytest.raises(ValueError, match="counted in quanta, one click one unit"):
         parse_nature_beam_world(quantum)
     clocked = json.loads(json.dumps(good))
-    clocked["families"][2]["phase_per_link"] = [512, 1]
+    clocked["universe"][2]["phase_per_link"] = [512, 1]
     with pytest.raises(ValueError, match="has no clock of its own"):
         parse_nature_beam_world(clocked)
     charged = json.loads(json.dumps(good))
-    charged["families"][2]["charge"] = 1
+    charged["universe"][2]["charge"] = 1
     with pytest.raises(
         ValueError, match="is held and declares the charge 1: a held family carries none"
     ):
         parse_nature_beam_world(charged)
     reading = json.loads(json.dumps(good))
-    reading["families"][2]["reads"] = [{"family": "charge", "weight": 1}]
+    reading["universe"][2]["reads"] = [{"family": "charge", "weight": 1}]
     with pytest.raises(ValueError, match="is held and reads"):
         parse_nature_beam_world(reading)
     booked = json.loads(json.dumps(good))
-    booked["families"][2]["booked"] = True  # HISTORY (item 53): derived, not declared
+    booked["universe"][2]["booked"] = True  # HISTORY (item 53): derived, not declared
     with pytest.raises(ValueError, match="unknown keys: booked"):
         parse_nature_beam_world(booked)
     twice = json.loads(json.dumps(good))
-    twice["families"][3]["held"] = "content"
+    twice["universe"][3]["held"] = "content"
     with pytest.raises(ValueError, match="two families hold 'content'"):
         parse_nature_beam_world(twice)
     source = json.loads(json.dumps(good))
-    source["families"][2]["held"] = "momentum"
+    source["universe"][2]["held"] = "momentum"
     with pytest.raises(ValueError, match="held must be one of"):
         parse_nature_beam_world(source)
     components = json.loads(json.dumps(good))
-    components["families"][0]["components"] = 3
+    components["universe"][0]["components"] = 3
     with pytest.raises(ValueError, match="components is refused: the representation is `parts`"):
         parse_nature_beam_world(components)
     body = json.loads(json.dumps(good))
@@ -613,8 +615,8 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     with pytest.raises(ValueError, match="is of the held family 'clicks': no body is of it"):
         parse_nature_beam_world(body)
     holding = json.loads(json.dumps(good))
-    holding["measured"] = [dict(light_body(3, 1), held={"clicks": 2})]
-    with pytest.raises(ValueError, match="held names the held family 'clicks'"):
+    holding["measured"] = [dict(light_body(3, 1), stocks={"clicks": 2})]
+    with pytest.raises(ValueError, match="stocks names the held family 'clicks'"):
         parse_nature_beam_world(holding)
     given = emitter_world(stock=1)
     given["measured"][0]["emitter"]["family"] = "clicks"
@@ -624,9 +626,9 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     ):
         parse_nature_beam_world(given)
     many = json.loads(json.dumps(good))
-    many["families"] += [
+    many["universe"] += [
         {"name": f"family_{n}", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()}
-        for n in range(len(many["families"]), 21)
+        for n in range(len(many["universe"]), 21)
     ]
     with pytest.raises(ValueError, match="families declares 21; at most 20 families"):
         parse_nature_beam_world(many)
@@ -669,18 +671,18 @@ def test_the_engine_reads_no_family_name_the_held_families_renamed_step_bit_for_
     plain = content_chain(60, PERIODIC, range(20, 30), QUANTA)
     renamed = json.loads(json.dumps(plain))
     names = {"clicks": "charge", "charge": "content", "light": "sign"}
-    for family in renamed["families"]:
+    for family in renamed["universe"]:
         family["name"] = names.get(family["name"], family["name"])
         for read in family["reads"]:
             read["family"] = names.get(read["family"], read["family"])
     for entry in renamed["measured"]:
         entry["family"] = names.get(entry["family"], entry["family"])
-        if "held" in entry:
-            entry["held"] = {names.get(k, k): v for k, v in entry["held"].items()}
+        if "stocks" in entry:
+            entry["stocks"] = {names.get(k, k): v for k, v in entry["stocks"].items()}
     # the two held families in the other order (the indices move, the attributes stay)
-    held = [f for f in renamed["families"] if f.get("held")]
-    others = [f for f in renamed["families"] if not f.get("held")]
-    renamed["families"] = others + held[::-1]
+    held = [f for f in renamed["universe"] if f.get("held")]
+    others = [f for f in renamed["universe"] if not f.get("held")]
+    renamed["universe"] = others + held[::-1]
     world = parse_nature_beam_world(renamed)
     assert [world.families[i].held for i in world.held_families] == ["sign", "content"]
     assert [world.families[i].name for i in world.held_families] == ["content", "charge"]

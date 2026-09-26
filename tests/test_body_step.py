@@ -85,7 +85,7 @@ def test_the_torque_turns_the_spin_by_the_moment_and_the_charge_curl_at_the_read
     block = simulation.blocks[0]
     charge = parts_of(simulation, "charge")
     centre = simulation._window_centre(block)
-    assert block.definition.charge == 0 and list(block.definition.moment) == [0, 1, 0]
+    assert block.definition.q == 0 and list(block.definition.moment) == [0, 1, 0]
     amplitude = 1 << 20
     z_part = charge[3]
     above = (centre[0], centre[1] + 1, centre[2])
@@ -123,11 +123,11 @@ def own_family_world(stock: int | None) -> dict:
     document = matter_emitter_world(False, [512, 1])
     body = emitter_at(100, 1, family="source")
     body["amount"] = 4
-    body["held"] = {}
+    body["stocks"] = {}
     if stock is not None:
         body["stock"] = stock
     document["measured"].append(body)
-    document["families"][1]["phase_per_link"] = [512, 1]
+    document["universe"][1]["phase_per_link"] = [512, 1]
     massive_generator().seed_on_the_mode(document)  # the emitter's mode and the stamp
     return document
 
@@ -178,7 +178,7 @@ def test_the_self_source_slot_lowers_the_step_by_the_squared_differences_over_th
     exactly, the remainder the plain rule's; the inverse restores the levels."""
     document = parts_world()
     amplitude = document["amplitude_bound"]
-    for family in document["families"]:
+    for family in document["universe"]:
         if family["name"] == "clicks":
             family["self_unit"] = 24 * amplitude
     document["input"] = input_stamp(document)
@@ -219,7 +219,7 @@ def test_the_self_source_slot_lowers_the_step_by_the_squared_differences_over_th
 def test_the_loader_refuses_a_self_source_unit_below_24_a_and_admits_one_at_it():
     document = parts_world()
     amplitude = document["amplitude_bound"]
-    for family in document["families"]:
+    for family in document["universe"]:
         if family["name"] == "clicks":
             family["self_unit"] = 24 * amplitude
     document["input"] = input_stamp(document)

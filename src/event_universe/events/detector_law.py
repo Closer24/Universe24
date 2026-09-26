@@ -1213,7 +1213,7 @@ class DetectorLawSimulation:
         quanta it holds, an integer of either sign, moved with the labels at
         the clicks (the held books)."""
         block = self.block_by_number.get(number)
-        declared = block.definition.charge if block is not None else 0
+        declared = block.definition.q if block is not None else 0
         return declared + sum(
             sign * quanta for sign, quanta in zip(self.family_charge, self.held[number], strict=True)
         )

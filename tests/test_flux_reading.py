@@ -201,7 +201,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
     into a set the record does not reach."""
     document = massive_world([40, 1, 1], PERIODIC, [800, 809])
     document["age_bound"] = 100000
-    document["families"].append(
+    document["universe"].append(
         {"name": "source", "quantum": 1, "pair": [7, 8], "charge": 0, "reads": family_reads()}
     )
     document["measured"] = [
@@ -209,13 +209,13 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             "position": [20, 0, 0],
             "family": "source",
             "amount": 1,
-            "held": {},
+            "stocks": {},
             "ramp": 0,
             "start": 0,
             "margin": "control",
             "momentum": [0, 0, 0],
             "side": 1,
-            "charge": 0,
+            "q": 0,
             "spin": [0, 0, 0],
             "moment": [0, 0, 0],
             "pair": [8, 7],
@@ -225,7 +225,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             "position": [5, 0, 0],
             "family": "light",
             "amount": 1,
-            "held": {},
+            "stocks": {},
             "momentum": [0, 0, 0],
         },
         *(
@@ -233,7 +233,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
                 "position": [x, 0, 0],
                 "family": "light",
                 "amount": 1,
-                "held": {},
+                "stocks": {},
                 "momentum": [0, 0, 0],
             }
             for x in (6, 7, 30, 31, 32)

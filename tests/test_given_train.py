@@ -225,7 +225,7 @@ def test_the_light_clock_in_the_tables_form_and_the_generators_checks(capsys):
     document = json.loads(LIGHT_CLOCK.read_text(encoding="utf-8"))
     assert document["shape"] == [760, 3, 3] and document["face_depth"] == 32
     # the families file names the world's families; light's clock is the emitter's (item 59)
-    assert document["N"] == 1024 and document["families"] == "examples/events/families.json"
+    assert document["N"] == 1024 and document["universe"] == "examples/events/families.json"
     a = document["measured"][0]
     assert a["extents"] == [32, 3, 3] and a["position"] == [600, 0, 0] and a["pair"] == [800, 801]
     # the stock as the given family's content held at the body (item 47): one own quantum

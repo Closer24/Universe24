@@ -25,7 +25,7 @@
  "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
- "families": "examples/events/families.json",
+ "universe": "examples/events/universe.json",
  "measured": [
   {
    "position": [
@@ -38,7 +38,7 @@
     800,
     1200
    ],
-   "charge": 0,
+   "q": 0,
    "spin": [
     0,
     0,
@@ -56,7 +56,7 @@
     0
    ],
    "fixed": true,
-   "held": {
+   "stocks": {
     "charge": 30
    },
    "ramp": 0,
@@ -80144,7 +80144,7 @@
     800,
     809
    ],
-   "charge": 0,
+   "q": 0,
    "spin": [
     0,
     0,
@@ -80162,7 +80162,7 @@
     0
    ],
    "fixed": true,
-   "held": {
+   "stocks": {
     "charge": 128
    },
    "ramp": 0,
@@ -160252,7 +160252,7 @@
     0
    ],
    "fixed": true,
-   "held": {},
+   "stocks": {},
    "extents": [
     2,
     5,
@@ -160262,7 +160262,7 @@
     1,
     2
    ],
-   "charge": 0,
+   "q": 0,
    "spin": [
     0,
     0,
@@ -160290,7 +160290,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160306,7 +160306,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160322,7 +160322,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160338,7 +160338,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160354,7 +160354,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160370,7 +160370,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160386,7 +160386,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160402,7 +160402,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160418,7 +160418,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160434,7 +160434,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160450,7 +160450,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160466,7 +160466,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160482,7 +160482,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160498,7 +160498,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160514,7 +160514,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160530,7 +160530,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160546,7 +160546,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160562,7 +160562,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160578,7 +160578,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160594,7 +160594,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160610,7 +160610,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160626,7 +160626,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160642,7 +160642,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160658,7 +160658,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160674,7 +160674,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160690,7 +160690,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160706,7 +160706,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160722,7 +160722,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160738,7 +160738,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160754,7 +160754,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160770,7 +160770,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160786,7 +160786,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160802,7 +160802,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160818,7 +160818,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160834,7 +160834,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160850,7 +160850,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160866,7 +160866,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160882,7 +160882,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160898,7 +160898,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160914,7 +160914,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160930,7 +160930,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160946,7 +160946,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160962,7 +160962,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160978,7 +160978,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -160994,7 +160994,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161010,7 +161010,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161026,7 +161026,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161042,7 +161042,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161058,7 +161058,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161074,7 +161074,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161090,7 +161090,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161106,7 +161106,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161122,7 +161122,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161138,7 +161138,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161154,7 +161154,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161170,7 +161170,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161186,7 +161186,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161202,7 +161202,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161218,7 +161218,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161234,7 +161234,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161250,7 +161250,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161266,7 +161266,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161282,7 +161282,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161298,7 +161298,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161314,7 +161314,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161330,7 +161330,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161346,7 +161346,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161362,7 +161362,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161378,7 +161378,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161394,7 +161394,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161410,7 +161410,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161426,7 +161426,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161442,7 +161442,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161458,7 +161458,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161474,7 +161474,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161490,7 +161490,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161506,7 +161506,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161522,7 +161522,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161538,7 +161538,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161554,7 +161554,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161570,7 +161570,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161586,7 +161586,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161602,7 +161602,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161618,7 +161618,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161634,7 +161634,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161650,7 +161650,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161666,7 +161666,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161682,7 +161682,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161698,7 +161698,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161714,7 +161714,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161730,7 +161730,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161746,7 +161746,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161762,7 +161762,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161778,7 +161778,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161794,7 +161794,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161810,7 +161810,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161826,7 +161826,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161842,7 +161842,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161858,7 +161858,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161874,7 +161874,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161890,7 +161890,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161906,7 +161906,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161922,7 +161922,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161938,7 +161938,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161954,7 +161954,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161970,7 +161970,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -161986,7 +161986,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162002,7 +162002,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162018,7 +162018,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162034,7 +162034,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162050,7 +162050,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162066,7 +162066,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162082,7 +162082,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162098,7 +162098,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162114,7 +162114,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162130,7 +162130,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162146,7 +162146,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162162,7 +162162,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162178,7 +162178,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162194,7 +162194,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162210,7 +162210,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162226,7 +162226,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162242,7 +162242,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162258,7 +162258,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162274,7 +162274,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162290,7 +162290,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162306,7 +162306,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162322,7 +162322,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162338,7 +162338,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162354,7 +162354,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162370,7 +162370,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162386,7 +162386,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162402,7 +162402,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162418,7 +162418,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162434,7 +162434,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162450,7 +162450,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162466,7 +162466,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162482,7 +162482,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162498,7 +162498,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162514,7 +162514,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162530,7 +162530,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162546,7 +162546,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162562,7 +162562,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162578,7 +162578,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162594,7 +162594,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162610,7 +162610,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162626,7 +162626,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162642,7 +162642,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162658,7 +162658,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162674,7 +162674,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162690,7 +162690,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162706,7 +162706,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162722,7 +162722,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162738,7 +162738,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162754,7 +162754,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162770,7 +162770,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162786,7 +162786,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162802,7 +162802,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162818,7 +162818,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162834,7 +162834,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162850,7 +162850,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162866,7 +162866,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162882,7 +162882,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162898,7 +162898,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162914,7 +162914,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162930,7 +162930,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162946,7 +162946,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162962,7 +162962,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162978,7 +162978,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -162994,7 +162994,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163010,7 +163010,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163026,7 +163026,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163042,7 +163042,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163058,7 +163058,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163074,7 +163074,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163090,7 +163090,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163106,7 +163106,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163122,7 +163122,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163138,7 +163138,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163154,7 +163154,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163170,7 +163170,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163186,7 +163186,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163202,7 +163202,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163218,7 +163218,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163234,7 +163234,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163250,7 +163250,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163266,7 +163266,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163282,7 +163282,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163298,7 +163298,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163314,7 +163314,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163330,7 +163330,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163346,7 +163346,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163362,7 +163362,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163378,7 +163378,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163394,7 +163394,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163410,7 +163410,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163426,7 +163426,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163442,7 +163442,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163458,7 +163458,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163474,7 +163474,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163490,7 +163490,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163506,7 +163506,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163522,7 +163522,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163538,7 +163538,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163554,7 +163554,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163570,7 +163570,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163586,7 +163586,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163602,7 +163602,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163618,7 +163618,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163634,7 +163634,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163650,7 +163650,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163666,7 +163666,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163682,7 +163682,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163698,7 +163698,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163714,7 +163714,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163730,7 +163730,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163746,7 +163746,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163762,7 +163762,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163778,7 +163778,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163794,7 +163794,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163810,7 +163810,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163826,7 +163826,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163842,7 +163842,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163858,7 +163858,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163874,7 +163874,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163890,7 +163890,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163906,7 +163906,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163922,7 +163922,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163938,7 +163938,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163954,7 +163954,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163970,7 +163970,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -163986,7 +163986,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164002,7 +164002,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164018,7 +164018,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164034,7 +164034,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164050,7 +164050,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164066,7 +164066,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164082,7 +164082,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164098,7 +164098,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164114,7 +164114,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164130,7 +164130,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164146,7 +164146,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164162,7 +164162,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164178,7 +164178,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164194,7 +164194,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164210,7 +164210,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164226,7 +164226,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164242,7 +164242,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164258,7 +164258,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164274,7 +164274,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164290,7 +164290,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164306,7 +164306,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164322,7 +164322,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164338,7 +164338,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164354,7 +164354,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164370,7 +164370,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164386,7 +164386,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164402,7 +164402,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164418,7 +164418,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164434,7 +164434,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164450,7 +164450,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164466,7 +164466,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164482,7 +164482,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164498,7 +164498,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164514,7 +164514,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164530,7 +164530,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164546,7 +164546,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164562,7 +164562,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164578,7 +164578,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164594,7 +164594,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164610,7 +164610,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164626,7 +164626,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164642,7 +164642,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164658,7 +164658,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164674,7 +164674,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164690,7 +164690,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164706,7 +164706,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164722,7 +164722,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164738,7 +164738,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164754,7 +164754,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164770,7 +164770,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164786,7 +164786,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164802,7 +164802,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164818,7 +164818,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164834,7 +164834,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164850,7 +164850,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164866,7 +164866,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164882,7 +164882,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164898,7 +164898,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164914,7 +164914,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164930,7 +164930,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164946,7 +164946,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164962,7 +164962,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164978,7 +164978,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -164994,7 +164994,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165010,7 +165010,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165026,7 +165026,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165042,7 +165042,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165058,7 +165058,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165074,7 +165074,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165090,7 +165090,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165106,7 +165106,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165122,7 +165122,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165138,7 +165138,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165154,7 +165154,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165170,7 +165170,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165186,7 +165186,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165202,7 +165202,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165218,7 +165218,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165234,7 +165234,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165250,7 +165250,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165266,7 +165266,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165282,7 +165282,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165298,7 +165298,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165314,7 +165314,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165330,7 +165330,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165346,7 +165346,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165362,7 +165362,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165378,7 +165378,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165394,7 +165394,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165410,7 +165410,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165426,7 +165426,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165442,7 +165442,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165458,7 +165458,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165474,7 +165474,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165490,7 +165490,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165506,7 +165506,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165522,7 +165522,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165538,7 +165538,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165554,7 +165554,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165570,7 +165570,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165586,7 +165586,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165602,7 +165602,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165618,7 +165618,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165634,7 +165634,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165650,7 +165650,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165666,7 +165666,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165682,7 +165682,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165698,7 +165698,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165714,7 +165714,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165730,7 +165730,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165746,7 +165746,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165762,7 +165762,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165778,7 +165778,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165794,7 +165794,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165810,7 +165810,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165826,7 +165826,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165842,7 +165842,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165858,7 +165858,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165874,7 +165874,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165890,7 +165890,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165906,7 +165906,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165922,7 +165922,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165938,7 +165938,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165954,7 +165954,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165970,7 +165970,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -165986,7 +165986,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -166002,7 +166002,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -166018,7 +166018,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   },
   {
    "position": [
@@ -166034,7 +166034,7 @@
     0
    ],
    "fixed": true,
-   "held": {}
+   "stocks": {}
   }
  ],
  "detectors": [
@@ -168045,6 +168045,6 @@
  ],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "30b53057db80b7b2ad5abf89394bb32b5fa35a0e274936301eeb99cfc82b13c8"
+  "hash": "daf2666eaa0f9edc8648e1086abe2fae9f76e68cb2eb80e0846b8fd5f390f102"
  }
 }

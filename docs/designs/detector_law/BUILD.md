@@ -4786,6 +4786,34 @@ would have found no cell.
    there. Nothing of the binding family (9.98 (11) (c)) until the three agree
    (record 2156).
 
+68. THE WORDS AND THE UNIVERSE FILE OF RECORD 2128 (the Boss's word on the
+   owner's delegation, 2026-09-26 05:40Z; ALGEBRA.md 9.90 (6) read UNIVERSE).
+   (i) THE UNIVERSE FILE: examples/events/families.json is
+   examples/events/universe.json (moved, its history kept), its keys `integers`
+   and `families` (the `law` key gone: one engine, no name, no version); a world
+   names it under `universe` (the path; a unit test's world carries the
+   families' list inline under the same key); the world key `families` is
+   refused naming `universe` (under `detector_law`; the ray law's world, a
+   cancelled path loaded for the record and never run by the gate, keeps its
+   word `families` and never carries `universe`); the loader's attribute
+   `universe_file`. (ii) ONE
+   MEANING PER WORD: the body's signed number is `q` (`charge` the family's word
+   alone; `BlockDefinition.q`), the universe's integer `Lambda` (the charge's
+   read weight, the word a read names; `charge_weight` HISTORY), the body's
+   stocks of other families' quanta `stocks` (beside 9.96 (5)'s `stock` of its
+   own; `held` the family's word alone). (iii) ITEM 53'S ADVERSARIAL TEST over
+   the whole universe file: every family renamed to another's word in a copy of
+   the file and in the shipped light clock (its bodies, stocks, emitter), 120
+   intervals bit for bit with the original (tests/test_families_file.py). THE
+   GENERATORS write the words (`bind_universe_file`, the bodies' `q` and
+   `stocks`), every shipped world regenerated (the words and the hash alone;
+   the engine reads nothing else of them, every run bit for bit); the
+   check-mode generator's translation (Nature24's, merged) passes the words
+   through. THE TESTS' fixtures in the words. NOT HERE: the names "detector
+   law", `law`, `model_id` and "-v1" (the residue lines of
+   docs/CANCELLED_WORLDS.md section 9, the next push with the eight failing
+   tests), the seat's names (the push after).
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

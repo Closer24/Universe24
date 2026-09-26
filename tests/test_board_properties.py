@@ -83,7 +83,7 @@ def small_world(
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
-        "families": [
+        "universe": [
             {
                 "name": "light",
                 "quantum": 1,
@@ -101,12 +101,12 @@ def small_world(
                 "position": list(well_vertex),
                 "family": "matter",
                 "amount": 1,
-                "held": {},
+                "stocks": {},
                 "ramp": 0,
                 "start": 0,
                 "momentum": [0, 0, 0],
                 "side": well_side,
-                "charge": 0,
+                "q": 0,
                 "spin": [0, 0, 0],
                 "moment": [0, 0, 0],
                 "pair": list(pair),

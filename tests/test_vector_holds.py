@@ -29,7 +29,7 @@ def parts_world(**body: object) -> dict:
     periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
     document = block_world(SHAPE, periodic, KIND, [block], ticks=20)
     document["age_bound"] = 100000  # a board periodic on every axis declares it
-    for family in document["families"]:
+    for family in document["universe"]:
         if family["name"] == "clicks":
             family.update(
                 {"parts": [1, 3, 6], "held_factors": [1, 4, 2], "held_dipole": "spin", "levels": 1}
@@ -58,7 +58,7 @@ def test_a_moving_body_writes_the_vector_and_tensor_parts_with_the_remainders_ca
     = 0); the remainders carried, so over intervals the written value steps between the two
     integers around 4 s n_x / W with the mean the exact fraction; the charge Q = 2 gives its
     time part 2 and its current (2 n_x) div W; every unsourced part exactly zero and silent."""
-    document = parts_world(momentum=[64, 0, 0], charge=2)
+    document = parts_world(momentum=[64, 0, 0], q=2)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     block = simulation.blocks[0]
     s = sum(simulation.held[0])

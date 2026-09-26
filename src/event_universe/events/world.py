@@ -507,6 +507,11 @@ WORLD_KEYS = {
     "centred_step",
     "directions",
     "direction_bound",
+    # THE UNIVERSE (record 2128 (3)): the universe file's path, or the families'
+    # list inline in a unit test's world; the word `families` is the file's own.
+    # The ray law's world (a cancelled path, loaded for the record and never run
+    # by the gate) keeps its word `families` for its inline list
+    "universe",
     "families",
     "measured",
     "in_transit",
@@ -943,13 +948,16 @@ MOST_FAMILIES = 20
 # family, true otherwise). Under the file the world declares no node_clock and
 # no amplitude_bound (the universe's integers, one copy) and every emitter
 # declares its given clock (a light record's clock is its emitter's, 9.85 (3)).
-FAMILIES_FILE_KEYS = {"law", "integers", "families"}
+# THE UNIVERSE FILE (the Boss's record 2128 (3); ALGEBRA.md 9.90 (6) read UNIVERSE): what
+# repeats in every experiment, the families and the universe's integers; no `law` key,
+# no name and no version (one engine)
+FAMILIES_FILE_KEYS = {"integers", "families"}
 # THE UNIVERSE'S INTEGERS (ALGEBRA.md 9.83 (2) (a), 9.91 (7)): Gamma, A, Lambda
 # (the charge's read weight, the word "Lambda" on a read) and Q (the momentum's
 # unit, `momentum_unit`: the wall of every body is W = 3 Q M, ALGEBRA.md 9.96
 # (1), 9.89 (2)); the energy unit P_0 and the twist table enter with the
 # operations that read them (9.91 (10) commits 4 and 5)
-FAMILIES_INTEGERS = {"node_clock", "amplitude_bound", "charge_weight", "momentum_unit"}
+FAMILIES_INTEGERS = {"node_clock", "amplitude_bound", "Lambda", "momentum_unit"}
 # THE TWIST TABLE in the integers block (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c), (d)):
 # {unit, fine, coarse}; `unit` the integer 4 Gamma 2^16 whose inverse is theta_unit in
 # radians; `fine` 2^10 triples (c, s, d) for the angles k_0 theta_unit; `coarse` at most
@@ -975,8 +983,9 @@ FAMILY_ENTRY_REQUIRED = {"name", "parts", "phase", "pair", "reads", "self_source
 PARTS_FORMS = ((1,), (1, 3), (1, 3, 6))
 HELD_COUNTS = ("content", "sign")
 HELD_DIPOLES = ("spin", "moment")
-# a read's weight may be the universe's word (the file's integer by name)
-READ_WEIGHT_WORDS = {"Lambda": "charge_weight"}
+# a read's weight may be the universe's word (the file's integer by name: `Lambda`, the
+# charge's read weight, record 2128 (1); `charge_weight` HISTORY)
+READ_WEIGHT_WORDS = {"Lambda": "Lambda"}
 # a read's twist (ALGEBRA.md 9.81 (2), 9.91 (6), 9.96 (2) (b)): an integer or "own"
 # (the reading record's own rotation in the table's unit, round(2^16 omega_0), times
 # the read's weight: Lambda_v is Lambda and no separate twist exists)
@@ -1077,8 +1086,10 @@ READ_BY_WORDS = {1: "plain", "q": "sign", "plain": "plain", "sign": "sign"}
 
 
 def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str, object]]:
-    """The families file read and translated to the families list the parse
-    reads (item 51's attributes and the one stroke's, ALGEBRA.md 9.91 (7)),
+    """The universe file read and translated to the families list the parse
+    reads (item 51's attributes and the one stroke's, ALGEBRA.md 9.91 (7);
+    record 2128 (3): the file examples/events/universe.json, the world's key
+    `universe`, its integer `Lambda`),
     with the universe's integers; every key required and refused by name.
     THE TRANSLATION: `parts` as declared; `phase` to `levels`; `pair` [num,
     den] or "body"; `held` {count, factors, dipole, dipole_div} to `held`
@@ -1091,9 +1102,9 @@ def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str
     hold writes it, commit 2)."""
     path = REPOSITORY_ROOT / value
     if not path.is_file():
-        raise ValueError(f"{BEAM_LAW}: families names {value!r}, no file at the repository's root")
+        raise ValueError(f"{BEAM_LAW}: universe names {value!r}, no file at the repository's root")
     document = json.loads(path.read_text(encoding="utf-8"))
-    label = f"the families file {value!r}"
+    label = f"the universe file {value!r}"
     if not isinstance(document, dict):
         raise ValueError(f"{BEAM_LAW}: {label} must be a JSON object")
     unknown = set(document) - FAMILIES_FILE_KEYS
@@ -1102,10 +1113,6 @@ def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str
     missing = FAMILIES_FILE_KEYS - set(document)
     if missing:
         raise ValueError(f"{BEAM_LAW}: {label} lacks keys: {', '.join(sorted(missing))}")
-    if document["law"] != DETECTOR_LAW_RULE:
-        raise ValueError(
-            f"{BEAM_LAW}: {label} declares law {document['law']!r}, not {DETECTOR_LAW_RULE!r}"
-        )
     integers = document["integers"]
     if not isinstance(integers, dict) or set(integers) != FAMILIES_INTEGERS | FAMILIES_TABLES:
         raise ValueError(
@@ -1375,9 +1382,9 @@ MEASURED_KEYS = {
     "position",
     "family",
     "amount",
-    "held",
+    "stocks",  # the body's stocks of other families' quanta (record 2128 (1); `held` HISTORY)
     "kind",
-    "charge",
+    "q",  # the body's signed number (record 2128 (1); `charge` the family's word alone)
     "spin",
     "moment",
     "phase",
@@ -2030,9 +2037,10 @@ class BlockDefinition:
     ramp: int = 0
     start: int = 0
     # THE BODY'S NUMBERS (ALGEBRA.md 9.91 (3), (7); the one stroke, commit 2): the
-    # charge Q (the held sign's count at its Nodes), the spin S and the moment mu
-    # (the dipoles on its Node's six neighbours); the momentum n is `momentum`
-    charge: int = 0
+    # signed number q (the held sign's count at its Nodes; the world's word `q`,
+    # record 2128 (1)), the spin S and the moment mu (the dipoles on its Node's
+    # six neighbours); the momentum n is `momentum`
+    q: int = 0
     spin: tuple[int, int, int] = (0, 0, 0)
     moment: tuple[int, int, int] = (0, 0, 0)
     # THE BODY'S OWN RECORD'S TWIST "OWN" (ALGEBRA.md 9.96 (2) (a); commit 4): round(2^16
@@ -2310,7 +2318,7 @@ class NatureBeamWorld:
     start: EngineStart | None = None
     # THE ONE FAMILIES FILE (item 59): the world's `families` as a repository
     # path, None when the world lists its families inline
-    families_file: str | None = None
+    universe_file: str | None = None
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -3024,7 +3032,7 @@ def _held_bodies_checks(
                 )
             if len(entry.held) > index and entry.held[index]:
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}].held names the held family {name!r}: nothing "
+                    f"{BEAM_LAW}: measured[{number}].stocks names the held family {name!r}: nothing "
                     "holds its quanta; its level is held at a body's Nodes (ALGEBRA.md 9.45 (2))"
                 )
             if entry.block is not None and entry.block.emitter is not None:
@@ -3086,7 +3094,7 @@ def _node_clock_bound(
     def source_of(family: FamilyDefinition, entry: MeasuredDefinition) -> int:
         quanta = sum(entry.held)
         if family.held == "sign":
-            declared = entry.block.charge if entry.block is not None else 0
+            declared = entry.block.q if entry.block is not None else 0
             return abs(
                 declared
                 + sum(other.charge[0] * held for other, held in zip(families, entry.held, strict=True))
@@ -4823,12 +4831,8 @@ def _block(
     # THE BODY'S NUMBERS (ALGEBRA.md 9.91 (3), (7); commit 2): charge, spin and moment,
     # required under the law (no default), integers on the axes (record 2084)
     if detector_law:
-        _require_under_law(obj, label, {"charge", "spin", "moment"})
-    charge = (
-        0
-        if "charge" not in obj
-        else _integer(obj["charge"], f"{label}.charge", -AMOUNT_BOUND, AMOUNT_BOUND)
-    )
+        _require_under_law(obj, label, {"q", "spin", "moment"})
+    charge = 0 if "q" not in obj else _integer(obj["q"], f"{label}.q", -AMOUNT_BOUND, AMOUNT_BOUND)
     spin = _axes_vector(obj.get("spin", [0, 0, 0]), f"{label}.spin")
     moment = _axes_vector(obj.get("moment", [0, 0, 0]), f"{label}.moment")
     if detector_law and "margin" not in obj and pair[0] * kind[1] > pair[1] * kind[0]:
@@ -4964,7 +4968,7 @@ def _block(
         proper_clock=proper_clock,
         ramp=ramp,
         start=start,
-        charge=charge,
+        q=charge,
         spin=spin,
         moment=moment,
         # the body's own record's twist "own" (ALGEBRA.md 9.96 (2) (a)): its mode's
@@ -5364,7 +5368,7 @@ def _measured(
             # refused; `fixed` (an apparatus held in place) is read since the
             # Boss's record 2157 (ALGEBRA.md 9.104 (6) (b)): the feed, when it
             # lands, acts on a body without the word alone
-            _require_under_law(obj, label, {"momentum", "held"})
+            _require_under_law(obj, label, {"momentum", "stocks"})
             if "side" in obj or "extents" in obj:
                 _require_under_law(obj, label, {"ramp", "start"})
             _refuse_under_law(
@@ -5411,18 +5415,20 @@ def _measured(
         amount = _integer(obj["amount"], f"{label}.amount", 1)
         held = [0] * len(families)
         held[family] = amount
-        declared_held = obj.get("held", {})
+        # THE BODY'S STOCKS of other families' quanta (`stocks`, record 2128 (1); beside
+        # 9.96 (5)'s `stock` of its own): the given family's content held at the body
+        declared_held = obj.get("stocks", {})
         if not isinstance(declared_held, dict):
-            raise ValueError(f"{BEAM_LAW}: {label}.held must map family names to contents")
+            raise ValueError(f"{BEAM_LAW}: {label}.stocks must map family names to contents")
         for key, content in declared_held.items():
             if key not in names:
-                raise ValueError(f"{BEAM_LAW}: {label}.held names an unknown family {key!r}")
+                raise ValueError(f"{BEAM_LAW}: {label}.stocks names an unknown family {key!r}")
             if names[key] == family:
                 raise ValueError(
-                    f"{BEAM_LAW}: {label}.held names the event's own family {key!r}, whose "
+                    f"{BEAM_LAW}: {label}.stocks names the event's own family {key!r}, whose "
                     "content is `amount`"
                 )
-            held[names[key]] = _integer(content, f"{label}.held[{key!r}]", 1)
+            held[names[key]] = _integer(content, f"{label}.stocks[{key!r}]", 1)
         phased = families[family].phase
         # The turn's static bound: 2 x content x n below d x N at the clock's
         # rate [n, d] (2 x content below K x N for an integer K), the exact
@@ -7140,11 +7146,28 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         "the world",
         ("wheel", "clock_family", "charge_family", "charge_strength", "point_emitter"),
     )
+    # THE WORD (record 2128 (3)): under `detector_law` a world names its universe under
+    # `universe` and the word `families` is refused; the ray law's world (a cancelled
+    # path, loaded for the record) keeps its word `families` and never carries `universe`
+    under_law = isinstance(document, dict) and document.get("detector_law") is True
+    if under_law and "families" in document:
+        raise ValueError(
+            f"{BEAM_LAW}: the world.families is refused: a world names its universe under "
+            "`universe` (the universe file's path, examples/events/universe.json, or the "
+            "families' list inline in a unit test; the Boss's record 2128 (3))"
+        )
+    if not under_law and "universe" in document:
+        raise ValueError(
+            f"{BEAM_LAW}: the world.universe is the detector law's word (record 2128 (3)): a "
+            "universe file's path is admitted under `detector_law` alone; the ray law's world "
+            "names its families under `families`"
+        )
+    word = "universe" if under_law else "families"
     obj = _object(
         document,
         "the world",
         WORLD_KEYS,
-        {"law", "model_id", "shape", "ticks", "K", "N", "release", "families", "measured"},
+        {"law", "model_id", "shape", "ticks", "K", "N", "release", word, "measured"},
     )
     # NO DEFAULT UNDER THE DETECTOR LAW (the model owner's record 2089; records
     # 2092 and 2094; BUILD.md section 26 item 57): the law's world declares
@@ -7178,20 +7201,21 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         )
     start = _engine_start(obj["engine"] if "engine" in obj else None, early_law)
     families_file: str | None = None
-    as_written = obj  # the document as the generator stamped it (the families' path, item 59)
-    if isinstance(obj["families"], str):
-        # THE ONE FAMILIES FILE (item 59): the path in place of the list; the
-        # universe's integers from the file alone, the world's own refused
-        if not early_law:
-            raise ValueError(
-                f"{BEAM_LAW}: families as a file path is admitted under `detector_law` alone"
-            )
-        families_file = obj["families"]
+    as_written = obj  # the document as the generator stamped it (the universe's path, item 59)
+    universe = obj[word]
+    obj = dict(obj)
+    del obj[word]
+    if isinstance(universe, str):
+        # THE ONE UNIVERSE FILE (item 59; record 2128 (3)): the path in place of the
+        # list; the universe's integers from the file alone, the world's own refused
+        # (the path reaches here under `detector_law` alone: the ray law's word is `families`)
+        families_file = universe
         _refuse_under_law(obj, "the world", FAMILIES_INTEGERS | FAMILIES_TABLES)
         entries, integers = families_file_entries(families_file)
-        obj = dict(obj)
         obj["families"] = entries
         obj.update(integers)
+    else:
+        obj["families"] = universe  # the families' list inline (a unit test's world)
     model_id = obj["model_id"]
     if not isinstance(model_id, str) or not model_id:
         raise ValueError(f"{BEAM_LAW}: model_id must be a nonempty string")
@@ -7626,7 +7650,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         momentum_unit=momentum_unit,
         twist_table=twist_table,
         start=start,
-        families_file=families_file,
+        universe_file=families_file,
     )
     if detector_law:
         _detector_law_load_checks(measured, families, table, periodic, phase_steps)

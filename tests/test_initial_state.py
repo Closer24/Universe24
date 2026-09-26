@@ -98,12 +98,12 @@ def test_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_roundi
             "position": [5, 0, 0],
             "family": "matter",
             "amount": 1,
-            "held": {},
+            "stocks": {},
             "ramp": 0,
             "start": 0,
             "momentum": [0, 0, 0],
             "side": 12,
-            "charge": 0,
+            "q": 0,
             "spin": [0, 0, 0],
             "moment": [0, 0, 0],
             "pair": [800, 801],
@@ -177,11 +177,11 @@ def test_at_most_five_families():
     owner's constant: record 1875's three, four since the family of clicks, record 1982,
     five since the family of charge, ALGEBRA.md 9.48; BUILD.md section 26 item 35)."""
     document = emitter_world(stock=2)
-    assert len(document["families"]) <= MOST_FAMILIES
-    while len(document["families"]) < MOST_FAMILIES:
-        document["families"].append(
+    assert len(document["universe"]) <= MOST_FAMILIES
+    while len(document["universe"]) < MOST_FAMILIES:
+        document["universe"].append(
             {
-                "name": f"family_{len(document['families'])}",
+                "name": f"family_{len(document['universe'])}",
                 "quantum": 1,
                 "pair": [800, 809],
                 "charge": 0,
@@ -189,7 +189,7 @@ def test_at_most_five_families():
             }
         )
     parse_nature_beam_world(restamped(document))
-    document["families"].append(
+    document["universe"].append(
         {"name": "sixth", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()}
     )
     restamped(document)
@@ -212,12 +212,12 @@ def test_bodies_are_whole_and_disjoint():
             "position": [x, 0, 0],
             "family": "light",
             "amount": 1,
-            "held": {},
+            "stocks": {},
             "ramp": 0,
             "start": 0,
             "momentum": [0, 0, 0],
             "side": side,
-            "charge": 0,
+            "q": 0,
             "spin": [0, 0, 0],
             "moment": [0, 0, 0],
             "pair": [1, 2],
@@ -272,12 +272,12 @@ def test_two_wells_of_one_family_may_stand_anywhere():
             "position": [160, 0, 0],
             "family": "light",
             "amount": 1,
-            "held": {},
+            "stocks": {},
             "ramp": 0,
             "start": 0,
             "momentum": [0, 0, 0],
             "side": 3,
-            "charge": 0,
+            "q": 0,
             "spin": [0, 0, 0],
             "moment": [0, 0, 0],
             "pair": [1, 2],

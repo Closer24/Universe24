@@ -316,7 +316,7 @@ def moving_world(ticks: int = 600, ramp: int = 200) -> dict:
             {
                 "position": [5, 5, 5],
                 "side": 6,
-                "charge": 0,
+                "q": 0,
                 "spin": [0, 0, 0],
                 "moment": [0, 0, 0],
                 "pair": [800, 801],
@@ -351,13 +351,13 @@ def test_the_moving_seat_rotates_at_the_proper_pair_of_its_momentum():
     plane = {
         "shape": [12, 3, 3],
         "boundary": PERIODIC,
-        "families": [{"name": "matter", "pair": [800, 809]}],
+        "universe": [{"name": "matter", "pair": [800, 809]}],
         "measured": [
             {
                 "family": "matter",
                 "position": [0, 0, 0],
                 "side": 12,
-                "charge": 0,
+                "q": 0,
                 "spin": [0, 0, 0],
                 "moment": [0, 0, 0],
                 "pair": [800, 809],

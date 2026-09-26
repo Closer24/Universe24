@@ -52,9 +52,9 @@ def reversible_world(ticks: int = 400) -> dict:
     screen at [70, 72]; seeded on the mode by the generator (the profile, the clock pair, the
     period, the given rows under the stamp)."""
     document = emitter_world(stock=STOCK, ticks=ticks, on_mode=False)
-    document["families"][LIGHT]["charge"] = -1
-    document["families"][MATTER]["charge"] = -1
-    document["families"].insert(
+    document["universe"][LIGHT]["charge"] = -1
+    document["universe"][MATTER]["charge"] = -1
+    document["universe"].insert(
         POSITIVE,
         {
             "name": "positive",
@@ -70,7 +70,7 @@ def reversible_world(ticks: int = 400) -> dict:
             "position": [55, 0, 0],
             "family": "positive",
             "amount": 1,
-            "held": {},
+            "stocks": {},
             "momentum": [0, 0, 0],
         }
     )

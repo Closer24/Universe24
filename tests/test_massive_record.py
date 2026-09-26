@@ -78,7 +78,7 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
-        "families": [
+        "universe": [
             {
                 "name": "light",
                 "quantum": 1,
@@ -425,26 +425,27 @@ def test_the_loaders_refusals_name_the_key():
     with pytest.raises(ValueError, match="pair is refused without the world key"):
         parse_nature_beam_world(without_key)
     reversed_pair = json.loads(json.dumps(base))
-    reversed_pair["families"][1]["pair"] = [3, 2]
+    reversed_pair["universe"][1]["pair"] = [3, 2]
     with pytest.raises(ValueError, match="den >= num"):
         parse_nature_beam_world(reversed_pair)
     # one border for every family (BUILD.md section 26 item 28): the family key `faces`
     # refused by name on the massive kind and on light's alike
     for family in (0, 1):
         faced = json.loads(json.dumps(base))
-        faced["families"][family]["faces"] = {"x": "open"}
+        faced["universe"][family]["faces"] = {"x": "open"}
         with pytest.raises(ValueError, match=rf"families\[{family}\]\.faces is refused: one border"):
             parse_nature_beam_world(faced)
     turned = json.loads(json.dumps(base))
-    turned["families"][1]["phase_per_link"] = 5
+    turned["universe"][1]["phase_per_link"] = 5
     with pytest.raises(ValueError, match="never a declared turn"):
         parse_nature_beam_world(turned)
     # the pair form is the family's clock, admitted (test (z): a matter lamp)
     clocked = json.loads(json.dumps(base))
-    clocked["families"][1]["phase_per_link"] = [1, 2]
+    clocked["universe"][1]["phase_per_link"] = [1, 2]
     assert parse_nature_beam_world(clocked).families[1].phase_per_age == (1, 2)
     no_law = json.loads(json.dumps(base))
     no_law["detector_law"] = False
+    no_law["families"] = no_law.pop("universe")  # the ray law's word (record 2128 (3))
     del no_law["engine"]  # the start file is the detector law's (item 57)
     del no_law["face_depth"]  # the face slab is the detector law's (refused without it)
     with pytest.raises(ValueError, match="massive_record needs detector_law"):
@@ -459,7 +460,7 @@ def test_the_loaders_refusals_name_the_key():
             "position": [1, 1, 1],
             "family": "matter",
             "amount": 4,
-            "held": {},
+            "stocks": {},
             "momentum": [0, 0, 0],
             "lamp": {"rate": [1, 40], "wheel": [1, 64], "train": 2},
         }
@@ -468,8 +469,8 @@ def test_the_loaders_refusals_name_the_key():
         parse_nature_beam_world(lamp_on_kind)
     # light's kind written out, [1, 1], is a value and not a massive kind
     written = json.loads(json.dumps(base))
-    written["families"][1]["pair"] = [1, 1]
-    written["families"][1]["phase_per_link"] = [77, 25]
+    written["universe"][1]["pair"] = [1, 1]
+    written["universe"][1]["phase_per_link"] = [77, 25]
     world = parse_nature_beam_world(written)
     assert not world.families[1].massive_kind
 
@@ -490,10 +491,10 @@ def test_the_records_keys_under_the_key_and_none_without_it():
     # detector law): the rule's world with the key withdrawn and light alone
     without = massive_world([4, 4, 4], "open", [2, 3])
     without["massive_record"] = False
-    for family in without["families"]:
+    for family in without["universe"]:
         family.pop("pair", None)  # the pair is admitted under massive_record alone (item 57)
     del without["amplitude_bound"]
-    del without["families"][1]
+    del without["universe"][1]
     plain = parse_nature_beam_world(without)
     assert MASSIVE_RECORD_RULE not in plain.hypotheses
     assert plain.kind_periodic(0) == plain.periodic
@@ -542,14 +543,14 @@ def block_world(
             "position": block["position"],
             "family": "matter",
             "amount": block.get("amount", 1),
-            "held": {},
+            "stocks": {},
             "ramp": 0,
             "start": 0,
             "momentum": block.get("momentum", [0, 0, 0]),
             "side": block["side"],
             "pair": block["pair"],
             # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2), no loader default
-            "charge": block.get("charge", 0),
+            "q": block.get("q", 0),
             "spin": block.get("spin", [0, 0, 0]),
             "moment": block.get("moment", [0, 0, 0]),
         }
@@ -558,7 +559,7 @@ def block_world(
             "ramp",
             "start",
             "margin",
-            "held",
+            "stocks",
             "receiver",
             "emitter",
         ):
@@ -591,7 +592,7 @@ def block_world(
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
-        "families": families,
+        "universe": families,
         "measured": measured,
         "detectors": [],
     }
@@ -723,7 +724,7 @@ def test_the_blocks_drive_steps_its_cells_and_leaves_the_rows():
                     {
                         "position": [4, 0, 0],
                         "side": 3,
-                        "charge": 0,
+                        "q": 0,
                         "spin": [0, 0, 0],
                         "moment": [0, 0, 0],
                         "pair": [800, 800],
@@ -842,7 +843,7 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     on_light["measured"][0]["family"] = "light"
     on_light["measured"][0]["seed"] = 100
     on_light["measured"][0]["pair"] = [1, 2]
-    on_light["measured"][0]["held"] = {"matter": 1}  # the stock, not the own family (item 47)
+    on_light["measured"][0]["stocks"] = {"matter": 1}  # the stock, not the own family (item 47)
     with pytest.raises(ValueError, match="of light's kind"):
         parse_nature_beam_world(on_light)
     empty = json.loads(json.dumps(base))
@@ -865,7 +866,7 @@ def test_a_seeded_block_at_rest_counts_its_cycles():
                 {
                     "position": [11, 11, 11],
                     "side": 10,
-                    "charge": 0,
+                    "q": 0,
                     "spin": [0, 0, 0],
                     "moment": [0, 0, 0],
                     "pair": [800, 800],
@@ -937,7 +938,7 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
                 {
                     "position": [10, 10, 10],
                     "side": 28,
-                    "charge": 0,
+                    "q": 0,
                     "spin": [0, 0, 0],
                     "moment": [0, 0, 0],
                     "pair": [1600, 1609],
@@ -1085,7 +1086,7 @@ def test_the_mode_line_sums_lights_field_by_residue_class():
         parse_nature_beam_world(bad)
     unkeyed = json.loads(json.dumps(document))
     unkeyed["massive_record"] = False  # declared false, never absent (item 57)
-    for family in unkeyed["families"]:
+    for family in unkeyed["universe"]:
         family.pop("pair", None)  # the pair is admitted under massive_record alone
     del unkeyed["amplitude_bound"]
     del unkeyed["measured"]
@@ -1221,7 +1222,7 @@ def test_the_margin_rule_on_a_layer_keeps_the_folded_axis_self_reads():
             {
                 "position": [121, 121, 0],
                 "side": 14,
-                "charge": 0,
+                "q": 0,
                 "spin": [0, 0, 0],
                 "moment": [0, 0, 0],
                 "pair": [3200, 3227],
@@ -1252,7 +1253,7 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     block = {
         "position": [57, 57, 0],
         "side": 14,
-        "charge": 0,
+        "q": 0,
         "spin": [0, 0, 0],
         "moment": [0, 0, 0],
         "pair": [3200, 3227],
@@ -1315,12 +1316,12 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
     document = chain_world(on_mode=False)
     document["shape"] = [200, 1, 1]
     document["ticks"] = 160
-    document["families"][1]["name"] = "source"
+    document["universe"][1]["name"] = "source"
     document["measured"][0]["family"] = "source"
     matter: dict = {"name": "matter", "quantum": 1, "pair": [156, 157], "charge": 0, "reads": reads()}
     if clock is not None:
         matter["phase_per_link"] = clock  # None: no clock (the refusal's edge case)
-    document["families"].append(matter)
+    document["universe"].append(matter)
     document["measured"] = document["measured"][:1]
     if matter_emitter:
         document["measured"].append(emitter_at(100, stock, family="matter"))
@@ -1494,7 +1495,7 @@ def test_every_declared_wheel_is_refused_by_name():
         ),
         (lambda d: d["measured"][0].__setitem__("absorbing", True), "absorbing is refused"),
         (lambda d: d["measured"][0].__setitem__("take", [-15, 56]), r"measured\[0\]\.take is refused"),
-        (lambda d: d["families"][1].__setitem__("take", [-19, 86]), r"families\[1\]\.take is refused"),
+        (lambda d: d["universe"][1].__setitem__("take", [-19, 86]), r"families\[1\]\.take is refused"),
     ):
         document = json.loads(json.dumps(base))
         mutate(document)
@@ -1524,10 +1525,10 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "amount": 1,
             "ramp": 0,
             "start": 0,
-            "held": {"light": 1},
+            "stocks": {"light": 1},
             "momentum": [0, 0, 0],
             "extents": [32, 1, 1],
-            "charge": 0,
+            "q": 0,
             "spin": [0, 0, 0],
             "moment": [0, 0, 0],
             "pair": [800, 801],
@@ -1612,6 +1613,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
     # the loader's refusals
     bad = light_clock_world("closed", False)
     bad["detector_law"] = False
+    bad["families"] = bad.pop("universe")  # the ray law's word (record 2128 (3))
     del bad["engine"]  # the start file is the detector law's (item 57)
     bad["massive_record"] = False
     for family in bad["families"]:
@@ -1661,19 +1663,19 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
         document["ticks"] = 1200
         document["age_bound"] = 1 << 20
         document["clock_stamp"] = True
-        document["families"].append(source_family())
+        document["universe"].append(source_family())
         document["measured"] = [
             dict(emitter_at(100, 2), receiver="B_nodes"),
             {
                 "position": [200, 0, 0],
                 "family": "matter",
                 "amount": 1,
-                "held": {},
+                "stocks": {},
                 "ramp": 0,
                 "start": 0,
                 "momentum": momentum,
                 "side": 12,
-                "charge": 0,
+                "q": 0,
                 "spin": [0, 0, 0],
                 "moment": [0, 0, 0],
                 "pair": [800, 801],
@@ -1729,12 +1731,12 @@ def test_a_block_that_steps_off_the_board_refuses_the_interval():
                 "position": [30, 0, 0],
                 "family": "matter",
                 "amount": 1,
-                "held": {},
+                "stocks": {},
                 "ramp": 0,
                 "start": 0,
                 "momentum": [-64, 0, 0],
                 "side": 12,
-                "charge": 0,
+                "q": 0,
                 "spin": [0, 0, 0],
                 "moment": [0, 0, 0],
                 "pair": [800, 800],
@@ -1779,12 +1781,12 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
                 "position": [x, 0, 0],
                 "family": "light",
                 "amount": 1,
-                "held": {},
+                "stocks": {},
                 "ramp": 0,
                 "start": 0,
                 "momentum": [0, 0, 0],
                 "side": 1,
-                "charge": 0,
+                "q": 0,
                 "spin": [0, 0, 0],
                 "moment": [0, 0, 0],
                 "pair": [1, 2],

@@ -53,10 +53,10 @@ def emitter(
         "amount": 1,
         "ramp": 0,
         "start": 0,
-        "held": {"light": stock},
+        "stocks": {"light": stock},
         "momentum": [momentum, 0, 0],
         "extents": [32, 1, 1],
-        "charge": 0,
+        "q": 0,
         "spin": [0, 0, 0],
         "moment": [0, 0, 0],
         "pair": [800, 801],
@@ -80,7 +80,7 @@ def body(x: int) -> dict:
         "position": [x, 0, 0],
         "family": "light",
         "amount": 1,
-        "held": {},
+        "stocks": {},
         "momentum": [0, 0, 0],
     }
 

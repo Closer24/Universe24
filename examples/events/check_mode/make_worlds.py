@@ -167,7 +167,7 @@ def body(position: list[int], extents: list[int], amount: int, q: int = 0, **ext
         "pair": list(WELL),
         "kind": list(KIND),
         "seed": SEED,
-        "charge": q,
+        "q": q,
     }
     block.update(extra)
     return block
@@ -261,8 +261,8 @@ def translate(document: dict) -> dict:
     for key, value in document.items():
         if key in DELETED_WORLD_KEYS:
             continue
-        if key == "families":
-            out[UNIVERSE_KEY] = UNIVERSE_FILE
+        if key in ("families", UNIVERSE_KEY):
+            out[UNIVERSE_KEY] = UNIVERSE_FILE  # the inline list to the file's path
             continue
         out[key] = value
     measured = []
@@ -336,7 +336,7 @@ def all_families() -> tuple[dict, dict]:
     the counters (an open face is a detector of its name), no D. A's spin S = 1000 is its
     record's winding and waits for the winding's line (README section 4)."""
     blocks = pair_blocks(CHARGE_Q)
-    blocks[0]["held"] = {massive.WAVE_FAMILY_NAME: EMITTER_STOCK}
+    blocks[0]["stocks"] = {massive.WAVE_FAMILY_NAME: EMITTER_STOCK}
     blocks[0]["emitter"] = {
         "family": massive.WAVE_FAMILY_NAME,
         "clock": list(massive.MASSIVE_GIVEN_CLOCK),
@@ -376,7 +376,7 @@ def pass_world(name: str, source_q: int, packet_q: int, source_speed: float) -> 
 
 def beam_emitter(stock: int, train: bool) -> dict:
     block = body(BEAM_EMITTER_CORNER, BEAM_EXTENTS, TARGET_QUANTA)
-    block["held"] = {massive.WAVE_FAMILY_NAME: stock}
+    block["stocks"] = {massive.WAVE_FAMILY_NAME: stock}
     # the given family's clock: the train's on N = 1024 (its wavelength 4 Links, 9.17 (6a)),
     # the point emitter's the massive generator's own
     clock = TRAIN_CLOCK if train else list(massive.MASSIVE_GIVEN_CLOCK)

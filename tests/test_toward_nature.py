@@ -54,7 +54,7 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
         doc = document(name)
         world = parse_nature_beam_world(doc)
         # the integers from the families file alone (item 59)
-        assert doc["families"] == "examples/events/families.json" and "node_clock" not in doc
+        assert doc["universe"] == "examples/events/universe.json" and "node_clock" not in doc
         assert world.node_clock == generator.NODE_CLOCK == 10_000
         if name == "bending":
             continue
@@ -89,7 +89,7 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     # the one-Node emitter at the retired beam's head on the beam's line (commit 7; the beam of
     # 32 x 20 Nodes HISTORY)
     assert emitter["extents"] == [1, 1, 1] and emitter["amount"] == 1
-    assert emitter["held"] == {"charge": generator.BENDING_STOCK} and generator.BENDING_STOCK == 100
+    assert emitter["stocks"] == {"charge": generator.BENDING_STOCK} and generator.BENDING_STOCK == 100
     assert (
         body["family"] == "matter"
         and body["amount"] == generator.BENDING_BODY_CONTENT
@@ -116,7 +116,7 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     assert all(m["momentum"] == [0, 0, 0] for m in rest["measured"])
     for entry in moving["measured"]:
         # the wall on the whole content, the own quanta and the stock held (item 47)
-        content = int(entry["amount"]) + sum(int(v) for v in entry.get("held", {}).values())
+        content = int(entry["amount"]) + sum(int(v) for v in entry.get("stocks", {}).values())
         wall = generator.drive_wall(content)
         assert entry["momentum"] == [wall // generator.HOP_EVERY, 0, 0]
 

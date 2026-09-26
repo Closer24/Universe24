@@ -182,7 +182,7 @@ def ray_world(name: str, shape: list[int], boundary: dict, pair: list[int], tick
     document["amplitude_bound"] = AMPLITUDE_BOUND  # the emitter body's massive family (M1-10)
     document["node_clock"] = NODE_CLOCK  # the Node clock Gamma (item 31)
     document["momentum_unit"] = MOMENTUM_UNIT  # the momentum's unit Q (ALGEBRA.md 9.96 (1))
-    document["families"] = [
+    document["universe"] = [
         light_family(pair),
         emitter_kind_family(),
         dict(CLOCK_FAMILY),
@@ -249,7 +249,7 @@ def body(position: list[int], family: str = "light") -> dict:
         "amount": 1,
         "momentum": [0, 0, 0],
         "fixed": True,
-        "held": {},
+        "stocks": {},
     }
     return entry
 
@@ -655,7 +655,7 @@ def emitter(
         # the stock as the given family's content held at the body (ALGEBRA.md
         # 9.51 (8); BUILD.md section 26 item 47); light is the charge family's wave
         # (9.86 (2) (b)), so the stock and the giving are the charge family's
-        "held": {"charge": EMITTER_STOCK},
+        "stocks": {"charge": EMITTER_STOCK},
         "emitter": {"family": "charge"},
         # the light's component along the body's moment (ALGEBRA.md 9.82 (3) (d); commit 4)
         "moment": list(LIGHT_MOMENT),
@@ -684,7 +684,7 @@ def mirror_slab(position: list[int], extents: list[int]) -> dict:
     entry["extents"] = extents
     entry["pair"] = list(WALL_PAIR)
     # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2): a mirror carries none
-    entry["charge"] = 0
+    entry["q"] = 0
     entry["spin"] = [0, 0, 0]
     entry["moment"] = [0, 0, 0]
     # a block declares its drive's ramp and start (record 2089, no default; item 57)
@@ -799,8 +799,8 @@ def main() -> None:
     ):
         for name, document in worlds.items():
             path = (HELD if name in HELD_NAMES else folder) / f"{name}.json"
-            if document.get("detector_law") and isinstance(document.get("families"), list):
-                document = massive.bind_families_file(document)  # the families file (item 59)
+            if document.get("detector_law") and isinstance(document.get("universe"), list):
+                document = massive.bind_universe_file(document)  # the universe file (item 59)
             path.write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
             print(path.relative_to(EVENTS.parent.parent))
 

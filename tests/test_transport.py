@@ -43,7 +43,7 @@ def twisted_world() -> dict:
     """The paces world with the matter family's read on gravity twisted by "own" and the
     shipped twist table (an inline world declares it as a world key)."""
     document = paces_world()
-    for family in document["families"]:
+    for family in document["universe"]:
         if family["name"] == "matter":
             family["reads"][0]["twist"] = "own"
         if family["name"] == "charge":

@@ -37,7 +37,7 @@ def seated_layer(stock: int = STOCK, seats: bool = True) -> dict:
     receiver body of light at (71, row) read as the set) or as the cubes of the layer test."""
     document = layer_world(receiver=[name for _, name in PLACES])
     # the stock as the given family's content held at the body (ALGEBRA.md 9.51 (8); item 47)
-    document["measured"][0]["held"] = {"light": stock}
+    document["measured"][0]["stocks"] = {"light": stock}
     document["ticks"] = stock * 250 + 300  # every giving a window and a rung (commit 7)
     if seats:
         document["measured"] = [document["measured"][0]]
@@ -48,7 +48,7 @@ def seated_layer(stock: int = STOCK, seats: bool = True) -> dict:
                     "position": [71, row, 0],
                     "family": "light",
                     "amount": 1,
-                    "held": {},
+                    "stocks": {},
                     "momentum": [0, 0, 0],
                 }
             )
@@ -148,7 +148,7 @@ def test_the_loader_admits_a_seat_under_body_record_alone():
             "position": [72, 1, 0],
             "family": "light",
             "amount": 1,
-            "held": {},
+            "stocks": {},
             "momentum": [0, 0, 0],
         }
     )

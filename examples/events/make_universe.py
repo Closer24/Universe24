@@ -28,7 +28,7 @@ from event_universe.events.world import (  # noqa: E402
     twist_triple,
 )
 
-FAMILIES_FILE = ROOT / "examples" / "events" / "families.json"
+FAMILIES_FILE = ROOT / "examples" / "events" / "universe.json"  # the universe file (record 2128 (3))
 
 
 def twist_table(node_clock: int) -> dict[str, object]:

@@ -1,9 +1,8 @@
 {
- "law": "detector-law-v1",
  "integers": {
   "node_clock": 10000,
   "amplitude_bound": 1048576,
-  "charge_weight": 1,
+  "Lambda": 1,
   "momentum_unit": 64,
   "twist_table": {
    "unit": 2621440000,

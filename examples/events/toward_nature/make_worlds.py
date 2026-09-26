@@ -181,7 +181,9 @@ def clock_world(
             # the momentum one hop_every-th of the block's own drive wall
             # the wall on the body's whole content, its own quanta and the stock it
             # holds (ALGEBRA.md 9.51 (8); BUILD.md section 26 item 47)
-            content = int(entry["amount"]) + sum(int(value) for value in entry.get("held", {}).values())
+            content = int(entry["amount"]) + sum(
+                int(value) for value in entry.get("stocks", {}).values()
+            )
             wall = drive_wall(content)
             assert wall % hop_every == 0, (content, wall, hop_every)
             entry["momentum"] = [wall // hop_every, 0, 0]
@@ -220,7 +222,7 @@ def holder_nodes(position: list[int], extents: list[int], amount: int) -> list[d
             "family": "matter",
             "amount": amount,
             "momentum": [0, 0, 0],
-            "held": {},
+            "stocks": {},
             "fixed": True,  # a tool held in place (ALGEBRA.md 9.104 (6) (b); record 2157)
         }
         for dx in range(extents[0])
@@ -349,7 +351,7 @@ def main() -> None:
     for name, document in worlds().items():
         path = HERE / f"{name}.json"
         path.write_text(
-            json.dumps(massive.bind_families_file(document), indent=1) + "\n", encoding="utf-8"
+            json.dumps(massive.bind_universe_file(document), indent=1) + "\n", encoding="utf-8"
         )
         print(path.name, flush=True)
 

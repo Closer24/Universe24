@@ -62,9 +62,9 @@ def charged_chain(
     the matter kind [800, 809] of charge `matter_charge`, a fifth family `neutral` of light's
     pair and charge 0 (the reader the charge never touches), and Lambda = `strength`."""
     document = content_chain(length, boundary, nodes, amount)
-    document["families"][LIGHT]["charge"] = light_charge
-    document["families"][MATTER]["charge"] = matter_charge
-    document["families"].insert(
+    document["universe"][LIGHT]["charge"] = light_charge
+    document["universe"][MATTER]["charge"] = matter_charge
+    document["universe"].insert(
         NEUTRAL,
         {
             "name": "neutral",
@@ -82,7 +82,7 @@ def charged_chain(
 def set_strength(document: dict, strength: int) -> None:
     """Lambda on every reading family: the weight of its read on the family of charge (the
     family genericity, BUILD.md section 26 item 51)."""
-    for family in document["families"]:
+    for family in document["universe"]:
         for read in family.get("reads", []):
             if read["family"] == CHARGE_FAMILY_NAME:
                 read["weight"] = strength
@@ -191,8 +191,8 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     flight is -8 at every interval; the books balanced. The edge case: a light body of charge
     0 in a world whose bodies carry charge holds Q = 0 (the neutral chain, (v))."""
     document = emitter_world(stock=4, on_mode=False)
-    document["families"][LIGHT]["charge"] = -1
-    document["families"][MATTER]["charge"] = -1
+    document["universe"][LIGHT]["charge"] = -1
+    document["universe"][MATTER]["charge"] = -1
     massive_generator().seed_on_the_mode(document)  # the stamp covers the charges
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
@@ -297,38 +297,38 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     set_strength(weak, 0)
     refused(weak, r"reads\[1\].weight")
     by = copy()
-    by["families"][MATTER]["reads"][1]["by"] = "signed"
+    by["universe"][MATTER]["reads"][1]["by"] = "signed"
     refused(by, r"reads\[1\].by must be one of")
     twice = copy()
-    twice["families"][MATTER]["reads"].append({"family": CHARGE_FAMILY_NAME, "weight": 2, "by": "sign"})
+    twice["universe"][MATTER]["reads"].append({"family": CHARGE_FAMILY_NAME, "weight": 2, "by": "sign"})
     refused(twice, "reads names 'charge' twice")
     unlabelled = copy()
-    del unlabelled["families"][MATTER]["charge"]
+    del unlabelled["universe"][MATTER]["charge"]
     refused(unlabelled, r"families\[1\] lacks keys required under `detector_law`: charge")
     strong = copy()
-    strong["families"][MATTER]["charge"] = 2
+    strong["universe"][MATTER]["charge"] = 2
     refused(strong, r"families\[1\].charge \[2, 1\]: under")
     split = copy()
-    split["families"][LIGHT]["charge"] = [1, 2]
+    split["universe"][LIGHT]["charge"] = [1, 2]
     refused(split, r"the pair \[1, 2\] is refused on 'light'")
     same = copy()
-    same["families"][CHARGE]["held"] = "content"
+    same["universe"][CHARGE]["held"] = "content"
     refused(same, "two families hold 'content'")
     massive = copy()
-    massive["families"][MATTER]["held"] = "sign"
-    massive["families"][MATTER]["reads"] = []
+    massive["universe"][MATTER]["held"] = "sign"
+    massive["universe"][MATTER]["reads"] = []
     refused(massive, r"a held family is massless, its pair \[1, 1\]")
     quantum = copy()
-    quantum["families"][CHARGE]["quantum"] = 2
+    quantum["universe"][CHARGE]["quantum"] = 2
     refused(quantum, "a held family is counted in quanta")
     clocked = copy()
-    clocked["families"][CHARGE]["phase_per_link"] = [512, 1]
+    clocked["universe"][CHARGE]["phase_per_link"] = [512, 1]
     refused(clocked, "a held family givings nothing")
     charged = copy()
-    charged["families"][CHARGE]["charge"] = 1
+    charged["universe"][CHARGE]["charge"] = 1
     refused(charged, "a held family carries none")
     unknown = copy()
-    unknown["families"][MATTER]["reads"][1]["family"] = "ions"
+    unknown["universe"][MATTER]["reads"][1]["family"] = "ions"
     refused(unknown, "reads names 'ions', which no family declares")
     body = copy()
     body["measured"] = [
@@ -336,7 +336,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
             "position": [3, 0, 0],
             "family": CHARGE_FAMILY_NAME,
             "amount": 1,
-            "held": {},
+            "stocks": {},
             "momentum": [0, 0, 0],
         }
     ]
@@ -348,10 +348,10 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
             "family": "light",
             "amount": 1,
             "momentum": [0, 0, 0],
-            "held": {CHARGE_FAMILY_NAME: 1},
+            "stocks": {CHARGE_FAMILY_NAME: 1},
         }
     ]
-    refused(held, r"measured\[0\].held names the held family 'charge'")
+    refused(held, r"measured\[0\].stocks names the held family 'charge'")
 
 
 def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_lambda():

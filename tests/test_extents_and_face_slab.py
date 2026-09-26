@@ -40,17 +40,17 @@ def wall(position, family="light", **keys):
         "position": position,
         "family": family,
         "amount": 1,
-        "held": {},
+        "stocks": {},
         "momentum": [0, 0, 0],
         "pair": [1, 2],
         **keys,
     }
     if "extents" in entry or "side" in entry:
         # a block declares its drive's ramp and start (no default, item 57) and its
-        # numbers, charge, spin and moment (ALGEBRA.md 9.91 (3); item 61)
+        # numbers, q, spin and moment (ALGEBRA.md 9.91 (3); item 61; the word q, item 68)
         entry.setdefault("ramp", 0)
         entry.setdefault("start", 0)
-        entry.setdefault("charge", 0)
+        entry.setdefault("q", 0)
         entry.setdefault("spin", [0, 0, 0])
         entry.setdefault("moment", [0, 0, 0])
     return entry
@@ -127,12 +127,12 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
             "position": [5, 2, 0],
             "family": "matter",
             "amount": 1,
-            "held": {},
+            "stocks": {},
             "ramp": 0,
             "start": 0,
             "momentum": [0, 0, 0],
             "extents": [12, 5, 1],
-            "charge": 0,
+            "q": 0,
             "spin": [0, 0, 0],
             "moment": [0, 0, 0],
             "pair": [800, 801],
@@ -140,7 +140,7 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
             "margin": "control",
         }
     ]
-    document["families"][1]["pair"] = [800, 809]
+    document["universe"][1]["pair"] = [800, 809]
     document["detectors"] = []
     massive_generator().seed_on_the_mode(document)
     world = parse_nature_beam_world(document)

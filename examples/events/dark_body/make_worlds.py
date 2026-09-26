@@ -115,7 +115,7 @@ def cube(document: dict, name: str, corner: list[int]) -> str:
                 "amount": 1,
                 "momentum": [0, 0, 0],
                 "fixed": True,  # a tool held in place (ALGEBRA.md 9.104 (6) (b); record 2157)
-                "held": {},
+                "stocks": {},
             }
         )
     document["detectors"].append({"name": name, "positions": positions})
@@ -137,14 +137,14 @@ def block(
         "position": list(corner),
         "family": family,
         "kind": list(kind),  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
-        "charge": 0,  # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2)
+        "q": 0,  # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2; the word `q`, record 2128)
         "spin": [0, 0, 0],
         # a light emitter's moment, the given component's axis (ALGEBRA.md 9.82 (3) (d))
         "moment": list(LIGHT_MOMENT) if emitter is not None else [0, 0, 0],
         "amount": amount,
         "momentum": [0, 0, 0],
         "fixed": True,  # a tool held in place (ALGEBRA.md 9.104 (6) (b); record 2157)
-        "held": {},
+        "stocks": {},
         "ramp": 0,
         "start": 0,
         "extents": list(extents),
@@ -159,7 +159,7 @@ def block(
         # quanta (the level at the Nodes `amount`, the bright body's field)
         entry["emitter"] = emitter
         entry["amount"] = 1 if stock is None else amount - stock
-        entry["held"] = {emitter["family"]: amount if stock is None else stock}
+        entry["stocks"] = {emitter["family"]: amount if stock is None else stock}
         assert entry["amount"] >= 1
     return entry
 
@@ -190,7 +190,7 @@ def world(dark: bool, source_weight: int | None = None) -> dict:
         "node_clock": FAMILIES_INTEGERS["node_clock"],
         "momentum_unit": FAMILIES_INTEGERS["momentum_unit"],
         "twist_table": FAMILIES_INTEGERS["twist_table"],
-        "families": [dict(entry) for entry in FAMILIES_ENTRIES],
+        "universe": [dict(entry) for entry in FAMILIES_ENTRIES],
         "measured": [],
         "detectors": [],
     }
@@ -374,7 +374,7 @@ def main() -> None:
     for name, dark in (("dark", True), ("bright", False)):
         built = world(dark, source_weight)
         source_weight = int(built["measured"][0]["emitter"]["weight"])  # the pair's one instrument
-        document = massive_generator().bind_families_file(built)
+        document = massive_generator().bind_universe_file(built)
         (HERE / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
         print(name, flush=True)
     bend = ray_bend(static_field())

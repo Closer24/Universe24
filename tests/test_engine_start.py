@@ -81,12 +81,12 @@ def test_a_missing_key_of_the_world_or_the_start_file_is_refused_by_name(tmp_pat
 def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
     document = emitter_world(stock=1, ticks=10)
     # the family's pair, the block's held quanta and drive, the well's margin
-    light = document["families"][0]
+    light = document["universe"][0]
     assert light["pair"] == [1, 1]
     broken = json.loads(json.dumps(document))
-    del broken["families"][0]["pair"]
+    del broken["universe"][0]["pair"]
     refused(broken, r"families\[0\] lacks keys required under `detector_law`: pair")
-    for key in ("momentum", "held", "ramp", "start"):
+    for key in ("momentum", "stocks", "ramp", "start"):
         broken = json.loads(json.dumps(document))
         del broken["measured"][0][key]
         refused(broken, rf"measured\[0\] lacks keys required under `detector_law`: {key}")
@@ -116,7 +116,7 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
         broken[key] = value
         refused(broken, f"the world declares {key}, which the detector law never reads")
     broken = json.loads(json.dumps(document))
-    broken["families"][0]["lifetime"] = 5
+    broken["universe"][0]["lifetime"] = 5
     refused(broken, r"families\[0\] declares lifetime, which the detector law never reads")
 
 

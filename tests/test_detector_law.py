@@ -84,10 +84,10 @@ def emitter_body(
         "amount": 1,
         "ramp": 0,
         "start": 0,
-        "held": {family: stock},
+        "stocks": {family: stock},
         "momentum": [0, 0, 0],
         "extents": extents,
-        "charge": 0,
+        "q": 0,
         "spin": [0, 0, 0],
         "moment": [0, 0, 0],
         "pair": list(EMITTER_PAIR),
@@ -118,7 +118,7 @@ def receiver_body(position: list[int], family: str = "light") -> dict:
         "position": position,
         "family": family,
         "amount": 1,
-        "held": {},
+        "stocks": {},
         "momentum": [0, 0, 0],
     }
 
@@ -172,7 +172,7 @@ def chain_world(
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
-        "families": [
+        "universe": [
             {
                 "name": "light",
                 "quantum": 1,
@@ -209,7 +209,7 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
         "position": [2, 0, 0],
         "family": "light",
         "amount": 6,
-        "held": {},
+        "stocks": {},
         "momentum": [0, 0, 0],
         "lamp": {"rate": [1, 40], "wheel": [1, 64], "directions": [[1, 0, 0]], "train": 4},
     }
@@ -225,7 +225,7 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
         with pytest.raises(ValueError, match=f"{key} is refused"):
             parse_nature_beam_world(retired)
     integer_clock = chain_world()
-    integer_clock["families"][0]["phase_per_link"] = 3
+    integer_clock["universe"][0]["phase_per_link"] = 3
     with pytest.raises(ValueError, match="pair form of"):
         parse_nature_beam_world(integer_clock)
 
@@ -351,7 +351,7 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
     with pytest.raises(ValueError, match=r"detectors\[0\]\.wheel is refused"):
         parse_nature_beam_world(set_wheel)
     on_light = chain_world()
-    on_light["families"][0]["take"] = [-15, 56]
+    on_light["universe"][0]["take"] = [-15, 56]
     with pytest.raises(ValueError, match=r"families\[0\]\.take is refused"):
         parse_nature_beam_world(on_light)
 
@@ -387,7 +387,7 @@ def layer_world(receiver: object = None) -> dict:
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
-        "families": [
+        "universe": [
             {
                 "name": "light",
                 "quantum": 1,
@@ -692,12 +692,12 @@ def test_detector_is_one_connected_cube_of_side_three():
                 "position": [40, 2, 0],
                 "family": "light",
                 "amount": 1,
-                "held": {},
+                "stocks": {},
                 "ramp": 0,
                 "start": 0,
                 "momentum": [0, 0, 0],
                 "side": side,
-                "charge": 0,
+                "q": 0,
                 "spin": [0, 0, 0],
                 "moment": [0, 0, 0],
                 "pair": [1, 2],

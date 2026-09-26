@@ -199,7 +199,7 @@ def emitter_world(
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
-        "families": [
+        "universe": [
             {
                 "name": "light",
                 "quantum": 1,
@@ -219,10 +219,10 @@ def emitter_world(
                 "amount": 1,
                 "ramp": 0,
                 "start": 0,
-                "held": {"light": stock},
+                "stocks": {"light": stock},
                 "momentum": [0, 0, 0],
                 "extents": [32, 1, 1],
-                "charge": 0,
+                "q": 0,
                 "spin": [0, 0, 0],
                 "moment": [0, 0, 0],
                 "pair": [800, 801],
@@ -574,7 +574,7 @@ def test_the_loaders_refusals_name_their_keys():
         document["measured"][0]["family"] = "light"
         document["measured"][0]["pair"] = [1, 2]
         document["measured"][0]["emitter"]["family"] = "matter"
-        document["measured"][0]["held"] = {"matter": 2}
+        document["measured"][0]["stocks"] = {"matter": 2}
         del document["measured"][0]["seed"]
 
     refused(on_light, "light's kind")
@@ -590,9 +590,9 @@ def test_the_loaders_refusals_name_their_keys():
     refused(no_stock, "amount")
 
     def no_held_stock(document):
-        del document["measured"][0]["held"]  # the stock as the given family's content (item 47)
+        del document["measured"][0]["stocks"]  # the stock as the given family's content (item 47)
 
-    refused(no_held_stock, "lacks keys required under `detector_law`: held")  # item 57: no default
+    refused(no_held_stock, "lacks keys required under `detector_law`: stocks")  # item 57: no default
 
     # the generator's integers (ALGEBRA.md 9.17 (5) item 1): a norm the
     # emitter does not declare refuses the simulation at its first
@@ -645,7 +645,7 @@ def test_the_loaders_refusals_name_their_keys():
     refused(two_ladders, "one ladder")
 
     def free_given(document):
-        document["families"].append(
+        document["universe"].append(
             {"name": "e", "quantum": 0, "pair": [1, 1], "charge": -1, "reads": reads()}
         )
         document["measured"][0]["emitter"]["family"] = "e"

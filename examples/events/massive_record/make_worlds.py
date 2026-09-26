@@ -101,7 +101,7 @@ AMPLITUDE_BOUND = (
 # THE ONE FAMILIES FILE (ALGEBRA.md 9.83 (2), 9.85 (3); BUILD.md section 26 item 59): the
 # universe's families as laws and the universe's integers, one canonical copy; every world of
 # this generator is built with the file's entries and written with the file's path
-FAMILIES_FILE = "examples/events/families.json"
+UNIVERSE_FILE = "examples/events/universe.json"  # the universe file (record 2128 (3))
 MASSIVE_GIVEN_CLOCK = [77, 25]  # this generator's light clock (the pair form on N = 64)
 # THE THREE FAMILIES (ALGEBRA.md 9.86 (2), 9.91 (7); the one stroke, commit 1): gravity (the
 # held content, the Node clock), the charge (the held sign; light is its wave, so a light
@@ -117,25 +117,26 @@ LIGHT_MOMENT = [0, 0, 1]
 
 
 def families_entries() -> tuple[list[dict], dict[str, int]]:
-    """The families file's entries in the loader's list form and the universe's integers."""
+    """The universe file's entries in the loader's list form and the universe's integers."""
     from event_universe.events.world import families_file_entries
 
-    entries, integers = families_file_entries(FAMILIES_FILE)
+    entries, integers = families_file_entries(UNIVERSE_FILE)
     return [dict(entry) for entry in entries], dict(integers)
 
 
 def universe_integer(document: dict, key: str) -> int:
     """One of the universe's integers as the world reads it: the world's own key on an inline
-    list, the families file's under the path (Q, `momentum_unit`, ALGEBRA.md 9.96 (1))."""
-    if isinstance(document["families"], str):
+    list, the universe file's under the path (Q, `momentum_unit`, ALGEBRA.md 9.96 (1))."""
+    if isinstance(document["universe"], str):
         return int(families_entries()[1][key])
     return int(document[key])
 
 
-def bind_families_file(document: dict) -> dict:
-    """The world as written: the families file's path in place of the list, the universe's
-    integers the file's alone (the world's copies removed), the stamp over the file."""
-    document["families"] = FAMILIES_FILE
+def bind_universe_file(document: dict) -> dict:
+    """The world as written: the universe file's path in place of the list (the world's key
+    `universe`, record 2128 (3)), the universe's integers the file's alone (the world's copies
+    removed), the stamp over the file."""
+    document["universe"] = UNIVERSE_FILE
     document.pop("node_clock", None)
     document.pop("amplitude_bound", None)
     document.pop("momentum_unit", None)
@@ -146,7 +147,7 @@ def bind_families_file(document: dict) -> dict:
 def families_of(document: dict) -> list[dict]:
     """The world's families in the loader's list form: the list as written, or the families
     file's entries when the world names the file (ALGEBRA.md 9.85 (3); item 59)."""
-    families = document["families"]
+    families = document["universe"]
     if isinstance(families, str):
         from event_universe.events.world import families_file_entries
 
@@ -185,12 +186,11 @@ LAYER_HOLD = 8000
 BLOCK_KEYS = (
     "seed",
     # the stock as the given family's content held at the body (ALGEBRA.md
-    # 9.51 (8); item 47)
-    "held",
+    # 9.51 (8); item 47): the body's `stocks` (record 2128 (1))
+    "stocks",
     "ramp",
     "start",
     "margin",
-    "held",
     # the emitter as a clicking body (ALGEBRA.md 9.17; BUILD.md section 26)
     "emitter",
     "receiver",
@@ -234,7 +234,7 @@ def world(
             "family": family,
             "amount": block.get("amount", 1),
             "momentum": block.get("momentum", [0, 0, 0]),
-            "held": {},
+            "stocks": {},  # the body's stocks of other families' quanta (record 2128 (1))
             "ramp": 0,
             "start": 0,
         }
@@ -248,7 +248,7 @@ def world(
         if any(item["name"] == family and item.get("pair") == "body" for item in families):
             entry["kind"] = list(block.get("kind", pair))  # the body's rest pair (9.91 (7))
         # the body's numbers the holds read (ALGEBRA.md 9.91 (3), (7); commit 2), no default
-        entry["charge"] = block.get("charge", 0)
+        entry["q"] = block.get("q", 0)  # the body's signed number (record 2128 (1))
         entry["spin"] = list(block.get("spin", [0, 0, 0]))
         entry["moment"] = list(block.get("moment", [0, 0, 0]))
         for key in BLOCK_KEYS:
@@ -295,8 +295,8 @@ def world(
         "twist_table": integers["twist_table"],
         # the families' roles stand on the families (`held`, `reads`; the family
         # genericity, BUILD.md section 26 item 51); the list during the build, the
-        # file's path as written (`bind_families_file`)
-        "families": families,
+        # file's path as written (`bind_universe_file`; the world's key `universe`, record 2128)
+        "universe": families,
         "measured": measured,
         "detectors": [],
     }
@@ -730,7 +730,7 @@ def giving_ticks(document: dict, number: int, extra: int) -> int:
     plus `extra` intervals (the flights declared by the row's generator)."""
     entry = document["measured"][number]
     emitter = entry["emitter"]
-    stock = int(entry["stock"]) if "stock" in entry else int(entry["held"][emitter["family"]])
+    stock = int(entry["stock"]) if "stock" in entry else int(entry["stocks"][emitter["family"]])
     return stock * (int(emitter["window_read"]) + 2 * int(emitter["period"])) + extra
 
 
@@ -1183,7 +1183,7 @@ def proper_clock(document: dict, number: int) -> list[list[int]]:
     a, b = (int(value) for value in entry["clock"])
     # the body's wall W = 3 Q M on its whole content, its own quanta and what it holds
     # (ALGEBRA.md 9.96 (1); Q the universe's `momentum_unit`)
-    content = int(entry.get("amount", 1)) + sum(int(value) for value in entry.get("held", {}).values())
+    content = int(entry.get("amount", 1)) + sum(int(value) for value in entry.get("stocks", {}).values())
     wall = 3 * universe_integer(document, "momentum_unit") * content
     table = [[a, b]]
     for whole in range(1, abs(momentum[axes[0]]) + 1):
@@ -1195,7 +1195,7 @@ def proper_clock(document: dict, number: int) -> list[list[int]]:
 def main() -> None:
     for name, document in worlds().items():
         path = HERE / f"{name}.json"
-        path.write_text(json.dumps(bind_families_file(document), indent=1) + "\n", encoding="utf-8")
+        path.write_text(json.dumps(bind_universe_file(document), indent=1) + "\n", encoding="utf-8")
         print(path.name)
 
 
