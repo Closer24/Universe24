@@ -155,7 +155,7 @@ outside, and a deterministic model is suspect of superdeterminism (the
 settings and the pairs correlated through a common past). Here each
 counter's window is read from the phase of a ray arriving from a third
 source (Alice's) and a fourth (Bob's), the key `phase_window` `{"reads":
-"<family>", "offset": s}` ([ENGINE](../../../docs/ENGINE.md#the-beam-law-beam-v1),
+"<family>", "offset": s}` ([ENGINE](../../../docs/ENGINE.md#the-beam-law-beam-v1-the-ray-laws-record-cancelled-docscancelled_worldsmd-the-engine-has-no-laws-name-item-70),
 [BEAM_LAW note 34](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
 the settings are events of the GameBoard with a past of their own, and
 the question is whether the law carries a correlation from the initial

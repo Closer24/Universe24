@@ -2192,7 +2192,7 @@ byte-identical in `events.jsonl` and `state.json`.
 ## A table entry's window read from a reading, on 2026-09-20 (`phase_window` as `{"reads": ..., "offset": ...}`; issue #363)
 
 An additive key of the world file ([BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
-[ENGINE, the world](ENGINE.md#the-beam-law-beam-v1);
+[ENGINE, the world](ENGINE.md#the-beam-law-beam-v1-the-ray-laws-record-cancelled-docscancelled_worldsmd-the-engine-has-no-laws-name-item-70);
 [expectations](TEST_EXPECTATIONS.md#a-window-read-from-a-reading)): a
 measured event's table entry may declare `"phase_window": {"reads":
 "<family>", "offset": s}` in place of the number. The centre of the window

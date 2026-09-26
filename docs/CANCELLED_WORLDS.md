@@ -58,6 +58,8 @@ The gate never collects them (section 7). A living test is never skipped.
 | Path | Note |
 | --- | --- |
 | `tests/test_algebra_visualizer.py` | its fixtures run the old runner on the ray law's worlds |
+| `tests/test_locality.py` | the ray law: it imports the cancelled engine's `NatureBeamSimulation` (found by the full gate of 2026-09-26) |
+| `tests/test_run_series_guard.py` | the ray law's series runner `tools/run_series.py`, cancelled in section 4 (found by the full gate of 2026-09-26) |
 | `tests/test_amplitude_bell_24_4.py` | the ray law |
 | `tests/test_amplitude_click.py` | the ray law |
 | `tests/test_amplitude_cone.py` | the ray law |

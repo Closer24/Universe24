@@ -408,7 +408,7 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   turn and count; MIGRATION 2026-09-21).
 - **Frame**: the engine's bookkeeping of an interval, the tick, the steps,
   the books and the record; it computes no physics of the row
-  ([ENGINE.md](ENGINE.md#the-beam-law-beam-v1)).
+  ([ENGINE.md](ENGINE.md#the-beam-law-beam-v1-the-ray-laws-record-cancelled-docscancelled_worldsmd-the-engine-has-no-laws-name-item-70)).
 - **Bijection**: the walk, the collision, the meeting and the merge have
   inverses (`NatureBeamSimulation.inverse_step`); the click is the only
   one-way border.
