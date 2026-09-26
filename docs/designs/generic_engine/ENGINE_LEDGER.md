@@ -117,6 +117,23 @@ renders the output file alone, never the engine's state: "what the visualizer do
 output runnable on a screen" (the owner, the same word); a new display is a reader of the
 output, not a line of the engine.
 
+THE PINS, OUTSIDE THE CODE (the model owner's word of 2026-09-26, 12:25Z: "after the engine is
+closed and checked and everything plays exactly as we want, think already now how we add the
+pins fully generically; the pins will not be in the code, the pins will be outside the code").
+Nature24's design, for the Boss's word; nothing of it runs before the Go:
+
+| Piece | What it is | Where it lives |
+| --- | --- | --- |
+| a pin | one declared expectation on one declared reading: {reading (the name of a `readings` line of the world file), nature's value with its uncertainty and its source, the unit line that turns nature's number into the GameBoard's (Gamma and the Link, from universe.json), the comparison kind (an interval, a ratio within a fraction, a direction, the rule of three), the ALGEBRA.md section of the formula} | a pins file beside the world file, `<world>.pins.json`; never a line of the engine, never a key the loader reads |
+| the reader | one generic program that takes a run's output and a pins file and writes the table (expected, read, direction, verdict), knowing reading kinds and comparison kinds and no experiment's name | `tools/`, outside `src/event_universe`; the engine never imports it |
+| the rule of kinds | a pin is on a DETECTOR reading alone (a click, a record's moments, an external thing's reading); a pin on a GameBoard reading is refused by the reader with the reason | the reader's one refusal |
+| blindness | the run is written first and stamps the world, the universe and the start file; the pins file is read after and stamped in the verdict table; a run cannot depend on it | the reader's stamp |
+| the modes | `mode` "check" in the start file: the runner refuses a pins file as today (`tests/test_engine_start.py`); after the Go a second mode names the pins file, and the same reader writes the verdicts | the start file, the reader |
+| the old registers | every pin retired by name (records 2172 to 2174) and every expectations register of the ray law's tools become a pins file in this form or stay history; none returns through code | the pins files |
+
+A new pin is a line in a pins file; a new comparison kind is a line of the reader, not of the
+engine; the engine is closed the same day with or without pins.
+
 THE TERM FORM behind the table (the mathematician's 9.110 item 7): a family is a shape and a
 list of terms [kind, target, of, degree, weight, table], the kind one of four (READ, SOURCE,
 HOLD, CLICK); the shape is `parts`, `phase`, `pair` and the internal representation
