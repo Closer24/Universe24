@@ -67,6 +67,7 @@ from math import gcd
 
 import numpy as np
 
+from event_universe.core.game_board import box_centre
 from event_universe.core.integer import by_drive
 from event_universe.core.register import Register, discover
 from event_universe.core.rule3 import ISOTROPIC, coefficients, form_term, rule3, rungs
@@ -76,6 +77,7 @@ from event_universe.events.world import (
     BlockDefinition,
     NatureBeamWorld,
 )
+from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
 
 Record = Callable[[dict[str, object]], None]
 
@@ -1280,28 +1282,18 @@ class DetectorLawSimulation:
         return self.node_clock - int(self._effective_content(family)[node]), self.node_clock
 
     def _effective_content(self, family: int) -> np.ndarray:
-        """THE PACE'S READ (ALGEBRA.md 9.45 (3), 9.48 (3); BUILD.md section 26
-        items 35 and 51): the content a record of `family` reads at every
-        Node, the sum over its declared reads of weight x level (by "plain")
-        or - q x weight x level (by "sign", q the family's own charge sign):
-        c - q Lambda d where a family reads the content plainly and the
-        charge by its sign; zeros for a family that reads nothing (a held
-        family, or the vacuum's rule). HOST: one array per family per
-        interval, cleared by the hold; a single plain read at weight 1 is
-        that held level itself, no copy."""
+        """The content a record of `family` reads at every Node, the signed read's own `content_of` (features/signed_read; ALGEBRA.md 9.117 row 1, 9.48 (3)), one array per family per interval."""
         cached = self._effective.get(family)
         if cached is not None:
             return cached
-        reads = self.families[family].reads
-        sign = self.family_charge[family]
-        if len(reads) == 1 and reads[0][1] == 1 and reads[0][2] == "plain":
-            content = self.node_level[reads[0][0]]
-        else:
-            content = np.zeros(self.shape, dtype=np.int64)
-            for other, weight, by, _ in reads:
-                factor = weight if by == "plain" else -sign * weight
-                if factor:
-                    content = content + factor * self.node_level[other]
+        definition = self.families[family]
+        term = SignedReadTerm(
+            tuple((other, weight, by) for other, weight, by, _twist in definition.reads),
+            self.family_charge[family],
+            (int(definition.pair[0]), int(definition.pair[1])),
+            self.node_clock,
+        )
+        content = content_of(term, SignedReadStart(self.shape, self.node_level, None))
         self._effective[family] = content
         return content
 
@@ -2142,10 +2134,7 @@ class DetectorLawSimulation:
         # the co-moving centre Node (the design's reading of the clock in
         # motion, MASSIVE_RECORD.md section 8: "the clock read at the
         # co-moving centre"): the total record's value there, on the line
-        centre = tuple(
-            (block.corner[axis] + block.definition.extents[axis] // 2) % self.shape[axis]
-            for axis in range(3)
-        )
+        centre = box_centre(block.corner, block.definition.extents, self.shape)
         at_centre = 0
         if block.node_record is not None:
             # the body's Node's record (9.60 (1)): its level is the standing record's
