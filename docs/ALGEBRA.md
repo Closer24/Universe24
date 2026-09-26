@@ -17551,6 +17551,28 @@ as written here.
    big decision for three (record 2136), which this word opens; the
    Boss records it and Nature24's runs are the second party.
 
+9. **Hypothesis A of 9.103 and the two families are one thing: the
+   strong force is the binding (the model owner's question through
+   Nature24, 2026-09-26: "does the strong force close everything?").**
+   What the two families give without a declaration: CONFINEMENT of a
+   body's Nodes (a record bound in its own well does not leave it), the
+   MASS AS A READING (the bound rotation of the self-bound record, 9.94,
+   set by the norm M and the universe's K_m, K_r and the two ranges, so
+   the mass table of 9.101 item 7 goes), the YUKAWA TAIL (the binding
+   family's range), and the SATURATION of nuclear matter (the core: a
+   body cannot shrink below the balance, and two bodies bind at the
+   range and no closer). Two bodies of s at a few Links bind by the same
+   families, nature's deuteron, a check row. WHAT STAYS OWED, as 9.103
+   (3) said: the readings that COUNT the internal states, the ratio R,
+   the pion's two photons and the jets' 9 / 4, count three colours and
+   eight carriers, and a scalar family has no such count; colour is an
+   internal symmetry that commutes with every rotation (9.101 item 13,
+   9.103 item 9), a declared internal three-pair family, outside the law
+   until a row of the twenty-four reads it. So: the strong force AS THE
+   WELL is closed by the two families once their runs stand (item 6, the
+   four); the strong force AS COLOUR is a declaration still owed, and
+   nothing in the engine's rows reads it.
+
 ### 9.109 The click that keeps the momentum, in integers (the model owner's question of 2026-09-26, record 2160: "but one click, is it not received in one click?"; the Boss's ask for the line), and the algebra's numbers for the ninth question's rerun
 
 1. **What the engine's click does and what the bath's construct did.**
