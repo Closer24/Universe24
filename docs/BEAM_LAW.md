@@ -2242,7 +2242,7 @@ implementation's part of the contract. The design above is unchanged.
 34. **A table entry's window read from a reading** (issue #363, the model
     owner's go of 2026-09-20: "Alice and Bob are part of the GameBoard,
     no?"; a measurement, not a change of law; `tests/test_nature_beam_window_reads.py`
-    (a) to (c); [ENGINE, the world](ENGINE.md#the-beam-law-beam-v1)). One
+    (a) to (c); [ENGINE, the world](ENGINE.md#the-beam-law-beam-v1-the-ray-laws-record-cancelled-docscancelled_worldsmd-the-engine-has-no-laws-name-item-70)). One
     additive key: on a measured event's table entry, `phase_window` may be
     the object `{"reads": "<family>", "offset": s}` in place of the number.
     The centre of the window is then the phase of the coherent pointer of

@@ -238,28 +238,9 @@ def common_denominator(held: int, arriving: int) -> tuple[int, int, int]:
     return root_b, root_a, held * b
 
 
-def rungs(weights: list[tuple[int, int]], steps: int) -> tuple[list[int], tuple[int, int]]:
-    """The ladder (the design's section 3.3): the cells' weights as pairs
-    (numerator, multiplicity), the cumulative C_k over the common
-    denominator D and the rungs b_k = (2 W C_k + Total) // (2 Total) at
-    the nearest integer on the wheel `steps` = W (N under [1, N]), b_K =
-    W; returns the rungs and the total as the reduced pair. Every u = 0 ..
-    W - 1 falls in exactly one cell; an offer below Total / 2W may get an
-    empty cell."""
-    denominator = 1
-    for _, m in weights:
-        denominator = lcm(denominator, m)
-    scaled = [n * (denominator // m) for n, m in weights]
-    total = sum(scaled)
-    if total == 0:
-        return [0] * len(weights), (0, 1)
-    found = []
-    cumulative = 0
-    for value in scaled:
-        cumulative += value
-        found.append((2 * steps * cumulative + total) // (2 * total))
-    common = gcd(total, denominator) or 1
-    return found, (total // common, denominator // common)
+# The ladder's rungs live in the engine's rule module since the residue lines of
+# docs/CANCELLED_WORLDS.md section 9 (one copy); this cancelled module reads them there
+from event_universe.events.rule import rungs  # noqa: E402
 
 
 def choose(found: list[int], u: int) -> int | None:

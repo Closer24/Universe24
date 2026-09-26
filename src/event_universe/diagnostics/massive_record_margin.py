@@ -6,8 +6,8 @@ outside the engine's integer path.
 
 The block's bound mode in the massive medium: the rule of section 1 with
 the kind's pair `[num, den]` on every Node and the block's lowered pair on
-its cells has the characters `2 cos omega D a = (S_6 / 3) a`, D = den /
-num per Node (the six-neighbour sum with the kind's faces, the row itself
+its Nodes has the characters `2 cos omega D a = (S_6 / 3) a`, D = den /
+num per Node (the six-neighbour sum with the world's faces, the row itself
 twice on an axis of one layer, as the engine reads it); the bound mode is
 the largest eigenvalue `lambda = 2 cos omega_b` of the symmetric operator
 `A = D^-1/2 (S_6 / 3) D^-1/2`, found by a Lanczos iteration (the largest
@@ -16,15 +16,13 @@ D_out the kind's own ratio, `cosh kappa = 3 D_out cos omega_b - 2` and the
 mode's extent in the medium is `1 / kappa` Links (the tail exp(-kappa x)),
 its binding depth `eps = 1 - omega_b^2 / omega_0^2` with `cos omega_0 =
 num / den`. A mode at or above the gap (lambda / 2 <= num / den) is not
-bound and the block is refused. THE RULE: a CONTROL world's cells lie at
+bound and the block is refused. THE RULE: a CONTROL world's Nodes lie at
 least ONE extent from any non-periodic face of the kind and a periodic
 axis's side is at least the block's side plus TWO extents; a PIN world's
-cells lie at least TWO extents from a non-periodic face and a periodic side
+Nodes lie at least TWO extents from a non-periodic face and a periodic side
 is at least the side plus FOUR extents (a hard face at distance d shifts
 the mode by about eps e^(-2 kappa d)); a declaration below the margin is
-refused naming the block, the axis, the extent and the distance; a cavity
-(form (I), its record held by its own faces) has no tail and is not
-checked. Every
+refused naming the block, the axis, the extent and the distance. Every
 number here is a COMPUTATION from the declaration, printed before the run
 and written into the run's record; the state never reads it (the
 transcendental of the pair is no verb of the law). This is the method of
@@ -35,13 +33,16 @@ shifts omega_b, so the world's own number is the pin's).
 
 from __future__ import annotations
 
+import dataclasses
 import math
 from dataclasses import dataclass
+from fractions import Fraction
 from typing import Any
 
 import numpy as np
+from scipy.sparse.linalg import LinearOperator, eigsh  # type: ignore[import-untyped]
 
-from event_universe.events.world import BEAM_LAW, MARGIN_KINDS, NatureBeamWorld
+from event_universe.events.world import MARGIN_KINDS, NatureBeamWorld, body_node_indices
 
 # The ramp of a pushed body at least this many relaxation times 1 / (omega_0
 # - omega_b) of its own well (DECLARATIONS.md section 8, the rule for any
@@ -79,6 +80,16 @@ class MarginReading:
     @property
     def bound(self) -> bool:
         return self.kappa > 0.0
+
+    @property
+    def runaway(self) -> bool:
+        """The largest eigenvalue at or above 2: the well's mode is no
+        oscillation (2 cos omega_b = lambda has no omega_b) but a level
+        that grows by lambda / 2 + sqrt(lambda^2 / 4 - 1) per interval
+        (a well too deep for its board: on a chain or a layer the folded
+        axes' self-reads count fully, so a one-Node well runs away at a
+        depth that binds on a cube; BUILD.md section 26)."""
+        return self.lambda_max >= 2.0
 
     def lines(self) -> list[str]:
         """The reading printed, one line per fact, labelled COMPUTATION."""
@@ -124,22 +135,17 @@ class MarginReading:
         }
 
 
-def block_cells(
-    shape: tuple[int, int, int], corner: tuple[int, int, int], side: int, wrap: tuple[bool, bool, bool]
+def body_node_mask(
+    shape: tuple[int, int, int],
+    corner: tuple[int, int, int],
+    side: int | tuple[int, int, int],
+    wrap: tuple[bool, bool, bool],
 ) -> np.ndarray:
-    """The block's cells as the engine forms them: the cube from its lower
-    corner, wrapped on a periodic axis of the kind, cut on an open one."""
+    """The block's Nodes as a mask over the board: the array form of the
+    loader's `body_node_indices` (the one copy of the box's rule; a cube's
+    side or the box's extents)."""
     mask = np.zeros(shape, dtype=bool)
-    ranges = []
-    for axis in range(3):
-        indices = [corner[axis] + offset for offset in range(side)]
-        if wrap[axis]:
-            indices = [index % shape[axis] for index in indices]
-        else:
-            indices = [index for index in indices if 0 <= index < shape[axis]]
-        ranges.append(sorted(set(indices)))
-    if all(ranges):
-        mask[np.ix_(ranges[0], ranges[1], ranges[2])] = True
+    mask.ravel()[body_node_indices(shape, corner, side, wrap)] = True
     return mask
 
 
@@ -243,33 +249,231 @@ def lanczos(
     return ritz, count, mode
 
 
-def bound_mode(world: NatureBeamWorld, number: int) -> np.ndarray:
-    """The bound mode's shape of a block on the world's own board (the
-    margin module's Lanczos vector, its largest entry 1), over the whole
-    board: the seed a pin world declares as integers at its amplitude
-    (MASSIVE_RECORD.md section 11 item 7, the reader of record and the
-    seed; a HOST computation of the generator, never of the engine's run)."""
+def accurate_mode(world: NatureBeamWorld, number: int) -> tuple[float, np.ndarray]:
+    """The bound mode of a block alone in its medium on the world's own
+    board, to the host's floating precision: the largest eigenpair of the
+    symmetric operator A = D^-1/2 (S_6 / 3) D^-1/2 (D = den / num per Node)
+    by the implicitly restarted Lanczos method (ARPACK through scipy's
+    `eigsh`, the tolerance the machine's, the start the Nodes' indicator
+    plus a flat 10^-3), the eigenvalue 2 cos omega_b and the mode of the
+    rule's operator (A's vector times D^-1/2, its largest entry 1). A HOST
+    computation of the generator and of the diagnostics, never of the
+    engine's run; the loader reads its rounded integers alone and checks
+    them in integers (ALGEBRA.md 9.22 (7)). The three-term recurrence of
+    `lanczos` (no reorthogonalisation) gave the mode to about 3 x 10^-4
+    relative, hundreds of units at the amplitude 50 x 2^20, which the
+    integer check refuses (BUILD.md section 26 item 20)."""
     entry = world.measured[number]
     definition = entry.block
     if definition is None:
-        raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
-    family = world.families[entry.family]
+        raise ValueError(f"measured[{number}] is no block")
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-    cells = block_cells(shape, corner, definition.side, wrap)
-    ratio = np.where(cells, definition.pair[1] / definition.pair[0], family.pair[1] / family.pair[0])
-    seed = np.where(cells, 1.0, 0.0) + 1e-3 * np.random.default_rng(0).standard_normal(shape)
-    _, _, mode = lanczos(ratio, wrap, seed, vector=True)
-    assert mode is not None
-    return mode
+    nodes = body_node_mask(shape, corner, definition.extents, wrap)
+    kind = definition.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+    ratio = np.where(nodes, definition.pair[1] / definition.pair[0], kind[1] / kind[0])
+    scale = 1.0 / np.sqrt(ratio)
+    count = int(np.prod(shape))
+
+    def apply(flat: np.ndarray) -> np.ndarray:
+        result: np.ndarray = scale * six_neighbours(scale * flat.reshape(shape), wrap) / 3.0
+        return result.ravel()
+
+    operator = LinearOperator((count, count), matvec=apply, dtype=np.float64)
+    start = (np.where(nodes, 1.0, 0.0) + 1e-3).ravel()
+    values, vectors = eigsh(operator, k=1, which="LA", v0=start, tol=0, maxiter=100 * count)
+    mode: np.ndarray = scale * vectors[:, 0].reshape(shape)
+    mode /= np.max(np.abs(mode))
+    if mode[np.unravel_index(int(np.argmax(np.abs(mode))), mode.shape)] < 0:
+        mode = -mode
+    return float(values[0]), mode
+
+
+def _operator_step(
+    levels: np.ndarray,
+    remainder: np.ndarray,
+    num: np.ndarray,
+    den: np.ndarray,
+    wrap: tuple[bool, bool, bool],
+    amplitude: int,
+) -> tuple[np.ndarray, np.ndarray]:
+    """One step of the board's own operator in the law's integers, 3 den v' =
+    num S_6(v) + 6 den v + r with the remainder r carried from step to step
+    (the one copy of the generator's step; ALGEBRA.md 9.22 (7)): returns
+    the levels and the remainder after the step. When the levels pass twice the amplitude they are renormalised by an
+    exact shift by a power of two, the remainder shifted with them (the
+    value v + r / wall halved k times is (v >> k) + ((v mod 2^k) wall + r)
+    / (wall 2^k), whose remainder against the same wall is the floor of
+    ((v mod 2^k) wall + r) / 2^k: nothing of the fraction is dropped but
+    the last bits below the wall)."""
+    wall = 3 * den.astype(np.int64)
+    total = num.astype(np.int64) * six_neighbours(levels, wrap).astype(np.int64) + remainder
+    total += 6 * den.astype(np.int64) * levels
+    levels = np.floor_divide(total, wall)
+    remainder = total - wall * levels
+    largest = int(np.max(np.abs(levels)))
+    if largest >= 2 * amplitude:
+        shift = largest.bit_length() - int(amplitude).bit_length()
+        shifted = np.right_shift(levels, shift)
+        low = levels - np.left_shift(shifted, shift)
+        remainder = np.right_shift(low * wall + remainder, shift)
+        levels = shifted
+    return levels, remainder
+
+
+def integer_mode_iteration(
+    start: np.ndarray,
+    num: np.ndarray,
+    den: np.ndarray,
+    wrap: tuple[bool, bool, bool],
+    amplitude: int,
+    iterations: int,
+) -> np.ndarray:
+    """The board's own operator iterated a FIXED number of times from
+    `start` (a diagnostic of the generator's convergence, `_operator_step`
+    repeated; the generator itself stops by the rule of `iterated_mode`):
+    from any start the power iteration v -> (M + 2 I) v converges to the
+    bound mode (Perron-Frobenius on the nonnegative shifted operator) at
+    the rate 1 - gap / (lambda + 2) per iteration. Reproducible bit for bit
+    on every host; the cost one board step per iteration. Returns the
+    levels after `iterations`, their largest magnitude in [amplitude, 2
+    amplitude)."""
+    levels = start.astype(np.int64).copy()
+    remainder = np.zeros_like(levels)
+    for _ in range(iterations):
+        levels, remainder = _operator_step(levels, remainder, num, den, wrap, amplitude)
+    return levels
+
+
+WORKING_AMPLITUDE = (
+    1 << 28
+)  # the generator's least working amplitude (`iterated_mode`); 2^20 left the muon layer's well hovering at 1.5 times the loader's bound
+
+
+def clock_denominator(amplitude: int) -> int:
+    """The clock's denominator b for a profile at `amplitude` (ALGEBRA.md 9.22
+    (7)): a power of two at least twice the amplitude and at least 2^20 (so
+    that a shallow mode's binding above the band's top is resolved)."""
+    return max(1 << (int(amplitude).bit_length() + 1), 1 << 20)
+
+
+def iterated_mode(
+    world: NatureBeamWorld, number: int, amplitude: int, limit: int = 1 << 20
+) -> tuple[list[int], tuple[int, int], int]:
+    """THE GENERATOR: THE BOARD'S OWN OPERATOR ITERATED IN INTEGERS, WITH THE
+    STOP (the model owner's word of 2026-09-25, 04:10Z, closing record 1898:
+    "the iterated operator becomes the generator itself, with the stop").
+    The block alone in its medium on the world's own board (the family's
+    pair everywhere, the block's pair on its Nodes), from the Nodes'
+    indicator at `amplitude`: every iteration is one step of the operator
+    (`_operator_step`), the levels are scaled to the amplitude at the peak,
+    and the clock a / b is read from the scaled profile p as the operator's
+    quotient over the whole board, a = round(b SUM_i p_i num_i (S_6 p)_i /
+    SUM_i 3 den_i p_i^2) with b = `clock_denominator` (exact for the mode,
+    second order in the rounding, every Node weighing in; the growth at the
+    peak Node alone was READ AND REJECTED: its remainder's noise at a small
+    amplitude, 4096, moves the read by more than a shallow well's binding
+    above the band's top); THE STOP is the first iteration at which the
+    scaled profile with that clock passes the loader's own residual bound
+    (`mode_residual`: |b num_i (S_6 p)_i - 3 den_i a p_i| <= b (3 num_i + 6
+    den_i) at every Node, ALGEBRA.md 9.22 (7)): the next step changes the
+    board no more than the rounding floor, the board only rotating (a float
+    reading of the residual filters the iterations first; the verdict is
+    the loader's integer check alone). THE WORKING AMPLITUDE: the
+    iteration runs at 2^28 or the declared amplitude, whichever is larger
+    (`WORKING_AMPLITUDE`), and the profile checked and written is its
+    rounding at the declared amplitude: the loader's bound is the bound
+    for one rounding of an exact mode, while the iteration's own noise (a
+    unit per Node per step through the six reads) must sit below it, which
+    it does only when the working amplitude is large against the bound's
+    1.5 / p relative width (a side-4 well of [850, 800] on the 24-cube at
+    4096 hovered at 1.2 to 1.7 times the bound for ever and stopped at
+    2^20; the muon layer's well [3200, 3227] of side 14 on the 200 x 200
+    layer hovered at 1.5 times the bound at 2^20 for 2^20 iterations and
+    stops at 36694 iterations at 2^28, the working amplitude
+    since the names' regeneration of 2026-09-25, COMPUTATION). A HOST
+    computation of the generator, reproducible bit for bit (the same
+    integers in, the same out); the loader reads the written integers alone
+    and checks them again. Returns the profile (x-major over the board),
+    the clock [a, b] and the iterations taken; past `limit` iterations
+    without the stop it raises, naming the last residual against the
+    bound (a generator fault or the iteration's floor, never a bound
+    moved)."""
+    from event_universe.events.world import mode_residual
+
+    entry = world.measured[number]
+    definition = entry.block
+    if definition is None:
+        raise ValueError(f"measured[{number}] is no block")
+    shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
+    wrap = world.kind_periodic(entry.family)
+    corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
+    nodes = body_node_mask(shape, corner, definition.extents, wrap)
+    kind = definition.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+    num = np.where(nodes, definition.pair[0], kind[0]).astype(np.int64)
+    den = np.where(nodes, definition.pair[1], kind[1]).astype(np.int64)
+    num_flat = [int(value) for value in num.ravel()]
+    den_flat = [int(value) for value in den.ravel()]
+    b = clock_denominator(amplitude)
+    working = max(amplitude, WORKING_AMPLITUDE)
+    levels = np.where(nodes, working, 0).astype(np.int64)
+    remainder = np.zeros_like(levels)
+    residual = bound = 0
+    # the loader's bound per Node and the operator's integers as floats for the
+    # quick filter below (a filter, never the verdict)
+    num_float = num.astype(np.float64)
+    den_float = den.astype(np.float64)
+    bound_float = float(b) * (3.0 * num_float + 6.0 * den_float)
+    for iteration in range(1, limit + 1):
+        levels, remainder = _operator_step(levels, remainder, num, den, wrap, working)
+        largest = int(np.max(np.abs(levels)))
+        scaled = np.floor_divide(2 * levels * amplitude + largest, 2 * largest)
+        six = six_neighbours(scaled, wrap)
+        profile_float = scaled.astype(np.float64)
+        six_float = six.astype(np.float64)
+        quotient = float(np.sum(profile_float * num_float * six_float)) / float(
+            np.sum(3.0 * den_float * profile_float * profile_float)
+        )
+        reading = np.abs(
+            float(b) * num_float * six_float - 3.0 * den_float * (b * quotient) * profile_float
+        )
+        if not bool(np.all(reading <= bound_float * (1.0 + 1e-9))):
+            continue
+        # the exact integers: the clock as the quotient over the board, then the
+        # loader's own check
+        flat = [int(value) for value in scaled.ravel()]
+        six_flat = [int(value) for value in six.ravel()]
+        numerator = sum(p * n * s for p, n, s in zip(flat, num_flat, six_flat, strict=True))
+        denominator = sum(3 * d * p * p for p, d in zip(flat, den_flat, strict=True))
+        a = (2 * b * numerator + denominator) // (2 * denominator)
+        residual, bound, _ = mode_residual(flat, num_flat, den_flat, (a, b), shape, wrap)
+        if residual <= bound:
+            return flat, (a, b), iteration
+    raise ValueError(
+        f"the generator's iteration for measured[{number}] did not stop within "
+        f"{limit} iterations: the last residual {residual} against the bound {bound} (the "
+        f"amplitude {amplitude}; the iteration's floor or a generator fault; nothing written)"
+    )
+
+
+def bound_mode(world: NatureBeamWorld, number: int) -> np.ndarray:
+    """The bound mode's shape of a block on the world's own board (its
+    largest entry 1), over the whole board: the seed a pin world declares as
+    integers at its amplitude (MASSIVE_RECORD.md section 11 item 7, the
+    reader of record and the seed; a HOST computation of the generator,
+    never of the engine's run); `accurate_mode`'s vector."""
+    return accurate_mode(world, number)[1]
 
 
 def profile_check(world: NatureBeamWorld, number: int) -> tuple[int, int] | None:
-    """The GAMEBOARD check at load of a block seeded with an integer
+    """A GAMEBOARD diagnostic at load of a block seeded with an integer
     profile: the largest deviation, in units, of the file's integers from
-    the module's mode at the file's amplitude, with that amplitude; None
-    for a flat seed (a comparison printed, never read by the state)."""
+    the eigensolver's mode at the file's amplitude, with that amplitude;
+    None for a flat seed (a comparison printed, never read by the state;
+    the generator's iterated profile sits within its floor, about 1 / gap
+    units, of the eigensolver's; the law's check is the loader's residual
+    bound)."""
     definition = world.measured[number].block
     if definition is None or definition.profile is None:
         return None
@@ -283,23 +487,24 @@ def profile_check(world: NatureBeamWorld, number: int) -> tuple[int, int] | None
 
 def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     """The reading of one block: its mode on the world's own board with its
-    kind's faces, alone in the medium (the other blocks' wells not carried:
+    world's faces, alone in the medium (the other blocks' wells not carried:
     each block is checked on its own)."""
     entry = world.measured[number]
     definition = entry.block
     if definition is None:
-        raise ValueError(f"{BEAM_LAW}: measured[{number}] is no block")
+        raise ValueError(f"measured[{number}] is no block")
     family = world.families[entry.family]
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
-    cells = block_cells(shape, corner, definition.side, wrap)
-    ratio_out = family.pair[1] / family.pair[0]
+    nodes = body_node_mask(shape, corner, definition.extents, wrap)
+    kind = definition.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+    ratio_out = kind[1] / kind[0]
     ratio_in = definition.pair[1] / definition.pair[0]
-    ratio = np.where(cells, ratio_in, ratio_out)
-    seed = np.where(cells, 1.0, 0.0) + 1e-3 * np.random.default_rng(0).standard_normal(shape)
+    ratio = np.where(nodes, ratio_in, ratio_out)
+    seed = np.where(nodes, 1.0, 0.0) + 1e-3 * np.random.default_rng(0).standard_normal(shape)
     lambda_max, iterations = largest_eigenvalue(ratio, wrap, seed)
-    omega_0 = math.acos(min(1.0, family.pair[0] / family.pair[1]))
+    omega_0 = math.acos(min(1.0, kind[0] / kind[1]))
     cosine = lambda_max / 2.0
     omega_b = math.acos(max(-1.0, min(1.0, cosine)))
     eps = 1.0 - (omega_b / omega_0) ** 2 if omega_0 > 0 else 0.0
@@ -308,17 +513,20 @@ def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     extent = 1.0 / kappa if kappa > 0.0 else math.inf
     axes = []
     for axis, name in enumerate(("x", "y", "z")):
-        if wrap[axis] and shape[axis] < definition.side:
+        side = definition.extents[axis]
+        if wrap[axis] and shape[axis] <= side:
             # A FOLDED axis (a layer or a chain, MASSIVE_RECORD.md section 11
             # item 7: the block wraps onto itself and the rule reads the
             # Node itself across it, a_U = a_D = a_now): no face, no tail,
-            # nothing for the rule to compare on that axis.
+            # nothing for the rule to compare on that axis. A body whose side
+            # equals the axis's extent spans it the same way (an emitter body
+            # of side 1 on a chain or a layer, BUILD.md section 26).
             continue
         if wrap[axis]:
             have = float(shape[axis])
-            need = definition.side + SIDE_EXTENTS[definition.margin] * extent
+            need = side + SIDE_EXTENTS[definition.margin] * extent
         else:
-            have = float(min(corner[axis], shape[axis] - corner[axis] - definition.side))
+            have = float(min(corner[axis], shape[axis] - corner[axis] - side))
             need = FACE_EXTENTS[definition.margin] * extent
         axes.append((name, wrap[axis], have, need))
     return MarginReading(
@@ -345,42 +553,45 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
     for number, entry in enumerate(world.measured):
         if entry.block is None or not world.families[entry.family].massive_kind:
             continue
-        if entry.block.cavity:
-            # A cavity (form (I)) binds its record by its mirror faces: its
-            # mode has no tail in the medium and the rule has no extent to
-            # compare; the control world of MASSIVE_RECORD.md section 4.
-            continue
         if entry.block.seed == 0:
             # A silent block (seed 0, no own record) holds nothing to bind: a
             # take line (an absorbing block with the kind's own pair, item 6b)
-            # takes at its cells and carries no mode, so the threshold and
+            # takes at its Nodes and carries no mode, so the threshold and
             # the extent have no record to read.
             continue
-        kind = world.families[entry.family].pair
+        kind = entry.block.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
         if entry.block.pair[0] * kind[1] < entry.block.pair[1] * kind[0]:
             # A barrier (a raised pair, the matter wall of DECLARATIONS.md
             # section 15 M1-6) binds nothing: no mode, no margin.
             continue
         reading = block_margin(world, number)
         found.append(reading)
+        if reading.runaway:
+            raise ValueError(
+                f"measured[{number}]: the block's mode is a runaway (2 cos omega_b = "
+                f"{reading.lambda_max:.6f} at or above 2: no oscillation, a level growing by "
+                f"{reading.lambda_max / 2 + math.sqrt(reading.lambda_max**2 / 4 - 1):.4f} per "
+                "interval; the well is too deep for its board, the folded axes' self-reads "
+                "counting fully on a chain or a layer; BUILD.md section 26)"
+            )
         if not reading.bound:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{number}]: the block's mode is not bound (2 cos omega_b = "
+                f"measured[{number}]: the block's mode is not bound (2 cos omega_b = "
                 f"{reading.lambda_max:.6f} at or below the gap's 2 num / den = "
-                f"{2 * world.families[entry.family].pair[0] / world.families[entry.family].pair[1]:.6f}; "
+                f"{2 * kind[0] / kind[1]:.6f}; "
                 "the well is too shallow or the side too small for its pair, MASSIVE_RECORD.md "
                 "section 4's threshold table)"
             )
         for axis, periodic, have, need in reading.axes:
             if have < need:
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}]: below the margin rule on {axis} for a "
+                    f"measured[{number}]: below the margin rule on {axis} for a "
                     f"{reading.kind} world (the mode's extent {reading.extent:.2f} Links): "
                     + (
                         f"the periodic side {have:.0f} is less than the block's side "
                         f"{reading.side} plus {SIDE_EXTENTS[reading.kind]:.0f} extents = {need:.1f}"
                         if periodic
-                        else f"the cells lie {have:.0f} Links from a zero face, less than "
+                        else f"the Nodes lie {have:.0f} Links from a zero face, less than "
                         f"{FACE_EXTENTS[reading.kind]:.0f} extents = {need:.1f}"
                     )
                 )
@@ -391,6 +602,125 @@ def relaxation_time(reading: MarginReading) -> float:
     """The mode's relaxation time 1 / (omega_0 - omega_b) in intervals
     (DECLARATIONS.md section 8; COMPUTATION)."""
     return 1.0 / (reading.omega_0 - reading.omega_b)
+
+
+def period_of(reading: MarginReading) -> int:
+    """The period P of the body's mode in intervals, the nearest integer to
+    2 pi / omega_b (ALGEBRA.md 9.17 (5) item 1; COMPUTATION from the
+    module's own omega_b); at least 1."""
+    if reading.omega_b <= 0.0:
+        return 1
+    return max(1, int(round(2.0 * math.pi / reading.omega_b)))
+
+
+def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
+    """The excited record's norm T, one period's action P e_c (ALGEBRA.md
+    9.17 (7) (e) and (f) in the flux's units of 9.19 (3)): the share e_c of
+    the record's conserved form at the body's centre Node, summed over
+    `period` intervals of its own mode advanced ALONE (the body on its board
+    with no other measured event, no set and no emitter, the rule exact on
+    integers; constant for the exact mode, wobbling with the seed's
+    rounding transient), times the centre Node's pace (the body's own units,
+    item 36). The generator writes it as the emitter's `norm`, under the
+    input stamp (a HOST computation, not the law; the count of intervals
+    reads no norm since item 33)."""
+    from event_universe.events.detector_law import DetectorLawSimulation
+
+    entry = world.measured[number]
+    definition = entry.block
+    if definition is None:
+        raise ValueError(f"measured[{number}] is no block")
+    alone = dataclasses.replace(
+        world,
+        measured=(
+            dataclasses.replace(
+                entry, block=dataclasses.replace(definition, emitter=None, receiver=None)
+            ),
+        ),
+        detectors=(),
+    )
+    simulation = DetectorLawSimulation(alone)
+    block = simulation.blocks[0]
+    total = Fraction(0)
+    for _ in range(period):
+        simulation.step()
+        own = block.own
+        assert own is not None
+        total += Fraction(*simulation.form_share(own, simulation.centre_mask(block)))
+    # THE BODY'S OWN UNITS (ALGEBRA.md 9.57 (1); item 44): the share's denominator at the
+    # centre Node is the rule's coefficient on the six reads there, R = 2 p^2 num (the pace p
+    # of item 36 under the first-order rule, HISTORY); T is the summed share in those units,
+    # the numerator of the exact rational, whole
+    return int(total.numerator) if total.denominator != 1 else int(total)
+
+
+def excitation_action(world: NatureBeamWorld, number: int, period: int) -> Fraction:
+    """The excited record's action over one period as the exact rational (the
+    Fraction whose numerator `excitation_norm` returns): the summed share of
+    the body's own conserved form at its centre Node over `period` intervals
+    advanced alone, in the form's units of ALGEBRA.md 9.19 (3). THE POINT
+    EMITTER (9.71 (1) (d); BUILD.md section 26 item 50) closes its window when
+    the given family's norm that left the body's Node reaches it, so the generator
+    writes its denominator beside the norm (`norm_denominator`)."""
+    from event_universe.events.detector_law import DetectorLawSimulation
+
+    entry = world.measured[number]
+    definition = entry.block
+    if definition is None:
+        raise ValueError(f"measured[{number}] is no block")
+    alone = dataclasses.replace(
+        world,
+        measured=(
+            dataclasses.replace(
+                entry, block=dataclasses.replace(definition, emitter=None, receiver=None)
+            ),
+        ),
+        detectors=(),
+    )
+    simulation = DetectorLawSimulation(alone)
+    block = simulation.blocks[0]
+    total = Fraction(0)
+    for _ in range(period):
+        simulation.step()
+        own = block.own
+        assert own is not None
+        total += Fraction(*simulation.form_share(own, simulation.centre_mask(block)))
+    return total
+
+
+def composed_largest_eigenvalues(world: NatureBeamWorld) -> dict[tuple[int, tuple[int, int]], float]:
+    """The largest eigenvalue of the COMPOSED operator of each massive family
+    at each of its bodies' kinds (ALGEBRA.md 9.19 (2); 9.91 (7): the bodies of
+    one kind of a family share the operator, their rest pair outside and every
+    body's well of the family in one read matrix on the world's faces); the
+    stability condition is read on it, below 2, refused at or above (a
+    runaway mode of the whole board)."""
+    found: dict[tuple[int, tuple[int, int]], float] = {}
+    shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
+    for index, family in enumerate(world.families):
+        if not family.massive_kind:
+            continue
+        kinds: list[tuple[int, int]] = []
+        for entry in world.measured:
+            if entry.block is not None and entry.family == index and entry.block.kind not in kinds:
+                kinds.append(entry.block.kind)
+        for kind in kinds:
+            ratio = np.full(shape, kind[1] / kind[0])
+            seed = 1e-3 * np.random.default_rng(0).standard_normal(shape)
+            bodies = False
+            for entry in world.measured:
+                definition = entry.block
+                if definition is None or entry.family != index or definition.seed == 0:
+                    continue
+                corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
+                nodes = body_node_mask(shape, corner, definition.extents, world.kind_periodic(index))
+                ratio = np.where(nodes, definition.pair[1] / definition.pair[0], ratio)
+                seed = seed + np.where(nodes, 1.0, 0.0)
+                bodies = True
+            if not bodies:
+                continue
+            found[(index, kind)], _ = largest_eigenvalue(ratio, world.kind_periodic(index), seed)
+    return found
 
 
 def check_body_conditions(
@@ -417,6 +747,19 @@ def check_body_conditions(
     COMPUTATION."""
     lines: list[str] = []
     blocks = simulation.block_by_number
+    for (index, kind), largest in composed_largest_eigenvalues(world).items():
+        if largest >= 2.0:
+            raise ValueError(
+                f"the family {world.families[index].name!r} at the kind {list(kind)}: the "
+                f"composed operator's largest eigenvalue {largest:.6f} is at or above 2 (ALGEBRA.md "
+                "9.19 (2): a mode of the whole board grows without bound; the bodies' wells together "
+                "are too deep for the board)"
+            )
+        lines.append(
+            f"operator (COMPUTATION): the family {world.families[index].name!r} at the kind "
+            f"{list(kind)}: the composed operator's largest eigenvalue 2 cos omega = {largest:.6f}, "
+            "below 2"
+        )
     for reading in readings:
         number = reading.number
         entry = world.measured[number]
@@ -424,36 +767,77 @@ def check_body_conditions(
         assert definition is not None
         own = blocks[number].own
         if own is None:
-            raise ValueError(
-                f"{BEAM_LAW}: measured[{number}]: a bound body without its own record at load"
-            )
+            raise ValueError(f"measured[{number}]: a bound body without its own record at load")
         amplitude = int(definition.seed)
-        expected = np.rint(bound_mode(world, number) * amplitude).astype(np.int64)
+        if definition.profile is None:
+            raise ValueError(
+                f"measured[{number}]: a bound body declares its seed as the "
+                "generator's profile (the operator iterated with the stop, `mode_profile` of the "
+                "massive record generator); a flat scalar seed is no mode"
+            )
+        # the initial state is the file's profile at both levels, bit for bit; that
+        # the profile IS the mode within the rounding is the loader's own residual
+        # check (record 1886), made before this
+        expected = np.array(definition.profile, dtype=np.int64).reshape(world.shape)
         for level_name, level in (("now", own.now), ("before", own.before)):
             found = np.asarray(level, dtype=np.int64)
             differing = np.nonzero(found != expected)
             if differing[0].size:
                 x, y, z = (int(differing[axis][0]) for axis in range(3))
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}]: the body's initial state is not the bound "
-                    f"mode's integer profile at the amplitude {amplitude}: at the Node ({x}, {y}, "
-                    f"{z}) the level `{level_name}` holds {int(found[x, y, z])} where the mode gives "
-                    f"{int(expected[x, y, z])} ({int(differing[0].size)} Nodes differ; the seed is "
-                    "written as the margin module's own integers over the whole board, "
-                    "`mode_profile` of the massive record generator, ALGEBRA.md 8.7: the standing "
-                    "start exact; the model owner's word of 2026-09-24, 16:48Z)"
+                    f"measured[{number}]: the body's initial state is not the file's "
+                    f"profile at the amplitude {amplitude}: at the Node ({x}, {y}, {z}) the level "
+                    f"`{level_name}` holds {int(found[x, y, z])} where the profile gives "
+                    f"{int(expected[x, y, z])} ({int(differing[0].size)} Nodes differ; ALGEBRA.md "
+                    "8.7: the standing start exact; the model owner's word of 2026-09-24, 16:48Z)"
                 )
         lines.append(
-            f"seed (COMPUTATION): block {number}: the initial state is the bound mode's integer "
-            f"profile at the amplitude {amplitude} at both levels, bit for bit "
-            f"({int(np.count_nonzero(expected))} Nodes nonzero)"
+            f"seed (COMPUTATION): block {number}: the initial state is the file's profile at the "
+            f"amplitude {amplitude} at both levels, bit for bit "
+            f"({int(np.count_nonzero(expected))} Nodes nonzero; the profile the mode within the "
+            "loader's residual bound, record 1886)"
         )
+        emitter = definition.emitter
+        if emitter is not None:
+            # (c) THE EXCITED RECORD'S NORM (ALGEBRA.md 9.17 (5) item 1, 9.19
+            # (3)): the emitter's `period` and `norm` are the generator's
+            # integers; the norm is recomputed here by advancing the seed
+            # alone and a mismatch refuses the world; the period is printed
+            # against the module's 2 pi / omega_b (COMPUTATION)
+            if emitter.period is None or emitter.norm is None:
+                raise ValueError(
+                    f"measured[{number}].emitter declares no `period` and `norm`: the "
+                    "excited record's period P (the nearest integer to 2 pi / omega_b) and the "
+                    "one-way flux into the body's centre Node over P intervals, the generator's "
+                    "integers (ALGEBRA.md 9.17 (5) item 1; `excite_on_the_mode` of the massive "
+                    "record generator)"
+                )
+            recomputed = excitation_norm(world, number, emitter.period)
+            if recomputed != emitter.norm:
+                raise ValueError(
+                    f"measured[{number}].emitter.norm {emitter.norm} is not the one-way "
+                    f"flux into the body's centre Node over its period {emitter.period} advanced "
+                    f"alone, {recomputed} (ALGEBRA.md 9.17 (5) item 1: the generator's integer, "
+                    "recomputed at load)"
+                )
+            lines.append(
+                f"norm (COMPUTATION): block {number}: the excited record's norm {emitter.norm} is the "
+                f"one-way flux into its centre Node over the period {emitter.period} advanced alone, "
+                "bit for bit; 2 pi / omega_b = "
+                f"{2.0 * math.pi / reading.omega_b if reading.omega_b > 0 else math.inf:.2f} intervals"
+            )
+            if emitter.given is not None:
+                lines.append(
+                    f"given (COMPUTATION): block {number}: the given train of "
+                    f"{len(emitter.given.now)} Nodes with the norm {emitter.given.norm} on the "
+                    "vacuum (the generator's integers, ALGEBRA.md 9.17 (6a); no table in the engine)"
+                )
         relaxation = relaxation_time(reading)
         if any(int(component) != 0 for component in entry.momentum):
             need = RELAXATION_TIMES * relaxation
             if definition.ramp < need:
                 raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}]: the ramp {definition.ramp} is below "
+                    f"measured[{number}]: the ramp {definition.ramp} is below "
                     f"{RELAXATION_TIMES} relaxation times of its own well (1 / (omega_0 - omega_b) = "
                     f"{relaxation:.1f} intervals, {RELAXATION_TIMES} times {need:.0f}; "
                     "DECLARATIONS.md section 8): a pushed body declares `ramp` at least that"

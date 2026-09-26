@@ -1,0 +1,76 @@
+{
+ "law": "beam",
+ "model_id": "beam-massive-record-cavity-24-v1",
+ "shape": [
+  48,
+  48,
+  48
+ ],
+ "boundary": {
+  "x": "periodic",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ticks": 3000,
+ "age_bound": 1048576,
+ "K": 1073741824,
+ "N": 64,
+ "release": [
+  1,
+  128
+ ],
+ "suspension": 0,
+ "clock_stamp": true,
+ "detector_law": true,
+ "massive_record": true,
+ "amplitude_bound": 4294967296,
+ "directions": [],
+ "families": [
+  {
+   "name": "light",
+   "quantum": 1,
+   "phase_per_link": [
+    77,
+    25
+   ]
+  },
+  {
+   "name": "matter",
+   "quantum": 1,
+   "pair": [
+    800,
+    809
+   ]
+  }
+ ],
+ "measured": [
+  {
+   "position": [
+    12,
+    12,
+    12
+   ],
+   "family": "matter",
+   "amount": 1,
+   "phase": 0,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "fixed": true,
+   "side": 24,
+   "pair": [
+    800,
+    809
+   ],
+   "cavity": true,
+   "margin": "control"
+  }
+ ],
+ "detectors": [],
+ "input": {
+  "law": "detector-law algebra 9.25 (2026-09-25)",
+  "hash": "14f3e704ea65b8b8b1d16eb742ce3e64376c65ba28ec68665ffed8074ffc3f2a"
+ }
+}

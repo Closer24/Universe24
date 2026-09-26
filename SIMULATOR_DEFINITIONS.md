@@ -337,7 +337,7 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
      no own record (the receding index's medium body, pushed at `start`
      3000 with a momentum and no ramp) has no mode to lag, no margin
      reading and no ramp check, as the margin module skips it; test g on
-     `index_moving_long_k3_away.json` loads it with no reading. ON THE
+     `receding_index_speed_third_away.json` loads it with no reading. ON THE
      LANCZOS START (the Boss's question of 16:35Z): the margin module
      starts its iteration from a fixed-seed numpy random vector (HOST,
      outside the law); the converged mode is the operator's own (unique up
@@ -361,12 +361,12 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   the well [3200, 3227] on [3200, 3236]; `margin` pin; the seed a PROFILE
   of 40000 integers, the module's own mode at its amplitude (compared, not
   refused, at the runner's start); at rest, no ramp: every condition met.
-  The deep well in motion (`deep_well_k3_40.json`): the square of edge 40
+  The deep well in motion (`deep_well_clock_speed_third_40.json`): the square of edge 40
   at [44, 44] on 128 x 128 periodic, whole; the well [800, 800] on [800,
   809]; `margin` control; the seed FLAT, 1048576 on the cells (condition 5
   NOT met as the owner's word reads it: the record relaxes from the flat
   seed); the ramp 1500 against the relaxation 11 (136 times): met.
-  The bound clock's second term, the boxes (`moving_20.json` and its rest
+  The bound clock's second term, the boxes (`boxed_clock_side_20_moving.json` and its rest
   world): the cube of edge 20 at [22, 22, 22] in 64^3 periodic, whole; the
   well full-depth; `margin` control; the seed FLAT (the loader's default);
   the ramp 1500 against the relaxation 26 (57 times): met; condition 5 NOT
@@ -374,15 +374,15 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   the chain of 673 (periodic for the matter kind, closed for light: the
   per-kind faces, HISTORY, one border for every family, record 1875), whole;
   the well [800, 800]; `margin` pin by default; the seed FLAT 52428800; no
-  ramp; condition 5 NOT met. The Sagnac ratio (`sagnac_k3.json` and its
+  ramp; condition 5 NOT met. The Sagnac ratio (`sagnac_light_times_speed_third.json` and its
   rest world): the segments [700, 712) and [772, 784) on the chain of 3000
   (x open for the matter kind), whole; `margin` pin; the seeds FLAT
   52428800; the ramp 1500 against the relaxation 17 (88 times): met;
-  condition 5 NOT met. The moving lamp's redshift (`redshift_k3.json` and
+  condition 5 NOT met. The moving lamp's redshift (`moving_emitter_redshift_speed_third.json` and
   its control): the segment [2994, 3006) on the chain of 4096, whole; the
   well [314, 315] on [156, 157]; `margin` pin; the seed FLAT 52428800; the
   ramp 1500 against the relaxation 90 (16 times): met; condition 5 NOT
-  met. The muon's form in motion (`layer_pin_k3_14.json`): the same square
+  met. The muon's form in motion (`muon_moving_clock_speed_third_14.json`): the same square
   and profile as at rest; pushed to k = 3 over the ramp 10000, which is 8.6
   relaxation times by the margin module on its own 200 x 200 layer
   (omega_b 0.14844 against omega_0 0.14930, the relaxation 1165 intervals;
@@ -390,7 +390,7 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   the rule's ten stays and the ramp moves is the owner's word (put to him
   by the Boss, 14:45Z; his "2 yes" of 15:05Z: the ramp to ten relaxation
   times or more, regenerated on body-check). The box of edge 28
-  (`moving_28.json` and `rest_28.json`, the same 64^3 board): the seed FLAT
+  (`boxed_clock_side_28_moving.json` and `boxed_clock_side_28_at_rest.json`, the same 64^3 board): the seed FLAT
   (the loader's default); the ramp 1500 against the relaxation 56.8 (26
   times): met; condition 5 NOT met. The receding index at k = 3 and k = 4
   (`index_moving_long_k{3,4}_away.json`): the segment [1500, 1524) on the

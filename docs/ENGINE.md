@@ -1,8 +1,13 @@
 # The engine
 
-The one engine of Universe24 is the engine of the Beam Law (`beam-v1`;
+The one engine of Universe24 has no law's name and no version (ALGEBRA.md
+9.90 (1); the model owner's records 2103 and 2107; BUILD.md section 26 item
+70): the world keys `law`, `model_id` and `detector_law` are refused by name,
+the file's stamp is `stamp` {hash}, the start file holds `mode` alone, and a
+refusal names the file and the key. The paragraphs below on the Beam Law
+(`beam-v1`) are the record of the ray law, cancelled (docs/CANCELLED_WORLDS.md;
 [Highlights 5.4](HIGHLIGHTS.md#54-the-detector), "DECIDED: the law of the
-ray", the model owner, 2026-09-19). Its design and implementation contract is
+ray", the model owner, 2026-09-19). Its design and implementation contract was
 [the Beam Law](BEAM_LAW.md): the row (the record of an event in transit,
 `NatureBeam` in the code; "ray" its name until the rows-and-bodies decision
 of 2026-09-21, record 183; [the glossary](TERMINOLOGY.md)), the one
@@ -146,7 +151,7 @@ configuration. The independent expectations of the topology are pinned in
 [test expectations](TEST_EXPECTATIONS.md#the-flight) (`test_nature_beam_flight` (d)
 and (e)).
 
-## The Beam Law (`beam-v1`)
+## The Beam Law (`beam-v1`), the ray law's record (cancelled, docs/CANCELLED_WORLDS.md; the engine has no law's name, item 70)
 
 **One thing.** A row, with a place (a Node) and a record: a direction (an
 index into the world's direction table D), an age (the count of intervals
@@ -258,7 +263,7 @@ turn, the owed count, the release and the lamp keep `by_clock`, the same
 count where the rate is constant); the drive of every axis advances at every such self-creation,
 and a later axis whose drive reaches its D in the interval of an earlier
 axis's step loses that Link, its D subtracted, as the frame lost it
-before; the model owner's D1 of 2026-09-19 and the label along the unit
+before; the model owner's push-width decision of 2026-09-19 and the label along the unit
 vector of the same day,
 [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 5
 and notes 15 and 23; one unit of net flow, the label Q M, gives the speed
@@ -284,7 +289,7 @@ the rule) is a contact when its destination holds another measured
 event, an escape when it leaves through an open face, both before the
 law: a row given at a contact makes its first Link in the interval of
 the give, and the rows a body releases in the interval of a step are
-born at its destination with the phase turned at the Link.
+given at its destination with the phase turned at the Link.
 A measured event on a set of Nodes (`span`, [BEAM_LAW note 30](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 `Measured.span`, `Measured.nodes`, `world.body_nodes`) is one record on
 all of them, and since the four unifications (2026-09-20, (3),
@@ -410,8 +415,8 @@ passage and the push of a `read` moves the remainder line by nothing;
 the residue leaves with the row when it is absorbed (the click's push,
 the entry's momentum; the `share` beside the `push` on the click line)
 or comes home, to the remainder line with the rest of the label, and the
-line gives the born labels less the recoil at the recoil of a paid
-re-creation (the born rows' shares, a lamp's birth and a split alike),
+line gives the given labels less the recoil at the recoil of a paid
+re-creation (the given rows' shares, a lamp's giving click and a split alike),
 while the transit line carries the rows' whole labels; so measured +
 transit + escaped + cancelled + remainder moves only by the pushes, the
 turns and the escapes, and the remainder line reads what left with
@@ -475,8 +480,8 @@ the pair `[1, K]`, or since 2026-09-20 a pair `[n, d]` of phase steps per
 unit of content per self-creation like `release`, the turn `by_clock(age,
 content x n, d)`, refused at half the circle, `NatureBeamWorld.turn_rate`;
 the record carries the key as declared; every example world declares the
-integer); `N` (64 by
-default, a power of two from 2 through 65536, the tables' one bound
+integer); `N` (REQUIRED, no default since 2026-09-25, BUILD.md section 26
+item 28, the 64 of the first worlds HISTORY and written in each; a power of two from 2 through 65536, the tables' one bound
 `core.phase.MAX_PHASE_STEPS`, raised from 4096 on 2026-09-20 by the model
 owner so that a table at 2N exists for every N up to 32768); `release` `[n, d]` per
 direction per self-creation per unit of content of a free family;
@@ -618,8 +623,21 @@ reads as it did, byte for byte, `tests/test_flow_link.py` (a)); the amplitude la
 (`amplitude-v1`, [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation); the record form is the law since stage (vii)
 step 4, the one click, MIGRATION (vii-4), and the world key `amplitude`
 of stages (i) to (vii-3) is deleted, a world that declares it refused
-naming MIGRATION): every lamp births records; every row of a record
-carries a `record`, a `branch`, a `multiplicity` and its birth phase `u`
+naming MIGRATION): every lamp giving clicks records (under the detector law, since
+BUILD.md section 26, the lamp is refused and an emitter body of a massive
+kind giving clicks them, its own standing record ticking on a count of intervals: SINCE THE RESEED
+RETIRED (ALGEBRA.md 9.43 (3) and (4), 9.44 (5) (c); BUILD.md section 26 item 33) a click sets
+the given rows, lowers the stock and the content and leaves the body's own record as it is
+(its levels, phase and remainders never rewritten; the reseed of item 29 and the click rule
+on the running total of item 24 HISTORY); the residue u is the own record's remainder at the
+body's first shell Node in the declared order (the first Node in x-major order with a Port),
+read at the click on the body's wheel there, the given record's residue and the next
+excitation's alike; the next click fires at the first count t of intervals since the read
+with 2 W t >= (2 u + 1) P, P the emitter's `period` (the generator's integer, required), so
+each giving click falls ceil((2 u + 1) P / (2 W)) intervals after its read, at least one; the first
+residue after the load is read after the body's first advance; the giving line carries
+`wait`, `period` and `read_node` beside `u` and `W`); every row of a record
+carries a `record`, a `branch`, a `multiplicity` and its giving click phase `u`
 (a row of no record carries none: a declared row, a free family's rows);
 the merge is the normal form that cancels antiphase rows of one record
 (`NatureBeamStore.merge` with the circle's N; what it removed on the
@@ -656,11 +674,11 @@ the label-table entry of the chosen row's direction into its momentum (a
 chosen face or the border: the face's `clicks`, `content` and `momentum`,
 no body formed), the chosen row read by the ladder's rungs over the
 waiting units per direction at the Node (`amplitude.node_choice`, the
-same rungs that chose the Node within the cell), and the rest of the
+same rungs that chose the Node within the detector), and the rest of the
 record's waiting goes to the `cancelled` lines; a row of no record has no
 completion and is placed at its arrival; the `gather` line's `content`
 and `momentum` are f_F x what the chosen rows brought plus q_F and the
-one label, the `click` line as today; a massive birth whose turn is not 1
+one label, the `click` line as today; a massive giving click whose turn is not 1
 is refused naming the lamp; the inverse interval is refused with the key;
 `run.json` carries `massive_rows` as declared, the identity under
 `hypotheses` when it is true and per family `massive` and
@@ -678,7 +696,7 @@ weight at the relative speed of 2026-09-20, `doppler-v1`, deleted on
 a moving reader's Doppler is the count of the rows it crosses; a world
 that declares the key is refused as an unknown key, MIGRATION); the keys of the hand (since 2026-09-20, `hand-v1`,
 [BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
-`hand`, -1 or +1, on a family (every row born of it carries it), on a
+`hand`, -1 or +1, on a family (every row given of it carries it), on a
 lamp (a circularly polarised lamp of a family without a hand; a chiral
 family's lamp may repeat the family's value only), on a transit row (a
 row of a family without one) and on a table entry (the parity filter:
@@ -687,7 +705,7 @@ as outside a window; refused on `pass`), a third entry per branch of a
 lamp's `branches` (the hand the label means; a family carries its hand as
 the row's column or as a label bit's meaning, never both) and `axis` on
 a measured event (one of the six headings as a vector, the axial record
-the right-hand rule reads at the birth of every product of its
+the right-hand rule reads at the giving click of every product of its
 `become`: a product of hand h leaves only on the event's directions with
 sign(A . u_d) = h, a left-handed product against the axis; an empty set
 refused at load); absent everywhere, no row carries a hand and every
@@ -727,7 +745,7 @@ a pair `[n, d]`, the phase per interval of age (the design's frequency,
 the owner's unification (1): a row of the family turns `by_clock(age, n,
 d)` at every walk that advances its age, carried through a re-emission,
 so that two paths of one record read their difference in intervals at the
-click (the row's own floor per segment from its age 0 at its birth or
+click (the row's own floor per segment from its age 0 at its giving click or
 re-emission, sum_j floor(A_j n / d) over a path's segments, the design's
 one floor at the click when d = 1 and within one step per segment
 otherwise; the default stays the integer 0, not the lamp's own turn: a
@@ -752,7 +770,7 @@ unit], ...], "crowd": c}`, fired at the self-creation whose clock reaches
 `at` (the age against the key, first at `at`, then at every multiple of
 it) while the count the clock read is below `crowd` (optional, an integer
 from 0; absent, no gate): the event becomes an event of `into`, the
-products, paid from what it holds of its own family, are born as a
+products, paid from what it holds of its own family, are given as a
 re-release is with the recoil over all of them, and the key is consumed),
 `directions` (the
 directions it releases and re-emits on, by vector or by index into D; the
@@ -766,7 +784,7 @@ with `reads` one of `scalar`, `outside`, `here`, `vector`,
 of the presence), and on a `become` entry (the click trigger of the
 transformation, since 2026-09-20, [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iii)) its `into` and `products`: the
 arrival clicked as `measure` clicks it and the same transformation fired,
-its products born at the reader's next self-creation, the entry consumed;
+its products given at the reader's next self-creation, the entry consumed;
 the table generated from the keys by `world.default_table` (a
 free family read, a paid one measured, no window) and the world declaring
 only the entries that differ, `rule` optional in the object form, an entry
@@ -819,23 +837,23 @@ chose that set; a row of a record taken home is re-created with its
 columns and its multiplicity kept, apportioned whole as a row of no
 record is, no split at the home); `lamp` `{rate: [n, d], wheel: [r, W],
 directions, phase_window, phase_width}` on a measured event of a paid
-family, its window a number, its `wheel` the birth wheel's rate (required
+family, its window a number, its `wheel` the giving click wheel's rate (required
 since 2026-09-21, [BEAM_LAW note 46](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
 u = ordinal x r mod W the record's coordinate on the ladder, [1, N] the
-count of births mod N); also `turns`, a phase step
-per direction the born row carries beyond the clock's phase; a
-self-creation with a release births as many records as the rate says
+count of giving clicks mod N); also `turns`, a phase step
+per direction the given row carries beyond the clock's phase; a
+self-creation with a release giving clicks as many records as the rate says
 units per direction (`by_clock(age, n, d)`, the crowd form's count, as
 many as the lamp can pay whole; stage (vii); until then the rate [1, 1]
 alone), each one row of amount 1 per direction with the multiplicity the
 directions' count, the record's identity the lamp's number x 2^32 + the
-birth's ordinal at the lamp, `nature_beam.record_identity`, the birth
-phase u the lamp's count of births less one, mod N (the record's own
-field on its rows, the column `birth`, uniform over births whatever the
+giving click's ordinal at the lamp, `nature_beam.record_identity`, the giving click
+phase u the lamp's count of giving clicks less one, mod N (the record's own
+field on its rows, the column `giving click`, uniform over giving clicks whatever the
 lamp's turn; a rebirth's u the re-emitter's own count; the K finding of
-2026-09-20, stage (vii) step 2), the born rows' phase u plus the
+2026-09-20, stage (vii) step 2), the given rows' phase u plus the
 direction's turn; and `branches`, the joint labels
-of the birth with their integer weights (`[[label, weight], ...]`, the
+of the giving click with their integer weights (`[[label, weight], ...]`, the
 labels distinct and below 2^arms, the bit k of a label its value on arm
 k; [[0, 1]] by default) and `arms`, the count of directions that are
 separate quanta (1 by default, dividing the directions, which the arms
@@ -843,7 +861,7 @@ share in order): per direction one row per label of amount the label's
 weight, the multiplicity the paths per arm times the norm (the sum of
 the squared weights), the row's `branch` its arm x 2^32 + its label; a
 lamp that cannot pay every label's weight on every direction refuses the
-birth naming the lamp); a table entry's `turn`
+giving click naming the lamp); a table entry's `turn`
 (0 by default, 0 .. N - 1, refused on `pass`): the
 phase step on the label-1 column of the rotation a `sum` set reads at
 its window's setting s, `U_s = [[C'[s], S'[s] v(t)], [-S'[s], C'[s]
@@ -859,7 +877,7 @@ signs say (from a clear bit the set bit takes a half turn; from a set bit
 both take the turn t), not a click; a `rerelease` entry's `gate` `{kind:
 "cnot", hold, parties, control}` (the design's section
 10): the rows of `parties` records of distinct lamps pending at the entry
-(one per emitter, the earliest born; with `hold`, true by default, held
+(one per emitter, the earliest given; with `hold`, true by default, held
 until rows of `parties` distinct emitters are pending, read from the
 rows alone; without it the rows present) join into the record of the
 control, the record whose rows arrive on the `control` direction (a
@@ -906,11 +924,11 @@ record per interval; `record` under `sum`, one record's rows over its
 lifetime, no pointer gate, a window the rotation's setting and not a
 gate, the record the square of the record's pointer per label added at
 the record at its completion; interference is coherent within one Node
-only: a set of several Nodes, a face included, offers one cell whose
+only: a set of several Nodes, a face included, offers one detector whose
 weight is the sum over its Nodes of the per-Node squares, and the click
-lands at the Node of the set that u's position within the cell selects by
+lands at the Node of the set that u's position within the detector selects by
 the same rungs over the Nodes, `c_j = (2 W D_j + T) // (2 T)` with W the
-cell's width, D_j the cumulative Node weight and T the cell's weight; the
+detector's width, D_j the cumulative Node weight and T the detector's weight; the
 decision of 2026-09-20 on the owner's point 5)). Refused, naming the key and the law: `"law": "events"` (pointing
 to MIGRATION), `dynamics`, `max_active_owners`, `port_map`, `output`,
 `capacity`, `groups`, `reference_phase`, `headings` on a lamp, `heading` on
@@ -988,50 +1006,55 @@ under it a family declares its `pair` `[num, den]` on the six-neighbour
 term of the local detector law's rule (den > num a massive kind, its rest
 frequency the gap cos omega_0 = num / den, no `phase_per_link` and no lamp
 on it; every family without the key reads light's `[1, 1]`) and its
-`faces` (the kind's own faces per axis, periodic by default, an open face a
-zero face; light's faces the world's `boundary`); a measured event with
-`side` is a BLOCK, the foreign object: its cells the cube of `side` at its
-`position` (the lower corner), its `pair` at the cells (a well of the
+`faces` REFUSED by name since 2026-09-25 (ONE BORDER FOR EVERY FAMILY, BUILD.md section 26
+item 28: every family's rows read the world's `boundary`; was: the kind's own faces per
+axis, periodic by default, an open face a zero face); a measured event with
+`side` (or `extents` [x, y, z], the box's extents per axis, the slabs of ALGEBRA.md 9.22 (8); one of the two, BUILD.md section 26 item 23) is a BLOCK, the foreign object: its Nodes the cube of `side` (the box of `extents`) at its
+`position` (the lower corner), its `pair` at the Nodes (a well of the
 massive kind's pair, or a gap on light's kind, the (M) wall), its
-`coupling` `{"G": [n, d], "g": [n, d]}` (the dielectric of section 7, the
-first difference both ways on the same Node, each rational folded into
-the row's one division: the massive wall `3 den g_d`, light's `3 L` with L
-the least common multiple of the blocks' `G_d`; `[0, 1]` each by default), its `wheel` (the
-first rung's W, the world's by default), its `seed` (its own record's
-amplitude on its cells at interval 0, 2^20 by default, 0 silent; or, with
+`coupling` RETIRED and refused by name since 2026-09-25 (the model owner's decision (2)
+of record 1962, ALGEBRA.md 9.34 (B); BUILD.md section 26 item 30: mass and light meet
+only at the click, in whole numbers; the response records, the receive and source
+terms, the folded denominators, the light scale and the index in motion of
+MASSIVE_RECORD.md section 7 are HISTORY, and every record advances by the rule alone
+with the wall 3 den), its `seed` (its own record's
+amplitude on its Nodes at interval 0, DECLARED on every well, no default since 2026-09-25
+(BUILD.md section 26 item 28; the loader's 2^20 HISTORY), 0 silent; or, with
 `margin` declared, a list of one integer per Node of the board in x-major
 order, the bound mode's integer profile the generator writes into the file
 at the world's amplitude, the record seeded so over the whole board at both
 levels, a standing start on the mode, the load-time check against the margin
-module's mode printed as GAMEBOARD; MASSIVE_RECORD.md section 11 item 7),
-`absorbing` (the take on light's row at its cells, false by default: a clock
-body takes nothing), `cavity` (its own record held at 0 outside its
-cells), `ramp` (the momentum reached from 0 over that many intervals, the
+module's mode printed as GAMEBOARD; MASSIVE_RECORD.md section 11 item 7), and beside a profile its mode's `clock` [a, b] (REQUIRED there, refused beside a scalar seed: the generator's rational for 2 cos omega, b a power of two at least twice the amplitude; SINCE the model owner's record 1886 and BUILD.md section 26 item 20 the loader checks the profile in integers at load, with no float: the eigen-equation's residual abs(b num (S_6 p) - 3 den a p) within b (3 num + 6 den) at every Node of the family's composed operator outside the other bodies' Nodes, a / b above the band's top 2 num / den and below 2, the block's cube whole and disjoint from every other block's, at most three families; a file that fails is refused with the reason, ALGEBRA.md 9.22 (7)); the world key `input` {law, hash} (REQUIRED on a world with a seeded body, BUILD.md section 26 item 21): the law identifier the file was made under (`LAW_IDENTIFIER`) and the SHA-256 of the initial state's integers (the shape and, per seeded body, its number, profile, clock and given train, `input_stamp`), a stamp missing, under another law or not the digest of the WHOLE FILE loaded refused (the stamp over every key of the document without `input`, `input_digest`, since 2026-09-25, BUILD.md section 26 item 28; was: the digest of the profiles, clocks and given trains alone); the one command `tools/run_inputs.py` runs input files in parallel processes, one output file each (record 1887)); the world key `face_depth` (an integer from 1, REQUIRED on a GameBoard with an open face under `detector_law` and refused without that law, no default since 2026-09-25, BUILD.md section 26 item 28; a depth above one whose two slabs leave no interior on an open axis is refused; ALGEBRA.md 9.25 (10), BUILD.md section 26 item 23): the face receiver at every open border is the slab of that many free Nodes nearest the border, one detector `face`, last on every ladder, a depth that leaves no interior on an open axis refused); THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27): an emitter's `train` {"direction": one signed unit axis vector, "periods": n >= 8, and on a moving body its own "clock" [p, q], the boosted wave number of ALGEBRA.md 9.62 (4) (BUILD.md section 26 item 49; refused at rest)} and its `given` {"now": [...], "before": [...], "norm": T, and with the train's own "clock" alone "rest_norm": T_rest}, the train's two levels over the body's Nodes in the box's x-major order and its conserved form on the given family's vacuum, the generator's integers (SINCE ITEM 56, ALGEBRA.md 9.74 (3): a boosted train carries D T_rest forward and T_rest / D backward at the rest amplitude, the form quadratic in the wave number, and declares the rest train's norm `rest_norm`, required there and refused at rest, the ladder's threshold the record's form at the giving times rest_norm / norm) (`given_train` of the massive record generator: the character of one **K** over the periods under the tapers and the window, at the amplitude 2^16), checked at load in integers (the given clock the given family's declared clock, the wavelength 2 N q / p a whole number of Links, the body's extent along the direction the train's length, the profile's count, a motion, the flux along the way positive, the norm the vacuum's form; the two-integer pair [now, before] refused by name as the broadband one-Node giving click); the engine writes the two levels on the body's Nodes at the giving click and the norm as written,
+`cavity` (RETIRED, refused by name since 2026-09-25, BUILD.md section 26 item 28: a body's
+record is held by the law alone, its border the world's; was: its own record held at 0
+outside its Nodes), `ramp` (the momentum reached from 0 over that many intervals, the
 pushing agent's declaration), `start` (the interval its drive begins, 0 by
 default, the ramp counted from it: the same agent's declaration), `margin` (`"pin"` or `"control"`, the margin
 rule's kind of world) and `emits` (the light family its record sources,
 one record per cycle of its clock, paid from its `held`); `probes` a list
-of Nodes whose light amplitude the record writes per interval; `wheel` (an integer from 1, under `detector_law`) the detector sets' rung W where no lamp declares a larger birth wheel (a world whose records a block emits); `amplitude_bound` (required on a world with a massive family) the amplitude A every row stays below, MUST 3's load bound at that A and the rows' run-time assertion (BUILD.md section 14); a face declared `"closed"` (under `detector_law`) a zero face for light without the take; an emitter block's or a lamp's `own_grace` (the intervals after its train during which a set bound to the emitter takes nothing of its own record, N_s, required on every emitter; a light lamp without it keeps two periods), an absorbing block's `take` [n, d] (its Ports' take pair, required on an absorbing block of a massive kind; light's kind takes with the law's [-15, 56]) and a detector set bound to a block (`"block": n` with its own `wheel`: a receiver whose Nodes are the block's current cells, or ONE declared free Node under `positions`; the click stamped with the block's count; a set on a body is `positions` with its own `wheel`); the order channel's two keys on a PAIR lamp (a lamp with `arms` above 1; DECLARATIONS.md section 2 item 8): `residue_order`, REQUIRED there with no default, "ordinal" (the counter form, u = (ordinal - 1) r mod W) or "seed" (u = order[(ordinal - 1) mod W], the order a Fisher-Yates permutation of the wheel's Z_W driven by the SplitMix64 mixing hash from `residue_seed`, `core.integer.keyed_permutation`, the stride r 1), and `residue_seed`, an integer in [0, 2^64) required under "seed" and refused under "ordinal", an input of kind 1 drawn once per world and written to no line; neither key admitted on a lamp without arms; the gather line's `u` and the `records` reading's `u` are HOST (the input of the diagnostic E_N), the reader of record reads `click`, `birth` and `chosen`; item 10 THE RULE (DECLARATIONS.md section 10 item 10, BUILD.md section 18; the model owner's records 1694 and 1711): every emitter's own Nodes take its record's remnant from the first interval after its train (no key, no load-time integer), in the record's kind's pair (the family key `take` [n, d] on a massive kind, required where a lamp of the kind exists; light's kind the law's [-15, 56]), booked onto no pointer and not into `absorbed`: the ledger's HOST row `taken_by_emitter` (the content of a record its emitter took wholly; `transit.taken_by_emitter` in the books), the gather line's `taken_by_emitter` and the records reading's `emitter_taking`; a detector-law world with a set and no lamp declares `wheel` (refused absent); THE RECEIVER BY NAME (DECLARATIONS.md section 13 item 7, BUILD.md section 21; Nature24's eight decisions of 2026-09-24 12:40Z through the Boss; `tests/test_receiver_by_name.py`): an emitting block's `receiver`, the name of a declared detector set, REQUIRED on every emitting block (refused absent, no default; refused on a block that emits nothing; refused naming no declared set, the names listed; the set may be the one bound to the block itself), makes that set's one cell the LADDER of every record the block emits (one cell whatever the set's Node count, its rung the set's own `wheel`, the record's u 0 choosing nothing): the faces and every other set are SINKS for it (their take into `absorbed`, the completion's measure, and onto the record's HOST `escaped`, never onto a pointer), the gather line is written at the receiver's first rung after the record's train (the law's sentence: at the first interval at which the record's cell is final, after the train and when the block is not sourcing it; `click` the rung's interval, `tick` the line's, equal to `click` unless the rung fell inside the train, then the birth plus the train), the content moves with the line to the receiver's body (0 for a block's record, born at content 0), and the record lives on with content 0 (field energy the sinks absorb, booked to the escaped row at its close) to close with NO second line, counted on the ledger's HOST row `closed_after_click` (`transit.closed_after_click` in the books; the records reading's `clicked` and `escaped`, the sinks' take in the pointer's unit; the gather line's `escaped`; all written on a world with a receiver alone); a record whose receiver crosses no rung within the ticks writes NO line and closes to the row of the take that ended it (`taken_by_emitter` where its own emitter took it, the escaped row where a face or a set did; 0 for a block's record) or stays open at the run's end; the emitter's own cells take on no pointer at every age (item 10 at T = 0 as merged; the hop's take of the block's own record booked nowhere), so a block naming the set at its own cells never clicks; a lamp's record (several cells) keeps the close and the cell by u; the five registered emitting worlds carry the key (sagnac_k3 and sagnac_rest: A at_b and B at_a; light_clock_60: A at_a; redshift_k3 and redshift_control: A light_detector); `mode_axis`
+of Nodes whose light amplitude the record writes per interval; SINCE BUILD.md section 26 item 15 the keys `wheel`, `own_grace`, `take`, `absorbing`, `residue_order` and `residue_seed` below are RETIRED and refused by name (the residue and the wheel are the law's, ALGEBRA.md 9.22 (4): u the clicking record's rule remainder at the giving click Node and W = 3 den / gcd(num, 3 den) the record's own, carried on the giving line as `u` and `W`; the take is gone, 9.19 (3)), and this paragraph is their history; SINCE THE ONE STROKE'S COMMIT 7 (ALGEBRA.md 9.85 (5), 9.71 (1), 9.91 (10) 7; the model owner's record 2082 (4); BUILD.md section 26 item 66) the emitter's `train` and `given` and the world key `point_emitter` are RETIRED and refused by name: the window is the law's one giving, every emitter's rotation written into the given row at its own Nodes at its `weight` every interval until the outward norm through its outer Ports reaches its excitation's action `norm` / `norm_denominator` (the generator's integers, `period` beside them), the light at the body's own rotation on the given family's dispersion; a body's own Nodes are its own detector whatever its support and a set of one Node is admitted on every world (ALGEBRA.md 9.92, record 2109); SINCE THE WORDS OF RECORD 2128 (item 68) the universe file is `examples/events/universe.json` (its keys `integers` and `families`, no `law`), a world names it under `universe` (a unit test's world may carry the families' list inline there; the world key `families` is refused), the body's signed number is `q`, its stocks of other families' quanta `stocks` (beside its own `stock`), the universe's integer `Lambda` the charge's read weight (`charge_weight` HISTORY); the engine reads no family's name (the adversarial test over the whole universe file, tests/test_families_file.py); SINCE THE ONE STROKE'S COMMIT 5 IN PART (ALGEBRA.md 9.86 (1), 9.91 (4), 9.84 (2), 9.25 (12); item 69) every click line's `momentum` is the sign per axis of the taken quantum's direction of travel (the flux booked through the chosen detector's -a Ports minus its +a Ports over the record's walk) and every giving line's `momentum` the sign per axis of the outward flux through the body's +a Ports minus its -a Ports over the window, the four-vector's space part beside its count `content` (DETECTOR); no body's momentum moves (the recoil waits on record 2135); SINCE THE RESIDUE LINES (ALGEBRA.md 9.90 (1); item 70) the world keys `law`, `model_id` and `detector_law` are refused by name (every world is the engine's, the ray law's parse cancelled and unreachable), the file's stamp is `stamp` {hash} (the key `input` refused), the start file holds `mode` alone, no refusal names a law and the books and the state carry no `law` entry; SINCE ITEM 71 the engine holds no `fractions`: the body-frame booking's carry, the conserved form and the Node density are pairs of integers in lowest terms (the books' `form` [numerator, denominator] unchanged), bit for bit; SINCE ITEM 72 the loader reads no file: the host module `event_universe.world_files` reads the world, the universe file and the start file and hands the loader the documents and the stamp's digest (`parse_nature_beam_world` there is the whole read, `load_world` the file's; the generators' `input_stamp` lives there); SINCE ITEM 73 every body and every emitter declares `twist`, the generator's integer round(2^16 omega_0) (ALGEBRA.md 9.96 (2) (a); `event_universe.generator_numbers`), and the loader computes no float: the twist table is checked in integers (the identities, the bound, the angles' order); SINCE ITEM 74 the word seat is retired (record 2108): the body's record on its one Node is `NodeRecord`, the block's `node_record`, the state's key `node_record`, and the living words say the body's Node and a body on one Node; `wheel` (an integer from 1, under `detector_law`) the detector sets' rung W where no lamp declares a larger giving click wheel (a world whose records a block emits); `amplitude_bound` (required on a world with a massive family, and under `detector_law` with `massive_record`, item 57) the amplitude A every row stays below, MUST 3's load bound at that A and the rows' run-time assertion (BUILD.md section 14), its ceiling 2^28 under the Node clock (BUILD.md section 26 item 31) RETIRED by item 57 (ALGEBRA.md 9.83 (2) (a)); `node_clock` (REQUIRED under `detector_law` with no default, refused without that law; BUILD.md section 26 items 31 and 44) Gamma, the Node clock's one integer; SINCE ITEM 44 (ALGEBRA.md 9.57 (1)) every record steps by the weak-field rule w a_next + r' = R S_6(a_now) + S a_now - w a_before + r with R = 2 p^2 num, S = 12 den Gamma^2 - 6 (p^2 + Gamma^2)(den - num) - 12 num p^2 and w = 6 den Gamma^2 at the Node's own pace p = Gamma - c (`event_universe.events.rule`; the two field families plain at pace 1; the first-order rule of item 36 HISTORY as the law), the loader's int64 bound the rule's own total at A, Gamma = 10^4 and A = 2^20 in every shipped world; the clause below is the first-order rule's, kept for the record: at every Node the pace Gamma - c over the wall's Gamma, c the family of clicks' level there (the content held at a body's Nodes, its field elsewhere, 0 in the vacuum), enters every family's rule SINCE THE FIXED WALL (BUILD.md section 26 item 34; the model owner's record 1994) on the numerator over the constant wall 3 den Gamma, and SINCE THE NODE'S OWN PACE (the model owner's record 2003; ALGEBRA.md 9.50 (13); BUILD.md section 26 item 36) as the pace p_i = Gamma - c_i (+ q Lambda d_i, the charge) of the Node ALONE on the Node's own six-neighbour sum: 3 den Gamma a_next + r' = p_i num S_6(a_now)_i + 6 den c_i a_now - 3 den Gamma a_before + r (the Node steps the vacuum's rule at its own pace; the pace on each read's far end, form (B) of item 34, HISTORY; the vacuum the plain rule bit for bit with the remainder Gamma times its; the conserved form the Node's terms weighted by 1 / p_i less the plain Link sum, an exact rational carried by the books and the state as [numerator, denominator]; the click's flux the plain current, Born's rule unchanged; a given record's form the exact rational `norm` / `pace` on the record and on the giving line (p times it whole at one level, the body's own units; SINCE ITEM 58, ALGEBRA.md 9.85 (2), read at the content the giving finds, the pace Gamma - c: the giving's lowered quanta are held after the held families' step with the takings', one order for both clicks, a click's writes entering at the next interval), the ladder reading 2 W pace C against (2 u + 1) norm; at uniform content 1 - cos omega' = (1 - cos omega)(Gamma - c) / Gamma; the step one to one at every Node for every clock history, so the backward run is exact everywhere; the forms with integer weights at the scale 3 Gamma L, Gamma^2 times the plain form in the vacuum, the current on a Link weighted by the pace at both ends; the wheel read from the rule at the Node with its six reads' paces, the giving line's `read_clocks`; the wall 3 den (Gamma + c) of item 31, which lost states where the level fell, HISTORY); `clock_family` (REQUIRED under `detector_law` with no default, refused without that law; ALGEBRA.md 9.45; BUILD.md section 26 item 32) the name of the family of clicks, a fourth family declared like any other with the pair [1, 1], the quantum 1 and no clock of its own (a massive pair, another quantum, a clock, a body of it, a `held` naming it or an emitter giving into it refused by name): one record of it lies over the board, held at every body's Nodes at the body's content (both levels the held quanta, the remainder 0; at the load and at every interval's end) and moving elsewhere by its own plain step, stepped last in the interval; its level c at a Node is the M of the clock pair (Gamma, Gamma + c) every other family reads there, so the content spreads from the bodies at the plain step's pace; the joint inverse steps every family backward at the level of the interval's start, then the clock; the run is refused at a level at or below -Gamma; the load bound reads twice the world's content; at most twenty families (the model owner's record 2081 of 2026-09-25, every family works in every experiment; BUILD.md section 26 item 54; the five of item 35 HISTORY); the snapshot's `clock` entry (SINCE ITEM 51 its `held_fields` entry) and the family's books' form are GAMEBOARD diagnostics; the inverse exact everywhere SINCE THE FIXED WALL (item 34; item 32's finding A RESOLVED); `families` (SINCE ITEM 59, ALGEBRA.md 9.83 (2) and 9.85 (3), the model owner's record 2075; SINCE ITEM 60, the one stroke's commit 1, ALGEBRA.md 9.86 (2) and 9.91 (7)) either THE ONE FAMILIES FILE's repository path, examples/events/families.json, the universe's integers (`node_clock` Gamma, `amplitude_bound` A, `charge_weight` Lambda, the word "Lambda" on a read's weight, and SINCE ITEM 63 `momentum_unit` Q, the momentum's unit: every body's wall is W = 3 Q M with M its quanta as it holds them, live at every interval, the hop, the holds' divisions and the booking in the body's frame reading it, ALGEBRA.md 9.96 (1), 9.89 (2); the width S = 1 gone from the wall) and THREE FAMILIES as laws, each with name, `parts` (the representation as a list of parts, [1] a scalar, [1, 3] the time part and the vector, [1, 3, 6] the symmetric tensor over the four directions; the component order (t), (x, y, z), (xx, yy, zz, xy, xz, yz)), `phase` (1 or 2, the levels at a Node), `pair` ([num, den], or "body": every body and record of the family declares its own), `reads` [{family, weight, twist, by}] (the weight an integer or the universe's word, the twist an integer or "own", the reading record's own rotation round(2^16 omega_0) times the read's weight, SINCE ITEM 64 (ALGEBRA.md 9.96 (2) (b): Lambda_v is Lambda, "Lambda_v" retired), `by` 1 or "q"), `self_source` {unit 0}, and `held` {count "content" or "sign", factors (one per part), dipole "spin" or "moment", dipole_div} or `clicks` {gives, takes, quantum} or both (`booked` derived, true exactly for a family with clicks): gravity [1, 3, 6] at phase 1, held content with the factors [1, 4, 2] and the spin's dipole; the charge [1, 3] at phase 2, held sign with the moment's dipole halved, reading gravity, with clicks, LIGHT ITS WAVE (every light record, mirror, receiver and stock is the charge family's); matter [1] at phase 2 with the pair on the body (`kind` [num, den] on every body of it, `pair` on every emitter giving it, each required there and refused where the family declares its pair), reading gravity at 1 and the charge at Lambda by q, with clicks; every family on in every world, the world's own node_clock and amplitude_bound then refused (one copy); or an inline list (the unit tests' small lists, the scalar's attributes by default); with the file every emitter declares `clock`, the given record's clock (required when the given family declares none, refused when it does); a held family has one record per component, every part written by the hold at every body's support after the held families' step (SINCE ITEM 61, ALGEBRA.md 9.91 (3): the time part the body's content or its charge Q, the vector component a factor x count x n_a div W and the tensor component ab factor x count x n_a n_b div W^2 with the families file's factors, W the body's wall, the division's remainder carried on the body between intervals and inverted exactly; the dipoles, the vector component i at the centre Node + sigma e_j gaining sigma x (D x e_j)_i over the family's dipole divisor, D the body's `spin` or `moment`; a part no body sources stays exactly zero and silent), the leak test reading every part; every block declares `charge`, `spin` and `moment` (required, no default); THE FOUR PACES (SINCE ITEM 62, ALGEBRA.md 9.91 (2)): a reading family's pace at a Node is p_0 = Gamma - c on its own term and p_a = p_0 - t_a on the axis a's two reads, t_a the sum over its reads of weight x by x the read family's aa component halved with the remainder kept at the Node; the rule w a_next + r' = SUM_a 2 p_a^2 num (a_(+a) + a_(-a)) + S a_now - w a_before + r with S = 12 den Gamma^2 - 6 (p_0^2 + Gamma^2)(den - num) - 4 num (p_x^2 + p_y^2 + p_z^2); with every tensor part zero the one rule bit for bit; a record carries its own pair, the board's pair arrays made once per (family, pair) with every body of the family's well written into each; THE SECOND LEVEL AND THE TRANSPORT (SINCE ITEM 64, ALGEBRA.md 9.81 (2), 9.91 (1), (6), 9.96 (2)): a record of a phase-2 family carries the pair (re, im), each level with its now, before and remainder, the second level allocated by the first rotation that writes it and exactly zero before; on every Port of a Node the angle is k = sigma x by x twist x (V_a here + V_a arrived), V_a the read family's vector component along the Port's axis, the twist the record's own round(2^16 omega_0) times the read's weight (the loader's integer: a body's from its mode's clock, a given matter record's from its pair, a train's light from its wavelength on light's dispersion cos omega = (cos(2 pi / lambda) + 2) / 3, a window's light the emitter's rotation), and the arriving pair is rotated to the nearest unit by the universe's TWIST TABLE (the families file's integers block `twist_table` {unit 4 Gamma 2^16, fine 2^10 triples, coarse at most 2^15 triples}, every triple c^2 + s^2 = d^2 exactly with d at most 10^9 and the nearest of its angle k_0 theta_unit or k_1 2^10 theta_unit, the transport's triple their exact product; `examples/events/make_universe.py` writes it, the loader checks every identity and every angle) T_re = (c re - s im) / d and T_im = (s re + c im) / d rounded to the nearest unit, a pure function of the arrivals recomputed exactly by the inverse (9.81 (2) (c)'s remainder per Port is not one to one when d changes between intervals: sent to the mathematician, BUILD.md item 64); with every vector part silent every k is 0 and the plain paths run bit for bit; a k beyond the coarse table is refused naming the Port; THE TRANSVERSE BOOKING (9.82 (3) (b), (c)): a light record is given into the charge family's component along the emitting body's `moment` (one axis, required on a light emitter), the Ports along that axis book nothing of it and the pair's two levels' currents are summed at the others; every shipped light emitter's moment is [0, 0, 1], the axis with no Port in its world, so its bookings are the scalar light's bit for bit; THE BODY ON ONE NODE (SINCE ITEM 65, ALGEBRA.md 9.91 (8) (v), 9.78 (5), 9.96 (4), (5)): the spin is state on the body, stepped after the holds by S_(t+1) = S_(t-1) + (2 [(Omega x S_t) + mu x B_q] + carry) div (W Gamma) with Omega and B_q the curls of the read families' vector parts at the body's Node (the leapfrog, exactly invertible); a family's `self_source.unit` above 0 (at least 24 A) lowers every step of its records by (the six squared differences over its components) div P_2 (every shipped unit 0); two wells of one family may stand anywhere (the tail check of 9.35 retired); a body's emitter may give the body's own family from the body's `stock` (a count of its own quanta from 1 to `amount`, required there and refused elsewhere), each giving lowering its quanta by one; the feed and the induction of 9.78 (4) are not in the engine (built and held back: with them every chain world's tools fall together; BUILD.md section 26 item 65); `engine` (REQUIRED under `detector_law`, refused without it; the model owner's record 2089; BUILD.md section 26 item 57) the repository path of THE ONE ENGINE START FILE, examples/events/engine_start.json, {"law": "detector-law-v1", "mode": "check" or "pin"}, every key required and refused by name when missing (an unknown key, another law, a wrong mode and a missing file refused too); under "check" the runner (tools/run_inputs.py, `--jobs` required) compares no pin and refuses `--pins`, under "pin" it requires them; NO DEFAULT UNDER THE LAW (item 57): a world of the detector law declares `boundary`, `width`, `clock_stamp`, `massive_record`, `body_record`, `point_emitter`, `engine`, `measured` and `detectors` (and `amplitude_bound` with `massive_record`), every family its `pair`, `charge` and `reads`, every measured event its `momentum` and `held`, every block its `ramp` and `start`, every well its `margin`, each refused by name when missing; and it declares none of the keys the law never reads, refused by name when present (`suspension`, `direction_bound`, `directions`, `action`, `meeting`, `massive_rows`; a family's `phase`, `lifetime`, `hand`, `columns`, `massive`; a measured event's `fixed`, `phase`, `directions`, `phase_by_momentum`, `span`, `books`, `table` and the lamp's keys; a detector's `threshold` and `reading`); the ceiling 2^28 on `amplitude_bound` is RETIRED (ALGEBRA.md 9.83 (2) (a): A the one number) and the engine's constant UNIT with its output entry `unit` deleted; `body_record` (true or false, REQUIRED under `detector_law` since item 57; refused without `massive_record`; ALGEBRA.md 9.46 and 9.60; BUILD.md section 26 items 37 and 42) holds every seeded block as one Node with a shape: its profile a declared constant read at the giving click alone, its own rows nowhere else on the GameBoard, and its standing record (a, b, r) kept AT ITS BODY'S NODE (the block's centre Node) and stepped by the engine's one rule with the standing family's six Ports closed on the body's Node (the six reads the body's Node itself, S_6 = 6 a) at the declared pair [num_c, 2 den_c] from its clock pair `clock` and the body's Node's own level (6 den_c Gamma a' + r' = (6 num_c p + 12 den_c c) a - 6 den_c Gamma b + r, the rotation of 9.46 (2) as rationals, the remainder six times its); its wheel and residue the rule's own at the body's Node; a seeded block without `clock` is refused by name under the key; `point_emitter` (true or false, REQUIRED under `detector_law` since item 57; needs `body_record`; ALGEBRA.md 9.69 (2), 9.71 (1); BUILD.md section 26 item 50, a hypothesis under its own identity): every emitting body's Node declares a `weight` g and its action's `norm_denominator` and no `train`; at its giving click a window opens and every interval, right after the record's own step and before the bookings read its rows, the body's Node's rotation is added to the given row at the body's Node at the weight, the outward flux through the body's Node's six Ports summed, until the sum reaches the excitation's action norm / norm_denominator, when the record is named on its giving line with the window's length (the quantum, the stock and the ledger moved at the open, the record's norm T from there); the inverse subtracts the writes; SINCE ITEM 46 (ALGEBRA.md 9.63 (3)) a moving seeded block declares `proper_clock`, the |P| + 1 pairs the body's Node rotates at by the momentum's whole part m from 0 (the clock itself) to |P| along its one axis of motion, the generator's 2 cos(omega_K - K v) at v = m / (3 Q S M) from the mode's own dispersion (the rotation of the moving mode's rows at its moving centre), and the body's Node reads the pair of the drive's momentum now (`node_record_clock`; under the ramp m = P t // ramp); refused absent on a moving block under the key, on a block at rest, on a momentum on two axes, at the wrong length or with a first entry other than the clock; the state's block entry carries `body's Node` [a, b, r] and the invariant as its form (GAMEBOARD); HOST (record 2039; BUILD.md section 26 item 43): every record's step is evaluated on its support box grown by one Link, zeros written elsewhere, the same integers at every Node as the whole-board step (a shortcut of the host, the model's local work per Node unchanged); the equivalence to the lattice body is the gate of tests/test_body_record.py; THE BOOKING IN THE BODY'S FRAME (ALGEBRA.md 9.74 (2); BUILD.md section 26 item 56; the taking at a hop of 9.62 (3), item 48, HISTORY): a face of a set bound to a body moving at v with outward normal n books per interval (G_in + (v . n) e_out) cut at zero after the sum, G_in the inward current through the face's Link (the Port booking) and e_out the record's density on the Node outside the face, v . n the momentum over the drive's wall along the face's axis, positive at the front and negative at the back; the whole part booked, the fraction carried on the record per detector; one rule for every face, per interval; with no moving set the Port booking alone, bit for bit; the detectors' Port pairs re-read at every hop (the cache of the load cleared); THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25 through the Boss; BUILD.md section 26 item 51): the engine knows no family's name or role; what a family is stands on the family in `families`, four keys admitted under `detector_law`: `held` ("content" or "sign", the source a body's record writes at its Nodes at both levels with the remainder 0: its quanta, or their signed sum by the families' declared signs; absent for a family the step alone moves), `reads` (REQUIRED on every family under the law: the held families whose levels enter the family's pace, [{family, weight, by}] each, by "plain" adding weight x level and by "sign" adding - q x weight x level with q the family's own charge sign; the empty list on a held family, the plain rule) and `components` (1 alone today; 3 and 6 ride on ALGEBRA.md 9.77); the family holding the content is the Node clock's family of 9.45 and the family holding the charge the family of 9.48, a reading family's read on the charge at the weight Lambda giving the effective content c - q Lambda d; the held families step last in the declared order and first backward, then the hold writes every body's sources as the interval's clicks and givings left them (ONE ORDER FOR BOTH CLICKS, ALGEBRA.md 9.85 (2); BUILD.md section 26 item 58: no hold at the giving), are booked by no detector and click never (the booking derived, never declared: every family but a held one is booked at the Ports; the sources and the read modes are the operations' words, never a family's name; a family declares nothing of detectors or emitters, the bodies' mechanisms; item 53); the state carries `held_fields` (every held family by name and source, its rows and form) and `node_clock`; the world keys `clock_family`, `charge_family` and `charge_strength` of items 32 and 35 are RETIRED and refused by name, and the two clauses that follow are their history: `charge_family` and `charge_strength` (both REQUIRED under `detector_law` with no default, refused without that law; ALGEBRA.md 9.48; BUILD.md section 26 item 35) the name of the family of charge, a fifth family declared like the family of clicks (the pair [1, 1], the quantum 1, no clock of its own, its own `charge` 0; the family of clicks, a massive pair, another quantum, a clock, a charge of its own, a body of it, a `held` naming it or an emitter giving into it refused by name), and Lambda, the charge's weight in the clock, an integer from 1: under `detector_law` every family declares its `charge` q, -1, 0 or +1 per quantum, no default (a family without it, |q| above 1 or a denominator other than 1 refused by name); a body's charge Q is the sum of the signs of the quanta it holds, moved with the labels at the clicks and the giving clicks; the family of charge is held at every body's Nodes at Q as the family of clicks is at the content, moves elsewhere by its own plain step, stepped last with it, and inverts with it; a record of charge q reads the effective content c - q Lambda d at every Node (the pace Gamma - c + q Lambda d under the fixed wall; light, q = 0, the content alone), its clock pair and its wheel the rule's at that content, the giving line carrying the body's `charge`; the run is refused where the effective content reaches Gamma in size for a declared sign, the load where a body's content plus Lambda times its charge in size is not below Gamma; the snapshot's `charge` entry (SINCE ITEM 51 its `held_fields` entry) and the family's books' form are GAMEBOARD diagnostics; a face declared `"closed"` (under `detector_law`) a zero face for light without the take; an emitter block's or a lamp's `own_grace` (the intervals after its train during which a set bound to the emitter takes nothing of its own record, N_s, required on every emitter; a light lamp without it keeps two periods), an absorbing block's `take` [n, d] (its Ports' take pair, required on an absorbing block of a massive kind; light's kind takes with the law's [-15, 56]) and a detector set bound to a block (`"block": n` with its own `wheel`: a receiver whose Nodes are the block's current Nodes, or ONE declared free Node under `positions`; the click stamped with the block's count; a set on a body is `positions` with its own `wheel`); SINCE THE DETECTOR CUBE (the model owner's decisions of 2026-09-25, record 1899; BUILD.md section 26 item 18) a detector is one region, a cube of side 3 or more (its `positions` one connected box whose sides are 3 or more, cut by the GameBoard on an axis of extent below 3; a bound set the block's Nodes of side 3 or more, or a cube of free Nodes beside it), its sensitivity its whole cube (the one-way flux into it through its Ports from outside), the click the detector's, named on the line and never placed at a Node, and the ladder the detectors' increments in the declared order; a detector below side 3, a set that fills no box and a disconnected set are refused naming the sides, the Nodes or the pieces; SINCE THE ONE-NODE DETECTOR (ALGEBRA.md 9.46 (8) (c); BUILD.md section 26 item 40) under `body_record` a detector may be one Node, its body's Node, its six Links its Ports and the click the body's Node's (a block of extents [1, 1, 1] bound as its own detector a body on one Node too), a set of more than one Node keeping the cube rule; the order channel's two keys on a PAIR lamp (a lamp with `arms` above 1; DECLARATIONS.md section 2 item 8): `residue_order`, REQUIRED there with no default, "ordinal" (the counter form, u = (ordinal - 1) r mod W) or "seed" (u = order[(ordinal - 1) mod W], the order a Fisher-Yates permutation of the wheel's Z_W driven by the SplitMix64 mixing hash from `residue_seed`, `core.integer.keyed_permutation`, the stride r 1), and `residue_seed`, an integer in [0, 2^64) required under "seed" and refused under "ordinal", an input of kind 1 drawn once per world and written to no line; neither key admitted on a lamp without arms; the gather line's `u` and the `records` reading's `u` are HOST (the input of the diagnostic E_N), the reader of record reads `click`, `giving click` and `chosen`; item 10 THE RULE (DECLARATIONS.md section 10 item 10, BUILD.md section 18; the model owner's records 1694 and 1711): every emitter's own Nodes take its record's remnant from the first interval after its train (no key, no load-time integer), in the record's kind's pair (the family key `take` [n, d] on a massive kind, required where a lamp of the kind exists; light's kind the law's [-15, 56]), booked onto no pointer and not into `absorbed`: the ledger's HOST row `taken_by_emitter` (the content of a record its emitter took wholly; `transit.taken_by_emitter` in the books), the gather line's `taken_by_emitter` and the records reading's `emitter_taking`; a detector-law world with a set and no lamp declares `wheel` (refused absent); THE RECEIVER BY NAME (DECLARATIONS.md section 13 item 7, BUILD.md section 21; Nature24's eight decisions of 2026-09-24 12:40Z through the Boss; `tests/test_receiver_by_name.py`): an emitting block's `receiver`, the name of a declared detector set, REQUIRED on every emitting block (refused absent, no default; refused on a block that emits nothing; refused naming no declared set, the names listed; the set may be the one bound to the block itself), makes that set's one detector the LADDER of every record the block emits (one detector whatever the set's Node count, its rung the set's own `wheel`, the record's u 0 choosing nothing): the faces and every other set are SINKS for it (their take into `absorbed`, the completion's measure, and onto the record's HOST `escaped`, never onto a pointer), the gather line is written at the receiver's first rung after the record's train (the law's sentence: at the first interval at which the record's detector is final, after the train and when the block is not sourcing it; `click` the rung's interval, `tick` the line's, equal to `click` unless the rung fell inside the train, then the giving click plus the train), the content moves with the line to the receiver's body (0 for a block's record, given at content 0), and the record lives on with content 0 (field energy the sinks absorb, booked to the escaped row at its close) to close with NO second line, counted on the ledger's HOST row `closed_after_click` (`transit.closed_after_click` in the books; the records reading's `clicked` and `escaped`, the sinks' take in the pointer's unit; the gather line's `escaped`; all written on a world with a receiver alone); a record whose receiver crosses no rung within the ticks writes NO line and closes to the row of the take that ended it (`taken_by_emitter` where its own emitter took it, the escaped row where a face or a set did; 0 for a block's record) or stays open at the run's end; the emitter's own Nodes take on no pointer at every age (item 10 at T = 0 as merged; the hop's take of the block's own record booked nowhere), so a block naming the set at its own Nodes never clicks; a lamp's record (several detectors) keeps the close and the detector by u; the five registered emitting worlds carry the key (sagnac_k3 and sagnac_rest: A at_b and B at_a; light_clock_60: A at_a; redshift_k3 and redshift_control: A light_detector); `mode_axis`
 (`"x"`, `"y"` or `"z"`) the axis along which the record writes a `mode`
 line per interval, the three sums of light's total field over the Nodes of
 each residue class of that coordinate modulo 3 (the content of the mode
 k = 2 pi / 3, the hop pump's signature of MASSIVE_RECORD.md section 7, a
 GAMEBOARD reading; the reading tool forms abs(S_0 + w S_1 + w^2 S_2)^2 with
 w the cube root of unity). The record
-under the key: `massive_record`, per family `pair` and `faces`, and
+under the key: `massive_record`, per family `pair` and `faces` (the world's border,
+one for every family), and
 `margin` (the margin rule's readings per block, MASSIVE_RECORD.md section
 11 item 4: a load-time check made before the world runs by
-`diagnostics/massive_record_margin`, the block's bound mode by a Lanczos
-iteration on the world's own board, its extent in the medium and the
+`diagnostics/massive_record_margin`, the block's bound mode (the generator's
+iterated operator with the stop, BUILD.md section 26 item 25; the eigensolver
+a diagnostic) on the world's own board, its extent in the medium and the
 margin per axis, two extents for a `"pin"` world and one for a
 `"control"`, a declaration below the margin refusing the run; a HOST
 computation of the declaration, printed and recorded, never read by the
-state; a cavity is skipped, and so is a folded axis, a periodic extent
+state; a folded axis is skipped, a periodic extent
 below the block's side, a layer's or a chain's) in `run.json`; the books' `form` per family (the conserved form I of section
 3, GAMEBOARD); in `events.jsonl` the block's `click` line per cycle of its
 own record (`clock` its count), a `block` line per interval (its record's
-sum across its cells, its corner, its count, its steps), a `probe` line
-per interval and the emitted records' `birth` lines; in `state.json` the
+sum across its Nodes, its corner, its count, its steps), a `probe` line
+per interval and the emitted records' `giving click` lines; in `state.json` the
 `blocks` with the rows of each block's own record. Without the key every
 record is byte for byte as it was (`tests/test_massive_record.py`).
 
@@ -1121,7 +1144,7 @@ the run holds a body with paid content (at load, or from the first give
 on) `given`, the content the body gave to the flight at this hand-over
 (`binding-v1`; 0 on a later hand-over), and the body's `momentum` after;
 one per occupant that took a hand-over), `become` (since 2026-09-20, one
-per transformation at its products' birth: the `tick`, `node` and
+per transformation at its products' giving click: the `tick`, `node` and
 `measured`, the `trigger` "clock" or "click" and `triggered` the tick of
 the trigger, `from` and `into` the families, `products` as [family,
 amount, content, direction], `recoil` and `counted` the count the clock
@@ -1147,7 +1170,7 @@ declares a hand or an axis (`hand-v1`) also the row's `hand`, written
 only then, and the `click`, `pass`, `read`, `rerelease` and face lines
 carry `hand`, the `become` line's products a fifth entry, the product's
 hand, and the books' measured line per family `left` and `right`, the
-units clicked of each hand). The birth phase u
+units clicked of each hand). The giving click phase u
 is the record's own field beside the running phase (the K finding of
 2026-09-20; stage (vii) step 2): every rule of the GameBoard that reads
 a record row's phase reads the path phase, phase - u (the meeting's
@@ -1180,24 +1203,24 @@ measured + transit + escaped + cancelled + remainder + waiting moves only
 by the pushes, the turns and the escapes; absent (every f_F 1) the lines
 are zero and not written.
 In a recorded world the record gains the lines of the layer
-(`events/amplitude.py`, the design's sections 3 and 5): `birth` (a lamp's
+(`events/amplitude.py`, the design's sections 3 and 5): `giving click` (a lamp's
 record: `record`, `u`, `labels`, `arms`, `units`, `multiplicity`, and
 `clock` under the world key `clock_stamp`, the emitter's own count), the
 `click`, `read` and `rerelease` lines carry the rows' `record`, `branch`,
 `multiplicity`, `u`, `share` (the row's push on a body) and `age` where
 the row is a record's (`rows` on a group
 line, the rows of a record among the group's, absent where none is;
-`window` and `turn` at a rotated `sum` set), `split` (per re-created row: `absorbed`, `born`,
+`window` and `turn` at a rotated `sum` set), `split` (per re-created row: `absorbed`, `given`,
 `multiplicity`, `rebirth`, the entry's phase `u`), `cancel` (per record,
 direction and content per unit: `amount`, `content`), the `record` line
 of a `sum` set at a gather (`scope` `record`, `of` the record, `arm`,
 `label`, `pointer`, the square `record`, `multiplicity`) and `gather`
-(the world's row: `tick`, `arrived`, `family`, `record`, `u`, `born`,
+(the world's row: `tick`, `arrived`, `family`, `record`, `u`, `given`,
 `chosen` [set, arm, channel], `node` (the Node of every chosen end),
 `windows` [set, setting, turn] of the rotated sets among the chosen,
 `content` and `momentum` (what the chosen rows brought and gave at their
 Nodes: the books' line of the click), `weight` and `total` as pairs in
-the unit 2^58 (`unit`), `T`, `before`, `after`, `cells` with the rungs),
+the unit 2^58 (`unit`), `T`, `before`, `after`, `detectors` with the rungs),
 `gate` (`survivor`, `joined`, `present` per record, `labels`, `arms`,
 `rows`) and `rotate` (`setting`, `bit`, `turn`, `rows`, `records` with
 the units before and after); what follows a click at a chosen `sum`
@@ -1211,7 +1234,7 @@ for the lazy deletion of its rows, which resolve to nothing at their next
 set; a gathered record reaching a gate is refused by name), and a
 completion visits only the records whose live count reached 0, so the
 host's work and memory per interval follow the open records, not every
-record born.
+record given.
 `tools/amplitude_path.py` replays a run's register through the layer and
 checks it against `world`. `tools/run_series.py` runs these worlds as any.
 
@@ -1236,7 +1259,7 @@ keep_row_clicks=True)`; `NatureBeamSimulation(world, observer,
 keep_row_clicks=True)` keeps its in-process observer whole) writes them
 and no such field, the record as it was before the option, byte for byte.
 Every other line (the face and border clicks, the `gather`, `record`,
-`birth`, `split`, `cancel`, `read`, `pass`, `rerelease`, `step`,
+`giving click`, `split`, `cancel`, `read`, `pass`, `rerelease`, `step`,
 `contact`, `home`, `become` and `energy` lines, the stamps) is written
 either way, in order, and `state.json` and the books are the same. Every
 registered digest is of the whole record: the digest tests, the register's
@@ -1289,11 +1312,11 @@ that action measures; the host's readings of the board only read
 | the record (the square) | scalar, the norm of the pointer | `record` per family on the set (`wave`: X^2 + Y^2 of the coherent pointer, accumulated; `beam`: the count clicked); `record` on the `record` line at each click; the same square on a face and the border `lifetime` | (32 x 256)^2 per unit of amount squared (X = sum 32 x amount x C[phase], C on the circle at the scale 256) | detector |
 | the pointer (X, Y) | a vector of the phase plane (Z^2), not of the GameBoard | `pointer` on the `record` line of a one-Node `wave` set, and per label on the `sum` set's `record` line at a gather | 32 x 256 per unit of amount | detector |
 | the phase | scalar on the circle Z_N | `phase` on the set at its last click; `phase` on a `click`, `record`, `home` or `rerelease` line; `phase` of a measured event's state | steps of the circle (N per turn) | detector |
-| the wheel value u | scalar on the circle Z_N | `u` on a `birth` line ((births - 1) mod N at the lamp) and on the `click`, `read`, `rerelease` and `split` lines of a record's rows | steps of the circle | detector |
+| the wheel value u | scalar on the circle Z_N | `u` on a `giving click` line ((giving clicks - 1) mod N at the lamp) and on the `click`, `read`, `rerelease` and `split` lines of a record's rows | steps of the circle | detector |
 | the age of a row | scalar | `age` on the `click` line of a record's row; the age moment `reading` when the entry reads `age` (sum amount x age) | intervals (the moment: units x intervals) | detector (read whole only by a measured event) |
 | the content | scalar M | `content` on a `click`, `read`, `home` or `rerelease` line (amount x content per unit); `content` and `held` of a measured event's state; `content` and `measured_content` on a face | units of content | detector |
 | the clock of a measured event | scalars | `age` (its intervals), `phase_steps` (its turns), `owed` (the count owed in a crowd), `waited`, `steps` of its state | intervals, steps, units | detector |
-| the clock stamp of a measured event (the world key `clock_stamp`, false by default; the moving detector, 2026-09-22, docs/designs/moving_detector/DESIGN.md section 7) | scalar | `clock` on every line the measured event writes (its `click`, `read`, `rerelease` and `become` lines, its face click and, the fifth line stamped, the `birth` line of its lamp, the emitter's own count at the birth, what the light clock's N(j) = clock(return) - clock(birth) of one ordinal subtracts): its own count of self-creations at that interval, the `age` of its state, not the row's `age` on the same line and not `clock_age`; a record field and no physics, entering neither the model identity nor the hypothesis list; without the key no line carries it and every record is byte identical | intervals of its own count | detector (the detector's own count, record 768) |
+| the clock stamp of a measured event (the world key `clock_stamp`, false by default; the moving detector, 2026-09-22, docs/designs/moving_detector/DESIGN.md section 7) | scalar | `clock` on every line the measured event writes (its `click`, `read`, `rerelease` and `become` lines, its face click and, the fifth line stamped, the `giving click` line of its lamp, the emitter's own count at the giving click, what the light clock's N(j) = clock(return) - clock(giving click) of one ordinal subtracts): its own count of self-creations at that interval, the `age` of its state, not the row's `age` on the same line and not `clock_age`; a record field and no physics, entering neither the model identity nor the hypothesis list; without the key no line carries it and every record is byte identical | intervals of its own count | detector (the detector's own count, record 768) |
 | the reading of the moments, order 0 | scalar | `reading` on a `click` or `read` line when the entry reads `scalar` (the presence), `outside` (the rows that arrived) or `here` (the rows that did not step) | units of amount | detector |
 | the net flow **f** | vector, 3 components | `reading` on a `click` or `read` line when the entry reads `vector`: sum amount x **u**_d over the arrivals, on the unit vectors of the directions | Q = 64 per unit of amount along a heading | detector |
 | the traceless second moment **T** | tensor, 3 x 3 symmetric of trace zero | `reading` on a `click` or `read` line when the entry reads `tensor`: 3 sum amount x **u**_d **u**_d^T less its trace on the diagonal | Q^2 per unit of amount | detector |
@@ -1308,8 +1331,8 @@ that action measures; the host's readings of the board only read
 | the step of a measured event | scalars and a vector | `steps` and `axis_steps` of its state; the `step` line | Links | GameBoard |
 | the level of a closure (`atom-level-v1`, the world key `atom_level`; docs/designs/atom_levels/LEVELS.md section 2 (b)) | scalars | the `level` line of `events.jsonl` at a body's return: `action` (the action gained over the loop, the sum of the body's give rows), `count` (its self-creations since the last return), `level` (the whole part of `n_l x action / (2 h d_l x count)`), `last` (the level at the last release, null at the first return), `released` (the rise released), `content` and `momentum` after; the released rows' `turn` (their own phase rate, steps per interval) on their `state.json` rows | steps of h d_l / (N n_l); label units x Links; intervals | GameBoard (the host's view of the body's store: the level a detector reads is the same arithmetic on two counts of the faces, LEVELS.md section 5 (d), R3) |
 | the charge | a reduced pair (n, d) | `charge` of a measured event's state (rho x content, reduced) and `charges` per column by name; the `charge` line of the books | the family's charge per unit of content (a paid family: a whole charge per unit of amount) | detector (the state); GameBoard (the books) |
-| the gather's weight and total | reduced pairs | `weight` and `total` on a `gather` line, `T` the norm, `cells` the rungs | the unit 2^58 (`unit`) | detector (the one click) |
-| the click of a block's record at its named receiver (`detector-law-v1`, the block key `receiver`; DECLARATIONS.md section 13 item 7) | scalars | the `gather` line written at the receiver's first rung after the record's train: `click` the rung's interval, `tick` the line's (equal to `click`, or the birth plus the train where the rung fell inside the train), `click_at` "rung", `chosen` the receiver, `clock` the receiving block's count where the receiver is a set bound to a block (`clock_source`); `cells` the receiver alone (the sinks on no pointer), `T` the receiver's pointer with the sinks' take, `escaped` the sinks' take by the line (HOST, the pointer's unit); a record whose receiver crosses no rung writes no line | intervals; the unit 2^58 | detector (the one click; the interval from `birth` to `click` is the row's reading); `closed_after_click` of the books and `clicked` and `escaped` of the records reading are HOST |
+| the gather's weight and total | reduced pairs | `weight` and `total` on a `gather` line, `T` the norm, `detectors` the rungs | the unit 2^58 (`unit`) | detector (the one click) |
+| the click of a block's record at its named receiver (`detector-law-v1`, the block key `receiver`; DECLARATIONS.md section 13 item 7) | scalars | the `gather` line written at the receiver's first rung after the record's train: `click` the rung's interval, `tick` the line's (equal to `click`, or the giving click plus the train where the rung fell inside the train), `click_at` "rung", `chosen` the receiver, `clock` the receiving block's count where the receiver is a set bound to a block (`clock_source`); `detectors` the receiver alone (the sinks on no pointer), `T` the receiver's pointer with the sinks' take, `escaped` the sinks' take by the line (HOST, the pointer's unit); a record whose receiver crosses no rung writes no line | intervals; the unit 2^58 | detector (the one click; the interval from `giving click` to `click` is the row's reading); `closed_after_click` of the books and `clicked` and `escaped` of the records reading are HOST |
 | a non-absorbing read of a record's rows | a deferred offer, not an outcome | the `read` line of a record's rows that went on: the layer stores a residual selector keyed by the record's current label set (`amplitude.Layer.end`, the read branch) and the rows continue; a later rotation replaces that label set (`Layer.rotate`, `nature_beam.rotate_rows`) and the record's one click gathers at its far completion, so a read followed by a rotation and a second read is not a sequential measurement and is out of the register's contract (sequential-instrument use is unsupported under `amplitude-v1`; issue #584, 2026-09-21) | units of amount | detector (deferred to the gather) |
 | the books | scalars and vectors, exact at every tick | `audit` of `run.json` per completed tick: per family the sums, the `momentum` block (`measured`, `transit`, `escaped`, `turned`), the `charge` line, `balanced` | units, label units, pairs | GameBoard |
 | the `become` and `contact` lines of a measured event | scalars and vectors | the `become` line of `events.jsonl` (`triggered`, the tick its clock fired; `counted`, the count read at the trigger; `into`, `products` with their directions and hands, `recoil`); the `contact` line (the hand-over: `occupant`, the label handed) | intervals, units, label units | detector (the event's own record; the audit of record 567, F6, F8 and F14: never GameBoard) |
