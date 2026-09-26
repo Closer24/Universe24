@@ -18775,3 +18775,30 @@ that constancy.
    of the algebra with its section. Nothing here is a family's name, a
    number of the universe or a default: the weights, the scales and the
    tables are the files'.
+
+5. **From the rule or beyond it, per declaration (the Boss's record
+   2225).** The two words are 9.113 item 1's: FROM THE RULE 9.57 (1) AND
+   THE CLICK, or BEYOND THE RULE with its reason (L, H, S). The line
+   beside each word is the one that shows which: for a primitive from
+   the rule, the rule's own line that the folder must build and no
+   other; for a primitive beyond, the line the rule does not have. A
+   folder that could come from the rule and writes a formula of its own
+   in place of the rule's line is sent back.
+
+   | Name | The word | The line that shows which |
+   | --- | --- | --- |
+   | the signed read | from the rule | p_0 = Gamma - SUM (weight x by x argument) is the rule's own pace p = Gamma - c + q Lambda d (9.57 (1); 9.78 (4)); the guard is the rule's stability, its factor (S - 6 R) / w at -2 (9.108 item 12); the folder features/signed_read builds this sum and this edge (PR #1164; its test the equivalence with the engine's sum over a run) |
+   | the source | the field's shape from the rule, the write beyond (H) | the static limit of the rule is (Delta - kappa^2) a = 0 with kappa^2 = 6 den / num - 6 (9.108 item 3); D_i div E_s added to a level is a load, a count written into a level, which a homogeneous rule does not have (9.113 item 2, the hold) |
+   | the giving | the click (its inverse), the bulk share from the rule, the window's write beyond (H) | the close M_k -= 1 is the click's write with the opposite sign (9.107); n_a -= n_a div M is the rule's conserved momentum shared by the quantum that leaves (9.84 (1); 9.86 (1)); a_given += g x a_body over the window is a load, as the hold's |
+   | the clicks | the click; the booking from the rule | num (now_i before_j - before_i now_j) is the rule's conserved current (9.25 (2)); the ladder and the record's end are the click, the one irreversible read-out (9.25 (12)) |
+   | the recoil | from the rule | the rule is translation-invariant, so its form's momentum is conserved (9.84 (1)); the taker gains what the record lost, sigma_a x (W x P_body) div (M x lambda_q) (9.84 (2), 9.91 (4)); the folder features/recoil builds this division and no other (PR #1165) |
+   | the recoil's accumulator | beyond (S) | k_q div M is a fraction of a hop per click; the rule keeps nothing at a Port to carry it (9.109 item 2 (b); 9.113 item 3 (b)) |
+   | the feed | its contraction from the rule, its write beyond (S) | the contraction is the rule's pace at the two faces (9.78 (4)); a body's momentum n is state the rule does not keep (its state is a Node's two levels and remainder); retired when the rule moves bodies (9.104 item 6) |
+   | the induction | beyond (S) | the change of (n_b V_b) div W over an interval is a memory of the last interval on a body, which the rule does not keep |
+   | the spin's step | beyond (L, S) | Omega x S is a product on a body's spin; the rule has no spinor and no body's spin (9.113 item 2, the hand) |
+   | the hop | beyond (S) | a body's position and its accumulator are state on a body; the rule moves levels and no body; retired when the rule moves bodies (9.104 item 6) |
+   | the trace | neither: a diagnostic | it reads every word and moves nothing (9.112 item 5) |
+
+   The well, 9.113 item 3 (a), is no declaration here: it is two sourced
+   families with opposite reads (the source's row twice), and its
+   balance is under its own name (9.108 item 14).
