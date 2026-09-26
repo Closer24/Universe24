@@ -50,8 +50,6 @@ SRC = ROOT / "src" / "event_universe"
 # interval or forms the tables it reads, one line each why.
 PHYSICAL_MODULES: dict[str, str] = {
     "events/world.py": "the world file's parse and the load-time constants (the flight table, the labels)",
-    "events/measured.py": "the measured event's record and the ledger of an interval",
-    "events/amplitude.py": "the click's ledger: the offer, the evaluation, the Gram form, the rungs",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md 9.90 (1))",
     "events/rule.py": "the one rule's coefficients per Node and per axis (ALGEBRA.md 9.57 (1), 9.91 (2)) and the ladder's rungs (9.25 (2))",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md 9.88 (7)): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
@@ -111,10 +109,6 @@ ROOT_NAMES = {"isqrt", "integer_root"}
 ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
     # the ray law's modules (nature_beam.py, meeting.py, engine.py) and their roots were
     # deleted on 2026-09-26 (docs/CANCELLED_WORLDS.md)
-    (
-        "events/amplitude.py",
-        "common_denominator",
-    ): "a predicate at a join of two multiplicities: is the ratio a perfect square (the root squared back and compared); no rounded number enters a reading",
     ("events/world.py", None): "at load: T_HEADING = isqrt(3 Q^2), the flight's resolution on a heading",
     (
         "events/world.py",

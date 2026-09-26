@@ -1,5 +1,7 @@
 # Architecture and change boundaries
 
+> Paths of the ray law named in this document were deleted on 2026-09-26 (docs/CANCELLED_WORLDS.md); the sentences naming them are history.
+
 The one engine is the engine of the Beam Law ([BEAM_LAW.md](BEAM_LAW.md),
 its bookkeeping [ENGINE.md](ENGINE.md)):
 `src/event_universe/events/` on the substrate of `src/event_universe/core/`,

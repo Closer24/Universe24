@@ -16,20 +16,36 @@ file: the last commit of `main` that holds them all is `fbfed39f`, and one path 
 | modules and tools | 42 | `src/event_universe/events/engine.py`, `nature_beam.py`, `meeting.py`, `run.py`; `src/event_universe/__main__.py`, `configuration_validation.py`, `json_documents.py`, `register_map.py`, `runner.py`, `snapshot_writer.py`, `trimmed_record.py`, `world_loading.py`, `diagnostics/shell_readings.py`; `tools/click_readings/*.py` but `detector_law_bell.py`; `tools/amplitude_path.py`, `amplitude_probe.py`, `moving_detector_readings.py`, `newton_side_readings.py`, `profile_run.py`, `run_series.py` | 24,098 |
 | the gate's cancelled-paths machinery | 3 | `tools/cancelled_paths.py`, `tests/test_cancelled_paths.py`, `tests/test_gate_configuration.py`, with the `collect_ignore` of `tests/conftest.py`, the selector's filter in `tools/check.py`, the type checker's override and the script entry `event-universe` in `pyproject.toml` | 214 |
 
-In all 515 files and 69,929 Python lines: `main` at `fbfed39f` held 157,545 Python lines, the
-branch holds 87,527 (36,049 of them the design folders' scripts, records).
+In all 515 files and 69,929 Python lines in this first round; section 2's second round, on the
+owner's word, took 7,928 more. `main` at `fbfed39f` held 157,545 Python lines; the branch holds
+79,559, of which 36,049 are the design folders' scripts (records) and 43,510 the code that runs,
+its generators and its tests.
 
 Every markdown link to a deleted path was turned into its text with the path in code font and
 the word "deleted 2026-09-26". Nothing of the design folders under `docs/designs/` or of the
 dated logs was deleted; the design scripts that imported the deleted modules are records and
 do not run.
 
-## 2. Listed whole, kept for now (the Boss's approval asked, record 2220)
+## 2. Deleted on the model owner's word of 2026-09-26, 15:30Z ("delete everything not in use")
 
-| Path | Why it stays today |
-| --- | --- |
-| `src/event_universe/events/measured.py` | imported by `src/event_universe/events/amplitude.py` (a living file with a cancelled half, Main Loop's cut), so its deletion would break the type check of a file that is not this branch's to touch; it is the one module under the type checker's `ignore_errors` override. `amplitude.py` itself is imported by nothing living since `rungs` moved to `events/rule.py`, so it is proposed whole in section 4 |
-| `docs/BEAM_LAW.md`, `docs/DERIVATIONS_BEAM.md` | the ray law's two documents, linked from about 460 places of the living documentation and Highlights; history, not code (0 Python lines) |
+The two listed modules kept at first and every file that nothing living read, found by a scan of
+the imports and the names across `src/`, `tools/`, `tests/` and `examples/`:
+
+| Path | Python lines | Why it was dead |
+| --- | --- | --- |
+| `src/event_universe/events/amplitude.py` | 1025 | imported by the deleted `nature_beam.py`, `engine.py`, `amplitude_path.py` and `amplitude_probe.py` alone; `rungs` is `events/rule.py`'s |
+| `src/event_universe/events/measured.py` | 1118 | listed whole; imported by `amplitude.py` alone |
+| `examples/events/make_worlds.py` | 140 | the generator of the deleted root worlds; it imported the deleted `world_loading.py` |
+| `tools/click_readings/detector_law_bell.py` and the folder's README | 183 | the reader of the deleted Bell series' register; it imported the deleted `world_loading.py` |
+| `tools/algebra_visualizer/` (5 files) | 5171 | its test was cancelled and deleted; it rendered the deleted runner's runs |
+| `tests/support/hand_worlds.py` | 184 | used by no living test |
+| `examples/events/toward_nature/read_bending.py` | 107 | a reader of the stopped bending runs (record 2199), named by no test |
+| `examples/events/one_slit.json`, `two_contents.json`, `two_slits.json`, `gate_set.json` | 0 | the ray law's root worlds and its gate register, read by nothing |
+
+Kept: `docs/BEAM_LAW.md` and `docs/DERIVATIONS_BEAM.md`, the ray law's two documents, linked
+from about 460 places of the living documentation and Highlights (history, 0 Python lines);
+`examples/events/one_content.json`, the preflight test's refused example; `expectations.json`
+and `pins.json` at the root, read by living tests.
 
 ## 3. The cancelled halves in living files (Main Loop's cut; formerly section 9)
 
@@ -45,14 +61,19 @@ Main Loop's cut (record 2220), never in this deletion.
 | `tools/check.py` | its resource map is empty since the deletion; the check itself stays |
 | `tools/preflight_worlds.py` | only its ray-law part; its detector-law part stays |
 
-## 4. Code that nothing living reads (proposed; the Boss approves each item before deletion)
+## 4. What is left to shorten (for the Boss, the owner's word: very short, very readable code)
 
-| Path | Python lines | Why it is dead |
+Reported, not changed here; the engine's files are Main Loop's:
+
+| File | Lines | Note |
 | --- | --- | --- |
-| `src/event_universe/events/amplitude.py` | 1025 | imported by the deleted `nature_beam.py`, `engine.py`, `amplitude_path.py` and `amplitude_probe.py` alone; `rungs` is `events/rule.py`'s |
-| `src/event_universe/events/measured.py` | 1118 | listed whole; imported by `amplitude.py` alone |
-| `examples/events/make_worlds.py` | 140 | the generator of the deleted root worlds (the old entities' families); it imports the deleted `world_loading.py` and no longer runs |
-| `tools/click_readings/detector_law_bell.py` | 183 | the reader of the deleted Bell series' register; it imports the deleted `world_loading.py` and no longer runs |
-| `tools/algebra_visualizer/` (5 files) | 5171 | its test `tests/test_algebra_visualizer.py` was cancelled and deleted; it renders the deleted runner's runs |
-| `tests/support/hand_worlds.py` | 184 | used by no living test |
-| `examples/events/one_slit.json`, `two_contents.json`, `two_slits.json`, `gate_set.json` | 0 (JSON) | the ray law's root worlds and its gate register, named by `examples/events/README.md` alone (`two_slits.json` as a path string in `tests/test_check_scope.py`); `one_content.json` stays as the preflight test's refused example, `expectations.json` and `pins.json` are read by living tests |
+| `src/event_universe/events/world.py` | 7575 | the loader; its ray-law half (section 3) is about half of it |
+| `src/event_universe/events/detector_law.py` | 4298 | the engine's loop, the hold, the click, the hop and the readings in one file; the cut splits it into the main loop, the step, the Node, the register and the features (record 2221) |
+| `examples/events/massive_record/make_worlds.py` | 1227 | the generator of the shipped worlds, the seeding on the mode included |
+| `src/event_universe/diagnostics/massive_record_margin.py` | 849 | the mode iteration the generator seeds with |
+| `examples/events/detector_law/make_worlds.py` | 803 | the detector-law worlds' generator |
+| `src/event_universe/retention.py` | 613 | artifact leases and output paths, a host concern |
+| `tests/test_massive_record.py` | 1858 | the largest test file |
+| `src/event_universe/core/game_board.py` | 124 | `adjacent_node` and `cube_symmetries` are called by nothing (59 lines) |
+| `src/event_universe/events/world.py` | | `default_width` is called by nothing |
+| `docs/designs/**/*.py` | 36,049 | the design scripts, records; many import deleted modules and do not run |

@@ -134,7 +134,7 @@ Doppler; their verdicts are in the log and Highlights 5.4). No key, hypothesis o
 rule of the engine moves; TERMINOLOGY.md's retired rows stay as history.
 
 The readings of a click under one boundary (the third commit): the package
-`tools/click_readings/` ([its README](../tools/click_readings/README.md)) holds the
+`tools/click_readings/` (its README (`tools/click_readings/README.md`, deleted 2026-09-26)) holds the
 readings tools, one module per series, renamed by the series' subject and moved
 byte for byte but for their root path: `tools/bell_chsh.py` -> `bell.py`,
 `tools/bell_choosers.py` -> `bell_choosers.py`, `tools/<series>_readings.py` ->
