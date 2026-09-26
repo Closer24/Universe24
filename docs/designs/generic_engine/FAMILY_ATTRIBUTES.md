@@ -24,7 +24,7 @@ reads each family by its attributes and never by its name (records 2066, 2075; i
 | the reads | `reads` | [{family, weight, twist, by}], weight an integer FROM 1 or "Lambda", by plain or sign, twist own, Lambda_v or an integer | the pace Gamma - SUM weight x by x level (9.91 (2)) |
 | the self source | `self_source` | {unit} | the field's own energy as its source (9.97 (3)) |
 | the clicks | `clicks` | {gives, takes, quantum} | the ladder and the giving |
-| the lifetime | `lifetime` | an integer | the border every row of the family clicks on |
+| the lifetime | `lifetime` | an integer | the border every record of the family clicks on |
 
 A family declaring none of the sources stays exactly zero at every interval (the leak test of
 record 2075 (3)); the shipped families renamed at random give the same digests (item 53).

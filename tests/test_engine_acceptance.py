@@ -7,7 +7,7 @@ adversarial universe, (b) the cap of twenty families, (c) the null family, (d) t
 attribute (a hill), (e) the closed engine (no family name, no universe integer, no default,
 no flag and no version in the code; record 2182), (f) the rule as one function. A test of a support the
 ledger lists as to do is marked xfail strict: it turns green the day the support lands and then
-must lose its mark (the ledger's row moves)."""
+must lose its mark (the ledger's item moves)."""
 
 from __future__ import annotations
 
@@ -154,7 +154,7 @@ def test_c_a_family_with_no_source_stays_exactly_zero_and_silent():
 
 @pytest.mark.xfail(
     strict=True,
-    reason="the ledger's row 'a signed read weight' (ALGEBRA.md 9.108 (8)): the loader bounds "
+    reason="the ledger's item 'a signed read weight' (ALGEBRA.md 9.108 (8)): the loader bounds "
     "the weight from 1; when the support lands this passes and the mark comes off",
 )
 def test_d_an_attribute_added_in_the_file_alone_gives_its_effect_a_hill_on_gravity():
@@ -200,7 +200,7 @@ def constants(tree: ast.AST) -> list[tuple[int, object]]:
 
 @pytest.mark.xfail(
     strict=True,
-    reason="the ledger's row 'no flag, family name or number in the code' (records 2172 to 2174): "
+    reason="the ledger's item 'no flag, family name or number in the code' (records 2172 to 2174): "
     "the loader names 'gravity' as a string constant (world.py, the held family's word); the "
     "review after the merge takes it out and the mark comes off",
 )
@@ -260,7 +260,7 @@ def world_key_defaults() -> list[str]:
 
 @pytest.mark.xfail(
     strict=True,
-    reason="the ledger's row 'no flag, family name or number in the code' (records 2172 to 2174): "
+    reason="the ledger's item 'no flag, family name or number in the code' (records 2172 to 2174): "
     "the loader still writes defaults for keys of the files; the review after the merge",
 )
 def test_e3_no_key_of_the_files_has_a_default_written_in_the_engine():
@@ -276,7 +276,7 @@ FLAG_WORDS = {"flag", "flags", "version", "schema_version"}
 
 @pytest.mark.xfail(
     strict=True,
-    reason="the ledger's row 'no flag, family name, number or version in the code' (records 2172 "
+    reason="the ledger's item 'no flag, family name, number or version in the code' (records 2172 "
     "to 2174, 2182): the loader still holds the identities' version strings ('beam-v1', "
     "'amplitude-v1', 'bohr-v1', 'columns-v1', 'weak-v1', 'meeting-v1', 'optical-v1', 'hand-v1', "
     "'binding-v1') and the key 'schema_version'; the review after the merge takes them out and the "
