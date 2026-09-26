@@ -16103,3 +16103,102 @@ and the equations of motion coded in item 10 are redundant with it;
 the script is `fall_from_rule_check.py` in the session's scratchpad,
 and the row for the engine is the same packet under the stable engine
 in check mode. This is the evidence for (2)'s row on item 10.
+
+### 9.99 The families derived in structure: the symmetric algebra of the four directions, and why the tower stops at gravity (the model owner's question of 2026-09-26, "can you think of something that derives the unification?", and his word "write it all")
+
+**(1) THE CLAIM.** The three families are not three declarations. They
+are the three graded pieces of ONE object, the symmetric algebra of
+the four directions at a Node, (t, x, y, z), truncated at degree 2;
+the truncation is the rule's own order. What a family declares
+reduces to its degree and its charge sign. What stays declared beyond
+the rule is the internal group of the strong and weak forces, and
+nothing else.
+
+**(2) THE READING IS A POLYNOMIAL IN THE READER'S FOUR-VELOCITY.** By
+9.95 (3) the reading of a body moving with u = gamma (1, v) is a
+Lorentz scalar built from the fields and u. Collect every term the
+engine reads at a Node (9.78 (4), 9.95 (4)):
+
+  R(u) = omega_0            (degree 0: the record's own rotation, its mass)
+       + q A_mu u^mu        (degree 1: the charge's four components)
+       + (1/2) h_(mu nu) u^mu u^nu   (degree 2: gravity's ten components),
+
+a polynomial of degree 2 in u. The fields that can couple at each
+degree are exactly the symmetric tensors of that degree over the four
+directions: Sym^0 = 1, Sym^1 = 4, Sym^2 = 10. Under the cube's group
+G_48, which fixes t and permutes x, y, z with signs, these split as 1;
+1 + 3; 1 + 3 + 6: matter's one component, the charge's [1, 3],
+gravity's [1, 3, 6] (9.86 (2)), the parts as built. So the counts 1, 4,
+10 and their split into parts are not chosen: they are the degrees of
+one algebra.
+
+**(3) WHY IT STOPS AT DEGREE 2: THE RULE'S ORDER.** The rule 9.57 (1)
+is of second order: two levels in time, the six neighbours once, and
+the pace entering as its square. Its long-wave form is the wave
+equation, a quadratic form in the record; the Lagrangian of a body in
+its fields is then quadratic in u (the geodesic Lagrangian (1/2) g u u
+and the charge's q A u), and a quadratic Lagrangian couples to a
+symmetric tensor of rank at most 2. A rank-3 field (Sym^3 = 20
+components, a massless spin 3) would need a cubic kinetic term, which
+the rule does not have. So gravity is the top of the tower because
+the rule is of second order; nature shows no massless field above
+spin 2, and here that is a consequence.
+
+**(4) THE COUPLINGS ARE THE READER'S OWN NUMBERS.** Degree 0 couples
+by the record's mass (its own pair), degree 1 by its charge q, degree
+2 by its count with the weight 1 for every record (the equivalence
+principle is "the degree-2 coupling is the count itself"). No
+coupling constant of nature enters beyond Lambda (the charge's unit,
+one number, 9.83 (2)) and the universe's integers.
+
+**(5) WHAT A FAMILY DECLARES, THEN.** Its degree (0, 1 or 2), which
+fixes its parts, its holds and its reads by 9.95; its charge sign q
+per record (degree 1's coupling); its clicks (whether it gives and
+takes); its pair per record (degree 0's coupling); its phase (2 where
+a transport reads it). The families file's three entries of 9.91 (7)
+are these words, and the loader computes the rest.
+
+**(6) WHAT IS NOT DERIVED, said once.** The internal representations
+of the strong and weak forces (9.88 (7)) are rotations of n pairs
+together by the transport's primitive; which group, how many pairs
+and which structure table is a declaration. The rule admits every
+rational rotation table and prefers none. The unification of the
+strong and weak forces with the charge (one internal group with the
+charge's rotation inside it) is therefore a declaration in this
+engine, as it is a hypothesis in nature's physics, and the rule does
+not choose it.
+
+**(7) ASSUMED, FINALLY.** The rule 9.57 (1). Three degrees of one
+algebra, which the rule's order fixes. The internal group, declared.
+Nothing else: no number, no factor, no version.
+
+### 9.100 The day's closure, for the Boss's independent review (the model owner's word of 2026-09-26: "write all we did and talked, the unification, the rule, the families' unification, and send it to the Boss to review independently and approve, and everything proceeds as we talked")
+
+**(1) WHAT WAS DERIVED TODAY, one line each, with the place to check.**
+- 9.95: the holds' factors (1, 4, 2) and (1, 1) from the rule, its own Lorentz symmetry, one normalisation per family and the reading as a Lorentz scalar; the trace's 1/2 from the rule's light-to-matter ratio 2. CHECK: (2) (a), (b) and (3), (4) step by step; the dipoles' doubling in (5).
+- 9.96 (2) (b): Lambda_v = Lambda, from the same reading. CHECK: the (1, 1) of 9.95 (4).
+- 9.97: P_2 = 0 for gravity's t part by the rule's own second order (beta = 1 exactly); P_2 for the waves' parts computed from the units, about 10^17, zero in integers at every Node; the strong field the rule's own, its departure from Einstein's isotropic form at third order (3.7 and 28 percent at U = 0.3). CHECK: (2)'s identity (1 + (1 - 2 U)^2) / 2 = 1 - 2 U + 2 U^2; (3)'s bound 2^45 div 10^17 = 0; (4)'s two closed forms.
+- 9.98 (7): the rule alone moves a body at the predicted acceleration (num / den) g / (6 Gamma), within a tenth; the control does not move. CHECK: rerun `fall_from_rule_check.py` (the session's scratchpad; to be committed under tools/ by Nature24 as the row's script).
+- 9.99: the three families are the degrees 0, 1, 2 of the symmetric algebra of the four directions; the tower stops at 2 by the rule's order. CHECK: Sym^k(4) = 1, 4, 10 and their G_48 splits 1; 1 + 3; 1 + 3 + 6.
+
+**(2) WHAT WAS DECIDED TODAY BY THE OWNER, one line each.** No named
+law and no version anywhere (9.90 (1)). The one keys table (9.90 (6)).
+The whole stroke now, unit tests first (9.90 (6)). The word "seat"
+gone (record 2108). The engine from the rule alone: the rule, the
+click, the well's hop, the files; the stroke's commit 6 replaced by
+"the body moves by the rule", the declared spin and moment by the
+winding, the recoil by a rotation at the click; parts in parallel,
+each checked alone (9.98, the owner's word of 04:5xZ). The families'
+structure derived (9.99), written on his word.
+
+**(3) WHAT STAYS ASSUMED.** The rule 9.57 (1). The internal group of
+the strong and weak forces, declared. Nothing else.
+
+**(4) WHAT THE BOSS CHECKS INDEPENDENTLY, and then records.** The five
+derivations of (1) by their steps; the two computations (9.97 (3),
+9.98 (7)) by rerunning; that no line here changes a shipped digest at
+rest (bit for bit is the gate at every part); that the stroke's list
+as changed (9.98 (5) and the owner's word) is what Nature24's fresh
+session builds. On approval: Highlights 5.4 takes the decisions of
+(2) as lines, this section is their record, and everything proceeds
+as written here.
