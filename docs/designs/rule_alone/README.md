@@ -153,7 +153,47 @@ them (the runs of 2026-09-26, 09:00Z).
    width. Both numbers are the mathematician's to set: the click rate that holds a width w and
    the rate that lets a body fall.
 
-## 7. The commands
+## 7. The four runs of ALGEBRA.md 9.98 (11): the binding as a family (record 2157)
+
+The mathematician's generic line (c): every record writes its local count s_i = F_i div E_s
+into the t part of gravity and of a binding family; every matter record reads gravity with the
+weight 1 and the binding family with the weight K_m; the binding family is held, of degree 0,
+with its own pair below [1, 1] (a range of a few Links); no pair well, no hop, no tally.
+`binding_family.py`, the readings as JSON beside it (the runs of 2026-09-26, 09:30Z).
+
+1. **As run (HOST choices, stated once).** F_i = now^2 + before^2 - 2 now before cos omega_i
+   from the record's pair alone, cos omega_i the Node's rest rotation at the content read there
+   in the interval before. The binding pair [54, 55]: the held level's static equation is
+   SUM_neighbours a = 6 (den / num) a, so kappa^2 = 6 (den / num - 1) = 1 / 9, the range 3 Links
+   asked. The hold after the held families' plain step (9.85 (2)); the pace p_0,i = Gamma - g_i -
+   K_m b_i; the guard p > 0 ends a run. The board 48^3 with open faces; the record a standing
+   Gaussian of sigma = side / 2 at 2^17 (a start, not the mode). Three readings of E_s, the
+   source's scale: `level`, E_s = F_peak(0) div s (the peak reads s = 2000 at the start, the
+   level the mathematician's table of 9.98 (10) (h) binds with, K_m s at the Nodes); `count`,
+   E_s = SUM F_i(0) div s (one count's form, the counts summing to s); `cap`, `level` with s_i
+   cut at s (a saturation, not the line: what the cut does).
+2. **The algebra's numbers beside.** The table of 9.98 (10) (h) at [800, 850]: a uniform
+   content binds from c near 3500 at side 5 (the tail 12 Links at 4000) and from c near 2000 at
+   side 9 (the tail 6 Links at 3000); K_m s = 4000 at K_m = 2. The fall of two bodies of s =
+   2000 from rest at 20 Links: meeting at 249 (item 2's Newton integration). The moving body:
+   x = x_0 + v t.
+
+| Run | Reading (GAMEBOARD of the runner) | Verdict |
+| --- | --- | --- |
+| (1) `level`, the line as written, side 5 and 9, K_m = 1, 2, 3 | THE GUARD at interval 18 to 61 in all six runs: the record concentrates, its form at the peak grows, the count at the peak passes s (3261 at interval 25 for side 5, K_m = 2; 4538 for side 9, K_m = 1), and the content reaches Gamma (10002 to 16676) | FAILS: a runaway. A source that follows the record's own form deepens the well as the record concentrates, and the rule in three dimensions has no stop before the guard |
+| (1) `count`, the counts summing to s | the content at the peak 66 (side 5) and 12 (side 9) at the start, then the counts flicker to 0 as the packet spreads (rms 1.8 to 9.4 at 500); the guard at 746 and 878 from the held families' waves piling up on the runner's reflecting faces, not from a binding | FAILS to bind: with s conserved as a count over the Nodes, the level at a Node is s times the Node's share of the form, far below the table's 3500 |
+| (1) `cap`, the level cut at s | side 5, K_m = 2: rms 1.8, 3.7, 7.2, 9.9, 11.9 at 0, 25, 500, 1000, 1500, the peak's count 2000 to 98, the bound share within 12 Links 1.00 to 0.11: disperses. Side 9, K_m = 2: rms 3.2, 3.8, 5.4, 6.2, 6.0; the peak's count 2000 throughout, the content 6000; the tail 3 to 5 Links; the bound share 0.76 to 0.85; the rotation measure 2 SUM now before / SUM (now^2 + before^2) gives omega 0.42 to 0.48 against the vacuum's 0.345 (a trapped packet that sloshes, not a mode below the band). Side 9, K_m = 3: the guard at 189 | binds at side 9 with K_m = 2, at rms 6 with a tail of 3 to 5 Links, beside the table's tail of 6 at 3000; not at side 5. The cut is a new operation, not the line |
+| (2) `moving`, `cap` side 9 K_m = 2, v = 0.05 and 0.1 | the centroid 16.0 to 21.5 (250), 21.8 (500), then 16.8 to 19.0 against x_0 + v t = 91; at v = 0.1: 16.0 to 24.7 (500), 25.6 (750), then 21.8 to 23.0 against 166; the width 6 to 8; the `level` moving run hits the guard at 39 | FAILS: the body moves 6 to 9 Links and stops, pinned |
+| (3) the leak, in every run | the rule's form at the current coefficients over its start swings 0.65 to 1.20 over 1500 intervals in the bound runs; the count sum 400,000 to 1,000,000 | the form is not conserved under a pace the record itself changes; a norm for the self-sourced record is owed by the algebra |
+| (4) `pair`, `cap` side 9 K_m = 2, 20 Links apart | the separation 20.0, 12.9 (250), 5.85 (500); at 532 the two sources overlap and the guard fires (content 12000) | the attraction WORKS at about half the pace of item 2's algebra (meeting at 249); a moving one keeps its shape (rms 6 to 8) but not its motion (row 2) |
+
+3. **The sum.** The line as written runs away in three dimensions at every K_m tried; with the
+   counts conserved it binds nothing at s = 2000; with a cut at s it binds at side 9 and pins the
+   body. What the runs ask of the algebra: the source's scale E_s with a stop (the count's cap
+   or another), the norm of a self-sourced record, and the moving self-bound body's pinning
+   against the free record's motion (item 1 and 9.98 (7)).
+
+## 8. The commands
 
     PYTHONPATH=src python docs/designs/rule_alone/item1_fall.py 1 2100
     PYTHONPATH=src python docs/designs/rule_alone/item1_fall.py 0 2100
@@ -169,5 +209,8 @@ them (the runs of 2026-09-26, 09:00Z).
     PYTHONPATH=src python docs/designs/rule_alone/item9_clicks.py check
     PYTHONPATH=src python docs/designs/rule_alone/item9_clicks.py whole|quantum|control 1500
     PYTHONPATH=src python docs/designs/rule_alone/item9_pair.py pair|moving|moving_control 1500
+    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py rest 9 2 1500 level|count|cap
+    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py moving 9 2 0.05 1500 cap
+    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py pair 9 2 1500 cap
 
 The readings are written beside the scripts as JSON (the runs of 2026-09-26).
