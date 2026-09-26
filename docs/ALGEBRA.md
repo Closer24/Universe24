@@ -13964,7 +13964,9 @@ proceeds as in 9.50 (8). The remainder makes the transport unbiased
 over time, as the rule's r does; without it a floor would drift by
 half a unit per Port per interval. (e) THE INTEGERS: d_k up to 10^9
 gives angles to 10^-6 of a radian per Link, below every band over a
-hundred Links; c_k x arrival at most 10^9 x 2^20 = 10^15, within
+hundred Links (CORRECTED in 9.96 (2) (e): the smallest nonzero angle
+of a triple under the bound is 6.3 x 10^-5, and the mean per Link is
+made exact by the Port's accumulator); c_k x arrival at most 10^9 x 2^20 = 10^15, within
 int64 with room; the rule's total UNCHANGED at 6.1 x 10^18 (9.57
 (2)), since T is level-sized; so Gamma = 10^4 and A = 2^20 stand.
 Storage: twelve remainders per twisted family per Node (six Ports,
@@ -14721,7 +14723,15 @@ products, and conservation alone does not fix the share; the engine
 draws it from the residue on the wheel (the same draw as Born's rule
 at the taking end, 9.25 (3)) over the products' momenta, whole, the
 sum kept exactly. Without this line a decay with several daughters
-stays outside (9.78 (6) (g)); with it, inside.
+stays outside (9.78 (6) (g)); with it, inside. THE DRAW, said exactly
+(Nature24's question of 2026-09-26): one cut per product from its own
+rung, not m - 1 cuts at equal spacing from one residue (equal spacing
+gives equal shares for every u and is no draw); the rungs are the
+record's remainders at the Node in a fixed order (the time part's,
+then x, y, z, then the Port remainders in the Port order), each a
+residue on its own wheel scaled to W, sorted, the shares their
+differences signed as n_a, the sum exact, one product taking the
+whole; nothing beyond the Node's own remainders is read.
 
 **(5) HANDEDNESS: CONFIRMED FOR BODIES, NOT FOR WAVES.** A body carries
 its spin S_i and its momentum n_i, both integer vectors, and its
@@ -15816,6 +15826,38 @@ above; the tables generated once into the universe file's integers
 block by the generator, checked by the loader (every identity, every
 angle).
 
+(e) THE TABLE'S FORM CORRECTED (Nature24's finding of 2026-09-26,
+tools/twist_table.py on stroke-side): a Pythagorean triple's angle is
+2 atan(n / m), so with d = m^2 + n^2 at most 10^9 the smallest nonzero
+angle is 2 / sqrt(10^9) = 6.3 x 10^-5 radians, and no triple under the
+bound reaches theta_unit = 3.8 x 10^-10 or (c)'s precision theta_unit
+/ 2^10; (c)'s fine table and its exact product are withdrawn, and 9.81
+(2) (e)'s "10^-6 of a radian per Link" is off by sixty for the same
+reason. Away from zero the triples are dense to about 10^-9 (n / m
+nearest tan(angle / 2) at m near 3 x 10^4), so a large angle (the own
+twist, the recoil) has its triple; the gap is at small angles alone.
+THE FORM, local and exact on the mean: the angle count k of a Port
+stays in units of theta_unit; the Port's transport remainder (9.91
+(1), twelve per Node) is the angle's accumulator rho: each interval
+rho gains k, the Port applies the table's triple j = rho div K_0 and
+keeps rho - j K_0, with K_0 = A_1 the table's step; the table is one
+list of 2^12 triples (m^2 - j^2, 2 m j, m^2 + j^2) for m = 31000 and j
+= 1 to 4096, angles from 6.45 x 10^-5 to 0.26 radians, d below 10^9,
+each entry with its angle A_j = round(2 atan(j / m) / theta_unit) as
+an integer; a rotation asked beyond the table is refused at load
+naming the Port. What this gives: the mean angle per Link exact to
+theta_unit over intervals (the accumulator drifts below theta_unit / 2
+per application); the rotation applied at one interval quantised at
+6.45 x 10^-5 radians, four units on an amplitude of 2^16, read by
+clicks as the residue ladder is read, on averages; fixed local work
+per Port (LOCALITY-1); the weak-field twists of the vector rows (near
+7 x 10^-5 per Link) kept, which a coarser unit would cut to zero.
+Nature24's form (a), a unit of 6 x 10^-5 with k rescaled, loses those
+rows; (c), an accumulation across Ports, is not local; this is (c)
+made local in time on the Port's own remainder. A change of one
+primitive's table and no operation of the law; the Boss says whether
+it is a decision for three.
+
 (c) ON Lambda_v = Lambda (record 2132 fix 9): it holds at first order
 in v. At order v^2 the charge's scalar d enters the pace squared (9.57
 (1)) and so acts as a metric term would; that is the rule's own reading
@@ -16786,3 +16828,32 @@ as written here.
    an optimisation later, as the Boss said. Both are written here as
    the owner's readings for the Boss's record; the eighth question of
    A goes to Nature24 through the Boss (record 2133).
+
+9. B's second form (the Boss's record 2143 on the owner's question,
+   "can our Node of today be built from sub-Nodes of three exits?"),
+   reproduced (docs/designs/laves_graph/cluster_node_check.py, host):
+   one Node of six Ports as ten sub-Nodes of three exits, six face
+   sub-Nodes (the outer Link to the neighbour's opposite face and two
+   Links to the hubs on the face) and four hubs on alternate corners.
+
+   | Reading | Value |
+   | --- | --- |
+   | Exits per sub-Node | 3, every one |
+   | The long wave | isotropic, 0.04 times the identity per Node spacing |
+   | The anisotropy, body and face diagonal | + 0.0111 k^2 and + 0.0083 k^2, 2.5 times smaller than the cubic lattice's |
+   | The adjacency at k = 0 | 3 once, 1 five-fold, -2 four-fold |
+   | The point group | T_d, the hubs' tetrahedron: no handedness, and the cube's quarter turn gone |
+   | The five-fold level under T_d | E + T_2 (a doublet and a vector triplet) |
+   | The four-fold level under T_d | A_1 + T_2 (a singlet and a vector triplet) |
+   | Away from k = 0 | the internal levels disperse into bands (along an axis -2.5 to -1 and -0.3 to 2): high branches that propagate, not local states |
+   | The cost | 10 sub-Nodes and 30 neighbour reads per Node in place of 1 and 6 |
+
+   For hypothesis A's counts: the two T_2 triplets are vectors under
+   T_d, which a click reads as directions, so they are not hidden; the
+   E doublet is the one hidden index the cluster offers (it is not a
+   vector; a tensor reading would see it), a 2 and not a 3; the A_1 is
+   a singlet. At k = 0 the nine internal modes are orthogonal to the
+   uniform mode, so a click that sums the cluster does not see them;
+   away from k = 0 they mix with the long wave and propagate. A
+   hypothesis, not a decision (the Boss's word); B's first form is
+   closed (item 8) and this form is recorded beside it with its cost.
