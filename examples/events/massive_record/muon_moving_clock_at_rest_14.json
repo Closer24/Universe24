@@ -19,17 +19,23 @@
   1,
   128
  ],
- "suspension": 0,
+ "width": 1,
  "clock_stamp": true,
  "detector_law": true,
  "massive_record": true,
+ "body_record": false,
+ "point_emitter": false,
+ "engine": "examples/events/engine_start.json",
  "amplitude_bound": 1048576,
  "node_clock": 10000,
- "directions": [],
  "families": [
   {
    "name": "light",
    "quantum": 1,
+   "pair": [
+    1,
+    1
+   ],
    "phase_per_link": [
     77,
     25
@@ -70,6 +76,10 @@
   {
    "name": "clicks",
    "quantum": 1,
+   "pair": [
+    1,
+    1
+   ],
    "charge": 0,
    "held": "content",
    "reads": []
@@ -77,6 +87,10 @@
   {
    "name": "charge",
    "quantum": 1,
+   "pair": [
+    1,
+    1
+   ],
    "charge": 0,
    "held": "sign",
    "reads": []
@@ -91,13 +105,15 @@
    ],
    "family": "matter",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
+   "held": {},
+   "ramp": 0,
+   "start": 0,
+   "margin": "pin",
    "side": 14,
    "pair": [
     3200,
@@ -40105,7 +40121,6 @@
     2459,
     2456
    ],
-   "margin": "pin",
    "clock": [
     2074087,
     1048576
@@ -40115,6 +40130,6 @@
  "detectors": [],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "c5851cfa46d1a0423e13950a73b5d222d6c5f6d1ca19d09b52268838926dc918"
+  "hash": "0ec9f6930460cccd5d7fb76c701d543ec035d1f5aec907e38bede62b267e9cf8"
  }
 }

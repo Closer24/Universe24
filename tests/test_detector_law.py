@@ -17,7 +17,7 @@ import math
 import numpy as np
 import pytest
 
-from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
+from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import DETECTOR_LAW_RULE, input_stamp, parse_nature_beam_world
 from tests.test_emitter import (
@@ -28,6 +28,10 @@ from tests.test_emitter import (
     massive_generator,
     reads,
 )
+
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+UNIT = 1 << 20
 
 EMITTER_KIND = [7, 8]  # the emitter body's kind (omega_0 = 0.505)
 EMITTER_PAIR = [
@@ -78,10 +82,10 @@ def emitter_body(
         "position": position,
         "family": "matter",
         "amount": 1,
+        "ramp": 0,
+        "start": 0,
         "held": {family: stock},
-        "phase": 0,
         "momentum": [0, 0, 0],
-        "fixed": True,
         "extents": extents,
         "pair": list(EMITTER_PAIR),
         "seed": 1 << 20,
@@ -110,10 +114,8 @@ def receiver_body(position: list[int], family: str = "light") -> dict:
         "position": position,
         "family": family,
         "amount": 1,
-        "phase": 0,
+        "held": {},
         "momentum": [0, 0, 0],
-        "fixed": True,
-        "directions": [[-1, 0, 0]],
     }
 
 
@@ -123,7 +125,7 @@ def receiver_cube(document: dict, name: str, corner: list[int], family: str = "l
     detector's, never a Node's)."""
     positions = cube_positions(document["shape"], corner)
     document["measured"].extend(receiver_body(position, family) for position in positions)
-    document["detectors"].append({"name": name, "positions": positions, "threshold": 1})
+    document["detectors"].append({"name": name, "positions": positions})
 
 
 def chain_world(
@@ -157,17 +159,20 @@ def chain_world(
         "K": 1073741824,
         "N": PHASE_STEPS,
         "release": [1, 128],
-        "suspension": 0,
         "clock_stamp": clock_stamp,
         "detector_law": True,
+        "width": 1,
+        "body_record": False,
+        "point_emitter": False,
+        "engine": "examples/events/engine_start.json",
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
-        "directions": [],
         "families": [
             {
                 "name": "light",
                 "quantum": 1,
+                "pair": [1, 1],
                 "phase_per_link": list(GIVEN_CLOCK),
                 "charge": 0,
                 "reads": reads(),
@@ -200,10 +205,8 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
         "position": [2, 0, 0],
         "family": "light",
         "amount": 6,
-        "phase": 0,
+        "held": {},
         "momentum": [0, 0, 0],
-        "fixed": True,
-        "directions": [[1, 0, 0]],
         "lamp": {"rate": [1, 40], "wheel": [1, 64], "directions": [[1, 0, 0]], "train": 4},
     }
     with pytest.raises(ValueError, match="lamp is refused under detector-law-v1"):
@@ -371,17 +374,20 @@ def layer_world(receiver: object = None) -> dict:
         "K": 1073741824,
         "N": PHASE_STEPS,
         "release": [1, 128],
-        "suspension": 0,
         "clock_stamp": True,
         "detector_law": True,
+        "width": 1,
+        "body_record": False,
+        "point_emitter": False,
+        "engine": "examples/events/engine_start.json",
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
-        "directions": [],
         "families": [
             {
                 "name": "light",
                 "quantum": 1,
+                "pair": [1, 1],
                 "phase_per_link": list(GIVEN_CLOCK),
                 "charge": 0,
                 "reads": reads(),
@@ -660,7 +666,7 @@ def test_detector_is_one_connected_cube_of_side_three():
     ):
         document = layer_world()
         document["measured"].extend(receiver_body(position) for position in positions)
-        document["detectors"].append({"name": "cube", "positions": positions, "threshold": 1})
+        document["detectors"].append({"name": "cube", "positions": positions})
         document["input"] = input_stamp(document)  # the stamp over the whole file (item 28)
         if refusal is None:
             simulation = DetectorLawSimulation(parse_nature_beam_world(document))
@@ -683,9 +689,10 @@ def test_detector_is_one_connected_cube_of_side_three():
                 "position": [40, 2, 0],
                 "family": "light",
                 "amount": 1,
-                "phase": 0,
+                "held": {},
+                "ramp": 0,
+                "start": 0,
                 "momentum": [0, 0, 0],
-                "fixed": True,
                 "side": side,
                 "pair": [1, 2],
             }

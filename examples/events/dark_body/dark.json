@@ -19,17 +19,23 @@
   1,
   128
  ],
- "suspension": 0,
+ "width": 1,
  "clock_stamp": true,
  "detector_law": true,
  "massive_record": true,
+ "body_record": false,
+ "point_emitter": false,
+ "engine": "examples/events/engine_start.json",
  "amplitude_bound": 1048576,
  "node_clock": 10000,
- "directions": [],
  "families": [
   {
    "name": "light",
    "quantum": 1,
+   "pair": [
+    1,
+    1
+   ],
    "phase_per_link": [
     512,
     1
@@ -90,6 +96,10 @@
   {
    "name": "clicks",
    "quantum": 1,
+   "pair": [
+    1,
+    1
+   ],
    "charge": 0,
    "held": "content",
    "reads": []
@@ -97,6 +107,10 @@
   {
    "name": "charge",
    "quantum": 1,
+   "pair": [
+    1,
+    1
+   ],
    "charge": 0,
    "held": "sign",
    "reads": []
@@ -111,13 +125,16 @@
    ],
    "family": "matter",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
+   "held": {
+    "light": 30
+   },
+   "ramp": 0,
+   "start": 0,
    "extents": [
     32,
     5,
@@ -80512,9 +80529,6 @@
      "norm": 323059463943
     }
    },
-   "held": {
-    "light": 30
-   },
    "clock": [
     2077285,
     1048576
@@ -80528,13 +80542,14 @@
    ],
    "family": "dark",
    "amount": 4812,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
+   "held": {},
+   "ramp": 0,
+   "start": 0,
    "extents": [
     32,
     5,
@@ -160560,20 +160575,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160583,20 +160590,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160606,20 +160605,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160629,20 +160620,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160652,20 +160635,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160675,20 +160650,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160698,20 +160665,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160721,20 +160680,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160744,20 +160695,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160767,20 +160710,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160790,20 +160725,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160813,20 +160740,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160836,20 +160755,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160859,20 +160770,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160882,20 +160785,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160905,20 +160800,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160928,20 +160815,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160951,20 +160830,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160974,20 +160845,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -160997,20 +160860,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161020,20 +160875,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161043,20 +160890,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161066,20 +160905,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161089,20 +160920,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161112,20 +160935,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161135,20 +160950,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161158,20 +160965,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161181,20 +160980,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161204,20 +160995,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161227,20 +161010,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161250,20 +161025,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161273,20 +161040,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161296,20 +161055,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161319,20 +161070,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161342,20 +161085,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161365,20 +161100,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161388,20 +161115,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161411,20 +161130,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161434,20 +161145,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161457,20 +161160,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161480,20 +161175,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161503,20 +161190,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161526,20 +161205,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161549,20 +161220,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161572,20 +161235,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161595,20 +161250,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161618,20 +161265,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161641,20 +161280,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161664,20 +161295,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161687,20 +161310,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161710,20 +161325,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161733,20 +161340,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161756,20 +161355,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161779,20 +161370,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161802,20 +161385,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161825,20 +161400,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161848,20 +161415,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161871,20 +161430,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161894,20 +161445,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161917,20 +161460,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161940,20 +161475,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161963,20 +161490,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -161986,20 +161505,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162009,20 +161520,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162032,20 +161535,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162055,20 +161550,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162078,20 +161565,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162101,20 +161580,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162124,20 +161595,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162147,20 +161610,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162170,20 +161625,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162193,20 +161640,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162216,20 +161655,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162239,20 +161670,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162262,20 +161685,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162285,20 +161700,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162308,20 +161715,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162331,20 +161730,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162354,20 +161745,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162377,20 +161760,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162400,20 +161775,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162423,20 +161790,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162446,20 +161805,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162469,20 +161820,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162492,20 +161835,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162515,20 +161850,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162538,20 +161865,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162561,20 +161880,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162584,20 +161895,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162607,20 +161910,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162630,20 +161925,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162653,20 +161940,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162676,20 +161955,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162699,20 +161970,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162722,20 +161985,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162745,20 +162000,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162768,20 +162015,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162791,20 +162030,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162814,20 +162045,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162837,20 +162060,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162860,20 +162075,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162883,20 +162090,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162906,20 +162105,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162929,20 +162120,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162952,20 +162135,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162975,20 +162150,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -162998,20 +162165,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163021,20 +162180,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163044,20 +162195,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163067,20 +162210,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163090,20 +162225,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163113,20 +162240,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163136,20 +162255,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163159,20 +162270,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163182,20 +162285,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163205,20 +162300,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163228,20 +162315,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163251,20 +162330,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163274,20 +162345,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163297,20 +162360,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163320,20 +162375,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163343,20 +162390,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163366,20 +162405,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163389,20 +162420,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163412,20 +162435,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163435,20 +162450,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163458,20 +162465,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163481,20 +162480,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163504,20 +162495,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163527,20 +162510,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163550,20 +162525,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163573,20 +162540,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163596,20 +162555,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163619,20 +162570,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163642,20 +162585,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163665,20 +162600,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163688,20 +162615,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163711,20 +162630,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163734,20 +162645,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163757,20 +162660,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163780,20 +162675,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163803,20 +162690,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163826,20 +162705,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163849,20 +162720,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163872,20 +162735,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163895,20 +162750,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163918,20 +162765,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163941,20 +162780,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163964,20 +162795,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -163987,20 +162810,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164010,20 +162825,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164033,20 +162840,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164056,20 +162855,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164079,20 +162870,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164102,20 +162885,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164125,20 +162900,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164148,20 +162915,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164171,20 +162930,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164194,20 +162945,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164217,20 +162960,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164240,20 +162975,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164263,20 +162990,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164286,20 +163005,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164309,20 +163020,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164332,20 +163035,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164355,20 +163050,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164378,20 +163065,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164401,20 +163080,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164424,20 +163095,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164447,20 +163110,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164470,20 +163125,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164493,20 +163140,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164516,20 +163155,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164539,20 +163170,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164562,20 +163185,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164585,20 +163200,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164608,20 +163215,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164631,20 +163230,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164654,20 +163245,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164677,20 +163260,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164700,20 +163275,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164723,20 +163290,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164746,20 +163305,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164769,20 +163320,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164792,20 +163335,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164815,20 +163350,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164838,20 +163365,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164861,20 +163380,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164884,20 +163395,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164907,20 +163410,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164930,20 +163425,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164953,20 +163440,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164976,20 +163455,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -164999,20 +163470,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165022,20 +163485,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165045,20 +163500,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165068,20 +163515,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165091,20 +163530,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165114,20 +163545,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165137,20 +163560,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165160,20 +163575,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165183,20 +163590,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165206,20 +163605,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165229,20 +163620,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165252,20 +163635,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165275,20 +163650,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165298,20 +163665,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165321,20 +163680,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165344,20 +163695,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165367,20 +163710,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165390,20 +163725,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165413,20 +163740,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165436,20 +163755,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165459,20 +163770,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165482,20 +163785,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165505,20 +163800,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165528,20 +163815,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165551,20 +163830,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165574,20 +163845,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165597,20 +163860,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165620,20 +163875,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165643,20 +163890,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165666,20 +163905,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165689,20 +163920,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165712,20 +163935,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165735,20 +163950,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165758,20 +163965,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165781,20 +163980,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165804,20 +163995,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165827,20 +164010,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165850,20 +164025,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165873,20 +164040,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165896,20 +164055,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165919,20 +164070,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165942,20 +164085,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165965,20 +164100,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -165988,20 +164115,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166011,20 +164130,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166034,20 +164145,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166057,20 +164160,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166080,20 +164175,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166103,20 +164190,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166126,20 +164205,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166149,20 +164220,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166172,20 +164235,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166195,20 +164250,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166218,20 +164265,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166241,20 +164280,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166264,20 +164295,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166287,20 +164310,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166310,20 +164325,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166333,20 +164340,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166356,20 +164355,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166379,20 +164370,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166402,20 +164385,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166425,20 +164400,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166448,20 +164415,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166471,20 +164430,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166494,20 +164445,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166517,20 +164460,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166540,20 +164475,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166563,20 +164490,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166586,20 +164505,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166609,20 +164520,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166632,20 +164535,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166655,20 +164550,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166678,20 +164565,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166701,20 +164580,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166724,20 +164595,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166747,20 +164610,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166770,20 +164625,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166793,20 +164640,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166816,20 +164655,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166839,20 +164670,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166862,20 +164685,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166885,20 +164700,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166908,20 +164715,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166931,20 +164730,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166954,20 +164745,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -166977,20 +164760,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167000,20 +164775,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167023,20 +164790,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167046,20 +164805,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167069,20 +164820,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167092,20 +164835,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167115,20 +164850,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167138,20 +164865,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167161,20 +164880,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167184,20 +164895,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167207,20 +164910,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167230,20 +164925,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167253,20 +164940,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167276,20 +164955,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167299,20 +164970,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167322,20 +164985,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167345,20 +165000,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167368,20 +165015,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167391,20 +165030,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167414,20 +165045,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167437,20 +165060,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167460,20 +165075,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167483,20 +165090,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167506,20 +165105,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167529,20 +165120,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167552,20 +165135,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167575,20 +165150,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167598,20 +165165,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167621,20 +165180,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167644,20 +165195,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167667,20 +165210,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167690,20 +165225,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167713,20 +165240,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167736,20 +165255,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167759,20 +165270,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167782,20 +165285,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167805,20 +165300,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167828,20 +165315,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167851,20 +165330,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167874,20 +165345,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167897,20 +165360,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167920,20 +165375,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167943,20 +165390,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167966,20 +165405,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -167989,20 +165420,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168012,20 +165435,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168035,20 +165450,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168058,20 +165465,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168081,20 +165480,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168104,20 +165495,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168127,20 +165510,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168150,20 +165525,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168173,20 +165540,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168196,20 +165555,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168219,20 +165570,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168242,20 +165585,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168265,20 +165600,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168288,20 +165615,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168311,20 +165630,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168334,20 +165645,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168357,20 +165660,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168380,20 +165675,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168403,20 +165690,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168426,20 +165705,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168449,20 +165720,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168472,20 +165735,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168495,20 +165750,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168518,20 +165765,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168541,20 +165780,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168564,20 +165795,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168587,20 +165810,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168610,20 +165825,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168633,20 +165840,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168656,20 +165855,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168679,20 +165870,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168702,20 +165885,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168725,20 +165900,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168748,20 +165915,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168771,20 +165930,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168794,20 +165945,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   },
   {
    "position": [
@@ -168817,20 +165960,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
-   "directions": [
-    [
-     -1,
-     0,
-     0
-    ]
-   ]
+   "held": {}
   }
  ],
  "detectors": [
@@ -168882,8 +166017,7 @@
      42,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_43",
@@ -168933,8 +166067,7 @@
      45,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_46",
@@ -168984,8 +166117,7 @@
      48,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_49",
@@ -169035,8 +166167,7 @@
      51,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_52",
@@ -169086,8 +166217,7 @@
      54,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_55",
@@ -169137,8 +166267,7 @@
      57,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_58",
@@ -169188,8 +166317,7 @@
      60,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_61",
@@ -169239,8 +166367,7 @@
      63,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_64",
@@ -169290,8 +166417,7 @@
      66,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_67",
@@ -169341,8 +166467,7 @@
      69,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_70",
@@ -169392,8 +166517,7 @@
      72,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_73",
@@ -169443,8 +166567,7 @@
      75,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_76",
@@ -169494,8 +166617,7 @@
      78,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_79",
@@ -169545,8 +166667,7 @@
      81,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_82",
@@ -169596,8 +166717,7 @@
      84,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_85",
@@ -169647,8 +166767,7 @@
      87,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_88",
@@ -169698,8 +166817,7 @@
      90,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_91",
@@ -169749,8 +166867,7 @@
      93,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_94",
@@ -169800,8 +166917,7 @@
      96,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_97",
@@ -169851,8 +166967,7 @@
      99,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_100",
@@ -169902,8 +167017,7 @@
      102,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_103",
@@ -169953,8 +167067,7 @@
      105,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_106",
@@ -170004,8 +167117,7 @@
      108,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_109",
@@ -170055,8 +167167,7 @@
      111,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_112",
@@ -170106,8 +167217,7 @@
      114,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_115",
@@ -170157,8 +167267,7 @@
      117,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_118",
@@ -170208,8 +167317,7 @@
      120,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_121",
@@ -170259,8 +167367,7 @@
      123,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_124",
@@ -170310,8 +167417,7 @@
      126,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_127",
@@ -170361,8 +167467,7 @@
      129,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_130",
@@ -170412,8 +167517,7 @@
      132,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_133",
@@ -170463,8 +167567,7 @@
      135,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_136",
@@ -170514,8 +167617,7 @@
      138,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_139",
@@ -170565,8 +167667,7 @@
      141,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_142",
@@ -170616,8 +167717,7 @@
      144,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_145",
@@ -170667,8 +167767,7 @@
      147,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_148",
@@ -170718,8 +167817,7 @@
      150,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_151",
@@ -170769,8 +167867,7 @@
      153,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_154",
@@ -170820,8 +167917,7 @@
      156,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   },
   {
    "name": "screen_157",
@@ -170871,12 +167967,11 @@
      159,
      0
     ]
-   ],
-   "threshold": 1
+   ]
   }
  ],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "16e495f67be7893ab1002a666c3b0335c7f2b118b152073c4067730d0e771d13"
+  "hash": "2992d7f8b4bc5e278c510d4f5032cf7ad3f8625c284cad5b0d6bd3130eacfb0c"
  }
 }

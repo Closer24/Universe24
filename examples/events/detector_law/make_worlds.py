@@ -111,10 +111,12 @@ TEMPLATE_KEYS = {
     "K": 1073741824,
     "N": 64,
     "release": [1, 128],
-    "suspension": 0,
+    "width": 1,
     "clock_stamp": True,
     "detector_law": True,
-    "directions": [],
+    "body_record": False,
+    "point_emitter": False,
+    "engine": "examples/events/engine_start.json",
 }
 WALL_PAIR = [1, 2]  # the mirror line's block pair, two Nodes deep (section 15 L-1, the fourth commit)
 TRAIN_32 = 32  # periods, section 15 L-3 and L-6 (HISTORY: the lamp's train, retired)
@@ -151,7 +153,13 @@ RECEIVER_KEY = True
 
 
 def light_family(pair: list[int] | None) -> dict:
-    family: dict = {"name": "light", "quantum": 1, "charge": 0, "reads": [dict(read) for read in READS]}
+    family: dict = {
+        "name": "light",
+        "quantum": 1,
+        "pair": [1, 1],
+        "charge": 0,
+        "reads": [dict(read) for read in READS],
+    }
     if pair is not None:
         family["phase_per_link"] = pair
     return family
@@ -211,9 +219,9 @@ def emitter_body(
         # the stock as the given family's content held at the body (ALGEBRA.md
         # 9.51 (8); BUILD.md section 26 item 47)
         "held": {family: stock},
-        "phase": 0,
         "momentum": [0, 0, 0],
-        "fixed": True,
+        "ramp": 0,
+        "start": 0,
         "side": 1,
         "pair": list(pair or EMITTER_WELL),
         "seed": EMITTER_SEED_AMPLITUDE,
@@ -222,18 +230,16 @@ def emitter_body(
     }
 
 
-def body(position: list[int], family: str = "light", directions: list[list[int]] | None = None) -> dict:
-    """A fixed body of one Node (the template's receiver form)."""
+def body(position: list[int], family: str = "light") -> dict:
+    """A body of one Node at rest (the template's receiver form), every key the
+    detector law reads written (record 2089; BUILD.md section 26 item 57)."""
     entry: dict = {
         "position": position,
         "family": family,
         "amount": 1,
-        "phase": 0,
         "momentum": [0, 0, 0],
-        "fixed": True,
+        "held": {},
     }
-    if directions is not None:
-        entry["directions"] = directions
     return entry
 
 
@@ -281,7 +287,7 @@ def receiver_cube(document: dict, name: str, corner: list[int], family: str = "l
     positions = cube_positions(document, corner)
     for position in positions:
         document["measured"].append(body(position, family, [[-1, 0, 0]]))
-    document["detectors"].append({"name": name, "positions": positions, "threshold": 1})
+    document["detectors"].append({"name": name, "positions": positions})
     return name
 
 
@@ -543,9 +549,23 @@ NODE_CLOCK = 10_000  # the world key `node_clock`, Gamma = 10^4 (ALGEBRA.md 9.57
 CLOCK_FAMILY_NAME = (
     "clicks"  # the family whose held level is the Node clock: the massive generator's name and family
 )
-CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "content", "reads": []}
+CLOCK_FAMILY = {
+    "name": CLOCK_FAMILY_NAME,
+    "quantum": 1,
+    "pair": [1, 1],
+    "charge": 0,
+    "held": "content",
+    "reads": [],
+}
 CHARGE_FAMILY_NAME = "charge"  # the family whose held level is the signed charge
-CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "sign", "reads": []}
+CHARGE_FAMILY = {
+    "name": CHARGE_FAMILY_NAME,
+    "quantum": 1,
+    "pair": [1, 1],
+    "charge": 0,
+    "held": "sign",
+    "reads": [],
+}
 CHARGE_STRENGTH = (
     1  # Lambda, the weight of the read on the charge; every registered family's charge is 0
 )
@@ -600,6 +620,9 @@ def mirror_slab(position: list[int], extents: list[int]) -> dict:
     entry = body(position, "light")
     entry["extents"] = extents
     entry["pair"] = list(WALL_PAIR)
+    # a block declares its drive's ramp and start (record 2089, no default; item 57)
+    entry["ramp"] = 0
+    entry["start"] = 0
     return entry
 
 
@@ -607,7 +630,7 @@ def receiver_set(document: dict, name: str, block: int) -> None:
     """A detector set on the light record bound to the receiving block (section 15 M1-4:
     the one key `block`, the measured number of the block, its Nodes the block's current
     Nodes); no wheel (the rung's wheel is the record's own, ALGEBRA.md 9.22 (4))."""
-    document["detectors"].append({"name": name, "block": block, "threshold": 1})
+    document["detectors"].append({"name": name, "block": block})
 
 
 def matter_world(

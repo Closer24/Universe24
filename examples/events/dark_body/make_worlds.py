@@ -93,13 +93,11 @@ def cube(document: dict, name: str, corner: list[int]) -> str:
                 "position": position,
                 "family": "light",
                 "amount": 1,
-                "phase": 0,
                 "momentum": [0, 0, 0],
-                "fixed": True,
-                "directions": [[-1, 0, 0]],
+                "held": {},
             }
         )
-    document["detectors"].append({"name": name, "positions": positions, "threshold": 1})
+    document["detectors"].append({"name": name, "positions": positions})
     return name
 
 
@@ -116,9 +114,10 @@ def block(
         "position": list(corner),
         "family": family,
         "amount": amount,
-        "phase": 0,
         "momentum": [0, 0, 0],
-        "fixed": True,
+        "held": {},
+        "ramp": 0,
+        "start": 0,
         "extents": list(extents),
         "pair": list(well),
         "seed": SEED,
@@ -148,17 +147,20 @@ def world(dark: bool) -> dict:
         "K": 1073741824,
         "N": 1024,
         "release": [1, 128],
-        "suspension": 0,
+        "width": 1,
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
+        "body_record": False,
+        "point_emitter": False,
+        "engine": "examples/events/engine_start.json",
         "amplitude_bound": 1 << 20,  # the integers of 9.61 (3) (item 44)
         "node_clock": NODE_CLOCK,
-        "directions": [],
         "families": [
             {
                 "name": "light",
                 "quantum": 1,
+                "pair": [1, 1],
                 "phase_per_link": list(GIVEN_CLOCK),
                 "charge": 0,
                 "reads": [dict(read) for read in READS],
@@ -177,8 +179,15 @@ def world(dark: bool) -> dict:
                 "charge": 0,
                 "reads": [dict(read) for read in READS],
             },
-            {"name": "clicks", "quantum": 1, "charge": 0, "held": "content", "reads": []},
-            {"name": "charge", "quantum": 1, "charge": 0, "held": "sign", "reads": []},
+            {
+                "name": "clicks",
+                "quantum": 1,
+                "pair": [1, 1],
+                "charge": 0,
+                "held": "content",
+                "reads": [],
+            },
+            {"name": "charge", "quantum": 1, "pair": [1, 1], "charge": 0, "held": "sign", "reads": []},
         ],
         "measured": [],
         "detectors": [],
@@ -218,7 +227,7 @@ def world(dark: bool) -> dict:
                 stock=BRIGHT_STOCK,
             )
         )
-        document["detectors"].append({"name": "at_body", "block": 1, "threshold": 1})
+        document["detectors"].append({"name": "at_body", "block": 1})
     for y in range(SCREEN_YS.start, SCREEN_YS.stop, DETECTOR_SIDE):
         cube(document, f"screen_{y}", [SCREEN_X, y, 0])
     massive = load_generator(

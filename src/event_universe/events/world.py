@@ -307,6 +307,7 @@ import math
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, replace
 from functools import cached_property
+from pathlib import Path
 
 from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
 from event_universe.core.integer import (
@@ -428,6 +429,13 @@ WORLD_KEYS = {
     # detector-law-v1 (2026-09-23): the local detector law, a boolean, false
     # by default (`DETECTOR_LAW_RULE`; docs/designs/detector_law/DESIGN.md).
     "detector_law",
+    # THE ENGINE START FILE (the model owner's record 2089 of 2026-09-25
+    # through the Boss, "every flag the engine needs for a run should leave
+    # the code"; records 2092 and 2094; ALGEBRA.md 9.83 (2) (a); BUILD.md
+    # section 26 item 57): the repository path of the one start file, REQUIRED
+    # under `detector_law`, refused without it; the file holds the run's
+    # parameters (`mode`), every key required, none defaulted
+    "engine",
     # massive-record-v1 (2026-09-23): the massive record kind beside light
     # under the local detector law, a boolean, false by default
     # (`MASSIVE_RECORD_RULE`; docs/designs/detector_law/MASSIVE_RECORD.md,
@@ -899,6 +907,97 @@ NO_CHARGE = (0, 1)
 # 20": every family works in every experiment; record 1875's three, 1982's
 # four and 9.48's five HISTORY; BUILD.md section 26 item 54)
 MOST_FAMILIES = 20
+# THE ENGINE START FILE (record 2089; records 2092 and 2094; ALGEBRA.md 9.83 (2)
+# (a); BUILD.md section 26 item 57): one canonical copy at
+# examples/events/engine_start.json, referenced by every world of the detector
+# law by its repository path (`engine`) and read by the runner; it holds the
+# run's parameters and no law's number (the law's numbers are the families
+# file's and the world's, 9.83 (2) (a)). Its keys, every one required: `law`
+# (the law identifier) and `mode`, "check" (every measured event read beside
+# its blind expectation, no pin compared; the run's mode until the model
+# owner's Go, records 2050 and 2054) or "pin" (the pins compared).
+START_KEYS = {"law", "mode"}
+START_MODES = ("check", "pin")
+REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
+
+
+@dataclass(frozen=True)
+class EngineStart:
+    """The one engine start file as read: its repository path and its mode."""
+
+    path: str
+    mode: str
+
+
+def _engine_start(value: object, detector_law: bool) -> EngineStart | None:
+    """The world key `engine`: the repository path of the start file, required
+    under `detector_law` and refused without it; the file a JSON object with
+    exactly the keys of START_KEYS, `law` the detector law's identifier and
+    `mode` one of START_MODES; a missing key refused by name."""
+    if not detector_law:
+        if value is not None:
+            raise ValueError(f"{BEAM_LAW}: engine is refused without `detector_law`")
+        return None
+    if value is None:
+        raise ValueError(
+            f"{BEAM_LAW}: engine is required under `detector_law`: the repository path of the one "
+            "engine start file (examples/events/engine_start.json), no default (the model owner's "
+            "record 2089; BUILD.md section 26 item 57)"
+        )
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{BEAM_LAW}: engine must be the start file's repository path, a string")
+    path = REPOSITORY_ROOT / value
+    if not path.is_file():
+        raise ValueError(f"{BEAM_LAW}: engine names {value!r}, no file at the repository's root")
+    start = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(start, dict):
+        raise ValueError(f"{BEAM_LAW}: the engine start file {value!r} must be a JSON object")
+    unknown = set(start) - START_KEYS
+    if unknown:
+        raise ValueError(
+            f"{BEAM_LAW}: the engine start file {value!r} has unknown keys: {', '.join(sorted(unknown))}"
+        )
+    missing = START_KEYS - set(start)
+    if missing:
+        raise ValueError(
+            f"{BEAM_LAW}: the engine start file {value!r} lacks keys: {', '.join(sorted(missing))} "
+            "(every key required, no default; the model owner's record 2089)"
+        )
+    if start["law"] != DETECTOR_LAW_RULE:
+        raise ValueError(
+            f"{BEAM_LAW}: the engine start file {value!r} declares law {start['law']!r}, not "
+            f"{DETECTOR_LAW_RULE!r}"
+        )
+    if start["mode"] not in START_MODES:
+        raise ValueError(
+            f"{BEAM_LAW}: the engine start file {value!r} declares mode {start['mode']!r}; one of "
+            f"{list(START_MODES)}"
+        )
+    return EngineStart(value, str(start["mode"]))
+
+
+def _require_under_law(obj: dict[str, object], label: str, keys: set[str]) -> None:
+    """NO DEFAULT UNDER THE DETECTOR LAW (record 2089): every key the engine or
+    the loader reads is declared; a missing one is refused by name."""
+    missing = keys - set(obj)
+    if missing:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} lacks keys required under `detector_law`: "
+            f"{', '.join(sorted(missing))} (no default; the model owner's record 2089)"
+        )
+
+
+def _refuse_under_law(obj: dict[str, object], label: str, keys: set[str]) -> None:
+    """A KEY THE DETECTOR LAW NEVER READS is refused by name (records 2089 and
+    2094: a flag the engine does not need is deleted, not defaulted)."""
+    present = [key for key in sorted(keys) if key in obj]
+    if present:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} declares {', '.join(present)}, which the detector law never reads "
+            "(refused by name; the model owner's records 2089 and 2094)"
+        )
+
+
 # THE LAW IDENTIFIER (record 1886; ALGEBRA.md 9.22 (7) (i)): the law an input
 # file was made under, written by the generator into the file's `input` and
 # compared at load; a change of the laws that moves the initial state moves
@@ -1796,6 +1895,9 @@ class NatureBeamWorld:
     # every Node; required under the detector law, 0 on a world without it
     # (the ray law has no rule with a division).
     node_clock: int = 0
+    # THE ENGINE START FILE (record 2089; BUILD.md section 26 item 57): the
+    # world's `engine` as read, None on a world without the detector law
+    start: EngineStart | None = None
     # atom-level-v1 (the world key `atom_level`, false by default): the
     # release at a closure of the difference of two closures' levels
     # (`ATOM_LEVEL_RULE`; a body's `level` declaration).
@@ -2691,6 +2793,21 @@ def _families(
             )
         _refuse_retired(entry, f"families[{index}]", ("take",))
         obj = _object(entry, f"families[{index}]", FAMILY_KEYS, {"name", "quantum"})
+        if detector_law:
+            # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): the pair,
+            # the charge and the reads declared (the clock `phase_per_link` on the
+            # given family, 9.62 (1)); the ray law's phase, lifetime, hand, columns
+            # and massive flag never read, refused
+            _require_under_law(
+                obj,
+                f"families[{index}]",
+                {"pair", "charge", "reads"} if massive_record else {"charge", "reads"},
+            )
+            _refuse_under_law(
+                obj,
+                f"families[{index}]",
+                {"phase", "lifetime", "hand", "columns", "massive"},
+            )
         name = obj["name"]
         if not isinstance(name, str) or not name:
             raise ValueError(f"{BEAM_LAW}: families[{index}].name must be a nonempty string")
@@ -3890,6 +4007,7 @@ def _block(
     amplitude_bound: int = AMPLITUDE_BOUND,
     phase_steps: int = 64,
     periodic: tuple[bool, bool, bool] = (True, True, True),
+    detector_law: bool = False,
 ) -> BlockDefinition | None:
     """The block's keys on a measured event (`massive-record-v1`), each named
     in its refusal: `side` makes a block; every other block key without
@@ -4104,6 +4222,14 @@ def _block(
         )
     ramp = 0 if "ramp" not in obj else _integer(obj["ramp"], f"{label}.ramp", 0)
     start = 0 if "start" not in obj else _integer(obj["start"], f"{label}.start", 0)
+    if detector_law and "margin" not in obj and pair[0] * kind[1] > pair[1] * kind[0]:
+        # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): a well's
+        # margin kind, pin or control, declared (record 2037, per measured
+        # event); a barrier or a gap declares none (refused above)
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.margin is required on a well under `detector_law`: one of "
+            f"{list(MARGIN_KINDS)}, no default (the model owner's records 2037 and 2089)"
+        )
     margin = obj.get("margin", MARGIN_KINDS[0])
     if margin not in MARGIN_KINDS:
         raise ValueError(f"{BEAM_LAW}: {label}.margin must be one of {list(MARGIN_KINDS)}")
@@ -4489,6 +4615,37 @@ def _measured(
             entry, label, ("absorbing", "take", "emits", "own_grace", "wheel", "cavity", "coupling")
         )
         obj = _object(entry, label, MEASURED_KEYS, {"position", "family", "amount"})
+        if detector_law:
+            # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): the
+            # momentum and the held quanta on every measured event, the drive's
+            # ramp and start on every block (a `side` or `extents`), the margin
+            # kind on every well (`_block`); the ray law's fixed, phase,
+            # directions, phase_by_momentum, span, books and the lamp's keys
+            # never read, refused
+            _require_under_law(obj, label, {"momentum", "held"})
+            if "side" in obj or "extents" in obj:
+                _require_under_law(obj, label, {"ramp", "start"})
+            _refuse_under_law(
+                obj,
+                label,
+                {
+                    "fixed",
+                    "phase",
+                    "directions",
+                    "phase_by_momentum",
+                    "span",
+                    "books",
+                    "windows",
+                    "splits",
+                    "transforms",
+                    "become",
+                    "rotations",
+                    "gates",
+                    "contact",
+                    "widths",
+                    "table",
+                },
+            )
         position = _address(obj["position"], f"{label}.position", shape)
         if any(item.position == position for item in found):
             raise ValueError(f"{BEAM_LAW}: two measured events at one Node {list(position)}")
@@ -4751,6 +4908,7 @@ def _measured(
             amplitude_bound,
             phase_steps,
             periodic,
+            detector_law,
         )
         found.append(
             MeasuredDefinition(
@@ -6018,7 +6176,8 @@ def _detectors(
     shape: Address3,
     periodic: tuple[bool, bool, bool],
     measured: tuple[MeasuredDefinition, ...],
-    body_record: bool = False,
+    body_record: bool,
+    detector_law: bool,
 ) -> tuple[DetectorDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{BEAM_LAW}: detectors must be a list")
@@ -6033,6 +6192,10 @@ def _detectors(
         label = f"detectors[{index}]"
         _refuse_retired(entry, label, ("wheel",))
         obj = _object(entry, label, DETECTOR_KEYS, {"name"})
+        if detector_law:
+            # the ray law's threshold and reading kind: never read by the
+            # detector law (the click is the ladder's), refused (record 2089)
+            _refuse_under_law(obj, label, {"threshold", "reading"})
         name = obj["name"]
         if not isinstance(name, str) or not name:
             raise ValueError(f"{BEAM_LAW}: {label}.name must be a nonempty string")
@@ -6270,6 +6433,38 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         WORLD_KEYS,
         {"law", "model_id", "shape", "ticks", "K", "N", "release", "families", "measured"},
     )
+    # NO DEFAULT UNDER THE DETECTOR LAW (the model owner's record 2089; records
+    # 2092 and 2094; BUILD.md section 26 item 57): the law's world declares
+    # every key its path reads (the flags written true or false, the start
+    # file, the faces, the wall's width, the events and the detectors), and
+    # none the law never reads (the ray law's clock rate, release, push,
+    # direction table, action and its two hypotheses' switches); a world
+    # without `detector_law` is the ray law's until its deletion (record 2095)
+    early_law = obj["detector_law"] if "detector_law" in obj else False
+    if type(early_law) is not bool:
+        raise ValueError(f"{BEAM_LAW}: detector_law must be true or false ({DETECTOR_LAW_RULE})")
+    if early_law:
+        _require_under_law(
+            obj,
+            "the world",
+            {
+                "boundary",
+                "width",
+                "clock_stamp",
+                "massive_record",
+                "body_record",
+                "point_emitter",
+                "engine",
+                "measured",
+                "detectors",
+            },
+        )
+        _refuse_under_law(
+            obj,
+            "the world",
+            {"suspension", "direction_bound", "directions", "action", "meeting", "massive_rows"},
+        )
+    start = _engine_start(obj["engine"] if "engine" in obj else None, early_law)
     model_id = obj["model_id"]
     if not isinstance(model_id, str) or not model_id:
         raise ValueError(f"{BEAM_LAW}: model_id must be a nonempty string")
@@ -6400,17 +6595,19 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             "`detector_law` (a zero face without the take is the local detector law's; the ray law "
             "has no rows)"
         )
-    # massive-record-v1: the amplitude bound A, declared per massive world
+    # massive-record-v1: the amplitude bound A, declared per massive world;
+    # REQUIRED under the detector law with `massive_record` (no default, the
+    # model owner's record 2089; the ceiling 2^28 of item 31 RETIRED, ALGEBRA.md
+    # 9.83 (2) (a): A is the one number, the rule's int64 total its bound)
     amplitude_bound = AMPLITUDE_BOUND
+    if detector_law and massive_record and "amplitude_bound" not in obj:
+        raise ValueError(
+            f"{BEAM_LAW}: amplitude_bound is required under `detector_law` with `massive_record`: "
+            "A, the amplitude every row stays below, no default (the model owner's record 2089; "
+            "ALGEBRA.md 9.57 (2), 9.83 (2) (a))"
+        )
     if massive_record and "amplitude_bound" in obj:
         amplitude_bound = _integer(obj["amplitude_bound"], "amplitude_bound", 1, AMOUNT_BOUND)
-        if amplitude_bound > AMPLITUDE_BOUND:
-            raise ValueError(
-                f"{BEAM_LAW}: amplitude_bound {amplitude_bound} is above the ceiling 2^28 = "
-                f"{AMPLITUDE_BOUND}, the A at which the rule's int64 total under the Node clock "
-                "stands (the model owner's decision (5) of record 1962; BUILD.md section 26 item "
-                "31; MUST 3's 2^40 and DECLARATIONS.md section 15 M1-10's 2^32 HISTORY)"
-            )
     elif "amplitude_bound" in obj:
         raise ValueError(
             f"{BEAM_LAW}: amplitude_bound is refused without the world key `massive_record`"
@@ -6632,7 +6829,9 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     in_transit = _in_transit(
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
-    detectors = _detectors(obj.get("detectors", []), shape, periodic, measured, body_record)
+    detectors = _detectors(
+        obj.get("detectors", []), shape, periodic, measured, body_record, detector_law
+    )
     optical = _optical(obj.get("optical"), suspension, meeting, table, massive_rows)
     # Every family under one wall, step 3: a moving body under the wall
     # (the law's own since the generic entry of 2026-09-22).
@@ -6691,6 +6890,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         closed=closed,
         amplitude_bound=amplitude_bound,
         node_clock=node_clock,
+        start=start,
     )
     if detector_law:
         _detector_law_load_checks(measured, families, table, periodic, phase_steps)

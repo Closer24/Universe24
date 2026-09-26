@@ -45,6 +45,17 @@ from event_universe.events.world import parse_nature_beam_world
 OUTPUT_FORMAT = "one-command-output-v1"
 
 
+def input_mode(path: Path) -> str:
+    """The run's mode of one input as its engine start file declares it
+    (`parse_nature_beam_world` reads the file and refuses a missing key by
+    name); an input the loader refuses is reported by the run itself."""
+    try:
+        world = parse_nature_beam_world(json.loads(path.read_text(encoding="utf-8")))
+    except ValueError, OSError:
+        return "refused"
+    return world.start.mode if world.start is not None else "refused"
+
+
 def load_pins(path: Path | None) -> dict[str, list[dict[str, Any]]]:
     if path is None:
         return {}
@@ -76,6 +87,7 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
         return {"name": name, "verdict": "REFUSED", "seconds": time.monotonic() - started}
     output["verdict"] = "LAWFUL"
     output["ticks"] = world.ticks
+    output["mode"] = world.start.mode if world.start is not None else None
     clicks: list[dict[str, object]] = []
     for _ in range(world.ticks):
         simulation.step()
@@ -165,15 +177,31 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("inputs", nargs="+", type=Path, help="the input files (world files)")
     parser.add_argument("--out", type=Path, required=True, help="the directory of the output files")
     parser.add_argument(
-        "--jobs", type=int, default=None, help="processes at once (the cores by default)"
+        "--jobs", type=int, required=True, help="processes at once (required, no default)"
     )
     parser.add_argument(
-        "--pins", type=Path, default=None, help="the blind pins per input, written before the run"
+        "--pins",
+        type=Path,
+        default=None,
+        help="the blind pins per input, written before the run; refused under the mode check",
     )
     arguments = parser.parse_args(argv)
     names = [path.stem for path in arguments.inputs]
     if len(set(names)) != len(names):
         parser.error("two inputs of one name")
+    if arguments.jobs < 1:
+        parser.error("--jobs must be 1 or more")
+    # THE RUN'S MODE (the engine start file, record 2092 (2); BUILD.md section 26
+    # item 57): every input names the one start file; under "check" no pin is
+    # compared (the pins file refused), under "pin" the pins file is required
+    modes = {path.stem: input_mode(path) for path in arguments.inputs}
+    if any(mode == "check" for mode in modes.values()) and arguments.pins is not None:
+        parser.error(
+            "--pins is refused under the mode check (the engine start file: every measured event "
+            "is read beside its blind expectation, no pin compared; records 2050, 2054, 2092)"
+        )
+    if any(mode == "pin" for mode in modes.values()) and arguments.pins is None:
+        parser.error("--pins is required under the mode pin (the engine start file)")
     pins = load_pins(arguments.pins)
     rows: list[dict[str, object]] = []
     with ProcessPoolExecutor(max_workers=arguments.jobs, mp_context=get_context("spawn")) as pool:

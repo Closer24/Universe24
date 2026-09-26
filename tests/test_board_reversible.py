@@ -56,16 +56,22 @@ def reversible_world(ticks: int = 400) -> dict:
     document["families"][MATTER]["charge"] = -1
     document["families"].insert(
         POSITIVE,
-        {"name": "positive", "quantum": 1, "phase_per_link": [512, 1], "charge": 1, "reads": reads()},
+        {
+            "name": "positive",
+            "quantum": 1,
+            "pair": [1, 1],
+            "phase_per_link": [512, 1],
+            "charge": 1,
+            "reads": reads(),
+        },
     )
     document["measured"].append(
         {
             "position": [55, 0, 0],
             "family": "positive",
             "amount": 1,
-            "phase": 0,
+            "held": {},
             "momentum": [0, 0, 0],
-            "fixed": True,
         }
     )
     massive_generator().seed_on_the_mode(document)

@@ -24,7 +24,7 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
-from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
+from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_emitter import (
@@ -34,6 +34,10 @@ from tests.test_emitter import (
     massive_generator,
     reads,
 )
+
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+UNIT = 1 << 20
 
 SIDE = 12
 SHAPE = (SIDE, SIDE, SIDE)
@@ -70,15 +74,24 @@ def small_world(
         "K": 1073741824,
         "N": 64,
         "release": [1, 128],
-        "suspension": 0,
         "clock_stamp": True,
         "detector_law": True,
+        "width": 1,
+        "body_record": False,
+        "point_emitter": False,
+        "engine": "examples/events/engine_start.json",
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
-        "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": [77, 25], "charge": 0, "reads": reads()},
+            {
+                "name": "light",
+                "quantum": 1,
+                "pair": [1, 1],
+                "phase_per_link": [77, 25],
+                "charge": 0,
+                "reads": reads(),
+            },
             {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
@@ -88,9 +101,10 @@ def small_world(
                 "position": list(well_vertex),
                 "family": "matter",
                 "amount": 1,
-                "phase": 0,
+                "held": {},
+                "ramp": 0,
+                "start": 0,
                 "momentum": [0, 0, 0],
-                "fixed": True,
                 "side": well_side,
                 "pair": list(pair),
                 "seed": AMPLITUDE,

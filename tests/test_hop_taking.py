@@ -48,9 +48,10 @@ def cart_world(
         "position": [start, 0, 0],
         "family": "cart",
         "amount": 1,
-        "phase": 0,
+        "held": {},
+        "ramp": 0,
+        "start": 0,
         "momentum": [momentum, 0, 0],
-        "fixed": True,
         "extents": [3, 1, 1],
         "pair": [800, 810],  # a barrier of matter's kind, no seed: light passes it untouched
     }

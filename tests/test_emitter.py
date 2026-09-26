@@ -67,9 +67,23 @@ NODE_CLOCK = (
 # the charge by its own sign at the weight Lambda (CHARGE_STRENGTH); every family declares
 # its charge, 0 here.
 CLOCK_FAMILY_NAME = "clicks"
-CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "content", "reads": []}
+CLOCK_FAMILY = {
+    "name": CLOCK_FAMILY_NAME,
+    "quantum": 1,
+    "pair": [1, 1],
+    "charge": 0,
+    "held": "content",
+    "reads": [],
+}
 CHARGE_FAMILY_NAME = "charge"
-CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "sign", "reads": []}
+CHARGE_FAMILY = {
+    "name": CHARGE_FAMILY_NAME,
+    "quantum": 1,
+    "pair": [1, 1],
+    "charge": 0,
+    "held": "sign",
+    "reads": [],
+}
 CHARGE_STRENGTH = 1
 READS = [
     {"family": CLOCK_FAMILY_NAME, "weight": 1},
@@ -173,15 +187,24 @@ def emitter_world(
         "K": 1073741824,
         "N": 1024,
         "release": [1, 128],
-        "suspension": 0,
         "clock_stamp": True,
         "detector_law": True,
+        "width": 1,
+        "body_record": False,
+        "point_emitter": False,
+        "engine": "examples/events/engine_start.json",
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
-        "directions": [],
         "families": [
-            {"name": "light", "quantum": 1, "phase_per_link": [512, 1], "charge": 0, "reads": reads()},
+            {
+                "name": "light",
+                "quantum": 1,
+                "pair": [1, 1],
+                "phase_per_link": [512, 1],
+                "charge": 0,
+                "reads": reads(),
+            },
             {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
@@ -191,10 +214,10 @@ def emitter_world(
                 "position": [5, 0, 0],
                 "family": "matter",
                 "amount": 1,
+                "ramp": 0,
+                "start": 0,
                 "held": {"light": stock},
-                "phase": 0,
                 "momentum": [0, 0, 0],
-                "fixed": True,
                 "extents": [32, 1, 1],
                 "pair": [800, 801],
                 "seed": 1 << 20,
@@ -543,7 +566,7 @@ def test_the_loaders_refusals_name_their_keys():
     def no_held_stock(document):
         del document["measured"][0]["held"]  # the stock as the given family's content (item 47)
 
-    refused(no_held_stock, "needs its stock as the given family's content held at the body")
+    refused(no_held_stock, "lacks keys required under `detector_law`: held")  # item 57: no default
 
     # the generator's integers (ALGEBRA.md 9.17 (5) item 1): a norm the
     # emitter does not declare refuses the simulation at its first
@@ -620,7 +643,7 @@ def test_the_loaders_refusals_name_their_keys():
 
     def free_given(document):
         document["families"].append(
-            {"name": "e", "quantum": 0, "charge": -1, "phase": True, "reads": reads()}
+            {"name": "e", "quantum": 0, "pair": [1, 1], "charge": -1, "reads": reads()}
         )
         document["measured"][0]["emitter"]["family"] = "e"
 

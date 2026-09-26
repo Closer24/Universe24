@@ -74,7 +74,7 @@ def test_the_dark_body_is_dark_by_declaration_and_the_bright_one_is_not():
     assert all("block" not in detector for detector in dark["detectors"])
     assert bright["measured"][DARK_NUMBER]["family"] == "matter"
     assert bright["measured"][DARK_NUMBER]["emitter"]["family"] == "light"
-    assert {"name": "at_body", "block": DARK_NUMBER, "threshold": 1} in bright["detectors"]
+    assert {"name": "at_body", "block": DARK_NUMBER} in bright["detectors"]
     assert bright["measured"][0]["emitter"]["receiver"][0] == "at_body"
     assert "at_body" not in dark["measured"][0]["emitter"]["receiver"]
 

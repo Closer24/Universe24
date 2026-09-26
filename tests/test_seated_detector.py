@@ -48,13 +48,11 @@ def seated_layer(stock: int = STOCK, seats: bool = True) -> dict:
                     "position": [71, row, 0],
                     "family": "light",
                     "amount": 1,
-                    "phase": 0,
+                    "held": {},
                     "momentum": [0, 0, 0],
-                    "fixed": True,
-                    "directions": [[-1, 0, 0]],
                 }
             )
-            document["detectors"].append({"name": name, "positions": [[71, row, 0]], "threshold": 1})
+            document["detectors"].append({"name": name, "positions": [[71, row, 0]]})
     document["input"] = input_stamp(document)
     return with_body_record(document, True)
 
@@ -149,10 +147,8 @@ def test_the_loader_admits_a_seat_under_body_record_alone():
             "position": [72, 1, 0],
             "family": "light",
             "amount": 1,
-            "phase": 0,
+            "held": {},
             "momentum": [0, 0, 0],
-            "fixed": True,
-            "directions": [[-1, 0, 0]],
         }
     )
     pair["detectors"][0]["positions"] = [[71, 1, 0], [72, 1, 0]]

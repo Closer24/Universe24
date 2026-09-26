@@ -8,6 +8,7 @@ here is the engine's on the line's small test worlds (COMPUTATION); no pin of na
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -45,8 +46,8 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
     assert main(["--out", str(together), "--jobs", "2", str(a), str(b)]) == 0
     alone_a = tmp_path / "alone_a"
     alone_b = tmp_path / "alone_b"
-    assert main(["--out", str(alone_a), str(a)]) == 0
-    assert main(["--out", str(alone_b), str(b)]) == 0
+    assert main(["--out", str(alone_a), "--jobs", "1", str(a)]) == 0
+    assert main(["--out", str(alone_b), "--jobs", "1", str(b)]) == 0
     for name, alone in (("emitter_small", alone_a), ("chain_small", alone_b)):
         joint = (together / f"{name}.output.json").read_bytes()
         assert joint == (alone / f"{name}.output.json").read_bytes()
@@ -72,13 +73,22 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     its clicks (ALGEBRA.md 9.25 (11) (d); a detector with no click reads None and MISS)."""
     inputs = tmp_path / "inputs"
     inputs.mkdir()
+    # THE MODE PIN (item 57): the pins are compared under the mode "pin" alone; a start file
+    # of that mode, named by its path relative to the repository's root
+    start = tmp_path / "start_pin.json"
+    start.write_text(json.dumps({"law": "detector-law-v1", "mode": "pin"}), encoding="utf-8")
+    relative = os.path.relpath(start, Path(__file__).resolve().parents[1])
     bad = emitter_world(stock=2, ticks=200)
+    bad["engine"] = relative
     profile = bad["measured"][0]["seed"]
     peak = max(range(len(profile)), key=lambda index: abs(profile[index]))
     profile[peak] *= 2
     bad["input"] = input_stamp(bad)
     bad_path = write(inputs, "bad", bad)
-    good_path = write(inputs, "good", emitter_world(stock=2, ticks=250))
+    good = emitter_world(stock=2, ticks=250)
+    good["engine"] = relative
+    good["input"] = input_stamp(good)
+    good_path = write(inputs, "good", good)
     pins = tmp_path / "pins.json"
     pins.write_text(
         json.dumps(

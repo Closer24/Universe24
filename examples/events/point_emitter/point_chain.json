@@ -19,17 +19,23 @@
   1,
   128
  ],
- "suspension": 0,
+ "width": 1,
  "clock_stamp": true,
  "detector_law": true,
  "massive_record": true,
  "amplitude_bound": 1048576,
  "node_clock": 10000,
- "directions": [],
+ "body_record": true,
+ "point_emitter": true,
+ "engine": "examples/events/engine_start.json",
  "families": [
   {
    "name": "light",
    "quantum": 1,
+   "pair": [
+    1,
+    1
+   ],
    "phase_per_link": [
     77,
     25
@@ -70,6 +76,10 @@
   {
    "name": "clicks",
    "quantum": 1,
+   "pair": [
+    1,
+    1
+   ],
    "charge": 0,
    "held": "content",
    "reads": []
@@ -77,6 +87,10 @@
   {
    "name": "charge",
    "quantum": 1,
+   "pair": [
+    1,
+    1
+   ],
    "charge": 0,
    "held": "sign",
    "reads": []
@@ -94,13 +108,13 @@
    "held": {
     "light": 64
    },
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true,
+   "ramp": 0,
+   "start": 0,
    "extents": [
     1,
     1,
@@ -1334,13 +1348,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true
+   "held": {}
   },
   {
    "position": [
@@ -1350,13 +1363,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true
+   "held": {}
   },
   {
    "position": [
@@ -1366,13 +1378,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true
+   "held": {}
   },
   {
    "position": [
@@ -1382,13 +1393,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true
+   "held": {}
   },
   {
    "position": [
@@ -1398,13 +1408,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true
+   "held": {}
   },
   {
    "position": [
@@ -1414,13 +1423,12 @@
    ],
    "family": "light",
    "amount": 1,
-   "phase": 0,
    "momentum": [
     0,
     0,
     0
    ],
-   "fixed": true
+   "held": {}
   }
  ],
  "detectors": [
@@ -1468,8 +1476,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "432477691d82e4178b026e1504450131a0f267dd321f7fcb8dd4ce26506b2152"
- },
- "body_record": true,
- "point_emitter": true
+  "hash": "0250cea0750e15171c880d0e1fd82aeea41d99548634096be6e093199a497b11"
+ }
 }

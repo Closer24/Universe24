@@ -85,9 +85,7 @@ from event_universe.events.world import (
 Record = Callable[[dict[str, object]], None]
 
 DETECTOR_LAW_RULE = "detector-law-v1"
-UNIT = 1 << 20  # the amplitude unit (the wheel's resolution)
 FACE_NAMES = ("face:-x", "face:+x", "face:-y", "face:+y", "face:-z", "face:+z")
-DEFAULT_TRAIN = 32  # periods of the record's clock (DESIGN.md section 6.2)
 # The receiver's take (DESIGN.md sections 1 and 5): a Node that receives does
 # not send the wave back (a mirror is a receiver body that re-emits, never a
 # wall). The record's row at a receiver holds one amplitude per Port that
@@ -1200,7 +1198,7 @@ class DetectorLawSimulation:
         assert seat is not None
         num, den, gamma, content = self.seat_rule(block)
         nxt, remainder = self.one_rule(
-            num, den, gamma, content, 6 * seat.now, seat.now, seat.before, seat.remainder
+            num, den, gamma, content, 6 * seat.now, seat.now, seat.before, seat.remainder, True
         )
         if abs(nxt) > self.world.amplitude_bound:
             raise RuntimeError(
@@ -1220,7 +1218,7 @@ class DetectorLawSimulation:
         assert seat is not None
         num, den, gamma, content = self.seat_rule(block)
         a_before, remainder = self.one_rule_inverse(
-            num, den, gamma, content, 6 * seat.before, seat.now, seat.before, seat.remainder
+            num, den, gamma, content, 6 * seat.before, seat.now, seat.before, seat.remainder, True
         )
         seat.remainder = remainder
         seat.now = seat.before
@@ -2164,7 +2162,7 @@ class DetectorLawSimulation:
         now: np.ndarray,
         before: np.ndarray,
         remainder: np.ndarray,
-        weak_field: bool = True,
+        weak_field: bool,
     ) -> tuple[np.ndarray, np.ndarray]: ...
 
     @overload
@@ -2178,11 +2176,11 @@ class DetectorLawSimulation:
         now: int,
         before: int,
         remainder: int,
-        weak_field: bool = True,
+        weak_field: bool,
     ) -> tuple[int, int]: ...
 
     @staticmethod
-    def one_rule(num, den, gamma, content, neighbours, now, before, remainder, weak_field=True):  # type: ignore[no-untyped-def]
+    def one_rule(num, den, gamma, content, neighbours, now, before, remainder, weak_field):  # type: ignore[no-untyped-def]
         """THE ONE RULE (ALGEBRA.md 9.57 (1), the law's rule with Einstein's weak
         field, the model owner's "switch" of record 2024; BUILD.md section 26
         item 44), the same integers for every record at every Node and for
@@ -2214,7 +2212,7 @@ class DetectorLawSimulation:
         now: np.ndarray,
         before: np.ndarray,
         remainder: np.ndarray,
-        weak_field: bool = True,
+        weak_field: bool,
     ) -> tuple[np.ndarray, np.ndarray]: ...
 
     @overload
@@ -2228,12 +2226,12 @@ class DetectorLawSimulation:
         now: int,
         before: int,
         remainder: int,
-        weak_field: bool = True,
+        weak_field: bool,
     ) -> tuple[int, int]: ...
 
     @staticmethod
     def one_rule_inverse(  # type: ignore[no-untyped-def]
-        num, den, gamma, content, neighbours_of_before, now, before, remainder, weak_field=True
+        num, den, gamma, content, neighbours_of_before, now, before, remainder, weak_field
     ):
         """The one rule one interval back with the same integers (ALGEBRA.md
         9.50 (8), (9), 9.57 (1); item 34): w a_before - r = R S_6(a_now) + S
@@ -2707,7 +2705,6 @@ class DetectorLawSimulation:
             "momentum": [0, 0, 0],
             "weight": [live.pointers[chosen] if chosen is not None else 0, 1],
             "total": list(total),
-            "unit": UNIT,
             "T": live.absorbed,
             "before": sum(1 for p in live.pointers if p),
             "after": 1 if chosen is not None else 0,

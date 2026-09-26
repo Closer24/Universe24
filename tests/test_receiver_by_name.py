@@ -51,10 +51,10 @@ def emitter(
         "position": [position, 0, 0],
         "family": "matter",
         "amount": 1,
+        "ramp": 0,
+        "start": 0,
         "held": {"light": stock},
-        "phase": 0,
         "momentum": [momentum, 0, 0],
-        "fixed": True,
         "extents": [32, 1, 1],
         "pair": [800, 801],
         "seed": 50 << 12,
@@ -76,10 +76,8 @@ def body(x: int) -> dict:
         "position": [x, 0, 0],
         "family": "light",
         "amount": 1,
-        "phase": 0,
+        "held": {},
         "momentum": [0, 0, 0],
-        "fixed": True,
-        "directions": [[-1, 0, 0]],
     }
 
 

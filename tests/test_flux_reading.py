@@ -18,12 +18,17 @@ from fractions import Fraction
 
 import numpy as np
 
-from event_universe.events.detector_law import UNIT, DetectorLawSimulation, LiveRecord
+from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import parse_nature_beam_world
 from tests.test_emitter import NODE_CLOCK
 from tests.test_emitter import reads as family_reads
 from tests.test_massive_record import massive_world
+
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+UNIT = 1 << 20
+
 
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
@@ -204,9 +209,11 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             "position": [20, 0, 0],
             "family": "source",
             "amount": 1,
-            "phase": 0,
+            "held": {},
+            "ramp": 0,
+            "start": 0,
+            "margin": "control",
             "momentum": [0, 0, 0],
-            "fixed": True,
             "side": 1,
             "pair": [8, 7],
             "seed": 0,
@@ -215,18 +222,16 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             "position": [5, 0, 0],
             "family": "light",
             "amount": 1,
-            "phase": 0,
+            "held": {},
             "momentum": [0, 0, 0],
-            "fixed": True,
         },
         *(
             {
                 "position": [x, 0, 0],
                 "family": "light",
                 "amount": 1,
-                "phase": 0,
+                "held": {},
                 "momentum": [0, 0, 0],
-                "fixed": True,
             }
             for x in (6, 7, 30, 31, 32)
         ),

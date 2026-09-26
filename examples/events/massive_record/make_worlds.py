@@ -105,12 +105,26 @@ NODE_CLOCK = 10_000  # Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44; the
 # clock of its own; declared in every world as the family holding the content (the family
 # genericity, the model owner's record 2066; BUILD.md section 26 item 51)
 CLOCK_FAMILY_NAME = "clicks"
-CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "content", "reads": []}
+CLOCK_FAMILY = {
+    "name": CLOCK_FAMILY_NAME,
+    "quantum": 1,
+    "pair": [1, 1],
+    "charge": 0,
+    "held": "content",
+    "reads": [],
+}
 # THE FAMILY OF CHARGE (ALGEBRA.md 9.48; BUILD.md section 26 item 35): the fifth family,
 # holding the signed charge at every body's Nodes; Lambda the weight of the read on it;
 # every registered family's charge is 0, so the field stays 0 and no row moves
 CHARGE_FAMILY_NAME = "charge"
-CHARGE_FAMILY = {"name": CHARGE_FAMILY_NAME, "quantum": 1, "charge": 0, "held": "sign", "reads": []}
+CHARGE_FAMILY = {
+    "name": CHARGE_FAMILY_NAME,
+    "quantum": 1,
+    "pair": [1, 1],
+    "charge": 0,
+    "held": "sign",
+    "reads": [],
+}
 CHARGE_STRENGTH = 1
 READS = [
     {"family": CLOCK_FAMILY_NAME, "weight": 1},
@@ -157,7 +171,10 @@ def world(
     seed on its mode (`seed_on_the_mode`) unless `seed_profile` is off, for a caller that
     completes the document first (the detector-law generator's emitters) and calls it then."""
     matter: dict = {"name": "matter", "quantum": 1, "pair": pair}
-    families = [light or {"name": "light", "quantum": 1, "phase_per_link": [77, 25]}, matter]
+    families = [
+        light or {"name": "light", "quantum": 1, "pair": [1, 1], "phase_per_link": [77, 25]},
+        matter,
+    ]
     if any(block.get("family") == "source" for block in blocks):
         # the emitter bodies' own family (`emitter_at`): the kind SOURCE_KIND
         families.append({"name": "source", "quantum": 1, "pair": list(SOURCE_KIND)})
@@ -166,18 +183,28 @@ def world(
         # the reads (item 51): the held content plainly, the held charge by the sign
         family.setdefault("charge", 0)
         family.setdefault("reads", [dict(read) for read in READS])
+        # THE PAIR ON EVERY FAMILY (record 2089, no default; ALGEBRA.md 9.83 (2)
+        # (a): light's pair [1, 1] written, never a constant of the loader)
+        family.setdefault("pair", [1, 1])
     families.append(dict(CLOCK_FAMILY))  # the family holding the content, the Node clock (item 32)
     families.append(dict(CHARGE_FAMILY))  # the family holding the charge (item 35)
     measured: list[dict] = []
     for block in blocks:
+        # EVERY KEY THE DETECTOR LAW READS, WRITTEN (the model owner's record 2089;
+        # BUILD.md section 26 item 57): the momentum, the held quanta, the drive's
+        # ramp and start and the margin kind on every measured event; the ray
+        # law's `phase`, `fixed` and `directions` no longer written (never read)
         entry: dict = {
             "position": block["position"],
             "family": block.get("family", "matter"),
             "amount": block.get("amount", 1),
-            "phase": 0,
             "momentum": block.get("momentum", [0, 0, 0]),
-            "fixed": True,
+            "held": {},
+            "ramp": 0,
+            "start": 0,
         }
+        if "seed" in block:
+            entry["margin"] = "pin"  # a well's margin kind (record 2037), declared on every well
         if "side" in block:
             entry["side"] = block["side"]
         else:
@@ -197,20 +224,25 @@ def world(
         "K": 1073741824,
         "N": 64,
         "release": [1, 128],
-        "suspension": 0,
+        # the drive wall's width S (3 Q S M; ALGEBRA.md 9.52 (4)), declared (record 2089)
+        "width": 1,
         "clock_stamp": True,
         "detector_law": True,
         "massive_record": True,
-        # the amplitude bound A every row stays below (2^28, the ceiling under
-        # the Node clock, BUILD.md section 26 item 31; DECLARATIONS.md section
-        # 15 M1-10's 2^32 HISTORY; the rows asserted below it at run time)
+        "body_record": False,
+        "point_emitter": False,
+        # THE ENGINE START FILE (record 2089; BUILD.md section 26 item 57): the one
+        # canonical copy, referenced by its repository path
+        "engine": "examples/events/engine_start.json",
+        # the amplitude bound A every row stays below (BUILD.md section 26 item
+        # 31; the ceiling 2^28 retired, ALGEBRA.md 9.83 (2) (a); the rows
+        # asserted below A at run time)
         "amplitude_bound": AMPLITUDE_BOUND,
         # the Node clock Gamma (ALGEBRA.md 9.35 (3); item 31): (e, f) = (Gamma,
         # Gamma + M) at every Node, M the content held there; required, no default
         "node_clock": NODE_CLOCK,
         # the families' roles stand on the families (`held`, `reads`; the family
         # genericity, BUILD.md section 26 item 51)
-        "directions": [],
         "families": families,
         "measured": measured,
         "detectors": [],

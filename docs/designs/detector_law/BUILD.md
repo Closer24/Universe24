@@ -4217,6 +4217,70 @@ would have found no cell.
    in the README of the rows toward nature. Findings (b) and (c) of item 48
    are answered by 9.74 (3) and (5).
 
+57. THE ENGINE START FILE AND NO DEFAULT UNDER THE DETECTOR LAW (the model
+   owner's record 2089 of 2026-09-25 through the Boss: "every flag the engine
+   needs for a run should leave the code; it prevents bugs: either throw them
+   out of the code or put them in an engine start file"; the Boss's records
+   2092 (the build approved, `margin` both per event and the run's `mode`)
+   and 2094 (a flag the engine does not need is deleted, not moved); the
+   mathematician's 9.83 (2) (a): the law's numbers are the families file's
+   and the world's, a run's parameters the start file's). THE AUDIT (record
+   2092): every default and flag on the law's path, by file and line, in
+   Nature24's scratch file audit_2089_defaults.md and in the Boss's log. THE
+   START FILE: examples/events/engine_start.json, one canonical copy, {"law":
+   "detector-law-v1", "mode": "check"}; every world of the law names it by its
+   repository path (`engine`, REQUIRED under `detector_law`, refused without
+   it); the loader reads it (`_engine_start`, `EngineStart` on the world as
+   `start`) and refuses a missing file, an unknown key, a missing key, another
+   law or a mode outside check and pin, each by name; `mode` "check" until the
+   model owner's Go (records 2050, 2054): the runner refuses `--pins` under
+   it (no pin compared) and requires it under "pin"; `--jobs` REQUIRED (the
+   cores' default gone); the output carries `mode`. NO DEFAULT UNDER THE LAW
+   (`_require_under_law`, `_refuse_under_law`): the world declares `boundary`,
+   `width` (the drive wall's S), `clock_stamp`, `massive_record`,
+   `body_record`, `point_emitter`, `engine`, `measured` and `detectors`, and
+   `amplitude_bound` with `massive_record`; every family its `pair` (light's
+   [1, 1] written), `charge` and `reads`; every measured event its `momentum`
+   and `held`; every block (a `side` or `extents`) its `ramp` and `start`;
+   every well its `margin` (record 2037, per measured event). A KEY THE LAW
+   NEVER READS IS REFUSED BY NAME (record 2094; 0 engine references each): the
+   world's `suspension`, `direction_bound`, `directions`, `action`, `meeting`
+   and `massive_rows`; a family's `phase`, `lifetime`, `hand`, `columns` and
+   `massive`; a measured event's `fixed`, `phase`, `directions`,
+   `phase_by_momentum`, `span`, `books`, `table` and the lamp's keys; a
+   detector's `threshold` and `reading`. THE CODE CONSTANTS OUT (9.83 (2)
+   (a)): UNIT 2^20 deleted from the engine (its output entry `unit` with it;
+   the tests' planted rows carry their own explicit constant), the ceiling
+   AMPLITUDE_BOUND 2^28 retired (A is the one number, required, the rule's
+   int64 total its bound), DEFAULT_TRAIN deleted (unused), the rule's
+   `weak_field` argument without a default (the law's 9.57 (1) for every
+   record, the held families' plain step by attribute; no choice). What stays
+   until the ray law's deletion (record 2095): the ray law's own defaults on
+   a world without `detector_law`, the shared `.get` lines that a required
+   key makes dead under the law, `K`, `release` and `age_bound` (required
+   today, never read by the law), the constant MASSLESS_PAIR on the ray law's
+   path and in the held family's check, and the per-family `components` (1,
+   the vector work's hook, ALGEBRA.md 9.86). THE FLAGS `detector_law`,
+   `massive_record`, `body_record`, `point_emitter` and `clock_stamp` are
+   kept as REQUIRED explicit keys in this commit (the deletion list of
+   records 2094 and 2095 is with the Boss; deleting them moves rows or lines
+   or the ray law). THE GENERATORS write every required key and none refused;
+   every shipped world of the law regenerated (the keys alone, the integers
+   unchanged); THE PROOF: the rows and the held levels bit for bit those of
+   776c0d0d on the five worlds of the item-51 method, the lines identical but
+   for the deleted entry `unit` of the giving worlds' gather lines (the
+   chain's events digest moved by that entry alone; the state and the audit
+   digests unchanged). THE GATE
+   tests/test_engine_start.py: the shipped start file says check and every
+   world of the law names it; a missing key of the world or of the start file
+   refused by name (every flag, `engine`, `mode`; an unknown key, another
+   law, a wrong mode, a missing file); a key the law reads refused when
+   absent (`pair`, `momentum`, `held`, `ramp`, `start`, a well's `margin`)
+   and a key it never reads refused when present (`fixed`, `phase`,
+   `directions`, `threshold`, `suspension`, `action`, `lifetime`); the
+   runner: `--jobs` required, `--pins` refused under check, the output's
+   `mode`. HOST; no physics.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

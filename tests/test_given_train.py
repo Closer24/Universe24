@@ -227,7 +227,7 @@ def test_the_light_clock_in_the_tables_form_and_the_generators_checks(capsys):
     mirror = document["measured"][1]
     assert mirror["family"] == "light" and mirror["pair"] == [1, 2]
     assert mirror["extents"] == [4, 3, 3] and mirror["position"] == [690, 0, 0]
-    assert document["detectors"] == [{"name": "at_well", "block": 0, "threshold": 1}]
+    assert document["detectors"] == [{"name": "at_well", "block": 0}]
     world = parse_nature_beam_world(document)
     DetectorLawSimulation(world)
     generator = massive_generator()

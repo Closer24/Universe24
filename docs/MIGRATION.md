@@ -6,6 +6,28 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The engine start file and no default under the detector law, on 2026-09-26 (keys required and refused; no behaviour)
+
+The model owner's record 2089 through the Boss (BUILD.md section 26 item 57):
+every flag the engine needs for a run leaves the code. A world of the
+detector law names the one engine start file by its repository path,
+`"engine": "examples/events/engine_start.json"` (the file holds the run's
+`mode`, "check" until the Go), and declares every key the law's path reads:
+`boundary`, `width`, `clock_stamp`, `massive_record`, `body_record`,
+`point_emitter`, `measured`, `detectors` (and `amplitude_bound` with
+`massive_record`); on every family `pair`, `charge` and `reads`; on every
+measured event `momentum` and `held`; on every block `ramp` and `start`; on
+every well `margin`. A key the law never reads is refused by name: the
+world's `suspension`, `direction_bound`, `directions`, `action`, `meeting`,
+`massive_rows`; a family's `phase`, `lifetime`, `hand`, `columns`, `massive`;
+a measured event's `fixed`, `phase`, `directions`, `phase_by_momentum`,
+`span`, `books`, `table`; a detector's `threshold` and `reading`. The runner
+requires `--jobs` and refuses `--pins` under the mode check. The engine's
+constant UNIT and its output entry `unit` are gone; the ceiling 2^28 on
+`amplitude_bound` is retired. Rewrite a world file by regenerating it with
+its generator (every generator writes the keys); the rows, the held levels
+and the lines are bit for bit those before the change.
+
 ## The family genericity, on 2026-09-25 (three world keys retired; no behaviour)
 
 The model owner's record 2066 through the Boss (BUILD.md section 26 item 51):

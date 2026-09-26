@@ -26,12 +26,17 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe.events.detector_law import UNIT, DetectorLawSimulation, form_json
+from event_universe.events.detector_law import DetectorLawSimulation, form_json
 from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_emitter import NODE_CLOCK, emitter_world, lawful_wheel, reads
 from tests.test_flux_reading import planted
 from tests.test_massive_record import massive_world
+
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+UNIT = 1 << 20
+
 
 ROOT = Path(__file__).resolve().parents[1]
 VACUUM_WHEEL = (
@@ -51,9 +56,8 @@ def light_body(x: int, amount: int) -> dict:
         "position": [x, 0, 0],
         "family": "light",
         "amount": amount,
-        "phase": 0,
+        "held": {},
         "momentum": [0, 0, 0],
-        "fixed": True,
     }
 
 
@@ -323,7 +327,10 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
         parse_nature_beam_world(document)
     ray = content_chain(12, PERIODIC, [], 1)
     ray["detector_law"] = False
+    del ray["engine"]  # the start file is the law's (item 57)
     ray["massive_record"] = False
+    for family in ray["families"]:
+        family.pop("pair", None)  # the pair is the detector law's declaration (item 57)
     del ray["amplitude_bound"]
     del ray["face_depth"]
     del ray["families"][1]
@@ -523,7 +530,10 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
             parse_nature_beam_world(retired)
     ray = json.loads(json.dumps(good))
     ray["detector_law"] = False
+    del ray["engine"]  # the start file is the law's (item 57)
     ray["massive_record"] = False
+    for family in ray["families"]:
+        family.pop("pair", None)  # the pair is the detector law's declaration (item 57)
     del ray["amplitude_bound"]
     del ray["face_depth"]
     del ray["node_clock"]
@@ -532,7 +542,9 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
         parse_nature_beam_world(ray)
     unread = json.loads(json.dumps(good))
     del unread["families"][0]["reads"]
-    with pytest.raises(ValueError, match=r"families\[0\] declares no `reads` under detector-law-v1"):
+    with pytest.raises(
+        ValueError, match=r"families\[0\] lacks keys required under `detector_law`: reads"
+    ):
         parse_nature_beam_world(unread)
     unknown = json.loads(json.dumps(good))
     unknown["families"][0]["reads"][0]["family"] = "ticks"

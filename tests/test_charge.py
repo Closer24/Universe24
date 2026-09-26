@@ -25,7 +25,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe.events.detector_law import UNIT, DetectorLawSimulation
+from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.rule import rule_coefficients
 from event_universe.events.world import parse_nature_beam_world
 from tests.test_emitter import (
@@ -37,6 +37,11 @@ from tests.test_emitter import (
 )
 from tests.test_flux_reading import planted
 from tests.test_node_clock import CHAIN, GAMMA, PAIR, PERIODIC, content_chain, six_reads
+
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+UNIT = 1 << 20
+
 
 ROOT = Path(__file__).resolve().parents[1]
 QUANTA = 10  # the content and the charge per Node of the charged slab (ten Nodes) at GAMMA
@@ -61,7 +66,14 @@ def charged_chain(
     document["families"][MATTER]["charge"] = matter_charge
     document["families"].insert(
         NEUTRAL,
-        {"name": "neutral", "quantum": 1, "phase_per_link": [512, 1], "charge": 0, "reads": reads()},
+        {
+            "name": "neutral",
+            "quantum": 1,
+            "pair": [1, 1],
+            "phase_per_link": [512, 1],
+            "charge": 0,
+            "reads": reads(),
+        },
     )
     set_strength(document, strength)
     return document
@@ -292,7 +304,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     refused(twice, "reads names 'charge' twice")
     unlabelled = copy()
     del unlabelled["families"][MATTER]["charge"]
-    refused(unlabelled, r"families\[1\] \('matter'\) declares no `charge`")
+    refused(unlabelled, r"families\[1\] lacks keys required under `detector_law`: charge")
     strong = copy()
     strong["families"][MATTER]["charge"] = 2
     refused(strong, r"families\[1\].charge \[2, 1\]: under")
@@ -324,9 +336,8 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
             "position": [3, 0, 0],
             "family": CHARGE_FAMILY_NAME,
             "amount": 1,
-            "phase": 0,
+            "held": {},
             "momentum": [0, 0, 0],
-            "fixed": True,
         }
     ]
     refused(body, r"measured\[0\] is of the held family 'charge'")
@@ -336,9 +347,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
             "position": [3, 0, 0],
             "family": "light",
             "amount": 1,
-            "phase": 0,
             "momentum": [0, 0, 0],
-            "fixed": True,
             "held": {CHARGE_FAMILY_NAME: 1},
         }
     ]

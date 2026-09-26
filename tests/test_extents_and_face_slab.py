@@ -12,11 +12,15 @@ import math
 import numpy as np
 import pytest
 
-from event_universe.events.detector_law import UNIT, DetectorLawSimulation
+from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import body_node_indices, input_stamp, parse_nature_beam_world
 from tests.test_detector_law import layer_world
 from tests.test_emitter import emitter_world, massive_generator
 from tests.test_flux_reading import planted
+
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+UNIT = 1 << 20
 
 
 def small_layer() -> dict:
@@ -32,16 +36,20 @@ def small_layer() -> dict:
 
 
 def wall(position, family="light", **keys):
-    return {
+    entry = {
         "position": position,
         "family": family,
         "amount": 1,
-        "phase": 0,
+        "held": {},
         "momentum": [0, 0, 0],
-        "fixed": True,
         "pair": [1, 2],
         **keys,
     }
+    if "extents" in entry or "side" in entry:
+        # a block declares its drive's ramp and start (no default, item 57)
+        entry.setdefault("ramp", 0)
+        entry.setdefault("start", 0)
+    return entry
 
 
 def test_a_box_of_extents_is_placed_whole_and_its_cells_are_the_box():
@@ -114,9 +122,10 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
             "position": [5, 2, 0],
             "family": "matter",
             "amount": 1,
-            "phase": 0,
+            "held": {},
+            "ramp": 0,
+            "start": 0,
             "momentum": [0, 0, 0],
-            "fixed": True,
             "extents": [12, 5, 1],
             "pair": [800, 801],
             "seed": 4096,

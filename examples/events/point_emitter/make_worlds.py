@@ -66,9 +66,9 @@ def seat(position: list[int]) -> dict:
         "family": "matter",
         "amount": 1,
         "held": {"light": STOCK},
-        "phase": 0,
         "momentum": [0, 0, 0],
-        "fixed": True,
+        "ramp": 0,
+        "start": 0,
         "extents": [1, 1, 1],
         "pair": list(WELL),
         "seed": SEED,
@@ -82,9 +82,8 @@ def body(x: int) -> dict:
         "position": [x, 0, 0],
         "family": "light",
         "amount": 1,
-        "phase": 0,
         "momentum": [0, 0, 0],
-        "fixed": True,
+        "held": {},
     }
 
 

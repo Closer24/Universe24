@@ -640,6 +640,17 @@ outside the mathematician's band goes to him before any word (9.59 (6)).
 
 ## The point emitter
 
+THE ENGINE START FILE (the model owner's record 2089 of 2026-09-25 through the
+Boss; BUILD.md section 26 item 57): `engine_start.json` in this folder is the one
+canonical copy of the run's parameters, {"law": "detector-law-v1", "mode": "check"};
+every world of the detector law names it by its repository path (`"engine"`), the
+loader reads it and refuses a missing key by name, and the runner reads its `mode`
+("check" until the model owner's Go: no pin compared, `--pins` refused). No key of
+the law's path has a default: a world declares every flag it runs under, every
+family its pair, charge and reads, every measured event its momentum and held
+quanta, every block its ramp and start, every well its margin; a key the law never
+reads is refused by name (docs/MIGRATION.md, "The engine start file").
+
 The folder [point_emitter/](point_emitter/README.md) holds the first row of the
 point emitter (ALGEBRA.md 9.69 (2), 9.71 (1); BUILD.md section 26 item 50), a
 hypothesis under its own identity, the world key `point_emitter`: a one-Node
