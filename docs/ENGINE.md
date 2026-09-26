@@ -25,25 +25,25 @@ One interval has five places, in this order:
 
 | Place | What happens | Who writes |
 | --- | --- | --- |
-| (i) | The clicking families' records step by Rule3, every component, with the transport through the Ports. | the operation, the send, the receive, the wait |
-| (ii) | The bookings at the detectors' Ports, the ladder, the takings and the givings. A click's writes are deferred to the next interval. | the clicks, the giving, the recoil |
+| (i) | The clicking families' records step by Rule3, every component, with the transport through the Ports. | the operation, the send, the receive, the wait, the degree, the pair, the phase, the self-source, the signed read, the internal representation |
+| (ii) | The bookings at the detectors' Ports, the ladder, the takings and the givings. A click's writes to a body's values are ordered among the writers of (iv). | the clicks, the clicks list, the giving, the hand, the lifetime |
 | (iii) | The held families' records step by Rule3. | the operation |
-| (iv) | The holds are written: each body's count, momentum and spin written into the held families' levels at its Nodes; the deferred writes of the interval's clicks enter. | the hold, the source |
+| (iv) | The holds are written: each body's count, momentum and spin written into the held families' levels at its Nodes; the deferred writes of the interval's clicks enter. | the hold, the source, the recoil |
 | (v) | The bodies on one Node: the feed, the induction, the spin's step, the recoil's accumulator. | the spin's step, the feed, the induction |
 
-The loop calls a primitive through the register by its name and its place, `register.at("the hold", "(iv)")`, and never by a family's name. The order of two primitives that write the same value at the same place is declared by each, and the register refuses two writers with no order.
+The loop is built with the register: it discovers the folders, binds every card that has a binder to one of its own methods or to Rule3, checks the writers and checks every term of the files against the built names. It calls two primitives through the register by name and place, the hold, `register.at("the hold", "(iv)")`, and the clicks; the other bound primitives run as the loop's own methods, called directly, and never by a family's name. Two primitives that write the same value at the same place each declare an order; the register refuses two writers with no order or with equal orders. A body's value a click writes at (ii) is ordered among the writers of (iv); a remainder is the writer's own and never collides.
 
-Every step is reversible: `step_inverse` returns the whole state to the interval before, bit for bit, by Rule3's own backward line and the click journal.
+The step is a bijection but for the click: `step_inverse` returns the state to the interval before, bit for bit, by Rule3's own backward line, for an interval with no click, no giving and no hop; it refuses a body that has hopped. There is no click journal; a test steps a click's interval back by hand.
 
 ### Rule3
 
-Rule3 is one function in `src/event_universe/core/rule3.py`, the only place in the code that holds the rule's arithmetic. At every Node it forms the next level from the level now, the level before, the six neighbours' arrivals and the remainder:
+Rule3 is the function `rule3` in `src/event_universe/core/rule3.py`, the only place in the code that holds the rule's arithmetic; beside it the module holds `coefficients` (the rule's integers at a Node), `form_term` (the conserved form's term), `rule_total_bound` (the load-time bound of the line inside int64) and `rungs` (the ladder's rungs). At every Node `rule3` it forms the next level from the level now, the level before, the six neighbours' arrivals and the remainder:
 
 ```
 w a_next + r' = SUM_axis R_axis (arrival_+ + arrival_-) + S a_now - w a_before + r,  0 <= r' < w
 ```
 
-The coefficients `R` (one per axis), `S` and `w` come from the family's pair, the Node clock and the paces read at the Node. The paces are `Gamma` minus the weighted sum of the levels the family reads (its `reads`), so a body's count lowers the pace of what it reads and bends the wave. One floor division per Node per step; the remainder stays at the Node. The same line with the two levels exchanged is the step backward.
+The coefficients `R` (one per axis), `S` and `w` come from the family's pair, the Node clock `Gamma` and the paces at the Node. The content at a Node is the sum over the family's `reads` of weight times the read level (by plain) or minus q times weight times the read level (by sign), q the body's sign; the pace is `Gamma` minus the content, and the axis pace is the pace minus the axis content, so a body's count lowers the pace of what it reads and bends the wave. `coefficients` has two forms: the weak-field rule (`R_a = 2 num p_a^2`, `S` from the paces, `w = 6 den Gamma^2`) and the plain first-order rule (`R = num p`, `S = 6 den c`, `w = 3 den Gamma`); the loop steps a held family's record plain and every other record weak-field, and the loader chooses the weak-field bound where `Gamma > 1`. One floor division per Node per step; the remainder stays at the Node. After the hold the loop's guard ends the run when a reading family's content, or content plus an axis content, reaches `Gamma`. The step backward is `rule3` with `direction=-1`: the two levels exchanged and the sum negated, the remainder after carried in and the remainder before given out.
 
 ### The state a run keeps
 
@@ -55,21 +55,21 @@ Every primitive is one folder `src/event_universe/features/<name>/__init__.py`. 
 
 | Field | Meaning |
 | --- | --- |
-| `name` | the primitive's unique English name, "the hold"; the folder is the name without "the", with underscores |
+| `name` | the primitive's unique English name, "the hold"; the folder is the name without "the ", the apostrophe dropped, a space or a hyphen an underscore ("the spin's step" is `spins_step`, "the self-source" is `self_source`) |
 | `place` | one of the five places, or "any" for a read-only line |
 | `reads` | the values it reads, in the ledger's words |
 | `writes` | the values it writes |
-| `order` | its order among the writers of the same value at the same place, or None when alone |
-| `function` | its function once its code lives in the folder, or None |
+| `order` | its order among the writers of the same value at the same place: one integer, or a mapping value to integer where it writes two values with different orders (the giving, the clicks list), or None when alone |
+| `function` | its function where its code lives in the folder (the recoil's `apply`), or None; a card with both a function and a binder runs the binder's method today (the signed read, the giving) |
 | `section` | its line in ALGEBRA.md |
-| `word` | the mathematician's reading of its moment: the right side, the step, after the step |
-| `binder` | `bind(loop)`, which gives the loop's method that implements it today while the code still sits in the loop |
+| `word` | the mathematician's reading of its moment: the right side, the step, after the step, or any (the trace); optional, and only a word outside the four is refused |
+| `binder` | `bind(loop)`, which gives the loop's method that implements it today while the code still sits in the loop; the operation's binder gives Rule3 itself |
 
-A folder's function has one signature, `apply(term, start, own) -> writes` (`src/event_universe/core/primitive.py`): the term is one line of the files (the primitive's name, its target value, the family or body it acts on, its degree, its weight, its table); the start is the interval's read-only state (levels now and before, paces, counts, walls, momenta); the own is the primitive's own record at the Nodes it acts on, where every remainder of its divisions lives; the writes are whole integers into declared values, now or deferred to the next interval.
+A folder's function has one signature, `apply(term, start, own) -> writes`, declared in `src/event_universe/core/primitive.py`: the term is one line of the files (the primitive's name, its target value, the family or body it acts on, its degree, its weight, its table, and the line's label for a refusal); the start is the interval's read-only state (levels now and before, paces, counts, walls, momenta, the Ports' accumulators); the own is the primitive's own record at the Nodes it acts on, where every remainder of its divisions lives; the writes are whole integers into declared values, now or deferred to the next interval. Today each built folder defines its own term, start, own and writes classes in that shape; nothing imports the declared types yet.
 
-The folders today: the operation (Rule3 itself), the send, the receive, the wait, the hold, the clicks, the clicks list, the giving, the recoil, the recoil's accumulator, the source, the signed read, the self-source, the feed, the induction, the spin's step, the degree, the pair, the phase, the hop, the hand, the lifetime, the internal representation, the trace. A folder whose card has neither a function nor a binder is a row of the law not built: the loader refuses a term naming it.
+The folders today: the operation (Rule3 itself), the send, the receive, the wait, the hold, the clicks, the clicks list, the giving, the recoil, the recoil's accumulator, the source, the signed read, the self-source, the feed, the induction, the spin's step, the degree, the pair, the phase, the hop, the hand, the lifetime, the internal representation, the trace. Nine folders have neither a function nor a binder on main (the clicks list, the feed, the hand, the induction, the internal representation, the lifetime, the recoil's accumulator, the source, the trace): a row of the law not built. The loop's constructor, not the loader, refuses a term of the files naming one, through the register's check of the terms.
 
-The register refuses, at load and by name: a folder without a card or whose folder name is not its declared name's; a name declared twice; a place or a word outside the five and the three; two writers of one value at one place with no order; and a call from the loop at a place other than the declared one. There is no version anywhere: a primitive that changes behaviour keeps every shipped world bit for bit or takes a new name.
+The register refuses, at load and by name: a folder without a card or whose folder name is not its declared name's; a dict-form card with an unknown or missing key; a `bind` that is not a function; a name declared twice; a place outside the six or a word outside the four; two writers of one value at one place with no order or with equal orders; a term naming a primitive the register does not hold, or one not built; and a call from the loop at a place other than the declared one. There is no version anywhere: a primitive that changes behaviour keeps every shipped world bit for bit or takes a new name.
 
 ## 4. The loader and the files
 
@@ -83,7 +83,7 @@ One experiment is one world file, a JSON object under `examples/events/`. Its ke
 - `universe`: the path of the universe file. `engine`: the path of the start file. Both are repository paths.
 - `measured`: the bodies. Each names its `family`, its place on the GameBoard (`position`, and `extents` for a box), its `amount` of quanta, its `stocks` of other families it can give, its `momentum`, `spin` and `moment`, and, for a giver, its `emitter` (the given family, the receivers, the weight, the twist). Today's loader also asks a body for its `pair`, `kind` and `seed`; the law's form of a body is its family, its Nodes, its count per Node and its momentum, and nothing else.
 - `detectors`: the named sets of Nodes, each with its `positions` and the body it belongs to.
-- `readings`: what the run writes, a list of named entries, each with a `name`, a `kind` (`clicks`, `level`, `support`, `total`, `centre`) and the kind's keys (a detector, a family and a Node, a family, a body) and `every`, the interval between readings. The source worlds carry this key; today's loader does not read it yet.
+- `readings`: what the run writes beyond its verdict, a list of named entries read by `src/event_universe/core/readings.py`. Each has a `name`, a `kind` and the kind's own keys: `clicks` of a `detector` (labelled DETECTOR); `level` of a `family` at a `node`, `support` (the Nodes whose level is nonzero) and `total` (the sum of absolute levels) of a `family`, `centre` of a `body` (GAMEBOARD); `alive`, the records alive (HOST). A periodic kind takes `every`, its stride from 1: read at the interval 0 and at every multiple of the stride. A reading writes nothing into the run. The refusals name the reading and the key: an unknown or missing key, an unknown kind, an empty or repeated name, a stride below 1, a detector, family or body the world lacks, a Node outside the shape.
 - `stamp`: the digest of the file as its generator wrote it. A file whose stamp does not match is refused.
 - Today's loader also requires `K`, `N` and `release`, integers of the old form kept until the loader's cut.
 
@@ -100,7 +100,7 @@ One file, `examples/events/universe.json`, names every family and every integer 
 
 ### The output
 
-`tools/run_inputs.py` writes one file per world, `<name>.output.json`: the input's name and stamp, the verdict (`LAWFUL`, `REFUSED` with the reason, or `LEAK` when a family with no source moved), the ticks, the mode, every click with its detector and its interval, the count per detector, and the comparison per registered pin (`MATCH` within the band or `MISS`). A click is a measurement. The engine's state stream (`snapshot_stream`: the interval, the bodies' contents, the held families' levels, the records' integers, under the files' names) and the books are GameBoard readings, diagnostics for the tests and the record; they are never compared with nature.
+`tools/run_inputs.py` writes one file per world, `<name>.output.json`: the input's name and stamp, the verdict (`LAWFUL`, `REFUSED` with the reason, or `LEAK` when a family with no source moved), the ticks, the mode, every click with its detector and its interval, the count per detector, the comparison per registered pin (`MATCH` within the band or `MISS`), and `readings`, the declared readings in their order, each with its name, kind, label, target, stride and lines (a click's line: the interval, the record, its giving, content, momentum and the detector's Nodes). A click is a measurement. The engine's state stream (`snapshot_stream`: the interval, the bodies' contents, the held families' levels, the records' integers, under the files' names) and the books are GameBoard readings, diagnostics for the tests and the record; they are never compared with nature.
 
 ## 5. The gates
 
