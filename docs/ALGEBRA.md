@@ -14883,11 +14883,11 @@ M, with Q the momentum's unit in the universe's integers (9.83 (2)
 (a)) and M the body's held content (9.46 (7) (b)). Bit for bit.
 
 **(3) THE CUBE BODY STAYS A DECLARED SUPPORT, the third line.** The
-owner's "a body can be one Node" is met by the seat: one Node, the
+owner's "a body can be one Node" is met by the body on one Node, the
 least form (9.71 (2)). A body of extent is still a body: the mirror
 slab, the screen, the moving emitter whose extent is its train's
 wavelengths (9.75 (2)). The cube is not a second law: each of its
-Nodes is a seat under the one rule, its contraction per Node (9.78
+Nodes is a body's Node under the one rule, its contraction per Node (9.78
 (4)), and the body's declared support says which Nodes. So the key
 `body_record` goes, the support decides (the Boss's word), and nothing
 is retired. No question for the owner here.
@@ -15010,7 +15010,7 @@ whole is refused at load, as now.
 `seed` (the profile), `clock` (the mode's rotation pair), `extents`,
 `held` (the stock), `receiver`, `ramp` with `start` (the pushing
 agent's declaration, a moving body's row), `proper_clock` (a moving
-seat's rotations, 9.63 (3)): KEEP. `side` DELETE (`extents` [s, s, s]
+body's rotations on its Node, 9.63 (3)): KEEP. `side` DELETE (`extents` [s, s, s]
 is the cube; one form). `fixed` (true on all 1123) DELETE: a body
 moves by its momentum, none by a key. `phase` (0 on all 1123) DELETE.
 `directions` on a body (three worlds, the ray law's release
@@ -15152,19 +15152,19 @@ the held families' step of the interval (9.85 (2)):
 
 the divisions' remainders on the body's record (three for the vector,
 six for the tensor, three for the charge's current), carried between
-intervals and inverted with the body. THE DIPOLES on the seat's six
-neighbours (seat + sigma e_j, sigma = +1 or -1, j = x, y, z), added
+intervals and inverted with the body. THE DIPOLES on the body's Node's six
+neighbours (the Node + sigma e_j, sigma = +1 or -1, j = x, y, z), added
 to the component i of the vector part:
 
-  gravity i at seat + sigma e_j:  += sigma x (S x e_j)_i
-  charge  i at seat + sigma e_j:  += (sigma x (mu x e_j)_i) div 2
+  gravity i at the Node + sigma e_j:  += sigma x (S x e_j)_i
+  charge  i at the Node + sigma e_j:  += (sigma x (mu x e_j)_i) div 2
 
 (S x e_x = (0, S_z, -S_y), S x e_y = (-S_z, 0, S_x), S x e_z = (S_y,
 -S_x, 0); the div 2 with its remainder on the body's record). The
 held factors (1, 4, 2) and (1, 1) are the families file's numbers,
 not the code's. At a hop the field's integers of the covered Nodes
 move to the vacated ones as today (9.52 (4) (i)); the dipole's six
-writes move with the seat.
+writes move with the body's Node.
 
 **(4) THE FOUR-VECTOR CLICK AND THE RECOIL (9.86 (1), 9.84 (2)).** A
 taking at a body: the content M += quantum (as today, 9.45 (2)) and,
@@ -15258,10 +15258,10 @@ flux summed over the booked components: for the charge's waves the
 components transverse to the Port's axis, 9.82 (3); the t component
 never), the ladder, the takings and the givings of (4); (iii) the
 held family steps (gravity's ten, plain); (iv) the holds of (3) are
-written, the clicks' changes of M, Q and n included; (v) the seats:
+written, the clicks' changes of M, Q and n included; (v) the bodies on one Node:
 the feed and the induction from the contraction
 
-  p_0 at the seat = Gamma - SUM over reads of by x weight x
+  p_0 at the body's Node = Gamma - SUM over reads of by x weight x
       [ t level - (n_a V_a) div W + (n_a n_b h_ab) div W^2 ],
 
 the feed the difference of this across the two faces of each axis,
@@ -15275,7 +15275,7 @@ the induction minus the change of its momentum part over the interval
 and cyclic for y and z (V gravity's vector part, c its t part; B_q
 the same curl on the charge's vector part without the second term,
 div 2), the remainder on the body's record (9.78 (5)); the recoil's
-accumulator of (4). Backward: the seats first, then the fields, the
+accumulator of (4). Backward: the bodies first, then the fields, the
 families in the reverse order, per Node, the clicks read from the
 run's events output (9.80 (4)).
 
@@ -15305,7 +15305,7 @@ charge's four at phase 2 with light as its wave, the transverse
 booking and the transport of (6) with the twist table: bit for bit
 (k = 0). 5. The four-vector click of (4), the tools at true quanta:
 bit for bit but the recoil below the band, the leak test the only
-reader. 6. The seat's contraction, the feed, the induction and the
+reader. 6. The body's contraction at its Node, the feed, the induction and the
 spin step of (8): bit for bit where every vector and tensor part is
 zero; the check rows read the rest. 7. The point emitter as the
 declaration (the train retired, row (iv)'s fix of 9.85 (5)), the body

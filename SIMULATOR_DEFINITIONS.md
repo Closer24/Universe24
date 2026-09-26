@@ -262,7 +262,7 @@ ALGEBRA.md 9.40 D1, 9.46, 9.51, 9.53).
   turn at the body's Nodes) and, for a moving body, a momentum. A body on
   ONE NODE is the body record (ALGEBRA.md 9.46): its parameters (the family,
   the pair, S with the stored profile, the clock pair, P, T, the stock, M_k,
-  Q, u, s) and one rotation (a, b, r) at one seat; it holds, it takes
+  Q, u, s) and one rotation (a, b, r) at the body's Node; it holds, it takes
   through its six Ports, it falls by its accumulators (9.52), and it gives
   only with a declared giving extent (9.46 (8)); it is a host form, valid
   only by its equivalence gate against the lattice body (9.46 (4): the
@@ -272,7 +272,7 @@ ALGEBRA.md 9.40 D1, 9.46, 9.51, 9.53).
   outside it (the shell, 9.38 (2)); the first shell Node in the engine's
   x-major order reads its residue; a body with no shell is refused. WHAT IS
   A BODY AND WHAT IS NOT: a body holds a record and clicks (an emitter, a
-  detector, a seated body, a composite of bodies, a dark body that never
+  detector, a body on one Node, a composite of bodies, a dark body that never
   clicks, 9.54); a tool is a region of the vacuum's pair with no record
   and no click (a mirror, a splitter, a gap, a slab, a layer of one Node)
   and is never a body; a declared well is today's way to hold a body's
