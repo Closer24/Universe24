@@ -6,19 +6,23 @@ from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from typing import Any
 
+from event_universe.core.carried import (
+    ACTS,
+    THE_ADVANCE,
+    THE_INVERSE,
+    THE_LOAD,
+    THE_UNHOLD,
+    Key,
+    carried,
+    division_back,
+)
+from event_universe.core.carried import (
+    THE_REWRITE as THE_REWRITE,
+)
 from event_universe.core.register import Declaration
-from event_universe.core.rule3 import rule3
 
-THE_LOAD = "the load"
-THE_ADVANCE = "the advance"
-THE_REWRITE = "the rewrite"
-THE_INVERSE = "the inverse"
-THE_UNHOLD = "the unhold"
-ACTS = (THE_LOAD, THE_ADVANCE, THE_REWRITE, THE_INVERSE, THE_UNHOLD)
 COUNT_WORDS = ("content", "sign")
-NO_READ = (0, 0, 0)
 TENSOR_AXES = ((0, 0), (1, 1), (2, 2), (0, 1), (0, 2), (1, 2))
-Key = tuple[object, ...]
 Vector = tuple[int, int, int]
 
 
@@ -62,18 +66,6 @@ class HoldWrites:
     own: HoldOwn
 
 
-def division_forward(numerator: int, wall: int, carry: int) -> tuple[int, int]:
-    """Rule3's division act forward: (numerator + carry) div wall and the remainder, the line with no read, the self coefficient the numerator on the level 1 (ALGEBRA.md 9.91 (3))."""
-    return rule3(NO_READ, NO_READ, numerator, wall, 1, 0, carry, 1)
-
-
-def division_back(numerator: int, wall: int, value: int, carry: int) -> tuple[int, int]:
-    """The carried division one interval back by Rule3's direction -1: the carry before from (value, carry), then the value before from that carry, exact while the carry stays below the wall (ALGEBRA.md 9.50 (8), 9.91 (3))."""
-    _, carry_before = rule3(NO_READ, NO_READ, numerator, wall, 1, value, carry, -1)
-    value_before, _ = rule3(NO_READ, NO_READ, numerator, wall, 1, 0, carry_before, -1)
-    return value_before, carry_before
-
-
 # (D x e_j)_i for the axis j, per (i, the component k of D, the sign): D x e_x = (0, D_z, -D_y),
 # D x e_y = (-D_z, 0, D_x), D x e_z = (D_y, -D_x, 0) (ALGEBRA.md 9.91 (3))
 CROSS_TERMS: tuple[tuple[tuple[int, int, int], ...], ...] = (
@@ -97,24 +89,6 @@ def check(term: HoldTerm, start: HoldStart) -> None:
         raise ValueError(
             f"the hold's wall W = {start.wall} and the dipole's divisor {term.dipole_divisor} are from 1"
         )
-
-
-def carried(
-    act: str, key: Key, numerator: int, wall: int, values: dict[Key, int], carries: dict[Key, int]
-) -> tuple[int, int]:
-    """One carried division by its act: forward the value of this interval and the last one's (the first value twice at the load), back the state stepped back with the value before it, a rewrite the standing value twice (ALGEBRA.md 9.91 (3))."""
-    if act == THE_INVERSE:
-        value, carry = division_back(numerator, wall, values.get(key, 0), carries.get(key, 0))
-        values[key], carries[key] = value, carry
-        before, _ = division_back(numerator, wall, value, carry)
-        return value, before
-    if act in (THE_ADVANCE, THE_LOAD):
-        previous = values.get(key)
-        value, carry = division_forward(numerator, wall, carries.get(key, 0))
-        values[key], carries[key] = value, carry
-        return value, value if previous is None else previous
-    value = values.get(key, 0)
-    return value, value
 
 
 def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:

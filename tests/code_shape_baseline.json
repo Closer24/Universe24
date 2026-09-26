@@ -1,6 +1,6 @@
 {
  "format": "code-shape-baseline",
- "recorded_at": "bebd68d8",
+ "recorded_at": "711e7aaa",
  "files": {
   "src/event_universe/__init__.py": {
    "lines": 27,
@@ -13,6 +13,14 @@
   "src/event_universe/core/__init__.py": {
    "lines": 1,
    "docstring_lines": 1,
+   "comment_lines": 0,
+   "record_references": 0,
+   "rule_arithmetic_sites": 0,
+   "level_shift_sites": 0
+  },
+  "src/event_universe/core/carried.py": {
+   "lines": 44,
+   "docstring_lines": 4,
    "comment_lines": 0,
    "record_references": 0,
    "rule_arithmetic_sites": 0,
@@ -179,10 +187,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/features/hold/__init__.py": {
-   "lines": 36,
-   "docstring_lines": 7,
-   "comment_lines": 1,
-   "record_references": 1,
+   "lines": 165,
+   "docstring_lines": 8,
+   "comment_lines": 3,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
