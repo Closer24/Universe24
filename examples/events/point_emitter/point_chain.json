@@ -48,7 +48,7 @@
    "moment": [
     0,
     0,
-    0
+    1
    ],
    "amount": 1,
    "held": {
@@ -1426,6 +1426,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "966e214b4af3720f01e26f7b7ee430bcf25f159f76d25340b63a573f47acb1ab"
+  "hash": "1a49bda6447bdcccef8dfccb0d0b6afc125e3c8bff8290a911c7e137010c684a"
  }
 }

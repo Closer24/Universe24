@@ -75,6 +75,7 @@ from event_universe.events.rule import axis_rule_coefficients, rule_coefficients
 from event_universe.events.world import (
     AXES,
     BEAM_LAW,
+    TWIST_FINE_BITS,
     BlockDefinition,
     NatureBeamWorld,
     Vector,
@@ -236,6 +237,17 @@ class LiveRecord:
     # flux against it, 2 W pace C against (2 u + 1) norm. 1 for a record
     # whose norm is set in the form's own units.
     pace: int = 1
+    # THE SECOND LEVEL of a phase-2 record (ALGEBRA.md 9.91 (1); commit 4): the pair's
+    # second component, (now, before, r) over the board, None until a rotation of the
+    # transport writes it (a second level that starts zero and meets no twist stays
+    # exactly zero, 9.91 (2), (9) (c))
+    im_now: np.ndarray | None = None
+    im_before: np.ndarray | None = None
+    im_remainder: np.ndarray | None = None
+    # THE TWIST "OWN" (ALGEBRA.md 9.96 (2) (a)): round(2^16 omega_0), the record's own
+    # rotation in the table's unit, the loader's integer; 0 for a record with none (a
+    # held part, a planted record without one)
+    twist: int = 0
 
 
 @dataclass
@@ -550,6 +562,15 @@ class DetectorLawSimulation:
                 f"{BEAM_LAW}: the world declares no momentum unit (`momentum_unit`, Q from 1; "
                 "ALGEBRA.md 9.96 (1))"
             )
+        # THE TWIST TABLE (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c); commit 4): the universe's
+        # triples as arrays, (c, s, d) by k_0 (fine) and by k_1 (coarse); None on a world
+        # without one, where a nonzero twist is refused naming the Port
+        self.twist_table = world.twist_table
+        if self.twist_table is not None:
+            self._fine = np.array(self.twist_table.fine, dtype=np.int64).T
+            self._coarse = np.array(self.twist_table.coarse, dtype=np.int64).T
+        # HOST: the Ports' angles per (family, own twist, direction) per interval
+        self._twists: dict[tuple[int, int, bool], tuple[int, list[np.ndarray] | None]] = {}
         self.node_clock = int(world.node_clock)
         if self.node_clock < 1:
             raise ValueError(
@@ -670,7 +691,7 @@ class DetectorLawSimulation:
                     self._excite(block, block.seat)
             elif definition.seed > 0:
                 own_record = self._massive_record(
-                    number * (1 << 32), number, entry.family, definition.kind
+                    number * (1 << 32), number, entry.family, definition.kind, definition.twist
                 )
                 if definition.profile is not None:
                     # the declared integer profile over the whole board at both
@@ -1282,10 +1303,11 @@ class DetectorLawSimulation:
                     den[other.mask & ~block.mask] = other.definition.pair[1]
 
     def _massive_record(
-        self, identity: int, number: int, family: int, pair: tuple[int, int]
+        self, identity: int, number: int, family: int, pair: tuple[int, int], twist: int
     ) -> LiveRecord:
         """A record of the massive kind on the board: a block's own record at
-        the body's kind (its rest pair); no train, no clock, no Ports."""
+        the body's kind (its rest pair) with its twist "own" (9.96 (2) (a)); no
+        train, no clock, no Ports."""
         return LiveRecord(
             identity,
             number,
@@ -1304,6 +1326,7 @@ class DetectorLawSimulation:
             pointers=[0] * len(self.detector_names),
             first_rung=[None] * len(self.detector_names),
             pair=(int(pair[0]), int(pair[1])),
+            twist=twist,
         )
 
     def _momentum_now(self, block: Block) -> list[int]:
@@ -1731,6 +1754,10 @@ class DetectorLawSimulation:
             labels=tuple(emitter.branches),
             emitter=number,
             pair=(int(emitter.pair[0]), int(emitter.pair[1])),
+            # the component along the body's moment and the twist "own" (ALGEBRA.md
+            # 9.82 (3) (d), 9.96 (2) (a); commit 4), the loader's integers
+            part=emitter.part,
+            twist=emitter.twist,
         )
         # E^T: the given clock's character on the body's Nodes, written once at
         # both levels, every Node at the vertex's phase (the one-Node broadband
@@ -1952,7 +1979,9 @@ class DetectorLawSimulation:
         remainder in [0, 3 den Gamma): a_before the ceiling of that quotient,
         r the difference; exact at every Node for every clock history, since
         the remainder's range is the wall's, constant (board_algebra.py's
-        `step_inverse`)."""
+        `step_inverse`). With a tensor part read, a twist on a Port or a
+        second level (commits 3 and 4) the arrivals are stepped back per axis
+        after the transport's inverse (`_arrivals`), both levels."""
         if live.silent:
             return  # a zero held part steps to zero exactly (HOST; 9.91 (1))
         num, den = self.pair_arrays(live.family, live.pair)
@@ -1965,18 +1994,39 @@ class DetectorLawSimulation:
         # (it was the window of the step that wrote `now`), so the inverse is
         # read on the box itself, zeros elsewhere; the box stays (a superset)
         axis_contents = None if field else self._axis_contents(live.family, inverse=True)
-        if axis_contents is not None:
-            a_before, live.remainder = self.one_rule_axes_inverse(
+        twists = None if field else self._port_twists(live, True)
+        plain = axis_contents is None and twists is None and live.im_now is None
+        if not plain:
+            reads_re, reads_im = self._arrivals(live, twists, True)
+            a_before, live.remainder = self._level_inverse(
                 num,
                 den,
                 gamma,
                 content,
                 axis_contents,
-                self._axis_neighbours(live.before, self.kind_wrap[live.family]),
+                reads_re,
                 live.now,
                 live.before,
                 live.remainder,
+                not field,
             )
+            if live.im_now is not None:
+                assert live.im_before is not None and live.im_remainder is not None
+                im_reads = [np.zeros_like(live.now) for _ in range(3)] if reads_im is None else reads_im
+                im_a_before, live.im_remainder = self._level_inverse(
+                    num,
+                    den,
+                    gamma,
+                    content,
+                    axis_contents,
+                    im_reads,
+                    live.im_now,
+                    live.im_before,
+                    live.im_remainder,
+                    not field,
+                )
+                live.im_now = live.im_before
+                live.im_before = im_a_before
         elif live.box is None or self._window(live.box, self.kind_wrap[live.family]) is None:
             neighbours = self._neighbours(live.before, self.kind_wrap[live.family])
             a_before, live.remainder = self.one_rule_inverse(
@@ -2091,20 +2141,6 @@ class DetectorLawSimulation:
                 total += self._shift(a, axis, sign, wrap=wrap)
         return total
 
-    def _axis_neighbours(
-        self, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None
-    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """The two reads along each axis summed, (a_(+x) + a_(-x), ...), as
-        `_neighbours` reads them (ALGEBRA.md 9.91 (2): the rule's R_a on the
-        axis a's two reads)."""
-        sums: list[np.ndarray] = []
-        for axis in range(3):
-            if self.shape[axis] == 1:
-                sums.append(2 * a)
-                continue
-            sums.append(self._shift(a, axis, 1, wrap=wrap) + self._shift(a, axis, -1, wrap=wrap))
-        return sums[0], sums[1], sums[2]
-
     def _axis_contents(self, family: int, inverse: bool = False) -> tuple[np.ndarray, ...] | None:
         """THE AXIS CONTENTS t_a of a reading family (ALGEBRA.md 9.91 (2); commit
         3): SUM over its reads of weight x by x (the read family's aa component
@@ -2150,6 +2186,216 @@ class DetectorLawSimulation:
         result = None if found is None else (found[0], found[1], found[2])
         self._axis_effective[family] = (self.tick, inverse, result)
         return result
+
+    # THE TRANSPORT (ALGEBRA.md 9.81 (2), 9.91 (6), 9.96 (2); the one stroke, commit 4):
+    # the operations, written once for any phase-2 family and any read with a twist
+
+    def _arrival(
+        self, a: np.ndarray, axis: int, sigma: int, wrap: tuple[bool, bool, bool]
+    ) -> np.ndarray:
+        """The level arriving through the Port toward `sigma` on the axis: the
+        neighbour's level (the wrap on a periodic axis, 0 beyond an open face, the
+        Node itself on a folded axis of extent 1), as `_neighbours` reads it."""
+        if self.shape[axis] == 1:
+            return a
+        return self._shift(a, axis, -sigma, wrap=wrap)
+
+    def _port_twists(self, live: LiveRecord, inverse: bool) -> list[np.ndarray] | None:
+        """THE LINK'S ANGLE PER PORT (ALGEBRA.md 9.81 (2) (a), 9.91 (6)): k = sigma x by x
+        twist x (V_a here + V_a arrived), summed over the record's family's reads with a
+        twist, V_a the read family's vector component along the Port's axis a at this Node
+        and at the neighbour across the Port (sigma +1 toward +a, -1 toward -a; the other
+        end forms -k, the transport back the inverse rotation); the twist "own" is the
+        record's own rotation times the read's weight (9.96 (2) (b): Lambda_v is Lambda),
+        an integer twist as declared, by q the reading family's charge sign. None where
+        no read has a twist or every read's vector part is silent: the identity, bit for
+        bit. Backward the vector parts' `before` levels, the levels the step read. HOST:
+        one list of six arrays per (family, own twist) per interval."""
+        definition = self.families[live.family]
+        if definition.levels < 2:
+            return None
+        key = (live.family, live.twist, inverse)
+        cached = self._twists.get(key)
+        if cached is not None and cached[0] == self.tick:
+            return cached[1]
+        sign = self.family_charge[live.family]
+        wrap = self.kind_wrap[live.family]
+        found: list[np.ndarray] | None = None
+        for other, weight, by, twist in definition.reads:
+            if len(self.families[other].parts) < 2:
+                continue
+            vector = self.held_parts[other][:3]
+            if all(record.silent for record in vector):
+                continue
+            factor = weight * live.twist if twist == "own" else int(twist)
+            if by != "plain":
+                factor *= sign
+            if factor == 0:
+                continue
+            if found is None:
+                found = [np.zeros(self.shape, dtype=np.int64) for _ in range(6)]
+            for axis in range(3):
+                level = vector[axis].before if inverse else vector[axis].now
+                for side, sigma in enumerate((1, -1)):
+                    found[2 * axis + side] += (
+                        sigma * factor * (level + self._arrival(level, axis, sigma, wrap))
+                    )
+        self._twists[key] = (self.tick, found)
+        return found
+
+    def _twist_triple(self, k: np.ndarray, port: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """THE ROTATION'S TRIPLE per Node from the twist table (ALGEBRA.md 9.81 (2) (b),
+        9.96 (2) (c)): |k| = k_1 2^10 + k_0, the fine triple of k_0 and the coarse triple
+        of k_1 composed exactly, (c_1 c_0 - s_1 s_0, s_1 c_0 + c_1 s_0, d_1 d_0), with
+        (c, -s, d) for k < 0 and (1, 0, 1) at k = 0; a k_1 beyond the coarse table, or any
+        k on a world without a table, is refused naming the Port."""
+        magnitude = np.abs(k)
+        coarse_index = magnitude >> TWIST_FINE_BITS
+        most = int(coarse_index.max())
+        if self.twist_table is None or most >= len(self.twist_table.coarse):
+            axis, sigma = port // 2, (1, -1)[port % 2]
+            node = np.unravel_index(int(np.argmax(coarse_index)), self.shape)
+            raise RuntimeError(
+                f"{BEAM_LAW}: the twist k = {int(k[node])} on the Port toward {'+' if sigma > 0 else '-'}"
+                f"{AXES[axis]} of the Node {[int(i) for i in node]} at interval {self.tick} is beyond the "
+                f"twist table ({'no table' if self.twist_table is None else f'{len(self.twist_table.coarse)} coarse triples'}; "
+                "ALGEBRA.md 9.96 (2) (c)): the run is refused"
+            )
+        fine_index = magnitude & ((1 << TWIST_FINE_BITS) - 1)
+        c0, s0, d0 = self._fine[:, fine_index]
+        c1, s1, d1 = self._coarse[:, coarse_index]
+        return c1 * c0 - s1 * s0, np.sign(k) * (s1 * c0 + c1 * s0), d1 * d0
+
+    def _arrivals(
+        self, live: LiveRecord, twists: list[np.ndarray] | None, inverse: bool
+    ) -> tuple[list[np.ndarray], list[np.ndarray] | None]:
+        """THE SIX ARRIVALS AFTER THE TRANSPORT (ALGEBRA.md 9.81 (2) (c), (d); 9.91 (6)),
+        summed per axis for the two levels: on a Port with the angle k the arriving pair
+        (re, im) is rotated by the table's triple, T_re = (c re - s im) / d and T_im = (s
+        re + c im) / d, each ROUNDED TO THE NEAREST UNIT ((2 x + d) div (2 d)), a pure
+        function of the arrivals and the angle; at k = 0 the neighbour's level exactly.
+        NO REMAINDER IS KEPT ON THE PORT: 9.81 (2) (c)'s rho in [0, d) is one to one only
+        while d stands, and d changes with the angle every interval (a remainder of up
+        to d_old flushed whole into the level when d fell to 1: the moving long Lorentz
+        clock's jump at interval 250; sent to the mathematician, BUILD.md item 64); the
+        rounding is unbiased in the mean and the inverse recomputes the same T from the
+        `before` levels, exact. The second level's sums are None while the record has
+        no second level and no rotation writes one."""
+        wrap = self.kind_wrap[live.family]
+        re = live.before if inverse else live.now
+        im = None if live.im_now is None else (live.im_before if inverse else live.im_now)
+        reads_re = [np.zeros_like(re) for _ in range(3)]
+        reads_im: list[np.ndarray] | None = None if im is None else [np.zeros_like(re) for _ in range(3)]
+        for axis in range(3):
+            for side, sigma in enumerate((1, -1)):
+                port = 2 * axis + side
+                re_j = self._arrival(re, axis, sigma, wrap)
+                im_j = None if im is None else self._arrival(im, axis, sigma, wrap)
+                k = None if twists is None else twists[port]
+                if k is None or not k.any():
+                    reads_re[axis] += re_j
+                    if reads_im is not None and im_j is not None:
+                        reads_im[axis] += im_j
+                    continue
+                c, s, d = self._twist_triple(k, port)
+                base_re = c * re_j - (0 if im_j is None else s * im_j)
+                base_im = s * re_j + (0 if im_j is None else c * im_j)
+                t_re = np.floor_divide(2 * base_re + d, 2 * d)
+                t_im = np.floor_divide(2 * base_im + d, 2 * d)
+                reads_re[axis] += t_re
+                if reads_im is None and t_im.any():
+                    reads_im = [np.zeros_like(re) for _ in range(3)]
+                if reads_im is not None:
+                    reads_im[axis] += t_im
+        return reads_re, reads_im
+
+    @staticmethod
+    def _level_step(
+        num: np.ndarray,
+        den: np.ndarray,
+        gamma: int,
+        content: np.ndarray | int,
+        axis_contents: tuple[np.ndarray, ...] | None,
+        reads: list[np.ndarray],
+        now: np.ndarray,
+        before: np.ndarray,
+        remainder: np.ndarray,
+        weak_field: bool,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """One level's step from its three per-axis arrival sums (ALGEBRA.md 9.91 (2)):
+        the rule with the four paces where a tensor part is read, else the one rule on
+        their sum; the same integers as the plain paths, bit for bit."""
+        if axis_contents is None:
+            return DetectorLawSimulation.one_rule(
+                num,
+                den,
+                gamma,
+                content,
+                reads[0] + reads[1] + reads[2],
+                now,
+                before,
+                remainder,
+                weak_field,
+            )
+        return DetectorLawSimulation.one_rule_axes(
+            num,
+            den,
+            gamma,
+            content,
+            axis_contents,
+            (reads[0], reads[1], reads[2]),
+            now,
+            before,
+            remainder,
+        )
+
+    @staticmethod
+    def _level_inverse(
+        num: np.ndarray,
+        den: np.ndarray,
+        gamma: int,
+        content: np.ndarray | int,
+        axis_contents: tuple[np.ndarray, ...] | None,
+        reads: list[np.ndarray],
+        now: np.ndarray,
+        before: np.ndarray,
+        remainder: np.ndarray,
+        weak_field: bool,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """One level's step back from the per-axis sums of the arrivals its step read
+        (ALGEBRA.md 9.50 (8), 9.91 (2)), the same integers."""
+        if axis_contents is None:
+            return DetectorLawSimulation.one_rule_inverse(
+                num,
+                den,
+                gamma,
+                content,
+                reads[0] + reads[1] + reads[2],
+                now,
+                before,
+                remainder,
+                weak_field,
+            )
+        return DetectorLawSimulation.one_rule_axes_inverse(
+            num,
+            den,
+            gamma,
+            content,
+            axis_contents,
+            (reads[0], reads[1], reads[2]),
+            now,
+            before,
+            remainder,
+        )
+
+    def booked_axis(self, live: LiveRecord) -> int | None:
+        """THE TRANSVERSE BOOKING (ALGEBRA.md 9.82 (3) (b), (c)): the axis of a record's own
+        vector component, whose Ports book nothing of it (the longitudinal component
+        along the Port's axis carries the near field and no count); None for a scalar
+        family's record or a time part (booked through every Port)."""
+        if len(self.families[live.family].parts) > 1 and 1 <= live.part <= 3:
+            return live.part - 1
+        return None
 
     # The flux reading (ALGEBRA.md 9.19 (3), the mathematician's derivation
     # of 2026-09-24 from 8.2; BUILD.md section 26 item 13): the flux into a
@@ -2268,6 +2514,14 @@ class DetectorLawSimulation:
         HOST cost is the Ports, not the Nodes (the two levels are still
         board arrays; the advance is the board's cost)."""
         port_i, port_j, port_detector = self._inflow_ports(live.family)
+        port_axis, port_side = self._inflow_port_faces[live.family]
+        # THE TRANSVERSE BOOKING (ALGEBRA.md 9.82 (3) (b), (c); commit 4): the Ports along
+        # the record's own vector component book nothing of it
+        own_axis = self.booked_axis(live)
+        if own_axis is not None:
+            keep = port_axis != own_axis
+            port_i, port_j, port_detector = port_i[keep], port_j[keep], port_detector[keep]
+            port_axis, port_side = port_axis[keep], port_side[keep]
         if port_i.size == 0:
             return {}
         # THE CURRENT IS UNWEIGHTED (ALGEBRA.md 9.50 (9) and (13); BUILD.md
@@ -2283,6 +2537,11 @@ class DetectorLawSimulation:
         now_j = now[port_j].astype(object)
         before_j = before[port_j].astype(object)
         flux = now_i * before_j - before_i * now_j
+        if live.im_now is not None and live.im_before is not None:
+            # the pair's norm (9.82 (3) (b)): the second level's current added
+            im_now, im_before = live.im_now.ravel(), live.im_before.ravel()
+            flux += im_now[port_i].astype(object) * im_before[port_j].astype(object)
+            flux -= im_before[port_i].astype(object) * im_now[port_j].astype(object)
         moving = self._moving_sets() if self.set_block else {}
         offers: dict[int, int] = {}
         if not moving:
@@ -2307,7 +2566,6 @@ class DetectorLawSimulation:
         # three tests: the face's Link, the outside Node's density and the
         # body's own pace, fixed work; sums and products; no name. At v = 0
         # the rule is the Port booking above, bit for bit.
-        port_axis, port_side = self._inflow_port_faces[live.family]
         outside = sorted(
             set(
                 int(node)
@@ -2352,15 +2610,18 @@ class DetectorLawSimulation:
         now_j where positive, times the family's wall (the form's units; the
         current unweighted, item 36), from the record's two levels
         after the interval's step (`now`, `before`; the prototype's
-        reading, board_algebra.py)."""
+        reading, board_algebra.py); the pair's second level added (9.82 (3)
+        (b)) and the Ports along the record's own component skipped (9.82
+        (3) (c); commit 4)."""
         wrap = self.kind_wrap[live.family]
         wall = self.kind_wall(live.family)
-        level_now, level_before = live.now, live.before
-        now = level_now.astype(object)
-        before = level_before.astype(object)
+        own_axis = self.booked_axis(live)
+        levels = [(live.now, live.before)]
+        if live.im_now is not None and live.im_before is not None:
+            levels.append((live.im_now, live.im_before))
         total = 0
         for axis in range(3):
-            if self.shape[axis] == 1:
+            if self.shape[axis] == 1 or axis == own_axis:
                 continue
             for side in (1, -1):
                 outside = ~self._shift(mask, axis, -side, fill=False, wrap=wrap)
@@ -2370,9 +2631,13 @@ class DetectorLawSimulation:
                 port = mask & outside & present
                 if not port.any():
                     continue
-                now_j = self._shift(level_now, axis, -side, wrap=wrap).astype(object)
-                before_j = self._shift(level_before, axis, -side, wrap=wrap).astype(object)
-                flux = now * before_j - before * now_j
+                flux = np.zeros(self.shape, dtype=object)
+                for level_now, level_before in levels:
+                    now_j = self._shift(level_now, axis, -side, wrap=wrap).astype(object)
+                    before_j = self._shift(level_before, axis, -side, wrap=wrap).astype(object)
+                    flux = (
+                        flux + level_now.astype(object) * before_j - level_before.astype(object) * now_j
+                    )
                 total += int(np.sum(np.where(port & (flux > 0), flux, 0)))
         return total * wall
 
@@ -2402,12 +2667,15 @@ class DetectorLawSimulation:
         before: np.ndarray,
         norm: int = 0,
         pair: tuple[int, int] | None = None,
+        part: int = 0,
+        twist: int = 0,
     ) -> LiveRecord:
         """A record of the family given to the rule directly, its two levels
         as given and its remainder 0 (the generator's checks of the given
         train, ALGEBRA.md 9.17 (6a) and 9.22 (7a) (iv), and the tests'
         device): registered in no ledger, advanced by `_advance` and read by
-        `inward_flux` and `conserved_form` alone; `norm` its T where given."""
+        `inward_flux` and `conserved_form` alone; `norm` its T where given,
+        `part` its component and `twist` its own rotation (commit 4)."""
         return LiveRecord(
             0,
             0,
@@ -2427,6 +2695,8 @@ class DetectorLawSimulation:
             first_rung=[None] * len(self.detector_names),
             norm=norm,
             pair=self.families[family].pair if pair is None else (int(pair[0]), int(pair[1])),
+            part=part,
+            twist=twist,
         )
 
     def conserved_form(self, live: LiveRecord) -> Fraction:
@@ -2487,12 +2757,20 @@ class DetectorLawSimulation:
             content,
             not field,
         )
-        now = live.now.astype(object)
-        before = live.before.astype(object)
-        reads = self._neighbours(live.before, self.kind_wrap[family]).astype(object)
-        node = wall * (wall_at * (now * now + before * before) - self_coefficient * now * before)
-        links = wall * now * reads
-        return self._weighted_sum(node, read_coefficient, mask) - int(np.sum(links[mask]))
+        # the pair's two levels summed (9.91 (1); commit 4): the form of each level, the
+        # plain Link term (exact where every twist is 0, a reading elsewhere)
+        levels = [(live.now, live.before)]
+        if live.im_now is not None and live.im_before is not None:
+            levels.append((live.im_now, live.im_before))
+        total = Fraction(0)
+        for level_now, level_before in levels:
+            now = level_now.astype(object)
+            before = level_before.astype(object)
+            reads = self._neighbours(level_before, self.kind_wrap[family]).astype(object)
+            node = wall * (wall_at * (now * now + before * before) - self_coefficient * now * before)
+            links = wall * now * reads
+            total += self._weighted_sum(node, read_coefficient, mask) - int(np.sum(links[mask]))
+        return total
 
     @staticmethod
     def _weighted_sum(node: np.ndarray, divisor: np.ndarray, mask: np.ndarray) -> Fraction:
@@ -2792,21 +3070,47 @@ class DetectorLawSimulation:
         # Node steps the vacuum's rule at its own pace (the pace on each
         # read's far end, form (B) of item 34, HISTORY)
         axis_contents = None if field else self._axis_contents(live.family)
+        twists = None if field else self._port_twists(live, False)
         window = self._window(live.box, self.kind_wrap[live.family])
-        if axis_contents is not None:
-            # THE FOUR PACES (ALGEBRA.md 9.91 (2); commit 3): the rule per axis on the
-            # whole board (the tensor's diagonal read; HOST: no window shortcut here)
-            nxt, live.remainder = self.one_rule_axes(
+        im_next: np.ndarray | None = None
+        plain = axis_contents is None and twists is None and live.im_now is None
+        if not plain:
+            # THE FOUR PACES AND THE TRANSPORT (ALGEBRA.md 9.91 (2), (6); commits 3 and 4):
+            # the arrivals per axis after the transport, the rule per level on the whole
+            # board (HOST: no window shortcut here); the second level allocated by the
+            # first rotation that writes it
+            reads_re, reads_im = self._arrivals(live, twists, False)
+            nxt, live.remainder = self._level_step(
                 num,
                 den,
                 gamma,
                 content,
                 axis_contents,
-                self._axis_neighbours(live.now, self.kind_wrap[live.family]),
+                reads_re,
                 live.now,
                 live.before,
                 live.remainder,
+                not field,
             )
+            if reads_im is not None or live.im_now is not None:
+                if live.im_now is None:
+                    live.im_now = np.zeros_like(live.now)
+                    live.im_before = np.zeros_like(live.now)
+                    live.im_remainder = np.zeros_like(live.now)
+                assert live.im_before is not None and live.im_remainder is not None
+                im_reads = [np.zeros_like(live.now) for _ in range(3)] if reads_im is None else reads_im
+                im_next, live.im_remainder = self._level_step(
+                    num,
+                    den,
+                    gamma,
+                    content,
+                    axis_contents,
+                    im_reads,
+                    live.im_now,
+                    live.im_before,
+                    live.im_remainder,
+                    not field,
+                )
             live.box = None
         elif window is None:
             neighbours = self._neighbours(live.now, self.kind_wrap[live.family])
@@ -2835,13 +3139,21 @@ class DetectorLawSimulation:
             nxt[slices] = nxt_w
             live.remainder[slices] = remainder_w
             live.box = grown
-        if self.world.massive_record and int(np.max(np.abs(nxt))) > self.world.amplitude_bound:
+        largest = int(np.max(np.abs(nxt)))
+        if im_next is not None:
+            largest = max(largest, int(np.max(np.abs(im_next))))
+        if self.world.massive_record and largest > self.world.amplitude_bound:
             raise RuntimeError(
                 f"{BEAM_LAW}: the record {live.identity} reached the level "
-                f"{int(np.max(np.abs(nxt)))} at interval {self.tick}, above the world's declared "
+                f"{largest} at interval {self.tick}, above the world's declared "
                 f"amplitude bound A = {self.world.amplitude_bound} (issue #1085; MUST 3's bound "
                 "holds only below A): the run is refused"
             )
+        if im_next is not None:
+            if live.mask is not None:
+                im_next[~live.mask] = 0
+            live.im_before = live.im_now
+            live.im_now = im_next
         if not booked:
             live.before = live.now
             live.now = nxt
@@ -2907,16 +3219,20 @@ class DetectorLawSimulation:
         9.71 (1) (c); item 50): the taking's inward booking with the sign
         reversed, wall (now_j before_i - before_j now_i) where positive over
         the seat's Links (the Link to a Node beyond an open face carries none;
-        a folded axis none), from the record's two levels as the interval leaves
+        a folded axis none; the Ports along the record's own component none,
+        9.82 (3) (c)), from the record's two levels as the interval leaves
         them, this interval's write in `now` and the last one's in `before`
-        (a flux read across a write would book the write itself)."""
+        (a flux read across a write would book the write itself); the pair's
+        second level added (9.82 (3) (b))."""
         wall = self.kind_wall(live.family)
         wrap = self.kind_wrap[live.family]
-        now_i = int(live.now[centre])
-        before_i = int(live.before[centre])
+        own_axis = self.booked_axis(live)
+        levels = [(live.now, live.before)]
+        if live.im_now is not None and live.im_before is not None:
+            levels.append((live.im_now, live.im_before))
         total = 0
         for axis in range(3):
-            if self.shape[axis] == 1:
+            if self.shape[axis] == 1 or axis == own_axis:
                 continue
             for side in (1, -1):
                 index = list(centre)
@@ -2926,7 +3242,10 @@ class DetectorLawSimulation:
                         continue
                     index[axis] %= self.shape[axis]
                 j = (index[0], index[1], index[2])
-                flux = int(live.now[j]) * before_i - int(live.before[j]) * now_i
+                flux = sum(
+                    int(now[j]) * int(before[centre]) - int(before[j]) * int(now[centre])
+                    for now, before in levels
+                )
                 if flux > 0:
                     total += flux * wall
         return total
@@ -3053,17 +3372,21 @@ class DetectorLawSimulation:
         num = num_all.ravel()[nodes]
         den = den_all.ravel()[nodes]
         level = content.ravel()[nodes]
-        now = live.now.ravel()[nodes]
-        before = live.before.ravel()[nodes]
-        reads = self._reads_at(live.before, nodes, self.kind_wrap[family])
-        out: list[Fraction] = []
-        for index in range(len(nodes)):
-            read_coefficient, self_coefficient, wall_at = rule_coefficients(
-                int(num[index]), int(den[index]), gamma, int(level[index]), not field
-            )
-            a, b = int(now[index]), int(before[index])
-            node = wall * (wall_at * (a * a + b * b) - self_coefficient * a * b)
-            out.append(Fraction(node, read_coefficient) - wall * a * int(reads[index]))
+        levels = [(live.now, live.before)]
+        if live.im_now is not None and live.im_before is not None:
+            levels.append((live.im_now, live.im_before))  # the pair's second level (commit 4)
+        out: list[Fraction] = [Fraction(0) for _ in range(len(nodes))]
+        for level_now, level_before in levels:
+            now = level_now.ravel()[nodes]
+            before = level_before.ravel()[nodes]
+            reads = self._reads_at(level_before, nodes, self.kind_wrap[family])
+            for index in range(len(nodes)):
+                read_coefficient, self_coefficient, wall_at = rule_coefficients(
+                    int(num[index]), int(den[index]), gamma, int(level[index]), not field
+                )
+                a, b = int(now[index]), int(before[index])
+                node = wall * (wall_at * (a * a + b * b) - self_coefficient * a * b)
+                out[index] += Fraction(node, read_coefficient) - wall * a * int(reads[index])
         return out
 
     def _ladder_of(self, live: LiveRecord) -> list[int]:

@@ -306,6 +306,7 @@ import json
 import math
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, replace
+from fractions import Fraction
 from functools import cached_property
 from pathlib import Path
 from typing import NamedTuple
@@ -480,6 +481,10 @@ WORLD_KEYS = {
     # `momentum_unit`, the wall W = 3 Q M of every body; required under
     # `detector_law` (no default), refused without it.
     "momentum_unit",
+    # THE TWIST TABLE (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c)): the universe's table of
+    # exact triples for the transport's angles, the families file's; admitted as a
+    # world key on an inline world alone.
+    "twist_table",
     # THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25
     # through the Boss; BUILD.md section 26 item 51): the world keys
     # `clock_family`, `charge_family` and `charge_strength` of items 32 and
@@ -947,6 +952,17 @@ FAMILIES_FILE_KEYS = {"law", "integers", "families"}
 # (1), 9.89 (2)); the energy unit P_0 and the twist table enter with the
 # operations that read them (9.91 (10) commits 4 and 5)
 FAMILIES_INTEGERS = {"node_clock", "amplitude_bound", "charge_weight", "momentum_unit"}
+# THE TWIST TABLE in the integers block (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c), (d)):
+# {unit, fine, coarse}; `unit` the integer 4 Gamma 2^16 whose inverse is theta_unit in
+# radians; `fine` 2^10 triples (c, s, d) for the angles k_0 theta_unit; `coarse` at most
+# 2^15 triples for the angles k_1 2^10 theta_unit; every triple c^2 + s^2 = d^2 exactly,
+# d at most 10^9, the nearest the generator finds (`twist_triple`); the transport's
+# triple for k = k_1 2^10 + k_0 is their exact product.
+FAMILIES_TABLES = {"twist_table"}
+TWIST_UNIT_SCALE = 1 << 16
+TWIST_FINE_BITS = 10
+TWIST_COARSE_MOST = 1 << 15
+TWIST_TRIPLE_BOUND = 10**9
 # THE ENTRY, the complete attribute set (ALGEBRA.md 9.79 (1), 9.86 (3), 9.91
 # (7)): name; parts (the representation as a list of parts, [1] a scalar, [1,
 # 3] a vector with its time part, [1, 3, 6] the symmetric tensor over the
@@ -963,14 +979,106 @@ HELD_COUNTS = ("content", "sign")
 HELD_DIPOLES = ("spin", "moment")
 # a read's weight may be the universe's word (the file's integer by name)
 READ_WEIGHT_WORDS = {"Lambda": "charge_weight"}
-# a read's twist (ALGEBRA.md 9.81 (2), 9.91 (6)): an integer, "own" (the
-# reading record's own rotation) or "Lambda_v" (the charge's twist, the
-# universe's integer once the transport reads it; commit 4)
-READ_TWIST_WORDS = ("own", "Lambda_v")
+# a read's twist (ALGEBRA.md 9.81 (2), 9.91 (6), 9.96 (2) (b)): an integer or "own"
+# (the reading record's own rotation in the table's unit, round(2^16 omega_0), times
+# the read's weight: Lambda_v is Lambda and no separate twist exists)
+READ_TWIST_WORDS = ("own",)
+
+
+@dataclass(frozen=True)
+class TwistTable:
+    """THE TWIST TABLE as read (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c)): the unit's
+    integer (theta_unit = 1 / unit radians, unit = 4 Gamma 2^16), the fine triples for
+    k_0 in [0, 2^10) and the coarse triples for k_1 in [0, bound); the transport's
+    triple for |k| = k_1 2^10 + k_0 is their exact product."""
+
+    unit: int
+    fine: tuple[tuple[int, int, int], ...]
+    coarse: tuple[tuple[int, int, int], ...]
+
+
+def twist_triple(k: int, unit: int) -> tuple[int, int, int]:
+    """THE NEAREST TRIPLE of the angle k / unit radians (ALGEBRA.md 9.81 (2) (b), 9.96
+    (2) (c); the generator's procedure, the loader's check): n / m nearest tan(angle
+    / 2) with m at most the root of the d bound, the triple (m^2 - n^2, 2 m n, m^2 +
+    n^2) in lowest terms, (1, 0, 1) at angle 0. HOST, at the generation and the load."""
+    ratio = Fraction(math.tan(k / (2 * unit))).limit_denominator(math.isqrt(TWIST_TRIPLE_BOUND))
+    n, m = ratio.numerator, ratio.denominator
+    c, s, d = m * m - n * n, 2 * m * n, m * m + n * n
+    g = math.gcd(math.gcd(c, s), d)
+    return c // g, s // g, d // g
+
+
+def rotation_twist(cosine_numerator: int, cosine_denominator: int) -> int:
+    """THE TWIST "OWN" of a record (ALGEBRA.md 9.96 (2) (a)): round(2^16 omega_0), omega_0
+    the record's rest rotation in radians per interval, cos omega_0 the pair's num / den
+    (a matter record's pair) or a / (2 b) of a body's clock [a, b] (2 cos omega); the
+    loader's one computation (HOST), an integer the engine reads."""
+    return round(TWIST_UNIT_SCALE * math.acos(cosine_numerator / cosine_denominator))
+
+
+def light_twist(wavelength: int) -> int:
+    """THE TWIST "OWN" of a light record from its wavelength in Links on light's dispersion
+    (ALGEBRA.md 9.96 (2) (a)): cos omega = (cos(2 pi / lambda) + 2) / 3, round(2^16 omega)."""
+    return round(TWIST_UNIT_SCALE * math.acos((math.cos(2 * math.pi / wavelength) + 2) / 3))
+
+
+def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: int) -> TwistTable:
+    """The twist table read and checked (ALGEBRA.md 9.96 (2) (c), (d): every identity,
+    every angle): {unit, fine, coarse}; unit = 4 Gamma 2^16; fine 2^10 triples, coarse
+    from 1 to 2^15; each triple three integers, c from 1, s from 0, d from 1 to 10^9 with
+    c^2 + s^2 = d^2, and the nearest triple of its angle (`twist_triple`); the product of
+    the largest d of each part times 3 A inside int64 (the transport's total)."""
+    obj = _object(value, label, {"unit", "fine", "coarse"}, {"unit", "fine", "coarse"})
+    unit = _integer(obj["unit"], f"{label}.unit", 1)
+    if unit != 4 * node_clock * TWIST_UNIT_SCALE:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.unit {unit} is not 4 Gamma 2^16 = {4 * node_clock * TWIST_UNIT_SCALE}: "
+            "theta_unit = 1 / (4 Gamma 2^16) radians per unit of k (ALGEBRA.md 9.96 (2) (a))"
+        )
+    parts: list[tuple[tuple[int, int, int], ...]] = []
+    for name, least, most, step in (
+        ("fine", 1 << TWIST_FINE_BITS, 1 << TWIST_FINE_BITS, 1),
+        ("coarse", 1, TWIST_COARSE_MOST, 1 << TWIST_FINE_BITS),
+    ):
+        rows = obj[name]
+        if not isinstance(rows, list) or not least <= len(rows) <= most:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.{name} must be a list of {least} to {most} triples [c, s, d] "
+                "(ALGEBRA.md 9.96 (2) (c))"
+            )
+        triples: list[tuple[int, int, int]] = []
+        for index, row in enumerate(rows):
+            where = f"{label}.{name}[{index}]"
+            if not isinstance(row, list) or len(row) != 3 or any(type(item) is not int for item in row):
+                raise ValueError(f"{BEAM_LAW}: {where} must be three integers [c, s, d]")
+            c, s, d = (int(item) for item in row)
+            if c < 1 or s < 0 or d < 1 or d > TWIST_TRIPLE_BOUND or c * c + s * s != d * d:
+                raise ValueError(
+                    f"{BEAM_LAW}: {where} [{c}, {s}, {d}] is no triple of the table: c from 1, s from 0, "
+                    f"d from 1 to {TWIST_TRIPLE_BOUND}, c^2 + s^2 = d^2 exactly (ALGEBRA.md 9.81 (2) (b))"
+                )
+            if (c, s, d) != twist_triple(index * step, unit):
+                raise ValueError(
+                    f"{BEAM_LAW}: {where} [{c}, {s}, {d}] is not the nearest triple of the angle "
+                    f"{index * step} / {unit} radians, {list(twist_triple(index * step, unit))} "
+                    "(ALGEBRA.md 9.96 (2) (c); the generator writes it, the loader checks it)"
+                )
+            triples.append((c, s, d))
+        parts.append(tuple(triples))
+    room = 3 * max(d for _, _, d in parts[0]) * max(d for _, _, d in parts[1]) * (amplitude_bound + 1)
+    if room >= TOTAL_BOUND:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}: the transport's total at A = {amplitude_bound}, {room}, leaves int64 "
+            "(3 d_1 d_0 (A + 1) below 2^63; ALGEBRA.md 9.81 (2) (e))"
+        )
+    return TwistTable(unit, parts[0], parts[1])
+
+
 READ_BY_WORDS = {1: "plain", "q": "sign", "plain": "plain", "sign": "sign"}
 
 
-def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str, int]]:
+def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str, object]]:
     """The families file read and translated to the families list the parse
     reads (item 51's attributes and the one stroke's, ALGEBRA.md 9.91 (7)),
     with the universe's integers; every key required and refused by name.
@@ -1001,15 +1109,18 @@ def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str
             f"{BEAM_LAW}: {label} declares law {document['law']!r}, not {DETECTOR_LAW_RULE!r}"
         )
     integers = document["integers"]
-    if not isinstance(integers, dict) or set(integers) != FAMILIES_INTEGERS:
+    if not isinstance(integers, dict) or set(integers) != FAMILIES_INTEGERS | FAMILIES_TABLES:
         raise ValueError(
-            f"{BEAM_LAW}: {label}.integers must hold exactly {sorted(FAMILIES_INTEGERS)} (the "
-            "universe's integers, ALGEBRA.md 9.83 (2) (a), 9.91 (7); no default)"
+            f"{BEAM_LAW}: {label}.integers must hold exactly "
+            f"{sorted(FAMILIES_INTEGERS | FAMILIES_TABLES)} (the universe's integers and its twist "
+            "table, ALGEBRA.md 9.83 (2) (a), 9.91 (7), 9.96 (2); no default)"
         )
-    universe = {
+    universe: dict[str, object] = {
         key: _integer(integers[key], f"{label}.integers.{key}", 1, AMOUNT_BOUND)
         for key in sorted(FAMILIES_INTEGERS)
     }
+    # the twist table as written, checked with the world's Gamma and A (`_twist_table`)
+    universe["twist_table"] = integers["twist_table"]
     entries = document["families"]
     if not isinstance(entries, list) or not entries:
         raise ValueError(f"{BEAM_LAW}: {label}.families must be a nonempty list")
@@ -1784,6 +1895,14 @@ class EmitterDefinition:
     # copied at that weight into the given row at the seat every interval of
     # the window; None on a train emitter; required under `point_emitter`
     weight: int | None = None
+    # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md 9.82 (3) (d), 9.91 (1); commit 4): the
+    # index in the given family's parts, 0 on a scalar family, 1 + the axis of the
+    # body's moment on a vector family (the component along mu)
+    part: int = 0
+    # THE GIVEN RECORD'S TWIST "OWN" (ALGEBRA.md 9.96 (2) (a); commit 4): round(2^16
+    # omega_0), the record's rest rotation from its pair (a massive kind) or from its
+    # wavelength on light's dispersion (a train) or its emitter's rotation (a window)
+    twist: int = 0
 
 
 @dataclass(frozen=True)
@@ -1911,6 +2030,10 @@ class BlockDefinition:
     charge: int = 0
     spin: tuple[int, int, int] = (0, 0, 0)
     moment: tuple[int, int, int] = (0, 0, 0)
+    # THE BODY'S OWN RECORD'S TWIST "OWN" (ALGEBRA.md 9.96 (2) (a); commit 4): round(2^16
+    # omega_0), its rotation from its mode's clock [a, b] (2 cos omega) where it has
+    # one, else from its kind's pair
+    twist: int = 0
     margin: str = MARGIN_KINDS[0]
     # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
     # 7, the click line): the name of the detector set whose one detector is the
@@ -2172,6 +2295,9 @@ class NatureBeamWorld:
     # its velocity n / W Links per interval; required under the detector law,
     # 0 on a world without it
     momentum_unit: int = 0
+    # THE TWIST TABLE (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c); commit 4): the exact
+    # triples of the transport's angles, None on a world without one (no transport)
+    twist_table: TwistTable | None = None
     # THE ENGINE START FILE (record 2089; BUILD.md section 26 item 57): the
     # world's `engine` as read, None on a world without the detector law
     start: EngineStart | None = None
@@ -4756,6 +4882,8 @@ def _block(
             extents=extents,
             periodic=periodic,
             momentum=momentum,
+            moment=moment,
+            clock_pair=clock,
         )
         # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md 9.51 (8); BUILD.md
         # section 26 item 47): the quanta a body gives are the given family's,
@@ -4802,6 +4930,15 @@ def _block(
         charge=charge,
         spin=spin,
         moment=moment,
+        # the body's own record's twist "own" (ALGEBRA.md 9.96 (2) (a)): its mode's
+        # rotation, or its kind's rest rotation on a body without a mode
+        twist=(
+            rotation_twist(clock[0], 2 * clock[1])
+            if clock is not None
+            else rotation_twist(kind[0], kind[1])
+            if kind[1] > kind[0]
+            else 0
+        ),
         margin=str(margin),
         receiver=receiver,
         emitter=emitter,
@@ -4831,6 +4968,8 @@ def _emitter(
     extents: tuple[int, int, int] = (1, 1, 1),
     periodic: tuple[bool, bool, bool] = (True, True, True),
     momentum: tuple[int, ...] = (0, 0, 0),
+    moment: tuple[int, int, int] = (0, 0, 0),
+    clock_pair: tuple[int, int] | None = None,
 ) -> EmitterDefinition:
     """The `emitter` object of a clicking body (ALGEBRA.md 9.17 (4) to (6),
     9.22 (4)): the given family a paid family with the pair form of its
@@ -4968,6 +5107,30 @@ def _emitter(
             )
         wrap = periodic
         given = _given_train(value, f"{label}.given", given_pair, shape, extents, wrap, train)
+    # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md 9.82 (3) (d)): on a vector family the
+    # component along the body's moment mu, one axis; a scalar family's one component
+    part = 0
+    if len(given_family.parts) > 1:
+        axes = [axis for axis in range(3) if moment[axis] != 0]
+        if len(axes) != 1:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}: the given family {name!r} is a vector family and the body's "
+                f"moment {list(moment)} lies on {len(axes)} axes: the given record is written into the "
+                "component along the body's moment, one axis (ALGEBRA.md 9.82 (3) (d); a body with no "
+                "moment gives no direction to write)"
+            )
+        part = 1 + axes[0]
+    # THE GIVEN RECORD'S TWIST "OWN" (ALGEBRA.md 9.96 (2) (a)): a massive kind's rest
+    # rotation from its pair; a wave's from its train's wavelength on light's dispersion,
+    # or from the emitting body's own rotation where the window writes it (9.85 (5))
+    if given_pair[1] > given_pair[0]:
+        twist = rotation_twist(given_pair[0], given_pair[1])
+    elif train is not None:
+        twist = light_twist(train.wavelength)
+    elif clock_pair is not None:
+        twist = rotation_twist(clock_pair[0], 2 * clock_pair[1])
+    else:
+        twist = 0
     return EmitterDefinition(
         names[name],
         branches,
@@ -4981,6 +5144,8 @@ def _emitter(
         given,
         weight=weight,
         norm_denominator=norm_denominator,
+        part=part,
+        twist=twist,
     )
 
 
@@ -7004,7 +7169,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                 f"{BEAM_LAW}: families as a file path is admitted under `detector_law` alone"
             )
         families_file = obj["families"]
-        _refuse_under_law(obj, "the world", set(FAMILIES_INTEGERS))
+        _refuse_under_law(obj, "the world", FAMILIES_INTEGERS | FAMILIES_TABLES)
         entries, integers = families_file_entries(families_file)
         obj = dict(obj)
         obj["families"] = entries
@@ -7192,6 +7357,16 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         )
     if detector_law:
         momentum_unit = _integer(obj["momentum_unit"], "momentum_unit", 1, AMOUNT_BOUND)
+    # THE TWIST TABLE (ALGEBRA.md 9.96 (2)): the families file's, checked with Gamma and A;
+    # admitted on an inline world of the law, refused without the law; an inline world
+    # without it has no transport (the engine refuses a nonzero twist naming the Port)
+    twist_table: TwistTable | None = None
+    if "twist_table" in obj and not detector_law:
+        raise ValueError(
+            f"{BEAM_LAW}: twist_table is refused without `detector_law` (ALGEBRA.md 9.81 (2))"
+        )
+    if "twist_table" in obj:
+        twist_table = _twist_table(obj["twist_table"], "twist_table", node_clock, amplitude_bound)
     # THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26
     # item 51): the families' roles of items 32 and 35 are their own
     # declarations (`held`, `reads`), read by `_families` below; the world
@@ -7453,6 +7628,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         amplitude_bound=amplitude_bound,
         node_clock=node_clock,
         momentum_unit=momentum_unit,
+        twist_table=twist_table,
         start=start,
         families_file=families_file,
     )

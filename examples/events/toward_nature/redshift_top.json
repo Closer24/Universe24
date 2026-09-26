@@ -69,7 +69,7 @@
    "moment": [
     0,
     0,
-    0
+    1
    ],
    "seed": [
     0,
@@ -7566,6 +7566,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "7ec2d84b7516a84608010b2a00ad55f359db987d4821e318186205c1e4b24a2f"
+  "hash": "6a892f1a8658969c00af45872c020960be86c0e408af33780d60715ab5a6c46d"
  }
 }

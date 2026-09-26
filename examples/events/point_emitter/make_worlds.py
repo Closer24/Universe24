@@ -67,7 +67,7 @@ def seat(position: list[int]) -> dict:
         "kind": list(KIND),  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
         "charge": 0,  # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2)
         "spin": [0, 0, 0],
-        "moment": [0, 0, 0],
+        "moment": list(massive.LIGHT_MOMENT),  # the given light's component (9.82 (3) (d))
         "amount": 1,
         "held": {massive.WAVE_FAMILY_NAME: STOCK},  # the stock of light, the charge family's quanta
         "momentum": [0, 0, 0],

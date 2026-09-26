@@ -592,6 +592,11 @@ FACE_DEPTH = 32  # every face a receiver slab as deep as the train (9.25 (11))
 LIGHT_CLOCK_SHAPE = [760, 3, 3]  # the one table (9.30): the chain of 760 extruded to [760, 3, 3]
 LIGHT_CLOCK_TICKS = 4800  # COMPUTATION: 64 givings at the mean cadence P / 2 = 47 (P = 94 on A's mode), about 3000 intervals, the last return 300, a margin
 MIRROR_DEPTH = 4  # the mirror's depth, the gap [1, 2] (A.3)
+LIGHT_MOMENT = [
+    0,
+    0,
+    1,
+]  # the light emitter's moment, the given component's axis (ALGEBRA.md 9.82 (3) (d)); the massive generator's
 
 
 def emitter(
@@ -615,6 +620,8 @@ def emitter(
         # (9.86 (2) (b)), so the stock and the giving are the charge family's
         "held": {"charge": EMITTER_STOCK},
         "emitter": {"family": "charge", "train": {"direction": direction, "periods": TRAIN_PERIODS}},
+        # the light's component along the body's moment (ALGEBRA.md 9.82 (3) (d); commit 4)
+        "moment": list(LIGHT_MOMENT),
     }
     block.update(extra)
     return block

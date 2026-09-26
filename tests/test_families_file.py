@@ -41,12 +41,19 @@ def refused(document: dict, match: str) -> None:
 def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_names_it():
     document = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
     assert document["law"] == "detector-law-v1"
+    table = document["integers"].pop("twist_table")
     assert document["integers"] == {
         "node_clock": 10000,
         "amplitude_bound": 1 << 20,
         "charge_weight": 1,
         "momentum_unit": 64,
     }
+    # the twist table (ALGEBRA.md 9.96 (2) (c); commit 4): the unit 4 Gamma 2^16, 2^10 fine
+    # and 2^15 coarse triples, every one c^2 + s^2 = d^2 with d at most 10^9
+    assert table["unit"] == 4 * 10000 * 65536
+    assert len(table["fine"]) == 1024 and len(table["coarse"]) == 32768
+    assert all(c * c + s * s == d * d and d <= 10**9 for c, s, d in table["fine"] + table["coarse"])
+    document["integers"]["twist_table"] = table
     names = [entry["name"] for entry in document["families"]]
     assert names == ["gravity", "charge", "matter"]
     gravity, charge, matter = document["families"]
@@ -71,12 +78,12 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     assert "held" not in matter and matter["clicks"] == {"gives": True, "takes": True, "quantum": 1}
     assert matter["reads"] == [
         {"family": "gravity", "weight": 1, "twist": "own", "by": 1},
-        {"family": "charge", "weight": "Lambda", "twist": "Lambda_v", "by": "q"},
+        {"family": "charge", "weight": "Lambda", "twist": "own", "by": "q"},
     ]
     entries, integers = families_file_entries(FILE)
     assert integers == document["integers"] and len(entries) == 3
     assert entries[0]["held"] == "content" and entries[1]["held"] == "sign" and "held" not in entries[2]
-    assert entries[2]["reads"][1] == {"family": "charge", "weight": 1, "by": "sign", "twist": "Lambda_v"}
+    assert entries[2]["reads"][1] == {"family": "charge", "weight": 1, "by": "sign", "twist": "own"}
     for path in (ROOT / "examples/events").glob("*/*.json"):
         text = json.loads(path.read_text(encoding="utf-8"))
         if isinstance(text, dict) and text.get("detector_law") is True:
@@ -118,6 +125,8 @@ def on_the_file(document: dict, clock: list[int]) -> dict:
             entry["emitter"]["clock"] = clock
             if entry["emitter"]["family"] == "light":
                 entry["emitter"]["family"] = "charge"
+            # the light's component along the body's moment (ALGEBRA.md 9.82 (3) (d); commit 4)
+            entry["moment"] = [0, 0, 1]
     moved["input"] = input_stamp(moved)
     return moved
 
@@ -161,10 +170,15 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
         assert names_b[other.family] == rename.get(names_a[live.family], names_a[live.family])
     for source in ("content", "sign"):
         assert np.array_equal(a.level_of(source), b.level_of(source))
-    # the other parts of gravity and the charge stay exactly zero and silent (9.91 (9) (a))
-    for parts in b.held_parts.values():
+    # every other part with no source stays exactly zero and silent (9.91 (9) (a)); the
+    # light emitter's moment [0, 0, 1] writes the charge's dipole on its neighbours (9.82
+    # (3) (d), 9.91 (3); commit 4), which nothing reads at q = 0
+    for family, parts in b.held_parts.items():
         for record in parts:
-            assert record.silent and not record.now.any() and not record.remainder.any()
+            if record.silent:
+                assert not record.now.any() and not record.remainder.any()
+            else:
+                assert b.families[family].held == "sign" and record.part in (1, 2)
     assert b.leaks() == []
 
 

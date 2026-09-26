@@ -109,6 +109,11 @@ MASSIVE_GIVEN_CLOCK = [77, 25]  # this generator's light clock (the pair form on
 # (one family, every body with its own rest pair `kind`)
 MATTER_FAMILY_NAME = "matter"
 WAVE_FAMILY_NAME = "charge"
+# THE LIGHT EMITTER'S MOMENT (ALGEBRA.md 9.82 (3) (d), 9.82 (4); the one stroke, commit 4):
+# the given light is written into the charge family's component along the body's moment
+# mu; every shipped light row gives along z, the axis with no Port in its worlds (folded
+# or the body's whole periodic extent), so its bookings are the scalar light's bit for bit
+LIGHT_MOMENT = [0, 0, 1]
 
 
 def families_entries() -> tuple[list[dict], dict[str, int]]:
@@ -134,6 +139,7 @@ def bind_families_file(document: dict) -> dict:
     document.pop("node_clock", None)
     document.pop("amplitude_bound", None)
     document.pop("momentum_unit", None)
+    document.pop("twist_table", None)
     return stamped(document)
 
 
@@ -280,6 +286,9 @@ def world(
         "node_clock": integers["node_clock"],
         # the momentum's unit Q (ALGEBRA.md 9.96 (1)): every body's wall W = 3 Q M
         "momentum_unit": integers["momentum_unit"],
+        # the twist table (ALGEBRA.md 9.96 (2) (c)): the file's, on the inline document
+        # while the build runs the engine
+        "twist_table": integers["twist_table"],
         # the families' roles stand on the families (`held`, `reads`; the family
         # genericity, BUILD.md section 26 item 51); the list during the build, the
         # file's path as written (`bind_families_file`)

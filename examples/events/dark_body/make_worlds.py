@@ -87,6 +87,7 @@ def massive_generator():
 
 
 FAMILIES_ENTRIES, FAMILIES_INTEGERS = massive_generator().families_entries()
+LIGHT_MOMENT = massive_generator().LIGHT_MOMENT
 NODE_CLOCK = FAMILIES_INTEGERS["node_clock"]  # Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44)
 
 
@@ -124,7 +125,8 @@ def block(
         "kind": list(MATTER),  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
         "charge": 0,  # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2)
         "spin": [0, 0, 0],
-        "moment": [0, 0, 0],
+        # a light emitter's moment, the given component's axis (ALGEBRA.md 9.82 (3) (d))
+        "moment": list(LIGHT_MOMENT) if emitter is not None else [0, 0, 0],
         "amount": amount,
         "momentum": [0, 0, 0],
         "held": {},
@@ -172,6 +174,7 @@ def world(dark: bool) -> dict:
         "amplitude_bound": FAMILIES_INTEGERS["amplitude_bound"],
         "node_clock": FAMILIES_INTEGERS["node_clock"],
         "momentum_unit": FAMILIES_INTEGERS["momentum_unit"],
+        "twist_table": FAMILIES_INTEGERS["twist_table"],
         "families": [dict(entry) for entry in FAMILIES_ENTRIES],
         "measured": [],
         "detectors": [],

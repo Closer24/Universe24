@@ -4556,6 +4556,76 @@ would have found no cell.
    9.96 (5)), a check-mode digest. The generators write Q into their inline
    documents and the proper pair's table reads v = m / (3 Q M).
 
+64. THE ONE STROKE, COMMIT 4: THE CHARGE'S FOUR AT PHASE 2, THE TRANSPORT WITH
+   THE TWIST TABLE AND THE TRANSVERSE BOOKING (ALGEBRA.md 9.91 (10) 4; 9.81
+   (2); 9.82 (3), (4); 9.91 (1), (6); 9.96 (2)). THE SECOND LEVEL: a record of
+   a phase-2 family (the charge and matter) carries the pair (re, im), each
+   level (now, before, r) over the board (`im_now`, `im_before`,
+   `im_remainder`), stepped by the same rule from its own arrivals; the second
+   level is None until a rotation writes it (a level that starts zero and
+   meets no twist stays exactly zero, so no work: HOST). THE TRANSPORT
+   (`_port_twists`, `_twist_triple`, `_arrivals`, written once for any family
+   and any read): on every Port of a Node the angle k = sigma x by x twist x
+   (V_a here + V_a arrived), V_a the read family's vector component along the
+   Port's axis (gravity's x, y, z at the Node and across the Port; the other end
+   forms -k); the twist "own" is the record's own rotation round(2^16 omega_0)
+   times the read's weight (9.96 (2) (b): Lambda_v is Lambda, the word
+   "Lambda_v" retired from the reads), by q the reading family's sign; the
+   arriving pair is rotated by the table's triple TO THE NEAREST UNIT, T_re =
+   (c re - s im) / d and T_im = (s re + c im) / d as (2 x + d) div (2 d), a pure
+   function of the arrivals and the angle; at k = 0 the arrival is the
+   neighbour's level (the plain paths untouched, bit for bit); the inverse
+   recomputes the same T from the `before` levels and the vector parts' `before`
+   levels (the levels the step read), exact. NO REMAINDER ON THE PORT, a defect
+   of 9.81 (2) (c) found in the build and SENT to the mathematician: rho in [0,
+   d) is one to one only while d stands, and d is the angle's, changing every
+   interval at every Node where the vector part moves; when d fell to 1 (k_1 =
+   80, the triple (1, 0, 1)) a remainder of 2 x 10^8 flushed whole into the
+   level (the moving long Lorentz clock's own record, -12 to -9.9 x 10^6 at
+   one Node at interval 250, the run refused at A). The rounding is unbiased
+   in the mean (the floor's drift of half a unit per Port per interval that
+   the remainder was to remove); the sub-unit part is lost, the same lesson
+   as the fixed wall of item 34. THE TWIST TABLE (`twist_table` in the families file's
+   integers block, `examples/events/make_universe.py` writes it, the loader
+   checks every identity and every angle with `twist_triple`, the same
+   procedure): unit = 4 Gamma 2^16 (theta_unit = 1 / unit radians), fine 2^10
+   triples for k_0 theta_unit, coarse 2^15 triples for k_1 2^10 theta_unit, each
+   (m^2 - n^2, 2 m n, m^2 + n^2) in lowest terms with n / m nearest tan(angle /
+   2) and d at most 10^9; the transport's triple the exact product, (c, -s, d)
+   for k < 0; a k_1 beyond the coarse table is refused at the step naming the
+   Port and the Node; the loader bounds 3 d_1 d_0 (A + 1) below 2^63 (the int64
+   room). WHAT THE TABLE GIVES (HOST, the files' integers): with d at most 10^9
+   the smallest angle above 0 a triple makes is 2 / 31622 = 6.3 x 10^-5 rad,
+   so every fine triple and the first 81 coarse triples are (1, 0, 1) and the
+   transport's resolution is that floor, not theta_unit / 2^10 (9.96 (2) (c)'s
+   precision is unreachable at any d whose product fits int64: SENT to the
+   mathematician through the Boss, report 1); the moving long Lorentz clock's
+   angles (k about 5.7 x 10^5, 2.2 x 10^-4 rad per Link) are resolved to 10^-9.
+   THE TWIST "OWN" is the loader's one computation (`rotation_twist`,
+   `light_twist`; HOST, a float at the load, an integer in the file's terms):
+   a body's own record from its mode's clock [a, b] (2 cos omega, the record's
+   own frequency), a given matter record from the emitter's pair, a train's
+   light from its wavelength on light's dispersion, cos omega = (cos(2 pi /
+   lambda) + 2) / 3, a window's light the emitter's rotation (9.85 (5) (1));
+   `EmitterDefinition.twist`, `BlockDefinition.twist`, `LiveRecord.twist`. THE
+   TRANSVERSE BOOKING (9.82 (3) (b), (c), (d); `booked_axis`): a light record is
+   given into the charge family's component along the emitting body's
+   `moment` (`EmitterDefinition.part` = 1 + the axis; a light emitter whose
+   moment is not on one axis is refused by name), the Ports along that axis
+   book nothing of it (`detector_inflow_tally`, `inward_flux`,
+   `seat_outward_flux`) and the pair's two levels' currents are summed; the
+   form and the density sum the two levels (exact where every twist is 0, a
+   reading elsewhere). EVERY SHIPPED LIGHT EMITTER declares the moment [0, 0,
+   1] (the generators' `LIGHT_MOMENT`): z is the axis with no Port in every
+   shipped world (folded, or the body's whole periodic extent), so the
+   bookings are the scalar light's bit for bit; the moment also writes the
+   charge's dipole of item 61 on the emitter's neighbours (one word, one
+   meaning: the body's mu), which nothing reads in the shipped worlds (q = 0).
+   The worlds regenerated. THE GATE tests/test_transport.py; the four resting
+   worlds BIT FOR BIT (every vector part silent, every k 0); the moving long
+   Lorentz clock's rows now also turn by the transport (its body's gravity x
+   part 72), a check-mode digest.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

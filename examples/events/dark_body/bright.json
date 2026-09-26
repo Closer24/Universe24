@@ -48,7 +48,7 @@
    "moment": [
     0,
     0,
-    0
+    1
    ],
    "amount": 1,
    "momentum": [
@@ -80485,7 +80485,7 @@
    "moment": [
     0,
     0,
-    0
+    1
    ],
    "amount": 4684,
    "momentum": [
@@ -168310,6 +168310,6 @@
  ],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "80f97d9eae9ac9c6f6548153665e0d814f5345a713d8d5ec6d2ec2de7297c5e1"
+  "hash": "e4afa76ba085edc8f6f8a427d4c99572b7081d84cb353fae995ddabc8e6f274a"
  }
 }
