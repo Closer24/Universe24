@@ -6,7 +6,8 @@ from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from typing import Any
 
-from event_universe.core.carried import (
+from event_universe.core.register import Declaration
+from event_universe.core.rule3 import (
     ACTS,
     THE_ADVANCE,
     THE_INVERSE,
@@ -16,10 +17,9 @@ from event_universe.core.carried import (
     carried,
     division_back,
 )
-from event_universe.core.carried import (
+from event_universe.core.rule3 import (
     THE_REWRITE as THE_REWRITE,
 )
-from event_universe.core.register import Declaration
 
 COUNT_WORDS = ("content", "sign")
 TENSOR_AXES = ((0, 0), (1, 1), (2, 2), (0, 1), (0, 2), (1, 2))
@@ -91,6 +91,14 @@ def check(term: HoldTerm, start: HoldStart) -> None:
         )
 
 
+def booking(factor: int, count: int, momentum: Vector, axes: tuple[int, ...]) -> int:
+    """The part's numerator, the booking of the count's level and the momentum's level per axis with the declared held factor, a reading with declared coefficients (ALGEBRA.md 9.119 item 1 (e)); its wall the declared W to the power of the momentum factors."""
+    found = factor * count
+    for axis in axes:
+        found *= momentum[axis]
+    return found
+
+
 def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:
     """The primitive at (iv) for one body and one held family: the count at the time part, every part beyond it by its carried division, the dipole's terms at the six neighbours (ALGEBRA.md 9.117 the row "the hold")."""
     check(term, start)
@@ -102,13 +110,15 @@ def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:
             if group == 0:
                 continue
             axes = (k,) if group == 1 else TENSOR_AXES[k]
-            numerator = term.factors[group] * start.count
-            for axis in axes:
-                numerator *= start.momentum[axis]
             part = index + k
             if start.act != THE_UNHOLD:
                 now, before = carried(
-                    start.act, (part,), numerator, start.wall ** len(axes), values, carries
+                    start.act,
+                    (part,),
+                    booking(term.factors[group], start.count, start.momentum, axes),
+                    start.wall ** len(axes),
+                    values,
+                    carries,
                 )
                 parts.append((part, now, before))
         index += count
@@ -122,7 +132,9 @@ def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:
         for j in range(3):
             for sigma in (1, -1):
                 for i, component, sign in CROSS_TERMS[j]:
-                    amount = sigma * sign * start.vector[component]
+                    amount = (
+                        sigma * sign * start.vector[component]
+                    )  # the unit coefficient times the moment's level
                     if amount == 0:
                         continue
                     key: Key = ("d", i, j, sigma)

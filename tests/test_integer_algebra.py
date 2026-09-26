@@ -52,7 +52,6 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/world.py": "the world file's parse and the load-time constants (the flight table, the labels)",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md 9.90 (1))",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md 9.57 (1), 9.50 (8), 9.91 (2)), and the ladder's rungs (9.25 (2))",
-    "core/carried.py": "the carried division as Rule3's division act, forward and by the direction -1, and the five acts a body's writer names (ALGEBRA.md 9.91 (3), 9.50 (8))",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md 9.88 (7)): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
     "core/register.py": "the register of primitives: one name to one function, found by the features' folders, each with its place, word, reads, writes and order (records 2212 and 2221; issue #1154)",
