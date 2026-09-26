@@ -17531,3 +17531,22 @@ as written here.
    bound at a finite width, moving, the form's mean constant, the pair
    at 249 with both families at the pace. Between the two forms the
    runs decide; the algebra's preference is this one.
+
+8. **The generic line behind it, a consequence of the rule and not a
+   new law (the model owner's word of 2026-09-26: "if it feels like the
+   nuclear force, test it and go on, and then everything is closed; is
+   there a law with us that everything must balance, something for and
+   something against?").** Every read of a family carries a signed
+   weight: a hollow (attraction, the weight positive) or a hill
+   (repulsion, the weight negative), the one primitive the charge
+   already uses (like signs a hill, 9.78 (4)). In three dimensions a
+   hollow alone gives no body: the record collapses into its own well
+   or disperses (Nature24's runs of item 1; nature's star with nothing
+   against its gravity). So A BODY IS A BALANCE OF A HOLLOW AND A HILL
+   OF DIFFERENT RANGES, and one sign alone is no body: a theorem of the
+   rule for a bound record, read from its runs, not a line added to the
+   law. Gravity is the one-signed exception and behaves as nature's does.
+   The owner's word: test the two families and go on; if they stand, the
+   rule closes and is used. The core family added is a family added, a
+   big decision for three (record 2136), which this word opens; the
+   Boss records it and Nature24's runs are the second party.
