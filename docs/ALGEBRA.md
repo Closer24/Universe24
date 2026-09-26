@@ -17304,3 +17304,59 @@ as written here.
    content in the pace, as (c)'s is, the same script gives X and m* once
    the mode is the run's. A run that reads less than that number is a
    finding for the mathematician (record 2137).
+
+### 9.106 The ninth question closed: a body held by its clicks cannot also move (Nature24's runs of 2026-09-26 09:15Z, stroke-side 3de5dafd, item9_clicks.py; the two rates owed by record 2152)
+
+1. **The runs, read.** Every Node a detector, the engine's ladder on
+   the one-way flux, the record deleted whole and re-created at the
+   click's Node (or one quantum per click). A free packet of rms 7.1
+   spreads to 16.6 in 250 intervals (the algebra's Gaussian, sigma(t)^2
+   = sigma_0^2 + (omega'' t / (2 sigma_0))^2 with omega'' = 0.925 Link^2
+   per interval, gives 17.7: they meet within the packet's shape). With
+   the clicks the width stays at 0 to 0.2 for 1500 intervals at one
+   click per 1.73 intervals, WORKS as a holding; two bodies 20 Links
+   apart never meet (the algebra's meeting at 249) and a body set at v =
+   0.1 stays at its Node after its first click at interval 5, FAILS as
+   motion. A record re-created at one Node has no phase gradient, and a
+   one-Node record books 0.30 of its norm as flux at the first step and
+   0.68 at the second, so it is clicked again within two intervals at
+   its own Node: the freeze of a record watched at every interval.
+
+2. **The two rates, and why no rate satisfies both.** (a) THE RATE THAT
+   HOLDS A WIDTH w. A click that re-creates the record at one Node holds
+   the width only by clicking within two intervals (item 1), at width 0.
+   A click that re-creates the record over a region of width w (a
+   detector of that width, not a Node) holds w against the spreading
+   for tau_w = 2 w^2 / omega'' intervals:
+
+   | w (Links) | tau_w (intervals) | the velocity noise per click, omega'' / (2 w) (Links per interval) | intervals before a fall at a = 1.25e-5 shows through the noise |
+   | --- | --- | --- | --- |
+   | 5 | 54 | 0.093 | 4.3e5 |
+   | 7.1 | 109 | 0.065 | 2.5e5 |
+   | 9 | 175 | 0.051 | 1.3e5 |
+
+   (b) THE RATE THAT KEEPS A FALL. A click that re-creates the record
+   with no phase gradient resets its speed, so a body clicked every tau
+   drifts by g t tau / 2, not g t^2 / 2: it falls only if tau exceeds
+   the run, which no bath gives. A click that keeps the momentum to
+   within the region's own uncertainty, delta K = 1 / (2 w), still adds
+   the velocity noise omega'' / (2 w) per click, a walk whose spread
+   after t / tau clicks hides a fall of acceleration a until t = omega''^2
+   / (4 w^2 a^2 tau), the last column at tau = tau_w: a hundred thousand
+   intervals and more, against runs of three thousand. So no tau holds
+   the width and keeps the fall: THE NINTH QUESTION IS CLOSED by 9.98
+   (11) (a): clicks hold the phase, and the body's Nodes are held
+   together by the binding, line (c). What a click that keeps the
+   record's momentum would need (9.98 (8)) is the momentum's store, the
+   Port's angle accumulator of 9.96 (2) (e), and even then the walk above.
+
+3. **The ladder's resolution (Nature24's finding on 9.25 (2)).** The
+   ladder's rungs are T / W apart in the running total; Born's rule
+   holds when every Node's increment in one interval is below that
+   spacing, so that the rung falls inside a Node's increment with the
+   chance of its share. An increment above the spacing is crossed
+   whatever the rung, and the declared order picks the Node. So a
+   detector's cells must read increments below T / W per interval, a
+   condition on the declared detector, met by the engine's cube
+   detectors and broken by a bath of Node detectors on a one-Node
+   record. Written beside 9.25 (2) as its condition.
