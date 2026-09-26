@@ -17161,3 +17161,85 @@ as written here.
    to the uniform mode; away from k = 0 they mix with the long wave
    and propagate. A hypothesis, not a decision; B's first form is
    closed (item 8) and this form is recorded beside it with its cost.
+
+### 9.104 The gate of the one stroke's commit 6 (6330442a, 2026-09-26T07:39Z) and the answer on the held-back feed: the fixed body, the distance between the read planes, the torque's factor
+
+1. **The spin's step: CONFIRMED.** The leapfrog S_(t+1) = S_(t-1) +
+   (2 [(Omega x S_t) + mu x B_q] + carry) div (W Gamma), with Omega
+   (the precession rate) and B_q (the curl of the charge's vector part)
+   read from the six neighbours' differences, Omega_i = [curl_i +
+   3 ((grad c) x n)_i div W] div 8 and B_q = curl_q div 2, is 9.91 (8)
+   (v) term for term and the second of 9.78 (5)'s two forms, bit-exact
+   backward. Two notes, no line: (a) the start S_(-1) = S_0 counts the
+   first term twice, once (the leapfrog's half-step start), one term's
+   size, below every row; (b) the read's weight multiplies the curl and
+   not the tidal term; the same at weight 1, gravity's for every record
+   (9.52 (2)).
+
+2. **The torque's factor: NOT CONFIRMED, one line.** The torque is
+   mu x B_q with B_q = Lambda curl V_q: the read's weight alone. The
+   moment mu is declared with the body's charge in it (9.78 (2): the
+   g-factor times Q S over 2 s), so the factor -Q x weight of the
+   energy's read (9.78 (4), like signs a hill) does not belong on the
+   torque; with it the torque goes as Q^2 and turns the other way for a
+   body of positive charge. The fix: the torque's factor is the weight;
+   the energy's contraction keeps -Q. No shipped body spins, so today
+   is bit for bit; Larmor's row (9.78 (5)) reads it.
+
+3. **The self-source's slot: CONFIRMED, one note.** The term reads the
+   levels of the interval's start, so the inverse's read of the before
+   levels is the forward's read of the now levels, and every shipped
+   unit is 0 (9.97 (2), (3)). The note: a family with more than one
+   record is one field, so the six squared differences are of the
+   family's summed level, not the sum over its records of each record's
+   own squares; not evaluated at P_2 = 0, written so when a unit is
+   nonzero.
+
+4. **9.96 (4) retired and 9.96 (5) built: CONFIRMED.** One reading
+   asked: M and s after k givings of a body giving its own family, in
+   the test's words (9.96 (3): s follows M).
+
+5. **The inverse of a moving body that has not hopped: CONFIRMED as a
+   limit.** The hop's inverse is a permutation (9.52 (4) (i)), owed.
+
+6. **The held-back feed and induction: the finding is the law on a
+   chain, and the answer is a declaration that already exists.**
+   (a) On a chain the content field of a body is a tent (the
+   one-dimensional Green's function of the six-neighbour sum grows
+   with the distance), so its slope at another body does not fall with
+   the distance, and two free bodies on a chain fall together under a
+   constant feed. In three dimensions the field falls as 1 / r and the
+   mutual fall of two tools over a run is below one hop (9.52 (4)
+   (ii)). The algebra's number beside the run's (record 2137): a body
+   at rest in a slope of Delta C levels per Link (the difference of
+   its two read planes) hops first at
+
+     t_1 = sqrt(4 Gamma D_a F_a / Delta C) intervals,
+
+   D_a the Link distance between the two read planes and F_a the count
+   of Nodes on a face; at Gamma = 10^4, D_a = 2, F_a = 1 and t_1 = 300
+   the slope is 0.9 levels per Link. The tent's slope at the detector's
+   Node, a GameBoard reading of the run, goes beside it.
+   (b) The tools of every shipped world are apparatus held in place,
+   and the world file has that word: `fixed` (true: an apparatus held
+   in place; the body's declaration in
+   `src/event_universe/events/world.py`). The feed and the induction act
+   on a body that is not fixed. A fixed body sources as it stands and
+   takes no feed; if its feed is booked at all, it is booked as a
+   GameBoard reading of the bench's force, never into the n its hold
+   sources (its velocity, 0 at rest). The bench's impulse is not
+   modelled, as in nature's laboratory. Every shipped tool declares
+   `fixed: true` (a world-file edit; no implicit default: a body without
+   the word is free), and every resting world stays bit for bit with
+   the feed landed. The fall rows' falling emitter is free and its
+   receiver fixed (9.52 (4) (vi)). This adds no operation to the law: one
+   existing word read by one more line, not a big decision (record 2136);
+   the Boss records the reading.
+   (c) The seat's factor of 2: 9.52 (2)'s unit 1 / (2 Gamma L) has L the
+   distance between the two faces read. A body on one Node reads its
+   two neighbours at +1 and -1, two Links apart, so its D_a is 2, not
+   its width 1; with D_a = 2 the fall is (C_+ - C_-) / (4 Gamma) = grad c
+   / (2 Gamma) Links per interval squared, the law's (9.52 (2); the free
+   packet's fall of 9.98 (10) 1 was measured against it). In general
+   D_a is the Link distance between the two read planes; with D_a the
+   body's width the fall is twice the law's.
