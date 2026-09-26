@@ -18904,3 +18904,116 @@ that constancy.
    decided. One tool, tools/body_generator.py, called by every world's
    generator; the worlds' generators keep their declarations and lose
    their dispersion lines.
+
+### 9.119 The gate of the generic engine: every primitive of the register is Rule3, a composition of Rule3's steps with declared coefficients, or the click, over the families' declarations (the Boss's records 2236 and 2237 on the model owner's word, "the rule keeps us in integers only, so all the functions can be composed from it"; the rule is named Rule3 from today; 9.57 (1); 9.113; 9.117)
+
+1. **The three words, said exactly.** RULE3 is 9.57 (1) as the engine
+   codes it (`one_rule`): at every Node, w a_next + r' = R S_6(a_now)
+   + B a_now - w a_before + the loads + r, with w the wall (6 den
+   Gamma^2), R the read's coefficient (2 p^2 num, p = Gamma - c the
+   pace), B the self coefficient, S_6 the sum over the six reads, the
+   loads the declared integers added into the numerator, r' the
+   remainder kept in [0, w). Its steps, each one act of the same form:
+   (a) THE SPATIAL STEP, the line above over the board (the six reads
+   through the Ports); (b) THE ONE-NODE STEP, the same line where the
+   neighbours' reads are declared 0 or already read: a_next + a_before
+   = (a / b) a_now, the rotation by the angle whose 2 cos is a / b
+   (Chebyshev's recurrence, the pair's own); with a / b = 1 and the
+   coefficient on a_before declared 0 it KEEPS a level (a_next =
+   a_now), and with a / b = 2 from (0, 1) it COUNTS (a_t = t); (c) THE
+   DIVISION, the same line with R = B = 0: w a_next + r' = the
+   numerator + r, Euclid's division with the remainder kept, the wall
+   and the numerator declared; (d) THE LOAD, a declared integer in the
+   numerator, which is how a count enters a level (9.113's reason (H)
+   is Rule3's own load term, not a step beyond it). A COMPOSITION OF
+   RULE3'S STEPS WITH DECLARED COEFFICIENTS is a finite sequence of
+   these acts, each with its coefficients (a pair, a weight, a wall, a
+   load) declared in the families' or the universe's files, applied to
+   declared levels: a family's level at a Node, or a declared family's
+   level on a body's record. THE CLICK is 9.25 (2), (3): (e) THE
+   BOOKING, the reading of a bilinear form of the two levels at a Port
+   with declared coefficients (the current num (now_i before_j -
+   before_i now_j) at a detector's Port; the form; a body's two vectors
+   as two declared families' levels), a reading and no write; (f) THE
+   LADDER, the first k with 2 W C_k >= (2 u + 1) T; (g) THE END OF THE
+   RECORD AND THE COUNT'S MOVE, the one irreversible act (POSTULATES
+   10). THE FAMILIES are the declarations: pairs, weights, walls,
+   tables, and the degrees. ONE READING that closes 9.113's reason (S):
+   an integer kept anywhere (a Port's accumulator, a body's spin, its
+   momentum, its position's accumulator, a record's age) is a declared
+   family's level with the KEEP step, so nothing is state outside
+   Rule3's levels; and one that closes (L): a product of two integers
+   is never made by Rule3 and always read by the booking (e), so every
+   product in the engine is a reading with declared coefficients and
+   no write.
+
+2. **The rows.** Every folder of the register (PR #1168's twenty-three,
+   PR #1165's recoil), with the word and the line that shows it.
+
+   | Row | The word | The line that shows it |
+   | --- | --- | --- |
+   | the pair | Rule3 | its coefficients from the declared pair: cos omega_0 = num / den; 9.111 item 7 row 1 |
+   | the degree | Rule3 | the same line on 1, 3 or 6 components, copies |
+   | the phase | a composition | phase 2 is Rule3; phase 1 is Rule3 with the coefficient on a_before declared 0 (9.50 (13)) |
+   | the signed read | Rule3 | the pace p = Gamma - SUM (weight x by x argument) is Rule3's own coefficient from the declared reads; the guard its stability (9.108 item 12); 9.117 item 5 |
+   | the send | Rule3 | the value on the Link is the read's weight times now: R's factor |
+   | the receive | a composition | the arrival rotated by the triple (c, s, d) is the one-Node step (b) at the pair [c, d] applied once to (now, before): the rotation by the declared angle; the accumulator a degree-six family's level at the Node (one per Port) with the KEEP step, its rate a load |
+   | the wait | Rule3 | the count (b) at a / b = 2: one interval |
+   | the operation | Rule3 | the line itself |
+   | the internal representation | a composition | n pairs, each rotated by the generators' tables: the one-Node step at the tables' pairs, in sequence (9.101) |
+   | the self-source | a composition | the six differences' squares are a booking (e) of the family's own levels with the coefficients declared (the structure table), the write the division (c) by P_2 as a load (d) |
+   | the hold | a composition | s = SUM_k (M_k P_0) div P_k is the division (c) with the wall P_k and the numerator M_k P_0 (a declared integer times the count), written as the load (d) into the held family's level; the vector and tensor parts the same divisions over the wall W |
+   | the source | a composition | D_i = now^2 - next x before is the booking (e) of the record's own two levels (the form, Rule3's conserved integer); its division by E_s (c) enters the sourced level as the load (d); the table s_cap the same with the declared wall |
+   | the clicks | the click | (e), (f), (g) as 9.25 (2), (3); the count's move M_k += 1 at t + 1 (9.111 item 6) |
+   | the lifetime | a composition and the click | the record's age is the count (b) at a / b = 2 on the record; at age = L on the face the click (g) ends it |
+   | the clicks list | the click | the products' shares from the record's remainders and the wheels are the click's draw (9.88 (4)); the sum is the taken momentum exactly |
+   | the hand | a composition and the click | S . n is a booking (e) of two declared families' levels on the body (the spin, the momentum); its sign against the declared hand admits or refuses the click (g) |
+   | the giving | the click and a composition | the open M_k -= 1 is the click's count move with the opposite sign (g); the bulk share n_a -= sgn(n_a) (|n_a| div M) is the division (c) with the wall M into the momentum's level (the KEEP step plus a load); the window's write is the load (d) g x a_body into the given level; the close is the ladder (f) on the outward booking (e) against T |
+   | the recoil | a composition | the amount (W P_body) div (M lambda_q) is the division (c); its store carried exactly across walls needs one declared wall for the record, the least common multiple of the world's declared wavelengths as a universe integer L, so that the store is Rule3's remainder against L (9.117 item 5's "beyond (S)" closes with that declaration; PR #1165's lowest-terms store then goes) |
+   | the recoil's accumulator | a composition | sigma_a x (k_q div M): the division (c) as a load into the Port's degree-six family (the receive's row) |
+   | the feed | a composition | the contraction at the two faces is Rule3's pace (the signed read) read with the coefficients +1 and -1; the difference divided by W (c) is a load into the momentum's level |
+   | the induction | a composition | (n_b V_b) is a booking (e) of the momentum's level and the read's vector part; its change over the interval is the difference of the two levels now and before that every family carries; the division by W (c) a load into the momentum's level |
+   | the spin's step | a composition | the curls are reads with the coefficients +1 and -1 (Rule3's read); Omega x S_now and mu B_q are bookings (e) of the curl and the spin's level; the division by W Gamma (c) is a load into the spin's level (a degree-three family on the body's record, the KEEP step) |
+   | the hop | a composition | the position's accumulator is a level with the KEEP step and the load n; at the wall W the division (c) gives the hop and keeps the remainder; the body's Nodes' translation by one Link is Rule3 with the coefficients declared 1 on the one read behind and 0 elsewhere, a_next(x) = a_now(x - 1) |
+   | the trace | neither | a reading of every act's integers, it writes nothing (9.112 item 5) |
+
+   No row is left beyond, on three declarations the owner is asked for
+   in item 4. Until they are given, the rows the reviewer marked beyond
+   in 9.113 and 9.117 item 5 keep their words: the store's exact carry
+   (the recoil), the kept integers (the accumulator, the spin, the
+   position, the age) and the products (the self-source, the hand, the
+   induction, the spin's step).
+
+3. **The generator's objects (the Boss's record 2235), each a
+   composition with a stop.** (a) A BODY: the spatial step (a) iterated
+   from the declared seed (a Node, a packet, a box) with the stop of
+   9.118 item 4 (the mode, or the growth); the levels are the
+   iteration's last state, no formula beside. (b) AN EMITTER'S STARTING
+   RECORD: the given family's two levels at the body's Nodes are the
+   one-Node step's state (now, before) at the declared given clock (the
+   rotation's own pair), and the window then adds the load g x a_body
+   each interval (the giving's row) until the ladder closes it; nothing
+   else is written. (c) A SPLIT'S TWO OUTGOING RECORDS (the crystal,
+   9.71 (2) (b)): the arriving record clicks (g) at the split's Node,
+   and two starting records as (b) are born on the two arms' Ports'
+   sides with the declared labels and the declared clocks p_1 + p_2 =
+   p, the residue carried on the record; the shares of the norm the
+   click's draw (the clicks list's row). Each object follows its line
+   here and none a formula of its own; the tool of 9.118 item 4 builds
+   the three.
+
+4. **What the model owner is asked to say, three words (record 2136),
+   and the test that then stands.** (i) A product of two integers in
+   the engine is the booking with declared coefficients, the click's
+   reading, and never a write (closes (L)); (ii) an integer kept
+   anywhere is a declared family's level with the KEEP step (closes
+   (S)); (iii) a record's store across walls is a remainder against one
+   declared wall of the universe (the recoil). With the three words
+   given, the engine is Rule3, the click and the families, and the
+   test of record 2237 enforces it: every arithmetic in src/ is in
+   core's Rule3 (the one line and its four acts), in the click's three
+   acts, or in a folder that calls them with declared coefficients; a
+   folder that computes with its own line fails the gate by name. The
+   rows that then lose their own code: the hold's and the source's
+   divisions, the feed's, the induction's and the spin's steps, the
+   hop's accumulator, the recoil's store, the receive's rotation.
