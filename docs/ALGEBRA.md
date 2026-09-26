@@ -17419,6 +17419,27 @@ as written here.
    intervals): 48 clicks. Each row's stock is to be checked against its
    N.
 
+6. **The words and the universe file (4ec9d2ae, 2026-09-26; and the
+   merge of stroke-side, 24ada9af): CONFIRMED, with two notes.** The
+   universe file `examples/events/universe.json` with the keys `integers`
+   and `families` and no law key (9.90 (6): no name, no version); a world
+   names it under `universe`; the body's signed number `q`, its stocks
+   of other families' quanta `stocks`, the universe's integer `Lambda`;
+   the world key `families` refused under the law; every shipped world
+   regenerated in the words alone, every run bit for bit; the
+   adversarial rename test over the whole file (item 53): record 2128's
+   words as recorded. The merge of stroke-side touches no engine file
+   and its suites are green: CONFIRMED as a merge. THE NOTES: (a) the
+   universe file carries the twist table as built at commit 4 (every fine
+   triple the identity), the provisional table gated NOT CONFIRMED there;
+   it is replaced by the one table of 9.96 (2) (e) on the Boss's word,
+   and the file changes with it. (b) The one keys table of 9.90 (6) and
+   its walking test are not built yet: a shipped world still carries
+   `law`, `model_id`, `engine`, `K`, `N`, `release`, `width`,
+   `age_bound` and `clock_stamp`, the residue lines The 3 names for his
+   next push; the keys table is what closes them for good (a key read and
+   not in the table, or in the table and never read, fails).
+
 ### 9.108 The four runs of line (c) (Nature24, 2026-09-26 09:40Z, stroke-side 39c01258, binding_family.py): the line as written collapses in three dimensions; the corrected line, the saturation as the primitive's own table; the three asks answered
 
 1. **The finding, read (record 2137: a gap is mine).** With the source
