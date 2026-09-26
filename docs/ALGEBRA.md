@@ -19081,7 +19081,13 @@ that constancy.
    integer vector bounded by A, so the iteration is a map on a finite
    set and enters a cycle; the stop is the first repeat of the
    profile, exact, with no tolerance and no declared count; the profile
-   at the repeat is the mode within one unit of A. (d) THE TWO LEVELS
+   at the repeat is the mode within one unit of A. COMPUTED in integers
+   from a flat start (every level A = 2^20, no seed), Rule3's
+   coefficients as the engine's: the iteration reaches a fixed point
+   (a cycle of length 1) at step 196 for side 4 and 3000 per Node on
+   12^3, at 271 for side 6 and 2000 on 18^3, at 395 for side 12 and
+   1000 on 24^3, and the profile's overlap with the float top mode is
+   1.000000 in each case. (d) THE TWO LEVELS
    AND THE AMPLITUDE FROM THE COUNT. The mode's second level is the
    read act once more, halved: before = (M now) div 2, since M phi =
    2 cos omega_b phi; the two levels are scaled together so that the
