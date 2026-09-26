@@ -356,7 +356,7 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   that day, HISTORY since the unification and the seventeen of
   2026-09-25; read from the files on `main` 8b9a2897 through the loader;
   with the vertex check of 15:20Z above):
-  the muon's form, the layer pin world at rest (`layer_pin_rest_14.json`):
+  the muon's form, the layer pin world at rest (`muon_moving_clock_at_rest_14.json`):
   the square of edge 14 at [93, 93] on the 200 x 200 periodic layer, whole;
   the well [3200, 3227] on [3200, 3236]; `margin` pin; the seed a PROFILE
   of 40000 integers, the module's own mode at its amplitude (compared, not
@@ -370,7 +370,7 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   world): the cube of edge 20 at [22, 22, 22] in 64^3 periodic, whole; the
   well full-depth; `margin` control; the seed FLAT (the loader's default);
   the ramp 1500 against the relaxation 26 (57 times): met; condition 5 NOT
-  met. The light clock (`light_clock_60.json`): the segment [600, 612) on
+  met. The light clock (`light_clock.json`): the segment [600, 612) on
   the chain of 673 (periodic for the matter kind, closed for light: the
   per-kind faces, HISTORY, one border for every family, record 1875), whole;
   the well [800, 800]; `margin` pin by default; the seed FLAT 52428800; no
@@ -400,21 +400,21 @@ and a birth cell's pair is rich, ALGEBRA.md 9.9, 9.19 (2) and (4a)):
   which the ramp rule does not reach (no record to lag). The two slits
   (`two_slits.json`): the mirror line, blocks of edge 1 of light's kind
   with the gap [1, 2], single cells, no seed and no clock: conditions 3 to
-  7 do not apply. De Broglie's fringes (`matter_waves_12.json`): the take
+  7 do not apply. De Broglie's fringes (`de_broglie_fringes_12.json`): the take
   lines and the barrier line, blocks of edge 1 of the matter kind, silent
   (the silent body: HISTORY, tool bodies are bound and of the holder
   family, record 1875).
-  The energy of a moving mass (`matter_front_12.json`): NO body (a matter
+  The energy of a moving mass (`moving_mass_energy_12.json`): NO body (a matter
   lamp and a one-Node receiver body `front`). On `main` 8b9a2897 both
   files were REFUSED at load for the family's missing `take` pair (the fix
   on runner-lines 195a9fb9, merged in here). Bell's four, Malus's four,
   the pace fans and the cart: no body (the polarisers bodies of one Node
   with a table, the receivers bodies of one Node: HISTORY, no table and a
   detector cube of side 3 or more, records 1878 and 1899). SO: ELEVEN FILES (the
-  deep well's two, `deep_well_k3_40` and `deep_well_rest_40`; the boxes'
-  four, `moving_20`, `moving_28`, `rest_20`, `rest_28`; the light clock,
-  `light_clock_60`; Sagnac's two, `sagnac_k3` and `sagnac_rest`; the
-  redshift's two, `redshift_k3` and `redshift_control`) carried a FLAT
+  deep well's two, `deep_well_clock_speed_third_40` and `deep_well_clock_at_rest_40`; the boxes'
+  four, `boxed_clock_side_20_moving`, `boxed_clock_side_28_moving`, `boxed_clock_side_20_at_rest`, `boxed_clock_side_28_at_rest`; the light clock,
+  `light_clock`; Sagnac's two, `sagnac_light_times_speed_third` and `sagnac_light_times_at_rest`; the
+  redshift's two, `moving_emitter_redshift_speed_third` and `moving_emitter_redshift_at_rest`) carried a FLAT
   seed and were refused by the seed check of body-check, and the muon's
   form in motion by the ramp (10000, 8.6 relaxation times by the module's
   own number); on the owner's word "regenerate" (records 1817 and 1818;
