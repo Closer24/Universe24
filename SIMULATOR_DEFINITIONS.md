@@ -1,8 +1,9 @@
 # Event Universe — active modular 3D integer simulator
 
-## The detector law: the law in force (adopted 2026-09-24, record 1875)
+## The engine (adopted 2026-09-24, record 1875; one engine and no named law, the model owner's record 2103 of 2026-09-26)
 
-A world runs the detector law (`src/event_universe/events/detector_law.py`;
+A world runs the engine (`src/event_universe/events/detector_law.py`, the module
+to take the engine's name;
 the engine's steps in [docs/ENGINE.md](docs/ENGINE.md); the algebra in
 [docs/ALGEBRA.md](docs/ALGEBRA.md) chapter 9, the rule 9.57 (1)): every Node
 steps its own record's two levels from its six neighbours' reads by the plain
@@ -635,7 +636,7 @@ describes was deleted on 2026-09-19 with the engines before the ray law of that
 day ([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted);
 the ray law itself retired by record 1875);
 its schema document, docs/DISTURBANCES.md, is in git at any commit before that
-deletion. The active contract is the detector law
+deletion. The active contract is the engine
 ([docs/ENGINE.md](docs/ENGINE.md), [docs/ALGEBRA.md](docs/ALGEBRA.md) chapter
 9). The text below is kept as written,
 the record of that model; it defines nothing in the engine.

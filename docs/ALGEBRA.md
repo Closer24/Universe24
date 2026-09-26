@@ -14837,18 +14837,19 @@ is there because a click needs it, and nothing at a Node that no
 click needs; WHAT ENTERS THE ONE STROKE: the four primitives of (7),
 unchanged.
 
-### 9.89 The parity line for the ray law's deletion, the wall's width, the cube body, and the gate on item 56 with the k squared of the boosted norm (the Boss's record 2098 of 2026-09-26; Nature24's report of 00:25Z on his head 776c0d0d)
+### 9.89 The parity line for the ray law's cancellation, the wall's width, the cube body, and the gate on item 56 with the k squared of the boosted norm (the Boss's record 2098 of 2026-09-26; Nature24's report of 00:25Z on his head 776c0d0d)
 
 **(1) THE PARITY LINE (record 2095): every behaviour the ray law showed
-exists in the detector law, and the deletion may go.** One line per
-behaviour, with the reading under the detector law that shows it.
+exists in the engine, and the cancellation may go (record 2102: the ray
+law is cancelled, not deleted).** One line per
+behaviour, with the reading under the engine that shows it.
 (a) THE STRAIGHT LINE: a train at one wave number keeps its direction
 at the rule's group pace (9.62 (1)); the long-wave pair's round trip
 of the head 2 x 90 / 0.573 = 314 sits inside the rest tick 460 read
 459.0 +- 8.1, and the point emitter's first clicks 884 and 914 sit at
 the flight 873 plus the window's share (9.85 (5)). (b) ONE LINK PER
 INTERVAL: the ray law's pace was the digital line's, one Link per
-interval by construction; the detector law's pace is the dispersion's
+interval by construction; the engine's pace is the dispersion's
 group pace, 1 / sqrt 3 Links per interval at the long wave and 0.573
 at k = 0.299, one value for every source and every direction on the
 board: the behaviour (a fixed pace independent of the source) is kept,
@@ -14864,18 +14865,18 @@ of 100 against the pin 100 / 0 with the dark share 3.3 x 10^-4 (9.25
 (9.25 (11)), read. (g) THE LIGHT CLOCK: 2 x 60 / 0.57689 + 3.973 + 88
 = 300 computed, 294.7 +- 2.3 read at k = pi / 2 (9.24 (6); Nature24's
 rereading of 00:25Z). WHAT HAS NO COUNTERPART, BY DESIGN: the ray
-law's collision and meeting tables; the detector law's rows add
+law's collision and meeting tables; the engine's rows add
 (the rule is linear on the rows, 9.17 (2)), and Sorkin's row is the
 test that nothing beyond the sum is there. The ray law's numbers (206,
 307, 254, 0.916, 0.891) stay in the pins' table as history. VERDICT:
 parity holds; the ray law's path (its code, worlds, tests, tools and
-docs/BEAM_LAW.md) may be deleted after the start file lands bit for
-bit, in the Boss's order.
+docs/BEAM_LAW.md) may be cancelled after the start file lands bit for
+bit, in the Boss's order (record 2102).
 
 **(2) THE WALL'S WIDTH S, the second line.** The drive's wall 3 Q S M
 reads S = 1 in every world. S was the ray law's width of the push (the
 model owner's D1 of 2026-09-19, "the electron of width 3"), a number of
-the digital line; a Node of the detector law has no push and no
+the digital line; a Node of the engine has no push and no
 width. A key with one value in every world is a default (record
 2089). SO: S = 1 fixed, the key `width` goes, and the wall reads 3 Q
 M, with Q the momentum's unit in the universe's integers (9.83 (2)
@@ -14951,9 +14952,11 @@ and docs/BEAM_LAW.md. A refusal names the file and the key, never a
 law. A hypothesis outside the engine (9.88 (7)'s primitives before
 they enter, a row's declared idealisation) is named by its section
 here, not by a version. My proposal of "detector" and `detector-v1`
-(2026-09-26, 00:40Z) is withdrawn. "The detector law" stays only as
-the name of the existing module and design folder until Nature24
-renames them in the deletion.
+(2026-09-26, 00:40Z) is withdrawn. The name "the detector law" goes
+too (the Boss's record 2103, the model owner: "there is no more
+detector law; there is an engine"): the module and the design folder
+take the engine's name; the living documents say "the engine"; the
+dated records stay as written.
 
 **(2) WHERE A FLAG MAY LIVE.** Three files and nothing else: the
 FAMILIES FILE (the families' seven attributes of 9.79 (1) and the
