@@ -5,6 +5,8 @@ description: Execute reproducible Universe24 runs and inspect outcomes and trace
 
 # Simulator execution
 
+The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). Every agent may run the engine locally and debug it with the trace; only the coder, Coder 3, changes it.
+
 > **One engine (2026-09-19).** The runner takes `--init`, `--output` and `--ticks`
 > only and runs a world of the Beam Law headless; `--visualize`,
 > `--frame-stride`, `--observer`, `--node-workers`, `--dense-field` and

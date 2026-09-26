@@ -5,6 +5,8 @@ description: Derive and review Universe24 state spaces, operators, invariants, b
 
 # Mathematical validation
 
+The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The mathematician writes one algebraic line per primitive with its place in the step and gates each build; it never changes the engine's code.
+
 Read the [shared workflow](../workflow.md), current
 [architecture](../../docs/ARCHITECTURE.md) and the affected physical contract.
 Use the canonical [physics comparison method](../workflow.md#physics-comparison-method)
@@ -93,7 +95,7 @@ something different, polar or not polar; it must come from the group."
 Every lab tool is derived in docs/ALGEBRA.md as a body at rest, a fixed
 point of the translation group's action whose shape its stabilizer in
 G_48 fixes, performing one group action on the records that pass its
-cells. The integers written on the board are computed from the algebra,
+Nodes. The integers written on the board are computed from the algebra,
 as a body's seed is, and checked at load. A consequence (a state, a
 cause, a length, a form) is derived with its proof and never put to the
 owner as a choice. LAB_TOOLS.md cites the section for the engine lines and

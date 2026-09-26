@@ -5,6 +5,8 @@ description: Independently validate every changed Universe24 physics-engine rule
 
 # Physics-rule validation
 
+The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The physicist, Nature24, runs the engine, writes the run's files and the tests, and checks each ledger item; it never changes the engine's code.
+
 Read [the shared workflow](../workflow.md), [postulates](../../POSTULATES.md),
 [definitions](../../SIMULATOR_DEFINITIONS.md) and the
 [feature procedure](../../docs/PHYSICAL_FEATURES.md). This review is mandatory
@@ -214,20 +216,20 @@ every Node, the addition of amplitudes, the click or the bound mode's clock,
 and reports TESTS when the world exercises it, or BYPASSES when a
 declaration or a board edge does its work.
 
-## No per-cell branch that is not a group operation (the owner, 2026-09-24, record 1843)
+## No per-Node branch that is not a group operation (the owner, 2026-09-24, record 1843)
 
-The owner's word (translated): "Every place in the code where a cell has an
-'if' is forbidden: every operation in the cells is always an operation of
+The owner's word (translated): "Every place in the code where a Node has an
+'if' is forbidden: every operation in the Nodes is always an operation of
 the group." In every read of the physical path the reviewer lists each
-conditional that acts per cell or per Node and classifies it as the
-group's own action written as a mask (a body's cells as a G_48-set, a
+conditional that acts per Node and classifies it as the
+group's own action written as a mask (a body's Nodes as a G_48-set, a
 half-space, the translation), as host bookkeeping outside the law's
-values, or as a per-cell branch that is not a group operation. The last
+values, or as a per-Node branch that is not a group operation. The last
 kind is a defect, reported with the group operation that should replace
 it.
 
-The owner's further word (record 1845): no one asks a cell what is in it;
+The owner's further word (record 1845): no one asks a Node what is in it;
 the one read is the click, from above. The reviewer also lists every place
-where the law reads a cell's or a record's value at a Node to decide what
+where the law reads a Node's value or a record's value at a Node to decide what
 happens, marked as the click, host bookkeeping that changes no value of the
 law, or a forbidden read.

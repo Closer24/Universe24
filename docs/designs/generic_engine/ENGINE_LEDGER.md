@@ -61,7 +61,7 @@ generic implementation in the engine for families?": a PRIMITIVE is a kind of at
 engine can apply, written once in the code and applied to any family by its kind, never by
 its name; an ATTRIBUTE is a family's declared value of a primitive, written in the run's
 files, never in the code (HIGHLIGHTS 5.6; ALGEBRA.md 9.110 items 1 and 3). The engine
-implements the rule, the click and this closed set of primitives; Main Loop (Main Loop until record 2186) supports exactly this
+implements the rule, the click and this closed set of primitives; Main Loop (The 3 until record 2186, Coder 3 until record 2209) supports exactly this
 table after the merge; the tests at the end check it. Any experiment is then a change of the
 files and a check-mode run; a kind this table lacks is proposed as a new primitive, never written
 into a step. The keys are the loader's of emitter-click 01109b05 where a primitive is implemented
