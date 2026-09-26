@@ -10,7 +10,9 @@ A name marked "retired" is quoted as it was used then; it is not in use now.
 
 ## 1. The first code and the Google Doc (2026-09-10 to 2026-09-16)
 
-The earliest dated evidence in the repository is a validation of 2026-09-10 ([VALIDATION.md](VALIDATION.md#historical-validation--2026-09-10)).
+The project began before this repository, on the model owner's own machine; its start date is not recorded here.
+The repository on GitHub begins on 2026-09-10 with the import of that local project at its fifth version, whose model was then named `scalar-field-v10-contact` (a retired name), with its README in Hebrew.
+The earliest dated evidence inside the repository is a validation of the same day ([VALIDATION.md](VALIDATION.md#historical-validation--2026-09-10)).
 It shows an integer simulator of Nodes with local rules, 206 passing tests and runs whose total momentum stayed constant at every tick.
 On 2026-09-12 a consistency cleanup separated the generic engine from older particle models ([MIGRATION.md](MIGRATION.md#explicit-historical-component-names)).
 On 2026-09-14 the first archived version, 0.2.0, was deposited on Zenodo ([CHANGELOG.md](../CHANGELOG.md#020---2026-09-14)).
@@ -151,7 +153,8 @@ There were 30 records for 2026-09-17 and 2026-09-18, and 29 for 2026-09-19.
 From 2026-09-20 the numbers ran from 1 to about 164 that day, to about 556 on 2026-09-21, 1042 on 2026-09-22, 1526 on 2026-09-23, 1849 on 2026-09-24 and 2094 on 2026-09-25.
 The numbers reached 2117 by about 03:20Z on 2026-09-26.
 Most records were written by the Boss, the orchestrating agent, in the owner's words, translated from Hebrew.
-The local clone holds Git history only from 2026-09-23; it shows 228 commits that day, 449 on 2026-09-24 and 239 on 2026-09-25.
+The Git history of the repository holds 5006 commits on main from 2026-09-10 to 2026-09-25: 43 on the first day, 342 on 2026-09-17, 979 on 2026-09-21 and 1141 on 2026-09-22, the busiest day.
+Most later work sits on the builders' branches until the owner's Go.
 
 ## 14. Where we are now (2026-09-26)
 
