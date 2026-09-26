@@ -1428,12 +1428,12 @@ class DetectorLawSimulation:
         # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 items 31 and
         # 36; ALGEBRA.md 9.50 (13)): the given record's T is p times its
         # conserved form as written on the board, the engine's own integer
-        # with the content at the body's Nodes as the giving leaves it (one
-        # quantum fewer: the pace p the record is advanced at from the next
-        # interval): the form the plain flux booking sums to over the
-        # record's passage (the share's identity, `form_share`), read on
-        # the ladder as T / p
-        self._hold()
+        # with the content at the body's Nodes AS IT STANDS this interval:
+        # ONE ORDER FOR BOTH CLICKS (ALGEBRA.md 9.85 (2); BUILD.md section 26
+        # item 58): a click's writes enter at the next interval (9.57 (1)),
+        # so the giving's lowered quanta are held after the held families'
+        # step with the takings' (`_advance_fields`), no hold here (the hold
+        # at once, item 47, HISTORY: a defect against 9.57 (1))
         if live.window_open:
             # THE POINT EMITTER (item 50): the record's norm is T from the open,
             # the excitation's action the window will reach (9.71 (1) (d)), as the

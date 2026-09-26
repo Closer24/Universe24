@@ -474,18 +474,30 @@ def test_the_given_record_is_written_once_and_the_law_advances_it():
             # THE NORM UNDER THE NODE'S OWN PACE (BUILD.md section 26 item 36): the
             # record's conserved form as written on the board, the exact rational norm /
             # pace in lowest terms (the Node's terms weighted by 1 / p, p the pace at the
-            # body's Nodes as the giving leaves them, Gamma - content after the giving; p
-            # times the form whole, the pair reducing from (p x form, p)), read again here
+            # body's Nodes AS THE GIVING FINDS THEM, Gamma - content: ONE ORDER FOR BOTH
+            # CLICKS, ALGEBRA.md 9.85 (2), item 58, the click's writes entering at the next
+            # interval; p times the form whole, the pair reducing from (p x form, p))
             assert giving["given_norm"] == train["norm"] > 0 and giving["content"] == 2
-            pace = NODE_CLOCK - (giving["content"] - 1)
+            pace = NODE_CLOCK - giving["content"]
             # SINCE item 44 the form's denominator divides the rule's read coefficient at
             # the body's pace, R = 2 p^2 num (the Node terms over R), not the pace itself
             num_c, den_c = (int(value) for value in block.definition.pair)
             read_coefficient = rule_coefficients(num_c, den_c, NODE_CLOCK, NODE_CLOCK - pace, True)[0]
             assert given.pace == giving["pace"] and read_coefficient % given.pace == 0
             form = Fraction(given.norm, given.pace)
-            assert form == simulation.conserved_form(given) > 0 and given.norm == giving["norm"]
-            assert form == wall_form(simulation, 0, given.now, given.before)
+            # ONE ORDER FOR BOTH CLICKS (ALGEBRA.md 9.85 (2); item 58): the norm is the
+            # record's form at the content the giving found (one quantum more at the
+            # body's Nodes than the hold after the held families' step now writes), so it
+            # differs from the form read on the board after the interval
+            found = simulation.level_of("content").copy()
+            found[block.mask] += 1
+            assert form == wall_form(simulation, 0, given.now, given.before, found) > 0
+            assert given.norm == giving["norm"]
+            assert (
+                form
+                != simulation.conserved_form(given)
+                == wall_form(simulation, 0, given.now, given.before)
+            )
             assert (form * read_coefficient).denominator == 1
             assert giving["nodes"] == 32 and giving["excitation"] == 1 and giving["train"] == 0
             assert given.u == giving["u"] and given.wheel == giving["W"]

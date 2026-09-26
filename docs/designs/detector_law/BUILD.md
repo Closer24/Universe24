@@ -4281,6 +4281,36 @@ would have found no cell.
    runner: `--jobs` required, `--pins` refused under check, the output's
    `mode`. HOST; no physics.
 
+58. ONE ORDER FOR BOTH CLICKS: THE HOLD AFTER THE HELD FAMILIES' STEP (ALGEBRA.md
+   9.85 (2), the mathematician's ruling on Nature24's item 4 of form (d); the
+   Boss's record 2096, the one stroke's first piece). THE LAW: a click's writes
+   enter at the next interval (9.57 (1)): the content, s and Q are recomputed
+   and held after the interval's steps, and the fields read the new content
+   from t + 1. THE DEFECT: the engine held a giving's lowered quanta at once
+   (`_hold` right after the stock's decrement, so the held families' step of
+   that interval read the post-click quanta and the given record's norm was
+   read at the content as the giving left it), and a taking's only after the
+   held families' step. THE FIX: the giving's hold moves to the taking's
+   order; no hold at the giving; `_advance_fields` holds both clicks' writes
+   after the held families' step; the given record's norm (`given_norm`, the
+   exact rational norm / pace) is read at the content the giving FINDS (the
+   pace Gamma - c, not Gamma - (c - 1)). The pin stays (9.45 (2)): the clicks
+   record is held at the bodies' Nodes to the quanta they hold; no click term
+   on a free record. WHAT MOVES: the giving worlds alone (a body that gives):
+   the chain's three digests (events, state, audit; tests/test_massive_record.py
+   reread at this head), every giving world's rows from the first giving; a
+   world that only takes is bit for bit. THE READINGS (check mode, DETECTOR,
+   no pin), before and after: the light clock (k = pi / 2, the blind 300
+   computed) 301.9 +- 1.9 to 300.7 +- 3.0 over 85 and 86 clicks (three early
+   clicks at 164, 237 and 249 appear, the rms 17.8 to 27.4; a reading for the
+   mathematician); the long-wave Lorentz pair: rest 459.0 +- 8.1 (51 clicks)
+   to 473.4 +- 9.0 (45 clicks) against the blind 460, moving 532.4 +- 5.7 (50)
+   to 534.0 +- 6.1 (48) against 551 (9.89 (5) (b)), the ratio 1.160 +- 0.024
+   to 1.128 +- 0.030 against 1.198. THE GATE tests/test_emitter.py (the given
+   record's norm the form at the content the giving found, one quantum above
+   the hold's; the form on the board after the interval differs), the chain's
+   digests; the rest of the gate untouched.
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

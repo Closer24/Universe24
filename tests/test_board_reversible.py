@@ -242,11 +242,10 @@ def inverse_giving_interval(
 ) -> None:
     """The giving click's interval stepped back by hand, the click's write undone: the given
     record removed (its rows as written the file's given rows on the body's Nodes, asserted);
-    every other record stepped back at the content the interval began with (the hold before the
-    click, which their forward step read); the two fields stepped back at the click's hold (the
-    giving held the body at its lowered content before the fields' own step, ALGEBRA.md 9.45
-    (2)); then the body's stock restored and the fields held again. Nothing is lost at a giving
-    click: the rows it wrote are the file's."""
+    every record and both fields stepped back at the content the interval began with (the hold
+    before the click, which every forward step read: ONE ORDER FOR BOTH CLICKS, ALGEBRA.md 9.85
+    (2), item 58; the giving's hold at once HISTORY), the body's stock restored and the fields
+    held again first. Nothing is lost at a giving click: the rows it wrote are the file's."""
     line = next(line for line in lines if line["event"] == "giving" and line["tick"] == t)
     # the given record: present unless a taking click deleted it since (then the click's one
     # loss, already accounted); its rows as written are the file's either way
@@ -267,33 +266,13 @@ def inverse_giving_interval(
     assert np.array_equal(written[1], expected_before.reshape(shape))
     assert not written[2].any()
     simulation.records.pop(line["record"], None)
-    held_before = states[t - 1]["held"]
-    number = line["measured"]
-    mask = block.mask
-    clock, charge = simulation.held_record("content"), simulation.held_record("sign")
-    pre_content = clock.before.copy()
-    pre_charge = charge.before.copy()
-    pre_content[mask] = sum(held_before[number])
-    pre_charge[mask] = sum(
-        sign * quanta for sign, quanta in zip(simulation.family_charge, held_before[number], strict=True)
-    )
-    simulation.node_level[clock.family] = pre_content
-    simulation.node_level[charge.family] = pre_charge
-    simulation._effective.clear()
-    for other in list(simulation.records.values()):
-        if other.standing:
-            continue
-        simulation._advance_inverse(other)
-    for each in simulation.blocks:
-        if each.seat is not None:
-            simulation._advance_seat_inverse(each)
-        elif each.own is not None:
-            simulation._advance_inverse(each.own)
-    simulation._advance_inverse(clock)
-    simulation._advance_inverse(charge)
-    simulation.held = copy.deepcopy(held_before)
+    # ONE ORDER FOR BOTH CLICKS (ALGEBRA.md 9.85 (2); item 58): the giving's lowered quanta
+    # are held after the held families' step, as a taking's, so every record and both fields
+    # stepped forward at the content the interval began with; the inverse restores that hold
+    # and steps back as across a taking
+    simulation.held = copy.deepcopy(states[t - 1]["held"])
     simulation._hold()
-    simulation.tick -= 1
+    simulation.step_inverse()
 
 
 def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():

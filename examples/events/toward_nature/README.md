@@ -210,6 +210,13 @@ written (COMPUTATION on the files' integers): 1.577 of the rest train's against 
 (9.75 (1)'s reading: the rows at the rest amplitude carry it already; no amplitude factor).
 A reading for the mathematician; no verdict.
 
+THE SAME PAIR ON THE HEAD OF ITEM 58 (ALGEBRA.md 9.85 (2), one order for both clicks: the
+giving's hold after the held families' step; check mode, DETECTOR; no pin): rest 45 clicks,
+mean 473.4, rms 60.2, standard error 9.0, first 358 (the blind 460, 9.89 (5) (a)); moving 48
+clicks, mean 534.0, rms 42.5, standard error 6.1, first 436 (the blind 551, 9.89 (5) (b));
+the ratio 1.128 +- 0.030 against 1.198. The two GameBoard readings of 9.89 (5) (c) (the
+returning train's length on the board, the click's mean fraction of the passage) are owed.
+
 ## Row (3): the bending on today's law
 
 Two forms. FIRST, the dark body's two worlds (`../dark_body/dark.json` and

@@ -395,11 +395,16 @@ def test_the_light_record_is_byte_identical_without_the_key():
     more by the source word alone (`held_fields[].held` "sign"); SINCE ITEM 57 (the model
     owner's record 2089) the events digest alone moved, by the gather line's entry `unit`
     deleted with the engine's constant (the rows, the held levels, the state and the audit
-    bit for bit; the five-world comparison against 776c0d0d); read again at this head."""
+    bit for bit; the five-world comparison against 776c0d0d); SINCE ITEM 58 (ALGEBRA.md 9.85
+    (2), one order for both clicks) all three moved: the giving's lowered quanta are held
+    after the held families' step with the takings', so the given record's norm reads the
+    content as it stands and the fields read the giving from the next interval (a defect
+    against 9.57 (1) repaired, the mathematician's line; the giving worlds alone move); read
+    again at this head."""
     assert run_chain_digests() == {
-        "events": "3599b3274ba156e9454e6da0a731f8709b3a7030c07377e143955edc7e580b50",
-        "state": "1028bffc2e6efd5687feb85d9da8f5c8f1fb72f917754077c742e7c6f1e4ceca",
-        "audit": "372e68dbe0e0ef831d7115456de3de6b97ec09277db5db3d980eda236ad50b78",
+        "events": "48af69fa57a7e158be4302795d77dabf6f673a95f49834e3940568af6f8ad170",
+        "state": "28af61ca17732b2819ea343901736e858e6763bb733496a1251bd89458d10811",
+        "audit": "9c0eccc9a144d0ad506de42fe4cd7e40c409f1bcc87091017a2897c4caee1fb8",
     }
 
 
