@@ -17360,3 +17360,61 @@ as written here.
    condition on the declared detector, met by the engine's cube
    detectors and broken by a bath of Node detectors on a one-Node
    record. Written beside 9.25 (2) as its condition.
+
+### 9.107 The gate of the one stroke's commit 7 (d2360dfb, the window as the law's one giving, the train retired) and of record 2157's three lines (b59b94f4), 2026-09-26 09:30Z
+
+1. **Record 2157's three lines: CONFIRMED.** The torque at the read's
+   weight alone (9.104 item 2; a neutral body with a moment now turns,
+   as nature's neutron does); the world's word `fixed` read into the
+   body and declared on every resting tool of every shipped world, the
+   moving clocks free (9.104 item 6 (b)); D_a = 2 for a body on one Node
+   noted in the held-back feed (9.104 item 6 (c)); every shipped run bit
+   for bit.
+
+2. **Commit 7: CONFIRMED against 9.91 (10) 7, 9.71 (1), 9.85 (5) and
+   9.92.** The point emitter as the declaration with no world key, the
+   window opened at the giving click, the body's rotation written into
+   the given row at its declared weight at every interval of the
+   window, the outward norm read through the body's outer Ports until
+   it reaches the quantum's norm, the train and its keys refused by name
+   and its paths marked CANCELLED (record 2102), the mirror behind every
+   one-sided emitter and the window shorter than the arm's round trip
+   (9.85 (5) (a), (b)), a body its own detector whatever its support and
+   a set of one Node admitted (9.92). The weights chosen by trial so that
+   a window spans two periods are declarations of the rows, and each
+   row's expectation moves with its window's length n (9.85 (5) (d): the
+   tick 209 + n / 2, the spread n / sqrt(12)); the Boss holds the
+   recomputed blind values.
+
+3. **The finding for the mathematician: a body of several Nodes writing
+   at every Node piles the given row up inside itself.** The reading
+   (about 300-fold before it leaves) is the algebra's own expectation: a
+   source held at the row's frequency over a region wider than the
+   row's wavelength drives the row as a cavity, and the body's content
+   slows light's pace inside it, so the row inside the body is partly
+   trapped; a one-Node seat drives nothing but its six Ports. MY LINE:
+   the giving is at the body's Ports, where 9.71 (1) (c) reads the norm,
+   so the write of a body of several Nodes goes to its outer shell alone
+   (the Nodes with a Port to the outside), each at the declared weight,
+   and the interior is never driven; a one-Node body is unchanged bit
+   for bit. This reads record 2082 (2) ("the body's declared write at its
+   own Nodes") as the shell, a build-sheet line and no operation of the
+   law; the Boss's word decides it.
+
+4. **The bending row at the seat's rotation.** The seat's rotation on
+   the layer, 0.832 per interval, lies on light's dispersion at k = 1.55
+   per Link (cos omega = (2 + cos k) / 3 on a layer), 1.3 percent below
+   pi / 2 where the row's expectation was computed. The ray's deflection
+   in the pace does not depend on k at first order, and the lattice's
+   own anisotropy term (k^2 / 48) changes by 2.6 percent of itself; the
+   expectation stands, the file unchanged, unless the row's band is
+   tighter than that share.
+
+5. **The rows' resolution with the shorter windows, a number for the
+   reviewer.** A click's tick is spread by n / sqrt(12) about its mean
+   (9.85 (5) (d)); a row that reads a shift of a fraction f of the mean
+   cycle C resolves it at three standard errors after N = (3 n / (sqrt(12)
+   f C))^2 clicks. The light clock at n = 21 (the spread 6.1 intervals),
+   reading the redshift's 1.2 percent of a cycle near 220 intervals (2.6
+   intervals): 48 clicks. Each row's stock is to be checked against its
+   N.
