@@ -793,3 +793,5 @@ colour carrier is a live shape); a read mass that differs from the sum
 Not checked on the engine: the 3000-interval fates (the toy stands in);
 the kicked quark's exit tick; the dressed world's hand-over count; any
 orientation but x for a line and y for the stacked pair.
+
+> The scripts of this folder (`quark_numbers.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/quarks/<script>`).

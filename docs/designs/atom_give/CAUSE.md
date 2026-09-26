@@ -266,7 +266,7 @@ label of size Q times 16 times M per entry, toward the proton's Node;
 the fan's grain absent by construction), steady (a tenth of a shell
 every interval) or pulsed (one shell every 10 intervals), with and
 without `main`'s lost coincident fires; the map is
-[cause_kicks.py](cause_kicks.py) with its printout
+cause_kicks.py (`docs/designs/atom_give/cause_kicks.py`, deleted 2026-09-26) with its printout
 [cause_kicks.out](cause_kicks.out), a host computation and no run of
 the engine, GAMEBOARD by formula. The radius at the quarter crossings
 over 7500 intervals (the reading: 13, 13, 17, 26, the escape at 3407):
@@ -437,8 +437,12 @@ beside the step lines, DETECTOR.
 [RUN.md](../atom_baseline/RUN.md) and [baseline_readings.out](../atom_baseline/baseline_readings.out)
 (`main` at 384b15c6); [ALGEBRA.md](../atom_algebra/ALGEBRA.md) sections
 1 to 3; [PINS.md](../atoms/PINS.md) section 2; [the flow weight design](../flow_weight/DESIGN.md)
-(flow-link-v1); [cause_kicks.py](cause_kicks.py) and [its printout](cause_kicks.out)
+(flow-link-v1); cause_kicks.py (`docs/designs/atom_give/cause_kicks.py`, deleted 2026-09-26) and [its printout](cause_kicks.out)
 (the kick map, no engine import); [`core.integer.by_drive`](../../../src/event_universe/core/integer.py)
 (the count primitive, BEAM_LAW note 41, record 108); [DESIGN_MOMENTUM.md](DESIGN_MOMENTUM.md) sections 5 (g)
 and 6; [BEAM_LAW note 30](../../BEAM_LAW.md); [DERIVATIONS_BEAM 12b.1](../../DERIVATIONS_BEAM.md);
 records 108, 652, 817, 872, 898, 926, 935 and 937 of [the log](../../LOG_2026-09-20.md).
+
+> The scripts of this folder (`cause_kicks.py`, `centred_readings.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/atom_give/<script>`).
+
+> The scripts of this folder (`cause_kicks.py`, `centred_readings.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/atom_give/<script>`).

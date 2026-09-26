@@ -76,7 +76,7 @@ Reported, not changed here; the engine's files are Main Loop's:
 | `tests/test_massive_record.py` | 1858 | the largest test file |
 | `src/event_universe/core/game_board.py` | 124 | `adjacent_node` and `cube_symmetries` are called by nothing (59 lines) |
 | `src/event_universe/events/world.py` | | `default_width` is called by nothing |
-| `docs/designs/**/*.py` | 36,049 | the design scripts, records; many import deleted modules and do not run |
+| `docs/designs/**/*.py` | 2,187 left | 161 scripts (33,862 lines) that nothing living named were deleted on 2026-09-26 (the owner's word, record 2229; branch feature/remove-design-scripts), each folder's document naming the restore commit `6d2a92e2`; the folders that held scripts alone went with them (`docs/designs/content_well`, `docs/designs/fall_from_rule`, `docs/designs/laves_graph`); the eight scripts that living code names stay |
 
 ## 5. The earlier pages
 

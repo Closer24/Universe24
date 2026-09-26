@@ -486,3 +486,5 @@ formulas, and the alternatives named (W = E^2 as the state; -grad(A) alone)
 are stated as what the design must decide, not as rules. Nothing here
 changes beam-v1; the law's FAIL rows 4a, 4b and 5b stand as the law's
 prediction (route A) beside the identity, as record 270 decided.
+
+> The scripts of this folder (`amended_pins.py`, `bell_plateau.py`, `click_gram.py`, `covariant_readings.py`, `crowd_decay.py`, `decay_click.py`, `entropy_clicks.py`, `event_count.py`, `growing_wall.py`, `kepler_compton.py`, `lamp_orbits_map.py`, `lattice_gas.py`, `lorentz_field.py`, `masses_chain.py`, `massive_rows.py`, `mover_counter.py`, `nature_numbers.py`, `orbit_thrown.py`, `periodic_images.py`, `rest_of_masses.py`, `smallest_mass.py`, `uncertainty_lattice.py`, `units_from_g.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/derivations_beam/<script>`).

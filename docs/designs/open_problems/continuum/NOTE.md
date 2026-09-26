@@ -13,7 +13,7 @@ limit), 21.5 (the six-point standard), 25.4 and 25.5 (the continuity
 equation and the lattice gas), 25.10 and 26 (the verdicts and the
 programs), and the general-formula paper's "Continuum limits: what
 returns and what does not". Every number is from
-[continuum_map.py](continuum_map.py) beside this note (the flight rule
+continuum_map.py (`docs/designs/open_problems/continuum/continuum_map.py`, deleted 2026-09-26) beside this note (the flight rule
 transcribed, integers, no engine import) and its output
 [continuum_map.out](continuum_map.out); no run, nothing registered,
 nothing decided. Notation: Q the label's scale, N the circle, P the
@@ -229,3 +229,5 @@ conditional theorem labelled so; the law meets it.
 [NATURE](../../../NATURE.md) rows 5a and 2c;
 the five notes before this one under docs/designs/open_problems/ (on their branches, PRs #602, #603, #606, #608 and the Born note's);
 [the three tests](../../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).
+
+> The scripts of this folder (`continuum_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/open_problems/continuum/<script>`).

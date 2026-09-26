@@ -13,7 +13,7 @@ radius under the centred step plus the key `atom_level` and the electron's
 the +x crossing of the x axis). The pins are [LEVELS.md](LEVELS.md) section
 5 (d), R1 to R6, declared before the runs; NO PIN WAS MOVED AFTER THE RUNS.
 The reading is the Atom Baseline Runner's method (`baseline_readings.py`,
-imported by [level_readings.py](level_readings.py), nothing copied): the
+imported by level_readings.py (`docs/designs/atom_levels/level_readings.py`, deleted 2026-09-26), nothing copied): the
 faces' clicks paired into releases, the arrival Nodes, the axis crossings,
 the phase increments unwrapped; its printout [level_readings.out](level_readings.out);
 the run blocks (the fingerprints, the readings) in
@@ -182,7 +182,7 @@ one PASS, two not applicable; R6 PASS; R4 NOT READ; R2 a diagnostic.
 ## Links
 
 [LEVELS.md](LEVELS.md) (the rule, section 2 (b); the pins, section 5);
-[level_readings.py](level_readings.py) and [its printout](level_readings.out);
+level_readings.py (`docs/designs/atom_levels/level_readings.py`, deleted 2026-09-26) and [its printout](level_readings.out);
 the run blocks (`examples/events/atoms/expectations.json`, deleted 2026-09-26);
 the worlds and the atoms README (`examples/events/atoms/README.md`, deleted 2026-09-26);
 [RUN_CENTRED.md](../atom_give/RUN_CENTRED.md) (the control);

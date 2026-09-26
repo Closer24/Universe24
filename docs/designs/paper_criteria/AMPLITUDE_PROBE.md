@@ -128,6 +128,8 @@ PYTHONPATH=src python tools/amplitude_probe.py <run folder> [--records 60] [--em
 ## 5. Links
 
 - [RUN_10.md](../fail_rows/RUN_10.md): the world, the chain of steps, the pins.
-- [slits_huygens_pin.py](slits_huygens_pin.py): the pin machinery whose forms the probe checks the engine against.
+- slits_huygens_pin.py (`docs/designs/paper_criteria/slits_huygens_pin.py`, deleted 2026-09-26): the pin machinery whose forms the probe checks the engine against.
 - [BEAM_LAW.md note 45](../../BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation): the exact phase at the click.
-- [two_slits_map.py](../fraction_free/two_slits_map.py): the walk on the engine's digital line and flight table.
+- two_slits_map.py (`docs/designs/fraction_free/two_slits_map.py`, deleted 2026-09-26): the walk on the engine's digital line and flight table.
+
+> The scripts of this folder (`slits_huygens_pin.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/paper_criteria/<script>`).

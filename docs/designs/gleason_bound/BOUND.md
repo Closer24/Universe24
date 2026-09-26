@@ -25,7 +25,7 @@ the wheel), the tables as integers (`core/phase.py`; the listing
 ([malus_map.out](../malus/malus_map.out) sections 2 and 4), the Born note
 ([NOTE.md](../open_problems/born/NOTE.md) sections 2 and 4), records 817
 and 894 of the log of 2026-09-20. Every number here is from
-[bound_map.py](bound_map.py) beside this note, run on the engine's own
+bound_map.py (`docs/designs/gleason_bound/bound_map.py`, deleted 2026-09-26) beside this note, run on the engine's own
 tables (`event_universe.core.phase`, host arithmetic, no run) with its
 output [bound_map.out](bound_map.out); a number read from the register is
 labelled DETECTOR with its line, a number computed from the tables is
@@ -309,7 +309,7 @@ forms it with the amplitudes 32 x amount, `AMPLITUDE_SCALE` in
 `events/amplitude.py`; a common scale, the Boss's 512 included, changes no
 zero), has additional zeros: elements f nonzero in `Z[zeta_N]` whose table
 reading is exactly (0, 0). Searched by computation
-([zeros_map.py](zeros_map.py), its output [zeros_map.out](zeros_map.out)):
+(zeros_map.py (`docs/designs/gleason_bound/zeros_map.py`, deleted 2026-09-26), its output [zeros_map.out](zeros_map.out)):
 every f with at most three rows at distinct phases and amounts 1 to 4, at
 every phase (the sign `p -> p + N/2` is exact on both sides and is used;
 the phase rotation is no symmetry of the table reading, section 1, and is
@@ -385,10 +385,12 @@ at the window 32.
   the Gram matrix's eight diagonal values: 6.7 there.
 - The tables: `src/event_universe/core/phase.py` (`phase_cosines`,
   `phase_sines`); [tables.txt](../amplitude-v1/tables.txt).
-- The Malus numbers: [malus_map.py](../malus/malus_map.py) and
+- The Malus numbers: malus_map.py (`docs/designs/malus/malus_map.py`, deleted 2026-09-26) and
   [malus_map.out](../malus/malus_map.out); record 395.
 - The classes of harmonics: [the Born note](../open_problems/born/NOTE.md)
   sections 2 and 4, [born_map.out](../open_problems/born/born_map.out).
-- The arithmetic of this note: [bound_map.py](bound_map.py),
-  [bound_map.out](bound_map.out); the zeros' search: [zeros_map.py](zeros_map.py),
+- The arithmetic of this note: bound_map.py (`docs/designs/gleason_bound/bound_map.py`, deleted 2026-09-26),
+  [bound_map.out](bound_map.out); the zeros' search: zeros_map.py (`docs/designs/gleason_bound/zeros_map.py`, deleted 2026-09-26),
   [zeros_map.out](zeros_map.out).
+
+> The scripts of this folder (`bound_map.py`, `zeros_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/gleason_bound/<script>`).

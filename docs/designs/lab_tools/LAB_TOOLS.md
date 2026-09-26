@@ -1812,3 +1812,5 @@ The unit tests:
    interval until a polar body.
 5. The default: a world with one label replays main's record byte for
    byte.
+
+> The scripts of this folder (`board_algebra_coupled.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/lab_tools/<script>`).

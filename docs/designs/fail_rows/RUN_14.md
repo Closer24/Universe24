@@ -758,7 +758,7 @@ pixels; agreement within the grain confirms the push's and the wall's
 forms at the comb (Newton's form in the crowd the world has),
 disagreement names a second cause. A COMPUTATION labelled a CHECK: no
 world, no key, no run of a pin, no pin moved. The script and its output
-are beside this file: [run_14_check.py](run_14_check.py),
+are beside this file: run_14_check.py (`docs/designs/fail_rows/run_14_check.py`, deleted 2026-09-26),
 [run_14_check.out](run_14_check.out), the two JSON records
 `run_14_check_mass.json` and `run_14_check_light.json`. Written on
 `main` at bf8330f1 (PR #987 merged), the reviewer's reading (1) as the
@@ -961,6 +961,6 @@ owner's word.
   the tool `tools/newton_side_readings.py`; the test
   `tests/test_newton_side_readings.py`; Side B's generator
   `examples/events/orbit_lamp/make_worlds.py`; the check of section 10,
-  [run_14_check.py](run_14_check.py) and [run_14_check.out](run_14_check.out).
+  run_14_check.py (`docs/designs/fail_rows/run_14_check.py`, deleted 2026-09-26) and [run_14_check.out](run_14_check.out).
 - The log: records 768, 1043, 1044, 1046, 1047, 1050, 1053, 1095, 1098,
   1113, 1117, 1122 and 1128.

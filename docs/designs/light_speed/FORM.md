@@ -168,7 +168,7 @@ holds multiplies by `wall_old / wall_new`, between `1 / (3 P)` and `3 P`
 at the bound P (192 at P = 64); a residue of a long line discharges as
 consecutive Links on a short one, one per interval, above the pace the
 momentum earns. Reproduced on the same integers
-([drive_residue_map.py](drive_residue_map.py) (A), its output
+(drive_residue_map.py (`docs/designs/light_speed/drive_residue_map.py`, deleted 2026-09-26) (A), its output
 [drive_residue_map.out](drive_residue_map.out)): at `|p|_1 = 6000`, M =
 64, S = 1, the residue 0.585 Link of the (3, 1, 2) line's wall (4056864)
 is 2.575 Links of the heading's (922144): four Links in the first four
@@ -368,3 +368,5 @@ bond clock is the law's only slowing in motion, at 1 + 2 / k on the axis.
    pins are ticks 71 and 126; without it gamma stays HYPOTHESES 21's
    limit; and it and the derivation's exchange clock are two clocks, of
    which a body can have one.
+
+> The scripts of this folder (`drive_residue_map.py`, `light_speed_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/light_speed/<script>`).

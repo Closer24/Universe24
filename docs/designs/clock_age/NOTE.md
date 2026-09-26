@@ -13,7 +13,7 @@ owner's decision. This note is my read: is it a rule change under its own
 identity, does it pass the three tests, what it predicts for NATURE's rows,
 and the pin of the two-crowd test before any run. The numbers are in
 [clock_age_map.out](clock_age_map.out), from
-[clock_age_map.py](clock_age_map.py) (the engine's own flight lines, the
+clock_age_map.py (`docs/designs/clock_age/clock_age_map.py`, deleted 2026-09-26) (the engine's own flight lines, the
 one import; no run). Nothing here is registered or decided.
 
 ## 1. What the law says today
@@ -192,3 +192,7 @@ series E (`examples/events/redshift/README.md`, deleted 2026-09-26); series U (d
 series V (deleted on 2026-09-23); [optical-v1](../gr_rows/DESIGN.md);
 [NATURE](../../NATURE.md) rows 3, 4a, 4b and 11a;
 [the three tests](../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).
+
+> The scripts of this folder (`clock_age_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/clock_age/<script>`).
+
+> The scripts of this folder (`clock_age_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/clock_age/<script>`).

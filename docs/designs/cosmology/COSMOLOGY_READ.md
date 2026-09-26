@@ -14,7 +14,7 @@ Outside](../einstein_outside/DERIVATION.md) II.10 to IV,
 [DARK_SECTOR.md](../far_lamp/DARK_SECTOR.md), [SCHEDULE.md](../detector_law/SCHEDULE.md)
 and [DECLARATIONS.md](../detector_law/declarations/DECLARATIONS.md) section 4. It
 changes no page, declares and moves no pin, runs nothing, and enters neither the
-paper nor the GO. Its arithmetic is [cosmology_read.py](cosmology_read.py) with its
+paper nor the GO. Its arithmetic is cosmology_read.py (`docs/designs/cosmology/cosmology_read.py`, deleted 2026-09-26) with its
 output [cosmology_read.out](cosmology_read.out), pure integers and fractions.
 
 **The rules and the kinds.** Every symbol is named in English at its first use; a
@@ -541,3 +541,5 @@ DESIGN.md section 5's rule, not derived here. FOR THE OWNER.
   were not read against the law, which has no object for them (2 (d) 5); the paper's
   own text on the dark sector was not read (paper-48 is the one writer's), and the
   third FOR THE OWNER line is an offer to the Boss, not a proposal into it.
+
+> The scripts of this folder (`cosmology_read.py`, `receding_source_chain.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/cosmology/<script>`).

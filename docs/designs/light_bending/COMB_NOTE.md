@@ -12,7 +12,7 @@ light bending") asked what the comb does as the fan grows. This note
 answers by the same map (`step_algebra_map.py`'s `Crowd`, one row per
 direction per interval, the flight rule's dwell at every Node, the flow
 the label per arriving row), re-run at five fan bounds by
-[`comb_map.py`](comb_map.py) (its output [`comb_map.out`](comb_map.out)).
+`comb_map.py` (`docs/designs/light_bending/comb_map.py`, deleted 2026-09-26) (its output [`comb_map.out`](comb_map.out)).
 Every number is GAMEBOARD by formula, a host arithmetic of the lines;
 nothing here is a detector's reading and nothing is pinned.
 
@@ -63,3 +63,5 @@ crowd's kicks and the fan's grain (docs/designs/atoms/PINS.md items 3 and
 4), not the comb of this table; the bound the atom needs is a separate
 algebra. Nothing is run; no pin moves; the Algebraist's files are
 untouched.
+
+> The scripts of this folder (`comb_map.py`, `step_algebra_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/light_bending/<script>`).

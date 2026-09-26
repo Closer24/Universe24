@@ -29,7 +29,7 @@ covariant readings cannot give are those that need a rule on the LINEAR
 block, a row's pace or turn read off what arrives at its Node. Written by
 the mathematician, read-only; the pins before any run and before the
 rule's numbers; every number made by the host script
-[gr_rows_map.py](gr_rows_map.py) with its output
+gr_rows_map.py (`docs/designs/gr_rows/gr_rows_map.py`, deleted 2026-09-26) with its output
 [gr_rows_map.out](gr_rows_map.out); no run, no fit, no build. The
 derivation mathematician states the status of each of Einstein's formulas
 in section 21.2 of DERIVATIONS_BEAM.md; this note designs the rule and
@@ -556,4 +556,6 @@ crowd.
 - The meeting key and the crowd audit: [BEAM_LAW.md](../../BEAM_LAW.md) notes 35, 47 and 48; the register: the lensing README (`examples/events/lensing/README.md`, deleted 2026-09-26), [EXPERIMENTS.md](../../EXPERIMENTS.md) series K.
 - The fan by angle and the exact phase at the click: [designs/fraction_free/TWO_SLITS.md](../fraction_free/TWO_SLITS.md) sections 2, 7 and 10.
 - The vector form, the six verbs and the roundings at load: [designs/vector_form/LAW.md](../vector_form/LAW.md) sections 4.1, 5 and 6; the three tests: [skills/workflow.md](../../../skills/workflow.md).
-- The map: [gr_rows_map.py](gr_rows_map.py), [gr_rows_map.out](gr_rows_map.out).
+- The map: gr_rows_map.py (`docs/designs/gr_rows/gr_rows_map.py`, deleted 2026-09-26), [gr_rows_map.out](gr_rows_map.out).
+
+> The scripts of this folder (`gr_rows_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/gr_rows/<script>`).

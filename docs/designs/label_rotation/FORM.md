@@ -140,3 +140,5 @@ applied once at the click (exact composition, one rounding, the multiplicity
 not (the ceiling at the fourth Link); for three labels the mixing at the
 ends with a phase per Link per label, 2^48 per path, and the counts above
 as the pinned expectation of the first run.
+
+> The scripts of this folder (`rotation_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/label_rotation/<script>`).

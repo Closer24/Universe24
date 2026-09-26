@@ -20,7 +20,7 @@ lack?"), the one constant K of section 13 at a galaxy's edge, in three
 forms. Written by
 the mathematician, read-only, on the law as it stands on main; the pins
 before the numbers; every number made by the host script
-[s_and_a0_map.py](s_and_a0_map.py) with its output
+s_and_a0_map.py (`docs/designs/far_lamp/s_and_a0_map.py`, deleted 2026-09-26) with its output
 [s_and_a0_map.out](s_and_a0_map.out); no run, no fit, no rule proposed.
 Notation per record 184; rows and bodies, not light and matter.
 
@@ -377,4 +377,4 @@ was.
 - The width and G: [DERIVATIONS_BEAM.md](../../DERIVATIONS_BEAM.md) sections 3.3, 3.4, 13.2 (b), 13.3, 13.4, 16.2 (e) and (f), 16.4; the delay field, the clock and the general flux: 5.1, 5.2, 5.5; the books' balance: 9 (I5); the growing wall and `expansion-v1`: 15, 20.4; the push's form and its divisions: [designs/vector_form/LAW.md](../vector_form/LAW.md) sections 3 and 6; the inventory of what is not one of the six: section 1.
 - The click model and the readings: [designs/amplitude-v1/CLICK_SQUARE.md](../amplitude-v1/CLICK_SQUARE.md); the click without amplitudes: DERIVATIONS_BEAM.md 6.7; the moments and the crossing rule: sections 2 and 5.7 of [HIGHLIGHTS.md](../../HIGHLIGHTS.md); the meeting: DERIVATIONS_BEAM.md 5.4.
 - The dark sector: [DARK_SECTOR.md](DARK_SECTOR.md); the far lamp: [BRIGHTNESS.md](BRIGHTNESS.md).
-- The map: [s_and_a0_map.py](s_and_a0_map.py), [s_and_a0_map.out](s_and_a0_map.out).
+- The map: s_and_a0_map.py (`docs/designs/far_lamp/s_and_a0_map.py`, deleted 2026-09-26), [s_and_a0_map.out](s_and_a0_map.out).
