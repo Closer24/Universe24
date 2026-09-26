@@ -573,8 +573,8 @@ The owner's one page, in force now. It governs every other section of this file;
 1. `main` is the one version that works. No one pushes to it directly.
 2. Every task is one short branch from `main` (`feature/...`, `core/...`, `exp/...`). It is merged within days and the branch is deleted after the merge (this replaces the old word never to delete a branch, for merged branches only).
 3. Only the Boss merges into `main`, and only when CI is green on the pull request's head.
-4. Only Main Loop touches the central loop (`src/event_universe/core/` once the cut of record 2208 makes it). Whoever needs something in the core opens an issue.
-5. A new primitive (the owner's "feature") is one folder under `src/event_universe/features/`, registered under its unique name (point 12 below). It acts only when the run's files declare it; the code holds no flag and no written default (records 2172, 2199 item 7). Several primitives that work together are one composite, registered under one name.
+4. Only Main Loop touches the core (`src/event_universe/core/`: `main_loop.py`, which takes the input, runs the step and writes the output; the step, the Node and the register, each its own file; record 2221). Whoever needs something in the core asks Main Loop.
+5. A new primitive (the owner's "feature") is one folder under `src/event_universe/features/`, which declares its own unique name, place, reads and writes; the register finds it by its folder, so adding one touches no shared file (point 12 below; record 2221). It acts only when the run's files declare it; the code holds no flag and no written default (records 2172, 2199 item 7). Several primitives that work together are one composite, registered under one name.
 6. The mathematician approves every primitive before its merge, by the comment `APPROVED-MATH` on its pull request.
 7. The most important test: with the new primitive undeclared, every old run comes out identical to the bit.
 8. Every result names the `main` commit it ran on. There are no tags (record 2218); the engine keeps no version in its code or files (record 2182).
