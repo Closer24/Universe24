@@ -1140,10 +1140,14 @@ def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str
                 f"{BEAM_LAW}: {where}.phase must be 1 or 2, the levels at a Node (ALGEBRA.md 9.91 (1))"
             )
         self_source = _object(obj["self_source"], f"{where}.self_source", {"unit"}, {"unit"})
-        if self_source["unit"] != 0:
+        self_unit = _integer(self_source["unit"], f"{where}.self_source.unit", 0)
+        amplitude = universe["amplitude_bound"]
+        assert isinstance(amplitude, int)
+        if 0 < self_unit < 24 * amplitude:
             raise ValueError(
-                f"{BEAM_LAW}: {where}.self_source.unit must be 0: the self-source (ALGEBRA.md 9.78 "
-                "(3), 9.91 (5)) is not built"
+                f"{BEAM_LAW}: {where}.self_source.unit {self_unit} is below 24 A = "
+                f"{24 * amplitude}: the self-source's unit P_2 is 0 (off) or "
+                "at least 24 A (ALGEBRA.md 9.91 (5))"
             )
         pair_value = obj["pair"]
         if pair_value != "body" and not (
@@ -1166,7 +1170,7 @@ def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str
             "pair": pair_value,
             "parts": list(parts),
             "levels": obj["phase"],
-            "self_unit": 0,
+            "self_unit": self_unit,
         }
         reads: list[dict[str, object]] = []
         raw_reads = obj["reads"]
@@ -1360,6 +1364,9 @@ BLOCK_KEYS = {
     # 7): an emitting block names the detector set whose one detector is its
     # record's ladder; admitted on an emitting block alone
     "receiver",
+    # the stock of the body's own family where its emitter gives it (ALGEBRA.md
+    # 9.96 (5); commit 6)
+    "stock",
 }
 # The margin rule's two kinds of world (MASSIVE_RECORD.md section 11 item 4,
 # Reviewer 3's two lines): a pin world's Nodes two extents from a
@@ -2045,6 +2052,10 @@ class BlockDefinition:
     # the emitter as a clicking body (ALGEBRA.md 9.17 (4)): None on a body
     # that emits nothing by the click
     emitter: EmitterDefinition | None = None
+    # THE STOCK OF THE BODY'S OWN FAMILY (ALGEBRA.md 9.96 (5); commit 6): the count of
+    # its own quanta set aside for giving where its emitter gives its own family, 0
+    # elsewhere (another family's stock is the body's `held` quanta of it)
+    stock: int = 0
 
 
 @dataclass(frozen=True)
@@ -3452,12 +3463,13 @@ def _family_generic(obj: dict[str, object], label: str, detector_law: bool) -> F
     levels = obj.get("levels", 2)
     if levels not in (1, 2):
         raise ValueError(f"{BEAM_LAW}: {label}.levels must be 1 or 2 (ALGEBRA.md 9.91 (1))")
+    # THE SELF-SOURCE'S UNIT P_2 (ALGEBRA.md 9.78 (3), 9.91 (5), 9.97; commit 6): 0 turns
+    # the line off (every shipped family: 9.97 derives 0 for gravity's t part and a
+    # computed P_2 whose term is 0 in integers on every shipped world); above 0 the
+    # engine subtracts (the six squared differences summed over the components) div P_2
+    # from the step; the bound 24 A is checked on the file's entries with the universe's
+    # A (`families_file_entries`)
     self_unit = _integer(obj.get("self_unit", 0), f"{label}.self_unit", 0)
-    if self_unit != 0:
-        raise ValueError(
-            f"{BEAM_LAW}: {label}.self_unit must be 0: the self-source (ALGEBRA.md 9.78 (3), 9.91 "
-            "(5)) is not built"
-        )
     held_factors: tuple[int, ...] = tuple(1 for _ in parts)
     held_dipole: str | None = None
     held_dipole_div = 1
@@ -4849,6 +4861,7 @@ def _block(
             )
         receiver = value
     emitter: EmitterDefinition | None = None
+    stock = 0
     if "emitter" in obj:
         # the emitter as a clicking body (ALGEBRA.md 9.17 (4)): a body of a
         # massive kind with its seed (the excited record) and its stock
@@ -4890,7 +4903,24 @@ def _block(
         # held at the body under `held`; a giving lowers them and leaves the
         # body's own quanta and its charge (a body spending its own quantum
         # per giving would lose charge by giving light: refused)
-        if held[emitter.family] < 1:
+        # A BODY GIVING ITS OWN FAMILY (ALGEBRA.md 9.96 (5); commit 6): its stock is `stock`, a
+        # count of its own quanta set aside for giving, from 1 to `amount`; each giving lowers
+        # M by one; `stock` is refused where the given family is another (its stock is `held`)
+        if emitter.family == names[family.name]:
+            if "stock" not in obj:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.stock is required: the emitter gives the body's own family "
+                    f"{family.name!r}, so the body declares the count of its own quanta set aside for "
+                    "giving, from 1 to `amount` (ALGEBRA.md 9.96 (5))"
+                )
+            stock = _integer(obj["stock"], f"{label}.stock", 1, amount)
+        elif "stock" in obj:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.stock is refused: the emitter gives {families[emitter.family].name!r}, "
+                "another family, whose stock is the body's `held` quanta of it (ALGEBRA.md 9.51 (8), "
+                "9.96 (5))"
+            )
+        elif held[emitter.family] < 1:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.emitter needs its stock as the given family's content held "
                 f"at the body: `held` naming {families[emitter.family].name!r} from 1 (a world that "
@@ -4942,6 +4972,7 @@ def _block(
         margin=str(margin),
         receiver=receiver,
         emitter=emitter,
+        stock=stock,
     )
 
 
@@ -5002,11 +5033,8 @@ def _emitter(
     if not isinstance(name, str) or name not in names:
         raise ValueError(f"{BEAM_LAW}: {label}.family names an unknown family")
     given_family = families[names[name]]
-    if given_family is family:
-        raise ValueError(
-            f"{BEAM_LAW}: {label}.family is the body's own family (the given record is of another "
-            "family, the photon of the excited body)"
-        )
+    # a body may give its own family (ALGEBRA.md 9.96 (5); commit 6): the given record
+    # carries the emitter's declared pair, the stock is the body's `stock` of its own quanta
     if given_family.free:
         raise ValueError(
             f"{BEAM_LAW}: {label}.family {name!r}: the given family is a paid family (light's kind, "
@@ -6661,16 +6689,14 @@ def _initial_state_checks(
     (the body's own mode in place on the composed operator: at another
     body's Nodes the operator carries that body's summand, so those Nodes
     are its check, not this one's; Nature's reading for the mathematician's
-    word, BUILD.md section 26 item 20), and THE TAIL: its profile 0 at
-    every Node of every other body of its family (a body's mode ends
-    before another body of its family begins; the mathematician's 86e1df43
-    on ALGEBRA.md 9.35, BUILD.md section 26 item 28). The remainders are 0 by
+    word, BUILD.md section 26 item 20); the tail rule of 9.35 (a body's mode
+    0 at every Node of every other body of its family) is RETIRED by ALGEBRA.md
+    9.96 (4) (commit 6). The remainders are 0 by
     construction (the profile is written at both levels with none); the
     amplitude's bound and the rich giving Nodes are checked where the block
     is parsed."""
     board = (int(shape[0]), int(shape[1]), int(shape[2]))
     count = board[0] * board[1] * board[2]
-    stride_x, stride_y = board[1] * board[2], board[2]
     blocks: list[tuple[int, MeasuredDefinition, BlockDefinition, list[int]]] = []
     for number, entry in enumerate(measured):
         block = entry.block
@@ -6732,26 +6758,10 @@ def _initial_state_checks(
                 f"{block.seed}); the generator writes the mode's integers and the loader checks "
                 "them in integers (ALGEBRA.md 9.22 (7) (ii), the model owner's record 1886)"
             )
-        # THE TAIL (the mathematician's 86e1df43 on ALGEBRA.md 9.35; BUILD.md
-        # section 26 item 28): a body's mode ends before another body of its
-        # family begins; the profile is 0 at every Node of every other body
-        # of the family (below one unit: in integers, 0), else refused naming
-        # both bodies, the Node and the value
-        for other_number, other, _other_block, other_nodes in blocks:
-            if other_number == number or other.family != entry.family:
-                continue
-            for index in other_nodes:
-                value = block.profile[index]
-                if value == 0:
-                    continue
-                node = (index // stride_x, (index // stride_y) % board[1], index % board[2])
-                raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}].seed is {value} at Node {list(node)} of "
-                    f"measured[{other_number}]: a body's mode ends before another body of its "
-                    "family begins (the profile 0 at every Node of every other body of the "
-                    "family; the mathematician's 86e1df43 on ALGEBRA.md 9.35; BUILD.md section "
-                    "26 item 28); move the bodies apart or lower the amplitude"
-                )
+        # THE SEPARATION RULE OF 9.35 IS RETIRED (ALGEBRA.md 9.96 (4); the one stroke,
+        # commit 6): each body's record is its own array and meets another body only
+        # through the held families, so two bodies of one family may stand anywhere;
+        # the tail check of item 28 is gone
 
 
 def _connected_pieces(

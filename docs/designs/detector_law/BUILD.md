@@ -4626,6 +4626,60 @@ would have found no cell.
    Lorentz clock's rows now also turn by the transport (its body's gravity x
    part 72), a check-mode digest.
 
+65. THE ONE STROKE, COMMIT 6: THE BODY ON ONE NODE, IN PART (ALGEBRA.md 9.91 (10)
+   6; 9.91 (8) (v), (5); 9.78 (5); 9.96 (4), (5); 9.97). BUILT: (i) THE SPIN'S
+   STEP (`_body_step`, after the holds at (v), from the fields as the interval
+   leaves them): the spin is state on the body (`Block.spin`, `spin_before`,
+   the declared `spin` at the load), S_(t+1) = S_(t-1) + (2 [(Omega x S_t) + mu
+   x B_q] + carry) div (W Gamma), the leapfrog of the body's two integers with
+   the doubled term (the Euler line's rate; 9.78 (5) leaves the choice to the
+   build: this one is bit-exact backward, S_(t-1) = S_(t+1) - the same term
+   recomputed from S_t), Omega_i = [factor x (curl V)_i + 3 ((grad c) x n)_i div
+   W] div 8 from every read whose family's dipole is the spin (gravity's vector
+   part and its t part at the body's Node's six neighbours), B_q = (factor x
+   curl V_q) div 2 from every read whose family's dipole is the moment, the
+   read's factor its weight (times minus the body's charge Q for a read by q),
+   every division's remainder carried on the body (`_division_now`: backward
+   the value the forward wrote, the carry stepped back); the dipole hold of
+   item 61 reads the live spin. A body wider than one Node reads its own
+   hold at its Node's neighbours (the curl of its own dipole, which turns
+   nothing), so the step acts on a body on one Node, as 9.91 (8) (v) says.
+   (ii) THE SELF-SOURCE'S SLOT (`_self_source`; 9.91 (5)): a family with a unit
+   P_2 above 0 (the file's `self_source.unit`, the inline `self_unit`; the loader
+   bounds it at 24 A or 0) loses w Sigma_self from the step's right side, Sigma_self
+   = (the six squared differences summed over the family's records and
+   components, the levels at the interval's start) div P_2, which lowers a_next
+   by Sigma_self exactly and leaves the remainder; the inverse the same off
+   a_before; every shipped unit is 0 (9.97 (2) derives 0 for gravity's t part;
+   9.97 (3)'s computed P_2 for the waves gives 0 in integers on every shipped
+   world; the loader's computation of P_2 from E_1 and w_6 waits on the
+   mathematician's line, report 2). (iii) THE SEPARATION RULE OF 9.35 RETIRED
+   (9.96 (4)): the tail check of item 28 is gone; two wells of one family may
+   stand anywhere. (iv) A BODY GIVING ITS OWN FAMILY (9.96 (5)): the emitter's
+   family may be the body's own; its stock is the body's `stock` (a count of
+   its own quanta set aside, from 1 to `amount`, required there and refused on
+   an emitter of another family), each giving lowers M by one (the held count of
+   its own family, and the wall W = 3 Q M with it), the given record carries the
+   emitter's pair (the family's, or the emitter's `pair` on a family whose pair
+   is the body's), `stock_of` the one reading of a giver's stock. (v) THE INVERSE
+   admits a moving body that has not hopped (the drive's accumulator stepped
+   back); a hopped body is refused naming the hop's inverse (the field moved
+   back through the body, 9.52 (4) (i), not built). NOT LANDED, BUILT AND HELD
+   BACK (the code beside the handoff note): THE FEED AND THE INDUCTION of 9.78
+   (4) and 9.52 (2), (4), n_a += (C_+ - C_-) x W div (2 Gamma D_a F_a) with the
+   contraction summed over the Nodes across the body's Ports and n_a -= factor x W
+   x (the change of the read's vector component over the body) div (2 Gamma N):
+   with them the two tools of every chain world FALL TOGETHER, since a chain's
+   content field is a tent with a constant slope (the light clock's detector,
+   s = 1, hops toward its emitter within 300 intervals and about 24 Links over
+   the run; the emitter drifts 2 Links), so no resting world stays bit for bit
+   and no shipped row's expectation holds; sent to the mathematician (how a
+   tool is held, and the seat's factor of 2 in 9.52 (2)'s unit). THE GATE
+   tests/test_body_step.py; the four resting worlds BIT FOR BIT (no shipped body
+   spins, every unit 0, no own-family giver); the moving long Lorentz clock as at
+   item 64; the chain world's state digest moved by the block entry's `spin`
+   alone (tests/test_massive_record.py, the events and the audit bit for bit).
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

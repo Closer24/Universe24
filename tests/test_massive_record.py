@@ -401,10 +401,13 @@ def test_the_light_record_is_byte_identical_without_the_key():
     after the held families' step with the takings', so the given record's norm reads the
     content as it stands and the fields read the giving from the next interval (a defect
     against 9.57 (1) repaired, the mathematician's line; the giving worlds alone move); read
-    again at this head."""
+    again at this head; SINCE THE SPIN AS STATE (ALGEBRA.md 9.78 (5), 9.91 (8) (v); the one
+    stroke's commit 6, BUILD.md section 26 item 65) the state digest alone moved once more,
+    by the block entry's `spin` (the events and the audit bit for bit: no shipped body
+    spins)."""
     assert run_chain_digests() == {
         "events": "48af69fa57a7e158be4302795d77dabf6f673a95f49834e3940568af6f8ad170",
-        "state": "28af61ca17732b2819ea343901736e858e6763bb733496a1251bd89458d10811",
+        "state": "be330b22fda64f16b946ffdd1d827e2c4f2b5c2bdf9821deff22d3c70986ef5a",
         "audit": "9c0eccc9a144d0ad506de42fe4cd7e40c409f1bcc87091017a2897c4caee1fb8",
     }
 

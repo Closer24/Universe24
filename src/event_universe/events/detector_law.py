@@ -298,6 +298,11 @@ class Block:
     detector: int
     momentum: list[int]
     drive: list[int] = field(default_factory=lambda: [0, 0, 0])
+    # THE SPIN AS STATE (ALGEBRA.md 9.78 (5), 9.91 (8) (v); commit 6): S now and S one
+    # interval back, the leapfrog's two integers; the load's write is the body's
+    # declared `spin` at both
+    spin: list[int] = field(default_factory=lambda: [0, 0, 0])
+    spin_before: list[int] = field(default_factory=lambda: [0, 0, 0])
     count: int = 0
     previous_sum: int = 0
     own: LiveRecord | None = None
@@ -571,6 +576,8 @@ class DetectorLawSimulation:
             self._coarse = np.array(self.twist_table.coarse, dtype=np.int64).T
         # HOST: the Ports' angles per (family, own twist, direction) per interval
         self._twists: dict[tuple[int, int, bool], tuple[int, list[np.ndarray] | None]] = {}
+        # HOST: the self-source per family per interval (9.91 (5)), None at P_2 = 0
+        self._sources: dict[tuple[int, bool], tuple[int, np.ndarray]] = {}
         self.node_clock = int(world.node_clock)
         if self.node_clock < 1:
             raise ValueError(
@@ -672,6 +679,8 @@ class DetectorLawSimulation:
                 int(self.detector_at_node[tuple(entry.position)]),
                 [int(component) for component in entry.momentum],
             )
+            block.spin = list(definition.spin)
+            block.spin_before = list(definition.spin)
             self._write_pair(block)
             if definition.seed > 0 and world.body_record:
                 # THE BODY RECORD (ALGEBRA.md 9.46 (1), (7) (c); BUILD.md section
@@ -963,7 +972,11 @@ class DetectorLawSimulation:
         definition = self.families[family]
         if definition.held_dipole is None or len(definition.parts) < 2:
             return []
-        vector = block.definition.spin if definition.held_dipole == "spin" else block.definition.moment
+        vector = (
+            (block.spin[0], block.spin[1], block.spin[2])
+            if definition.held_dipole == "spin"
+            else block.definition.moment
+        )
         if not any(vector):
             return []
         centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
@@ -1329,6 +1342,16 @@ class DetectorLawSimulation:
             twist=twist,
         )
 
+    def stock_of(self, block: Block) -> int:
+        """THE STOCK of the family a body gives (ALGEBRA.md 9.51 (8), 9.96 (5)): its
+        held quanta of another family; of its own family, its declared `stock` less
+        its givings (each giving lowered M by one, the held count of its own)."""
+        emitter = block.definition.emitter
+        assert emitter is not None
+        if emitter.family == block.family:
+            return block.definition.stock - block.givings
+        return self.held[block.number][emitter.family]
+
     def _momentum_now(self, block: Block) -> list[int]:
         """The block's momentum at this interval: the declared P, or under a
         ramp the whole part P x t // ramp until the ramp ends (the pushing
@@ -1408,6 +1431,137 @@ class DetectorLawSimulation:
         for node in zip(*np.nonzero(block.mask), strict=True):
             address = (int(node[0]), int(node[1]), int(node[2]))
             self.detector_at_node[address] = block.detector if set_detector is None else set_detector
+
+    # THE BODIES ON ONE NODE (ALGEBRA.md 9.91 (8) (v), 9.78 (4), (5), 9.52 (2), (4); the
+    # one stroke, commit 6): the contraction, the feed, the induction, the spin's step,
+    # written once for any body and any read
+
+    def _read_factor(self, block: Block, weight: int, by: str) -> int:
+        """A read's factor on a body (ALGEBRA.md 9.78 (4)): the weight plainly, or minus
+        the body's charge Q times the weight for a read by q (the pace's convention,
+        `_effective_content`: like signs a hill)."""
+        return weight if by == "plain" else -self._body_charge(block.number) * weight
+
+    def _division_now(
+        self, block: Block, key: tuple[object, ...], numerator: int, wall: int, inverse: bool
+    ) -> int:
+        """This interval's value of a carried division on the body (`_carried_division`):
+        forward the division advanced; backward the value the forward wrote (the carry
+        then stepped back to the interval's start), so the inverse subtracts the same
+        term the step added."""
+        if not inverse:
+            return self._carried_division(block, key, numerator, wall, True, False)[0]
+        value = block.hold_value.get(key, 0)
+        self._carried_division(block, key, numerator, wall, False, True)
+        return value
+
+    def _curl(
+        self, records: list[LiveRecord], centre: tuple[int, int, int], wrap: tuple[bool, bool, bool]
+    ) -> list[int]:
+        """The curl of a vector part at the centre Node from its six neighbours' levels
+        (ALGEBRA.md 9.77 (3), 9.91 (8) (v)): (curl V)_x = V_z(+y) - V_z(-y) - V_y(+z) +
+        V_y(-z) and cyclic; a read beyond an open face is 0."""
+
+        def at(component: int, axis: int, sigma: int) -> int:
+            if records[component].silent or self.shape[axis] == 1:
+                return 0
+            node = list(centre)
+            node[axis] += sigma
+            if wrap[axis]:
+                node[axis] %= self.shape[axis]
+            elif not 0 <= node[axis] < self.shape[axis]:
+                return 0
+            return int(records[component].now[node[0], node[1], node[2]])
+
+        return [
+            at(z, y, 1) - at(z, y, -1) - at(y, z, 1) + at(y, z, -1) for y, z in ((1, 2), (2, 0), (0, 1))
+        ]
+
+    def _body_step(self, block: Block, inverse: bool) -> None:
+        """THE BODY'S STEP AT (v) (ALGEBRA.md 9.91 (8) (v), 9.78 (5); commit 6), from the
+        fields as the interval leaves them (their `now` levels, which the inverse meets
+        first): THE SPIN'S STEP, S_(t+1) = S_(t-1) + (2 [(Omega x S_t) + mu x B_q] +
+        carry) div (W Gamma), the leapfrog of the body's two integers with the doubled
+        term (the Euler line's rate, exactly invertible; 9.78 (5) leaves the choice),
+        Omega_i = [factor x (curl V)_i + 3 ((grad c) x n)_i div W] div 8 from a read whose
+        dipole is the spin (gravity's vector part and its t part c), B_q = (factor x curl
+        V_q) div 2 from a read whose dipole is the moment, the curls and the gradient at
+        the body's Node from its six neighbours, every remainder carried on the body.
+        Backward the same term is recomputed from S_t and subtracted, the divisions
+        stepped back. THE FEED AND THE INDUCTION of 9.78 (4) are NOT here: built and
+        held back, since with them the two tools of every chain world fall together
+        (the chain's content field is a tent; the light clock's detector hops toward
+        its emitter within 300 intervals) and no resting world stays bit for bit; the
+        line waits on the mathematician (BUILD.md section 26 item 65)."""
+        definition = self.families[block.family]
+        if not definition.reads:
+            return
+        advance = not inverse
+        gamma = self.node_clock
+        wall = self.wall_of(block)
+        centre = self._window_centre(block)
+        wrap = self.kind_wrap[block.family]
+        # the spin's term from S_t (the leapfrog's middle), before the momentum moves
+        spin_now = (
+            (block.spin[0], block.spin[1], block.spin[2])
+            if advance
+            else (block.spin_before[0], block.spin_before[1], block.spin_before[2])
+        )
+        omega = [0, 0, 0]
+        torque = [0, 0, 0]
+        momentum = self._momentum_now(block)  # n in the tidal term (grad c) x n
+        for position, (other, weight, by, _) in enumerate(definition.reads):
+            factor = self._read_factor(block, weight, by)
+            read = self.families[other]
+            if factor == 0 or len(read.parts) < 2 or read.held_dipole is None:
+                continue
+            curl = self._curl(self.held_parts[other][:3], centre, wrap)
+            if read.held_dipole == "spin":
+                content = self.held_records[other].now
+                gradient = [0, 0, 0]
+                for axis in range(3):
+                    if self.shape[axis] == 1:
+                        continue
+                    ahead, behind = list(centre), list(centre)
+                    ahead[axis] += 1
+                    behind[axis] -= 1
+                    for node in (ahead, behind):
+                        if wrap[axis]:
+                            node[axis] %= self.shape[axis]
+                    inside = all(0 <= node[axis] < self.shape[axis] for node in (ahead, behind))
+                    if inside or wrap[axis]:
+                        gradient[axis] = int(content[ahead[0], ahead[1], ahead[2]]) - int(
+                            content[behind[0], behind[1], behind[2]]
+                        )
+                cross = (
+                    gradient[1] * momentum[2] - gradient[2] * momentum[1],
+                    gradient[2] * momentum[0] - gradient[0] * momentum[2],
+                    gradient[0] * momentum[1] - gradient[1] * momentum[0],
+                )
+                for i in range(3):
+                    tidal = self._division_now(
+                        block, ("gradc", position, i), 3 * cross[i], wall, inverse
+                    )
+                    omega[i] += self._division_now(
+                        block, ("omega", position, i), factor * curl[i] + tidal, 8, inverse
+                    )
+            else:
+                for i in range(3):
+                    torque[i] += self._division_now(
+                        block, ("bq", position, i), factor * curl[i], 2, inverse
+                    )
+        mu = block.definition.moment
+        turn = [
+            omega[1] * spin_now[2] - omega[2] * spin_now[1] + mu[1] * torque[2] - mu[2] * torque[1],
+            omega[2] * spin_now[0] - omega[0] * spin_now[2] + mu[2] * torque[0] - mu[0] * torque[2],
+            omega[0] * spin_now[1] - omega[1] * spin_now[0] + mu[0] * torque[1] - mu[1] * torque[0],
+        ]
+        for i in range(3):
+            step = self._division_now(block, ("spin", i), 2 * turn[i], wall * gamma, inverse)
+            if advance:
+                block.spin[i], block.spin_before[i] = block.spin_before[i] + step, block.spin[i]
+            else:
+                block.spin[i], block.spin_before[i] = block.spin_before[i], block.spin[i] - step
 
     def shell_mask(self, block: Block) -> np.ndarray:
         """THE SHELL of a body (ALGEBRA.md 9.38 (2), 9.44 (5)): its Nodes with
@@ -1650,8 +1804,9 @@ class DetectorLawSimulation:
         if own is None or emitter is None or block.emit_now or block.window is not None:
             return
         # the stock is the given family's content held at the body (ALGEBRA.md
-        # 9.51 (8); item 47): nothing fires once it is spent
-        if self.held[block.number][emitter.family] <= 0:
+        # 9.51 (8); item 47), or the body's own quanta set aside (9.96 (5); commit
+        # 6): nothing fires once it is spent
+        if self.stock_of(block) <= 0:
             return
         if block.residue_pending:
             own.u, own.wheel = self.residue_of(own, block)
@@ -1895,7 +2050,7 @@ class DetectorLawSimulation:
         block.emit_now = False
         block.wait = 0
         own.u, own.wheel = residue, wheel
-        if self.held[number][family] > 0:
+        if self.stock_of(block) > 0:
             block.excitations += 1
 
     def _block_clock(self, block: Block) -> None:
@@ -1995,7 +2150,8 @@ class DetectorLawSimulation:
         # read on the box itself, zeros elsewhere; the box stays (a superset)
         axis_contents = None if field else self._axis_contents(live.family, inverse=True)
         twists = None if field else self._port_twists(live, True)
-        plain = axis_contents is None and twists is None and live.im_now is None
+        sigma_self = self._self_source(live, True)
+        plain = axis_contents is None and twists is None and live.im_now is None and sigma_self is None
         if not plain:
             reads_re, reads_im = self._arrivals(live, twists, True)
             a_before, live.remainder = self._level_inverse(
@@ -2010,6 +2166,8 @@ class DetectorLawSimulation:
                 live.remainder,
                 not field,
             )
+            if sigma_self is not None:
+                a_before -= sigma_self  # the same multiple of the wall off (9.91 (5))
             if live.im_now is not None:
                 assert live.im_before is not None and live.im_remainder is not None
                 im_reads = [np.zeros_like(live.now) for _ in range(3)] if reads_im is None else reads_im
@@ -2066,10 +2224,16 @@ class DetectorLawSimulation:
         (the bodies at rest and no click in the interval, the property test's
         world)."""
         for block in self.blocks:
-            if any(int(component) != 0 for component in block.momentum):
+            if block.stepped > 0 or any(block.hop):
                 raise ValueError(
-                    f"{BEAM_LAW}: the inverse map is defined at rest (block {block.number} moves)"
+                    f"{BEAM_LAW}: the inverse map is defined for a body that has not hopped (block "
+                    f"{block.number} hopped; the hop's inverse, the field moved back through the "
+                    "body, ALGEBRA.md 9.52 (4) (i), is not built)"
                 )
+        # the bodies' step back first (9.91 (8) (v); commit 6): the momentum and the
+        # spin as the interval began, from the fields as it left them
+        for block in self.blocks:
+            self._body_step(block, True)
         # the joint inverse (ALGEBRA.md 9.41 (2), 9.45 (2); item 51): every
         # family backward at the held levels of the interval's start (their
         # `before` level: the held families stepped last), then the held
@@ -2096,6 +2260,11 @@ class DetectorLawSimulation:
         for record in reversed(self.held_component_records()):
             self._advance_inverse(record)
         self._hold(inverse=True)
+        # the drive's accumulator back (no hop this interval: drive' = drive + n)
+        for block in self.blocks:
+            momentum = self._momentum_now(block)
+            for axis in range(3):
+                block.drive[axis] -= momentum[axis]
         self.tick -= 1
 
     # The rule
@@ -2387,6 +2556,43 @@ class DetectorLawSimulation:
             before,
             remainder,
         )
+
+    def _self_source(self, live: LiveRecord, inverse: bool) -> np.ndarray | None:
+        """THE SELF-SOURCE'S SLOT (ALGEBRA.md 9.78 (3), 9.91 (5), 9.97; commit 6): per
+        family with a unit P_2 above 0, per Node, from the levels at the interval's
+        start, Sigma_self = (SUM over the six Links of SUM over the family's records and
+        components of (a_j - a_i)^2) div P_2; the step's right side loses w Sigma_self,
+        which lowers a_next by Sigma_self exactly and leaves the remainder (a multiple of
+        the wall). None at P_2 = 0 (every shipped family: the line is not evaluated).
+        Backward the same array from the `before` levels. HOST: once per family per
+        interval, before any record of the family steps (the first request)."""
+        family = live.family
+        unit = self.families[family].self_unit
+        if unit <= 0:
+            return None
+        key = (family, inverse)
+        cached = self._sources.get(key)
+        if cached is not None and cached[0] == self.tick:
+            return cached[1]
+        wrap = self.kind_wrap[family]
+        total = np.zeros(self.shape, dtype=np.int64)
+        records = [record for record in self.records.values() if record.family == family]
+        if family in self.held_records:
+            records.extend([self.held_records[family], *self.held_parts[family]])
+        for record in records:
+            for level in (
+                record.before if inverse else record.now,
+                record.im_before if inverse else record.im_now,
+            ):
+                if level is None or (record.silent and record.held_part):
+                    continue
+                for axis in range(3):
+                    for sigma in (1, -1):
+                        difference = self._arrival(level, axis, sigma, wrap) - level
+                        total += difference * difference
+        sigma_self = np.floor_divide(total, unit)
+        self._sources[key] = (self.tick, sigma_self)
+        return sigma_self
 
     def booked_axis(self, live: LiveRecord) -> int | None:
         """THE TRANSVERSE BOOKING (ALGEBRA.md 9.82 (3) (b), (c)): the axis of a record's own
@@ -3071,9 +3277,10 @@ class DetectorLawSimulation:
         # read's far end, form (B) of item 34, HISTORY)
         axis_contents = None if field else self._axis_contents(live.family)
         twists = None if field else self._port_twists(live, False)
+        sigma_self = self._self_source(live, False)
         window = self._window(live.box, self.kind_wrap[live.family])
         im_next: np.ndarray | None = None
-        plain = axis_contents is None and twists is None and live.im_now is None
+        plain = axis_contents is None and twists is None and live.im_now is None and sigma_self is None
         if not plain:
             # THE FOUR PACES AND THE TRANSPORT (ALGEBRA.md 9.91 (2), (6); commits 3 and 4):
             # the arrivals per axis after the transport, the rule per level on the whole
@@ -3092,6 +3299,8 @@ class DetectorLawSimulation:
                 live.remainder,
                 not field,
             )
+            if sigma_self is not None:
+                nxt -= sigma_self  # the self-source's term, w Sigma_self off the right side (9.91 (5))
             if reads_im is not None or live.im_now is not None:
                 if live.im_now is None:
                     live.im_now = np.zeros_like(live.now)
@@ -3301,7 +3510,6 @@ class DetectorLawSimulation:
         rows as the train emitter's; the norm T from the open)."""
         emitter = block.definition.emitter
         assert emitter is not None
-        family = live.family
         live.window_open = False
         block.window = None
         if live.giving_line is not None and self.record is not None:
@@ -3315,7 +3523,7 @@ class DetectorLawSimulation:
             self.record(line)
         live.giving_line = None
         block.wait = 0
-        if self.held[block.number][family] > 0:
+        if self.stock_of(block) > 0:
             block.excitations += 1
 
     def _point_window_inverse(self, block: Block) -> None:
@@ -3654,6 +3862,11 @@ class DetectorLawSimulation:
         # and are held at the bodies' Nodes at the sources the interval's
         # clicks and givings left (ALGEBRA.md 9.45 (2); item 51)
         self._advance_fields()
+        # THE BODIES ON ONE NODE (ALGEBRA.md 9.91 (8) (v); commit 6): the spin's step
+        # from the fields as the interval leaves them (the feed and the induction held
+        # back, `_body_step`)
+        for block in self.blocks:
+            self._body_step(block, False)
         if self.world.probes and self.record is not None:
             values = []
             for probe in self.world.probes:
@@ -3844,6 +4057,7 @@ class DetectorLawSimulation:
                         "steps": block.stepped,
                         "drive": list(block.drive),
                         "momentum": list(block.momentum),
+                        "spin": list(block.spin),
                         "emitted": list(block.emitted),
                         "rows": None if block.own is None else block.own.now.ravel().tolist(),
                         "form": (

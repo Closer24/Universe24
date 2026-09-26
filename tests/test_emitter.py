@@ -537,7 +537,13 @@ def test_the_loaders_refusals_name_their_keys():
 
         return mutate
 
-    refused(emitter("family", "matter"), "the body's own family")
+    # a body gives its own family from its `stock` (ALGEBRA.md 9.96 (5); commit 6): the
+    # emitter of the body's own family without one is refused naming the stock
+    def own_family(document):
+        document["measured"][0]["emitter"]["family"] = "matter"
+        document["measured"][0]["emitter"]["clock"] = [512, 1]
+
+    refused(own_family, "stock is required")
     refused(emitter("family", "nobody"), "unknown family")
     # the retired keys of the declared residue (ALGEBRA.md 9.22 (4)), each
     # refused by name with its successor

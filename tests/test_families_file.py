@@ -214,9 +214,8 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     refuses(lambda d: d["families"][0].pop("parts"), r"families\[0\] lacks keys: parts")
     refuses(lambda d: d["families"][0].__setitem__("parts", [3]), "parts must be one of")
     refuses(lambda d: d["families"][0].__setitem__("phase", 3), "phase must be 1 or 2")
-    refuses(
-        lambda d: d["families"][0]["self_source"].__setitem__("unit", 24), "self_source.unit must be 0"
-    )
+    # the self-source's unit (9.91 (5); commit 6): 0, or at least 24 A
+    refuses(lambda d: d["families"][0]["self_source"].__setitem__("unit", 24), "is below 24 A")
     refuses(lambda d: d["families"][0].pop("held"), "declares neither held")
     refuses(
         lambda d: d["families"][2].__setitem__("pair", "mine"), r"pair must be \[num, den\] or the word"

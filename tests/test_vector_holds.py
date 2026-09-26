@@ -9,8 +9,6 @@ leak test per part). HOST; at rest bit for bit with the scalar engine."""
 
 from __future__ import annotations
 
-import json
-
 import numpy as np
 
 from event_universe.events.detector_law import TENSOR_AXES, DetectorLawSimulation, cross_with_axis
@@ -120,7 +118,8 @@ def test_a_body_at_rest_with_spin_and_moment_writes_the_dipoles_and_inverts_exac
         for name in ("clicks", "charge")
         for record in parts_of(simulation, name)
     }
-    carry = json.loads(json.dumps({str(k): v for k, v in simulation.blocks[0].hold_carry.items()}))
+    # the carried divisions with a remainder (the spin's step adds its keys at 0, commit 6)
+    carry = {str(k): v for k, v in simulation.blocks[0].hold_carry.items() if v}
     for _ in range(6):
         simulation.step()
     # the adds spread by the plain step between the holds; the field is nonzero and sourced
@@ -131,9 +130,7 @@ def test_a_body_at_rest_with_spin_and_moment_writes_the_dipoles_and_inverts_exac
         record = next(r for r in parts_of(simulation, key[0]) if r.part == key[1])
         assert np.array_equal(record.now, now) and np.array_equal(record.before, before), key
         assert np.array_equal(record.remainder, remainder), key
-    assert (
-        json.loads(json.dumps({str(k): v for k, v in simulation.blocks[0].hold_carry.items()})) == carry
-    )
+    assert {str(k): v for k, v in simulation.blocks[0].hold_carry.items() if v} == carry
 
 
 def test_at_rest_without_numbers_every_other_part_is_silent_and_the_scalar_engine_stands():

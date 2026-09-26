@@ -239,15 +239,14 @@ def test_bodies_are_whole_and_disjoint():
     parse_nature_beam_world(restamped(whole))
 
 
-def test_a_bodys_mode_ends_before_another_body_of_its_family_begins():
-    """THE TAIL (the mathematician's 86e1df43 on ALGEBRA.md 9.35; BUILD.md section 26 item
-    28): two wells of the matter kind on the closed chain of 400, A at [100, 132) with its
-    profile at 50 x 2^20 (the generator's mode, its last nonzero Node 194, 63 Links beyond
-    A's head, HOST) and B at [182, 214) with a scalar seed (a gap of 50): refused naming A,
-    B, the Node [182, 0, 0] and A's value there (130 read); B at [232, 264) (a gap of 100):
-    admitted. A light-kind wall at B's place is another family: no check (the light clock's
-    mirror stands 58 Links from A's head)."""
-    for b_corner, admitted in ((170, False), (232, True)):  # the tail ends at 180 at the seed 50 x 2^12
+def test_two_wells_of_one_family_may_stand_anywhere():
+    """THE SEPARATION RULE OF 9.35 IS RETIRED (ALGEBRA.md 9.96 (4); the one stroke, commit 6;
+    the tail check of BUILD.md section 26 item 28 HISTORY): two wells of the matter kind on
+    the closed chain of 400, A at [100, 132) with its profile at 50 x 2^12 (its last nonzero
+    Node 180, HOST) and B at [170, 202) inside A's tail, or at [232, 264) beyond it: both
+    admitted, each body's record its own array meeting the other through the held
+    families alone. A light-kind wall at B's place is another family, admitted as before."""
+    for b_corner, admitted in ((170, True), (232, True)):  # the tail ends at 180 at the seed 50 x 2^12
         document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
         document["ticks"] = 10
         document["measured"] = [emitter(100, None), emitter(b_corner, None, direction=[-1, 0, 0])]
