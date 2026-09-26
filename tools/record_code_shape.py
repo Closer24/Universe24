@@ -252,18 +252,18 @@ def contract_violations(root: Path) -> list[str]:
 
 
 def record(root: Path) -> dict[str, Any]:
-    """The baseline of the current tree."""
-    files = {
-        relative(root, path): {
-            key: value for key, value in shape_of(root, path).items() if key in COUNTS
-        }
-        for path in python_files(root, "src")
-    }
+    """The baseline of the current tree: the counts of the files beyond the limits alone (a file within them needs no entry), the duplicate groups and the imports of the loop's internals, every key sorted so two re-records of different files touch different lines."""
+    files = {}
+    for path in python_files(root, "src"):
+        rel = relative(root, path)
+        shape = shape_of(root, path)
+        if beyond_the_limits(rel, shape):
+            files[rel] = {key: shape[key] for key in COUNTS}
     return {
         "format": "code-shape-baseline",
-        "files": files,
+        "files": dict(sorted(files.items())),
         "duplicates": duplicates(root),
-        "loop_internal_imports": loop_internal_imports(root),
+        "loop_internal_imports": dict(sorted(loop_internal_imports(root).items())),
     }
 
 
@@ -384,29 +384,18 @@ def above_the_base(
 
 
 def main() -> None:
+    """Write the baseline for the current tree (no commit stamp, so two re-records differ only where the counts differ)."""
     baseline = record(ROOT)
-    try:
-        head = subprocess.run(
-            ["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True, cwd=ROOT, check=True
-        ).stdout.strip()
-    except OSError, subprocess.CalledProcessError:
-        head = "unknown"
-    baseline = {
-        "format": baseline["format"],
-        "recorded_at": head,
-        **{k: v for k, v in baseline.items() if k != "format"},
-    }
-    (ROOT / BASELINE).write_text(
-        json.dumps(baseline, indent=1, sort_keys=False) + "\n", encoding="utf-8"
-    )
+    (ROOT / BASELINE).write_text(json.dumps(baseline, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     files = baseline["files"]
     totals = {key: sum(shape[key] for shape in files.values()) for key in COUNTS}
     print(
-        f"{len(files)} files of src/ recorded at {head}: "
+        f"{len(files)} files of src/ beyond the limits recorded: "
         + ", ".join(f"{k} {v}" for k, v in totals.items())
     )
     print(
-        f"duplicate groups {len(baseline['duplicates'])}; files importing the loop's internals {len(baseline['loop_internal_imports'])}"
+        f"duplicate groups {len(baseline['duplicates'])}; "
+        f"files importing the loop's internals {len(baseline['loop_internal_imports'])}"
     )
     sys.exit(0)
 
