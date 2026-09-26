@@ -629,6 +629,7 @@ which say so; nowhere else.
 | --- | --- | --- | --- |
 | board, the game board, lattice (as the noun), grid | the GameBoard | GameBoard | the model owner, 2026-09-20; [MIGRATION](MIGRATION.md#the-names-naturebeam-and-gameboard-and-the-glossarys-single-names-on-2026-09-20). "Lattice" stays as the mathematical term (the translation group of the lattice, a lattice gas) |
 | site, Site | a Node | Node, `node`, NodeState | AGENTS.md, no second physical-location noun |
+| row, rows (for a record in transit, an experiment, a primitive or a family's entry) | the ray law's record `NatureBeam`; the check-mode table's experiments | a record in transit; an experiment; a primitive; an entry ([GLOSSARY.md section 9](GLOSSARY.md#9-the-words-of-the-generic-engine-one-meaning-each-the-model-owner-2026-09-26)) | the model owner, 2026-09-26, 12:10Z: "rows are the experiments; say experiment" |
 | ray, rays (the noun); "the law of the ray" | a row; the Beam Law | row, rows, `NatureBeam`; the Beam Law | rows and bodies, record 183 (2026-09-21); the name, record 37 of 2026-09-20; ray stays only in a quoted decision |
 | `rays-v1` | the identity of the law | `beam-v1`, the same law | MIGRATION, the names; a historical identity name only |
 | light and matter (as the two things) | rows and bodies | rows (of any family) and bodies (measured events) | record 183 |
