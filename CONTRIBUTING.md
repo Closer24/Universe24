@@ -70,9 +70,10 @@ branch `main`. ZIP files are backups after the project has been uploaded. For ea
 7. Open a pull request to `main` explaining the problem, change, expected behavior,
    validation, limitations and compatibility impact. State which tests were not run.
 8. Record where the record belongs: a decision of the model owner is one line in
-   `docs/HIGHLIGHTS.md` section 5.4 with a link to its record; the record itself (what
-   was read, found, run, proposed or asked, in the owner's words where he gave them)
-   is appended to the day's log, `docs/LOG_<date>.md`, under the next number; a run's
+   `docs/HIGHLIGHTS.md` section 5.4, replacing the line it changes; no log is kept
+   (the owner, 2026-09-26): a reading, a finding or a run lives in its pull request or
+   issue, and git keeps the history. A change to any document replaces what it
+   changes and deletes what no longer holds in the same pull request; a run's
    entry goes beside its worlds in `examples/events/<series>/README.md` with its row
    in `docs/EXPERIMENTS.md`. Do not copy a record into a second document; link to it.
 9. If `main` advances, integrate its changes and recheck the resulting risks.
