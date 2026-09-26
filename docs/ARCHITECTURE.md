@@ -297,6 +297,20 @@ runtime arithmetic in API assembly while allowing type annotations and literal
 configuration; it is tested with both allowed and forbidden examples. Inputs and
 expected outcomes are listed in `TEST_EXPECTATIONS.md`.
 
+## The features' folders (issue #1154, cut 2; the model owner's record 2221 (3))
+
+Every primitive of the engine is one folder, `src/event_universe/features/<name>/`
+(the name without the article: spins_step), declaring its name, place, word, reads,
+writes and order, the row of ALGEBRA.md 9.117 for its name (`DECLARATION`, a
+`Declaration` of the register), and holding its function (`apply`) or binding the
+loop's method of today (`bind`); the register (`src/event_universe/core/register.py`,
+`discover`) finds the folders at load and refuses a folder without a declaration or
+with a name not its own. Adding a feature touches no shared file, not even a list: the audits
+find the folders too. The layers: `core` (integers, the register, the interface
+`core/primitive.py`: apply(term, start, own) -> writes) imports nothing but `core`;
+`features` imports `core` and `features`; `events` (the engine, shrinking cut by
+cut toward `core/main_loop.py`) imports `core`, `features` and `events`.
+
 ## Adding physical features
 
 Follow [the physical-feature procedure](PHYSICAL_FEATURES.md) before adding a

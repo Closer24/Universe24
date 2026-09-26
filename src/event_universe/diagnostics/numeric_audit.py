@@ -100,9 +100,15 @@ ARTIFACT_WRITER = "events/run.py"
 
 
 def audit_physical_modules() -> dict[str, list[tuple[int, str]]]:
-    """Every module of the two physical layers with its audit's findings."""
+    """Every module of the three physical layers with its audit's findings (the
+    features' folders audited as the engine is, integer numpy and nothing that
+    leaves the integers; issue #1154 cut 2)."""
     root = Path(__file__).parents[1]
-    audits = (("core", static_integer_audit), ("events", static_events_audit))
+    audits = (
+        ("core", static_integer_audit),
+        ("features", static_events_audit),
+        ("events", static_events_audit),
+    )
     return {
         str(path.relative_to(root)): audit(path)
         for folder, audit in audits
