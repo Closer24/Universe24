@@ -257,21 +257,24 @@ def test_c1_an_unknown_key_is_refused_by_name_on_the_world_the_universe_and_a_bo
 
 @pytest.mark.xfail(
     strict=True,
-    reason="record 2226 (1) and (2): no folder of features/ declares its term's schema yet, and the "
-    "loader of today writes the keys itself; the schema loader reads every folder's schema from "
-    "its declaration in the register",
+    reason="record 2226 (1) and (2): the folders' cards carry no schema yet, and the loader of today "
+    "writes the keys itself; the schema loader reads every key of a family's entry from a folder's card",
 )
-def test_c2_every_folders_schema_is_its_own_declaration_and_not_a_line_of_the_loader():
-    """Record 2226 (1) and (2): every primitive's folder carries its term's schema (the keys and
-    the bounds it accepts) beside its function, in its declaration in the register; the loader
-    names none of those keys as a string of its own."""
+def test_c2_every_key_of_a_familys_entry_is_a_folders_schema_and_not_a_line_of_the_loader():
+    """Record 2226 (1) and (2): every key a shipped family entry carries beyond its name (the
+    universe file and the source's fragment) is declared by one folder's card in the register
+    (its `schema`, the keys and the kinds it accepts, beside its function); the loader names
+    none of those keys as a string of its own."""
     register = discover()
-    schemas = {
-        name: getattr(declaration, "schema", None) for name, declaration in register.declarations.items()
+    words = {
+        key
+        for declaration in register.declarations.values()
+        for key in (getattr(declaration, "schema", None) or ())
     }
-    missing = sorted(name for name, schema in schemas.items() if not schema)
-    assert missing == [], f"folders without a schema: {missing}"
-    words = {key for schema in schemas.values() for key in schema}
+    universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
+    fragment = json.loads((SOURCE_FOLDER / "universe_entries.json").read_text(encoding="utf-8"))
+    keys = {key for entry in universe["families"] + fragment["families"] for key in entry} - {"name"}
+    assert keys <= words, f"keys of a family's entry no folder declares: {sorted(keys - words)}"
     offending = [
         f"{path.relative_to(ROOT)}:{line} {value!r}"
         for path in loader_modules()
