@@ -17550,3 +17550,65 @@ as written here.
    rule closes and is used. The core family added is a family added, a
    big decision for three (record 2136), which this word opens; the
    Boss records it and Nature24's runs are the second party.
+
+### 9.109 The click that keeps the momentum, in integers (the model owner's question of 2026-09-26, record 2160: "but one click, is it not received in one click?"; the Boss's ask for the line), and the algebra's numbers for the ninth question's rerun
+
+1. **What the engine's click does and what the bath's construct did.**
+   The engine's click on a body of M quanta takes ONE quantum (the
+   ladder, 9.25 (2); the record ends at the detector, POSTULATES section
+   10): the record is not re-created, so its phase gradient, its momentum
+   per quantum, is untouched; (M - 1) / M of the momentum stays with the
+   record and one quantum's share goes with the click. What erased the
+   momentum in the ninth question's runs (9.106) was the bath's
+   construct: the record deleted whole and re-created at one Node with
+   no phase gradient. Nature's click is the engine's, with the recoil.
+
+2. **The line in integers, three parts, nothing new.** (a) THE TAKING
+   keeps the record's levels' phase: the norm falls by one quantum's T
+   (the count M lowered as at a giving, 9.96 (5)); the record's
+   accumulators are untouched. (b) THE RECOIL, on the giver and on the
+   taker alike: each click books k_q div M into the Port angle
+   accumulators of the body along the click's axis (9.98 (10) (g); the
+   accumulator of 9.96 (2) (e)), the taker with the opposite sign; the
+   mean momentum over clicks is exact, the store a remainder of the
+   state already declared. (c) A RECORD RE-CREATED WHOLE at the click's
+   Node (a one-quantum record given again, or the bath's construct)
+   carries its momentum in the six Port accumulators of that Node: rho
+   on the Port +a is +K_a and on -a is -K_a in units of theta_unit, K
+   read from the record before the click as the phase difference of its
+   pair between the Node and its neighbours through the table's inverse
+   (an integer lookup of the nearest triple). As the record spreads, the
+   transport applies the accumulated angle across each Link crossed
+   (K = 0.1242 per Link is the table's triple j = 1928 of 4096, applied at
+   the first step), so the phase gradient is restored on the neighbours
+   within one interval. A phase on a single Node is nothing; the Ports
+   carry it (9.96 (2) (e)), which is why the store is the Ports' and not
+   the Node's.
+
+3. **The algebra's numbers for the rerun of the ninth question with
+   this click (the Boss's test to Nature24, record 2160), HOST
+   readings.** A one-Node record re-created with its K spreads from the
+   Node and moves at the band's average of the group speed over the
+   width's momentum spread: at K = 0.1242 (v_g 0.1128) with the width 1
+   the factor exp(-1 / 8) gives 0.0995 Links per interval. The click's
+   Node is drawn by Born's rule among the Node and its neighbours (0.68
+   of the norm at the first neighbours at the click, one click per 1.73
+   intervals), so the position walks: D = 0.13 Links^2 per interval per
+   axis, the spread sqrt(2 D t):
+
+   | t (intervals) | the walk's spread, one record (Links) | v t at v = 0.1 (Links) |
+   | --- | --- | --- |
+   | 249 | 8 | 25 |
+   | 1500 | 20 | 150 |
+   | 3000 | 28 | 300 |
+
+   so one body keeps its speed in the mean (WORKS, against the freeze).
+   The fall accrues in the phase between clicks and is re-read into the
+   Ports at each click, so the mean fall is exact and shows through the
+   walk after t = (8 D / a^2)^(1 / 3): 1900 intervals for one record at a
+   = 1.25e-5, and 1900 / M^(1 / 3) for a body of M records (150 at M =
+   2000); two bodies 20 Links apart meet at item 2's 249 within the walk's
+   8 Links each. What stays as 9.106 said: between clicks the record
+   spreads from its Node, so a body held by clicks alone is a bath's
+   body; in vacuum the binding holds the Nodes together (9.108) and the
+   clicks hold the phase.
