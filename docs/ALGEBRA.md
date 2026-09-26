@@ -16778,7 +16778,11 @@ as written here.
    optimisation.
 
 8. Status. Neither A nor B is in the law. A has a test that costs one
-   row (item 4); B has a test that costs a new board (item 6 (b)).
-   Both are written here as the owner's readings of 2026-09-26 for the
-   Boss's record; the eighth question goes to Nature24 through the
-   Boss (record 2133).
+   row (item 4). B IS CLOSED by the model owner's word of 2026-09-26
+   after the side check of item 6 (e) and the Boss's record 2142: "so
+   it is not worth it": the same physics per Link, the same size of
+   anisotropy with only the sign reversed, a Node's exits in one
+   plane, and a new board for it; the host saving stays available as
+   an optimisation later, as the Boss said. Both are written here as
+   the owner's readings for the Boss's record; the eighth question of
+   A goes to Nature24 through the Boss (record 2133).
