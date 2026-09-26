@@ -15983,3 +15983,94 @@ by both ends' paces, R_a(ij) = 2 num p_a(i) p_a(j), which makes M
 symmetric with G = 1 by construction; it is the far-end read of item
 34 (form (B), HISTORY) and it changes the rule, so it waits for a row
 that needs the form exact under a wave, which none of 9.87's does.
+
+### 9.98 The engine from the rule alone: the plan (the model owner's word of 2026-09-26, "the whole engine built only from this rule, and it brings everything by itself; write it as the plan and make sure it all converges to the engine")
+
+**(1) THE CLAIM.** The engine reduces to four things: THE RULE (9.57
+(1) with the four paces and the transport of a pair, 9.91 (2), (6)),
+THE CLICK (the one one-way act, with Born's rule from the booking of
+the rule's own flux), ONE SEAM (a body's well hops with its record),
+and THE THREE FILES. Every other operation of 9.79 (2) is either a
+reading of the rule's integers (kept as code, not as law) or a
+declaration that becomes the rule's own motion and goes. The reduction
+is staged after the stable engine of record 2106; each stage is bit
+for bit at rest and re-reads the moving rows against their standing
+blind expectations; nothing here changes a formula of 9.91 to 9.97.
+
+**(2) WHAT EACH OPERATION BECOMES.** One row per operation of 9.79 (2)
+and 9.91.
+
+| Today | In the engine from the rule alone | Why it may go |
+| --- | --- | --- |
+| The step (item 1) | The rule, unchanged | it is the rule |
+| The inverse (item 2) | The same integers backward, unchanged | a reading of the rule |
+| The hold (item 3): the body's count written at its Nodes; the vector and tensor parts from a declared momentum; the dipoles from a declared spin and moment | The body's count s written at its Nodes as today (a declared whole number, changed by clicks); the vector and tensor parts from the record's own current and stress (the flux the booking already reads, and its axis products), normalised to s with the derived factors (9.95); no declared momentum, spin or moment | the record's shape carries its motion (the character of K, 9.94 (6)) and its rotation (a winding of the pair about the axis); a spinning body needs the ring of Nodes its winding needs, never one |
+| The pace (item 4) | Unchanged | the rule's own input |
+| The self-source (item 5) | Unchanged, P_2 computed (9.97) | the rule's own term |
+| The click (item 6) | Unchanged: a free record ends at the detector, a body's count changes by one; the recoil is a rotation of the body's pair along the quantum's direction by the transport's own primitive (a phase gradient of k_q / M) | the recoil rule of 9.84 (2) becomes a transport write; no accumulator |
+| The booking (item 7) | Unchanged | a reading of the rule's flux |
+| The wheel and the residue (item 8) | Unchanged | the rule's own remainder |
+| The form (item 9) | Unchanged, a reading | a reading |
+| The reading on bodies (item 10): the feed, the induction, the spin's step, the hop rule, the accumulator, the proper clock table | GONE. A body's record moves by the rule in the paces around it (a wave packet in a potential accelerates by the rule, the geodesic and the Lorentz force at once); its rotation slows in motion by the rule (the moving mode's omega_K - K v, which the generator computes today and the rule then produces); its spin precesses by the rule acting on its winding. THE ONE SEAM: the body's well (its declared pair on its Nodes) hops when the record's centroid over its support crosses a Node, the centroid a per-body tally like today's accumulator | the equations of motion are what the rule does to a bound mode; coding them twice is the seam of 9.53 |
+| The transport (9.91 (6)) | Unchanged | part of the step for a pair |
+| The generator (9.94) | Unchanged; the moving body's initial record is the mode times the character of K, which it already computes for the proper clock | the same eigenproblem |
+| The giving (the window) | Unchanged | the click's other half |
+| The tools (mirrors, splitters, wells) | Unchanged: pairs per Node | already the rule |
+| The detectors | Unchanged: bodies that book and click | already the rule and the click |
+
+**(3) WHAT A BODY IS, THEN.** A body is a record with a well: its pair
+on its Nodes, its vacuum outside (9.91 (11)), its count s a whole
+number that clicks change, its record the bound mode the generator
+makes. At rest on one Node it is what it is today: the count at the
+Node, the tail not written, the source 0 beyond the count. IN MOTION
+it needs its tail: the record that carries the wave number is the
+mode times the character, on the support the mode's extent gives (27
+to 125 Nodes for the shipped wells), and the well hops under it. So a
+one-Node body is a body at rest or a detector; a body that moves has
+its tail. The momentum is not declared: the generator writes the
+record at the wave number K whose group pace is the row's v (9.94
+(6)), and the reading of the momentum is the centroid's drift. The
+spin is not declared: the generator writes the winding.
+
+**(4) THE SOURCE FROM THE RECORD, in the rule's integers.** For a body
+of count s with the record a on its support: the t part writes s at
+every Node of the support as today (bit for bit at rest). The vector
+part at Node i along axis a: 4 s J_a(i) div F, with J_a(i) the
+record's current through the Port along a (wall x (now_j before_i -
+before_j now_i), the booking's quantity) and F the record's form
+summed over the support, the remainder on the body; for the moving
+mode J / F is v distributed over the support, so the sum over the
+support is 4 s v as 9.91 (3) writes it. The tensor part: 2 s T_ab(i)
+div F with T_ab the form's axis product ((a_{+a} - a_{-a})(a_{+b} -
+a_{-b}) div 4 at the Node, the stress of a wave). A free record (one
+quantum) sources by the same lines with s = 1 div (1000 P) = 0 in
+integers: light gravitates by nothing readable, as 9.97 (3) says.
+Every term is products of levels at the Node and its six neighbours
+and one division with a remainder: the three tests hold.
+
+**(5) THE STAGES, each gated.** (a) The moving body as its record: the
+generator writes the mode times the character; the hop rule reads the
+centroid; the accumulator, the feed, the induction and the proper
+clock table are deleted; the moving rows re-read (the Lorentz pair,
+the muon, the light clock in motion, the dragging) against their
+standing expectations (1 / gamma, D, 1.198), check mode. (b) The
+vector and tensor parts from the record's current and stress ((4));
+the declared momentum goes; bit for bit at rest, the moving rows
+re-read. (c) The spin as the winding: the ring row 9.78 (9) (h) with
+a wound record against the ring; the declared spin and the dipole
+writes go. (d) The recoil as a rotation of the body's pair at the
+click; the recoil rule goes; the radiation-pressure row 9.84 (5) (a)
+re-read. (e) The correspondence table 9.93 rewritten: the rows of the
+reading on bodies deleted, the source row rewritten. After (e) the
+engine is the rule, the click, the seam and the files.
+
+**(6) WHAT IT COSTS AND WHAT IT DOES NOT REMOVE.** The cost: a moving
+body's support is its tail, tens to a hundred Nodes in place of one,
+and its motion is resolved as a wave. What stays: the click (the rule
+is reversible and the click is not; it is the second thing in the
+engine and will always be); the seam of the well's hop (a body binds
+itself by nothing in this engine, P_2 = 0 for matter, so its well is a
+declaration that must follow it); the files. What is gained: the
+equations of motion, the dilation of a moving clock, the precession
+of a spin and the recoil are no longer coded; the rule does them, and
+the rows read whether it does them as nature does.
