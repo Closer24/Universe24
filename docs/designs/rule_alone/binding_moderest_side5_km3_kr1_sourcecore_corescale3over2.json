@@ -1,0 +1,107 @@
+{
+ "options": {
+  "mode": "rest",
+  "side": "5",
+  "km": "3",
+  "kr": "1",
+  "source": "core",
+  "corescale": "3/2"
+ },
+ "mode": "rest",
+ "side": 5,
+ "k_m": 3,
+ "k_r": 1,
+ "speed": 0.0,
+ "intervals": 1500,
+ "source": "core",
+ "s_cap": null,
+ "core_scale": "3/2",
+ "fields_at_pace": false,
+ "shape": [
+  48,
+  48,
+  48
+ ],
+ "kind": [
+  800,
+  850
+ ],
+ "binding_pair": [
+  1000,
+  1019
+ ],
+ "core_pair": [
+  1000,
+  1181
+ ],
+ "count": 2000,
+ "amplitude": 131072,
+ "guard_interval": 31,
+ "guard_content": 38120,
+ "e_s": [
+  980857
+ ],
+ "e_core": 1471285,
+ "cos_omega_vacuum": 0.9411764705882353,
+ "omega_vacuum": 0.34470117979864606,
+ "form_means_300": [
+  []
+ ],
+ "readings": [
+  {
+   "t": 0,
+   "binding_form": 23150495.854759544,
+   "core_form": 23860170.77561389,
+   "record_0": {
+    "centroid": [
+     23.999999999999996,
+     24.000000000000004,
+     24.000000000000007
+    ],
+    "width_rms": 1.7677667353836952,
+    "peak": 44291,
+    "peak_node": [
+     24,
+     24,
+     24
+    ],
+    "count_sum": 173022,
+    "count_peak": 2000,
+    "content_peak": 6667,
+    "bound_share_12": 0.9999999992562578,
+    "tail_links": 0.7346314615979305,
+    "cos_omega_eff": NaN,
+    "omega_eff": NaN,
+    "leak": 1.0
+   }
+  },
+  {
+   "t": 25,
+   "binding_form": 14895519.607458286,
+   "core_form": 10525395.703640975,
+   "record_0": {
+    "centroid": [
+     23.999999962013632,
+     23.999999962013632,
+     23.999999962013632
+    ],
+    "width_rms": 3.8227006988101455,
+    "peak": 53722,
+    "peak_node": [
+     24,
+     24,
+     24
+    ],
+    "count_sum": 158746,
+    "count_peak": 2942,
+    "content_peak": 9807,
+    "bound_share_12": 0.9343366306144091,
+    "tail_links": 4.7398171637747515,
+    "cos_omega_eff": 0.8518122866954748,
+    "omega_eff": 0.5513611311273058,
+    "leak": 1.1943046016915038
+   }
+  }
+ ],
+ "host_seconds": 5.019605398178101
+}

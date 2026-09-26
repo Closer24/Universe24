@@ -224,7 +224,43 @@ with its own pair below [1, 1] (a range of a few Links); no pair well, no hop, n
    form; the many-record form is owed. The engine's flux rule, in a bath of Node detectors,
    adds half a Link forward per click.
 
-## 9. The commands
+## 9. The runs of ALGEBRA.md 9.108 (the Boss's record 2163): the saturating table and the two families
+
+The mathematician's two corrected forms of the binding line after section 7's collapse:
+the source as a saturating table, s_i = s_cap F_i div (s_cap E_s + F_i) (9.108 (3)), and two
+families with no table, a hollow of range 3 Links read +K_m and a hill of range 1 Link read
+-K_r (9.108 (7)). `binding_family.py` with `source=table|core`; the pairs [1000, 1019] and
+[1000, 1181]; the readings as JSON beside it (the runs of 2026-09-26, 10:15Z). The table's
+numbers hold at the start: side 9, K_m = 2, s_cap = 4000 gives K_m T = 2666 at the peak, as
+9.108 (3) says. For the two families the floor 2666 at the peak needs K_r = 2 / 3 at K_m = 2;
+the runs take integer weights and the core's source scaled by 3 / 2 (K_m = 2, K_r = 1, E_core
+= 3 E_s / 2, the floor 2666 + gravity), and beside it (3, 2), (2, 1), (2, 2), (2, 3), (3, 4).
+
+| Run | Reading (GAMEBOARD of the runner) | Algebra beside | Verdict |
+| --- | --- | --- | --- |
+| (1) table, side 9, K_m = 2, s_cap = 4000, at rest | no guard over 1500; the content at the peak climbs to 9500 to 9800 (the ceiling 8000 plus gravity's own share); rms 3.2, 3.7, 12.7, 7.0, 8.4, 9.5 at 0, 25, 250, 500, 1000, 1500; the bound share within 12 Links 1.00, 0.95, 0.08, 0.77, 0.62, 0.45; the rotation measure 0.46 to 0.53 against the vacuum's 0.345 | bound at a finite width, no guard | the runaway is stopped; the record sloshes out to the board and back, half of it stays bound at 1500 |
+| (1) table, side 5, K_m = 3, s_cap = 3000 | the guard at 686 (content 10800): the ceiling 9000 plus gravity's 1800 passes Gamma; the record disperses first (the bound share 0.08 at 250) | below the guard | FAILS: gravity's weight 1 was left out of "K_m s_cap below Gamma" |
+| (2) table, side 9, moving, v = 0.05 and 0.1 | v = 0.05: the centroid 16.0, 21.8 (250), 25.6 (500), 21.8 (1000) against 28.5, 41, 66, then the guard at 1145; v = 0.1: the guard at 156 | x_0 + v t; the speed ratio v / (K / m_rec) | FAILS: it moves 10 Links and wanders; the content reaches Gamma as it concentrates |
+| (3) table, the form's means over windows of 300 | at rest: 0.92, 0.97, 1.19, 1.36, 1.67; moving: 1.34, 1.65, 1.94; the pair: 0.92, 0.96, 1.03, 1.06, 1.13 | no drift; the field's form in antiphase | FAILS: a secular drift of 13 to 94 percent in 1500 intervals; the binding family's form falls 3.6e7 to 1.7e7 and rises to 2.9e7 with no clear antiphase |
+| (4) table, the pair 20 Links apart, the fields at the pace and plain | the separation 20.0, 4.4 (250), -10.6 (500), 7.6 (1000), -1.3 (1500): the bodies meet before 250 and pass through each other; the two pace forms give the same record readings to four figures (the hold rewrites the field at the support every interval, so the field's pace changes nothing for the record) | item 2's meeting at 249 | WORKS: the meeting at the algebra's time |
+| (1) two families, K_m > K_r (2 and 1 with the core scaled 3 / 2; 3 and 2; 2 and 1) | the guard at 31 to 76 at rest, 39 to 58 moving, 76 in the pair: the record concentrates as in section 7 | bound at a finite size where the hill and the hollow balance | FAILS: a runaway |
+| (1) two families, K_m <= K_r (2 and 2; 2 and 3; 3 and 4) | the content at the peak 2000 (gravity alone) or 0; the record disperses: rms 3.2 to 13 by 1500, the bound share 0.10 | | FAILS: nothing binds |
+
+1. **Why the two families give no size.** The engine's held family is written to the source's
+   level at the source's Nodes whatever its pair; the range shapes only the tail outside the
+   support. So at the record's own Nodes the hollow and the hill are K_m s_i and K_r s_i, and
+   their difference has one sign everywhere: attraction that runs away or repulsion that
+   disperses, nothing between. A balance by range needs fields whose value at the source
+   grows with the range, a sourced field (Poisson's), not a held level. This is a property of
+   the hold, the engine's primitive, not of the weights.
+2. **The sum for record 2163.** The saturating table is the one form that stops the runaway,
+   and two such bodies fall together at the algebra's 249. But the body it makes sloshes to
+   the board's edge and back, keeps about half its form within 12 Links, drifts in its form
+   by tens of percent, does not move freely, and reaches the guard when gravity's share is
+   added to the ceiling. The two-family stop does not work with held fields. A gap in these
+   is the mathematician's (9.108 (6)).
+
+## 10. The commands
 
     PYTHONPATH=src python docs/designs/rule_alone/item1_fall.py 1 2100
     PYTHONPATH=src python docs/designs/rule_alone/item1_fall.py 0 2100
@@ -240,8 +276,11 @@ with its own pair below [1, 1] (a range of a few Links); no pair well, no hop, n
     PYTHONPATH=src python docs/designs/rule_alone/item9_clicks.py check
     PYTHONPATH=src python docs/designs/rule_alone/item9_clicks.py whole|quantum|control 1500
     PYTHONPATH=src python docs/designs/rule_alone/item9_pair.py pair|moving|moving_control|still 1500 [keep] [flux|density] [seed N]
-    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py rest 9 2 1500 level|count|cap
-    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py moving 9 2 0.05 1500 cap
-    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py pair 9 2 1500 cap
+    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py rest side=9 km=2 source=level|count|cap
+    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py rest side=9 km=2 source=table scap=4000
+    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py moving side=9 km=2 v=0.05 source=table scap=4000
+    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py pair side=9 km=2 source=table scap=4000 pace=1
+    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py rest side=9 km=2 kr=1 source=core corescale=3/2
+    PYTHONPATH=src python docs/designs/rule_alone/item9_pair.py moving 1500 keep density width 1
 
 The readings are written beside the scripts as JSON (the runs of 2026-09-26).

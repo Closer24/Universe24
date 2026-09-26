@@ -1,50 +1,46 @@
-"""THE FOUR RUNS OF ALGEBRA.md 9.98 (11) (the Boss's record 2157): THE BINDING AS A FAMILY, the
-mathematician's generic line (c), in Nature24's runner of the rule 9.57 (1) in integers.
+"""THE RUNS OF ALGEBRA.md 9.98 (11) AND 9.108 (the Boss's records 2157 and 2163): THE BINDING AS A
+FAMILY, the mathematician's generic line (c) and its two corrected forms, in Nature24's runner
+of the rule 9.57 (1) in integers.
 
-THE LINE, as run here (HOST choices stated once):
-- every record writes at every Node of its support its local count s_i = F_i div E_s into the
-  t part of gravity and of the binding family. F_i is the record's form at the Node from its
-  own pair alone, F_i = now^2 + before^2 - 2 now before cos omega_i, cos omega_i the Node's rest
-  rotation at the content read there in the interval before (the stationary envelope; the
-  mathematician's six-differences form is its neighbour form); E_s is fixed at the start so that
-  the record's peak Node reads s = 2000 (today's hold writes s at the body's Nodes; the source
-  writes s_i as the form says, more at the centre): E_s = F_peak(0) div 2000, a universe integer
-  in the design, here read from the start.
-- the hold: at every interval, after the held families' plain step, both levels of gravity and
-  of the binding family at the support (s_i > 0) are written to s_i (the engine's hold, the
-  order of 9.85 (2)).
-- gravity's pair [1, 1] (long range); the binding family's pair [54, 55]: the static equation
-  of a held level is SUM_neighbours a = 6 (den / num) a at p = Gamma, so its level decays as
-  exp(-kappa r) with kappa^2 = 6 (den / num - 1) = 1 / 9: the range of 3 Links asked.
-- the record's pace at a Node p_0,i = Gamma - g_i - K_m b_i (weights 1 and K_m, 9.91 (2)); the
-  record steps by the rule with these coefficients; no pair well anywhere, the kind [800, 850]
-  on every Node, no hop, no tally.
+THE LINE, as run (HOST choices stated once):
+- every record writes at every Node of its support its local count s_i into the t part of
+  gravity and of the binding family (and of the core family in the two-family form). F_i is
+  the record's form at the Node from its own pair, F_i = now^2 + before^2 - 2 now before cos
+  omega_i, cos omega_i the Node's rest rotation at the content read there in the interval
+  before. E_s is the level's: F_peak(0) div s, the peak Node reading s = 2000 at the start.
+- the hold: at every interval, after the held families' step, both levels of every held family
+  at the support (s_i > 0) are written to s_i (the engine's hold, the order of 9.85 (2)).
+- gravity's pair [1, 1]; the binding family's pair [1000, 1019] (cosh kappa = 3 den / num - 2,
+  the range 1 / kappa = 3 Links); the core family's pair [1000, 1181] (the range 1 Link).
+- the record's pace at a Node p_0,i = Gamma - g_i - K_m b_i + K_r h_i (the weights 1, +K_m and
+  -K_r: a hollow, a hollow and a hill, 9.108 (7), (8)); the record steps by the rule with these
+  coefficients; no pair well anywhere, the kind [800, 850] on every Node, no hop, no tally.
+- the held families step by the plain rule at the pace Gamma (`pace=0`) or at the Node's pace,
+  the same coefficients as the record's (`pace=1`, 9.108 (5): every field instance at the pace).
 - the board 48^3 with open faces (a level 0 beyond a face; the runner's face reflects); the
   record starts as a standing Gaussian of sigma = side / 2 at amplitude 2^17 (a start, not the
   mode; the mode is what the run settles to).
 
-THE RUNS: (1) `rest SIDE K_M`: bound or not, at what width and rotation; (2) `moving SIDE K_M
-V`: a phase gradient at the group pace V; does it move freely, from what width; (3) the leak,
-read in every run: the rule's conserved form I at the current coefficients over its start; (4)
-`pair K_M`: two bodies 20 Links apart, each sourcing both families and reading both.
-
-THE READINGS (GAMEBOARD of the runner) every 25 intervals: the centroid of F, the rms width
-about it, the peak level and Node, the count SUM s_i and the peak's s_i, the content at the peak,
-the rotation (the time average of 2 SUM now before / SUM (now^2 + before^2) over the window,
-cos omega_eff), the bound share (F within 12 Links of the centroid over the total), the leak.
-
-THE THREE READINGS OF E_s (the source's scale), all run, the first the line as written:
-- `level`: E_s = F_peak(0) div s, the peak Node reads s at the start (the engine's hold today
-  writes the level s at every Node of the body; the mathematician's table of 9.98 (10) (h) binds
-  at the level K_m s); the level then follows the form.
-- `count`: E_s = SUM F_i(0) div s, the counts sum to s (one count's form, the conserved
-  reading; the level at a Node is then s times the Node's share of the form).
-- `cap`: `level` with s_i cut at s (a saturation: not the line, a reading of what the cut does).
+THE FORMS OF THE SOURCE (`source=`):
+- `level`: s_i = F_i div E_s (9.98 (11) (c) as written).
+- `count`: E_s = SUM F_i(0) div s, the counts summing to s.
+- `cap`: `level` with s_i cut at s.
+- `table`: s_i = s_cap F_i div (s_cap E_s + F_i), the saturating divide of 9.108 (3), `scap=`.
+- `core`: `level` into the binding family and, scaled by `corescale=a/b` (E_core = E_s a / b),
+  into the core family read with -K_r (`kr=`), 9.108 (7).
 The guard p > 0 (the content reaching Gamma) ends a run and is reported with its interval.
 
-    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py rest 5 2 [intervals] [level|count|cap]
-    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py moving 5 2 0.05 [intervals] [source]
-    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py pair 9 2 [intervals] [source]
+THE READINGS (GAMEBOARD of the runner) every 25 intervals: the centroid of F, the rms width about
+it, the peak level and Node, the count SUM s_i and the peak's s_i, the content at the peak, the
+rotation (the time average of 2 SUM now before / SUM (now^2 + before^2) over the window), the
+bound share (F within 12 Links of the centroid over the total), the record's form at the current
+coefficients over its start, and the binding family's own form at its coefficients (9.108 (4):
+the record's form and the field's in antiphase; the mean of the record's form over windows of
+300 intervals, no drift).
+
+    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py rest side=9 km=2 source=table scap=4000
+    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py moving side=9 km=2 v=0.05 source=core kr=1 corescale=3/2
+    PYTHONPATH=src python docs/designs/rule_alone/binding_family.py pair side=9 km=2 source=table scap=4000 pace=1
 """
 
 from __future__ import annotations
@@ -53,6 +49,7 @@ import json
 import math
 import sys
 import time
+from fractions import Fraction
 from pathlib import Path
 
 import numpy as np
@@ -64,12 +61,14 @@ SHAPE = (48, 48, 48)
 WRAP = (False, False, False)
 KIND = (800, 850)
 GRAVITY_PAIR = (1, 1)
-BINDING_PAIR = (54, 55)  # kappa^2 = 6 (55 / 54 - 1) = 1 / 9, the range 3 Links
+BINDING_PAIR = (1000, 1019)  # cosh kappa = 3 den / num - 2 = 1.057: the range 3 Links
+CORE_PAIR = (1000, 1181)  # cosh kappa = 1.543: the range 1 Link
 COUNT = 2000
 AMPLITUDE = 1 << 17
 EVERY = 25
 BOUND_RADIUS = 12
 PAIR_SEPARATION = 20
+WINDOW = 300
 
 
 def wave_number(speed: float, num: int, den: int) -> tuple[float, float]:
@@ -89,24 +88,33 @@ def wave_number(speed: float, num: int, den: int) -> tuple[float, float]:
 
 
 class Field:
-    """A held family stepping by the plain rule at the pace Gamma with its own pair."""
+    """A held family stepping by the rule with its own pair, at the pace Gamma or the Node's."""
 
     def __init__(self, pair: tuple[int, int]) -> None:
-        num = np.full(SHAPE, pair[0], dtype=R.INT)
-        den = np.full(SHAPE, pair[1], dtype=R.INT)
-        self.read, self.own, self.wall = R.coefficients(num, den, np.zeros(SHAPE, dtype=R.INT))
+        self.num = np.full(SHAPE, pair[0], dtype=R.INT)
+        self.den = np.full(SHAPE, pair[1], dtype=R.INT)
+        self.plain = R.coefficients(self.num, self.den, np.zeros(SHAPE, dtype=R.INT))
+        self.coefficients = self.plain
         self.now = np.zeros(SHAPE, dtype=R.INT)
         self.before = np.zeros(SHAPE, dtype=R.INT)
         self.remainder = np.zeros(SHAPE, dtype=R.INT)
 
-    def step(self) -> None:
+    def step(self, content: np.ndarray | None) -> None:
+        self.coefficients = (
+            self.plain if content is None else R.coefficients(self.num, self.den, content)
+        )
+        read, own, wall = self.coefficients
         self.now, self.before, self.remainder = R.step(
-            self.now, self.before, self.remainder, self.read, self.own, self.wall, WRAP
+            self.now, self.before, self.remainder, read, own, wall, WRAP
         )
 
     def hold(self, support: np.ndarray, level: np.ndarray) -> None:
         self.now[support] = level[support]
         self.before[support] = level[support]
+
+    def form(self) -> float:
+        read, own, wall = self.coefficients
+        return conserved(self.now, self.before, read, own, wall)
 
 
 class Record:
@@ -116,6 +124,8 @@ class Record:
         self.remainder = np.zeros(SHAPE, dtype=R.INT)
         self.cos_omega = np.full(SHAPE, 0.0)
         self.e_s = 1
+        self.form_window: list[float] = []
+        self.form_means: list[float] = []
 
 
 def packet(
@@ -143,14 +153,27 @@ def form_of(record: Record) -> np.ndarray:
     return np.maximum(n * n + b * b - 2.0 * n * b * record.cos_omega, 0.0)
 
 
-def conserved(record: Record, read: np.ndarray, own: np.ndarray, wall: np.ndarray) -> float:
-    n = record.now.astype(np.float64)
-    b = record.before.astype(np.float64)
+def conserved(
+    now: np.ndarray, before: np.ndarray, read: np.ndarray, own: np.ndarray, wall: np.ndarray
+) -> float:
+    n = now.astype(np.float64)
+    b = before.astype(np.float64)
     return float(
         (n * n + b * b).sum()
         - (own / wall * n * b).sum()
-        - (read / wall * b * R.neighbour_sum(record.now, WRAP)).sum()
+        - (read / wall * b * R.neighbour_sum(now, WRAP)).sum()
     )
+
+
+def source_counts(form: np.ndarray, e_s: int, source: str, s_cap: int) -> np.ndarray:
+    integer = form.astype(np.int64)
+    if source == "table":
+        # the saturating divide of 9.108 (3), in integers
+        return (s_cap * integer) // (s_cap * e_s + integer)
+    count = integer // e_s
+    if source == "cap":
+        count = np.minimum(count, COUNT)
+    return count.astype(R.INT)
 
 
 def readings_of(
@@ -163,17 +186,14 @@ def readings_of(
     width = math.sqrt(float((form * r2).sum()) / total / 3.0) if total > 0 else float("nan")
     peak = np.unravel_index(int(np.argmax(form)), SHAPE)
     bound = float(form[r2 <= BOUND_RADIUS**2].sum()) / total if total > 0 else float("nan")
-    # the tail: the log slope of the form along +x from the centroid between 6 and 12 Links
     xs = np.arange(SHAPE[0])
-    line = form[:, int(round(cy)), int(round(cz))]
+    line = form[:, int(round(cy)) % SHAPE[1], int(round(cz)) % SHAPE[2]]
     r_line = xs - cx
     inside = (r_line >= 6) & (r_line <= 12) & (line > 0)
     tail = float("nan")
     if inside.sum() >= 3:
         slope = np.polyfit(r_line[inside], np.log(line[inside]), 1)[0]
-        tail = (
-            -2.0 / slope if slope < 0 else float("inf")
-        )  # the envelope's 1 / kappa (the form is the envelope squared)
+        tail = -2.0 / slope if slope < 0 else float("inf")
     cos_eff = float(np.mean(window)) if window else float("nan")
     return {
         "centroid": [cx, cy, cz],
@@ -190,81 +210,104 @@ def readings_of(
     }
 
 
-def run(mode: str, side: int, k_m: int, speed: float, intervals: int, source: str) -> dict:
+def run(options: dict) -> dict:
+    mode = options["mode"]
+    side = int(options.get("side", 9))
+    k_m = int(options.get("km", 2))
+    k_r = int(options.get("kr", 0))
+    speed = float(options.get("v", 0.0))
+    intervals = int(options.get("t", 1500))
+    source = options.get("source", "level")
+    s_cap = int(options.get("scap", 4000))
+    core_scale = Fraction(options.get("corescale", "1"))
+    at_pace = options.get("pace", "0") == "1"
     num = np.full(SHAPE, KIND[0], dtype=R.INT)
     den = np.full(SHAPE, KIND[1], dtype=R.INT)
     read0, own0, wall0 = R.coefficients(num, den, np.zeros(SHAPE, dtype=R.INT))
     cos_vacuum = float(R.rest_rotation(read0, own0, wall0)[0, 0, 0])
     middle = SHAPE[1] / 2.0
     gravity, binding = Field(GRAVITY_PAIR), Field(BINDING_PAIR)
+    core = Field(CORE_PAIR) if source == "core" else None
     sigma = side / 2.0
     records: list[Record] = []
+    x_start = SHAPE[0] / 2.0 - 8 if mode == "moving" else SHAPE[0] / 2.0
     if mode == "pair":
         for x in (SHAPE[0] / 2.0 - PAIR_SEPARATION / 2.0, SHAPE[0] / 2.0 + PAIR_SEPARATION / 2.0):
             records.append(Record(*packet((x, middle, middle), sigma, cos_vacuum)))
     elif mode == "moving":
         k, omega_k = wave_number(speed, *KIND)
-        records.append(
-            Record(*packet((SHAPE[0] / 2.0 - 8, middle, middle), sigma, cos_vacuum, k, omega_k))
-        )
+        records.append(Record(*packet((x_start, middle, middle), sigma, cos_vacuum, k, omega_k)))
     else:
-        records.append(Record(*packet((SHAPE[0] / 2.0, middle, middle), sigma, cos_vacuum)))
+        records.append(Record(*packet((x_start, middle, middle), sigma, cos_vacuum)))
     for record in records:
         record.cos_omega = np.full(SHAPE, cos_vacuum)
         form = form_of(record)
-        if source == "count":
-            record.e_s = max(1, int(form.sum()) // COUNT)
-        else:
-            record.e_s = max(1, int(form.max()) // COUNT)
+        record.e_s = (
+            max(1, int(form.sum()) // COUNT) if source == "count" else max(1, int(form.max()) // COUNT)
+        )
+    e_core = max(1, int(records[0].e_s * core_scale))
     guard_interval = None
-    i_start = None
+    guard_content = 0
+    i_start: list[float] | None = None
     windows: list[list[float]] = [[] for _ in records]
     readings: list[dict] = []
     t0 = time.time()
     content = np.zeros(SHAPE, dtype=R.INT)
-    guard_content = 0
     for t in range(intervals + 1):
-        # the sources: each record's local count from its own form
         counts = []
         support = np.zeros(SHAPE, dtype=bool)
         level = np.zeros(SHAPE, dtype=R.INT)
+        level_core = np.zeros(SHAPE, dtype=R.INT)
         for record in records:
             form = form_of(record)
-            count = (form // record.e_s).astype(R.INT)
-            if source == "cap":
-                count = np.minimum(count, COUNT)
+            count = source_counts(form, record.e_s, source, s_cap)
             counts.append(count)
             support |= count > 0
             level += count
-        # the held families' step, then the hold (9.85 (2))
-        gravity.step()
-        binding.step()
+            if core is not None:
+                level_core += (form.astype(np.int64) // e_core).astype(R.INT)
+        pace_content = content if at_pace and t > 0 else None
+        gravity.step(pace_content)
+        binding.step(pace_content)
         gravity.hold(support, level)
         binding.hold(support, level)
+        if core is not None:
+            core.step(pace_content)
+            core.hold(support, level_core)
         content = gravity.now + k_m * binding.now
+        if core is not None:
+            content = content - k_r * core.now
         if int(content.max()) >= R.GAMMA:
             guard_interval = t
             guard_content = int(content.max())
             break
         read, own, wall = R.coefficients(num, den, content)
         cos_local = R.rest_rotation(read, own, wall)
+        forms = [conserved(r.now, r.before, read, own, wall) for r in records]
         if t == 0:
-            i_start = [conserved(r, read, own, wall) for r in records]
+            i_start = forms
+        for index, record in enumerate(records):
+            record.form_window.append(
+                forms[index] / i_start[index] if i_start and i_start[index] else float("nan")
+            )
+            if len(record.form_window) == WINDOW:
+                record.form_means.append(float(np.mean(record.form_window)))
+                record.form_window = []
         if t % EVERY == 0:
-            row: dict = {"t": t}
+            row: dict = {"t": t, "binding_form": binding.form()}
+            if core is not None:
+                row["core_form"] = core.form()
             for index, record in enumerate(records):
                 reading = readings_of(record, form_of(record), content, counts[index], windows[index])
                 reading["leak"] = (
-                    conserved(record, read, own, wall) / i_start[index]
-                    if i_start and i_start[index]
-                    else float("nan")
+                    forms[index] / i_start[index] if i_start and i_start[index] else float("nan")
                 )
                 row[f"record_{index}"] = reading
                 windows[index] = []
             if mode == "pair":
                 row["separation"] = row["record_1"]["centroid"][0] - row["record_0"]["centroid"][0]
             if mode == "moving":
-                row["expected_x"] = SHAPE[0] / 2.0 - 8 + speed * t
+                row["expected_x"] = x_start + speed * t
             readings.append(row)
         if t == intervals:
             break
@@ -279,65 +322,63 @@ def run(mode: str, side: int, k_m: int, speed: float, intervals: int, source: st
             )
             record.cos_omega = cos_local
     return {
+        "options": options,
         "mode": mode,
         "side": side,
         "k_m": k_m,
+        "k_r": k_r,
         "speed": speed,
         "intervals": intervals,
+        "source": source,
+        "s_cap": s_cap if source == "table" else None,
+        "core_scale": str(core_scale) if core is not None else None,
+        "fields_at_pace": at_pace,
         "shape": SHAPE,
         "kind": KIND,
         "binding_pair": BINDING_PAIR,
+        "core_pair": CORE_PAIR if core is not None else None,
         "count": COUNT,
         "amplitude": AMPLITUDE,
-        "source": source,
         "guard_interval": guard_interval,
         "guard_content": guard_content if guard_interval is not None else None,
         "e_s": [r.e_s for r in records],
+        "e_core": e_core if core is not None else None,
         "cos_omega_vacuum": cos_vacuum,
         "omega_vacuum": math.acos(cos_vacuum),
+        "form_means_300": [r.form_means for r in records],
         "readings": readings,
         "host_seconds": time.time() - t0,
     }
 
 
 def main() -> None:
-    mode = sys.argv[1]
-    args = sys.argv[2:]
-    source = "level"
-    if args and args[-1] in ("level", "count", "cap"):
-        source = args.pop()
-    if mode == "pair":
-        side, k_m, speed = int(args[0]), int(args[1]), 0.0
-        intervals = int(args[2]) if len(args) > 2 else 1500
-        name = f"binding_pair_s{side}_k{k_m}_{source}"
-    elif mode == "moving":
-        side, k_m, speed = int(args[0]), int(args[1]), float(args[2])
-        intervals = int(args[3]) if len(args) > 3 else 1500
-        name = f"binding_moving_s{side}_k{k_m}_v{speed}_{source}"
-    else:
-        side, k_m, speed = int(args[0]), int(args[1]), 0.0
-        intervals = int(args[2]) if len(args) > 2 else 1500
-        name = f"binding_rest_s{side}_k{k_m}_{source}"
-    result = run(mode, side, k_m, speed, intervals, source)
+    options: dict = {"mode": sys.argv[1]}
+    for item in sys.argv[2:]:
+        key, _, value = item.partition("=")
+        options[key] = value
+    result = run(options)
+    name = "binding_" + "_".join(f"{k}{v}".replace("/", "over") for k, v in options.items())
     guard = (
         f"; THE GUARD at interval {result['guard_interval']} (content {result['guard_content']})"
         if result["guard_interval"] is not None
         else ""
     )
     print(
-        f"{name}: E_s {result['e_s']}, omega_vacuum {result['omega_vacuum']:.4f}; {result['host_seconds']:.0f} s{guard}"
+        f"{name}: E_s {result['e_s']}, E_core {result['e_core']}, omega_vacuum {result['omega_vacuum']:.4f}; {result['host_seconds']:.0f} s{guard}"
     )
     for row in result["readings"]:
         if row["t"] % 250 == 0 or row["t"] == 25:
             r = row["record_0"]
-            extra = (
-                f", separation {row['separation']:.2f}"
-                if "separation" in row
-                else (f", expected x {row['expected_x']:.1f}" if "expected_x" in row else "")
-            )
+            extra = f", separation {row['separation']:.2f}" if "separation" in row else ""
+            extra += f", expected x {row['expected_x']:.1f}" if "expected_x" in row else ""
             print(
-                f"  t {row['t']:5d}: centroid x {r['centroid'][0]:6.2f}, width {r['width_rms']:5.2f}, tail {r['tail_links']:5.1f}, peak {r['peak']:7d}, count sum {r['count_sum']:6d} peak {r['count_peak']:5d}, content {r['content_peak']:5d}, omega {r['omega_eff']:.4f}, bound {r['bound_share_12']:.3f}, leak {r['leak']:.4f}{extra}"
+                f"  t {row['t']:5d}: centroid x {r['centroid'][0]:6.2f}, width {r['width_rms']:5.2f}, tail {r['tail_links']:5.1f}, "
+                f"peak {r['peak']:7d}, count sum {r['count_sum']:7d} peak {r['count_peak']:5d}, content {r['content_peak']:5d}, "
+                f"omega {r['omega_eff']:.4f}, bound {r['bound_share_12']:.3f}, form {r['leak']:.4f}, field form {row['binding_form']:.3e}{extra}"
             )
+    print(
+        f"  the record's form's means over windows of {WINDOW}: {[round(v, 4) for v in result['form_means_300'][0]]}"
+    )
     (Path(__file__).resolve().parent / f"{name}.json").write_text(
         json.dumps(result, indent=1) + "\n", encoding="utf-8"
     )

@@ -240,6 +240,10 @@ def main() -> None:
     if len(args) >= 2 and args[-2] == "seed":
         seed = int(args[-1])
         args = args[:-2]
+    # `width W`: the re-created packet's rms (9.109 (3) reads a width of 1)
+    if len(args) >= 2 and args[-2] == "width":
+        globals()["KEEP_WIDTH"] = float(args[-1])
+        args = args[:-2]
     born_by = "flux"
     if args and args[-1] in ("flux", "density"):
         born_by = args.pop()
@@ -249,7 +253,8 @@ def main() -> None:
     mode = args[0] if args else "pair"
     intervals = int(args[1]) if len(args) > 1 else 1500
     result = run(mode, intervals, keep, born_by, seed)
-    name = f"item9_pair_{mode}{'_keep' if keep else ''}{'_' + born_by if keep else ''}{('_seed' + str(seed)) if seed else ''}"
+    width_word = f"_w{KEEP_WIDTH:g}" if keep and KEEP_WIDTH != 3.0 else ""
+    name = f"item9_pair_{mode}{'_keep' if keep else ''}{'_' + born_by if keep else ''}{width_word}{('_seed' + str(seed)) if seed else ''}"
     print(
         f"{name}: {result.get('clicks', result.get('clicks_a'))} clicks; {result['host_seconds']:.0f} s"
     )
