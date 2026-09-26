@@ -1,0 +1,490 @@
+"""THE GENERICITY TEST (the model owner's word through the Boss, record 2234; record 2237: the
+rule is Rule3; ALGEBRA.md 9.57 (1), 9.91 (7), 9.110 item 3): a universe generator driven by a
+fixed seed draws one to twenty families with random English names and random combinations of
+the attributes the loader admits today (the parts, the phase, the pair, the holds, the reads,
+the self-source, the clicks); every draw loads and runs, and five properties hold on each:
+
+(a) renaming the families leaves the run bit for bit;
+(b) reordering the families in the universe file leaves it bit for bit;
+(c) a family with no source stays exactly zero (the engine's own leak test, record 2075 (3));
+(d) Rule3's conserved form holds where no click and no load acts: the step's exact identity of
+    the form I with the remainders' drift (ALGEBRA.md 9.50 (13), 9.57 (1); item 44) on the
+    body's own record, the body alone on the GameBoard (no emitter, no stock), at the plain
+    pace (the body's reads of an integer weight by 1 at the twist "own" summed into the level
+    in force; a read by q, at the weight Lambda or at an angle carries the four paces with
+    their remainders, ALGEBRA.md 9.91 (2): that form is the mathematician's line and the
+    test widens onto it);
+(e) running backward returns the start in the world of the Nodes, bit for bit.
+
+The run is read by tools/record_shipped_worlds.py's reading (what the run is, under the
+world's names). A failing draw is kept as a fixed test with its seed (`KEPT`); the draw widens
+as each new schema lands (the source, the readings). Selected on every pull request by
+tools/check.py. HOST readings, no measurement, no pin."""
+
+from __future__ import annotations
+
+import copy
+import importlib.util
+import json
+import random
+import sys
+from fractions import Fraction
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+import pytest
+
+import event_universe.world_files as world_files
+from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.events.rule import rule_coefficients
+from event_universe.world_files import input_stamp, parse_nature_beam_world
+from tests.test_board_properties import reads_of
+from tests.test_emitter import emitter_world
+
+ROOT = Path(__file__).resolve().parents[1]
+SEEDS = tuple(range(24))
+# draws kept as fixed tests with their seeds: seed -> the finding (empty until one fails)
+KEPT: dict[int, str] = {}
+INTERVALS = 20
+WORDS = (
+    "amber",
+    "basalt",
+    "cedar",
+    "delta",
+    "ember",
+    "fjord",
+    "garnet",
+    "harbor",
+    "indigo",
+    "jasper",
+    "kelp",
+    "lumen",
+    "marble",
+    "nectar",
+    "onyx",
+    "pebble",
+    "quartz",
+    "raven",
+    "saffron",
+    "tundra",
+    "umber",
+    "velvet",
+    "willow",
+    "xenon",
+    "yarrow",
+    "zephyr",
+    "anvil",
+    "birch",
+    "cobalt",
+    "dune",
+    "echo",
+    "flint",
+    "gravel",
+    "heron",
+    "iris",
+    "juniper",
+    "kestrel",
+    "lichen",
+    "meadow",
+    "nickel",
+    "orchid",
+    "prism",
+    "quill",
+    "ripple",
+    "sable",
+    "thistle",
+    "upland",
+    "vortex",
+    "walnut",
+    "yucca",
+)
+PAIRS = ([1, 1], [700, 703], [800, 809], [1000, 1019], [500, 501], [1000, 1181])
+PARTS = ([1], [1, 3], [1, 3, 6])
+
+
+def recorder():  # type: ignore[no-untyped-def]
+    spec = importlib.util.spec_from_file_location(
+        "record_shipped_worlds", ROOT / "tools" / "record_shipped_worlds.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    sys.modules["record_shipped_worlds"] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def draw(seed: int) -> dict[str, Any]:
+    """One draw: the families (the body's, the given, up to two holders, the rest clicking
+    families of random shape) with random names, and the roles by name."""
+    rng = random.Random(seed)
+    count = rng.randint(1, 20)
+    names = rng.sample(WORDS, count)
+    roles: dict[str, str] = {}
+    families: list[dict[str, Any]] = []
+    body = names[0]
+    roles["body"] = body
+    given = names[1] if count >= 2 else None
+    if given:
+        roles["given"] = given
+    holders: list[str] = []
+    rest = names[2:] if given else names[1:]
+    content_holder = rest[0] if rest and rng.random() < 0.8 else None
+    if content_holder:
+        rest = rest[1:]
+        holders.append(content_holder)
+    sign_holder = None
+    if given and rng.random() < 0.5:
+        sign_holder = given  # the given family holds the sign, as the shipped charge does
+    elif rest and rng.random() < 0.5:
+        sign_holder = rest[0]
+        rest = rest[1:]
+    if sign_holder:
+        holders.append(sign_holder)
+
+    def reads_of(exclude: str | None = None) -> list[dict[str, Any]]:
+        chosen = [h for h in holders if h != exclude and rng.random() < 0.6]
+        return [
+            {
+                "family": h,
+                "weight": rng.choice([1, 2, 3, "Lambda"]),
+                "twist": rng.choice(["own", "own", rng.randint(0, 200)]),
+                "by": rng.choice([1, "q"]),
+            }
+            for h in chosen
+        ]
+
+    def held(count_word: str, parts: list[int]) -> dict[str, Any]:
+        entry: dict[str, Any] = {
+            "count": count_word,
+            "factors": [rng.randint(1, 4) for _ in parts],
+            "dipole": "spin" if count_word == "content" else "moment",
+        }
+        if rng.random() < 0.5:
+            entry["dipole_div"] = rng.randint(1, 3)
+        return entry
+
+    def clicks() -> dict[str, Any]:
+        return {"gives": True, "takes": True, "quantum": rng.randint(1, 4)}
+
+    if content_holder:
+        parts = rng.choice(([1, 3], [1, 3, 6]))
+        families.append(
+            {
+                "name": content_holder,
+                "parts": parts,
+                "phase": 1,
+                "pair": [1, 1],
+                "held": held("content", parts),
+                "reads": [],
+                "self_source": {"unit": 0},
+            }
+        )
+    if sign_holder and sign_holder != given:
+        parts = rng.choice(([1, 3], [1, 3, 6]))
+        entry = {
+            "name": sign_holder,
+            "parts": parts,
+            "phase": rng.choice([1, 2]),
+            "pair": [1, 1],
+            "held": held("sign", parts),
+            "reads": reads_of(exclude=sign_holder),
+            "self_source": {"unit": 0},
+        }
+        if entry["reads"] or rng.random() < 0.5:
+            # a held family that reads has waves (the loader's rule, ALGEBRA.md 9.45 (2))
+            entry["clicks"] = {"gives": True, "takes": True, "quantum": 1}
+        families.append(entry)
+    if given:
+        parts = rng.choice(([1, 3], [1, 3, 6])) if sign_holder == given else rng.choice(PARTS)
+        entry = {
+            "name": given,
+            "parts": parts,
+            "phase": 2,
+            "pair": [1, 1],
+            "reads": [] if rng.random() < 0.5 else reads_of(exclude=given),
+            "self_source": {"unit": 0},
+            "clicks": {"gives": True, "takes": True, "quantum": 1},
+        }
+        if sign_holder == given:
+            entry["held"] = held("sign", parts)
+        families.append(entry)
+    families.append(
+        {
+            "name": body,
+            "parts": [1],
+            "phase": 2,
+            "pair": "body",
+            "reads": reads_of(),
+            "self_source": {"unit": 0},
+            "clicks": {"gives": True, "takes": True, "quantum": 1},
+        }
+    )
+    for name in rest:
+        families.append(
+            {
+                "name": name,
+                "parts": rng.choice(PARTS),
+                "phase": rng.choice([1, 2]),
+                "pair": rng.choice(PAIRS),
+                "reads": reads_of(),
+                "self_source": {"unit": 0 if rng.random() < 0.7 else 24 * AMPLITUDE * rng.randint(1, 3)},
+                "clicks": clicks(),
+            }
+        )
+    rng.shuffle(families)
+    return {"seed": seed, "families": families, "roles": roles, "holders": holders}
+
+
+TEMPLATE = emitter_world(stock=1, ticks=INTERVALS)
+AMPLITUDE = int(TEMPLATE["amplitude_bound"])
+SHIPPED = json.loads((ROOT / "examples/events/universe.json").read_text(encoding="utf-8"))
+INTEGERS = {**SHIPPED["integers"], "node_clock": TEMPLATE["node_clock"], "amplitude_bound": AMPLITUDE}
+
+
+def world_of(drawn: dict[str, Any]) -> dict[str, Any]:
+    """The world on the drawn universe: the emitter test world's chain of 80 with its body of
+    the drawn body family (the shipped kind and well, the seed on the mode as the template
+    carries it), its emitter giving the drawn given family to the screen of three receivers, or
+    the body alone where the draw has one family."""
+    roles = drawn["roles"]
+    document = copy.deepcopy(TEMPLATE)
+    for key in ("node_clock", "amplitude_bound", "momentum_unit"):
+        document.pop(key, None)
+    document["universe"] = "universe.json"
+    document["engine"] = "start.json"
+    body = document["measured"][0]
+    body["family"] = roles["body"]
+    body["kind"] = [800, 809]
+    if "given" in roles:
+        body["stocks"] = {roles["given"]: 1}
+        body["emitter"]["family"] = roles["given"]
+        body["emitter"]["clock"] = [512, 1]
+        body["moment"] = [0, 0, 1]
+        for receiver in document["measured"][1:]:
+            receiver["family"] = roles["given"]
+    else:
+        body["stocks"] = {}
+        body.pop("emitter")
+        body.pop("moment", None)
+        document["measured"] = [body]
+        document["detectors"] = []
+    document.pop("stamp", None)
+    return document
+
+
+def alone(drawn: dict[str, Any], families: list[dict[str, Any]]) -> tuple[list, dict]:
+    """The world and the universe of property (d): the body alone on the GameBoard, no emitter,
+    no stock, no detector, no moment (no click and no load acts on its record); the body's
+    reads kept where they are at the plain pace (an integer weight, by 1, the twist "own")."""
+    document = world_of(drawn)
+    body = document["measured"][0]
+    body["stocks"] = {}
+    body.pop("emitter", None)
+    body["moment"] = [0, 0, 0]
+    document["measured"] = [body]
+    document["detectors"] = []
+    plain = copy.deepcopy(families)
+    for family in plain:
+        if family["name"] == drawn["roles"]["body"]:
+            family["reads"] = [
+                read
+                for read in family["reads"]
+                if isinstance(read["weight"], int) and read["by"] == 1 and read["twist"] == "own"
+            ]
+    return plain, document
+
+
+def place(
+    tmp_path: Path, monkeypatch, families: list[dict[str, Any]], document: dict[str, Any]
+) -> dict[str, Any]:
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    (tmp_path / "universe.json").write_text(
+        json.dumps({"integers": INTEGERS, "families": families}), encoding="utf-8"
+    )
+    (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
+    placed = copy.deepcopy(document)
+    placed["stamp"] = input_stamp(placed)
+    return placed
+
+
+def run(document: dict[str, Any], intervals: int = INTERVALS) -> tuple[DetectorLawSimulation, list]:
+    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+    lines: list[dict[str, object]] = []
+    simulation.record = lines.append
+    for _ in range(intervals):
+        simulation.step()
+        assert simulation.leaks() == [], "a family with no source moved (record 2075 (3))"
+    return simulation, lines
+
+
+def renamed(value: Any, mapping: dict[str, str]) -> Any:
+    """Every family name in a reading replaced by its new name (keys and string values)."""
+    if isinstance(value, dict):
+        return {renamed(k, mapping): renamed(v, mapping) for k, v in value.items()}
+    if isinstance(value, list):
+        return [renamed(v, mapping) for v in value]
+    if isinstance(value, str):
+        for old, new in mapping.items():
+            value = value.replace(old, new) if value == old else value
+        return value
+    return value
+
+
+def rename_everything(
+    families: list[dict[str, Any]], document: dict[str, Any], mapping: dict[str, str]
+) -> tuple[list, dict]:
+    return renamed(copy.deepcopy(families), mapping), renamed(copy.deepcopy(document), mapping)
+
+
+def state_reading(module, simulation: DetectorLawSimulation) -> dict[str, Any]:  # type: ignore[no-untyped-def]
+    reading = module.run_reading(simulation, [])
+    return {k: v for k, v in reading.items() if k in ("records", "held families", "read remainders")}
+
+
+@pytest.mark.parametrize("seed", SEEDS)
+def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tmp_path, monkeypatch):
+    if seed in KEPT:
+        pytest.xfail(KEPT[seed])
+    module = recorder()
+    drawn = draw(seed)
+    families, document = drawn["families"], world_of(drawn)
+    # the draw loads and runs (every family of the universe on, record 2075)
+    placed = place(tmp_path, monkeypatch, families, document)
+    simulation, lines = run(placed)
+    assert [f.name for f in simulation.families] == [f["name"] for f in families]
+    base = module.run_reading(simulation, lines)
+    digest = module.digest_of(base)
+    # (c) no source, exactly zero: the run's leak test held at every interval (in `run`); and
+    # every clicking family without a record or a hold has no level anywhere
+    roles, holders = drawn["roles"], drawn["holders"]
+    quiet = {f["name"] for f in families} - {roles["body"], roles.get("given")} - set(holders)
+    for index, family in enumerate(simulation.families):
+        if family.name in quiet:
+            assert all(live.family != index for live in simulation.records.values())
+    # (a) renaming the families leaves the run bit for bit
+    rng = random.Random(seed + 1000)
+    fresh = rng.sample([w for w in WORDS if w not in {f["name"] for f in families}], len(families))
+    mapping = {f["name"]: new for f, new in zip(families, fresh, strict=True)}
+    families_a, document_a = rename_everything(families, document, mapping)
+    placed_a = place(tmp_path, monkeypatch, families_a, document_a)
+    simulation_a, lines_a = run(placed_a)
+    back = {new: old for old, new in mapping.items()}
+    assert module.digest_of(renamed(module.run_reading(simulation_a, lines_a), back)) == digest
+    # (b) reordering the families in the universe file leaves it bit for bit
+    families_b = list(families)
+    rng.shuffle(families_b)
+    if families_b == families and len(families) > 1:
+        families_b = families[::-1]
+    placed_b = place(tmp_path, monkeypatch, families_b, document)
+    simulation_b, lines_b = run(placed_b)
+    assert module.digest_of(module.run_reading(simulation_b, lines_b)) == digest
+    # (d) Rule3's conserved form where no click and no load acts: the body alone, its own
+    # record's step the exact identity value - previous = the remainders' drift (ALGEBRA.md
+    # 9.57 (1); item 44), the record's own pair (9.85 (3)), the level in force the body's plain
+    # reads summed (weight x the read family's level as the interval began)
+    plain, document_d = alone(drawn, families)
+    placed_d = place(tmp_path, monkeypatch, plain, document_d)
+    simulation_d = DetectorLawSimulation(parse_nature_beam_world(placed_d))
+    (live,) = simulation_d.records.values()
+    body_family = live.family
+    num, den = simulation_d.pair_arrays(body_family, live.pair)
+    counts = {f["name"]: f["held"]["count"] for f in plain if "held" in f}
+    weights = {
+        counts[read["family"]]: read["weight"]
+        for f in plain
+        if f["name"] == roles["body"]
+        for read in f["reads"]
+    }
+
+    def level_in_force() -> np.ndarray:
+        level = np.zeros(simulation_d.shape, dtype=np.int64)
+        for count, weight in weights.items():
+            level += weight * simulation_d.level_of(count)
+        return level
+
+    def form(now: np.ndarray, before: np.ndarray, level: np.ndarray) -> Fraction:
+        read_coefficient, self_coefficient, wall = rule_coefficients(
+            num.astype(object), den.astype(object), simulation_d.node_clock, level.astype(object), True
+        )
+        read = reads_of(simulation_d, body_family)(before).astype(object)
+        total = Fraction(0)
+        for node in zip(*np.nonzero(now.astype(object) | before.astype(object) | read), strict=True):
+            a, b = int(now[node]), int(before[node])
+            total += Fraction(
+                int(wall[node]) * (a * a + b * b) - int(self_coefficient[node]) * a * b,
+                3 * int(read_coefficient[node]),
+            )
+            total -= Fraction(1, 3) * a * int(read[node])
+        return total
+
+    states = [(live.now.copy(), live.before.copy(), live.remainder.copy())]
+    levels = [level_in_force()]
+    for _ in range(INTERVALS):
+        simulation_d.step()
+        (live,) = simulation_d.records.values()
+        states.append((live.now.copy(), live.before.copy(), live.remainder.copy()))
+        levels.append(level_in_force())
+    assert len(simulation_d.layer.gathers) == 0, "the body alone clicks"
+    assert np.count_nonzero(states[-1][0]) > 0, "the body's record is empty"
+    for t in range(1, INTERVALS + 1):
+        now, before, remainder = states[t]
+        prev_now, prev_before, prev_remainder = states[t - 1]
+        read_coefficient, _self, _wall = rule_coefficients(
+            num.astype(object),
+            den.astype(object),
+            simulation_d.node_clock,
+            levels[t - 1].astype(object),
+            True,
+        )
+        drift = Fraction(0)
+        for node in zip(*np.nonzero((now != prev_before) | (remainder != prev_remainder)), strict=True):
+            drift += Fraction(
+                (int(now[node]) - int(prev_before[node]))
+                * (int(prev_remainder[node]) - int(remainder[node])),
+                3 * int(read_coefficient[node]),
+            )
+        value = form(now, before, levels[t - 1])
+        previous = form(prev_now, prev_before, levels[t - 1])
+        assert value - previous == drift, (seed, t)
+    # (e) running backward returns the start in the world of the Nodes, bit for bit
+    simulation_e = DetectorLawSimulation(parse_nature_beam_world(placed))
+    start = state_reading(module, simulation_e)
+    start_digest = module.digest_of(start)
+    for _ in range(INTERVALS):
+        simulation_e.step()
+    assert module.digest_of(state_reading(module, simulation_e)) != start_digest
+    for _ in range(INTERVALS):
+        simulation_e.step_inverse()
+    assert module.digest_of(state_reading(module, simulation_e)) == start_digest
+
+
+def test_the_draw_is_fixed_by_its_seed_and_spans_the_admitted_attributes():
+    """The same seed draws the same universe; over the seeds the draw reaches one to twenty
+    families, every parts form, both phases, several pairs, holds of both counts, reads by
+    plain and by sign with an integer or the universe's word for the weight, a self-source on
+    and off, quanta above one."""
+    assert draw(3) == draw(3)
+    seen: dict[str, set] = {
+        k: set() for k in ("count", "parts", "phase", "pair", "held", "by", "weight", "self", "quantum")
+    }
+    for seed in range(200):
+        drawn = draw(seed)
+        seen["count"].add(len(drawn["families"]))
+        for f in drawn["families"]:
+            seen["parts"].add(tuple(f["parts"]))
+            seen["phase"].add(f["phase"])
+            seen["pair"].add(str(f["pair"]))
+            if "held" in f:
+                seen["held"].add(f["held"]["count"])
+            for r in f["reads"]:
+                seen["by"].add(r["by"])
+                seen["weight"].add(str(r["weight"]))
+            seen["self"].add(f["self_source"]["unit"] > 0)
+            if "clicks" in f:
+                seen["quantum"].add(f["clicks"]["quantum"])
+    assert seen["count"] >= {1, 2, 20} and min(seen["count"]) == 1 and max(seen["count"]) == 20
+    assert seen["parts"] == {(1,), (1, 3), (1, 3, 6)} and seen["phase"] == {1, 2}
+    assert len(seen["pair"]) >= 5 and seen["held"] == {"content", "sign"}
+    assert seen["by"] == {1, "q"} and "Lambda" in seen["weight"] and "1" in seen["weight"]
+    assert seen["self"] == {True, False} and seen["quantum"] >= {1, 2, 3, 4}

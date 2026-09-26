@@ -133,7 +133,7 @@ def canonical(value: Any, out: list[bytes], seen: dict[int, int] | None = None) 
 def run_reading(simulation: DetectorLawSimulation, lines: list[dict[str, object]]) -> dict[str, Any]:
     """What the run is, under stable names: the output lines, the engine's state stream, the
     records' and the held families' levels and remainders, the reads' remainders, the clicks
-    and the books. The engine's containers are read by their present names (`records`,
+    and the books, every family by its name. The engine's containers are read by their present names (`records`,
     `held_records`, `_pace_carry`, `layer.gathers`): a cut that renames one breaks this reader
     aloud, and the reader follows; the digest never moves on its own."""
     names = [family.name for family in simulation.families]
@@ -154,9 +154,19 @@ def run_reading(simulation: DetectorLawSimulation, lines: list[dict[str, object]
         f"{names[reading]} reads {names[read]} on axis {axis}": carry
         for (reading, read, axis), carry in simulation._pace_carry.items()
     }
+    state = dict(simulation.snapshot_stream())
+    # the engine lists a body's held stocks and the held families by the family's position in
+    # the universe file; the reading names them, so that order is not in the digest
+    state["measured"] = [
+        {**body, "held": dict(zip(names, body["held"], strict=True))} for body in state["measured"]
+    ]
+    state["held_fields"] = {
+        field["family"]: {key: value for key, value in field.items() if key != "family"}
+        for field in state["held_fields"]
+    }
     return {
         "lines": lines,
-        "state": dict(simulation.snapshot_stream()),
+        "state": state,
         "records": records,
         "held families": held,
         "read remainders": reads,
