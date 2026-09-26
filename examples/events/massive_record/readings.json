@@ -2,7 +2,7 @@
  "format": "massive-record-readings-v1",
  "identity": "massive-record-v1",
  "artifacts": "artifacts/massive_record/<world>/ (events.jsonl, run.json), each world run headless by python -m event_universe; the pins in expectations.json",
- "rest_20": {
+ "boxed_clock_side_20_at_rest": {
   "kind": "GAMEBOARD",
   "window": [
    200,
@@ -17,7 +17,7 @@
   "peak_over_pin": 0.997902108476137,
   "rate_over_pin": 0.9954306666194825
  },
- "rest_28": {
+ "boxed_clock_side_28_at_rest": {
   "kind": "GAMEBOARD",
   "window": [
    200,
@@ -47,7 +47,7 @@
   "peak_over_pin": 1.0007646769427592,
   "rate_over_pin": 1.0019603201666882
  },
- "moving_20": {
+ "boxed_clock_side_20_moving": {
   "kind": "GAMEBOARD",
   "hold": {
    "window": [
@@ -86,7 +86,7 @@
   "rate_over_pin": 1.010680120138225,
   "peak_over_pin": 1.0001935024424105
  },
- "moving_28": {
+ "boxed_clock_side_28_moving": {
   "kind": "GAMEBOARD",
   "hold": {
    "window": [
@@ -164,7 +164,7 @@
   "rate_over_pin": 1.7560344827586205,
   "peak_over_pin": 2.071903339748153
  },
- "index_50": {
+ "medium_index_at_rest_50": {
   "kind": "GAMEBOARD",
   "window": [
    1000,
@@ -177,7 +177,7 @@
   "n_over_pin": 0.9947752280051063,
   "excess_over_pin": 0.8705698660365051
  },
- "index_20": {
+ "medium_index_at_rest_20": {
   "kind": "GAMEBOARD",
   "window": [
    1000,
@@ -190,7 +190,7 @@
   "n_over_pin": 0.9878002622847639,
   "excess_over_pin": 0.8683797015613319
  },
- "index_10": {
+ "medium_index_at_rest_10": {
   "kind": "GAMEBOARD",
   "window": [
    1000,
@@ -203,7 +203,7 @@
   "n_over_pin": 0.9787355233459566,
   "excess_over_pin": 0.8700316846828188
  },
- "index_moving_k3_toward": {
+ "receding_index_short_speed_third_toward": {
   "kind": "GAMEBOARD",
   "rest_at_omega": {
    "window": [
@@ -249,7 +249,7 @@
   "pin_ratio": 0.5,
   "ratio_over_pin": 0.9962441595242214
  },
- "index_moving_k3_away": {
+ "receding_index_short_speed_third_away": {
   "kind": "GAMEBOARD",
   "rest_at_omega": {
    "window": [
@@ -295,7 +295,7 @@
   "pin_ratio": 2.569,
   "ratio_over_pin": 0.9542236417599228
  },
- "index_moving_long_k3_away": {
+ "receding_index_speed_third_away": {
   "kind": "GAMEBOARD",
   "rest_at_omega_prime": {
    "window": [
@@ -332,7 +332,7 @@
   "pin_ratio": 6.74,
   "ratio_over_pin": 0.5314772507465193
  },
- "index_moving_k4_toward": {
+ "receding_index_short_speed_quarter_toward": {
   "kind": "GAMEBOARD",
   "rest_at_omega": {
    "window": [
@@ -376,7 +376,7 @@
    0.30347549604915347
   ]
  },
- "index_moving_k4_away": {
+ "receding_index_short_speed_quarter_away": {
   "kind": "GAMEBOARD",
   "rest_at_omega": {
    "window": [
@@ -420,7 +420,7 @@
    0.41396147538166517
   ]
  },
- "index_moving_long_k4_away": {
+ "receding_index_speed_quarter_away": {
   "kind": "GAMEBOARD",
   "rest_at_omega_prime": {
    "window": [

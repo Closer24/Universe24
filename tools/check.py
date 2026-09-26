@@ -2,6 +2,7 @@
 
 import argparse
 import ast
+import importlib.util
 import io
 import json
 import subprocess
@@ -208,6 +209,17 @@ def affected(changed, sources):
     return impacted
 
 
+def cancelled_tests():
+    """The ray law's test files (docs/CANCELLED_WORLDS.md section 3): never selected."""
+    spec = importlib.util.spec_from_file_location(
+        "cancelled_paths", Path(__file__).resolve().parent / "cancelled_paths.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return set(module.cancelled_paths("tests"))
+
+
 def select(changed, sources):
     impacted = affected(changed, sources)
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
@@ -215,7 +227,9 @@ def select(changed, sources):
     for path in changed:
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
         if path.endswith(".json") and path.startswith(("examples/", "skills/")):
-            tests.add("tests/test_configuration_validation.py")
+            # the detector law's preflight (the old runner's preflight is cancelled,
+            # docs/CANCELLED_WORLDS.md section 3)
+            tests.add("tests/test_preflight_worlds.py")
         if path.endswith(".md") or path == "MANIFEST.in":
             tests.add("tests/test_repository_navigation.py")
         # Paths and duplicate contents can change in any source file, not just Python.
@@ -243,6 +257,7 @@ def select(changed, sources):
                 for p, text in sources.items()
                 if p.startswith("tests/test_") and "event_universe" in text
             )
+    tests -= cancelled_tests()
     return sorted(tests), sorted(
         p for p in impacted if p.startswith("src/") and p.endswith(".py") and p in sources
     )

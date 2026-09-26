@@ -1,0 +1,37 @@
+The one stroke, commit 1: the representation as a list of parts and the families file's three entries, gravity of ten components, the charge of four with light as its wave and one family of matter with the pair on every body (ALGEBRA.md 9.91 (10) 1; 9.86 (2), (3); 9.91 (1), (7); 9.85 (3); the Boss's records 2105 and 2106 of 2026-09-26; BUILD.md section 26 item 60)
+
+examples/events/families.json: node_clock 10^4, amplitude_bound 2^20,
+charge_weight 1, and three families: gravity (parts [1, 3, 6], phase 1, held
+content with the factors [1, 4, 2] and the spin's dipole, no reads, no
+clicks), the charge (parts [1, 3], phase 2, held sign with the moment's
+dipole halved, reading gravity, with clicks: light is its wave) and matter
+(parts [1], phase 2, pair "body", reading gravity at 1 and the charge at
+Lambda by q, with clicks). booked derived. The loader carries parts, levels,
+held factors, dipole, self_unit, clicks and the reads' twist on the family; a
+body of a family whose pair is the body's declares `kind`, an emitter giving
+it the given record's `pair`, each required there and refused elsewhere.
+
+The engine: a record carries its pair and part; the pair arrays are made once
+per (family, pair) with every body of the family's well written into each;
+the wall and the wheel are read by (family, pair); a held family has one
+record per component, the time part written by the hold, the other parts
+zero and silent (a zero part steps to zero exactly; the leak test reads every
+part); the booking and the field step are decided by the record, since the
+charge is both held and clicking.
+
+Every shipped world regenerated: "charge" for "light" on every record
+family, mirror, receiver and stock; "matter" with its `kind` for every body
+of a massive kind. The rows, the held levels and the lines bit for bit those
+of 96d58266 on the five worlds of the item-51 method (the name light read as
+charge). tests/test_families_file.py rewritten on the three entries.
+
+One world design moved: the redshift's bottom clock held its arm's content
+with a well body of a fifth family; under one family of matter that is a
+second well of the emitter's family on its chain and the separation rule of
+9.35 refuses it (the emitter's mode is nonzero on every Node of the chain), so
+the arm is held by bodies of matter on one Node each, content 2000 apiece, no
+well; the light's pace on the arm as before. The same rule meets the
+all-families world of 9.87 (5): a question for the mathematician.
+
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01FiGGiQ6ee5yyFwBih4fdeE

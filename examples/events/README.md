@@ -617,6 +617,81 @@ register entry is
 0.5893 (the mean 0.5810) over the fan at this GameBoard, 0.5774 to
 0.5818 in the limit, against c = 0.5774.
 
+## The dark body
+
+The folder [dark_body/](dark_body/README.md) holds the two worlds of the dark
+body row (ALGEBRA.md 9.54 (4); BUILD.md section 26 item 39): a body of content
+100000 beside a beam's line that gives nothing and takes nothing (`dark.json`)
+and the bright control of the same content with its giving and taking clicks
+(`bright.json`), written by `dark_body/make_worlds.py` with their pins in
+`expectations.json` declared blind from the algebra before any run; run only
+when the model owner says the engine is stable.
+
+## The runs toward nature
+
+The folder [toward_nature/](toward_nature/README.md) holds the diagnostic worlds
+of rows 1 to 3 of ALGEBRA.md 9.59 (the model owner's question of 2026-09-25,
+record 2030: the direction toward nature, without pins): the redshift's two
+light clocks, the longitudinal Lorentz clock at rest and moving, and the
+bending's beam past a dark body, under Gamma 10^4 (BUILD.md section 26 item 41).
+No `expectations.json`, no pin, no verdict; every reading in the README is
+labelled by kind and set beside nature's value only for the direction; a reading
+outside the mathematician's band goes to him before any word (9.59 (6)).
+
+## The point emitter
+
+THE ONE FAMILIES FILE (ALGEBRA.md 9.83 (2), 9.85 (3), 9.86 (2), 9.91 (7); the model
+owner's record 2075; the one stroke of record 2106, commit 1; BUILD.md section 26 items 59
+and 60): `families.json` in this folder is the one canonical copy of the universe's three
+families as laws and of the universe's integers (node_clock Gamma = 10^4, amplitude_bound
+A = 2^20, charge_weight Lambda = 1). GRAVITY, parts [1, 3, 6] (the time part the Node
+clock's content, the vector the momentum's field, the tensor), held content with the
+factors [1, 4, 2] and the spin's dipole; THE CHARGE, parts [1, 3], held sign with the
+moment's dipole, reading gravity, with clicks: light is its wave, so every light record,
+mirror, receiver and stock in a world file is of the family "charge"; MATTER, parts [1],
+the pair on every body (`kind` [num, den] on each body, the families matter, well, dark,
+heavy, muon and point of item 59 its kinds), reading gravity and the charge at Lambda by
+q, with clicks. Every world of the detector law names the file (`"families":
+"examples/events/families.json"`), declares no integers of its own, and every family is on
+in every world; a component with no source stays exactly zero (the leak test per part).
+The light record's clock is its emitter's (`clock` on every emitter). The unit tests keep
+their small inline lists.
+
+THE ENGINE START FILE (the model owner's record 2089 of 2026-09-25 through the
+Boss; BUILD.md section 26 item 57): `engine_start.json` in this folder is the one
+canonical copy of the run's parameters, {"law": "detector-law-v1", "mode": "check"};
+every world of the detector law names it by its repository path (`"engine"`), the
+loader reads it and refuses a missing key by name, and the runner reads its `mode`
+("check" until the model owner's Go: no pin compared, `--pins` refused). No key of
+the law's path has a default: a world declares every flag it runs under, every
+family its pair, charge and reads, every measured event its momentum and held
+quanta, every block its ramp and start, every well its margin; a key the law never
+reads is refused by name (docs/MIGRATION.md, "The engine start file").
+
+The folder [point_emitter/](point_emitter/README.md) holds the first row of the
+point emitter (ALGEBRA.md 9.69 (2), 9.71 (1); BUILD.md section 26 item 50), a
+hypothesis under its own identity, the world key `point_emitter`: a one-Node
+well on a chain of 1200 giving light by the window between two receiver sets
+(`point_chain.json`) and the light clock with a point emitter
+(`point_light_clock.json`), written by `point_emitter/make_worlds.py`. No
+`expectations.json`, no pin, no verdict; the README sets every reading beside
+its algebraic expectation by kind, for the direction alone.
+
+## The check-mode worlds
+
+The folder [check_mode/](check_mode/README.md) holds the check-mode worlds of the
+new physics (ALGEBRA.md 9.87 (4) and (5), 9.92; the Boss's record 2133 (2) of
+2026-09-26): the rows of the check-mode table that a world of today's keys can
+declare (Newton's fall, the Kepler pair, the charge rows and magnetism on the
+layer, the recoil rows) and the all-families world with the six faces as its
+counters, each beside its blind expectation in the README, written by
+`check_mode/make_worlds.py` in record 2128's words (`universe`, `q`, `stocks`)
+with no momentum or spin declared (record 2130: a moving body is its record with
+its tail, written by the generator at the wave number K of its pace). No
+`expectations.json`, no pin, no verdict. Until the engine's writer lands the
+words, the files load in no loader; `tests/test_check_mode_worlds.py` reads their
+structure.
+
 ## The massive record kind
 
 The folder [massive_record/](massive_record/README.md) holds the check worlds
@@ -625,10 +700,12 @@ docs/designs/detector_law/MASSIVE_RECORD.md, the build's plan BUILD.md, the
 readings BUILD_READINGS.md), written by `massive_record/make_worlds.py` with
 their pins in `expectations.json` written by `pins.py` before any run: one
 block at rest on a periodic 48^3 board (CONTROL), the block pushed to k = 3
-on 64^3 (PREDICTION of the block form's residual), the rest cavity and the
-cavity moved (CONTROL), the index block at rest on a chain (CONTROL of the
-coupling) and the index in motion at K = 3 and K = 4 (PREDICTION of the
-model as built); `read_runs.py` writes the runs' readings beside the pins.
+on 64^3 (PREDICTION of the block form's residual), the muon's and the deep
+well's clocks (PIN and CONTROL) and the light clock in the one table's form;
+the rest cavity and the cavity moved are CANCELLED with the cavity and the
+index rows HELD under the born train (BUILD.md section 26 items 27 and 28,
+their files as written in `docs/designs/detector_law/held_worlds/`);
+`read_runs.py` writes the runs' readings beside the pins.
 
 ## The massive rows
 
