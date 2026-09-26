@@ -15416,6 +15416,11 @@ sections are marked so in place when the engine is declared stable.
 | The one keys table and its test | 9.90 (6) | owed |
 | The four primitives of the freeze, declared | 9.88 (7) | owed |
 | The faces: periodic, mirror, receiver with depth | 9.85 (5) (c); 9.90 (3) (a) | owed |
+| The generator: the bound mode and its clock (the eigenproblem of the rest operator) | 9.94 (2), (3); 9.22 (7) | owed |
+| The generator: the period and the norm of one quantum | 9.94 (4) | owed |
+| The generator: a body on one Node (the eigenvalue kept alone) | 9.94 (5) | owed |
+| The generator: the moving body's proper pairs (the mode times a character) | 9.94 (6); 9.63 (3) | owed |
+| The loader's check of a generated file (the eigen-residual, the stamp) | 9.94 (7); 9.22 (7) | owed |
 
 **(3) WHAT THE REVIEWER CHECKS, one line each (record 2110 item 3).**
 Every section in force implemented; every operation of the code backed
@@ -15423,3 +15428,160 @@ by a row; integers only, every division with its remainder kept at its
 place; the order of the step as 9.91 (8); the booking and Born's rule
 in both forms of record 2109; no name of a family, a law or a version
 anywhere in the code; no number of the law in the code.
+
+### 9.94 The generator's algebra: one generator, one operation, the eigenproblem of the engine's own rest operator (the model owner's question of 2026-09-26: "our world generator, we have one generator, what is its algebraic expression? ... also the generator of a body on one Node ... the operation must converge to an algebraic operator, in your file and in ours, matching one to one")
+
+**(1) THE ANSWER IN ONE LINE.** There is one generator and it does one
+algebraic thing: it finds the EXTREMAL EIGENVECTOR of the engine's own
+rest operator on the world's GameBoard with the body's pair on the
+body's Nodes, and reads its EIGENVALUE. The eigenvector is the body's
+profile (the world file's `seed`); the eigenvalue is the body's clock
+(`clock` [a, b] = 2 cos omega_b); the rotation's integer period is
+`period`; the action of the mode over one period at the body's Node is
+`norm`, the quantum. A body on one Node is the same eigenproblem with
+only the eigenvalue kept. A moving body's proper pairs are the same
+eigenproblem's dispersion along the axis of motion. Nothing else in
+the generator is an operation of the law: the train is retired, the
+weight is declared, the stamp and the margin are checks.
+
+**(2) THE OPERATOR.** At rest (every pace Gamma) the rule 9.57 (1)
+divided by 6 Gamma^2 is
+
+  den_i (a_next,i + a_before,i) = (num_i / 3) (S_6 a_now)_i,
+
+with num_i, den_i the pair at Node i (the body's pair on its Nodes,
+the family's elsewhere) and S_6 the six-neighbour sum with the world's
+faces (the wrap on a periodic axis, zero beyond a face). A standing
+rotation a_t = p cos(omega t) satisfies it exactly when
+
+  num_i (S_6 p)_i = 3 den_i (2 cos omega) p_i   at every Node i,
+
+the generalised eigenproblem of the pencil (N S_6, 3 D) with N =
+diag(num), D = diag(den): the eigenvalue is 2 cos omega, the
+eigenvector the profile p. Its extremal eigenvector (the largest 2 cos
+omega, the slowest rotation) is THE BOUND MODE, the body's ground
+state, above the band's top 2 num / den of the medium when the body's
+pair is deeper than the medium's; every other eigenvector is a
+radiating mode. This is the whole algebra of a body's record: the
+engine's rest operator restricted to the body's world, and its
+Perron eigenvector.
+
+**(3) THE COMPUTATION, IN THE ENGINE'S INTEGERS, ONE TO ONE.** The
+generator's iteration step is
+
+  3 den_i v'_i + r'_i = num_i (S_6 v)_i + 6 den_i v_i + r_i,   0 <= r' < 3 den,
+
+which is THE ENGINE'S OWN REST STEP with the before level set to minus
+twice the now level (a_before = -2 a_now turns den (a_next + a_before)
+into den a_next - 2 den a_now): the power iteration of the shifted
+operator D^-1 (N S_6 / 3 + 2 I), whose eigenvalues are 2 cos omega + 2
+>= 0, so the operator is nonnegative and Perron-Frobenius gives its
+dominant eigenvector as the bound mode from any positive start (the
+body's Nodes' indicator at the working amplitude), converging at the
+rate 1 - gap / (2 cos omega_b + 2) per iteration. The remainder r is
+carried from step to step, so the map is an exact integer map; when
+the levels pass twice the amplitude they are halved k times as one
+exact shift with the remainder shifted with them (a projective
+rescaling, which changes nothing of the eigenvector). THE CLOCK is
+read from the scaled profile as the Rayleigh quotient of the pencil,
+
+  a = round( b SUM_i p_i num_i (S_6 p)_i / SUM_i 3 den_i p_i^2 ),
+
+with b the clock's denominator, a power of two at least twice the
+amplitude and at least 2^20 (exact for the exact mode, second order in
+the rounding, every Node weighing in). THE STOP is the first iteration
+at which the scaled profile with that clock passes the loader's own
+residual bound,
+
+  | b num_i (S_6 p)_i - 3 den_i a p_i | <= b (3 num_i + 6 den_i)   at every Node,
+
+the eigen-equation to the rounding floor: the next step changes the
+GameBoard no more than the rounding, only rotating. The profile p at
+the declared amplitude A and the clock [a, b] are the file's integers;
+the loader recomputes the residual from them alone and refuses a file
+that fails. So the generator and the loader hold one equation between
+them, and the engine runs the same operator: one to one by
+construction, since the generator's step is the engine's step.
+
+**(4) THE PERIOD AND THE NORM, from the eigenvalue and the engine.**
+The period P = round(2 pi / omega_b) with 2 cos omega_b = a / b: the
+nearest integer to the rotation's period (the smallest whole count of
+intervals at which the mode's phase returns to itself, to the integer
+floor). THE NORM T of one quantum: the body's mode alone on its world
+is advanced by the engine's rule for P intervals and the share of the
+conserved form at the body's Node is summed,
+
+  T = SUM over t = 1..P of e_c(t),   the exact rational;
+
+for the exact mode e_c is constant and T = P e_c, the action of one
+period at the Node (9.17 (7) (e), 9.51 (3)); the generator writes the
+rational's numerator as `norm` and its denominator beside it. This
+computation is the engine itself run alone, so it is one to one by
+identity; the world file carries the integers and the loader reads
+them.
+
+**(5) A BODY ON ONE NODE.** The same eigenproblem on the world with the
+body's pair at one Node: its eigenvector is the one Node's level with
+the evanescent tail into the medium (for the well [800, 802] in the
+kind [800, 813] the eigenvalue gives omega_b = 0.178, between the
+well's own rotation and the band's top), and its eigenvalue is the
+clock. The body on one Node keeps THE EIGENVALUE ALONE: its record at
+its Node rotates by the rule with the six Ports closed on itself (S_6 =
+6 a) at the pair [num_c, 2 den_c] read from the clock, 6 den_c Gamma a'
++ r' = (6 num_c p + 12 den_c c) a - 6 den_c Gamma b + r (9.46 (2), 9.60
+(2)), so that with p = Gamma and c = 0 its rotation is exactly 2 cos
+omega = num_c / den_c = a / b; the tail is not written (the body's
+support decides what is on the GameBoard, 9.89 (3)). There is no second
+generator: the one-Node body's clock is the same eigenvalue, and its
+profile is the constant the support allows. A body whose pair equals
+the medium's has no bound mode (the eigenvalue at the band's top, a
+radiating profile) and the generator refuses it.
+
+**(6) A MOVING BODY, the proper pairs (9.63 (3)).** The mode times the
+character of K along the axis of motion, p_i cos(K x_i), is an
+eigenvector of the same pencil restricted to that axis with the
+eigenvalue
+
+  2 cos omega_K = 2 cos omega_b - (1 - cos K) X,
+  X = SUM_i num_i p_i (p_{i+e} + p_{i-e}) / (3 SUM_i den_i p_i^2),
+
+X the profile's own Rayleigh quotient on the axis's two reads (on a
+plane wave X = 2 num / (3 den) and the line is the free dispersion 3
+cos omega = (num / den)(cos K + 2) of 9.24 (2) exactly). The moving
+body at the pace v = m / W (m the momentum's whole part, W the
+accumulator's wall) carries the K at which the group pace X sin K /
+(2 sin omega_K) equals v, and its record rotates at its moving Node by
+omega_K - K v per interval (the rotation of the moving mode's rows at
+its moving centre); the generator writes the pair [round(b 2
+cos(omega_K - K v)), b] for every whole m from 0 to |P| as
+`proper_clock`, the engine reading the pair of its momentum now. The
+root K is the host's (a bisection on floats); the file carries the
+integers; the dilation the pairs carry is 9.62 (2)'s and 9.24 (2)'s.
+
+**(7) WHAT ELSE THE GENERATOR DOES, AND WHAT IT IS.** (a) THE WEIGHT g
+of a point emitter: the row's declaration (9.85 (5), g = 4 for the
+light clock, 1 for the chains); the generator's trial runs (the window
+at g = 1, the estimate sqrt(n_1 / target)) are a host reading toward
+that declaration, not an operation of the law. (b) THE GIVEN TRAIN
+(the character of K under tapers and a window, its norm the conserved
+form, the Doppler clock of a moving train): RETIRED with the train
+(9.83 (2) (a), 9.85 (5)); the point emitter's window writes the rows.
+(c) THE STAMP: the SHA-256 of the whole file, a check that the
+generator's integers were not edited by hand; no algebra. (d) THE
+MARGIN: the mode's binding and extents by a float eigensolver
+(Lanczos), a host diagnostic of the declaration; no algebra of the
+law. (e) THE PLACEMENT and the FLUX checks of the retired train: gone
+with it.
+
+**(8) ONE TO ONE, what the two files must say alike.** In this
+document: (2) the operator, (3) the iteration as the engine's step
+with a_before = -2 a_now and the Rayleigh quotient with the stop, (4)
+the period and the action, (5) the one-Node body's eigenvalue, (6)
+the dispersion along an axis. In the engine's documents and the
+generator's docstrings: the same five, in the same symbols, with the
+function that does each (today `iterated_mode` and `_operator_step`,
+`clock_denominator`, `period_of`, `excitation_action`,
+`mode_dispersion` with `moving_rotation` and `proper_clock`, and the
+loader's `mode_residual`), so that the outside reviewer of record 2110
+reads one equation in two places. A generator line that is not one of
+these five is a check or a reading and says so.
