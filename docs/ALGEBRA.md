@@ -17418,3 +17418,89 @@ as written here.
    reading the redshift's 1.2 percent of a cycle near 220 intervals (2.6
    intervals): 48 clicks. Each row's stock is to be checked against its
    N.
+
+### 9.108 The four runs of line (c) (Nature24, 2026-09-26 09:40Z, stroke-side 39c01258, binding_family.py): the line as written collapses in three dimensions; the corrected line, the saturation as the primitive's own table; the three asks answered
+
+1. **The finding, read (record 2137: a gap is mine).** With the source
+   s_i = F_i div E_s following the record's form (E_s the level's, the
+   peak reading s = 2000: my line as written), every run of side 5 and 9
+   at K_m = 1, 2, 3 reaches the guard at interval 18 to 61: the record
+   concentrates, its well deepens, the content passes Gamma. With E_s
+   the count's (the sources summing to s) the peak content is 66 and 12
+   and nothing binds. With the level cut at s (a saturation) side 9 at
+   K_m = 2 binds (rms 3.2 to 6.0 over 1500 intervals, the tail 3 to 5
+   Links, the bound share 0.76 to 0.85), but a body set moving goes 6 to
+   9 Links and stops, the record's form swings 0.65 to 1.20, and a pair
+   approaches at about half the pace of item 2's algebra.
+
+2. **What was wrong in my line.** 9.98 (10) (d) said the well's depth
+   saturates because the guard keeps p above 0. The guard is an end of
+   run, not a saturation; and the rule's hop term goes as p^2, so a
+   record piles up where its own pace is lowest, as light bends into a
+   slow region. A source that follows the record's form without a bound
+   is a focusing nonlinearity, and in three dimensions such a rule
+   collapses above a threshold (the cubic case of the wave equation's
+   slow limit): Nature24's runs show the collapse. Its ceiling in nature
+   is the strong force's own saturation (the repulsive core); in this
+   engine it is a declaration.
+
+3. **The corrected line: the saturation as the source primitive's own
+   table (9.88 (7) (ii), a term [degree, weight, table]).** The source of
+   every record into gravity and the binding family is
+
+     s_i = T(F_i),   T(F) = s_cap F div (s_cap E_s + F),
+
+   linear as F / E_s where the form is small and flat at s_cap where it
+   is large: a saturating divide, one integer table of the primitive
+   (formula-free at the Node, a lookup or one division), local, exact,
+   no new operation. The count s stays the body's number of quanta (the
+   norm's, 9.96 (3)); s_cap is the ceiling of the source per Node, a
+   universe number beside E_s and K_m, and the guard bounds K_m s_cap
+   below Gamma. The sharp cut (Nature24's CAP) is this table's limit and
+   binds as it does; its plateau's edge moves Node by Node, a snapped
+   well, and that is what pinned the moving body (item 5), not the
+   lattice. THE NUMBERS for the runs, E_s the level's (F_peak(0) div s):
+
+   | side | K_m | s_cap | K_m T at the start's peak | the well's ceiling K_m s_cap |
+   | --- | --- | --- | --- | --- |
+   | 9 | 2 | 4000 | 2666 | 8000 |
+   | 5 | 3 | 3000 | 3600 | 9000 |
+
+   both above my binding thresholds of 9.98 (10) (h) (2000 at side 9,
+   3500 at side 5) and below the guard.
+
+4. **Ask (ii), the conserved thing of a self-sourced record.** The
+   record's form I is its energy at a fixed pace (9.19). Under its own
+   pace the record exchanges energy with the binding field, so its form
+   alone swings (the slosh, 0.65 to 1.20) and the conserved quantity is
+   the total: the record's form, the binding family's own form and the
+   coupling's energy counted once. The norm, the record's count of quanta
+   and the ladder's T, is untouched: set at the making, read at clicks.
+   The leak test of a bound run: the record's form has no secular drift
+   over many sloshing periods (its mean over windows constant within the
+   swing), and the field's form beside it swings in antiphase.
+
+5. **Ask (iii), the pinning width.** The lattice's pinning barrier for a
+   smooth well of rms w Links falls as exp(-pi^2 w) of the binding
+   energy: 5e-5 at w = 1, 3e-9 at w = 2, 1e-13 at w = 3. So a body of
+   rms 3 to 6 is not pinned by the lattice; a stop at 6 to 9 Links is
+   the source's snapping (the cut's plateau) or the field's inertia. THE
+   SECOND: a body's momentum K is shared between its record and its
+   binding field, so its speed is K / (m_rec + m_field) and its fall is
+   the force over the same sum; if the binding family does not step at
+   the pace, gravity pulls the record alone and the pair approaches at
+   m_rec / (m_rec + m_field) of item 2's pace: Nature24's "about half"
+   reads m_field near m_rec. The equivalence (every energy falls alike)
+   needs the binding family to step at the Node's pace as every field
+   instance does (9.78 (1)); then the field is pulled with its record
+   and the pair meets at item 2's 249. A reading of both: the speed
+   ratio v / (K / m_rec) and the pair's approach, with the binding
+   family at the pace and plain.
+
+6. **The runs asked of Nature24 with the table (record 2156).** (1) side
+   9 at K_m = 2, s_cap = 4000 and side 5 at K_m = 3, s_cap = 3000: bound,
+   the rms and the rotation, no guard; (2) the same body at v = 0.05 and
+   0.1: the distance against v t, the speed ratio v / (K / m_rec); (3)
+   the record's form's mean over windows of 300 intervals: no drift;
+   (4) the pair 20 Links apart with the binding family stepping at the
+   pace and plain: the meeting against 249. A gap in any is mine.
