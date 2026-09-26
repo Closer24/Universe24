@@ -4,11 +4,16 @@ records 2216 (2) and 2230; issue #1155): one digest per shipped world over the e
 state after a recorded number of intervals, written once here into `tests/shipped_worlds.json`
 and compared by `tests/test_shipped_worlds.py` on every pull request, whatever it changes.
 
-THE DIGEST is SHA-256 over a canonical dump of the simulation object after the intervals: every
-attribute, every dataclass field, every integer array (its dtype, shape and bytes), every list
-and dict in a fixed order; the parsed world included, so a change of the loader, of the rule, of
-a hold, of a click or of a world file moves it. Nothing physical is read: the digest is a HOST
-reading of the state, bit for bit, never a measurement.
+THE DIGEST is SHA-256 over what the run is, never over how the code holds it (the Boss's word on
+PR #1172): the output lines the run wrote; the engine's own state stream (`snapshot_stream`: the
+interval, the bodies' contents, momenta and spins, the held families' levels and the live
+records' integers, each under the world file's family names, record identities and body
+numbers); every live record's levels now and before and its remainder; every held family's
+levels before and its remainder; every read's remainder (by the reading and the read family's
+names and the axis); the clicks; and the books. Every key is a name of the world's files or a
+word of the ledger, never a Python attribute name, so a cut that renames or moves the engine's
+attributes while every run stays bit for bit leaves the digest where it is (its test). Nothing
+physical is read: the digest is a HOST reading of the state, bit for bit, never a measurement.
 
 THE INTERVALS per world: the world's own `ticks` when the whole run fits the budget of
 `FULL_RUN_SECONDS` (estimated from `SAMPLE_STEPS` timed steps), else `PREFIX_INTERVALS`; the
@@ -84,15 +89,19 @@ def canonical(value: Any, out: list[bytes], seen: dict[int, int] | None = None) 
             out.append(f"<again {seen[id(value)]}>".encode())
             return
         seen[id(value)] = len(seen)
-    if value is None or isinstance(value, (bool, int, str)):
+    if isinstance(value, bool) or value is None or isinstance(value, str):
         out.append(repr(value).encode())
+    elif isinstance(value, int):
+        # an integer by its bytes, never its decimal string: the books' conserved forms run to
+        # thousands of digits (GAMEBOARD readings, ALGEBRA.md 9.50 (13))
+        out.append(b"int " + value.to_bytes((value.bit_length() + 8) // 8, "big", signed=True))
     elif isinstance(value, float):
         out.append(value.hex().encode())
     elif isinstance(value, np.ndarray):
         out.append(f"array {value.dtype} {value.shape} ".encode())
         out.append(np.ascontiguousarray(value).tobytes())
     elif isinstance(value, np.generic):
-        out.append(repr(value.item()).encode())
+        canonical(value.item(), out, seen)
     elif isinstance(value, (list, tuple)):
         out.append(b"[")
         for item in value:
@@ -121,9 +130,44 @@ def canonical(value: Any, out: list[bytes], seen: dict[int, int] | None = None) 
         raise TypeError(f"no canonical form for {type(value).__name__}")
 
 
-def state_digest(simulation: DetectorLawSimulation) -> str:
+def run_reading(simulation: DetectorLawSimulation, lines: list[dict[str, object]]) -> dict[str, Any]:
+    """What the run is, under stable names: the output lines, the engine's state stream, the
+    records' and the held families' levels and remainders, the reads' remainders, the clicks
+    and the books. The engine's containers are read by their present names (`records`,
+    `held_records`, `_pace_carry`, `layer.gathers`): a cut that renames one breaks this reader
+    aloud, and the reader follows; the digest never moves on its own."""
+    names = [family.name for family in simulation.families]
+    records = {
+        str(live.identity): {
+            "family": names[live.family],
+            "now": live.now,
+            "before": live.before,
+            "remainder": live.remainder,
+        }
+        for live in simulation.records.values()
+    }
+    held = {
+        names[family]: {"before": record.before, "remainder": record.remainder}
+        for family, record in simulation.held_records.items()
+    }
+    reads = {
+        f"{names[reading]} reads {names[read]} on axis {axis}": carry
+        for (reading, read, axis), carry in simulation._pace_carry.items()
+    }
+    return {
+        "lines": lines,
+        "state": dict(simulation.snapshot_stream()),
+        "records": records,
+        "held families": held,
+        "read remainders": reads,
+        "clicks": simulation.layer.gathers,
+        "books": simulation.books(),
+    }
+
+
+def digest_of(reading: dict[str, Any]) -> str:
     parts: list[bytes] = []
-    canonical(vars(simulation), parts)
+    canonical(reading, parts)
     return hashlib.sha256(b"".join(parts)).hexdigest()
 
 
@@ -149,7 +193,7 @@ def run(path: Path, intervals: int | None = None) -> dict[str, Any]:
         "stamp": stamp,
         "ticks": ticks,
         "intervals": intervals,
-        "digest": state_digest(simulation),
+        "digest": digest_of(run_reading(simulation, lines)),
         "records": len(simulation.records),
         "clicks": len(simulation.layer.gathers),
         "lines": len(lines),
