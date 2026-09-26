@@ -15854,7 +15854,15 @@ per Port (LOCALITY-1); the weak-field twists of the vector rows (near
 7 x 10^-5 per Link) kept, which a coarser unit would cut to zero.
 Nature24's form (a), a unit of 6 x 10^-5 with k rescaled, loses those
 rows; (c), an accumulation across Ports, is not local; this is (c)
-made local in time on the Port's own remainder. A change of one
+made local in time on the Port's own remainder. THE DIVISION INSIDE
+THE ROTATION (The 3's reading in commit 4, 7bbd69ba, right): a
+remainder in [0, d) carried across intervals is one to one only while
+d stands, and d_j changes with j; so the rotation's two divisions
+round to the nearest unit, (2 x + d) div (2 d), with no carried
+remainder, and the Port's one remainder per pair-family is the angle
+accumulator rho: six per family per Node in place of 9.81 (2) (c)'s
+twelve, the rounding unbiased and the norm's drift a random walk of
+one unit per applied rotation, read on averages. A change of one
 primitive's table and no operation of the law; the Boss says whether
 it is a decision for three.
 
