@@ -16244,6 +16244,88 @@ the count s = M div (1000 P) (9.96 (3)), 55 for a million quanta at
 P = 18, below the pace guard; the row waits for the commit that brings
 P_0.
 
+**(10) THE FINDING OF THE HARD QUESTION (Nature24's runs of the rule
+alone, record 2134, docs/designs/rule_alone/ on stroke-side, his
+message of 2026-09-26 08:40Z): a record bound in a declared well does
+not move by the rule; the fork, and my line.** (a) WHAT WORKS, the
+algebra's number beside the run's (record 2137): item 1, a FREE
+packet of width 20 falls in three dimensions on the envelope at 1.25
+x 10^-5 Links per interval^2 (six windows 1.15 to 1.33 x 10^-5), the
+control still below 2 x 10^-8, against my line with (7)'s factor,
+1.264 x 10^-5 at U = 0.05: they meet; item 7, the local source of (4)
+exists: at each Node of a moving mode (the well of side 5 at [800,
+850] at v = 0.05, 0.1, 0.2) the pace it implies, (num / den) J_a(i) /
+(3 F_i), has the median 0.0506, 0.1037, 0.2295 with a spread of a
+third of v either way, its total over the support 4 s times 0.0504,
+0.1028, 0.2189 (within one, three and nine percent), and at rest the
+current is exactly 0 at every Node. (b) WHAT FAILS: items 2 and 3. A
+record bound in a declared pair-well is held by the declaration: with
+the well following the envelope's centroid ((8)'s seam) the pull
+polarises the record by a fifth of a Link and no hop ever comes (two
+bodies of s = 2000 at 20 Links: no motion in 3000 intervals, against
+the algebra's meeting at 249; a record put in motion at v = 0.1: the
+well never moves, the phase rate at the centre is the rest's, the
+record breathes); with the well following the record's own current
+(which reads v within two percent) the seam is unstable, the wells run
+away from each other and the well outruns the record 3.5 times; the
+free control moves at K's pace and disperses. THE REASON, said once:
+the well is external to the rule, a potential fixed to Nodes by a
+declaration, and a record in an external trap does not carry the trap;
+a seam that only reads the record has the resting record as a fixed
+point and cannot start it, and a seam that feeds the record's current
+back into the well's motion is a loop with a lag, unstable. So "the
+body moves by the rule" ((2), (5) (a)) holds for a free record and
+NOT for a body as declared today; stages (a) to (c) of (5) do not
+stand as written. (c) THE FORK, Nature24's two forms, both right as
+forms: (i) the well is the record's own, matter's self-binding, a
+finite P_2 for matter, which (6) had at 0 and (8) named as a big
+decision; (ii) the body keeps a store of its motion beside the rule,
+today's drive, which (5) (a) deleted, the well following the drive's
+hop and the record following the well: the engine as built, and not
+"from the rule alone" for bodies. (d) FORM (i) WRITTEN, for the
+decision: the pace at a Node of a matter record is lowered by the
+record's own form at that Node, p_0,i = Gamma - c_i - F_i div P_m,
+with F_i the record's form at the Node alone (its quadratic in its six
+differences and its time term, 9.97 (3), the F_i of (4)) and P_m one
+integer of the universe, matter's self-binding; local (the Node and
+its six neighbours); the well depth saturates because the guard keeps
+p > 0, so the long-wave form is a focusing nonlinearity that
+saturates, and such a rule has stable self-bound solutions in three
+dimensions where the plain cubic one collapses; the self-bound record
+is a soliton: it moves freely with its own well (item 3 by the same
+fact as item 1), two of them attract by their content (item 2), no
+seam and no `pair` well on Nodes; ITS MASS is its rest rotation, which
+P_m and its norm M fix, so the mass table of 9.101 item 7 becomes M
+per body and one P_m: the count of the universe's numbers drops by
+the table. What is owed before it enters: (1) the existence and
+width of a self-bound record at the shipped norms, a run; (2) its
+mobility on the lattice: a narrow discrete soliton can be pinned by
+the lattice (the Peierls-Nabarro barrier), so the width that moves is
+a run's reading; (3) the norm's conservation under a pace that
+changes with the record, a leak test, since 9.19's conservation was
+proved for paces fixed in time; (4) the light family has no P_m and
+spreads, as nature's light does. THE SIZE of P_m, from the shipped
+wells: a well of depth 100 in content units at the centre of a packet
+of width 5 Links and amplitude 2^16 needs P_m near F_i / 100, about
+10^13, ten thousand times stronger than the waves' self-source of
+9.97 (3): it is not gravity; it is the binding that hypothesis A of
+9.103 calls the strong force, now as one universe integer. (e) MY
+LINE: form (i), for three reasons: form (ii) abandons the rule alone
+for the one object that matters, a body, and keeps the motion code
+that (2) removed; form (i) closes hypothesis A and the hard question
+with one term; and it takes a number out of the universe file (the
+mass table) in place of adding one. It is a big decision for three
+(record 2136): an operation of the law added. Until the owner's word,
+the engine's motion stays as built (record 2147), and Nature24's
+items 4 to 6 run on the engine as it is. (f) THE GENERATOR'S MODE
+in three dimensions is not stationary under the rule at rest (the
+peak swings 2 x 10^4 to 1.6 x 10^5 and the width 4 to 17 Links over
+1500 intervals): the loader's residual bound admits a profile that
+sloshes; the generator must iterate the rule's own rest step (9.94)
+until the profile is stationary to the residual the row needs, a host
+fix outside the engine; under form (i) the profile is the soliton's,
+found by the same iteration on the rule with P_m.
+
 ### 9.99 The families derived in structure: the symmetric algebra of the four directions, and why the tower stops at gravity (the model owner's question of 2026-09-26, "can you think of something that derives the unification?", and his word "write it all")
 
 **(1) THE CLAIM.** The three families are not three declarations. They
@@ -16717,7 +16799,12 @@ as written here.
 
    The last is larger than the strong force: the records of this
    engine have no statistics yet; that is an open matter of the whole
-   programme, not of A.
+   programme, not of A. THE CONVERGENCE (2026-09-26, 9.98 (10)):
+   Nature24's runs show that a record bound in a DECLARED well does
+   not move by the rule, so the well must be the record's own, matter's
+   self-binding P_m; A then reads "the strong force is the record's
+   self-binding", one universe integer, which also makes the mass from
+   the norm; a big decision for three.
 
 4. A mechanism to test, not an answer. A well's bound modes are
    labelled by the cube group: one s-like mode and three p-like modes,
