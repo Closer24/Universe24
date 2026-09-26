@@ -1,6 +1,6 @@
 {
  "format": "code-shape-baseline",
- "recorded_at": "12fc75f8",
+ "recorded_at": "fe9e69be",
  "files": {
   "src/event_universe/__init__.py": {
    "lines": 27,
@@ -99,10 +99,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/events/detector_law.py": {
-   "lines": 4168,
-   "docstring_lines": 693,
-   "comment_lines": 709,
-   "record_references": 46,
+   "lines": 4014,
+   "docstring_lines": 671,
+   "comment_lines": 694,
+   "record_references": 44,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 15
   },
@@ -163,10 +163,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/features/giving/__init__.py": {
-   "lines": 36,
-   "docstring_lines": 7,
-   "comment_lines": 1,
-   "record_references": 1,
+   "lines": 154,
+   "docstring_lines": 9,
+   "comment_lines": 2,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },
@@ -283,10 +283,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/features/source/__init__.py": {
-   "lines": 26,
-   "docstring_lines": 6,
+   "lines": 134,
+   "docstring_lines": 10,
    "comment_lines": 0,
-   "record_references": 1,
+   "record_references": 0,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 0
   },

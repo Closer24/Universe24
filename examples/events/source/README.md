@@ -29,7 +29,7 @@ loader lacks today are written as the ledger's table names them, for Main Loop's
 | Declaration | Where | Form | Meaning |
 | --- | --- | --- | --- |
 | `sourced` | the sourced family's entry of the universe file | `{"of": "matter", "weight": 1, "scale": 18910}`, with `"cap": 60` on the table form | the family gains weight x s_i at every Node of a `matter` record; s_i = D_i div E_s with E_s the scale; with the cap s_i = cap D_i div (cap E_s + D_i) |
-| `readings` | the world file | a list of `{kind, ...,  every}` | what the run writes, each a GameBoard reading: `level` (a family's level at a Node), `total` (a family's sum of absolute levels), `support` (the count of Nodes with a nonzero level), `centre` (a family's or a body's centre) |
+| `readings` | the world file | a list of `{name, kind, ...,  every}`, the name unique in the world (`level_field_16_16_16`, `support_field`, `total_control`, `centre_body_0`) | what the run writes under its name, each a GameBoard reading: `level` (a family's level at a Node), `total` (a family's sum of absolute levels), `support` (the count of Nodes with a nonzero level), `centre` (a family's or a body's centre) |
 
 THE ONE UNIVERSE (record 2075): every world names the shipped `examples/events/universe.json`,
 and the three families of these runs are the folder's fragment `universe_entries.json`, the
