@@ -18663,3 +18663,30 @@ finding for me, the run is never adjusted).
    the reader only after the Go, once per world, with the stamp. The
    old registers become pins files in this form or stay history; none
    returns through code.
+
+### 9.116 The shortest path to one standing engine: for each item of the Boss's record 2199, top down, the one algebraic line and its place in the step, ready before Coder 3 reaches it (the model owner: "stop the runs; close the well as beyond the rule; a generic engine, clear and standing, the fastest way"; the well closed here, 9.113 item 3 (a) and 9.108 items 13, 14, no further section on it until the engine stands)
+
+The place is one of 9.111 item 7's three (the right side, read from the
+interval's start; the step; after the step, the writes entering at
+t + 1) or the loader, the output and the host. Each line is already
+written; the section names it, and two lines are added here (items 2
+and 6) so that nothing waits on me.
+
+| Item of record 2199 | The one algebraic line | The place |
+| --- | --- | --- |
+| 1. the merge into main | none: a Git act; the gate of every head after it is 9.5's routine (skills/mathematical-validation) | the Boss and Coder 3 |
+| 2. the output in one format | every reading the world file declares is one line of the output labelled by its kind (9.111 item 5 (ii); 9.115 item 1); a click line carries the four-vector of 9.86 (1): {detector, record, interval, giving, content, momentum}, a giving line the same with the giver, a GameBoard reading its name, its kind and its integers, the residue keys of 9.107 item 6 once per run, the stamp of the three files; no version string in the format's name (9.90 (1)) | the output, after the run |
+| 3. the loader reads every declaration as a generic term, the step's four included | a family is a shape and a list of terms [kind, target, of, degree, weight, table] with the four kinds (9.110 item 7); the step is the four words SEND, RECEIVE, WAIT, COMBINE with their integers (9.112 items 1, 2); a key with no section in the keys table is refused by name (9.90 (6)); `conserved` a list of names and values (9.114 item 2) | the loader |
+| 4a. the signed read | p_0 = Gamma - SUM over the reads of (signed weight x the argument), the argument a phase-1 family's level or a phase-2 family's D_i = now^2 - next x before, by "sign" the weight times q; a hollow positive, a hill negative (9.78 (4), 9.108 items 8, 13, 14) | the right side, first |
+| 4b. the source verb | the sourced family's level at the record's Nodes gains D_i div E_s each interval, the remainder on the record, the inverse subtracts it; with a table s_cap D_i div (s_cap E_s + D_i) (9.108 items 3, 11, 13) | the right side, after the hold |
+| 4c. the two-sided guard | 0 < p <= Gamma at every Node and axis at run time, the run ended with the guard's line naming the Node; the reason: the stability factor (S - 6 R) / w crosses -2 at p = 1.015 Gamma (9.108 item 12) | after the pace's read, before the step |
+| 5. the click that keeps the momentum, with its recoil's store | the taking lowers the record's count by one quantum and keeps its phase (9.109 item 2 (a)); the recoil sigma_a x (W x P_body) div (M x lambda_q) into a held body's n_a, or sigma_a x (k_q div M) into a sourced body's Port angle accumulators, sigma_a the quantum's direction of travel (the booked flux through the -a face minus the +a face), the giver with the opposite sign, the remainder on the record (9.111 items 1, 2; 9.84 (2), 9.91 (4)) | after the step, with the click; its writes at t + 1 |
+| 6a. a click's change after all advances | every read of interval t is the interval's start, the body's content and wall included; the clicks of t are gathered and their writes applied after all advances, in the records' identity order, read from t + 1 (9.111 item 6; 9.57 (1)) | after the step |
+| 6b. a run-time overflow bound | at load: the rule's total at a Node under the amplitude bound A, 12 Gamma^2 num A + abs(B) A + 6 den Gamma^2 (A + 1), below 2^63, refused by name otherwise (9.57 (2); the pick Gamma = 10^4, A = 2^20); at run time: abs(now) <= A at every Node after the step, the run ended with the bound's line naming the Node (the guard's second half; nothing wraps silently); the flux, the tally and the ladder in unbounded integers (9.25 (2), the host's) | the loader; after the step |
+| 7. no identity string, version, flag or written default | the words are "the engine" and "the rule"; no version, no law's name, no flag in the code, every flag a key of the run's files, no default of a key in the code (9.90 (1), (2), (6); records 2182 (3), (4)) | the loader and every file of the engine |
+| 8. the trace | one line per traced word per Node per interval with the header and the integers of 9.112 item 5, the hand check per line; declared in the start file; read by no word; a traced run bit for bit the untraced one | every word, read-only |
+| 9. the speed items | no algebra line: the hold by flat indices, the active box, the records advanced in parallel and merged in identity order are host costs, bit for bit by 6a; measured separately from the model's local cost (the change boundaries) | the host |
+
+On each commit of Coder 3 from here: one line to the Boss, CONFIRMED or
+the line that differs (9.5; record 2199 (b)); no section for a gate,
+a note under the item's row here only when a line moves.
