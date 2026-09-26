@@ -59,6 +59,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/rule.py": "the one rule's coefficients per Node and per axis (ALGEBRA.md 9.57 (1), 9.91 (2)) and the ladder's rungs (9.25 (2))",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md 9.88 (7)): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
+    "core/register.py": "the register of primitives: one name to one function, each with its place, reads, writes and order (record 2212; issue #1154)",
     "core/phase.py": "the phase circle and its cosine and sine tables in bounded integers",
     "core/game_board.py": "the GameBoard's addresses, the six headings, the cube's group of 48",
 }

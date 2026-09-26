@@ -4986,6 +4986,52 @@ would have found no cell.
    (`detector_law.py`, `DetectorLawSimulation`, docs/designs/detector_law/):
    the engine's name collides with the cancelled ray engine's file
    `engine.py` (nothing deleted); a line to the Boss on the name to take.
+76. THE REGISTER OF PRIMITIVES, CUT 1 OF THE LOOP FROM THE ATTRIBUTES (issue
+   #1154; the model owner's decisions of 2026-09-26 through the Boss, records
+   2208 and 2212; the short procedure of skills/workflow.md, point 5; ALGEBRA.md
+   9.110 item 7, 9.111 item 7, 9.112 item 1; the interface posted on the issue
+   before this commit). A primitive's identity is its unique English name, the
+   key of the ledger's table (docs/designs/generic_engine/ENGINE_LEDGER.md
+   section 3), never a number. THE REGISTER (src/event_universe/core/register.py):
+   one dict in the engine, name to declaration, built by the loop at load
+   (`_engine_register`) and read by it alone; a DECLARATION carries the name,
+   the place in the interval (the five of 9.91 (8): (i) the clicking families'
+   step with the transport, (ii) the bookings, the ladder, the takings and the
+   givings, (iii) the held families' step, (iv) the holds written with the
+   clicks' changes, (v) the bodies on one Node; "any" the trace's), what it
+   reads, what it writes, its order among the writers of one value at one place,
+   its function and its ALGEBRA.md line. THE REFUSALS at load, by name: a name
+   registered twice; a term of the files naming a primitive the register lacks
+   or a row of the ledger not built (no function); two writers of one value at
+   one place with no order declared; the loop calling a primitive at a place
+   other than its declared one (`Register.at`). THE SEVENTEEN of the ledger's
+   table declared: the pair, the degree, the phase, the signed read, the hold,
+   the source, the clicks, the lifetime, the internal representation, the clicks
+   list, the hand, the self-source, the send, the receive, the wait, the
+   operation, the trace; eleven bound to the methods that implement them today
+   (the pair `pair_arrays`, the degree `_part_axes`, the phase `_level_step`,
+   the signed read `_effective_content`, the hold `_hold`, the clicks
+   `_ladder_click`, the self-source `_self_source`, the send `_neighbours`, the
+   receive `_arrivals`, the wait `_wait` (one interval, always), the operation
+   `one_rule`), six without a function (the source, the lifetime, the internal
+   representation, the clicks list, the hand, the trace: the ledger's rows to
+   do). THE TERMS: `family_terms` reads each family's attributes of today
+   (`reads` the signed read, `held` the hold, `self_source.unit` the
+   self-source, `clicks` the clicks, `lifetime` the lifetime; every family the
+   shape and the step's four words) as (label, name) pairs and the register
+   checks them; the term form [name, target, of, degree, weight, table] is the
+   loader's next cut. THE LOOP calls the hold (the load's write, the interval's
+   start and the end hold) and the clicks (the ladder) through the register at
+   their declared places; every other name is bound and not yet routed. NO
+   BEHAVIOUR CHANGE: every shipped world bit for bit (the suites' digests; the
+   five worlds' comparison of the gate). NO VERSION: a change of a primitive's
+   behaviour keeps every shipped world bit for bit or takes a new English name.
+   NEXT CUTS, each bit for bit: the hold's body into its own folder behind
+   apply(term, start, own) -> writes; the signed read with the guard's two
+   sides; the clicks with the deferred writes applied at (iv); the giving; the
+   source and the step's four words read from the file. PROOF:
+   tests/test_register.py (the refusals, the seventeen on a shipped test world,
+   the terms checked, the wait 1, twenty intervals balanced).
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
