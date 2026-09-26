@@ -27,7 +27,7 @@ L1 incidence factor comes from); record 817 (Newton's and Kepler's forms on
 the comparison side only); the paper's Section 4 ground paragraph in
 `paper/general_formula/main.tex` on branch `claude/paper-owner-review-five`
 (PR #802, head `735ee8c8`, line 469); the series D3 register
-([examples/events/orbit_lamp/README.md](../../../examples/events/orbit_lamp/README.md),
+(examples/events/orbit_lamp/README.md (`examples/events/orbit_lamp/README.md`, deleted 2026-09-26),
 [docs/EXPERIMENTS.md](../../EXPERIMENTS.md) "D3") and its paper row
 (`paper/general_formula/NUMBERS.md` line 172).
 
@@ -583,7 +583,7 @@ statements of the law's push matching a form, never of how nature is
   comparison side only), 872 (where `F_L1` comes from; the law's two
   constants of gravity), 883 (the order, as numbered by the Boss).
 - The series D3 register:
-  [examples/events/orbit_lamp/README.md](../../../examples/events/orbit_lamp/README.md),
+  examples/events/orbit_lamp/README.md (`examples/events/orbit_lamp/README.md`, deleted 2026-09-26),
   [docs/EXPERIMENTS.md](../../EXPERIMENTS.md) ("D3"), `paper/general_formula/NUMBERS.md`
   line 172, `tools/orbit_lamp_readings.py` lines 167 to 174.
 - The paper: `paper/general_formula/main.tex` line 469 on branch

@@ -287,5 +287,5 @@ after the run.
 ## 7. Links
 
 - [Every family under one wall (step 2)](EVERY_FAMILY.md), [the one-wall note](NOTE.md).
-- [drive-b-v1, form B](../drive_b/DESIGN.md) and [series X](../../../examples/events/drive_b/README.md).
-- [The optical worlds' register](../../../examples/events/optical/README.md).
+- [drive-b-v1, form B](../drive_b/DESIGN.md) and series X (`examples/events/drive_b/README.md`, deleted 2026-09-26).
+- The optical worlds' register (`examples/events/optical/README.md`, deleted 2026-09-26).

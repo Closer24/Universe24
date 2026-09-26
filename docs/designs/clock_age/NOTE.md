@@ -188,7 +188,7 @@ of step 5, ENGINE.md, the catalog's clock row and the readings of section
 [BEAM_LAW section 3](../../BEAM_LAW.md#3-the-nodes-interval-nature_beam)
 (step 5), note 25 and note 41;
 [DERIVATIONS_BEAM section 5](../../DERIVATIONS_BEAM.md#5-general-relativity-the-equation-of-the-delay-field);
-[series E](../../../examples/events/redshift/README.md); series U (deleted on 2026-09-23);
+series E (`examples/events/redshift/README.md`, deleted 2026-09-26); series U (deleted on 2026-09-23);
 series V (deleted on 2026-09-23); [optical-v1](../gr_rows/DESIGN.md);
 [NATURE](../../NATURE.md) rows 3, 4a, 4b and 11a;
 [the three tests](../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).

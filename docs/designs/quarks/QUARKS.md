@@ -24,7 +24,7 @@ Boss's pull request and are cited by number; on this base
 beside it: `quark_numbers.py` (every integer below, recomputed from the
 engine's own flight table and the law's push form; its printed output
 `quark_numbers.out`), the seven world files of series R under
-[`examples/events/quarks/`](../../../examples/events/quarks/README.md)
+`examples/events/quarks/` (`examples/events/quarks/README.md`, deleted 2026-09-26)
 (their generator `make_worlds.py` and their pins `expectations.json`
 beside them), and a smoke test of the seven
 worlds for 24 intervals each (section 4.6), which is the only run made.
@@ -36,9 +36,9 @@ and [the gap list](../../ENTITY_CATALOG.md#the-gap-list));
 [EXPERIMENTS](../../EXPERIMENTS.md) series
 [I](../../EXPERIMENTS.md#i-the-nucleus-2026-09-20) and
 [J](../../EXPERIMENTS.md#j-the-weak-force-2026-09-20) with their pages
-([the nucleus](../../../examples/events/nucleus/README.md),
-[the weak force](../../../examples/events/weak/README.md),
-[the binding](../../../examples/events/binding/README.md));
+(the nucleus (`examples/events/nucleus/README.md`, deleted 2026-09-26),
+the weak force (`examples/events/weak/README.md`, deleted 2026-09-26),
+the binding (`examples/events/binding/README.md`, deleted 2026-09-26));
 [PREDICTIONS 26](../../PREDICTIONS.md#26-the-law-quantises-exactly-what-lives-on-a-compact-group-and-leaves-free-what-lives-on-a-scale-charge-phase-and-direction-have-numbers-mass-has-none);
 [DERIVATIONS_BEAM](../../DERIVATIONS_BEAM.md) section 13 (the wait as
 the reading's cost, and 13.4, what K leaves free: the family table);
@@ -720,7 +720,7 @@ its pin is reported with its numbers and never moved.
 | all | the books | initial = current + spent + escaped per family at every tick; the momentum line closed through every hand-over | any imbalance |
 
 Read on the engine on 2026-09-21 as series R (the page
-[the quarks](../../../examples/events/quarks/README.md), the register's
+the quarks (`examples/events/quarks/README.md`, deleted 2026-09-26), the register's
 entry R): every push exact, the lines hold, the triangle and the
 rectangle shear, the line of six holds, the kicked u leaves at tick 63
 and the pair it leaves breaks at about 1190 (two pins outside, reported),

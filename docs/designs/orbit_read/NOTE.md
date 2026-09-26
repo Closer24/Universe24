@@ -105,7 +105,7 @@ visits many ring Nodes, reads the per-Node rate: its time mean is the
 ring mean of the per-Node reading, `1.29 q L / N(r)`, not the flux `q L /
 N(r)`. Series C's `C = 1.00 +- 0.10` is exact on its six headings
 (`S_1 / |D| = 1`) and is the registered evidence for the derivation's
-`C = 1` ([the orbit README](../../../examples/events/orbit/README.md),
+`C = 1` (the orbit README (`examples/events/orbit/README.md`, deleted 2026-09-26),
 "C = 1 (taken; series C: 1.00 +- 0.10)"); on the 120-direction fan the
 constant is the Manhattan mean, and the auditor's C_naive (1.87, 1.33,
 1.29) and C_shell (1.39, 1.20, 1.31, 1.16) are this constant times the
@@ -152,7 +152,7 @@ the proof on the axis; section 5 (c) beyond the axis) and its
 [independent count](../crossing/crossing_2d.py);
 [DERIVATIONS_BEAM 3.2](../../DERIVATIONS_BEAM.md#32-the-far-field-a-beam-does-not-dilute-a-shell-does)
 (the shell mean and the ring counts);
-[series D](../../../examples/events/orbit/README.md) and
-[its generator](../../../examples/events/orbit/make_worlds.py);
+series D (`examples/events/orbit/README.md`, deleted 2026-09-26) and
+its generator (`examples/events/orbit/make_worlds.py`, deleted 2026-09-26);
 [BEAM_LAW section 3](../../BEAM_LAW.md#3-the-nodes-interval-nature_beam)
 step 4 and note 48.

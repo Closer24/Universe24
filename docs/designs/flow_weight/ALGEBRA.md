@@ -248,6 +248,6 @@ stated factor would refute the algebra's walk of the rule.
 - [DESIGN.md](DESIGN.md): the rule, the three tests, what moves, the key.
 - [flow_weight_map.py](flow_weight_map.py), [flow_weight_map.out](flow_weight_map.out): the arithmetic (the Algebraist's map imported).
 - [STEP_ALGEBRA.md](../light_bending/STEP_ALGEBRA.md), [step_algebra_map.py](../light_bending/step_algebra_map.py): the step algebra reused, sections 5, 9 and 10.
-- [examples/events/optical/README.md](../../../examples/events/optical/README.md): the registered worlds (DETECTOR).
+- examples/events/optical/README.md (`examples/events/optical/README.md`, deleted 2026-09-26): the registered worlds (DETECTOR).
 - [docs/EXPERIMENTS.md](../../EXPERIMENTS.md), D3: Newton after a detector, the pins that would move.
 - [the log](../../LOG_2026-09-20.md) records 817, 862, 872, 878, 880, 884, 888.

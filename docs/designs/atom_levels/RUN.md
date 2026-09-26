@@ -17,7 +17,7 @@ imported by [level_readings.py](level_readings.py), nothing copied): the
 faces' clicks paired into releases, the arrival Nodes, the axis crossings,
 the phase increments unwrapped; its printout [level_readings.out](level_readings.out);
 the run blocks (the fingerprints, the readings) in
-[examples/events/atoms/expectations.json](../../../examples/events/atoms/expectations.json).
+examples/events/atoms/expectations.json (`examples/events/atoms/expectations.json`, deleted 2026-09-26).
 Every number DETECTOR (the faces' clicks, the arrival Nodes, the crossings,
 the `light` clicks), GAMEBOARD (the engine's `level` lines, the step lines,
 the host's tick) or COMPUTATION (the level from two counts, the ratio), as
@@ -183,9 +183,9 @@ one PASS, two not applicable; R6 PASS; R4 NOT READ; R2 a diagnostic.
 
 [LEVELS.md](LEVELS.md) (the rule, section 2 (b); the pins, section 5);
 [level_readings.py](level_readings.py) and [its printout](level_readings.out);
-[the run blocks](../../../examples/events/atoms/expectations.json);
-[the worlds and the atoms README](../../../examples/events/atoms/README.md);
+the run blocks (`examples/events/atoms/expectations.json`, deleted 2026-09-26);
+the worlds and the atoms README (`examples/events/atoms/README.md`, deleted 2026-09-26);
 [RUN_CENTRED.md](../atom_give/RUN_CENTRED.md) (the control);
-[tests/test_atom_level.py](../../../tests/test_atom_level.py) (the byte
+tests/test_atom_level.py (`tests/test_atom_level.py`, deleted 2026-09-26) (the byte
 identity, the build's readings); [the retention policy](../../RETENTION.md);
 records 973, 991 and 994 of [the log](../../LOG_2026-09-20.md).
