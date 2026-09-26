@@ -40066,6 +40066,7 @@
     2459,
     2456
    ],
+   "fixed": true,
    "clock": [
     2074087,
     1048576
@@ -40075,6 +40076,6 @@
  "detectors": [],
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "83910ffe4ab8d6c982ac837ea2e0de44bcbe419f39ab51ca2ad123c6f10fbef5"
+  "hash": "190706472e6804d9eb194f8e5b8cc8921123cb09fedc59ecf4f38e82e6297e09"
  }
 }

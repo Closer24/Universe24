@@ -73,6 +73,50 @@ def test_the_spins_step_turns_the_spin_by_the_curl_at_the_bodys_node_and_inverts
     assert simulation.leaks() == []
 
 
+def test_the_torque_turns_the_spin_by_the_moment_and_the_charge_curl_at_the_reads_weight_alone():
+    """ALGEBRA.md 9.104 (2) (the Boss's record 2157): the torque is mu x B_q with the read's
+    weight alone, since the moment carries the charge: a body of charge 0 with the moment
+    (0, 1, 0) and the spin 0, the charge's z part planted at +A at its Node + e_y and -A at
+    - e_y (the curl's x component at the centre), steps its spin's z component by
+    2 (mu x B_q)_z div (W Gamma) with B_q,x = (1 x curl_x) div 2 (the read's weight 1, no
+    factor of the body's sign Q = 0, which would have given 0); the inverse restores it."""
+    document = parts_world(spin=[0, 0, 0], moment=[0, 1, 0], side=1)
+    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+    block = simulation.blocks[0]
+    charge = parts_of(simulation, "charge")
+    centre = simulation._window_centre(block)
+    assert block.definition.charge == 0 and list(block.definition.moment) == [0, 1, 0]
+    amplitude = 1 << 20
+    z_part = charge[3]
+    above = (centre[0], centre[1] + 1, centre[2])
+    below = (centre[0], centre[1] - 1, centre[2])
+    z_part.now[above] = amplitude
+    z_part.before[above] = amplitude
+    z_part.now[below] = -amplitude
+    z_part.before[below] = -amplitude
+    z_part.silent = False
+    simulation._sourced_ever[(charge[0].family, 3)] = True
+    wall = simulation.wall_of(block)
+    simulation.step()
+    y_part = charge[2]
+    ahead = (centre[0], centre[1], centre[2] + 1)
+    behind = (centre[0], centre[1], centre[2] - 1)
+    curl_x = (
+        int(z_part.now[above])
+        - int(z_part.now[below])
+        - int(y_part.now[ahead])
+        + int(y_part.now[behind])
+    )
+    b_x = curl_x // 2  # the read's weight 1 alone (the body's Q = 0 is no factor)
+    turn_z = -b_x  # (mu x B)_z = mu_x B_y - mu_y B_x with mu = e_y
+    step_z = (2 * turn_z) // (wall * GAMMA)
+    assert b_x != 0 and step_z != 0, (curl_x, b_x, step_z)
+    assert block.spin == [0, 0, step_z] and block.spin_before == [0, 0, 0]
+    simulation.step_inverse()
+    assert block.spin == [0, 0, 0] and block.spin_before == [0, 0, 0]
+    assert simulation.leaks() == []
+
+
 def own_family_world(stock: int | None) -> dict:
     """The matter emitter world with the emitter giving ITS OWN family (`source`, its well the
     source well): its `stock` of its own quanta, `amount` 4."""

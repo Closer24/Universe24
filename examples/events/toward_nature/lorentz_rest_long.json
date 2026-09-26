@@ -13584,6 +13584,7 @@
     "norm_denominator": 3948169,
     "window_read": 45
    },
+   "fixed": true,
    "receiver": "at_well",
    "clock": [
     2063848,
@@ -13603,6 +13604,7 @@
     0,
     0
    ],
+   "fixed": true,
    "held": {},
    "extents": [
     4,
@@ -13640,6 +13642,7 @@
     0,
     0
    ],
+   "fixed": true,
    "held": {},
    "extents": [
     2,
@@ -13674,6 +13677,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "1c1916d7af08782db8628809c4c73adad4b74dedda1b2fd96ccf757ca052b271"
+  "hash": "3b37db7362e23c27d7548d4b60d42bc60669a5db73c20d15f8292e5ed28c13dc"
  }
 }

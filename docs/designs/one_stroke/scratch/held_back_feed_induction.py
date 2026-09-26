@@ -252,7 +252,8 @@ BODY = '''    # THE BODIES ON ONE NODE (ALGEBRA.md 9.91 (8) (v), 9.78 (4), (5), 
         interval leaves them (their `now` levels, which the inverse meets first):
         THE FEED per axis, n_a += (C_+ - C_-) x W div (2 Gamma D_a F_a), C_+ and C_- the
         contraction summed over the F_a Nodes across the body's Ports toward +a and -a
-        and D_a their distance, the body's extent plus one (9.52 (2): the acceleration
+        and D_a their distance, the body's extent plus one, 2 for a body on one Node as
+        ALGEBRA.md 9.104 (6) (c) fixes it (9.52 (2): the acceleration
         grad c / (2 Gamma) toward content; (4) (iii), (iv)); THE INDUCTION, n_a -= factor
         x W x (the change over the interval of the read's vector component a summed over
         the body's Nodes) div (2 Gamma N) (9.78 (4): minus the change of the

@@ -77,6 +77,7 @@ def seat(position: list[int]) -> dict:
         "amount": 1,
         "held": {massive.WAVE_FAMILY_NAME: STOCK},  # the stock of light, the charge family's quanta
         "momentum": [0, 0, 0],
+        "fixed": True,  # a tool held in place (ALGEBRA.md 9.104 (6) (b); record 2157)
         "ramp": 0,
         "start": 0,
         "extents": [1, 1, 1],
@@ -94,6 +95,7 @@ def body(x: int) -> dict:
         "amount": 1,
         "momentum": [0, 0, 0],
         "held": {},
+        "fixed": True,  # a tool held in place (ALGEBRA.md 9.104 (6) (b); record 2157)
     }
 
 

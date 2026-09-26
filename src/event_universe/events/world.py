@@ -5359,9 +5359,11 @@ def _measured(
             # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): the
             # momentum and the held quanta on every measured event, the drive's
             # ramp and start on every block (a `side` or `extents`), the margin
-            # kind on every well (`_block`); the ray law's fixed, phase,
-            # directions, phase_by_momentum, span, books and the lamp's keys
-            # never read, refused
+            # kind on every well (`_block`); the ray law's phase, directions,
+            # phase_by_momentum, span, books and the lamp's keys never read,
+            # refused; `fixed` (an apparatus held in place) is read since the
+            # Boss's record 2157 (ALGEBRA.md 9.104 (6) (b)): the feed, when it
+            # lands, acts on a body without the word alone
             _require_under_law(obj, label, {"momentum", "held"})
             if "side" in obj or "extents" in obj:
                 _require_under_law(obj, label, {"ramp", "start"})
@@ -5369,7 +5371,6 @@ def _measured(
                 obj,
                 label,
                 {
-                    "fixed",
                     "phase",
                     "directions",
                     "phase_by_momentum",

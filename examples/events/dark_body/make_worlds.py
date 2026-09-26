@@ -114,6 +114,7 @@ def cube(document: dict, name: str, corner: list[int]) -> str:
                 "family": "charge",  # a receiver of light's kind: the charge family's (9.86 (2) (b))
                 "amount": 1,
                 "momentum": [0, 0, 0],
+                "fixed": True,  # a tool held in place (ALGEBRA.md 9.104 (6) (b); record 2157)
                 "held": {},
             }
         )
@@ -142,6 +143,7 @@ def block(
         "moment": list(LIGHT_MOMENT) if emitter is not None else [0, 0, 0],
         "amount": amount,
         "momentum": [0, 0, 0],
+        "fixed": True,  # a tool held in place (ALGEBRA.md 9.104 (6) (b); record 2157)
         "held": {},
         "ramp": 0,
         "start": 0,

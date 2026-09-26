@@ -256,6 +256,11 @@ def world(
                 entry[key] = block[key]
         if "emitter" in entry:
             entry["emitter"].setdefault("clock", list(clock))
+        # A TOOL IS APPARATUS HELD IN PLACE (ALGEBRA.md 9.104 (6) (b); the Boss's record
+        # 2157): every resting body of a shipped world declares `fixed: true` (the feed, when
+        # it lands, acts on a body without the word alone); a body with a momentum is free
+        if all(int(component) == 0 for component in entry["momentum"]):
+            entry["fixed"] = True
         measured.append(entry)
     document: dict = {
         "law": "beam",

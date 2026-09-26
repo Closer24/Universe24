@@ -185,6 +185,7 @@ def clock_world(
             wall = drive_wall(content)
             assert wall % hop_every == 0, (content, wall, hop_every)
             entry["momentum"] = [wall // hop_every, 0, 0]
+            entry.pop("fixed", None)  # the moving clock's bodies are free (record 2157)
     detector.receiver_set(document, "at_well", 0)
     detector.named_receiver(document, {0: "at_well"})
     massive.seed_on_the_mode(document)
@@ -220,6 +221,7 @@ def holder_nodes(position: list[int], extents: list[int], amount: int) -> list[d
             "amount": amount,
             "momentum": [0, 0, 0],
             "held": {},
+            "fixed": True,  # a tool held in place (ALGEBRA.md 9.104 (6) (b); record 2157)
         }
         for dx in range(extents[0])
         for dy in range(extents[1])

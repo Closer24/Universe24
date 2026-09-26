@@ -58,6 +58,7 @@
     0,
     0
    ],
+   "fixed": true,
    "ramp": 0,
    "start": 0,
    "extents": [
@@ -503,6 +504,7 @@
     0,
     0
    ],
+   "fixed": true,
    "held": {},
    "extents": [
     4,
@@ -540,6 +542,7 @@
     0,
     0
    ],
+   "fixed": true,
    "held": {},
    "extents": [
     2,
@@ -574,6 +577,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "d3f61b8e728866011e564b9a67fbe151f55a2a224edceb631cd4c1327b53a3b7"
+  "hash": "cf54c9616f9fa12bcd549265a2efe30be503f648e4a274fd4cba67de1384277b"
  }
 }

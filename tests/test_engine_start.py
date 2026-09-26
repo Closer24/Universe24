@@ -97,10 +97,17 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
         r"measured\[0\]\.(margin is required on a well|seed as a profile is admitted only with margin)",
     )
     # the keys the law never reads
-    for key, value in (("fixed", True), ("phase", 0), ("directions", [[1, 0, 0]])):
+    for key, value in (("phase", 0), ("directions", [[1, 0, 0]])):
         broken = json.loads(json.dumps(document))
         broken["measured"][0][key] = value
         refused(broken, rf"measured\[0\] declares {key}, which the detector law never reads")
+    # `fixed` is read since the Boss's record 2157 (ALGEBRA.md 9.104 (6) (b)): an apparatus
+    # held in place, the feed (when it lands) acting on a body without the word alone
+    held_in_place = json.loads(json.dumps(document))
+    held_in_place["measured"][0]["fixed"] = True
+    held_in_place["input"] = input_stamp(held_in_place)
+    assert parse_nature_beam_world(held_in_place).measured[0].fixed is True
+    assert parse_nature_beam_world(document).measured[0].fixed is False
     broken = json.loads(json.dumps(document))
     broken["detectors"][0]["threshold"] = 1
     refused(broken, r"detectors\[0\] declares threshold, which the detector law never reads")

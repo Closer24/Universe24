@@ -4763,6 +4763,29 @@ would have found no cell.
    Go and the mathematician's recomputation at the seat's rotation (the file
    unchanged).
 
+67. RECORD 2157'S THREE LINES (the Boss's gate of commit 6, ALGEBRA.md 9.104;
+   2026-09-26). (i) THE TORQUE'S FACTOR (9.104 (2)): mu x B_q with the read's
+   weight alone, since the moment carries the charge Q (the read's factor by the
+   body's sign stays on the spin's turn); a neutral body with a moment now feels
+   the torque (before, its factor 0 skipped the read); no shipped body spins and
+   no shipped body's moment crosses a charge curl (an emitter's own dipole field
+   at its Node is along its moment), so every shipped world stays bit for bit;
+   tests/test_body_step.py's torque test (Q = 0, mu = e_y, the charge's z part
+   planted across y: S_z steps by 2 (mu x B_q)_z div (W Gamma), the inverse
+   exact). (ii) `fixed: true` ON EVERY SHIPPED RESTING TOOL (9.104 (6) (b)): the
+   world file's word `fixed` (an apparatus held in place) is admitted under the
+   law and read into the body's state and the snapshot's block entry (the chain
+   world's state digest moved by that entry alone); the feed, when it lands, acts
+   on a body without the word alone; every resting body of a shipped world
+   declares it (the massive generator's `world`, the detector generator's
+   `body`, the holders, the point row's seat and receivers, the dark row's bodies
+   and cubes), the moving clocks' bodies are free (the hop loop removes the word);
+   the world files regenerated (the word and the hash alone; every run bit for
+   bit). (iii) D_a = 2 FOR A BODY ON ONE NODE (9.104 (6) (c)): the held-back
+   feed's script reads the extent plus one, 2 on one Node, as it stood; noted
+   there. Nothing of the binding family (9.98 (11) (c)) until the three agree
+   (record 2156).
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

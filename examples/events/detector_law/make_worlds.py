@@ -240,6 +240,7 @@ def emitter_body(
 
 
 def body(position: list[int], family: str = "light") -> dict:
+    # a tool held in place: `fixed: true` (ALGEBRA.md 9.104 (6) (b); record 2157)
     """A body of one Node at rest (the template's receiver form), every key the
     detector law reads written (record 2089; BUILD.md section 26 item 57)."""
     entry: dict = {
@@ -247,6 +248,7 @@ def body(position: list[int], family: str = "light") -> dict:
         "family": family,
         "amount": 1,
         "momentum": [0, 0, 0],
+        "fixed": True,
         "held": {},
     }
     return entry

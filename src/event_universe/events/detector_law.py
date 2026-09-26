@@ -303,6 +303,9 @@ class Block:
     # declared `spin` at both
     spin: list[int] = field(default_factory=lambda: [0, 0, 0])
     spin_before: list[int] = field(default_factory=lambda: [0, 0, 0])
+    # A TOOL HELD IN PLACE (ALGEBRA.md 9.104 (6) (b); the Boss's record 2157): the world's
+    # word `fixed`; the feed, when it lands, acts on a body without the word alone
+    fixed: bool = False
     count: int = 0
     previous_sum: int = 0
     own: LiveRecord | None = None
@@ -681,6 +684,7 @@ class DetectorLawSimulation:
             )
             block.spin = list(definition.spin)
             block.spin_before = list(definition.spin)
+            block.fixed = bool(entry.fixed)
             self._write_pair(block)
             if definition.seed > 0 and world.body_record:
                 # THE BODY RECORD (ALGEBRA.md 9.46 (1), (7) (c); BUILD.md section
@@ -1484,15 +1488,18 @@ class DetectorLawSimulation:
         carry) div (W Gamma), the leapfrog of the body's two integers with the doubled
         term (the Euler line's rate, exactly invertible; 9.78 (5) leaves the choice),
         Omega_i = [factor x (curl V)_i + 3 ((grad c) x n)_i div W] div 8 from a read whose
-        dipole is the spin (gravity's vector part and its t part c), B_q = (factor x curl
-        V_q) div 2 from a read whose dipole is the moment, the curls and the gradient at
+        dipole is the spin (gravity's vector part and its t part c), B_q = (weight x curl
+        V_q) div 2 from a read whose dipole is the moment (the read's weight alone, since
+        mu carries Q: ALGEBRA.md 9.104 (2), record 2157), the curls and the gradient at
         the body's Node from its six neighbours, every remainder carried on the body.
         Backward the same term is recomputed from S_t and subtracted, the divisions
         stepped back. THE FEED AND THE INDUCTION of 9.78 (4) are NOT here: built and
         held back, since with them the two tools of every chain world fall together
         (the chain's content field is a tent; the light clock's detector hops toward
         its emitter within 300 intervals) and no resting world stays bit for bit; the
-        line waits on the mathematician (BUILD.md section 26 item 65)."""
+        line waits on the mathematician (BUILD.md section 26 item 65); when it lands it
+        acts on a body without the world's word `fixed` alone (9.104 (6) (b); the
+        word is read into `Block.fixed`, record 2157)."""
         definition = self.families[block.family]
         if not definition.reads:
             return
@@ -1513,7 +1520,12 @@ class DetectorLawSimulation:
         for position, (other, weight, by, _) in enumerate(definition.reads):
             factor = self._read_factor(block, weight, by)
             read = self.families[other]
-            if factor == 0 or len(read.parts) < 2 or read.held_dipole is None:
+            if len(read.parts) < 2 or read.held_dipole is None:
+                continue
+            # THE TORQUE'S FACTOR (ALGEBRA.md 9.104 (2); the Boss's record 2157): mu x B_q
+            # with the read's weight alone, since the moment mu carries the charge Q; the
+            # spin's turn keeps the read's factor (the weight by the body's sign for a read by q)
+            if factor == 0 if read.held_dipole == "spin" else weight == 0:
                 continue
             curl = self._curl(self.held_parts[other][:3], centre, wrap)
             if read.held_dipole == "spin":
@@ -1548,7 +1560,7 @@ class DetectorLawSimulation:
             else:
                 for i in range(3):
                     torque[i] += self._division_now(
-                        block, ("bq", position, i), factor * curl[i], 2, inverse
+                        block, ("bq", position, i), weight * curl[i], 2, inverse
                     )
         mu = block.definition.moment
         turn = [
@@ -4119,6 +4131,7 @@ class DetectorLawSimulation:
                         "drive": list(block.drive),
                         "momentum": list(block.momentum),
                         "spin": list(block.spin),
+                        "fixed": block.fixed,
                         "emitted": list(block.emitted),
                         "rows": None if block.own is None else block.own.now.ravel().tolist(),
                         "form": (
