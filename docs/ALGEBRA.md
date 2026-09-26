@@ -18137,3 +18137,53 @@ finding for me, the run is never adjusted).
    with universe.json, and the code there is history; a check that
    still needs a line names the missing row, and the row joins the
    table before the line is written.
+
+6. **The order of reading at a click, the Boss's audit line (record 2185,
+   the read at detector_law.py line 2845 of the count moved at line 3837):
+   CONFIRMED from 9.57 (1), one line.** Every read of an interval is the
+   interval's start: the levels, the paces, and the body's content M with
+   its wall W = 3 Q M and its count s. A click's writes, a taking's as a
+   giving's (the content M_k, the stock, s, Q, the momentum of item 2),
+   enter after the interval's steps and are read from t + 1 (9.57 (1),
+   "the click's writes enter at the next interval"; 9.96 (5)). So every
+   booking of interval t through a body's Ports reads W from the content
+   at the start of t, whatever earlier record of the same interval
+   clicked at that body; the clicks of one interval are gathered and
+   applied after all advances, in the records' identity order (one
+   content per interval, the inverse of 9.55 (7) unchanged). A booking
+   that reads a count moved in the same interval departs from the
+   algebra by 1 / M of the wall per earlier click, and where two records
+   click at one body in one interval the digest moves by it; The 3 names
+   the rows. With this line the records of an interval may advance in
+   parallel and merge bit for bit.
+
+7. **One algebraic line per row of Nature24's table (the Boss's records
+   2182 and 2184; the owner: "each primitive has a specific place of use
+   and its algebraic expression").** Three places in the interval: THE
+   RIGHT SIDE (what the step reads, loaded before it from the interval's
+   start), THE STEP (the rule), AFTER THE STEP (the clicks; their writes
+   enter at t + 1, item 6). The source's and the recoil's lines first,
+   then the rest in the table's order.
+
+   | Row | The algebraic line | The place |
+   | --- | --- | --- |
+   | the source (row 6) | at every Node of a record of family g, the level of the sourced family f gains F_i div E_s (F_i the record's local count, its form at the Node) each interval and the inverse subtracts it; the stationary response is (Delta - kappa^2) a = - sigma / q with kappa^2 = 6 den / num - 6 of f's pair (9.108 item 10); the saturating form s_i = s_cap F_i div (s_cap E_s + F_i) is the same line with a table (9.108 item 3) | the right side, after the hold |
+   | the recoil (row 7's click) | n_a += sigma_a x (W x P_body) div (M x lambda_q) into a held body's momentum, or sigma_a x (k_q div M) into a sourced body's Port angle accumulators along the axis, sigma_a the quantum's direction of travel, the giver with the opposite sign, the remainder on the body's record (item 2) | after the step, with the click |
+   | the pair (row 1) | the rest rotation of the rule at k = 0 and p = Gamma: cos omega_0 = num / den (from 9.57 (1) with S_6 = 6 a); den = num massless, den > num a range 1 / kappa | the step: the rule's coefficients |
+   | the degree, parts (row 2) | the family's state is a representation of the cube group, 1, 3 or 6 components, the rule applied to each component with the same integers, the hold and the read in that representation (the scalar s, the current 4 s n / W, the symmetric pair) (9.86, 9.91 (2)) | the step, per component |
+   | the phase (row 3) | phase 2: the state at a Node is the pair (now, before) and the rule is the second-order line of 9.57 (1), a rotation; phase 1: one level, the rule read at first order (a static family stands at its stationary response) (9.91 (2)) | the step |
+   | the signed read with a twist (row 4) | p_0 = Gamma - SUM over the reads of (weight x level) at the Node, weight signed (a hollow positive, a hill negative), by "sign" the weight times q; the axes' paces with the tensor's parts; a neighbour's pair read through the Port's angle accumulator by the one table of triples (the twist, 9.96 (2) (e)); the guard 0 < p <= Gamma (9.78 (4), 9.108 items 11 and 12) | the right side, first |
+   | the hold (row 5) | a body's count s = SUM_k (M_k P_0) div P_k (item 3), written whole into the held family's level at the body's Nodes each interval in the family's representation, the dipole on the six neighbours, the remainder on the record (9.45 (2), 9.91 (3)) | the right side, before the source |
+   | the clicks (row 7) | the ladder on the inward flux at a detector's Ports: the first k with 2 W (C + f_1 + ... + f_k) >= (2 u + 1) T, u the record's residue on its wheel W (9.25 (2)); the Node by the shares (Born's rule, 9.25 (3)); the taking lowers the record's count by one quantum and keeps its phase (9.109 item 2 (a)); the giving the window's write until the outward norm reaches the quantum (9.107) | after the step |
+   | the lifetime (row 8) | a click at a border: a record of age L intervals clicks on the face it is on, as the face receiver does (9.88 (3)) | after the step, with the click |
+   | the internal representation (row 9) | n pairs at a Node, the generators exact triples of the twist table, the transport across a Link the product of the Port's accumulated rotation with the generator's table, composed and inverted per Node (9.88 (7) (i), 9.101) | the right side, in the transport |
+   | the clicks list (row 10) | one taking, m givings; the conserved integers of the products sum to the taken quantum's or the loader refuses; the momenta's share one cut per product from its own rung (the record's remainders at the Node in the fixed order, each a residue on its wheel scaled to W, sorted, the differences the shares, the sum exact) (9.88 (4)) | after the step, with the click |
+   | the hand (row 11) | the sign of S . n, the body's spin dotted with its momentum, an integer -1, 0, 1; a click declaring a hand is refused on a body of the other hand; a wave has none (9.88 (5)) | after the step, with the click |
+   | the self-source (row 12) | off the step's right side: the sum over the family's components of the six squared differences at the Node, div the unit P_2 (degree 2), and with the structure table the cubic term f_abc a_b a_c summed over the internal components (degree 3; my line for the table owed) (9.78 (3), 9.88 (2), 9.91 (5)) | the right side, last |
+
+   The two rules of the engine in his section have their lines here
+   too: the remainders (every division of every row keeps its remainder
+   on the dividing family's record at the Node, 9.91 (2), (3)) and the
+   two-sided guard (0 < p <= Gamma at run time, 9.108 item 12). The
+   twelve lines are the algebra's; the table's two new columns (the
+   place and the expression, record 2182) take them as written.
