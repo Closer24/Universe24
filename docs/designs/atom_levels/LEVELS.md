@@ -762,9 +762,9 @@ the give rows, the paid release) and [DESIGN_MOMENTUM.md](../atom_give/DESIGN_MO
 [CAUSE.md](../atom_give/CAUSE.md), [CENTRED_STEP.md](../atom_give/CENTRED_STEP.md)
 and [RUN_CENTRED.md](../atom_give/RUN_CENTRED.md) (the loop that stays,
 its returns, periods, momenta and closure fractions); [PINS.md](../atoms/PINS.md)
-section 2 (the rung at r = 12, the fan's grain); [the atoms generator](../../../examples/events/atoms/make_worlds.py),
-[the world](../../../examples/events/atoms/hydrogen_r12_centred.json)
-and [the atoms README](../../../examples/events/atoms/README.md);
+section 2 (the rung at r = 12, the fan's grain); the atoms generator (`examples/events/atoms/make_worlds.py`, deleted 2026-09-26),
+the world (`examples/events/atoms/hydrogen_r12_centred.json`, deleted 2026-09-26)
+and the atoms README (`examples/events/atoms/README.md`, deleted 2026-09-26);
 [the Einstein Outside derivation](../einstein_outside/DERIVATION.md)
 (Theorem 4, `m_i = Q S M`); [DERIVATIONS_BEAM 6.4 and 7.2](../../DERIVATIONS_BEAM.md);
 [BEAM_LAW notes 18, 30 (ii), 40 and 41](../../BEAM_LAW.md); [NATURE row 6](../../NATURE.md);

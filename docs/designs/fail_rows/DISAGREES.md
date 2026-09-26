@@ -41,11 +41,11 @@ on `fail-run-14` at `f30f2b0a87b63b6475bd023a327de8a951e4ee8b`;
 [its pins](../order_channel/PINS.md); [the atom's baseline run](../atom_baseline/RUN.md),
 [its cause](../atom_give/CAUSE.md) and [the centred step's run](../atom_give/RUN_CENTRED.md);
 [the price of the generic entry](../one_wall/GENERIC_BENDING_PRICE.md); the
-registers of series K ([lensing](../../../examples/events/lensing/README.md)),
-the optical worlds ([optical](../../../examples/events/optical/README.md),
-its `expectations.json`), series N ([binding](../../../examples/events/binding/README.md)),
-series J ([weak](../../../examples/events/weak/README.md)) and series H
-([atoms](../../../examples/events/atoms/README.md)); `examples/events/gate_set.json`;
+registers of series K (lensing (`examples/events/lensing/README.md`, deleted 2026-09-26)),
+the optical worlds (optical (`examples/events/optical/README.md`, deleted 2026-09-26),
+its `expectations.json`), series N (binding (`examples/events/binding/README.md`, deleted 2026-09-26)),
+series J (weak (`examples/events/weak/README.md`, deleted 2026-09-26)) and series H
+(atoms (`examples/events/atoms/README.md`, deleted 2026-09-26)); `examples/events/gate_set.json`;
 [POSTULATES.md section 10](../../../POSTULATES.md) as amended on the owner's
 word of record 1139; records 281, 678, 707, 709, 941, 955, 1129, 1134,
 1139, 1164, 1166 and 1173 of the log.
@@ -1331,11 +1331,11 @@ section), and the cheapest next step is a docs line, not a run.
 
 - [NATURE.md](../../NATURE.md), the rows and the tally by status (2026-09-23).
 - [WHAT_IS_MISSING.md](WHAT_IS_MISSING.md) sections 1.2, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 1.12 and 3.
-- [RUN_4AB.md](RUN_4AB.md) sections 2.3, 3.3, 6.1, 6.2, 6.3 and 6.4; the series S register ([covariant](../../../examples/events/covariant/README.md)) and G2's ([hubble_stars](../../../examples/events/hubble_stars/README.md)); [DERIVATIONS_BEAM](../../DERIVATIONS_BEAM.md) sections 2.2, 4.3, 12.3, 12.4 and 12.5.
+- [RUN_4AB.md](RUN_4AB.md) sections 2.3, 3.3, 6.1, 6.2, 6.3 and 6.4; the series S register (covariant (`examples/events/covariant/README.md`, deleted 2026-09-26)) and G2's (hubble_stars (`examples/events/hubble_stars/README.md`, deleted 2026-09-26)); [DERIVATIONS_BEAM](../../DERIVATIONS_BEAM.md) sections 2.2, 4.3, 12.3, 12.4 and 12.5.
 - `docs/designs/fail_rows/KIND_AUDIT.md` on `kind-audit` (PR #990), the rows 1c, 4a, 4b, 5b, 6, 7b, 8a, 8b, 13 and its section 2.
 - [CRITERIA.md](../paper_criteria/CRITERIA.md) rows 7a and 7b, 8a, 8b, and item (a).
 - [RUN_8BC.md](RUN_8BC.md) sections 0, 5 and 6.3; `RUN_13_2A.md` on `fail-run-13-2a` sections 0, 3 and 9; `RUN_14.md` on `fail-run-14` sections 0 and 9.
 - [The order channel](../order_channel/RUN.md) and [its pins](../order_channel/PINS.md); [the atom's baseline](../atom_baseline/RUN.md), [its cause](../atom_give/CAUSE.md), [the centred step's run](../atom_give/RUN_CENTRED.md).
-- [The price of the generic entry](../one_wall/GENERIC_BENDING_PRICE.md); `examples/events/gate_set.json`; the registers of [lensing](../../../examples/events/lensing/README.md), [optical](../../../examples/events/optical/README.md), [binding](../../../examples/events/binding/README.md), [weak](../../../examples/events/weak/README.md) and [atoms](../../../examples/events/atoms/README.md).
+- [The price of the generic entry](../one_wall/GENERIC_BENDING_PRICE.md); `examples/events/gate_set.json`; the registers of lensing (`examples/events/lensing/README.md`, deleted 2026-09-26), optical (`examples/events/optical/README.md`, deleted 2026-09-26), binding (`examples/events/binding/README.md`, deleted 2026-09-26), weak (`examples/events/weak/README.md`, deleted 2026-09-26) and atoms (`examples/events/atoms/README.md`, deleted 2026-09-26).
 - [POSTULATES.md section 10](../../../POSTULATES.md); the paper's `tab:nature` on `paper-algebra-first`.
 - The log: records 281, 678, 707, 709, 941, 955, 1129, 1134, 1139, 1164, 1166, 1173, 1196, 1200, 1207, 1216 and 1224 (all on `origin/main` at `89d0d3ba`).

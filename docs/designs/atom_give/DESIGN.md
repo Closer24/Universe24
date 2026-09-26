@@ -525,7 +525,7 @@ named in the six lines' item 5 is kept.
 ## Links
 
 [ALGEBRA.md](../atom_algebra/ALGEBRA.md) (sections 1, 2, 3, 6 and 7 at
-643b7ae7); [the atoms pins](../atoms/PINS.md) and [their generator](../../../examples/events/atoms/make_worlds.py);
+643b7ae7); [the atoms pins](../atoms/PINS.md) and their generator (`examples/events/atoms/make_worlds.py`, deleted 2026-09-26);
 [BEAM_LAW note 40 and note 41](../../BEAM_LAW.md); [DERIVATIONS_BEAM 6.4
 and 19.1](../../DERIVATIONS_BEAM.md); [the local integer operation contract](../../ARCHITECTURE.md#local-integer-operation-contract);
 [LOCALITY-1](../../../SIMULATOR_DEFINITIONS.md); [the three tests](../../../skills/workflow.md);

@@ -363,7 +363,7 @@ by the linear scaling of the gr_rows pin world's GAMEBOARD age moment,
 DETECTOR only when a lamp at b reads it against a control (series T's
 method); a read k_a(b) re-derives every conditional number by the same
 forms and refutes nothing. The register beside the worlds:
-[expectations.json](../../../examples/events/newton_side/expectations.json).
+expectations.json (`examples/events/newton_side/expectations.json`, deleted 2026-09-26).
 
 | The reading | The control | The mass world | The light world | Kind | PASS | FAIL |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -461,7 +461,7 @@ beyond the identity the design declares).
 
 ## 5. The world files of Side A
 
-`examples/events/newton_side/` ([README.md](../../../examples/events/newton_side/README.md)):
+`examples/events/newton_side/` (README.md (`examples/events/newton_side/README.md`, deleted 2026-09-26)):
 `control.json`, `mass.json`, `light.json`, written by `make_worlds.py`
 from series K's generator (the box, the fan, the definitions the
 families come from) with the design's section 4.3 keys, and byte-checked
@@ -957,7 +957,7 @@ owner's word.
   readings by type; [TERMINOLOGY.md](../../TERMINOLOGY.md), the readings
   (a detector's clock, Inside and Outside); `src/event_universe/events/measured.py`,
   `count_component` (what a clock counts by its entry's `reads`).
-- The worlds [examples/events/newton_side/](../../../examples/events/newton_side/README.md);
+- The worlds examples/events/newton_side/ (`examples/events/newton_side/README.md`, deleted 2026-09-26);
   the tool `tools/newton_side_readings.py`; the test
   `tests/test_newton_side_readings.py`; Side B's generator
   `examples/events/orbit_lamp/make_worlds.py`; the check of section 10,

@@ -1924,5 +1924,5 @@ deleted.
 [17.6](../../DERIVATIONS_BEAM.md#176-amended-per-the-physics-rule-review-of-covariant-readings-v1-record-297-the-nine-must-fixes-the-integer-forms-the-should-fixes),
 [17.7](../../DERIVATIONS_BEAM.md#177-the-proper-time-gate-without-a-root-two-counters-compared-against-the-whole-root-the-owners-word-2026-09-22-records-642-and-647);
 [the clock loop, stage 1](../clock_loop/DERIVATION.md); [NATURE rows 4a, 4b
-and 12](../../NATURE.md); [the covariant worlds](../../../examples/events/covariant/README.md);
+and 12](../../NATURE.md); the covariant worlds (`examples/events/covariant/README.md`, deleted 2026-09-26);
 [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector).

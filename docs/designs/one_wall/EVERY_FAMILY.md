@@ -569,6 +569,6 @@ integer walk (the map's last section), committed before the run: DONE
 
 - [The generic optical-v1](NOTE.md), [the chief physicist's re-read](PHYSICIST.md), [the mathematician's check](MATHEMATICIAN.md).
 - [The light-bending note and its map](../open_problems/light_bending/NOTE.md).
-- [The massive rows' design](../massive_rows/DESIGN.md) and [their register worlds](../../../examples/events/massive_rows/README.md).
-- [The optical pin worlds](../../../examples/events/optical/README.md).
+- [The massive rows' design](../massive_rows/DESIGN.md) and their register worlds (`examples/events/massive_rows/README.md`, deleted 2026-09-26).
+- The optical pin worlds (`examples/events/optical/README.md`, deleted 2026-09-26).
 - [DERIVATIONS_BEAM 3.3](../../../docs/DERIVATIONS_BEAM.md#33-newtons-law-and-gs-place) and [5.4](../../../docs/DERIVATIONS_BEAM.md#54-light-no-optical-metric-on-main-the-meetings-turn-as-a-key).

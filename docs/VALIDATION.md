@@ -538,7 +538,7 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 
 | Check | Result |
 | --- | --- |
-| Series N, `examples/events/binding/` (three worlds, `tools/run_series.py --jobs 2 --wall-seconds 1200`, 3000 intervals each) | every run completed in 13 to 53 s with the books balanced at every tick; the digests (state, audit, events): `deuteron_bond` `b66833650869` / `ae9319ed637a` / `c05fb3c3a433`, `proton_bond_lamp` `67b598ee4d37` / `65de22cd56dd` / `45fd5c0c63a2` (under the one click of `amplitude-v1`, the key deleted and the world regenerated without it: `cf524330f3e6` / `5f20f826d21f` / `660ac30e7957`, the same 2993 gathers of 2961 x 8 and 32 x 7, 7 open, no contact, `held.bond` 2; B1 and B3 not re-run: no lamp, no key), `alpha_square_bond` `35e1ce3c9cf2` / `247cd70da903` / `51c4fba7ca0d`; every reading inside its pin (B3's dispersal inside in kind, at other ticks than series I's), the table in [the worlds' README](../examples/events/binding/README.md#what-was-measured-2026-09-20) and the entry in [EXPERIMENTS, N](EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20) |
+| Series N, `examples/events/binding/` (three worlds, `tools/run_series.py --jobs 2 --wall-seconds 1200`, 3000 intervals each) | every run completed in 13 to 53 s with the books balanced at every tick; the digests (state, audit, events): `deuteron_bond` `b66833650869` / `ae9319ed637a` / `c05fb3c3a433`, `proton_bond_lamp` `67b598ee4d37` / `65de22cd56dd` / `45fd5c0c63a2` (under the one click of `amplitude-v1`, the key deleted and the world regenerated without it: `cf524330f3e6` / `5f20f826d21f` / `660ac30e7957`, the same 2993 gathers of 2961 x 8 and 32 x 7, 7 open, no contact, `held.bond` 2; B1 and B3 not re-run: no lamp, no key), `alpha_square_bond` `35e1ce3c9cf2` / `247cd70da903` / `51c4fba7ca0d`; every reading inside its pin (B3's dispersal inside in kind, at other ticks than series I's), the table in the worlds' README (`examples/events/binding/README.md`, deleted 2026-09-26) and the entry in [EXPERIMENTS, N](EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20) |
 | The gate set, `examples/events/gate_set.json` (15 worlds at their listed ticks), main `b8620d8f` against the branch, `tools/run_series.py --list ... --compare` | every world identical in `state.json`, the ledger and `events.jsonl`: a0_b0 `dc4cba74e3a5` / `90cab346067c` / `dfa00b9ef9b6`, j3_deuteron `d4485137fd01` / `431cc87afa9f` / `23196889fbed`, r2 `e8e3e137bd61` / `fe50819ae70d` / `ea52bf20dda2`, lamp_mirror_screen `9de7f52ec260` / `9041dac91aae` / `e6ca788d38ca`, heavy_meeting `395040805a4d` / `18c5eb4625ac` / `188ced16170a`, grouped_12_nodes `f0b869e4d566` / `cc8eb7346911` / `a4b2d2b35cfc`, fixed `d078ace3e8d8` / `6466e974280d` / `77ca1b3b3bc9`, j2_ladder `380fbbf27895` / `48335f1672dc` / `911390d0f64b`, j3_deuteron_crowd `9bdcf69e2620` / `677af7000b26` / `094a32eb6c0f`, w27_beam `73d4980059d3` / `b5c15a82715e` / `439252c03ee8`, alpha_square `26799da3d3b2` / `9102a8f9fd11` / `600166fb5bdd`, pushing_age `5e40e4bea36a` / `ae00571de265` / `4d89f6b6182b`, 1b_m16 `391d4cbdc763` / `baee1e32e96a` / `dc1054aa43c4`, w1_beam `d843680c8246` / `61bc435a99ff` / `1e08efda9aab`, sun_planet `f7043252f62a` / `583a5e8e5163` / `4b793a913b22` (r2, 1b_m16 and alpha_square write `contact` records: without a body that holds a paid family the record carries no `given` and the contact is the hand-over alone) |
 | `tests/test_binding.py` (a) to (d) | the give at the first hand-over, the remainder, the take on the line, a body that carries nothing: the integers of [TEST_EXPECTATIONS](TEST_EXPECTATIONS.md#the-binding-that-costs-content) |
 | `python tools/check.py` | ruff lint and format, mypy and the selected tests green; `--full` before the push |
@@ -603,7 +603,7 @@ numpy 2.5.3; the worlds of `examples/events/hubble_stars/` through
 `tools/click_readings/hubble_stars.py`, every run of 400 intervals completed with
 the books balanced at every interval; the readings registered in
 [G2](EXPERIMENTS.md#g2-the-hubble-diagram-with-stars-behind-the-detector-2026-09-20)
-and the worlds' [README](../examples/events/hubble_stars/README.md).
+and the worlds' README (`examples/events/hubble_stars/README.md`, deleted 2026-09-26).
 
 | Run | Engine and fingerprint | Worlds | Result |
 | --- | --- | --- | --- |
@@ -1076,7 +1076,7 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores; the model owner's go
 of 2026-09-20 on the physicist's entry 2 of the law's own predictions
 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector)); the readings registered
 in [K](EXPERIMENTS.md#k-light-beside-a-mass-2026-09-20) and the worlds'
-[README](../examples/events/lensing/README.md).
+README (`examples/events/lensing/README.md`, deleted 2026-09-26).
 
 | Check | Result |
 | --- | --- |
@@ -1104,7 +1104,7 @@ minutes): 0 record checks failed, the reading's formula 288 of 288 inside
 2 %, 22 pinned readings inside and 26 outside, none moved; the readings
 registered in
 [G](EXPERIMENTS.md#g-the-hubble-diagram-behind-the-detector-2026-09-20)
-and the worlds' [README](../examples/events/hubble/README.md).
+and the worlds' README (`examples/events/hubble/README.md`, deleted 2026-09-26).
 
 | Check | Result |
 | --- | --- |
@@ -1141,7 +1141,7 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 | `tests/test_nature_beam_body.py` (a) to (f) | passed: a set of one Node equal to the measured event of the engine before the change record by record and row by row over 30 intervals with rays, collisions and clicks (the reference integers taken on that engine first: 152 clicks, 20 record lines, 5 steps, 5 homes, the record 37348285440); the set of three Nodes reading, clicking, owing and pushing as one, stepping as one, refused at an occupied Node, clicking on the face, wrapping; the books balanced with a set that releases (the shares 8, 4, 4 then 4, 8, 4); the turn's phases 11, 37 and 50, 32, 14, 59, 41 as derived by hand, composed over axes 14 and 18, today's phase without `action`; the rays' rows identical with and without the two keys on a colliding crowd of 324 rays over 40 intervals; every refusal by name and the record |
 | `tests/test_push_width.py` (a), `tests/test_nature_beam_clock.py` (e) | `engine.step_axis` and `engine.count_owed` pinned to the step rule and the owed count, no integer changed |
 | `python tools/check.py --base 38c9b621` after each feature | ruff lint and format, mypy and 335 then 337 tests green |
-| Series H, `examples/events/bohr/` (seven worlds, `tools/run_series.py --jobs 4`, 3000 to 10300 intervals) | every run completed in 19 to 87 s with the books balanced at every tick; `tools/click_readings/bohr.py`: 0 record checks failed, 1 coherence reading inside and 1 outside, five worlds without a reading (fewer than two closed turns): no orbit closed within r / 4 at any radius; at r = 8 two turns of mean radius 8.11 and 7.95 with T 722 and 736 (838 derived), the returns 5 and 4 Links, the escape at the close pass of the third turn; the phase's turn per orbit 0.234 of a circle against 0 designed; C(2) = 0.84 against the expected 1.0 ([the register](EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20), [the README](../examples/events/bohr/README.md)) |
+| Series H, `examples/events/bohr/` (seven worlds, `tools/run_series.py --jobs 4`, 3000 to 10300 intervals) | every run completed in 19 to 87 s with the books balanced at every tick; `tools/click_readings/bohr.py`: 0 record checks failed, 1 coherence reading inside and 1 outside, five worlds without a reading (fewer than two closed turns): no orbit closed within r / 4 at any radius; at r = 8 two turns of mean radius 8.11 and 7.95 with T 722 and 736 (838 derived), the returns 5 and 4 Links, the escape at the close pass of the third turn; the phase's turn per orbit 0.234 of a circle against 0 designed; C(2) = 0.84 against the expected 1.0 ([the register](EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20), the README (`examples/events/bohr/README.md`, deleted 2026-09-26)) |
 | `tests/test_bohr_readings.py` (a) to (c) | the tool's flight time, pointer per turn, coherence and run reading pinned to the engine's `manhattan_steps`, `coherent_pointer` and the runner's record |
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green on the final commit |
 
@@ -1188,7 +1188,7 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 | `tests/test_nature_beam_age.py` (a) to (e) | passed: the age 200 whole after 200 intervals (35 until the change); a head-on pair parked with the ages 60 kept and the class cycle ha hb -> +z-z -> +y-y observed (the first derivation had the pair leave on z without meeting again; the pin was corrected to the observed cycle before registration); the re-emission and the birth at 0; the age moment 41, 61 with here, fixed under the 48 symmetries; the clock's ages 1, 2, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, ... under `reads: "age"` equal to the hand derivation at every interval, the scalar reader unchanged; the bound's default 108 and 222, the refusals, the stub refused at its 13th interval; the GameBoard identical with the ages whole and reduced over 40 intervals of a colliding crowd |
 | A sample of the registered worlds under the whole age (`one_content`, `two_contents`, `two_slits`, coupling `1b_m16` and `5_long`, orbit `s32_r12`, Bell `a0_b8`) | every run completed with the books balanced at every tick, no age past its default bound (the coupling plane 830, the orbit plane 830, the two slits 620, the cube 252); the `audit` of `run.json` unchanged (the clocks read the presence by default, integer by integer); `state.json` differs where a ray's age had passed its period |
 | `python tools/check.py` (the scoped selection of the age commit) | ruff lint and format, mypy and 300 tests green |
-| Series E, `examples/events/redshift/` (`scalar`, `age`; `tools/run_series.py --jobs 2`, 300 intervals each) | both completed, the books balanced at every tick, 16.0 s and 15.5 s; `tools/click_readings/redshift.py`: 0 record checks failed, 11 readings inside, 3 outside: k_s x r^2 = 39.0 to 44.8 (mean 41.5) and k_a x r = 33.1 to 39.2 (mean 36.1) over r = 6 to 14, their ratio 0.870 against sqrt 3 / 2; the redshift ratios of the age clocks 0.50, 0.57, 0.72, 0.82 at r = 6, 8, 10, 12 against the fitted 1 / r law 0.52, 0.65, 0.78, 0.90, outside the 15 %-of-shift criterion at r = 8, 10, 12 ([the register](EXPERIMENTS.md#e-the-clocks-redshift-in-space-under-the-age-reading-2026-09-20), [the README](../examples/events/redshift/README.md)) |
+| Series E, `examples/events/redshift/` (`scalar`, `age`; `tools/run_series.py --jobs 2`, 300 intervals each) | both completed, the books balanced at every tick, 16.0 s and 15.5 s; `tools/click_readings/redshift.py`: 0 record checks failed, 11 readings inside, 3 outside: k_s x r^2 = 39.0 to 44.8 (mean 41.5) and k_a x r = 33.1 to 39.2 (mean 36.1) over r = 6 to 14, their ratio 0.870 against sqrt 3 / 2; the redshift ratios of the age clocks 0.50, 0.57, 0.72, 0.82 at r = 6, 8, 10, 12 against the fitted 1 / r law 0.52, 0.65, 0.78, 0.90, outside the 15 %-of-shift criterion at r = 8, 10, 12 ([the register](EXPERIMENTS.md#e-the-clocks-redshift-in-space-under-the-age-reading-2026-09-20), the README (`examples/events/redshift/README.md`, deleted 2026-09-26)) |
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green on the final commit |
 
 The runs establish that the age reading of a measured event reads M / r
@@ -1231,7 +1231,7 @@ commit (`dacbe0f3`), source fingerprint `f3fb33607190c86c...`, Python
 tick; `tools/click_readings/heisenberg.py` 16 record checks passed, 0 failed;
 the readings registered in
 [A10](EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20)
-and the worlds' [README](../examples/events/heisenberg/README.md). The
+and the worlds' README (`examples/events/heisenberg/README.md`, deleted 2026-09-26). The
 runs establish what this screen reads of the spread behind an opening
 under the two readings; they establish no physical law, and the reading
 of the lobe fails at w <= 9 on the sparse fan (a limit of the reading,

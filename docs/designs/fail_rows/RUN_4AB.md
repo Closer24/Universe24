@@ -39,8 +39,8 @@ the domain cap gamma <= 2), the moving detector
 [PREREGISTRATION_V2.md](../moving_detector/PREREGISTRATION_V2.md), the
 band and the batch-933 sign), the series S and X registers
 ([EXPERIMENTS](../../EXPERIMENTS.md#s-the-covariant-readings-2026-09-21),
-[the S worlds](../../../examples/events/covariant/README.md),
-[the cart worlds](../../../examples/events/moving_detector/README.md)),
+the S worlds (`examples/events/covariant/README.md`, deleted 2026-09-26),
+the cart worlds (`examples/events/moving_detector/README.md`, deleted 2026-09-26)),
 and the paper's Table 2 rows 4a and 4b
 ([NATURE](../../NATURE.md)).
 
@@ -758,9 +758,9 @@ hops every 2.64 intervals, 2.0 counts). The radar velocity NOT READ.
 covariant readings](../covariant_readings/REVIEW_3.md); [the moving
 detector's design](../moving_detector/DESIGN.md) and
 [preregistration, version 2](../moving_detector/PREREGISTRATION_V2.md);
-[the drive default](../drive_b/DEFAULT.md); [series
-S](../../../examples/events/covariant/README.md); [the cart
-worlds](../../../examples/events/moving_detector/README.md); [the
+[the drive default](../drive_b/DEFAULT.md); series
+S (`examples/events/covariant/README.md`, deleted 2026-09-26); the cart
+worlds (`examples/events/moving_detector/README.md`, deleted 2026-09-26); [the
 confrontation register](../../NATURE.md); [the experiments
 register](../../EXPERIMENTS.md); [the hypotheses](../../HYPOTHESES.md);
 `run_4ab_worlds.py`, `run_4ab_pins.json`, `run_4ab_pins.out` and

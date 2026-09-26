@@ -2,7 +2,6 @@
 
 import argparse
 import ast
-import importlib.util
 import io
 import json
 import subprocess
@@ -13,68 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 # Every row names a kept test; main() still skips a selected test that does not exist.
 RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
-    "examples/events/README.md": ("tests/test_nature_beam_worlds.py",),
-    # The registers a test reads a world's numbers from (2026-09-21).
-    "examples/events/expectations.json": ("tests/test_nature_beam_worlds.py",),
-    "examples/events/bell/expectations.json": ("tests/test_nature_beam_worlds.py",),
-    "examples/events/amplitude/expectations.json": (
-        "tests/test_amplitude_bell_24_4.py",
-        "tests/test_amplitude_cone.py",
-        "tests/test_amplitude_gate.py",
-        "tests/test_amplitude_layer.py",
-        "tests/test_amplitude_malus.py",
-        "tests/test_amplitude_mz_345_n.py",
-        "tests/test_amplitude_pair.py",
-        "tests/test_amplitude_split.py",
-    ),
-    "examples/events/c_measured/expectations.json": ("tests/test_c_measured.py",),
-    "examples/events/c_measured/c_measured.json": ("tests/test_c_measured.py",),
-    # The massive rows' register, worlds and generators (2026-09-21): the
-    # test that reads the pin, the byte-identity digests and the replay.
-    "examples/events/massive_rows/expectations.json": ("tests/test_massive_rows.py",),
-    "examples/events/massive_rows/make_worlds.py": ("tests/test_massive_rows.py",),
-    "tools/click_readings/massive_rows_replay.py": ("tests/test_massive_rows.py",),
-    "examples/events/massive_rows/slits_matter.json": ("tests/test_massive_rows.py",),
-    "examples/events/massive_rows/slits_matter_1024.json": ("tests/test_massive_rows.py",),
-    "examples/events/massive_rows/slits_matter_small.json": ("tests/test_massive_rows.py",),
-    # Side A of Newton on the side (2026-09-23): the worlds, the register and
-    # the generator the reading tool's test pins.
-    "examples/events/newton_side/expectations.json": ("tests/test_newton_side_readings.py",),
-    "examples/events/newton_side/make_worlds.py": ("tests/test_newton_side_readings.py",),
-    "examples/events/newton_side/control.json": ("tests/test_newton_side_readings.py",),
-    "examples/events/newton_side/mass.json": ("tests/test_newton_side_readings.py",),
-    "examples/events/newton_side/light.json": ("tests/test_newton_side_readings.py",),
-    "examples/events/gate_set.json": (
-        "tests/test_nature_beam_worlds.py",
-        "tests/test_amplitude_click.py",
-        "tests/test_massive_rows.py",
-        "tests/test_drive_b.py",
-    ),
-    # The drive-b register, worlds and generator (2026-09-22): the test that
-    # reads the pins and replays the deciding worlds.
-    "examples/events/drive_b/expectations.json": ("tests/test_drive_b.py",),
-    "examples/events/drive_b/make_worlds.py": ("tests/test_drive_b.py",),
-    "examples/events/detector/entities/detectors.json": (
-        "tests/test_entity_definitions.py",
-        "tests/test_configuration_validation.py",
-        "tests/test_entity_loading_consumers.py",
-    ),
-    # The shipped worlds take their families from `families.json` since
-    # 2026-09-20: every test that loads a shipped world depends on it.
-    "examples/events/entities/families.json": (
-        "tests/test_entity_definitions.py",
-        "tests/test_configuration_validation.py",
-        "tests/test_nature_beam_worlds.py",
-        "tests/test_bell_choosers.py",
-        "tests/test_entity_loading_consumers.py",
-        "tests/test_amplitude_layer.py",
-        "tests/test_amplitude_click.py",
-    ),
-    "examples/events/entities/apparatus.json": ("tests/test_entity_definitions.py",),
-    # The weak register and its generator: the tests that derive or replay
-    # their entries (J2 from the flight table, J1 and J3 from the warm runs).
-    "examples/events/weak/expectations.json": ("tests/test_weak_readings.py",),
-    "examples/events/weak/make_worlds.py": ("tests/test_weak_readings.py",),
+    # The registers, worlds and generators a living test reads by path (the ray law's
+    # rows were deleted with their tests on 2026-09-26, docs/CANCELLED_WORLDS.md).
 }
 
 
@@ -209,17 +148,6 @@ def affected(changed, sources):
     return impacted
 
 
-def cancelled_tests():
-    """The ray law's test files (docs/CANCELLED_WORLDS.md section 3): never selected."""
-    spec = importlib.util.spec_from_file_location(
-        "cancelled_paths", Path(__file__).resolve().parent / "cancelled_paths.py"
-    )
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    spec.loader.exec_module(module)
-    return set(module.cancelled_paths("tests"))
-
-
 def select(changed, sources):
     impacted = affected(changed, sources)
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
@@ -227,8 +155,8 @@ def select(changed, sources):
     for path in changed:
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
         if path.endswith(".json") and path.startswith(("examples/", "skills/")):
-            # the detector law's preflight (the old runner's preflight is cancelled,
-            # docs/CANCELLED_WORLDS.md section 3)
+            # the detector law's preflight (the old runner's preflight was deleted,
+            # docs/CANCELLED_WORLDS.md)
             tests.add("tests/test_preflight_worlds.py")
         if path.endswith(".md") or path == "MANIFEST.in":
             tests.add("tests/test_repository_navigation.py")
@@ -257,7 +185,6 @@ def select(changed, sources):
                 for p, text in sources.items()
                 if p.startswith("tests/test_") and "event_universe" in text
             )
-    tests -= cancelled_tests()
     return sorted(tests), sorted(
         p for p in impacted if p.startswith("src/") and p.endswith(".py") and p in sources
     )

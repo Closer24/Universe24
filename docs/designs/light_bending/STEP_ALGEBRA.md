@@ -63,7 +63,7 @@ registered box with a ring of lamps, its arrival Nodes pinned in section
 
 1. Read the law's lines on main for the key's three rules and the flight
    (section 2), and the registered worlds' numbers from the world files
-   under [examples/events/optical/](../../../examples/events/optical/README.md).
+   under examples/events/optical/ (`examples/events/optical/README.md`, deleted 2026-09-26).
 2. Declare the pins before any arithmetic (section 3): `n S = d`,
    `c_f = 2`, the comparison and its tolerance, the calibration.
 3. Transcribe the steps as integers (section 4): the flight table, the hop
@@ -585,7 +585,7 @@ needed for the plane's question. No world file is written here.
 ## 12. Links
 
 - [step_algebra_map.py](step_algebra_map.py), [step_algebra_map.out](step_algebra_map.out): the arithmetic of this file.
-- [examples/events/optical/README.md](../../../examples/events/optical/README.md): the registered worlds and their runs (DETECTOR).
+- examples/events/optical/README.md (`examples/events/optical/README.md`, deleted 2026-09-26): the registered worlds and their runs (DETECTOR).
 - [docs/designs/one_wall/NOTE.md](../one_wall/NOTE.md), [EVERY_FAMILY.md](../one_wall/EVERY_FAMILY.md): the key's rules as designed.
 - [docs/designs/open_problems/light_bending/NOTE.md](../open_problems/light_bending/NOTE.md): the lattice's lines and the comb (section 4), the pins of the register.
 - [docs/designs/einstein_outside/DERIVATION.md](../einstein_outside/DERIVATION.md) II.10a and II.11: the pin `n S = d` and the closed form under the key.

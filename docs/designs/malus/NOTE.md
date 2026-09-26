@@ -209,6 +209,6 @@ enters the law: no identity, no key, no rule.
 ## 6. Links
 
 - The entries: [ENGINE.md](../../ENGINE.md) (the `lamp`, `rerelease` with `rotate`, `read`, `phase_window` and `sum` entries; the `gather` line's `chosen`); [amplitude-v1 DESIGN.md](../amplitude-v1/DESIGN.md) sections 2.2 and 4.1; [BEAM_LAW.md](../../BEAM_LAW.md) notes 45 and 46 (section 10).
-- The register: [A12](../../EXPERIMENTS.md#a12-maluss-law-and-the-three-polarizer-chain-after-feature-11) (the crowd-form run of 2026-09-17), the L3 and L5 entries of [EXPERIMENTS.md](../../EXPERIMENTS.md#l-the-amplitude-law-2026-09-20) (the Bell counters, the which-path read, `rotations_3`); [NATURE row 9](../../NATURE.md); the worlds beside [the amplitude README](../../../examples/events/amplitude/README.md).
+- The register: [A12](../../EXPERIMENTS.md#a12-maluss-law-and-the-three-polarizer-chain-after-feature-11) (the crowd-form run of 2026-09-17), the L3 and L5 entries of [EXPERIMENTS.md](../../EXPERIMENTS.md#l-the-amplitude-law-2026-09-20) (the Bell counters, the which-path read, `rotations_3`); [NATURE row 9](../../NATURE.md); the worlds beside the amplitude README (`examples/events/amplitude/README.md`, deleted 2026-09-26).
 - The tables per Link and the norm: [label_rotation/FORM.md](../label_rotation/FORM.md).
 - The map: [malus_map.py](malus_map.py), [malus_map.out](malus_map.out).

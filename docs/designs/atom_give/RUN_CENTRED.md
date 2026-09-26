@@ -135,8 +135,8 @@ and reports; C6 the build's.
 [CENTRED_STEP.md](CENTRED_STEP.md) (the pins, section 4); [CAUSE.md](CAUSE.md);
 [centred_readings.py](centred_readings.py) and [centred_readings.out](centred_readings.out);
 [the baseline run](../atom_baseline/RUN.md) and [its readings](../atom_baseline/baseline_readings.out);
-[the world](../../../examples/events/atoms/hydrogen_r12_centred.json) and
-[the atoms README](../../../examples/events/atoms/README.md);
-[tests/test_centred_step.py](../../../tests/test_centred_step.py);
+the world (`examples/events/atoms/hydrogen_r12_centred.json`, deleted 2026-09-26) and
+the atoms README (`examples/events/atoms/README.md`, deleted 2026-09-26);
+tests/test_centred_step.py (`tests/test_centred_step.py`, deleted 2026-09-26);
 [the retention policy](../../RETENTION.md); records 953, 955 and 958 of
 [the log](../../LOG_2026-09-20.md).

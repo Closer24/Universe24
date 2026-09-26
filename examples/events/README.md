@@ -125,7 +125,7 @@ refusal to learn while series O and P were built.
 
 ## The Bell run
 
-The folder [bell/](bell/README.md) holds the ten worlds of the Bell run A2
+The folder bell/ (`examples/events/bell/README.md`, deleted 2026-09-26) holds the ten worlds of the Bell run A2
 under the Beam Law, written by `bell/make_worlds.py`: one bar of
 21 x 1 x 1, a lamp of `light` at the centre releasing one ray per
 self-creation on +X and on -X, and four counters with phase windows, Alice's
@@ -153,7 +153,7 @@ correlate what never met.
 
 ## The coupling series
 
-The folder [coupling/](coupling/README.md) holds the twenty-one worlds of
+The folder coupling/ (`examples/events/coupling/README.md`, deleted 2026-09-26) holds the twenty-one worlds of
 the coupling series C under the Beam Law, written by
 `coupling/make_worlds.py` from one base: a GameBoard of 121 x 121 x 1 with the z
 axis periodic, a source of content 2^24 at the centre releasing six beams on
@@ -172,7 +172,7 @@ the register entry is
 
 ## The redshift series
 
-The folder [redshift/](redshift/README.md) holds the two worlds of the
+The folder redshift/ (`examples/events/redshift/README.md`, deleted 2026-09-26) holds the two worlds of the
 redshift series E, written by `redshift/make_worlds.py`: an open 31^3 cube,
 a fixed source of content 2^12 at the centre releasing one ray per
 self-creation on the 290 primitive directions with |a| + |b| + |c| <= 6,
@@ -191,7 +191,7 @@ is series T (outside a source) and series X below (its source term).
 
 ## The shell series: Poisson after a detector
 
-The folder [shell_clock/](shell_clock/README.md) holds the nine worlds of
+The folder shell_clock/ (`examples/events/shell_clock/README.md`, deleted 2026-09-26) holds the nine worlds of
 series X, written by `shell_clock/make_worlds.py` (series T's generator
 imported for the speeds, series E's for the one copy of the fan of 290):
 series T's lamp and detector 100 Links apart, and a shell of 450 fixed
@@ -210,7 +210,7 @@ tells the clock's two words apart at a source term.
 
 ## The Hubble series
 
-The folder [hubble/](hubble/README.md) holds the four worlds of series G,
+The folder hubble/ (`examples/events/hubble/README.md`, deleted 2026-09-26) holds the four worlds of series G,
 the Hubble diagram behind the detector, written by `hubble/make_worlds.py`:
 an open 301^3 cube, twenty-four free sources (a family each) thrown from
 the centre along the six axes at 0.05 c to 0.6 c (c = 32 / 55 Links per
@@ -238,7 +238,7 @@ initial distances and the emitters' clocks and not by an acceleration
 
 ## The Bohr series
 
-The folder [bohr/](bohr/README.md) holds the seven worlds of series H,
+The folder bohr/ (`examples/events/bohr/README.md`, deleted 2026-09-26) holds the seven worlds of series H,
 written by `bohr/make_worlds.py`: an open cube sized to the orbit, a fixed
 proton (`p`, content 1836, `charge` [1, 1]) at the centre releasing one
 ray per direction of a shell of 2616 primitive directions every 10
@@ -261,7 +261,7 @@ registered as the finding and not tuned.
 
 ## The atoms series
 
-The folder [atoms/](atoms/README.md) holds the two worlds of the atoms
+The folder atoms/ (`examples/events/atoms/README.md`, deleted 2026-09-26) holds the two worlds of the atoms
 series under form B, written by `atoms/make_worlds.py` on series H's base:
 `hydrogen_r12`, the one registered radius with a whole closure, with the
 momentum derived under form B's drive, the action re-fixed by series H's
@@ -274,7 +274,7 @@ come after form B lands.
 
 ## The nucleus series
 
-The folder [nucleus/](nucleus/README.md) holds the eight worlds of series
+The folder nucleus/ (`examples/events/nucleus/README.md`, deleted 2026-09-26) holds the eight worlds of series
 I, written by `nucleus/make_worlds.py`: an open 21^3 cube, three free
 families without a phase circle (`p` with `charge` 4, `n`, and `nuclear`
 with the column `strong` of value 10000 and sign minus and the `lifetime`
@@ -294,7 +294,7 @@ line held, 29 readings inside and 1 outside, registered and not tuned.
 
 ## The quarks series
 
-The folder [quarks/](quarks/README.md) holds the seven worlds of series
+The folder quarks/ (`examples/events/quarks/README.md`, deleted 2026-09-26) holds the seven worlds of series
 R, written by `quarks/make_worlds.py`: series I's base with the up and the
 down quarks as free families (4 and 9 units of content, the charges 1224
 and -272 per unit: the whole charges 2/3 and -1/3 of the register's proton
@@ -310,7 +310,7 @@ the design is [the quarks as families of the family table](../../docs/designs/qu
 
 ## The binding series
 
-The folder [binding/](binding/README.md) holds the three worlds of series
+The folder binding/ (`examples/events/binding/README.md`, deleted 2026-09-26) holds the three worlds of series
 N, the binding that costs content (`binding-v1`,
 [BEAM_LAW note 40](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
 written by `binding/make_worlds.py` on series I's base: the nucleons carry
@@ -328,7 +328,7 @@ register entry is
 
 ## The orbit series
 
-The folder [orbit/](orbit/README.md) holds the six worlds of the orbit
+The folder orbit/ (`examples/events/orbit/README.md`, deleted 2026-09-26) holds the six worlds of the orbit
 series D, written by `orbit/make_worlds.py`: the same plane, a fixed source
 of content 2^10 releasing one shell every 10 intervals on a fan of 120
 primitive in-plane directions (q = 12 units per interval), and a free probe
@@ -344,7 +344,7 @@ mean push reads as derived, the grain of the push breaks the rest.
 
 ## The orbit read by a lamp on the probe (series D3, Newton after a detector)
 
-The folder [orbit_lamp/](orbit_lamp/README.md) holds the five worlds of
+The folder orbit_lamp/ (`examples/events/orbit_lamp/README.md`, deleted 2026-09-26) holds the five worlds of
 series D3, written by `orbit_lamp/make_worlds.py` with their expectations
 before the runs (`orbit_lamp/expectations.json`), the chief physicist's
 design of 2026-09-22 (records 574 and 594) on the owner's word: series
@@ -374,7 +374,7 @@ named, as series D registered the loops.
 
 ## The Heisenberg run
 
-The folder [heisenberg/](heisenberg/README.md) holds the eight worlds of
+The folder heisenberg/ (`examples/events/heisenberg/README.md`, deleted 2026-09-26) holds the eight worlds of
 the run A10, written by `heisenberg/make_worlds.py`: the plane stretched
 to 120 x 161, a plane wave from a row of lamps on one heading, a wall
 with ONE opening of width w (1, 3, 9, 27 Nodes) declared as one detector
@@ -390,7 +390,7 @@ the smaller widths on the sparse fan.
 
 ## The light-beside-a-mass series
 
-The folder [lensing/](lensing/README.md) holds the four worlds of series
+The folder lensing/ (`examples/events/lensing/README.md`, deleted 2026-09-26) holds the four worlds of series
 K, written by `lensing/make_worlds.py`: an open 57 x 41 x 41 box, a lamp
 of the paid family `light` sending a narrow beam (five directions within
 5 degrees of the heading) past a fixed mass of the free phase-less
@@ -419,7 +419,7 @@ past the mass), not delayed in time, the mass measuring the light turned
 into it; registered, 14 readings inside and 9 outside, not tuned.
 ## Newton on the side, Side A: the moving detector with mass
 
-The folder [newton_side/](newton_side/README.md) holds the three worlds
+The folder newton_side/ (`examples/events/newton_side/README.md`, deleted 2026-09-26) holds the three worlds
 of Side A of Newton on the side (the model owner's words, records 1043,
 1046, 1098 and 1128; the design
 [NEWTON_ON_THE_SIDE.md](../../docs/designs/newton_clicks/NEWTON_ON_THE_SIDE.md)
@@ -453,7 +453,7 @@ order; the registered orbit_lamp worlds untouched.
 
 ## The Hubble series with stars
 
-The folder [hubble_stars/](hubble_stars/README.md) holds the nine worlds of
+The folder hubble_stars/ (`examples/events/hubble_stars/README.md`, deleted 2026-09-26) holds the nine worlds of
 series G2, the Hubble diagram with stars behind the detector, written by
 `hubble_stars/make_worlds.py` with their expectations
 (`hubble_stars/expectations.json`, written before the runs) for the model
@@ -486,7 +486,7 @@ clicks and the same numbers to the last digit.
 
 ## The weak-force series
 
-The folder [weak/](weak/README.md) holds the worlds of series J, the weak
+The folder weak/ (`examples/events/weak/README.md`, deleted 2026-09-26) holds the worlds of series J, the weak
 force, written by `weak/make_worlds.py`: J2, the neutrino's passage through
 a filled bar (the neutrino first, no change of law: a bar of 200 x 1 x 1, a
 fixed source of the free family `nu` releasing one ray per self-creation
@@ -524,7 +524,7 @@ which then has a neutron's charge and content.
 
 ## The covariant series
 
-The folder [covariant/](covariant/README.md) holds the four worlds of
+The folder covariant/ (`examples/events/covariant/README.md`, deleted 2026-09-26) holds the four worlds of
 series S, the covariant readings (`covariant-readings-v1`, the world key
 `covariant_readings`; the model owner's decision of 2026-09-21, record 270
 of the log of 2026-09-20, on DERIVATIONS_BEAM section 17 as amended in
@@ -542,7 +542,7 @@ pins; the register entry is
 
 ## The drive-b series
 
-The folder [drive_b/](drive_b/README.md) holds the six worlds of series X,
+The folder drive_b/ (`examples/events/drive_b/README.md`, deleted 2026-09-26) holds the six worlds of series X,
 the directional drive of a body (`drive-b-v1`, the world key `drive_b`, off
 by default; the model owner's approval of form B, 2026-09-22, record 652 of
 the log of 2026-09-20; the design [docs/designs/drive_b/DESIGN.md](../../docs/designs/drive_b/DESIGN.md)),
@@ -557,7 +557,7 @@ bound (GAMEBOARD) against the pins; the register entry is
 
 ## The flow-link series
 
-The folder [flow_link/](flow_link/README.md) holds the ring worlds of
+The folder flow_link/ (`examples/events/flow_link/README.md`, deleted 2026-09-26) holds the ring worlds of
 `flow-link-v1` (the world key `flow_link`, off by default; the model
 owner's decision of 2026-09-22, record 915 of the log of 2026-09-20; the
 design [docs/designs/flow_weight/DESIGN.md](../../docs/designs/flow_weight/DESIGN.md)
@@ -576,7 +576,7 @@ verdict by the pins is in the folder's README.
 
 ## The amplitude series
 
-The folder [amplitude/](amplitude/README.md) holds the worlds of series L,
+The folder amplitude/ (`examples/events/amplitude/README.md`, deleted 2026-09-26) holds the worlds of series L,
 the amplitude law (`amplitude-v1`, the record form of every lamp since
 stage (vii) step 4, the world key `amplitude` deleted,
 [BEAM_LAW note 37](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
@@ -600,7 +600,7 @@ at N = 1024 and 4096. The register entry is
 
 ## The c series
 
-The folder [c_measured/](c_measured/README.md) holds the one world of
+The folder c_measured/ (`examples/events/c_measured/README.md`, deleted 2026-09-26) holds the one world of
 series Q, c measured behind a detector, written by `c_measured/make_world.py`
 with its register (`expectations.json` and `derived.csv`: the closed form's
 escape of every direction, DERIVATIONS_BEAM.md section 11.1, written before
@@ -709,7 +709,7 @@ their files as written in `docs/designs/detector_law/held_worlds/`);
 
 ## The massive rows
 
-The folder [massive_rows/](massive_rows/README.md) holds the worlds of the
+The folder massive_rows/ (`examples/events/massive_rows/README.md`, deleted 2026-09-26) holds the worlds of the
 massive rows (`massive-rows-v1`, the model owner's yes of 2026-09-21,
 record 332; the design docs/designs/massive_rows/DESIGN.md), written by
 `massive_rows/make_worlds.py` from series L's generator beside
@@ -726,7 +726,7 @@ completions, the books). The register entry is
 
 ## The detector definitions
 
-The folder [detector/](detector/README.md) holds four worlds that place
+The folder detector/ (`examples/events/detector/README.md`, deleted 2026-09-26) holds four worlds that place
 reusable apparatus from `detector/entities/detectors.json` through the
 [entity definitions loader](../../docs/ENTITY_DEFINITIONS.md): chains of
 measured events measuring a carrier, declared as detectors with thresholds,
