@@ -15052,8 +15052,11 @@ is refused by name, as now.
 
 **(6) THE ONE KEYS TABLE (the model owner's question of 2026-09-26,
 "where can a flag be? can it be more generic and smarter, simply
-centralised, so there are no bugs?"; the mathematician's answer,
-awaiting the owner's word).** The three files of (2) are right; the
+centralised, so there are no bugs?"; the mathematician's answer;
+ADOPTED by the model owner, 2026-09-26, "yes, this is excellent", with
+his ruling that no version exists anywhere and the start file carries
+the mode without a name, and his order that Nature24 builds the whole
+stroke now, his own unit tests first and the general tests after).** The three files of (2) are right; the
 reading of them is not yet generic. Item 57 wrote the required and the
 refused keys as lists by hand in the loader, one list per object, so
 three places must agree (the list, the read in the engine, the
