@@ -14836,3 +14836,102 @@ engine's own: every attribute of 9.79 (1) and every primitive of (7)
 is there because a click needs it, and nothing at a Node that no
 click needs; WHAT ENTERS THE ONE STROKE: the four primitives of (7),
 unchanged.
+
+### 9.89 The parity line for the ray law's deletion, the wall's width, the cube body, and the gate on item 56 with the k squared of the boosted norm (the Boss's record 2098 of 2026-09-26; Nature24's report of 00:25Z on his head 776c0d0d)
+
+**(1) THE PARITY LINE (record 2095): every behaviour the ray law showed
+exists in the detector law, and the deletion may go.** One line per
+behaviour, with the reading under the detector law that shows it.
+(a) THE STRAIGHT LINE: a train at one wave number keeps its direction
+at the rule's group pace (9.62 (1)); the long-wave pair's round trip
+of the head 2 x 90 / 0.573 = 314 sits inside the rest tick 460 read
+459.0 +- 8.1, and the point emitter's first clicks 884 and 914 sit at
+the flight 873 plus the window's share (9.85 (5)). (b) ONE LINK PER
+INTERVAL: the ray law's pace was the digital line's, one Link per
+interval by construction; the detector law's pace is the dispersion's
+group pace, 1 / sqrt 3 Links per interval at the long wave and 0.573
+at k = 0.299, one value for every source and every direction on the
+board: the behaviour (a fixed pace independent of the source) is kept,
+the number is the lattice's own unit, and the pins compare ratios
+(9.25 (9), record 1894). (c) THE SPLIT AT EVERY NODE: the rule reads
+the six neighbours at every Node (9.57 (1)); a beam spreads by its
+Fresnel number (the single opening's band, the layer's spreading of 30
+Links), read on the two slits' screen. (d) INTERFERENCE: the two-slit
+visibility 0.966 in the clicks against the pin 0.9659 (the table of
+9.22 (8), row 2a). (e) MACH-ZEHNDER: row 17 built and read, 97 bright
+of 100 against the pin 100 / 0 with the dark share 3.3 x 10^-4 (9.25
+(12)). (f) THE TWO SLITS: the pattern with the spacing L lambda / d
+(9.25 (11)), read. (g) THE LIGHT CLOCK: 2 x 60 / 0.57689 + 3.973 + 88
+= 300 computed, 294.7 +- 2.3 read at k = pi / 2 (9.24 (6); Nature24's
+rereading of 00:25Z). WHAT HAS NO COUNTERPART, BY DESIGN: the ray
+law's collision and meeting tables; the detector law's rows add
+(the rule is linear on the rows, 9.17 (2)), and Sorkin's row is the
+test that nothing beyond the sum is there. The ray law's numbers (206,
+307, 254, 0.916, 0.891) stay in the pins' table as history. VERDICT:
+parity holds; the ray law's path (its code, worlds, tests, tools and
+docs/BEAM_LAW.md) may be deleted after the start file lands bit for
+bit, in the Boss's order.
+
+**(2) THE WALL'S WIDTH S, the second line.** The drive's wall 3 Q S M
+reads S = 1 in every world. S was the ray law's width of the push (the
+model owner's D1 of 2026-09-19, "the electron of width 3"), a number of
+the digital line; a Node of the detector law has no push and no
+width. A key with one value in every world is a default (record
+2089). SO: S = 1 fixed, the key `width` goes, and the wall reads 3 Q
+M, with Q the momentum's unit in the universe's integers (9.83 (2)
+(a)) and M the body's held content (9.46 (7) (b)). Bit for bit.
+
+**(3) THE CUBE BODY STAYS A DECLARED SUPPORT, the third line.** The
+owner's "a body can be one Node" is met by the seat: one Node, the
+least form (9.71 (2)). A body of extent is still a body: the mirror
+slab, the screen, the moving emitter whose extent is its train's
+wavelengths (9.75 (2)). The cube is not a second law: each of its
+Nodes is a seat under the one rule, its contraction per Node (9.78
+(4)), and the body's declared support says which Nodes. So the key
+`body_record` goes, the support decides (the Boss's word), and nothing
+is retired. No question for the owner here.
+
+**(4) THE GATE ON 776c0d0d (item 56): CONFIRMED, and the k squared
+written.** The one rule of 9.74 (2) as built (the gate's lines in the
+mathematician's message of 2026-09-26; the signed G_in in the moving
+branch is what makes the outrunning cut c W > e p come out of the one
+rule). THE NORM (9.75 (1), corrected): Nature24 read the given norms of
+the long-wave pair at the rest amplitude, 622631060037 boosted against
+394826125248 at rest, the ratio 1.5770 against D = 1.5962: the boosted
+rows at the rest amplitude ALREADY carry D T_rest, within 1.2 percent
+(the lattice's D at k = 0.299 against the continuum's). He is right and
+9.75 (1) is corrected: the row's level a is the potential, and the
+form is quadratic in its DIFFERENCES (9.57 (1)), so a train's norm is
+A^2 k^2 L, not A^2 L; the boost sends k to D k and L to L / D at the
+same level amplitude A, the norm to D times: the field's amplitude (k
+A) grows by D, the level's does not. No amplitude factor enters; the
+rows stand; the threshold alone was missing, and it is built as the
+record's form at the giving times rest_norm / norm, the exact
+rational, the ladder on T_rest (9.74 (3)).
+
+**(5) THE LORENTZ PAIR'S READING, 1.160 +- 0.024 against 1.198
+(Nature24's two questions).** (a) THE L = 60 WORLD: not needed; the
+file's own geometry has its blind ticks (9.75 (3): 460 and 551, the
+same ratio 1.198), and the rest tick 459.0 +- 8.1 meets 460; the half
+hour goes to the two readings of (c). (b) THE MOVING BODY'S LENGTH IS
+NOT THE MISSING 0.04: the passage is the RETURNING TRAIN'S length over
+the closing speed, not the body's length; at rest 168 / 0.573 = 293
+(the body and the train are 168 by the file's construction alone); on
+the move the reflected train is 268 on the board (the Lorentz
+reflection, 168 D) at the closing speed 0.823, the passage 326, the
+click at its half 163, the tick 388 + 163 = 551; the body's 104 Nodes
+never enter, since the front face books the whole train as it enters
+and the back face books nothing (the cut). So the reading 532.4 +- 5.7
+is 3.3 standard errors below 551 on the tick, 1.6 on the ratio, and
+the missing 18 intervals are either the reflected train's length
+(238 in place of 268, 11 percent shorter) or the click's mean
+fraction of the passage (0.44 in place of 0.5). (c) THE TWO GAMEBOARD
+READINGS DECIDE, as 9.75 (3): the returning train's length in Links on
+the board, and the mean fraction of its passage at which the click
+comes. The suspect is the moving mirror on the lattice: Nature24's
+0.735 of the norm after the reflection against the continuum's 0.392
+(9.74 (3)) already says the hopping gap slab does not reflect as a
+continuum mirror, and a reflected train whose norm is off is a train
+whose length is off; the seam of 9.67 (1) (the declared hop does no
+work) is where it sits. Not a pin; the direction holds (1.16 against
+1.0), and the number waits on the two readings.
