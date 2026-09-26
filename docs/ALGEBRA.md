@@ -17883,6 +17883,23 @@ as written here.
    of reading (what counts as a measurement), in the documents and the
    generators, never in a step. The one keys table of 9.90 (6) is this
    dictionary's index in the loader: a key read and not here fails.
+   EVERY ATTRIBUTE IS AN OPERATION OF THE ALGEBRA (the model owner,
+   2026-09-26: "there are no attributes without an algebraic operation;
+   families too, all under the algebra"): the shape is a representation
+   (parts: the trivial, the vector and the symmetric-pair representation
+   of the cube group, section 1.1 and 9.78 (1); phase: a real level or the
+   pair that rotates, 9.4; pair: the operator's mass term, the rotation at
+   k = 0, 9.62 (1); the internal representation: the generators of U(n)
+   and their tables, 9.88 (7) (i), 9.101); a read is a coefficient of the
+   Node's quadratic form (the pace, 9.78 (4)); a hold and a source are the
+   load's verb, an addition into the state vector (9.45 (2), 9.71 (1)
+   (b)); the self-source a polynomial term of the form (9.78 (3)); a click
+   the projection of the record onto the representation, Born's rule
+   (9.25 (3), 9.88 (8)); a sign the charge of the pair's U(1) (9.101); a
+   lifetime a click at a border. An attribute with no section is refused
+   by the keys table, which is how "all under the algebra" is enforced
+   (9.90 (6): a flag is a number the algebra names; with no section it
+   does not exist).
 
 2. **The steps of the engine (generic verbs), in the interval's order.**
 
