@@ -644,6 +644,8 @@ The owner's word: everything the owner and the Boss close on the way of work ent
 6. The trace (record 2187): any primitive can write one line per interval, Node and Port, with the integers read and written and the remainder. The files choose what is traced. A traced run is bit for bit the untraced one. Anyone may run the engine locally and debug with it.
 7. A new word: it enters the glossary (Highlights 5.6) with its definition before it is used (Highlights 0.2 (2)). The Boss adds it with the record of the owner's word. Words already taken are not reused: a field is one family's levels over the Nodes, an attribute is never called a field, and an experiment is never called a row (records 2182, 2189).
 8. Every attribute is algebra. Each has a small test of its own, and the run tests the whole (record 2184).
+9. The output is generic like the input (record 2191). Every reading the run writes is declared in the world file and labelled by its kind; one output format for every experiment; the visualizer reads the output alone, never the engine's state.
+10. The pins are outside the code (record 2191). A pin is a line of a pins file beside the world file, on a detector reading only; one generic reader outside the engine compares a run's output with it after the run; the engine never reads a pin. Nothing is compared against a pin before the Go.
 
 ## Tools and authority
 
