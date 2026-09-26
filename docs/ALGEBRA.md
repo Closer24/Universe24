@@ -15626,13 +15626,16 @@ twist_table; the generator's working amplitude, a number of the
 generator and not of the law, goes to the start file or is derived
 from A by a stated rule.
 
-### 9.95 The holds' factors derived: (1, 4, 2) for gravity and (1, 1) for the charge from the rule and its own Lorentz symmetry, nothing from nature (the model owner's question of 2026-09-26, "can we reach Lorentz, Einstein's special and general relativity from our formulas alone, without assuming them?", and his word "go for it")
+### 9.95 The holds' factors derived: (1, 4, 2) for gravity and (1, 1) for the charge from the rule and its own Lorentz symmetry, with the linear form's structure assumed (record 2132 fix 4) (the model owner's question of 2026-09-26, "can we reach Lorentz, Einstein's special and general relativity from our formulas alone, without assuming them?", and his word "go for it")
 
 **(1) THE QUESTION AND THE ANSWER.** Until now the factors (1, 4, 2)
 on the body's three writes (9.78 (2)) and (1, 1) on the charge's two
 were "nature's once": numbers in the universe file taken from the
 linear form of Einstein's equations. Here they are derived. The inputs
-are four, none of them a number of nature: (I) the rule 9.57 (1); (II)
+are four, none of them a number of nature, and two of them a form of
+nature's, said here (record 2132 fix 4): 9.56 (7) designed the rule's
+clock factor to give beta = gamma = 1, and (III) with (IV) assume the
+trace-reversed linear form of Einstein's equations: (I) the rule 9.57 (1); (II)
 its long-wave symmetry, DERIVED in 9.67 (1): the rule is the wave
 equation with one pace c_l = 1 / sqrt 3 for every family, invariant
 under the Lorentz boosts of that pace, gamma (the Lorentz factor) = 1 /
@@ -15698,8 +15701,10 @@ of R carry the weights on the raw levels
   i part:  2 v . f_t,               weight 2     (the cross term's two slots),
   ij part: v v : f,                 weight 1     (one slot, no trace),
 
-and the term (1/2) f_ii is the trace's static piece that the ruler
-carries (the scalar in every axis's pace, 9.78 (4)'s "1 - 4 U"). With
+and the ruler's piece is -(1/2) tr f eta_ij v^i v^j = +(1/2) f_tt v^2
+for a static source (f_ii = K s v_s^2 is a source term, zero at rest;
+record 2132 fix 8), the scalar in every axis's pace, 9.78 (4)'s "1 - 4
+U". With
 f = K s (1, v_s, v_s v_s) and c / Gamma = 2 U the potential R / Gamma
 reads U - 4 U (v . v_s) + 2 U (v . v_s)^2 in sign and size. The engine's
 contraction (9.78 (4)) reads the three parts with the weights (1, -1,
@@ -15717,32 +15722,33 @@ v_s); the one Lorentz scalar of a vector and a worldline is u . A = A_t -
 v . A, one slot and no trace, so the factors are (1, 1): Maxwell's, as
 9.78 (2) has them, now derived.
 
-**(5) THE DIPOLES, CORRECTED.** The same source rule fixes a spinning
-body's write. A body at rest with spin S (its angular momentum in
-quanta of action) has the current density (1/2) curl (S delta), the
-half because S is half the first moment of the current; on the
-GameBoard the derivative of a point source along axis j is the pair of
-weights -sigma / 2 at the Node sigma e_j (the central difference: a
-unit dipole is +1/2 at -e_j and -1/2 at +e_j), so the current's i
-component at the Node sigma e_j is sigma (S x e_j)_i / 2, and with the
-vector's factor 4 the WRITE is
+**(5) THE DIPOLES, CORRECTED, AND THE CORRECTION WITHDRAWN (record
+2132 fix 1).** The same source rule fixes a spinning body's write. A
+body at rest with spin S (its angular momentum in quanta of action)
+has the current density (1/2) curl (S delta), the half because S is
+half the first moment of the current; on the GameBoard the derivative
+of a point source along axis j by the central difference is -sigma / 2
+at the Node sigma e_j, so curl (S delta) at sigma e_j has the i
+component (sigma / 2)(S x e_j)_i and the current's is (sigma / 4)(S x
+e_j)_i; with the vector's factor 4 the WRITE is
 
-  gravity i at the body's Node + sigma e_j:  += 2 sigma (S x e_j)_i,
+  gravity i at the body's Node + sigma e_j:  += sigma (S x e_j)_i,
 
-twice 9.78 (2)'s and 9.91 (3)'s "sigma (S x e_j)_i". For the charge the
-moment mu is the first moment of the current itself (no half), the
-current at sigma e_j is sigma (mu x e_j)_i, the factor 1, so the write is
+9.78 (2)'s and 9.91 (3)'s line as written. For the charge the moment
+mu is the first moment of the current itself (no half), the current
+at sigma e_j is (sigma / 2)(mu x e_j)_i, the factor 1, so the write is
 
-  charge i at the body's Node + sigma e_j:  += sigma (mu x e_j)_i,
+  charge i at the body's Node + sigma e_j:  += (sigma (mu x e_j)_i) div 2,
 
-twice 9.78 (2)'s "div 2". Both earlier lines carried the half twice.
-THE ROW THAT DECIDES is 9.78 (9) (h) as designed: a spinning body on one
-Node against a ring of moving bodies of the same angular momentum; the
-ring's field comes from the moving bodies' writes 4 s v alone, so the
-ring is the derivation's own witness, and a spinning body written with
-the old coefficient would drag at half the ring's rate. The correction
-enters the one stroke's commit 2 (9.91 (10)); the sense of sigma stays
-the row's.
+9.78 (2)'s "div 2" as written. My first version of this item doubled
+both (it counted the central difference's half once where it enters
+twice); the Boss's reviewer caught it with the ring check (four bodies
+at +-e_x and +-e_y write 4 s w with these lines, 8 s w with the doubled
+ones), and the doubling is withdrawn; The 3's commit 2, which built
+these lines, stands CONFIRMED. THE ROW THAT DECIDES stays 9.78 (9)
+(h): a spinning body against a ring of moving bodies of the same
+angular momentum, the ring's field from the moving bodies' writes 4 s
+v alone.
 
 **(6) WHAT IS NOW ASSUMED, AND WHAT IS NOT.** Assumed: the rule 9.57
 (1) and the engine's construction (one rule for every component, the
@@ -15809,6 +15815,16 @@ naming the Port. (d) THE VALUE FOR THE CHECK ROWS: theta_unit as
 above; the tables generated once into the universe file's integers
 block by the generator, checked by the loader (every identity, every
 angle).
+
+(c) ON Lambda_v = Lambda (record 2132 fix 9): it holds at first order
+in v. At order v^2 the charge's scalar d enters the pace squared (9.57
+(1)) and so acts as a metric term would; that is the rule's own reading
+and a row's prediction (a fast charged record in a static charge
+field, its dilation read against Lambda d v^2), not a declaration. THE
+SIGN: the source's q gives d and A_a their sign together; a reader of
+charge q reads + q Lambda d in its scalar pace (like signs a hill, 9.57
+(1)) and - q Lambda (n . A) div W on the vector part (9.78 (4)), so
+like charges moving together repel less, as in nature.
 
 **(3) P_0 AND THE TOOLS' QUANTA.** The count s = M P_0 div P (9.51 (3))
 is the body's energy in units of 1 / interval when P_0 = 1: a quantum's
@@ -15881,9 +15897,9 @@ this order sits in the reading.
 
 **(3) THE VALUE OF P_2 FOR THE PARTS THE PACE DOES NOT CARRY, computed
 from the engine's units.** The waves' parts (gravity's vector and
-tensor) enter no reader's pace quadratically, so their own energy is
-not in any reading and the self-source is the only place it can
-gravitate. Its weight is fixed by one requirement, the same as 9.95's:
+tensor) enter a reader's paces (the tensor's diagonal through p_a, 9.91 (2)),
+but their own energy enters no source, and the self-source is the only
+place it can gravitate (record 2132 fix 7). Its weight is fixed by one requirement, the same as 9.95's:
 the field's energy gravitates with the coupling of matter's. THE
 UNITS: a record's conserved form I is its energy in units of one over
 an interval (9.94 (4): the norm T is one period's action, T = E P, and
@@ -15901,15 +15917,18 @@ shipped worlds: HOST reading of the files), and
   P_2 = 12 x 1000 x E_1 / w_6,
 
 a number the loader computes from Gamma, P_0 and the form, about 10^17
-at Gamma = 10^4. Nothing of nature enters. ITS EFFECT: the six squared
+at Gamma = 10^4 (E_1 and w_6 are HOST readings of the universe file,
+printed by the loader; the estimate used E_1 about 1.7 x 10^20 and w_6
+about 2 x 10^7). No number of nature enters; the linear form is assumed
+as in 9.95. ITS EFFECT: the six squared
 differences of any field on the GameBoard at A = 2^20 sum to at most 6
-(2 A)^2 = 2^45 = 3.5 x 10^13 per Node, and 3.5 x 10^13 div 10^17 = 0:
+(2 A)^2 = 2.64 x 10^13 per Node, and 2.64 x 10^13 div 10^17 = 0:
 the self-source is exactly zero in integers at every Node of every
 shipped world. So the computed P_2 is bit for bit with P_2 = 0 today,
 the term costs nothing (a quotient that is 0 is not evaluated), and
 the loader's bound P_2 >= 24 A holds by a factor of 4 x 10^9. The
 waves' energy would first move a level when a wave's amplitude reaches
-sqrt(10^17 / 6) = 4 x 10^8, four hundred times A: nature's waves at
+sqrt(10^17 / 6) = 1.3 x 10^8, one hundred and twenty times A: nature's waves at
 10^-20 of a level are as far below it as 9.78 (3) said.
 
 **(4) THE STRONG FIELD IS THE RULE'S OWN.** With the field linear and
@@ -15920,10 +15939,12 @@ by the rule and by nothing declared: a clock body's rate sqrt(1 - 2 U
 where the loader's guard p > 0 refuses the world: the rule has no
 horizon and no interior. Against Einstein in isotropic coordinates,
 whose clock is (1 - U / 2) / (1 + U / 2) and whose light speed is (1 -
-U / 2) / (1 + U / 2)^3, the two agree through second order and part
-at the third: at U = 0.1 the clocks differ by 0.1 percent and light by
-2.5 percent; at U = 0.3 the clocks by 3.7 percent (0.762 against
-0.735) and light by 28 percent (0.40 against 0.56). THE ROW that reads
+U / 2) / (1 + U / 2)^3, the clocks agree through second order and part
+at the third, and light parts at the second (Einstein's 1 - 2 U + 2.25
+U^2 against the rule's 1 - 2 U; record 2132 fix 6): at U = 0.1 the
+clocks differ by 0.1 percent and light by 2.5 percent; at U = 0.3 the
+clocks by 3.0 percent (0.762 against 0.739) and light by 28 percent
+(0.40 against 0.56). THE ROW that reads
 it: a deep well at U = 0.3 at the reading Node (a body of count s = 6000
 on a chain, c / Gamma = 0.6), a clock body and a light clock with a
 declared arm across it, in check mode against both closed forms; and
@@ -16039,21 +16060,30 @@ record at the wave number K whose group pace is the row's v (9.94
 (6)), and the reading of the momentum is the centroid's drift. The
 spin is not declared: the generator writes the winding.
 
-**(4) THE SOURCE FROM THE RECORD, in the rule's integers.** For a body
-of count s with the record a on its support: the t part writes s at
-every Node of the support as today (bit for bit at rest). The vector
-part at Node i along axis a: 4 s J_a(i) div F, with J_a(i) the
-record's current through the Port along a (wall x (now_j before_i -
-before_j now_i), the booking's quantity) and F the record's form
-summed over the support, the remainder on the body; for the moving
-mode J / F is v distributed over the support, so the sum over the
-support is 4 s v as 9.91 (3) writes it. The tensor part: 2 s T_ab(i)
-div F with T_ab the form's axis product ((a_{+a} - a_{-a})(a_{+b} -
-a_{-b}) div 4 at the Node, the stress of a wave). A free record (one
-quantum) sources by the same lines with s = 1 div (1000 P) = 0 in
-integers: light gravitates by nothing readable, as 9.97 (3) says.
-Every term is products of levels at the Node and its six neighbours
-and one division with a remainder: the three tests hold.
+**(4) THE SOURCE FROM THE RECORD, in the rule's integers, LOCAL (record
+2132 fix 3; the first version summed the form over the support and kept
+one remainder per body, which fails LOCALITY-1, and its tensor was
+nonzero at rest).** For a body of count s with the record a on its
+support: the t part writes s at every Node of the support as today. At
+a Node i, F_i is the record's form at the Node alone (its quadratic in
+its six differences and its time term, 9.97 (3)) and J_a(i) its
+current through the Port along a (wall x (now_j before_i - before_j
+now_i), 9.19 (3)); the vector part at i along a is 4 s J_a(i) div F_i,
+the remainder on the record at i; the tensor part at i is 2 s J_a(i)
+J_b(i) div F_i div F_i, two divisions with their remainders at i, the
+current's product and not the differences' product, so that it is 0
+wherever the current is. Every term reads the Node and its six
+neighbours and nothing else, and nothing is summed over the support.
+AT REST a standing mode has J = 0 up to the seed's rounding, so the
+vector and tensor parts are 0 wherever 4 s |J_a(i)| < F_i: the check is
+bit for bit with today's hold at rest under that condition, which
+Nature24's item 7 (record 2134) reads on the engine. For the moving
+mode J_a(i) / F_i is v_a at every Node of a plane wave and near it on a
+packet, so the writes read 4 s v and 2 s v v Node by Node, and the sum
+over the support is 9.91 (3)'s only for a packet of one wave number. A
+free record (one quantum) sources by the same lines with s = 1 div
+(1000 P) = 0 in integers. Whether this local source keeps the moving
+Lorentz rows is not shown here; it is Nature24's item 7.
 
 **(5) THE STAGES, each gated.** (a) The moving body as its record: the
 generator writes the mode times the character; the hop rule reads the
@@ -16090,26 +16120,38 @@ no motion rule of any kind: a chain of 2600 Nodes, a matter packet
 [800, 809] at rest (a Gaussian envelope of width 40 Nodes at the
 amplitude 2^16, its standing rotation as its before level), in a
 content that rises by g = 1 per Link (U from 0.05 to 0.18), 3000
-intervals. The algebra's prediction for the fall, from the rule's own
-dispersion (9.95 (2): the rest rotation's dependence on the pace gives
-d k / d t = omega_0 g / (2 Gamma), the group pace gives the rest):
+intervals. The algebra's prediction for the fall, from the rule's own clock and
+light speed (9.97 (4)): a slow bound record has the energy omega_0
+n(x), n = sqrt(1 - 2 U + 2 U^2) the clock rate, and the effective mass
+omega_0 n / c(x)^2 with c = (1 - 2 U) c_l the light speed; the force
+-d(omega_0 n)/dx over that mass gives a = c^2 (-n'/n) = c_l^2 U' (1 -
+2 U)^3 / (1 - 2 U + 2 U^2), so with c_l^2 = 1 / 3 and U' = g / (2 Gamma)
 
-  a = (num / den) g / (6 Gamma) = 1.65 x 10^-5 Links per interval^2,
+  a = (num / den) g / (6 Gamma) x 2 (1 - 2 U)^3 / (1 + (1 - 2 U)^2)
 
-which is Newton's a = c_l^2 dU / dx with c_l^2 = 1 / 3 (9.59 (5)).
-READ: the control (g = 0) does not move, the centroid at 600.00 at
-every interval; with g = 1 the centroid falls toward the content,
-600.0, 599.3, 604.7, 627.4 at t = 0, 1000, 2000, 3000, and the
-acceleration read by second differences over windows of 500 intervals
-is 0.85, 1.16 and 1.06 of the prediction at t = 1500, 2000 and 2500
-(the first window, 0.34, is the start's transient: the packet begins at
-rest and takes its momentum from the gradient). So the rule alone
-moves a bound record as the algebra says, at the predicted
-acceleration within a tenth (the windows and the packet's spreading),
-and the equations of motion coded in item 10 are redundant with it;
-the script is `fall_from_rule_check.py` in the session's scratchpad,
-and the row for the engine is the same packet under the stable engine
-in check mode. This is the evidence for (2)'s row on item 10.
+at the packet's U; at U = 0 this is Newton's a = c_l^2 dU / dx (9.59
+(5)), and at the packet's U = 0.08 the factor is 0.695, a = 1.15 x
+10^-5 Links per interval^2. (My first version omitted the factor and
+read the centroid of now^2 at single instants, a measure the phase
+gradient across the packet biases; the Boss's reviewer found both,
+record 2132 fix 2.) READ on the amplitude envelope, (now^2 - 2 now
+before cos omega + before^2) / sin^2 omega with the local omega, a
+GameBoard reading of the host: the control (g = 0) stays at 600.00 at
+every interval; with g = 1 the centroid runs 600.0, 605.5, 622.0, 649.4
+at t = 0, 1000, 2000, 3000, and the acceleration by second differences
+over windows of 500 intervals is 0.96 to 0.94 of the prediction from t
+= 500 on at the width 40, and 0.99 to 0.97 at the width 80 (the
+shortfall is the packet's width; a packet spreads, its rms width from
+28 to 93 Nodes in 3000 intervals at the width 40, from 57 to 71 at
+80). So the rule alone moves a bound record at the predicted
+acceleration within five percent, and the equations of motion coded
+in item 10 are redundant with it; the script is
+docs/designs/fall_from_rule/fall_from_rule_check.py, and the row for
+the engine is the same packet under the stable engine in check mode,
+its blind value the line above at the packet's U with a five-percent
+band at the width 80. This is the evidence for (2)'s row on item 10, in
+one dimension for the scalar; the vector rows and three dimensions are
+Nature24's items 1 to 5 of record 2134.
 
 ### 9.99 The families derived in structure: the symmetric algebra of the four directions, and why the tower stops at gravity (the model owner's question of 2026-09-26, "can you think of something that derives the unification?", and his word "write it all")
 
@@ -16134,12 +16176,15 @@ a polynomial of degree 2 in u. The fields that can couple at each
 degree are exactly the symmetric tensors of that degree over the four
 directions: Sym^0 = 1, Sym^1 = 4, Sym^2 = 10. Under the cube's group
 G_48, which fixes t and permutes x, y, z with signs, these split as 1;
-1 + 3; 1 + 3 + 6: matter's one component, the charge's [1, 3],
+1 + 3; 1 + 3 + 6, the 6 itself 1 + 2 + 3 under the cube group (two
+singlets in Sym^2, the time part and the spatial trace; record 2132
+fix 5): matter's one component, the charge's [1, 3],
 gravity's [1, 3, 6] (9.86 (2)), the parts as built. So the counts 1, 4,
 10 and their split into parts are not chosen: they are the degrees of
 one algebra.
 
-**(3) WHY IT STOPS AT DEGREE 2: THE RULE'S ORDER.** The rule 9.57 (1)
+**(3) WHY IT STOPS AT DEGREE 2: A DECLARATION, WITH THE RULE'S ORDER AS
+ITS REASON (record 2132 fix 5).** The rule 9.57 (1)
 is of second order: two levels in time, the six neighbours once, and
 the pace entering as its square. Its long-wave form is the wave
 equation, a quadratic form in the record; the Lagrangian of a body in
@@ -16149,7 +16194,12 @@ symmetric tensor of rank at most 2. A rank-3 field (Sym^3 = 20
 components, a massless spin 3) would need a cubic kinetic term, which
 the rule does not have. So gravity is the top of the tower because
 the rule is of second order; nature shows no massless field above
-spin 2, and here that is a consequence.
+spin 2, and here that is the reason for the declaration. The argument
+is by analogy and not a derivation: a massless field of any rank has a
+second-order equation, a worldline couples to h u ... u of any rank,
+and the geodesic Lagrangian's being quadratic presumes the rank-2
+metric; so the stop at degree 2 is declared, with this reason (the
+Boss's reviewer, record 2132).
 
 **(4) THE COUPLINGS ARE THE READER'S OWN NUMBERS.** Degree 0 couples
 by the record's mass (its own pair), degree 1 by its charge q, degree
@@ -16176,17 +16226,18 @@ engine, as it is a hypothesis in nature's physics, and the rule does
 not choose it.
 
 **(7) ASSUMED, FINALLY.** The rule 9.57 (1). Three degrees of one
-algebra, which the rule's order fixes. The internal group, declared.
+algebra, the stop at 2 declared with the rule's order as its reason
+((3), record 2132 fix 5). The internal group, declared.
 Nothing else: no number, no factor, no version.
 
 ### 9.100 The day's closure, for the Boss's independent review (the model owner's word of 2026-09-26: "write all we did and talked, the unification, the rule, the families' unification, and send it to the Boss to review independently and approve, and everything proceeds as we talked")
 
 **(1) WHAT WAS DERIVED TODAY, one line each, with the place to check.**
-- 9.95: the holds' factors (1, 4, 2) and (1, 1) from the rule, its own Lorentz symmetry, one normalisation per family and the reading as a Lorentz scalar; the trace's 1/2 from the rule's light-to-matter ratio 2. CHECK: (2) (a), (b) and (3), (4) step by step; the dipoles' doubling in (5).
+- 9.95: the holds' factors (1, 4, 2) and (1, 1) from the rule, its own Lorentz symmetry, one normalisation per family and the reading as a Lorentz scalar; the trace's 1/2 from the rule's light-to-matter ratio 2. CHECK: (2) (a), (b) and (3), (4) step by step; the dipoles' doubling in (5), WITHDRAWN by record 2132 fix 1.
 - 9.96 (2) (b): Lambda_v = Lambda, from the same reading. CHECK: the (1, 1) of 9.95 (4).
-- 9.97: P_2 = 0 for gravity's t part by the rule's own second order (beta = 1 exactly); P_2 for the waves' parts computed from the units, about 10^17, zero in integers at every Node; the strong field the rule's own, its departure from Einstein's isotropic form at third order (3.7 and 28 percent at U = 0.3). CHECK: (2)'s identity (1 + (1 - 2 U)^2) / 2 = 1 - 2 U + 2 U^2; (3)'s bound 2^45 div 10^17 = 0; (4)'s two closed forms.
-- 9.98 (7): the rule alone moves a body at the predicted acceleration (num / den) g / (6 Gamma), within a tenth; the control does not move. CHECK: rerun `fall_from_rule_check.py` (the session's scratchpad; to be committed under tools/ by Nature24 as the row's script).
-- 9.99: the three families are the degrees 0, 1, 2 of the symmetric algebra of the four directions; the tower stops at 2 by the rule's order. CHECK: Sym^k(4) = 1, 4, 10 and their G_48 splits 1; 1 + 3; 1 + 3 + 6.
+- 9.97: P_2 = 0 for gravity's t part by the rule's own second order (beta = 1 exactly); P_2 for the waves' parts computed from the units, about 10^17, zero in integers at every Node; the strong field the rule's own, its departure from Einstein's isotropic form at third order (3.0 and 28 percent at U = 0.3, record 2132 fix 6). CHECK: (2)'s identity (1 + (1 - 2 U)^2) / 2 = 1 - 2 U + 2 U^2; (3)'s bound 2.64 x 10^13 div 10^17 = 0; (4)'s two closed forms.
+- 9.98 (7): the rule alone moves a body at the predicted acceleration (num / den) g / (6 Gamma) times 2 (1 - 2 U)^3 / (1 + (1 - 2 U)^2) at the packet's U, within five percent on the envelope (record 2132 fix 2); the control does not move. CHECK: rerun `fall_from_rule_check.py` (the session's scratchpad; to be committed under tools/ by Nature24 as the row's script).
+- 9.99: the three families are the degrees 0, 1, 2 of the symmetric algebra of the four directions; the tower's stop at 2 declared with the rule's order as its reason (record 2132 fix 5). CHECK: Sym^k(4) = 1, 4, 10 and their G_48 splits 1; 1 + 3; 1 + 3 + 6.
 
 **(2) WHAT WAS DECIDED TODAY BY THE OWNER, one line each.** No named
 law and no version anywhere (9.90 (1)). The one keys table (9.90 (6)).
@@ -16375,7 +16426,9 @@ as written here.
     doublet and stops at degree 2: the internal objects are the
     degree-0, degree-1 and degree-2 objects over the two levels, and
     nothing of degree 3. This is derived exactly as far as 9.99 is: on
-    the one premise and the rule's order.
+    the one premise and the rule's order; and since 9.99 (3)'s stop is
+    a declaration with that reason (record 2132 fix 5), this stop is
+    the same declaration.
     (c) The common phase is one: the degree-0 internal object is the
     scalar rotation of every pair, and there is one family that
     sources it, the charge (one family per degree, 9.99 (5)); every
@@ -16469,3 +16522,72 @@ as written here.
     of numbers and nothing else. The owner's question "one number or
     several" has this answer: several, of three kinds, and every one
     of them is a number nature has not derived either.
+
+### 9.102 The nine fixes of the Boss's independent review (record 2132 of 2026-09-26), one answer each, and where each is written
+
+1. The dipoles (9.95 (5)): the reviewer is right; the doubling is
+   withdrawn. The central difference gives sigma (S x e_j)_i / 4 for
+   the current, and with the vector's factor 4 the write is sigma (S x
+   e_j)_i, 9.78 (2)'s line; the charge's write keeps its div 2. The
+   ring check (4 s w against 8 s w) is the witness. Written in 9.95
+   (5); The 3's commit 2 stands CONFIRMED and my NOT CONFIRMED line on
+   its dipole coefficients is withdrawn.
+2. The fall (9.98 (7)): the reviewer is right on both counts. The
+   factor 2 (1 - 2 U)^3 / (1 + (1 - 2 U)^2) follows from 9.97 (4)'s
+   clock and light speed (the force on the energy omega_0 n over the
+   mass omega_0 n / c^2), 0.695 at the packet's U = 0.08; measured on
+   the amplitude envelope the acceleration is 0.96 to 0.94 of it at
+   the width 40 and 0.99 to 0.97 at the width 80, steady from t = 500,
+   the controls at 600.00 (my rerun, a host check). Written in 9.98
+   (7) and in the script under docs/designs/fall_from_rule/; the
+   falling row's blind value is the line with the factor, a
+   five-percent band at the width 80.
+3. The source from the record (9.98 (4)): the reviewer is right; the
+   sum over the support and the body-wide remainder fail LOCALITY-1,
+   and the differences' tensor is nonzero at rest. Redesigned in 9.98
+   (4): the form F_i and the current J_a(i) at the Node alone, the
+   vector 4 s J_a(i) div F_i and the tensor 2 s J_a J_b div F_i div
+   F_i with the remainders at the Node, 0 at rest wherever the current
+   is 0; whether it keeps the moving rows is Nature24's item 7.
+4. "Nothing from nature" (9.95, 9.97, 9.100): the phrases are replaced
+   by what was designed in: 9.56 (7) designed the clock factor to give
+   beta = gamma = 1, and 9.95's inputs (III) and (IV) assume the
+   trace-reversed linear form. Written in 9.95's title and (1) and in
+   9.97 (3).
+5. The tower's stop (9.99 (3)): the reviewer is right; the argument is
+   an analogy. The stop at degree 2 is relabelled a declaration with
+   the rule's order as its reason, in 9.99 (3) and (7), 9.100 (1) and
+   9.101 item 10 (b); the split of the spatial 6 into 1 + 2 + 3 under
+   the cube group (two singlets in Sym^2) is written in 9.99 (2).
+6. The strong field's numbers (9.97 (4)): Einstein's clock at U = 0.3
+   is 0.739 and the departure 3.0 percent; light parts at second
+   order (1 - 2 U + 2.25 U^2 against 1 - 2 U). Corrected in 9.97 (4)
+   and 9.100 (1).
+7. The arithmetic of 9.97 (3): 6 (2 A)^2 = 2.64 x 10^13 and sqrt(10^17
+   / 6) = 1.3 x 10^8, one hundred and twenty times A; E_1 and w_6 are
+   named as HOST readings of the universe file that the loader prints
+   (the estimate used E_1 about 1.7 x 10^20 and w_6 about 2 x 10^7),
+   so the value near 10^17 is checked when the loader prints them; the
+   sentence on the paces is corrected: the tensor's diagonal enters
+   the paces p_a (9.91 (2)), and what enters no source is the waves'
+   own energy. Corrected in 9.97 (3).
+8. The ruler's U v^2 (9.95 (4)): the reviewer is right; it is -(1/2)
+   tr f eta_ij v^i v^j = +(1/2) f_tt v^2 for a static source, and f_ii
+   = K s v_s^2 is a source term, zero at rest. Corrected in 9.95 (4).
+9. Lambda_v = Lambda (9.96 (2)): holds at first order in v; at order
+   v^2 the charge's scalar enters the pace squared and acts as a
+   metric term would, the rule's own reading and a row's prediction;
+   the sign convention between d and A is written (+ q Lambda d on the
+   scalar pace, - q Lambda (n . A) div W on the vector). Written in
+   9.96 (2) (c).
+10. The three things also named for 9.98 (6): the well's hop by a
+    per-body centroid tally is HOST work and the one seam by name
+    (9.98 (2)); whether the recoil as a phase gradient near 10^-8 per
+    Link survives in integers is untested and is Nature24's item 6;
+    the evidence of 9.98 (7) covers the scalar in one dimension, and
+    three dimensions, the dragging, the Lorentz force, the precession
+    and the orbit are Nature24's items 1 to 5 of record 2134.
+11. What proceeds, as record 2135 orders: The 3 builds the wall,
+    commit 4, the four-vector click without the recoil, and commit 7;
+    9.98 (5)'s stages wait for Nature24's verdicts and the owner's
+    word on the closed plan.
