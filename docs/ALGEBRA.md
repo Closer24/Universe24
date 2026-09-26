@@ -16332,7 +16332,40 @@ peak swings 2 x 10^4 to 1.6 x 10^5 and the width 4 to 17 Links over
 sloshes; the generator must iterate the rule's own rest step (9.94)
 until the profile is stationary to the residual the row needs, a host
 fix outside the engine; under form (i) the profile is the soliton's,
-found by the same iteration on the rule with P_m.
+found by the same iteration on the rule with P_m. (g) ITEMS 4 TO 6
+(Nature24's message of 09:20Z). ITEM 5, the winding, WORKS as a
+holding: the standing mode times the winding m = 1 keeps its angular
+momentum reading within a tenth over 1500 intervals in a well of side
+9 at [800, 850]; a well of side 5 binds no wound state (the pattern
+leaks); the wound pattern turns at 0.290 per interval against the
+s-like mode's 0.252, the sector's own level, as (9) (c) says; so a
+body with a winding declares a well of side 9 at least, and the
+check-mode worlds' A takes that side; the precession waits on item 4.
+ITEM 6, the recoil as a rotation at each click, FAILS AT THE WRITE:
+one click's phase gradient (7.6 x 10^-8 per Link at s = 2000 and
+lambda_q = 21, by 9.96 (3)) changes no integer of the record at 2^17
+or at 2^20; the first integer changes near 10^-5 per Link; the rule's
+remainders carry only what was written. MY LINE: the recoil is
+written where sub-unit angles already live, the Port's angle
+accumulator of 9.96 (2) (e): at the click, each Port of the record
+along the recoil's axis gains the recoil's angle per Link, k_q div M
+in units of theta_unit (about 200 units per click at s = 2000), added
+to its rho; the transport then applies the table's triple when rho
+reaches K_0 (after about eight hundred such clicks at that s), a
+persistent step of the record's phase across that Link, a momentum
+kick of one table unit; the mean momentum over clicks is exact, the
+store is a remainder of the state already declared (9.91 (1)), local
+to the Port, and not a new register; the momentum of a body is then
+its phase gradient plus its Ports' sub-unit angle remainders, read by
+the same clicks as the residue ladder is. Under form (i) the
+self-bound record moves with that gradient; under form (ii) the drive
+keeps the momentum label and this line is not needed. ITEM 4, the
+vector part, NEEDS the twist table's form of 9.96 (2) (e), on the
+Boss's word; no run yet. THE SUM of the seven, Nature24's words: the
+rule alone does the fall, holds a winding and reads a local source;
+beyond the rule and the click it needs a body that can move (items 2
+and 3, the fork of (c)), a store of the clicks' momentum (item 6, the
+Port accumulator above), and the transport's table (item 4, (e)).
 
 ### 9.99 The families derived in structure: the symmetric algebra of the four directions, and why the tower stops at gravity (the model owner's question of 2026-09-26, "can you think of something that derives the unification?", and his word "write it all")
 
