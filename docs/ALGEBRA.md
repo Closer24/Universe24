@@ -17612,3 +17612,46 @@ as written here.
    spreads from its Node, so a body held by clicks alone is a bath's
    body; in vacuum the binding holds the Nodes together (9.108) and the
    clicks hold the phase.
+
+4. **Nature24's runs of the momentum-keeping click (stroke-side 3463da19,
+   10:10Z) and his two asks; the line for 9.25 (3).** His readings: a
+   body re-created at each click as a packet of rms 3 with its K keeps a
+   speed of 0.069 over 364 clicks (the label 0.1006); a free packet of
+   rms 3 moves at 0.083 to 0.086, of rms 7 at 0.093 to 0.103, of rms 12 at
+   0.098; a body at rest walks 10 to 15 Links; two bodies of one record
+   each do not show their approach through the walk. THE ALGEBRA'S NUMBERS
+   BESIDE: the group speed averaged over a packet's momentum spread (a
+   Gaussian of rms sigma has sigma_k = 1 / (2 sigma)) at K = 0.1006 on the
+   kind [800, 850]: 0.083 at rms 3, 0.090 at rms 7, 0.091 at rms 12, against
+   v_g(K) = 0.092 for a plane wave: his free packets meet the band's
+   average within his windows. (i) THE READING OF K: the reading by the
+   current over the form, sin K = sin omega_K SUM J / I, is exact for a
+   plane wave and biased low on a narrow packet by the form's cross
+   terms: 0.094 at rms 3 and 0.100 at rms 7 for K = 0.1006 (HOST, the
+   same construction as his); his 0.069 at rms 3 is below that, so his
+   run's reading lost more (the re-created packet's own transient in its
+   first intervals). THE EXACT READING at any width is the neighbours'
+   phase difference: at each Node the pair's phase phi from (now, before)
+   with the Node's omega (now = A cos phi, before = A cos(phi - omega)),
+   and K = phi(Node + a) - phi(Node), the density-weighted mean over the
+   Links; it reads 0.1006 at rms 3, 7 and 12 exactly, since a real
+   envelope carries the whole phase difference on the pair. It is local
+   (the click's Node and its six neighbours) and an integer lookup (the
+   twist table's inverse, the nearest triple to the pair's ratio), so a
+   detector reads it at the click without a host. (ii) WHERE K LIVES:
+   between clicks in the record's own levels, carried by the rule as the
+   phase gradient of the pair, no label and no host reading; at a
+   re-creation with a width it is written as the character (9.98 (9)
+   (b)); at a re-creation on one Node it is carried by the Node's six Port
+   accumulators (item 2 (c)) until the record has width again. THE LINE
+   FOR 9.25 (3), his finding: a Link's flux is booked to the Node it
+   enters, so a click by the flux share names the Node a moving record
+   arrives at, half a Link ahead of its density's centroid (his +0.48
+   Link per click); for the engine's detectors, cubes with a wall, that
+   is one half Link at the wall, below the one-Node resolution of record
+   1894 (a click names one Node, nothing below it is claimed). A bath of
+   Node detectors that re-creates the record after each click multiplies
+   the half Link by the click rate (his 2.7 times the speed), which no
+   detector of the engine does, since a click ends the record. The wide
+   cut body (side 13) pinning after 9 Links as side 9 did is the cut's
+   snapping again (9.108 item 5); the two families' run decides.
