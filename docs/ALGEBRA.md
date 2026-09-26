@@ -18301,3 +18301,59 @@ finding for me, the run is never adjusted).
    to 5 here and of 9.111 item 7; Nature24 declares the runs and reads
    the traces against the hand checks; every reader runs the engine
    with the trace and no one but Coder 3 edits it.
+
+### 9.113 The rule first: for each row of the ledger one word, from the rule or beyond it, and for each piece beyond the rule one line on why the rule does not give it (the Boss's record 2188, the model owner: "whatever can be built with the rule, let it be built with the rule; whatever cannot, let it not be, and we will see what happens there")
+
+1. **The two words, said exactly.** FROM THE RULE means: the row is
+   the rule of 9.57 (1) itself, its coefficients, its exact
+   consequence (its conserved current, its static limit, its stability)
+   or the click (the second primitive the Boss names beside it). BEYOND
+   THE RULE means: the rule, being linear, homogeneous and reversible in
+   the levels, cannot produce it, so it is a declaration of the run's
+   files under its own name, studied on its own. Three reasons cover
+   every piece beyond: (L) the rule is LINEAR, it has no product of
+   levels; (H) the rule is HOMOGENEOUS, it moves levels and never makes
+   one from a count; (S) the rule keeps STATE at a Node alone (the two
+   levels and the remainder), nothing at a Port and no age.
+
+2. **The rows.**
+
+   | Row | The word | Why, in one line |
+   | --- | --- | --- |
+   | the pair (row 1) | from the rule | its own coefficients: cos omega_0 = num / den, the range 1 / kappa with kappa^2 = 6 den / num - 6 |
+   | parts, the degree (row 2) | from the rule | the same rule on 1, 3 or 6 components; the representation is how many copies run |
+   | the phase (row 3) | from the rule | phase 2 is the rule; phase 1 its first-order limit (9.50 (13)) |
+   | the signed read (row 4) | from the rule | p = Gamma - c + q Lambda d is the rule's own pace; the sign is the weight's sign; the guard is the rule's stability (9.108 item 12) |
+   | the twist (row 4) | beyond (S) | a rotation of the received pair by an angle kept at the Port; the rule reads the neighbours' levels with a real coefficient and keeps nothing at a Port |
+   | the hold (row 5) | the read from the rule, the write beyond (H) | the rule reads c; a count written into c is the load's verb, which a homogeneous rule does not have |
+   | the source (row 6) | the field's shape from the rule, the write beyond (H) | the static limit of the rule is (Delta - kappa^2) a = 0, the Yukawa shape; F_i div E_s added to a level is a load, as the hold |
+   | the clicks (row 7) | the click; the booking from the rule | the current num (now_i before_j - before_i now_j) is the rule's conserved current; the ladder and the record's end are the click, the one irreversible read-out (9.25 (12)) |
+   | the recoil's amount (row 7) | from the rule | the rule is translation-invariant, so its form's momentum is conserved (9.84 (1)); the taker gains what the record lost, sigma_a x k_q per quantum |
+   | the recoil's store below one integer (row 7; the Boss's second piece) | beyond (S) | k_q div M is a fraction of a hop per click; the rule keeps no accumulator at a body's Ports to carry it (9.109 item 2 (b), the KEEP word) |
+   | the lifetime (row 8) | beyond (S) | a border at an age; the rule has no age (a lowered pair gives a short RANGE from the rule, 9.88 (3), never a time) |
+   | the internal representation (row 9) | the step from the rule, the transport beyond (S) | n copies of the rule on n pairs; the generators' rotation on a Link is the twist's reason |
+   | the clicks list (row 10) | the click | the share of the products' momenta is the click's draw from the record's remainders (9.88 (4)); the rule does not choose |
+   | the hand (row 11) | beyond (L, S) | a sign of S . n on a body; the rule has no spinor and no body's spin |
+   | the self-source (row 12) | beyond (L) | a product of levels on the right side; the rule is linear |
+   | the remainders (a rule of the engine) | from the rule | the rule's own Euclidean division |
+   | the two-sided guard (a rule of the engine) | from the rule | its stability factor (S - 6 R) / w crosses -2 at p = 1.015 Gamma (9.108 item 12) |
+   | the trace (9.112 item 5) | neither: a diagnostic | it reads every word and moves nothing |
+
+3. **The three pieces the Boss names, one line each.** (a) THE WELL
+   that holds a body's Nodes together, beyond (L, H): a linear field
+   sourced by a body is a hollow or a hill by one sign at every Node,
+   so one family alone collapses the body or scatters it (9.108 item
+   8); a body is a balance of two sourced families with opposite reads
+   and different ranges (the binding [1000, 1019] and the core [1000,
+   1181], 9.108 item 7), each field's shape from the rule, the balance
+   itself a declaration under its own name and under study (its
+   corrected line 9.108 item 12, Nature24's rerun owed). (b) THE STORE
+   OF A CLICK'S RECOIL BELOW ONE INTEGER, beyond (S): as in the table.
+   (c) THE TWIST TABLE'S PRECISION, beyond (S): the rule's own rotation
+   is exact, cos omega_0 = num / den a rational of the pair; a rotation
+   by an accumulated angle through the table of triples is a rational
+   approximation whose precision is a declared integer (9.96 (2) (e)),
+   which the rule does not give, being a rotation by its own angle
+   alone. Nothing else in the ledger is beyond the rule; a new row
+   answers the same question with the same two words before it is
+   built.
