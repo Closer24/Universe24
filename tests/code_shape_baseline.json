@@ -80,9 +80,9 @@
   },
   "src/event_universe/events/detector_law.py": {
    "comment_lines": 694,
-   "docstring_lines": 679,
+   "docstring_lines": 671,
    "level_shift_sites": 15,
-   "lines": 4023,
+   "lines": 4014,
    "record_references": 44,
    "rule_arithmetic_sites": 0
   },
@@ -243,14 +243,6 @@
    "docstring_lines": 7,
    "level_shift_sites": 0,
    "lines": 29,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
-  "src/event_universe/features/signed_read/__init__.py": {
-   "comment_lines": 1,
-   "docstring_lines": 7,
-   "level_shift_sites": 0,
-   "lines": 34,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },

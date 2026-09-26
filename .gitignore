@@ -11,3 +11,7 @@ artifacts/
 .event-universe-retention/
 # Agents' git worktrees are checkouts, not repository content.
 .claude/worktrees/
+
+# the coverage tool's data file (never a repository artifact)
+.coverage
+.coverage.*
