@@ -38,7 +38,7 @@ def seated_layer(stock: int = STOCK, seats: bool = True) -> dict:
     document = layer_world(receiver=[name for _, name in PLACES])
     # the stock as the given family's content held at the body (ALGEBRA.md 9.51 (8); item 47)
     document["measured"][0]["held"] = {"light": stock}
-    document["ticks"] = stock * 60 + 300
+    document["ticks"] = stock * 250 + 300  # every giving a window and a rung (commit 7)
     if seats:
         document["measured"] = [document["measured"][0]]
         document["detectors"] = []
@@ -136,11 +136,12 @@ def test_the_loader_admits_a_seat_under_body_record_alone():
     admitted under the key and refused without it."""
     document = seated_layer(stock=2, seats=True)
     parse_nature_beam_world(document)
+    # SINCE COMMIT 7 a detector of one Node is admitted on every world (ALGEBRA.md 9.92,
+    # record 2109: several bodies on one Node each are several detectors), the lattice body's too
     lattice = json.loads(json.dumps(document))
     lattice["body_record"] = False
     lattice["input"] = input_stamp(lattice)
-    with pytest.raises(ValueError, match="record 1899"):
-        parse_nature_beam_world(lattice)
+    parse_nature_beam_world(lattice)
     pair = json.loads(json.dumps(document))
     pair["measured"].append(
         {
@@ -153,5 +154,5 @@ def test_the_loader_admits_a_seat_under_body_record_alone():
     )
     pair["detectors"][0]["positions"] = [[71, 1, 0], [72, 1, 0]]
     pair["input"] = input_stamp(pair)
-    with pytest.raises(ValueError, match="a seat is one Node and a cube three or more"):
+    with pytest.raises(ValueError, match="one Node .a body's. or a cube of three or more"):
         parse_nature_beam_world(pair)

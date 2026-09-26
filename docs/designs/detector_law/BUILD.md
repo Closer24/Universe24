@@ -4557,6 +4557,10 @@ would have found no cell.
    documents and the proper pair's table reads v = m / (3 Q M).
 
 64. THE ONE STROKE, COMMIT 4: THE CHARGE'S FOUR AT PHASE 2, THE TRANSPORT WITH
+   PROVISIONAL (the Boss's record 2153, 2026-09-26): the twist table's form was
+   held by record 2144 before this landed (the table as built meets no precision
+   below 6.3e-5 radians: every fine entry is the identity, the unit 3.8e-10; the
+   mathematician's line pending); kept as built, not reverted, not extended.
    THE TWIST TABLE AND THE TRANSVERSE BOOKING (ALGEBRA.md 9.91 (10) 4; 9.81
    (2); 9.82 (3), (4); 9.91 (1), (6); 9.96 (2)). THE SECOND LEVEL: a record of
    a phase-2 family (the charge and matter) carries the pair (re, im), each
@@ -4627,6 +4631,10 @@ would have found no cell.
    part 72), a check-mode digest.
 
 65. THE ONE STROKE, COMMIT 6: THE BODY ON ONE NODE, IN PART (ALGEBRA.md 9.91 (10)
+   PROVISIONAL (the Boss's record 2153; the owner's record 2147: motion stays as
+   built today until the closing of record 2135): the spin's step is new motion
+   code landed before the hold reached this session; kept as built, not
+   reverted, not extended; the feed and the induction stay held back.
    6; 9.91 (8) (v), (5); 9.78 (5); 9.96 (4), (5); 9.97). BUILT: (i) THE SPIN'S
    STEP (`_body_step`, after the holds at (v), from the fields as the interval
    leaves them): the spin is state on the body (`Block.spin`, `spin_before`,
@@ -4679,6 +4687,81 @@ would have found no cell.
    spins, every unit 0, no own-family giver); the moving long Lorentz clock as at
    item 64; the chain world's state digest moved by the block entry's `spin`
    alone (tests/test_massive_record.py, the events and the audit bit for bit).
+
+66. THE ONE STROKE, COMMIT 7: THE WINDOW IS THE LAW'S ONE GIVING, THE TRAIN
+   RETIRED (ALGEBRA.md 9.91 (10) 7; 9.85 (5); 9.71 (1); 9.92; the model owner's
+   records 2082 (4) and 2109; record 2102 on cancelling). BUILT: (i) THE POINT
+   EMITTER AS THE DECLARATION: no world key; every emitter gives by the window
+   at its declared `weight` (the body's rotation written into the given row at
+   its own Nodes every interval of the window, `_window_write`, the body's
+   declared write at its own Nodes of record 2082 (2): a one-Node body its one
+   Node as 9.71 (1) (b), bit for bit as before; a body of several Nodes every
+   Node), the outward norm read through the body's outer Ports
+   (`body_outward_flux`, a one-Node body's six Ports `seat_outward_flux`) until
+   it reaches the excitation's action `norm` / `norm_denominator`; the loader
+   requires `weight` and `norm_denominator` on every emitter and reads
+   `point_emitter` as RETIRED (RETIRED_KEYS, refused by name), the lattice body
+   giving by the window too (its centre's level was the seat's; `body_record`
+   stays the seat's form, folded with the words in (f)). (ii) THE GIVEN TRAIN
+   RETIRED: `train` and `given` refused by name; the loader's `_train` and
+   `_given_train`, the engine's write (`_write_given_train_cancelled`), the
+   generator's `given_train`, `train_rows`, `doppler_clock`, `doppler_factor`,
+   `train_run`, `train_passage_flux` marked CANCELLED and disconnected, not
+   deleted; tests/test_given_train.py and tests/test_doppler_train.py skipped
+   whole with the reason. (iii) ROW (iv)'S FIX (9.85 (5)): a gap slab of depth 2
+   one Link behind every one-sided emitter (`mirror_behind`), the point light
+   clock's weight g = 4 (its window read 226 against 1124 at g = 1: the return
+   off the mirror behind interferes with the write, COMPUTATION), the light
+   clocks' windows shorter than the arm's round trip. (iv) A BODY IS ITS OWN
+   DETECTOR whatever its support and a set of one Node is admitted on every
+   world (9.92; the cube rule of record 1899 the free set's). (v) EVERY TRAIN
+   WORLD RE-DECLARED: the emitter one Node at the retired train's head, so every
+   arm stands as before; on the one table's extruded chains [X, 3, 3] the chain's
+   point extruded, [1, 3, 3] (a one-Node well binds no mode across a periodic
+   cross-section of 3 x 3, the loader's check refusing it, its depth shared by
+   the nine Nodes); the kind of the beam's seat [800, 1200] (BEAM_KIND: the kind
+   [800, 813] of the point row binds no one-Node mode on the layer or across the
+   cross-section; [800, 1200] binds everywhere tried and rotates near light's
+   frequency at the retired train's k = pi / 2, so the short rows keep about
+   their wavelength 4: the layer's mode omega = 0.832 against 0.841, the extruded
+   slab's 0.664), the long rows' seat the point row's [800, 813] (the wavelength
+   about 20 for the retired 21); the seat's seed 2^12 and the weight by the
+   generator's trial (`point_weight`, the window aimed at WINDOW_PERIODS = 2
+   periods, the start weight doubled where a window does not close: a moving
+   body's at g = 1); a row's pair carries ONE declared weight, read by the trial
+   on the first of the pair (the resting clock's for the moving one, the well's
+   top's for its bottom, the dark row's source's for the bright control's: the
+   same instrument in both worlds); the light clock: g = 3, the window 21
+   intervals, P = 9; the runs' lengths from the windows read (`giving_ticks`,
+   `finish_windows`); the weights read (the window aimed at two periods):
+   redshift_top 21 and bottom 27 (g = 3), lorentz_rest 21 and moving 26, the
+   long rows (P = 35) rest 45 and moving 10, top 45 and bottom 60, bending and
+   dark g = 19 with 11 and 13 (a layer's one-Node source radiates in two
+   dimensions), the bright body g = 1 (any higher weight rises above the bound)
+   with 16 at P = 46; the runs bright 15156 and redshift_bottom_long 10558
+   intervals. THE MOVING-FRAME BOOKING (item 56, tests/test_hop_taking.py) on
+   the window's record: the front face books the norm within 0.08 and the back
+   face 0.93 of it (the one rule), the board's frame 1.63 on the back face against the
+   train's 2.27 (the envelope's, COMPUTATION). THE
+   PLACEMENT RULE of 9.25 (11) (b) (the generator's `placement_check`) reads
+   the trains and now checks nothing; the face slabs stay 32 deep. FOUND, for
+   the mathematician: a body of several Nodes writing at all its Nodes at its
+   own rotation piles the given row up inside itself about 300-fold before it
+   leaves (the resonant drive of the row at the body's frequency), so the unit
+   worlds' 32-Node emitters carry the seed 2^10 under the bound 2^22 (the bright
+   body of the dark row 2^8 under 2^20), and their sets at the body's own Nodes
+   book the light leaving the body's faces as it piles up (a click before any
+   return); the one-Node seats of the shipped clocks click on the return alone.
+   THE GATE: the stroke's suites converted (the fixtures' `train` replaced by
+   `weight` 3, the seeds lowered, the train-bound assertions rewritten to the
+   window's), the chain world's three digests moved and re-read
+   (tests/test_massive_record.py); the five worlds: boxed_clock_side_20_at_rest
+   (no emitter) BIT FOR BIT, every world with an emitter moved (the readings in
+   report 4 to the Boss). NOT BUILT HERE: the fold of the roles into the one
+   body (SeatRecord, the receiver Nodes as bodies, the words), in (f) with record
+   2128; the bending row's expectation, computed for k = pi / 2, waits for the
+   Go and the mathematician's recomputation at the seat's rotation (the file
+   unchanged).
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

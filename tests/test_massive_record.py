@@ -73,7 +73,6 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "width": 1,
         "clock_stamp": False,
         "body_record": False,
-        "point_emitter": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
         "amplitude_bound": 1 << 22,
@@ -404,11 +403,14 @@ def test_the_light_record_is_byte_identical_without_the_key():
     again at this head; SINCE THE SPIN AS STATE (ALGEBRA.md 9.78 (5), 9.91 (8) (v); the one
     stroke's commit 6, BUILD.md section 26 item 65) the state digest alone moved once more,
     by the block entry's `spin` (the events and the audit bit for bit: no shipped body
-    spins)."""
+    spins); SINCE THE WINDOW AS THE ONE GIVING (ALGEBRA.md 9.85 (5), 9.71 (1); commit 7,
+    item 66) all three moved: the chain world's emitter gives by the window at its 32 Nodes
+    at the weight 3 (its seed 2^10, the train's profile and its keys retired), every giving
+    line named at the close with the window's length."""
     assert run_chain_digests() == {
-        "events": "48af69fa57a7e158be4302795d77dabf6f673a95f49834e3940568af6f8ad170",
-        "state": "be330b22fda64f16b946ffdd1d827e2c4f2b5c2bdf9821deff22d3c70986ef5a",
-        "audit": "9c0eccc9a144d0ad506de42fe4cd7e40c409f1bcc87091017a2897c4caee1fb8",
+        "events": "1436ff63ac0669faa8eaa9ff26d2a37fb5ae1bdd18f8e1da6ae857979b1f57c3",
+        "state": "06067b37f120dfd223a9bc82aaaeca81909e5d956708e616c3ad6f0cfd27b890",
+        "audit": "9c4eb02e50596a16c05d5a1648f0a80338d460b398c51f04644158f68139790b",
     }
 
 
@@ -582,7 +584,6 @@ def block_world(
         "detector_law": True,
         "width": 1,
         "body_record": False,
-        "point_emitter": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
         "amplitude_bound": 1 << 22,
@@ -606,7 +607,7 @@ def seed_source(document: dict, number: int) -> None:
     generator = massive_generator()
     entry["seed"] = generator.mode_profile(document, number, amplitude=entry["seed"])
     if "emitter" in entry:
-        generator.given_train(document, number)
+        generator.emitter_rung(document, number)  # the window's rung (commit 7; the train retired)
     # the input stamp (record 1886): the law and the hash of the integers
     document["input"] = input_stamp(document)
 
@@ -1330,12 +1331,11 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     """The emitter of a massive kind (the matter lamp's successor, ALGEBRA.md 9.17; the Boss's
     23:32Z on the lamp verb): an emitter body of the source kind at x = 100 whose given family
     is `matter` (the kind [156, 157] with the declared clock [512, 1] on N = 1024) givings a
-    record of the matter kind, written once on its 32 Nodes at both levels as the train
-    (ALGEBRA.md 9.17 (6a)) and advanced by the rule with the kind's pair (a massive kind's
+    record of the matter kind, written by the window at its 32 Nodes (commit 7; ALGEBRA.md
+    9.85 (5), 9.71 (1)) and advanced by the rule with the kind's pair (a massive kind's
     given record is driven by nothing and completes as light's: its `driven` set empty); the
-    train TRAVELS +x: a hundred intervals after its giving its levels ahead of the body (x in
-    [140, 180)) are large and those behind it (x in [40, 90)) below a tenth of them (the
-    tapers' dispersion alone goes back, 3.9 percent in the matter family); the books balance
+    record LEAVES BOTH WAYS: a hundred intervals after its open its levels ahead of the body
+    (x in [140, 180)) and behind it (x in [40, 90)) are both large; the books balance
     at every interval; light's rows are identical with and without the matter emitter beside
     it UNTIL the matter body's content field, the family of clicks (BUILD.md section 26 item
     32), reaches a light record's support: the field spreads from the body at [100, 132)
@@ -1383,8 +1383,8 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     live = simulation.records[identity]
     ahead = int(np.max(np.abs(live.now[140:180, 0, 0])))
     behind = int(np.max(np.abs(live.now[40:90, 0, 0])))
-    # the matter train's tapers disperse more than light's: 3.9 percent behind (COMPUTATION)
-    assert ahead > 1000 and behind * 10 < ahead, (ahead, behind)
+    # SINCE COMMIT 7 the window's record leaves the body both ways (no train's way; COMPUTATION)
+    assert ahead > 1000 and behind > 1000, (ahead, behind)
     with pytest.raises(ValueError, match="clock is required: the given family 'matter' declares no"):
         parse_nature_beam_world(matter_emitter_world(True))
 
@@ -1529,8 +1529,9 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "spin": [0, 0, 0],
             "moment": [0, 0, 0],
             "pair": [800, 801],
-            "seed": 50 << 12,
-            "emitter": {"family": "light", "train": {"direction": [1, 0, 0], "periods": 8}},
+            "seed": 1
+            << 10,  # the window's writes at the body's Nodes pile up about 300-fold and stay under the bound (commit 7)
+            "emitter": {"family": "light", "weight": 3},  # the window (commit 7)
             "margin": "control",
             # the receiver by name (section 13 item 7): A's own bound set
             "receiver": "A_face",

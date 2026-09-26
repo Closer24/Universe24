@@ -37,7 +37,7 @@ import numpy as np
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.rule import rule_coefficients
-from event_universe.events.world import body_node_indices, input_stamp, parse_nature_beam_world
+from event_universe.events.world import input_stamp, parse_nature_beam_world
 from tests.test_board_properties import exchange_of, form_I
 from tests.test_detector_law import Seen, chosen_by_the_rule, spy_on
 from tests.test_emitter import emitter_world, massive_generator, reads
@@ -132,10 +132,31 @@ def run_states(document: dict, ticks: int) -> tuple[DetectorLawSimulation, list[
 
 
 def click_ticks(lines: list[dict]) -> tuple[list[int], list[int]]:
-    """The intervals of the giving clicks and of the taking clicks."""
-    giving = [line["tick"] for line in lines if line["event"] == "giving"]
+    """The intervals of the giving clicks (the windows' opens, SINCE COMMIT 7: the quantum moves
+    and the record is made at the open, the line is named at the close) and of the taking
+    clicks."""
+    giving = [line["opened"] for line in lines if line["event"] == "giving"]
     taking = [line["tick"] for line in lines if line["event"] == "gather"]
     return giving, taking
+
+
+def close_ticks(lines: list[dict]) -> list[int]:
+    """The intervals of the windows' closes (the giving lines' own ticks)."""
+    return [line["tick"] for line in lines if line["event"] == "giving"]
+
+
+def inverse_close_interval(simulation: DetectorLawSimulation, lines: list[dict], t: int) -> None:
+    """The window's close stepped back by hand (the close is named from the run's events, as a
+    click is, ALGEBRA.md 9.80 (4)): the window reopened on its record where the record still
+    stands (a taking since then lost it, the click's one loss), then the interval stepped back
+    (the write of the interval subtracted by the engine's inverse, the rows stepped back)."""
+    line = next(line for line in lines if line["event"] == "giving" and line["tick"] == t)
+    live = simulation.records.get(line["record"])
+    if live is not None:
+        block = simulation.block_by_number[line["measured"]]
+        live.window_open = True
+        block.window = live.identity
+    simulation.step_inverse()
 
 
 def test_between_clicks_the_board_returns_bit_for_bit_where_the_clock_rises_and_falls():
@@ -223,9 +244,12 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
     simulation.step_inverse()
     assert_same(rows_of(simulation), states[t_taking - 1], lost={deleted})
     lost = {deleted}
+    closes = close_ticks(lines)
     for t in range(t_taking - 1, t_giving, -1):
         if t in giving_ticks:
             inverse_giving_interval(simulation, lines, states, t)
+        elif t in closes:
+            inverse_close_interval(simulation, lines, t)
         else:
             simulation.step_inverse()
         assert_same(rows_of(simulation), states[t - 1], lost=lost & set(states[t - 1]["records"]))
@@ -240,32 +264,24 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
 def inverse_giving_interval(
     simulation: DetectorLawSimulation, lines: list[dict], states: list[dict], t: int
 ) -> None:
-    """The giving click's interval stepped back by hand, the click's write undone: the given
-    record removed (its rows as written the file's given rows on the body's Nodes, asserted);
-    every record and both fields stepped back at the content the interval began with (the hold
-    before the click, which every forward step read: ONE ORDER FOR BOTH CLICKS, ALGEBRA.md 9.85
-    (2), item 58; the giving's hold at once HISTORY), the body's stock restored and the fields
-    held again first. Nothing is lost at a giving click: the rows it wrote are the file's."""
-    line = next(line for line in lines if line["event"] == "giving" and line["tick"] == t)
+    """The giving click's interval (the window's open, SINCE COMMIT 7) stepped back by hand, the
+    click's act undone: the given record removed (made at the open with nothing written yet,
+    its rows zero, asserted: the writes come with the window's intervals and the engine's
+    inverse subtracts them); every record and both fields stepped back at the content the
+    interval began with (the hold before the click, which every forward step read: ONE ORDER
+    FOR BOTH CLICKS, ALGEBRA.md 9.85 (2), item 58; the giving's hold at once HISTORY), the
+    body's stock restored and the fields held again first. Nothing is lost at a giving
+    click."""
+    line = next(line for line in lines if line["event"] == "giving" and line["opened"] == t)
     # the given record: present unless a taking click deleted it since (then the click's one
-    # loss, already accounted); its rows as written are the file's either way
-    family = [each.name for each in simulation.families].index(line["family"])
+    # loss, already accounted); at its open nothing is written on it
     block = simulation.block_by_number[line["measured"]]
-    given = block.definition.emitter.given
-    shape = tuple(int(v) for v in simulation.shape)
-    nodes = body_node_indices(
-        shape, tuple(block.corner), block.definition.extents, simulation.kind_wrap[family]
-    )
-    expected_now = np.zeros(shape, dtype=np.int64).reshape(-1)
-    expected_before = np.zeros(shape, dtype=np.int64).reshape(-1)
-    for index, a, b in zip(nodes, given.now, given.before, strict=True):
-        expected_now[index] = a
-        expected_before[index] = b
-    written = states[t]["records"][line["record"]]
-    assert np.array_equal(written[0], expected_now.reshape(shape))
-    assert np.array_equal(written[1], expected_before.reshape(shape))
-    assert not written[2].any()
+    if line["record"] in states[t]["records"]:
+        written = states[t]["records"][line["record"]]
+        assert not written[0].any() and not written[1].any() and not written[2].any()
     simulation.records.pop(line["record"], None)
+    if block.window == line["record"]:
+        block.window = None
     # ONE ORDER FOR BOTH CLICKS (ALGEBRA.md 9.85 (2); item 58): the giving's lowered quanta
     # are held after the held families' step, as a taking's, so every record and both fields
     # stepped forward at the content the interval began with; the inverse restores that hold
@@ -300,12 +316,14 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
     assert total_charge == -(STOCK + 1) - 3 + 1
     block = simulation.blocks[0]
     previous_residue = None
+    residue_at_open = (0, 1)
     read_at = 0
     held_before = copy.deepcopy(simulation.held)
     for _ in range(400):
         own = block.own
         assert own is not None
         residue_before = (own.u, own.wheel)
+        opens_before = block.givings
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
         flights = list(simulation.records.values())
@@ -315,21 +333,24 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
             sum(simulation._body_charge(n) for n in range(len(simulation.held)))
             + sum(charge[f.family] * f.content for f in in_flight)
         ) == total_charge
+        if block.givings > opens_before:
+            # THE OPEN (commit 7): the giving lowers the given family's content held at the
+            # body (item 47) and makes the record, its content 1; the line comes at the close;
+            # the residue the count to this open was read on is the one before this interval
+            residue_at_open = residue_before
+            given_family = block.definition.emitter.family if block.definition.emitter else -1
+            assert simulation.held[0][given_family] == held_before[0][given_family] - 1
+            assert simulation.records[block.number * (1 << 32) + block.givings].content == 1
         for line in [line for line in lines if line["tick"] == simulation.tick]:
             if line["event"] == "giving":
-                giver = line["measured"]
-                # the giving lowers the given family's content held at the body (item 47)
-                given_family = block.definition.emitter.family if block.definition.emitter else -1
-                assert simulation.held[giver][given_family] == held_before[giver][given_family] - 1
-                assert simulation.records[line["record"]].content == 1
                 assert 0 <= line["u"] < line["W"] and line["read_node"] == [5, 0, 0]
                 if previous_residue is not None:
                     u, wheel = previous_residue
-                    wait = line["tick"] - read_at
+                    wait = line["opened"] - read_at  # the open falls the count after the read
                     assert line["wait"] == wait
                     assert 2 * wheel * (wait - 1) < (2 * u + 1) * period <= 2 * wheel * wait
                 else:
-                    u, wheel = residue_before
+                    u, wheel = residue_at_open
                     assert (
                         2 * wheel * (line["wait"] - 1) < (2 * u + 1) * period <= 2 * wheel * line["wait"]
                     )

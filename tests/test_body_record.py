@@ -170,8 +170,11 @@ def cycles_of(
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
     givings = [line for line in lines if line["event"] == "giving"]
+    # SINCE COMMIT 7 a giving line is named at its window's close and the next count starts
+    # there: the cycle is the count from one close to the next open (the gap less the window)
     ticks_of = [line["tick"] for line in givings]
-    gaps = [b - a for a, b in zip(ticks_of, ticks_of[1:], strict=False)]
+    windows = [int(line["window"]) for line in givings]
+    gaps = [b - a - w for a, b, w in zip(ticks_of, ticks_of[1:], windows[1:], strict=False)]
     return gaps, [(line["u"], line["W"]) for line in givings], givings
 
 
@@ -198,7 +201,6 @@ def test_the_ticks_of_the_two_forms_agree_in_distribution():
     wheels: the law's claim is statistical, 9.46 (4))."""
     document = emitter_world(stock=600, ticks=1)
     period = document["measured"][0]["emitter"]["period"]
-    train = document["measured"][0]["emitter"]["given"]
     results = {}
     for on in (False, True):
         gaps, residues, givings = cycles_of(document, on, 600 * period)
@@ -217,7 +219,7 @@ def test_the_ticks_of_the_two_forms_agree_in_distribution():
         assert longest_run_of_ones(gaps) <= 3, (on, gaps)
         first = givings[0]
         assert first["read_node"] == ([21, 0, 0] if on else [5, 0, 0])
-        assert first["given_norm"] == train["norm"] and first["period"] == period
+        assert first["given_norm"] == 0 and first["period"] == period  # no train's norm (commit 7)
         results[on] = (mean, [line["tick"] for line in givings], [line["W"] for line in givings])
     assert abs(results[True][0] - results[False][0]) < 0.05 * results[False][0]
     assert results[True][1] != results[False][1]

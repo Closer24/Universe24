@@ -60,10 +60,11 @@ def emitter(
         "spin": [0, 0, 0],
         "moment": [0, 0, 0],
         "pair": [800, 801],
-        "seed": 50 << 12,
+        "seed": 1
+        << 10,  # the window's writes at the body's Nodes pile up about 300-fold and stay under the bound (commit 7)
         "emitter": {
             "family": "light",
-            "train": {"direction": direction or [1, 0, 0], "periods": 8},
+            "weight": 3,  # the window's weight (commit 7; the train retired)
         },
         "margin": "control",
     }
@@ -269,13 +270,11 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     assert simulation.detector_names[own_detector] == "measured:0"
     found = gathers(lines)
     assert found and all(g["chosen"] == [["screen", 0, "0"]] for g in found)
-    # A's own detector books nothing of the outgoing train (the outward flux is negative);
-    # what it books is the tapers' dispersion returned off the mirror at x = 0, below a
-    # hundredth of the norm
-    assert all(
-        seen[g["record"]][0][own_detector] * seen[g["record"]][5] * 100 < seen[g["record"]][3]
-        for g in found
-    )
+    # A's own detector books nothing of the light leaving A's Nodes (the outward flux is
+    # negative); SINCE COMMIT 7 (the window, ALGEBRA.md 9.85 (5)) the light leaves both ways
+    # and the half toward x = 0 returns off the mirror into A's Nodes and books there
+    # (COMPUTATION), off every ladder by name: never chosen
+    assert all(own_detector not in seen[g["record"]][1] for g in found)
     givings = {line["record"]: line for line in lines if line["event"] == "giving"}
     assert all(seen[g["record"]][4] == givings[g["record"]]["W"] for g in found)
     assert all(lawful_wheel(simulation.world, givings[g["record"]]) for g in found)
@@ -290,7 +289,11 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     assert simulation.receiver_detector == {0: simulation.detector_names.index("at_well")}
     found = gathers(lines)
     assert found and all(g["chosen"] == [["at_well", 0, "0"]] for g in found)
-    assert all(g["click"] > g["giving"] + 200 and g["tick"] == g["click"] for g in found)
+    # SINCE COMMIT 7 (the window at every Node of the 32-Node body) the set at A's own Nodes
+    # books the light leaving A's faces as it piles up inside them, so a record may click at
+    # A before the mirror's return (COMPUTATION; the one-Node seat of the shipped light clock
+    # clicks on the return alone, tests/test_receiver_by_name.py's light clock test)
+    assert all(g["tick"] == g["click"] > g["giving"] for g in found)
 
 
 def test_the_lines_time():
@@ -340,8 +343,9 @@ def test_the_lines_time():
 
 def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
     """The registered world `examples/events/massive_record/light_clock.json` (the one table's
-    form: [760, 3, 3] with the face slabs 32 deep, A at [600, 632) with its train along +x
-    and its stock of 64, the mirror at [690, 694), A's `receiver` at_well the set at its own
+    form: [760, 3, 3] with the face slabs 32 deep, A the chain's point extruded, [1, 3, 3] at
+    x = 631, giving by the window (commit 7) with its stock of 64, the mirror at [690, 694)
+    and the mirror behind A at [629, 631), A's `receiver` at_well the set at its own
     Nodes) loads and is stepped 700 intervals as a load-and-step diagnostic (no pin): A
     givings (its excitations click at their rungs), and its records click at at_well when
     the mirror returns them into A's Nodes (the line at the rung, the record deleted at it;
@@ -353,6 +357,7 @@ def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
     world = parse_nature_beam_world(document)
     assert [entry.block.receiver for entry in world.measured if entry.block is not None] == [
         "at_well",
+        None,
         None,
     ]
     simulation, lines = run(copy.deepcopy(document), 700, every=100)

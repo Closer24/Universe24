@@ -60,14 +60,19 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
             continue
         assert doc["detectors"][0]["name"] == "at_well" and doc["detectors"][0]["block"] == 0
         assert world.shape[1:] == (3, 3)
-    # the long-wave pair (ALGEBRA.md 9.62 (1)): the given clock [4096, 21] on N = 2048, the
-    # wavelength 21 Links (k = 0.299), the train 168 Nodes, the emitter one train from the face
+    # the long-wave pair (ALGEBRA.md 9.62 (1)): the given clock [4096, 21] on N = 2048; SINCE
+    # COMMIT 7 the emitter is the chain's point extruded, [1, 3, 3] at the retired train's head
+    # (one train, 168 Nodes, from the face), on the point row's seat kind [800, 813]
     for name in ("redshift_top_long", "redshift_bottom_long"):
         doc = document(name)
         assert doc["N"] == generator.LONG_PHASE_STEPS == 2048
         assert doc["measured"][0]["emitter"]["clock"] == generator.LONG_GIVEN_CLOCK == [4096, 21]
-        assert doc["measured"][0]["extents"] == [generator.LONG_TRAIN_LENGTH, 3, 3] == [168, 3, 3]
-        assert doc["measured"][0]["position"] == [generator.LONG_REDSHIFT_EMITTER_X, 0, 0]
+        assert doc["measured"][0]["extents"] == [1, 3, 3] and doc["measured"][0]["kind"] == [800, 813]
+        assert doc["measured"][0]["position"] == [
+            generator.LONG_REDSHIFT_EMITTER_X + generator.LONG_TRAIN_LENGTH - 1,
+            0,
+            0,
+        ]
     # THE ARM'S HOLDERS UNDER ONE FAMILY OF MATTER (ALGEBRA.md 9.86 (2) (c); the one stroke,
     # commit 1): bodies of matter on one Node each, content 2000 apiece, no well and no
     # record (a second well of the emitter's family on its chain is refused by the
@@ -81,7 +86,9 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     bending = document("bending")
     emitter, body = bending["measured"][0], bending["measured"][1]
     assert bending["model_id"] == "beam-toward-nature-bending-v1"
-    assert emitter["extents"] == [32, 20, 1] and emitter["amount"] == 1
+    # the one-Node emitter at the retired beam's head on the beam's line (commit 7; the beam of
+    # 32 x 20 Nodes HISTORY)
+    assert emitter["extents"] == [1, 1, 1] and emitter["amount"] == 1
     assert emitter["held"] == {"charge": generator.BENDING_STOCK} and generator.BENDING_STOCK == 100
     assert (
         body["family"] == "matter"
@@ -91,14 +98,15 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     assert bending["ticks"] == generator.BENDING_TICKS
     assert sum(1 for d in bending["detectors"] if d["name"].startswith("screen_")) == 40
     top, bottom = document("redshift_top"), document("redshift_bottom")
-    assert [m["family"] for m in top["measured"]] == ["matter", "charge"]
+    # the emitter, the mirror and the mirror behind the emitter (ALGEBRA.md 9.85 (5) (b); commit 7)
+    assert [m["family"] for m in top["measured"]] == ["matter", "charge", "charge"]
     arm_start = (
         generator.REDSHIFT_EMITTER_X + generator.TRAIN_LENGTH
         if hasattr(generator, "TRAIN_LENGTH")
         else 132
     )
     arm_nodes = (generator.REDSHIFT_MIRROR_X - arm_start) * 9
-    assert [m["family"] for m in bottom["measured"]] == ["matter"] * (1 + arm_nodes) + ["charge"]
+    assert [m["family"] for m in bottom["measured"]] == ["matter"] * (1 + arm_nodes) + ["charge"] * 2
     holder = bottom["measured"][1]
     assert holder["position"] == [arm_start, 0, 0]
     assert holder["amount"] == generator.WELL_LEVEL == 2000
@@ -124,8 +132,9 @@ def test_the_held_level_is_the_well_on_the_arm_and_the_moving_clock_hops_togethe
     assert (
         int(level[arm_start, 1, 1]) == 2000 and int(level[generator.REDSHIFT_MIRROR_X - 1, 1, 1]) == 2000
     )
-    # the emitter's one own quantum beside its stock of 64 at its Nodes (item 47)
-    assert int(level[generator.REDSHIFT_EMITTER_X + 10, 1, 1]) == 65
+    # the emitter's one own quantum beside its stock of 64 at its Nodes (item 47); the emitter
+    # one Node (the chain's point extruded) at the retired train's head since commit 7
+    assert int(level[generator.REDSHIFT_EMITTER_X + 31, 1, 1]) == 65
     assert int(level[generator.REDSHIFT_MIRROR_X + 10, 1, 1]) == 0  # beyond the mirror, free
     moving = DetectorLawSimulation(
         parse_nature_beam_world(document("lorentz_moving")), observer=lines.append
@@ -134,11 +143,11 @@ def test_the_held_level_is_the_well_on_the_arm_and_the_moving_clock_hops_togethe
     for _ in range(100):
         moving.step()
         corners.append([int(block.corner[0]) for block in moving.blocks])
-    emitter, mirror = zip(*corners, strict=True)
-    assert (
-        emitter[-1] - generator.LORENTZ_EMITTER_X == 25 and mirror[-1] - generator.LORENTZ_MIRROR_X == 25
-    )
-    assert all(m - e == generator.LORENTZ_MIRROR_X - generator.LORENTZ_EMITTER_X for e, m in corners)
+    seat_x = generator.LORENTZ_EMITTER_X + 31  # the one-Node emitter at the retired train's head
+    emitter, mirror, behind = zip(*corners, strict=True)  # the mirror behind the seat too (9.85 (5))
+    assert emitter[-1] - seat_x == 25 and mirror[-1] - generator.LORENTZ_MIRROR_X == 25
+    assert behind[-1] - (seat_x - 2) == 25
+    assert all(m - e == generator.LORENTZ_MIRROR_X - seat_x for e, m, _ in corners)
     hops = np.diff(np.array(emitter))
     assert set(hops.tolist()) <= {0, 1} and int(hops.sum()) == 25
     # the set follows the emitter: its Nodes are the block's current Nodes

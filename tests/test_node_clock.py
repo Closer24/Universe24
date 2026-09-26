@@ -361,15 +361,19 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     # body's kind [800, 809] (the pair on the body, 9.91 (7))
     matter = [family.name for family in world.families].index("matter")
     kind = block.definition.kind
-    assert kind == (800, 809) and world.families[matter].pair_on_body
+    # the beam seat's kind [800, 1200] since commit 7 (the one-Node emitter of the window)
+    assert kind == (800, 1200) and world.families[matter].pair_on_body
     # A's level 65: its one own quantum beside its stock of 64 light quanta (item 47)
     assert simulation.node_clock_pair(centre, matter) == (NODE_CLOCK - 65, NODE_CLOCK)
     assert simulation.node_clock_pair((100, 0, 0), matter) == (NODE_CLOCK, NODE_CLOCK)
     # the wheel from the weak-field rule's integers (item 44): (g, W) = (50, 9612000000) at the
     # emitter's level 65 (its one own quantum beside the stock of 64, item 47; (1536,
     # 312890625) at 64), the kind's own in the vacuum
-    assert simulation.wheel_at(matter, centre, kind) == (50, 9612000000)
-    assert simulation.wheel_at(matter, (100, 0, 0), kind) == VACUUM_WHEEL
+    # at the kind [800, 1200] since commit 7: (100, 4812000000) at the level 65, (80000000000, 9)
+    # in the vacuum (COMPUTATION; (50, 9612000000) and VACUUM_WHEEL at [800, 809] HISTORY)
+    assert simulation.wheel_at(matter, centre, kind) == (100, 4812000000)
+    assert simulation.wheel_at(matter, (100, 0, 0), kind) == (80000000000, 9)
+    assert VACUUM_WHEEL == (200000000, 2427)  # the kind [800, 809]'s vacuum wheel, read elsewhere
 
 
 def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
@@ -398,12 +402,13 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
     )
     givings_seen = 0
     clicks_seen = 0
+    block = simulation.blocks[0]
     for _ in range(document["ticks"]):
-        before_givings = sum(1 for line in lines if line["event"] == "giving")
-        before_clicks = sum(1 for line in lines if line["event"] == "gather")
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-        givings_seen = sum(1 for line in lines if line["event"] == "giving")
+        # SINCE COMMIT 7 the quantum moves at the window's open (the body's count of givings)
+        # and the line is named at the close
+        givings_seen = block.givings
         clicks_seen = sum(1 for line in lines if line["event"] == "gather")
         # the array after the interval is the one its advances used: rebuilt as the
         # interval began from the events before it, and again at a giving within it
@@ -419,10 +424,10 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
         # the family's waves and, at these small contents, the rounding's own walk of the
         # plain step at unit levels: far below Gamma (at most 9 read on this head)
         assert int(np.abs(simulation.level_of("content")[40:70]).max()) <= 64
-        del before_clicks
-        for line in lines[len(lines) - (givings_seen - before_givings) :]:
+        for line in [line for line in lines if line["tick"] == simulation.tick]:
             if line["event"] == "giving":
-                assert line["content"] == 5 - before_givings
+                # the content the k-th giving found at its open (the line named at the close)
+                assert line["content"] == 5 - (line["excitation"] - 1)
                 assert line["node_clock"] == [NODE_CLOCK - line["content"], NODE_CLOCK]
                 assert lawful_wheel(simulation.world, line)
     assert givings_seen == 4 and clicks_seen >= 1

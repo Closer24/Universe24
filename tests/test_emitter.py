@@ -173,10 +173,13 @@ def emitter_world(
     # `massive_generator` from this one)
     from tests.test_detector_law import receiver_cube
 
+    # SINCE COMMIT 7 the giving is the window's (ALGEBRA.md 9.85 (5), 9.71 (1)): the body's
+    # rotation written at its Nodes at the weight 3 (the written light 3 x 2^20 under the
+    # bound 2^22), the train retired
     emitter: dict = {
         "family": "light",
         "receiver": ["screen"],
-        "train": {"direction": [1, 0, 0], "periods": 8},
+        "weight": 3,
     }
     document = {
         "law": "beam",
@@ -191,7 +194,6 @@ def emitter_world(
         "detector_law": True,
         "width": 1,
         "body_record": False,
-        "point_emitter": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
         "amplitude_bound": 1 << 22,
@@ -224,7 +226,7 @@ def emitter_world(
                 "spin": [0, 0, 0],
                 "moment": [0, 0, 0],
                 "pair": [800, 801],
-                "seed": 1 << 20,
+                "seed": 1 << 10,  # the window's writes pile up at the body's Nodes (commit 7)
                 "margin": "control",
                 "emitter": emitter,
             },
@@ -332,8 +334,24 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     assert pace == NODE_CLOCK - 5 and action.numerator == norm  # one own quantum and the stock 4
     assert read_coefficient % action.denominator == 0
     # the share's wobble from the seed's rounding: 2.1 parts in a thousand on the
-    # 32-Node well at 2^20 (COMPUTATION; one part in a thousand on the side-12 well)
-    assert 1000 * (max(shares) - min(shares)) < 3 * (action // emitter["period"])
+    # 32-Node well at 2^20 (COMPUTATION; one part in a thousand on the side-12 well), read
+    # on the body alone seeded at 2^20 (the emitter world's seed is 2^10 since commit 7, the
+    # window's writes piling up at the body's Nodes; a profile at 2^10 rounds coarser)
+    fine = emitter_world(stock=4, on_mode=False)
+    del fine["measured"][0]["emitter"]
+    fine["measured"] = fine["measured"][:1]
+    fine["detectors"] = []
+    fine["measured"][0]["seed"] = 1 << 20
+    massive_generator().seed_on_the_mode(fine)
+    fine_solitary = DetectorLawSimulation(parse_nature_beam_world(fine))
+    fine_body = fine_solitary.block_by_number[0]
+    fine_shares = []
+    for _ in range(emitter["period"]):
+        fine_solitary.step()
+        assert fine_body.own is not None
+        fine_shares.append(fine_solitary.form_share(fine_body.own, centre))
+    fine_action = sum(fine_shares)
+    assert 1000 * (max(fine_shares) - min(fine_shares)) < 3 * (fine_action // emitter["period"])
     by_tick = {entry["tick"]: entry for entry in trace}
     # THE TICK AS A COUNT OF INTERVALS (ALGEBRA.md 9.44 (5) (c), 9.47 (5) (i); BUILD.md
     # section 26 item 33): the residue u read at the previous click (after the first
@@ -351,7 +369,9 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     for line in givings:
         u, wheel = previous
         expected = max(1, -(-(2 * u + 1) * period // (2 * wheel)))
-        assert line["tick"] - read_at == expected == line["wait"], (line["tick"], u, wheel)
+        # SINCE COMMIT 7 the line is named at the window's close: the open (`opened`, the
+        # click's interval) falls the count after the read, the next count starts at the close
+        assert line["opened"] - read_at == expected == line["wait"], (line["opened"], u, wheel)
         assert 2 * wheel * (line["wait"] - 1) < (2 * u + 1) * period <= 2 * wheel * line["wait"]
         read_at = line["tick"]
         previous = (line["u"], line["W"])
@@ -448,71 +468,55 @@ def test_the_bodys_own_record_is_never_rewritten_and_the_residue_is_read_at_the_
 
 
 def test_the_given_record_is_written_once_and_the_law_advances_it():
+    """THE WINDOW'S GIVING (ALGEBRA.md 9.71 (1), 9.85 (5); the one stroke's commit 7, the train
+    retired): at the open the given record exists with its window open and nothing written
+    yet (the writes come with the record's own steps: the body's rotation at its 32 Nodes
+    times the weight 3, zero elsewhere), no giving line yet (the line is named at the close),
+    its norm the excitation's action norm / norm_denominator (the generator's integers), its
+    ladder the named set; at the close the line carries the window's length, the outward norm
+    read (at or above the action) and the open's interval, the residue and the wheel the
+    law's, the content the giving found; nothing reaches Manhattan distance m from the body
+    before age m; no take after the write (the retired row stays 0)."""
     document = emitter_world(stock=1, ticks=400)
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
     block = simulation.block_by_number[0]
+    emitter = document["measured"][0]["emitter"]
     given = None
-    extent: list[tuple[int, int]] = []
+    closed = None
+    extent: list[tuple[int, int, int]] = []
     while simulation.tick < 400:
         simulation.step()
         assert simulation.books()["balanced"]
         light = [live for live in simulation.records.values() if live.family == 0]
         if light and given is None:
             (given,) = light
-            giving = next(line for line in lines if line["event"] == "giving")
-            assert giving["tick"] == simulation.tick and given.age == 0 and given.train == 0
-            # THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a)): the world's profile `given`
-            # {now, before, norm}, the generator's integers, written on the
-            # body's 32 Nodes in the box's x-major order and zero elsewhere; the
-            # character cos(pi i / 2) under the tapers of 8 at both ends: the
-            # levels 1, 0, -1, 0 times 2^16 in the flat middle
-            train = document["measured"][0]["emitter"]["given"]
-            assert len(train["now"]) == len(train["before"]) == 32
-            assert train["now"][8:16] == [65536, 0, -65536, 0, 65536, 0, -65536, 0]
-            assert 0 < train["now"][0] < 1000 and train["now"][31] == 0
-            assert list(given.now[5:37, 0, 0]) == train["now"]
-            assert list(given.before[5:37, 0, 0]) == train["before"]
-            assert not np.any(given.now[~block.mask]) and not np.any(given.before[~block.mask])
-            # THE NORM UNDER THE NODE'S OWN PACE (BUILD.md section 26 item 36): the
-            # record's conserved form as written on the board, the exact rational norm /
-            # pace in lowest terms (the Node's terms weighted by 1 / p, p the pace at the
-            # body's Nodes AS THE GIVING FINDS THEM, Gamma - content: ONE ORDER FOR BOTH
-            # CLICKS, ALGEBRA.md 9.85 (2), item 58, the click's writes entering at the next
-            # interval; p times the form whole, the pair reducing from (p x form, p))
-            assert giving["given_norm"] == train["norm"] > 0 and giving["content"] == 2
-            pace = NODE_CLOCK - giving["content"]
-            # SINCE item 44 the form's denominator divides the rule's read coefficient at
-            # the body's pace, R = 2 p^2 num (the Node terms over R), not the pace itself
-            num_c, den_c = (int(value) for value in block.definition.pair)
-            read_coefficient = rule_coefficients(num_c, den_c, NODE_CLOCK, NODE_CLOCK - pace, True)[0]
-            assert given.pace == giving["pace"] and read_coefficient % given.pace == 0
-            form = Fraction(given.norm, given.pace)
-            # ONE ORDER FOR BOTH CLICKS (ALGEBRA.md 9.85 (2); item 58): the norm is the
-            # record's form at the content the giving found (one quantum more at the
-            # body's Nodes than the hold after the held families' step now writes), so it
-            # differs from the form read on the board after the interval
-            found = simulation.level_of("content").copy()
-            found[block.mask] += 1
-            assert form == wall_form(simulation, 0, given.now, given.before, found) > 0
-            assert given.norm == giving["norm"]
-            assert (
-                form
-                != simulation.conserved_form(given)
-                == wall_form(simulation, 0, given.now, given.before)
-            )
-            assert (form * read_coefficient).denominator == 1
-            assert giving["nodes"] == 32 and giving["excitation"] == 1 and giving["train"] == 0
-            assert given.u == giving["u"] and given.wheel == giving["W"]
-            assert lawful_wheel(simulation.world, giving)
+            assert given.window_open and given.window == 0 and given.train == 0 and given.age == 0
+            assert not [line for line in lines if line["event"] == "giving"]
+            assert not np.any(given.now) and not np.any(given.before)
+            assert given.norm == emitter["norm"] and given.pace == emitter["norm_denominator"]
             assert given.content == 1 and given.emitter == 0
             assert given.ladder == [simulation.detector_names.index("screen")]
+        elif given is not None and given.window == 1:
+            # the first write: the body's Nodes alone
+            assert np.any(given.now[block.mask]) and not np.any(given.now[~block.mask])
+        if given is not None and closed is None and not given.window_open:
+            closed = simulation.tick
+            (giving,) = [line for line in lines if line["event"] == "giving"]
+            assert giving["tick"] == closed and giving["window"] == given.window > 1
+            assert giving["opened"] == closed - given.window and giving["outward"] == given.outward
+            assert giving["outward"] * given.pace >= given.norm == giving["norm"] > 0
+            assert giving["given_norm"] == 0 and giving["content"] == 2
+            assert giving["pace"] == given.pace and giving["nodes"] == 32
+            assert giving["excitation"] == 1 and giving["train"] == 0
+            assert given.u == giving["u"] and given.wheel == giving["W"]
+            assert lawful_wheel(simulation.world, giving)
         if given is not None and given.identity in simulation.records:
             nonzero = np.nonzero(given.now)[0]
             if len(nonzero):
                 extent.append((given.age, int(nonzero.min()), int(nonzero.max())))
-    assert given is not None and extent
+    assert given is not None and closed is not None and extent
     for age, low, high in extent:
         # nothing reaches Manhattan distance m before age m (the causal bound)
         assert low >= 5 - age and high <= 36 + age
@@ -603,47 +607,24 @@ def test_the_loaders_refusals_name_their_keys():
     # the mathematician's gate item 8: a body that givings declares its seed
     # as its composed mode's profile; a flat scalar seed is refused
     refused(lambda document: None, "seed. as its composed mode's profile")
-    # THE GIVEN TRAIN'S REFUSALS (ALGEBRA.md 9.17 (6a)): the two-integer pair
-    # (the one-Node giving, a flat pulse) by its reason; a profile of the wrong
-    # count, one that writes no motion, one whose flux runs against the
-    # declared way, one whose norm is not the vacuum's form; `given` without
-    # `train`; the train's direction, periods, wavelength and extent
-    refused(emitter("given", [5, -5]), "a flat pulse of the body's length is broadband")
-    refused(emitter("given", {"now": [1, 2], "before": [3, 4], "norm": 1}), "must be 32 integers")
-    refused(emitter("given", {"now": [0] * 32, "before": [0] * 32, "norm": 1}), "writes no motion")
-
-    def against(document):
-        train = document["measured"][0]["emitter"]["given"]
-        document["measured"][0]["emitter"]["given"] = {
-            "now": train["now"],
-            "before": train["now"],
-            "norm": train["norm"],
-        }
-
-    refused(against, "not positive: the record does not travel as declared", on_mode=True)
-
-    def wrong_norm(document):
-        document["measured"][0]["emitter"]["given"]["norm"] += 1
-
-    refused(wrong_norm, "is not the given record's conserved form on the vacuum", on_mode=True)
-
-    def trainless(document):
-        del document["measured"][0]["emitter"]["train"]
-
-    refused(trainless, "needs the emitter's `train`", on_mode=True)
+    # THE GIVEN TRAIN RETIRED (commit 7; ALGEBRA.md 9.85 (5), 9.71 (1)): its keys `train` and
+    # `given` are refused by name with their successor, the window; the window's integers
+    # are required on every emitter: the weight g from 1, the action's denominator
     refused(
-        lambda document: document["measured"][0]["emitter"].pop("given"),
-        "declares no given train",
-        on_mode=True,
+        emitter("given", {"now": [1] * 32, "before": [-1] * 32, "norm": 1}), "emitter.given is refused"
     )
-    refused(emitter("train", {"direction": [1, 1, 0], "periods": 8}), "one signed unit axis vector")
-    refused(emitter("train", {"direction": [1, 0, 0], "periods": 3}), "periods")
-    refused(emitter("train", {"direction": [0, 1, 0], "periods": 8}), "is not the train's length")
+    refused(emitter("train", {"direction": [1, 0, 0], "periods": 8}), "emitter.train is refused")
+    refused(emitter("weight", 0), "weight")
 
-    def odd_wavelength(document):
-        document["families"][0]["phase_per_link"] = [500, 1]
+    def no_weight(document):
+        del document["measured"][0]["emitter"]["weight"]
 
-    refused(odd_wavelength, "no whole number of Links")
+    refused(no_weight, "declares no `weight`", on_mode=True)
+
+    def no_action(document):
+        del document["measured"][0]["emitter"]["norm_denominator"]
+
+    refused(no_action, "declares no `norm_denominator`", on_mode=True)
 
     for key, value, message in (
         ("emits", "light", "emits is refused"),

@@ -61,7 +61,6 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
     massive_generator().seed_on_the_mode(document)
     document["measured"][0]["emitter"]["weight"] = weight
     document["body_record"] = True
-    document["point_emitter"] = True
     document["input"] = input_stamp(document)
     return document
 
@@ -143,33 +142,36 @@ def test_the_window_inverts_bit_for_bit():
 def test_the_loader_pairs_the_key_with_the_seat_the_weight_and_the_action():
     document = point_world(2, ticks=10)
     parse_nature_beam_world(document)
+    # SINCE COMMIT 7 the window is the law's one giving: the lattice body gives by it too
+    # (the level at its centre Node), the key `point_emitter` is retired and refused by name,
+    # and so are the train's keys; the weight and the action are required on every emitter
     no_seat = json.loads(json.dumps(document))
     no_seat["body_record"] = False
     no_seat["input"] = input_stamp(no_seat)
-    with pytest.raises(ValueError, match="point_emitter needs body_record"):
-        parse_nature_beam_world(no_seat)
+    parse_nature_beam_world(no_seat)
     no_weight = json.loads(json.dumps(document))
     del no_weight["measured"][0]["emitter"]["weight"]
     no_weight["input"] = input_stamp(no_weight)
-    with pytest.raises(ValueError, match="declares no `weight` under point_emitter"):
+    with pytest.raises(ValueError, match="declares no `weight`"):
         parse_nature_beam_world(no_weight)
     no_action = json.loads(json.dumps(document))
     del no_action["measured"][0]["emitter"]["norm_denominator"]
     no_action["input"] = input_stamp(no_action)
-    with pytest.raises(ValueError, match="declares no `norm_denominator` under point_emitter"):
+    with pytest.raises(ValueError, match="declares no `norm_denominator`"):
         parse_nature_beam_world(no_action)
-    off = json.loads(json.dumps(document))
-    off["point_emitter"] = False
-    off["input"] = input_stamp(off)
-    with pytest.raises(ValueError, match="weight is the point emitter's, admitted under the world key"):
-        parse_nature_beam_world(off)
+    for key, value in (("point_emitter", True), ("point_emitter", False)):
+        retired = json.loads(json.dumps(document))
+        retired[key] = value
+        retired["input"] = input_stamp(retired)
+        with pytest.raises(ValueError, match="point_emitter is refused"):
+            parse_nature_beam_world(retired)
     with_train = json.loads(json.dumps(document))
     with_train["measured"][0]["emitter"]["train"] = {"direction": [1, 0, 0], "periods": 8}
     with_train["input"] = input_stamp(with_train)
-    with pytest.raises(ValueError, match="train"):
+    with pytest.raises(ValueError, match="emitter.train is refused"):
         parse_nature_beam_world(with_train)
-    bad = json.loads(json.dumps(document))
-    bad["point_emitter"] = "yes"
-    bad["input"] = input_stamp(bad)
-    with pytest.raises(ValueError, match="point_emitter must be true or false"):
-        parse_nature_beam_world(bad)
+    with_given = json.loads(json.dumps(document))
+    with_given["measured"][0]["emitter"]["given"] = {"now": [1], "before": [-1], "norm": 1}
+    with_given["input"] = input_stamp(with_given)
+    with pytest.raises(ValueError, match="emitter.given is refused"):
+        parse_nature_beam_world(with_given)

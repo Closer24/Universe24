@@ -1642,13 +1642,16 @@ class DetectorLawSimulation:
                 "`seed_on_the_mode`; a flat scalar seed is no mode and givings nothing lawful, "
                 "ALGEBRA.md 9.17 (4) item 1)"
             )
-        # the point emitter (item 50) gives by the window, no train
-        if (emitter.train is None or emitter.given is None) and not self.world.point_emitter:
+        # THE GIVING IS THE WINDOW'S (ALGEBRA.md 9.85 (5), 9.71 (1); record 2082 (4);
+        # commit 7): every emitter gives by the window at its centre Node at its declared
+        # weight; the given train is CANCELLED (`_write_given_train_cancelled`, disconnected)
+        if emitter.weight is None or emitter.norm_denominator is None:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{block.number}].emitter declares no given train: `train` "
-                "(the direction and the periods) with `given` (the train's two levels over the "
-                "body's Nodes and its norm on the vacuum), the generator's integers (ALGEBRA.md "
-                "9.17 (6a); `given_train` of the massive record generator; no table in the engine)"
+                f"{BEAM_LAW}: measured[{block.number}].emitter declares no `weight` or no "
+                "`norm_denominator`: the giving is the window's, the body's rotation written into "
+                "the given row at its Node at the weight g until the outward norm reaches the "
+                "excitation's action norm / norm_denominator (ALGEBRA.md 9.71 (1), 9.85 (5); the "
+                "generator's integers; the given train is retired, commit 7)"
             )
         if emitter.norm is None:
             raise ValueError(
@@ -1927,18 +1930,13 @@ class DetectorLawSimulation:
         # x-major order (`body_node_indices`, the loader's and the generator's
         # one convention), the norm T the written one (the conserved form on
         # the given family's vacuum, the generator's integer checked at load)
-        if self.world.point_emitter:
-            # THE POINT EMITTER (ALGEBRA.md 9.69 (2), 9.71 (1) (a); item 50): no
-            # train; the window opens at the click, the given row at the seat
-            # written from the seat's rotation every interval (`_point_windows`)
-            # until the outward norm reaches T; the record named at the close
-            live.window_open = True
-            live.box = tuple((int(index), int(index) + 1) for index in centre)
-            block.window = identity
-        else:
-            assert emitter.given is not None
-            self.write_levels(live, block, emitter.given.now, emitter.given.before)
-            live.box = self.support_box(live.now, live.before)  # HOST (item 43): the train's own Nodes
+        # THE WINDOW (ALGEBRA.md 9.69 (2), 9.71 (1) (a), 9.85 (5); item 50; commit 7,
+        # the one giving): no train; the window opens at the click, the given row at
+        # the body's Node written from its rotation every interval (`_point_windows`)
+        # until the outward norm reaches T; the record named at the close
+        live.window_open = True
+        live.box = self.mask_box(block.mask)  # HOST (item 43): the body's own Nodes
+        block.window = identity
         if emitter.receiver is not None:
             # the named sets in the NAMED order (ALGEBRA.md 9.19 (3) (b): the
             # ladder cumulative in its declared order), a set's detectors in the
@@ -1972,7 +1970,7 @@ class DetectorLawSimulation:
             # bookings from the first interval (Born's rule's walk as now)
             assert emitter.norm is not None and emitter.norm_denominator is not None
             live.norm, live.pace = emitter.norm, emitter.norm_denominator
-        else:
+        else:  # CANCELLED (commit 7): the train's norm; every giving opens a window
             live.norm, live.pace = self.given_norm(live)
             given = emitter.given
             if given is not None and given.rest_norm != given.norm:
@@ -2033,7 +2031,7 @@ class DetectorLawSimulation:
             }
             if live.window_open:
                 live.giving_line = giving_line  # named at the close (item 50)
-            else:
+            else:  # CANCELLED (commit 7): the train's line at the open
                 self.record(giving_line)
         if live.window_open:
             # the next excitation and the count wait for the window's close
@@ -2052,6 +2050,16 @@ class DetectorLawSimulation:
         own.u, own.wheel = residue, wheel
         if self.stock_of(block) > 0:
             block.excitations += 1
+
+    def _write_given_train_cancelled(self, live: LiveRecord, block: Block) -> None:
+        """CANCELLED (commit 7; the model owner's record 2102, marked and not deleted):
+        THE GIVEN TRAIN'S WRITE (ALGEBRA.md 9.17 (6a); item 27), the train's two levels
+        written once on the body's Nodes at the open; disconnected, called nowhere: the
+        window is the law's one giving (9.85 (5), 9.71 (1); record 2082 (4))."""
+        emitter = block.definition.emitter
+        assert emitter is not None and emitter.given is not None
+        self.write_levels(live, block, emitter.given.now, emitter.given.before)
+        live.box = self.support_box(live.now, live.before)  # HOST (item 43): the train's own Nodes
 
     def _block_clock(self, block: Block) -> None:
         """The block's clock (MASSIVE_RECORD.md sections 4 and 6): its total
@@ -3400,28 +3408,82 @@ class DetectorLawSimulation:
 
     def _window_write(self, live: LiveRecord) -> None:
         """One interval of an open window (ALGEBRA.md 9.71 (1) (b), (c); item
-        50), right after the record's own step: (b) the seat's rotation is
-        written into the given row at the seat, a_given(seat) += g x a_seat
-        (the seat stepped this interval already, its level the one written);
-        (c) the norm that left the seat this interval is read as the outward
-        flux through its six Ports from the two levels as the interval leaves
+        50; the body's declared write at its own Nodes, record 2082 (2); commit
+        7), right after the record's own step: (b) the body's rotation is
+        written into the given row at every Node of the body, a_given(i) += g x
+        a_body(i) (the body stepped this interval already, its levels the ones
+        written; a one-Node body its one Node, the seat of 9.71 (1)); (c) the
+        norm that left the body this interval is read as the outward flux
+        through its outer Ports from the two levels as the interval leaves
         them, both with their writes, and summed; the window's count grows by
-        one and the record's box takes the seat in."""
+        one and the record's box takes the body in."""
         block = self.block_by_number.get(live.emitter) if live.emitter is not None else None
         if block is None or block.window != live.identity:
             return
         emitter = block.definition.emitter
         if emitter is None or emitter.weight is None:
             return
-        centre = self._window_centre(block)
-        live.now[centre] += emitter.weight * self._seat_level(block)
-        live.outward += self.seat_outward_flux(live, centre)
+        live.now[block.mask] += emitter.weight * self._body_levels(block)
+        live.outward += self.body_outward_flux(live, block)
         live.window += 1
         if live.box is not None:
             live.box = tuple(
-                (min(lo, centre[axis]), max(hi, centre[axis] + 1))
-                for axis, (lo, hi) in enumerate(live.box)
+                (min(lo, low), max(hi, high))
+                for (lo, hi), (low, high) in zip(live.box, self.mask_box(block.mask), strict=True)
             )
+
+    def mask_box(self, mask: np.ndarray) -> tuple[tuple[int, int], ...]:
+        """The box of a body's Nodes, [low, high) per axis (HOST)."""
+        axes = np.nonzero(mask)
+        return tuple((int(axis.min()), int(axis.max()) + 1) for axis in axes)
+
+    def _body_levels(self, block: Block) -> np.ndarray:
+        """The body's rotation's level now at each of its Nodes, in the mask's
+        order: the standing record at its one Node (the seat, item 42) or its
+        own rows there (the lattice body)."""
+        if block.seat is not None:
+            count = int(np.count_nonzero(block.mask))
+            return np.full(count, int(block.seat.now), dtype=np.int64)
+        assert block.own is not None
+        return np.asarray(block.own.now[block.mask], dtype=np.int64)
+
+    def body_outward_flux(self, live: LiveRecord, block: Block) -> int:
+        """THE OUTWARD FLUX through the body's outer Ports this interval (ALGEBRA.md
+        9.71 (1) (c); record 2082 (2); item 50; commit 7): over every Port from a
+        Node of the body to a Node outside it, the taking's inward booking with the
+        sign reversed, wall (now_j before_i - before_j now_i) where positive (the
+        Link to a Node beyond an open face carries none; a folded axis none; the
+        Ports along the record's own component none, 9.82 (3) (c)), from the
+        record's two levels as the interval leaves them, this interval's write in
+        `now` and the last one's in `before`; the pair's second level added (9.82
+        (3) (b)). A one-Node body's six Ports are `seat_outward_flux`, bit for bit."""
+        wall = self.kind_wall(live.family)
+        wrap = self.kind_wrap[live.family]
+        own_axis = self.booked_axis(live)
+        mask = block.mask
+        levels = [(live.now, live.before)]
+        if live.im_now is not None and live.im_before is not None:
+            levels.append((live.im_now, live.im_before))
+        total = 0
+        for axis in range(3):
+            if self.shape[axis] == 1 or axis == own_axis:
+                continue
+            for side in (1, -1):
+                # the Port from i to j = i + side e_axis, j outside the body
+                ports = mask & ~np.roll(mask, -side, axis=axis)
+                if not wrap[axis]:
+                    face: list[slice | int] = [slice(None)] * 3
+                    face[axis] = -1 if side == 1 else 0
+                    ports[tuple(face)] = False
+                if not ports.any():
+                    continue
+                flux = np.zeros(int(np.count_nonzero(ports)), dtype=np.int64)
+                for now, before in levels:
+                    now_j = np.roll(now, -side, axis=axis)[ports]
+                    before_j = np.roll(before, -side, axis=axis)[ports]
+                    flux += now_j * before[ports] - before_j * now[ports]
+                total += int(flux[flux > 0].sum()) * wall
+        return total
 
     def seat_outward_flux(self, live: LiveRecord, centre: tuple[int, int, int]) -> int:
         """THE OUTWARD FLUX through the seat's six Ports this interval (ALGEBRA.md
@@ -3469,9 +3531,9 @@ class DetectorLawSimulation:
         return int(block.own.now[centre])
 
     def _point_windows(self) -> None:
-        """THE POINT EMITTER'S WINDOW, one interval (ALGEBRA.md 9.69 (2), 9.71
-        (1); BUILD.md section 26 item 50; a hypothesis under its own identity,
-        the world key `point_emitter`): the close, after the interval's
+        """THE WINDOW, one interval (ALGEBRA.md 9.69 (2), 9.71 (1); BUILD.md
+        section 26 item 50; the law's one giving since commit 7, 9.85 (5),
+        9.91 (10) 7, record 2082 (4)): the close, after the interval's
         bookings; the write (b) and the outward reading (c) are the record's
         own, right after its step (`_window_write`). (d) At the first interval
         at which the summed outward norm reaches T (the quantum's norm, the
@@ -3536,9 +3598,8 @@ class DetectorLawSimulation:
         emitter = block.definition.emitter
         if live is None or emitter is None or emitter.weight is None or live.window <= 0:
             return
-        centre = self._window_centre(block)
-        live.outward -= self.seat_outward_flux(live, centre)
-        live.now[centre] -= emitter.weight * self._seat_level(block)
+        live.outward -= self.body_outward_flux(live, block)
+        live.now[block.mask] -= emitter.weight * self._body_levels(block)
         live.window -= 1
 
     def _reads_at(self, a: np.ndarray, nodes: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:

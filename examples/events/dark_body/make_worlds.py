@@ -88,6 +88,17 @@ def massive_generator():
 
 FAMILIES_ENTRIES, FAMILIES_INTEGERS = massive_generator().families_entries()
 LIGHT_MOMENT = massive_generator().LIGHT_MOMENT
+detector = load_generator(
+    ROOT / "examples/events/detector_law/make_worlds.py", "detector_law_make_worlds"
+)
+EMITTER_SEAT = [
+    EMITTER_CORNER[0] + EMITTER_EXTENTS[0] - 1,
+    BEAM_Y,
+    0,
+]  # the one-Node emitter at the retired train's head on the beam's line (commit 7)
+BODY_SEED = (
+    1 << 10
+)  # the body's own record's amplitude in both worlds: the bright body's window writes at its 160 Nodes pile up about 300-fold, so the trial keeps the weight under the bound (2^14 reached 1.1 x 2^20; a profile at 2^8 binds no mode, the rounding too coarse)
 NODE_CLOCK = FAMILIES_INTEGERS["node_clock"]  # Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44)
 
 
@@ -118,11 +129,13 @@ def block(
     emitter: dict | None,
     well: list[int] = WELL,
     stock: int | None = None,
+    seed: int = SEED,
+    kind: list[int] = MATTER,
 ) -> dict:
     entry: dict = {
         "position": list(corner),
         "family": family,
-        "kind": list(MATTER),  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+        "kind": list(kind),  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
         "charge": 0,  # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2)
         "spin": [0, 0, 0],
         # a light emitter's moment, the given component's axis (ALGEBRA.md 9.82 (3) (d))
@@ -134,7 +147,7 @@ def block(
         "start": 0,
         "extents": list(extents),
         "pair": list(well),
-        "seed": SEED,
+        "seed": seed,
         "margin": "control",
     }
     if emitter is not None:
@@ -149,8 +162,9 @@ def block(
     return entry
 
 
-def world(dark: bool) -> dict:
-    """The dark world (True) or the bright control (False)."""
+def world(dark: bool, source_weight: int | None = None) -> dict:
+    """The dark world (True) or the bright control (False); the bright control's source carries
+    the dark world's source weight (one instrument in both worlds, read by the trial once)."""
     document: dict = {
         "law": "beam",
         "model_id": "beam-dark-body-v1" if dark else "beam-dark-body-bright-control-v1",
@@ -166,7 +180,6 @@ def world(dark: bool) -> dict:
         "detector_law": True,
         "massive_record": True,
         "body_record": False,
-        "point_emitter": False,
         "engine": "examples/events/engine_start.json",
         # THE ONE FAMILIES FILE (item 59): the universe's integers and every family, the
         # file's entries (the list during the build, the path as written); the light
@@ -181,24 +194,28 @@ def world(dark: bool) -> dict:
     }
     screen_names = [f"screen_{y}" for y in range(SCREEN_YS.start, SCREEN_YS.stop, DETECTOR_SIDE)]
     ladder = screen_names if dark else ["at_body", *screen_names]
+    # THE EMITTER ONE NODE at the retired train's head on the beam's line, giving by the
+    # window (commit 7; ALGEBRA.md 9.85 (5)), a mirror of depth 2 behind it across the beam
     document["measured"].append(
         block(
-            EMITTER_CORNER,
-            EMITTER_EXTENTS,
+            EMITTER_SEAT,
+            [1, 1, 1],
             "matter",
             STOCK,
             {
                 "family": "charge",  # light, the charge family's wave (ALGEBRA.md 9.86 (2) (b))
                 "receiver": ladder,
                 "clock": list(GIVEN_CLOCK),
-                "train": {"direction": [1, 0, 0], "periods": 8},
             },
+            well=detector.SEAT_WELL,
+            seed=detector.WINDOW_SEED,
+            kind=detector.BEAM_KIND,  # the beam's seat: light near the retired train's wavelength 4
         )
     )
     if dark:
         # the dark body: one family of matter (9.86 (2) (c)); dark by declaration, no emitter
         document["measured"].append(
-            block(BODY_CORNER, BODY_EXTENTS, "matter", BODY_CONTENT, None, BODY_WELL)
+            block(BODY_CORNER, BODY_EXTENTS, "matter", BODY_CONTENT, None, BODY_WELL, seed=BODY_SEED)
         )
     else:
         document["measured"].append(
@@ -211,20 +228,27 @@ def world(dark: bool) -> dict:
                     "family": "charge",
                     "receiver": screen_names,
                     "clock": list(GIVEN_CLOCK),
-                    "train": {"direction": [1, 0, 0], "periods": 8},
                 },
                 BODY_WELL,
                 stock=BRIGHT_STOCK,
+                seed=BODY_SEED,
             )
         )
         document["detectors"].append({"name": "at_body", "block": 1})
+    document["measured"].append(
+        detector.mirror_behind(EMITTER_SEAT, [1, 0, 0], [1, EMITTER_EXTENTS[1], 1])
+    )
     for y in range(SCREEN_YS.start, SCREEN_YS.stop, DETECTOR_SIDE):
         cube(document, f"screen_{y}", [SCREEN_X, y, 0])
-    massive = load_generator(
-        ROOT / "examples/events/massive_record/make_worlds.py", "massive_record_make_worlds"
-    )
+    massive = massive_generator()
     massive.seed_on_the_mode(document)
-    return document
+    # the windows' weights and the run's length (commit 7): the source's stock at its
+    # windows read, the bright body's own givings beside, the flight to the screen
+    emitters = [0] if dark else [0, 1]
+    weights = None if source_weight is None else {0: source_weight}
+    return detector.finish_windows(
+        massive, document, emitters, 3 * (SCREEN_X - EMITTER_SEAT[0]) + 300, weights=weights
+    )
 
 
 def static_field() -> np.ndarray:
@@ -344,8 +368,11 @@ def expectations(bend: float) -> dict:
 
 
 def main() -> None:
+    source_weight: int | None = None
     for name, dark in (("dark", True), ("bright", False)):
-        document = massive_generator().bind_families_file(world(dark))
+        built = world(dark, source_weight)
+        source_weight = int(built["measured"][0]["emitter"]["weight"])  # the pair's one instrument
+        document = massive_generator().bind_families_file(built)
         (HERE / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
         print(name, flush=True)
     bend = ray_bend(static_field())

@@ -13,8 +13,13 @@
   (GAMEBOARD, `read_runs.py --wavelength`).
 - `point_light_clock.json`: the light clock with a point emitter: the same seat at 100 on a
   chain of 400, a mirror four Nodes deep 60 Links beyond it, the detector the seat's own set
-  `at_well`; (iv) the tick 2 x 60 / c_l + the window's centroid n / 2 from the open, every
-  tick within sqrt(n) of it.
+  `at_well`; ROW (iv) AS FIXED (ALGEBRA.md 9.85 (5); commit 7): the weight g = 4 (the window
+  shorter than the arm's round trip), a gap slab of depth 2 one Link behind the seat, the
+  reading the rung's share on the return, 2 x 60 / c_l + n / 2 +- n / sqrt(12) from the open,
+  n the window's length.
+
+SINCE COMMIT 7 the window is the law's one giving (no world key `point_emitter`; every
+emitter of every world gives so); `body_record` stays the seat's form here.
 
 Run from the repository root:
 
@@ -58,6 +63,7 @@ CLOCK_LENGTH = 400
 CLOCK_SEAT_X = 100
 CLOCK_ARM = 60  # the mirror 60 Links beyond the seat (9.71 (1) (iv))
 FLIGHTS = 2  # the run's length: the stock's windows and rungs plus two flights
+CLOCK_WEIGHT = 4  # the light clock's weight g (ALGEBRA.md 9.85 (5) (a)): its window shorter than the arm's round trip
 
 
 def seat(position: list[int]) -> dict:
@@ -91,19 +97,30 @@ def body(x: int) -> dict:
     }
 
 
-def finish(document: dict, ticks_of_window, receiver: bool = False) -> dict:  # type: ignore[no-untyped-def]
+def finish(  # type: ignore[no-untyped-def]
+    document: dict, ticks_of_window, receiver: bool = False, weight: int | None = None
+) -> dict:
     """The point emitter's keys after the seeding (the mode first, as `body_record`): the
-    world keys, the seat's own set where the row reads at the seat (one Node, admitted under
-    body_record alone), the weight by the generator's trial, the ticks from the window read,
-    the stamp over the whole file."""
+    world key `body_record` (the seat's form), the seat's own set where the row reads at the
+    seat (one Node), the weight by the generator's trial or the row's own `weight` (9.85 (5)
+    (a): g = 4 for the light clock), the ticks from the window read, the stamp over the whole
+    file. The world key `point_emitter` is retired (commit 7): the window is the law's one
+    giving."""
     massive.seed_on_the_mode(document)
     document["body_record"] = True
-    document["point_emitter"] = True
     if receiver:
         detector.receiver_set(document, "at_well", 0)
         detector.named_receiver(document, {0: "at_well"})
     document["input"] = input_stamp(document)
-    massive.point_weight(document, 0, PERIODS)
+    if weight is None:
+        massive.point_weight(document, 0, PERIODS)
+    else:
+        emitter = document["measured"][0]["emitter"]
+        limit = 12 * PERIODS * int(emitter["period"])
+        read = massive.point_window(document, 0, weight, limit)
+        assert read is not None, (weight, limit)
+        emitter["weight"] = weight
+        emitter["window_read"] = read  # HOST: the trial's window at the row's weight
     window = int(document["measured"][0]["emitter"]["window_read"])
     document["ticks"] = ticks_of_window(window)
     document["input"] = input_stamp(document)
@@ -152,9 +169,15 @@ def point_light_clock() -> dict:
     document["measured"].append(
         detector.mirror_slab([CLOCK_SEAT_X + CLOCK_ARM, 0, 0], [detector.MIRROR_DEPTH, 1, 1])
     )
+    # ROW (iv)'S FIX (ALGEBRA.md 9.85 (5); commit 7): the mirror behind the seat, and the
+    # weight g = 4 so that the window is shorter than the arm's round trip
+    document["measured"].append(detector.mirror_behind([CLOCK_SEAT_X, 0, 0], [1, 0, 0], [1, 1, 1]))
     period = 35
     return finish(
-        document, lambda window: STOCK * (window + 2 * period + 2 * CLOCK_ARM * 2) + 1000, receiver=True
+        document,
+        lambda window: STOCK * (window + 2 * period + 2 * CLOCK_ARM * 2) + 1000,
+        receiver=True,
+        weight=CLOCK_WEIGHT,
     )
 
 

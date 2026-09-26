@@ -26,7 +26,6 @@ from event_universe.diagnostics.massive_record_margin import (
 from event_universe.events.world import (
     LAW_IDENTIFIER,
     MOST_FAMILIES,
-    given_train_norm,
     input_stamp,
     mode_residual,
     parse_nature_beam_world,
@@ -320,19 +319,15 @@ def test_the_input_stamp_the_law_and_the_hash():
     def clock(document):
         document["measured"][0]["clock"][0] += 1
 
-    def given(document):
-        # a unit on the train's profile with its norm recomputed (the norm check
-        # passes; the stamp's hash is what refuses, ALGEBRA.md 9.22 (7) (i))
-        train = document["measured"][0]["emitter"]["given"]
-        train["now"][16] += 1
-        train["norm"] = given_train_norm(
-            train["now"], train["before"], (80, 1, 1), (0, 0, 0), (32, 1, 1), (1, 1), (False, True, True)
-        )
+    def weight(document):
+        # a unit on the window's weight (the loader admits it; the stamp's hash is what
+        # refuses, ALGEBRA.md 9.22 (7) (i); the train's profile retired at commit 7)
+        document["measured"][0]["emitter"]["weight"] += 1
 
     def ticks(document):
         document["ticks"] += 1
 
-    for change in (unit, clock, given, ticks):
+    for change in (unit, clock, weight, ticks):
         changed = emitter_world(stock=2)
         change(changed)
         with pytest.raises(ValueError, match="is not the digest of the file"):

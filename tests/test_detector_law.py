@@ -71,7 +71,7 @@ def emitter_body(
     runaway and refused at the margin rule."""
     emitter: dict = {
         "family": family,
-        "train": {"direction": direction or [1, 0, 0], "periods": 8},
+        "weight": 3,  # the window's weight (commit 7; the train retired)
     }
     if receiver is not None:
         emitter["receiver"] = receiver
@@ -91,7 +91,8 @@ def emitter_body(
         "spin": [0, 0, 0],
         "moment": [0, 0, 0],
         "pair": list(EMITTER_PAIR),
-        "seed": 1 << 20,
+        "seed": 1
+        << 10,  # the window's writes at the body's Nodes pile up about 300-fold and stay under the bound (commit 7)
         "margin": "control",
         "emitter": emitter,
     }
@@ -166,7 +167,6 @@ def chain_world(
         "detector_law": True,
         "width": 1,
         "body_record": False,
-        "point_emitter": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
         "amplitude_bound": 1 << 22,
@@ -382,7 +382,6 @@ def layer_world(receiver: object = None) -> dict:
         "detector_law": True,
         "width": 1,
         "body_record": False,
-        "point_emitter": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
         "amplitude_bound": 1 << 22,
@@ -413,7 +412,7 @@ def layer_world(receiver: object = None) -> dict:
 Seen = dict[int, tuple[int, list[int], list[int], int, int, int, int]]
 
 
-def run_layer(document: dict, ticks: int = 900) -> tuple[list[dict], DetectorLawSimulation, Seen]:
+def run_layer(document: dict, ticks: int = 3000) -> tuple[list[dict], DetectorLawSimulation, Seen]:
     """The layer world stepped with the books balanced at every interval; the gather lines,
     the simulation, and per clicked record what the click read (a spy on the engine's
     `_ladder_click`: the running total before the interval, the interval's increments, the
@@ -524,7 +523,7 @@ def planted_layer(order: tuple[str, ...]) -> tuple[list[dict], DetectorLawSimula
 
 
 def lockstep_givings(
-    first: dict, second: dict, ticks: int = 900
+    first: dict, second: dict, ticks: int = 3000
 ) -> tuple[list[dict], list[dict], int | None]:
     """Two worlds stepped together (BUILD.md section 26 item 32, FINDING C): their giving
     lines and the first interval at which the family of clicks' level differs between them
@@ -635,7 +634,7 @@ def test_the_increment_ladder_over_the_named_sets():
     assert sum(1 for _same, read in agreed if read < differs) >= 3
     # one set on the emitter's row alone books a third of the flux: the last click at 1014
     # under the one border (the well two Links from the closed face; item 28), COMPUTATION
-    one, _, _ = run_layer(layer_world("s1"), ticks=1200)
+    one, _, _ = run_layer(layer_world("s1"))  # every giving a window and a rung (commit 7)
     assert len(one) == 8 and all(gather["chosen"][0][0] == "s1" for gather in one)
     with pytest.raises(ValueError, match="names 'screen', which no detector set declares"):
         parse_nature_beam_world(layer_world(["s0", "screen"]))
@@ -658,7 +657,8 @@ def test_detector_is_one_connected_cube_of_side_three():
     the periodic seam (y = 8, 0, 1: one piece, one box), refuses a disconnected set (two
     bodies at (40, 2) and (43, 2), naming the two pieces) and refuses a connected set that
     fills no box (the 3 x 3 box less its centre, naming its Nodes); a set bound to a block
-    refuses a block of side 1 as its Nodes and admits one of side 3; the engine reads the
+    admits a block of side 1 as its Nodes (SINCE COMMIT 7 a body is its own detector whatever
+    its support, ALGEBRA.md 9.92, record 2109) and one of side 3; the engine reads the
     admitted cube as ONE detector whose Nodes are the cube's (the click line names the set and
     places no Node)."""
     box = [[x, y, 0] for x in (40, 41, 42) for y in (2, 3, 4)]
@@ -685,10 +685,7 @@ def test_detector_is_one_connected_cube_of_side_three():
         else:
             with pytest.raises(ValueError, match=refusal):
                 parse_nature_beam_world(document)
-    for side, refusal in (
-        (1, r"a block of extents \[1, 1, 1\]; a detector is one cube of side 3"),
-        (3, None),
-    ):
+    for side, refusal in ((1, None), (3, None)):
         document = layer_world()
         document["measured"].append(
             {

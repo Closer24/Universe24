@@ -111,8 +111,9 @@ def test_the_extents_refusals_and_the_fit_per_axis():
     parse_nature_beam_world(document)
     document["measured"][-1]["extents"] = [2, 1, 1]
     document["input"] = input_stamp(document)
-    with pytest.raises(ValueError, match=r"a block of extents \[2, 1, 1\]; a detector is one cube"):
-        parse_nature_beam_world(document)
+    # SINCE COMMIT 7 a body is its own detector whatever its support (ALGEBRA.md 9.92, record
+    # 2109): the slab of two Nodes bound as its own set is admitted
+    parse_nature_beam_world(document)
 
 
 def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():

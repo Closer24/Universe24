@@ -11,7 +11,7 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 116712,
+ "ticks": 35304,
  "age_bound": 1048576,
  "K": 1073741824,
  "N": 64,
@@ -24,7 +24,6 @@
  "detector_law": true,
  "massive_record": true,
  "body_record": true,
- "point_emitter": true,
  "engine": "examples/events/engine_start.json",
  "families": "examples/events/families.json",
  "measured": [
@@ -479,11 +478,11 @@
      77,
      25
     ],
+    "weight": 4,
     "period": 35,
     "norm": 180255439696889394,
     "norm_denominator": 3948169,
-    "weight": 1,
-    "window_read": 1498
+    "window_read": 226
    },
    "clock": [
     2063848,
@@ -527,6 +526,43 @@
    ],
    "ramp": 0,
    "start": 0
+  },
+  {
+   "position": [
+    98,
+    0,
+    0
+   ],
+   "family": "charge",
+   "amount": 1,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "held": {},
+   "extents": [
+    2,
+    1,
+    1
+   ],
+   "pair": [
+    1,
+    2
+   ],
+   "charge": 0,
+   "spin": [
+    0,
+    0,
+    0
+   ],
+   "moment": [
+    0,
+    0,
+    0
+   ],
+   "ramp": 0,
+   "start": 0
   }
  ],
  "detectors": [
@@ -538,6 +574,6 @@
  "face_depth": 32,
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "c6ac17ac31630971df3cbedee97fc9dff29637ef5a15bf9ae650b8714428fb95"
+  "hash": "d3f61b8e728866011e564b9a67fbe151f55a2a224edceb631cd4c1327b53a3b7"
  }
 }

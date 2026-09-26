@@ -24,7 +24,6 @@
  "detector_law": true,
  "massive_record": true,
  "body_record": false,
- "point_emitter": false,
  "engine": "examples/events/engine_start.json",
  "families": "examples/events/families.json",
  "measured": [
@@ -262483,6 +262482,6 @@
  "mode_axis": "x",
  "input": {
   "law": "detector-law algebra 9.25 (2026-09-25)",
-  "hash": "31050cea92381a014ba6899f4911bdff9e082776e1f9d76e71ea28281598d0e6"
+  "hash": "8380d9ac5e5886a4a5806412fc2c835c6ca3fedc45399c7c244d8bff195cb3a6"
  }
 }

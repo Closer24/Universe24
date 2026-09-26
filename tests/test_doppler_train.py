@@ -1,4 +1,8 @@
-"""DOPPLER, THE GIVEN ROWS OF A MOVING BODY CARRY ITS MOTION (ALGEBRA.md 9.62 (4), adopted by
+"""CANCELLED (the one stroke's commit 7; ALGEBRA.md 9.85 (5), 9.91 (10) 7; the model owner's
+record 2102: marked and disconnected, not deleted): the train and its boosted clock are retired;
+a moving body's light is its own rotation at its Node, written by the window (9.63 (3)); this
+suite is skipped whole, its text kept as the record.
+DOPPLER, THE GIVEN ROWS OF A MOVING BODY CARRY ITS MOTION (ALGEBRA.md 9.62 (4), adopted by
 the model owner through the Boss, record 2042; BUILD.md section 26 item 49): (1) the
 generator's boosted clock: on the long wave [4096, 21] of N = 2048 (k = 0.299, c_l = 0.573)
 at v = 1 / 4 the forward wave number k gamma (1 + v / c_l) = 0.478 gives the wavelength 13
@@ -24,6 +28,11 @@ from tests.test_toward_nature import document, load_module
 
 ROOT = Path(__file__).resolve().parents[1]
 generator = load_module("make_worlds")
+
+pytestmark = pytest.mark.skip(
+    reason="CANCELLED at commit 7: the train and its Doppler clock are retired, a moving body's "
+    "light is its own rotation written by the window (ALGEBRA.md 9.85 (5), 9.63 (3); record 2102)"
+)
 
 
 def test_the_boosted_clock_is_the_wave_number_times_gamma_one_plus_or_minus_v_over_c():

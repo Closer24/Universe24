@@ -273,7 +273,6 @@ def world(
         "detector_law": True,
         "massive_record": True,
         "body_record": False,
-        "point_emitter": False,
         # THE ENGINE START FILE (record 2089; BUILD.md section 26 item 57): the one
         # canonical copy, referenced by its repository path
         "engine": "examples/events/engine_start.json",
@@ -317,6 +316,12 @@ def seed_on_the_mode(document: dict) -> None:
     gets `seed` the profile of `mode_profile` at that scalar, its `margin` made explicit
     (the loader admits a profile with `margin` declared; "pin" is the loader's default). A
     silent block (seed 0) and a barrier (a raised pair) keep their keys."""
+    # the loader requires the window's weight on every emitter (commit 7): the mode and the
+    # rung are read at the weight 1 where none is declared yet; the row's generator chooses
+    # the weight after the seeding (`point_weight`, `finish_windows`), a test declares its own
+    for entry in document["measured"]:
+        if "emitter" in entry:
+            entry["emitter"].setdefault("weight", 1)
     for number, entry in enumerate(document["measured"]):
         if "side" not in entry and "extents" not in entry:
             continue
@@ -339,13 +344,10 @@ def seed_on_the_mode(document: dict) -> None:
             entry["proper_clock"] = proper_clock(document, number)
     for number, entry in enumerate(document["measured"]):
         if "emitter" in entry:
-            if "train" not in entry["emitter"]:
-                # THE POINT EMITTER (ALGEBRA.md 9.71 (1); item 50): no train, the rung
-                # alone (the world key, the weight and the seat are set after the seeding,
-                # as `body_record` is: the mode is computed first)
-                emitter_rung(document, number)
-            else:
-                given_train(document, number)
+            # THE WINDOW IS THE ONE GIVING (ALGEBRA.md 9.85 (5), 9.71 (1); commit 7): the
+            # rung alone (the weight is set after the seeding by `point_weight`: the mode is
+            # computed first); the given train's `given_train` is CANCELLED, called nowhere
+            emitter_rung(document, number)
     placement_check(document)
     stamped(document)
 
@@ -388,17 +390,17 @@ def emitter_rung(document: dict, number: int):  # type: ignore[no-untyped-def]
     period = period_of(block_margin(world, number))
     emitter["period"] = period
     emitter["norm"] = excitation_norm(world, number, period)
-    if "train" not in emitter:
-        # THE POINT EMITTER (9.71 (1) (d); item 50): the action's exact rational, the
-        # window's T; the train emitter's norm stays the numerator alone
-        action = excitation_action(world, number, period)
-        assert action.numerator == emitter["norm"]
-        emitter["norm_denominator"] = int(action.denominator)
+    # THE WINDOW'S T (9.71 (1) (d); item 50): the action's exact rational
+    action = excitation_action(world, number, period)
+    assert action.numerator == emitter["norm"]
+    emitter["norm_denominator"] = int(action.denominator)
     return parse_nature_beam_world(stamped(document))
 
 
 def given_train(document: dict, number: int) -> None:
-    """THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27): the emitter body
+    """CANCELLED (commit 7; record 2102: marked, disconnected, not deleted): the given train
+    is retired, every giving is the window's (ALGEBRA.md 9.85 (5), 9.71 (1)); called nowhere.
+    THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27): the emitter body
     `number`'s `given` profile, the character of one **K** over its declared periods under the
     window across the transverse extents and the tapers along **K**, written on the body's
     Nodes at both levels (t = 0 and t = -1), the generator's integers at the amplitude
@@ -533,7 +535,8 @@ def train_rows(
     amplitude: float,
     spanned: tuple[bool, ...],
 ) -> tuple[list[int], list[int]]:
-    """The train's two levels over a box (`given_train`): the character of **K** under the
+    """CANCELLED (commit 7): the given train's helper, disconnected, not deleted.
+    The train's two levels over a box (`given_train`): the character of **K** under the
     Hann window across the transverse extents and the tapers over a quarter of the length at
     each end, at the amplitude, x-major (HOST, the generator's floats rounded once)."""
     length = extents[axis]
@@ -571,7 +574,8 @@ def train_rows(
 def doppler_factor(
     given_clock: list[int], phase_steps: int, given_pair: list[int], pace: Fraction
 ) -> float:
-    """D = sqrt((1 + beta) / (1 - beta)), beta = v / c_l, the Doppler factor of a light train
+    """CANCELLED (commit 7): the given train's helper, disconnected, not deleted.
+    D = sqrt((1 + beta) / (1 - beta)), beta = v / c_l, the Doppler factor of a light train
     given along the motion (ALGEBRA.md 9.74 (3), 9.75 (1)): the boosted norm D T_rest forward
     and T_rest / D backward; c_l the given family's group pace at the rest clock's k
     (`group_pace`). HOST, the generator's float; the file carries integers."""
@@ -603,7 +607,8 @@ def group_pace(pair: tuple[int, int], k: float) -> float:
 def doppler_clock(
     given_clock: list[int], phase_steps: int, given_pair: list[int], pace: Fraction, forward: bool
 ) -> tuple[list[int], int]:
-    """DOPPLER (ALGEBRA.md 9.62 (4), adopted by the model owner, record 2042; BUILD.md section
+    """CANCELLED (commit 7): the given train's helper, disconnected, not deleted.
+    DOPPLER (ALGEBRA.md 9.62 (4), adopted by the model owner, record 2042; BUILD.md section
     26 item 49): the given rows of a moving body carry its motion in the given family's
     representation. For a train given along the motion (`forward`) or against it, the wave
     number k = 2 pi p / (2 N q) of the given family's clock is boosted to k' = k gamma (1 +- v /
@@ -630,9 +635,18 @@ def doppler_clock(
 
 
 def point_window(document: dict, number: int, weight: int, limit: int) -> int | None:
-    """HOST: the first window's length of the point emitter measured[`number`] at the weight
-    `weight` on the document as it stands (the keys `body_record` and `point_emitter` on),
-    run up to `limit` intervals; None when no window closed by then."""
+    """HOST: the first window's length of the emitter measured[`number`] at the weight
+    `weight` on the document as it stands, run up to `limit` intervals; None when no window
+    closed by then."""
+
+    window, _ = window_reading(document, number, weight, limit)
+    return window
+
+
+def window_reading(document: dict, number: int, weight: int, limit: int) -> tuple[int | None, bool]:
+    """HOST: the first window's length at the weight, or None; and whether the run was refused
+    for a row above the world's amplitude bound (a body of several Nodes writing at all its
+    Nodes piles the given row up inside itself; the weight is then too high)."""
     from event_universe.events.detector_law import DetectorLawSimulation
     from event_universe.events.world import parse_nature_beam_world
 
@@ -642,41 +656,77 @@ def point_window(document: dict, number: int, weight: int, limit: int) -> int | 
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(stamped(trial)), observer=lines.append)
     for _ in range(limit):
-        simulation.step()
+        try:
+            simulation.step()
+        except RuntimeError as error:
+            if "amplitude bound" in str(error):
+                return None, True
+            raise
         for line in lines:
             if line.get("event") == "giving" and line.get("measured") == number:
-                return int(line["window"])
+                return int(line["window"]), False
         lines.clear()
-    return None
+    return None, False
 
 
-def point_weight(document: dict, number: int, periods: int) -> int:
-    """THE POINT EMITTER'S WEIGHT (ALGEBRA.md 9.71 (1); BUILD.md section 26 item 50): the
+def point_weight(document: dict, number: int, periods: int, start: int = 1) -> int:
+    """THE EMITTER'S WEIGHT (ALGEBRA.md 9.71 (1), 9.85 (5); BUILD.md section 26 item 50): the
     integer g at which the window of measured[`number`] is nearest `periods` periods of the
     body's rotation (the window's length falls about as 1 / g^2, the outward norm growing as
-    the square of the written amplitude): the window at g = 1 read first, the estimate g* =
-    sqrt(n_1 / target) and its neighbours read, the nearest taken; written as the emitter's
-    `weight`. HOST, a trial run of the generator; the engine reads the integer."""
+    the square of the written amplitude): the window at g = `start` read first, the estimate
+    g* = start sqrt(n_start / target) and its neighbours read, the nearest taken; written as
+    the emitter's `weight`. HOST, a trial run of the generator; the engine reads the integer.
+    SINCE COMMIT 7 every emitter's weight is chosen here (the window the one giving); a
+    light clock's window is aimed shorter than its arm's round trip (9.85 (5) (a))."""
     emitter = document["measured"][number]["emitter"]
     target = periods * int(emitter["period"])
-    limit = 12 * target
-    first = point_window(document, number, 1, limit)
+    # the window at g = 1 runs about 32 periods (the point chain's 1124 intervals at P = 35);
+    # where a weight's window does not close within the limit (a moving body at g = 1: the
+    # write chases the hop) the start weight is doubled, up to six times
+    limit = max(12 * target, 64 * int(emitter["period"]))
+    readings: dict[int, int] = {}
+    over: set[int] = set()  # the weights whose rows rise above the world's amplitude bound
+
+    def read(weight: int) -> int | None:
+        window, exceeded = window_reading(document, number, weight, limit * weight * weight)
+        if exceeded:
+            over.add(weight)
+        elif window is not None:
+            readings[weight] = window
+        return window
+
+    first = None
+    for _ in range(7):
+        first = read(start)
+        if first is not None or start in over:
+            break
+        start *= 2
+    while start > 1 and start in over:  # the start weight itself too high: halved until it fits
+        start //= 2
+        first = read(start)
     if first is None:
         raise ValueError(
-            f"measured[{number}]: the point emitter's window at the weight 1 did not close within "
-            f"{limit} intervals; nothing written"
+            f"measured[{number}]: the emitter's window did not close within {limit} intervals at "
+            f"the weights tried up to {start}, or its rows rose above the bound; nothing written"
         )
-    guess = max(1, round(math.sqrt(first / target)))
-    readings: dict[int, int] = {1: first}
+    guess = max(1, round(start * math.sqrt(first / target)))
     for weight in sorted({guess, guess + 1, max(1, guess - 1)}):
-        if weight not in readings:
-            window = point_window(document, number, weight, limit)
-            if window is not None:
-                readings[weight] = window
+        if weight not in readings and weight not in over and all(weight < w for w in over):
+            read(weight)
     best = min(readings, key=lambda w: (abs(readings[w] - target), w))
     emitter["weight"] = best
     emitter["window_read"] = readings[best]  # HOST: the trial's window at the chosen weight
     return best
+
+
+def giving_ticks(document: dict, number: int, extra: int) -> int:
+    """HOST: a run's length covering every giving of the emitter measured[`number`]: its stock
+    times (the window read at its weight plus two periods of its rotation, the rung's wait)
+    plus `extra` intervals (the flights declared by the row's generator)."""
+    entry = document["measured"][number]
+    emitter = entry["emitter"]
+    stock = int(entry["stock"]) if "stock" in entry else int(entry["held"][emitter["family"]])
+    return stock * (int(emitter["window_read"]) + 2 * int(emitter["period"])) + extra
 
 
 def train_run(
@@ -691,7 +741,8 @@ def train_run(
     clock: tuple[int, int],
     pair: tuple[int, int] | None = None,
 ) -> int:
-    """THE GENERATOR'S RUN OF A TRAIN (HOST; ALGEBRA.md 9.25 (11) (a)): the train's two
+    """CANCELLED (commit 7): the given train's helper, disconnected, not deleted.
+    THE GENERATOR'S RUN OF A TRAIN (HOST; ALGEBRA.md 9.25 (11) (a)): the train's two
     levels planted on the given family's VACUUM of the world's families, on a check board of
     the world's transverse shape and faces whose axis along **K** is open and long (a back
     margin of one train's length behind the tail, the train, the plane one Node deep
@@ -784,7 +835,8 @@ def given_clock_of(document: dict, number: int) -> tuple[int, int]:
 
 
 def train_passage_flux(document: dict, number: int, now: list[int], before: list[int]) -> int:
-    """THE FLUX CHECK'S READING (ALGEBRA.md 9.25 (11) (a)): the train alone on the vacuum,
+    """CANCELLED (commit 7): the given train's helper, disconnected, not deleted.
+    THE FLUX CHECK'S READING (ALGEBRA.md 9.25 (11) (a)): the train alone on the vacuum,
     the plane TRAIN_FLUX_DISTANCE Links ahead of its head (`train_run`)."""
     entry = document["measured"][number]
     direction = entry["emitter"]["train"]["direction"]

@@ -206,7 +206,7 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     for _ in range(document["ticks"]):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-        givings = sum(1 for line in lines if line["event"] == "giving")
+        givings = simulation.blocks[0].givings  # the quantum moves at the window's open (commit 7)
         clicks = sum(1 for line in lines if line["event"] == "gather")
         assert int(simulation.level_of("sign")[21, 0, 0]) == -5 + givings
         assert int(simulation.level_of("sign")[70, 0, 0]) == -1 - clicks

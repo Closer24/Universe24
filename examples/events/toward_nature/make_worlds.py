@@ -59,7 +59,6 @@ from __future__ import annotations
 import importlib.util
 import json
 import sys
-from fractions import Fraction
 from pathlib import Path
 
 from event_universe.events.world import input_stamp
@@ -132,32 +131,31 @@ def clock_world(
     train_length: int | None = None,
     doppler: bool = False,
     arm: int | None = None,
+    kind: list[int] | None = None,
+    weight: int | None = None,
 ) -> dict:
     """The light clock's form (`detector.light_clock`) with the arm's ends and the
-    ticks as given, Gamma = NODE_CLOCK, optional holder bodies and an optional
-    hop of the whole clock along +x every `hop_every` intervals; the given clock,
-    its circle N and the train's length the light clock's unless given (the
-    long-wave rows of 9.62 (1) give theirs). DOPPLER (ALGEBRA.md 9.62 (4); item 49):
-    with `doppler` the moving emitter's train is given at the boosted wave number
-    k gamma (1 + v / c_l) along its motion (`massive.doppler_clock`), declared as
-    the train's own clock, the body's length the periods of the boosted
-    wavelength; with `arm` the mirror stands that many Links beyond the train's
-    head (in place of `mirror_x`)."""
+    ticks as given (at least; the windows read may lengthen the run), Gamma =
+    NODE_CLOCK, optional holder bodies and an optional hop of the whole clock
+    along +x every `hop_every` intervals; the given clock, its circle N and the
+    retired train's length (the emitter's one Node stands at its head) the light
+    clock's unless given (the long-wave rows of 9.62 (1) give theirs). SINCE
+    COMMIT 7 (ALGEBRA.md 9.85 (5)) the emitter gives by the window at its own
+    rotation, a mirror of depth 2 behind it; `doppler` is CANCELLED with the train
+    (a moving body's light is its own rotation at its Node, 9.63 (3)); with `arm`
+    the mirror stands that many Links beyond the seat (in place of `mirror_x`)."""
     given_clock = list(detector.GIVEN_CLOCK) if given_clock is None else list(given_clock)
     phase_steps = detector.PHASE_STEPS if phase_steps is None else phase_steps
     train_length = detector.TRAIN_LENGTH if train_length is None else train_length
-    train_clock: list[int] | None = None
-    if doppler:
-        assert hop_every is not None, "Doppler is the moving body's"
-        train_clock, wavelength = massive.doppler_clock(
-            given_clock, phase_steps, [1, 1], Fraction(1, hop_every), True
-        )
-        train_length = detector.TRAIN_PERIODS * wavelength
+    # CANCELLED (commit 7): the Doppler clock of the retired train (`massive.doppler_clock`);
+    # a moving body's light is its own rotation at its Node, written by the window
+    # (ALGEBRA.md 9.85 (5) answer 1; 9.63 (3))
+    assert not doppler or hop_every is not None, "Doppler is the moving body's"
     if arm is not None:
         mirror_x = emitter_x + train_length + arm
-    blocks = [detector.emitter([emitter_x, 0, 0], [train_length, 3, 3], detector.WELL_FULL, [1, 0, 0])]
-    if train_clock is not None:
-        blocks[0]["emitter"]["train"]["clock"] = train_clock
+    # THE EMITTER ONE NODE at the retired train's head (its last Node): the arm as before
+    seat_x = emitter_x + train_length - 1
+    blocks = [detector.emitter([seat_x, 0, 0], [1, 3, 3], kind=kind)]
     document = massive.world(
         name,
         "PIN",
@@ -175,6 +173,8 @@ def clock_world(
     document["face_depth"] = detector.FACE_DEPTH
     detector.bounded(document)
     document["measured"].append(detector.mirror_slab([mirror_x, 0, 0], [detector.MIRROR_DEPTH, 3, 3]))
+    # the mirror behind the seat (ALGEBRA.md 9.85 (5) (b); commit 7), moving with the clock
+    document["measured"].append(detector.mirror_behind([seat_x, 0, 0], [1, 0, 0], [1, 3, 3]))
     if hop_every is not None:
         for entry in document["measured"]:
             # one Link every hop_every intervals for every block of the clock:
@@ -188,7 +188,21 @@ def clock_world(
     detector.receiver_set(document, "at_well", 0)
     detector.named_receiver(document, {0: "at_well"})
     massive.seed_on_the_mode(document)
-    return document
+    # the window's weight and the run's length (commit 7): every giving's window and rung,
+    # then two arms' flights and a margin
+    return detector.finish_windows(
+        massive,
+        document,
+        [0],
+        3 * 2 * (mirror_x - seat_x) + 300,
+        weights=None if weight is None else {0: weight},
+    )
+
+
+def weight_of(document: dict) -> int:
+    """The emitter's weight read by the trial on the first world of a pair (the same instrument
+    in both worlds of the pair)."""
+    return int(document["measured"][0]["emitter"]["weight"])
 
 
 def holder_nodes(position: list[int], extents: list[int], amount: int) -> list[dict]:
@@ -247,82 +261,86 @@ def bending() -> dict:
 
 
 def worlds() -> dict[str, dict]:
+    """The nine worlds; each pair (the resting clock and the moving one, the well's top and
+    its bottom) carries one emitter weight, read by the trial on the first of the pair."""
     arm_start = REDSHIFT_EMITTER_X + detector.TRAIN_LENGTH
     arm = [REDSHIFT_MIRROR_X - arm_start, 3, 3]
-    return {
-        "redshift_top": clock_world(
-            "redshift-top", REDSHIFT_SHAPE, REDSHIFT_EMITTER_X, REDSHIFT_MIRROR_X, REDSHIFT_TICKS
+    out: dict[str, dict] = {}
+    out["redshift_top"] = clock_world(
+        "redshift-top", REDSHIFT_SHAPE, REDSHIFT_EMITTER_X, REDSHIFT_MIRROR_X, REDSHIFT_TICKS
+    )
+    out["redshift_bottom"] = clock_world(
+        "redshift-bottom",
+        REDSHIFT_SHAPE,
+        REDSHIFT_EMITTER_X,
+        REDSHIFT_MIRROR_X,
+        REDSHIFT_TICKS,
+        holder=holder_nodes([arm_start, 0, 0], arm, WELL_LEVEL),
+        weight=weight_of(out["redshift_top"]),
+    )
+    out["lorentz_rest"] = clock_world(
+        "lorentz-rest", LORENTZ_SHAPE, LORENTZ_EMITTER_X, LORENTZ_MIRROR_X, LORENTZ_TICKS
+    )
+    out["lorentz_moving"] = clock_world(
+        "lorentz-moving",
+        LORENTZ_SHAPE,
+        LORENTZ_EMITTER_X,
+        LORENTZ_MIRROR_X,
+        LORENTZ_TICKS,
+        hop_every=HOP_EVERY,
+        weight=weight_of(out["lorentz_rest"]),
+    )
+    out["bending"] = bending()
+    long_rows = dict(
+        given_clock=LONG_GIVEN_CLOCK,
+        phase_steps=LONG_PHASE_STEPS,
+        train_length=LONG_TRAIN_LENGTH,
+        kind=detector.SEAT_KIND,  # the long rows' seat: omega = 0.178, the wavelength about 20
+    )
+    out["lorentz_rest_long"] = clock_world(
+        "lorentz-rest-long",
+        LORENTZ_SHAPE,
+        LONG_LORENTZ_EMITTER_X,
+        0,
+        LONG_LORENTZ_TICKS,
+        arm=LONG_LORENTZ_ARM,
+        **long_rows,
+    )
+    out["lorentz_moving_long"] = clock_world(
+        "lorentz-moving-long",
+        LORENTZ_SHAPE,
+        LONG_LORENTZ_EMITTER_X,
+        0,
+        LONG_LORENTZ_TICKS,
+        hop_every=HOP_EVERY,
+        doppler=True,
+        arm=LONG_LORENTZ_ARM,
+        weight=weight_of(out["lorentz_rest_long"]),
+        **long_rows,
+    )
+    out["redshift_top_long"] = clock_world(
+        "redshift-top-long",
+        REDSHIFT_SHAPE,
+        LONG_REDSHIFT_EMITTER_X,
+        LONG_REDSHIFT_MIRROR_X,
+        LONG_REDSHIFT_TICKS,
+        **long_rows,
+    )
+    out["redshift_bottom_long"] = clock_world(
+        "redshift-bottom-long",
+        REDSHIFT_SHAPE,
+        LONG_REDSHIFT_EMITTER_X,
+        LONG_REDSHIFT_MIRROR_X,
+        LONG_REDSHIFT_TICKS,
+        holder=holder_nodes(
+            [LONG_REDSHIFT_EMITTER_X + LONG_TRAIN_LENGTH, 0, 0],
+            [LONG_REDSHIFT_MIRROR_X - LONG_REDSHIFT_EMITTER_X - LONG_TRAIN_LENGTH, 3, 3],
+            WELL_LEVEL,
         ),
-        "redshift_bottom": clock_world(
-            "redshift-bottom",
-            REDSHIFT_SHAPE,
-            REDSHIFT_EMITTER_X,
-            REDSHIFT_MIRROR_X,
-            REDSHIFT_TICKS,
-            holder=holder_nodes([arm_start, 0, 0], arm, WELL_LEVEL),
-        ),
-        "lorentz_rest": clock_world(
-            "lorentz-rest", LORENTZ_SHAPE, LORENTZ_EMITTER_X, LORENTZ_MIRROR_X, LORENTZ_TICKS
-        ),
-        "lorentz_moving": clock_world(
-            "lorentz-moving",
-            LORENTZ_SHAPE,
-            LORENTZ_EMITTER_X,
-            LORENTZ_MIRROR_X,
-            LORENTZ_TICKS,
-            hop_every=HOP_EVERY,
-        ),
-        "bending": bending(),
-        "lorentz_rest_long": clock_world(
-            "lorentz-rest-long",
-            LORENTZ_SHAPE,
-            LONG_LORENTZ_EMITTER_X,
-            0,
-            LONG_LORENTZ_TICKS,
-            given_clock=LONG_GIVEN_CLOCK,
-            phase_steps=LONG_PHASE_STEPS,
-            train_length=LONG_TRAIN_LENGTH,
-            arm=LONG_LORENTZ_ARM,
-        ),
-        "lorentz_moving_long": clock_world(
-            "lorentz-moving-long",
-            LORENTZ_SHAPE,
-            LONG_LORENTZ_EMITTER_X,
-            0,
-            LONG_LORENTZ_TICKS,
-            hop_every=HOP_EVERY,
-            given_clock=LONG_GIVEN_CLOCK,
-            phase_steps=LONG_PHASE_STEPS,
-            train_length=LONG_TRAIN_LENGTH,
-            doppler=True,
-            arm=LONG_LORENTZ_ARM,
-        ),
-        "redshift_top_long": clock_world(
-            "redshift-top-long",
-            REDSHIFT_SHAPE,
-            LONG_REDSHIFT_EMITTER_X,
-            LONG_REDSHIFT_MIRROR_X,
-            LONG_REDSHIFT_TICKS,
-            given_clock=LONG_GIVEN_CLOCK,
-            phase_steps=LONG_PHASE_STEPS,
-            train_length=LONG_TRAIN_LENGTH,
-        ),
-        "redshift_bottom_long": clock_world(
-            "redshift-bottom-long",
-            REDSHIFT_SHAPE,
-            LONG_REDSHIFT_EMITTER_X,
-            LONG_REDSHIFT_MIRROR_X,
-            LONG_REDSHIFT_TICKS,
-            holder=holder_nodes(
-                [LONG_REDSHIFT_EMITTER_X + LONG_TRAIN_LENGTH, 0, 0],
-                [LONG_REDSHIFT_MIRROR_X - LONG_REDSHIFT_EMITTER_X - LONG_TRAIN_LENGTH, 3, 3],
-                WELL_LEVEL,
-            ),
-            given_clock=LONG_GIVEN_CLOCK,
-            phase_steps=LONG_PHASE_STEPS,
-            train_length=LONG_TRAIN_LENGTH,
-        ),
-    }
+        weight=weight_of(out["redshift_top_long"]),
+        **long_rows,
+    )
+    return out
 
 
 def main() -> None:

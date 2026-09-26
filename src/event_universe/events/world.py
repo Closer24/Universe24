@@ -449,10 +449,8 @@ WORLD_KEYS = {
     # false by default (the lattice body); a host form under its own
     # identity, gated by the equivalence test of 9.46 (4)
     "body_record",
-    # THE POINT EMITTER (ALGEBRA.md 9.69 (2), 9.71 (1); BUILD.md section 26 item
-    # 50): under its own identity, off by default; the seat's rotation written
-    # into the given family's row at the seat over a window
-    "point_emitter",
+    # `point_emitter` RETIRED (commit 7): the window is the law's one giving
+    # (ALGEBRA.md 9.85 (5), 9.91 (10) 7), the key refused by name (RETIRED_KEYS)
     # massive-record-v1: `probes`, declared Nodes whose light amplitude the
     # record writes per interval (a GAMEBOARD reading of the rows), a list
     # of Nodes, admitted under `massive_record` alone.
@@ -1895,12 +1893,12 @@ class EmitterDefinition:
     # THE POINT EMITTER'S NORM DENOMINATOR (9.71 (1) (d); item 50): the
     # excitation's action T as the exact rational norm / norm_denominator,
     # in the form's units, which the window's outward norm is read against;
-    # None on a train emitter; required under `point_emitter`
+    # required on every emitter (commit 7: the window the one giving)
     norm_denominator: int | None = None
     # THE POINT EMITTER'S WEIGHT g (ALGEBRA.md 9.71 (1) (b); item 50): the
     # body's coupling to the given family, one integer, the seat's rotation
     # copied at that weight into the given row at the seat every interval of
-    # the window; None on a train emitter; required under `point_emitter`
+    # the window; required on every emitter (commit 7: the window the one giving)
     weight: int | None = None
     # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md 9.82 (3) (d), 9.91 (1); commit 4): the
     # index in the given family's parts, 0 on a scalar family, 1 + the axis of the
@@ -2278,11 +2276,9 @@ class NatureBeamWorld:
     # (a Node with a shape), its profile read and never stepped; false, the
     # default, the lattice body (its own rows on the GameBoard)
     body_record: bool = False
-    # THE POINT EMITTER (ALGEBRA.md 9.69 (2), 9.71 (1); BUILD.md section 26 item
-    # 50; the world key `point_emitter`, under its own identity, off by
-    # default): every emitting body gives by the seat's rotation written into
-    # the given row at its seat over a window, at its declared `weight`; needs
-    # `body_record` (the seat) and refuses a `train`
+    # CANCELLED (commit 7): the world key `point_emitter` is retired, the window
+    # the law's one giving (ALGEBRA.md 9.85 (5), 9.71 (1); record 2082 (4)); the
+    # field stays False and is read nowhere
     point_emitter: bool = False
     # massive-record-v1: the probes, Nodes whose light amplitude is written
     # per interval (GAMEBOARD), empty by default.
@@ -2619,6 +2615,17 @@ RETIRED_KEYS = {
     "2066; BUILD.md section 26 item 51)",
     "charge_strength": "the family genericity: Lambda is the `weight` of the reading family's "
     "`reads` entry on the family of charge (record 2066; BUILD.md section 26 item 51)",
+    # THE WINDOW IS THE ONE GIVING (ALGEBRA.md 9.85 (5), 9.71 (1); record 2082 (4);
+    # the one stroke's commit 7): the point emitter is the law, no key; the given
+    # train is retired, its paths marked CANCELLED and disconnected (record 2102)
+    "point_emitter": "the window is the law's one giving: every emitter gives by its "
+    "rotation written into the given row at its Node at its `weight` (ALGEBRA.md 9.85 (5), "
+    "9.71 (1); commit 7); no world key",
+    "train": "the given train is retired: every giving is the window's, its length, shape "
+    "and wave number from the window and the given family's dispersion (ALGEBRA.md 9.85 "
+    "(5), 9.71 (1); commit 7)",
+    "given": "the given train's profile is retired with the train: the window writes the "
+    "given row (ALGEBRA.md 9.85 (5), 9.71 (1); commit 7)",
 }
 
 
@@ -5009,7 +5016,7 @@ def _emitter(
     (material). No wheel, no residue order and no seed: the residue is the
     law's (the clicking record's remainder at the giving Node, the wheel the
     pair's), and the keys are refused by name."""
-    _refuse_retired(value, label, ("wheel", "residue_order", "residue_seed"))
+    _refuse_retired(value, label, ("wheel", "residue_order", "residue_seed", "train", "given"))
     obj = _object(
         value,
         label,
@@ -5109,6 +5116,8 @@ def _emitter(
         else _integer(obj["norm_denominator"], f"{label}.norm_denominator", 1)
     )
     norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
+    # CANCELLED (commit 7): the given train's keys are refused by name above; the
+    # parse of `train` and `given` below is disconnected, kept as the record
     train: TrainDefinition | None = None
     if "train" in obj:
         train = _train(
@@ -6838,10 +6847,11 @@ def _detector_region(
     9.25 (7)), no box, a side below DETECTOR_SIDE where the GameBoard's extent
     allows it (record 1899). THE SEATED DETECTOR (ALGEBRA.md 9.46 (8) (c);
     the model owner's word of 2026-09-25 in Nature24's session, "start";
-    BUILD.md section 26 item 40): under `body_record` a detector may be ONE
-    Node, its seat, its six Links its Ports (the cube's fifty-four
-    HISTORY there, the counts rescaled by the seat's share); a set of more
-    than one Node keeps the cube rule."""
+    BUILD.md section 26 item 40; SINCE COMMIT 7 on every world, ALGEBRA.md
+    9.92, record 2109: several bodies on one Node each are several detectors):
+    a detector may be ONE Node, a body's Node, its six Links its Ports (the
+    cube's fifty-four HISTORY there, the counts rescaled by the Node's share);
+    a set of more than one Node keeps the cube rule."""
     if seated and len(set(positions)) == 1:
         return
     pieces = _connected_pieces(positions, shape, periodic)
@@ -6867,8 +6877,8 @@ def _detector_region(
             "sensitivity its whole cube and the click the detector's, never a Node's (the model "
             "owner's word of 2026-09-25, record 1899)"
             + (
-                "; under body_record a seat is one Node and a cube three or more, nothing between "
-                "(ALGEBRA.md 9.46 (8) (c); BUILD.md section 26 item 40)"
+                "; a detector is one Node (a body's) or a cube of three or more, nothing between "
+                "(ALGEBRA.md 9.46 (8) (c), 9.92; BUILD.md section 26 item 40; commit 7)"
                 if seated
                 else ""
             )
@@ -6948,20 +6958,14 @@ def _detectors(
                         )
                     taken.add(position)
                     bound_positions.append(position)
-                _detector_region(name, bound_positions, shape, periodic, seated=body_record)
+                _detector_region(name, bound_positions, shape, periodic, seated=True)
             else:
-                bound = measured[bound_block].block
-                assert bound is not None
-                least = [min(DETECTOR_SIDE, int(shape[axis])) for axis in range(3)]
-                # a seated body of one Node is its own detector under body_record (the
-                # seat's six Links its Ports; ALGEBRA.md 9.46 (8) (c); item 40)
-                seat = body_record and all(int(extent) == 1 for extent in bound.extents)
-                if not seat and any(bound.extents[axis] < least[axis] for axis in range(3)):
-                    raise ValueError(
-                        f"{BEAM_LAW}: the receiver {name!r} is the Nodes of measured[{bound_block}], "
-                        f"a block of extents {list(bound.extents)}; a detector is one cube of side "
-                        f"{DETECTOR_SIDE} or more (at least {least} on this GameBoard; record 1899)"
-                    )
+                # A BODY IS ITS OWN DETECTOR, whatever its support (ALGEBRA.md 9.92, the
+                # detectors' rule approved by the model owner, record 2109: a body of
+                # several Nodes is one detector, a body of one Node its own, its six Links
+                # its Ports, 9.46 (8) (c); item 40; commit 7): the cube rule of record
+                # 1899 is the free set's, not a body's
+                assert measured[bound_block].block is not None
             found.append(DetectorDefinition(name, tuple(bound_positions), threshold, block=bound_block))
             continue
         if "positions" not in obj:
@@ -6995,7 +6999,7 @@ def _detectors(
         # seam too), fill one box, and the box's sides are DETECTOR_SIDE or
         # more where the GameBoard's extent allows; separate places are
         # separate names
-        _detector_region(name, positions, shape, periodic, seated=body_record)
+        _detector_region(name, positions, shape, periodic, seated=True)
         threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
         if name.startswith(RESERVED_SET_PREFIX) or name in FACE_NAMES or name == LIFETIME_NAME:
             raise ValueError(
@@ -7130,7 +7134,11 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             "the law and every lamp givings records; remove the key (docs/MIGRATION.md, the "
             "amplitude law (vii-4))"
         )
-    _refuse_retired(document, "the world", ("wheel", "clock_family", "charge_family", "charge_strength"))
+    _refuse_retired(
+        document,
+        "the world",
+        ("wheel", "clock_family", "charge_family", "charge_strength", "point_emitter"),
+    )
     obj = _object(
         document,
         "the world",
@@ -7157,7 +7165,6 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                 "clock_stamp",
                 "massive_record",
                 "body_record",
-                "point_emitter",
                 "engine",
                 "measured",
                 "detectors",
@@ -7470,45 +7477,24 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     if detector_law:
         _held_bodies_checks(families, measured)
         _node_clock_bound(families, measured, amplitude_bound, node_clock)
-    point_emitter = obj.get("point_emitter", False)
-    if type(point_emitter) is not bool:
-        raise ValueError(
-            f"{BEAM_LAW}: point_emitter must be true or false (ALGEBRA.md 9.71 (1); off by default, "
-            "the train emitter)"
-        )
-    if point_emitter and not body_record:
-        raise ValueError(
-            f"{BEAM_LAW}: point_emitter needs body_record: true (the point emitter writes the seat's "
-            "rotation into the given row at the seat, ALGEBRA.md 9.69 (2), 9.71 (1))"
-        )
+    # THE WINDOW IS THE ONE GIVING (ALGEBRA.md 9.85 (5), 9.71 (1); record 2082 (4);
+    # commit 7): every emitter declares its weight g and its rung's action; the world
+    # key `point_emitter` and the train are retired (RETIRED_KEYS)
     for number, entry in enumerate(measured):
         block = entry.block
         if block is None or block.emitter is None:
             continue
-        if point_emitter:
-            if block.emitter.train is not None or block.emitter.given is not None:
-                raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}].emitter declares a `train` under point_emitter: "
-                    "the point emitter declares no train, its length, shape and wave number come "
-                    "from the window and light's dispersion (ALGEBRA.md 9.71 (1))"
-                )
-            if block.emitter.weight is None:
-                raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}].emitter declares no `weight` under point_emitter: "
-                    "the seat's rotation is copied into the given row at a declared weight g, one "
-                    "integer from 1 (ALGEBRA.md 9.71 (1) (b))"
-                )
-            if block.emitter.norm is not None and block.emitter.norm_denominator is None:
-                raise ValueError(
-                    f"{BEAM_LAW}: measured[{number}].emitter declares no `norm_denominator` under "
-                    "point_emitter: the window closes when the outward norm reaches the excitation's "
-                    "action norm / norm_denominator, the generator's exact rational (ALGEBRA.md 9.71 "
-                    "(1) (d))"
-                )
-        elif block.emitter.weight is not None:
+        if block.emitter.weight is None:
             raise ValueError(
-                f"{BEAM_LAW}: measured[{number}].emitter.weight is the point emitter's, admitted under "
-                "the world key point_emitter alone (ALGEBRA.md 9.71 (1))"
+                f"{BEAM_LAW}: measured[{number}].emitter declares no `weight`: the body's rotation is "
+                "copied into the given row at its Node at a declared weight g, one integer from 1 "
+                "(ALGEBRA.md 9.71 (1) (b), 9.85 (5); commit 7)"
+            )
+        if block.emitter.norm is not None and block.emitter.norm_denominator is None:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{number}].emitter declares no `norm_denominator`: the window "
+                "closes when the outward norm reaches the excitation's action norm / "
+                "norm_denominator, the generator's exact rational (ALGEBRA.md 9.71 (1) (d))"
             )
     if body_record:
         # every seeded block carries its profile and its clock pair (the
@@ -7631,7 +7617,6 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         detector_law=detector_law,
         massive_record=massive_record,
         body_record=body_record,
-        point_emitter=point_emitter,
         probes=probes,
         mode_axis=mode_axis,
         closed=closed,

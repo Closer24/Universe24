@@ -78,7 +78,6 @@ def small_world(
         "detector_law": True,
         "width": 1,
         "body_record": False,
-        "point_emitter": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
         "amplitude_bound": 1 << 22,

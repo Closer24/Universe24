@@ -105,7 +105,7 @@ def test_a_body_gives_its_own_family_from_its_stock_and_its_quanta_fall_by_one_p
     assert simulation.held[block.number][own] == 4 and simulation.stock_of(block) == 2
     wall = simulation.wall_of(block)
     givings = []
-    for _ in range(160):
+    for _ in range(900):  # two windows and their rungs (commit 7)
         simulation.step()
         if block.givings > len(givings):
             givings.append(simulation.tick)

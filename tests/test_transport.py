@@ -92,11 +92,14 @@ def test_the_loader_writes_the_twist_own_and_the_given_lights_component():
     # the window's light turns at the emitter's rotation (9.85 (5)); its component along z
     assert body.emitter.twist == body.twist and body.emitter.part == 3
     clock = json.loads((ROOT / "examples/events/massive_record/light_clock.json").read_text())
-    train = parse_nature_beam_world(clock).measured[0].block
-    assert train is not None and train.emitter is not None and train.emitter.train is not None
-    # a train's light turns at its wavelength on light's dispersion, cos omega = (cos k + 2) / 3
-    assert train.emitter.twist == light_twist(4) == round(65536 * math.acos(2 / 3))
-    assert train.emitter.part == 3 and train.twist == rotation_twist(train.clock[0], 2 * train.clock[1])
+    beam = parse_nature_beam_world(clock).measured[0].block
+    # SINCE COMMIT 7 the light clock's A gives by the window too (the train retired): its
+    # light turns at its own rotation, the component along z
+    assert beam is not None and beam.emitter is not None and beam.emitter.train is None
+    assert beam.emitter.twist == beam.twist == rotation_twist(beam.clock[0], 2 * beam.clock[1])
+    assert beam.emitter.part == 3
+    # the retired train's twist was its wavelength's on light's dispersion, cos omega = (cos k + 2) / 3
+    assert light_twist(4) == round(65536 * math.acos(2 / 3))
     assert rotation_twist(800, 809) == round(65536 * math.acos(800 / 809))
 
 

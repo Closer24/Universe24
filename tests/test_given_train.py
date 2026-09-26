@@ -1,4 +1,7 @@
-"""THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a), 9.25 (11), 9.22 (7a) (iv); BUILD.md section 26 item
+"""CANCELLED (the one stroke's commit 7; ALGEBRA.md 9.85 (5), 9.91 (10) 7; the model owner's
+record 2102: marked and disconnected, not deleted): the given train is retired, every giving is
+the window's; this suite is skipped whole, its text and its helpers kept as the record.
+THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a), 9.25 (11), 9.22 (7a) (iv); BUILD.md section 26 item
 27): every giving is a travelling train, the character of one **K** over 8 periods under the
 window across the transverse extents and the tapers along **K**, written on the body's Nodes
 at both levels; the generator's integers (the profile, its norm on the vacuum), its checks
@@ -28,6 +31,11 @@ from event_universe.events.world import (
 )
 from tests.test_detector_law import layer_world
 from tests.test_emitter import NODE_CLOCK, emitter_world, massive_generator
+
+pytestmark = pytest.mark.skip(
+    reason="CANCELLED at commit 7: the given train is retired, every giving is the window's "
+    "(ALGEBRA.md 9.85 (5), 9.91 (10) 7; record 2102: marked, not deleted)"
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 LIGHT_CLOCK = ROOT / "examples/events/massive_record/light_clock.json"

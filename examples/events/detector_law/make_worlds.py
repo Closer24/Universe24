@@ -37,6 +37,14 @@ moving mass's energy (the massive rows written into `../massive_record/`); the f
 and the four Malus worlds held before them (HELD_NAMES below: the crystal and the polariser
 body with an axis).
 
+SINCE THE ONE STROKE'S COMMIT 7 (ALGEBRA.md 9.85 (5), 9.71 (1), 9.91 (10) 7; record 2082
+(4)) THE GIVEN TRAIN IS RETIRED: every emitter is a body of ONE NODE giving by the window
+(its rotation written into the given row at its Node at its `weight`, chosen by the massive
+generator's trial so that the window is about one period of the rotation, shorter than a
+light clock's round trip), the light at the body's own rotation on the given family's
+dispersion, a gap slab of depth 2 one Link behind every one-sided emitter (`mirror_behind`);
+the one-Node emitter stands at the retired train's head, so every arm is as before.
+
 Run from the repository root:
 
     PYTHONPATH=src python examples/events/detector_law/make_worlds.py
@@ -586,8 +594,8 @@ GIVEN_CLOCK = [
     512,
     1,
 ]  # the given clock of every light emitter on N = 1024: k = pi / 2, the wavelength 4
-TRAIN_PERIODS = 8  # the train's periods (9.17 (6a))
-TRAIN_LENGTH = 32  # the train's Nodes along K, TRAIN_PERIODS x the wavelength 4
+TRAIN_PERIODS = 8  # HISTORY (the train retired, commit 7): the train's periods (9.17 (6a))
+TRAIN_LENGTH = 32  # HISTORY (the train retired, commit 7): the train's Nodes along K; the one-Node emitter stands at its head
 FACE_DEPTH = 32  # every face a receiver slab as deep as the train (9.25 (11))
 LIGHT_CLOCK_SHAPE = [760, 3, 3]  # the one table (9.30): the chain of 760 extruded to [760, 3, 3]
 LIGHT_CLOCK_TICKS = 4800  # COMPUTATION: 64 givings at the mean cadence P / 2 = 47 (P = 94 on A's mode), about 3000 intervals, the last return 300, a margin
@@ -599,32 +607,72 @@ LIGHT_MOMENT = [
 ]  # the light emitter's moment, the given component's axis (ALGEBRA.md 9.82 (3) (d)); the massive generator's
 
 
+WINDOW_SEED = (
+    1 << 12
+)  # the emitter's amplitude: the written light g x a stays far below the bound at every weight read
+WINDOW_PERIODS = 2  # the window aimed at two periods of the emitter's rotation (the fixed row (iv)'s 64 intervals at omega = 0.178, ALGEBRA.md 9.85 (5) (a))
+# THE ONE-NODE EMITTER'S KIND AND WELL (the point emitter's row, ALGEBRA.md 9.69 (2), 9.71 (1);
+# `../point_emitter/make_worlds.py`): the matter kind [800, 813] (the band's bottom omega_0 =
+# 0.179) with the well [800, 802], bound on one Node at omega = 0.178 (light's wavelength about
+# 20 at that rotation); the 32-Node body's well [800, 801] on the kind [800, 809] binds no mode
+# on one Node (the loader's check of 9.22 (7) (iii) refuses it)
+SEAT_KIND = [800, 813]
+SEAT_WELL = [800, 802]
+# THE BEAM SEAT'S KIND: on a layer (y open) and across the extruded chain's cross-section a
+# one-Node well of the kind [800, 813] binds no mode (the loader's check, the profile at the
+# band's top); the kind [800, 1200] binds on one Node everywhere tried and rotates near light's
+# frequency at the retired train's wave number k = pi / 2 (cos omega = (cos k + 2) / 3 = 2 / 3,
+# 2 cos omega = 4 / 3 = 1600 / 1200; the layer's mode reads omega = 0.832 against 0.841), so
+# the short rows keep about their wavelength 4; the long rows (the wavelength 21 of 9.62 (1))
+# take SEAT_KIND (omega = 0.178, the wavelength about 20)
+BEAM_KIND = [800, 1200]
+
+
 def emitter(
-    position: list[int], extents: list[int], pair: list[int], direction: list[int], **extra: object
+    position: list[int], extents: list[int] | None = None, kind: list[int] | None = None, **extra: object
 ) -> dict:
-    """A well that emits light (the light clock's A): the seed 50 x 2^20 on its mode (no
-    coupling: the click alone, the model owner's decision (2) of record 1962); SINCE ALGEBRA.md 9.17
-    (BUILD.md section 26) its emission is by its excited records' clicks: the stock
-    EMITTER_STOCK excitations, each written once at its rung; SINCE THE GIVEN TRAIN (item
-    27; 9.17 (6a)) each giving the train of TRAIN_PERIODS periods along `direction` on the
-    given family's clock, the body's `extents` TRAIN_LENGTH along it; the profile and its norm
-    the generator's (`given_train`)."""
+    """A well of ONE NODE that emits light by the window (ALGEBRA.md 9.85 (5), 9.71 (1); the
+    one stroke's commit 7: the given train of item 27 retired): the kind `kind` (BEAM_KIND
+    unless given) with the well SEAT_WELL (the point emitter's seat), its seed WINDOW_SEED on its
+    mode (no coupling: the click alone, the model owner's decision (2) of record 1962), its
+    emission by its excited records' clicks (ALGEBRA.md 9.17; BUILD.md section 26): the stock
+    EMITTER_STOCK excitations, each opening a window at its rung, the body's rotation written
+    into the given row at its Node at the weight `weight` (chosen by the massive generator's
+    `point_weight` after the seeding) until the outward norm reaches the excitation's action;
+    the light at the body's own rotation on the given family's dispersion (9.85 (5) answer 1)."""
     block: dict = {
         "position": position,
-        "extents": extents,
-        "pair": pair,
-        "seed": EMITTER_SEED,
+        # one Node; on the one table's extruded chain [X, 3, 3] the chain's point extruded,
+        # [1, 3, 3] (a one-Node well binds no mode across a periodic cross-section of 3 x 3:
+        # its depth is shared by the nine Nodes; the window is at the centre Node)
+        "extents": [1, 1, 1] if extents is None else list(extents),
+        "kind": list(BEAM_KIND if kind is None else kind),  # the body's rest pair (ALGEBRA.md 9.91 (7))
+        "pair": list(SEAT_WELL),
+        "seed": WINDOW_SEED,
         "amount": 1,
         # the stock as the given family's content held at the body (ALGEBRA.md
         # 9.51 (8); BUILD.md section 26 item 47); light is the charge family's wave
         # (9.86 (2) (b)), so the stock and the giving are the charge family's
         "held": {"charge": EMITTER_STOCK},
-        "emitter": {"family": "charge", "train": {"direction": direction, "periods": TRAIN_PERIODS}},
+        "emitter": {"family": "charge"},
         # the light's component along the body's moment (ALGEBRA.md 9.82 (3) (d); commit 4)
         "moment": list(LIGHT_MOMENT),
     }
     block.update(extra)
     return block
+
+
+def mirror_behind(seat: list[int], direction: list[int], cross: list[int]) -> dict:
+    """THE MIRROR BEHIND THE SEAT (ALGEBRA.md 9.85 (5) (b); commit 7): a gap slab of depth 2
+    whose face is the Node one Link behind the one-Node emitter along `direction`, `cross`
+    its extents across (the axis along the direction set to 2), so the half given away from
+    the arm returns forward two Links later and nothing reaches the face behind."""
+    axis = next(index for index, value in enumerate(direction) if value != 0)
+    corner = list(seat)
+    corner[axis] = seat[axis] - 2 if direction[axis] > 0 else seat[axis] + 1
+    extents = list(cross)
+    extents[axis] = 2
+    return mirror_slab(corner, extents)
 
 
 def mirror_slab(position: list[int], extents: list[int]) -> dict:
@@ -673,20 +721,51 @@ def bounded(document: dict) -> None:
             document["momentum_unit"] = MOMENTUM_UNIT
 
 
+LIGHT_CLOCK_SEAT_X = 631  # the one-Node emitter at the retired train's head (its last Node of [600, 632)), the arm 58 free Links to the mirror as before
+
+
+def finish_windows(
+    massive, document: dict, emitters: list[int], extra: int, weights: dict[int, int] | None = None
+) -> dict:
+    """The windows' weights after the seeding (the massive generator's `point_weight` at
+    WINDOW_PERIODS periods for each emitter of `emitters`, or the weight given in `weights`
+    for an emitter that is the same instrument as another world's: a row's pair, the moving
+    clock and the resting one, the well's bottom and its top, the bright control and the
+    dark row, carry ONE declared weight, read once by the trial on the first of the pair),
+    the run's length covering every stock at the windows read plus `extra` intervals (at
+    least the declared `ticks`), and the stamp over the whole file."""
+    for number in emitters:
+        if weights is not None and number in weights:
+            emitter = document["measured"][number]["emitter"]
+            limit = 64 * int(emitter["period"]) * weights[number] ** 2
+            window, exceeded = massive.window_reading(document, number, weights[number], limit)
+            assert window is not None and not exceeded, (number, weights[number], window, exceeded)
+            emitter["weight"] = weights[number]
+            emitter["window_read"] = window  # HOST: the trial's window at the pair's weight
+        else:
+            massive.point_weight(document, number, WINDOW_PERIODS)
+    document["ticks"] = max(
+        int(document["ticks"]), *(massive.giving_ticks(document, number, extra) for number in emitters)
+    )
+    massive.stamped(document)
+    return document
+
+
 def light_clock(massive) -> dict:
     """THE LIGHT CLOCK in the one table's form (the module docstring): the board [760, 3, 3]
-    with x open and the face slabs 32 deep, light with the given clock on N = 1024, A at
-    [600, 632) over the whole cross-section with its train along +x and its stock, the mirror
-    at [690, 694), the set `at_well` A's own Nodes and A's `receiver` by name; the seeds,
-    the train, the placement rule and the stamp by the massive generator's
-    `seed_on_the_mode`."""
+    with x open and the face slabs 32 deep, light with the given clock on N = 1024, A ONE
+    NODE at x = LIGHT_CLOCK_SEAT_X (the retired train's head) with its stock, giving by the
+    window (commit 7; ALGEBRA.md 9.85 (5)), the mirror at [690, 694), the mirror behind A at
+    [629, 631) (9.85 (5) (b)), the set `at_well` A's own Node and A's `receiver` by name;
+    the seed, the placement rule and the stamp by the massive generator's `seed_on_the_mode`,
+    the weight by its trial (`finish_windows`)."""
     document = massive.world(
         "light-clock",
         "PIN",
         list(LIGHT_CLOCK_SHAPE),
         massive.CHAIN,
         KIND,
-        [emitter([600, 0, 0], [TRAIN_LENGTH, 3, 3], WELL_FULL, [1, 0, 0])],
+        [emitter([LIGHT_CLOCK_SEAT_X, 0, 0], [1, 3, 3])],
         LIGHT_CLOCK_TICKS,
         given_clock=list(GIVEN_CLOCK),
         seed_profile=False,
@@ -695,10 +774,11 @@ def light_clock(massive) -> dict:
     document["face_depth"] = FACE_DEPTH
     bounded(document)
     document["measured"].append(mirror_slab([690, 0, 0], [MIRROR_DEPTH, 3, 3]))
+    document["measured"].append(mirror_behind([LIGHT_CLOCK_SEAT_X, 0, 0], [1, 0, 0], [1, 3, 3]))
     receiver_set(document, "at_well", 0)
     named_receiver(document, {0: "at_well"})
     massive.seed_on_the_mode(document)
-    return document
+    return finish_windows(massive, document, [0], 3 * 2 * (690 - LIGHT_CLOCK_SEAT_X) + 300)
 
 
 def massive_worlds(massive) -> dict[str, dict]:

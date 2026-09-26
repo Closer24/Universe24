@@ -51,7 +51,7 @@ def test_a_missing_key_of_the_world_or_the_start_file_is_refused_by_name(tmp_pat
     document = emitter_world(stock=1, ticks=10)
     del document["engine"]
     refused(document, "the world lacks keys required under `detector_law`: engine")
-    for key in ("boundary", "width", "clock_stamp", "massive_record", "body_record", "point_emitter"):
+    for key in ("boundary", "width", "clock_stamp", "massive_record", "body_record"):
         broken = json.loads(json.dumps(document))
         broken["engine"] = START
         del broken[key]
