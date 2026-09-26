@@ -15,7 +15,7 @@ docs/ENGINE.md; the table of primitives of record 2179 is its section 3, one fil
 
 | Support | Where | The test that proves it |
 | --- | --- | --- |
-| the rule, one step at every Node (9.57 (1), 9.91 (2)) | `events/rule.py` | the one step equal to the rule's transcription bit for bit on random arrays (`docs/designs/rule_alone/rule_alone.py`); the resting worlds bit for bit at every commit |
+| the rule, one step at every Node (9.57 (1), 9.91 (2)) | `core/rule3.py` (one function with a direction, and the form's term; the operation's cut) | the one step equal to the rule's transcription bit for bit on random arrays (`docs/designs/rule_alone/rule_alone.py`); the resting worlds bit for bit at every commit |
 | the representation as parts, 1, 1 + 3, 1 + 3 + 6 (9.86) | the loader's `parts`, the stepping of every component | the leak test per part (commit 2) |
 | the four paces from the reads (9.91 (2)) | commit 3 | bit for bit with the tensor zero |
 | the held source of a body: the count, its factors, its dipole (9.91 (3)) | the loader's `held` | the holds' tests of commit 2 |

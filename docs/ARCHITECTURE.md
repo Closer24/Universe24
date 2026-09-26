@@ -307,7 +307,8 @@ loop's method of today (`bind`); the register (`src/event_universe/core/register
 `discover`) finds the folders at load and refuses a folder without a declaration or
 with a name not its own. Adding a feature touches no shared file, not even a list: the audits
 find the folders too. The layers: `core` (integers, the register, the interface
-`core/primitive.py`: apply(term, start, own) -> writes; the run's declared readings,
+`core/primitive.py`: apply(term, start, own) -> writes; Rule3, `core/rule3.py`, every
+record's step in either direction and the form's term in one place; the run's declared readings,
 `core/readings.py`, reading state at the declared intervals and writing nothing into the
 run) imports nothing but `core`;
 `features` imports `core` and `features`; `events` (the engine, shrinking cut by

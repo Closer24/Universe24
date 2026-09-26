@@ -317,7 +317,7 @@ from event_universe.core.integer import (
 )
 from event_universe.core.phase import MAX_PHASE_STEPS
 from event_universe.core.readings import Reading, world_readings
-from event_universe.events.rule import rule_total_bound
+from event_universe.core.rule3 import rule_total_bound
 
 # ONE ENGINE, NO LAW'S NAME AND NO VERSION (ALGEBRA.md 9.90 (1); the model owner's
 # records 2103 and 2107; the cancel of docs/CANCELLED_WORLDS.md section 9): the

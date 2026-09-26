@@ -24,8 +24,8 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
+from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
-from event_universe.events.rule import rule_coefficients
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_emitter import (
     CHARGE_FAMILY,
@@ -352,8 +352,8 @@ def form_I(
         content = simulation.level_of("content")
     num = simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
-    read_coefficient, self_coefficient, wall = rule_coefficients(
-        num, den, gamma, content.astype(object), True
+    (read_coefficient, _, _), self_coefficient, wall = coefficients(
+        num, den, gamma, content.astype(object)
     )
     read = reads_of(simulation, family)(before).astype(object)
     now_o, before_o = now.astype(object), before.astype(object)
@@ -413,12 +413,11 @@ def test_conservation_between_clicks():
             # the remainder term of 8.2 over the step t - 1 -> t under the weak-field rule
             # (9.57 (1); item 44): (a_next - a_before) (r - r') / (3 R_i) per Node, R_i the
             # rule's coefficient on the six reads at the Node's level in force for the step
-            read_coefficient, _self, _wall = rule_coefficients(
+            (read_coefficient, _, _), _self, _wall = coefficients(
                 num.astype(object),
                 simulation.kind_den[family].astype(object),
                 gamma,
                 contents[t - 1].astype(object),
-                True,
             )
             drift = Fraction(0)
             for node in zip(
@@ -461,8 +460,8 @@ def exchange_of(
     gamma = simulation.node_clock
     num = simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
-    read_old, self_old, wall = rule_coefficients(num, den, gamma, old.astype(object), True)
-    read_new, self_new, _wall = rule_coefficients(num, den, gamma, new.astype(object), True)
+    (read_old, _, _), self_old, wall = coefficients(num, den, gamma, old.astype(object))
+    (read_new, _, _), self_new, _wall = coefficients(num, den, gamma, new.astype(object))
     a, b = now.astype(object), before.astype(object)
     total = Fraction(0)
     for node in zip(*np.nonzero(a | b), strict=True):

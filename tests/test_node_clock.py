@@ -3,7 +3,7 @@ his "switch" of record 2024; ALGEBRA.md 9.35 (2) and (3), 9.57 (1); BUILD.md sec
 31 and 44): at every Node the family of clicks' level c, Gamma the world key `node_clock`, the
 Node's own pace p = Gamma - c, enters the rule as w a_next + r' = R S_6(a_now) + S a_now - w
 a_before + r with R = 2 p^2 num, S = 12 den Gamma^2 - 6 (p^2 + Gamma^2)(den - num) - 12 num
-p^2 and the wall w = 6 den Gamma^2 (`rule_coefficients`); c = 0 is the plain rule (the vacuum:
+p^2 and the wall w = 6 den Gamma^2 (core/rule3.py `coefficients`); c = 0 is the plain rule (the vacuum:
 the levels bit for bit, the remainder 2 Gamma^2 times the plain one). The suite reads the
 engine: (i) the rule in integers at a Node with content and its plain limit; (ii) the rotation
 2 cos omega' = 2 - (1 + f)(1 - num / den) at k = 0 with f = (p / Gamma)^2 (the clock's second
@@ -26,8 +26,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, form_json
-from event_universe.events.rule import rule_coefficients
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_emitter import NODE_CLOCK, emitter_world, lawful_wheel, reads
 from tests.test_flux_reading import planted
@@ -102,7 +102,7 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
     for family, (num, den) in ((0, (1, 1)), (1, PAIR)):
         rows_now = rng.integers(-UNIT, UNIT, size=(12, 1, 1), dtype=np.int64)
         rows_before = rng.integers(-UNIT, UNIT, size=(12, 1, 1), dtype=np.int64)
-        read, self_coefficient, wall = rule_coefficients(num, den, GAMMA, QUANTA, True)
+        (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, QUANTA)
         rows_remainder = rng.integers(0, wall, size=(12, 1, 1), dtype=np.int64)
         slowed = DetectorLawSimulation(
             parse_nature_beam_world(content_chain(12, PERIODIC, range(12), QUANTA))
@@ -142,7 +142,7 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
         f = ((GAMMA - quanta) / GAMMA) ** 2
         assert 2 - (1 + f) * (1 - num / den) == pytest.approx(expected, abs=5e-7)
         # the same from the rule's integers: (6 R + S) / w at S_6 = 6 a
-        read, self_coefficient, wall = rule_coefficients(num, den, GAMMA, quanta, True)
+        (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, quanta)
         assert (6 * read + self_coefficient) / wall == pytest.approx(expected, abs=5e-7)
         uniform = np.full((12, 1, 1), amplitude, dtype=np.int64)
         live = planted(simulation, 1, uniform, uniform.copy(), np.zeros((12, 1, 1), dtype=np.int64))
@@ -243,12 +243,12 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
         live = planted(simulation, family, now, before, np.zeros((60, 1, 1), dtype=np.int64))
         # (a) the form from the rule's integers (item 44): L [w (a^2 + b^2) - S_i a b] / R_i at
         # the Nodes, the Links plain
-        coefficients = [rule_coefficients(num, den, GAMMA, c, True) for c in content]
+        integers = [coefficients(num, den, GAMMA, c) for c in content]
         reads = six_reads(before, True)
         expected = Fraction(0)
         for i in range(60):
             a, b = int(now[i, 0, 0]), int(before[i, 0, 0])
-            read_i, self_i, wall_i = coefficients[i]
+            (read_i, _, _), self_i, wall_i = integers[i]
             expected += Fraction(wall * (wall_i * (a * a + b * b) - self_i * a * b), read_i)
             expected -= wall * a * reads[i]
         assert Fraction(*simulation.conserved_form(live)) == expected
@@ -270,10 +270,10 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
             remainders = Fraction(
                 (int(a_next[i, 0, 0]) - int(a_before[i, 0, 0]))
                 * (int(r_old[i, 0, 0]) - int(r_new[i, 0, 0])),
-                coefficients[i][0],
+                integers[i][0][0],
             )
             assert new[i] - old[i] == wall * flux + wall * remainders, (family, i)
-            assert 0 <= int(r_new[i, 0, 0]) < coefficients[i][2]
+            assert 0 <= int(r_new[i, 0, 0]) < integers[i][2]
         # (c) the books' form's remainder identity, exact, over 40 intervals
         previous = Fraction(*simulation.record_form(live))
         for _ in range(40):
@@ -286,9 +286,7 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
                 term += Fraction(
                     int(live.now[i, 0, 0] - a_before[i, 0, 0])
                     * int(r[i, 0, 0] - live.remainder[i, 0, 0]),
-                    rule_coefficients(
-                        num, den, GAMMA, int(simulation.level_of("content")[i, 0, 0]), True
-                    )[0],
+                    coefficients(num, den, GAMMA, int(simulation.level_of("content")[i, 0, 0]))[0][0],
                 )
             assert current - previous == wall * term
             previous = current

@@ -22,6 +22,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import MOST_FAMILIES
 from event_universe.world_files import input_stamp, parse_nature_beam_world
@@ -337,9 +338,12 @@ def test_f_one_step_of_the_engine_is_the_rules_transcription_bit_for_bit():
         expected_now, _, expected_remainder = transcription.step(
             now, before, remainder, read, own, wall, wrap
         )
-        neighbours = transcription.neighbour_sum(now, wrap)
-        engine_now, engine_remainder = DetectorLawSimulation.one_rule(
-            num, den, NODE_CLOCK, content, neighbours, now, before, remainder, True
+        # the one rule's three axis sums on the periodic board (their sum the transcription's six-sum)
+        axis_sums = tuple(np.roll(now, 1, axis=axis) + np.roll(now, -1, axis=axis) for axis in range(3))
+        assert np.array_equal(sum(axis_sums), transcription.neighbour_sum(now, wrap))
+        reads, self_coefficient, wall_rule = coefficients(num, den, NODE_CLOCK, content)
+        engine_now, engine_remainder = rule3(
+            reads, axis_sums, self_coefficient, wall_rule, now, before, remainder
         )
         assert np.array_equal(engine_now, expected_now) and np.array_equal(
             engine_remainder, expected_remainder
