@@ -18408,3 +18408,79 @@ finding for me, the run is never adjusted).
    through a key, and refused as a branch on a family's name. The
    loader's keys table (9.90 (6)) gains the key `conserved` with this
    section as its column.
+
+### 9.115 The pins outside the code: the comparison kinds of the one generic reader, and the unit line that turns nature's number into the GameBoard's (the Boss's record 2191 on the model owner's word: the output generic like the input, the pins in a file beside the world file, read after the run by one reader outside the engine; nothing compared before the Go; Nature24's design in ENGINE_LEDGER.md section 3, "The pins, outside the code")
+
+1. **A pin is one line of the pins file `<world>.pins.json`**, on one
+   declared DETECTOR reading of the world file (a click count, a
+   record's moment, an external thing's reading, 9.25 (12), POSTULATES
+   section 10; a pin on a GameBoard reading is refused by the reader):
+   {reading, kind, expected, band, unit, section, source}. `expected`
+   is the algebra's number in the board's units, written before the run
+   (record 205) with the section that derived it; `source` nature's
+   value with its uncertainty; `unit` the line of item 3; `kind` and
+   `band` one of item 2. The reader writes one table, expected, read,
+   direction, verdict, and stamps the pins file after the run; the run
+   is never adjusted (record 2137).
+
+2. **The comparison kinds, six, in integers and rationals, no float and
+   no division (2.6).** With r the reading, e the expected, both
+   integers or pairs [num, den]:
+
+   | Kind | The line of the pins file | The reader's test | Used for |
+   | --- | --- | --- | --- |
+   | EXACT | expected e | r = e | a digest (bit for bit), a declared count of givings, a refusal |
+   | INTERVAL | [lo, hi] | lo <= r <= hi | a first rung in intervals, a centroid in Nodes, a tick |
+   | COUNT | expected n, sigmas k | (r - n)^2 <= k^2 n (the Poisson band, k = 3 by default) | clicks on a detector, a share of a stock (Bell's S, Malus, the dark port's 0 as n = 0 with the band's k) |
+   | RATIO | two readings a, b (or a and a declared number), expected [p, q], fraction [f_n, f_d] | f_d x abs(q a - p b) <= f_n x q x b, cross-multiplied | a tick as a ratio of intervals, an index as a ratio of delays, a spacing over a wavelength, a share of a total |
+   | SIGN | expected s in {-1, 0, +1} per axis | sign(r) = s | a recoil's direction, a fall toward a well, a drift's side |
+   | CONSTANT | none | r(t) = r(0) at every interval of the reading's sequence | a conserved total (9.114 item 4), a bound body's centre |
+
+   THE RULE OF THREE (record 1940) is not a kind but the report's form
+   for every pin: the algebra's number in the file before the run, the
+   run's reading, and the second party's check (Nature24's run or the
+   Boss's read); a pin with fewer than three is written as such, never
+   as a pass. A differing reading refutes and never moves the expected
+   without its cause, written (record 2137). A new kind is a line of the
+   reader with its row here, never a line of the engine.
+
+3. **The unit line.** The board has no metre and no second: the
+   universe file holds integers (node_clock Gamma, amplitude_bound A,
+   Lambda, momentum_unit Q, the twist table, E_s) and no length. What
+   fixes the units is the given light: on the board its pace is c_l = 1
+   / sqrt 3 Links per interval in the long-wave limit (9.58 (2) (b)),
+   so ONE declared number, tau (the interval in seconds), fixes the Link
+   as l = sqrt 3 c tau (the row of 8.1 (iv)); tau and l are written once
+   in the pins file's `unit` (or, if the Boss wants them beside the
+   integers, as the two rationals `interval` and `link` of the universe
+   file, read by no step). Every nature number then becomes the board's
+   by one of these lines, each an exact rational from tau and l with
+   hbar, c and G in nature's units:
+
+   | Nature's number | The board's number | The line |
+   | --- | --- | --- |
+   | a length L | Links | L / l |
+   | a time T | intervals | T / tau |
+   | a speed v | Links per interval | v tau / l = v / (sqrt 3 c); light 1 / sqrt 3 |
+   | a frequency f | a rotation per interval | omega = 2 pi f tau |
+   | a mass m (a family's rest rotation) | the pair [num, den] | cos omega_0 = num / den with omega_0 = m c^2 tau / hbar (8.1); the nearest pair within the twist table's precision |
+   | a momentum p | K per Link | K = p l / hbar |
+   | an energy E | per interval | E tau / hbar; the count s in units of 1 / P_0 (9.51 (3)) |
+   | a gravitational potential Phi | the held level c of the family of clicks | c = Gamma x Phi / c^2 in the weak limit (the clock ratio p / Gamma = 1 - c / Gamma against sqrt(g_00) = 1 + Phi / c^2, 9.51 (3)); the exact form the rule's pace |
+   | a count, a share, a ratio of two readings of one kind | the same | no unit: the counts and the ratios carry no length (9.25 (9)) |
+
+   A pin written by a ratio (the RATIO kind) needs no tau: the tick
+   ratio 1 / gamma, an index, a spacing over a wavelength, Bell's S. A
+   pin written by an absolute board number (a first rung in intervals,
+   a wavelength in Links) carries tau and l in its line and moves with
+   them; the reader refuses such a pin with no `unit`. Where a pin's
+   board number depends on the grain (the pace fans' k^2 / 48, the
+   moving rows' lattice term 0.8146 against 0.8165), the line says so
+   and the band includes it (9.25 (9)).
+
+4. **Before the Go, nothing is compared.** The start file's mode
+   "check" refuses a pins file (Nature24's row); the pins files are
+   written now, with their expected numbers and sections, and read by
+   the reader only after the Go, once per world, with the stamp. The
+   old registers become pins files in this form or stay history; none
+   returns through code.
