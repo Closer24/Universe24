@@ -11315,7 +11315,31 @@ is this rule's limit at first order in c / Gamma, HISTORY as the law
 from this record, kept as the control of the rows in (5) and as the
 digests' record. THE INVERSE: the same integers, the ceiling and the
 difference, exact at every Node for every clock history (the wall
-constant, 9.50 (8); COMPUTED). THE WHEEL at a Node: 6 den Gamma^2 over
+constant, 9.50 (8); COMPUTED). THE BACKWARD LINE, AND THE ONE LINE WITH
+A DIRECTION (the model owner's word of 2026-09-26 through the Boss,
+record 2240: "the inverse of Rule3 can be Rule3 with a variable for the
+direction; there is no need for two functions"): backward,
+
+  6 den Gamma^2 a_before - r = 2 p^2 num S_6(a_now) + B a_now
+  - 6 den Gamma^2 a_next - r',  0 <= r < 6 den Gamma^2,
+
+B the self coefficient in brackets above; and forward and backward are
+one line with sigma (the direction, +1 forward and -1 backward), w the
+wall, div and mod the floor division and its remainder in [0, w):
+
+  u = sigma (2 p^2 num S_6(x) + B x - w y) + rho,
+  z = sigma (u div w),  rho' = u mod w,
+
+with (x, y, rho) = (a_now, a_before, r) and (z, rho') = (a_next, r')
+forward, (x, y, rho) = (a_now, a_next, r') and (z, rho') = (a_before,
+r) backward; with the four paces of 9.91 (2) the read term is SUM_a R_a
+(x_(+a) + x_(-a)). PROVED: at sigma = -1, u = w a_next - T + r' with T
+the right side's first two terms, so z = -floor(u / w) = ceil((T - w
+a_next - r') / w) = a_before and rho' = u - w floor(u / w) = w a_before
+- (T - w a_next - r') = r, the ceiling and the difference of 9.50 (8);
+COMPUTED against the two functions of PR #1179 on 20,000 random cases,
+bit for bit. So Rule3 is one function with sigma, and the engine's
+backward step is the same call. THE WHEEL at a Node: 6 den Gamma^2 over
 the gcd of 2 p^2 num, the self coefficient and the wall, read from the
 rule, never declared (9.22 (4)). THE GUARD: p > 0 at every Node for
 every declared sign; the pace at or below 0 refused by name. THE
