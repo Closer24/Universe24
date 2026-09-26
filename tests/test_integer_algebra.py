@@ -51,7 +51,7 @@ SRC = ROOT / "src" / "event_universe"
 PHYSICAL_MODULES: dict[str, str] = {
     "events/world.py": "the world file's parse and the load-time constants (the flight table, the labels)",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md 9.90 (1))",
-    "events/rule.py": "the one rule's coefficients per Node and per axis (ALGEBRA.md 9.57 (1), 9.91 (2)) and the ladder's rungs (9.25 (2))",
+    "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md 9.57 (1), 9.50 (8), 9.91 (2)), and the ladder's rungs (9.25 (2))",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md 9.88 (7)): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
     "core/schema.py": "the schema language of the run's files: a key's kind, bounds and admitted words, one reader that refuses by name, no default (cut 3 of issue #1154)",

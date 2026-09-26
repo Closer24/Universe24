@@ -18,8 +18,8 @@ from fractions import Fraction
 
 import numpy as np
 
+from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
-from event_universe.events.rule import rule_coefficients
 from event_universe.world_files import parse_nature_beam_world
 from tests.test_emitter import NODE_CLOCK
 from tests.test_emitter import reads as family_reads
@@ -262,7 +262,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             den = int(simulation.kind_den[family][i, 0, 0])
             content = int(simulation.level_of("content")[i, 0, 0])
             assert content == (1 if i in (5, 6, 7, 20, 30, 31, 32) else 0)
-            read_i, self_i, wall_i = rule_coefficients(num, den, NODE_CLOCK, content, True)
+            (read_i, _, _), self_i, wall_i = coefficients(num, den, NODE_CLOCK, content)
             # the six reads plain, the Node's terms [w (a^2 + b^2) - S a b] / (3 R) (item 44)
             read = sum(Fraction(m) * int(before[j, 0, 0]) for (ii, j), m in matrix.items() if ii == i)
             a, b = int(now[i, 0, 0]), int(before[i, 0, 0])

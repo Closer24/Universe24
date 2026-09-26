@@ -36,8 +36,8 @@ import numpy as np
 import pytest
 
 import event_universe.world_files as world_files
+from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.rule import rule_coefficients
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_board_properties import reads_of
 from tests.test_emitter import emitter_world
@@ -404,8 +404,8 @@ def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tm
         return level
 
     def form(now: np.ndarray, before: np.ndarray, level: np.ndarray) -> Fraction:
-        read_coefficient, self_coefficient, wall = rule_coefficients(
-            num.astype(object), den.astype(object), simulation_d.node_clock, level.astype(object), True
+        (read_coefficient, _, _), self_coefficient, wall = coefficients(
+            num.astype(object), den.astype(object), simulation_d.node_clock, level.astype(object)
         )
         read = reads_of(simulation_d, body_family)(before).astype(object)
         total = Fraction(0)
@@ -430,12 +430,11 @@ def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tm
     for t in range(1, INTERVALS + 1):
         now, before, remainder = states[t]
         prev_now, prev_before, prev_remainder = states[t - 1]
-        read_coefficient, _self, _wall = rule_coefficients(
+        (read_coefficient, _, _), _self, _wall = coefficients(
             num.astype(object),
             den.astype(object),
             simulation_d.node_clock,
             levels[t - 1].astype(object),
-            True,
         )
         drift = Fraction(0)
         for node in zip(*np.nonzero((now != prev_before) | (remainder != prev_remainder)), strict=True):
