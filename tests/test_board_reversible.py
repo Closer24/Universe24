@@ -35,8 +35,8 @@ from fractions import Fraction
 
 import numpy as np
 
+from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.rule import rule_coefficients
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_board_properties import exchange_of, form_I
 from tests.test_detector_law import Seen, chosen_by_the_rule, spy_on
@@ -408,13 +408,12 @@ def test_between_clicks_the_weighted_form_is_exact_where_the_field_stands():
         num = simulation.kind_num[live.family]
         value = form_I(simulation, live.family, now, before, content_start)
         previous = form_I(simulation, live.family, prev_now, prev_before, content_start)
-        read_coefficient = rule_coefficients(
+        read_coefficient = coefficients(
             num.astype(object),
             simulation.kind_den[live.family].astype(object),
             gamma,
             content_start.astype(object),
-            True,
-        )[0]
+        )[0][0]
         drift = Fraction(0)
         for node in zip(*np.nonzero((now != prev_before) | (remainder != prev_remainder)), strict=True):
             drift += Fraction(
