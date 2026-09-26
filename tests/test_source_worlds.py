@@ -191,7 +191,7 @@ def test_the_record_count_and_the_table_are_the_algebras_integers():
 
 @pytest.mark.xfail(
     strict=True,
-    reason="the loader reads neither `readings` nor `sourced` and requires the residue keys "
+    reason="the loader reads `readings` (these lines lack a `name`), reads no `sourced` and requires the residue keys "
     "K, N, release (record 2199 items 2 and 3; the ledger's source row); LAWFUL when they land",
 )
 @pytest.mark.parametrize("name", NAMES)
