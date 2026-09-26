@@ -62,7 +62,7 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
         assert world.shape[1:] == (3, 3)
     # the long-wave pair (ALGEBRA.md 9.62 (1)): the given clock [4096, 21] on N = 2048; SINCE
     # COMMIT 7 the emitter is the chain's point extruded, [1, 3, 3] at the retired train's head
-    # (one train, 168 Nodes, from the face), on the point row's seat kind [800, 813]
+    # (one train, 168 Nodes, from the face), on the point row's body's Node kind [800, 813]
     for name in ("redshift_top_long", "redshift_bottom_long"):
         doc = document(name)
         assert doc["N"] == generator.LONG_PHASE_STEPS == 2048
@@ -143,11 +143,13 @@ def test_the_held_level_is_the_well_on_the_arm_and_the_moving_clock_hops_togethe
     for _ in range(100):
         moving.step()
         corners.append([int(block.corner[0]) for block in moving.blocks])
-    seat_x = generator.LORENTZ_EMITTER_X + 31  # the one-Node emitter at the retired train's head
-    emitter, mirror, behind = zip(*corners, strict=True)  # the mirror behind the seat too (9.85 (5))
-    assert emitter[-1] - seat_x == 25 and mirror[-1] - generator.LORENTZ_MIRROR_X == 25
-    assert behind[-1] - (seat_x - 2) == 25
-    assert all(m - e == generator.LORENTZ_MIRROR_X - seat_x for e, m, _ in corners)
+    head_x = generator.LORENTZ_EMITTER_X + 31  # the one-Node emitter at the retired train's head
+    emitter, mirror, behind = zip(
+        *corners, strict=True
+    )  # the mirror behind the body's Node too (9.85 (5))
+    assert emitter[-1] - head_x == 25 and mirror[-1] - generator.LORENTZ_MIRROR_X == 25
+    assert behind[-1] - (head_x - 2) == 25
+    assert all(m - e == generator.LORENTZ_MIRROR_X - head_x for e, m, _ in corners)
     hops = np.diff(np.array(emitter))
     assert set(hops.tolist()) <= {0, 1} and int(hops.sum()) == 25
     # the set follows the emitter: its Nodes are the block's current Nodes

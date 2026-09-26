@@ -143,7 +143,7 @@ def clock_world(
     COMMIT 7 (ALGEBRA.md 9.85 (5)) the emitter gives by the window at its own
     rotation, a mirror of depth 2 behind it; `doppler` is CANCELLED with the train
     (a moving body's light is its own rotation at its Node, 9.63 (3)); with `arm`
-    the mirror stands that many Links beyond the seat (in place of `mirror_x`)."""
+    the mirror stands that many Links beyond the body's Node (in place of `mirror_x`)."""
     given_clock = list(detector.GIVEN_CLOCK) if given_clock is None else list(given_clock)
     phase_steps = detector.PHASE_STEPS if phase_steps is None else phase_steps
     train_length = detector.TRAIN_LENGTH if train_length is None else train_length
@@ -154,8 +154,8 @@ def clock_world(
     if arm is not None:
         mirror_x = emitter_x + train_length + arm
     # THE EMITTER ONE NODE at the retired train's head (its last Node): the arm as before
-    seat_x = emitter_x + train_length - 1
-    blocks = [detector.emitter([seat_x, 0, 0], [1, 3, 3], kind=kind)]
+    head_x = emitter_x + train_length - 1
+    blocks = [detector.emitter([head_x, 0, 0], [1, 3, 3], kind=kind)]
     document = massive.world(
         name,
         "PIN",
@@ -173,8 +173,8 @@ def clock_world(
     document["face_depth"] = detector.FACE_DEPTH
     detector.bounded(document)
     document["measured"].append(detector.mirror_slab([mirror_x, 0, 0], [detector.MIRROR_DEPTH, 3, 3]))
-    # the mirror behind the seat (ALGEBRA.md 9.85 (5) (b); commit 7), moving with the clock
-    document["measured"].append(detector.mirror_behind([seat_x, 0, 0], [1, 0, 0], [1, 3, 3]))
+    # the mirror behind the body's Node (ALGEBRA.md 9.85 (5) (b); commit 7), moving with the clock
+    document["measured"].append(detector.mirror_behind([head_x, 0, 0], [1, 0, 0], [1, 3, 3]))
     if hop_every is not None:
         for entry in document["measured"]:
             # one Link every hop_every intervals for every block of the clock:
@@ -197,7 +197,7 @@ def clock_world(
         massive,
         document,
         [0],
-        3 * 2 * (mirror_x - seat_x) + 300,
+        3 * 2 * (mirror_x - head_x) + 300,
         weights=None if weight is None else {0: weight},
     )
 
@@ -298,7 +298,7 @@ def worlds() -> dict[str, dict]:
         given_clock=LONG_GIVEN_CLOCK,
         phase_steps=LONG_PHASE_STEPS,
         train_length=LONG_TRAIN_LENGTH,
-        kind=detector.SEAT_KIND,  # the long rows' seat: omega = 0.178, the wavelength about 20
+        kind=detector.ONE_NODE_KIND,  # the long rows' body's Node: omega = 0.178, the wavelength about 20
     )
     out["lorentz_rest_long"] = clock_world(
         "lorentz-rest-long",

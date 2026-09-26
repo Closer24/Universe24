@@ -612,9 +612,9 @@ WINDOW_PERIODS = 2  # the window aimed at two periods of the emitter's rotation 
 # 0.179) with the well [800, 802], bound on one Node at omega = 0.178 (light's wavelength about
 # 20 at that rotation); the 32-Node body's well [800, 801] on the kind [800, 809] binds no mode
 # on one Node (the loader's check of 9.22 (7) (iii) refuses it)
-SEAT_KIND = [800, 813]
-SEAT_WELL = [800, 802]
-# THE BEAM SEAT'S KIND: on a layer (y open) and across the extruded chain's cross-section a
+ONE_NODE_KIND = [800, 813]
+ONE_NODE_WELL = [800, 802]
+# THE BEAM BODY'S KIND: on a layer (y open) and across the extruded chain's cross-section a
 # one-Node well of the kind [800, 813] binds no mode (the loader's check, the profile at the
 # band's top); the kind [800, 1200] binds on one Node everywhere tried and rotates near light's
 # frequency at the retired train's wave number k = pi / 2 (cos omega = (cos k + 2) / 3 = 2 / 3,
@@ -629,7 +629,7 @@ def emitter(
 ) -> dict:
     """A well of ONE NODE that emits light by the window (ALGEBRA.md 9.85 (5), 9.71 (1); the
     one stroke's commit 7: the given train of item 27 retired): the kind `kind` (BEAM_KIND
-    unless given) with the well SEAT_WELL (the point emitter's seat), its seed WINDOW_SEED on its
+    unless given) with the well SEAT_WELL (the point emitter's body's Node), its seed WINDOW_SEED on its
     mode (no coupling: the click alone, the model owner's decision (2) of record 1962), its
     emission by its excited records' clicks (ALGEBRA.md 9.17; BUILD.md section 26): the stock
     EMITTER_STOCK excitations, each opening a window at its rung, the body's rotation written
@@ -643,7 +643,7 @@ def emitter(
         # its depth is shared by the nine Nodes; the window is at the centre Node)
         "extents": [1, 1, 1] if extents is None else list(extents),
         "kind": list(BEAM_KIND if kind is None else kind),  # the body's rest pair (ALGEBRA.md 9.91 (7))
-        "pair": list(SEAT_WELL),
+        "pair": list(ONE_NODE_WELL),
         "seed": WINDOW_SEED,
         "amount": 1,
         # the stock as the given family's content held at the body (ALGEBRA.md
@@ -658,14 +658,14 @@ def emitter(
     return block
 
 
-def mirror_behind(seat: list[int], direction: list[int], cross: list[int]) -> dict:
-    """THE MIRROR BEHIND THE SEAT (ALGEBRA.md 9.85 (5) (b); commit 7): a gap slab of depth 2
+def mirror_behind(node_record: list[int], direction: list[int], cross: list[int]) -> dict:
+    """THE MIRROR BEHIND THE BODY'S NODE (ALGEBRA.md 9.85 (5) (b); commit 7): a gap slab of depth 2
     whose face is the Node one Link behind the one-Node emitter along `direction`, `cross`
     its extents across (the axis along the direction set to 2), so the half given away from
     the arm returns forward two Links later and nothing reaches the face behind."""
     axis = next(index for index, value in enumerate(direction) if value != 0)
-    corner = list(seat)
-    corner[axis] = seat[axis] - 2 if direction[axis] > 0 else seat[axis] + 1
+    corner = list(node_record)
+    corner[axis] = node_record[axis] - 2 if direction[axis] > 0 else node_record[axis] + 1
     extents = list(cross)
     extents[axis] = 2
     return mirror_slab(corner, extents)
@@ -717,7 +717,7 @@ def bounded(document: dict) -> None:
             document["momentum_unit"] = MOMENTUM_UNIT
 
 
-LIGHT_CLOCK_SEAT_X = 631  # the one-Node emitter at the retired train's head (its last Node of [600, 632)), the arm 58 free Links to the mirror as before
+LIGHT_CLOCK_EMITTER_X = 631  # the one-Node emitter at the retired train's head (its last Node of [600, 632)), the arm 58 free Links to the mirror as before
 
 
 def finish_windows(
@@ -761,7 +761,7 @@ def light_clock(massive) -> dict:
         list(LIGHT_CLOCK_SHAPE),
         massive.CHAIN,
         KIND,
-        [emitter([LIGHT_CLOCK_SEAT_X, 0, 0], [1, 3, 3])],
+        [emitter([LIGHT_CLOCK_EMITTER_X, 0, 0], [1, 3, 3])],
         LIGHT_CLOCK_TICKS,
         given_clock=list(GIVEN_CLOCK),
         seed_profile=False,
@@ -770,11 +770,11 @@ def light_clock(massive) -> dict:
     document["face_depth"] = FACE_DEPTH
     bounded(document)
     document["measured"].append(mirror_slab([690, 0, 0], [MIRROR_DEPTH, 3, 3]))
-    document["measured"].append(mirror_behind([LIGHT_CLOCK_SEAT_X, 0, 0], [1, 0, 0], [1, 3, 3]))
+    document["measured"].append(mirror_behind([LIGHT_CLOCK_EMITTER_X, 0, 0], [1, 0, 0], [1, 3, 3]))
     receiver_set(document, "at_well", 0)
     named_receiver(document, {0: "at_well"})
     massive.seed_on_the_mode(document)
-    return finish_windows(massive, document, [0], 3 * 2 * (690 - LIGHT_CLOCK_SEAT_X) + 300)
+    return finish_windows(massive, document, [0], 3 * 2 * (690 - LIGHT_CLOCK_EMITTER_X) + 300)
 
 
 def massive_worlds(massive) -> dict[str, dict]:

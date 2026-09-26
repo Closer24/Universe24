@@ -3,8 +3,8 @@ the Boss, record 2054, "try to reduce them all to a Node"; BUILD.md section 26 i
 hypothesis under its own identity, the world key `point_emitter`, off by default: on a chain
 of 400 (x open) a one-Node well [800, 802] of the kind [800, 813] holds two light quanta and
 gives by the window: (1) THE WINDOW: at the giving click no rows are written; every interval
-the seat's rotation is added to the given row at the seat at the weight g and the outward
-flux through the seat's two Ports is summed; the window closes at the first interval at which
+the body's Node's rotation is added to the given row at the body's Node at the weight g and the outward
+flux through the body's Node's two Ports is summed; the window closes at the first interval at which
 the sum reaches the excitation's action T (norm / norm_denominator), the record then carrying
 the norm of its rows, the giving line naming the record with the window's length and the
 open's interval (the quantum moved at the open: the stock one less from there); the window at g = 4 is shorter than at g = 1 by about g^2
@@ -75,7 +75,7 @@ def run(document: dict, ticks: int) -> tuple[DetectorLawSimulation, list[dict]]:
     return simulation, lines
 
 
-def test_the_window_writes_the_seats_rotation_and_closes_at_the_excitations_action():
+def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_action():
     windows = {}
     for weight in (1, 4):
         document = point_world(weight)
@@ -99,7 +99,7 @@ def test_the_window_writes_the_seats_rotation_and_closes_at_the_excitations_acti
         if len(givings) > 1:
             assert givings[1]["opened"] > first["tick"]  # the next giving after the close
         windows[weight] = first["window"]
-        # the record's rows: a light record with rows spread from the seat, the seat's level
+        # the record's rows: a light record with rows spread from the body's Node, the body's Node's level
         # written every interval of its window
         live = simulation.records.get(first["record"])
         if live is not None:
@@ -126,9 +126,9 @@ def test_the_window_inverts_bit_for_bit():
     live = simulation.records[simulation.blocks[0].window]  # type: ignore[index]
     assert live.window_open and live.window >= 20 and int(np.abs(live.now).max()) > 0
     state = (live.now.copy(), live.before.copy(), live.remainder.copy(), live.window, live.outward)
-    seat = simulation.blocks[0].seat
-    assert seat is not None
-    seat_state = (seat.now, seat.before, seat.remainder)
+    record = simulation.blocks[0].node_record
+    assert record is not None
+    record_state = (record.now, record.before, record.remainder)
     for _ in range(40):
         simulation.step()
     assert live.window == state[3] + 40
@@ -137,19 +137,19 @@ def test_the_window_inverts_bit_for_bit():
     assert np.array_equal(live.now, state[0]) and np.array_equal(live.before, state[1])
     assert np.array_equal(live.remainder, state[2])
     assert (live.window, live.outward) == (state[3], state[4])
-    assert (seat.now, seat.before, seat.remainder) == seat_state
+    assert (record.now, record.before, record.remainder) == record_state
 
 
-def test_the_loader_pairs_the_key_with_the_seat_the_weight_and_the_action():
+def test_the_loader_pairs_the_key_with_the_one_node_body_the_weight_and_the_action():
     document = point_world(2, ticks=10)
     parse_nature_beam_world(document)
     # SINCE COMMIT 7 the window is the law's one giving: the lattice body gives by it too
     # (the level at its centre Node), the key `point_emitter` is retired and refused by name,
     # and so are the train's keys; the weight and the action are required on every emitter
-    no_seat = json.loads(json.dumps(document))
-    no_seat["body_record"] = False
-    no_seat["stamp"] = input_stamp(no_seat)
-    parse_nature_beam_world(no_seat)
+    no_body_record = json.loads(json.dumps(document))
+    no_body_record["body_record"] = False
+    no_body_record["stamp"] = input_stamp(no_body_record)
+    parse_nature_beam_world(no_body_record)
     no_weight = json.loads(json.dumps(document))
     del no_weight["measured"][0]["emitter"]["weight"]
     no_weight["stamp"] = input_stamp(no_weight)

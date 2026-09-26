@@ -6,7 +6,7 @@ held as one Node with a shape: its profile stored and never stepped, its own row
 GameBoard, and one rotation (a, b, r) stepped by the two-term rule on its clock pair [num_c,
 den_c] at the pace of its Nodes, den_c Gamma a' + r' = (num_c p + 2 den_c (Gamma - p)) a -
 den_c Gamma b + r, the remainder in [0, den_c Gamma); its residue its own remainder on its own
-wheel, read at the click at the seat (the centre Node); its tick the count of intervals against
+wheel, read at the click at the body's Node (the centre Node); its tick the count of intervals against
 (2 u + 1) P / (2 W) as the lattice body's; the given rows the file's, set on the body's Nodes as
 before. THE EQUIVALENCE (9.46 (4), the gate): (i) the ticks agree in distribution between the
 two forms (the mean cycle length, the residues spread on the wheel, no runs of one-interval
@@ -90,55 +90,57 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
     case: the lattice body's own rows are on the GameBoard and the body record's are not."""
     document = cube_world()
     lattice = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, False)))
-    seated = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, True)))
-    lattice_block, seated_block = lattice.blocks[0], seated.blocks[0]
-    assert lattice_block.own is not None and lattice_block.seat is None
-    assert seated_block.seat is not None and seated_block.own is None
-    assert seated_block.own is None and all(
-        not seated.families[live.family].massive_kind for live in seated.records.values()
+    one_node = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, True)))
+    lattice_block, one_node_block = lattice.blocks[0], one_node.blocks[0]
+    assert lattice_block.own is not None and lattice_block.node_record is None
+    assert one_node_block.node_record is not None and one_node_block.own is None
+    assert one_node_block.own is None and all(
+        not one_node.families[live.family].massive_kind for live in one_node.records.values()
     )
-    body = seated_block.seat
-    centre = tuple(int(axis[0]) for axis in np.nonzero(seated.centre_mask(seated_block)))
-    profile = np.array(document["measured"][0]["seed"], dtype=np.int64).reshape(seated.shape)
+    body = one_node_block.node_record
+    centre = tuple(int(axis[0]) for axis in np.nonzero(one_node.centre_mask(one_node_block)))
+    profile = np.array(document["measured"][0]["seed"], dtype=np.int64).reshape(one_node.shape)
     assert (body.now, body.before, body.remainder) == (int(profile[centre]), int(profile[centre]), 0)
-    # THE SEAT'S RULE (ALGEBRA.md 9.60 (2), 9.57 (1)): the one rule with the six reads returning
-    # the seat, the pair [num_c, 2 den_c] and the seat's own level: its coefficient on a is 6 R
+    # THE BODY'S NODE'S RULE (ALGEBRA.md 9.60 (2), 9.57 (1)): the one rule with the six reads returning
+    # the body's Node, the pair [num_c, 2 den_c] and the body's Node's own level: its coefficient on a is 6 R
     # + S and its wall w, the weak-field rule's integers at that pair and level; asserted once
-    num_c, den_c = seated_block.definition.clock
-    pace, gamma = seated.node_clock_pair(centre, seated_block.family)
+    num_c, den_c = one_node_block.definition.clock
+    pace, gamma = one_node.node_clock_pair(centre, one_node_block.family)
     assert (pace, gamma) == (gamma - 1, gamma)
-    assert seated.seat_rule(seated_block) == (num_c, 2 * den_c, gamma, 1)
-    coefficient, wall = seated.seat_coefficients(seated_block)
+    assert one_node.node_record_rule(one_node_block) == (num_c, 2 * den_c, gamma, 1)
+    coefficient, wall = one_node.node_record_coefficients(one_node_block)
     read, self_coefficient, wall_rule = rule_coefficients(num_c, 2 * den_c, gamma, 1, True)
     assert wall == wall_rule == 12 * den_c * gamma**2
     assert coefficient == 6 * read + self_coefficient
-    assert seated.one_rule(num_c, 2 * den_c, gamma, 1, 6 * body.now, body.now, body.before, 0, True) == (
+    assert one_node.one_rule(
+        num_c, 2 * den_c, gamma, 1, 6 * body.now, body.now, body.before, 0, True
+    ) == (
         (coefficient * body.now - wall * body.before) // wall,
         (coefficient * body.now - wall * body.before) % wall,
     )
     forms = []
-    seated_levels = [body.before, body.now]
+    one_node_levels = [body.before, body.now]
     lattice_levels = [int(lattice_block.own.before[centre]), int(lattice_block.own.now[centre])]
     for _ in range(400):
         a_before, a_now, r = body.before, body.now, body.remainder
-        seated.step()
+        one_node.step()
         lattice.step()
         # the rule's identity, exact
         assert wall * body.now + body.remainder == coefficient * a_now - wall * a_before + r
         assert 0 <= body.remainder < wall and body.before == a_now
-        seated_levels.append(body.now)
+        one_node_levels.append(body.now)
         lattice_levels.append(int(lattice_block.own.now[centre]))
-        forms.append(seated.seat_form(seated_block))
-        assert np.array_equal(seated.held_record("content").now, lattice.held_record("content").now)
+        forms.append(one_node.node_record_form(one_node_block))
+        assert np.array_equal(one_node.held_record("content").now, lattice.held_record("content").now)
         assert np.array_equal(
-            seated.held_record("content").remainder, lattice.held_record("content").remainder
+            one_node.held_record("content").remainder, lattice.held_record("content").remainder
         )
     expected = Fraction(coefficient, wall)
     # the read at the levels above half the amplitude: (r' - r) / (wall a_now) below 2 x 10^-6
     # on the body record; the profile's rounding on the lattice body below 10^-4 (the median
     # 6 x 10^-6, the worst 4.5 x 10^-5 over 400 intervals on this cube, COMPUTATION)
     half = 1 << 19
-    read = [rotation_of(seated_levels[i : i + 3]) for i in range(len(seated_levels) - 2)]
+    read = [rotation_of(one_node_levels[i : i + 3]) for i in range(len(one_node_levels) - 2)]
     read = [value for value in read if value is not None and abs(value.denominator) > half]
     assert len(read) > 100 and all(abs(value - expected) < Fraction(2, 10**6) for value in read)
     lattice_read = [rotation_of(lattice_levels[i : i + 3]) for i in range(len(lattice_levels) - 2)]
@@ -146,14 +148,14 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
     assert len(lattice_read) > 100
     # under the weak field the lattice body's profile (the plain rule's eigenvector) is not
     # the rule's own at its level, so its read jitters at c / Gamma (the worst 4 x 10^-4,
-    # the median 10^-6, COMPUTATION); the seat's within 2 x 10^-6
+    # the median 10^-6, COMPUTATION); the body's Node's within 2 x 10^-6
     assert all(abs(value - expected) < Fraction(1, 10**3) for value in lattice_read)
-    assert abs(lattice_block.count - seated_block.count) <= 1 and seated_block.count >= 5
+    assert abs(lattice_block.count - one_node_block.count) <= 1 and one_node_block.count >= 5
     # the invariant's jitter (a_next - a_before)(r - r') over e: 2 x 10^-5 read, below 10^-4
     assert max(forms) - min(forms) < max(forms) // 10**4
-    step, wheel = seated.seat_wheel(seated_block)
+    step, wheel = one_node.node_record_wheel(one_node_block)
     assert step * wheel == wall and step == math.gcd(wall, coefficient)
-    # the wheel the rule's own gcd at the seat (9.60 (2), 9.57 (1))
+    # the wheel the rule's own gcd at the body's Node (9.60 (2), 9.57 (1))
     assert wheel == wall // math.gcd(wall, coefficient)
 
 
@@ -236,19 +238,19 @@ def test_the_joint_inverse_is_exact_with_a_body_record():
     rng = np.random.default_rng(46)
     simulation = DetectorLawSimulation(parse_nature_beam_world(with_body_record(cube_world(), True)))
     block = simulation.blocks[0]
-    assert block.seat is not None
+    assert block.node_record is not None
     now = rng.integers(-UNIT, UNIT, size=simulation.shape, dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=simulation.shape, dtype=np.int64)
     live = planted(simulation, 0, now, before, np.zeros(simulation.shape, dtype=np.int64))
     simulation.records[live.identity] = live
-    start = (block.seat.now, block.seat.before, block.seat.remainder)
+    start = (block.node_record.now, block.node_record.before, block.node_record.remainder)
     field = simulation.held_record("content").now.copy()
     for _ in range(60):
         simulation.step()
-    assert (block.seat.now, block.seat.before, block.seat.remainder) != start
+    assert (block.node_record.now, block.node_record.before, block.node_record.remainder) != start
     for _ in range(60):
         simulation.step_inverse()
-    assert (block.seat.now, block.seat.before, block.seat.remainder) == start
+    assert (block.node_record.now, block.node_record.before, block.node_record.remainder) == start
     assert np.array_equal(live.now, now) and np.array_equal(live.before, before)
     assert not live.remainder.any() and simulation.tick == 0
     assert np.array_equal(simulation.held_record("content").now, field)
@@ -286,22 +288,22 @@ def test_the_loader_and_the_state_name_the_body_record():
     with pytest.raises(ValueError, match=r"measured\[0\] under body_record declares no `clock`"):
         parse_nature_beam_world(flat)
     lines: list[dict] = []
-    seated = DetectorLawSimulation(
+    one_node = DetectorLawSimulation(
         parse_nature_beam_world(with_body_record(document, True)), observer=lines.append
     )
     for _ in range(40):
-        seated.step()
-    state = dict(seated.snapshot_stream())
+        one_node.step()
+    state = dict(one_node.snapshot_stream())
     entry = state["blocks"][0]
-    body = seated.blocks[0].seat
+    body = one_node.blocks[0].node_record
     assert body is not None
-    assert entry["rows"] is None and entry["seat"] == [body.now, body.before, body.remainder]
-    assert entry["form"] == [seated.seat_form(seated.blocks[0]), 1]
+    assert entry["rows"] is None and entry["node_record"] == [body.now, body.before, body.remainder]
+    assert entry["form"] == [one_node.node_record_form(one_node.blocks[0]), 1]
     clicks = [line for line in lines if line["event"] == "click"]
     assert clicks and all(line["record"] == body.identity == 0 for line in clicks)
     lattice = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, False)))
     entry = dict(lattice.snapshot_stream())["blocks"][0]
-    assert entry["seat"] is None and entry["rows"] is not None
+    assert entry["node_record"] is None and entry["rows"] is not None
 
 
 def moving_world(ticks: int = 600, ramp: int = 200) -> dict:
@@ -334,16 +336,16 @@ def moving_world(ticks: int = 600, ramp: int = 200) -> dict:
     return document
 
 
-def test_the_moving_seat_rotates_at_the_proper_pair_of_its_momentum():
+def test_the_moving_body_on_one_node_rotates_at_the_proper_pair_of_its_momentum():
     """ALGEBRA.md 9.63 (3) (BUILD.md section 26 item 46). (1) THE GENERATOR'S LINE on a plane
     wave: the mode's quotient X is 2 num / (3 den) exactly and the moving rotation at v = 1 / 3
     and v = 1 / 5 on [800, 809] is the algebra's own (9.24 (2)): K = 0.18556 with the ratio
     0.81457 to the rest rotation, K = 0.09637 with 0.93757 (COMPUTATION). (2) THE TABLE: 65
     pairs for the momentum 64, the first the clock, the numerators never falling as the momentum
     grows (the proper rate slows), the last the rounding of b 2 cos(omega_K - K v) at v = 1 / 3
-    from the mode's own dispersion. (3) THE SEAT reads the pair of the drive's momentum now: the
+    from the mode's own dispersion. (3) THE BODY'S NODE reads the pair of the drive's momentum now: the
     clock before the ramp's first whole part, the table's entry at P t // ramp during it, the
-    last after it, its rule at [num_m, 2 b]; the seat moved with its body. (4) THE LOADER under
+    last after it, its rule at [num_m, 2 b]; the body's Node moved with its body. (4) THE LOADER under
     body_record refuses a moving seeded block without `proper_clock`, a table of the wrong
     length, a first entry other than the clock and the key on a body at rest, naming each; the
     generator refuses a momentum on two axes; the cube form loads the same file as before."""
@@ -388,19 +390,19 @@ def test_the_moving_seat_rotates_at_the_proper_pair_of_its_momentum():
     assert two_cos_rest == Fraction(a, b)
     _, rotation = generator.moving_rotation(float(two_cos_rest), float(quotient), 64 / 192)
     assert table[64] == [round(b * 2 * math.cos(rotation)), b]
-    # (3) the seat's pair by the interval
-    seated = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, True)))
-    block = seated.blocks[0]
-    assert block.seat is not None and block.definition.proper_clock is not None
-    centre_at_rest = int(np.nonzero(seated.centre_mask(block))[0][0])
-    assert seated.seat_clock(block) == (a, b)
+    # (3) the body's Node's pair by the interval
+    one_node = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, True)))
+    block = one_node.blocks[0]
+    assert block.node_record is not None and block.definition.proper_clock is not None
+    centre_at_rest = int(np.nonzero(one_node.centre_mask(block))[0][0])
+    assert one_node.node_record_clock(block) == (a, b)
     for tick in range(1, 301):
-        seated.step()
+        one_node.step()
         whole = 64 * tick // 200 if tick < 200 else 64
-        assert seated.seat_clock(block) == tuple(table[whole]), tick
-        num, den, _, _ = seated.seat_rule(block)
+        assert one_node.node_record_clock(block) == tuple(table[whole]), tick
+        num, den, _, _ = one_node.node_record_rule(block)
         assert (num, den) == (table[whole][0], 2 * b)
-    assert block.stepped > 60 and int(np.nonzero(seated.centre_mask(block))[0][0]) != centre_at_rest
+    assert block.stepped > 60 and int(np.nonzero(one_node.centre_mask(block))[0][0]) != centre_at_rest
     # (4) the refusals, each named; the cube form loads the file as before
     parse_nature_beam_world(with_body_record(document, False))
     without = json.loads(json.dumps(document))

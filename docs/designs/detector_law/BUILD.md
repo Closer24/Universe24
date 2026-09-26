@@ -4965,6 +4965,27 @@ would have found no cell.
    9.96 (2) (a)'s "the loader writes it once" is the generator's write and
    the loader's read (report 9's question to the mathematician). PROOF: the
    gate; the five worlds bit for bit.
+74. THE SEAT'S NAMES RETIRED (the model owner's record 2108 through the Boss:
+   "seat" is retired, say "a body on one Node"; ALGEBRA.md 9.90 (1); the Boss's
+   records 2133 and 2161). A words-only push over the living code and documents,
+   every run bit for bit: the engine's `SeatRecord` is `NodeRecord` (the body's
+   record on its one Node), `Block.seat` is `Block.node_record`, the methods
+   `seat_rule`, `seat_coefficients`, `seat_clock`, `seat_wheel`, `seat_form`,
+   `_advance_seat`, `_advance_seat_inverse`, `_seat_level` carry `node_record`
+   and `seat_outward_flux` is `one_node_outward_flux`; the state's block entry
+   key `seat` is `node_record` (the chain world's state digest moved by it and
+   re-read); the loader's `_detector_region(seated=...)` is `one_node`; the
+   generators' constants (ONE_NODE_KIND, ONE_NODE_WELL, LIGHT_CLOCK_EMITTER_X,
+   CHAIN_EMITTER_X, CLOCK_EMITTER_X, EMITTER_NODE, the retired train's head
+   `head_x`); the suite tests/test_seated_detector.py is
+   tests/test_one_node_detector.py with its names; the prose of the comments,
+   docstrings, messages and the living documents (ENGINE.md,
+   TEST_EXPECTATIONS.md) says the body's Node, a body on one Node, a one-Node
+   detector. The dated items of this file and the design documents stay as
+   written (records). NOT HERE: the module's and the design folder's names
+   (`detector_law.py`, `DetectorLawSimulation`, docs/designs/detector_law/):
+   the engine's name collides with the cancelled ray engine's file
+   `engine.py` (nothing deleted); a line to the Boss on the name to take.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

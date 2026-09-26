@@ -293,7 +293,7 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     assert found and all(g["chosen"] == [["at_well", 0, "0"]] for g in found)
     # SINCE COMMIT 7 (the window at every Node of the 32-Node body) the set at A's own Nodes
     # books the light leaving A's faces as it piles up inside them, so a record may click at
-    # A before the mirror's return (COMPUTATION; the one-Node seat of the shipped light clock
+    # A before the mirror's return (COMPUTATION; the one-Node body's Node of the shipped light clock
     # clicks on the return alone, tests/test_receiver_by_name.py's light clock test)
     assert all(g["tick"] == g["click"] > g["giving"] for g in found)
 

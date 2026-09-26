@@ -7,19 +7,19 @@
   at omega = 0.178 (light's wave number at that frequency k = 0.31, the wavelength about 20;
   9.62 (1)), its stock 64 of light, its weight g chosen by the generator so that the window
   is about 32 periods of its rotation; two receiver sets of three light bodies 500 Links
-  from the seat on each side (`left`, `right`). The blind expectations of 9.71 (1): (i) the
+  from the body's Node on each side (`left`, `right`). The blind expectations of 9.71 (1): (i) the
   counts at the two sides alike, 32 +- 4 each; (ii) the first click at each side at 500 /
   c_l after the open plus the window's share; (iii) the train's wavelength on the chain
   (GAMEBOARD, `read_runs.py --wavelength`).
-- `point_light_clock.json`: the light clock with a point emitter: the same seat at 100 on a
-  chain of 400, a mirror four Nodes deep 60 Links beyond it, the detector the seat's own set
+- `point_light_clock.json`: the light clock with a point emitter: the same body's Node at 100 on a
+  chain of 400, a mirror four Nodes deep 60 Links beyond it, the detector the body's Node's own set
   `at_well`; ROW (iv) AS FIXED (ALGEBRA.md 9.85 (5); commit 7): the weight g = 4 (the window
-  shorter than the arm's round trip), a gap slab of depth 2 one Link behind the seat, the
+  shorter than the arm's round trip), a gap slab of depth 2 one Link behind the body's Node, the
   reading the rung's share on the return, 2 x 60 / c_l + n / 2 +- n / sqrt(12) from the open,
   n the window's length.
 
 SINCE COMMIT 7 the window is the law's one giving (no world key `point_emitter`; every
-emitter of every world gives so); `body_record` stays the seat's form here.
+emitter of every world gives so); `body_record` stays the body's Node's form here.
 
 Run from the repository root:
 
@@ -53,20 +53,22 @@ detector = load(EVENTS / "detector_law" / "make_worlds.py", "detector_law_make_w
 
 KIND = [800, 813]  # the matter kind: the band's bottom omega_0 = 0.179
 WELL = [800, 802]  # the one-Node well: the bound mode at omega = 0.178, its pair rich (1203 values)
-SEED = 1 << 12  # the seat's amplitude; the written light stays far below the bound at the weights read
+SEED = (
+    1 << 12
+)  # the body's Node's amplitude; the written light stays far below the bound at the weights read
 STOCK = 64
-PERIODS = 32  # the window's length aimed at, in periods of the seat's rotation (9.71 (1))
+PERIODS = 32  # the window's length aimed at, in periods of the body's Node's rotation (9.71 (1))
 CHAIN_LENGTH = 1200
-CHAIN_SEAT_X = 600
-SET_DISTANCE = 500  # the receiver sets' distance from the seat
+CHAIN_EMITTER_X = 600
+SET_DISTANCE = 500  # the receiver sets' distance from the body's Node
 CLOCK_LENGTH = 400
-CLOCK_SEAT_X = 100
-CLOCK_ARM = 60  # the mirror 60 Links beyond the seat (9.71 (1) (iv))
+CLOCK_EMITTER_X = 100
+CLOCK_ARM = 60  # the mirror 60 Links beyond the body's Node (9.71 (1) (iv))
 FLIGHTS = 2  # the run's length: the stock's windows and rungs plus two flights
 CLOCK_WEIGHT = 4  # the light clock's weight g (ALGEBRA.md 9.85 (5) (a)): its window shorter than the arm's round trip
 
 
-def seat(position: list[int]) -> dict:
+def node_record(position: list[int]) -> dict:
     return {
         "position": position,
         "family": massive.MATTER_FAMILY_NAME,
@@ -103,8 +105,8 @@ def finish(  # type: ignore[no-untyped-def]
     document: dict, ticks_of_window, receiver: bool = False, weight: int | None = None
 ) -> dict:
     """The point emitter's keys after the seeding (the mode first, as `body_record`): the
-    world key `body_record` (the seat's form), the seat's own set where the row reads at the
-    seat (one Node), the weight by the generator's trial or the row's own `weight` (9.85 (5)
+    world key `body_record` (the body's Node's form), the body's Node's own set where the row reads at the
+    body's Node (one Node), the weight by the generator's trial or the row's own `weight` (9.85 (5)
     (a): g = 4 for the light clock), the ticks from the window read, the stamp over the whole
     file. The world key `point_emitter` is retired (commit 7): the window is the law's one
     giving."""
@@ -140,13 +142,13 @@ def point_chain() -> dict:
         1000,
         seed_profile=False,
     )
-    document["measured"] = [seat([CHAIN_SEAT_X, 0, 0])]
-    for x in (CHAIN_SEAT_X - SET_DISTANCE, CHAIN_SEAT_X + SET_DISTANCE):
+    document["measured"] = [node_record([CHAIN_EMITTER_X, 0, 0])]
+    for x in (CHAIN_EMITTER_X - SET_DISTANCE, CHAIN_EMITTER_X + SET_DISTANCE):
         for offset in (-1, 0, 1):
             document["measured"].append(body(x + offset))
     document["detectors"] = [
-        {"name": "left", "positions": [[CHAIN_SEAT_X - SET_DISTANCE + o, 0, 0] for o in (-1, 0, 1)]},
-        {"name": "right", "positions": [[CHAIN_SEAT_X + SET_DISTANCE + o, 0, 0] for o in (-1, 0, 1)]},
+        {"name": "left", "positions": [[CHAIN_EMITTER_X - SET_DISTANCE + o, 0, 0] for o in (-1, 0, 1)]},
+        {"name": "right", "positions": [[CHAIN_EMITTER_X + SET_DISTANCE + o, 0, 0] for o in (-1, 0, 1)]},
     ]
     document["face_depth"] = detector.FACE_DEPTH
     detector.bounded(document)
@@ -165,15 +167,15 @@ def point_light_clock() -> dict:
         1000,
         seed_profile=False,
     )
-    document["measured"] = [seat([CLOCK_SEAT_X, 0, 0])]
+    document["measured"] = [node_record([CLOCK_EMITTER_X, 0, 0])]
     document["face_depth"] = detector.FACE_DEPTH
     detector.bounded(document)
     document["measured"].append(
-        detector.mirror_slab([CLOCK_SEAT_X + CLOCK_ARM, 0, 0], [detector.MIRROR_DEPTH, 1, 1])
+        detector.mirror_slab([CLOCK_EMITTER_X + CLOCK_ARM, 0, 0], [detector.MIRROR_DEPTH, 1, 1])
     )
-    # ROW (iv)'S FIX (ALGEBRA.md 9.85 (5); commit 7): the mirror behind the seat, and the
+    # ROW (iv)'S FIX (ALGEBRA.md 9.85 (5); commit 7): the mirror behind the body's Node, and the
     # weight g = 4 so that the window is shorter than the arm's round trip
-    document["measured"].append(detector.mirror_behind([CLOCK_SEAT_X, 0, 0], [1, 0, 0], [1, 1, 1]))
+    document["measured"].append(detector.mirror_behind([CLOCK_EMITTER_X, 0, 0], [1, 0, 0], [1, 1, 1]))
     period = 35
     return finish(
         document,

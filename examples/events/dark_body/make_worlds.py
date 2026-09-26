@@ -91,7 +91,7 @@ LIGHT_MOMENT = massive_generator().LIGHT_MOMENT
 detector = load_generator(
     ROOT / "examples/events/detector_law/make_worlds.py", "detector_law_make_worlds"
 )
-EMITTER_SEAT = [
+EMITTER_NODE = [
     EMITTER_CORNER[0] + EMITTER_EXTENTS[0] - 1,
     BEAM_Y,
     0,
@@ -197,7 +197,7 @@ def world(dark: bool, source_weight: int | None = None) -> dict:
     # window (commit 7; ALGEBRA.md 9.85 (5)), a mirror of depth 2 behind it across the beam
     document["measured"].append(
         block(
-            EMITTER_SEAT,
+            EMITTER_NODE,
             [1, 1, 1],
             "matter",
             STOCK,
@@ -206,9 +206,9 @@ def world(dark: bool, source_weight: int | None = None) -> dict:
                 "receiver": ladder,
                 "clock": list(GIVEN_CLOCK),
             },
-            well=detector.SEAT_WELL,
+            well=detector.ONE_NODE_WELL,
             seed=detector.WINDOW_SEED,
-            kind=detector.BEAM_KIND,  # the beam's seat: light near the retired train's wavelength 4
+            kind=detector.BEAM_KIND,  # the beam's body's Node: light near the retired train's wavelength 4
         )
     )
     if dark:
@@ -235,7 +235,7 @@ def world(dark: bool, source_weight: int | None = None) -> dict:
         )
         document["detectors"].append({"name": "at_body", "block": 1})
     document["measured"].append(
-        detector.mirror_behind(EMITTER_SEAT, [1, 0, 0], [1, EMITTER_EXTENTS[1], 1])
+        detector.mirror_behind(EMITTER_NODE, [1, 0, 0], [1, EMITTER_EXTENTS[1], 1])
     )
     for y in range(SCREEN_YS.start, SCREEN_YS.stop, DETECTOR_SIDE):
         cube(document, f"screen_{y}", [SCREEN_X, y, 0])
@@ -246,7 +246,7 @@ def world(dark: bool, source_weight: int | None = None) -> dict:
     emitters = [0] if dark else [0, 1]
     weights = None if source_weight is None else {0: source_weight}
     return detector.finish_windows(
-        massive, document, emitters, 3 * (SCREEN_X - EMITTER_SEAT[0]) + 300, weights=weights
+        massive, document, emitters, 3 * (SCREEN_X - EMITTER_NODE[0]) + 300, weights=weights
     )
 
 

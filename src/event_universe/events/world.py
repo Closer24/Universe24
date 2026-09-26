@@ -1313,7 +1313,7 @@ BLOCK_KEYS = {
     "seed",
     # the bound mode's clock [a, b] beside a profile (ALGEBRA.md 9.22 (7))
     "clock",
-    # the moving seat's proper pairs by the momentum's whole part (ALGEBRA.md
+    # the moving body's Node's proper pairs by the momentum's whole part (ALGEBRA.md
     # 9.63 (3); BUILD.md section 26 item 46), beside `clock` on a moving block
     "proper_clock",
     "cavity",
@@ -1866,8 +1866,8 @@ class EmitterDefinition:
     # required on every emitter (commit 7: the window the one giving)
     norm_denominator: int | None = None
     # THE POINT EMITTER'S WEIGHT g (ALGEBRA.md 9.71 (1) (b); item 50): the
-    # body's coupling to the given family, one integer, the seat's rotation
-    # copied at that weight into the given row at the seat every interval of
+    # body's coupling to the given family, one integer, the body's Node's rotation
+    # copied at that weight into the given row at the body's Node every interval of
     # the window; required on every emitter (commit 7: the window the one giving)
     weight: int | None = None
     # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md 9.82 (3) (d), 9.91 (1); commit 4): the
@@ -1990,8 +1990,8 @@ class BlockDefinition:
     # least the profile's amplitude; the loader's integer check of the
     # profile against the eigen-equation reads it; None for a flat seed
     clock: tuple[int, int] | None = None
-    # THE PROPER PAIR OF A MOVING SEAT (ALGEBRA.md 9.63 (3); BUILD.md section 26
-    # item 46): the pairs [num_m, b] the seat rotates at while the drive's
+    # THE PROPER PAIR OF A MOVING BODY ON ONE NODE (ALGEBRA.md 9.63 (3); BUILD.md section 26
+    # item 46): the pairs [num_m, b] the body's Node rotates at while the drive's
     # momentum is m, indexed by m from 0 (the clock itself) to |P| along the
     # one axis of the declared momentum, the generator's reading of the moving
     # mode at its moving centre, 2 cos(omega_K - K v) at v = m / (3 Q M);
@@ -4707,7 +4707,7 @@ def _block(
             "generator's rational for 2 cos omega, b at least the amplitude; the loader checks "
             "the profile against the eigen-equation in integers, ALGEBRA.md 9.22 (7), record 1886)"
         )
-    # THE PROPER PAIR OF A MOVING SEAT (ALGEBRA.md 9.63 (3); BUILD.md section 26
+    # THE PROPER PAIR OF A MOVING BODY ON ONE NODE (ALGEBRA.md 9.63 (3); BUILD.md section 26
     # item 46): beside `clock`, on a block whose momentum lies on one axis, the
     # |P| + 1 pairs [num, den] indexed by the momentum's whole part, the first
     # the clock itself (the rest pair at K = 0)
@@ -4717,7 +4717,7 @@ def _block(
         if clock is None or len(moving_axes) != 1:
             raise ValueError(
                 f"{label}.proper_clock is admitted beside `clock` on a block whose "
-                "momentum lies on one axis (the moving seat's pairs by the momentum's whole part, "
+                "momentum lies on one axis (the moving body's Node's pairs by the momentum's whole part, "
                 "ALGEBRA.md 9.63 (3))"
             )
         value = obj["proper_clock"]
@@ -4742,7 +4742,7 @@ def _block(
         if (int(value[0][0]), int(value[0][1])) != clock:
             raise ValueError(
                 f"{label}.proper_clock[0] {value[0]} is not the clock {list(clock)}: at "
-                "rest the seat rotates at the mode's own pair (ALGEBRA.md 9.63 (3))"
+                "rest the body's Node rotates at the mode's own pair (ALGEBRA.md 9.63 (3))"
             )
         proper_clock = tuple((int(item[0]), int(item[1])) for item in value)
     if seed > amplitude_bound:
@@ -6740,18 +6740,18 @@ def _detector_region(
     positions: list[Address3],
     shape: Address3,
     periodic: tuple[bool, bool, bool],
-    seated: bool = False,
+    one_node: bool = False,
 ) -> None:
     """The three refusals on a detector's Nodes: disconnected pieces (ALGEBRA.md
     9.25 (7)), no box, a side below DETECTOR_SIDE where the GameBoard's extent
-    allows it (record 1899). THE SEATED DETECTOR (ALGEBRA.md 9.46 (8) (c);
+    allows it (record 1899). THE ONE-NODE DETECTOR (ALGEBRA.md 9.46 (8) (c);
     the model owner's word of 2026-09-25 in Nature24's session, "start";
     BUILD.md section 26 item 40; SINCE COMMIT 7 on every world, ALGEBRA.md
     9.92, record 2109: several bodies on one Node each are several detectors):
     a detector may be ONE Node, a body's Node, its six Links its Ports (the
     cube's fifty-four HISTORY there, the counts rescaled by the Node's share);
     a set of more than one Node keeps the cube rule."""
-    if seated and len(set(positions)) == 1:
+    if one_node and len(set(positions)) == 1:
         return
     pieces = _connected_pieces(positions, shape, periodic)
     if pieces > 1:
@@ -6778,7 +6778,7 @@ def _detector_region(
             + (
                 "; a detector is one Node (a body's) or a cube of three or more, nothing between "
                 "(ALGEBRA.md 9.46 (8) (c), 9.92; BUILD.md section 26 item 40; commit 7)"
-                if seated
+                if one_node
                 else ""
             )
         )
@@ -6857,7 +6857,7 @@ def _detectors(
                         )
                     taken.add(position)
                     bound_positions.append(position)
-                _detector_region(name, bound_positions, shape, periodic, seated=True)
+                _detector_region(name, bound_positions, shape, periodic, one_node=True)
             else:
                 # A BODY IS ITS OWN DETECTOR, whatever its support (ALGEBRA.md 9.92, the
                 # detectors' rule approved by the model owner, record 2109: a body of
@@ -6896,7 +6896,7 @@ def _detectors(
         # seam too), fill one box, and the box's sides are DETECTOR_SIDE or
         # more where the GameBoard's extent allows; separate places are
         # separate names
-        _detector_region(name, positions, shape, periodic, seated=True)
+        _detector_region(name, positions, shape, periodic, one_node=True)
         threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
         if name.startswith(RESERVED_SET_PREFIX) or name in FACE_NAMES or name == LIFETIME_NAME:
             raise ValueError(
@@ -7422,7 +7422,7 @@ def parse_world_document(
             if block.proper_clock is None and any(int(part) != 0 for part in entry.momentum):
                 raise ValueError(
                     f"measured[{number}] under body_record moves and declares no "
-                    "`proper_clock`: the seat of a moving body rotates at the proper pair of its "
+                    "`proper_clock`: the body's Node of a moving body rotates at the proper pair of its "
                     "momentum, the moving mode's rotation at its moving centre, the generator's "
                     "(ALGEBRA.md 9.63 (3); `seed_on_the_mode`)"
                 )

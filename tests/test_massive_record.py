@@ -378,8 +378,8 @@ def test_the_light_record_is_byte_identical_without_the_key():
     the state digest moved once more (the block entry's `rotation`, None under the lattice
     body; the events and the audit unchanged); SINCE THE GIVING CLICK (record 2016) the events
     and the state digests moved with the lines' names alone (`giving` for `birth`,
-    `given_norm` for `born_norm`; the state's record entries carry `giving`); SINCE THE SEAT (ALGEBRA.md 9.60; item 42) the state digest moved once more (the block
-    entry's `seat` for `rotation`, None under the lattice body; the events and the audit
+    `given_norm` for `born_norm`; the state's record entries carry `giving`); SINCE THE BODY'S NODE (ALGEBRA.md 9.60; item 42) the state digest moved once more (the block
+    entry's `body's Node` for `rotation`, None under the lattice body; the events and the audit
     unchanged: the one rule factored and the support box of item 43 bit for bit); SINCE THE WEAK FIELD (ALGEBRA.md 9.57 (1); item 44) all three moved (the rule, Gamma 10^4,
     the amplitude 2^22, the seed 50 x 2^12: every level, remainder, giving line and book); SINCE THE
     STOCK AS GIVEN-FAMILY CONTENT (ALGEBRA.md 9.51 (8); item 47) all three moved (the emitter's
@@ -410,10 +410,12 @@ def test_the_light_record_is_byte_identical_without_the_key():
     quantum's direction; the rows, the state and the audit bit for bit); SINCE THE RESIDUE
     LINES (ALGEBRA.md 9.90 (1); item 70) the state digest alone moved once more, by the
     state's `law` entry gone (one engine, no law's name; the events and the audit bit for
-    bit)."""
+    bit); SINCE THE SEAT'S NAMES (record 2108; item 74) the state digest alone moved once
+    more, by the block entry's key `node_record` in place of `seat` (the events and the
+    audit bit for bit)."""
     assert run_chain_digests() == {
         "events": "be458a826af93758056f1a5f845f25ce53787ff63122bc87d1991ffbf96e0467",
-        "state": "67ec38db5e464693a102234d07cb5c652d8f88855c4eaebeec332a95b1122ea7",
+        "state": "4ad93f10916fb60cba5ef90eee02fe816bb316a66728c1653cc40833dc7ad6ff",
         "audit": "9c4eb02e50596a16c05d5a1648f0a80338d460b398c51f04644158f68139790b",
     }
 

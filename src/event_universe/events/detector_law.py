@@ -234,7 +234,7 @@ class LiveRecord:
     outward_tally: list[int] = field(default_factory=lambda: [0, 0, 0])
     # THE POINT EMITTER'S WINDOW (ALGEBRA.md 9.71 (1); BUILD.md section 26 item
     # 50): open from the giving click until the outward norm through the
-    # seat's six Ports reaches T; the intervals written and the outward norm
+    # body's Node's six Ports reaches T; the intervals written and the outward norm
     # summed; the giving line held until the close names the record
     window_open: bool = False
     window: int = 0
@@ -291,23 +291,23 @@ class LiveRecord:
 
 
 @dataclass
-class SeatRecord:
-    """THE BODY'S RECORD AT ITS SEAT NODE (ALGEBRA.md 9.60 (1) and (2); BUILD.md
+class NodeRecord:
+    """THE BODY'S RECORD AT ITS BODY'S NODE (ALGEBRA.md 9.60 (1) and (2); BUILD.md
     section 26 item 42; the model owner's question of record 2036, "can it not
     be represented somehow in the Node?"): the standing record of the body's
-    own standing family on the seat Node alone (the body's centre Node,
+    own standing family on the body's Node alone (the body's centre Node,
     `centre_mask`), two integer levels and one remainder (a, b, r) at that
     Node, stepped by the engine's one rule (`one_rule`, ALGEBRA.md 9.50 (13))
-    with the standing family's six Ports closed on the seat, so that the six
-    reads return the seat itself, S_6 = 6 a, with the declared pair [num_c,
-    2 den_c] (the body's clock pair in the rule's convention) and the seat's
+    with the standing family's six Ports closed on the body's Node, so that the six
+    reads return the body's Node itself, S_6 = 6 a, with the declared pair [num_c,
+    2 den_c] (the body's clock pair in the rule's convention) and the body's Node's
     own level: 6 den_c Gamma a' + r' = (6 num_c p + 12 den_c c) a - 6 den_c
     Gamma b + r, 0 <= r' < 6 den_c Gamma, the rotation of 9.46 (2) as
     rationals with the remainder six times its (9.60 (2)); its residue u its
     own remainder on its wheel, read at the click and carried; its norm T the
     emitter's declared integer; the identity the body's record's (number x
     2^32). Nothing physical is kept beside the GameBoard: the record is the
-    seat's, the content the seat's level of the family of clicks, the charge
+    body's Node's, the content the body's Node's level of the family of clicks, the charge
     the family of charge's; the shape phi and the pairs are the world file's
     declared constants (9.60 (6))."""
 
@@ -349,11 +349,11 @@ class Block:
     count: int = 0
     previous_sum: int = 0
     own: LiveRecord | None = None
-    # THE BODY'S RECORD AT ITS SEAT (ALGEBRA.md 9.60; item 42, item 37
-    # HISTORY): the standing record on the seat Node under the world key
+    # THE BODY'S RECORD AT ITS BODY'S NODE (ALGEBRA.md 9.60; item 42, item 37
+    # HISTORY): the standing record on the body's Node under the world key
     # `body_record`, its own rows then nowhere else on the GameBoard (`own`
     # None); None under the lattice body
-    seat: SeatRecord | None = None
+    node_record: NodeRecord | None = None
     emitted: list[int] = field(default_factory=list)
     current: int | None = None
     givings: int = 0
@@ -735,10 +735,10 @@ class DetectorLawSimulation:
                 profile = np.array(definition.profile, dtype=np.int64).reshape(self.shape)
                 centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
                 level = int(profile[centre])
-                block.seat = SeatRecord(number * (1 << 32), level, level)
+                block.node_record = NodeRecord(number * (1 << 32), level, level)
                 block.previous_sum = level
                 if definition.emitter is not None:
-                    self._excite(block, block.seat)
+                    self._excite(block, block.node_record)
             elif definition.seed > 0:
                 own_record = self._massive_record(
                     number * (1 << 32), number, entry.family, definition.kind, definition.twist
@@ -1644,7 +1644,7 @@ class DetectorLawSimulation:
             )
         return int(where[0][0]), int(where[1][0]), int(where[2][0])
 
-    def residue_of(self, live: LiveRecord | SeatRecord, block: Block) -> tuple[int, int]:
+    def residue_of(self, live: LiveRecord | NodeRecord, block: Block) -> tuple[int, int]:
         """THE RESIDUE FROM THE LAW (ALGEBRA.md 9.22 (4); BUILD.md section 26
         item 15) UNDER THE NODE CLOCK (9.35 (2), (3); item 31), READ AT THE
         FIRST SHELL NODE (9.44 (5) (c); item 33): the record's rule remainder
@@ -1657,16 +1657,16 @@ class DetectorLawSimulation:
         801] at Gamma = 10^6 with M = 64); no declaration, no draw; which
         Node is read is a convention (9.47 (5) (ii)), the centre Node
         HISTORY."""
-        if isinstance(live, SeatRecord):
-            # THE SEAT'S RECORD (ALGEBRA.md 9.60 (1), 9.46 (2)): its residue its
-            # own remainder on its own wheel, read at the seat
-            step, wheel = self.seat_wheel(block)
+        if isinstance(live, NodeRecord):
+            # THE BODY'S NODE'S RECORD (ALGEBRA.md 9.60 (1), 9.46 (2)): its residue its
+            # own remainder on its own wheel, read at the body's Node
+            step, wheel = self.node_record_wheel(block)
             return live.remainder // step, wheel
         node = self.first_shell_node(block)
         step, wheel = self.wheel_at(live.family, node, live.pair)
         return int(live.remainder[node]) // step, wheel
 
-    def _excite(self, block: Block, own_record: LiveRecord | SeatRecord) -> None:
+    def _excite(self, block: Block, own_record: LiveRecord | NodeRecord) -> None:
         """The body's own record at the load, the one write of a body's record
         (ALGEBRA.md 9.43 (4); 9.17 (4) item 1): its norm T one period's
         action of its own mode (the emitter's declared integer `norm`, the
@@ -1722,8 +1722,8 @@ class DetectorLawSimulation:
         block.wait = 0
         block.emit_now = False
 
-    def seat_clock(self, block: Block) -> tuple[int, int]:
-        """THE SEAT'S PAIR THIS INTERVAL (ALGEBRA.md 9.63 (3); BUILD.md section
+    def node_record_clock(self, block: Block) -> tuple[int, int]:
+        """THE BODY'S NODE'S PAIR THIS INTERVAL (ALGEBRA.md 9.63 (3); BUILD.md section
         26 item 46): the declared clock pair [num_c, den_c] of the body's mode
         at rest, and on a moving body THE PROPER PAIR of the drive's momentum
         now, the world's `proper_clock` at the momentum's whole part along its
@@ -1731,7 +1731,7 @@ class DetectorLawSimulation:
         hops with): the moving mode's rotation at its moving centre per
         interval, 2 cos(omega_K - K v), which the generator wrote from the
         mode's own dispersion; the rest pair at m = 0. The cube carries the
-        dilation in its rows by the rule; the seat carries it in its declared
+        dilation in its rows by the rule; the body's Node carries it in its declared
         pair, the seam of the host form (9.46), and the equivalence test is
         what checks that they agree."""
         clock = block.definition.clock
@@ -1743,86 +1743,102 @@ class DetectorLawSimulation:
         num_c, den_c = table[index]
         return int(num_c), int(den_c)
 
-    def seat_rule(self, block: Block) -> tuple[int, int, int, int]:
-        """THE ONE RULE AT THE SEAT (ALGEBRA.md 9.60 (1), (2); item 42): the
-        integers the seat's record is stepped with, (num, den, Gamma, c): the
-        seat's pair this interval as [num_c, 2 den_c] (`seat_clock`: the body's
+    def node_record_rule(self, block: Block) -> tuple[int, int, int, int]:
+        """THE ONE RULE AT THE BODY'S NODE (ALGEBRA.md 9.60 (1), (2); item 42): the
+        integers the body's Node's record is stepped with, (num, den, Gamma, c): the
+        body's Node's pair this interval as [num_c, 2 den_c] (`node_record_clock`: the body's
         clock pair in the rule's convention, 2 cos omega = num_c / den_c, the
         proper pair of its momentum on a moving body), the world's Gamma and
-        the seat's own effective content c (Gamma - p at the body's centre
+        the body's Node's own effective content c (Gamma - p at the body's centre
         Node, the family of clicks' level less the charge's read, uniform over
         its Nodes); the wall 3 den Gamma = 6 den_c Gamma."""
-        num_c, den_c = self.seat_clock(block)
+        num_c, den_c = self.node_record_clock(block)
         centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
         pace, gamma = self.node_clock_pair(centre, block.family)
         return num_c, 2 * den_c, gamma, gamma - pace
 
-    def seat_coefficients(self, block: Block) -> tuple[int, int]:
-        """The one rule's coefficients at the seat with the six reads returning
-        the seat (S_6 = 6 a): (the coefficient on a, the wall) = (6 num (Gamma
+    def node_record_coefficients(self, block: Block) -> tuple[int, int]:
+        """The one rule's coefficients at the body's Node with the six reads returning
+        the body's Node (S_6 = 6 a): (the coefficient on a, the wall) = (6 num (Gamma
         - c) + 6 den c, 3 den Gamma) = (6 num_c p + 12 den_c c, 6 den_c Gamma),
         six times 9.46 (2)'s (K, den_c Gamma): the same rotation as rationals
         (9.60 (2))."""
-        num, den, gamma, content = self.seat_rule(block)
+        num, den, gamma, content = self.node_record_rule(block)
         read, self_coefficient, wall = rule_coefficients(num, den, gamma, content, True)
         return 6 * read + self_coefficient, wall
 
-    def _advance_seat(self, block: Block) -> None:
-        """One interval of the seat's record (ALGEBRA.md 9.60 (2)): the engine's
+    def _advance_node_record(self, block: Block) -> None:
+        """One interval of the body's Node's record (ALGEBRA.md 9.60 (2)): the engine's
         one rule (`one_rule`, the same integers as every record's step) with
-        the standing family's Ports closed on the seat, the six reads the seat
+        the standing family's Ports closed on the body's Node, the six reads the body's Node
         itself (S_6 = 6 a); the amplitude bound as the rows'."""
-        seat = block.seat
-        assert seat is not None
-        num, den, gamma, content = self.seat_rule(block)
+        node_record = block.node_record
+        assert node_record is not None
+        num, den, gamma, content = self.node_record_rule(block)
         nxt, remainder = self.one_rule(
-            num, den, gamma, content, 6 * seat.now, seat.now, seat.before, seat.remainder, True
+            num,
+            den,
+            gamma,
+            content,
+            6 * node_record.now,
+            node_record.now,
+            node_record.before,
+            node_record.remainder,
+            True,
         )
         if abs(nxt) > self.world.amplitude_bound:
             raise RuntimeError(
-                f"the seat's record of measured[{block.number}] reached the level {nxt} "
+                f"the body's Node record of measured[{block.number}] reached the level {nxt} "
                 f"at interval {self.tick}, above the world's declared amplitude bound A = "
                 f"{self.world.amplitude_bound}: the run is refused"
             )
-        seat.remainder = remainder
-        seat.before = seat.now
-        seat.now = nxt
+        node_record.remainder = remainder
+        node_record.before = node_record.now
+        node_record.now = nxt
 
-    def _advance_seat_inverse(self, block: Block) -> None:
-        """The seat's record one interval back with the same integers
+    def _advance_node_record_inverse(self, block: Block) -> None:
+        """The body's Node's record one interval back with the same integers
         (`one_rule_inverse`; ALGEBRA.md 9.50 (8): the wall constant, the
         remainder's range the same at every interval, one to one)."""
-        seat = block.seat
-        assert seat is not None
-        num, den, gamma, content = self.seat_rule(block)
+        node_record = block.node_record
+        assert node_record is not None
+        num, den, gamma, content = self.node_record_rule(block)
         a_before, remainder = self.one_rule_inverse(
-            num, den, gamma, content, 6 * seat.before, seat.now, seat.before, seat.remainder, True
+            num,
+            den,
+            gamma,
+            content,
+            6 * node_record.before,
+            node_record.now,
+            node_record.before,
+            node_record.remainder,
+            True,
         )
-        seat.remainder = remainder
-        seat.now = seat.before
-        seat.before = a_before
+        node_record.remainder = remainder
+        node_record.now = node_record.before
+        node_record.before = a_before
 
-    def seat_wheel(self, block: Block) -> tuple[int, int]:
-        """The remainder's step g and the wheel W of the one rule at the seat
+    def node_record_wheel(self, block: Block) -> tuple[int, int]:
+        """The remainder's step g and the wheel W of the one rule at the body's Node
         (ALGEBRA.md 9.60 (2), 9.22 (4); `wheel_at`'s reading with the six reads
-        the seat): g the gcd of the rule's coefficients (on a and the wall), W
+        the body's Node): g the gcd of the rule's coefficients (on a and the wall), W
         = wall / g; 9.46 (2)'s wheel of the body record, the remainder six
         times its (the coefficients and the wall six times)."""
-        coefficient, wall = self.seat_coefficients(block)
+        coefficient, wall = self.node_record_coefficients(block)
         step = gcd(wall, coefficient)
         return step, wall // step
 
-    def seat_form(self, block: Block) -> int:
-        """The seat's record's invariant (ALGEBRA.md 9.46 (2), (9) (b); 9.60):
-        e = wall (a^2 + b^2) - coefficient a b, the one rule's own at the seat
+    def node_record_form(self, block: Block) -> int:
+        """The body's Node's record's invariant (ALGEBRA.md 9.46 (2), (9) (b); 9.60):
+        e = wall (a^2 + b^2) - coefficient a b, the one rule's own at the body's Node
         (a' = (coefficient / wall) a - b leaves it fixed); constant between the
         remainders' jitter (GAMEBOARD)."""
-        seat = block.seat
-        assert seat is not None
-        coefficient, wall = self.seat_coefficients(block)
+        node_record = block.node_record
+        assert node_record is not None
+        coefficient, wall = self.node_record_coefficients(block)
         return (
-            wall * (seat.now * seat.now + seat.before * seat.before)
-            - coefficient * seat.now * seat.before
+            wall * (node_record.now * node_record.now + node_record.before * node_record.before)
+            - coefficient * node_record.now * node_record.before
         )
 
     def centre_mask(self, block: Block) -> np.ndarray:
@@ -1851,7 +1867,9 @@ class DetectorLawSimulation:
         write), the count starting from that interval; every later residue
         is read at the click (`_emit`). Nothing fires while the stock is
         spent: the body's own record continues (9.43 (3))."""
-        own: LiveRecord | SeatRecord | None = block.seat if block.seat is not None else block.own
+        own: LiveRecord | NodeRecord | None = (
+            block.node_record if block.node_record is not None else block.own
+        )
         emitter = block.definition.emitter
         if own is None or emitter is None or block.emit_now or block.window is not None:
             return
@@ -1895,7 +1913,9 @@ class DetectorLawSimulation:
         afterwards: the law advances it."""
         world = self.world
         emitter = block.definition.emitter
-        own: LiveRecord | SeatRecord | None = block.seat if block.seat is not None else block.own
+        own: LiveRecord | NodeRecord | None = (
+            block.node_record if block.node_record is not None else block.own
+        )
         assert emitter is not None and own is not None
         number = block.number
         family = emitter.family
@@ -1911,10 +1931,10 @@ class DetectorLawSimulation:
         residue, wheel = self.residue_of(own, block)
         wait = block.wait
         # the read Node: the first shell Node of the lattice body (item 33),
-        # the seat (the centre Node) of a seated body (9.60; item 42)
+        # the body's Node (the centre Node) of a body on one Node (9.60; item 42)
         read_node = (
             tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
-            if block.seat is not None
+            if block.node_record is not None
             else self.first_shell_node(block)
         )
         # the held content's level at the read Node and at its reads as the
@@ -2126,11 +2146,11 @@ class DetectorLawSimulation:
             for axis in range(3)
         )
         at_centre = 0
-        if block.seat is not None:
-            # the seat's record (9.60 (1)): its level is the standing record's
+        if block.node_record is not None:
+            # the body's Node's record (9.60 (1)): its level is the standing record's
             # coefficient, the sum over the Nodes and the centre alike
-            total += block.seat.now
-            at_centre += block.seat.now
+            total += block.node_record.now
+            at_centre += block.node_record.now
         elif block.own is not None:
             total += int(np.sum(block.own.now[block.mask]))
             at_centre += int(block.own.now[centre])
@@ -2148,8 +2168,8 @@ class DetectorLawSimulation:
                         "measured": block.number,
                         "family": self.families[block.family].name,
                         "record": (
-                            block.seat.identity
-                            if block.seat is not None
+                            block.node_record.identity
+                            if block.node_record is not None
                             else None
                             if block.own is None
                             else block.own.identity
@@ -2310,8 +2330,8 @@ class DetectorLawSimulation:
                 continue
             self._advance_inverse(live)
         for block in self.blocks:
-            if block.seat is not None:
-                self._advance_seat_inverse(block)
+            if block.node_record is not None:
+                self._advance_node_record_inverse(block)
             elif block.own is not None:
                 self._advance_inverse(block.own)
         for record in reversed(self.held_component_records()):
@@ -3202,7 +3222,7 @@ class DetectorLawSimulation:
         """THE ONE RULE (ALGEBRA.md 9.57 (1), the law's rule with Einstein's weak
         field, the model owner's "switch" of record 2024; BUILD.md section 26
         item 44), the same integers for every record at every Node and for
-        the seat's record with its six reads returning the seat (9.60 (2);
+        the body's Node's record with its six reads returning the body's Node (9.60 (2);
         item 42): w a_next + r' = R S_6(a_now) + S a_now - w a_before + r, the
         remainder in [0, w), with (R, S, w) the rule's integers at the Node
         (`rule_coefficients`: R = 2 p^2 num, S = 12 den Gamma^2 - 6 (p^2 +
@@ -3490,7 +3510,7 @@ class DetectorLawSimulation:
         self._ladder_click(live, increments)
 
     def _window_centre(self, block: Block) -> tuple[int, int, int]:
-        """The seat Node of a block with a window (its centre Node)."""
+        """The body's Node of a block with a window (its centre Node)."""
         axes = np.nonzero(self.centre_mask(block))
         return (int(axes[0][0]), int(axes[1][0]), int(axes[2][0]))
 
@@ -3500,7 +3520,7 @@ class DetectorLawSimulation:
         7), right after the record's own step: (b) the body's rotation is
         written into the given row at every Node of the body, a_given(i) += g x
         a_body(i) (the body stepped this interval already, its levels the ones
-        written; a one-Node body its one Node, the seat of 9.71 (1)); (c) the
+        written; a one-Node body its one Node, the body's Node of 9.71 (1)); (c) the
         norm that left the body this interval is read as the outward flux
         through its outer Ports from the two levels as the interval leaves
         them, both with their writes, and summed; the window's count grows by
@@ -3527,11 +3547,11 @@ class DetectorLawSimulation:
 
     def _body_levels(self, block: Block) -> np.ndarray:
         """The body's rotation's level now at each of its Nodes, in the mask's
-        order: the standing record at its one Node (the seat, item 42) or its
+        order: the standing record at its one Node (the body's Node, item 42) or its
         own rows there (the lattice body)."""
-        if block.seat is not None:
+        if block.node_record is not None:
             count = int(np.count_nonzero(block.mask))
-            return np.full(count, int(block.seat.now), dtype=np.int64)
+            return np.full(count, int(block.node_record.now), dtype=np.int64)
         assert block.own is not None
         return np.asarray(block.own.now[block.mask], dtype=np.int64)
 
@@ -3544,7 +3564,7 @@ class DetectorLawSimulation:
         Ports along the record's own component none, 9.82 (3) (c)), from the
         record's two levels as the interval leaves them, this interval's write in
         `now` and the last one's in `before`; the pair's second level added (9.82
-        (3) (b)). A one-Node body's six Ports are `seat_outward_flux`, bit for bit.
+        (3) (b)). A one-Node body's six Ports are `one_node_outward_flux`, bit for bit.
         With `tally`, the flux through the Ports on the body's +a side is added to
         tally[a] and through its -a side subtracted (the given quantum's direction,
         ALGEBRA.md 9.91 (4); commit 5 without the recoil), in the same units."""
@@ -3579,11 +3599,11 @@ class DetectorLawSimulation:
                     tally[axis] += side * outward
         return total
 
-    def seat_outward_flux(self, live: LiveRecord, centre: tuple[int, int, int]) -> int:
-        """THE OUTWARD FLUX through the seat's six Ports this interval (ALGEBRA.md
+    def one_node_outward_flux(self, live: LiveRecord, centre: tuple[int, int, int]) -> int:
+        """THE OUTWARD FLUX through the body's Node's six Ports this interval (ALGEBRA.md
         9.71 (1) (c); item 50): the taking's inward booking with the sign
         reversed, wall (now_j before_i - before_j now_i) where positive over
-        the seat's Links (the Link to a Node beyond an open face carries none;
+        the body's Node's Links (the Link to a Node beyond an open face carries none;
         a folded axis none; the Ports along the record's own component none,
         9.82 (3) (c)), from the record's two levels as the interval leaves
         them, this interval's write in `now` and the last one's in `before`
@@ -3615,11 +3635,11 @@ class DetectorLawSimulation:
                     total += flux * wall
         return total
 
-    def _seat_level(self, block: Block) -> int:
-        """The seat's rotation's level now (the standing record at the seat, item
+    def _node_record_level(self, block: Block) -> int:
+        """The body's Node's rotation's level now (the standing record at the body's Node, item
         42; the lattice body's centre Node otherwise)."""
-        if block.seat is not None:
-            return int(block.seat.now)
+        if block.node_record is not None:
+            return int(block.node_record.now)
         assert block.own is not None
         centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
         return int(block.own.now[centre])
@@ -3636,7 +3656,7 @@ class DetectorLawSimulation:
         there), the giving line names the record with the window's length,
         and the next excitation waits its count from here. What comes out by the law: a train of about n c_l
         Links with the band 1 / n, at the wave number light's dispersion gives
-        to the seat's frequency; no declared train. The giving is n additive
+        to the body's Node's frequency; no declared train. The giving is n additive
         writes, each undone by the inverse (`_point_window_inverse`)."""
         for block in self.blocks:
             if block.window is None:
@@ -3647,7 +3667,7 @@ class DetectorLawSimulation:
                 block.window = None
                 continue
             if live.clicked:
-                # taken while its window was open (its own seat's set reading the
+                # taken while its window was open (its own body's Node's set reading the
                 # returning light, the light clock): the window closes at the
                 # click, the record named
                 self._close_window(block, live)
@@ -3691,7 +3711,7 @@ class DetectorLawSimulation:
         """One interval of an open window backwards (ALGEBRA.md 9.71 (1) (e)):
         the interval's outward reading taken off the sum on the rows as the
         interval left them, then the write subtracted (an addition inverts),
-        before the record's own inverse step; the seat's level is the one
+        before the record's own inverse step; the body's Node's level is the one
         written, its own inverse coming after."""
         live = self.records.get(block.window) if block.window is not None else None
         emitter = block.definition.emitter
@@ -3996,8 +4016,8 @@ class DetectorLawSimulation:
         # (MASSIVE_RECORD.md section 7's massive step first; the coupling's
         # terms HISTORY, the model owner's decision (2) of record 1962).
         for block in self.blocks:
-            if block.seat is not None:
-                self._advance_seat(block)
+            if block.node_record is not None:
+                self._advance_node_record(block)
             elif block.own is not None:
                 self._advance(block.own)
             else:
@@ -4232,17 +4252,21 @@ class DetectorLawSimulation:
                         "emitted": list(block.emitted),
                         "rows": None if block.own is None else block.own.now.ravel().tolist(),
                         "form": (
-                            form_json((self.seat_form(block), 1))
-                            if block.seat is not None
+                            form_json((self.node_record_form(block), 1))
+                            if block.node_record is not None
                             else None
                             if block.own is None
                             else form_json(self.record_form(block.own))
                         ),
-                        # the seat's record, (a, b, r) at the seat Node (9.60; item 42; GAMEBOARD)
-                        "seat": (
+                        # the body's Node's record, (a, b, r) at the body's Node (9.60; item 42; GAMEBOARD)
+                        "node_record": (
                             None
-                            if block.seat is None
-                            else [block.seat.now, block.seat.before, block.seat.remainder]
+                            if block.node_record is None
+                            else [
+                                block.node_record.now,
+                                block.node_record.before,
+                                block.node_record.remainder,
+                            ]
                         ),
                     }
                     for block in self.blocks

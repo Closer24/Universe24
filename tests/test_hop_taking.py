@@ -36,8 +36,8 @@ def cart_world(
     """The emitter A at [20, 52) naming the set `cart`, its two records along +x; the cart a
     silent block of matter over [200, 203) with the momentum `momentum` along x and the set
     `cart` bound to its Nodes (the detector follows the body, item 40's cube of three)."""
-    # SINCE COMMIT 7 the emitter is a one-Node seat at the retired train's head (x = 51) on
-    # the beam seat's kind [800, 1200] (its light near the wavelength 4 of the retired train's
+    # SINCE COMMIT 7 the emitter is a one-Node body's Node at the retired train's head (x = 51) on
+    # the beam body's Node's kind [800, 1200] (its light near the wavelength 4 of the retired train's
     # clock; a body of 32 Nodes writing at all its Nodes would give a record far above one T)
     document = massive_world([300, 1, 1], CLOSED_CHAIN, [800, 1200])
     document["ticks"] = ticks
@@ -62,12 +62,12 @@ def cart_world(
         "moment": [0, 0, 0],
         "pair": [800, 810],  # a barrier of matter's kind, no seed: light passes it untouched
     }
-    seat = emitter(51, "cart", 0, stock)
-    seat["extents"] = [1, 1, 1]
-    seat["pair"] = [800, 802]
-    seat["seed"] = 1 << 12
-    seat["emitter"]["weight"] = 4
-    document["measured"] = [seat, cart]
+    source = emitter(51, "cart", 0, stock)
+    source["extents"] = [1, 1, 1]
+    source["pair"] = [800, 802]
+    source["seed"] = 1 << 12
+    source["emitter"]["weight"] = 4
+    document["measured"] = [source, cart]
     document["detectors"] = [{"name": "cart", "block": 1}]
     seed_source(document, 0)
     return document
@@ -154,7 +154,7 @@ def test_the_back_face_books_a_record_overtaking_the_cart_once_and_not_c_over_c_
     booked, plain = booked_share(frame, board)
     assert abs(float(booked) - 1) < 0.1, float(booked)
     # the board's frame books the rows the back face uncovers again: c / (c - v) = 2.27 on the
-    # retired train's uniform rows; on the window's record (its envelope the seat's, commit 7)
+    # retired train's uniform rows; on the window's record (its envelope the body's Node's, commit 7)
     # it reads 1.63 (COMPUTATION), well above the norm the one rule books once
     re_entry = LIGHT_PACE / (LIGHT_PACE - CART_MOMENTUM / 192)  # c / (c - v) = 2.27, the uniform rows'
     assert 1.4 < float(plain) < re_entry, float(plain)

@@ -350,7 +350,7 @@ def seed_on_the_mode(document: dict) -> None:
         entry.setdefault("margin", "pin")
         entry["seed"] = mode_profile(document, number, amplitude=scalar)
         if any(component != 0 for component in entry.get("momentum", [0, 0, 0])):
-            # the moving seat's proper pairs (ALGEBRA.md 9.63 (3); item 46)
+            # the moving body's Node's proper pairs (ALGEBRA.md 9.63 (3); item 46)
             entry["proper_clock"] = proper_clock(document, number)
     for number, entry in enumerate(document["measured"]):
         if "emitter" in entry:
@@ -1184,15 +1184,15 @@ def moving_rotation(two_cos_rest: float, quotient: float, pace: float) -> tuple[
 
 
 def proper_clock(document: dict, number: int) -> list[list[int]]:
-    """THE PROPER PAIRS OF A MOVING SEAT (ALGEBRA.md 9.63 (3); BUILD.md section 26 item 46; the
-    mathematician's ruling on Nature24's finding that the seat's clock did not slow in motion):
+    """THE PROPER PAIRS OF A MOVING BODY ON ONE NODE (ALGEBRA.md 9.63 (3); BUILD.md section 26 item 46; the
+    mathematician's ruling on Nature24's finding that the body's Node's clock did not slow in motion):
     for a block with the momentum P on one axis, the pair [num_m, b] for every whole part m of
     the momentum from 0 to |P| (the ramp's P t // ramp, then P; the engine's `_momentum_now`),
     b the clock's denominator and num_m = round(b 2 cos(omega_K - K v)) with v = m / W the hop
     rate (W = 3 Q S M, the drive's wall) and (K, omega_K - K v) from `moving_rotation` on the
     mode's own dispersion (`mode_dispersion`): the rotation of the moving mode's rows at its
-    moving centre per interval, which the seat rotates at between hops; at m = 0 the clock
-    itself. The cube carries the dilation in its rows by the rule; the seat carries it in
+    moving centre per interval, which the body's Node rotates at between hops; at m = 0 the clock
+    itself. The cube carries the dilation in its rows by the rule; the body's Node carries it in
     this declared pair, the seam of the host form (9.46). HOST, the generator's; the engine
     reads the integers alone."""
     entry = document["measured"][number]

@@ -354,7 +354,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     # body's kind [800, 809] (the pair on the body, 9.91 (7))
     matter = [family.name for family in world.families].index("matter")
     kind = block.definition.kind
-    # the beam seat's kind [800, 1200] since commit 7 (the one-Node emitter of the window)
+    # the beam body's Node's kind [800, 1200] since commit 7 (the one-Node emitter of the window)
     assert kind == (800, 1200) and world.families[matter].pair_on_body
     # A's level 65: its one own quantum beside its stock of 64 light quanta (item 47)
     assert simulation.node_clock_pair(centre, matter) == (NODE_CLOCK - 65, NODE_CLOCK)

@@ -660,7 +660,7 @@ def excitation_action(world: NatureBeamWorld, number: int, period: int) -> Fract
     the body's own conserved form at its centre Node over `period` intervals
     advanced alone, in the form's units of ALGEBRA.md 9.19 (3). THE POINT
     EMITTER (9.71 (1) (d); BUILD.md section 26 item 50) closes its window when
-    the given family's norm that left the seat reaches it, so the generator
+    the given family's norm that left the body's Node reaches it, so the generator
     writes its denominator beside the norm (`norm_denominator`)."""
     from event_universe.events.detector_law import DetectorLawSimulation
 
