@@ -119,12 +119,21 @@ def families_entries() -> tuple[list[dict], dict[str, int]]:
     return [dict(entry) for entry in entries], dict(integers)
 
 
+def universe_integer(document: dict, key: str) -> int:
+    """One of the universe's integers as the world reads it: the world's own key on an inline
+    list, the families file's under the path (Q, `momentum_unit`, ALGEBRA.md 9.96 (1))."""
+    if isinstance(document["families"], str):
+        return int(families_entries()[1][key])
+    return int(document[key])
+
+
 def bind_families_file(document: dict) -> dict:
     """The world as written: the families file's path in place of the list, the universe's
     integers the file's alone (the world's copies removed), the stamp over the file."""
     document["families"] = FAMILIES_FILE
     document.pop("node_clock", None)
     document.pop("amplitude_bound", None)
+    document.pop("momentum_unit", None)
     return stamped(document)
 
 
@@ -269,6 +278,8 @@ def world(
         # the Node clock Gamma (ALGEBRA.md 9.35 (3); item 31): (e, f) = (Gamma,
         # Gamma + M) at every Node, M the content held there; required, no default
         "node_clock": integers["node_clock"],
+        # the momentum's unit Q (ALGEBRA.md 9.96 (1)): every body's wall W = 3 Q M
+        "momentum_unit": integers["momentum_unit"],
         # the families' roles stand on the families (`held`, `reads`; the family
         # genericity, BUILD.md section 26 item 51); the list during the build, the
         # file's path as written (`bind_families_file`)
@@ -410,7 +421,6 @@ def given_train(document: dict, number: int) -> None:
     own clock, is written beside `norm` (the ladder's threshold); the ratio norm / rest_norm
     is checked against D (1 / D backward) within 3 percent, else refused."""
     from event_universe.events.world import (
-        LABEL_SCALE,
         given_train_flux_sign,
         given_train_norm,
     )
@@ -447,7 +457,7 @@ def given_train(document: dict, number: int) -> None:
         # emitter's declared `clock` (ALGEBRA.md 9.85 (3); item 59)
         rest_clock = [int(definition.emitter.clock[0]), int(definition.emitter.clock[1])]
         entry = world.measured[number]
-        wall = 3 * LABEL_SCALE * int(world.width) * sum(int(value) for value in entry.held)
+        wall = 3 * int(world.momentum_unit) * sum(int(value) for value in entry.held)
         momentum = int(entry.momentum[axis])
         if momentum == 0:
             raise ValueError(
@@ -1095,8 +1105,6 @@ def proper_clock(document: dict, number: int) -> list[list[int]]:
     itself. The cube carries the dilation in its rows by the rule; the seat carries it in
     this declared pair, the seam of the host form (9.46). HOST, the generator's; the engine
     reads the integers alone."""
-    from event_universe.events.world import LABEL_SCALE
-
     entry = document["measured"][number]
     momentum = [int(component) for component in entry.get("momentum", [0, 0, 0])]
     axes = [axis for axis in range(3) if momentum[axis] != 0]
@@ -1107,9 +1115,10 @@ def proper_clock(document: dict, number: int) -> list[list[int]]:
         )
     two_cos_rest, quotient = mode_dispersion(document, number, axes[0])
     a, b = (int(value) for value in entry["clock"])
-    # the drive's wall on the body's whole content, its own quanta and what it holds
+    # the body's wall W = 3 Q M on its whole content, its own quanta and what it holds
+    # (ALGEBRA.md 9.96 (1); Q the universe's `momentum_unit`)
     content = int(entry.get("amount", 1)) + sum(int(value) for value in entry.get("held", {}).values())
-    wall = 3 * LABEL_SCALE * int(document.get("width", 1)) * content
+    wall = 3 * universe_integer(document, "momentum_unit") * content
     table = [[a, b]]
     for whole in range(1, abs(momentum[axes[0]]) + 1):
         _, rotation = moving_rotation(float(two_cos_rest), float(quotient), whole / wall)

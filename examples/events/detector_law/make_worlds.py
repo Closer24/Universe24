@@ -173,6 +173,7 @@ def ray_world(name: str, shape: list[int], boundary: dict, pair: list[int], tick
     document["massive_record"] = True  # the absorbing blocks and the `probes` key live under it
     document["amplitude_bound"] = AMPLITUDE_BOUND  # the emitter body's massive family (M1-10)
     document["node_clock"] = NODE_CLOCK  # the Node clock Gamma (item 31)
+    document["momentum_unit"] = MOMENTUM_UNIT  # the momentum's unit Q (ALGEBRA.md 9.96 (1))
     document["families"] = [
         light_family(pair),
         emitter_kind_family(),
@@ -495,6 +496,7 @@ def malus(name: str, source: Path, setting: int) -> dict:
     rebuilt["massive_record"] = True
     rebuilt["amplitude_bound"] = AMPLITUDE_BOUND
     rebuilt["node_clock"] = NODE_CLOCK
+    rebuilt["momentum_unit"] = MOMENTUM_UNIT
     rebuilt["measured"] = [
         entry for entry in rebuilt["measured"] if entry["position"] != MALUS_READ_NODE
     ]
@@ -541,6 +543,9 @@ EMITTER_SEED = (
 AMPLITUDE_BOUND = (
     1 << 20
 )  # the world key `amplitude_bound` of every massive world: the ceiling under the Node clock (BUILD.md section 26 item 31; section 15 M1-10's 2^32 HISTORY)
+MOMENTUM_UNIT = (
+    64  # the world key `momentum_unit`, Q, the momentum's unit (ALGEBRA.md 9.96 (1)): the wall W = 3 Q M
+)
 NODE_CLOCK = 10_000  # the world key `node_clock`, Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44) (ALGEBRA.md 9.35 (3); item 31): the massive generator's integer, written in every world
 # THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26 item 51): what a
 # family is stands on the family: the family of clicks holds the content (ALGEBRA.md 9.45;
@@ -658,6 +663,7 @@ def bounded(document: dict) -> None:
         if key == "massive_record":
             document["amplitude_bound"] = AMPLITUDE_BOUND
             document["node_clock"] = NODE_CLOCK
+            document["momentum_unit"] = MOMENTUM_UNIT
 
 
 def light_clock(massive) -> dict:

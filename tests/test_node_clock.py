@@ -544,6 +544,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     del ray["amplitude_bound"]
     del ray["face_depth"]
     del ray["node_clock"]
+    del ray["momentum_unit"]  # the wall's Q is the detector law's (ALGEBRA.md 9.96 (1))
     del ray["families"][1]
     with pytest.raises(ValueError, match="declares reads, refused without `detector_law`"):
         parse_nature_beam_world(ray)

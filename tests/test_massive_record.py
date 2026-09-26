@@ -78,6 +78,7 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
+        "momentum_unit": 64,
         "families": [
             {
                 "name": "light",
@@ -583,6 +584,7 @@ def block_world(
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
+        "momentum_unit": 64,
         "families": families,
         "measured": measured,
         "detectors": [],
@@ -727,7 +729,7 @@ def test_the_blocks_drive_steps_its_cells_and_leaves_the_rows():
         )
         simulation = DetectorLawSimulation(world)
         block = simulation.blocks[0]
-        assert block.wall == 192
+        assert simulation.wall_of(block) == 192
         steps = []
         for _ in range(12):
             simulation.step()

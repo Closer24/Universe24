@@ -45,6 +45,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         "node_clock": 10000,
         "amplitude_bound": 1 << 20,
         "charge_weight": 1,
+        "momentum_unit": 64,
     }
     names = [entry["name"] for entry in document["families"]]
     assert names == ["gravity", "charge", "matter"]
@@ -105,6 +106,7 @@ def on_the_file(document: dict, clock: list[int]) -> dict:
     moved["families"] = FILE
     del moved["node_clock"]
     del moved["amplitude_bound"]
+    del moved["momentum_unit"]
     for entry in moved["measured"]:
         if entry["family"] == "light":
             entry["family"] = "charge"

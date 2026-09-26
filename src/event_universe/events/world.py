@@ -476,6 +476,10 @@ WORLD_KEYS = {
     # Gamma + M) at every Node, M the content held at the Node; required
     # under `detector_law` (no default), refused without it.
     "node_clock",
+    # THE MOMENTUM'S UNIT Q (ALGEBRA.md 9.96 (1), 9.89 (2)): the universe's integer
+    # `momentum_unit`, the wall W = 3 Q M of every body; required under
+    # `detector_law` (no default), refused without it.
+    "momentum_unit",
     # THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25
     # through the Boss; BUILD.md section 26 item 51): the world keys
     # `clock_family`, `charge_family` and `charge_strength` of items 32 and
@@ -937,11 +941,12 @@ MOST_FAMILIES = 20
 # no amplitude_bound (the universe's integers, one copy) and every emitter
 # declares its given clock (a light record's clock is its emitter's, 9.85 (3)).
 FAMILIES_FILE_KEYS = {"law", "integers", "families"}
-# THE UNIVERSE'S INTEGERS (ALGEBRA.md 9.83 (2) (a), 9.91 (7)): Gamma, A, and Lambda
-# (the charge's read weight, the word "Lambda" on a read); the energy unit
-# P_0, the twist Lambda_v, the accumulator wall W and the twist table enter
-# with the operations that read them (9.91 (10) commits 4 to 6)
-FAMILIES_INTEGERS = {"node_clock", "amplitude_bound", "charge_weight"}
+# THE UNIVERSE'S INTEGERS (ALGEBRA.md 9.83 (2) (a), 9.91 (7)): Gamma, A, Lambda
+# (the charge's read weight, the word "Lambda" on a read) and Q (the momentum's
+# unit, `momentum_unit`: the wall of every body is W = 3 Q M, ALGEBRA.md 9.96
+# (1), 9.89 (2)); the energy unit P_0 and the twist table enter with the
+# operations that read them (9.91 (10) commits 4 and 5)
+FAMILIES_INTEGERS = {"node_clock", "amplitude_bound", "charge_weight", "momentum_unit"}
 # THE ENTRY, the complete attribute set (ALGEBRA.md 9.79 (1), 9.86 (3), 9.91
 # (7)): name; parts (the representation as a list of parts, [1] a scalar, [1,
 # 3] a vector with its time part, [1, 3, 6] the symmetric tensor over the
@@ -1895,7 +1900,7 @@ class BlockDefinition:
     # item 46): the pairs [num_m, b] the seat rotates at while the drive's
     # momentum is m, indexed by m from 0 (the clock itself) to |P| along the
     # one axis of the declared momentum, the generator's reading of the moving
-    # mode at its moving centre, 2 cos(omega_K - K v) at v = m / (3 Q S M);
+    # mode at its moving centre, 2 cos(omega_K - K v) at v = m / (3 Q M);
     # None on a body at rest
     proper_clock: tuple[tuple[int, int], ...] | None = None
     ramp: int = 0
@@ -2162,6 +2167,11 @@ class NatureBeamWorld:
     # every Node; required under the detector law, 0 on a world without it
     # (the ray law has no rule with a division).
     node_clock: int = 0
+    # THE MOMENTUM'S UNIT Q (ALGEBRA.md 9.96 (1), 9.89 (2)): the universe's
+    # integer `momentum_unit`; every body's wall is W = 3 Q M with M its quanta,
+    # its velocity n / W Links per interval; required under the detector law,
+    # 0 on a world without it
+    momentum_unit: int = 0
     # THE ENGINE START FILE (record 2089; BUILD.md section 26 item 57): the
     # world's `engine` as read, None on a world without the detector law
     start: EngineStart | None = None
@@ -4413,7 +4423,7 @@ def _block(
     held: list[int],
     momentum: tuple[int, ...],
     amount: int,
-    width: int,
+    momentum_unit: int,
     massive_record: bool,
     lamp_declared: bool,
     span: tuple[int, int, int],
@@ -4430,7 +4440,8 @@ def _block(
     num / den) or a gap on light's kind (den' > num', the (M) wall, which
     declares no clock, seed or margin); an emitter's
     giving Node carries a rich pair (at least 500 remainder values, ALGEBRA.md
-    9.22 (4)); the momentum is bounded by the pace, 3 (P . P) < (3 Q S M)^2."""
+    9.22 (4)); the momentum is bounded by the pace, 3 (P . P) < (3 Q M)^2 (the wall W
+    = 3 Q M of ALGEBRA.md 9.96 (1), Q the universe's `momentum_unit`)."""
     declared = [key for key in BLOCK_KEYS if key in obj]
     if "side" not in obj and "extents" not in obj:
         if declared:
@@ -4686,13 +4697,15 @@ def _block(
     margin = obj.get("margin", MARGIN_KINDS[0])
     if margin not in MARGIN_KINDS:
         raise ValueError(f"{BEAM_LAW}: {label}.margin must be one of {list(MARGIN_KINDS)}")
-    # the drive's wall on the body's whole content, its own quanta and what it holds
-    # (the stock is content, ALGEBRA.md 9.51 (8); item 47)
-    wall = 3 * LABEL_SCALE * width * sum(held)
+    # THE WALL W = 3 Q M (ALGEBRA.md 9.96 (1), 9.89 (2)): one wall per body, on its
+    # whole content at the load, its own quanta and what it holds (the stock is
+    # content, 9.51 (8)); the width S = 1 is gone
+    wall = 3 * momentum_unit * sum(held)
     if 3 * sum(component * component for component in momentum) >= wall * wall:
         raise ValueError(
-            f"{BEAM_LAW}: {label}.momentum {list(momentum)}: the pace bound 3 (P . P) < (3 Q S M)^2 "
-            f"= {wall * wall} fails (the block's pace v = P / (3 Q S M) below c, DESIGN.md 5.1 (a))"
+            f"{BEAM_LAW}: {label}.momentum {list(momentum)}: the pace bound 3 (P . P) < (3 Q M)^2 "
+            f"= {wall * wall} fails (the body's velocity v = P / (3 Q M) below c, ALGEBRA.md "
+            "9.96 (1); DESIGN.md 5.1 (a))"
         )
     receiver: str | None = None
     if "receiver" in obj:
@@ -5118,6 +5131,7 @@ def _measured(
     width: int = 1,
     amplitude_bound: int = AMPLITUDE_BOUND,
     detector_law: bool = False,
+    momentum_unit: int = 0,
 ) -> tuple[MeasuredDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{BEAM_LAW}: measured must be a list")
@@ -5424,7 +5438,7 @@ def _measured(
             held,
             momentum,
             amount,
-            width,
+            momentum_unit,
             massive_record,
             lamp is not None,
             span,
@@ -7161,6 +7175,23 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         )
     if detector_law:
         node_clock = _integer(obj["node_clock"], "node_clock", 1, AMOUNT_BOUND)
+    # THE MOMENTUM'S UNIT Q (ALGEBRA.md 9.96 (1), 9.89 (2)): the universe's integer
+    # `momentum_unit`, REQUIRED under `detector_law` with no default (the wall W = 3 Q
+    # M of every body), refused without that law
+    momentum_unit = 0
+    if "momentum_unit" in obj and not detector_law:
+        raise ValueError(
+            f"{BEAM_LAW}: momentum_unit is refused without `detector_law` (the momentum's unit "
+            "Q enters the wall W = 3 Q M of the detector law's bodies, ALGEBRA.md 9.96 (1))"
+        )
+    if detector_law and "momentum_unit" not in obj:
+        raise ValueError(
+            f"{BEAM_LAW}: momentum_unit is required under `detector_law`: Q, the momentum's unit "
+            "of the universe's integers, the wall W = 3 Q M of every body, no default (ALGEBRA.md "
+            "9.96 (1), 9.89 (2); the model owner's record 2089)"
+        )
+    if detector_law:
+        momentum_unit = _integer(obj["momentum_unit"], "momentum_unit", 1, AMOUNT_BOUND)
     # THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26
     # item 51): the families' roles of items 32 and 35 are their own
     # declarations (`held`, `reads`), read by `_families` below; the world
@@ -7248,6 +7279,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         width,
         amplitude_bound,
         detector_law,
+        momentum_unit,
     )
     _column_budget(families, measured, release)
     if detector_law:
@@ -7420,6 +7452,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         closed=closed,
         amplitude_bound=amplitude_bound,
         node_clock=node_clock,
+        momentum_unit=momentum_unit,
         start=start,
         families_file=families_file,
     )

@@ -3,7 +3,8 @@
  "integers": {
   "node_clock": 10000,
   "amplitude_bound": 1048576,
-  "charge_weight": 1
+  "charge_weight": 1,
+  "momentum_unit": 64
  },
  "families": [
   {

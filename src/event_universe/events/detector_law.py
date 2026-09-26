@@ -75,7 +75,6 @@ from event_universe.events.rule import axis_rule_coefficients, rule_coefficients
 from event_universe.events.world import (
     AXES,
     BEAM_LAW,
-    LABEL_SCALE,
     BlockDefinition,
     NatureBeamWorld,
     Vector,
@@ -276,7 +275,8 @@ class Block:
     cube of `side` at `corner`), its own massive record (the seed on its
     Nodes), the light records it emitted, its clock (its record's cycles
     across R), its momentum per axis with the drive's accumulators against
-    the wall 3 Q S M, and its detector among the simulation's detectors."""
+    its wall W = 3 Q M (`wall_of`, live with its quanta; ALGEBRA.md 9.96 (1)),
+    and its detector among the simulation's detectors."""
 
     number: int
     family: int
@@ -284,7 +284,6 @@ class Block:
     corner: list[int]
     mask: np.ndarray
     detector: int
-    wall: int
     momentum: list[int]
     drive: list[int] = field(default_factory=lambda: [0, 0, 0])
     count: int = 0
@@ -543,6 +542,14 @@ class DetectorLawSimulation:
         # Node. M changes only at the law's events (a giving, a click, a
         # step of a body), so the array is rebuilt from the held books as
         # each interval begins (`_hold`) and after a giving.
+        # THE MOMENTUM'S UNIT Q (ALGEBRA.md 9.96 (1), 9.89 (2)): the universe's
+        # integer; every body's wall is W = 3 Q M (`wall_of`)
+        self.momentum_unit = int(world.momentum_unit)
+        if self.momentum_unit < 1:
+            raise ValueError(
+                f"{BEAM_LAW}: the world declares no momentum unit (`momentum_unit`, Q from 1; "
+                "ALGEBRA.md 9.96 (1))"
+            )
         self.node_clock = int(world.node_clock)
         if self.node_clock < 1:
             raise ValueError(
@@ -628,16 +635,13 @@ class DetectorLawSimulation:
         ]
         # The blocks (massive-record-v1): every measured event with a block,
         # its Nodes written into its kind's pair arrays, its own record
-        # seeded on its Nodes, its momentum and the drive's wall 3 Q S M.
+        # seeded on its Nodes and its momentum on its wall W = 3 Q M (`wall_of`).
         for number, entry in enumerate(world.measured):
             if entry.block is None:
                 continue
             definition = entry.block
             corner = [int(entry.position[axis]) for axis in range(3)]
             mask = self._box(corner, definition.extents, entry.family)
-            # the drive's wall 3 Q S M on the body's whole content at the load, its own
-            # quanta and what it holds (the stock is content, ALGEBRA.md 9.51 (8); item 47)
-            wall = 3 * LABEL_SCALE * world.width * sum(entry.held)
             block = Block(
                 number,
                 entry.family,
@@ -645,7 +649,6 @@ class DetectorLawSimulation:
                 corner,
                 mask,
                 int(self.detector_at_node[tuple(entry.position)]),
-                wall,
                 [int(component) for component in entry.momentum],
             )
             self._write_pair(block)
@@ -745,6 +748,14 @@ class DetectorLawSimulation:
             for record in parts:
                 record.silent = True
         self._hold(advance=True)
+
+    def wall_of(self, block: Block) -> int:
+        """THE ONE WALL OF A BODY (ALGEBRA.md 9.96 (1), 9.89 (2)): W = 3 Q M, Q the
+        universe's momentum unit and M the body's quanta as it holds them now (its
+        own and its stocks, 9.51 (8); a click moves M, 9.91 (4), 9.96 (5)); the hop,
+        the holds' divisions and the recoil read this one wall, the momentum's
+        whole part n on it the body's velocity n / W in Links per interval."""
+        return 3 * self.momentum_unit * sum(self.held[block.number])
 
     def _held_part(self, position: int, family: int, part: int) -> LiveRecord:
         """A held family's component record over the board (item 51; 9.91 (1)):
@@ -906,7 +917,7 @@ class DetectorLawSimulation:
         momentum = self._momentum_now(block)
         for axis in axes:
             numerator *= int(momentum[axis])
-        wall = block.wall ** len(axes)
+        wall = self.wall_of(block) ** len(axes)
         if numerator:
             self._sourced_ever[(family, record.part)] = True
         value, before = self._carried_division(
@@ -1309,7 +1320,8 @@ class DetectorLawSimulation:
 
     def _move_block(self, block: Block) -> None:
         """The block's step (MASSIVE_RECORD.md section 5): per axis the
-        accumulator gains the momentum's component against the wall 3 Q S M
+        accumulator gains the momentum's component against the wall W = 3 Q M
+        (`wall_of`, ALGEBRA.md 9.96 (1))
         (verb T, then D with the remainder kept, at most one Link per
         interval, `core.integer.by_drive`), x before y before z, a second
         Link in one interval lost to the earlier axis (its wall subtracted,
@@ -1319,7 +1331,9 @@ class DetectorLawSimulation:
         hop = [0, 0, 0]
         stepped = False
         for axis in range(3):
-            count, block.drive[axis] = by_drive(block.drive[axis], momentum[axis], block.wall, at_most=1)
+            count, block.drive[axis] = by_drive(
+                block.drive[axis], momentum[axis], self.wall_of(block), at_most=1
+            )
             if count and not stepped:
                 hop[axis] = count
                 stepped = True
@@ -2319,7 +2333,9 @@ class DetectorLawSimulation:
                     offers[detector] = offers.get(detector, 0) + int(value) * wall
                 continue
             block, momentum = bound
-            term = int(value) * wall + Fraction(side * momentum[axis], block.wall) * density[node]
+            term = (
+                int(value) * wall + Fraction(side * momentum[axis], self.wall_of(block)) * density[node]
+            )
             if term > 0:
                 frame[detector] = frame.get(detector, Fraction(0)) + term
         for detector, share in frame.items():

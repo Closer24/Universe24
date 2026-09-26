@@ -171,6 +171,7 @@ def world(dark: bool) -> dict:
         # record's clock on the emitter (`clock`)
         "amplitude_bound": FAMILIES_INTEGERS["amplitude_bound"],
         "node_clock": FAMILIES_INTEGERS["node_clock"],
+        "momentum_unit": FAMILIES_INTEGERS["momentum_unit"],
         "families": [dict(entry) for entry in FAMILIES_ENTRIES],
         "measured": [],
         "detectors": [],

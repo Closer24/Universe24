@@ -4537,6 +4537,25 @@ would have found no cell.
    gives the rule per axis, not the form's Link terms per axis); the window
    shortcut on the anisotropic path (the whole board is stepped, HOST).
 
+63. THE ONE STROKE, THE WALL: ONE WALL PER BODY, W = 3 Q M (ALGEBRA.md 9.96 (1),
+   9.89 (2); the Boss's record 2125). The wall of a body is W = 3 Q M with Q
+   the momentum's unit, now the universe's integer `momentum_unit` (64) in the
+   families file beside Gamma, A and Lambda (required on every world of the
+   law, an inline world declaring it as a world key; refused without the law),
+   and M the body's quanta as it holds them at the interval, its own and its
+   stocks (9.51 (8); a click moves M, 9.91 (4), 9.96 (5)): `wall_of` in the
+   engine, read by the hop (`_move_block`), the holds' divisions (`_hold_part`)
+   and the booking in the body's frame; the wall's width S = 1 is gone from
+   the wall (the key `width` stays in the files until the words commit, 9.90
+   (3)), the code constant Q of the ray law (`LABEL_SCALE`) is no longer read
+   by the engine, and the loader's pace bound reads 3 (P . P) < (3 Q M)^2.
+   The momentum's whole part n on W is the body's velocity n / W in Links per
+   interval; the writes of 9.91 (3) read that v. BIT FOR BIT on the four
+   resting worlds (S was 1 and no body at rest has n); the moving long Lorentz
+   clock's wall follows its stock as it gives (M lower by one per giving,
+   9.96 (5)), a check-mode digest. The generators write Q into their inline
+   documents and the proper pair's table reads v = m / (3 Q M).
+
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 
 1. THE BUG: `_split_table_offers` took the weights C'[s]^2 and S'[s]^2

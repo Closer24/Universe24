@@ -64,7 +64,7 @@ def test_a_moving_body_writes_the_vector_and_tensor_parts_with_the_remainders_ca
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     block = simulation.blocks[0]
     s = sum(simulation.held[0])
-    wall = block.wall
+    wall = simulation.wall_of(block)
     gravity = parts_of(simulation, "clicks")
     charge = parts_of(simulation, "charge")
     assert [record.part for record in gravity] == list(range(10))

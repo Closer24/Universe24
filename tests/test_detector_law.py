@@ -171,6 +171,7 @@ def chain_world(
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
+        "momentum_unit": 64,
         "families": [
             {
                 "name": "light",
@@ -386,6 +387,7 @@ def layer_world(receiver: object = None) -> dict:
         "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
+        "momentum_unit": 64,
         "families": [
             {
                 "name": "light",
