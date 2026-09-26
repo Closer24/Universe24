@@ -193,7 +193,38 @@ with its own pair below [1, 1] (a range of a few Links); no pair well, no hop, n
    or another), the norm of a self-sourced record, and the moving self-bound body's pinning
    against the free record's motion (item 1 and 9.98 (7)).
 
-## 8. The commands
+## 8. The click that keeps the momentum (the Boss's record 2160) and the wide self-bound body
+
+1. **The click that keeps the momentum, as run** (`item9_pair.py ... keep`, `Record.
+   recreate_with_momentum`): at a click the record is re-created at the click's Node as a
+   packet of rms 3 carrying its momentum K and its norm. K is CARRIED as a label: set from the
+   record's start, changed between clicks by what the rule did (the reading now less the
+   reading just after the last re-creation; the reading itself, sin K = sin omega_K SUM J / I
+   with I the rule's invariant, is biased low on a narrow packet, 0.069 read on a packet of
+   rms 3 carrying 0.1006, and re-imposing the reading alone lost the momentum in 50 clicks).
+   The click's Node by Born's rule on the record's form (`density`) or on the inward flux
+   (`flux`, the engine's). The displacement to the click's Node is the detector's share.
+2. **A finding on the flux rule in a bath of Node detectors.** A Link's flux is booked to the
+   Node it enters, so the click samples a moving packet half a Link ahead of its density: the
+   mean share along the motion +0.48 Link per click over the first 50 clicks (GAMEBOARD), and
+   the body at v = 0.1 went 38 to 450 in 1500 intervals, 2.7 times its speed. For the engine's
+   cube detectors the bias is the cube's wall against its side; for Node detectors it is the
+   whole Link. The `density` runs below sample the form.
+
+| Run | Reading (GAMEBOARD of the runner) | Algebra beside | Verdict |
+| --- | --- | --- | --- |
+| `moving keep density`, v = 0.1 | the peak 38, 42, 64, 99, 108, 134, 142 at 0 to 1500: a speed of 0.069 Link per interval over 364 clicks; the carried K 0.1006 to 0.1005 | v t: 188 at 1500 (the plane wave's 0.1); a FREE packet of rms 3 moves at 0.083 to 0.086 in its first 100 intervals and one of rms 12 at 0.098 (the calibration `packet_speed`, HOST): a narrow packet is slower than its K's group pace under the rule | WORKS: the body keeps a speed, the narrow packet's own, 0.7 of the plane wave's |
+| `still keep density`, v = 0 | the peak 38, 27, 30, 46, 29, 24, 44: a walk of 10 to 15 Links, no drift; 317 clicks | the walk of one record re-created at a Born Node: about (w / 2) sqrt(N) (9.98 (10) (i)) = 1.5 x 18 = 27 | the walk as the algebra says; no motion from nothing |
+| `pair keep density`, 20 Links apart, eight residue seeds | the separation at 1500: 5, 16, 31, 29, 34, 16, 3, 13 (the mean 18.4, the spread 11, the error of the mean 4); at 250: -1 to 58 (a body crossing the periodic seam flips the reading) | item 2's algebra: meeting at 249 | NOT READABLE in the one-record form: the two bodies' walks (20 to 30 Links each) hide a 20-Link approach; the mean shows no approach. The form of M records (the walk over sqrt M, 9.98 (10) (i)) would decide: owed, a heavier build |
+| `binding_family` `cap`, side 13, K_m = 2 (the owner's question of 09:40Z: a wider body) | at rest: rms 4.6, 4.7, 10.1, 5.2, 6.5, 5.9 at 0, 25, 250, 500, 1000, 1500, the peak's count 2000 throughout, bound; moving at v = 0.05: the centroid 16.0, 24.6 (250), 24.4 (500), 25.9 (1000), 25.7 (1500) against 91: pinned after 9 Links, as side 9. Side 17 on the 48-board reaches the faces and the guard (a run not read) | | the pinning is not the narrow body's alone |
+
+3. **The sum for record 2160.** A click that carries the momentum lets a body keep its speed
+   (0.7 of the plane wave's, the narrow packet's own) and does not move a body at rest. Whether
+   two such bodies fall together is hidden by the whole body's Born walk in the one-record
+   form; the many-record form is owed. The engine's flux rule, in a bath of Node detectors,
+   adds half a Link forward per click.
+
+## 9. The commands
 
     PYTHONPATH=src python docs/designs/rule_alone/item1_fall.py 1 2100
     PYTHONPATH=src python docs/designs/rule_alone/item1_fall.py 0 2100
@@ -208,7 +239,7 @@ with its own pair below [1, 1] (a range of a few Links); no pair well, no hop, n
     PYTHONPATH=src python docs/designs/rule_alone/item8_rate_read.py RUNS
     PYTHONPATH=src python docs/designs/rule_alone/item9_clicks.py check
     PYTHONPATH=src python docs/designs/rule_alone/item9_clicks.py whole|quantum|control 1500
-    PYTHONPATH=src python docs/designs/rule_alone/item9_pair.py pair|moving|moving_control 1500
+    PYTHONPATH=src python docs/designs/rule_alone/item9_pair.py pair|moving|moving_control|still 1500 [keep] [flux|density] [seed N]
     PYTHONPATH=src python docs/designs/rule_alone/binding_family.py rest 9 2 1500 level|count|cap
     PYTHONPATH=src python docs/designs/rule_alone/binding_family.py moving 9 2 0.05 1500 cap
     PYTHONPATH=src python docs/designs/rule_alone/binding_family.py pair 9 2 1500 cap

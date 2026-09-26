@@ -16,7 +16,14 @@ omega_K / 2), before = p cos(K dx + omega_K / 2), ALGEBRA.md 9.98 (9) (b)), no c
 the reading the peak's x over 1500 intervals (unwrapped), against v t; `moving_control` the same
 record with no click.
 
-    PYTHONPATH=src python docs/designs/rule_alone/item9_pair.py pair|moving|moving_control [intervals]
+THE CLICK THAT KEEPS THE MOMENTUM (the Boss's record 2160; the trailing word `keep`): the record
+is re-created at the click's Node as a packet of rms KEEP_WIDTH carrying the phase gradient read
+from its currents before the click, at the same norm (`Record.recreate_with_momentum`); the
+displacement to the click's Node is the detector's share, booked on the click line. Run as
+`moving ... keep` (one body at v), `still ... keep` (the same at v = 0: the walk alone) and
+`pair ... keep` (two bodies, each reading the other's content).
+
+    PYTHONPATH=src python docs/designs/rule_alone/item9_pair.py pair|moving|moving_control|still [intervals] [keep] [flux|density] [seed N]
 """
 
 from __future__ import annotations
@@ -42,6 +49,7 @@ WIDTH = 6.0
 X_A, X_B = 38, 58
 SPEED = 0.1
 EVERY = 50
+KEEP_WIDTH = 3.0  # the re-created packet's rms (the detector's resolution, a HOST choice)
 C.SHAPE = SHAPE
 C.WRAP = WRAP
 
@@ -90,7 +98,7 @@ def unwrap(previous: int, current: int, extent: int) -> int:
     return d
 
 
-def run(mode: str, intervals: int) -> dict:
+def run(mode: str, intervals: int, keep: bool = False, born_by: str = "flux", seed: int = 0) -> dict:
     num = np.full(SHAPE, KIND[0], dtype=R.INT)
     den = np.full(SHAPE, KIND[1], dtype=R.INT)
     zero = np.zeros(SHAPE, dtype=R.INT)
@@ -103,12 +111,20 @@ def run(mode: str, intervals: int) -> dict:
         lone = B.lone_static_field(
             SHAPE, WRAP, B.Body([SHAPE[0] // 2, middle, middle], AMOUNT, side=1, kind=KIND, well=KIND)
         )
-        a = C.Record(*packet((X_A, middle, middle), cos_omega), 0.0, C.RESIDUE_START, C.POSITION_START)
+        width = KEEP_WIDTH if keep else None
+        u0 = (C.RESIDUE_START + 97 * seed) % C.WHEEL
+        p0 = (C.POSITION_START + 41 * seed) % C.WHEEL
+        a = C.Record(
+            *packet((X_A, middle, middle), cos_omega), 0.0, u0, p0, width, cos_omega, born_by=born_by
+        )
         b = C.Record(
             *packet((X_B, middle, middle), cos_omega),
             0.0,
-            (C.RESIDUE_START + 173) % C.WHEEL,
-            (C.POSITION_START + 59) % C.WHEEL,
+            (u0 + 173) % C.WHEEL,
+            (p0 + 59) % C.WHEEL,
+            width,
+            cos_omega,
+            born_by=born_by,
         )
         a.t_norm = C.norm(a.now, a.before, read0, own0, wall0, WRAP, *KIND)
         b.t_norm = C.norm(b.now, b.before, read0, own0, wall0, WRAP, *KIND)
@@ -148,9 +164,19 @@ def run(mode: str, intervals: int) -> dict:
             "clicks_b_first": b.clicks[:50],
         }
     else:
-        k, omega_k = wave_number(SPEED, *KIND)
+        speed = 0.0 if mode == "still" else SPEED
+        k, omega_k = wave_number(speed, *KIND) if speed > 0 else (0.0, 0.0)
         now, before = packet((X_A, middle, middle), cos_omega, k, omega_k)
-        record = C.Record(now, before, 0.0, C.RESIDUE_START, C.POSITION_START)
+        record = C.Record(
+            now,
+            before,
+            0.0,
+            (C.RESIDUE_START + 97 * seed) % C.WHEEL,
+            (C.POSITION_START + 41 * seed) % C.WHEEL,
+            KEEP_WIDTH if keep else None,
+            cos_omega,
+            born_by=born_by,
+        )
         record.t_norm = C.norm(now, before, read0, own0, wall0, WRAP, *KIND)
         peak = peak_of(record, cos_omega)
         x = float(peak[0])
@@ -162,10 +188,11 @@ def run(mode: str, intervals: int) -> dict:
                     {
                         "t": t,
                         "x_peak": x,
-                        "expected_v_t": X_A + SPEED * t,
+                        "expected_v_t": X_A + speed * t,
                         "peak": list(peak),
                         "clicks": len(record.clicks),
                         "centroid_x": cx,
+                        "k_read": record.momentum(),
                     }
                 )
             if t == intervals:
@@ -183,7 +210,7 @@ def run(mode: str, intervals: int) -> dict:
             "mode": mode,
             "K": k,
             "omega_K": omega_k,
-            "speed": SPEED,
+            "speed": speed,
             "readings": readings,
             "clicks": len(record.clicks),
             "clicks_first": record.clicks[:50],
@@ -195,6 +222,10 @@ def run(mode: str, intervals: int) -> dict:
             "kind": KIND,
             "amount": AMOUNT,
             "width": WIDTH,
+            "keep": keep,
+            "keep_width": KEEP_WIDTH if keep else None,
+            "born_by": born_by,
+            "seed": seed,
             "host_seconds": time.time() - t0,
         }
     )
@@ -202,16 +233,33 @@ def run(mode: str, intervals: int) -> dict:
 
 
 def main() -> None:
-    mode = sys.argv[1] if len(sys.argv) > 1 else "pair"
-    intervals = int(sys.argv[2]) if len(sys.argv) > 2 else 1500
-    result = run(mode, intervals)
+    args = sys.argv[1:]
+    # the trailing words: `keep`, then `flux` or `density` (the click's Node by Born's rule on
+    # the inward flux or on the record's form), then `seed N` (the residue sequences' start)
+    seed = 0
+    if len(args) >= 2 and args[-2] == "seed":
+        seed = int(args[-1])
+        args = args[:-2]
+    born_by = "flux"
+    if args and args[-1] in ("flux", "density"):
+        born_by = args.pop()
+    keep = bool(args) and args[-1] == "keep"
+    if keep:
+        args = args[:-1]
+    mode = args[0] if args else "pair"
+    intervals = int(args[1]) if len(args) > 1 else 1500
+    result = run(mode, intervals, keep, born_by, seed)
+    name = f"item9_pair_{mode}{'_keep' if keep else ''}{'_' + born_by if keep else ''}{('_seed' + str(seed)) if seed else ''}"
     print(
-        f"{mode}: {result.get('clicks', result.get('clicks_a'))} clicks; {result['host_seconds']:.0f} s"
+        f"{name}: {result.get('clicks', result.get('clicks_a'))} clicks; {result['host_seconds']:.0f} s"
     )
     for r in result["readings"]:
         if r["t"] % 250 == 0:
-            print("  " + ", ".join(f"{k} {v}" for k, v in r.items() if not isinstance(v, list)))
-    (Path(__file__).resolve().parent / f"item9_pair_{mode}.json").write_text(
+            line = ", ".join(f"{k} {v}" for k, v in r.items() if not isinstance(v, list))
+            if "k_read" in r:
+                line += f", k_read x {r['k_read'][0]:.4f}"
+            print("  " + line)
+    (Path(__file__).resolve().parent / f"{name}.json").write_text(
         json.dumps(result, indent=1) + "\n", encoding="utf-8"
     )
 
