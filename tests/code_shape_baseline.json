@@ -1,6 +1,6 @@
 {
  "format": "code-shape-baseline",
- "recorded_at": "8a4ab2b0",
+ "recorded_at": "ad81e1a1",
  "files": {
   "src/event_universe/__init__.py": {
    "lines": 27,
@@ -99,10 +99,10 @@
    "level_shift_sites": 0
   },
   "src/event_universe/events/detector_law.py": {
-   "lines": 4177,
-   "docstring_lines": 701,
-   "comment_lines": 709,
-   "record_references": 46,
+   "lines": 4023,
+   "docstring_lines": 679,
+   "comment_lines": 694,
+   "record_references": 44,
    "rule_arithmetic_sites": 0,
    "level_shift_sites": 15
   },
