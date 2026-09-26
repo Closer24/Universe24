@@ -619,18 +619,7 @@ The order and the report (the owner's rules of the day, in one place):
    formula and status); its findings are applied in the manuscript or sent
    through the Boss to the file's writer as one bounded fix; the paper never
    changes the tree, and the tree's writers never write the paper.
-8. Messaging between sessions (the model owner, 2026-09-24: "put it in your
-   skills and the other agents' skills: always use SendMessage"): every
-   order, report, question and answer between the Boss and a role's session,
-   and between two sessions, is sent as a direct message with the SendMessage
-   tool; the sender first lists its reachable agents (ListAgents) and checks
-   that the receiver is on the list; the receiver replies by SendMessage to
-   the sender's listed name. A Routine (create_trigger, send_later) is used
-   only for what must happen at a later time (a check-in at an hour, a
-   re-read after a run's expected end), never as a way to talk; a direct
-   message creates no scheduled task. When the receiver is not on the list
-   (its session stopped or unreachable), the sender says so in its report
-   and does not fall back to a Routine as a message; the Boss decides.
+8. Messaging between sessions (the model owner, 2026-09-24; corrected 2026-09-26, record 2195): the team's sessions cannot reach one another by SendMessage (ListAgents lists none of them; Nature24's test of record 2195). The channel between sessions is a Routine bound to the receiver's session (create_trigger with the receiver's session, then fire_trigger at once); the message names its sender, its record and its commit, and the receiver answers the same way to the sender's session. SendMessage stays the channel to an agent the sender itself spawned inside its own session. A Routine at a later time (a check-in) stays what it was; a message is fired at once, never left to wait.
 
 ## The generic engine: the engine supports, the run defines (the model owner, 2026-09-26, records 2172 to 2190)
 
