@@ -25,8 +25,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.rule import rule_coefficients
 from event_universe.world_files import parse_nature_beam_world
 from tests.test_emitter import (
     CHARGE_FAMILY_NAME,
@@ -111,7 +111,7 @@ def rule_step(
     for i, c in enumerate(effective):
         a, b = int(now[i, 0, 0]), int(before[i, 0, 0])
         # the weak-field rule's three integers at the effective content (ALGEBRA.md 9.57 (1))
-        read, self_coefficient, wall = rule_coefficients(num, den, GAMMA, c, True)
+        (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, c)
         total = read * reads[i] + self_coefficient * a - wall * b
         levels.append(total // wall)
         remainders.append(total - wall * (total // wall))
