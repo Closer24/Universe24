@@ -1137,7 +1137,7 @@ gains two modes and the framework's claims are narrowed to what is measured.
   configured laws are named as inputs, the Bell section carries errors and the
   causal analysis, "what is new" and "what is not claimed" are explicit, and
   the bonded pair is stated not to be a local explanation of the Bell value
-  ([paper](paper/main.tex)).
+  (the paper of that release, since removed).
 
 ## 0.3.0 - 2026-09-14
 

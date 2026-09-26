@@ -5,8 +5,7 @@
 % paper-48 at cc8b22b8). Every formula is taken from docs/ALGEBRA.md, chapters
 % 8 and 9, and every pin from ALGEBRA.md 9.22 (8) or
 % docs/designs/lab_tools/LAB_TOOLS.md part B, each with its section. This file
-% is the paper's source and is edited by hand; the cut30 assembler, which
-% generated the paper of the engine before 2026-09-25, is history. No number
+% is the paper's source and is edited by hand. No number
 % of an old-engine run stands in the body: each experiment's row is held until
 % it is re-derived blind and run on the new engine.
 \documentclass[11pt]{article}
@@ -570,7 +569,7 @@ A6 & Gravity's forms & Newton's inverse square and Poisson's equation under a sh
 
 \subsection{Discussion and conclusions}\label{sec:discussion}
 
-\paragraph{Positioning.} The model is a local deterministic lattice dynamics with one non-local act, the click; its correlations violate the CHSH bound \cite{bell1964,chsh1969} through that act, and its counts do not signal \cite{grw1980} (Theorem~\ref{th:nosignal}). Its transport is an exact integer lattice dynamics, as a lattice gas's is \cite{hpp1976,fhp1986}, and its light disperses at $k^2$ with the cubic pattern where the lattice automata of \cite{bialynicki1994,meyer1996,arrighi2019} disperse by their own forms. The residue read from the law does the work of quantum equilibrium \cite{bohm1952,dgz1992}; the model is $\psi$-ontic (the wave function is part of the state) \cite{spekkens2007,hs2010}; its CHSH sum on integer axes lies between the local bound $2$ and Tsirelson's $2\sqrt2$ \cite{tsirelson1980,pr1994}. The earlier testbed \cite{paper1} is history.
+\paragraph{Positioning.} The model is a local deterministic lattice dynamics with one non-local act, the click; its correlations violate the CHSH bound \cite{bell1964,chsh1969} through that act, and its counts do not signal \cite{grw1980} (Theorem~\ref{th:nosignal}). Its transport is an exact integer lattice dynamics, as a lattice gas's is \cite{hpp1976,fhp1986}, and its light disperses at $k^2$ with the cubic pattern where the lattice automata of \cite{bialynicki1994,meyer1996,arrighi2019} disperse by their own forms. The residue read from the law does the work of quantum equilibrium \cite{bohm1952,dgz1992}; the model is $\psi$-ontic (the wave function is part of the state) \cite{spekkens2007,hs2010}; its CHSH sum on integer axes lies between the local bound $2$ and Tsirelson's $2\sqrt2$ \cite{tsirelson1980,pr1994}.
 
 \paragraph{Conclusion.} One local integer operator on the cubic lattice, required to commute with the group of order $48$, with one non-local act, the click, and one write, the birth, is read only through detectors' clicks. Exact on the lattice are the conserved forms, the step's bijection, the flux identity, one click per quantum, Born's rule for a detector and no signalling; the CHSH sum on integer axes is $14/5$; a moving clock slows by its own dispersion. Of twenty-four experiments, eighteen are measured, ten of them with a pin written blind, seven with it still owed and one a diagnostic (Table~\ref{tab:list}), and six are algebraic (Table~\ref{tab:algebraic}); none is run yet on the new engine, and the runs decide, row by row, what the law matches and where it fails.
 
@@ -587,7 +586,6 @@ A6 & Gravity's forms & Newton's inverse square and Poisson's equation under a sh
 
 {\footnotesize
 \begin{thebibliography}{99}
-\bibitem{paper1} A. Gonen, A finite-integer causal-GameBoard testbed: which resources reproduce interference, causal collapse and Bell correlations on one GameBoard (2026), arXiv preprint.
 \bibitem{log} The dated working log of the model, cited by the number of its record, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}. The model owner's decisions cited by number are records 1872 to 1899 of 2026-09-25, on the branch \texttt{claude/new-boss-skills-file-4d1svd} at 143a7a3c.
 \bibitem{algebra} The algebra of the law, in one place, \texttt{docs/ALGEBRA.md} of the archived code \cite{zenodo}: chapter 8, the rule with a pair per family, the conserved form, the coupling and the direction of time; chapter 9, the tools as operations of the group, the one element and the one operator (9.19), the property test (9.20), the implications of one algebra (9.21), the family and the experiment (9.22), the two-qubit computer (9.23), the moving body (9.24) and the click over a set of Nodes (9.25); on \texttt{main} at dfeb7abc.
 \bibitem{labtools} The lab tools: one specification per tool (part A) and the experiments as placed tools with their pins written blind (part B), \texttt{docs/designs/lab\_tools/LAB\_TOOLS.md} of the archived code \cite{zenodo}, on \texttt{main} at dfeb7abc.
@@ -723,6 +721,5 @@ Then $J(o_A, o_B) = (\bM_A\mathbf x)_{o_A}(\bM_B\mathbf y)_{o_B}$ and $R$ factor
 
 The paper's law is the one operator with its click and its birth, the algebra document's sections 9.19 to 9.25 with chapter 8, on \texttt{main} at dfeb7abc \cite{algebra}, and the lab tools' specification at the same commit \cite{labtools}. Each experiment is its short file of entries; its input file, written once by the input-file generator, names the law and the generator it was made under and is checked at load (LAWFUL or REFUSED); one command runs the input files in parallel and writes one output file per experiment, its clicks and its verdict against the blind pin (records 1881, 1886 and 1887 \cite{log}). The engine's commit and the law's identity that each input file carries are named here with the runs. The software, the computations, the derivations' checks and the text were made with a large language model as a tool under the author's direction and instructions, as the declaration states; every decision is the author's.
 
-The paper of the engine before 2026-09-25, with its readings, is history, at the commit \texttt{cc8b22b8} of the branch \texttt{paper-48}.
 
 \end{document}

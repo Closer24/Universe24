@@ -6,7 +6,7 @@ is the rows' pace c = 1 / sqrt 3 Links per interval (the model section of
 main.tex; checks/light_speed.py). The unit cube whose group of 48 signed
 axis permutations is also the octahedron's is drawn faint behind it.
 
-    python paper/click_model/octahedron.py --output paper/click_model/figures
+    python paper/general_formula/octahedron.py --output paper/general_formula/figures
 
 Needs matplotlib (the `render` extra). Nothing is read from a run.
 """

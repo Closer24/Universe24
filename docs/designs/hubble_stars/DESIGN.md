@@ -35,7 +35,7 @@ covariance; Scolnic et al., ApJ 938, 113 (2022); Brout et al., ApJ 938, 110
 / 2 - Omega_Lambda = -0.50; the value -0.55 for Omega_m = 0.3 is the one
 series G compared with) reads q_0 about -0.5: the expansion accelerates,
 and "dark energy" is the name of whatever makes q_0 negative. The old
-manuscript of this project ([paper/redshift/main.tex](../../../paper/redshift/main.tex))
+manuscript of this project (`paper/redshift/main.tex`, since removed)
 put the same sample against the old engine's load histories and was behind
 flat LambdaCDM by Delta chi^2 = 106 and 64; it concluded that nothing there
 removes dark energy, the acceleration becoming "a load history not yet
