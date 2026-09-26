@@ -17722,9 +17722,13 @@ as written here.
     undamped, and its k = 0 part does not propagate; the net well, the
     difference of two ringing fields, flickers. (b) A HILL DRIVES THE
     PACE ABOVE GAMMA, where the rule's step is unstable: the K = pi
-    mode's factor (S - 6 R) / w falls below -2 near p = 1.25 Gamma (the
-    kind [800, 850]: -1.4 at 1.2 Gamma, -2.3 at 1.3 Gamma) and the record
-    grows exponentially; the engine's guard is one-sided.
+    mode's factor (S - 6 R) / w, -2 num / den at p = Gamma (-1.88 for
+    [800, 850]), falls below -2 at p = 1.015 Gamma (x = p^2 / Gamma^2 =
+    (24 den - 6 (den - num)) / (6 (den - num) + 24 num) = 1.031) and is
+    -3.6 at 1.2 Gamma, so the record grows exponentially; the ceiling is
+    Gamma itself with 1.5 percent of room (his -20400 is -4 w / Gamma^2;
+    the bound is -2 w / Gamma^2 = -10200); the engine's guard is
+    one-sided.
 
     THE LINE, CORRECTED. (i) THE GUARD IS TWO-SIDED: the pace read is
     bounded, 0 < p <= Gamma; a hill lessens a hollow and never exceeds
