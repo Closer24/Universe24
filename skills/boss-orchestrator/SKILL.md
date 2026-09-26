@@ -5,7 +5,7 @@ description: Coordinate Universe24 specialists, research, candidates and durable
 
 # Boss orchestration
 
-The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The Boss leads the four (the Boss, the coder Coder 3, the physicist Nature24, the mathematician) and the paper writer, owns the ledger and the glossary, and writes every closed way of work into the Skills.
+The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The Boss leads the four (the Boss, the coder Main Loop, the physicist Nature24, the mathematician) and the paper writer, owns the ledger and the glossary, and writes every closed way of work into the Skills.
 
 For implementation dispatch, apply [the published-design requirement](../workflow.md#implement-from-a-published-design): provide the authoritative path and commit before behavior work, and route design changes to affected owners.
 
