@@ -16410,7 +16410,57 @@ Gamma the Node freezes (R = 0) rather than binds.
    self-bound mode; every body row's blind value is recomputed; a leak
    test of the norm on a self-bound body at rest is owed before any
    pin. A test, not a decision (record 2136); the numbers of (1) are
-   held by the Boss for Nature24's run (record 2137).
+   held by the Boss for Nature24's run (record 2137). (i) THE OWNER'S
+   WORD (record 2152): "self-binding is an old rule anyway, from when
+   a body made a field for itself; there is no need for it when an
+   event always splits." The self-binding test of (h) is dropped, and
+   (d)'s form (i) with it. THE NINTH QUESTION IS NOW A BODY HELD BY
+   ITS CLICKS, no well and no self-binding: between clicks a free
+   record that spreads and moves by the rule; a click localises it
+   again. My three lines. (1) THE RATES. A free matter packet of the
+   kind [num, den] at rest spreads by the rule's own dispersion, cos
+   omega_k = num / den - (num / (6 den)) k^2 at small k, so its
+   effective mass is m = 3 den sin omega_0 / num intervals per Link^2
+   (0.451 at [800, 809]) and a packet of rms width sigma_0 grows as
+   sigma_0 sqrt(1 + (t / tau)^2) with tau = 2 m sigma_0^2 = 0.9
+   sigma_0^2 intervals (checked against the 1D run of (7): 121
+   predicted, 104 read at t = 3000 from sigma_0 = 28; the lattice's
+   higher orders spread less). For a width w = 2 sigma_0: w = 5 gives
+   tau = 6 intervals, w = 9 gives tau = 18; to stay within twice its
+   width a record must be localised again every 1.7 tau intervals at
+   most: a click every 10 intervals at w = 5, every 30 at w = 9, and
+   more often for a tighter hold (the spreading is quadratic in t
+   below tau, so frequent clicks freeze the width). M does not enter
+   the spreading; it enters the position: a click re-births a record
+   at one Node by Born's rule over its own density, a random step of
+   about w / 2 per click, so ONE record of M quanta held by clicks
+   walks as (w / 2) sqrt(N) over N clicks, 110 Links in 3000
+   intervals at w = 5, and a body of M records (one per quantum, each
+   held by its own clicks) walks as (w / 2) sqrt(N) / M, 0.03 Links at
+   M = 2000: the position is held only when the body is M records,
+   which is nature's way and the engine's cost, M records per body
+   in place of one. (2) THE ENGINE'S CLICK: a record clicks where its
+   flux into a detector reaches the detector's rung (9.25 (2)); a
+   free record in empty space never clicks, and bodies meet only
+   through held families (9.96), not by clicks. So the picture needs
+   either a declared environment that clicks on the body (a light
+   bath, a gas, detector regions around it) or a new rule that every
+   body's Nodes are a detector for every record (mutual clicks with
+   the increment ladder), which is an operation of the law added, a
+   decision for three; today's engine gives no rate on its own. (3)
+   WHAT ASSUMES A DECLARED WELL, and falls with it: 9.91 (11), the
+   `pair` well on the body's Nodes; 9.94, the generator's bound mode
+   in the well and the mass as the bound rotation; 9.98 (3), the
+   moving body as the mode times the character; 9.87's check-mode
+   bodies and their blind values (the clocks' ticks are the bound
+   mode's); the margin rule (a mode's tail in a well); the proper
+   clock table; 9.96 (3)'s label on the wall. Without a well every
+   body of a kind has the kind's rest rotation, the medium's omega_0:
+   the mass table becomes the kinds' pairs alone, the binding's mass
+   defect is gone, the holds (9.91 (3)) are written where the record
+   is after each click, and the clocks read the free record's
+   rotation. 9.96 (4)'s separation rule was retired already. A test,
+   not a decision.
 
 ### 9.99 The families derived in structure: the symmetric algebra of the four directions, and why the tower stops at gravity (the model owner's question of 2026-09-26, "can you think of something that derives the unification?", and his word "write it all")
 
