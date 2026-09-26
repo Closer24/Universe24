@@ -185,6 +185,10 @@ def select(changed, sources):
                 for p, text in sources.items()
                 if p.startswith("tests/test_") and "event_universe" in text
             )
+    if changed:
+        # THE SHAPE OF THE CODE is held at its baseline on every pull request, whatever it
+        # changes (the model owner's decisions, records 2239 and 2241)
+        tests.add("tests/test_code_shape.py")
     return sorted(tests), sorted(
         p for p in impacted if p.startswith("src/") and p.endswith(".py") and p in sources
     )
