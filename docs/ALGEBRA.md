@@ -17940,6 +17940,20 @@ as written here.
     its size the declared balance; the SOURCE word is then not needed
     for the well and stays on the ledger for what else sources.
 
+    WHERE THESE RUNS HAPPEN (the model owner's word of 2026-09-26, after
+    this item was written: "the experiments you and Nature24 do must be
+    generic inside the engine; stop the internal runs between you; not
+    now, only after a working generic engine, and then you simply check
+    these things with generic attributes"): the D_i rerun of item 13 and
+    the pair of item 14 are NOT run in Nature24's runner; they wait for
+    the generic engine and are then two world files under
+    examples/events/ with universe.json and their pins files, needing
+    only attributes of the ledger: a READ of a phase-2 family's D_i, a
+    SOURCE of D_i (item 13), the start as the stationary pair of modes,
+    the faces, the readings (the ringing at a Node, the rms, the bound
+    share, the centroid, the total momentum), the trace. Nature24 writes
+    those files now; the numbers above stay written before the run.
+
 ### 9.109 The click that keeps the momentum, in integers (the model owner's question of 2026-09-26, record 2160: "but one click, is it not received in one click?"; the Boss's ask for the line), and the algebra's numbers for the ninth question's rerun
 
 1. **What the engine's click does and what the bath's construct did.**
