@@ -1,0 +1,248 @@
+{
+ "format": "shipped-worlds-digest",
+ "recorded_at": "6d2a92e2",
+ "worlds": {
+  "examples/events/dark_body/bright.json": {
+   "stamp": {
+    "hash": "4c346ef41a03962560157b600f2670efc6e842d6aa588b7f1dc8238d4fa6aa23"
+   },
+   "ticks": 15156,
+   "intervals": 200,
+   "digest": "5cc5683ebec7007b92f54584d3f4bd63428c28c6aca7f343b64158f9cc2a7d46",
+   "records": 18,
+   "clicks": 0,
+   "lines": 644
+  },
+  "examples/events/dark_body/dark.json": {
+   "stamp": {
+    "hash": "6af365ea83f561a07ad8d9d1d538169e0f59ba04a5e00d949afe6bcf2b3cdcc6"
+   },
+   "ticks": 2400,
+   "intervals": 200,
+   "digest": "92e5032ba1348611ff3bb08a158982050afce474694dc7c91c4e1fa2d7bdd0d9",
+   "records": 14,
+   "clicks": 0,
+   "lines": 640
+  },
+  "examples/events/massive_record/boxed_clock_side_20_at_rest.json": {
+   "stamp": {
+    "hash": "c1266ab19b1405ec0954821677204cd2f8444344b0ef30fce97093c8abce50ee"
+   },
+   "ticks": 3000,
+   "intervals": 200,
+   "digest": "fcd6b14ad6abacb22bb61749c995fb169156c925481720ebf0fde875343fa55c",
+   "records": 1,
+   "clicks": 0,
+   "lines": 203
+  },
+  "examples/events/massive_record/boxed_clock_side_20_moving.json": {
+   "stamp": {
+    "hash": "906976ad6edbcad7af2284c215b2aae70a62a23bb93f837375d34e6406776f5c"
+   },
+   "ticks": 9500,
+   "intervals": 200,
+   "digest": "fedb0efa86b33c57debe2ab6083e525076e7a7de1388ad124159a8cb4ff0b566",
+   "records": 1,
+   "clicks": 0,
+   "lines": 403
+  },
+  "examples/events/massive_record/boxed_clock_side_28_at_rest.json": {
+   "stamp": {
+    "hash": "1b4a8183786d8ca816b73f0727e1693c966fe07a1d4694395479716d8e68de94"
+   },
+   "ticks": 3000,
+   "intervals": 200,
+   "digest": "55a788cd2e71800b9368b0af601252c435f03725a9299a3bdc2cd9b513b5ca8d",
+   "records": 1,
+   "clicks": 0,
+   "lines": 204
+  },
+  "examples/events/massive_record/boxed_clock_side_28_moving.json": {
+   "stamp": {
+    "hash": "553a40b0db1bb672d79922a68eed17088fd90716767b852f56b20ae80f9c7b89"
+   },
+   "ticks": 9500,
+   "intervals": 200,
+   "digest": "3fd5f62f113a629e28f336ba11e16903cb2e4631f80282ce9fe13163ba36a95f",
+   "records": 1,
+   "clicks": 0,
+   "lines": 404
+  },
+  "examples/events/massive_record/deep_well_clock_at_rest_40.json": {
+   "stamp": {
+    "hash": "3da4ff8afeb301b5fbe72e5ca941303b594478281a08e422dbf07312a514dc63"
+   },
+   "ticks": 3500,
+   "intervals": 200,
+   "digest": "5b54872f4b175d9d9efd9743f4a750641d21e37b0fd1395b7da0daa296f673bd",
+   "records": 1,
+   "clicks": 0,
+   "lines": 201
+  },
+  "examples/events/massive_record/deep_well_clock_speed_third_40.json": {
+   "stamp": {
+    "hash": "3dab81fd0593ccdfa32d958737bfd3bf2717ef95511589003b7f968e646c551b"
+   },
+   "ticks": 9500,
+   "intervals": 200,
+   "digest": "2c40b041c3de7dc99df38c762578226fcc733207c14ffc2cd1d7eb4d8194b51d",
+   "records": 1,
+   "clicks": 0,
+   "lines": 401
+  },
+  "examples/events/massive_record/light_clock.json": {
+   "stamp": {
+    "hash": "022ba5eb97b86d3914972d3c2a4ae50c69fde899430022d24194ec7b0dadf2e4"
+   },
+   "ticks": 4800,
+   "intervals": 1500,
+   "digest": "badbe75fa1d8eee31f0fbfcac8f035d87109615fea3159efceebde253755871e",
+   "records": 16,
+   "clicks": 42,
+   "lines": 4756
+  },
+  "examples/events/massive_record/muon_moving_clock_at_rest_14.json": {
+   "stamp": {
+    "hash": "5a01b6950a3c1c0ba18223ae956f2f638efbc196a8801da5e7b22359710881fc"
+   },
+   "ticks": 20500,
+   "intervals": 200,
+   "digest": "9b67fda0327e28a078de16974a1ce25578becd6b912b6f379edcaa6668e0f197",
+   "records": 1,
+   "clicks": 0,
+   "lines": 204
+  },
+  "examples/events/massive_record/muon_moving_clock_speed_third_14.json": {
+   "stamp": {
+    "hash": "a86e395d2bf83b8f985e84ac4976d052870c8f09c76670efc75728e7dd692568"
+   },
+   "ticks": 20500,
+   "intervals": 200,
+   "digest": "c575a83844e479f1530a6b7b1ea7bf08a8a36496ce91c5e061bbee3a23c62fa4",
+   "records": 1,
+   "clicks": 0,
+   "lines": 404
+  },
+  "examples/events/point_emitter/point_chain.json": {
+   "stamp": {
+    "hash": "79d3e798f9a68a62dea6982ba00c4c4717fc14fc30a28ca6dccce9497f9c2c0d"
+   },
+   "ticks": 70992,
+   "intervals": 200,
+   "digest": "1be776d2b33cf7e96ecce56eab469831263aba7b0dfb4c77632fa574fc13071b",
+   "records": 1,
+   "clicks": 0,
+   "lines": 205
+  },
+  "examples/events/point_emitter/point_light_clock.json": {
+   "stamp": {
+    "hash": "dcf2b18326e71e43b8d41a00dfe74288be0e46811d726f9cd110e302da02aaee"
+   },
+   "ticks": 35304,
+   "intervals": 3000,
+   "digest": "8312c71398a17d30b746f556468006681de11ff724e8255af96fb415f716a103",
+   "records": 2,
+   "clicks": 11,
+   "lines": 9108
+  },
+  "examples/events/toward_nature/bending.json": {
+   "stamp": {
+    "hash": "0ab5cb4345fc1b7eac52246cb040e7cda83155cd1379fbe02617573657f5a46d"
+   },
+   "ticks": 5600,
+   "intervals": 200,
+   "digest": "9fd463e34568a15fec2261579479f106ce9fba84843a76a7fdbfa6d7a238154b",
+   "records": 15,
+   "clicks": 0,
+   "lines": 641
+  },
+  "examples/events/toward_nature/lorentz_moving.json": {
+   "stamp": {
+    "hash": "8ad0a03ac9314762182c976df008937378a8472a689e3f627a1beaa1c4288769"
+   },
+   "ticks": 3600,
+   "intervals": 200,
+   "digest": "e93a61fa64b8993ba6eb6863219b2d8314bb752d31034313f3eae2e5f70929ee",
+   "records": 3,
+   "clicks": 0,
+   "lines": 625
+  },
+  "examples/events/toward_nature/lorentz_moving_long.json": {
+   "stamp": {
+    "hash": "425eb81fd6cee2129b84609d2404e5e1940a1da8dfe54c6bce93db9b92ec09a6"
+   },
+   "ticks": 5966,
+   "intervals": 200,
+   "digest": "395590c24fe752ec9f6010e165aa0cd82f33cdbf7d615739f3416a026cdedb02",
+   "records": 4,
+   "clicks": 1,
+   "lines": 610
+  },
+  "examples/events/toward_nature/lorentz_rest.json": {
+   "stamp": {
+    "hash": "6e0a58a8e9ceda645e75e5c74acf4ac8e28edf6d28486db9d1dcf1c91c2d8669"
+   },
+   "ticks": 3600,
+   "intervals": 1500,
+   "digest": "034f73835c6b6ce133501a792ca9b6e76d6f923d9f7c1ac713444c519272001a",
+   "records": 17,
+   "clicks": 39,
+   "lines": 4751
+  },
+  "examples/events/toward_nature/lorentz_rest_long.json": {
+   "stamp": {
+    "hash": "65719d844953df8b4fe9f65e24f181ddd2cb676d81324cd637d9e3bcc4aff86c"
+   },
+   "ticks": 8206,
+   "intervals": 200,
+   "digest": "2ffb6e732974d5c81571ba385e34a73eb067b95b4581308913971ec136bc1f16",
+   "records": 4,
+   "clicks": 0,
+   "lines": 607
+  },
+  "examples/events/toward_nature/redshift_bottom.json": {
+   "stamp": {
+    "hash": "7954ae7f5b5b5be710b33948b88624f791040b9c2c6af3ca091d917fd26bc892"
+   },
+   "ticks": 6534,
+   "intervals": 200,
+   "digest": "00760a623ba0bb50c8c379f1691cc6b7569c9d7a486d91ebcc863702101564ec",
+   "records": 8,
+   "clicks": 0,
+   "lines": 627
+  },
+  "examples/events/toward_nature/redshift_bottom_long.json": {
+   "stamp": {
+    "hash": "b2bbd20bc77f3862169505cf88a0c1ea67196c8daa0b89b7830c615a79635973"
+   },
+   "ticks": 10558,
+   "intervals": 200,
+   "digest": "9c0b16ad9e870e33becc99e92fb3eedeca41bef09c3cc2fe7cd39c264dfae73b",
+   "records": 3,
+   "clicks": 0,
+   "lines": 606
+  },
+  "examples/events/toward_nature/redshift_top.json": {
+   "stamp": {
+    "hash": "8ab50c9df4f95ed65672f6059af8f6c5d3bb55070f48af0b4cf39f6cc628ac63"
+   },
+   "ticks": 6150,
+   "intervals": 200,
+   "digest": "49ee23cb66c521f754fc0159db86bb19ae65c3657e709818ce9f0c91165415e9",
+   "records": 9,
+   "clicks": 0,
+   "lines": 628
+  },
+  "examples/events/toward_nature/redshift_top_long.json": {
+   "stamp": {
+    "hash": "ad7e919413b1901b385474217bae98aab8e1dae98f1d7a3f1ccbf97c68e0bbe9"
+   },
+   "ticks": 9598,
+   "intervals": 200,
+   "digest": "26f7546c262400f54c01122bc52c4fa55cf1230fd57a954700bc8efd4e09ab1c",
+   "records": 4,
+   "clicks": 0,
+   "lines": 607
+  }
+ }
+}
