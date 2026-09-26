@@ -106,7 +106,7 @@ def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
         assert bound * bound * left <= right < (bound + 1) * (bound + 1) * left
         for pace, admitted in ((bound, True), (bound + 1, False)):
             (read, _, _), self_coefficient, wall = coefficients(
-                pair[0], pair[1], CHAIN_GAMMA, CHAIN_GAMMA - pace, True
+                pair[0], pair[1], CHAIN_GAMMA, CHAIN_GAMMA - pace
             )
             assert (self_coefficient - 6 * read + 2 * wall >= 0) is admitted
 
