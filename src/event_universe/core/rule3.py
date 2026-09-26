@@ -54,15 +54,15 @@ def rule3(
     carry: Any,
     direction: int = 1,
 ) -> tuple[Any, Any]:
-    """One interval of Rule3 in `direction`: +1 from (a_now, a_before = other, r = carry) to (a_next, r'), -1 from (a_now, a_next = other, r' = carry) back to (a_before, r), the remainder kept in [0, w) both ways (ALGEBRA.md 9.57 (1), 9.50 (8), (9))."""
+    """One interval of Rule3 in `direction` sigma: u = sigma (SUM_a R_a arr_a + S a_now - w other) + carry, z = sigma (u div w), carry' = u mod w; +1 from (a_now, a_before, r) to (a_next, r'), -1 from (a_now, a_next, r') back to (a_before, r) (ALGEBRA.md 9.57 (1), 9.50 (8), (9))."""
     total = reads[0] * arrivals[0]
     total += reads[1] * arrivals[1]
     total += reads[2] * arrivals[2]
     total += self_coefficient * now
     total -= wall * other
-    total += direction * carry
-    result = total // wall if direction == 1 else -((-total) // wall)
-    return result, direction * (total - wall * result)
+    total = direction * total + carry
+    quotient = total // wall
+    return direction * quotient, total - wall * quotient
 
 
 def form_term(self_coefficient: Any, wall: Any, now: Any, before: Any) -> Any:
