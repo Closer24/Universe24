@@ -18260,3 +18260,44 @@ finding for me, the run is never adjusted).
    in the engine, said once: the six words, the loader and the keys
    table; every integer, every coefficient and every family in the
    files.
+
+5. **The trace: the integers each word's line must show, so that a
+   reader checks the algebra's line by hand (the Boss's record 2187,
+   the model owner: "each generic part writes itself somewhere on the
+   side, by step number, per Port").** The trace is a diagnostic
+   (a GameBoard reading of the host, docs/ENGINE.md), declared in the
+   start file (which intervals, which Nodes, which words, which
+   families), read-only, so a traced run is bit for bit the untraced
+   one. EVERY LINE carries the header: the interval t, the Node (x, y,
+   z), the family, the component, the word; a Port line adds the axis
+   and the side; a record line adds the record's identity. What follows
+   the header is the word's integers, in the order the algebra's line
+   reads them, and the one identity a reader checks with a pencil.
+
+   | Word or row | The integers on the line, in the line's order | The hand check |
+   | --- | --- | --- |
+   | SEND | the weight, the level (now), the value put on the Link | value = weight x now |
+   | RECEIVE | the value taken, the Port's accumulator rho, the table's index and triple (a pair), the value after the rotation | the triple's row applied to the pair, exactly (9.96 (2) (e)) |
+   | KEEP | rho before, the rate (the twist), the recoil's terms (sigma_a, k_q, M, the quotient k_q div M, the remainder), rho after, in units of theta_unit | rho after = rho before + rate + sigma_a x quotient; 0 <= remainder < M |
+   | COMBINE | now, before, r (the remainder in), the six received values, p and the coefficients w = 2 p^2 num, B, W with num, den, Gamma beside, the loads (the hold's, the source's, the self-source's integers), the numerator (the whole sum), a_next, r' | W x a_next + r' = the numerator; 0 <= r' < W (9.57 (1)) |
+   | BOOK | num, now_i, before_i, now_j, before_j, the current, its positive part, the running total C, the record's u and W, the norm T, the rung (2 u + 1) T, the comparison 2 W C against the rung | the current = num (now_i before_j - before_i now_j); the click at the first k with 2 W C_k >= (2 u + 1) T (9.25 (2)) |
+   | the click's writes (at t + 1) | the chosen Node and its share, the record's count before and after, the taker's M_k per family before and after, s before and after with its remainders, the recoil per axis (sigma_a, W, P_body, M, lambda_q, the quotient, the remainder) | the count moves by one quantum; n_a moves by sigma_a x (W P_body) div (M lambda_q) (9.111 item 2); the writes appear at t + 1 and at no line of t (9.111 item 6) |
+   | the pace's read (row 4) | per read: the family read, the signed weight, the level at the Node, by plain or by sign with q, the product; the sum; p_0 = Gamma - the sum; the axes' paces | p_0 = Gamma - SUM of the products; 0 < p <= Gamma (the guard) |
+   | the pair (row 1), at a rest record | num, den, Gamma; from COMBINE's line at k = 0: a_next + a_before against (2 num / den) a_now | W (a_next + a_before) = 12 num Gamma^2 a_now + the remainders (cos omega_0 = num / den) |
+   | the hold (row 5) | the body, per family it holds: M_k, P_0, P_k, the quotient (M_k P_0) div P_k, the remainder; s; the factor per part; for the current: n, W, 4 s n, the quotient div W, the remainder; the value written at the Node | s = SUM of the quotients; the written value = factor x s (or 4 s n div W); the remainders on the record |
+   | the source (row 6) | the record, F_i (its form at the Node), E_s (or s_cap and E_s for the table), the quotient, the remainder, the level before and after | after = before + F_i div E_s (or s_cap F_i div (s_cap E_s + F_i)); 0 <= remainder < E_s |
+   | the self-source (row 12) | per component the six differences and their squares, the sum, P_2, the quotient, the remainder; with a table: the cubic products and the table's entries | the quotient = the sum div P_2; 0 <= remainder < P_2 |
+   | the internal representation (row 9) | as RECEIVE, with the generator's index and its table row per pair, n lines | the product of the tables composed and inverted returns the pair |
+   | the clicks list (row 10) | the record's remainders at the Node in the fixed order, each u_j and its wheel W_j, the scaled rungs, the sorted rungs, the differences, the products' shares, the sum | the shares sum to the taken momentum exactly; the sorted order is the record's own (9.88 (4)) |
+   | the hand (row 11) | S (three integers), n (three integers), S . n, the sign, the declared hand | the sign of S . n; a refusal where the signs differ |
+   | the lifetime (row 8) | the record's age, L, the face | the click at age = L on the face the record is on |
+
+   The trace's cost is the host's: one line per traced word per Node
+   per interval, declared by the start file's selection; nothing of it
+   is read by any word. A line that shows fewer integers than its row
+   cannot be checked by hand and does not pass the gate; a line that
+   shows more is allowed. The roles for the record: Coder 3 builds the
+   trace and the words; I gate each build against the lines of items 1
+   to 5 here and of 9.111 item 7; Nature24 declares the runs and reads
+   the traces against the hand checks; every reader runs the engine
+   with the trace and no one but Coder 3 edits it.
