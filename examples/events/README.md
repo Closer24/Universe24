@@ -677,6 +677,21 @@ well on a chain of 1200 giving light by the window between two receiver sets
 `expectations.json`, no pin, no verdict; the README sets every reading beside
 its algebraic expectation by kind, for the direction alone.
 
+## The check-mode worlds
+
+The folder [check_mode/](check_mode/README.md) holds the check-mode worlds of the
+new physics (ALGEBRA.md 9.87 (4) and (5), 9.92; the Boss's record 2133 (2) of
+2026-09-26): the rows of the check-mode table that a world of today's keys can
+declare (Newton's fall, the Kepler pair, the charge rows and magnetism on the
+layer, the recoil rows) and the all-families world with the six faces as its
+counters, each beside its blind expectation in the README, written by
+`check_mode/make_worlds.py` in record 2128's words (`universe`, `q`, `stocks`)
+with no momentum or spin declared (record 2130: a moving body is its record with
+its tail, written by the generator at the wave number K of its pace). No
+`expectations.json`, no pin, no verdict. Until the engine's writer lands the
+words, the files load in no loader; `tests/test_check_mode_worlds.py` reads their
+structure.
+
 ## The massive record kind
 
 The folder [massive_record/](massive_record/README.md) holds the check worlds

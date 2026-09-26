@@ -56,6 +56,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/measured.py": "the measured event's record and the ledger of an interval",
     "events/amplitude.py": "the click's ledger: the offer, the evaluation, the Gram form, the rungs",
     "events/detector_law.py": "the local detector law under its key: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click",
+    "events/primitives.py": "the primitives of the freeze (ALGEBRA.md 9.88 (7)): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
     "core/phase.py": "the phase circle and its cosine and sine tables in bounded integers",
     "core/game_board.py": "the GameBoard's addresses, the six headings, the cube's group of 48",

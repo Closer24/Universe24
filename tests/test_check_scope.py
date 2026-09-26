@@ -18,9 +18,12 @@ CHECK = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CHECK)
 
 
-def test_the_worlds_readme_selects_the_engine_test():
+def test_the_worlds_readme_selects_navigation_and_never_a_cancelled_test():
+    # its consumer row names the ray law's worlds test, cancelled (docs/CANCELLED_WORLDS.md
+    # section 3): the selector drops it and keeps the document scanners
     selected, _ = CHECK.select(["examples/events/README.md"], {})
-    assert "tests/test_nature_beam_worlds.py" in selected
+    assert "tests/test_nature_beam_worlds.py" not in selected
+    assert "tests/test_repository_navigation.py" in selected
     assert "tests/test_retention.py" not in selected
 
 
@@ -121,7 +124,7 @@ def test_example_selects_its_consumers_and_not_other_collision_candidates():
     }
     tests, _ = CHECK.select(["examples/04-unequal-mass-collision.json"], sources)
     assert "tests/test_atomic_interactions.py" in tests
-    assert "tests/test_configuration_validation.py" in tests
+    assert "tests/test_preflight_worlds.py" in tests
     assert "tests/test_historical.py" not in tests
 
 
@@ -145,7 +148,7 @@ def test_example_script_selects_only_the_test_that_names_it():
 def test_world_files_select_the_preflight_and_the_tests_that_name_them(resource):
     sources = {"tests/test_names_it.py": f'WORLD = "{resource}"', "tests/test_other.py": ""}
     tests, _ = CHECK.select(["examples/events/" + resource], sources)
-    assert "tests/test_configuration_validation.py" in tests
+    assert "tests/test_preflight_worlds.py" in tests
     assert "tests/test_names_it.py" in tests and "tests/test_other.py" not in tests
 
 
@@ -288,23 +291,26 @@ def test_scope_report_stays_leased_until_failed_selected_command_finishes(monkey
 )
 def test_configuration_inventory_selects_preflight_without_unrelated_worlds(path):
     tests, _ = CHECK.select([path], {})
-    assert "tests/test_configuration_validation.py" in tests
+    assert "tests/test_preflight_worlds.py" in tests
     assert "tests/test_spatial_engine.py" not in tests
 
 
 @pytest.mark.parametrize("name", ["catalog.json", "representation-probes.json"])
 def test_catalog_resources_select_the_preflight_and_no_deleted_consumer(name):
     tests, _ = CHECK.select(["examples/known-entities/" + name], {})
-    assert "tests/test_configuration_validation.py" in tests
+    assert "tests/test_preflight_worlds.py" in tests
     assert all(test.startswith("tests/test_") for test in tests)
     assert not any("entity" in test or "profile" in test for test in tests)
 
 
-def test_detector_definitions_select_their_explicit_loading_consumers():
+def test_detector_definitions_select_no_cancelled_consumer():
+    # the row's three consumers are the ray law's, cancelled (docs/CANCELLED_WORLDS.md
+    # section 3): the selector names none of them and keeps the living preflight
     tests, _ = CHECK.select(["examples/events/detector/entities/detectors.json"], {})
-    assert {
+    assert not {
         "tests/test_entity_definitions.py",
         "tests/test_configuration_validation.py",
         "tests/test_entity_loading_consumers.py",
-    } <= set(tests)
+    } & set(tests)
+    assert "tests/test_preflight_worlds.py" in tests
     assert "tests/test_nature_beam_flight.py" not in tests
