@@ -16365,7 +16365,52 @@ Boss's word; no run yet. THE SUM of the seven, Nature24's words: the
 rule alone does the fall, holds a winding and reads a local source;
 beyond the rule and the click it needs a body that can move (items 2
 and 3, the fork of (c)), a store of the clicks' momentum (item 6, the
-Port accumulator above), and the transport's table (item 4, (e)).
+Port accumulator above), and the transport's table (item 4, (e)). (h)
+THE NINTH QUESTION (the Boss's record 2151 on the owner's question,
+"how would a body hold itself without a well, with one uniform
+rule?"): a body bound by its own content, the record sourcing
+gravity's t part from its own form at each Node, the content lowering
+the pace where the record is dense, no declared well and no seam. My
+three lines. (1) THE CONTENT NEEDED, computed
+(docs/designs/content_well/content_well_check.py, the rule's rest
+operator on a 31^3 cube, a uniform content in a cube of side w; a host
+computation): the well's depth is bounded by the guard p > 0, at c =
+Gamma it is 1 - num / den, half the pair well's ceiling, and near c =
+Gamma the Node freezes (R = 0) rather than binds.
+
+   | Kind | Side 3 | Side 5 | Side 9 |
+   | --- | --- | --- | --- |
+   | [800, 809], the shipped kind | no mode below the guard | no mode below the guard | from c near 5000, U = 0.25 (the tail 10 Links at 6000) |
+   | [800, 850] | from c near 5000, U = 0.25 | from c near 3500, U = 0.18 (the tail 12 Links at 4000) | from c near 2000, U = 0.10 (the tail 6 Links at 3000) |
+
+   So gravity's t part holds a body only at the compactness of a
+   neutron star's surface, U from 0.1 to 0.3; the shipped bodies (s =
+   2000, U = 0.1 at their Nodes) bind by their own content only at
+   side 9 of the heavier kind, and a small body not at all. For the
+   rows' bodies the binding needs its own integer, the P_m of (d) in
+   count units: the mechanism of record 2151 is (d) with gravity's
+   coupling 1 per quantum in place of P_m's, and gravity is too weak.
+   (2) REVERSIBLE on one condition: the sourced content at a Node
+   reads the record's now level alone (its six differences at the
+   Node), never the time term now x before; then the step is form (d),
+   next = f(now) - before with c recomputed from the same now, and the
+   inverse is before = f(now) - next, exact per Node; a source reading
+   before would make the inverse an implicit equation. (3) WHAT IT
+   BREAKS: a record that sources the content acting on it is
+   nonlinear, superposition fails for it, and two paths of one such
+   record interact through their own content, so a self-bound record
+   takes one slit as a lump. THE DIVIDE that keeps the rows: the
+   content is sourced in count units, s = M div (1000 P) (9.96 (3)),
+   and one quantum has s = 0 (9.98 (4)), so a single free matter
+   quantum sources nothing, stays linear, interferes, and Born's rule
+   at the click is untouched; only a record of a thousand P quanta and
+   more sources content and binds: nature's own divide, wave below and
+   body above; the two-slit, Bell and Malus rows run on single quanta.
+   For bodies: the mass is read, not declared; the shape is the
+   self-bound mode; every body row's blind value is recomputed; a leak
+   test of the norm on a self-bound body at rest is owed before any
+   pin. A test, not a decision (record 2136); the numbers of (1) are
+   held by the Boss for Nature24's run (record 2137).
 
 ### 9.99 The families derived in structure: the symmetric algebra of the four directions, and why the tower stops at gravity (the model owner's question of 2026-09-26, "can you think of something that derives the unification?", and his word "write it all")
 
