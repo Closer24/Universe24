@@ -508,7 +508,7 @@ def planted_layer(order: tuple[str, ...]) -> tuple[list[dict], DetectorLawSimula
             wheel=RESIDUES,
             ladder=list(ladder),
         )
-        live.norm = simulation.conserved_form(live)
+        live.norm, live.pace = simulation.given_norm(live)  # the form as the exact pair
         simulation.records[live.identity] = live
         simulation.ledger.transit_released[0] += 1
     for _ in range(300):

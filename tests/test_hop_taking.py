@@ -99,7 +99,7 @@ def booked_share(
     (other,) = [live for live in control.records.values() if live.family == 0]
     assert live.identity == other.identity and live.norm == other.norm and live.pace == other.pace
     norm = Fraction(live.norm, live.pace)
-    carry = live.carry.get(cart, Fraction(0))
+    carry = Fraction(*live.carry.get(cart, (0, 1)))  # the carry kept as the exact pair
     assert 0 <= carry < 1 and not other.carry
     return (Fraction(live.pointers[cart]) + carry) / norm, Fraction(other.pointers[cart]) / norm
 

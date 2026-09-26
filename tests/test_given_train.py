@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 import math
+from fractions import Fraction
 from pathlib import Path
 
 import numpy as np
@@ -102,7 +103,7 @@ def test_the_generators_train_is_the_character_under_the_tapers_and_the_window()
     # the engine's form under the Node's own pace is the file's vacuum norm itself on the
     # vacuum (no content anywhere; the Node's terms weighted by 1 / Gamma; BUILD.md section
     # 26 item 36)
-    assert norm == train["norm"] > 0 and simulation.conserved_form(live) == norm
+    assert norm == train["norm"] > 0 and Fraction(*simulation.conserved_form(live)) == norm
     # the window across y on a layer: Y = 5 not spanned, then Y = 9 spanned (uniform)
     layer = layer_world()
     layer["measured"][0]["extents"] = [TRAIN, 5, 1]

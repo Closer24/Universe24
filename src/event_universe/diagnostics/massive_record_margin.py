@@ -646,7 +646,7 @@ def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
         simulation.step()
         own = block.own
         assert own is not None
-        total += simulation.form_share(own, simulation.centre_mask(block))
+        total += Fraction(*simulation.form_share(own, simulation.centre_mask(block)))
     # THE BODY'S OWN UNITS (ALGEBRA.md 9.57 (1); item 44): the share's denominator at the
     # centre Node is the rule's coefficient on the six reads there, R = 2 p^2 num (the pace p
     # of item 36 under the first-order rule, HISTORY); T is the summed share in those units,
@@ -684,7 +684,7 @@ def excitation_action(world: NatureBeamWorld, number: int, period: int) -> Fract
         simulation.step()
         own = block.own
         assert own is not None
-        total += simulation.form_share(own, simulation.centre_mask(block))
+        total += Fraction(*simulation.form_share(own, simulation.centre_mask(block)))
     return total
 
 

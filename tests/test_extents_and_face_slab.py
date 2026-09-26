@@ -8,6 +8,7 @@ Every reading here is the engine's on small worlds (COMPUTATION); no pin.
 from __future__ import annotations
 
 import math
+from fractions import Fraction
 
 import numpy as np
 import pytest
@@ -223,7 +224,7 @@ def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
         live = planted(simulation, 0, now, before, np.zeros((300, 1, 1), dtype=np.int64))
         live.norm = 10**30
         simulation.records[live.identity] = live
-        energy = simulation.conserved_form(live)
+        energy = Fraction(*simulation.conserved_form(live))
         for _ in range(600):
             simulation.step()
         readings[depth] = live.pointers[face] / energy

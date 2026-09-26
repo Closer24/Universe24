@@ -267,7 +267,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             a, b = int(now[i, 0, 0]), int(before[i, 0, 0])
             expected += Fraction(wall_i * (a * a + b * b) - self_i * a * b, 3 * read_i)
             expected -= Fraction(1, 3) * a * read
-        assert simulation.conserved_form(live) == 3 * wall * expected
+        assert Fraction(*simulation.conserved_form(live)) == 3 * wall * expected
         pair = simulation.detector_names.index("pair")
         far = simulation.detector_names.index("far")
         offers = simulation.detector_inflow_tally(live)

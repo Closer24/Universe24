@@ -63,7 +63,6 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterator, Sequence
 from dataclasses import dataclass, field
-from fractions import Fraction
 from math import gcd
 from typing import overload
 
@@ -99,11 +98,37 @@ FACE_NAMES = ("face:-x", "face:+x", "face:-y", "face:+y", "face:-z", "face:+z")
 # the offer arriving by that Port.
 
 
-def form_json(value: Fraction) -> list[int]:
+# A RATIONAL IS A PAIR OF INTEGERS (numerator, denominator) in lowest terms with the
+# denominator positive: the engine holds no `fractions` (the integer rule, record 2071;
+# tests/test_integer_algebra.py). The pairs are Python integers without the working
+# bound (the conserved form summed over a board and the body-frame booking's terms
+# exceed 2^63, as the exact rationals they replace did); gcd, sums and products alone.
+Ratio = tuple[int, int]
+ZERO: Ratio = (0, 1)
+
+
+def ratio(numerator: int, denominator: int) -> Ratio:
+    """The pair (n, d) in lowest terms with d positive (one gcd)."""
+    if denominator < 0:
+        numerator, denominator = -numerator, -denominator
+    common = gcd(numerator, denominator) or 1
+    return numerator // common, denominator // common
+
+
+def ratio_sum(terms: list[Ratio]) -> Ratio:
+    """The exact sum of pairs, reduced after every addition (sums and products)."""
+    numerator, denominator = 0, 1
+    for n, d in terms:
+        numerator, denominator = ratio(numerator * d + n * denominator, denominator * d)
+    return numerator, denominator
+
+
+def form_json(value: Ratio) -> list[int]:
     """A form's exact rational for the books and the state (GAMEBOARD): the
     pair [numerator, denominator] in lowest terms (the denominator 1 for a
     record at one level and for the fields; ALGEBRA.md 9.50 (13))."""
-    return [value.numerator, value.denominator]
+    numerator, denominator = ratio(value[0], value[1])
+    return [numerator, denominator]
 
 
 @dataclass
@@ -192,7 +217,7 @@ class LiveRecord:
     # 26 item 56): per detector of a moving set, the fraction of the face's
     # booking below one unit of the flux, carried to the next interval's
     # booking (a remainder kept on the record, exact); empty at rest
-    carry: dict[int, Fraction] = field(default_factory=dict)
+    carry: dict[int, Ratio] = field(default_factory=dict)
     # THE FOUR-VECTOR CLICK'S SPACE PART (ALGEBRA.md 9.86 (1), 9.91 (4), 9.84 (2),
     # 9.25 (12); commit 5 without the recoil, record 2135): per detector, per
     # axis, the flux booked through the detector's Ports on its -a side minus
@@ -2821,7 +2846,7 @@ class DetectorLawSimulation:
         density = dict(
             zip(outside, self.node_density(live, np.array(outside, dtype=np.int64)), strict=True)
         )
-        frame: dict[int, Fraction] = {}
+        frame: dict[int, Ratio] = {}
         for value, detector, node, axis, side in zip(
             flux.tolist(),
             port_detector.tolist(),
@@ -2841,15 +2866,21 @@ class DetectorLawSimulation:
                     offers[detector] = offers.get(detector, 0) + int(value) * wall
                 continue
             block, momentum = bound
-            term = (
-                int(value) * wall + Fraction(side * momentum[axis], self.wall_of(block)) * density[node]
+            # G_in + (v . n) e_out as one pair: the Port booking whole, the frame
+            # term side x momentum x e_out over the body's wall (exact integers)
+            body_wall = self.wall_of(block)
+            density_numerator, density_denominator = density[node]
+            term = ratio(
+                int(value) * wall * body_wall * density_denominator
+                + side * momentum[axis] * density_numerator,
+                body_wall * density_denominator,
             )
-            if term > 0:
-                frame[detector] = frame.get(detector, Fraction(0)) + term
+            if term[0] > 0:
+                frame[detector] = ratio_sum([frame.get(detector, ZERO), term])
         for detector, share in frame.items():
-            share += live.carry.get(detector, Fraction(0))
-            whole = share.numerator // share.denominator
-            live.carry[detector] = share - whole
+            numerator, denominator = ratio_sum([share, live.carry.get(detector, ZERO)])
+            whole = numerator // denominator
+            live.carry[detector] = ratio(numerator - whole * denominator, denominator)
             if whole > 0:
                 offers[detector] = offers.get(detector, 0) + whole
         return offers
@@ -2967,7 +2998,7 @@ class DetectorLawSimulation:
             twist=twist,
         )
 
-    def conserved_form(self, live: LiveRecord) -> Fraction:
+    def conserved_form(self, live: LiveRecord) -> Ratio:
         """The record's conserved form I (ALGEBRA.md 8.2; under the Node's own
         pace, 9.50 (9) and (13); BUILD.md section 26 item 36) in the form's
         units, 3 I x wall in the vacuum: over the Nodes [3 wall (den_i /
@@ -2980,7 +3011,7 @@ class DetectorLawSimulation:
         body's own units, p times it, at a uniform level, `given_norm`)."""
         return self.form_share(live, np.ones(self.shape, dtype=bool))
 
-    def form_share(self, live: LiveRecord, mask: np.ndarray) -> Fraction:
+    def form_share(self, live: LiveRecord, mask: np.ndarray) -> Ratio:
         """The Nodes' share e of the record's conserved form (ALGEBRA.md 9.17
         (7) (e), 9.19 (3), 9.50 (9)) on the Nodes of `mask`, in the form's
         units: a bilinear form of the record's two levels at the Node, its
@@ -3030,27 +3061,31 @@ class DetectorLawSimulation:
         levels = [(live.now, live.before)]
         if live.im_now is not None and live.im_before is not None:
             levels.append((live.im_now, live.im_before))
-        total = Fraction(0)
+        total: Ratio = ZERO
         for level_now, level_before in levels:
             now = level_now.astype(object)
             before = level_before.astype(object)
             reads = self._neighbours(level_before, self.kind_wrap[family]).astype(object)
             node = wall * (wall_at * (now * now + before * before) - self_coefficient * now * before)
             links = wall * now * reads
-            total += self._weighted_sum(node, read_coefficient, mask) - int(np.sum(links[mask]))
+            total = ratio_sum(
+                [total, self._weighted_sum(node, read_coefficient, mask), (-int(np.sum(links[mask])), 1)]
+            )
         return total
 
     @staticmethod
-    def _weighted_sum(node: np.ndarray, divisor: np.ndarray, mask: np.ndarray) -> Fraction:
-        """SUM_i node_i / divisor_i over the Nodes of `mask`, exact (one Fraction
-        per distinct divisor: the rule's read coefficients present are few,
-        the body's and the field's levels)."""
-        total = Fraction(0)
+    def _weighted_sum(node: np.ndarray, divisor: np.ndarray, mask: np.ndarray) -> Ratio:
+        """SUM_i node_i / divisor_i over the Nodes of `mask`, exact (one pair per
+        distinct divisor: the rule's read coefficients present are few, the
+        body's and the field's levels; the pairs summed by `rational_sum`)."""
         chosen = divisor[mask]
         values = node[mask]
-        for value in set(int(v) for v in chosen.tolist()):
-            total += Fraction(int(np.sum(values[chosen == value])), value)
-        return total
+        return ratio_sum(
+            [
+                (int(np.sum(values[chosen == value])), value)
+                for value in sorted(set(int(v) for v in chosen.tolist()))
+            ]
+        )
 
     def given_norm(self, live: LiveRecord) -> tuple[int, int]:
         """THE NORM AS THE EXACT RATIONAL (ALGEBRA.md 9.46 (1), 9.50 (9) and
@@ -3064,8 +3099,7 @@ class DetectorLawSimulation:
         pair reduces from (p Q, p); a record written across levels (a moving
         body's Nodes as the hold leaves them) has a rational Q, its world
         energy, and the same reading."""
-        form = self.conserved_form(live)
-        return form.numerator, form.denominator
+        return self.conserved_form(live)
 
     def _half_space(self, origin: Address3, vector: Vector) -> np.ndarray:
         """The Nodes on the arm's side of the lamp: (node - origin) . vector at
@@ -3693,7 +3727,7 @@ class DetectorLawSimulation:
                 total += np.where(inside, values, 0)
         return total
 
-    def node_density(self, live: LiveRecord, nodes: np.ndarray) -> list[Fraction]:
+    def node_density(self, live: LiveRecord, nodes: np.ndarray) -> list[Ratio]:
         """The record's density e at each of the Nodes (flat indices), the
         per-Node terms of `form_share` (the Node's term over the rule's read
         coefficient there, less its Link term), exact rationals in the form's
@@ -3711,7 +3745,7 @@ class DetectorLawSimulation:
         levels = [(live.now, live.before)]
         if live.im_now is not None and live.im_before is not None:
             levels.append((live.im_now, live.im_before))  # the pair's second level (commit 4)
-        out: list[Fraction] = [Fraction(0) for _ in range(len(nodes))]
+        out: list[Ratio] = [ZERO for _ in range(len(nodes))]
         for level_now, level_before in levels:
             now = level_now.ravel()[nodes]
             before = level_before.ravel()[nodes]
@@ -3722,7 +3756,12 @@ class DetectorLawSimulation:
                 )
                 a, b = int(now[index]), int(before[index])
                 node = wall * (wall_at * (a * a + b * b) - self_coefficient * a * b)
-                out[index] += Fraction(node, read_coefficient) - wall * a * int(reads[index])
+                out[index] = ratio_sum(
+                    [
+                        out[index],
+                        (node - wall * a * int(reads[index]) * read_coefficient, read_coefficient),
+                    ]
+                )
         return out
 
     def _ladder_of(self, live: LiveRecord) -> list[int]:
@@ -3786,7 +3825,7 @@ class DetectorLawSimulation:
                 self.dead.append(live.identity)
                 return
 
-    def record_form(self, live: LiveRecord) -> Fraction:
+    def record_form(self, live: LiveRecord) -> Ratio:
         """The conserved form I of the record (MASSIVE_RECORD.md section 3, a
         GAMEBOARD diagnostic read by the books): the one form of the rule,
         `conserved_form` (ALGEBRA.md 9.57 (1); item 44: from the rule's own
@@ -4078,16 +4117,13 @@ class DetectorLawSimulation:
                 # (massive-record-v1): a GAMEBOARD diagnostic, written under
                 # the key alone.
                 lines["form"] = form_json(
-                    sum(
-                        (
+                    ratio_sum(
+                        [
                             self.record_form(live)
                             for live in self.records.values()
                             if live.family == index
-                        ),
-                        Fraction(0),
-                    )
-                    + sum(
-                        (
+                        ]
+                        + [
                             self.record_form(record)
                             for record in (
                                 [self.held_records[index], *self.held_parts[index]]
@@ -4095,8 +4131,7 @@ class DetectorLawSimulation:
                                 else []
                             )
                             if not record.silent
-                        ),
-                        Fraction(0),
+                        ]
                     )
                 )
             families[family.name] = lines
@@ -4197,7 +4232,7 @@ class DetectorLawSimulation:
                         "emitted": list(block.emitted),
                         "rows": None if block.own is None else block.own.now.ravel().tolist(),
                         "form": (
-                            form_json(Fraction(self.seat_form(block)))
+                            form_json((self.seat_form(block), 1))
                             if block.seat is not None
                             else None
                             if block.own is None

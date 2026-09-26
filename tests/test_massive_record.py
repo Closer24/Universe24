@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from fractions import Fraction
 
 import numpy as np
 import pytest
@@ -243,7 +244,7 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
         world = parse_nature_beam_world(document)
         simulation = DetectorLawSimulation(world)
         live = planted(simulation, 1, now, before, np.zeros((6, 6, 6), dtype=np.int64))
-        start = simulation.record_form(live)
+        start = Fraction(*simulation.record_form(live))
         assert start > 0
         peak = 0
         projection = 0
@@ -251,7 +252,7 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
             step_once(simulation, live)
             peak = max(peak, int(np.abs(live.now).max()))
             projection = max(projection, abs(int(np.sum(live.now * checker)) // 216))
-            assert abs(simulation.record_form(live) - start) < start // 1000
+            assert abs(Fraction(*simulation.record_form(live)) - start) < start // 1000
         assert peak < 2 * UNIT
         assert projection < 40
         simulation.records[live.identity] = live
@@ -1189,12 +1190,12 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
         now = rng.integers(-50, 51, size=(6, 1, 1)).astype(np.int64)
         before = rng.integers(-50, 51, size=(6, 1, 1)).astype(np.int64)
         live = planted(simulation, 1, now, before, np.zeros((6, 1, 1), dtype=np.int64))
-        previous = simulation.record_form(live)
+        previous = Fraction(*simulation.record_form(live))
         for _ in range(60):
             a_before = live.before.astype(object)
             r = live.remainder.astype(object)
             simulation._advance(live)
-            current = simulation.record_form(live)
+            current = Fraction(*simulation.record_form(live))
             remainders = int(
                 np.sum((live.now.astype(object) - a_before) * (r - live.remainder.astype(object)))
             )

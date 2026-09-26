@@ -4895,6 +4895,32 @@ would have found no cell.
    the three keys, the stamp under `stamp`, the refusal regexes, the ray-law
    flips as refusals of the retired flag); the gate; the five worlds' rows
    bit for bit.
+71. THE ENGINE'S RATIONALS AS INTEGER PAIRS (the integer rule, the model owner's
+   record 2071; the Boss's record 2138 (2): the eight failing tests; tests/
+   test_integer_algebra.py, tests/test_architecture.py). The engine module held
+   `fractions.Fraction` in three places: the body-frame booking's carry per
+   detector (item 56), the record's conserved form and its shares (the books'
+   GAMEBOARD diagnostic, `given_norm`'s exact rational) and the Node density
+   the frame booking reads. Every one is now a pair of integers (numerator,
+   denominator) in lowest terms with the denominator positive (`Ratio`,
+   `ratio`, `ratio_sum`: one gcd, sums and products, Python integers without
+   the working bound, as the exact rationals they replace were: the form
+   summed over a board and the booking's terms exceed 2^63). The booking: G_in
+   + (v . n) e_out as one pair (the Port booking times the body's wall times
+   the density's denominator, plus side x momentum x the density's numerator,
+   over the wall times the denominator), the whole part booked, the carry the
+   pair below one; bit for bit with the Fraction (the same exact arithmetic).
+   The host and the tests read the pairs as Fractions where they compute with
+   them (the margin diagnostic's excitation action, the suites' form
+   identities). rule.py holds no `math.lcm` (the least common multiple by gcd)
+   and is named in the physical-module list with its line; `rungs` there since
+   item 70. STILL RED of the six (record 2138): the loader's floats (the twist
+   "own" and the nearest triple computed at load, 9.96 (2) (a)) and its file
+   reads (the universe file and the start file read inside the loader: json
+   and pathlib in a physical module): the next push, the twist declared by the
+   generator and read by the loader, the files read by a host module. PROOF:
+   the gate; the five worlds' rows and lines bit for bit; tests/
+   test_hop_taking.py (the carry as the pair) green.
 
 ## 23. The polariser splits by the record's own state (Reviewer 3's bug line of 2026-09-24, 15:15Z; DECLARATIONS.md section 14 item 6; `polariser-fix`)
 

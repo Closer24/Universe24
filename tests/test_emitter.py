@@ -317,11 +317,11 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     for _ in range(emitter["period"]):
         solitary.step()
         assert body.own is not None
-        share = solitary.form_share(body.own, centre)
+        share = Fraction(*solitary.form_share(body.own, centre))
         shares.append(share)
         action += share
-        whole = solitary.form_share(body.own, np.ones(solitary.shape, dtype=bool))
-        assert whole == solitary.conserved_form(body.own)
+        whole = Fraction(*solitary.form_share(body.own, np.ones(solitary.shape, dtype=bool)))
+        assert whole == Fraction(*solitary.conserved_form(body.own))
     # the file's norm in the body's own units (9.57 (1); item 44): the action's numerator, its
     # denominator a divisor of the rule's coefficient on the six reads at the centre, R = 2 p^2
     # num with the pace Gamma - stock at the solitary body's centre
@@ -346,7 +346,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     for _ in range(emitter["period"]):
         fine_solitary.step()
         assert fine_body.own is not None
-        fine_shares.append(fine_solitary.form_share(fine_body.own, centre))
+        fine_shares.append(Fraction(*fine_solitary.form_share(fine_body.own, centre)))
     fine_action = sum(fine_shares)
     assert 1000 * (max(fine_shares) - min(fine_shares)) < 3 * (fine_action // emitter["period"])
     by_tick = {entry["tick"]: entry for entry in trace}

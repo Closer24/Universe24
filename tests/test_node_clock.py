@@ -198,10 +198,10 @@ def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
             parse_nature_beam_world(content_chain(400, CHAIN, nodes, QUANTA))
         )
         live = planted(simulation, 0, now, before, np.zeros((400, 1, 1), dtype=np.int64))
-        start = simulation.record_form(live)
+        start = Fraction(*simulation.record_form(live))
         for _ in range(400):
             simulation._advance(live)
-            assert abs(simulation.record_form(live) - start) < start // 1000
+            assert abs(Fraction(*simulation.record_form(live)) - start) < start // 1000
         weights = np.abs(live.now[:, 0, 0]).astype(np.float64)
         weights[:190] = 0.0
         centroids[slab] = float(np.sum(x * weights) / np.sum(weights))
@@ -251,13 +251,13 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
             read_i, self_i, wall_i = coefficients[i]
             expected += Fraction(wall * (wall_i * (a * a + b * b) - self_i * a * b), read_i)
             expected -= wall * a * reads[i]
-        assert simulation.conserved_form(live) == expected
+        assert Fraction(*simulation.conserved_form(live)) == expected
         # (b) the share's identity per Node, one interval
-        old = [simulation.form_share(live, one_node(60, i)) for i in range(60)]
+        old = [Fraction(*simulation.form_share(live, one_node(60, i))) for i in range(60)]
         a_before, a_now, r_old = live.before.copy(), live.now.copy(), live.remainder.copy()
         simulation._advance(live)
         a_next, r_new = live.now.copy(), live.remainder.copy()
-        new = [simulation.form_share(live, one_node(60, i)) for i in range(60)]
+        new = [Fraction(*simulation.form_share(live, one_node(60, i))) for i in range(60)]
         for i in range(60):
             # the plain currents through the Node's two Links (unweighted, item 36)
             flux = 0
@@ -275,12 +275,12 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
             assert new[i] - old[i] == wall * flux + wall * remainders, (family, i)
             assert 0 <= int(r_new[i, 0, 0]) < coefficients[i][2]
         # (c) the books' form's remainder identity, exact, over 40 intervals
-        previous = simulation.record_form(live)
+        previous = Fraction(*simulation.record_form(live))
         for _ in range(40):
             a_before = live.before.astype(object)
             r = live.remainder.astype(object)
             simulation._advance(live)
-            current = simulation.record_form(live)
+            current = Fraction(*simulation.record_form(live))
             term = Fraction(0)
             for i in range(60):
                 term += Fraction(

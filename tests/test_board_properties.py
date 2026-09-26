@@ -185,7 +185,7 @@ def plant(simulation: DetectorLawSimulation, node, u: int, ladder: bool = True, 
     live.driven = np.zeros(SHAPE, dtype=bool)
     if ladder and "screen" in simulation.detector_names:
         live.ladder = [simulation.detector_names.index("screen")]
-    live.norm = simulation.conserved_form(live)
+    live.norm, live.pace = simulation.given_norm(live)  # the form as the exact pair
     simulation.records[live.identity] = live
     return live
 
@@ -643,7 +643,7 @@ def test_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
     )
     live.driven = np.zeros(shape, dtype=bool)
     live.ladder = [simulation.detector_names.index("screen")]
-    live.norm = simulation.conserved_form(live)
+    live.norm, live.pace = simulation.given_norm(live)  # the form as the exact pair
     simulation.records[live.identity] = live
     nodes = side**3
     tracemalloc.start()

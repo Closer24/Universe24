@@ -19,7 +19,7 @@ float, no root (the three tests of every rule, skills/workflow.md).
 
 from __future__ import annotations
 
-from math import gcd, lcm
+from math import gcd
 from typing import overload
 
 import numpy as np
@@ -114,7 +114,7 @@ def rungs(weights: list[tuple[int, int]], steps: int) -> tuple[list[int], tuple[
     empty cell. Integers alone: sums, products and one floor division."""
     denominator = 1
     for _, m in weights:
-        denominator = lcm(denominator, m)
+        denominator = denominator * m // gcd(denominator, m)  # the least common multiple
     scaled = [n * (denominator // m) for n, m in weights]
     total = sum(scaled)
     if total == 0:
