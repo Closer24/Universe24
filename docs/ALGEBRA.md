@@ -19177,3 +19177,102 @@ that constancy.
    from zero by the generator and the float generators deleted (record
    2248). The test of record 2233, "a generated body stands still in
    the run within the rounding", stands as the gate of item 4 at k = 0.
+
+### 9.121 The click as Rule3's acts: what it is, what it is not, and the one line that makes the engine Rule3 and the families alone (the Boss's question of 2026-09-26, 21:12Z, on the model owner's "the click is also built from Rule3, no?"; the owner's word to the mathematician, "algebraically, extend Rule3"; 9.119 items 1 and 4; 9.120 item 5; the count's line PROPOSED until the owner's word, then the law)
+
+1. **What Rule3's acts can form (PROVED).** The four acts of 9.119
+   item 1 are the read (a fixed integer combination of the six
+   neighbours' levels and the Node's own), the one-Node step (a fixed
+   combination of the two levels), the division by the wall with the
+   remainder kept, and the load (an integer added). Each is a linear
+   form of the levels or a floor of one, so every composition of them
+   with declared coefficients is a piecewise-linear function of the
+   levels with integer slopes: a sum of linear forms and of floors of
+   linear forms, composed. No such function is quadratic in the
+   levels: its second difference in any level is 0 almost everywhere,
+   while the second difference of a product now_i before_j in the pair
+   is 1. So nothing bilinear comes from Rule3's acts alone.
+
+2. **The click's three acts against them.** (a) THE LADDER (9.25 (2)):
+   the rungs b_k = (2 W C_k + Total) div (2 Total) and the walk of the
+   increments with the remainder carried are the division act with the
+   remainder: Rule3's. (b) THE RECORD'S END AND THE COUNT'S MOVE
+   (POSTULATES.md section 10; 9.53 (1)): the count of the family of
+   clicks at the detector's Node gains 1 (a load), and the record's
+   levels at the detector go by the load of their own negative (a
+   linear act): Rule3's. (c) THE BOOKING (9.50 (13) (iv); 9.57 (1)):
+   the flux through a Port, num (now_i before_j - before_i now_j), is a
+   product of two levels: NOT a composition of Rule3's acts, by item 1.
+   It is, however, nothing foreign to Rule3: it is the Link term of the
+   form Rule3 conserves (9.50 (5), (9); 9.57 (1), the conserved form),
+   the current of Rule3's own conservation law. So the one thing the
+   click needs beyond the four acts is the reading of Rule3's own
+   current at the Node's Ports.
+
+3. **The one line, the count's step (the owner's word, PROPOSED).**
+   Rule3 for the family of clicks, at every Node, in Rule3's own form
+   with the current as its read:
+
+   T c_next + r' = T c_now + SUM_a (F_a^- - F_a^+) + r,  0 <= r' < T,
+
+   c the count at the Node, T the quantum's norm (that family's wall,
+   a row of the family in the universe file, 9.120 item 4 (d)), F_a^-
+   the current of the record's form entering through the -a Port and
+   F_a^+ the current leaving through the +a Port over the interval, r
+   the remainder kept at the Node. The same four acts, the read being
+   the current. With it: (i) THE CLICK is the division: a quantum moves
+   whole from one Node to the next exactly when the remainder crosses T
+   (the ladder's rung), and never a fraction of one; (ii) THE HOP
+   retires: the count follows its record's current at every Node, so
+   the well of 9.120 moves with the count one quantum at a time (9.120
+   item 5 (c)); (iii) EMISSION AND DETECTION are the same line with the
+   target family named: a detector's count is the family of clicks'
+   level at its Nodes, an emitter's giving is the count leaving through
+   its outer Ports into the born family's record; (iv) THE COUNT IS
+   CONSERVED (PROVED from the line): the current through a Link enters
+   one Node's right side as +F and its neighbour's as -F, so SUM over a
+   region of (T c_i + r_i) changes only by the currents through the
+   region's boundary, a telescoping sum, exact in integers; (v) THE
+   VELOCITY: the record's k is conserved by the record's line (9.84
+   (1)), and the count's line is the continuity equation of the current
+   in integers, so the count's centroid moves at the current's velocity
+   (9.120 item 5 (b)), with no leak beyond the ladder's remainder. (vi)
+   A DETECTOR SET is one Node of this line with its Ports the set's
+   outer Ports (9.25 (7)): the sum of its Nodes' lines with one
+   remainder; Born's rule (9.25 (3)) is the shares of the current among
+   the set's Nodes, as today. (vii) THE INVERSE: the same line backward
+   with the direction sigma of 9.57 (1), the current read from the
+   interval's levels as the forward step read it.
+
+4. **What it closes.** The first word of 9.119 item 4: a product of two
+   levels writes one level only, the count, and that product is Rule3's
+   own current; nothing else in the engine writes from a product. With
+   the count's line the engine is Rule3 (the record's line and the
+   count's line: one function with two reads, the levels or the
+   current), the click as its division, and the families' rows (the
+   pair, Gamma, T, the reads); the rows of 9.117 item 5 that then lose
+   their own code: the ladder's `rungs`, the hop and its accumulator,
+   the giving's open and close, the clicks list's count move, the
+   lifetime's tally (a count of the record's Nodes' remainders). What
+   stays beyond and is not this section's: the hand and the spin's
+   step (9.113 item 2), the twist table's precision (9.113 item 3 (c)).
+
+5. **The amplitude unit A and the norm T (the Boss's question).** A is
+   DERIVED: the grain of the integers, the universe's amplitude bound
+   that the loader already holds (9.61 (3)), a host precision with no
+   physics in it; the generator scales the profile to it and then to
+   c T (9.120 item 4). T is a DECLARATION of the universe, one integer
+   per family beside the pair and Gamma: the action of one quantum,
+   the count's wall above; Rule3 is linear and its form's scale is
+   free, so no line of Rule3 fixes T; nature pins it, and no body
+   declares it.
+
+6. **The runs beside the line (Nature24's).** (a) The emitter's unit
+   world: the four givings' intervals of today against the count's line
+   at the emitter's Nodes, its own record's current through its outer
+   Ports, T the emitter's `norm` of today: the same four intervals
+   within the ladder's remainder, or the interval that differs named.
+   (b) The moving cube of 9.120 item 5 (d) under the count's line in
+   place of the hop: the centroid's slope v, the share inside the cube
+   holding to 3 x 10^-5 per Link. (c) The count conserved: SUM (T c +
+   r) over a closed box constant to the bit over 10^4 intervals.
