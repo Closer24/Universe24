@@ -50,3 +50,8 @@ checks each row; The 3 moves a row by landing its build and its test. Read from 
 The engine is closed when section 2 is empty and every row of section 1 has its green test on
 main. From then on a force, a coupling or a well is a line in the files, and a run in check
 mode is how it is tried.
+
+Every row of this ledger is tried from run files alone: the world file, the universe file and
+the start file, run by the one command (`tools/run_inputs.py`), with the engine never rebuilt
+for it (the model owner's word of 2026-09-26, 11:45Z). The test of the closing: if trying a
+thing needs a line of code, the engine is not closed.
