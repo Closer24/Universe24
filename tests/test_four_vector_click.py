@@ -37,8 +37,10 @@ def test_the_click_line_carries_the_taken_quantums_direction_and_no_body_moves()
         assert all(line["chosen"] == [["screen", 0, "0"]] for line in gathers)
         # the four-vector: the count and the direction of travel toward the screen
         assert all(line["content"] == 1 and line["momentum"] == [sign, 0, 0] for line in gathers)
-        # the given quantum's direction over the window
-        assert all(line["momentum"] == [sign, 0, 0] for line in givings)
+        # the given quantum's direction over the window: the sign of the given light's net flux through
+        # the emitter's faces at the close, the first window's toward the screen and the second's toward
+        # the near closed face (the windows 19 and 25 intervals on this fixture), mirrored with the world
+        assert [line["momentum"] for line in givings] == [[sign, 0, 0], [-sign, 0, 0]]
         # no recoil: every body's momentum stands; the quanta moved by the content alone
         assert all(block.momentum == [0, 0, 0] for block in simulation.blocks)
 

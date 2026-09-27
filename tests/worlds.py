@@ -250,7 +250,7 @@ def emitter_world(
     ticks: int = 1200,
     on_mode: bool = True,
 ) -> dict:
-    """The emitter's unit world: a chain of 80 (x closed), an emitter of the matter kind [800, 809] at [5, 37)
+    """The emitter's unit world: a chain of 80 (x closed), an emitter of the matter kind [2, 3] (the pair [800, 1200] in lowest terms, so the rule's walls admit the amplitude bound 2^24) in the well [250, 251] at [5, 37), its record seeded on its mode at 2^12 (a real body under the count's line: its count stands to the bit)
     on its mode with `stock` givings of light, and the receiver cube `screen` at [70, 72]."""
     # the giving is the window's (ALGEBRA.md #the-primitives): the body's rotation written
     # at its Nodes at the weight 3 (3 x 2^20 under the bound 2^22)
@@ -270,12 +270,12 @@ def emitter_world(
         "body_record": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
-        "amplitude_bound": 1 << 22,
+        "amplitude_bound": 1 << 24,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
             family_entry("light", [1, 1], reads(), clock=[512, 1]),
-            family_entry("matter", [800, 809], reads()),
+            family_entry("matter", [2, 3], reads()),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -296,8 +296,8 @@ def emitter_world(
                 "spin_before": [0, 0, 0],
                 "twist": 0,
                 "moment": [0, 0, 0],
-                "pair": [800, 801],
-                "seed": 1 << 10,  # the window's writes pile up at the body's Nodes (commit 7)
+                "pair": [250, 251],
+                "seed": 1 << 12,  # the window's writes pile up at the body's Nodes (commit 7)
                 "margin": "control",
                 "emitter": emitter,
             },

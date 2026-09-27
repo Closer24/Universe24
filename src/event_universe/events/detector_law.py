@@ -123,16 +123,7 @@ Record = Callable[[dict[str, object]], None]
 # that named the law and its version ("detector-law-v1") is CANCELLED; the books
 # and the state carry no law entry
 FACE_NAMES = ("face:-x", "face:+x", "face:-y", "face:+y", "face:-z", "face:+z")
-# The receiver's take (DESIGN.md sections 1 and 5): a Node that receives does
-# not send the wave back (a mirror is a receiver body that re-emits, never a
-# wall). The record's row at a receiver holds one amplitude per Port that
-# faces a free Node (the NodeState's Ports), the wave entering by that Port,
-# following it one way: g(t + 1) = a_f(t) + k (a_f(t + 1) - g(t)) with a_f
-# the free neighbour's amplitude and k = (c - 1) / (c + 1) at c = 1 / sqrt 3,
-# the declared pair [-15, 56] (-0.2679 against sqrt 3 - 2 = -0.2679), a
-# rounding declared at load, not a root at run time; the free neighbour reads
-# g as the receiver's amplitude on that Link, and the receiver books g^2 as
-# the offer arriving by that Port.
+# The receiver's take (DESIGN.md sections 1 and 5): a Node that receives does not send the wave back (a mirror is a receiver body that re-emits, never a wall). The record's row at a receiver holds one amplitude per Port that faces a free Node (the NodeState's Ports), the wave entering by that Port, following it one way: g(t + 1) = a_f(t) + k (a_f(t + 1) - g(t)) with a_f the free neighbour's amplitude and k = (c - 1) / (c + 1) at c = 1 / sqrt 3, the declared pair [-15, 56] (-0.2679 against sqrt 3 - 2 = -0.2679), a rounding declared at load, not a root at run time; the free neighbour reads g as the receiver's amplitude on that Link, and the receiver books g^2 as the offer arriving by that Port.
 
 
 # A RATIONAL IS A PAIR OF INTEGERS (numerator, denominator) in lowest terms with the
@@ -191,16 +182,7 @@ class LiveRecord:
     absorbed: int = 0
     norm: int = 0
     first_rung: list[int | None] = field(default_factory=list)
-    # THE RESIDUE FROM THE LAW (ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item
-    # 15): the record's own wheel W, given with its residue u, both read from
-    # the rule's remainder at the giving Node of the record that clicked to
-    # giving it (`residue_of`); a planted record carries the test's W. The
-    # rung's wheel is the record's, never a set's or the world's. UNDER THE
-    # NODE CLOCK (ALGEBRA.md #the-paces; BUILD.md section 26 item 31) W
-    # = 3 den f / gcd(Gamma num, 6 den M, 3 den f) at that Node with f =
-    # Gamma + M (`wheel_at`): the pair's own where the content M is 0,
-    # content-dependent at a body's Nodes, read from the rule and never
-    # declared.
+    # THE RESIDUE FROM THE LAW (ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 15): the record's own wheel W, given with its residue u, both read from the rule's remainder at the giving Node of the record that clicked to giving it (`residue_of`); a planted record carries the test's W. The rung's wheel is the record's, never a set's or the world's. UNDER THE NODE CLOCK (ALGEBRA.md #the-paces; BUILD.md section 26 item 31) W = 3 den f / gcd(Gamma num, 6 den M, 3 den f) at that Node with f = Gamma + M (`wheel_at`): the pair's own where the content M is 0, content-dependent at a body's Nodes, read from the rule and never declared.
     wheel: int = 1
     # massive-record-v1: the emitter's number for a record a body emitted
     # (None for a planted record and for a block's own record); the
@@ -255,15 +237,7 @@ class LiveRecord:
     # booking below one unit of the flux, carried to the next interval's
     # booking (a remainder kept on the record, exact); empty at rest
     carry: dict[int, Ratio] = field(default_factory=dict)
-    # THE FOUR-VECTOR CLICK'S SPACE PART (ALGEBRA.md #the-primitives, #the-interval,
-    # ALGEBRA.md #the-ladder; commit 5 without the recoil, record 2135): per detector, per
-    # axis, the flux booked through the detector's Ports on its -a side minus
-    # the flux booked through those on its +a side, summed over the record's
-    # walk (the taken quantum's direction of travel: a quantum moving toward
-    # +a enters through the -a face); the sign per axis is sigma_a on the
-    # click line. Nothing is added to any body's momentum: the recoil of
-    # ALGEBRA.md #the-primitives waits on the closing of record 2135 (the click that keeps the
-    # momentum, 9.109, is a decision of three).
+    # THE FOUR-VECTOR CLICK'S SPACE PART (ALGEBRA.md #the-primitives, #the-interval, ALGEBRA.md #the-ladder; commit 5 without the recoil, record 2135): per detector, per axis, the flux booked through the detector's Ports on its -a side minus the flux booked through those on its +a side, summed over the record's walk (the taken quantum's direction of travel: a quantum moving toward +a enters through the -a face); the sign per axis is sigma_a on the click line. Nothing is added to any body's momentum: the recoil of ALGEBRA.md #the-primitives waits on the closing of record 2135 (the click that keeps the momentum, 9.109, is a decision of three).
     momentum_tally: dict[int, list[int]] = field(default_factory=dict)
     # THE GIVEN QUANTUM'S DIRECTION (ALGEBRA.md #the-interval, the giving's tally): per axis, the
     # outward flux through the body's +a Ports minus through its -a Ports over
@@ -914,17 +888,14 @@ class DetectorLawSimulation:
 
     def _counts_act(self, line: Callable[..., object], block: Block, direction: int) -> None:
         """THE COUNT'S LINE ON A BODY (ALGEBRA.md #the-counts-line): the line's levels laid at its
-        first act (the body's declared quanta at each of its Nodes, the remainder at the law's origin T / 2 at every Node), then per interval the record's levels
+        first act (`_lay_count`: at every Node T c + r the Node's share of the record's form plus the origin T / 2), then per interval the record's levels
         here and across the six Ports (the Ports' arrivals), the count and its remainder stepped by
-        the line forward or back (the direction +1 or -1), the body's Nodes following the count."""
+        the line forward or back (the direction +1 or -1), the body's Nodes following the count's centroid."""
         live = block.own
         if live is None:
             return
         if block.counts is None or block.count_remainder is None:
-            block.counts = block.mask.astype(np.int64) * self.world.measured[block.number].amount
-            block.count_norm = self._count_norm(block)
-            half = int(rule3(NO_READ, NO_READ, 1, SPAN, 0, 0, block.count_norm)[0])
-            block.count_remainder = np.full(self.shape, half, dtype=np.int64)
+            block.counts, block.count_remainder = self._lay_count(block, live)
         term = CountTerm(
             block.count_norm,
             self.kind_wall(block.family, block.definition.pair),
@@ -941,27 +912,46 @@ class DetectorLawSimulation:
         self._follow_count(block)
 
     def _body_count(self, block: Block) -> int:
-        """The count at the body: its quanta, the sum of its count (the declared quanta per Node over its Nodes until the line's first act)."""
-        if block.counts is None:
-            return int(block.mask.sum()) * self.world.measured[block.number].amount
-        return int(block.counts.sum())
+        """The count at the body, its quanta: the declared count per Node over its Nodes (the record's norm in quanta, ALGEBRA.md #what-a-body-is; the count's line moves them between the Nodes and loses none)."""
+        return int(block.mask.sum()) * self.world.measured[block.number].amount
 
-    def _count_norm(self, block: Block) -> int:
-        """T, the count's wall, read once at the lay: the record's conserved form per quantum (the form's numerator over its denominator times the body's quanta, the declared count per Node summed over its Nodes), Rule3's division act; a form below one per quantum is the line's refusal."""
-        numerator, denominator = self.conserved_form(cast(LiveRecord, block.own))
-        quanta = int(cast(np.ndarray, block.counts).sum())
-        return int(rule3(NO_READ, NO_READ, 1, denominator * quanta, 0, 0, numerator)[0])
+    def _lay_count(self, block: Block, live: LiveRecord) -> tuple[np.ndarray, np.ndarray]:
+        """THE COUNT'S LAY (ALGEBRA.md #the-counts-line, the remainder's origin): T, the count's wall, the record's conserved form per quantum of the body's declared count, read once by Rule3's division act; then at every Node of the record T c + r is the Node's share of the form plus the origin T / 2 (the share's exact rational n / d: c = (n + d T / 2) div (d T), r the rest div d, Rule3's division act twice), so the count follows the norm with the margin T / 2 against the rounding's walk; a form below one per quantum is the line's refusal."""
+        numerator, denominator = self.conserved_form(live)
+        block.count_norm = int(
+            rule3(NO_READ, NO_READ, 1, denominator * self._body_count(block), 0, 0, numerator)[0]
+        )
+        half = int(rule3(NO_READ, NO_READ, 1, SPAN, 0, 0, block.count_norm)[0])
+        counts = np.zeros(self.shape, dtype=np.int64)
+        remainder = np.full(self.shape, half, dtype=np.int64)
+        terms, read_coefficient = self.form_terms(live)
+        for node in zip(*np.nonzero((live.now != 0) | (live.before != 0)), strict=True):
+            share = ratio_sum(
+                [(int(part[node]), int(read_coefficient[node])) for part, _ in terms]
+                + [(-int(links[node]), 1) for _, links in terms]
+            )
+            count, rest = rule3(
+                NO_READ, NO_READ, 1, share[1] * block.count_norm, 0, 0, share[0] + share[1] * half
+            )
+            counts[node] = int(count)
+            remainder[node] = int(rule3(NO_READ, NO_READ, 1, share[1], 0, 0, rest)[0])
+        return counts, remainder
 
     def _follow_count(self, block: Block) -> None:
-        """The body's Nodes follow the count's centroid by whole Links (ALGEBRA.md #the-counts-line, the velocity: the centroid moves at the current's velocity; #the-velocity: the well moves with the count): along an axis where the quanta's centroid lies a whole Link beyond the body's centre, the mask, the corner, the family's pair region and the detector map shift one Link that way (the hop's HOST bookkeeping, now the count's); a resting body's quanta jitter within its Nodes (the open point 1) and move nothing."""
-        counts = cast(np.ndarray, block.counts)
-        total = int(counts.sum())
+        """The body's Nodes follow the count's centroid by whole Links (ALGEBRA.md #the-counts-line, the velocity: the centroid moves at the current's velocity; #the-velocity: the well moves with the count): along an axis where the centroid of the quanta shown (the counts above 0; a hole nature does not show) lies a whole Link beyond the body's centre, the mask, the corner, the family's pair region and the detector map shift one Link that way (the hop's HOST bookkeeping, now the count's); a resting body's quanta jitter within its Nodes (the open point 1) and move nothing."""
+        shown = np.maximum(cast(np.ndarray, block.counts), 0)
+        total = int(shown.sum())
+        wrap = self.kind_wrap[block.family]
         shift = [0, 0, 0]
         for axis in range(3):
-            extent = int(block.definition.extents[axis])
-            span = int(self.shape[axis])
-            offsets = (np.arange(span) - block.corner[axis] + span // 2) % span - span // 2
-            along = counts.sum(axis=tuple(other for other in range(3) if other != axis))
+            extent, span = int(block.definition.extents[axis]), int(self.shape[axis])
+            offsets = np.arange(span) - block.corner[axis]
+            if wrap[
+                axis
+            ]:  # every Node at its nearest image to the corner (the halves compared, no division)
+                offsets = np.where(2 * offsets > span, offsets - span, offsets)
+                offsets = np.where(2 * offsets <= -span, offsets + span, offsets)
+            along = shown.sum(axis=tuple(other for other in range(3) if other != axis))
             moment = 2 * int((along * offsets).sum())
             if moment >= total * (extent + 1):
                 shift[axis] = 1
@@ -971,11 +961,10 @@ class DetectorLawSimulation:
         if not block.moved:
             return
         old_mask = block.mask
-        wrap = self.kind_wrap[block.family]
         for axis in range(3):
             corner, span = block.corner[axis] + shift[axis], int(self.shape[axis])
             if wrap[axis]:
-                corner %= span
+                corner = corner - span if corner >= span else corner + span if corner < 0 else corner
             elif corner < 0 or corner + int(block.definition.extents[axis]) > span:
                 raise ValueError(
                     f"block {block.number}'s Nodes would leave the board through the face on axis "
@@ -1992,23 +1981,7 @@ class DetectorLawSimulation:
             part=emitter.part,
             twist=emitter.twist,
         )
-        # E^T: the given clock's character on the body's Nodes, written once at
-        # both levels, every Node at the vertex's phase (the one-Node broadband
-        # giving; a line's travelling character, the per-Link pair of ALGEBRA.md
-        # ALGEBRA.md #the-click, is owed until that pair is declared)
-        # NO TABLE IN THE ENGINE (the cleanup order's step 2; ALGEBRA.md #the-click
-        # (6), ALGEBRA.md #a-familys-declaration): the given pair is the world's two integers `given:
-        # [now, before]`, the generator's, checked at load (before = -now),
-        # written on every Node of the body
-        # THE GIVEN TRAIN (ALGEBRA.md #the-click; BUILD.md section 26 item 27):
-        # the train's two levels written on the body's Nodes in the box's
-        # x-major order (`body_node_indices`, the loader's and the generator's
-        # one convention), the norm T the written one (the conserved form on
-        # the given family's vacuum, the generator's integer checked at load)
-        # THE WINDOW (ALGEBRA.md #what-a-body-is, #the-primitives; item 50; commit 7,
-        # the one giving): no train; the window opens at the click, the given row at
-        # the body's Node written from its rotation every interval (`_point_windows`)
-        # until the outward norm reaches T; the record named at the close
+        # E^T: the given clock's character on the body's Nodes, written once at both levels, every Node at the vertex's phase (the one-Node broadband giving; a line's travelling character, the per-Link pair of ALGEBRA.md ALGEBRA.md #the-click, is owed until that pair is declared) NO TABLE IN THE ENGINE (the cleanup order's step 2; ALGEBRA.md #the-click (6), ALGEBRA.md #a-familys-declaration): the given pair is the world's two integers `given: [now, before]`, the generator's, checked at load (before = -now), written on every Node of the body THE GIVEN TRAIN (ALGEBRA.md #the-click; BUILD.md section 26 item 27): the train's two levels written on the body's Nodes in the box's x-major order (`body_node_indices`, the loader's and the generator's one convention), the norm T the written one (the conserved form on the given family's vacuum, the generator's integer checked at load) THE WINDOW (ALGEBRA.md #what-a-body-is, #the-primitives; item 50; commit 7, the one giving): no train; the window opens at the click, the given row at the body's Node written from its rotation every interval (`_point_windows`) until the outward norm reaches T; the record named at the close
         live.window_open = True
         live.box = self.mask_box(block.mask)  # HOST (item 43): the body's own Nodes
         block.window = identity
@@ -2041,19 +2014,7 @@ class DetectorLawSimulation:
         )
         self.held[number][family] += opened.count
         self.ledger.held_spent[family] += 1
-        # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 items 31 and
-        # 36; ALGEBRA.md #the-direction): the given record's T is p times its
-        # conserved form as written on the board, the engine's own integer
-        # with the content at the body's Nodes AS IT STANDS this interval:
-        # ONE ORDER FOR BOTH CLICKS (ALGEBRA.md #the-primitives; BUILD.md section 26
-        # item 58): a click's writes enter at the next interval (ALGEBRA.md #the-line),
-        # so the giving's lowered quanta are held after the held families'
-        # step with the takings' (`_advance_fields`), no hold here (the hold
-        # at once, item 47, HISTORY: a defect against ALGEBRA.md #the-line)
-        # THE POINT EMITTER (item 50): the record's norm is T from the open,
-        # the excitation's action the window will reach (ALGEBRA.md), as the
-        # exact rational norm / norm_denominator, so the ladder reads its
-        # bookings from the first interval (Born's rule's walk as now)
+        # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 items 31 and 36; ALGEBRA.md #the-direction): the given record's T is p times its conserved form as written on the board, the engine's own integer with the content at the body's Nodes AS IT STANDS this interval: ONE ORDER FOR BOTH CLICKS (ALGEBRA.md #the-primitives; BUILD.md section 26 item 58): a click's writes enter at the next interval (ALGEBRA.md #the-line), so the giving's lowered quanta are held after the held families' step with the takings' (`_advance_fields`), no hold here (the hold at once, item 47, HISTORY: a defect against ALGEBRA.md #the-line) THE POINT EMITTER (item 50): the record's norm is T from the open, the excitation's action the window will reach (ALGEBRA.md), as the exact rational norm / norm_denominator, so the ladder reads its bookings from the first interval (Born's rule's walk as now)
         assert emitter.norm is not None and emitter.norm_denominator is not None
         live.norm, live.pace = emitter.norm, emitter.norm_denominator
         self.ledger.transit_released[family] += cost
@@ -2462,15 +2423,7 @@ class DetectorLawSimulation:
             return live.part - 1
         return None
 
-    # The flux reading (ALGEBRA.md #rule3, the mathematician's derivation
-    # of 2026-09-24 from 8.2; BUILD.md section 26 item 13): the flux into a
-    # Node i from a read j of it, 3 G_ij = A_ij (now_i before_j - before_i
-    # now_j), a bilinear form of the record's own two levels at the two ends
-    # of a Link, pair-free and antisymmetric; a receiver's offer the one-way
-    # inward flux through its Ports, summed over intervals; the record's
-    # norm its conserved form I. Both in the integers 3 G x wall and 3 I x
-    # wall, wall the family's common wall (the least common multiple of its
-    # pairs' numerators over the board).
+    # The flux reading (ALGEBRA.md #rule3, the mathematician's derivation of 2026-09-24 from 8.2; BUILD.md section 26 item 13): the flux into a Node i from a read j of it, 3 G_ij = A_ij (now_i before_j - before_i now_j), a bilinear form of the record's own two levels at the two ends of a Link, pair-free and antisymmetric; a receiver's offer the one-way inward flux through its Ports, summed over intervals; the record's norm its conserved form I. Both in the integers 3 G x wall and 3 I x wall, wall the family's common wall (the least common multiple of its pairs' numerators over the board).
 
     def kind_wall(self, family: int, pair: tuple[int, int] | None = None) -> int:
         """The family's common wall: the least common multiple of the
@@ -2604,23 +2557,7 @@ class DetectorLawSimulation:
                     offers[detector] = offers.get(detector, 0) + int(value) * wall
                     self._tally_direction(live, detector, axis, side, int(value) * wall)
             return offers
-        # THE BOOKING IN THE BODY'S FRAME (ALGEBRA.md #the-ladder; BUILD.md section
-        # 26 item 56): a face of a body moving at v with outward normal n books
-        # per interval (G_in + (v . n) e_out) cut at zero AFTER the sum: G_in
-        # the board's inward current through the face's Link (the Port booking
-        # above), e_out the record's density on the Node outside the face
-        # (`node_density`, the same units), v . n = side x momentum / wall along
-        # the face's axis, positive at a face advancing into the outside (the
-        # front) and negative at a face receding from it (the back). One rule
-        # for every face of every moving set, per interval, not per hop: at
-        # the front an oncoming record books G_in + v e_out, a standing or
-        # transverse one v e_out, a record outrunning the body nothing; at the
-        # back a record overtaking from behind books G_in - v e_out, the norm
-        # once, with no negative booking. The whole part is booked, the
-        # fraction carried on the record per detector (`carry`, exact). The
-        # three tests: the face's Link, the outside Node's density and the
-        # body's own pace, fixed work; sums and products; no name. At v = 0
-        # the rule is the Port booking above, bit for bit.
+        # THE BOOKING IN THE BODY'S FRAME (ALGEBRA.md #the-ladder; BUILD.md section 26 item 56): a face of a body moving at v with outward normal n books per interval (G_in + (v . n) e_out) cut at zero AFTER the sum: G_in the board's inward current through the face's Link (the Port booking above), e_out the record's density on the Node outside the face (`node_density`, the same units), v . n = side x momentum / wall along the face's axis, positive at a face advancing into the outside (the front) and negative at a face receding from it (the back). One rule for every face of every moving set, per interval, not per hop: at the front an oncoming record books G_in + v e_out, a standing or transverse one v e_out, a record outrunning the body nothing; at the back a record overtaking from behind books G_in - v e_out, the norm once, with no negative booking. The whole part is booked, the fraction carried on the record per detector (`carry`, exact). The three tests: the face's Link, the outside Node's density and the body's own pace, fixed work; sums and products; no name. At v = 0 the rule is the Port booking above, bit for bit.
         outside = sorted(
             set(
                 int(node)
@@ -2760,26 +2697,20 @@ class DetectorLawSimulation:
         return self.form_share(live, np.ones(self.shape, dtype=bool))
 
     def form_share(self, live: LiveRecord, mask: np.ndarray) -> Ratio:
-        """The Nodes' share e of the record's conserved form (ALGEBRA.md #the-click, #rule3, #the-direction) on the Nodes of `mask`, in the form's
-        units: a bilinear form of the record's two levels at the Node, its
-        six reads and the pace at the Node (verb B, local), the Node's terms
-        weighted by 1 / p_i; its change over an interval is the sum of the
-        plain currents through the Node's Links plus the remainders' term,
-        so a bound mode's share is constant where nothing flows."""
+        """The Nodes' share e of the record's conserved form (ALGEBRA.md #the-click, #rule3, #the-direction) on the Nodes of `mask`, in the form's units: a bilinear form of the record's two levels at the Node, its six reads and the pace at the Node (verb B, local), the Node's terms weighted by 1 / p_i (`form_terms`, summed exactly); its change over an interval is the sum of the plain currents through the Node's Links plus the remainders' term, so a bound mode's share is constant where nothing flows."""
+        terms, read_coefficient = self.form_terms(live)
+        total: Ratio = ZERO
+        for node, links in terms:
+            total = ratio_sum(
+                [total, self._weighted_sum(node, read_coefficient, mask), (-int(np.sum(links[mask])), 1)]
+            )
+        return total
+
+    def form_terms(self, live: LiveRecord) -> tuple[list[tuple[np.ndarray, np.ndarray]], np.ndarray]:
+        """The per-Node terms of the record's conserved form, one pair per level pair: the Node term L [w_i (now^2 + before^2) - S_i now before] over the rule's read coefficient R_i (the third value) and the Link term L now_i SUM_j before_j, L the family's common wall (ALGEBRA.md #the-line; item 44); a Node's share is the quotient less the Link term."""
         family = live.family
         wall = self.kind_wall(family, live.pair)
-        # THE SHARE UNDER THE NODE'S OWN PACE (ALGEBRA.md #the-direction and (13);
-        # BUILD.md section 26 item 36; the form's units, the plain share in
-        # the vacuum): with the pace p_i at every Node, e_i = [3 wall (den_i
-        # / num_i) Gamma (now_i^2 + before_i^2) - 6 wall (den_i / num_i) c_i
-        # now_i before_i] / p_i - wall now_i SUM_j before_j; the step's
-        # operator is symmetric under the weight den_i / (num_i p_i), so the
-        # sum over the board is exactly invariant where the clock field
-        # stands still, and the share's change over an interval is the sum
-        # of the plain currents wall (now_i before_j - before_i now_j)
-        # through the Node's Links plus the remainders' term (wall / (num_i
-        # p_i)) (a_next - a_before)(r - r'), an exact rational per Node (the
-        # weights p_i p_j at one integer scale, form (B) of item 34, HISTORY)
+        # THE SHARE UNDER THE NODE'S OWN PACE (ALGEBRA.md #the-direction and (13); BUILD.md section 26 item 36; the form's units, the plain share in the vacuum): with the pace p_i at every Node, e_i = [3 wall (den_i / num_i) Gamma (now_i^2 + before_i^2) - 6 wall (den_i / num_i) c_i now_i before_i] / p_i - wall now_i SUM_j before_j; the step's operator is symmetric under the weight den_i / (num_i p_i), so the sum over the board is exactly invariant where the clock field stands still, and the share's change over an interval is the sum of the plain currents wall (now_i before_j - before_i now_j) through the Node's Links plus the remainders' term (wall / (num_i p_i)) (a_next - a_before)(r - r'), an exact rational per Node (the weights p_i p_j at one integer scale, form (B) of item 34, HISTORY)
         field = live.held_part
         gamma = 1 if field else self.node_clock
         content = (
@@ -2788,14 +2719,7 @@ class DetectorLawSimulation:
             else self._effective_content(live.family).astype(object)
         )
         num_all, den_all = self.pair_arrays(family, live.pair)
-        # THE FORM FROM THE RULE'S OWN INTEGERS (ALGEBRA.md #the-line; item 44):
-        # with (R_i, S_i, w_i) the rule's coefficients at the Node, the Node's
-        # term is L [w_i (now^2 + before^2) - S_i now before] / R_i and the
-        # Link term L now_i SUM_j before_j, L the family's common wall; exact
-        # where the field stands (the step's operator symmetric under the
-        # weight 1 / R_i), the work term where it moves; the first-order form
-        # of item 36, [3 den Gamma (a^2 + b^2) - 6 den c a b] / (p num), is
-        # this at R = p num, S = 6 den c, w = 3 den Gamma
+        # THE FORM FROM THE RULE'S OWN INTEGERS (ALGEBRA.md #the-line; item 44): with (R_i, S_i, w_i) the rule's coefficients at the Node, the Node's term is L [w_i (now^2 + before^2) - S_i now before] / R_i and the Link term L now_i SUM_j before_j, L the family's common wall; exact where the field stands (the step's operator symmetric under the weight 1 / R_i), the work term where it moves; the first-order form of item 36, [3 den Gamma (a^2 + b^2) - 6 den c a b] / (p num), is this at R = p num, S = 6 den c, w = 3 den Gamma
         (read_coefficient, _, _), self_coefficient, wall_at = coefficients(
             num_all.astype(object), den_all.astype(object), gamma, content, ISOTROPIC, not field
         )
@@ -2804,18 +2728,14 @@ class DetectorLawSimulation:
         levels = [(live.now, live.before)]
         if live.im_now is not None and live.im_before is not None:
             levels.append((live.im_now, live.im_before))
-        total: Ratio = ZERO
+        terms = []
         for level_now, level_before in levels:
             now = level_now.astype(object)
             before = level_before.astype(object)
             send = self.main_loop.function_of("the send", "(i)")
             reads = send(self.ports, level_before, self.kind_wrap[family]).astype(object)
-            node = wall * form_term(self_coefficient, wall_at, now, before)
-            links = wall * now * reads
-            total = ratio_sum(
-                [total, self._weighted_sum(node, read_coefficient, mask), (-int(np.sum(links[mask])), 1)]
-            )
-        return total
+            terms.append((wall * form_term(self_coefficient, wall_at, now, before), wall * now * reads))
+        return terms, read_coefficient
 
     @staticmethod
     def _weighted_sum(node: np.ndarray, divisor: np.ndarray, mask: np.ndarray) -> Ratio:
@@ -2893,18 +2813,7 @@ class DetectorLawSimulation:
         return tuple(slices), (wraps[0], wraps[1], wraps[2]), tuple(grown)
 
     def _advance(self, live: LiveRecord) -> None:
-        # THE EMITTER'S NODES ARE NODES LIKE EVERY OTHER (ALGEBRA.md #the-click; the
-        # Boss's line of 2026-09-24 on the knot): no grace, no exemption, no
-        # own take, no fresh Port; the given record is written once and the
-        # law advances it (the retired forms in BUILD.md section 26).
-        # Every given record, light's kind or a massive kind alike, books its
-        # flux at the Nodes and clicks on its ladder (the click is the law's
-        # one action on any record, POSTULATES 10); a BLOCK'S own record (a
-        # massive kind, given of no emitter) books nothing and is on no
-        # ladder (massive-record-v1, MUST 2).
-        # THE BOOKING BY ATTRIBUTE (item 51; item 53): a held family's record
-        # and a body's own standing record are read by no detector; every other
-        # record is booked at the Ports (nothing declared: derived from `held`)
+        # THE EMITTER'S NODES ARE NODES LIKE EVERY OTHER (ALGEBRA.md #the-click; the Boss's line of 2026-09-24 on the knot): no grace, no exemption, no own take, no fresh Port; the given record is written once and the law advances it (the retired forms in BUILD.md section 26). Every given record, light's kind or a massive kind alike, books its flux at the Nodes and clicks on its ladder (the click is the law's one action on any record, POSTULATES 10); a BLOCK'S own record (a massive kind, given of no emitter) books nothing and is on no ladder (massive-record-v1, MUST 2). THE BOOKING BY ATTRIBUTE (item 51; item 53): a held family's record and a body's own standing record are read by no detector; every other record is booked at the Ports (nothing declared: derived from `held`)
         if live.silent:
             return  # a zero held part steps to zero exactly (HOST; ALGEBRA.md #the-interval)
         field = live.held_part
@@ -2914,40 +2823,10 @@ class DetectorLawSimulation:
         # neighbours, then D by 3 den with the remainder kept, then T; at
         # light's pair [1, 1] the first build's integers bit for bit.
         num, den = self.pair_arrays(live.family, live.pair)
-        # THE COUPLING IS THE CLICK ALONE (the model owner's decision (2) of
-        # record 1962; ALGEBRA.md #the-line (B); BUILD.md section 26 item 30): no
-        # coupling's term and no folded denominator (MASSIVE_RECORD.md
-        # section 7 HISTORY); the wall 3 den, one division per row per
-        # interval, the remainder kept in [0, wall)
-        # THE NODE CLOCK UNDER THE FIXED WALL (the model owner's decision (5)
-        # of record 1962 and his word of 2026-09-25 in Nature24's session,
-        # record 1994: the backward run exact everywhere; ALGEBRA.md #the-paces
-        # amended, the mathematician's section asked; BUILD.md section 26
-        # item 34): the wall is 3 den Gamma at every Node, a constant of the
-        # declared region, and the clock enters the numerator as the pace
-        # Gamma - c_j of each of the six reads: 3 den Gamma a_next + r' = num
-        # SUM_j (Gamma - c_j) a_j + 6 den c a_now - 3 den Gamma a_before + r,
-        # c the family of clicks' level at a Node, the remainder in [0, 3 den
-        # Gamma). The remainder's range never changes, so the step is one to
-        # one at every Node for every clock history (the wall 3 den (Gamma +
-        # c) of item 31, which shrank where the level fell and merged two
-        # states into one, HISTORY). In the vacuum (c = 0) the levels are the
-        # plain rule's bit for bit and the remainder Gamma times its; at
-        # uniform content 1 - cos omega' = (1 - cos omega)(Gamma - c) / Gamma.
-        # One division per row per interval, the int64 total under the load
-        # bound of `_pair_bound`. THE FAMILY OF CLICKS ITSELF steps plain (the
-        # pace 1, the wall 3 den): it reads no other family and not its own
-        # level (ALGEBRA.md #the-counts-line)
+        # THE COUPLING IS THE CLICK ALONE (the model owner's decision (2) of record 1962; ALGEBRA.md #the-line (B); BUILD.md section 26 item 30): no coupling's term and no folded denominator (MASSIVE_RECORD.md section 7 HISTORY); the wall 3 den, one division per row per interval, the remainder kept in [0, wall) THE NODE CLOCK UNDER THE FIXED WALL (the model owner's decision (5) of record 1962 and his word of 2026-09-25 in Nature24's session, record 1994: the backward run exact everywhere; ALGEBRA.md #the-paces amended, the mathematician's section asked; BUILD.md section 26 item 34): the wall is 3 den Gamma at every Node, a constant of the declared region, and the clock enters the numerator as the pace Gamma - c_j of each of the six reads: 3 den Gamma a_next + r' = num SUM_j (Gamma - c_j) a_j + 6 den c a_now - 3 den Gamma a_before + r, c the family of clicks' level at a Node, the remainder in [0, 3 den Gamma). The remainder's range never changes, so the step is one to one at every Node for every clock history (the wall 3 den (Gamma + c) of item 31, which shrank where the level fell and merged two states into one, HISTORY). In the vacuum (c = 0) the levels are the plain rule's bit for bit and the remainder Gamma times its; at uniform content 1 - cos omega' = (1 - cos omega)(Gamma - c) / Gamma. One division per row per interval, the int64 total under the load bound of `_pair_bound`. THE FAMILY OF CLICKS ITSELF steps plain (the pace 1, the wall 3 den): it reads no other family and not its own level (ALGEBRA.md #the-counts-line)
         gamma = 1 if field else self.node_clock
         content = 0 if field else self._effective_content(live.family)
-        # THE NODE'S OWN PACE (the model owner's ruling of record 2003, "take
-        # only from the current Node, not from the neighbours"; ALGEBRA.md
-        # ALGEBRA.md #the-direction; BUILD.md section 26 item 36): the pace p_i = Gamma - c_i
-        # (+ q Lambda d_i) multiplies the Node's own six-neighbour sum, the
-        # reads plain as S_6 reads them: 3 den Gamma a_next + r' = p_i num
-        # S_6(a_now)_i + 6 den c_i a_now - 3 den Gamma a_before + r; the
-        # Node steps the vacuum's rule at its own pace (the pace on each
-        # read's far end, form (B) of item 34, HISTORY)
+        # THE NODE'S OWN PACE (the model owner's ruling of record 2003, "take only from the current Node, not from the neighbours"; ALGEBRA.md ALGEBRA.md #the-direction; BUILD.md section 26 item 36): the pace p_i = Gamma - c_i (+ q Lambda d_i) multiplies the Node's own six-neighbour sum, the reads plain as S_6 reads them: 3 den Gamma a_next + r' = p_i num S_6(a_now)_i + 6 den c_i a_now - 3 den Gamma a_before + r; the Node steps the vacuum's rule at its own pace (the pace on each read's far end, form (B) of item 34, HISTORY)
         axis_contents = None if field else self._axis_contents(live.family)
         twisted = None if field else self._twist_reads(live, False)
         sigma_self = self._self_source(live, False)

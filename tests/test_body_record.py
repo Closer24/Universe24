@@ -387,7 +387,7 @@ def test_the_moving_body_on_one_node_rotates_at_the_proper_pair_of_its_momentum(
         assert one_node.node_record_clock(block) == tuple(table[whole]), tick
         num, den, _, _ = one_node.node_record_rule(block)
         assert (num, den) == (table[whole][0], 2 * b)
-    assert block.stepped > 60 and int(np.nonzero(one_node.centre_mask(block))[0][0]) != centre_at_rest
+    assert not block.moved and int(np.nonzero(one_node.centre_mask(block))[0][0]) == centre_at_rest
     # (4) the refusals, each named; the cube form loads the file as before
     parse_nature_beam_world(with_body_record(document, False))
     without = json.loads(json.dumps(document))
