@@ -118,13 +118,20 @@ class MainLoop:
         return cls(register, step, tuple(acts), chain, tuple(terms), _flush_index(acts, register))
 
     def run(self, loop: Any) -> None:
-        """One interval: the clock; the start's arrays frozen; each act through the register with its grants and its writes audited; the deferred writes applied before the first (iv) act after (ii); the closing; the start thawed."""
+        """One interval: the clock; the start's arrays frozen (and after each act the arrays it rebound); each act through the register with its grants and its writes audited; the deferred writes applied before the first (iv) act after (ii); the closing; the start thawed."""
         loop.tick += 1
         self.written.clear()
         self.walked.clear()
         loop.ports.begin()
-        start = tuple(loop.start_arrays())
-        _freeze(start, True)
+        frozen: list[tuple[Any, ...]] = []
+
+        def freeze_now() -> None:
+            """Every array the loop holds at this moment frozen: at the start, and after each act, so that an array an act rebound (a record's stepped level) is frozen for the acts after it."""
+            arrays = tuple(loop.start_arrays())
+            _freeze(arrays, True)
+            frozen.append(arrays)
+
+        freeze_now()
         try:
             for index, act in enumerate(self.acts):
                 if index == self.flush_at:
@@ -139,6 +146,7 @@ class MainLoop:
                     elif act.kind == GENERIC:
                         self.generic(loop, act, function)
                 _freeze(opened, True)
+                freeze_now()
             if self.deferred:
                 raise ValueError(
                     "a deferred write is left after the walk: the step file lists no (iv) act after (ii)"
@@ -146,7 +154,8 @@ class MainLoop:
             with self.act("the closing", "any", frozenset({ALIVE}), loop.fingerprints):
                 loop.close_interval()
         finally:
-            _freeze(start, False)
+            for arrays in frozen:
+                _freeze(arrays, False)
 
     @contextmanager
     def act(

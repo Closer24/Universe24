@@ -41,7 +41,7 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
 - **GameBoard**: the cubic lattice of Nodes with six Ports each and the faces
   per axis, open or periodic (the world keys `shape` and `boundary`);
   `GameBoard` in code, `game_board` in module and function names; the only
-  noun for it (the model owner, 2026-09-20, [Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+  noun for it (the model owner, 2026-09-20, [Highlights 5.4](HIGHLIGHTS.md),
   "DECIDED: the name of the board is GameBoard"). In the vector form, the
   translation group Z_X x Z_Y x Z_Z acting by shift operators (record 191).
 - **Face, face detector**: an open face of the GameBoard is a detector,

@@ -693,6 +693,6 @@ series H's table); [BEAM_LAW notes 18,
 30, 35, 37 and 40](../../BEAM_LAW.md); [DERIVATIONS_BEAM 6.4](../../DERIVATIONS_BEAM.md);
 [the local integer operation contract](../../ARCHITECTURE.md#local-integer-operation-contract);
 [LOCALITY-1](../../../SIMULATOR_DEFINITIONS.md); [the three tests](../../../skills/workflow.md);
-[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector) (records 281, 652,
+[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md) (records 281, 652,
 721, 754, 762, 817, 844, 864, 881, 886, 894); records 896, 899, 903 and
 910 of [the log](../../LOG_2026-09-20.md); [HYPOTHESES section 27](../../HYPOTHESES.md).

@@ -70,8 +70,8 @@ def check(term: SelfSourceTerm, start: SelfSourceStart) -> None:
         )
 
 
-def apply(term: SelfSourceTerm, start: SelfSourceStart) -> SelfSourceWrites:
-    """The primitive at (i): the six differences of every level squared and summed, the sum divided by P_2 by Rule3's division act, the remainder not kept (ALGEBRA.md 9.117 the row "the self-source")."""
+def apply(term: SelfSourceTerm, start: SelfSourceStart, own: None = None) -> SelfSourceWrites:
+    """The primitive at (i), `apply(term, start, own)` with no own record: the six differences of every level squared and summed, the sum divided by P_2 by Rule3's division act, the remainder not kept (ALGEBRA.md 9.117 the row "the self-source")."""
     check(term, start)
     total: Any = 0
     for level in start.levels:

@@ -6,10 +6,10 @@ import dataclasses
 import json
 from pathlib import Path
 
-import pytest
-
+from event_universe.core.rule3 import THE_REWRITE
 from event_universe.core.step import STEP_FILE, read_step
 from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm
 from event_universe.world_files import parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -81,7 +81,7 @@ def test_one_tick_looks_up_every_built_act_once_in_the_files_order_and_nothing_o
 
 
 def test_a_loop_out_of_the_files_order_or_calling_a_primitive_outside_an_act_fails():
-    """A loop whose acts are out of the file's order is seen by the lookups; a primitive called outside an act is seen by the spy and, writing into the interval's start, refused by the main loop itself."""
+    """A loop whose acts are out of the file's order is seen by the lookups; a primitive called outside an act is seen by the spy (the hold's line writes nothing on the GameBoard itself, so the main loop's guard has nothing to refuse there)."""
     simulation, lookups, outside = spied(WORLDS[0])
     acts = list(simulation.main_loop.acts)
     acts[2], acts[3] = acts[3], acts[2]
@@ -89,11 +89,12 @@ def test_a_loop_out_of_the_files_order_or_calling_a_primitive_outside_an_act_fai
     close = simulation.close_interval
 
     def close_and_cheat() -> None:
-        simulation.register.declarations["the hold"].function(advance=False)
+        term, own = HoldTerm("content", (1,), (1,), None, 1), HoldOwn({}, {})
+        start = HoldStart(THE_REWRITE, 0, (0, 0, 0), 1, None)
+        simulation.register.declarations["the hold"].function(term, start, own)
         close()
 
     simulation.close_interval = close_and_cheat  # type: ignore[method-assign]
-    with pytest.raises(ValueError, match="wrote into an array of the interval's start"):
-        simulation.step()
+    simulation.step()
     assert lookups != the_files_built_acts(simulation)
     assert outside == ["the hold"]

@@ -1,16 +1,5 @@
-"""THE DARK BODY ROW, BUILT AND NOT RUN AGAINST ITS PINS (ALGEBRA.md 9.54 (4); the model owner's
-word of 2026-09-25 through the Boss, record 2015: "yes" to building it now, the run only after
-he says the engine is stable; BUILD.md section 26 item 39). The two worlds of
-examples/events/dark_body (the dark body of content M standing 45 Links beside a beam's line,
-and the bright control of the same M in a body of the light clock's family with its giving and
-taking clicks) and their expectations, declared blind from the algebra. The suite reads what
-needs no run against the pins: (i) the files are the generator's under the stamp and the pins
-are declared with their kinds; (ii) the dark body is dark by declaration: every family's charge
-0, no emitter on it, no detector set names its Nodes; the bright body has both; (iii) over 80
-intervals of each world the books balance, the family of charge is 0 everywhere, the family
-of clicks' level beside the two bodies is the same in both worlds within the rounding, no giving click
-    and no taking click of the dark world names the dark body, and the emitter's giving clicks have begun (GAMEBOARD
-readings, COMPUTATION; no pin read)."""
+"""The dark body row, built and not run against its pins: the dark body of content M beside a beam's
+line and its bright control, their files the generator's and their pins declared blind."""
 
 from __future__ import annotations
 
@@ -54,10 +43,7 @@ def test_the_files_are_the_generators_and_the_pins_are_declared_blind():
 
 
 def test_the_dark_body_is_dark_by_declaration_and_the_bright_one_is_not():
-    """(ii) The dark body: a block of the family `dark` (charge 0), no emitter, on no detector
-    set; the bright body: the same place and content in the family `matter`, an emitter of
-    light and the set `at_body` bound to its Nodes; the emitter's ladder names the body's set
-    first in the bright world and not at all in the dark one."""
+    """The dark body has charge 0, no emitter and no detector set; the bright one gives light and is read."""
     dark, bright = load("dark"), load("bright")
     for document in (dark, bright):
         body = document["measured"][DARK_NUMBER]
@@ -81,11 +67,8 @@ def test_the_dark_body_is_dark_by_declaration_and_the_bright_one_is_not():
 
 
 def test_both_worlds_run_with_the_same_field_beside_the_body_and_the_dark_body_never_clicks():
-    """(iii) 80 intervals of each world: the books balanced every 20 intervals; the family of
-    charge 0 everywhere (every family's charge 0); the family of clicks' level at the Nodes 10
-    Links outside the body's four faces equal in the two worlds within one percent (the same
-    held content at the same Nodes, the bright body's lower by its giving clicks so far); no giving click and no taking click of the dark world
-    names the dark body (its own rotation's cycle lines are the GameBoard's); the emitter's first giving click has happened in both."""
+    """80 intervals each: books balanced, the same field beside the body within one percent, and no
+    click of the dark world names the dark body."""
     simulations = {}
     lines: dict[str, list[dict]] = {}
     for name in ("dark", "bright"):
