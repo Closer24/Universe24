@@ -18,12 +18,7 @@ branch `main`. The Python package is `event_universe`.
 **Start here:** [AGENTS.md](AGENTS.md) (the shared instructions and the language
 rule), then the three documents: [the law](docs/ALGEBRA.md),
 [the engine](docs/ENGINE.md) (with [its drawing](docs/ENGINE.svg)) and
-[the decisions](docs/HIGHLIGHTS.md). Two sections of the engine's page are
-rendered from the tree and never written by hand:
-[the run's files, key by key](docs/ENGINE.md#8-the-runs-files-key-by-key) and
-[the state of the engine](docs/ENGINE.md#9-the-state-of-the-engine) (the
-primitives, the step file's acts, the expected failures, the owners, the shipped
-worlds).
+[the decisions](docs/HIGHLIGHTS.md).
 [Boss orchestration](skills/boss-orchestrator/SKILL.md) and
 [the shared workflow](skills/workflow.md) define coordinated work.
 
@@ -62,20 +57,9 @@ python tools/check.py
 ```
 
 This runs lint, formatting, strict types and the tests of the changed files and
-their consumers; `--full` runs everything. Every test is headless. Sections 8
-and 9 of `docs/ENGINE.md` are rendered by `PYTHONPATH=src python tools/render_documents.py --render`;
-its `--check` compares them and lists every path a document cites that the tree
-lacks, and the documents gate holds both on every pull request.
-
-## The history
-
-Git keeps the history; the documents describe the tree as it is:
-
-```bash
-PYTHONPATH=src python tools/render_documents.py --history    # main's merges and commits, by day
-PYTHONPATH=src python tools/render_documents.py --decisions  # each decision with the date and commit of its last change
-git log -p -- docs/HIGHLIGHTS.md                             # a decision's earlier wording
-```
+their consumers; `--full` runs everything. Every test is headless. Every path
+a document or a skill cites in backticks exists in the tree; `tests/test_documents.py`
+holds it on every pull request.
 
 ## Project map
 
@@ -87,7 +71,7 @@ git log -p -- docs/HIGHLIGHTS.md                             # a decision's earl
 | `law/step.json` | The interval's order, one data file shared by every world; a change is a change of the law |
 | `examples/events/` | The universe file, the start file and the worlds, with the shipped output of the first run |
 | `tests/` | One module per generic rule on a minimal GameBoard, the regression of every shipped world and the repository gates |
-| `tools/` | One command each: `check.py` (the affected check), `run_inputs.py` (a run), `record_shipped_worlds.py` (the regression record), `render_documents.py` (the rendered sections, the history, the decisions) |
+| `tools/` | One command each: `check.py` (the affected check), `run_inputs.py` (a run), `record_shipped_worlds.py` (the regression record) |
 | `docs/ALGEBRA.md` | The law |
 | `docs/ENGINE.md` | The engine as the code holds it, with its drawing `docs/ENGINE.svg` |
 | `docs/HIGHLIGHTS.md` | The decisions in force |

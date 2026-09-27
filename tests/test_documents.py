@@ -1,4 +1,4 @@
-"""The document lock: only the three, the skills and the entry files exist; each of the three stays under its cap with no history marker; ENGINE.md's rendered sections equal the render and every cited path exists."""
+"""The document lock: only the three, the skills and the entry files exist; each of the three stays under its cap with no history marker; every path a document or a skill cites in backticks exists in the tree."""
 
 from __future__ import annotations
 
@@ -7,16 +7,13 @@ from pathlib import Path
 
 import pytest
 
-from tests.worlds import load_file
-
 ROOT = Path(__file__).resolve().parents[1]
-RENDER = load_file("render_documents", ROOT / "tools" / "render_documents.py")
 THE_THREE = ("docs/ALGEBRA.md", "docs/ENGINE.md", "docs/HIGHLIGHTS.md")
 ENTRY_FILES = ("README.md", "AGENTS.md", "CONTRIBUTING.md")
 ALLOWED_FOLDERS = ("skills/", "paper/")  # the skills' pages and the paper's own folder
 CAPS = {
     "docs/ALGEBRA.md": 718,
-    "docs/ENGINE.md": 520,
+    "docs/ENGINE.md": 200,
     "docs/HIGHLIGHTS.md": 100,
 }  # lines, each of the three
 SKIPPED = set(".git .venv venv node_modules __pycache__ .pytest_cache artifacts runs".split())
@@ -27,6 +24,10 @@ HISTORY_MARKERS = (
     re.compile(r"\brecords? [0-9]{3,4}\b"),
     re.compile(r"\bwas replaced\b", re.IGNORECASE),
 )
+SUFFIXES = (".py", ".md", ".json", ".yml", ".txt", ".svg", ".toml", ".cff")
+# a git ref or a run's folder, no path of the tree
+REFS = ("origin/", "feature/", "exp/", "artifacts/", "runs/")
+CITED = re.compile(r"`([^`\n]+)`")
 
 
 def markdown_files(root: Path) -> list[str]:
@@ -48,14 +49,14 @@ def unexpected_documents(root: Path) -> list[str]:
 
 def lines_over_the_cap(root: Path, caps: dict[str, int]) -> list[str]:
     """Every capped document longer than its cap, with both counts."""
-    found = []
-    for rel, cap in caps.items():
-        if not (root / rel).exists():
-            continue
-        lines = len((root / rel).read_text(encoding="utf-8").splitlines())
-        if lines > cap:
-            found.append(f"{rel}: {lines} lines, the cap {cap}")
-    return found
+    lines = {
+        rel: len((root / rel).read_text(encoding="utf-8").splitlines())
+        for rel in caps
+        if (root / rel).exists()
+    }
+    return [
+        f"{rel}: {count} lines, the cap {caps[rel]}" for rel, count in lines.items() if count > caps[rel]
+    ]
 
 
 def history_markers(root: Path, documents: tuple[str, ...]) -> list[str]:
@@ -74,6 +75,35 @@ def history_markers(root: Path, documents: tuple[str, ...]) -> list[str]:
     return found
 
 
+def cited_paths(text: str) -> list[str]:
+    """Every backticked token that reads as a path: a command's first word, its line numbers dropped."""
+    found = []
+    for token in CITED.findall(text):
+        token = re.sub(r":\d+(?:-\d+)?$", "", token.split()[0]) if token.strip() else ""
+        if re.fullmatch(r"[\w./-]+", token) and ("/" in token or token.endswith(SUFFIXES)):
+            if "..." not in token and not token.startswith(REFS):
+                found.append(token)
+    return found
+
+
+def missing_paths(root: Path) -> list[str]:
+    """Every cited path of the three, the entry files and the skills that the tree lacks, as document:line path."""
+    skills = sorted(p.relative_to(root).as_posix() for p in (root / "skills").rglob("*.md"))
+    found = []
+    for rel in (*THE_THREE, *ENTRY_FILES, *skills):
+        if not (root / rel).exists():
+            continue
+        for number, line in enumerate((root / rel).read_text(encoding="utf-8").splitlines(), 1):
+            for token in cited_paths(line):
+                as_written, in_package = (
+                    (root / token).exists(),
+                    (root / "src/event_universe" / token).exists(),
+                )
+                if not (as_written or in_package or ("/" not in token and any(root.rglob(token)))):
+                    found.append(f"{rel}:{number} {token}")
+    return found
+
+
 def test_a_only_the_three_the_skills_and_the_entry_files_exist():
     assert unexpected_documents(ROOT) == []
 
@@ -88,11 +118,8 @@ def test_c_the_three_hold_no_history_marker(document: str):
     assert history_markers(ROOT, (document,)) == []
 
 
-def test_d_the_rendered_sections_equal_the_tree_and_every_cited_path_exists():
-    """ENGINE.md's sections 8 and 9 are what tools/render_documents.py renders from the tree now; every path a document or a skill cites in backticks exists; a decision line naming an absent path says so."""
-    assert RENDER.stale_sections(ROOT) == []
-    assert RENDER.missing_paths(ROOT) == []
-    assert RENDER.unmarked_decisions(ROOT) == []
+def test_d_every_path_a_document_or_a_skill_cites_exists():
+    assert missing_paths(ROOT) == []
 
 
 def tree(tmp_path: Path, files: dict[str, str]) -> Path:
@@ -111,47 +138,28 @@ def test_each_gate_fails_on_a_small_tree(tmp_path):
             "docs/ENGINE.md": "# The engine\n" + "a line\n" * 10,
             "docs/HIGHLIGHTS.md": "# The decisions\n",
             "README.md": "# Entry\n",
-            "skills/workflow.md": "# The workflow\n",
+            "skills/workflow.md": "# The workflow, see `docs/ENGINE.md` and `origin/main`\n",
         },
     )
     assert unexpected_documents(root) == []
     assert lines_over_the_cap(root, {"docs/ENGINE.md": 11, "docs/ABSENT.md": 5}) == []
     assert lines_over_the_cap(root, {"docs/ENGINE.md": 10}) == ["docs/ENGINE.md: 11 lines, the cap 10"]
     assert history_markers(root, ("docs/ENGINE.md",)) == []
+    assert missing_paths(root) == []
+    assert cited_paths("`x.py:3-4`, `word`, `a/b`, `python a/b`, `core/...`") == ["x.py", "a/b"]
     tree(
         root,
         {
             "docs/OLD_PLAN.md": "# An old plan\n",
             "docs/ENGINE.md": "# The engine\nThis was replaced in record 2251.\nHISTORY: the old law.\n"
             "The well was superseded; previously a seed.\n",
+            "skills/x.md": "see `core/node.py` and `law/step.json`\n",
         },
     )
     assert unexpected_documents(root) == ["docs/OLD_PLAN.md"]
-    marked = "a\n<!-- generated: x -->\nT\n<!-- end -->\n"
-    assert RENDER.section_text(marked, "x") == "\nT\n" and RENDER.section_text("a\n", "x") is None
     assert history_markers(root, ("docs/ENGINE.md",)) == [
         "docs/ENGINE.md:2 'record 2251'",
         "docs/ENGINE.md:3 'HISTORY'",
         "docs/ENGINE.md:4 'superseded'",
     ]
-
-
-def test_the_render_check_reads_paths_as_the_documents_cite_them(tmp_path):
-    root = tree(
-        tmp_path,
-        {
-            "docs/HIGHLIGHTS.md": "- **A.** `core/rule3.py` and `law/step.json`.\n"
-            "- **B.** `core/node.py` waits, ahead of the tree.\n- **C.** `core/node.py` waits.\n",
-            "law/step.json": "{}\n",
-            "src/event_universe/core/rule3.py": "",
-        },
-    )
-    cited = (
-        "`origin/main`, `feature/...`, `x.py:12-14`, `word`, `a/b`, `tools/run.py --list`, `python a/b`"
-    )
-    assert RENDER.cited_paths(cited) == ["x.py", "a/b", "tools/run.py"]
-    assert RENDER.resolves(root, "rule3.py") and RENDER.resolves(root, "runs/out.json")
-    assert not RENDER.resolves(root, "core/node.py")
-    assert RENDER.unmarked_decisions(root) == [
-        "docs/HIGHLIGHTS.md:3 names core/node.py and does not say 'ahead of the tree'"
-    ]
+    assert missing_paths(root) == ["skills/x.md:1 core/node.py", "skills/x.md:1 law/step.json"]

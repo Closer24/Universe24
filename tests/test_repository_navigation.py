@@ -72,7 +72,7 @@ def test_navigation_detects_missing_files_and_headings(tmp_path, target, valid):
 
 def test_docs_holds_the_three_documents_alone():
     docs = Path(__file__).resolve().parents[1] / "docs"
-    assert {path.name for path in docs.glob("*.md")} == {"ALGEBRA.md", "ENGINE.md", "HIGHLIGHTS.md"}
+    assert {path.name for path in docs.rglob("*.md")} == {"ALGEBRA.md", "ENGINE.md", "HIGHLIGHTS.md"}
 
 
 def test_nested_example_readmes_are_included_in_navigation_audit(tmp_path):
