@@ -51,21 +51,14 @@ def run_clicks(clicks: list[tuple[int, int, int, int]], wall: int = WALL) -> Rec
 
 
 def test_the_line_on_the_moving_rows_numbers():
-    """n_a += sigma_a x 3 Q P_body (L div lambda_q) div L: 3 x 64 x 21 x 63 = 254016 over 252 gives
-    1008 exactly on x (the tally positive, toward +x) and -1008 on z (the tally negative), nothing on
-    y (no tally); the stores empty; the same as W x P_body div (M x lambda_q) = 262080 div 260."""
+    """n_a += sigma_a x 3 Q P_body (L div lambda_q) div L: 3 x 64 x 21 x 63 = 254016 over 252 gives 1008 exactly on x (the tally positive, toward +x) and -1008 on z (the tally negative), nothing on y (no tally); the stores empty; the same as W x P_body div (M x lambda_q) = 262080 div 260."""
     writes = apply(TERM, START, RecoilOwn((100, 200, 300), NONE))
     assert writes.momentum == (1108, 200, -708) and writes.remainders == NONE
     assert 3 * UNIT * 21 * (WALL // 4) // WALL == 12_480 * 21 // (65 * 4) == 1008
 
 
 def test_the_store_on_the_wall_makes_the_sum_over_clicks_the_exact_floor():
-    """The store stays on the body between clicks as one remainder on L, so the sum of the whole parts
-    over k clicks of any wavelengths is the exact floor of the sum of the fractions: 52 exact clicks
-    at wavelength 4; at wavelength 7 the fraction 4032 / 7 = 576 exactly; at wavelength 9 (448 per
-    click) 3 / 9 per click adds a unit every three; the reviewer's case, a click of lambda 7 then one
-    of lambda 4 at P = 20, gives 1508, the exact floor of 1508.571; a mixed run of wavelengths,
-    takings and givings, the momentum after every click the exact floor."""
+    """The store stays on the body between clicks as one remainder on L, so the sum of the whole parts over k clicks of any wavelengths is the exact floor of the sum of the fractions: 52 exact clicks at wavelength 4; at wavelength 7 the fraction 4032 / 7 = 576 exactly; at wavelength 9 (448 per click) 3 / 9 per click adds a unit every three; the reviewer's case, a click of lambda 7 then one of lambda 4 at P = 20, gives 1508, the exact floor of 1508.571; a mixed run of wavelengths, takings and givings, the momentum after every click the exact floor."""
     assert run_clicks([(TAKING, 1, 21, 4)] * 52) == RecoilOwn((52 * 1008, 0, 0), NONE)
     assert run_clicks([(TAKING, 1, 21, 7)] * 3).momentum == (3 * 576, 0, 0)
     for count in range(1, 10):
@@ -95,11 +88,7 @@ def test_the_store_on_the_wall_makes_the_sum_over_clicks_the_exact_floor():
 
 
 def test_a_taking_and_a_giving_of_the_same_quantum_cancel_and_the_direction_of_travel():
-    """A giving is the same line with the opposite sign: a taking of 3840 / 7 (548, the store 4 / 7 on
-    L) then a giving of the same undo each other exactly; a giving first floors to -549 (the exact
-    floor of -548.571) and the taking after it returns n to 0; sigma is the tally's sign, never its
-    size (a tally of 1 and of 10^6 recoil the same); a symmetric emitter (the tallies 0) recoils by
-    nothing and keeps its stores (ALGEBRA.md #the-primitives)."""
+    """A giving is the same line with the opposite sign: a taking of 3840 / 7 (548, the store 4 / 7 on L) then a giving of the same undo each other exactly; a giving first floors to -549 (the exact floor of -548.571) and the taking after it returns n to 0; sigma is the tally's sign, never its size (a tally of 1 and of 10^6 recoil the same); a symmetric emitter (the tallies 0) recoils by nothing and keeps its stores (ALGEBRA.md #the-primitives)."""
     take, give = (TAKING, 1, 20, 7), (GIVING, 1, 20, 7)
     assert run_clicks([take, give]) == RecoilOwn((0, 0, 0), NONE)
     given = run_clicks([give])
@@ -118,9 +107,7 @@ def test_a_taking_and_a_giving_of_the_same_quantum_cancel_and_the_direction_of_t
 
 
 def test_the_bounds_and_the_terms_are_refused_by_name():
-    """The period, the wavelength, the wall and the unit from 1; a wall at or beyond 2^63 (the row's
-    refusal by name; 2^63 - 1 admitted as a wall, its click's amount then refused at the width); the
-    sense +1 or -1; a wall that is no multiple of the wavelength; a store at or beyond the wall."""
+    """The period, the wavelength, the wall and the unit from 1; a wall at or beyond 2^63 (the row's refusal by name; 2^63 - 1 admitted as a wall, its click's amount then refused at the width); the sense +1 or -1; a wall that is no multiple of the wavelength; a store at or beyond the wall."""
     with pytest.raises(ValueError, match="from 1, got P_body = 0"):
         apply(RecoilTerm(0, 4, TAKING, WALL, UNIT), START, RecoilOwn((0, 0, 0), NONE))
     with pytest.raises(ValueError, match="L = 0, Q = 64"):
@@ -141,10 +128,7 @@ def test_the_bounds_and_the_terms_are_refused_by_name():
 
 
 def test_the_trace_hand_identity_on_the_emitters_run():
-    """The emitter's unit world (Q = 64 giving four quanta of light of wavelength 4 along +x, L = 4):
-    fed every giving line's integers with the giver's sense, the folder moves n by the whole part and
-    keeps the store, and after every giving n equals the exact floor of the sum of the fractions
-    (ALGEBRA.md #the-interval, #the-primitives); that the run moves no momentum is tests/test_four_vector_click.py's check."""
+    """The emitter's unit world (Q = 64 giving four quanta of light of wavelength 4 along +x, L = 4): fed every giving line's integers with the giver's sense, the folder moves n by the whole part and keeps the store, and after every giving n equals the exact floor of the sum of the fractions (ALGEBRA.md #the-interval, #the-primitives); that the run moves no momentum is tests/test_four_vector_click.py's check."""
     document = emitter_world(stock=4, ticks=1200)
     period = document["measured"][0]["emitter"]["period"]
     wavelength = 2 * document["N"] // document["universe"][0]["clock"][0]  # k = pi / 2: 4
@@ -155,7 +139,8 @@ def test_the_trace_hand_identity_on_the_emitters_run():
         simulation.step()
     givings = [line for line in lines if line["event"] == "giving" and "momentum" in line]
     # the givings' direction labels as this fixture reads them under the row's floor (the net flux at each window's close)
-    assert [line["momentum"] for line in givings] == [[1, 0, 0], [-1, 0, 0], [-1, 0, 0], [-1, 0, 0]]
+    # measured once under THE START (the field at rest at the load): the third window's net flux reads +x
+    assert [line["momentum"] for line in givings] == [[1, 0, 0], [-1, 0, 0], [1, 0, 0], [-1, 0, 0]]
     unit = document["momentum_unit"]
     own = RecoilOwn((0, 0, 0), NONE)
     total = Fraction(0)
@@ -171,8 +156,7 @@ def test_the_trace_hand_identity_on_the_emitters_run():
 
 
 def test_the_declaration_is_the_ledgers_row():
-    """The folder declares the row of ALGEBRA.md #the-primitives: "the recoil" at (iv), writing a body's momentum
-    n and its remainders, its function `apply`, its section; the engine's register finds it."""
+    """The folder declares the row of ALGEBRA.md #the-primitives: "the recoil" at (iv), writing a body's momentum n and its remainders, its function `apply`, its section; the engine's register finds it."""
     assert DECLARATION.name == "the recoil" and DECLARATION.place == "(iv)"
     assert DECLARATION.writes == ("a body's momentum n", "a body's remainders")
     assert DECLARATION.function is apply and DECLARATION.built

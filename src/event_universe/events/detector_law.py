@@ -224,7 +224,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         self.kind_den = PairView(self, 1)
         assembly.bodies(self, world)
         assembly.held_records(self)
-        # the register: the folders' primitives by name, the step file's acts bound to the loop's stages
         self.register = self._engine_register()
         self.register.check_step(world.step)
         self.register.check_writers(world.step)
@@ -233,6 +232,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self.register, world.step, self._stages(), self.CHAIN, self.family_terms()
         )
         self._hold(self.register.at("the hold", "(iv)"), advance=True)
+        assembly.start_at_rest(self)
 
     def _block(
         self,
