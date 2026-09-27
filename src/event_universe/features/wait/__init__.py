@@ -12,16 +12,7 @@ from typing import Any
 
 from event_universe.core.register import Declaration
 
-DECLARATION = Declaration(
-    "the wait",
-    "(i)",
-    (),
-    (),
-    None,
-    None,
-    "9.112 item 1",
-    word="the step",
-)
+DECLARATION = Declaration("the wait", "(i)", (), (), None, "9.112 item 1", word="the step")
 
 
 def bind(loop: Any) -> Callable[..., object]:

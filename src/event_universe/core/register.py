@@ -31,29 +31,20 @@ from __future__ import annotations
 
 import importlib
 import pkgutil
-from collections.abc import Callable, Iterable, Mapping
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field, replace
 
 from event_universe.core.schema import Schema
+from event_universe.core.step import PLACES, Step
 
-# THE FIVE PLACES of the interval (ALGEBRA.md 9.91 (8)): (i) the clicking families'
-# step with the transport, every component; (ii) the bookings at the Ports, the
-# ladder, the takings and the givings; (iii) the held families' step; (iv) the holds
-# written, the clicks' changes of M, Q and n included; (v) the bodies on one Node,
-# the feed, the induction, the spin's step, the recoil's accumulator. "any" is the
-# trace's, a read-only line at every place.
-PLACES: tuple[str, ...] = ("(i)", "(ii)", "(iii)", "(iv)", "(v)", "any")
-# THE THREE WORDS of 9.111 item 7, the mathematician's reading of the same interval:
-# the right side (read from the interval's start), the step (the rule), after the
-# step (the clicks, whose writes enter at t + 1); "any" the trace's.
+# the words of 9.111 item 7: the right side (read from the interval's start), the step (the rule),
+# after the step (the clicks, whose writes enter at t + 1); "any" the trace's
 WORDS: tuple[str, ...] = ("the right side", "the step", "after the step", "any")
 
 Binder = Callable[[object], Callable[..., object]]
 
 
-# THE VALUES a body's record holds (ALGEBRA.md 9.117 item 1): a write of one of them
-# left by a click at (ii) is a deferred write, applied at (iv) with the click's other
-# writes (9.111 item 6), so the register orders it among the writers at (iv)
+# a body's values (ALGEBRA.md 9.117 item 1): a click's write of one at (ii) is applied at (iv)
 DEFERRED_VALUES: frozenset[str] = frozenset(
     {
         "a body's content M_k",
@@ -64,34 +55,24 @@ DEFERRED_VALUES: frozenset[str] = frozenset(
     }
 )
 
-# THE VALUES THAT ARE THE WRITER'S OWN (ALGEBRA.md 9.91 (2), (3); 9.117 item 1: "a body's
-# remainders", one per division of every primitive on the body): a remainder lives on
-# the record of the primitive that divided (core/primitive.py, Own), so two primitives
-# writing it at one place never collide and the register orders no writers of it
+# a remainder is the dividing primitive's own record (ALGEBRA.md 9.117 item 1): no two writers collide
 OWN_VALUES: frozenset[str] = frozenset({"a body's remainders", "the record's remainder"})
 
 
 def folder_of(name: str) -> str:
-    """The folder a primitive's name takes (the mathematician's contract, PRs 1164 and
-    1165): the name without "the ", the apostrophe dropped, a space or a hyphen an
-    underscore ("the spin's step" -> "spins_step", "the self-source" -> "self_source")."""
+    """The folder of a primitive's name: no article, no apostrophe, a space or a hyphen an underscore ("the spin's step" -> "spins_step")."""
     bare = name[4:] if name.startswith("the ") else name
     return bare.replace("'", "").replace("-", "_").replace(" ", "_")
 
 
 @dataclass(frozen=True)
 class Declaration:
-    """What one primitive declares: its name; its place (9.91 (8)) and its word (9.111
-    item 7); the values it reads and writes (the ledger's words); its order among the
-    writers of one value at one place (None where alone); its ALGEBRA.md line; its
-    function once bound (None on a row not built: a term naming it is refused); its
-    binder `bind(loop)`; and its schema, its keys of the files (core/schema.py)."""
+    """What one primitive declares: its name, its place (9.91 (8)) and word (9.111 item 7), the values it reads and writes, its ALGEBRA.md line, its function once bound (None on a row not built), its binder and its schema, its keys of the files (core/schema.py); its order among the writers of one value is the step file's."""
 
     name: str
     place: str
     reads: tuple[str, ...]
     writes: tuple[str, ...]
-    order: int | Mapping[str, int] | None = None
     function: Callable[..., object] | None = None
     section: str = ""
     word: str = ""
@@ -101,14 +82,6 @@ class Declaration:
     @property
     def built(self) -> bool:
         return self.function is not None or self.binder is not None
-
-    def order_of(self, value: str) -> int | None:
-        """The order among the writers of `value`: one integer for every value the
-        primitive writes, or a mapping value to integer (a primitive that writes two
-        values with different orders, the giving of ALGEBRA.md 9.117 item 2), or None."""
-        if isinstance(self.order, Mapping):
-            return self.order.get(value)
-        return self.order
 
     def place_of(self, value: str) -> str:
         """The place at which a write of `value` is ordered: a body's value left by a
@@ -120,11 +93,10 @@ class Declaration:
 
 @dataclass
 class Register:
-    """The one register: name to declaration, filled from the features' folders at
-    load and read by the loop at every interval; nothing else registers and nothing
-    else reads it."""
+    """The one register, name to declaration, filled from the features' folders at load and read by the loop."""
 
     declarations: dict[str, Declaration] = field(default_factory=dict)
+    step: Step | None = None
 
     def add(self, declaration: Declaration) -> None:
         """Register one primitive; a name registered twice is refused at load."""
@@ -155,30 +127,58 @@ class Register:
             if declaration.binder is not None:
                 self.declarations[name] = replace(declaration, function=declaration.binder(loop))
 
-    def check_writers(self) -> None:
-        """Two primitives writing the same value at the same place without an order
-        declared between them are refused (record 2212 (3))."""
-        writers: dict[tuple[str, str], list[Declaration]] = {}
+    def check_step(self, step: Step) -> None:
+        """The step file names registered primitives only, each at its declared place, and leaves out no built one; the register then refuses a call at a place the file does not list."""
+        for place, names in step.places.items():
+            for name in names:
+                declaration = self.declarations.get(name)
+                if declaration is None:
+                    raise ValueError(
+                        f"the step file lists {name!r} at {place}, which the register lacks; the "
+                        f"primitives are {list(self.names)}"
+                    )
+                if declaration.place != place:
+                    raise ValueError(
+                        f"the step file lists {name!r} at {place}, but it declares {declaration.place}"
+                    )
+        for name in self.built_names():
+            if step.position(name) is None:
+                raise ValueError(
+                    f"the step file leaves out the built primitive {name!r}: every bound primitive is "
+                    "called in the file's order"
+                )
+        self.step = step
+
+    def writers(self, value: str, place: str, step: Step) -> tuple[str, ...]:
+        """The primitives writing `value` at `place` in the step file's order, a write deferred from an earlier place first."""
+        found = []
+        for declaration in self.declarations.values():
+            if value in declaration.writes and declaration.place_of(value) == place:
+                position = step.position(declaration.name)
+                if position is None:
+                    raise ValueError(
+                        f"the primitive {declaration.name!r} writes {value!r} at the place {place} and is "
+                        "not in the step file: the file orders the writers of one value"
+                    )
+                found.append((position[0] != place, position[1], declaration.name))
+        return tuple(
+            name for _deferred, _index, name in sorted(found, key=lambda item: (not item[0], item[1]))
+        )
+
+    def check_writers(self, step: Step) -> None:
+        """Every value written by two primitives at one place has both in the step file, whose order is theirs."""
+        groups: dict[tuple[str, str], int] = {}
         for declaration in self.declarations.values():
             for value in declaration.writes:
-                if value in OWN_VALUES:
-                    continue
-                writers.setdefault((declaration.place_of(value), value), []).append(declaration)
-        for (place, value), group in sorted(writers.items()):
-            if len(group) < 2:
-                continue
-            orders = [declaration.order_of(value) for declaration in group]
-            if any(order is None for order in orders) or len(set(orders)) != len(orders):
-                names = ", ".join(repr(declaration.name) for declaration in group)
-                raise ValueError(
-                    f"the primitives {names} all write {value!r} at the place {place} and declare "
-                    "no order between them: each writer of one value at one place declares its "
-                    "order, an integer, distinct (record 2212 (3))"
-                )
+                if value not in OWN_VALUES:
+                    key = (declaration.place_of(value), value)
+                    groups[key] = groups.get(key, 0) + 1
+        for (place, value), count in sorted(groups.items()):
+            if count > 1:
+                self.writers(value, place, step)
 
     def check_terms(self, terms: Iterable[tuple[str, str]]) -> None:
-        """Every term of the files names a primitive the register holds with a
-        function; (label, name) pairs, the label naming the file's line."""
+        """Every term of the files, as (label, name) pairs, names a primitive the register holds with a function."""
         for label, name in terms:
             declaration = self.declarations.get(name)
             if declaration is None:
@@ -193,14 +193,20 @@ class Register:
                 )
 
     def at(self, name: str, place: str) -> Callable[..., object]:
-        """The function of a registered primitive, called by the loop at `place`; a
-        call at a place other than the declared one is refused (the loop checks the
-        declaration, not the code's comments)."""
+        """The function of a registered primitive, called by the loop at `place`: a call at another place, or at one the step file does not list, is refused."""
         declaration = self.declarations[name]
         if declaration.place not in (place, "any"):
             raise ValueError(
                 f"the loop calls the primitive {name!r} at the place {place}, but it declares "
                 f"{declaration.place}"
+            )
+        if (
+            self.step is not None
+            and name not in self.step.places.get(place, ())
+            and declaration.place != "any"
+        ):
+            raise ValueError(
+                f"the loop calls the primitive {name!r} at {place}, which the step file does not list there"
             )
         if declaration.function is None:
             raise ValueError(f"the primitive {name!r} has no function: a row of the ledger not built")
@@ -211,30 +217,24 @@ class Register:
 
 
 def declaration_of(folder: str, module: object) -> Declaration:
-    """One folder's declaration read from its module: `DECLARATION`, a `Declaration`
-    of this register (the mathematician's folders, PRs 1164 and 1165) or a dict of
-    its words (name, place, reads, writes, section, and optionally word and order),
-    and `bind`, the loop's binder, or the declaration's own function (a folder whose
-    body of code has moved in); neither: a row of the ledger not built."""
+    """One folder's declaration read from its module: `DECLARATION`, a `Declaration` or a dict of its words (name, place, reads, writes, section, optionally word), and `bind` or the declaration's own function; neither: a row not built."""
     declared = getattr(module, "DECLARATION", None)
     if isinstance(declared, Declaration):
         declaration = declared
     elif isinstance(declared, dict):
         keys = {"name", "place", "reads", "writes", "section"}
-        unknown = set(declared) - keys - {"order", "word"}
+        unknown = set(declared) - keys - {"word"}
         missing = keys - set(declared)
         if unknown or missing:
             raise ValueError(
                 f"the features folder {folder!r}: DECLARATION has unknown keys {sorted(unknown)} "
                 f"or lacks {sorted(missing)}"
             )
-        order = declared.get("order")
         declaration = Declaration(
             str(declared["name"]),
             str(declared["place"]),
             tuple(str(value) for value in declared["reads"]),
             tuple(str(value) for value in declared["writes"]),
-            order if isinstance(order, Mapping) or order is None else int(order),
             None,
             str(declared["section"]),
             word=str(declared.get("word", "")),
@@ -242,7 +242,7 @@ def declaration_of(folder: str, module: object) -> Declaration:
     else:
         raise ValueError(
             f"the features folder {folder!r} declares no DECLARATION (a Declaration of the register: "
-            "the primitive's name, place, reads, writes, order, section)"
+            "the primitive's name, place, reads, writes, section)"
         )
     if folder_of(declaration.name) != folder:
         raise ValueError(

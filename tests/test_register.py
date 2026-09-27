@@ -39,6 +39,7 @@ from event_universe.core.register import (
     discover,
     folder_of,
 )
+from event_universe.core.step import Step
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world
@@ -84,15 +85,15 @@ ROWS_OF_9_117 = (
     "the hop",
     "the trace",
 )
-# the orders of ALGEBRA.md 9.117 item 3 (the recoil's 2 on n at (iv), after the giving's 1),
-# the lifetime's on the tally at (ii) after the clicks (a row of the ledger, 9.88 (3))
+# the orders of ALGEBRA.md 9.117 item 3 as the step file law/step.json gives them (record 2251):
+# the writers of one value at one place in the file's order, a write deferred from (ii) first
 ORDERS = {
-    ("(iv)", "a family's level at a Node"): {"the hold": 1, "the source": 2},
-    ("(iv)", "a body's content M_k"): {"the clicks": 1, "the giving": 2, "the clicks list": 3},
-    ("(iv)", "a body's momentum n"): {"the giving": 1, "the recoil": 2},
-    ("(v)", "a body's momentum n"): {"the feed": 1, "the induction": 2},
-    ("(i)", "the arrivals"): {"the receive": 1, "the internal representation": 2},
-    ("(ii)", "the record's tally"): {"the clicks": 1, "the lifetime": 2},
+    ("(iv)", "a family's level at a Node"): ("the hold", "the source"),
+    ("(iv)", "a body's content M_k"): ("the clicks", "the giving", "the clicks list"),
+    ("(iv)", "a body's momentum n"): ("the giving", "the recoil"),
+    ("(v)", "a body's momentum n"): ("the feed", "the induction"),
+    ("(i)", "the arrivals"): ("the receive", "the internal representation"),
+    ("(ii)", "the record's tally"): ("the clicks", "the lifetime"),
 }
 
 
@@ -112,19 +113,18 @@ def test_a_name_registered_twice_or_an_unknown_place_or_word_is_refused_by_name(
             "(iv)",
             ("a body's content M_k",),
             ("a family's level at a Node",),
-            1,
             noop,
             "9.91 (3)",
             word="the right side",
         )
     )
     with pytest.raises(ValueError, match="'the hold' is registered twice"):
-        register.add(Declaration("the hold", "(iv)", (), (), None, noop, ""))
+        register.add(Declaration("the hold", "(iv)", (), (), noop, ""))
     assert register.names == ("the hold",)
     with pytest.raises(ValueError, match="none of the interval's places"):
-        register.add(Declaration("the source", "(vi)", (), (), None, noop, ""))
+        register.add(Declaration("the source", "(vi)", (), (), noop, ""))
     with pytest.raises(ValueError, match="none of \\['the right side'"):
-        register.add(Declaration("the source", "(iv)", (), (), None, noop, "", word="before"))
+        register.add(Declaration("the source", "(iv)", (), (), noop, "", word="before"))
     assert PLACES == ("(i)", "(ii)", "(iii)", "(iv)", "(v)", "any")
     assert WORDS == ("the right side", "the step", "after the step", "any")
     assert folder_of("the spin's step") == "spins_step"
@@ -141,111 +141,64 @@ def test_a_name_registered_twice_or_an_unknown_place_or_word_is_refused_by_name(
     assert OWN_VALUES == {"a body's remainders", "the record's remainder"}
 
 
-def test_two_writers_of_one_value_at_one_place_need_a_declared_order():
-    """The loop refuses two primitives that write the same value at the same place
-    unless their order is declared (record 2212 (3)); distinct orders pass, an integer
-    for every value or a mapping value to integer (the giving, 9.117 item 2); the same
-    value at another place is no conflict; a body's value written by a click at (ii) is
-    a deferred write ordered at (iv) (9.117 item 1); a remainder is the writer's own."""
+def test_the_step_file_orders_the_writers_of_one_value_and_a_writer_it_leaves_out_is_refused():
+    """The order among the writers of one value at one place is the step file's (record 2251),
+    a write deferred from (ii) to (iv) (9.117 item 1) before the place's own writers; a writer
+    the file leaves out is refused by name; a remainder is the writer's own and never
+    collides; the same value at another place is no conflict."""
     register = Register()
+    register.add(Declaration("the receive", "(i)", ("the Link's value",), ("the arrivals",), noop, ""))
     register.add(
-        Declaration("the receive", "(i)", ("the Link's value",), ("the arrivals",), None, noop, "")
+        Declaration("the internal representation", "(i)", ("n pairs",), ("the arrivals",), noop, "")
     )
-    register.add(
-        Declaration(
-            "the internal representation", "(i)", ("n pairs",), ("the arrivals",), None, noop, ""
-        )
+    step = Step({"(i)": ("the receive", "the internal representation")}, "d")
+    assert register.writers("the arrivals", "(i)", step) == (
+        "the receive",
+        "the internal representation",
     )
+    register.check_writers(step)
     with pytest.raises(
-        ValueError, match="all write 'the arrivals' at the place \\(i\\) and declare no order"
+        ValueError,
+        match="'the internal representation' writes 'the arrivals' at the place \\(i\\) and is not in the step file",
     ):
-        register.check_writers()
-    ordered = Register()
-    ordered.add(Declaration("the receive", "(i)", ("the Link's value",), ("the arrivals",), 1, noop, ""))
-    ordered.add(
-        Declaration("the internal representation", "(i)", ("n pairs",), ("the arrivals",), 2, noop, "")
-    )
-    ordered.add(
-        Declaration("the trace", "any", ("every word's integers",), (), None, None, "", word="any")
-    )
-    ordered.check_writers()
-    same_order = Register()
-    same_order.add(Declaration("a", "(ii)", (), ("the tally",), 1, noop, ""))
-    same_order.add(Declaration("b", "(ii)", (), ("the tally",), 1, noop, ""))
-    with pytest.raises(ValueError, match="declare no order between them"):
-        same_order.check_writers()
-    apart = Register()
-    apart.add(Declaration("a", "(i)", (), ("the tally",), None, noop, ""))
-    apart.add(Declaration("b", "(ii)", (), ("the tally",), None, noop, ""))
-    apart.check_writers()
-    # the click's deferred writes: the clicks at (ii) with one integer for every value it
-    # writes, the giving at (ii) with a mapping (M_k 2, n 1), the recoil at (iv) on n 2; the
-    # writes of M_k and n are ordered at (iv), the tally stays at (ii)
+        register.check_writers(Step({"(i)": ("the receive",)}, "d"))
     deferred = Register()
     clicks = Declaration(
-        "the clicks", "(ii)", (), ("the record's tally", "a body's content M_k"), 1, noop, ""
+        "the clicks", "(ii)", (), ("the record's tally", "a body's content M_k"), noop, ""
     )
     giving = Declaration(
         "the giving",
         "(ii)",
         (),
         ("a family's level at a Node", "a body's content M_k", "a body's momentum n"),
-        {"a body's content M_k": 2, "a body's momentum n": 1},
         noop,
         "",
     )
     recoil = Declaration(
-        "the recoil", "(iv)", (), ("a body's momentum n", "a body's remainders"), 2, noop, ""
+        "the recoil", "(iv)", (), ("a body's momentum n", "a body's remainders"), noop, ""
     )
     hold = Declaration(
-        "the hold", "(iv)", (), ("a family's level at a Node", "a body's remainders"), 1, noop, ""
+        "the hold", "(iv)", (), ("a family's level at a Node", "a body's remainders"), noop, ""
     )
     for declaration in (clicks, giving, recoil, hold):
         deferred.add(declaration)
-    deferred.check_writers()
+    step = Step({"(ii)": ("the clicks", "the giving"), "(iv)": ("the hold", "the recoil")}, "d")
+    deferred.check_writers(step)
     assert (
         clicks.place_of("a body's content M_k") == "(iv)"
         and clicks.place_of("the record's tally") == "(ii)"
     )
-    assert giving.order_of("a body's content M_k") == 2 and giving.order_of("a body's momentum n") == 1
-    assert (
-        giving.order_of("a family's level at a Node") is None
-        and clicks.order_of("the record's tally") == 1
-    )
     assert recoil.place_of("a body's momentum n") == "(iv)"
-    deferred.add(Declaration("the clicks list", "(ii)", (), ("a body's content M_k",), None, None, ""))
-    with pytest.raises(
-        ValueError,
-        match="'the clicks', 'the giving', 'the clicks list' all write \"a body's content M_k\" at the place \\(iv\\)",
-    ):
-        deferred.check_writers()
+    assert deferred.writers("a body's content M_k", "(iv)", step) == ("the clicks", "the giving")
+    assert deferred.writers("a body's momentum n", "(iv)", step) == ("the giving", "the recoil")
+    # the giving's level write is at (ii) itself (not a body's value): no conflict with the hold's at (iv)
+    assert deferred.writers("a family's level at a Node", "(iv)", step) == ("the hold",)
+    # a remainder is the writer's own: two writers of it at one place need no order
+    assert deferred.writers("a body's remainders", "(iv)", step) == ("the hold", "the recoil")
     own = Register()
-    own.add(
-        Declaration(
-            "the feed",
-            "(v)",
-            (),
-            ("a body's momentum n", "a body's remainders"),
-            {"a body's momentum n": 1},
-            None,
-            "",
-        )
-    )
-    own.add(
-        Declaration(
-            "the induction",
-            "(v)",
-            (),
-            ("a body's momentum n", "a body's remainders"),
-            {"a body's momentum n": 2},
-            None,
-            "",
-        )
-    )
-    own.add(
-        Declaration("the hop", "(v)", (), ("a body's position", "a body's remainders"), None, noop, "")
-    )
-    own.check_writers()
+    own.add(Declaration("the feed", "(v)", (), ("a body's momentum n", "a body's remainders"), None, ""))
+    own.add(Declaration("the hop", "(v)", (), ("a body's position", "a body's remainders"), None, ""))
+    own.check_writers(Step({"(v)": ("the feed",)}, "d"))
 
 
 def test_a_term_naming_an_unknown_or_unbuilt_primitive_is_refused_by_name():
@@ -255,12 +208,12 @@ def test_a_term_naming_an_unknown_or_unbuilt_primitive_is_refused_by_name():
     register = Register()
     register.add(
         Declaration(
-            "the hold", "(iv)", ("a body's content M_k",), ("a family's level at a Node",), 1, noop, ""
+            "the hold", "(iv)", ("a body's content M_k",), ("a family's level at a Node",), noop, ""
         )
     )
     register.add(
         Declaration(
-            "the source", "(iv)", ("the record's form",), ("a family's level at a Node",), 2, None, ""
+            "the source", "(iv)", ("the record's form",), ("a family's level at a Node",), None, ""
         )
     )
     register.check_terms([("universe.families[0].held", "the hold")])
@@ -276,10 +229,10 @@ def test_the_loop_calls_a_primitive_at_its_declared_place_alone():
     place "any" admits every place; an unbuilt row has no function to call; a
     binder gives its function for the loop at `bind`, once."""
     register = Register()
-    register.add(Declaration("the hold", "(iv)", (), (), None, noop, ""))
-    register.add(Declaration("the trace", "any", (), (), None, noop, "", word="any"))
-    register.add(Declaration("the source", "(iv)", (), (), None, None, ""))
-    register.add(Declaration("the wait", "(i)", (), (), None, None, "", binder=lambda loop: loop))
+    register.add(Declaration("the hold", "(iv)", (), (), noop, ""))
+    register.add(Declaration("the trace", "any", (), (), noop, "", word="any"))
+    register.add(Declaration("the source", "(iv)", (), (), None, ""))
+    register.add(Declaration("the wait", "(i)", (), (), None, "", binder=lambda loop: loop))
     assert register.at("the hold", "(iv)") is noop
     assert register.at("the trace", "(ii)") is noop
     with pytest.raises(
@@ -324,33 +277,30 @@ def test_the_register_finds_the_folders_and_refuses_a_folder_without_its_declara
     good = (
         'DECLARATION = {"name": "the hold", "place": "(iv)", "word": "the right side", '
         '"reads": ("a body\'s content M_k",), "writes": ("a family\'s level at a Node",), '
-        '"order": 1, "section": "9.91 (3)"}\n'
+        '"section": "9.91 (3)"}\n'
         "def bind(loop):\n    return loop\n"
     )
     unbuilt = (
         'DECLARATION = {"name": "the source", "place": "(iv)", "word": "the right side", '
-        '"reads": ("D_i",), "writes": ("a family\'s level at a Node",), "order": 2, '
+        '"reads": ("D_i",), "writes": ("a family\'s level at a Node",), '
         '"section": "9.117 item 2"}\n'
     )
     own_function = (
         "from event_universe.core.register import Declaration\n"
         "def apply(term, start, own):\n    return ('the paces', term)\n"
         'DECLARATION = Declaration("the signed read", "(i)", ("the read families\' arguments",), '
-        '("the paces",), None, apply, "9.117 item 2, the first row")\n'
+        '("the paces",), apply, "9.117 item 2, the first row")\n'
     )
     package = write_package(tmp_path, {"hold": good, "source": unbuilt, "signed_read": own_function})
     forget(package)
     register = discover(package)
     assert register.names == ("the hold", "the signed read", "the source")
     assert register.built_names() == ("the hold", "the signed read")
-    register.check_writers()
+    register.check_writers(Step({"(i)": ("the signed read",), "(iv)": ("the hold", "the source")}, "d"))
     register.bind("the loop")
     assert register.at("the hold", "(iv)") == "the loop"
     assert register.at("the signed read", "(i)")("a term", None, None) == ("the paces", "a term")
-    assert (
-        register.declarations["the hold"].order == 1
-        and register.declarations["the hold"].word == "the right side"
-    )
+    assert register.declarations["the hold"].word == "the right side"
     with pytest.raises(ValueError, match="'the source', a row of the ledger not built yet"):
         register.check_terms([("universe.families[0].sourced", "the source")])
     cases = (
@@ -405,12 +355,11 @@ def test_the_engine_registers_every_folder_on_disk_and_checks_every_term():
         assert (folders / folder_of(declaration.name) / "__init__.py").is_file()
     for name in ROWS_OF_9_117:
         assert set(register.declarations[name].writes) <= NAMED_VALUES, name
+    step = simulation.world.step
     for (place, value), expected in ORDERS.items():
-        for name, order in expected.items():
-            declaration = register.declarations[name]
-            assert declaration.place_of(value) == place, (name, value)
-            assert declaration.order_of(value) == order, (name, value)
-    register.check_writers()
+        assert register.writers(value, place, step) == expected, (place, value)
+    register.check_writers(step)
+    assert register.step is step and step.digest
     terms = simulation.family_terms()
     names = {name for _label, name in terms}
     assert names <= set(register.built_names())

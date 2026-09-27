@@ -267,7 +267,6 @@ def test_the_declaration_is_the_ledgers_row():
         "the axis contents with their remainders",
     )
     assert DECLARATION.writes == ("the paces",)
-    assert DECLARATION.order is None
     assert DECLARATION.function is apply and DECLARATION.built
     assert DECLARATION.word == "the right side"
     assert DECLARATION.section.startswith(THE_WORD) and THE_WORD.startswith("from the rule")

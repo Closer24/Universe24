@@ -129,9 +129,8 @@ DECLARATION = Declaration(
         "the giving's outward tally with the opposite sign",
     ),
     ("a body's momentum n", "a body's remainders"),
-    2,
     apply,
-    THE_WORD + " (9.117 item 5); 9.117 item 2, the row 'the recoil'; 9.84 (2); 9.91 (4); "
-    "9.111 items 1 and 2",
+    THE_WORD
+    + " (9.117 item 5); 9.117 item 2, the row 'the recoil'; 9.84 (2); 9.91 (4); 9.111 items 1 and 2",
     word="after the step",
 )
