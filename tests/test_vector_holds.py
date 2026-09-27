@@ -11,7 +11,8 @@ from __future__ import annotations
 
 import numpy as np
 
-from event_universe.events.detector_law import TENSOR_AXES, DetectorLawSimulation, cross_with_axis
+from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.features.hold import CROSS_TERMS, TENSOR_AXES
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_massive_record import block_world
 
@@ -88,7 +89,7 @@ def test_a_moving_body_writes_the_vector_and_tensor_parts_with_the_remainders_ca
     assert simulation.leaks() == []
     # the source spreads by the plain step: the part is nonzero beyond the body and sourced
     assert gravity[1].now[~block.mask].any() and not gravity[1].silent
-    assert TENSOR_AXES[3] == (0, 1) and cross_with_axis((1, 2, 3), 0) == (0, 3, -2)
+    assert TENSOR_AXES[3] == (0, 1) and CROSS_TERMS[0] == ((1, 2, 1), (2, 1, -1))
 
 
 def test_a_body_at_rest_with_spin_and_moment_writes_the_dipoles_and_inverts_exactly():

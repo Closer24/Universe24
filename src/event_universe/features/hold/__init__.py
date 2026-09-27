@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Mapping
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Any
 
 from event_universe.core.register import Declaration
 from event_universe.core.rule3 import (
@@ -189,8 +188,3 @@ DECLARATION = Declaration(
         }
     ),
 )
-
-
-def bind(loop: Any) -> Callable[..., object]:
-    """The loop's method `_hold`, whose divisions `apply` gives bit for bit, until the loop calls `apply`."""
-    return loop._method("_hold")  # type: ignore[no-any-return]
