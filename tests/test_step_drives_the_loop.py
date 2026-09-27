@@ -6,6 +6,8 @@ import dataclasses
 import json
 from pathlib import Path
 
+import pytest
+
 from event_universe.core.step import STEP_FILE, read_step
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
@@ -53,8 +55,13 @@ def spied(world: str) -> tuple[DetectorLawSimulation, list[tuple[str, str]], lis
                 declaration, function=counted(name, declaration.function)
             )
     register.at = at  # type: ignore[method-assign]
-    simulation._acts = tuple(
-        (place, name, within(name, stage), words) for place, name, stage, words in simulation._acts
+    simulation.main_loop.acts = tuple(
+        dataclasses.replace(
+            act, stage=dataclasses.replace(act.stage, function=within(act.name, act.stage.function))
+        )
+        if act.stage is not None
+        else act
+        for act in simulation.main_loop.acts
     )
     return simulation, lookups, outside
 
@@ -74,17 +81,19 @@ def test_one_tick_looks_up_every_built_act_once_in_the_files_order_and_nothing_o
 
 
 def test_a_loop_out_of_the_files_order_or_calling_a_primitive_outside_an_act_fails():
+    """A loop whose acts are out of the file's order is seen by the lookups; a primitive called outside an act is seen by the spy and, writing into the interval's start, refused by the main loop itself."""
     simulation, lookups, outside = spied(WORLDS[0])
-    acts = list(simulation._acts)
+    acts = list(simulation.main_loop.acts)
     acts[2], acts[3] = acts[3], acts[2]
-    simulation._acts = tuple(acts)
-    close = simulation._close_interval
+    simulation.main_loop.acts = tuple(acts)
+    close = simulation.close_interval
 
     def close_and_cheat() -> None:
         simulation.register.declarations["the hold"].function(advance=False)
         close()
 
-    simulation._close_interval = close_and_cheat  # type: ignore[method-assign]
-    simulation.step()
+    simulation.close_interval = close_and_cheat  # type: ignore[method-assign]
+    with pytest.raises(ValueError, match="wrote into an array of the interval's start"):
+        simulation.step()
     assert lookups != the_files_built_acts(simulation)
     assert outside == ["the hold"]

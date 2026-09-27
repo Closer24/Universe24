@@ -69,6 +69,9 @@ import numpy as np
 
 from event_universe.core.game_board import box_centre
 from event_universe.core.integer import by_drive
+from event_universe.core.main_loop import MainLoop, Stage, read_only
+from event_universe.core.ports import Ports, port_of
+from event_universe.core.primitive import Own, Start, Term, Write
 from event_universe.core.register import Register, discover
 from event_universe.core.rule3 import ISOTROPIC, coefficients, form_term, rule3, rungs
 from event_universe.events.world import (
@@ -288,27 +291,23 @@ class LiveRecord:
     # held part, a planted record without one)
     twist: int = 0
 
+    def arrays(self) -> Iterator[np.ndarray]:
+        """The record's arrays on the GameBoard: its two levels and remainder, and the second level's where the family has one."""
+        for array in (
+            self.now,
+            self.before,
+            self.remainder,
+            self.im_now,
+            self.im_before,
+            self.im_remainder,
+        ):
+            if isinstance(array, np.ndarray):
+                yield array
+
 
 @dataclass
 class NodeRecord:
-    """THE BODY'S RECORD AT ITS BODY'S NODE (ALGEBRA.md 9.60 (1) and (2); BUILD.md
-    section 26 item 42; the model owner's question of record 2036, "can it not
-    be represented somehow in the Node?"): the standing record of the body's
-    own standing family on the body's Node alone (the body's centre Node,
-    `centre_mask`), two integer levels and one remainder (a, b, r) at that
-    Node, stepped by rule3 (core/rule3.py, ALGEBRA.md 9.50 (13))
-    with the standing family's six Ports closed on the body's Node, so that the six
-    reads return the body's Node itself, S_6 = 6 a, with the declared pair [num_c,
-    2 den_c] (the body's clock pair in the rule's convention) and the body's Node's
-    own level: 6 den_c Gamma a' + r' = (6 num_c p + 12 den_c c) a - 6 den_c
-    Gamma b + r, 0 <= r' < 6 den_c Gamma, the rotation of 9.46 (2) as
-    rationals with the remainder six times its (9.60 (2)); its residue u its
-    own remainder on its wheel, read at the click and carried; its norm T the
-    emitter's declared integer; the identity the body's record's (number x
-    2^32). Nothing physical is kept beside the GameBoard: the record is the
-    body's Node's, the content the body's Node's level of the family of clicks, the charge
-    the family of charge's; the shape phi and the pairs are the world file's
-    declared constants (9.60 (6))."""
+    """A body's record on its one Node: the two levels and the remainder of its standing wave, stepped by the rule alone with the count's wall."""
 
     identity: int
     now: int
@@ -466,6 +465,7 @@ class DetectorLawSimulation:
         self.record = observer
         self.tick = 0
         self.shape = tuple(int(n) for n in world.shape)
+        self.ports = Ports(world.periodic)
         self.families = world.families
         self.fast_steps = 0
         self.hypotheses = list(world.hypotheses)
@@ -822,7 +822,9 @@ class DetectorLawSimulation:
         self.register.check_step(world.step)
         self.register.check_writers(world.step)
         self.register.check_terms(self.family_terms())
-        self._acts = self._stage_table()
+        self.main_loop = MainLoop.plan(
+            self.register, world.step, self._stages(), self.CHAIN, self.family_terms()
+        )
         self.register.at("the hold", "(iv)")(advance=True)
 
     # The register of primitives: one register, name to function, read by the loop alone
@@ -845,53 +847,125 @@ class DetectorLawSimulation:
         register.bind(self)
         return register
 
-    def _stage_table(self) -> tuple[tuple[str, str, Callable[..., None], dict[str, object]], ...]:
-        """The file's built acts in the file's order, each bound to the loop's stage of its name with the words the stage takes; a built name without a stage, an act with other words, or a file ordering the record's fused chain otherwise is refused at load."""
-        stages: dict[str, tuple[Callable[..., None], tuple[str, ...]]] = {
-            "the hop": (self._hop_stage, ()),
-            "the hold": (self._hold_stage, ("advance",)),
-            "the operation": (self._records_stage, ()),
-            "the giving": (self._giving_stage, ()),
-            "the spin's step": (self._spins_stage, ()),
+    def _stages(self) -> dict[str, Stage]:
+        """The loop's whole-board stages by the file's names, each with the words it takes and the cards whose writes it carries (the records' pass carries the chain's cards but the clicks, whose act is nested in it)."""
+        chain = tuple(name for name in self.CHAIN if name != "the clicks")
+        return {
+            "the hop": Stage(self._hop_stage, (), ("the hop",)),
+            "the hold": Stage(self._hold_stage, ("advance",), ("the hold",)),
+            "the operation": Stage(self._records_stage, (), chain),
+            "the giving": Stage(self._giving_stage, (), ("the giving",)),
+            "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
         }
-        for name in self.CHAIN + ("the recoil",):
-            stages.setdefault(name, (self._no_stage, ()))
-        built = self.register.built_names()
-        missing = [name for name in built if name not in stages]
-        if missing:
-            raise ValueError(
-                f"the loop has no stage for the built primitives {missing}: every built primitive of "
-                "the step file is bound to one act of the loop"
-            )
-        acts: list[tuple[str, str, Callable[..., None], dict[str, object]]] = []
-        for place, name, words in self.world.step.acts:
-            if name not in built:
-                continue
-            stage, taken = stages[name]
-            if sorted(dict(words)) != sorted(taken):
-                raise ValueError(
-                    f"the step file's act {name!r} at {place} carries the words {sorted(dict(words))}; "
-                    f"the loop's stage of {name!r} takes {sorted(taken)}"
-                )
-            acts.append((place, name, stage, dict(words)))
-        chain = [index for index, act in enumerate(acts) if act[1] in self.CHAIN]
-        ordered = [acts[index][1] for index in chain]
-        between = (
-            [
-                act[1]
-                for act in acts[chain[0] : chain[-1] + 1]
-                if act[2] != self._no_stage and act[1] != "the operation"
-            ]
-            if chain
-            else []
+
+    def _card_writes(self, name: str) -> frozenset[str]:
+        """The ledger's words a card names as its writes."""
+        return frozenset(self.register.declarations[name].writes)
+
+    def start_arrays(self) -> Iterator[np.ndarray]:
+        """Every array of the interval's start the main loop freezes for the walk: the records', the bodies' own records' and masks, the held families', the pair arrays, the detector map, the spans, the paces' carries and the held levels."""
+        for live in self.records.values():
+            yield from live.arrays()
+        for block in self.blocks:
+            if block.own is not None:
+                yield from block.own.arrays()
+            yield block.mask
+        for record in self.held_component_records():
+            yield from record.arrays()
+        for num, den in self._pairs.values():
+            yield num
+            yield den
+        yield self.detector_at_node
+        yield from self.span_masks.values()
+        yield from self._pace_carry.values()
+        yield from self.node_level.values()
+
+    def grants(self, name: str) -> Iterator[np.ndarray]:
+        """The arrays of the start an act may write in place, as its card names them: the hop a body's position (the pair arrays and the detector map), the hold a family's level at a Node (the held families' arrays), the operation the remainders."""
+        if name == "the hop":
+            for num, den in self._pairs.values():
+                yield num
+                yield den
+            yield self.detector_at_node
+        elif name == "the hold":
+            for record in self.held_component_records():
+                yield from record.arrays()
+        elif name == "the operation":
+            for live in self.records.values():
+                yield live.remainder
+            for block in self.blocks:
+                if block.own is not None:
+                    yield block.own.remainder
+
+    def fingerprints_of(self, *records: LiveRecord) -> dict[str, dict[object, object]]:
+        """The ledger's words of the named records and the bodies' counts, stamped for the audit: a rebound array by its identity, an integer by its value."""
+        return {
+            "a body's content M_k": {number: tuple(row) for number, row in enumerate(self.held)},
+            "the record's tally": {
+                live.identity: (live.total, tuple(live.pointers), live.absorbed, tuple(live.first_rung))
+                for live in records
+            },
+            "the level next, the remainder": {
+                live.identity: (id(live.now), id(live.before), id(live.remainder)) for live in records
+            },
+            "the second level": {
+                live.identity: (id(live.im_now), id(live.im_before), id(live.im_remainder))
+                for live in records
+            },
+        }
+
+    def fingerprints(self) -> dict[str, dict[object, object]]:
+        """Every ledger word the main loop audits after an act, stamped: the bodies' counts, momenta, spins, positions and remainders, the records' and the held families' arrays by identity, the tallies, the paces' carries and the records alive."""
+        stamps = self.fingerprints_of(*self.records.values(), *self.held_component_records())
+        stamps["a body's momentum n"] = {b.number: tuple(b.momentum) for b in self.blocks}
+        stamps["a body's spin S"] = {
+            b.number: (tuple(b.spin), tuple(b.spin_before)) for b in self.blocks
+        }
+        stamps["a body's position"] = {b.number: (tuple(b.corner), id(b.mask)) for b in self.blocks}
+        remainders: dict[object, object] = {("drive", b.number): tuple(b.drive) for b in self.blocks}
+        for b in self.blocks:
+            for key, value in b.hold_value.items():
+                remainders[(b.number, key)] = (value, b.hold_carry.get(key))
+        stamps["a body's remainders"] = remainders
+        stamps["the paces"] = {key: id(array) for key, array in self._pace_carry.items()}
+        stamps["the records alive"] = dict.fromkeys(self.records, True)
+        return stamps
+
+    def apply_write(self, write: Write) -> None:
+        """One write of a primitive applied by the main loop: a body's momentum, spin or content by whole integers; another value is refused by name."""
+        if write.value == "a body's momentum n":
+            block = self.block_by_number[write.of]
+            for axis in range(3):
+                block.momentum[axis] += int(write.integers[axis])
+        elif write.value == "a body's spin S":
+            block = self.block_by_number[write.of]
+            for axis in range(3):
+                block.spin[axis] += int(write.integers[axis])
+        elif write.value == "a body's content M_k":
+            self.held[write.of][write.at] += int(write.integers)
+        else:
+            raise ValueError(f"the loop applies no write of {write.value!r}: no such value of a body")
+
+    def term_of(self, label: str, name: str) -> Term:
+        """The term of the files a generic act is called with: the primitive's name and the line's label, the index parsed from the label."""
+        digits = "".join(character for character in label if character.isdigit())
+        return Term(name, "", int(digits) if digits else 0, 0, 0, (), label)
+
+    def start_view(self) -> Start:
+        """The interval's start as a generic act reads it: the held levels as read-only views, the bodies' counts, walls and momenta."""
+        held = [family for family in range(len(self.families)) if family in self.held_records]
+        return Start(
+            tuple(read_only(self.held_records[family].now) for family in held),
+            tuple(read_only(self.held_records[family].before) for family in held),
+            (),
+            tuple(tuple(row) for row in self.held),
+            tuple(self.wall_of(block) for block in self.blocks),
+            tuple(tuple(block.momentum) for block in self.blocks),
         )
-        if ordered != [name for name in self.CHAIN if name in built] or between:
-            raise ValueError(
-                f"the record's step is one chain today: {', '.join(self.CHAIN)}; the file orders them as "
-                f"{', '.join(ordered) or 'none of them'}"
-                + (f", with {', '.join(between)} between them" if between else "")
-            )
-        return tuple(acts)
+
+    def own_of(self, label: str, name: str) -> Own:
+        """The own record of a generic act: none until a folder's remainders live on the body."""
+        return Own(None)
 
     def _hop_stage(self, function: Callable[..., None]) -> None:
         """The hop's act: each body's step by its drive."""
@@ -934,10 +1008,7 @@ class DetectorLawSimulation:
         for block in self.blocks:
             function(block, False)
 
-    def _no_stage(self, function: Callable[..., None]) -> None:
-        """A primitive with no whole-board act of its own: called per record or part inside another act (the record's step, the hold), or, the recoil, by no act of the loop yet."""
-
-    def _close_interval(self) -> None:
+    def close_interval(self) -> None:
         """The interval's closing: each body's clock, the clicked records deleted whole, then the host's probe and mode readings."""
         for block in self.blocks:
             self._block_clock(block)
@@ -1056,15 +1127,8 @@ class DetectorLawSimulation:
         return sum(self.held[number])
 
     def _hold(self, advance: bool = False, inverse: bool = False) -> None:
-        """THE HOLD (ALGEBRA.md 9.45 (2), 9.48 (2); item 51; the vector and tensor
-        parts and the dipoles, 9.91 (3), commit 2): at every body's
-        Nodes a held family's level is the body's declared source (a block's
-        Nodes as they stand this interval, a measured event's span), written
-        whole at both levels with the remainder 0: the one place where a
-        family's level is not the step's own, the same write as the load's,
-        at the load and at every click (up by one at a taking, down by one at
-        a giving). `node_level` is then each held family's level as every
-        reading family's step reads it at the Node."""
+        """The hold: at every body's Nodes a held family's level is the body's declared source, written whole at both levels with the remainder 0 (the one write not the step's own), then the vector and tensor parts and the dipoles; `node_level` is then each held family's level as every reading family's step reads it."""
+        self.ports.begin()
         for family, record in self.held_records.items():
             source = self.families[family].held
             assert source is not None
@@ -1315,16 +1379,33 @@ class DetectorLawSimulation:
 
     def _advance_fields(self, hold: Callable[..., None]) -> None:
         """The held families' own steps after every other family's (the plain step at every Node), then the hold at the bodies' Nodes, then the guard: every reading family's pace stays positive at every Node, else the run is refused."""
-        for record in self.held_component_records():
-            self._advance(record)
+        held = self.held_component_records()
+        with self.main_loop.act(
+            "the operation",
+            "(iii)",
+            self._card_writes("the operation"),
+            lambda: self.fingerprints_of(*held),
+        ):
+            for record in held:
+                self._advance(record)
         hold(advance=True)
+        paces = self._card_writes("the signed read")
+        with self.main_loop.act(
+            "the signed read",
+            "(i)",
+            paces,
+            lambda: {"the paces": {key: id(a) for key, a in self._pace_carry.items()}},
+        ):
+            self._guard()
+
+    def _guard(self) -> None:
+        """The pace guard: every reading family's pace stays positive at every Node, else the run is refused."""
         for family, definition in enumerate(self.families):
             if not definition.reads:
                 continue
             most = int(np.max(np.abs(self._effective_content(family))))
             axis_contents = self._axis_contents(family)
             if axis_contents is not None:
-                # every axis pace p_a = Gamma - c - t_a stays positive too (9.91 (2))
                 content = self._effective_content(family)
                 most = max(most, *(int(np.max(np.abs(content + t))) for t in axis_contents))
             if most >= self.node_clock:
@@ -1332,8 +1413,7 @@ class DetectorLawSimulation:
                     f"the effective content {definition.name!r} reads reached {most} "
                     f"in size at interval {self.tick}, at or beyond Gamma = {self.node_clock}: "
                     "the pace Gamma minus the weighted held levels of every read stays positive "
-                    "under the fixed wall (ALGEBRA.md 9.45 (3), 9.48 (3); BUILD.md section 26 "
-                    "items 34, 35 and 51); the run is refused"
+                    "under the fixed wall (ALGEBRA.md 9.45 (3), 9.48 (3)); the run is refused"
                 )
 
     def _neighbour_nodes(
@@ -1403,7 +1483,9 @@ class DetectorLawSimulation:
             (int(definition.pair[0]), int(definition.pair[1])),
             self.node_clock,
         )
-        content = content_of(term, SignedReadStart(self.shape, self.node_level, None))
+        levels = {family: read_only(level) for family, level in self.node_level.items()}
+        content = content_of(term, SignedReadStart(self.shape, levels, None))
+        content.flags.writeable = False
         self._effective[family] = content
         return content
 
@@ -1504,6 +1586,7 @@ class DetectorLawSimulation:
     def _write_pair(self, block: Block) -> None:
         """The block's pair written on its Nodes into every pair array of its
         family; the array's own pair elsewhere on the Nodes the block left."""
+        self.ports.begin()
         for key in [key for key in self._kind_walls if key[0] == block.family]:
             del self._kind_walls[key]  # the family's walls read anew (`kind_wall`)
         for (family, rest_num, rest_den), (num, den) in self._pairs.items():
@@ -1681,24 +1764,7 @@ class DetectorLawSimulation:
         ]
 
     def _body_step(self, block: Block, inverse: bool) -> None:
-        """THE BODY'S STEP AT (v) (ALGEBRA.md 9.91 (8) (v), 9.78 (5); commit 6), from the
-        fields as the interval leaves them (their `now` levels, which the inverse meets
-        first): THE SPIN'S STEP, S_(t+1) = S_(t-1) + (2 [(Omega x S_t) + mu x B_q] +
-        carry) div (W Gamma), the leapfrog of the body's two integers with the doubled
-        term (the Euler line's rate, exactly invertible; 9.78 (5) leaves the choice),
-        Omega_i = [factor x (curl V)_i + 3 ((grad c) x n)_i div W] div 8 from a read whose
-        dipole is the spin (gravity's vector part and its t part c), B_q = (weight x curl
-        V_q) div 2 from a read whose dipole is the moment (the read's weight alone, since
-        mu carries Q: ALGEBRA.md 9.104 (2), record 2157), the curls and the gradient at
-        the body's Node from its six neighbours, every remainder carried on the body.
-        Backward the same term is recomputed from S_t and subtracted, the divisions
-        stepped back. THE FEED AND THE INDUCTION of 9.78 (4) are NOT here: built and
-        held back, since with them the two tools of every chain world fall together
-        (the chain's content field is a tent; the light clock's detector hops toward
-        its emitter within 300 intervals) and no resting world stays bit for bit; the
-        line waits on the mathematician (BUILD.md section 26 item 65); when it lands it
-        acts on a body without the world's word `fixed` alone (9.104 (6) (b); the
-        word is read into `Block.fixed`, record 2157)."""
+        """The body's step at (v) from the fields as the interval leaves them: the momentum's and the spin's bookings from the curls and the gradient at the body's Node, every division carried on the body; the inverse the same lines back."""
         definition = self.families[block.family]
         if not definition.reads:
             return
@@ -1775,20 +1841,11 @@ class DetectorLawSimulation:
                 block.spin[i], block.spin_before[i] = block.spin_before[i], block.spin[i] - step
 
     def shell_mask(self, block: Block) -> np.ndarray:
-        """THE SHELL of a body (ALGEBRA.md 9.38 (2), 9.44 (5)): its Nodes with
-        a Port, a Link to a Node outside the body on the board (the wrap on
-        an axis the family's border makes periodic; beyond an open face there
-        is no Node and no Port; a folded axis of extent 1 carries none, as
-        the flux reading's Ports)."""
-        mask = block.mask
-        wrap = self.kind_wrap[block.family]
+        """The shell of a body: its Nodes with a Port, a Link to a Node outside the body (the wrap on a periodic axis; no Port beyond an open face; a folded axis carries none)."""
+        outward = self.ports.outward(block.mask, self.kind_wrap[block.family])
         shell = np.zeros(self.shape, dtype=bool)
-        for axis in range(3):
-            if self.shape[axis] == 1:
-                continue
-            for side in (1, -1):
-                inside = self._shift(mask, axis, -side, fill=True, wrap=wrap)
-                shell |= mask & ~inside
+        for port in outward:
+            shell |= port
         return shell
 
     def first_shell_node(self, block: Block) -> tuple[int, int, int]:
@@ -1997,20 +2054,7 @@ class DetectorLawSimulation:
         )
 
     def _excitation_rung(self, block: Block) -> None:
-        """THE TICK OF THE GIVING END (ALGEBRA.md 9.44 (5) (c), 9.47 (5) (i)
-        and (6); BUILD.md section 26 item 33): the body counts its intervals
-        since the residue's read against (2 u + 1) P / (2 W), P the
-        emitter's `period` (the generator's integer, the mode's period in
-        intervals) and W the body's wheel at the read Node; the click fires
-        at the first count t with 2 W t >= (2 u + 1) P (the interval
-        ceil((2 u + 1) P / (2 W)) after the read, at least one), the same
-        at every Node of the body (T2); no running total, no share summed,
-        no fraction moved (the click rule on the offer C of 9.17 (7) (f),
-        item 24, HISTORY). The first residue after the load is read here
-        after the body's first advance (the seed's remainders 0 at the
-        write), the count starting from that interval; every later residue
-        is read at the click (`_emit`). Nothing fires while the stock is
-        spent: the body's own record continues (9.43 (3))."""
+        """The count of intervals to the body's next click, started at a click and lowered every interval; the body gives when it reaches zero."""
         own: LiveRecord | NodeRecord | None = (
             block.node_record if block.node_record is not None else block.own
         )
@@ -2379,6 +2423,7 @@ class DetectorLawSimulation:
 
     def step_inverse(self) -> None:
         """One interval backward in the joint inverse's fixed order (the bodies' step back, every family at the interval's start levels, the held families and their hold last); no hop, click or giving in the interval."""
+        self.ports.begin()
         for block in self.blocks:
             if block.stepped > 0 or any(block.hop):
                 raise ValueError(
@@ -2425,57 +2470,19 @@ class DetectorLawSimulation:
 
     # The rule
 
-    def _shift(
-        self,
-        a: np.ndarray,
-        axis: int,
-        sign: int,
-        fill: int | bool = 0,
-        wrap: tuple[bool, bool, bool] | None = None,
-    ) -> np.ndarray:
-        """The neighbour on the side `sign` of `axis`: the wrap on a periodic
-        axis, `fill` beyond an open face; `wrap` the faces read (the world's
-        `boundary`, one border for every family)."""
-        periodic = self.world.periodic if wrap is None else wrap
-        if periodic[axis]:
-            return np.roll(a, sign, axis=axis)
-        out = np.full_like(a, fill)
-        lower = [slice(None)] * 3
-        upper = [slice(None)] * 3
-        if sign > 0:
-            lower[axis] = slice(1, None)
-            upper[axis] = slice(None, -1)
-        else:
-            lower[axis] = slice(None, -1)
-            upper[axis] = slice(1, None)
-        out[tuple(lower)] = a[tuple(upper)]
-        return out
-
     def _neighbours(self, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None) -> np.ndarray:
-        """The sum of the six neighbours' amplitudes at every Node (verb G):
-        the wrap on a periodic axis, 0 beyond a zero face (no Node there),
-        the row itself on an axis of one layer; `wrap` the world's faces (one
-        border for every family). Nothing is read through a Port: the take
-        is retired (ALGEBRA.md 9.19 (3))."""
+        """The sum of the six arrivals at every Node (the receive; a folded axis gives the Node itself twice), on the world's faces or the family's."""
         total = np.zeros_like(a)
-        for axis in range(3):
-            if self.shape[axis] == 1:
-                total += 2 * a
-                continue
-            for sign in (1, -1):
-                total += self._shift(a, axis, sign, wrap=wrap)
+        for port in self.ports.arrivals(a, wrap):
+            total += port
         return total
 
     def _axis_sums(
         self, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """The two neighbours\' levels summed per axis at every Node, the three arrival sums rule3 reads; their sum is `_neighbours` (verb G; ALGEBRA.md 9.57 (1))."""
-        sums = []
-        for axis in range(3):
-            if self.shape[axis] == 1:
-                sums.append(2 * a)
-                continue
-            sums.append(self._shift(a, axis, 1, wrap=wrap) + self._shift(a, axis, -1, wrap=wrap))
+        """The two arrivals summed per axis at every Node, the three arrival sums rule3 reads; their sum is `_neighbours` (ALGEBRA.md 9.57 (1))."""
+        arr = self.ports.arrivals(a, wrap)
+        sums = tuple(arr[port_of(axis, 1)] + arr[port_of(axis, -1)] for axis in range(3))
         return sums[0], sums[1], sums[2]
 
     def _axis_contents(self, family: int, inverse: bool = False) -> tuple[np.ndarray, ...] | None:
@@ -2530,12 +2537,9 @@ class DetectorLawSimulation:
     def _arrival(
         self, a: np.ndarray, axis: int, sigma: int, wrap: tuple[bool, bool, bool]
     ) -> np.ndarray:
-        """The level arriving through the Port toward `sigma` on the axis: the
-        neighbour's level (the wrap on a periodic axis, 0 beyond an open face, the
-        Node itself on a folded axis of extent 1), as `_neighbours` reads it."""
-        if self.shape[axis] == 1:
-            return a
-        return self._shift(a, axis, -sigma, wrap=wrap)
+        """The level arriving through the Port toward `sigma` on the axis (the wrap on a periodic axis, 0 beyond an open face, the Node itself on a folded axis)."""
+        arrived: np.ndarray = self.ports.arrivals(a, wrap)[port_of(axis, sigma)]
+        return arrived
 
     def _port_twists(self, live: LiveRecord, inverse: bool) -> list[np.ndarray] | None:
         """THE LINK'S ANGLE PER PORT (ALGEBRA.md 9.81 (2) (a), 9.91 (6)): k = sigma x by x
@@ -2752,15 +2756,7 @@ class DetectorLawSimulation:
         return wall
 
     def _flux_ports(self, family: int) -> list[tuple[int, int, np.ndarray]]:
-        """The Ports of every detector for the flux reading (ALGEBRA.md 9.25 (2),
-        the mathematician's gate item 2): per axis of extent above 1 and
-        per side s, the Nodes of a detector whose neighbour on that side (the
-        read across the Link, on the family's faces) is a Node of no set or
-        of ANOTHER set; a Link between two Nodes of one set (inside a
-        detector's cube) is no Port, so the energy that entered the set at
-        one Node is not offered again at its neighbour. A self-read of a folded
-        axis carries no flux; beyond an open face there is no Node and no
-        Link."""
+        """The Ports of every detector for the flux reading: per axis of extent above one and per side, the Nodes of a detector whose neighbour across the Link (on the family's faces) is a Node of no set or of another set; a Link inside one set is no Port, a folded axis carries none, beyond an open face there is no Link."""
         wrap = self.kind_wrap[family]
         set_names = sorted(set(self.detector_set))
         set_of_detector = [set_names.index(name) for name in self.detector_set]
@@ -2772,7 +2768,7 @@ class DetectorLawSimulation:
             if self.shape[axis] == 1:
                 continue
             for side in (1, -1):
-                neighbour = self._shift(set_index, axis, -side, fill=-2, wrap=wrap)
+                neighbour = self.ports.arrivals(set_index, wrap, -2)[port_of(axis, side)]
                 mask = occupied & (neighbour != -2) & (neighbour != set_index)
                 ports.append((axis, side, mask))
         return ports
@@ -2794,7 +2790,7 @@ class DetectorLawSimulation:
         axes: list[np.ndarray] = []
         sides: list[np.ndarray] = []
         for axis, side, mask in self._flux_ports(family):
-            across = self._shift(flat, axis, -side, fill=-1, wrap=wrap)
+            across = self.ports.arrivals(flat, wrap, -1)[port_of(axis, side)]
             where = mask & (across >= 0)
             nodes.append(flat[where])
             neighbours.append(across[where])
@@ -2965,14 +2961,7 @@ class DetectorLawSimulation:
         return [(value > 0) - (value < 0) for value in tally]
 
     def inward_flux(self, live: LiveRecord, mask: np.ndarray) -> int:
-        """The one-way inward flux into the Nodes of `mask` through the Links
-        from Nodes outside it (9.19 (3)): 3 G_ij = now_i before_j - before_i
-        now_j where positive, times the family's wall (the form's units; the
-        current unweighted, item 36), from the record's two levels
-        after the interval's step (`now`, `before`; the prototype's
-        reading, board_algebra.py); the pair's second level added (9.82 (3)
-        (b)) and the Ports along the record's own component skipped (9.82
-        (3) (c); commit 4)."""
+        """The one-way inward flux into the Nodes of `mask` through the Links from outside: wall times (now_i before_j - before_i now_j) where positive from the record's two levels after the step, the second level added, the Ports along the record's own component skipped."""
         wrap = self.kind_wrap[live.family]
         wall = self.kind_wall(live.family)
         own_axis = self.booked_axis(live)
@@ -2984,17 +2973,15 @@ class DetectorLawSimulation:
             if self.shape[axis] == 1 or axis == own_axis:
                 continue
             for side in (1, -1):
-                outside = ~self._shift(mask, axis, -side, fill=False, wrap=wrap)
-                present = self._shift(
-                    np.ones(self.shape, dtype=bool), axis, -side, fill=False, wrap=wrap
-                )
-                port = mask & outside & present
+                port = self.ports.outward(mask, wrap)[port_of(axis, side)]
                 if not port.any():
                     continue
                 flux = np.zeros(self.shape, dtype=object)
                 for level_now, level_before in levels:
-                    now_j = self._shift(level_now, axis, -side, wrap=wrap).astype(object)
-                    before_j = self._shift(level_before, axis, -side, wrap=wrap).astype(object)
+                    now_j = self.ports.arrivals(level_now, wrap)[port_of(axis, side)].astype(object)
+                    before_j = self.ports.arrivals(level_before, wrap)[port_of(axis, side)].astype(
+                        object
+                    )
                     flux = (
                         flux + level_now.astype(object) * before_j - level_before.astype(object) * now_j
                     )
@@ -3354,23 +3341,19 @@ class DetectorLawSimulation:
         live.now = nxt
         live.age += 1
         if live.window_open:
-            # THE POINT EMITTER (ALGEBRA.md 9.71 (1) (b), (c); item 50): the
-            # window's write and its outward reading right after the record's
-            # own step, before any booking reads the rows: the bookings read
-            # the rows as the interval leaves them, both levels with their
-            # writes (a flux read across a write books the write itself)
-            self._window_write(live)
-        # THE FLUX READING (ALGEBRA.md 9.19 (3)): after the step, the one-way
-        # inward flux into every detector this interval, from the record's two
-        # levels at the Ports alone (record 1934), booked to the detector's
-        # pointer C; nothing is taken, the rows evolve at every Node
-        before_booking = list(live.pointers)
-        for detector, value in self.detector_inflow_tally(live).items():
-            live.pointers[detector] += value
-            live.absorbed += value
-        # this interval's increment per detector
-        increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
-        self.register.at("the clicks", "(ii)")(live, increments)
+            # the window's write right after the record's own step, before any booking reads the rows
+            with self.main_loop.act("the giving", "(ii)", self._card_writes("the giving"), dict):
+                self._window_write(live)
+        # the flux reading: the one-way inward flux into every detector, booked to its pointer, then the click
+        with self.main_loop.act(
+            "the clicks", "(ii)", self._card_writes("the clicks"), lambda: self.fingerprints_of(live)
+        ):
+            before_booking = list(live.pointers)
+            for detector, value in self.detector_inflow_tally(live).items():
+                live.pointers[detector] += value
+                live.absorbed += value
+            increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
+            self.register.at("the clicks", "(ii)")(live, increments)
 
     def _window_centre(self, block: Block) -> tuple[int, int, int]:
         """The body's Node of a block with a window (its centre Node)."""
@@ -3378,16 +3361,7 @@ class DetectorLawSimulation:
         return (int(axes[0][0]), int(axes[1][0]), int(axes[2][0]))
 
     def _window_write(self, live: LiveRecord) -> None:
-        """One interval of an open window (ALGEBRA.md 9.71 (1) (b), (c); item
-        50; the body's declared write at its own Nodes, record 2082 (2); commit
-        7), right after the record's own step: (b) the body's rotation is
-        written into the given row at every Node of the body, a_given(i) += g x
-        a_body(i) (the body stepped this interval already, its levels the ones
-        written; a one-Node body its one Node, the body's Node of 9.71 (1)); (c) the
-        norm that left the body this interval is read as the outward flux
-        through its outer Ports from the two levels as the interval leaves
-        them, both with their writes, and summed; the window's count grows by
-        one and the record's box takes the body in."""
+        """One interval of an open window right after the record's own step: the body's rotation written into the given row at the body's Nodes, the norm that left the body read as the outward flux through its outer Ports, the window's count grown and the box taking the body in."""
         block = self.block_by_number.get(live.emitter) if live.emitter is not None else None
         if block is None or block.window != live.identity:
             return
@@ -3419,18 +3393,7 @@ class DetectorLawSimulation:
         return np.asarray(block.own.now[block.mask], dtype=np.int64)
 
     def body_outward_flux(self, live: LiveRecord, block: Block, tally: list[int] | None = None) -> int:
-        """THE OUTWARD FLUX through the body's outer Ports this interval (ALGEBRA.md
-        9.71 (1) (c); record 2082 (2); item 50; commit 7): over every Port from a
-        Node of the body to a Node outside it, the taking's inward booking with the
-        sign reversed, wall (now_j before_i - before_j now_i) where positive (the
-        Link to a Node beyond an open face carries none; a folded axis none; the
-        Ports along the record's own component none, 9.82 (3) (c)), from the
-        record's two levels as the interval leaves them, this interval's write in
-        `now` and the last one's in `before`; the pair's second level added (9.82
-        (3) (b)).
-        With `tally`, the flux through the Ports on the body's +a side is added to
-        tally[a] and through its -a side subtracted (the given quantum's direction,
-        ALGEBRA.md 9.91 (4); commit 5 without the recoil), in the same units."""
+        """The outward flux through the body's outer Ports this interval, wall times (now_j before_i - before_j now_i) where positive over the Ports to Nodes outside the body (none beyond an open face, on a folded axis or along the record's own component), the second level added; with `tally` the flux per axis signed by the side."""
         wall = self.kind_wall(live.family)
         wrap = self.kind_wrap[live.family]
         own_axis = self.booked_axis(live)
@@ -3443,18 +3406,13 @@ class DetectorLawSimulation:
             if self.shape[axis] == 1 or axis == own_axis:
                 continue
             for side in (1, -1):
-                # the Port from i to j = i + side e_axis, j outside the body
-                ports = mask & ~np.roll(mask, -side, axis=axis)
-                if not wrap[axis]:
-                    face: list[slice | int] = [slice(None)] * 3
-                    face[axis] = -1 if side == 1 else 0
-                    ports[tuple(face)] = False
+                ports = self.ports.outward(mask, wrap)[port_of(axis, side)]
                 if not ports.any():
                     continue
                 flux = np.zeros(int(np.count_nonzero(ports)), dtype=np.int64)
                 for now, before in levels:
-                    now_j = np.roll(now, -side, axis=axis)[ports]
-                    before_j = np.roll(before, -side, axis=axis)[ports]
+                    now_j = self.ports.arrivals(now, wrap)[port_of(axis, side)][ports]
+                    before_j = self.ports.arrivals(before, wrap)[port_of(axis, side)][ports]
                     flux += now_j * before[ports] - before_j * now[ports]
                 outward = int(flux[flux > 0].sum()) * wall
                 total += outward
@@ -3463,19 +3421,7 @@ class DetectorLawSimulation:
         return total
 
     def _point_windows(self) -> None:
-        """THE WINDOW, one interval (ALGEBRA.md 9.69 (2), 9.71 (1); BUILD.md
-        section 26 item 50; the law's one giving since commit 7, 9.85 (5),
-        9.91 (10) 7, record 2082 (4)): the close, after the interval's
-        bookings; the write (b) and the outward reading (c) are the record's
-        own, right after its step (`_window_write`). (d) At the first interval
-        at which the summed outward norm reaches T (the quantum's norm, the
-        emitter's `norm`) the window closes: the writing ends (the
-        quantum, the stock and the ledger moved at the open, the norm T from
-        there), the giving line names the record with the window's length,
-        and the next excitation waits its count from here. What comes out by the law: a train of about n c_l
-        Links with the band 1 / n, at the wave number light's dispersion gives
-        to the body's Node's frequency; no declared train. The giving is n additive
-        writes, each undone by the inverse (`_point_window_inverse`)."""
+        """The point emitters' windows closed after the interval's bookings: the given record's norm, residue and wheel fixed from what left the body, the window's count and the record's box settled, the giving line written."""
         for block in self.blocks:
             if block.window is None:
                 continue
@@ -3804,11 +3750,8 @@ class DetectorLawSimulation:
             self.record(gather)
 
     def step(self) -> None:
-        """One interval: the clock, then the file's acts in the file's order, each through the register, then the interval's closing (the bodies' clocks, the clicked records leaving, the readings)."""
-        self.tick += 1
-        for place, name, stage, words in self._acts:
-            stage(self.register.at(name, place), **words)
-        self._close_interval()
+        """One interval, walked by the main loop: the clock, the file's acts through the register under its guards, the closing."""
+        self.main_loop.run(self)
 
     # The readings
 

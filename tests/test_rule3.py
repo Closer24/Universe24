@@ -208,32 +208,23 @@ def test_every_step_of_the_engine_goes_through_the_one_rule(monkeypatch):
     assert simulation.books()["balanced"]
 
 
-# THE SPLIT IS BUILT FROM THE RULE TOO (the model owner's word through the Boss, record 2234): a
-# Node's level goes to its six neighbours only through rule3's own send, receive, wait and
-# operation; the split has no function of its own. The functions that shift an array across
-# Nodes, each with its reason: the transport (send and receive, the arrival sums rule3 reads) and
-# the readings of a neighbour's level at a Port (the flux booked at the Node, no level written);
-# a shift of a mask or of an index (the shell, the sets' Ports) moves no level.
-LEVEL_SHIFTERS = {
-    "_shift": "the one shift of an array across a Link, the send and the receive",
-    "_neighbours": "the six neighbours' sum, the receive",
-    "_axis_sums": "the arrival sums per axis, the receive rule3 reads",
-    "_arrival": "one neighbour's level after the transport, the receive",
-    "inward_flux": "the neighbour's levels read at a detector's Ports for the booking, no level written",
-    "body_outward_flux": "the neighbour's levels read at a body's outer Ports for the window, no level written",
-}
-INDEX_SHIFTERS = {"shell_mask", "_flux_ports", "_inflow_ports"}
+# A Node's level goes to its six neighbours only through the Ports: the one shift of an array across a
+# Link is core/ports.py's `arrival`, the send and the receive; every reading of a neighbour's level (the
+# transport's arrival sums, the flux at a Port, the shell of a body) takes it from there.
+SHIFT_HOME = {"src/event_universe/core/ports.py": {"arrival"}}
+SHIFT_TOKENS = re.compile(r"np\.roll\(|\._shift\(|\.take\(")
 
 
 def test_no_other_code_moves_a_level_from_one_node_to_another():
-    """Record 2234: every shift of an array across Nodes in src/ sits in a named function of the
-    transport or of a Port's reading, and no function of src/ is a split of its own."""
+    """Every shift of an array across Nodes in src/ is core/ports.py's `arrival` (no np.roll, no take, no
+    shift elsewhere: the loop reads its neighbours through the Ports), and no function of src/ is a split
+    of its own."""
     import ast
 
     found: dict[str, set[str]] = {}
     for path in sorted(SOURCE.rglob("*.py")):
         text = path.read_text(encoding="utf-8")
-        if "np.roll(" not in text and "._shift(" not in text:
+        if not SHIFT_TOKENS.search(text):
             continue
         tree = ast.parse(text)
         spans = [
@@ -241,12 +232,13 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
             for node in ast.walk(tree)
             if isinstance(node, ast.FunctionDef)
         ]
-        for match in re.finditer(r"np\.roll\(|self\._shift\(", text):
+        for match in SHIFT_TOKENS.finditer(text):
             line = text.count("\n", 0, match.start()) + 1
             inner = max((span for span in spans if span[0] <= line <= span[1]), key=lambda span: span[0])
             found.setdefault(path.relative_to(ROOT).as_posix(), set()).add(inner[2])
-    engine = found.pop("src/event_universe/events/detector_law.py")
-    assert engine <= set(LEVEL_SHIFTERS) | INDEX_SHIFTERS, engine - set(LEVEL_SHIFTERS) - INDEX_SHIFTERS
+    assert "src/event_universe/events/detector_law.py" not in found
+    for home, functions in SHIFT_HOME.items():
+        assert found.pop(home) == functions
     assert {name for name in found if not name.startswith("src/event_universe/diagnostics/")} == set(), (
         found
     )
