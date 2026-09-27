@@ -344,3 +344,8 @@ def test_detector_definitions_select_no_cancelled_consumer():
     } & set(tests)
     assert "tests/test_preflight_worlds.py" in tests
     assert "tests/test_nature_beam_flight.py" not in tests
+
+
+def test_a_change_to_the_law_selects_its_words_and_links_gate():
+    tests, _ = CHECK.select(["docs/ALGEBRA.md"], {})
+    assert "tests/test_law_words.py" in tests
