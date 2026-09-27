@@ -10,8 +10,8 @@ not in this document.
 
 ### The objects
 
-A **Node** is a physical location. The **GameBoard** is the lattice of
-Nodes, a box of `shape` = (N_x, N_y, N_z) Nodes; each axis is periodic
+A **Node** is a physical location. The **GameBoard** is all the Nodes
+together, a box of `shape` = (N_x, N_y, N_z) Nodes; each axis is periodic
 (the box a torus on that axis) or open (a face beyond which no Node
 lies), as the world declares. Two Nodes that differ by one step along
 one axis are joined by a **Link**; each Node has six Links, one through
@@ -260,8 +260,8 @@ two read acts of Rule3 with the coefficients (2c, -2s) and (2s, 2c) on
 the two arrivals, the load d, the wall 2 d, the remainder not kept: a
 remainder carried across intervals is one to one only while d stands,
 and d changes with the angle every interval; the rounding is unbiased
-in the mean and the inverse recomputes the same T from the start's
-levels, exact. The record's own rotation "own" is round(2^16 omega_0),
+in the mean and the inverse recomputes the same triple from the
+start's levels, exact. The record's own rotation "own" is round(2^16 omega_0),
 written once by the loader from the record's pair (matter) or from its
 wavelength on light's dispersion (light), so no per-world number is
 declared. The charge's twist on a charged record is Lambda times "own",
@@ -269,7 +269,7 @@ by q: no separate number exists.
 
 ### The second level
 
-A phase-2 family runs the line of 2.1 on each of its two levels with the
+A phase-2 family runs [the line](#the-line) on each of its two levels with the
 transported arrivals; with no twist the second level stays exactly zero
 when it starts zero. The **self-source** of a family with the unit P_2
 above 0, at every Node from the start's levels,
@@ -427,7 +427,7 @@ the probability that the click lands at Node i is C_i(infinity) / T, the
 detector's share of the record's total inward flux, whatever the time
 profile.
 
-PROOF. theta is then spread evenly over a grid of V points in [0, T).
+PROOF. theta is then spread evenly over V points in [0, T).
 The segments [C(t - 1) + SUM_{j < i} f_j(t), C(t - 1) + SUM_{j <= i}
 f_j(t)), one per (interval, Node), partition [0, C(infinity)) and have
 the lengths f_i(t); so P(the click at interval t at Node i) = f_i(t) / T
@@ -464,7 +464,7 @@ on the record of the primitive that divided.
 | the self-source | (i) | the family's own levels, P_2 | the family's level | [the second level](#the-second-level) |
 | the operation | (i) | the coefficients | the record's levels | Rule3's line itself |
 | the wait | (i) | the record's age | the record's age | the count (b) at a / b = 2: one interval |
-| the clicks | (ii) | the current at the detectors' Ports, u, W, T | the record's tally; a body's content M_k at t + 1 | the ladder of [the ladder](#the-ladder) until the count's line is bound in the loop |
+| the clicks | (ii) | the current at the detectors' Ports, u, V, T | the record's tally; a body's content M_k at t + 1 | the ladder of [the ladder](#the-ladder) until the count's line is bound in the loop |
 | the count's line | (ii) | the record's levels at the Node and across its six Ports, T, the weight | the count at a Node, its remainder | [the count's line](#the-counts-line) |
 | the lifetime | (ii) | the record's age, L | the record's end | the age is the count (b) on the record; at age L on the face the record ends |
 | the clicks list | (ii) | the record's remainders, the wheels | the taken momentum's shares | the products' shares are the click's draw; the sum is the taken momentum exactly |
