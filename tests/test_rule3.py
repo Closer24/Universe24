@@ -1,13 +1,7 @@
-"""THE RULE IN ONE PLACE (the model owner's question of 2026-09-26 through the Boss, 16:33Z;
-ALGEBRA.md 9.57 (1), 9.50 (8), (9) and (13), 9.91 (2); the operation's cut of issue #1154;
-src/event_universe/core/rule3.py).
-
-One function steps every record at every Node in either direction, the body's Node record
-included; the conserved form's Node term is read from the same integers; the isotropic
-rule is the same call with the three paces equal (the axis contents zero); the coefficients are
-the two functions of the engine before the cut, term for term; no other file of src/ writes this
-arithmetic; the operation primitive of the register is rule3 itself. Bit for bit on every
-shipped world: the suites' digests and the shipped worlds' record."""
+"""THE RULE IN ONE PLACE (ALGEBRA.md 9.57 (1), 9.50 (8), (9) and (13), 9.91 (2); issue #1154;
+src/event_universe/core/rule3.py): one function steps every record at every Node in either direction;
+the form's term is read from the same integers; the isotropic rule is the same call with equal paces;
+no other file of src/ writes this arithmetic; the operation primitive is rule3; bit for bit everywhere."""
 
 from __future__ import annotations
 
@@ -65,11 +59,8 @@ def old_axes(
 
 
 def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_zero_axis_contents():
-    """One function of the paces: with the axis contents zero it is the isotropic rule's
-    (R, R, R), S, w term for term (4 num x 3 p^2 = 12 num p^2); with them the four paces'
-    reads; `weak_field` False the plain first-order rule; `ISOTROPIC` is the default; the vacuum
-    c = 0 is 2 Gamma^2 times the plain rule; a tensor along x alone slows the x read and the own
-    term by 4 num (p_x^2 - p_0^2)."""
+    """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four
+    paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule."""
     rng = random.Random(3)
     for _ in range(500):
         num, den = rng.randint(1, 1000), rng.randint(1, 1000)
@@ -103,9 +94,8 @@ def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_ze
 
 
 def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_arrays():
-    """w a_next + r' = SUM_a R_a arr_a + S a_now - w a_before + r with 0 <= r' < w, and the
-    inverse returns a_before and r exactly; on int64 arrays the sum over the axes equals R
-    times the six-sum bit for bit (the ring's arithmetic), the dtype kept."""
+    """w a_next + r' = SUM_a R_a arr_a + S a_now - w a_before + r with 0 <= r' < w, the inverse exact; on
+    int64 arrays the sum over the axes equals R times the six-sum bit for bit, the dtype kept."""
     rng = random.Random(5)
     for _ in range(500):
         num, den = rng.randint(1, 1000), rng.randint(1, 1000)
@@ -198,9 +188,8 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
 
 
 def test_every_step_of_the_engine_goes_through_the_one_rule(monkeypatch):
-    """The engine's records step and step back through rule3 alone, forward with the direction
-    +1 and back with -1 (a spy on the one name the engine imports), and the operation primitive
-    of the register is rule3 itself."""
+    """The engine's records step and step back through rule3 alone (+1 forward, -1 back, a spy on the one
+    name the engine imports), and the operation primitive of the register is rule3 itself."""
     calls = {"forward": 0, "backward": 0}
     real_rule = detector_law.rule3
 
@@ -265,9 +254,8 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
 
 
 def test_a_run_stepped_forward_and_back_returns_bit_for_bit():
-    """Rule3 with the direction -1 undoes the direction +1 exactly: the emitter world stepped
-    eight intervals forward and eight back returns every record's levels and remainders and
-    the held levels bit for bit (ALGEBRA.md 9.50 (8), (9))."""
+    """Rule3 with the direction -1 undoes +1 exactly: the emitter world eight intervals forward and eight
+    back returns every record's levels, remainders and the held levels bit for bit (9.50 (8), (9))."""
     simulation = detector_law.DetectorLawSimulation(
         parse_nature_beam_world(emitter_world(stock=1, ticks=8))
     )
