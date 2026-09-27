@@ -14,7 +14,7 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
 from tests.bodies import massive_world
 from tests.running import planted
-from tests.worlds import NODE_CLOCK
+from tests.worlds import NODE_CLOCK, family_entry
 from tests.worlds import reads as family_reads
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
@@ -172,9 +172,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
     into a set the record does not reach."""
     document = massive_world([40, 1, 1], PERIODIC, [800, 809])
     document["age_bound"] = 100000
-    document["universe"].append(
-        {"name": "source", "quantum": 1, "pair": [7, 8], "charge": 0, "reads": family_reads()}
-    )
+    document["universe"].append(family_entry("source", [7, 8], family_reads()))
     document["measured"] = [
         {
             "position": [20, 0, 0],
@@ -185,6 +183,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             "start": 0,
             "margin": "control",
             "momentum": [0, 0, 0],
+            "fixed": False,
             "side": 1,
             "q": 0,
             "spin": [0, 0, 0],
@@ -199,6 +198,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             "amount": 1,
             "stocks": {},
             "momentum": [0, 0, 0],
+            "fixed": False,
         },
         *(
             {
@@ -207,6 +207,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
                 "amount": 1,
                 "stocks": {},
                 "momentum": [0, 0, 0],
+                "fixed": False,
             }
             for x in (6, 7, 30, 31, 32)
         ),

@@ -23,14 +23,14 @@ from event_universe.diagnostics.massive_record_margin import (
     integer_mode_iteration,
     iterated_mode,
 )
-from event_universe.events.world import (
+from event_universe.loader.world import (
     MOST_FAMILIES,
     mode_residual,
     six_neighbours_flat,
 )
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import CLOSED_CHAIN, emitter, light_clock_world, massive_world
-from tests.worlds import emitter_world, massive_generator, reads
+from tests.worlds import emitter_world, family_entry, massive_generator, reads
 
 
 def peak_of(profile: list[int]) -> int:
@@ -99,6 +99,7 @@ def test_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_roundi
             "ramp": 0,
             "start": 0,
             "momentum": [0, 0, 0],
+            "fixed": False,
             "side": 12,
             "q": 0,
             "spin": [0, 0, 0],
@@ -178,18 +179,10 @@ def test_at_most_five_families():
     assert len(document["universe"]) <= MOST_FAMILIES
     while len(document["universe"]) < MOST_FAMILIES:
         document["universe"].append(
-            {
-                "name": f"family_{len(document['universe'])}",
-                "quantum": 1,
-                "pair": [800, 809],
-                "charge": 0,
-                "reads": reads(),
-            }
+            family_entry(f"family_{len(document['universe'])}", [800, 809], reads())
         )
     parse_nature_beam_world(restamped(document))
-    document["universe"].append(
-        {"name": "sixth", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()}
-    )
+    document["universe"].append(family_entry("sixth", [800, 809], reads()))
     restamped(document)
     with pytest.raises(
         ValueError,
@@ -214,6 +207,7 @@ def test_bodies_are_whole_and_disjoint():
             "ramp": 0,
             "start": 0,
             "momentum": [0, 0, 0],
+            "fixed": False,
             "side": side,
             "q": 0,
             "spin": [0, 0, 0],
@@ -281,6 +275,7 @@ def test_two_wells_of_one_family_may_stand_anywhere():
             "ramp": 0,
             "start": 0,
             "momentum": [0, 0, 0],
+            "fixed": False,
             "side": 3,
             "q": 0,
             "spin": [0, 0, 0],

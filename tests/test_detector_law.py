@@ -50,6 +50,7 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
         "amount": 6,
         "stocks": {},
         "momentum": [0, 0, 0],
+        "fixed": False,
         "lamp": {"rate": [1, 40], "wheel": [1, 64], "directions": [[1, 0, 0]], "train": 4},
     }
     with pytest.raises(ValueError, match="has unknown keys: lamp"):
@@ -64,8 +65,8 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
         with pytest.raises(ValueError, match=f"has unknown keys: {key}"):
             parse_nature_beam_world(retired)
     integer_clock = chain_world()
-    integer_clock["universe"][0]["phase_per_link"] = 3
-    with pytest.raises(ValueError, match="pair form of"):
+    integer_clock["universe"][0]["clock"] = 3
+    with pytest.raises(ValueError, match="clock must be a list, not 3"):
         parse_nature_beam_world(integer_clock)
 
 
@@ -191,7 +192,7 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
         parse_nature_beam_world(set_wheel)
     on_light = chain_world()
     on_light["universe"][0]["take"] = [-15, 56]
-    with pytest.raises(ValueError, match=r"families\[0\] has unknown keys: take"):
+    with pytest.raises(ValueError, match=r"universe\[0\] has unknown keys: take"):
         parse_nature_beam_world(on_light)
 
 
@@ -435,6 +436,7 @@ def test_detector_is_one_connected_cube_of_side_three():
                 "ramp": 0,
                 "start": 0,
                 "momentum": [0, 0, 0],
+                "fixed": False,
                 "side": side,
                 "q": 0,
                 "spin": [0, 0, 0],

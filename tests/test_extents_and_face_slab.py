@@ -14,7 +14,7 @@ import numpy as np
 import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import body_node_indices
+from event_universe.loader.world import body_node_indices
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import planted
 from tests.worlds import emitter_world, layer_world, massive_generator
@@ -43,6 +43,7 @@ def wall(position, family="light", **keys):
         "amount": 1,
         "stocks": {},
         "momentum": [0, 0, 0],
+        "fixed": False,
         "pair": [1, 2],
         **keys,
     }
@@ -133,6 +134,7 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
             "ramp": 0,
             "start": 0,
             "momentum": [0, 0, 0],
+            "fixed": False,
             "extents": [12, 5, 1],
             "q": 0,
             "spin": [0, 0, 0],

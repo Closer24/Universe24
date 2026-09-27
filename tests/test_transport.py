@@ -18,8 +18,8 @@ import pytest
 
 from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import TWIST_FINE_BITS
 from event_universe.generator_numbers import light_twist, rotation_twist, twist_triple
+from event_universe.loader.world import TWIST_FINE_BITS
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import PACES_SHAPE as SHAPE
 from tests.bodies import paces_world, parts_of
@@ -46,7 +46,10 @@ def twisted_world() -> dict:
         if family["name"] == "charge":
             # the charge with its vector part (the shipped file's entry on the inline list)
             family.update(
-                {"parts": [1, 3], "held_factors": [1, 1], "held_dipole": "moment", "held_dipole_div": 2}
+                {
+                    "parts": [1, 3],
+                    "held": {"count": "sign", "factors": [1, 1], "dipole": "moment", "dipole_div": 2},
+                }
             )
     document["twist_table"] = table()
     document["stamp"] = input_stamp(document)

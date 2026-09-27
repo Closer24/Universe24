@@ -151,7 +151,7 @@ def test_the_trace_hand_identity_on_the_emitters_run():
     (ALGEBRA.md 9.112 item 5; 9.84 (2)); that the run moves no momentum is tests/test_four_vector_click.py's check."""
     document = emitter_world(stock=4, ticks=1200)
     period = document["measured"][0]["emitter"]["period"]
-    wavelength = 2 * document["N"] // document["universe"][0]["phase_per_link"][0]  # k = pi / 2: 4
+    wavelength = 2 * document["N"] // document["universe"][0]["clock"][0]  # k = pi / 2: 4
     assert wavelength == 4 and period > 0
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)

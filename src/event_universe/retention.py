@@ -182,7 +182,7 @@ def _read(path: Path) -> dict[str, Any]:
     entry = json.loads(path.read_text(encoding="utf-8"))
     if (
         not isinstance(entry, dict)
-        or entry.get("version") != 1
+        or entry.get("record_form") != 1
         or entry.get("id") != path.stem
         or not _number(entry.get("started_at"))
         or not isinstance(entry.get("targets"), list)
@@ -342,7 +342,7 @@ def _register(
                 )
             started = time.time() if finished_at is None else finished_at
             entry = {
-                "version": 1,
+                "record_form": 1,
                 "id": identifier,
                 "started_at": started,
                 "finished_at": finished_at,

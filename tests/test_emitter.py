@@ -14,7 +14,7 @@ from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import run
-from tests.worlds import NODE_CLOCK, emitter_world, lawful_wheel, reads
+from tests.worlds import NODE_CLOCK, emitter_world, lawful_wheel
 
 
 def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
@@ -393,11 +393,3 @@ def test_the_loaders_refusals_name_their_keys():
         document["measured"][0]["receiver"] = "screen"
 
     refused(two_ladders, "one ladder")
-
-    def free_given(document):
-        document["universe"].append(
-            {"name": "e", "quantum": 0, "pair": [1, 1], "charge": -1, "reads": reads()}
-        )
-        document["measured"][0]["emitter"]["family"] = "e"
-
-    refused(free_given, "paid family")

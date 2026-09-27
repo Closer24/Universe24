@@ -1,7 +1,4 @@
-"""THE SELF-SOURCE, its own folder (ALGEBRA.md 9.117 the row "the self-source"; 9.91 (5); record 2250):
-each difference Rule3's read act, its square a booking, the sum divided by P_2 by the division act; on
-the shipped moving Lorentz world with the charge's unit P_2 = 24 A the folder's line through the register
-is the loop's arithmetic before the binding at every interval, forward and backward, bit for bit."""
+"""The self-source's folder: each difference Rule3's read act, its square a booking, the sum divided by P_2; on the shipped moving Lorentz world the folder's line is the loop's arithmetic at every interval, forward and backward, bit for bit."""
 
 from __future__ import annotations
 

@@ -1,10 +1,4 @@
-"""THE DOCUMENT LOCK (the model owner's decision through the Boss, 2026-09-26 22:01Z; the short
-procedure, point 12): the project keeps three current documents (the law, the engine, the
-decisions), the skills and the entry files, and nothing else; each of the three stays under a
-line cap set when its condensed version lands; none of the three carries a history marker. One
-test, selected on every pull request. A gate the tree fails today is marked xfail strict with
-its reason; it turns green when the deletion or the condensed document lands and then loses its
-mark. Three small trees show each gate fails."""
+"""The document lock: only the three current documents, the skills and the entry files exist; each of the three stays under its line cap and holds no history marker; three small trees show each gate fails."""
 
 from __future__ import annotations
 

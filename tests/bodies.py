@@ -15,6 +15,7 @@ from tests.worlds import (
     NODE_CLOCK,
     chain_world,
     emitter_body,
+    family_entry,
     massive_generator,
     reads,
     receiver_cube,
@@ -74,8 +75,13 @@ def paces_world() -> dict:
     document["age_bound"] = 100000
     for family in document["universe"]:
         if family["name"] == "clicks":
-            family.update({"parts": [1, 3, 6], "held_factors": [1, 4, 2], "held_dipole": "spin"})
-            family["spins_step"] = {"curl": [1, 4], "tidal": [3, 4]}
+            family.update(
+                {
+                    "parts": [1, 3, 6],
+                    "held": {"count": "content", "factors": [1, 4, 2], "dipole": "spin"},
+                    "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
+                }
+            )
     document["stamp"] = input_stamp(document)
     return document
 
@@ -100,18 +106,11 @@ def charged_chain(
     """A chain of `length` under GAMMA: light bodies of `amount` quanta at `nodes`, light and matter charged,
     a neutral fifth family, and Lambda = `strength`."""
     document = content_chain(length, boundary, nodes, amount)
-    document["universe"][LIGHT]["charge"] = light_charge
-    document["universe"][MATTER]["charge"] = matter_charge
+    document["universe"][LIGHT]["sign"] = light_charge
+    document["universe"][MATTER]["sign"] = matter_charge
     document["universe"].insert(
         NEUTRAL,
-        {
-            "name": "neutral",
-            "quantum": 1,
-            "pair": [1, 1],
-            "phase_per_link": [512, 1],
-            "charge": 0,
-            "reads": reads(),
-        },
+        family_entry("neutral", [1, 1], reads(), clock=[512, 1]),
     )
     set_strength(document, strength)
     return document
@@ -136,17 +135,10 @@ def block_world(
 ) -> dict:
     """A world of the massive kind `matter` with blocks, a light family on the clock [77, 25], and optionally
     an emitter body of light (`emitter_at`) as the first measured event, seeded on its mode."""
-    matter: dict = {"name": "matter", "quantum": 1, "pair": kind, "charge": 0, "reads": reads()}
+    matter: dict = family_entry("matter", kind, reads())
     # light on the given clock [512, 1] of N = 1024 (the given train, ALGEBRA.md 9.17 (6a))
     families = [
-        {
-            "name": "light",
-            "quantum": 1,
-            "pair": [1, 1],
-            "phase_per_link": [512, 1],
-            "charge": 0,
-            "reads": reads(),
-        },
+        family_entry("light", [1, 1], reads(), clock=[512, 1]),
         matter,
     ]
     measured: list[dict] = []
@@ -164,6 +156,7 @@ def block_world(
             "ramp": 0,
             "start": 0,
             "momentum": block.get("momentum", [0, 0, 0]),
+            "fixed": block.get("fixed", False),
             "side": block["side"],
             "pair": block["pair"],
             # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2), no loader default
@@ -195,11 +188,9 @@ def block_world(
         "boundary": boundary,
         "face_depth": 1,
         "ticks": ticks,
-        "K": 1073741824,
         "N": 1024,
-        "release": [1, 128],
         "clock_stamp": True,
-        "width": 1,
+        "age_bound": 100000,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
@@ -246,6 +237,7 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "start": 0,
             "stocks": {"light": 1},
             "momentum": [0, 0, 0],
+            "fixed": False,
             "extents": [32, 1, 1],
             "q": 0,
             "spin": [0, 0, 0],
@@ -272,17 +264,15 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
 def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
     """A world of the massive kind `matter` beside light, with no emitter and no block; the face slab one Node
     deep where the board is open."""
-    matter: dict = {"name": "matter", "quantum": 1, "pair": pair, "charge": 0, "reads": reads()}
+    matter: dict = family_entry("matter", pair, reads())
     return {
         "shape": shape,
         "boundary": boundary,
         "face_depth": 1,
         "ticks": 10,
-        "K": 1073741824,
         "N": 1024,
-        "release": [1, 128],
-        "width": 1,
         "clock_stamp": False,
+        "age_bound": 100000,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
@@ -290,14 +280,7 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": [512, 1],
-                "charge": 0,
-                "reads": reads(),
-            },
+            family_entry("light", [1, 1], reads(), clock=[512, 1]),
             matter,
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
@@ -315,9 +298,9 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
     document["ticks"] = 160
     document["universe"][1]["name"] = "source"
     document["measured"][0]["family"] = "source"
-    matter: dict = {"name": "matter", "quantum": 1, "pair": [156, 157], "charge": 0, "reads": reads()}
+    matter: dict = family_entry("matter", [156, 157], reads())
     if clock is not None:
-        matter["phase_per_link"] = clock  # None: no clock (the refusal's edge case)
+        matter["clock"] = clock  # None: no clock (the refusal's edge case)
     document["universe"].append(matter)
     document["measured"] = document["measured"][:1]
     if matter_emitter:
@@ -341,7 +324,7 @@ def seed_source(document: dict, number: int) -> None:
 
 def source_family() -> dict:
     """The emitter bodies' massive family `source` (the kind SOURCE_KIND, no clock)."""
-    return {"name": "source", "quantum": 1, "pair": list(SOURCE_KIND), "charge": 0, "reads": reads()}
+    return family_entry("source", list(SOURCE_KIND), reads())
 
 
 def content_chain(length: int, boundary: dict, nodes, amount: int, gamma: int = GAMMA) -> dict:
@@ -363,6 +346,7 @@ def light_body(x: int, amount: int) -> dict:
         "amount": amount,
         "stocks": {},
         "momentum": [0, 0, 0],
+        "fixed": False,
     }
 
 
@@ -394,6 +378,7 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
             "start": 0,
             "stocks": {"light": stock},
             "momentum": [0, 0, 0],
+            "fixed": False,
             "extents": [1, 1, 1],
             "q": 0,
             "spin": [0, 0, 0],
@@ -430,6 +415,7 @@ def emitter(
         "start": 0,
         "stocks": {"light": stock},
         "momentum": [momentum, 0, 0],
+        "fixed": False,
         "extents": [32, 1, 1],
         "q": 0,
         "spin": [0, 0, 0],
@@ -465,16 +451,19 @@ def parts_world(**body: object) -> dict:
     for family in document["universe"]:
         if family["name"] == "clicks":
             family.update(
-                {"parts": [1, 3, 6], "held_factors": [1, 4, 2], "held_dipole": "spin", "levels": 1}
+                {
+                    "parts": [1, 3, 6],
+                    "phase": 1,
+                    "held": {"count": "content", "factors": [1, 4, 2], "dipole": "spin"},
+                    "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
+                }
             )
             family["spins_step"] = {"curl": [1, 4], "tidal": [3, 4]}
         if family["name"] == "charge":
             family.update(
                 {
                     "parts": [1, 3],
-                    "held_factors": [1, 1],
-                    "held_dipole": "moment",
-                    "held_dipole_div": 2,
+                    "held": {"count": "sign", "factors": [1, 1], "dipole": "moment", "dipole_div": 2},
                 }
             )
     document["stamp"] = input_stamp(document)

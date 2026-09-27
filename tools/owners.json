@@ -8,7 +8,6 @@
       ],
       "areas": [
         "src/event_universe/loader/",
-        "src/event_universe/events/world.py",
         "docs/ENGINE.md"
       ]
     },

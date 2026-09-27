@@ -24,7 +24,7 @@ import pytest
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
 from tests.running import run_world, stamped
-from tests.worlds import emitter_world
+from tests.worlds import emitter_world, family_entry
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
@@ -174,12 +174,7 @@ def test_3a_a_sourced_family_is_written_where_its_records_are_and_nowhere_else()
     same family with no source stays exactly zero everywhere (the leak test)."""
     document = emitter_world(stock=2, ticks=STEPS)
     well = {
-        "name": "well",
-        "quantum": 1,
-        "pair": [1000, 1019],
-        "phase_per_link": [512, 1],
-        "charge": 0,
-        "reads": [],
+        **family_entry("well", [1000, 1019], [], clock=[512, 1]),
         "sourced": {"of": "matter", "weight": 1, "scale": 1000},
     }
     null = {**well, "name": "null"}
