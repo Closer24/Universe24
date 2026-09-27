@@ -140,7 +140,10 @@ responsibilities. Keep renames, consumers, migration notes and the
   not branch on physical names, reintroduce an implicit default, or keep
   anything at a Node beyond the law's own numbers: each record's two levels
   and its division's remainder, the family's pair and the Node clock from the
-  content there (no register and no draw; the model owner, 2026-09-25).
+  content there (no register and no draw; the model owner, 2026-09-25). Any
+  other kept integer (a Port's accumulator, a body's spin, momentum or
+  position, a record's age) is a declared family's level with the KEEP step,
+  or it is a register and is refused at load (the model owner, 2026-09-27).
 - Displays only read state. A measurement is a detector's click, an action of
   the law on the state: the record ends at the detector and the detector's own
   record changes (the model owner, 2026-09-23, record 1139; [POSTULATES.md](POSTULATES.md)
