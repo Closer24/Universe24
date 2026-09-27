@@ -95,8 +95,7 @@ def physical_sources() -> dict[str, str]:
 
 
 def float_literals(source: str) -> list[int]:
-    """The lines of every float literal token (a decimal point or an
-    exponent outside a hexadecimal literal)."""
+    """The lines of every float literal token (a decimal point or an exponent outside a hexadecimal literal)."""
     found = []
     for token in tokenize.generate_tokens(io.StringIO(source).readline):
         if token.type != tokenize.NUMBER:
