@@ -1900,68 +1900,6 @@ def body_node_indices(
     return [x * stride_x + y * stride_y + z for x in ranges[0] for y in ranges[1] for z in ranges[2]]
 
 
-def six_neighbours_flat(
-    values: Sequence[int], shape: tuple[int, int, int], wrap: tuple[bool, bool, bool]
-) -> list[int]:
-    """S_6 of a flat x-major integer array in exact integers: the sum of the
-    six neighbours, a periodic axis wrapped (an axis of extent 1 reads the
-    Node itself twice), an open axis reading 0 beyond its faces; the read of
-    the law's rule and of the generator's iteration (ALGEBRA.md #a-familys-declaration)."""
-    extents = (int(shape[0]), int(shape[1]), int(shape[2]))
-    strides = (extents[1] * extents[2], extents[2], 1)
-    total = [0] * len(values)
-    for axis in range(3):
-        extent, stride = extents[axis], strides[axis]
-        for index, value in enumerate(values):
-            coordinate = (index // stride) % extent
-            for step in (1, -1):
-                neighbour = coordinate + step
-                if wrap[axis]:
-                    neighbour %= extent
-                elif not 0 <= neighbour < extent:
-                    continue
-                total[index + (neighbour - coordinate) * stride] += value
-    return total
-
-
-def mode_residual(
-    profile: Sequence[int],
-    num: Sequence[int],
-    den: Sequence[int],
-    clock: tuple[int, int],
-    shape: tuple[int, int, int],
-    wrap: tuple[bool, bool, bool],
-    where: Sequence[bool] | None = None,
-) -> tuple[int, int, tuple[int, int, int]]:
-    """THE EIGEN-EQUATION'S RESIDUAL IN INTEGERS (ALGEBRA.md #a-familys-declaration,
-    PROVED there as the bound for the rounded profile of an exact mode): at
-    every Node i of `where` (every Node by default) the residual
-    abs(b num_i (S_6 p)_i - 3 den_i a p_i) against the bound b (3 num_i + 6
-    den_i), the clock [a, b] the mode's 2 cos omega as a rational; the
-    Node of the largest excess with its residual and its bound (the
-    residual at or below the bound everywhere means the profile is the
-    operator's mode to within its rounding). Exact Python integers, the
-    same on every host; the arrays flat in x-major order."""
-    a, b = clock
-    read = six_neighbours_flat(profile, shape, wrap)
-    worst_index, worst_excess, worst_residual, worst_bound = 0, None, 0, 0
-    for index, (p, n, d, s) in enumerate(zip(profile, num, den, read, strict=True)):
-        if where is not None and not where[index]:
-            continue
-        residual = abs(b * n * s - 3 * d * a * p)
-        bound = b * (3 * n + 6 * d)
-        excess = residual - bound
-        if worst_excess is None or excess > worst_excess:
-            worst_index, worst_excess, worst_residual, worst_bound = index, excess, residual, bound
-    stride_x, stride_y = int(shape[1]) * int(shape[2]), int(shape[2])
-    node = (
-        worst_index // stride_x,
-        (worst_index // stride_y) % int(shape[1]),
-        worst_index % int(shape[2]),
-    )
-    return worst_residual, worst_bound, node
-
-
 # THE FILE'S DIGEST AND THE STAMP the generator writes (`input_digest`, `input_stamp`)
 # live in the host module event_universe.world_files since item 72: the loader
 # compares the stamp with the digest handed to it and computes none.

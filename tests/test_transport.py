@@ -15,11 +15,10 @@ from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import PACES_SHAPE as SHAPE
 from tests.bodies import paces_world, parts_of
 from tests.running import refused
-from tests.worlds import FILE, emitter_world, load_file, on_the_file
+from tests.worlds import FILE, emitter_world, on_the_file
 
 ROOT = Path(__file__).resolve().parents[1]
-GENERATOR = load_file("generator_numbers", ROOT / "tools" / "generator_numbers.py")  # the host's numbers
-rotation_twist, twist_triple = GENERATOR.rotation_twist, GENERATOR.twist_triple
+OWN_TWIST = 9785  # round(2^16 acos(800 / 809)), the retired generator's rounding of the pair's rest rotation, measured once
 GAMMA = 10_000
 UNIT = 4 * GAMMA * 65536
 
@@ -61,15 +60,14 @@ def composed(k: int, rows: dict) -> tuple[int, int, int]:
 def test_the_twist_tables_triples_are_exact_and_the_nearest_of_their_angles():
     rows = table()
     assert rows["unit"] == UNIT
-    for k in (0, 1, 81 << 10, 200 << 10, 32767 << 10):
-        c, s, d = twist_triple(k, UNIT)
-        assert c * c + s * s == d * d and 1 <= d <= 10**9
-        assert math.gcd(math.gcd(c, s), d) == 1
-        # the angle within the triples' own resolution of its target (the nearest n / m with
-        # m at most 31622: no triple below 2 / m, the fine angles all read 0)
-        assert abs(math.atan2(s, c) - k / UNIT) <= 2 / 31622
+    for name, step in (("fine", 1), ("coarse", 1 << 10)):
+        for k, (c, s, d) in list(enumerate(rows[name]))[:: max(1, len(rows[name]) // 64)]:
+            assert c * c + s * s == d * d and 1 <= d <= 10**9
+            assert math.gcd(math.gcd(c, s), d) == 1
+            # the angle within the triples' own resolution of its target (the nearest n / m with
+            # m at most 31622: no triple below 2 / m, the fine angles all read 0)
+            assert abs(math.atan2(s, c) - k * step / UNIT) <= 2 / 31622
     assert rows["fine"][0] == [1, 0, 1] and rows["coarse"][0] == [1, 0, 1]
-    assert list(twist_triple(200 << 10, UNIT)) == rows["coarse"][200]
     c, s, d = rows["coarse"][200]
     assert abs(math.atan2(s, c) - (200 << 10) / UNIT) < 1e-8
 
@@ -81,7 +79,7 @@ def test_the_loader_writes_the_twist_own_and_the_given_lights_component():
     assert body is not None and body.emitter is not None
     # the body's own record turns at its mode's rotation, 2 cos omega = a / b
     a, b = body.clock if body.clock is not None else (0, 1)
-    assert body.twist == rotation_twist(a, 2 * b) == round(65536 * math.acos(a / (2 * b)))
+    assert body.twist == round(65536 * math.acos(a / (2 * b)))
     # the window's light turns at the emitter's rotation (ALGEBRA.md #the-primitives); its component along z
     assert body.emitter.twist == body.twist and body.emitter.part == 3
     clock = json.loads((ROOT / "examples/events/massive_record/light_clock.json").read_text())
@@ -89,10 +87,12 @@ def test_the_loader_writes_the_twist_own_and_the_given_lights_component():
     # SINCE COMMIT 7 the light clock's A gives by the window too (the train retired): its
     # light turns at its own rotation, the component along z
     assert beam is not None and beam.emitter is not None
-    assert beam.emitter.twist == beam.twist == rotation_twist(beam.clock[0], 2 * beam.clock[1])
+    assert (
+        beam.emitter.twist == beam.twist == round(65536 * math.acos(beam.clock[0] / (2 * beam.clock[1])))
+    )
     assert beam.emitter.part == 3
     # the retired train's twist was its wavelength's on light's dispersion, cos omega = (cos k + 2) / 3
-    assert rotation_twist(800, 809) == round(65536 * math.acos(800 / 809))
+    assert OWN_TWIST == round(65536 * math.acos(800 / 809))
 
 
 def test_a_planted_vector_part_rotates_the_arriving_pair_and_the_inverse_restores_everything():
@@ -110,7 +110,7 @@ def test_a_planted_vector_part_rotates_the_arriving_pair_and_the_inverse_restore
     x_part.before[6:8, :, :] = 5
     x_part.silent = False
     simulation._sourced_ever[(gravity[0].family, 1)] = True
-    twist = rotation_twist(800, 809)
+    twist = OWN_TWIST
     rng = np.random.default_rng(7)
     now = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
     before = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
@@ -154,7 +154,7 @@ def test_with_every_vector_part_zero_the_step_is_the_plain_path_bit_for_bit():
     rng = np.random.default_rng(11)
     now = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
     before = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
-    live = simulation.planted_record(matter, now.copy(), before.copy(), twist=rotation_twist(800, 809))
+    live = simulation.planted_record(matter, now.copy(), before.copy(), twist=OWN_TWIST)
     assert simulation._twist_reads(live, False) is None  # every vector part silent: no twist read
     content = simulation._effective_content(matter)
     num, den = simulation.pair_arrays(matter)
@@ -209,7 +209,7 @@ def test_the_loader_refuses_a_light_emitter_without_one_moment_axis_and_a_bad_ta
     diagonal["stamp"] = input_stamp(diagonal)
     refused(diagonal, "lies on 2 axes")
     # the table on an inline world: the unit, the identities and the angles' order checked (the
-    # nearest triple the generator's, `generator_numbers.twist_triple`, item 73)
+    # nearest triple the retired generator's, item 73)
     good = twisted_world()
     parse_nature_beam_world(good)
     for change, match in (
@@ -239,7 +239,7 @@ def test_a_twist_beyond_the_coarse_table_is_refused_naming_the_port():
         matter,
         np.ones(tuple(SHAPE), dtype=np.int64),
         np.zeros(tuple(SHAPE), dtype=np.int64),
-        twist=rotation_twist(800, 809),
+        twist=OWN_TWIST,
     )
     with pytest.raises(ValueError, match=r"toward \+x .*beyond the twist table .*32768 coarse triples"):
         simulation._advance(live)
