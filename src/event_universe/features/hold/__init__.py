@@ -20,7 +20,6 @@ DECLARATION = Declaration(
         "the dipole",
     ),
     ("a family's level at a Node", "a body's remainders"),
-    1,
     None,
     "9.45 (2); 9.91 (3); 9.111 item 3; 9.117 item 3",
     word="the right side",

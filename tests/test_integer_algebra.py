@@ -55,6 +55,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md 9.88 (7)): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
     "core/readings.py": "the run's readings declared in the world file and written in one format: a detector's clicks, a family's level, support and total, a body's centre, the records alive (record 2199 item 1); reads state, writes nothing into the run",
+    "core/step.py": "the step file: the interval's places and the ordered names of the primitives the loop calls, one shared file with its digest ",
     "core/register.py": "the register of primitives: one name to one function, found by the features' folders, each with its place, word, reads, writes and order (records 2212 and 2221; issue #1154)",
     "core/primitive.py": "the interface of a primitive: the term of the files, the interval's start, the primitive's own record, its writes; apply(term, start, own) -> writes (records 2212 and 2221; issue #1154)",
     "core/schema.py": "the kinds of a value of the files and one generic check that refuses by name; a folder's schema on its card in the register (record 2226; ALGEBRA.md 9.117 item 2)",

@@ -14,7 +14,6 @@ DECLARATION = Declaration(
     ("levels",),
     ("the second level",),
     None,
-    None,
     "9.91 (2)",
     word="the step",
     schema=Schema({"a family's entry": ObjectOf({"phase": OneOf((1, 2))})}),
