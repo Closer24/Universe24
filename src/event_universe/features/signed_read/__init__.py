@@ -1,4 +1,4 @@
-"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces with the tensor's parts, and 0 < p <= P with P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) at every Node (ALGEBRA.md 9.117 item 2 row 1 and item 5, 9.78 (4), 9.108 item 12); from the rule. `content_of` is this read's one place: the loop's `_effective_content` calls it."""
+"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces with the tensor's parts, and 0 < p <= P with P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) at every Node (ALGEBRA.md #the-primitives row 1 and item 5, ALGEBRA.md #a-familys-declaration, #the-paces); from the rule. `content_of` is this read's one place: the loop's `_effective_content` calls it."""
 
 from __future__ import annotations
 
@@ -28,8 +28,8 @@ BY_SIGN = "sign"
 # the sum of the reads stays within int64: the reach of the products is bounded before any is formed
 TOTAL_BOUND = (1 << 63) - 1
 
-# the two words of ALGEBRA.md 9.113 item 1 and 9.117 item 5: this primitive is the rule's own
-THE_WORD = "from the rule 9.57 (1) and the click"
+# the two words of ALGEBRA.md #the-primitives.117 item 5: this primitive is the rule's own
+THE_WORD = "from the rule ALGEBRA.md #the-line and the click"
 
 
 @dataclass(frozen=True)
@@ -69,7 +69,7 @@ class SignedReadWrites:
 
 
 def stability_bound(pair: tuple[int, int], gamma: int) -> tuple[int, int]:
-    """The guard's upper side as one integer comparison, p^2 x left <= right with left = 18 num + 6 den and right = Gamma^2 (18 den + 6 num) (ALGEBRA.md 9.108 item 12)."""
+    """The guard's upper side as one integer comparison, p^2 x left <= right with left = 18 num + 6 den and right = Gamma^2 (18 den + 6 num) (ALGEBRA.md #the-paces)."""
     num, den = pair
     return 18 * num + 6 * den, gamma * gamma * (18 * den + 6 * num)
 
@@ -90,7 +90,7 @@ def content_of(term: SignedReadTerm, start: SignedReadStart) -> np.ndarray:
         if by not in (BY_PLAIN, BY_SIGN):
             raise ValueError(
                 f"the read of family {other} is by {by!r}: by {BY_PLAIN!r} or by {BY_SIGN!r} "
-                "(ALGEBRA.md 9.48 (3))"
+                "(ALGEBRA.md #the-paces)"
             )
         factor = weight if by == BY_PLAIN else -term.q * weight
         if factor:
@@ -100,14 +100,14 @@ def content_of(term: SignedReadTerm, start: SignedReadStart) -> np.ndarray:
                 raise ValueError(
                     f"the read of family {other} at the weight {weight} reaches {reach} with the "
                     f"argument's size {int(np.max(np.abs(argument)))}, beyond int64 {TOTAL_BOUND} "
-                    "(ALGEBRA.md 9.61 (3))"
+                    "(ALGEBRA.md #the-rows-against-nature)"
                 )
             content = content + factor * argument
     return content
 
 
 def guard(term: SignedReadTerm, writes: SignedReadWrites, own: SignedReadOwn) -> None:
-    """The two-sided guard 0 < p <= P on p_0 and every axis pace; a pace outside ends the run naming the Node, the family and the interval (ALGEBRA.md 9.108 item 12)."""
+    """The two-sided guard 0 < p <= P on p_0 and every axis pace; a pace outside ends the run naming the Node, the family and the interval (ALGEBRA.md #the-paces)."""
     gamma = term.gamma
     left, right = stability_bound(term.pair, gamma)
     bound = pace_bound(term.pair, gamma)
@@ -122,7 +122,7 @@ def guard(term: SignedReadTerm, writes: SignedReadWrites, own: SignedReadOwn) ->
                 f"the pace of {own.name!r} (family {own.family}, axis {axis}) is {low} at the Node "
                 f"{tuple(int(i) for i in node)} at interval {own.interval}: the pace stays above 0 "
                 f"(the content {int(writes.content[node])} at or beyond Gamma = {gamma}; ALGEBRA.md "
-                "9.108 item 12, the guard's lower side); the run ends"
+                "ALGEBRA.md #the-paces, the guard's lower side); the run ends"
             )
         high = int(np.max(pace))
         if high > bound:
@@ -131,13 +131,13 @@ def guard(term: SignedReadTerm, writes: SignedReadWrites, own: SignedReadOwn) ->
                 f"the pace of {own.name!r} (family {own.family}, axis {axis}) is {high} at the Node "
                 f"{tuple(int(i) for i in node)} at interval {own.interval}, above the stability "
                 f"edge {bound} of its pair {list(term.pair)} at Gamma = {gamma} (p^2 x {left} <= "
-                f"{right}; ALGEBRA.md 9.108 item 12, the guard's upper side: a hill beyond the edge); "
+                f"{right}; ALGEBRA.md #the-paces, the guard's upper side: a hill beyond the edge); "
                 "the run ends"
             )
 
 
 def apply(term: SignedReadTerm, start: SignedReadStart, own: SignedReadOwn) -> SignedReadWrites:
-    """The primitive: the paces from the reads, then the guard (ALGEBRA.md 9.117 item 2 row 1)."""
+    """The primitive: the paces from the reads, then the guard (ALGEBRA.md #the-primitives row 1)."""
     content = content_of(term, start) if term.reads else np.zeros(start.shape, dtype=np.int64)
     writes = SignedReadWrites(content, start.axis_contents)
     guard(term, writes, own)
@@ -156,7 +156,7 @@ DECLARATION = Declaration(
     ("the paces",),
     apply,
     THE_WORD
-    + " (9.117 item 5); 9.117 item 2, the first row; 9.78 (4); 9.108 items 8, 11, 12, 13; 9.116 items 4a and 4c",
+    + " (ALGEBRA.md #the-primitives); ALGEBRA.md #the-primitives, the first row; ALGEBRA.md #a-familys-declaration, #the-paces",
     word="the right side",
     schema=Schema(
         {

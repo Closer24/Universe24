@@ -1,4 +1,4 @@
-"""A one-Node detector under `body_record` (ALGEBRA.md 9.46 (8) (c)): its body's Node with its six Ports,
+"""A one-Node detector under `body_record` (ALGEBRA.md #what-a-body-is): its body's Node with its six Ports,
 the click from the flux through them, the counts rescaled from a cube's and the pattern the same."""
 
 from __future__ import annotations
@@ -21,7 +21,7 @@ def one_node_layer(stock: int = STOCK, one_node_detectors: bool = True) -> dict:
     """The layer world with the emitter's stock `stock` and its three places as bodies on one Node (one
     receiver body of light at (71, row) read as the set) or as the cubes of the layer test."""
     document = layer_world(receiver=[name for _, name in PLACES])
-    # the stock as the given family's content held at the body (ALGEBRA.md 9.51 (8); item 47)
+    # the stock as the given family's content held at the body (ALGEBRA.md #the-paces; item 47)
     document["measured"][0]["stocks"] = {"light": stock}
     document["ticks"] = stock * 250 + 300  # every giving a window and a rung (commit 7)
     if one_node_detectors:
@@ -122,7 +122,7 @@ def test_the_loader_admits_a_one_node_detector_under_body_record_alone():
     admitted under the key and refused without it."""
     document = one_node_layer(stock=2, one_node_detectors=True)
     parse_nature_beam_world(document)
-    # SINCE COMMIT 7 a detector of one Node is admitted on every world (ALGEBRA.md 9.92,
+    # SINCE COMMIT 7 a detector of one Node is admitted on every world (ALGEBRA.md #the-rows-against-nature,
     # record 2109: several bodies on one Node each are several detectors), the lattice body's too
     lattice = json.loads(json.dumps(document))
     lattice["body_record"] = False

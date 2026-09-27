@@ -1,5 +1,4 @@
-"""THE RECOIL, its own folder (ALGEBRA.md #the-primitives, the row "the recoil"; 9.84 (2); 9.91 (4); 9.111
-items 1 and 2; record 2224): the line's integers on the moving row's numbers, the store one remainder
+"""THE RECOIL, its own folder (ALGEBRA.md #the-primitives, the row "the recoil"; ALGEBRA.md #the-primitives, #the-interval; record 2224): the line's integers on the moving row's numbers, the store one remainder
 on the universe's wall L so the sum over clicks of every wavelength is the exact floor (across a
 taking and a giving too), the direction of travel, the refusals by name, the trace's hand identity on
 the emitter's run, the declaration."""
@@ -103,7 +102,7 @@ def test_a_taking_and_a_giving_of_the_same_quantum_cancel_and_the_direction_of_t
     L) then a giving of the same undo each other exactly; a giving first floors to -549 (the exact
     floor of -548.571) and the taking after it returns n to 0; sigma is the tally's sign, never its
     size (a tally of 1 and of 10^6 recoil the same); a symmetric emitter (the tallies 0) recoils by
-    nothing and keeps its stores (9.84 (2))."""
+    nothing and keeps its stores (ALGEBRA.md #the-primitives)."""
     take, give = (TAKING, 1, 20, 7), (GIVING, 1, 20, 7)
     assert run_clicks([take, give]) == RecoilOwn((0, 0, 0), NONE)
     given = run_clicks([give])
@@ -148,7 +147,7 @@ def test_the_trace_hand_identity_on_the_emitters_run():
     """The emitter's unit world (Q = 64 giving four quanta of light of wavelength 4 along +x, L = 4):
     fed every giving line's integers with the giver's sense, the folder moves n by the whole part and
     keeps the store, and after every giving n equals the exact floor of the sum of the fractions
-    (ALGEBRA.md 9.112 item 5; 9.84 (2)); that the run moves no momentum is tests/test_four_vector_click.py's check."""
+    (ALGEBRA.md #the-interval, #the-primitives); that the run moves no momentum is tests/test_four_vector_click.py's check."""
     document = emitter_world(stock=4, ticks=1200)
     period = document["measured"][0]["emitter"]["period"]
     wavelength = 2 * document["N"] // document["universe"][0]["clock"][0]  # k = pi / 2: 4
@@ -174,7 +173,7 @@ def test_the_trace_hand_identity_on_the_emitters_run():
 
 
 def test_the_declaration_is_the_ledgers_row():
-    """The folder declares the row of ALGEBRA.md 9.117: "the recoil" at (iv), writing a body's momentum
+    """The folder declares the row of ALGEBRA.md #the-primitives: "the recoil" at (iv), writing a body's momentum
     n and its remainders, its function `apply`, its section; the engine's register finds it."""
     assert DECLARATION.name == "the recoil" and DECLARATION.place == "(iv)"
     assert DECLARATION.writes == ("a body's momentum n", "a body's remainders")

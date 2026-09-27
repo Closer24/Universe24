@@ -1,4 +1,4 @@
-"""THE GIVING, its own folder (ALGEBRA.md 9.117 item 2, the row "the giving"; 9.107; 9.71 (1); issue
+"""THE GIVING, its own folder (ALGEBRA.md #the-primitives, the row "the giving"; 9.107; ALGEBRA.md; issue
 #1156): the bulk share on the moving row's numbers, the three acts of a window on synthetic integers,
 the refusals by name, the declaration."""
 
@@ -107,7 +107,7 @@ def test_the_refusals_by_name():
 
 
 def test_the_declaration_is_the_ledgers_row():
-    """The folder declares the row of ALGEBRA.md 9.117 in the register's form: "the giving" at (ii), the
+    """The folder declares the row of ALGEBRA.md #the-primitives in the register's form: "the giving" at (ii), the
     word after the step, the writes ordered as a click's deferred writes at (iv), its section; its function
     is `apply`, the act the loop calls."""
     assert DECLARATION.name == "the giving" and folder_of("the giving") == "giving"

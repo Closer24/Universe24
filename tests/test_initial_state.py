@@ -1,5 +1,5 @@
 """THE INPUT CHECKED LAWFUL OR REFUSED IN INTEGERS (the model owner's record 1886 of
-2026-09-25; ALGEBRA.md 9.22 (3) and (7); BUILD.md section 26 items 20 and 21): the
+2026-09-25; ALGEBRA.md #a-familys-declaration and (7); BUILD.md section 26 items 20 and 21): the
 initial state is stored once in the world file (every seeded body's integer profile at
 both levels, its mode's clock [a, b] and its given pair, the generator's, under the
 file's `input` stamp: the law identifier and the hash of those integers) and the loader
@@ -79,7 +79,7 @@ def test_a_generated_world_is_lawful_and_carries_its_clock_and_stamp():
 
 
 def test_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_rounding():
-    """The residual bound (9.22 (7) (ii), proved for the rounded profile of an exact mode):
+    """The residual bound (ALGEBRA.md #a-familys-declaration, proved for the rounded profile of an exact mode):
     the profile with its peak doubled is refused naming the Node, its residual and the
     bound; the profile with its peak zeroed is refused; the profile with one unit added at
     the peak is ADMITTED (the edge case: a one-unit change is within the rounding the bound
@@ -174,7 +174,7 @@ def test_at_most_five_families():
     """Five families are admitted (the emitter world's four, the families of clicks and of
     charge among them, and a fifth), a sixth is refused naming the count and the bound (the
     owner's constant: record 1875's three, four since the family of clicks, record 1982,
-    five since the family of charge, ALGEBRA.md 9.48; BUILD.md section 26 item 35)."""
+    five since the family of charge, ALGEBRA.md #the-paces; BUILD.md section 26 item 35)."""
     document = emitter_world(stock=2)
     assert len(document["universe"]) <= MOST_FAMILIES
     while len(document["universe"]) < MOST_FAMILIES:
@@ -233,7 +233,7 @@ def test_bodies_are_whole_and_disjoint():
 
 @pytest.mark.diagnostic
 def test_two_wells_of_one_family_may_stand_anywhere():
-    """THE SEPARATION RULE OF 9.35 IS RETIRED (ALGEBRA.md 9.96 (4); the one stroke, commit 6;
+    """THE SEPARATION RULE OF 9.35 IS RETIRED (ALGEBRA.md #the-primitives; the one stroke, commit 6;
     the tail check of BUILD.md section 26 item 28 HISTORY): two wells of the matter kind on
     the closed chain of 400, A at [100, 132) with its profile at 50 x 2^12 and B at [170, 202)
     inside A's tail, or at [232, 264) beyond it (that A's tail reaches the one and not the
@@ -296,9 +296,9 @@ def test_the_six_neighbour_read_in_integers():
 
 
 def test_the_input_stamp_the_law_and_the_hash():
-    """THE FILE'S HASH (9.22 (7) (i); 9.90 (3) (c)): a seeded world without its `stamp` is
+    """THE FILE'S HASH (ALGEBRA.md #a-familys-declaration, #the-primitives): a seeded world without its `stamp` is
     refused naming the key; a stamp carrying a law's name is refused naming the key (no law
-    identifier, 9.90 (1)); a stamp whose hash is not the digest of the whole file (the profile changed by
+    identifier, ALGEBRA.md #the-primitives); a stamp whose hash is not the digest of the whole file (the profile changed by
     one unit without restamping, the clock changed, the given pair changed, the ticks changed:
     the stamp covers every key, BUILD.md section 26 item 28) is refused as not the file the
     generator wrote; a world with no profile needs no stamp (the emitter
@@ -322,7 +322,7 @@ def test_the_input_stamp_the_law_and_the_hash():
 
     def weight(document):
         # a unit on the window's weight (the loader admits it; the stamp's hash is what
-        # refuses, ALGEBRA.md 9.22 (7) (i); the train's profile retired at commit 7)
+        # refuses, ALGEBRA.md #a-familys-declaration; the train's profile retired at commit 7)
         document["measured"][0]["emitter"]["weight"] += 1
 
     def ticks(document):
@@ -342,7 +342,7 @@ def test_the_input_stamp_the_law_and_the_hash():
 @pytest.mark.diagnostic
 def test_the_generator_as_the_operator_iterated_in_integers():
     """THE GENERATOR WITH THE STOP (the model owner's word of 2026-09-25, 04:10Z, closing
-    record 1898; ALGEBRA.md 9.22 (7); BUILD.md section 26 item 25): on the emitter world's
+    record 1898; ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 25): on the emitter world's
     chain of 80 (the well [800, 801] in the kind [800, 809]) `iterated_mode` iterates the law's
     own operator 3 den v' = num S_6(v) + 6 den v + r from the Nodes' indicator at the working
     amplitude 2^28 (scaled to the declared 2^20), reads

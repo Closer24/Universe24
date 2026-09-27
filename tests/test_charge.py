@@ -1,4 +1,4 @@
-"""The family of charge (ALGEBRA.md 9.48): a field family held at every body's Nodes at its signed charge
+"""The family of charge (ALGEBRA.md #the-paces): a field family held at every body's Nodes at its signed charge
 and stepping by its own plain rule elsewhere, read by the other families at the weight Lambda."""
 
 from __future__ import annotations
@@ -31,7 +31,7 @@ from tests.bodies import (
 from tests.running import planted
 from tests.worlds import CHARGE_FAMILY_NAME, PERIODIC, emitter_world, massive_generator, wheel_of
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
@@ -52,7 +52,7 @@ def rule_step(
     pair: tuple[int, int], effective: list[int], now: np.ndarray, before: np.ndarray, wrap: bool
 ) -> tuple[list[int], list[int]]:
     """One step of the rule under the Node's own pace at the effective content `effective`
-    per Node (ALGEBRA.md 9.57 (1), 9.48 (3), 9.51 (2)): w a_next + r' = R S_6(a_now)_i + S a_now
+    per Node (ALGEBRA.md #the-line, #the-paces): w a_next + r' = R S_6(a_now)_i + S a_now
     - w a_before + r with r = 0 and (R, S, w) the rule's integers at the effective content c_i of
     the Node alone; the levels and the remainders, Python integers."""
     num, den = pair
@@ -61,7 +61,7 @@ def rule_step(
     remainders: list[int] = []
     for i, c in enumerate(effective):
         a, b = int(now[i, 0, 0]), int(before[i, 0, 0])
-        # the weak-field rule's three integers at the effective content (ALGEBRA.md 9.57 (1))
+        # the weak-field rule's three integers at the effective content (ALGEBRA.md #the-line)
         (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, c)
         total = read * reads[i] + self_coefficient * a - wall * b
         levels.append(total // wall)
@@ -70,7 +70,7 @@ def rule_step(
 
 
 def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone():
-    """(i) THE READING WITH ONE SIGN (ALGEBRA.md 9.48 (3)): on the periodic chain of 60 with
+    """(i) THE READING WITH ONE SIGN (ALGEBRA.md #the-paces): on the periodic chain of 60 with
     light bodies of QUANTA quanta and charge +1 at [20, 30) (Q = +QUANTA there, the family of
     charge held at it, 0 elsewhere at the load), a matter record of charge -1 is advanced at
     the effective content c + Lambda d = 2 QUANTA at the slab (the hill deepened: its pace
@@ -129,9 +129,9 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
 
 
 def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
-    """(ii) THE HOLD AT Q (ALGEBRA.md 9.48 (1) and (2)): on the emitter world with light and the
+    """(ii) THE HOLD AT Q (ALGEBRA.md #the-paces and (2)): on the emitter world with light and the
     matter kind both of charge -1 (the emitter's one own quantum of matter and its stock of 4
-    light quanta held at [5, 37) (ALGEBRA.md 9.51 (8); item 47), the screen's three light
+    light quanta held at [5, 37) (ALGEBRA.md #the-paces; item 47), the screen's three light
     bodies of one quantum at [70, 72], the cube of side 3 on a chain), the family of charge is
     -5 at every Node of the emitter body and -1 at every Node of the screen at the load, 0 in
     the vacuum; the
@@ -176,7 +176,7 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
 
 
 def test_the_joint_step_with_both_fields_inverts_bit_for_bit():
-    """(iii) THE EXACT BACKWARD RUN (the model owner's record 1994; ALGEBRA.md 9.48 (2) under
+    """(iii) THE EXACT BACKWARD RUN (the model owner's record 1994; ALGEBRA.md #the-paces under
     item 34): on the periodic chain of 60 with light bodies of QUANTA quanta and charge +1 at
     [20, 30), a record of the charged light (q = +1, reading c - Lambda d) and a neutral record
     of random rows registered (nothing clicks), both fields rise and fall at Nodes over 30 intervals (the falls

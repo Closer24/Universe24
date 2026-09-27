@@ -64,7 +64,7 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     within the band and MISS outside it, the value read written beside each: a pin on the
     count of clicks, a pin on the detector's first click (the least interval since the
     record's giving among its clicks) and a pin on the mean interval since the giving over
-    its clicks (ALGEBRA.md 9.25 (11) (d); a detector with no click reads None and MISS)."""
+    its clicks (ALGEBRA.md #the-ladder; a detector with no click reads None and MISS)."""
     inputs = tmp_path / "inputs"
     inputs.mkdir()
     # THE MODE PIN (item 57): the pins are compared under the mode "pin" alone; a start file

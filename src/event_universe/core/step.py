@@ -6,7 +6,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 
 STEP_FILE = "law/step.json"
-# the five places of the interval (ALGEBRA.md 9.91 (8)) and "any", the trace's read-only line
+# the five places of the interval (ALGEBRA.md #the-interval) and "any", the trace's read-only line
 PLACES: tuple[str, ...] = ("(i)", "(ii)", "(iii)", "(iv)", "(v)", "any")
 INTERVAL = "interval"
 ACT_FORM = "[place, name] or [place, name, words] (words: an object of the call's words to booleans or integers)"

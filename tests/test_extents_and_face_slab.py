@@ -1,4 +1,4 @@
-"""BODIES WITH EXTENTS AND THE FACE SLAB (ALGEBRA.md 9.22 (8) and 9.25 (10); BUILD.md
+"""BODIES WITH EXTENTS AND THE FACE SLAB (ALGEBRA.md #a-familys-declaration, #the-ladder; BUILD.md
 section 26 item 23): a block is the box of `extents` per axis (the cube of `side` the
 shorthand), the slabs of the table's emitters, walls and receivers; the face receiver at
 every open border is the slab of the world's `face_depth`, one detector, last on every ladder.
@@ -19,7 +19,7 @@ from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import planted
 from tests.worlds import emitter_world, layer_world, massive_generator
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
@@ -49,7 +49,7 @@ def wall(position, family="light", **keys):
     }
     if "extents" in entry or "side" in entry:
         # a block declares its drive's ramp and start (no default, item 57) and its
-        # numbers, q, spin and moment (ALGEBRA.md 9.91 (3); item 61; the word q, item 68)
+        # numbers, q, spin and moment (ALGEBRA.md #the-interval; item 61; the word q, item 68)
         entry.setdefault("ramp", 0)
         entry.setdefault("start", 0)
         entry.setdefault("q", 0)
@@ -114,7 +114,7 @@ def test_the_extents_refusals_and_the_fit_per_axis():
     parse_nature_beam_world(document)
     document["measured"][-1]["extents"] = [2, 1, 1]
     document["stamp"] = input_stamp(document)
-    # SINCE COMMIT 7 a body is its own detector whatever its support (ALGEBRA.md 9.92, record
+    # SINCE COMMIT 7 a body is its own detector whatever its support (ALGEBRA.md #the-rows-against-nature, record
     # 2109): the slab of two Nodes bound as its own set is admitted
     parse_nature_beam_world(document)
 
@@ -198,7 +198,7 @@ def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
 
 
 def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
-    """ALGEBRA.md 9.25 (10), the mathematician's reading: a face one Node deep books a part of
+    """ALGEBRA.md #the-ladder, the mathematician's reading: a face one Node deep books a part of
     a packet and reflects the rest, a slab as deep as the packet books nearly all of it.
     On light's open chain of 300 a Gaussian packet of width 14 at k = 0.3 moving +x is
     planted at 150 with its norm set to 7/10 of its conserved form, so the face clicks only

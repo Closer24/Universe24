@@ -1,4 +1,4 @@
-"""The Node clock under the weak-field rule (ALGEBRA.md 9.35, 9.57 (1)): the pace p = Gamma - c enters
+"""The Node clock under the weak-field rule (ALGEBRA.md #the-paces, #the-line): the pace p = Gamma - c enters
 Rule3's integers at every Node, c = 0 is the plain rule, and light crosses a slab of content under it."""
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ from tests.bodies import CHAIN, GAMMA, PAIR, content_chain, light_body, six_read
 from tests.running import planted
 from tests.worlds import NODE_CLOCK, PERIODIC, emitter_world, family_entry, lawful_wheel, reads
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
@@ -32,7 +32,7 @@ QUANTA = 250  # the content per Node for e / f = 0.8 at GAMMA
 
 
 def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_e_over_f():
-    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md 9.57 (1); item 44): on the periodic chain
+    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md #the-line; item 44): on the periodic chain
     of 12 with QUANTA at every Node, one step of the engine on random rows equals w a_next + r' = R
     S_6(a_now) + S a_now - w a_before + r in Python integers; with no content the plain rule's levels bit
     for bit. (ii) THE ROTATION of a uniform record of the matter kind, 2 cos omega' = 2 - (1 + f)(1 - num /
@@ -145,7 +145,7 @@ def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
         energy = live.now[:, 0, 0].astype(np.float64) ** 2 + live.before[:, 0, 0].astype(np.float64) ** 2
         beyond[slab] = float(energy[190:].sum() / energy.sum())
     pace = group_pace_light(k, 1.0)
-    # the dispersion's factor under the weak field, f = (p / Gamma)^2 (ALGEBRA.md 9.62 (1))
+    # the dispersion's factor under the weak field, f = (p / Gamma)^2 (ALGEBRA.md #the-rows-against-nature)
     slowed = group_pace_light(k, ((GAMMA - QUANTA) / GAMMA) ** 2)
     delay = 40.0 * (1.0 / slowed - 1.0 / pace)
     lag = centroids[False] - centroids[True]
@@ -253,7 +253,9 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     with pytest.raises(ValueError, match="node_clock is required: Gamma"):
         parse_nature_beam_world(document)
     ray = content_chain(12, PERIODIC, [], 1)
-    ray["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
+    ray["detector_law"] = (
+        False  # the flag was the law's name: refused by name (ALGEBRA.md #the-primitives)
+    )
     with pytest.raises(ValueError, match="the world has unknown keys: detector_law"):
         parse_nature_beam_world(ray)
     zero = content_chain(12, PERIODIC, [], 1)
@@ -269,7 +271,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     registered = json.loads(
         (ROOT / "examples/events/massive_record/light_clock.json").read_text(encoding="utf-8")
     )
-    # the integers of 9.61 (3) from the families file alone (item 59)
+    # the integers of ALGEBRA.md #the-rows-against-nature from the families file alone (item 59)
     assert registered["universe"] == "examples/events/universe.json"
     assert "node_clock" not in registered and "amplitude_bound" not in registered
     world = parse_nature_beam_world(registered)
@@ -278,7 +280,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     block = simulation.blocks[0]
     centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))
     # the registered world's matter family (the families file's third entry, item 60) at the
-    # body's kind [800, 809] (the pair on the body, 9.91 (7))
+    # body's kind [800, 809] (the pair on the body, ALGEBRA.md #the-interval)
     matter = [family.name for family in world.families].index("matter")
     kind = block.definition.kind
     # the beam body's Node's kind [800, 1200] since commit 7 (the one-Node emitter of the window)
@@ -331,7 +333,7 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
         assert int(simulation.level_of("content")[21, 0, 0]) == 5 - givings_seen
         # the family of clicks steps last in the interval and is then held at the content
         # the interval's clicks and givings left, so a click's quantum is on the screen's
-        # body as the interval ends (ALGEBRA.md 9.45 (2))
+        # body as the interval ends (ALGEBRA.md #the-counts-line)
         assert int(simulation.level_of("content")[70, 0, 0]) == 1 + clicks_seen
         if simulation.tick <= 12:
             assert int(simulation.level_of("content")[50, 0, 0]) == 0
@@ -350,7 +352,7 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
 
 
 def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_elsewhere():
-    """(vii) THE FAMILY OF CLICKS (record 1982; ALGEBRA.md 9.41 (3), 9.44 (3), 9.45): on the open chain of
+    """(vii) THE FAMILY OF CLICKS (record 1982; ALGEBRA.md #the-counts-line, #the-ladder): on the open chain of
     200 with light bodies of QUANTA at [90, 110), the clock record's level is the content at the bodies'
     Nodes with the remainder 0 (the hold) and 0 elsewhere at the load; THE FRONT: nothing before the cone of
     one Link per interval, the long waves at the pace 1 / sqrt 3, the field never above twice the content."""
@@ -433,7 +435,9 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
         with pytest.raises(ValueError, match=f"the world has unknown keys: {key}"):
             parse_nature_beam_world(retired)
     ray = json.loads(json.dumps(good))
-    ray["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
+    ray["detector_law"] = (
+        False  # the flag was the law's name: refused by name (ALGEBRA.md #the-primitives)
+    )
     with pytest.raises(ValueError, match="the world has unknown keys: detector_law"):
         parse_nature_beam_world(ray)
     unread = json.loads(json.dumps(good))

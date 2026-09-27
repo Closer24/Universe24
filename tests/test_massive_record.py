@@ -1,14 +1,4 @@
-"""The massive record kind (`massive-record-v1`, docs/designs/detector_law/MASSIVE_RECORD.md;
-the build's plan BUILD.md section 6, the expected integers written there before the code):
-the rule with a pair per record kind on the six-neighbour term, (a) on a chain and (b) at a
-corner against section 1's integers, (c) light's pair [1, 1] the first build's integers bit
-for bit, (d) the conserved form I to the remainders' jitter; (p) the byte identity of the
-light record without the key (the digests of the head f4a3971a); (q) the loader's refusals
-of the step's keys; (r) the record's keys under the key and none without it. SINCE THE
-EMITTER AS A CLICKING BODY (ALGEBRA.md 9.17 (4); BUILD.md section 26) every source in these
-worlds is an emitter body of a massive kind seeded on its bound mode (the lamp is refused
-under the detector law; the emission by the coupling's source term, the emitter's grace,
-its exemption and its own take are retired: its Nodes are Nodes like every other)."""
+"""The massive record kind: the rule with a pair per record kind on the six-neighbour term, on a chain and at a corner, light's pair [1, 1] bit for bit, the conserved form to the remainders' jitter, the byte identity of the light record without the key, and the loader's refusals; every source is an emitter body seeded on its bound mode."""
 
 from __future__ import annotations
 
@@ -49,7 +39,7 @@ from tests.worlds import (
     receiver_cube,
 )
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
@@ -64,7 +54,7 @@ def test_the_rule_on_a_chain_against_section_ones_integers():
     """BUILD.md (a): the kind [2, 3] on a 5-Node open chain (y, z one layer periodic, so
     S_6 = a_W + a_E + 4 a_now with 0 beyond the ends); the totals num S_6 - 9 a_before + r
     are [1, 27, -56, 19, 7], a_next = [0, 3, -7, 2, 0], r' = [1, 0, 7, 1, 7]. UNDER THE
-    WEAK-FIELD RULE (ALGEBRA.md 9.57 (1); BUILD.md section 26 item 44) the vacuum's wall is 9
+    WEAK-FIELD RULE (ALGEBRA.md #the-line; BUILD.md section 26 item 44) the vacuum's wall is 9
     times 2 Gamma^2 and the remainder 2 Gamma^2 times the line's, the levels bit for bit: r
     and r' here are the line's times 2 Gamma^2."""
     world = parse_nature_beam_world(
@@ -135,7 +125,7 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     assert 30 <= int(np.sum(free)) <= 45
     assert np.array_equal(a_next[free], expected_next[free])
     assert np.array_equal(r_next[free], expected_remainder[free])
-    # the weak-field rule at every Node from its three integers (ALGEBRA.md 9.57 (1); item 44)
+    # the weak-field rule at every Node from its three integers (ALGEBRA.md #the-line; item 44)
     (read, _, _), self_coefficient, wall = coefficients(
         simulation.kind_num[0], simulation.kind_den[0], NODE_CLOCK, content
     )
@@ -176,7 +166,9 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
     for pair in ([128, 129], [1600, 1618]):
         document = massive_world([6, 6, 6], periodic, pair)
         document["age_bound"] = 100000
-        document["amplitude_bound"] = 1 << 21  # the pair's room under the weak field (9.61 (3))
+        document["amplitude_bound"] = (
+            1 << 21
+        )  # the pair's room under the weak field (ALGEBRA.md #the-rows-against-nature)
         world = parse_nature_beam_world(document)
         simulation = DetectorLawSimulation(world)
         live = planted(simulation, 1, now, before, np.zeros((6, 6, 6), dtype=np.int64))
@@ -266,7 +258,7 @@ def test_the_light_record_is_byte_identical_without_the_key():
     body of the kind [7, 8] on the well [8, 7], six givings at their rungs, the grace and the
     own take retired), then once more by the write on the circle of 2 N with before = -now
     and the excited record's norm as the one-way flux into its centre Node over one period
-    (ALGEBRA.md 9.17 (5) and (6), 9.19 (3); BUILD.md section 26 item 13), then once more by
+    (ALGEBRA.md #the-click and (6), ALGEBRA.md #rule3; BUILD.md section 26 item 13), then once more by
     the flux reading at every detector with the cumulative ladder and the deletion at the click,
     on the chain world's faces closed (item 14), then once more by the residue from the law
     on the rich well [801, 700] with the take's data gone (item 15), then the events and the
@@ -276,7 +268,7 @@ def test_the_light_record_is_byte_identical_without_the_key():
     givings and the residue read after the excited record's first advance (item 19), the
     digests read at that head; then the state once more by the `extents` of every block
     written beside its `side` on the snapshot (item 23; the events and the audit unchanged),
-    then the events and the audit by the click rule of ALGEBRA.md 9.17 (7) (f) (the model
+    then the events and the audit by the click rule of ALGEBRA.md #the-click (the model
     owner's word, record 1918; item 24: the excited record's running total accruing its
     centre Node's share of its conserved form, the emitter's seed raised to 2^20, the six
     givings at (2 u + 1) P / (2 W) after their reads; the state at 600 unchanged), then all
@@ -285,7 +277,7 @@ def test_the_light_record_is_byte_identical_without_the_key():
     the eigensolver's), then all three by the generator's working amplitude 2^28 (the names'
     regeneration of 2026-09-25, item 25 amended: the muon layer's well hovered at 1.5 times
     the bound at 2^20; the emitter's profile and clock the iteration's at 2^28), then all
-    three by THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a); item 27: the chain world's emitter body
+    three by THE GIVEN TRAIN (ALGEBRA.md #the-click; item 27: the chain world's emitter body
     the train's 32 Nodes at [2, 34) with the well [699, 700], light on the given clock
     [512, 1] of N = 1024, every giving the train written on the Nodes), the digests read at
     that head; SINCE THE TIGHTENINGS (BUILD.md section 26 item 28) the closed chain bounds
@@ -299,30 +291,29 @@ def test_the_light_record_is_byte_identical_without_the_key():
     content at its Nodes, the wheel and the residues read there, the norms on the lines in
     the clock's units); SINCE THE RENAME (record 1978, no cell) the events digest moved once
     more with the two line fields' names, the giving line's `nodes` and the gather line's
-    `detectors` (the state and the audit unchanged); SINCE THE FAMILY OF CLICKS (ALGEBRA.md
-    9.45; item 32) all three moved once more (the fourth family declared in the chain world,
+    `detectors` (the state and the audit unchanged); SINCE THE FAMILY OF CLICKS (ALGEBRA.md #the-counts-line; item 32) all three moved once more (the fourth family declared in the chain world,
     one record of it over the board, held at the bodies' Nodes at their content and
     spreading from them by the plain step, every Node's clock pair read from its level);
-    SINCE THE RESEED RETIRED (ALGEBRA.md 9.43 (3), 9.44 (5) (c); item 33) all three moved
+    SINCE THE RESEED RETIRED (ALGEBRA.md #the-ladder; item 33) all three moved
     once more (the body's own record continuing under its one identity, its levels never
     rewritten, the residues read at the click at the first shell Node, the givings at the
     counted intervals, the giving lines' fields); SINCE THE FIXED WALL (the model owner's
     record 1994; item 34) all three moved once more (the paced reads at and beside the
     bodies, the forms' units Gamma squared, the giving lines' `read_clocks`); SINCE THE FAMILY
-    OF CHARGE (ALGEBRA.md 9.48; item 35) all three moved once more (the fifth family declared
+    OF CHARGE (ALGEBRA.md #the-paces; item 35) all three moved once more (the fifth family declared
     in the chain world, one record of it over the board held at the bodies' Nodes at their
     charge 0, the giving lines' `charge`, the snapshot's `charge` entry; the rows bit for bit);
-    SINCE THE NODE'S OWN PACE (ALGEBRA.md 9.50 (13); item 36) all three moved once more (the
+    SINCE THE NODE'S OWN PACE (ALGEBRA.md #the-direction; item 36) all three moved once more (the
     pace on the Node's own sum at and beside the bodies, the forms as exact rationals, the
-    giving lines' `pace`, the plain flux); SINCE THE BODY RECORD (ALGEBRA.md 9.46; item 37)
+    giving lines' `pace`, the plain flux); SINCE THE BODY RECORD (ALGEBRA.md #what-a-body-is; item 37)
     the state digest moved once more (the block entry's `rotation`, None under the lattice
     body; the events and the audit unchanged); SINCE THE GIVING CLICK (record 2016) the events
     and the state digests moved with the lines' names alone (`giving` for `birth`,
-    `given_norm` for `born_norm`; the state's record entries carry `giving`); SINCE THE BODY'S NODE (ALGEBRA.md 9.60; item 42) the state digest moved once more (the block
+    `given_norm` for `born_norm`; the state's record entries carry `giving`); SINCE THE BODY'S NODE (ALGEBRA.md #what-a-body-is; item 42) the state digest moved once more (the block
     entry's `body's Node` for `rotation`, None under the lattice body; the events and the audit
-    unchanged: the one rule factored and the support box of item 43 bit for bit); SINCE THE WEAK FIELD (ALGEBRA.md 9.57 (1); item 44) all three moved (the rule, Gamma 10^4,
+    unchanged: the one rule factored and the support box of item 43 bit for bit); SINCE THE WEAK FIELD (ALGEBRA.md #the-line; item 44) all three moved (the rule, Gamma 10^4,
     the amplitude 2^22, the seed 50 x 2^12: every level, remainder, giving line and book); SINCE THE
-    STOCK AS GIVEN-FAMILY CONTENT (ALGEBRA.md 9.51 (8); item 47) all three moved (the emitter's
+    STOCK AS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; item 47) all three moved (the emitter's
     level one more, its one own quantum beside the held stock: every pace at its Nodes, the
     giving lines' content and the books per family); SINCE THE FAMILY GENERICITY (record 2066;
     item 51) the state digest alone moved once more, by the state's entries (`node_clock` and
@@ -331,24 +322,22 @@ def test_the_light_record_is_byte_identical_without_the_key():
     more by the source word alone (`held_fields[].held` "sign"); SINCE ITEM 57 (the model
     owner's record 2089) the events digest alone moved, by the gather line's entry `unit`
     deleted with the engine's constant (the rows, the held levels, the state and the audit
-    bit for bit; the five-world comparison against 776c0d0d); SINCE ITEM 58 (ALGEBRA.md 9.85
-    (2), one order for both clicks) all three moved: the giving's lowered quanta are held
+    bit for bit; the five-world comparison against 776c0d0d); SINCE ITEM 58 (ALGEBRA.md #the-primitives, one order for both clicks) all three moved: the giving's lowered quanta are held
     after the held families' step with the takings', so the given record's norm reads the
     content as it stands and the fields read the giving from the next interval (a defect
-    against 9.57 (1) repaired, the mathematician's line; the giving worlds alone move); read
-    again at this head; SINCE THE SPIN AS STATE (ALGEBRA.md 9.78 (5), 9.91 (8) (v); the one
+    against ALGEBRA.md #the-line repaired, the mathematician's line; the giving worlds alone move); read
+    again at this head; SINCE THE SPIN AS STATE (ALGEBRA.md #a-familys-declaration, #the-interval; the one
     stroke's commit 6, BUILD.md section 26 item 65) the state digest alone moved once more,
     by the block entry's `spin` (the events and the audit bit for bit: no shipped body
-    spins); SINCE THE WINDOW AS THE ONE GIVING (ALGEBRA.md 9.85 (5), 9.71 (1); commit 7,
+    spins); SINCE THE WINDOW AS THE ONE GIVING (ALGEBRA.md #the-primitives; commit 7,
     item 66) all three moved: the chain world's emitter gives by the window at its 32 Nodes
     at the weight 3 (its seed 2^10, the train's profile and its keys retired), every giving
-    line named at the close with the window's length; SINCE RECORD 2157 (ALGEBRA.md 9.104
-    (6) (b); item 67) the state digest alone moved once more, by the block entry's `fixed`
+    line named at the close with the window's length; SINCE RECORD 2157 (ALGEBRA.md #the-primitives; item 67) the state digest alone moved once more, by the block entry's `fixed`
     (the events and the audit bit for bit); SINCE THE FOUR-VECTOR CLICK WITHOUT THE RECOIL
-    (ALGEBRA.md 9.86 (1), 9.91 (4); commit 5 in part, item 69) the events digest alone moved
+    (ALGEBRA.md #the-primitives, #the-interval; commit 5 in part, item 69) the events digest alone moved
     once more, by the `momentum` key of every click and giving line (the sign per axis of the
     quantum's direction; the rows, the state and the audit bit for bit); SINCE THE RESIDUE
-    LINES (ALGEBRA.md 9.90 (1); item 70) the state digest alone moved once more, by the
+    LINES (ALGEBRA.md #the-primitives; item 70) the state digest alone moved once more, by the
     state's `law` entry gone (one engine, no law's name; the events and the audit bit for
     bit); SINCE THE SEAT'S NAMES (record 2108; item 74) the state digest alone moved once
     more, by the block entry's key `node_record` in place of `seat` (the events and the
@@ -388,7 +377,9 @@ def test_the_loaders_refusals_name_the_key():
     clocked["universe"][1]["clock"] = [1, 2]
     assert parse_nature_beam_world(clocked).families[1].phase_per_age == (1, 2)
     no_law = json.loads(json.dumps(base))
-    no_law["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
+    no_law["detector_law"] = (
+        False  # the flag was the law's name: refused by name (ALGEBRA.md #the-primitives)
+    )
     with pytest.raises(ValueError, match="the world has unknown keys: detector_law"):
         parse_nature_beam_world(no_law)
     not_bool = json.loads(json.dumps(base))
@@ -424,7 +415,7 @@ def test_the_records_keys_under_the_key_and_none_without_it():
     world = parse_nature_beam_world(
         massive_world([4, 4, 4], {"x": "open", "y": "periodic", "z": "open"}, [2, 3])
     )
-    assert world.hypotheses == []  # no identity beside the engine (ALGEBRA.md 9.90 (1))
+    assert world.hypotheses == []  # no identity beside the engine (ALGEBRA.md #the-primitives)
     assert world.families[1].pair == (2, 3) and world.families[1].massive_kind
     assert world.kind_periodic(1) == (False, True, False) == world.kind_periodic(0)
     simulation = DetectorLawSimulation(world)
@@ -444,7 +435,7 @@ def test_the_records_keys_under_the_key_and_none_without_it():
 def with_screen(document: dict, x: int) -> dict:
     """The receiver by name for a test world's emitter body (DECLARATIONS.md section 13
     item 7): the cube of side 3 of light bodies at [x, x + 2] read as the set `screen`
-    (record 1899; no wheel: the rung's wheel is the record's own, ALGEBRA.md 9.22 (4))."""
+    (record 1899; no wheel: the rung's wheel is the record's own, ALGEBRA.md #a-familys-declaration)."""
     receiver_cube(document, "screen", [x, 0, 0])
     document["stamp"] = input_stamp(document)  # the stamp over the whole file (item 28)
     return document
@@ -580,13 +571,12 @@ def six_reads(row: np.ndarray) -> np.ndarray:
 
 def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     """BUILD.md (h) SINCE section 26 (the emission by the coupling's source term retired with
-    the lamp; an emitter is a clicking body, ALGEBRA.md 9.17 (4)): an emitter body of the
+    the lamp; an emitter is a clicking body, ALGEBRA.md #the-click): an emitter body of the
     source kind (the one-Node well SOURCE_WELL at x = 100 seeded on its mode, the stock 3)
     on the chain of 240 with the screen at 230: three givings in turn, the residues the
     law's, each given record of content 1 moved from the stock (`held_spent` 3 of the
     source family, `transit_released` 3 of light), the body's own record continuing under its
-    one identity after every giving and after the stock is spent, never rewritten (ALGEBRA.md
-    9.43 (3); item 33), the books balanced at every tick. The
+    one identity after every giving and after the stock is spent, never rewritten (ALGEBRA.md #the-ladder; item 33), the books balanced at every tick. The
     edge cases: `emits` and `own_grace` beside `emitter` refused naming the key; `emitter` on
     a body of light's kind refused; a stock below 1 refused."""
     world = parse_nature_beam_world(
@@ -609,9 +599,9 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
         assert simulation.books()["balanced"], simulation.tick
     givings = [line for line in lines if line["event"] == "giving"]
     assert len(givings) == 3
-    # the residues from the law (ALGEBRA.md 9.22 (4)) on the body's own wheel (700
+    # the residues from the law (ALGEBRA.md #a-familys-declaration) on the body's own wheel (700
     # on the source well in the vacuum; at its Node the wheel of its content under
-    # the Node clock, 9.35 (2), read from the rule), spread from the remainder
+    # the Node clock, ALGEBRA.md #the-paces, read from the rule), spread from the remainder
     # kept at the Nodes (the model owner's decisions (1) and (2) of record 1962;
     # the coupling's back-action HISTORY)
     assert all(lawful_wheel(world, line) for line in givings)
@@ -620,7 +610,9 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     # the spent quanta on the given family's row, light (item 47; the own family's HISTORY)
     assert simulation.ledger.held_spent[0] == 3 and simulation.ledger.transit_released[0] == 3
     own = simulation.blocks[0].own
-    assert own is not None and own.identity == 0  # the standing record continues (9.43 (3))
+    assert (
+        own is not None and own.identity == 0
+    )  # the standing record continues (ALGEBRA.md #the-ladder)
     assert all(
         live.family == 0 and live.content == 1 for live in simulation.records.values() if live is not own
     )
@@ -729,12 +721,15 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
                     "moment": [0, 0, 0],
                     "pair": [1600, 1609],
                     "margin": margin,
-                    "seed": 1 << 18,  # below the pair's amplitude bound (9.61 (3))
+                    "seed": 1
+                    << 18,  # below the pair's amplitude bound (ALGEBRA.md #the-rows-against-nature)
                 }
             ],
         )
         document["age_bound"] = 100000
-        document["amplitude_bound"] = 1 << 19  # the pair's room under the weak field (9.61 (3))
+        document["amplitude_bound"] = (
+            1 << 19
+        )  # the pair's room under the weak field (ALGEBRA.md #the-rows-against-nature)
         world = parse_nature_beam_world(document)
         if admitted:
             readings = check_margins(world)
@@ -880,18 +875,7 @@ def test_the_mode_line_sums_lights_field_by_residue_class():
 
 
 def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
-    """MUST 3 UNDER THE NODE CLOCK (BUILD.md section 26 item 31): a kind's pair whose rule total
-    at the world's declared amplitude bound A with the clock Gamma = 10^6 and the world's
-    content M reaches 2^63 is refused at load naming the bound, the clock, the content and
-    the pair (A = 2^28, [2^20, 2^20 + 1]: 10^6 x 2^20 x 6 x 2^28 above 2^63, admitted by the
-    plain rule's first pass on the pair alone); [800, 809] is admitted (1.9 x 10^18) and so
-    is the muon layer's [3200, 3236] (7.8 x 10^18, the largest registered pair); a block's
-    pair is checked the same way with the world's content, M twice it for the family of
-    clicks' waves ([big, big + 1] refused naming measured[0] and M = 2, [800, 800] admitted). The world key (issue #1085): a massive world
-    without `amplitude_bound` is refused naming it; the ceiling 2^28 (2^29 refused naming
-    it); a seed above the bound is refused naming the bound and the pair (a seed of 2^60 at
-    A = 2^28); the key without `massive_record` refused; a planted row above the bound stops
-    the run at its interval."""
+    """A pair whose rule total at the declared amplitude bound, the clock and the content reaches 2^63 is refused at load naming them ([800, 809] and [3200, 3236] admitted); the amplitude bound is required, capped at 2^28, and a seed or a row above it is refused naming it."""
     big = 1 << 20
     document = massive_world([6, 6, 6], PERIODIC, [big, big + 1])
     document["age_bound"] = 100
@@ -905,7 +889,9 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
     for pair, amplitude in (([800, 809], 1 << 22), ([3200, 3236], 1 << 19)):
         admitted_pair = massive_world([6, 6, 6], PERIODIC, pair)
         admitted_pair["age_bound"] = 100
-        admitted_pair["amplitude_bound"] = amplitude  # the integers of 9.61 (3) per pair
+        admitted_pair["amplitude_bound"] = (
+            amplitude  # the integers of ALGEBRA.md #the-rows-against-nature per pair
+        )
         parse_nature_beam_world(admitted_pair)
     # the block's own pair under the bound with the world's content (one well of one
     # quantum, M = 1): a well [big, big + 1] refused, [800, 800] admitted
@@ -1009,19 +995,21 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
         "moment": [0, 0, 0],
         "pair": [3200, 3227],
         "margin": "control",
-        "seed": 1 << 18,  # below the pair's amplitude bound (9.61 (3))
+        "seed": 1 << 18,  # below the pair's amplitude bound (ALGEBRA.md #the-rows-against-nature)
     }
     document = block_world([128, 128, 1], PERIODIC, [3200, 3236], [block], ticks=1500)
     document["age_bound"] = 100000
-    document["amplitude_bound"] = 1 << 19  # the pair's room under the weak field (9.61 (3))
+    document["amplitude_bound"] = (
+        1 << 19
+    )  # the pair's room under the weak field (ALGEBRA.md #the-rows-against-nature)
     world = parse_nature_beam_world(document)
     # the mode's period 2 pi / omega_b on this 128^2 layer (omega_b 0.14833, a COMPUTATION)
     period = 42.36
     # the generator as the operator iterated with the stop (the owner's word of
-    # 2026-09-25): the profile with its clock beside it (record 1886; ALGEBRA.md 9.22 (7))
+    # 2026-09-25): the profile with its clock beside it (record 1886; ALGEBRA.md #a-familys-declaration)
     profile, clock, _ = iterated_mode(
         world, 0, 1 << 18
-    )  # below the pair's amplitude bound 2^19 (9.61 (3))
+    )  # below the pair's amplitude bound 2^19 (ALGEBRA.md #the-rows-against-nature)
     seeded = dict(document)
     seeded["measured"] = [dict(document["measured"][0], seed=profile, clock=list(clock))]
     seeded["stamp"] = input_stamp(seeded)
@@ -1084,7 +1072,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
         if given is not None and tick == given + 100:
             break
     assert compared > 1 and (field_reached is None or field_reached > 1)
-    # the first giving within the well's period (the residue's wait, 9.17 (7) (f))
+    # the first giving within the well's period (the residue's wait, ALGEBRA.md #the-click)
     assert given is not None and given < 120
     live = simulation.records[identity]
     ahead = int(np.max(np.abs(live.now[140:180, 0, 0])))
@@ -1140,7 +1128,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
             break
     gathers = [line for line in lines if line["event"] == "gather"]
     # both records click, each once, in either order (under the click rule of
-    # 9.17 (7) (f) the second is given (2 u + 1) P / (2 W) after the first's
+    # ALGEBRA.md #the-click the second is given (2 u + 1) P / (2 W) after the first's
     # click and may reach its rung at the screen first when its residue is
     # the smaller)
     assert sorted(gather["record"] for gather in gathers) == identities
@@ -1162,7 +1150,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
 
 
 def test_every_declared_wheel_is_refused_by_name():
-    """The wheel is the record's own (ALGEBRA.md 9.22 (4); BUILD.md section 26 item 15): the
+    """The wheel is the record's own (ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 15): the
     world key `wheel`, a detector set's `wheel`, a block's `wheel` and an emitter's `wheel`
     are each refused by name with the successor named; the same for `residue_order` and
     `residue_seed` on an emitter, `absorbing` and `take` on a block, `take` on a family. The
@@ -1256,7 +1244,9 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         assert all(g["chosen"][0][0] != "far" for g in lines if g["event"] == "gather")
     # the loader's refusals
     bad = light_clock_world("closed", False)
-    bad["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
+    bad["detector_law"] = (
+        False  # the flag was the law's name: refused by name (ALGEBRA.md #the-primitives)
+    )
     with pytest.raises(ValueError, match="the world has unknown keys: detector_law"):
         parse_nature_beam_world(bad)
     on_body = light_clock_world("open", False)
@@ -1286,7 +1276,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
 
 def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_block():
     """A set bound to a block WITHOUT positions is a receiver (Sagnac's form, DECLARATIONS.md section 13
-    item 1) under the flux reading (ALGEBRA.md 9.19 (3)): the block's twelve Nodes are the
+    item 1) under the flux reading (ALGEBRA.md #rule3): the block's twelve Nodes are the
     set's Nodes (the detector index at them the set's); an emitter's record (the emitter
     body of the source kind at [100, 132) on a chain of 300, its train along +x toward the
     block 68 Links ahead, two givings, the emitter naming the set) books its one-way flux into the
@@ -1400,18 +1390,7 @@ def test_a_block_that_steps_off_the_board_refuses_the_interval():
 
 
 def test_a_wall_of_lights_kind_is_a_mirror_line():
-    """DECLARATIONS.md section 15 L-1 (the (M) wall's path): a mirror line of blocks of light's
-    kind with the pair [1, 2], FOUR Nodes deep (the mirror's depth of ALGEBRA.md A.3 at the
-    train's wavelength 4), on the first build's chain (x = 40 to 43; the emitter body at
-    [2, 34), the screen cube at [70, 72]): the blocks have no own record, no clock and no
-    coupling (the loader sets their seed 0; the engine's blocks' loop skips them; the margin
-    rule skips light's kind), light's pair arrays carry [1, 2] at the four Nodes and [1, 1]
-    elsewhere; over 200 intervals the two givings of the emitter never click at the screen cube
-    beyond the wall (no gather line, both light records still alive: the detector's reading of
-    the mirror, against the chain world without the wall, where every giving clicks at `screen`,
-    tests/test_detector_law.py), the books balanced at every interval; a light-kind block with
-    `seed` or `margin` refused, and `coupling` refused by name on any block. The chain's source is
-    the emitter body of section 26 (a block itself, of the matter kind, with its own record)."""
+    """A line of blocks of light's kind at the pair [1, 2], four Nodes deep, is a mirror: beyond it the largest level stays below four percent of the level before it over 200 intervals (COMPUTATION), the books balanced; a light-kind block with seed or margin, and any block with coupling, refused by name."""
     document = chain_world()  # the closed chain (BUILD.md section 26 item 14)
     document["massive_record"] = True
     document["amplitude_bound"] = 1 << 22

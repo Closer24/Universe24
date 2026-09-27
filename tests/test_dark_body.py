@@ -27,7 +27,7 @@ def test_the_files_are_the_generators_and_the_pins_are_declared_blind():
         assert document["universe"] == "examples/events/universe.json"  # item 59
         world = parse_nature_beam_world(document)
         assert world.node_clock == 10_000 and world.body_record is False
-        # the three families of ALGEBRA.md 9.86 (2) (the one stroke, commit 1)
+        # the three families of ALGEBRA.md #the-primitives (the one stroke, commit 1)
         assert [family.name for family in world.families] == ["gravity", "charge", "matter"]
         assert [family.parts for family in world.families] == [(1, 3, 6), (1, 3), (1,)]
         assert all(family.charge == (0, 1) for family in world.families)
@@ -50,9 +50,9 @@ def test_the_dark_body_is_dark_by_declaration_and_the_bright_one_is_not():
     # its stock of light held (item 47)
     assert dark["measured"][DARK_NUMBER]["amount"] == 4812
     assert bright["measured"][DARK_NUMBER]["amount"] == 4812 - 128
-    # light is the charge family's wave (9.86 (2) (b)): the stock and the giving are its
+    # light is the charge family's wave (ALGEBRA.md #the-primitives): the stock and the giving are its
     assert bright["measured"][DARK_NUMBER]["stocks"] == {"charge": 128}
-    # the dark body is dark by declaration, one family of matter (9.86 (2) (c)), no emitter
+    # the dark body is dark by declaration, one family of matter (ALGEBRA.md #the-primitives), no emitter
     assert dark["measured"][DARK_NUMBER]["family"] == "matter"
     assert dark["measured"][DARK_NUMBER]["kind"] == [800, 809]
     assert "emitter" not in dark["measured"][DARK_NUMBER]
@@ -82,7 +82,7 @@ def test_both_worlds_run_balanced_and_the_dark_body_never_clicks():
             and not simulation.held_record("sign").remainder.any()
         )
     # the dark body's own rotation cycles on (its `click` and `block` lines are the GameBoard's
-    # count of its own record, 9.54 (3)); no giving click and no taking click name it
+    # count of its own record, ALGEBRA.md #the-postulates); no giving click and no taking click name it
     assert not [
         line
         for line in lines["dark"]

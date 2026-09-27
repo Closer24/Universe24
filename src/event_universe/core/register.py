@@ -1,6 +1,6 @@
 """THE REGISTER OF PRIMITIVES (the model owner's decisions of 2026-09-26 through the
 Boss, records 2208, 2212 and 2221; the short procedure of skills/workflow.md, point 5;
-issue #1154; ALGEBRA.md 9.110 item 7, 9.111 item 7, 9.112 item 1).
+issue #1154; ALGEBRA.md #the-primitives.111 item 7, ALGEBRA.md #the-interval).
 
 A PRIMITIVE is a kind of attribute the engine can apply, written once and applied
 to any family by its declaration in the run's files, never by a family's name. Its
@@ -37,14 +37,14 @@ from dataclasses import dataclass, field, replace
 from event_universe.core.schema import Schema
 from event_universe.core.step import PLACES, Step
 
-# the words of 9.111 item 7: the right side (read from the interval's start), the step (the rule),
+# the words of ALGEBRA.md #the-primitives: the right side (read from the interval's start), the step (the rule),
 # after the step (the clicks, whose writes enter at t + 1); "any" the trace's
 WORDS: tuple[str, ...] = ("the right side", "the step", "after the step", "any")
 
 Binder = Callable[[object], Callable[..., object]]
 
 
-# a body's values (ALGEBRA.md 9.117 item 1): a click's write of one at (ii) is applied at (iv)
+# a body's values (ALGEBRA.md #the-primitives): a click's write of one at (ii) is applied at (iv)
 DEFERRED_VALUES: frozenset[str] = frozenset(
     {
         "a body's content M_k",
@@ -55,7 +55,7 @@ DEFERRED_VALUES: frozenset[str] = frozenset(
     }
 )
 
-# a remainder is the dividing primitive's own record (ALGEBRA.md 9.117 item 1): no two writers collide
+# a remainder is the dividing primitive's own record (ALGEBRA.md #the-primitives): no two writers collide
 OWN_VALUES: frozenset[str] = frozenset({"a body's remainders", "the record's remainder"})
 
 
@@ -67,7 +67,7 @@ def folder_of(name: str) -> str:
 
 @dataclass(frozen=True)
 class Declaration:
-    """What one primitive declares: its name, its place (9.91 (8)) and word (9.111 item 7), the values it reads and writes, its ALGEBRA.md line, its function once bound (None on a row not built), its binder and its schema, its keys of the files (core/schema.py); its order among the writers of one value is the step file's."""
+    """What one primitive declares: its name, its place (ALGEBRA.md #the-interval) and word (ALGEBRA.md #the-primitives), the values it reads and writes, its ALGEBRA.md line, its function once bound (None on a row not built), its binder and its schema, its keys of the files (core/schema.py); its order among the writers of one value is the step file's."""
 
     name: str
     place: str
@@ -85,7 +85,7 @@ class Declaration:
 
     def place_of(self, value: str) -> str:
         """The place at which a write of `value` is ordered: a body's value left by a
-        click at (ii) is a deferred write of (iv) (ALGEBRA.md 9.117 item 1)."""
+        click at (ii) is a deferred write of (iv) (ALGEBRA.md #the-primitives)."""
         if self.place == "(ii)" and value in DEFERRED_VALUES:
             return "(iv)"
         return self.place
@@ -108,7 +108,7 @@ class Register:
         if declaration.word and declaration.word not in WORDS:
             raise ValueError(
                 f"the primitive {declaration.name!r} declares the word {declaration.word!r}, "
-                f"which is none of {list(WORDS)} (ALGEBRA.md 9.111 item 7)"
+                f"which is none of {list(WORDS)} (ALGEBRA.md #the-primitives)"
             )
         if declaration.name in self.declarations:
             raise ValueError(
