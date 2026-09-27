@@ -83,11 +83,11 @@ def test_the_merge_replaces_the_named_worlds_and_keeps_the_rest(tmp_path, monkey
     kept = {"stamp": {"hash": "k" * 64}, "ticks": 9, "intervals": 9, "digest": "0" * 64}
     moved, added = {**kept, "digest": "2" * 64, "refused": "at the wall"}, {**kept, "intervals": 3}
     monkeypatch.setattr(module, "RECORD", tmp_path / "record.json")
-    module.write_record({"a/kept": kept, "a/moved": {**kept, "digest": "1" * 64}}, "before")
-    (tmp_path / "s" / "d").mkdir(parents=True)
-    (tmp_path / "a__moved.record.json").write_text(json.dumps({"a/moved": moved}))
-    (tmp_path / "s" / "d" / "b__added.record.json").write_text(json.dumps({"b/added": added}))
-    assert module.merge(tmp_path, "abc1234") == module.merge(tmp_path, "later") == ["a/moved", "b/added"]
-    record = json.loads((tmp_path / "record.json").read_text())
-    assert record["format"] == module.FORMAT and record["recorded_at"] == "abc1234"
-    assert record["worlds"] == {"a/kept": kept, "a/moved": moved, "b/added": added}
+    module.write_record({"k": kept, "m": {**kept, "digest": "1" * 64}}, "before")
+    (tmp_path / "m.record.json").write_text(json.dumps({"m": moved}))
+    (tmp_path / "b.record.json").write_text(json.dumps({"b": added}))
+    with pytest.raises(ValueError, match="'k'"):  # a world with no entry: a lost shard, no record
+        module.merge(tmp_path, "abc1234", every_world=True)
+    assert module.merge(tmp_path, "abc1234") == module.merge(tmp_path, "later") == ["b", "m"]
+    record = json.loads((tmp_path / "record.json").read_text())  # "later" rewrote nothing
+    assert record["recorded_at"] == "abc1234" and record["worlds"] == {"k": kept, "m": moved, "b": added}
