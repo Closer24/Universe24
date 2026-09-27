@@ -85,7 +85,7 @@ from event_universe.core.rule3 import (
     rungs,
 )
 from event_universe.events import guards
-from event_universe.events.geometry import GameBoardGeometry
+from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.features import self_source
 from event_universe.features.giving import (
     THE_CLOSE,
@@ -418,19 +418,6 @@ class Block:
     # inverted with the body
     hold_carry: dict[tuple[object, ...], int] = field(default_factory=dict)
     hold_value: dict[tuple[object, ...], int] = field(default_factory=dict)
-
-
-class PairView:
-    """The tests' view of a family's pair arrays by its own declared pair
-    (`kind_num[family]`, `kind_den[family]`; item 51's form): one array of
-    the two, from `pair_arrays`."""
-
-    def __init__(self, simulation: DetectorLawSimulation, index: int) -> None:
-        self.simulation = simulation
-        self.index = index
-
-    def __getitem__(self, family: int) -> np.ndarray:
-        return self.simulation.pair_arrays(family)[self.index]
 
 
 @dataclass
@@ -2850,11 +2837,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 live.absorbed += value
             increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
             self.register.at("the clicks", "(ii)")(live, increments)
-
-    def _window_centre(self, block: Block) -> tuple[int, int, int]:
-        """The body's Node of a block with a window (its centre Node)."""
-        axes = np.nonzero(self.centre_mask(block))
-        return (int(axes[0][0]), int(axes[1][0]), int(axes[2][0]))
 
     def _giving_act(self, block: Block, start: GivingStart, live: LiveRecord | None) -> GivingWrites:
         """One act of the giving through the folder's `apply` (the function the main loop looked up at (ii)): the term from the emitter's declaration, the own record from the window's record (`live`), none at the open."""

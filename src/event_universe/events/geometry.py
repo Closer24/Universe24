@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import Protocol, cast
+from typing import Any, Protocol, cast
 
 import numpy as np
 
@@ -165,6 +165,11 @@ class GameBoardGeometry[B: Body]:
                 moving[detector] = (block, momentum)
         return moving
 
+    def _window_centre(self, block: B) -> tuple[int, int, int]:
+        """The body's Node of a block with a window (its centre Node)."""
+        axes = np.nonzero(self.centre_mask(block))
+        return (int(axes[0][0]), int(axes[1][0]), int(axes[2][0]))
+
     def pair_arrays(
         self, family: int, pair: tuple[int, int] | None = None
     ) -> tuple[np.ndarray, np.ndarray]:
@@ -204,3 +209,14 @@ class GameBoardGeometry[B: Body]:
                 if other is not block and other.family == block.family:
                     num[other.mask & ~block.mask] = other.definition.pair[0]
                     den[other.mask & ~block.mask] = other.definition.pair[1]
+
+
+class PairView:
+    """The tests' view of a family's pair arrays by its own declared pair (`kind_num[family]`, `kind_den[family]`; item 51's form): one array of the two, from `pair_arrays`."""
+
+    def __init__(self, simulation: GameBoardGeometry[Any], index: int) -> None:
+        self.simulation = simulation
+        self.index = index
+
+    def __getitem__(self, family: int) -> np.ndarray:
+        return self.simulation.pair_arrays(family)[self.index]
