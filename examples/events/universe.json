@@ -33831,7 +33831,8 @@
      2
     ],
     "dipole": "spin",
-    "dipole_div": 1
+    "dipole_div": 1,
+    "divisor": 40000
    },
    "reads": [],
    "self_source": {
@@ -33872,7 +33873,8 @@
      1
     ],
     "dipole": "moment",
-    "dipole_div": 2
+    "dipole_div": 2,
+    "divisor": 40000
    },
    "reads": [
     {

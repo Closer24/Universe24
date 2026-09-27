@@ -251,6 +251,8 @@ class FamilyDefinition:
     held_factors: tuple[int, ...] = (1,)
     held_dipole: str | None = None
     held_dipole_div: int = 1
+    # THE SUM'S DIVISOR E_s (the owner's word of 21:35Z): the body's count enters the held line over it; the row's key
+    held_divisor: int | None = None
     # THE SPIN'S STEP'S ROW (ALGEBRA.md #a-familys-declaration): the curl and tidal pairs, read by the spin's step's
     # folder; required on a family that holds the spin's dipole, None on every other
     spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
@@ -714,15 +716,9 @@ def _pair_bound(
     node_clock: int = 1,
     content: int = 0,
 ) -> None:
-    """The load bound of a pair (Reviewer 3's MUST 3) under the Node clock
-    (ALGEBRA.md #the-line, #the-rows-against-nature; BUILD.md section 26 items 31, 34 and 44):
-    the weak-field rule's total at a Node under the amplitude bound A (the
-    world's `amplitude_bound`), 6 A R + A |S| + w (A + 1) with the rule's
-    integers (R, S, w) at the vacuum's level and at the content M, below
-    2^63, Gamma the world's `node_clock` and M the content at the Node (the
-    world's whole content at the second pass, `_node_clock_bound`; the plain
-    rule at Gamma = 1 and M = 0, the first pass on the pair alone); refused
-    otherwise naming the bound, the clock, the content and the pair."""
+    """The load bound of a pair on the rule's integers (MUST 3; ALGEBRA.md #the-line, #the-rows-against-nature):
+    6 A R + A |S| + w (A + 1) with (R, S, w) the rule's coefficients at the two levels a Node can read, the
+    larger, inside the width; refused by name above it."""
     # THE BOUND FROM THE RULE'S OWN INTEGERS (ALGEBRA.md #the-line, #the-rows-against-nature;
     # BUILD.md section 26 item 44): 6 A R + A |S| + w (A + 1) with (R, S, w)
     # the weak-field rule's coefficients at the level 0 and at the level M
@@ -920,6 +916,7 @@ def _families_of(
         held_factors: tuple[int, ...] = tuple(1 for _ in parts)
         held_dipole: str | None = None
         held_dipole_div = 1
+        held_divisor: int | None = None
         if "held" in obj:
             source = cast(dict[str, object], obj["held"])
             held = str(source["count"])
@@ -943,8 +940,8 @@ def _families_of(
                         "divisor is the row's, no default"
                     )
             if "dipole_div" in source:
-                divisor = cast(int, source["dipole_div"])
-                held_dipole_div = divisor
+                held_dipole_div = cast(int, source["dipole_div"])
+            held_divisor = cast(int, source["divisor"])
         spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
         if "spins_step" in obj:
             if held_dipole != "spin":
@@ -1037,6 +1034,7 @@ def _families_of(
                 held_factors=held_factors,
                 held_dipole=held_dipole,
                 held_dipole_div=held_dipole_div,
+                held_divisor=held_divisor,
                 spin_weights=spin_weights,
                 sourced=sourced,
                 self_unit=self_unit,
