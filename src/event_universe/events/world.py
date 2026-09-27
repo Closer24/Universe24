@@ -6639,9 +6639,8 @@ def parse_world_document(
         raise ValueError(f"N must be a power of two from 2 through {MAX_PHASE_STEPS}")
     release = _ratio(obj["release"], "release", zero=True)
     # the ray law's keys suspension, direction_bound, directions, action, meeting and
-    # massive_rows are no keys of the file (the frame refuses them by name); their values
-    # below and the world's fields that carry them are this module's remains of the
-    # cancelled law, read by no line of the loop (the DEAD numbers of #1197, deleted whole)
+    # massive_rows are no keys of the file (the frame refuses them by name); the values below
+    # and the world's fields carrying them are read by no line of the loop (DEAD, deleted whole)
     suspension = (1, 1)
     width = obj["width"]
     assert isinstance(width, int)
