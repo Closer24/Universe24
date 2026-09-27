@@ -158,9 +158,12 @@ def test_bound_at_v_a_free_body_falls_toward_a_held_body_and_the_step_back_retur
     held, free = simulation.blocks
     for _ in range(10):
         simulation.step()
-    # measured once under THE START (the held field at rest at the load, no transient): -1 in ten intervals
+    # measured once under THE START (the held field at rest at the load, no transient) with no body held
+    # in place (#1283): the free body -1 in ten intervals; the big body is fed from the first interval
+    # too and moves away from the hole the small body's count makes in its field (the hold's write at a
+    # body's Nodes is its count: a finding on #1198 for the owner, the law as written)
     assert free.momentum == [-1, 0, 0] and free.momentum_before == [-1, 0, 0]
-    assert held.momentum == [0, 0, 0] and free.hold_carry[("feed", 0)] > 0
+    assert held.momentum == [-93, 0, 0] and free.hold_carry[("feed", 0)] > 0
     for _ in range(10):
         simulation.step_inverse()
     assert free.momentum == [0, 0, 0] == free.momentum_before
