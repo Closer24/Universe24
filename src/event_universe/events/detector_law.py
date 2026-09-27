@@ -1075,7 +1075,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         # the body's own record is not ended and never rewritten (ALGEBRA.md #the-ladder)
         block.givings += 1
         identity, self.next_identity = self.next_identity, self.next_identity + 1
-        rows = [np.zeros(self.shape, dtype=np.int64) for _ in range(3)]
+        rows = tuple(np.zeros(self.shape, dtype=np.int64) for _ in range(3))
         live = LiveRecord(
             identity,
             number,
@@ -1088,7 +1088,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             denominator,
             0,
             period,
-            *rows,
+            rows[0],
+            rows[1],
+            rows[2],
             pointers=[0] * len(self.detector_names),
             first_rung=[None] * len(self.detector_names),
             wheel=wheel,
