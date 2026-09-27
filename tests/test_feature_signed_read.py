@@ -86,7 +86,7 @@ def test_apply_equals_the_engines_read_bit_for_bit_on_the_emitters_world():
 
 def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
     """The guard's bound P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) is the last pace with
-    (S - 6 R) + 2 w >= 0 on the rule's coefficients: 1002 for [800, 809], 1015 for [800, 850], 1000 for [1, 1]"""
+    (S - 6 R) + 2 w >= 0 on the rule's (R, S, w): 1002 for [800, 809], 1015 for [800, 850], 1000 for [1, 1]"""
     for pair, expected in (((800, 809), 1002), ((800, 850), 1015), ((1, 1), 1000)):
         bound = pace_bound(pair, CHAIN_GAMMA)
         assert bound == expected
@@ -100,7 +100,7 @@ def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
 
 
 def test_a_like_charge_hill_is_admitted_to_the_edge_and_refused_beyond_it_naming_the_node():
-    """The charged chain of 60: a matter record of charge +1 reads c - Lambda d; at Lambda = 1 p = 1000 <=
+    """The charged chain: a matter record of charge +1 reads c - Lambda d; at Lambda = 1 p = 1000 <=
     1002, admitted; at Lambda = 3 p = 1020 beyond the edge of [800, 809], refused naming a slab Node."""
     admitted = DetectorLawSimulation(
         parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, 1, 1))

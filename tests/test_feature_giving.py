@@ -87,7 +87,7 @@ def test_the_three_acts_of_a_window_on_synthetic_integers():
 
 def test_the_refusals_by_name():
     """The weight, the norm and its denominator from 1; the act one of the three; an open on an open one,
-    a write or a close on none; the quanta from 1 at the open; every field named by the loop, no default"""
+    a write or a close on none; the quanta from 1 at the open; every field named, no default"""
     with pytest.raises(ValueError, match="needs a weight, a norm and its denominator from 1"):
         apply(GivingTerm(0, 1000, 1, 0), an_open(1, NO_TALLY), CLOSED)
     with pytest.raises(ValueError, match="act is one of"):
@@ -166,7 +166,7 @@ def test_the_close_act_closes_where_the_engines_window_closes_and_not_before():
 
 def test_the_declaration_is_the_ledgers_row():
     """The folder declares the row of ALGEBRA.md 9.117 in the register's form: "the giving" at (ii), the
-    word after the step, the writes with their orders as a click's deferred writes at (iv), its section"""
+    word after the step, the writes ordered as a click's deferred writes at (iv), its section"""
     assert DECLARATION.name == "the giving" and folder_of("the giving") == "giving"
     assert DECLARATION.place == "(ii)" and DECLARATION.word == "after the step"
     assert DECLARATION.writes == (
