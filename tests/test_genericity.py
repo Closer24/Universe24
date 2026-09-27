@@ -1,25 +1,5 @@
-"""THE GENERICITY TEST (the model owner's word through the Boss, record 2234; record 2237: the
-rule is Rule3; ALGEBRA.md 9.57 (1), 9.91 (7), 9.110 item 3): a universe generator driven by a
-fixed seed draws one to twenty families with random English names and random combinations of
-the attributes the loader admits today (the parts, the phase, the pair, the holds, the reads,
-the self-source, the clicks); every draw loads and runs, and five properties hold on each:
-
-(a) renaming the families leaves the run bit for bit;
-(b) reordering the families in the universe file leaves it bit for bit;
-(c) a family with no source stays exactly zero (the engine's own leak test, record 2075 (3));
-(d) Rule3's conserved form holds where no click and no load acts: the step's exact identity of
-    the form I with the remainders' drift (ALGEBRA.md 9.50 (13), 9.57 (1); item 44) on the
-    body's own record, the body alone on the GameBoard (no emitter, no stock), at the plain
-    pace (the body's reads of an integer weight by 1 at the twist "own" summed into the level
-    in force; a read by q, at the weight Lambda or at an angle carries the four paces with
-    their remainders, ALGEBRA.md 9.91 (2): that form is the mathematician's line and the
-    test widens onto it);
-(e) running backward returns the start in the world of the Nodes, bit for bit.
-
-The run is read by tools/record_shipped_worlds.py's reading (what the run is, under the
-world's names). A failing draw is kept as a fixed test with its seed (`KEPT`); the draw widens
-as each new schema lands (the source, the readings). Selected on every pull request by
-tools/check.py. HOST readings, no measurement, no pin."""
+"""The genericity test: a seeded generator draws one to twenty families with random English names and
+admitted attributes; every draw loads and runs, and five properties hold on each (a failing seed is kept)."""
 
 from __future__ import annotations
 
