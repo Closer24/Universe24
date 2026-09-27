@@ -457,8 +457,8 @@ Local: each click reads its own Node's arrivals; nothing kept at a Node.
 - The scout's table: the Boss's record 1168 (unread here); the owner's
   word, record 1173; the three statuses, record 1166.
 - [ALGEBRA.md](../../ALGEBRA.md) (on main since PR #982, beae0a4, the
-  merge base): [4.9, Theorem 5](../../ALGEBRA.md#4-the-exact-identities-one-line-each-and-the-link-to-the-proof),
-  4.12 (Malus), [5.1, the r-free lines](../../ALGEBRA.md#51-the-click-theorem-lorentzs-factors-from-the-clicks); [the click frame](../click_frame/DERIVATION.md)
+  merge base): [4.9, Theorem 5](../../ALGEBRA.md),
+  4.12 (Malus), [5.1, the r-free lines](../../ALGEBRA.md); [the click frame](../click_frame/DERIVATION.md)
   sections 2 to 4; [RUN_4AB.md](../fail_rows/RUN_4AB.md) 1.2, 3.2, 6.3;
   [RUN_8BC.md](../fail_rows/RUN_8BC.md) 5 (the lamp's first remainder);
   [the malus note](../malus/NOTE.md) section 3; [WHAT_IS_MISSING.md](../fail_rows/WHAT_IS_MISSING.md)
