@@ -320,7 +320,7 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_elsewhere():
-    """(vii) THE FAMILY OF CLICKS (record 1982; ALGEBRA.md #the-counts-line, #the-ladder, #the-primitives the row "the hold"): on the open chain of 200 with light bodies of QUANTA at [90, 110) under the held row's divisor QUANTA, the clock record's level at the start is one quantum (the count over the divisor) at the bodies' Nodes and 0 elsewhere, the remainder 0; the source adds one quantum at the bodies' Nodes each interval into the record's own step, so at the slab's centre, until the edges' waves arrive (10 Links, one per interval), the level is the triangular sum (t + 1)(t + 2) / 2 at the interval t, 3, 6, 10, ..., 55 over the first nine (a_next = 2 a_now - a_before + 1 on a uniform slab); THE FRONT: nothing before the cone of one Link per interval, the long waves at the pace 1 / sqrt 3."""
+    """(vii) THE FAMILY OF CLICKS (record 1982; ALGEBRA.md #the-counts-line, #the-ladder, #the-primitives the row "the hold"): on the open chain of 200 with light bodies of QUANTA at [90, 110) under the held row's divisor QUANTA, the clock record's level at the start is one quantum (the count over the divisor) at the bodies' Nodes and 0 elsewhere, the remainder 0; the source adds one quantum at the bodies' Nodes each interval into the record's own step, so at the slab's centre, until the edges' waves arrive (10 Links, one per interval), the level is the triangular sum (t + 1)(t + 2) / 2 at the interval t, 3, 6, 10, ..., 55 over the first nine (a_next = 2 a_now - a_before + 1 on a uniform slab); THE FRONT: nothing before the cone of one Link per interval, the long waves at the pace 1 / sqrt 3; the run 60 intervals (the level at the centre 902 at the 60th and 1005 at the 66th, at or beyond Gamma = 1000, the pace guard's end, ALGEBRA.md #the-paces)."""
     document = content_chain(200, CHAIN, range(90, 110), QUANTA, divisor=QUANTA)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     clock = simulation.held_records[2]
@@ -331,7 +331,7 @@ def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_el
     assert not clock.now[~held].any() and not clock.remainder.any()
     assert simulation.level_of("content") is clock.now
     reached = None
-    for _ in range(80):
+    for _ in range(60):
         simulation.step()
         if simulation.tick <= 9:
             assert int(clock.now[99, 0, 0]) == (simulation.tick + 1) * (simulation.tick + 2) // 2
@@ -340,7 +340,7 @@ def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_el
         elif reached is None and int(clock.now[60, 0, 0]) != 0:
             reached = simulation.tick
         assert simulation.level_of("content") is clock.now
-    assert reached is not None and 30 <= reached <= 70, reached
+    assert reached is not None and 30 <= reached <= 60, reached
     books = simulation.books()
     assert books["families"]["clicks"]["form"] == form_json(simulation.record_form(clock))
     assert books["families"]["clicks"]["measured"]["current"] == 0
@@ -357,26 +357,27 @@ def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_el
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_joint_step_inverts_bit_for_bit_wherever_the_clock_falls():
-    """(viii) THE EXACT BACKWARD RUN EVERYWHERE (record 1994; item 34): the periodic chain of 60 with a body of QUANTA at [20, 30) under the held row's divisor QUANTA (one quantum into the field at the bodies' Nodes each interval, ALGEBRA.md #the-primitives the row "the hold") and a light record of random rows: the clicks' field rises and falls at Nodes over 30 intervals, and the joint step inverts bit for bit, the wall 3 den Gamma the same at every interval so no two states merge. The edge case: the field did move."""
+    """(viii) THE EXACT BACKWARD RUN EVERYWHERE (record 1994; item 34): the chain of 60 with an open x and a body of QUANTA at [20, 30) under the held row's divisor QUANTA (one quantum into the field at the bodies' Nodes each interval, ALGEBRA.md #the-primitives the row "the hold") and a light record of random rows: the clicks' field rises at Nodes over 60 intervals and falls too (the zero faces send the wave back inverted, from the 50th interval; on a periodic chain a count, a source above 0, only raises it), and the joint step inverts bit for bit, the wall 3 den Gamma the same at every interval so no two states merge. The edge case: the field did move."""
     rng = np.random.default_rng(31)
     now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
     simulation = DetectorLawSimulation(
-        parse_nature_beam_world(content_chain(60, PERIODIC, range(20, 30), QUANTA, divisor=QUANTA))
+        parse_nature_beam_world(content_chain(60, CHAIN, range(20, 30), QUANTA, divisor=QUANTA))
     )
     live = planted(simulation, 0, now, before, np.zeros((60, 1, 1), dtype=np.int64))
     simulation.records[live.identity] = live
     clock = simulation.held_records[2]
     start = (live.now.copy(), live.before.copy(), live.remainder.copy(), clock.now.copy())
-    falls = 0
+    rises = falls = 0
     previous = clock.now.copy()
-    for _ in range(30):
+    for _ in range(60):
         simulation.step()
+        rises += int(np.sum(clock.now > previous))
         falls += int(np.sum(clock.now < previous))
         previous = clock.now.copy()
     assert live.identity in simulation.records and not live.clicked
-    assert falls > 0 and not np.array_equal(clock.now, start[3])
-    for _ in range(30):
+    assert rises > 0 and falls > 0 and not np.array_equal(clock.now, start[3])
+    for _ in range(60):
         simulation.step_inverse()
     for x, y in zip((live.now, live.before, live.remainder, clock.now), start, strict=True):
         assert np.array_equal(x, y)

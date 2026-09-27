@@ -114,7 +114,7 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
-    """(ii) THE HOLD AT Q (ALGEBRA.md #the-paces, #the-primitives the row "the hold"): on the emitter world with light and the matter kind both of charge -1 (the emitter's one own quantum of matter and its stock of 4 light quanta at [5, 37) (item 47), the screen's three light bodies of one quantum at [70, 72], the cube of side 3 on a chain), Q is -5 at the emitter and -1 at each screen body; the family of charge at the start is Q div 40000 = -1 at their Nodes (the division act's floor, the remainder 39995 carried on the emitter) and 0 in the vacuum; the emitter's Q rises by one at each giving (a held light quantum given, its label in flight on the given record; the body's own quantum and its own charge stay) and the giving line carries it, the screen's first body's Q falls by one at each click there (the label held); the emitter's carried remainder gains its Q after each interval's clicks and stays above 0, so no increment is written; the whole charge of the bodies and of the records in flight is -8 at every interval; the books balanced. The edge case: a light body of charge 0 in a world whose bodies carry charge holds Q = 0 (the neutral chain, (v))."""
+    """(ii) THE HOLD AT Q (ALGEBRA.md #the-paces, #the-primitives the row "the hold"): on the emitter world with light and the matter kind both of charge -1 (the emitter's one own quantum of matter and its stock of 4 light quanta at [5, 37) (item 47), the screen's three light bodies of one quantum at [70, 72], the cube of side 3 on a chain), Q is -5 at the emitter and -1 at each screen body; the family of charge at the start is Q div 40000 = -1 at their Nodes (the division act's floor, the remainder 39995 carried on the emitter) and 0 in the vacuum; the emitter's Q rises by one at each giving (a held light quantum given, its label in flight on the given record; the body's own quantum and its own charge stay) and the giving line carries the Q the clicking record was advanced under, -5 + the givings before it, with the content 0 (the count 5 over 40000 writes no increment in the run), the screen's first body's Q falls by one at each click there (the label held); the emitter's carried remainder gains its Q after each interval's clicks and stays above 0, so no increment is written; the whole charge of the bodies and of the records in flight is -8 at every interval; the books balanced. The edge case: a light body of charge 0 in a world whose bodies carry charge holds Q = 0 (the neutral chain, (v))."""
     document = emitter_world(stock=4, on_mode=False)
     document["universe"][LIGHT]["sign"] = -1
     document["universe"][MATTER]["sign"] = -1
@@ -151,18 +151,21 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
         )
         assert bodies + flight == -8, simulation.tick
     assert givings == 4 and clicks >= 1
-    for line in lines:
-        if line["event"] == "giving":
-            assert line["charge"] == -line["content"]
+    giving_lines = [line for line in lines if line["event"] == "giving"]
+    assert [(line["charge"], line["content"]) for line in giving_lines] == [
+        (-5 + k, 0) for k in range(4)
+    ]
 
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_joint_step_with_both_fields_inverts_bit_for_bit():
-    """(iii) THE EXACT BACKWARD RUN (the model owner's record 1994; ALGEBRA.md #the-paces under item 34): on the periodic chain of 60 with light bodies of QUANTA quanta and charge +1 at [20, 30) under the held rows' divisor QUANTA (each field gains one quantum at the bodies' Nodes every interval, ALGEBRA.md #the-primitives the row "the hold"), a record of the charged light (q = +1, reading c - Lambda d) and a neutral record of random rows registered (nothing clicks), both fields rise and fall at Nodes over 30 intervals (the falls counted, above 0, the charge field moved off its start), and the joint step inverts bit for bit: every record's two levels and remainders and both fields' rows. The edge case: the chain with an open x (the zero faces) inverts as exactly."""
+    """(iii) THE EXACT BACKWARD RUN (the model owner's record 1994; ALGEBRA.md #the-paces under item 34): on the chain of 60 with light bodies of QUANTA quanta and charge +1 at [20, 30) under the held rows' divisor 2 QUANTA (the level 0 at the load, each field gaining one quantum at the bodies' Nodes every second interval, the remainder QUANTA carried between, ALGEBRA.md #the-primitives the row "the hold"), a record of the charged light (q = +1, reading c - Lambda d) and a neutral record of random rows registered (nothing clicks), over 60 intervals: the family of charge is the family of clicks bit for bit (Q = +QUANTA is the count at every body, the same row's line), the field rises at Nodes and, on the periodic chain, never falls (a count is a source above 0), while on the chain with an open x it falls too (the zero faces send the wave back inverted, from the 47th interval); the joint step inverts bit for bit: every record's two levels and remainders and both fields' rows, on both chains."""
     for boundary in (PERIODIC, CHAIN):
         rng = np.random.default_rng(37)
         simulation = DetectorLawSimulation(
-            parse_nature_beam_world(charged_chain(60, boundary, range(20, 30), QUANTA, 1, -1, 1, QUANTA))
+            parse_nature_beam_world(
+                charged_chain(60, boundary, range(20, 30), QUANTA, 1, -1, 1, 2 * QUANTA)
+            )
         )
         starts = []
         for family in (LIGHT, NEUTRAL):
@@ -174,15 +177,20 @@ def test_the_joint_step_with_both_fields_inverts_bit_for_bit():
             starts.append((live, now.copy(), before.copy()))
         clock, charge = held_record(simulation, "content"), held_record(simulation, "sign")
         fields = (clock.now.copy(), charge.now.copy())
-        falls = 0
+        assert not fields[0].any() and not fields[1].any()
+        rises = falls = 0
         previous = charge.now.copy()
-        for _ in range(30):
+        for _ in range(60):
             simulation.step()
+            assert np.array_equal(charge.now, clock.now) and np.array_equal(
+                charge.remainder, clock.remainder
+            )
+            rises += int(np.sum(charge.now > previous))
             falls += int(np.sum(charge.now < previous))
             previous = charge.now.copy()
-        assert falls > 0 and not np.array_equal(charge.now, fields[1])
+        assert rises > 0 and (falls > 0 if boundary is CHAIN else falls == 0), boundary
         assert all(live.identity in simulation.records for live, _, _ in starts)
-        for _ in range(30):
+        for _ in range(60):
             simulation.step_inverse()
         assert simulation.tick == 0
         for live, now, before in starts:
