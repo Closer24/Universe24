@@ -842,32 +842,6 @@ def universe_file_entries(
     return translated, universe
 
 
-# THE ENGINE START FILE (ALGEBRA.md 9.83 (2) (a)): one canonical copy at
-# examples/events/engine_start.json, referenced by every world by its repository
-# path (`engine`) and read by the frame (loader/frame.py, `START`: the run's mode,
-# check or pin; no law's number); the repository's root and every file read live
-# in the host module event_universe.world_files (the loader reads no file)
-
-
-def _engine_start(value: object, files: Mapping[str, object], detector_law: bool) -> EngineStart | None:
-    """The world key `engine`: the repository path of the start file, required
-    (the ray law's branch below CANCELLED, 9.90 (1)); the file read by the frame,
-    a missing key refused by name."""
-    if not detector_law:
-        if value is not None:
-            raise ValueError("engine is refused without `detector_law`")
-        return None
-    if value is None:
-        raise ValueError(
-            "engine is required: the repository path of the one "
-            "engine start file (examples/events/engine_start.json), no default (the model owner's "
-            "record 2089; BUILD.md section 26 item 57)"
-        )
-    if not isinstance(value, str) or not value:
-        raise ValueError("engine must be the start file's repository path, a string")
-    return frame.start(value, files)
-
-
 def _require_under_law(obj: dict[str, object], label: str, keys: set[str]) -> None:
     """NO DEFAULT (record 2089): every key the engine or
     the loader reads is declared; a missing one is refused by name."""
@@ -3160,6 +3134,11 @@ def _measured(
         label = f"measured[{index}]"
         assert isinstance(entry, dict)
         obj = entry
+        if "nodes" in obj:
+            raise ValueError(
+                f"{label} is a body in the law's form (its Nodes with their counts): "
+                "the loop reads a body by its position until the count's line is bound to it"
+            )
         if detector_law and ("side" in obj or "extents" in obj):
             # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): the drive's ramp and
             # start on every block; the momentum and the stocks are the schema's required keys
@@ -3894,9 +3873,13 @@ def parse_world_document(
     # ONE ENGINE (ALGEBRA.md 9.90 (1); the model owner's record 2103): every world is the
     # engine's; every branch below on the flag's absence (the ray law's parse) is CANCELLED
     # and unreachable
-    early_law = True
     word = "universe"
-    start = _engine_start(obj["engine"], files, early_law)
+    # THE ENGINE START FILE (ALGEBRA.md 9.83 (2) (a)): one canonical copy at
+    # examples/events/engine_start.json, named by every world by its repository path
+    # (`engine`, a required word of the frame's schema) and read by the frame (`START`)
+    engine = obj["engine"]
+    assert isinstance(engine, str)
+    start = frame.start(engine, files)
     step = files.get(STEP_FILE)
     if not isinstance(step, Step):
         raise ValueError(

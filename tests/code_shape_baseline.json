@@ -95,11 +95,11 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/world.py": {
-   "comment_lines": 828,
-   "docstring_lines": 706,
+   "comment_lines": 826,
+   "docstring_lines": 703,
    "level_shift_sites": 0,
-   "lines": 4262,
-   "record_references": 79,
+   "lines": 4245,
+   "record_references": 78,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/features/__init__.py": {

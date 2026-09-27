@@ -1,4 +1,4 @@
-"""The frame of the run's files read through the schemas: the world file's own keys by the frame's schema, the bodies' and the detectors' keys by the frame's schemas of today's form, the readings and the universe handed on as written to their readers; the universe file, its integers by the frame's schema and each family's entry by the cards of the register with the frame's one key, the name; and the start file, its mode; every key refused by name, no default written here (ALGEBRA.md 9.117 item 2: a term is one line of the files)."""
+"""The frame of the run's files read through the schemas: the world file's own keys by the frame's schema, the bodies' keys by the frame's schemas of today's form and of the law's form (a body by its family, its Nodes with their counts and its momentum), the detectors' by the frame's schema, the readings and the universe handed on as written to their readers; the universe file, its integers by the frame's schema and each family's entry by the cards of the register with the frame's one key, the name; and the start file, its mode; every key refused by name, no default written here (ALGEBRA.md 9.117 item 2: a term is one line of the files)."""
 
 from __future__ import annotations
 
@@ -152,6 +152,19 @@ BODY = ObjectOf(
         }
     ),
 )
+# one Node of a body in the law's form (ALGEBRA.md 9.120 item 1, 9.121 item 3): its address and the family of clicks' level there, the count; one line per Node
+NODE_COUNT = ObjectOf({"node": ListOf(Integer(least=0), 3), "count": Integer(least=1)})
+# a body of the world file in the law's form (ALGEBRA.md 9.120 item 1; the mathematician's word on it under (ii) of #1210): its family, its Nodes with their counts, its momentum n, and its spin and its moment where declared, nothing else; the momentum's and the spin's parts are handed to the families whose rows keep them (three parts, the KEEP step), a folder's binding and not the frame's; a folder's own key at a body joins through the cards when one declares it
+COUNTED = ObjectOf(
+    {
+        "family": Name(),
+        "nodes": ListOf(NODE_COUNT),
+        "momentum": AXES,
+        "spin": AXES,
+        "moment": AXES,
+    },
+    frozenset({"spin", "moment"}),
+)
 # a detector of the world file: its name, its Nodes, or the body it belongs to
 DETECTOR = ObjectOf(
     {"name": Word(), "positions": ListOf(ListOf(Integer(least=0), 3)), "block": Integer(least=0)},
@@ -250,14 +263,51 @@ def world(document: object) -> dict[str, object]:
     return checked
 
 
+def body_form(entry: object, label: str) -> ObjectOf:
+    """The form a body is written in: today's, by its position (BODY), or the law's, by its Nodes with their counts (COUNTED); a body written in neither or in both is refused by name."""
+    if not isinstance(entry, dict):
+        raise ValueError(
+            f"{label} must be an object: a body by its position, or by its nodes with their counts"
+        )
+    by_position = "position" in entry
+    by_nodes = "nodes" in entry
+    if by_position == by_nodes:
+        which = "both" if by_position else "neither"
+        raise ValueError(
+            f"{label} is written by its position (today's form) or by its nodes with their counts "
+            f"(the law's form), not {which}"
+        )
+    return BODY if by_position else COUNTED
+
+
+def counted_nodes(body: Mapping[str, object], label: str) -> None:
+    """The rule between the lines of a body in the law's form: at least one Node, and no Node twice."""
+    nodes = body["nodes"]
+    assert isinstance(nodes, tuple)
+    if not nodes:
+        raise ValueError(f"{label}.nodes is empty: a body stands on at least one Node")
+    seen: set[object] = set()
+    for line in nodes:
+        assert isinstance(line, dict)
+        node = line["node"]
+        if node in seen:
+            assert isinstance(node, tuple)
+            raise ValueError(f"{label}.nodes names the Node {list(node)} twice")
+        seen.add(node)
+
+
 def bodies(value: object, context: Context) -> tuple[dict[str, object], ...]:
-    """The bodies of the world file, each against the body's schema with the families known; an unknown key, a missing key, a wrong kind and a family the universe lacks refused by name."""
+    """The bodies of the world file, each against the schema of its form with the families known; an unknown key, a missing key, a wrong kind and a family the universe lacks refused by name."""
     if not isinstance(value, list):
         raise ValueError("measured must be a list")
     checked = []
     for index, entry in enumerate(value):
-        found = check(entry, BODY, f"measured[{index}]", context)
+        label = f"measured[{index}]"
+        kind = body_form(entry, label)
+        found = check(entry, kind, label, context)
         assert isinstance(found, dict)
+        if kind is COUNTED:
+            counted_nodes(found, label)
         checked.append(found)
     return tuple(checked)
 
