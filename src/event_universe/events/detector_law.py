@@ -1046,7 +1046,7 @@ class DetectorLawSimulation:
         for number, sense, tally, clock in self._recoils:
             block = self.block_by_number.get(number)
             emitter = block.definition.emitter if block is not None else None
-            if block is None or block.fixed or emitter is None or emitter.period is None:
+            if block is None or emitter is None or emitter.period is None:
                 continue
             term = RecoilTerm(
                 emitter.period,

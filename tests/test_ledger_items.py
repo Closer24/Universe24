@@ -195,11 +195,6 @@ def test_3b_a_content_below_zero_at_run_time_ends_the_run_with_the_guards_line()
 # (4) THE CLICK THAT KEEPS THE MOMENTUM, WITH ITS RECOIL'S STORE (ALGEBRA.md #the-primitives.111 item 2)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="item 4: the recoil is built and a fixed body takes none (the owner's working rule); the "
-    "acceptance needs a heavy body that is not fixed, the generator's worlds",
-)
 def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer():
     """At a giving the body's held vector n changes along the click's axis by
     sigma_a x 3 Q P_body (L div lambda_q) div L, the store on the body's record; the taker
