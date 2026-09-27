@@ -121,7 +121,7 @@ def check(term: SpinStepTerm, start: SpinStepStart) -> None:
 
 
 def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinStepWrites:
-    """The primitive at (v): Omega from the curl and the tidal term at the declared weights over the span, the torque from the charge's curl over the span, the turn (Omega x S_now) + mu x B_q over the two intervals divided by W Gamma per axis, the leapfrog forward or back by the load act (ALGEBRA.md 9.117 the row "the spin's step")."""
+    """The primitive at (v): Omega from the curl and the tidal term at the declared weights over the span, the torque from the second read's curl over the span, the turn (Omega x S_now) + mu x B_q over the two intervals divided by W Gamma per axis, the leapfrog forward or back by the load act (ALGEBRA.md 9.117 the row "the spin's step")."""
     check(term, start)
     values, carries = dict(own.values), dict(own.carries)
     (c_num, c_den), (t_num, t_den) = term.curl_weight, term.tidal_weight
@@ -196,7 +196,7 @@ DECLARATION = Declaration(
     "(v)",
     (
         "S_now",
-        "the curls at the body's Node (V gravity's vector part, c its t part, B_q the charge's curl)",
+        "the curls at the body's Node (V the first read's vector part, t its time part, B_q the second read's curl)",
         "mu",
         "n",
         "W",
