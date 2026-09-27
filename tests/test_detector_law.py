@@ -20,6 +20,7 @@ import pytest
 
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
+from event_universe.features.send import send
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import Seen, chosen_by_the_rule, spy_on
 from tests.worlds import (
@@ -80,7 +81,7 @@ def test_the_rule_is_the_designs_integers_on_a_chain():
     now = rng.integers(-UNIT, UNIT, size=(80, 1, 1), dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=(80, 1, 1), dtype=np.int64)
     remainder = rng.integers(0, 3, size=(80, 1, 1), dtype=np.int64)
-    total = simulation._neighbours(now) - 3 * before + remainder
+    total = send(simulation.ports, now) - 3 * before + remainder
     expected = np.zeros_like(now)
     for x in range(80):
         left = now[x - 1, 0, 0] if x > 0 else 0
