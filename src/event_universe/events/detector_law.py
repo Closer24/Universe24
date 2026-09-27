@@ -78,12 +78,7 @@ from event_universe.events.world import (
     BlockDefinition,
     NatureBeamWorld,
 )
-from event_universe.features.self_source import (
-    OwnLevel,
-    SelfSourceStart,
-    SelfSourceTerm,
-    SelfSourceWrites,
-)
+from event_universe.features import self_source
 from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
 
 Record = Callable[[dict[str, object]], None]
@@ -2683,14 +2678,11 @@ class DetectorLawSimulation:
         )
 
     def _self_source(self, live: LiveRecord, inverse: bool) -> np.ndarray | None:
-        """THE SELF-SOURCE'S SLOT (ALGEBRA.md 9.78 (3), 9.91 (5), 9.97): per family with
-        a unit P_2 above 0, the folder's line (features/self_source) through the register
-        on every level of the family at the interval's start with its six Links; the
-        step's right side loses w Sigma_self, which lowers a_next by Sigma_self exactly
-        and leaves the remainder (a multiple of the wall). None at P_2 = 0 (every shipped
-        family: the line is not evaluated). Backward the same array from the `before`
-        levels. HOST: once per family per interval, before any record of the family
-        steps (the first request)."""
+        """THE SELF-SOURCE'S SLOT (ALGEBRA.md 9.78 (3), 9.91 (5), 9.97): per family with a unit
+        P_2 above 0, the folder's line (features/self_source) through the register on every level
+        of the family at the interval's start (backward the `before` levels) with its six Links;
+        the step's right side loses w Sigma_self. None at P_2 = 0 (every shipped family). HOST:
+        once per family per interval, before any record of the family steps."""
         family = live.family
         unit = self.families[family].self_unit
         if unit <= 0:
@@ -2711,15 +2703,12 @@ class DetectorLawSimulation:
             ):
                 if level is None or (record.silent and record.held_part):
                     continue
-                links = tuple(
-                    self._arrival(level, axis, sigma, wrap) for axis in range(3) for sigma in (1, -1)
-                )
-                levels.append(OwnLevel(level, links))
-        term = SelfSourceTerm(unit, self.world.amplitude_bound)
-        line = self.register.at("the self-source", "(i)")
-        sigma_self: np.ndarray = cast(
-            SelfSourceWrites, line(term, SelfSourceStart(tuple(levels)))
-        ).source
+                links = [self._arrival(level, axis, side, wrap) for axis in range(3) for side in (1, -1)]
+                levels.append(self_source.OwnLevel(level, tuple(links)))
+        term = self_source.SelfSourceTerm(unit, self.world.amplitude_bound)
+        start = self_source.SelfSourceStart(tuple(levels))
+        writes = self.register.at("the self-source", "(i)")(term, start)
+        sigma_self: np.ndarray = cast(self_source.SelfSourceWrites, writes).source
         self._sources[key] = (self.tick, sigma_self)
         return sigma_self
 
