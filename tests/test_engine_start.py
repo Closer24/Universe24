@@ -85,7 +85,11 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
     broken = json.loads(json.dumps(document))
     del broken["universe"][0]["pair"]
     refused(broken, r"families\[0\] lacks keys the engine reads: pair")
-    for key in ("momentum", "stocks", "ramp", "start"):
+    for key in ("momentum", "stocks"):  # the body's schema (loader/frame.py, BODY)
+        broken = json.loads(json.dumps(document))
+        del broken["measured"][0][key]
+        refused(broken, rf"measured\[0\] lacks keys: {key}")
+    for key in ("ramp", "start"):  # required with a block, the loader's own rule
         broken = json.loads(json.dumps(document))
         del broken["measured"][0][key]
         refused(broken, rf"measured\[0\] lacks keys the engine reads: {key}")
@@ -99,7 +103,7 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
     for key, value in (("phase", 0), ("directions", [[1, 0, 0]])):
         broken = json.loads(json.dumps(document))
         broken["measured"][0][key] = value
-        refused(broken, rf"measured\[0\] declares {key}, which the engine never reads")
+        refused(broken, rf"measured\[0\] has unknown keys: {key}")
     # `fixed` is read since the Boss's record 2157 (ALGEBRA.md 9.104 (6) (b)): an apparatus
     # held in place, the feed (when it lands) acting on a body without the word alone
     held_in_place = json.loads(json.dumps(document))
@@ -109,7 +113,7 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
     assert parse_nature_beam_world(document).measured[0].fixed is False
     broken = json.loads(json.dumps(document))
     broken["detectors"][0]["threshold"] = 1
-    refused(broken, r"detectors\[0\] declares threshold, which the engine never reads")
+    refused(broken, r"detectors\[0\] has unknown keys: threshold")
     for key, value in (("suspension", 0), ("directions", []), ("action", 1)):
         broken = json.loads(json.dumps(document))
         broken[key] = value
