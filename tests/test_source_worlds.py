@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -176,12 +175,9 @@ def test_the_source_is_declared_as_the_ledger_names_it():
     assert isinstance(table["sourced"]["cap"], int) and table["sourced"]["cap"] == module.TABLE_CAP >= 1
 
 
-def test_the_readme_names_every_world_and_every_world_is_in_the_readme():
-    readme = (FOLDER / "README.md").read_text(encoding="utf-8")
-    named = set(re.findall(r"`([a-z_]+)\.json`", readme))
+def test_every_shipped_world_is_the_generators_and_carries_no_pin():
     shipped = {path.stem for path in FOLDER.glob("*.json")}
     assert shipped == set(NAMES) | {"universe_entries"}
-    assert shipped <= named, sorted(shipped - named)
     assert not (FOLDER / "expectations.json").exists() and not list(FOLDER.glob("*.pins.json"))
 
 

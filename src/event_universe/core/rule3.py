@@ -69,6 +69,9 @@ THE_UNHOLD = "the unhold"
 ACTS = (THE_LOAD, THE_ADVANCE, THE_REWRITE, THE_INVERSE, THE_UNHOLD)
 NO_READ = (0, 0, 0)
 Key = tuple[object, ...]
+# the span of a step on two levels (the leapfrog of a body's spin or momentum): two intervals; the
+# same 2 is the form's second order, the potential's 2 Gamma (ALGEBRA.md #the-well)
+SPAN = 2
 
 
 def division_forward(numerator: int, wall: int, carry: int) -> tuple[int, int]:

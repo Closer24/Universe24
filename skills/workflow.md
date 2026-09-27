@@ -9,8 +9,8 @@ or weakening those contracts.
 
 ## Repository knowledge and restart
 
-Use [monorepo ownership](../docs/ARCHITECTURE.md#monorepo-ownership) and the
-[restart guide](../docs/PROJECT_STATUS.md) to recover context without chat history.
+Use monorepo ownership and the
+restart guide to recover context without chat history.
 Read only affected contracts and Skills after the root entry point. Use one
 authoritative definition per concept; Skills link to laws rather than copy them.
 Since 2026-09-17 the Highlights specification is `docs/HIGHLIGHTS.md`, edited
@@ -18,7 +18,7 @@ directly; the Google Doc is not edited or resynced, and the documents that
 restate a Highlights rule are synchronized from that file after each change
 ([Boss project reference](boss-orchestrator/SKILL.md#project-reference)).
 Since 2026-09-20, by the model owner's decision of that day
-([record 87](../docs/LOG_2026-09-20.md#87-decided-the-trimming-pull-request-after-amplitude-v1-lands)),
+(record 87),
 Highlights 5.4 holds the decisions only, one line each; every record of a day is
 appended to `docs/LOG_<date>.md` with the next number, and a decision line links to
 its record. A record is written once and linked from everywhere else.
@@ -139,7 +139,7 @@ A data error belongs to configuration authoring. A check-only request returns th
 error and a proposed correction without applying it. An invalid result can complete
 a check-only task: success is an accurate report, not making every input pass.
 Correct data when authoring
-or correction is requested; reuse [external entity definitions](../docs/ENTITY_DEFINITIONS.md)
+or correction is requested; reuse external entity definitions
 and explicit placements through the canonical loader. Keep the complete portable
 input when exporting or handing it to a runner. Unsupported format or composition means a capability
 gap. A suspected validator/engine defect needs a minimal reproduction, expected
@@ -197,7 +197,7 @@ Return a concise handoff with:
 - violated or satisfied contract, remaining limitation, and next owner/action.
 
 Generated run evidence, including previously retained failure traces, follows
-the [24-hour retention policy](../docs/RETENTION.md). Record reproducible inputs
+the 24-hour retention policy. Record reproducible inputs
 and concise acceptance results durably before registered output expires. Active
 writer leases protect ongoing work; do not infer cleanup ownership from a folder
 name or age. Use the cleanup watcher or a scheduled command when the UI and
@@ -280,7 +280,7 @@ else: one test module per rule, one per feature of the ray-event model, with the
 expected integers written down before the first run. No test pins the numbers of
 an example world, compares two worlds or reproduces a known experiment; those are
 research runs, made once and recorded with a fingerprint and a date in
-[validation evidence](../docs/VALIDATION.md), never repeated as tests. A change is
+validation evidence, never repeated as tests. A change is
 checked only against the tests that depend on what it changed, selected by the
 import graph (`python tools/check.py`); the whole suite runs together only when
 the shared core changes (the Node and its Ports, the order of the cycle, the
@@ -294,7 +294,7 @@ not newly invented physical tests. The repository's existing submission and CI
 gate still applies. Ordinary runs and tests are headless; render only when the
 user explicitly requests visualization or visual checks. Diagnostics may reject
 a run but may not repair physical state. Consult
-[the Beam Law](../docs/BEAM_LAW.md) and [the engine's bookkeeping](../docs/ENGINE.md)
+the Beam Law and [the engine's bookkeeping](../docs/ENGINE.md)
 before applying old scalar/particle or disturbance assumptions to the primary
 API (`NatureBeamSimulation`).
 
@@ -444,7 +444,7 @@ cites is labelled a detector reading or a GameBoard reading; only the first
 is compared with nature or pinned; the second is a diagnostic of the host's
 view of the state and never stands in for a measurement.
 
-**A formula lives in three places (the model owner, 2026-09-21, [record 248](../docs/LOG_2026-09-20.md#248-the-owner-the-quarks-and-every-such-formula-must-be-in-the-paper-in-git-and-in-the-code-when-and-how-did-you-reach-it-the-owner-2026-09-21-about-0425z-translated-and-then-how-does-it-work-with-the-quarks-are-the-quarks-dividers-of-the-masses-or-a-group-that-composes-the-masses-they-too-have-masses-every-such-formula-you-must-put-in-the-paper-and-in-git-and-in-the-code-when-did-you-reach-the-formula-how-did-you-reach-the-formula-these-formulas-are-critical-the-bosss-answers-and-the-rule-1-the-quarks-today-not-modelled-the-nucleon-is-a-family-the-owners-decision-of-2026-09-20-entity_catalogmds-rows-on-the-six-quarks-the-proton-and-confinement-hypothesesmd-13-issue-169-if-they-enter-they-are-families-that-compose-a-nucleon-a-group-not-dividers-three-measured-events-bound-by-the-strong-column-at-adjacent-nodes-with-the-rational-charges-2-3-and--1-3-each-with-its-own-content-in-units-and-the-decisive-physical-fact-the-protons-measured-mass-is-about-one-percent-the-quarks-rest-masses-and-about-ninety-nine-percent-the-binding-the-strong-fields-energy-which-the-law-already-expresses-as-the-mass-a-detector-reads-of-a-bound-body-record-115-binding-v1-the-read-mass-of-a-bound-set-is-not-the-sum-of-its-parts-units-so-under-the-minimal-mass-reading-record-243-the-unit-is-at-most-the-lightest-quarks-content-and-a-composites-mass-is-the-bound-sets-reading-a-derivation-for-section-16-2-2-when-and-how-the-mass-formula-was-reached-mass--content-in-units-of-the-quantum-the-minimal-mass-one-unit-the-content-as-an-integer-amount-of-units-since-the-law-of-the-ray-the-code-era-code_to_formulas-1-the-drives-step-rule-with-the-mass-one-link-per-q-s-m--p-of-drive-the-label-along-the-unit-vector-at-q--64-with-the-physicists-corrections-2026-09-20-beam_laws-step-rule-the-coupling-and-the-charge-per-unit-of-content-the-one-mechanism-the-columns-2026-09-20-e--h-f-as-the-cost-of-a-release-per-unit-and-the-statement-that-the-minimal-mass-is-one-unit-and-not-free-reached-today-from-the-owners-question-record-243-its-theorem-status-and-the-mass-ratios-assigned-to-section-16-2-the-chronology-written-into-code_to_formulasmd-section-6-3-the-rule-the-owners-durable-every-formula-the-law-reaches-lives-in-three-places-and-code_to_formulasmd-records-when-and-how-it-was-reached-in-git-its-derivation-section-and-its-line-in-beam_law-or-formmdlawmd-in-the-code-the-docstring-of-the-function-that-computes-it-naming-the-section-and-a-derive-and-compare-test-or-a-derivations-entry-of-the-register-and-in-the-paper-the-paper-agent-adds-it-under-the-paper-writer-skill-when-the-section-lands-written-into-skillsworkflowmd-under-the-main-course-the-minimal-mass-and-the-mass-ratios-go-to-the-paper-with-section-16)).** Every formula the law reaches is written (1) in git, in its derivation section and its line of the law's document; (2) in the code, in the docstring of the function that computes it, naming the section, and in a derive-and-compare test or a `derivations` entry of the register; (3) in the paper, under the paper-writer skill, when its section lands. [docs/CODE_TO_FORMULAS.md](../docs/CODE_TO_FORMULAS.md) records for each formula when and how it was reached. A formula in one place only is not yet a result.
+**A formula lives in three places (the model owner, 2026-09-21, record 248).** Every formula the law reaches is written (1) in git, in its derivation section and its line of the law's document; (2) in the code, in the docstring of the function that computes it, naming the section, and in a derive-and-compare test or a `derivations` entry of the register; (3) in the paper, under the paper-writer skill, when its section lands. docs/CODE_TO_FORMULAS.md records for each formula when and how it was reached. A formula in one place only is not yet a result.
 
 ## The generic vector form first (the model owner's ask, 2026-09-21, record 177)
 
@@ -579,7 +579,7 @@ The owner's one page, in force now. It governs every other section of this file;
 7. The most important test: with the new primitive undeclared, every old run comes out identical to the bit.
 8. Every result names the `main` commit it ran on. There are no tags (record 2218); the engine keeps no version in its code or files (record 2182).
 9. An experiment runs only on a `main` commit whose CI is green, with its pin written before the run; every result names that commit. Comparing a result against a pin waits for the Go (records 2172 to 2174, 2207).
-10. The agents talk by direct messages (item 8 of the next section): the task, the finish in two lines and a link; waking a session that does not answer is the sender's work (record 2215). A large item lives where it is kept and seen by all (record 2252): a finding or an approval that belongs to one pull request is a comment on that pull request; a list that spans several pull requests (for example the numbers left in the engine) is one issue with a checklist, each pull request that closes an item ticking it and naming the issue; the message is then two lines and the link. Each session reads, at every check-in, the issues and pull requests it was sent; the Boss wakes a session whose item waits. [docs/PROJECT_STATUS.md](../docs/PROJECT_STATUS.md) is the current state. The owner's decisions stay in Highlights 5.4, one line each, replacing the line they change.
+10. The agents talk by direct messages (item 8 of the next section): the task, the finish in two lines and a link; waking a session that does not answer is the sender's work (record 2215). A large item lives where it is kept and seen by all (record 2252): a finding or an approval that belongs to one pull request is a comment on that pull request; a list that spans several pull requests (for example the numbers left in the engine) is one issue with a checklist, each pull request that closes an item ticking it and naming the issue; the message is then two lines and the link. Each session reads, at every check-in, the issues and pull requests it was sent; the Boss wakes a session whose item waits. docs/PROJECT_STATUS.md is the current state. The owner's decisions stay in Highlights 5.4, one line each, replacing the line they change.
 
 11. The shape of the code (record 2239). A docstring is one line: what the function does and its ALGEBRA.md line. No record number, decision or history in src/: git keeps them. A module stays small, and core/ together stays a few hundred lines. No arithmetic of Rule3's outside its one function. A gate test enforces it as a ratchet: no file in src/ may grow its prose, its record references or its length, and a new file meets the limits from its first commit. The Boss merges no pull request that grows them.
 
@@ -691,7 +691,7 @@ that GitHub enforces a branch protection rule unless it was actually verified.
 The owner's words of 2026-09-24, 12:36Z to 14:12Z, in force for the
 stabilisation of the engine and the freeze:
 
-1. **One list, seventeen experiments** ([RUN_LIST.md](../docs/designs/detector_law/RUN_LIST.md); the sixteenth, a two-qubit quantum computer, added on 2026-09-25, record 1883; the seventeenth, Mach-Zehnder, record 1891);
+1. **One list, seventeen experiments** (RUN_LIST.md; the sixteenth, a two-qubit quantum computer, added on 2026-09-25, record 1883; the seventeenth, Mach-Zehnder, record 1891);
    the seven others are OUT, not deferred ("there is no after the paper").
 2. **One agent writes all the engine code, the input-file generator and the test-run lines**
    (Nature24, the physicist; the owner's word of 17:05Z: "only one writes the
@@ -718,7 +718,7 @@ stabilisation of the engine and the freeze:
    branch as soon as it is pushed and reports clean or what broke; a defect in
    `src/` goes to the writer through the Boss.
 6. **The Boss's status, three columns per experiment**
-   ([ENGINE_STATUS.md](../docs/designs/detector_law/ENGINE_STATUS.md)): the
+   (ENGINE_STATUS.md): the
    engine features it needs and whether they are on `main`; its world file
    on `main`; its test run without a pin clean or not; a Node rewritten only
    on a merged record. The freeze is every row "yes" on one commit; then the
@@ -797,7 +797,7 @@ vertices), a cube on a board, a square on a layer, a segment on a chain
 does not fit the board rather than cutting it to fit; a refusal is a
 declaration error, never a silent change of shape. Where the loader today
 cuts a side to the board, that is a defect against this word, listed among the
-body's conditions in [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md)
+body's conditions in SIMULATOR_DEFINITIONS.md
 and fixed on the owner's word as an engine line with its test.
 
 ## Names with meaning, never codes (the owner, 2026-09-24 and 2026-09-25, records 1815 and 1924)
@@ -810,8 +810,8 @@ receiver by name". No code stands for a thing anywhere, not even in parentheses 
 (the owner, 2026-09-25, record 1924: "no more F1 and such numbers; everything
 must be names with meaning"); a number stays only as a count or as a citation
 after the name; a new label is not coined. The canonical names and slugs are
-those of [docs/THE_EXPERIMENTS.md](../docs/THE_EXPERIMENTS.md) and
-[the names review](../docs/designs/names_review/NAMES_REVIEW.md). In any message the owner may read,
+those of docs/THE_EXPERIMENTS.md and
+the names review. In any message the owner may read,
 including an agent's replies in its own session, no code appears at all,
 not even in parentheses: say what the thing is ("the declaration of the
 muon's ramp", not "M1-8"; "the list of the world lines in the
