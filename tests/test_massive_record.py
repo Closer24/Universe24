@@ -917,19 +917,8 @@ PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 
 def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
-    """BUILD.md (n): (1) the s = 28 block of world (i-b) on the periodic 48^3 board is refused as
-    a pin world naming x, the extent (about 7.9 Links) and the side needed (about 60 > 48), and
-    admitted as a control (44 < 48); (2) a block of s = 20 whose Nodes lie 3 Links from an open
-    massive face is refused as a control (3 < 5.7) naming the axis and the distance; (3) the
-    kind [800, 809] with the well [800, 808] at s = 3 (far below the threshold) is refused: on a
-    finite periodic box the unbound case reads as an extent beyond the board (261 Links against
-    24), the refusal the margin's; (4) the extent printed for (i-a) on 48^3 is 5.73 within 0.05
-    Links (the float scratch of the plan) and its mode 0.1105 (the design's 96^3 box 0.1107);
-    (5) BUILD.md section 26: a well too deep for its board is a RUNAWAY (the largest
-    eigenvalue at or above 2, no oscillation, a level growing every interval; the one-Node
-    well [800, 700] on the kind [800, 809] on a chain, 2 cos omega_b = 2.03, its level
-    growing by 1.2 per interval) and is refused naming it, while the same well on a cube of
-    24^3 is no runaway (the folded axes' self-reads count fully on a chain)."""
+    """The margin rule refuses a block whose extent passes its board or a face (naming the axis, the
+    extent and the side needed), an unbound well, and a runaway well on a chain, and admits a control."""
     for margin, admitted in (("pin", False), ("control", True)):
         document = block_world(
             [48, 48, 48],
@@ -1335,22 +1324,8 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
 
 
 def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair():
-    """The emitter of a massive kind (the matter lamp's successor, ALGEBRA.md 9.17; the Boss's
-    23:32Z on the lamp verb): an emitter body of the source kind at x = 100 whose given family
-    is `matter` (the kind [156, 157] with the declared clock [512, 1] on N = 1024) givings a
-    record of the matter kind, written by the window at its 32 Nodes (commit 7; ALGEBRA.md
-    9.85 (5), 9.71 (1)) and advanced by the rule with the kind's pair (a massive kind's
-    given record is driven by nothing and completes as light's: its `driven` set empty); the
-    record LEAVES BOTH WAYS: a hundred intervals after its open its levels ahead of the body
-    (x in [140, 180)) and behind it (x in [40, 90)) are both large; the books balance
-    at every interval; light's rows are identical with and without the matter emitter beside
-    it UNTIL the matter body's content field, the family of clicks (BUILD.md section 26 item
-    32), reaches a light record's support: the field spreads from the body at [100, 132)
-    within the plain step's cone and bends every record it reaches (ALGEBRA.md 9.46 (6)
-    (b)), so the rows are compared bit for bit while the field is the same on the record's
-    Nodes, on more than one interval, and not after (the first build's chain digests stand,
-    test (p)). The edge cases: an emitter whose given family is a massive kind WITHOUT the
-    clock is refused at load naming the pair form."""
+    """An emitter giving the massive kind: its record is advanced by the kind's pair, leaves both ways
+    with the books balanced, and light's rows match until the body's field reaches them; no clock is refused."""
     world = parse_nature_beam_world(matter_emitter_world(True, [512, 1]))
     beside = parse_nature_beam_world(matter_emitter_world(False, [512, 1]))
     matter = [family.name for family in world.families].index("matter")
@@ -1397,19 +1372,8 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
 
 
 def test_a_matter_emitters_record_clicks_once_at_the_rung():
-    """Reviewer 3's line on the matter lamp (the Boss's 01:10Z), on the matter emitter under
-    the flux reading (ALGEBRA.md 9.19 (3)): an emitter's record of a massive kind goes
-    through the same pointer path as light's (the click is the law's one action on any
-    record, POSTULATES 10). The chain world of test (z) without light's emitter (the matter
-    kind's faces periodic), the matter emitter's stock 2 (the residues from the law on
-    W = 700), the cube of matter bodies at [184, 186] read as the set `screen`
-    named by the emitter: each record clicks ONCE at the screen, at the first interval at
-    which 2 W C >= (2 u + 1) T on its pointer there (read through the engine's
-    `_ladder_click`; the interval before it below the rung), after the train's flight (53
-    Links from the head at 131 at v_g = 0.442, 120 intervals, and as much of the passage of
-    72 as the residue asks: between 100 and 400 intervals after the giving), the line's
-    `tick` its `click`, the record deleted whole at it; two gather lines in all, the books
-    balanced at every interval."""
+    """A massive record clicks once at the screen, at the first interval 2 W C >= (2 u + 1) T on its
+    pointer, and is deleted whole there; two gather lines, the books balanced every interval."""
     document = matter_emitter_world(True, [512, 1], stock=2)
     document["ticks"] = 3000
     # the cube of matter bodies at [184, 186] read as `screen` (record 1899), the
@@ -1555,20 +1519,8 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
 
 
 def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_rung():
-    """A set bound to a block is a receiver (the receiving set at ONE free Node) on the light clock's chain of 173 (W = 64;
-    the world's `wheel` 64) SINCE THE FLUX READING (ALGEBRA.md 9.19 (3); BUILD.md section 26
-    item 14): A's one given record is written once on A's 32 Nodes as the train and leaves toward +x;
-    the set's cube at [132, 134] books the one-way flux into it from the first interval (its
-    pointer above 0 and its rung at the record's own residue from the law, the click line written
-    at that rung and stamped with A's count as the interval begins, named by
-    `clock_source`), and the record is deleted whole at its click, with the faces closed
-    and open alike (no `face` detector on the closed chain; `face` on the open one, last on the
-    ladder and never reached first); nothing absorbs (the take retired). A receiver body at
-    x = 160 read as `far` is a declared set off A's ladder (A names A_face): never chosen.
-    The loader: `block` with a position on a measured Node refused, with two positions
-    refused as a box of sides [2, 1, 1] (the cube of record 1899), `block` naming a body
-    refused naming the positions form, `closed` without
-    `detector_law` refused, `own_grace` on the emitter refused, a stock below 1 refused."""
+    """The receiving set at the emitter's head books the one-way flux and clicks at the record's rung,
+    closed or open; a set off the ladder is never chosen; the loader refuses the malformed forms."""
     first = 1  # A's given record: block 0, giving 1
     for faces in ("closed", "open"):
         world = parse_nature_beam_world(light_clock_world(faces, faces == "open"))
