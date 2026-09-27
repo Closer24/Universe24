@@ -80115,16 +80115,9 @@
      "screen_154",
      "screen_157"
     ],
-    "clock": [
-     512,
-     1
-    ],
     "weight": 19,
-    "twist": 54543,
-    "period": 8,
     "norm": 2358234713625561286,
-    "norm_denominator": 11042329,
-    "window_read": 13
+    "norm_denominator": 11042329
    },
    "twist": 54543,
    "clock": [
@@ -160231,16 +160224,9 @@
      "screen_154",
      "screen_157"
     ],
-    "clock": [
-     512,
-     1
-    ],
     "weight": 1,
-    "twist": 9174,
-    "period": 46,
     "norm": 9181606359642499,
-    "norm_denominator": 1682209,
-    "window_read": 16
+    "norm_denominator": 1682209
    },
    "twist": 9174,
    "clock": [
@@ -169504,6 +169490,6 @@
   }
  ],
  "stamp": {
-  "hash": "07dd6cd992d4bb1254f0c92a47057b59aa2a95da2d232970d20fb0a8d27373a5"
+  "hash": "23fa7d19cc00ff162aabeed42e089db060e774018ff97a9440fb676a0acec192"
  }
 }

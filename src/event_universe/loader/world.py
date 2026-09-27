@@ -5,13 +5,14 @@ from __future__ import annotations
 import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+from math import isqrt
 from typing import cast
 
 from event_universe.core.game_board import MAX_VALUE, Address3
 from event_universe.core.phase import MAX_PHASE_STEPS
 from event_universe.core.readings import Reading, world_readings
 from event_universe.core.register import discover
-from event_universe.core.rule3 import rule_total_bound
+from event_universe.core.rule3 import NO_READ, rule3, rule_total_bound
 from event_universe.core.schema import Context
 from event_universe.core.step import STEP_FILE, Step
 from event_universe.loader import frame
@@ -217,12 +218,13 @@ class FamilyDefinition:
     turn per Link crossed, and its `lifetime` (L, or None for ever: the
     age at which an event in transit of the family clicks on the border
     `lifetime` instead of making its next event, the range of the family's
-    force in Links of flight)."""
+    force in Links of flight) and its `hand` (-1 or +1, the click's sign check; None for no check)."""
 
     name: str
     quantum: int
     charge: tuple[int, int] = NO_CHARGE
     lifetime: int | None = None
+    hand: int | None = None
     phase_per_age: tuple[int, int] | None = None
     # The record kind's pair [num, den] on the six-neighbour term of the
     # local detector law's rule (`massive-record-v1`, MASSIVE_RECORD.md
@@ -997,6 +999,9 @@ def _families_of(
         # THE FAMILY'S QUANTUM (the law's owner's row of 2026-09-27; the Boss's word of
         # 09:27Z): one integer from 1 on every row, required; the clicks card's copy agrees
         quantum = cast(int, obj["quantum"])
+        # the lifetime's and the hand's rows (ALGEBRA.md #the-primitives): L from 1 or for ever, the hand -1 or +1 or no check
+        lifetime = None if "lifetime" not in obj else cast(int, obj["lifetime"])
+        hand = None if "hand" not in obj else cast(int, obj["hand"])
         if quantum > MAX_VALUE:
             raise ValueError(f"{label}.quantum must be an integer up to {MAX_VALUE}")
         if "clicks" in obj:
@@ -1040,6 +1045,8 @@ def _families_of(
                 quantum,
                 (sign, 1),
                 phase_per_age=clock,
+                lifetime=lifetime,
+                hand=hand,
                 pair=pair,
                 held=held,
                 reads=tuple(reads),
@@ -1069,7 +1076,7 @@ def _held_family_shapes(families: tuple[FamilyDefinition, ...]) -> None:
     """A held family's shape by attribute (ALGEBRA.md #a-familys-declaration; item 51):
     its field steps at the pair its row declares, [1, 1] or any other (no
     shortcut: the model owner, 2026-09-27), the quantum 1 (one click writes
-    one unit), no clock of its own (it givings nothing), its own charge 0 (its
+    one unit), a clock only where it gives (the given record's), its own charge 0 (its
     level is the source it holds, it carries none); a read names a held family;
     under the detector law at most one family holds each source (the level
     every other family reads is one array)."""
@@ -1081,10 +1088,10 @@ def _held_family_shapes(families: tuple[FamilyDefinition, ...]) -> None:
                     f"{label} is held with the quantum {family.quantum}: a held family "
                     "is counted in quanta, one click one unit (`quantum` 1; ALGEBRA.md #the-counts-line)"
                 )
-            if family.phase_per_age is not None:
+            if family.phase_per_age is not None and family.clicks is None:
                 raise ValueError(
-                    f"{label} is held and declares a clock: a held family "
-                    "givings nothing and has no clock of its own (ALGEBRA.md #the-counts-line)"
+                    f"{label} is held, gives nothing and declares a clock: the clock [p, q] is the given "
+                    "record's, lambda_q = 2 N q / p (ALGEBRA.md #the-primitives the recoil's row)"
                 )
             if family.charge[0] != 0:
                 raise ValueError(
@@ -1546,6 +1553,25 @@ def _axes_vector(value: object, label: str) -> tuple[int, int, int]:
     )
 
 
+def period_by_the_rule(a: int, b: int) -> int:
+    """The period by the one-Node Rule3 with the pair, b c_next + r' = a c_now - b c_before + r from (c_before, c_now) = (2 b, a) at the pair's own unit b, each interval one call of rule3: the first t with a negative c before it, c_t >= 0 and 4 b c_t^2 >= (2 b + a) c_before_0^2, the nearest integer to 2 pi / omega with no pi; the longest period a pair on b allows is 2 pi sqrt(b), at the rotation nearest 0, so a clock not back within 8 sqrt(b) + 8 intervals is refused by name (ALGEBRA.md #the-generator, #the-primitives the recoil's row: P_body never declared)."""
+    if b < 1 or not -2 * b < a < 2 * b:
+        raise ValueError(f"the clock [{a}, {b}] is no rotation: b from 1 and |a| below 2 b")
+    before, now, carry = 2 * b * b, a * b, 0
+    start = before
+    seen_negative = now < 0
+    longest = 8 * isqrt(b) + 8
+    for t in range(1, longest + 1):
+        if seen_negative and now >= 0 and 4 * b * now * now >= (2 * b + a) * start * start:
+            return t
+        before, (now, carry) = now, rule3(NO_READ, NO_READ, a, b, now, before, carry)
+        if now < 0:
+            seen_negative = True
+    raise ValueError(
+        f"the clock [{a}, {b}] returns within no {longest} intervals, the longest a pair on {b} allows"
+    )
+
+
 def _emitter(
     value: object,
     label: str,
@@ -1561,12 +1587,12 @@ def _emitter(
     clock_pair: tuple[int, int] | None = None,
 ) -> EmitterDefinition:
     """The `emitter` object of a clicking body (ALGEBRA.md #the-click to (6),
-    ALGEBRA.md #a-familys-declaration): the given family a paid family with the pair form of its
-    clock (not the body's own), the given labels, the ladder by name, the
-    period and the norm (the generator's integers), the given profile
-    (material). No wheel, no residue order and no seed: the residue is the
-    law's (the clicking record's remainder at the giving Node, the wheel the
-    pair's), and the keys are refused by name."""
+    ALGEBRA.md #a-familys-declaration): the given family a paid family whose row's `clock` [p, q] is the
+    given record's clock (lambda_q), the given labels, the ladder by name, the norm (the generator's
+    integer); the period P_body by the one-Node rule from the body's own mode's clock pair and the
+    twist "own" from the given record's pair or the body's rotation, neither declared (ALGEBRA.md
+    #the-primitives, the recoil's row, L479). No wheel, no residue order, no seed, no period, no clock,
+    no twist: each is the law's, and the keys are refused by name."""
     obj = cast(dict[str, object], value)  # the frame's checked emitter (loader/frame.py, `EMITTER`)
     name = obj["family"]
     if not isinstance(name, str) or name not in names:
@@ -1606,21 +1632,12 @@ def _emitter(
     # THE GIVEN CLOCK (ALGEBRA.md #the-primitives; item 59): a light record's clock is its
     # emitter's, `clock` [p, q] on the emitter, REQUIRED when the given family
     # declares none (the families file's light) and refused when it does (one copy)
-    if "clock" in obj:
-        if given_family.phase_per_age is not None:
-            raise ValueError(
-                f"{label}.clock is refused: the given family {name!r} declares its own "
-                "clock (phase_per_link); one copy (ALGEBRA.md #the-primitives)"
-            )
-        clock = _ratio(obj["clock"], f"{label}.clock", zero=False)
-    elif given_family.phase_per_age is not None:
-        clock = (int(given_family.phase_per_age[0]), int(given_family.phase_per_age[1]))
-    else:
+    if given_family.phase_per_age is None:
         raise ValueError(
-            f"{label}.clock is required: the given family {name!r} declares no clock, so "
-            "the emitter declares the given record's clock [p, q] (ALGEBRA.md #the-primitives; BUILD.md "
-            "section 26 item 59)"
+            f"{label}: the given family {name!r} declares no clock; the given record's clock is the "
+            "family's row's `clock` [p, q] (ALGEBRA.md #the-primitives, the recoil's row)"
         )
+    clock = (int(given_family.phase_per_age[0]), int(given_family.phase_per_age[1]))
     step = clock[0] // clock[1]
     if step % 2 == 1 and 2 * phase_steps > MAX_PHASE_STEPS:
         raise ValueError(
@@ -1631,7 +1648,12 @@ def _emitter(
     branches: tuple[tuple[int, int], ...] = ((0, 1),)
     label_hands: tuple[int, int] | None = None
     receiver = _receiver_names(obj, label)
-    period = None if "period" not in obj else _integer(obj["period"], f"{label}.period", 1)
+    # THE PERIOD FROM THE BODY'S OWN MODE (ALGEBRA.md #the-primitives, the recoil's row, L479: P_body by
+    # the one-Node rule from its clock pair, never declared; a body seeded off its mode has none)
+    from event_universe.generator_numbers import emitter_twist  # its module imports the loader
+
+    period = None if clock_pair is None else period_by_the_rule(clock_pair[0], clock_pair[1])
+    twist = emitter_twist(given_pair, clock_pair)
     # THE POINT EMITTER'S WEIGHT (ALGEBRA.md; item 50): an integer from
     # 1; the world's `point_emitter` key pairs it with the absence of a train
     weight = None if "weight" not in obj else _integer(obj["weight"], f"{label}.weight", 1)
@@ -1654,10 +1676,6 @@ def _emitter(
                 "moment gives no direction to write)"
             )
         part = 1 + axes[0]
-    # THE GIVEN RECORD'S TWIST "OWN" (ALGEBRA.md #the-primitives; item 73): the generator's
-    # integer declared under `twist` (a massive kind's rest rotation from its pair, or
-    # the emitting body's own rotation where the window writes it, ALGEBRA.md #the-primitives), no default
-    twist = _integer(obj["twist"], f"{label}.twist", 0)
     return EmitterDefinition(
         names[name],
         branches,
@@ -1670,7 +1688,7 @@ def _emitter(
         weight=weight,
         norm_denominator=norm_denominator,
         part=part,
-        twist=twist,
+        twist=twist,  # the given record's twist "own" (ALGEBRA.md #the-primitives): its pair's rest rotation, else its giver's mode
     )
 
 

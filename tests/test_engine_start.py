@@ -106,9 +106,13 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
         broken = json.loads(json.dumps(document))
         broken[key] = value
         refused(broken, f"the world has unknown keys: {key}")
+    # the family's two rows (the lifetime's and the hand's, ALGEBRA.md #the-primitives), each refused by its bound
     broken = json.loads(json.dumps(document))
-    broken["universe"][0]["lifetime"] = 5
-    refused(broken, r"universe\[0\] has unknown keys: lifetime")
+    broken["universe"][0]["lifetime"] = 0
+    refused(broken, r"universe\[0\]\.lifetime is 0, below its least 1")
+    broken = json.loads(json.dumps(document))
+    broken["universe"][0]["hand"] = 0
+    refused(broken, r"universe\[0\]\.hand must be one of \[-1, 1\], not 0")
 
 
 def test_the_runner_requires_jobs_and_refuses_pins_under_the_mode_check(tmp_path):

@@ -200,7 +200,7 @@ def test_the_ports_along_a_records_own_component_book_nothing_of_it():
 
 
 def test_the_loader_refuses_a_light_emitter_without_one_moment_axis_and_a_bad_table():
-    document = on_the_file(emitter_world(stock=1, ticks=10), [512, 1])
+    document = on_the_file(emitter_world(stock=1, ticks=10))
     flat = json.loads(json.dumps(document))
     flat["measured"][0]["moment"] = [0, 0, 0]
     flat["stamp"] = input_stamp(flat)

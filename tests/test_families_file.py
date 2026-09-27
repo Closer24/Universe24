@@ -109,7 +109,7 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
     a = DetectorLawSimulation(parse_nature_beam_world(inline))
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    moved = on_the_file(inline, [512, 1])
+    moved = on_the_file(inline)
     moved["universe"] = "universe.json"
     moved["engine"] = "start.json"
     moved["stamp"] = input_stamp(moved)
@@ -202,7 +202,7 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
 
 
 def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_path, monkeypatch):
-    document = on_the_file(emitter_specimen(stock=1, ticks=10), [512, 1])
+    document = on_the_file(emitter_specimen(stock=1, ticks=10))
     second = json.loads(json.dumps(document))
     second["node_clock"] = 10000
     refused(second, "the world declares node_clock, which the engine never reads")
@@ -283,28 +283,26 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     assert parse_nature_beam_world(document).universe_file == "universe.json"
 
 
-def test_the_given_clock_is_the_emitters_when_the_family_declares_none():
-    document = on_the_file(emitter_specimen(stock=1, ticks=10), [512, 1])
+def test_the_given_clock_is_the_familys_row_and_the_emitter_declares_none():
+    """The given record's clock is the given family's row's `clock` (ALGEBRA.md #the-primitives, L479): the
+    charge row's [512, 1] on the file; `clock` on the emitter is refused by name; a given family whose row
+    declares none is refused by name."""
+    document = on_the_file(emitter_specimen(stock=1, ticks=10))
     world = parse_nature_beam_world(document)
     emitter = world.measured[0].block.emitter  # type: ignore[union-attr]
     assert emitter is not None and emitter.clock == (512, 1)
     assert emitter.weight == 3  # the window's (commit 7; the train retired)
     assert emitter.pair == (1, 1)  # the charge family's declared pair, light's kind
-    without = json.loads(json.dumps(document))
-    del without["measured"][0]["emitter"]["clock"]
-    refused(
-        without,
-        r"measured\[0\]\.emitter\.clock is required: the given family 'charge' declares no clock",
-    )
+    declared = json.loads(json.dumps(document))
+    declared["measured"][0]["emitter"]["clock"] = [512, 1]
+    refused(declared, r"measured\[0\]\.emitter has unknown keys: clock")
     inline = emitter_specimen(stock=1, ticks=10)
-    inline["measured"][0]["emitter"]["clock"] = [512, 1]
-    refused(
-        inline, r"measured\[0\]\.emitter\.clock is refused: the given family 'light' declares its own"
-    )
+    del inline["universe"][0]["clock"]
+    refused(inline, r"measured\[0\]\.emitter: the given family 'light' declares no clock")
 
 
 def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no_pair():
-    document = on_the_file(emitter_specimen(stock=1, ticks=10), [512, 1])
+    document = on_the_file(emitter_specimen(stock=1, ticks=10))
     world = parse_nature_beam_world(document)
     body = world.measured[0]
     assert body.block is not None and body.block.kind == (800, 809) and body.block.pair == (800, 801)
@@ -328,7 +326,7 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
     body["family"] = "heavy"
     body["stocks"] = {"matter": 1}
     body["emitter"]["family"] = "matter"
-    body["emitter"]["clock"] = [512, 1]
+    names["matter"]["clock"] = [512, 1]  # the given record's clock is the row's (L479)
     refused(giving_matter, r"measured\[0\]\.emitter\.pair is required: the given family 'matter'")
     inline_pair = emitter_specimen(stock=1, ticks=10)
     inline_pair["measured"][0]["emitter"]["pair"] = [1, 1]

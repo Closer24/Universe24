@@ -157,7 +157,6 @@ def emitter_body(
     emitter: dict = {
         "family": family,
         "weight": 3,  # the window's weight (commit 7; the train retired)
-        "twist": 0,  # the given record's twist "own", the generator's number (item 73)
     }
     if receiver is not None:
         emitter["receiver"] = receiver
@@ -244,7 +243,6 @@ def _emitter_world(
         "family": "light",
         "receiver": ["screen"],
         "weight": 3,
-        "twist": 0,  # the given record's twist "own", the generator's number (item 73)
     }
     document = {
         "shape": [80, 1, 1],
@@ -357,8 +355,8 @@ def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
     return wall // math.gcd(wall, self_coefficient, read)
 
 
-def on_the_file(document: dict, clock: list[int]) -> dict:
-    """The emitter world on the families file: its path, no integers of its own, light the charge family, the emitter body of matter."""
+def on_the_file(document: dict) -> dict:
+    """The emitter world on the families file: its path, no integers of its own, light the charge family (the given clock its row's), the emitter body of matter."""
     moved = json.loads(json.dumps(document))
     names = {family["name"]: family for family in moved["universe"]}
     moved["universe"] = FILE
@@ -373,7 +371,6 @@ def on_the_file(document: dict, clock: list[int]) -> dict:
         if "light" in entry.get("stocks", {}):
             entry["stocks"] = {"charge": entry["stocks"]["light"]}
         if "emitter" in entry:
-            entry["emitter"]["clock"] = clock
             if entry["emitter"]["family"] == "light":
                 entry["emitter"]["family"] = "charge"
             # the light's component along the body's moment (ALGEBRA.md #the-second-level; commit 4)

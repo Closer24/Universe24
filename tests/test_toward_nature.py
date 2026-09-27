@@ -49,7 +49,7 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     for name in ("redshift_top_long", "redshift_bottom_long"):
         doc = document(name)
         assert doc["N"] == generator.LONG_PHASE_STEPS == 2048
-        assert doc["measured"][0]["emitter"]["clock"] == generator.LONG_GIVEN_CLOCK == [4096, 21]
+        assert "clock" not in doc["measured"][0]["emitter"]  # the given clock is the charge row's (L479)
         assert doc["measured"][0]["extents"] == [1, 3, 3] and doc["measured"][0]["kind"] == [800, 813]
         assert doc["measured"][0]["position"] == [
             generator.LONG_REDSHIFT_EMITTER_X + generator.LONG_TRAIN_LENGTH - 1,

@@ -102,7 +102,6 @@ AMPLITUDE_BOUND = (
 # universe's families as laws and the universe's integers, one canonical copy; every world of
 # this generator is built with the file's entries and written with the file's path
 UNIVERSE_FILE = "examples/events/universe.json"  # the universe file (record 2128 (3))
-MASSIVE_GIVEN_CLOCK = [77, 25]  # this generator's light clock (the pair form on N = 64)
 # THE THREE FAMILIES (ALGEBRA.md #the-primitives, #the-interval; the one stroke, commit 1): gravity (the
 # held content, the Node clock), the charge (the held sign; light is its wave, so a light
 # record, a mirror of light's kind and a stock of light are the charge family's), and matter
@@ -205,7 +204,6 @@ def world(
     pair: list[int],
     blocks: list[dict],
     ticks: int,
-    given_clock: list[int] | None = None,
     probes: list[list[int]] | None = None,
     mode_axis: str | None = None,
     seed_profile: bool = True,
@@ -218,11 +216,10 @@ def world(
     emitters) and calls it then."""
     # THE ONE FAMILIES FILE (item 59; the three entries of ALGEBRA.md #the-interval, commit 1):
     # every family of the universe in every world, the file's entries; a body of matter
-    # declares its rest pair `kind`; the light record's clock the emitter's (`clock` on
-    # every emitter, ALGEBRA.md #the-primitives)
+    # declares its rest pair `kind`; the given record's clock is the given family's row's
+    # (ALGEBRA.md #the-primitives, L479; no key on the emitter)
     families, integers = families_entries()
-    clock = list(MASSIVE_GIVEN_CLOCK if given_clock is None else given_clock)
-    from event_universe.generator_numbers import body_twist, emitter_twist
+    from event_universe.generator_numbers import body_twist
 
     measured: list[dict] = []
     for block in blocks:
@@ -262,11 +259,6 @@ def world(
         # THE TWIST "OWN" (ALGEBRA.md #the-primitives; item 73): the kind's rest rotation here,
         # the mode's rotation once the body is seeded (`declare_twists` at every stamp)
         entry["twist"] = block.get("twist", body_twist(block.get("clock"), entry.get("kind", pair)))
-        if "emitter" in entry:
-            entry["emitter"].setdefault("clock", list(clock))
-            entry["emitter"].setdefault(
-                "twist", emitter_twist(entry["emitter"].get("pair"), block.get("clock"))
-            )
         # A TOOL IS APPARATUS HELD IN PLACE (ALGEBRA.md #the-primitives; the Boss's record
         # 2157): every resting body of a shipped world declares `fixed: true` (the feed, when
         # it lands, acts on a body without the word alone); a body with a momentum is free
@@ -378,41 +370,35 @@ def stamped(document: dict) -> dict:
 def declare_twists(document: dict) -> None:
     """THE TWIST "OWN" DECLARED (ALGEBRA.md #the-primitives; BUILD.md section 26 item 73): on
     every body (a block) round(2^16 omega_0) of its mode's rotation (`clock`) or of its
-    kind's rest rotation, and on every emitter the given record's (the emitter's own `pair`
-    on a body giving its own family, else the body's rotation where the window writes it);
-    the generator's HOST number, an integer the loader reads under `twist`, no default."""
-    from event_universe.generator_numbers import body_twist, emitter_twist
+    kind's rest rotation; the generator's HOST number, an integer the loader reads under `twist`,
+    no default. The given record's twist is the loader's from the row and the body's mode, no key
+    (ALGEBRA.md #the-primitives, L479)."""
+    from event_universe.generator_numbers import body_twist
 
     for entry in document["measured"]:
         if "side" in entry or "extents" in entry:
             entry["twist"] = body_twist(entry.get("clock"), kind_of(document, entry))
-        if "emitter" in entry:
-            emitter = entry["emitter"]
-            emitter["twist"] = emitter_twist(emitter.get("pair"), entry.get("clock"))
 
 
 TRAIN_FLUX_DISTANCE = 40  # Links ahead of the train's head, the plane the generator's checks read
 
 
 def emitter_rung(document: dict, number: int):  # type: ignore[no-untyped-def]
-    """The emitter's rung as the file declares it (ALGEBRA.md #the-click and (f); ALGEBRA.md #the-ladder): `period` P, the nearest integer to 2 pi over the body's mode's rotation, and `norm`
-    T, one period's action of the excited record (`excitation_norm`), the generator's integers
-    under the input stamp, written on the emitter of measured[`number`] (ALGEBRA.md). Returns
-    the world parsed with them."""
-    from event_universe.diagnostics.massive_record_margin import (
-        block_margin,
-        excitation_action,
-        excitation_norm,
-        period_of,
-    )
+    """The emitter's rung (ALGEBRA.md #the-click and (f); ALGEBRA.md #the-ladder): `norm` T, one
+    period's action of the excited record (`excitation_norm`) over the period P_body the loader
+    derives by the one-Node rule from the body's clock pair (ALGEBRA.md #the-primitives, L479;
+    no `period` key), the generator's integers under the input stamp, written on the emitter of
+    measured[`number`]. Returns the world parsed with them."""
+    from event_universe.diagnostics.massive_record_margin import excitation_action, excitation_norm
     from event_universe.world_files import parse_nature_beam_world
 
     emitter = document["measured"][number]["emitter"]
-    for key in ("period", "norm", "norm_denominator"):
+    for key in ("norm", "norm_denominator"):
         emitter.pop(key, None)
     world = parse_nature_beam_world(stamped(document))
-    period = period_of(block_margin(world, number))
-    emitter["period"] = period
+    block = world.measured[number].block
+    assert block is not None and block.emitter is not None and block.emitter.period is not None
+    period = block.emitter.period
     emitter["norm"] = excitation_norm(world, number, period)
     # THE WINDOW'S T (ALGEBRA.md; item 50): the action's exact rational
     action = excitation_action(world, number, period)
@@ -469,21 +455,25 @@ def window_reading(document: dict, number: int, weight: int, limit: int) -> tupl
     return None, False
 
 
-def point_weight(document: dict, number: int, periods: int, start: int = 1) -> int:
+def point_weight(document: dict, number: int, periods: int, start: int = 1) -> tuple[int, int]:
     """THE EMITTER'S WEIGHT (ALGEBRA.md #the-primitives; BUILD.md section 26 item 50): the
     integer g at which the window of measured[`number`] is nearest `periods` periods of the
     body's rotation (the window's length falls about as 1 / g^2, the outward norm growing as
     the square of the written amplitude): the window at g = `start` read first, the estimate
     g* = start sqrt(n_start / target) and its neighbours read, the nearest taken; written as
-    the emitter's `weight`. HOST, a trial run of the generator; the engine reads the integer.
-    SINCE COMMIT 7 every emitter's weight is chosen here (the window the one giving); a
-    light clock's window is aimed shorter than its arm's round trip (ALGEBRA.md #the-primitives)."""
+    the emitter's `weight`, returned with the window read at it (HOST, a trial run of the
+    generator, no world key; the engine reads the integer). SINCE COMMIT 7 every emitter's weight
+    is chosen here (the window the one giving); a light clock's window is aimed shorter than its
+    arm's round trip (ALGEBRA.md #the-primitives)."""
+    from event_universe.loader.world import period_by_the_rule
+
     emitter = document["measured"][number]["emitter"]
-    target = periods * int(emitter["period"])
+    period = period_by_the_rule(*document["measured"][number]["clock"])
+    target = periods * period
     # the window at g = 1 runs about 32 periods (the point chain's 1124 intervals at P = 35);
     # where a weight's window does not close within the limit (a moving body at g = 1: the
     # write chases the hop) the start weight is doubled, up to six times
-    limit = max(12 * target, 64 * int(emitter["period"]))
+    limit = max(12 * target, 64 * period)
     readings: dict[int, int] = {}
     over: set[int] = set()  # the weights whose rows rise above the world's amplitude bound
 
@@ -515,18 +505,19 @@ def point_weight(document: dict, number: int, periods: int, start: int = 1) -> i
             read(weight)
     best = min(readings, key=lambda w: (abs(readings[w] - target), w))
     emitter["weight"] = best
-    emitter["window_read"] = readings[best]  # HOST: the trial's window at the chosen weight
-    return best
+    return best, readings[best]
 
 
-def giving_ticks(document: dict, number: int, extra: int) -> int:
+def giving_ticks(document: dict, number: int, extra: int, window: int) -> int:
     """HOST: a run's length covering every giving of the emitter measured[`number`]: its stock
-    times (the window read at its weight plus two periods of its rotation, the rung's wait)
+    times (the `window` read at its weight plus two periods of its rotation, the rung's wait)
     plus `extra` intervals (the flights declared by the row's generator)."""
+    from event_universe.loader.world import period_by_the_rule
+
     entry = document["measured"][number]
     emitter = entry["emitter"]
     stock = int(entry["stock"]) if "stock" in entry else int(entry["stocks"][emitter["family"]])
-    return stock * (int(emitter["window_read"]) + 2 * int(emitter["period"])) + extra
+    return stock * (window + 2 * period_by_the_rule(*entry["clock"])) + extra
 
 
 def train_run(
@@ -620,19 +611,16 @@ def train_run(
 
 
 def given_clock_of(document: dict, number: int) -> tuple[int, int]:
-    """THE GIVEN CLOCK of measured[`number`]'s emitter (ALGEBRA.md #the-primitives; item 59): the
-    emitter's declared `clock` [p, q], else the given family's own (`phase_per_link` on an
-    inline families list)."""
+    """THE GIVEN CLOCK of measured[`number`]'s emitter (ALGEBRA.md #the-primitives, L479): the
+    given family's row's `clock` [p, q], the emitter declaring none."""
     emitter = document["measured"][number]["emitter"]
-    if "clock" in emitter:
-        return int(emitter["clock"][0]), int(emitter["clock"][1])
     family_entry = families_of(document)[names_of(document)[emitter["family"]]]
-    if "phase_per_link" not in family_entry:
+    if "clock" not in family_entry:
         raise ValueError(
-            f"measured[{number}].emitter declares no `clock` and the given family "
-            f"{emitter['family']!r} declares none (ALGEBRA.md #the-primitives); nothing written"
+            f"measured[{number}].emitter: the given family {emitter['family']!r} declares no `clock` "
+            "(ALGEBRA.md #the-primitives, L479); nothing written"
         )
-    return int(family_entry["phase_per_link"][0]), int(family_entry["phase_per_link"][1])
+    return int(family_entry["clock"][0]), int(family_entry["clock"][1])
 
 
 def train_passage_flux(document: dict, number: int, now: list[int], before: list[int]) -> int:

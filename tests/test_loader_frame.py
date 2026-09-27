@@ -246,16 +246,16 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
         r"measured\[0\]\.momentum must be a list of 3, not of 2",
     )
     refuses(
-        lambda d: d["measured"][0].__setitem__("emitter", {"family": "nobody", "twist": 0}),
+        lambda d: d["measured"][0].__setitem__("emitter", {"family": "nobody"}),
         r"emitter\.family names 'nobody', no family of the universe",
     )
     refuses(
-        lambda d: d["measured"][0].__setitem__("emitter", {"family": "charge", "wheel": 1, "twist": 0}),
+        lambda d: d["measured"][0].__setitem__("emitter", {"family": "charge", "wheel": 1}),
         r"emitter has unknown keys: wheel",
     )
     refuses(
-        lambda d: d["measured"][0].__setitem__("emitter", {"family": "charge"}),
-        r"emitter lacks keys: twist",
+        lambda d: d["measured"][0].__setitem__("emitter", {"family": "charge", "twist": 0}),
+        r"emitter has unknown keys: twist",
     )
     refuses(
         lambda d: d["detectors"][0].__setitem__("threshold", 1),

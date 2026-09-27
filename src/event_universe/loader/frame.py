@@ -83,18 +83,12 @@ EMITTER = ObjectOf(
     {
         "family": Name(),
         "receiver": Either((Word(), ListOf(Word()))),
-        "period": Integer(least=1),
         "norm": Integer(least=1),
         "weight": Integer(least=1),
         "norm_denominator": Integer(least=1),
-        "window_read": Integer(),
-        "clock": Either((Integer(least=1), PAIR)),
         "pair": Either((Integer(least=1), PAIR)),
-        "twist": Integer(least=0),
     },
-    frozenset(
-        {"receiver", "period", "norm", "weight", "norm_denominator", "window_read", "clock", "pair"}
-    ),
+    frozenset({"receiver", "norm", "weight", "norm_denominator", "pair"}),
 )
 # an emitting body in the law's form (the mathematician's words of 2026-09-27 on #1198, what the giving's row reads): the given family, the giving's weight g, the window's norm T with its denominator, the ladder's receiver where named; no period (P_body is the mode's rotation), no clock, no pair, no twist
 GIVER = ObjectOf(
@@ -210,16 +204,18 @@ def document_of(key: str, value: str, files: Mapping[str, object], label: str) -
 
 
 def entry_kind(register: Register) -> ObjectOf:
-    """A family's entry: the frame's keys, its name, its quantum (an integer from 1, the law's owner's row of 2026-09-27), its clock and its spins_step (both optional), and every key the cards declare at a family's entry, optional where a card says so."""
+    """A family's entry: the frame's keys, its name, its quantum (an integer from 1, the law's owner's row of 2026-09-27), its clock, its spins_step, its lifetime (L, an integer from 1; absent, for ever) and its hand (-1 or +1; absent, no check), the four optional (ALGEBRA.md #the-primitives, the lifetime's and the hand's rows), and every key the cards declare at a family's entry, optional where a card says so."""
     declared = cards.at(register, "a family's entry")
     keys = {
         "name": Word(),
         "quantum": Integer(least=1),
         "clock": CLOCK,
         "spins_step": SPINS_STEP,
+        "lifetime": Integer(least=1),
+        "hand": OneOf((-1, 1)),
         **declared.keys,
     }
-    return ObjectOf(keys, declared.optional | {"clock", "spins_step"})
+    return ObjectOf(keys, declared.optional | {"clock", "spins_step", "lifetime", "hand"})
 
 
 def families(

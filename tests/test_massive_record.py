@@ -797,7 +797,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     behind = int(np.max(np.abs(live.now[40:90, 0, 0])))
     # SINCE COMMIT 7 the window's record leaves the body both ways (no train's way; COMPUTATION)
     assert ahead > 1000 and behind > 1000, (ahead, behind)
-    with pytest.raises(ValueError, match="clock is required: the given family 'matter' declares no"):
+    with pytest.raises(ValueError, match="the given family 'matter' declares no clock"):
         parse_nature_beam_world(matter_emitter_world(True))
 
 
@@ -913,7 +913,7 @@ def test_every_declared_wheel_is_refused_by_name():
 
 def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_rung():
     """The receiving set at the emitter's head books the one-way flux and clicks at the record's rung,
-    closed or open; a set off the ladder is never chosen; the loader refuses the malformed forms."""
+    closed or open, the run to that click; a set off the ladder is never chosen; the loader refuses the malformed forms."""
     first = 1  # A's given record: block 0, giving 1
     for faces in ("closed", "open"):
         world = parse_nature_beam_world(light_clock_world(faces, faces == "open"))
@@ -948,6 +948,8 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
                 giving = live.giving_tick
             if pointer_at_click is not None and count_then is None:
                 count_then = count_before
+            if count_then is not None and first not in simulation.records:
+                break  # the run to the first record's click: the giver recoils toward the open face after it
         assert giving is not None and pointer_at_click is not None and pointer_at_click > 0
         gathers = [g for g in lines if g["event"] == "gather" and g["record"] == first]
         assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "A_face"
@@ -1108,7 +1110,9 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
     # the measurement: nothing given crosses the wall to click at `screen` at [70, 72]
     givings = [line for line in lines if line["event"] == "giving"]
     gathers = [line for line in lines if line["event"] == "gather"]
-    assert len(givings) == 2 and gathers == []
+    # three givings in the 200 (measured once: the given record turns with its giver's mode, the twist
+    # the loader's from the body's clock, no key; two when the fixture declared the twist 0)
+    assert len(givings) == 3 and gathers == []
     assert all(line["record"] in simulation.records for line in givings)
     for key, value in (("seed", 5), ("margin", "control")):
         bad = json.loads(json.dumps(document))
