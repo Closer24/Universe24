@@ -16,6 +16,7 @@ from event_universe.diagnostics.massive_record_margin import (
     iterated_mode,
 )
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord, form_json
+from event_universe.features.send import send
 from event_universe.loader.world import (
     MASSLESS_PAIR,
 )
@@ -98,13 +99,10 @@ def test_the_rule_at_a_corner_of_an_open_board():
 
 
 def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
-    """BUILD.md (c): on the first build's random chain the step at light's pair [1, 1] gives the
-    same quotient as the line 3 a_next + r' = S_6 - 3 a_before + r, the total and the remainder
-    Gamma times the line's (the Node clock in the vacuum, BUILD.md section 26 item 31) on
-    every Node without content whose six reads have none; at the emitter body's 32 Nodes and
-    the screen's three (their content M) and at the Nodes beside them the line under the
-    Node's own pace (item 36), 3 Gamma a_next + r' = (Gamma - c_i) S_6(a_now)_i + 6 c_i a_now -
-    3 Gamma a_before + r (tests/test_node_clock.py reads it on random rows too)."""
+    """BUILD.md (c): on the first build's random chain the step at light's pair [1, 1] gives the same quotient
+    as 3 a_next + r' = S_6 - 3 a_before + r, the total and the remainder Gamma times the line's on every Node
+    without content whose six reads have none; at the bodies' Nodes and beside them the line under the Node's
+    own pace, 3 Gamma a_next + r' = (Gamma - c_i) S_6(a_now)_i + 6 c_i a_now - 3 Gamma a_before + r."""
     world = parse_nature_beam_world(chain_world())
     simulation = DetectorLawSimulation(world)
     assert world.families[0].pair == MASSLESS_PAIR
@@ -116,12 +114,12 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     remainder = rng.integers(0, 3, size=(80, 1, 1), dtype=np.int64) * vacuum_scale
     live = planted(simulation, 0, now, before, remainder)
     live.age = 1000
-    total = vacuum_scale * (simulation._neighbours(now) - 3 * before) + remainder
+    total = vacuum_scale * (send(simulation.ports, now) - 3 * before) + remainder
     expected_next = np.floor_divide(total, 3 * vacuum_scale)
     expected_remainder = total - 3 * vacuum_scale * expected_next
     a_next, r_next = step_once(simulation, live)
     content = simulation.level_of("content")
-    free = (content == 0) & (simulation._neighbours(content, simulation.kind_wrap[0]) == 0)
+    free = (content == 0) & (send(simulation.ports, content, simulation.kind_wrap[0]) == 0)
     assert 30 <= int(np.sum(free)) <= 45
     assert np.array_equal(a_next[free], expected_next[free])
     assert np.array_equal(r_next[free], expected_remainder[free])
@@ -129,7 +127,7 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     (read, _, _), self_coefficient, wall = coefficients(
         simulation.kind_num[0], simulation.kind_den[0], NODE_CLOCK, content
     )
-    clocked = read * simulation._neighbours(now, simulation.kind_wrap[0])
+    clocked = read * send(simulation.ports, now, simulation.kind_wrap[0])
     clocked += self_coefficient * now - wall * before + remainder
     assert np.array_equal(a_next, np.floor_divide(clocked, wall))
     assert np.array_equal(r_next, clocked - wall * np.floor_divide(clocked, wall))

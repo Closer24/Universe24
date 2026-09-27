@@ -12,18 +12,17 @@ import pytest
 
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.features.send import send
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import run
 from tests.worlds import NODE_CLOCK, emitter_world, lawful_wheel
 
 
 def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
-    """A record's conserved form under the Node's own pace (ALGEBRA.md #the-direction and (13);
-    BUILD.md section 26 item 36) from its two levels and the family of clicks' levels
-    `content` (the engine's array when None), in the engine's units (the scale 3 L, L the
-    numerators' lcm): [3 L (den / num) Gamma (a^2 + b^2) - 6 L (den / num) c_i a b] / p_i at
-    the Nodes, p_i = Gamma - c_i the pace, and L (a_i b_j + a_j b_i) on the Links, plain; an
-    exact rational over the six reads (the pace at both ends of a Link, item 34, HISTORY)."""
+    """A record's conserved form under the Node's own pace (ALGEBRA.md #the-direction) from its two levels and
+    the clicks' levels `content` (the engine's array when None), in the engine's units (the scale 3 L, L the
+    numerators' lcm): [3 L (den / num) Gamma (a^2 + b^2) - 6 L (den / num) c_i a b] / p_i at the Nodes,
+    p_i = Gamma - c_i, and L (a_i b_j + a_j b_i) on the Links; an exact rational over the six reads."""
     gamma = simulation.node_clock
     levels = simulation.level_of("content") if content is None else content
     num = simulation.kind_num[family].astype(object)
@@ -31,7 +30,7 @@ def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
     wall = simulation.kind_wall(family)
     a = now.astype(object)
     b = before.astype(object)
-    read = simulation._neighbours(before, simulation.kind_wrap[family]).astype(object)
+    read = send(simulation.ports, before, simulation.kind_wrap[family]).astype(object)
     (read_coefficient, _, _), self_coefficient, wall_at = coefficients(
         num, den, gamma, levels.astype(object)
     )

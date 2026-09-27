@@ -95,7 +95,7 @@ from event_universe.features.giving import (
     GivingTerm,
     GivingWrites,
 )
-from event_universe.features.hold import TENSOR_AXES, HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
+from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
 from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
@@ -831,10 +831,6 @@ class DetectorLawSimulation:
 
     # The register of primitives: one register, name to function, read by the loop alone
 
-    def _wait(self) -> int:
-        """WAIT is one interval, always (ALGEBRA.md #the-interval): a value sent at the start of t is combined in t."""
-        return 1
-
     def _method(self, name: str) -> Callable[..., object]:
         """The loop's method `name` resolved at each call (a test's spy set on the instance is honoured); the folders' own functions replace it cut by cut."""
 
@@ -1199,7 +1195,8 @@ class DetectorLawSimulation:
                     continue
                 for part, value, before in writes.parts:
                     record = self.held_parts[family][part - 1]
-                    group, axes = self._part_axes(family, part)
+                    degree = self.main_loop.function_of("the degree", "(i)")
+                    group, axes = degree(self.families[family].parts, part)
                     factor = self.families[family].held_factors[group]
                     if booking(factor, writes.time_level, momentum_of[block.number], axes):
                         self._sourced_ever[(family, part)] = True
@@ -1296,22 +1293,6 @@ class DetectorLawSimulation:
         elif not 0 <= node[j] < self.shape[j]:
             return None
         return node[0], node[1], node[2]
-
-    def _part_axes(self, family: int, part: int) -> tuple[int, tuple[int, ...]]:
-        """A component's part group (0 the time part, 1 the vector, 2 the tensor)
-        and the axes it multiplies (ALGEBRA.md #the-interval: n_a for the vector,
-        n_a n_b for the tensor), by the family's parts list."""
-        offset = 0
-        for group, count in enumerate(self.families[family].parts):
-            if part < offset + count:
-                index = part - offset
-                if group == 0:
-                    return 0, ()
-                if group == 1:
-                    return 1, (index,)
-                return 2, TENSOR_AXES[index]
-            offset += count
-        raise ValueError(f"the part {part} is beyond the family's components")
 
     def _unhold_dipoles(self, line: Callable[..., object]) -> None:
         """The interval's dipole writes taken back (the inverse, before the fields
@@ -1420,7 +1401,7 @@ class DetectorLawSimulation:
     def _neighbour_nodes(
         self, node: tuple[int, ...], wrap: tuple[bool, bool, bool]
     ) -> list[tuple[int, int, int]]:
-        """The six reads of a Node as `_neighbours` makes them: the wrap on a
+        """The six reads of a Node as the send makes them: the wrap on a
         periodic axis, the Node itself twice on a folded axis of extent 1,
         none beyond an open face."""
         nodes: list[tuple[int, int, int]] = []
@@ -2391,17 +2372,10 @@ class DetectorLawSimulation:
 
     # The rule
 
-    def _neighbours(self, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None) -> np.ndarray:
-        """The sum of the six arrivals at every Node (the receive; a folded axis gives the Node itself twice), on the world's faces or the family's."""
-        total = np.zeros_like(a)
-        for port in self.ports.arrivals(a, wrap):
-            total += port
-        return total
-
     def _axis_sums(
         self, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """The two arrivals summed per axis at every Node, the three arrival sums rule3 reads; their sum is `_neighbours` (ALGEBRA.md #the-line)."""
+        """The two arrivals summed per axis at every Node, the three arrival sums rule3 reads; their sum is the send's (ALGEBRA.md #the-line)."""
         arr = self.ports.arrivals(a, wrap)
         sums = tuple(arr[port_of(axis, 1)] + arr[port_of(axis, -1)] for axis in range(3))
         return sums[0], sums[1], sums[2]
@@ -2932,7 +2906,8 @@ class DetectorLawSimulation:
         for level_now, level_before in levels:
             now = level_now.astype(object)
             before = level_before.astype(object)
-            reads = self._neighbours(level_before, self.kind_wrap[family]).astype(object)
+            send = self.main_loop.function_of("the send", "(i)")
+            reads = send(self.ports, level_before, self.kind_wrap[family]).astype(object)
             node = wall * form_term(self_coefficient, wall_at, now, before)
             links = wall * now * reads
             total = ratio_sum(
@@ -3360,7 +3335,7 @@ class DetectorLawSimulation:
 
     def _reads_at(self, a: np.ndarray, nodes: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:
         """The sum of the six neighbours' amplitudes at the Nodes (flat
-        indices) alone, as `_neighbours` reads them over the board (the wrap
+        indices) alone, as the send reads them over the board (the wrap
         on a periodic axis, 0 beyond a zero face, the row itself on an axis
         of one layer); HOST: the cost is the Nodes asked, not the board."""
         coordinates = np.stack(np.unravel_index(nodes, self.shape), axis=0)

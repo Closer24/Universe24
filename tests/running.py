@@ -16,6 +16,7 @@ import pytest
 
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
+from event_universe.features.send import send
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.worlds import ROOT, emitter_world, load_file
 
@@ -95,7 +96,7 @@ def form_I(
 
 def reads_of(simulation: DetectorLawSimulation, family: int):
     """The read matrix as a function: the six reads' sum of an array (the family's faces)."""
-    return lambda a: simulation._neighbours(a, simulation.kind_wrap[family])
+    return lambda a: send(simulation.ports, a, simulation.kind_wrap[family])
 
 
 def chosen_by_the_rule(
