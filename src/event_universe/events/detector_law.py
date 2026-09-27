@@ -94,7 +94,7 @@ from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, Rec
 from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
 from event_universe.features.spins_step import (
     KEYS,
-    Ports,
+    Neighbours,
     SpinRead,
     SpinStepOwn,
     SpinStepStart,
@@ -1634,7 +1634,7 @@ class DetectorLawSimulation:
         silent: bool,
         centre: tuple[int, int, int],
         wrap: tuple[bool, bool, bool],
-    ) -> Ports:
+    ) -> Neighbours:
         """A level at the six neighbours of a Node in the Ports' order, the spin's step's read (HOST): None where the loop has no read there, a silent part, an axis of extent 1 or a Node beyond an open face; the wrap on a periodic axis."""
         found: list[int | None] = []
         for axis in range(3):
@@ -1650,7 +1650,7 @@ class DetectorLawSimulation:
                     found.append(None)
                     continue
                 found.append(int(level_now[node[0], node[1], node[2]]))
-        return cast(Ports, tuple(found))
+        return cast(Neighbours, tuple(found))
 
     def _spins_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
         """THE BODY'S STEP AT (v) (ALGEBRA.md 9.91 (8) (v), 9.78 (5)): the spin's step's line
