@@ -60,7 +60,7 @@ ENTRY_SUFFIX = ".record.json"  # one world's entry, written by the replay for CI
 # the folders whose worlds are ahead of the loader's words (their structure tests hold their
 # load as expected failures; `generated`: the readable example of the law's form, its giving body
 # refused at load until the mode file): not shipped worlds of the engine
-AHEAD = ("check_mode", "generated", "source")
+AHEAD = ("generated",)
 FULL_RUN_SECONDS = 12.0
 PREFIX_INTERVALS = 200
 SAMPLE_STEPS = 5

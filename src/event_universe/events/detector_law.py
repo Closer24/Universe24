@@ -1,5 +1,5 @@
 """The engine (one engine, no law's name and no version, ALGEBRA.md #the-primitives;
-the model owner's words of 2026-09-23, docs/designs/detector_law/DESIGN.md):
+the model owner's words of 2026-09-23):
 the record splits at every free Node inside the board and holds its
 amplitudes; outside there is no board, only clicks, and nothing passes from
 Node to Node except through a detector, at rest or moving. Every world is the

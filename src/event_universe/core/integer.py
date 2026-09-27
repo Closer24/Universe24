@@ -87,7 +87,7 @@ def by_drive(
     count is the whole part of the sum of the rates, exact over any
     period, which `by_clock` at the current rate is not. `centred` (the
     body's step under the world key `centred_step`, `centred-step-v1`,
-    docs/designs/atom_give/CENTRED_STEP.md section 1; False for every
+    the centred step's record, section 1; False for every
     other count): the count is the NEAREST whole number the accumulator
     holds in units of the denominator, `(abs(drive) + denominator // 2)
     // denominator` with the sign, so a count fires when the accumulated
@@ -111,9 +111,9 @@ def by_drive(
 def by_line(
     drives: Sequence[int], rates: Sequence[int], wall: int, centred: bool = False
 ) -> tuple[int | None, int, list[int]]:
-    """The line count of `drive-b-v1` (docs/designs/drive_b/DESIGN.md section
-    2; docs/designs/light_speed/FORM.md section 3.1 (c), the mathematician's
-    form; the model owner's approval of form B, 2026-09-22): the rows' own
+    """The line count of `drive-b-v1` (the drive's record, section 2; the light
+    speed's form, section 3.1 (c), the mathematician's form; the model owner's
+    approval of form B, 2026-09-22): the rows' own
     line rule (the deficits' argmax carry of the flight, BEAM_LAW note 41
     (viii)) on a body's momentum. Every accumulator whose rate is not 0
     gains its rate (a signed rate: the momentum's component times Q); of
@@ -127,7 +127,7 @@ def by_line(
     is and never carries (a momentum of 0 never steps); one Link at most
     per call. On one axis the same integers as `by_drive(drive, rate, wall,
     at_most=1)`. The caller bounds the sums before the call. `centred`
-    (`centred-step-v1`, docs/designs/atom_give/CENTRED_STEP.md section 1):
+    (`centred-step-v1`, the centred step's record, section 1):
     an accumulator is at or beyond the wall when its magnitude reaches
     HALF the wall, `wall - wall // 2`, the whole wall subtracted with the
     sign as before, so the accumulators run in [-(wall - wall // 2), wall
