@@ -28,6 +28,8 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         "amplitude_bound": 1 << 20,
         "Lambda": 1,
         "momentum_unit": 64,
+        "most_steps": 65536,
+        "width": 63,
     }
     # the twist table (ALGEBRA.md #the-primitives; commit 4): the unit 4 Gamma 2^16, 2^10 fine
     # and 2^15 coarse triples, every one c^2 + s^2 = d^2 with d at most 10^9

@@ -9,7 +9,6 @@ from typing import cast
 
 from event_universe.core.game_board import MAX_VALUE, Address3
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.phase import MAX_PHASE_STEPS
 from event_universe.core.readings import Reading, world_readings
 from event_universe.core.register import discover
 from event_universe.core.rule3 import rule_total_bound
@@ -227,27 +226,17 @@ class FamilyDefinition:
     # (`massive-record-v1`, MASSIVE_RECORD.md section 1): light's kind is the value (1, 1) (every family without the key `pair`); a massive kind declares den > num, its rest
     # frequency cos omega_0 = num / den.
     pair: tuple[int, int] = MASSLESS_PAIR
-    # THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25
-    # through the Boss: "the engine does not know the family's name, does not
-    # know what the family does; it only supports the family's operations";
-    # BUILD.md section 26 item 51). What a family IS is declared here and
-    # read by the engine as attributes alone, never by a name or a role:
-    # `held`, the source a body's record writes at the body's Nodes at both
-    # levels with the remainder 0, "content" (the quanta the body holds, the
-    # Node clock's c of ALGEBRA.md #the-counts-line) or "charge" (the signed sum of its
-    # quanta, the d of 9.48), None for a family the step alone moves; `reads`,
-    # the held families whose levels enter this family's pace at every Node,
-    # (family index, weight, by) each, the effective content SUM weight x
-    # level for by = "plain" and - q x weight x level for by = "sign" (q the
-    # reading family's own charge sign; ALGEBRA.md #the-paces: c - q Lambda d), empty for
-    # a held family (the plain rule, the pace 1 of its own); `components`,
-    # the representation's count (1 a scalar; 3 and 6 the vector and tensor
-    # families of 9.77, not yet built). The sources and the read modes are
-    # the operations' words, never a family's name (item 53: "sign", the
-    # signed sum of the quanta by the families' declared signs). A held
-    # family is booked by no detector and every other family is (`booked`,
-    # derived, item 53); a family declares nothing about detectors or
-    # emitters: those are the bodies' mechanisms.
+    # THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25 through the Boss: "the engine does not know the family's name, does not know
+    # what the family does; it only supports the family's operations"; BUILD.md section 26 item 51). What a family IS is declared here and read by the
+    # engine as attributes alone, never by a name or a role: `held`, the source a body's record writes at the body's Nodes at both levels with the
+    # remainder 0, "content" (the quanta the body holds, the Node clock's c of ALGEBRA.md #the-counts-line) or "charge" (the signed sum of its quanta,
+    # the d of 9.48), None for a family the step alone moves; `reads`, the held families whose levels enter this family's pace at every Node, (family
+    # index, weight, by) each, the effective content SUM weight x level for by = "plain" and - q x weight x level for by = "sign" (q the reading
+    # family's own charge sign; ALGEBRA.md #the-paces: c - q Lambda d), empty for a held family (the plain rule, the pace 1 of its own); `components`,
+    # the representation's count (1 a scalar; 3 and 6 the vector and tensor families of 9.77, not yet built). The sources and the read modes are the
+    # operations' words, never a family's name (item 53: "sign", the signed sum of the quanta by the families' declared signs). A held family is booked
+    # by no detector and every other family is (`booked`, derived, item 53); a family declares nothing about detectors or emitters: those are the
+    # bodies' mechanisms.
     held: str | None = None
     reads: tuple[tuple[int, int, str, int | str], ...] = ()
     # THE REPRESENTATION AS A LIST OF PARTS (ALGEBRA.md #the-primitives, #the-interval
@@ -1153,6 +1142,7 @@ def _block(
     shape: Address3,
     amplitude_bound: int,
     phase_steps: int,
+    most_steps: int | None,
     periodic: tuple[bool, bool, bool] = (True, True, True),
 ) -> BlockDefinition | None:
     """The block's keys on a measured event (`massive-record-v1`), each named
@@ -1459,6 +1449,7 @@ def _block(
             names,
             shape,
             phase_steps,
+            most_steps,
             extents=extents,
             periodic=periodic,
             momentum=momentum,
@@ -1560,6 +1551,7 @@ def _emitter(
     names: dict[str, int],
     shape: Address3,
     phase_steps: int,
+    most_steps: int | None,
     extents: tuple[int, int, int] = (1, 1, 1),
     periodic: tuple[bool, bool, bool] = (True, True, True),
     momentum: tuple[int, ...] = (0, 0, 0),
@@ -1620,11 +1612,11 @@ def _emitter(
         )
     clock = (int(given_family.phase_per_age[0]), int(given_family.phase_per_age[1]))
     step = clock[0] // clock[1]
-    if step % 2 == 1 and 2 * phase_steps > MAX_PHASE_STEPS:
+    if step % 2 == 1 and most_steps is not None and 2 * phase_steps > most_steps:
         raise ValueError(
             f"{label}.family {name!r}: the given clock's step floor(n / d) = {step} is "
-            f"odd and the write's circle of 2 N = {2 * phase_steps} steps exceeds the tables' bound "
-            f"{MAX_PHASE_STEPS} (ALGEBRA.md #the-click); declare an even step or a smaller N"
+            f"odd and the write's circle of 2 N = {2 * phase_steps} steps exceeds the universe's "
+            f"most_steps {most_steps} (ALGEBRA.md #the-click); declare an even step or a smaller N"
         )
     branches: tuple[tuple[int, int], ...] = ((0, 1),)
     label_hands: tuple[int, int] | None = None
@@ -1676,6 +1668,7 @@ def _measured(
     periodic: tuple[bool, bool, bool],
     families: tuple[FamilyDefinition, ...],
     phase_steps: int,
+    most_steps: int | None,
     ticks: int,
     action: int | None,
     amplitude_bound: int = AMPLITUDE_BOUND,
@@ -1762,6 +1755,7 @@ def _measured(
             shape,
             amplitude_bound,
             phase_steps,
+            most_steps,
             periodic,
         )
         found.append(
@@ -2412,12 +2406,14 @@ def parse_world_document(
     closed = tuple(isinstance(boundary, dict) and boundary.get(axis) == CLOSED_FACE for axis in AXES)
     closed = (closed[0], closed[1], closed[2])
     ticks = _integer(obj["ticks"], "ticks", 0)
-    # N declared in every file (no default: the model owner's rule through
-    # the Boss, 2026-09-25; BUILD.md section 26 item 28; the 64 of the first
-    # worlds HISTORY, written in each)
-    phase_steps = _integer(obj["N"], "N", 2, MAX_PHASE_STEPS)
+    # N declared in every file (no default: the model owner's rule through the Boss, 2026-09-25; BUILD.md
+    # section 26 item 28), a power of two through the universe's `most_steps` where the universe declares one
+    most_steps = _integer(obj["most_steps"], "most_steps", 2) if "most_steps" in obj else None
+    phase_steps = _integer(obj["N"], "N", 2, AMOUNT_BOUND if most_steps is None else most_steps)
     if phase_steps & (phase_steps - 1):
-        raise ValueError(f"N must be a power of two from 2 through {MAX_PHASE_STEPS}")
+        raise ValueError(
+            f"N {phase_steps} must be a power of two from 2 (through the universe's most_steps)"
+        )
     # THE FACE SLAB (ALGEBRA.md #the-ladder, the mathematician's reading: a face
     # one Node deep books 0.15 of a packet and reflects the rest, the slab as
     # deep as the packet books 0.96): the receiver `face` at every open
@@ -2468,6 +2464,12 @@ def parse_world_document(
             "ALGEBRA.md #the-primitives, #the-well; the model owner's record 2089)"
         )
     momentum_unit = _integer(obj["momentum_unit"], "momentum_unit", 1, AMOUNT_BOUND)
+    # THE WIDTH (Main Loop's ask, 2026-09-27): the universe's `width`, the working integer's bits, is this host's
+    if "width" in obj and obj["width"] != MAX_WORK_INT.bit_length():
+        raise ValueError(
+            f"integers.width {obj['width']} is not this host's working width {MAX_WORK_INT.bit_length()} "
+            "bits: the universe's integers are the host's, refused where they differ"
+        )
     # THE TWIST TABLE (ALGEBRA.md #the-primitives): the families file's, checked with Gamma and A;
     # admitted on an inline world; an inline world without it has no transport (the
     # engine refuses a nonzero twist naming the Port)
@@ -2503,6 +2505,7 @@ def parse_world_document(
         periodic,
         families,
         phase_steps,
+        most_steps,
         ticks,
         action,
         bound,

@@ -28,6 +28,8 @@ INTEGERS = ObjectOf(
         "amplitude_bound": Integer(least=1),
         "Lambda": Integer(least=1),
         "momentum_unit": Integer(least=1),
+        "most_steps": Integer(least=2),
+        "width": Integer(least=1),
         "twist_table": ObjectOf(
             {
                 "unit": Integer(least=1),
