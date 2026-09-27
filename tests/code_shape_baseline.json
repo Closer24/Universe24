@@ -80,7 +80,7 @@
   },
   "src/event_universe/events/detector_law.py": {
    "comment_lines": 653,
-   "docstring_lines": 619,
+   "docstring_lines": 616,
    "level_shift_sites": 15,
    "lines": 3999,
    "record_references": 36,
