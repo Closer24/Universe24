@@ -186,9 +186,8 @@ def test_the_record_count_and_the_table_are_the_algebras_integers():
 
 @pytest.mark.xfail(
     strict=True,
-    reason="the loader requires the old form's world keys N, age_bound, body_record, clock_stamp "
-    "and massive_record, which the loop still reads (Main Loop's next piece on #1198, #1194's "
-    "b-marks); the mark comes off when those reads go",
+    reason="the loader requires the old form's world key N, which the loop still reads for the given "
+    "record's period (Main Loop's item 3 on #1198 takes it); the mark comes off when that read goes",
 )
 @pytest.mark.parametrize("name", NAMES)
 def test_the_source_worlds_load_lawful(name):

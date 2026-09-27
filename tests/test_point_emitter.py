@@ -68,9 +68,9 @@ def test_the_window_inverts_bit_for_bit():
     live = simulation.records[simulation.blocks[0].window]  # type: ignore[index]
     assert live.window_open and live.window >= 20 and int(np.abs(live.now).max()) > 0
     state = (live.now.copy(), live.before.copy(), live.remainder.copy(), live.window, live.outward)
-    record = simulation.blocks[0].node_record
+    record = simulation.blocks[0].own
     assert record is not None
-    record_state = (record.now, record.before, record.remainder)
+    record_state = (record.now.copy(), record.before.copy(), record.remainder.copy())
     for _ in range(40):
         simulation.step()
     assert live.window == state[3] + 40
@@ -79,7 +79,10 @@ def test_the_window_inverts_bit_for_bit():
     assert np.array_equal(live.now, state[0]) and np.array_equal(live.before, state[1])
     assert np.array_equal(live.remainder, state[2])
     assert (live.window, live.outward) == (state[3], state[4])
-    assert (record.now, record.before, record.remainder) == record_state
+    assert all(
+        np.array_equal(a, b)
+        for a, b in zip((record.now, record.before, record.remainder), record_state, strict=True)
+    )
 
 
 def test_the_loader_pairs_the_key_with_the_one_node_body_the_weight_and_the_action():
@@ -88,10 +91,6 @@ def test_the_loader_pairs_the_key_with_the_one_node_body_the_weight_and_the_acti
     # SINCE COMMIT 7 the window is the law's one giving: the lattice body gives by it too
     # (the level at its centre Node), the key `point_emitter` is retired and refused by name,
     # and so are the train's keys; the weight and the action are required on every emitter
-    no_body_record = json.loads(json.dumps(document))
-    no_body_record["body_record"] = False
-    no_body_record["stamp"] = input_stamp(no_body_record)
-    parse_nature_beam_world(no_body_record)
     no_weight = json.loads(json.dumps(document))
     del no_weight["measured"][0]["emitter"]["weight"]
     no_weight["stamp"] = input_stamp(no_weight)

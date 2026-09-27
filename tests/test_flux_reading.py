@@ -48,7 +48,6 @@ def reads(simulation: DetectorLawSimulation, family: int, length: int) -> dict[t
 def chain_world(pair: list[int] | None, length: int, boundary: dict[str, str]) -> DetectorLawSimulation:
     document = massive_world([length, 1, 1], boundary, [800, 809])
     document["detectors"] = []
-    document["age_bound"] = 100000
     return DetectorLawSimulation(parse_nature_beam_world(document))
 
 
@@ -171,7 +170,6 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
     only (the Links inside the set are no Ports), exact against the Fraction fluxes, and 0
     into a set the record does not reach."""
     document = massive_world([40, 1, 1], PERIODIC, [800, 809])
-    document["age_bound"] = 100000
     document["universe"].append(family_entry("source", [7, 8], family_reads()))
     document["measured"] = [
         {
@@ -184,7 +182,6 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             "margin": "control",
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
             "side": 1,
             "q": 0,
             "spin": [0, 0, 0],
@@ -201,7 +198,6 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             "stocks": {},
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
         },
         *(
             {
@@ -211,7 +207,6 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
                 "stocks": {},
                 "momentum": [0, 0, 0],
                 "momentum_before": [0, 0, 0],
-                "fixed": False,
             }
             for x in (6, 7, 30, 31, 32)
         ),
