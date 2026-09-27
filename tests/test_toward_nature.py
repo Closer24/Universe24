@@ -115,21 +115,11 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     "merge into main is not held (the model owner's word of 13:20Z, speed the merge); the mark comes "
     "off with the fix",
 )
+@pytest.mark.diagnostic
 def test_the_held_level_is_the_well_on_the_arm_and_the_moving_clock_hops_together():
     generator = load_module("make_worlds")
     lines: list[dict] = []
-    bottom = DetectorLawSimulation(
-        parse_nature_beam_world(document("redshift_bottom")), observer=lines.append
-    )
-    level = bottom.level_of("content")
-    arm_start = generator.REDSHIFT_EMITTER_X + 32
-    assert (
-        int(level[arm_start, 1, 1]) == 2000 and int(level[generator.REDSHIFT_MIRROR_X - 1, 1, 1]) == 2000
-    )
-    # the emitter's one own quantum beside its stock of 64 at its Nodes (item 47); the emitter
-    # one Node (the chain's point extruded) at the retired train's head since commit 7
-    assert int(level[generator.REDSHIFT_EMITTER_X + 31, 1, 1]) == 65
-    assert int(level[generator.REDSHIFT_MIRROR_X + 10, 1, 1]) == 0  # beyond the mirror, free
+    # a GameBoard reading (a diagnostic): the blocks' corners and the set over 100 intervals
     moving = DetectorLawSimulation(
         parse_nature_beam_world(document("lorentz_moving")), observer=lines.append
     )

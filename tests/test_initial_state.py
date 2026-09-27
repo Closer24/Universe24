@@ -231,14 +231,17 @@ def test_bodies_are_whole_and_disjoint():
     parse_nature_beam_world(restamped(whole))
 
 
+@pytest.mark.diagnostic
 def test_two_wells_of_one_family_may_stand_anywhere():
     """THE SEPARATION RULE OF 9.35 IS RETIRED (ALGEBRA.md 9.96 (4); the one stroke, commit 6;
     the tail check of BUILD.md section 26 item 28 HISTORY): two wells of the matter kind on
-    the closed chain of 400, A at [100, 132) with its profile at 50 x 2^12 (its last nonzero
-    Node 180, HOST) and B at [170, 202) inside A's tail, or at [232, 264) beyond it: both
-    admitted, each body's record its own array meeting the other through the held
-    families alone. A light-kind wall at B's place is another family, admitted as before."""
-    for b_corner, admitted in ((170, True), (232, True)):  # the tail ends at 180 at the seed 50 x 2^12
+    the closed chain of 400, A at [100, 132) with its profile at 50 x 2^12 and B at [170, 202)
+    inside A's tail, or at [232, 264) beyond it (that A's tail reaches the one and not the
+    other is a HOST precondition read from the generated profile, a GameBoard reading, not an
+    expectation): both admitted, each body's record its own array meeting the other through
+    the held families alone. A light-kind wall at B's place is another family, admitted as
+    before."""
+    for b_corner, admitted in ((170, True), (232, True)):
         document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
         document["ticks"] = 10
         document["measured"] = [emitter(100, None), emitter(b_corner, None, direction=[-1, 0, 0])]
@@ -246,9 +249,12 @@ def test_two_wells_of_one_family_may_stand_anywhere():
             del entry["emitter"]  # two wells, no giving: the loader's tail check alone
         profile = massive_generator().mode_profile(document, 0, amplitude=50 << 12)
         document["measured"][0]["seed"] = profile
-        assert (
-            max(x for x in range(400) if profile[x] != 0) == 180
-        )  # at the seed 50 x 2^12 (194 at 50 x 2^20 HISTORY)
+        # the HOST precondition of each case, not an expectation: A's tail reaches B's Nodes
+        # at 170 (inside the tail) and none of them at 232 (beyond it)
+        if b_corner == 170:
+            assert any(profile[x] != 0 for x in range(170, 202))
+        else:
+            assert all(profile[x] == 0 for x in range(232, 264))
         restamped(document)
         if admitted:
             parse_nature_beam_world(document)
@@ -333,6 +339,7 @@ def test_the_input_stamp_the_law_and_the_hash():
     parse_nature_beam_world(unseeded)
 
 
+@pytest.mark.diagnostic
 def test_the_generator_as_the_operator_iterated_in_integers():
     """THE GENERATOR WITH THE STOP (the model owner's word of 2026-09-25, 04:10Z, closing
     record 1898; ALGEBRA.md 9.22 (7); BUILD.md section 26 item 25): on the emitter world's

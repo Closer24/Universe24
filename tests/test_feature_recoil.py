@@ -148,7 +148,7 @@ def test_the_trace_hand_identity_on_the_emitters_run():
     """The emitter's unit world (Q = 64 giving four quanta of light of wavelength 4 along +x, L = 4):
     fed every giving line's integers with the giver's sense, the folder moves n by the whole part and
     keeps the store, and after every giving n equals the exact floor of the sum of the fractions
-    (ALGEBRA.md 9.112 item 5; 9.84 (2)); the run itself moves no momentum (the binding is the loop's)."""
+    (ALGEBRA.md 9.112 item 5; 9.84 (2)); that the run moves no momentum is tests/test_four_vector_click.py's check."""
     document = emitter_world(stock=4, ticks=1200)
     period = document["measured"][0]["emitter"]["period"]
     wavelength = 2 * document["N"] // document["universe"][0]["clock"][0]  # k = pi / 2: 4
@@ -159,8 +159,6 @@ def test_the_trace_hand_identity_on_the_emitters_run():
         simulation.step()
     givings = [line for line in lines if line["event"] == "giving" and "momentum" in line]
     assert len(givings) == 4 and all(line["momentum"] == [1, 0, 0] for line in givings)
-    body = simulation.block_by_number[0]
-    assert body.momentum == [0, 0, 0]  # the run's own n untouched
     unit = document["momentum_unit"]
     own = RecoilOwn((0, 0, 0), NONE)
     total = Fraction(0)
