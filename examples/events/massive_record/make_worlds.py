@@ -356,7 +356,7 @@ def seed_on_the_mode(document: dict) -> None:
         if "emitter" in entry:
             # THE WINDOW IS THE ONE GIVING (ALGEBRA.md 9.85 (5), 9.71 (1); commit 7): the
             # rung alone (the weight is set after the seeding by `point_weight`: the mode is
-            # computed first); the given train's `given_train` is CANCELLED, called nowhere
+            # computed first)
             emitter_rung(document, number)
     placement_check(document)
     stamped(document)
@@ -390,8 +390,6 @@ def declare_twists(document: dict) -> None:
             emitter["twist"] = emitter_twist(emitter.get("pair"), entry.get("clock"))
 
 
-GIVEN_AMPLITUDE = 1 << 16  # the given train's amplitude A (ALGEBRA.md 9.17 (6a))
-TRAIN_FLUX_TOLERANCE = 2  # per thousand: the train's one-way flux 40 Links ahead within 2 x 10^-3 of T
 TRAIN_FLUX_DISTANCE = 40  # Links ahead of the train's head, the plane the generator's checks read
 
 
@@ -399,8 +397,7 @@ def emitter_rung(document: dict, number: int):  # type: ignore[no-untyped-def]
     """The emitter's rung as the file declares it (ALGEBRA.md 9.17 (7) (e) and (f); 9.44 (5)
     (c)): `period` P, the nearest integer to 2 pi over the body's mode's rotation, and `norm`
     T, one period's action of the excited record (`excitation_norm`), the generator's integers
-    under the input stamp, written on the emitter of measured[`number`] (the train emitter's
-    by `given_train`, the point emitter's on their own, ALGEBRA.md 9.71 (1); item 50). Returns
+    under the input stamp, written on the emitter of measured[`number`] (ALGEBRA.md 9.71 (1)). Returns
     the world parsed with them."""
     from event_universe.diagnostics.massive_record_margin import (
         block_margin,
@@ -424,200 +421,6 @@ def emitter_rung(document: dict, number: int):  # type: ignore[no-untyped-def]
     return parse_nature_beam_world(stamped(document))
 
 
-def given_train(document: dict, number: int) -> None:
-    """CANCELLED (commit 7; record 2102: marked, disconnected, not deleted): the given train
-    is retired, every giving is the window's (ALGEBRA.md 9.85 (5), 9.71 (1)); called nowhere.
-    THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27): the emitter body
-    `number`'s `given` profile, the character of one **K** over its declared periods under the
-    window across the transverse extents and the tapers along **K**, written on the body's
-    Nodes at both levels (t = 0 and t = -1), the generator's integers at the amplitude
-    A = 2^16: now = round(A e(i) h(y) h(z) cos(k i)), before = round(A e h h cos(k i + omega)),
-    i the Node's index along the train's way from its tail, k = 2 pi p / (2 N q) from the
-    given family's clock [p, q] on the world's N, 3 cos omega = (num / den) (cos k + 2) on the
-    given family's vacuum pair; h the Hann window sin^2(pi (y + 1 / 2) / Y) across a transverse
-    extent Y, and 1 across an axis the body spans on a periodic face (a chain, and the
-    extruded axes of the one table's boards, where the seed is uniform across the added
-    axes); e the taper over tau = X / 4 Nodes at each end (sin^2(pi (i + 1 / 2) / (2 tau))
-    for i < tau, 1 between, mirrored at the tail). THE NORM T the conserved form of the two
-    levels on the vacuum (`given_train_norm`, the one copy the loader checks). THE FLUX CHECK
-    (HOST, the generator, 9.25 (11) (a)): the train alone on the given family's vacuum,
-    advanced by the engine's rule, books its one-way flux through a plane one Node deep 40
-    Links ahead of its head; the sum over the passage must be T within 2 x 10^-3, else the
-    profile is refused (3 periods 1.0285 and growing; 8 periods 0.9987; 16 periods 0.9997).
-    THE TRANSPARENCY (9.22 (7a) (iv)): every body coupled to the given family (a body its
-    record must enter to be read: the emitter itself where its light returns, another well,
-    a medium) passes the train run through it alone on the vacuum with 0.99 of T booked 40
-    Links beyond, refused below. The emitter's `period` and `norm` (the excited record's) are
-    the mode's as before (`excitation_norm`). THE BOOSTED NORM (ALGEBRA.md 9.74 (3), 9.75 (1);
-    BUILD.md section 26 item 56): a moving body's train at its own boosted clock (item 49),
-    written at the rest amplitude A, ALREADY carries the quantum's energy in the board's frame,
-    D T_rest forward and T_rest / D backward, D = sqrt((1 + beta) / (1 - beta)), beta = v / c_l
-    (`doppler_factor`): the form is quadratic in the wave number as in the amplitude (the
-    energy of a wave A^2 k^2 L; k by D and the length by 1 / D), so no amplitude factor enters
-    (the reading asked in 9.75 (1): the long-wave pair's ratio 1.577 against D = 1.596,
-    COMPUTATION on the files' integers). `rest_norm`, the same train's norm at the family's
-    own clock, is written beside `norm` (the ladder's threshold); the ratio norm / rest_norm
-    is checked against D (1 / D backward) within 3 percent, else refused."""
-    from event_universe.events.world import (
-        given_train_flux_sign,
-        given_train_norm,
-    )
-
-    entry = document["measured"][number]
-    emitter = entry["emitter"]
-    emitter.pop("given", None)
-    world = emitter_rung(document, number)
-    definition = world.measured[number].block
-    assert definition is not None and definition.emitter is not None
-    train = definition.emitter.train
-    if train is None:
-        raise ValueError(
-            f"measured[{number}].emitter declares no `train` (the direction and the periods): "
-            "every giving is a travelling train (ALGEBRA.md 9.17 (6a)); nothing written"
-        )
-    num, den = int(definition.emitter.pair[0]), int(definition.emitter.pair[1])
-    p, q = train.clock
-    steps = int(world.phase_steps)
-    extents = tuple(int(v) for v in definition.extents)
-    shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
-    wrap = world.kind_periodic(definition.emitter.family)
-    axis, sign = train.axis, train.sign
-    k = 2.0 * math.pi * p / (2.0 * steps * q)
-    omega = math.acos((num / den) * (math.cos(k) + 2.0) / 3.0)
-    spanned = tuple(extents[a] == shape[a] and wrap[a] for a in range(3))
-    # THE BOOSTED NORM (9.74 (3), 9.75 (1); item 56): the rest train (the
-    # family's clock, the same amplitude and periods) written beside a boosted
-    # train for its norm; the boosted rows' norm is read against D T_rest
-    expected = 1.0
-    rest_norm: int | None = None
-    if train.boosted:
-        # the rest clock is the given record's clock, the family's own or the
-        # emitter's declared `clock` (ALGEBRA.md 9.85 (3); item 59)
-        rest_clock = [int(definition.emitter.clock[0]), int(definition.emitter.clock[1])]
-        entry = world.measured[number]
-        wall = 3 * int(world.momentum_unit) * sum(int(value) for value in entry.held)
-        momentum = int(entry.momentum[axis])
-        if momentum == 0:
-            raise ValueError(
-                f"measured[{number}]: the train's own clock along {['x', 'y', 'z'][axis]} on a body "
-                "with no momentum along it (ALGEBRA.md 9.62 (4)); nothing written"
-            )
-        forward = sign * momentum > 0
-        doppler = doppler_factor(rest_clock, steps, [num, den], Fraction(abs(momentum), wall))
-        expected = doppler if forward else 1.0 / doppler
-        rest_wavelength = (2 * steps * rest_clock[1]) // rest_clock[0]
-        rest_extents = list(extents)
-        rest_extents[axis] = train.periods * rest_wavelength
-        rest_k = 2.0 * math.pi * rest_clock[0] / (2.0 * steps * rest_clock[1])
-        rest_omega = math.acos((num / den) * (math.cos(rest_k) + 2.0) / 3.0)
-        rest_now, rest_before = train_rows(
-            tuple(rest_extents), axis, sign, rest_k, rest_omega, float(GIVEN_AMPLITUDE), spanned
-        )
-        rest_shape = tuple(max(shape[a], rest_extents[a]) for a in range(3))
-        rest_norm = given_train_norm(
-            rest_now, rest_before, rest_shape, (0, 0, 0), tuple(rest_extents), (num, den), wrap
-        )
-    now, before = train_rows(extents, axis, sign, k, omega, float(GIVEN_AMPLITUDE), spanned)
-    if given_train_flux_sign(now, before, extents, axis, sign) <= 0:
-        raise ValueError(
-            f"measured[{number}]: the train's flux along its way is not positive; nothing written"
-        )
-    norm = given_train_norm(now, before, shape, (0, 0, 0), extents, (num, den), wrap)
-    # the check board's engine books the plain flux, the wall times the current,
-    # unweighted (ALGEBRA.md 9.50 (13); BUILD.md section 26 item 36); the file's norm
-    # is the plain vacuum form (the loader's check), so the passage is read against
-    # the norm itself (Gamma squared times it under form (B) of item 34, HISTORY)
-    gamma = int(document["node_clock"])
-    booked = train_passage_flux(document, number, now, before)
-    scaled = norm
-    if (
-        not scaled * (1000 - TRAIN_FLUX_TOLERANCE)
-        <= booked * 1000
-        <= scaled * (1000 + TRAIN_FLUX_TOLERANCE)
-    ):
-        raise ValueError(
-            f"measured[{number}]: the train of {train.periods} periods books {booked} of its norm "
-            f"{norm} (the Node clock {gamma}) through a plane {TRAIN_FLUX_DISTANCE} Links ahead "
-            f"({booked / scaled:.4f}): not a passage within 2 x 10^-3 (ALGEBRA.md 9.25 (11)); "
-            "nothing written"
-        )
-    emitter["given"] = {"now": now, "before": before, "norm": norm}
-    if rest_norm is not None:
-        ratio = norm / rest_norm
-        if not 0.97 * expected <= ratio <= 1.03 * expected:
-            raise ValueError(
-                f"measured[{number}]: the boosted train's norm {norm} over the rest train's "
-                f"{rest_norm} is {ratio:.4f}, not the Doppler factor {expected:.4f} within 3 percent "
-                "(ALGEBRA.md 9.74 (3), 9.75 (1)); nothing written"
-            )
-        emitter["given"]["rest_norm"] = rest_norm
-
-
-def train_rows(
-    extents: tuple[int, ...],
-    axis: int,
-    sign: int,
-    k: float,
-    omega: float,
-    amplitude: float,
-    spanned: tuple[bool, ...],
-) -> tuple[list[int], list[int]]:
-    """CANCELLED (commit 7): the given train's helper, disconnected, not deleted.
-    The train's two levels over a box (`given_train`): the character of **K** under the
-    Hann window across the transverse extents and the tapers over a quarter of the length at
-    each end, at the amplitude, x-major (HOST, the generator's floats rounded once)."""
-    length = extents[axis]
-    taper = length // 4
-
-    def envelope(i: int) -> float:
-        if i < taper:
-            return math.sin(math.pi * (i + 0.5) / (2.0 * taper)) ** 2
-        if i >= length - taper:
-            return envelope(length - 1 - i)
-        return 1.0
-
-    def window(index: int, extent: int, uniform: bool) -> float:
-        if extent <= 1 or uniform:
-            return 1.0
-        return math.sin(math.pi * (index + 0.5) / extent) ** 2
-
-    now: list[int] = []
-    before: list[int] = []
-    for x in range(extents[0]):
-        for y in range(extents[1]):
-            for z in range(extents[2]):
-                position = (x, y, z)
-                along = position[axis] if sign > 0 else length - 1 - position[axis]
-                shape_factor = envelope(along)
-                for other in range(3):
-                    if other != axis:
-                        shape_factor *= window(position[other], extents[other], spanned[other])
-                scaled = amplitude * shape_factor
-                now.append(int(round(scaled * math.cos(k * along))))
-                before.append(int(round(scaled * math.cos(k * along + omega))))
-    return now, before
-
-
-def doppler_factor(
-    given_clock: list[int], phase_steps: int, given_pair: list[int], pace: Fraction
-) -> float:
-    """CANCELLED (commit 7): the given train's helper, disconnected, not deleted.
-    D = sqrt((1 + beta) / (1 - beta)), beta = v / c_l, the Doppler factor of a light train
-    given along the motion (ALGEBRA.md 9.74 (3), 9.75 (1)): the boosted norm D T_rest forward
-    and T_rest / D backward; c_l the given family's group pace at the rest clock's k
-    (`group_pace`). HOST, the generator's float; the file carries integers."""
-    p, q = int(given_clock[0]), int(given_clock[1])
-    k = 2.0 * math.pi * p / (2.0 * phase_steps * q)
-    speed = group_pace((int(given_pair[0]), int(given_pair[1])), k)
-    beta = float(pace) / speed
-    if not 0 < beta < 1:
-        raise ValueError(
-            f"the body's pace {float(pace):.4f} is not between 0 and the given family's pace "
-            f"{speed:.4f} at k = {k:.4f}: no boost (ALGEBRA.md 9.62 (4))"
-        )
-    return math.sqrt((1.0 + beta) / (1.0 - beta))
-
-
 def names_of(document: dict) -> dict[str, int]:
     return {family["name"]: index for index, family in enumerate(families_of(document))}
 
@@ -629,36 +432,6 @@ def group_pace(pair: tuple[int, int], k: float) -> float:
     num, den = pair
     cos_omega = (num / den) * (math.cos(k) + 2.0) / 3.0
     return (num / den) * math.sin(k) / (3.0 * math.sqrt(1.0 - cos_omega * cos_omega))
-
-
-def doppler_clock(
-    given_clock: list[int], phase_steps: int, given_pair: list[int], pace: Fraction, forward: bool
-) -> tuple[list[int], int]:
-    """CANCELLED (commit 7): the given train's helper, disconnected, not deleted.
-    DOPPLER (ALGEBRA.md 9.62 (4), adopted by the model owner, record 2042; BUILD.md section
-    26 item 49): the given rows of a moving body carry its motion in the given family's
-    representation. For a train given along the motion (`forward`) or against it, the wave
-    number k = 2 pi p / (2 N q) of the given family's clock is boosted to k' = k gamma (1 +- v /
-    c_l), v the body's pace (Links per interval, the momentum over the drive's wall) and c_l the
-    given family's group pace at k (`group_pace`), gamma = 1 / sqrt(1 - (v / c_l)^2); the
-    train's wavelength is the whole number nearest 2 pi / k' (the loader's rule: a whole
-    wavelength, the body's extent n of them), and the pair returned is [2 N / g, lambda' / g]
-    with g their gcd, so that 2 N q' / p' = lambda' exactly. Returns (the pair, the wavelength).
-    HOST, the generator's floats as `given_train` solves its clock; the engine reads the pair."""
-    p, q = int(given_clock[0]), int(given_clock[1])
-    k = 2.0 * math.pi * p / (2.0 * phase_steps * q)
-    speed = group_pace((int(given_pair[0]), int(given_pair[1])), k)
-    v = float(pace)
-    if not 0 < v < speed:
-        raise ValueError(
-            f"the body's pace {v:.4f} is not between 0 and the given family's pace {speed:.4f} at "
-            f"k = {k:.4f}: no boost (ALGEBRA.md 9.62 (4))"
-        )
-    gamma = 1.0 / math.sqrt(1.0 - (v / speed) ** 2)
-    boosted = k * gamma * (1.0 + v / speed if forward else 1.0 - v / speed)
-    wavelength = max(2, round(2.0 * math.pi / boosted))
-    g = math.gcd(2 * phase_steps, wavelength)
-    return [2 * phase_steps // g, wavelength // g], wavelength
 
 
 def point_window(document: dict, number: int, weight: int, limit: int) -> int | None:
@@ -1163,8 +936,7 @@ def mode_dispersion(document: dict, number: int, axis: int) -> tuple[Fraction, F
 def moving_rotation(two_cos_rest: float, quotient: float, pace: float) -> tuple[float, float]:
     """The moving mode at the pace v = `pace` Links per interval on the dispersion 2 cos
     omega_K = 2 cos omega_b - (1 - cos K) X: the wavenumber K at which the group pace X sin
-    K / (2 sin omega_K) equals v (bisection on [0, pi], the host's floats as `given_train`
-    solves its clock) and the rotation of the rows at the moving centre per interval,
+    K / (2 sin omega_K) equals v (bisection on [0, pi], the host's floats) and the rotation of the rows at the moving centre per interval,
     omega_K - K v (ALGEBRA.md 9.63 (3), 9.24 (2)); on the plane wave of [800, 809] at v = 1 /
     3 the algebra's own K = 0.18556 and (omega_K - K v) / omega_b = 0.81457 (COMPUTATION)."""
 
