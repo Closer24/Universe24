@@ -38,7 +38,7 @@ from event_universe.diagnostics.massive_record_margin import (
     profile_check,
 )
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import NatureBeamWorld
+from event_universe.loader.world import NatureBeamWorld
 from event_universe.world_files import parse_nature_beam_world
 
 DEFAULT_ROOT = Path("examples/events")

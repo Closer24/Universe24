@@ -25,22 +25,6 @@ def bounded_gcd(first: int, second: int) -> int:
     raise ArithmeticError("bounded gcd iteration limit exceeded")
 
 
-def integer_root(value: int) -> int:
-    """The integer square root, the floor, exact: Newton's iteration on
-    integers from a power-of-two estimate (no float anywhere)."""
-    checked_work(value)
-    if value < 0:
-        raise ValueError("integer root of a negative value")
-    if value < 2:
-        return value
-    estimate = 1 << ((value.bit_length() + 1) // 2)
-    while True:
-        better = (estimate + value // estimate) // 2
-        if better >= estimate:
-            return estimate
-        estimate = better
-
-
 def reduced(numerator: int, denominator: int) -> tuple[int, int]:
     """A rational as the pair (n, d) in lowest terms with d positive."""
     common = bounded_gcd(abs(numerator), denominator) or 1

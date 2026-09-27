@@ -28,7 +28,7 @@ from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import exchange_of, form_I
-from tests.worlds import CHARGE_FAMILY, CLOCK_FAMILY, NODE_CLOCK, massive_generator, reads
+from tests.worlds import CHARGE_FAMILY, CLOCK_FAMILY, NODE_CLOCK, family_entry, massive_generator, reads
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
@@ -64,11 +64,8 @@ def small_world(
         "boundary": PERIODIC,
         "ticks": INTERVALS,
         "age_bound": 100000,
-        "K": 1073741824,
         "N": 64,
-        "release": [1, 128],
         "clock_stamp": True,
-        "width": 1,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
@@ -76,15 +73,8 @@ def small_world(
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": [77, 25],
-                "charge": 0,
-                "reads": reads(),
-            },
-            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
+            family_entry("light", [1, 1], reads(), clock=[77, 25]),
+            family_entry("matter", [800, 809], reads()),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -97,6 +87,7 @@ def small_world(
                 "ramp": 0,
                 "start": 0,
                 "momentum": [0, 0, 0],
+                "fixed": False,
                 "side": well_side,
                 "q": 0,
                 "spin": [0, 0, 0],

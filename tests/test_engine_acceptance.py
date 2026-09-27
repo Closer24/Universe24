@@ -23,9 +23,9 @@ import pytest
 
 from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import MOST_FAMILIES
+from event_universe.loader.world import MOST_FAMILIES
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.worlds import NODE_CLOCK, emitter_world, load_file
+from tests.worlds import NODE_CLOCK, emitter_world, family_entry, load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / "src" / "event_universe"
@@ -100,14 +100,7 @@ def families_of(document: dict) -> list[dict]:
 
 def extra_family(name: str) -> dict:
     """A paid family declaring the light kind and nothing that sources it."""
-    return {
-        "name": name,
-        "quantum": 1,
-        "pair": [1, 1],
-        "phase_per_link": [512, 1],
-        "charge": 0,
-        "reads": [],
-    }
+    return family_entry(name, [1, 1], [], clock=[512, 1])
 
 
 def test_a_the_adversarial_universe_runs_bit_for_bit_under_random_family_names():
@@ -287,13 +280,6 @@ VERSION_STRING = re.compile(r"-v[0-9]+$")
 FLAG_WORDS = {"flag", "flags", "version", "schema_version"}
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="the ledger's item 'no flag, family name, number or version in the code' (records 2172 "
-    "to 2174, 2182): the loader holds no version string since its cuts (record 2226); the one hit "
-    "left is the word 'version', a key of the artifacts' retention index in "
-    "src/event_universe/retention.py (the host's); the mark comes off when that key is renamed",
-)
 def test_e4_no_flag_and_no_version_is_a_constant_of_the_engine():
     """(e) The engine has no flag and no version (the Boss's record 2182, the model owner: "in the
     code there will be no flags; they are in the run file only; there is no version in the

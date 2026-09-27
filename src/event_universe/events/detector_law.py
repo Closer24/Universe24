@@ -85,12 +85,6 @@ from event_universe.core.rule3 import (
     rule3,
     rungs,
 )
-from event_universe.events.world import (
-    AXES,
-    TWIST_FINE_BITS,
-    BlockDefinition,
-    NatureBeamWorld,
-)
 from event_universe.features import self_source
 from event_universe.features.hold import TENSOR_AXES, HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
@@ -103,6 +97,12 @@ from event_universe.features.spins_step import (
     SpinStepStart,
     SpinStepTerm,
     SpinStepWrites,
+)
+from event_universe.loader.world import (
+    AXES,
+    TWIST_FINE_BITS,
+    BlockDefinition,
+    NatureBeamWorld,
 )
 
 Record = Callable[[dict[str, object]], None]

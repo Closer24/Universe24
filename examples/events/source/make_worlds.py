@@ -92,6 +92,7 @@ EVERY = 1
 def sourced_family(name: str, scale: int, cap: int | None, sourced: bool) -> dict:
     entry: dict = {
         "name": name,
+        "sign": 0,
         "parts": [1],
         "phase": 2,
         "pair": list(FAMILY_PAIR),
@@ -252,7 +253,7 @@ def main() -> None:
         for key in ("momentum_unit", "twist_table"):
             written.pop(key, None)
         for entry in written["measured"]:
-            entry.pop("fixed", None)
+            entry["fixed"] = False
         written["readings"] = readings(centre, far, moving)
         written.pop("stamp", None)
         written["stamp"] = input_stamp(written)

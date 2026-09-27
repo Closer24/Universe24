@@ -16,7 +16,6 @@ import pytest
 from event_universe.core.register import folder_of
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.primitives import compose_triples, mirror_triple
-from event_universe.events.world import TWIST_FINE_BITS
 from event_universe.features.receive import (
     DECLARATION,
     Link,
@@ -27,6 +26,7 @@ from event_universe.features.receive import (
     rotated,
     triple,
 )
+from event_universe.loader.world import TWIST_FINE_BITS
 from event_universe.world_files import parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
