@@ -162,6 +162,7 @@ DECLARATION = Declaration(
         {
             "a family's entry": ObjectOf(
                 {
+                    "sign": OneOf((-1, 0, 1)),
                     "reads": ListOf(
                         ObjectOf(
                             {
@@ -171,7 +172,7 @@ DECLARATION = Declaration(
                                 "by": OneOf((1, "q")),
                             }
                         )
-                    )
+                    ),
                 }
             )
         }

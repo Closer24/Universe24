@@ -12,7 +12,6 @@ from event_universe.core.integer import (
     by_clock,
     by_drive,
     checked_work,
-    integer_root,
     signed_inner,
 )
 
@@ -38,35 +37,6 @@ def test_working_register_is_bounded():
         checked_work(-MAX_WORK_INT - 1)
     with pytest.raises(TypeError):
         checked_work(True)
-
-
-@pytest.mark.parametrize(
-    "value,expected",
-    [
-        (0, 0),
-        (1, 1),
-        (2, 1),
-        (3, 1),
-        (4, 2),
-        (15, 3),
-        (16, 4),
-        (17, 4),
-        (1 << 62, 1 << 31),
-        (MAX_WORK_INT, 3037000499),
-    ],
-)
-def test_integer_root_is_the_exact_floor(value, expected):
-    assert integer_root(value) == expected
-    assert expected * expected <= value < (expected + 1) * (expected + 1)
-
-
-def test_integer_root_refuses_a_negative_a_float_and_an_overflow():
-    with pytest.raises(ValueError):
-        integer_root(-1)
-    with pytest.raises(TypeError):
-        integer_root(4.0)
-    with pytest.raises(OverflowError):
-        integer_root(MAX_WORK_INT + 1)
 
 
 @pytest.mark.parametrize(

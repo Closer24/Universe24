@@ -115,10 +115,7 @@ def load_massive_generator():
 # template of every ray-law world: its world keys; the light clocks of section 15
 # (the pair on N = 64 per wavelength in Links).
 TEMPLATE_KEYS = {
-    "K": 1073741824,
     "N": 64,
-    "release": [1, 128],
-    "width": 1,
     "clock_stamp": True,
     "body_record": False,
     "point_emitter": False,

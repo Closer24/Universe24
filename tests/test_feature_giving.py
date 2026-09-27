@@ -1,6 +1,6 @@
 """THE GIVING, its own folder (ALGEBRA.md 9.117 item 2, the row "the giving"; 9.107; 9.71 (1); issue
 #1156): the bulk share on the moving row's numbers, the three acts of a window on synthetic integers,
-the refusals by name, the close act replayed against the engine's own windows, the declaration."""
+the refusals by name, the declaration."""
 
 from __future__ import annotations
 
@@ -20,7 +20,6 @@ from event_universe.features.giving import (
     GivingStart,
     GivingTerm,
     apply,
-    bind,
     bulk_share,
 )
 from event_universe.world_files import parse_nature_beam_world
@@ -107,66 +106,10 @@ def test_the_refusals_by_name():
     assert ACTS == (THE_OPEN, THE_WRITE, THE_CLOSE)
 
 
-def test_the_close_act_closes_where_the_engines_window_closes_and_not_before():
-    """The emitter's unit world, every window replayed from the engine's own record: fed the increments,
-    the folder's close act keeps the window open where the engine does and closes at the interval the
-    engine's giving line names, with its outward, length and direction; the stock falls one per open."""
-    document = emitter_world(stock=4, ticks=1200)
-    lines: list[dict] = []
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    block = simulation.block_by_number[0]
-    emitter = block.definition.emitter
-    assert emitter is not None and emitter.weight is not None and emitter.norm is not None
-    denominator = emitter.norm_denominator if emitter.norm_denominator is not None else 1
-    term = GivingTerm(emitter.weight, emitter.norm, denominator, emitter.family)
-    watched: list[tuple[int, int, tuple[int, int, int], int]] = []
-    finals: list[tuple[int, int, tuple[int, int, int], int]] = []
-    for _ in range(document["ticks"]):
-        opened = block.window
-        simulation.step()
-        identity = block.window if block.window is not None else opened
-        if identity is None:
-            continue
-        live = simulation.records[identity]
-        tally = (int(live.outward_tally[0]), int(live.outward_tally[1]), int(live.outward_tally[2]))
-        entry = (simulation.tick, int(live.outward), tally, int(live.window))
-        if block.window is not None:
-            watched.append(entry)
-        else:
-            finals.append(entry)  # closed inside this step: the loop's final outward and tally
-    givings = [line for line in lines if line["event"] == "giving" and "window" in line]
-    assert len(givings) == len(finals) == 4 and simulation.held[0][emitter.family] == 0
-    # the runs of open intervals, one per giving, in order
-    runs: list[list[tuple[int, int, tuple[int, int, int], int]]] = []
-    for entry in watched:
-        if runs and entry[0] == runs[-1][-1][0] + 1:
-            runs[-1].append(entry)
-        else:
-            runs.append([entry])
-    assert len(runs) == len(givings)
-    for run, final, line in zip(runs, finals, givings, strict=True):
-        assert (line["tick"], line["window"], line["outward"]) == (final[0], final[3], final[1])
-        assert final[0] == run[-1][0] + 1 and final[3] == run[-1][3] + 1
-        own = apply(term, an_open(1, NO_TALLY), CLOSED).own
-        outward, tally = 0, NO_TALLY
-        for _tick, summed, summed_tally, _window in [*run, final]:
-            own = apply(term, a_write(np.zeros(1, dtype=np.int64)), own).own
-            increment = (
-                summed_tally[0] - tally[0],
-                summed_tally[1] - tally[1],
-                summed_tally[2] - tally[2],
-            )
-            writes = apply(term, a_close(summed - outward, increment), own)
-            assert writes.closed == (summed * denominator >= emitter.norm) == (summed == final[1])
-            own, outward, tally = writes.own, summed, summed_tally
-        assert own == GivingOwn(None, line["outward"], final[2])
-        assert writes.direction == tuple(line["momentum"]) == (1, 0, 0)
-        assert writes.direction == tuple((v > 0) - (v < 0) for v in final[2])
-
-
 def test_the_declaration_is_the_ledgers_row():
     """The folder declares the row of ALGEBRA.md 9.117 in the register's form: "the giving" at (ii), the
-    word after the step, the writes ordered as a click's deferred writes at (iv), its section"""
+    word after the step, the writes ordered as a click's deferred writes at (iv), its section; its function
+    is `apply`, the act the loop calls."""
     assert DECLARATION.name == "the giving" and folder_of("the giving") == "giving"
     assert DECLARATION.place == "(ii)" and DECLARATION.word == "after the step"
     assert DECLARATION.writes == (
@@ -181,4 +124,4 @@ def test_the_declaration_is_the_ledgers_row():
     assert "from the rule" in THE_WORD and "beyond (H)" in THE_WORD and "click's inverse" in THE_WORD
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
     assert simulation.register.declarations["the giving"].writes == DECLARATION.writes
-    assert callable(bind(simulation))  # the loop's `_emit` of today, resolved at each call
+    assert simulation.register.at("the giving", "(ii)") is apply  # the loop calls the folder's acts

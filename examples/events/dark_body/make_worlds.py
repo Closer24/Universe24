@@ -172,10 +172,8 @@ def world(dark: bool, source_weight: int | None = None) -> dict:
         "boundary": {"x": "closed", "y": "open", "z": "periodic"},
         "face_depth": 1,
         "ticks": TICKS,
-        "K": 1073741824,
+        "age_bound": 2060,  # the largest age a record may carry: twice the flight bound of this GameBoard
         "N": 1024,
-        "release": [1, 128],
-        "width": 1,
         "clock_stamp": True,
         "massive_record": True,
         "body_record": False,

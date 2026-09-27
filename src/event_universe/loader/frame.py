@@ -42,7 +42,7 @@ UNIVERSE_KEYS = ("integers", "families")
 START = ObjectOf({"mode": OneOf(("check", "pin"))})
 # a face of the GameBoard: open (its edge is infinity), periodic (the walk wraps) or closed (a zero face with no take)
 FACE = OneOf(("open", "periodic", "closed"))
-# the world file's own keys (ALGEBRA.md 9.90 (2)): the GameBoard, its faces, the intervals, the files it names, its stamp; and the keys of the loop's old form that the loop still reads
+# the world file's own keys (ALGEBRA.md 9.90 (2)): the GameBoard, its faces, the intervals, the files it names, its stamp, the largest age a record may carry; and the old form's N and three flags the loop still reads
 WORLD = ObjectOf(
     {
         "shape": ListOf(Integer(least=1), 3),
@@ -59,10 +59,7 @@ WORLD = ObjectOf(
         "amplitude_bound": Integer(least=1),
         "node_clock": Integer(least=1),
         "momentum_unit": Integer(least=1),
-        "K": Either((Integer(least=1), ListOf(Integer(least=1), 2))),
         "N": Integer(least=2),
-        "release": Either((Integer(least=0), ListOf(Integer(least=0), 2))),
-        "width": Integer(least=1),
         "clock_stamp": Flag(),
         "massive_record": Flag(),
         "body_record": Flag(),
@@ -71,7 +68,6 @@ WORLD = ObjectOf(
         {
             "stamp",
             "face_depth",
-            "age_bound",
             "probes",
             "mode_axis",
             "amplitude_bound",
@@ -82,6 +78,10 @@ WORLD = ObjectOf(
 )
 # a pair of integers, a rational
 PAIR = ListOf(Integer(least=1), 2)
+# a family's clock, the pair form [p, q] of its phase per interval of age (ALGEBRA.md, a family's declaration): the frame's key beside the name; p from 0, q from 1 (the build's rule)
+CLOCK = ListOf(Integer(least=0), 2)
+# the spin's step's row: the two weights curl and tidal, each a pair (ALGEBRA.md 9.78 (5)); the frame admits the key by name and kind, the spin's step's folder reads it (the leapfrog's span is core's SPAN, never a key of a row)
+SPINS_STEP = ObjectOf({"curl": PAIR, "tidal": PAIR})
 # three integers on the axes
 AXES = ListOf(Integer(), 3)
 # a body's emitter, the giving of a clicking body (ALGEBRA.md 9.17 (4) to (6), 9.85 (5)): the given family, the ladder by name, the given record's clock and pair where the family declares none, the period, the norm with its denominator, the weight, the window's read, the twist
@@ -131,7 +131,6 @@ BODY = ObjectOf(
     },
     frozenset(
         {
-            "fixed",
             "kind",
             "q",
             "spin",
@@ -199,9 +198,33 @@ def document_of(key: str, value: str, files: Mapping[str, object], label: str) -
 
 
 def entry_kind(register: Register) -> ObjectOf:
-    """A family's entry: the frame's key, its name, and every key the cards declare at a family's entry, optional where a card says so."""
+    """A family's entry: the frame's keys, its name, its clock and its spins_step (both optional), and every key the cards declare at a family's entry, optional where a card says so."""
     declared = cards.at(register, "a family's entry")
-    return ObjectOf({"name": Word(), **declared.keys}, declared.optional)
+    keys = {"name": Word(), "clock": CLOCK, "spins_step": SPINS_STEP, **declared.keys}
+    return ObjectOf(keys, declared.optional | {"clock", "spins_step"})
+
+
+def families(
+    value: object, integers: Mapping[str, object], register: Register, label: str
+) -> tuple[dict[str, object], ...]:
+    """The families' entries checked against the cards with the names and the integers known (a read's weight word resolved to the integer): a nonempty list, every entry an object of the entry's kind; the checked entries."""
+    if not isinstance(value, list) or not value:
+        raise ValueError(f"{label} must be a nonempty list")
+    names = tuple(
+        entry["name"]
+        for entry in value
+        if isinstance(entry, dict) and "name" in entry and isinstance(entry["name"], str)
+    )
+    context = Context(
+        names, {key: number for key, number in integers.items() if isinstance(number, int)}
+    )
+    kind = entry_kind(register)
+    checked = []
+    for index, entry in enumerate(value):
+        found = check(entry, kind, f"{label}[{index}]", context)
+        assert isinstance(found, dict)
+        checked.append(found)
+    return tuple(checked)
 
 
 def universe(
@@ -218,24 +241,7 @@ def universe(
         raise ValueError(f"{label} lacks keys: {', '.join(missing)}")
     integers = check(document["integers"], INTEGERS, f"{label}.integers", Context())
     assert isinstance(integers, dict)
-    entries = document["families"]
-    if not isinstance(entries, list) or not entries:
-        raise ValueError(f"{label}.families must be a nonempty list")
-    names = tuple(
-        entry["name"]
-        for entry in entries
-        if isinstance(entry, dict) and "name" in entry and isinstance(entry["name"], str)
-    )
-    context = Context(
-        names, {key: number for key, number in integers.items() if isinstance(number, int)}
-    )
-    kind = entry_kind(register)
-    checked = []
-    for index, entry in enumerate(entries):
-        found = check(entry, kind, f"{label}.families[{index}]", context)
-        assert isinstance(found, dict)
-        checked.append(found)
-    return tuple(checked), integers
+    return families(document["families"], integers, register, f"{label}.families"), integers
 
 
 def world(document: object) -> dict[str, object]:

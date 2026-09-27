@@ -21,12 +21,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
-from event_universe.events.world import (  # noqa: E402
+from event_universe.generator_numbers import twist_triple  # noqa: E402
+from event_universe.loader.world import (  # noqa: E402
     TWIST_COARSE_MOST,
     TWIST_FINE_BITS,
     TWIST_UNIT_SCALE,
 )
-from event_universe.generator_numbers import twist_triple  # noqa: E402
 
 FAMILIES_FILE = ROOT / "examples" / "events" / "universe.json"  # the universe file (record 2128 (3))
 

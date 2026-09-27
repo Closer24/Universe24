@@ -27,6 +27,7 @@ def body(x: int) -> dict:
         "amount": 1,
         "stocks": {},
         "momentum": [0, 0, 0],
+        "fixed": False,
     }
 
 
