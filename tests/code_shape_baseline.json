@@ -118,14 +118,6 @@
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
-  "src/event_universe/features/feed/__init__.py": {
-   "comment_lines": 0,
-   "docstring_lines": 6,
-   "level_shift_sites": 0,
-   "lines": 20,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
   "src/event_universe/features/hand/__init__.py": {
    "comment_lines": 0,
    "docstring_lines": 6,
@@ -139,14 +131,6 @@
    "docstring_lines": 7,
    "level_shift_sites": 0,
    "lines": 28,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
-  "src/event_universe/features/induction/__init__.py": {
-   "comment_lines": 0,
-   "docstring_lines": 6,
-   "level_shift_sites": 0,
-   "lines": 20,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
