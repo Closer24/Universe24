@@ -86,7 +86,7 @@ def test_the_rule_at_a_corner_of_an_open_board():
 
 
 def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
-    """BUILD.md (c): on the first build's random chain the step at light's pair [1, 1] gives the same quotient as 3 a_next + r' = S_6 - 3 a_before + r, the total and the remainder Gamma times the line's on every Node without content whose six reads have none; at the bodies' Nodes and beside them the line under the Node's own pace, 3 Gamma a_next + r' = (Gamma - c_i) S_6(a_now)_i + 6 c_i a_now - 3 Gamma a_before + r."""
+    """BUILD.md (c): on the first build's random chain the step at light's pair [1, 1] gives the same quotient as 3 a_next + r' = S_6 - 3 a_before + r, the total and the remainder Gamma times the line's on every Node without content whose six reads have none: the held level is 0 at every Node (the counts 7 at the emitter and 1 at each screen body over the divisor 40000 add no increment at the start, ALGEBRA.md #the-primitives the row "the hold"), so all 80 Nodes are free and the weak-field rule from the three integers, 3 Gamma a_next + r' = (Gamma - c_i) S_6(a_now)_i + 6 c_i a_now - 3 Gamma a_before + r, is the plain rule's at c_i = 0."""
     world = parse_nature_beam_world(chain_world())
     simulation = DetectorLawSimulation(world)
     assert world.families[0].pair == MASSLESS_PAIR
@@ -104,7 +104,7 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     a_next, r_next = step_once(simulation, live)
     content = simulation.level_of("content")
     free = (content == 0) & (send(simulation.ports, content, simulation.kind_wrap[0]) == 0)
-    assert 30 <= int(np.sum(free)) <= 45
+    assert int(np.sum(free)) == 80
     assert np.array_equal(a_next[free], expected_next[free])
     assert np.array_equal(r_next[free], expected_remainder[free])
     # the weak-field rule at every Node from its three integers (ALGEBRA.md #the-line; item 44)
@@ -353,14 +353,7 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     """BUILD.md (h) SINCE section 26 (the emission by the coupling's source term retired with the lamp; an emitter is a clicking body, ALGEBRA.md #the-click): an emitter body of the source kind (the one-Node well SOURCE_WELL at x = 100 seeded on its mode, the stock 3) on the chain of 240 with the screen at 230: three givings in turn, the residues the law's, each given record of content 1 moved from the stock (`held_spent` 3 of the source family, `transit_released` 3 of light), the body's own record continuing under its one identity after every giving and after the stock is spent, never rewritten (ALGEBRA.md #the-ladder; item 33), the books balanced at every tick. The edge cases: `emits` and `own_grace` beside `emitter` refused naming the key; `emitter` on a body of light's kind refused; a stock below 1 refused."""
     world = parse_nature_beam_world(
         with_screen(
-            block_world(
-                [240, 1, 1],
-                CHAIN,
-                [156, 157],
-                [],
-                emitter_at(100, 3),
-                ticks=600,
-            ),
+            block_world([240, 1, 1], CHAIN, [156, 157], [], emitter_at(100, 3), ticks=600),
             230,
         )
     )
@@ -377,7 +370,9 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     # kept at the Nodes (the model owner's decisions (1) and (2) of record 1962;
     # the coupling's back-action HISTORY)
     assert all(lawful_wheel(world, line) for line in givings)
-    assert [line["content"] for line in givings] == [4, 3, 2]  # one own quantum beside the stock
+    # the line's content is the held level at the body's Node, 0 (4 quanta over the divisor 40000 add nothing)
+    assert [line["content"] for line in givings] == [0, 0, 0]
+    assert [line["excitation"] for line in givings] == [1, 2, 3]
     assert len({line["u"] for line in givings}) > 1
     # the spent quanta on the given family's row, light (item 47; the own family's HISTORY)
     assert simulation.ledger.held_spent[0] == 3 and simulation.ledger.transit_released[0] == 3
@@ -609,7 +604,7 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
 
 
 def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair():
-    """An emitter giving the massive kind: its record is advanced by the kind's pair, leaves both ways with the books balanced, and light's rows match until the body's field reaches them; no clock is refused."""
+    """An emitter giving the massive kind: its record is advanced by the kind's pair, leaves both ways with the books balanced, and light's rows match until light reaches the body's Nodes (the family of clicks' field the same 0 on both boards under the divisor 40000); no clock is refused."""
     world = parse_nature_beam_world(matter_emitter_world(True, [512, 1]))
     beside = parse_nature_beam_world(matter_emitter_world(False, [512, 1]))
     matter = [family.name for family in world.families].index("matter")
@@ -619,8 +614,8 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     other = DetectorLawSimulation(beside)
     identity: int | None = None
     given: int | None = None
-    field_reached: int | None = None
-    compared = 0
+    reached, compared = None, 0
+    body = simulation.blocks[1].mask
     for tick in range(1, 301):
         simulation.step()
         other.step()
@@ -630,21 +625,22 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
         if live is not None:
             given = given if given is not None else tick
             assert live.family == matter and live.emitter == 1
-        # light's rows unchanged beside the matter emitter while the family of clicks'
-        # field is the same on their Nodes (the source body's own standing record is of
-        # the source kind, its tail reached by the field too: not light's row)
+        # the clock field is 0 on both boards (the counts 7 and 2 over the divisor 40000): light's rows of
+        # one name match until light reaches the matter emitter's Nodes, which receive (a name given after
+        # the matter emitter's giving is another record's on the other board)
+        assert not simulation.level_of("content").any() and not other.level_of("content").any()
         for light_identity, light in other.records.items():
-            if other.families[light.family].massive_kind:
+            mine = simulation.records.get(light_identity)
+            if other.families[light.family].massive_kind or mine is None or mine.family != light.family:
                 continue
-            differs = simulation.held_record("content").now != other.held_record("content").now
-            if field_reached is None and np.any(differs & (light.now != 0)):
-                field_reached = tick
-            if field_reached is None:
-                assert np.array_equal(simulation.records[light_identity].now, light.now), tick
+            if reached is None and light.now[body].any():
+                reached = tick
+            if reached is None:
+                assert np.array_equal(mine.now, light.now), tick
                 compared += 1
         if given is not None and tick == given + 100:
             break
-    assert compared > 1 and (field_reached is None or field_reached > 1)
+    assert compared > 1 and reached is not None
     # the first giving within the well's period (the residue's wait, ALGEBRA.md #the-click)
     assert given is not None and given < 120
     live = simulation.records[identity]
@@ -950,7 +946,8 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
     # the measurement: nothing given crosses the wall to click at `screen` at [70, 72]
     givings = [line for line in lines if line["event"] == "giving"]
     gathers = [line for line in lines if line["event"] == "gather"]
-    assert len(givings) == 3 and gathers == []  # 3 at the rule's period 82 (2 at the generator's 84)
+    # 2 at the kind's own period: the level at the emitter's Nodes stays 0 (7 quanta over 40000 add nothing)
+    assert len(givings) == 2 and gathers == []
     assert all(line["record"] in simulation.records for line in givings)
     for key, value in (("seed", 5), ("margin", "control")):
         bad = json.loads(json.dumps(document))

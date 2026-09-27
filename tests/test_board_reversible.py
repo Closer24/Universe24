@@ -117,29 +117,20 @@ def inverse_close_interval(simulation: DetectorLawSimulation, lines: list[dict],
     simulation.step_inverse()
 
 
-def test_between_clicks_the_board_returns_bit_for_bit_where_the_clock_rises_and_falls():
-    """1. From the load to the interval before the first giving click, every interval back returns the load's rows bit for bit: the bodies' own records, the family of clicks and the family of charge (their levels and remainders), the held quanta; the family of clicks' level fell at Nodes during the run (the falls counted, above 0), and at some Node it fell to 0 and rose again (the edge case). ALGEBRA.md #the-direction: the wall constant, one to one."""
+def test_between_clicks_the_board_returns_bit_for_bit_where_the_field_rises_and_falls():
+    """1. From the load to the interval before the first giving click, every interval back returns the load's rows bit for bit: the bodies' own records, the family of clicks and the family of charge (their levels and remainders), the held quanta; the family of charge's level, -1 at the emitter's 32 Nodes at the start (its Q = -4 over the divisor 40000, the division act's floor; ALGEBRA.md #the-primitives the row "the hold") and 0 in the vacuum, ran and waved: it fell at Nodes (the falls counted, above 0) and rose again at Nodes that had fallen (every rise is one, no level being above 0: the edge case); the family of clicks' level stays 0 (the counts 4, 1 and 1 over the divisor add no increment in 400 intervals). ALGEBRA.md #the-direction: the wall constant, one to one."""
     document = reversible_world()
     probe, _, lines, _ = run_states(document, 120)
     first_giving = click_ticks(lines)[0][0]
     assert first_giving > 10
     simulation, states, lines, _ = run_states(document, first_giving - 1)
     assert not [line for line in lines if line["event"] in ("giving", "gather")]
-    levels = np.stack([state["clock"][0] for state in states])  # (interval, x, y, z)
+    levels = np.stack([state["charge"][0] for state in states])  # (interval, x, y, z)
+    assert np.all(levels[0][5:37] == -1) and not levels[0][37:70].any() and not levels[0][:5].any()
     falls = int(np.sum(levels[1:] < levels[:-1]))
-    assert falls > 0
-    history = levels[:, :, 0, 0]
-    dipped = False
-    for x in range(history.shape[1]):
-        column = history[:, x]
-        zeros = np.nonzero(column == 0)[0]
-        for t in zeros:
-            if column[:t].any() and column[t + 1 :].any():
-                dipped = True
-                break
-        if dipped:
-            break
-    assert dipped, "no Node fell to 0 and rose again in this window"
+    rises = int(np.sum(levels[1:] > levels[:-1]))
+    assert falls > 0 and rises > 0 and int(levels.max()) == 0
+    assert not np.stack([state["clock"][0] for state in states]).any()
     for t in range(first_giving - 1, 0, -1):
         simulation.step_inverse()
         assert_same(rows_of(simulation), states[t - 1])
@@ -147,7 +138,7 @@ def test_between_clicks_the_board_returns_bit_for_bit_where_the_clock_rises_and_
 
 
 def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
-    """1. Across the first giving click and the first taking click. (a) NO RULE UNDOES A CLICK (the owner's word of record 2011): stepping back across the taking click leaves the deleted record deleted and the taken quantum with its taker (the screen's first body's held content and the field held at it stay the click's). (b) THE CLICK'S ONE LOSS: with the click's ledger undone by hand (the held quanta of the interval before restored, the fields held again), the backward run across the taking click returns every row bit for bit but the deleted record's, and across the giving click, with the given record removed (its rows at its write the file's given rows on the body's Nodes) and the stock restored, returns every row bit for bit with nothing lost; then down to the load exactly."""
+    """1. Across the first giving click and the first taking click. (a) NO RULE UNDOES A CLICK (the owner's word of record 2011): stepping back across the taking click leaves the deleted record deleted and the taken quantum with its taker (the screen's first body's held content stays the click's; its Nodes' level is the source's sum over the divisor 40000, which one quantum does not move). (b) THE CLICK'S ONE LOSS: with the click's ledger undone by hand (the held quanta of the interval before restored, the fields held again), the backward run across the taking click returns every row bit for bit but the deleted record's, and across the giving click, with the given record removed (its rows at its write the file's given rows on the body's Nodes) and the stock restored, returns every row bit for bit with nothing lost; then down to the load exactly."""
     document = reversible_world()
     probe, _, lines, _ = run_states(document, 200)
     giving_ticks, taking_ticks = click_ticks(lines)
@@ -165,21 +156,11 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
         blind.step_inverse()
         assert_same(rows_of(blind), states[t - 1])
     # across the taking click without undoing its ledger: the record stays deleted, the taker
-    # keeps its quantum, the field at its Nodes stays held at the click's content
-    taker = next(
-        number
-        for number in range(len(states[t_taking]["held"]))
-        if states[t_taking]["held"][number] != states[t_taking - 1]["held"][number]
-    )
+    # keeps its quantum
     blind.step_inverse()
     after = rows_of(blind)
     assert deleted not in after["records"]
     assert after["held"] == states[t_taking]["held"] != states[t_taking - 1]["held"]
-    taker_mask = blind.span_masks[taker]
-    assert np.array_equal(after["clock"][0][taker_mask], states[t_taking]["clock"][0][taker_mask])
-    assert not np.array_equal(
-        after["clock"][0][taker_mask], states[t_taking - 1]["clock"][0][taker_mask]
-    )
     # (b) the same run again, the click's ledger undone by hand before each step across a click
     simulation, states, lines, _ = run_states(document, end)
     for t in range(end, t_taking, -1):

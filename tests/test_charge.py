@@ -65,14 +65,14 @@ def rule_step(
 
 
 def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone():
-    """(i) THE READING WITH ONE SIGN (ALGEBRA.md #the-paces): on the periodic chain of 60 with light bodies of QUANTA quanta and charge +1 at [20, 30) (Q = +QUANTA there, the family of charge held at it, 0 elsewhere at the load), a matter record of charge -1 is advanced at the effective content c + Lambda d = 2 QUANTA at the slab (the hill deepened: its pace Gamma - 2 QUANTA, the clock pair the engine reports), one of charge +1 at c - Lambda d = 0 (the hill filled to the vacuum's pace at Lambda = 1), the neutral record at c alone and a record of the charged light itself (q = +1) at c - Lambda c, each bit for bit the rule's on random rows; at Lambda = 3 the -1 record reads 4 QUANTA and the +1 records 0 (the row's floor: a hill lessens a hollow and never exceeds it). The wheel at a slab Node is the rule's at the effective content. The edge case: the engine refuses the load where the pace could reach 0 at a body's Nodes (its content plus Lambda times its charge in size not below Gamma: Lambda = 99 at the content 10 and the charge 10 gives 10 + 990, 1000, at Gamma 1000; at Lambda = 98 it loads)."""
+    """(i) THE READING WITH ONE SIGN (ALGEBRA.md #the-paces): on the periodic chain of 60 with light bodies of QUANTA quanta and charge +1 at [20, 30) (Q = +QUANTA there; the held rows' divisor 1, so each field's level at the start is the count over it, QUANTA at the bodies' Nodes and 0 elsewhere, ALGEBRA.md #the-primitives the row "the hold"), a matter record of charge -1 is advanced at the effective content c + Lambda d = 2 QUANTA at the slab (the hill deepened: its pace Gamma - 2 QUANTA, the clock pair the engine reports), one of charge +1 at c - Lambda d = 0 (the hill filled to the vacuum's pace at Lambda = 1), the neutral record at c alone and a record of the charged light itself (q = +1) at c - Lambda c, each bit for bit the rule's on random rows; at Lambda = 3 the -1 record reads 4 QUANTA and the +1 records 0 (the row's floor: a hill lessens a hollow and never exceeds it). The wheel at a slab Node is the rule's at the effective content. The edge case: the engine refuses the load where the pace could reach 0 at a body's Nodes (its content plus Lambda times its charge in size not below Gamma: Lambda = 99 at the content 10 and the charge 10 gives 10 + 990, 1000, at Gamma 1000; at Lambda = 98 it loads)."""
     rng = np.random.default_rng(35)
     now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
     slab = [QUANTA if 20 <= i < 30 else 0 for i in range(60)]
     for strength in (1, 3):
         for matter_charge in (-1, 1):
-            document = charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, matter_charge, strength)
+            document = charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, matter_charge, strength, 1)
             simulation = DetectorLawSimulation(parse_nature_beam_world(document))
             assert [simulation.families[f].held for f in simulation.held_families] == [
                 "content",
@@ -112,7 +112,7 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
 
 
 def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
-    """(ii) THE HOLD AT Q (ALGEBRA.md #the-paces and (2)): on the emitter world with light and the matter kind both of charge -1 (the emitter's one own quantum of matter and its stock of 4 light quanta held at [5, 37) (ALGEBRA.md #the-paces; item 47), the screen's three light bodies of one quantum at [70, 72], the cube of side 3 on a chain), the family of charge is -5 at every Node of the emitter body and -1 at every Node of the screen at the load, 0 in the vacuum; the emitter's Q rises by one at each giving (a held light quantum given, its label in flight on the given record; the body's own quantum and its own charge stay) and the giving line carries it, the screen's first body's Q falls by one at each click there (the label held); the whole charge of the bodies and of the records in flight is -8 at every interval; the books balanced. The edge case: a light body of charge 0 in a world whose bodies carry charge holds Q = 0 (the neutral chain, (v))."""
+    """(ii) THE HOLD AT Q (ALGEBRA.md #the-paces, #the-primitives the row "the hold"): on the emitter world with light and the matter kind both of charge -1 (the emitter's one own quantum of matter and its stock of 4 light quanta at [5, 37) (item 47), the screen's three light bodies of one quantum at [70, 72], the cube of side 3 on a chain), Q is -5 at the emitter and -1 at each screen body; the family of charge at the start is Q div 40000 = -1 at their Nodes (the division act's floor, the remainder 39995 carried on the emitter) and 0 in the vacuum; the emitter's Q rises by one at each giving (a held light quantum given, its label in flight on the given record; the body's own quantum and its own charge stay) and the giving line carries it, the screen's first body's Q falls by one at each click there (the label held); the emitter's carried remainder gains its Q after each interval's clicks and stays above 0, so no increment is written; the whole charge of the bodies and of the records in flight is -8 at every interval; the books balanced. The edge case: a light body of charge 0 in a world whose bodies carry charge holds Q = 0 (the neutral chain, (v))."""
     document = emitter_world(stock=4, on_mode=False)
     document["universe"][LIGHT]["sign"] = -1
     document["universe"][MATTER]["sign"] = -1
@@ -120,19 +120,26 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     charge = held_record(simulation, "sign")
-    assert simulation.family_charge == [-1, -1, 0, 0]
-    assert np.all(charge.now[5:37] == -5) and np.all(charge.before[5:37] == -5)
-    assert np.all(charge.now[70:73] == -1) and not charge.now[37:70].any()
+    emitter = simulation.blocks[0]
+    key = (simulation.held_families[1], 0)  # the family of charge's time part on the body's remainders
+    assert simulation.family_charge == [-1, -1, 0, 0] and simulation.families[key[0]].held == "sign"
+    assert np.all(charge.now[5:37] == -1) and not charge.now[37:70].any() and not charge.before.any()
     assert simulation.level_of("sign") is charge.now and not charge.remainder.any()
+    assert simulation._body_charge(0) == -5 and simulation._body_charge(1) == -1
+    carried = emitter.hold_carry[key]
+    assert carried == 39995
+    assert np.all(charge.now[70:73] == -1)
     givings = 0
     clicks = 0
     for _ in range(document["ticks"]):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-        givings = simulation.blocks[0].givings  # the quantum moves at the window's open (commit 7)
+        givings = emitter.givings  # the quantum moves at the window's open (commit 7)
         clicks = sum(1 for line in lines if line["event"] == "gather")
-        assert int(simulation.level_of("sign")[21, 0, 0]) == -5 + givings
-        assert int(simulation.level_of("sign")[70, 0, 0]) == -1 - clicks
+        assert simulation._body_charge(0) == -5 + givings
+        assert simulation._body_charge(1) == -1 - clicks
+        carried += simulation._body_charge(0)
+        assert emitter.hold_carry[key] == carried and carried > 0
         bodies = sum(simulation._body_charge(number) for number in range(len(simulation.held)))
         flight = sum(simulation.family_charge[live.family] for live in simulation.records.values())
         flight -= sum(
@@ -148,11 +155,11 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
 
 
 def test_the_joint_step_with_both_fields_inverts_bit_for_bit():
-    """(iii) THE EXACT BACKWARD RUN (the model owner's record 1994; ALGEBRA.md #the-paces under item 34): on the periodic chain of 60 with light bodies of QUANTA quanta and charge +1 at [20, 30), a record of the charged light (q = +1, reading c - Lambda d) and a neutral record of random rows registered (nothing clicks), both fields rise and fall at Nodes over 30 intervals (the falls counted, above 0, the charge field moved off its start), and the joint step inverts bit for bit: every record's two levels and remainders and both fields' rows. The edge case: the chain with an open x (the zero faces) inverts as exactly."""
+    """(iii) THE EXACT BACKWARD RUN (the model owner's record 1994; ALGEBRA.md #the-paces under item 34): on the periodic chain of 60 with light bodies of QUANTA quanta and charge +1 at [20, 30) under the held rows' divisor QUANTA (each field gains one quantum at the bodies' Nodes every interval, ALGEBRA.md #the-primitives the row "the hold"), a record of the charged light (q = +1, reading c - Lambda d) and a neutral record of random rows registered (nothing clicks), both fields rise and fall at Nodes over 30 intervals (the falls counted, above 0, the charge field moved off its start), and the joint step inverts bit for bit: every record's two levels and remainders and both fields' rows. The edge case: the chain with an open x (the zero faces) inverts as exactly."""
     for boundary in (PERIODIC, CHAIN):
         rng = np.random.default_rng(37)
         simulation = DetectorLawSimulation(
-            parse_nature_beam_world(charged_chain(60, boundary, range(20, 30), QUANTA, 1, -1))
+            parse_nature_beam_world(charged_chain(60, boundary, range(20, 30), QUANTA, 1, -1, 1, QUANTA))
         )
         starts = []
         for family in (LIGHT, NEUTRAL):

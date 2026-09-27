@@ -102,10 +102,11 @@ def charged_chain(
     light_charge: int,
     matter_charge: int,
     strength: int = 1,
+    divisor: int = 40000,
 ) -> dict:
     """A chain of `length` under GAMMA: light bodies of `amount` quanta at `nodes`, light and matter charged,
-    a neutral fifth family, and Lambda = `strength`."""
-    document = content_chain(length, boundary, nodes, amount)
+    a neutral fifth family, Lambda = `strength` and the held rows' divisor E_s `divisor`."""
+    document = content_chain(length, boundary, nodes, amount, divisor=divisor)
     document["universe"][LIGHT]["sign"] = light_charge
     document["universe"][MATTER]["sign"] = matter_charge
     document["universe"].insert(
@@ -328,12 +329,18 @@ def source_family() -> dict:
     return family_entry("source", list(SOURCE_KIND), reads())
 
 
-def content_chain(length: int, boundary: dict, nodes, amount: int, gamma: int = GAMMA) -> dict:
+def content_chain(
+    length: int, boundary: dict, nodes, amount: int, gamma: int = GAMMA, divisor: int = 40000
+) -> dict:
     """The chain [length, 1, 1] of the matter kind [800, 809] beside light with `amount` quanta
-    held at each Node of `nodes` (a light body per Node) under the Node clock `gamma`."""
+    held at each Node of `nodes` (a light body per Node) under the Node clock `gamma`; the held rows'
+    divisor E_s `divisor`, 40000 as shipped (ALGEBRA.md #the-primitives, the row "the hold")."""
     document = massive_world([length, 1, 1], boundary, list(PAIR))
     document["node_clock"] = gamma
     document["amplitude_bound"] = 1 << 26  # the rows at UNIT have room under the suite's Gamma = 1000
+    for family in document["universe"]:
+        if "held" in family:  # the shared row copied, never written in place
+            family["held"] = {**family["held"], "divisor": divisor}
     document["measured"] = [light_body(x, amount) for x in nodes]
     return document
 
