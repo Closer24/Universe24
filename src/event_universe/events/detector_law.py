@@ -240,14 +240,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
 
     # The register of primitives: one register, name to function, read by the loop alone
 
-    def _method(self, name: str) -> Callable[..., object]:
-        """The loop's method `name` resolved at each call (a test's spy set on the instance is honoured); the folders' own functions replace it cut by cut."""
-
-        def call(*args: object, **kwargs: object) -> object:
-            return getattr(self, name)(*args, **kwargs)
-
-        return call
-
     def _engine_register(self) -> Register:
         """The register filled from the features' folders and bound to this loop: a built primitive's function is its folder's or the loop's method of today; a row not built has none."""
         register = discover()
