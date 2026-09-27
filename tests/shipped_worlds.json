@@ -1,245 +1,245 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "408c0e8e",
+ "recorded_at": "f01764fc",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
-    "hash": "07dd6cd992d4bb1254f0c92a47057b59aa2a95da2d232970d20fb0a8d27373a5"
+    "hash": "9ba402875ccb6920189e21586d6f9d4bb02f3a3897c89479a3b93205677b0f1e"
    },
    "ticks": 15156,
    "intervals": 200,
-   "digest": "071c6bc7319e5d91cc8cb6b3eb4310d3d7ca7dbd7fea821b56075502101bc2c4",
+   "digest": "e5fdcf05f6aa5fadf4280f2cc77162c903dbb1ea133aa0737ccfcd2292daf5d1",
    "records": 17,
    "clicks": 0,
    "lines": 643
   },
   "examples/events/dark_body/dark.json": {
    "stamp": {
-    "hash": "9b14b3fa4d32026d675374fcd7ad6c66e2fc95625ea869d2cc3b94b975a7f993"
+    "hash": "78941ed0e4980b404f0320676293ee70cc5549be456771e225f1208824ef5d4a"
    },
    "ticks": 2400,
    "intervals": 200,
-   "digest": "8485a8255ef281d06cc15334bc9df8120d12370f3f08daafc7f2a4e6b91aa253",
+   "digest": "d81be59f61aec025d8cc63ef9ed3c90fd90b7da7b834ca5786ebca658a58753c",
    "records": 13,
    "clicks": 0,
    "lines": 639
   },
   "examples/events/massive_record/boxed_clock_side_20_at_rest.json": {
    "stamp": {
-    "hash": "15f38ea7d331bb081dd30725b6cb4941475e9c0fae390d5cd2c88a4ca23d702a"
+    "hash": "5c7ec24ceb90d5dd70b4b501300f14b232100b61735d1468d609041c1fd4f909"
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "6569671f3d6151c4ba4bfbc239ffa7bf526e1dea34fd4db1623f685eac1b4e41",
+   "digest": "0c87685862910f8122217ee6aeea54e3a15b5fa7eb38a1635d518f3123cfcc75",
    "records": 1,
    "clicks": 0,
    "lines": 203
   },
   "examples/events/massive_record/boxed_clock_side_20_moving.json": {
    "stamp": {
-    "hash": "782614dbc5e833b2d11d64c74c4c8f3857e0f9c52020f4211b665bf56104cb12"
+    "hash": "26caa35a4ec227f275314cf86059c78dac8fb08a8f0f643a04e81f26b55bf326"
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "35cf1353144fa79a155e723021bded5ab30d83ad6a1b9ab1f0e4aa9d2740f209",
+   "digest": "1470902baf3cc6378a104dbe222ecfdb1ef570fa9215f0cdc4aead35e53affc3",
    "records": 1,
    "clicks": 0,
    "lines": 403
   },
   "examples/events/massive_record/boxed_clock_side_28_at_rest.json": {
    "stamp": {
-    "hash": "5b6bef101f5cfc2daa1f3b7633b5e10b7c54255b8e20f5aeac6ba2f10ff30ef0"
+    "hash": "27d23cb86686a9b8f691ba0e61c66b961333951e2e54ee313a1710e7e23d37d1"
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "8f5ec852becfa43e7e517161af223076ffd0c96147ebb7405f9d8d97ea6760eb",
+   "digest": "0265732d459a9f9fea4406b410e024f58e6d615ee496c6b7cefabd003b766e5f",
    "records": 1,
    "clicks": 0,
    "lines": 204
   },
   "examples/events/massive_record/boxed_clock_side_28_moving.json": {
    "stamp": {
-    "hash": "ddf17445f14f0fb469c8e5d60d85b0f9d9824fbffbc11c068b919664b020cdfc"
+    "hash": "04791c7f6f2c78a08f54ddd957817d17a1110ae62dae6da910d2b6aa1860a15d"
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "1b2aa8f25c3287538301c40fd9e608543127ede242bd28c3868d16b83a7f4210",
+   "digest": "977b35559677c5acda6f678ee3c52dc6723b325d0147246d27915989b6d8f738",
    "records": 1,
    "clicks": 0,
    "lines": 404
   },
   "examples/events/massive_record/deep_well_clock_at_rest_40.json": {
    "stamp": {
-    "hash": "ed2288b15f83c09ac86a35eed00058098afe01f22718dc45d494b499ab33d330"
+    "hash": "3151738b61cc1bc2ee3df4df48a73aaeb0aa4832e348b6d261ecc8d2d56da533"
    },
    "ticks": 3500,
    "intervals": 200,
-   "digest": "e46e64f92e910741c796ebcdf252150427056e761ec3ff448e6b3893cd27e575",
+   "digest": "91aacfa62964b989f3baff4976e42e57a31d511f28b517fa14f4ff0f08405965",
    "records": 1,
    "clicks": 0,
    "lines": 201
   },
   "examples/events/massive_record/deep_well_clock_speed_third_40.json": {
    "stamp": {
-    "hash": "8e2298bf4d7981201f2c279a2ce2f6ce4005ac6b11bf316e0fd3132a6c7f245b"
+    "hash": "2662ea9d36da1f431b8a1b6a5cf9dfda4f18867d215ae66010bdb2d8ee808f7b"
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "00c792ae4307cc08c043b22af2288983dc5b17000f912ce1c871508049c99226",
+   "digest": "0f2ce2950199fa37043baed5e8819d3b0ef4cbe8e0df76f93faad581d2e4922d",
    "records": 1,
    "clicks": 0,
    "lines": 401
   },
   "examples/events/massive_record/light_clock.json": {
    "stamp": {
-    "hash": "e35d7873be165414bc4f3822daa3c09bdd379d10c6af1d79c4191ab17d44f883"
+    "hash": "6bfad60a225f4bd7fddd4413c8cf8c060b9cdc12b11dfbe6541cbd200fe1c91e"
    },
    "ticks": 4800,
    "intervals": 1500,
-   "digest": "2d76f5fef6cda6220958c4ecf602cdf777e6ca27e3293743280f45c1c9e8423b",
+   "digest": "88328d497238015d897ea4de4358709d02cbd4c465c271f8880a067df7f64d0c",
    "records": 17,
    "clicks": 41,
    "lines": 4755
   },
   "examples/events/massive_record/muon_moving_clock_at_rest_14.json": {
    "stamp": {
-    "hash": "6f8d023d26dc180713e3db753eea7539140fab56ba5ad3490413ab62c3356186"
+    "hash": "e867810958452cab73ebffb9d4a61ea8d820a50328a41557abf3fe3f056d245e"
    },
    "ticks": 20500,
    "intervals": 200,
-   "digest": "767c1261fb82d348f314928ac275deaa46b2602a6bd5880aef35d65605f5b628",
+   "digest": "e43e9c41b1d45072b3f072f3ff2a35de409b2d8098c2de67ed357d6c3679d63f",
    "records": 1,
    "clicks": 0,
    "lines": 204
   },
   "examples/events/massive_record/muon_moving_clock_speed_third_14.json": {
    "stamp": {
-    "hash": "642da15099174eb0dfd70f268881738c0efc0f3edd43214c3e58b7b016ba3771"
+    "hash": "d7aa978c2212903abfbb043478472a6e85e657330be02007fc72cc181b66c880"
    },
    "ticks": 20500,
    "intervals": 200,
-   "digest": "0c6ff8f19c49aa1c3fbec8442c3e28ca2daecdde3150efbcef46392de7318b76",
+   "digest": "a801e376bf7830389b61239c7ea3d1b0641d60f8607b00e3ffd74882a8d7d69d",
    "records": 1,
    "clicks": 0,
    "lines": 404
   },
   "examples/events/point_emitter/point_chain.json": {
    "stamp": {
-    "hash": "1f38daaa3bf5806b7ea86e9bac9bfc1234edb3e093b496b5e7921f7fa6121283"
+    "hash": "f74cdf609b8f10081f9d7402ce3b9c8ff7cdd9129d6c8dda33c58a2dade3d61f"
    },
    "ticks": 70992,
    "intervals": 200,
-   "digest": "7cb322fb0b84251a666c8b8073a9ac181454b14298cb929c1d6180b318af8eb2",
-   "records": 2,
+   "digest": "1f09d104c2479c32961c588d65a3c3a5a2d248fded574c2d70db2c6db9366d7d",
+   "records": 1,
    "clicks": 0,
    "lines": 205
   },
   "examples/events/point_emitter/point_light_clock.json": {
    "stamp": {
-    "hash": "39ab0210af23eeaf869237996a41c851b8a15a65cb3bbf83ad11c747e973c962"
+    "hash": "6b37f5b9b7a3ac8a98feaea1e287f8f7c96486ad1494964fc7b0c2ef2eecd256"
    },
    "ticks": 35304,
    "intervals": 3000,
-   "digest": "5dc35b766368ad89ed8ba33a390e6d19c83096e329b6f8054ecd0376a9b3316e",
-   "records": 5,
-   "clicks": 6,
-   "lines": 9099
+   "digest": "87074e1d6f0a6e1075181e142c994a2df075c6ff0094c9fc49bc50453daad1f9",
+   "records": 2,
+   "clicks": 10,
+   "lines": 9106
   },
   "examples/events/toward_nature/bending.json": {
    "stamp": {
-    "hash": "643373cfa97d1edb61558b12f9457545bcd49d4709be5cfe9fa7f29ccc80de1b"
+    "hash": "b3a874153c00ab0fff5121799b75269edc5ee8cecd0fe777290b189d26d6df25"
    },
    "ticks": 5600,
    "intervals": 200,
-   "digest": "898d6dcef732eb2be1236d0c5f86817c74c4a07152b2ec0544b2f81cd3952634",
+   "digest": "f57848811302aac0b045ad0d5f13ca34d86235cd2697e286ad4db5f8192b0a2e",
    "records": 14,
    "clicks": 0,
    "lines": 640
   },
   "examples/events/toward_nature/lorentz_moving.json": {
    "stamp": {
-    "hash": "1eac3116b3cc7c20e1b488d90b02d19a2c0da861cfc63a5c78369b148c9e6bc4"
+    "hash": "9f0eeb18e013f99808cfffa4c26f7c515ea8b3a1ebd91addf48f08b280bc25dd"
    },
    "ticks": 3600,
    "intervals": 200,
-   "digest": "b3538fa5e2d41661f0f6d049ee8d47d91af501f163a627dc23dd19d2c6c106e9",
+   "digest": "f7fb808403334cb72cdf0c2da690bac50086c558b5e0aa17779b805941f718ca",
    "records": 11,
-   "clicks": 0,
-   "lines": 630
+   "clicks": 1,
+   "lines": 632
   },
   "examples/events/toward_nature/lorentz_moving_long.json": {
    "stamp": {
-    "hash": "b48cad34a2ac65aaf07972043bbf3af2bafac353011d9fd9a652fb553179f6a1"
+    "hash": "badf1b61b9e26836133cf53d3dc31ab0e7dee84dbb5dc1beff39f9005ad95774"
    },
    "ticks": 5966,
    "intervals": 200,
-   "digest": "c7632c2afdf0d733420c473aebe0667351b40eedba9a889c90da7281d2c45b2d",
+   "digest": "1001f69560c11ca5b4c8c24a62f166ddec4f00a68a726277977d9e595a7e7f7d",
    "records": 4,
    "clicks": 0,
    "lines": 607
   },
   "examples/events/toward_nature/lorentz_rest.json": {
    "stamp": {
-    "hash": "07bb1db95b2b07b091c6ce778a13f568a30e76be795c0da0b79277dfc605a9c1"
+    "hash": "4d7f249660fe868748aaeb4e48ca0a2f5235f06d10b28b8ffab23d91f01b05d3"
    },
    "ticks": 3600,
    "intervals": 1500,
-   "digest": "5f4ef9e3acbbe3ebb1c61dce9f74a2467e0b5dce8249ac5cdbb6ac9c28c0d532",
+   "digest": "f5b30491a85964b85b2291ec733fefe1319a0b9bbcb37fcc169a1fd7ab347aa9",
    "records": 18,
    "clicks": 42,
    "lines": 4758
   },
   "examples/events/toward_nature/lorentz_rest_long.json": {
    "stamp": {
-    "hash": "311b2687d3670de3574d834ad68acc1455d6fa1d092b5acadf2554fb2c94c1e1"
+    "hash": "1fd119bdaf87af16517afbf52f82b96517f7c75d3bfb2eb54d5e325dcea91a9e"
    },
    "ticks": 8206,
    "intervals": 200,
-   "digest": "16fcb02a4df8a92c23e308fb762e6a994bc5fa1f31bfb5f9db87771a59c0f75c",
+   "digest": "d917e924524599266215ce5e739c6c192593a9265cc99abdab814a3e86455b95",
    "records": 4,
    "clicks": 0,
    "lines": 607
   },
   "examples/events/toward_nature/redshift_bottom.json": {
    "stamp": {
-    "hash": "cc1fb880742211ec707acc56af42cba473e62c4f62382349d75ce5779e320449"
+    "hash": "d1f787862c1bee2042028f43cd64cdeda833bc07d1e3a1ab3f5f20e6458c9b0a"
    },
    "ticks": 6534,
    "intervals": 200,
-   "digest": "6d4e8df7f96db5a8db3142d4b17b081e8fad1d1ab4e02b17cb1a8ba8818a8206",
+   "digest": "dbaf3b0484fd08d8f46b918358920b69aad6648916b76e5c5e996a5297f04b24",
    "records": 8,
    "clicks": 0,
    "lines": 627
   },
   "examples/events/toward_nature/redshift_bottom_long.json": {
    "stamp": {
-    "hash": "d57d2fcc780023e4a83e7858914e330aacdb3cae93717971861dbdd51f3306da"
+    "hash": "420cdfed226ad27ed7b3e775e661e75fef9921f795195f6f093dc7c611d1fcaa"
    },
    "ticks": 10558,
    "intervals": 200,
-   "digest": "bab1b07d1085a96d1a49e8655a2429b6e571cd20cdb21dec9d40573e9ed3ec3c",
+   "digest": "71610b56d4d5e083c8342f8c31edc9c9346105b2ca8f8d217e9616c84d609a03",
    "records": 3,
    "clicks": 0,
    "lines": 606
   },
   "examples/events/toward_nature/redshift_top.json": {
    "stamp": {
-    "hash": "7acf85b05ee0bc9f4090d7254934f2519fb0236d0931aba81051d9675623377e"
+    "hash": "35bce69fd35f505c4ef219a5dc84e6d8c3994412ab08695157d478f087ea0152"
    },
    "ticks": 6150,
    "intervals": 200,
-   "digest": "13a80ab60d3572aafcb871c30e763f188e3309d2e2b599b6cf63cff9305d23a7",
+   "digest": "fb8dd8ac650b3287089d7d516c96f26c60f4909c6c631e6023fc46b036ac402b",
    "records": 9,
    "clicks": 0,
    "lines": 628
   },
   "examples/events/toward_nature/redshift_top_long.json": {
    "stamp": {
-    "hash": "30dbc7579748c32d50b83d67aa3c8089d755c6062095ce00445aa539d6041ea3"
+    "hash": "8b2fe5b2d143892b643f00ab08853a374f9b3dab02c6e831ed3efea78a4805f4"
    },
    "ticks": 9598,
    "intervals": 200,
-   "digest": "efe7e1ad8d06055c665bbf3e4cb35dabf7f5c8f89f6aa02dbeba02085bf3163b",
+   "digest": "d07c0e963fa03d2a51a72baeaafaee062bda37c7cda4b61627e7357267dc2c40",
    "records": 4,
    "clicks": 0,
    "lines": 607

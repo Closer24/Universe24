@@ -1,4 +1,4 @@
-"""THE FEED AND THE INDUCTION, their own folders (ALGEBRA.md #the-primitives, the rows "the feed" and "the induction"; #the-well): the fall toward content the same for every body, the contraction's vector and tensor parts, the induction's momentum part, the electric identity (a gradient of the time part and a rising vector part push alike), the inverse bit for bit with the remainders carried, the refusals, the declarations the loop does not call yet."""
+"""THE FEED AND THE INDUCTION, their own folders (ALGEBRA.md #the-primitives, the rows "the feed" and "the induction"; #the-well): the fall toward content the same for every body, the contraction's vector and tensor parts, the induction's momentum part, the electric identity (a gradient of the time part and a rising vector part push alike), the inverse bit for bit with the remainders carried, the refusals, the declarations bound at (v), the fall on the board and its step back."""
 
 from __future__ import annotations
 
@@ -6,9 +6,12 @@ import pytest
 
 from event_universe.core.register import folder_of
 from event_universe.core.rule3 import THE_ADVANCE, THE_INVERSE, THE_LOAD
+from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features import feed, induction
 from event_universe.features.feed import TENSOR_AXES, FeedFace, FeedOwn, FeedRead, FeedStart
 from event_universe.features.induction import InductionOwn, InductionRead, InductionStart
+from event_universe.world_files import input_stamp, parse_nature_beam_world
+from tests.bodies import KIND, WELL, block_world
 
 GAMMA = 1000
 WALL = 3 * 7 * 65  # W = 3 Q M: a body of 65 quanta at the momentum unit 7
@@ -139,5 +142,35 @@ def test_the_refusals_by_name_and_the_declarations_the_loop_does_not_call_yet():
     for module, name, folder in ((feed, "the feed", "feed"), (induction, "the induction", "induction")):
         card = module.DECLARATION
         assert card.name == name and folder_of(name) == folder and card.place == "(v)"
-        assert card.function is None and not card.built and card.word == "after the step"
+        assert card.function is module.apply and card.built and card.word == "after the step"
         assert card.writes == ("a body's momentum n", "a body's remainders")
+
+
+def test_bound_at_v_a_free_body_falls_toward_a_held_body_and_the_step_back_returns_it():
+    """The binding (the owner's word of 09:37Z): on a periodic board a big body held in place (`fixed`) and
+    a small free body 5 Links ahead on x; the feed reads the content's time part at the small body's faces
+    once the field reaches them, so its momentum turns toward the big body (n = -2 on x by interval 10,
+    the second level one interval behind, no hop), the held body is not fed; ten steps back return both
+    levels, the drive and every remainder of the feed to the load's, bit for bit."""
+    periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
+    big = {
+        "position": [2, 3, 3],
+        "side": 2,
+        "pair": WELL,
+        "margin": "control",
+        "amount": 400,
+        "fixed": True,
+    }
+    small = {"position": [9, 3, 3], "side": 2, "pair": WELL, "margin": "control", "amount": 3}
+    document = block_world([16, 8, 8], periodic, KIND, [big, small], ticks=12)
+    document["stamp"] = input_stamp(document)
+    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+    held, free = simulation.blocks
+    for _ in range(10):
+        simulation.step()
+    assert free.momentum == [-2, 0, 0] and free.momentum_before == [-2, 0, 0]
+    assert held.momentum == [0, 0, 0] and free.hold_carry[("feed", 0)] > 0
+    for _ in range(10):
+        simulation.step_inverse()
+    assert free.momentum == [0, 0, 0] == free.momentum_before
+    assert all(value == 0 for key, value in free.hold_carry.items() if key[0] == "feed")

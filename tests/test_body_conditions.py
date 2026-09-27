@@ -137,29 +137,14 @@ def test_a_body_that_does_not_fit_is_refused_at_load_never_cut():
     assert parse_nature_beam_world(seam).measured[0].block is not None
 
 
-def test_one_unit_off_the_mode_is_admitted_and_the_peak_doubled_is_refused_naming_the_node():
-    """SINCE THE GENERATOR WITH THE STOP (the owner's word of 2026-09-25; BUILD.md section 26
-    item 25) the law's check of a profile is the loader's own residual bound in integers
-    (record 1886), and the body's condition here is that the initial state IS the file's
-    profile at both levels: one unit off at a Node stays within the rounding the bound allows
-    (admitted, the check's line naming the profile), the peak doubled is refused by the loader
-    naming the Node, its residual and the bound (before this the check compared the state
-    with the eigensolver's rounded mode and refused the one unit)."""
+def test_one_unit_off_the_mode_is_admitted_and_the_initial_state_is_the_files_profile():
+    """The body's condition is that the initial state IS the file's profile at both levels: one unit off at a Node is admitted, the check's line naming the profile; the old loader's residual bound on a declared seed is gone (the law's form declares no seed and no profile, ALGEBRA.md #what-a-body-is; the Boss's word of 16:12 Israel time)."""
     document = seeded([48, 48, 48], [14, 14, 14], 20)
     index = (14 * 48 + 14) * 48 + 14
     document["measured"][0]["seed"][index] += 1
     document["stamp"] = input_stamp(document)  # the stamp of the changed integers
     lines = checked(document)
     assert any("the initial state is the file's profile" in line for line in lines)
-    doubled = seeded([48, 48, 48], [14, 14, 14], 20)
-    peak = max(
-        range(len(doubled["measured"][0]["seed"])), key=doubled["measured"][0]["seed"].__getitem__
-    )
-    doubled["measured"][0]["seed"][peak] *= 2
-    doubled["stamp"] = input_stamp(doubled)
-    with pytest.raises(ValueError, match="residual") as found:
-        checked(doubled)
-    assert "the bound" in str(found.value)
 
 
 def test_a_flat_seed_is_not_the_mode_and_is_refused():
