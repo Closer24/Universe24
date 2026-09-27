@@ -1,6 +1,6 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "c7800638",
+ "recorded_at": "7d702552",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
@@ -8,11 +8,10 @@
    },
    "ticks": 15156,
    "intervals": 200,
-   "digest": "2bc6a7f2d8b486af199e8721594282bb3c0f7320f4896a492780b860cf0bbd8e",
+   "digest": "f0f5b7ffae7af07c1c259711a299062b6c7655f35444cd2dbe447c97512ec999",
    "records": 16,
    "clicks": 0,
-   "lines": 576,
-   "refused_at": 181,
+   "lines": 577,
    "refused": "the twist on the Port toward +y reaches |k| = 43307142, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/dark_body/dark.json": {
@@ -25,7 +24,6 @@
    "records": 12,
    "clicks": 0,
    "lines": 573,
-   "refused_at": 181,
    "refused": "the twist on the Port toward +y reaches |k| = 43416228, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/massive_record/boxed_clock_side_20_at_rest.json": {
@@ -132,22 +130,24 @@
     "hash": "1f38daaa3bf5806b7ea86e9bac9bfc1234edb3e093b496b5e7921f7fa6121283"
    },
    "ticks": 70992,
-   "intervals": 200,
-   "digest": "7cb322fb0b84251a666c8b8073a9ac181454b14298cb929c1d6180b318af8eb2",
-   "records": 2,
+   "intervals": 0,
+   "digest": "515aaf7dae61f1234ed82d39af7fe9172b03159dc106fa218f5e4515fd8dc767",
+   "records": 0,
    "clicks": 0,
-   "lines": 205
+   "lines": 0,
+   "refused": "families[1] declares the clock [512, 1] on N = 64 steps: its wavelength 2 N q / p is no whole number of Links, so the universe's wall L has no value"
   },
   "examples/events/point_emitter/point_light_clock.json": {
    "stamp": {
     "hash": "39ab0210af23eeaf869237996a41c851b8a15a65cb3bbf83ad11c747e973c962"
    },
    "ticks": 35304,
-   "intervals": 3000,
-   "digest": "05309268eceb1d9696e5f0b7c726b86b45ae845d1756d72ad67ee04f1a92b361",
-   "records": 2,
-   "clicks": 9,
-   "lines": 9102
+   "intervals": 0,
+   "digest": "515aaf7dae61f1234ed82d39af7fe9172b03159dc106fa218f5e4515fd8dc767",
+   "records": 0,
+   "clicks": 0,
+   "lines": 0,
+   "refused": "families[1] declares the clock [512, 1] on N = 64 steps: its wavelength 2 N q / p is no whole number of Links, so the universe's wall L has no value"
   },
   "examples/events/toward_nature/bending.json": {
    "stamp": {
@@ -159,7 +159,6 @@
    "records": 13,
    "clicks": 0,
    "lines": 574,
-   "refused_at": 181,
    "refused": "the twist on the Port toward +y reaches |k| = 43416228, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/toward_nature/lorentz_moving.json": {
@@ -179,10 +178,10 @@
    },
    "ticks": 5966,
    "intervals": 200,
-   "digest": "841e4f351b9657408fadf128368e5d422d1878a778550e07098e58f052042c28",
-   "records": 4,
-   "clicks": 0,
-   "lines": 608
+   "digest": "643bb6db9f2b110a97d094ad3eef784d12e0f30704927b5c8a14e68e0a141818",
+   "records": 3,
+   "clicks": 1,
+   "lines": 609
   },
   "examples/events/toward_nature/lorentz_rest.json": {
    "stamp": {
@@ -201,7 +200,7 @@
    },
    "ticks": 8206,
    "intervals": 200,
-   "digest": "16cd21fb0e94ebcd55b47fa5d780c1641f1d9eb7442ce6b39d075e380a643ccd",
+   "digest": "92ce46699cdd15e65d35ac5217d6236b72ad730bcb01fc0282e8557d7c66f4c6",
    "records": 4,
    "clicks": 0,
    "lines": 607
@@ -216,7 +215,6 @@
    "records": 2,
    "clicks": 1,
    "lines": 101,
-   "refused_at": 34,
    "refused": "the twist on the Port toward +x reaches |k| = 33829026, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/toward_nature/redshift_bottom_long.json": {
@@ -229,7 +227,6 @@
    "records": 1,
    "clicks": 1,
    "lines": 165,
-   "refused_at": 56,
    "refused": "the twist on the Port toward +x reaches |k| = 37704680, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/toward_nature/redshift_top.json": {
@@ -249,7 +246,7 @@
    },
    "ticks": 9598,
    "intervals": 200,
-   "digest": "26f32ee9c69c53223d25d227908d685c3a34bd51f09d21255d962d63d159389d",
+   "digest": "b309a62200c42ce112271610e5822197df10ce9210f0cf8a9da6591c93b768e7",
    "records": 4,
    "clicks": 0,
    "lines": 607

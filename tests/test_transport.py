@@ -75,8 +75,8 @@ def test_the_twist_tables_triples_are_exact_and_the_nearest_of_their_angles():
 
 
 def test_the_loader_writes_the_twist_own_and_the_given_lights_component():
-    point = json.loads((ROOT / "examples/events/point_emitter/point_light_clock.json").read_text())
-    world = parse_nature_beam_world(point)
+    dark = json.loads((ROOT / "examples/events/dark_body/dark.json").read_text())
+    world = parse_nature_beam_world(dark)
     body = world.measured[0].block
     assert body is not None and body.emitter is not None
     # the body's own record turns at its mode's rotation, 2 cos omega = a / b

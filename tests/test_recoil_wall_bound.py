@@ -1,5 +1,4 @@
-"""The recoil's wall L, the least common multiple of a world's declared wavelengths, stays below 2^63 in
-every shipped world and divides their product; a world whose L reaches the width is refused by name."""
+"""The recoil's wall L, the least common multiple of a world's declared wavelengths, stays below 2^63 in every shipped world and divides their product; a world whose L reaches the width is refused by name."""
 
 from __future__ import annotations
 
@@ -38,12 +37,12 @@ def recoil_wall(wavelengths: list[int]) -> int:
 
 
 def clocks_of(world) -> list[tuple[int, int]]:
-    """The families' clocks [p, q] as the loader holds them, where a family declares one."""
-    found = []
-    for family in world.families:
-        clock = family.phase_per_age
-        if isinstance(clock, (tuple, list)) and len(clock) == 2 and int(clock[0]) > 0:
-            found.append((int(clock[0]), int(clock[1])))
+    """The clocks [p, q] that enter L: the given families' rows and the emitters' own (the recoil's row; #1295)."""
+    givers = [e.block.emitter for e in world.measured if e.block and e.block.emitter]
+    found = [(int(g.clock[0]), int(g.clock[1])) for g in givers]
+    for index, family in enumerate(world.families):
+        if family.phase_per_age is not None and any(g.family == index for g in givers):
+            found.append((int(family.phase_per_age[0]), int(family.phase_per_age[1])))
     return found
 
 
@@ -59,7 +58,7 @@ def shipped_worlds():
 
 
 def test_every_shipped_world_keeps_the_wall_below_the_width():
-    """Twelve worlds keep the wall; the ten at N = 64 have no whole wavelength under the charge row's clock [512, 1] (lambda_q = 1/4), the law's load refusal once the loop computes L (the recoil's row; measured once)."""
+    """Twenty worlds keep the wall; the two point-emitter worlds at N = 64 give the charge row's clock [512, 1] with no whole wavelength (lambda_q = 1/4), the law's load refusal (the recoil's row: L over the given families' clocks; measured once)."""
     seen, refused = 0, 0
     for path, world in shipped_worlds():
         if any((2 * int(world.phase_steps) * q) % p for p, q in clocks_of(world)):
@@ -70,7 +69,7 @@ def test_every_shipped_world_keeps_the_wall_below_the_width():
         assert 1 <= wall <= MAX_WORK_INT, path
         assert wall <= math.prod(wavelengths or [1])
         seen += 1
-    assert seen >= 12 and refused == 10
+    assert seen == 20 and refused == 2
 
 
 def test_the_wall_divides_the_product_and_the_width_refuses_by_name():
