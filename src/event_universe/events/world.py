@@ -1271,10 +1271,9 @@ LAMP_KEYS = {
     # line: no default): on a PAIR lamp (a lamp with `arms` above 1) under
     # `detector_law`, `residue_order` is REQUIRED, "ordinal" (the counter
     # form as built, u = (ordinal - 1) r mod W) or "seed" (the seed-set
-    # order, u = order[(ordinal - 1) mod W], the order a Fisher-Yates
-    # permutation of Z_W driven by the SplitMix64 mixing hash from
-    # `residue_seed`, `core.integer.keyed_permutation`; the stride r must be
-    # 1); `residue_seed`, an integer in [0, 2^64), an input of kind 1,
+    # order, u = order[(ordinal - 1) mod W], a keyed permutation of Z_W from
+    # `residue_seed`; the stride r must be 1); `residue_seed`, an integer in
+    # [0, 2^64), an input of kind 1,
     # required under "seed" and refused under "ordinal". Neither key is
     # admitted on a lamp without arms or outside `detector_law`.
     "residue_order",

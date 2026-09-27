@@ -24,18 +24,10 @@
   },
   "src/event_universe/core/integer.py": {
    "comment_lines": 1,
-   "docstring_lines": 137,
+   "docstring_lines": 127,
    "level_shift_sites": 0,
-   "lines": 304,
+   "lines": 271,
    "record_references": 5,
-   "rule_arithmetic_sites": 0
-  },
-  "src/event_universe/core/phase.py": {
-   "comment_lines": 3,
-   "docstring_lines": 58,
-   "level_shift_sites": 0,
-   "lines": 201,
-   "record_references": 1,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/core/primitive.py": {
@@ -95,10 +87,10 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/world.py": {
-   "comment_lines": 1154,
+   "comment_lines": 1153,
    "docstring_lines": 1221,
    "level_shift_sites": 0,
-   "lines": 7444,
+   "lines": 7443,
    "record_references": 99,
    "rule_arithmetic_sites": 0
   },
