@@ -48,7 +48,7 @@
   },
   "src/event_universe/core/register.py": {
    "comment_lines": 16,
-   "docstring_lines": 63,
+   "docstring_lines": 60,
    "level_shift_sites": 0,
    "lines": 272,
    "record_references": 5,
@@ -95,11 +95,11 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/world.py": {
-   "comment_lines": 1177,
+   "comment_lines": 1154,
    "docstring_lines": 1229,
    "level_shift_sites": 0,
-   "lines": 7554,
-   "record_references": 107,
+   "lines": 7444,
+   "record_references": 101,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/features/__init__.py": {
@@ -110,27 +110,11 @@
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
-  "src/event_universe/features/clicks/__init__.py": {
-   "comment_lines": 1,
-   "docstring_lines": 7,
-   "level_shift_sites": 0,
-   "lines": 33,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
   "src/event_universe/features/clicks_list/__init__.py": {
    "comment_lines": 0,
    "docstring_lines": 6,
    "level_shift_sites": 0,
    "lines": 21,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
-  "src/event_universe/features/degree/__init__.py": {
-   "comment_lines": 1,
-   "docstring_lines": 7,
-   "level_shift_sites": 0,
-   "lines": 29,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -147,14 +131,6 @@
    "docstring_lines": 6,
    "level_shift_sites": 0,
    "lines": 21,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
-  "src/event_universe/features/hold/__init__.py": {
-   "comment_lines": 1,
-   "docstring_lines": 7,
-   "level_shift_sites": 0,
-   "lines": 36,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -198,22 +174,6 @@
    "record_references": 0,
    "rule_arithmetic_sites": 0
   },
-  "src/event_universe/features/pair/__init__.py": {
-   "comment_lines": 1,
-   "docstring_lines": 7,
-   "level_shift_sites": 0,
-   "lines": 29,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
-  "src/event_universe/features/phase/__init__.py": {
-   "comment_lines": 1,
-   "docstring_lines": 7,
-   "level_shift_sites": 0,
-   "lines": 29,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
   "src/event_universe/features/receive/__init__.py": {
    "comment_lines": 1,
    "docstring_lines": 7,
@@ -227,14 +187,6 @@
    "docstring_lines": 6,
    "level_shift_sites": 0,
    "lines": 21,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
-  "src/event_universe/features/self_source/__init__.py": {
-   "comment_lines": 1,
-   "docstring_lines": 7,
-   "level_shift_sites": 0,
-   "lines": 29,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },

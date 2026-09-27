@@ -89,7 +89,7 @@ The owner-approved run parameter selects open or periodic topology independently
 per axis; open is the default (history, superseded on 2026-09-23 by ALGEBRA.md 1.6
 and the owner's word, record 1421). The exact schema, one-interval Link transfer,
 extent-one return, unchanged carried momentum and mixed-axis refusal rules are
-in [the engine contract](docs/ENGINE.md#per-axis-gameboard-topology-2026-09-19-implementation-amendment)
+in [the engine contract](docs/ENGINE.md#1-the-words)
 (DECLARATION: the world file's keys `shape` and `boundary`, ALGEBRA.md 1.6; the
 engine's refusals are the engine's).
 This choice does not change a local contact law or establish equivalence between
@@ -1876,7 +1876,7 @@ family and never the emitter's held mass, which does not pass. What arrives
 with a record and is read as it is: its content (the mass), its amount, its
 label **p** (the momentum vector, its direction and its size), its phase,
 its number and its own age (the click line, `nature_beam.py` lines 5536 to
-5566; [ENGINE.md, the detector's readings by type](docs/ENGINE.md#the-detectors-readings-by-type):
+5566; [ENGINE.md, the detector's readings by type](docs/ENGINE.md#the-output):
 the age of a row on the click line is a DETECTOR reading). The click's
 time is the detector's own count and its place the detector's own Node;
 what does not pass is the host's tick and any place but the detector's

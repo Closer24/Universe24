@@ -1,0 +1,1 @@
+"""The loader: one generic reader of the run's files, driven by the schemas the folders declare on their cards in the register (event_universe.loader.cards); it holds no key of any folder, no default, no number of the universe and no family's name."""

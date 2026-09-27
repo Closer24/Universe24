@@ -2192,7 +2192,7 @@ byte-identical in `events.jsonl` and `state.json`.
 ## A table entry's window read from a reading, on 2026-09-20 (`phase_window` as `{"reads": ..., "offset": ...}`; issue #363)
 
 An additive key of the world file ([BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
-[ENGINE, the world](ENGINE.md#the-beam-law-beam-v1-the-ray-laws-record-cancelled-docscancelled_worldsmd-the-engine-has-no-laws-name-item-70);
+[ENGINE, the world](ENGINE.md);
 [expectations](TEST_EXPECTATIONS.md#a-window-read-from-a-reading)): a
 measured event's table entry may declare `"phase_window": {"reads":
 "<family>", "offset": s}` in place of the number. The centre of the window
@@ -3473,7 +3473,7 @@ same content. Now, at a self-creation whose turn is s = `by_clock(age,
 content, K)` phase steps (the content before that self-creation's releases),
 each unit a lamp releases costs it `quantum` x s content, carries that
 content and the momentum `quantum` x s along its heading, and gives it to the
-measured event that measures it ([the engine](ENGINE.md#a-release-costs-the-emitter-by-its-phase-rate)).
+measured event that measures it ([the engine](ENGINE.md#2-the-main-loop)).
 Nothing here is evidence of a physical law.
 
 - **The record.** `Transit` carries the content per slot (`arr_con`,
@@ -3643,7 +3643,7 @@ antiphase 5, 4, 0, 0, 0, 0 each, nothing sideways; a number with no whole
 whole by its own momentum at the common phase; a number alone as before).
 No key of the world file or of the record changes; `MixingArrays` keeps its
 fields, with the number axis next to the Port axis
-([the engine](ENGINE.md#the-law-of-events-events-v1),
+([the engine](ENGINE.md),
 [expectations](TEST_EXPECTATIONS.md#the-coherent-sum-over-the-numbers)).
 
 The pair of `test_event_worlds` (c), two contents of one free family 8
@@ -3685,7 +3685,7 @@ and `EventWorld.periodic` (per axis), `EventWorld.boundary_per_axis`,
 `Transit(..., periodic=...)`; `run.json` and `state.json` carry `boundary` as
 declared (the string or the object) in place of the constant `"open"`; the
 preflight's summary gains `boundary` per axis. A world with `"open"` or
-without the key runs as before ([the engine](ENGINE.md#the-law-of-events-events-v1),
+without the key runs as before ([the engine](ENGINE.md),
 [expectations](TEST_EXPECTATIONS.md#a-periodic-axis),
 `tests/test_periodic_axis.py`).
 
