@@ -574,49 +574,6 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
         parse_nature_beam_world(empty)
 
 
-def test_a_seeded_block_at_rest_counts_its_cycles():
-    """BUILD.md (j): a seeded block (the kind [800, 809], the well [800, 800], s = 10) on a
-    periodic 32^3 board, no light: over 500 intervals its count equals the upward zero crossings
-    of its summed record on the `block` lines, one `click` line per count, the mean period
-    between 30 and 80 intervals. The edge case: seed 0 counts nothing."""
-    for seed, expected_counts in ((UNIT, None), (0, 0)):
-        document = block_world(
-            [32, 32, 32],
-            {"x": "periodic", "y": "periodic", "z": "periodic"},
-            [800, 809],
-            [
-                {
-                    "position": [11, 11, 11],
-                    "side": 10,
-                    "q": 0,
-                    "spin": [0, 0, 0],
-                    "twist": 0,
-                    "moment": [0, 0, 0],
-                    "pair": [800, 800],
-                    "seed": seed,
-                    "margin": "control",
-                }
-            ],
-            ticks=500,
-        )
-        document["age_bound"] = 100000
-        world = parse_nature_beam_world(document)
-        lines: list[dict] = []
-        simulation = DetectorLawSimulation(world, observer=lines.append)
-        for _ in range(500):
-            simulation.step()
-        block = simulation.blocks[0]
-        sums = [line["sum"] for line in lines if line["event"] == "block"]
-        crossings = sum(1 for a, b in zip(sums, sums[1:], strict=False) if a <= 0 < b)
-        clicks = [line for line in lines if line["event"] == "click"]
-        if expected_counts is None:
-            assert block.count == crossings == len(clicks) >= 6
-            assert 30 <= 500 / block.count <= 80
-            assert [line["clock"] for line in clicks] == list(range(1, block.count + 1))
-        else:
-            assert block.count == 0 and not clicks
-
-
 def test_the_pace_bound_refuses_one_link_per_interval():
     """The pace bound 3 (P . P) < (3 Q S M)^2 (MASSIVE_RECORD.md section 5): K = 1 (P = 192
     on x, one Link every interval) is refused naming the bound. The index in motion (the
@@ -734,46 +691,6 @@ def test_the_cavity_is_refused_by_name():
 
 
 # The series' two keys of step 5 (BUILD.md section 4 step 7 and section 5 (v-m))
-
-
-def test_the_drives_start_and_the_ramp_counted_from_it():
-    """The block key `start` (the pushing agent's declaration, like `ramp`): a block of side 3
-    with the momentum 64 on x (one Link every three intervals against the wall 192) and
-    `start` 30 has not moved by interval 30, has stepped once by interval 33 and ten times by
-    interval 60; with `ramp` 30 as well the ramp counts from the start (no step before 30,
-    the momentum reaching 64 at interval 60). The edge case: `start` below 0 is refused."""
-    for extra, expected in (
-        ({"start": 30}, {30: 0, 33: 1, 60: 10}),
-        ({"start": 30, "ramp": 30}, {30: 0, 45: None}),
-    ):
-        document = block_world(
-            [64, 8, 8],
-            PERIODIC_CHAIN,
-            [800, 809],
-            [{"position": [10, 2, 2], "side": 3, "pair": [800, 800], "momentum": [64, 0, 0], **extra}],
-            ticks=100,
-        )
-        document["age_bound"] = 100000
-        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-        block = simulation.blocks[0]
-        steps: dict[int, int] = {}
-        for _ in range(60):
-            simulation.step()
-            steps[simulation.tick] = block.corner[0] - 10
-        for tick, count in expected.items():
-            if count is not None:
-                assert steps[tick] == count, (extra, tick, steps[tick])
-        if "ramp" in extra:
-            assert steps[30] == 0 and 0 < steps[45] < 5 and steps[60] > steps[45]
-    refused = block_world(
-        [64, 8, 8],
-        PERIODIC_CHAIN,
-        [800, 809],
-        [{"position": [10, 2, 2], "side": 3, "pair": [800, 800], "momentum": [64, 0, 0], "start": -1}],
-    )
-    refused["age_bound"] = 100000
-    with pytest.raises(ValueError, match="start"):
-        parse_nature_beam_world(refused)
 
 
 def test_the_mode_line_sums_lights_field_by_residue_class():

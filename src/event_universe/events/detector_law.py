@@ -1001,7 +1001,7 @@ class DetectorLawSimulation:
 
     def _counts_act(self, line: Callable[..., object], block: Block, direction: int) -> None:
         """THE COUNT'S LINE ON A BODY (ALGEBRA.md #the-counts-line): the line's levels laid at its
-        first act (one quantum per Node, the remainder T / 2), then per interval the record's levels
+        first act (one quantum per Node of the body with the remainder T / 2 under it, 0 in the vacuum), then per interval the record's levels
         here and across the six Ports (the Ports' arrivals), the count and its remainder stepped by
         the line forward or back (the direction +1 or -1), the body's Nodes following the count."""
         live = block.own
@@ -1011,7 +1011,7 @@ class DetectorLawSimulation:
             block.counts = block.mask.astype(np.int64)
             block.count_norm = self._count_norm(block)
             half = int(rule3(NO_READ, NO_READ, 1, SPAN, 0, 0, block.count_norm)[0])
-            block.count_remainder = np.full(self.shape, half, dtype=np.int64)
+            block.count_remainder = block.counts * half  # T / 2 under each quantum, 0 in the vacuum
         term = CountTerm(
             block.count_norm,
             self.kind_wall(block.family, block.definition.pair),
