@@ -4,7 +4,7 @@
 
 Written 2026-09-20 by the paper coordinator (a separate session, by the
 model owner's decision recorded in
-[Highlights 5.4](../../docs/HIGHLIGHTS.md#54-the-detector), "DECIDED: the
+[Highlights 5.4](../../docs/HIGHLIGHTS.md), "DECIDED: the
 paper is coordinated by a separate agent"). Base: `072fd8bd` on the branch
 `claude/universe24-new-3ytqde`, the commit that added the `amplitude-v1`
 design and its check outputs to `docs/designs/amplitude-v1/`. Nothing of

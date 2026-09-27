@@ -3,11 +3,11 @@
 The beam is the record of an event in transit, `NatureBeam` in the code; on
 the GameBoard there are only events; until 2026-09-20 this law was called the
 law of the ray, and "ray" stays its informal name in prose (the model owner,
-2026-09-20, [Highlights 5.4](HIGHLIGHTS.md#54-the-detector); the identity
+2026-09-20, [Highlights 5.4](HIGHLIGHTS.md); the identity
 `beam-v1` is `rays-v1`, the same law, [migration](MIGRATION.md#the-names-naturebeam-and-gameboard-and-the-glossarys-single-names-on-2026-09-20)).
 
 The published design and implementation contract of the Beam Law, the
-model owner's decision of 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+model owner's decision of 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md),
 "DECIDED: the law of the ray"): the Node holds no wave. No coherent sum, no
 shares, no placement, no tie order, no scatter. A unit is a ray with a record
 and moves along the digital line of its momentum at one speed for every

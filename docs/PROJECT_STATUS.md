@@ -4,7 +4,7 @@
 
 Items 1 to 4 written by the Boss on 2026-09-25 at about 01:00Z from `main`
 at `b3268367` (PR #1140 merged), records 1875 to 1903 of
-`docs/LOG_2026-09-20.md` and [Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+`docs/LOG_2026-09-20.md` and [Highlights 5.4](HIGHLIGHTS.md),
 "What defines the system now"; items 5 and 6 are the Boss's snapshot of
 2026-09-24 at about 12:30Z from `main` at `111e6b1e`. A snapshot, not live
 evidence: read current Git before acting on it.
@@ -67,7 +67,7 @@ evidence: read current Git before acting on it.
 
 This is a snapshot of `claude/universe24-new-3ytqde` at the pull request
 that carries the day's work to `main`; read current Git, the linked issues
-and pull requests, and [Highlights 5.4](HIGHLIGHTS.md#54-the-detector) (the
+and pull requests, and [Highlights 5.4](HIGHLIGHTS.md) (the
 record "The day of 2026-09-20 in summary") before treating it as live status.
 
 1. **One law, one engine, one name per thing.** The Beam Law (`beam-v1`,

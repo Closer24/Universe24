@@ -1,6 +1,6 @@
 # The catalog of the entities
 
-The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md),
 "DECIDED: the catalog of the entities"), in the owner's words, translated:
 "Make sure that every entity the world of physics knows exists in our
 entity definitions, and that we can also support external ones such as the

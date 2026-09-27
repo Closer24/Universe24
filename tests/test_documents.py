@@ -21,7 +21,7 @@ ALLOWED_FOLDERS = ("skills/",)
 CAPS: dict[str, int | None] = {
     "docs/ALGEBRA.md": None,
     "docs/ENGINE.md": 200,
-    "docs/HIGHLIGHTS.md": None,
+    "docs/HIGHLIGHTS.md": 100,
 }
 HISTORY_MARKERS = (
     re.compile(r"\bsuperseded\b", re.IGNORECASE),

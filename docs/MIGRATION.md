@@ -1983,7 +1983,7 @@ verdict to be re-read.
 
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 
-The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md),
 "DECIDED: go on everything", item (3): the W world after the
 transformation; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iv)).
 No key, no refusal and no record line is added: the W is a paid family
@@ -2002,7 +2002,7 @@ clicks per family), `tests/test_w_world.py` (a) to (d) and
 
 ## The weak force, on 2026-09-20, (iii): the transformation `become`, the identity `weak-v1`
 
-The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md),
 "DECIDED: go on everything", item (1): "the transformation `become` with
 the identity `weak-v1`", after the neutrino; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (iii)). Identities: no world file changes; no registered world declares a
@@ -2075,7 +2075,7 @@ transformation, so every example world replays byte-identical in
 
 ## The weak force, on 2026-09-20, (ii): a paid family's charge per unit of amount (D-1)
 
-The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md),
 "DECIDED: go on everything", item (2): "D-1, a paid family may declare a
 whole charge per unit of amount, read on the charge line only, the push
 untouched"; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
@@ -2110,7 +2110,7 @@ charge on a paid family, so every example world replays byte-identical in
 
 ## The weak force, on 2026-09-20, (i): the window's width `phase_width` (no change of law)
 
-The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md),
 "DECIDED: go on everything; just make sure again that it is good and
 generic", item (1): the neutrino first with the table-entry key
 `phase_width` and no change of law; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
@@ -2147,7 +2147,7 @@ but for the added `widths` (VALIDATION).
   (e) pins the rule.
 ## The meeting, on 2026-09-20 (`meeting` per world; `meeting-v1`; the `turned` line of the books)
 
-The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md),
 "DECIDED: the meeting, M-R: an event in transit reads the crowd as a body
 does, a report, not a balance"; [BEAM_LAW section 3 step 3 and note 35](BEAM_LAW.md#3-the-nodes-interval-nature_beam);
 [expectations](TEST_EXPECTATIONS.md#the-meeting)). No world file changes:
@@ -2227,7 +2227,7 @@ an object with other keys or without `reads`.
 
 ## The four unifications of the formulas, on 2026-09-20 (the pointer as the first moment; `by_clock` on every age against a key; one moment table over one set; the columns at the clock age)
 
-The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md),
 "DECIDED: the four unifications of the formulas"; [BEAM_LAW note 33](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
 the places where the code spelled the one moment or the one `by_clock`
 twice are spelled once. Identities: no world file changes and every
@@ -2371,7 +2371,7 @@ defaults (`threshold` 1, `reading` `wave`).
 ## The columns of the one coupling, the lifetime, the held content and the contact through the table, on 2026-09-20 (`columns` and `lifetime` per family; `held` per measured event; `columns-v1`; the `contact` record)
 
 The model owner's decision of 2026-09-20 ("one mechanism for all the laws
-on the GameBoard", [Highlights 5.4](HIGHLIGHTS.md#54-the-detector); the
+on the GameBoard", [Highlights 5.4](HIGHLIGHTS.md); the
 physicist's design of the strong force and the mathematician's verified
 form, "correct and working"; [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 [expectations](TEST_EXPECTATIONS.md#the-columns)). No existing world needs
@@ -2545,10 +2545,10 @@ columns and runs the same integer by integer (the 66 example worlds:
 
 ## The names NatureBeam and GameBoard and the glossary's single names, on 2026-09-20
 
-The model owner's decisions of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector):
+The model owner's decisions of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md):
 "the ray is to be called NatureBeam in the code everywhere", "DECIDED: the
 name of the board is GameBoard", "there is no ray, there is only an event";
-[Highlights 5.6](HIGHLIGHTS.md#56-the-glossary-of-the-names-and-how-each-is-computed-2026-09-20),
+[Highlights 5.6](HIGHLIGHTS.md),
 the 23 redundancies with the one name recommended). A mechanical rename in
 three commits; no rule, integer, record key or artifact changed: the whole
 suite passes with the same test bodies. The ray is the record of an event in
@@ -2692,7 +2692,7 @@ transit, `NatureBeam` in the code; on the GameBoard there are only events
 ## The turn by momentum, Bohr as parameters outside the board, on 2026-09-20 (`action`, `phase_by_momentum`; `bohr-v1`)
 
 The model owner's decision of 2026-09-20 ("On Bohr, go, and put it as
-parameters outside the board like the age"; [Highlights 5.4](HIGHLIGHTS.md#54-the-detector);
+parameters outside the board like the age"; [Highlights 5.4](HIGHLIGHTS.md);
 [RAY_LAW note 30 (ii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 [expectations](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
 
@@ -2834,7 +2834,7 @@ must know:
 ## The age of a ray kept whole and read by the measured event, on 2026-09-20
 
 The model owner's "go for it" of 2026-09-19 on the clock beside a mass
-([Highlights 5.4](HIGHLIGHTS.md#54-the-detector); [RAY_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+([Highlights 5.4](HIGHLIGHTS.md); [RAY_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 25; [validation](VALIDATION.md)): the clock's count may read the
 amount-weighted age of the rays at its Node, M / r in space, while the
 push keeps the flow, M / r^2.
@@ -3364,7 +3364,7 @@ key changes. The events in transit keep their count `presence x n // d`
   ([expectations](TEST_EXPECTATIONS.md#the-border-and-the-clocks-count)).
 ## One reading set for every coupling, on 2026-09-19
 
-The model owner's decision of 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+The model owner's decision of 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md),
 on the mathematician's list: "ONE READING SET FOR EVERY COUPLING, 'everything
 present at the Node but the reader's own number, including here'"): one
 generic law replaces two reading rules. Until then the suspension read the
@@ -3717,7 +3717,7 @@ No key of the world file or of the record changes.
 
 ## The phase window, on 2026-09-19 (`phase_window`)
 
-The model owner's decision of 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+The model owner's decision of 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md),
 "Approve the phase window as a declared width of a detector, and of the
 emitter too"). Additive: a table entry of a measured event may be an object
 `{"rule": ..., "phase_window": s}` beside the string form, which is still
@@ -3735,7 +3735,7 @@ runs as before ([the engine](ENGINE.md), [expectations](TEST_EXPECTATIONS.md#the
 
 ## The engine of the law of events, on 2026-09-19, the evening (`events-v1`)
 
-Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md),
 "The law of events" and "The principles of the law of events"): "There is no
 shadow, no real. There are only events on the event board. There are
 detectors by sensitivity. That is it. Everything must be generic in the
@@ -3796,7 +3796,7 @@ at the default quantum of 1 turns 1/K per interval: declare the light's
 
 ## One engine, on 2026-09-19: the old engine deleted
 
-Decision of the model owner, 2026-09-19, the evening ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+Decision of the model owner, 2026-09-19, the evening ([Highlights 5.4](HIGHLIGHTS.md),
 the status line of the law of the shadow): "The field is, in fact, a field of
 events. No confrontations are needed. Only tests that everything is as
 designed." The engine of the law of the shadow (`field-only-v1`, feature 20)
@@ -5722,7 +5722,7 @@ conflict. A reference to "Highlights 5.4" that names a record links to the
 record's anchor in its log (`docs/LOG_<date>.md#NN-<title>`: the coverage
 table's 5.4 cells, the documentation index, the Boss skill and the workflow);
 a reference to the section as the law's home is unchanged, since the heading
-`HIGHLIGHTS.md#54-the-detector` still exists. The four rows repeated in the
+`HIGHLIGHTS.md` still exists. The four rows repeated in the
 coverage table are removed, and its row on the detector as a set with one
 record says `wave` is the default reading since 2026-09-20. Added:
 `examples/events/gate_set.json`, the gate set of fifteen worlds chosen by

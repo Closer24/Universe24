@@ -274,7 +274,7 @@ into an expected pass to achieve a green gate. A candidate's passing tests do no
 repair another model's failure or establish a real-world law.
 
 Since 2026-09-17, by the model owner's decision in
-[Highlights 5.5](../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions),
+[Highlights 5.5](../docs/HIGHLIGHTS.md),
 a test exercises one generic rule in isolation on a minimal GameBoard and nothing
 else: one test module per rule, one per feature of the ray-event model, with the
 expected integers written down before the first run. No test pins the numbers of
