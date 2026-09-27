@@ -24,6 +24,7 @@
   ["(v)", "the induction"],
   ["(v)", "the spin's step"],
   ["(v)", "the recoil's accumulator"],
-  ["any", "the trace"]
+  ["any", "the trace"],
+  ["any", "the start"]
  ]
 }

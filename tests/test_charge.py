@@ -1,5 +1,4 @@
-"""The family of charge (ALGEBRA.md #the-paces): a field family held at every body's Nodes at its signed charge
-and stepping by its own plain rule elsewhere, read by the other families at the weight Lambda."""
+"""The family of charge (ALGEBRA.md #the-paces): a field family held at every body's Nodes at its signed charge and stepping by its own plain rule elsewhere, read by the other families at the weight Lambda."""
 
 from __future__ import annotations
 
@@ -40,8 +39,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def held_record(simulation: DetectorLawSimulation, source: str):
-    """The engine's held record of the family holding `source` (the family genericity, item
-    51: by attribute, never by index or name)."""
+    """The engine's held record of the family holding `source` (the family genericity, item 51: by attribute, never by index or name)."""
     for family, record in simulation.held_records.items():
         if simulation.families[family].held == source:
             return record
@@ -51,10 +49,7 @@ def held_record(simulation: DetectorLawSimulation, source: str):
 def rule_step(
     pair: tuple[int, int], effective: list[int], now: np.ndarray, before: np.ndarray, wrap: bool
 ) -> tuple[list[int], list[int]]:
-    """One step of the rule under the Node's own pace at the effective content `effective`
-    per Node (ALGEBRA.md #the-line, #the-paces): w a_next + r' = R S_6(a_now)_i + S a_now
-    - w a_before + r with r = 0 and (R, S, w) the rule's integers at the effective content c_i of
-    the Node alone; the levels and the remainders, Python integers."""
+    """One step of the rule under the Node's own pace at the effective content `effective` per Node (ALGEBRA.md #the-line, #the-paces): w a_next + r' = R S_6(a_now)_i + S a_now - w a_before + r with r = 0 and (R, S, w) the rule's integers at the effective content c_i of the Node alone; the levels and the remainders, Python integers."""
     num, den = pair
     reads = six_reads(now, wrap)
     levels: list[int] = []
@@ -70,19 +65,7 @@ def rule_step(
 
 
 def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone():
-    """(i) THE READING WITH ONE SIGN (ALGEBRA.md #the-paces): on the periodic chain of 60 with
-    light bodies of QUANTA quanta and charge +1 at [20, 30) (Q = +QUANTA there, the family of
-    charge held at it, 0 elsewhere at the load), a matter record of charge -1 is advanced at
-    the effective content c + Lambda d = 2 QUANTA at the slab (the hill deepened: its pace
-    Gamma - 2 QUANTA, the clock pair the engine reports), one of charge +1 at c - Lambda d = 0
-    (the hill filled to the vacuum's pace at Lambda = 1), the neutral record at c alone and a
-    record of the charged light itself (q = +1) at c - Lambda c, each bit for bit the rule's on
-    random rows; at Lambda = 3 the -1 record reads 4 QUANTA and the +1 records 0 (the row's
-    floor: a hill lessens a hollow and never exceeds it). The wheel at a slab Node is the
-    rule's at the effective content. The edge case: the engine refuses the
-    load where the pace could reach 0 at a body's Nodes (its content plus Lambda times its
-    charge in size not below Gamma: Lambda = 99 at the content 10 and the charge 10 gives 10 +
-    990, 1000, at Gamma 1000; at Lambda = 98 it loads)."""
+    """(i) THE READING WITH ONE SIGN (ALGEBRA.md #the-paces): on the periodic chain of 60 with light bodies of QUANTA quanta and charge +1 at [20, 30) (Q = +QUANTA there, the family of charge held at it, 0 elsewhere at the load), a matter record of charge -1 is advanced at the effective content c + Lambda d = 2 QUANTA at the slab (the hill deepened: its pace Gamma - 2 QUANTA, the clock pair the engine reports), one of charge +1 at c - Lambda d = 0 (the hill filled to the vacuum's pace at Lambda = 1), the neutral record at c alone and a record of the charged light itself (q = +1) at c - Lambda c, each bit for bit the rule's on random rows; at Lambda = 3 the -1 record reads 4 QUANTA and the +1 records 0 (the row's floor: a hill lessens a hollow and never exceeds it). The wheel at a slab Node is the rule's at the effective content. The edge case: the engine refuses the load where the pace could reach 0 at a body's Nodes (its content plus Lambda times its charge in size not below Gamma: Lambda = 99 at the content 10 and the charge 10 gives 10 + 990, 1000, at Gamma 1000; at Lambda = 98 it loads)."""
     rng = np.random.default_rng(35)
     now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
@@ -129,18 +112,7 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
 
 
 def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
-    """(ii) THE HOLD AT Q (ALGEBRA.md #the-paces and (2)): on the emitter world with light and the
-    matter kind both of charge -1 (the emitter's one own quantum of matter and its stock of 4
-    light quanta held at [5, 37) (ALGEBRA.md #the-paces; item 47), the screen's three light
-    bodies of one quantum at [70, 72], the cube of side 3 on a chain), the family of charge is
-    -5 at every Node of the emitter body and -1 at every Node of the screen at the load, 0 in
-    the vacuum; the
-    emitter's Q rises by one at each giving (a held light quantum given, its label in flight on
-    the given record; the body's own quantum and its own charge stay) and the giving line
-    carries it, the screen's first body's Q falls by one at
-    each click there (the label held); the whole charge of the bodies and of the records in
-    flight is -8 at every interval; the books balanced. The edge case: a light body of charge
-    0 in a world whose bodies carry charge holds Q = 0 (the neutral chain, (v))."""
+    """(ii) THE HOLD AT Q (ALGEBRA.md #the-paces and (2)): on the emitter world with light and the matter kind both of charge -1 (the emitter's one own quantum of matter and its stock of 4 light quanta held at [5, 37) (ALGEBRA.md #the-paces; item 47), the screen's three light bodies of one quantum at [70, 72], the cube of side 3 on a chain), the family of charge is -5 at every Node of the emitter body and -1 at every Node of the screen at the load, 0 in the vacuum; the emitter's Q rises by one at each giving (a held light quantum given, its label in flight on the given record; the body's own quantum and its own charge stay) and the giving line carries it, the screen's first body's Q falls by one at each click there (the label held); the whole charge of the bodies and of the records in flight is -8 at every interval; the books balanced. The edge case: a light body of charge 0 in a world whose bodies carry charge holds Q = 0 (the neutral chain, (v))."""
     document = emitter_world(stock=4, on_mode=False)
     document["universe"][LIGHT]["sign"] = -1
     document["universe"][MATTER]["sign"] = -1
@@ -176,13 +148,7 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
 
 
 def test_the_joint_step_with_both_fields_inverts_bit_for_bit():
-    """(iii) THE EXACT BACKWARD RUN (the model owner's record 1994; ALGEBRA.md #the-paces under
-    item 34): on the periodic chain of 60 with light bodies of QUANTA quanta and charge +1 at
-    [20, 30), a record of the charged light (q = +1, reading c - Lambda d) and a neutral record
-    of random rows registered (nothing clicks), both fields rise and fall at Nodes over 30 intervals (the falls
-    counted, above 0, the charge field moved off its start), and the joint step inverts bit
-    for bit: every record's two levels and remainders and both fields' rows. The edge case:
-    the chain with an open x (the zero faces) inverts as exactly."""
+    """(iii) THE EXACT BACKWARD RUN (the model owner's record 1994; ALGEBRA.md #the-paces under item 34): on the periodic chain of 60 with light bodies of QUANTA quanta and charge +1 at [20, 30), a record of the charged light (q = +1, reading c - Lambda d) and a neutral record of random rows registered (nothing clicks), both fields rise and fall at Nodes over 30 intervals (the falls counted, above 0, the charge field moved off its start), and the joint step inverts bit for bit: every record's two levels and remainders and both fields' rows. The edge case: the chain with an open x (the zero faces) inverts as exactly."""
     for boundary in (PERIODIC, CHAIN):
         rng = np.random.default_rng(37)
         simulation = DetectorLawSimulation(
@@ -217,15 +183,7 @@ def test_the_joint_step_with_both_fields_inverts_bit_for_bit():
 
 
 def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
-    """(iv) THE FAMILY GENERICITY (record 2066; item 51): the family of charge is the family
-    declaring `held: "sign"` and Lambda the weight of a reading family's read on it; the world
-    keys `charge_family` and `charge_strength` are refused by name (retired); a weight below 1 is
-    refused; a family without `charge` is refused under the detector law, a charge beyond one
-    sign (|q| > 1) is refused and a charge with a denominator other than 1 (the paid family's
-    whole charge, D-1 of 2026-09-20, the check before this one) is refused; the family of
-    charge is refused as the family of clicks, on a quantum other than 1, on a clock of its own
-    and with a charge of its own; a measured event of it and `held` naming it are refused; a
-    world with the family declared loads, its index among the held families, its reads the matter family's."""
+    """(iv) THE FAMILY GENERICITY (record 2066; item 51): the family of charge is the family declaring `held: "sign"` and Lambda the weight of a reading family's read on it; the world keys `charge_family` and `charge_strength` are refused by name (retired); a weight below 1 is refused; a family without `charge` is refused under the detector law, a charge beyond one sign (|q| > 1) is refused and a charge with a denominator other than 1 (the paid family's whole charge, D-1 of 2026-09-20, the check before this one) is refused; the family of charge is refused as the family of clicks, on a quantum other than 1, on a clock of its own and with a charge of its own; a measured event of it and `held` naming it are refused; a world with the family declared loads, its index among the held families, its reads the matter family's."""
     good = charged_chain(12, PERIODIC, [], 1, 0, 0)
     world = parse_nature_beam_world(good)
     assert world.held_families == (CLICKS, CHARGE) and world.families[CHARGE].held == "sign"
@@ -308,14 +266,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
 
 
 def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_lambda():
-    """(v) THE REGISTERED WORLDS' CASE (every family of charge 0): on the chain of 60 with a
-    body of QUANTA quanta at [20, 30) and matter and light records of random rows, the family
-    of charge is 0 everywhere at the load and after 40 intervals, and the records' rows are bit
-    for bit the same at Lambda = 1 and Lambda = 7 (no charge is read: the strength weighs
-    nothing); THE LEAK TEST (the model owner's record 2075 (3); BUILD.md section 26 item 55):
-    the never-sourced sign family is named at no interval, the planted matter record (no body
-    of its family) is, and a row planted in the sign family is named. The edge case: the giving
-    lines of the emitter world carry the charge 0."""
+    """(v) THE REGISTERED WORLDS' CASE (every family of charge 0): on the chain of 60 with a body of QUANTA quanta at [20, 30) and matter and light records of random rows, the family of charge is 0 everywhere at the load and after 40 intervals, and the records' rows are bit for bit the same at Lambda = 1 and Lambda = 7 (no charge is read: the strength weighs nothing); THE LEAK TEST (the model owner's record 2075 (3); BUILD.md section 26 item 55): the never-sourced sign family is named at no interval, the planted matter record (no body of its family) is, and a row planted in the sign family is named. The edge case: the giving lines of the emitter world carry the charge 0."""
     rows = {}
     for strength in (1, 7):
         rng = np.random.default_rng(41)

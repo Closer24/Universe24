@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from dataclasses import dataclass
 from fractions import Fraction
@@ -15,11 +14,18 @@ import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import coefficients, form_term, rule3, rule_total_bound
+from event_universe.features.start import (
+    NO_READ,
+    PERIODIC,
+    Pair,
+    Wrap,
+    arrivals,
+    axis_arrivals,
+    check_counts,
+    division,
+    field_at_rest,
+)
 
-NO_READ = (0, 0, 0)  # the line with no read
-Wrap = tuple[bool, bool, bool]
-Pair = tuple[int, int]
-PERIODIC: Wrap = (True, True, True)
 Triple = tuple[int, int, int]  # (a, b, c) with a^2 + b^2 = c^2: cos k = a / c, sin k = b / c, exact
 AT_REST: Triple = (1, 0, 1)
 
@@ -34,17 +40,6 @@ class BoundMode:
     cycle: int
     rotation: Fraction
     share_inside: Fraction
-
-
-@dataclass(frozen=True)
-class FieldAtRest:
-    """The held field at rest around the body under its family's pair: the levels (the nearest integers), the fine levels at the derived unit, the unit, the iterations to the repeat and the cycle's length, 1 at a fixed point (ALGEBRA.md #the-generator (g))."""
-
-    levels: np.ndarray
-    fine: np.ndarray
-    unit: int
-    iterations: int
-    cycle: int
 
 
 @dataclass(frozen=True)
@@ -73,17 +68,6 @@ class MovingBody:
     rest: BoundMode
 
 
-def check_counts(counts: np.ndarray, gamma: int) -> None:
-    """The refusals by name: the counts an int64 array of nonnegative integers below Gamma, at least one nonzero (ALGEBRA.md #the-paces, the guard's lower side)."""
-    if counts.dtype != np.int64 or counts.size == 0 or not counts.any():
-        raise ValueError("the counts are an int64 array (integers only), not zero everywhere: no body")
-    low, high = int(counts.min()), int(counts.max())
-    if low < 0 or high >= gamma:
-        raise ValueError(
-            f"a count {low if low < 0 else high}: the counts stay in [0, Gamma) with Gamma = {gamma}"
-        )
-
-
 def amplitude_unit(pair: tuple[int, int], gamma: int, counts: np.ndarray) -> int:
     """The amplitude unit A, derived and never written: the largest amplitude at which Rule3's total stays inside the integer width at every content of the region, (M - w) div (6 R + |S| + w) at the content whose coefficients are largest, M the width, checked against rule_total_bound (ALGEBRA.md #the-stable-body, #the-line)."""
     num, den = pair
@@ -100,53 +84,10 @@ def amplitude_unit(pair: tuple[int, int], gamma: int, counts: np.ndarray) -> int
     return int(found)
 
 
-def field_at_rest(counts: np.ndarray, pair: Pair, wrap: Wrap = PERIODIC) -> FieldAtRest:
-    """The held family's field at rest under its own line at the pace 1 (ALGEBRA.md #the-line; #the-generator (g)): a stands where 6 den a = num S_6(a), so from nothing b <- num S_6(b) div (6 den) by Rule3's division act on the levels at the fine unit (the counts times the unit at the body's Nodes, rewritten each time: the hold); the map is monotone from nothing, so the levels rise to a fixed point, the stop at its first repeat (exact, no tolerance); the fixed point is below the line's own by less than one fine unit per Node, so the levels, the nearest integers by the division act, are the rest within one unit."""
-    check_counts(counts, 1 + int(counts.max()))
-    num, den = pair
-    if num < 1 or den < num:
-        raise ValueError(f"the field's pair [{num}, {den}] has num from 1 and den from num")
-    unit = field_unit(counts, num)
-    hold = counts > 0
-    fine = np.zeros(counts.shape, dtype=np.int64)
-    seen: dict[bytes, int] = {}
-    step = 0
-    key = hashlib.sha256(fine.tobytes()).digest()
-    while key not in seen:
-        seen[key] = step
-        fine = np.asarray(rule3((num, num, num), arrivals(fine, wrap), 0, 6 * den, fine, 0, 0, 1)[0])
-        fine[hold] = counts[hold] * unit
-        step += 1
-        key = hashlib.sha256(fine.tobytes()).digest()
-    half = int(division(1, 2, np.array(unit, dtype=object)))
-    levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half, 1)[0])
-    return FieldAtRest(levels, fine, unit, step, step - seen[key])
-
-
 def rule_integers(pair: Pair, gamma: int, counts: np.ndarray) -> tuple[np.ndarray, np.ndarray, int]:
     """Rule3's integers at every Node from the pace p = Gamma - c: the read R = 2 p^2 num, the self coefficient S and the wall w = 6 den Gamma^2 (ALGEBRA.md #the-line)."""
     reads, self_coefficient, wall = coefficients(pair[0], pair[1], gamma, counts)
     return np.asarray(reads[0], dtype=np.int64), np.asarray(self_coefficient, dtype=np.int64), int(wall)
-
-
-def axis_arrivals(a: np.ndarray, axis: int, wrap: Wrap) -> np.ndarray:
-    """The two neighbours' levels summed along one axis at every Node: the row itself twice on an axis of one layer, 0 beyond a closed face (the receive of ALGEBRA.md #the-line)."""
-    if a.shape[axis] == 1:
-        return 2 * a
-    total = np.zeros_like(a)
-    for sign in (1, -1):
-        shifted = np.roll(a, sign, axis=axis)
-        if not wrap[axis]:
-            edge: list[slice | int] = [slice(None)] * 3
-            edge[axis] = 0 if sign == 1 else -1
-            shifted[tuple(edge)] = 0
-        total += shifted
-    return total
-
-
-def arrivals(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
-    """The six arrivals as Rule3 reads them, one sum per axis."""
-    return tuple(axis_arrivals(a, axis, wrap) for axis in range(3))
 
 
 def read_act(
@@ -168,16 +109,6 @@ def read_act(
         np.asarray(rule3(reads, arrived, self_coefficient, wall, level, 0, 0)[0])
         for level, arrived in zip(levels, per_level, strict=True)
     )
-
-
-def division(numerator_coefficient: Any, wall: Any, level: np.ndarray) -> np.ndarray:
-    """Rule3's division act on a level: (coefficient x level) div wall, the line with no read, the coefficient as the self coefficient and the remainder not kept (ALGEBRA.md #the-four-acts)."""
-    return np.asarray(rule3(NO_READ, NO_READ, numerator_coefficient, wall, level, 0, 0)[0])
-
-
-def field_unit(counts: np.ndarray, num: int) -> int:
-    """The field's fine unit, derived and never written: the largest scale of the levels at which num S_6 stays inside the integer width with room, the width div (2 x 6 num x the largest count)."""
-    return int(division(1, 2 * 6 * num * int(counts.max()), np.array(MAX_WORK_INT, dtype=object)))
 
 
 def to_amplitude(levels: tuple[np.ndarray, ...], amplitude: int) -> tuple[np.ndarray, ...]:
