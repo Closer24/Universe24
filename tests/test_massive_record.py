@@ -10,11 +10,6 @@ import numpy as np
 import pytest
 
 from event_universe.core.rule3 import coefficients
-from event_universe.diagnostics.massive_record_margin import (
-    block_margin,
-    check_margins,
-    iterated_mode,
-)
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord, form_json
 from event_universe.features.send import send
 from event_universe.loader.world import (
@@ -35,6 +30,7 @@ from tests.worlds import (
     NODE_CLOCK,
     chain_world,
     cube_positions,
+    iterated_mode_row,
     lawful_wheel,
     receiver_body,
     receiver_cube,
@@ -432,78 +428,6 @@ PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 
 @pytest.mark.diagnostic
-def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
-    """The margin rule (its extent and mode a GameBoard reading, a diagnostic) refuses a block whose extent passes its board or a face (naming the axis, the extent and the side needed), an unbound well, and a runaway well on a chain, and admits a control."""
-    for margin, admitted in (("pin", False), ("control", True)):
-        document = block_world(
-            [48, 48, 48],
-            PERIODIC,
-            [1600, 1618],
-            [
-                {
-                    "position": [10, 10, 10],
-                    "side": 28,
-                    "q": 0,
-                    "spin": [0, 0, 0],
-                    "spin_before": [0, 0, 0],
-                    "twist": 0,
-                    "moment": [0, 0, 0],
-                    "pair": [1600, 1609],
-                    "margin": margin,
-                    "seed": 1
-                    << 18,  # below the pair's amplitude bound (ALGEBRA.md #the-rows-against-nature)
-                }
-            ],
-        )
-        document["amplitude_bound"] = (
-            1 << 19
-        )  # the pair's room under the weak field (ALGEBRA.md #the-rows-against-nature)
-        world = parse_nature_beam_world(document)
-        if admitted:
-            readings = check_margins(world)
-            assert 7.8 < readings[0].extent < 8.1
-            assert readings[0].axes[0][3] < 48
-        else:
-            with pytest.raises(ValueError, match="below the margin rule on x for a pin world"):
-                check_margins(world)
-    near = block_world(
-        [48, 48, 48],
-        CHAIN,
-        [800, 809],
-        [{"position": [3, 14, 14], "side": 20, "pair": [800, 800], "margin": "control"}],
-    )
-    with pytest.raises(ValueError, match="Nodes lie 3 Links from a zero face"):
-        check_margins(parse_nature_beam_world(near))
-    shallow = block_world(
-        [24, 24, 24],
-        PERIODIC,
-        [800, 809],
-        [{"position": [10, 10, 10], "side": 3, "pair": [800, 808], "margin": "control"}],
-    )
-    with pytest.raises(ValueError, match="below the margin rule"):
-        check_margins(parse_nature_beam_world(shallow))
-    assert block_margin(parse_nature_beam_world(shallow), 0).extent > 100
-    rest = block_world(
-        [48, 48, 48],
-        PERIODIC,
-        [800, 809],
-        [{"position": [14, 14, 14], "side": 20, "pair": [800, 800], "margin": "control"}],
-    )
-    reading = check_margins(parse_nature_beam_world(rest))[0]
-    assert abs(reading.extent - 5.73) < 0.05
-    assert abs(reading.omega_b - 0.1105) < 0.0005
-    assert abs(reading.omega_0 - 0.1493) < 0.0001
-    assert reading.lines() and reading.to_record()["kind"] == "COMPUTATION"
-    deep = {"position": [40, 0, 0], "side": 1, "pair": [800, 700], "margin": "control"}
-    runaway = block_world([200, 1, 1], CHAIN, [800, 809], [deep])
-    reading = block_margin(parse_nature_beam_world(runaway), 0)
-    assert reading.runaway and reading.omega_b == 0.0 and abs(reading.lambda_max - 2.032) < 0.002
-    with pytest.raises(ValueError, match="the block's mode is a runaway"):
-        check_margins(parse_nature_beam_world(runaway))
-    cube = block_world([24, 24, 24], PERIODIC, [800, 809], [dict(deep, position=[10, 10, 10])])
-    assert not block_margin(parse_nature_beam_world(cube), 0).runaway
-
-
 def test_the_cavity_is_refused_by_name():
     """THE CAVITY RETIRED (BUILD.md section 26 item 28; was BUILD.md (o), the cavity of form (I) counting the separable form's cycles): a block declaring `cavity` is refused by name with what stands in its place (a body's record held by the law alone, its border the world's), true and false alike; the kind's own pair stays no body."""
     for value in (True, False):
@@ -658,9 +582,7 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     period = 42.36
     # the generator as the operator iterated with the stop (the owner's word of
     # 2026-09-25): the profile with its clock beside it (record 1886; ALGEBRA.md #a-familys-declaration)
-    profile, clock, _ = iterated_mode(
-        world, 0, 1 << 18
-    )  # below the pair's amplitude bound 2^19 (ALGEBRA.md #the-rows-against-nature)
+    profile, clock = iterated_mode_row(document, 0, 1 << 18)  # the retired module's mode, recorded once
     seeded = dict(document)
     seeded["measured"] = [dict(document["measured"][0], seed=profile, clock=list(clock))]
     seeded["stamp"] = input_stamp(seeded)
@@ -899,8 +821,8 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
     on_body = light_clock_world("open", False)
     on_body["detectors"] = [{"name": "A_face", "block": 0, "positions": [[100, 0, 0]]}]
     on_body["stamp"] = input_stamp(on_body)  # the stamp over the whole file (item 28)
-    with pytest.raises(ValueError, match="names a Node of a measured event"):
-        parse_nature_beam_world(on_body)
+    loaded = parse_nature_beam_world(on_body)  # its own Node: the body's set (#the-ladder)
+    assert (loaded.detectors[0].positions, loaded.detectors[0].block) == (((100, 0, 0),), 0)
     two = light_clock_world("open", False)
     two["detectors"] = [{"name": "A_face", "block": 0, "positions": [[132, 0, 0], [133, 0, 0]]}]
     two["stamp"] = input_stamp(two)

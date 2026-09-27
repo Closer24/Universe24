@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import math
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import cast
 
 from event_universe.core.game_board import MAX_VALUE, Address3
@@ -186,7 +186,6 @@ BLOCK_KEYS = {
 MARGIN_KINDS = ("pin", "control")
 # the detector's readings, the loop's words; the first is every detector's (the key is gone)
 DETECTOR_READINGS = ("wave", "beam")
-SUM_READING = "sum"
 # the face detectors' names in Port order, and the prefix of a body's own set; a declared detector takes neither
 FACE_NAMES = ("face:+x", "face:-x", "face:+y", "face:-y", "face:+z", "face:-z")
 RESERVED_SET_PREFIX = "measured:"
@@ -420,6 +419,9 @@ class BlockDefinition:
     counts: tuple[int, ...] | None = None
     # a moving body's phase denominator m, the pair (m, j) of its phase per Link (ALGEBRA.md #the-generator (e))
     phase_denominator: int | None = None
+    # THE KEYS THE CARDS DECLARE AT A BODY, as the frame checked them (loader/frame.py `counted_kind`): the
+    # loop's hooks read each through its card's own reader; the loader names none (ALGEBRA.md #the-primitives)
+    declared: Mapping[str, object] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -1847,6 +1849,7 @@ def _counted(
         phase_denominator=_integer(obj["phase_denominator"], f"{label}.phase_denominator", 1)
         if "phase_denominator" in obj
         else None,
+        declared={key: value for key, value in obj.items() if key not in frame.COUNTED.keys},
     )
     return MeasuredDefinition(
         (corner[0], corner[1], corner[2]),
@@ -1898,68 +1901,6 @@ def body_node_indices(
         return []
     stride_x, stride_y = shape[1] * shape[2], shape[2]
     return [x * stride_x + y * stride_y + z for x in ranges[0] for y in ranges[1] for z in ranges[2]]
-
-
-def six_neighbours_flat(
-    values: Sequence[int], shape: tuple[int, int, int], wrap: tuple[bool, bool, bool]
-) -> list[int]:
-    """S_6 of a flat x-major integer array in exact integers: the sum of the
-    six neighbours, a periodic axis wrapped (an axis of extent 1 reads the
-    Node itself twice), an open axis reading 0 beyond its faces; the read of
-    the law's rule and of the generator's iteration (ALGEBRA.md #a-familys-declaration)."""
-    extents = (int(shape[0]), int(shape[1]), int(shape[2]))
-    strides = (extents[1] * extents[2], extents[2], 1)
-    total = [0] * len(values)
-    for axis in range(3):
-        extent, stride = extents[axis], strides[axis]
-        for index, value in enumerate(values):
-            coordinate = (index // stride) % extent
-            for step in (1, -1):
-                neighbour = coordinate + step
-                if wrap[axis]:
-                    neighbour %= extent
-                elif not 0 <= neighbour < extent:
-                    continue
-                total[index + (neighbour - coordinate) * stride] += value
-    return total
-
-
-def mode_residual(
-    profile: Sequence[int],
-    num: Sequence[int],
-    den: Sequence[int],
-    clock: tuple[int, int],
-    shape: tuple[int, int, int],
-    wrap: tuple[bool, bool, bool],
-    where: Sequence[bool] | None = None,
-) -> tuple[int, int, tuple[int, int, int]]:
-    """THE EIGEN-EQUATION'S RESIDUAL IN INTEGERS (ALGEBRA.md #a-familys-declaration,
-    PROVED there as the bound for the rounded profile of an exact mode): at
-    every Node i of `where` (every Node by default) the residual
-    abs(b num_i (S_6 p)_i - 3 den_i a p_i) against the bound b (3 num_i + 6
-    den_i), the clock [a, b] the mode's 2 cos omega as a rational; the
-    Node of the largest excess with its residual and its bound (the
-    residual at or below the bound everywhere means the profile is the
-    operator's mode to within its rounding). Exact Python integers, the
-    same on every host; the arrays flat in x-major order."""
-    a, b = clock
-    read = six_neighbours_flat(profile, shape, wrap)
-    worst_index, worst_excess, worst_residual, worst_bound = 0, None, 0, 0
-    for index, (p, n, d, s) in enumerate(zip(profile, num, den, read, strict=True)):
-        if where is not None and not where[index]:
-            continue
-        residual = abs(b * n * s - 3 * d * a * p)
-        bound = b * (3 * n + 6 * d)
-        excess = residual - bound
-        if worst_excess is None or excess > worst_excess:
-            worst_index, worst_excess, worst_residual, worst_bound = index, excess, residual, bound
-    stride_x, stride_y = int(shape[1]) * int(shape[2]), int(shape[2])
-    node = (
-        worst_index // stride_x,
-        (worst_index // stride_y) % int(shape[1]),
-        worst_index % int(shape[2]),
-    )
-    return worst_residual, worst_bound, node
 
 
 # THE FILE'S DIGEST AND THE STAMP the generator writes (`input_digest`, `input_stamp`)
@@ -2193,10 +2134,14 @@ def _detectors(
         tuple[dict[str, object], ...], value
     )  # the frame's checked detectors (loader/frame.py, `DETECTOR`)
     at = {entry.position for entry in measured}
-    # The other Nodes of the bodies on a set: a body is named by its centre.
-    inside: set[Address3] = set()
-    for entry in measured:
-        inside.update(body_nodes(entry.position, entry.span, shape, periodic) or ())
+    # The Nodes of every body: its declared Nodes in the law's form, else the block centred on its position.
+    owned = [
+        set(entry.block.nodes)
+        if entry.block is not None and entry.block.nodes is not None
+        else set(body_nodes(entry.position, entry.span, shape, periodic) or ())
+        for entry in measured
+    ]
+    inside: set[Address3] = set().union(*owned)
     taken: set[Address3] = set()
     found: list[DetectorDefinition] = []
     for index, obj in enumerate(detectors):
@@ -2225,86 +2170,68 @@ def _detectors(
                     "block; a receiver set on a BODY is `positions` on the body's Node "
                     "(DECLARATIONS.md section 15 M1-4)"
                 )
-            threshold = 1  # the ray law's key is gone; the loop still reads the attribute
-            bound_positions: list[Address3] = []
-            if "positions" in obj:
-                # the receiving set on free Nodes beside the block (the light
-                # clock's cube adjacent to A's face, section 10 item 9): free
-                # Nodes are admitted here, the set their receiver; the cube of
-                # record 1899 as any detector
-                positions_value = obj["positions"]
-                if not isinstance(positions_value, list | tuple) or not positions_value:
-                    raise ValueError(
-                        f"{label}.positions with `block` must be a nonempty list of "
-                        "Nodes, the receiving cube beside the block (DECLARATIONS.md section 10 "
-                        "item 9; record 1899)"
-                    )
-                for item in positions_value:
-                    position = _address(item, f"{label}.positions", shape)
-                    if position in at or position in inside or position in taken:
-                        raise ValueError(
-                            f"{label}.positions with `block` names a Node of a measured "
-                            f"event or of another set {list(position)}: the receiving set is a cube "
-                            "of free Nodes beside the block"
-                        )
-                    taken.add(position)
-                    bound_positions.append(position)
-                _detector_region(name, bound_positions, shape, periodic, one_node=True)
-            else:
-                # A BODY IS ITS OWN DETECTOR, whatever its support (ALGEBRA.md #the-rows-against-nature, the
-                # detectors' rule approved by the model owner, record 2109: a body of
-                # several Nodes is one detector, a body of one Node its own, its six Links
-                # its Ports, ALGEBRA.md #what-a-body-is; item 40; commit 7): the cube rule of record
-                # 1899 is the free set's, not a body's
-                if measured[bound_block].block is None:
-                    raise ValueError(
-                        f"{label}.block {bound_block} names a measured event that is no block"
-                    )
-            found.append(DetectorDefinition(name, tuple(bound_positions), threshold, block=bound_block))
-            continue
         if "positions" not in obj:
-            raise ValueError(f"{label} needs `positions` (or `block`, a set bound to a block)")
+            if bound_block is None:
+                raise ValueError(f"{label} needs `positions` (or `block`, a set bound to a block)")
+            # A BODY IS ITS OWN DETECTOR, whatever its support (ALGEBRA.md #the-rows-against-nature, the
+            # detectors' rule approved by the model owner, record 2109: a body of several Nodes is one
+            # detector, a body of one Node its own, its six Links its Ports, ALGEBRA.md #what-a-body-is)
+            found.append(DetectorDefinition(name, (), 1, block=bound_block))
+            continue
         positions_value = obj["positions"]
         if not isinstance(positions_value, list | tuple) or not positions_value:
             raise ValueError(f"{label}.positions must be a nonempty list of Nodes")
-        positions = []
+        positions: list[Address3] = []
         for item in positions_value:
             position = _address(item, f"{label}.positions", shape)
-            if position not in at:
-                if position in inside:
+            if position in taken:
+                raise ValueError(f"a Node in two detectors {list(position)}")
+            taken.add(position)
+            positions.append(position)
+        # THE SET'S NODES (ALGEBRA.md #the-ladder): with `block`, free Nodes beside the block (the
+        # receiving cube, DECLARATIONS.md section 10 item 9; record 1899) or the block's own Nodes;
+        # without it, a body's centre (a body named by its centre) or the Nodes of one body in the
+        # law's form, whose set it then is (the strip of a screen)
+        own = [number for number, nodes in enumerate(owned) if all(p in nodes for p in positions)]
+        if bound_block is not None:
+            others = [p for p in positions if p in inside and p not in owned[bound_block]]
+            if others:
+                raise ValueError(
+                    f"{label}.positions with `block` names a Node of another measured event "
+                    f"{list(others[0])}: the receiving set is free Nodes beside the block, or its own"
+                )
+        elif own and (body := measured[own[0]].block) is not None and body.nodes is not None:
+            bound_block = own[0]
+        else:
+            for position in positions:
+                if position in inside and position not in at:
                     raise ValueError(
                         f"{label}.positions names a Node of a body on a set "
                         f"{list(position)} that is not its position (a body is one record, "
                         "named by its centre)"
                     )
-                raise ValueError(
-                    f"{label}.positions names a Node without a measured event "
-                    f"{list(position)} (a receiving set at a free Node beside a block declares "
-                    "`block` with that one position, DECLARATIONS.md section 10 item 9)"
-                )
-            if position in taken:
-                raise ValueError(f"a Node in two detectors {list(position)}")
-            taken.add(position)
-            positions.append(position)
-        # THE DETECTOR IS ONE CONNECTED REGION, A CUBE (ALGEBRA.md #the-ladder;
-        # record 1899): its Nodes are connected by Links (across a periodic
-        # seam too), fill one box, and the box's sides are DETECTOR_SIDE or
-        # more where the GameBoard's extent allows; separate places are
-        # separate names
-        _detector_region(name, positions, shape, periodic, one_node=True)
-        threshold = 1  # the ray law's key is gone; the loop still reads the attribute
+                if position not in at:
+                    raise ValueError(
+                        f"{label}.positions names a Node without a measured event "
+                        f"{list(position)} (a receiving set at a free Node beside a block declares "
+                        "`block` with that one position, DECLARATIONS.md section 10 item 9)"
+                    )
+        if own == [bound_block]:
+            # a set on its body's own Nodes: one connected region, the body's shape its box
+            if _connected_pieces(positions, shape, periodic) > 1:
+                raise ValueError(f"the receiver {name!r} lies on disconnected Nodes of its body")
+        else:
+            # THE DETECTOR IS ONE CONNECTED REGION, A CUBE (ALGEBRA.md #the-ladder; record 1899): its
+            # Nodes connected by Links (across a periodic seam too), one box, its sides DETECTOR_SIDE
+            # or more where the GameBoard's extent allows; separate places are separate names
+            _detector_region(name, positions, shape, periodic, one_node=True)
         if name.startswith(RESERVED_SET_PREFIX) or name in FACE_NAMES or name == LIFETIME_NAME:
             raise ValueError(
                 f"{label}.name {name!r} is reserved: the layer names the measured "
                 f"events outside every detector `{RESERVED_SET_PREFIX}<number>`, the faces and "
                 "the border by their own names"
             )
-        reading = DETECTOR_READINGS[0]  # the ray law's key is gone; the loop still reads the attribute
-        if reading not in DETECTOR_READINGS and reading != SUM_READING:
-            raise ValueError(
-                f"{label}.reading must be one of {[*DETECTOR_READINGS, SUM_READING]}, not {reading!r}"
-            )
-        found.append(DetectorDefinition(name, tuple(positions), threshold, str(reading)))
+        found.append(DetectorDefinition(name, tuple(positions), 1, block=bound_block))
     return tuple(found)
 
 
@@ -2375,6 +2302,7 @@ def parse_world_document(
             f"the step file {STEP_FILE!r} is missing at the repository's root: the interval's order is its"
         )
     families_file: str | None = None
+    register = discover()  # the folders' cards, read once for the families' entries and the bodies
     as_written = obj  # the document as the generator stamped it (the universe's path, item 59)
     universe = obj[word]
     obj = dict(obj)
@@ -2384,7 +2312,7 @@ def parse_world_document(
         # list; the universe's integers from the file alone, the world's own refused
         families_file = universe
         _refuse_under_law(obj, "the world", set(frame.INTEGERS.keys))
-        entries, integers = frame.universe(families_file, files, discover())
+        entries, integers = frame.universe(families_file, files, register)
         obj.update(integers)
     else:
         # the families' list inline (a unit test's world), checked against the cards with
@@ -2392,7 +2320,7 @@ def parse_world_document(
         entries = frame.families(
             universe,
             {key: obj[key] for key in frame.INTEGERS.keys if key in obj},
-            discover(),
+            register,
             "the world.universe",
         )
     shape_value = cast(tuple[object, ...], obj["shape"])
@@ -2494,7 +2422,7 @@ def parse_world_document(
     bound = MAX_WORK_INT if amplitude_bound is None else amplitude_bound
     # THE BODIES AND THE DETECTORS through the frame (loader/frame.py, `BODY`, `DETECTOR`):
     # every key checked with the families known, an unknown key refused by name
-    bodies = frame.bodies(obj["measured"], Context(tuple(family.name for family in families)))
+    bodies = frame.bodies(obj["measured"], Context(tuple(family.name for family in families)), register)
     measured = _measured(
         bodies,
         shape,
