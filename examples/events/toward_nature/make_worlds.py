@@ -129,7 +129,6 @@ def clock_world(
     given_clock: list[int] | None = None,
     phase_steps: int | None = None,
     train_length: int | None = None,
-    doppler: bool = False,
     arm: int | None = None,
     kind: list[int] | None = None,
     weight: int | None = None,
@@ -141,16 +140,12 @@ def clock_world(
     retired train's length (the emitter's one Node stands at its head) the light
     clock's unless given (the long-wave rows of 9.62 (1) give theirs). SINCE
     COMMIT 7 (ALGEBRA.md 9.85 (5)) the emitter gives by the window at its own
-    rotation, a mirror of depth 2 behind it; `doppler` is CANCELLED with the train
-    (a moving body's light is its own rotation at its Node, 9.63 (3)); with `arm`
+    rotation, a mirror of depth 2 behind it (a moving body's light is its own rotation at
+    its Node, 9.63 (3)); with `arm`
     the mirror stands that many Links beyond the body's Node (in place of `mirror_x`)."""
     given_clock = list(detector.GIVEN_CLOCK) if given_clock is None else list(given_clock)
     phase_steps = detector.PHASE_STEPS if phase_steps is None else phase_steps
     train_length = detector.TRAIN_LENGTH if train_length is None else train_length
-    # CANCELLED (commit 7): the Doppler clock of the retired train (`massive.doppler_clock`);
-    # a moving body's light is its own rotation at its Node, written by the window
-    # (ALGEBRA.md 9.85 (5) answer 1; 9.63 (3))
-    assert not doppler or hop_every is not None, "Doppler is the moving body's"
     if arm is not None:
         mirror_x = emitter_x + train_length + arm
     # THE EMITTER ONE NODE at the retired train's head (its last Node): the arm as before
@@ -316,7 +311,6 @@ def worlds() -> dict[str, dict]:
         0,
         LONG_LORENTZ_TICKS,
         hop_every=HOP_EVERY,
-        doppler=True,
         arm=LONG_LORENTZ_ARM,
         weight=weight_of(out["lorentz_rest_long"]),
         **long_rows,
