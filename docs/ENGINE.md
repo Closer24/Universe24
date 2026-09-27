@@ -32,6 +32,7 @@ The drawing: one box per module, an arrow for what one hands to the next, the ga
 | `src/event_universe/loader/frame.py` with `core/schema.py` and `loader/cards.py` | the schemas of the files' keys; a family's entry is the frame's `name` and `clock` with the keys the folders' cards declare | the checked values |
 | `src/event_universe/loader/world.py` | the loop's classes built from the checked values, and the rules between keys | the loaded world |
 | `src/event_universe/events/detector_law.py` | the engine: the stages, the state and the readings, built from the loaded world | `step()`, the main loop's `run` |
+| `src/event_universe/events/geometry.py` | the engine's geometry: the Node sets, boxes, masks and Ports of a body or a detector from the GameBoard's shape, and the pair arrays' cache | the masks and boxes the stages read |
 | `src/event_universe/core/main_loop.py` | the plan of the step file's acts and the walk of one interval under its guards | each act's stage or `apply` |
 | `src/event_universe/core/register.py` with `core/step.py` | the folders' cards and the step file; `at(name, place)` | the act's function |
 | `src/event_universe/features/<name>/` | one primitive each: its card and its `apply` or `bind` | its writes |
