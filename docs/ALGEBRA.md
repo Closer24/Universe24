@@ -465,7 +465,7 @@ on the record of the primitive that divided.
 | the operation | (i) | the coefficients | the record's levels | Rule3's line itself |
 | the wait | (i) | the record's age | the record's age | the count (b) at a / b = 2: one interval |
 | the clicks | (ii) | the current at the detectors' Ports, u, V, T | the record's tally; a body's content M_k at t + 1 | the ladder of [the ladder](#the-ladder) until the count's line is bound in the loop |
-| the count's line | (ii) | the record's levels at the Node and across its six Ports, T, the weight | the count at a Node, its remainder | [the count's line](#the-counts-line) |
+| the count's line | (ii) | the body's own record's levels at the Node and across its six Ports as the step produced them (a given record is another record; a loaded level carries no current), T, the weight | the count at a Node, its remainder | [the count's line](#the-counts-line) |
 | the lifetime | (ii) | the record's age, L | the record's end | the age is the count (b) on the record; at age L on the face the record ends |
 | the clicks list | (ii) | the record's remainders, the wheels | the taken momentum's shares | the products' shares are the click's draw; the sum is the taken momentum exactly |
 | the hand | (ii) | **S**, **n**, the declared hand | admits or refuses the click | **S** . **n** is a booking of the spin's and the momentum's levels; its sign against the declared hand admits or refuses the click |
