@@ -1,16 +1,4 @@
-"""The world's files for the engine's loader (a host module).
-
-The engine's loader (`event_universe.events.world`) reads no file and computes no
-digest: physical code imports no storage (tests/test_architecture.py; the
-integer rule, the model owner's record 2071). This module reads the three files
-of ALGEBRA.md 9.90 (2), the world file, the universe file it names under
-`universe` and the start file it names under `engine`, and hands the loader the
-documents with the stamp's digest; the loader keeps every check (a missing file
-is refused by the loader naming the key, the universe file's and the start
-file's keys are its, the stamp is compared there). The generators write the
-stamp through `input_stamp` here (record 1886; ALGEBRA.md 9.22 (7) (i), 9.90
-(3) (c); BUILD.md section 26 items 28 and 72).
-"""
+"""The world's files for the engine's loader (a host module): the loader reads no file and computes no digest; this module reads the world file, the universe and start files it names, and the step file, and hands the loader the documents with the stamp's digest (ALGEBRA.md 9.90 (2), 9.22 (7) (i))."""
 
 from __future__ import annotations
 
@@ -18,9 +6,11 @@ import hashlib
 import json
 from pathlib import Path
 
+from event_universe.core.step import STEP_FILE, read_step
 from event_universe.events.world import NatureBeamWorld, parse_world_document, universe_file_entries
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+LAW_ROOT = Path(__file__).resolve().parents[2]
 
 
 def read_repository_json(value: str) -> object | None:
@@ -59,9 +49,7 @@ def input_stamp(document: dict[str, object]) -> dict[str, str]:
 
 
 def world_files(document: object) -> dict[str, object]:
-    """The documents a world names by a repository path: the universe file under
-    `universe` and the start file under `engine`, by their paths; a path with no
-    file is left out (the loader refuses it naming the key)."""
+    """The documents a world names by a repository path (the universe file under `universe`, the start file under `engine`) and the step file from the law's own root (LAW_ROOT: the repository's, whichever root a test redirects the world's files to), by their paths; a path with no file is left out (the loader refuses it naming the key)."""
     files: dict[str, object] = {}
     if isinstance(document, dict):
         for key in ("universe", "engine"):
@@ -70,6 +58,10 @@ def world_files(document: object) -> dict[str, object]:
                 read = read_repository_json(value)
                 if read is not None:
                     files[value] = read
+    path = LAW_ROOT / STEP_FILE
+    step = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else None
+    if isinstance(step, dict):
+        files[STEP_FILE] = read_step(step, input_digest(step))
     return files
 
 
