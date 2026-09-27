@@ -66,8 +66,9 @@ def amplitude_unit(pair: tuple[int, int], gamma: int, counts: np.ndarray) -> int
     for content in sorted({int(c) for c in counts.ravel()}):
         reads, self_coefficient, wall = coefficients(num, den, gamma, content)
         amplitude = (MAX_WORK_INT - wall) // (6 * abs(reads[0]) + abs(self_coefficient) + wall)
-        assert rule_total_bound(num, den, gamma, content, amplitude, True) <= MAX_WORK_INT
-        assert rule_total_bound(num, den, gamma, content, amplitude + 1, True) > MAX_WORK_INT
+        inside = rule_total_bound(num, den, gamma, content, amplitude, True) <= MAX_WORK_INT
+        if not inside or rule_total_bound(num, den, gamma, content, amplitude + 1, True) <= MAX_WORK_INT:
+            raise ValueError(f"A = {amplitude} at the content {content} is not the width's edge")
         found = amplitude if found is None else min(found, amplitude)
     if found is None or found < 1:
         raise ValueError(f"no amplitude unit keeps Rule3's total inside the width at Gamma = {gamma}")
@@ -199,17 +200,14 @@ def rotation_and_share(
     return rotation, share
 
 
-def bound_mode(
-    counts: np.ndarray,
-    pair: tuple[int, int],
-    gamma: int,
-    amplitude: int | None = None,
-    wrap: Wrap = PERIODIC,
-) -> BoundMode:
-    """The bound mode of the count's well: from a flat start the read act and the division act iterated until the integer profile repeats, the map on a finite set needing no limit (ALGEBRA.md 9.120 item 4 (c))."""
+def bound_mode(counts: np.ndarray, pair: Pair, gamma: int, wrap: Wrap = PERIODIC) -> BoundMode:
+    """The bound mode of the count's well at the derived amplitude unit: from a flat start the read act and the division act iterated until the integer profile repeats, the map on a finite set needing no limit (ALGEBRA.md 9.120 item 4 (c))."""
     check_counts(counts, gamma)
-    if amplitude is None:
-        amplitude = amplitude_unit(pair, gamma, counts)
+    return _bound_mode_at(counts, pair, gamma, amplitude_unit(pair, gamma, counts), wrap)
+
+
+def _bound_mode_at(counts: np.ndarray, pair: Pair, gamma: int, amplitude: int, wrap: Wrap) -> BoundMode:
+    """The iteration at a given unit, for the resolution check alone: the mode does not depend on A beyond its grain."""
     read, self_coefficient, wall = rule_integers(pair, gamma, counts)
     a = np.full(counts.shape, amplitude, dtype=np.int64)
     seen: dict[bytes, int] = {}
@@ -227,14 +225,9 @@ def bound_mode(
 
 
 def moving_mode(
-    counts: np.ndarray,
-    pair: tuple[int, int],
-    gamma: int,
-    triple: Triple,
-    amplitude: int | None = None,
-    wrap: Wrap = PERIODIC,
+    counts: np.ndarray, pair: Pair, gamma: int, triple: Triple, wrap: Wrap = PERIODIC
 ) -> MovingMode:
-    """The bound mode of the count's well moving along x at the rotation k per Link: the same iteration as at rest with the twisted read act, from a flat start, each iterate mirrored (the real part even and the imaginary part odd about the centre, the envelope's one gauge), the stop at the first repeat of the two parts; at the triple (1, 0, 1) it is the resting mode (ALGEBRA.md 9.120 item 4 (e))."""
+    """The bound mode of the count's well moving along x at the rotation k per Link, at the derived amplitude unit: the same iteration as at rest with the twisted read act, from a flat start, each iterate mirrored (the real part even and the imaginary part odd about the centre, the envelope's one gauge, two division acts), the stop at the first repeat of the two parts; at the triple (1, 0, 1) it is the resting mode (ALGEBRA.md 9.120 item 4 (e))."""
     check_counts(counts, gamma)
     if triple[2] < 1 or triple[0] ** 2 + triple[1] ** 2 != triple[2] ** 2:
         raise ValueError(
@@ -244,8 +237,7 @@ def moving_mode(
         raise ValueError(
             "the moving body's counts are mirrored along x about the box's centre (the gauge of its envelope)"
         )
-    if amplitude is None:
-        amplitude = amplitude_unit(pair, gamma, counts)
+    amplitude = amplitude_unit(pair, gamma, counts)
     read, self_coefficient, wall = rule_integers(pair, gamma, counts)
     re = np.full(counts.shape, amplitude, dtype=np.int64)
     im = np.zeros(counts.shape, dtype=np.int64)
@@ -273,7 +265,7 @@ def moving_mode(
 
 
 def moving_levels(mode: MovingMode, triple: Triple) -> tuple[np.ndarray, np.ndarray]:
-    """The moving body's two real levels: now the envelope times cos(k x) per Link (the rotation act along x), before the same one interval earlier, cos omega_b(k) now - sin omega_b(k) x the quarter-turned part, sin from the exact cosine by the integer square root at the amplitude unit (ALGEBRA.md 9.120 item 4 (e); 9.113 item 3 (c))."""
+    """The moving body's two real levels: now the envelope times cos(k x) per Link (the rotation act along x), before the same one interval earlier, cos omega_b(k) now - sin omega_b(k) x the quarter-turned part as one read act over the common denominator, sin from the exact cosine by the division act to the amplitude unit and the integer square root (ALGEBRA.md 9.120 item 4 (e); 9.113 item 3 (c))."""
     re, im, amplitude = mode.re.copy(), mode.im.copy(), mode.amplitude
     phase_re, phase_im = (
         np.full(re.shape[1:], amplitude, dtype=np.int64),
@@ -285,20 +277,22 @@ def moving_levels(mode: MovingMode, triple: Triple) -> tuple[np.ndarray, np.ndar
         now_re[x], now_im[x] = turned(re[x], im[x], phase_re, phase_im, amplitude)
         phase_re, phase_im = rotated(phase_re, phase_im, triple, 1)
     cosine = mode.rotation / 2
-    sine = isqrt(
-        ((1 - cosine * cosine) * amplitude * amplitude).numerator
-        // ((1 - cosine * cosine) * amplitude * amplitude).denominator
-    )
-    before = division(cosine.numerator, cosine.denominator, now_re.astype(object)) - division(
-        sine, amplitude, now_im.astype(object)
+    square = (1 - cosine * cosine) * amplitude * amplitude
+    sine = isqrt(int(division(square.numerator, square.denominator, np.array(1, dtype=object))))
+    p, q = cosine.numerator, cosine.denominator
+    before, _ = turned(
+        now_re.astype(object), now_im.astype(object), p * amplitude, q * sine, q * amplitude
     )
     return now_re, before.astype(np.int64)
 
 
 def clock_pair(rotation: Fraction, denominator: int) -> tuple[int, int]:
-    """The clock [a, b] with 2 cos omega_b = a / b on the denominator given (the amplitude unit A, the mode's resolution), a the nearest integer (exact rational rounding)."""
+    """The clock [a, b] with 2 cos omega_b = a / b on the denominator given (the amplitude unit A, the mode's resolution), a the nearest integer by the division act with the load d over the wall 2 d."""
     scaled = rotation * denominator
-    return (2 * scaled.numerator + scaled.denominator) // (2 * scaled.denominator), denominator
+    nearest = rule3(
+        NO_READ, NO_READ, 2, 2 * scaled.denominator, scaled.numerator, 0, scaled.denominator
+    )[0]
+    return int(nearest), denominator
 
 
 def period_by_the_rule(a: int, b: int) -> int:

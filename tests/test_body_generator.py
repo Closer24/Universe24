@@ -24,6 +24,7 @@ from event_universe.core.rule3 import coefficients, rule_total_bound
 from tools.body_generator import (
     AT_REST,
     PERIODIC,
+    _bound_mode_at,
     amplitude_unit,
     arrivals,
     bound_mode,
@@ -119,12 +120,12 @@ def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands
     assert rule_total_bound(KIND[0], KIND[1], GAMMA, 3000, amplitude + 1, True) > MAX_WORK_INT
     mode = bound_mode(counts, KIND, GAMMA)
     assert mode.amplitude == amplitude
-    coarse = bound_mode(counts, KIND, GAMMA, amplitude // 2)
+    coarse = _bound_mode_at(counts, KIND, GAMMA, amplitude // 2, PERIODIC)
     rescaled = (mode.profile * (amplitude // 2)) // amplitude
     assert int(np.abs(rescaled - coarse.profile).max()) <= 5
     assert abs(float(coarse.rotation) - float(mode.rotation)) < 1e-6
     with pytest.raises(ValueError, match="beyond int64"):
-        bound_mode(counts, KIND, GAMMA, 1 << 40)
+        _bound_mode_at(counts, KIND, GAMMA, 1 << 40, PERIODIC)
 
 
 def test_a_pair_whose_count_binds_nothing_is_refused_by_name():

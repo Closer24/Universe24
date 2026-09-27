@@ -19132,7 +19132,12 @@ that constancy.
    and T the family's quantum norm, a row of the family in the
    universe file (today the emitter's `norm` key, which moves to the
    family's row): the body's record carries exactly its quanta's norm,
-   and nothing of the body is declared. (e) THE MOVING BODY, THE SAME
+   and nothing of the body is declared. THE UNITS: the form here is
+   9.57 (1)'s, SUM [w (now^2 + before^2) - S now before] / p^2 - 2 num
+   SUM now S_6(before); the engine's ladder reads a record's norm with
+   the weights 1 / R_i and the family's common wall L (`given_norm`),
+   this form times L / (2 num), so c T is scaled in the tool's units
+   and the ladder's T is that times L / (2 num). (e) THE MOVING BODY, THE SAME
    PROCEDURE. The momentum n names the velocity v = n / W (the
    family's wall). The same iteration runs with the arrivals along the
    axis of motion read through the rotation act by the phase k per
@@ -19141,7 +19146,14 @@ that constancy.
    rotation omega_b(k); v(k) is the difference quotient of omega_b over
    k in exact rationals, and k is the pair at which v(k) is the named
    velocity, found by bisection on the pairs (exact; no float, record
-   2248). The body at rest is the case k = 0 of the same procedure.
+   2248). THE GAUGE: each iterate is mirrored about the box's centre
+   along the axis of motion, the real part even and the imaginary part
+   odd, re <- (re + re_mirrored) div 2 and im <- (im - im_mirrored) div
+   2, two division acts: the moving mode is determined up to a phase
+   and the mirror fixes it, the envelope's one gauge; a count not
+   mirrored along that axis is refused by name; at k = 0 the mirror is
+   the identity on the resting mode. The body at rest is the case k = 0
+   of the same procedure.
    PROPOSED: the moving mode's fixed point and its v(k) are the
    generator's to compute and the run's to confirm (item 5 (d)).
 
