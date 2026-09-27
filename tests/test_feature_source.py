@@ -41,9 +41,7 @@ def zeros() -> SourceOwn:
 
 
 def test_the_line_on_the_run_files_numbers():
-    """s_i = D_i div E_s at the peak: 1,891,072 div 18,910 = 100 with the remainder 72; a Node
-    with D_i below E_s adds nothing and keeps D_i as its remainder; a Node with D_i = 0 adds
-    nothing and is outside the write."""
+    """s_i = D_i div E_s at the peak: 1,891,072 div 18,910 = 100 with the remainder 72; a Node with D_i below E_s adds nothing and keeps D_i as its remainder; a Node with D_i = 0 adds nothing and is outside the write."""
     start = SourceStart(SHAPE, argument(PEAK, 18_909, 0, 37_820, 1, 18_910))
     writes = apply(PLAIN, start, zeros())
     assert writes.counts.ravel().tolist() == [100, 0, 0, 2, 0, 1]
@@ -56,9 +54,7 @@ def test_the_line_on_the_run_files_numbers():
 
 
 def test_the_remainder_is_carried_so_the_sum_of_the_counts_is_the_exact_floor():
-    """Over k intervals with the same D_i the counts sum to floor(k D_i / E_s), never less: at
-    the peak 100 per interval plus one more every 263 intervals (72 x 263 = 18,936 > 18,910);
-    on a Node with D_i = 7 the first count comes at the 2702nd interval."""
+    """Over k intervals with the same D_i the counts sum to floor(k D_i / E_s), never less: at the peak 100 per interval plus one more every 263 intervals (72 x 263 = 18,936 > 18,910); on a Node with D_i = 7 the first count comes at the 2702nd interval."""
     start = SourceStart(SHAPE, argument(PEAK, 7, 0, 0, 0, 0))
     own = zeros()
     total = np.zeros(SHAPE, dtype=np.int64)
@@ -74,9 +70,7 @@ def test_the_remainder_is_carried_so_the_sum_of_the_counts_is_the_exact_floor():
 
 
 def test_the_table_form_saturates_and_keeps_no_remainder():
-    """s_i = s_cap D_i div (s_cap E_s + D_i): 60 x 1,891,072 div (60 x 18,910 + 1,891,072) = 37
-    (the README's number); the count never reaches the cap; twice the argument gives 46, not
-    74; the remainder stays zero whatever the start's remainder says."""
+    """s_i = s_cap D_i div (s_cap E_s + D_i): 60 x 1,891,072 div (60 x 18,910 + 1,891,072) = 37 (the README's number); the count never reaches the cap; twice the argument gives 46, not 74; the remainder stays zero whatever the start's remainder says."""
     start = SourceStart(SHAPE, argument(PEAK, 2 * PEAK, 18_910, 0, 10**12, 1))
     own = SourceOwn(argument(5, 5, 5, 5, 5, 5))
     writes = apply(TABLE, start, own)
@@ -86,8 +80,7 @@ def test_the_table_form_saturates_and_keeps_no_remainder():
 
 
 def test_the_inverse_returns_the_start_bit_for_bit():
-    """The same integers subtracted and the remainder before restored, for both forms and for
-    a carried remainder."""
+    """The same integers subtracted and the remainder before restored, for both forms and for a carried remainder."""
     start = SourceStart(SHAPE, argument(PEAK, 7, 0, 37_820, 18_909, 1))
     for term in (PLAIN, TABLE, SourceTerm(3, 2, -2, 977)):
         own = SourceOwn(
@@ -145,10 +138,7 @@ def generator():  # type: ignore[no-untyped-def]
 
 
 def test_the_run_files_record_gives_the_readmes_counts():
-    """The rest world's seed at its clock gives D_i = p_i^2 (2 b - a) div b (the generator's
-    COMPUTATION, README section 4); the folder's first interval from zero remainders counts 100
-    at the peak Node and 14,887 in all on 2,169 Nodes for the plain form, 37 and 10,431 on
-    2,109 Nodes for the table (the fragment's E_s and cap)."""
+    """The rest world's seed at its clock gives D_i = p_i^2 (2 b - a) div b (the generator's COMPUTATION, README section 4); the folder's first interval from zero remainders counts 100 at the peak Node and 14,887 in all on 2,169 Nodes for the plain form, 37 and 10,431 on 2,109 Nodes for the table (the fragment's E_s and cap)."""
     module = generator()
     world = json.loads((SOURCE / "source_rest.json").read_text(encoding="utf-8"))
     entries = json.loads((SOURCE / "universe_entries.json").read_text(encoding="utf-8"))["families"]

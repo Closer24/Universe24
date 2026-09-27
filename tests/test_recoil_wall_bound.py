@@ -1,5 +1,4 @@
-"""The recoil's wall L, the least common multiple of a world's declared wavelengths, stays below 2^63 in
-every shipped world and divides their product; a world whose L reaches the width is refused by name."""
+"""The recoil's wall L, the least common multiple of a world's declared wavelengths, stays below 2^63 in every shipped world and divides their product; a world whose L reaches the width is refused by name."""
 
 from __future__ import annotations
 
