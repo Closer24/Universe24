@@ -63,9 +63,7 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
 
 
 def test_the_rule_is_the_designs_integers_on_a_chain():
-    """One step of the engine's rule equals the design's line
-    3 a_next + r' = a_E + a_W + 4 a - 3 a_before + r on a one-layer chain
-    (the y and z neighbours the row itself), with the remainder kept."""
+    """One step of the engine's rule equals the design's line 3 a_next + r' = a_E + a_W + 4 a - 3 a_before + r on a one-layer chain (the y and z neighbours the row itself), with the remainder kept."""
     world = parse_nature_beam_world(chain_world())
     simulation = DetectorLawSimulation(world)
     rng = np.random.default_rng(7)
@@ -171,10 +169,7 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
 
 
 def run_layer(document: dict, ticks: int = 3000) -> tuple[list[dict], DetectorLawSimulation, Seen]:
-    """The layer world stepped with the books balanced at every interval; the gather lines,
-    the simulation, and per clicked record what the click read (a spy on the engine's
-    `_ladder_click`: the running total before the interval, the interval's increments, the
-    ladder of `_ladder_of`, u, the norm and the record's own wheel W)."""
+    """The layer world stepped with the books balanced at every interval; the gather lines, the simulation, and per clicked record what the click read (a spy on the engine's `_ladder_click`: the running total before the interval, the interval's increments, the ladder of `_ladder_of`, u, the norm and the record's own wheel W)."""
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
@@ -190,10 +185,7 @@ RESIDUES = 128  # the planted records' wheel: every residue once
 
 
 def planted_layer(order: tuple[str, ...]) -> tuple[list[dict], DetectorLawSimulation, Seen]:
-    """The layer world without its emitter, RESIDUES light records planted at the emitter's
-    Node at interval 0 with every residue of the wheel once (the given pair on the circle of
-    2 N, the norm the conserved form) and the ladder the sets named in `order`; run 300
-    intervals; the gather lines, the simulation and the spy's readings."""
+    """The layer world without its emitter, RESIDUES light records planted at the emitter's Node at interval 0 with every residue of the wheel once (the given pair on the circle of 2 N, the norm the conserved form) and the ladder the sets named in `order`; run 300 intervals; the gather lines, the simulation and the spy's readings."""
     document = layer_world()
     document["measured"] = document["measured"][1:]
     world = parse_nature_beam_world(document)
@@ -239,9 +231,7 @@ def planted_layer(order: tuple[str, ...]) -> tuple[list[dict], DetectorLawSimula
 def lockstep_givings(
     first: dict, second: dict, ticks: int = 3000
 ) -> tuple[list[dict], list[dict], int | None]:
-    """Two worlds stepped together (BUILD.md section 26 item 32, FINDING C): their giving
-    lines and the first interval at which the family of clicks' level differs between them
-    on the emitter body's Nodes or their shell (None if it never does)."""
+    """Two worlds stepped together (BUILD.md section 26 item 32, FINDING C): their giving lines and the first interval at which the family of clicks' level differs between them on the emitter body's Nodes or their shell (None if it never does)."""
     runs: list[tuple[DetectorLawSimulation, list[dict]]] = []
     for document in (first, second):
         lines: list[dict] = []

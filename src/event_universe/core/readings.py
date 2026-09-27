@@ -16,6 +16,7 @@ SCHEMA: Mapping[str, tuple[str, tuple[str, ...]]] = {
     "total": ("GAMEBOARD", ("family", "every")),
     "centre": ("GAMEBOARD", ("body", "every")),
     "momentum": ("GAMEBOARD", ("body", "every")),
+    "cycle": ("GAMEBOARD", ("body", "every")),
     "rows": ("GAMEBOARD", ("family", "every")),
     "alive": ("HOST", ("every",)),
 }
@@ -37,11 +38,7 @@ class Reading:
 
     def target(self) -> dict[str, Any]:
         """The declared target keys, echoed into the output beside the lines."""
-        found: dict[str, Any] = {}
-        for key in SCHEMA[self.kind][1]:
-            value = getattr(self, key)
-            found[key] = list(value) if key == "node" else value
-        return found
+        return {k: list(vars(self)[k]) if k == "node" else vars(self)[k] for k in SCHEMA[self.kind][1]}
 
 
 def _node(value: object, where: str, shape: Sequence[int]) -> tuple[int, int, int]:
@@ -184,11 +181,13 @@ def _read(reading: Reading, simulation: Any) -> dict[str, Any]:
     """One reading's numbers at this interval, by its kind."""
     if reading.kind == "alive":
         return {"alive": len(simulation.records)}
-    if reading.kind == "centre":
-        block = simulation.block_by_number[reading.body]
-        return {"node": list(box_centre(block.corner, block.definition.extents, simulation.shape))}
-    if reading.kind == "momentum":
-        return {"momentum": [int(part) for part in simulation.block_by_number[reading.body].momentum]}
+    if reading.kind in ("centre", "momentum", "cycle"):
+        b = simulation.block_by_number[reading.body]
+        if reading.kind == "centre":
+            return {"node": list(box_centre(b.corner, b.definition.extents, simulation.shape))}
+        if reading.kind == "momentum":
+            return {"momentum": [int(part) for part in b.momentum]}
+        return {"cycle_start": int(b.cycle_start), "cycle_length": int(b.cycle_length)}
     level = _family_level(reading, simulation)
     if reading.kind == "rows":  # the family's levels over the board, the record's rows along its path
         return {"rows": [] if level is None else [int(part) for part in level.ravel()]}
