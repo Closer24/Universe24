@@ -215,10 +215,9 @@ def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
 
 
 def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name(tmp_path):
-    """THE INPUT IS A FILE (the owner's word): a world file in the law's form (the GameBoard, the Node clock,
-    the universe it names, one body by its Nodes with their counts) gives the mode on the held fields the
-    family reads plainly (a read by the charge's sign skipped, a weight named in the universe's integers);
-    refused by name: a moving body, a family whose row says "body", two bodies, [800, 809]'s shallow well."""
+    """THE INPUT IS A FILE (the owner's word): a world file in the law's form (the GameBoard, the Node clock, the
+    universe it names, one body by its Nodes and counts) gives the mode on the held fields the family reads plainly
+    (a read by the sign skipped, a weight named in the integers); the refusals by name, [800, 809]'s shallow well."""
 
     def row(name, pair, held, reads):
         return {"name": name, "pair": pair, "held": held, "reads": reads}
