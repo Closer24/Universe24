@@ -148,8 +148,8 @@ def test_the_clocks_refusals_name_the_rule():
 
     a, b = emitter_world(stock=2)["measured"][0]["clock"]
     refused(lambda entry: entry.pop("clock"), "seed as a profile needs the mode's `clock`")
-    refused(lambda entry: entry.__setitem__("clock", [a]), r"clock must be \[a, b\]")
-    refused(lambda entry: entry.__setitem__("clock", [a, 0]), r"clock must be \[a, b\]")
+    refused(lambda entry: entry.__setitem__("clock", [a]), r"clock must be a list of 2, not of 1")
+    refused(lambda entry: entry.__setitem__("clock", [a, 0]), r"clock\[1\] is 0, below its least 1")
     refused(
         lambda entry: entry.__setitem__("clock", [round(a * 64 / b), 64]),
         "b must be at least the profile's amplitude",
