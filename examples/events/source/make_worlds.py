@@ -96,6 +96,7 @@ def sourced_family(name: str, scale: int, cap: int | None, sourced: bool) -> dic
         "parts": [1],
         "phase": 2,
         "pair": list(FAMILY_PAIR),
+        "quantum": 1,
         "reads": [],
         "self_source": {"unit": 0},
     }

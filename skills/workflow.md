@@ -314,9 +314,11 @@ that day ("we said without 85 worlds"; "put it in the skill"):
   the trimming plan chose it by measured coverage on 2026-09-20);
   `tools/run_series.py --list` replays it; a new key or rule adds the world
   that first uses it to the list, with the line it covers.
-- **Check once at each stage, fully once at the end.** `python tools/check.py`
-  scoped per stage; `--full` and the gate-set replay after the first
-  behaviour-free commit and at the end, not after every commit.
+- **Check the near tests, then push; CI runs the whole suite (the owner,
+  2026-09-27).** `python tools/check.py` selects the changed files' tests and
+  the gates; when they pass, push and open the pull request READY. CI runs the
+  whole suite in about five minutes on eight machines, so the full local check
+  before the push is the same work twice; run it only to find a red shard.
 - **One writer per document, and agents apart.** A code agent and a
   documentation agent may run in parallel only with a written split of the
   files; two implementation agents never run on the same sources or the same

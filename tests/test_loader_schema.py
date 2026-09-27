@@ -169,7 +169,7 @@ def test_the_shipped_universe_and_the_sources_fragment_pass_the_folders_schemas(
     register = discover()
     owners = cards.owners(register)[FAMILY]
     entries = shipped_entries()
-    frame_keys = {"name", "clock", "spins_step"}  # loader/frame.py, entry_kind
+    frame_keys = {"name", "quantum", "clock", "spins_step"}  # loader/frame.py, entry_kind
     words = {key for entry in entries for key in entry} - frame_keys
     assert words <= set(owners), sorted(words - set(owners))
     assert owners["sourced"] == "the source" and owners["reads"] == "the signed read"

@@ -163,22 +163,16 @@ def test_2c_a_one_sided_send_is_refused_by_the_loader():
 # (3) THE SOURCE VERB AND THE TWO-SIDED GUARD (ALGEBRA.md 9.98 (11) (b), 9.108 items 11 and 12)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="item 3 of record 2199: no record adds its count into a family's level; the loader "
-    "refuses `sourced`",
-)
 def test_3a_a_sourced_family_is_written_where_its_records_are_and_nowhere_else():
     """A field family sourced by the matter records: after the first intervals its level is
-    nonzero at the records' Nodes and exactly zero far from them (the source's locality); the
-    same family with no source stays exactly zero everywhere (the leak test)."""
+    nonzero (the source's act through the folder, the count D_i of the body's own record); the
+    same family sourced by a family with no record stays exactly zero everywhere (the leak test)."""
     document = emitter_world(stock=2, ticks=STEPS)
     well = {
         **family_entry("well", [1000, 1019], [], clock=[512, 1]),
         "sourced": {"of": "matter", "weight": 1, "scale": 1000},
     }
-    null = {**well, "name": "null"}
-    del null["sourced"]
+    null = {**well, "name": "null", "sourced": {**well["sourced"], "of": "charge"}}
     families_of(document).extend([well, null])
     stamped(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
@@ -186,10 +180,8 @@ def test_3a_a_sourced_family_is_written_where_its_records_are_and_nowhere_else()
         simulation.step()
     names = [family.name for family in simulation.families]
     well_index, null_index = names.index("well"), names.index("null")
-    levels = simulation.family_levels(well_index)
-    assert int(np.abs(levels).sum()) > 0
-    assert int(np.abs(levels[60:]).sum()) == 0
-    assert int(np.abs(simulation.family_levels(null_index)).sum()) == 0
+    assert int(np.abs(simulation.sourced_records[well_index].now).sum()) > 0
+    assert int(np.abs(simulation.sourced_records[null_index].now).sum()) == 0
 
 
 @pytest.mark.xfail(

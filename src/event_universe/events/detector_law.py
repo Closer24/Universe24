@@ -100,6 +100,7 @@ from event_universe.features.giving import (
 from event_universe.features.hold import TENSOR_AXES, HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
+from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
 from event_universe.features.spins_step import (
     KEYS,
     Neighbours,
@@ -534,18 +535,10 @@ class DetectorLawSimulation:
             own = self._detector(f"measured:{number}", number, False)
             for node in nodes:
                 self.detector_at_node[node] = own
-        # The sets bound to a block (DECLARATIONS.md section 10 item 9, section
-        # 13 item 1, section 15 M1-4; a set bound to a block is a receiver): RECEIVERS in the form of
-        # DESIGN.md section 5, their Nodes take Nodes (the one-way Port take,
-        # the row held at 0, the offer booked to the set's detector, `absorbed`
-        # moved, the click at the first rung stamped with the block's own
-        # count), FREE for the emitting block's own record during that
-        # record's grace (the masks per record by its emitter and age). A set
-        # with one declared position is the receiving Node beside the block
-        # (the light clock's x = 612); a set without positions takes at the
-        # block's current Nodes (the Sagnac blocks, a stepping block's Nodes follow
-        # it). `set_block`: the set's detector to its block; `set_nodes`: the
-        # set's declared Nodes' mask, None where the Nodes are the block's.
+        # The sets bound to a block are receivers (DECLARATIONS.md section 10 item 9, section 13 item 1): their
+        # Nodes take (the one-way Port take, the row held at 0, the offer booked to the set's detector, the click
+        # at the first rung stamped with the block's own count); a set with one declared position is the Node
+        # beside the block, one without positions takes at the block's current Nodes (`set_block`, `set_nodes`).
         self.set_block: dict[int, int] = {}
         # the detector sets in their declared order: the ladder of a
         # record that names no receiver (ALGEBRA.md 9.19 (3) (b))
@@ -593,16 +586,10 @@ class DetectorLawSimulation:
                 elif measured is not None and self.detector_measured[set_detector] is None:
                     self.detector_measured[set_detector] = measured
                 self.detector_at_node[node] = set_detector
-        # THE FACE RECEIVER (ALGEBRA.md 9.19 (3) (a); Highlights' record 15
-        # kept): an open axis carries the receiver `face` at its border, last
-        # on every ladder, so that what leaves the board clicks there; a
-        # periodic axis has none; a `closed` face (DECLARATIONS.md section
-        # 10's mirror B) is a zero row with no receiver, the level 0 beyond it
-        # as `_shift` fills. Nothing takes: the sponge is retired. THE FACE
-        # SLAB (9.25 (10); BUILD.md section 26 item 23): the receiver is the
-        # slab of the world's `face_depth` free Nodes nearest every open
-        # border, one detector, its Ports toward the interior alone (a Link inside
-        # the slab carries no offer, the zero row beyond the border no Node).
+        # THE FACE RECEIVER (ALGEBRA.md 9.19 (3) (a)): an open axis carries the receiver `face` at its border,
+        # last on every ladder, so what leaves the board clicks there; a periodic axis has none; a `closed` face
+        # is a zero row with no receiver. THE FACE SLAB (9.25 (10)): the receiver is the slab of `face_depth`
+        # free Nodes nearest every open border, one detector, its Ports toward the interior alone.
         self.face_detector: int | None = None
         for axis in range(3):
             if world.periodic[axis] or world.closed[axis] or self.shape[axis] < 2:
@@ -614,18 +601,11 @@ class DetectorLawSimulation:
                 view = np.moveaxis(self.detector_at_node, axis, 0)[index]
                 free = view < 0
                 view[free] = self.face_detector
-        # THE NODE CLOCK (the model owner's decision (5) of record 1962;
-        # ALGEBRA.md 9.35 (2) and (3); BUILD.md section 26 item 31): the
-        # world's Gamma and the content M at every Node, the held quanta of
-        # every family at every measured event (a body's stock and what its
-        # clicks brought) on the event's Nodes (a block's Nodes as they
-        # stand, a measured event's span), 0 in the vacuum; the clock pair
-        # (e, f) = (Gamma, Gamma + M) enters every family's rule at the
-        # Node. M changes only at the law's events (a giving, a click, a
-        # step of a body), so the array is rebuilt from the held books as
-        # each interval begins (`_hold`) and after a giving.
-        # THE MOMENTUM'S UNIT Q (ALGEBRA.md 9.96 (1), 9.89 (2)): the universe's
-        # integer; every body's wall is W = 3 Q M (`wall_of`)
+        # THE NODE CLOCK (ALGEBRA.md 9.35 (2), (3)): the world's Gamma and the content M at every Node (the
+        # held quanta of every family at every measured event's Nodes, 0 in the vacuum), the clock pair
+        # (Gamma, Gamma + M) in every family's rule at the Node; M changes only at the law's events, so the
+        # array is rebuilt from the held books as each interval begins (`_hold`) and after a giving.
+        # THE MOMENTUM'S UNIT Q (ALGEBRA.md 9.96 (1)): the universe's integer; every body's wall is W = 3 Q M.
         self.momentum_unit = int(world.momentum_unit)
         if self.momentum_unit < 1:
             raise ValueError(
@@ -648,25 +628,12 @@ class DetectorLawSimulation:
                 "the world declares no Node clock (`node_clock`, Gamma from 1; "
                 "ALGEBRA.md 9.35 (3); BUILD.md section 26 item 31)"
             )
-        # THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25
-        # through the Boss; BUILD.md section 26 item 51; the family of clicks
-        # of record 1982 and ALGEBRA.md 9.45, item 32, and the family of
-        # charge of 9.48, item 35, are its two cases): the engine knows no
-        # family's name or role. A family with a declared `held` source has
-        # one record over the board (`held_records`), its level held at every
-        # body's Nodes at the body's declared source (the quanta it holds, or
-        # their signed sum; both levels, the remainder 0, not the step's own
-        # there), written at the load and at every click; elsewhere it moves
-        # by its own plain step after the other families' (so the joint step
-        # inverts); no residue, no ladder, no click of its own, never booked.
-        # `node_level` is each held family's level as every reading family's
-        # step reads it (`_effective_content`, by the reading family's
-        # declared `reads`: SUM weight x level, or - q x weight x level by the
-        # reading family's own charge sign q; 9.45 (3), 9.48 (3)). The sources
-        # and the read modes are words of the operations ("content", "sign";
-        # "plain", "sign"), never a family's name (item 53). The sources
-        # and the read modes are words of the operations ("content", "sign";
-        # "plain", "sign"), never a family's name (item 53).
+        # THE FAMILY GENERICITY (ALGEBRA.md 9.45, 9.48): the engine knows no family's name or role. A family
+        # with a declared `held` source has one record over the board (`held_records`), its level at every
+        # body's Nodes the body's declared source (both levels, the remainder 0), written at the load and at
+        # every click, elsewhere its own plain step after the other families'; never booked, no click of its
+        # own. `node_level` is each held family's level as every reading family's step reads it
+        # (`_effective_content`: SUM weight x level, or - q x weight x level by the reader's charge sign q).
         self.held_families: list[int] = list(world.held_families)
         self.family_charge = [int(family.charge[0]) for family in world.families]
         self.node_level: dict[int, np.ndarray] = {
@@ -707,18 +674,11 @@ class DetectorLawSimulation:
         # The block's count at a light record's first rung at its detector
         # (the click's `clock`, the body's event in the body's own clock).
         self.rung_counts: dict[tuple[int, int], int] = {}
-        # The record kinds (massive-record-v1): per family the pair on the
-        # six-neighbour term as two dense int64 arrays over the board
-        # (light's kind the value [1, 1] everywhere; a massive kind its
-        # declared pair; a block's Nodes a lowered pair there, the build's
-        # step 3) and the faces its rows read (the world's `boundary`, one
-        # border for every family, BUILD.md section 26 item 28).
-        # THE PAIR ARRAYS BY (FAMILY, PAIR) (ALGEBRA.md 9.85 (3), 9.91 (7); the
-        # one stroke, commit 1): a record's rows step with its own rest pair
-        # everywhere but at the bodies of its family, whose wells (the lowered
-        # pair) are written into every array of the family; the arrays are made
-        # once per (family, pair) on first use (`pair_arrays`); `kind_num` and
-        # `kind_den` read a family's own declared pair (the tests' view)
+        # THE PAIR ARRAYS BY (FAMILY, PAIR) (ALGEBRA.md 9.85 (3), 9.91 (7)): per family the pair on the
+        # six-neighbour term as two dense int64 arrays over the board, a record's rows stepping with their own
+        # rest pair everywhere but at the bodies of the family, whose wells (the lowered pair) are written into
+        # every array of the family; made once per (family, pair) on first use (`pair_arrays`); one border for
+        # every family (the world's `boundary`).
         self._pairs: dict[tuple[int, int, int], tuple[np.ndarray, np.ndarray]] = {}
         self.kind_num = PairView(self, 0)
         self.kind_den = PairView(self, 1)
@@ -842,6 +802,28 @@ class DetectorLawSimulation:
         for parts in self.held_parts.values():
             for record in parts:
                 record.silent = True
+        # THE SOURCED FAMILIES (ALGEBRA.md 9.117 row "the source"): a field written from a
+        # record family's count has one record over the board, stepped as a held family's
+        # is, its identity after the held families'; the counts D_i summed per record family
+        # at the step and the remainder per Node are the source's own, read at its act
+        self.sourced_records: dict[int, LiveRecord] = {
+            family: self._held_part(len(self.held_families) + position, family, 0)
+            for position, family in enumerate(
+                index
+                for index, definition in enumerate(self.families)
+                if definition.sourced is not None and definition.held is None
+            )
+        }
+        self._source_argument: dict[int, np.ndarray] = {
+            definition.sourced[0]: np.zeros(self.shape, dtype=np.int64)
+            for definition in self.families
+            if definition.sourced is not None
+        }
+        self._source_remainders: dict[int, np.ndarray] = {
+            family: np.zeros(self.shape, dtype=np.int64)
+            for family, definition in enumerate(self.families)
+            if definition.sourced is not None
+        }
         # the register: the folders' primitives by name, the step file's acts bound to the loop's stages
         self.register = self._engine_register()
         self.register.check_step(world.step)
@@ -880,6 +862,7 @@ class DetectorLawSimulation:
             "the hold": Stage(self._hold_stage, ("advance",), ("the hold",)),
             "the operation": Stage(self._records_stage, (), chain),
             "the giving": Stage(self._giving_stage, (), ("the giving",), creates=True),
+            "the source": Stage(self._source_stage, (), ("the source",)),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
         }
 
@@ -915,6 +898,9 @@ class DetectorLawSimulation:
         elif name == "the hold":
             for record in self.held_component_records():
                 yield from record.arrays()
+        elif name == "the source":
+            for family in self._source_remainders:
+                yield from self._sourced_record(family).arrays()
         elif name == "the operation":
             for live in self.records.values():
                 yield live.remainder
@@ -1069,6 +1055,35 @@ class DetectorLawSimulation:
         else:
             self._hold(function)
 
+    def _sourced_record(self, family: int) -> LiveRecord:
+        """The record a sourced family's level lives in: its held record where it is held, else its own."""
+        return self.held_records.get(family) or self.sourced_records[family]
+
+    def _count_source(self, live: LiveRecord, nxt: np.ndarray) -> None:
+        """The record's count D_i = now^2 - next x before at the step's end, summed into its family's argument for the source's act (ALGEBRA.md 9.117 row "the source"); nothing where no family is sourced by it."""
+        argument = self._source_argument.get(live.family)
+        if argument is not None:
+            argument += live.now * live.now - nxt * live.before
+
+    def _source_stage(self, function: Callable[..., object]) -> None:
+        """The source's act (features/source): per sourced family the folder's line on its record family's counts summed at the step, the count's write added into the family's level after its own step, the remainder per Node kept; the counts cleared for the next interval."""
+        for family, definition in enumerate(self.families):
+            if definition.sourced is None:
+                continue
+            of, weight, scale, cap = definition.sourced
+            writes = cast(
+                SourceWrites,
+                function(
+                    SourceTerm(family, of, weight, scale, cap),
+                    SourceStart(self.shape, self._source_argument[of]),
+                    SourceOwn(self._source_remainders[family]),
+                ),
+            )
+            self._sourced_record(family).now[writes.at] += writes.integers[writes.at]
+            self._source_remainders[family] = writes.remainders
+        for argument in self._source_argument.values():
+            argument[...] = 0
+
     def _records_stage(self, function: Callable[..., None]) -> None:
         """The records' act: the bodies' own records first, each by the rule alone, then every live record's fused step (its click included); `function` is the rule the steps apply."""
         for block in self.blocks:
@@ -1202,6 +1217,7 @@ class DetectorLawSimulation:
         for family, record in self.held_records.items():
             found.append(record)
             found.extend(self.held_parts[family])
+        found.extend(self.sourced_records.values())
         return found
 
     # The held families (ALGEBRA.md 9.35 (2), 9.45, 9.48; BUILD.md section 26
@@ -1610,13 +1626,7 @@ class DetectorLawSimulation:
     def pair_arrays(
         self, family: int, pair: tuple[int, int] | None = None
     ) -> tuple[np.ndarray, np.ndarray]:
-        """THE PAIR ARRAYS of a record of `family` at its rest pair (ALGEBRA.md
-        9.85 (3), 9.91 (7); commit 1): num and den over the board, the pair
-        everywhere but at the family's bodies, whose declared pairs (the wells
-        and the gaps) are written at their Nodes; made once per (family, pair)
-        and kept up with the bodies' steps (`_write_pair`). `pair` None reads
-        the family's own declared pair (refused on a family whose pair is the
-        body's: every record of it carries its own)."""
+        """THE PAIR ARRAYS of a record of `family` at its rest pair (ALGEBRA.md 9.85 (3), 9.91 (7)): num and den over the board, the pair everywhere but at the family's bodies, whose declared pairs are written at their Nodes; made once per (family, pair) and kept up with the bodies' steps (`_write_pair`); `pair` None reads the family's own declared pair (refused on a family whose pair is the body's)."""
         if pair is None:
             definition = self.families[family]
             if definition.pair_on_body:
@@ -1924,6 +1934,9 @@ class DetectorLawSimulation:
             )
         node_record.remainder = remainder
         if direction == 1:
+            argument = self._source_argument.get(block.family)
+            if argument is not None:
+                argument[block.mask] += now * now - result * other
             node_record.before, node_record.now = node_record.now, result
         else:
             node_record.now, node_record.before = node_record.before, result
@@ -2240,17 +2253,7 @@ class DetectorLawSimulation:
     # click; the property test of 9.20 (B) 4 runs it backwards
 
     def _advance_inverse(self, live: LiveRecord) -> None:
-        """One interval of the rule backwards on a record: from (a_next, a_now,
-        r') to (a_now, a_before, r) with 3 den Gamma a_before - r = num SUM_j
-        (Gamma - c_j) a_now,j + 6 den c a_now - (3 den Gamma a_next + r')
-        under the fixed wall (BUILD.md section 26 item 34; the same integers
-        as the forward step's, the clock field of the interval's start), the
-        remainder in [0, 3 den Gamma): a_before the ceiling of that quotient,
-        r the difference; exact at every Node for every clock history, since
-        the remainder's range is the wall's, constant (board_algebra.py's
-        `step_inverse`). With a tensor part read, a twist on a Port or a
-        second level (commits 3 and 4) the arrivals are stepped back per axis
-        after the transport's inverse (`_transport`), both levels."""
+        """One interval of the rule backwards on a record: from (a_next, a_now, r') to (a_now, a_before, r) with 3 den Gamma a_before - r = num SUM_j (Gamma - c_j) a_now,j + 6 den c a_now - (3 den Gamma a_next + r') under the fixed wall (the forward step's integers, the clock field of the interval's start), the remainder in [0, 3 den Gamma), exact at every Node; with a tensor part read, a twist or a second level the arrivals are stepped back per axis after the transport's inverse (`_transport`), both levels."""
         if live.silent:
             return  # a zero held part steps to zero exactly (HOST; 9.91 (1))
         num, den = self.pair_arrays(live.family, live.pair)
@@ -2395,14 +2398,7 @@ class DetectorLawSimulation:
         return sums[0], sums[1], sums[2]
 
     def _axis_contents(self, family: int, inverse: bool = False) -> tuple[np.ndarray, ...] | None:
-        """THE AXIS CONTENTS t_a of a reading family (ALGEBRA.md 9.91 (2); commit
-        3): SUM over its reads of weight x by x (the read family's aa component
-        div 2), one division per read per axis with the remainder kept at the
-        Node (`_pace_carry`), advanced once per interval; backward the same
-        values with the remainder stepped back (r_(t-1) = (r_t - S) mod 2, the
-        value (S + r_(t-1)) div 2), so the inverse reads the paces the step
-        read. None where no read's tensor part was ever sourced: the rule is
-        then isotropic, p_a = p_0, bit for bit."""
+        """THE AXIS CONTENTS t_a of a reading family (ALGEBRA.md 9.91 (2)): SUM over its reads of weight x by x (the read family's aa component div 2), one division per read per axis with the remainder kept at the Node (`_pace_carry`), advanced once per interval, backward the same values with the remainder stepped back (r_(t-1) = (r_t - S) mod 2); None where no read's tensor part was ever sourced, the isotropic rule bit for bit."""
         cached = self._axis_effective.get(family)
         if cached is not None and cached[0] == self.tick and cached[1] == inverse:
             return cached[2]
@@ -3159,6 +3155,7 @@ class DetectorLawSimulation:
                 im_next[~live.mask] = 0
             live.im_before = live.im_now
             live.im_now = im_next
+        self._count_source(live, nxt)
         if not booked:
             live.before = live.now
             live.now = nxt

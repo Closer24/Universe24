@@ -1,13 +1,6 @@
-"""THE FRAME OF THE FILES READ THROUGH THE SCHEMAS, the loader's second cut (the Boss's word of
-2026-09-26 22:12Z on the model owner's; record 2226; ALGEBRA.md 9.117 item 2: a term is one line
-of the files). loader/frame.py reads the universe file, its integers by the frame's schema and
-every family's entry by the folders' cards with the frame's one key, the name, and the start
-file, its mode; every refusal by name, no default written (record 2089: the dipole's divisor is
-the universe file's). Checked here: the shipped file and the source's fragment pass with the
-weight word resolved (every genericity draw passes through its load in test_genericity), each defect is refused by name, the start
-file is its mode and nothing else, the world's own keys, the bodies and the detectors by the frame's schemas with the
-universe handed on, and the frame holds no default, no family name and no
-version (the acceptance tests' readers on the new module)."""
+"""THE FRAME OF THE FILES READ THROUGH THE SCHEMAS (the Boss's word of 2026-09-26 22:12Z; record 2226;
+ALGEBRA.md 9.117 item 2): loader/frame.py reads the universe file, the world's own keys, the bodies, the
+detectors and the start file by schemas and the folders' cards; every defect refused by name, no default."""
 
 from __future__ import annotations
 
@@ -280,11 +273,8 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
 
 
 def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by_name():
-    """A body by its family, its Nodes with their counts and its momentum (ALGEBRA.md 9.120
-    item 1), with its spin and its moment where declared, passes the frame with the families
-    known; written in both forms or in neither, a missing key, an unknown key (today's keys
-    among them), a wrong kind, an empty Nodes list, a Node twice and a family the universe lacks
-    are refused by name; the loop's translation refuses the form by name until it reads it."""
+    """A body in the law's form (its family, its Nodes with counts, its momentum, spin and moment) passes the
+    frame; every defect is refused by name; world.py refuses the form until the loop reads it."""
     families = tuple(entry["name"] for entry in shipped()["families"])
     context = Context(families)
     body = {
