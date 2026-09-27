@@ -65,7 +65,6 @@ ROWS_OF_9_117 = (
     "the feed",
     "the induction",
     "the spin's step",
-    "the hop",
     "the trace",
 )
 

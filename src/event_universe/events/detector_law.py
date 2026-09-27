@@ -247,7 +247,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         """The loop's whole-board stages by the file's names, each with the words it takes and the cards whose writes it carries (the records' pass carries the chain's cards but the clicks, whose act is nested in it)."""
         chain = tuple(name for name in self.CHAIN if name != "the clicks")
         return {
-            "the count's line": Stage(self._counts_stage, (), ("the count's line", "the hop")),
+            "the count's line": Stage(self._counts_stage, (), ("the count's line",)),
             "the hold": Stage(self._hold_stage, ("advance",), ("the hold",)),
             "the operation": Stage(self._records_stage, (), chain),
             "the giving": Stage(self._giving_stage, (), ("the giving",), creates=True),

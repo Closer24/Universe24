@@ -201,4 +201,4 @@ def test_the_declaration_is_the_registers_row():
     assert DECLARATION.name == "the count's line" and folder_of(DECLARATION.name) == "counts_line"
     assert DECLARATION.place == "(ii)" and DECLARATION.word == "after the step"
     assert DECLARATION.function is apply and DECLARATION.built  # bound: the loop calls apply
-    assert DECLARATION.writes == ("the count at a Node", "the count's remainder")
+    assert DECLARATION.writes == ("the count at a Node", "the count's remainder", "a body's position")
