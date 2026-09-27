@@ -204,6 +204,8 @@ def select(changed, sources):
         tests.add("tests/test_step_drives_the_loop.py")
         # and EVERY FOLDER CARD LOADS with the step file, none built by position (#1198, gate 3)
         tests.add("tests/test_folder_cards.py")
+        # and NO ASSERT AS A GUARD, no unused module-level name, in src/ and tools/ (#1198, gate 6)
+        tests.add("tests/test_runtime_guards.py")
         # and THE DOCUMENT LOCK keeps the three current documents (the short procedure,
         # point 12)
         tests.add("tests/test_documents.py")
