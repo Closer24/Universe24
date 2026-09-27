@@ -10,6 +10,7 @@ from pathlib import Path
 from event_universe.core.register import discover
 from event_universe.core.schema import Context
 from event_universe.loader import frame
+from event_universe.world_files import input_digest
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLD = ROOT / "examples" / "events" / "generated" / "fall.json"
@@ -34,7 +35,11 @@ def test_the_falls_world_its_mode_file_and_its_expectation_agree():
     except ValueError as refusal:  # the giving body in the law's form waits on the loader's item 3
         assert "emitter" in str(refusal) or "phase_denominator" in str(refusal)
     mode = json.loads(WORLD.with_suffix(".mode.json").read_text(encoding="utf-8"))
-    assert mode["world_digest"] == hashlib.sha256(WORLD.read_bytes()).hexdigest()
+    digests = (
+        hashlib.sha256(WORLD.read_bytes()).hexdigest(),
+        input_digest(document),
+    )  # the one digest once regenerated
+    assert mode["world_digest"] in digests
     assert mode["rest"]["gravity"]["at_bodies"] == 3000 and mode["bodies"][0]["period"] >= 1
     assert mode["bodies"][0]["moving"]["phase_pair"] == [1024, 0]
     expectation = json.loads(WORLD.with_suffix(".expectation.json").read_text(encoding="utf-8"))

@@ -23,13 +23,9 @@ def read_repository_json(value: str) -> object | None:
 
 
 def input_digest(document: dict[str, object]) -> str:
-    """THE FILE'S DIGEST (ALGEBRA.md #a-familys-declaration; the model owner's rule of
-    2026-09-25 through the Boss, BUILD.md section 26 item 28: the stamp over
-    the whole file): SHA-256 of the canonical JSON (the keys sorted, no
-    spaces, ASCII) of the document without its `stamp` key; the same from
-    the raw document (`input_stamp`) and at load (the loader's stamp check),
-    so that a file the generator wrote runs as written and a file changed by
-    hand, in any key, is refused."""
+    """THE FILE'S DIGEST (ALGEBRA.md #a-familys-declaration; the stamp over the whole file): SHA-256 of the
+    canonical JSON (the keys sorted, no spaces, ASCII) of the document without its `stamp` key, the same
+    from the raw document (`input_stamp`) and at load, so that a file changed by hand is refused."""
     canonical = json.dumps(
         {key: value for key, value in document.items() if key != "stamp"},
         sort_keys=True,
@@ -40,11 +36,8 @@ def input_digest(document: dict[str, object]) -> str:
 
 
 def input_stamp(document: dict[str, object]) -> dict[str, str]:
-    """THE STAMP the generator writes into a world file under `stamp` (record 1886;
-    ALGEBRA.md #a-familys-declaration, #the-primitives; BUILD.md section 26 item 28): the
-    digest of the whole document (`input_digest`) and nothing else (no law
-    identifier, ALGEBRA.md #the-primitives). The loader compares it with the digest this module
-    computes at load and refuses a file that is not the one the generator wrote."""
+    """THE STAMP the generator writes into a world file under `stamp` (ALGEBRA.md #a-familys-declaration): the
+    digest of the whole document and nothing else; the loader compares it with the digest computed at load."""
     return {"hash": input_digest(document)}
 
 
@@ -73,5 +66,11 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
 
 
 def load_world(path: Path) -> NatureBeamWorld:
-    """A world file read and parsed (the one command's read)."""
-    return parse_nature_beam_world(json.loads(path.read_text(encoding="utf-8")))
+    """A world file read and parsed, the generator's mode file beside it (`<world>.mode.json`) handed with the files."""
+    document = json.loads(path.read_text(encoding="utf-8"))
+    files = world_files(document)
+    beside = path.with_suffix(".mode.json")
+    if beside.is_file():
+        files[beside.name] = json.loads(beside.read_text(encoding="utf-8"))
+    digest = input_digest(document) if isinstance(document, dict) else None
+    return parse_world_document(document, files, digest)

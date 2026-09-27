@@ -34,9 +34,20 @@ def declared(document: dict, readings: list[dict]) -> dict:
     return document
 
 
-def test_the_schema_holds_eight_kinds_with_their_labels_and_keys():
-    """Eight kinds, each with a label of the three and its own keys beside name and kind; a body's momentum and a family's rows GAMEBOARD."""
-    assert set(SCHEMA) == {"clicks", "level", "support", "total", "rows", "centre", "momentum", "alive"}
+def test_the_schema_holds_nine_kinds_with_their_labels_and_keys():
+    """Nine kinds, each with a label of the three and its own keys beside name and kind; a body's momentum, its cycle and a family's rows GAMEBOARD."""
+    assert set(SCHEMA) == {
+        "clicks",
+        "level",
+        "support",
+        "total",
+        "rows",
+        "centre",
+        "momentum",
+        "cycle",
+        "alive",
+    }
+    assert SCHEMA["cycle"] == ("GAMEBOARD", ("body", "every"))
     assert SCHEMA["momentum"] == ("GAMEBOARD", ("body", "every")) and SCHEMA["rows"][1] == (
         "family",
         "every",
@@ -109,8 +120,7 @@ def test_every_defect_of_a_declaration_is_refused_by_name(value, message):
 
 
 def test_a_reading_reads_the_state_and_writes_nothing_into_the_run():
-    """The emitter world run with the six readings read at every interval gives the same lines,
-    levels and remainders as the plain run, bit for bit; the readings hold the run's numbers."""
+    """The emitter world run with the six readings read at every interval gives the same lines, levels and remainders as the plain run, bit for bit; the readings hold the run's numbers."""
     plain = DetectorLawSimulation(
         parse_nature_beam_world(emitter_world(stock=2, ticks=160))
     )  # 160: the first click at the screen at 129 on this fixture
@@ -212,3 +222,30 @@ def test_the_one_command_writes_the_readings_beside_todays_keys(tmp_path: Path):
     (tmp_path / "plain").mkdir()
     plain = run_world(emitter_world(stock=2, ticks=120), tmp_path / "plain")
     assert plain["readings"] == [] and plain["clicks"] == output["clicks"]
+
+
+def test_a_bodys_own_cycle_is_a_gameboard_reading_a_clock_world_with_no_detector_can_declare():
+    """The kind `cycle` of a body (GAMEBOARD, a diagnostic): the interval the body's own record last rose through 0 and the length of the cycle before it, the body's own tick where no detector clicks. On the emitter world (stock 2) read at every interval: nothing at the load, the first cycle closes at 42 (its length the 42 intervals from the load), then a cycle every 55 intervals (97, 152), the mode's rotation of this fixture (its declared period 55), measured once; 161 lines for 160 intervals. The edge case: a body the world lacks is refused by name."""
+    world = parse_nature_beam_world(
+        declared(
+            emitter_world(stock=2, ticks=160), [{"name": "tick", "kind": "cycle", "body": 0, "every": 1}]
+        )
+    )
+    simulation = DetectorLawSimulation(world)
+    readings = Readings(world.readings)
+    readings.read(simulation)
+    for _ in range(160):
+        simulation.step()
+        readings.read(simulation)
+    out = readings.output()[0]
+    assert out["label"] == "GAMEBOARD" and out["body"] == 0 and len(out["lines"]) == 161
+    starts = sorted({(line["cycle_start"], line["cycle_length"]) for line in out["lines"]})
+    assert starts == [(0, 0), (42, 42), (97, 55), (152, 55)]
+    with pytest.raises(ValueError, match="names no measured entry with a block"):
+        declarations(
+            [{"name": "tick", "kind": "cycle", "body": 3, "every": 1}],
+            SHAPE,
+            DETECTORS,
+            FAMILIES,
+            BODIES,
+        )

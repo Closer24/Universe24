@@ -20,9 +20,7 @@ UNIT = 1 << 20
 
 
 def small_layer() -> dict:
-    """The layer of 24 x 9 of the first form, empty (no emitter, no set): the detector-law
-    layer's emitter body is the train's 32 Nodes since the given train (BUILD.md section 26
-    item 27), wider than this layer, so these tests place their bodies on the empty layer."""
+    """The layer of 24 x 9 of the first form, empty (no emitter, no set): the detector-law layer's emitter body is the train's 32 Nodes since the given train (BUILD.md section 26 item 27), wider than this layer, so these tests place their bodies on the empty layer."""
     document = layer_world()
     document["shape"] = [24, 9, 1]
     document["measured"] = []
@@ -56,10 +54,7 @@ def wall(position, family="light", **keys):
 
 
 def test_a_box_of_extents_is_placed_whole_and_its_cells_are_the_box():
-    """A light-kind wall slab with the extents [4, 3, 1] at (10, 2, 0) on the layer of 24 x 9:
-    the loader carries the extents (the side the x extent) and the engine's Nodes are the
-    box's 12 Nodes; `side` 3 is the extents (3, 3, 3) cut by the layer's thin axis;
-    `body_node_indices` on a cube's side and on the box's extents agree with the box."""
+    """A light-kind wall slab with the extents [4, 3, 1] at (10, 2, 0) on the layer of 24 x 9: the loader carries the extents (the side the x extent) and the engine's Nodes are the box's 12 Nodes; `side` 3 is the extents (3, 3, 3) cut by the layer's thin axis; `body_node_indices` on a cube's side and on the box's extents agree with the box."""
     document = small_layer()
     document["measured"].append(wall([10, 2, 0], extents=[4, 3, 1]))
     world = parse_nature_beam_world(document)
@@ -80,12 +75,7 @@ def test_a_box_of_extents_is_placed_whole_and_its_cells_are_the_box():
 
 
 def test_the_extents_refusals_and_the_fit_per_axis():
-    """Both `side` and `extents` refused; `extents` not three integers from 1 refused; a box
-    reaching beyond a face is refused per axis naming its side on that axis (the extents
-    [4, 3, 1] at x = 22 on the layer of 24: side 4 reaches 25 beyond the face at 23); a box
-    wider than a periodic axis refused (extents [2, 12, 1] on the layer of 9 on y); a
-    detector bound to a block of extents [12, 1, 1] on a chain is a cube cut by the chain
-    and admitted, a bound block of extents [2, 1, 1] refused naming the extents."""
+    """Both `side` and `extents` refused; `extents` not three integers from 1 refused; a box reaching beyond a face is refused per axis naming its side on that axis (the extents [4, 3, 1] at x = 22 on the layer of 24: side 4 reaches 25 beyond the face at 23); a box wider than a periodic axis refused (extents [2, 12, 1] on the layer of 9 on y); a detector bound to a block of extents [12, 1, 1] on a chain is a cube cut by the chain and admitted, a bound block of extents [2, 1, 1] refused naming the extents."""
     both = small_layer()
     both["measured"].append(wall([10, 2, 0], side=3, extents=[3, 3, 1]))
     with pytest.raises(ValueError, match="declares both `side` and `extents`"):
@@ -116,10 +106,7 @@ def test_the_extents_refusals_and_the_fit_per_axis():
 
 
 def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
-    """A well [800, 801] of the matter kind with the extents [12, 5, 1] at (5, 2, 0) on the
-    layer of 24 x 9 (a control world), seeded by the generator on its composed mode with its
-    clock and stamp: LAWFUL at load, the residual within the bound at every Node, the mode's
-    largest entry on the slab's Nodes; the slab's centre Node (5 + 6, 2 + 2)."""
+    """A well [800, 801] of the matter kind with the extents [12, 5, 1] at (5, 2, 0) on the layer of 24 x 9 (a control world), seeded by the generator on its composed mode with its clock and stamp: LAWFUL at load, the residual within the bound at every Node, the mode's largest entry on the slab's Nodes; the slab's centre Node (5 + 6, 2 + 2)."""
     document = small_layer()
     document["measured"] = [
         {
@@ -157,13 +144,7 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
 
 
 def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
-    """The world key `face_depth`, DECLARED on every board with an open face (no default,
-    BUILD.md section 26 item 28): the chain of 80 opened on x without it is refused naming
-    the axis; at depth 1 the face detector is the 2 border Nodes; at depth 4 it covers the 4
-    Nodes nearest each border (8 Nodes, the free ones); a depth above one that leaves no
-    interior is refused; a periodic axis has no face whatever the depth (read on a chain
-    without a body: the emitter's mode is the closed chain's, one border for every family).
-    The stamp is rewritten for every changed key (the stamp over the whole file)."""
+    """The world key `face_depth`, DECLARED on every board with an open face (no default, BUILD.md section 26 item 28): the chain of 80 opened on x without it is refused naming the axis; at depth 1 the face detector is the 2 border Nodes; at depth 4 it covers the 4 Nodes nearest each border (8 Nodes, the free ones); a depth above one that leaves no interior is refused; a periodic axis has no face whatever the depth (read on a chain without a body: the emitter's mode is the closed chain's, one border for every family). The stamp is rewritten for every changed key (the stamp over the whole file)."""
     document = emitter_world(stock=1)
     document["boundary"] = {"x": "open", "y": "periodic", "z": "periodic"}
     document["stamp"] = input_stamp(document)
@@ -194,14 +175,7 @@ def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
 
 
 def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
-    """ALGEBRA.md #the-ladder, the mathematician's reading: a face one Node deep books a part of
-    a packet and reflects the rest, a slab as deep as the packet books nearly all of it.
-    On light's open chain of 300 a Gaussian packet of width 14 at k = 0.3 moving +x is
-    planted at 150 with its norm set to 7/10 of its conserved form, so the face clicks only
-    when it has taken most of the packet: after 600 intervals the face slab of depth 40 has
-    clicked once (one gather line, chosen the face), the face of depth 1 not at all (the
-    measurement is the click count on the gather lines; the reflected remainder returns
-    along the chain)."""
+    """ALGEBRA.md #the-ladder, the mathematician's reading: a face one Node deep books a part of a packet and reflects the rest, a slab as deep as the packet books nearly all of it. On light's open chain of 300 a Gaussian packet of width 14 at k = 0.3 moving +x is planted at 150 with its norm set to 7/10 of its conserved form, so the face clicks only when it has taken most of the packet: after 600 intervals the face slab of depth 40 has clicked once (one gather line, chosen the face), the face of depth 1 not at all (the measurement is the click count on the gather lines; the reflected remainder returns along the chain)."""
     from tests.bodies import massive_world
 
     clicks = {}
