@@ -107,8 +107,8 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
         broken[key] = value
         refused(broken, f"the world has unknown keys: {key}")
     broken = json.loads(json.dumps(document))
-    broken["universe"][0]["lifetime"] = 5
-    refused(broken, r"universe\[0\] has unknown keys: lifetime")
+    broken["universe"][0]["lifetime"] = 0  # the lifetime's row reads the key: an integer from 1
+    refused(broken, r"universe\[0\]\.lifetime is 0, below its least 1")
 
 
 def test_the_runner_requires_jobs_and_refuses_pins_under_the_mode_check(tmp_path):
