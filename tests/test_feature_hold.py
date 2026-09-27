@@ -1,10 +1,7 @@
-"""THE HOLD, its own folder (ALGEBRA.md 9.117 the row "the hold"; 9.91 (3); 9.119 item 2; the
-Boss's record 2250): every division through core.rule3 (the division act forward, the state
-stepped back by the direction -1); on the shipped moving Lorentz world the folder's carried
-divisions of the gravity's vector and tensor parts and of the charge's dipoles give the loop's
-own values and carries over forty intervals bit for bit, and the parts' levels at the body's
-Nodes; forward then back returns the state exactly; the dipole's terms are 9.91 (3)'s table;
-the refusals by name; the declaration the ledger's row."""
+"""THE HOLD, its own folder (ALGEBRA.md 9.117 the row "the hold"; 9.91 (3); 9.119 item 2; record 2250):
+every division through core.rule3; on the shipped moving Lorentz world the folder's carried divisions
+give the loop's own values, carries and levels over forty intervals bit for bit; forward then back
+returns the state exactly; the dipole's terms are 9.91 (3)'s table; the refusals; the declaration."""
 
 from __future__ import annotations
 
@@ -84,12 +81,10 @@ def engines_state(block, family: int) -> tuple[dict, dict]:
 
 
 def test_the_folder_gives_the_loops_integers_on_the_moving_lorentz_world_bit_for_bit():
-    """examples/events/toward_nature/lorentz_moving.json: the body of content 65 giving charge
-    quanta at v = 1 / 4 (its wall and count change at the givings, its Nodes hop): the load as
-    the folder's load act and every interval as its advance act with the loop's own integers
-    read after the interval give the loop's values and carries of the gravity's three vector
-    and six tensor parts and of the charge's dipoles bit for bit over forty intervals, and the
-    parts' two levels at the body's Nodes are the folder's now and before."""
+    """examples/events/toward_nature/lorentz_moving.json (the body of content 65 giving charge quanta at
+    v = 1 / 4, its wall and count changing, its Nodes hopping): the load as the folder's load act and
+    every interval as its advance act give the loop's values and carries of gravity's vector and
+    tensor parts and of the charge's dipoles bit for bit over forty intervals, and the parts' levels."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(json.loads(MOVING.read_text())))
     block = simulation.block_by_number[0]
     owns = {}
@@ -136,9 +131,8 @@ def test_the_folder_gives_the_loops_integers_on_the_moving_lorentz_world_bit_for
 
 
 def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_first_value_twice():
-    """Rule3's division act forward and its direction -1 back: from any (value, carry) with the
-    carry below the wall, an advance then an inverse returns the state; the value before is
-    the ceiling form; at the load both levels are the first value; a rewrite repeats it."""
+    """Rule3's division act forward and its direction -1 back: an advance then an inverse returns the
+    state; the value before is the ceiling form; at the load both levels are the first value."""
     rng = random.Random(7)
     for _ in range(300):
         wall = rng.randint(1, 10**6)
@@ -166,10 +160,8 @@ def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_fir
 
 
 def test_the_dipoles_terms_are_the_table_of_9_91_3():
-    """A spin S at the body's Node writes sigma x (S x e_j)_i at the Node + sigma e_j: S x e_x =
-    (0, S_z, -S_y), S x e_y = (-S_z, 0, S_x), S x e_z = (S_y, -S_x, 0); the charge's moment the
-    same over the divisor 2 with the remainder carried; a zero vector or a family without a
-    vector part writes no dipole; the unhold steps the divisions back."""
+    """A spin S at the body's Node writes sigma x (S x e_j)_i at the Node + sigma e_j (S x e_x = (0, S_z,
+    -S_y) and cyclic); the moment the same over the divisor 2; a zero vector writes no dipole."""
 
     def cross(vector, j):
         out = [0, 0, 0]
@@ -252,9 +244,8 @@ def test_the_refusals_by_name():
 
 
 def test_the_declaration_is_the_ledgers_row():
-    """ "the hold" at (iv), the word the right side, the writes a family's level at a Node and a
-    body's remainders (the order the step file's), its function `apply`; the engine's register finds
-    the folder bound: the loop calls `apply` itself, no binder."""
+    """ "the hold" at (iv), the word the right side, the writes a family's level at a Node and a body's
+    remainders, its function `apply`; the register finds the folder bound: the loop calls `apply`."""
     assert DECLARATION.name == "the hold" and folder_of("the hold") == "hold"
     assert DECLARATION.place == "(iv)" and DECLARATION.word == "the right side"
     assert DECLARATION.writes == ("a family's level at a Node", "a body's remainders")
@@ -265,12 +256,10 @@ def test_the_declaration_is_the_ledgers_row():
 
 
 def test_the_folder_gives_the_loops_integers_backward_on_the_resting_lorentz_world_bit_for_bit():
-    """examples/events/toward_nature/lorentz_rest.json (no hop, so the loop's inverse is defined):
-    twenty intervals forward with the folder's advance act, then twenty of the loop's
-    `step_inverse`, each the folder's unhold act (the dipoles' divisions stepped back) and its
-    inverse act (the parts' stepped back), the loop's own integers read after each: the
-    values and carries of every held family agree bit for bit on the way back, and the state at
-    the end is the state at the start."""
+    """examples/events/toward_nature/lorentz_rest.json (no hop, so the loop's inverse is defined): twenty
+    intervals forward with the advance act, then twenty of the loop's `step_inverse`, each the unhold
+    act then the inverse act, the loop's integers read after each: the values and carries of every
+    held family agree bit for bit on the way back, and the end state is the start state."""
     rest = ROOT / "examples" / "events" / "toward_nature" / "lorentz_rest.json"
     simulation = DetectorLawSimulation(parse_nature_beam_world(json.loads(rest.read_text())))
     block = simulation.block_by_number[0]

@@ -1,37 +1,12 @@
-"""The algebra gate: the physical modules hold integer mathematics only
-(the model owner's word of 2026-09-22, record 920: the whole GameBoard is
-algebra and the clicks' implementation is algebra; no code that is not
-integer mathematics on the GameBoard and the clicks; the Boss's order to
-the Register Architect of the same day). The six verbs of the law
-(Highlights 5.4, "The six operations") act on integers; a root is the
-seventh verb, outside the law (record 249), admitted only where this test
-lists it by function, with its reason.
-
-The gate reads the source as tokens and as a syntax tree, never running
-a world, and asserts on every physical module: (a) no float literal token;
-(b) no `/` operator token (only `//`); (c) no import of `random`,
-`fractions`, `decimal`, `cmath` or `statistics`, and of `math` only its
-integer functions `gcd` and `isqrt`, and no alias of `math`, `isqrt` or
-`integer_root`; (d) every numpy dtype named is `int64`, `bool` or `object`
-(no `float*`, `complex*`, `floating`, no narrower integer), every
-allocation `np.zeros`, `np.ones`, `np.empty`, `np.full` carries a `dtype`
-(float64 by default without one), `np.array` takes no non-integer
-literal, and `.astype` names one of the same; (e) none of numpy's
-functions that leave the integers (`sqrt`, `mean`, `float`, `true_divide`,
-`divide`, `exp`, `log`, `sin`, `cos`, `tan`, `average`, `std`, `var`), none
-of its families `np.linalg.*`, `np.linspace`, `np.random.*`, `np.fft.*`,
-`np.polyfit`, `np.interp` (the attribute chains rooted at `np` walked), no
-call of the builtin `float` and no method `.mean`, `.std`, `.var`; (f) a
-root (`math.isqrt` or `core.integer.integer_root`, under any alias) only
-in the functions ALLOWED_ROOTS names, exactly those: a root that appears
-anywhere else fails, and a root that leaves a listed function fails too,
-so that the list is always the inventory. The reasons distinguish a rounding at load (a table constant,
-docs/designs/vector_form/LAW.md section 6), a predicate (a perfect-square
-test, no rounded number enters a reading) and a root at run time (the
-seventh verb, named in docs/designs/register_paper_sources/NODE_ALGEBRA.md
-section 2, pending the owner's word; one such root since PR #855, the
-meeting's norm). The self-tests at the end write
-sources with one violation each and show the gate catches them.
+"""The algebra gate: the physical modules hold integer mathematics only (the model owner's word of
+2026-09-22, record 920; the six verbs of the law act on integers; a root is the seventh verb, outside
+the law, record 249, admitted only where ALLOWED_ROOTS lists it by function with its reason). The gate
+reads the source as tokens and as a syntax tree, never running a world: no float literal, no `/`, no
+import of random, fractions, decimal, cmath or statistics, of math only gcd and isqrt and no alias of
+them; every numpy dtype int64, bool or object and every allocation with a dtype; none of numpy's
+functions or methods that leave the integers (sqrt, mean, divide, exp, the trigonometric ones, linalg,
+linspace, random, fft, polyfit, interp), no builtin float; a root only in the listed functions, so that
+the list is always the inventory. The self-tests at the end show the gate catches each violation.
 """
 
 from __future__ import annotations

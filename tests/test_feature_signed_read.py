@@ -1,12 +1,8 @@
-"""THE SIGNED READ WITH THE TWO-SIDED GUARD, its own folder (ALGEBRA.md 9.117 item 2,
-the first row; 9.117 item 5; 9.108 item 12; the Boss's record 2224): the folder's `apply`
-equals the engine's read bit for bit on the emitter's world (sign reads, hollows alone), the
-trace's hand identity p_0 = Gamma - SUM of the products holds on that run from the raw levels,
-the guard's edge is where the rule's own checkerboard factor crosses -2, a like-charge hill is
-admitted up to the edge and refused beyond it naming the Node, a massless family admits no
-hill, the guard never squares a pace (10^8 refused), the argument of a pair is D_i as handed
-in, a multi-read sum, a read by an unknown word and a sum that could leave int64 refused by
-name, and the folder's declaration is the ledger's row."""
+"""THE SIGNED READ WITH THE TWO-SIDED GUARD, its own folder (ALGEBRA.md 9.117 item 2, the first row;
+9.117 item 5; 9.108 item 12; record 2224): the folder's read equals the engine's bit for bit on the
+emitter's world, the trace's hand identity holds, the guard's edge is where the rule's checkerboard
+factor crosses -2 (a hill admitted up to it, refused beyond it naming the Node, no pace squared),
+the refusals by name, the declaration the ledger's row."""
 
 from __future__ import annotations
 
@@ -59,9 +55,8 @@ def own_of(simulation: DetectorLawSimulation, family: int) -> SignedReadOwn:
 
 
 def hand_line(simulation: DetectorLawSimulation, family: int, node: tuple[int, ...]) -> int:
-    """The trace's line of the pace's read at one Node (ALGEBRA.md 9.112 item 5): per read the
-    family read, the signed weight, the level at the Node, by plain or by sign with q, the
-    product; the sum; p_0 = Gamma - the sum, in Python integers from the raw levels."""
+    """The trace's line of the pace's read at one Node (ALGEBRA.md 9.112 item 5): per read the family,
+    the signed weight, the level, by plain or by sign with q, the product; p_0 = Gamma - the sum."""
     q = simulation.family_charge[family]
     products = []
     for other, weight, by, _twist in simulation.families[family].reads:
@@ -71,11 +66,9 @@ def hand_line(simulation: DetectorLawSimulation, family: int, node: tuple[int, .
 
 
 def test_apply_equals_the_engines_read_bit_for_bit_on_the_emitters_world():
-    """On the emitter's unit world (matter and light reading the clicks plainly and the
-    charge by sign, hollows alone), the folder's content equals `_effective_content` at every
-    reading family over twenty intervals and the guard passes: no such world moves (record
-    2224). The trace's hand identity holds on the same run: at sampled Nodes p_0 = Gamma -
-    SUM of the products from the raw levels equals the folder's pace and the engine's."""
+    """The emitter's unit world: the folder's content equals `_effective_content` at every reading
+    family over twenty intervals, the guard passes (record 2224), and the hand identity p_0 = Gamma -
+    SUM of the products holds at sampled Nodes from the raw levels."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=20)))
     readers = [family for family, definition in enumerate(simulation.families) if definition.reads]
     assert readers
@@ -95,10 +88,9 @@ def test_apply_equals_the_engines_read_bit_for_bit_on_the_emitters_world():
 
 
 def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
-    """The guard's bound P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) is, on the
-    engine's own coefficients (R, S, w) of the rule at the pace p, the last p with (S - 6 R) +
-    2 w >= 0 (the band's edge, ALGEBRA.md 9.108 item 12): 1002 for [800, 809], 1015 for [800,
-    850] and 1000 for the massless pair at Gamma = 1000."""
+    """The guard's bound P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) is the last pace with
+    (S - 6 R) + 2 w >= 0 on the rule's coefficients (ALGEBRA.md 9.108 item 12): 1002 for [800, 809],
+    1015 for [800, 850], 1000 for [1, 1] at Gamma = 1000."""
     for pair, expected in (((800, 809), 1002), ((800, 850), 1015), ((1, 1), 1000)):
         bound = pace_bound(pair, CHAIN_GAMMA)
         assert bound == expected
@@ -112,13 +104,9 @@ def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
 
 
 def test_a_like_charge_hill_is_admitted_to_the_edge_and_refused_beyond_it_naming_the_node():
-    """On the charged chain of 60 (light bodies of charge +1 at [20, 30), the content and the
-    charge QUANTA there), a matter record of charge +1 reads c - Lambda d: at Lambda = 1 the
-    hill is filled to the vacuum's pace, p = Gamma = 1000 <= 1002, admitted over three
-    intervals; at Lambda = 3 it reads -2 QUANTA, p = 1020 beyond the edge 1002 of [800, 809],
-    refused naming a slab Node, where today's guard admits up to 2 Gamma and the rule's
-    checkerboard mode grows (the test above): a finding for the algebra, not a fix of the
-    world (record 2137)."""
+    """The charged chain of 60 (light bodies of charge +1 at [20, 30)): a matter record of charge +1
+    reads c - Lambda d; at Lambda = 1 p = Gamma = 1000 <= 1002, admitted; at Lambda = 3 p = 1020 beyond
+    the edge of [800, 809], refused naming a slab Node (a finding for the algebra, record 2137)."""
     admitted = DetectorLawSimulation(
         parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, 1, 1))
     )
@@ -135,10 +123,9 @@ def test_a_like_charge_hill_is_admitted_to_the_edge_and_refused_beyond_it_naming
 
 
 def test_the_guard_refuses_a_hill_beyond_the_stability_edge_naming_the_node():
-    """A hill (a negative weight) raises the pace above Gamma; the pair [800, 850] admits
-    it up to p^2 x 19500 <= Gamma^2 x 20100 (p = 1.0152 Gamma, ALGEBRA.md 9.108 item 12):
-    at Gamma = 10^4 a hill of 152 passes and 153 ends the run naming the Node; a hill of
-    10^8 is refused too (no square of a pace is ever formed, so nothing wraps)."""
+    """A hill raises the pace above Gamma; [800, 850] admits it up to p = 1.0152 Gamma (ALGEBRA.md 9.108
+    item 12): at Gamma = 10^4 a hill of 152 passes, 153 ends the run naming the Node, and 10^8 is
+    refused with no square of a pace formed."""
     left, right = stability_bound((800, 850), GAMMA)
     assert (left, right) == (19_500, GAMMA * GAMMA * 20_100) and pace_bound((800, 850), GAMMA) == 10_152
     term = SignedReadTerm(((1, -1, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA)
@@ -188,10 +175,9 @@ def test_a_massless_family_admits_no_hill_and_every_family_needs_a_pace_above_ze
 
 
 def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
-    """Three reads, two plain (2 a - 3 b) and one by "sign" at the weight 4 with q = -1 (+ 4 c),
-    sum per Node exactly; a family with no reads has the content 0 on the GameBoard's shape;
-    a read of a phase-2 family takes the argument the loop hands in, D_i = now^2 - next x
-    before, and the content is the weight times it (ALGEBRA.md 9.108 item 13)."""
+    """Three reads (2 a - 3 b plain, + 4 c by sign with q = -1) sum per Node exactly; no reads give 0 on
+    the GameBoard's shape; a phase-2 read takes D_i = now^2 - next x before as handed in, times the
+    weight (ALGEBRA.md 9.108 item 13)."""
     shape = (2, 1, 1)
     a = np.array([[[5]], [[7]]], dtype=np.int64)
     b = np.array([[[1]], [[-2]]], dtype=np.int64)
@@ -219,10 +205,9 @@ def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
 
 
 def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_by_name():
-    """A read by a word other than plain or sign is refused naming the family and the word,
-    never read as sign; a read whose weight times the argument's size reaches beyond int64
-    (D_i near 10^16 at the weight 1000) is refused before any product is formed; two reads
-    whose reach together leaves int64 are refused on the second, each admitted alone."""
+    """A read by a word other than plain or sign is refused naming the family and the word; a read
+    whose reach leaves int64 is refused before any product; two reads whose reach together leaves
+    int64 are refused on the second, each admitted alone."""
     shape = (2, 1, 1)
     level = np.array([[[3]], [[-4]]], dtype=np.int64)
     own = SignedReadOwn(0, "matter", 0)
@@ -256,9 +241,8 @@ def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_
 
 
 def test_the_declaration_is_the_ledgers_row():
-    """The folder declares the row of ALGEBRA.md 9.117: the name, the place (i), the four
-    reads in the row's words, the paces as its one write with no order, its function `apply`,
-    and its section with the word of 9.117 item 5, from the rule."""
+    """The folder declares the row of ALGEBRA.md 9.117: the name, the place (i), the four reads in the
+    row's words, the paces as its one write with no order, its function `apply`, its section."""
     assert DECLARATION.name == "the signed read"
     assert DECLARATION.place == "(i)"
     assert DECLARATION.reads == (

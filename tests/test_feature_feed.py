@@ -7,14 +7,13 @@ import pytest
 from event_universe.core.register import folder_of
 from event_universe.core.rule3 import THE_ADVANCE, THE_INVERSE, THE_LOAD
 from event_universe.features import feed, induction
-from event_universe.features.feed import FeedFace, FeedOwn, FeedRead, FeedStart
+from event_universe.features.feed import TENSOR_AXES, FeedFace, FeedOwn, FeedRead, FeedStart
 from event_universe.features.induction import InductionOwn, InductionRead, InductionStart
 
 GAMMA = 1000
 WALL = 3 * 7 * 65  # W = 3 Q M: a body of 65 quanta at the momentum unit 7
 ZERO3 = (0, 0, 0)
 ZERO6 = (0, 0, 0, 0, 0, 0)
-PAIRS = ((0, 0), (1, 1), (2, 2), (0, 1), (0, 2), (1, 2))
 
 
 def faces(minus: FeedRead, plus: FeedRead, nodes: int = 1) -> tuple[FeedFace, FeedFace]:
@@ -30,11 +29,10 @@ def induced(act, now, before, nodes, *reads) -> InductionStart:
 
 
 def test_a_body_falls_toward_content_the_same_for_every_body_over_the_faces_distance():
-    """The fall (ALGEBRA.md #the-well): a resting body between the time levels 400 behind and 460
-    ahead on x gets n_next = n_before + 2 W x 60 div (2 Gamma x 2), the remainder carried: the
-    velocity's change per interval is 60 / (4 Gamma) whatever W; a block whose faces are 4 Links
-    apart with 9 Nodes each (the levels summed) the same per Node over 4 Links; a hill (a negative
-    factor) pushes away; an axis with no faces is left alone; n moves to n_before."""
+    """The fall (ALGEBRA.md #the-well): a resting body between the time levels 400 behind and 460 ahead
+    on x gets n_next = n_before + 2 W x 60 div (2 Gamma x 2), the remainder carried, the same velocity
+    change whatever W; a block with 9-Node faces 4 Links apart the same per Node; a hill pushes away;
+    an axis with no faces is left alone; n moves to n_before."""
     for wall in (WALL, 5 * WALL):
         pair = faces(FeedRead(1, 400, ZERO3, ZERO6), FeedRead(1, 460, ZERO3, ZERO6))
         writes = feed.apply(start(THE_ADVANCE, (3, 5, 7), ZERO3, pair, wall=wall), FeedOwn({}))
@@ -50,14 +48,12 @@ def test_a_body_falls_toward_content_the_same_for_every_body_over_the_faces_dist
 
 
 def test_the_contraction_books_the_momentum_with_the_vector_and_tensor_parts_and_the_electric_identity():
-    """A moving body (n = (300, -200, 0)) between faces carrying a time level, a vector part and a
-    tensor part: the contraction is f x [t - (n_b V_b) div W + (n_b n_c h_bc) div W^2] in Python
-    integers, the off-diagonal pairs counted twice, and the feed its difference by the rule; THE
-    ELECTRIC IDENTITY (the row "the induction"): a time gradient of 120 over two faces 2 Links apart
-    and a vector part rising by 60 over the interval push a one-Node body alike, W x 60 per 2 Gamma per
-    interval (the feed's doubled term 2 W x 60 div 2 Gamma over its two intervals, rounded once), since E = -grad phi - dA/dt in one
-    unit; the induction reads minus the momentum part's change and pushes both integers; a block of
-    27 Nodes with the levels summed the same."""
+    """A moving body (n = (300, -200, 0)) between faces with time, vector and tensor parts: the contraction
+    f x [t - (n_b V_b) div W + (n_b n_c h_bc) div W^2] in Python integers (the off-diagonal pairs twice)
+    and the feed its difference; THE ELECTRIC IDENTITY: a time gradient of 120 over 2 Links and a vector
+    part rising by 60 push a one-Node body alike, W x 60 per 2 Gamma per interval (the feed's doubled
+    term rounded once), E = -grad phi - dA/dt in one unit; the induction pushes both integers; a block
+    of 27 Nodes with the levels summed the same."""
     n = (300, -200, 0)
     minus = FeedRead(2, 500, (7, -11, 13), (1, 2, 3, -4, 5, -6))
     plus = FeedRead(2, 530, (-9, 17, 19), (2, -3, 4, 5, -6, 7))
@@ -66,7 +62,8 @@ def test_the_contraction_books_the_momentum_with_the_vector_and_tensor_parts_and
     for read in (minus, plus):
         current = sum(n[b] * read.vector[b] for b in range(3))
         stress = sum(
-            n[b] * n[c] * h * (1 if b == c else 2) for (b, c), h in zip(PAIRS, read.tensor, strict=True)
+            n[b] * n[c] * h * (1 if b == c else 2)
+            for (b, c), h in zip(TENSOR_AXES, read.tensor, strict=True)
         )
         expected.append(
             read.factor * read.time - (read.factor * current) // WALL + (read.factor * stress) // WALL**2
@@ -94,9 +91,8 @@ def test_the_contraction_books_the_momentum_with_the_vector_and_tensor_parts_and
 
 
 def test_the_inverse_undoes_the_feed_and_the_induction_bit_for_bit_with_the_remainders():
-    """Three intervals forward on changing faces and fields, then the same three backward in the
-    reverse order with the same readings: the two integers of momentum and every carry are back at
-    the start, the numerators recomputed from the middle each time."""
+    """Three intervals forward on changing faces and fields, then the same three backward in the reverse
+    order: the two integers of momentum and every carry back at the start, the numerators recomputed."""
     readings = [
         (
             FeedRead(1, 400 + 7 * k, (3 * k, -k, 5), (k, 0, 1, 2, -k, 3)),
