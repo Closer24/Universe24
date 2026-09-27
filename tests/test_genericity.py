@@ -214,9 +214,6 @@ def draw(seed: int) -> dict[str, Any]:
                 "clicks": clicks(),
             }
         )
-    for entry in families:
-        if entry["reads"]:  # a family whose bodies read a dipole declares their span (9.78 (5))
-            entry["spins_step"] = {**entry.get("spins_step", {}), "span": 2}
     rng.shuffle(families)
     return {"seed": seed, "families": families, "roles": roles, "holders": holders}
 

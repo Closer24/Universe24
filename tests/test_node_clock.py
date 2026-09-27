@@ -71,19 +71,12 @@ def six_reads(levels: np.ndarray, wrap_x: bool) -> list[int]:
 
 
 def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_e_over_f():
-    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md 9.57 (1); BUILD.md section 26
-    item 44): on the periodic chain of 12 with QUANTA quanta held at every Node (the pace
-    (Gamma - c) / Gamma = 0.75), one step of the engine on random rows of light and of the
-    matter kind equals w a_next + r' = R S_6(a_now) + S a_now - w a_before + r with (R, S, w)
-    the rule's integers at the level and the remainder in [0, w), computed in Python
-    integers, and its inverse returns the rows bit for bit; on the same rows with no content the
-    levels are the plain rule's bit for bit and the remainder 2 Gamma^2 times the plain one (from
-    r = 0). (ii) THE ROTATION: a uniform
-    record (k = 0) of the matter kind at 2^20 turns with 2 cos omega' = 2 - (1 + f)(1 - num /
-    den), f = ((Gamma - c) / Gamma)^2 (the clock's second-order weight, 9.56 (4)), read from
-    three consecutive levels at a Node: 1.982617 at the pace 0.75 and 1.977750 = 2 num / den
-    in the vacuum, within 10^-5 over 60 intervals; the edge case: at the pace 1 / 2 (c =
-    Gamma / 2) 1.986094."""
+    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md 9.57 (1); BUILD.md section 26 item 44):
+    on the periodic chain of 12 with QUANTA quanta at every Node, one step of the engine on random rows
+    equals w a_next + r' = R S_6(a_now) + S a_now - w a_before + r in Python integers; with no content
+    the plain rule's levels bit for bit. (ii) THE ROTATION of a uniform record of the matter kind: 2 cos
+    omega' = 2 - (1 + f)(1 - num / den), f = ((Gamma - c) / Gamma)^2 (9.56 (4)): 1.982617 at the pace
+    0.75, 1.977750 in the vacuum, within 10^-5 over 60 intervals; at the pace 1 / 2, 1.986094."""
     rng = np.random.default_rng(11)
     for family, (num, den) in ((0, (1, 1)), (1, PAIR)):
         rows_now = rng.integers(-UNIT, UNIT, size=(12, 1, 1), dtype=np.int64)
@@ -502,17 +495,12 @@ def test_the_joint_step_inverts_bit_for_bit_wherever_the_clock_falls():
 
 
 def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_cannot_be():
-    """(ix) THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26 item 51):
-    the family whose level is the Node clock is the family declaring `held: "content"`, no
-    world key and no name in the engine; the world keys clock_family, charge_family and
-    charge_strength are refused by name (retired); a held family is refused with a pair other
-    than [1, 1] (the matter kind), with a quantum other than 1, with a clock of its own, with a
-    charge; two families holding the content are refused; a read naming a family that is not
-    held is refused, and a read naming no family; under the detector law a family without
-    `reads` is refused and the attributes are refused without the law; a measured event of a
-    held family, `held` naming it and an emitter given into it are refused; six families are
-    refused (the owner's cap of twenty, record 2081; the five of 9.48 HISTORY); a
-    world with the family declared loads, its index among the engine's held families."""
+    """(ix) THE FAMILY GENERICITY (record 2066; item 51): the family whose level is the Node clock is the
+    one declaring `held: "content"`, no world key, no name in the engine; refused by name: the retired
+    world keys, a held family with a quantum other than 1, a clock of its own or a charge, two families
+    holding the content, a read naming a family not held or none, a family without `reads` under the law,
+    a measured event of a held family, `held` naming it, an emitter given into it, six families (the cap
+    of twenty, record 2081); a world with the family declared loads, its index among the held."""
     good = content_chain(12, PERIODIC, [], 1)
     parse_nature_beam_world(good)
     for key, value in (("clock_family", "clicks"), ("charge_family", "charge"), ("charge_strength", 1)):
@@ -536,13 +524,6 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     unheld["universe"][0]["reads"][0]["family"] = "matter"
     with pytest.raises(ValueError, match="reads names 'matter', which is not held"):
         parse_nature_beam_world(unheld)
-    massive = json.loads(json.dumps(good))
-    massive["universe"][1]["held"] = "content"
-    massive["universe"][1]["reads"] = []
-    with pytest.raises(
-        ValueError, match="is held with the pair \\[800, 809\\]: a held family is massless"
-    ):
-        parse_nature_beam_world(massive)
     quantum = json.loads(json.dumps(good))
     quantum["universe"][2]["quantum"] = 2
     with pytest.raises(ValueError, match="counted in quanta, one click one unit"):
@@ -601,3 +582,26 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
         parse_nature_beam_world(many)
     world = parse_nature_beam_world(good)
     assert world.held_families == (2, 3) and DetectorLawSimulation(world).held_families == [2, 3]
+
+
+def test_a_held_family_steps_at_the_pair_its_row_declares():
+    """THE HELD FAMILY'S PAIR IS ITS ROW'S (the model owner, 2026-09-27; ALGEBRA.md #the-line): the
+    family holding the content at [1, 2], [3, 5] and [800, 809] loads, and one field step on random
+    levels is 3 den a_next + r' = num S_6(a_now) - 3 den a_before + r bit for bit; [1, 1] the same."""
+    rng = np.random.default_rng(5)
+    for num, den in ((1, 1), (1, 2), (3, 5), (800, 809)):
+        document = content_chain(12, PERIODIC, [3], 5)
+        document["universe"][2]["pair"] = [num, den]
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+        family = next(f for f in simulation.held_records if simulation.families[f].held == "content")
+        record = simulation.held_records[family]
+        assert simulation.families[family].pair == (num, den) and record.pair is None
+        record.now[:], record.before[:] = rng.integers(-20, 20, size=(2, *record.now.shape))
+        record.remainder[:] = rng.integers(0, 3 * den, size=record.now.shape)
+        now, before, remainder = record.now.copy(), record.before.copy(), record.remainder.copy()
+        simulation._advance(record)
+        for x, read in enumerate(six_reads(now, True)):
+            total = num * read - 3 * den * int(before[x, 0, 0]) + int(remainder[x, 0, 0])
+            level, rest = divmod(total, 3 * den)
+            assert (int(record.now[x, 0, 0]), int(record.remainder[x, 0, 0])) == (level, rest)
+        assert np.array_equal(record.before, now)

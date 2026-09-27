@@ -51,7 +51,8 @@ RULE_ARITHMETIC = (
     r"now \* now \+ before \* before",
 )
 RULE_HOME = PACKAGE / "core" / "rule3.py"
-LEVEL_SHIFT = re.compile(r"np\.roll\(|self\._shift\(")
+LEVEL_SHIFT = re.compile(r"np\.roll\(|self\._shift\(|\.take\(")
+SHIFT_HOME = PACKAGE / "core" / "ports.py"
 COUNTS = (
     "lines",
     "docstring_lines",
@@ -107,7 +108,9 @@ def shape_of(root: Path, path: Path) -> dict[str, int]:
         "comment_lines": len(comment_lines),
         "record_references": len(RECORD_REFERENCE.findall(text)),
         "rule_arithmetic_sites": arithmetic,
-        "level_shift_sites": len(LEVEL_SHIFT.findall(text)),
+        "level_shift_sites": (
+            0 if path.resolve() == (root / SHIFT_HOME).resolve() else len(LEVEL_SHIFT.findall(text))
+        ),
         "multi_line_docstrings": multi_line,
     }
 

@@ -71,11 +71,11 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/detector_law.py": {
-   "comment_lines": 646,
-   "docstring_lines": 566,
-   "level_shift_sites": 15,
-   "lines": 3881,
-   "record_references": 33,
+   "comment_lines": 634,
+   "docstring_lines": 473,
+   "level_shift_sites": 0,
+   "lines": 3831,
+   "record_references": 28,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/primitives.py": {
@@ -90,7 +90,7 @@
    "comment_lines": 473,
    "docstring_lines": 400,
    "level_shift_sites": 0,
-   "lines": 3420,
+   "lines": 3407,
    "record_references": 45,
    "rule_arithmetic_sites": 0
   },
@@ -103,14 +103,6 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/features/clicks_list/__init__.py": {
-   "comment_lines": 0,
-   "docstring_lines": 6,
-   "level_shift_sites": 0,
-   "lines": 20,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
-  "src/event_universe/features/feed/__init__.py": {
    "comment_lines": 0,
    "docstring_lines": 6,
    "level_shift_sites": 0,
@@ -131,14 +123,6 @@
    "docstring_lines": 7,
    "level_shift_sites": 0,
    "lines": 28,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
-  "src/event_universe/features/induction/__init__.py": {
-   "comment_lines": 0,
-   "docstring_lines": 6,
-   "level_shift_sites": 0,
-   "lines": 20,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },

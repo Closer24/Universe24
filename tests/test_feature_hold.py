@@ -1,9 +1,6 @@
-"""THE HOLD, its own folder (ALGEBRA.md 9.117 the row "the hold"; 9.91 (3); 9.119 item 2; the
-Boss's record 2250): every division through core.rule3 (the division act forward, the state
-stepped back by the direction -1); forward then back returns the state exactly; the dipole's
-terms are 9.91 (3)'s table; the refusals by name; the declaration the ledger's row. The hold is
-bound (#1231): the loop's hold forward and backward is this folder's line, pinned by every shipped
-world's digest and by tests/test_board_reversible.py."""
+"""THE HOLD, its own folder (ALGEBRA.md 9.117 the row "the hold"; 9.91 (3); record 2250): every division
+through core.rule3, forward then back exact; the dipole's terms 9.91 (3)'s table; the refusals; the card,
+bound (#1231): the loop's hold is this folder's line, pinned by every shipped world's digest."""
 
 from __future__ import annotations
 
@@ -36,9 +33,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_first_value_twice():
-    """Rule3's division act forward and its direction -1 back: from any (value, carry) with the
-    carry below the wall, an advance then an inverse returns the state; the value before is
-    the ceiling form; at the load both levels are the first value; a rewrite repeats it."""
+    """Rule3's division act forward and its direction -1 back: an advance then an inverse returns the
+    state; the value before is the ceiling form; at the load both levels are the first value."""
     rng = random.Random(7)
     for _ in range(300):
         wall = rng.randint(1, 10**6)
@@ -66,10 +62,8 @@ def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_fir
 
 
 def test_the_dipoles_terms_are_the_table_of_9_91_3():
-    """A spin S at the body's Node writes sigma x (S x e_j)_i at the Node + sigma e_j: S x e_x =
-    (0, S_z, -S_y), S x e_y = (-S_z, 0, S_x), S x e_z = (S_y, -S_x, 0); the charge's moment the
-    same over the divisor 2 with the remainder carried; a zero vector or a family without a
-    vector part writes no dipole; the unhold steps the divisions back."""
+    """A spin S at the body's Node writes sigma x (S x e_j)_i at the Node + sigma e_j (S x e_x = (0, S_z,
+    -S_y) and cyclic); the moment the same over the divisor 2; a zero vector writes no dipole."""
 
     def cross(vector, j):
         out = [0, 0, 0]
@@ -152,9 +146,8 @@ def test_the_refusals_by_name():
 
 
 def test_the_declaration_is_the_ledgers_row():
-    """ "the hold" at (iv), the word the right side, the writes a family's level at a Node and a
-    body's remainders (the order the step file's), its function `apply`; the engine's register finds
-    the folder bound: the loop calls `apply` itself, no binder."""
+    """ "the hold" at (iv), the word the right side, the writes a family's level at a Node and a body's
+    remainders, its function `apply`; the register finds the folder bound: the loop calls `apply`."""
     assert DECLARATION.name == "the hold" and folder_of("the hold") == "hold"
     assert DECLARATION.place == "(iv)" and DECLARATION.word == "the right side"
     assert DECLARATION.writes == ("a family's level at a Node", "a body's remainders")

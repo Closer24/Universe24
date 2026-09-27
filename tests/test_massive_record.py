@@ -521,7 +521,6 @@ def block_world(
     where a test names none: no loader default, BUILD.md section 26 item 28) and the face
     slab is one Node deep where the board is open."""
     matter: dict = {"name": "matter", "quantum": 1, "pair": kind, "charge": 0, "reads": reads()}
-    matter["spins_step"] = {"span": 2}  # the leapfrog's span of its bodies' spin (9.78 (5))
     # light on the given clock [512, 1] of N = 1024 (the given train, ALGEBRA.md 9.17 (6a))
     families = [
         {
@@ -531,7 +530,6 @@ def block_world(
             "phase_per_link": [512, 1],
             "charge": 0,
             "reads": reads(),
-            "spins_step": {"span": 2},
         },
         matter,
     ]

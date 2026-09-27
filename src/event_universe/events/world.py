@@ -445,10 +445,9 @@ class FamilyDefinition:
     held_factors: tuple[int, ...] = (1,)
     held_dipole: str | None = None
     held_dipole_div: int = 1
-    # the spin's step's row (9.78 (5)): a spin's family's curl and tidal weights as pairs; the
-    # bodies' family's span of the leapfrog (the two intervals)
-    spins_step: tuple[tuple[int, int], tuple[int, int]] | None = None
-    span: int | None = None
+    # the spin's step's row (9.78 (5)): a family holding the spin's dipole declares the curl's and
+    # the tidal term's weights as pairs (spins_step); the step's span is core's SPAN
+    spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
     # the self-source's unit P_2 (9.78 (3), 9.91 (5)): 0, off
     self_unit: int = 0
     # THE CLICKS (9.79 (1), 9.91 (7)): (gives, takes) for a family of records,
@@ -1491,8 +1490,7 @@ def _families(
             held_factors=attributes.held_factors,
             held_dipole=attributes.held_dipole,
             held_dipole_div=attributes.held_dipole_div,
-            spins_step=attributes.spins_step,
-            span=attributes.span,
+            spin_weights=attributes.spin_weights,
             self_unit=attributes.self_unit,
             clicks=attributes.clicks,
             pair_on_body=family.pair_on_body,
@@ -1517,8 +1515,7 @@ class FamilyAttributes(NamedTuple):
     held_factors: tuple[int, ...]
     held_dipole: str | None
     held_dipole_div: int
-    spins_step: tuple[tuple[int, int], tuple[int, int]] | None
-    span: int | None
+    spin_weights: tuple[tuple[int, int], tuple[int, int]] | None
     self_unit: int
     clicks: tuple[bool, bool] | None
     reads: list[tuple[str, int, str, int | str]]
@@ -1598,17 +1595,16 @@ def _family_generic(obj: dict[str, object], label: str) -> FamilyAttributes:
             )
     if "held_dipole_div" in obj:
         held_dipole_div = _integer(obj["held_dipole_div"], f"{label}.held_dipole_div", 1)
-    spins_step = span = None
+    spin_weights = None
+    if held_dipole == "spin" and "spins_step" not in obj:  # no default: the two weights are the row's
+        raise ValueError(f"{label} holds the spin's dipole and lacks spins_step (9.78 (5))")
     turn = {"curl", "tidal"} if held_dipole == "spin" else set()
-    if turn or "spins_step" in obj:  # no default: a spin's family its two pairs, a bodies' its span
-        row = _object(obj.get("spins_step", {}), f"{label}.spins_step", turn | {"span"}, turn)
-        if turn:
-            pairs = cast(list[list[int]], [row["curl"], row["tidal"]])
-            if any(len(p) != 2 or any(type(v) is not int or v < 1 for v in p) for p in pairs):
-                raise ValueError(f"{label}.spins_step.curl and .tidal are pairs of integers from 1")
-            spins_step = ((pairs[0][0], pairs[0][1]), (pairs[1][0], pairs[1][1]))
-        if "span" in row:
-            span = _integer(row["span"], f"{label}.spins_step.span", 1)
+    if "spins_step" in obj:  # on a family without the spin's dipole the row is read by no line
+        row = _object(obj["spins_step"], f"{label}.spins_step", turn, turn)
+        pairs = cast(list[list[int]], [row["curl"], row["tidal"]])
+        if any(len(p) != 2 or any(type(v) is not int or v < 1 for v in p) for p in pairs):
+            raise ValueError(f"{label}.spins_step.curl and .tidal are pairs of integers from 1")
+        spin_weights = ((pairs[0][0], pairs[0][1]), (pairs[1][0], pairs[1][1]))
     clicks: tuple[bool, bool] | None = None
     if "clicks" in obj:
         value = _object(obj["clicks"], f"{label}.clicks", {"gives", "takes"}, {"gives", "takes"})
@@ -1671,7 +1667,7 @@ def _family_generic(obj: dict[str, object], label: str) -> FamilyAttributes:
             "level (ALGEBRA.md 9.45 (2); BUILD.md section 26 item 51)"
         )
     found = (held, parts, levels, held_factors, held_dipole, held_dipole_div)
-    return FamilyAttributes(*found, spins_step, span, self_unit, clicks, reads)
+    return FamilyAttributes(*found, spin_weights, self_unit, clicks, reads)
 
 
 def _resolve_reads(
@@ -1690,22 +1686,16 @@ def _resolve_reads(
 
 
 def _held_family_shapes(families: tuple[FamilyDefinition, ...]) -> None:
-    """A held family's shape by attribute (ALGEBRA.md 9.41 (3), 9.45 (1),
-    9.48 (2); item 51): the pair [1, 1] (massless: the only pair whose
-    static solutions reach), the quantum 1 (one click writes one unit), no
-    clock of its own (it givings nothing), its own charge 0 (its level is
-    the source it holds, it carries none); a read names a held family; under the
-    detector law at most one family holds each source (the level every
-    other family reads is one array)."""
+    """A held family's shape by attribute (ALGEBRA.md #a-familys-declaration; item 51):
+    its field steps at the pair its row declares, [1, 1] or any other (no
+    shortcut: the model owner, 2026-09-27), the quantum 1 (one click writes
+    one unit), no clock of its own (it givings nothing), its own charge 0 (its
+    level is the source it holds, it carries none); a read names a held family;
+    under the detector law at most one family holds each source (the level
+    every other family reads is one array)."""
     for index, family in enumerate(families):
         label = f"families[{index}] ({family.name!r})"
         if family.held is not None:
-            if family.pair != MASSLESS_PAIR:
-                raise ValueError(
-                    f"{label} is held with the pair {list(family.pair)}: a held family "
-                    "is massless, its pair [1, 1], the only pair whose static field reaches "
-                    "(ALGEBRA.md 9.41 (3), 9.45 (1))"
-                )
             if family.quantum != 1:
                 raise ValueError(
                     f"{label} is held with the quantum {family.quantum}: a held family "
@@ -2403,9 +2393,6 @@ def _measured(
         if not isinstance(family_name, str) or family_name not in names:
             raise ValueError(f"{label}.family names an unknown family")
         family = names[family_name]
-        reading = families[family]  # no default (9.78 (5)): a body reading a dipole has the spin's step
-        if reading.span is None and any(families[o].held_dipole for o, *_ in reading.reads):
-            raise ValueError(f"{label}.family {family_name!r} reads a dipole, no spins_step.span")
         amount = _integer(obj["amount"], f"{label}.amount", 1)
         held = [0] * len(families)
         held[family] = amount

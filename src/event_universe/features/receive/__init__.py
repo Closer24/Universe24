@@ -7,7 +7,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.game_board import PORT_HEADINGS
+from event_universe.core.ports import port_of
 from event_universe.core.register import Declaration
 from event_universe.core.rule3 import rule3
 
@@ -15,8 +15,8 @@ PORTS = ("+x", "-x", "+y", "-y", "+z", "-z")
 
 
 def heading(port: int) -> tuple[int, int]:
-    """The Port's axis and side from the six Ports' table (core.game_board.PORT_HEADINGS)."""
-    return next((axis, side) for axis, side in enumerate(PORT_HEADINGS[port]) if side)
+    """The Port's axis and side, read off the six Ports' one table (core.ports.port_of)."""
+    return next((axis, side) for axis in range(3) for side in (1, -1) if port_of(axis, side) == port)
 
 
 Triple = tuple[Any, Any, Any]
