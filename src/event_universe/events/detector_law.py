@@ -90,6 +90,7 @@ from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
 from event_universe.events.output import form_json as form_json
 from event_universe.features import self_source
+from event_universe.features import signed_read as sr
 from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
 from event_universe.features.giving import (
     THE_CLOSE,
@@ -102,7 +103,6 @@ from event_universe.features.giving import (
 )
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
-from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
 from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
 from event_universe.features.spins_step import (
     KEYS,
@@ -122,9 +122,7 @@ from event_universe.loader.world import (
 
 Record = Callable[[dict[str, object]], None]
 
-# ONE ENGINE, NO LAW'S NAME AND NO VERSION (ALGEBRA.md #the-primitives): the constant
-# that named the law and its version ("detector-law-v1") is CANCELLED; the books
-# and the state carry no law entry
+# ONE ENGINE, NO LAW'S NAME AND NO VERSION (ALGEBRA.md #the-primitives): the constant that named the law and its version is CANCELLED; the books and the state carry no law entry
 FACE_NAMES = ("face:-x", "face:+x", "face:-y", "face:+y", "face:-z", "face:+z")
 # The receiver's take (DESIGN.md sections 1 and 5): a Node that receives does not send the wave back (a mirror is a receiver body that re-emits, never a wall). The record's row at a receiver holds one amplitude per Port that faces a free Node (the NodeState's Ports), the wave entering by that Port, following it one way: g(t + 1) = a_f(t) + k (a_f(t + 1) - g(t)) with a_f the free neighbour's amplitude and k = (c - 1) / (c + 1) at c = 1 / sqrt 3, the declared pair [-15, 56] (-0.2679 against sqrt 3 - 2 = -0.2679), a rounding declared at load, not a root at run time; the free neighbour reads g as the receiver's amplitude on that Link, and the receiver books g^2 as the offer arriving by that Port.
 
@@ -1070,19 +1068,21 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return self.node_clock - int(self._effective_content(family)[node]), self.node_clock
 
     def _effective_content(self, family: int) -> np.ndarray:
-        """The content a record of `family` reads at every Node, the signed read's own `content_of` (features/signed_read; ALGEBRA.md #the-primitives row 1, ALGEBRA.md #the-paces), one array per family per interval."""
+        """The content a record of `family` reads at every Node, the folder's `apply` (features/signed_read, the function the main loop looked up at (i); ALGEBRA.md #the-primitives row 1, #the-paces) with its floor and guard, one array per family per interval; zeros for a family with no read."""
         cached = self._effective.get(family)
         if cached is not None:
             return cached
         definition = self.families[family]
-        term = SignedReadTerm(
-            tuple((other, weight, by) for other, weight, by, _twist in definition.reads),
-            self.family_charge[family],
-            (int(definition.pair[0]), int(definition.pair[1])),
-            self.node_clock,
-        )
-        levels = {family: read_only(level) for family, level in self.node_level.items()}
-        content = content_of(term, SignedReadStart(self.shape, levels, None))
+        content = np.zeros(self.shape, dtype=np.int64)
+        if definition.reads:
+            read = self.main_loop.function_of("the signed read", "(i)")
+            pair = (int(definition.pair[0]), int(definition.pair[1]))
+            reads = tuple((other, weight, by) for other, weight, by, _twist in definition.reads)
+            term = sr.SignedReadTerm(reads, self.family_charge[family], pair, self.node_clock)
+            levels = {family: read_only(level) for family, level in self.node_level.items()}
+            start = sr.SignedReadStart(self.shape, levels, None)
+            own = sr.SignedReadOwn(family, definition.name, self.tick)
+            content = cast(sr.SignedReadWrites, read(term, start, own)).content
         content.flags.writeable = False
         self._effective[family] = content
         return content
