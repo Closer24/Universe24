@@ -6,9 +6,9 @@ scalar is written plain, a vector in bold lowercase (**n**), a matrix or
 an operator in bold uppercase (**C**). A line that no longer holds is
 not in this document.
 
-## 1. The GameBoard, the families and the interval
+## The GameBoard and the families
 
-### 1.1 The physical objects
+### The objects
 
 A **Node** is a physical location. The **GameBoard** is the lattice of
 Nodes, a box of `shape` = (N_x, N_y, N_z) Nodes; each axis is periodic
@@ -20,28 +20,28 @@ each of its six **Ports**, named by their outward direction +x, -x, +y,
 itself. The local information of a Node is its **NodeState**: the
 levels and remainders of the families at that Node, and nothing else.
 A change of a NodeState is an **Event**; the rule that makes it is a
-**LocalRule**, and there is one LocalRule, Rule3 (section 2).
+**LocalRule**, and there is one LocalRule, Rule3 ([Rule3](#rule3)).
 
 A **family** is one kind of physical value with its own declarations
-(section 1.2). A family's **record** is a set of levels over the
+([a family's declaration](#a-familys-declaration)). A family's **record** is a set of levels over the
 GameBoard, one integer per Node per level, with a remainder per Node; a
 family with two levels per Node holds a **pair** (re, im) at each Node.
 A **body** is a set of Nodes on which a family's **count** stands, with
 the values the body's writer declares (its content, its momentum, its
 spin, its moment); a body is one connected region.
 
-### 1.2 What a family declares
+### A family's declaration
 
 Every physical number comes from the world's files: the universe file
 (the families and the universe's integers) and the world file (the
 bodies, the detectors, the readings). The engine holds no number of its
-own; a scale that is no physics (the amplitude unit A of section 6, a
+own; a scale that is no physics (the amplitude unit A of [the generator](#the-generator) (f), a
 product bound) is derived from the integer width, never written.
 
 The universe's integers: the Node clock Gamma (the pace of an empty
 Node, every family's clock unit); the amplitude bound A_bound, the
 largest level a record may reach before the run is refused; Lambda, the
-charge's weight; the momentum unit Q; the twist table (section 2.6).
+charge's weight; the momentum unit Q_unit; the twist table ([the transport](#the-transport)).
 
 A family's row: its parts (1 for a scalar; [1, 3] a time part and a
 vector; [1, 3, 6] a time part, a vector and a symmetric tensor); its
@@ -56,7 +56,7 @@ one integer per family, the action of one quantum). T is a declaration:
 Rule3 is linear and its form's scale is free, so no line of Rule3 fixes
 T; nature pins it and no body declares it.
 
-### 1.3 The interval and its five places
+### The interval
 
 The engine steps every family from the state at the interval's start to
 the state at its end. Every read is of the start's values: the six
@@ -80,20 +80,20 @@ read at the start, its digest in every run's output. A click's writes
 enter at the next interval. Backward, the places run in reverse order
 and each primitive runs its own inverse.
 
-### 1.4 Readings and measurements
+### Readings and measurements
 
 A **measurement** is a detector's click: the one act of the law on the
 state that ends a record at the detector and changes the detector's own
-record (section 4). Only a measurement is compared with nature. A
+record ([the count's line](#the-counts-line)). Only a measurement is compared with nature. A
 **GameBoard reading** (a level, a support, a total, a body's centre) is
 a diagnostic and is labelled so wherever it appears; a number whose kind
 is not named is not a result. Displays read state and write nothing.
 Every run is headless; the readings are declared in the world file and
 written in one format, each labelled DETECTOR, GAMEBOARD or HOST.
 
-## 2. Rule3: one line at every Node
+## Rule3
 
-### 2.1 The line
+### The line
 
 Every family, at every Node, with the wall w, the read coefficient R_a
 on each axis a, the self coefficient S, the level a_now at the interval's
@@ -104,11 +104,11 @@ Node:
   0 <= r' < w,
 
 arr_(±a) the **arrival** through the Port ±a: the neighbour's level, or
-its rotation by the Link's angle (section 2.6); 0 beyond an open face;
+its rotation by the Link's angle ([the transport](#the-transport)); 0 beyond an open face;
 the Node's own level on a folded axis. The remainder r is the Node's own
 and never travels.
 
-The coefficients at a Node, from its paces (section 2.4) and its
+The coefficients at a Node, from its paces ([the paces](#the-paces)) and its
 family's pair [num, den]:
 
   w   = 6 den Gamma^2,
@@ -121,10 +121,11 @@ six-neighbour coupling, the rotation omega_0 with cos omega_0 = num /
 den at wave number zero. The field families (phase 1, held) step with
 the pace 1 and the wall 3 den, the same line at first order.
 
-### 2.2 The direction: forward and backward are one line
+### The direction
 
 Let sigma be the direction, +1 forward and -1 backward, and let div and
-mod be the floor division and its remainder in [0, w). With
+mod be the floor division and its remainder in [0, w), and rho the
+remainder carried in. With
 
   u = sigma (SUM_a R_a arr_a + S x - w y) + rho,
   z = sigma (u div w),  rho' = u mod w,
@@ -133,17 +134,17 @@ forward (x, y, rho) = (a_now, a_before, r) gives (z, rho') = (a_next, r');
 backward (x, y, rho) = (a_now, a_next, r') gives (z, rho') = (a_before, r).
 
 PROOF. Forward, sigma = 1, the line is the definition of div and mod.
-Backward, sigma = -1: write T for the right side's first two terms, SUM_a
-R_a arr_a + S a_now. Then u = w a_next - T + r', and z = -floor(u / w) =
-ceil((T - w a_next - r') / w). From the forward line, T - w a_next - r' =
+Backward, sigma = -1: write Y for the right side's first two terms, SUM_a
+R_a arr_a + S a_now. Then u = w a_next - Y + r', and z = -floor(u / w) =
+ceil((Y - w a_next - r') / w). From the forward line, Y - w a_next - r' =
 w a_before - r with 0 <= r < w, whose ceiling divided by w is a_before
-exactly; and rho' = u - w floor(u / w) = w a_before - (T - w a_next - r')
+exactly; and rho' = u - w floor(u / w) = w a_before - (Y - w a_next - r')
 = r. So the backward call returns (a_before, r) bit for bit; the
 reversibility of every run needs no second function. Checked bit for
-bit on 20,000 random cases against the two separate functions the
-engine once held.
+bit on 20,000 random cases against a forward and a backward function
+written separately.
 
-### 2.3 The four acts of Rule3, and what they compose
+### The four acts
 
 Rule3's line is one act; declared coefficients make it four:
 
@@ -177,8 +178,8 @@ comes from the acts alone.
 
 What the theorem separates: every product of two levels in the engine
 is a **booking**, a reading of a bilinear form with declared
-coefficients and no write (section 4.1); the one thing written from a
-product is the count, by the count's line (section 4.3), and that
+coefficients and no write ([the booking](#the-booking)); the one thing written from a
+product is the count, by the count's line ([the count's line](#the-counts-line)), and that
 product is Rule3's own conserved current.
 
 THE THREE TESTS OF EVERY RULE. A line enters the law only if it is
@@ -188,7 +189,7 @@ local (its own record and the six neighbours, nothing kept at a Node
 beyond the law's numbers). A hypothesis that needs more is stated under
 its own name, outside the law.
 
-### 2.4 The paces: the signed read
+### The paces
 
 The **pace** of a Node for a family is what its reads make of the Node
 clock:
@@ -204,30 +205,35 @@ no reads steps at p_0 = p_a = Gamma, the plain rule. The clock's slowing
 is this pace: a record at a Node of pace p rotates and moves as a record
 at Gamma does, with its intervals p / Gamma as long.
 
-THE GUARD, two-sided: 0 < p <= Gamma at every Node. Below 0 the pace is
-no clock; above Gamma the step is unstable: the mode at wave number pi
-has the factor (S - 6 R) / w, which is -2 num / den at p = Gamma and
-falls below -2 once p^2 / Gamma^2 exceeds (24 den - 6 (den - num)) /
-(6 (den - num) + 24 num), so the record grows without bound. A hill
-lessens a hollow and never exceeds it; a pace outside the guard refuses
-the run naming the Node.
+THE GUARD, two-sided: 0 < p <= P at every Node, with the edge
+
+  P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)),
+
+above Gamma where num < den. Below 0 the pace is no clock; beyond P the
+step is unstable: the mode at wave number pi has the factor (S - 6 R) /
+w, which is -2 num / den at p = Gamma and falls below -2 once p^2 /
+Gamma^2 exceeds (18 den + 6 num) / (18 num + 6 den), so the record grows
+without bound; P is the largest pace at which p^2 (18 num + 6 den) <=
+Gamma^2 (18 den + 6 num) holds exactly. A hill lessens a hollow and
+never exceeds it; a pace outside the guard refuses the run naming the
+Node.
 
 A body is a balance of a hollow and a hill of different ranges: a
 hollow alone in three dimensions binds no record (it collapses into its
 own well or disperses); gravity is the one-signed exception. This is a
 theorem of the rule read from its runs, not a line added to it.
 
-### 2.5 The bound of the integers
+### The bound
 
 The rule's total at a Node whose levels and arrivals stand at the
 amplitude A is at most 6 A |R| + A |S| + w (A + 1). Every world declares
 integers under which this total sits below 2^63 - 1, the width of the
 engine's integers, or the loader refuses it naming the total; the
 generator's amplitude unit is the largest A that keeps it inside
-(section 6.3). With Gamma = 10^4 and A = 2^20 the total is near 3 x
+([the generator](#the-generator) (f)). With Gamma = 10^4 and A = 2^20 the total is near 3 x
 10^18, one third of the room.
 
-### 2.6 The transport: the arrival through a Port
+### The transport
 
 A family with a pair (re, im) at each Node and a read with a twist turns
 its arrivals by the Link's angle. On the Port along axis a in the sense
@@ -248,7 +254,7 @@ d) for k < 0 and (1, 0, 1) at k = 0; a k beyond the coarse table, or any
 k on a world without a table, refuses the run naming the Port. The
 arriving pair is rotated to the nearest unit:
 
-  T_re = (2 c re - 2 s im + d) div 2 d,   T_im = (2 s re + 2 c im + d) div 2 d,
+  R_re = (2 c re - 2 s im + d) div 2 d,   R_im = (2 s re + 2 c im + d) div 2 d,
 
 two read acts of Rule3 with the coefficients (2c, -2s) and (2s, 2c) on
 the two arrivals, the load d, the wall 2 d, the remainder not kept: a
@@ -261,7 +267,7 @@ wavelength on light's dispersion (light), so no per-world number is
 declared. The charge's twist on a charged record is Lambda times "own",
 by q: no separate number exists.
 
-### 2.7 The second level and the self-source
+### The second level
 
 A phase-2 family runs the line of 2.1 on each of its two levels with the
 transported arrivals; with no twist the second level stays exactly zero
@@ -275,7 +281,7 @@ difference is a read act, its square a booking of the family's own
 levels, the division Rule3's with the remainder not kept; P_2 = 0 turns
 the line off, and a nonzero P_2 stands at or above 24 A_bound.
 
-### 2.8 The conserved form
+### The conserved form
 
 The read matrix 2 num p_i^2 is not symmetric where the paces differ, so
 the form carries the weight 1 / p_i^2 on the Node terms and the plain
@@ -287,7 +293,7 @@ S_6 the sum over the six neighbours. E is exact where the paces stand and
 changes by the work term where they move; it is a GameBoard reading.
 Its Link term, the plain current num (now_i before_j - before_i now_j)
 through the Link ij, is the current of Rule3's own conservation law and
-the one product the click reads (section 4).
+the one product the click reads ([the count's line](#the-counts-line)).
 
 PROOF at constant paces. Without the rounding the line is a_next +
 a_before = **M** a_now with **M** the matrix whose diagonal is S_i / w
@@ -303,32 +309,36 @@ a_now = a_before . **D** a_before - a_before . **D M** a_now, which
 is the other side. Multiplied by w this is E up to the Link term's
 sign convention. With the rounding, each Node's remainder adds at most
 one unit of the level per interval to the walk of E.
-## 3. The click and the count's line
+## The click
 
-### 3.1 The booking: the current through a Link
+### The booking
 
-The **current** of a record through the Link from Node i to Node j over
-an interval is the bilinear form of its two levels at the two ends,
+The **current** of a record into Node i from its neighbour j through
+their Link over an interval is the bilinear form of its two levels at
+the two ends,
 
   F_ij = weight x (now_i before_j - before_i now_j),
 
 the pair's second level added (im_now_i im_before_j - im_before_i
-im_now_j), the weight the family's num in the form's units; it is
-antisymmetric, F_ji = -F_ij, and it is the Link term of the conserved
-form of section 2.8: the current of Rule3's own conservation law. The
-booking reads it at a Port and writes nothing.
+im_now_j), the weight the family's common wall in the form's units (its
+num where one pair stands); positive inward, as the ladder reads it: a
+record of wave number k travelling from i to j has F_ij = -2 weight x
+|psi|^2 sin omega sin k, below 0. It is antisymmetric, F_ji = -F_ij, and
+it is the Link term of the conserved form of [the conserved form](#the-conserved-form): the current of
+Rule3's own conservation law. The booking reads it at a Port and writes
+nothing.
 
-### 3.2 The count's line
+### The count's line
 
 The **family of clicks** is one family like every other: its level at a
 Node is the **count** c, the number of quanta there; its wall is T, the
 quantum's norm; its read is the current. At every Node,
 
-  T c_next + r' = T c_now + SUM_a (F_a^- - F_a^+) + r,   0 <= r' < T,
+  T c_next + r' = T c_now + SUM_j F_ij + r,   0 <= r' < T,
 
-F_a^- the current entering through the Port -a and F_a^+ the current
-leaving through the Port +a over the interval, r the remainder kept at
-the Node: Rule3 with the coefficient 1 on each axis's net current, T on
+the sum over the six Ports of the current into the Node from its
+neighbour over the interval, r the remainder kept at the Node: Rule3
+with the coefficient 1 on each axis's inflow through its two Ports, T on
 the count and the wall T. The **click** is the division: a quantum moves
 whole from one Node to the next exactly when the remainder crosses T,
 and never a fraction of one. The record ends where its last quantum
@@ -340,13 +350,16 @@ count follows its record's current at every Node, one quantum at a
 time, so a body moves without any accumulator of its position.
 
 THE REMAINDER'S ORIGIN. The remainder at a Node starts at the ladder's
-origin, (2 u + 1) T div 2 with u the record's residue (section 3.3):
+origin, (2 u + 1) T div 2 with u the record's residue ([the ladder](#the-ladder)):
 started at 0, a Node with no quantum reads the count -1 at its first
 outward swing (T c + r below 0), a hole the line conserves and nature
-does not show.
+does not show. A body's count is laid with its record: at every Node
+T c + r is the Node's share of the record's form plus the origin, so
+the count follows the norm with the margin T / 2 against the rounding's
+walk.
 
 THE INVERSE is the same line with the current reversed: T c_now + r =
-T c_next + r' - SUM_a (F_a^- - F_a^+), exact, the currents read from the
+T c_next + r' - SUM_j F_ij, exact, the currents read from the
 interval's levels as the forward step read them.
 
 THEOREM (the count is conserved). Over any region of Nodes, SUM (T c_i +
@@ -356,7 +369,7 @@ boundary Links.
 PROOF. Summing the line over the region, each interior Link's current
 enters one Node's right side as +F and its neighbour's as -F and
 cancels; what remains is the sum over the boundary Links, a telescoping
-sum, exact in integers. On a periodic board with no boundary the sum is
+sum, exact in integers. On a periodic GameBoard with no face the sum is
 constant to the bit.
 
 THE VELOCITY. The record's wave number is conserved by the record's
@@ -364,20 +377,34 @@ line, and the count's line is the continuity equation of the current in
 integers, so the count's centroid moves at the current's velocity, with
 no leak beyond the ladder's remainder; a body at rest has zero net
 current at every Node in the mean and its count stays in place (the
-open point, section 7).
+open point, [what is open](#what-is-open)). On the shipped worlds: the resting Lorentz
+world's body keeps its count in place under its own standing record
+stepped by the loop, two hundred intervals, the swing 2 x 10^-9 of T /
+2; a record of two levels with the phase k per Link, stepped by the loop
+on the moving Lorentz world's GameBoard, carries its count at Rule3's
+group velocity R 2 sin k / (2 w sin omega), the count's centroid within
+one Node of the record's over six hundred intervals, and the integrated
+inflow of a slab is the change of the form's share there within the
+rounding's re-allocation of the Link terms. The shipped moving world's
+own body record is a standing profile whose arrivals are read through
+the twist, with no net current, and the body moves by the hop there:
+under the count's line a moving body is the moving mode of [the generator](#the-generator)
+(e).
 
 THE BOUND. The total at a Node is at most 6 x weight x 4 A^2 + T (c + 1)
-+ T with A the amplitude bound (a second level doubles the current's
-bound); at the weight num = 10^3 the amplitude bound A stays at or below
-2^24 for int64, so the loader's 2^28 is refused and the generator's A
-(section 6.3) admitted.
++ T: one current per Port, each the weight times the two products of two
+levels at A on each of the two level pairs, the count's wall T (c + 1)
+and the remainder below T. The shipped universe (A = 2^20, the weight
+800) is within int64; a world declaring A beyond 2^24 at the weight
+10^3 is refused by name; the generator's A ([the generator](#the-generator) (f)) is
+admitted.
 
-### 3.3 The ladder, and Born's rule
+### The ladder
 
 Until the count's line is bound in the loop, the click is read by the
 **ladder**, the same division act on a record's inward flux. The data:
 the record's residue u (its remainder at its giving Node), its norm T,
-its wheel W, hence its threshold theta = (2 u + 1) T / (2 W), fixed at
+its wheel V, hence its threshold theta = (2 u + 1) T / (2 V), fixed at
 the giving; the named detectors in their declared order with the face
 last. At every interval each Node i of a detector receives the one-way
 inward flux f_i(t) >= 0 of the record through its Ports (a Link between
@@ -386,7 +413,7 @@ record's running total is C(t) = C(t - 1) + SUM_i f_i(t). The click is
 at the first interval t* with C(t*) >= theta, at the Node whose segment
 of that interval's increment, laid in the ladder's order, contains theta
 - C(t* - 1); there the record ends, whole. The rungs are the division
-act: b_k = (2 W C_k + Total) div (2 Total).
+act: b_k = (2 V C_k + Total) div (2 Total).
 
 THEOREM (one quantum, one click). theta is crossed exactly once.
 
@@ -395,16 +422,16 @@ face last is at least T (what leaves offers everything at the face), so
 C crosses theta once; the deletion of the record at once leaves nothing
 to cross it again.
 
-THEOREM (Born's rule). Let u be spread evenly over {0, ..., W - 1}; then
+THEOREM (Born's rule). Let u be spread evenly over {0, ..., V - 1}; then
 the probability that the click lands at Node i is C_i(infinity) / T, the
 detector's share of the record's total inward flux, whatever the time
 profile.
 
-PROOF. theta is then spread evenly over a grid of W points in [0, T).
+PROOF. theta is then spread evenly over a grid of V points in [0, T).
 The segments [C(t - 1) + SUM_{j < i} f_j(t), C(t - 1) + SUM_{j <= i}
 f_j(t)), one per (interval, Node), partition [0, C(infinity)) and have
 the lengths f_i(t); so P(the click at interval t at Node i) = f_i(t) / T
-to the grain 1 / W, and summing over t gives the share. The counts over
+to the grain 1 / V, and summing over t gives the share. The counts over
 many records are binomial about the shares, since the residues are
 equidistributed and not a permutation.
 
@@ -414,7 +441,7 @@ line with its Ports the set's outer Ports, the sum of its Nodes' lines
 with one remainder; Born's rule is the shares of the current among the
 set's Nodes.
 
-## 4. The primitives: every row a composition of Rule3's acts
+## The primitives
 
 Every primitive of the engine is one folder under
 `src/event_universe/features/` with its declaration (its name, its
@@ -427,36 +454,37 @@ on the record of the primitive that divided.
 
 | Primitive | Place | Reads | Writes | The line |
 | --- | --- | --- | --- | --- |
-| the pair | (i) | the pair [num, den] | the record's levels | Rule3's coefficients from the declared pair (section 2.1) |
+| the pair | (i) | the pair [num, den] | the record's levels | Rule3's coefficients from the declared pair ([the line](#the-line)) |
 | the degree | (i) | the parts | the record's levels | the same line on 1, 3 or 6 components |
 | the phase | (i) | the phase | the record's levels | phase 2 is Rule3 on the pair; phase 1 is Rule3 with the coefficient on a_before declared 0 |
-| the signed read | (i), first on the right side | the read families' levels at the start, the signed weights, by, the tensor's parts | the paces | section 2.4; the guard two-sided |
+| the signed read | (i), first on the right side | the read families' levels at the start, the signed weights, by, the tensor's parts | the paces | [the paces](#the-paces); the guard two-sided |
 | the send | (i) | the record's level | the Link's value | the value on the Link is the level times the read's weight, R's factor |
-| the receive | (i) | the Link's value, the twist reads, the twist table | the arrivals | section 2.6: the angle per Port a read act over the wall 1, the triple the tables' composed reading, the rotation two read acts over the wall 2 d with the load d, the six arrivals summed per axis |
+| the receive | (i) | the Link's value, the twist reads, the twist table | the arrivals | [the transport](#the-transport): the angle per Port a read act over the wall 1, the triple the tables' composed reading, the rotation two read acts over the wall 2 d with the load d, the six arrivals summed per axis |
 | the internal representation | (i) | the generators' tables | the record's pairs | n pairs, each rotated at the Port by the generators' exact tables in sequence, the one-Node step at the tables' pairs |
-| the self-source | (i) | the family's own levels, P_2 | the family's level | section 2.7 |
+| the self-source | (i) | the family's own levels, P_2 | the family's level | [the second level](#the-second-level) |
 | the operation | (i) | the coefficients | the record's levels | Rule3's line itself |
 | the wait | (i) | the record's age | the record's age | the count (b) at a / b = 2: one interval |
-| the clicks | (ii) | the current at the detectors' Ports, u, W, T | the record's tally; a body's content M_k at t + 1 | the ladder of section 3.3 until the count's line is bound in the loop |
-| the count's line | (ii) | the record's levels at the Node and across its six Ports, T, the weight | the count at a Node, its remainder | section 3.2 |
+| the clicks | (ii) | the current at the detectors' Ports, u, W, T | the record's tally; a body's content M_k at t + 1 | the ladder of [the ladder](#the-ladder) until the count's line is bound in the loop |
+| the count's line | (ii) | the record's levels at the Node and across its six Ports, T, the weight | the count at a Node, its remainder | [the count's line](#the-counts-line) |
 | the lifetime | (ii) | the record's age, L | the record's end | the age is the count (b) on the record; at age L on the face the record ends |
 | the clicks list | (ii) | the record's remainders, the wheels | the taken momentum's shares | the products' shares are the click's draw; the sum is the taken momentum exactly |
-| the hand | (ii) | S, n, the declared hand | admits or refuses the click | S . n is a booking of the spin's and the momentum's levels; its sign against the declared hand admits or refuses the click |
-| the giving | (ii) | the body's own levels, the weight g, the outward current through its outer Ports, T, M, n | the given family's level at the body's outer Ports; at the open M_k -= 1 and n at t + 1 | the window: the given level at the body's outer shell += g x a_body each interval (a load) until the outward norm through the outer Ports reaches T (the ladder); the open is the click's count move with the opposite sign; the bulk share n_a -= sgn(n_a) (|n_a| div M) the division act with the wall M |
-| the hold | (iv) | a body's content M_k, P_0 and P_k, W, n, the held factors, the dipole | the held family's levels at the body's Nodes; the body's remainders | the count s = SUM_k (M_k P_0) div P_k the division act, written as the load into the time part; the vector part (factor x s x n_a) div W, the tensor part (factor x s x n_a n_b) div W^2, each with its remainder carried; the dipole sigma (D x e_j)_i div its divisor at the six neighbours |
-| the source | (iv) | the record's D_i = now^2 - next x before at its Nodes, E_s | the sourced family's level at the record's Nodes; the record's remainder | D_i is the booking of the record's own two levels (the form); the level gains weight x ((D_i + r_i) div E_s) each interval, the division act as a load; with a table weight x (s_cap D_i div (s_cap E_s + D_i)), no remainder |
-| the recoil | (iv) | the click's tally sigma_a, W, P_body, M, lambda_q | a body's momentum n | n_a += sigma_a x (W x P_body) div (M x lambda_q), the giver with the opposite sign: the quantum's momentum over the body's energy on the momentum's wall; the store a remainder against one declared wall of the universe |
-| the feed | (v) | the paces at the two faces of each axis of the body's Node, W | a body's momentum n | the contraction p_0 = Gamma - SUM by x weight x [the time level - (n_a V_a) div W + (n_a n_b h_ab) div W^2] read with the coefficients +1 and -1 at the two faces; the difference divided by W a load into n |
-| the induction | (v) | the momentum part of the contraction this interval and the last | a body's momentum n | (n_b V_b) is a booking of the momentum and the read's vector part; n_a -= the change of (n_b V_b) div W over the interval |
-| the spin's step | (v) | S, the curls at the body's Node, mu, n, W, Gamma | a body's spin S | S_next = S_now + [(Omega x S_now) + mu x B_q] div (W Gamma), Omega_x = [(V_z(+y) - V_z(-y) - V_y(+z) + V_y(-z)) + 3 ((c(+y) - c(-y)) n_z - (c(+z) - c(-z)) n_y) div W] div 8 and cyclic, B_q the same curl on the charge's vector part div 2; the curls reads with the coefficients +1 and -1, the crosses bookings, the divisions the division act with the remainders on the body |
-| the recoil's accumulator | (v) | sigma_a, k_q, M | a Port's angle accumulator | sigma_a x (k_q div M) into the Port's angle, the taker and the giver with opposite signs |
+| the hand | (ii) | **S**, **n**, the declared hand | admits or refuses the click | **S** . **n** is a booking of the spin's and the momentum's levels; its sign against the declared hand admits or refuses the click |
+| the giving | (ii) | the body's own levels, the weight g, the outward current through its outer Ports, T, M, **n** | the given family's level at the body's outer Ports; at the open M_k -= 1 and **n** at t + 1 | the three acts of one window in this order: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) (|n_a| div M), the division act with the wall M, both written at t + 1), the write (the given level at the body's outer shell += g x a_body each interval, a load, before the bookings), the close (at outward x den >= norm the record named, its direction the tally's sign per axis); the open is the click's count move with the opposite sign, and a close is never an open: the count moves once per window |
+| the hold | (iv) | a body's content M_k, P_0 and P_k, W, **n**, the held factors, the dipole | the held family's levels at the body's Nodes; the body's remainders | the count s = SUM_k (M_k P_0) div P_k the division act, written as the load into the time part; the vector part (factor x s x n_a) div W, the tensor part (factor x s x n_a n_b) div W^2, each with its remainder carried; the dipole sigma (D x e_j)_i div its divisor at the six neighbours |
+| the source | (iv) | the record's D_i = now^2 - next x before at its Nodes, E_s (the source's scale) | the sourced family's level at the record's Nodes; the record's remainder | D_i is the booking of the record's own two levels (the form); the level gains weight x ((D_i + r_i) div E_s) each interval, the division act as a load; with a table weight x (s_cap D_i div (s_cap E_s + D_i)), s_cap the table's cap, no remainder, the denominator refused at or below 0; the field's shape is the static limit of Rule3, (Delta - kappa^2) a = -sigma / q with kappa^2 = 6 den / num - 6 (kappa the inverse reach, sigma the source, q the charge's weight) |
+| the recoil | (iv) | the click's tally sigma_a, W, P_body (the body's period), M, lambda_q (the quantum's wavelength) | a body's momentum **n** | n_a += sigma_a x (W x P_body) div (M x lambda_q), the giver with the opposite sign: the quantum's momentum over the body's energy on the momentum's wall; the store a remainder kept with its divisor in lowest terms, so that clicks of different divisors add exactly, until the one declared wall of the universe (open, [what is open](#what-is-open)) |
+| the feed | (v) | the paces at the two faces of each axis of the body's Node, W | a body's momentum **n** | the contraction p_0 = Gamma - SUM by x weight x [the time level - (n_a V_a) div W + (n_a n_b h_ab) div W^2], V gravity's vector part and h_ab its tensor part, read with the coefficients +1 and -1 at the two faces; the difference divided by W a load into **n** |
+| the induction | (v) | the momentum part of the contraction this interval and the last | a body's momentum **n** | (n_b V_b) is a booking of the momentum and the read's vector part; n_a -= the change of (n_b V_b) div W over the interval |
+| the spin's step | (v) | **S**, the curls at the body's Node, mu, **n**, W, Gamma | a body's spin **S** | S_next = S_now + [(Omega x S_now) + mu x B_q] div (W Gamma), Omega (the curl of gravity's vector part V with its time part t, at the six neighbours) Omega_x = [(V_z(+y) - V_z(-y) - V_y(+z) + V_y(-z)) + 3 ((t(+y) - t(-y)) n_z - (t(+z) - t(-z)) n_y) div W] div 8 and cyclic, B_q (the charge's curl) the same curl on the charge's vector part div 2; the curls reads with the coefficients +1 and -1, the crosses bookings, the divisions the division act with the remainders on the body |
+| the recoil's accumulator | (v) | sigma_a, k_q (the quantum's wave number), M | a Port's angle accumulator | sigma_a x (k_q div M) into the Port's angle, the taker and the giver with opposite signs |
 | the trace | any | every act's integers | nothing | a reading of every act, it writes nothing |
 
-The hop is retired: the count's line moves the count with its record's
-current, and no accumulator of a body's position remains. The rows
-whose own code the count's line retires when bound: the ladder's rungs,
-the hop, the giving's open and close, the clicks list's count move, the
-lifetime's tally.
+The hop runs until the count's line is bound in the loop and is retired
+then: the count's line moves the count with its record's current, and
+no accumulator of a body's position remains. The rows whose own code
+the count's line retires when bound: the ladder's rungs, the hop, the
+giving's open and close, the clicks list's count move, the lifetime's
+tally.
 
 A body's writes into its family's levels (the hold): a body of quanta
 M_k of the family k, with the energy unit P_0 = [1, 1000] and the
@@ -470,9 +498,9 @@ factors (1, 4, 2) and (1, 1) the universe file's numbers; and the
 dipoles at its Node's six neighbours, gravity's vector i at the Node +
 sigma e_j gaining sigma (S x e_j)_i, the charge's (sigma (mu x e_j)_i)
 div 2.
-## 5. The stable body from Rule3 alone
+## The stable body
 
-### 5.1 What a body is
+### What a body is
 
 A body is its count and its record. The count c_i is the family of
 clicks' level at the body's Nodes, in quanta; it enters Rule3 through
@@ -483,7 +511,7 @@ names the body's family, its Nodes, its count per Node and its momentum
 **n**, and nothing else: no lowered pair on its Nodes, no seed, no stop,
 no profile, no closed Port.
 
-### 5.2 The well from the count
+### The well
 
 At a Node with count c Rule3's one-Node rotation rises from cos omega_0
 = num / den by (1 - p^2 / Gamma^2)(den - num) / den, and its bonds fall
@@ -500,7 +528,7 @@ the cube 0.79), 1000 (0.92), 2000 (0.97), 5000 (0.997), of side 6 at
 at 9000, 0.599. A body's clock is set by its count and its side, from
 the rule: a body's mass is its count.
 
-### 5.3 The generator: Rule3 iterated, nothing beside it
+### The generator
 
 The generator builds every world from zero; it declares nothing and
 holds no float.
@@ -548,8 +576,8 @@ body at rest is the case k = 0 of the same procedure.
 
 (f) THE AMPLITUDE UNIT A IS DERIVED, NEVER WRITTEN: the largest
 amplitude at which Rule3's total stays inside the integer width at
-every content of the region, the bound of section 2.5 solved for the
-amplitude, A = (M - w) div (6 R + |S| + w) with M = 2^63 - 1 at the
+every content of the region, the bound of [the bound](#the-bound) solved for the
+amplitude, A = (2^63 - 1 - w) div (6 R + |S| + w) at the
 content whose coefficients are largest (the body's, whose |S| grows
 with the content): 5117272 at 3000 per Node, 5221564 at 2000, 5345022
 at 1000 on [800, 1200] at Gamma = 10^4, between 2^22 and 2^23. The
@@ -558,7 +586,7 @@ profile agrees with the one at A, rescaled, within 5, 8 and 12 units of
 the coarser in the three cases of (c), 5 x 10^-6 of A, and the rotation
 to 10^-6; the final scale comes from c T.
 
-### 5.4 Why the velocity is constant
+### The velocity
 
 Rule3 is translation-invariant, so the record's wave number k is
 conserved where no pace gradient stands: the record's centre moves at
@@ -568,7 +596,7 @@ across the body's face is c T v_g per interval, so c v_g quanta cross
 per interval and the count's centroid moves at v_g, exact up to the
 remainder. The well moves with the count one quantum at a time, 1 / c_i
 of a Link, so the record is never kicked by a whole Link; the leak of a
-hop of the whole well by one Link, delta = 1 - <phi | T phi>^2 with T
+hop of the whole well by one Link, delta = 1 - <phi | X phi>^2 with X
 the shift by one Link, is 0.031 at side 12 and 1000 per Node (0.021 at
 500, 0.040 at 2000; 0.099 at side 6 and 2000; 0.38 at side 3 and 5000;
 0.999 at one Node and 9000), and per Link of travel delta / c = 3 x
@@ -585,9 +613,9 @@ per Link; the clock's period 2 pi / omega_b(k), 7.74 intervals at k =
 0. A larger fall, or a slope that drifts, names a missing law; the
 body's own numbers are never patched.
 
-## 6. What the law says of nature
+## What the law says of nature
 
-### 6.1 The postulates that stand
+### The postulates
 
 1. The world is Nodes and Events. Space is the GameBoard; an Event is a
 wall crossed by a remainder at a Node: a level stepped, a count moved,
@@ -618,7 +646,7 @@ nothing.
 the detectors and their clicks, the only thing claimed to represent
 nature.
 
-### 6.2 What the constants are on the GameBoard
+### The constants
 
 The speed of light is one Link per interval. The quantum of action is
 one click, its energy the quantum's norm T of its family. Newton's
@@ -628,7 +656,7 @@ level slows the clock by the potential Phi = -c / (2 Gamma), so
 
   G = (the reference flux) / (2 Gamma) per unit of energy count,
 
-with the reference flux a number of the lattice's geometry (about 1.4
+with the reference flux a number of the GameBoard's geometry (about 1.4
 for a cube of side 3) and the energy unit setting the mass of one unit
 of level. A world at a smaller Gamma has stronger gravity per unit of
 content; the ratios between rows carry G once and cancel it. The
@@ -637,7 +665,7 @@ two Nodes or two intervals is observed. The potential at a body's Nodes
 changes by G per unit of energy count and never by less: the quantum of
 gravity is the click.
 
-### 6.3 The rows read against nature, as diagnostics
+### The rows against nature
 
 Each row is a detector's click on a declared world, read blind, with
 U_b = c_b / (2 Gamma) the potential at the point named; the bands are
@@ -654,8 +682,9 @@ path's length within the well's reach.
 (d) THE PERIHELION: an orbiting emitter at semi-axis a and eccentricity
 e advances 6 pi U_p per orbit with U_p the potential at a (1 - e^2).
 (e) THE MOVING CLOCK: a body at velocity v has its tick lengthened by
-the dispersion's factor, 0.8146 against 1 / gamma = 0.8165 at k =
-0.18556 per Link, the lattice's own term inside the rows' bands.
+the dispersion's factor, 0.8146 against 1 / gamma = 0.8165 (gamma the
+Lorentz factor) at k =
+0.18556 per Link, the GameBoard's own term inside the rows' bands.
 (f) THE CHARGE: like signs a hill, unlike a hollow; a reader of charge q
 reads + q Lambda d in its pace and - q Lambda (**n** . **A**) div W on
 its vector part, so like charges moving together repel less.
@@ -663,12 +692,12 @@ its vector part, so like charges moving together repel less.
 A row outside its band is a finding: it names the missing law or the
 defect, and no body's numbers are patched to meet it.
 
-## 7. What is open
+## What is open
 
 1. Whether a body at rest jitters when its current's swing reaches T /
 2: on a standing mode of sixteen Nodes at A = 2^10 the accumulated
 swing of T c + r is 158094 against T / 2 = 16777216 over 400 intervals,
-one percent, and the count stays in place; the run of section 5.4
+one percent, and the count stays in place; the run of [the velocity](#the-velocity)
 stands beside it.
 2. The store of the recoil across walls as one remainder against one
 declared wall of the universe, the least common multiple of the
