@@ -258,7 +258,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             "the source": Stage(self._source_stage, (), ("the source",)),
             "the recoil": Stage(self._recoil_stage, (), ("the recoil",)),
             "the lifetime": Stage(self._lifetime_stage, (), ("the lifetime",)),
-            "the hand": Stage(self._hand_stage, (), ("the hand",)),
+            "the hand": Stage(lambda function: None, (), ("the hand",)),
             "the feed": Stage(self._feed_stage, (), ("the feed",)),
             "the induction": Stage(self._induction_stage, (), ("the induction",)),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
@@ -446,9 +446,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 f"wavelength 2 N q / p is no whole number of Links, so the universe's wall L has no value"
             )
         return whole
-
-    def _hand_stage(self, function: Callable[..., object]) -> None:
-        """The hand's whole-board act carries nothing of its own: the check is nested in each record's click (`_hand_admits`, inside the clicks' act), where the taking body is known."""
 
     def _recoil_stage(self, function: Callable[..., object]) -> None:
         """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1; a body with no period declares no term."""
@@ -1034,7 +1031,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             block.emit_now = True
 
     def _emit(self, block: Block, pair: CrystalWrites | None = None) -> None:
-        """The click of the body's own record and the giving: the given record written once at both levels at the body, its norm and residue from the law, one quantum of the given family moved from the body's stock, the body's own levels, phase and remainders as they are, the count to the next click started here."""
+        """The click of the body's own record and the giving: the given record written once at both levels at the body, its norm and residue from the law, one quantum of the given family moved from the body's stock, the body's own levels, phase and remainders as they are, the count to the next click started here; for a crystal's pair (features/crystal) the clock, the labels and the norm are the pair's writes in place of the emitter's; the component along the body's moment and the twist are the loader's integers (ALGEBRA.md #the-second-level)."""
         world = self.world
         emitter = block.definition.emitter
         own: LiveRecord | NodeRecord | None = (
@@ -1044,9 +1041,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         number = block.number
         family = emitter.family
         definition = self.families[family]
-        # the given clock, the emitter's (item 59), or the crystal's for its pair; the pair's labels and norm the crystal's writes (features/crystal)
-        numerator, denominator = emitter.clock if pair is None else pair.clock
-        labels = emitter.branches if pair is None else pair.labels
+        (numerator, denominator), labels = (
+            (emitter.clock, emitter.branches) if pair is None else (pair.clock, pair.labels)
+        )
         steps = world.phase_steps
         period = (steps * denominator + numerator - 1) // numerator
         cost = definition.quantum
@@ -1078,6 +1075,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         # the body's own record is not ended and never rewritten (ALGEBRA.md #the-ladder)
         block.givings += 1
         identity, self.next_identity = self.next_identity, self.next_identity + 1
+        rows = [np.zeros(self.shape, dtype=np.int64) for _ in range(3)]
         live = LiveRecord(
             identity,
             number,
@@ -1090,16 +1088,13 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             denominator,
             0,
             period,
-            np.zeros(self.shape, dtype=np.int64),
-            np.zeros(self.shape, dtype=np.int64),
-            np.zeros(self.shape, dtype=np.int64),
+            *rows,
             pointers=[0] * len(self.detector_names),
             first_rung=[None] * len(self.detector_names),
             wheel=wheel,
             labels=tuple(labels),
             emitter=number,
             pair=(int(emitter.pair[0]), int(emitter.pair[1])),
-            # the component along the body's moment and the twist "own" (ALGEBRA.md ALGEBRA.md #the-second-level, #the-primitives; commit 4), the loader's integers
             part=emitter.part,
             twist=emitter.twist,
         )
