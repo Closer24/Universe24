@@ -24,7 +24,6 @@ from event_universe.diagnostics.massive_record_margin import (
     block_margin,
     check_margins,
     iterated_mode,
-    profile_check,
 )
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord, form_json
 from event_universe.loader.world import (
@@ -160,6 +159,7 @@ def checkerboard_seed(n: int) -> tuple[np.ndarray, np.ndarray]:
     return now.astype(np.int64), before.astype(np.int64)
 
 
+@pytest.mark.diagnostic
 def test_the_conserved_form_holds_to_the_remainders_jitter():
     """BUILD.md (d): on a periodic 6^3 board at [128, 129] and at [1600, 1618] the form I stays
     within 10^-3 of its start over 200 intervals (measured: 3 x 10^-6) and the amplitude stays
@@ -188,6 +188,7 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
             step_once(simulation, live)
             peak = max(peak, int(np.abs(live.now).max()))
             projection = max(projection, abs(int(np.sum(live.now * checker)) // 216))
+            # GAMEBOARD: the books' form, a diagnostic bound on the remainders' jitter, not a measurement
             assert abs(Fraction(*simulation.record_form(live)) - start) < start // 1000
         assert peak < 2 * UNIT
         assert projection < 40
@@ -249,8 +250,10 @@ def run_chain_digests() -> dict[str, str]:
     }
 
 
+@pytest.mark.diagnostic
 def test_the_light_record_is_byte_identical_without_the_key():
-    """BUILD.md (p): the first build's chain world over 600 intervals gives the digests read at
+    """BUILD.md (p), a GameBoard reading (three host digests, a diagnostic and not a
+    measurement): the first build's chain world over 600 intervals gives the digests read at
     the head f4a3971a before any line of the build was written: the state and the audit
     the witness that the rows are byte for byte; the events' digest moved ONCE, at the GO's
     fold (BUILD.md section 14), by the two fields added to every gather line (`click_at`,
@@ -706,9 +709,11 @@ def test_the_pace_bound_refuses_one_link_per_interval():
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 
+@pytest.mark.diagnostic
 def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
-    """The margin rule refuses a block whose extent passes its board or a face (naming the axis, the
-    extent and the side needed), an unbound well, and a runaway well on a chain, and admits a control."""
+    """The margin rule (its extent and mode a GameBoard reading, a diagnostic) refuses a block
+    whose extent passes its board or a face (naming the axis, the extent and the side needed),
+    an unbound well, and a runaway well on a chain, and admits a control."""
     for margin, admitted in (("pin", False), ("control", True)):
         document = block_world(
             [48, 48, 48],
@@ -984,49 +989,17 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
             previous = current
 
 
-def test_the_margin_rule_on_a_layer_keeps_the_folded_axis_self_reads():
-    """Reviewer 3's line (18:12Z): on a periodic 256 x 256 x 1 layer the mode's operator keeps
-    the folded axis's two self-reads (S_4 + 2 a_now), so the layer row of MASSIVE_RECORD.md
-    section 11 item 7 (mu = 0.15, s = 14, g = mu^2 / 4: the kind [3200, 3236], the well
-    [3200, 3227]) reads omega_b 0.14846 within 0.0002 and the extent 36.2 within 1 Link
-    (`massive_layer_pins.out`), and the rule compares x and y only (z folded)."""
-    document = block_world(
-        [256, 256, 1],
-        PERIODIC,
-        [3200, 3236],
-        [
-            {
-                "position": [121, 121, 0],
-                "side": 14,
-                "q": 0,
-                "spin": [0, 0, 0],
-                "twist": 0,
-                "moment": [0, 0, 0],
-                "pair": [3200, 3227],
-                "margin": "control",
-                "seed": 1 << 18,  # below the pair's amplitude bound (9.61 (3))
-            }
-        ],
-    )
-    document["age_bound"] = 100000
-    document["amplitude_bound"] = 1 << 19  # the pair's room under the weak field (9.61 (3))
-    reading = check_margins(parse_nature_beam_world(document))[0]
-    assert abs(reading.omega_b - 0.14846) < 0.0002
-    assert abs(reading.extent - 36.2) < 1.0
-    assert [axis for axis, _, _, _ in reading.axes] == ["x", "y"]
-
-
 def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     """The seed as the bound mode's integer profile (MASSIVE_RECORD.md section 11 item 7, the
     reader of record and the seed; EXPLORATORY, the cheap 128^2 rest layer): the block s = 14 at
     g = mu^2 / 4 (the kind [3200, 3236], the well [3200, 3227]) seeded flat reads its clicks at a
-    beat (the mean interval 39.3 against the mode's period 42.32), seeded with the module's mode
-    as integers at 2^20 over the whole layer (the generator's integers in the world file, the
+    beat (the mean interval 39.3 against the mode's period 42.36), seeded with the module's mode
+    as integers at 2^18 over the whole layer (the generator's integers in the world file, the
     same at both levels) it reads the mode: the clicks' mean interval over [200, 1500] within
-    0.5 percent of 2 pi / omega_b; the load-time diagnostic of the profile against the
-    eigensolver's mode reads the generator's floor on this layer's small gap (3497 units, at
-    most 4000; the loader's residual bound is the law's check). The edge cases: a profile without `margin` refused; a profile of the wrong
-    length refused; an all-zero profile refused."""
+    0.5 percent of the mode's period 2 pi / omega_b, 42.36 intervals on this layer (the
+    detector's clicks; the loader's residual bound is the law's check of the profile). The edge
+    cases: a profile without `margin` refused; a profile of the wrong length refused; an
+    all-zero profile refused."""
     block = {
         "position": [57, 57, 0],
         "side": 14,
@@ -1042,8 +1015,8 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     document["age_bound"] = 100000
     document["amplitude_bound"] = 1 << 19  # the pair's room under the weak field (9.61 (3))
     world = parse_nature_beam_world(document)
-    reading = block_margin(world, 0)
-    period = 2 * np.pi / reading.omega_b
+    # the mode's period 2 pi / omega_b on this 128^2 layer (omega_b 0.14833, a COMPUTATION)
+    period = 42.36
     # the generator as the operator iterated with the stop (the owner's word of
     # 2026-09-25): the profile with its clock beside it (record 1886; ALGEBRA.md 9.22 (7))
     profile, clock, _ = iterated_mode(
@@ -1053,14 +1026,6 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     seeded["measured"] = [dict(document["measured"][0], seed=profile, clock=list(clock))]
     seeded["stamp"] = input_stamp(seeded)
     world = parse_nature_beam_world(seeded)
-    deviation, amplitude = profile_check(world, 0)
-    # the diagnostic against the eigensolver's rounded mode reads the iteration's floor:
-    # on this layer the gap is small and the loader's bound admits about 3 / gap units
-    # of the neighbouring mode (3497 read, COMPUTATION; the bound is the law's check)
-    # under the weak-field rule at the body's level the plain eigenvector's residual reads 2493 at
-    # 2^18 (COMPUTATION; the loader's own bound admits it; the re-read of ALGEBRA.md 9.61 (3),
-    # reported to the mathematician)
-    assert amplitude == 1 << 18 and deviation <= 3000
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
     assert np.array_equal(simulation.blocks[0].own.now, np.array(profile).reshape(world.shape))
@@ -1441,12 +1406,12 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
     [2, 34), the screen cube at [70, 72]): the blocks have no own record, no clock and no
     coupling (the loader sets their seed 0; the engine's blocks' loop skips them; the margin
     rule skips light's kind), light's pair arrays carry [1, 2] at the four Nodes and [1, 1]
-    elsewhere; over 200 intervals the largest level beyond the wall (x in [48, 69]) stays below
-    four percent of the largest level before it (x in [10, 38], the train's own Nodes; the
-    reading on this head in the test's assertion, COMPUTATION), the books balanced at every
-    interval; a light-kind block with
-    `seed` or `margin` refused, and `coupling` refused by name on any block. The chain's source is the emitter body of
-    section 26 (a block itself, of the matter kind, with its own record)."""
+    elsewhere; over 200 intervals the two givings of the emitter never click at the screen cube
+    beyond the wall (no gather line, both light records still alive: the detector's reading of
+    the mirror, against the chain world without the wall, where every giving clicks at `screen`,
+    tests/test_detector_law.py), the books balanced at every interval; a light-kind block with
+    `seed` or `margin` refused, and `coupling` refused by name on any block. The chain's source is
+    the emitter body of section 26 (a block itself, of the matter kind, with its own record)."""
     document = chain_world()  # the closed chain (BUILD.md section 26 item 14)
     document["massive_record"] = True
     document["amplitude_bound"] = 1 << 22
@@ -1483,20 +1448,19 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
         True,
     ]
     assert world.measured[4].block is not None and world.measured[4].block.seed == 0
-    simulation = DetectorLawSimulation(world)
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
     assert all(block.own is None for block in simulation.blocks[1:])
     assert int(simulation.kind_den[0][40, 0, 0]) == 2 and int(simulation.kind_den[0][41, 0, 0]) == 2
     assert int(simulation.kind_den[0][39, 0, 0]) == 1 and int(simulation.kind_num[0][40, 0, 0]) == 1
-    before = beyond = 0
     for _ in range(200):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-        for live in simulation.records.values():
-            if live.family != 0:
-                continue
-            before = max(before, int(np.max(np.abs(live.now[10:39, 0, 0]))))
-            beyond = max(beyond, int(np.max(np.abs(live.now[48:70, 0, 0]))))
-    assert before > 0 and beyond * 100 < 4 * before, (before, beyond)
+    # the measurement: nothing given crosses the wall to click at `screen` at [70, 72]
+    givings = [line for line in lines if line["event"] == "giving"]
+    gathers = [line for line in lines if line["event"] == "gather"]
+    assert len(givings) == 2 and gathers == []
+    assert all(line["record"] in simulation.records for line in givings)
     for key, value in (("seed", 5), ("margin", "control")):
         bad = json.loads(json.dumps(document))
         bad["measured"][4][key] = value

@@ -90,8 +90,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         # audit of ALGEBRA.md 9.90 (3)) carry none of the keys the loader still requires
         # the check-mode worlds and the source verb's run files (Nature24's generators, ahead of
         # the loader's words: `readings`, `sourced`, the residue keys) carry keys the loader
-        # does not read yet; tests/test_check_mode_worlds.py and tests/test_source_worlds.py
-        # read their structure and hold their load as expected failures
+        # does not read yet; tests/test_source_worlds.py reads their structure
         ahead = {"check_mode", "source"}
         if isinstance(text, dict) and "universe" in text and not ahead & set(path.parts):
             assert text["universe"] == FILE, path

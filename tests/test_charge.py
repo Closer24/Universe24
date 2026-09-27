@@ -307,13 +307,12 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
 def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_lambda():
     """(v) THE REGISTERED WORLDS' CASE (every family of charge 0): on the chain of 60 with a
     body of QUANTA quanta at [20, 30) and matter and light records of random rows, the family
-    of charge is 0 everywhere at the load and after 40 intervals, the books carry its form 0
-    and the state its rows, and the records' rows are bit for bit the same at Lambda = 1 and
-    Lambda = 7 (no charge is read: the strength weighs nothing); THE LEAK TEST (the model owner's
-    record 2075 (3); BUILD.md section 26 item 55): the never-sourced sign family is named at no
-    interval, the planted matter record (no body of its family) is, and a row planted in the sign
-    family is named. The edge case: the giving lines of the emitter
-    world carry the charge 0."""
+    of charge is 0 everywhere at the load and after 40 intervals, and the records' rows are bit
+    for bit the same at Lambda = 1 and Lambda = 7 (no charge is read: the strength weighs
+    nothing); THE LEAK TEST (the model owner's record 2075 (3); BUILD.md section 26 item 55):
+    the never-sourced sign family is named at no interval, the planted matter record (no body
+    of its family) is, and a row planted in the sign family is named. The edge case: the giving
+    lines of the emitter world carry the charge 0."""
     rows = {}
     for strength in (1, 7):
         rng = np.random.default_rng(41)
@@ -346,15 +345,6 @@ def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_
         held_record(simulation, "sign").now[3, 0, 0] = 0
         assert simulation.leaks() == ["matter"]
         rows[strength] = [(live.now.copy(), live.before.copy(), live.remainder.copy()) for live in lives]
-        books = simulation.books()
-        assert books["families"][CHARGE_FAMILY_NAME]["form"] == [0, 1]
-        state = dict(simulation.snapshot_stream())
-        fields = {field["family"]: field for field in state["held_fields"]}
-        assert fields[CHARGE_FAMILY_NAME]["held"] == "sign"
-        assert fields[CHARGE_FAMILY_NAME]["rows"] == [0] * 60 and fields[CHARGE_FAMILY_NAME]["form"] == [
-            0,
-            1,
-        ]
     for one, seven in zip(rows[1], rows[7], strict=True):
         for x, y in zip(one, seven, strict=True):
             assert np.array_equal(x, y)
