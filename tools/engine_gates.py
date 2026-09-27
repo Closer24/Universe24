@@ -8,8 +8,11 @@ Four gates, selected on every pull request by `tools/check.py`:
 2. Family names. A string literal equal to the name of a family declared in a world file under
    `examples/` is counted per file, on the same ratchet.
 3. Rule3's arithmetic by hand. A floor division, a remainder (`//`, `%`, `divmod`) in
-   `features/`, in `events/` or in `tools/body_generator.py` is counted per file, on the same
-   ratchet: a division belongs in `core/rule3.py`, and the count may only fall.
+   `features/`, in `events/` or in `tools/body_generator.py` is counted per top-level folder of
+   the package (`core/`, `features/`, `events/`, `loader/`, the package's own files together;
+   `tools/body_generator.py` by itself), on the same ratchet: a division belongs in
+   `core/rule3.py`, the count may only fall, and a helper moved between two files of one folder
+   keeps its count.
 4. A new module of `core/`. A Python file under `src/event_universe/core/` that the merge base
    does not hold needs a line in the pull request's body that starts with `APPROVED-CORE` and
    names Main Loop's approval. CI passes the body as the `PR_BODY` environment variable; the
@@ -40,6 +43,7 @@ WORLDS = Path("examples")
 FREE_NUMBERS = frozenset({0, 1, 2, 3, 4, 6, 8})
 APPROVAL = "APPROVED-CORE"
 COUNTS = ("numbers", "family_names", "hand_divisions")
+FILE_COUNTS = ("numbers", "family_names")
 # the places where a division by hand is Rule3's arithmetic written again
 DIVISION_SCOPES = (PACKAGE / "features", PACKAGE / "events")
 DIVISION_FILES = (Path("tools/body_generator.py"),)
@@ -137,15 +141,38 @@ def record_at(root: Path, ref: str | None = None) -> dict[str, Any]:
     return {**base, "files": carried(base["files"], root, ref)}
 
 
+def division_folder(rel: str) -> str:
+    """The group a file's hand divisions are counted in: its top-level folder of the package, the package's own files together under the package's path, a file outside the package by itself."""
+    path = Path(rel)
+    if not path.is_relative_to(PACKAGE):
+        return rel
+    parts = path.relative_to(PACKAGE).parts
+    return (PACKAGE / parts[0] if len(parts) > 1 else PACKAGE).as_posix() + "/"
+
+
+def folder_divisions(files: dict[str, dict[str, int]]) -> dict[str, int]:
+    """The hand divisions of a table of files summed per group of `division_folder`."""
+    found: dict[str, int] = {}
+    for rel, shape in files.items():
+        group = division_folder(rel)
+        found[group] = found.get(group, 0) + shape.get("hand_divisions", 0)
+    return found
+
+
 def ratchet(root: Path, base: dict[str, Any]) -> list[str]:
-    """Every count of a file above the same file's at the merge base; a new file has none."""
+    """Every number or family-name count of a file above the same file's at the merge base (a new file has none), and every folder's hand divisions above the folder's at the merge base (a helper moved between the folder's files keeps its count)."""
     found: list[str] = []
     zero = dict.fromkeys(COUNTS, 0)
-    for rel, shape in present(root).items():
+    now = present(root)
+    for rel, shape in now.items():
         was = {**zero, **base["files"].get(rel, {})}
-        for key in COUNTS:
+        for key in FILE_COUNTS:
             if shape[key] > was[key]:
                 found.append(f"{rel}: {key.replace('_', ' ')} grew from {was[key]} to {shape[key]}")
+    was_divided = folder_divisions(base["files"])
+    for group, count in sorted(folder_divisions(now).items()):
+        if count > was_divided.get(group, 0):
+            found.append(f"{group}: hand divisions grew from {was_divided.get(group, 0)} to {count}")
     return found
 
 
