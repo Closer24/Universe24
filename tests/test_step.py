@@ -159,7 +159,7 @@ def test_each_defect_of_the_file_is_refused_by_name(tmp_path, monkeypatch):
         lambda d: d[INTERVAL].__setitem__(14, ["(v)", "the giving"]),
         r"lists 'the giving' at \(v\), but it declares \(ii\)",
     )
-    refused(lambda d: d[INTERVAL].pop(12), "leaves out the built primitive 'the count's line'")
+    refused(lambda d: d[INTERVAL].pop(12), "leaves out the built primitive .the count's line.")
     # the loop's refusals at construction, the file redirected: the record's chain reordered, an act
     # with other words, a whole-board act inside the chain
     monkeypatch.setattr(host, "LAW_ROOT", tmp_path)

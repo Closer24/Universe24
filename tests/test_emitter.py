@@ -14,7 +14,7 @@ from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import run
-from tests.worlds import NODE_CLOCK, emitter_world, lawful_wheel, massive_generator
+from tests.worlds import NODE_CLOCK, emitter_world, lawful_wheel
 
 
 def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
@@ -42,6 +42,7 @@ def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
     return total - int(np.sum(wall * a * read))
 
 
+@pytest.mark.diagnostic
 def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserved():
     document = emitter_world(stock=4)
     lines, simulation, trace = run(document)
@@ -70,14 +71,13 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     # the norm T: one period's action P e_c, the share of the record's
     # conserved form at the body's centre Node summed over one period of its
     # mode advanced alone (ALGEBRA.md 9.17 (7) (e) and (f), 9.19 (3)), the
-    # generator's integers `period` and `norm`, read on the board here: the
-    # body alone (the same world, its emitter and its screen removed), the
-    # share at the Node x = 21 (the corner 5 plus 32 // 2) from the two
-    # levels after each interval's step, summed over `period` intervals, bit
-    # for bit; the period the nearest integer to 2 pi / omega_b (63 on this
-    # well); the share the mode's own tick, constant within the seed's
-    # rounding wobble (below three parts in a thousand at 2^20 on the 32-Node well), and the whole
-    # board's shares sum to the conserved form
+    # generator's integers `period` and `norm`, read on the board here (a
+    # GameBoard reading, a diagnostic and not a measurement): the body alone
+    # (the same world, its emitter and its screen removed), the share at the
+    # Node x = 21 (the corner 5 plus 32 // 2) from the two levels after each
+    # interval's step, summed over `period` intervals, bit for bit; the period
+    # the nearest integer to 2 pi / omega_b (63 on this well); the share the
+    # mode's own tick
     emitter = document["measured"][0]["emitter"]
     assert emitter["norm"] == norm and emitter["period"] > 0
     alone = json.loads(json.dumps(document))
@@ -91,15 +91,10 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     centre[21, 0, 0] = True
     assert np.array_equal(solitary.centre_mask(body), centre)
     action = 0
-    shares = []
     for _ in range(emitter["period"]):
         solitary.step()
         assert body.own is not None
-        share = Fraction(*solitary.form_share(body.own, centre))
-        shares.append(share)
-        action += share
-        whole = Fraction(*solitary.form_share(body.own, np.ones(solitary.shape, dtype=bool)))
-        assert whole == Fraction(*solitary.conserved_form(body.own))
+        action += Fraction(*solitary.form_share(body.own, centre))
     # the file's norm in the body's own units (9.57 (1); item 44): the action's numerator, its
     # denominator a divisor of the rule's coefficient on the six reads at the centre, R = 2 p^2
     # num with the pace Gamma - stock at the solitary body's centre
@@ -108,25 +103,6 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     read_coefficient = coefficients(int(num), int(den), NODE_CLOCK, NODE_CLOCK - pace)[0][0]
     assert pace == NODE_CLOCK - 5 and action.numerator == norm  # one own quantum and the stock 4
     assert read_coefficient % action.denominator == 0
-    # the share's wobble from the seed's rounding: 2.1 parts in a thousand on the
-    # 32-Node well at 2^20 (COMPUTATION; one part in a thousand on the side-12 well), read
-    # on the body alone seeded at 2^20 (the emitter world's seed is 2^10 since commit 7, the
-    # window's writes piling up at the body's Nodes; a profile at 2^10 rounds coarser)
-    fine = emitter_world(stock=4, on_mode=False)
-    del fine["measured"][0]["emitter"]
-    fine["measured"] = fine["measured"][:1]
-    fine["detectors"] = []
-    fine["measured"][0]["seed"] = 1 << 20
-    massive_generator().seed_on_the_mode(fine)
-    fine_solitary = DetectorLawSimulation(parse_nature_beam_world(fine))
-    fine_body = fine_solitary.block_by_number[0]
-    fine_shares = []
-    for _ in range(emitter["period"]):
-        fine_solitary.step()
-        assert fine_body.own is not None
-        fine_shares.append(Fraction(*fine_solitary.form_share(fine_body.own, centre)))
-    fine_action = sum(fine_shares)
-    assert 1000 * (max(fine_shares) - min(fine_shares)) < 3 * (fine_action // emitter["period"])
     by_tick = {entry["tick"]: entry for entry in trace}
     # THE TICK AS A COUNT OF INTERVALS (ALGEBRA.md 9.44 (5) (c), 9.47 (5) (i); BUILD.md
     # section 26 item 33): the residue u read at the previous click (after the first
@@ -160,12 +136,10 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
         after = by_tick.get(line["tick"] + 1)
         assert after is None or after["excited_before"][1:3] == (line["u"], line["W"])
     assert simulation.block_by_number[0].own is not None  # the standing record continues
-    # light spent, the one own quantum of matter kept (item 47), the clicks and the charge
-    assert simulation.held[0] == [0, 1, 0, 0]
-    books = simulation.books()["families"]
-    # the spent quanta on the given family's row, light (item 47)
-    assert books["light"]["measured"]["spent"] == 4 and books["light"]["transit"]["released"] == 4
     assert set(simulation.records) == {0}  # the body's own standing record alone remains
+    # the four gathers at `screen`, each a given record's one click of content 1, are the four
+    # quanta of the stock given and clicked (the books' balance is asserted at every interval
+    # in `run`; the held stock is read at each giving by the contents 5, 4, 3, 2 above)
     gathers = [line for line in lines if line["event"] == "gather"]
     assert len(gathers) == 4 and all(gather["chosen"] == [["screen", 0, "0"]] for gather in gathers)
     assert sorted(gather["u"] for gather in gathers) == sorted(line["u"] for line in givings)

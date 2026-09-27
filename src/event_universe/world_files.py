@@ -83,5 +83,5 @@ def families_file_entries(value: str) -> tuple[tuple[dict[str, object], ...], di
 
 
 def load_world(path: Path) -> NatureBeamWorld:
-    """A world file read and parsed (the preflight's and the one command's read)."""
+    """A world file read and parsed (the one command's read)."""
     return parse_nature_beam_world(json.loads(path.read_text(encoding="utf-8")))

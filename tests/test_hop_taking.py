@@ -6,6 +6,7 @@ from __future__ import annotations
 from fractions import Fraction
 
 import numpy as np
+import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
@@ -91,20 +92,29 @@ def booked_share(
     return (Fraction(live.pointers[cart]) + carry) / norm, Fraction(other.pointers[cart]) / norm
 
 
+@pytest.mark.diagnostic
 def test_the_front_face_books_the_oncoming_record_whole_over_a_pass():
+    """GAMEBOARD reading of the record's books at the detector, the clicks held off; a
+    diagnostic, not a measurement (the control clicks as the frame does, 1 against 1)."""
     document = cart_world(stock=1)
     frame, _ = run(document, frame=True, clicks=False, ticks=600)
     board, _ = run(document, frame=False, clicks=False, ticks=600)
-    # the cart passed through the whole record (its 32 Nodes at 0.447 against the cart's 0.25)
+    # the cart passed through the whole record (its 32 Nodes at 0.447 against the cart's 0.25);
+    # a body-position reading, the setup's guard
     assert frame.blocks[1].corner[0] < CART_START - 100
+    # GAMEBOARD reading of the record's books at the detector, the clicks held off; a diagnostic
     booked, plain = booked_share(frame, board)
-    assert abs(float(booked) - 1) < 0.08, float(booked)
+    assert abs(float(booked) - 1) < 0.08, f"GAMEBOARD reading, a diagnostic: booked {float(booked)}"
     share = CART_MOMENTUM / 192 / (CART_MOMENTUM / 192 + LIGHT_PACE)  # the hop's share, 0.36
-    assert abs(float(booked - plain) - share) < 0.1, float(booked - plain)
+    assert abs(float(booked - plain) - share) < 0.1, (
+        f"GAMEBOARD reading, a diagnostic: booked - plain {float(booked - plain)}"
+    )
     assert plain < booked
 
 
+@pytest.mark.diagnostic
 def test_both_records_click_at_the_moving_cart_on_the_first_pass():
+    """The clicks (measurements) and, last, a GAMEBOARD reading of the cart's store."""
     simulation, lines = run(cart_world(stock=2), frame=True, clicks=True, ticks=700)
     gathers = [line for line in lines if line["event"] == "gather"]
     assert len(gathers) == 2
@@ -112,7 +122,9 @@ def test_both_records_click_at_the_moving_cart_on_the_first_pass():
     # the first pass: the click before the cart has left the record's train behind
     for line in gathers:
         assert 0 < line["tick"] - line["giving"] < 400
-    assert simulation.held[1][0] == 2  # two light quanta taken by the cart
+    assert sum(line["content"] for line in gathers) == 2  # the two light quanta taken, the gather lines
+    # GAMEBOARD: the cart's store after the two clicks (the set bound to the body, item 40); a diagnostic
+    assert simulation.held[1][0] == 2
 
 
 def test_at_rest_the_rule_is_the_port_booking_bit_for_bit_and_nothing_is_carried():
@@ -127,20 +139,25 @@ def test_at_rest_the_rule_is_the_port_booking_bit_for_bit_and_nothing_is_carried
         assert np.array_equal(live.now, other.now)
 
 
+@pytest.mark.diagnostic
 def test_the_back_face_books_a_record_overtaking_the_cart_once_and_not_c_over_c_minus_v():
     """AT THE BACK (9.74 (2)): the cart moving along +x at one Link every four intervals, the
     record given along +x at 0.447 overtakes it from behind and books G_in - v e_out at the back
     face, cut at zero: the norm once. THE CONTROL, the board's frame: the rows the back face
     uncovers at each hop re-enter through the back Port and are booked again, c / (c - v) = 2.27
-    of the norm (finding (a) of item 48, resolved by the one rule). COMPUTATION; no pin."""
+    of the norm (finding (a) of item 48, resolved by the one rule). COMPUTATION; no pin. Both
+    shares are GAMEBOARD readings of the record's books with the clicks held off, diagnostics
+    (docs/ENGINE.md, the readings by type), not measurements."""
     document = cart_world(momentum=CART_MOMENTUM, stock=1, ticks=700, start=60)
     frame, _ = run(document, frame=True, clicks=False, ticks=700)
     board, _ = run(document, frame=False, clicks=False, ticks=700)
-    assert frame.blocks[1].stepped > 150  # the cart moved on; the record passed it
+    # a body-motion reading, the setup's guard: the cart moved on; the record passed it
+    assert frame.blocks[1].stepped > 150
+    # GAMEBOARD reading of the record's books at the back face, the clicks held off; a diagnostic
     booked, plain = booked_share(frame, board)
-    assert abs(float(booked) - 1) < 0.1, float(booked)
+    assert abs(float(booked) - 1) < 0.1, f"GAMEBOARD reading, a diagnostic: booked {float(booked)}"
     # the board's frame books the rows the back face uncovers again: c / (c - v) = 2.27 on the
     # retired train's uniform rows; on the window's record (its envelope the body's Node's, commit 7)
-    # it reads 1.63 (COMPUTATION), well above the norm the one rule books once
+    # it reads 1.63 (COMPUTATION, a GAMEBOARD reading), well above the norm the one rule books once
     re_entry = LIGHT_PACE / (LIGHT_PACE - CART_MOMENTUM / 192)  # c / (c - v) = 2.27, the uniform rows'
-    assert 1.4 < float(plain) < re_entry, float(plain)
+    assert 1.4 < float(plain) < re_entry, f"GAMEBOARD reading, a diagnostic: plain {float(plain)}"

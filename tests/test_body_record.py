@@ -47,6 +47,7 @@ def rotation_of(levels: list[int]) -> Fraction | None:
     return Fraction(a_next + a_before, a_now)
 
 
+@pytest.mark.diagnostic
 def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_body():
     """(ii), (iv), (v) on the solitary cube: the body record's rotation satisfies den_c Gamma
     a_next + r' = K a_now - den_c Gamma a_before + r exactly at every interval with K = num_c p +
@@ -60,7 +61,9 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
     (its cycles) over 400 intervals is the same on both forms within one; the body's invariant
     e = den_c Gamma (a^2 + b^2) - K a b jitters below 10^-4 of itself (2 x 10^-5 read); the family of clicks'
     field is identical on both forms at every interval (nothing given, the same hold). The edge
-    case: the lattice body's own rows are on the GameBoard and the body record's are not."""
+    case: the lattice body's own rows are on the GameBoard and the body record's are not. The
+    rotation read from the levels and the form are GameBoard readings, diagnostics, not clicks;
+    the block's count is the click."""
     document = cube_world()
     lattice = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, False)))
     one_node = DetectorLawSimulation(parse_nature_beam_world(with_body_record(document, True)))
