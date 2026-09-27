@@ -1,13 +1,5 @@
-"""THE GENERATOR BY RULE3 ALONE, tools/body_generator.py (ALGEBRA.md 9.120 item 4; the Boss's
-records 2243, 2244, 2248): from a flat start the read act and the division act iterated stop at
-the first repeat of the integer profile and give the bound mode of the count's well (its
-rotation above the band's top, its weight inside the counted cube, the float top mode's profile
-to the rounding: the test may use floats, the tool never does); a pair whose count binds
-nothing is refused by name; the moving body at a rotation k per Link (a Pythagorean triple) by the
-same iteration with the arrivals along x rotated, at rest the resting mode bit for bit, in motion
-an eigenvector of the untwisted rule away from the box's periodic seam whose two levels travel;
-the period by the one-Node rule in integers is the nearest integer to 2 pi / omega; the two
-levels and the amplitude from the count and the norm; the refusals."""
+"""The generator by Rule3 alone (tools/body_generator.py): the read and division acts iterated to the
+first repeat give the bound mode at rest and in motion; a pair that binds nothing is refused."""
 
 from __future__ import annotations
 
@@ -81,11 +73,8 @@ def float_top_mode(counts: np.ndarray, pair: tuple[int, int]) -> tuple[float, np
 
 
 def test_the_iteration_stops_at_the_first_repeat_and_gives_the_bound_mode():
-    """The cube of side 4 at 3000 per Node on the kind [800, 1200] in a periodic box of 12:
-    the repeat at iteration 198, a cycle of length 1 (a fixed point), the rotation above the
-    band's top 4 / 3 and equal to the float mode's 2 cos omega_b to 10^-6, the profile's
-    overlap with the float mode 1 to 10^-6, the share inside the cube 0.76, the clock's
-    period 8 by the one-Node rule (2 pi / 0.779)."""
+    """A cube of side 4 at 3000 per Node on [800, 1200]: a fixed point at iteration 198, the float
+    mode's rotation and profile to 10^-6, 0.76 inside the cube, the clock's period 8."""
     counts = counted_cube(12, 4, 3000)
     mode = bound_mode(counts, KIND, GAMMA)
     assert (mode.iterations, mode.cycle) == (198, 1)
@@ -104,12 +93,8 @@ def test_the_iteration_stops_at_the_first_repeat_and_gives_the_bound_mode():
 
 
 def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands_beyond_it():
-    """A is never written: the largest amplitude at which Rule3's total stays inside int64 at
-    every content of the region (the body's content, whose |S| is largest, binds it: (M - w)
-    div (6 R + |S| + w) at 3000 per Node, between 2^22 and 2^23 on [800, 1200] at Gamma
-    10^4), rule_total_bound at A inside the width and at A + 1 beyond; the fixed point does
-    not depend on A beyond its resolution: at A / 2 the profile agrees with the one at A,
-    rescaled, within five units of the coarser (the final scale comes from c T)."""
+    """A is the largest amplitude keeping Rule3's total inside int64 (between 2^22 and 2^23 here);
+    at A / 2 the profile agrees with the one at A, rescaled, within five units."""
     counts = counted_cube(12, 4, 3000)
     amplitude = amplitude_unit(KIND, GAMMA, counts)
     reads, self_coefficient, wall = coefficients(KIND[0], KIND[1], GAMMA, 3000)
@@ -137,10 +122,7 @@ def test_a_pair_whose_count_binds_nothing_is_refused_by_name():
 
 
 def test_the_period_is_the_nearest_integer_to_two_pi_over_omega_with_no_pi():
-    """On the shipped emitters' clocks and on a sweep of clocks a / b the first return within
-    half a step after half a turn is round(2 pi / acos(a / 2 b)); in integers with the
-    remainder carried (Rule3's one-Node form), the light clock's 9 and the dark body's 45
-    where its file says 46."""
+    """The period is round(2 pi / acos(a / 2 b)) in integers: 9 for the light clock, 45 for the dark body."""
     assert period_by_the_rule(1651150, 1048576) == 9
     assert period_by_the_rule(2076636, 1048576) == 45
     b = 1 << 20
@@ -150,10 +132,7 @@ def test_the_period_is_the_nearest_integer_to_two_pi_over_omega_with_no_pi():
 
 
 def test_the_two_levels_and_the_amplitude_from_the_count_and_the_norm():
-    """The second level is the read act halved, so the pair (now, before) rotates by the
-    mode's own 2 cos omega_b; the form of the pair scales as the square of the levels, and
-    the levels scaled to the norm c T give the form within one part in 10^3 of c T (the
-    levels then a few tens in size, the rounding's grain)."""
+    """The second level is the read act halved; the levels scaled to c T give the form within 10^-3."""
     counts = counted_cube(12, 4, 3000)
     mode = bound_mode(counts, KIND, GAMMA)
     read, self_coefficient, wall = rule_integers(KIND, GAMMA, counts)
@@ -185,13 +164,8 @@ def envelope_times_sine(mode, triple: tuple[int, int, int]) -> np.ndarray:
 
 
 def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
-    """At the triple (1, 0, 1) the moving iteration gives the resting mode bit for bit with its
-    rotation; at (99, 20, 101), k = 0.199 per Link, on a box of 24 along x it stops at a repeat,
-    its rotation 2 cos omega_b(k) lies below the resting one and above the band's top, its
-    weight stays inside the cube, and its real level is an eigenvector of the untwisted rule to
-    10^-4 of its norm on the Nodes away from the box's periodic seam (the seam is the box's,
-    not the mode's); the two levels travel: one step of Rule3 gives cos omega x now + sin omega
-    x the quarter-turned part to the same precision (ALGEBRA.md 9.120 item 4 (e))."""
+    """At (1, 0, 1) the moving iteration is the resting mode bit for bit; at (99, 20, 101) it is an
+    eigenvector of the untwisted rule to 10^-4 and one step of Rule3 rotates its two levels."""
     counts = counted_cube(12, 4, 3000)
     rest = bound_mode(counts, KIND, GAMMA)
     still = moving_mode(counts, KIND, GAMMA, AT_REST)

@@ -1,11 +1,4 @@
-"""Every folder card loads together with the step file, and a card names its words (the gate of #1198, gate 3).
-
-`discover()` imports every folder of the tree, and the shipped step file must name every built
-primitive at its declared place. A folder reaches the loop through discovery only, so this test
-is selected on every pull request. A `Declaration(...)` built by position in a folder counts
-against the merge base (CHECK_BASE, else origin/main): the count may only fall, and a new folder
-has none.
-"""
+"""Every folder card loads with the step file, and no card is built by position beyond the merge base (#1198, gate 3)."""
 
 from __future__ import annotations
 
