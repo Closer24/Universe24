@@ -35,7 +35,16 @@ HISTORY_MARKERS = (
 def markdown_files(root: Path) -> list[str]:
     """Every markdown file of the tree, as a posix path relative to the root; the git and
     virtual environment folders left out."""
-    skipped = {".git", ".venv", "venv", "node_modules", "__pycache__", ".pytest_cache", "artifacts", "runs"}
+    skipped = {
+        ".git",
+        ".venv",
+        "venv",
+        "node_modules",
+        "__pycache__",
+        ".pytest_cache",
+        "artifacts",
+        "runs",
+    }
     return sorted(
         path.relative_to(root).as_posix()
         for path in root.rglob("*.md")
