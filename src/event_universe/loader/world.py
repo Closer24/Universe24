@@ -324,20 +324,16 @@ class EmitterDefinition:
     branches: tuple[tuple[int, int], ...]
     label_hands: tuple[int, int] | None
     receiver: tuple[str, ...] | None
-    # THE GIVEN CLOCK (ALGEBRA.md #the-primitives; item 59): the given record's clock
-    # [p, q], the family's own or the emitter's `clock`
+    # THE GIVEN CLOCK (ALGEBRA.md #the-primitives; item 59): the given record's clock [p, q], the family's own or the emitter's `clock`
     clock: tuple[int, int]
     # THE GIVEN RECORD'S PAIR (ALGEBRA.md #the-primitives, #the-interval; commit 1): the
-    # given family's declared pair, or the emitter's own `pair` on a family
-    # whose pair is the body's
+    # given family's declared pair, or the emitter's own `pair` on a family whose pair is the body's
     pair: tuple[int, int] = MASSLESS_PAIR
     period: int | None = None
     norm: int | None = None
     given: None = None  # the ray law's given train, read by the loop as None (its cancelled branch)
-    # THE POINT EMITTER'S NORM DENOMINATOR (ALGEBRA.md; item 50): the
-    # excitation's action T as the exact rational norm / norm_denominator,
-    # in the form's units, which the window's outward norm is read against;
-    # required on every emitter (commit 7: the window the one giving)
+    # THE POINT EMITTER'S NORM DENOMINATOR (ALGEBRA.md; item 50): the excitation's action T as the exact rational
+    # norm / norm_denominator, in the form's units, which the window's outward norm is read against; required on every emitter (commit 7)
     norm_denominator: int | None = None
     # THE POINT EMITTER'S WEIGHT g (ALGEBRA.md; item 50): the
     # body's coupling to the given family, one integer, the body's Node's rotation
