@@ -93,6 +93,8 @@ from event_universe.features.feed import (
     FeedRead,
     FeedStart,
     FeedWrites,
+    Tensor,
+    Vector,
 )
 from event_universe.features.giving import (
     THE_CLOSE,
@@ -103,7 +105,7 @@ from event_universe.features.giving import (
     GivingTerm,
     GivingWrites,
 )
-from event_universe.features.hold import TENSOR_AXES, HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
+from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.induction import (
     InductionOwn,
     InductionRead,
@@ -1669,7 +1671,7 @@ class DetectorLawSimulation:
 
     def _parts_summed(
         self, family: int, where: np.ndarray, before: bool = False
-    ) -> tuple[int, tuple[int, int, int], tuple[int, ...]]:
+    ) -> tuple[int, Vector, Tensor]:
         """A held family's levels summed over the Nodes of `where` (HOST, the feed's and the induction's read): the time part, the vector part (0 where the family has none) and the symmetric tensor part in the feed's order (0 where none), as the interval leaves them or at its start."""
 
         def total(record: LiveRecord) -> int:
@@ -1678,12 +1680,18 @@ class DetectorLawSimulation:
         vector = [0, 0, 0]
         tensor = [0] * len(set(PAIR_INDEX.values()))
         for index, record in enumerate(self.held_parts[family]):
-            group, axes = self._part_axes(family, index + 1)
+            group, axes = self.main_loop.function_of("the degree", "(i)")(
+                self.families[family].parts, index + 1
+            )
             if group == 1:
                 vector[axes[0]] = total(record)
             elif group == 2:
                 tensor[PAIR_INDEX[axes]] = total(record)
-        return total(self.held_records[family]), (vector[0], vector[1], vector[2]), tuple(tensor)
+        return (
+            total(self.held_records[family]),
+            (vector[0], vector[1], vector[2]),
+            cast(Tensor, tuple(tensor)),
+        )
 
     def _faces_of(self, block: Block, axis: int) -> tuple[np.ndarray, np.ndarray] | None:
         """The body's two faces on an axis (minus, plus): the Nodes outside the body whose Link through the Port toward it leads inside, read through the Ports (the wrap on a periodic axis, nothing beyond an open face); None where the axis has one layer or the two faces differ in size (a face beyond an open face, a body not a box)."""

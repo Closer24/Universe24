@@ -439,11 +439,10 @@ to the grain 1 / V, and summing over t gives the share. The counts over
 many records are binomial about the shares, since the residues are
 equidistributed and not a permutation.
 
-A detector is one connected region of Nodes with one name; separate
-places are separate names. A detector set is one Node of the count's
-line with its Ports the set's outer Ports, the sum of its Nodes' lines
-with one remainder; Born's rule is the shares of the current among the
-set's Nodes.
+A detector is one connected region of Nodes with one name; separate places
+are separate names. A detector set is one Node of the count's line with its
+Ports the set's outer Ports, the sum of its Nodes' lines with one remainder;
+Born's rule is the shares of the current among the set's Nodes.
 
 ## The primitives
 
@@ -506,29 +505,31 @@ universe file's numbers; and the dipoles at its Node's six neighbours, gravity's
 
 ### What a body is
 
-A body is its count and its record. The count c_i is the family of
-clicks' level at the body's Nodes, in quanta; it enters Rule3 through
-the pace alone, p_i = Gamma - c_i, and it never splits: a quantum moves
-whole, by the count's line. The record (now, before) of the body's
-family splits by the send and is bound by the count. The world file
-names the body's family, its Nodes, its count per Node and its momentum
-**n**, and nothing else: no lowered pair on its Nodes, no seed, no stop,
-no profile, no closed Port.
+A body is its count and its record. The count c_i is the family of clicks'
+level at the body's Nodes, in quanta; it enters Rule3 through the pace
+alone, p_i = Gamma - c_i, and it never splits: a quantum moves whole, by the
+count's line. The record (now, before) of the body's family splits by the
+send and is bound by the count. The world file names the body's family, its
+Nodes, its count per Node, its momentum **n** at its two levels (now and
+before, both declared, a resting body's equal) and its spin's two levels
+where it has one, and on a body that gives its stocks and its emitter (the
+given family, the weight g, the norm T with its denominator, the ladder by
+name), and nothing else: no lowered pair on its Nodes, no seed, no stop, no
+profile, no closed Port, no period (P_body is its mode's rotation).
 
 ### The well
 
-At a Node with count c Rule3's one-Node rotation rises from cos omega_0
-= num / den by (1 - p^2 / Gamma^2)(den - num) / den, and its bonds fall
-from num / (3 den) to num p_i p_j / (3 den Gamma^2): the symmetric form
-of the line with the weights 1 / p_i. The depth is bounded by the
-family's own 1 - cos omega_0, so a family whose pair lies close to 1
-binds nothing: on [800, 809] (1 - cos omega_0 = 0.011) no cube of any
-side at any count is bound; on [800, 1200] (1 / 3) at Gamma = 10^4 a
-cube of side 12 is bound from 500 quanta per Node (the mode's share
-inside 0.79, 0.92 at 1000, 0.997 at 5000), of side 6 from 1000, of side
-3 at 3000, one Node at 5000; omega_b / omega_0 for side 12 is 0.832 at
-500 and 0.771 at 2000. A body's clock is set by its count and its side,
-from the rule: a body's mass is its count.
+At a Node with count c Rule3's one-Node rotation rises from cos omega_0 =
+num / den by (1 - p^2 / Gamma^2)(den - num) / den, and its bonds fall from
+num / (3 den) to num p_i p_j / (3 den Gamma^2): the symmetric form of the
+line with the weights 1 / p_i. The depth is bounded by the family's own 1 -
+cos omega_0, so a family whose pair lies close to 1 binds nothing: on [800,
+809] (1 - cos omega_0 = 0.011) no cube of any side at any count is bound; on
+[800, 1200] (1 / 3) at Gamma = 10^4 a cube of side 12 is bound from 500
+quanta per Node (the mode's share inside 0.79, 0.92 at 1000, 0.997 at 5000),
+of side 6 from 1000, of side 3 at 3000, one Node at 5000; omega_b / omega_0
+for side 12 is 0.832 at 500 and 0.771 at 2000. A body's clock is set by its
+count and its side, from the rule: a body's mass is its count.
 
 ### The generator
 
@@ -672,14 +673,13 @@ level slows the clock by the potential Phi = -c / (2 Gamma), so
 
   G = (the reference flux) / (2 Gamma) per unit of energy count,
 
-with the reference flux a number of the GameBoard's geometry (about 1.4
-for a cube of side 3) and the energy unit setting the mass of one unit
-of level. A world at a smaller Gamma has stronger gravity per unit of
-content; the ratios between rows carry G once and cancel it. The
-quantum of distance is the Link, of time the interval; nothing between
-two Nodes or two intervals is observed. The potential at a body's Nodes
-changes by G per unit of energy count and never by less: the quantum of
-gravity is the click.
+with the reference flux a number of the GameBoard's geometry (about 1.4 for
+a cube of side 3) and the energy unit setting the mass of one unit of level.
+A world at a smaller Gamma has stronger gravity per unit of content; the
+ratios between rows carry G once and cancel it. The quantum of distance is
+the Link, of time the interval; nothing between two Nodes or two intervals
+is observed. The potential at a body's Nodes changes by G per unit of energy
+count and never by less: the quantum of gravity is the click.
 
 ### The rows against nature
 

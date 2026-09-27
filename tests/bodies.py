@@ -245,7 +245,7 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "stocks": {"light": 1},
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
+            "fixed": True,  # a tool held in place, not fed (the feed's word)
             "extents": [32, 1, 1],
             "q": 0,
             "spin": [0, 0, 0],
@@ -389,7 +389,7 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
             "stocks": {"light": stock},
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
+            "fixed": True,  # a tool held in place, not fed (the feed's word)
             "extents": [1, 1, 1],
             "q": 0,
             "spin": [0, 0, 0],
@@ -428,7 +428,7 @@ def emitter(
         "stocks": {"light": stock},
         "momentum": [momentum, 0, 0],
         "momentum_before": [momentum, 0, 0],
-        "fixed": False,
+        "fixed": True,  # a tool held in place, not fed (the feed's word)
         "extents": [32, 1, 1],
         "q": 0,
         "spin": [0, 0, 0],

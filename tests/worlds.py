@@ -178,7 +178,7 @@ def emitter_body(
         "stocks": {family: stock},
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
-        "fixed": False,
+        "fixed": True,  # a tool held in place, not fed (the feed's word)
         "extents": extents,
         "q": 0,
         "spin": [0, 0, 0],
@@ -289,7 +289,7 @@ def emitter_world(
                 "stocks": {"light": stock},
                 "momentum": [0, 0, 0],
                 "momentum_before": [0, 0, 0],
-                "fixed": False,
+                "fixed": True,  # a tool held in place, not fed (the feed's word)
                 "extents": [32, 1, 1],
                 "q": 0,
                 "spin": [0, 0, 0],

@@ -310,7 +310,7 @@ def moving_world(ticks: int = 600, ramp: int = 200) -> dict:
                 "margin": "control",
                 "momentum": [64, 0, 0],
                 "momentum_before": [64, 0, 0],
-                "fixed": False,
+                "fixed": True,  # pushed by its ramp and held from the feed: its Node's pair by the declared momentum
                 "ramp": ramp,
             }
         ],
