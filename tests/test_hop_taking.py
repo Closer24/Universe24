@@ -9,9 +9,8 @@ import numpy as np
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_emitter import reads
-from tests.test_massive_record import massive_world, seed_source
-from tests.test_receiver_by_name import CLOSED_CHAIN, emitter
+from tests.bodies import CLOSED_CHAIN, emitter, massive_world, seed_source
+from tests.worlds import reads
 
 CART_START = 200
 CART_MOMENTUM = 48  # against the wall 3 x 64 x 1: one Link every four intervals, v = 1 / 4

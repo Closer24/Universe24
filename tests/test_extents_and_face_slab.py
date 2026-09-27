@@ -16,9 +16,8 @@ import pytest
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import body_node_indices
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_detector_law import layer_world
-from tests.test_emitter import emitter_world, massive_generator
-from tests.test_flux_reading import planted
+from tests.running import planted
+from tests.worlds import emitter_world, layer_world, massive_generator
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
@@ -188,7 +187,7 @@ def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
         parse_nature_beam_world(document)
     # a periodic chain (no body: the emitter's mode is the closed chain's, one border for
     # every family, and would not fit the periodic operator) has no face whatever the depth
-    from tests.test_flux_reading import massive_world
+    from tests.bodies import massive_world
 
     periodic = massive_world([80, 1, 1], {"x": "periodic", "y": "periodic", "z": "periodic"}, [800, 809])
     periodic["face_depth"] = 4
@@ -203,7 +202,7 @@ def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
     planted at 150 and kept from clicking; after 600 intervals the face slab of depth 40 has
     booked more than 0.9 of the packet's conserved form I, the face of depth 1 less than
     0.5 (COMPUTATION; the reflected remainder returns along the chain)."""
-    from tests.test_flux_reading import massive_world
+    from tests.bodies import massive_world
 
     readings = {}
     for depth in (1, 40):

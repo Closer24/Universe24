@@ -13,44 +13,8 @@ import numpy as np
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.hold import CROSS_TERMS, TENSOR_AXES
-from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_massive_record import block_world
-
-KIND = [800, 809]
-WELL = [800, 801]
-SHAPE = [16, 8, 8]
-
-
-def parts_world(**body: object) -> dict:
-    """A periodic board with one body of matter at [3, 2, 2] of side 3 and the families with
-    parts: gravity [1, 3, 6] holding the content with the factors [1, 4, 2] and the spin's
-    dipole, the charge [1, 3] holding the sign with the moment's dipole halved (the shipped
-    file's entries on an inline list; light stays its own family here, the tests' list)."""
-    block = {"position": [3, 2, 2], "side": 3, "pair": WELL, "margin": "control", **body}
-    periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
-    document = block_world(SHAPE, periodic, KIND, [block], ticks=20)
-    document["age_bound"] = 100000  # a board periodic on every axis declares it
-    for family in document["universe"]:
-        if family["name"] == "clicks":
-            family.update(
-                {"parts": [1, 3, 6], "held_factors": [1, 4, 2], "held_dipole": "spin", "levels": 1}
-            )
-        if family["name"] == "charge":
-            family.update(
-                {
-                    "parts": [1, 3],
-                    "held_factors": [1, 1],
-                    "held_dipole": "moment",
-                    "held_dipole_div": 2,
-                }
-            )
-    document["stamp"] = input_stamp(document)
-    return document
-
-
-def parts_of(simulation: DetectorLawSimulation, name: str) -> list:
-    family = [family.name for family in simulation.families].index(name)
-    return [simulation.held_records[family], *simulation.held_parts[family]]
+from event_universe.world_files import parse_nature_beam_world
+from tests.bodies import parts_of, parts_world
 
 
 def test_a_moving_body_writes_the_vector_and_tensor_parts_with_the_remainders_carried():

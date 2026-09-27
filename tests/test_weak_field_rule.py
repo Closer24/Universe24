@@ -12,7 +12,8 @@ import pytest
 
 from event_universe.core.rule3 import coefficients, rule_total_bound
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_node_clock import PERIODIC, content_chain
+from tests.bodies import content_chain
+from tests.worlds import PERIODIC
 
 
 def test_the_rotation_and_the_dispersion_carry_the_clocks_second_order_weight():

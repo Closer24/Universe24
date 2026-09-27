@@ -20,8 +20,8 @@ import pytest
 from event_universe.core.readings import LABELS, SCHEMA, Reading, Readings, declarations
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import emitter_world
-from tests.test_ledger_items import run_world
+from tests.running import run_world
+from tests.worlds import emitter_world
 
 SHAPE = (80, 1, 1)
 DETECTORS = ["screen"]
