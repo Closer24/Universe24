@@ -1,32 +1,5 @@
-"""THE BOARD IS REVERSIBLE IN TIME, AND THE CLICKS KEEP THE PHYSICS (the model owner's word of
-2026-09-25 through the Boss, records 2010 and 2011: "write a test that shows the board is
-reversible in time, and in general keeps the physical definitions known in the clicks"; "clicks
-go only forward in time because they are what happened in the world; the rest is all
-possibilities"). One small world with every piece: an emitter body of the matter kind with a
-stock of three quanta, its given family light, both of charge -1; a body of a fifth family of
-charge +1; the screen of three light bodies; the family of clicks and the family of charge held
-at the bodies and moving elsewhere; on the Node's own pace (ALGEBRA.md 9.50 (13)).
-
-1. REVERSIBLE IN TIME (ALGEBRA.md 9.50 (8): the constant wall, the remainder's range the same at
-   every interval; 9.26 (3) (b): the click the one deletion). Between clicks N intervals forward
-   and N back return every level, remainder and field bit for bit, where the family of clicks'
-   level rises and where it falls, a Node whose level falls to 0 and rises again among them.
-   Across a click no rule undoes it: the deleted record stays deleted, the taken quantum stays
-   with its taker. Undoing the click's ledger by hand (the test's device, the click's own write:
-   the held quanta restored and the fields held again; the given record removed at a giving
-   click, its rows the file's given rows), the backward run is exact again for everything but
-   the rows the taking click deleted, which are the click's one loss.
-2. THE CLICKS' PHYSICS, on every line: the count of quanta (the giver's content down by one,
-   the taker's up by one, the total of the held quanta and the records in flight unchanged);
-   the charge (the total of the bodies' Q and the flights' q unchanged, a click moving q with
-   the quantum, ALGEBRA.md 9.48 (1), 9.51 (2)); whole numbers (one whole quantum per click);
-   the residue read at the first shell Node in [0, W) and the next giving click at its counted
-   interval (9.44 (5) (c)); Born's rule at the taking end, the detector chosen by the increment
-   ladder on the plain flux (9.25 (2) and (3), item 36); between clicks the conserved form with
-   the Node terms weighted by 1 / p (9.50 (9) and (13)) exact where the field stands, the
-   weights' change where it moves.
-   The energy count s of 9.51 (3) (the key `energy_source`) is not built; its line waits on it.
-Every number a COMPUTATION on the rule's integers; GAMEBOARD readings; no pin."""
+"""The GameBoard is reversible in time between clicks, and the clicks keep the physical definitions:
+one small world with every piece, stepped forward and back bit for bit (ALGEBRA.md 9.50 (8))."""
 
 from __future__ import annotations
 

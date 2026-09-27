@@ -2,14 +2,14 @@
 section 26 item 62): a reading family's pace on the axis a is p_a = p_0 - t_a, p_0 = Gamma - c
 (the reads' time components) and t_a the reads' aa components halved with the remainder kept at
 the Node; the rule's reads along the axis a weigh 2 p_a^2 num and its own term carries the
-three axis paces; with every tensor part zero the paces are one and the rule is the isotropic
-one bit for bit; the inverse reads the paces the step read. HOST; no pin."""
+three axis paces; the inverse reads the paces the step read (the coefficients at equal paces
+and the step with every tensor part zero are test_rule3's and test_transport's). HOST; no pin."""
 
 from __future__ import annotations
 
 import numpy as np
 
-from event_universe.core.rule3 import coefficients, rule3
+from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_massive_record import block_world
@@ -40,17 +40,6 @@ def paces_world() -> dict:
 
 def axis_sums(a: np.ndarray) -> list[np.ndarray]:
     return [np.roll(a, 1, axis=axis) + np.roll(a, -1, axis=axis) for axis in range(3)]
-
-
-def test_the_coefficients_with_equal_paces_are_the_isotropic_rules():
-    reads, self_coefficient, wall = coefficients(800, 809, GAMMA, 250, (0, 0, 0))
-    (read, _, _), self_iso, wall_iso = coefficients(800, 809, GAMMA, 250)
-    assert reads == (read, read, read) and self_coefficient == self_iso and wall == wall_iso
-    # a tensor along x alone slows the x reads and the own term by 4 num (p_x^2 - p_0^2)
-    reads_x, self_x, _ = coefficients(800, 809, GAMMA, 250, (20, 0, 0))
-    p0, px = GAMMA - 250, GAMMA - 250 - 20
-    assert reads_x == (2 * px * px * 800, read, read)
-    assert self_x == self_iso - 4 * 800 * (px * px - p0 * p0)
 
 
 def test_a_planted_tensor_part_bends_the_rule_per_axis_and_the_inverse_reads_the_same_paces():
@@ -102,21 +91,3 @@ def test_a_planted_tensor_part_bends_the_rule_per_axis_and_the_inverse_reads_the
     assert np.array_equal(live.now, now) and np.array_equal(live.before, before)
     assert not live.remainder.any()
     assert simulation.leaks() == []
-
-
-def test_with_the_tensor_zero_the_engine_is_the_isotropic_one_bit_for_bit():
-    simulation = DetectorLawSimulation(parse_nature_beam_world(paces_world()))
-    matter = [family.name for family in simulation.families].index("matter")
-    rng = np.random.default_rng(5)
-    now = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
-    before = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
-    live = simulation.planted_record(matter, now.copy(), before.copy())
-    content = simulation._effective_content(matter)
-    num, den = simulation.pair_arrays(matter)
-    reads, self_coefficient, wall = coefficients(num, den, GAMMA, content)
-    expected, remainder = rule3(
-        reads, simulation._axis_sums(now), self_coefficient, wall, now, before, np.zeros_like(now)
-    )
-    simulation._advance(live)
-    assert np.array_equal(live.now, expected) and np.array_equal(live.remainder, remainder)
-    assert simulation._axis_contents(matter) is None

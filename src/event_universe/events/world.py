@@ -1390,10 +1390,6 @@ def _receiver_names(obj: dict[str, object], label: str) -> tuple[str, ...] | Non
     return tuple(names)
 
 
-GATE_KINDS = ("cnot",)
-LABEL_BITS_BOUND = 32
-
-
 def _block(
     obj: dict[str, object],
     label: str,
