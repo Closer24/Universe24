@@ -20,6 +20,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "loader/frame.py": "the frame of the files: the schemas the loader reads them through; no arithmetic",
     "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md #the-primitives)",
+    "events/geometry.py": "the engine's geometry: the Node sets, boxes, masks and Ports of a body or a detector from the GameBoard's shape through the core's and the loader's one copy of each rule, and the pair arrays' cache",
     "events/output.py": "the engine's readings and output lines: the exact rationals of the books, the leak test, the record's click line, the books, the contents and the state stream; reads the simulation, writes the lines",
     "events/guards.py": "the engine's run-time guards bound as its methods: the start's arrays to freeze, an act's grants, a card's writes, a write applied by name, the generic act's term, start view and own record, the pace guard",
     "events/live.py": "the records' making and release: the ledger's stamps, the held records and levels, a body's own record, a planted record, a detector by name, a record's receiver, ladder and release; functions taking the engine, bound as its methods",
@@ -258,8 +259,7 @@ def root_aliases(tree: ast.AST) -> tuple[set[str], set[str]]:
 
 
 def roots(tree: ast.AST) -> set[tuple[str | None, int]]:
-    """Every call of `isqrt` or `integer_root`, under any alias, with its
-    enclosing function."""
+    """Every call of `isqrt` or `integer_root`, under any alias, with its enclosing function."""
     names, modules = root_aliases(tree)
     found: set[tuple[str | None, int]] = set()
 
