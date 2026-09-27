@@ -6,7 +6,7 @@ from collections.abc import Iterator
 from math import gcd
 from typing import TYPE_CHECKING
 
-from event_universe.core.rule3 import rungs
+from event_universe.core.rule3 import division_forward, rungs
 
 if TYPE_CHECKING:
     from event_universe.events import detector_law
@@ -21,11 +21,11 @@ ZERO: Ratio = (0, 1)
 
 
 def ratio(numerator: int, denominator: int) -> Ratio:
-    """The pair (n, d) in lowest terms with d positive (one gcd)."""
+    """The pair (n, d) in lowest terms with d positive (one gcd; the two exact divisions by the common factor are Rule3's division act, `division_forward`, the one division of the package)."""
     if denominator < 0:
         numerator, denominator = -numerator, -denominator
     common = gcd(numerator, denominator) or 1
-    return numerator // common, denominator // common
+    return division_forward(numerator, common, 0)[0], division_forward(denominator, common, 0)[0]
 
 
 def ratio_sum(terms: list[Ratio]) -> Ratio:

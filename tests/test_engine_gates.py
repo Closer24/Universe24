@@ -28,7 +28,7 @@ WORLD = {"examples/world.json": json.dumps({"universe": {"families": [{"name": "
 
 
 def test_the_tree_holds_against_the_merge_base_and_a_new_core_module_is_approved():
-    """Every file of src/ holds each count at or below the merge base's (the hand divisions per folder), read from git; a new module of core/ on a pull request has the approval line."""
+    """Every file of src/ holds each count at or below the merge base's, read from git; a new module of core/ on a pull request has the approval line."""
     ref = GATES.base_ref()
     assert GATES.ratchet(ROOT, GATES.record_at(ROOT, ref)) == []
     if BASE.on_pull_request(dict(os.environ)):
@@ -55,7 +55,10 @@ def test_a_new_core_module_needs_the_approval_line():
     new = [f"{PACKAGE}/core/main_loop.py"]
     assert GATES.core_approval([], None) == []
     assert "new module of core/" in GATES.core_approval(new, "Adds the loop.")[0]
-    assert GATES.core_approval(new, "Adds the loop.\nAPPROVED-CORE: Main Loop, 2026-09-27\n") == []
+    assert (
+        GATES.core_approval(new, "Adds the loop.\nAPPROVED-CORE: Main Loop, review of 2026-09-27\n")
+        == []
+    )
 
 
 def test_the_core_check_runs_on_a_pull_request_and_never_on_a_push_to_main():
@@ -77,20 +80,19 @@ def test_a_merge_base_that_cannot_be_resolved_fails_by_name():
             check(ROOT, "deadbeef")
 
 
-def test_a_division_by_hand_counts_per_folder_and_rule3_and_a_string_format_do_not_count(tmp_path):
-    folder = f"{PACKAGE}/features/"
-    hold, hop = f"{folder}hold/__init__.py", f"{folder}hop/__init__.py"
-    root = tree(
-        tmp_path, {**WORLD, hold: "def f(a, b):\n    return a // b\n", hop: "def g(a):\n    return a\n"}
-    )
+def test_a_division_by_hand_in_a_folder_fails_and_rule3_and_a_string_format_do_not_count(tmp_path):
+    folder = f"{PACKAGE}/features/hold/__init__.py"
+    root = tree(tmp_path, {**WORLD, folder: "def f(a, b):\n    return a + b\n"})
     baseline = GATES.record(root)
-    assert baseline["files"] == {hold: {"numbers": 0, "family_names": 0, "hand_divisions": 1}}
-    # the division moved from one file of the folder to another: the folder's count stands
-    tree(root, {hold: "def f(a, b):\n    return a + b\n", hop: "def g(a, b):\n    return a // b\n"})
-    assert GATES.ratchet(root, baseline) == []
-    (root / hop).write_text("def g(a, b):\n    q, r = divmod(a, b)\n    return a // b + a % b + q\n")
-    tree(root, {f"{PACKAGE}/core/rule3.py": "def rule3(u, w):\n    return u // w, u % w\n"})
-    tree(root, {f"{PACKAGE}/events/log.py": 'def line(x):\n    return "%d" % x\n'})
-    assert GATES.ratchet(root, baseline) == [f"{folder}: hand divisions grew from 1 to 3"]
+    assert baseline["files"] == {}
+    (root / folder).write_text("def f(a, b):\n    q, r = divmod(a, b)\n    return a // b + a % b + q\n")
+    tree(
+        root,
+        {
+            f"{PACKAGE}/core/rule3.py": "def rule3(u, w):\n    return u // w, u % w\n",
+            f"{PACKAGE}/events/log.py": 'def line(x):\n    return "%d" % x\n',
+        },
+    )
+    assert GATES.ratchet(root, baseline) == [f"{folder}: hand divisions grew from 0 to 3"]
     tree(root, {"tools/body_generator.py": "def seed(a):\n    a //= 2\n    return a\n"})
     assert "tools/body_generator.py: hand divisions grew from 0 to 1" in GATES.ratchet(root, baseline)
