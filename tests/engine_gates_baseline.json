@@ -29,7 +29,7 @@
    "numbers": 3
   },
   "src/event_universe/events/world.py": {
-   "family_names": 8,
+   "family_names": 2,
    "numbers": 22
   },
   "src/event_universe/features/recoil/__init__.py": {

@@ -69,31 +69,56 @@ NODE_CLOCK = (
 CLOCK_FAMILY_NAME = "clicks"
 CLOCK_FAMILY = {
     "name": CLOCK_FAMILY_NAME,
-    "quantum": 1,
+    "sign": 0,
+    "parts": [1],
+    "phase": 2,
     "pair": [1, 1],
-    "charge": 0,
-    "held": "content",
+    "held": {"count": "content", "factors": [1]},
     "reads": [],
+    "self_source": {"unit": 0},
 }
 CHARGE_FAMILY_NAME = "charge"
 CHARGE_FAMILY = {
     "name": CHARGE_FAMILY_NAME,
-    "quantum": 1,
+    "sign": 0,
+    "parts": [1],
+    "phase": 2,
     "pair": [1, 1],
-    "charge": 0,
-    "held": "sign",
+    "held": {"count": "sign", "factors": [1]},
     "reads": [],
+    "self_source": {"unit": 0},
 }
 CHARGE_STRENGTH = 1
 READS = [
-    {"family": CLOCK_FAMILY_NAME, "weight": 1},
-    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "sign"},
+    {"family": CLOCK_FAMILY_NAME, "weight": 1, "twist": 0, "by": 1},
+    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "twist": 0, "by": "q"},
 ]
 
 
 def reads() -> list[dict]:
     """A reading family's `reads`, a fresh copy."""
     return [dict(read) for read in READS]
+
+
+def family_entry(
+    name: str, pair, reads: list[dict], clock=None, sign: int = 0, quantum: int = 1
+) -> dict:
+    """A family of records in the cards' form (the universe file's entry): one part, two
+    levels, its pair, its reads, the self-source off, clicks at the quantum; its clock and
+    its sign where given."""
+    entry = {
+        "name": name,
+        "sign": sign,
+        "parts": [1],
+        "phase": 2,
+        "pair": pair,
+        "reads": reads,
+        "self_source": {"unit": 0},
+        "clicks": {"gives": True, "takes": True, "quantum": quantum},
+    }
+    if clock is not None:
+        entry["clock"] = list(clock)
+    return entry
 
 
 def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
@@ -198,15 +223,8 @@ def emitter_world(
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": [512, 1],
-                "charge": 0,
-                "reads": reads(),
-            },
-            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
+            family_entry("light", [1, 1], reads(), clock=[512, 1]),
+            family_entry("matter", [800, 809], reads()),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -643,11 +661,3 @@ def test_the_loaders_refusals_name_their_keys():
         document["measured"][0]["receiver"] = "screen"
 
     refused(two_ladders, "one ladder")
-
-    def free_given(document):
-        document["universe"].append(
-            {"name": "e", "quantum": 0, "pair": [1, 1], "charge": -1, "reads": reads()}
-        )
-        document["measured"][0]["emitter"]["family"] = "e"
-
-    refused(free_given, "paid family")

@@ -92,6 +92,7 @@ EVERY = 1
 def sourced_family(name: str, scale: int, cap: int | None, sourced: bool) -> dict:
     entry: dict = {
         "name": name,
+        "sign": 0,
         "parts": [1],
         "phase": 2,
         "pair": list(FAMILY_PAIR),

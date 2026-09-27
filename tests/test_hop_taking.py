@@ -21,7 +21,7 @@ import numpy as np
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_emitter import reads
+from tests.test_emitter import family_entry, reads
 from tests.test_massive_record import massive_world, seed_source
 from tests.test_receiver_by_name import CLOSED_CHAIN, emitter
 
@@ -44,9 +44,7 @@ def cart_world(
     document["clock_stamp"] = True
     # the cart's own massive family (its Nodes apart from the emitter's mode, which spans the
     # chain), the kind's pair [800, 809], the cart a barrier of it
-    document["universe"].append(
-        {"name": "cart", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()}
-    )
+    document["universe"].append(family_entry("cart", [800, 809], reads()))
     cart = {
         "position": [start, 0, 0],
         "family": "cart",

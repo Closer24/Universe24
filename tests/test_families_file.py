@@ -25,7 +25,7 @@ import pytest
 from event_universe import world_files
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import families_file_entries, input_stamp, parse_nature_beam_world
-from tests.test_emitter import emitter_world
+from tests.test_emitter import emitter_world, family_entry
 
 ROOT = Path(__file__).resolve().parents[1]
 FILE = "examples/events/universe.json"
@@ -88,8 +88,9 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     entries, integers = families_file_entries(FILE)
     # the frame reads the table's lists as tuples (core/schema.py); the same numbers
     assert json.loads(json.dumps(integers)) == document["integers"] and len(entries) == 3
-    assert entries[0]["held"] == "content" and entries[1]["held"] == "sign" and "held" not in entries[2]
-    assert entries[2]["reads"][1] == {"family": "charge", "weight": 1, "by": "sign", "twist": "own"}
+    assert entries[0]["held"]["count"] == "content" and entries[1]["held"]["count"] == "sign"
+    assert "held" not in entries[2]
+    assert entries[2]["reads"][1] == {"family": "charge", "weight": 1, "by": "q", "twist": "own"}
     for path in (ROOT / "examples/events").glob("*/*.json"):
         text = json.loads(path.read_text(encoding="utf-8"))
         # a world of the engine; the check-mode worlds (Nature24's generator, ahead of the
@@ -285,7 +286,7 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     refuses(lambda d: d["families"][0]["self_source"].__setitem__("unit", 24), "is below 24 A")
     refuses(lambda d: d["families"][0].pop("held"), "declares neither held")
     # no default written for the dipole's divisor: the universe file writes it (the hold's card)
-    refuses(lambda d: d["families"][0]["held"].pop("dipole_div"), "held lacks keys: dipole_div")
+    refuses(lambda d: d["families"][0]["held"].pop("factors"), "held lacks keys: factors")
     refuses(
         lambda d: d["families"][2].__setitem__("pair", "mine"),
         r"pair must be a list, not 'mine'; or .*pair must be one of \['body'\], not 'mine'",
@@ -298,7 +299,9 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
         lambda d: d["families"][2]["reads"][1].__setitem__("by", 2),
         r"by must be one of \[1, 'q'\], not 2",
     )
-    refuses(lambda d: d["families"][0]["held"].__setitem__("factors", [1, 4]), "held_factors must be 3")
+    refuses(
+        lambda d: d["families"][0]["held"].__setitem__("factors", [1, 4]), r"held\.factors must be 3"
+    )
     refuses(
         lambda d: d["families"][0]["held"].__setitem__("dipole", "twist"),
         r"dipole must be one of \['spin', 'moment'\], not 'twist'",
@@ -349,15 +352,7 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
     giving_matter = emitter_world(stock=1, ticks=10)
     names = {family["name"]: family for family in giving_matter["universe"]}
     names["matter"]["pair"] = "body"
-    giving_matter["universe"].append(
-        {
-            "name": "heavy",
-            "quantum": 1,
-            "pair": [1600, 1618],
-            "charge": 0,
-            "reads": names["matter"]["reads"],
-        }
-    )
+    giving_matter["universe"].append(family_entry("heavy", [1600, 1618], names["matter"]["reads"]))
     body = giving_matter["measured"][0]
     body["family"] = "heavy"
     body["stocks"] = {"matter": 1}

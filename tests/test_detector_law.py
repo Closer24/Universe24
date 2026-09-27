@@ -25,6 +25,7 @@ from tests.test_emitter import (
     CHARGE_FAMILY,
     CLOCK_FAMILY,
     NODE_CLOCK,
+    family_entry,
     lawful_wheel,
     massive_generator,
     reads,
@@ -173,15 +174,8 @@ def chain_world(
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": list(GIVEN_CLOCK),
-                "charge": 0,
-                "reads": reads(),
-            },
-            {"name": "matter", "quantum": 1, "pair": list(EMITTER_KIND), "charge": 0, "reads": reads()},
+            family_entry("light", [1, 1], reads(), clock=list(GIVEN_CLOCK)),
+            family_entry("matter", list(EMITTER_KIND), reads()),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -224,8 +218,8 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
         with pytest.raises(ValueError, match=f"has unknown keys: {key}"):
             parse_nature_beam_world(retired)
     integer_clock = chain_world()
-    integer_clock["universe"][0]["phase_per_link"] = 3
-    with pytest.raises(ValueError, match="pair form of"):
+    integer_clock["universe"][0]["clock"] = 3
+    with pytest.raises(ValueError, match="clock must be a list, not 3"):
         parse_nature_beam_world(integer_clock)
 
 
@@ -351,7 +345,7 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
         parse_nature_beam_world(set_wheel)
     on_light = chain_world()
     on_light["universe"][0]["take"] = [-15, 56]
-    with pytest.raises(ValueError, match=r"families\[0\] has unknown keys: take"):
+    with pytest.raises(ValueError, match=r"universe\[0\] has unknown keys: take"):
         parse_nature_beam_world(on_light)
 
 
@@ -384,15 +378,8 @@ def layer_world(receiver: object = None) -> dict:
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": list(GIVEN_CLOCK),
-                "charge": 0,
-                "reads": reads(),
-            },
-            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
+            family_entry("light", [1, 1], reads(), clock=list(GIVEN_CLOCK)),
+            family_entry("matter", [800, 809], reads()),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],

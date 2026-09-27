@@ -26,7 +26,7 @@ from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import MOST_FAMILIES
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import NODE_CLOCK, emitter_world
+from tests.test_emitter import NODE_CLOCK, emitter_world, family_entry
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / "src" / "event_universe"
@@ -101,14 +101,7 @@ def families_of(document: dict) -> list[dict]:
 
 def extra_family(name: str) -> dict:
     """A paid family declaring the light kind and nothing that sources it."""
-    return {
-        "name": name,
-        "quantum": 1,
-        "pair": [1, 1],
-        "phase_per_link": [512, 1],
-        "charge": 0,
-        "reads": [],
-    }
+    return family_entry(name, [1, 1], [], clock=[512, 1])
 
 
 def test_a_the_adversarial_universe_runs_bit_for_bit_under_random_family_names():

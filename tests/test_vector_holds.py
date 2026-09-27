@@ -33,15 +33,17 @@ def parts_world(**body: object) -> dict:
     for family in document["universe"]:
         if family["name"] == "clicks":
             family.update(
-                {"parts": [1, 3, 6], "held_factors": [1, 4, 2], "held_dipole": "spin", "levels": 1}
+                {
+                    "parts": [1, 3, 6],
+                    "phase": 1,
+                    "held": {"count": "content", "factors": [1, 4, 2], "dipole": "spin"},
+                }
             )
         if family["name"] == "charge":
             family.update(
                 {
                     "parts": [1, 3],
-                    "held_factors": [1, 1],
-                    "held_dipole": "moment",
-                    "held_dipole_div": 2,
+                    "held": {"count": "sign", "factors": [1, 1], "dipole": "moment", "dipole_div": 2},
                 }
             )
     document["stamp"] = input_stamp(document)

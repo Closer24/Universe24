@@ -6,8 +6,10 @@ import hashlib
 import json
 from pathlib import Path
 
+from event_universe.core.register import discover
 from event_universe.core.step import STEP_FILE, read_step
-from event_universe.events.world import NatureBeamWorld, parse_world_document, universe_file_entries
+from event_universe.events.world import NatureBeamWorld, parse_world_document
+from event_universe.loader import frame
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 LAW_ROOT = Path(__file__).resolve().parents[2]
@@ -72,14 +74,12 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     return parse_world_document(document, world_files(document), digest)
 
 
-def families_file_entries(value: str) -> tuple[list[dict[str, object]], dict[str, object]]:
-    """The universe file at the repository path `value`, read here and translated by
-    the loader (`universe_file_entries`): the families list and the universe's
-    integers."""
+def families_file_entries(value: str) -> tuple[tuple[dict[str, object], ...], dict[str, object]]:
+    """The universe file at the repository path `value`, read here and checked by the frame: the families' checked entries and the universe's integers."""
     read = read_repository_json(value)
     if read is None:
         raise ValueError(f"universe names {value!r}, no file at the repository's root")
-    return universe_file_entries(value, {value: read})
+    return frame.universe(value, {value: read}, discover())
 
 
 def load_world(path: Path) -> NatureBeamWorld:

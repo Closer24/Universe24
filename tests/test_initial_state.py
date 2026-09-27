@@ -29,7 +29,7 @@ from event_universe.events.world import (
     six_neighbours_flat,
 )
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import emitter_world, massive_generator, reads
+from tests.test_emitter import emitter_world, family_entry, massive_generator, reads
 from tests.test_massive_record import light_clock_world, massive_world
 from tests.test_receiver_by_name import CLOSED_CHAIN, emitter
 
@@ -179,18 +179,10 @@ def test_at_most_five_families():
     assert len(document["universe"]) <= MOST_FAMILIES
     while len(document["universe"]) < MOST_FAMILIES:
         document["universe"].append(
-            {
-                "name": f"family_{len(document['universe'])}",
-                "quantum": 1,
-                "pair": [800, 809],
-                "charge": 0,
-                "reads": reads(),
-            }
+            family_entry(f"family_{len(document['universe'])}", [800, 809], reads())
         )
     parse_nature_beam_world(restamped(document))
-    document["universe"].append(
-        {"name": "sixth", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()}
-    )
+    document["universe"].append(family_entry("sixth", [800, 809], reads()))
     restamped(document)
     with pytest.raises(
         ValueError,

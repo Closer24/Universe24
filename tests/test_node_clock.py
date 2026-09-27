@@ -29,7 +29,7 @@ import pytest
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, form_json
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import NODE_CLOCK, emitter_world, lawful_wheel, reads
+from tests.test_emitter import NODE_CLOCK, emitter_world, family_entry, lawful_wheel, reads
 from tests.test_flux_reading import planted
 from tests.test_massive_record import massive_world
 
@@ -535,39 +535,39 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
         parse_nature_beam_world(ray)
     unread = json.loads(json.dumps(good))
     del unread["universe"][0]["reads"]
-    with pytest.raises(ValueError, match=r"families\[0\] lacks keys the engine reads: reads"):
+    with pytest.raises(ValueError, match=r"universe\[0\] lacks keys: reads"):
         parse_nature_beam_world(unread)
     unknown = json.loads(json.dumps(good))
     unknown["universe"][0]["reads"][0]["family"] = "ticks"
-    with pytest.raises(ValueError, match="reads names 'ticks', which no family declares"):
+    with pytest.raises(ValueError, match=r"reads\[0\]\.family names 'ticks', no family of the universe"):
         parse_nature_beam_world(unknown)
     unheld = json.loads(json.dumps(good))
     unheld["universe"][0]["reads"][0]["family"] = "matter"
     with pytest.raises(ValueError, match="reads names 'matter', which is not held"):
         parse_nature_beam_world(unheld)
     massive = json.loads(json.dumps(good))
-    massive["universe"][1]["held"] = "content"
+    massive["universe"][1]["held"] = {"count": "content", "factors": [1]}
     massive["universe"][1]["reads"] = []
     with pytest.raises(
         ValueError, match="is held with the pair \\[800, 809\\]: a held family is massless"
     ):
         parse_nature_beam_world(massive)
     quantum = json.loads(json.dumps(good))
-    quantum["universe"][2]["quantum"] = 2
+    quantum["universe"][2]["clicks"] = {"gives": True, "takes": True, "quantum": 2}
     with pytest.raises(ValueError, match="counted in quanta, one click one unit"):
         parse_nature_beam_world(quantum)
     clocked = json.loads(json.dumps(good))
-    clocked["universe"][2]["phase_per_link"] = [512, 1]
+    clocked["universe"][2]["clock"] = [512, 1]
     with pytest.raises(ValueError, match="has no clock of its own"):
         parse_nature_beam_world(clocked)
     charged = json.loads(json.dumps(good))
-    charged["universe"][2]["charge"] = 1
+    charged["universe"][2]["sign"] = 1
     with pytest.raises(
         ValueError, match="is held and declares the charge 1: a held family carries none"
     ):
         parse_nature_beam_world(charged)
     reading = json.loads(json.dumps(good))
-    reading["universe"][2]["reads"] = [{"family": "charge", "weight": 1}]
+    reading["universe"][2]["reads"] = [{"family": "charge", "weight": 1, "twist": 0, "by": 1}]
     with pytest.raises(ValueError, match="is held and reads"):
         parse_nature_beam_world(reading)
     booked = json.loads(json.dumps(good))
@@ -575,16 +575,16 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     with pytest.raises(ValueError, match="unknown keys: booked"):
         parse_nature_beam_world(booked)
     twice = json.loads(json.dumps(good))
-    twice["universe"][3]["held"] = "content"
+    twice["universe"][3]["held"] = {"count": "content", "factors": [1]}
     with pytest.raises(ValueError, match="two families hold 'content'"):
         parse_nature_beam_world(twice)
     source = json.loads(json.dumps(good))
-    source["universe"][2]["held"] = "momentum"
-    with pytest.raises(ValueError, match="held must be one of"):
+    source["universe"][2]["held"] = {"count": "momentum", "factors": [1]}
+    with pytest.raises(ValueError, match=r"held\.count must be one of"):
         parse_nature_beam_world(source)
     components = json.loads(json.dumps(good))
     components["universe"][0]["components"] = 3
-    with pytest.raises(ValueError, match="components is refused: the representation is `parts`"):
+    with pytest.raises(ValueError, match="has unknown keys: components"):
         parse_nature_beam_world(components)
     body = json.loads(json.dumps(good))
     body["measured"] = [dict(light_body(3, 1), family="clicks")]
@@ -603,8 +603,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
         parse_nature_beam_world(given)
     many = json.loads(json.dumps(good))
     many["universe"] += [
-        {"name": f"family_{n}", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()}
-        for n in range(len(many["universe"]), 21)
+        family_entry(f"family_{n}", [800, 809], reads()) for n in range(len(many["universe"]), 21)
     ]
     with pytest.raises(ValueError, match="families declares 21; at most 20 families"):
         parse_nature_beam_world(many)

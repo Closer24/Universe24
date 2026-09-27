@@ -31,6 +31,7 @@ from tests.test_emitter import (
     CHARGE_FAMILY,
     CLOCK_FAMILY,
     NODE_CLOCK,
+    family_entry,
     massive_generator,
     reads,
 )
@@ -81,15 +82,8 @@ def small_world(
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": [77, 25],
-                "charge": 0,
-                "reads": reads(),
-            },
-            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
+            family_entry("light", [1, 1], reads(), clock=[77, 25]),
+            family_entry("matter", [800, 809], reads()),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],

@@ -5,7 +5,6 @@ from __future__ import annotations
 import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
-from typing import NamedTuple
 
 from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
 from event_universe.core.integer import (
@@ -49,8 +48,6 @@ Vector = tuple[int, int, int]
 T_HEADING = integer_root(3 * LABEL_SCALE * LABEL_SCALE)
 
 
-# no hand: every row of every world
-NO_HAND = 0
 # the ceiling A of a row's amplitude where a world declares none, and the rule's int64 total
 AMPLITUDE_BOUND = 1 << 28
 TOTAL_BOUND = 1 << 63
@@ -58,48 +55,6 @@ TOTAL_BOUND = 1 << 63
 MASSLESS_PAIR = (1, 1)
 # a body of one Node
 ONE_NODE: tuple[int, int, int] = (1, 1, 1)
-# the keys of an inline family (a unit test's list); the universe file's entries are the cards' and translate to them (universe_file_entries)
-FAMILY_KEYS = {
-    "name",
-    "quantum",
-    "charge",
-    "columns",
-    "lifetime",
-    "phase",
-    "phase_per_link",
-    "hand",
-    "massive",
-    # massive-record-v1: the kind's pair [num, den] on the six-neighbour
-    # term, admitted under the world key `massive_record` alone; `faces`
-    # (a kind's own border per axis, HISTORY) is refused by name: one
-    # border for every family, the world's `boundary` (BUILD.md section
-    # 26 item 28)
-    "pair",
-    "faces",
-    # THE REPRESENTATION AS A LIST OF PARTS and the rest of the complete
-    # attribute set (ALGEBRA.md 9.86 (3), 9.91 (7); the one stroke, commit 1):
-    # `parts`, `levels`, `self_unit`, `clicks`, and the held source's
-    # `held_factors`, `held_dipole`, `held_dipole_div`; the families file's
-    # entries translate to these, an inline list may declare them
-    "parts",
-    "levels",
-    "self_unit",
-    "clicks",
-    "held_factors",
-    "held_dipole",
-    "held_dipole_div",
-    # THE FAMILY GENERICITY (record 2066; BUILD.md section 26 item 51): what
-    # a family is, declared on the family and read by the engine as
-    # attributes alone, admitted under `detector_law`: `held` (the source a
-    # body's record writes at its Nodes: "content" or "sign"), `reads`
-    # (the held levels that enter the family's pace, with their weights),
-    # and `components` (1 today; 3 and 6 with the vector and tensor
-    # families of ALGEBRA.md 9.77); `booked` HISTORY (item 53: derived, a held
-    # family is never booked and every other family is)
-    "held",
-    "reads",
-    "components",
-}
 # the border's name no detector may take
 LIFETIME_NAME = "lifetime"
 # the charge per unit of content of a family with none: 0 as the pair [0, 1]
@@ -189,101 +144,6 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
             "(3 d_1 d_0 (A + 1) below 2^63; ALGEBRA.md 9.81 (2) (e))"
         )
     return TwistTable(unit, parts[0], parts[1])
-
-
-READ_BY_WORDS = {1: "plain", "q": "sign", "plain": "plain", "sign": "sign"}
-
-
-def universe_file_entries(
-    value: str, files: Mapping[str, object]
-) -> tuple[list[dict[str, object]], dict[str, object]]:
-    """The universe file read through the frame (loader/frame.py: its integers by the
-    frame's schema, every family's entry by the folders' cards, a read's weight word
-    resolved to the universe's integer) and translated to the families list the parse
-    reads (item 51's attributes and the one stroke's, ALGEBRA.md 9.91 (7)), with the
-    universe's integers. THE TRANSLATION: `parts` as declared; `phase` to `levels`;
-    `pair` [num, den] or "body"; `held` {count, factors, dipole, dipole_div} to `held`
-    (the count word), `held_factors`, `held_dipole`, `held_dipole_div` (as written,
-    no default: the universe file writes it); `reads` with `by` 1 or "q" to the
-    loader's words, `twist` kept; `self_source.unit` to `self_unit`; `clicks` to
-    `clicks` with the quantum, `quantum` 1 on a family without clicks (a held family,
-    one click one unit); `charge` 0 on every family (a body's charge is the body's
-    number, 9.91 (7); the hold writes it, commit 2). A key of a card this translation
-    has no word for (`sourced`, the source's, read by no loop yet) is carried as
-    written and refused by name in `_families`. The folders' rules the cards do not
-    state stay here until the switch: the three forms of `parts`, the self-source's
-    unit 0 or at least 24 A, a family held or clicking or both."""
-    entries, universe = frame.universe(value, files, discover())
-    label = f"the universe file {value!r}"
-    translated: list[dict[str, object]] = []
-    for index, obj in enumerate(entries):
-        where = f"{label}.families[{index}]"
-        parts = obj["parts"]
-        assert isinstance(parts, tuple)
-        if parts not in PARTS_FORMS:
-            raise ValueError(
-                f"{where}.parts must be one of {[list(form) for form in PARTS_FORMS]}: "
-                "the representation as a list of parts, the time part first (ALGEBRA.md 9.86 (2), "
-                "9.91 (1))"
-            )
-        self_source = obj["self_source"]
-        assert isinstance(self_source, dict)
-        self_unit = self_source["unit"]
-        amplitude = universe["amplitude_bound"]
-        assert isinstance(self_unit, int) and isinstance(amplitude, int)
-        if 0 < self_unit < 24 * amplitude:
-            raise ValueError(
-                f"{where}.self_source.unit {self_unit} is below 24 A = "
-                f"{24 * amplitude}: the self-source's unit P_2 is 0 (off) or "
-                "at least 24 A (ALGEBRA.md 9.91 (5))"
-            )
-        pair_value = obj["pair"]
-        if "held" not in obj and "clicks" not in obj:
-            raise ValueError(
-                f"{where} declares neither held (a field family) nor clicks (a family "
-                "of records): a family does one or both (ALGEBRA.md 9.86 (2))"
-            )
-        legacy: dict[str, object] = {
-            "name": obj["name"],
-            "charge": 0,
-            "pair": list(pair_value) if isinstance(pair_value, tuple) else pair_value,
-            "parts": list(parts),
-            "levels": obj["phase"],
-            "self_unit": self_unit,
-        }
-        raw_reads = obj["reads"]
-        assert isinstance(raw_reads, tuple)
-        reads: list[dict[str, object]] = []
-        for read in raw_reads:
-            assert isinstance(read, dict)
-            reads.append(
-                {
-                    "family": read["family"],
-                    "weight": read["weight"],
-                    "by": READ_BY_WORDS[read["by"]],
-                    "twist": read["twist"],
-                }
-            )
-        legacy["reads"] = reads
-        if "held" in obj:
-            source = obj["held"]
-            assert isinstance(source, dict)
-            legacy["held"] = source["count"]
-            legacy["held_factors"] = list(source["factors"])
-            legacy["held_dipole"] = source["dipole"]
-            legacy["held_dipole_div"] = source["dipole_div"]
-        if "clicks" in obj:
-            clicks = obj["clicks"]
-            assert isinstance(clicks, dict)
-            legacy["clicks"] = {"gives": clicks["gives"], "takes": clicks["takes"]}
-            legacy["quantum"] = clicks["quantum"]
-        else:
-            legacy["quantum"] = 1
-        for key, as_written in obj.items():
-            if key not in ("name", "parts", "phase", "pair", "self_source", "reads", "held", "clicks"):
-                legacy[key] = as_written
-        translated.append(legacy)
-    return translated, universe
 
 
 def _require_under_law(obj: dict[str, object], label: str, keys: set[str]) -> None:
@@ -384,34 +244,8 @@ class FamilyDefinition:
     name: str
     quantum: int
     charge: tuple[int, int] = NO_CHARGE
-    phase: bool = True
-    phase_per_link: int = 0
     lifetime: int | None = None
-    # The pair form of `phase_per_link` (the amplitude law, 2026-09-20, the
-    # owner's unification (1): the design's frequency is `phase_per_link`
-    # with a rational pair [n, d]): the phase steps a row of the family
-    # turns per interval of its age, `by_clock(age, n, d)` at every walk
-    # that advances its age, carried through a re-emission; None without.
-    # The integer form turns per Link crossed, as it did.
     phase_per_age: tuple[int, int] | None = None
-    # The hand of the family (`hand-v1`, 2026-09-20; BEAM_LAW note 39): -1
-    # or +1 for a chiral family, whose every row (a lamp's, a free
-    # release's, a product's, a home's, a declared transit row's) carries
-    # it, the helicity relative to the row's direction (the neutrino -1);
-    # 0 for a family without one, every family until then. Declared on the
-    # family as `charge` is: the neutrino is left-handed once, not per
-    # world.
-    hand: int = NO_HAND
-    # The massive rows (`massive-rows-v1`, 2026-09-21; the family key
-    # `massive`, admitted under the world key `massive_rows` alone): a paid
-    # family whose rows are records of massive rows, flying at the pace
-    # |p| / E' with the rest energy E'_0 = Q S M (M the `quantum`) and the
-    # momentum label p_D at the scale `momentum_magnitude` (the lamp's key,
-    # one value per family, resolved by the parser from the family's lamps),
-    # turning de Broglie's |p_a| N / h per axis Link; its click hands one
-    # quantum at the record's completion. False for every family until then.
-    massive: bool = False
-    momentum_magnitude: int = 0
     # The record kind's pair [num, den] on the six-neighbour term of the
     # local detector law's rule (`massive-record-v1`, MASSIVE_RECORD.md
     # section 1): light's kind is the value (1, 1) (every family without
@@ -486,11 +320,6 @@ class FamilyDefinition:
         gap), or its bodies declare their pairs; light's kind reads den =
         num."""
         return self.pair_on_body or self.pair[1] > self.pair[0]
-
-    @property
-    def declared_phase_per_link(self) -> int | list[int]:
-        """The key as the record carries it: the integer, or the pair."""
-        return list(self.phase_per_age) if self.phase_per_age is not None else self.phase_per_link
 
     @property
     def free(self) -> bool:
@@ -925,22 +754,6 @@ def _ratio(value: object, label: str, zero: bool) -> tuple[int, int]:
     return numerator, denominator
 
 
-def _signed_ratio(value: object, label: str) -> tuple[int, int]:
-    """A charge per unit of content n / d as an integer c (the pair (c, 1))
-    or as `[n, d]`, n an integer of either sign and d an integer from 1,
-    each within the bound of a declared charge; a denominator of 0 and a
-    part that is not an integer are refused naming the key."""
-    if type(value) is int:
-        return _integer(value, label, -MAX_VALUE, MAX_VALUE), 1
-    if not isinstance(value, list) or len(value) != 2:
-        raise ValueError(
-            f"{label} must be an integer or [numerator, denominator], the charge per unit of content"
-        )
-    numerator = _integer(value[0], f"{label} numerator", -MAX_VALUE, MAX_VALUE)
-    denominator = _integer(value[1], f"{label} denominator", 1, MAX_VALUE)
-    return numerator, denominator
-
-
 def _address(value: object, label: str, shape: Address3) -> Address3:
     if not isinstance(value, list | tuple) or len(value) != 3:
         raise ValueError(f"{label} must be three integers")
@@ -1214,29 +1027,6 @@ def _held_bodies_checks(
                     )
 
 
-def _charge_labels(raw: object, families: tuple[FamilyDefinition, ...]) -> None:
-    """THE SIGN ON THE QUANTUM (ALGEBRA.md 9.48 (1); BUILD.md section 26 item
-    35): under the detector law every family declares its `charge` q, one
-    of -1, 0 and +1 per quantum (light 0, a matter family its own), no
-    default; the label passes whole in the click, a body's charge Q the
-    signed sum of the quanta it holds."""
-    if not isinstance(raw, list):
-        return
-    for index, (entry, family) in enumerate(zip(raw, families, strict=True)):
-        if not isinstance(entry, dict) or "charge" not in entry:
-            raise ValueError(
-                f"families[{index}] ({family.name!r}) declares no `charge`: under "
-                f"every family declares the sign on its quantum, -1, 0 or +1, "
-                "no default (ALGEBRA.md 9.48 (1); BUILD.md section 26 item 35)"
-            )
-        if family.charge[1] != 1 or abs(family.charge[0]) > 1:
-            raise ValueError(
-                f"families[{index}].charge {list(family.charge)}: under "
-                f"the charge is the sign on the quantum, -1, 0 or +1 "
-                "(ALGEBRA.md 9.48 (1))"
-            )
-
-
 def _node_clock_bound(
     families: tuple[FamilyDefinition, ...],
     measured: tuple[MeasuredDefinition, ...],
@@ -1319,374 +1109,179 @@ def _node_clock_bound(
                 )
 
 
-def _kind_pair(
-    obj: dict[str, object], label: str, massive_record: bool, amplitude_bound: int = AMPLITUDE_BOUND
-) -> tuple[int, int] | None:
-    """The family key `pair` (`massive-record-v1`): [num, den], two integers
-    from 1 with den >= num (den > num a massive kind, den = num light's
-    kind written out); refused without the world key `massive_record`, and
-    with the integer `phase_per_link` on a massive kind (its phase per Link
-    is its band's at its clock, never a declared turn; the pair form, the
-    clock a matter lamp drives, is admitted) or with the massive rows' flag
-    `massive` (one massive form per family)."""
-    if "pair" not in obj:
-        return MASSLESS_PAIR
-    if not massive_record:
-        raise ValueError(
-            f"{label}.pair is refused without the world key `massive_record` "
-            f"(the world key `massive_record`, absent by default)"
-        )
-    value = obj["pair"]
-    if value == "body":
-        # THE PAIR ON THE BODY (ALGEBRA.md 9.85 (3), 9.91 (7)): the family
-        # declares none; every body (`kind`) and every given record (the
-        # emitter's `pair`) declares its own; the placeholder here, the flag
-        # `pair_on_body` on the family
-        return None
-    if not isinstance(value, list) or len(value) != 2:
-        raise ValueError(f"{label}.pair must be [num, den], the kind's pair")
-    numerator = _integer(value[0], f"{label}.pair numerator", 1, MAX_VALUE)
-    denominator = _integer(value[1], f"{label}.pair denominator", 1, MAX_VALUE)
-    _pair_bound(numerator, denominator, label, amplitude_bound)
-    if denominator < numerator:
-        raise ValueError(
-            f"{label}.pair [{numerator}, {denominator}]: a kind's pair has den >= num "
-            "(den > num a massive kind, its gap cos omega_0 = num / den; den = num light's kind)"
-        )
-    if denominator > numerator:
-        if "phase_per_link" in obj and not isinstance(obj["phase_per_link"], list):
-            # The pair form is the family's clock (a matter lamp's train
-            # carries the band, its phase per Link the rule's at that clock,
-            # cos k = 3 den cos omega / num - 2 on a chain); the integer
-            # form declares a turn per Link, no massive kind's to declare.
-            raise ValueError(
-                f"{label}.pair with the integer phase_per_link: a massive kind's phase "
-                "per Link is its band's at its clock (the pair form), never a declared turn"
-            )
-        if obj.get("massive"):
-            raise ValueError(
-                f"{label} declares both `pair` (massive-record-v1) and `massive` "
-                "(massive-rows-v1): one massive form per family"
-            )
-    return numerator, denominator
-
-
-def _refuse_family_faces(obj: dict[str, object], label: str) -> None:
-    """ONE BORDER FOR EVERY FAMILY (the model owner's rule through the Boss,
-    2026-09-25; BUILD.md section 26 item 28): the family key `faces` (a
-    massive kind's own border per axis, `massive-record-v1`, HISTORY) is
-    refused by name; every family's rows read the world's `boundary`."""
-    if "faces" in obj:
-        raise ValueError(
-            f"{label}.faces is refused: one border for every family, the world's "
-            "`boundary` (a kind's own faces are HISTORY; BUILD.md section 26 item 28)"
-        )
-
-
-def _families(
-    value: object,
-    phase_steps: int,
-    age_bound: int = AMOUNT_BOUND,
-    massive_rows: bool = False,
-    action: int | None = None,
-    massive_record: bool = False,
-    amplitude_bound: int = AMPLITUDE_BOUND,
+def _families_of(
+    entries: tuple[dict[str, object], ...],
+    age_bound: int,
+    massive_record: bool,
+    amplitude_bound: int,
 ) -> tuple[FamilyDefinition, ...]:
-    if not isinstance(value, list) or not value:
-        raise ValueError("families must be a nonempty list")
-    if len(value) > MOST_FAMILIES:
+    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair under the world key massive_record with its bound and den >= num, the clock's pair [p, q] with q from 1 and p bounded by the world's largest age, the held source's factors one per part and its dipole on a vector family, the self-source's unit 0 or at least 24 A, a family held or clicking or both, a read naming a held family once, and a held family's shape."""
+    if len(entries) > MOST_FAMILIES:
         raise ValueError(
-            f"families declares {len(value)}; at most {MOST_FAMILIES} families on a "
+            f"families declares {len(entries)}; at most {MOST_FAMILIES} families on a "
             "GameBoard (the model owner's record 2081 of 2026-09-25: every family works in every "
             "experiment, the cap 20; record 1875's unification and its counts HISTORY)"
         )
-    found: list[FamilyDefinition] = []
-    # THE FAMILY GENERICITY (item 51): the three attributes per family, the
-    # reads resolved by name once every family is read
-    generic: list[FamilyAttributes] = []
-    for index, entry in enumerate(value):
-        obj = _object(entry, f"families[{index}]", FAMILY_KEYS, {"name", "quantum"})
-        # NO DEFAULT (record 2089; item 57): the pair, the charge and the reads declared
-        # (the clock `phase_per_link` on the given family, 9.62 (1)); the ray law's
-        # phase, lifetime, hand, columns and massive flag never read, refused
-        _require_under_law(
-            obj,
-            f"families[{index}]",
-            {"pair", "charge", "reads"} if massive_record else {"charge", "reads"},
-        )
-        _refuse_under_law(
-            obj,
-            f"families[{index}]",
-            {"phase", "lifetime", "hand", "columns", "massive"},
-        )
+    names: list[str] = []
+    for obj in entries:
         name = obj["name"]
-        if not isinstance(name, str) or not name:
-            raise ValueError(f"families[{index}].name must be a nonempty string")
-        if any(item.name == name for item in found):
+        assert isinstance(name, str)
+        if name in names:
             raise ValueError(f"two families named {name!r}")
-        quantum = _integer(obj["quantum"], f"families[{index}].quantum", FREE_QUANTUM, MAX_VALUE)
-        charge = _signed_ratio(obj.get("charge", 0), f"families[{index}].charge")
-        if quantum != FREE_QUANTUM and charge[1] != 1:
+        names.append(name)
+    found: list[FamilyDefinition] = []
+    for index, obj in enumerate(entries):
+        label = f"families[{index}]"
+        parts_value = obj["parts"]
+        assert isinstance(parts_value, tuple)
+        if parts_value not in PARTS_FORMS:
             raise ValueError(
-                f"families[{index}].charge: a paid family's charge is per unit of "
-                f"amount and whole (an integer; the pair {list(charge)} is refused on {name!r}; D-1, "
-                "2026-09-20)"
+                f"{label}.parts must be one of {[list(form) for form in PARTS_FORMS]}: the "
+                "representation as a list of parts, the time part first (ALGEBRA.md 9.86 (2), 9.91 (1))"
             )
-        phase = obj.get("phase", True)
-        if type(phase) is not bool:
-            raise ValueError(f"families[{index}].phase must be true or false")
-        turn_key = f"families[{index}].phase_per_link"
-        declared_turn = obj.get("phase_per_link", 0)
-        per_age: tuple[int, int] | None = None
-        if isinstance(declared_turn, list):
-            # The pair form: the phase per interval of age (the amplitude
-            # law's frequency; an integer turns per Link crossed).
-            per_age = _ratio(declared_turn, turn_key, zero=True)
-            # The walk forms (age + 1) x n whole (`by_clock_rows`): bounded
-            # here, before it is formed, by the world's largest age.
-            if per_age[0] > AMOUNT_BOUND // (age_bound + 1):
+        parts = tuple(int(part) for part in parts_value)
+        levels = obj["phase"]
+        assert isinstance(levels, int)
+        if not massive_record:
+            raise ValueError(
+                f"{label}.pair is refused without the world key `massive_record` "
+                f"(the world key `massive_record`, absent by default)"
+            )
+        pair_value = obj["pair"]
+        pair_on_body = pair_value == "body"
+        pair = MASSLESS_PAIR
+        if not pair_on_body:
+            assert isinstance(pair_value, tuple)
+            numerator, denominator = int(pair_value[0]), int(pair_value[1])
+            if numerator > MAX_VALUE or denominator > MAX_VALUE:
+                raise ValueError(f"{label}.pair must be [num, den], two integers up to {MAX_VALUE}")
+            _pair_bound(numerator, denominator, label, amplitude_bound)
+            if denominator < numerator:
                 raise ValueError(
-                    f"{turn_key} [{per_age[0]}, {per_age[1]}]: (age_bound + 1) x n "
-                    f"= {age_bound + 1} x {per_age[0]} exceeds the integer bound {AMOUNT_BOUND}"
+                    f"{label}.pair [{numerator}, {denominator}]: a kind's pair has den >= num "
+                    "(den > num a massive kind, its gap cos omega_0 = num / den; den = num light's kind)"
                 )
-            per_link = 0
-        else:
-            per_link = _integer(declared_turn, turn_key, 0, phase_steps - 1)
-        if (per_link or per_age is not None) and not phase:
-            raise ValueError(f"{turn_key} is refused for a family without a phase circle")
-        # the ray law's lifetime, hand, massive and columns are refused above (no key of the file)
-        lifetime = None
-        hand = NO_HAND
-        massive = False
-        declared_pair = _kind_pair(obj, f"families[{index}]", massive_record, amplitude_bound)
-        pair = MASSLESS_PAIR if declared_pair is None else declared_pair
-        if "phase_per_link" in obj and not isinstance(obj["phase_per_link"], list):
-            # under the law a family's clock is the pair form (ALGEBRA.md 9.17 (6));
-            # the integer form is the ray law's turn per Link
+            pair = (numerator, denominator)
+        clock: tuple[int, int] | None = None
+        if "clock" in obj:
+            clock_value = obj["clock"]
+            assert isinstance(clock_value, tuple)
+            clock = (int(clock_value[0]), int(clock_value[1]))
+            if clock[1] < 1:
+                raise ValueError(
+                    f"{label}.clock [{clock[0]}, {clock[1]}]: the pair form [p, q] has q from 1"
+                )
+            # the walk forms (age + 1) x p whole (`by_clock_rows`): bounded here by the world's largest age
+            if clock[0] > AMOUNT_BOUND // (age_bound + 1):
+                raise ValueError(
+                    f"{label}.clock [{clock[0]}, {clock[1]}]: (age_bound + 1) x p "
+                    f"= {age_bound + 1} x {clock[0]} exceeds the integer bound {AMOUNT_BOUND}"
+                )
+        sign = obj["sign"]
+        assert isinstance(sign, int)
+        held: str | None = None
+        held_factors: tuple[int, ...] = tuple(1 for _ in parts)
+        held_dipole: str | None = None
+        held_dipole_div = 1
+        if "held" in obj:
+            source = obj["held"]
+            assert isinstance(source, dict)
+            held = str(source["count"])
+            factors = source["factors"]
+            assert isinstance(factors, tuple)
+            if len(factors) != len(parts):
+                raise ValueError(
+                    f"{label}.held.factors must be {len(parts)} integers from 1, one per part "
+                    "(ALGEBRA.md 9.91 (3): the held factors are the families file's numbers)"
+                )
+            held_factors = tuple(int(item) for item in factors)
+            if "dipole" in source:
+                held_dipole = str(source["dipole"])
+                if len(parts) < 2:
+                    raise ValueError(
+                        f"{label}.held.dipole is refused on a scalar family: the dipole is "
+                        "written into the vector part (ALGEBRA.md 9.91 (3))"
+                    )
+            if "dipole_div" in source:
+                divisor = source["dipole_div"]
+                assert isinstance(divisor, int)
+                held_dipole_div = divisor
+        self_source = obj["self_source"]
+        assert isinstance(self_source, dict)
+        self_unit = self_source["unit"]
+        assert isinstance(self_unit, int)
+        if 0 < self_unit < 24 * amplitude_bound:
             raise ValueError(
-                f"families[{index}].phase_per_link is an integer: a "
-                "family declares the pair form of its clock [p, q] or none, the given record's "
-                "clock then its emitter's (ALGEBRA.md 9.17 (6), 9.85 (3))"
+                f"{label}.self_source.unit {self_unit} is below 24 A = {24 * amplitude_bound}: the "
+                "self-source's unit P_2 is 0 (off) or at least 24 A (ALGEBRA.md 9.91 (5))"
             )
-        _refuse_family_faces(obj, f"families[{index}]")
-        generic.append(_family_generic(obj, f"families[{index}]"))
+        clicks: tuple[bool, bool] | None = None
+        quantum = 1
+        if "clicks" in obj:
+            value = obj["clicks"]
+            assert isinstance(value, dict)
+            if value["gives"] is not True or value["takes"] is not True:
+                raise ValueError(
+                    f"{label}.clicks.gives and .takes must be true: a family of records is "
+                    "given and taken at clicks (ALGEBRA.md 9.79 (1))"
+                )
+            clicks = (True, True)
+            declared_quantum = value["quantum"]
+            assert isinstance(declared_quantum, int)
+            if declared_quantum > MAX_VALUE:
+                raise ValueError(f"{label}.clicks.quantum must be an integer up to {MAX_VALUE}")
+            quantum = declared_quantum
+        elif held is None:
+            raise ValueError(
+                f"{label} declares neither held (a field family) nor clicks (a family "
+                "of records): a family does one or both (ALGEBRA.md 9.86 (2))"
+            )
+        raw_reads = obj["reads"]
+        assert isinstance(raw_reads, tuple)
+        reads: list[tuple[int, int, str, int | str]] = []
+        for read in raw_reads:
+            assert isinstance(read, dict)
+            other = read["family"]
+            assert isinstance(other, str)
+            if any(names[found_index] == other for found_index, _, _, _ in reads):
+                raise ValueError(f"{label}.reads names {other!r} twice")
+            weight = read["weight"]
+            twist = read["twist"]
+            assert isinstance(weight, int) and isinstance(twist, int | str)
+            reads.append((names.index(other), weight, READ_BY[read["by"]], twist))
+        if held is not None and reads and clicks is None:
+            raise ValueError(
+                f"{label} is held and reads {[names[i] for i, _, _, _ in reads]}: a field "
+                "family with no waves steps by the plain rule at the pace 1 of its own and reads no "
+                "level (ALGEBRA.md 9.45 (2); BUILD.md section 26 item 51)"
+            )
         found.append(
             FamilyDefinition(
-                name,
+                names[index],
                 quantum,
-                charge,
-                phase,
-                per_link,
-                lifetime=lifetime,
-                phase_per_age=per_age,
-                hand=hand,
-                massive=massive,
+                (sign, 1),
+                phase_per_age=clock,
                 pair=pair,
-                pair_on_body=declared_pair is None,
+                held=held,
+                reads=tuple(reads),
+                parts=parts,
+                levels=levels,
+                held_factors=held_factors,
+                held_dipole=held_dipole,
+                held_dipole_div=held_dipole_div,
+                self_unit=self_unit,
+                clicks=clicks,
+                pair_on_body=pair_on_body,
             )
         )
-    family_names = [family.name for family in found]
-    families = tuple(
-        FamilyDefinition(
-            family.name,
-            family.quantum,
-            family.charge,
-            family.phase,
-            family.phase_per_link,
-            family.lifetime,
-            family.phase_per_age,
-            family.hand,
-            family.massive,
-            pair=family.pair,
-            held=attributes.held,
-            reads=_resolve_reads(attributes.reads, family_names, f"families[{index}]"),
-            parts=attributes.parts,
-            levels=attributes.levels,
-            held_factors=attributes.held_factors,
-            held_dipole=attributes.held_dipole,
-            held_dipole_div=attributes.held_dipole_div,
-            self_unit=attributes.self_unit,
-            clicks=attributes.clicks,
-            pair_on_body=family.pair_on_body,
-        )
-        for index, (family, attributes) in enumerate(zip(found, generic, strict=True))
-    )
+    families = tuple(found)
     _held_family_shapes(families)
     return families
 
 
 HELD_SOURCES = ("content", "sign")
-READ_BY = ("plain", "sign")
-
-
-class FamilyAttributes(NamedTuple):
-    """What a family is, as declared (items 51 and 53; ALGEBRA.md 9.86 (3), 9.91
-    (7)): the reads by name, resolved after every family is read."""
-
-    held: str | None
-    parts: tuple[int, ...]
-    levels: int
-    held_factors: tuple[int, ...]
-    held_dipole: str | None
-    held_dipole_div: int
-    self_unit: int
-    clicks: tuple[bool, bool] | None
-    reads: list[tuple[str, int, str, int | str]]
-
-
-def _family_generic(obj: dict[str, object], label: str) -> FamilyAttributes:
-    """THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section
-    26 item 51) AND THE COMPLETE ATTRIBUTE SET (ALGEBRA.md 9.86 (3), 9.91 (7);
-    the one stroke, commit 1): the family's own declaration of what it is,
-    `held` (with `held_factors`, `held_dipole`, `held_dipole_div`), `parts`,
-    `levels`, `self_unit`, `clicks` and `reads` (the reads by name, resolved
-    after every family is read). Every family declares `reads` (a field family with no waves the empty
-    list: the plain rule), no default. The booking is derived (item 53):
-    exactly a family with clicks; an inline entry without `clicks` is a
-    family of records unless held (the tests' small lists)."""
-    held: str | None = None
-    if "held" in obj:
-        held_value = obj["held"]
-        if held_value not in HELD_SOURCES:
-            raise ValueError(
-                f"{label}.held must be one of {list(HELD_SOURCES)}: the source a body's "
-                "record writes at its Nodes, its held quanta or their signed sum (ALGEBRA.md 9.45 "
-                "(2), 9.48 (1); BUILD.md section 26 item 51)"
-            )
-        held = str(held_value)
-    if "components" in obj:
-        raise ValueError(
-            f"{label}.components is refused: the representation is `parts`, a list "
-            "([1], [1, 3] or [1, 3, 6]; ALGEBRA.md 9.86 (2), 9.91 (1))"
-        )
-    parts_value = obj.get("parts", [1])
-    if not isinstance(parts_value, list) or tuple(parts_value) not in PARTS_FORMS:
-        raise ValueError(
-            f"{label}.parts must be one of {[list(form) for form in PARTS_FORMS]}: the "
-            "representation as a list of parts, the time part first (ALGEBRA.md 9.86 (2), 9.91 (1))"
-        )
-    parts = tuple(int(part) for part in parts_value)
-    levels = obj.get("levels", 2)
-    if levels not in (1, 2):
-        raise ValueError(f"{label}.levels must be 1 or 2 (ALGEBRA.md 9.91 (1))")
-    # THE SELF-SOURCE'S UNIT P_2 (ALGEBRA.md 9.78 (3), 9.91 (5), 9.97; commit 6): 0 turns
-    # the line off (every shipped family: 9.97 derives 0 for gravity's t part and a
-    # computed P_2 whose term is 0 in integers on every shipped world); above 0 the
-    # engine subtracts (the six squared differences summed over the components) div P_2
-    # from the step; the bound 24 A is checked on the file's entries with the universe's
-    # A (`families_file_entries`)
-    self_unit = _integer(obj.get("self_unit", 0), f"{label}.self_unit", 0)
-    held_factors: tuple[int, ...] = tuple(1 for _ in parts)
-    held_dipole: str | None = None
-    held_dipole_div = 1
-    for key in ("held_factors", "held_dipole", "held_dipole_div"):
-        if key in obj and held is None:
-            raise ValueError(f"{label}.{key} is refused on a family that holds nothing")
-    if "held_factors" in obj:
-        value = obj["held_factors"]
-        if (
-            not isinstance(value, list)
-            or len(value) != len(parts)
-            or any(type(item) is not int or item < 1 for item in value)
-        ):
-            raise ValueError(
-                f"{label}.held_factors must be {len(parts)} integers from 1, one per part "
-                "(ALGEBRA.md 9.91 (3): the held factors are the families file's numbers)"
-            )
-        held_factors = tuple(int(item) for item in value)
-    if "held_dipole" in obj:
-        if obj["held_dipole"] not in HELD_DIPOLES:
-            raise ValueError(
-                f"{label}.held_dipole must be one of {list(HELD_DIPOLES)}, the body's "
-                "number written on its Node's six neighbours (ALGEBRA.md 9.91 (3))"
-            )
-        held_dipole = str(obj["held_dipole"])
-        if len(parts) < 2:
-            raise ValueError(
-                f"{label}.held_dipole is refused on a scalar family: the dipole is "
-                "written into the vector part (ALGEBRA.md 9.91 (3))"
-            )
-    if "held_dipole_div" in obj:
-        held_dipole_div = _integer(obj["held_dipole_div"], f"{label}.held_dipole_div", 1)
-    clicks: tuple[bool, bool] | None = None
-    if "clicks" in obj:
-        value = _object(obj["clicks"], f"{label}.clicks", {"gives", "takes"}, {"gives", "takes"})
-        if value["gives"] is not True or value["takes"] is not True:
-            raise ValueError(
-                f"{label}.clicks.gives and .takes must be true: a family of records is "
-                "given and taken at clicks (ALGEBRA.md 9.79 (1))"
-            )
-        clicks = (True, True)
-    elif held is None:
-        clicks = (True, True)
-    reads: list[tuple[str, int, str, int | str]] = []
-    if "reads" not in obj:
-        raise ValueError(
-            f"{label} declares no `reads`: the held families "
-            "whose levels enter the family's pace, with their weights (an empty list for a held "
-            "family: the plain rule), no default (ALGEBRA.md 9.45 (3), 9.48 (3); BUILD.md section "
-            "26 item 51)"
-        )
-    raw_reads = obj.get("reads", [])
-    if not isinstance(raw_reads, list):
-        raise ValueError(f"{label}.reads must be a list of {{family, weight, by, twist}}")
-    for position, item in enumerate(raw_reads):
-        read = _object(
-            item,
-            f"{label}.reads[{position}]",
-            {"family", "weight", "by", "twist"},
-            {"family", "weight"},
-        )
-        name = read["family"]
-        if not isinstance(name, str) or not name:
-            raise ValueError(f"{label}.reads[{position}].family must name a family")
-        weight = _integer(read["weight"], f"{label}.reads[{position}].weight", 1, AMOUNT_BOUND)
-        by = read.get("by", "plain")
-        if by not in READ_BY:
-            raise ValueError(
-                f"{label}.reads[{position}].by must be one of {list(READ_BY)}: the level "
-                "enters the pace as weight x level (plain) or as - q x weight x level, q the "
-                "reading family's own charge sign (sign; ALGEBRA.md 9.48 (3))"
-            )
-        twist_value = read.get("twist", 0)
-        twist: int | str
-        if type(twist_value) is int and twist_value >= 0:
-            twist = twist_value
-        elif isinstance(twist_value, str) and twist_value in READ_TWIST_WORDS:
-            twist = twist_value
-        else:
-            raise ValueError(
-                f"{label}.reads[{position}].twist must be an integer from 0 or one of "
-                f"{list(READ_TWIST_WORDS)} (the transport's angle per read, ALGEBRA.md 9.81 (2), "
-                "9.91 (6))"
-            )
-        if any(other == name for other, _, _, _ in reads):
-            raise ValueError(f"{label}.reads names {name!r} twice")
-        reads.append((name, weight, str(by), twist))
-    if held is not None and reads and clicks is None:
-        raise ValueError(
-            f"{label} is held and reads {[name for name, _, _, _ in reads]}: a field "
-            "family with no waves steps by the plain rule at the pace 1 of its own and reads no "
-            "level (ALGEBRA.md 9.45 (2); BUILD.md section 26 item 51)"
-        )
-    return FamilyAttributes(
-        held, parts, levels, held_factors, held_dipole, held_dipole_div, self_unit, clicks, reads
-    )
-
-
-def _resolve_reads(
-    reads: list[tuple[str, int, str, int | str]], names: list[str], label: str
-) -> tuple[tuple[int, int, str, int | str], ...]:
-    """The reads by name to the families' indices; a read names a declared
-    family (the names listed)."""
-    out: list[tuple[int, int, str, int | str]] = []
-    for name, weight, by, twist in reads:
-        if name not in names:
-            raise ValueError(
-                f"{label}.reads names {name!r}, which no family declares (the families: {names})"
-            )
-        out.append((names.index(name), weight, by, twist))
-    return tuple(out)
+# a read's word `by` in the file (1 plain, "q" by the reading family's own sign) to the loop's word
+READ_BY: dict[object, str] = {1: "plain", "q": "sign"}
 
 
 def _held_family_shapes(families: tuple[FamilyDefinition, ...]) -> None:
@@ -1711,9 +1306,9 @@ def _held_family_shapes(families: tuple[FamilyDefinition, ...]) -> None:
                     f"{label} is held with the quantum {family.quantum}: a held family "
                     "is counted in quanta, one click one unit (`quantum` 1; ALGEBRA.md 9.45 (1))"
                 )
-            if family.phase_per_age is not None or family.phase_per_link:
+            if family.phase_per_age is not None:
                 raise ValueError(
-                    f"{label} is held and declares phase_per_link: a held family "
+                    f"{label} is held and declares a clock: a held family "
                     "givings nothing and has no clock of its own (ALGEBRA.md 9.45 (1))"
                 )
             if family.charge[0] != 0:
@@ -2250,11 +1845,6 @@ def _emitter(
     given_family = families[names[name]]
     # a body may give its own family (ALGEBRA.md 9.96 (5); commit 6): the given record
     # carries the emitter's declared pair, the stock is the body's `stock` of its own quanta
-    if given_family.free:
-        raise ValueError(
-            f"{label}.family {name!r}: the given family is a paid family (light's kind, "
-            "or a massive kind)"
-        )
     # THE GIVEN RECORD'S PAIR (ALGEBRA.md 9.85 (3), 9.91 (7)): the emitter's
     # `pair` [num, den], required when the given family's pair is the body's
     # and refused when the family declares one (one copy)
@@ -2425,11 +2015,10 @@ def _measured(
                     f"{label}.stocks names the event's own family {key!r}, whose content is `amount`"
                 )
             held[names[key]] = _integer(content, f"{label}.stocks[{key!r}]", 1)
-        phased = families[family].phase
         # The turn's static bound: 2 x content x n below d x N at the clock's
         # rate [n, d] (2 x content below K x N for an integer K), the exact
         # refusal of a turn at half the circle staying the frame's.
-        if phased and 2 * sum(held) * turn_rate[0] >= turn_rate[1] * phase_steps:
+        if 2 * sum(held) * turn_rate[0] >= turn_rate[1] * phase_steps:
             raise ValueError(
                 f"{label}.amount must keep 2 x content below K x N (the phase step "
                 "per self-creation below half the circle; the content held of every family counts; "
@@ -2444,33 +2033,6 @@ def _measured(
         fixed = obj.get("fixed", False)
         assert isinstance(fixed, bool)
         turning = False
-        if turning:
-            if action is None:
-                raise ValueError(
-                    f"{label}.phase_by_momentum needs the world's `action` (the "
-                    "quantum h of the turn by momentum), which the world does not declare"
-                )
-            if fixed:
-                raise ValueError(
-                    f"{label}.phase_by_momentum is refused on a fixed measured "
-                    "event, which never steps a Link"
-                )
-            if not phased:
-                raise ValueError(
-                    f"{label}.phase_by_momentum is refused for a family without a "
-                    "phase circle: there is no phase to turn"
-                )
-            # The bound of the turn: a body steps at most one Link per
-            # interval, so within the run k <= ticks Links on an axis and
-            # the product k x |p| x N of the declared momentum must fit.
-            largest = max(abs(component) for component in momentum)
-            if ticks * largest * phase_steps > MOMENTUM_BOUND:
-                raise ValueError(
-                    f"{label}: the turn by momentum forms k x |p| x N up to "
-                    f"{ticks} x {largest} x {phase_steps} = {ticks * largest * phase_steps} "
-                    f"within the run, beyond the integer bound {MOMENTUM_BOUND} (a smaller "
-                    "momentum, N or run)"
-                )
         directions = _directions(
             list(range(HEADING_OFFSET, FIXED_DIRECTIONS)), f"{label}.directions", table
         )
@@ -3139,11 +2701,17 @@ def parse_world_document(
         # list; the universe's integers from the file alone, the world's own refused
         families_file = universe
         _refuse_under_law(obj, "the world", set(frame.INTEGERS.keys))
-        entries, integers = universe_file_entries(families_file, files)
-        obj["families"] = entries
+        entries, integers = frame.universe(families_file, files, discover())
         obj.update(integers)
     else:
-        obj["families"] = universe  # the families' list inline (a unit test's world)
+        # the families' list inline (a unit test's world), checked against the cards with
+        # the world's own integers
+        entries = frame.families(
+            universe,
+            {key: obj[key] for key in frame.INTEGERS.keys if key in obj},
+            discover(),
+            "the world.universe",
+        )
     shape_value = obj["shape"]
     assert isinstance(shape_value, tuple)
     extents = tuple(_integer(item, "shape", 1, 4096) for item in shape_value)
@@ -3179,7 +2747,6 @@ def parse_world_document(
     assert isinstance(width, int)
     bound = DEFAULT_DIRECTION_BOUND
     table = _direction_table([], bound)
-    massive_rows = False
     age_bound = _age_bound(obj.get("age_bound"), shape, periodic, table)
     clock_stamp = obj["clock_stamp"]
     assert isinstance(clock_stamp, bool)
@@ -3273,16 +2840,7 @@ def parse_world_document(
         assert isinstance(declared_probes, tuple)
         probes = tuple(_address(item, "probes", shape) for item in declared_probes)
     action = None
-    families = _families(
-        obj["families"],
-        phase_steps,
-        age_bound,
-        massive_rows,
-        action,
-        massive_record,
-        amplitude_bound,
-    )
-    _charge_labels(obj["families"], families)
+    families = _families_of(entries, age_bound, massive_record, amplitude_bound)
     # The bound is asked of a world with a MASSIVE FAMILY (a pair with den >
     # num; DECLARATIONS.md section 15 M1-10 lists the massive worlds): a
     # light world under `massive_record` (its probes, its mirror blocks of

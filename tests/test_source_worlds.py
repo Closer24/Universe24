@@ -144,7 +144,16 @@ def test_the_fragment_holds_the_three_families_for_the_one_universe():
     for entry in added:
         assert entry["parts"] == [1] and entry["phase"] == 2 and entry["pair"] == [1000, 1019]
         assert entry["reads"] == [] and entry["self_source"] == {"unit": 0}
-        assert set(entry) <= {"name", "parts", "phase", "pair", "reads", "self_source", "sourced"}
+        assert set(entry) <= {
+            "name",
+            "sign",
+            "parts",
+            "phase",
+            "pair",
+            "reads",
+            "self_source",
+            "sourced",
+        }
     assert "sourced" not in control and "sourced" in field and "sourced" in table
 
 

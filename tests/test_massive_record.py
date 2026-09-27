@@ -42,6 +42,7 @@ from tests.test_emitter import (
     CHARGE_FAMILY,
     CLOCK_FAMILY,
     NODE_CLOCK,
+    family_entry,
     lawful_wheel,
     massive_generator,
     reads,
@@ -57,7 +58,7 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
     no lamp, no block (the rule's tests construct a record's rows directly); every family
     reads the world's `boundary` (one border, BUILD.md section 26 item 28) and the face slab
     is one Node deep where the board is open (`face_depth`, declared: no default)."""
-    matter: dict = {"name": "matter", "quantum": 1, "pair": pair, "charge": 0, "reads": reads()}
+    matter: dict = family_entry("matter", pair, reads())
     return {
         "shape": shape,
         "boundary": boundary,
@@ -75,14 +76,7 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": [512, 1],
-                "charge": 0,
-                "reads": reads(),
-            },
+            family_entry("light", [1, 1], reads(), clock=[512, 1]),
             matter,
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
@@ -426,7 +420,7 @@ def test_the_loaders_refusals_name_the_key():
     without_key = json.loads(json.dumps(base))
     without_key["massive_record"] = False
     del without_key["amplitude_bound"]
-    with pytest.raises(ValueError, match="pair is refused without the world key"):
+    with pytest.raises(ValueError, match="is refused without the world key `massive_record`"):
         parse_nature_beam_world(without_key)
     reversed_pair = json.loads(json.dumps(base))
     reversed_pair["universe"][1]["pair"] = [3, 2]
@@ -437,15 +431,15 @@ def test_the_loaders_refusals_name_the_key():
     for family in (0, 1):
         faced = json.loads(json.dumps(base))
         faced["universe"][family]["faces"] = {"x": "open"}
-        with pytest.raises(ValueError, match=rf"families\[{family}\]\.faces is refused: one border"):
+        with pytest.raises(ValueError, match=rf"universe\[{family}\] has unknown keys: faces"):
             parse_nature_beam_world(faced)
     turned = json.loads(json.dumps(base))
-    turned["universe"][1]["phase_per_link"] = 5
-    with pytest.raises(ValueError, match="never a declared turn"):
+    turned["universe"][1]["clock"] = 5
+    with pytest.raises(ValueError, match="clock must be a list, not 5"):
         parse_nature_beam_world(turned)
     # the pair form is the family's clock, admitted (test (z): a matter lamp)
     clocked = json.loads(json.dumps(base))
-    clocked["universe"][1]["phase_per_link"] = [1, 2]
+    clocked["universe"][1]["clock"] = [1, 2]
     assert parse_nature_beam_world(clocked).families[1].phase_per_age == (1, 2)
     no_law = json.loads(json.dumps(base))
     no_law["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
@@ -471,7 +465,7 @@ def test_the_loaders_refusals_name_the_key():
     # light's kind written out, [1, 1], is a value and not a massive kind
     written = json.loads(json.dumps(base))
     written["universe"][1]["pair"] = [1, 1]
-    written["universe"][1]["phase_per_link"] = [77, 25]
+    written["universe"][1]["clock"] = [77, 25]
     world = parse_nature_beam_world(written)
     assert not world.families[1].massive_kind
 
@@ -492,14 +486,9 @@ def test_the_records_keys_under_the_key_and_none_without_it():
     # detector law): the rule's world with the key withdrawn and light alone
     without = massive_world([4, 4, 4], "open", [2, 3])
     without["massive_record"] = False
-    for family in without["universe"]:
-        family.pop("pair", None)  # the pair is admitted under massive_record alone (item 57)
-    del without["amplitude_bound"]
-    del without["universe"][1]
-    plain = parse_nature_beam_world(without)
-    assert plain.hypotheses == []
-    assert plain.kind_periodic(0) == plain.periodic
-    assert "form" not in DetectorLawSimulation(plain).books()["families"]["light"]
+    # every family declares its pair (the pair's card), admitted under massive_record alone
+    with pytest.raises(ValueError, match="is refused without the world key `massive_record`"):
+        parse_nature_beam_world(without)
 
 
 # The block (STEP 3 of the build: BUILD.md section 6, (e) to (l))
@@ -520,17 +509,10 @@ def block_world(
     profile at its scalar seed); every well declares its seed (the suite's amplitude 2^20
     where a test names none: no loader default, BUILD.md section 26 item 28) and the face
     slab is one Node deep where the board is open."""
-    matter: dict = {"name": "matter", "quantum": 1, "pair": kind, "charge": 0, "reads": reads()}
+    matter: dict = family_entry("matter", kind, reads())
     # light on the given clock [512, 1] of N = 1024 (the given train, ALGEBRA.md 9.17 (6a))
     families = [
-        {
-            "name": "light",
-            "quantum": 1,
-            "pair": [1, 1],
-            "phase_per_link": [512, 1],
-            "charge": 0,
-            "reads": reads(),
-        },
+        family_entry("light", [1, 1], reads(), clock=[512, 1]),
         matter,
     ]
     measured: list[dict] = []
@@ -632,7 +614,7 @@ SOURCE_WELL = [
 
 def source_family() -> dict:
     """The emitter bodies' massive family `source` (the kind SOURCE_KIND, no clock)."""
-    return {"name": "source", "quantum": 1, "pair": list(SOURCE_KIND), "charge": 0, "reads": reads()}
+    return family_entry("source", list(SOURCE_KIND), reads())
 
 
 def emitter_at(
@@ -1077,12 +1059,7 @@ def test_the_mode_line_sums_lights_field_by_residue_class():
         parse_nature_beam_world(bad)
     unkeyed = json.loads(json.dumps(document))
     unkeyed["massive_record"] = False  # declared false, never absent (item 57)
-    for family in unkeyed["universe"]:
-        family.pop("pair", None)  # the pair is admitted under massive_record alone
-    del unkeyed["amplitude_bound"]
-    del unkeyed["measured"]
-    unkeyed["measured"] = []
-    with pytest.raises(ValueError, match="mode_axis"):
+    with pytest.raises(ValueError, match="is refused without the world key `massive_record`"):
         parse_nature_beam_world(unkeyed)
 
 
@@ -1311,9 +1288,9 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
     document["ticks"] = 160
     document["universe"][1]["name"] = "source"
     document["measured"][0]["family"] = "source"
-    matter: dict = {"name": "matter", "quantum": 1, "pair": [156, 157], "charge": 0, "reads": reads()}
+    matter: dict = family_entry("matter", [156, 157], reads())
     if clock is not None:
-        matter["phase_per_link"] = clock  # None: no clock (the refusal's edge case)
+        matter["clock"] = clock  # None: no clock (the refusal's edge case)
     document["universe"].append(matter)
     document["measured"] = document["measured"][:1]
     if matter_emitter:
@@ -1471,7 +1448,7 @@ def test_every_declared_wheel_is_refused_by_name():
         ),
         (
             lambda d: d["universe"][1].__setitem__("take", [-19, 86]),
-            r"families\[1\] has unknown keys: take",
+            r"universe\[1\] has unknown keys: take",
         ),
     ):
         document = json.loads(json.dumps(base))

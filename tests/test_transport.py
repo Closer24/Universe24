@@ -45,7 +45,10 @@ def twisted_world() -> dict:
         if family["name"] == "charge":
             # the charge with its vector part (the shipped file's entry on the inline list)
             family.update(
-                {"parts": [1, 3], "held_factors": [1, 1], "held_dipole": "moment", "held_dipole_div": 2}
+                {
+                    "parts": [1, 3],
+                    "held": {"count": "sign", "factors": [1, 1], "dipole": "moment", "dipole_div": 2},
+                }
             )
     document["twist_table"] = table()
     document["stamp"] = input_stamp(document)

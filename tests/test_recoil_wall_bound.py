@@ -41,7 +41,7 @@ def clocks_of(world) -> list[tuple[int, int]]:
     """The families' clocks [p, q] as the loader holds them, where a family declares one."""
     found = []
     for family in world.families:
-        clock = family.phase_per_link
+        clock = family.phase_per_age
         if isinstance(clock, (tuple, list)) and len(clock) == 2 and int(clock[0]) > 0:
             found.append((int(clock[0]), int(clock[1])))
     return found

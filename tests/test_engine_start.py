@@ -84,7 +84,7 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
     assert light["pair"] == [1, 1]
     broken = json.loads(json.dumps(document))
     del broken["universe"][0]["pair"]
-    refused(broken, r"families\[0\] lacks keys the engine reads: pair")
+    refused(broken, r"universe\[0\] lacks keys: pair")
     for key in ("momentum", "stocks"):  # the body's schema (loader/frame.py, BODY)
         broken = json.loads(json.dumps(document))
         del broken["measured"][0][key]
@@ -120,7 +120,7 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
         refused(broken, f"the world has unknown keys: {key}")
     broken = json.loads(json.dumps(document))
     broken["universe"][0]["lifetime"] = 5
-    refused(broken, r"families\[0\] declares lifetime, which the engine never reads")
+    refused(broken, r"universe\[0\] has unknown keys: lifetime")
 
 
 def test_the_runner_requires_jobs_and_refuses_pins_under_the_mode_check(tmp_path):
