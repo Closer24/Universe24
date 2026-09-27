@@ -18,7 +18,6 @@ from event_universe.features.signed_read import (
     SignedReadStart,
     SignedReadTerm,
     apply,
-    bind,
     pace_bound,
     stability_bound,
 )
@@ -99,10 +98,10 @@ def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
 
 
 @pytest.mark.diagnostic
-def test_a_like_charge_hill_is_admitted_to_the_edge_and_refused_beyond_it_naming_the_node():
+def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond_it():
     """The charged chain: a matter record of charge +1 reads c - Lambda d; at Lambda = 1 p = 1000 <=
     1002, admitted (the largest pace over the GameBoard is a GameBoard reading, a diagnostic,
-    not a measurement); at Lambda = 3 p = 1020 beyond the edge of [800, 809], refused naming a slab Node."""
+    not a measurement); at Lambda = 3 the hill beyond the hollow at a slab Node enters at the floor 0."""
     admitted = DetectorLawSimulation(
         parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, 1, 1))
     )
@@ -115,13 +114,13 @@ def test_a_like_charge_hill_is_admitted_to_the_edge_and_refused_beyond_it_naming
     refused = DetectorLawSimulation(
         parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, 1, 3))
     )
-    with pytest.raises(RuntimeError, match=r"is 1020 at the Node \(20, 0, 0\) at interval 0, above"):
-        apply(term_of(refused, MATTER), start_of(refused, MATTER), own_of(refused, MATTER))
+    floored = apply(term_of(refused, MATTER), start_of(refused, MATTER), own_of(refused, MATTER))
+    assert int(floored.content[20, 0, 0]) == 0 and int(np.min(floored.content)) == 0
 
 
-def test_the_guard_refuses_a_hill_beyond_the_stability_edge_naming_the_node():
-    """A hill raises the pace above Gamma; [800, 850] admits it up to p = 1.0152 Gamma: at Gamma = 10^4 a
-    hill of 152 passes, 153 ends the run naming the Node, and 10^8 is refused with no pace squared."""
+def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edge():
+    """A hill would raise the pace above Gamma; the floor reads it as 0 at any depth (152, 153, 10^8), and
+    the edge of [800, 850], p = 1.0152 Gamma, is the arithmetic's check on the axis contents alone."""
     left, right = stability_bound((800, 850), GAMMA)
     assert (left, right) == (19_500, GAMMA * GAMMA * 20_100) and pace_bound((800, 850), GAMMA) == 10_152
     term = SignedReadTerm(((1, -1, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA)
@@ -132,12 +131,9 @@ def test_the_guard_refuses_a_hill_beyond_the_stability_edge_naming_the_node():
         level[1, 1, 1] = depth
         return SignedReadStart(SHAPE, {1: level}, None)
 
-    passing = apply(term, hill(152), own)
-    assert int(passing.content[1, 1, 1]) == -152 and int(passing.content[0, 0, 0]) == 0
-    with pytest.raises(RuntimeError, match=r"is 10153 at the Node \(1, 1, 1\) at interval 7, above"):
-        apply(term, hill(153), own)
-    with pytest.raises(RuntimeError, match=r"is 100010000 at the Node \(1, 1, 1\)"):
-        apply(term, hill(100_010_000 - GAMMA), own)
+    for depth in (152, 153, 100_010_000 - GAMMA):
+        floored = apply(term, hill(depth), own)
+        assert int(floored.content[1, 1, 1]) == 0 and int(floored.content[0, 0, 0]) == 0
     # the same hill on the axis contents alone is caught on that axis
     flat = np.zeros(SHAPE, dtype=np.int64)
     axis = np.zeros(SHAPE, dtype=np.int64)
@@ -150,16 +146,15 @@ def test_the_guard_refuses_a_hill_beyond_the_stability_edge_naming_the_node():
         )
 
 
-def test_a_massless_family_admits_no_hill_and_every_family_needs_a_pace_above_zero():
-    """For den = num the edge is p <= Gamma exactly, so any hill ends the run; a content
-    at Gamma (the pace 0) ends the run on the lower side; Gamma - 1 passes."""
+def test_a_massless_family_reads_a_hill_as_the_floor_and_every_family_needs_a_pace_above_zero():
+    """For den = num the edge is p <= Gamma exactly, and the floor keeps every hill at it (read as 0); a
+    content at Gamma (the pace 0) ends the run on the lower side; Gamma - 1 passes."""
     massless = SignedReadTerm(((1, 1, signed_read.BY_PLAIN),), 0, (1, 1), GAMMA)
     own = SignedReadOwn(2, "light", 3)
     shape = (2, 2, 2)
     hollow = np.zeros(shape, dtype=np.int64)
     hollow[0, 1, 0] = -1
-    with pytest.raises(RuntimeError, match=r"is 10001 at the Node \(0, 1, 0\) at interval 3, above"):
-        apply(massless, SignedReadStart(shape, {1: hollow}, None), own)
+    assert int(apply(massless, SignedReadStart(shape, {1: hollow}, None), own).content[0, 1, 0]) == 0
     deep = np.zeros(shape, dtype=np.int64)
     deep[1, 1, 1] = GAMMA
     with pytest.raises(RuntimeError, match=r"is 0 at the Node \(1, 1, 1\) at interval 3: the pace"):
@@ -172,7 +167,7 @@ def test_a_massless_family_admits_no_hill_and_every_family_needs_a_pace_above_ze
 
 def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
     """Three reads (2 a - 3 b plain, + 4 c by sign with q = -1) sum per Node exactly; no reads give 0; a
-    phase-2 read takes D_i = now^2 - next x before as handed in, times the weight (ALGEBRA.md #the-paces)."""
+    phase-2 read takes D_i = now^2 - next x before as handed in, times the weight, a hill at the floor 0."""
     shape = (2, 1, 1)
     a = np.array([[[5]], [[7]]], dtype=np.int64)
     b = np.array([[[1]], [[-2]]], dtype=np.int64)
@@ -196,7 +191,7 @@ def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
     assert invariant.tolist() == [[[25 - 21]], [[36 + 8]]]
     sourced = SignedReadTerm(((5, -2, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA)
     writes = apply(sourced, SignedReadStart(shape, {5: invariant}, None), SignedReadOwn(0, "matter", 1))
-    assert writes.content.tolist() == [[[-8]], [[-88]]]
+    assert writes.content.tolist() == [[[0]], [[0]]]
 
 
 def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_by_name():
@@ -251,9 +246,7 @@ def test_the_declaration_is_the_ledgers_row():
     assert DECLARATION.section.startswith(THE_WORD) and THE_WORD.startswith("from the rule")
     assert "#the-primitives" in DECLARATION.section and "#the-paces" in DECLARATION.section
     assert folder_of(DECLARATION.name) == "signed_read"
-    # the engine's register finds this folder and, until the loop calls apply, binds the
-    # loop's read of today through `bind`, which apply equals bit for bit
+    # the engine's register finds this folder; the loop reads through its `apply`, no binder
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
-    assert bind(simulation)(1) is simulation._effective_content(1)
     registered = simulation.register.declarations["the signed read"]
-    assert registered.reads == DECLARATION.reads and registered.built
+    assert registered.function is apply and registered.reads == DECLARATION.reads and registered.built

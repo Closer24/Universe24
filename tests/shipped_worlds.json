@@ -1,6 +1,6 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "fdff0b0f",
+ "recorded_at": "baaa8fbe",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
@@ -8,10 +8,10 @@
    },
    "ticks": 15156,
    "intervals": 200,
-   "digest": "5951df1ddb735e99aa5eeadba8f0498ccae94ab51100d0f845705471812cc69d",
-   "records": 18,
+   "digest": "0b34206864c35f491c9252a3f8c16d6bbdafcdc7347ac61e0d7139e4b6daf459",
+   "records": 17,
    "clicks": 0,
-   "lines": 644
+   "lines": 643
   },
   "examples/events/dark_body/dark.json": {
    "stamp": {
@@ -19,10 +19,10 @@
    },
    "ticks": 2400,
    "intervals": 200,
-   "digest": "f61291b6cbffab68af043432d09bc0bac0be0b18b50cc0cde530fd4e010ea0a4",
-   "records": 14,
+   "digest": "fb046ba2493309d46eb4b06a4aa630db2dbd282f42ec8b2534c3970f7243c1c7",
+   "records": 13,
    "clicks": 0,
-   "lines": 640
+   "lines": 639
   },
   "examples/events/massive_record/boxed_clock_side_20_at_rest.json": {
    "stamp": {
@@ -30,7 +30,7 @@
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "1685a2c18f90b824dd673be2f35d6eb97dc07e48b39b7f1b54c60d557f6321f6",
+   "digest": "58e866278141e1f8c2855c315c12eac70d99958ef0b9bfc6a964cd31d6400ede",
    "records": 1,
    "clicks": 0,
    "lines": 203
@@ -41,7 +41,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "eb238733d4ae6230bbaa99ca94f065474bb88e350196929ab31efa909d27370d",
+   "digest": "367823368127897984b0e5a264f3db47b5d607b8011b3abff98287bc2eeb4dbd",
    "records": 1,
    "clicks": 0,
    "lines": 403
@@ -52,7 +52,7 @@
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "18c73943a17c8fb5ab554402f794a1e2c9f6752a6bcccdee9ed6f37b08caec18",
+   "digest": "de7bfd0bdfbf1eb24972f33940ba679ef52bfb10bc3fcaf29b0209eee1ef21da",
    "records": 1,
    "clicks": 0,
    "lines": 204
@@ -63,7 +63,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "6db124ced3ea13a2f3b2c6cb44402d5606141e07528aabc653eecfda982caa77",
+   "digest": "7475fe181e7afc6d5ea76ca1fec973a5da02275dfd5fa17d29dad783668b6d78",
    "records": 1,
    "clicks": 0,
    "lines": 404
@@ -74,7 +74,7 @@
    },
    "ticks": 3500,
    "intervals": 200,
-   "digest": "7462d9a642336d0696598f6ee77b41cb22f0045e5cabcc20bb7abb2d860cf22a",
+   "digest": "d7497993faa209abb3cf9eaf1855cff6283d5b0cb422b5027364a5f0472b2727",
    "records": 1,
    "clicks": 0,
    "lines": 201
@@ -85,7 +85,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "7ce1c6d7e46628a47e067227143bf39c2ca57700b6cfbab7a7a0e6b3f4d285e9",
+   "digest": "b687ef24a0539b8e0c4aeb29306a3706442fb8b8892cc55ffbc1bd15d9887299",
    "records": 1,
    "clicks": 0,
    "lines": 401
@@ -96,10 +96,10 @@
    },
    "ticks": 4800,
    "intervals": 1500,
-   "digest": "c16b059a12a6359d03b62e82ac7bcd2c3db78d9551b88205be0090d09ca3a4b1",
-   "records": 16,
-   "clicks": 42,
-   "lines": 4756
+   "digest": "38a54ef874fc4dfc6125843bde01604c9fa88b25ad155d8015109d3772c150e9",
+   "records": 17,
+   "clicks": 41,
+   "lines": 4755
   },
   "examples/events/massive_record/muon_moving_clock_at_rest_14.json": {
    "stamp": {
@@ -107,7 +107,7 @@
    },
    "ticks": 20500,
    "intervals": 200,
-   "digest": "fbe997f88f2d03ac86a14eab376fc97e308288e6766913b1d47d00d9537bc80c",
+   "digest": "9ec5dc0665bf72d4be838b15964b56d21e42c64d19298d861490326876eb7f62",
    "records": 1,
    "clicks": 0,
    "lines": 204
@@ -118,7 +118,7 @@
    },
    "ticks": 20500,
    "intervals": 200,
-   "digest": "c45701a55cb416154b978b3299c66c8e81a191c50a982fa58d60daed63da2c6d",
+   "digest": "66d92475d8758bb79e60bcf7465dcb7179387624b375941755c4ef5626e00241",
    "records": 1,
    "clicks": 0,
    "lines": 404
@@ -140,10 +140,10 @@
    },
    "ticks": 35304,
    "intervals": 3000,
-   "digest": "b8691cd68f3acc7434d037160dc45c6e7b861a9e6e5d353fd370bd9df1f93c4e",
+   "digest": "bca50d4b4ac0a2bab7eba0a35d98625a2414a587d1a4b4c9d84ef9b9ef6f9866",
    "records": 2,
-   "clicks": 11,
-   "lines": 9108
+   "clicks": 10,
+   "lines": 9106
   },
   "examples/events/toward_nature/bending.json": {
    "stamp": {
@@ -151,10 +151,10 @@
    },
    "ticks": 5600,
    "intervals": 200,
-   "digest": "133a03d0eda7607409d497c37d2db50e41fcfbbde7fc8dc8f633729fb219f00e",
-   "records": 15,
+   "digest": "04e7e5f2878d9c830a808b3ee732d55e0d051685c3394fb02aa79010bca362eb",
+   "records": 14,
    "clicks": 0,
-   "lines": 641
+   "lines": 640
   },
   "examples/events/toward_nature/lorentz_moving.json": {
    "stamp": {
@@ -162,7 +162,7 @@
    },
    "ticks": 3600,
    "intervals": 200,
-   "digest": "11669ce22b464f72d55ba317909561c8e215202fff3e18fd5141e774ffc1140f",
+   "digest": "de122cbdd6fdd728dc74b4deb5d677d74f2ead575d10369153b10d687892bcf7",
    "records": 3,
    "clicks": 0,
    "lines": 625
@@ -173,7 +173,7 @@
    },
    "ticks": 5966,
    "intervals": 200,
-   "digest": "fd13979e2bffa12dfbb07bc57ddc3d6fad2b7ccb9ffc18ad14502538e4046fd6",
+   "digest": "64f3ad8f42ed0a167777813722681de35af154267478a67271d819bb3704b7f5",
    "records": 4,
    "clicks": 1,
    "lines": 610
@@ -184,10 +184,10 @@
    },
    "ticks": 3600,
    "intervals": 1500,
-   "digest": "1fddd33a62fb4ea854ca5127df5ccf0c57ca53a98033cec1013357e50866f987",
-   "records": 17,
-   "clicks": 39,
-   "lines": 4751
+   "digest": "a66bc78e6f24c7898cfd11ea4e3f49f864fbddb6c2571e4bdf0b4350d7438ef5",
+   "records": 18,
+   "clicks": 42,
+   "lines": 4758
   },
   "examples/events/toward_nature/lorentz_rest_long.json": {
    "stamp": {
@@ -195,7 +195,7 @@
    },
    "ticks": 8206,
    "intervals": 200,
-   "digest": "5903e3b94bf990118dfc32d6fcd8a8341c327eff6aae8044ddd695b120f74140",
+   "digest": "2fb54767b3b7d2f26ec8fee52ce5a51ffa7ee0d5cb2cc5f711b7cc29df2ab314",
    "records": 4,
    "clicks": 0,
    "lines": 607

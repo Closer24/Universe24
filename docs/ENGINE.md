@@ -85,7 +85,7 @@ Every primitive is one folder `src/event_universe/features/<name>/__init__.py`. 
 | `place` | one of the five places, or "any" for a read-only line |
 | `reads` | the values it reads, in the ledger's words |
 | `writes` | the values it writes |
-| `function` | its function where its code lives in the folder (the recoil's and the source's `apply`), or None; a card with both a function and a binder runs the binder's method today (the signed read) |
+| `function` | its function where its code lives in the folder (the recoil's and the source's `apply`), or None |
 | `section` | its line in ALGEBRA.md |
 | `word` | the mathematician's reading of its moment: the right side, the step, after the step, or any (the trace); optional, and only a word outside the four is refused |
 | `binder` | `bind(loop)`, which gives the loop's method that implements it today while the code still sits in the loop; the operation's binder gives Rule3 itself |
