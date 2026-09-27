@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
@@ -346,7 +346,8 @@ def start_at_rest(loop: DetectorLawSimulation) -> None:
         if not record.now.any():
             continue
         try:
-            levels = start(record.now, loop.families[family].pair, loop.kind_wrap[family]).levels
+            field: Any = start(record.now, loop.families[family].pair, loop.kind_wrap[family])
+            levels = field.levels
         except ValueError as refusal:
             raise ValueError(
                 f"the start of the held family {loop.families[family].name!r}: {refusal}"
