@@ -1,10 +1,6 @@
-"""THE SPIN'S STEP, its own folder (ALGEBRA.md 9.117 the row "the spin's step"; 9.78 (5); 9.104
-(2); 9.119 item 2; the Boss's record 2250), bound to the loop: the curl and the gradient are
-Rule3's read acts on the six neighbours' levels, Omega x S and mu x B_q bookings, every division
-through core.rule3, the row's two weights read from the family's entry; on a body at rest the loop
-turns the spin by a planted curl and restores it one interval back, and the torque turns it by the
-moment and the charge's curl at the read's weight alone; the inverse undoes the advance exactly on
-synthetic integers; the refusals; the declaration, bound. HOST; no pin."""
+"""THE SPIN'S STEP, its own folder bound to the loop (ALGEBRA.md the row "the spin's step"; 9.78 (5); 9.104 (2)):
+the curl and the gradient Rule3's read acts on the six neighbours, every division through core.rule3, the row's two
+weights from the family's entry; the loop turns a resting spin by a planted curl and by a moment's torque, and restores it."""
 
 from __future__ import annotations
 
@@ -26,8 +22,8 @@ from event_universe.features.spins_step import (
     gradient,
 )
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_emitter import emitter_world
-from tests.test_vector_holds import parts_of, parts_world
+from tests.bodies import parts_of, parts_world
+from tests.worlds import emitter_world
 
 GAMMA = 10_000
 # the row's weights of the spin's turn, Schiff's 1 / 2 and 3 / 2 in the levels' unit (ALGEBRA.md 9.78 (5))
@@ -64,13 +60,9 @@ def planted(simulation: DetectorLawSimulation, parts, block) -> tuple[int, int]:
 
 
 def test_the_loop_turns_the_spin_by_the_curl_at_the_bodys_node_and_inverts_exactly():
-    """S = (0, 0, 5) at rest; gravity's z component planted at +A at the Node + e_y and -A at
-    the Node - e_y (the curl's x component 2 A at the centre, the other components 0): after
-    one interval Omega_x = (curl V)_x div (SPAN x 4) at the row's weight 1 / 4, read from the
-    fields as the interval leaves them, (Omega x S)_y = -Omega_x S_z, and S_y steps by (2 (Omega
-    x S)_y + carry) div (W Gamma) from S_(t-1) = S_0 (the leapfrog's start); the inverse restores
-    S, its partner and the carried remainders. A body on one Node: the hold rewrites a wider
-    body's own Nodes, so a curl planted at its centre's neighbours would be overwritten."""
+    """S = (0, 0, 5) at rest; gravity's z component planted at +A at the Node + e_y and -A at - e_y (the curl's
+    x component 2 A): after one interval Omega_x = (curl V)_x div (2 x 4) at the row's weight 1 / 4, (Omega x S)_y =
+    -Omega_x S_z, S_y steps by (2 (Omega x S)_y + carry) div (W Gamma) from S_0; the inverse restores S and the carries."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(parts_world(spin=[0, 0, 5], side=1)))
     block = simulation.blocks[0]
     assert simulation._window_centre(block) == (3, 2, 2)
@@ -90,12 +82,9 @@ def test_the_loop_turns_the_spin_by_the_curl_at_the_bodys_node_and_inverts_exact
 
 
 def test_the_torque_turns_the_spin_by_the_moment_and_the_charge_curl_at_the_reads_weight_alone():
-    """ALGEBRA.md 9.104 (2) (the Boss's record 2157): the torque is mu x B_q with the read's
-    weight alone, since the moment carries the charge: a body of charge 0 with the moment
-    (0, 1, 0) and the spin 0, the charge's z part planted at +A at its Node + e_y and -A at
-    - e_y, steps its spin's z component by 2 (mu x B_q)_z div (W Gamma) with B_q,x = (1 x
-    curl_x) div 2 (the read's weight 1, no factor of the body's sign Q = 0, which would have
-    given 0); the inverse restores it."""
+    """ALGEBRA.md 9.104 (2): the torque is mu x B_q at the read's weight alone (the moment carries the charge): a
+    body of charge 0 with the moment (0, 1, 0) and the spin 0, the charge's z part planted at +A at + e_y and -A at
+    - e_y, steps its spin's z by 2 (mu x B_q)_z div (W Gamma), B_q,x = curl_x div 2 (Q = 0 is no factor); inverted."""
     document = parts_world(spin=[0, 0, 0], moment=[0, 1, 0], side=1)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     block = simulation.blocks[0]
