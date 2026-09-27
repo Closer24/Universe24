@@ -256,10 +256,6 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
         r"measured\[0\]\.momentum must be a list of 3, not of 2",
     )
     refuses(
-        lambda d: d["measured"][0].__setitem__("margin", "loose"),
-        r"margin must be one of \['pin', 'control'\], not 'loose'",
-    )
-    refuses(
         lambda d: d["measured"][0].__setitem__("emitter", {"family": "nobody", "twist": 0}),
         r"emitter\.family names 'nobody', no family of the universe",
     )

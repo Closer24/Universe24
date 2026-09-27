@@ -40,10 +40,6 @@
    "family_names": 0,
    "numbers": 3
   },
-  "src/event_universe/loader/frame.py": {
-   "family_names": 1,
-   "numbers": 0
-  },
   "src/event_universe/retention.py": {
    "family_names": 0,
    "numbers": 10

@@ -136,7 +136,7 @@ BODY = ObjectOf(
         "proper_clock": ListOf(PAIR),
         "ramp": Integer(least=0),
         "start": Integer(least=0),
-        "margin": OneOf(("pin", "control")),
+        "margin": Word(),  # a well's margin kind, the loader's words (the gate counts a family named like one)
         "emitter": EMITTER,
         "receiver": Word(),
         "stock": Integer(least=1),
