@@ -26,7 +26,7 @@ KEPT: dict[int, str] = {}
 
 
 def recorder():  # type: ignore[no-untyped-def]
-    return load_file("record_shipped_worlds", ROOT / "tools" / "record_shipped_worlds.py")
+    return load_file("state_digest", ROOT / "tools" / "state_digest.py")
 
 
 SHIPPED = json.loads((ROOT / "examples/events/universe.json").read_text(encoding="utf-8"))

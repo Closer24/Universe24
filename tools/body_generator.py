@@ -29,7 +29,6 @@ from event_universe.features.start import (
 )
 from event_universe.features.start import rest as start_rest
 from event_universe.loader.mode import period_by_the_rule
-from event_universe.loader.world import TWIST_UNIT_SCALE
 from event_universe.world_files import input_digest
 
 Triple = tuple[int, int, int]  # (a, b, c) with a^2 + b^2 = c^2: cos k = a / c, sin k = b / c, exact
@@ -474,6 +473,10 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
     rows = {row["name"]: row for row in universe["families"]}
     integers = universe.get("integers", {})
     gamma = int(document.get("node_clock", integers.get("node_clock", 0)))
+    # the own twist's scale from the file: theta_unit = 1 / unit, "own" = round(unit omega_0 / (4 Gamma)) (ALGEBRA.md #the-primitives)
+    twist_scale = int(
+        division(1, 4 * gamma, np.array(int(integers["twist_table"]["unit"]), dtype=object))
+    )
     bodies = [
         body for body in document.get("measured", []) if isinstance(body, dict) and "nodes" in body
     ]
@@ -586,7 +589,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                     "rotation": [mode.rotation.numerator, mode.rotation.denominator],
                     "clock": list(clock),
                     "period": period_by_the_rule(*clock),
-                    "twist": round(TWIST_UNIT_SCALE * acos(clock[0] / (2 * clock[1]))),
+                    "twist": round(twist_scale * acos(clock[0] / (2 * clock[1]))),
                     "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
                     "in_the_worlds_well": in_world,
                     "profile": mode.profile,

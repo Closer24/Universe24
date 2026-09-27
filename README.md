@@ -71,7 +71,7 @@ holds it on every pull request.
 | `law/step.json` | The interval's order, one data file shared by every world; a change is a change of the law |
 | `examples/events/` | The universe file, the start file and the worlds, with the shipped output of the first run |
 | `tests/` | One module per generic rule on a minimal GameBoard, the regression of every shipped world and the repository gates |
-| `tools/` | One command each: `check.py` (the affected check), `run_inputs.py` (a run), `record_shipped_worlds.py` (the regression record) |
+| `tools/` | One command each: `check.py` (the affected check), `run_inputs.py` (a run), `state_digest.py` (a run's state digest, a HOST reading) |
 | `docs/ALGEBRA.md` | The law |
 | `docs/ENGINE.md` | The engine as the code holds it, with its drawing `docs/ENGINE.svg` |
 | `docs/HIGHLIGHTS.md` | The decisions in force |
