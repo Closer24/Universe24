@@ -6,13 +6,10 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from event_universe.events import detector_law
+from event_universe.events.records import LiveRecord
 
 if TYPE_CHECKING:
     from event_universe.events.detector_law import DetectorLawSimulation
-
-    LiveRecord = detector_law.LiveRecord
-    Block = detector_law.Block
 
 
 def fingerprints_of(
@@ -80,7 +77,7 @@ def massive_record(
     twist: int,
 ) -> LiveRecord:
     """A record of the massive kind on the board: a block's own record at the body's kind (its rest pair) with its twist "own" (ALGEBRA.md #the-primitives); no train, no clock, no Ports."""
-    return detector_law.LiveRecord(
+    return LiveRecord(
         identity,
         number,
         family,
@@ -113,7 +110,7 @@ def planted_record(
     twist: int = 0,
 ) -> LiveRecord:
     """A record of the family given to the rule directly, its two levels as given and its remainder 0 (the generator's checks of the given train, ALGEBRA.md #the-click, #a-familys-declaration, and the tests' device): registered in no ledger, advanced by `_advance` and read by `inward_flux` and `conserved_form` alone; `norm` its T where given, `part` its component and `twist` its own rotation (commit 4)."""
-    return detector_law.LiveRecord(
+    return LiveRecord(
         0,
         0,
         family,
