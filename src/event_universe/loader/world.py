@@ -224,9 +224,9 @@ class FamilyDefinition:
     # two levels with their remainders (the second level not yet allocated:
     # it enters with the transport, commit 4)
     levels: int = 2
-    # THE HELD SOURCE'S WRITES (ALGEBRA.md #the-interval, #the-primitives the row "the hold"): the factor per
-    # part (gravity (1, 4, 2): s, 4 s n div W, 2 s n n div W^2; the charge (1, 1)), the body's dipole number
-    # on the six neighbours ("spin", "moment") and its divisor; the sum's divisor E_s (the row "the hold")
+    # THE HELD SOURCE'S WRITES (ALGEBRA.md #the-interval): the factor per part (gravity (1, 4, 2): s,
+    # 4 s n div W, 2 s n n div W^2; the charge (1, 1)), the body's dipole number written on the
+    # six neighbours ("spin", "moment") and its divisor; one factor per part, (1,) on a scalar
     held_factors: tuple[int, ...] = (1,)
     held_dipole: str | None = None
     held_dipole_div: int = 1
@@ -829,16 +829,6 @@ def _families_of(
         if "held" in obj:
             source = cast(dict[str, object], obj["held"])
             held = str(source["count"])
-            if "divisor" not in source:
-                raise ValueError(
-                    f"{label}.held lacks divisor: the count enters the field's line as a source over the "
-                    "row's divisor E_s (ALGEBRA.md #the-primitives, the row 'the hold'), no default"
-                )
-            if not isinstance(source["divisor"], int) or source["divisor"] < 1:
-                raise ValueError(
-                    f"{label}.held.divisor must be an integer from 1, not {source['divisor']!r}"
-                )
-            held_divisor = source["divisor"]
             factors = cast(tuple[int, ...], source["factors"])
             if len(factors) != len(parts):
                 raise ValueError(
@@ -928,7 +918,8 @@ def _families_of(
             other = cast(str, read["family"])
             if any(names[found_index] == other for found_index, _, _, _ in reads):
                 raise ValueError(f"{label}.reads names {other!r} twice")
-            weight, twist = cast(int, read["weight"]), cast(int | str, read["twist"])
+            weight = cast(int, read["weight"])
+            twist = cast(int | str, read["twist"])
             reads.append((names.index(other), weight, READ_BY[read["by"]], twist))
         if held is not None and reads and clicks is None:
             raise ValueError(
@@ -1157,8 +1148,9 @@ def _block(
     else:
         if pair[1] <= pair[0]:
             raise ValueError(
-                f"{label}.pair [{pair[0]}, {pair[1]}] on light's kind is no gap: the (M) wall declares "
-                "den > num (a lump in the massless surround, MASSIVE_RECORD.md section 4)"
+                f"{label}.pair [{pair[0]}, {pair[1]}] on light's kind is no gap: the "
+                "(M) wall declares den > num (a lump in the massless surround, "
+                "MASSIVE_RECORD.md section 4)"
             )
         clock_keys = [key for key in ("seed", "margin") if key in obj]
         if clock_keys:
@@ -1174,8 +1166,9 @@ def _block(
     if "seed" not in obj:
         # NO IMPLICIT SEED (the model owner, 2026-09-25; BUILD.md section 26 item 28)
         raise ValueError(
-            f"{label} lacks keys: seed (a well's own record on its Nodes: its amplitude at interval 0, "
-            "0 silent, or its profile with `margin`; no default, BUILD.md section 26 item 28)"
+            f"{label} lacks keys: seed (a well's own record on its Nodes: its "
+            "amplitude at interval 0, 0 silent, or its profile with `margin`; no default, "
+            "BUILD.md section 26 item 28)"
         )
     seed: int
     profile: tuple[int, ...] | None = None
@@ -1232,9 +1225,10 @@ def _block(
         proper_clock = tuple((int(item[0]), int(item[1])) for item in value)
     if seed > amplitude_bound:
         raise ValueError(
-            f"{label}.seed {seed} (the scalar seed, or a profile's largest magnitude) is above the "
-            f"world's amplitude bound A = {amplitude_bound} on the pair [{pair[0]}, {pair[1]}]: every "
-            "admitted amplitude enters the one declared bound (issue #1085; MUST 3)"
+            f"{label}.seed {seed} (the scalar seed, or a profile's largest magnitude) "
+            f"is above the world's amplitude bound A = {amplitude_bound} on the pair "
+            f"[{pair[0]}, {pair[1]}]: every admitted amplitude enters the one declared bound "
+            "(issue #1085; MUST 3)"
         )
     ramp = 0 if "ramp" not in obj else _integer(obj["ramp"], f"{label}.ramp", 0)
     start = 0 if "start" not in obj else _integer(obj["start"], f"{label}.start", 0)
@@ -1270,8 +1264,9 @@ def _block(
     if "receiver" in obj:
         if "emitter" not in obj:
             raise ValueError(
-                f"{label}.receiver is refused on a block that emits nothing (the receiver by name is "
-                "the ladder of the block's emitted records, DECLARATIONS.md section 13 item 7)"
+                f"{label}.receiver is refused on a block that emits nothing (the "
+                "receiver by name is the ladder of the block's emitted records, DECLARATIONS.md "
+                "section 13 item 7)"
             )
         value = obj["receiver"]
         if not isinstance(value, str) or not value:
@@ -1359,8 +1354,9 @@ def _block(
             )
         if receiver is not None and emitter.receiver is not None:
             raise ValueError(
-                f"{label}: one ladder for the given records: the block's `receiver` (one name, the line "
-                "at the rung) or the emitter's `receiver` (a list, the ladder by name), not both"
+                f"{label}: one ladder for the given records: the block's `receiver` "
+                "(one name, the line at the rung) or the emitter's `receiver` (a list, the "
+                "ladder by name), not both"
             )
     return BlockDefinition(
         side,
@@ -2097,8 +2093,9 @@ def _detector_region(
     pieces = _connected_pieces(positions, shape, periodic)
     if pieces > 1:
         raise ValueError(
-            f"the receiver {name!r} lies on {pieces} disconnected pieces; a detector is one connected "
-            "region, and separate places are separate names (ALGEBRA.md ALGEBRA.md #the-ladder)"
+            f"the receiver {name!r} lies on {pieces} disconnected pieces; a detector "
+            "is one connected region, and separate places are separate names (ALGEBRA.md "
+            "ALGEBRA.md #the-ladder)"
         )
     sides = _box_sides(positions, shape, periodic)
     if sides is None:
@@ -2166,8 +2163,9 @@ def _detectors(
             bound_block = _integer(obj["block"], f"{label}.block", 0, max(0, len(measured) - 1))
             if measured[bound_block].block is None:
                 raise ValueError(
-                    f"{label}.block {bound_block} names a measured event that is no block; a receiver "
-                    "set on a BODY is `positions` on the body's Node (DECLARATIONS.md section 15 M1-4)"
+                    f"{label}.block {bound_block} names a measured event that is no "
+                    "block; a receiver set on a BODY is `positions` on the body's Node "
+                    "(DECLARATIONS.md section 15 M1-4)"
                 )
         if "positions" not in obj:
             if bound_block is None:
@@ -2205,8 +2203,9 @@ def _detectors(
             for position in positions:
                 if position in inside and position not in at:
                     raise ValueError(
-                        f"{label}.positions names a Node of a body on a set {list(position)} that is "
-                        "not its position (a body is one record, named by its centre)"
+                        f"{label}.positions names a Node of a body on a set "
+                        f"{list(position)} that is not its position (a body is one record, "
+                        "named by its centre)"
                     )
                 if position not in at:
                     raise ValueError(
@@ -2225,8 +2224,9 @@ def _detectors(
             _detector_region(name, positions, shape, periodic, one_node=True)
         if name.startswith(RESERVED_SET_PREFIX) or name in FACE_NAMES or name == LIFETIME_NAME:
             raise ValueError(
-                f"{label}.name {name!r} is reserved: the layer names the measured events outside every "
-                f"detector `{RESERVED_SET_PREFIX}<number>`, the faces and the border by their own names"
+                f"{label}.name {name!r} is reserved: the layer names the measured "
+                f"events outside every detector `{RESERVED_SET_PREFIX}<number>`, the faces and "
+                "the border by their own names"
             )
         found.append(DetectorDefinition(name, tuple(positions), 1, block=bound_block))
     return tuple(found)
@@ -2258,10 +2258,11 @@ def _body_fit_check(world: NatureBeamWorld) -> None:
                     )
             elif corner < 0 or corner + side > extent:
                 raise ValueError(
-                    f"measured[{number}]: the body of side {side} at {corner} on the axis {name} "
-                    f"reaches {corner + side - 1} beyond the face at {extent - 1}: a body lies whole on "
-                    "the board, exactly where it is declared, never cut to fit (the model owner's word "
-                    "of 2026-09-24, 16:35Z; move the vertex or the edge, or open the axis as periodic)"
+                    f"measured[{number}]: the body of side {side} at {corner} on "
+                    f"the axis {name} reaches {corner + side - 1} beyond the face at "
+                    f"{extent - 1}: a body lies whole on the board, exactly where it is declared, "
+                    "never cut to fit (the model owner's word of 2026-09-24, 16:35Z; move the "
+                    "vertex or the edge, or open the axis as periodic)"
                 )
 
 
@@ -2484,8 +2485,9 @@ def parse_world_document(
             for name in entry.block.emitter.receiver or ():
                 if name not in set_names:
                     raise ValueError(
-                        f"measured[{number}].emitter.receiver names {name!r}, which no detector set "
-                        "declares (the record's ladder is made of declared sets; a face is never on it)"
+                        f"measured[{number}].emitter.receiver names {name!r}, which no "
+                        "detector set declares (the record's ladder is made of declared sets; "
+                        "a face is never on it)"
                     )
         # the receiver by name (DECLARATIONS.md section 13 item 7): the
         # set named must be declared; the names are listed in the refusal

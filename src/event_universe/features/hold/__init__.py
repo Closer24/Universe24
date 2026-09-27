@@ -196,7 +196,6 @@ DECLARATION = Declaration(
                             "divisor": Integer(least=1),
                             "dipole": OneOf(("spin", "moment")),
                             "dipole_div": Integer(least=1),
-                            "divisor": Integer(least=1),
                         },
                         frozenset({"dipole", "dipole_div"}),
                     )

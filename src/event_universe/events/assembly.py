@@ -173,7 +173,7 @@ def state_arrays(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
         for family in loop.held_families
         for part in range(loop.families[family].components)
     }
-    loop.span_masks = {}
+    loop.span_masks, loop.span_hold = {}, {}
     for number, entry in enumerate(world.measured):
         if entry.block is None:
             span = np.zeros(loop.shape, dtype=bool)

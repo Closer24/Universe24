@@ -79,6 +79,9 @@ FACE_NAMES = ("face:-x", "face:+x", "face:-y", "face:+y", "face:-z", "face:+z")
 # The receiver's take (DESIGN.md sections 1 and 5): a Node that receives does not send the wave back (a mirror is a receiver body that re-emits, never a wall). The record's row at a receiver holds one amplitude per Port that faces a free Node (the NodeState's Ports), the wave entering by that Port, following it one way: g(t + 1) = a_f(t) + k (a_f(t + 1) - g(t)) with a_f the free neighbour's amplitude and k = (c - 1) / (c + 1) at c = 1 / sqrt 3, the declared pair [-15, 56] (-0.2679 against sqrt 3 - 2 = -0.2679), a rounding declared at load, not a root at run time; the free neighbour reads g as the receiver's amplitude on that Link, and the receiver books g^2 as the offer arriving by that Port.
 
 
+HoldMap = dict[tuple[int, int], HoldWrites]  # the hold's writes by (family, body) between its two phases
+
+
 class DetectorLawSimulation(GameBoardGeometry[Block]):
     """One world under the engine, stepped interval by interval."""
 
@@ -131,6 +134,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     _axis_effective: dict[int, tuple[int, bool, tuple[np.ndarray, ...] | None]]
     _sourced_ever: dict[tuple[int, int], bool]
     span_masks: dict[int, np.ndarray]
+    span_hold: dict[tuple[int, int], HoldOwn]  # a span body's remainders of the hold by (family, number)
     records: dict[int, LiveRecord]
     _kind_walls: dict[tuple[int, int, int], int]
     dead: list[int]
@@ -206,7 +210,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         self.main_loop = MainLoop.plan(
             self.register, world.step, self._stages(), self.CHAIN, self.family_terms()
         )
-        self._hold(self.register.at("the hold", "(iv)"), advance=True)
+        self._hold(self.register.at("the hold", "(iv)"), THE_ADVANCE)
         assembly.start_at_rest(self)
 
     def _block(
@@ -399,7 +403,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         if advance:
             self._advance_fields(function)
         else:
-            self._hold(function)
+            self._hold(function, THE_REWRITE)
 
     def _sourced_record(self, family: int) -> LiveRecord:
         """The record a sourced family's level lives in: its held record where it is held, else its own."""
@@ -613,30 +617,47 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             return self._body_charge(number)
         return sum(self.held[number])
 
-    def _hold(self, line: Callable[..., object], advance: bool = False, inverse: bool = False) -> None:
-        """The hold: at every body's Nodes a held family's level gains the body's count over the row's divisor each interval, the folder's carried division (the count a source into the field's line, ALGEBRA.md #the-primitives the row "the hold"), subtracted on the inverse; the parts beyond the time part and the dipoles are the hold's line `line` (features/hold), one call per body and held family with the act the loop names (the advance, the rewrite of a moved body's Nodes, the inverse); `node_level` is then each held family's level as every reading family's step reads it."""
-        self.ports.begin()
-        act = THE_INVERSE if inverse else THE_ADVANCE if advance else THE_REWRITE
-        for family, record in self.held_records.items():
-            source = self.families[family].held
-            assert source is not None
-            for number in range(len(self.held)):
-                if self.body_source(number, source):
-                    self._sourced_ever[(family, 0)] = True
-            self.node_level[family] = record.now
-            held = {
-                b.number: self._held_writes(line, b, family, act)
-                for b in self.blocks
-                if advance or inverse or b.moved
-            }
-            for block in self.blocks:
-                if (w := held.get(block.number)) is not None:
-                    record.now[block.mask] += -w.time_level if inverse else w.time_level
+    def _hold(self, line: Callable[..., object], act: str, held: HoldMap | None = None) -> HoldMap:
+        """The hold in two phases, both in the forward order and apart at the inverse (`step_inverse`). The first: at every body's Nodes a held family's level gains the body's count over the row's divisor each interval, the folder's carried division (the count a source into the field's line, ALGEBRA.md #the-primitives the row "the hold"), subtracted on the inverse; one call per body and held family with the act the loop names (the advance, the rewrite of a moved body's Nodes, the inverse), a body with a block by `_held_writes`, a span body (no block) its time part alone by the same line on its own remainders (`span_hold`); `node_level` is then each held family's level as every reading family's step reads it; the inverse returns here with the writes. The second, from the first's writes `held`: the vector and tensor parts at the bodies (ALGEBRA.md #the-interval), the body's numbers times the held factors over the wall, the remainder carried, at every Node of the body at both levels (the interval's start rewrites a moved body's Nodes alone), then the dipoles on the body's Node's six neighbours (forward with the division advanced, at the inverse with the values the unhold stepped back; none beyond an open face)."""
+        if held is None:
+            self.ports.begin()
+            held = {}
+            for family, record in self.held_records.items():
+                definition = self.families[family]
+                source = cast(str, definition.held)
+                for number in range(len(self.held)):
+                    if self.body_source(number, source):
+                        self._sourced_ever[(family, 0)] = True
+                    block = self.block_by_number.get(number)
+                    if act == THE_REWRITE and not (block is not None and block.moved):
+                        continue
+                    if block is not None:
+                        if act == THE_INVERSE and self.held_parts[family]:
+                            unhold = self._held_writes(line, block, family, THE_UNHOLD)
+                            for (i, j, s), value, _ in unhold.dipoles:
+                                node = self._dipole_node(self._centre_node(block), family, j, s)
+                                if node is not None:
+                                    self.held_parts[family][i].now[node] -= value
+                        w = self._held_writes(line, block, family, act)
+                    else:
+                        divisor = cast(int, definition.held_divisor)
+                        term = HoldTerm(source, (1,), (definition.held_factors[0],), None, 1, divisor)
+                        start = HoldStart(act, self.body_source(number, source), (0, 0, 0), 1, None)
+                        own = self.span_hold.get((family, number), HoldOwn({}, {}))
+                        w = cast(HoldWrites, line(term, start, own))
+                        self.span_hold[(family, number)] = w.own
+                    held[(family, number)] = w
+                    mask = block.mask if block is not None else self.span_masks[number]
+                    record.now[mask] += -w.time_level if act == THE_INVERSE else w.time_level
+                self.node_level[family] = record.now
+            if act == THE_INVERSE:
+                return held
+        for family in self.held_records:
+            source = cast(str, self.families[family].held)
             if not self.held_parts[family]:
                 continue
-            # THE VECTOR AND TENSOR PARTS AT THE BODIES (ALGEBRA.md #the-interval): the body's numbers times the held factors over the wall, the remainder carried, at every Node of the body at both levels; the interval's start rewrites a moved body's Nodes alone (a body at rest keeps them); the time part under the row's write `sum` gained the folder's increment above (ALGEBRA.md #the-primitives, the row "the hold")
             for block in self.blocks:
-                writes = held.get(block.number)
+                writes = held.get((family, block.number))
                 if writes is None:
                     continue
                 m = self._momentum_now(block)
@@ -654,23 +675,20 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                     record.now[block.mask] = value
                     record.before[block.mask] = before
                     record.remainder[block.mask] = 0
-            # THE DIPOLES on the body's Node's six neighbours, added after the parts: forward with the division advanced, at the inverse with the values the unhold stepped back; none beyond an open face (a hopping body's dipoles at its new Node wait on the next hold)
-            if advance or inverse:
-                for block in self.blocks:
-                    dipoles = held[block.number].dipoles
-                    centre = self._centre_node(block) if dipoles else []
-                    for (i, j, sigma), value, before in dipoles:
-                        node = self._dipole_node(centre, family, j, sigma)
-                        if node is None:
-                            continue
-                        record = self.held_parts[family][i]
-                        self._sourced_ever[(family, record.part)] = True
-                        if value == 0 and before == 0:
-                            continue
-                        record.silent = False
-                        record.now[node] += value
-                        record.before[node] += before
+                centre = self._centre_node(block) if writes.dipoles else []
+                for (i, j, sigma), value, before in writes.dipoles if act != THE_REWRITE else ():
+                    node = self._dipole_node(centre, family, j, sigma)
+                    if node is None:
+                        continue
+                    record = self.held_parts[family][i]
+                    self._sourced_ever[(family, record.part)] = True
+                    if value == 0 and before == 0:
+                        continue
+                    record.silent = False
+                    record.now[node] += value
+                    record.before[node] += before
         self._effective.clear()
+        return held
 
     def _held_writes(
         self, line: Callable[..., object], block: Block, family: int, act: str
@@ -696,7 +714,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             tuple(definition.held_factors),
             definition.held_dipole,
             definition.held_dipole_div,
-            definition.held_divisor,
+            cast(int, definition.held_divisor),
         )
         start = HoldStart(
             act,
@@ -716,19 +734,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                     stored[("d", family, *key[1:])] = value
         return writes
 
-    def _unhold_dipoles(self, line: Callable[..., object]) -> None:
-        """The interval's dipole writes taken back (the inverse, before the fields step back) by the hold's line, the unhold act: each term's value off the `now` level alone (the `before` level holds the level the step read, which the inverse needs) and its division stepped back to the previous interval."""
-        for family in self.held_records:
-            if not self.held_parts[family]:
-                continue
-            for block in self.blocks:
-                dipoles = self._held_writes(line, block, family, THE_UNHOLD).dipoles
-                centre = self._centre_node(block) if dipoles else []
-                for (i, j, sigma), value, _ in dipoles:
-                    node = self._dipole_node(centre, family, j, sigma)
-                    if node is not None:
-                        self.held_parts[family][i].now[node] -= value
-
     def _advance_fields(self, hold: Callable[..., object]) -> None:
         """The held families' own steps after every other family's (the plain step at every Node), then the hold at the bodies' Nodes, then the guard: every reading family's pace stays positive at every Node, else the run is refused."""
         held = self.held_component_records()
@@ -740,7 +745,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         ):
             for record in held:
                 self._advance(record)
-        self._hold(hold, advance=True)
+        self._hold(hold, THE_ADVANCE)
         paces = self._card_writes("the signed read")
         with self.main_loop.act(
             "the signed read",
@@ -1301,6 +1306,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self._induction_act(self.register.at("the induction", "(v)"), block, True)
         for block in self.blocks:
             self._feed_act(self.register.at("the feed", "(v)"), block, True)
+        # the interval's dipole writes taken back first (ALGEBRA.md #the-interval; commit 2): they were the last writes of the forward interval, after the fields' step; then the hold's first phase back at the count the forward hold read (the store stepped back, the time part's increment off the end level) before the count's line returns the quanta
+        hold = self.register.at("the hold", "(iv)")
+        held = self._hold(hold, THE_INVERSE)
         # the count's line back (its own inverse, the current reversed; ALGEBRA.md #the-counts-line): the quanta return to their Nodes before the records step back
         counts_line = self.register.at("the count's line", "(ii)")
         for block in self.blocks:
@@ -1315,9 +1323,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         for family, record in self.held_records.items():
             self.node_level[family] = record.before
         self._effective.clear()
-        # the interval's dipole writes taken back first (ALGEBRA.md #the-interval; commit 2): they were the last writes of the forward interval, after the fields' step
-        hold = self.register.at("the hold", "(iv)")
-        self._unhold_dipoles(hold)
         for block in self.blocks:
             if block.window is not None:
                 self._point_window_inverse(block)
@@ -1333,7 +1338,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 self._advance_inverse(block.own)
         for record in reversed(self.held_component_records()):
             self._advance_inverse(record)
-        self._hold(hold, inverse=True)
+        self._hold(hold, THE_INVERSE, held)
         self.tick -= 1
 
     # The rule
