@@ -76,6 +76,10 @@ class GameBoardGeometry[B: Body]:
                 counts[node] = count
         return counts
 
+    def body_quanta(self, block: B, amount: int) -> int:
+        """A body's quanta: the world file's counts per Node summed for a body in the law's form (ALGEBRA.md #what-a-body-is), else the declared amount over its Nodes."""
+        return sum(block.definition.counts or ()) or int(block.mask.sum()) * amount
+
     def mask_box(self, mask: np.ndarray) -> tuple[tuple[int, int], ...]:
         """The box of a body's Nodes, [low, high) per axis (HOST)."""
         axes = np.nonzero(mask)

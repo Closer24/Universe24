@@ -10,7 +10,6 @@ from event_universe.core.register import Register
 from event_universe.core.schema import (
     Context,
     Either,
-    Flag,
     Integer,
     ListOf,
     MapOf,
@@ -43,7 +42,7 @@ UNIVERSE_KEYS = ("integers", "families")
 START = ObjectOf({"mode": OneOf(("check", "pin"))})
 # a face of the GameBoard: open (its edge is infinity), periodic (the walk wraps) or closed (a zero face with no take)
 FACE = OneOf(("open", "periodic", "closed"))
-# the world file's own keys (ALGEBRA.md #the-primitives): the GameBoard, its faces, the intervals, the files it names, its stamp; and the old form's N and body_record, which the loop still reads
+# the world file's own keys (ALGEBRA.md #the-primitives): the GameBoard, its faces, the intervals, the files it names, its stamp; and the old form's N, which the loop still reads for the given record's period
 WORLD = ObjectOf(
     {
         "shape": ListOf(Integer(least=1), 3),
@@ -58,7 +57,6 @@ WORLD = ObjectOf(
         "node_clock": Integer(least=1),
         "momentum_unit": Integer(least=1),
         "N": Integer(least=2),
-        "body_record": Flag(),
     },
     frozenset(
         {
@@ -109,7 +107,7 @@ GIVER = ObjectOf(
     },
     frozenset({"receiver"}),
 )
-# a body of the world file in today's form (ALGEBRA.md #the-stable-body names the form to come: its family, its Nodes, its count per Node and its momentum n): its Node, its family, its quanta, its momentum at its two levels (now and before) and its stocks of other families; a block's side or extents, pair and kind, seed with its clock and proper clock, ramp and start, margin, the body's numbers q, spin at its two levels, moment and twist, its emitter with receiver and stock, and fixed
+# a body of the world file in today's form (ALGEBRA.md #the-stable-body names the form to come: its family, its Nodes, its count per Node and its momentum n): its Node, its family, its quanta, its momentum at its two levels (now and before) and its stocks of other families; a block's side or extents, pair and kind, seed with its clock and proper clock, ramp and start, margin, the body's numbers q, spin at its two levels, moment and twist, its emitter with receiver and stock
 BODY = ObjectOf(
     {
         "position": ListOf(Integer(least=0), 3),
@@ -118,7 +116,6 @@ BODY = ObjectOf(
         "momentum": AXES,
         "momentum_before": AXES,
         "stocks": MapOf(Name(), Integer(least=1)),
-        "fixed": Flag(),
         "kind": PAIR,
         "q": Integer(),
         "spin": AXES,

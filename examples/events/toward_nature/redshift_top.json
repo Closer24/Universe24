@@ -11,7 +11,6 @@
  },
  "ticks": 6150,
  "N": 1024,
- "body_record": false,
  "engine": "examples/events/engine_start.json",
  "universe": "examples/events/universe.json",
  "measured": [
@@ -6923,7 +6922,6 @@
     "norm_denominator": 3948169,
     "window_read": 21
    },
-   "fixed": true,
    "receiver": "at_well",
    "twist": 43538,
    "clock": [
@@ -6949,7 +6947,6 @@
     0,
     0
    ],
-   "fixed": true,
    "stocks": {},
    "extents": [
     4,
@@ -6998,7 +6995,6 @@
     0,
     0
    ],
-   "fixed": true,
    "stocks": {},
    "extents": [
     2,
@@ -7038,6 +7034,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "c2dba9708274c1c17e454fe3af448e21679dd32fb50741859ae06b0abeb05cd8"
+  "hash": "7acf85b05ee0bc9f4090d7254934f2519fb0236d0931aba81051d9675623377e"
  }
 }

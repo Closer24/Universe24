@@ -41,7 +41,6 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
         "stocks": {},
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
-        "fixed": False,
         "lamp": {"rate": [1, 40], "wheel": [1, 64], "directions": [[1, 0, 0]], "train": 4},
     }
     with pytest.raises(ValueError, match="has unknown keys: lamp"):
@@ -427,7 +426,6 @@ def test_detector_is_one_connected_cube_of_side_three():
                 "start": 0,
                 "momentum": [0, 0, 0],
                 "momentum_before": [0, 0, 0],
-                "fixed": False,
                 "side": side,
                 "q": 0,
                 "spin": [0, 0, 0],

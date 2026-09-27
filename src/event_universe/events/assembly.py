@@ -199,7 +199,7 @@ def state_arrays(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
 
 
 def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
-    """The bodies' blocks: every measured event with a block, its Nodes written into its family's pair arrays, its own record seeded on its Nodes (the body's record at its centre Node under `body_record`), the blocks' Nodes on the detector map and the receiver by name."""
+    """The bodies' blocks: every measured event with a block, its Nodes written into its family's pair arrays, its own record seeded on its Nodes, the blocks' Nodes on the detector map and the receiver by name."""
     # The blocks (massive-record-v1): every measured event with a block,
     # its Nodes written into its kind's pair arrays, its own record
     # seeded on its Nodes and its momentum on its wall W = 3 Q M (`wall_of`).
@@ -215,27 +215,7 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
         block = loop._block(number, entry, definition, corner, mask)
         loop._write_pair(block)
         identity = number * loop.OWN_IDENTITY_STRIDE
-        if definition.seed > 0 and world.body_record:
-            # THE BODY RECORD (ALGEBRA.md #what-a-body-is; BUILD.md section
-            # 26 item 37): the load's one write, the rotation at the
-            # profile's value at the body's centre Node at both levels with
-            # the remainder 0 (the lattice body's standing start, both
-            # levels the profile), the profile a declared constant read at
-            # the giving click alone (ALGEBRA.md #what-a-body-is), no rows elsewhere on the
-            # GameBoard
-            if definition.profile is None or definition.clock is None:
-                raise ValueError(
-                    f"measured[{number}].body_record needs the body's `seed` as a profile with "
-                    "the mode's `clock` beside it (ALGEBRA.md #a-familys-declaration)"
-                )
-            profile = np.array(definition.profile, dtype=np.int64).reshape(loop.shape)
-            centre = tuple(int(axis[0]) for axis in np.nonzero(loop.centre_mask(block)))
-            level = int(profile[centre])
-            block.node_record = loop._node_record(identity, level)
-            block.previous_sum = level
-            if definition.emitter is not None:
-                loop._excite(block, block.node_record)
-        elif definition.seed > 0:
+        if definition.seed > 0:
             own_record = loop._massive_record(
                 identity, number, entry.family, definition.kind, definition.twist
             )

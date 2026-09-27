@@ -11,7 +11,6 @@
  },
  "ticks": 9500,
  "N": 64,
- "body_record": false,
  "engine": "examples/events/engine_start.json",
  "universe": "examples/events/universe.json",
  "measured": [
@@ -262474,13 +262473,12 @@
      2088621,
      1048576
     ]
-   ],
-   "fixed": false
+   ]
   }
  ],
  "detectors": [],
  "mode_axis": "x",
  "stamp": {
-  "hash": "6d5cc9d41d796cda46e56a7b9c8e0bbd8483f078650bf70e4b08bdf017497b5c"
+  "hash": "782614dbc5e833b2d11d64c74c4c8f3857e0f9c52020f4211b665bf56104cb12"
  }
 }

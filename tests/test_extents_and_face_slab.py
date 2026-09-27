@@ -39,7 +39,6 @@ def wall(position, family="light", **keys):
         "stocks": {},
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
-        "fixed": False,
         "pair": [1, 2],
         **keys,
     }
@@ -132,7 +131,6 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
             "start": 0,
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
             "extents": [12, 5, 1],
             "q": 0,
             "spin": [0, 0, 0],

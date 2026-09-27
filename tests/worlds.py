@@ -112,7 +112,6 @@ def chain_world(
         "face_depth": 1,
         "ticks": 600,
         "N": PHASE_STEPS,
-        "body_record": False,
         "engine": "examples/events/engine_start.json",
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
@@ -174,7 +173,6 @@ def emitter_body(
         "stocks": {family: stock},
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
-        "fixed": False,
         "extents": extents,
         "q": 0,
         "spin": [0, 0, 0],
@@ -198,7 +196,6 @@ def layer_world(receiver: object = None) -> dict:
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": 400,
         "N": PHASE_STEPS,
-        "body_record": False,
         "engine": "examples/events/engine_start.json",
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
@@ -227,7 +224,6 @@ def receiver_body(position: list[int], family: str = "light") -> dict:
         "stocks": {},
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
-        "fixed": False,
     }
 
 
@@ -255,7 +251,6 @@ def _emitter_world(
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": ticks,
         "N": 1024,
-        "body_record": False,
         "engine": "examples/events/engine_start.json",
         "amplitude_bound": bound,
         "node_clock": NODE_CLOCK,
@@ -276,7 +271,6 @@ def _emitter_world(
                 "stocks": {"light": stock},
                 "momentum": [0, 0, 0],
                 "momentum_before": [0, 0, 0],
-                "fixed": False,
                 "extents": [32, 1, 1],
                 "q": 0,
                 "spin": [0, 0, 0],

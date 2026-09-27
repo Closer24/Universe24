@@ -11,7 +11,6 @@
  },
  "ticks": 70992,
  "N": 64,
- "body_record": true,
  "engine": "examples/events/engine_start.json",
  "universe": "examples/events/universe.json",
  "measured": [
@@ -56,7 +55,6 @@
     0,
     0
    ],
-   "fixed": true,
    "ramp": 0,
    "start": 0,
    "extents": [
@@ -1308,8 +1306,7 @@
     0,
     0
    ],
-   "stocks": {},
-   "fixed": true
+   "stocks": {}
   },
   {
    "position": [
@@ -1329,8 +1326,7 @@
     0,
     0
    ],
-   "stocks": {},
-   "fixed": true
+   "stocks": {}
   },
   {
    "position": [
@@ -1350,8 +1346,7 @@
     0,
     0
    ],
-   "stocks": {},
-   "fixed": true
+   "stocks": {}
   },
   {
    "position": [
@@ -1371,8 +1366,7 @@
     0,
     0
    ],
-   "stocks": {},
-   "fixed": true
+   "stocks": {}
   },
   {
    "position": [
@@ -1392,8 +1386,7 @@
     0,
     0
    ],
-   "stocks": {},
-   "fixed": true
+   "stocks": {}
   },
   {
    "position": [
@@ -1413,8 +1406,7 @@
     0,
     0
    ],
-   "stocks": {},
-   "fixed": true
+   "stocks": {}
   }
  ],
  "detectors": [
@@ -1461,6 +1453,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "d1d5f97804b0997019791cac7b7f6ae529ae0c5c8a24135274324787606fe23e"
+  "hash": "1f38daaa3bf5806b7ea86e9bac9bfc1234edb3e093b496b5e7921f7fa6121283"
  }
 }

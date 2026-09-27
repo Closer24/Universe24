@@ -42,7 +42,7 @@ def test_a_missing_key_of_the_world_or_the_start_file_is_refused_by_name(tmp_pat
     document = emitter_world(stock=1, ticks=10)
     del document["engine"]
     refused(document, "the world lacks keys: engine")
-    for key in ("boundary", "body_record"):
+    for key in ("boundary",):
         broken = json.loads(json.dumps(document))
         broken["engine"] = START
         del broken[key]
@@ -95,13 +95,10 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
         broken = json.loads(json.dumps(document))
         broken["measured"][0][key] = value
         refused(broken, rf"measured\[0\] has unknown keys: {key}")
-    # `fixed` is read since the Boss's record 2157 (ALGEBRA.md #the-primitives): an apparatus
-    # held in place, the feed (when it lands) acting on a body without the word alone
     held_in_place = json.loads(json.dumps(document))
-    held_in_place["measured"][0]["fixed"] = True
+    held_in_place["measured"][0]["fixed"] = True  # no body is held in place: the key is refused
     held_in_place["stamp"] = input_stamp(held_in_place)
-    assert parse_nature_beam_world(held_in_place).measured[0].fixed is True
-    assert parse_nature_beam_world(document).measured[0].fixed is False
+    refused(held_in_place, r"measured\[0\] has unknown keys: fixed")
     broken = json.loads(json.dumps(document))
     broken["detectors"][0]["threshold"] = 1
     refused(broken, r"detectors\[0\] has unknown keys: threshold")

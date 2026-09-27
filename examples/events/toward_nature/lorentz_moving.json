@@ -11,7 +11,6 @@
  },
  "ticks": 3600,
  "N": 1024,
- "body_record": false,
  "engine": "examples/events/engine_start.json",
  "universe": "examples/events/universe.json",
  "measured": [
@@ -26074,8 +26073,7 @@
      1954435,
      1048576
     ]
-   ],
-   "fixed": false
+   ]
   },
   {
    "position": [
@@ -26123,8 +26121,7 @@
    ],
    "ramp": 0,
    "start": 0,
-   "twist": 0,
-   "fixed": false
+   "twist": 0
   },
   {
    "position": [
@@ -26172,8 +26169,7 @@
    ],
    "ramp": 0,
    "start": 0,
-   "twist": 0,
-   "fixed": false
+   "twist": 0
   }
  ],
  "detectors": [
@@ -26184,6 +26180,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "193bf305eb046e16a7646a7e593bf28b7df5f7d19e74c89ed2057bcc4050ae3b"
+  "hash": "1eac3116b3cc7c20e1b488d90b02d19a2c0da861cfc63a5c78369b148c9e6bc4"
  }
 }

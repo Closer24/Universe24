@@ -182,7 +182,6 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             "margin": "control",
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
             "side": 1,
             "q": 0,
             "spin": [0, 0, 0],
@@ -199,7 +198,6 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             "stocks": {},
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
         },
         *(
             {
@@ -209,7 +207,6 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
                 "stocks": {},
                 "momentum": [0, 0, 0],
                 "momentum_before": [0, 0, 0],
-                "fixed": False,
             }
             for x in (6, 7, 30, 31, 32)
         ),

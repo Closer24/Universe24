@@ -283,7 +283,6 @@ def test_the_loaders_refusals_name_the_key():
             "stocks": {},
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
             "lamp": {"rate": [1, 40], "wheel": [1, 64], "train": 2},
         }
     ]
@@ -1019,7 +1018,6 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
                 "start": 0,
                 "momentum": momentum,
                 "momentum_before": momentum,
-                "fixed": False,
                 "side": 12,
                 "q": 0,
                 "spin": [0, 0, 0],
@@ -1077,7 +1075,6 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
                 "start": 0,
                 "momentum": [0, 0, 0],
                 "momentum_before": [0, 0, 0],
-                "fixed": False,
                 "side": 1,
                 "q": 0,
                 "spin": [0, 0, 0],

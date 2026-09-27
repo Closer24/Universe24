@@ -141,7 +141,7 @@ def test_every_defect_of_the_worlds_own_keys_is_refused_by_name():
             lambda d, key=key: d.__setitem__(key, 1), f"the world has unknown keys: {key} \\(the keys: "
         )
     refuses(lambda d: d.__setitem__("families", []), "the world has unknown keys: families")
-    for key in ("engine", "measured", "shape", "boundary", "body_record"):
+    for key in ("engine", "measured", "shape", "boundary"):
         refuses(lambda d, key=key: d.pop(key), f"the world lacks keys: {key}")
     refuses(lambda d: d.__setitem__("shape", [4, 4]), r"the world\.shape must be a list of 3, not of 2")
     refuses(lambda d: d.__setitem__("ticks", -1), r"the world\.ticks is -1, below its least 0")
@@ -318,7 +318,7 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
         refuses(
             lambda b, key=key: b.__setitem__(key, 1),
             rf"measured\[0\] has unknown keys: {key} \(the keys: emitter, family, moment, momentum, "
-            r"momentum_before, nodes, spin, spin_before, stocks\)",
+            r"momentum_before, nodes, phase_denominator, spin, spin_before, stocks\)",
         )
     for key in ("period", "clock", "pair", "twist", "window_read"):
         refuses(
@@ -393,7 +393,7 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
     entry = load()
     assert (entry.position, entry.block.extents, entry.amount) == ((1, 2, 0), (3, 3, 1), 13)
     assert entry.block.nodes == ((1, 2, 0), (1, 4, 0), (3, 3, 0)) and entry.block.counts == (5, 7, 1)
-    assert entry.block.spin == (0, 1, 0) and entry.block.moment == (2, 0, 0) and not entry.fixed
+    assert entry.block.spin == (0, 1, 0) and entry.block.moment == (2, 0, 0)
     with pytest.raises(ValueError, match=r"measured\[0\]\.emitter on a body in the law's form"):
         load(emitter={**giver, "family": families[1]})
     with pytest.raises(

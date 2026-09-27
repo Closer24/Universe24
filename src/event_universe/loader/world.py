@@ -443,7 +443,7 @@ class BlockDefinition:
 @dataclass(frozen=True)
 class MeasuredDefinition:
     """One measured event as declared: its Node, its family, its amount, its
-    phase, its momentum, whether it is held in place, the directions it
+    phase, its momentum, the directions it
     releases and re-emits on, its table per family (in family order) with
     the phase window and the reading key of each entry, and its lamp. Its
     charge is its family's charge per unit of content times its content
@@ -465,7 +465,6 @@ class MeasuredDefinition:
     phase: int
     momentum: Vector
     momentum_before: Vector
-    fixed: bool
     table: tuple[str, ...]
     windows: tuple[int | None, ...]
     reads: tuple[str, ...]
@@ -526,11 +525,6 @@ class NatureBeamWorld:
     face_depth: int = 0
     # every family declares its pair and every body its record; the loop's read, no key of the file
     massive_record: bool = True
-    # THE BODY RECORD (ALGEBRA.md #what-a-body-is to (3); BUILD.md section 26 item
-    # 37): true holds every seeded block as one rotation on its clock pair
-    # (a Node with a shape), its profile read and never stepped; false, the
-    # default, the lattice body (its own rows on the GameBoard)
-    body_record: bool = False
     # massive-record-v1: the probes, Nodes whose light amplitude is written
     # per interval (GAMEBOARD), empty by default.
     probes: tuple[Address3, ...] = ()
@@ -1755,7 +1749,6 @@ def _measured(
         momentum_before = tuple(
             _integer(item, f"{label}.momentum_before", -AMOUNT_BOUND) for item in before_value
         )
-        fixed = cast(bool, obj["fixed"])
         turning = False
         # the ray law's table: every family at the keys' rule `measure` with the scalar
         # component, no window (no family is free: the row's quantum is from 1)
@@ -1787,7 +1780,6 @@ def _measured(
                 phase,
                 (momentum[0], momentum[1], momentum[2]),
                 (momentum_before[0], momentum_before[1], momentum_before[2]),
-                fixed,
                 tuple(rules),
                 tuple(windows),
                 tuple(reads),
@@ -1881,7 +1873,6 @@ def _counted(
         0,
         momentum,
         momentum_before,
-        False,
         tuple(TABLES[1] for _ in families),
         tuple(None for _ in families),
         tuple("scalar" for _ in families),
@@ -2238,7 +2229,6 @@ def _detectors(
     shape: Address3,
     periodic: tuple[bool, bool, bool],
     measured: tuple[MeasuredDefinition, ...],
-    body_record: bool,
 ) -> tuple[DetectorDefinition, ...]:
     detectors = cast(
         tuple[dict[str, object], ...], value
@@ -2481,7 +2471,6 @@ def parse_world_document(
                 f"face_depth {face_depth} leaves no interior on the open axis {name} of "
                 f"extent {shape[axis]} (two slabs of the depth fill it)"
             )
-    body_record = cast(bool, obj["body_record"])
     # the amplitude bound A, the world's where it declares one (ALGEBRA.md #a-familys-declaration:
     # A is the one number, the rule's integer total its bound; required with a massive family below)
     amplitude_bound = AMPLITUDE_BOUND
@@ -2570,31 +2559,9 @@ def parse_world_document(
                 "closes when the outward norm reaches the excitation's action norm / "
                 "norm_denominator, the generator's exact rational (ALGEBRA.md)"
             )
-    if body_record:
-        # every seeded block carries its profile and its clock pair (the
-        # generator's, under the stamp): the body record's shape and its
-        # rotation's rational (ALGEBRA.md #what-a-body-is)
-        for number, entry in enumerate(measured):
-            block = entry.block
-            if block is None or block.seed <= 0:
-                continue
-            if block.profile is None or block.clock is None:
-                raise ValueError(
-                    f"measured[{number}] under body_record declares no `clock` with its "
-                    "profile: a body record is its stored profile and one rotation on its clock pair "
-                    "[num_c, den_c], the generator's (ALGEBRA.md #what-a-body-is and (9) (a); "
-                    "`seed_on_the_mode`)"
-                )
-            if block.proper_clock is None and any(int(part) != 0 for part in entry.momentum):
-                raise ValueError(
-                    f"measured[{number}] under body_record moves and declares no "
-                    "`proper_clock`: the body's Node of a moving body rotates at the proper pair of its "
-                    "momentum, the moving mode's rotation at its moving centre, the generator's "
-                    "(ALGEBRA.md #the-velocity; `seed_on_the_mode`)"
-                )
     _input_stamp_check(as_written, measured, digest)
     _initial_state_checks(shape, periodic, families, measured)
-    detectors = _detectors(frame.detectors(obj["detectors"]), shape, periodic, measured, body_record)
+    detectors = _detectors(frame.detectors(obj["detectors"]), shape, periodic, measured)
     readings = world_readings(obj, shape, detectors, families, measured)
     world = NatureBeamWorld(
         shape,
@@ -2608,7 +2575,6 @@ def parse_world_document(
         readings,
         step,
         face_depth=face_depth,
-        body_record=body_record,
         probes=probes,
         mode_axis=mode_axis,
         closed=closed,

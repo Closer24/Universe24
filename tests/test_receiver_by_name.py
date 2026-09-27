@@ -28,7 +28,6 @@ def body(x: int) -> dict:
         "stocks": {},
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
-        "fixed": False,
     }
 
 

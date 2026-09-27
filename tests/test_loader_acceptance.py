@@ -114,8 +114,8 @@ def body_world() -> dict:
 @pytest.mark.xfail(
     strict=True,
     reason="ALGEBRA.md #the-stable-body: the loader reads a body by its nodes with their counts, but "
-    "the world of this test writes the older `nodes` list with one `count` and names no `engine`, "
-    "`N` or `body_record`, which the loop still reads; the mark comes off with the world rewritten",
+    "the world of this test writes the older `nodes` list with one `count` and names no `engine` "
+    "and no `N`, which the loop still reads; the mark comes off with the world rewritten",
 )
 def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_and_runs(
     tmp_path, monkeypatch
@@ -155,7 +155,7 @@ def test_b2_the_word_sourced_on_a_family_of_the_universe_loads(tmp_path, monkeyp
 @pytest.mark.xfail(
     strict=True,
     reason="record 2199 item 1 with record 2226: K, release and width are gone (#1236); the source "
-    "worlds still carry neither N nor body_record, which the loader requires while the loop reads them",
+    "worlds still carry no N, which the loader requires while the loop reads it",
 )
 def test_b3_the_word_readings_on_the_shipped_source_world_loads():
     """Record 2199 item 1 (the output declared in one format; Main Loop's interface: a name, a

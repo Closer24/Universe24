@@ -325,7 +325,6 @@ def snapshot_stream(simulation: detector_law.DetectorLawSimulation) -> Iterator[
                 "extents": list(block.definition.extents),
                 "momentum": list(block.momentum),
                 "spin": list(block.spin),
-                "fixed": block.fixed,
                 "emitted": list(block.emitted),
                 "rows": None if block.own is None else block.own.now.ravel().tolist(),
                 "form": (

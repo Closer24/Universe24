@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import json
-
 import numpy as np
 
 from event_universe.events.detector_law import DetectorLawSimulation
@@ -93,14 +91,6 @@ def paces_world() -> dict:
     return document
 
 
-def with_body_record(document: dict, on: bool) -> dict:
-    """The document with `body_record` set and the input stamp renewed over the whole file."""
-    copy = json.loads(json.dumps(document))
-    copy["body_record"] = on
-    copy["stamp"] = input_stamp(copy)
-    return copy
-
-
 def charged_chain(
     length: int,
     boundary: dict,
@@ -167,7 +157,6 @@ def block_world(
             "start": 0,
             "momentum": block.get("momentum", [0, 0, 0]),
             "momentum_before": block.get("momentum", [0, 0, 0]),
-            "fixed": block.get("fixed", False),
             "side": block["side"],
             "pair": block["pair"],
             # the body's numbers (ALGEBRA.md #the-interval; commit 2), no loader default
@@ -203,7 +192,6 @@ def block_world(
         "face_depth": 1,
         "ticks": ticks,
         "N": 1024,
-        "body_record": False,
         "engine": "examples/events/engine_start.json",
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
@@ -250,7 +238,6 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "stocks": {"light": 1},
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
             "extents": [32, 1, 1],
             "q": 0,
             "spin": [0, 0, 0],
@@ -285,7 +272,6 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "face_depth": 1,
         "ticks": 10,
         "N": 1024,
-        "body_record": False,
         "engine": "examples/events/engine_start.json",
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
@@ -357,7 +343,6 @@ def light_body(x: int, amount: int) -> dict:
         "stocks": {},
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
-        "fixed": False,
     }
 
 
@@ -375,8 +360,8 @@ def six_reads(levels: np.ndarray, wrap_x: bool) -> list[int]:
 
 
 def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 400) -> dict:
-    """The chain with the one-Node point emitter at its middle; the mode seeded first (as
-    `body_record`), the keys and the weight set after, the stamp renewed."""
+    """The chain with the one-Node point emitter at its middle; the mode seeded first, the keys
+    and the weight set after, the stamp renewed."""
     document = massive_world([length, 1, 1], CHAIN, POINT_KIND)
     document["ticks"] = ticks
     document["measured"] = [
@@ -389,7 +374,6 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
             "stocks": {"light": stock},
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
             "extents": [1, 1, 1],
             "q": 0,
             "spin": [0, 0, 0],
@@ -405,7 +389,6 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
     document["detectors"] = []
     massive_generator().seed_on_the_mode(document)
     document["measured"][0]["emitter"]["weight"] = weight
-    document["body_record"] = True
     document["stamp"] = input_stamp(document)
     return document
 
@@ -428,7 +411,6 @@ def emitter(
         "stocks": {"light": stock},
         "momentum": [momentum, 0, 0],
         "momentum_before": [momentum, 0, 0],
-        "fixed": False,
         "extents": [32, 1, 1],
         "q": 0,
         "spin": [0, 0, 0],
