@@ -23,8 +23,8 @@ from pathlib import Path
 import pytest
 
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import massive_generator
-from tests.test_toward_nature import document, load_module
+from tests.running import document, load_module
+from tests.worlds import massive_generator
 
 ROOT = Path(__file__).resolve().parents[1]
 generator = load_module("make_worlds")

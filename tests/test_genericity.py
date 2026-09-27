@@ -24,10 +24,8 @@ tools/check.py. HOST readings, no measurement, no pin."""
 from __future__ import annotations
 
 import copy
-import importlib.util
 import json
 import random
-import sys
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
@@ -39,8 +37,8 @@ import event_universe.world_files as world_files
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_board_properties import reads_of
-from tests.test_emitter import emitter_world
+from tests.running import reads_of
+from tests.worlds import emitter_world, load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 SEEDS = tuple(range(24))
@@ -104,14 +102,7 @@ PARTS = ([1], [1, 3], [1, 3, 6])
 
 
 def recorder():  # type: ignore[no-untyped-def]
-    spec = importlib.util.spec_from_file_location(
-        "record_shipped_worlds", ROOT / "tools" / "record_shipped_worlds.py"
-    )
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    sys.modules["record_shipped_worlds"] = module
-    spec.loader.exec_module(module)
-    return module
+    return load_file("record_shipped_worlds", ROOT / "tools" / "record_shipped_worlds.py")
 
 
 def draw(seed: int) -> dict[str, Any]:

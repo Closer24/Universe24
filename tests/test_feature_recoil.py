@@ -27,7 +27,7 @@ from event_universe.features.recoil import (
     sign_of,
 )
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_emitter import emitter_world
+from tests.worlds import emitter_world
 
 # the moving row's body (issue #1156): W = 12480 at M = 65 (Q = 64), its period 21, the
 # given light's wavelength 4 Links

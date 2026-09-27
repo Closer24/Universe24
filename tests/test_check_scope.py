@@ -1,6 +1,5 @@
 """Changed-code selection includes consumers without scheduling unrelated worlds."""
 
-import importlib.util
 import json
 import subprocess
 import time
@@ -10,12 +9,9 @@ from tempfile import TemporaryDirectory
 import pytest
 
 from event_universe.retention import MAX_AGE_SECONDS, cleanup_expired
+from tests.worlds import load_file
 
-SPEC = importlib.util.spec_from_file_location(
-    "check_scope", Path(__file__).resolve().parents[1] / "tools/check.py"
-)
-CHECK = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(CHECK)
+CHECK = load_file("check_scope", Path(__file__).resolve().parents[1] / "tools/check.py")
 
 
 def test_the_worlds_readme_selects_navigation_and_never_a_cancelled_test():
@@ -116,6 +112,7 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
         "tests/test_repository_language.py",
         "tests/test_repository_navigation.py",
         "tests/test_shipped_worlds.py",
+        "tests/test_tests_shape.py",
     ]
     assert not typed
 
@@ -134,7 +131,7 @@ def test_every_change_selects_the_code_shape_gate_and_no_change_selects_nothing(
     """The shape of the code is held at its baseline on any change at all (records 2239 and
     2241); with nothing changed nothing is selected."""
     tests, _ = CHECK.select(["docs/GLOSSARY.md"], {})
-    assert "tests/test_code_shape.py" in tests
+    assert "tests/test_code_shape.py" in tests and "tests/test_tests_shape.py" in tests
     assert CHECK.select([], {}) == ([], [])
 
 

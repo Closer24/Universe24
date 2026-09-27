@@ -18,8 +18,9 @@ import pytest
 from event_universe.core.rule3 import coefficients, rule_total_bound
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_flux_reading import planted
-from tests.test_node_clock import GAMMA, PERIODIC, content_chain, six_reads
+from tests.bodies import GAMMA, content_chain, six_reads
+from tests.running import planted
+from tests.worlds import PERIODIC
 
 
 def test_the_three_integers_are_the_algebras_line_and_the_vacuum_is_the_plain_rule():

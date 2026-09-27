@@ -29,10 +29,9 @@ from event_universe.features.signed_read import (
     stability_bound,
 )
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_charge import MATTER, QUANTA, charged_chain
-from tests.test_emitter import emitter_world
-from tests.test_node_clock import GAMMA as CHAIN_GAMMA
-from tests.test_node_clock import PERIODIC
+from tests.bodies import GAMMA as CHAIN_GAMMA
+from tests.bodies import MATTER, QUANTA, charged_chain
+from tests.worlds import PERIODIC, emitter_world
 
 GAMMA = 10_000
 SHAPE = (3, 3, 3)

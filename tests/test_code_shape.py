@@ -13,23 +13,16 @@ groups. The import contracts hold with no baseline. Selected on every pull reque
 
 from __future__ import annotations
 
-import importlib.util
 import json
-import sys
 from pathlib import Path
+
+from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def tool():  # type: ignore[no-untyped-def]
-    spec = importlib.util.spec_from_file_location(
-        "record_code_shape", ROOT / "tools" / "record_code_shape.py"
-    )
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    sys.modules["record_code_shape"] = module
-    spec.loader.exec_module(module)
-    return module
+    return load_file("record_code_shape", ROOT / "tools" / "record_code_shape.py")
 
 
 SHAPE = tool()

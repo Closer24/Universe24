@@ -20,22 +20,15 @@ import json
 from pathlib import Path
 
 import numpy as np
-import pytest
 
 from event_universe import world_files
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import families_file_entries, input_stamp, parse_nature_beam_world
-from tests.test_emitter import emitter_world
+from tests.running import refused
+from tests.worlds import FILE, emitter_world, on_the_file
 
 ROOT = Path(__file__).resolve().parents[1]
-FILE = "examples/events/universe.json"
 ATTRIBUTES = {"name", "parts", "phase", "pair", "reads", "self_source"}
-
-
-def refused(document: dict, match: str) -> None:
-    document["stamp"] = input_stamp(document)
-    with pytest.raises(ValueError, match=match):
-        parse_nature_beam_world(document)
 
 
 def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_names_it():
@@ -109,33 +102,6 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
             for entry in world.measured:
                 if entry.block is not None and entry.family == 2:
                     assert entry.block.kind[1] > entry.block.kind[0]
-
-
-def on_the_file(document: dict, clock: list[int]) -> dict:
-    """The emitter world moved onto the families file: the path, no integers of its own, the
-    given clock on the emitter; light is the charge family (9.86 (2) (b)), the emitter body of
-    matter with its kind (9.91 (7))."""
-    moved = json.loads(json.dumps(document))
-    names = {family["name"]: family for family in moved["universe"]}
-    moved["universe"] = FILE
-    del moved["node_clock"]
-    del moved["amplitude_bound"]
-    del moved["momentum_unit"]
-    for entry in moved["measured"]:
-        if entry["family"] == "light":
-            entry["family"] = "charge"
-        if entry["family"] == "matter":
-            entry["kind"] = list(names["matter"]["pair"])
-        if "light" in entry.get("stocks", {}):
-            entry["stocks"] = {"charge": entry["stocks"]["light"]}
-        if "emitter" in entry:
-            entry["emitter"]["clock"] = clock
-            if entry["emitter"]["family"] == "light":
-                entry["emitter"]["family"] = "charge"
-            # the light's component along the body's moment (ALGEBRA.md 9.82 (3) (d); commit 4)
-            entry["moment"] = [0, 0, 1]
-    moved["stamp"] = input_stamp(moved)
-    return moved
 
 
 def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):

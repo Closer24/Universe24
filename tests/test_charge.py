@@ -28,15 +28,23 @@ import pytest
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_emitter import (
-    CHARGE_FAMILY_NAME,
-    emitter_world,
-    massive_generator,
-    reads,
-    wheel_of,
+from tests.bodies import (
+    CHAIN,
+    CHARGE,
+    CLICKS,
+    GAMMA,
+    LIGHT,
+    MATTER,
+    NEUTRAL,
+    PAIR,
+    QUANTA,
+    charged_chain,
+    content_chain,
+    set_strength,
+    six_reads,
 )
-from tests.test_flux_reading import planted
-from tests.test_node_clock import CHAIN, GAMMA, PAIR, PERIODIC, content_chain, six_reads
+from tests.running import planted
+from tests.worlds import CHARGE_FAMILY_NAME, PERIODIC, emitter_world, massive_generator, wheel_of
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
@@ -44,48 +52,6 @@ UNIT = 1 << 20
 
 
 ROOT = Path(__file__).resolve().parents[1]
-QUANTA = 10  # the content and the charge per Node of the charged slab (ten Nodes) at GAMMA
-LIGHT, MATTER, NEUTRAL, CLICKS, CHARGE = range(5)  # the charged chain's families in order
-
-
-def charged_chain(
-    length: int,
-    boundary: dict,
-    nodes,
-    amount: int,
-    light_charge: int,
-    matter_charge: int,
-    strength: int = 1,
-) -> dict:
-    """The chain of `length` under the Node clock GAMMA with light bodies of `amount` quanta at
-    `nodes`, light of charge `light_charge` (the bodies' charge Q = light_charge x amount),
-    the matter kind [800, 809] of charge `matter_charge`, a fifth family `neutral` of light's
-    pair and charge 0 (the reader the charge never touches), and Lambda = `strength`."""
-    document = content_chain(length, boundary, nodes, amount)
-    document["universe"][LIGHT]["charge"] = light_charge
-    document["universe"][MATTER]["charge"] = matter_charge
-    document["universe"].insert(
-        NEUTRAL,
-        {
-            "name": "neutral",
-            "quantum": 1,
-            "pair": [1, 1],
-            "phase_per_link": [512, 1],
-            "charge": 0,
-            "reads": reads(),
-        },
-    )
-    set_strength(document, strength)
-    return document
-
-
-def set_strength(document: dict, strength: int) -> None:
-    """Lambda on every reading family: the weight of its read on the family of charge (the
-    family genericity, BUILD.md section 26 item 51)."""
-    for family in document["universe"]:
-        for read in family.get("reads", []):
-            if read["family"] == CHARGE_FAMILY_NAME:
-                read["weight"] = strength
 
 
 def held_record(simulation: DetectorLawSimulation, source: str):

@@ -26,7 +26,7 @@ from event_universe.core.rule3 import (
 )
 from event_universe.events import detector_law
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_emitter import emitter_world
+from tests.worlds import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "src" / "event_universe"

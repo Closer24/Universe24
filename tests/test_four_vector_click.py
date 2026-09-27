@@ -16,16 +16,16 @@ reading on the line; no pin."""
 from __future__ import annotations
 
 from event_universe.events.detector_law import DetectorLawSimulation
-from tests.test_emitter import emitter_world, massive_generator
-from tests.test_emitter import run as run_emitter
-from tests.test_point_emitter import point_world
-from tests.test_point_emitter import run as run_point
+from tests.bodies import point_world
+from tests.running import run as run_emitter
+from tests.running import run_point_world as run_point
+from tests.worlds import emitter_world, massive_generator
 
 
 def mirrored_emitter_world(ticks: int) -> dict:
     """The emitter's unit world reflected in x -> 79 - x: the body at [43, 75) (five Nodes to
     the closed end at 79, as the original's five at 0 to 4), the screen's cube at 7 to 9."""
-    from tests.test_detector_law import receiver_cube
+    from tests.worlds import receiver_cube
 
     document = emitter_world(stock=2, ticks=ticks, on_mode=False)
     body = document["measured"][0]
