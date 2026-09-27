@@ -265,11 +265,13 @@ def write_record(worlds: dict[str, Any], recorded_at: str) -> None:
     )
 
 
-def merge(folder: Path, recorded_at: str) -> list[str]:
+def merge(folder: Path, recorded_at: str, every_world: bool = False) -> list[str]:
     """Every world's record file under `folder` (the shards' uploads, any depth) merged into the
     record: a named world replaced by its entry, every other world kept as recorded; the record
     is written only where a world's entry moved, so a record that replays as it stands keeps its
-    commit and is not rewritten for the sha alone; the worlds merged, sorted."""
+    commit and is not rewritten for the sha alone; the worlds merged, sorted. With `every_world`
+    a recorded world with no entry refuses the merge by name (a cancelled or lost shard), since a
+    record of the worlds that finished alone is no record."""
     recorded: dict[str, Any] = (
         json.loads(RECORD.read_text(encoding="utf-8")) if RECORD.exists() else {"worlds": {}}
     )
@@ -279,6 +281,9 @@ def merge(folder: Path, recorded_at: str) -> list[str]:
         for key, entry in json.loads(file.read_text(encoding="utf-8")).items():
             worlds[key] = entry
             merged.append(key)
+    missing = sorted(set(recorded.get("worlds", {})) - set(merged))
+    if every_world and missing:
+        raise ValueError(f"no entry for {len(missing)} recorded worlds under {folder}: {missing}")
     if worlds != recorded.get("worlds", {}):
         write_record(worlds, recorded_at)
     return sorted(merged)
@@ -297,6 +302,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--recorded-at", metavar="SHA", help="the commit written into the record; HEAD's"
     )
+    parser.add_argument(
+        "--every-world", action="store_true", help="refuse a merge missing a recorded world's entry"
+    )
     args = parser.parse_args(argv)
     recorded_at = (
         args.recorded_at
@@ -305,7 +313,11 @@ def main(argv: list[str] | None = None) -> int:
         ).stdout.strip()
     )
     if args.merge is not None:
-        merged = merge(args.merge, recorded_at)
+        try:
+            merged = merge(args.merge, recorded_at, args.every_world)
+        except ValueError as refusal:
+            print("the merge is refused:", refusal)
+            return 1
         print("merged", len(merged), "worlds at", recorded_at, "into", RECORD.relative_to(ROOT))
         return 0
     paths = [Path(n).resolve() for n in args.worlds] if args.worlds else shipped_worlds()
