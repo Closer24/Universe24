@@ -72,10 +72,10 @@
   },
   "src/event_universe/events/detector_law.py": {
    "comment_lines": 639,
-   "docstring_lines": 490,
+   "docstring_lines": 408,
    "level_shift_sites": 0,
-   "lines": 3973,
-   "record_references": 29,
+   "lines": 3891,
+   "record_references": 27,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/primitives.py": {

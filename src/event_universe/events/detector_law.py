@@ -1305,15 +1305,7 @@ class DetectorLawSimulation:
                         self.held_parts[family][i].now[node] -= value
 
     def leaks(self) -> list[str]:
-        """THE LEAK TEST (the model owner's record 2075 (3): "a family with no
-        source stays exactly zero; that is a test in every run: no leak, no
-        family doing what it should not"; BUILD.md section 26 item 55): the
-        names of the families that carry rows without a source. A held family
-        no body has ever sourced (every body's declared source 0 at every
-        hold so far) whose record has a nonzero level or remainder anywhere; a
-        family the step alone moves with no body of it, no body holding its
-        quanta and no emitter giving into it, that has a record. Read by
-        attribute, never by a name; a HOST reading of the state, no line."""
+        """The leak test: the names of the families that carry rows without a source (a held family no body ever sourced whose record has a nonzero level or remainder; a family the step alone moves with no body, no stock and no emitter that has a record), read by attribute, never by a name; a HOST reading of the state."""
         found: list[str] = []
         for family, record in self.held_records.items():
             if self._sourced_ever[(family, 0)]:
@@ -1847,18 +1839,7 @@ class DetectorLawSimulation:
         return int(where[0][0]), int(where[1][0]), int(where[2][0])
 
     def residue_of(self, live: LiveRecord | NodeRecord, block: Block) -> tuple[int, int]:
-        """THE RESIDUE FROM THE LAW (ALGEBRA.md 9.22 (4); BUILD.md section 26
-        item 15) UNDER THE NODE CLOCK (9.35 (2), (3); item 31), READ AT THE
-        FIRST SHELL NODE (9.44 (5) (c); item 33): the record's rule remainder
-        r at the body's first shell Node in the declared order, read now, in
-        units of the remainder's step g = gcd(Gamma num, 6 den M, 3 den f) at
-        that Node (r moves on the multiples of g from 0), and the wheel W =
-        3 den f / g values (`wheel_at`: the pair's own 3 den / gcd(num, 3
-        den) where the content is 0, 700 on [801, 700] and 2403 on [800,
-        801]; at a body's Nodes the wheel of its content, 18774639 on [800,
-        801] at Gamma = 10^6 with M = 64); no declaration, no draw; which
-        Node is read is a convention (9.47 (5) (ii)), the centre Node
-        HISTORY."""
+        """The residue from the law under the Node clock, read at the first shell Node: the record's rule remainder r at the body's first shell Node in the declared order, read now, in units of the remainder's step g = gcd(Gamma num, 6 den M, 3 den f) at that Node, and the wheel W = 3 den f / g (`wheel_at`); no declaration, no draw; which Node is read is a convention."""
         if isinstance(live, NodeRecord):
             # THE BODY'S NODE'S RECORD (ALGEBRA.md 9.60 (1), 9.46 (2)): its residue its
             # own remainder on its own wheel, read at the body's Node
@@ -1869,16 +1850,7 @@ class DetectorLawSimulation:
         return int(live.remainder[node]) // step, wheel
 
     def _excite(self, block: Block, own_record: LiveRecord | NodeRecord) -> None:
-        """The body's own record at the load, the one write of a body's record
-        (ALGEBRA.md 9.43 (4); 9.17 (4) item 1): its norm T one period's
-        action of its own mode (the emitter's declared integer `norm`, the
-        generator's, under the input stamp; the body's T of 9.46 (1), not
-        read by the tick since the count in intervals of 9.44 (5) (c)); its
-        first residue and wheel from the law (`residue_of`) are read after
-        ITS FIRST ADVANCE (the load's seed has the remainders 0, the file's
-        integers; 9.19 (4e), 9.43 (4)); every later residue is read at the
-        click (`_emit`). SINCE THE RESEED RETIRED (9.43 (3); BUILD.md section
-        26 item 33) this is called at the load alone."""
+        """The body's own record at the load, the one write of a body's record: its norm T one period's action of its own mode (the emitter's declared integer `norm`, the generator's, under the input stamp); its first residue and wheel from the law (`residue_of`) are read after its first advance (the load's seed has the remainders 0); every later residue is read at the click (`_emit`); called at the load alone."""
         emitter = block.definition.emitter
         assert emitter is not None
         if block.definition.profile is None:
@@ -1925,17 +1897,7 @@ class DetectorLawSimulation:
         block.emit_now = False
 
     def node_record_clock(self, block: Block) -> tuple[int, int]:
-        """THE BODY'S NODE'S PAIR THIS INTERVAL (ALGEBRA.md 9.63 (3); BUILD.md section
-        26 item 46): the declared clock pair [num_c, den_c] of the body's mode
-        at rest, and on a moving body THE PROPER PAIR of the drive's momentum
-        now, the world's `proper_clock` at the momentum's whole part along its
-        one axis (under the ramp m = P t // ramp, then P, the same m the drive
-        hops with): the moving mode's rotation at its moving centre per
-        interval, 2 cos(omega_K - K v), which the generator wrote from the
-        mode's own dispersion; the rest pair at m = 0. The cube carries the
-        dilation in its rows by the rule; the body's Node carries it in its declared
-        pair, the seam of the host form (9.46), and the equivalence test is
-        what checks that they agree."""
+        """The body's Node's pair this interval: the declared clock pair [num_c, den_c] of the body's mode at rest, and on a moving body the proper pair of the drive's momentum now (the world's `proper_clock` at the momentum's whole part along its one axis, the same m the drive hops with), the moving mode's rotation at its moving centre per interval; the rest pair at m = 0."""
         clock = block.definition.clock
         assert clock is not None
         table = block.definition.proper_clock
@@ -2817,16 +2779,7 @@ class DetectorLawSimulation:
         return moving
 
     def detector_inflow_tally(self, live: LiveRecord) -> dict[int, int]:
-        """THE DETECTORS' INFLOW, PER RECORD, OVER THE PORTS ALONE (ALGEBRA.md
-        9.19 (3), 9.25 (2); the model owner's record 1934): this interval's
-        one-way inward flux into every detector, 3 G_ij = now_i before_j -
-        before_i now_j where positive per Port, times the family's wall (the
-        form's units; the current unweighted, ALGEBRA.md 9.50 (13); BUILD.md
-        section 26 item 36), from the record's two levels AFTER the interval's step, by the detector's
-        index. The record's levels are read at the Port pairs only (one
-        gather per pair, exact Python integers), never over the board: the
-        HOST cost is the Ports, not the Nodes (the two levels are still
-        board arrays; the advance is the board's cost)."""
+        """The detectors' inflow per record over the Ports alone: this interval's one-way inward flux into every detector, 3 G_ij = now_i before_j - before_i now_j where positive per Port, times the family's wall (the form's units), from the record's two levels after the interval's step, by the detector's index; read at the Port pairs only (one gather per pair, exact Python integers), never over the board."""
         port_i, port_j, port_detector = self._inflow_ports(live.family)
         port_axis, port_side = self._inflow_port_faces[live.family]
         # THE TRANSVERSE BOOKING (ALGEBRA.md 9.82 (3) (b), (c); commit 4): the Ports along
@@ -3022,16 +2975,7 @@ class DetectorLawSimulation:
         )
 
     def conserved_form(self, live: LiveRecord) -> Ratio:
-        """The record's conserved form I (ALGEBRA.md 8.2; under the Node's own
-        pace, 9.50 (9) and (13); BUILD.md section 26 item 36) in the form's
-        units, 3 I x wall in the vacuum: over the Nodes [3 wall (den_i /
-        num_i) Gamma (now_i^2 + before_i^2) - 6 wall (den_i / num_i) c_i
-        now_i before_i] / p_i - wall now_i SUM_j before_j, p_i = Gamma - c_i
-        (+ q Lambda d_i) the pace at the Node, the six reads with the
-        family's faces (the folded axes' self-reads); the sum of every Node's
-        share (`form_share`), an exact rational (the Killing energy: each
-        Node's share read in the world's time by its own pace; whole in the
-        body's own units, p times it, at a uniform level, `given_norm`)."""
+        """The record's conserved form I in the form's units, 3 I x wall in the vacuum: over the Nodes [3 wall (den_i / num_i) Gamma (now_i^2 + before_i^2) - 6 wall (den_i / num_i) c_i now_i before_i] / p_i - wall now_i SUM_j before_j, p_i = Gamma - c_i (+ q Lambda d_i) the pace at the Node, the six reads with the family's faces; the sum of every Node's share (`form_share`), an exact rational (each Node's share read in the world's time by its own pace)."""
         return self.form_share(live, np.ones(self.shape, dtype=bool))
 
     def form_share(self, live: LiveRecord, mask: np.ndarray) -> Ratio:
@@ -3107,17 +3051,7 @@ class DetectorLawSimulation:
         )
 
     def given_norm(self, live: LiveRecord) -> tuple[int, int]:
-        """THE NORM AS THE EXACT RATIONAL (ALGEBRA.md 9.46 (1), 9.50 (9) and
-        (13); BUILD.md section 26 item 36): the given record's conserved form
-        Q, the Node's terms weighted by 1 / p_i, as the pair (numerator,
-        denominator) in lowest terms, the record's `norm` and `pace`; the
-        ladder reads the plain flux C against Q, 2 W pace C against (2 u +
-        1) norm, in integers. For a record written at one level (a body's
-        Nodes at rest, the content and the charge uniform there) p Q is
-        whole, the integer T of 9.46 (1) in the body's own units, and the
-        pair reduces from (p Q, p); a record written across levels (a moving
-        body's Nodes as the hold leaves them) has a rational Q, its world
-        energy, and the same reading."""
+        """The norm as the exact rational: the given record's conserved form Q, the Node's terms weighted by 1 / p_i, as the pair (numerator, denominator) in lowest terms, the record's `norm` and `pace`; the ladder reads the plain flux C against Q in integers; for a record written at one level p Q is whole (the integer T in the body's own units) and the pair reduces from (p Q, p); a record written across levels has a rational Q, its world energy, and the same reading."""
         return self.conserved_form(live)
 
     @staticmethod
@@ -3622,15 +3556,7 @@ class DetectorLawSimulation:
                 return
 
     def record_form(self, live: LiveRecord) -> Ratio:
-        """The conserved form I of the record (MASSIVE_RECORD.md section 3, a
-        GAMEBOARD diagnostic read by the books): the one form of the rule,
-        `conserved_form` (ALGEBRA.md 9.57 (1); item 44: from the rule's own
-        integers, L [w (a^2 + b^2) - S a b] / R at the Nodes and L now_i SUM_j
-        before_j on the Links, L the least common multiple of the distinct
-        numerators, an exact rational; the plain form 3 den (a^2 + b^2) less
-        num over the Links in the vacuum); conserved by the rule up to the
-        remainders' bounded jitter (the books' second copy of the form, with
-        its own Link loop, HISTORY since item 44: one form, one code)."""
+        """The conserved form I of the record, a GAMEBOARD diagnostic read by the books: the one form of the rule, `conserved_form`, from the rule's own integers, L [w (a^2 + b^2) - S a b] / R at the Nodes and L now_i SUM_j before_j on the Links, L the least common multiple of the distinct numerators, an exact rational, conserved by the rule up to the remainders' bounded jitter."""
         return self.conserved_form(live)
 
     def _release(self, live: LiveRecord) -> None:
@@ -3643,15 +3569,7 @@ class DetectorLawSimulation:
             del self.rung_counts[key]
 
     def _gather_line(self, live: LiveRecord, chosen: int | None) -> None:
-        """The record's one click line (`gather`, the amplitude law's keys):
-        the content handed to the measured event at the chosen detector (or
-        booked as escaped at a face or a set without a body; with no detector
-        chosen, to the escaped row or, where the record's own emitter took
-        it wholly, to `taken_by_emitter`), the line written with `click` the
-        chosen detector's first rung (or the completion where no rung was
-        crossed) and `clock` the detector's own count. Called once per
-        record: at the close (`_click`) or, under the receiver by name, at
-        the receiver's rung (`_line_at_rung`)."""
+        """The record's one click line (`gather`): the content handed to the measured event at the chosen detector (or booked as escaped at a face or a set without a body; with no detector chosen, to the escaped row or, where the record's own emitter took it wholly, to `taken_by_emitter`), with `click` the chosen detector's first rung (or the completion where no rung was crossed) and `clock` the detector's own count; called once per record, at the close (`_click`) or at the receiver's rung (`_line_at_rung`)."""
         # the ladder's weights: the record's ladder of `_ladder_of` (the
         # emitter's named sets, or the block's receiver, or every declared
         # set, the face receiver last on every ladder; ALGEBRA.md 9.19 (3)
