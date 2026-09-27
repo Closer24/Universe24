@@ -32,6 +32,7 @@ def paces_world() -> dict:
                 {
                     "parts": [1, 3, 6],
                     "held": {"count": "content", "factors": [1, 4, 2], "dipole": "spin"},
+                    "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
                 }
             )
     document["stamp"] = input_stamp(document)

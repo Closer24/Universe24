@@ -215,11 +215,11 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/loader/world.py": {
-   "comment_lines": 408,
+   "comment_lines": 411,
    "docstring_lines": 323,
    "level_shift_sites": 0,
-   "lines": 2704,
-   "record_references": 43,
+   "lines": 2717,
+   "record_references": 44,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/retention.py": {

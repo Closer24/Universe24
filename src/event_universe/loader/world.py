@@ -162,20 +162,17 @@ BLOCK_KEYS = {
     # the body's rest pair on a family whose pair is the body's
     "kind",
     # THE BODY'S NUMBERS the holds read (ALGEBRA.md 9.91 (3), (7); commit 2): its
-    # charge Q, its spin S and its moment mu (the momentum n is `momentum`)
-    "charge",
+    # charge Q (`q`), its spin S and its moment mu (the momentum n is `momentum`)
     "spin",
     "moment",
     # the body's own record's twist "own", the generator's integer (item 73)
     "twist",
-    "coupling",
     "seed",
     # the bound mode's clock [a, b] beside a profile (ALGEBRA.md 9.22 (7))
     "clock",
     # the moving body's Node's proper pairs by the momentum's whole part (ALGEBRA.md
     # 9.63 (3); BUILD.md section 26 item 46), beside `clock` on a moving block
     "proper_clock",
-    "cavity",
     "ramp",
     "start",
     "margin",
@@ -277,6 +274,9 @@ class FamilyDefinition:
     held_factors: tuple[int, ...] = (1,)
     held_dipole: str | None = None
     held_dipole_div: int = 1
+    # THE SPIN'S STEP'S WEIGHTS (9.78 (5)): the row's curl and tidal pairs, read by the
+    # spin's step's folder; required on a family that holds the spin's dipole, else None
+    spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
     # the self-source's unit P_2 (9.78 (3), 9.91 (5)): 0, off
     self_unit: int = 0
     # THE CLICKS (9.79 (1), 9.91 (7)): (gives, takes) for a family of records,
@@ -426,7 +426,7 @@ class BlockDefinition:
     (the pushing agent's declaration: its momentum reached from 0 over that
     many intervals); `start` (the same agent's: the interval its drive
     begins, 0 by default, the ramp counted from it); `margin` (the margin
-    rule's kind of world). The take (`absorbing`, `take`), the cycle
+    rule's kind of world, a well's; None on a body that is no well). The take (`absorbing`, `take`), the cycle
     emitter (`emits`, `own_grace`) and a declared wheel are retired
     (BUILD.md section 26 items 14 and 15)."""
 
@@ -472,7 +472,8 @@ class BlockDefinition:
     # omega_0), its rotation from its mode's clock [a, b] (2 cos omega) where it has
     # one, else from its kind's pair
     twist: int = 0
-    margin: str = MARGIN_KINDS[0]
+    # a well's margin kind (required on a well, record 2089); None on a body that is no well
+    margin: str | None = None
     # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
     # 7, the click line): the name of the detector set whose one detector is the
     # ladder of every record this block emits (the click line at that detector's
@@ -960,7 +961,7 @@ def _families_of(
     massive_record: bool,
     amplitude_bound: int,
 ) -> tuple[FamilyDefinition, ...]:
-    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair under the world key massive_record with its bound and den >= num, the clock's pair [p, q] with q from 1 and p bounded by the world's largest age, the held source's factors one per part and its dipole on a vector family, the self-source's unit 0 or at least 24 A, a family held or clicking or both, a read naming a held family once, and a held family's shape."""
+    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair under the world key massive_record with its bound and den >= num, the clock's pair [p, q] with q from 1 and p bounded by the world's largest age, the held source's factors one per part and its dipole on a vector family, spins_step on a family that holds the spin's dipole, the self-source's unit 0 or at least 24 A, a family held or clicking or both, a read naming a held family once, and a held family's shape."""
     if len(entries) > MOST_FAMILIES:
         raise ValueError(
             f"families declares {len(entries)}; at most {MOST_FAMILIES} families on a "
@@ -1043,6 +1044,17 @@ def _families_of(
             if "dipole_div" in source:
                 divisor = cast(int, source["dipole_div"])
                 held_dipole_div = divisor
+        spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
+        if "spins_step" in obj:
+            weights = cast(dict[str, object], obj["spins_step"])
+            curl = cast(tuple[int, int], weights["curl"])
+            tidal = cast(tuple[int, int], weights["tidal"])
+            spin_weights = ((curl[0], curl[1]), (tidal[0], tidal[1]))
+        elif held_dipole == "spin":
+            raise ValueError(
+                f"{label} holds the spin's dipole and lacks spins_step: the spin's step's two "
+                "weights, curl and tidal, are the row's (ALGEBRA.md 9.78 (5)), no default"
+            )
         self_source = cast(dict[str, object], obj["self_source"])
         self_unit = cast(int, self_source["unit"])
         if 0 < self_unit < 24 * amplitude_bound:
@@ -1099,6 +1111,7 @@ def _families_of(
                 held_factors=held_factors,
                 held_dipole=held_dipole,
                 held_dipole_div=held_dipole_div,
+                spin_weights=spin_weights,
                 self_unit=self_unit,
                 clicks=clicks,
                 pair_on_body=pair_on_body,
@@ -1453,9 +1466,9 @@ def _block(
     # THE BODY'S NUMBERS (ALGEBRA.md 9.91 (3), (7); commit 2): charge, spin and moment,
     # required under the law (no default), integers on the axes (record 2084)
     _require_under_law(obj, label, {"q", "spin", "moment", "twist"})
-    charge = 0 if "q" not in obj else _integer(obj["q"], f"{label}.q", -AMOUNT_BOUND, AMOUNT_BOUND)
-    spin = _axes_vector(obj.get("spin", [0, 0, 0]), f"{label}.spin")
-    moment = _axes_vector(obj.get("moment", [0, 0, 0]), f"{label}.moment")
+    charge = _integer(obj["q"], f"{label}.q", -AMOUNT_BOUND, AMOUNT_BOUND)
+    spin = _axes_vector(obj["spin"], f"{label}.spin")
+    moment = _axes_vector(obj["moment"], f"{label}.moment")
     if "margin" not in obj and pair[0] * kind[1] > pair[1] * kind[0]:
         # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): a well's
         # margin kind, pin or control, declared (record 2037, per measured
@@ -1464,8 +1477,8 @@ def _block(
             f"{label}.margin is required on a well: one of "
             f"{list(MARGIN_KINDS)}, no default (the model owner's records 2037 and 2089)"
         )
-    margin = obj.get("margin", MARGIN_KINDS[0])
-    if margin not in MARGIN_KINDS:
+    margin = cast(str, obj["margin"]) if "margin" in obj else None
+    if margin is not None and margin not in MARGIN_KINDS:
         raise ValueError(f"{label}.margin must be one of {list(MARGIN_KINDS)}")
     # THE WALL W = 3 Q M (ALGEBRA.md 9.96 (1), 9.89 (2)): one wall per body, on its
     # whole content at the load, its own quanta and what it holds (the stock is
@@ -1595,7 +1608,7 @@ def _block(
         # generator's integer round(2^16 omega_0) declared under `twist` (its mode's
         # rotation, or its kind's rest rotation on a body without a mode), no default
         twist=_integer(obj["twist"], f"{label}.twist", 0),
-        margin=str(margin),
+        margin=margin,
         receiver=receiver,
         emitter=emitter,
         stock=stock,

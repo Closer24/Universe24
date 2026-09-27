@@ -306,6 +306,12 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
         lambda d: d["families"][0]["held"].__setitem__("dipole", "twist"),
         r"dipole must be one of \['spin', 'moment'\], not 'twist'",
     )
+    # the spin's step's weights (9.78 (5)): the row's, required with the spin's dipole, no default
+    refuses(lambda d: d["families"][0].pop("spins_step"), "holds the spin's dipole and lacks spins_step")
+    refuses(
+        lambda d: d["families"][0]["spins_step"].__setitem__("curl", 3),
+        r"spins_step\.curl must be a list, not 3",
+    )
     refuses(lambda d: d.__setitem__("law", "beam-v1"), "the universe file .* has unknown keys: law")
     (tmp_path / "universe.json").write_text(json.dumps(good), encoding="utf-8")
     document["stamp"] = input_stamp(document)

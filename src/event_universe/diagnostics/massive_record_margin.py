@@ -491,8 +491,8 @@ def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     each block is checked on its own)."""
     entry = world.measured[number]
     definition = entry.block
-    if definition is None:
-        raise ValueError(f"measured[{number}] is no block")
+    if definition is None or definition.margin is None:
+        raise ValueError(f"measured[{number}] is no block with a margin (a well's)")
     family = world.families[entry.family]
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
@@ -553,11 +553,11 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
     for number, entry in enumerate(world.measured):
         if entry.block is None or not world.families[entry.family].massive_kind:
             continue
-        if entry.block.seed == 0:
-            # A silent block (seed 0, no own record) holds nothing to bind: a
-            # take line (an absorbing block with the kind's own pair, item 6b)
-            # takes at its Nodes and carries no mode, so the threshold and
-            # the extent have no record to read.
+        if entry.block.seed == 0 or entry.block.margin is None:
+            # A silent block (seed 0, no own record) holds nothing to bind, and a
+            # body that is no well declares no margin (the loader's rule): a take
+            # line (an absorbing block with the kind's own pair, item 6b) takes at
+            # its Nodes and carries no mode; the extent has no record to read.
             continue
         kind = entry.block.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
         if entry.block.pair[0] * kind[1] < entry.block.pair[1] * kind[0]:
