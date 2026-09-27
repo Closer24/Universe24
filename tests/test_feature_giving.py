@@ -1,11 +1,6 @@
-"""THE GIVING, its own folder (ALGEBRA.md 9.117 item 2, the row "the giving"; 9.117 item 5;
-9.107; 9.71 (1); 9.116 item 5; issue #1156): the bulk share on the moving row's numbers
-(the velocity kept exactly where M divides n, within one unit of n on the new wall otherwise,
-symmetric under reflection), the three acts of a window on synthetic integers (the open's
-deferred writes, the write g x the body's levels, the close at the first interval reaching T
-with the direction the tally's sign), the refusals by name, the close act replayed against the
-engine's own windows on the emitter world interval by interval, and the declaration the
-ledger's row in the register's form."""
+"""THE GIVING, its own folder (ALGEBRA.md 9.117 item 2, the row "the giving"; 9.107; 9.71 (1); issue
+#1156): the bulk share on the moving row's numbers, the three acts of a window on synthetic integers,
+the refusals by name, the close act replayed against the engine's own windows, the declaration."""
 
 from __future__ import annotations
 
@@ -50,12 +45,9 @@ def a_close(flux: int, tally: tuple[int, int, int]) -> GivingStart:
 
 
 def test_the_bulk_share_keeps_the_velocity_on_the_moving_row_and_is_symmetric():
-    """The moving rows (examples/events/toward_nature): a body of M = 65 quanta on the wall
-    W = 3 Q M moving at v = 1 / 4 has n = W div 4 = 3120; a giving takes the quantum's share
-    3120 div 65 = 48 and leaves n = 3072 = the new wall's quarter, the velocity 1 / 4 exactly
-    (issue #1156: today n stays and the body speeds up); with n not divisible by M the body
-    keeps the remainder inside n, the velocity within one unit of n on the new wall; a
-    negative n gives the mirror image (the share rounded toward zero on both signs)."""
+    """The moving rows: a body of M = 65 on W = 3 Q M at v = 1 / 4 has n = 3120; a giving takes the share
+    48 and leaves n = 3072, the new wall's quarter (issue #1156); with n not divisible by M the velocity
+    stays within one unit of n on the new wall; a negative n gives the mirror image."""
     generator = load_module("make_worlds")
     wall = generator.drive_wall(65)
     momentum = wall // generator.HOP_EVERY
@@ -74,10 +66,9 @@ def test_the_bulk_share_keeps_the_velocity_on_the_moving_row_and_is_symmetric():
 
 
 def test_the_three_acts_of_a_window_on_synthetic_integers():
-    """The write adds g x the body's levels at its shell and counts the interval; the close
-    sums the outward flux and its tally and closes at the first interval with outward x den
-    >= norm (T = 1000 / 3 here, so 334 closes and 333 does not), the direction the tally's
-    sign per axis, never its size; before the close nothing is named."""
+    """The write adds g x the body's levels at its shell; the close sums the outward flux and closes at
+    the first interval with outward x den >= norm (334 closes at T = 1000 / 3, 333 not), the direction
+    the tally's sign per axis; before the close nothing is named."""
     term = GivingTerm(weight=3, norm=1000, norm_denominator=3, family=0)
     own = apply(term, an_open(2, NO_TALLY), CLOSED).own
     levels = np.array([7, -2, 0], dtype=np.int64)
@@ -95,10 +86,8 @@ def test_the_three_acts_of_a_window_on_synthetic_integers():
 
 
 def test_the_refusals_by_name():
-    """The weight, the norm and its denominator from 1; the act one of the three; an open on
-    an open window, a write or a close on none; the quanta from 1 at the open; the write
-    without the body's levels; every field of a start and of an own is named by the loop,
-    none has a written default."""
+    """The weight, the norm and its denominator from 1; the act one of the three; an open on an open one,
+    a write or a close on none; the quanta from 1 at the open; every field named, no default"""
     with pytest.raises(ValueError, match="needs a weight, a norm and its denominator from 1"):
         apply(GivingTerm(0, 1000, 1, 0), an_open(1, NO_TALLY), CLOSED)
     with pytest.raises(ValueError, match="act is one of"):
@@ -119,12 +108,9 @@ def test_the_refusals_by_name():
 
 
 def test_the_close_act_closes_where_the_engines_window_closes_and_not_before():
-    """On the emitter's unit world every window is replayed interval by interval from the
-    engine's own record (the outward norm and its tally as the loop books them after each
-    step): fed the same increments, the folder's close act keeps the window open at every
-    interval the engine keeps it open and closes at the interval the engine's close names
-    on the giving line, with the line's outward, its window length and its direction; the
-    stock falls by one per open (the engine's count, 9.107 item 2)."""
+    """The emitter's unit world, every window replayed from the engine's own record: fed the increments,
+    the folder's close act keeps the window open where the engine does and closes at the interval the
+    engine's giving line names, with its outward, length and direction; the stock falls one per open."""
     document = emitter_world(stock=4, ticks=1200)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
@@ -179,12 +165,8 @@ def test_the_close_act_closes_where_the_engines_window_closes_and_not_before():
 
 
 def test_the_declaration_is_the_ledgers_row():
-    """The folder declares the row of ALGEBRA.md 9.117 in the register's form: "the giving"
-    at (ii), the word after the step, the writes a family's level at a Node, a body's
-    content M_k and a body's momentum n (the stock is M_k of the given family; Q no value),
-    the orders per value (M_k 2 after the clicks, n 1 before the recoil, both at (iv) as
-    a click's deferred writes), its section with the words of 9.117 item 5; bind gives the
-    loop's open of today; the engine's register reads this folder's row."""
+    """The folder declares the row of ALGEBRA.md 9.117 in the register's form: "the giving" at (ii), the
+    word after the step, the writes ordered as a click's deferred writes at (iv), its section"""
     assert DECLARATION.name == "the giving" and folder_of("the giving") == "giving"
     assert DECLARATION.place == "(ii)" and DECLARATION.word == "after the step"
     assert DECLARATION.writes == (

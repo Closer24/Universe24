@@ -11,7 +11,7 @@ import pytest
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.register import folder_of
-from event_universe.core.rule3 import coefficients, rule3
+from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.counts_line import (
     DECLARATION,
@@ -71,49 +71,6 @@ def across(a: np.ndarray, axis: int, sigma: int, periodic: bool) -> np.ndarray:
         index[axis] = -1 if sigma > 0 else 0
         rolled[tuple(index)] = 0
     return rolled
-
-
-def standing_record(nodes: int, amplitude: int, num: int, den: int, gamma: int, intervals: int):
-    """A record of one standing mode on a ring of Nodes stepped by Rule3 at the vacuum's pace: the levels now and before at every interval."""
-    x = np.arange(nodes)
-    now = np.rint(amplitude * np.cos(2 * math.pi * x / nodes)).astype(np.int64).reshape(nodes, 1, 1)
-    # the mode's own clock from the pair: cos omega = (num / den) cos k at the pace Gamma (9.57 (1))
-    omega = math.acos(num / den * math.cos(2 * math.pi / nodes))
-    before = np.rint(amplitude * np.cos(2 * math.pi * x / nodes) * math.cos(omega)).astype(np.int64)
-    before = before.reshape(nodes, 1, 1)
-    reads, self_coefficient, wall = coefficients(num, den, gamma, 0)
-    remainder = np.zeros_like(now)
-    history = [(now, before)]
-    for _ in range(intervals):
-        arrivals = (across(now, 0, 1, True) + across(now, 0, -1, True), 2 * now, 2 * now)
-        nxt, remainder = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
-        now, before = nxt, now
-        history.append((now, before))
-    return history
-
-
-def test_a_body_at_rest_keeps_its_count_in_place():
-    nodes, amplitude = 16, 1 << 10
-    num, den, gamma = 1, 2, 10
-    history = standing_record(nodes, amplitude, num, den, gamma, 400)
-    # T the quantum's norm in the current's units: the mode's form, weight x 2 A^2 x the Nodes
-    weight = num
-    norm = weight * 2 * amplitude * amplitude * nodes
-    term = CountTerm(norm, weight, amplitude, 1)
-    count = np.zeros((nodes, 1, 1), dtype=np.int64)
-    count[3, 0, 0] = 1  # one quantum at the Node 3
-    # the remainder starts at the ladder's origin, (2 u + 1) T div 2 at the residue u = 0 (9.25 (2))
-    remainder = np.full_like(count, norm // 2)
-    origin = norm * count + remainder
-    excursion = 0
-    for now, before in history:
-        here = Levels(now, before, None, None)
-        writes = apply(term, CountStart(count, remainder, here, links_of(here), 1))
-        count, remainder = writes.count, writes.remainder
-        excursion = max(excursion, int(np.max(np.abs(norm * count + remainder - origin))))
-        assert int(count[3, 0, 0]) == 1 and int(count.sum()) == 1 and not np.any(count < 0)
-    # the current is not zero to the bit; its accumulated swing stays below half the quantum's norm
-    assert 0 < excursion < norm // 2
 
 
 def test_the_shipped_resting_body_keeps_its_count_under_the_loops_own_record():

@@ -1,13 +1,7 @@
-"""THE RULE IN ONE PLACE (the model owner's question of 2026-09-26 through the Boss, 16:33Z;
-ALGEBRA.md 9.57 (1), 9.50 (8), (9) and (13), 9.91 (2); the operation's cut of issue #1154;
-src/event_universe/core/rule3.py).
-
-One function steps every record at every Node in either direction, the body's Node record
-included; the conserved form's Node term is read from the same integers; the isotropic
-rule is the same call with the three paces equal (the axis contents zero); the coefficients are
-the two functions of the engine before the cut, term for term; no other file of src/ writes this
-arithmetic; the operation primitive of the register is rule3 itself. Bit for bit on every
-shipped world: the suites' digests and the shipped worlds' record."""
+"""THE RULE IN ONE PLACE (ALGEBRA.md 9.57 (1), 9.50 (8), (9) and (13), 9.91 (2); issue #1154;
+src/event_universe/core/rule3.py): one function steps every record at every Node in either direction;
+the form's term is read from the same integers; the isotropic rule is the same call with equal paces;
+no other file of src/ writes this arithmetic; the operation primitive is rule3; bit for bit everywhere."""
 
 from __future__ import annotations
 
@@ -65,11 +59,8 @@ def old_axes(
 
 
 def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_zero_axis_contents():
-    """One function of the paces: with the axis contents zero it is the isotropic rule's
-    (R, R, R), S, w term for term (4 num x 3 p^2 = 12 num p^2); with them the four paces'
-    reads; `weak_field` False the plain first-order rule; `ISOTROPIC` is the default; the vacuum
-    c = 0 is 2 Gamma^2 times the plain rule; a tensor along x alone slows the x read and the own
-    term by 4 num (p_x^2 - p_0^2)."""
+    """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four
+    paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule."""
     rng = random.Random(3)
     for _ in range(500):
         num, den = rng.randint(1, 1000), rng.randint(1, 1000)
@@ -103,9 +94,8 @@ def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_ze
 
 
 def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_arrays():
-    """w a_next + r' = SUM_a R_a arr_a + S a_now - w a_before + r with 0 <= r' < w, and the
-    inverse returns a_before and r exactly; on int64 arrays the sum over the axes equals R
-    times the six-sum bit for bit (the ring's arithmetic), the dtype kept."""
+    """w a_next + r' = SUM_a R_a arr_a + S a_now - w a_before + r with 0 <= r' < w, the inverse exact; on
+    int64 arrays the sum over the axes equals R times the six-sum bit for bit, the dtype kept."""
     rng = random.Random(5)
     for _ in range(500):
         num, den = rng.randint(1, 1000), rng.randint(1, 1000)
@@ -198,9 +188,8 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
 
 
 def test_every_step_of_the_engine_goes_through_the_one_rule(monkeypatch):
-    """The engine's records step and step back through rule3 alone, forward with the direction
-    +1 and back with -1 (a spy on the one name the engine imports), and the operation primitive
-    of the register is rule3 itself."""
+    """The engine's records step and step back through rule3 alone (+1 forward, -1 back, a spy on the one
+    name the engine imports), and the operation primitive of the register is rule3 itself."""
     calls = {"forward": 0, "backward": 0}
     real_rule = detector_law.rule3
 
@@ -220,32 +209,23 @@ def test_every_step_of_the_engine_goes_through_the_one_rule(monkeypatch):
     assert simulation.books()["balanced"]
 
 
-# THE SPLIT IS BUILT FROM THE RULE TOO (the model owner's word through the Boss, record 2234): a
-# Node's level goes to its six neighbours only through rule3's own send, receive, wait and
-# operation; the split has no function of its own. The functions that shift an array across
-# Nodes, each with its reason: the transport (send and receive, the arrival sums rule3 reads) and
-# the readings of a neighbour's level at a Port (the flux booked at the Node, no level written);
-# a shift of a mask or of an index (the shell, the sets' Ports) moves no level.
-LEVEL_SHIFTERS = {
-    "_shift": "the one shift of an array across a Link, the send and the receive",
-    "_neighbours": "the six neighbours' sum, the receive",
-    "_axis_sums": "the arrival sums per axis, the receive rule3 reads",
-    "_arrival": "one neighbour's level after the transport, the receive",
-    "inward_flux": "the neighbour's levels read at a detector's Ports for the booking, no level written",
-    "body_outward_flux": "the neighbour's levels read at a body's outer Ports for the window, no level written",
-}
-INDEX_SHIFTERS = {"shell_mask", "_flux_ports", "_inflow_ports"}
+# A Node's level goes to its six neighbours only through the Ports: the one shift of an array across a
+# Link is core/ports.py's `arrival`, the send and the receive; every reading of a neighbour's level (the
+# transport's arrival sums, the flux at a Port, the shell of a body) takes it from there.
+SHIFT_HOME = {"src/event_universe/core/ports.py": {"arrival"}}
+SHIFT_TOKENS = re.compile(r"np\.roll\(|\._shift\(|\.take\(")
 
 
 def test_no_other_code_moves_a_level_from_one_node_to_another():
-    """Record 2234: every shift of an array across Nodes in src/ sits in a named function of the
-    transport or of a Port's reading, and no function of src/ is a split of its own."""
+    """Every shift of an array across Nodes in src/ is core/ports.py's `arrival` (no np.roll, no take, no
+    shift elsewhere: the loop reads its neighbours through the Ports), and no function of src/ is a split
+    of its own."""
     import ast
 
     found: dict[str, set[str]] = {}
     for path in sorted(SOURCE.rglob("*.py")):
         text = path.read_text(encoding="utf-8")
-        if "np.roll(" not in text and "._shift(" not in text:
+        if not SHIFT_TOKENS.search(text):
             continue
         tree = ast.parse(text)
         spans = [
@@ -253,12 +233,13 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
             for node in ast.walk(tree)
             if isinstance(node, ast.FunctionDef)
         ]
-        for match in re.finditer(r"np\.roll\(|self\._shift\(", text):
+        for match in SHIFT_TOKENS.finditer(text):
             line = text.count("\n", 0, match.start()) + 1
             inner = max((span for span in spans if span[0] <= line <= span[1]), key=lambda span: span[0])
             found.setdefault(path.relative_to(ROOT).as_posix(), set()).add(inner[2])
-    engine = found.pop("src/event_universe/events/detector_law.py")
-    assert engine <= set(LEVEL_SHIFTERS) | INDEX_SHIFTERS, engine - set(LEVEL_SHIFTERS) - INDEX_SHIFTERS
+    assert "src/event_universe/events/detector_law.py" not in found
+    for home, functions in SHIFT_HOME.items():
+        assert found.pop(home) == functions
     assert {name for name in found if not name.startswith("src/event_universe/diagnostics/")} == set(), (
         found
     )
@@ -273,9 +254,8 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
 
 
 def test_a_run_stepped_forward_and_back_returns_bit_for_bit():
-    """Rule3 with the direction -1 undoes the direction +1 exactly: the emitter world stepped
-    eight intervals forward and eight back returns every record's levels and remainders and
-    the held levels bit for bit (ALGEBRA.md 9.50 (8), (9))."""
+    """Rule3 with the direction -1 undoes +1 exactly: the emitter world eight intervals forward and eight
+    back returns every record's levels, remainders and the held levels bit for bit (9.50 (8), (9))."""
     simulation = detector_law.DetectorLawSimulation(
         parse_nature_beam_world(emitter_world(stock=1, ticks=8))
     )

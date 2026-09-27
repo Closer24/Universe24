@@ -117,9 +117,8 @@ def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands
 
 
 def test_a_pair_whose_count_binds_nothing_is_refused_by_name():
-    """On [800, 809] (1 - cos omega_0 = 0.011) the count's well is too shallow for any cube
-    (ALGEBRA.md 9.120 item 2): the iteration settles on the band's top and the tool refuses
-    naming the family and the rotation."""
+    """On [800, 809] (1 - cos omega_0 = 0.011) the count's well is too shallow for any cube (ALGEBRA.md
+    9.120 item 2): the iteration settles on the band's top and the tool refuses naming the rotation."""
     with pytest.raises(ValueError, match=r"the count binds no mode of the family \[800, 809\]"):
         bound_mode(counted_cube(8, 4, 3000), (800, 809), GAMMA)
 
@@ -167,8 +166,8 @@ def envelope_times_sine(mode, triple: tuple[int, int, int]) -> np.ndarray:
 
 
 def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
-    """At (1, 0, 1) the moving iteration is the resting mode bit for bit; at (99, 20, 101) it is an
-    eigenvector of the untwisted rule to 10^-4 and one step of Rule3 rotates its two levels."""
+    """At (1, 0, 1) the moving iteration is the resting mode bit for bit; at (99, 20, 101) an eigenvector
+    of the untwisted rule to 10^-4, and one step of Rule3 rotates its two levels."""
     counts = counted_cube(12, 4, 3000)
     rest = bound_mode(counts, KIND, GAMMA)
     still = moving_mode(counts, KIND, GAMMA, AT_REST)

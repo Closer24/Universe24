@@ -32,19 +32,12 @@ QUANTA = 250  # the content per Node for e / f = 0.8 at GAMMA
 
 
 def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_e_over_f():
-    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md 9.57 (1); BUILD.md section 26
-    item 44): on the periodic chain of 12 with QUANTA quanta held at every Node (the pace
-    (Gamma - c) / Gamma = 0.75), one step of the engine on random rows of light and of the
-    matter kind equals w a_next + r' = R S_6(a_now) + S a_now - w a_before + r with (R, S, w)
-    the rule's integers at the level and the remainder in [0, w), computed in Python
-    integers, and its inverse returns the rows bit for bit; on the same rows with no content the
-    levels are the plain rule's bit for bit and the remainder 2 Gamma^2 times the plain one (from
-    r = 0). (ii) THE ROTATION: a uniform
-    record (k = 0) of the matter kind at 2^20 turns with 2 cos omega' = 2 - (1 + f)(1 - num /
-    den), f = ((Gamma - c) / Gamma)^2 (the clock's second-order weight, 9.56 (4)), read from
-    three consecutive levels at a Node: 1.982617 at the pace 0.75 and 1.977750 = 2 num / den
-    in the vacuum, within 10^-5 over 60 intervals; the edge case: at the pace 1 / 2 (c =
-    Gamma / 2) 1.986094."""
+    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md 9.57 (1); BUILD.md section 26 item 44):
+    on the periodic chain of 12 with QUANTA quanta at every Node, one step of the engine on random rows
+    equals w a_next + r' = R S_6(a_now) + S a_now - w a_before + r in Python integers; with no content
+    the plain rule's levels bit for bit. (ii) THE ROTATION of a uniform record of the matter kind: 2 cos
+    omega' = 2 - (1 + f)(1 - num / den), f = ((Gamma - c) / Gamma)^2 (9.56 (4)): 1.982617 at the pace
+    0.75, 1.977750 in the vacuum, within 10^-5 over 60 intervals; at the pace 1 / 2, 1.986094."""
     rng = np.random.default_rng(11)
     for family, (num, den) in ((0, (1, 1)), (1, PAIR)):
         rows_now = rng.integers(-UNIT, UNIT, size=(12, 1, 1), dtype=np.int64)
