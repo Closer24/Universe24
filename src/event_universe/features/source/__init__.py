@@ -7,6 +7,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from event_universe.core.register import Declaration
+from event_universe.core.schema import Integer, Name, ObjectOf, Schema
 
 THE_WORD = "the field's shape from the rule 9.57 (1), the write beyond (H)"
 PRODUCT_BOUND = (int(np.iinfo(np.int64).max) + 1) // 2  # half the integer width, no number of its own
@@ -131,4 +132,22 @@ DECLARATION = Declaration(
     None,
     THE_WORD + " (9.113 item 2; 9.117 item 5); 9.117 item 2; 9.108 items 3, 10, 11, 13; 9.116 item 4b",
     word="the right side",
+    schema=Schema(
+        {
+            "a family's entry": ObjectOf(
+                {
+                    "sourced": ObjectOf(
+                        {
+                            "of": Name(),
+                            "weight": Integer(),
+                            "scale": Integer(least=1),
+                            "cap": Integer(least=1),
+                        },
+                        frozenset({"cap"}),
+                    )
+                },
+                frozenset({"sourced"}),
+            )
+        }
+    ),
 )
