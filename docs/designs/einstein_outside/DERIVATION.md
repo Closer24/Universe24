@@ -1653,4 +1653,4 @@ no source in a linear scalar field.
 [NATURE rows 4a, 4b, 12, 13](../../NATURE.md); [the register: series S, T, X, D3, K, W](../../EXPERIMENTS.md);
 [the clock audit](../clock_audit/AUDIT_2026-09-22.md) (tier (b) in PR #777);
 [EVERY_FAMILY.md](../one_wall/EVERY_FAMILY.md) (the generic bending's steps);
-[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector); [TERMINOLOGY, the readings](../../TERMINOLOGY.md#the-readings).
+[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md); [TERMINOLOGY, the readings](../../TERMINOLOGY.md#the-readings).

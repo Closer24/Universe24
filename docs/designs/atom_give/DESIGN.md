@@ -529,5 +529,5 @@ named in the six lines' item 5 is kept.
 [BEAM_LAW note 40 and note 41](../../BEAM_LAW.md); [DERIVATIONS_BEAM 6.4
 and 19.1](../../DERIVATIONS_BEAM.md); [the local integer operation contract](../../ARCHITECTURE.md#local-integer-operation-contract);
 [LOCALITY-1](../../../SIMULATOR_DEFINITIONS.md); [the three tests](../../../skills/workflow.md);
-[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector) (records 281, 721,
+[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md) (records 281, 721,
 754, 762, 817, 844, 864); [HYPOTHESES section 27](../../HYPOTHESES.md).

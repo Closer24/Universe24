@@ -3,7 +3,7 @@
 > The ray law's test files, worlds and tools named below were deleted on 2026-09-26 (docs/CANCELLED_WORLDS.md, the restore commit named there); their rows stay as history of what each test pinned.
 
 Since 2026-09-17, by the model owner's decision in
-[Highlights 5.5](HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions), a test
+[Highlights 5.5](HIGHLIGHTS.md), a test
 exercises one generic rule in isolation on a minimal GameBoard and nothing else: one
 test module per rule, one per feature of the ray-event model, with the expected
 integers written down here before the first run. No test pins the numbers of an
@@ -65,7 +65,7 @@ leaves `format` and `derivations` out; no number moves with the map.
 
 ## Suite inventory of 2026-09-19: one engine, the Beam Law
 
-Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md),
 "DECIDED: the law of the ray"; [the Beam Law](BEAM_LAW.md)): one engine,
 `beam-v1`, the law of events of the same day deleted with its modules. The
 suite keeps one module per generic rule of the engine, on a minimal GameBoard,
