@@ -286,7 +286,7 @@ def test_e4_no_flag_and_no_version_is_a_constant_of_the_engine():
 def test_f_one_step_of_the_engine_is_the_rules_transcription_bit_for_bit():
     """(f) The rule as one function (ALGEBRA.md #the-line, #the-interval): the engine's one step on
     random levels, remainders and contents equals the independent transcription of the rule
-    (docs/designs/rule_alone/rule_alone.py) integer for integer."""
+    (the rule alone, its transcription script) integer for integer."""
     transcription = load_file(
         "rule_alone_transcription", ROOT / "docs" / "designs" / "rule_alone" / "rule_alone.py"
     )

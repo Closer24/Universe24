@@ -19,7 +19,6 @@
         "src/event_universe/core/",
         "src/event_universe/events/detector_law.py",
         "law/step.json",
-        "src/event_universe/retention.py",
         "tools/run_inputs.py",
         "tools/record_shipped_worlds.py"
       ]

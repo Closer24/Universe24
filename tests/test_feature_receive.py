@@ -21,7 +21,6 @@ from event_universe.features.receive import (
     rotated,
     triple,
 )
-from event_universe.loader.world import TWIST_FINE_BITS
 from event_universe.world_files import parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,11 +51,11 @@ def test_the_refusals_name_the_port():
     document = json.loads((TOWARD / "lorentz_moving.json").read_text(encoding="utf-8"))
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     term = simulation._receive_term
-    beyond = np.array([len(simulation.twist_table.coarse) << TWIST_FINE_BITS])
+    beyond = np.array([len(simulation.twist_table.coarse) << simulation.twist_table.fine_bits])
     with pytest.raises(ValueError, match=r"toward -y .* beyond the twist table"):
         triple(term, beyond, 3)
     with pytest.raises(ValueError, match=r"toward \+z .*no table"):
-        triple(ReceiveTerm(None, None, TWIST_FINE_BITS), np.array([1]), 4)
+        triple(ReceiveTerm(None, None, simulation.twist_table.fine_bits), np.array([1]), 4)
     level = np.zeros((1, 1, 1), dtype=np.int64)
     link = Link(level, None, ())
     with pytest.raises(ValueError, match="six Links"):

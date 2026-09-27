@@ -36,7 +36,6 @@ PHYSICAL_MODULES: dict[str, str] = {
     "core/register.py": "the register of primitives: one name to one function, found by the features' folders, each with its place, word, reads, writes and order (records 2212 and 2221; issue #1154)",
     "core/primitive.py": "the interface of a primitive: the term of the files, the interval's start, the primitive's own record, its writes; apply(term, start, own) -> writes (records 2212 and 2221; issue #1154)",
     "core/schema.py": "the kinds of a value of the files and one generic check that refuses by name; a folder's schema on its card in the register (record 2226; ALGEBRA.md #the-primitives)",
-    "core/phase.py": "the bound of the world's phase circle, read by the loader",
     "core/game_board.py": "the GameBoard's addresses, the six headings, the cube's group of 48",
 }
 

@@ -270,7 +270,7 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
             residue_at_open = residue_before
             given_family = block.definition.emitter.family if block.definition.emitter else -1
             assert simulation.held[0][given_family] == held_before[0][given_family] - 1
-            assert simulation.records[block.number * (1 << 32) + block.givings].content == 1
+            assert simulation.records[block.window].content == 1
         for line in [line for line in lines if line["tick"] == simulation.tick]:
             if line["event"] == "giving":
                 assert 0 <= line["u"] < line["W"] and line["read_node"] == [5, 0, 0]

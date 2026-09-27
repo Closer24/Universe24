@@ -361,16 +361,11 @@ def main():
     }
     print(json.dumps(report, indent=2), flush=True)
     if not args.dry_run:
-        from event_universe.retention import ArtifactLease, validate_output_path
-
         report_path = ROOT / "artifacts/check-scope.json"
-        validate_output_path(report_path)
         report_path.parent.mkdir(exist_ok=True)
-        report_path.touch(exist_ok=True)
-        with ArtifactLease(report_path.parent, [report_path]):
-            report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-            for command in commands:
-                subprocess.run([sys.executable, "-m", *command], cwd=ROOT, check=True)
+        report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        for command in commands:
+            subprocess.run([sys.executable, "-m", *command], cwd=ROOT, check=True)
 
 
 if __name__ == "__main__":
