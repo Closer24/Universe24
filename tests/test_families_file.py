@@ -284,9 +284,7 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
 
 
 def test_the_given_clock_is_the_familys_row_and_the_emitter_declares_none():
-    """The given record's clock is the given family's row's `clock` (ALGEBRA.md #the-primitives, L479): the
-    charge row's [512, 1] on the file; `clock` on the emitter is refused by name; a given family whose row
-    declares none is refused by name."""
+    """The given record's clock is the given family's row's (ALGEBRA.md #the-primitives, L479): the charge row's [512, 1] on the file; `clock` on the emitter refused by name; a given family whose row declares none refused by name."""
     document = on_the_file(emitter_specimen(stock=1, ticks=10))
     world = parse_nature_beam_world(document)
     emitter = world.measured[0].block.emitter  # type: ignore[union-attr]

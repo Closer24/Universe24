@@ -59,13 +59,18 @@ def shipped_worlds():
 
 
 def test_every_shipped_world_keeps_the_wall_below_the_width():
-    seen = 0
+    """Twelve worlds keep the wall; the ten at N = 64 have no whole wavelength under the charge row's clock [512, 1] (lambda_q = 1/4), the law's load refusal once the loop computes L (the recoil's row; measured once)."""
+    seen, refused = 0, 0
     for path, world in shipped_worlds():
-        wall = recoil_wall(declared_wavelengths(int(world.phase_steps), clocks_of(world)))
+        if any((2 * int(world.phase_steps) * q) % p for p, q in clocks_of(world)):
+            refused += 1  # no whole wavelength: the law's load refusal
+            continue
+        wavelengths = declared_wavelengths(int(world.phase_steps), clocks_of(world))
+        wall = recoil_wall(wavelengths)
         assert 1 <= wall <= MAX_WORK_INT, path
-        assert wall <= math.prod(declared_wavelengths(int(world.phase_steps), clocks_of(world)) or [1])
+        assert wall <= math.prod(wavelengths or [1])
         seen += 1
-    assert seen >= 20
+    assert seen >= 12 and refused == 10
 
 
 def test_the_wall_divides_the_product_and_the_width_refuses_by_name():

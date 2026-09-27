@@ -5,18 +5,18 @@ from __future__ import annotations
 import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
-from math import isqrt
 from typing import cast
 
 from event_universe.core.game_board import MAX_VALUE, Address3
 from event_universe.core.phase import MAX_PHASE_STEPS
 from event_universe.core.readings import Reading, world_readings
 from event_universe.core.register import discover
-from event_universe.core.rule3 import NO_READ, rule3, rule_total_bound
+from event_universe.core.rule3 import rule_total_bound
 from event_universe.core.schema import Context
 from event_universe.core.step import STEP_FILE, Step
 from event_universe.loader import frame
 from event_universe.loader.frame import EngineStart
+from event_universe.loader.mode import period_by_the_rule
 
 # the ray law's table rules, read by the loop's fixed values alone (DEAD, the paper writer's)
 TABLES = ("read", "measure", "rerelease", "pass", "become")
@@ -999,7 +999,6 @@ def _families_of(
         # THE FAMILY'S QUANTUM (the law's owner's row of 2026-09-27; the Boss's word of
         # 09:27Z): one integer from 1 on every row, required; the clicks card's copy agrees
         quantum = cast(int, obj["quantum"])
-        # the lifetime's and the hand's rows (ALGEBRA.md #the-primitives): L from 1 or for ever, the hand -1 or +1 or no check
         lifetime = None if "lifetime" not in obj else cast(int, obj["lifetime"])
         hand = None if "hand" not in obj else cast(int, obj["hand"])
         if quantum > MAX_VALUE:
@@ -1466,6 +1465,7 @@ def _block(
             momentum=momentum,
             moment=moment,
             clock_pair=clock,
+            twist=_integer(obj["twist"], f"{label}.twist", 0),
         )
         # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; BUILD.md
         # section 26 item 47): the quanta a body gives are the given family's,
@@ -1553,25 +1553,6 @@ def _axes_vector(value: object, label: str) -> tuple[int, int, int]:
     )
 
 
-def period_by_the_rule(a: int, b: int) -> int:
-    """The period by the one-Node Rule3 with the pair, b c_next + r' = a c_now - b c_before + r from (c_before, c_now) = (2 b, a) at the pair's own unit b, each interval one call of rule3: the first t with a negative c before it, c_t >= 0 and 4 b c_t^2 >= (2 b + a) c_before_0^2, the nearest integer to 2 pi / omega with no pi; the longest period a pair on b allows is 2 pi sqrt(b), at the rotation nearest 0, so a clock not back within 8 sqrt(b) + 8 intervals is refused by name (ALGEBRA.md #the-generator, #the-primitives the recoil's row: P_body never declared)."""
-    if b < 1 or not -2 * b < a < 2 * b:
-        raise ValueError(f"the clock [{a}, {b}] is no rotation: b from 1 and |a| below 2 b")
-    before, now, carry = 2 * b * b, a * b, 0
-    start = before
-    seen_negative = now < 0
-    longest = 8 * isqrt(b) + 8
-    for t in range(1, longest + 1):
-        if seen_negative and now >= 0 and 4 * b * now * now >= (2 * b + a) * start * start:
-            return t
-        before, (now, carry) = now, rule3(NO_READ, NO_READ, a, b, now, before, carry)
-        if now < 0:
-            seen_negative = True
-    raise ValueError(
-        f"the clock [{a}, {b}] returns within no {longest} intervals, the longest a pair on {b} allows"
-    )
-
-
 def _emitter(
     value: object,
     label: str,
@@ -1585,14 +1566,15 @@ def _emitter(
     momentum: tuple[int, ...] = (0, 0, 0),
     moment: tuple[int, int, int] = (0, 0, 0),
     clock_pair: tuple[int, int] | None = None,
+    twist: int = 0,
 ) -> EmitterDefinition:
     """The `emitter` object of a clicking body (ALGEBRA.md #the-click to (6),
     ALGEBRA.md #a-familys-declaration): the given family a paid family whose row's `clock` [p, q] is the
     given record's clock (lambda_q), the given labels, the ladder by name, the norm (the generator's
-    integer); the period P_body by the one-Node rule from the body's own mode's clock pair and the
-    twist "own" from the given record's pair or the body's rotation, neither declared (ALGEBRA.md
-    #the-primitives, the recoil's row, L479). No wheel, no residue order, no seed, no period, no clock,
-    no twist: each is the law's, and the keys are refused by name."""
+    integer); the period P_body by the one-Node rule from the body's own mode's clock pair, never
+    declared (ALGEBRA.md #the-primitives, the recoil's row, L479); the twist "own" the body's, the
+    given record turning as its giver's mode. No wheel, no residue order, no seed, no period, no
+    clock, no twist of its own: each is the law's, and the keys are refused by name."""
     obj = cast(dict[str, object], value)  # the frame's checked emitter (loader/frame.py, `EMITTER`)
     name = obj["family"]
     if not isinstance(name, str) or name not in names:
@@ -1650,10 +1632,7 @@ def _emitter(
     receiver = _receiver_names(obj, label)
     # THE PERIOD FROM THE BODY'S OWN MODE (ALGEBRA.md #the-primitives, the recoil's row, L479: P_body by
     # the one-Node rule from its clock pair, never declared; a body seeded off its mode has none)
-    from event_universe.generator_numbers import emitter_twist  # its module imports the loader
-
     period = None if clock_pair is None else period_by_the_rule(clock_pair[0], clock_pair[1])
-    twist = emitter_twist(given_pair, clock_pair)
     # THE POINT EMITTER'S WEIGHT (ALGEBRA.md; item 50): an integer from
     # 1; the world's `point_emitter` key pairs it with the absence of a train
     weight = None if "weight" not in obj else _integer(obj["weight"], f"{label}.weight", 1)
@@ -1688,7 +1667,7 @@ def _emitter(
         weight=weight,
         norm_denominator=norm_denominator,
         part=part,
-        twist=twist,  # the given record's twist "own" (ALGEBRA.md #the-primitives): its pair's rest rotation, else its giver's mode
+        twist=twist,  # the given record's twist "own" is its giver's (ALGEBRA.md #the-primitives; the files' emitters agree)
     )
 
 

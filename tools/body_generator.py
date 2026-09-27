@@ -25,7 +25,7 @@ from event_universe.features.start import (
     division,
     field_at_rest,
 )
-from event_universe.loader.world import period_by_the_rule
+from event_universe.loader.mode import period_by_the_rule
 
 Triple = tuple[int, int, int]  # (a, b, c) with a^2 + b^2 = c^2: cos k = a / c, sin k = b / c, exact
 AT_REST: Triple = (1, 0, 1)

@@ -732,7 +732,7 @@ def finish_windows(
     dark row, carry ONE declared weight, read once by the trial on the first of the pair),
     the run's length covering every stock at the windows read plus `extra` intervals (at
     least the declared `ticks`), and the stamp over the whole file."""
-    from event_universe.loader.world import period_by_the_rule
+    from event_universe.loader.mode import period_by_the_rule
 
     windows: dict[int, int] = {}  # HOST: the trial's window at each emitter's weight, no world key
     for number in emitters:

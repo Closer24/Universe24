@@ -459,7 +459,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
         parse_nature_beam_world(quantum)
     clocked = json.loads(json.dumps(good))
     clocked["universe"][2]["clock"] = [512, 1]
-    with pytest.raises(ValueError, match="has no clock of its own"):
+    with pytest.raises(ValueError, match="gives nothing and declares a clock"):
         parse_nature_beam_world(clocked)
     charged = json.loads(json.dumps(good))
     charged["universe"][2]["sign"] = 1

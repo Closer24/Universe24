@@ -106,7 +106,6 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
         broken = json.loads(json.dumps(document))
         broken[key] = value
         refused(broken, f"the world has unknown keys: {key}")
-    # the family's two rows (the lifetime's and the hand's, ALGEBRA.md #the-primitives), each refused by its bound
     broken = json.loads(json.dumps(document))
     broken["universe"][0]["lifetime"] = 0
     refused(broken, r"universe\[0\]\.lifetime is 0, below its least 1")

@@ -465,7 +465,7 @@ def point_weight(document: dict, number: int, periods: int, start: int = 1) -> t
     generator, no world key; the engine reads the integer). SINCE COMMIT 7 every emitter's weight
     is chosen here (the window the one giving); a light clock's window is aimed shorter than its
     arm's round trip (ALGEBRA.md #the-primitives)."""
-    from event_universe.loader.world import period_by_the_rule
+    from event_universe.loader.mode import period_by_the_rule
 
     emitter = document["measured"][number]["emitter"]
     period = period_by_the_rule(*document["measured"][number]["clock"])
@@ -512,7 +512,7 @@ def giving_ticks(document: dict, number: int, extra: int, window: int) -> int:
     """HOST: a run's length covering every giving of the emitter measured[`number`]: its stock
     times (the `window` read at its weight plus two periods of its rotation, the rung's wait)
     plus `extra` intervals (the flights declared by the row's generator)."""
-    from event_universe.loader.world import period_by_the_rule
+    from event_universe.loader.mode import period_by_the_rule
 
     entry = document["measured"][number]
     emitter = entry["emitter"]
