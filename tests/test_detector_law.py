@@ -265,27 +265,7 @@ def lockstep_givings(
 
 
 def test_the_increment_ladder_over_the_named_sets():
-    """THE INCREMENT LADDER (ALGEBRA.md #the-ladder, the mathematician's word of 2026-09-25 on
-    the finding of item 14; the cumulative sums withdrawn): 128 light records planted at
-    the layer's emitter Node with every residue of the wheel 128 once and the ladder [s0,
-    s1, s2]: every record clicks exactly once, at the detector the walk of ALGEBRA.md #the-ladder names on
-    the click's own numbers (the running total before the interval below the threshold,
-    the first detector of the ladder at which the interval's increments carry it across); the
-    counts per detector under [s0, s1, s2] agree with the counts under [s2, s1, s0] within the
-    sampling of 128 residues (the detector's share of the record's total inward flux, whatever
-    the order, ALGEBRA.md #the-ladder: a theorem in distribution; on eight residues the exact counts
-    are (4, 2, 2) against (2, 2, 4), the first detector of the ladder holding more of the eight
-    thresholds, COMPUTATION for the mathematician), s0 and s2 alike within the same
-    sampling (the placement's symmetry about the emitter's row). The emitter's own givings
-    carry residues spread from the kept remainder (the model owner's decisions (1) and (2)
-    of record 1962; the coupling's back-action of ALGEBRA.md #rule3 HISTORY), each
-    clicking at the detector the walk names on its own numbers, the line's `ladder` the names and
-    its `sunk` the pointers off the ladder; under the family of clicks (item 32, FINDING C)
-    the two ladder orders are read in lockstep: the residues read before the clock field
-    differs at the body agree bit for bit (all eight since item 33's count of intervals;
-    six of eight on item 32's head, the later two differing). The
-    loader refuses a name no set declares, a repeated name, an empty list, and a body's
-    `coupling` by name."""
+    """THE INCREMENT LADDER (ALGEBRA.md #the-ladder, the mathematician's word of 2026-09-25 on the finding of item 14; the cumulative sums withdrawn): 128 light records planted at the layer's emitter Node with every residue of the wheel 128 once and the ladder [s0, s1, s2]: every record clicks exactly once, at the detector the walk of ALGEBRA.md #the-ladder names on the click's own numbers (the running total before the interval below the threshold, the first detector of the ladder at which the interval's increments carry it across); the counts per detector under [s0, s1, s2] agree with the counts under [s2, s1, s0] within the sampling of 128 residues (the detector's share of the record's total inward flux, whatever the order, ALGEBRA.md #the-ladder: a theorem in distribution; on eight residues the exact counts are (4, 2, 2) against (2, 2, 4), the first detector of the ladder holding more of the eight thresholds, COMPUTATION for the mathematician), s0 and s2 alike within the same sampling (the placement's symmetry about the emitter's row). The emitter's own givings carry residues spread from the kept remainder (the model owner's decisions (1) and (2) of record 1962; the coupling's back-action of ALGEBRA.md #rule3 HISTORY), each clicking at the detector the walk names on its own numbers, the line's `ladder` the names and its `sunk` the pointers off the ladder; under the family of clicks (item 32, FINDING C) the two ladder orders are read in lockstep: the residues read before the clock field differs at the body agree bit for bit (all eight since item 33's count of intervals; six of eight on item 32's head, the later two differing). The loader refuses a name no set declares, a repeated name, an empty list, and a body's `coupling` by name."""
     counts: dict[tuple[str, ...], dict[str, int]] = {}
     for order in (("s0", "s1", "s2"), ("s2", "s1", "s0")):
         gathers, simulation, seen = planted_layer(order)
