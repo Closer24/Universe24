@@ -1406,12 +1406,6 @@ class NatureBeamWorld:
     # declared in the file under the detector law (no default, BUILD.md
     # section 26 item 28); 0 on a GameBoard with no open face (no slab)
     face_depth: int = 0
-    # ONE ENGINE (ALGEBRA.md 9.90 (1)): the flag `detector_law` that selected the
-    # engine beside the ray law is CANCELLED; every world is the engine's, and the
-    # loader refuses a lamp with turns and a measured event with a fan table
-    # (instruments of the ray law) and needs the pair form of the clock on every
-    # paid family. The attribute stays True for the record (read by nothing).
-    detector_law: bool = True
     # massive-record-v1 (2026-09-23): the massive record kind beside light
     # under the local detector law, false by default; under it a family may
     # declare its `pair`; its faces are the world's.
@@ -1528,63 +1522,11 @@ class NatureBeamWorld:
         return None
 
 
-# THE RETIRED KEYS OF THE TAKE AND THE DECLARED RESIDUE (ALGEBRA.md 9.19 (3),
-# 9.22 (4); BUILD.md section 26 items 14 and 15): each refused by name with
-# what stands in its place, on the world, a family, a measured event, an
-# emitter and a detector set alike.
+# THE RETIRED KEY OF THE TAKE (ALGEBRA.md 9.19 (3); BUILD.md section 26 items 14 and 15):
+# refused by name on an inline family with what stands in its place (every other retired key
+# is no key of the frame's schemas and is refused there as unknown)
 RETIRED_KEYS = {
-    # ONE ENGINE, NO LAW'S NAME AND NO VERSION (ALGEBRA.md 9.90 (1); records 2103, 2107)
-    "law": "one engine, no law's name and no version (ALGEBRA.md 9.90 (1)); no world declares a law",
-    "model_id": "one engine, no identity string (ALGEBRA.md 9.90 (1)); the file's name is its name",
-    "detector_law": "one engine (ALGEBRA.md 9.90 (1), record 2103): the flag was the law's "
-    "name; every world is the engine's",
-    "input": "the file's stamp is `stamp` {hash}, the digest alone (ALGEBRA.md 9.90 (3) (c)); "
-    "no law identifier",
-    "absorbing": "the take retired: every detector books the one-way flux into its Nodes (9.19 (3))",
     "take": "the take retired: nothing absorbs, no Port follows a wave (9.19 (3))",
-    "emits": "a body emits by its excited records' clicks, the key `emitter` (9.17 (4))",
-    "own_grace": "the emitter's grace retired with the take (9.17, 9.19 (3))",
-    "wheel": "the rung's wheel is the record's own, W = 3 den / gcd(num, 3 den) at its giving "
-    "Node, given with its residue from the law (9.22 (4)); no set, world or emitter declares one",
-    "residue_order": "the residue is the law's: the clicking record's rule remainder at the "
-    "giving Node (9.22 (4)); no order is declared",
-    "residue_seed": "the residue is the law's: the clicking record's rule remainder at the "
-    "giving Node (9.22 (4)); no seed is declared",
-    # the cavity of form (I) (MASSIVE_RECORD.md section 4, a record held
-    # by mirror faces of its own): refused by name since 2026-09-25 (the
-    # model owner's rule through the Boss; BUILD.md section 26 item 28)
-    "cavity": "the cavity retired: a body's record is held by the law alone, its border the "
-    "world's, no mirror faces of its own (BUILD.md section 26 item 28)",
-    # the dielectric coupling of MASSIVE_RECORD.md section 7 (the response
-    # records, the receive and source terms, the folded denominators):
-    # refused by name since 2026-09-25 (the model owner's decision (2) of
-    # record 1962; ALGEBRA.md 9.34 (B); BUILD.md section 26 item 30)
-    "coupling": "the coupling retired: mass and light meet only at the click, in whole "
-    "numbers (ALGEBRA.md 9.34 (B); BUILD.md section 26 item 30)",
-    # THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section
-    # 26 item 51): the engine knows no family's role; the family whose level
-    # is the Node clock declares `held: "content"`, the family of charge
-    # `held: "charge"`, and every family that reads them declares `reads`
-    # with the weight Lambda on the charge's line
-    "clock_family": "the family genericity: a family's role is its own declaration; the family "
-    'of clicks declares `held: "content"` in `families` and the families that read it declare '
-    "`reads` (record 2066; BUILD.md section 26 item 51)",
-    "charge_family": 'the family genericity: the family of charge declares `held: "sign"` '
-    'in `families` and a charged family reads it by `reads` with `by: "sign"` (record '
-    "2066; BUILD.md section 26 item 51)",
-    "charge_strength": "the family genericity: Lambda is the `weight` of the reading family's "
-    "`reads` entry on the family of charge (record 2066; BUILD.md section 26 item 51)",
-    # THE WINDOW IS THE ONE GIVING (ALGEBRA.md 9.85 (5), 9.71 (1); record 2082 (4);
-    # the one stroke's commit 7): the point emitter is the law, no key; the given
-    # train is retired, its paths marked CANCELLED and disconnected (record 2102)
-    "point_emitter": "the window is the law's one giving: every emitter gives by its "
-    "rotation written into the given row at its Node at its `weight` (ALGEBRA.md 9.85 (5), "
-    "9.71 (1); commit 7); no world key",
-    "train": "the given train is retired: every giving is the window's, its length, shape "
-    "and wave number from the window and the given family's dispersion (ALGEBRA.md 9.85 "
-    "(5), 9.71 (1); commit 7)",
-    "given": "the given train's profile is retired with the train: the window writes the "
-    "given row (ALGEBRA.md 9.85 (5), 9.71 (1); commit 7)",
 }
 
 
@@ -1926,13 +1868,13 @@ def _held_bodies_checks(
                     )
 
 
-def _charge_labels(raw: object, families: tuple[FamilyDefinition, ...], detector_law: bool) -> None:
+def _charge_labels(raw: object, families: tuple[FamilyDefinition, ...]) -> None:
     """THE SIGN ON THE QUANTUM (ALGEBRA.md 9.48 (1); BUILD.md section 26 item
     35): under the detector law every family declares its `charge` q, one
     of -1, 0 and +1 per quantum (light 0, a matter family its own), no
     default; the label passes whole in the click, a body's charge Q the
     signed sum of the quanta it holds."""
-    if not detector_law or not isinstance(raw, list):
+    if not isinstance(raw, list):
         return
     for index, (entry, family) in enumerate(zip(raw, families, strict=True)):
         if not isinstance(entry, dict) or "charge" not in entry:
@@ -2103,7 +2045,6 @@ def _families(
     action: int | None = None,
     massive_record: bool = False,
     amplitude_bound: int = AMPLITUDE_BOUND,
-    detector_law: bool = False,
 ) -> tuple[FamilyDefinition, ...]:
     if not isinstance(value, list) or not value:
         raise ValueError("families must be a nonempty list")
@@ -2126,21 +2067,19 @@ def _families(
             )
         _refuse_retired(entry, f"families[{index}]", ("take",))
         obj = _object(entry, f"families[{index}]", FAMILY_KEYS, {"name", "quantum"})
-        if detector_law:
-            # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): the pair,
-            # the charge and the reads declared (the clock `phase_per_link` on the
-            # given family, 9.62 (1)); the ray law's phase, lifetime, hand, columns
-            # and massive flag never read, refused
-            _require_under_law(
-                obj,
-                f"families[{index}]",
-                {"pair", "charge", "reads"} if massive_record else {"charge", "reads"},
-            )
-            _refuse_under_law(
-                obj,
-                f"families[{index}]",
-                {"phase", "lifetime", "hand", "columns", "massive"},
-            )
+        # NO DEFAULT (record 2089; item 57): the pair, the charge and the reads declared
+        # (the clock `phase_per_link` on the given family, 9.62 (1)); the ray law's
+        # phase, lifetime, hand, columns and massive flag never read, refused
+        _require_under_law(
+            obj,
+            f"families[{index}]",
+            {"pair", "charge", "reads"} if massive_record else {"charge", "reads"},
+        )
+        _refuse_under_law(
+            obj,
+            f"families[{index}]",
+            {"phase", "lifetime", "hand", "columns", "massive"},
+        )
         name = obj["name"]
         if not isinstance(name, str) or not name:
             raise ValueError(f"families[{index}].name must be a nonempty string")
@@ -2182,7 +2121,7 @@ def _families(
         massive = False
         declared_pair = _kind_pair(obj, f"families[{index}]", massive_record, amplitude_bound)
         pair = MASSLESS_PAIR if declared_pair is None else declared_pair
-        if detector_law and "phase_per_link" in obj and not isinstance(obj["phase_per_link"], list):
+        if "phase_per_link" in obj and not isinstance(obj["phase_per_link"], list):
             # under the law a family's clock is the pair form (ALGEBRA.md 9.17 (6));
             # the integer form is the ray law's turn per Link
             raise ValueError(
@@ -2191,7 +2130,7 @@ def _families(
                 "clock then its emitter's (ALGEBRA.md 9.17 (6), 9.85 (3))"
             )
         _refuse_family_faces(obj, f"families[{index}]")
-        generic.append(_family_generic(obj, f"families[{index}]", detector_law))
+        generic.append(_family_generic(obj, f"families[{index}]"))
         found.append(
             FamilyDefinition(
                 name,
@@ -2233,7 +2172,7 @@ def _families(
         )
         for index, (family, attributes) in enumerate(zip(found, generic, strict=True))
     )
-    _held_family_shapes(families, detector_law)
+    _held_family_shapes(families)
     return families
 
 
@@ -2256,38 +2195,16 @@ class FamilyAttributes(NamedTuple):
     reads: list[tuple[str, int, str, int | str]]
 
 
-def _family_generic(obj: dict[str, object], label: str, detector_law: bool) -> FamilyAttributes:
+def _family_generic(obj: dict[str, object], label: str) -> FamilyAttributes:
     """THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section
     26 item 51) AND THE COMPLETE ATTRIBUTE SET (ALGEBRA.md 9.86 (3), 9.91 (7);
     the one stroke, commit 1): the family's own declaration of what it is,
     `held` (with `held_factors`, `held_dipole`, `held_dipole_div`), `parts`,
     `levels`, `self_unit`, `clicks` and `reads` (the reads by name, resolved
-    after every family is read). Admitted under `detector_law` alone; under
-    it every family declares `reads` (a field family with no waves the empty
+    after every family is read). Every family declares `reads` (a field family with no waves the empty
     list: the plain rule), no default. The booking is derived (item 53):
     exactly a family with clicks; an inline entry without `clicks` is a
     family of records unless held (the tests' small lists)."""
-    keys = [
-        key
-        for key in (
-            "held",
-            "reads",
-            "parts",
-            "levels",
-            "self_unit",
-            "clicks",
-            "held_factors",
-            "held_dipole",
-            "held_dipole_div",
-        )
-        if key in obj
-    ]
-    if keys and not detector_law:
-        raise ValueError(
-            f"{label} declares {', '.join(keys)}, refused without `detector_law` (a "
-            "family's held source, reads and representation are the local detector law's; BUILD.md "
-            "section 26 item 51)"
-        )
     held: str | None = None
     if "held" in obj:
         held_value = obj["held"]
@@ -2364,7 +2281,7 @@ def _family_generic(obj: dict[str, object], label: str, detector_law: bool) -> F
     elif held is None:
         clicks = (True, True)
     reads: list[tuple[str, int, str, int | str]] = []
-    if detector_law and "reads" not in obj:
+    if "reads" not in obj:
         raise ValueError(
             f"{label} declares no `reads`: the held families "
             "whose levels enter the family's pace, with their weights (an empty list for a held "
@@ -2433,7 +2350,7 @@ def _resolve_reads(
     return tuple(out)
 
 
-def _held_family_shapes(families: tuple[FamilyDefinition, ...], detector_law: bool) -> None:
+def _held_family_shapes(families: tuple[FamilyDefinition, ...]) -> None:
     """A held family's shape by attribute (ALGEBRA.md 9.41 (3), 9.45 (1),
     9.48 (2); item 51): the pair [1, 1] (massless: the only pair whose
     static solutions reach), the quantum 1 (one click writes one unit), no
@@ -2472,14 +2389,13 @@ def _held_family_shapes(families: tuple[FamilyDefinition, ...], detector_law: bo
                     "a family's pace reads the held families' levels alone (ALGEBRA.md 9.45 (3), "
                     "9.48 (3); BUILD.md section 26 item 51)"
                 )
-    if detector_law:
-        for source in HELD_SOURCES:
-            holders = [family.name for family in families if family.held == source]
-            if len(holders) > 1:
-                raise ValueError(
-                    f"two families hold {source!r}: {holders}; one family holds each "
-                    "source (the level the others read is one array; BUILD.md section 26 item 51)"
-                )
+    for source in HELD_SOURCES:
+        holders = [family.name for family in families if family.held == source]
+        if len(holders) > 1:
+            raise ValueError(
+                f"two families hold {source!r}: {holders}; one family holds each "
+                "source (the level the others read is one array; BUILD.md section 26 item 51)"
+            )
 
 
 def _window(value: object, label: str, phase_steps: int) -> int:
@@ -2519,17 +2435,11 @@ def _label_bound(
             )
 
 
-def _receiver_names(obj: dict[str, object], label: str, detector_law: bool) -> tuple[str, ...] | None:
+def _receiver_names(obj: dict[str, object], label: str) -> tuple[str, ...] | None:
     """The lamp's `receiver`, its records' ladder by name: a set's name or a
-    list of distinct names; None without the key. Refused outside the local
-    detector law (the ladder is that law's form)."""
+    list of distinct names; None without the key."""
     if "receiver" not in obj:
         return None
-    if not detector_law:
-        raise ValueError(
-            f"{label}.receiver is admitted (the "
-            "record's ladder by name is the local detector law's form)"
-        )
     value = obj["receiver"]
     names = [value] if isinstance(value, str) else list(value) if isinstance(value, tuple) else value
     if (
@@ -2567,7 +2477,6 @@ def _block(
     amplitude_bound: int = AMPLITUDE_BOUND,
     phase_steps: int = 64,
     periodic: tuple[bool, bool, bool] = (True, True, True),
-    detector_law: bool = False,
 ) -> BlockDefinition | None:
     """The block's keys on a measured event (`massive-record-v1`), each named
     in its refusal: `side` makes a block; every other block key without
@@ -2811,12 +2720,11 @@ def _block(
     start = 0 if "start" not in obj else _integer(obj["start"], f"{label}.start", 0)
     # THE BODY'S NUMBERS (ALGEBRA.md 9.91 (3), (7); commit 2): charge, spin and moment,
     # required under the law (no default), integers on the axes (record 2084)
-    if detector_law:
-        _require_under_law(obj, label, {"q", "spin", "moment", "twist"})
+    _require_under_law(obj, label, {"q", "spin", "moment", "twist"})
     charge = 0 if "q" not in obj else _integer(obj["q"], f"{label}.q", -AMOUNT_BOUND, AMOUNT_BOUND)
     spin = _axes_vector(obj.get("spin", [0, 0, 0]), f"{label}.spin")
     moment = _axes_vector(obj.get("moment", [0, 0, 0]), f"{label}.moment")
-    if detector_law and "margin" not in obj and pair[0] * kind[1] > pair[1] * kind[0]:
+    if "margin" not in obj and pair[0] * kind[1] > pair[1] * kind[0]:
         # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): a well's
         # margin kind, pin or control, declared (record 2037, per measured
         # event); a barrier or a gap declares none (refused above)
@@ -3064,7 +2972,7 @@ def _emitter(
         )
     branches: tuple[tuple[int, int], ...] = ((0, 1),)
     label_hands: tuple[int, int] | None = None
-    receiver = _receiver_names(obj, label, True)
+    receiver = _receiver_names(obj, label)
     period = None if "period" not in obj else _integer(obj["period"], f"{label}.period", 1)
     # THE POINT EMITTER'S WEIGHT (ALGEBRA.md 9.71 (1); item 50): an integer from
     # 1; the world's `point_emitter` key pairs it with the absence of a train
@@ -3122,7 +3030,6 @@ def _measured(
     massive_record: bool = False,
     width: int = 1,
     amplitude_bound: int = AMPLITUDE_BOUND,
-    detector_law: bool = False,
     momentum_unit: int = 0,
 ) -> tuple[MeasuredDefinition, ...]:
     assert isinstance(value, tuple)  # the frame's checked bodies (loader/frame.py, `BODY`)
@@ -3139,7 +3046,7 @@ def _measured(
                 f"{label} is a body in the law's form (its Nodes with their counts): "
                 "the loop reads a body by its position until the count's line is bound to it"
             )
-        if detector_law and ("side" in obj or "extents" in obj):
+        if "side" in obj or "extents" in obj:
             # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): the drive's ramp and
             # start on every block; the momentum and the stocks are the schema's required keys
             _require_under_law(obj, label, {"ramp", "start"})
@@ -3265,7 +3172,6 @@ def _measured(
             amplitude_bound,
             phase_steps,
             periodic,
-            detector_law,
         )
         found.append(
             MeasuredDefinition(
@@ -3700,7 +3606,6 @@ def _detectors(
     periodic: tuple[bool, bool, bool],
     measured: tuple[MeasuredDefinition, ...],
     body_record: bool,
-    detector_law: bool,
 ) -> tuple[DetectorDefinition, ...]:
     assert isinstance(value, tuple)  # the frame's checked detectors (loader/frame.py, `DETECTOR`)
     at = {entry.position for entry in measured}
@@ -3893,7 +3798,6 @@ def parse_world_document(
     if isinstance(universe, str):
         # THE ONE UNIVERSE FILE (item 59; record 2128 (3)): the path in place of the
         # list; the universe's integers from the file alone, the world's own refused
-        # (the path reaches here under `detector_law` alone: the ray law's word is `families`)
         families_file = universe
         _refuse_under_law(obj, "the world", set(frame.INTEGERS.keys))
         entries, integers = universe_file_entries(families_file, files)
@@ -3940,7 +3844,6 @@ def parse_world_document(
     age_bound = _age_bound(obj.get("age_bound"), shape, periodic, table)
     clock_stamp = obj["clock_stamp"]
     assert isinstance(clock_stamp, bool)
-    detector_law = True  # one engine (9.90 (1)); the ray law's branches below CANCELLED
     # THE FACE SLAB (ALGEBRA.md 9.25 (10), the mathematician's reading: a face
     # one Node deep books 0.15 of a packet and reflects the rest, the slab as
     # deep as the packet books 0.96): the receiver `face` at every open
@@ -3950,12 +3853,7 @@ def parse_world_document(
     # model owner's rule through the Boss, 2026-09-25; BUILD.md section 26
     # item 28); 0 on a GameBoard with no open face (no slab)
     open_axes = [name for axis, name in enumerate(AXES) if not periodic[axis] and not closed[axis]]
-    if "face_depth" in obj and not detector_law:
-        raise ValueError(
-            "face_depth is refused without `detector_law` (the face slab is the local "
-            "detector law's receiver; the ray law has no slab)"
-        )
-    if detector_law and open_axes and "face_depth" not in obj:
+    if open_axes and "face_depth" not in obj:
         raise ValueError(
             f"face_depth is required on a GameBoard open on {', '.join(open_axes)} "
             "under `detector_law`: the depth of the receiver slab at every open border, no "
@@ -3977,23 +3875,12 @@ def parse_world_document(
             "body_record needs massive_record: true (a body record is a block held as "
             "one rotation on its clock pair, ALGEBRA.md 9.46 (1))"
         )
-    if massive_record and not detector_law:
-        raise ValueError(
-            "massive_record needs detector_law: true (a record "
-            "kind of the local detector law; the ray law has no record's rows at Nodes)"
-        )
-    if any(closed) and not detector_law:
-        raise ValueError(
-            f"a face declared {CLOSED_FACE!r}: a closed GameBoard is refused without "
-            "`detector_law` (a zero face without the take is the local detector law's; the ray law "
-            "has no rows)"
-        )
     # massive-record-v1: the amplitude bound A, declared per massive world;
     # REQUIRED under the detector law with `massive_record` (no default, the
     # model owner's record 2089; the ceiling 2^28 of item 31 RETIRED, ALGEBRA.md
     # 9.83 (2) (a): A is the one number, the rule's int64 total its bound)
     amplitude_bound = AMPLITUDE_BOUND
-    if detector_law and massive_record and "amplitude_bound" not in obj:
+    if massive_record and "amplitude_bound" not in obj:
         raise ValueError(
             "amplitude_bound is required with `massive_record`: "
             "A, the amplitude every row stays below, no default (the model owner's record 2089; "
@@ -4007,44 +3894,27 @@ def parse_world_document(
     # 9.35 (2) and (3); BUILD.md section 26 item 31): Gamma, one integer from
     # 1, the clock pair (e, f) = (Gamma, Gamma + M) at every Node under the
     # detector law's rule (M the content held at the Node, 0 in the vacuum);
-    # REQUIRED under `detector_law` with no default, refused without that law
-    node_clock = 0
-    if "node_clock" in obj and not detector_law:
-        raise ValueError(
-            "node_clock is refused without `detector_law` (the Node clock enters the "
-            "local detector law's rule, ALGEBRA.md 9.35 (2); the ray law has no rule with a division)"
-        )
-    if detector_law and "node_clock" not in obj:
+    # REQUIRED with no default
+    if "node_clock" not in obj:
         raise ValueError(
             "node_clock is required: Gamma, the one integer of "
             "the Node clock (e, f) = (Gamma, Gamma + M) at every Node, no default (ALGEBRA.md "
             "9.35 (3); BUILD.md section 26 item 31)"
         )
-    if detector_law:
-        node_clock = _integer(obj["node_clock"], "node_clock", 1, AMOUNT_BOUND)
+    node_clock = _integer(obj["node_clock"], "node_clock", 1, AMOUNT_BOUND)
     # THE MOMENTUM'S UNIT Q (ALGEBRA.md 9.96 (1), 9.89 (2)): the universe's integer
-    # `momentum_unit`, REQUIRED under `detector_law` with no default (the wall W = 3 Q
-    # M of every body), refused without that law
-    momentum_unit = 0
-    if "momentum_unit" in obj and not detector_law:
-        raise ValueError(
-            "momentum_unit is refused without `detector_law` (the momentum's unit "
-            "Q enters the wall W = 3 Q M of the detector law's bodies, ALGEBRA.md 9.96 (1))"
-        )
-    if detector_law and "momentum_unit" not in obj:
+    # `momentum_unit`, REQUIRED with no default (the wall W = 3 Q M of every body)
+    if "momentum_unit" not in obj:
         raise ValueError(
             "momentum_unit is required: Q, the momentum's unit "
             "of the universe's integers, the wall W = 3 Q M of every body, no default (ALGEBRA.md "
             "9.96 (1), 9.89 (2); the model owner's record 2089)"
         )
-    if detector_law:
-        momentum_unit = _integer(obj["momentum_unit"], "momentum_unit", 1, AMOUNT_BOUND)
+    momentum_unit = _integer(obj["momentum_unit"], "momentum_unit", 1, AMOUNT_BOUND)
     # THE TWIST TABLE (ALGEBRA.md 9.96 (2)): the families file's, checked with Gamma and A;
-    # admitted on an inline world of the law, refused without the law; an inline world
-    # without it has no transport (the engine refuses a nonzero twist naming the Port)
+    # admitted on an inline world; an inline world without it has no transport (the
+    # engine refuses a nonzero twist naming the Port)
     twist_table: TwistTable | None = None
-    if "twist_table" in obj and not detector_law:
-        raise ValueError("twist_table is refused without `detector_law` (ALGEBRA.md 9.81 (2))")
     if "twist_table" in obj:
         twist_table = _twist_table(obj["twist_table"], "twist_table", node_clock, amplitude_bound)
     # THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26
@@ -4085,10 +3955,8 @@ def parse_world_document(
         action,
         massive_record,
         amplitude_bound,
-        detector_law,
     )
-    if detector_law:
-        _charge_labels(obj["families"], families, detector_law)
+    _charge_labels(obj["families"], families)
     # The bound is asked of a world with a MASSIVE FAMILY (a pair with den >
     # num; DECLARATIONS.md section 15 M1-10 lists the massive worlds): a
     # light world under `massive_record` (its probes, its mirror blocks of
@@ -4117,12 +3985,10 @@ def parse_world_document(
         massive_record,
         width,
         amplitude_bound,
-        detector_law,
         momentum_unit,
     )
-    if detector_law:
-        _held_bodies_checks(families, measured)
-        _node_clock_bound(families, measured, amplitude_bound, node_clock)
+    _held_bodies_checks(families, measured)
+    _node_clock_bound(families, measured, amplitude_bound, node_clock)
     # THE WINDOW IS THE ONE GIVING (ALGEBRA.md 9.85 (5), 9.71 (1); record 2082 (4);
     # commit 7): every emitter declares its weight g and its rung's action; the world
     # key `point_emitter` and the train are retired (RETIRED_KEYS)
@@ -4166,9 +4032,7 @@ def parse_world_document(
                 )
     _input_stamp_check(as_written, measured, digest)
     _initial_state_checks(shape, periodic, families, measured)
-    detectors = _detectors(
-        frame.detectors(obj["detectors"]), shape, periodic, measured, body_record, detector_law
-    )
+    detectors = _detectors(frame.detectors(obj["detectors"]), shape, periodic, measured, body_record)
     readings = world_readings(obj, shape, detectors, families, measured)
     world = NatureBeamWorld(
         shape,
@@ -4191,7 +4055,6 @@ def parse_world_document(
         step,
         clock_stamp=clock_stamp,
         face_depth=face_depth,
-        detector_law=detector_law,
         massive_record=massive_record,
         body_record=body_record,
         probes=probes,
@@ -4204,39 +4067,29 @@ def parse_world_document(
         start=start,
         universe_file=families_file,
     )
-    if detector_law:
-        _detector_law_load_checks(measured, families, table, periodic, phase_steps)
-        set_names = {detector.name for detector in detectors}
-        for number, entry in enumerate(measured):
-            # the lamp record's ladder by name: every name a declared set's
-            if entry.lamp is not None and entry.lamp.receiver is not None:
-                for name in entry.lamp.receiver:
-                    if name not in set_names:
-                        raise ValueError(
-                            f"measured[{number}].lamp.receiver names {name!r}, which no "
-                            "detector set declares (the record's ladder is made of declared sets; "
-                            "a face is never on it)"
-                        )
-            # the emitter body's ladder by name (ALGEBRA.md 9.17): every name a
-            # declared set's
-            if entry.block is not None and entry.block.emitter is not None:
-                for name in entry.block.emitter.receiver or ():
-                    if name not in set_names:
-                        raise ValueError(
-                            f"measured[{number}].emitter.receiver names {name!r}, which no "
-                            "detector set declares (the record's ladder is made of declared sets; "
-                            "a face is never on it)"
-                        )
-            # the receiver by name (DECLARATIONS.md section 13 item 7): the
-            # set named must be declared; the names are listed in the refusal
-            if entry.block is not None and entry.block.receiver is not None:
-                names_declared = [detector.name for detector in detectors]
-                if entry.block.receiver not in names_declared:
+    _detector_law_load_checks(measured, families, table, periodic, phase_steps)
+    set_names = {detector.name for detector in detectors}
+    for number, entry in enumerate(measured):
+        # the emitter body's ladder by name (ALGEBRA.md 9.17): every name a
+        # declared set's
+        if entry.block is not None and entry.block.emitter is not None:
+            for name in entry.block.emitter.receiver or ():
+                if name not in set_names:
                     raise ValueError(
-                        f"measured[{number}].receiver {entry.block.receiver!r} names no "
-                        f"declared detector set (the sets declared: {names_declared}); the receiver "
-                        "by name is a set's name (DECLARATIONS.md section 13 item 7)"
+                        f"measured[{number}].emitter.receiver names {name!r}, which no "
+                        "detector set declares (the record's ladder is made of declared sets; "
+                        "a face is never on it)"
                     )
+        # the receiver by name (DECLARATIONS.md section 13 item 7): the
+        # set named must be declared; the names are listed in the refusal
+        if entry.block is not None and entry.block.receiver is not None:
+            names_declared = [detector.name for detector in detectors]
+            if entry.block.receiver not in names_declared:
+                raise ValueError(
+                    f"measured[{number}].receiver {entry.block.receiver!r} names no "
+                    f"declared detector set (the sets declared: {names_declared}); the receiver "
+                    "by name is a set's name (DECLARATIONS.md section 13 item 7)"
+                )
     _body_fit_check(world)
     # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),
     # tested where Lambda_c is formed (`column_scales`): a world whose column
