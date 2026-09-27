@@ -657,13 +657,14 @@ detectors and their clicks, the only thing claimed to represent nature.
 The speed of light is one Link per interval. The quantum of action is
 one click, its energy the quantum's norm T of its family. Newton's
 constant is not declared: a body of energy count s makes the level c(r)
-= s times the reference flux over the distance r in Links, and the
-level slows the clock by the potential Phi = -c / (2 Gamma), so
+= s times the reference flux over E_s over the distance r in Links (the
+hold's row: the count enters the field's line over the row's divisor E_s),
+and the level slows the clock by the potential Phi = -c / (2 Gamma), so
 
-  G = (the reference flux) / (2 Gamma) per unit of energy count,
+  G = (the reference flux) / (2 Gamma E_s) per unit of energy count,
 
 with the reference flux a number of the GameBoard's geometry (about 1.4 for
-a cube of side 3) and the energy unit setting the mass of one unit of level.
+a cube of side 3) and the divisor E_s the energy unit setting the mass of one unit of level.
 A world at a smaller Gamma has stronger gravity per unit of content; the
 ratios between rows carry G once and cancel it. The quantum of distance is
 the Link, of time the interval; nothing between two Nodes or two intervals
