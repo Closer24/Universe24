@@ -352,8 +352,8 @@ def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
             rounds += 1
             worst = residual(fine, pair, wrap, free)
             size = sizes(worst)
-            if margin * MARGIN_ROOM <= half or (floor is not None and 2 * size >= floor):
-                break  # only a half is left uncertified, or the residual at the solver's floor
+            if floor is not None and 2 * size >= floor:
+                break  # the residual at the solver's floor: the rest of the way is the unit's
             floor = size
             margin = int(
                 division(1, bound_wall, np.array(bound_top * size + bound_wall - 1, dtype=object))
@@ -361,6 +361,8 @@ def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
             levels, closed = certified(fine, unit, half, margin, free)
             if closed:
                 return FieldAtRest(levels.astype(np.int64), fine, unit, rounds, 1)
+            if margin * MARGIN_ROOM <= half:
+                break  # only a half is left uncertified
             fine = fine + solved(counts, solver, free, -worst)
     levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half + margin, 1)[0])
     return FieldAtRest(levels.astype(np.int64), fine, unit, rounds, 1)
