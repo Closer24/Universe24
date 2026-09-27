@@ -1,4 +1,4 @@
-"""The kinds of a value of the run's files and one generic check: a folder's schema names its keys, where they live and each key's kind; the check refuses an unknown key, a missing key, a wrong kind, a value beyond its bound and a name the universe lacks, each by name; no key of any folder is written here, no default, no number of the universe (ALGEBRA.md 9.117 item 2: a term is one line of the files)."""
+"""The kinds of a value of the run's files and one generic check: a folder's schema names its keys, where they live and each key's kind; the check refuses an unknown key, a missing key, a wrong kind, a value beyond its bound, an empty word and a name the universe lacks, each by name; no key of any folder is written here, no default, no number of the universe (ALGEBRA.md 9.117 item 2: a term is one line of the files)."""
 
 from __future__ import annotations
 
@@ -27,6 +27,11 @@ class OneOf:
     """One of the values listed, an integer or a word, exactly as written."""
 
     choices: tuple[object, ...]
+
+
+@dataclass(frozen=True)
+class Word:
+    """A word: a nonempty string."""
 
 
 @dataclass(frozen=True)
@@ -62,7 +67,7 @@ class Either:
     kinds: tuple[Kind, ...]
 
 
-Kind = Integer | Flag | OneOf | Name | IntegerName | ListOf | ObjectOf | Either
+Kind = Integer | Flag | OneOf | Word | Name | IntegerName | ListOf | ObjectOf | Either
 
 
 @dataclass(frozen=True)
@@ -117,10 +122,12 @@ def check_keys(
         raise ValueError(f"{label} must be an object with the keys {sorted(keys)}")
     unknown = set(value) - set(keys)
     if unknown:
-        raise ValueError(f"{label} has unknown keys {sorted(unknown)}: the keys are {sorted(keys)}")
+        raise ValueError(
+            f"{label} has unknown keys: {', '.join(sorted(unknown))} (the keys: {', '.join(sorted(keys))})"
+        )
     missing = set(keys) - set(optional) - set(value)
     if missing:
-        raise ValueError(f"{label} lacks the keys {sorted(missing)}")
+        raise ValueError(f"{label} lacks keys: {', '.join(sorted(missing))}")
     return {key: check(value[key], keys[key], f"{label}.{key}", context) for key in keys if key in value}
 
 
@@ -143,6 +150,10 @@ def check(value: object, kind: Kind, label: str, context: Context) -> object:
     if isinstance(kind, OneOf):
         if not any(type(value) is type(choice) and value == choice for choice in kind.choices):
             raise ValueError(f"{label} must be one of {list(kind.choices)}, not {value!r}")
+        return value
+    if isinstance(kind, Word):
+        if not isinstance(value, str) or not value:
+            raise ValueError(f"{label} must be a word, not {value!r}")
         return value
     if isinstance(kind, Name):
         if not isinstance(value, str) or value not in context.families:
