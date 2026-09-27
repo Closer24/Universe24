@@ -1,21 +1,5 @@
-"""THE ONE-NODE DETECTOR (ALGEBRA.md 9.46 (8) (c); the model owner's word of 2026-09-25 in
-Nature24's session, "start", on the cube rule of record 1899 lifted for bodies on one Node under
-`body_record`; BUILD.md section 26 item 40): under the world key `body_record` a detector may be
-ONE Node, its body's Node, whose six Links are its Ports (four on a layer, two on a chain), a set of
-more than one Node keeping the cube rule; the click is the body's Node's, the flux into it through its
-Ports from outside, Born's rule at the taking end the increment ladder on the plain flux as for
-a cube; a one-Node detector's inflow per interval is its Ports' share of a
-cube's, so its clicks come later and, where records can leave, fewer (9.46 (8) (c): the
-counts rescaled, the pattern not). On the detector-law layer (80 by 9, closed at both x faces,
-the emitter's train across the whole width, three places at x = 70 on the rows 1, 4 and 7):
-(i) three bodies on one Node against the three cubes over the same run of 60 giving clicks: every record
-clicks at one of the places on both forms (nothing leaves the closed layer), the bodies on one Node' clicks
-come later (the mean wait from the giving to the taking click longer), and the three places
-share alike within the draw on both forms (the train uniform across the width); (ii) at every body's Node's click the detector is the one the increment ladder chooses on the
-plain flux (Born's rule, 9.25 (2) and (3), item 36) and the taker's content rises by one;
-(iii) the loader: one Node without `body_record` refused naming record 1899, two Nodes under
-it refused naming the body's Node, a block on one Node of extents [1, 1, 1] bound as its own detector
-admitted under the key and refused without it. Every number a COMPUTATION; GAMEBOARD; no pin."""
+"""A one-Node detector under `body_record` (ALGEBRA.md 9.46 (8) (c)): its body's Node with its six Ports,
+the click from the flux through them, the counts rescaled from a cube's and the pattern the same."""
 
 from __future__ import annotations
 

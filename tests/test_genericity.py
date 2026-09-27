@@ -4,7 +4,8 @@ fixed seed draws one to twenty families with random English names and random com
 the attributes the loader admits today (the parts, the phase, the pair, the holds, the reads,
 the self-source, the clicks); every draw loads and runs, and five properties hold on each:
 
-(a) renaming the families leaves the run bit for bit;
+(a) renaming the families leaves the run bit for bit, each holder named by the other hold's
+    source word too;
 (b) reordering the families in the universe file leaves it bit for bit;
 (c) a family with no source stays exactly zero (the engine's own leak test, record 2075 (3));
 (d) Rule3's conserved form holds where no click and no load acts: the step's exact identity of
@@ -177,11 +178,19 @@ def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tm
     rng = random.Random(seed + 1000)
     fresh = rng.sample([w for w in WORDS if w not in {f["name"] for f in families}], len(families))
     mapping = {f["name"]: new for f, new in zip(families, fresh, strict=True)}
+    # the crossing: each holder named by the other hold's source word (the engine reads the
+    # attributes `held` and `reads`, never a name)
+    by_word = {f["held"]["count"]: f["name"] for f in families if "held" in f}
+    for word, other in (("content", "sign"), ("sign", "content")):
+        if word in by_word:
+            mapping[by_word[word]] = other
+    assert len(set(mapping.values())) == len(mapping)
     families_a, document_a = rename_everything(families, document, mapping)
     placed_a = place(tmp_path, monkeypatch, families_a, document_a)
     simulation_a, lines_a = run(placed_a)
-    back = {new: old for old, new in mapping.items()}
-    assert module.digest_of(renamed(module.run_reading(simulation_a, lines_a), back)) == digest
+    assert module.digest_of(module.run_reading(simulation_a, lines_a)) == module.digest_of(
+        renamed(base, mapping)
+    )
     # (b) reordering the families in the universe file leaves it bit for bit
     families_b = list(families)
     rng.shuffle(families_b)
