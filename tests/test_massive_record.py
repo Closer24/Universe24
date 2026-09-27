@@ -27,7 +27,7 @@ from event_universe.diagnostics.massive_record_margin import (
     profile_check,
 )
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord, form_json
-from event_universe.events.world import (
+from event_universe.loader.world import (
     MASSLESS_PAIR,
 )
 from event_universe.world_files import input_stamp, parse_nature_beam_world

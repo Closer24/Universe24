@@ -83,15 +83,15 @@ from event_universe.core.rule3 import (
     rule3,
     rungs,
 )
-from event_universe.events.world import (
+from event_universe.features import self_source
+from event_universe.features.hold import TENSOR_AXES, HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
+from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
+from event_universe.loader.world import (
     AXES,
     TWIST_FINE_BITS,
     BlockDefinition,
     NatureBeamWorld,
 )
-from event_universe.features import self_source
-from event_universe.features.hold import TENSOR_AXES, HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
-from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
 
 Record = Callable[[dict[str, object]], None]
 

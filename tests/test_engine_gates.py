@@ -65,6 +65,18 @@ def test_a_new_number_or_family_name_fails_and_a_removed_one_asks_for_the_re_rec
     assert f"{PACKAGE}/b.py: numbers grew from 0 to 1" in GATES.ratchet(
         root, GATES.record(root) | {"files": {}}
     )
+    # a moved file carries its old path's counts: not new, the old path asks for the re-record
+    recorded = GATES.record(root)
+    (root / PACKAGE / "moved").mkdir()
+    (root / PACKAGE / "b.py").rename(root / PACKAGE / "moved" / "b.py")
+    found = GATES.ratchet(root, recorded, recorded)
+    assert found == [
+        f"{PACKAGE}/b.py is in the baseline and not in the tree; " + found[0].split("; ")[1]
+    ]
+    (root / PACKAGE / "moved" / "b.py").write_text("Q = 64\nR = 128\n")
+    assert f"{PACKAGE}/moved/b.py: numbers is 2, above the merge base's 1" in GATES.ratchet(
+        root, recorded, recorded
+    )
 
 
 def test_a_baseline_raised_in_the_same_commit_is_refused_against_the_merge_base(tmp_path):

@@ -34,7 +34,7 @@ VERSION_WORDS = {"version", "schema_version"}
 
 
 def loader_modules() -> list[Path]:
-    """The loader as it stands: today events/world.py, tomorrow core/loader.py (record 2226);
+    """The loader as it stands: loader/world.py since #1236 (events/world.py before it) (record 2226);
     every module of the engine whose name is the world's reader or names a loader."""
     found = [
         path

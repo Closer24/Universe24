@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+from typing import cast
 
 from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
 from event_universe.core.integer import (
@@ -44,10 +45,6 @@ MAX_DIRECTIONS = 4096
 Vector = tuple[int, int, int]
 
 
-# the flight table's resolution on a heading, isqrt(3 Q^2) = 110
-T_HEADING = integer_root(3 * LABEL_SCALE * LABEL_SCALE)
-
-
 # the ceiling A of a row's amplitude where a world declares none, and the rule's int64 total
 AMPLITUDE_BOUND = 1 << 28
 TOTAL_BOUND = 1 << 63
@@ -66,10 +63,8 @@ TWIST_UNIT_SCALE = 1 << 16
 TWIST_FINE_BITS = 10
 TWIST_COARSE_MOST = 1 << 15
 TWIST_TRIPLE_BOUND = 10**9
-# the three forms of a family's parts (ALGEBRA.md 9.86 (2)), the held source's two dipoles, and a read's twist word (the reading record's own rotation, 9.91 (6))
+# the three forms of a family's parts (ALGEBRA.md 9.86 (2))
 PARTS_FORMS = ((1,), (1, 3), (1, 3, 6))
-HELD_DIPOLES = ("spin", "moment")
-READ_TWIST_WORDS = ("own",)
 
 
 @dataclass(frozen=True)
@@ -706,7 +701,8 @@ class NatureBeamWorld:
         2026-09-25; BUILD.md section 26 item 28); a family's own `faces`
         (`massive-record-v1`, HISTORY) is refused at load, so every family
         reads the same border."""
-        assert 0 <= family < len(self.families)
+        if not 0 <= family < len(self.families):
+            raise ValueError(f"no family {family} on this world")
         return self.periodic
 
     @property
@@ -1124,24 +1120,21 @@ def _families_of(
         )
     names: list[str] = []
     for obj in entries:
-        name = obj["name"]
-        assert isinstance(name, str)
+        name = cast(str, obj["name"])
         if name in names:
             raise ValueError(f"two families named {name!r}")
         names.append(name)
     found: list[FamilyDefinition] = []
     for index, obj in enumerate(entries):
         label = f"families[{index}]"
-        parts_value = obj["parts"]
-        assert isinstance(parts_value, tuple)
+        parts_value = cast(tuple[object, ...], obj["parts"])
         if parts_value not in PARTS_FORMS:
             raise ValueError(
                 f"{label}.parts must be one of {[list(form) for form in PARTS_FORMS]}: the "
                 "representation as a list of parts, the time part first (ALGEBRA.md 9.86 (2), 9.91 (1))"
             )
         parts = tuple(int(part) for part in parts_value)
-        levels = obj["phase"]
-        assert isinstance(levels, int)
+        levels = cast(int, obj["phase"])
         if not massive_record:
             raise ValueError(
                 f"{label}.pair is refused without the world key `massive_record` "
@@ -1151,8 +1144,8 @@ def _families_of(
         pair_on_body = pair_value == "body"
         pair = MASSLESS_PAIR
         if not pair_on_body:
-            assert isinstance(pair_value, tuple)
-            numerator, denominator = int(pair_value[0]), int(pair_value[1])
+            pair_list = cast(tuple[int, int], pair_value)
+            numerator, denominator = int(pair_list[0]), int(pair_list[1])
             if numerator > MAX_VALUE or denominator > MAX_VALUE:
                 raise ValueError(f"{label}.pair must be [num, den], two integers up to {MAX_VALUE}")
             _pair_bound(numerator, denominator, label, amplitude_bound)
@@ -1164,8 +1157,7 @@ def _families_of(
             pair = (numerator, denominator)
         clock: tuple[int, int] | None = None
         if "clock" in obj:
-            clock_value = obj["clock"]
-            assert isinstance(clock_value, tuple)
+            clock_value = cast(tuple[int, int], obj["clock"])
             clock = (int(clock_value[0]), int(clock_value[1]))
             if clock[1] < 1:
                 raise ValueError(
@@ -1177,18 +1169,15 @@ def _families_of(
                     f"{label}.clock [{clock[0]}, {clock[1]}]: (age_bound + 1) x p "
                     f"= {age_bound + 1} x {clock[0]} exceeds the integer bound {AMOUNT_BOUND}"
                 )
-        sign = obj["sign"]
-        assert isinstance(sign, int)
+        sign = cast(int, obj["sign"])
         held: str | None = None
         held_factors: tuple[int, ...] = tuple(1 for _ in parts)
         held_dipole: str | None = None
         held_dipole_div = 1
         if "held" in obj:
-            source = obj["held"]
-            assert isinstance(source, dict)
+            source = cast(dict[str, object], obj["held"])
             held = str(source["count"])
-            factors = source["factors"]
-            assert isinstance(factors, tuple)
+            factors = cast(tuple[int, ...], source["factors"])
             if len(factors) != len(parts):
                 raise ValueError(
                     f"{label}.held.factors must be {len(parts)} integers from 1, one per part "
@@ -1203,13 +1192,10 @@ def _families_of(
                         "written into the vector part (ALGEBRA.md 9.91 (3))"
                     )
             if "dipole_div" in source:
-                divisor = source["dipole_div"]
-                assert isinstance(divisor, int)
+                divisor = cast(int, source["dipole_div"])
                 held_dipole_div = divisor
-        self_source = obj["self_source"]
-        assert isinstance(self_source, dict)
-        self_unit = self_source["unit"]
-        assert isinstance(self_unit, int)
+        self_source = cast(dict[str, object], obj["self_source"])
+        self_unit = cast(int, self_source["unit"])
         if 0 < self_unit < 24 * amplitude_bound:
             raise ValueError(
                 f"{label}.self_source.unit {self_unit} is below 24 A = {24 * amplitude_bound}: the "
@@ -1218,16 +1204,14 @@ def _families_of(
         clicks: tuple[bool, bool] | None = None
         quantum = 1
         if "clicks" in obj:
-            value = obj["clicks"]
-            assert isinstance(value, dict)
+            value = cast(dict[str, object], obj["clicks"])
             if value["gives"] is not True or value["takes"] is not True:
                 raise ValueError(
                     f"{label}.clicks.gives and .takes must be true: a family of records is "
                     "given and taken at clicks (ALGEBRA.md 9.79 (1))"
                 )
             clicks = (True, True)
-            declared_quantum = value["quantum"]
-            assert isinstance(declared_quantum, int)
+            declared_quantum = cast(int, value["quantum"])
             if declared_quantum > MAX_VALUE:
                 raise ValueError(f"{label}.clicks.quantum must be an integer up to {MAX_VALUE}")
             quantum = declared_quantum
@@ -1236,18 +1220,15 @@ def _families_of(
                 f"{label} declares neither held (a field family) nor clicks (a family "
                 "of records): a family does one or both (ALGEBRA.md 9.86 (2))"
             )
-        raw_reads = obj["reads"]
-        assert isinstance(raw_reads, tuple)
+        raw_reads = cast(tuple[object, ...], obj["reads"])
         reads: list[tuple[int, int, str, int | str]] = []
-        for read in raw_reads:
-            assert isinstance(read, dict)
-            other = read["family"]
-            assert isinstance(other, str)
+        for entry in raw_reads:
+            read = cast(dict[str, object], entry)
+            other = cast(str, read["family"])
             if any(names[found_index] == other for found_index, _, _, _ in reads):
                 raise ValueError(f"{label}.reads names {other!r} twice")
-            weight = read["weight"]
-            twist = read["twist"]
-            assert isinstance(weight, int) and isinstance(twist, int | str)
+            weight = cast(int, read["weight"])
+            twist = cast(int | str, read["twist"])
             reads.append((names.index(other), weight, READ_BY[read["by"]], twist))
         if held is not None and reads and clicks is None:
             raise ValueError(
@@ -1833,8 +1814,7 @@ def _emitter(
     (material). No wheel, no residue order and no seed: the residue is the
     law's (the clicking record's remainder at the giving Node, the wheel the
     pair's), and the keys are refused by name."""
-    assert isinstance(value, dict)  # the frame's checked emitter (loader/frame.py, `EMITTER`)
-    obj = value
+    obj = cast(dict[str, object], value)  # the frame's checked emitter (loader/frame.py, `EMITTER`)
     name = obj["family"]
     if not isinstance(name, str) or name not in names:
         raise ValueError(f"{label}.family names an unknown family")
@@ -1957,15 +1937,15 @@ def _measured(
     amplitude_bound: int = AMPLITUDE_BOUND,
     momentum_unit: int = 0,
 ) -> tuple[MeasuredDefinition, ...]:
-    assert isinstance(value, tuple)  # the frame's checked bodies (loader/frame.py, `BODY`)
+    bodies = cast(
+        tuple[dict[str, object], ...], value
+    )  # the frame's checked bodies (loader/frame.py, `BODY`)
     names = {family.name: index for index, family in enumerate(families)}
     found: list[MeasuredDefinition] = []
     # Every Node of every body so far: two measured events never share one.
     occupied: set[Address3] = set()
-    for index, entry in enumerate(value):
+    for index, obj in enumerate(bodies):
         label = f"measured[{index}]"
-        assert isinstance(entry, dict)
-        obj = entry
         if "nodes" in obj:
             raise ValueError(
                 f"{label} is a body in the law's form (its Nodes with their counts): "
@@ -2001,8 +1981,7 @@ def _measured(
         held[family] = amount
         # THE BODY'S STOCKS of other families' quanta (`stocks`, record 2128 (1); beside
         # 9.96 (5)'s `stock` of its own): the given family's content held at the body
-        declared_held = obj["stocks"]
-        assert isinstance(declared_held, dict)
+        declared_held = cast(dict[str, object], obj["stocks"])
         for key, content in declared_held.items():
             if key not in names:
                 raise ValueError(f"{label}.stocks names an unknown family {key!r}")
@@ -2023,11 +2002,9 @@ def _measured(
         # the ray law's phase, phase_by_momentum, directions, table and become are no keys of
         # the file (the frame refuses them by name); the loop still reads their attributes
         phase = 0
-        momentum_value = obj["momentum"]
-        assert isinstance(momentum_value, tuple)
+        momentum_value = cast(tuple[object, ...], obj["momentum"])
         momentum = tuple(_integer(item, f"{label}.momentum", -AMOUNT_BOUND) for item in momentum_value)
-        fixed = obj.get("fixed", False)
-        assert isinstance(fixed, bool)
+        fixed = cast(bool, obj.get("fixed", False))
         turning = False
         directions = _directions(
             list(range(HEADING_OFFSET, FIXED_DIRECTIONS)), f"{label}.directions", table
@@ -2504,7 +2481,9 @@ def _detectors(
     measured: tuple[MeasuredDefinition, ...],
     body_record: bool,
 ) -> tuple[DetectorDefinition, ...]:
-    assert isinstance(value, tuple)  # the frame's checked detectors (loader/frame.py, `DETECTOR`)
+    detectors = cast(
+        tuple[dict[str, object], ...], value
+    )  # the frame's checked detectors (loader/frame.py, `DETECTOR`)
     at = {entry.position for entry in measured}
     # The other Nodes of the bodies on a set: a body is named by its centre.
     inside: set[Address3] = set()
@@ -2512,10 +2491,8 @@ def _detectors(
         inside.update(body_nodes(entry.position, entry.span, shape, periodic) or ())
     taken: set[Address3] = set()
     found: list[DetectorDefinition] = []
-    for index, entry in enumerate(value):
+    for index, obj in enumerate(detectors):
         label = f"detectors[{index}]"
-        assert isinstance(entry, dict)
-        obj = entry
         name = obj["name"]
         if not isinstance(name, str) or not name:
             raise ValueError(f"{label}.name must be a nonempty string")
@@ -2571,7 +2548,10 @@ def _detectors(
                 # several Nodes is one detector, a body of one Node its own, its six Links
                 # its Ports, 9.46 (8) (c); item 40; commit 7): the cube rule of record
                 # 1899 is the free set's, not a body's
-                assert measured[bound_block].block is not None
+                if measured[bound_block].block is None:
+                    raise ValueError(
+                        f"{label}.block {bound_block} names a measured event that is no block"
+                    )
             found.append(DetectorDefinition(name, tuple(bound_positions), threshold, block=bound_block))
             continue
         if "positions" not in obj:
@@ -2679,8 +2659,7 @@ def parse_world_document(
     # THE ENGINE START FILE (ALGEBRA.md 9.83 (2) (a)): one canonical copy at
     # examples/events/engine_start.json, named by every world by its repository path
     # (`engine`, a required word of the frame's schema) and read by the frame (`START`)
-    engine = obj["engine"]
-    assert isinstance(engine, str)
+    engine = cast(str, obj["engine"])
     start = frame.start(engine, files)
     step = files.get(STEP_FILE)
     if not isinstance(step, Step):
@@ -2708,8 +2687,7 @@ def parse_world_document(
             discover(),
             "the world.universe",
         )
-    shape_value = obj["shape"]
-    assert isinstance(shape_value, tuple)
+    shape_value = cast(tuple[object, ...], obj["shape"])
     extents = tuple(_integer(item, "shape", 1, 4096) for item in shape_value)
     shape: Address3 = (extents[0], extents[1], extents[2])
     boundary, periodic = _boundary(obj["boundary"])
@@ -2739,13 +2717,11 @@ def parse_world_document(
     # massive_rows are no keys of the file (the frame refuses them by name); the values below
     # and the world's fields carrying them are read by no line of the loop (DEAD, deleted whole)
     suspension = (1, 1)
-    width = obj["width"]
-    assert isinstance(width, int)
+    width = cast(int, obj["width"])
     bound = DEFAULT_DIRECTION_BOUND
     table = _direction_table([], bound)
     age_bound = _age_bound(obj.get("age_bound"), shape, periodic, table)
-    clock_stamp = obj["clock_stamp"]
-    assert isinstance(clock_stamp, bool)
+    clock_stamp = cast(bool, obj["clock_stamp"])
     # THE FACE SLAB (ALGEBRA.md 9.25 (10), the mathematician's reading: a face
     # one Node deep books 0.15 of a packet and reflects the rest, the slab as
     # deep as the packet books 0.96): the receiver `face` at every open
@@ -2768,10 +2744,8 @@ def parse_world_document(
                 f"face_depth {face_depth} leaves no interior on the open axis {name} of "
                 f"extent {shape[axis]} (two slabs of the depth fill it)"
             )
-    massive_record = obj["massive_record"]
-    assert isinstance(massive_record, bool)
-    body_record = obj["body_record"]
-    assert isinstance(body_record, bool)
+    massive_record = cast(bool, obj["massive_record"])
+    body_record = cast(bool, obj["body_record"])
     if body_record and not massive_record:
         raise ValueError(
             "body_record needs massive_record: true (a body record is a block held as "
@@ -2832,8 +2806,7 @@ def parse_world_document(
     if "probes" in obj:
         if not massive_record:
             raise ValueError("probes is refused without the world key `massive_record`")
-        declared_probes = obj["probes"]
-        assert isinstance(declared_probes, tuple)
+        declared_probes = cast(tuple[object, ...], obj["probes"])
         probes = tuple(_address(item, "probes", shape) for item in declared_probes)
     action = None
     families = _families_of(entries, age_bound, massive_record, amplitude_bound)

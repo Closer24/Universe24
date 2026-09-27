@@ -4,8 +4,9 @@ Three gates on `src/`, selected on every pull request by `tools/check.py`:
 
 1. Numbers. A numeric literal beyond 0, 1, 2, 3, 4, 6 and 8, outside a docstring, is counted
    per file (the count of issue #1197). No file's count may grow, or stand above the merge
-   base's baseline; a new file has none; a count that went down is re-recorded in the same
-   commit (`python tools/engine_gates.py`).
+   base's baseline; a new file has none, and a moved file (its name recorded under a path no
+   longer in the tree) carries its old path's counts; a count that went down is re-recorded in
+   the same commit (`python tools/engine_gates.py`).
 2. Family names. A string literal equal to the name of a family declared in a world file under
    `examples/` is counted per file, on the same ratchet.
 3. A new module of `core/`. A Python file under `src/event_universe/core/` that the merge base
@@ -97,17 +98,26 @@ def record(root: Path) -> dict[str, Any]:
     return {"format": "engine-gates-baseline", "files": dict(sorted(files.items()))}
 
 
+def entry_of(
+    rel: str, files: dict[str, dict[str, int]], tree: dict[str, dict[str, int]]
+) -> dict[str, int]:
+    """A file's recorded counts: under its path, else under the one recorded path with its name no longer in the tree (a moved file is not a new file), else zero."""
+    if rel in files:
+        return files[rel]
+    moved = [path for path in files if path not in tree and Path(path).name == Path(rel).name]
+    return files[moved[0]] if len(moved) == 1 else dict.fromkeys(COUNTS, 0)
+
+
 def ratchet(root: Path, baseline: dict[str, Any], base: dict[str, Any] | None = None) -> list[str]:
     """Every count that grew, stands above the merge base's, or went down without a re-record."""
     found: list[str] = []
     re_record = "re-record the baseline in this commit: python tools/engine_gates.py"
-    zero = dict.fromkeys(COUNTS, 0)
     tree = present(root)
     for rel in sorted(set(baseline["files"]) - set(tree)):
         found.append(f"{rel} is in the baseline and not in the tree; {re_record}")
     for rel, shape in tree.items():
-        recorded = baseline["files"].get(rel, zero)
-        based = base["files"].get(rel, zero) if base is not None else recorded
+        recorded = entry_of(rel, baseline["files"], tree)
+        based = entry_of(rel, base["files"], tree) if base is not None else recorded
         for key in COUNTS:
             name = key.replace("_", " ")
             if shape[key] > recorded[key]:

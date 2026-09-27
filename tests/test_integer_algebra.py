@@ -49,7 +49,9 @@ SRC = ROOT / "src" / "event_universe"
 # The physical modules: every module that runs a physical step of the
 # interval or forms the tables it reads, one line each why.
 PHYSICAL_MODULES: dict[str, str] = {
-    "events/world.py": "the world file's parse and the load-time constants (the flight table, the labels)",
+    "loader/world.py": "the loop's classes built from the checked files and the load-time constants (the flight table, the labels)",
+    "loader/frame.py": "the frame of the files: the schemas the loader reads them through; no arithmetic",
+    "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md 9.90 (1))",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md 9.57 (1), 9.50 (8), 9.91 (2)), and the ladder's rungs (9.25 (2))",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md 9.88 (7)): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
@@ -114,8 +116,7 @@ ROOT_NAMES = {"isqrt", "integer_root"}
 ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
     # the ray law's modules (nature_beam.py, meeting.py, engine.py) and their roots were
     # deleted on 2026-09-26 (docs/CANCELLED_WORLDS.md)
-    ("events/world.py", None): "at load: T_HEADING = isqrt(3 Q^2), the flight's resolution on a heading",
-    ("events/world.py", "flight_bound"): "at load: the flight table's T_D for the parser's bound",
+    ("loader/world.py", "flight_bound"): "at load: the flight table's T_D for the parser's bound",
 }
 
 
@@ -357,11 +358,11 @@ def test_a_feature_holds_integer_mathematics_only(name: str) -> None:
 
 
 def test_the_module_list_names_every_module_that_runs_a_step() -> None:
-    """Every module of `events/` and `core/` but the package markers is a
+    """Every module of `events/`, `core/` and `loader/` but the package markers is a
     physical module here, so a new one cannot escape the gate unnamed."""
     modules = {
         path.relative_to(SRC).as_posix()
-        for folder in ("events", "core")
+        for folder in ("events", "core", "loader")
         for path in (SRC / folder).glob("*.py")
         if path.name not in ("__init__.py", "run.py")
     }

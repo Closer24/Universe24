@@ -42,7 +42,7 @@ from typing import Any
 import numpy as np
 from scipy.sparse.linalg import LinearOperator, eigsh  # type: ignore[import-untyped]
 
-from event_universe.events.world import MARGIN_KINDS, NatureBeamWorld, body_node_indices
+from event_universe.loader.world import MARGIN_KINDS, NatureBeamWorld, body_node_indices
 
 # The ramp of a pushed body at least this many relaxation times 1 / (omega_0
 # - omega_b) of its own well (DECLARATIONS.md section 8, the rule for any
@@ -400,7 +400,7 @@ def iterated_mode(
     without the stop it raises, naming the last residual against the
     bound (a generator fault or the iteration's floor, never a bound
     moved)."""
-    from event_universe.events.world import mode_residual
+    from event_universe.loader.world import mode_residual
 
     entry = world.measured[number]
     definition = entry.block

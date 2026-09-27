@@ -28,10 +28,6 @@
    "family_names": 0,
    "numbers": 3
   },
-  "src/event_universe/events/world.py": {
-   "family_names": 2,
-   "numbers": 21
-  },
   "src/event_universe/features/recoil/__init__.py": {
    "family_names": 0,
    "numbers": 2
@@ -39,6 +35,10 @@
   "src/event_universe/features/signed_read/__init__.py": {
    "family_names": 0,
    "numbers": 3
+  },
+  "src/event_universe/loader/world.py": {
+   "family_names": 2,
+   "numbers": 21
   },
   "src/event_universe/retention.py": {
    "family_names": 0,

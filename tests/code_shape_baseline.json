@@ -86,14 +86,6 @@
    "record_references": 3,
    "rule_arithmetic_sites": 0
   },
-  "src/event_universe/events/world.py": {
-   "comment_lines": 424,
-   "docstring_lines": 351,
-   "level_shift_sites": 0,
-   "lines": 2978,
-   "record_references": 43,
-   "rule_arithmetic_sites": 0
-  },
   "src/event_universe/features/__init__.py": {
    "comment_lines": 0,
    "docstring_lines": 24,
@@ -220,6 +212,14 @@
    "level_shift_sites": 0,
    "lines": 71,
    "record_references": 1,
+   "rule_arithmetic_sites": 0
+  },
+  "src/event_universe/loader/world.py": {
+   "comment_lines": 423,
+   "docstring_lines": 351,
+   "level_shift_sites": 0,
+   "lines": 2951,
+   "record_references": 43,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/retention.py": {

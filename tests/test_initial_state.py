@@ -23,7 +23,7 @@ from event_universe.diagnostics.massive_record_margin import (
     integer_mode_iteration,
     iterated_mode,
 )
-from event_universe.events.world import (
+from event_universe.loader.world import (
     MOST_FAMILIES,
     mode_residual,
     six_neighbours_flat,

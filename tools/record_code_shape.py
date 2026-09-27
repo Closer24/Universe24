@@ -10,7 +10,9 @@ lines, none of the three sites) passes whatever its counts. A file beyond them i
 `tests/code_shape_baseline.json` and with the same file at the merge base (the ref CI checks
 against, else origin/main): none of its counts may grow, and none may stand above the merge
 base's (a baseline raised in the same commit is refused); a count that went down is re-recorded
-in the same commit (`python tools/record_code_shape.py`); a new file beyond them fails. Two
+in the same commit (`python tools/record_code_shape.py`); a new file beyond them fails, and a
+file that moved (its name recorded under a path no longer in the tree) ratchets against its old
+entry. Two
 functions of `src/` with the same
 normalised body (names and literals abstracted) fail; the duplicates of today are in the baseline
 and may only go down. The import contracts hold with no baseline: a feature folder imports
@@ -299,6 +301,14 @@ def base_baseline(root: Path, ref: str | None = None) -> dict[str, Any] | None:
     return loaded
 
 
+def moved_entry(
+    rel: str, recorded: dict[str, dict[str, int]], present: dict[str, dict[str, int]]
+) -> dict[str, int] | None:
+    """The baseline's entry of a file that moved: the one recorded path with this file's name that is no longer in the tree (a moved file is not a new file; it ratchets against its old entry)."""
+    candidates = [path for path in recorded if path not in present and Path(path).name == Path(rel).name]
+    return recorded[candidates[0]] if len(candidates) == 1 else None
+
+
 def violations(root: Path, baseline: dict[str, Any], base: dict[str, Any] | None = None) -> list[str]:
     """Every way the tree departs from the limits and the baseline, one line each: a file within the limits passes whatever its counts; a file beyond them is new and fails, or is recorded and ratchets."""
     found: list[str] = []
@@ -313,7 +323,7 @@ def violations(root: Path, baseline: dict[str, Any], base: dict[str, Any] | None
         beyond = beyond_the_limits(rel, shape)
         if not beyond:
             continue
-        recorded = recorded_files.get(rel)
+        recorded = recorded_files.get(rel) or moved_entry(rel, recorded_files, present)
         if recorded is None:
             found.extend(f"{line} and is new" for line in beyond)
             continue
@@ -365,7 +375,7 @@ def above_the_base(
     """Every count of a file beyond the limits, every duplicate group and every import of the loop's internals that stands higher than the merge base's baseline: raising the baseline in the same commit is refused."""
     found: list[str] = []
     for rel, shape in present.items():
-        recorded = base["files"].get(rel)
+        recorded = base["files"].get(rel) or moved_entry(rel, base["files"], present)
         if recorded is None or not beyond_the_limits(rel, shape):
             continue
         for key in COUNTS:

@@ -24,7 +24,7 @@ import pytest
 
 from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.events.world import MOST_FAMILIES
+from event_universe.loader.world import MOST_FAMILIES
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_emitter import NODE_CLOCK, emitter_world, family_entry
 

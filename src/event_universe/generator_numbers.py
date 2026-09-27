@@ -16,7 +16,7 @@ from __future__ import annotations
 import math
 from fractions import Fraction
 
-from event_universe.events.world import TWIST_TRIPLE_BOUND, TWIST_UNIT_SCALE
+from event_universe.loader.world import TWIST_TRIPLE_BOUND, TWIST_UNIT_SCALE
 
 
 def twist_triple(k: int, unit: int) -> tuple[int, int, int]:

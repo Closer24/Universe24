@@ -258,7 +258,7 @@ def test_swapping_two_independent_acts_of_the_file_swaps_the_loops_calls_and_lea
 
 
 def test_a_world_without_the_step_file_is_refused_at_load():
-    from event_universe.events.world import parse_world_document
+    from event_universe.loader.world import parse_world_document
 
     document = emitter_world(stock=1, ticks=2)
     files = {key: value for key, value in world_files(document).items() if key != STEP_FILE}

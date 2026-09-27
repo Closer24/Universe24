@@ -20,7 +20,7 @@ same README on the branch `drive-default` (PR #907, the line drive's
 re-run), the engine (nature_beam.py (`src/event_universe/events/nature_beam.py`, deleted 2026-09-26):
 `push_form`, `CrowdMoments`, `optical_turn`, the flight's `walk_step`;
 engine.py (`src/event_universe/events/engine.py`, deleted 2026-09-26): `step_axis`,
-`_move`; [world.py](../../../src/event_universe/events/world.py):
+`_move`; [world.py](../../../src/event_universe/loader/world.py):
 `step_divisor`, `bresenham_line`; BEAM_LAW notes 17 and 48), and the two
 flow worlds replayed once on the engine at head (section 3).
 

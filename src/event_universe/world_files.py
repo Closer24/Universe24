@@ -8,8 +8,8 @@ from pathlib import Path
 
 from event_universe.core.register import discover
 from event_universe.core.step import STEP_FILE, read_step
-from event_universe.events.world import NatureBeamWorld, parse_world_document
 from event_universe.loader import frame
+from event_universe.loader.world import NatureBeamWorld, parse_world_document
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 LAW_ROOT = Path(__file__).resolve().parents[2]

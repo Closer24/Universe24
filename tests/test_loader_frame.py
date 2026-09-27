@@ -19,8 +19,8 @@ import pytest
 
 from event_universe.core.register import discover
 from event_universe.core.schema import Context
-from event_universe.events.world import parse_world_document
 from event_universe.loader import frame
+from event_universe.loader.world import parse_world_document
 from event_universe.world_files import input_digest, world_files
 from tests.test_loader_acceptance import family_names, string_constants, written_defaults
 
