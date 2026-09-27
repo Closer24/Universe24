@@ -1,6 +1,6 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "28cf70dc",
+ "recorded_at": "5cbe91bc",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
@@ -8,10 +8,10 @@
    },
    "ticks": 15156,
    "intervals": 181,
-   "digest": "79acdef605803d345e59b50a96bdd7b5f8bd5037c64f462d270528887ee3df53",
+   "digest": "301d573b657b4580fe4619d438129881319d421578ef082f41869d11d62c9f24",
    "records": 17,
    "clicks": 0,
-   "lines": 577,
+   "lines": 578,
    "refused": "the twist on the Port toward +y reaches |k| = 43307142, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/dark_body/dark.json": {
