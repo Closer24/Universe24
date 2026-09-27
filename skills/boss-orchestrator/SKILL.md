@@ -158,6 +158,8 @@ Since 2026-09-17, by the model owner's decision, an implementation specialist do
 
 **Merge into main only (2026-09-27).** A stacked pull request's base is its parent's branch; once the parent merges, merging the child lands it on that branch, not on main (#1178, #1204). Before every merge, read the pull request's base: if it is not `main`, retarget it to `main` first and confirm the diff is the child's alone.
 
+**Watch every open pull request (2026-09-27).** Subscribe to each open pull request's activity when it opens, so an author's fix, question or green CI reaches the Boss at once; on 2026-09-27 four fixed pull requests and six questions waited an hour unseen. A pull request that merges cleanly as text can still break main after another merge (#1207 after #1201): check the merge with current main, not only the head's CI.
+
 **Merging one at a time (2026-09-17).** Two green pull requests merged back to back broke `main` (#204, then #205): the second's pins were made against the base before the first merged, and CI never ran on the combined tree. The rule: merge one pull request at a time, and before merging the next bring `main` into its branch (a merge, never a rebase) and let CI run on that merged head, or run its affected selection locally on the merge result; `git merge-tree` shows textual conflicts only, never semantic ones. A pin made on an older base is a semantic conflict, and a green check on the old base is no evidence about the tree that merging produces.
 
 The record of a day is never copied into a second document; 5.4, the register's index, MIGRATION and the READMEs link to it.
