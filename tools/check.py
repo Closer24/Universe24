@@ -28,6 +28,82 @@ def every_pull_request() -> list[str]:
     return [line.strip() for line in lines if line.strip() and not line.lstrip().startswith("#")]
 
 
+SECONDS = Path(__file__).with_name("test_seconds.json")
+REGRESSION = "tests/test_shipped_worlds.py"
+WORLD_TEST = "test_a_shipped_world_runs_bit_for_bit_as_recorded"
+# a pull request touching none of these runs no world, so it skips the regression (the owner's word)
+RUNS_A_WORLD = ("src/", "law/", "examples/", "tools/", "tests/shipped_worlds.json", REGRESSION)
+SUITE_SHARDS, HEAVY_WORLDS, WORLD_SHARDS = 3, 3, 2
+UNRECORDED_SECONDS = 5.0
+LINT = [["ruff", "check", "."], ["ruff", "format", "--check", "."], ["mypy"]]
+
+
+def balanced(seconds, count):
+    """The names split into `count` groups of about equal seconds, the longest placed first."""
+    groups, loads = [[] for _ in range(count)], [0.0] * count
+    for name in sorted(seconds, key=lambda n: (-seconds[n], n)):
+        lightest = loads.index(min(loads))
+        groups[lightest].append(name)
+        loads[lightest] += seconds[name]
+    return [sorted(group) for group in groups]
+
+
+def shards(runs_worlds):
+    """The CI jobs by name, each its pytest targets: the suite in equal parts, and where a world
+    runs, the heaviest shipped worlds each alone and the rest in equal parts."""
+    table = json.loads(SECONDS.read_text(encoding="utf-8"))
+    files = sorted(
+        p.relative_to(ROOT).as_posix()
+        for p in (ROOT / "tests").glob("test_*.py")
+        if p.relative_to(ROOT).as_posix() != REGRESSION
+    )
+    suite = {f: table["files"].get(f, UNRECORDED_SECONDS) for f in files}
+    plan = {f"suite {i + 1}": group for i, group in enumerate(balanced(suite, SUITE_SHARDS))}
+    if not runs_worlds:
+        return plan
+    record = json.loads((ROOT / "tests/shipped_worlds.json").read_text(encoding="utf-8"))
+    worlds = {w: table["worlds"].get(w, UNRECORDED_SECONDS) for w in record["worlds"]}
+    heavy = sorted(worlds, key=lambda w: (-worlds[w], w))[:HEAVY_WORLDS]
+    for world in heavy:
+        plan[f"world {Path(world).parent.name}/{Path(world).stem}"] = [
+            f"{REGRESSION}::{WORLD_TEST}[{world}]"
+        ]
+    rest = {w: s for w, s in worlds.items() if w not in heavy}
+    tree = ast.parse((ROOT / REGRESSION).read_text(encoding="utf-8"))
+    others = [
+        f"{REGRESSION}::{node.name}"
+        for node in tree.body
+        if isinstance(node, ast.FunctionDef)
+        and node.name.startswith("test_")
+        and node.name != WORLD_TEST
+    ]
+    for i, group in enumerate(balanced(rest, WORLD_SHARDS)):
+        plan[f"worlds {i + 1}"] = (others if i == 0 else []) + [
+            f"{REGRESSION}::{WORLD_TEST}[{w}]" for w in group
+        ]
+    return plan
+
+
+def record_seconds(junit):
+    """The seconds per test file and per shipped world read from a junit file, written to the table."""
+    import xml.etree.ElementTree as ElementTree
+
+    files, worlds = {}, {}
+    for case in ElementTree.parse(junit).getroot().iter("testcase"):
+        path, name, seconds = (
+            case.get("classname", "").replace(".", "/") + ".py",
+            case.get("name", ""),
+            float(case.get("time", 0)),
+        )
+        if path == REGRESSION and name.startswith(WORLD_TEST + "["):
+            worlds[name[len(WORLD_TEST) + 1 : -1]] = round(seconds, 1)
+        else:
+            files[path] = round(files.get(path, 0.0) + seconds, 1)
+    table = json.loads(SECONDS.read_text(encoding="utf-8"))
+    table.update(files=dict(sorted(files.items())), worlds=dict(sorted(worlds.items())))
+    SECONDS.write_text(json.dumps(table, indent=1) + "\n", encoding="utf-8")
+
+
 def git(*args):
     return subprocess.check_output(["git", *args], cwd=ROOT, encoding="utf-8").strip()
 
@@ -218,11 +294,31 @@ def main():
     parser.add_argument(
         "--dry-run", action="store_true", help="Print selected checks without executing them"
     )
+    parser.add_argument(
+        "--plan", action="store_true", help="Print the CI jobs as a GitHub output line and exit"
+    )
+    parser.add_argument("--shard", help="Run one CI job of the plan: the whole suite in parts")
+    parser.add_argument("--record-seconds", metavar="JUNIT", help="Re-record tools/test_seconds.json")
     args = parser.parse_args()
+    if args.record_seconds:
+        record_seconds(args.record_seconds)
+        return
+    if args.plan:
+        base = git("merge-base", args.base, "HEAD")
+        touched = git("diff", "--name-only", base).splitlines()
+        runs_worlds = any(p.startswith(RUNS_A_WORLD) for p in touched)
+        print("shards=" + json.dumps(list(shards(runs_worlds))))
+        return
     for target in args.tests:
         if not (ROOT / target.split("::")[0]).exists():
             parser.error(f"additional test target does not exist: {target}")
-    if args.full:
+    if args.shard:
+        targets = shards(runs_worlds=True)[args.shard]
+        commands = (LINT if args.shard == "suite 1" else []) + [
+            ["pytest", "-n", "auto", *targets, "--junitxml=artifacts/junit.xml"]
+        ]
+        changed = []
+    elif args.full:
         commands = [
             ["ruff", "check", "."],
             ["ruff", "format", "--check", "."],
@@ -262,7 +358,11 @@ def main():
             commands.append(["pytest", "-n", "auto", *tests, "--junitxml=artifacts/junit.xml"])
         if {"pyproject.toml", "MANIFEST.in"} & set(changed):
             commands.append(["build"])
-    report = {"mode": "full" if args.full else "affected", "changed": changed, "commands": commands}
+    report = {
+        "mode": args.shard or ("full" if args.full else "affected"),
+        "changed": changed,
+        "commands": commands,
+    }
     print(json.dumps(report, indent=2), flush=True)
     if not args.dry_run:
         from event_universe.retention import ArtifactLease, validate_output_path
