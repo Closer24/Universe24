@@ -1,24 +1,24 @@
-"""Domain-neutral integer arithmetic: the working bound (the host's integer bound) and the Beam
-Law's integer primitives; callers own payload bounds and operation costs."""
+"""Domain-neutral integer arithmetic: the working bound (the host's integer bound) and the Beam Law's integer primitives; callers own payload bounds and operation costs."""
 
+import sys
 from collections.abc import Sequence
 
-MAX_WORK_INT = (1 << 63) - 1
+MAX_WORK_INT = sys.maxsize
 
 
 def checked_work(value: int) -> int:
-    """Bound intermediate arithmetic to the working bound, a signed 64-bit range."""
+    """Bound intermediate arithmetic to the working bound, the host's signed integer range."""
     if type(value) is not int:
         raise TypeError("integer intermediate required")
     if not -MAX_WORK_INT <= value <= MAX_WORK_INT:
-        raise OverflowError("64-bit intermediate range exceeded")
+        raise OverflowError("the working bound's intermediate range exceeded")
     return value
 
 
 def bounded_gcd(first: int, second: int) -> int:
-    """Euclid on checked magnitudes; 128 divisions is a fixed upper bound."""
+    """Euclid on checked magnitudes; twice the width's bits of divisions is a fixed upper bound."""
     a, b = abs(checked_work(first)), abs(checked_work(second))
-    for _ in range(128):
+    for _ in range(2 * MAX_WORK_INT.bit_length()):
         if b == 0:
             return a
         a, b = b, a % b
@@ -233,10 +233,7 @@ def signed_inner(
 
 
 def apportion_whole(total: int, weights: list[int], first: int) -> list[int]:
-    """`total` shared over the entries in proportion to `weights`, exact in
-    whole numbers: the floors, then the units left to the largest
-    remainders, ties broken in index order counted from `first`. Nothing
-    without weights."""
+    """`total` shared over the entries in proportion to `weights`, exact in whole numbers: the floors, then the units left to the largest remainders, ties broken in index order counted from `first`. Nothing without weights."""
     divisor = sum(weights)
     if divisor <= 0 or total <= 0:
         return [0] * len(weights)
