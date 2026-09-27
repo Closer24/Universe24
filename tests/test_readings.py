@@ -107,8 +107,10 @@ def test_every_defect_of_a_declaration_is_refused_by_name(value, message):
 def test_a_reading_reads_the_state_and_writes_nothing_into_the_run():
     """The emitter world run with the six readings read at every interval gives the same lines,
     levels and remainders as the plain run, bit for bit; the readings hold the run's numbers."""
-    plain = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=2, ticks=120)))
-    world = parse_nature_beam_world(declared(emitter_world(stock=2, ticks=120), SIX))
+    plain = DetectorLawSimulation(
+        parse_nature_beam_world(emitter_world(stock=2, ticks=160))
+    )  # 160: the first click at the screen at 129 on this fixture
+    world = parse_nature_beam_world(declared(emitter_world(stock=2, ticks=160), SIX))
     assert [reading.name for reading in world.readings] == [item["name"] for item in SIX]
     read = DetectorLawSimulation(world)
     lines_plain: list[dict] = []
@@ -117,7 +119,7 @@ def test_a_reading_reads_the_state_and_writes_nothing_into_the_run():
     read.record = lines_read.append
     readings = Readings(world.readings)
     readings.read(read)
-    for _ in range(120):
+    for _ in range(160):
         plain.step()
         read.step()
         readings.read(read)
@@ -137,11 +139,11 @@ def test_a_reading_reads_the_state_and_writes_nothing_into_the_run():
         "GAMEBOARD",
         "HOST",
     ]
-    assert [line["interval"] for line in out["alive"]["lines"]] == list(range(121))
+    assert [line["interval"] for line in out["alive"]["lines"]] == list(range(161))
     assert out["alive"]["lines"][0]["alive"] == 1 and out["alive"]["lines"][-1]["alive"] == len(
         read.records
     )
-    assert [line["interval"] for line in out["emitter_centre"]["lines"]] == [0, 40, 80, 120]
+    assert [line["interval"] for line in out["emitter_centre"]["lines"]] == [0, 40, 80, 120, 160]
     assert all(line["node"] == [21, 0, 0] for line in out["emitter_centre"]["lines"])
     matter = [family.name for family in read.families].index("matter")
     level = sum(live.now for live in read.records.values() if live.family == matter)

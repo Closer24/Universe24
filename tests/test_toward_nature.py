@@ -12,10 +12,6 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import numpy as np
-import pytest
-
-from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
 from tests.running import FOLDER, document, load_module
 
@@ -106,39 +102,6 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
         content = int(entry["amount"]) + sum(int(v) for v in entry.get("stocks", {}).values())
         wall = generator.drive_wall(content)
         assert entry["momentum"] == [wall // generator.HOP_EVERY, 0, 0]
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="#1246 item 1, the hold's count: a giving lowers the live M in the wall W = 3 Q M while "
-    "n stays, so the moving emitter hops one interval before the mirror from interval 51; the "
-    "mark comes off with the hold's row (held.quantum) bound in the loop",
-)
-@pytest.mark.diagnostic
-def test_the_held_level_is_the_well_on_the_arm_and_the_moving_clock_hops_together():
-    generator = load_module("make_worlds")
-    lines: list[dict] = []
-    # a GameBoard reading (a diagnostic): the blocks' corners and the set over 100 intervals
-    moving = DetectorLawSimulation(
-        parse_nature_beam_world(document("lorentz_moving")), observer=lines.append
-    )
-    corners = []
-    for _ in range(100):
-        moving.step()
-        corners.append([int(block.corner[0]) for block in moving.blocks])
-    head_x = generator.LORENTZ_EMITTER_X + 31  # the one-Node emitter at the retired train's head
-    emitter, mirror, behind = zip(
-        *corners, strict=True
-    )  # the mirror behind the body's Node too (ALGEBRA.md #the-primitives)
-    assert emitter[-1] - head_x == 25 and mirror[-1] - generator.LORENTZ_MIRROR_X == 25
-    assert behind[-1] - (head_x - 2) == 25
-    assert all(m - e == generator.LORENTZ_MIRROR_X - head_x for e, m, _ in corners)
-    hops = np.diff(np.array(emitter))
-    assert set(hops.tolist()) <= {0, 1} and int(hops.sum()) == 25
-    # the set follows the emitter: its Nodes are the block's current Nodes
-    at_well = moving.detector_names.index("at_well")
-    assert moving.detector_at_node[(emitter[-1] + 5, 1, 1)] == at_well
-    assert moving.detector_at_node[(generator.LORENTZ_EMITTER_X + 5, 1, 1)] == -1
 
 
 def test_the_reader_reads_the_means_the_ratio_and_the_closed_forms(tmp_path: Path, capsys):

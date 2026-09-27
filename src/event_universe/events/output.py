@@ -315,8 +315,8 @@ def snapshot_stream(simulation: detector_law.DetectorLawSimulation) -> Iterator[
         ],
     )
     if simulation.world.massive_record:
-        # The blocks (massive-record-v1): the corner, the count, the momentum's accumulators, the
-        # steps, and the rows of the block's own record (its amplitude now over the board, GAMEBOARD:
+        # The blocks (massive-record-v1): the corner, the momentum, the spin, and the rows of the
+        # block's own record (its amplitude now over the board, GAMEBOARD:
         # the mode's extent is read from them).
         yield (
             "blocks",
@@ -327,9 +327,6 @@ def snapshot_stream(simulation: detector_law.DetectorLawSimulation) -> Iterator[
                     "corner": list(block.corner),
                     "side": block.definition.side,
                     "extents": list(block.definition.extents),
-                    "clock": block.count,
-                    "steps": block.stepped,
-                    "drive": list(block.drive),
                     "momentum": list(block.momentum),
                     "spin": list(block.spin),
                     "fixed": block.fixed,

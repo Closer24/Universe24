@@ -39,8 +39,8 @@ def start_arrays(loop: DetectorLawSimulation) -> Iterator[np.ndarray]:
 
 
 def grants(loop: DetectorLawSimulation, name: str) -> Iterator[np.ndarray]:
-    """The arrays of the start an act may write in place, as its card names them: the hop a body's position (the pair arrays and the detector map), the hold a family's level at a Node (the held families' arrays), the operation the remainders."""
-    if name == "the hop":
+    """The arrays of the start an act may write in place, as its card names them: the count's line a body's position (the pair arrays and the detector map, the hop's writes it carries), the hold a family's level at a Node (the held families' arrays), the operation the remainders."""
+    if name == "the count's line":
         for num, den in loop._pairs.values():
             yield num
             yield den
