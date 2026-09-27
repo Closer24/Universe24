@@ -74,6 +74,12 @@ class MainLoop:
     written: dict[tuple[str, object], list[str]] = field(default_factory=dict)
     claimed: list[set[tuple[str, object]]] = field(default_factory=list)
     walked: list[str] = field(default_factory=list)
+    functions: dict[tuple[str, str], Callable[..., Any]] = field(default_factory=dict)
+
+    def function_of(self, name: str, place: str) -> Callable[..., Any]:
+        """The function of a listed act as this interval's walk looked it up through the register (one lookup per act); outside a walk, the register's own answer."""
+        found = self.functions.get((name, place))
+        return found if found is not None else self.register.at(name, place)
 
     @classmethod
     def plan(
@@ -122,6 +128,7 @@ class MainLoop:
         loop.tick += 1
         self.written.clear()
         self.walked.clear()
+        self.functions.clear()
         loop.ports.begin()
         frozen: list[tuple[Any, ...]] = []
 
@@ -137,6 +144,7 @@ class MainLoop:
                 if index == self.flush_at:
                     self.flush(loop)
                 function = self.register.at(act.name, act.place)
+                self.functions[(act.name, act.place)] = function
                 self.walked.append(act.name)
                 opened = tuple(loop.grants(act.name))
                 _freeze(opened, False)

@@ -93,6 +93,15 @@ from event_universe.events.world import (
     NatureBeamWorld,
 )
 from event_universe.features import self_source
+from event_universe.features.giving import (
+    THE_CLOSE,
+    THE_OPEN,
+    THE_WRITE,
+    GivingOwn,
+    GivingStart,
+    GivingTerm,
+    GivingWrites,
+)
 from event_universe.features.hold import TENSOR_AXES, HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
 
@@ -999,11 +1008,11 @@ class DetectorLawSimulation:
             self._advance(live)
 
     def _giving_stage(self, function: Callable[..., None]) -> None:
-        """The giving's act: the point emitters' windows close after the interval's bookings, then each body due gives."""
+        """The giving's act: the point emitters' windows close after the interval's bookings, then each body due gives; `function` is the folder's `apply`, reached through `_giving_act` at the three acts."""
         self._point_windows()
         for block in self.blocks:
             if block.emit_now:
-                function(block)
+                self._emit(block)
 
     def _spins_stage(self, function: Callable[..., None]) -> None:
         """The spin's step's act: each body's momentum and spin from the fields as the interval leaves them."""
@@ -2163,7 +2172,19 @@ class DetectorLawSimulation:
         # the body's own quanta and its charge untouched (under the point
         # emitter too, item 50: the quantum moves at the open, the window
         # shapes its rows, the close names the record)
-        self.held[number][family] -= 1
+        opened = self._giving_act(
+            block,
+            GivingStart(
+                THE_OPEN,
+                self.held[number][family],
+                (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2])),
+                None,
+                0,
+                (0, 0, 0),
+            ),
+            None,
+        )
+        self.held[number][family] += opened.count
         self.ledger.held_spent[family] += 1
         # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 items 31 and
         # 36; ALGEBRA.md 9.50 (13)): the given record's T is p times its
@@ -3336,6 +3357,27 @@ class DetectorLawSimulation:
         axes = np.nonzero(self.centre_mask(block))
         return (int(axes[0][0]), int(axes[1][0]), int(axes[2][0]))
 
+    def _giving_act(self, block: Block, start: GivingStart, live: LiveRecord | None) -> GivingWrites:
+        """One act of the giving through the folder's `apply` (the function the main loop looked up at (ii)): the term from the emitter's declaration, the own record from the window's record (`live`), none at the open."""
+        emitter = block.definition.emitter
+        if emitter is None:
+            raise ValueError(f"the body {block.number} gives with no emitter declared")
+        norm = emitter.norm if emitter.norm is not None else 1
+        denominator = emitter.norm_denominator if emitter.norm_denominator is not None else 1
+        weight = emitter.weight if emitter.weight is not None else 1
+        term = GivingTerm(weight, norm, denominator, emitter.family)
+        own = (
+            GivingOwn(None, 0, (0, 0, 0))
+            if live is None
+            else GivingOwn(
+                live.window,
+                live.outward,
+                (live.outward_tally[0], live.outward_tally[1], live.outward_tally[2]),
+            )
+        )
+        function = self.main_loop.function_of("the giving", "(ii)")
+        return cast(GivingWrites, function(term, start, own))
+
     def _window_write(self, live: LiveRecord) -> None:
         """One interval of an open window right after the record's own step: the body's rotation written into the given row at the body's Nodes, the norm that left the body read as the outward flux through its outer Ports, the window's count grown and the box taking the body in."""
         block = self.block_by_number.get(live.emitter) if live.emitter is not None else None
@@ -3344,8 +3386,22 @@ class DetectorLawSimulation:
         emitter = block.definition.emitter
         if emitter is None or emitter.weight is None:
             return
-        live.now[block.mask] += emitter.weight * self._body_levels(block)
-        live.outward += self.body_outward_flux(live, block, live.outward_tally)
+        written = self._giving_act(
+            block, GivingStart(THE_WRITE, 0, (0, 0, 0), self._body_levels(block), 0, (0, 0, 0)), live
+        )
+        if written.level is not None:
+            live.now[block.mask] += written.level
+        flux_tally = [0, 0, 0]
+        flux = self.body_outward_flux(live, block, flux_tally)
+        closing = self._giving_act(
+            block,
+            GivingStart(
+                THE_CLOSE, 0, (0, 0, 0), None, flux, (flux_tally[0], flux_tally[1], flux_tally[2])
+            ),
+            live,
+        )
+        live.outward = closing.own.outward
+        live.outward_tally = list(closing.own.tally)
         live.window += 1
         if live.box is not None:
             live.box = tuple(
@@ -3412,10 +3468,10 @@ class DetectorLawSimulation:
                 # click, the record named
                 self._close_window(block, live)
                 continue
-            # (d) the close: the outward norm against the excitation's action T as
-            # the exact rational norm / norm_denominator, both in the form's units
-            denominator = emitter.norm_denominator if emitter.norm_denominator is not None else 1
-            if live.outward * denominator >= emitter.norm:
+            # (d) the close: the folder's close act on the outward norm summed over the window
+            if self._giving_act(
+                block, GivingStart(THE_CLOSE, 0, (0, 0, 0), None, 0, (0, 0, 0)), live
+            ).closed:
                 self._close_window(block, live)
 
     def _close_window(self, block: Block, live: LiveRecord) -> None:
