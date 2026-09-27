@@ -1189,16 +1189,6 @@ def _window(value: object, label: str, phase_steps: int) -> int:
     return _integer(value, label, 0, phase_steps - 1)
 
 
-def axis_sign(axis: Vector, direction: Vector) -> int:
-    """The sign of the inner product of an axis (a heading) with a direction
-    vector, in {-1, 0, +1}: the right-hand rule's one integer (BEAM_LAW
-    note 39). An axis is a heading, so the product is one component of the
-    direction with a sign, within P; the sign is the same on the direction's
-    unit label u_d, whose components carry the direction's signs."""
-    product = sum(int(a) * int(d) for a, d in zip(axis, direction, strict=True))
-    return (product > 0) - (product < 0)
-
-
 def _receiver_names(obj: dict[str, object], label: str) -> tuple[str, ...] | None:
     """The lamp's `receiver`, its records' ladder by name: a set's name or a
     list of distinct names; None without the key."""

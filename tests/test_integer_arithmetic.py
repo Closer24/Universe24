@@ -1,41 +1,5 @@
-"""Independent numerical contracts for the shared bounded integer primitives.
-
-The component arithmetic of the deleted engines (signed and ceiling division,
-ordered sums, component addition and subtraction, dot and cross products,
-reduced ratios) was deleted with its pins on 2026-09-19; see the migration
-notes. `by_clock` and `apportion_whole` are pinned where the clock uses them.
-
-The fraction-free primitive (2026-09-20, the mathematician's
-docs/designs/fraction_free/FORM.md section 1; `by_drive` with the whole part
-as its default and the step's cap `at_most`), the integers written first:
-(a) the identity at a constant rate over 10^4 self-creations on seven rates
-    from 1 / 3 to a star's 9 736 000 000 000 / 290 000 000 000 000: from an
-    empty accumulator `by_drive` gains `by_clock(k - 1, n, d)` at the k-th
-    self-creation and holds `(k n) mod d` after it; at 7 over 3 the counts
-    2, 2, 3, 2, 2, 3, ... (70 over thirty, the accumulator 0 after), and
-    with `at_most` 1 one per self-creation and 120 kept after thirty; the
-    signed rate -7 the same with the sign;
-(b) the bound: under 10^4 random rates below the denominator (3, 1000,
-    2^20) an unsigned accumulator stays in [0, d) and a signed one in
-    (-d, d), with the cap and without, the count in {-1, 0, 1} for a rate
-    below the denominator; a denominator below 1 is refused.
-
-The age wall (2026-09-21, `clock-age-v1`, the generic shape of records 421,
-422 and 428 of docs/LOG_2026-09-20.md; `age_wall`, the one wall function of
-the crowd), the integers written first:
-(c) a count at the rate r against the wall w becomes the count at the rate
-    r x d against the wall w x (d + c a_tau n) at the suspension [n, d], c
-    the member's coefficient and a_tau the age moment: the clock's member
-    (1, 1) at c = 1 with a_tau = 11 and [1, 4] gives (4, 15), the excess
-    15 - 4 = 11 = a_tau n the owed count's rate; the flight's form
-    (2 S_1 Q, 2 T_d) = (128, 192) at c = 2, a_tau = 11, [1, 4] gives
-    (512, 192 x 26 = 4992), the pace 512 / 4992 = (128 / 192) / (1 + 2 x
-    11 / 4); with no crowd (r d, w d), the same count; the count from an
-    empty accumulator at the rate 4 against the wall 15 fires 4 in 15
-    self-creations, one more than 15 / (1 + 11 / 4) rounds down; a
-    denominator below 1, a coefficient below 1, a negative age moment and a
-    negative width are refused.
-"""
+"""The shared bounded integer primitives against independent integers: `by_drive` at constant
+rates and its bound, and the age wall `age_wall` with its refusals."""
 
 import random
 
@@ -48,7 +12,6 @@ from event_universe.core.integer import (
     by_clock,
     by_drive,
     checked_work,
-    integer_root,
     signed_inner,
 )
 
@@ -74,35 +37,6 @@ def test_working_register_is_bounded():
         checked_work(-MAX_WORK_INT - 1)
     with pytest.raises(TypeError):
         checked_work(True)
-
-
-@pytest.mark.parametrize(
-    "value,expected",
-    [
-        (0, 0),
-        (1, 1),
-        (2, 1),
-        (3, 1),
-        (4, 2),
-        (15, 3),
-        (16, 4),
-        (17, 4),
-        (1 << 62, 1 << 31),
-        (MAX_WORK_INT, 3037000499),
-    ],
-)
-def test_integer_root_is_the_exact_floor(value, expected):
-    assert integer_root(value) == expected
-    assert expected * expected <= value < (expected + 1) * (expected + 1)
-
-
-def test_integer_root_refuses_a_negative_a_float_and_an_overflow():
-    with pytest.raises(ValueError):
-        integer_root(-1)
-    with pytest.raises(TypeError):
-        integer_root(4.0)
-    with pytest.raises(OverflowError):
-        integer_root(MAX_WORK_INT + 1)
 
 
 @pytest.mark.parametrize(

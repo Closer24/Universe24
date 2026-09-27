@@ -22,38 +22,21 @@ import numpy as np
 import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import emitter_world, family_entry
+from event_universe.world_files import parse_nature_beam_world
+from tests.running import run_world, stamped
+from tests.worlds import emitter_world, family_entry
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-from run_inputs import main as run_main  # noqa: E402
 
 STEPS = 120
 READING_KINDS = {"DETECTOR", "GAMEBOARD", "HOST"}
-
-
-def stamped(document: dict) -> dict:
-    document["stamp"] = input_stamp(document)
-    return document
 
 
 def families_of(document: dict) -> list[dict]:
     entries = document["universe"]
     assert isinstance(entries, list)
     return entries
-
-
-def run_world(document: dict, tmp_path: Path, start: dict | None = None) -> dict:
-    """The one command on one world file, headless; the output file read back."""
-    if start is not None:
-        (tmp_path / "start.json").write_text(json.dumps(start) + "\n", encoding="utf-8")
-        document["engine"] = str(tmp_path / "start.json")
-        stamped(document)
-    source = tmp_path / "world.json"
-    source.write_text(json.dumps(document) + "\n", encoding="utf-8")
-    assert run_main(["--out", str(tmp_path / "out"), "--jobs", "1", str(source)]) == 0
-    return json.loads((tmp_path / "out" / "world.output.json").read_text(encoding="utf-8"))
 
 
 def digests(document: dict, steps: int) -> tuple[list, list]:

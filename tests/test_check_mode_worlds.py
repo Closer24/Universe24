@@ -7,12 +7,12 @@ pin: the rows are check-mode rows (9.59 (6)). Every count here is a HOST count."
 
 from __future__ import annotations
 
-import importlib.util
 import json
-import sys
 from pathlib import Path
 
 import pytest
+
+from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 FOLDER = ROOT / "examples" / "events" / "check_mode"
@@ -65,12 +65,7 @@ DELETED_BLOCK_KEYS = {"momentum", "spin", "moment", "margin", "charge", "held"}
 
 
 def generator():
-    spec = importlib.util.spec_from_file_location("check_mode_make_worlds", FOLDER / "make_worlds.py")
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    sys.modules["check_mode_make_worlds"] = module
-    spec.loader.exec_module(module)
-    return module
+    return load_file("check_mode_make_worlds", FOLDER / "make_worlds.py")
 
 
 def document(name: str) -> dict:

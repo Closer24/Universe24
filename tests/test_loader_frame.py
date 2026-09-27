@@ -22,7 +22,7 @@ from event_universe.core.schema import Context
 from event_universe.loader import frame
 from event_universe.loader.world import parse_world_document
 from event_universe.world_files import input_digest, world_files
-from tests.test_loader_acceptance import family_names, string_constants, written_defaults
+from tests.running import family_names, string_constants, written_defaults
 
 ROOT = Path(__file__).resolve().parents[1]
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"

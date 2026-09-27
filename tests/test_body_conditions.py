@@ -27,7 +27,8 @@ from event_universe.diagnostics.massive_record_margin import (
 )
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_massive_record import block_world, massive_generator
+from tests.bodies import block_world
+from tests.worlds import massive_generator
 
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 # the world open on x: a zero face there for every family (one border, BUILD.md section 26 item 28)

@@ -4,18 +4,13 @@ loaded and its engine constructed, no interval stepped (the model owner's rule o
 
 from __future__ import annotations
 
-import importlib.util
 import json
-import sys
 from pathlib import Path
 
+from tests.worlds import load_file
+
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = importlib.util.spec_from_file_location("preflight_worlds", ROOT / "tools/preflight_worlds.py")
-assert SPEC is not None and SPEC.loader is not None
-PREFLIGHT = importlib.util.module_from_spec(SPEC)
-# registered before the load: the tool's dataclass looks its module up by name
-sys.modules["preflight_worlds"] = PREFLIGHT
-SPEC.loader.exec_module(PREFLIGHT)
+PREFLIGHT = load_file("preflight_worlds", ROOT / "tools/preflight_worlds.py")
 
 
 def test_the_preflight_loads_every_listed_world_and_runs_none(tmp_path: Path, capsys) -> None:

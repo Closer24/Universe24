@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-import importlib.util
 import json
-import sys
 from fractions import Fraction
 from pathlib import Path
 
@@ -23,7 +21,7 @@ from event_universe.features.source import (
     invert,
 )
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_emitter import emitter_world
+from tests.worlds import emitter_world, load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "examples" / "events" / "source"
@@ -143,12 +141,7 @@ def test_the_trace_hand_identity_at_a_node():
 
 
 def generator():  # type: ignore[no-untyped-def]
-    spec = importlib.util.spec_from_file_location("source_make_worlds", SOURCE / "make_worlds.py")
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    sys.modules["source_make_worlds"] = module
-    spec.loader.exec_module(module)
-    return module
+    return load_file("source_make_worlds", SOURCE / "make_worlds.py")
 
 
 def test_the_run_files_record_gives_the_readmes_counts():

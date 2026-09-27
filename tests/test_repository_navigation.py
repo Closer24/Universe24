@@ -6,7 +6,7 @@ from urllib.parse import unquote, urlsplit
 
 import pytest
 
-from .test_repository_language import repository_files
+from tests.running import repository_files
 
 
 def local_links(document):

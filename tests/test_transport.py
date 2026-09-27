@@ -21,9 +21,10 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.generator_numbers import light_twist, rotation_twist, twist_triple
 from event_universe.loader.world import TWIST_FINE_BITS
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_axis_paces import SHAPE, paces_world
-from tests.test_families_file import FILE, emitter_world, on_the_file, refused
-from tests.test_vector_holds import parts_of
+from tests.bodies import PACES_SHAPE as SHAPE
+from tests.bodies import paces_world, parts_of
+from tests.running import refused
+from tests.worlds import FILE, emitter_world, on_the_file
 
 ROOT = Path(__file__).resolve().parents[1]
 GAMMA = 10_000

@@ -16,8 +16,7 @@ from event_universe.core.register import Declaration, Register, discover
 from event_universe.core.step import INTERVAL, STEP_FILE, Step
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_emitter import emitter_world
-from tests.test_step import shipped
+from tests.worlds import emitter_world, shipped
 
 SPIN, MOMENTUM, CONTENT = "a body's spin S", "a body's momentum n", "a body's content M_k"
 LAW_ROOT = host.LAW_ROOT

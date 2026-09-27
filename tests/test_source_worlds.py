@@ -14,14 +14,13 @@ COMPUTATION."""
 
 from __future__ import annotations
 
-import importlib.util
 import json
-import sys
 from pathlib import Path
 
 import pytest
 
 from event_universe.world_files import parse_nature_beam_world
+from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 FOLDER = ROOT / "examples" / "events" / "source"
@@ -58,12 +57,7 @@ DELETED_BLOCK_KEYS = {"momentum", "spin", "moment", "margin", "charge", "held", 
 
 
 def generator():
-    spec = importlib.util.spec_from_file_location("source_make_worlds", FOLDER / "make_worlds.py")
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    sys.modules["source_make_worlds"] = module
-    spec.loader.exec_module(module)
-    return module
+    return load_file("source_make_worlds", FOLDER / "make_worlds.py")
 
 
 def document(name: str) -> dict:

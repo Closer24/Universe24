@@ -9,8 +9,9 @@ import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_body_record import with_body_record
-from tests.test_detector_law import Seen, chosen_by_the_rule, layer_world, spy_on
+from tests.bodies import with_body_record
+from tests.running import Seen, chosen_by_the_rule, spy_on
+from tests.worlds import layer_world
 
 PLACES = ((1, "s0"), (4, "s1"), (7, "s2"))
 STOCK = 60

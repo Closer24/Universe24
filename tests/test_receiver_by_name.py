@@ -11,55 +11,11 @@ import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import lawful_wheel
-from tests.test_massive_record import light_clock_world, massive_world, seed_source
+from tests.bodies import CLOSED_CHAIN, emitter, light_clock_world, massive_world, seed_source
+from tests.worlds import lawful_wheel
 
 LIGHT_CLOCK = Path(__file__).resolve().parents[1] / "examples/events/massive_record/light_clock.json"
-CLOSED_CHAIN = {"x": "closed", "y": "periodic", "z": "periodic"}
 Spy = dict[int, tuple[list[int], list[int], int, int, int]]
-
-
-def emitter(
-    position: int,
-    receiver: str | None,
-    momentum: int = 0,
-    stock: int = 4,
-    direction: list[int] | None = None,
-) -> dict:
-    """An emitter body over the train's 32 Nodes from `position` on the matter kind
-    [800, 809]: the well [800, 801] (W = 2403 remainder values in the vacuum, ALGEBRA.md 9.22
-    (4); at its Nodes the wheel of its content under the Node clock, 9.35 (2)), no
-    coupling (the click alone, the model owner's decision (2) of record 1962), the seed 50 x 2^20 (its
-    profile on the mode by `seed_source` once the world is built), its `emitter` of light
-    with the stock `stock` and its train along `direction` (+x by default; THE GIVEN TRAIN,
-    9.17 (6a)), its `receiver` where one is named (the line at that set's rung)."""
-    block = {
-        "position": [position, 0, 0],
-        "family": "matter",
-        "amount": 1,
-        "ramp": 0,
-        "start": 0,
-        "stocks": {"light": stock},
-        "momentum": [momentum, 0, 0],
-        "fixed": False,
-        "extents": [32, 1, 1],
-        "q": 0,
-        "spin": [0, 0, 0],
-        "twist": 0,
-        "moment": [0, 0, 0],
-        "pair": [800, 801],
-        "seed": 1
-        << 10,  # the window's writes at the body's Nodes pile up about 300-fold and stay under the bound (commit 7)
-        "emitter": {
-            "family": "light",
-            "weight": 3,  # the window's weight (commit 7; the train retired)
-            "twist": 0,  # the given record's twist "own", the generator's number (item 73)
-        },
-        "margin": "control",
-    }
-    if receiver is not None:
-        block["receiver"] = receiver
-    return block
 
 
 def body(x: int) -> dict:

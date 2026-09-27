@@ -27,14 +27,8 @@ import pytest
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import (
-    CHARGE_FAMILY,
-    CLOCK_FAMILY,
-    NODE_CLOCK,
-    family_entry,
-    massive_generator,
-    reads,
-)
+from tests.running import exchange_of, form_I
+from tests.worlds import CHARGE_FAMILY, CLOCK_FAMILY, NODE_CLOCK, family_entry, massive_generator, reads
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
@@ -322,44 +316,6 @@ def test_translation_on_the_torus():
 # ---------------------------------------------------------------- conservation, reversibility, locality
 
 
-def reads_of(simulation: DetectorLawSimulation, family: int):
-    """The read matrix as a function: the six reads' sum of an array (the family's faces)."""
-    return lambda a: simulation._neighbours(a, simulation.kind_wrap[family])
-
-
-def form_I(
-    simulation: DetectorLawSimulation,
-    family: int,
-    now: np.ndarray,
-    before: np.ndarray,
-    content: np.ndarray | None = None,
-) -> Fraction:
-    # the form from the rule's own integers (ALGEBRA.md 9.57 (1); BUILD.md section 26 item 44)
-    # at the scale of the plain form (the engine's rational over 3 L): with (R_i, S_i, w_i) the
-    # weak-field rule's coefficients at the Node, [w_i (a^2 + b^2) - S_i a b] / (3 R_i) at the
-    # Nodes and 1 / 3 on every Link, plain (den / num, 0 and 1 / 3 in the vacuum, where R = 2
-    # Gamma^2 num, S = 0, w = 6 den Gamma^2; the first-order form of item 36 HISTORY)
-    gamma = simulation.node_clock
-    if content is None:
-        content = simulation.level_of("content")
-    num = simulation.kind_num[family].astype(object)
-    den = simulation.kind_den[family].astype(object)
-    (read_coefficient, _, _), self_coefficient, wall = coefficients(
-        num, den, gamma, content.astype(object)
-    )
-    read = reads_of(simulation, family)(before).astype(object)
-    now_o, before_o = now.astype(object), before.astype(object)
-    total = Fraction(0)
-    for node in zip(*np.nonzero(now_o | before_o | read), strict=True):
-        a, b = int(now_o[node]), int(before_o[node])
-        total += Fraction(
-            int(wall[node]) * (a * a + b * b) - int(self_coefficient[node]) * a * b,
-            3 * int(read_coefficient[node]),
-        )
-        total -= Fraction(1, 3) * a * int(read[node])
-    return total
-
-
 def test_conservation_between_clicks():
     """(a) the content per family constant before the click and down by one quantum of light
     at it; (b) per record, I(t) - I(t - 1) is the remainder term of 8.2 over the step, exactly,
@@ -435,37 +391,6 @@ def test_conservation_between_clicks():
                 assert np.all(contents[t][well] - contents[t - 1][well] == 1)
                 assert exchange != 0
         assert exchanges > 0, identity
-
-
-def exchange_of(
-    simulation: DetectorLawSimulation,
-    family: int,
-    now: np.ndarray,
-    before: np.ndarray,
-    old: np.ndarray,
-    new: np.ndarray,
-) -> Fraction:
-    """The change of the form I of `form_I` when the family of clicks' levels move from `old`
-    to `new` (ALGEBRA.md 9.45 (5) under the weak-field rule, 9.57 (1); item 44): at every Node
-    the Node's term [w (a^2 + b^2) - S a b] / (3 R) at the new level less the same at the old
-    (R and S move with the level, w does not); nothing on the Links (their weights plain)."""
-    gamma = simulation.node_clock
-    num = simulation.kind_num[family].astype(object)
-    den = simulation.kind_den[family].astype(object)
-    (read_old, _, _), self_old, wall = coefficients(num, den, gamma, old.astype(object))
-    (read_new, _, _), self_new, _wall = coefficients(num, den, gamma, new.astype(object))
-    a, b = now.astype(object), before.astype(object)
-    total = Fraction(0)
-    for node in zip(*np.nonzero(a | b), strict=True):
-        squares = int(a[node]) ** 2 + int(b[node]) ** 2
-        product = int(a[node]) * int(b[node])
-        total += Fraction(
-            int(wall[node]) * squares - int(self_new[node]) * product, 3 * int(read_new[node])
-        )
-        total -= Fraction(
-            int(wall[node]) * squares - int(self_old[node]) * product, 3 * int(read_old[node])
-        )
-    return total
 
 
 def test_reversibility_except_the_click():

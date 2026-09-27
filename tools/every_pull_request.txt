@@ -1,0 +1,12 @@
+# The tests every pull request runs, whatever it changes (tools/check.py reads this file).
+# One test per line, sorted; a new gate appends its line here (#1198, gate 7).
+tests/test_code_shape.py
+tests/test_documents.py
+tests/test_engine_gates.py
+tests/test_folder_cards.py
+tests/test_genericity.py
+tests/test_ownership.py
+tests/test_runtime_guards.py
+tests/test_shipped_worlds.py
+tests/test_step_drives_the_loop.py
+tests/test_tests_shape.py

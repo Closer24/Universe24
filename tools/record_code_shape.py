@@ -1,25 +1,18 @@
-"""The shape of the code, recorded and gated (the model owner's decisions of 2026-09-26 through
-the Boss, records 2239 and 2241; skills/workflow.md, the short procedure, point 11).
+"""The shape of the code, gated against the merge base (the model owner's decisions of 2026-09-26
+through the Boss, records 2239 and 2241; #1198, gate 7: no recorded baseline file).
 
 For every Python file under `src/` the counts: total lines, docstring lines, comment lines,
 references to records or decisions ("record 2234", "decision 3"), sites of Rule3's arithmetic
-outside its one function, sites that shift an array across Nodes, and, for every Python file of
-`src/`, `tools/` and `tests/`, the names imported from the loop's module beyond its public
-entry. A file within the limits (every docstring one line, no record reference, under 400
-lines, none of the three sites) passes whatever its counts. A file beyond them is compared with
-`tests/code_shape_baseline.json` and with the same file at the merge base (the ref CI checks
-against, else origin/main): none of its counts may grow, and none may stand above the merge
-base's (a baseline raised in the same commit is refused); a count that went down is re-recorded
-in the same commit (`python tools/record_code_shape.py`); a new file beyond them fails, and a
-file that moved (its name recorded under a path no longer in the tree) ratchets against its old
-entry. Two
-functions of `src/` with the same
-normalised body (names and literals abstracted) fail; the duplicates of today are in the baseline
-and may only go down. The import contracts hold with no baseline: a feature folder imports
-`core/` alone and never another feature; `core/` imports nothing of the package outside itself;
-nothing outside `core/` imports the loop's internals.
+outside its one function and sites that shift an array across Nodes; for every Python file of
+`src/`, `tools/` and `tests/`, the names imported from the loop's module beyond its public entry.
+A file within the limits (every docstring one line, no record reference, under 400 lines, none of
+the sites) passes whatever its counts. A file beyond them holds each count at or below the same
+file's at the merge base (CHECK_BASE, else origin/main), read from git; a new file beyond them
+fails. Two functions of `src/` with one abstracted body fail beyond the merge base's groups; an
+internal of the loop is imported by no more files than at the merge base. The import contracts
+hold outright: a feature folder imports `core/` alone; `core/` imports nothing outside itself.
 
-Usage: `python tools/record_code_shape.py` writes the baseline for the current tree.
+Usage: `python tools/record_code_shape.py` prints every departure from the merge base.
 """
 
 from __future__ import annotations
@@ -27,17 +20,17 @@ from __future__ import annotations
 import ast
 import hashlib
 import io
-import json
-import os
 import re
-import subprocess
 import sys
 import tokenize
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = Path("tests/code_shape_baseline.json")
+sys.path.insert(0, str(ROOT / "tools"))
+
+from merge_base import base_ref, carried, tree_at  # noqa: E402
+
 PACKAGE = Path("src/event_universe")
 LOOP = PACKAGE / "events" / "detector_law.py"
 LOOP_MODULE = "event_universe.events.detector_law"
@@ -257,7 +250,7 @@ def contract_violations(root: Path) -> list[str]:
 
 
 def record(root: Path) -> dict[str, Any]:
-    """The baseline of the current tree: the counts of the files beyond the limits alone (a file within them needs no entry), the duplicate groups and the imports of the loop's internals, every key sorted so two re-records of different files touch different lines."""
+    """The record of a tree: the counts of the files beyond the limits alone (a file within them needs none), the duplicate groups and the imports of the loop's internals."""
     files = {}
     for path in python_files(root, "src"):
         rel = relative(root, path)
@@ -287,130 +280,58 @@ def beyond_the_limits(rel: str, shape: dict[str, int]) -> list[str]:
     return found
 
 
-def base_baseline(root: Path, ref: str | None = None) -> dict[str, Any] | None:
-    """The baseline as the merge base holds it (the ref CI checks against, else origin/main), or None where git cannot show it; a baseline raised in the same commit never passes the ratchet."""
-    ref = ref or os.environ.get("CHECK_BASE") or "origin/main"
-    try:
-        shown = subprocess.run(
-            ["git", "show", f"{ref}:{BASELINE.as_posix()}"],
-            capture_output=True,
-            text=True,
-            cwd=root,
-            check=True,
-        ).stdout
-    except OSError, subprocess.CalledProcessError:
-        return None
-    loaded: dict[str, Any] = json.loads(shown)
-    return loaded
+def record_at(root: Path, ref: str | None = None) -> dict[str, Any]:
+    """The same record of the merge base's tree (CHECK_BASE, else origin/main), read from git: no file holds it."""
+    ref = ref or base_ref()
+    with tree_at(root, ref, SCOPES) as base_root:
+        base = record(base_root)
+    return {**base, "files": carried(base["files"], root, ref)}
 
 
-def moved_entry(
-    rel: str, recorded: dict[str, dict[str, int]], present: dict[str, dict[str, int]]
-) -> dict[str, int] | None:
-    """The baseline's entry of a file that moved: the one recorded path with this file's name that is no longer in the tree (a moved file is not a new file; it ratchets against its old entry)."""
-    candidates = [path for path in recorded if path not in present and Path(path).name == Path(rel).name]
-    return recorded[candidates[0]] if len(candidates) == 1 else None
-
-
-def violations(root: Path, baseline: dict[str, Any], base: dict[str, Any] | None = None) -> list[str]:
-    """Every way the tree departs from the limits and the baseline, one line each: a file within the limits passes whatever its counts; a file beyond them is new and fails, or is recorded and ratchets."""
+def violations(root: Path, base: dict[str, Any]) -> list[str]:
+    """Every way the tree departs from the limits and the merge base, one line each: a file within the limits passes whatever its counts; a file beyond them is new and fails, or holds each count at or below the merge base's."""
     found: list[str] = []
-    re_record = (
-        f"re-record the baseline in this commit: python {Path('tools/record_code_shape.py').as_posix()}"
-    )
-    recorded_files: dict[str, dict[str, int]] = baseline["files"]
-    present = {relative(root, path): shape_of(root, path) for path in python_files(root, "src")}
-    for rel in sorted(set(recorded_files) - set(present)):
-        found.append(f"{rel} is in the baseline and not in the tree; {re_record}")
-    for rel, shape in present.items():
+    for path in python_files(root, "src"):
+        rel = relative(root, path)
+        shape = shape_of(root, path)
         beyond = beyond_the_limits(rel, shape)
         if not beyond:
             continue
-        recorded = recorded_files.get(rel) or moved_entry(rel, recorded_files, present)
-        if recorded is None:
+        was = base["files"].get(rel)
+        if was is None:
             found.extend(f"{line} and is new" for line in beyond)
             continue
         for key in COUNTS:
-            if shape[key] > recorded[key]:
-                found.append(f"{rel}: {key.replace('_', ' ')} grew from {recorded[key]} to {shape[key]}")
-            elif shape[key] < recorded[key]:
-                found.append(
-                    f"{rel}: {key.replace('_', ' ')} went down from {recorded[key]} to {shape[key]}; {re_record}"
-                )
-    recorded_groups: dict[str, list[str]] = baseline["duplicates"]
-    groups = duplicates(root)
-    for digest, names in groups.items():
-        recorded_names = recorded_groups.get(digest, [])
-        if len(names) > len(recorded_names):
-            found.append(f"duplicate functions: {', '.join(names)} share one body")
-        elif len(names) < len(recorded_names):
-            found.append(f"a duplicate group shrank ({', '.join(names)}); {re_record}")
-    for digest in set(recorded_groups) - set(groups):
-        found.append(
-            f"a duplicate group of the baseline is gone ({', '.join(recorded_groups[digest])}); {re_record}"
-        )
-    recorded_imports: dict[str, list[str]] = baseline["loop_internal_imports"]
-    imports = loop_internal_imports(root)
-    for rel, names in imports.items():
-        recorded_names = set(recorded_imports.get(rel, []))
-        grew = sorted(set(names) - recorded_names)
-        if grew:
-            found.append(
-                f"{rel} imports the loop's internals {', '.join(grew)}: nothing outside core/ does"
-            )
-        elif set(names) < recorded_names:
-            found.append(f"{rel} imports fewer of the loop's internals; {re_record}")
-    for rel in set(recorded_imports) - set(imports):
-        found.append(f"{rel} no longer imports the loop's internals; {re_record}")
-    found.extend(contract_violations(root))
-    if base is not None:
-        found.extend(above_the_base(root, present, groups, imports, base))
-    return found
-
-
-def above_the_base(
-    root: Path,
-    present: dict[str, dict[str, int]],
-    groups: dict[str, list[str]],
-    imports: dict[str, list[str]],
-    base: dict[str, Any],
-) -> list[str]:
-    """Every count of a file beyond the limits, every duplicate group and every import of the loop's internals that stands higher than the merge base's baseline: raising the baseline in the same commit is refused."""
-    found: list[str] = []
-    for rel, shape in present.items():
-        recorded = base["files"].get(rel) or moved_entry(rel, base["files"], present)
-        if recorded is None or not beyond_the_limits(rel, shape):
-            continue
-        for key in COUNTS:
-            if shape[key] > recorded[key]:
-                found.append(
-                    f"{rel}: {key.replace('_', ' ')} is {shape[key]}, above the merge base's {recorded[key]}"
-                )
-    for digest, names in groups.items():
+            if shape[key] > was[key]:
+                found.append(f"{rel}: {key.replace('_', ' ')} grew from {was[key]} to {shape[key]}")
+    for digest, names in duplicates(root).items():
         if len(names) > len(base["duplicates"].get(digest, [])):
-            found.append(f"duplicate functions above the merge base: {', '.join(names)}")
-    for rel, names in imports.items():
-        grew = sorted(set(names) - set(base["loop_internal_imports"].get(rel, [])))
-        if grew:
-            found.append(f"{rel} imports the loop's internals {', '.join(grew)} above the merge base")
+            found.append(f"duplicate functions: {', '.join(names)} share one body")
+
+    # per name, the number of files importing it: a helper moved between files keeps the count
+    def importers(table: dict[str, list[str]]) -> dict[str, int]:
+        counts: dict[str, int] = {}
+        for names in table.values():
+            for name in names:
+                counts[name] = counts.get(name, 0) + 1
+        return counts
+
+    was_imported = importers(base["loop_internal_imports"])
+    for name, count in sorted(importers(loop_internal_imports(root)).items()):
+        if count > was_imported.get(name, 0):
+            found.append(
+                f"the loop's internal {name} is imported by {count} files, above the merge base's "
+                f"{was_imported.get(name, 0)}: nothing outside core/ imports it"
+            )
+    found.extend(contract_violations(root))
     return found
 
 
 def main() -> None:
-    """Write the baseline for the current tree (no commit stamp, so two re-records differ only where the counts differ)."""
-    baseline = record(ROOT)
-    (ROOT / BASELINE).write_text(json.dumps(baseline, indent=1, sort_keys=True) + "\n", encoding="utf-8")
-    files = baseline["files"]
-    totals = {key: sum(shape[key] for shape in files.values()) for key in COUNTS}
-    print(
-        f"{len(files)} files of src/ beyond the limits recorded: "
-        + ", ".join(f"{k} {v}" for k, v in totals.items())
-    )
-    print(
-        f"duplicate groups {len(baseline['duplicates'])}; "
-        f"files importing the loop's internals {len(baseline['loop_internal_imports'])}"
-    )
-    sys.exit(0)
+    """Print every departure of the working tree from the limits and the merge base; exit 1 when there is one."""
+    found = violations(ROOT, record_at(ROOT))
+    print("\n".join(found) or "the shape of the code holds against the merge base")
+    sys.exit(1 if found else 0)
 
 
 if __name__ == "__main__":

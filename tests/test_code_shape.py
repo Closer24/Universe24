@@ -1,52 +1,28 @@
-"""THE RATCHET ON THE SHAPE OF THE CODE (the model owner's decisions through the Boss, records
-2239 and 2241; skills/workflow.md, the short procedure, point 11). tools/record_code_shape.py
-counts, per file of src/, the lines, the docstring lines, the comment lines, the references to
-records or decisions, the sites of Rule3's arithmetic outside its one function and the sites that
-shift an array across Nodes, and per file of src/, tools/ and tests/ the names imported from the
-loop's module beyond its public entry. A file within the limits (one-line docstrings, no record
-reference, under 400 lines, none of the three sites) passes whatever its counts (the Boss's word
-of 18:11Z: the rule never blocks a feature folder that fills within them); a file beyond them is
-compared with tests/code_shape_baseline.json and with the merge base's copy of it: no count may
-grow or stand above the merge base's (a baseline raised in the same commit is refused), a count
-that went down is re-recorded in the same commit, and a new file beyond them fails. Two functions of src/ with one abstracted body fail beyond the baseline's
-groups. The import contracts hold with no baseline. Selected on every pull request."""
+"""The shape of the code holds against the merge base, read from git (tools/record_code_shape.py; #1198, gate 7): a file
+beyond the limits grows no count, a new one stays within them, no new copied function, no new importer of the
+loop's internals, and the import contracts hold; no baseline file is kept."""
 
 from __future__ import annotations
 
-import importlib.util
-import json
-import sys
+import subprocess
 from pathlib import Path
+
+from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def tool():  # type: ignore[no-untyped-def]
-    spec = importlib.util.spec_from_file_location(
-        "record_code_shape", ROOT / "tools" / "record_code_shape.py"
-    )
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    sys.modules["record_code_shape"] = module
-    spec.loader.exec_module(module)
-    return module
+    return load_file("record_code_shape", ROOT / "tools" / "record_code_shape.py")
 
 
 SHAPE = tool()
-BASELINE = json.loads((ROOT / SHAPE.BASELINE).read_text(encoding="utf-8"))
 PACKAGE = "src/event_universe"
 
 
-def test_the_tree_is_at_the_baseline_and_keeps_the_import_contracts():
-    """Every count of every file of src/ equals its baseline, no new duplicate, no new import of
-    the loop's internals, every feature on core/ alone, core/ on itself alone."""
-    assert BASELINE["format"] == "code-shape-baseline"
-    base = SHAPE.base_baseline(ROOT)
-    assert SHAPE.violations(ROOT, BASELINE, base) == []
-    present = {SHAPE.relative(ROOT, p): SHAPE.shape_of(ROOT, p) for p in SHAPE.python_files(ROOT, "src")}
-    beyond = {rel for rel, shape in present.items() if SHAPE.beyond_the_limits(rel, shape)}
-    assert set(BASELINE["files"]) == beyond and "recorded_at" not in BASELINE
-    assert list(BASELINE["files"]) == sorted(BASELINE["files"])
+def test_the_tree_keeps_its_shape_against_the_merge_base_and_no_baseline_file_is_kept():
+    assert SHAPE.violations(ROOT, SHAPE.record_at(ROOT)) == []
+    assert not [p for p in (ROOT / "tests").glob("*baseline*.json")]
 
 
 def tree(tmp_path: Path, files: dict[str, str]) -> Path:
@@ -65,54 +41,17 @@ SMALL = {
 }
 
 
-def test_a_grown_count_fails_and_a_lowered_count_asks_for_the_re_record(tmp_path):
+def test_a_grown_count_fails_against_the_merge_base_and_a_cut_passes(tmp_path):
     root = tree(tmp_path, SMALL)
-    baseline = SHAPE.record(root)
-    assert SHAPE.violations(root, baseline) == []
+    base = SHAPE.record(root)
+    assert SHAPE.violations(root, base) == []
     path = root / PACKAGE / "core" / "a.py"
     path.write_text(path.read_text() + "# one more comment\n", encoding="utf-8")
-    found = SHAPE.violations(root, baseline)
+    found = SHAPE.violations(root, base)
     assert any("comment lines grew from 1 to 2" in line for line in found)
     assert any("lines grew from 8 to 9" in line for line in found)
     path.write_text(SMALL[f"{PACKAGE}/core/a.py"].replace("    # a comment\n", ""), encoding="utf-8")
-    found = SHAPE.violations(root, baseline)
-    assert any("comment lines went down from 1 to 0; re-record" in line for line in found)
-    path.unlink()
-    assert any("not in the tree; re-record" in line for line in SHAPE.violations(root, baseline))
-
-
-def test_a_baseline_raised_in_the_same_commit_is_refused_against_the_merge_base(tmp_path):
-    """The Boss's hole of 19:33Z: a pull request that grows a file beyond the limits and
-    re-records its own baseline passes against that baseline and fails against the merge base's."""
-    root = tree(tmp_path, SMALL)
-    base = SHAPE.record(root)
-    path = root / PACKAGE / "core" / "a.py"
-    path.write_text(path.read_text() + "# one more comment\n# and another\n", encoding="utf-8")
-    raised = SHAPE.record(root)
-    assert SHAPE.violations(root, raised) == []
-    found = SHAPE.violations(root, raised, base)
-    assert any("comment lines is 3, above the merge base's 1" in line for line in found)
-    assert any("lines is 10, above the merge base's 8" in line for line in found)
-    # a file within the limits is free of the base too; a cut below the base passes
-    path.write_text('"""One line."""\n\n\ndef f(x):\n    return x\n', encoding="utf-8")
-    assert SHAPE.violations(root, SHAPE.record(root), base) == []
-
-
-def test_a_moved_file_beyond_the_limits_ratchets_against_its_old_entry(tmp_path):
-    """A moved file beyond the limits is not new: it is compared with its old path's entry."""
-    root = tree(tmp_path, SMALL)
-    baseline = SHAPE.record(root)
-    old = root / PACKAGE / "core" / "a.py"
-    new = root / PACKAGE / "features" / "a.py"
-    new.parent.mkdir(parents=True, exist_ok=True)
-    old.rename(new)
-    found = SHAPE.violations(root, baseline, baseline)
-    assert not any("is new" in line for line in found)
-    assert any("core/a.py is in the baseline and not in the tree" in line for line in found)
-    new.write_text(new.read_text(encoding="utf-8") + "# one more comment\n", encoding="utf-8")
-    found = SHAPE.violations(root, baseline, baseline)
-    assert any("features/a.py: comment lines grew from 1 to 2" in line for line in found)
-    assert any("features/a.py: comment lines is 2, above the merge base's 1" in line for line in found)
+    assert SHAPE.violations(root, base) == []
 
 
 def test_a_new_file_meets_the_limits_from_its_first_commit(tmp_path):
@@ -170,7 +109,7 @@ def test_a_feature_stub_grown_within_the_limits_passes_and_beyond_them_fails(tmp
     assert any("has 1 docstring(s) beyond one line and is new" in line for line in found)
 
 
-def test_two_functions_with_one_abstracted_body_fail_beyond_the_baseline(tmp_path):
+def test_two_functions_with_one_abstracted_body_fail_beyond_the_merge_base(tmp_path):
     twin = (
         '"""One line."""\n\n\ndef first(alpha, beta):\n    total = alpha * 2 + beta\n    return total\n\n\n'
         'def second(p, q):\n    """A docstring."""\n    s = p * 7 + q\n    return s\n'
@@ -234,10 +173,47 @@ def test_an_import_of_the_loops_internals_outside_core_fails(tmp_path):
         "from event_universe.events.detector_law import _inner\n", encoding="utf-8"
     )
     found = SHAPE.violations(root, baseline)
-    assert found == ["tools/run.py imports the loop's internals _inner: nothing outside core/ does"]
+    assert found == [
+        "the loop's internal _inner is imported by 1 files, above the merge base's 0: nothing outside core/ imports it"
+    ]
     (root / "tools" / "run.py").write_text(
         "import event_universe.events.detector_law\n", encoding="utf-8"
     )
     assert SHAPE.violations(root, baseline) == [
-        "tools/run.py imports the loop's internals *: nothing outside core/ does"
+        "the loop's internal * is imported by 1 files, above the merge base's 0: nothing outside core/ imports it"
     ]
+
+
+def test_a_moved_import_of_the_loops_internals_keeps_the_count_and_a_new_importer_fails(tmp_path):
+    loop = f"{PACKAGE}/events/detector_law.py"
+    root = tree(
+        tmp_path,
+        {
+            **SMALL,
+            f"{PACKAGE}/events/__init__.py": "",
+            loop: "def _inner():\n    pass\n",
+            "tests/test_a.py": "from event_universe.events.detector_law import _inner\n",
+        },
+    )
+    base = SHAPE.record(root)
+    (root / "tests" / "test_a.py").write_text("X = 1\n", encoding="utf-8")
+    tree(root, {"tests/helpers.py": "from event_universe.events.detector_law import _inner\n"})
+    assert SHAPE.violations(root, base) == []
+    tree(root, {"tests/test_b.py": "from event_universe.events.detector_law import _inner\n"})
+    assert SHAPE.violations(root, base) == [
+        "the loop's internal _inner is imported by 2 files, above the merge base's 1: nothing outside core/ imports it"
+    ]
+
+
+def test_a_moved_file_keeps_its_counts_from_the_merge_base(tmp_path):
+    root = tree(tmp_path, SMALL)
+    git = ["git", "-C", str(root), "-c", "user.name=t", "-c", "user.email=t@t"]
+    subprocess.run([*git, "init", "-q"], check=True)
+    subprocess.run([*git, "add", "."], check=True)
+    subprocess.run([*git, "commit", "-qm", "base"], check=True)
+    (root / PACKAGE / "loader").mkdir()
+    subprocess.run([*git, "mv", f"{PACKAGE}/core/a.py", f"{PACKAGE}/loader/a.py"], check=True)
+    subprocess.run([*git, "commit", "-qm", "move"], check=True)
+    base = SHAPE.record_at(root, "HEAD~1")
+    assert list(base["files"]) == [f"{PACKAGE}/loader/a.py"]
+    assert SHAPE.violations(root, base) == []

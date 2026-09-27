@@ -31,83 +31,28 @@ from event_universe.loader.world import (
     MASSLESS_PAIR,
 )
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_detector_law import (
+from tests.bodies import (
+    block_world,
+    emitter_at,
+    light_clock_world,
+    massive_world,
+    matter_emitter_world,
+    seed_source,
+    source_family,
+)
+from tests.running import planted
+from tests.worlds import (
+    NODE_CLOCK,
     chain_world,
     cube_positions,
-    emitter_body,
+    lawful_wheel,
     receiver_body,
     receiver_cube,
-)
-from tests.test_emitter import (
-    CHARGE_FAMILY,
-    CLOCK_FAMILY,
-    NODE_CLOCK,
-    family_entry,
-    lawful_wheel,
-    massive_generator,
-    reads,
 )
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
-
-
-def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
-    """A world of the massive kind `matter` (its pair on the six-neighbour term) beside light,
-    no lamp, no block (the rule's tests construct a record's rows directly); every family
-    reads the world's `boundary` (one border, BUILD.md section 26 item 28) and the face slab
-    is one Node deep where the board is open (`face_depth`, declared: no default)."""
-    matter: dict = family_entry("matter", pair, reads())
-    return {
-        "shape": shape,
-        "boundary": boundary,
-        "face_depth": 1,
-        "ticks": 10,
-        "age_bound": 100000,
-        "N": 1024,
-        "clock_stamp": False,
-        "body_record": False,
-        "engine": "examples/events/engine_start.json",
-        "massive_record": True,
-        "amplitude_bound": 1 << 22,
-        "node_clock": NODE_CLOCK,
-        "momentum_unit": 64,
-        "universe": [
-            family_entry("light", [1, 1], reads(), clock=[512, 1]),
-            matter,
-            dict(CLOCK_FAMILY),
-            dict(CHARGE_FAMILY),
-        ],
-        "measured": [],
-        "detectors": [],
-    }
-
-
-def planted(
-    simulation: DetectorLawSimulation, family: int, now: np.ndarray, before: np.ndarray, r: np.ndarray
-) -> LiveRecord:
-    """A record's rows given to the rule's step directly (the test's device: no lamp givings a
-    massive record; the rule reads the rows and nothing else)."""
-    return LiveRecord(
-        1,
-        0,
-        family,
-        0,
-        1,
-        0,
-        1,
-        1,
-        1,
-        0,
-        1,
-        now.astype(np.int64),
-        before.astype(np.int64),
-        r.astype(np.int64),
-        pointers=[0] * len(simulation.detector_names),
-        first_rung=[None] * len(simulation.detector_names),
-        age=10,
-    )
 
 
 def step_once(simulation: DetectorLawSimulation, live: LiveRecord) -> tuple[np.ndarray, np.ndarray]:
@@ -493,107 +438,6 @@ def test_the_records_keys_under_the_key_and_none_without_it():
 # The block (STEP 3 of the build: BUILD.md section 6, (e) to (l))
 
 
-def block_world(
-    shape: list[int],
-    boundary: object,
-    kind: list[int],
-    blocks: list[dict],
-    source: dict | None = None,
-    ticks: int = 100,
-) -> dict:
-    """A world of the massive kind `matter` with blocks (measured events of `matter` with
-    `side`), a light family with the chain test's clock [77, 25] (the period 20.8 intervals,
-    lambda 12 Links), and optionally an emitter body of light (`emitter_at`, a well of the
-    source family) as the first measured event, seeded on its bound mode (the generator's
-    profile at its scalar seed); every well declares its seed (the suite's amplitude 2^20
-    where a test names none: no loader default, BUILD.md section 26 item 28) and the face
-    slab is one Node deep where the board is open."""
-    matter: dict = family_entry("matter", kind, reads())
-    # light on the given clock [512, 1] of N = 1024 (the given train, ALGEBRA.md 9.17 (6a))
-    families = [
-        family_entry("light", [1, 1], reads(), clock=[512, 1]),
-        matter,
-    ]
-    measured: list[dict] = []
-    if source is not None:
-        measured.append(source)
-        families.append(source_family())
-    families.append(dict(CHARGE_FAMILY))  # the family of charge (item 35)
-    families.append(dict(CLOCK_FAMILY))  # the family of clicks (BUILD.md section 26 item 32)
-    for block in blocks:
-        entry = {
-            "position": block["position"],
-            "family": "matter",
-            "amount": block.get("amount", 1),
-            "stocks": {},
-            "ramp": 0,
-            "start": 0,
-            "momentum": block.get("momentum", [0, 0, 0]),
-            "fixed": block.get("fixed", False),
-            "side": block["side"],
-            "pair": block["pair"],
-            # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2), no loader default
-            "q": block.get("q", 0),
-            "spin": block.get("spin", [0, 0, 0]),
-            "moment": block.get("moment", [0, 0, 0]),
-            "twist": block.get("twist", 0),  # the generator's number; 0 where no read by "own" (item 73)
-        }
-        for key in (
-            "seed",
-            "ramp",
-            "start",
-            "margin",
-            "stocks",
-            "receiver",
-            "emitter",
-        ):
-            if key in block:
-                entry[key] = block[key]
-        if block["pair"][0] * kind[1] > block["pair"][1] * kind[0]:
-            # every well declares its seed (no loader default, BUILD.md section 26 item
-            # 28): the suite's amplitude 2^20 where a test names none; and its margin
-            # kind (record 2037; no default, item 57)
-            if "seed" not in entry:
-                entry["seed"] = 1 << 20
-            entry.setdefault("margin", "pin")
-        measured.append(entry)
-    document: dict = {
-        "shape": shape,
-        "boundary": boundary,
-        "face_depth": 1,
-        "ticks": ticks,
-        "age_bound": 100000,
-        "N": 1024,
-        "clock_stamp": True,
-        "body_record": False,
-        "engine": "examples/events/engine_start.json",
-        "massive_record": True,
-        "amplitude_bound": 1 << 22,
-        "node_clock": NODE_CLOCK,
-        "momentum_unit": 64,
-        "universe": families,
-        "measured": measured,
-        "detectors": [],
-    }
-    if source is not None:
-        seed_source(document, 0)
-    return document
-
-
-def seed_source(document: dict, number: int) -> None:
-    """The measured event `number` (an emitter body, a one-Node well) seeded on its bound
-    mode at its scalar seed (the generator's `mode_profile`, the world's other blocks left as
-    declared), its `margin` made explicit."""
-    entry = document["measured"][number]
-    entry.setdefault("margin", "control")
-    generator = massive_generator()
-    entry["seed"] = generator.mode_profile(document, number, amplitude=entry["seed"])
-    if "emitter" in entry:
-        generator.emitter_rung(document, number)  # the window's rung (commit 7; the train retired)
-    # the input stamp (record 1886): the law and the hash of the integers
-    document["stamp"] = input_stamp(document)
-
-
 def with_screen(document: dict, x: int) -> dict:
     """The receiver by name for a test world's emitter body (DECLARATIONS.md section 13
     item 7): the cube of side 3 of light bodies at [x, x + 2] read as the set `screen`
@@ -601,41 +445,6 @@ def with_screen(document: dict, x: int) -> dict:
     receiver_cube(document, "screen", [x, 0, 0])
     document["stamp"] = input_stamp(document)  # the stamp over the whole file (item 28)
     return document
-
-
-SOURCE_KIND = [7, 8]  # the emitter bodies' own kind (omega_0 = 0.505; the index worlds')
-SOURCE_WELL = [
-    699,
-    700,
-]  # its well over the train's 32 Nodes, rich (W = 700, ALGEBRA.md 9.22 (4)) and bound (2 cos omega_b = 1.9944 on a chain; the one-Node giving's [801, 700] is a runaway over 32 Nodes, its interior above 1)
-
-
-def source_family() -> dict:
-    """The emitter bodies' massive family `source` (the kind SOURCE_KIND, no clock)."""
-    return family_entry("source", list(SOURCE_KIND), reads())
-
-
-def emitter_at(
-    x: int,
-    stock: int = 1,
-    family: str = "light",
-    own: str = "source",
-    pair: list[int] | None = None,
-    receiver: object = None,
-) -> dict:
-    """An emitter body on a chain (ALGEBRA.md 9.17 (4), 9.17 (6a)): the well of the massive
-    family `own` (the well `pair`, SOURCE_WELL by default) over the train's 32 Nodes from x,
-    its train along +x, with the scalar seed 2^20
-    (its profile on the mode by `seed_source`; at 100 the given light's back-action swamps
-    the excited record, ALGEBRA.md 9.17 (7) (c)), `stock` excitations, the given family
-    `family`; with `receiver`, the given records' ladder by name. The residue and the wheel
-    are the law's (9.22 (4): W = 700 on SOURCE_WELL); the cadence of the excitations under
-    the click rule of 9.17 (7) (f) (BUILD.md section 26 item 24): the residue u clicks
-    (2 u + 1) P / (2 W) intervals after its read, P the mode's period."""
-    entry = emitter_body([x, 0, 0], stock, receiver=receiver, family=family)
-    entry["family"] = own
-    entry["pair"] = list(pair or SOURCE_WELL)
-    return entry
 
 
 CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
@@ -1273,32 +1082,6 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
             parse_nature_beam_world(refused)
 
 
-def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, stock: int = 1) -> dict:
-    """A chain of 200 Nodes (x open; y and z periodic of one layer): the light emitter of the
-    first build at [2, 34) (chain_world's, its family named `source`) beside the massive kind
-    `matter`, pair [156, 157], the given clock [512, 1] on N = 1024 declared as its
-    `phase_per_link` (the pair form: the matter train at K = pi / 2, cos omega = 0.6624),
-    and, when asked, an emitter body of the source kind at [100, 132) whose given family is
-    `matter` (`stock` givings, the train along +x); no detector; `clock` None declares no
-    clock on the kind and none on the emitter (the refusal's edge case, item 59); every
-    emitter body seeded on its mode."""
-    document = chain_world(on_mode=False)
-    document["shape"] = [200, 1, 1]
-    document["ticks"] = 160
-    document["universe"][1]["name"] = "source"
-    document["measured"][0]["family"] = "source"
-    matter: dict = family_entry("matter", [156, 157], reads())
-    if clock is not None:
-        matter["clock"] = clock  # None: no clock (the refusal's edge case)
-    document["universe"].append(matter)
-    document["measured"] = document["measured"][:1]
-    if matter_emitter:
-        document["measured"].append(emitter_at(100, stock, family="matter"))
-    document["detectors"] = []
-    massive_generator().seed_on_the_mode(document)
-    return document
-
-
 def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair():
     """An emitter giving the massive kind: its record is advanced by the kind's pair, leaves both ways
     with the books balanced, and light's rows match until the body's field reaches them; no clock is refused."""
@@ -1455,53 +1238,6 @@ def test_every_declared_wheel_is_refused_by_name():
         document["stamp"] = input_stamp(document)  # the stamp over the whole file (item 28)
         with pytest.raises(ValueError, match=message):
             parse_nature_beam_world(document)
-
-
-def light_clock_world(faces: str, far_body: bool) -> dict:
-    """DECLARATIONS.md section 10 with section 15's lines (M1-1, M1-3, M1-4, M1-10) and item 9,
-    SINCE BUILD.md section 26 and THE GIVEN TRAIN (item 27): a chain of 173 (x `closed` for
-    light, the zero face at 172 the mirror B forty Links from A's head at 131; or x open,
-    the sponges), the matter kind [800, 809], the emitter A of the extents [32, 1, 1] at
-    [100, 132) with the seed 50 x 2^20 on its bound mode, its `emitter` of light on the given
-    clock [512, 1] of N = 1024 with its train along +x and the stock 1 (one giving); the
-    receiving set `A_face` bound to A at the cube of three free Nodes adjacent to A's head
-    (x in [132, 134]; item 9, record 1899), A's `receiver` by name; with `far_body`, the cube
-    of light bodies at [160, 162] read as the set `far`; the amplitude bound 2^32; no wheel
-    (the record's own, 9.22 (4))."""
-    document = massive_world([173, 1, 1], {"x": faces, "y": "periodic", "z": "periodic"}, [800, 809])
-    document["ticks"] = 600
-    document["clock_stamp"] = True
-    document["measured"] = [
-        {
-            "position": [100, 0, 0],
-            "family": "matter",
-            "amount": 1,
-            "ramp": 0,
-            "start": 0,
-            "stocks": {"light": 1},
-            "momentum": [0, 0, 0],
-            "fixed": False,
-            "extents": [32, 1, 1],
-            "q": 0,
-            "spin": [0, 0, 0],
-            "twist": 0,
-            "moment": [0, 0, 0],
-            "pair": [800, 801],
-            "seed": 1
-            << 10,  # the window's writes at the body's Nodes pile up about 300-fold and stay under the bound (commit 7)
-            "emitter": {"family": "light", "weight": 3, "twist": 0},  # the window (commit 7)
-            "margin": "control",
-            # the receiver by name (section 13 item 7): A's own bound set
-            "receiver": "A_face",
-        }
-    ]
-    document["detectors"] = [
-        {"name": "A_face", "block": 0, "positions": [[132, 0, 0], [133, 0, 0], [134, 0, 0]]}
-    ]
-    if far_body:
-        receiver_cube(document, "far", [160, 0, 0])
-    seed_source(document, 0)
-    return document
 
 
 def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_rung():
