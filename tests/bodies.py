@@ -80,9 +80,7 @@ def paces_world() -> dict:
 
 
 def with_body_record(document: dict, on: bool) -> dict:
-    """The document with `body_record` set and the input stamp renewed over the whole file
-    (the generators build with the key off: the profile and the clock pair are written first,
-    the loader's check under the key reads them)."""
+    """The document with `body_record` set and the input stamp renewed over the whole file."""
     copy = json.loads(json.dumps(document))
     copy["body_record"] = on
     copy["stamp"] = input_stamp(copy)
@@ -329,9 +327,7 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
 
 
 def seed_source(document: dict, number: int) -> None:
-    """The measured event `number` (an emitter body, a one-Node well) seeded on its bound
-    mode at its scalar seed (the generator's `mode_profile`, the world's other blocks left as
-    declared), its `margin` made explicit."""
+    """The measured event `number` seeded on its bound mode at its scalar seed, its `margin` made explicit."""
     entry = document["measured"][number]
     entry.setdefault("margin", "control")
     generator = massive_generator()

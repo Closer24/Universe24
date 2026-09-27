@@ -358,3 +358,20 @@ def test_the_every_pull_request_list_is_one_sorted_file_of_existing_tests():
     assert listed == sorted(listed) and len(listed) == len(set(listed))
     assert all((root / test).is_file() for test in listed)
     assert set(listed) <= set(CHECK.select(["docs/GLOSSARY.md"], {})[0])
+
+
+def test_the_ci_shards_hold_every_test_once_and_the_regression_only_where_a_world_runs():
+    plan = CHECK.shards(runs_worlds=True)
+    assert len(plan) == 8 and all(plan.values())
+    files = [t for name, targets in plan.items() if name.startswith("suite") for t in targets]
+    tests = sorted(
+        p.relative_to(CHECK.ROOT).as_posix() for p in (CHECK.ROOT / "tests").glob("test_*.py")
+    )
+    assert sorted(files + [CHECK.REGRESSION]) == tests
+    worlds = [t for name, targets in plan.items() if name.startswith("world") for t in targets]
+    assert (
+        len(worlds)
+        == len(json.loads((CHECK.ROOT / "tests/shipped_worlds.json").read_text())["worlds"]) + 2
+    )
+    assert list(CHECK.shards(runs_worlds=False)) == ["suite 1", "suite 2", "suite 3"]
+    assert CHECK.balanced({"a": 9, "b": 5, "c": 4, "d": 1}, 2) == [["a", "d"], ["b", "c"]]
