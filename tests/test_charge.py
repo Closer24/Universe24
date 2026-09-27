@@ -292,7 +292,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     for key, value in (("charge_family", CHARGE_FAMILY_NAME), ("charge_strength", 1)):
         retired = copy()
         retired[key] = value
-        refused(retired, f"{key} is refused: the family genericity")
+        refused(retired, f"the world has unknown keys: {key}")
     weak = copy()
     set_strength(weak, 0)
     refused(weak, r"reads\[1\].weight")
