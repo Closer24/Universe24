@@ -9,8 +9,10 @@ Three gates on `src/`, selected on every pull request by `tools/check.py`:
 2. Family names. A string literal equal to the name of a family declared in a world file under
    `examples/` is counted per file, on the same ratchet.
 3. A new module of `core/`. A Python file under `src/event_universe/core/` that the merge base
-   does not hold needs a line in the pull request's body that contains `APPROVED-CORE` and
-   names Main Loop's approval. CI passes the body as the `PR_BODY` environment variable.
+   does not hold needs a line in the pull request's body that starts with `APPROVED-CORE` and
+   names Main Loop's approval. CI passes the body as the `PR_BODY` environment variable; the
+   check runs on a pull request (or locally with PR_BODY set), never on a push to main.
+A merge base that git cannot resolve fails by name.
 
 Usage: `python tools/engine_gates.py` writes the baseline for the current tree.
 """
@@ -119,18 +121,31 @@ def ratchet(root: Path, baseline: dict[str, Any], base: dict[str, Any] | None = 
     return found
 
 
-def new_core_modules(root: Path, ref: str) -> list[str]:
-    """The Python files under `core/` that the merge base does not hold."""
+def resolved(root: Path, ref: str) -> str:
+    """The commit `ref` names; a ref git cannot resolve fails by name, never passes silently."""
     try:
-        listed = subprocess.run(
-            ["git", "ls-tree", "-r", "--name-only", ref, "--", CORE.as_posix()],
+        return subprocess.run(
+            ["git", "rev-parse", "--verify", "--quiet", f"{ref}^{{commit}}"],
             capture_output=True,
             text=True,
             cwd=root,
             check=True,
-        ).stdout.split()
+        ).stdout.strip()
     except OSError, subprocess.CalledProcessError:
-        return []
+        raise ValueError(
+            f"the merge base {ref!r} cannot be resolved: fetch it or set CHECK_BASE"
+        ) from None
+
+
+def new_core_modules(root: Path, ref: str) -> list[str]:
+    """The Python files under `core/` that the merge base does not hold."""
+    listed = subprocess.run(
+        ["git", "ls-tree", "-r", "--name-only", resolved(root, ref), "--", CORE.as_posix()],
+        capture_output=True,
+        text=True,
+        cwd=root,
+        check=True,
+    ).stdout.split()
     held = set(listed)
     now = sorted(p.relative_to(root).as_posix() for p in (root / CORE).rglob("*.py"))
     return [rel for rel in now if rel not in held]
@@ -138,13 +153,19 @@ def new_core_modules(root: Path, ref: str) -> list[str]:
 
 def core_approval(new: list[str], body: str | None) -> list[str]:
     """A refusal per new module of `core/` when the pull request's body has no approval line."""
-    if not new or any(APPROVAL in line for line in (body or "").splitlines()):
+    if not new or any(line.lstrip().startswith(APPROVAL) for line in (body or "").splitlines()):
         return []
     return [
-        f"{rel} is a new module of core/: add a line with {APPROVAL} naming Main Loop's approval "
+        f"{rel} is a new module of core/: add a line starting with {APPROVAL} naming Main Loop's approval "
         "to the pull request's body"
         for rel in new
     ]
+
+
+def core_check_applies(environment: dict[str, str]) -> bool:
+    """The approval is read on a pull request, or locally where PR_BODY is set; never on a push to main."""
+    event = environment.get("GITHUB_EVENT_NAME")
+    return event == "pull_request" or (event is None and "PR_BODY" in environment)
 
 
 def base_ref() -> str:
@@ -152,7 +173,8 @@ def base_ref() -> str:
 
 
 def base_baseline(root: Path, ref: str) -> dict[str, Any] | None:
-    """The baseline as the merge base holds it, or None where it has none yet."""
+    """The baseline as the merge base holds it, or None where it has none yet; an unresolved base fails."""
+    ref = resolved(root, ref)
     try:
         shown = subprocess.run(
             ["git", "show", f"{ref}:{BASELINE.as_posix()}"],

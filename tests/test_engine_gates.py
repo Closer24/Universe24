@@ -8,6 +8,8 @@ import os
 import sys
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = "src/event_universe"
 
@@ -41,7 +43,7 @@ def test_the_tree_is_at_its_baseline_and_a_new_core_module_is_approved():
     assert baseline["format"] == "engine-gates-baseline"
     ref = GATES.base_ref()
     assert GATES.ratchet(ROOT, baseline, GATES.base_baseline(ROOT, ref)) == []
-    if os.environ.get("GITHUB_EVENT_NAME") == "pull_request" or "PR_BODY" in os.environ:
+    if GATES.core_check_applies(dict(os.environ)):
         new = GATES.new_core_modules(ROOT, ref)
         assert GATES.core_approval(new, os.environ.get("PR_BODY")) == []
 
@@ -84,3 +86,22 @@ def test_a_new_core_module_needs_the_approval_line():
         GATES.core_approval(new, "Adds the loop.\nAPPROVED-CORE: Main Loop, review of 2026-09-27\n")
         == []
     )
+
+
+def test_the_core_check_runs_on_a_pull_request_and_never_on_a_push_to_main():
+    assert GATES.core_check_applies({"GITHUB_EVENT_NAME": "pull_request", "PR_BODY": ""})
+    assert not GATES.core_check_applies({"GITHUB_EVENT_NAME": "push", "PR_BODY": ""})
+    assert GATES.core_check_applies({"PR_BODY": "local"})
+    assert not GATES.core_check_applies({})
+
+
+def test_an_approval_counts_only_at_a_lines_start():
+    new = [f"{PACKAGE}/core/main_loop.py"]
+    assert GATES.core_approval(new, "NOT-APPROVED-CORE: Main Loop said no\n") != []
+    assert GATES.core_approval(new, "  APPROVED-CORE: Main Loop, 2026-09-27\n") == []
+
+
+def test_a_merge_base_that_cannot_be_resolved_fails_by_name():
+    for check in (GATES.base_baseline, GATES.new_core_modules):
+        with pytest.raises(ValueError, match="'deadbeef' cannot be resolved"):
+            check(ROOT, "deadbeef")
