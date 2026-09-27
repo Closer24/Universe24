@@ -60,6 +60,19 @@ class MovingMode:
     share_inside: Fraction
 
 
+@dataclass(frozen=True)
+class MovingBody:
+    """The moving body of ALGEBRA.md #the-generator (e): the resting mode's two levels with the phase k per Link along x, the phase's pair (m, j) found by bisection and its triple, the packet's velocity (its current over its form, exact) against the named one n / (3 Q M), and the rest mode."""
+
+    now: np.ndarray
+    before: np.ndarray
+    pair: Pair
+    triple: Triple
+    velocity: Fraction
+    named: Fraction
+    rest: BoundMode
+
+
 def check_counts(counts: np.ndarray, gamma: int) -> None:
     """The refusals by name: the counts an int64 array of nonnegative integers below Gamma, at least one nonzero (ALGEBRA.md 9.108 item 12, the guard's lower side)."""
     if counts.dtype != np.int64 or counts.size == 0 or not counts.any():
@@ -275,7 +288,7 @@ def moving_mode(
     wrap: Wrap = PERIODIC,
     content: np.ndarray | None = None,
 ) -> MovingMode:
-    """The bound mode of the well moving along x at the rotation k per Link, at the derived amplitude unit: the same iteration as at rest with the twisted read act, from a flat start, each iterate mirrored (the real part even and the imaginary part odd about the centre, the envelope's one gauge, two division acts), the stop at the first repeat of the two parts; at the triple (1, 0, 1) it is the resting mode; the well the content at every Node, the field at rest where given (ALGEBRA.md #the-generator (e), (g))."""
+    """The bound mode of the well moving along x at the rotation k per Link, at the derived amplitude unit: the same iteration as at rest with the twisted read act, from a flat start, each iterate mirrored (the real part even and the imaginary part odd about the centre, the envelope's one gauge, two division acts), the stop at the first repeat of the two parts; at the triple (1, 0, 1) it is the resting mode; the well the content at every Node, the field at rest where given; a diagnostic: the twisted read is a gauge of the plain one, so this fixed point is the rest mode times a phase (ALGEBRA.md #the-generator (e): the moving body is moving_body)."""
     check_counts(counts, gamma)
     if content is None:
         content = counts
@@ -336,6 +349,95 @@ def moving_levels(mode: MovingMode, triple: Triple) -> tuple[np.ndarray, np.ndar
         now_re.astype(object), now_im.astype(object), p * amplitude, q * sine, q * amplitude
     )
     return now_re, before.astype(np.int64)
+
+
+def triple_of(pair: Pair) -> Triple:
+    """The Pythagorean triple of the phase's pair (m, j): (m^2 - j^2, 2 m j, m^2 + j^2), cos k = (m^2 - j^2) / (m^2 + j^2) exact, k from 0 at j = 0 to a quarter turn at j = m; refused by name outside 0 <= j <= m with m from 1 (ALGEBRA.md #the-generator (e))."""
+    m, j = pair
+    if m < 1 or j < 0 or j > m:
+        raise ValueError(f"the phase's pair (m, j) = {pair}: m from 1 and j from 0 to m")
+    return (m * m - j * j, 2 * m * j, m * m + j * j)
+
+
+def packet_current(now: np.ndarray, before: np.ndarray, num: int, wrap: Wrap) -> int:
+    """The packet's own current along x toward +x: SUM over the Links i to i + 1 of -F_ij, F_ij = num x (now_i before_j - before_i now_j) the law's current with the family's num as its weight (ALGEBRA.md #the-current: a wave travelling from i to j has F_ij below 0); the Link across the faces only between periodic ones."""
+    n, b = now.astype(object), before.astype(object)
+    flow = b * np.roll(n, -1, axis=0) - n * np.roll(b, -1, axis=0)
+    if not wrap[0]:
+        flow[-1] = 0
+    return num * int(flow.sum())
+
+
+def packet_velocity(
+    rest: BoundMode,
+    triple: Triple,
+    num: int,
+    self_coefficient: np.ndarray,
+    wall: int,
+    paces: np.ndarray,
+    wrap: Wrap,
+) -> tuple[Fraction, np.ndarray, np.ndarray]:
+    """The packet at the phase k per Link of the triple: the resting mode's envelope with the phase (moving_levels, no twisted fixed point) and its velocity, the current over the conserved form, the law's equality SUM F = T n / (3 Q) divided by the packet's form M T, so C / form = v exact (ALGEBRA.md #the-generator (e))."""
+    envelope = MovingMode(
+        rest.profile,
+        np.zeros_like(rest.profile),
+        rest.amplitude,
+        rest.iterations,
+        rest.cycle,
+        rest.rotation,
+        rest.share_inside,
+    )
+    now, before = moving_levels(envelope, triple)
+    form = conserved_form(now, before, self_coefficient, wall, num, paces, wrap)
+    return Fraction(packet_current(now, before, num, wrap)) / form, now, before
+
+
+def moving_body(
+    counts: np.ndarray,
+    pair: Pair,
+    gamma: int,
+    momentum: int,
+    momentum_unit: int,
+    denominator: int,
+    wrap: Wrap = PERIODIC,
+    content: np.ndarray | None = None,
+    rest: BoundMode | None = None,
+) -> MovingBody:
+    """The moving body along x (ALGEBRA.md #the-generator (e)): the momentum n names the velocity v = n / (3 Q M), Q the universe's momentum unit and M the body's quanta (the counts' sum); the phase's pair (m, j), m the body's declared denominator, j by bisection from 0 to m on the packet's velocity, which rises with k, to the j whose velocity is nearest the named one, the phase's sense the momentum's sign; refused by name where the named velocity is beyond the packet's at j = m (a quarter turn per Link)."""
+    if momentum_unit < 1 or denominator < 1:
+        raise ValueError(
+            f"the momentum unit Q = {momentum_unit} and the phase's denominator m = {denominator} are from 1"
+        )
+    if rest is None:
+        rest = bound_mode(counts, pair, gamma, wrap, content)
+    well = counts if content is None else content
+    named = Fraction(momentum, 3 * momentum_unit * int(counts.sum()))
+    read, self_coefficient, wall = rule_integers(pair, gamma, well)
+    paces = gamma - well
+    sense = 1 if momentum >= 0 else -1
+
+    def at(j: int) -> tuple[Fraction, np.ndarray, np.ndarray]:
+        a, b, c = triple_of((denominator, j))
+        return packet_velocity(rest, (a, sense * b, c), pair[0], self_coefficient, wall, paces, wrap)
+
+    found = {0: at(0), denominator: at(denominator)}
+    if abs(found[denominator][0]) < abs(named):
+        raise ValueError(
+            f"the momentum {momentum} names the velocity {named}, beyond the packet's "
+            f"{found[denominator][0]} at a quarter turn per Link (m = {denominator})"
+        )
+    low, high = 0, denominator
+    while high - low > 1:
+        middle = int(division(1, 2, np.array(low + high, dtype=object)))
+        found[middle] = at(middle)
+        if abs(found[middle][0]) <= abs(named):
+            low = middle
+        else:
+            high = middle
+    j = low if abs(named) - abs(found[low][0]) <= abs(found[high][0]) - abs(named) else high
+    velocity, now, before = found[j]
+    a, b, c = triple_of((denominator, j))
+    return MovingBody(now, before, (denominator, j), (a, sense * b, c), velocity, named, rest)
 
 
 def clock_pair(rotation: Fraction, denominator: int) -> tuple[int, int]:
@@ -456,10 +558,10 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
             f"the generator takes one body in the law's form (its nodes with their counts), found {len(bodies)}"
         )
     body = bodies[0]
-    if any(int(v) for v in body.get("momentum", (0, 0, 0))):
-        raise ValueError(
-            "a moving body's k by bisection on the pairs is not in the tool yet: the momentum is 0 here"
-        )
+    momentum = tuple(int(v) for v in body.get("momentum", (0, 0, 0)))
+    axes = [axis for axis, component in enumerate(momentum) if component]
+    if len(axes) > 1:
+        raise ValueError(f"a moving body moves along one axis: the momentum {momentum} has two")
     counts = np.zeros(shape, dtype=np.int64)
     for entry in body["nodes"]:
         counts[tuple(int(v) for v in entry["node"])] = int(entry["count"])
@@ -485,6 +587,34 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
         }
     mode = bound_mode(counts, pair, gamma, wrap, content)
     clock = clock_pair(mode.rotation, mode.amplitude)
+    moving: dict[str, Any] = {}
+    if axes:
+        axis = axes[0]
+        if "phase_denominator" not in body:
+            raise ValueError(
+                "a moving body declares its phase_denominator m (the phase's pair (m, j), j bisected)"
+            )
+        order = (axis, *(other for other in range(3) if other != axis))
+        moved = moving_body(
+            np.moveaxis(counts, axis, 0),
+            pair,
+            gamma,
+            momentum[axis],
+            int(integers["momentum_unit"]),
+            int(body["phase_denominator"]),
+            tuple(wrap[other] for other in order),
+            np.moveaxis(content, axis, 0),
+        )
+        moving = {
+            "axis": axis,
+            "momentum": momentum[axis],
+            "phase_pair": list(moved.pair),
+            "triple": list(moved.triple),
+            "velocity_named": [moved.named.numerator, moved.named.denominator],
+            "velocity": [moved.velocity.numerator, moved.velocity.denominator],
+            "now": np.moveaxis(moved.now, 0, axis),
+            "before": np.moveaxis(moved.before, 0, axis),
+        }
     return {
         "family": body["family"],
         "pair": list(pair),
@@ -498,6 +628,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
         "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
         "profile": mode.profile,
         "content": content,
+        "moving": moving,
     }
 
 
@@ -507,13 +638,12 @@ def main() -> None:
     parser.add_argument("--out", type=Path, help="write the readings, the profile and the well as JSON")
     args = parser.parse_args()
     reading = generate(json.loads(args.input.read_text(encoding="utf-8")))
-    profile, content = reading.pop("profile"), reading.pop("content")
+    arrays = {key: reading.pop(key) for key in ("profile", "content")}
+    arrays.update({key: reading["moving"].pop(key) for key in ("now", "before") if reading["moving"]})
     print(json.dumps(reading))
     if args.out is not None:
         args.out.write_text(
-            json.dumps(
-                {**reading, "profile": profile.ravel().tolist(), "content": content.ravel().tolist()}
-            )
+            json.dumps({**reading, **{key: value.ravel().tolist() for key, value in arrays.items()}})
         )
 
 
