@@ -110,7 +110,7 @@ def test_the_refusals_name_the_unit_the_links_and_the_bound():
         apply(SelfSourceTerm(24, 1), SelfSourceStart((OwnLevel(level, (level,) * 5),)))
     with pytest.raises(ValueError, match="beyond int64"):
         apply(SelfSourceTerm(1 << 40, 1 << 30), SelfSourceStart((own,)))
-    assert apply(SelfSourceTerm(1 << 40, 1 << 20), SelfSourceStart((own,))).total == 0
+    assert apply(SelfSourceTerm(1 << 40, 1 << 20), SelfSourceStart((own,)), None).total == 0
 
 
 def test_the_declaration_is_the_registers_row():
