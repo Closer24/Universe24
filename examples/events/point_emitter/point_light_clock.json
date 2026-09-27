@@ -35,6 +35,11 @@
     0,
     0
    ],
+   "spin_before": [
+    0,
+    0,
+    0
+   ],
    "moment": [
     0,
     0,
@@ -45,6 +50,11 @@
     "charge": 64
    },
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -497,6 +507,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {},
    "extents": [
@@ -510,6 +525,11 @@
    ],
    "q": 0,
    "spin": [
+    0,
+    0,
+    0
+   ],
+   "spin_before": [
     0,
     0,
     0
@@ -536,6 +556,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {},
    "extents": [
@@ -549,6 +574,11 @@
    ],
    "q": 0,
    "spin": [
+    0,
+    0,
+    0
+   ],
+   "spin_before": [
     0,
     0,
     0
@@ -571,6 +601,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "0982c31eb3e3406f6af4b85f870de49a93d0a3343af4f35b3c137f93f1f496e1"
+  "hash": "6b37f5b9b7a3ac8a98feaea1e287f8f7c96486ad1494964fc7b0c2ef2eecd256"
  }
 }

@@ -224,6 +224,7 @@ def emitter_body(
         # ALGEBRA.md #the-paces; BUILD.md section 26 item 47)
         "held": {family: stock},
         "momentum": [0, 0, 0],
+        "momentum_before": [0, 0, 0],
         "ramp": 0,
         "start": 0,
         "side": 1,
@@ -243,6 +244,7 @@ def body(position: list[int], family: str = "light") -> dict:
         "family": family,
         "amount": 1,
         "momentum": [0, 0, 0],
+        "momentum_before": [0, 0, 0],
         "fixed": True,
         "stocks": {},
     }
@@ -335,6 +337,7 @@ def lamp(
         "amount": amount,
         "phase": 0,
         "momentum": [0, 0, 0],
+        "momentum_before": [0, 0, 0],
         "fixed": True,
     }
     inner: dict = {"rate": rate, "wheel": wheel}
