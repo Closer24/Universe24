@@ -83,8 +83,7 @@ def test_1_the_output_holds_exactly_the_declared_readings_each_labelled_by_kind(
     "[kind, target, of, degree, weight, table]",
 )
 def test_2a_a_read_written_as_a_term_runs_bit_for_bit_with_the_reads_form():
-    """A family's `reads` entry and the same coupling as a term of kind READ give the same
-    records, remainders and lines."""
+    """A family's `reads` entry and the same coupling as a term of kind READ give the same records, remainders and lines."""
     document = emitter_world(stock=2, ticks=STEPS)
     as_terms = json.loads(json.dumps(document))
     for entry in families_of(as_terms):
@@ -186,6 +185,7 @@ def test_3b_a_content_below_zero_at_run_time_ends_the_run_with_the_guards_line()
 # (4) THE CLICK THAT KEEPS THE MOMENTUM, WITH ITS RECOIL'S STORE (ALGEBRA.md #the-primitives.111 item 2)
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer():
     """At a giving's close the body's held vector n changes along the click's axis, opposite to the given light, by 3 Q P_body (L div lambda_q) div L with the store on the body's record; two givings each way cancel (the law's row "the recoil"; ALGEBRA.md #the-interval, #the-primitives)."""
     document = emitter_world(stock=2, ticks=STEPS)
@@ -276,8 +276,7 @@ def test_7_a_traced_run_is_bit_for_bit_the_untraced_one_and_the_trace_only_reads
 )
 @pytest.mark.parametrize("start", [{"mode": "check", "parallel": 2}, {"mode": "check", "active": True}])
 def test_8_the_parallel_and_the_active_paths_are_bit_for_bit_the_plain_one(tmp_path, start):
-    """Records advanced in parallel and merged in identity order, or the active box from the
-    real support, give the same output as the plain path on a shipped world."""
+    """Records advanced in parallel and merged in identity order, or the active box from the real support, give the same output as the plain path on a shipped world."""
     plain = run_world(emitter_world(stock=2, ticks=STEPS), tmp_path / "plain")
     other = run_world(emitter_world(stock=2, ticks=STEPS), tmp_path / "other", start=start)
     for key in ("clicks", "verdict", "digest"):

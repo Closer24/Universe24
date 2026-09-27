@@ -10,6 +10,8 @@ from tests.worlds import (
     CHARGE_FAMILY,
     CHARGE_FAMILY_NAME,
     CLOCK_FAMILY,
+    HELD_MOMENT,
+    HELD_SPIN,
     NODE_CLOCK,
     chain_world,
     emitter_body,
@@ -80,13 +82,7 @@ def paces_world() -> dict:
             family.update(
                 {
                     "parts": [1, 3, 6],
-                    "held": {
-                        "count": "content",
-                        "divisor": 40000,
-                        "factors": [1, 4, 2],
-                        "dipole": "spin",
-                        "dipole_div": 1,
-                    },
+                    "held": dict(HELD_SPIN),
                     "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
                 }
             )
@@ -459,19 +455,12 @@ def parts_world(**body: object) -> dict:
                 {
                     "parts": [1, 3, 6],
                     "phase": 1,
-                    "held": {
-                        "count": "content",
-                        "divisor": 40000,
-                        "factors": [1, 4, 2],
-                        "dipole": "spin",
-                        "dipole_div": 1,
-                    },
+                    "held": dict(HELD_SPIN),
                     "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
                 }
             )
             family["spins_step"] = {"curl": [1, 4], "tidal": [3, 4]}
         if family["name"] == "charge":
-            family.update(parts=[1, 3], held={"count": "sign", "divisor": 40000, "factors": [1, 1]})
-            family["held"].update(dipole="moment", dipole_div=2)
+            family.update({"parts": [1, 3], "held": dict(HELD_MOMENT)})
     document["stamp"] = input_stamp(document)
     return document

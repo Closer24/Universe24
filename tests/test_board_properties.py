@@ -287,6 +287,7 @@ def test_translation_on_the_torus():
 # ---------------------------------------------------------------- conservation, reversibility, locality
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_conservation_between_clicks():
     """(a) the content per family constant before the click and down by one quantum of light at it; (b) per record, I(t) - I(t - 1) is the remainder term of 8.2 over the step, exactly, both forms with the Node clock's content in force for that step (ALGEBRA.md #the-paces; BUILD.md section 26 item 31: the well's Nodes at M = 1 until the click at the set bound to the well hands it the light quantum, M = 2 after; the form changes with the content at the event and the identity holds step by step across it)."""
     document = small_world()
@@ -359,6 +360,7 @@ def test_conservation_between_clicks():
         assert exchanges > 0, identity
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_reversibility_except_the_click():
     """8.8's inverse UNDER THE FIXED WALL (the model owner's record 1994 and his word of 2026-09-25; ALGEBRA.md #the-counts-line; BUILD.md section 26 item 34): (a) the joint step inverts BIT FOR BIT, remainders and the family of clicks' own field included, over the whole run with no receiver named, though the family's level falls at Nodes as its waves pass (the falls counted, above 0): the wall 3 den Gamma is the same at every interval, so no two states merge (item 32's finding A, the loss where the wall 3 den (Gamma + c) shrank, HISTORY). (b) With the receiver named the inverse from the run's end returns the state at the click's interval exactly, without the deleted summand: the click's deletion is the one act the inverse cannot undo, the deleted summand in neither state."""
     unnamed = small_world(receiver_named=False)

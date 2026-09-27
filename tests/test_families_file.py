@@ -15,7 +15,7 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.loader import frame
 from event_universe.world_files import input_stamp, parse_nature_beam_world, read_repository_json
 from tests.running import refused
-from tests.worlds import FILE, emitter_specimen, family_entry, on_the_file
+from tests.worlds import FILE, HELD_MOMENT, HELD_SPIN, emitter_specimen, family_entry, on_the_file
 
 ROOT = Path(__file__).resolve().parents[1]
 ATTRIBUTES = {"name", "parts", "phase", "pair", "reads", "self_source"}
@@ -25,14 +25,13 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     document = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
     assert "law" not in document  # one engine, no name and no version (record 2128)
     table = document["integers"].pop("twist_table")
-    assert document["integers"] == {
-        "node_clock": 10000,
-        "amplitude_bound": 1 << 20,
-        "Lambda": 1,
-        "momentum_unit": 64,
-        "most_steps": 65536,
-        "width": 63,
-    }
+    expected = dict(
+        node_clock=10000, amplitude_bound=1 << 20, Lambda=1, momentum_unit=64, most_steps=65536
+    )
+    expected.update(
+        width=63, most_families=20, least_residues=500
+    )  # the owner's two numbers, in the file
+    assert document["integers"] == expected
     # the twist table (ALGEBRA.md #the-primitives; commit 4): the unit 4 Gamma 2^16, 2^10 fine
     # and 2^15 coarse triples, every one c^2 + s^2 = d^2 with d at most 10^9
     assert table["unit"] == 4 * 10000 * 65536
@@ -49,19 +48,12 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     # gravity: ten components, one level, held content with the factors (1, 4, 2) and the spin's
     # dipole, no reads, no clicks (ALGEBRA.md #the-interval)
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and gravity["pair"] == [1, 1]
-    # THE HOLD'S DIVISOR E_s (ALGEBRA.md #the-primitives, the row "the hold"): the count a source over it
-    assert gravity["held"].pop("divisor") == 40000 and charge["held"].pop("divisor") == 40000
-    assert gravity["held"] == {
-        "count": "content",
-        "factors": [1, 4, 2],
-        "dipole": "spin",
-        "dipole_div": 1,
-    }
+    assert gravity["held"] == HELD_SPIN
     assert gravity["reads"] == [] and "clicks" not in gravity
     # the charge: four components, two levels, held sign with the moment's dipole halved, reads
     # gravity, and clicks: light is its wave
     assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["pair"] == [1, 1]
-    assert charge["held"] == {"count": "sign", "factors": [1, 1], "dipole": "moment", "dipole_div": 2}
+    assert charge["held"] == {**HELD_MOMENT}
     assert charge["reads"] == [{"family": "gravity", "weight": 1, "twist": "own", "by": 1}]
     assert charge["clicks"] == {"gives": True, "takes": True, "quantum": 1}
     # matter: a scalar, two levels, the pair on every body, reads gravity and the charge at

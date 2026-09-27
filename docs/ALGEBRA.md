@@ -590,14 +590,19 @@ from zeros, whose transient rings. Under [1, 1] between periodic faces the
 sources have no rest (the periodic Poisson problem at kappa = 0), and the
 world is refused by name; between open faces the harmonic well of the sources.
 
-THE START. The loop writes every held family at the load at its rest, the
-fixed point of the family's line under the hold's source, by one folder
-found by its name, once before the first interval and never in it: on a
-chain (one layer on two axes) the rise between the bodies' Nodes in one pass
-in integers, the tridiagonal line of the same map with the sources on its
-right side; elsewhere the map iterated. Generic (the row's pair and divisor),
-vector (the division act, no root), local (the six reads and the source);
-the cost is the load's.
+THE START. The loop writes every held family at the load at its rest, by
+one folder found by its name, once before the first interval and never in
+it: on a chain (one layer on two axes) in one pass in integers, the
+tridiagonal line with the sources on its right side; on a box a guess of the line's solver refined on the exact
+residual R and certified in whole integers: the exit-time field T of the
+same line, with its own exact residual rho, bounds the inverse, ||A^-1|| <=
+||T|| / (6 den x scale - ||rho||), so the field stands within ||A^-1|| ||R||
+of the exact rest, and where every free Node is farther than that from a
+half the levels are the rest's nearest integers; a Node nearer takes a
+finer unit once, then rounds up, the half's own side. Generic (the
+row's pair and divisor), vector (the levels by the division act, the certificate in
+integers; the guess is no value of the law), local (the six reads and the
+source); the cost is the load's.
 
 ### The velocity
 

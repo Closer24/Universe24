@@ -222,17 +222,17 @@ def test_the_every_pull_request_list_is_one_sorted_file_of_existing_tests():
 
 
 def test_the_ci_shards_hold_every_test_once_and_the_regression_only_where_a_world_runs():
-    plan = CHECK.shards(runs_worlds=True)
+    plan = CHECK.shards(runs_worlds=True, every_world=True)
     assert len(plan) == 8 and all(plan.values())
     files = [t for name, targets in plan.items() if name.startswith("suite") for t in targets]
     tests = sorted(
         p.relative_to(CHECK.ROOT).as_posix() for p in (CHECK.ROOT / "tests").glob("test_*.py")
     )
     assert sorted(files + [CHECK.REGRESSION]) == tests
-    worlds = [t for name, targets in plan.items() if name.startswith("world") for t in targets]
-    assert (
-        len(worlds)
-        == len(json.loads((CHECK.ROOT / "tests/shipped_worlds.json").read_text())["worlds"]) + 3
-    )
+    recorded = json.loads((CHECK.ROOT / "tests/shipped_worlds.json").read_text())["worlds"]
+    planned = json.loads(CHECK.RECORD_PLAN.read_text())["every_pull_request"]  # the owner's five
+    for every, count in ((True, len(recorded)), (False, len(planned))):
+        worlds = [t for n, ts in CHECK.shards(True, every).items() if "world" in n for t in ts]
+        assert len(worlds) == count + 3 and len(planned) == 5 and set(planned) <= set(recorded)
     assert list(CHECK.shards(runs_worlds=False)) == ["suite 1", "suite 2", "suite 3"]
     assert CHECK.balanced({"a": 9, "b": 5, "c": 4, "d": 1}, 2) == [["a", "d"], ["b", "c"]]

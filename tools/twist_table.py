@@ -28,7 +28,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from event_universe.events.primitives import FINE_SIZE, Triple, TwistTable, is_triple  # noqa: E402
+from event_universe.events.primitives import Triple, TwistTable, is_triple  # noqa: E402
+from event_universe.loader.world import TWIST_FINE_COUNT  # noqa: E402
 
 GAMMA = 10_000
 UNIT_SCALE = 1 << 16
@@ -60,8 +61,8 @@ def angle_of(triple: Triple) -> float:
 
 def build(coarse: int = COARSE_DEFAULT, gamma: int = GAMMA) -> TwistTable:
     unit = theta_unit(gamma)
-    fine = tuple(triple_for(k * unit) for k in range(FINE_SIZE))
-    coarse_entries = tuple(triple_for(k * FINE_SIZE * unit) for k in range(coarse))
+    fine = tuple(triple_for(k * unit) for k in range(TWIST_FINE_COUNT))
+    coarse_entries = tuple(triple_for(k * TWIST_FINE_COUNT * unit) for k in range(coarse))
     return TwistTable(fine, coarse_entries)
 
 
@@ -72,7 +73,10 @@ def check_angles(table: TwistTable, gamma: int = GAMMA, tolerance: float | None 
     unit = theta_unit(gamma)
     allowed = SMALLEST_ANGLE if tolerance is None else tolerance
     largest = 0.0
-    for name, entries, step in (("fine", table.fine, unit), ("coarse", table.coarse, FINE_SIZE * unit)):
+    for name, entries, step in (
+        ("fine", table.fine, unit),
+        ("coarse", table.coarse, TWIST_FINE_COUNT * unit),
+    ):
         for index, triple in enumerate(entries):
             if not is_triple(triple):
                 raise ValueError(f"the {name} triple {index} {triple} is no Pythagorean triple")
@@ -96,7 +100,7 @@ def main() -> None:
     miss = check_angles(table, args.gamma)
     print(
         f"the largest miss of an angle {miss:.3e} radians against the asked theta_unit / 2^10 = "
-        f"{theta_unit(args.gamma) / FINE_SIZE:.3e} (the finding in this tool's docstring)"
+        f"{theta_unit(args.gamma) / TWIST_FINE_COUNT:.3e} (the finding in this tool's docstring)"
     )
     args.out.write_text(
         json.dumps({"fine": [list(t) for t in table.fine], "coarse": [list(t) for t in table.coarse]})

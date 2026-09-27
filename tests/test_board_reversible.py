@@ -43,8 +43,7 @@ def reversible_world(ticks: int = 400) -> dict:
 
 
 def rows_of(simulation: DetectorLawSimulation) -> dict[str, object]:
-    """Every row of the board: the records' two levels and remainders (the bodies' own among
-    them), both fields' rows, the held quanta and the interval."""
+    """Every row of the board: the records' two levels and remainders (the bodies' own among them), both fields' rows, the held quanta and the interval."""
     return {
         "records": {
             identity: (live.now.copy(), live.before.copy(), live.remainder.copy())
@@ -66,8 +65,7 @@ def rows_of(simulation: DetectorLawSimulation) -> dict[str, object]:
 
 
 def assert_same(now: dict, then: dict, lost: set[int] = frozenset()) -> None:
-    """`now` equals `then` bit for bit, but for the records in `lost` (present in `then`,
-    absent in `now`)."""
+    """`now` equals `then` bit for bit, but for the records in `lost` (present in `then`, absent in `now`)."""
     assert set(then["records"]) - set(now["records"]) == set(lost)
     assert set(now["records"]) <= set(then["records"])
     for identity, rows in now["records"].items():
@@ -80,8 +78,7 @@ def assert_same(now: dict, then: dict, lost: set[int] = frozenset()) -> None:
 
 
 def run_states(document: dict, ticks: int) -> tuple[DetectorLawSimulation, list[dict], list[dict], Seen]:
-    """The world stepped `ticks` intervals: the simulation, the rows after every interval (the
-    load's at index 0), the lines, and the ladder spy's readings at every click."""
+    """The world stepped `ticks` intervals: the simulation, the rows after every interval (the load's at index 0), the lines, and the ladder spy's readings at every click."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     seen: Seen = {}

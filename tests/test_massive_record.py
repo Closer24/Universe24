@@ -85,6 +85,7 @@ def test_the_rule_at_a_corner_of_an_open_board():
         assert int(r_next[0, 0, 0]) == 5
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     """BUILD.md (c): on the first build's random chain the step at light's pair [1, 1] gives the same quotient as 3 a_next + r' = S_6 - 3 a_before + r, the total and the remainder Gamma times the line's on every Node without content whose six reads have none: the held level is 0 at every Node (the counts 7 at the emitter and 1 at each screen body over the divisor 40000 add no increment at the start, ALGEBRA.md #the-primitives the row "the hold"), so all 80 Nodes are free and the weak-field rule from the three integers, 3 Gamma a_next + r' = (Gamma - c_i) S_6(a_now)_i + 6 c_i a_now - 3 Gamma a_before + r, is the plain rule's at c_i = 0."""
     world = parse_nature_beam_world(chain_world())
@@ -220,8 +221,7 @@ def test_the_loaders_refusals_name_the_key():
     reversed_pair["universe"][1]["pair"] = [3, 2]
     with pytest.raises(ValueError, match="den >= num"):
         parse_nature_beam_world(reversed_pair)
-    # one border for every family (BUILD.md section 26 item 28): the family key `faces`
-    # refused by name on the massive kind and on light's alike
+    # one border for every family (BUILD.md section 26 item 28): `faces` refused by name on both kinds
     for family in (0, 1):
         faced = json.loads(json.dumps(base))
         faced["universe"][family]["faces"] = {"x": "open"}
@@ -277,8 +277,7 @@ def test_the_records_keys_under_the_key_and_none_without_it():
     assert world.kind_periodic(1) == (False, True, False) == world.kind_periodic(0)
     simulation = DetectorLawSimulation(world)
     assert "form" in simulation.books()["families"]["matter"]
-    # without the key there is no block, so no emitter body (the lamp refused under the
-    # detector law): the rule's world with the key withdrawn and light alone
+    # without the key there is no block, so no emitter body: the world with the key withdrawn, light alone
     without = massive_world([4, 4, 4], "open", [2, 3])
     without["clock_stamp"] = True  # the old form's key, refused by name: the stamp is always written
     with pytest.raises(ValueError, match="the world has unknown keys: clock_stamp"):
@@ -652,6 +651,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
         parse_nature_beam_world(matter_emitter_world(True))
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_a_matter_emitters_record_clicks_once_at_the_rung():
     """A massive record clicks once at the screen, at the first interval 2 W C >= (2 u + 1) T on its pointer, and is deleted whole there; two gather lines, the books balanced every interval."""
     document = matter_emitter_world(True, [512, 1], stock=2)

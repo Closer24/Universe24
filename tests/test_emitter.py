@@ -39,6 +39,7 @@ def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
 
 
 @pytest.mark.diagnostic
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserved():
     document = emitter_world(stock=4)
     lines, simulation, trace = run(document)
@@ -291,9 +292,9 @@ def test_the_loaders_refusals_name_their_keys():
 
     refused(coupled, "has unknown keys: coupling")
 
-    # the richness of the giving Node (ALGEBRA.md #a-familys-declaration): a pair with fewer than 500
-    # remainder values refuses the emitter naming the count
+    # the richness of the giving Node: a pair with fewer than the universe's `least_residues` refuses the emitter
     def poor_well(document):
+        document["least_residues"] = 500
         document["measured"][0]["pair"] = [800, 800]
 
     refused(poor_well, "gives 3 remainder values")

@@ -27,8 +27,7 @@ GAMMA = 10_000
 def old_isotropic(
     num: int, den: int, gamma: int, content: int, weak_field: bool
 ) -> tuple[int, int, int]:
-    """The engine's `rule_coefficients` before the cut (events/rule.py of main 6d2a92e2), the
-    oracle: (R, S, w) of the weak-field rule, or of the plain first-order rule."""
+    """The engine's `rule_coefficients` before the cut (events/rule.py of main 6d2a92e2), the oracle: (R, S, w) of the weak-field rule, or of the plain first-order rule."""
     pace = gamma - content
     if not weak_field:
         return pace * num, 6 * den * content, 3 * den * gamma
@@ -56,8 +55,7 @@ def old_axes(
 
 
 def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_zero_axis_contents():
-    """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four
-    paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule."""
+    """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule."""
     rng = random.Random(3)
     for _ in range(500):
         num, den = rng.randint(1, 1000), rng.randint(1, 1000)
@@ -91,8 +89,7 @@ def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_ze
 
 
 def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_arrays():
-    """w a_next + r' = SUM_a R_a arr_a + S a_now - w a_before + r with 0 <= r' < w, the inverse exact; on
-    int64 arrays the sum over the axes equals R times the six-sum bit for bit, the dtype kept."""
+    """w a_next + r' = SUM_a R_a arr_a + S a_now - w a_before + r with 0 <= r' < w, the inverse exact; on int64 arrays the sum over the axes equals R times the six-sum bit for bit, the dtype kept."""
     rng = random.Random(5)
     for _ in range(500):
         num, den = rng.randint(1, 1000), rng.randint(1, 1000)
@@ -140,8 +137,7 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
 
 
 def test_the_forms_node_term_and_the_load_bound_read_the_same_integers():
-    """The form's Node term w (now^2 + before^2) - S now before and the load bound 6 A R + A |S|
-    + w (A + 1) are read from the one function's integers."""
+    """The form's Node term w (now^2 + before^2) - S now before and the load bound 6 A R + A |S| + w (A + 1) are read from the one function's integers."""
     reads, self_coefficient, wall = coefficients(800, 809, GAMMA, 250)
     assert form_term(self_coefficient, wall, 7, -3) == wall * (49 + 9) + self_coefficient * 21
     amplitude = 1 << 20
@@ -168,8 +164,7 @@ RULE_ARITHMETIC = RULE_LINES + (
 
 
 def test_no_other_file_of_src_writes_the_rules_arithmetic():
-    """(d) of the model owner's target: the rule is written once, in core/rule3.py; every other
-    file of src/ calls it."""
+    """(d) of the model owner's target: the rule is written once, in core/rule3.py; every other file of src/ calls it."""
     offenders = []
     for path in sorted(SOURCE.rglob("*.py")):
         if path == SOURCE / "core" / "rule3.py":
@@ -185,8 +180,7 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
 
 
 def test_every_step_of_the_engine_goes_through_the_one_rule(monkeypatch):
-    """The engine's records step and step back through rule3 alone (+1 forward, -1 back, a spy on the one
-    name the engine imports), and the operation primitive of the register is rule3 itself."""
+    """The engine's records step and step back through rule3 alone (+1 forward, -1 back, a spy on the one name the engine imports), and the operation primitive of the register is rule3 itself."""
     calls = {"forward": 0, "backward": 0}
     real_rule = detector_law.rule3
 
@@ -214,9 +208,7 @@ SHIFT_TOKENS = re.compile(r"np\.roll\(|\._shift\(|\.take\(")
 
 
 def test_no_other_code_moves_a_level_from_one_node_to_another():
-    """Every shift of an array across Nodes in src/ is core/ports.py's `arrival` (no np.roll, no take, no
-    shift elsewhere: the loop reads its neighbours through the Ports), and no function of src/ is a split
-    of its own."""
+    """Every shift of an array across Nodes in src/ is core/ports.py's `arrival` (no np.roll, no take, no shift elsewhere: the loop reads its neighbours through the Ports), and no function of src/ is a split of its own."""
     import ast
 
     found: dict[str, set[str]] = {}
@@ -251,8 +243,7 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
 
 
 def test_a_run_stepped_forward_and_back_returns_bit_for_bit():
-    """Rule3 with the direction -1 undoes +1 exactly: the emitter world eight intervals forward and eight
-    back returns every record's levels, remainders and the held levels bit for bit (ALGEBRA.md #the-direction)."""
+    """Rule3 with the direction -1 undoes +1 exactly: the emitter world eight intervals forward and eight back returns every record's levels, remainders and the held levels bit for bit (ALGEBRA.md #the-direction)."""
     simulation = detector_law.DetectorLawSimulation(
         parse_nature_beam_world(emitter_world(stock=1, ticks=8))
     )

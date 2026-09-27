@@ -51,6 +51,14 @@ SOURCED = {
     "self_source": {"unit": 0},
     "sourced": {"of": "matter", "weight": 1, "scale": 18910},
 }
+HELD_MOMENT = {"count": "sign", "factors": [1, 1], "dipole": "moment", "dipole_div": 2, "divisor": 40000}
+HELD_SPIN = {
+    "count": "content",
+    "factors": [1, 4, 2],
+    "dipole": "spin",
+    "dipole_div": 1,
+    "divisor": 40000,
+}
 CHARGE_FAMILY_NAME = "charge"
 
 
@@ -61,7 +69,7 @@ CHARGE_FAMILY = {
     "phase": 2,
     "pair": [1, 1],
     "quantum": 1,
-    "held": {"count": "sign", "divisor": 40000, "factors": [1]},
+    "held": {"count": "sign", "factors": [1], "divisor": 40000},
     "reads": [],
     "self_source": {"unit": 0},
 }
@@ -82,7 +90,7 @@ CLOCK_FAMILY = {
     "phase": 2,
     "pair": [1, 1],
     "quantum": 1,
-    "held": {"count": "content", "divisor": 40000, "factors": [1]},
+    "held": {"count": "content", "factors": [1], "divisor": 40000},
     "reads": [],
     "self_source": {"unit": 0},
 }
@@ -337,12 +345,10 @@ SEEDS_FILE = ROOT / "tests" / "seeds.json"  # the retired generator's seedings, 
 def _seed_key(document: dict) -> str:
     from event_universe.world_files import input_digest
 
-    plain = json.loads(json.dumps({k: v for k, v in document.items() if k != "stamp"}))
-    # the held row's divisor changes no recorded seeding (the seeds predate it): left out of the digest
-    for row in plain["universe"] if isinstance(plain.get("universe"), list) else ():
-        if isinstance(row.get("held"), dict):
-            row["held"].pop("divisor", None)
-    return input_digest(plain)
+    bare = json.loads(json.dumps({k: v for k, v in document.items() if k != "stamp"}))
+    for entry in bare["universe"] if isinstance(bare.get("universe"), list) else ():
+        entry.get("held", {}).pop("divisor", None)  # a key the recorded seeding never read
+    return input_digest(bare)
 
 
 def _seeds() -> dict:
@@ -355,8 +361,9 @@ def _apply(document: dict, written: dict) -> None:
     document.update(written["top"])
     for index, keys in written["measured"].items():
         document["measured"][int(index)].update(keys)
-    if "stamp" in written["top"]:  # the stamp covers the whole seeded file, the held rows' divisor in it
-        document["stamp"] = input_stamp(document)
+    document["stamp"] = input_stamp(
+        document
+    )  # over the document as it stands (the recorded stamp's document)
 
 
 def seed_on_the_mode(document: dict) -> None:

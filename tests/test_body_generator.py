@@ -13,6 +13,7 @@ import scipy.sparse.linalg as sparse_linalg
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import coefficients, rule_total_bound
+from event_universe.features.start import rest as start_rest
 from tools.body_generator import (
     AT_REST,
     PERIODIC,
@@ -21,7 +22,6 @@ from tools.body_generator import (
     bound_mode,
     clock_pair,
     conserved_form,
-    field_at_rest,
     generate,
     moving_body,
     moving_mode,
@@ -212,7 +212,7 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     world["universe"] = str(tmp_path / "universe.json")
     readings, box = generate(world), counted_cube(8, 2, 3000)
     reading = readings["bodies"][0]
-    rest = field_at_rest(box, (1, 4))
+    rest = start_rest(box, (1, 4))
     mode = bound_mode(box, KIND, GAMMA, content=rest.levels)
     assert reading["rotation"] == [mode.rotation.numerator, mode.rotation.denominator]
     assert reading["period"] == 8 and np.array_equal(reading["profile"], mode.profile)

@@ -102,8 +102,7 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
 
 
 def group_pace_light(k: float, ratio: float) -> float:
-    """The group pace of light's dispersion under a uniform clock ratio e / f: cos omega' =
-    1 - ratio (1 - cos omega), cos omega = (cos k + 2) / 3, by a central difference (HOST)."""
+    """The group pace of light's dispersion under a uniform clock ratio e / f: cos omega' = 1 - ratio (1 - cos omega), cos omega = (cos k + 2) / 3, by a central difference (HOST)."""
 
     def omega(kk: float) -> float:
         return math.acos(1.0 - ratio * (1.0 - (math.cos(kk) + 2.0) / 3.0))
@@ -113,6 +112,7 @@ def group_pace_light(k: float, ratio: float) -> float:
 
 
 @pytest.mark.diagnostic
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
     """(iii) THE SLAB, a GameBoard reading (a diagnostic, not a measurement): the flux test's Gaussian packet of light (40 Links, k = 0.3024) on the open chain of 400, 400 intervals with and without a slab of 40 Nodes at [150, 190) holding QUANTA each (the held row's divisor 1, the level at the slab the count at the start; the record alone is advanced): the transmitted packet's centroid lags the vacuum's by the slab's delay 40 (1 / v' - 1 / v) (6.23 Links; read 6.16), within 15 percent; 0.974 of the energy beyond the slab in the vacuum run and 0.946 with it."""
     k = 0.3024
@@ -153,6 +153,7 @@ def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
     )
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_content():
     """(iv) UNDER THE FIXED WALL (BUILD.md section 26 item 34), the periodic chain of 60, QUANTA at [20, 30) (the held row's divisor 1, the level there the count at the start; the record alone is advanced), random rows: (a) the engine's `conserved_form` is the form at the pace p_i = Gamma - c_i, 3 L (den / num) Gamma p_i (a^2 + b^2) - 6 L (den / num) p_i c_i a b at Nodes and L p_i p_j (a_i b_j + a_j b_i) on Links; (b) a Node's share changes by L times the currents on its Links plus (L / num) p_i (a_next - a_before) (r - r'), exactly; (c) the books' form by that term over 40 intervals; (d) 30 steps back return bit for bit."""
     rng = np.random.default_rng(23)
@@ -285,6 +286,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
 
 
 @pytest.mark.diagnostic
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
     """(vi) On the emitter world (the stock 4 at [5, 37), the screen at [70, 72]): the body's content, the hold's source (`body_source`), is 5 at the load and falls by one at each giving; the screen's first body's 1 rises by one after each gather line; the held level stays 0 at every Node through the run (the emitter's carried remainder is 5 plus its count after every interval, 6005 at most, below the divisor 40000: no increment, ALGEBRA.md #the-primitives the row "the hold"), so the giving line's `content` is 0 and its `node_clock` the vacuum's pair; the books balanced; a GameBoard reading, a diagnostic, not a measurement."""
     document = emitter_world(stock=4)
@@ -316,6 +318,7 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
     assert simulation.body_source(0, "content") == 1  # the one own quantum stays (item 47)
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_elsewhere():
     """(vii) THE FAMILY OF CLICKS (record 1982; ALGEBRA.md #the-counts-line, #the-ladder, #the-primitives the row "the hold"): on the open chain of 200 with light bodies of QUANTA at [90, 110) under the held row's divisor QUANTA, the clock record's level at the start is one quantum (the count over the divisor) at the bodies' Nodes and 0 elsewhere, the remainder 0; the source adds one quantum at the bodies' Nodes each interval into the record's own step, so at the slab's centre, until the edges' waves arrive (10 Links, one per interval), the level is the triangular sum (t + 1)(t + 2) / 2 at the interval t, 3, 6, 10, ..., 55 over the first nine (a_next = 2 a_now - a_before + 1 on a uniform slab); THE FRONT: nothing before the cone of one Link per interval, the long waves at the pace 1 / sqrt 3."""
     document = content_chain(200, CHAIN, range(90, 110), QUANTA, divisor=QUANTA)
@@ -352,6 +355,7 @@ def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_el
     assert not empty.held_records[2].now.any() and not empty.level_of("content").any()
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_joint_step_inverts_bit_for_bit_wherever_the_clock_falls():
     """(viii) THE EXACT BACKWARD RUN EVERYWHERE (record 1994; item 34): the periodic chain of 60 with a body of QUANTA at [20, 30) under the held row's divisor QUANTA (one quantum into the field at the bodies' Nodes each interval, ALGEBRA.md #the-primitives the row "the hold") and a light record of random rows: the clicks' field rises and falls at Nodes over 30 intervals, and the joint step inverts bit for bit, the wall 3 den Gamma the same at every interval so no two states merge. The edge case: the field did move."""
     rng = np.random.default_rng(31)
@@ -430,11 +434,11 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     with pytest.raises(ValueError, match="unknown keys: booked"):
         parse_nature_beam_world(booked)
     twice = json.loads(json.dumps(good))
-    twice["universe"][3]["held"] = {"count": "content", "divisor": 40000, "factors": [1]}
+    twice["universe"][3]["held"] = {"count": "content", "factors": [1], "divisor": 40000}
     with pytest.raises(ValueError, match="two families hold 'content'"):
         parse_nature_beam_world(twice)
     source = json.loads(json.dumps(good))
-    source["universe"][2]["held"] = {"count": "momentum", "divisor": 40000, "factors": [1]}
+    source["universe"][2]["held"] = {"count": "momentum", "factors": [1], "divisor": 40000}
     with pytest.raises(ValueError, match=r"held\.count must be one of"):
         parse_nature_beam_world(source)
     components = json.loads(json.dumps(good))
@@ -457,6 +461,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     ):
         parse_nature_beam_world(given)
     many = json.loads(json.dumps(good))
+    many["most_families"] = 20  # the universe's key
     many["universe"] += [
         family_entry(f"family_{n}", [800, 809], reads()) for n in range(len(many["universe"]), 21)
     ]

@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
+from event_universe.features.polariser import read_term
 from event_universe.features.receive import ReceiveTerm
 from event_universe.loader.world import NatureBeamWorld
 
@@ -240,6 +241,9 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
                 loop._excite(block, own_record)
         loop.blocks.append(block)
         loop.block_by_number[number] = block
+    loop.polarisers = {
+        b.number: t for b in loop.blocks if (t := read_term(dict(b.definition.declared))) is not None
+    }
     # The blocks' Nodes: a block's Nodes carry its detector's index (the flux
     # into them booked to it, never chosen: the detector is on no ladder); a
     # set bound to a block without positions owns the block's Nodes
@@ -320,3 +324,22 @@ def held_records(loop: DetectorLawSimulation) -> None:
         for family, definition in enumerate(loop.families)
         if definition.sourced is not None
     }
+
+
+def start_at_rest(loop: DetectorLawSimulation) -> None:
+    """THE START (ALGEBRA.md #the-generator, THE START): every held family's time part at the load at its rest, the fixed point of the family's line under the hold's rewrite, by the folder found by its name, once before the first interval and never in it; the rest on the counts the load's hold wrote at the bodies' Nodes (0 elsewhere), its levels written at both levels with the remainder 0, `node_level` the same array; a family no body holds stays at 0, and the folder's refusal names the family."""
+    start = loop.register.at("the start", "any")
+    for family, record in loop.held_records.items():
+        if not record.now.any():
+            continue
+        try:
+            field: Any = start(record.now, loop.families[family].pair, loop.kind_wrap[family])
+            levels = field.levels
+        except ValueError as refusal:
+            raise ValueError(
+                f"the start of the held family {loop.families[family].name!r}: {refusal}"
+            ) from refusal
+        record.now[...] = levels
+        record.before[...] = levels
+        record.remainder[...] = 0
+        loop.node_level[family] = record.now
