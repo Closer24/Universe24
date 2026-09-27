@@ -8,7 +8,7 @@ section C, the order in which they become possible as the features of issue
 essay: one entry per run, its rule stated before any code.
 
 **What an entry is.** Every entry is a research run under
-[Highlights](HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions) 5.5: made
+[Highlights](HIGHLIGHTS.md) 5.5: made
 once, on a stated date, at one runtime source fingerprint (the SHA-256 of the
 package files that every run records), with its expectation written before
 the run and its result recorded with that fingerprint in the
