@@ -233,7 +233,7 @@ def inverse_giving_interval(
 def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
     """2. Over 400 intervals with three giving clicks and their taking clicks: at every interval the books balance, the held quanta plus the records in flight are the load's total, and the bodies' Q plus the flights' q are the load's total (-3 - 3 + 1 = -5); at every giving click the giver's held content falls by one, the given record's content is 1, its residue u is in [0, W) with W the rule's at the first shell Node, and the click's interval is the counted one, 2 W (wait - 1) < (2 u + 1) P <= 2 W wait from the residue read before it (ALGEBRA.md #the-ladder); at every taking click the taker's held content rises by one, the record's content is 1, and the detector is the one the increment ladder chooses on the plain flux against the norm's rational (Born's rule at the taking end, ALGEBRA.md #the-ladder and (3), item 36)."""
     document = reversible_world()
-    period = document["measured"][0]["emitter"]["period"]
+    period = parse_nature_beam_world(document).measured[0].block.emitter.period
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     seen: Seen = {}

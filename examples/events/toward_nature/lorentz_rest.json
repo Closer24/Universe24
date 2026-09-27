@@ -13571,16 +13571,9 @@
    ],
    "emitter": {
     "family": "charge",
-    "clock": [
-     512,
-     1
-    ],
     "weight": 3,
-    "twist": 43538,
-    "period": 9,
     "norm": 614944947801629108,
-    "norm_denominator": 3948169,
-    "window_read": 21
+    "norm_denominator": 3948169
    },
    "receiver": "at_well",
    "twist": 43538,
@@ -13694,6 +13687,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "07bb1db95b2b07b091c6ce778a13f568a30e76be795c0da0b79277dfc605a9c1"
+  "hash": "1805359dd6bd65f6bbaae56a64d4280cd3b482b86fe4c2a2239939c58d02837f"
  }
 }

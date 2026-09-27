@@ -75,7 +75,8 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     # the nearest integer to 2 pi / omega_b (63 on this well); the share the
     # mode's own tick
     emitter = document["measured"][0]["emitter"]
-    assert emitter["norm"] == norm and emitter["period"] > 0
+    period = parse_nature_beam_world(document).measured[0].block.emitter.period  # P_body, the loader's
+    assert emitter["norm"] == norm and period > 0
     alone = json.loads(json.dumps(document))
     del alone["measured"][0]["emitter"]
     alone["measured"] = alone["measured"][:1]
@@ -87,7 +88,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     centre[21, 0, 0] = True
     assert np.array_equal(solitary.centre_mask(body), centre)
     action = 0
-    for _ in range(emitter["period"]):
+    for _ in range(period):
         solitary.step()
         assert body.own is not None
         action += Fraction(*solitary.form_share(body.own, centre))
@@ -107,7 +108,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     # its read (at least one), on the residue and the wheel the previous giving line
     # carries; the first residue is on no line, read from the own record before the
     # first giving (the trace's entry of interval 2, the state after the read at 1)
-    period = document["measured"][0]["emitter"]["period"]
+    period = parse_nature_beam_world(document).measured[0].block.emitter.period
     assert all(line["period"] == period for line in givings)
     first = by_tick[2]["excited_before"]
     assert first is not None and first[1] > 0
@@ -272,7 +273,7 @@ def test_the_loaders_refusals_name_their_keys():
     # emitter of the body's own family without one is refused naming the stock
     def own_family(document):
         document["measured"][0]["emitter"]["family"] = "matter"
-        document["measured"][0]["emitter"]["clock"] = [512, 1]
+        next(f for f in document["universe"] if f["name"] == "matter")["clock"] = [512, 1]
 
     refused(own_family, "stock is required")
     refused(emitter("family", "nobody"), "no family of the universe")
@@ -326,7 +327,6 @@ def test_the_loaders_refusals_name_their_keys():
     # excitation; a `given` profile of the wrong count, or one that writes no
     # motion, refuses the loader (ALGEBRA.md #the-click)
     def no_norm(document):
-        document["measured"][0]["emitter"]["period"] = 70
         document["measured"][0]["emitter"]["norm"] = 1000
         del document["measured"][0]["emitter"]["norm"]
 

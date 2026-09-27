@@ -75,8 +75,8 @@ def test_the_twist_tables_triples_are_exact_and_the_nearest_of_their_angles():
 
 
 def test_the_loader_writes_the_twist_own_and_the_given_lights_component():
-    point = json.loads((ROOT / "examples/events/point_emitter/point_light_clock.json").read_text())
-    world = parse_nature_beam_world(point)
+    dark = json.loads((ROOT / "examples/events/dark_body/dark.json").read_text())
+    world = parse_nature_beam_world(dark)
     body = world.measured[0].block
     assert body is not None and body.emitter is not None
     # the body's own record turns at its mode's rotation, 2 cos omega = a / b
@@ -200,7 +200,7 @@ def test_the_ports_along_a_records_own_component_book_nothing_of_it():
 
 
 def test_the_loader_refuses_a_light_emitter_without_one_moment_axis_and_a_bad_table():
-    document = on_the_file(emitter_world(stock=1, ticks=10), [512, 1])
+    document = on_the_file(emitter_world(stock=1, ticks=10))
     flat = json.loads(json.dumps(document))
     flat["measured"][0]["moment"] = [0, 0, 0]
     flat["stamp"] = input_stamp(flat)

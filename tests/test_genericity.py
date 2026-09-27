@@ -50,7 +50,6 @@ def world_of(drawn: dict[str, Any]) -> dict[str, Any]:
     if "given" in roles:
         body["stocks"] = {roles["given"]: 1}
         body["emitter"]["family"] = roles["given"]
-        body["emitter"]["clock"] = [512, 1]
         body["moment"] = [0, 0, 1]
         for receiver in document["measured"][1:]:
             receiver["family"] = roles["given"]

@@ -82,7 +82,7 @@ def test_the_clocks_refusals_name_the_rule():
     )
     refused(
         lambda entry: entry.__setitem__("clock", [2 * b, b]),
-        "is at or above 2: the mode is a runaway",
+        "is no rotation: b from 1 and |a| below 2 b",  # the giver's period by the rule reads it first
     )
 
     def scalar(entry):

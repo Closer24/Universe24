@@ -80114,16 +80114,9 @@
      "screen_154",
      "screen_157"
     ],
-    "clock": [
-     512,
-     1
-    ],
     "weight": 19,
-    "twist": 54543,
-    "period": 8,
     "norm": 21408851908391381288,
-    "norm_denominator": 97990201,
-    "window_read": 11
+    "norm_denominator": 97990201
    },
    "twist": 54543,
    "clock": [
@@ -169442,6 +169435,6 @@
   }
  ],
  "stamp": {
-  "hash": "643373cfa97d1edb61558b12f9457545bcd49d4709be5cfe9fa7f29ccc80de1b"
+  "hash": "afd085a67cba2f1391a60655a71b3091ca8198aafca414fd8fce198d6d3f4c92"
  }
 }
