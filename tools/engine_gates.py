@@ -80,6 +80,43 @@ def family_names(root: Path) -> frozenset[str]:
     return frozenset(name for name in names if isinstance(name, str))
 
 
+OPERATORS: dict[type[ast.AST], Any] = {
+    ast.Add: lambda a, b: a + b,
+    ast.Sub: lambda a, b: a - b,
+    ast.Mult: lambda a, b: a * b,
+    ast.Pow: lambda a, b: a**b,
+    ast.LShift: lambda a, b: a << b,
+    ast.RShift: lambda a, b: a >> b,
+    ast.BitOr: lambda a, b: a | b,
+    ast.BitAnd: lambda a, b: a & b,
+    ast.BitXor: lambda a, b: a ^ b,
+    ast.FloorDiv: lambda a, b: a // b,
+    ast.Mod: lambda a, b: a % b,
+    ast.USub: lambda a: -a,
+    ast.UAdd: lambda a: a,
+}
+
+
+def constant_value(node: ast.AST) -> int | None:
+    """The value of an expression whose leaves are all integer literals (`4 * 8 + 8`, `1 << (6 * 8)`, `2 ** 10`, `-3`), folded; None where a leaf is a name, a call or a float, or the operator is not integer arithmetic."""
+    if isinstance(node, ast.Constant):
+        leaf = node.value
+        return leaf if isinstance(leaf, int) and not isinstance(leaf, bool) else None
+    if isinstance(node, ast.UnaryOp) and type(node.op) in OPERATORS:
+        inner = constant_value(node.operand)
+        return None if inner is None else int(OPERATORS[type(node.op)](inner))
+    if isinstance(node, ast.BinOp) and type(node.op) in OPERATORS:
+        left, right = constant_value(node.left), constant_value(node.right)
+        if left is None or right is None or (isinstance(node.op, ast.FloorDiv | ast.Mod) and right == 0):
+            return None
+        if isinstance(node.op, ast.Pow) and (right < 0 or right > 4096):
+            return None
+        if isinstance(node.op, ast.LShift | ast.RShift) and (right < 0 or right > 4096):
+            return None
+        return int(OPERATORS[type(node.op)](left, right))
+    return None
+
+
 def counts_of(path: Path, families: frozenset[str], divisions: bool = True) -> dict[str, int]:
     """The counts of one file: its numbers beyond the free ones, its family-name strings and, where
     `divisions`, its floor divisions and remainders by hand (a string's `%` format excluded)."""
@@ -90,8 +127,15 @@ def counts_of(path: Path, families: frozenset[str], divisions: bool = True) -> d
             if node.body and isinstance(node.body[0], ast.Expr):
                 docstrings.add(id(node.body[0].value))
     numbers = names = 0
+    folded: set[int] = set()  # the leaves inside a constant expression, counted once as its value
     for node in ast.walk(tree):
-        if not isinstance(node, ast.Constant) or id(node) in docstrings:
+        if isinstance(node, ast.BinOp | ast.UnaryOp) and id(node) not in folded:
+            folded_value = constant_value(node)
+            if folded_value is not None:  # a negative free number is free: -1 as 1
+                numbers += abs(folded_value) not in FREE_NUMBERS
+                folded.update(id(inner) for inner in ast.walk(node))
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Constant) or id(node) in docstrings or id(node) in folded:
             continue
         value = node.value
         if isinstance(value, int | float | complex) and not isinstance(value, bool):
