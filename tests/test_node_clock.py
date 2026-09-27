@@ -1,20 +1,5 @@
-"""THE NODE CLOCK UNDER THE WEAK-FIELD RULE (the model owner's decision (5) of record 1962 and
-his "switch" of record 2024; ALGEBRA.md 9.35 (2) and (3), 9.57 (1); BUILD.md section 26 items
-31 and 44): at every Node the family of clicks' level c, Gamma the world key `node_clock`, the
-Node's own pace p = Gamma - c, enters the rule as w a_next + r' = R S_6(a_now) + S a_now - w
-a_before + r with R = 2 p^2 num, S = 12 den Gamma^2 - 6 (p^2 + Gamma^2)(den - num) - 12 num
-p^2 and the wall w = 6 den Gamma^2 (core/rule3.py `coefficients`); c = 0 is the plain rule (the vacuum:
-the levels bit for bit, the remainder 2 Gamma^2 times the plain one). The suite reads the
-engine: (i) the rule in integers at a Node with content and its plain limit; (ii) the rotation
-2 cos omega' = 2 - (1 + f)(1 - num / den) at k = 0 with f = (p / Gamma)^2 (the clock's second
-order, 9.56 (4)); (iii) light through a slab of content, delayed by the slowed dispersion cos
-omega' = 1 - f (1 - cos omega) (9.62 (1)), its form conserved; (iv) the form from the rule's
-integers, [w (a^2 + b^2) - S a b] / R at the Nodes and the Links plain, exactly, the share's
-identity per Node, the books' form's remainder identity and the inverse map bit for bit; (v)
-the loader's refusals (the key required under the detector law, refused without it, the load
-bound naming the clock and the content) and the registered light clock's Gamma; (vi) the content
-at a body down by one at a giving and up by one at a click, on the giving line. Every number a
-COMPUTATION on the rule's integers; no pin."""
+"""The Node clock under the weak-field rule (ALGEBRA.md 9.35, 9.57 (1)): the pace p = Gamma - c enters
+Rule3's integers at every Node, c = 0 is the plain rule, and light crosses a slab of content under it."""
 
 from __future__ import annotations
 

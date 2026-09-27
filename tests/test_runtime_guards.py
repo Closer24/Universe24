@@ -1,10 +1,4 @@
-"""No assert as a runtime guard and no module-level name nothing uses, in src/ and tools/ (the gate of #1198, gate 6).
-
-An `assert` vanishes under `python -O`, so a check the engine relies on raises instead. The
-asserts of today count per file against the merge base (CHECK_BASE, else origin/main) and may
-only fall; a new file has none. A module-level name of src/ or tools/ that no file of src/,
-tools/, tests/ or examples/ names again is refused outright.
-"""
+"""No assert as a runtime guard and no unused module-level name in src/ and tools/ (#1198, gate 6)."""
 
 from __future__ import annotations
 

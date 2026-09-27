@@ -1,38 +1,5 @@
-"""The emitter as a clicking body (ALGEBRA.md 9.17 (4), the mathematician's integers of
-2026-09-24; LAB_TOOLS.md A.1; the model owner's word of 22:30Z, "in principle we cannot do
-any operation on the Nodes except to produce a click"): a body of a massive kind with its
-seed and a stock `amount` = M holds its excited records in turn (the seed at both levels,
-content one quantum, the residue from the body's wheel [step, W] in its residue order);
-excited record k clicks at its own rung on its own Nodes (E its own motion booked through
-its Nodes, D the rung 2 T u_k + T <= 2 W C with T its norm, the seed's squares over its
-Nodes); at that click X ends it and E^T givings the photon, written ONCE at both levels
-(now = A C[phase(0)], before = A C[phase(-1)] on the body's Nodes, A the lamp's unit) with
-the norm T the motion the write inserts and the excitation's residue, and, while the stock
-lasts, excited record k + 1. No rate, no train, no drive, no source term, no grace, no own
-take. BUILD.md section 26.
-
-SINCE THE FLUX READING (ALGEBRA.md 9.19 (3); BUILD.md section 26 items 13 and 14): the
-excited record's offer is the one-way flux into the body's centre Node, its norm T the
-generator's integer `norm` (that flux over one period of the mode advanced alone); the given
-record's norm its conserved form I; every set books the one-way flux into its Nodes and the
-click is on the cumulative ladder, the record deleted whole at it. The unit world's faces
-are CLOSED (mirrors): an open face two Links behind a body is the face receiver, last on
-every ladder, and the half that leaves through it clicks there before anything reaches a
-screen (test_detector_law.py reads that).
-
-(a) M excitations give M givings at the rungs: each giving at the first interval where the
-    excited record's booked flux crosses T (2 u + 1) / (2 W) (tracked interval by
-    interval), the residues in the wheel's order ("ordinal" the counter, "seed" the keyed
-    permutation), the quanta conserved (the stock spent one per giving, the books balanced
-    at every interval), the excited record ended at its click and the next one seeded with
-    the next residue, none after the stock; the giving line's keys.
-(b) The given values: at the giving the record's `now` and `before` equal the cosine table at
-    phase(0) and phase(-1) of the given clock on every Node of the body and 0 elsewhere; its
-    norm is its conserved form; nothing drives it afterwards (its train 0, no grace, no
-    take); nothing reaches Manhattan distance m before age m; the given records reach the
-    receiver by name and click.
-(c) The loader's refusals, each naming its key.
-"""
+"""The emitter as a clicking body (ALGEBRA.md 9.17 (4)): its excited records click in turn at their own
+rungs, each click giving one photon written once at both levels, the stock falling by one each time."""
 
 from __future__ import annotations
 
