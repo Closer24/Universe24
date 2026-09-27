@@ -10,7 +10,6 @@ from event_universe.core.register import Register
 from event_universe.core.schema import (
     Context,
     Either,
-    Flag,
     Integer,
     ListOf,
     MapOf,
@@ -43,7 +42,7 @@ UNIVERSE_KEYS = ("integers", "families")
 START = ObjectOf({"mode": OneOf(("check", "pin"))})
 # a face of the GameBoard: open (its edge is infinity), periodic (the walk wraps) or closed (a zero face with no take)
 FACE = OneOf(("open", "periodic", "closed"))
-# the world file's own keys (ALGEBRA.md #the-primitives): the GameBoard, its faces, the intervals, the files it names, its stamp, the largest age a record may carry; and the old form's N and three flags the loop still reads
+# the world file's own keys (ALGEBRA.md #the-primitives): the GameBoard, its faces, the intervals, the files it names, its stamp; and the old form's N, which the loop still reads for the given record's period
 WORLD = ObjectOf(
     {
         "shape": ListOf(Integer(least=1), 3),
@@ -52,16 +51,12 @@ WORLD = ObjectOf(
         "engine": Word(),
         "stamp": ObjectOf({"hash": Word()}),
         "face_depth": Integer(least=1),
-        "age_bound": Integer(least=1),
         "probes": ListOf(ListOf(Integer(least=0), 3)),
         "mode_axis": OneOf(("x", "y", "z")),
         "amplitude_bound": Integer(least=1),
         "node_clock": Integer(least=1),
         "momentum_unit": Integer(least=1),
         "N": Integer(least=2),
-        "clock_stamp": Flag(),
-        "massive_record": Flag(),
-        "body_record": Flag(),
     },
     frozenset(
         {
@@ -112,7 +107,7 @@ GIVER = ObjectOf(
     },
     frozenset({"receiver"}),
 )
-# a body of the world file in today's form (ALGEBRA.md #the-stable-body names the form to come: its family, its Nodes, its count per Node and its momentum n): its Node, its family, its quanta, its momentum at its two levels (now and before) and its stocks of other families; a block's side or extents, pair and kind, seed with its clock and proper clock, ramp and start, margin, the body's numbers q, spin at its two levels, moment and twist, its emitter with receiver and stock, and fixed
+# a body of the world file in today's form (ALGEBRA.md #the-stable-body names the form to come: its family, its Nodes, its count per Node and its momentum n): its Node, its family, its quanta, its momentum at its two levels (now and before) and its stocks of other families; a block's side or extents, pair and kind, seed with its clock and proper clock, ramp and start, margin, the body's numbers q, spin at its two levels, moment and twist, its emitter with receiver and stock
 BODY = ObjectOf(
     {
         "position": ListOf(Integer(least=0), 3),
@@ -121,7 +116,6 @@ BODY = ObjectOf(
         "momentum": AXES,
         "momentum_before": AXES,
         "stocks": MapOf(Name(), Integer(least=1)),
-        "fixed": Flag(),
         "kind": PAIR,
         "q": Integer(),
         "spin": AXES,
@@ -166,7 +160,7 @@ BODY = ObjectOf(
 )
 # one Node of a body in the law's form (ALGEBRA.md #the-stable-body.121 item 3): its address and the family of clicks' level there, the count; one line per Node
 NODE_COUNT = ObjectOf({"node": ListOf(Integer(least=0), 3), "count": Integer(least=1)})
-# a body of the world file in the law's form (ALGEBRA.md #the-stable-body; the mathematician's word on it under (ii) of #1210 and his lines of 2026-09-27 on #1198): its family, its Nodes with their counts, its momentum n at its two levels (now and before, the KEEP step), its spin at its two levels and its moment where declared, its stocks and its emitter where it gives, nothing else; the momentum's and the spin's parts are handed to the families whose rows keep them (three parts, the KEEP step), a folder's binding and not the frame's; a folder's own key at a body joins through the cards when one declares it
+# a body of the world file in the law's form (ALGEBRA.md #what-a-body-is: "the world file names the body's family, its Nodes, its count per Node and its momentum n, and nothing else"; #the-generator (a): "one body by its Nodes with their counts"; #the-counts-line: the counts laid from the file into T c_next + r' = T c_now + SUM_j F_ij + r): its family, its Nodes with their counts, its momentum n at its two levels (now and before, the KEEP step), its spin at its two levels and its moment where declared, a moving body's phase denominator m (#the-generator (e)), its stocks and its emitter where it gives, nothing else; the momentum's and the spin's parts are handed to the families whose rows keep them (three parts, the KEEP step), a folder's binding and not the frame's; a folder's own key at a body joins through the cards when one declares it
 COUNTED = ObjectOf(
     {
         "family": Name(),
@@ -176,10 +170,11 @@ COUNTED = ObjectOf(
         "spin": AXES,
         "spin_before": AXES,
         "moment": AXES,
+        "phase_denominator": Integer(least=1),
         "stocks": MapOf(Name(), Integer(least=1)),
         "emitter": GIVER,
     },
-    frozenset({"spin", "spin_before", "moment", "stocks", "emitter"}),
+    frozenset({"spin", "spin_before", "moment", "phase_denominator", "stocks", "emitter"}),
 )
 # a detector of the world file: its name, its Nodes, or the body it belongs to
 DETECTOR = ObjectOf(

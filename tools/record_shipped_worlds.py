@@ -183,7 +183,9 @@ def digest_of(reading: dict[str, Any]) -> str:
 
 def run(path: Path, intervals: int | None = None) -> dict[str, Any]:
     """The world stepped `intervals` times (its recorded count, or the count this tool picks) and
-    its digest, with the counts that name a difference when the digest moves."""
+    its digest, with the counts that name a difference when the digest moves; a world the law
+    refuses on the way is recorded at the interval of the refusal with the refusal's words, which
+    the digest covers, so the replay refuses the same step the same way."""
     document = json.loads(path.read_text(encoding="utf-8"))
     stamp = input_stamp(document)
     started = time.monotonic()
@@ -197,18 +199,28 @@ def run(path: Path, intervals: int | None = None) -> dict[str, Any]:
         per_step = (time.monotonic() - started) / max(1, min(SAMPLE_STEPS, ticks))
         intervals = ticks if per_step * ticks <= FULL_RUN_SECONDS else min(ticks, PREFIX_INTERVALS)
         intervals = min(ticks, LONGER.get(path.resolve().relative_to(ROOT).as_posix(), intervals))
-    while simulation.tick < intervals:
-        simulation.step()
-    return {
+    refused: str | None = None
+    try:
+        while simulation.tick < intervals:
+            simulation.step()
+    except ValueError as refusal:
+        refused, intervals = str(refusal), simulation.tick + 1
+    reading = run_reading(simulation, lines)
+    if refused is not None:
+        reading["refused"] = refused
+    entry: dict[str, Any] = {
         "stamp": stamp,
         "ticks": ticks,
         "intervals": intervals,
-        "digest": digest_of(run_reading(simulation, lines)),
+        "digest": digest_of(reading),
         "records": len(simulation.records),
         "clicks": len(simulation.layer.gathers),
         "lines": len(lines),
         "seconds": round(time.monotonic() - started, 2),
     }
+    if refused is not None:
+        entry["refused"] = refused
+    return entry
 
 
 def main(argv: list[str] | None = None) -> int:
