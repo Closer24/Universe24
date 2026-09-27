@@ -1,4 +1,4 @@
-"""The readings of a run, declared in the world file under `readings` and written in one format, each labelled DETECTOR (a declared detector's clicks), GAMEBOARD (a family's level, support or total, a body's centre) or HOST (the records alive); a reading reads state at the declared intervals and writes nothing into the run (ALGEBRA.md #readings-and-measurements; docs/ENGINE.md, the readings by type)."""
+"""The readings of a run, declared in the world file under `readings` and written in one format, each labelled DETECTOR (a declared detector's clicks), GAMEBOARD (a family's level, support, total or rows over the board, a body's centre or momentum) or HOST (the records alive); a reading reads state at the declared intervals and writes nothing into the run (ALGEBRA.md #readings-and-measurements; docs/ENGINE.md, the readings by type)."""
 
 from __future__ import annotations
 
@@ -15,6 +15,8 @@ SCHEMA: Mapping[str, tuple[str, tuple[str, ...]]] = {
     "support": ("GAMEBOARD", ("family", "every")),
     "total": ("GAMEBOARD", ("family", "every")),
     "centre": ("GAMEBOARD", ("body", "every")),
+    "momentum": ("GAMEBOARD", ("body", "every")),
+    "rows": ("GAMEBOARD", ("family", "every")),
     "alive": ("HOST", ("every",)),
 }
 LABELS: tuple[str, ...] = ("DETECTOR", "GAMEBOARD", "HOST")
@@ -185,7 +187,11 @@ def _read(reading: Reading, simulation: Any) -> dict[str, Any]:
     if reading.kind == "centre":
         block = simulation.block_by_number[reading.body]
         return {"node": list(box_centre(block.corner, block.definition.extents, simulation.shape))}
+    if reading.kind == "momentum":
+        return {"momentum": [int(part) for part in simulation.block_by_number[reading.body].momentum]}
     level = _family_level(reading, simulation)
+    if reading.kind == "rows":  # the family's levels over the board, the record's rows along its path
+        return {"rows": [] if level is None else [int(part) for part in level.ravel()]}
     if reading.kind == "level":
         return {"level": 0 if level is None else int(level[reading.node])}
     if reading.kind == "support":

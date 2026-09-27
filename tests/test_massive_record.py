@@ -52,12 +52,7 @@ def step_once(simulation: DetectorLawSimulation, live: LiveRecord) -> tuple[np.n
 
 
 def test_the_rule_on_a_chain_against_section_ones_integers():
-    """BUILD.md (a): the kind [2, 3] on a 5-Node open chain (y, z one layer periodic, so
-    S_6 = a_W + a_E + 4 a_now with 0 beyond the ends); the totals num S_6 - 9 a_before + r
-    are [1, 27, -56, 19, 7], a_next = [0, 3, -7, 2, 0], r' = [1, 0, 7, 1, 7]. UNDER THE
-    WEAK-FIELD RULE (ALGEBRA.md #the-line; BUILD.md section 26 item 44) the vacuum's wall is 9
-    times 2 Gamma^2 and the remainder 2 Gamma^2 times the line's, the levels bit for bit: r
-    and r' here are the line's times 2 Gamma^2."""
+    """BUILD.md (a): the kind [2, 3] on a 5-Node open chain (y, z one layer periodic, so S_6 = a_W + a_E + 4 a_now with 0 beyond the ends); the totals num S_6 - 9 a_before + r are [1, 27, -56, 19, 7], a_next = [0, 3, -7, 2, 0], r' = [1, 0, 7, 1, 7]. UNDER THE WEAK-FIELD RULE (ALGEBRA.md #the-line; BUILD.md section 26 item 44) the vacuum's wall is 9 times 2 Gamma^2 and the remainder 2 Gamma^2 times the line's, the levels bit for bit: r and r' here are the line's times 2 Gamma^2."""
     world = parse_nature_beam_world(
         massive_world([5, 1, 1], {"x": "open", "y": "periodic", "z": "periodic"}, [2, 3])
     )
@@ -76,10 +71,7 @@ def test_the_rule_on_a_chain_against_section_ones_integers():
 
 
 def test_the_rule_at_a_corner_of_an_open_board():
-    """BUILD.md (b): the kind [1, 2] (3 den = 6) at the corner (0, 0, 0) of an open 2^3 board
-    of the massive kind (the world's faces open on every axis, one border): a_now 4 with the three
-    neighbours 3, -2, 5 and three zero faces, a_before 1, r 5: the total 5, a_next 0, r' 5;
-    with a_before -2 the total 23, a_next 3, r' 5."""
+    """BUILD.md (b): the kind [1, 2] (3 den = 6) at the corner (0, 0, 0) of an open 2^3 board of the massive kind (the world's faces open on every axis, one border): a_now 4 with the three neighbours 3, -2, 5 and three zero faces, a_before 1, r 5: the total 5, a_next 0, r' 5; with a_before -2 the total 23, a_next 3, r' 5."""
     world = parse_nature_beam_world(massive_world([2, 2, 2], "open", [1, 2]))
     simulation = DetectorLawSimulation(world)
     for past, expected in ((1, 0), (-2, 3)):
@@ -99,10 +91,7 @@ def test_the_rule_at_a_corner_of_an_open_board():
 
 
 def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
-    """BUILD.md (c): on the first build's random chain the step at light's pair [1, 1] gives the same quotient
-    as 3 a_next + r' = S_6 - 3 a_before + r, the total and the remainder Gamma times the line's on every Node
-    without content whose six reads have none; at the bodies' Nodes and beside them the line under the Node's
-    own pace, 3 Gamma a_next + r' = (Gamma - c_i) S_6(a_now)_i + 6 c_i a_now - 3 Gamma a_before + r."""
+    """BUILD.md (c): on the first build's random chain the step at light's pair [1, 1] gives the same quotient as 3 a_next + r' = S_6 - 3 a_before + r, the total and the remainder Gamma times the line's on every Node without content whose six reads have none; at the bodies' Nodes and beside them the line under the Node's own pace, 3 Gamma a_next + r' = (Gamma - c_i) S_6(a_now)_i + 6 c_i a_now - 3 Gamma a_before + r."""
     world = parse_nature_beam_world(chain_world())
     simulation = DetectorLawSimulation(world)
     assert world.families[0].pair == MASSLESS_PAIR
@@ -134,8 +123,7 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
 
 
 def checkerboard_seed(n: int) -> tuple[np.ndarray, np.ndarray]:
-    """The seed of massive_corner_stability.py: a smooth 2^20 cosine along x plus one unit of
-    checkerboard, the cosine's table taken at the integers (the phase table's scale 256)."""
+    """The seed of massive_corner_stability.py: a smooth 2^20 cosine along x plus one unit of checkerboard, the cosine's table taken at the integers (the phase table's scale 256)."""
     x, y, z = np.meshgrid(*[np.arange(n)] * 3, indexing="ij")
     checker = (x + y + z) % 2 * 2 - 1
     # cos(2 pi x / 6) at the six residues, in the unit 2^20: 1, 1/2, -1/2, -1, -1/2, 1/2
@@ -149,14 +137,7 @@ def checkerboard_seed(n: int) -> tuple[np.ndarray, np.ndarray]:
 
 @pytest.mark.diagnostic
 def test_the_conserved_form_holds_to_the_remainders_jitter():
-    """BUILD.md (d): on a periodic 6^3 board at [128, 129] and at [1600, 1618] the form I stays
-    within 10^-3 of its start over 200 intervals (measured: 3 x 10^-6) and the amplitude stays
-    bounded (below 2 x 2^20); the books read the form under the key (GAMEBOARD). The edge case:
-    light's pair [1, 1] on the same seed keeps the checkerboard component at its one unit (the
-    double root's stationary alternation: the seed's checkerboard carries no velocity, so the
-    secular solution of DESIGN.md 2.1 is not excited; the growing form is the withdrawn
-    self-term form (A), not built), and the massive kind keeps it below 40 units (measured 11
-    and 18)."""
+    """BUILD.md (d): on a periodic 6^3 board at [128, 129] and at [1600, 1618] the form I stays within 10^-3 of its start over 200 intervals (measured: 3 x 10^-6) and the amplitude stays bounded (below 2 x 2^20); the books read the form under the key (GAMEBOARD). The edge case: light's pair [1, 1] on the same seed keeps the checkerboard component at its one unit (the double root's stationary alternation: the seed's checkerboard carries no velocity, so the secular solution of DESIGN.md 2.1 is not excited; the growing form is the withdrawn self-term form (A), not built), and the massive kind keeps it below 40 units (measured 11 and 18)."""
     now, before = checkerboard_seed(6)
     x, y, z = np.meshgrid(*[np.arange(6)] * 3, indexing="ij")
     checker = (x + y + z) % 2 * 2 - 1
@@ -194,10 +175,7 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
 
 
 def test_every_family_reads_the_worlds_border_and_a_zero_face_when_open():
-    """ONE BORDER FOR EVERY FAMILY (BUILD.md section 26 item 28; was BUILD.md (m), the
-    kind's own periodic faces): on a 5 x 1 x 1 board whose world `boundary` is periodic on
-    x the massive kind wraps (Node 0 reads Node 4 as its -x neighbour); on a board open on
-    x the neighbour beyond the face reads 0 for the massive kind as for light."""
+    """ONE BORDER FOR EVERY FAMILY (BUILD.md section 26 item 28; was BUILD.md (m), the kind's own periodic faces): on a 5 x 1 x 1 board whose world `boundary` is periodic on x the massive kind wraps (Node 0 reads Node 4 as its -x neighbour); on a board open on x the neighbour beyond the face reads 0 for the massive kind as for light."""
     for boundary, expected in (({"x": "periodic", "y": "periodic", "z": "periodic"}, 9), (CHAIN, 0)):
         document = massive_world([5, 1, 1], boundary, [1, 2])
         world = parse_nature_beam_world(document)
@@ -214,8 +192,7 @@ def test_every_family_reads_the_worlds_border_and_a_zero_face_when_open():
         assert total == read * expected
     assert world.kind_periodic(1) == (False, True, True)
     assert world.kind_periodic(0) == (False, True, True)
-    # the world open on every axis: every family open on every axis (the massive kind's
-    # periodic default of the first builds, HISTORY)
+    # the world open on every axis: every family open on every axis (the massive kind's periodic default, HISTORY)
     everywhere = parse_nature_beam_world(massive_world([5, 1, 1], "open", [1, 2]))
     assert everywhere.kind_periodic(1) == everywhere.kind_periodic(0) == (False, False, False)
 
@@ -297,9 +274,7 @@ def test_the_loaders_refusals_name_the_key():
 
 
 def test_the_records_keys_under_the_key_and_none_without_it():
-    """BUILD.md (r): the identity under `hypotheses`, the families' pair and the books'
-    form under the key; nothing of them without it (the first build's world); every
-    family's faces the world's (one border, BUILD.md section 26 item 28)."""
+    """BUILD.md (r): the identity under `hypotheses`, the families' pair and the books' form under the key; nothing of them without it (the first build's world); every family's faces the world's (one border, BUILD.md section 26 item 28)."""
     world = parse_nature_beam_world(
         massive_world([4, 4, 4], {"x": "open", "y": "periodic", "z": "open"}, [2, 3])
     )
@@ -320,9 +295,7 @@ def test_the_records_keys_under_the_key_and_none_without_it():
 
 
 def with_screen(document: dict, x: int) -> dict:
-    """The receiver by name for a test world's emitter body (DECLARATIONS.md section 13
-    item 7): the cube of side 3 of light bodies at [x, x + 2] read as the set `screen`
-    (record 1899; no wheel: the rung's wheel is the record's own, ALGEBRA.md #a-familys-declaration)."""
+    """The receiver by name for a test world's emitter body (DECLARATIONS.md section 13 item 7): the cube of side 3 of light bodies at [x, x + 2] read as the set `screen` (record 1899; no wheel: the rung's wheel is the record's own, ALGEBRA.md #a-familys-declaration)."""
     receiver_cube(document, "screen", [x, 0, 0])
     document["stamp"] = input_stamp(document)  # the stamp over the whole file (item 28)
     return document
@@ -333,9 +306,7 @@ PERIODIC_CHAIN = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 
 def test_the_blocks_cells_and_its_pair_on_them():
-    """BUILD.md (e): a block of side 3 at (2, 2, 2) on an open 8^3 board of the kind [800, 809]
-    with the well [800, 800]: den reads 809 on every Node but the 27 Nodes, 800 there, num 800
-    everywhere; the Nodes are the cube. The edge case: a pair that is no well is refused."""
+    """BUILD.md (e): a block of side 3 at (2, 2, 2) on an open 8^3 board of the kind [800, 809] with the well [800, 800]: den reads 809 on every Node but the 27 Nodes, 800 there, num 800 everywhere; the Nodes are the cube. The edge case: a pair that is no well is refused."""
     world = parse_nature_beam_world(
         block_world(
             [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 800]}]
@@ -376,8 +347,7 @@ def test_the_blocks_cells_and_its_pair_on_them():
 
 
 def six_reads(row: np.ndarray) -> np.ndarray:
-    """The six directed reads of the rule on a periodic board (an axis of extent 1 reads the
-    Node itself twice), summed: the S_6 of MASSIVE_RECORD.md section 3."""
+    """The six directed reads of the rule on a periodic board (an axis of extent 1 reads the Node itself twice), summed: the S_6 of MASSIVE_RECORD.md section 3."""
     total = np.zeros(row.shape, dtype=object)
     for axis in range(3):
         for shift in (1, -1):
@@ -386,15 +356,7 @@ def six_reads(row: np.ndarray) -> np.ndarray:
 
 
 def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
-    """BUILD.md (h) SINCE section 26 (the emission by the coupling's source term retired with
-    the lamp; an emitter is a clicking body, ALGEBRA.md #the-click): an emitter body of the
-    source kind (the one-Node well SOURCE_WELL at x = 100 seeded on its mode, the stock 3)
-    on the chain of 240 with the screen at 230: three givings in turn, the residues the
-    law's, each given record of content 1 moved from the stock (`held_spent` 3 of the
-    source family, `transit_released` 3 of light), the body's own record continuing under its
-    one identity after every giving and after the stock is spent, never rewritten (ALGEBRA.md #the-ladder; item 33), the books balanced at every tick. The
-    edge cases: `emits` and `own_grace` beside `emitter` refused naming the key; `emitter` on
-    a body of light's kind refused; a stock below 1 refused."""
+    """BUILD.md (h) SINCE section 26 (the emission by the coupling's source term retired with the lamp; an emitter is a clicking body, ALGEBRA.md #the-click): an emitter body of the source kind (the one-Node well SOURCE_WELL at x = 100 seeded on its mode, the stock 3) on the chain of 240 with the screen at 230: three givings in turn, the residues the law's, each given record of content 1 moved from the stock (`held_spent` 3 of the source family, `transit_released` 3 of light), the body's own record continuing under its one identity after every giving and after the stock is spent, never rewritten (ALGEBRA.md #the-ladder; item 33), the books balanced at every tick. The edge cases: `emits` and `own_grace` beside `emitter` refused naming the key; `emitter` on a body of light's kind refused; a stock below 1 refused."""
     world = parse_nature_beam_world(
         with_screen(
             block_world(
@@ -454,10 +416,7 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
 
 
 def test_the_pace_bound_refuses_one_link_per_interval():
-    """The pace bound 3 (P . P) < (3 Q S M)^2 (MASSIVE_RECORD.md section 5): K = 1 (P = 192
-    on x, one Link every interval) is refused naming the bound. The index in motion (the
-    drive's pair carried as the coupling's g, BUILD.md (l)) is HISTORY with the coupling
-    (the model owner's decision (2) of record 1962)."""
+    """The pace bound 3 (P . P) < (3 Q S M)^2 (MASSIVE_RECORD.md section 5): K = 1 (P = 192 on x, one Link every interval) is refused naming the bound. The index in motion (the drive's pair carried as the coupling's g, BUILD.md (l)) is HISTORY with the coupling (the model owner's decision (2) of record 1962)."""
     with pytest.raises(ValueError, match="pace bound"):
         parse_nature_beam_world(
             block_world(
@@ -476,9 +435,7 @@ PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 @pytest.mark.diagnostic
 def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
-    """The margin rule (its extent and mode a GameBoard reading, a diagnostic) refuses a block
-    whose extent passes its board or a face (naming the axis, the extent and the side needed),
-    an unbound well, and a runaway well on a chain, and admits a control."""
+    """The margin rule (its extent and mode a GameBoard reading, a diagnostic) refuses a block whose extent passes its board or a face (naming the axis, the extent and the side needed), an unbound well, and a runaway well on a chain, and admits a control."""
     for margin, admitted in (("pin", False), ("control", True)):
         document = block_world(
             [48, 48, 48],
@@ -550,10 +507,7 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
 
 
 def test_the_cavity_is_refused_by_name():
-    """THE CAVITY RETIRED (BUILD.md section 26 item 28; was BUILD.md (o), the cavity of form
-    (I) counting the separable form's cycles): a block declaring `cavity` is refused by name
-    with what stands in its place (a body's record held by the law alone, its border the
-    world's), true and false alike; the kind's own pair stays no body."""
+    """THE CAVITY RETIRED (BUILD.md section 26 item 28; was BUILD.md (o), the cavity of form (I) counting the separable form's cycles): a block declaring `cavity` is refused by name with what stands in its place (a body's record held by the law alone, its border the world's), true and false alike; the kind's own pair stays no body."""
     for value in (True, False):
         document = block_world(
             [24, 24, 24],
@@ -570,11 +524,7 @@ def test_the_cavity_is_refused_by_name():
 
 
 def test_the_mode_line_sums_lights_field_by_residue_class():
-    """The world key `mode_axis` ("x"): the record's `mode` line per interval carries the
-    three sums of light's total field over the Nodes whose x coordinate is 0, 1, 2 modulo 3,
-    equal to the sums formed from the records' rows at that interval; on a chain of 30 with
-    a planted packet the three sums are the packet's residue sums. The edge case:
-    an axis not x, y or z is refused."""
+    """The world key `mode_axis` ("x"): the record's `mode` line per interval carries the three sums of light's total field over the Nodes whose x coordinate is 0, 1, 2 modulo 3, equal to the sums formed from the records' rows at that interval; on a chain of 30 with a planted packet the three sums are the packet's residue sums. The edge case: an axis not x, y or z is refused."""
     document = block_world([30, 1, 1], PERIODIC_CHAIN, [800, 809], [], ticks=20)
     document["mode_axis"] = "x"
     lines: list[dict] = []
@@ -664,13 +614,7 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
 
 
 def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
-    """MUST 1's test: on the chain 6 x 1 x 1 (y and z folded, the Node reading itself twice on
-    each) at the pair [2, 3], open on x, the form I of section 3 as the books read it
-    (`record_form`, the weights L / num, L the numerators' lcm, here 2) changes by the
-    remainders' term exactly on every interval: num x Gamma x (I(t) - I(t - 1)) = L x SUM_i
-    (a_next - a_before)_i (r - r')_i (the pace Gamma at every Node of the vacuum, the Node's
-    terms weighted by 1 / Gamma, item 36), integers, no tolerance, 60 intervals from random
-    rows; the same on a periodic x."""
+    """MUST 1's test: on the chain 6 x 1 x 1 (y and z folded, the Node reading itself twice on each) at the pair [2, 3], open on x, the form I of section 3 as the books read it (`record_form`, the weights L / num, L the numerators' lcm, here 2) changes by the remainders' term exactly on every interval: num x Gamma x (I(t) - I(t - 1)) = L x SUM_i (a_next - a_before)_i (r - r')_i (the pace Gamma at every Node of the vacuum, the Node's terms weighted by 1 / Gamma, item 36), integers, no tolerance, 60 intervals from random rows; the same on a periodic x."""
     for boundary in (CHAIN, PERIODIC_CHAIN):
         document = massive_world([6, 1, 1], boundary, [2, 3])
         simulation = DetectorLawSimulation(parse_nature_beam_world(document))
@@ -694,16 +638,7 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
 
 
 def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
-    """The seed as the bound mode's integer profile (MASSIVE_RECORD.md section 11 item 7, the
-    reader of record and the seed; EXPLORATORY, the cheap 128^2 rest layer): the block s = 14 at
-    g = mu^2 / 4 (the kind [3200, 3236], the well [3200, 3227]) seeded flat reads its clicks at a
-    beat (the mean interval 39.3 against the mode's period 42.36), seeded with the module's mode
-    as integers at 2^18 over the whole layer (the generator's integers in the world file, the
-    same at both levels) it reads the mode: the clicks' mean interval over [200, 1500] within
-    0.5 percent of the mode's period 2 pi / omega_b, 42.36 intervals on this layer (the
-    detector's clicks; the loader's residual bound is the law's check of the profile). The edge
-    cases: a profile without `margin` refused; a profile of the wrong length refused; an
-    all-zero profile refused."""
+    """The seed as the bound mode's integer profile (MASSIVE_RECORD.md section 11 item 7, the reader of record and the seed; EXPLORATORY, the cheap 128^2 rest layer): the block s = 14 at g = mu^2 / 4 (the kind [3200, 3236], the well [3200, 3227]) seeded flat reads its clicks at a beat (the mean interval 39.3 against the mode's period 42.36), seeded with the module's mode as integers at 2^18 over the whole layer (the generator's integers in the world file, the same at both levels) it reads the mode: the clicks' mean interval over [200, 1500] within 0.5 percent of the mode's period 2 pi / omega_b, 42.36 intervals on this layer (the detector's clicks; the loader's residual bound is the law's check of the profile). The edge cases: a profile without `margin` refused; a profile of the wrong length refused; an all-zero profile refused."""
     block = {
         "position": [57, 57, 0],
         "side": 14,
@@ -754,8 +689,7 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
 
 
 def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair():
-    """An emitter giving the massive kind: its record is advanced by the kind's pair, leaves both ways
-    with the books balanced, and light's rows match until the body's field reaches them; no clock is refused."""
+    """An emitter giving the massive kind: its record is advanced by the kind's pair, leaves both ways with the books balanced, and light's rows match until the body's field reaches them; no clock is refused."""
     world = parse_nature_beam_world(matter_emitter_world(True, [512, 1]))
     beside = parse_nature_beam_world(matter_emitter_world(False, [512, 1]))
     matter = [family.name for family in world.families].index("matter")
@@ -797,13 +731,12 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     behind = int(np.max(np.abs(live.now[40:90, 0, 0])))
     # SINCE COMMIT 7 the window's record leaves the body both ways (no train's way; COMPUTATION)
     assert ahead > 1000 and behind > 1000, (ahead, behind)
-    with pytest.raises(ValueError, match="clock is required: the given family 'matter' declares no"):
+    with pytest.raises(ValueError, match="the given family 'matter' declares no clock"):
         parse_nature_beam_world(matter_emitter_world(True))
 
 
 def test_a_matter_emitters_record_clicks_once_at_the_rung():
-    """A massive record clicks once at the screen, at the first interval 2 W C >= (2 u + 1) T on its
-    pointer, and is deleted whole there; two gather lines, the books balanced every interval."""
+    """A massive record clicks once at the screen, at the first interval 2 W C >= (2 u + 1) T on its pointer, and is deleted whole there; two gather lines, the books balanced every interval."""
     document = matter_emitter_world(True, [512, 1], stock=2)
     document["ticks"] = 3000
     # the cube of matter bodies at [184, 186] read as `screen` (record 1899), the
@@ -868,11 +801,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
 
 
 def test_every_declared_wheel_is_refused_by_name():
-    """The wheel is the record's own (ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 15): the
-    world key `wheel`, a detector set's `wheel`, a block's `wheel` and an emitter's `wheel`
-    are each refused by name with the successor named; the same for `residue_order` and
-    `residue_seed` on an emitter, `absorbing` and `take` on a block, `take` on a family. The
-    edge case: a world without any of them loads."""
+    """The wheel is the record's own (ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 15): the world key `wheel`, a detector set's `wheel`, a block's `wheel` and an emitter's `wheel` are each refused by name with the successor named; the same for `residue_order` and `residue_seed` on an emitter, `absorbing` and `take` on a block, `take` on a family. The edge case: a world without any of them loads."""
     base = with_screen(block_world([240, 1, 1], CHAIN, [156, 157], [], emitter_at(100, 3)), 230)
     parse_nature_beam_world(base)
     for mutate, message in (
@@ -912,8 +841,7 @@ def test_every_declared_wheel_is_refused_by_name():
 
 
 def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_rung():
-    """The receiving set at the emitter's head books the one-way flux and clicks at the record's rung,
-    closed or open; a set off the ladder is never chosen; the loader refuses the malformed forms."""
+    """The receiving set at the emitter's head books the one-way flux and clicks at the record's rung, closed or open, the run to that click; a set off the ladder is never chosen; the loader refuses the malformed forms."""
     first = 1  # A's given record: block 0, giving 1
     for faces in ("closed", "open"):
         world = parse_nature_beam_world(light_clock_world(faces, faces == "open"))
@@ -948,6 +876,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
                 giving = live.giving_tick
             if pointer_at_click is not None and count_then is None:
                 count_then = count_before
+                break  # past the click the giver at the rule's period 91 (the generator's 94) recoils off the open face
         assert giving is not None and pointer_at_click is not None and pointer_at_click > 0
         gathers = [g for g in lines if g["event"] == "gather" and g["record"] == first]
         assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "A_face"
@@ -993,16 +922,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
 
 
 def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_block():
-    """A set bound to a block WITHOUT positions is a receiver (Sagnac's form, DECLARATIONS.md section 13
-    item 1) under the flux reading (ALGEBRA.md #rule3): the block's twelve Nodes are the
-    set's Nodes (the detector index at them the set's); an emitter's record (the emitter
-    body of the source kind at [100, 132) on a chain of 300, its train along +x toward the
-    block 68 Links ahead, two givings, the emitter naming the set) books its one-way flux into the
-    block's Nodes to the set and clicks once there, the click stamped with the block's own
-    count as the interval began and named by `clock_source`, the record deleted whole at
-    it, the books balanced; nothing absorbs. Pushed toward the emitter at k = 3 (the block
-    stepping, its Nodes and the set's Nodes following it): the record still clicks once at
-    the set, the books balanced. The loader: a set's `wheel` refused by name."""
+    """A set bound to a block WITHOUT positions is a receiver (Sagnac's form, DECLARATIONS.md section 13 item 1) under the flux reading (ALGEBRA.md #rule3): the block's twelve Nodes are the set's Nodes (the detector index at them the set's); an emitter's record (the emitter body of the source kind at [100, 132) on a chain of 300, its train along +x toward the block 68 Links ahead, two givings, the emitter naming the set) books its one-way flux into the block's Nodes to the set and clicks once there, the click stamped with the block's own count as the interval began and named by `clock_source`, the record deleted whole at it, the books balanced; nothing absorbs. Pushed toward the emitter at k = 3 (the block stepping, its Nodes and the set's Nodes following it): the record still clicks once at the set, the books balanced. The loader: a set's `wheel` refused by name."""
     for momentum in ([0, 0, 0], [-64, 0, 0]):
         document = massive_world([300, 1, 1], CHAIN, [800, 809])
         document["ticks"] = 1200
@@ -1108,7 +1028,7 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
     # the measurement: nothing given crosses the wall to click at `screen` at [70, 72]
     givings = [line for line in lines if line["event"] == "giving"]
     gathers = [line for line in lines if line["event"] == "gather"]
-    assert len(givings) == 2 and gathers == []
+    assert len(givings) == 3 and gathers == []  # 3 at the rule's period 82 (2 at the generator's 84)
     assert all(line["record"] in simulation.records for line in givings)
     for key, value in (("seed", 5), ("margin", "control")):
         bad = json.loads(json.dumps(document))
@@ -1122,11 +1042,7 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
 
 
 def test_the_momentum_books_carry_the_blocks_held_momentum_and_nothing_else():
-    """Issue #1086 (a GAMEBOARD diagnostic, no law, no pin): the books' `momentum` carries
-    `held` as the sum of the blocks' declared momentum vectors ([64, 0, 0] for one block
-    pushed to k = 3; [0, 0, 0] at rest), `transit` and `escaped` null with the note that
-    they are not accounted, and `balanced_scope` naming content alone; the run's record
-    carries the same scope line."""
+    """Issue #1086 (a GAMEBOARD diagnostic, no law, no pin): the books' `momentum` carries `held` as the sum of the blocks' declared momentum vectors ([64, 0, 0] for one block pushed to k = 3; [0, 0, 0] at rest), `transit` and `escaped` null with the note that they are not accounted, and `balanced_scope` naming content alone; the run's record carries the same scope line."""
     world = parse_nature_beam_world(
         block_world(
             [24, 24, 24],

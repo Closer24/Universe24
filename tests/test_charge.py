@@ -230,7 +230,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     refused(quantum, "a held family is counted in quanta")
     clocked = copy()
     clocked["universe"][CHARGE]["clock"] = [512, 1]
-    refused(clocked, "a held family givings nothing")
+    refused(clocked, "gives nothing and declares a clock")
     charged = copy()
     charged["universe"][CHARGE]["sign"] = 1
     refused(charged, "a held family carries none")

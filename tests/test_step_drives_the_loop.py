@@ -13,7 +13,7 @@ from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm
 from event_universe.world_files import parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
-WORLDS = ("massive_record/light_clock.json", "point_emitter/point_chain.json")
+WORLDS = ("massive_record/light_clock.json", "dark_body/dark.json")
 
 
 def spied(world: str) -> tuple[DetectorLawSimulation, list[tuple[str, str]], list[str]]:

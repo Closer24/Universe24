@@ -33857,6 +33857,10 @@
     1
    ],
    "quantum": 1,
+   "clock": [
+    512,
+    1
+   ],
    "held": {
     "count": "sign",
     "factors": [

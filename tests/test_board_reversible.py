@@ -269,7 +269,7 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
     plain flux against the norm's rational (Born's rule at the taking end, ALGEBRA.md #the-ladder and (3),
     item 36)."""
     document = reversible_world()
-    period = document["measured"][0]["emitter"]["period"]
+    period = parse_nature_beam_world(document).measured[0].block.emitter.period
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     seen: Seen = {}

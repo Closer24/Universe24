@@ -584,15 +584,6 @@ def relaxation_time(reading: MarginReading) -> float:
     return 1.0 / (reading.omega_0 - reading.omega_b)
 
 
-def period_of(reading: MarginReading) -> int:
-    """The period P of the body's mode in intervals, the nearest integer to
-    2 pi / omega_b (ALGEBRA.md #the-click; COMPUTATION from the
-    module's own omega_b); at least 1."""
-    if reading.omega_b <= 0.0:
-        return 1
-    return max(1, int(round(2.0 * math.pi / reading.omega_b)))
-
-
 def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
     """The excited record's norm T, one period's action P e_c (ALGEBRA.md #the-click and (f) in the flux's units of ALGEBRA.md #rule3): the share e_c of
     the record's conserved form at the body's centre Node, summed over
