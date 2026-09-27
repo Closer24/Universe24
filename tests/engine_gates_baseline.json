@@ -64,6 +64,11 @@
    "family_names": 0,
    "hand_divisions": 0,
    "numbers": 10
+  },
+  "tools/body_generator.py": {
+   "family_names": 0,
+   "hand_divisions": 3,
+   "numbers": 0
   }
  },
  "format": "engine-gates-baseline"
