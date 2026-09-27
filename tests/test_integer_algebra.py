@@ -1,5 +1,4 @@
-"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import,
-dtype or numpy function, and a root only in the functions ALLOWED_ROOTS names, each with its reason."""
+"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function, and a root only in the functions ALLOWED_ROOTS names, each with its reason."""
 
 from __future__ import annotations
 
@@ -20,6 +19,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "loader/frame.py": "the frame of the files: the schemas the loader reads them through; no arithmetic",
     "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md #the-primitives)",
+    "events/records.py": "the records' bookkeeping the loop steps: the live record, a body's Node record, the block, the books, the runner's layer; no arithmetic",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md #the-line, #the-direction, #the-interval), and the ladder's rungs (ALGEBRA.md #the-ladder)",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md #what-is-open): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
