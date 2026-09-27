@@ -26,8 +26,8 @@ from event_universe.features.start import (
     axis_arrivals,
     check_counts,
     division,
-    field_at_rest,
 )
+from event_universe.features.start import rest as start_rest
 from event_universe.loader.mode import period_by_the_rule
 from event_universe.loader.world import TWIST_UNIT_SCALE
 from event_universe.world_files import input_digest
@@ -517,9 +517,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                     weight = integers[weight]
                 held = rows[read["family"]]
                 if read["family"] not in fields:
-                    rest = field_at_rest(
-                        total, pair_of(held, f"the held family {read['family']!r}"), wrap
-                    )
+                    rest = start_rest(total, pair_of(held, f"the held family {read['family']!r}"), wrap)
                     fields[read["family"]] = rest
                     rests[read["family"]] = {
                         "pair": list(held["pair"]),
@@ -531,7 +529,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                 content = content + int(weight) * fields[read["family"]].levels
                 own_key = (id(body), read["family"])
                 if own_key not in own_fields:
-                    own_fields[own_key] = field_at_rest(
+                    own_fields[own_key] = start_rest(
                         counts, pair_of(held, f"the held family {read['family']!r}"), wrap
                     )
                 own_content = own_content + int(weight) * own_fields[own_key].levels

@@ -39,6 +39,7 @@ def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
 
 
 @pytest.mark.diagnostic
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserved():
     document = emitter_world(stock=4)
     lines, simulation, trace = run(document)

@@ -64,6 +64,7 @@ def rule_step(
     return levels, remainders
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone():
     """(i) THE READING WITH ONE SIGN (ALGEBRA.md #the-paces): on the periodic chain of 60 with light bodies of QUANTA quanta and charge +1 at [20, 30) (Q = +QUANTA there, the family of charge held at it, 0 elsewhere at the load), a matter record of charge -1 is advanced at the effective content c + Lambda d = 2 QUANTA at the slab (the hill deepened: its pace Gamma - 2 QUANTA, the clock pair the engine reports), one of charge +1 at c - Lambda d = 0 (the hill filled to the vacuum's pace at Lambda = 1), the neutral record at c alone and a record of the charged light itself (q = +1) at c - Lambda c, each bit for bit the rule's on random rows; at Lambda = 3 the -1 record reads 4 QUANTA and the +1 records 0 (the row's floor: a hill lessens a hollow and never exceeds it). The wheel at a slab Node is the rule's at the effective content. The edge case: the engine refuses the load where the pace could reach 0 at a body's Nodes (its content plus Lambda times its charge in size not below Gamma: Lambda = 99 at the content 10 and the charge 10 gives 10 + 990, 1000, at Gamma 1000; at Lambda = 98 it loads)."""
     rng = np.random.default_rng(35)
@@ -111,6 +112,7 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
         parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, -1, 99))
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     """(ii) THE HOLD AT Q (ALGEBRA.md #the-paces and (2)): on the emitter world with light and the matter kind both of charge -1 (the emitter's one own quantum of matter and its stock of 4 light quanta held at [5, 37) (ALGEBRA.md #the-paces; item 47), the screen's three light bodies of one quantum at [70, 72], the cube of side 3 on a chain), the family of charge is -5 at every Node of the emitter body and -1 at every Node of the screen at the load, 0 in the vacuum; the emitter's Q rises by one at each giving (a held light quantum given, its label in flight on the given record; the body's own quantum and its own charge stay) and the giving line carries it, the screen's first body's Q falls by one at each click there (the label held); the whole charge of the bodies and of the records in flight is -8 at every interval; the books balanced. The edge case: a light body of charge 0 in a world whose bodies carry charge holds Q = 0 (the neutral chain, (v))."""
     document = emitter_world(stock=4, on_mode=False)
@@ -147,6 +149,7 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
             assert line["charge"] == -line["content"]
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_joint_step_with_both_fields_inverts_bit_for_bit():
     """(iii) THE EXACT BACKWARD RUN (the model owner's record 1994; ALGEBRA.md #the-paces under item 34): on the periodic chain of 60 with light bodies of QUANTA quanta and charge +1 at [20, 30), a record of the charged light (q = +1, reading c - Lambda d) and a neutral record of random rows registered (nothing clicks), both fields rise and fall at Nodes over 30 intervals (the falls counted, above 0, the charge field moved off its start), and the joint step inverts bit for bit: every record's two levels and remainders and both fields' rows. The edge case: the chain with an open x (the zero faces) inverts as exactly."""
     for boundary in (PERIODIC, CHAIN):

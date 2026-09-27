@@ -50,6 +50,7 @@ def test_the_booking_is_s_dot_n_and_the_opposite_sign_alone_refuses():
             apply(HandTerm(hand), HandStart(spin, momentum))
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_hand_refuses_a_click_at_the_giver_and_the_ladder_walks_on_to_the_face():
     """The shipped light clock over 700 intervals with A's spin S = (1, 0, 0) and the charge family's hand set on the parsed world: A's momentum runs positive under the loader's period by the rule (item 3), so the booking S . n is positive at A's own set; the hand +1 admits every click there (13 at `at_well`, none at the face, the same run as with no hand, A's momentum 1846) and the hand -1 refuses them all, each record walking the ladder on to the face (19 there, none at `at_well`, A's momentum 523 with its takings gone), measured once on this fixture."""
     document = json.loads(LIGHT_CLOCK.read_bytes())
