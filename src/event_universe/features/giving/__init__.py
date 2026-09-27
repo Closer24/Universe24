@@ -141,10 +141,9 @@ DECLARATION = Declaration(
         "a body's content M_k and its momentum n",
     ),
     ("a family's level at a Node", "a body's content M_k", "a body's momentum n"),
-    {"a body's content M_k": 2, "a body's momentum n": 1},
     apply,
-    THE_WORD + " (9.117 item 5); 9.117 item 2, the row 'the giving'; 9.107; 9.71 (1); 9.116 item 5; "
-    "9.86 (1)",
+    THE_WORD
+    + " (9.117 item 5); 9.117 item 2, the row 'the giving'; 9.107; 9.71 (1); 9.116 item 5; 9.86 (1)",
     word="after the step",
 )
 

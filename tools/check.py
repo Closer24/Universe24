@@ -195,6 +195,9 @@ def select(changed, sources):
         # and THE SHAPE OF THE CODE is held at its baseline (the model owner's decisions,
         # records 2239 and 2241)
         tests.add("tests/test_code_shape.py")
+        # and THE DOCUMENT LOCK keeps the three current documents (the short procedure,
+        # point 12)
+        tests.add("tests/test_documents.py")
     return sorted(tests), sorted(
         p for p in impacted if p.startswith("src/") and p.endswith(".py") and p in sources
     )
