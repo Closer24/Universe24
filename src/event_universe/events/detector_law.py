@@ -1311,8 +1311,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self._induction_act(self.register.at("the induction", "(v)"), block, True)
         for block in self.blocks:
             self._feed_act(self.register.at("the feed", "(v)"), block, True)
-        # the count's line back (its own inverse, the current reversed; ALGEBRA.md
-        # #the-counts-line): the quanta return to their Nodes before the records step back
+        # the count's line back (its own inverse, the current reversed; ALGEBRA.md #the-counts-line): the quanta return to their Nodes before the records step back
         counts_line = self.register.at("the count's line", "(ii)")
         for block in self.blocks:
             self._counts_act(counts_line, block, -1)

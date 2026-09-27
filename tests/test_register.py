@@ -29,9 +29,7 @@ from tests.worlds import emitter_world
 
 
 def declared_folders() -> list[tuple[str, str, bool]]:
-    """Every folder of the features package on disk with its declared name and whether it is
-    built (a function or a bind), in the folders' order: the register lists nothing by hand
-    (record 2221 (3)), so a folder added or built touches no shared file."""
+    """Every folder of the features package on disk with its declared name and whether it is built (a function or a bind), in the folders' order: the register lists nothing by hand (record 2221 (3)), so a folder added or built touches no shared file."""
     package = Path(features.__file__).parent
     found = []
     for folder in sorted(p for p in package.iterdir() if p.is_dir() and (p / "__init__.py").is_file()):
@@ -74,10 +72,7 @@ def noop() -> None:
 
 
 def test_a_name_registered_twice_or_an_unknown_place_or_word_is_refused_by_name():
-    """One register, one name to one function (record 2212 (2)); a place is one of
-    ALGEBRA.md #the-interval's five or "any"; a word one of ALGEBRA.md #the-primitives's three or "any"; a folder is
-    the name without the article, the apostrophe dropped, a space or a hyphen an
-    underscore (the mathematician's folders signed_read and recoil, PRs 1164 and 1165)."""
+    """One register, one name to one function (record 2212 (2)); a place is one of ALGEBRA.md #the-interval's five or "any"; a word one of ALGEBRA.md #the-primitives's three or "any"; a folder is the name without the article, the apostrophe dropped, a space or a hyphen an underscore (the mathematician's folders signed_read and recoil, PRs 1164 and 1165)."""
     register = Register()
     register.add(
         Declaration(
@@ -114,10 +109,7 @@ def test_a_name_registered_twice_or_an_unknown_place_or_word_is_refused_by_name(
 
 
 def test_the_step_file_orders_the_writers_of_one_value_and_a_writer_it_leaves_out_is_refused():
-    """The order among the writers of one value at one place is the step file's (record 2251),
-    a write deferred from (ii) to (iv) (ALGEBRA.md #the-primitives) before the place's own writers; a writer
-    the file leaves out is refused by name; a remainder is the writer's own and never
-    collides; the same value at another place is no conflict."""
+    """The order among the writers of one value at one place is the step file's (record 2251), a write deferred from (ii) to (iv) (ALGEBRA.md #the-primitives) before the place's own writers; a writer the file leaves out is refused by name; a remainder is the writer's own and never collides; the same value at another place is no conflict."""
     register = Register()
     register.add(Declaration("the receive", "(i)", ("the Link's value",), ("the arrivals",), noop, ""))
     register.add(
@@ -174,9 +166,7 @@ def test_the_step_file_orders_the_writers_of_one_value_and_a_writer_it_leaves_ou
 
 
 def test_a_term_naming_an_unknown_or_unbuilt_primitive_is_refused_by_name():
-    """A term of the files names a primitive the register holds with a function;
-    a name the register lacks and a row of the ledger not built are refused
-    naming the file's line and the primitive."""
+    """A term of the files names a primitive the register holds with a function; a name the register lacks and a row of the ledger not built are refused naming the file's line and the primitive."""
     register = Register()
     register.add(
         Declaration(
@@ -197,9 +187,7 @@ def test_a_term_naming_an_unknown_or_unbuilt_primitive_is_refused_by_name():
 
 
 def test_the_loop_calls_a_primitive_at_its_declared_place_alone():
-    """A call at a place other than the declared one is refused; the trace's
-    place "any" admits every place; an unbuilt row has no function to call; a
-    binder gives its function for the loop at `bind`, once."""
+    """A call at a place other than the declared one is refused; the trace's place "any" admits every place; an unbuilt row has no function to call; a binder gives its function for the loop at `bind`, once."""
     register = Register()
     register.add(Declaration("the hold", "(iv)", (), (), noop, ""))
     register.add(Declaration("the trace", "any", (), (), noop, "", word="any"))
@@ -239,13 +227,7 @@ def forget(package: str) -> None:
 
 
 def test_the_register_finds_the_folders_and_refuses_a_folder_without_its_declaration(tmp_path):
-    """Discovery by folders (record 2221 (3)): a folder declares its own name, place,
-    word, reads, writes and order as a Declaration of the register with its own
-    function (the mathematician's form, PRs 1164 and 1165) or as a dict of its words
-    with `bind`; a folder without DECLARATION, a folder whose name is not its declared
-    name's, a declaration with an unknown key, a bind that is no function and two
-    folders declaring one name are refused by name; the folders' order is the
-    register's; a folder with neither function nor bind is a row not built."""
+    """Discovery by folders (record 2221 (3)): a folder declares its own name, place, word, reads, writes and order as a Declaration of the register with its own function (the mathematician's form, PRs 1164 and 1165) or as a dict of its words with `bind`; a folder without DECLARATION, a folder whose name is not its declared name's, a declaration with an unknown key, a bind that is no function and two folders declaring one name are refused by name; the folders' order is the register's; a folder with neither function nor bind is a row not built."""
     good = (
         'DECLARATION = {"name": "the hold", "place": "(iv)", "word": "the right side", '
         '"reads": ("a body\'s content M_k",), "writes": ("a family\'s level at a Node",), '
@@ -306,14 +288,7 @@ def test_the_register_finds_the_folders_and_refuses_a_folder_without_its_declara
 
 
 def test_the_engine_registers_every_folder_on_disk_and_checks_every_term():
-    """On a shipped test world the engine's register holds exactly the folders' names in
-    the folders' order, found on disk and listed nowhere by hand (the recoil's folder among
-    them, PR #1165), each folder the name's, each with a place, a
-    word and a section, the built ones bound to a function and the rows to do without
-    one; the rows of 9.117 write the values named once (item 1) and the writers' orders
-    are ALGEBRA.md #the-primitives's; every term a family or a body declares (the giving of an emitter
-    among them) names a built primitive; the hold and the clicks are called through the
-    register (the shipped worlds bit for bit: the suites' digests)."""
+    """On a shipped test world the engine's register holds exactly the folders' names in the folders' order, found on disk and listed nowhere by hand (the recoil's folder among them, PR #1165), each folder the name's, each with a place, a word and a section, the built ones bound to a function and the rows to do without one; the rows of 9.117 write the values named once (item 1) and the writers' orders are ALGEBRA.md #the-primitives's; every term a family or a body declares (the giving of an emitter among them) names a built primitive; the hold and the clicks are called through the register (the shipped worlds bit for bit: the suites' digests)."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=20)))
     register = simulation.register
     folders_found = declared_folders()
