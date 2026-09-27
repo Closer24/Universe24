@@ -1,7 +1,4 @@
-"""THE RULE IN ONE PLACE (ALGEBRA.md #the-line, #the-direction and (13), ALGEBRA.md #the-interval; issue #1154;
-src/event_universe/core/rule3.py): one function steps every record at every Node in either direction;
-the form's term is read from the same integers; the isotropic rule is the same call with equal paces;
-no other file of src/ writes this arithmetic; the operation primitive is rule3; bit for bit everywhere."""
+"""Rule3 in one place (core/rule3.py; ALGEBRA.md #the-line, #the-direction, #the-interval): one function steps every record in either direction, the isotropic rule is the same call with equal paces, and no other file of src/ writes this arithmetic."""
 
 from __future__ import annotations
 

@@ -1,13 +1,4 @@
-"""THE ENGINE'S ACCEPTANCE TESTS (the model owner's words of 2026-09-26 through Nature24, the
-Boss's records 2177 and 2178; docs/designs/generic_engine/FAMILY_ATTRIBUTES.md section 4 and
-ENGINE_LEDGER.md): the engine supports generic primitives and the run defines the families;
-every attribute is read by its kind and never by its name; a new family or attribute is a line
-in the files, with the engine never rebuilt. Six tests, checking code (record 2135): (a) the
-adversarial universe, (b) the cap of twenty families, (c) the null family, (d) the added
-attribute (a hill), (e) the closed engine (no family name, no universe integer, no default,
-no flag and no version in the code; record 2182), (f) the rule as one function. A test of a support the
-ledger lists as to do is marked xfail strict: it turns green the day the support lands and then
-must lose its mark (the ledger's item moves)."""
+"""The engine's acceptance tests: attributes read by kind, never by name; the adversarial universe, the cap of twenty families, the null family, an added attribute, the closed engine (no family name, universe integer, default, flag or version in the code) and the rule as one function; a support not built yet is xfail strict and loses its mark when it lands."""
 
 from __future__ import annotations
 
