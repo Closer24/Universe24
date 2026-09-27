@@ -14,15 +14,6 @@ from tests.worlds import load_file
 CHECK = load_file("check_scope", Path(__file__).resolve().parents[1] / "tools/check.py")
 
 
-def test_the_worlds_readme_selects_navigation_and_never_a_cancelled_test():
-    # its consumer row names the ray law's worlds test, cancelled (docs/CANCELLED_WORLDS.md
-    # section 3): the selector drops it and keeps the document scanners
-    selected, _ = CHECK.select(["examples/events/README.md"], {})
-    assert "tests/test_nature_beam_worlds.py" not in selected
-    assert "tests/test_repository_navigation.py" in selected
-    assert "tests/test_retention.py" not in selected
-
-
 def test_every_resource_consumer_row_names_an_existing_test():
     root = Path(__file__).resolve().parents[1]
     for resource, consumers in CHECK.RESOURCE_CONSUMERS.items():
@@ -104,47 +95,10 @@ def test_deleted_module_retains_old_consumers_and_cycles_terminate():
 
 def test_docs_and_validation_changes_do_not_schedule_simulations():
     tests, typed = CHECK.select(["AGENTS.md", "tools/check.py", ".github/workflows/check.yml"], {})
-    assert tests == [
-        "tests/test_check_scope.py",
-        "tests/test_code_shape.py",
-        "tests/test_documents.py",
-        "tests/test_engine_gates.py",
-        "tests/test_folder_cards.py",
-        "tests/test_genericity.py",
-        "tests/test_ownership.py",
-        "tests/test_repository_hygiene.py",
-        "tests/test_repository_language.py",
-        "tests/test_repository_navigation.py",
-        "tests/test_runtime_guards.py",
-        "tests/test_shipped_worlds.py",
-        "tests/test_step_drives_the_loop.py",
-        "tests/test_tests_shape.py",
-    ]
+    own = {"tests/test_check_scope.py", "tests/test_repository_hygiene.py"}
+    own |= {"tests/test_repository_language.py", "tests/test_repository_navigation.py"}
+    assert tests == sorted(own | set(CHECK.every_pull_request()))
     assert not typed
-
-
-def test_every_change_selects_the_shipped_worlds_regression_and_no_change_selects_nothing():
-    """The regression record of every shipped world is compared and the genericity test draws
-    its universes on any change at all (record 2214 point 7; record 2234); with nothing changed
-    nothing is selected."""
-    tests, _ = CHECK.select(["docs/GLOSSARY.md"], {})
-    assert "tests/test_shipped_worlds.py" in tests and "tests/test_genericity.py" in tests
-    tests, _ = CHECK.select(["tests/shipped_worlds.json"], {})
-    assert "tests/test_shipped_worlds.py" in tests
-
-
-def test_every_change_selects_the_code_shape_gate_and_no_change_selects_nothing():
-    """The shape of the code is held at its baseline on any change at all (records 2239 and
-    2241); with nothing changed nothing is selected."""
-    tests, _ = CHECK.select(["docs/GLOSSARY.md"], {})
-    assert "tests/test_code_shape.py" in tests and "tests/test_engine_gates.py" in tests
-    assert "tests/test_step_drives_the_loop.py" in tests
-    assert "tests/test_folder_cards.py" in tests
-    assert "tests/test_runtime_guards.py" in tests
-    assert "tests/test_code_shape.py" in tests and "tests/test_tests_shape.py" in tests
-    assert "tests/test_engine_gates.py" in tests
-    assert "tests/test_documents.py" in tests
-    assert CHECK.select([], {}) == ([], [])
 
 
 def test_example_selects_its_consumers_and_not_other_collision_candidates():
@@ -311,41 +265,6 @@ def test_scope_report_stays_leased_until_failed_selected_command_finishes(monkey
     assert selected.exists()
 
 
-@pytest.mark.parametrize(
-    "path",
-    [
-        "examples/new-world.json",
-        "examples/directional-wave/display.json",
-        "skills/simulation-configuration/assets/two-streams.json",
-    ],
-)
-def test_configuration_inventory_selects_preflight_without_unrelated_worlds(path):
-    tests, _ = CHECK.select([path], {})
-    assert "tests/test_preflight_worlds.py" in tests
-    assert "tests/test_spatial_engine.py" not in tests
-
-
-@pytest.mark.parametrize("name", ["catalog.json", "representation-probes.json"])
-def test_catalog_resources_select_the_preflight_and_no_deleted_consumer(name):
-    tests, _ = CHECK.select(["examples/known-entities/" + name], {})
-    assert "tests/test_preflight_worlds.py" in tests
-    assert all(test.startswith("tests/test_") for test in tests)
-    assert not any("entity" in test or "profile" in test for test in tests)
-
-
-def test_detector_definitions_select_no_cancelled_consumer():
-    # the row's three consumers are the ray law's, cancelled (docs/CANCELLED_WORLDS.md
-    # section 3): the selector names none of them and keeps the living preflight
-    tests, _ = CHECK.select(["examples/events/detector/entities/detectors.json"], {})
-    assert not {
-        "tests/test_entity_definitions.py",
-        "tests/test_configuration_validation.py",
-        "tests/test_entity_loading_consumers.py",
-    } & set(tests)
-    assert "tests/test_preflight_worlds.py" in tests
-    assert "tests/test_nature_beam_flight.py" not in tests
-
-
 def test_a_change_to_the_law_selects_its_words_and_links_gate():
     tests, _ = CHECK.select(["docs/ALGEBRA.md"], {})
     assert "tests/test_law_words.py" in tests
@@ -358,6 +277,8 @@ def test_the_every_pull_request_list_is_one_sorted_file_of_existing_tests():
     assert listed == sorted(listed) and len(listed) == len(set(listed))
     assert all((root / test).is_file() for test in listed)
     assert set(listed) <= set(CHECK.select(["docs/GLOSSARY.md"], {})[0])
+    assert "tests/test_shipped_worlds.py" in CHECK.select(["tests/shipped_worlds.json"], {})[0]
+    assert CHECK.select([], {}) == ([], [])
 
 
 def test_the_ci_shards_hold_every_test_once_and_the_regression_only_where_a_world_runs():

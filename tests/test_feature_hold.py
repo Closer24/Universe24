@@ -1,6 +1,4 @@
-"""THE HOLD, its own folder (ALGEBRA.md 9.117 the row "the hold"; 9.91 (3); record 2250): every division
-through core.rule3, forward then back exact; the dipole's terms 9.91 (3)'s table; the refusals; the card,
-bound (#1231): the loop's hold is this folder's line, pinned by every shipped world's digest."""
+"""The hold's folder: every division through core.rule3, forward then back exact; the dipole's terms; the refusals; the card bound, the loop's hold being this folder's line."""
 
 from __future__ import annotations
 

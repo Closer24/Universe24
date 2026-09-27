@@ -1,8 +1,4 @@
-"""THE LAW'S RULE WITH EINSTEIN'S WEAK FIELD (ALGEBRA.md #the-line): the rotation at k = 0 is
-the clock's second-order weight, light's dispersion at a level f = (p / Gamma)^2, and the loader's
-int64 bound from the rule's own total (Gamma 10^4, A 2^20, the muon's pair at two thirds of the
-room). Every number a COMPUTATION on the rule's integers; no pin. The rule's three integers
-against the algebra's line, the vacuum and one step's inverse are test_rule3's and test_node_clock's."""
+"""The law's rule with the weak field (ALGEBRA.md #the-line): the rotation at k = 0, light's dispersion at a level, and the loader's int64 bound from the rule's own total. COMPUTATION; no pin."""
 
 from __future__ import annotations
 

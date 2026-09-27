@@ -1,9 +1,4 @@
-"""THE CHECK-MODE WORLDS (ALGEBRA.md 9.87 (4), (5); 9.92; 9.98 (3); the Boss's records 2128,
-2130 and 2133 (2)): the world files of `examples/events/check_mode/` are the generator's, in
-record 2128's words (`universe`, `q`, `stocks`), with no momentum, spin, moment or margin on a
-body and none of the world keys 9.90 (3) deletes; a moving body carries its record at both
-levels over the whole board; every world file is the generator's; the generator's translation and its screen are checked on small inputs. No
-pin: the rows are check-mode rows (9.59 (6)). Every count here is a HOST count."""
+"""The check-mode worlds of examples/events/check_mode/ are the generator's, with no momentum, spin, moment or margin on a body; a moving body carries its record at both levels; the generator's translation and screen hold on small inputs. HOST counts; no pin."""
 
 from __future__ import annotations
 

@@ -1,9 +1,4 @@
-"""THE ONE COMMAND (the model owner's record 1887 of 2026-09-25; tools/run_inputs.py):
-input files in, one output file per experiment out, each in its own process, in
-parallel; each input first LAWFUL or REFUSED at load, the lawful one run under the law
-and its clicks written per detector with the registered pin's verdict. Every reading
-here is the engine's on the line's small test worlds (COMPUTATION); no pin of nature.
-"""
+"""The one command (tools/run_inputs.py): input files in, one output file per experiment out, each in its own process; each input LAWFUL or REFUSED at load, a lawful one run and its clicks written per detector with the pin's verdict. COMPUTATION on small worlds; no pin of nature."""
 
 from __future__ import annotations
 
