@@ -14,6 +14,8 @@ ROOT = Path(__file__).resolve().parents[1]
 RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
     # The registers, worlds and generators a living test reads by path (the ray law's
     # rows were deleted with their tests on 2026-09-26, docs/CANCELLED_WORLDS.md).
+    # The law document's words and links (#1198, gate 5).
+    "docs/ALGEBRA.md": ("tests/test_law_words.py",),
 }
 
 
