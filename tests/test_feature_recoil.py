@@ -130,7 +130,7 @@ def test_the_bounds_and_the_terms_are_refused_by_name():
 def test_the_trace_hand_identity_on_the_emitters_run():
     """The emitter's unit world (Q = 64 giving four quanta of light of wavelength 4 along +x, L = 4): fed every giving line's integers with the giver's sense, the folder moves n by the whole part and keeps the store, and after every giving n equals the exact floor of the sum of the fractions (ALGEBRA.md #the-interval, #the-primitives); that the run moves no momentum is tests/test_four_vector_click.py's check."""
     document = emitter_world(stock=4, ticks=1200)
-    period = document["measured"][0]["emitter"]["period"]
+    period = parse_nature_beam_world(document).measured[0].block.emitter.period
     wavelength = 2 * document["N"] // document["universe"][0]["clock"][0]  # k = pi / 2: 4
     assert wavelength == 4 and period > 0
     lines: list[dict] = []

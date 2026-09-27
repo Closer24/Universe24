@@ -247,7 +247,7 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "pair": [800, 801],
             "seed": 1
             << 10,  # the window's writes at the body's Nodes pile up about 300-fold and stay under the bound (commit 7)
-            "emitter": {"family": "light", "weight": 3, "twist": 0},  # the window (commit 7)
+            "emitter": {"family": "light", "weight": 3},  # the window (commit 7)
             "margin": "control",
             # the receiver by name (section 13 item 7): A's own bound set
             "receiver": "A_face",
@@ -383,7 +383,7 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
             "pair": list(POINT_WELL),
             "seed": 1 << 12,
             "margin": "control",
-            "emitter": {"family": "light", "twist": 0},  # rewritten by the seeding (item 73)
+            "emitter": {"family": "light"},  # the weight by the seeding
         }
     ]
     document["detectors"] = []
@@ -423,7 +423,6 @@ def emitter(
         "emitter": {
             "family": "light",
             "weight": 3,  # the window's weight (commit 7; the train retired)
-            "twist": 0,  # the given record's twist "own", the generator's number (item 73)
         },
         "margin": "control",
     }

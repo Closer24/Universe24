@@ -430,6 +430,7 @@ def draw(seed: int) -> dict[str, Any]:
             "phase": 2,
             "pair": [1, 1],
             "quantum": 1,
+            "clock": [512, 1],  # the given record's clock, the row's (L479)
             "reads": [] if rng.random() < 0.5 else reads_of(exclude=given),
             "self_source": {"unit": 0},
             "clicks": {"gives": True, "takes": True, "quantum": 1},

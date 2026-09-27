@@ -92,7 +92,6 @@ REDSHIFT_TICKS = 6000  # 64 givings by about 3000, the last return about 2200 la
 # ALGEBRA.md #the-velocity, gives the wavelength 20.8, not whole; the train needs a whole wavelength, 9.17
 # (6a): [4096, 21] on N = 2048 gives 21 Links, k = 2 pi / 21 = 0.299), where the lattice's
 # term is 0.3 percent; the train's 8 periods of the wavelength 21 over 168 Nodes
-LONG_GIVEN_CLOCK = [4096, 21]
 LONG_PHASE_STEPS = 2048
 LONG_TRAIN_LENGTH = 168
 LONG_REDSHIFT_EMITTER_X = 200  # one train (168) beyond the low face slab (32), ALGEBRA.md #the-ladder
@@ -128,7 +127,6 @@ def clock_world(
     ticks: int,
     holder: list[dict] | None = None,
     hop_every: int | None = None,
-    given_clock: list[int] | None = None,
     phase_steps: int | None = None,
     train_length: int | None = None,
     arm: int | None = None,
@@ -145,7 +143,6 @@ def clock_world(
     rotation, a mirror of depth 2 behind it (a moving body's light is its own rotation at
     its Node, ALGEBRA.md #the-velocity); with `arm`
     the mirror stands that many Links beyond the body's Node (in place of `mirror_x`)."""
-    given_clock = list(detector.GIVEN_CLOCK) if given_clock is None else list(given_clock)
     phase_steps = detector.PHASE_STEPS if phase_steps is None else phase_steps
     train_length = detector.TRAIN_LENGTH if train_length is None else train_length
     if arm is not None:
@@ -161,7 +158,6 @@ def clock_world(
         detector.KIND,
         blocks,
         ticks,
-        given_clock=list(given_clock),
         seed_profile=False,
     )
     if holder is not None:
@@ -295,7 +291,6 @@ def worlds() -> dict[str, dict]:
     )
     out["bending"] = bending()
     long_rows = dict(
-        given_clock=LONG_GIVEN_CLOCK,
         phase_steps=LONG_PHASE_STEPS,
         train_length=LONG_TRAIN_LENGTH,
         kind=detector.ONE_NODE_KIND,  # the long rows' body's Node: omega = 0.178, the wavelength about 20

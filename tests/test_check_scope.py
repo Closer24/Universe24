@@ -275,7 +275,7 @@ def test_the_ci_shards_hold_every_test_once_and_the_regression_only_where_a_worl
     worlds = [t for name, targets in plan.items() if name.startswith("world") for t in targets]
     assert (
         len(worlds)
-        == len(json.loads((CHECK.ROOT / "tests/shipped_worlds.json").read_text())["worlds"]) + 2
+        == len(json.loads((CHECK.ROOT / "tests/shipped_worlds.json").read_text())["worlds"]) + 3
     )
     assert list(CHECK.shards(runs_worlds=False)) == ["suite 1", "suite 2", "suite 3"]
     assert CHECK.balanced({"a": 9, "b": 5, "c": 4, "d": 1}, 2) == [["a", "d"], ["b", "c"]]

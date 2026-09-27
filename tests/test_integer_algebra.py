@@ -15,6 +15,7 @@ SRC = ROOT / "src" / "event_universe"
 # The physical modules: every module that runs a physical step of the interval or forms the tables it reads, one line each why.
 PHYSICAL_MODULES: dict[str, str] = {
     "loader/world.py": "the loop's classes built from the checked files and the load-time constants (the flight table, the labels)",
+    "loader/mode.py": "the body's mode as the loader reads it: the period by the one-Node rule from the clock pair, no root",
     "loader/frame.py": "the frame of the files: the schemas the loader reads them through; no arithmetic",
     "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md #the-primitives)",
@@ -120,9 +121,7 @@ def true_divisions(source: str) -> list[int]:
 
 
 def forbidden_imports(tree: ast.AST) -> list[str]:
-    """Every forbidden import, and every alias of `math`, `isqrt` or
-    `integer_root` (an alias would hide a root from `roots`, so aliasing
-    them is itself a violation)."""
+    """Every forbidden import, and every alias of `math`, `isqrt` or `integer_root` (an alias would hide a root from `roots`, so aliasing them is itself a violation)."""
     found = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
@@ -162,8 +161,7 @@ METHODS_FORBIDDEN = {"mean", "std", "var"}
 
 
 def numpy_chain(node: ast.AST) -> list[str] | None:
-    """The attribute chain of an expression rooted at the name `np`
-    (`np.linalg.norm` -> ["linalg", "norm"]), None when not rooted there."""
+    """The attribute chain of an expression rooted at the name `np` (`np.linalg.norm` -> ["linalg", "norm"]), None when not rooted there."""
     chain: list[str] = []
     while isinstance(node, ast.Attribute):
         chain.append(node.attr)
@@ -174,8 +172,7 @@ def numpy_chain(node: ast.AST) -> list[str] | None:
 
 
 def is_integer_literal(node: ast.AST) -> bool:
-    """A literal that is an integer or a (nested) list or tuple of integers
-    and booleans; anything else (a float, a string, a name) is not."""
+    """A literal that is an integer or a (nested) list or tuple of integers and booleans; anything else (a float, a string, a name) is not."""
     if isinstance(node, ast.Constant):
         return isinstance(node.value, (int, bool)) and not isinstance(node.value, float)
     if isinstance(node, (ast.List, ast.Tuple)):
@@ -186,14 +183,7 @@ def is_integer_literal(node: ast.AST) -> bool:
 
 
 def numpy_violations(tree: ast.AST) -> list[str]:
-    """Every `np.<chain>` that names a forbidden dtype, a function that
-    leaves the integers or a forbidden family (`np.linalg.*`, `np.linspace`,
-    `np.random.*`, `np.fft.*`, `np.polyfit`, `np.interp`); every allocation
-    `np.zeros`, `np.ones`, `np.empty`, `np.full` without a `dtype` keyword
-    (float64 by default) and every `np.array` of a non-integer literal;
-    every call of the builtin `float`; every method call `.mean`, `.std`,
-    `.var`; every `dtype=` or `.astype(...)` argument that is not `np.int64`,
-    `bool`, `object`, `int` or the name `dtype` (a variable carrying one)."""
+    """Every `np.<chain>` that names a forbidden dtype, a function that leaves the integers or a forbidden family (`np.linalg.*`, `np.linspace`, `np.random.*`, `np.fft.*`, `np.polyfit`, `np.interp`); every allocation `np.zeros`, `np.ones`, `np.empty`, `np.full` without a `dtype` keyword (float64 by default) and every `np.array` of a non-integer literal; every call of the builtin `float`; every method call `.mean`, `.std`, `.var`; every `dtype=` or `.astype(...)` argument that is not `np.int64`, `bool`, `object`, `int` or the name `dtype` (a variable carrying one)."""
     found = []
     for node in ast.walk(tree):
         chain = numpy_chain(node) if isinstance(node, ast.Attribute) else None
@@ -243,8 +233,7 @@ def numpy_violations(tree: ast.AST) -> list[str]:
 
 
 def root_aliases(tree: ast.AST) -> tuple[set[str], set[str]]:
-    """The local names bound to `isqrt` or `integer_root` (with or without
-    an alias) and the local names of the `math` module."""
+    """The local names bound to `isqrt` or `integer_root` (with or without an alias) and the local names of the `math` module."""
     names: set[str] = set()
     modules: set[str] = set()
     for node in ast.walk(tree):
@@ -317,8 +306,7 @@ def features_modules() -> list[str]:
 
 @pytest.mark.parametrize("name", features_modules())
 def test_a_feature_holds_integer_mathematics_only(name: str) -> None:
-    """A feature's folder is a physical module under the same gate as the engine's
-    (issue #1154 cut 2), found by its folder and never listed."""
+    """A feature's folder is a physical module under the same gate as the engine's (issue #1154 cut 2), found by its folder and never listed."""
     source = (SRC / name).read_text(encoding="utf-8")
     tree = ast.parse(source)
     assert float_literals(source) == [], (name, float_literals(source))

@@ -13,7 +13,7 @@ from collections.abc import Sequence
 from functools import lru_cache
 from itertools import permutations, product
 
-from event_universe.core.integer import checked_work
+from event_universe.core.integer import MAX_WORK_INT, checked_work
 
 Address3 = tuple[int, int, int]
 Heading = tuple[int, int, int]
@@ -21,8 +21,8 @@ Heading = tuple[int, int, int]
 # Port that Port k faces after the symmetry.
 CubeSymmetry = tuple[int, int, int, int, int, int]
 
-# The bound of a declared charge or quantum: values are refused above it.
-MAX_VALUE = 1_073_741_823
+# The bound of a declared charge or quantum, refused above it: half the width less the six Ports' bits, so that a product of two summed over the Ports fits the width.
+MAX_VALUE = (1 << ((MAX_WORK_INT.bit_length() - 3) // 2)) - 1
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
 PORT_HEADINGS: tuple[Heading, ...] = (
     (1, 0, 0),
@@ -105,8 +105,8 @@ def adjacent_node(
     if type(port) is not int or not 0 <= port < 6:
         raise ValueError("adjacency requires an integer Port in 0 through 5")
     for coordinate, extent, wraps in zip(position, shape, periodic, strict=True):
-        if type(extent) is not int or not 1 <= extent <= 4096:
-            raise ValueError("adjacency requires integer extents in 1 through 4096")
+        if type(extent) is not int or extent < 1:
+            raise ValueError("adjacency requires integer extents from 1")
         if type(coordinate) is not int or not 0 <= coordinate < extent:
             raise ValueError("adjacency requires an integer position on the GameBoard")
         if type(wraps) is not bool:

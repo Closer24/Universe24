@@ -471,16 +471,9 @@
    "margin": "control",
    "emitter": {
     "family": "charge",
-    "clock": [
-     80,
-     25
-    ],
     "weight": 4,
-    "twist": 11695,
-    "period": 35,
     "norm": 180255439696889394,
-    "norm_denominator": 3948169,
-    "window_read": 226
+    "norm_denominator": 3948169
    },
    "twist": 11695,
    "clock": [
@@ -594,6 +587,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "39ab0210af23eeaf869237996a41c851b8a15a65cb3bbf83ad11c747e973c962"
+  "hash": "b0f76d7b81a392dc56f56da262d0b88ff63614dfe5ac787259cbfe7732989cda"
  }
 }

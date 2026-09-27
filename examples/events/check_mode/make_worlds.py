@@ -76,8 +76,6 @@ DELETED_WORLD_KEYS = (
 # a body declares no momentum, no spin and no moment (record 2130); the margin kind is the
 # start file's (ALGEBRA.md #the-primitives START)
 DELETED_BLOCK_KEYS = ("momentum", "spin", "moment", "margin")
-# the emitter's trial reading (HOST), never a world key (ALGEBRA.md #the-primitives DELETE)
-DELETED_EMITTER_KEYS = ("window_read",)
 
 GAMMA = massive.NODE_CLOCK  # the Node clock, 10^4 (ALGEBRA.md #the-line)
 # THE BODIES' REST PAIR AND WELL (a HOST probe of 2026-09-26, README section 1): on a GameBoard
@@ -151,10 +149,6 @@ BEAM_TICKS = 10_400  # 100 givings at the emitter's period plus the flight (COMP
 RECOIL_TICKS = 1_400
 
 TRAIN_PERIODS = 8
-TRAIN_CLOCK = [
-    512,
-    1,
-]  # the given family's clock of the shipped light clock: the wavelength 4 Links on N = 1024
 TRAIN_PHASE_STEPS = 1024
 
 
@@ -196,7 +190,6 @@ def build(
         KIND,
         blocks,
         ticks,
-        given_clock=TRAIN_CLOCK if train else None,
         seed_profile=False,
     )
     if train:
@@ -280,7 +273,7 @@ def translate(document: dict) -> dict:
             elif key == "held":
                 block[STOCKS_KEY] = value
             elif key == "emitter":
-                block[key] = {k: v for k, v in value.items() if k not in DELETED_EMITTER_KEYS}
+                block[key] = dict(value)
             else:
                 block[key] = value
         measured.append(block)
@@ -341,10 +334,7 @@ def all_families() -> tuple[dict, dict]:
     record's winding and waits for the winding's line (README section 4)."""
     blocks = pair_blocks(CHARGE_Q)
     blocks[0]["stocks"] = {massive.WAVE_FAMILY_NAME: EMITTER_STOCK}
-    blocks[0]["emitter"] = {
-        "family": massive.WAVE_FAMILY_NAME,
-        "clock": list(massive.MASSIVE_GIVEN_CLOCK),
-    }
+    blocks[0]["emitter"] = {"family": massive.WAVE_FAMILY_NAME}
     document = build("all-families", CUBE, OPEN, blocks, ORBITS * 363 + 363)
     document["measured"][0]["emitter"]["weight"] = EMITTER_WEIGHT
     return document, orbit(document)
@@ -381,10 +371,8 @@ def pass_world(name: str, source_q: int, packet_q: int, source_speed: float) -> 
 def beam_emitter(stock: int, train: bool) -> dict:
     block = body(BEAM_EMITTER_CORNER, BEAM_EXTENTS, TARGET_QUANTA)
     block["stocks"] = {massive.WAVE_FAMILY_NAME: stock}
-    # the given family's clock: the train's on N = 1024 (its wavelength 4 Links, ALGEBRA.md #the-click),
-    # the point emitter's the massive generator's own
-    clock = TRAIN_CLOCK if train else list(massive.MASSIVE_GIVEN_CLOCK)
-    emitter: dict = {"family": massive.WAVE_FAMILY_NAME, "clock": list(clock)}
+    # the given family's clock is its row's (ALGEBRA.md #the-primitives, L479)
+    emitter: dict = {"family": massive.WAVE_FAMILY_NAME}
     if train:
         emitter["train"] = {"direction": [1, 0, 0], "periods": TRAIN_PERIODS}
     block["emitter"] = emitter
