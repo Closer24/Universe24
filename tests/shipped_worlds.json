@@ -1,6 +1,6 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "83035bff",
+ "recorded_at": "d33f872b",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
@@ -41,7 +41,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "eb238733d4ae6230bbaa99ca94f065474bb88e350196929ab31efa909d27370d",
+   "digest": "c4a46ed5755145c0da791f994fbdf390b175bc4195845502d975baea8a1b73ee",
    "records": 1,
    "clicks": 0,
    "lines": 403
@@ -63,7 +63,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "6db124ced3ea13a2f3b2c6cb44402d5606141e07528aabc653eecfda982caa77",
+   "digest": "d37d9ef230fe6f68848b18484687417537f028a82424f8a265445288c45862eb",
    "records": 1,
    "clicks": 0,
    "lines": 404
@@ -85,7 +85,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "7ce1c6d7e46628a47e067227143bf39c2ca57700b6cfbab7a7a0e6b3f4d285e9",
+   "digest": "26cfb7a96d7ea3a9751d41c33bd06c511fe35ab6da7bba0fd7a1a9c30f6a33da",
    "records": 1,
    "clicks": 0,
    "lines": 401
@@ -162,10 +162,10 @@
    },
    "ticks": 3600,
    "intervals": 200,
-   "digest": "11669ce22b464f72d55ba317909561c8e215202fff3e18fd5141e774ffc1140f",
-   "records": 3,
-   "clicks": 0,
-   "lines": 625
+   "digest": "8db70460ab27ead2c2962bebaedd7a7aec07b4fa3fb541b4289522a94bbb817c",
+   "records": 2,
+   "clicks": 1,
+   "lines": 624
   },
   "examples/events/toward_nature/lorentz_moving_long.json": {
    "stamp": {
@@ -173,10 +173,10 @@
    },
    "ticks": 5966,
    "intervals": 200,
-   "digest": "fd13979e2bffa12dfbb07bc57ddc3d6fad2b7ccb9ffc18ad14502538e4046fd6",
-   "records": 4,
-   "clicks": 1,
-   "lines": 610
+   "digest": "6c6ec3dfebfc90174ce14a01bdd7df023ea5c3a37b51ed731e0d7d50fe5e9ccc",
+   "records": 2,
+   "clicks": 4,
+   "lines": 613
   },
   "examples/events/toward_nature/lorentz_rest.json": {
    "stamp": {
