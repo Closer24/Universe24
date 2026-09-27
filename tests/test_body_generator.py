@@ -212,7 +212,7 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
         json.dumps({"families": families, "integers": {"one": 1, "momentum_unit": 64}})
     )
     nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
-    body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0]}
+    body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
     faces = {"x": "periodic", "y": "periodic", "z": "periodic"}
     world = {"shape": [8, 8, 8], "boundary": faces, "node_clock": GAMMA, "measured": [body]}
     world["universe"] = str(tmp_path / "universe.json")

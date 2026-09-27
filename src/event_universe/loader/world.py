@@ -390,41 +390,35 @@ class BlockDefinition:
 
     side: int
     pair: tuple[int, int]
-    # THE BODY'S KIND (ALGEBRA.md #the-primitives, #the-interval): the rest pair of the body's own record,
-    # its family's declared pair or, on a family whose pair is the body's, the body's own `kind`
+    # THE BODY'S KIND (ALGEBRA.md #the-primitives, #the-interval): the rest pair of the body's own record, its family's declared pair or, on a family whose pair is the body's, the body's own `kind`
     kind: tuple[int, int]
-    # the well's own record's amplitude on its Nodes at interval 0 (0 silent), or its profile's;
-    # declared in the file, no default (the model owner, 2026-09-25; BUILD.md section 26 item 28)
+    # the well's own record's amplitude on its Nodes at interval 0 (0 silent), or its profile's; declared in the file, no default (the model owner, 2026-09-25; BUILD.md section 26 item 28)
     seed: int
+    spin: tuple[int, int, int]
+    spin_before: tuple[int, int, int]
     # the box's extents per axis (x, y, z); a cube's (side, side, side), `side` its x extent
     extents: tuple[int, int, int] = (1, 1, 1)
-    # the bound mode's integer profile over the whole board (x-major, one per
-    # Node) when the seed is declared so; None for a flat seed
+    # the bound mode's integer profile over the whole board (x-major, one per Node) when the seed is declared so; None for a flat seed
     profile: tuple[int, ...] | None = None
     # THE MODE'S CLOCK (ALGEBRA.md #a-familys-declaration; record 1886): 2 cos omega of the
     # body's bound mode as the rational [a, b] the generator wrote, b at
-    # least the profile's amplitude; the loader's integer check of the
-    # profile against the eigen-equation reads it; None for a flat seed
+    # least the profile's amplitude; the loader's integer check of the profile against the eigen-equation reads it; None for a flat seed
     clock: tuple[int, int] | None = None
     # THE PROPER PAIR OF A MOVING BODY ON ONE NODE (ALGEBRA.md #the-velocity; BUILD.md section 26
     # item 46): the pairs [num_m, b] the body's Node rotates at while the drive's
     # momentum is m, indexed by m from 0 (the clock itself) to |P| along the
     # one axis of the declared momentum, the generator's reading of the moving
-    # mode at its moving centre, 2 cos(omega_K - K v) at v = m / (3 Q M);
-    # None on a body at rest
+    # mode at its moving centre, 2 cos(omega_K - K v) at v = m / (3 Q M); None on a body at rest
     proper_clock: tuple[tuple[int, int], ...] | None = None
     ramp: int = 0
     start: int = 0
     # THE BODY'S NUMBERS (ALGEBRA.md #the-interval; the one stroke, commit 2): the
     # signed number q (the held sign's count at its Nodes; the world's word `q`,
-    # record 2128 (1)), the spin S and the moment mu (the dipoles on its Node's
-    # six neighbours); the momentum n is `momentum`
+    # record 2128 (1)), the spin S and the moment mu (the dipoles on its Node's six neighbours); the momentum n is `momentum`
     q: int = 0
-    spin: tuple[int, int, int] = (0, 0, 0)
     moment: tuple[int, int, int] = (0, 0, 0)
     # THE BODY'S OWN RECORD'S TWIST "OWN" (ALGEBRA.md #the-primitives; commit 4): round(2^16
-    # omega_0), its rotation from its mode's clock [a, b] (2 cos omega) where it has
-    # one, else from its kind's pair
+    # omega_0), its rotation from its mode's clock [a, b] (2 cos omega) where it has one, else from its kind's pair
     twist: int = 0
     # a well's margin kind (required on a well, record 2089); None on a body that is no well
     margin: str | None = None
@@ -432,15 +426,12 @@ class BlockDefinition:
     # 7, the click line): the name of the detector set whose one detector is the
     # ladder of every record this block emits (the click line at that detector's
     # first rung after the record's train; the faces and every other set
-    # sinks for it); None where the world names none, the ladder then every
-    # detector and the line at the close, as before the key.
+    # sinks for it); None where the world names none, the ladder then every detector and the line at the close, as before the key.
     receiver: str | None = None
-    # the emitter as a clicking body (ALGEBRA.md #the-click): None on a body
-    # that emits nothing by the click
+    # the emitter as a clicking body (ALGEBRA.md #the-click): None on a body that emits nothing by the click
     emitter: EmitterDefinition | None = None
     # THE STOCK OF THE BODY'S OWN FAMILY (ALGEBRA.md #the-primitives; commit 6): the count of
-    # its own quanta set aside for giving where its emitter gives its own family, 0
-    # elsewhere (another family's stock is the body's `held` quanta of it)
+    # its own quanta set aside for giving where its emitter gives its own family, 0 elsewhere (another family's stock is the body's `held` quanta of it)
     stock: int = 0
 
 
@@ -468,6 +459,7 @@ class MeasuredDefinition:
     amount: int
     phase: int
     momentum: Vector
+    momentum_before: Vector
     fixed: bool
     table: tuple[str, ...]
     windows: tuple[int | None, ...]
@@ -1421,9 +1413,10 @@ def _block(
     start = 0 if "start" not in obj else _integer(obj["start"], f"{label}.start", 0)
     # THE BODY'S NUMBERS (ALGEBRA.md #the-interval; commit 2): charge, spin and moment,
     # required under the law (no default), integers on the axes (record 2084)
-    _require_under_law(obj, label, {"q", "spin", "moment", "twist"})
+    _require_under_law(obj, label, {"q", "spin", "spin_before", "moment", "twist"})
     charge = _integer(obj["q"], f"{label}.q", -AMOUNT_BOUND, AMOUNT_BOUND)
     spin = _axes_vector(obj["spin"], f"{label}.spin")
+    spin_before = _axes_vector(obj["spin_before"], f"{label}.spin_before")
     moment = _axes_vector(obj["moment"], f"{label}.moment")
     if "margin" not in obj and pair[0] * kind[1] > pair[1] * kind[0]:
         # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): a well's
@@ -1559,6 +1552,7 @@ def _block(
         start=start,
         q=charge,
         spin=spin,
+        spin_before=spin_before,
         moment=moment,
         # THE BODY'S OWN RECORD'S TWIST "OWN" (ALGEBRA.md #the-primitives; item 73): the
         # generator's integer round(2^16 omega_0) declared under `twist` (its mode's
@@ -1781,6 +1775,10 @@ def _measured(
         phase = 0
         momentum_value = cast(tuple[object, ...], obj["momentum"])
         momentum = tuple(_integer(item, f"{label}.momentum", -AMOUNT_BOUND) for item in momentum_value)
+        before_value = cast(tuple[object, ...], obj["momentum_before"])
+        momentum_before = tuple(
+            _integer(item, f"{label}.momentum_before", -AMOUNT_BOUND) for item in before_value
+        )
         fixed = cast(bool, obj["fixed"])
         turning = False
         # the ray law's table: every family at the keys' rule `measure` with the scalar
@@ -1813,6 +1811,7 @@ def _measured(
                 amount,
                 phase,
                 (momentum[0], momentum[1], momentum[2]),
+                (momentum_before[0], momentum_before[1], momentum_before[2]),
                 fixed,
                 tuple(rules),
                 tuple(windows),
