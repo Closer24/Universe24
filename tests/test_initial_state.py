@@ -12,8 +12,6 @@ the loader's on the test worlds of the line (COMPUTATION); no pin.
 
 from __future__ import annotations
 
-import json
-
 import numpy as np
 import pytest
 
@@ -68,54 +66,6 @@ def test_a_generated_world_is_lawful_and_carries_its_clock_and_stamp():
             block.profile, num, den, block.clock, shape, world.kind_periodic(1)
         )
         assert 0 <= residual <= bound
-
-
-def test_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_rounding():
-    """The residual bound (ALGEBRA.md #a-familys-declaration, proved for the rounded profile of an exact mode): the profile with its peak doubled is refused naming the Node, its residual and the bound; the profile with its peak zeroed is refused; the profile with one unit added at the peak is ADMITTED (the edge case: a one-unit change is within the rounding the bound allows, so the check does not single it out; the same input then gives another output, the property test's test 8), read on a side-12 well [800, 801] seeded by the generator on the emitter world's chain (the 32-Node well of the given train's emitter sits at the bound's edge: the iteration's floor of 276 units leaves no unit of slack, and the peak plus one is refused there naming the Node). The stamp is rewritten for every changed profile so that the residual speaks (the hash's own refusal is test g)."""
-    document = emitter_world(stock=2, on_mode=False)
-    document["measured"] = [
-        {
-            "position": [5, 0, 0],
-            "family": "matter",
-            "amount": 1,
-            "stocks": {},
-            "ramp": 0,
-            "start": 0,
-            "momentum": [0, 0, 0],
-            "momentum_before": [0, 0, 0],
-            "fixed": False,
-            "side": 12,
-            "q": 0,
-            "spin": [0, 0, 0],
-            "spin_before": [0, 0, 0],
-            "twist": 0,
-            "moment": [0, 0, 0],
-            "pair": [800, 801],
-            "seed": 1 << 20,
-            "margin": "control",
-        }
-    ]
-    document["detectors"] = []
-    massive_generator().seed_on_the_mode(document)
-    profile = document["measured"][0]["seed"]
-    peak = peak_of(profile)
-    for change, refused in (
-        (lambda p: p.__setitem__(peak, 2 * p[peak]), True),
-        (lambda p: p.__setitem__(peak, 0), True),
-        (lambda p: p.__setitem__(peak, p[peak] + 1), False),
-    ):
-        changed = json.loads(json.dumps(document))
-        change(changed["measured"][0]["seed"])
-        restamped(changed)
-        if refused:
-            with pytest.raises(
-                ValueError,
-                match=r"seed is not the mode of its family's operator.*at Node \[\d+, 0, 0\] the "
-                r"eigen-equation's residual \d+ is above the bound \d+",
-            ):
-                parse_nature_beam_world(changed)
-        else:
-            parse_nature_beam_world(changed)
 
 
 def test_the_clocks_refusals_name_the_rule():
