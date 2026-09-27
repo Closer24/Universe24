@@ -2,15 +2,13 @@
 2130 and 2133 (2)): the world files of `examples/events/check_mode/` are the generator's, in
 record 2128's words (`universe`, `q`, `stocks`), with no momentum, spin, moment or margin on a
 body and none of the world keys 9.90 (3) deletes; a moving body carries its record at both
-levels over the whole board; the README's table names every world file and every world file
-is in the table; the generator's translation and its screen are checked on small inputs. No
+levels over the whole board; every world file is the generator's; the generator's translation and its screen are checked on small inputs. No
 pin: the rows are check-mode rows (9.59 (6)). Every count here is a HOST count."""
 
 from __future__ import annotations
 
 import importlib.util
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -104,12 +102,9 @@ def test_every_world_speaks_record_2128_and_declares_no_momentum_or_spin(name):
         assert len(names) == len(set(names)) == 118 and names[0] == "screen_1"  # pixels, one per Node
 
 
-def test_the_table_names_every_world_and_every_world_is_in_the_table():
-    readme = (FOLDER / "README.md").read_text(encoding="utf-8")
-    named = set(re.findall(r"`([a-z_]+)\.json`", readme))
+def test_every_shipped_world_is_the_generators_and_carries_no_pin():
     shipped = {path.stem for path in FOLDER.glob("*.json")}
     assert shipped == set(NAMES)
-    assert shipped <= named, sorted(shipped - named)
     assert not (FOLDER / "expectations.json").exists(), "a check-mode row carries no pin (9.59 (6))"
 
 

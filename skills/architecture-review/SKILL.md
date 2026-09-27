@@ -8,14 +8,14 @@ description: Review Universe24 state schemas, component ownership, interface com
 Apply [the published-design requirement](../workflow.md#implement-from-a-published-design). Own contract reconciliation and publish resolved revisions before dependent behavior changes; review the implementation against its cited design.
 
 Read [the shared workflow](../workflow.md) and the current
-[architecture](../../docs/ARCHITECTURE.md). Input is a commit/diff, candidate
+architecture. Input is a commit/diff, candidate
 contract and dependent changes; output is a scoped compatibility verdict with
 file references and required fixes.
 
-For the active API, read [the Beam Law](../../docs/BEAM_LAW.md) and
+For the active API, read the Beam Law and
 [the engine's bookkeeping](../../docs/ENGINE.md); the generic disturbance
 contract (DISTURBANCES.md) was deleted on 2026-09-19.
-Apply the [local integer operation contract](../../docs/ARCHITECTURE.md#local-integer-operation-contract)
+Apply the local integer operation contract
 to the complete physical dependency path. Report unsupported tensor shapes and
 separately scoped historical paths instead of certifying all code as local.
 Check the full initialization-to-expression-to-proposal path, fixed capacities,
@@ -44,7 +44,7 @@ Host-wide inventory snapshots are diagnostic inputs only; no residual, expressio
 cost or audit state may drive physical rules or model timing. Keep passive
 postcommit failure distinct from a physical rule's precommit atomic guard.
 
-For repository changes, use [monorepo ownership](../../docs/ARCHITECTURE.md#monorepo-ownership).
+For repository changes, use monorepo ownership.
 Check that a fresh checkout can find the active model, required commands and live
 work through the root entry point. Keep path maps and rules in their single owners.
 Do not split packages or processes merely to satisfy a directory convention.
@@ -83,10 +83,10 @@ For naming/consolidation changes, inspect the
 Keep public exports distinguishable from historical internal owners, route shared
 example inputs to one file, and recheck dynamic resource consumers as well as
 imports. Preserve revision-specific evidence rather than rewriting it to resemble
-the renamed source. The [documentation index](../../docs/README.md) must route each
+the renamed source. The documentation index must route each
 contract without becoming another copy of its definitions.
 
-For external entity definitions, trace [the canonical loading boundary](../../docs/ENTITY_DEFINITIONS.md)
+For external entity definitions, trace the canonical loading boundary
 from reusable data and placement to the immutable expanded world. Verify that all
 entry points use that provider, portable inputs retain exact dependencies after
 relocation, and names affect labels rather than physical rules. File ownership

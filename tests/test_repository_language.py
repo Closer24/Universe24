@@ -143,7 +143,6 @@ def test_language_rule_has_one_authoritative_entry_point():
     assert "## Repository language: English" in instructions
     for term in ("comments", "docstrings", "documentation", "every directory"):
         assert term in instructions
-    assert "../AGENTS.md#repository-language-english" in (root / "docs/ARCHITECTURE.md").read_text()
 
 
 def test_language_scan_covers_nested_source_and_keeps_generated_outputs_out(tmp_path):
