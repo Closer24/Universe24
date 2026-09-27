@@ -449,7 +449,7 @@ def test_the_loaders_refusals_name_the_key():
     assert parse_nature_beam_world(clocked).families[1].phase_per_age == (1, 2)
     no_law = json.loads(json.dumps(base))
     no_law["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
-    with pytest.raises(ValueError, match="the world.detector_law is refused: one engine"):
+    with pytest.raises(ValueError, match="the world has unknown keys: detector_law"):
         parse_nature_beam_world(no_law)
     not_bool = json.loads(json.dumps(base))
     not_bool["massive_record"] = 1
@@ -1446,7 +1446,7 @@ def test_every_declared_wheel_is_refused_by_name():
     base = with_screen(block_world([240, 1, 1], CHAIN, [156, 157], [], emitter_at(100, 3)), 230)
     parse_nature_beam_world(base)
     for mutate, message in (
-        (lambda d: d.__setitem__("wheel", 64), "the world.wheel is refused"),
+        (lambda d: d.__setitem__("wheel", 64), "the world has unknown keys: wheel"),
         (lambda d: d["detectors"][0].__setitem__("wheel", 64), r"detectors\[0\]\.wheel is refused"),
         (lambda d: d["measured"][0].__setitem__("wheel", 64), r"measured\[0\]\.wheel is refused"),
         (
@@ -1570,7 +1570,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
     # the loader's refusals
     bad = light_clock_world("closed", False)
     bad["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
-    with pytest.raises(ValueError, match="the world.detector_law is refused: one engine"):
+    with pytest.raises(ValueError, match="the world has unknown keys: detector_law"):
         parse_nature_beam_world(bad)
     on_body = light_clock_world("open", False)
     on_body["detectors"] = [{"name": "A_face", "block": 0, "positions": [[100, 0, 0]]}]

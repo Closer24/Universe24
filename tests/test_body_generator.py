@@ -16,7 +16,6 @@ from event_universe.core.rule3 import coefficients, rule_total_bound
 from tools.body_generator import (
     AT_REST,
     PERIODIC,
-    _bound_mode_at,
     amplitude_unit,
     arrivals,
     bound_mode,
@@ -93,6 +92,12 @@ def test_the_iteration_stops_at_the_first_repeat_and_gives_the_bound_mode():
 
 
 def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands_beyond_it():
+    """A is never written: the largest amplitude at which Rule3's total stays inside int64 at
+    every content of the region (the body's content, whose |S| is largest, binds it: (M - w)
+    div (6 R + |S| + w) at 3000 per Node, between 2^22 and 2^23 on [800, 1200] at Gamma
+    10^4), rule_total_bound at A inside the width and at A + 1 beyond; the fixed point does
+    not depend on A beyond its resolution: the profile divided to A / 2 is a fixed point of
+    the iteration at A / 2 within one unit (the final scale comes from c T)."""
     """A is the largest amplitude keeping Rule3's total inside int64 (between 2^22 and 2^23 here);
     at A / 2 the profile agrees with the one at A, rescaled, within five units."""
     counts = counted_cube(12, 4, 3000)
@@ -105,12 +110,16 @@ def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands
     assert rule_total_bound(KIND[0], KIND[1], GAMMA, 3000, amplitude + 1, True) > MAX_WORK_INT
     mode = bound_mode(counts, KIND, GAMMA)
     assert mode.amplitude == amplitude
-    coarse = _bound_mode_at(counts, KIND, GAMMA, amplitude // 2, PERIODIC)
-    rescaled = (mode.profile * (amplitude // 2)) // amplitude
-    assert int(np.abs(rescaled - coarse.profile).max()) <= 5
-    assert abs(float(coarse.rotation) - float(mode.rotation)) < 1e-6
+    # the fixed point at the coarser grain A / 2: the profile divided to A / 2 by the division
+    # act, then one read act and one division act at A / 2, returns within one unit of itself
+    read, self_coefficient, wall = rule_integers(KIND, GAMMA, counts)
+    (coarse,) = to_amplitude((mode.profile,), amplitude // 2)
+    (again,) = to_amplitude(
+        read_act((coarse,), (arrivals(coarse, PERIODIC),), read, self_coefficient, wall), amplitude // 2
+    )
+    assert int(np.abs(again - coarse).max()) <= 1
     with pytest.raises(ValueError, match="beyond int64"):
-        _bound_mode_at(counts, KIND, GAMMA, 1 << 40, PERIODIC)
+        to_amplitude((mode.profile,), 1 << 41)
 
 
 def test_a_pair_whose_count_binds_nothing_is_refused_by_name():
