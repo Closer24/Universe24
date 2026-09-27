@@ -288,13 +288,6 @@ VERSION_STRING = re.compile(r"-v[0-9]+$")
 FLAG_WORDS = {"flag", "flags", "version", "schema_version"}
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="the ledger's item 'no flag, family name, number or version in the code' (records 2172 "
-    "to 2174, 2182): the loader holds no version string since its cuts (record 2226); the one hit "
-    "left is the word 'version', a key of the artifacts' retention index in "
-    "src/event_universe/retention.py (the host's); the mark comes off when that key is renamed",
-)
 def test_e4_no_flag_and_no_version_is_a_constant_of_the_engine():
     """(e) The engine has no flag and no version (the Boss's record 2182, the model owner: "in the
     code there will be no flags; they are in the run file only; there is no version in the
