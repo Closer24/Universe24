@@ -8,6 +8,7 @@ from math import isqrt
 
 import numpy as np
 
+from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.register import Declaration
 from event_universe.core.schema import (
     Either,
@@ -25,7 +26,7 @@ BY_PLAIN = "plain"
 BY_SIGN = "sign"
 
 # the sum of the reads stays within int64: the reach of the products is bounded before any is formed
-TOTAL_BOUND = (1 << 63) - 1
+TOTAL_BOUND = MAX_WORK_INT  # the reads' sum within the work integer's width, the one place of the width
 
 # the two words of ALGEBRA.md #the-primitives.117 item 5: this primitive is the rule's own
 THE_WORD = "from the rule ALGEBRA.md #the-line and the click"
@@ -70,7 +71,10 @@ class SignedReadWrites:
 def stability_bound(pair: tuple[int, int], gamma: int) -> tuple[int, int]:
     """The guard's upper side as one integer comparison, p^2 x left <= right with left = 18 num + 6 den and right = Gamma^2 (18 den + 6 num) (ALGEBRA.md #the-paces)."""
     num, den = pair
-    return 18 * num + 6 * den, gamma * gamma * (18 * den + 6 * num)
+    edge = (
+        3 * 6
+    )  # the rule's own integer 18 = 3 x 6 (ALGEBRA.md #the-paces: 18 den + 6 num over 18 num + 6 den)
+    return edge * num + 6 * den, gamma * gamma * (edge * den + 6 * num)
 
 
 def pace_bound(pair: tuple[int, int], gamma: int) -> int:
