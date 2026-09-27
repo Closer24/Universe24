@@ -3261,22 +3261,16 @@ def _resolve_reads(
 
 
 def _held_family_shapes(families: tuple[FamilyDefinition, ...], detector_law: bool) -> None:
-    """A held family's shape by attribute (ALGEBRA.md 9.41 (3), 9.45 (1),
-    9.48 (2); item 51): the pair [1, 1] (massless: the only pair whose
-    static solutions reach), the quantum 1 (one click writes one unit), no
-    clock of its own (it givings nothing), its own charge 0 (its level is
-    the source it holds, it carries none); a read names a held family; under the
-    detector law at most one family holds each source (the level every
-    other family reads is one array)."""
+    """A held family's shape by attribute (ALGEBRA.md #a-familys-declaration; item 51):
+    its field steps at the pair its row declares, [1, 1] or any other (no
+    shortcut: the model owner, 2026-09-27), the quantum 1 (one click writes
+    one unit), no clock of its own (it givings nothing), its own charge 0 (its
+    level is the source it holds, it carries none); a read names a held family;
+    under the detector law at most one family holds each source (the level
+    every other family reads is one array)."""
     for index, family in enumerate(families):
         label = f"families[{index}] ({family.name!r})"
         if family.held is not None:
-            if family.pair != MASSLESS_PAIR:
-                raise ValueError(
-                    f"{label} is held with the pair {list(family.pair)}: a held family "
-                    "is massless, its pair [1, 1], the only pair whose static field reaches "
-                    "(ALGEBRA.md 9.41 (3), 9.45 (1))"
-                )
             if family.quantum != 1:
                 raise ValueError(
                     f"{label} is held with the quantum {family.quantum}: a held family "
