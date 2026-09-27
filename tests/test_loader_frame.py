@@ -51,9 +51,7 @@ def test_the_shipped_file_and_a_sourced_entry_pass_with_the_weight_word_resolved
 
 
 def test_every_defect_of_the_universe_file_is_refused_by_name():
-    """An unknown or missing key at the file, the integers, an entry or a nested object; a
-    wrong kind; a name the universe lacks; the divisor with no default; the table's triples;
-    the files the host did not read."""
+    """An unknown or missing key at the file, the integers, an entry or a nested object; a wrong kind; a name the universe lacks; the divisor with no default; the table's triples; the files the host did not read."""
     good = shipped()
 
     def refuses(change, match: str) -> None:
@@ -104,8 +102,7 @@ def test_every_defect_of_the_universe_file_is_refused_by_name():
 
 
 def test_every_shipped_world_passes_the_frames_world_schema():
-    """Every shipped world of the engine passes the frame's reading of the world's keys; the
-    handed keys come back as written and the frame's as checked (lists as tuples)."""
+    """Every shipped world of the engine passes the frame's reading of the world's keys; the handed keys come back as written and the frame's as checked (lists as tuples)."""
     count = 0
     ahead = {
         "check_mode",
@@ -126,8 +123,7 @@ def test_every_shipped_world_passes_the_frames_world_schema():
 
 
 def test_every_defect_of_the_worlds_own_keys_is_refused_by_name():
-    """An unknown key (the ray law's, a retired one, a law's name), a missing key, a wrong
-    kind, a face word the GameBoard lacks, a stamp without its hash; the handed keys unchecked."""
+    """An unknown key (the ray law's, a retired one, a law's name), a missing key, a wrong kind, a face word the GameBoard lacks, a stamp without its hash; the handed keys unchecked."""
     good = json.loads((ROOT / "examples/events/dark_body/bright.json").read_text(encoding="utf-8"))
 
     def refuses(change, match: str) -> None:
@@ -163,8 +159,7 @@ def test_every_defect_of_the_worlds_own_keys_is_refused_by_name():
 
 
 def test_every_shipped_body_and_detector_passes_the_frames_schemas():
-    """Every body and every detector of the shipped worlds passes the frame with the families
-    known; a stock names a family, the checked lists are tuples."""
+    """Every body and every detector of the shipped worlds passes the frame with the families known; a stock names a family, the checked lists are tuples."""
     families = tuple(entry["name"] for entry in shipped()["families"])
     context = Context(families)
     ahead = {"check_mode", "generated", "source"}
@@ -185,8 +180,7 @@ def test_every_shipped_body_and_detector_passes_the_frames_schemas():
 
 
 def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
-    """The ray law's and the retired keys as unknown keys, a missing key, a wrong kind, a
-    family the universe lacks (on the body, in its stocks, in its emitter), a bad mapping."""
+    """The ray law's and the retired keys as unknown keys, a missing key, a wrong kind, a family the universe lacks (on the body, in its stocks, in its emitter), a bad mapping."""
     good = json.loads(
         (ROOT / "examples" / "events" / "dark_body" / "bright.json").read_text(encoding="utf-8")
     )
@@ -360,8 +354,7 @@ def test_the_start_file_is_its_mode_and_nothing_else():
 
 
 def test_the_frame_holds_no_default_no_family_name_and_no_version():
-    """The acceptance tests' readers (tests/test_loader_acceptance.py) on the new module alone:
-    no `.get(key, default)`, no string that is a family's name, no version word."""
+    """The acceptance tests' readers (tests/test_loader_acceptance.py) on the new module alone: no `.get(key, default)`, no string that is a family's name, no version word."""
     assert written_defaults(FRAME) == []
     names = family_names() | {"version", "schema_version"}
     assert [value for _, value in string_constants(FRAME) if value in names] == []

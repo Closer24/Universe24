@@ -34,9 +34,6 @@ Vector = tuple[int, int, int]
 # the ceiling of a row's amplitude is the width's (the rule's total and the transport's room bound it below); the rule's int64 total
 AMPLITUDE_BOUND = MAX_WORK_INT
 TOTAL_BOUND = MAX_WORK_INT + 1
-# the law's two numbers of the twist table (ALGEBRA.md #the-primitives): theta_unit = 1 / (4 Gamma 2^16), |k| = k_1 2^10 + k_0
-TWIST_UNIT_SCALE = 1 << 16
-TWIST_FINE_COUNT = 1 << 10
 # light's kind: the pair [1, 1], the value every family without a declared pair reads (no branch on a name)
 MASSLESS_PAIR = (1, 1)
 # a body of one Node
@@ -52,9 +49,9 @@ PARTS_FORMS = ((1,), (1, 3), (1, 3, 6))
 @dataclass(frozen=True)
 class TwistTable:
     """THE TWIST TABLE as read (ALGEBRA.md #the-transport, #the-primitives): the unit's
-    integer (theta_unit = 1 / unit radians, unit = 4 Gamma 2^16), the fine triples for
-    k_0 in [0, 2^10) and the coarse triples for k_1 in [0, bound); the transport's
-    triple for |k| = k_1 2^10 + k_0 is their exact product."""
+    integer as the file gives it (theta_unit = 1 / unit radians), the fine triples for
+    k_0 in [0, F) with F the fine table's length, a power of two, and the coarse triples
+    for k_1 in [0, bound); the transport's triple for |k| = k_1 F + k_0 is their exact product."""
 
     unit: int
     fine: tuple[tuple[int, int, int], ...]
@@ -62,23 +59,18 @@ class TwistTable:
     fine_bits: int  # the fine table's size as a power of two: |k| = k_1 2^fine_bits + k_0
 
 
-def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: int | None) -> TwistTable:
-    """The twist table read and checked in integers (ALGEBRA.md #the-primitives): {unit, fine, coarse};
-    unit = 4 Gamma 2^16 and 2^10 fine triples (the law's two numbers, theta_unit = 1 / (4 Gamma 2^16)
-    radians per unit of k and |k| = k_1 2^10 + k_0), the coarse from 1; each triple three integers,
-    c from 1, s from 0, d from 1 with c^2 + s^2 = d^2, the first the angle 0's and the angles never
-    falling along the table (the nearest triple of each angle is the generator's number, checked by
-    its own test); the product of the largest d of each part times 3 (A + 1) inside the width (the
-    transport's total), which bounds every d and the coarse count."""
+def _twist_table(value: object, label: str, amplitude_bound: int | None) -> TwistTable:
+    """The twist table read and checked in integers (ALGEBRA.md #the-primitives): {unit, fine, coarse},
+    the unit an integer from 1 as the file gives it (theta_unit = 1 / unit radians per unit of k) and
+    the fine table's length F a power of two (|k| = k_1 F + k_0), no number of the loader's own; the
+    coarse from 1; each triple three integers, c from 1, s from 0, d from 1 with c^2 + s^2 = d^2, the
+    first the angle 0's and the angles never falling along the table (the nearest triple of each angle
+    is the generator's number, checked by its own test); the product of the largest d of each part
+    times 3 (A + 1) inside the width (the transport's total), which bounds every d and the coarse count."""
     obj = _object(value, label, {"unit", "fine", "coarse"}, {"unit", "fine", "coarse"})
     if amplitude_bound is None:
         raise ValueError(f"{label}: a world with a twist table declares `amplitude_bound`")
     unit = _integer(obj["unit"], f"{label}.unit", 1)
-    if unit != 4 * node_clock * TWIST_UNIT_SCALE:
-        raise ValueError(
-            f"{label}.unit {unit} is not 4 Gamma 2^16 = {4 * node_clock * TWIST_UNIT_SCALE}: "
-            "theta_unit = 1 / (4 Gamma 2^16) radians per unit of k (ALGEBRA.md #the-primitives)"
-        )
     parts: list[tuple[tuple[int, int, int], ...]] = []
     for name in ("fine", "coarse"):
         rows = obj[name]
@@ -86,9 +78,10 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
             raise ValueError(
                 f"{label}.{name} must be a list of triples [c, s, d] (ALGEBRA.md #the-primitives)"
             )
-        if name == "fine" and len(rows) != TWIST_FINE_COUNT:
+        if name == "fine" and len(rows) & (len(rows) - 1):
             raise ValueError(
-                f"{label}.fine holds {len(rows)} triples, not 2^10: |k| = k_1 2^10 + k_0 (ALGEBRA.md #the-primitives)"
+                f"{label}.fine holds {len(rows)} triples, not a power of two: |k| = k_1 F + k_0 with F "
+                "the fine table's length (ALGEBRA.md #the-primitives)"
             )
         triples: list[tuple[int, int, int]] = []
         for index, row in enumerate(rows):
@@ -2386,7 +2379,7 @@ def parse_world_document(
     # engine refuses a nonzero twist naming the Port)
     twist_table: TwistTable | None = None
     if "twist_table" in obj:
-        twist_table = _twist_table(obj["twist_table"], "twist_table", node_clock, amplitude_bound)
+        twist_table = _twist_table(obj["twist_table"], "twist_table", amplitude_bound)
     # THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26
     # item 51): the families' roles of items 32 and 35 are their own
     # declarations (`held`, `reads`), read by `_families` below; the world
