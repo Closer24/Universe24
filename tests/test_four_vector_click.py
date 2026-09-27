@@ -1,17 +1,5 @@
-"""THE FOUR-VECTOR CLICK WITHOUT THE RECOIL (ALGEBRA.md 9.86 (1), 9.91 (4), 9.84 (2), 9.25 (12);
-the one stroke, commit 5 in part; the Boss's records 2135 and 2161; BUILD.md section 26 item
-69). A click transfers a quantum's count and its momentum: (1) on the emitter's unit world (the
-body at [5, 37) of a closed chain of 80, the screen at 70 to 72) every taken quantum travelled
-toward +x, so every click line's `momentum` reads [1, 0, 0] with its count 1, and the giving
-lines read [1, 0, 0] too (the closed end 5 Links behind the body sends the light that left
-through its -x Ports back through it, so the +x Ports' outward flux leads the tally); on the
-mirror image of that world (the body at [43, 75), the screen at 7 to 9) every sign is reversed;
-no body's momentum moves and the held quanta move by the content alone (the recoil waits on
-the closing of record 2135). (2) THE EDGE: the one-Node point emitter at the middle of an open
-chain gives symmetrically, so its tallies cancel and its giving lines read [0, 0, 0] (9.84
-(2)); inside a window the outward tally is undone bit for bit by the inverse. (3) The sign per
-axis of a tally is -1, 0 or 1. COMPUTATION on the engine's integers, the direction a DETECTOR
-reading on the line; no pin."""
+"""The four-vector click without the recoil (ALGEBRA.md 9.86 (1)): a click moves a quantum's count and
+its momentum, and every click line reads the momentum its quantum travelled with."""
 
 from __future__ import annotations
 
