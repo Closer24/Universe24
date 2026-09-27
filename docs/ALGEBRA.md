@@ -446,7 +446,7 @@ set's Nodes.
 Every primitive of the engine is one folder under
 `src/event_universe/features/` with its declaration (its name, its
 place, what it reads, what it writes, its line here) and its function
-`apply(term, start)`, which calls Rule3 and nothing else; the loop binds
+`apply(term, start, own)`, which calls Rule3 and nothing else; the loop binds
 the folders through the register and the step file. No folder holds a
 number, a family's name or a default. Every write of a primitive is a
 whole integer into a declared level; every division's remainder lives

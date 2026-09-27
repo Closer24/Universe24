@@ -7,12 +7,21 @@ a whole quantum moves at a click, and only a detector's click is a measurement.
 The name of the framework is Reality Theory; the simulator that realizes it is
 Universe24.
 
+A run reads three files (a world, the universe it names and the start file),
+steps the GameBoard a declared number of intervals and writes one output file:
+the verdict, the detectors' clicks and the declared readings. The paper compares
+the clicks with nature; nothing else a run writes is a measurement.
+
 Canonical source: [Closer24/Universe24](https://github.com/Closer24/Universe24),
 branch `main`. The Python package is `event_universe`.
 
 **Start here:** [AGENTS.md](AGENTS.md) (the shared instructions and the language
 rule), then the three documents: [the law](docs/ALGEBRA.md),
-[the engine](docs/ENGINE.md) and [the decisions](docs/HIGHLIGHTS.md).
+[the engine](docs/ENGINE.md) (with [its drawing](docs/ENGINE.svg)) and
+[the decisions](docs/HIGHLIGHTS.md). Two pages are rendered from the tree and
+never written by hand: [the run's files, key by key](docs/generated/FILES.md)
+and [the state of the engine](docs/generated/STATUS.md) (the primitives, the
+step file's acts, the expected failures, the owners, the shipped worlds).
 [Boss orchestration](skills/boss-orchestrator/SKILL.md) and
 [the shared workflow](skills/workflow.md) define coordinated work.
 
@@ -25,17 +34,24 @@ A run needs numpy, which the package installs:
 python3.14 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e .
-python -m event_universe --init examples/events/one_content.json --output artifacts/one_content
+PYTHONPATH=src python tools/run_inputs.py --out runs/first --jobs 1 examples/events/massive_record/light_clock.json
 ```
+
+The first run is the light clock: 4,800 intervals, about a minute, one file
+`runs/first/light_clock.output.json`. It is byte for byte the shipped
+[light_clock.output.json](examples/events/massive_record/light_clock.output.json)
+(the verdict `LAWFUL`, 167 clicks at the detector `at_well`); a run carries no
+time, so the same input gives the same file again.
 
 On Windows use `py -3.14 -m venv .venv` and `.\.venv\Scripts\python.exe` in place
 of `python`. For development, install `python -m pip install -e '.[dev]'`.
 
-A run reads three files (the universe file, the world file and the start file),
-steps the GameBoard a declared number of intervals and writes one output;
+Runs are headless: `--out` names the directory of the output files and `--jobs`
+the processes at once, both required; a pins file (`--pins`) is compared only
+under the start file's mode `pin`.
 [docs/ENGINE.md](docs/ENGINE.md#4-the-loader-and-the-files) defines the files,
 their keys and the refusals, and [docs/ENGINE.md](docs/ENGINE.md#6-how-to-run-a-world)
-how to run a world. Runs are headless and require a new or empty output directory.
+how to run a world.
 
 ## Check the project with one command
 
@@ -44,28 +60,44 @@ python tools/check.py
 ```
 
 This runs lint, formatting, strict types and the tests of the changed files and
-their consumers; `--full` runs everything. Every test is headless.
+their consumers; `--full` runs everything. Every test is headless. The pages
+under `docs/generated/` are rendered by `PYTHONPATH=src python tools/render_documents.py`;
+its `--check` lists every path a document cites that the tree lacks, and the
+documents gate holds both on every pull request.
+
+## The history
+
+Git keeps the history; the documents describe the tree as it is:
+
+```bash
+PYTHONPATH=src python tools/render_documents.py --history    # main's merges and commits, by day
+PYTHONPATH=src python tools/render_documents.py --decisions  # each decision with the date and commit of its last change
+git log -p -- docs/HIGHLIGHTS.md                             # a decision's earlier wording
+```
 
 ## Project map
 
 | Path | Responsibility |
 | --- | --- |
-| `src/event_universe/core/` | The main loop, the step file's reader, the register, the Node and the bounded integers; only Main Loop writes here |
+| `src/event_universe/core/` | The main loop, the step file's reader, the register, the six Ports, Rule3 and the bounded integers; only Main Loop writes here |
 | `src/event_universe/features/` | One folder per primitive, found by the register from its name |
-| `examples/events/` | The universe file and the worlds |
+| `src/event_universe/loader/` | The three files checked against the frame's schemas and the folders' cards, and the loop's classes built from the checked values |
+| `law/step.json` | The interval's order, one data file shared by every world; a change is a change of the law |
+| `examples/events/` | The universe file, the start file and the worlds, with the shipped output of the first run |
 | `tests/` | One module per generic rule on a minimal GameBoard, the regression of every shipped world and the repository gates |
-| `tools/check.py` | The affected check: changed files and their consumers; `--full` for everything |
+| `tools/` | One command each: `check.py` (the affected check), `run_inputs.py` (a run), `record_shipped_worlds.py` (the regression record), `render_documents.py` (the rendered pages, the history, the decisions) |
 | `docs/ALGEBRA.md` | The law |
-| `docs/ENGINE.md` | The engine as the code holds it |
+| `docs/ENGINE.md` | The engine as the code holds it, with its drawing `docs/ENGINE.svg` |
 | `docs/HIGHLIGHTS.md` | The decisions in force |
+| `docs/generated/` | The run's files key by key and the state of the engine, rendered from the tree |
 | `skills/` | The shared workflow and one short role card per skill |
 
 ## License and citation
 
 Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen.
-Every version is archived on Zenodo; the concept DOI
-[10.5281/zenodo.22738746](https://doi.org/10.5281/zenodo.22738746) resolves
-to the latest version. Cite the software using [CITATION.cff](CITATION.cff):
+The software is archived on Zenodo under the concept DOI
+[10.5281/zenodo.22738746](https://doi.org/10.5281/zenodo.22738746), which
+resolves to the latest archived version. Cite the software using [CITATION.cff](CITATION.cff):
 
 > Gonen, A. (2026). Universe24: a discrete simulator of local physical laws
 > (Reality Theory) [Computer software]. Zenodo.

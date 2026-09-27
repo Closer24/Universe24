@@ -420,9 +420,8 @@ just close things; start from what the paper needs." From this word the
 Boss orders nothing that the paper does not need: the open items in flight are closed (reviewed, merged, their
 sessions archived) and no new item outside the paper starts, however small,
 until the owner lifts the word. What the paper needs is decided from the
-audit of its rewrite on the new engine,
-docs/designs/paper_verification/NEW_ENGINE_AUDIT.md, on branch
-`paper-new-engine` (records 1899 and 1900): first the general formula and the
+audit of its rewrite on the new engine, on the branch
+`paper-new-engine`: first the general formula and the
 algebra chapter, then the experiments' rows after their new-engine runs with
 blind pins; every other proposal waits, written in one line
 in the log, not ordered. The owner's remaining points are listed to him
@@ -451,7 +450,7 @@ Everything that can be shown in formulas in modern algebra is shown in modern al
 ### The night of the pins: the working method (the owner, 2026-09-23 to 24, records 1518 to 1532)
 
 The owner's words of the night, kept as the Boss's method for every run-and-paper
-day (their record in `docs/LOG_2026-09-20.md`, the decisions in HIGHLIGHTS 5.4):
+day (the decisions in `docs/HIGHLIGHTS.md`, "The experiments"):
 
 1. **Three tiers, in order.** The algebra first (every number from the one law
    before any run; a row not closed in the algebra is not done and is replaced
@@ -461,9 +460,9 @@ day (their record in `docs/LOG_2026-09-20.md`, the decisions in HIGHLIGHTS 5.4):
    or P, a miss written as a miss). Nothing whose board is too small or that
    takes hours; the layer instead of the box wherever the layer lemma proves the
    reading identical, declared before the run.
-2. **One file with three checks.** `docs/designs/detector_law/APPROVALS.md`,
-   the Boss's file: one row per experiment, a check written only on a merged
-   record with its link (the algebra; the GameBoard without pins; the pins);
+2. **One list with three checks.** One issue with a checklist,
+   the Boss's: one row per experiment, a check written only on a merged
+   pull request with its link (the algebra; the GameBoard without pins; the pins);
    the paper exists when every row carries its three checks; the truth of the
    moment, "partial" and "not yet" the other two words.
 3. **No pinned run without an exploratory pass of the same file first.** The
@@ -486,18 +485,18 @@ day (their record in `docs/LOG_2026-09-20.md`, the decisions in HIGHLIGHTS 5.4):
    standard). The Boss's own cost, more sessions to coordinate, is met by
    batching the records about once an hour.
 6. **One writer, the storyline from a file.** The writer takes the title, the
-   opening, the order and the limits from
-   `docs/designs/paper_verification/NEW_ENGINE_AUDIT.md` on branch
-   `paper-new-engine` (records 1899 and 1900), not from a conversation; every number a visible blank until its click is read and
+   opening, the order and the limits from the audit of the paper's rewrite
+   on its branch `paper-new-engine`, not from a conversation; every number a visible blank until its click is read and
    merged; the bounds rows and the derivations final before any run.
 7. **The answer before the record; waits of at most two minutes.** When the
    owner writes, the Boss answers first (three to six short lines, the picture
    first) and records after; no blocking wait on CI longer than two minutes,
    so a new message is seen; every answer based on `docs/ALGEBRA.md` and
    `docs/HIGHLIGHTS.md` (the owner's two-file rule).
-8. **A closed glossary; boxed formulas; the three worlds.** One name per term
-   in `docs/GLOSSARY.md` (the group of order 48 and the group of order 24 each
-   one entry); the key algebraic formulas boxed in the paper; the GameBoard,
+8. **A closed glossary; boxed formulas; the three worlds.** One name per term,
+   defined at its first use in `docs/ALGEBRA.md` and, for the engine's words, in
+   `docs/ENGINE.md` section 1 (the group of order 48 and the group of order 24
+   each one name); the key algebraic formulas boxed in the paper; the GameBoard,
    the clicks and nature named as the three worlds with the passage between
    them; "matches nature", never "is nature".
 
