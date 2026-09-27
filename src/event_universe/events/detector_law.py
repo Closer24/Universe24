@@ -26,7 +26,7 @@ from event_universe.core.rule3 import (
     form_term,
     rule3,
 )
-from event_universe.events import assembly, feeding, guards, output
+from event_universe.events import after_step, assembly, feeding, guards, output
 from event_universe.events import live as live_records
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
@@ -44,15 +44,8 @@ from event_universe.features.giving import (
     GivingTerm,
     GivingWrites,
 )
-from event_universe.features.hand import HandStart, HandTerm, HandWrites
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
-from event_universe.features.lifetime import LifetimeStart, LifetimeTerm, LifetimeWrites
-from event_universe.features.polariser import (
-    PolariserOwn,
-    PolariserStart,
-    PolariserTerm,
-    PolariserWrites,
-)
+from event_universe.features.polariser import PolariserTerm
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.recoil import (
     GIVING,
@@ -288,6 +281,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     _detector = live_records.add_detector
     _ladder_of = live_records.ladder_of
     _release = live_records.release
+    _hand_admits = after_step.hand_admits
+    _lifetime_stage = after_step.lifetime_stage
+    _polariser_stage = after_step.polariser_stage
+    _polarised = after_step.polarised
 
     def _counts_stage(self, function: Callable[..., None]) -> None:
         """The count's line's act: each body's quanta moved by its record's current through its Nodes' Ports."""
@@ -447,73 +444,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     def _hand_stage(self, function: Callable[..., object]) -> None:
         """The hand's whole-board act carries nothing of its own: the check is nested in each record's click (`_hand_admits`, inside the clicks' act), where the taking body is known."""
 
-    def _hand_admits(self, live: LiveRecord, detector: int) -> bool:
-        """The hand's check at a click on a set with a body (features/hand, the function the main loop looked up at (ii)): the taking body's spin and momentum now against the record's family's declared hand; a family with no hand, a set with no body and the face admit."""
-        hand = self.families[live.family].hand
-        if hand is None or detector not in self.set_block:
-            return True
-        block = self.block_by_number[self.set_block[detector]]
-        spin = (int(block.spin[0]), int(block.spin[1]), int(block.spin[2]))
-        momentum = (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2]))
-        with self.main_loop.act(
-            "the hand", "(ii)", self._card_writes("the hand"), lambda: self.fingerprints_of(live)
-        ):
-            check = self.main_loop.function_of("the hand", "(ii)")
-            writes = cast(HandWrites, check(HandTerm(hand), HandStart(spin, momentum)))
-        return writes.admitted
-
-    def _lifetime_stage(self, function: Callable[..., object]) -> None:
-        """The lifetime's act (features/lifetime): every live record of a family with a lifetime L that the ladder did not click this interval ends on the border `lifetime` at age L, its content booked as escaped there, the record deleted whole at the interval's close as a clicked one."""
-        for identity in list(self.records):
-            live = self.records[identity]
-            lifetime = self.families[live.family].lifetime
-            if lifetime is None or live.clicked or self.lifetime_detector is None:
-                continue
-            writes = cast(
-                LifetimeWrites, function(LifetimeTerm(lifetime), LifetimeStart(live.age, live.clicked))
-            )
-            if writes.ends:
-                live.first_rung[self.lifetime_detector] = self.tick
-                self._gather_line(live, self.lifetime_detector)
-                live.clicked = True
-                self.dead.append(live.identity)
-
-    def _polariser_stage(self, function: Callable[..., object]) -> None:
-        """The polariser's act (features/polariser): per polariser body and per live record with a level on its Nodes, the folder's `apply` on the record's pair there (a record with one level has its second at 0), the turned pair rebound whole at those Nodes (the record continues to the far set with it); the body's own set took its share of the flux in the clicks' booking before (`_polarised`); a record with nothing on the body's Nodes is untouched, and the body's own standing record is no record of the ladder."""
-        for number, term in self.polarisers.items():
-            mask = self.block_by_number[number].mask
-            for live in self.records.values():
-                im_now = np.zeros_like(live.now) if live.im_now is None else live.im_now
-                if not (np.any(live.now[mask]) or np.any(im_now[mask])):
-                    continue
-                writes = cast(
-                    PolariserWrites,
-                    function(term, PolariserStart(live.now[mask], im_now[mask]), PolariserOwn()),
-                )
-                now, im = live.now.copy(), im_now.copy()
-                now[mask], im[mask] = writes.re, writes.im
-                if live.im_now is None:
-                    live.im_before, live.im_remainder = np.zeros_like(im), np.zeros_like(im)
-                live.now, live.im_now = now, im
-
-    def _polarised(self, live: LiveRecord, detector: int, value: int) -> int:
-        """The set's increment at a polariser body (the mathematician's form of the row, 2026-09-27): at the body's own set (the term's second set) the record's inward flux at the body's Ports times the sum over the body's Nodes of the second offers, div the sum of both offers, one division act on the body's totals with the remainder not kept (a body with no level of the record on its Nodes offers 0); the folder's `apply` is read on the pair as the step left it, before the stage turns it; every other detector books the flux whole."""
-        number = self.set_block.get(detector)
-        if number is None:
-            return value
-        term = self.polarisers.get(number)
-        if term is None or self.detector_names[detector] != term.sets[1]:
-            return value
-        mask = self.block_by_number[number].mask
-        im_now = np.zeros_like(live.now) if live.im_now is None else live.im_now
-        apply = self.register.at("the polariser", "(ii)")
-        writes = cast(
-            PolariserWrites, apply(term, PolariserStart(live.now[mask], im_now[mask]), PolariserOwn())
-        )
-        second = int(sum(writes.second.tolist()))
-        whole = int(sum(writes.first.tolist())) + second
-        return 0 if whole == 0 else int(rule3(NO_READ, NO_READ, 1, whole, 0, 0, value * second)[0])
-
     def _recoil_stage(self, function: Callable[..., object]) -> None:
         """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1; a body with no period declares no term."""
         for number, sense, tally, clock in self._recoils:
@@ -635,16 +565,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 terms.append((f"{label}.lifetime", "the lifetime"))
             if family.hand is not None:
                 terms.append((f"{label}.hand", "the hand"))
-        for number, polariser in self.polarisers.items():
-            second = polariser.sets[1]
-            if (
-                second not in self.detector_names
-                or self.set_block.get(self.detector_names.index(second)) != number
-            ):
-                raise ValueError(
-                    f"measured[{number}].polariser names {second!r} as its second set, which is no set on the body"
-                )
-            terms.append((f"measured[{number}].polariser", "the polariser"))
+        terms.extend(after_step.polariser_terms(self))
         for number, entry in enumerate(self.world.measured):
             if entry.block is not None and entry.block.emitter is not None:
                 terms.append((f"measured[{number}].emitter", "the giving"))

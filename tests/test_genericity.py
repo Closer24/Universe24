@@ -34,10 +34,7 @@ INTEGERS = {**SHIPPED["integers"], "node_clock": TEMPLATE["node_clock"], "amplit
 
 
 def world_of(drawn: dict[str, Any]) -> dict[str, Any]:
-    """The world on the drawn universe: the emitter test world's chain of 80 with its body of
-    the drawn body family (the shipped kind and well, the seed on the mode as the template
-    carries it), its emitter giving the drawn given family to the screen of three receivers, or
-    the body alone where the draw has one family."""
+    """The world on the drawn universe: the emitter test world's chain of 80 with its body of the drawn body family (the shipped kind and well, the seed on the mode as the template carries it), its emitter giving the drawn given family to the screen of three receivers, or the body alone where the draw has one family."""
     roles = drawn["roles"]
     document = copy.deepcopy(TEMPLATE)
     for key in ("node_clock", "amplitude_bound", "momentum_unit"):
@@ -64,9 +61,7 @@ def world_of(drawn: dict[str, Any]) -> dict[str, Any]:
 
 
 def alone(drawn: dict[str, Any], families: list[dict[str, Any]]) -> tuple[list, dict]:
-    """The world and the universe of property (d): the body alone on the GameBoard, no emitter,
-    no stock, no detector, no moment (no click and no load acts on its record); the body's
-    reads kept where they are at the plain pace (an integer weight, by 1, the twist "own")."""
+    """The world and the universe of property (d): the body alone on the GameBoard, no emitter, no stock, no detector, no moment (no click and no load acts on its record); the body's reads kept where they are at the plain pace (an integer weight, by 1, the twist "own")."""
     document = world_of(drawn)
     body = document["measured"][0]
     body["stocks"] = {}
@@ -249,10 +244,7 @@ def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tm
 
 
 def test_the_draw_is_fixed_by_its_seed_and_spans_the_admitted_attributes():
-    """The same seed draws the same universe; over the seeds the draw reaches one to twenty
-    families, every parts form, both phases, several pairs, holds of both counts, reads by
-    plain and by sign with an integer or the universe's word for the weight, a self-source on
-    and off, quanta above one."""
+    """The same seed draws the same universe; over the seeds the draw reaches one to twenty families, every parts form, both phases, several pairs, holds of both counts, reads by plain and by sign with an integer or the universe's word for the weight, a self-source on and off, quanta above one."""
     assert draw(3) == draw(3)
     seen: dict[str, set] = {
         k: set() for k in ("count", "parts", "phase", "pair", "held", "by", "weight", "self", "quantum")
