@@ -561,7 +561,11 @@ level is the read act once more, halved: before = (**M** now) div 2,
 since **M** phi = 2 cos omega_b phi; the two levels are scaled together
 so that the record's conserved form equals c T, c the body's count and
 T the family's quantum norm: the body's record carries exactly its
-quanta's norm, and nothing of the body is declared.
+quanta's norm, and nothing of the body is declared. THE UNITS: the form is
+that of [the conserved form](#the-conserved-form); the ladder reads a
+record's norm with the weights 1 / R_i and the family's common wall L,
+the same form times L / (2 num), so c T scaled in the form's units is
+the ladder's T times L / (2 num).
 
 (e) THE MOVING BODY, THE SAME PROCEDURE. The momentum **n** names the
 velocity **v** = **n** / W. The same iteration runs with the arrivals
