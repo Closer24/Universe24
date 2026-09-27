@@ -505,10 +505,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return whole
 
     def _polariser_stage(self, function: Callable[..., object]) -> None:
-        """The polariser's act (features/polariser): per polariser body and per live record with a level on its Nodes, the folder's `apply` on the record's pair there (a record with one level has its second at 0), the turned pair rebound at those Nodes and the two offers summed over them into the record's pointers at the body's two sets, the ladder reading them as the sets' current at its next click; a record with nothing on the body's Nodes is untouched, and the body's own standing record is no record of the ladder."""
+        """The polariser's act (features/polariser): per polariser body and per live record with a level on its Nodes, the folder's `apply` on the record's pair there (a record with one level has its second at 0), the turned pair rebound whole at those Nodes (the record continues to the far set with it); the body's own set took its share of the flux in the clicks' booking before (`_polarised`); a record with nothing on the body's Nodes is untouched, and the body's own standing record is no record of the ladder."""
         for number, term in self.polarisers.items():
             mask = self.block_by_number[number].mask
-            first, second = (self.detector_names.index(name) for name in term.sets)
             for live in self.records.values():
                 im_now = np.zeros_like(live.now) if live.im_now is None else live.im_now
                 if not (np.any(live.now[mask]) or np.any(im_now[mask])):
@@ -522,8 +521,24 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 if live.im_now is None:
                     live.im_before, live.im_remainder = np.zeros_like(im), np.zeros_like(im)
                 live.now, live.im_now = now, im
-                live.pointers[first] += int(sum(writes.first.tolist()))
-                live.pointers[second] += int(sum(writes.second.tolist()))
+
+    def _polarised(self, live: LiveRecord, detector: int, value: int) -> int:
+        """The set's increment at a polariser body (the mathematician's form of the row, 2026-09-27): at the body's own set (the term's second set) the record's inward flux at the body's Ports times the sum over the body's Nodes of the second offers, div the sum of both offers, one division act on the body's totals with the remainder not kept (a body with no level of the record on its Nodes offers 0); the folder's `apply` is read on the pair as the step left it, before the stage turns it; every other detector books the flux whole."""
+        number = self.set_block.get(detector)
+        if number is None:
+            return value
+        term = self.polarisers.get(number)
+        if term is None or self.detector_names[detector] != term.sets[1]:
+            return value
+        mask = self.block_by_number[number].mask
+        im_now = np.zeros_like(live.now) if live.im_now is None else live.im_now
+        apply = self.register.at("the polariser", "(ii)")
+        writes = cast(
+            PolariserWrites, apply(term, PolariserStart(live.now[mask], im_now[mask]), PolariserOwn())
+        )
+        second = int(sum(writes.second.tolist()))
+        whole = int(sum(writes.first.tolist())) + second
+        return 0 if whole == 0 else int(rule3(NO_READ, NO_READ, 1, whole, 0, 0, value * second)[0])
 
     def _recoil_stage(self, function: Callable[..., object]) -> None:
         """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1; a body with no period declares no term."""
@@ -644,7 +659,15 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 terms.append((f"{label}.clicks", "the clicks"))
             if family.lifetime is not None:
                 terms.append((f"{label}.lifetime", "the lifetime"))
-        for number in self.polarisers:
+        for number, polariser in self.polarisers.items():
+            second = polariser.sets[1]
+            if (
+                second not in self.detector_names
+                or self.set_block.get(self.detector_names.index(second)) != number
+            ):
+                raise ValueError(
+                    f"measured[{number}].polariser names {second!r} as its second set, which is no set on the body"
+                )
             terms.append((f"measured[{number}].polariser", "the polariser"))
         for number, entry in enumerate(self.world.measured):
             if entry.block is not None and entry.block.emitter is not None:
@@ -913,9 +936,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     # The blocks (massive-record-v1)
 
     def stock_of(self, block: Block) -> int:
-        """THE STOCK of the family a body gives (ALGEBRA.md #the-paces, #the-primitives): its
-        held quanta of another family; of its own family, its declared `stock` less
-        its givings (each giving lowered M by one, the held count of its own)."""
+        """THE STOCK of the family a body gives (ALGEBRA.md #the-paces, #the-primitives): its held quanta of another family; of its own family, its declared `stock` less its givings (each giving lowered M by one, the held count of its own)."""
         emitter = block.definition.emitter
         assert emitter is not None
         if emitter.family == block.family:
@@ -923,9 +944,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return self.held[block.number][emitter.family]
 
     def _momentum_now(self, block: Block) -> list[int]:
-        """The block's momentum at this interval: the declared P, or under a
-        ramp the whole part P x t // ramp until the ramp ends (the pushing
-        agent's declaration)."""
+        """The block's momentum at this interval: the declared P, or under a ramp the whole part P x t // ramp until the ramp ends (the pushing agent's declaration)."""
         ramp = block.definition.ramp
         elapsed = self.tick - block.definition.start
         if elapsed < 0:
@@ -1844,9 +1863,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
 
     @staticmethod
     def _weighted_sum(node: np.ndarray, divisor: np.ndarray, mask: np.ndarray) -> Ratio:
-        """SUM_i node_i / divisor_i over the Nodes of `mask`, exact (one pair per
-        distinct divisor: the rule's read coefficients present are few, the
-        body's and the field's levels; the pairs summed by `rational_sum`)."""
+        """SUM_i node_i / divisor_i over the Nodes of `mask`, exact (one pair per distinct divisor: the rule's read coefficients present are few, the body's and the field's levels; the pairs summed by `rational_sum`)."""
         chosen = divisor[mask]
         values = node[mask]
         return ratio_sum(
@@ -2014,8 +2031,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         ):
             before_booking = list(live.pointers)
             for detector, value in self.detector_inflow_tally(live).items():
-                live.pointers[detector] += value
-                live.absorbed += value
+                taken = self._polarised(live, detector, value)
+                live.pointers[detector] += taken
+                live.absorbed += taken
             increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
             self._ladder_click(live, increments)
 
@@ -2072,9 +2090,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             )
 
     def _body_levels(self, block: Block) -> np.ndarray:
-        """The body's rotation's level now at each of its Nodes, in the mask's
-        order: the standing record at its one Node (the body's Node, item 42) or its
-        own rows there (the lattice body)."""
+        """The body's rotation's level now at each of its Nodes, in the mask's order: the standing record at its one Node (the body's Node, item 42) or its own rows there (the lattice body)."""
         if block.node_record is not None:
             count = int(np.count_nonzero(block.mask))
             return np.full(count, int(block.node_record.now), dtype=np.int64)
@@ -2173,10 +2189,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         live.window -= 1
 
     def _reads_at(self, a: np.ndarray, nodes: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:
-        """The sum of the six neighbours' amplitudes at the Nodes (flat
-        indices) alone, as the send reads them over the board (the wrap
-        on a periodic axis, 0 beyond a zero face, the row itself on an axis
-        of one layer); HOST: the cost is the Nodes asked, not the board."""
+        """The sum of the six neighbours' amplitudes at the Nodes (flat indices) alone, as the send reads them over the board (the wrap on a periodic axis, 0 beyond a zero face, the row itself on an axis of one layer); HOST: the cost is the Nodes asked, not the board."""
         coordinates = np.stack(np.unravel_index(nodes, self.shape), axis=0)
         total = np.zeros(nodes.shape[0], dtype=object)
         for axis in range(3):
@@ -2197,10 +2210,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return total
 
     def node_density(self, live: LiveRecord, nodes: np.ndarray) -> list[Ratio]:
-        """The record's density e at each of the Nodes (flat indices), the
-        per-Node terms of `form_share` (the Node's term over the rule's read
-        coefficient there, less its Link term), exact rationals in the form's
-        units; read on the Nodes outside a moving set's faces (ALGEBRA.md #the-ladder; item 56; the hop's reading of item 48 HISTORY)."""
+        """The record's density e at each of the Nodes (flat indices), the per-Node terms of `form_share` (the Node's term over the rule's read coefficient there, less its Link term), exact rationals in the form's units; read on the Nodes outside a moving set's faces (ALGEBRA.md #the-ladder; item 56; the hop's reading of item 48 HISTORY)."""
         family = live.family
         wall = self.kind_wall(family, live.pair)
         field = live.held_part
