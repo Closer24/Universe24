@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+from typing import cast
 
 from event_universe.core.register import Register
 from event_universe.core.schema import (
@@ -100,18 +101,31 @@ EMITTER = ObjectOf(
         {"receiver", "period", "norm", "weight", "norm_denominator", "window_read", "clock", "pair"}
     ),
 )
-# a body of the world file in today's form (ALGEBRA.md #the-stable-body names the form to come: its family, its Nodes, its count per Node and its momentum n): its Node, its family, its quanta, its momentum and its stocks of other families; a block's side or extents, pair and kind, seed with its clock and proper clock, ramp and start, margin, the body's numbers q, spin, moment and twist, its emitter with receiver and stock, and fixed
+# an emitting body in the law's form (the mathematician's words of 2026-09-27 on #1198, what the giving's row reads): the given family, the giving's weight g, the window's norm T with its denominator, the ladder's receiver where named; no period (P_body is the mode's rotation), no clock, no pair, no twist
+GIVER = ObjectOf(
+    {
+        "family": Name(),
+        "weight": Integer(least=1),
+        "norm": Integer(least=1),
+        "norm_denominator": Integer(least=1),
+        "receiver": Word(),
+    },
+    frozenset({"receiver"}),
+)
+# a body of the world file in today's form (ALGEBRA.md #the-stable-body names the form to come: its family, its Nodes, its count per Node and its momentum n): its Node, its family, its quanta, its momentum at its two levels (now and before) and its stocks of other families; a block's side or extents, pair and kind, seed with its clock and proper clock, ramp and start, margin, the body's numbers q, spin at its two levels, moment and twist, its emitter with receiver and stock, and fixed
 BODY = ObjectOf(
     {
         "position": ListOf(Integer(least=0), 3),
         "family": Name(),
         "amount": Integer(least=1),
         "momentum": AXES,
+        "momentum_before": AXES,
         "stocks": MapOf(Name(), Integer(least=1)),
         "fixed": Flag(),
         "kind": PAIR,
         "q": Integer(),
         "spin": AXES,
+        "spin_before": AXES,
         "moment": AXES,
         "twist": Integer(least=0),
         "side": Integer(least=1),
@@ -132,6 +146,7 @@ BODY = ObjectOf(
             "kind",
             "q",
             "spin",
+            "spin_before",
             "moment",
             "twist",
             "side",
@@ -151,16 +166,20 @@ BODY = ObjectOf(
 )
 # one Node of a body in the law's form (ALGEBRA.md #the-stable-body.121 item 3): its address and the family of clicks' level there, the count; one line per Node
 NODE_COUNT = ObjectOf({"node": ListOf(Integer(least=0), 3), "count": Integer(least=1)})
-# a body of the world file in the law's form (ALGEBRA.md #the-stable-body; the mathematician's word on it under (ii) of #1210): its family, its Nodes with their counts, its momentum n, and its spin and its moment where declared, nothing else; the momentum's and the spin's parts are handed to the families whose rows keep them (three parts, the KEEP step), a folder's binding and not the frame's; a folder's own key at a body joins through the cards when one declares it
+# a body of the world file in the law's form (ALGEBRA.md #the-stable-body; the mathematician's word on it under (ii) of #1210 and his lines of 2026-09-27 on #1198): its family, its Nodes with their counts, its momentum n at its two levels (now and before, the KEEP step), its spin at its two levels and its moment where declared, its stocks and its emitter where it gives, nothing else; the momentum's and the spin's parts are handed to the families whose rows keep them (three parts, the KEEP step), a folder's binding and not the frame's; a folder's own key at a body joins through the cards when one declares it
 COUNTED = ObjectOf(
     {
         "family": Name(),
         "nodes": ListOf(NODE_COUNT),
         "momentum": AXES,
+        "momentum_before": AXES,
         "spin": AXES,
+        "spin_before": AXES,
         "moment": AXES,
+        "stocks": MapOf(Name(), Integer(least=1)),
+        "emitter": GIVER,
     },
-    frozenset({"spin", "moment"}),
+    frozenset({"spin", "spin_before", "moment", "stocks", "emitter"}),
 )
 # a detector of the world file: its name, its Nodes, or the body it belongs to
 DETECTOR = ObjectOf(
@@ -306,8 +325,29 @@ def counted_nodes(body: Mapping[str, object], label: str) -> None:
         seen.add(node)
 
 
+def kept_levels(body: Mapping[str, object], label: str) -> None:
+    """The rule between a level and its level before (the KEEP step of the body's form): a body that declares its spin declares spin_before, and spin_before stands beside spin alone."""
+    if ("spin" in body) != ("spin_before" in body):
+        declared, missing = ("spin", "spin_before") if "spin" in body else ("spin_before", "spin")
+        raise ValueError(
+            f"{label} declares {declared} without {missing}: the spin's two levels are declared together"
+        )
+
+
+def counted_giver(body: Mapping[str, object], label: str) -> None:
+    """The rule between an emitter and its body in the law's form: the given family is the body's own or one it stocks."""
+    if "emitter" not in body:
+        return
+    emitter = body["emitter"]
+    assert isinstance(emitter, dict)
+    given = emitter["family"]
+    stocked = "stocks" in body and given in cast(Mapping[str, object], body["stocks"])
+    if given != body["family"] and not stocked:
+        raise ValueError(f"{label}.emitter gives {given!r}, a family the body neither is nor stocks")
+
+
 def bodies(value: object, context: Context) -> tuple[dict[str, object], ...]:
-    """The bodies of the world file, each against the schema of its form with the families known; an unknown key, a missing key, a wrong kind and a family the universe lacks refused by name."""
+    """The bodies of the world file, each against the schema of its form with the families known; an unknown key, a missing key, a wrong kind and a family the universe lacks refused by name; the rules between the keys (the spin's two levels together; in the law's form the Nodes and the giver's family)."""
     if not isinstance(value, list):
         raise ValueError("measured must be a list")
     checked = []
@@ -316,8 +356,10 @@ def bodies(value: object, context: Context) -> tuple[dict[str, object], ...]:
         kind = body_form(entry, label)
         found = check(entry, kind, label, context)
         assert isinstance(found, dict)
+        kept_levels(found, label)
         if kind is COUNTED:
             counted_nodes(found, label)
+            counted_giver(found, label)
         checked.append(found)
     return tuple(checked)
 
