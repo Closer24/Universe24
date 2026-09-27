@@ -81,11 +81,6 @@ def same(a: tuple[list, list], b: tuple[list, list]) -> bool:
 # (1) THE OUTPUT DECLARED IN ONE FORMAT (records 2191, 2199; the ledger's run declarations)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="item 1 of record 2199: the world's `readings` declaration and the one output format are "
-    "not built; the loader refuses the key",
-)
 def test_1_the_output_holds_exactly_the_declared_readings_each_labelled_by_kind(tmp_path):
     """Every line the run writes is a reading the world file declared, labelled by its kind
     (DETECTOR, GAMEBOARD or HOST); one format for every experiment; the clicks of a declared

@@ -67,6 +67,7 @@ from math import gcd
 
 import numpy as np
 
+from event_universe.core.game_board import box_centre
 from event_universe.core.integer import by_drive
 from event_universe.core.register import Register, discover
 from event_universe.core.rule3 import ISOTROPIC, coefficients, form_term, rule3, rungs
@@ -2133,10 +2134,7 @@ class DetectorLawSimulation:
         # the co-moving centre Node (the design's reading of the clock in
         # motion, MASSIVE_RECORD.md section 8: "the clock read at the
         # co-moving centre"): the total record's value there, on the line
-        centre = tuple(
-            (block.corner[axis] + block.definition.extents[axis] // 2) % self.shape[axis]
-            for axis in range(3)
-        )
+        centre = box_centre(block.corner, block.definition.extents, self.shape)
         at_centre = 0
         if block.node_record is not None:
             # the body's Node's record (9.60 (1)): its level is the standing record's
