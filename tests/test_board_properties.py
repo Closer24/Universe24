@@ -315,6 +315,7 @@ def test_conservation_between_clicks():
     document = small_world()
     contents: list[np.ndarray] = []
     simulation, states, clicks = run(document, contents=contents)
+    paced = [np.maximum(content, 0) for content in contents]  # the read in force: the row's floor
     assert len(clicks) == 1
     click_tick = clicks[0][0]
     light = 1 << 40
@@ -326,8 +327,8 @@ def test_conservation_between_clicks():
         else:
             assert light not in state
     # (b) the form I with the remainder identity, per record, exact, step by step with the
-    # family of clicks' level in force for the step (`contents[t - 1]`, the level as interval t
-    # began: the clock steps last in the interval, ALGEBRA.md #the-counts-line), and THE EXCHANGE WITH
+    # family of clicks' level in force for the step (`paced[t - 1]`, the level as interval t began
+    # read at no less than 0, ALGEBRA.md #the-paces, #the-counts-line), and THE EXCHANGE WITH
     # A MOVING CLOCK (ALGEBRA.md #the-counts-line; under the fixed wall, item 34): between the steps the form
     # with the new level differs from the form with the old by the weights' change, exactly
     # (at the well's Nodes the level is held, 1 until the click's quantum enters as interval
@@ -345,8 +346,8 @@ def test_conservation_between_clicks():
                 break
             now, before, remainder = states[t][identity]
             prev_now, prev_before, prev_remainder = states[t - 1][identity]
-            value = form_I(simulation, family, now, before, contents[t - 1])
-            previous = form_I(simulation, family, prev_now, prev_before, contents[t - 1])
+            value = form_I(simulation, family, now, before, paced[t - 1])
+            previous = form_I(simulation, family, prev_now, prev_before, paced[t - 1])
             # the remainder term of 8.2 over the step t - 1 -> t under the weak-field rule
             # (ALGEBRA.md #the-line; item 44): (a_next - a_before) (r - r') / (3 R_i) per Node, R_i the
             # rule's coefficient on the six reads at the Node's level in force for the step
@@ -354,7 +355,7 @@ def test_conservation_between_clicks():
                 num.astype(object),
                 simulation.kind_den[family].astype(object),
                 gamma,
-                contents[t - 1].astype(object),
+                paced[t - 1].astype(object),
             )
             drift = Fraction(0)
             for node in zip(
@@ -367,10 +368,9 @@ def test_conservation_between_clicks():
                 )
             # the step's identity, exact, with the level in force for the step
             assert value - previous == drift, (identity, t)
-            # the exchange with the moving clock, exact: the weights' change with the pace
-            # at the Nodes and on the Links (`exchange_of`)
-            exchange = exchange_of(simulation, family, now, before, contents[t - 1], contents[t])
-            moved = form_I(simulation, family, now, before, contents[t])
+            # the exchange with the moving clock, exact: the weights' change with the pace (`exchange_of`)
+            exchange = exchange_of(simulation, family, now, before, paced[t - 1], paced[t])
+            moved = form_I(simulation, family, now, before, paced[t])
             assert moved - value == exchange, (identity, t)
             exchanges += exchange != 0
             if identity == 0 and t == click_tick:
