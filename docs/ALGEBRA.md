@@ -470,7 +470,7 @@ on the record of the primitive that divided.
 | the clicks list | (ii) | the record's remainders, the wheels | the taken momentum's shares | the products' shares are the click's draw; the sum is the taken momentum exactly |
 | the hand | (ii) | **S**, **n**, the declared hand | admits or refuses the click | **S** . **n** is a booking of the spin's and the momentum's levels; its sign against the declared hand admits or refuses the click |
 | the giving | (ii) | the body's own levels, the weight g, the outward current through its outer Ports, T, M, **n** | the given family's level at the body's outer Ports; at the open M_k -= 1 and **n** at t + 1 | the three acts of one window in this order: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) (|n_a| div M), the division act with the wall M, both written at t + 1), the write (the given level at the body's outer shell += g x a_body each interval, a load, before the bookings; the outer shell is the body's Nodes with a Port to a Node outside the body, and no inner Node is written), the close (at outward x den >= norm the record named, its direction the tally's sign per axis); the open is the click's count move with the opposite sign, and a close is never an open: the count moves once per window |
-| the hold | (iv) | a body's content M_k, P_0 and P_k, W, **n**, the held factors, the dipole | the held family's levels at the body's Nodes; the body's remainders | the count s = SUM_k (M_k P_0) div P_k the division act, written as the load into the time part; the vector part (factor x s x n_a) div W, the tensor part (factor x s x n_a n_b) div W^2, each with its remainder carried; the dipole sigma (D x e_j)_i div its divisor at the six neighbours |
+| the hold | (iv) | a body's content M_k, the quantum's weight w_k of each family's row (its key `quantum`, an integer from 1, required), W, **n**, the held factors, the dipole | the held family's levels at the body's Nodes; the body's remainders | the count s = SUM_k w_k M_k, a load into the time part; the vector part (factor x s x n_a) div W, the tensor part (factor x s x n_a n_b) div W^2, each with its remainder carried; the dipole sigma (D x e_j)_i div its divisor at the six neighbours |
 | the source | (iv) | the record's D_i = now^2 - next x before at its Nodes, E_s (the source's scale) | the sourced family's level at the record's Nodes; the record's remainder | D_i is the booking of the record's own two levels (the form); the level gains weight x ((D_i + r_i) div E_s) each interval, the division act as a load; with a table weight x (s_cap D_i div (s_cap E_s + D_i)), s_cap the table's cap, no remainder, the denominator refused at or below 0; the field's shape is the static limit of Rule3, (Delta - kappa^2) a = -sigma / q with kappa^2 = 6 den / num - 6 (kappa the inverse reach, sigma the source, q the charge's weight) |
 | the recoil | (iv) | the click's tally sigma_a, Q_unit, P_body (the body's period), lambda_q (the quantum's wavelength), L | a body's momentum **n**; the body's remainders | n_a += sigma_a x 3 Q_unit P_body (L div lambda_q) div L, the giver with the opposite sign: the quantum's momentum over the body's energy on the momentum's wall, W P_body / (M lambda_q) with W = 3 Q_unit M (the body's quanta cancel); the store one remainder per axis on the one declared wall of the universe, L = the least common multiple of the world's declared wavelengths 2 N q / p over the families with a clock [p, q] on the world's N steps, which every lambda_q divides, so that clicks of every wavelength add exactly (the sum's exact floor); L divides the wavelengths' product and is refused by name at or beyond 2^63; the shipped worlds declare no wavelength, so L = 1 there |
 | the feed | (v) | the reads' levels at the two faces of each axis of the body (the Nodes read across its Ports), the body's two levels of momentum **n** (now and before, as the spin's), W, Gamma | a body's two levels of momentum **n**; the body's remainders | the contraction at a face, C = SUM over the reads of f x [the time level - (n_b V_b) div W + (n_b n_c h_bc) div W^2] over the face's Nodes with **n** now, f the read's factor (the weight, or minus the body's charge times the weight by q), V and h the read family's vector and tensor parts; the leapfrog n_next = n_before + 2 W x (C_+ - C_-) div (2 Gamma D_a F_a), the two levels then (n_next, n now), D_a the faces' distance in Links and F_a a face's Nodes; the potential per unit of mass is -C / (2 Gamma), so a body falls toward content the same for every family |
@@ -489,17 +489,15 @@ giving's open and close, the clicks list's count move, the lifetime's
 tally.
 
 A body's writes into its family's levels (the hold): a body of quanta
-M_k of the family k, with the energy unit P_0 = [1, 1000] and the
-family's period P_k, has the count s = SUM_k (M_k P_0) div P_k, the
-charge Q, the momentum's whole part **n** on the wall W = 3 Q_unit M
-(its velocity **v** = **n** / W in Links per interval), the spin **S**
-and the moment **mu**; at every Node of its support it writes gravity's
-time part s, its vector (4 s n_a) div W, its tensor (2 s n_a n_b) div
-W^2, the charge's time part Q and vector (Q n_a) div W, the held
-factors (1, 4, 2) and (1, 1) the universe file's numbers; and the
-dipoles at its Node's six neighbours, gravity's vector i at the Node +
-sigma e_j gaining sigma (S x e_j)_i, the charge's (sigma (mu x e_j)_i)
-div 2.
+M_k of the family k, each family's quantum weighing w_k (the key
+`quantum` of its row, an integer from 1, required; every shipped family
+declares 1), has the count s = SUM_k w_k M_k, the charge Q, the
+momentum's whole part **n** on the wall W = 3 Q_unit M (its velocity
+**v** = **n** / W in Links per interval), the spin **S** and the moment
+**mu**; at every Node of its support it writes gravity's time part s, its
+vector (4 s n_a) div W, its tensor (2 s n_a n_b) div W^2, the charge's time
+part Q and vector (Q n_a) div W, the held factors (1, 4, 2) and (1, 1) the
+universe file's numbers; and the dipoles at its Node's six neighbours, gravity's vector i at the Node + sigma e_j gaining sigma (S x e_j)_i, the charge's (sigma (mu x e_j)_i) div 2.
 ## The stable body
 
 ### What a body is
@@ -539,19 +537,17 @@ body by its Nodes with their counts; nothing on the command line. The
 iteration runs on the body's Nodes and their surroundings, out to where
 the mode's tail falls below one unit; the count stays on the body's Nodes.
 
-(b) THE ITERATION. Rule3's read act with the before-coefficient 0: a <-
-(SUM_a R_a arr_a + S a) div w on the region; then Rule3's division act
-to the amplitude unit A (the level multiplied by A and divided by its
-largest size): the power iteration of the symmetric form's top mode
-(the bound mode, above the band, is the eigenvalue of largest size),
-converging at the rate cos omega_0 / cos omega_b per step.
+(b) THE ITERATION. Rule3's read act with the before-coefficient 0, a <-
+(SUM_a R_a arr_a + S a) div w on the region, then the division act to
+the amplitude unit A (the level times A over its largest size): the
+power iteration of the symmetric form's top mode (the bound mode, above
+the band, the eigenvalue largest in size), at cos omega_0 / cos omega_b per step.
 
 (c) THE STOP FROM THE INTEGERS. The profile is an integer vector bounded
 by A, so the iteration is a map on a finite set and enters a cycle; the
-stop is the first repeat of the profile, exact, with no tolerance and
-no declared count; the profile at the repeat is the mode within one
-unit of A (from a flat start, a fixed point at step 198, 291 and 513 for
-the sides 4, 6 and 12 of [the well](#the-well), the overlap with the float top mode 1.000000).
+stop is the first repeat, exact, no tolerance and no declared count, the
+profile there the mode within one unit of A (from a flat start a fixed point
+at step 198, 291 and 513 for the sides 4, 6 and 12 of [the well](#the-well), the overlap with the float top mode 1.000000).
 
 (d) THE TWO LEVELS AND THE AMPLITUDE FROM THE COUNT. The mode's second
 level is the read act once more, halved (**M** phi = 2 cos omega_b
@@ -562,15 +558,20 @@ quanta's norm, and nothing of the body is declared. THE UNITS: the ladder reads 
 the family's common wall L, the form of [the conserved form](#the-conserved-form)
 times L / (2 num), so the ladder's T is the form's T times L / (2 num).
 
-(e) THE MOVING BODY, THE SAME PROCEDURE. The momentum **n** names the
-velocity **v** = **n** / W. The same iteration runs with the arrivals
-along the axis of motion read through the rotation act by the phase k
-per Link (a Pythagorean triple (a, b, c) with cos k = a / c, exact),
-each iterate mirrored by one division act (the real part even and the
-imaginary part odd about the centre, the envelope's one gauge); its
-fixed point is the moving mode with the rotation omega_b(k); v(k) is the
-difference quotient of omega_b over k in exact rationals, and k is the
-pair at which v(k) is the named velocity, by bisection on the pairs.
+(e) THE MOVING BODY. The momentum **n** names the velocity **v** =
+**n** / W. The moving body is the resting envelope with the phase k per
+Link along the axis of motion, the rotation act on its two levels by the
+triple of the pair (m, j), cos k = (m^2 - j^2) / (m^2 + j^2), exact; k is
+the pair at which the packet's own current along the axis, SUM over its
+Links of F_ij = now_i before_j - before_i now_j at the norm T (M quanta),
+equals T n / (3 Q), the count's line's velocity of the packet, M
+cancelling: by bisection on j at the declared m (the body's `momentum` n and its `phase_denominator` m are its numbers in the world file, k is derived).
+The read with the arrivals along the axis turned by +k and -k on a fixed
+well is a gauge of the plain read: its fixed point is the rest mode, its
+current 0 and its rotation the rest's at every k; the packet is stationary
+in the body's frame only where the count's line moves the well at **v**; the
+loader's proper pair of a moving body is the packet's rotation at its centre.
+Generic: one primitive, the family's pair and the body's two numbers; vector: the rotation act, a booking, the division act, no root; local: each Node's six Links.
 
 (f) THE AMPLITUDE UNIT A IS DERIVED, NEVER WRITTEN: the largest
 amplitude at which Rule3's total stays inside the integer width at
