@@ -382,31 +382,31 @@ Rendered by `tools/render_documents.py` from the register, `law/step.json`, the 
 
 | primitive | place | word | how it runs | its keys of the files | its line in ALGEBRA.md |
 | --- | --- | --- | --- | --- | --- |
-| **the clicks** | (ii) | after the step | bound through the loop's `bind` | `clicks` (a family's entry) | 9.25 (2), (3); 9.111 items 1, 2 and 6; 9.117 items 2 and 3 |
-| **the clicks list** | (ii) | after the step | not built |  | 9.88 (4) |
-| **the count's line** | (ii) | after the step | not built |  | 9.121 item 3; 9.119 item 1; 9.57 (1) |
-| **the degree** | (i) | the step | bound through the loop's `bind` | `parts` (a family's entry) | 9.86 (2); 9.91 (2) |
-| **the feed** | (v) | after the step | not built |  | 9.117 item 2; 9.78 (4); 9.91 (8) (v) |
-| **the giving** | (ii) | after the step | its own `apply` |  | the close of the count the click's inverse, the bulk share from the rule 9.57 (1), the window's write beyond (H) (9.117 item 5); 9.117 item 2, the row 'the giving'; 9.107; 9.71 (1); 9.116 item 5; 9.86 (1) |
-| **the hand** | (ii) | after the step | not built |  | 9.88 (5) |
-| **the hold** | (iv) | the right side | its own `apply` | `held` (a family's entry) | 9.45 (2); 9.91 (3); 9.111 item 3; 9.117 item 3; 9.119 item 2, the row 'the hold' |
-| **the hop** | (v) | after the step | bound through the loop's `bind` |  | 9.117 item 2; 9.52; 9.104 item 6 |
-| **the induction** | (v) | after the step | not built |  | 9.117 item 2; 9.78 (4); 9.91 (8) (v) |
-| **the internal representation** | (i) | the right side | not built |  | 9.88 (7) (i); 9.101; 9.117 item 3 |
-| **the lifetime** | (ii) | after the step | not built |  | 9.88 (3); 9.117 item 3 |
-| **the operation** | (i) | the step | bound through the loop's `bind` |  | 9.57 (1); 9.112 items 1 and 2 |
-| **the pair** | (i) | the step | bound through the loop's `bind` | `pair` (a family's entry) | 9.57 (1); 9.111 item 7 row 1 |
-| **the phase** | (i) | the step | bound through the loop's `bind` | `phase` (a family's entry) | 9.91 (2) |
-| **the receive** | (i) | the step | its own `apply` |  | 9.112 item 1; 9.96 (2) (e); 9.117 item 3; 9.119 item 2, the row 'the receive' |
-| **the recoil** | (iv) | after the step | its own `apply` |  | from the rule 9.57 (1) and the click, the store a remainder of the division on the record (9.117 item 5); 9.117 item 2, the row 'the recoil'; 9.84 (2); 9.91 (4); 9.111 items 1 and 2 |
-| **the recoil's accumulator** | (v) | after the step | not built |  | 9.117 item 2; 9.109 item 2 (b); 9.96 (2) (e) |
-| **the self-source** | (i) | the right side | its own `apply` | `self_source` (a family's entry) | 9.78 (3); 9.88 (2); 9.91 (5); 9.119 item 2, the row 'the self-source' |
-| **the send** | (i) | the step | bound through the loop's `bind` |  | 9.112 item 1 |
-| **the signed read** | (i) | the right side | bound through the loop's `bind`; its own `apply` waits | `sign` (a family's entry), `reads` (a family's entry) | from the rule 9.57 (1) and the click (9.117 item 5); 9.117 item 2, the first row; 9.78 (4); 9.108 items 8, 11, 12, 13; 9.116 items 4a and 4c |
-| **the source** | (iv) | the right side | its own `apply` | `sourced` (a family's entry) | the field's shape from the rule 9.57 (1), the write beyond (H) (9.113 item 2; 9.117 item 5); 9.117 item 2; 9.108 items 3, 10, 11, 13; 9.116 item 4b |
-| **the spin's step** | (v) | after the step | its own `apply` | `spins_step` (a family's entry) | 9.117 item 2, the row 'the spin's step'; 9.78 (5); 9.104 (2); 9.119 item 2 |
-| **the trace** | any | any | not built |  | 9.112 item 5; 9.117 item 2 |
-| **the wait** | (i) | the step | bound through the loop's `bind` |  | 9.112 item 1 |
+| **the clicks** | (ii) | after the step | bound through the loop's `bind` | `clicks` (a family's entry) | ALGEBRA.md #the-ladder, #the-primitives |
+| **the clicks list** | (ii) | after the step | not built |  | ALGEBRA.md #what-is-open |
+| **the count's line** | (ii) | after the step | not built |  | ALGEBRA.md #the-counts-line, #the-four-acts, #the-line |
+| **the degree** | (i) | the step | bound through the loop's `bind` | `parts` (a family's entry) | ALGEBRA.md #the-primitives, #the-interval |
+| **the feed** | (v) | after the step | not built |  | ALGEBRA.md #the-primitives, #a-familys-declaration, #the-interval |
+| **the giving** | (ii) | after the step | its own `apply` |  | the close of the count the click's inverse, the bulk share from the rule ALGEBRA.md #the-line, the window's write beyond (H) (ALGEBRA.md #the-primitives); ALGEBRA.md #the-primitives, the row 'the giving'; 9.107; ALGEBRA.md #the-primitives |
+| **the hand** | (ii) | after the step | not built |  | ALGEBRA.md #what-is-open |
+| **the hold** | (iv) | the right side | its own `apply` | `held` (a family's entry) | ALGEBRA.md #the-counts-line, #the-interval, #the-primitives, #the-four-acts, the row 'the hold' |
+| **the hop** | (v) | after the step | bound through the loop's `bind` |  | ALGEBRA.md #the-primitives |
+| **the induction** | (v) | after the step | not built |  | ALGEBRA.md #the-primitives, #a-familys-declaration, #the-interval |
+| **the internal representation** | (i) | the right side | not built |  | ALGEBRA.md #what-is-open, #the-transport, #the-primitives |
+| **the lifetime** | (ii) | after the step | not built |  | ALGEBRA.md #what-is-open, #the-primitives |
+| **the operation** | (i) | the step | bound through the loop's `bind` |  | ALGEBRA.md #the-line, #the-interval |
+| **the pair** | (i) | the step | bound through the loop's `bind` | `pair` (a family's entry) | ALGEBRA.md #the-line, #the-primitives row 1 |
+| **the phase** | (i) | the step | bound through the loop's `bind` | `phase` (a family's entry) | ALGEBRA.md #the-interval |
+| **the receive** | (i) | the step | its own `apply` |  | ALGEBRA.md #the-interval, #the-primitives, #the-four-acts, the row 'the receive' |
+| **the recoil** | (iv) | after the step | its own `apply` |  | from the rule ALGEBRA.md #the-line and the click, the store a remainder of the division on the record (ALGEBRA.md #the-primitives); ALGEBRA.md #the-primitives, the row 'the recoil'; ALGEBRA.md #the-primitives, #the-interval |
+| **the recoil's accumulator** | (v) | after the step | not built |  | ALGEBRA.md #the-primitives |
+| **the self-source** | (i) | the right side | its own `apply` | `self_source` (a family's entry) | ALGEBRA.md #a-familys-declaration, #what-is-open, #the-interval, #the-four-acts, the row 'the self-source' |
+| **the send** | (i) | the step | bound through the loop's `bind` |  | ALGEBRA.md #the-interval |
+| **the signed read** | (i) | the right side | bound through the loop's `bind`; its own `apply` waits | `sign` (a family's entry), `reads` (a family's entry) | from the rule ALGEBRA.md #the-line and the click (ALGEBRA.md #the-primitives); ALGEBRA.md #the-primitives, the first row; ALGEBRA.md #a-familys-declaration, #the-paces |
+| **the source** | (iv) | the right side | its own `apply` | `sourced` (a family's entry) | the field's shape from the rule ALGEBRA.md #the-line, the write beyond (H) (ALGEBRA.md #the-primitives); ALGEBRA.md #the-primitives, #the-paces |
+| **the spin's step** | (v) | after the step | its own `apply` | `spins_step` (a family's entry) | ALGEBRA.md #the-primitives, the row 'the spin's step'; ALGEBRA.md #a-familys-declaration, #the-primitives, #the-four-acts |
+| **the trace** | any | any | not built |  | ALGEBRA.md #the-interval, #the-primitives |
+| **the wait** | (i) | the step | bound through the loop's `bind` |  | ALGEBRA.md #the-interval |
 
 
 ### The step file's acts
@@ -448,8 +448,8 @@ Each mark names what the tree does not do yet; it comes off when the cut lands.
 
 | test | reason |
 | --- | --- |
-| `tests/test_engine_acceptance.py:166` | the ledger's item 'a signed read weight' (ALGEBRA.md 9.108 (8)): the loader bounds the weight from 1; when the support lands this passes and the mark comes off |
-| `tests/test_engine_acceptance.py:267` | the loader still writes defaults for keys of the files; the review after the merge |
+| `tests/test_engine_acceptance.py:165` | the ledger's item 'a signed read weight' (ALGEBRA.md #the-paces): the loader bounds the weight from 1; when the support lands this passes and the mark comes off |
+| `tests/test_engine_acceptance.py:266` | the loader still writes defaults for keys of the files; the review after the merge |
 | `tests/test_genericity.py:139` |  |
 | `tests/test_ledger_items.py:94` | the loader admits `reads`, not the term form [kind, target, of, degree, weight, table] |
 | `tests/test_ledger_items.py:123` | the step's four declarations (send, receive, wait, operation) are not read from universe.json |
@@ -463,7 +463,7 @@ Each mark names what the tree does not do yet; it comes off when the cut lands.
 | `tests/test_loader_acceptance.py:155` | K, release and width are gone (#1236); the source worlds still carry none of N, age_bound, clock_stamp, massive_record and body_record, which the loader requ... |
 | `tests/test_loader_acceptance.py:191` | every key of a shipped family's entry is one folder's card (#1206, #1236) but `spins_step`, the frame's until #1203's card lands; `world.py` still builds the... |
 | `tests/test_source_worlds.py:187` | the ledger's source row); LAWFUL when they land |
-| `tests/test_toward_nature.py:109` | a giving lowers the live M in the wall W = 3 Q M while n stays, so the moving emitter speeds up and the mirror hops one interval before it from interval 51 (... |
+| `tests/test_toward_nature.py:111` | a giving lowers the live M in the wall W = 3 Q M while n stays, so the moving emitter speeds up and the mirror hops one interval before it from interval 51 (... |
 
 
 ### The owners
