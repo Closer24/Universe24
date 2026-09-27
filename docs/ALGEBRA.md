@@ -43,18 +43,22 @@ Node, every family's clock unit); the amplitude bound A_bound, the
 largest level a record may reach before the run is refused; Lambda, the
 charge's weight; the momentum unit Q_unit; the twist table ([the transport](#the-transport)).
 
-A family's row: its parts (1 for a scalar; [1, 3] a time part and a
-vector; [1, 3, 6] a time part, a vector and a symmetric tensor); its
-phase (1, one level per Node; 2, a pair); its pair [num, den], the
-cosine of its rest rotation, cos omega_0 = num / den, or the word "body"
-where every body and record declares its own; its reads, each a read
-family with a signed weight, a twist (an integer, or "own") and by
-(plain, or q, the reading record's charge sign); its held writer (the
-count word, the held factors, the dipole); its self-source unit P_2 (0
-off); its clicks (whether it takes and gives, and its quantum's norm T,
-one integer per family, the action of one quantum). T is a declaration:
-Rule3 is linear and its form's scale is free, so no line of Rule3 fixes
-T; nature pins it and no body declares it.
+A family's row: its parts (1 for a scalar; [1, 3] a time part and a vector;
+[1, 3, 6] a time part, a vector and a symmetric tensor); its phase (1, one
+level per Node; 2, a pair); its kinds (the key `kinds`, an integer from 1,
+required; every shipped family declares 1): a family of k kinds holds k
+counts and k levels at every Node, each stepping by the family's one line,
+and a read's weight is one integer for every kind or a k x k integer matrix
+mixing them, the read the bilinear form over the kinds; its pair [num, den],
+the cosine of its rest rotation, cos omega_0 = num / den, or the word "body"
+where every body and record declares its own; its reads, each a read family
+with a signed weight, a twist (an integer, or "own") and by (plain, or q,
+the reading record's charge sign); its held writer (the count word, the held
+factors, the dipole); its self-source unit P_2 (0 off); its clicks (whether
+it takes and gives, and its quantum's norm T, one integer per family, the
+action of one quantum). T is a declaration: Rule3 is linear and its form's
+scale is free, so no line of Rule3 fixes T; nature pins it and no body
+declares it.
 
 ### The interval
 
@@ -446,7 +450,7 @@ set's Nodes.
 Every primitive of the engine is one folder under
 `src/event_universe/features/` with its declaration (its name, its
 place, what it reads, what it writes, its line here) and its function
-`apply(term, start)`, which calls Rule3 and nothing else; the loop binds
+`apply(term, start, own)`, which calls Rule3 and nothing else; the loop binds
 the folders through the register and the step file. No folder holds a
 number, a family's name or a default. Every write of a primitive is a
 whole integer into a declared level; every division's remainder lives
@@ -465,14 +469,14 @@ on the record of the primitive that divided.
 | the operation | (i) | the coefficients | the record's levels | Rule3's line itself |
 | the wait | (i) | the record's age | the record's age | the count (b) at a / b = 2: one interval |
 | the clicks | (ii) | the current at the detectors' Ports, u, V, T | the record's tally; a body's content M_k at t + 1 | the ladder of [the ladder](#the-ladder) until the count's line is bound in the loop |
-| the count's line | (ii) | the record's levels at the Node and across its six Ports, T, the weight | the count at a Node, its remainder | [the count's line](#the-counts-line) |
+| the count's line | (ii) | the body's own record's levels at the Node and across its six Ports as the step produced them (a given record is another record; a loaded level carries no current), T, the weight | the count at a Node, its remainder | [the count's line](#the-counts-line) |
 | the lifetime | (ii) | the record's age, L | the record's end | the age is the count (b) on the record; at age L on the face the record ends |
 | the clicks list | (ii) | the record's remainders, the wheels | the taken momentum's shares | the products' shares are the click's draw; the sum is the taken momentum exactly |
 | the hand | (ii) | **S**, **n**, the declared hand | admits or refuses the click | **S** . **n** is a booking of the spin's and the momentum's levels; its sign against the declared hand admits or refuses the click |
 | the giving | (ii) | the body's own levels, the weight g, the outward current through its outer Ports, T, M, **n** | the given family's level at the body's outer Ports; at the open M_k -= 1 and **n** at t + 1 | the three acts of one window in this order: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) (|n_a| div M), the division act with the wall M, both written at t + 1), the write (the given level at the body's outer shell += g x a_body each interval, a load, before the bookings; the outer shell is the body's Nodes with a Port to a Node outside the body, and no inner Node is written), the close (at outward x den >= norm the record named, its direction the tally's sign per axis); the open is the click's count move with the opposite sign, and a close is never an open: the count moves once per window |
 | the hold | (iv) | a body's content M_k, the quantum's weight w_k of each family's row (its key `quantum`, an integer from 1, required), W, **n**, the held factors, the dipole | the held family's levels at the body's Nodes; the body's remainders | the count s = SUM_k w_k M_k, a load into the time part; the vector part (factor x s x n_a) div W, the tensor part (factor x s x n_a n_b) div W^2, each with its remainder carried; the dipole sigma (D x e_j)_i div its divisor at the six neighbours |
 | the source | (iv) | the record's D_i = now^2 - next x before at its Nodes, E_s (the source's scale) | the sourced family's level at the record's Nodes; the record's remainder | D_i is the booking of the record's own two levels (the form); the level gains weight x ((D_i + r_i) div E_s) each interval, the division act as a load; with a table weight x (s_cap D_i div (s_cap E_s + D_i)), s_cap the table's cap, no remainder, the denominator refused at or below 0; the field's shape is the static limit of Rule3, (Delta - kappa^2) a = -sigma / q with kappa^2 = 6 den / num - 6 (kappa the inverse reach, sigma the source, q the charge's weight) |
-| the recoil | (iv) | the click's tally sigma_a, Q_unit, P_body (the body's period), lambda_q (the quantum's wavelength), L | a body's momentum **n**; the body's remainders | n_a += sigma_a x 3 Q_unit P_body (L div lambda_q) div L, the giver with the opposite sign: the quantum's momentum over the body's energy on the momentum's wall, W P_body / (M lambda_q) with W = 3 Q_unit M (the body's quanta cancel); the store one remainder per axis on the one declared wall of the universe, L = the least common multiple of the world's declared wavelengths 2 N q / p over the families with a clock [p, q] on the world's N steps, which every lambda_q divides, so that clicks of every wavelength add exactly (the sum's exact floor); L divides the wavelengths' product and is refused by name at or beyond 2^63; the shipped worlds declare no wavelength, so L = 1 there |
+| the recoil | (iv) | the click's tally sigma_a, Q_unit, P_body (the rotation of the body's own mode, its period by the one-Node rule from its clock pair, never declared), lambda_q (the quantum's wavelength, 2 N q / p from its family's clock [p, q] on the world's N steps), L | a body's momentum **n**; the body's remainders | n_a += sigma_a x 3 Q_unit P_body (L div lambda_q) div L at the close, the giver and the taker with opposite signs: the quantum's momentum over the body's energy on the momentum's wall, W P_body / (M lambda_q) with W = 3 Q_unit M (the body's quanta cancel), so the velocity moves by P_body / (lambda_q M) and a heavy body's recoil is small by its quanta; a taker with no mode of its own has no period and takes no recoil; the store one remainder per axis on the one declared wall of the universe, L = the least common multiple of the wavelengths 2 N q / p over the families with a clock, each whole or the clock refused at load by name, which every lambda_q divides, so that clicks of every wavelength add exactly (the sum's exact floor); L divides the wavelengths' product and is refused by name at or beyond 2^63; a world whose families carry no clock has L = 1, nothing declared |
 | the feed | (v) | the reads' levels at the two faces of each axis of the body (the Nodes read across its Ports), the body's two levels of momentum **n** (now and before, as the spin's), W, Gamma | a body's two levels of momentum **n**; the body's remainders | the contraction at a face, C = SUM over the reads of f x [the time level - (n_b V_b) div W + (n_b n_c h_bc) div W^2] over the face's Nodes with **n** now, f the read's factor (the weight, or minus the body's charge times the weight by q), V and h the read family's vector and tensor parts; the leapfrog n_next = n_before + 2 W x (C_+ - C_-) div (2 Gamma D_a F_a), the two levels then (n_next, n now), D_a the faces' distance in Links and F_a a face's Nodes; the potential per unit of mass is -C / (2 Gamma), so a body falls toward content the same for every family |
 | the induction | (v) | the reads' vector parts summed over the body's N Nodes as the interval leaves it and at its start, the body's two levels of momentum **n**, W, Gamma | a body's two levels of momentum **n**; the body's remainders | the momentum part of the contraction, P_a = -SUM over the reads of f x V_a (the coefficient of n_a div W); both levels of **n**: n_a += W x SUM f x (V_a now - V_a before) div (2 Gamma N), minus the change of P_a; with the feed, d/dt (n_a - W P_a div (2 Gamma)) = W x (the gradient of C)_a div (2 Gamma): the Lorentz force and its gravitational twin in one line (the tensor part's change is second order and not carried) |
 | the spin's step | (v) | **S** at its two levels (S_now, S_before), the read families' vector parts and time parts at the body's six neighbours, mu, **n**, W, Gamma, and the row `spins_step` of the family whose dipole is the spin: the curl's weight c_num / den and the tidal term's weight t_num / den (two pairs over one denominator) | a body's spin **S** | the leapfrog on the two levels, S_next = S_before + 2 [(Omega x S_now) + mu x B_q] div (W Gamma), the remainder on the body (the 2 the span of a step on two levels, the form's, as the feed's); Omega from the read whose dipole is the spin, Omega_x = [c_num x factor x (V_z(+y) - V_z(-y) - V_y(+z) + V_y(-z)) + (t_num ((t(+y) - t(-y)) n_z - (t(+z) - t(-z)) n_y)) div W] div (2 den) and cyclic, V the read's vector part and t its time part, the factor the read's weight (by q, minus Q times it); B_q from the read whose dipole is the moment, the same curl on its vector part times the read's weight div 2; the curls and the gradient reads with the coefficients +1 and -1 at the six neighbours (a neighbour beyond an open face reads 0), the crosses bookings, every division the division act with its remainder on the body; backward the same terms from S_before, subtracted, every division stepped back |
@@ -620,46 +624,43 @@ falls by 3 x 10^-5 per Link there. A one-Node body of one quantum binds
 nothing and is a free record: its velocity is v_g(k) with no count to
 follow it.
 
-The run beside these numbers (the cube of side 12 on [800, 1200] at
-1000 per Node at v = 1 / 3 on a periodic box, 10^4 intervals): the
-count's centroid against v t, the slope v within the remainder; the
-share inside the cube 0.92 at the start, falling by at most 3 x 10^-5
-per Link; the clock's period 2 pi / omega_b(k), 7.74 intervals at k =
-0. A larger fall, or a slope that drifts, names a missing law; the
-body's own numbers are never patched.
+The run beside these numbers (the cube of side 12 on [800, 1200] at 1000 per
+Node at v = 1 / 3 on a periodic box, 10^4 intervals): the count's centroid
+against v t, the slope v within the remainder; the share inside the cube
+0.92 at the start, falling by at most 3 x 10^-5 per Link; the clock's period
+2 pi / omega_b(k), 7.74 intervals at k = 0. A larger fall, or a slope that
+drifts, names a missing law; the body's own numbers are never patched.
 
 ## What the law says of nature
 
 ### The postulates
 
-1. The world is Nodes and Events. Space is the GameBoard; an Event is a
-wall crossed by a remainder at a Node: a level stepped, a count moved,
-a click; nothing else happens.
-2. A Node holds bounded local information: its NodeState, fixed in
-size, read from itself and its six neighbours; no read beyond them, no
-list that grows with the world, nothing of the past kept. Every physical update
-uses its own record and the six causally available neighbours with
-fixed work and storage for a fixed set of families (LOCALITY-1); a
-self-field estimated or subtracted from anything global is forbidden,
-whatever the size of its final answer.
-3. Consistency is local and causal: an Event first changes its own
-Node and travels Link by Link, one Link per interval, each Node
-updating on receipt under the same rule. The one exception is the
-click: a record ends at once, whole, at the detector.
-4. The causal speed is one Link per interval, built in; every other
-speed is a rational, a count of Links over a count of intervals.
-5. Every physical calculation is on bounded integers; there is no
-float, no root and no draw in the law; a Node keeps only the law's own
-numbers: each record's two levels and its remainder, the family's pair
-and the Node clock from the content there.
-6. A measurement is a detector's click, an action of the law on the
-state: the record ends at the detector and the detector's own record
-changes. Only a click is compared with nature or pinned as an
-expectation; displays and the host's readings read state and write
-nothing.
-7. The Inside is the GameBoard, where no one measures; the Outside is
-the detectors and their clicks, the only thing claimed to represent
-nature.
+1. The world is Nodes and Events. Space is the GameBoard; an Event is a wall
+crossed by a remainder at a Node: a level stepped, a count moved, a click;
+nothing else happens.
+2. A Node holds bounded local information: its NodeState, fixed in size,
+read from itself and its six neighbours; no read beyond them, no list that
+grows with the world, nothing of the past kept. Every physical update uses
+its own record and the six causally available neighbours with fixed work and
+storage for a fixed set of families (LOCALITY-1); a self-field estimated or
+subtracted from anything global is forbidden, whatever the size of its final
+answer.
+3. Consistency is local and causal: an Event first changes its own Node and
+travels Link by Link, one Link per interval, each Node updating on receipt
+under the same rule. The one exception is the click: a record ends at once,
+whole, at the detector.
+4. The causal speed is one Link per interval, built in; every other speed is
+a rational, a count of Links over a count of intervals.
+5. Every physical calculation is on bounded integers; there is no float, no
+root and no draw in the law; a Node keeps only the law's own numbers: each
+record's two levels and its remainder, the family's pair and the Node clock
+from the content there.
+6. A measurement is a detector's click, an action of the law on the state:
+the record ends at the detector and the detector's own record changes. Only
+a click is compared with nature or pinned as an expectation; displays and
+the host's readings read state and write nothing.
+7. The Inside is the GameBoard, where no one measures; the Outside is the
+detectors and their clicks, the only thing claimed to represent nature.
 
 ### The constants
 
@@ -698,8 +699,7 @@ path's length within the well's reach.
 e advances 6 pi U_p per orbit with U_p the potential at a (1 - e^2).
 (e) THE MOVING CLOCK: a body at velocity v has its tick lengthened by
 the dispersion's factor, 0.8146 against 1 / gamma = 0.8165 (gamma the
-Lorentz factor) at k =
-0.18556 per Link, the GameBoard's own term inside the rows' bands.
+Lorentz factor) at k = 0.18556 per Link, the GameBoard's own term inside the rows' bands.
 (f) THE CHARGE: like signs a hill, unlike a hollow; a reader of charge q
 reads + q Lambda d in its pace and - q Lambda (**n** . **A**) div W on
 its vector part, so like charges moving together repel less.

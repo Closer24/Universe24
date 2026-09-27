@@ -1,11 +1,4 @@
-"""THE TRANSPORT AND THE SECOND LEVEL (ALGEBRA.md 9.81 (2), 9.82 (3), 9.91 (1), (6), 9.96 (2);
-the one stroke of record 2106, commit 4; BUILD.md section 26 item 64): the twist table's
-triples are exact and the nearest; the loader writes every record's twist "own" and the given
-light's component from the body's moment; a vector part on a slab rotates a matter record's
-arriving pair on the Ports with the remainders kept, writes its second level, and one interval
-back restores everything; the Ports along a record's own component book nothing of it; with
-every vector part zero the step is the plain path bit for bit; the refusals by name. HOST; no
-pin."""
+"""The transport and the second level (ALGEBRA.md #the-transport, #the-second-level): the twist table's triples are exact, a vector part rotates a record's arriving pair on the Ports with the remainders kept and one interval back restores it, and with every vector part zero the step is the plain path bit for bit. HOST; no pin."""
 
 from __future__ import annotations
 
@@ -57,7 +50,7 @@ def twisted_world() -> dict:
 
 
 def composed(k: int, rows: dict) -> tuple[int, int, int]:
-    """The transport's triple of k from the two tables, by hand (9.96 (2) (c))."""
+    """The transport's triple of k from the two tables, by hand (ALGEBRA.md #the-primitives)."""
     magnitude = abs(k)
     c0, s0, d0 = rows["fine"][magnitude & ((1 << TWIST_FINE_BITS) - 1)]
     c1, s1, d1 = rows["coarse"][magnitude >> TWIST_FINE_BITS]
@@ -89,7 +82,7 @@ def test_the_loader_writes_the_twist_own_and_the_given_lights_component():
     # the body's own record turns at its mode's rotation, 2 cos omega = a / b
     a, b = body.clock if body.clock is not None else (0, 1)
     assert body.twist == rotation_twist(a, 2 * b) == round(65536 * math.acos(a / (2 * b)))
-    # the window's light turns at the emitter's rotation (9.85 (5)); its component along z
+    # the window's light turns at the emitter's rotation (ALGEBRA.md #the-primitives); its component along z
     assert body.emitter.twist == body.twist and body.emitter.part == 3
     clock = json.loads((ROOT / "examples/events/massive_record/light_clock.json").read_text())
     beam = parse_nature_beam_world(clock).measured[0].block
@@ -177,7 +170,7 @@ def test_with_every_vector_part_zero_the_step_is_the_plain_path_bit_for_bit():
 
 def test_the_ports_along_a_records_own_component_book_nothing_of_it():
     """A record in the vector component z (part 3) is booked through the x and y Ports of a
-    set alone (9.82 (3) (b), (c)); the same levels as a time part are booked through all."""
+    set alone (ALGEBRA.md #the-second-level); the same levels as a time part are booked through all."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(twisted_world()))
     charge = [family.name for family in simulation.families].index("charge")
     assert simulation.families[charge].parts == (1, 3)

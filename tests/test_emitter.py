@@ -1,4 +1,4 @@
-"""The emitter as a clicking body (ALGEBRA.md 9.17 (4)): its excited records click in turn at their own
+"""The emitter as a clicking body (ALGEBRA.md #the-click): its excited records click in turn at their own
 rungs, each click giving one photon written once at both levels, the stock falling by one each time."""
 
 from __future__ import annotations
@@ -12,18 +12,17 @@ import pytest
 
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.features.send import send
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import run
 from tests.worlds import NODE_CLOCK, emitter_world, lawful_wheel
 
 
 def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
-    """A record's conserved form under the Node's own pace (ALGEBRA.md 9.50 (9) and (13);
-    BUILD.md section 26 item 36) from its two levels and the family of clicks' levels
-    `content` (the engine's array when None), in the engine's units (the scale 3 L, L the
-    numerators' lcm): [3 L (den / num) Gamma (a^2 + b^2) - 6 L (den / num) c_i a b] / p_i at
-    the Nodes, p_i = Gamma - c_i the pace, and L (a_i b_j + a_j b_i) on the Links, plain; an
-    exact rational over the six reads (the pace at both ends of a Link, item 34, HISTORY)."""
+    """A record's conserved form under the Node's own pace (ALGEBRA.md #the-direction) from its two levels and
+    the clicks' levels `content` (the engine's array when None), in the engine's units (the scale 3 L, L the
+    numerators' lcm): [3 L (den / num) Gamma (a^2 + b^2) - 6 L (den / num) c_i a b] / p_i at the Nodes,
+    p_i = Gamma - c_i, and L (a_i b_j + a_j b_i) on the Links; an exact rational over the six reads."""
     gamma = simulation.node_clock
     levels = simulation.level_of("content") if content is None else content
     num = simulation.kind_num[family].astype(object)
@@ -31,7 +30,7 @@ def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
     wall = simulation.kind_wall(family)
     a = now.astype(object)
     b = before.astype(object)
-    read = simulation._neighbours(before, simulation.kind_wrap[family]).astype(object)
+    read = send(simulation.ports, before, simulation.kind_wrap[family]).astype(object)
     (read_coefficient, _, _), self_coefficient, wall_at = coefficients(
         num, den, gamma, levels.astype(object)
     )
@@ -48,7 +47,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     lines, simulation, trace = run(document)
     givings = [line for line in lines if line["event"] == "giving"]
     assert len(givings) == 4
-    # the residue from the law (ALGEBRA.md 9.22 (4)) under the Node clock (9.35
+    # the residue from the law (ALGEBRA.md #a-familys-declaration) under the Node clock (9.35
     # (2), (3); BUILD.md section 26 item 31): u the clicking record's remainder
     # at the giving Node in the remainder's step, W = 3 den f / gcd(Gamma num,
     # 6 den M, 3 den f) at that Node with the body's content M (2403 on [800,
@@ -56,21 +55,21 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     # from the rule (`lawful_wheel`); read on the board below
     assert all(lawful_wheel(simulation.world, line) for line in givings)
     # the level at the body: its one own quantum beside the stock held, 5, 4, 3, 2 (the
-    # stock as the given family's content, ALGEBRA.md 9.51 (8); item 47)
+    # stock as the given family's content, ALGEBRA.md #the-paces; item 47)
     assert [line["content"] for line in givings] == [5, 4, 3, 2]
     assert [line["node_clock"] for line in givings] == [
         [NODE_CLOCK - m, NODE_CLOCK] for m in (5, 4, 3, 2)
     ]
     assert [line["excitation"] for line in givings] == [1, 2, 3, 4]
     ticks = [line["tick"] for line in givings]
-    # the first residue is read after the body's first advance (9.19 (4e), 9.43 (4); 0 on
-    # the seed itself), the tick ceil((2 u + 1) P / (2 W)) intervals after it (9.44 (5) (c))
+    # the first residue is read after the body's first advance (ALGEBRA.md #rule3, #the-ladder; 0 on
+    # the seed itself), the tick ceil((2 u + 1) P / (2 W)) intervals after it (ALGEBRA.md #the-ladder)
     assert ticks == sorted(ticks) and ticks[0] >= 2 and ticks[-1] < document["ticks"]
     norm = givings[0]["excitation_norm"]
     assert norm > 0 and all(line["excitation_norm"] == norm for line in givings)
     # the norm T: one period's action P e_c, the share of the record's
     # conserved form at the body's centre Node summed over one period of its
-    # mode advanced alone (ALGEBRA.md 9.17 (7) (e) and (f), 9.19 (3)), the
+    # mode advanced alone (ALGEBRA.md #the-click and (f), ALGEBRA.md #rule3), the
     # generator's integers `period` and `norm`, read on the board here (a
     # GameBoard reading, a diagnostic and not a measurement): the body alone
     # (the same world, its emitter and its screen removed), the share at the
@@ -95,7 +94,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
         solitary.step()
         assert body.own is not None
         action += Fraction(*solitary.form_share(body.own, centre))
-    # the file's norm in the body's own units (9.57 (1); item 44): the action's numerator, its
+    # the file's norm in the body's own units (ALGEBRA.md #the-line; item 44): the action's numerator, its
     # denominator a divisor of the rule's coefficient on the six reads at the centre, R = 2 p^2
     # num with the pace Gamma - stock at the solitary body's centre
     pace = solitary.node_clock_pair((21, 0, 0), body.family)[0]
@@ -104,7 +103,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     assert pace == NODE_CLOCK - 5 and action.numerator == norm  # one own quantum and the stock 4
     assert read_coefficient % action.denominator == 0
     by_tick = {entry["tick"]: entry for entry in trace}
-    # THE TICK AS A COUNT OF INTERVALS (ALGEBRA.md 9.44 (5) (c), 9.47 (5) (i); BUILD.md
+    # THE TICK AS A COUNT OF INTERVALS (ALGEBRA.md #the-ladder, #the-postulates; BUILD.md
     # section 26 item 33): the residue u read at the previous click (after the first
     # advance for the first, interval 1) times the click at the first count t with 2 W t >=
     # (2 u + 1) P, so each giving falls EXACTLY ceil((2 u + 1) P / (2 W)) intervals after
@@ -128,7 +127,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
         previous = (line["u"], line["W"])
         # the residue read at the first shell Node, the body's corner at x = 5
         assert line["read_node"] == [5, 0, 0]
-        # THE BODY'S OWN RECORD CONTINUES (9.43 (3)): the same record, the body's
+        # THE BODY'S OWN RECORD CONTINUES (ALGEBRA.md #the-ladder): the same record, the body's
         # identity, before and after every giving; the line's residue on it after the click
         entry = by_tick[line["tick"]]
         assert entry["excited_before"] is not None
@@ -150,7 +149,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
         # a little before it; the rung crossed on the passage
         assert gather["click"] >= gather["giving"] + 50
         assert gather["click"] == gather["tick"] and gather["record"] not in simulation.records
-    # THE RESIDUES SPREAD: the body's own record continues (ALGEBRA.md 9.43 (3)) and its
+    # THE RESIDUES SPREAD: the body's own record continues (ALGEBRA.md #the-ladder) and its
     # remainder at the first shell Node moves between givings with no coupling, no draw
     # and no reseed (the kept remainder through a reseed, item 29, HISTORY)
     assert len({line["u"] for line in givings}) > 1
@@ -160,8 +159,8 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
 
 
 def test_the_bodys_own_record_is_never_rewritten_and_the_residue_is_read_at_the_first_shell_node():
-    """THE RESEED RETIRED (ALGEBRA.md 9.43 (3) and (4); the residue at the click at the first
-    shell Node, 9.44 (5) (c); BUILD.md section 26 item 33): the giving end sets the given rows,
+    """THE RESEED RETIRED (ALGEBRA.md #the-ladder and (4); the residue at the click at the first
+    shell Node, ALGEBRA.md #the-ladder; BUILD.md section 26 item 33): the giving end sets the given rows,
     lowers the stock and the content, and leaves the body's own record as it is: at every one
     of the four givings the own record is the same object with its levels and remainders bit
     for bit as before the click, and it goes on advancing after the stock is spent (its levels
@@ -217,7 +216,7 @@ def test_the_bodys_own_record_is_never_rewritten_and_the_residue_is_read_at_the_
 
 
 def test_the_given_record_is_written_once_and_the_law_advances_it():
-    """THE WINDOW'S GIVING (ALGEBRA.md 9.71 (1), 9.85 (5); the one stroke's commit 7, the train
+    """THE WINDOW'S GIVING (ALGEBRA.md #the-primitives; the one stroke's commit 7, the train
     retired): at the open the given record exists with its window open and nothing written
     yet (the writes come with the record's own steps: the body's rotation at its 32 Nodes
     times the weight 3, zero elsewhere), no giving line yet (the line is named at the close),
@@ -270,7 +269,7 @@ def test_the_given_record_is_written_once_and_the_law_advances_it():
         # nothing reaches Manhattan distance m before age m (the causal bound)
         assert low >= 5 - age and high <= 36 + age
     # no drive and no take after the write (the take retired, ALGEBRA.md
-    # 9.19 (3)): the ledger's retired row stays 0
+    # ALGEBRA.md #rule3): the ledger's retired row stays 0
     assert simulation.books()["families"]["light"]["transit"]["taken_by_emitter"] == 0
 
 
@@ -290,7 +289,7 @@ def test_the_loaders_refusals_name_their_keys():
 
         return mutate
 
-    # a body gives its own family from its `stock` (ALGEBRA.md 9.96 (5); commit 6): the
+    # a body gives its own family from its `stock` (ALGEBRA.md #the-primitives; commit 6): the
     # emitter of the body's own family without one is refused naming the stock
     def own_family(document):
         document["measured"][0]["emitter"]["family"] = "matter"
@@ -298,7 +297,7 @@ def test_the_loaders_refusals_name_their_keys():
 
     refused(own_family, "stock is required")
     refused(emitter("family", "nobody"), "no family of the universe")
-    # the retired keys of the declared residue (ALGEBRA.md 9.22 (4)), each
+    # the retired keys of the declared residue (ALGEBRA.md #a-familys-declaration), each
     # refused by name with its successor
     refused(emitter("wheel", [1, 4]), "emitter has unknown keys: wheel")
     refused(emitter("residue_order", "ordinal"), "emitter has unknown keys: residue_order")
@@ -312,7 +311,7 @@ def test_the_loaders_refusals_name_their_keys():
 
     refused(coupled, "has unknown keys: coupling")
 
-    # the richness of the giving Node (9.22 (4)): a pair with fewer than 500
+    # the richness of the giving Node (ALGEBRA.md #a-familys-declaration): a pair with fewer than 500
     # remainder values refuses the emitter naming the count
     def poor_well(document):
         document["measured"][0]["pair"] = [800, 800]
@@ -343,10 +342,10 @@ def test_the_loaders_refusals_name_their_keys():
 
     refused(no_held_stock, "lacks keys: stocks")  # item 57: no default
 
-    # the generator's integers (ALGEBRA.md 9.17 (5) item 1): a norm the
+    # the generator's integers (ALGEBRA.md #the-click): a norm the
     # emitter does not declare refuses the simulation at its first
     # excitation; a `given` profile of the wrong count, or one that writes no
-    # motion, refuses the loader (9.17 (5) item 3)
+    # motion, refuses the loader (ALGEBRA.md #the-click)
     def no_norm(document):
         document["measured"][0]["emitter"]["period"] = 70
         document["measured"][0]["emitter"]["norm"] = 1000
@@ -356,7 +355,7 @@ def test_the_loaders_refusals_name_their_keys():
     # the mathematician's gate item 8: a body that givings declares its seed
     # as its composed mode's profile; a flat scalar seed is refused
     refused(lambda document: None, "seed. as its composed mode's profile")
-    # THE GIVEN TRAIN RETIRED (commit 7; ALGEBRA.md 9.85 (5), 9.71 (1)): its keys `train` and
+    # THE GIVEN TRAIN RETIRED (commit 7; ALGEBRA.md #the-primitives): its keys `train` and
     # `given` are refused by name with their successor, the window; the window's integers
     # are required on every emitter: the weight g from 1, the action's denominator
     refused(

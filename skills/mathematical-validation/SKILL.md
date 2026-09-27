@@ -79,8 +79,8 @@ reviewer and to the owner.
 The owner's word (translated): "All of the above is defined in one
 specification file of the lab tools. The mathematician can write the design
 of everything; Nature just checks all of it and talks with him." The
-mathematician writes `docs/designs/lab_tools/LAB_TOOLS.md`, one section per
-lab tool: what it is and what nature gives it, its declared properties and
+mathematician writes the lab tools' specification in `docs/ALGEBRA.md`, one
+section per lab tool: what it is and what nature gives it, its declared properties and
 orientation, its action on every kind of input, its timing, its cost, the
 engine lines it needs with their three tests, and its unit tests' exact
 values. Nature24, the physicist and the only writer of code, checks each
@@ -98,7 +98,7 @@ G_48 fixes, performing one group action on the records that pass its
 Nodes. The integers written on the board are computed from the algebra,
 as a body's seed is, and checked at load. A consequence (a state, a
 cause, a length, a form) is derived with its proof and never put to the
-owner as a choice. LAB_TOOLS.md cites the section for the engine lines and
+owner as a choice. Each tool's section cites the engine lines and
 the tests.
 
 ## Every head of the engine is gated against the algebra, line by line (the owner, 2026-09-25 and 2026-09-26, records 1940, 2129, 2135 and 2137)

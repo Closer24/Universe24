@@ -1,4 +1,4 @@
-"""Rule3 in one place: one function steps every record at every Node in either direction, w a_next + r' = SUM_a R_a (arr_a+ + arr_a-) + S a_now - w a_before + r with the remainder kept in [0, w); the carried division, its division act with the remainder kept between intervals; the form's Node term and the integers of the paces beside it (ALGEBRA.md 9.57 (1), 9.50 (8), (9), (13), 9.91 (2), (3))."""
+"""Rule3 in one place: one function steps every record at every Node in either direction, w a_next + r' = SUM_a R_a (arr_a+ + arr_a-) + S a_now - w a_before + r with the remainder kept in [0, w); the carried division, its division act with the remainder kept between intervals; the form's Node term and the integers of the paces beside it (ALGEBRA.md #the-line, #the-direction, #the-interval)."""
 
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ def coefficients(
     axis_contents: tuple[Any, ...] = ISOTROPIC,
     weak_field: bool = True,
 ) -> tuple[Reads, Any, Any]:
-    """The rule's integers at a Node from the paces, ((R_x, R_y, R_z), S, w); the isotropic rule at the axis contents zero, the plain first-order rule with weak_field False (ALGEBRA.md 9.57 (1), 9.91 (2), 9.50 (13))."""
+    """The rule's integers at a Node from the paces, ((R_x, R_y, R_z), S, w); the isotropic rule at the axis contents zero, the plain first-order rule with weak_field False (ALGEBRA.md #the-line, #the-interval, #the-direction)."""
     pace = gamma - content
     if not weak_field:
         read = pace * num
@@ -50,7 +50,7 @@ def rule3(
     carry: Any,
     direction: int = 1,
 ) -> tuple[Any, Any]:
-    """One interval of Rule3 in `direction` sigma: u = sigma (SUM_a R_a arr_a + S a_now - w other) + carry, z = sigma (u div w), carry' = u mod w; +1 from (a_now, a_before, r) to (a_next, r'), -1 from (a_now, a_next, r') back to (a_before, r) (ALGEBRA.md 9.57 (1), 9.50 (8), (9))."""
+    """One interval of Rule3 in `direction` sigma: u = sigma (SUM_a R_a arr_a + S a_now - w other) + carry, z = sigma (u div w), carry' = u mod w; +1 from (a_now, a_before, r) to (a_next, r'), -1 from (a_now, a_next, r') back to (a_before, r) (ALGEBRA.md #the-line, #the-direction)."""
     total = reads[0] * arrivals[0]
     total += reads[1] * arrivals[1]
     total += reads[2] * arrivals[2]
@@ -76,12 +76,12 @@ SPAN = len(LEVELS)  # the span of a step on two levels, two intervals: derived f
 
 
 def division_forward(numerator: int, wall: int, carry: int) -> tuple[int, int]:
-    """Rule3's division act forward: (numerator + carry) div wall and the remainder, the line with no read and the numerator as the self coefficient on the level 1 (ALGEBRA.md 9.91 (3))."""
+    """Rule3's division act forward: (numerator + carry) div wall and the remainder, the line with no read and the numerator as the self coefficient on the level 1 (ALGEBRA.md #the-interval)."""
     return rule3(NO_READ, NO_READ, numerator, wall, 1, 0, carry, 1)
 
 
 def division_back(numerator: int, wall: int, value: int, carry: int) -> tuple[int, int]:
-    """The carried division one interval back by Rule3's direction -1: the carry before from (value, carry), then the value before from that carry as the ceiling form, exact while the carry stays below the wall (ALGEBRA.md 9.50 (8), 9.91 (3))."""
+    """The carried division one interval back by Rule3's direction -1: the carry before from (value, carry), then the value before from that carry as the ceiling form, exact while the carry stays below the wall (ALGEBRA.md #the-direction, #the-interval)."""
     _, carry_before = rule3(NO_READ, NO_READ, numerator, wall, 1, value, carry, -1)
     value_before, _ = rule3(NO_READ, NO_READ, numerator, wall, 1, 0, carry_before, -1)
     return value_before, carry_before
@@ -90,7 +90,7 @@ def division_back(numerator: int, wall: int, value: int, carry: int) -> tuple[in
 def carried(
     act: str, key: Key, numerator: int, wall: int, values: dict[Key, int], carries: dict[Key, int]
 ) -> tuple[int, int]:
-    """One carried division by its act on the body's remainders: forward the value of this interval and the last one's (the first value twice at the load), back the state stepped back with the value before it, a rewrite the standing value twice (ALGEBRA.md 9.91 (3))."""
+    """One carried division by its act on the body's remainders: forward the value of this interval and the last one's (the first value twice at the load), back the state stepped back with the value before it, a rewrite the standing value twice (ALGEBRA.md #the-interval)."""
     if act == THE_INVERSE:
         value, carry = division_back(numerator, wall, values.get(key, 0), carries.get(key, 0))
         values[key], carries[key] = value, carry
@@ -106,14 +106,14 @@ def carried(
 
 
 def form_term(self_coefficient: Any, wall: Any, now: Any, before: Any) -> Any:
-    """The conserved form's term at one Node from the rule's integers, w (now^2 + before^2) - S now before (ALGEBRA.md 9.57 (1); BUILD.md section 26 items 36 and 44)."""
+    """The conserved form's term at one Node from the rule's integers, w (now^2 + before^2) - S now before (ALGEBRA.md #the-line; BUILD.md section 26 items 36 and 44)."""
     return wall * (now * now + before * before) - self_coefficient * now * before
 
 
 def rule_total_bound(
     num: int, den: int, gamma: int, content: int, amplitude: int, weak_field: bool
 ) -> int:
-    """The largest total the rule reaches at a Node whose reads and levels stand at the amplitude bound A, 6 A R + A |S| + w (A + 1); below 2^63 or the world is refused (ALGEBRA.md 9.57 (2), 9.61 (3))."""
+    """The largest total the rule reaches at a Node whose reads and levels stand at the amplitude bound A, 6 A R + A |S| + w (A + 1); below 2^63 or the world is refused (ALGEBRA.md #the-line, #the-rows-against-nature)."""
     reads, self_coefficient, wall = coefficients(num, den, gamma, content, ISOTROPIC, weak_field)
     return int(
         6 * amplitude * abs(reads[0]) + amplitude * abs(self_coefficient) + wall * (amplitude + 1)
@@ -121,7 +121,7 @@ def rule_total_bound(
 
 
 def rungs(weights: list[tuple[int, int]], steps: int) -> tuple[list[int], tuple[int, int]]:
-    """The ladder's rungs b_k = (2 W C_k + Total) div (2 Total) from the cells' weights as pairs, and the total as the reduced pair (ALGEBRA.md 9.25 (2))."""
+    """The ladder's rungs b_k = (2 W C_k + Total) div (2 Total) from the cells' weights as pairs, and the total as the reduced pair (ALGEBRA.md #the-ladder)."""
     denominator = 1
     for _, m in weights:
         denominator = denominator * m // bounded_gcd(denominator, m)  # the least common multiple

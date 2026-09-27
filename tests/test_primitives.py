@@ -49,7 +49,7 @@ def test_a_plane_rotation_keeps_the_norm_before_the_division_and_inverts_exactly
         assert rotated[0] * 5 + after[0] == exact_re + remainders[0]
         assert rotated[1] * 5 + after[1] == exact_im + remainders[1]
         back, before = P.rotate_plane_inverse(levels, triple, after)
-        assert back == rotated and before == remainders  # 9.81 (2) (d)
+        assert back == rotated and before == remainders  # ALGEBRA.md #the-transport
     # the quaternion's block, the same identities with four remainders
     quadruple = (1, 2, 2, 4, 5)
     block = (11, -7, 5, 3)
@@ -198,7 +198,7 @@ def test_the_hosts_table_generator_writes_exact_triples_within_their_angles():
     assert table.fine[0] == (1, 0, 1) and table.coarse[0] == (1, 0, 1)
     assert max(t[2] for t in table.fine + table.coarse) <= tool.DENOMINATOR_BOUND
     assert table.bound == 4 * P.FINE_SIZE - 1
-    # the unit: 1 / (4 Gamma 2^16) radians per unit of k (9.96 (2) (a))
+    # the unit: 1 / (4 Gamma 2^16) radians per unit of k (ALGEBRA.md #the-primitives)
     assert tool.theta_unit() == 1.0 / (4 * 10_000 * 65536)
     # THE FINDING (the tool's docstring): the asked precision theta_unit / 2^10 cannot be met
     # with d at most 10^9; every fine angle lies below the floor and its triple is the identity's

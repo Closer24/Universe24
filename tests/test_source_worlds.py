@@ -1,4 +1,4 @@
-"""THE RUN FILES OF THE SOURCE VERB (record 2217; ALGEBRA.md 9.108 items 11 and 13, 9.116 item 4b):
+"""THE RUN FILES OF THE SOURCE VERB (record 2217; ALGEBRA.md #the-paces.116 item 4b):
 examples/events/source/ holds two worlds and the fragment universe_entries.json with `sourced` and
 `readings` as the ledger names them; the load waits on the loop. No pin; HOST counts alone."""
 
@@ -167,8 +167,8 @@ def test_every_shipped_world_is_the_generators_and_carries_no_pin():
 
 
 def test_the_record_count_and_the_table_are_the_algebras_integers():
-    """D_i = p_i^2 (2 b - a) div b at the seed's symmetric point (9.108 item 13 with the clock
-    [a, b]); s_i = D_i div E_s; the table s_cap D_i div (s_cap E_s + D_i) (9.108 item 3)."""
+    """D_i = p_i^2 (2 b - a) div b at the seed's symmetric point (ALGEBRA.md #the-paces with the clock
+    [a, b]); s_i = D_i div E_s; the table s_cap D_i div (s_cap E_s + D_i) (ALGEBRA.md #the-paces)."""
     import numpy as np
 
     module = generator()
@@ -186,8 +186,9 @@ def test_the_record_count_and_the_table_are_the_algebras_integers():
 
 @pytest.mark.xfail(
     strict=True,
-    reason="the loader reads `readings`, reads no `sourced` and requires the residue keys "
-    "K, N, release (record 2199 items 2 and 3; the ledger's source row); LAWFUL when they land",
+    reason="the loader requires the old form's world keys N, age_bound, body_record, clock_stamp "
+    "and massive_record, which the loop still reads (Main Loop's next piece on #1198, #1194's "
+    "b-marks); the mark comes off when those reads go",
 )
 @pytest.mark.parametrize("name", NAMES)
 def test_the_source_worlds_load_lawful(name):

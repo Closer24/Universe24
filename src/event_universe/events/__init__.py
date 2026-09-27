@@ -1,5 +1,4 @@
-"""The engine's package (one engine, no law's name and no version, ALGEBRA.md
-9.90 (1)): the world parser and the engine module `detector_law`. The lazy
+"""The engine's package (one engine, no law's name and no version, ALGEBRA.md #the-primitives): the world parser and the engine module `detector_law`. The lazy
 exports of the ray law's engine (`Measured`, `NatureBeamSimulation` of
 `engine.py`) are CANCELLED (docs/CANCELLED_WORLDS.md section 9)."""
 

@@ -1,16 +1,4 @@
-"""The property test of the board (ALGEBRA.md 9.20 (B), the mathematician's six properties of
-the one map S, ADOPTED with record 1875; the gate of every step of the cleanup, 9.21 (3)):
-on the small world of 9.20 (a cube of 12 x 12 x 12 periodic on every axis; light [77, 25] and
-the massive family [800, 809]; one well of side 2 at the vertex (3, 4, 5) with the pair
-[800, 801] seeded on its composed mode; one light record given on the Node (8, 2, 7) with both
-labels and the wheel 8; one receiver, the cube of side 3 at (9, 9, 2), on the record's ladder; 60
-intervals): (1) equivariance under the 48; (2) translation on the torus; (3) conservation of
-the content and of the form I between clicks; (4) reversibility except the click, by 8.8's
-inverse; (5) locality; (6) only the click reads. Every comparison is bit for bit on the
-engine's integers unless the expected value says otherwise; a failure is an engine defect,
-never a change of the law. The record is planted as its giving would write it (the pair on the
-circle of 2 N, 9.17 (6)); its labels are one row (the label rows of a rank-2 record are the
-crystal's, held)."""
+"""The GameBoard's six properties on a small periodic world (a well, one light record, one receiver, 60 intervals): equivariance under the 48, translation, conservation of the content and the form between clicks, reversibility except the click, locality, and only the click reads; bit for bit on the engine's integers."""
 
 from __future__ import annotations
 
@@ -30,7 +18,7 @@ from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import exchange_of, form_I
 from tests.worlds import CHARGE_FAMILY, CLOCK_FAMILY, NODE_CLOCK, family_entry, massive_generator, reads
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
@@ -128,7 +116,7 @@ def small_world(
 
 
 def given_levels(simulation: DetectorLawSimulation) -> tuple[int, int]:
-    """The giving's pair on the circle of 2 N (9.17 (6)) for light's clock [77, 25] on N = 64:
+    """The giving's pair on the circle of 2 N (ALGEBRA.md #the-click) for light's clock [77, 25] on N = 64:
     the generator's integer (a host computation; no table in the engine), now = round(A sin(pi
     n / (d N))), the character half a step either side of its zero, before = -now."""
     _ = simulation
@@ -195,7 +183,7 @@ def run(
     """The small world run: the well's own record from interval 0, the light record planted at
     interval 0; the states after every interval and the click lines; with `contents` given,
     the Node clock's content array as the engine holds it after every interval (the array
-    the interval's advances used, ALGEBRA.md 9.35 (3))."""
+    the interval's advances used, ALGEBRA.md #the-paces)."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     plant(simulation, giving, u, rows=rows)
@@ -319,8 +307,7 @@ def test_translation_on_the_torus():
 def test_conservation_between_clicks():
     """(a) the content per family constant before the click and down by one quantum of light
     at it; (b) per record, I(t) - I(t - 1) is the remainder term of 8.2 over the step, exactly,
-    both forms with the Node clock's content in force for that step (ALGEBRA.md 9.35 (2),
-    (3); BUILD.md section 26 item 31: the well's Nodes at M = 1 until the click at the set
+    both forms with the Node clock's content in force for that step (ALGEBRA.md #the-paces; BUILD.md section 26 item 31: the well's Nodes at M = 1 until the click at the set
     bound to the well hands it the light quantum, M = 2 after; the form changes with the
     content at the event and the identity holds step by step across it)."""
     document = small_world()
@@ -338,8 +325,8 @@ def test_conservation_between_clicks():
             assert light not in state
     # (b) the form I with the remainder identity, per record, exact, step by step with the
     # family of clicks' level in force for the step (`contents[t - 1]`, the level as interval t
-    # began: the clock steps last in the interval, ALGEBRA.md 9.45 (2)), and THE EXCHANGE WITH
-    # A MOVING CLOCK (9.45 (5); under the fixed wall, item 34): between the steps the form
+    # began: the clock steps last in the interval, ALGEBRA.md #the-counts-line), and THE EXCHANGE WITH
+    # A MOVING CLOCK (ALGEBRA.md #the-counts-line; under the fixed wall, item 34): between the steps the form
     # with the new level differs from the form with the old by the weights' change, exactly
     # (at the well's Nodes the level is held, 1 until the click's quantum enters as interval
     # click_tick ends, 2 after; elsewhere the family's waves move it)
@@ -359,7 +346,7 @@ def test_conservation_between_clicks():
             value = form_I(simulation, family, now, before, contents[t - 1])
             previous = form_I(simulation, family, prev_now, prev_before, contents[t - 1])
             # the remainder term of 8.2 over the step t - 1 -> t under the weak-field rule
-            # (9.57 (1); item 44): (a_next - a_before) (r - r') / (3 R_i) per Node, R_i the
+            # (ALGEBRA.md #the-line; item 44): (a_next - a_before) (r - r') / (3 R_i) per Node, R_i the
             # rule's coefficient on the six reads at the Node's level in force for the step
             (read_coefficient, _, _), _self, _wall = coefficients(
                 num.astype(object),
@@ -385,7 +372,7 @@ def test_conservation_between_clicks():
             assert moved - value == exchange, (identity, t)
             exchanges += exchange != 0
             if identity == 0 and t == click_tick:
-                # THE EVENT (ALGEBRA.md 9.35 (3), 9.45 (2)): the click's quantum enters the
+                # THE EVENT (ALGEBRA.md #the-paces, #the-counts-line): the click's quantum enters the
                 # well's Nodes as this interval ends (its level 1 -> 2 there, one unit), the
                 # well's own weights moving with it (inside the exchange read above)
                 assert np.all(contents[t][well] - contents[t - 1][well] == 1)
@@ -395,7 +382,7 @@ def test_conservation_between_clicks():
 
 def test_reversibility_except_the_click():
     """8.8's inverse UNDER THE FIXED WALL (the model owner's record 1994 and his word of
-    2026-09-25; ALGEBRA.md 9.41 (2), 9.45 (2); BUILD.md section 26 item 34): (a) the joint
+    2026-09-25; ALGEBRA.md #the-counts-line; BUILD.md section 26 item 34): (a) the joint
     step inverts BIT FOR BIT, remainders and the family of clicks' own field included, over
     the whole run with no receiver named, though the family's level falls at Nodes as its
     waves pass (the falls counted, above 0): the wall 3 den Gamma is the same at every

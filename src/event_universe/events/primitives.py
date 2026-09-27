@@ -1,13 +1,13 @@
-"""THE PRIMITIVES OF THE FREEZE, none naming a force (ALGEBRA.md 9.88 (7); the Boss's records
+"""THE PRIMITIVES OF THE FREEZE, none naming a force (ALGEBRA.md #what-is-open; the Boss's records
 2131 and 2133 (3) of 2026-09-26): (i) THE INTERNAL REPRESENTATION of a family, n pairs of
 levels turned together at a Port by generators with exact integer tables, the transport
-composing them with one division and a running remainder per level (9.81 (2), 9.88 (1), the
-coarse and fine table of 9.96 (2) (c)); (iii) THE CLICKS LIST, one taking and several givings
+composing them with one division and a running remainder per level (ALGEBRA.md #the-transport, #what-is-open, the
+coarse and fine table of ALGEBRA.md #the-primitives); (iii) THE CLICKS LIST, one taking and several givings
 with the declared conserved integers checked and the taken momentum shared by the draw from
-the residue on the wheel, whole, the sum exact (9.88 (4)); (iv) THE HELICITY SIGN of a body,
-the sign of its spin against its momentum, read at a click (9.88 (5)). Primitive (ii), the
-self-source polynomial with a structure table (9.88 (2)), waits for the mathematician's line on
-whether it follows from (i) (record 2131; 9.99 (6); 9.101 (4)).
+the residue on the wheel, whole, the sum exact (ALGEBRA.md #what-is-open); (iv) THE HELICITY SIGN of a body,
+the sign of its spin against its momentum, read at a click (ALGEBRA.md #what-is-open). Primitive (ii), the
+self-source polynomial with a structure table (ALGEBRA.md #what-is-open), waits for the mathematician's line on
+whether it follows from (i) (record 2131; ALGEBRA.md #a-familys-declaration, #the-transport).
 
 Integers only: a table's angles are the host's (tools/twist_table.py writes and checks them);
 this module reads the integers and the identities alone. The loader's hooks are `internal()`
@@ -25,12 +25,12 @@ Triple = tuple[int, int, int]
 Quadruple = tuple[int, int, int, int, int]
 Vector = tuple[int, int, int]
 
-FINE_SIZE = 1 << 10  # the fine table's length: k = k_1 x 2^10 + k_0 (ALGEBRA.md 9.96 (2) (c))
+FINE_SIZE = 1 << 10  # the fine table's length: k = k_1 x 2^10 + k_0 (ALGEBRA.md #the-primitives)
 IDENTITY_TRIPLE: Triple = (1, 0, 1)
 IDENTITY_QUADRUPLE: Quadruple = (1, 0, 0, 0, 1)
 
 
-# THE ROTATIONS AS DECLARED INTEGERS (9.81 (2) (b); 9.88 (1))
+# THE ROTATIONS AS DECLARED INTEGERS (ALGEBRA.md #the-transport, #what-is-open)
 
 
 def is_triple(triple: tuple[int, ...]) -> bool:
@@ -43,7 +43,7 @@ def is_triple(triple: tuple[int, ...]) -> bool:
 
 def is_quadruple(quadruple: tuple[int, ...]) -> bool:
     """A Pythagorean quadruple (a, b, c, d, e): a^2 + b^2 + c^2 + d^2 = e^2 exactly, e positive:
-    a unit quaternion times e, the rotation of a pair of complex components (9.88 (1))."""
+    a unit quaternion times e, the rotation of a pair of complex components (ALGEBRA.md #what-is-open)."""
     if len(quadruple) != 5 or any(type(v) is not int for v in quadruple):
         return False
     a, b, c, d, e = quadruple
@@ -52,14 +52,14 @@ def is_quadruple(quadruple: tuple[int, ...]) -> bool:
 
 def compose_triples(first: Triple, second: Triple) -> Triple:
     """The exact product of two rotations: the angles add, the norms multiply
-    (c_1 c_0 - s_1 s_0, s_1 c_0 + c_1 s_0, d_1 d_0) (9.96 (2) (c))."""
+    (c_1 c_0 - s_1 s_0, s_1 c_0 + c_1 s_0, d_1 d_0) (ALGEBRA.md #the-primitives)."""
     c0, s0, d0 = first
     c1, s1, d1 = second
     return (c1 * c0 - s1 * s0, s1 * c0 + c1 * s0, d1 * d0)
 
 
 def mirror_triple(triple: Triple) -> Triple:
-    """The rotation by the opposite angle: k < 0 takes (c, -s, d) (9.81 (2) (b))."""
+    """The rotation by the opposite angle: k < 0 takes (c, -s, d) (ALGEBRA.md #the-transport)."""
     c, s, d = triple
     return (c, -s, d)
 
@@ -71,7 +71,7 @@ def conjugate_quadruple(quadruple: Quadruple) -> Quadruple:
 
 @dataclass(frozen=True)
 class TwistTable:
-    """THE TWIST TABLE IN TWO PARTS (9.96 (2) (c)): the fine triples for the angles k_0
+    """THE TWIST TABLE IN TWO PARTS (ALGEBRA.md #the-primitives): the fine triples for the angles k_0
     theta_unit, k_0 in [0, 2^10), and the coarse triples for the angles k_1 (2^10 theta_unit),
     k_1 in [0, bound]; the triple of k is their exact product, one rotation and one division
     per Port. The unit theta_unit = 1 / (4 Gamma 2^16) radians is the host's; the table holds
@@ -104,7 +104,7 @@ class TwistTable:
         coarse_index, fine_index = divmod(size, FINE_SIZE)
         if coarse_index >= len(self.coarse):
             raise ValueError(
-                f"the twist {k} is beyond the table's bound {self.bound} (ALGEBRA.md 9.96 (2) (c))"
+                f"the twist {k} is beyond the table's bound {self.bound} (ALGEBRA.md #the-primitives)"
             )
         triple = compose_triples(self.fine[fine_index], self.coarse[coarse_index])
         return mirror_triple(triple) if k < 0 else triple
@@ -133,12 +133,12 @@ class QuadrupleTable:
         return conjugate_quadruple(entry) if k < 0 else entry
 
 
-# THE LINK'S ANGLE AND THE ROTATION WITH ITS REMAINDERS (9.81 (2) (a), (c), (d))
+# THE LINK'S ANGLE AND THE ROTATION WITH ITS REMAINDERS (ALGEBRA.md #the-transport)
 
 
 def link_angle(sign: int, by: int, weight: int, here: int, arrived: int) -> int:
     """k_port = sigma x q x w x (A here + A arrived): one integer, the same size from both
-    ends with the opposite sign (9.81 (2) (a))."""
+    ends with the opposite sign (ALGEBRA.md #the-transport)."""
     return sign * by * weight * (here + arrived)
 
 
@@ -146,7 +146,7 @@ def rotate_plane(
     levels: tuple[int, int], triple: Triple, remainders: tuple[int, int]
 ) -> tuple[tuple[int, int], tuple[int, int]]:
     """T d + rho' = c re - s im + rho and s re + c im + rho, 0 <= rho' < d: the rotated pair
-    and the Port's two remainders after (9.81 (2) (c)); the norm of the rotated pair is the
+    and the Port's two remainders after (ALGEBRA.md #the-transport); the norm of the rotated pair is the
     pair's times d^2 before the division, exactly."""
     re, im = levels
     c, s, d = triple
@@ -158,7 +158,7 @@ def rotate_plane(
 def rotate_plane_inverse(
     levels: tuple[int, int], triple: Triple, remainders_after: tuple[int, int]
 ) -> tuple[tuple[int, int], tuple[int, int]]:
-    """The exact inverse per Node (9.81 (2) (d)): from the arrival (a start value, known
+    """The exact inverse per Node (ALGEBRA.md #the-transport): from the arrival (a start value, known
     backward) and the remainders after, the remainders before are the unique values in
     [0, d) with rho = rho' - (c re - s im) mod d, and the rotated pair follows."""
     re, im = levels
@@ -212,7 +212,7 @@ def rotate_quaternion_inverse(
     return (out[0], out[1], out[2], out[3]), (before[0], before[1], before[2], before[3])
 
 
-# THE GENERATORS AND THE INTERNAL REPRESENTATION (9.88 (1))
+# THE GENERATORS AND THE INTERNAL REPRESENTATION (ALGEBRA.md #what-is-open)
 
 
 @dataclass(frozen=True)
@@ -220,7 +220,7 @@ class PlaneGenerator:
     """A one-parameter rotation in one or more planes of real components, all by the same
     triple of the twist table: one plane (re, im) of one pair is the phase of U(1); the two
     planes (re_i, re_j) and (im_i, im_j) together are a rotation between two complex
-    components (the planes of colour's SU(3), 9.88 (1)). Each plane keeps two remainders."""
+    components (the planes of colour's SU(3), ALGEBRA.md #what-is-open). Each plane keeps two remainders."""
 
     planes: tuple[tuple[int, int], ...]
     table: TwistTable
@@ -245,7 +245,7 @@ class PlaneGenerator:
 @dataclass(frozen=True)
 class QuaternionGenerator:
     """A rotation of a pair of complex components, the four real components `block`, by a
-    unit quaternion of the table (weak isospin's SU(2), 9.88 (1)); four remainders."""
+    unit quaternion of the table (weak isospin's SU(2), ALGEBRA.md #what-is-open); four remainders."""
 
     block: tuple[int, int, int, int]
     table: QuadrupleTable
@@ -272,7 +272,7 @@ Generator = PlaneGenerator | QuaternionGenerator
 @dataclass(frozen=True)
 class InternalRepresentation:
     """A family's internal representation: `pairs` complex components (2 pairs real levels) and
-    its generators in the order the transport composes them (9.88 (1)); the Link's field is a
+    its generators in the order the transport composes them (ALGEBRA.md #what-is-open); the Link's field is a
     vector of integers, one angle per generator."""
 
     pairs: int
@@ -305,14 +305,14 @@ class InternalRepresentation:
         self, arrived: tuple[int, ...], angles: tuple[int, ...], remainders: tuple[int, ...]
     ) -> tuple[tuple[int, ...], tuple[int, ...]]:
         """The arrival's levels turned by every generator in sequence, each by its own angle
-        with its own division and remainders (9.88 (1)); returns the transported levels and the
+        with its own division and remainders (ALGEBRA.md #what-is-open); returns the transported levels and the
         remainders after."""
         return self._run(arrived, angles, remainders, inverse=False)
 
     def transport_inverse(
         self, arrived: tuple[int, ...], angles: tuple[int, ...], remainders_after: tuple[int, ...]
     ) -> tuple[tuple[int, ...], tuple[int, ...]]:
-        """The exact inverse (9.81 (2) (d)): from the arrival, known backward, and the
+        """The exact inverse (ALGEBRA.md #the-transport): from the arrival, known backward, and the
         remainders after, the transported levels and the remainders before, generator by
         generator in the forward order (each stage's input is the stage before's output)."""
         return self._run(arrived, angles, remainders_after, inverse=True)
@@ -358,7 +358,7 @@ def internal(obj: dict[str, Any], twist: TwistTable) -> InternalRepresentation:
     """THE LOADER'S HOOK for a family's `internal` object: `{"pairs": n, "generators": [...]}`,
     each generator `{"planes": [[p, q], ...]}` (the twist table's triples) or
     `{"quaternion": [w, x, y, z], "table": [[a, b, c, d, e], ...]}`; every index a level below
-    2 n, every table checked (9.88 (1))."""
+    2 n, every table checked (ALGEBRA.md #what-is-open)."""
     if not isinstance(obj, dict) or set(obj) != {"pairs", "generators"}:
         raise ValueError('internal: an object with the keys "pairs" and "generators"')
     pairs = obj["pairs"]
@@ -388,7 +388,7 @@ def internal(obj: dict[str, Any], twist: TwistTable) -> InternalRepresentation:
     return representation
 
 
-# THE CLICKS LIST (9.88 (4))
+# THE CLICKS LIST (ALGEBRA.md #what-is-open)
 
 
 @dataclass(frozen=True)
@@ -400,9 +400,9 @@ class Giving:
 
 @dataclass(frozen=True)
 class ClicksList:
-    """One taking and several givings: the click loops over the list (9.88 (4)); the
+    """One taking and several givings: the click loops over the list (ALGEBRA.md #what-is-open); the
     conserved integers are checked once, at load; the helicity the click takes or gives,
-    +1, -1 or 0 for none (9.88 (5))."""
+    +1, -1 or 0 for none (ALGEBRA.md #what-is-open)."""
 
     takes: str
     taken_labels: dict[str, int]
@@ -416,7 +416,7 @@ class ClicksList:
             given = sum(giving.count * giving.labels.get(label, 0) for giving in self.givings)
             if given != taken:
                 raise ValueError(
-                    f"clicks: the conserved integer {label!r} is {taken} taken and {given} given; the declared signs do not balance (ALGEBRA.md 9.88 (4))"
+                    f"clicks: the conserved integer {label!r} is {taken} taken and {given} given; the declared signs do not balance (ALGEBRA.md #what-is-open)"
                 )
         for giving in self.givings:
             if giving.count < 1:
@@ -437,7 +437,7 @@ class ClicksList:
 def clicks_list(obj: dict[str, Any]) -> ClicksList:
     """THE LOADER'S HOOK for a family's `clicks` object: `{"takes": {"labels": {...}}, "gives":
     [{"family": name, "count": n, "labels": {...}}, ...], "helicity": -1 | 0 | 1}`; the
-    conserved integers balance or the world is refused (9.88 (4), (5))."""
+    conserved integers balance or the world is refused (ALGEBRA.md #what-is-open)."""
     if (
         not isinstance(obj, dict)
         or not {"takes", "gives"} <= set(obj)
@@ -466,7 +466,7 @@ def clicks_list(obj: dict[str, Any]) -> ClicksList:
 
 
 def share_momenta(total: Vector, products: int, residue: int, wheel: int) -> tuple[Vector, ...]:
-    """THE ONE PRIMITIVE OF 9.88 (4): the taken momentum shared among `products` quanta by the
+    """THE ONE PRIMITIVE OF ALGEBRA.md #what-is-open: the taken momentum shared among `products` quanta by the
     draw from the residue on the wheel, whole, the sum kept exactly. The products - 1 cuts on
     [0, |n_a|] along each axis are the rungs (residue + i W div products) mod W scaled to |n_a|
     by one division each, i = 1 to products - 1, sorted; the shares are the differences,
@@ -486,7 +486,7 @@ def share_momenta(total: Vector, products: int, residue: int, wheel: int) -> tup
     return tuple((share[0], share[1], share[2]) for share in shares)
 
 
-# THE HELICITY SIGN (9.88 (5))
+# THE HELICITY SIGN (ALGEBRA.md #what-is-open)
 
 
 def helicity(spin: Vector, momentum: Vector) -> int:

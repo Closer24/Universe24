@@ -259,7 +259,7 @@ def accurate_mode(world: NatureBeamWorld, number: int) -> tuple[float, np.ndarra
     rule's operator (A's vector times D^-1/2, its largest entry 1). A HOST
     computation of the generator and of the diagnostics, never of the
     engine's run; the loader reads its rounded integers alone and checks
-    them in integers (ALGEBRA.md 9.22 (7)). The three-term recurrence of
+    them in integers (ALGEBRA.md #a-familys-declaration). The three-term recurrence of
     `lanczos` (no reorthogonalisation) gave the mode to about 3 x 10^-4
     relative, hundreds of units at the amplitude 50 x 2^20, which the
     integer check refuses (BUILD.md section 26 item 20)."""
@@ -271,7 +271,7 @@ def accurate_mode(world: NatureBeamWorld, number: int) -> tuple[float, np.ndarra
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
     nodes = body_node_mask(shape, corner, definition.extents, wrap)
-    kind = definition.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+    kind = definition.kind  # the body's rest pair (ALGEBRA.md #the-interval; commit 1)
     ratio = np.where(nodes, definition.pair[1] / definition.pair[0], kind[1] / kind[0])
     scale = 1.0 / np.sqrt(ratio)
     count = int(np.prod(shape))
@@ -300,7 +300,7 @@ def _operator_step(
 ) -> tuple[np.ndarray, np.ndarray]:
     """One step of the board's own operator in the law's integers, 3 den v' =
     num S_6(v) + 6 den v + r with the remainder r carried from step to step
-    (the one copy of the generator's step; ALGEBRA.md 9.22 (7)): returns
+    (the one copy of the generator's step; ALGEBRA.md #a-familys-declaration): returns
     the levels and the remainder after the step. When the levels pass twice the amplitude they are renormalised by an
     exact shift by a power of two, the remainder shifted with them (the
     value v + r / wall halved k times is (v >> k) + ((v mod 2^k) wall + r)
@@ -352,8 +352,7 @@ WORKING_AMPLITUDE = (
 
 
 def clock_denominator(amplitude: int) -> int:
-    """The clock's denominator b for a profile at `amplitude` (ALGEBRA.md 9.22
-    (7)): a power of two at least twice the amplitude and at least 2^20 (so
+    """The clock's denominator b for a profile at `amplitude` (ALGEBRA.md #a-familys-declaration): a power of two at least twice the amplitude and at least 2^20 (so
     that a shallow mode's binding above the band's top is resolved)."""
     return max(1 << (int(amplitude).bit_length() + 1), 1 << 20)
 
@@ -377,7 +376,7 @@ def iterated_mode(
     above the band's top); THE STOP is the first iteration at which the
     scaled profile with that clock passes the loader's own residual bound
     (`mode_residual`: |b num_i (S_6 p)_i - 3 den_i a p_i| <= b (3 num_i + 6
-    den_i) at every Node, ALGEBRA.md 9.22 (7)): the next step changes the
+    den_i) at every Node, ALGEBRA.md #a-familys-declaration): the next step changes the
     board no more than the rounding floor, the board only rotating (a float
     reading of the residual filters the iterations first; the verdict is
     the loader's integer check alone). THE WORKING AMPLITUDE: the
@@ -410,7 +409,7 @@ def iterated_mode(
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
     nodes = body_node_mask(shape, corner, definition.extents, wrap)
-    kind = definition.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+    kind = definition.kind  # the body's rest pair (ALGEBRA.md #the-interval; commit 1)
     num = np.where(nodes, definition.pair[0], kind[0]).astype(np.int64)
     den = np.where(nodes, definition.pair[1], kind[1]).astype(np.int64)
     num_flat = [int(value) for value in num.ravel()]
@@ -479,7 +478,7 @@ def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
     nodes = body_node_mask(shape, corner, definition.extents, wrap)
-    kind = definition.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+    kind = definition.kind  # the body's rest pair (ALGEBRA.md #the-interval; commit 1)
     ratio_out = kind[1] / kind[0]
     ratio_in = definition.pair[1] / definition.pair[0]
     ratio = np.where(nodes, ratio_in, ratio_out)
@@ -540,7 +539,7 @@ def check_margins(world: NatureBeamWorld) -> list[MarginReading]:
             # line (an absorbing block with the kind's own pair, item 6b) takes at
             # its Nodes and carries no mode; the extent has no record to read.
             continue
-        kind = entry.block.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+        kind = entry.block.kind  # the body's rest pair (ALGEBRA.md #the-interval; commit 1)
         if entry.block.pair[0] * kind[1] < entry.block.pair[1] * kind[0]:
             # A barrier (a raised pair, the matter wall of DECLARATIONS.md
             # section 15 M1-6) binds nothing: no mode, no margin.
@@ -587,7 +586,7 @@ def relaxation_time(reading: MarginReading) -> float:
 
 def period_of(reading: MarginReading) -> int:
     """The period P of the body's mode in intervals, the nearest integer to
-    2 pi / omega_b (ALGEBRA.md 9.17 (5) item 1; COMPUTATION from the
+    2 pi / omega_b (ALGEBRA.md #the-click; COMPUTATION from the
     module's own omega_b); at least 1."""
     if reading.omega_b <= 0.0:
         return 1
@@ -595,8 +594,7 @@ def period_of(reading: MarginReading) -> int:
 
 
 def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
-    """The excited record's norm T, one period's action P e_c (ALGEBRA.md
-    9.17 (7) (e) and (f) in the flux's units of 9.19 (3)): the share e_c of
+    """The excited record's norm T, one period's action P e_c (ALGEBRA.md #the-click and (f) in the flux's units of ALGEBRA.md #rule3): the share e_c of
     the record's conserved form at the body's centre Node, summed over
     `period` intervals of its own mode advanced ALONE (the body on its board
     with no other measured event, no set and no emitter, the rule exact on
@@ -628,7 +626,7 @@ def excitation_norm(world: NatureBeamWorld, number: int, period: int) -> int:
         own = block.own
         assert own is not None
         total += Fraction(*simulation.form_share(own, simulation.centre_mask(block)))
-    # THE BODY'S OWN UNITS (ALGEBRA.md 9.57 (1); item 44): the share's denominator at the
+    # THE BODY'S OWN UNITS (ALGEBRA.md #the-line; item 44): the share's denominator at the
     # centre Node is the rule's coefficient on the six reads there, R = 2 p^2 num (the pace p
     # of item 36 under the first-order rule, HISTORY); T is the summed share in those units,
     # the numerator of the exact rational, whole
@@ -639,8 +637,8 @@ def excitation_action(world: NatureBeamWorld, number: int, period: int) -> Fract
     """The excited record's action over one period as the exact rational (the
     Fraction whose numerator `excitation_norm` returns): the summed share of
     the body's own conserved form at its centre Node over `period` intervals
-    advanced alone, in the form's units of ALGEBRA.md 9.19 (3). THE POINT
-    EMITTER (9.71 (1) (d); BUILD.md section 26 item 50) closes its window when
+    advanced alone, in the form's units of ALGEBRA.md #rule3. THE POINT
+    EMITTER (ALGEBRA.md; BUILD.md section 26 item 50) closes its window when
     the given family's norm that left the body's Node reaches it, so the generator
     writes its denominator beside the norm (`norm_denominator`)."""
     from event_universe.events.detector_law import DetectorLawSimulation
@@ -671,7 +669,7 @@ def excitation_action(world: NatureBeamWorld, number: int, period: int) -> Fract
 
 def composed_largest_eigenvalues(world: NatureBeamWorld) -> dict[tuple[int, tuple[int, int]], float]:
     """The largest eigenvalue of the COMPOSED operator of each massive family
-    at each of its bodies' kinds (ALGEBRA.md 9.19 (2); 9.91 (7): the bodies of
+    at each of its bodies' kinds (ALGEBRA.md #rule3, #the-interval: the bodies of
     one kind of a family share the operator, their rest pair outside and every
     body's well of the family in one read matrix on the world's faces); the
     stability condition is read on it, below 2, refused at or above (a
@@ -733,7 +731,7 @@ def check_body_conditions(
             raise ValueError(
                 f"the family {world.families[index].name!r} at the kind {list(kind)}: the "
                 f"composed operator's largest eigenvalue {largest:.6f} is at or above 2 (ALGEBRA.md "
-                "9.19 (2): a mode of the whole board grows without bound; the bodies' wells together "
+                "ALGEBRA.md #rule3: a mode of the whole board grows without bound; the bodies' wells together "
                 "are too deep for the board)"
             )
         lines.append(
@@ -780,7 +778,7 @@ def check_body_conditions(
         )
         emitter = definition.emitter
         if emitter is not None:
-            # (c) THE EXCITED RECORD'S NORM (ALGEBRA.md 9.17 (5) item 1, 9.19
+            # (c) THE EXCITED RECORD'S NORM (ALGEBRA.md #the-click.19
             # (3)): the emitter's `period` and `norm` are the generator's
             # integers; the norm is recomputed here by advancing the seed
             # alone and a mismatch refuses the world; the period is printed
@@ -790,7 +788,7 @@ def check_body_conditions(
                     f"measured[{number}].emitter declares no `period` and `norm`: the "
                     "excited record's period P (the nearest integer to 2 pi / omega_b) and the "
                     "one-way flux into the body's centre Node over P intervals, the generator's "
-                    "integers (ALGEBRA.md 9.17 (5) item 1; `excite_on_the_mode` of the massive "
+                    "integers (ALGEBRA.md #the-click; `excite_on_the_mode` of the massive "
                     "record generator)"
                 )
             recomputed = excitation_norm(world, number, emitter.period)
@@ -798,7 +796,7 @@ def check_body_conditions(
                 raise ValueError(
                     f"measured[{number}].emitter.norm {emitter.norm} is not the one-way "
                     f"flux into the body's centre Node over its period {emitter.period} advanced "
-                    f"alone, {recomputed} (ALGEBRA.md 9.17 (5) item 1: the generator's integer, "
+                    f"alone, {recomputed} (ALGEBRA.md #the-click: the generator's integer, "
                     "recomputed at load)"
                 )
             lines.append(
@@ -811,7 +809,7 @@ def check_body_conditions(
                 lines.append(
                     f"given (COMPUTATION): block {number}: the given train of "
                     f"{len(emitter.given.now)} Nodes with the norm {emitter.given.norm} on the "
-                    "vacuum (the generator's integers, ALGEBRA.md 9.17 (6a); no table in the engine)"
+                    "vacuum (the generator's integers, ALGEBRA.md #the-click; no table in the engine)"
                 )
         relaxation = relaxation_time(reading)
         if any(int(component) != 0 for component in entry.momentum):

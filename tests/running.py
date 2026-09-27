@@ -16,6 +16,7 @@ import pytest
 
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
+from event_universe.features.send import send
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.worlds import ROOT, emitter_world, load_file
 
@@ -40,7 +41,7 @@ def exchange_of(
     new: np.ndarray,
 ) -> Fraction:
     """The change of the form I of `form_I` when the family of clicks' levels move from `old` to `new`
-    (ALGEBRA.md 9.45 (5), 9.57 (1))."""
+    (ALGEBRA.md #the-counts-line, #the-line)."""
     gamma = simulation.node_clock
     num = simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
@@ -67,7 +68,7 @@ def form_I(
     before: np.ndarray,
     content: np.ndarray | None = None,
 ) -> Fraction:
-    # the form from the rule's own integers (ALGEBRA.md 9.57 (1))
+    # the form from the rule's own integers (ALGEBRA.md #the-line)
     # at the scale of the plain form (the engine's rational over 3 L): with (R_i, S_i, w_i) the
     # weak-field rule's coefficients at the Node, [w_i (a^2 + b^2) - S_i a b] / (3 R_i) at the
     # Nodes and 1 / 3 on every Link, plain (den / num, 0 and 1 / 3 in the vacuum, where R = 2
@@ -95,7 +96,7 @@ def form_I(
 
 def reads_of(simulation: DetectorLawSimulation, family: int):
     """The read matrix as a function: the six reads' sum of an array (the family's faces)."""
-    return lambda a: simulation._neighbours(a, simulation.kind_wrap[family])
+    return lambda a: send(simulation.ports, a, simulation.kind_wrap[family])
 
 
 def chosen_by_the_rule(
@@ -108,7 +109,7 @@ def chosen_by_the_rule(
     wheel: int,
     pace: int,
 ) -> str:
-    """The increment ladder of ALGEBRA.md 9.25 (2) on the click's own numbers: the first detector k
+    """The increment ladder of ALGEBRA.md #the-ladder on the click's own numbers: the first detector k
     at which 2 W p (C + f_1 + ... + f_k) >= (2 u + 1) T."""
     threshold = (2 * u + 1) * norm
     running = 2 * wheel * pace * total
@@ -410,7 +411,7 @@ def draw(seed: int) -> dict[str, Any]:
             "self_source": {"unit": 0},
         }
         if entry["reads"] or rng.random() < 0.5:
-            # a held family that reads has waves (the loader's rule, ALGEBRA.md 9.45 (2))
+            # a held family that reads has waves (the loader's rule, ALGEBRA.md #the-counts-line)
             entry["clicks"] = {"gives": True, "takes": True, "quantum": 1}
         families.append(entry)
     if given:
@@ -508,7 +509,7 @@ def family_names() -> set[str]:
     return {family["name"] for family in universe["families"]}
 
 
-# the orders of ALGEBRA.md 9.117 item 3 as the step file law/step.json gives them: the writers
+# the orders of ALGEBRA.md #the-primitives as the step file law/step.json gives them: the writers
 # of one value at one place in the file's order, a write deferred from (ii) first
 ORDERS = {
     ("(iv)", "a family's level at a Node"): ("the hold", "the source"),

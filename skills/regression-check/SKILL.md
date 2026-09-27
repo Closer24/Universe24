@@ -7,19 +7,19 @@ description: Check Universe24 regressions and daily genericity across the active
 
 ## Formula-free node check for the daily audit
 
-Include `tests/test_node_state_contract.py` in the authorized daily genericity
-audit, alongside its existing baseline.
+Include `tests/test_genericity.py` (the seeded families: a rename and a reorder
+leave the run bit for bit) in the authorized daily genericity audit.
 Follow the node-state ownership contract.
 Inspect transitive evolving state, pending proposals and packets for embedded
 formulas, expression trees, definitions or executable laws. Shared immutable
 initialization definitions and generic evaluators remain permitted outside nodes.
 Check local causal field response and paired field reaction; a keyword scan or
 global source reconstruction behind a local accessor does not satisfy this rule.
-For the opt-in integer Node profile, include
-`tests/test_node_rule_contract.py` and `tests/test_node_conservation.py`. Keep
+For the integer Node, include
+`tests/test_rule3.py` and `tests/test_integer_arithmetic.py`. Keep
 explicit k timing separate from operation cost, and check actual pending/packet
-owners before accepting a balance. For joint indexed reactions and persistent
-conditions, include `tests/test_spatial_interactions.py`; follow the delayed-rule
+owners before accepting a balance. For the acts of the interval,
+include `tests/test_step_drives_the_loop.py` and `tests/test_main_loop.py`; follow the delayed-rule
 review in
 [physics validation](../physics-rule-validation/SKILL.md#review-the-declared-rules).
 The suite was reduced on 2026-09-17 to one module per generic rule
@@ -96,7 +96,7 @@ Use the existing project interpreter and set PYTHONPATH to that checkout's src.
 Run the bounded baseline from the repository root:
 
 ```text
-python -m pytest tests/test_architecture.py tests/test_locality.py tests/test_initialization.py tests/test_disturbance_application.py tests/test_local_field_rules.py tests/test_spatial_interactions.py
+python -m pytest tests/test_architecture.py tests/test_genericity.py tests/test_engine_gates.py tests/test_runtime_guards.py tests/test_step_drives_the_loop.py tests/test_folder_cards.py
 ```
 
 Missing runtimes or unexpected skips are coverage gaps, not a clean audit. No

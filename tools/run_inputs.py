@@ -1,5 +1,4 @@
-"""THE ONE COMMAND (the model owner's record 1887 of 2026-09-25; ALGEBRA.md 9.22
-(7)): a list of input files in, one output file per experiment out, in parallel.
+"""THE ONE COMMAND (the model owner's record 1887 of 2026-09-25; ALGEBRA.md #a-familys-declaration): a list of input files in, one output file per experiment out, in parallel.
 
 Every input file is run in its own process (the runs share nothing), at most
 `--jobs` at once (the machine's cores by default). Each run first loads its
@@ -15,7 +14,7 @@ blind pin for the input (`{"<name>": [{"detector": ..., "count": ..., "band":
 ...}` on the detector's first click (the least interval since the record's giving
 among its clicks), or `{"detector": ...,
 "mean_interval": ..., "band": ...}` on the mean over the detector's clicks of the
-interval since the record's giving (the passage rows, ALGEBRA.md 9.25 (11) (d)),
+interval since the record's giving (the passage rows, ALGEBRA.md #the-ladder),
 written before the run), the comparison per pin: MATCH within the band or MISS, with the
 value read. Nothing else is compared; a GameBoard
 reading is not written. The output carries no time, so two inputs run
@@ -133,7 +132,7 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
         # least interval since the record's giving among its clicks: the stock's
         # fastest passage; for one record given at interval 0 the interval of the
         # click itself), or on the MEAN INTERVAL over its clicks since the
-        # record's giving (the passage rows, ALGEBRA.md 9.25 (11) (d): the pin the
+        # record's giving (the passage rows, ALGEBRA.md #the-ladder: the pin the
         # mean click interval over the stock), rounded to the nearest integer
         detector, band = str(pin["detector"]), int(pin["band"])
         at_detector = [c for c in clicks if c["detector"] == detector]

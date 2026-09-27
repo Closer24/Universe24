@@ -1,6 +1,6 @@
 """THE RUN FILES OF THE SOURCE VERB (the ledger's primitive "source", unassigned until the
-Boss's record 2217 of 2026-09-26 gave it to Nature24; ALGEBRA.md 9.108 items 11 and 13, 9.110
-items 2, 3 and 7, 9.112 row 6, 9.116 item 4b): one record of matter at rest and one moving, each
+Boss's record 2217 of 2026-09-26 gave it to Nature24; ALGEBRA.md #the-paces.110
+items 2, 3 and 7, 9.112 row 6, ALGEBRA.md): one record of matter at rest and one moving, each
 sourcing two scalar field families that nothing reads back, one by the plain count and one by
 the saturating table, with an unsourced family beside.
 The source verb alone is under test: a sourced family's level at the record's Nodes gains the
@@ -57,9 +57,9 @@ UNIVERSE = "examples/events/universe.json"
 ENTRIES = HERE / "universe_entries.json"
 
 # THE SOURCED FAMILY AND ITS CONTROL: scalar (parts [1]), a pair of levels (phase 2, the rule
-# 9.57 (1) is of second order), the pair [1000, 1019] (kappa^2 = 6 den / num - 6 = 0.114, the
+# ALGEBRA.md #the-line is of second order), the pair [1000, 1019] (kappa^2 = 6 den / num - 6 = 0.114, the
 # range 1 / kappa = 2.96 Links, the gap omega_0 = arccos(num / den) = 0.193 per interval; the
-# numbers of ALGEBRA.md 9.108 item 11, used here for the short range alone: a level that falls
+# numbers of ALGEBRA.md #the-paces, used here for the short range alone: a level that falls
 # by e every three Links shows the source's locality on a small GameBoard), no read, no self
 # source, no click; `field` sourced by every matter record with the weight 1 and the scale
 # E_s, `field_table` the same under the saturating table with the cap s_cap, `control` the same
@@ -128,7 +128,7 @@ def universe_document(scale: int, cap: int) -> dict:
 
 
 def record_count(profile: np.ndarray, clock: list[int]) -> np.ndarray:
-    """D_i at the start (COMPUTATION, ALGEBRA.md 9.108 item 13): the seed writes both levels
+    """D_i at the start (COMPUTATION, ALGEBRA.md #the-paces): the seed writes both levels
     the profile p_i, the rotation's symmetric point, so D_i = now^2 - next x before = p_i^2 (2 -
     2 cos omega) = p_i^2 (2 b - a) div b with the mode's clock [a, b] (2 cos omega = a / b)."""
     a, b = int(clock[0]), int(clock[1])
@@ -139,7 +139,7 @@ def record_count(profile: np.ndarray, clock: list[int]) -> np.ndarray:
 
 
 def counts(record: np.ndarray, scale: int, cap: int | None) -> np.ndarray:
-    """s_i = D_i div E_s, or with the table s_cap D_i div (s_cap E_s + D_i) (9.108 item 3)."""
+    """s_i = D_i div E_s, or with the table s_cap D_i div (s_cap E_s + D_i) (ALGEBRA.md #the-paces)."""
     flat = record.ravel()
     if cap is None:
         values = [int(d) // scale for d in flat]
@@ -151,8 +151,8 @@ def counts(record: np.ndarray, scale: int, cap: int | None) -> np.ndarray:
 def static_response(source: np.ndarray, pair: list[int]) -> np.ndarray:
     """The stationary level of the sourced family (COMPUTATION, HOST floats): the rule at rest
     with the count added after every step, SUM over the six neighbours of (a_j - a_i) -
-    kappa^2 a_i = -(3 den / num) s_i, kappa^2 = 6 den / num - 6 (ALGEBRA.md 9.108 item 11, the
-    combine line of 9.112 item 2 with w = 2 num Gamma^2 and W = 6 den Gamma^2), the level zero
+    kappa^2 a_i = -(3 den / num) s_i, kappa^2 = 6 den / num - 6 (ALGEBRA.md #the-paces, the
+    combine line of ALGEBRA.md #the-interval with w = 2 num Gamma^2 and W = 6 den Gamma^2), the level zero
     beyond the open faces; solved exactly on the GameBoard by a sparse direct solve."""
     num, den = pair
     kappa2 = 6.0 * den / num - 6.0

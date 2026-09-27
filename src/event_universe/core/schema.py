@@ -1,4 +1,4 @@
-"""The kinds of a value of the run's files and one generic check: a folder's schema names its keys, where they live and each key's kind (an object of named keys, a list, a mapping of names to values among them); the check refuses an unknown key, a missing key, a wrong kind, a value beyond its bound, an empty word and a name the universe lacks, each by name; no key of any folder is written here, no default, no number of the universe (ALGEBRA.md 9.117 item 2: a term is one line of the files)."""
+"""The kinds of a value of the run's files and one generic check: a folder's schema names its keys, where they live and each key's kind (an object of named keys, a list, a mapping of names to values among them); the check refuses an unknown key, a missing key, a wrong kind, a value beyond its bound, an empty word and a name the universe lacks, each by name; no key of any folder is written here, no default, no number of the universe (ALGEBRA.md #the-primitives: a term is one line of the files)."""
 
 from __future__ import annotations
 

@@ -95,7 +95,7 @@ def test_a_feature_stub_grown_within_the_limits_passes_and_beyond_them_fails(tmp
     grown = (
         '"""One line."""\n\nfrom event_universe.core.register import Declaration\n\n\n'
         + "".join(
-            f'def f{i}(x):\n    """What f{i} does (ALGEBRA.md 9.1)."""\n    return x + {i}\n\n\n'
+            f'def f{i}(x):\n    """What f{i} does (ALGEBRA.md #what-a-body-is)."""\n    return x + {i}\n\n\n'
             for i in range(29)
         )
         + "X = 1\n"

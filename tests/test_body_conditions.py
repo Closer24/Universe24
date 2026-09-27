@@ -36,7 +36,7 @@ KIND = [800, 809]
 WELL = [
     800,
     801,
-]  # the rich well (2403 remainder values, ALGEBRA.md 9.22 (4)), the fifteen's since item 15
+]  # the rich well (2403 remainder values, ALGEBRA.md #a-familys-declaration), the fifteen's since item 15
 AMPLITUDE = 1 << 20
 WORLDS = Path(__file__).resolve().parents[1] / "examples" / "events"
 
@@ -84,7 +84,7 @@ def checked(document: dict) -> list[str]:
 def test_cube_square_and_segment_seeded_on_the_mode_pass_bit_for_bit():
     """The cube of side 20 in 48^3, the square of side 8 on a 32 x 32 layer and the segment
     of side 8 on a chain of 64, each on its own board's mode: two COMPUTATION lines each
-    (the family's composed operator below 2, ALGEBRA.md 9.19 (2); the initial state the
+    (the family's composed operator below 2, ALGEBRA.md #rule3; the initial state the
     profile at both levels bit for bit)."""
     for shape, corner, side in (
         ([48, 48, 48], [14, 14, 14], 20),

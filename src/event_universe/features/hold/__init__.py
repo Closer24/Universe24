@@ -1,4 +1,4 @@
-"""The hold: a body's writes into a held family at its Nodes, the count whole at the time part, the vector and tensor parts factor x count x n_a (x n_b) div W (div W^2) with the remainder carried, the dipole sigma (D x e_j)_i div its divisor at the six neighbours, every division Rule3's division act (ALGEBRA.md 9.117 the row "the hold", 9.91 (3), 9.119 item 2); the read from the rule, the write a load."""
+"""The hold: a body's writes into a held family at its Nodes, the count whole at the time part, the vector and tensor parts factor x count x n_a (x n_b) div W (div W^2) with the remainder carried, the dipole sigma (D x e_j)_i div its divisor at the six neighbours, every division Rule3's division act (ALGEBRA.md #the-primitives the row "the hold", ALGEBRA.md #the-interval, #the-four-acts); the read from the rule, the write a load."""
 
 from __future__ import annotations
 
@@ -67,7 +67,7 @@ class HoldWrites:
 
 
 # (D x e_j)_i for the axis j, per (i, the component k of D, the sign): D x e_x = (0, D_z, -D_y),
-# D x e_y = (-D_z, 0, D_x), D x e_z = (D_y, -D_x, 0) (ALGEBRA.md 9.91 (3))
+# D x e_y = (-D_z, 0, D_x), D x e_z = (D_y, -D_x, 0) (ALGEBRA.md #the-interval)
 CROSS_TERMS: tuple[tuple[tuple[int, int, int], ...], ...] = (
     ((1, 2, 1), (2, 1, -1)),
     ((0, 2, -1), (2, 0, 1)),
@@ -92,7 +92,7 @@ def check(term: HoldTerm, start: HoldStart) -> None:
 
 
 def booking(factor: int, count: int, momentum: Vector, axes: tuple[int, ...]) -> int:
-    """The part's numerator, the booking of the count's level and the momentum's level per axis with the declared held factor, a reading with declared coefficients (ALGEBRA.md 9.119 item 1 (e)); its wall the declared W to the power of the momentum factors."""
+    """The part's numerator, the booking of the count's level and the momentum's level per axis with the declared held factor, a reading with declared coefficients (ALGEBRA.md #the-four-acts); its wall the declared W to the power of the momentum factors."""
     found = factor * count
     for axis in axes:
         found *= momentum[axis]
@@ -100,7 +100,7 @@ def booking(factor: int, count: int, momentum: Vector, axes: tuple[int, ...]) ->
 
 
 def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:
-    """The primitive at (iv) for one body and one held family: the count at the time part, every part beyond it by its carried division, the dipole's terms at the six neighbours (ALGEBRA.md 9.117 the row "the hold")."""
+    """The primitive at (iv) for one body and one held family: the count at the time part, every part beyond it by its carried division, the dipole's terms at the six neighbours (ALGEBRA.md #the-primitives the row "the hold")."""
     check(term, start)
     values, carries = dict(own.values), dict(own.carries)
     parts: list[tuple[int, int, int]] = []
@@ -168,7 +168,7 @@ DECLARATION = Declaration(
     ),
     writes=("a family's level at a Node", "a body's remainders"),
     function=apply,
-    section="9.45 (2); 9.91 (3); 9.111 item 3; 9.117 item 3; 9.119 item 2, the row 'the hold'",
+    section="ALGEBRA.md #the-counts-line, #the-interval, #the-primitives, #the-four-acts, the row 'the hold'",
     word="the right side",
     schema=Schema(
         {
