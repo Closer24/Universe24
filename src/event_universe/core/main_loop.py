@@ -9,7 +9,7 @@ from typing import Any
 
 from event_universe.core.primitive import Write
 from event_universe.core.register import DEFERRED_VALUES, OWN_VALUES, Register
-from event_universe.core.step import Step
+from event_universe.core.step import PLACES, Step
 
 Words = dict[str, object]
 Fingerprints = Mapping[str, Mapping[Any, Any]]
@@ -270,7 +270,10 @@ class MainLoop:
                 else ()
             )
             if name not in order or any(
-                earlier not in order or order.index(earlier) > order.index(name) for earlier in names
+                (order.index(earlier) > order.index(name))
+                if earlier in order
+                else not self.precedes(earlier, name, word)
+                for earlier in names
             ):
                 raise ValueError(
                     f"{word!r} of {target!r} was written by {names} and then by {name!r} in one "
@@ -278,6 +281,13 @@ class MainLoop:
                 )
         if not names or names[-1] != name:
             names.append(name)
+
+    def precedes(self, earlier: str, name: str, word: str) -> bool:
+        """A writer at an earlier place of the interval precedes one at a later place by the law's order of the places (ALGEBRA.md #the-interval): a body's value written at (iv) before the feed's write at (v)."""
+        first, second = self.register.declarations.get(earlier), self.register.declarations.get(name)
+        if first is None or second is None:
+            return False
+        return PLACES.index(first.place_of(word)) < PLACES.index(second.place_of(word))
 
 
 def _check_chain(acts: list[Act], chain: tuple[str, ...], built: set[str]) -> None:

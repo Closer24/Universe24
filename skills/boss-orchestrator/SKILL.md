@@ -90,7 +90,16 @@ hour where one long session would have taken a night. The Boss watches each
 at every check-in (tokens spent, the branch moving, a line on the issue) and
 replaces one that stands twenty minutes or touches another's region with a
 fresh session on the same piece; a long-lived session is kept only for one
-continuing thing (the law, the loop's physics, the paper).
+continuing thing (the law, the loop's physics, the paper). **Parallel at
+every level (the owner, 2026-09-27).** Work is cut by file so that owners of
+different files run at once and nobody queues behind one file; two pull
+requests of one owner on one head fold into one push; the order on a shared
+file is by readiness, not by name; the next branch is prepared against the
+pending head before it lands. Inside a session the same rule holds: a
+re-record, a regression or CI runs in the background while the owner edits
+the next item, and a pass that needs no judgement goes to a subagent; each
+three-lines comment says what runs in the background and what is edited
+meanwhile.
 
 **No new work without the owner's word; every question comes with a proposed
 solution (the model owner, 2026-09-21, record 434).** The list of work in

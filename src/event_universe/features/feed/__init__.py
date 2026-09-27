@@ -1,4 +1,4 @@
-"""THE FEED (ALGEBRA.md #the-primitives, the row "the feed"; #the-paces; #the-well): the contraction C at each face of a body on an axis, C = SUM over the reads of f x [the time level - (n_b V_b) div W + (n_b n_c h_bc) div W^2] over the face's Nodes, read with the coefficients +1 and -1 at the two faces; n_a += W x (C_+ - C_-) div (2 Gamma D_a F_a), D_a the faces' distance in Links and F_a a face's Nodes, stepped as the spin is, by the body's two integers n and n_before with the doubled term (n_next = n_before + 2 W (C_+ - C_-)(n) div (2 Gamma D_a F_a)), exactly invertible since the contraction is read at the middle; every division Rule3's division act with its remainder carried on the body; a row of the ledger the loop does not call yet (function None: bodies move by the hop until the owner's word on motion)."""
+"""THE FEED (ALGEBRA.md #the-primitives, the row "the feed"; #the-paces; #the-well): the contraction C at each face of a body on an axis, C = SUM over the reads of f x [the time level - (n_b V_b) div W + (n_b n_c h_bc) div W^2] over the face's Nodes, read with the coefficients +1 and -1 at the two faces; n_a += W x (C_+ - C_-) div (2 Gamma D_a F_a), D_a the faces' distance in Links and F_a a face's Nodes, stepped as the spin is, by the body's two integers n and n_before with the doubled term (n_next = n_before + 2 W (C_+ - C_-)(n) div (2 Gamma D_a F_a)), exactly invertible since the contraction is read at the middle; every division Rule3's division act with its remainder carried on the body; bound at (v) through the register (the owner's word of 09:37Z)."""
 
 from __future__ import annotations
 
@@ -156,7 +156,7 @@ DECLARATION = Declaration(
         "Gamma",
     ),
     writes=("a body's momentum n", "a body's remainders"),
-    function=None,
+    function=apply,
     section="ALGEBRA.md #the-primitives, #a-familys-declaration, #the-interval",
     word="after the step",
 )

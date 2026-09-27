@@ -58,8 +58,8 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
 
 
 def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path: Path):
-    """An input whose profile is off the mode (the peak doubled, the stamp rewritten so that
-    the residual speaks) is REFUSED, its output carrying the reason and no clicks, and the
+    """An input whose body lacks a key of the frame (its momentum) is REFUSED by name, its
+    output carrying the reason and no clicks, and the
     command's exit is 1; a lawful input with pins registered before the run reads MATCH
     within the band and MISS outside it, the value read written beside each: a pin on the
     count of clicks, a pin on the detector's first click (the least interval since the
@@ -74,9 +74,7 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     relative = os.path.relpath(start, Path(__file__).resolve().parents[1])
     bad = emitter_world(stock=2, ticks=200)
     bad["engine"] = relative
-    profile = bad["measured"][0]["seed"]
-    peak = max(range(len(profile)), key=lambda index: abs(profile[index]))
-    profile[peak] *= 2
+    del bad["measured"][0]["momentum"]  # refused by name at the frame (the old residual check is gone)
     bad["stamp"] = input_stamp(bad)
     bad_path = write(inputs, "bad", bad)
     good = emitter_world(stock=2, ticks=250)
@@ -104,10 +102,7 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
         main(["--out", str(out), "--jobs", "2", "--pins", str(pins), str(bad_path), str(good_path)]) == 1
     )
     refused = json.loads((out / "bad.output.json").read_text(encoding="utf-8"))
-    assert (
-        refused["verdict"] == "REFUSED"
-        and "is not the mode of its family's operator" in refused["reason"]
-    )
+    assert refused["verdict"] == "REFUSED" and "lacks keys: momentum" in refused["reason"]
     assert "clicks" not in refused
     good = json.loads((out / "good.output.json").read_text(encoding="utf-8"))
     assert good["verdict"] == "LAWFUL"
