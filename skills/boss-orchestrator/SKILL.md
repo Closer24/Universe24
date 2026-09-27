@@ -82,7 +82,15 @@ check-in the Boss lists the account's sessions; one that is on no owner's row
 of the map and has had no turn for a day, or whose last report says its task
 is done, is archived without asking (the four of 2026-09-24 found idle three
 days later); a team session is archived on the owner's word once its last pull
-request merges.
+request merges. **Short sessions on small pieces (the owner, 2026-09-27).** A
+mechanical task with a clear edge (one module moved, one file folded, one
+world rewritten) goes to a fresh session that lives one pull request and is
+archived on its merge; four such sessions split the loop's bookkeeping in an
+hour where one long session would have taken a night. The Boss watches each
+at every check-in (tokens spent, the branch moving, a line on the issue) and
+replaces one that stands twenty minutes or touches another's region with a
+fresh session on the same piece; a long-lived session is kept only for one
+continuing thing (the law, the loop's physics, the paper).
 
 **No new work without the owner's word; every question comes with a proposed
 solution (the model owner, 2026-09-21, record 434).** The list of work in
