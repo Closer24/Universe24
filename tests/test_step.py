@@ -51,7 +51,7 @@ def test_the_file_names_every_built_primitive_at_its_declared_place_and_the_writ
         for name in names:
             assert register.declarations[name].place == place, name
     assert step.places["(iii)"] == () and step.places["any"] == ("the trace",)
-    assert step.acts[0][:2] == ("(v)", "the hop")
+    assert step.acts[0][:2] == ("(iv)", "the hold")
     holds = [act for act in step.acts if act[1] == "the hold"]
     assert holds == [
         ("(iv)", "the hold", (("advance", False),)),
@@ -140,7 +140,7 @@ def test_each_defect_of_the_file_is_refused_by_name(tmp_path, monkeypatch):
         r"interval\[3\] must be",
     )
     refused(
-        lambda d: d[INTERVAL].__setitem__(0, ["(vi)", "the hop"]),
+        lambda d: d[INTERVAL].__setitem__(0, ["(vi)", "the hold"]),
         r"interval\[0\] names the place '\(vi\)', which is none of",
     )
     refused(
@@ -156,10 +156,10 @@ def test_each_defect_of_the_file_is_refused_by_name(tmp_path, monkeypatch):
         r"lists 'the well' at \(iv\), which the register lacks",
     )
     refused(
-        lambda d: d[INTERVAL].__setitem__(0, ["(ii)", "the hop"]),
-        r"lists 'the hop' at \(ii\), but it declares \(v\)",
+        lambda d: d[INTERVAL].__setitem__(14, ["(v)", "the giving"]),
+        r"lists 'the giving' at \(v\), but it declares \(ii\)",
     )
-    refused(lambda d: d[INTERVAL].pop(0), "leaves out the built primitive 'the hop'")
+    refused(lambda d: d[INTERVAL].pop(12), "leaves out the built primitive 'the count's line'")
     # the loop's refusals at construction, the file redirected: the record's chain reordered, an act
     # with other words, a whole-board act inside the chain
     monkeypatch.setattr(host, "LAW_ROOT", tmp_path)
@@ -194,63 +194,6 @@ def test_each_defect_of_the_file_is_refused_by_name(tmp_path, monkeypatch):
         )
     assert PLACES == ("(i)", "(ii)", "(iii)", "(iv)", "(v)", "any") and tuple(good) == (INTERVAL,)
     assert tuple(read_step(good, "d").places) == PLACES
-
-
-def test_swapping_two_independent_acts_of_the_file_swaps_the_loops_calls_and_leaves_the_state(
-    tmp_path, monkeypatch
-):
-    """The hop and the spin's step commute on this world because its body is at rest (the hop adds zero and moves nothing); for a moving body they do not, and there a reordered file is a different run, as the owner decided. The recoil (built, no act of its own yet) and the hold's advancing act share no value; their exchange moves the register's checks alone."""
-    monkeypatch.setattr(host, "LAW_ROOT", tmp_path)
-    (tmp_path / "law").mkdir()
-    record = tool("record_shipped_worlds")
-
-    def loaded(acts):
-        (tmp_path / STEP_FILE).write_text(json.dumps({INTERVAL: acts}), encoding="utf-8")
-        world = parse_nature_beam_world(emitter_world(stock=1, ticks=4))
-        simulation = DetectorLawSimulation(world)
-        walked: list[str] = []
-        acted: list[tuple[int, str]] = []
-        original_at = simulation.register.at
-        simulation.register.at = lambda name, place: (walked.append(name), original_at(name, place))[1]
-
-        def spy(label, original):
-            def call(*args, **kwargs):
-                acted.append((simulation.tick, label))
-                return original(*args, **kwargs)
-
-            return call
-
-        simulation._move_block = spy("the hop", simulation._move_block)  # type: ignore[method-assign]
-        simulation._spins_act = spy("the spin's step", simulation._spins_act)  # type: ignore[method-assign]
-        for _ in range(4):
-            simulation.step()
-        reading = record.run_reading(simulation, [])
-        return world.step, walked, acted, record.digest_of(reading)
-
-    acts_a = shipped()[INTERVAL]
-    acts_b = list(acts_a)
-    for one, other in (
-        (["(v)", "the hop"], ["(v)", "the spin's step"]),
-        (["(iv)", "the hold", {"advance": True}], ["(iv)", "the recoil"]),
-    ):
-        i, j = acts_b.index(one), acts_b.index(other)
-        acts_b[i], acts_b[j] = acts_b[j], acts_b[i]
-    step_a, walked_a, acted_a, digest_a = loaded(acts_a)
-    step_b, walked_b, acted_b, digest_b = loaded(acts_b)
-    assert step_a.digest == input_digest(shipped()) != step_b.digest
-    for tick in range(1, 5):
-        hops_a = [i for i, (t, label) in enumerate(acted_a) if t == tick and label == "the hop"]
-        spins_a = [i for i, (t, label) in enumerate(acted_a) if t == tick and label == "the spin's step"]
-        hops_b = [i for i, (t, label) in enumerate(acted_b) if t == tick and label == "the hop"]
-        spins_b = [i for i, (t, label) in enumerate(acted_b) if t == tick and label == "the spin's step"]
-        assert hops_a and spins_a and max(hops_a) < min(spins_a)
-        assert hops_b and spins_b and max(spins_b) < min(hops_b)
-    assert walked_a.count("the recoil") == 4 == walked_b.count("the recoil")
-    first_a = [name for name in walked_a if name in ("the hold", "the recoil")]
-    first_b = [name for name in walked_b if name in ("the hold", "the recoil")]
-    assert first_a[:3] == ["the hold", "the hold", "the recoil"]
-    assert first_b[:3] == ["the hold", "the recoil", "the hold"]
-    assert digest_a == digest_b
 
 
 def test_a_world_without_the_step_file_is_refused_at_load():

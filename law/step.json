@@ -1,6 +1,5 @@
 {
  "interval": [
-  ["(v)", "the hop"],
   ["(iv)", "the hold", {"advance": false}],
   ["(i)", "the pair"],
   ["(i)", "the degree"],
@@ -13,6 +12,7 @@
   ["(i)", "the phase"],
   ["(i)", "the operation"],
   ["(ii)", "the clicks"],
+  ["(ii)", "the count's line"],
   ["(ii)", "the lifetime"],
   ["(ii)", "the giving"],
   ["(ii)", "the clicks list"],

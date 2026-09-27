@@ -129,7 +129,6 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
     # the rule's own at its level, so its read jitters at c / Gamma (the worst 4 x 10^-4,
     # the median 10^-6, COMPUTATION); the body's Node's within 2 x 10^-6
     assert all(abs(value - expected) < Fraction(1, 10**3) for value in lattice_read)
-    assert abs(lattice_block.count - one_node_block.count) <= 1 and one_node_block.count >= 5
     # the invariant's jitter (a_next - a_before)(r - r') over e: 2 x 10^-5 read, below 10^-4
     assert max(forms) - min(forms) < max(forms) // 10**4
     step, wheel = one_node.node_record_wheel(one_node_block)

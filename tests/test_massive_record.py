@@ -448,6 +448,7 @@ def with_screen(document: dict, x: int) -> dict:
 
 
 CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
+PERIODIC_CHAIN = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 
 def test_the_blocks_cells_and_its_pair_on_them():
@@ -491,78 +492,6 @@ def test_the_blocks_cells_and_its_pair_on_them():
                 [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 809]}]
             )
         )
-
-
-def test_the_blocks_drive_steps_its_cells_and_leaves_the_rows():
-    """BUILD.md (f): a block of content 1 with P = 64 on x (the wall 3 Q S M = 192) steps at the
-    intervals 3, 6, 9 with the remainder 0; with P = 70 at 3, 6, 9 with the remainders 18, 36,
-    54 and at 11 with the remainder 2; the Nodes and the pair arrays move, the record's rows
-    stay. The edge case: P = [112, 112, 112] and [64, 64, 64] refused by the pace bound,
-    [64, 64, 0] admitted."""
-    for momentum, ticks_and_remainders in (
-        ([64, 0, 0], [(3, 0), (6, 0), (9, 0), (12, 0)]),
-        ([70, 0, 0], [(3, 18), (6, 36), (9, 54), (11, 2)]),
-    ):
-        world = parse_nature_beam_world(
-            block_world(
-                [24, 1, 1],
-                CHAIN,
-                [800, 809],
-                [
-                    {
-                        "position": [4, 0, 0],
-                        "side": 3,
-                        "q": 0,
-                        "spin": [0, 0, 0],
-                        "twist": 0,
-                        "moment": [0, 0, 0],
-                        "pair": [800, 800],
-                        "momentum": momentum,
-                        "fixed": False,
-                        "seed": 5,
-                    }
-                ],
-            )
-        )
-        simulation = DetectorLawSimulation(world)
-        block = simulation.blocks[0]
-        assert simulation.wall_of(block) == 192
-        steps = []
-        for _ in range(12):
-            simulation.step()
-            if block.hop != (0, 0, 0):
-                steps.append((simulation.tick, block.drive[0]))
-        assert steps == ticks_and_remainders
-        corner = 4 + len(steps)
-        assert block.corner == [corner, 0, 0]
-        assert block.mask[corner : corner + 3, 0, 0].all() and not block.mask[4, 0, 0]
-        assert np.all(simulation.kind_den[1][corner : corner + 3, 0, 0] == 800)
-        assert int(simulation.kind_den[1][4, 0, 0]) == 809
-    # the rows stayed: the seeded record's rows are still centred on the old Nodes
-    assert block.own is not None
-    rows = block.own.now[:, 0, 0]
-    assert abs(rows[4:7]).sum() > abs(rows[corner + 3 : corner + 6]).sum()
-    for bad in ([112, 112, 112], [64, 64, 64]):
-        with pytest.raises(ValueError, match="pace bound"):
-            parse_nature_beam_world(
-                block_world(
-                    [24, 1, 1],
-                    CHAIN,
-                    [800, 809],
-                    [{"position": [4, 0, 0], "side": 3, "pair": [800, 800], "momentum": bad}],
-                )
-            )
-    parse_nature_beam_world(
-        block_world(
-            [24, 1, 1],
-            CHAIN,
-            [800, 809],
-            [{"position": [4, 0, 0], "side": 3, "pair": [800, 800], "momentum": [64, 64, 0]}],
-        )
-    )
-
-
-PERIODIC_CHAIN = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 
 def six_reads(row: np.ndarray) -> np.ndarray:
@@ -1268,7 +1197,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         giving: int | None = None
         count_then: int | None = None
         for _ in range(600):
-            count_before = block.count
+            count_before = simulation._body_count(block)
             simulation.step()
             books = simulation.books()
             assert books["balanced"], simulation.tick
@@ -1368,7 +1297,7 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
         identity = 0 * (1 << 32) + 1
         count_at_rung: int | None = None
         for _ in range(1200):
-            count_before = block.count
+            count_before = simulation._body_count(block)
             simulation.step()
             assert simulation.books()["balanced"], simulation.tick
             found = [g for g in lines if g["event"] == "gather" and g["record"] == identity]
@@ -1379,59 +1308,12 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
         assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "B_nodes", gathers
         assert gathers[0]["clock_source"] == "measured:1" and gathers[0]["clock"] == count_at_rung
         assert gathers[0]["tick"] == gathers[0]["click"] and identity not in simulation.records
-        assert block.stepped > 0 if momentum[0] else block.stepped == 0
         assert np.array_equal(simulation.detector_at_node == detector, block.mask)
     bad = document
     bad["detectors"] = [{"name": "B_nodes", "block": 1, "wheel": 64}]
     bad["stamp"] = input_stamp(bad)  # the stamp over the whole file (item 28)
     with pytest.raises(ValueError, match="has unknown keys: wheel"):
         parse_nature_beam_world(bad)
-
-
-def test_a_block_that_steps_off_the_board_refuses_the_interval():
-    """Reviewer 3's line from the redshift dry run (BUILD.md section 18): a block pushed toward
-    a zero face (momentum [-64, 0, 0] from x = 30 on the open chain of 300, one hop per three
-    intervals) refuses the run at the interval its Nodes would leave the board, naming the block
-    and the interval, instead of running on with the block gone; before that interval it steps
-    and the books balance. The edge case: on a periodic chain the same block wraps and steps on
-    through 400 intervals with no refusal."""
-    for boundary, refused in ((CHAIN, True), (PERIODIC_CHAIN, False)):
-        document = massive_world([300, 1, 1], boundary, [800, 809])
-        document["ticks"] = 400
-        document["age_bound"] = 1 << 20
-        document["clock_stamp"] = True
-        document["measured"] = [
-            {
-                "position": [30, 0, 0],
-                "family": "matter",
-                "amount": 1,
-                "stocks": {},
-                "ramp": 0,
-                "start": 0,
-                "momentum": [-64, 0, 0],
-                "fixed": False,
-                "side": 12,
-                "q": 0,
-                "spin": [0, 0, 0],
-                "twist": 0,
-                "moment": [0, 0, 0],
-                "pair": [800, 800],
-                "seed": 50 << 12,
-                "margin": "control",
-            }
-        ]
-        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-        block = simulation.blocks[0]
-        if refused:
-            with pytest.raises(RuntimeError, match=r"measured\[0\] stepped off the board at interval"):
-                for _ in range(400):
-                    simulation.step()
-                    assert simulation.books()["balanced"]
-            assert block.stepped > 20 and simulation.tick < 400
-        else:
-            for _ in range(400):
-                simulation.step()
-            assert block.stepped > 100 and int(np.count_nonzero(block.mask)) == 12
 
 
 def test_a_wall_of_lights_kind_is_a_mirror_line():

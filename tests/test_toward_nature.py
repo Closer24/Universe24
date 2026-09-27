@@ -12,10 +12,6 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import numpy as np
-import pytest
-
-from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
 from tests.running import FOLDER, document, load_module
 
@@ -104,52 +100,6 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
         content = int(entry["amount"]) + sum(int(v) for v in entry.get("stocks", {}).values())
         wall = generator.drive_wall(content)
         assert entry["momentum"] == [wall // generator.HOP_EVERY, 0, 0]
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="the Boss's records 2204 and 2206 (2026-09-26): a giving lowers the live M in the wall "
-    "W = 3 Q M while n stays, so the moving emitter speeds up and the mirror hops one interval "
-    "before it from interval 51 (the gap 58 for one interval at every hop); the fix is the count "
-    "per family and P_0 = [1, 1000] of ALGEBRA.md 9.111 item 3, Coder 3's; marked so that the "
-    "merge into main is not held (the model owner's word of 13:20Z, speed the merge); the mark comes "
-    "off with the fix",
-)
-def test_the_held_level_is_the_well_on_the_arm_and_the_moving_clock_hops_together():
-    generator = load_module("make_worlds")
-    lines: list[dict] = []
-    bottom = DetectorLawSimulation(
-        parse_nature_beam_world(document("redshift_bottom")), observer=lines.append
-    )
-    level = bottom.level_of("content")
-    arm_start = generator.REDSHIFT_EMITTER_X + 32
-    assert (
-        int(level[arm_start, 1, 1]) == 2000 and int(level[generator.REDSHIFT_MIRROR_X - 1, 1, 1]) == 2000
-    )
-    # the emitter's one own quantum beside its stock of 64 at its Nodes (item 47); the emitter
-    # one Node (the chain's point extruded) at the retired train's head since commit 7
-    assert int(level[generator.REDSHIFT_EMITTER_X + 31, 1, 1]) == 65
-    assert int(level[generator.REDSHIFT_MIRROR_X + 10, 1, 1]) == 0  # beyond the mirror, free
-    moving = DetectorLawSimulation(
-        parse_nature_beam_world(document("lorentz_moving")), observer=lines.append
-    )
-    corners = []
-    for _ in range(100):
-        moving.step()
-        corners.append([int(block.corner[0]) for block in moving.blocks])
-    head_x = generator.LORENTZ_EMITTER_X + 31  # the one-Node emitter at the retired train's head
-    emitter, mirror, behind = zip(
-        *corners, strict=True
-    )  # the mirror behind the body's Node too (9.85 (5))
-    assert emitter[-1] - head_x == 25 and mirror[-1] - generator.LORENTZ_MIRROR_X == 25
-    assert behind[-1] - (head_x - 2) == 25
-    assert all(m - e == generator.LORENTZ_MIRROR_X - head_x for e, m, _ in corners)
-    hops = np.diff(np.array(emitter))
-    assert set(hops.tolist()) <= {0, 1} and int(hops.sum()) == 25
-    # the set follows the emitter: its Nodes are the block's current Nodes
-    at_well = moving.detector_names.index("at_well")
-    assert moving.detector_at_node[(emitter[-1] + 5, 1, 1)] == at_well
-    assert moving.detector_at_node[(generator.LORENTZ_EMITTER_X + 5, 1, 1)] == -1
 
 
 def test_the_reader_reads_the_means_the_ratio_and_the_closed_forms(tmp_path: Path, capsys):

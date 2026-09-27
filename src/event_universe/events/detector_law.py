@@ -69,13 +69,14 @@ from typing import cast
 import numpy as np
 
 from event_universe.core.game_board import box_centre
-from event_universe.core.integer import by_drive
 from event_universe.core.main_loop import MainLoop, Stage, read_only
 from event_universe.core.ports import Ports, port_of
 from event_universe.core.primitive import Own, Start, Term, Write
 from event_universe.core.register import Register, discover
 from event_universe.core.rule3 import (
     ISOTROPIC,
+    NO_READ,
+    SPAN,
     THE_ADVANCE,
     THE_INVERSE,
     THE_REWRITE,
@@ -86,6 +87,7 @@ from event_universe.core.rule3 import (
     rungs,
 )
 from event_universe.features import self_source
+from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
 from event_universe.features.hold import TENSOR_AXES, HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
@@ -358,7 +360,6 @@ class Block:
     mask: np.ndarray
     detector: int
     momentum: list[int]
-    drive: list[int] = field(default_factory=lambda: [0, 0, 0])
     # THE SPIN AS STATE (ALGEBRA.md 9.78 (5), 9.91 (8) (v); commit 6): S now and S one
     # interval back, the leapfrog's two integers; the load's write is the body's
     # declared `spin` at both
@@ -367,7 +368,13 @@ class Block:
     # A TOOL HELD IN PLACE (ALGEBRA.md 9.104 (6) (b); the Boss's record 2157): the world's
     # word `fixed`; the feed, when it lands, acts on a body without the word alone
     fixed: bool = False
-    count: int = 0
+    # THE COUNT AT A NODE (ALGEBRA.md #the-counts-line; the count's line bound): the body's
+    # quanta per Node and the line's remainder, laid at the line's first act; the body's Nodes
+    # are the count's support, `moved` where a quantum changed Node in the last act
+    counts: np.ndarray | None = None
+    count_remainder: np.ndarray | None = None
+    count_norm: int = 0
+    moved: bool = False
     previous_sum: int = 0
     own: LiveRecord | None = None
     # THE BODY'S RECORD AT ITS BODY'S NODE (ALGEBRA.md 9.60; item 42, item 37
@@ -378,7 +385,6 @@ class Block:
     emitted: list[int] = field(default_factory=list)
     current: int | None = None
     givings: int = 0
-    hop: tuple[int, int, int] = (0, 0, 0)
     # THE POINT EMITTER (item 50): the identity of the given record whose
     # window is open at this body, None when none is
     window: int | None = None
@@ -387,7 +393,6 @@ class Block:
     # emitted record's period for its grace, the block's grace for its emitted records)
     cycle_start: int = 0
     cycle_length: int = 0
-    stepped: int = 0
     # the emitter as a clicking body (ALGEBRA.md 9.17 (4), 9.43 (3), 9.44 (5)
     # (c)): the excitations started (k), the intervals counted since the
     # residue's read (the count t against (2 u + 1) P / (2 W), no running
@@ -862,7 +867,7 @@ class DetectorLawSimulation:
         """The loop's whole-board stages by the file's names, each with the words it takes and the cards whose writes it carries (the records' pass carries the chain's cards but the clicks, whose act is nested in it)."""
         chain = tuple(name for name in self.CHAIN if name != "the clicks")
         return {
-            "the hop": Stage(self._hop_stage, (), ("the hop",)),
+            "the count's line": Stage(self._counts_stage, (), ("the count's line", "the hop")),
             "the hold": Stage(self._hold_stage, ("advance",), ("the hold",)),
             "the operation": Stage(self._records_stage, (), chain),
             "the giving": Stage(self._giving_stage, (), ("the giving",), creates=True),
@@ -892,8 +897,8 @@ class DetectorLawSimulation:
         yield from self.node_level.values()
 
     def grants(self, name: str) -> Iterator[np.ndarray]:
-        """The arrays of the start an act may write in place, as its card names them: the hop a body's position (the pair arrays and the detector map), the hold a family's level at a Node (the held families' arrays), the operation the remainders."""
-        if name == "the hop":
+        """The arrays of the start an act may write in place, as its card names them: the count's line a body's position (the pair arrays and the detector map, the hop's writes it carries), the hold a family's level at a Node (the held families' arrays), the operation the remainders."""
+        if name == "the count's line":
             for num, den in self._pairs.values():
                 yield num
                 yield den
@@ -933,7 +938,9 @@ class DetectorLawSimulation:
             b.number: (tuple(b.spin), tuple(b.spin_before)) for b in self.blocks
         }
         stamps["a body's position"] = {b.number: (tuple(b.corner), id(b.mask)) for b in self.blocks}
-        remainders: dict[object, object] = {("drive", b.number): tuple(b.drive) for b in self.blocks}
+        stamps["the count at a Node"] = {b.number: id(b.counts) for b in self.blocks}
+        stamps["the count's remainder"] = {b.number: id(b.count_remainder) for b in self.blocks}
+        remainders: dict[object, object] = {}
         for b in self.blocks:
             for key, value in b.hold_value.items():
                 remainders[(b.number, key)] = (value, b.hold_carry.get(key))
@@ -978,10 +985,73 @@ class DetectorLawSimulation:
         """The own record of a generic act: none until a folder's remainders live on the body."""
         return Own(None)
 
-    def _hop_stage(self, function: Callable[..., None]) -> None:
-        """The hop's act: each body's step by its drive."""
+    def _counts_stage(self, function: Callable[..., None]) -> None:
+        """The count's line's act: each body's quanta moved by its record's current through its Nodes' Ports."""
         for block in self.blocks:
-            function(block)
+            self._counts_act(function, block, 1)
+
+    def _counts_act(self, line: Callable[..., object], block: Block, direction: int) -> None:
+        """THE COUNT'S LINE ON A BODY (ALGEBRA.md #the-counts-line): the line's levels laid at its
+        first act (one quantum per Node, the remainder T / 2), then per interval the record's levels
+        here and across the six Ports (the Ports' arrivals), the count and its remainder stepped by
+        the line forward or back (the direction +1 or -1), the body's Nodes following the count."""
+        live = block.own
+        if live is None:
+            return
+        if block.counts is None or block.count_remainder is None:
+            block.counts = block.mask.astype(np.int64)
+            block.count_norm = self._count_norm(block)
+            half = int(rule3(NO_READ, NO_READ, 1, SPAN, 0, 0, block.count_norm)[0])
+            block.count_remainder = np.full(self.shape, half, dtype=np.int64)
+        term = CountTerm(
+            block.count_norm,
+            self.kind_wall(block.family, block.definition.pair),
+            self.world.amplitude_bound,
+            int(block.counts.sum()),
+        )
+        wrap = self.kind_wrap[block.family]
+        levels = (live.now, live.before, live.im_now, live.im_before)
+        arrived = [None if a is None else self.ports.arrivals(a, wrap) for a in levels]
+        links = tuple(Levels(*(None if a is None else a[port] for a in arrived)) for port in range(6))
+        start = CountStart(block.counts, block.count_remainder, Levels(*levels), links, direction)
+        writes = cast(CountWrites, line(term, start, None))
+        block.counts, block.count_remainder = writes.count, writes.remainder
+        self._follow_count(block)
+
+    def _body_count(self, block: Block) -> int:
+        """The count at the body: its quanta summed over its Nodes (one per Node until the line's first act)."""
+        return int(block.mask.sum()) if block.counts is None else int(block.counts.sum())
+
+    def _count_norm(self, block: Block) -> int:
+        """T, the count's wall, read once at the lay: the record's conserved form per quantum (the form's numerator over its denominator times the quanta, one per Node), Rule3's division act; a form below one per quantum is the line's refusal."""
+        numerator, denominator = self.conserved_form(cast(LiveRecord, block.own))
+        quanta = int(block.mask.sum())
+        return int(rule3(NO_READ, NO_READ, 1, denominator * quanta, 0, 0, numerator)[0])
+
+    def _follow_count(self, block: Block) -> None:
+        """The body's Nodes are the count's support: where a quantum changed Node, the mask, the corner (the support's lowest Node per axis), the family's pair region and the detector map follow (HOST); a body whose count stayed is unmoved."""
+        mask = cast(np.ndarray, block.counts) > 0
+        block.moved = not np.array_equal(mask, block.mask)
+        if not block.moved:
+            return
+        old_mask, block.mask = block.mask, mask
+        block.corner = [int(index.min()) for index in np.nonzero(mask)]
+        self._inflow_port_pairs.clear()
+        self._inflow_port_faces.clear()
+        self._write_pair(block)
+        for node in zip(*np.nonzero(old_mask & ~block.mask), strict=True):
+            self.detector_at_node[(int(node[0]), int(node[1]), int(node[2]))] = -1
+        set_detector = next(
+            (
+                detector
+                for detector, number in self.set_block.items()
+                if number == block.number and self.set_nodes[detector] is None
+            ),
+            None,
+        )
+        for node in zip(*np.nonzero(block.mask), strict=True):
+            address = (int(node[0]), int(node[1]), int(node[2]))
+            self.detector_at_node[address] = block.detector if set_detector is None else set_detector
 
     def _hold_stage(self, function: Callable[..., None], advance: bool) -> None:
         """The hold's two acts: at the interval's start the moved bodies' Nodes rewritten; after the records, the held families' own step, the hold and the pace guard."""
@@ -1162,7 +1232,7 @@ class DetectorLawSimulation:
             held = {
                 block.number: self._held_writes(line, block, family, act)
                 for block in self.blocks
-                if advance or inverse or any(block.hop)
+                if advance or inverse or block.moved
             }
             momentum_of: dict[int, tuple[int, int, int]] = {}
             for block in self.blocks:
@@ -1633,74 +1703,6 @@ class DetectorLawSimulation:
         if ramp <= 0 or elapsed >= ramp:
             return list(block.momentum)
         return [component * elapsed // ramp for component in block.momentum]
-
-    def _move_block(self, block: Block) -> None:
-        """The block's step (MASSIVE_RECORD.md section 5): per axis the
-        accumulator gains the momentum's component against the wall W = 3 Q M
-        (`wall_of`, ALGEBRA.md 9.96 (1))
-        (verb T, then D with the remainder kept, at most one Link per
-        interval, `core.integer.by_drive`), x before y before z, a second
-        Link in one interval lost to the earlier axis (its wall subtracted,
-        the frame's tie); the Nodes and the pair region translate by T; the
-        records' rows stay on their Nodes (12.7 (d))."""
-        momentum = self._momentum_now(block)
-        hop = [0, 0, 0]
-        stepped = False
-        for axis in range(3):
-            count, block.drive[axis] = by_drive(
-                block.drive[axis], momentum[axis], self.wall_of(block), at_most=1
-            )
-            if count and not stepped:
-                hop[axis] = count
-                stepped = True
-        block.hop = (hop[0], hop[1], hop[2])
-        if not stepped:
-            return
-        for axis in range(3):
-            if hop[axis]:
-                block.corner[axis] += hop[axis]
-                if self.kind_wrap[block.family][axis]:
-                    block.corner[axis] %= self.shape[axis]
-        old_mask = block.mask
-        block.mask = self._box(block.corner, block.definition.extents, block.family)
-        # HOST (item 48, the bug behind finding 2 of the run toward nature, row 2):
-        # the detectors' Port pairs are cached per family (`_inflow_ports`) and
-        # were never re-read after a hop, so a moving set's Ports stayed at its
-        # place of the load; the cache is cleared at every hop, the Ports read
-        # again from the Nodes as they stand (at rest bit for bit as before)
-        self._inflow_port_pairs.clear()
-        self._inflow_port_faces.clear()
-        if int(np.count_nonzero(block.mask)) < int(np.count_nonzero(old_mask)):
-            # Reviewer 3's line from the redshift dry run (the Boss's 09:45Z): a
-            # stepping block whose Nodes would leave the board by a zero face
-            # (the cube cut by `_cube` on a non-periodic axis) refuses the
-            # interval naming the block, instead of running on with the block
-            # gone and the books balanced; the margin rule refuses the same
-            # block at load, not at a hop, so this is the run's own check.
-            raise RuntimeError(
-                f"measured[{block.number}] stepped off the board at interval "
-                f"{self.tick} (its corner {list(block.corner)}, extents {list(block.definition.extents)}, "
-                f"{int(np.count_nonzero(block.mask))} of {int(np.count_nonzero(old_mask))} Nodes "
-                "left on the board): a block's Nodes must stay on the board; the run is refused"
-            )
-        self._write_pair(block)
-        block.stepped += 1
-        # The block's detector follows its Nodes (a set bound to it without
-        # positions with them); the Nodes it left are free Nodes.
-        for node in zip(*np.nonzero(old_mask & ~block.mask), strict=True):
-            address = (int(node[0]), int(node[1]), int(node[2]))
-            self.detector_at_node[address] = -1
-        set_detector = next(
-            (
-                detector
-                for detector, number in self.set_block.items()
-                if number == block.number and self.set_nodes[detector] is None
-            ),
-            None,
-        )
-        for node in zip(*np.nonzero(block.mask), strict=True):
-            address = (int(node[0]), int(node[1]), int(node[2]))
-            self.detector_at_node[address] = block.detector if set_detector is None else set_detector
 
     # THE BODIES ON ONE NODE (ALGEBRA.md 9.91 (8) (v), 9.78 (4), (5), 9.52 (2), (4); the
     # one stroke, commit 6): the contraction, the feed, the induction, the spin's step,
@@ -2183,8 +2185,6 @@ class DetectorLawSimulation:
                 "charge": body_charge,
                 "node_clock": list(clock_pair),
                 "nodes": int(np.sum(block.mask)),
-                "cycle": block.count,
-                **({"clock": block.count} if world.clock_stamp else {}),
             }
             live.giving_line = giving_line  # named at the close (item 50)
         # the next excitation and the count wait for the window's close
@@ -2214,7 +2214,6 @@ class DetectorLawSimulation:
             total += int(np.sum(block.own.now[block.mask]))
             at_centre += int(block.own.now[centre])
         if block.previous_sum <= 0 < total:
-            block.count += 1
             block.new_cycle = True
             block.cycle_length = self.tick - block.cycle_start
             block.cycle_start = self.tick
@@ -2233,8 +2232,6 @@ class DetectorLawSimulation:
                             if block.own is None
                             else block.own.identity
                         ),
-                        "cycle": block.count,
-                        "clock": block.count,
                     }
                 )
         block.previous_sum = total
@@ -2247,8 +2244,6 @@ class DetectorLawSimulation:
                     "corner": list(block.corner),
                     "sum": total,
                     "centre": at_centre,
-                    "clock": block.count,
-                    "steps": block.stepped,
                 }
             )
 
@@ -2361,17 +2356,15 @@ class DetectorLawSimulation:
     def step_inverse(self) -> None:
         """One interval backward in the joint inverse's fixed order (the bodies' step back, every family at the interval's start levels, the held families and their hold last); no hop, click or giving in the interval."""
         self.ports.begin()
-        for block in self.blocks:
-            if block.stepped > 0 or any(block.hop):
-                raise ValueError(
-                    f"the inverse map is defined for a body that has not hopped (block "
-                    f"{block.number} hopped; the hop's inverse, the field moved back through the "
-                    "body, ALGEBRA.md 9.52 (4) (i), is not built)"
-                )
         # the bodies' step back first (9.91 (8) (v); commit 6): the momentum and the
         # spin as the interval began, from the fields as it left them
         for block in self.blocks:
             self._spins_act(self.register.at("the spin's step", "(v)"), block, True)
+        # the count's line back (its own inverse, the current reversed; ALGEBRA.md
+        # #the-counts-line): the quanta return to their Nodes before the records step back
+        counts_line = self.register.at("the count's line", "(ii)")
+        for block in self.blocks:
+            self._counts_act(counts_line, block, -1)
         # the joint inverse (ALGEBRA.md 9.41 (2), 9.45 (2); item 51): every
         # family backward at the held levels of the interval's start (their
         # `before` level: the held families stepped last), then the held
@@ -2399,11 +2392,6 @@ class DetectorLawSimulation:
         for record in reversed(self.held_component_records()):
             self._advance_inverse(record)
         self._hold(hold, inverse=True)
-        # the drive's accumulator back (no hop this interval: drive' = drive + n)
-        for block in self.blocks:
-            momentum = self._momentum_now(block)
-            for axis in range(3):
-                block.drive[axis] -= momentum[axis]
         self.tick -= 1
 
     # The rule
@@ -3471,9 +3459,9 @@ class DetectorLawSimulation:
             if running >= threshold:
                 live.first_rung[detector] = self.tick
                 if detector in self.set_block:
-                    self.rung_counts[(live.identity, detector)] = self.block_by_number[
-                        self.set_block[detector]
-                    ].count
+                    self.rung_counts[(live.identity, detector)] = self._body_count(
+                        self.block_by_number[self.set_block[detector]]
+                    )
                 self._gather_line(live, detector)
                 live.clicked = True
                 self.dead.append(live.identity)
@@ -3776,9 +3764,6 @@ class DetectorLawSimulation:
                         "corner": list(block.corner),
                         "side": block.definition.side,
                         "extents": list(block.definition.extents),
-                        "clock": block.count,
-                        "steps": block.stepped,
-                        "drive": list(block.drive),
                         "momentum": list(block.momentum),
                         "spin": list(block.spin),
                         "fixed": block.fixed,

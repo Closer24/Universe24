@@ -84,8 +84,8 @@ def check(term: CountTerm, start: CountStart) -> None:
         )
 
 
-def apply(term: CountTerm, start: CountStart) -> CountWrites:
-    """The primitive at (ii): the inflow per axis, the current into the Node through its +a and -a Ports, read by Rule3 with the coefficient sigma on each axis and T on the count over the wall T (ALGEBRA.md 9.121 item 3)."""
+def apply(term: CountTerm, start: CountStart, own: None = None) -> CountWrites:
+    """The primitive at (ii), bound to the loop (the line keeps no own record, `own` is None): the inflow per axis, the current into the Node through its +a and -a Ports, read by Rule3 with the coefficient sigma on each axis and T on the count over the wall T (ALGEBRA.md 9.121 item 3)."""
     check(term, start)
     net = []
     for axis in range(3):
@@ -110,7 +110,7 @@ DECLARATION = Declaration(
     place="(ii)",
     reads=("the record's levels at the Node and across its six Ports", "T", "the current's weight"),
     writes=("the count at a Node", "the count's remainder"),
-    function=None,
+    function=apply,
     section="9.121 item 3; 9.119 item 1; 9.57 (1)",
     word="after the step",
 )
