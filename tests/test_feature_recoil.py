@@ -154,8 +154,8 @@ def test_the_trace_hand_identity_on_the_emitters_run():
     for _ in range(document["ticks"]):
         simulation.step()
     givings = [line for line in lines if line["event"] == "giving" and "momentum" in line]
-    # the givings' direction labels as this fixture reads them (the net flux at each window's close)
-    assert [line["momentum"] for line in givings] == [[-1, 0, 0], [-1, 0, 0], [1, 0, 0], [-1, 0, 0]]
+    # the givings' direction labels as this fixture reads them under the row's floor (the net flux at each window's close)
+    assert [line["momentum"] for line in givings] == [[1, 0, 0], [-1, 0, 0], [-1, 0, 0], [-1, 0, 0]]
     unit = document["momentum_unit"]
     own = RecoilOwn((0, 0, 0), NONE)
     total = Fraction(0)
