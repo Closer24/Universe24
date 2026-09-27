@@ -35,6 +35,11 @@
     0,
     0
    ],
+   "spin_before": [
+    0,
+    0,
+    0
+   ],
    "moment": [
     0,
     0,
@@ -45,6 +50,11 @@
     "charge": 64
    },
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -1296,6 +1306,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "stocks": {},
    "fixed": true
   },
@@ -1308,6 +1323,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -1328,6 +1348,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "stocks": {},
    "fixed": true
   },
@@ -1340,6 +1365,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -1360,6 +1390,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "stocks": {},
    "fixed": true
   },
@@ -1372,6 +1407,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -1424,6 +1464,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "df9a5b7ddb9f4d10802d9124252b00bf71d4c91e5db1b04387f0eb1db45f457e"
+  "hash": "f74cdf609b8f10081f9d7402ce3b9c8ff7cdd9129d6c8dda33c58a2dade3d61f"
  }
 }
