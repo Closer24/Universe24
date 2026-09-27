@@ -40,8 +40,7 @@ from tests.worlds import (
     receiver_cube,
 )
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
-# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
 
@@ -185,8 +184,7 @@ def test_every_family_reads_the_worlds_border_and_a_zero_face_when_open():
         zero = np.zeros((5, 1, 1), dtype=np.int64)
         live = planted(simulation, 1, now, zero, zero)
         a_next, r_next = step_once(simulation, live)
-        # at Node 0: the total R S_6 = R (a_W + a_E + 4 x 0) = R a_W over the vacuum's wall w
-        # (the weak-field rule's integers at c = 0, item 44)
+        # at Node 0: the total R S_6 = R (a_W + a_E + 4 x 0) = R a_W over the vacuum's wall w (the weak-field rule's integers at c = 0, item 44)
         (read, _, _), _self, wall = coefficients(1, 2, NODE_CLOCK, 0)
         total = wall * int(a_next[0, 0, 0]) + int(r_next[0, 0, 0])
         assert total == read * expected
