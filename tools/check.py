@@ -195,6 +195,9 @@ def select(changed, sources):
         # and THE SHAPE OF THE CODE is held at its baseline (the model owner's decisions,
         # records 2239 and 2241)
         tests.add("tests/test_code_shape.py")
+        # and the reviewer's recurring findings as gates: no new number, family name or
+        # unapproved core module in src/ (issue #1198, item 4 (a))
+        tests.add("tests/test_engine_gates.py")
         # and THE SHAPE OF TESTS/ is held against the merge base (issue #1211)
         tests.add("tests/test_tests_shape.py")
         # and THE DOCUMENT LOCK keeps the three current documents (the short procedure,

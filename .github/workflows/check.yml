@@ -1,6 +1,7 @@
 name: Python checks
 on:
   pull_request:
+    types: [opened, synchronize, reopened, edited]
   push:
     branches: [main]
 permissions:
@@ -22,6 +23,7 @@ jobs:
       - name: Check affected code and tests
         env:
           CHECK_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          PR_BODY: ${{ github.event.pull_request.body }}
         run: python tools/check.py --base "$CHECK_BASE"
       - uses: actions/upload-artifact@v4
         if: always()
