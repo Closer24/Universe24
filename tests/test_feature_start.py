@@ -5,7 +5,10 @@ from __future__ import annotations
 import numpy as np
 
 from event_universe.core.register import discover
+from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.start import chain_rest, field_at_rest, rest
+from event_universe.world_files import parse_nature_beam_world
+from tests.worlds import emitter_world
 
 
 def chain(extent: int = 40) -> np.ndarray:
@@ -35,15 +38,44 @@ def test_the_chains_one_pass_is_the_clamps_fixed_point_on_every_face_kind_and_pa
         assert rest(chain(), pair, wrap).iterations == 1
 
 
-def test_a_box_goes_through_the_clamp_and_a_chain_with_no_body_is_refused():
-    """A box is no chain: `rest` iterates the clamp there (the tool's field at rest, the same object); counts without a body are refused by name."""
+def test_a_box_takes_the_certified_rest_the_clamps_levels_and_a_half_rounded_up_and_no_body_is_refused():
+    """A box is no chain: `rest` takes the line's certified rest there, in a few rounds against the clamp's steps, the clamp's levels bit for bit where no value sits at a half; at a half (the two columns fixed under the torus's reflection that swaps two bodies of counts 1 and 4 read 2.5 exactly) the division act rounds up where the clamp's fixed point, below the line by the floors' deficit, rounds down; counts without a body are refused by name."""
     box = np.zeros((5, 5, 5), dtype=np.int64)
     box[1:3, 1:3, 1:3] = 7
-    found = rest(box, (1, 4), (True, True, True))
-    assert found.iterations > 1 and (found.levels == field_at_rest(box, (1, 4)).levels).all()
+    found, clamped = rest(box, (1, 4), (True, True, True)), field_at_rest(box, (1, 4))
+    assert 1 <= found.iterations < clamped.iterations and (found.levels == clamped.levels).all()
+    torus = np.zeros((20, 10, 1), dtype=np.int64)
+    torus[5, 0, 0], torus[15, 0, 0] = 1, 4
+    found, clamped = rest(torus, (1, 1), (True, True, True)), field_at_rest(torus, (1, 1))
+    halves = np.zeros(torus.shape, dtype=bool)
+    halves[0], halves[10] = True, True
+    assert (found.levels[halves] == 3).all() and (clamped.levels[halves] == 2).all()
+    assert (found.levels[~halves] == clamped.levels[~halves]).all()
     try:
         rest(np.zeros((9, 1, 1), dtype=np.int64), (1, 1), (True, True, True))
     except ValueError as refusal:
         assert "no body" in str(refusal)
     else:
         raise AssertionError("counts with no body were not refused")
+
+
+def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
+    """THE START in the loop (ALGEBRA.md #the-generator, THE START): at the load, after the held records and the hold's first write, every held family's time part is the folder's rest on the counts the hold wrote at the bodies' Nodes, at both levels with the remainder 0, before the first interval; a family no body holds stays at 0."""
+    simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
+    started = 0
+    for family, record in simulation.held_records.items():
+        definition = simulation.families[family]
+        counts = np.zeros(simulation.shape, dtype=np.int64)
+        for number in range(len(simulation.held)):  # every body's Nodes, a block's or a span's
+            block = simulation.block_by_number.get(number)
+            mask = block.mask if block is not None else simulation.span_masks[number]
+            counts[mask] = simulation.body_source(number, definition.held)
+        if not counts.any():
+            assert not record.now.any() and not record.before.any()
+            continue
+        expected = rest(counts, definition.pair, simulation.kind_wrap[family]).levels
+        assert np.array_equal(record.now, expected) and np.array_equal(record.before, expected)
+        assert not record.remainder.any() and simulation.node_level[family] is record.now
+        assert (expected != 0).sum() > (counts != 0).sum()  # the field reaches beyond the bodies
+        started += 1
+    assert started >= 1

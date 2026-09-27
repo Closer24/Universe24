@@ -29,6 +29,8 @@ INTEGERS = ObjectOf(
         "Lambda": Integer(least=1),
         "momentum_unit": Integer(least=1),
         "most_steps": Integer(least=2),
+        "most_families": Integer(least=1),
+        "least_residues": Integer(least=1),
         "width": Integer(least=1),
         "twist_table": ObjectOf(
             {
@@ -58,6 +60,8 @@ WORLD = ObjectOf(
         "amplitude_bound": Integer(least=1),
         "node_clock": Integer(least=1),
         "momentum_unit": Integer(least=1),
+        "most_families": Integer(least=1),
+        "least_residues": Integer(least=1),
         "N": Integer(least=2),
     },
     frozenset(
@@ -69,6 +73,8 @@ WORLD = ObjectOf(
             "amplitude_bound",
             "node_clock",
             "momentum_unit",
+            "most_families",
+            "least_residues",
         }
     ),
 )

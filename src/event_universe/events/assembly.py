@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
@@ -331,3 +331,22 @@ def held_records(loop: DetectorLawSimulation) -> None:
         for family, definition in enumerate(loop.families)
         if definition.sourced is not None
     }
+
+
+def start_at_rest(loop: DetectorLawSimulation) -> None:
+    """THE START (ALGEBRA.md #the-generator, THE START): every held family's time part at the load at its rest, the fixed point of the family's line under the hold's rewrite, by the folder found by its name, once before the first interval and never in it; the rest on the counts the load's hold wrote at the bodies' Nodes (0 elsewhere), its levels written at both levels with the remainder 0, `node_level` the same array; a family no body holds stays at 0, and the folder's refusal names the family."""
+    start = loop.register.at("the start", "any")
+    for family, record in loop.held_records.items():
+        if not record.now.any():
+            continue
+        try:
+            field: Any = start(record.now, loop.families[family].pair, loop.kind_wrap[family])
+            levels = field.levels
+        except ValueError as refusal:
+            raise ValueError(
+                f"the start of the held family {loop.families[family].name!r}: {refusal}"
+            ) from refusal
+        record.now[...] = levels
+        record.before[...] = levels
+        record.remainder[...] = 0
+        loop.node_level[family] = record.now
