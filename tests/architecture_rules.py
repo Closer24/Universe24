@@ -1,15 +1,4 @@
-"""Static layer checks used by the suite; these do not execute inspected code.
-
-The layers: `core` holds the law-free substrate (bounded integers, the GameBoard's
-addresses and headings, the phase tables, the register of primitives and their
-interface) and imports nothing but `core`; `features` holds the primitives, one
-folder each (the model owner's record 2221 (3); issue #1154), and may import
-`core` and `features`; `loader` reads the run's files through the cards and may
-import `core`, `features` and `loader`; `events` is the engine and may import
-`core`, `features`, `loader` and `events`; the host modules (the runner, the workspace, retention, the
-snapshot writer) may import all. No physical module imports output or storage
-libraries.
-"""
+"""Static layer checks, no inspected code run: `core` imports `core` alone; `features` imports `core` and `features`; `loader` adds itself; `events` adds itself; the host modules import all; no physical module imports output or storage libraries."""
 
 import ast
 from importlib.util import resolve_name

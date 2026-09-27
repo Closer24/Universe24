@@ -1,13 +1,4 @@
-"""THE SUPPORT-ONLY STEP, A SHORTCUT OF THE HOST (the model owner's question of 2026-09-25
-through the Boss, record 2039: "can we shorten the run somehow?"; BUILD.md section 26 item
-43): a record's rows are zero outside its box, the box grows by one Link per interval, the
-one rule is evaluated on the grown box and zeros are written elsewhere. The law is untouched
-(the same integers at every Node); the tests say so bit for bit: (1) the emitter's chain run
-600 intervals with the boxes and without gives the same lines, the same rows, remainders and
-boxes' complements zero; (2) a planted record with random rows near a corner of a periodic
-board, wrapping every axis as its box grows, steps forward 40 and back 40 the same with the
-boxes and without, and returns to its rows; (3) the invariant: outside a record's box its two
-levels and its remainder are zero at every interval. HOST cost only; no physics."""
+"""The support-only step, a host shortcut: a record's rows are zero outside its box, which grows one Link per interval; with and without the boxes the runs are the same bit for bit, forward and back, and outside the box the levels and the remainder stay zero. HOST cost only."""
 
 from __future__ import annotations
 

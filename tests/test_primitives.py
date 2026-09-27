@@ -1,11 +1,4 @@
-"""THE PRIMITIVES OF THE FREEZE (ALGEBRA.md 9.88 (7), 9.81 (2), 9.96 (2); records 2131 and
-2133 (3)): (i) the internal representation's tables are exact Pythagorean identities, the
-transport turns n pairs together with one division and a running remainder per level, keeps
-the norm exactly before the division, composes the coarse and fine triples exactly, and inverts
-exactly per Node; (iii) the clicks list balances every declared conserved integer or refuses,
-and the taken momentum is shared whole with the sum exact by the draw from the residue; (iv)
-the helicity is the sign of the spin against the momentum. Every number a HOST computation of
-the test's own integers; the host's table generator's angles within their tolerance."""
+"""The primitives: the internal representation's tables are exact Pythagorean identities and the transport turns, composes and inverts exactly per Node; the clicks list balances every declared conserved integer or refuses; the helicity is the sign of the spin against the momentum. HOST computations."""
 
 from __future__ import annotations
 
