@@ -72,7 +72,7 @@ def test_the_digest_does_not_move_under_a_rename_of_the_engines_attributes():
     assert module.digest_of(module.run_reading(simulation, lines)) == before
     reading = module.run_reading(simulation, lines)
     assert set(reading["held families"]) <= {family.name for family in simulation.families}
-    assert all(key.isdigit() for key in reading["records"])
+    assert all(key.lstrip("-").isdigit() for key in reading["records"])  # a name: from 1, or below 0
     keys = {"lines", "state", "records", "held families", "read remainders", "clicks", "books"}
     assert set(reading) == keys
 
