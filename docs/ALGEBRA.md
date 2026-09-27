@@ -571,30 +571,35 @@ not depend on A beyond its resolution: at A / 2 the profile agrees with the
 one at A, rescaled, within 12 units of the coarser, and the rotation to
 10^-6; the final scale comes from c T.
 
-(g) THE FIELD AT REST, THE START OF A WORLD. The generator iterates the held
-family's own line to rest first, at the pair of the family's row, as the
-rewriting hold makes it: the body's Nodes clamped to the count, the
-homogeneous line outside (a source row's static limit, (Delta - kappa^2) a =
--sigma, is the other case, not this one). From nothing the level at every
-Node is num S_6(a) div (6 den) by the division act on a fine unit derived
-from the width, the body's Nodes rewritten each time; the map is monotone,
-so the levels rise to a fixed point, the stop its first repeat; the levels
-are the rest within one unit, and the mode is solved on that content:
-generic (one primitive, the row's pair, no family name), vector (the
-division act alone, no root, no float) and local (the six reads and the
-hold's rewrite). A world starts from the field at rest, never from zeros,
-whose transient rings. Under [1, 1] the clamp's rest between periodic faces
-is the uniform level, the count itself, no well and no mode there (the
-source row's periodic problem at kappa = 0 has no rest at all); between open
-faces the harmonic well.
+(g) THE FIELD AT REST, THE START OF A WORLD. A held family's rest is its own
+line's solution at the pair of the family's row under the rewriting hold,
+the body's Nodes clamped to the count and the homogeneous line outside (a
+source row's static limit, (Delta - kappa^2) a = -sigma, is the other case,
+not this one): 6 den a = num S_6(a) between the bodies' Nodes, the counts at
+them, 0 beyond an open face, to the nearest integer on a fine unit derived
+from the width, a value at a half rounded up by the division act. The clamp
+iterated from nothing by the division act rises monotonely to the same rest
+(its fixed point lies below the line by the floors' deficit, far below half
+a count: the reference on a small GameBoard, the side squared per bit of
+the unit on a large one, and below at a half); the mode is solved on that
+content. A world starts from the rest, never from zeros, whose transient
+rings. Under [1, 1] the rest between periodic faces is the uniform level,
+the count itself, no well and no mode there (the source row's periodic
+problem at kappa = 0 has no rest at all); between open faces the harmonic well.
 
-THE START. The loop writes every held family at the load at its rest, the
-fixed point of the family's line under the hold's rewrite, by one folder
-found by its name, once before the first interval and never in it: on a
-chain (one layer on two axes) the rise between the bodies' Nodes in one pass
-in integers, the tridiagonal line of the same map; elsewhere the clamp
-iterated. Generic (the row's pair), vector (the division act, no root),
-local (the six reads and the rewrite); the cost is the load's.
+THE START. The loop writes every held family at the load at its rest, by
+one folder found by its name, once before the first interval and never in
+it: on a chain (one layer on two axes) in one pass in integers, the
+tridiagonal line; on a box a guess of the line's solver refined on the exact
+residual R and certified in whole integers: the exit-time field T of the
+same line, with its own exact residual rho, bounds the inverse, ||A^-1|| <=
+||T|| / (6 den x scale - ||rho||), so the field stands within ||A^-1|| ||R||
+of the exact rest, and where every free Node is farther than that from a
+half the levels are the rest's nearest integers; a Node nearer takes a
+finer unit, and at the last growth the division act decides. Generic (the
+row's pair), vector (the levels by the division act, the certificate in
+integers; the guess is no value of the law), local (the six reads and the
+rewrite); the cost is the load's.
 
 ### The velocity
 

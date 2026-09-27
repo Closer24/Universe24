@@ -38,12 +38,19 @@ def test_the_chains_one_pass_is_the_clamps_fixed_point_on_every_face_kind_and_pa
         assert rest(chain(), pair, wrap).iterations == 1
 
 
-def test_a_box_goes_through_the_clamp_and_a_chain_with_no_body_is_refused():
-    """A box is no chain: `rest` iterates the clamp there (the tool's field at rest, the same object); counts without a body are refused by name."""
+def test_a_box_takes_the_certified_rest_the_clamps_levels_and_a_half_rounded_up_and_no_body_is_refused():
+    """A box is no chain: `rest` takes the line's certified rest there, in a few rounds against the clamp's steps, the clamp's levels bit for bit where no value sits at a half; at a half (the two columns fixed under the torus's reflection that swaps two bodies of counts 1 and 4 read 2.5 exactly) the division act rounds up where the clamp's fixed point, below the line by the floors' deficit, rounds down; counts without a body are refused by name."""
     box = np.zeros((5, 5, 5), dtype=np.int64)
     box[1:3, 1:3, 1:3] = 7
-    found = rest(box, (1, 4), (True, True, True))
-    assert found.iterations > 1 and (found.levels == field_at_rest(box, (1, 4)).levels).all()
+    found, clamped = rest(box, (1, 4), (True, True, True)), field_at_rest(box, (1, 4))
+    assert 1 <= found.iterations < clamped.iterations and (found.levels == clamped.levels).all()
+    torus = np.zeros((20, 10, 1), dtype=np.int64)
+    torus[5, 0, 0], torus[15, 0, 0] = 1, 4
+    found, clamped = rest(torus, (1, 1), (True, True, True)), field_at_rest(torus, (1, 1))
+    halves = np.zeros(torus.shape, dtype=bool)
+    halves[0], halves[10] = True, True
+    assert (found.levels[halves] == 3).all() and (clamped.levels[halves] == 2).all()
+    assert (found.levels[~halves] == clamped.levels[~halves]).all()
     try:
         rest(np.zeros((9, 1, 1), dtype=np.int64), (1, 1), (True, True, True))
     except ValueError as refusal:
