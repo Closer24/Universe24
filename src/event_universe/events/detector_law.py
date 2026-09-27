@@ -2253,9 +2253,10 @@ class DetectorLawSimulation:
         sigma_self = self._self_source(live, True)
         plain = axis_contents is None and twisted is None and live.im_now is None and sigma_self is None
         if not plain:
-            receive = self.register.at("the receive", "(i)")
+            receive = self.main_loop.function_of("the receive", "(i)")
+            level_step = self.main_loop.function_of("the phase", "(i)")
             reads_re, reads_im = self._transport(receive, live, twisted, True)
-            a_before, live.remainder = self._level_step(
+            a_before, live.remainder = level_step(
                 num,
                 den,
                 gamma,
@@ -2273,7 +2274,7 @@ class DetectorLawSimulation:
             if live.im_now is not None:
                 assert live.im_before is not None and live.im_remainder is not None
                 im_reads = [np.zeros_like(live.now) for _ in range(3)] if reads_im is None else reads_im
-                im_a_before, live.im_remainder = self._level_step(
+                im_a_before, live.im_remainder = level_step(
                     num,
                     den,
                     gamma,
@@ -2486,35 +2487,6 @@ class DetectorLawSimulation:
         start = ReceiveStart(re, im, twisted, tuple(links))
         writes = cast(ReceiveWrites, line(self._receive_term, start, None))
         return list(writes.re), None if writes.im is None else list(writes.im)
-
-    @staticmethod
-    def _level_step(
-        num: np.ndarray,
-        den: np.ndarray,
-        gamma: int,
-        content: np.ndarray | int,
-        axis_contents: tuple[np.ndarray, ...] | None,
-        reads: list[np.ndarray],
-        now: np.ndarray,
-        other: np.ndarray,
-        remainder: np.ndarray,
-        weak_field: bool,
-        direction: int = 1,
-    ) -> tuple[np.ndarray, np.ndarray]:
-        """One level's step by rule3 in `direction` from its three per-axis arrival sums, `now` the level read and `other` the far level (ALGEBRA.md #the-interval, #the-direction)."""
-        integers, self_coefficient, wall = coefficients(
-            num, den, gamma, content, ISOTROPIC if axis_contents is None else axis_contents, weak_field
-        )
-        return rule3(
-            integers,
-            (reads[0], reads[1], reads[2]),
-            self_coefficient,
-            wall,
-            now,
-            other,
-            remainder,
-            direction,
-        )
 
     def _self_source(self, live: LiveRecord, inverse: bool) -> np.ndarray | None:
         """THE SELF-SOURCE'S SLOT (ALGEBRA.md #a-familys-declaration, #the-interval, #the-second-level): per family with a unit
@@ -3057,9 +3029,10 @@ class DetectorLawSimulation:
             # the arrivals per axis after the transport, the rule per level on the whole
             # board (HOST: no window shortcut here); the second level allocated by the
             # first rotation that writes it
-            receive = self.register.at("the receive", "(i)")
+            receive = self.main_loop.function_of("the receive", "(i)")
+            level_step = self.main_loop.function_of("the phase", "(i)")
             reads_re, reads_im = self._transport(receive, live, twisted, False)
-            nxt, live.remainder = self._level_step(
+            nxt, live.remainder = level_step(
                 num,
                 den,
                 gamma,
@@ -3080,7 +3053,7 @@ class DetectorLawSimulation:
                     live.im_remainder = np.zeros_like(live.now)
                 assert live.im_before is not None and live.im_remainder is not None
                 im_reads = [np.zeros_like(live.now) for _ in range(3)] if reads_im is None else reads_im
-                im_next, live.im_remainder = self._level_step(
+                im_next, live.im_remainder = level_step(
                     num,
                     den,
                     gamma,
