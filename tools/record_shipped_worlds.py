@@ -214,7 +214,7 @@ def run(path: Path, intervals: int | None = None, write_to: Path | None = None) 
     try:
         simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     except ValueError as refusal:  # refused at the load: no run, the refusal's words the whole reading
-        refused, intervals = str(refusal), 0
+        refused, intervals = str(refusal), ticks if intervals is None else intervals
     reading: dict[str, Any] = {}
     if simulation is not None:
         simulation.record = lines.append
