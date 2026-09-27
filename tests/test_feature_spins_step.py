@@ -24,7 +24,7 @@ from tests.bodies import parts_of, parts_world
 from tests.worlds import emitter_world
 
 GAMMA = 10_000
-# the row's weights of the spin's turn, Schiff's 1 / 2 and 3 / 2 in the levels' unit (ALGEBRA.md 9.78 (5))
+# the row's weights of the spin's turn, Schiff's 1 / 2 and 3 / 2 in the levels' unit (ALGEBRA.md #a-familys-declaration)
 TURN = ((1, 4), (3, 4))
 NONE = (None,) * 6
 ZERO = (0,) * 6
@@ -80,7 +80,7 @@ def test_the_loop_turns_the_spin_by_the_curl_at_the_bodys_node_and_inverts_exact
 
 
 def test_the_torque_turns_the_spin_by_the_moment_and_the_charge_curl_at_the_reads_weight_alone():
-    """ALGEBRA.md 9.104 (2): the torque is mu x B_q at the read's weight alone (the moment carries the charge): a
+    """ALGEBRA.md #the-primitives: the torque is mu x B_q at the read's weight alone (the moment carries the charge): a
     body of charge 0 with the moment (0, 1, 0) and the spin 0, the charge's z part planted at +A at + e_y and -A at
     - e_y, steps its spin's z by 2 (mu x B_q)_z div (W Gamma), B_q,x = curl_x div 2 (Q = 0 is no factor); inverted."""
     document = parts_world(spin=[0, 0, 0], moment=[0, 1, 0], side=1)

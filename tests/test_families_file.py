@@ -1,4 +1,4 @@
-"""THE ONE FAMILIES FILE WITH ITS THREE ENTRIES (ALGEBRA.md 9.83 (2), 9.85 (3), 9.86 (2), 9.91 (7);
+"""THE ONE FAMILIES FILE WITH ITS THREE ENTRIES (ALGEBRA.md #a-familys-declaration, #the-primitives, #the-interval;
 record 2075): every shipped world names examples/events/universe.json; the loader refuses its defects by
 name; the emitter's clock and the body's kind stand where the family declares none. HOST; no pin."""
 
@@ -29,7 +29,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         "Lambda": 1,
         "momentum_unit": 64,
     }
-    # the twist table (ALGEBRA.md 9.96 (2) (c); commit 4): the unit 4 Gamma 2^16, 2^10 fine
+    # the twist table (ALGEBRA.md #the-primitives; commit 4): the unit 4 Gamma 2^16, 2^10 fine
     # and 2^15 coarse triples, every one c^2 + s^2 = d^2 with d at most 10^9
     assert table["unit"] == 4 * 10000 * 65536
     assert len(table["fine"]) == 1024 and len(table["coarse"]) == 32768
@@ -43,7 +43,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         assert "held" in entry or "clicks" in entry
         assert "booked" not in entry and entry["quantum"] == 1 and "charge" not in entry
     # gravity: ten components, one level, held content with the factors (1, 4, 2) and the spin's
-    # dipole, no reads, no clicks (9.91 (7))
+    # dipole, no reads, no clicks (ALGEBRA.md #the-interval)
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and gravity["pair"] == [1, 1]
     assert gravity["held"] == {
         "count": "content",
@@ -75,7 +75,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     for path in (ROOT / "examples/events").glob("*/*.json"):
         text = json.loads(path.read_text(encoding="utf-8"))
         # a world of the engine; the check-mode worlds (Nature24's generator, ahead of the
-        # audit of ALGEBRA.md 9.90 (3)) carry none of the keys the loader still requires
+        # audit of ALGEBRA.md #the-primitives) carry none of the keys the loader still requires
         # the check-mode worlds and the source verb's run files (Nature24's generators, ahead of
         # the loader's words: `readings`, `sourced`, the residue keys) carry keys the loader
         # does not read yet; tests/test_source_worlds.py reads their structure
@@ -135,9 +135,9 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
         assert names_b[other.family] == rename.get(names_a[live.family], names_a[live.family])
     for source in ("content", "sign"):
         assert np.array_equal(a.level_of(source), b.level_of(source))
-    # every other part with no source stays exactly zero and silent (9.91 (9) (a)); the
+    # every other part with no source stays exactly zero and silent (ALGEBRA.md #the-interval); the
     # light emitter's moment [0, 0, 1] writes the charge's dipole on its neighbours (9.82
-    # (3) (d), 9.91 (3); commit 4), which nothing reads at q = 0
+    # (3) (d), ALGEBRA.md #the-interval; commit 4), which nothing reads at q = 0
     for family, parts in b.held_parts.items():
         for record in parts:
             if record.silent:
@@ -207,7 +207,9 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     second["node_clock"] = 10000
     refused(second, "the world declares node_clock, which the engine never reads")
     ray = json.loads(json.dumps(document))
-    ray["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
+    ray["detector_law"] = (
+        False  # the flag was the law's name: refused by name (ALGEBRA.md #the-primitives)
+    )
     refused(ray, "the world has unknown keys: detector_law")
     missing = json.loads(json.dumps(document))
     missing["universe"] = "examples/events/nowhere.json"
@@ -230,7 +232,7 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     refuses(lambda d: d["families"][0].pop("parts"), r"families\[0\] lacks keys: parts")
     refuses(lambda d: d["families"][0].__setitem__("parts", [3]), "parts must be one of")
     refuses(lambda d: d["families"][0].__setitem__("phase", 3), r"phase must be one of \[1, 2\], not 3")
-    # the self-source's unit (9.91 (5); commit 6): 0, or at least 24 A
+    # the self-source's unit (ALGEBRA.md #the-interval; commit 6): 0, or at least 24 A
     refuses(lambda d: d["families"][0]["self_source"].__setitem__("unit", 24), "is below 24 A")
     refuses(
         lambda d: d["families"][0].pop("held") and d["families"][0].pop("spins_step"),
@@ -317,7 +319,7 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
     refused(inline, r"measured\[0\]\.kind is refused: the family 'matter' declares its pair")
     # an emitter giving a family whose pair is the body's declares the given record's pair: on
     # an inline list, a body of a second massive kind giving matter (under the three entries a
-    # body of matter cannot give matter, its own family; ALGEBRA.md 9.85 (7) waits)
+    # body of matter cannot give matter, its own family; ALGEBRA.md #the-primitives waits)
     giving_matter = emitter_world(stock=1, ticks=10)
     names = {family["name"]: family for family in giving_matter["universe"]}
     names["matter"]["pair"] = "body"

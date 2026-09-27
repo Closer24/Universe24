@@ -1,7 +1,7 @@
-"""THE WAIT (ALGEBRA.md 9.112 item 1): one interval, for every Port, always: a value sent at the start of t is combined in t.
+"""THE WAIT (ALGEBRA.md #the-interval): one interval, for every Port, always: a value sent at the start of t is combined in t.
 
 One folder, one primitive (record 2221 (3)); the register finds it by this folder and reads
-DECLARATION, the row of ALGEBRA.md 9.117 for this name (cut 2: bind gives the loop's method that
+DECLARATION, the row of ALGEBRA.md #the-primitives for this name (cut 2: bind gives the loop's method that
 implements it today, resolved at each call; the next cut moves the body of code here).
 """
 
@@ -12,7 +12,7 @@ from typing import Any
 
 from event_universe.core.register import Declaration
 
-DECLARATION = Declaration("the wait", "(i)", (), (), None, "9.112 item 1", word="the step")
+DECLARATION = Declaration("the wait", "(i)", (), (), None, "ALGEBRA.md #the-interval", word="the step")
 
 
 def bind(loop: Any) -> Callable[..., object]:

@@ -93,7 +93,7 @@ def canonical(value: Any, out: list[bytes], seen: dict[int, int] | None = None) 
         out.append(repr(value).encode())
     elif isinstance(value, int):
         # an integer by its bytes, never its decimal string: the books' conserved forms run to
-        # thousands of digits (GAMEBOARD readings, ALGEBRA.md 9.50 (13))
+        # thousands of digits (GAMEBOARD readings, ALGEBRA.md #the-direction)
         out.append(b"int " + value.to_bytes((value.bit_length() + 8) // 8, "big", signed=True))
     elif isinstance(value, float):
         out.append(value.hex().encode())

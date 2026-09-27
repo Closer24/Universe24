@@ -1,4 +1,4 @@
-"""The cards' schemas collected from the register: at every place of the files, the keys the folders declare, each key one folder's; two folders claiming one key at one place are refused by name (ALGEBRA.md 9.117 item 2: a term is one line of the files, read by the folder it names)."""
+"""The cards' schemas collected from the register: at every place of the files, the keys the folders declare, each key one folder's; two folders claiming one key at one place are refused by name (ALGEBRA.md #the-primitives: a term is one line of the files, read by the folder it names)."""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""THE PAIR (ALGEBRA.md 9.57 (1); 9.111 item 7 row 1): the range and the rest rotation of the six-neighbour term: cos omega_0 = num / den at k = 0 and p = Gamma. 9.113 item 2: from the rule."""
+"""THE PAIR (ALGEBRA.md #the-line, #the-primitives row 1): the range and the rest rotation of the six-neighbour term: cos omega_0 = num / den at k = 0 and p = Gamma. ALGEBRA.md #the-primitives: from the rule."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from event_universe.core.schema import Either, Integer, ListOf, ObjectOf, OneOf,
 def pair_arrays(
     shape: tuple[int, ...], pair: tuple[int, int], wells: Sequence[tuple[np.ndarray, tuple[int, int]]]
 ) -> tuple[np.ndarray, np.ndarray]:
-    """THE PAIR ARRAYS (ALGEBRA.md 9.85 (3), 9.91 (7)): num and den over the GameBoard, the pair everywhere but at the bodies' Nodes, whose declared pairs (the wells) are written at their masks in order."""
+    """THE PAIR ARRAYS (ALGEBRA.md #the-primitives, #the-interval): num and den over the GameBoard, the pair everywhere but at the bodies' Nodes, whose declared pairs (the wells) are written at their masks in order."""
     num = np.full(shape, pair[0], dtype=np.int64)
     den = np.full(shape, pair[1], dtype=np.int64)
     for mask, (well_num, well_den) in wells:
@@ -28,7 +28,7 @@ DECLARATION = Declaration(
     ("the family's pair", "a body's pair at its Nodes"),
     ("the rule's coefficients",),
     pair_arrays,
-    "9.57 (1); 9.111 item 7 row 1",
+    "ALGEBRA.md #the-line, #the-primitives row 1",
     word="the step",
     schema=Schema(
         {
