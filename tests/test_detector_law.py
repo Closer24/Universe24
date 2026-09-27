@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+from dataclasses import replace
 
 import numpy as np
 import pytest
@@ -16,6 +17,7 @@ from tests.worlds import (
     EMITTER_PAIR,
     NODE_CLOCK,
     chain_world,
+    emitter_world,
     lawful_wheel,
     layer_world,
     receiver_body,
@@ -82,20 +84,7 @@ def test_the_rule_is_the_designs_integers_on_a_chain():
 
 
 def test_chain_world_clicks_once_per_record_with_the_books_balanced():
-    """The chain world under the flux reading (ALGEBRA.md #rule3; BUILD.md section 26
-    item 14): six givings at their rungs, every record clicking ONCE at `screen` (the
-    cumulative ladder [screen] on the emitter's default ladder of every declared set, no
-    face on a closed chain), its line at the rung's interval and the record deleted whole
-    at it (never in `records` after its line), the flight of the train's head over the 36
-    Links from the body's head at x = 33 to the screen at v_g = 0.447 (80 intervals) and
-    as much of the passage as the residue asks (the train of 32 Nodes passes in 72), every
-    click's quantum on the transit row `absorbed` and the screen body's `measured`, the
-    books balanced (the body's content level on the giving line is a GameBoard reading, a
-    diagnostic; the level sequence is pinned on the emitter world in tests/test_emitter.py).
-    The edge case: the faces OPEN on the chain of 140 (the body at [34, 66)
-    one train's length from the low face): the train leaves toward +x and the faces book
-    nothing of it within the first 40 intervals (no click there), the screen not reached
-    yet."""
+    """The chain world under the flux reading (ALGEBRA.md #rule3; BUILD.md section 26 item 14): six givings at their rungs, every record clicking ONCE at `screen` (the cumulative ladder [screen] on the emitter's default ladder of every declared set, no face on a closed chain), its line at the rung's interval and the record deleted whole at it (never in `records` after its line), the flight of the train's head over the 36 Links from the body's head at x = 33 to the screen at v_g = 0.447 (80 intervals) and as much of the passage as the residue asks (the train of 32 Nodes passes in 72), every click's quantum on the transit row `absorbed` and the screen body's `measured`, the books balanced (the body's content level on the giving line is a GameBoard reading, a diagnostic; the level sequence is pinned on the emitter world in tests/test_emitter.py). The edge case: the faces OPEN on the chain of 140 (the body at [34, 66) one train's length from the low face): the train leaves toward +x and the faces book nothing of it within the first 40 intervals (no click there), the screen not reached yet."""
     world = parse_nature_beam_world(chain_world())
     assert "face" not in DetectorLawSimulation(world).detector_names
     lines: list[dict] = []
@@ -140,14 +129,7 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
 
 
 def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_record():
-    """ALGEBRA.md #the-click (the Boss's line on the knot): the emitter's own Nodes are Nodes like
-    every other after the giving: no grace, no exemption, no own take. On the chain world
-    the given record's row at the emitter's tail Node evolves under the rule (nonzero at ages
-    after the giving, never held at 0), the ledger's row `taken_by_emitter` stays 0 (kept for the
-    readers' form) and the records reading carries no `emitter_taking`; a `remnant_take` key
-    on the emitter is refused as unknown; the world key `wheel`, a set's `wheel` and a
-    family's `take` are refused by name (the retired keys, BUILD.md section 26 item 15); the
-    books balanced."""
+    """ALGEBRA.md #the-click (the Boss's line on the knot): the emitter's own Nodes are Nodes like every other after the giving: no grace, no exemption, no own take. On the chain world the given record's row at the emitter's tail Node evolves under the rule (nonzero at ages after the giving, never held at 0), the ledger's row `taken_by_emitter` stays 0 (kept for the readers' form) and the records reading carries no `emitter_taking`; a `remnant_take` key on the emitter is refused as unknown; the world key `wheel`, a set's `wheel` and a family's `take` are refused by name (the retired keys, BUILD.md section 26 item 15); the books balanced."""
     world = parse_nature_beam_world(chain_world(1))
     simulation = DetectorLawSimulation(world)
     at_node: list[int] = []
@@ -379,17 +361,7 @@ def test_the_increment_ladder_over_the_named_sets():
 
 
 def test_detector_is_one_connected_cube_of_side_three():
-    """THE DETECTOR CUBE (the model owner's word of 2026-09-25, record 1899; ALGEBRA.md #the-ladder): a detector is one region, a cube of side 3 or more, its click the detector's.
-    On the layer of 80 x 9, beyond the emitter's box, the loader refuses a cube of side 2 (the 2 x 2 box at (40, 2)
-    naming its sides [2, 2, 1]), admits a cube of side 3 (the 3 x 3 box at (40, 2); the
-    layer's thin z axis cuts the cube to one Node deep), admits the 3 x 3 box wrapped across
-    the periodic seam (y = 8, 0, 1: one piece, one box), refuses a disconnected set (two
-    bodies at (40, 2) and (43, 2), naming the two pieces) and refuses a connected set that
-    fills no box (the 3 x 3 box less its centre, naming its Nodes); a set bound to a block
-    admits a block of side 1 as its Nodes (SINCE COMMIT 7 a body is its own detector whatever
-    its support, ALGEBRA.md #the-rows-against-nature, record 2109) and one of side 3; the engine reads the
-    admitted cube as ONE detector whose Nodes are the cube's (the click line names the set and
-    places no Node)."""
+    """THE DETECTOR CUBE (the model owner's word of 2026-09-25, record 1899; ALGEBRA.md #the-ladder): a detector is one region, a cube of side 3 or more, its click the detector's. On the layer of 80 x 9, beyond the emitter's box, the loader refuses a cube of side 2 (the 2 x 2 box at (40, 2) naming its sides [2, 2, 1]), admits a cube of side 3 (the 3 x 3 box at (40, 2); the layer's thin z axis cuts the cube to one Node deep), admits the 3 x 3 box wrapped across the periodic seam (y = 8, 0, 1: one piece, one box), refuses a disconnected set (two bodies at (40, 2) and (43, 2), naming the two pieces) and refuses a connected set that fills no box (the 3 x 3 box less its centre, naming its Nodes); a set bound to a block admits a block of side 1 as its Nodes (SINCE COMMIT 7 a body is its own detector whatever its support, ALGEBRA.md #the-rows-against-nature, record 2109) and one of side 3; the engine reads the admitted cube as ONE detector whose Nodes are the cube's (the click line names the set and places no Node)."""
     box = [[x, y, 0] for x in (40, 41, 42) for y in (2, 3, 4)]
     wrapped = [[x, y, 0] for x in (40, 41, 42) for y in (8, 0, 1)]
     for positions, refusal in (
@@ -442,3 +414,23 @@ def test_detector_is_one_connected_cube_of_side_three():
         else:
             with pytest.raises(ValueError, match=refusal):
                 parse_nature_beam_world(document)
+
+
+def test_the_wall_l_is_over_the_clocks_of_the_families_a_body_gives_and_the_emitters():
+    """The law's row "the recoil" (#1289): L is the least common multiple of the wavelengths 2 N q / p over the clocks of the families a body of the world gives and the emitters' own; a clock on a family no body gives enters nothing and is not checked (matter [7, 1] on N = 1024: 2048 / 7 is no whole number of Links), so L stands as without it. The edge case: the same clock on the given family (light) is refused at load by name."""
+    document = emitter_world(stock=2, ticks=120)
+    document["stamp"] = input_stamp(document)
+    world = parse_nature_beam_world(document)
+    families = list(world.families)
+    light, matter = (next(i for i, f in enumerate(families) if f.name == n) for n in ("light", "matter"))
+    wall = DetectorLawSimulation(world).recoil_wall
+    families[matter] = replace(families[matter], phase_per_age=(7, 1))
+    assert DetectorLawSimulation(replace(world, families=tuple(families))).recoil_wall == wall
+    families[matter], families[light] = (
+        world.families[matter],
+        replace(families[light], phase_per_age=(7, 1)),
+    )
+    with pytest.raises(
+        ValueError, match=rf"families\[{light}\] declares the clock \[7, 1\] on N = 1024"
+    ):
+        DetectorLawSimulation(replace(world, families=tuple(families)))
