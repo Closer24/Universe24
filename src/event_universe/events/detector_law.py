@@ -83,7 +83,7 @@ from event_universe.core.rule3 import (
     form_term,
     rule3,
 )
-from event_universe.events import assembly, guards, output
+from event_universe.events import assembly, feeding, guards, output
 from event_universe.events import live as live_records
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
@@ -92,16 +92,6 @@ from event_universe.events.records import Block, DetectorLawLayer, Ledger, LiveR
 from event_universe.features import self_source
 from event_universe.features import signed_read as sr
 from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
-from event_universe.features.feed import (
-    PAIR_INDEX,
-    FeedFace,
-    FeedOwn,
-    FeedRead,
-    FeedStart,
-    FeedWrites,
-    Tensor,
-    Vector,
-)
 from event_universe.features.giving import (
     THE_CLOSE,
     THE_OPEN,
@@ -112,12 +102,6 @@ from event_universe.features.giving import (
     GivingWrites,
 )
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
-from event_universe.features.induction import (
-    InductionOwn,
-    InductionRead,
-    InductionStart,
-    InductionWrites,
-)
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
 from event_universe.features.spins_step import (
@@ -920,123 +904,11 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         block.hold_value.update(writes.own.values)
         block.hold_carry.update(writes.own.carries)
 
-    def _read_factors(self, block: Block) -> list[tuple[int, int]]:
-        """The body's family's reads of held families with their factors f: the weight plainly, minus the body's charge times the weight by q (ALGEBRA.md #the-primitives, the rows of the feed and the induction)."""
-        found: list[tuple[int, int]] = []
-        for other, weight, by, _ in self.families[block.family].reads:
-            if other in self.held_records:
-                factor = weight if by == "plain" else -self._body_charge(block.number) * weight
-                found.append((other, factor))
-        return found
-
-    def _parts_summed(
-        self, family: int, where: np.ndarray, before: bool = False
-    ) -> tuple[int, Vector, Tensor]:
-        """A held family's levels summed over the Nodes of `where` (HOST, the feed's and the induction's read): the time part, the vector part (0 where the family has none) and the symmetric tensor part in the feed's order (0 where none), as the interval leaves them or at its start."""
-
-        def total(record: LiveRecord) -> int:
-            return int((record.before if before else record.now)[where].sum())
-
-        vector = [0, 0, 0]
-        tensor = [0] * len(set(PAIR_INDEX.values()))
-        for index, record in enumerate(self.held_parts[family]):
-            group, axes = self.main_loop.function_of("the degree", "(i)")(
-                self.families[family].parts, index + 1
-            )
-            if group == 1:
-                vector[axes[0]] = total(record)
-            elif group == 2:
-                tensor[PAIR_INDEX[axes]] = total(record)
-        return (
-            total(self.held_records[family]),
-            (vector[0], vector[1], vector[2]),
-            cast(Tensor, tuple(tensor)),
-        )
-
-    def _faces_of(self, block: Block, axis: int) -> tuple[np.ndarray, np.ndarray] | None:
-        """The body's two faces on an axis (minus, plus): the Nodes outside the body whose Link through the Port toward it leads inside, read through the Ports (the wrap on a periodic axis, nothing beyond an open face); None where the axis has one layer or the two faces differ in size (a face beyond an open face, a body not a box)."""
-        if self.shape[axis] == 1:
-            return None
-        inside = self.ports.arrivals(block.mask, self.kind_wrap[block.family], False)
-        minus = inside[port_of(axis, 1)] & ~block.mask
-        plus = inside[port_of(axis, -1)] & ~block.mask
-        if not minus.any() or int(minus.sum()) != int(plus.sum()):
-            return None
-        return minus, plus
-
-    def _feed_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
-        """THE FEED AT (v): the feed's line (features/feed) on the body, from the fields as the interval leaves them: per axis the two faces' reads (the time, vector and tensor parts summed over the face's Nodes, with the read's factor), the faces' distance in Links (the body's layers plus one) and a face's Node count, the body's two levels of momentum, its wall and the Node clock; the writes the two levels and the remainders back; a body held in place (the word `fixed`) is not fed."""
-        factors = [] if block.fixed else self._read_factors(block)
-        if not factors:
-            return
-        faces_per_axis: list[tuple[FeedFace, FeedFace] | None] = []
-        distance = [0, 0, 0]
-        for axis in range(3):
-            faces = self._faces_of(block, axis)
-            if faces is None:
-                faces_per_axis.append(None)
-                continue
-            pair = tuple(
-                FeedFace(
-                    tuple(FeedRead(f, *self._parts_summed(other, face)) for other, f in factors),
-                    int(face.sum()),
-                )
-                for face in faces
-            )
-            faces_per_axis.append((pair[0], pair[1]))
-            layers = np.any(block.mask, axis=tuple(other for other in range(3) if other != axis))
-            distance[axis] = int(layers.sum()) + 1
-        start = FeedStart(
-            THE_INVERSE if inverse else THE_ADVANCE,
-            (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2])),
-            (
-                int(block.momentum_before[0]),
-                int(block.momentum_before[1]),
-                int(block.momentum_before[2]),
-            ),
-            self.wall_of(block),
-            self.node_clock,
-            (faces_per_axis[0], faces_per_axis[1], faces_per_axis[2]),
-            (distance[0], distance[1], distance[2]),
-        )
-        own = FeedOwn({key: value for key, value in block.hold_carry.items() if key[0] == "feed"})
-        writes = cast(FeedWrites, line(start, own))
-        block.momentum, block.momentum_before = list(writes.momentum), list(writes.momentum_before)
-        block.hold_carry.update(writes.own.carries)
-
-    def _induction_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
-        """THE INDUCTION AT (v): the induction's line (features/induction) on the body: per read the vector part summed over the body's Nodes as the interval leaves it and at its start, with the read's factor; the body's two levels of momentum, its wall, the Node clock and its Node count; the writes the two levels and the remainders back; a body held in place (the word `fixed`) is not fed."""
-        factors = [] if block.fixed else self._read_factors(block)
-        factors = [(other, f) for other, f in factors if self.held_parts[other]]
-        if not factors:
-            return
-        reads = tuple(
-            InductionRead(
-                f,
-                self._parts_summed(other, block.mask)[1],
-                self._parts_summed(other, block.mask, True)[1],
-            )
-            for other, f in factors
-        )
-        start = InductionStart(
-            THE_INVERSE if inverse else THE_ADVANCE,
-            (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2])),
-            (
-                int(block.momentum_before[0]),
-                int(block.momentum_before[1]),
-                int(block.momentum_before[2]),
-            ),
-            self.wall_of(block),
-            self.node_clock,
-            int(np.count_nonzero(block.mask)),
-            reads,
-        )
-        own = InductionOwn(
-            {key: value for key, value in block.hold_carry.items() if key[0] == "induction"}
-        )
-        writes = cast(InductionWrites, line(start, own))
-        block.momentum, block.momentum_before = list(writes.momentum), list(writes.momentum_before)
-        block.hold_carry.update(writes.own.carries)
+    _read_factors = feeding.read_factors
+    _parts_summed = feeding.parts_summed
+    _faces_of = feeding.faces_of
+    _feed_act = feeding.feed_act
+    _induction_act = feeding.induction_act
 
     def residue_of(self, live: LiveRecord | NodeRecord, block: Block) -> tuple[int, int]:
         """The residue from the law under the Node clock, read at the first shell Node: the record's rule remainder r at the body's first shell Node in the declared order, read now, in units of the remainder's step g = gcd(Gamma num, 6 den M, 3 den f) at that Node, and the wheel W = 3 den f / g (`wheel_at`); no declaration, no draw; which Node is read is a convention."""
@@ -1054,11 +926,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         emitter = block.definition.emitter
         assert emitter is not None
         if block.definition.profile is None:
-            # the mathematician's gate item 8: the excited record is the body's
-            # composed mode (ALGEBRA.md #what-a-body-is, #the-click), the generator's
-            # profile; a flat seed is no mode and is refused where a body
-            # givings (at the engine's construction: the generator parses the
-            # world with the scalar seed to compute the profile)
             raise ValueError(
                 f"measured[{block.number}].emitter needs the body's `seed` as its "
                 "composed mode's profile (one integer per Node, the generator's "
@@ -1303,11 +1170,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 for detector, set_name in enumerate(self.detector_set)
                 if set_name == name
             ]
-        # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; item 47): the
-        # giving lowers the given family's content held at the body by one,
-        # the body's own quanta and its charge untouched (under the point
-        # emitter too, item 50: the quantum moves at the open, the window
-        # shapes its rows, the close names the record)
         opened = self._giving_act(
             block,
             GivingStart(
@@ -1355,9 +1217,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 # the wheel's ingredients, read with it (item 34; GAMEBOARD)
                 "read_clocks": read_clocks,
                 "norm": live.norm,
-                # the norm's denominator (item 36): the given record's
-                # form is norm / pace, whole in the body's own units at
-                # the body's level as written
                 "pace": live.pace,
                 # the file's vacuum norm (p times it the given record's T
                 # in the vacuum) and the body's content and clock pair
