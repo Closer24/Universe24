@@ -51,8 +51,7 @@ def own_of(simulation: DetectorLawSimulation, family: int) -> SignedReadOwn:
 
 
 def hand_line(simulation: DetectorLawSimulation, family: int, node: tuple[int, ...]) -> int:
-    """The trace's line of the pace's read at one Node (ALGEBRA.md #the-interval): per read the family,
-    the signed weight, the level, by plain or by sign with q, the product; p_0 = Gamma - the sum."""
+    """The trace's line of the pace's read at one Node (ALGEBRA.md #the-interval): per read the family, the signed weight, the level, by plain or by sign with q, the product; p_0 = Gamma - the sum."""
     q = simulation.family_charge[family]
     products = []
     for other, weight, by, _twist in simulation.families[family].reads:
@@ -62,8 +61,7 @@ def hand_line(simulation: DetectorLawSimulation, family: int, node: tuple[int, .
 
 
 def test_apply_equals_the_engines_read_bit_for_bit_on_the_emitters_world():
-    """The emitter's unit world: the folder's content equals `_effective_content` at every reading family
-    over twenty intervals, the guard passes, and the hand identity p_0 = Gamma - the sum holds."""
+    """The emitter's unit world: the folder's content equals `_effective_content` at every reading family over twenty intervals, the guard passes, and the hand identity p_0 = Gamma - the sum holds."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=20)))
     readers = [family for family, definition in enumerate(simulation.families) if definition.reads]
     assert readers
@@ -83,8 +81,7 @@ def test_apply_equals_the_engines_read_bit_for_bit_on_the_emitters_world():
 
 
 def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
-    """The guard's bound P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) is the last pace with
-    (S - 6 R) + 2 w >= 0 on the rule's (R, S, w): 1002 for [800, 809], 1015 for [800, 850], 1000 for [1, 1]"""
+    """The guard's bound P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) is the last pace with (S - 6 R) + 2 w >= 0 on the rule's (R, S, w): 1002 for [800, 809], 1015 for [800, 850], 1000 for [1, 1]"""
     for pair, expected in (((800, 809), 1002), ((800, 850), 1015), ((1, 1), 1000)):
         bound = pace_bound(pair, CHAIN_GAMMA)
         assert bound == expected
@@ -99,9 +96,7 @@ def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
 
 @pytest.mark.diagnostic
 def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond_it():
-    """The charged chain: a matter record of charge +1 reads c - Lambda d; at Lambda = 1 p = 1000 <=
-    1002, admitted (the largest pace over the GameBoard is a GameBoard reading, a diagnostic,
-    not a measurement); at Lambda = 3 the hill beyond the hollow at a slab Node enters at the floor 0."""
+    """The charged chain: a matter record of charge +1 reads c - Lambda d; at Lambda = 1 p = 1000 <= 1002, admitted (the largest pace over the GameBoard is a GameBoard reading, a diagnostic, not a measurement); at Lambda = 3 the hill beyond the hollow at a slab Node enters at the floor 0."""
     admitted = DetectorLawSimulation(
         parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, 1, 1))
     )
@@ -119,8 +114,7 @@ def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond
 
 
 def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edge():
-    """A hill would raise the pace above Gamma; the floor reads it as 0 at any depth (152, 153, 10^8), and
-    the edge of [800, 850], p = 1.0152 Gamma, is the arithmetic's check on the axis contents alone."""
+    """A hill would raise the pace above Gamma; the floor reads it as 0 at any depth (152, 153, 10^8), and the edge of [800, 850], p = 1.0152 Gamma, is the arithmetic's check on the axis contents alone."""
     left, right = stability_bound((800, 850), GAMMA)
     assert (left, right) == (19_500, GAMMA * GAMMA * 20_100) and pace_bound((800, 850), GAMMA) == 10_152
     term = SignedReadTerm(((1, -1, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA)
@@ -147,8 +141,7 @@ def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edg
 
 
 def test_a_massless_family_reads_a_hill_as_the_floor_and_every_family_needs_a_pace_above_zero():
-    """For den = num the edge is p <= Gamma exactly, and the floor keeps every hill at it (read as 0); a
-    content at Gamma (the pace 0) ends the run on the lower side; Gamma - 1 passes."""
+    """For den = num the edge is p <= Gamma exactly, and the floor keeps every hill at it (read as 0); a content at Gamma (the pace 0) ends the run on the lower side; Gamma - 1 passes."""
     massless = SignedReadTerm(((1, 1, signed_read.BY_PLAIN),), 0, (1, 1), GAMMA)
     own = SignedReadOwn(2, "light", 3)
     shape = (2, 2, 2)
@@ -166,8 +159,7 @@ def test_a_massless_family_reads_a_hill_as_the_floor_and_every_family_needs_a_pa
 
 
 def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
-    """Three reads (2 a - 3 b plain, + 4 c by sign with q = -1) sum per Node exactly; no reads give 0; a
-    phase-2 read takes D_i = now^2 - next x before as handed in, times the weight, a hill at the floor 0."""
+    """Three reads (2 a - 3 b plain, + 4 c by sign with q = -1) sum per Node exactly; no reads give 0; a phase-2 read takes D_i = now^2 - next x before as handed in, times the weight, a hill at the floor 0."""
     shape = (2, 1, 1)
     a = np.array([[[5]], [[7]]], dtype=np.int64)
     b = np.array([[[1]], [[-2]]], dtype=np.int64)
@@ -195,8 +187,7 @@ def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
 
 
 def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_by_name():
-    """A read by a word other than plain or sign is refused naming the family and the word; a read whose
-    reach leaves int64 is refused before any product; two reads whose reach together leaves int64 too."""
+    """A read by a word other than plain or sign is refused naming the family and the word; a read whose reach leaves int64 is refused before any product; two reads whose reach together leaves int64 too."""
     shape = (2, 1, 1)
     level = np.array([[[3]], [[-4]]], dtype=np.int64)
     own = SignedReadOwn(0, "matter", 0)
@@ -230,8 +221,7 @@ def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_
 
 
 def test_the_declaration_is_the_ledgers_row():
-    """The folder declares the row of ALGEBRA.md #the-primitives: the name, the place (i), the four reads in the
-    row's words, the paces as its one write with no order, its function `apply`, its section."""
+    """The folder declares the row of ALGEBRA.md #the-primitives: the name, the place (i), the four reads in the row's words, the paces as its one write with no order, its function `apply`, its section."""
     assert DECLARATION.name == "the signed read"
     assert DECLARATION.place == "(i)"
     assert DECLARATION.reads == (

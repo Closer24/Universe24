@@ -11,11 +11,7 @@ from tests.bodies import parts_of, parts_world
 
 
 def test_a_moving_body_writes_the_vector_and_tensor_parts_with_the_remainders_carried():
-    """The body at momentum n = (64, 0, 0) on its wall W and content s: gravity's x part at its
-    Nodes (4 s n_x + r) div W, xx (2 s n_x^2 + r) div W^2, the other components 0 (n_y = n_z
-    = 0); the remainders carried, so over intervals the written value steps between the two
-    integers around 4 s n_x / W with the mean the exact fraction; the charge Q = 2 gives its
-    time part 2 and its current (2 n_x) div W; every unsourced part exactly zero and silent."""
+    """The body at momentum n = (64, 0, 0) on its wall W and content s: gravity's x part at its Nodes (4 s n_x + r) div W, xx (2 s n_x^2 + r) div W^2, the other components 0 (n_y = n_z = 0); the remainders carried, so over intervals the written value steps between the two integers around 4 s n_x / W with the mean the exact fraction; the charge Q = 2 gives its time part 2 and its current (2 n_x) div W; every unsourced part exactly zero and silent."""
     document = parts_world(momentum=[64, 0, 0], q=2)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     block = simulation.blocks[0]
@@ -50,11 +46,7 @@ def test_a_moving_body_writes_the_vector_and_tensor_parts_with_the_remainders_ca
 
 
 def test_a_body_at_rest_with_spin_and_moment_writes_the_dipoles_and_inverts_exactly():
-    """At rest with S = (0, 0, 5) and mu = (4, 0, 0): gravity's vector part at the Node +
-    sigma e_j gains sigma (S x e_j)_i, the charge's (sigma (mu x e_j)_i) div 2 with the
-    remainder carried (so 0 and 1 alternate where mu x e_j is odd); the support's vector and
-    tensor parts stay 0 (n = 0); the backward run restores the start exactly, the dipoles
-    taken back and the carried divisions stepped back."""
+    """At rest with S = (0, 0, 5) and mu = (4, 0, 0): gravity's vector part at the Node + sigma e_j gains sigma (S x e_j)_i, the charge's (sigma (mu x e_j)_i) div 2 with the remainder carried (so 0 and 1 alternate where mu x e_j is odd); the support's vector and tensor parts stay 0 (n = 0); the backward run restores the start exactly, the dipoles taken back and the carried divisions stepped back."""
     document = parts_world(spin=[0, 0, 5], moment=[4, 0, 0])
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     gravity = parts_of(simulation, "clicks")
@@ -92,8 +84,7 @@ def test_a_body_at_rest_with_spin_and_moment_writes_the_dipoles_and_inverts_exac
 
 
 def test_at_rest_without_numbers_every_other_part_is_silent_and_the_scalar_engine_stands():
-    """A body with no momentum, spin, moment or charge writes the time parts alone; every other
-    part is zero and silent at every interval (ALGEBRA.md #the-interval), the leak test empty."""
+    """A body with no momentum, spin, moment or charge writes the time parts alone; every other part is zero and silent at every interval (ALGEBRA.md #the-interval), the leak test empty."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(parts_world()))
     for _ in range(10):
         simulation.step()

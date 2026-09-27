@@ -31,8 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_first_value_twice():
-    """Rule3's division act forward and its direction -1 back: an advance then an inverse returns the
-    state; the value before is the ceiling form; at the load both levels are the first value."""
+    """Rule3's division act forward and its direction -1 back: an advance then an inverse returns the state; the value before is the ceiling form; at the load both levels are the first value."""
     rng = random.Random(7)
     for _ in range(300):
         wall = rng.randint(1, 10**6)
@@ -60,8 +59,7 @@ def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_fir
 
 
 def test_the_dipoles_terms_are_the_table_of_9_91_3():
-    """A spin S at the body's Node writes sigma x (S x e_j)_i at the Node + sigma e_j (S x e_x = (0, S_z,
-    -S_y) and cyclic); the moment the same over the divisor 2; a zero vector writes no dipole."""
+    """A spin S at the body's Node writes sigma x (S x e_j)_i at the Node + sigma e_j (S x e_x = (0, S_z, -S_y) and cyclic); the moment the same over the divisor 2; a zero vector writes no dipole."""
 
     def cross(vector, j):
         out = [0, 0, 0]

@@ -1,6 +1,6 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "6766e731bd557a3abfb4b5c36e79ccca1c382ec6",
+ "recorded_at": "167b64e6696eb4bbc81c5b5750d1d2c619d4b48d",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
@@ -8,12 +8,12 @@
    },
    "ticks": 15156,
    "intervals": 200,
-   "digest": "5e0b1e3cb500ddcdf85efd6b0a393923fdf8107e17d3c7df14d2ccaf7c507c32",
-   "records": 16,
+   "digest": "d1fc82648f8eb3065b1382434a88bef51e1eb05500fb5afc9c86ae4434081a1d",
+   "records": 3,
    "clicks": 0,
-   "lines": 577,
-   "refused_at": 181,
-   "refused": "the twist on the Port toward +y reaches |k| = 43307142, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
+   "lines": 37,
+   "refused_at": 14,
+   "refused": "the twist on the Port toward +y reaches |k| = 34034832, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/dark_body/dark.json": {
    "stamp": {
@@ -21,12 +21,12 @@
    },
    "ticks": 2400,
    "intervals": 200,
-   "digest": "d8223eaab295a66282e5bee935e15297a5513703c0a20ac4c1df756d30ef2e7c",
-   "records": 12,
+   "digest": "1f7cc99f533c45b110be8cf4bf9e40b183a854e95ad8c5b7db907bdf0b342a55",
+   "records": 3,
    "clicks": 0,
-   "lines": 573,
-   "refused_at": 181,
-   "refused": "the twist on the Port toward +y reaches |k| = 43416228, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
+   "lines": 37,
+   "refused_at": 14,
+   "refused": "the twist on the Port toward +y reaches |k| = 34034832, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/massive_record/boxed_clock_side_20_at_rest.json": {
    "stamp": {
@@ -34,7 +34,7 @@
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "3f1ba949f0fc7c327b8e11a7c37817b896cce93dfa1f9a42447d7c85b478fa4a",
+   "digest": "11bbaf43682fc9fa77d775c051bd4ab9e5cafe210e4d0bda273bc5f66ade3314",
    "records": 1,
    "clicks": 0,
    "lines": 203
@@ -45,7 +45,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "ea6e27a69686ae3cc3e856f4e5fdd49f98c8ccfe57c8e11318053ffda3d70833",
+   "digest": "b19a2e6fd41be04833c6923e127362d386ffe2ba306b384a8f27d36d86d80120",
    "records": 1,
    "clicks": 0,
    "lines": 403
@@ -56,7 +56,7 @@
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "85fe3b56622fe3ec6ea1416867a3eb3a3dda3c6e1c958f5fdc26d4e77e29317f",
+   "digest": "6f33006103dbe73b108ef6228d35c377b3bf4cac4b0cd24f393fa997a210abaa",
    "records": 1,
    "clicks": 0,
    "lines": 204
@@ -67,7 +67,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "474a0e1c246c4e230d418ff1eb5f93c352217b6d5845deeb25a541d49db61fe2",
+   "digest": "0be862a705b698db9fcb6778747e1622077b364f9962b5ceb83fbb0c4c957afe",
    "records": 1,
    "clicks": 0,
    "lines": 404
@@ -78,7 +78,7 @@
    },
    "ticks": 3500,
    "intervals": 200,
-   "digest": "66306ead87dd68dee78b9c4af708f080ee81b52eb2e63bdf49ab90c91f881d2f",
+   "digest": "4a242ce4ee0833137064fda259bfab205d94f1ebe2d2cfcb62511963a15f5948",
    "records": 1,
    "clicks": 0,
    "lines": 201
@@ -89,7 +89,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "ecb23d2289884dff35912ee29bd9c505a9142b01ab5b74cbc35c7da8bb945bb0",
+   "digest": "8c7b2a84857692976d8121dc243dfa84fa75e708be3255ba03dbc21a583d4132",
    "records": 1,
    "clicks": 0,
    "lines": 401
@@ -100,10 +100,10 @@
    },
    "ticks": 4800,
    "intervals": 1500,
-   "digest": "a6a95fb9746554431bf245044670bf581ec8e22bfc53978c0f264f98a7d15840",
-   "records": 17,
-   "clicks": 40,
-   "lines": 4754
+   "digest": "4d32e84a40a1c1c0dfed656fef0457af1ade558646f07c4e9f06f794c62ad254",
+   "records": 15,
+   "clicks": 44,
+   "lines": 4759
   },
   "examples/events/massive_record/muon_moving_clock_at_rest_14.json": {
    "stamp": {
@@ -111,7 +111,7 @@
    },
    "ticks": 20500,
    "intervals": 200,
-   "digest": "0424b763c3638592188417a84fdbafef688892001fc9b296573881cf7258b8ad",
+   "digest": "1a59b38c9e3a9ddc483ed6825de40aaabd093b7282fbdda1aa6f440c50898102",
    "records": 1,
    "clicks": 0,
    "lines": 204
@@ -122,7 +122,7 @@
    },
    "ticks": 20500,
    "intervals": 200,
-   "digest": "6e65672f9dfb0bc6db24ccf08a464de8c6bdf75058ab02a806602c571e9f03d8",
+   "digest": "564988ec2cf36183ba8700d5982f1461a81e0ae4623b23e8fc5067291419562f",
    "records": 1,
    "clicks": 0,
    "lines": 404
@@ -159,12 +159,12 @@
    },
    "ticks": 5600,
    "intervals": 200,
-   "digest": "90697852a802eab1c0b70b5fc546a1688752bc968d544b87f33ddee5383dac48",
-   "records": 13,
+   "digest": "3feb2c7128fc55b7fbfc2b1ca205b2d8d0694cb6ad060c9ed974a7eb26e7519a",
+   "records": 3,
    "clicks": 0,
-   "lines": 574,
-   "refused_at": 181,
-   "refused": "the twist on the Port toward +y reaches |k| = 43416228, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
+   "lines": 37,
+   "refused_at": 14,
+   "refused": "the twist on the Port toward +y reaches |k| = 33925746, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/toward_nature/lorentz_moving.json": {
    "stamp": {
@@ -172,10 +172,10 @@
    },
    "ticks": 3600,
    "intervals": 200,
-   "digest": "da102fd6970312c6ee9714ca376c9536214d5970412049d995d9ec3225786e6d",
-   "records": 12,
-   "clicks": 0,
-   "lines": 631
+   "digest": "f837341cea120e8e68aa8452f59e53efff3831f4e43c070feab8da7e8e4e679a",
+   "records": 10,
+   "clicks": 2,
+   "lines": 633
   },
   "examples/events/toward_nature/lorentz_moving_long.json": {
    "stamp": {
@@ -183,10 +183,10 @@
    },
    "ticks": 5966,
    "intervals": 200,
-   "digest": "aa8321921fe7dc5389b68fd00f92c7931b9a8f12eed0006a637c7244e031946a",
+   "digest": "0c152af3f55f9a4c3e2bfc3997d043cc7bab8bfc811b7306fa5c88f1fa32b6e1",
    "records": 3,
    "clicks": 1,
-   "lines": 609
+   "lines": 608
   },
   "examples/events/toward_nature/lorentz_rest.json": {
    "stamp": {
@@ -194,10 +194,10 @@
    },
    "ticks": 3600,
    "intervals": 1500,
-   "digest": "2db4572ca005e45c6ff6b039885d6ba4ca02b2d37c911e149ee4211cac2e6c64",
-   "records": 19,
-   "clicks": 40,
-   "lines": 4755
+   "digest": "a45014e8e7ca8a4bcf8df459019512bed050c4921221ca571bfee56ccbf50d06",
+   "records": 14,
+   "clicks": 45,
+   "lines": 4760
   },
   "examples/events/toward_nature/lorentz_rest_long.json": {
    "stamp": {
@@ -205,7 +205,7 @@
    },
    "ticks": 8206,
    "intervals": 200,
-   "digest": "095930c809f2dc3f13ea6f28e9e228e8a99c7d75e734d89b96bfa4baa57337da",
+   "digest": "c5dedeeff11452de76f84c3860fbd7207737d04524a0b47f415ddc00ba36a31a",
    "records": 4,
    "clicks": 0,
    "lines": 607
@@ -216,7 +216,7 @@
    },
    "ticks": 6534,
    "intervals": 200,
-   "digest": "fa90e8261ac8f684ab47f88bcc9c513c52196b9737f031801c7fb9bc6b578f00",
+   "digest": "48ff4acee5199a34a0c73741b0d8e0eeeb2612cd5952ffd6140e4df62d50b3f7",
    "records": 2,
    "clicks": 1,
    "lines": 101,
@@ -229,12 +229,12 @@
    },
    "ticks": 10558,
    "intervals": 200,
-   "digest": "d0f7910a70cbc1a35435f029021d5aea9d7618c42ca8afdb84f4c20076f6d254",
+   "digest": "b5e506252893d63a31743a86cc3de43219394c7be8a153965f6d7f745a29406a",
    "records": 1,
    "clicks": 1,
    "lines": 165,
    "refused_at": 56,
-   "refused": "the twist on the Port toward +x reaches |k| = 37704680, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
+   "refused": "the twist on the Port toward +x reaches |k| = 36862640, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/toward_nature/redshift_top.json": {
    "stamp": {
@@ -242,10 +242,10 @@
    },
    "ticks": 6150,
    "intervals": 200,
-   "digest": "beab32bf0e33cf7c35fb74a813c5adabe7038aa0ddab23e257f4a0fe232bb8ed",
+   "digest": "a68efb8e9383e7d4febe998cd171ddc5f725b2f88d6fe184bc5d26109a275164",
    "records": 9,
-   "clicks": 1,
-   "lines": 630
+   "clicks": 0,
+   "lines": 628
   },
   "examples/events/toward_nature/redshift_top_long.json": {
    "stamp": {
@@ -253,7 +253,7 @@
    },
    "ticks": 9598,
    "intervals": 200,
-   "digest": "f7490dbb8ec7f14bfa3941a75b02997078b2b1a16d9d91eb8df468b5e8ee5542",
+   "digest": "99696586d9551415220b7a1d2634645d28d1d58dc77b0ad1dc54ae50b83c0d43",
    "records": 4,
    "clicks": 0,
    "lines": 607

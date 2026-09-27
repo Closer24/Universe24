@@ -96,7 +96,7 @@ def body_world() -> dict:
                 "nodes": [{"node": [5, 0, 0], "count": 1}, {"node": [6, 0, 0], "count": 1}],
                 "momentum": [0, 0, 0],
                 "momentum_before": [0, 0, 0],
-                "polariser": {"angle": [2, 1], "sets": ["strip", "rest"]},
+                "polariser": {"angle": [2, 1], "sets": ["rest", "strip"]},
             }
         ],
         "detectors": [{"name": "strip", "positions": [[6, 0, 0]]}],
@@ -112,7 +112,7 @@ def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_a
     next(row for row in universe["families"] if row["name"] == "matter")["sign"] = -1
     world = parse_nature_beam_world(place(tmp_path, monkeypatch, universe, body_world()))
     entry, (strip,) = world.measured[0], world.detectors
-    assert entry.block.declared == {"polariser": {"angle": (2, 1), "sets": ("strip", "rest")}}
+    assert entry.block.declared == {"polariser": {"angle": (2, 1), "sets": ("rest", "strip")}}
     assert entry.block.q == 0
     assert sum(f.charge[0] * h for f, h in zip(world.families, entry.held, strict=True)) == -2
     assert (strip.positions, strip.block) == (((6, 0, 0),), 0)
