@@ -9,13 +9,12 @@ the test's own integers; the host's table generator's angles within their tolera
 
 from __future__ import annotations
 
-import importlib.util
-import sys
 from pathlib import Path
 
 import pytest
 
 from event_universe.events import primitives as P
+from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -199,11 +198,7 @@ def test_the_helicity_is_the_sign_of_the_spin_against_the_momentum():
 
 
 def test_the_hosts_table_generator_writes_exact_triples_within_their_angles():
-    spec = importlib.util.spec_from_file_location("twist_table", ROOT / "tools/twist_table.py")
-    tool = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    sys.modules["twist_table"] = tool
-    spec.loader.exec_module(tool)
+    tool = load_file("twist_table", ROOT / "tools/twist_table.py")
     table = tool.build(coarse=4)
     table.check()  # every identity exact (the module's check)
     largest = tool.check_angles(table)  # every angle within the representable floor (the host's check)

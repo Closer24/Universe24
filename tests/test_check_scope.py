@@ -1,6 +1,5 @@
 """Changed-code selection includes consumers without scheduling unrelated worlds."""
 
-import importlib.util
 import json
 import subprocess
 import time
@@ -10,12 +9,9 @@ from tempfile import TemporaryDirectory
 import pytest
 
 from event_universe.retention import MAX_AGE_SECONDS, cleanup_expired
+from tests.worlds import load_file
 
-SPEC = importlib.util.spec_from_file_location(
-    "check_scope", Path(__file__).resolve().parents[1] / "tools/check.py"
-)
-CHECK = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(CHECK)
+CHECK = load_file("check_scope", Path(__file__).resolve().parents[1] / "tools/check.py")
 
 
 def test_the_worlds_readme_selects_navigation_and_never_a_cancelled_test():
@@ -115,12 +111,14 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
         "tests/test_engine_gates.py",
         "tests/test_folder_cards.py",
         "tests/test_genericity.py",
+        "tests/test_ownership.py",
         "tests/test_repository_hygiene.py",
         "tests/test_repository_language.py",
         "tests/test_repository_navigation.py",
         "tests/test_runtime_guards.py",
         "tests/test_shipped_worlds.py",
         "tests/test_step_drives_the_loop.py",
+        "tests/test_tests_shape.py",
     ]
     assert not typed
 
@@ -143,6 +141,8 @@ def test_every_change_selects_the_code_shape_gate_and_no_change_selects_nothing(
     assert "tests/test_step_drives_the_loop.py" in tests
     assert "tests/test_folder_cards.py" in tests
     assert "tests/test_runtime_guards.py" in tests
+    assert "tests/test_code_shape.py" in tests and "tests/test_tests_shape.py" in tests
+    assert "tests/test_engine_gates.py" in tests
     assert "tests/test_documents.py" in tests
     assert CHECK.select([], {}) == ([], [])
 
@@ -349,3 +349,12 @@ def test_detector_definitions_select_no_cancelled_consumer():
 def test_a_change_to_the_law_selects_its_words_and_links_gate():
     tests, _ = CHECK.select(["docs/ALGEBRA.md"], {})
     assert "tests/test_law_words.py" in tests
+
+
+def test_the_every_pull_request_list_is_one_sorted_file_of_existing_tests():
+    """The gates every pull request runs live in tools/every_pull_request.txt, one existing test per line, sorted (#1198, gate 7)."""
+    listed = CHECK.every_pull_request()
+    root = Path(__file__).resolve().parents[1]
+    assert listed == sorted(listed) and len(listed) == len(set(listed))
+    assert all((root / test).is_file() for test in listed)
+    assert set(listed) <= set(CHECK.select(["docs/GLOSSARY.md"], {})[0])

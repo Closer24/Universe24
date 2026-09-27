@@ -9,9 +9,7 @@ it is set beside, COMPUTATION). No run against a pin: the rows are diagnostics (
 
 from __future__ import annotations
 
-import importlib.util
 import json
-import sys
 from pathlib import Path
 
 import numpy as np
@@ -19,9 +17,8 @@ import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
+from tests.running import FOLDER, document, load_module
 
-ROOT = Path(__file__).resolve().parents[1]
-FOLDER = ROOT / "examples" / "events" / "toward_nature"
 NAMES = (
     "redshift_top",
     "redshift_bottom",
@@ -33,19 +30,6 @@ NAMES = (
     "lorentz_rest_long",
     "lorentz_moving_long",
 )
-
-
-def load_module(name: str):
-    spec = importlib.util.spec_from_file_location(f"toward_nature_{name}", FOLDER / f"{name}.py")
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[f"toward_nature_{name}"] = module
-    assert spec.loader is not None
-    spec.loader.exec_module(module)
-    return module
-
-
-def document(name: str) -> dict:
-    return json.loads((FOLDER / f"{name}.json").read_text(encoding="utf-8"))
 
 
 def test_the_four_worlds_carry_the_declared_integers_and_no_pin():

@@ -19,7 +19,7 @@ import pytest
 
 from event_universe import world_files
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import emitter_world
+from tests.worlds import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
