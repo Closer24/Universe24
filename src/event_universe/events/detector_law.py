@@ -44,6 +44,7 @@ from event_universe.features.giving import (
     GivingTerm,
     GivingWrites,
 )
+from event_universe.features.hand import HandStart, HandTerm, HandWrites
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.lifetime import LifetimeStart, LifetimeTerm, LifetimeWrites
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
@@ -254,6 +255,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             "the source": Stage(self._source_stage, (), ("the source",)),
             "the recoil": Stage(self._recoil_stage, (), ("the recoil",)),
             "the lifetime": Stage(self._lifetime_stage, (), ("the lifetime",)),
+            "the hand": Stage(self._hand_stage, (), ("the hand",)),
             "the feed": Stage(self._feed_stage, (), ("the feed",)),
             "the induction": Stage(self._induction_stage, (), ("the induction",)),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
@@ -434,6 +436,24 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             )
         return whole
 
+    def _hand_stage(self, function: Callable[..., object]) -> None:
+        """The hand's whole-board act carries nothing of its own: the check is nested in each record's click (`_hand_admits`, inside the clicks' act), where the taking body is known."""
+
+    def _hand_admits(self, live: LiveRecord, detector: int) -> bool:
+        """The hand's check at a click on a set with a body (features/hand, the function the main loop looked up at (ii)): the taking body's spin and momentum now against the record's family's declared hand; a family with no hand, a set with no body and the face admit."""
+        hand = self.families[live.family].hand
+        if hand is None or detector not in self.set_block:
+            return True
+        block = self.block_by_number[self.set_block[detector]]
+        spin = (int(block.spin[0]), int(block.spin[1]), int(block.spin[2]))
+        momentum = (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2]))
+        with self.main_loop.act(
+            "the hand", "(ii)", self._card_writes("the hand"), lambda: self.fingerprints_of(live)
+        ):
+            check = self.main_loop.function_of("the hand", "(ii)")
+            writes = cast(HandWrites, check(HandTerm(hand), HandStart(spin, momentum)))
+        return writes.admitted
+
     def _lifetime_stage(self, function: Callable[..., object]) -> None:
         """The lifetime's act (features/lifetime): every live record of a family with a lifetime L that the ladder did not click this interval ends on the border `lifetime` at age L, its content booked as escaped there, the record deleted whole at the interval's close as a clicked one."""
         for identity in list(self.records):
@@ -569,6 +589,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 terms.append((f"{label}.clicks", "the clicks"))
             if family.lifetime is not None:
                 terms.append((f"{label}.lifetime", "the lifetime"))
+            if family.hand is not None:
+                terms.append((f"{label}.hand", "the hand"))
         for number, entry in enumerate(self.world.measured):
             if entry.block is not None and entry.block.emitter is not None:
                 terms.append((f"measured[{number}].emitter", "the giving"))
@@ -2121,11 +2143,15 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             return
         click = self.main_loop.function_of("the clicks", "(ii)")
         ladder = self._ladder_of(live)
-        detector, live.total = click(
-            live.u, live.norm, live.wheel, live.pace, live.total, ladder, increments
-        )
-        if detector is None:
-            return
+        while True:
+            detector, live.total = click(
+                live.u, live.norm, live.wheel, live.pace, live.total, ladder, increments
+            )
+            if detector is None:
+                return
+            if self._hand_admits(live, detector):
+                break
+            ladder = ladder[ladder.index(detector) + 1 :]
         live.first_rung[detector] = self.tick
         if detector in self.set_block:
             block = self.block_by_number[self.set_block[detector]]

@@ -2,10 +2,19 @@
 
 from __future__ import annotations
 
+import copy
+import json
+from dataclasses import replace
+
 import pytest
 
 from event_universe.core.register import discover, folder_of
+from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.hand import DECLARATION, THE_WORD, HandStart, HandTerm, apply, booking
+from event_universe.world_files import parse_nature_beam_world
+from tests.running import ROOT
+
+LIGHT_CLOCK = ROOT / "examples" / "events" / "massive_record" / "light_clock.json"
 
 
 def test_the_declaration_is_the_ledgers_row_and_the_register_finds_it_built():
@@ -39,3 +48,22 @@ def test_the_booking_is_s_dot_n_and_the_opposite_sign_alone_refuses():
     for hand in (0, 2):
         with pytest.raises(ValueError, match=f"declared hand {hand} is refused"):
             apply(HandTerm(hand), HandStart(spin, momentum))
+
+
+def test_the_hand_refuses_a_click_at_the_giver_and_the_ladder_walks_on_to_the_face():
+    """The shipped light clock over 700 intervals with A's spin S = (1, 0, 0) and the charge family's hand set on the parsed world: A's momentum runs positive under the loader's period by the rule (item 3), so the booking S . n is positive at A's own set; the hand +1 admits every click there (13 at `at_well`, none at the face, the same run as with no hand, A's momentum 1846) and the hand -1 refuses them all, each record walking the ladder on to the face (19 there, none at `at_well`, A's momentum 523 with its takings gone), measured once on this fixture."""
+    document = json.loads(LIGHT_CLOCK.read_bytes())
+    for hand, at_well, at_face, momentum in ((-1, 0, 19, 523), (1, 13, 0, 1846)):
+        world = parse_nature_beam_world(copy.deepcopy(document))
+        families = list(world.families)
+        families[1] = replace(families[1], hand=hand)
+        simulation = DetectorLawSimulation(replace(world, families=tuple(families)))
+        simulation.blocks[0].spin = [1, 0, 0]
+        simulation.blocks[0].spin_before = [1, 0, 0]
+        lines: list[dict] = []
+        simulation.record = lines.append
+        for _ in range(700):
+            simulation.step()
+        chosen = [line["chosen"][0][0] for line in lines if line["event"] == "gather"]
+        assert (chosen.count("at_well"), chosen.count("face")) == (at_well, at_face)
+        assert simulation.blocks[0].momentum == [momentum, 0, 0]

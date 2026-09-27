@@ -1,16 +1,4 @@
-"""The body's algebraic conditions exact in the initial state, checked at load (the model
-owner's word of 2026-09-24, 16:48Z, through the Boss; SIMULATOR_DEFINITIONS.md, the four
-building blocks, the body's conditions): (a) a cube on a small board, a square on a layer
-and a segment on a chain, each seeded with the margin module's own integer profile, load,
-construct and pass the check bit for bit; (b) a body that does not fit the board is refused
-at load, named with the axis, never cut; (c) a profile with one Node off is refused naming
-the Node; (d) a flat seed is refused (the initial state is not the mode); (e) a pair not
-lowered is the loader's own refusal; (f) a pushed body's ramp below ten relaxation times of
-its own well is refused, at or above it admitted; (g) the run list's massive worlds under
-the check: every bound body seeded on its own mode by the generators passes bit for bit,
-the pushed ones with their ramp at or above ten relaxation times; the silent bodies and
-the light-kind walls have no reading. Every number here is a
-COMPUTATION of the declaration; nothing of the check is read by the state."""
+"""The body's algebraic conditions exact in the initial state, checked at load (the model owner's word of 2026-09-24, 16:48Z, through the Boss; SIMULATOR_DEFINITIONS.md, the four building blocks, the body's conditions): (a) a cube on a small board, a square on a layer and a segment on a chain, each seeded with the margin module's own integer profile, load, construct and pass the check bit for bit; (b) a body that does not fit the board is refused at load, named with the axis, never cut; (c) a profile with one Node off is refused naming the Node; (d) a flat seed is refused (the initial state is not the mode); (e) a pair not lowered is the loader's own refusal; (f) a pushed body's ramp below ten relaxation times of its own well is refused, at or above it admitted; (g) the run list's massive worlds under the check: every bound body seeded on its own mode by the generators passes bit for bit, the pushed ones with their ramp at or above ten relaxation times; the silent bodies and the light-kind walls have no reading. Every number here is a COMPUTATION of the declaration; nothing of the check is read by the state."""
 
 from __future__ import annotations
 
@@ -48,9 +36,7 @@ def seeded(
     momentum: list[int] | None = None,
     ramp: int = 0,
 ) -> dict:
-    """A world of one body of the kind [800, 809] with the well [800, 801], a
-    control world, its seed the generator's iterated mode at the amplitude 2^20 over the
-    whole board (the generator's `mode_profile` form)."""
+    """A world of one body of the kind [800, 809] with the well [800, 801], a control world, its seed the generator's iterated mode at the amplitude 2^20 over the whole board (the generator's `mode_profile` form)."""
     document = block_world(
         shape,
         PERIODIC,
@@ -81,10 +67,7 @@ def checked(document: dict) -> list[str]:
 
 
 def test_cube_square_and_segment_seeded_on_the_mode_pass_bit_for_bit():
-    """The cube of side 20 in 48^3, the square of side 8 on a 32 x 32 layer and the segment
-    of side 8 on a chain of 64, each on its own board's mode: two COMPUTATION lines each
-    (the family's composed operator below 2, ALGEBRA.md #rule3; the initial state the
-    profile at both levels bit for bit)."""
+    """The cube of side 20 in 48^3, the square of side 8 on a 32 x 32 layer and the segment of side 8 on a chain of 64, each on its own board's mode: two COMPUTATION lines each (the family's composed operator below 2, ALGEBRA.md #rule3; the initial state the profile at both levels bit for bit)."""
     for shape, corner, side in (
         ([48, 48, 48], [14, 14, 14], 20),
         ([32, 32, 1], [12, 12, 0], 8),
@@ -97,10 +80,7 @@ def test_cube_square_and_segment_seeded_on_the_mode_pass_bit_for_bit():
 
 
 def test_a_body_that_does_not_fit_is_refused_at_load_never_cut():
-    """A body whose far vertex passes an open face is refused naming the axis and the
-    vertex; a body wider than a periodic axis is refused as wrapped onto itself; a segment
-    past the chain's end the same; the folded axis of extent 1 is no refusal (the square
-    above). Before this line the engine cut the cube to the board silently."""
+    """A body whose far vertex passes an open face is refused naming the axis and the vertex; a body wider than a periodic axis is refused as wrapped onto itself; a segment past the chain's end the same; the folded axis of extent 1 is no refusal (the square above). Before this line the engine cut the cube to the board silently."""
     off = block_world(
         [48, 48, 48],
         OPEN_ON_X,
@@ -148,9 +128,7 @@ def test_one_unit_off_the_mode_is_admitted_and_the_initial_state_is_the_files_pr
 
 
 def test_a_flat_seed_is_not_the_mode_and_is_refused():
-    """The flat seed of the first builds (the value on the Nodes, 0 outside) is not the bound
-    mode's profile: refused, the sentence naming the generator's `mode_profile` as the form
-    the seed takes (the operator iterated with the stop)."""
+    """The flat seed of the first builds (the value on the Nodes, 0 outside) is not the bound mode's profile: refused, the sentence naming the generator's `mode_profile` as the form the seed takes (the operator iterated with the stop)."""
     document = block_world(
         [48, 48, 48],
         PERIODIC,
@@ -174,10 +152,7 @@ def test_a_pair_not_lowered_is_the_loaders_own_refusal():
 
 
 def test_the_ramp_against_ten_relaxation_times():
-    """The box of side 20 on the well [800, 801] (the relaxation about 33 intervals, a
-    COMPUTATION of the margin module's own omega_b, a GameBoard diagnostic not pinned here):
-    pushed with a ramp of 100 it is refused naming the ramp and the relaxation time; with
-    400 (above ten times) it is admitted with the ramp's line."""
+    """The box of side 20 on the well [800, 801] (the relaxation about 33 intervals, a COMPUTATION of the margin module's own omega_b, a GameBoard diagnostic not pinned here): pushed with a ramp of 100 it is refused naming the ramp and the relaxation time; with 400 (above ten times) it is admitted with the ramp's line."""
     with pytest.raises(ValueError, match=r"the ramp 100 is below 10 relaxation times"):
         checked(seeded([48, 48, 48], [14, 14, 14], 20, momentum=[64, 0, 0], ramp=100))
     lines = checked(seeded([48, 48, 48], [14, 14, 14], 20, momentum=[64, 0, 0], ramp=400))
@@ -201,13 +176,7 @@ NONE = "no reading"
     ],
 )
 def test_the_run_lists_massive_worlds_load_clean_under_the_check(name: str, verdict: str):
-    """Every bound body of the run list's massive worlds is seeded on its own mode by the
-    generators (`seed_on_the_mode`: the muon's layer pin worlds at rest and pushed, the deep
-    well and its rest world, the boxes, the light clock in the one table's form) and passes
-    the check bit for bit, a pushed body's ramp at or above ten relaxation times; the rows
-    held under the given train (BUILD.md section 26 item 27) are not loaded. Before this branch the seven worlds other
-    than the layer pin's carried a flat seed and were refused (the world line of
-    DECLARATIONS.md section 15, the body's seed on its mode)."""
+    """Every bound body of the run list's massive worlds is seeded on its own mode by the generators (`seed_on_the_mode`: the muon's layer pin worlds at rest and pushed, the deep well and its rest world, the boxes, the light clock in the one table's form) and passes the check bit for bit, a pushed body's ramp at or above ten relaxation times; the rows held under the given train (BUILD.md section 26 item 27) are not loaded. Before this branch the seven worlds other than the layer pin's carried a flat seed and were refused (the world line of DECLARATIONS.md section 15, the body's seed on its mode)."""
     document = json.loads((WORLDS / name).read_text(encoding="utf-8"))
     world = parse_nature_beam_world(document)
     readings = check_margins(world)
