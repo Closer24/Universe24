@@ -25,7 +25,6 @@ DECLARATION = Declaration(
     ),
     ("a body's spin S", "a body's remainders"),
     None,
-    None,
     "9.117 item 2; 9.78 (5); 9.104",
     word="after the step",
 )

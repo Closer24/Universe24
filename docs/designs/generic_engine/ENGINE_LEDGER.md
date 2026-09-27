@@ -30,6 +30,7 @@ docs/ENGINE.md; the table of primitives of record 2179 is its section 3, one fil
 | the cancel of the ray law, nothing deleted | stroke-side, merged | `tests/test_cancelled_paths.py` |
 | the check-mode worlds' generator | stroke-side, merged | `tests/test_check_mode_worlds.py` |
 | the engine start file, every default out of the code (record 2089) | `examples/events/engine_start.json` | its test |
+| the step file, the interval's order out of the code | `law/step.json`, read by the host, checked by the register, its digest in every output | `tests/test_step.py` |
 
 ## 2. To do
 

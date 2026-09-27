@@ -320,6 +320,7 @@ from event_universe.core.readings import Reading, world_readings
 from event_universe.core.register import discover
 from event_universe.core.rule3 import rule_total_bound
 from event_universe.core.schema import Context
+from event_universe.core.step import STEP_FILE, Step
 from event_universe.loader import frame
 from event_universe.loader.frame import EngineStart
 
@@ -1025,8 +1026,7 @@ def _require_under_law(obj: dict[str, object], label: str, keys: set[str]) -> No
 
 
 def _refuse_under_law(obj: dict[str, object], label: str, keys: set[str]) -> None:
-    """A KEY THE ENGINE NEVER READS is refused by name (records 2089 and
-    2094: a flag the engine does not need is deleted, not defaulted)."""
+    """A key the engine never reads is refused by name: a flag the engine does not need is deleted, not defaulted."""
     present = [key for key in sorted(keys) if key in obj]
     if present:
         raise ValueError(
@@ -1893,6 +1893,7 @@ class NatureBeamWorld:
     in_transit: tuple[TransitDefinition, ...]
     detectors: tuple[DetectorDefinition, ...]
     readings: tuple[Reading, ...]
+    step: Step
     action: int | None = None
     # The meeting (the world key `meeting`, false by default): a paid unit in
     # transit reads the free crowd at every free-space Node after the
@@ -6576,14 +6577,7 @@ def _body_fit_check(world: NatureBeamWorld) -> None:
 def parse_world_document(
     document: object, files: Mapping[str, object], digest: str | None
 ) -> NatureBeamWorld:
-    """Reject anything but a lawful world. THE LOADER READS NO FILE (tests/
-    test_architecture.py: physical code imports no storage; the integer rule,
-    record 2071): `files` holds the documents the world names by a repository
-    path (the universe file under `universe`, the start file under `engine`),
-    read by the host module event_universe.world_files, and `digest` the file's
-    digest computed there for the stamp's check; every check is this loader's.
-    `event_universe.world_files.parse_nature_beam_world(document)` is the whole
-    read."""
+    """Reject anything but a lawful world: the loader reads no file (the host hands it the documents and the digest) and refuses by name a key it does not read, a value outside its bounds and a stamp that is not the generator's."""
     # THE WORLD'S KEYS through the frame (loader/frame.py, `WORLD`): an unknown key, a missing
     # key and a wrong kind refused by name; the universe, the bodies, the detectors, the
     # readings, the records in transit, the covariant readings and an inline twist table
@@ -6595,6 +6589,11 @@ def parse_world_document(
     early_law = True
     word = "universe"
     start = _engine_start(obj["engine"], files, early_law)
+    step = files.get(STEP_FILE)
+    if not isinstance(step, Step):
+        raise ValueError(
+            f"the step file {STEP_FILE!r} is missing at the repository's root: the interval's order is its"
+        )
     families_file: str | None = None
     as_written = obj  # the document as the generator stamped it (the universe's path, item 59)
     universe = obj[word]
@@ -6953,6 +6952,7 @@ def parse_world_document(
         in_transit,
         detectors,
         readings,
+        step,
         action,
         meeting=meeting,
         massive_rows=massive_rows,

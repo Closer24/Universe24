@@ -14,7 +14,6 @@ DECLARATION = Declaration(
     "(ii)",
     ("the record's remainders at the Node", "the wheels"),
     ("a body's content M_k",),
-    {"a body's content M_k": 3},
     None,
     "9.88 (4)",
     word="after the step",
