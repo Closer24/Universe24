@@ -20,6 +20,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md #the-primitives)",
     "events/assembly.py": "the assembly of the engine's state from the loaded world before the first interval: the detectors' map, the arrays and caches, the bodies' blocks and own records, the held families' records; integer arrays alone",
+    "events/geometry.py": "the engine's geometry: the Node sets, boxes, masks and Ports of a body or a detector from the GameBoard's shape through the core's and the loader's one copy of each rule, and the pair arrays' cache",
     "events/output.py": "the engine's readings and output lines: the exact rationals of the books, the leak test, the record's click line, the books, the contents and the state stream; reads the simulation, writes the lines",
     "events/guards.py": "the engine's run-time guards bound as its methods: the start's arrays to freeze, an act's grants, a card's writes, a write applied by name, the generic act's term, start view and own record, the pace guard",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md #the-line, #the-direction, #the-interval), and the ladder's rungs (ALGEBRA.md #the-ladder)",
@@ -258,8 +259,7 @@ def root_aliases(tree: ast.AST) -> tuple[set[str], set[str]]:
 
 
 def roots(tree: ast.AST) -> set[tuple[str | None, int]]:
-    """Every call of `isqrt` or `integer_root`, under any alias, with its
-    enclosing function."""
+    """Every call of `isqrt` or `integer_root`, under any alias, with its enclosing function."""
     names, modules = root_aliases(tree)
     found: set[tuple[str | None, int]] = set()
 
