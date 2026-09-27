@@ -10,7 +10,7 @@ second agent's record for every run the paper relies on: nothing here is
 a new experiment, nothing is tuned, and a difference is reported, never
 fixed (a FAIL is the register's or the engine's to answer, not this
 document's). Only a detector's reading is compared ([the readings by
-type](ENGINE.md#the-detectors-readings-by-type)): the gathers' chosen
+type](ENGINE.md#the-output)): the gathers' chosen
 cells, the click lines' ages and phases; the books and the layer's counts
 are GameBoard diagnostics and are labelled so.
 

@@ -33824,7 +33824,8 @@
      4,
      2
     ],
-    "dipole": "spin"
+    "dipole": "spin",
+    "dipole_div": 1
    },
    "reads": [],
    "self_source": {
