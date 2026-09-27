@@ -380,7 +380,7 @@ class Block:
     fixed: bool = False
     # THE COUNT AT A NODE (ALGEBRA.md #the-counts-line; the count's line bound): the body's
     # quanta per Node and the line's remainder, laid at the line's first act; the body's Nodes
-    # are the count's support, `moved` where a quantum changed Node in the last act
+    # follow the count's centroid by whole Links, `moved` where they shifted in the last act
     counts: np.ndarray | None = None
     count_remainder: np.ndarray | None = None
     count_norm: int = 0
@@ -983,14 +983,14 @@ class DetectorLawSimulation:
 
     def _counts_act(self, line: Callable[..., object], block: Block, direction: int) -> None:
         """THE COUNT'S LINE ON A BODY (ALGEBRA.md #the-counts-line): the line's levels laid at its
-        first act (one quantum per Node of the body, the remainder at the law's origin T / 2 at every Node), then per interval the record's levels
+        first act (the body's declared quanta at each of its Nodes, the remainder at the law's origin T / 2 at every Node), then per interval the record's levels
         here and across the six Ports (the Ports' arrivals), the count and its remainder stepped by
         the line forward or back (the direction +1 or -1), the body's Nodes following the count."""
         live = block.own
         if live is None:
             return
         if block.counts is None or block.count_remainder is None:
-            block.counts = block.mask.astype(np.int64)
+            block.counts = block.mask.astype(np.int64) * self.world.measured[block.number].amount
             block.count_norm = self._count_norm(block)
             half = int(rule3(NO_READ, NO_READ, 1, SPAN, 0, 0, block.count_norm)[0])
             block.count_remainder = np.full(self.shape, half, dtype=np.int64)
@@ -1010,23 +1010,49 @@ class DetectorLawSimulation:
         self._follow_count(block)
 
     def _body_count(self, block: Block) -> int:
-        """The count at the body: its quanta summed over its Nodes (one per Node until the line's first act)."""
-        return int(block.mask.sum()) if block.counts is None else int(block.counts[block.mask].sum())
+        """The count at the body: its quanta, the sum of its count (the declared quanta per Node over its Nodes until the line's first act)."""
+        if block.counts is None:
+            return int(block.mask.sum()) * self.world.measured[block.number].amount
+        return int(block.counts.sum())
 
     def _count_norm(self, block: Block) -> int:
-        """T, the count's wall, read once at the lay: the record's conserved form per quantum (the form's numerator over its denominator times the quanta, one per Node), Rule3's division act; a form below one per quantum is the line's refusal."""
+        """T, the count's wall, read once at the lay: the record's conserved form per quantum (the form's numerator over its denominator times the body's quanta, the declared count per Node summed over its Nodes), Rule3's division act; a form below one per quantum is the line's refusal."""
         numerator, denominator = self.conserved_form(cast(LiveRecord, block.own))
-        quanta = int(block.mask.sum())
+        quanta = int(cast(np.ndarray, block.counts).sum())
         return int(rule3(NO_READ, NO_READ, 1, denominator * quanta, 0, 0, numerator)[0])
 
     def _follow_count(self, block: Block) -> None:
-        """The body's Nodes are the count's support: where a quantum changed Node, the mask, the corner (the support's lowest Node per axis), the family's pair region and the detector map follow (HOST); a body whose count stayed is unmoved."""
-        mask = cast(np.ndarray, block.counts) > 0
-        block.moved = not np.array_equal(mask, block.mask)
+        """The body's Nodes follow the count's centroid by whole Links (ALGEBRA.md #the-counts-line, the velocity: the centroid moves at the current's velocity; #the-velocity: the well moves with the count): along an axis where the quanta's centroid lies a whole Link beyond the body's centre, the mask, the corner, the family's pair region and the detector map shift one Link that way (the hop's HOST bookkeeping, now the count's); a resting body's quanta jitter within its Nodes (the open point 1) and move nothing."""
+        counts = cast(np.ndarray, block.counts)
+        total = int(counts.sum())
+        shift = [0, 0, 0]
+        for axis in range(3):
+            extent = int(block.definition.extents[axis])
+            span = int(self.shape[axis])
+            offsets = (np.arange(span) - block.corner[axis] + span // 2) % span - span // 2
+            along = counts.sum(axis=tuple(other for other in range(3) if other != axis))
+            moment = 2 * int((along * offsets).sum())
+            if moment >= total * (extent + 1):
+                shift[axis] = 1
+            elif moment <= total * (extent - 3):
+                shift[axis] = -1
+        block.moved = total > 0 and any(shift)
         if not block.moved:
             return
-        old_mask, block.mask = block.mask, mask
-        block.corner = [int(index.min()) for index in np.nonzero(mask)]
+        old_mask = block.mask
+        wrap = self.kind_wrap[block.family]
+        for axis in range(3):
+            corner, span = block.corner[axis] + shift[axis], int(self.shape[axis])
+            if wrap[axis]:
+                corner %= span
+            elif corner < 0 or corner + int(block.definition.extents[axis]) > span:
+                raise ValueError(
+                    f"block {block.number}'s Nodes would leave the board through the face on axis "
+                    f"{axis} at interval {self.tick}: its count's centroid crossed a whole Link toward a "
+                    "face with no Port (ALGEBRA.md #the-counts-line)"
+                )
+            block.corner[axis] = corner
+        block.mask = self._box(block.corner, block.definition.extents, block.family)
         self._inflow_port_pairs.clear()
         self._inflow_port_faces.clear()
         self._write_pair(block)
