@@ -14,6 +14,10 @@ on:
       base:
         description: the pull request's base branch
         required: true
+      record:
+        description: all for the whole record (every shipped world), else the pull request's plan
+        required: false
+        default: default
 permissions:
   contents: read
 concurrency:
@@ -22,6 +26,9 @@ concurrency:
 env:
   CHECK_BASE: ${{ github.base_ref && format('origin/{0}', github.base_ref) || (inputs.base && format('origin/{0}', inputs.base)) || github.event.before }}
   PR_BODY: ${{ github.event.pull_request.body }}
+  # the whole record replays on a push to main and on a dispatch for the whole; a pull request
+  # replays the worlds of tools/record_plan.json unless its body carries the line "RECORD: all"
+  RECORD_ALL: ${{ github.event_name == 'push' || inputs.record == 'all' }}
   # the tree CI checks: the pull request merged with its base; on a dispatch the same ref by number
   CHECKOUT_REF: ${{ inputs.pull_request && format('refs/pull/{0}/merge', inputs.pull_request) || '' }}
 jobs:
@@ -39,6 +46,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version-file: .python-version
+      # on a dispatch the pull request's body (the record's line) comes from the API
+      - if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          {
+            echo "PR_BODY<<END_OF_THE_PULL_REQUEST_BODY"
+            gh pr view "${{ inputs.pull_request }}" --repo "${{ github.repository }}" --json body --jq .body
+            echo "END_OF_THE_PULL_REQUEST_BODY"
+          } >> "$GITHUB_ENV"
       - id: plan
         run: python tools/check.py --base "$CHECK_BASE" --plan >> "$GITHUB_OUTPUT"
   check:
@@ -129,7 +146,13 @@ jobs:
             echo "the branch moved past ${{ steps.pull.outputs.sha }}; the new head's own run records it"
             exit 0
           fi
-          python tools/record_shipped_worlds.py --merge artifacts/shards --every-world --recorded-at "${{ steps.pull.outputs.sha }}"
+          # the whole record (a push, a dispatch for the whole, or the body's line "RECORD: all")
+          # refuses a merge short of any world; a pull request's plan records the worlds that ran
+          every_world=""
+          if [ "$RECORD_ALL" = "true" ] || gh pr view "${{ steps.pull.outputs.number }}" --repo "${{ github.repository }}" --json body --jq .body | grep -Eq '^[[:space:]]*RECORD:[[:space:]]*all[[:space:]]*$'; then
+            every_world="--every-world"
+          fi
+          python tools/record_shipped_worlds.py --merge artifacts/shards $every_world --recorded-at "${{ steps.pull.outputs.sha }}"
           if git diff --quiet -- tests/shipped_worlds.json; then
             echo "the record on ${{ steps.pull.outputs.sha }} is what the replay found; nothing to commit"
             exit 0
@@ -146,4 +169,5 @@ jobs:
           git commit -m "the record re-recorded by CI on ${{ steps.pull.outputs.sha }}" -m "Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
           git push origin "HEAD:${{ steps.pull.outputs.head }}"
           gh workflow run check.yml --repo "${{ github.repository }}" --ref "${{ steps.pull.outputs.head }}" \
-            -f "pull_request=${{ steps.pull.outputs.number }}" -f "base=${{ steps.pull.outputs.base }}"
+            -f "pull_request=${{ steps.pull.outputs.number }}" -f "base=${{ steps.pull.outputs.base }}" \
+            -f "record=$([ -n "$every_world" ] && echo all || echo default)"

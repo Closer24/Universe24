@@ -4,6 +4,8 @@ import argparse
 import ast
 import io
 import json
+import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -34,6 +36,10 @@ WORLD_TEST = "test_a_shipped_world_runs_bit_for_bit_as_recorded"
 # a pull request touching none of these runs no world, so it skips the regression (the owner's word)
 RUNS_A_WORLD = ("src/", "law/", "examples/", "tools/", "tests/shipped_worlds.json", REGRESSION)
 SUITE_SHARDS, HEAVY_WORLDS, WORLD_SHARDS = 3, 3, 2
+# the worlds replayed on every pull request that runs a world (the model owner, 2026-09-27); the
+# whole record on a push to main, on the body's line "RECORD: all" or on the Boss's dispatch
+RECORD_PLAN = Path(__file__).with_name("record_plan.json")
+RECORD_ALL_LINE = re.compile(r"^\s*RECORD:\s*all\s*$", re.MULTILINE)
 UNRECORDED_SECONDS = 5.0
 LINT = [["ruff", "check", "."], ["ruff", "format", "--check", "."], ["mypy"]]
 
@@ -48,9 +54,20 @@ def balanced(seconds, count):
     return [sorted(group) for group in groups]
 
 
-def shards(runs_worlds):
+def every_world_planned() -> bool:
+    """Whether the whole record replays: the environment's RECORD_ALL (a push to main, a dispatch
+    for the whole) or the pull request's body carrying the line "RECORD: all"."""
+    return os.environ.get("RECORD_ALL", "").lower() == "true" or bool(
+        RECORD_ALL_LINE.search(os.environ.get("PR_BODY", ""))
+    )
+
+
+def shards(runs_worlds, every_world=None):
     """The CI jobs by name, each its pytest targets: the suite in equal parts, and where a world
-    runs, the heaviest shipped worlds each alone and the rest in equal parts."""
+    runs, the heaviest shipped worlds each alone and the rest in equal parts; on a pull request
+    the worlds of tools/record_plan.json alone unless the whole record is planned."""
+    if every_world is None:
+        every_world = every_world_planned()
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
     files = sorted(
         p.relative_to(ROOT).as_posix()
@@ -62,7 +79,9 @@ def shards(runs_worlds):
     if not runs_worlds:
         return plan
     record = json.loads((ROOT / "tests/shipped_worlds.json").read_text(encoding="utf-8"))
-    worlds = {w: table["worlds"].get(w, UNRECORDED_SECONDS) for w in record["worlds"]}
+    planned = json.loads(RECORD_PLAN.read_text(encoding="utf-8"))["every_pull_request"]
+    names = record["worlds"] if every_world else [w for w in record["worlds"] if w in planned]
+    worlds = {w: table["worlds"].get(w, UNRECORDED_SECONDS) for w in names}
     heavy = sorted(worlds, key=lambda w: (-worlds[w], w))[:HEAVY_WORLDS]
     for world in heavy:
         plan[f"world {Path(world).parent.name}/{Path(world).stem}"] = [
