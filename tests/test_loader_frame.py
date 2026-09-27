@@ -18,8 +18,7 @@ import pytest
 
 from event_universe.core.register import discover
 from event_universe.loader import frame
-from tests.test_genericity import SEEDS, draw
-from tests.test_loader_acceptance import family_names, string_constants, written_defaults
+from tests.running import SEEDS, draw, family_names, string_constants, written_defaults
 
 ROOT = Path(__file__).resolve().parents[1]
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"

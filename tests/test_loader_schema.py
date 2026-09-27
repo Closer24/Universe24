@@ -32,7 +32,7 @@ from event_universe.core.schema import (
     check_keys,
 )
 from event_universe.loader import cards
-from tests.test_genericity import SEEDS, draw
+from tests.running import SEEDS, draw
 
 ROOT = Path(__file__).resolve().parents[1]
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
