@@ -1,10 +1,9 @@
-"""The spin's step: S_next = S_before + (2 [(Omega x S_now) + mu x B_q] + carry) div (W Gamma), Omega from a read whose dipole is the spin (factor x curl V + 3 ((grad c) x n) div W, div 8) and B_q from a read whose dipole is the moment (weight x curl V_q div 2), the curls and the gradient the loop's reads at the body's Node, every division Rule3's division act with its remainder on the body (ALGEBRA.md 9.117 the row "the spin's step", 9.78 (5), 9.104 (2), 9.119 item 2)."""
+"""The spin's step: S_next = S_before + (SPAN [(Omega x S_now) + mu x B_q] + carry) div (W Gamma), Omega from a read whose dipole is the spin ((c_num x factor x curl V + (t_num ((grad c) x n)) div W) div (SPAN x den), the two weights the read family's row), B_q from a read whose dipole is the moment (weight x curl V_q div SPAN); the curl and the gradient Rule3's read acts on the six neighbours' levels, every division Rule3's division act with its remainder on the body (ALGEBRA.md 9.117 the row "the spin's step", 9.78 (5), 9.104 (2), 9.119 item 2)."""
 
 from __future__ import annotations
 
-from collections.abc import Callable, Mapping
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Any, cast
 
 from event_universe.core.register import Declaration
 from event_universe.core.rule3 import NO_READ, THE_ADVANCE, THE_INVERSE, Key, carried, rule3
@@ -14,34 +13,37 @@ ACTS = (THE_ADVANCE, THE_INVERSE)
 SPAN = 2  # the central difference's two Links and the leapfrog's two intervals, the lattice's own integer (ALGEBRA.md 9.78 (5))
 SPIN = "spin"
 MOMENT = "moment"
+KEYS = ("gradc", "omega", "bq", "spin")  # the body's remainders of this step, by their first word
 Vector = tuple[int, int, int]
+Pair = tuple[int, int]
+# a level at the six neighbours of the Node in the order +x, -x, +y, -y, +z, -z; None where the Node has no read there
+Ports = tuple[int | None, int | None, int | None, int | None, int | None, int | None]
 
 
 @dataclass(frozen=True)
 class SpinRead:
-    """One read of the body's family at the body's Node: its position in the family's reads, the read family's dipole (spin or moment), its factor on the body (the weight, or minus Q times the weight by q), its weight, the curl of the read's vector part, and the gradient of its time part for a spin's read (None for a moment's)."""
+    """One read of the body's family at the body's Node: its position in the family's reads, the read family's dipole (spin or moment), its factor on the body (the weight, or minus Q times the weight by q), its weight, the read family's vector part at the six neighbours (three components, each at the six Ports; None beyond an open face, on an axis of extent 1 or on a silent part), and for a spin's read its time part at the six neighbours and its row's two weights of the turn over one denominator, the curl's and the tidal term's (None on a moment's read)."""
 
     position: int
     dipole: str
     factor: int
     weight: int
-    curl: Vector
-    gradient: Vector | None
+    vector: tuple[Ports, Ports, Ports]
+    time: Ports | None
+    turn: tuple[Pair, Pair] | None
 
 
 @dataclass(frozen=True)
 class SpinStepTerm:
-    """The body's declaration: its moment mu, the Node clock Gamma, and the two weights of the spin's turn as pairs over one denominator, declared on the row of the family whose dipole is the spin (`spins_step`: the curl's, 1 / 4 in the levels' unit, and the tidal term's, 3 / 4; Schiff's 1 / 2 and 3 / 2, ALGEBRA.md 9.78 (5))."""
+    """The body's declaration: its moment mu and the Node clock Gamma."""
 
     moment: Vector
     gamma: int
-    curl_weight: tuple[int, int]
-    tidal_weight: tuple[int, int]
 
 
 @dataclass(frozen=True)
 class SpinStepStart:
-    """The interval's reading at (v): the act (the advance or the inverse), the reads with their curls and gradients, the body's momentum n, its wall W, its spin S_now (the leapfrog's middle: the spin forward, the spin before backward) and the pair (spin, spin_before) it holds."""
+    """The interval's reading at (v): the act (the advance or the inverse), the reads with the neighbours' levels, the body's momentum n, its wall W, its spin S_now (the leapfrog's middle: the spin forward, the spin before backward) and the pair (spin, spin_before) it holds."""
 
     act: str
     reads: tuple[SpinRead, ...]
@@ -76,6 +78,43 @@ def cross(a: Vector, b: Vector) -> Vector:
     return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
 
 
+def read_act(coefficients: Vector, levels: Vector, self_coefficient: int, here: int) -> int:
+    """Rule3's read act over the wall 1: the coefficients on three levels and the self coefficient on the Node's own, exact (ALGEBRA.md 9.119 item 1 (a))."""
+    return int(rule3(coefficients, levels, self_coefficient, 1, here, 0, 0)[0])
+
+
+def level(ports: Ports, port: int) -> int:
+    """A neighbour's level, 0 where the Node has no read there."""
+    found = ports[port]
+    return 0 if found is None else found
+
+
+def curl(vector: tuple[Ports, Ports, Ports]) -> Vector:
+    """The curl of a vector part at the Node from its six neighbours, each component one read act: (curl V)_x = V_z(+y) - V_z(-y) - V_y(+z) + V_y(-z) and cyclic, the coefficients +1, -1, -1 on three neighbours and the self coefficient +1 on the fourth; a neighbour the Node lacks reads 0 (ALGEBRA.md 9.77 (3), 9.91 (8) (v))."""
+    found = []
+    for y, z in ((1, 2), (2, 0), (0, 1)):
+        found.append(
+            read_act(
+                (1, -1, -1),
+                (level(vector[z], 2 * y), level(vector[z], 2 * y + 1), level(vector[y], 2 * z)),
+                1,
+                level(vector[y], 2 * z + 1),
+            )
+        )
+    return (found[0], found[1], found[2])
+
+
+def gradient(time: Ports) -> Vector:
+    """The gradient of the time part at the Node, per axis the read act with +1 on the neighbour ahead and the self coefficient -1 on the one behind over the wall 1; 0 on an axis where either neighbour is missing, beyond an open face or on an axis of extent 1 (ALGEBRA.md 9.78 (5))."""
+    found = []
+    for axis in range(3):
+        ahead, behind = time[2 * axis], time[2 * axis + 1]
+        found.append(
+            0 if ahead is None or behind is None else read_act((1, 0, 0), (ahead, 0, 0), -1, behind)
+        )
+    return (found[0], found[1], found[2])
+
+
 def division_now(
     act: str, key: Key, numerator: int, wall: int, values: dict[Key, int], carries: dict[Key, int]
 ) -> int:
@@ -87,9 +126,9 @@ def division_now(
     return value
 
 
-def load(level: int, amount: int) -> int:
+def load(level_now: int, amount: int) -> int:
     """Rule3's load act: the level plus the amount, the line with the self coefficient 1 over the wall 1 and the amount as the carry (ALGEBRA.md 9.119 item 1 (d))."""
-    return int(rule3(NO_READ, NO_READ, 1, 1, level, 0, amount)[0])
+    return int(rule3(NO_READ, NO_READ, 1, 1, level_now, 0, amount)[0])
 
 
 def spin_wall(wall: int, gamma: int) -> int:
@@ -97,35 +136,43 @@ def spin_wall(wall: int, gamma: int) -> int:
     return wall * gamma
 
 
+def spin_read(read: SpinRead) -> tuple[Ports, tuple[Pair, Pair]]:
+    """A spin's read's time part at the six neighbours and its row's two weights, refused by name where either is missing or the weights stand over two denominators or below 1."""
+    if read.time is None or read.turn is None:
+        raise ValueError(
+            f"the spin's read at position {read.position} needs the time part at the six "
+            "neighbours and its row's two weights (spins_step: curl and tidal)"
+        )
+    (_, c_den), (_, t_den) = read.turn
+    if c_den < 1 or c_den != t_den:
+        raise ValueError(
+            f"the spin's step's weights {read.turn[0]} and {read.turn[1]} stand over one "
+            "denominator from 1"
+        )
+    return read.time, read.turn
+
+
 def check(term: SpinStepTerm, start: SpinStepStart) -> None:
-    """The refusals by name: the act, the wall and Gamma from 1, the two weights over one denominator from 1, each read's dipole spin or moment, a spin's read with its gradient."""
+    """The refusals by name: the act, the wall and Gamma from 1, each read's dipole spin or moment, a spin's read with its time part and its two weights over one denominator from 1."""
     if start.act not in ACTS:
         raise ValueError(f"the spin's step's act is one of {list(ACTS)}, got {start.act!r}")
     if start.wall < 1 or term.gamma < 1:
         raise ValueError(
             f"the spin's step needs the wall W = {start.wall} and Gamma = {term.gamma} from 1"
         )
-    if term.curl_weight[1] < 1 or term.curl_weight[1] != term.tidal_weight[1]:
-        raise ValueError(
-            f"the spin's step's weights {term.curl_weight} and {term.tidal_weight} stand over one "
-            "denominator from 1"
-        )
     for read in start.reads:
         if read.dipole not in (SPIN, MOMENT):
             raise ValueError(
                 f"the read at position {read.position} has the dipole {read.dipole!r}: spin or moment"
             )
-        if read.dipole == SPIN and read.gradient is None:
-            raise ValueError(
-                f"the spin's read at position {read.position} needs the gradient of its time part"
-            )
+        if read.dipole == SPIN:
+            spin_read(read)
 
 
 def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinStepWrites:
-    """The primitive at (v): Omega from the curl and the tidal term at the declared weights over the span, the torque from the second read's curl over the span, the turn (Omega x S_now) + mu x B_q over the two intervals divided by W Gamma per axis, the leapfrog forward or back by the load act (ALGEBRA.md 9.117 the row "the spin's step")."""
+    """The primitive at (v): the curl of each read's vector part and the gradient of a spin's read's time part by the read acts, Omega from the curl and the tidal term at the row's weights over the span, the torque from a moment's read's curl over the span, the turn (Omega x S_now) + mu x B_q over the two intervals divided by W Gamma per axis, the leapfrog forward or back by the load act (ALGEBRA.md 9.117 the row "the spin's step")."""
     check(term, start)
     values, carries = dict(own.values), dict(own.carries)
-    (c_num, denominator), (t_num, _) = term.curl_weight, term.tidal_weight
     spin_now = start.spin if start.act == THE_ADVANCE else start.spin_before
     omega = [0, 0, 0]
     torque = [0, 0, 0]
@@ -133,8 +180,9 @@ def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinSte
         if read.dipole == SPIN:
             if read.factor == 0:
                 continue
-            # `check` refuses a spin's read without its gradient
-            tidal_cross = cross(cast(Vector, read.gradient), start.momentum)
+            time, ((c_num, denominator), (t_num, _)) = spin_read(read)
+            found = curl(read.vector)
+            tidal_cross = cross(gradient(time), start.momentum)
             for i in range(3):
                 tidal = division_now(
                     start.act,
@@ -147,7 +195,7 @@ def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinSte
                 omega[i] += division_now(
                     start.act,
                     ("omega", read.position, i),
-                    c_num * read.factor * read.curl[i] + tidal,
+                    c_num * read.factor * found[i] + tidal,
                     SPAN * denominator,
                     values,
                     carries,
@@ -155,11 +203,12 @@ def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinSte
         else:
             if read.weight == 0:
                 continue
+            found = curl(read.vector)
             for i in range(3):
                 torque[i] += division_now(
                     start.act,
                     ("bq", read.position, i),
-                    read.weight * read.curl[i],
+                    read.weight * found[i],
                     SPAN,
                     values,
                     carries,
@@ -196,7 +245,8 @@ DECLARATION = Declaration(
     place="(v)",
     reads=(
         "S_now",
-        "the curls at the body's Node (V the first read's vector part, t its time part, B_q the second read's curl)",
+        "the read families' vector parts and time parts at the body's six neighbours",
+        "the row's two weights of the turn",
         "mu",
         "n",
         "W",
@@ -219,8 +269,3 @@ DECLARATION = Declaration(
         }
     ),
 )
-
-
-def bind(loop: Any) -> Callable[..., object]:
-    """The loop's method `_body_step`, whose divisions `apply` gives bit for bit, until the loop calls `apply`."""
-    return loop._method("_body_step")  # type: ignore[no-any-return]

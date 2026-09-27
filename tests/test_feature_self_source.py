@@ -47,47 +47,6 @@ def moving_world_with_the_self_source(family_name: str) -> tuple[DetectorLawSimu
     return DetectorLawSimulation(world), index, unit
 
 
-def before_the_binding(
-    simulation: DetectorLawSimulation, family: int, unit: int, inverse: bool
-) -> np.ndarray:
-    """The loop's arithmetic before the binding: every squared difference of the family's levels across the six Links, summed, floored by P_2."""
-    wrap = simulation.kind_wrap[family]
-    records = [record for record in simulation.records.values() if record.family == family]
-    if family in simulation.held_records:
-        records.extend([simulation.held_records[family], *simulation.held_parts[family]])
-    total = np.zeros(simulation.shape, dtype=np.int64)
-    for record in records:
-        for level in (
-            record.before if inverse else record.now,
-            record.im_before if inverse else record.im_now,
-        ):
-            if level is None or (record.silent and record.held_part):
-                continue
-            for axis in range(3):
-                for sigma in (1, -1):
-                    found = simulation._arrival(level, axis, sigma, wrap) - level
-                    total += found * found
-    return np.floor_divide(total, unit)
-
-
-def test_the_loops_self_source_is_the_folders_line_bit_for_bit_on_the_moving_lorentz_world():
-    simulation, family, unit = moving_world_with_the_self_source("charge")
-    nonzero, compared = 0, 0
-    for _ in range(30):
-        live = next((record for record in simulation.records.values() if record.family == family), None)
-        if live is None:  # the family's records are born at the emitter's givings
-            simulation.step()
-            continue
-        compared += 1
-        for inverse in (False, True):
-            simulation._sources.clear()  # the loop's cache holds the step's own array; its function on the state now
-            loops = simulation._self_source(live, inverse)
-            assert np.array_equal(loops, before_the_binding(simulation, family, unit, inverse))
-            nonzero += bool(np.any(loops))
-        simulation.step()
-    assert compared > 0 and nonzero > 0
-
-
 def test_the_shipped_universe_has_the_line_off_and_the_difference_is_the_read_act():
     document = json.loads((TOWARD / "lorentz_moving.json").read_text(encoding="utf-8"))
     simulation = DetectorLawSimulation(

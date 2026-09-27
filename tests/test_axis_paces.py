@@ -28,7 +28,14 @@ def paces_world() -> dict:
     document["age_bound"] = 100000
     for family in document["universe"]:
         if family["name"] == "clicks":
-            family.update({"parts": [1, 3, 6], "held_factors": [1, 4, 2], "held_dipole": "spin"})
+            family.update(
+                {
+                    "parts": [1, 3, 6],
+                    "held_factors": [1, 4, 2],
+                    "held_dipole": "spin",
+                    "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
+                }
+            )
     document["stamp"] = input_stamp(document)
     return document
 

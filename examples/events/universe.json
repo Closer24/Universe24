@@ -33830,6 +33830,16 @@
    "reads": [],
    "self_source": {
     "unit": 0
+   },
+   "spins_step": {
+    "curl": [
+     1,
+     4
+    ],
+    "tidal": [
+     3,
+     4
+    ]
    }
   },
   {

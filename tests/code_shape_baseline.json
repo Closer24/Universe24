@@ -71,11 +71,11 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/detector_law.py": {
-   "comment_lines": 650,
-   "docstring_lines": 598,
+   "comment_lines": 644,
+   "docstring_lines": 565,
    "level_shift_sites": 15,
-   "lines": 3977,
-   "record_references": 36,
+   "lines": 3874,
+   "record_references": 33,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/primitives.py": {
@@ -87,11 +87,11 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/world.py": {
-   "comment_lines": 491,
+   "comment_lines": 479,
    "docstring_lines": 400,
    "level_shift_sites": 0,
    "lines": 3420,
-   "record_references": 46,
+   "record_references": 45,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/features/__init__.py": {

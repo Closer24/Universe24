@@ -225,7 +225,7 @@ def test_swapping_two_independent_acts_of_the_file_swaps_the_loops_calls_and_lea
             return call
 
         simulation._move_block = spy("the hop", simulation._move_block)  # type: ignore[method-assign]
-        simulation._body_step = spy("the spin's step", simulation._body_step)  # type: ignore[method-assign]
+        simulation._spins_act = spy("the spin's step", simulation._spins_act)  # type: ignore[method-assign]
         for _ in range(4):
             simulation.step()
         reading = record.run_reading(simulation, [])

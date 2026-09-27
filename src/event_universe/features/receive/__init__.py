@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
@@ -107,8 +106,8 @@ def check(start: ReceiveStart) -> None:
             )
 
 
-def apply(term: ReceiveTerm, start: ReceiveStart) -> ReceiveWrites:
-    """The primitive at (i): the angle per Port, the Link's pair rotated by its triple where the angle is not zero (the pair itself where it is), then Rule3's input per axis, arr_a = the arrival through +a plus the arrival through -a, for the two levels (ALGEBRA.md 9.117 the row "the receive")."""
+def apply(term: ReceiveTerm, start: ReceiveStart, own: None = None) -> ReceiveWrites:
+    """The primitive at (i), `apply(term, start, own)` with no own record: the angle per Port, the Link's pair rotated by its triple where the angle is not zero (the pair itself where it is), then Rule3's input per axis, arr_a = the arrival through +a plus the arrival through -a, for the two levels (ALGEBRA.md 9.117 the row "the receive")."""
     check(start)
     angles = []
     re_sums = [np.zeros_like(start.re) for _ in range(3)]  # Rule3's arr_a on the first level
@@ -146,8 +145,3 @@ DECLARATION = Declaration(
     section="9.112 item 1; 9.96 (2) (e); 9.117 item 3; 9.119 item 2, the row 'the receive'",
     word="the step",
 )
-
-
-def bind(loop: Any) -> Callable[..., object]:
-    """The loop's method `_arrivals`, whose sums `apply` gives bit for bit, until the loop calls `apply`."""
-    return loop._method("_arrivals")  # type: ignore[no-any-return]

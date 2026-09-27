@@ -5,7 +5,7 @@ from __future__ import annotations
 import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
-from typing import NamedTuple
+from typing import NamedTuple, cast
 
 from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
 from event_universe.core.integer import (
@@ -69,11 +69,6 @@ FAMILY_KEYS = {
     "phase_per_link",
     "hand",
     "massive",
-    # massive-record-v1: the kind's pair [num, den] on the six-neighbour
-    # term, admitted under the world key `massive_record` alone; `faces`
-    # (a kind's own border per axis, HISTORY) is refused by name: one
-    # border for every family, the world's `boundary` (BUILD.md section
-    # 26 item 28)
     "pair",
     "faces",
     # THE REPRESENTATION AS A LIST OF PARTS and the rest of the complete
@@ -88,14 +83,7 @@ FAMILY_KEYS = {
     "held_factors",
     "held_dipole",
     "held_dipole_div",
-    # THE FAMILY GENERICITY (record 2066; BUILD.md section 26 item 51): what
-    # a family is, declared on the family and read by the engine as
-    # attributes alone, admitted under `detector_law`: `held` (the source a
-    # body's record writes at its Nodes: "content" or "sign"), `reads`
-    # (the held levels that enter the family's pace, with their weights),
-    # and `components` (1 today; 3 and 6 with the vector and tensor
-    # families of ALGEBRA.md 9.77); `booked` HISTORY (item 53: derived, a held
-    # family is never booked and every other family is)
+    "spins_step",
     "held",
     "reads",
     "components",
@@ -459,6 +447,8 @@ class FamilyDefinition:
     held_factors: tuple[int, ...] = (1,)
     held_dipole: str | None = None
     held_dipole_div: int = 1
+    # the spin's step's two weights of the turn, the curl's and the tidal term's pairs (9.78 (5))
+    spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
     # the self-source's unit P_2 (9.78 (3), 9.91 (5)): 0, off
     self_unit: int = 0
     # THE CLICKS (9.79 (1), 9.91 (7)): (gives, takes) for a family of records,
@@ -1505,6 +1495,7 @@ def _families(
             held_factors=attributes.held_factors,
             held_dipole=attributes.held_dipole,
             held_dipole_div=attributes.held_dipole_div,
+            spin_weights=attributes.spin_weights,
             self_unit=attributes.self_unit,
             clicks=attributes.clicks,
             pair_on_body=family.pair_on_body,
@@ -1529,6 +1520,7 @@ class FamilyAttributes(NamedTuple):
     held_factors: tuple[int, ...]
     held_dipole: str | None
     held_dipole_div: int
+    spin_weights: tuple[tuple[int, int], tuple[int, int]] | None
     self_unit: int
     clicks: tuple[bool, bool] | None
     reads: list[tuple[str, int, str, int | str]]
@@ -1608,6 +1600,15 @@ def _family_generic(obj: dict[str, object], label: str) -> FamilyAttributes:
             )
     if "held_dipole_div" in obj:
         held_dipole_div = _integer(obj["held_dipole_div"], f"{label}.held_dipole_div", 1)
+    spin_weights = None
+    if "spins_step" in obj:
+        weights = _object(obj["spins_step"], f"{label}.spins_step", {"curl", "tidal"}, {"curl", "tidal"})
+        pairs = cast(list[list[int]], [weights["curl"], weights["tidal"]])
+        if any(len(p) != 2 or any(type(v) is not int or v < 1 for v in p) for p in pairs):
+            raise ValueError(
+                f"{label}.spins_step.curl and .tidal are pairs of integers from 1 (9.78 (5))"
+            )
+        spin_weights = ((pairs[0][0], pairs[0][1]), (pairs[1][0], pairs[1][1]))
     clicks: tuple[bool, bool] | None = None
     if "clicks" in obj:
         value = _object(obj["clicks"], f"{label}.clicks", {"gives", "takes"}, {"gives", "takes"})
@@ -1669,9 +1670,8 @@ def _family_generic(obj: dict[str, object], label: str) -> FamilyAttributes:
             "family with no waves steps by the plain rule at the pace 1 of its own and reads no "
             "level (ALGEBRA.md 9.45 (2); BUILD.md section 26 item 51)"
         )
-    return FamilyAttributes(
-        held, parts, levels, held_factors, held_dipole, held_dipole_div, self_unit, clicks, reads
-    )
+    found = (held, parts, levels, held_factors, held_dipole, held_dipole_div)
+    return FamilyAttributes(*found, spin_weights, self_unit, clicks, reads)
 
 
 def _resolve_reads(

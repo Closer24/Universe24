@@ -180,6 +180,7 @@ def draw(seed: int) -> dict[str, Any]:
                 "held": held("content", parts),
                 "reads": [],
                 "self_source": {"unit": 0},
+                "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
             }
         )
     if sign_holder and sign_holder != given:
