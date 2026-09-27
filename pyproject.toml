@@ -42,8 +42,6 @@ line-length = 105
 select = ["E4", "E7", "E9", "F", "I", "B", "UP"]
 
 [tool.ruff.lint.isort]
-# The design scripts under docs/designs/ are records: some import modules deleted on
-# 2026-09-26 (docs/CANCELLED_WORLDS.md) and do not run; their import order stays as written.
 known-first-party = ["event_universe"]
 
 [tool.mypy]

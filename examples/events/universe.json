@@ -4,6 +4,8 @@
   "amplitude_bound": 1048576,
   "Lambda": 1,
   "momentum_unit": 64,
+  "most_steps": 65536,
+  "width": 63,
   "twist_table": {
    "unit": 2621440000,
    "fine": [

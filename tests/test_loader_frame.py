@@ -19,7 +19,18 @@ from tests.running import family_names, string_constants, written_defaults
 
 ROOT = Path(__file__).resolve().parents[1]
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
-FRAGMENT = ROOT / "examples" / "events" / "source" / "universe_entries.json"
+# one sourced entry (the word `sourced`, a card's key), as the retired source folder wrote it
+SOURCED = {
+    "name": "field",
+    "sign": 0,
+    "parts": [1],
+    "phase": 2,
+    "pair": [1000, 1019],
+    "quantum": 1,
+    "reads": [],
+    "self_source": {"unit": 0},
+    "sourced": {"of": "matter", "weight": 1, "scale": 18910},
+}
 FRAME = ROOT / "src" / "event_universe" / "loader" / "frame.py"
 FILE = "universe.json"
 
@@ -32,12 +43,10 @@ def read(universe: dict):
     return frame.universe(FILE, {FILE: universe}, discover())
 
 
-def test_the_shipped_file_and_the_sources_fragment_pass_with_the_weight_word_resolved():
-    """The three shipped families and the source's entries (the word `sourced`, a card's key)
-    pass the frame; matter's read of the charge at the word Lambda is the integer; the table's
-    lists are read as tuples of three."""
+def test_the_shipped_file_and_a_sourced_entry_pass_with_the_weight_word_resolved():
+    """The three shipped families and a sourced entry pass the frame; matter's read of the charge at the word Lambda is the integer; the table's lists are read as tuples of three."""
     universe = shipped()
-    universe["families"] += json.loads(FRAGMENT.read_text(encoding="utf-8"))["families"]
+    universe["families"] += [dict(SOURCED)]
     entries, integers = read(universe)
     assert [entry["name"] for entry in entries] == [f["name"] for f in universe["families"]]
     assert any("sourced" in entry for entry in entries)
