@@ -1,7 +1,6 @@
-"""THE RECOIL, its own folder (ALGEBRA.md 9.117 item 2, the row "the recoil"; 9.84 (2); 9.91 (4); 9.111
-items 1 and 2; record 2224): the line's integers on the moving row's numbers, the store carried so the
-sum over clicks is the exact floor (across divisors, across a taking and a giving), the direction of
-travel, the refusals by name, the trace's hand identity on the emitter's run, the declaration."""
+"""THE RECOIL, its own folder (ALGEBRA.md 9.117 item 2, the row "the recoil"; 9.84 (2); 9.91 (4); record
+2224): the line's integers on the moving row's numbers, the store carried so the sum over clicks is the
+exact floor, the direction of travel, the refusals, the hand identity on the emitter's run, the card."""
 
 from __future__ import annotations
 
@@ -63,8 +62,7 @@ def test_the_line_on_the_moving_rows_numbers():
 
 def test_the_store_is_carried_so_the_sum_over_clicks_is_the_exact_floor():
     """The store stays on the body between clicks, so the sum of the whole parts over k clicks is the
-    exact floor of k x (W x P_body) / (M x lambda_q): 52 exact at 260, 576 at 455; at 462 the fraction
-    3 / 11 per click adds three units over eleven clicks and the store returns to none."""
+    exact floor: 52 exact at 260, 576 at 455; at 462 the fraction 3 / 11 adds three units over eleven."""
     fifty_two = [(TAKING, 1, 12_480, 21, 65, 4)] * 52
     assert run_clicks(fifty_two) == RecoilOwn((52 * 1008, 0, 0), NONE)
     three = [(TAKING, 1, 12_480, 21, 65, 7)] * 3
@@ -79,9 +77,8 @@ def test_the_store_is_carried_so_the_sum_over_clicks_is_the_exact_floor():
 
 def test_clicks_of_different_divisors_add_exactly_the_reviewers_case_and_a_mixed_run():
     """Q = 64, M = 65, P = 20: a click of lambda 7 (548 + 4 / 7) then one of lambda 4 (960) give 1508,
-    the exact floor of 1508.571 (a bare integer remainder across the change of divisor gave 1509);
-    over a mixed run the momentum after every click is the exact floor of the sum of the fractions,
-    the store's divisor dividing the wavelengths' least common multiple."""
+    the exact floor of 1508.571 (a bare remainder gave 1509); over a mixed run the momentum after
+    every click is the exact floor of the sum, the store's divisor dividing the wavelengths' lcm."""
     reviewer = [(TAKING, 1, 12_480, 20, 65, 7), (TAKING, 1, 12_480, 20, 65, 4)]
     first = run_clicks(reviewer[:1])
     assert first.momentum == (548, 0, 0) and first.remainders[0] == (4, 7)
@@ -110,9 +107,8 @@ def test_clicks_of_different_divisors_add_exactly_the_reviewers_case_and_a_mixed
 
 
 def test_a_taking_and_a_giving_of_the_same_quantum_cancel_through_a_negative_remainder():
-    """A giving is the same line with the opposite sign: a taking of 3840 / 7 (548, the store 4 / 7)
-    then a giving of the same undo each other exactly; a giving first floors to -549 with the store
-    3 / 7, and the taking after it returns n to 0."""
+    """A giving is the same line with the opposite sign: a taking of 3840 / 7 then a giving undo each
+    other exactly; a giving first floors to -549 with the store 3 / 7, the taking after it returns 0."""
     take, give = (TAKING, 1, 12_480, 20, 65, 7), (GIVING, 1, 12_480, 20, 65, 7)
     assert run_clicks([take, give]) == RecoilOwn((0, 0, 0), NONE)
     given = run_clicks([give])
@@ -165,10 +161,9 @@ def test_the_bounds_and_the_terms_are_refused_by_name():
 
 
 def test_the_trace_hand_identity_on_the_emitters_run():
-    """The emitter's unit world (Q = 64 giving four quanta of light of wavelength 4 along +x): fed every
-    giving line's integers with the giver's sense, the folder moves n by the whole part and keeps the
-    store, and after every giving n equals the exact floor of the sum of the fractions (ALGEBRA.md
-    9.112 item 5; 9.84 (2)); the run itself moves no momentum (the binding is the loop's cut)."""
+    """The emitter's unit world (Q = 64 giving four quanta of wavelength 4 along +x): fed every giving
+    line's integers with the giver's sense, the folder moves n by the whole part and keeps the store, n
+    the exact floor of the sum after every giving (9.112 item 5); the run itself moves no momentum."""
     document = emitter_world(stock=4, ticks=1200)
     period = document["measured"][0]["emitter"]["period"]
     wavelength = 2 * document["N"] // document["universe"][0]["phase_per_link"][0]  # k = pi / 2: 4

@@ -72,13 +72,11 @@ def six_reads(levels: np.ndarray, wrap_x: bool) -> list[int]:
 
 def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_e_over_f():
     """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md 9.57 (1); BUILD.md section 26 item 44):
-    on the periodic chain of 12 with QUANTA quanta at every Node (the pace 0.75), one step of the engine
-    on random rows of light and of the matter kind equals w a_next + r' = R S_6(a_now) + S a_now - w
-    a_before + r in Python integers, the remainder in [0, w); with no content the plain rule's levels
-    bit for bit and the remainder 2 Gamma^2 times the plain one. (ii) THE ROTATION of a uniform record
-    of the matter kind: 2 cos omega' = 2 - (1 + f)(1 - num / den), f = ((Gamma - c) / Gamma)^2 (9.56
-    (4)), read from three levels at a Node: 1.982617 at the pace 0.75, 1.977750 in the vacuum, within
-    10^-5 over 60 intervals; at the pace 1 / 2, 1.986094."""
+    on the periodic chain of 12 with QUANTA quanta at every Node, one step of the engine on random rows
+    equals w a_next + r' = R S_6(a_now) + S a_now - w a_before + r in Python integers; with no content
+    the plain rule's levels bit for bit. (ii) THE ROTATION of a uniform record of the matter kind: 2 cos
+    omega' = 2 - (1 + f)(1 - num / den), f = ((Gamma - c) / Gamma)^2 (9.56 (4)): 1.982617 at the pace
+    0.75, 1.977750 in the vacuum, within 10^-5 over 60 intervals; at the pace 1 / 2, 1.986094."""
     rng = np.random.default_rng(11)
     for family, (num, den) in ((0, (1, 1)), (1, PAIR)):
         rows_now = rng.integers(-UNIT, UNIT, size=(12, 1, 1), dtype=np.int64)

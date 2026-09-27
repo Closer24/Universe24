@@ -29,10 +29,9 @@ def induced(act, now, before, nodes, *reads) -> InductionStart:
 
 
 def test_a_body_falls_toward_content_the_same_for_every_body_over_the_faces_distance():
-    """The fall (ALGEBRA.md #the-well): a resting body between the time levels 400 behind and 460 ahead
-    on x gets n_next = n_before + 2 W x 60 div (2 Gamma x 2), the remainder carried, the same velocity
-    change whatever W; a block with 9-Node faces 4 Links apart the same per Node; a hill pushes away;
-    an axis with no faces is left alone; n moves to n_before."""
+    """The fall (ALGEBRA.md #the-well): a resting body between the time levels 400 behind and 460 ahead on
+    x gets n_next = n_before + 2 W x 60 div (2 Gamma x 2), the remainder carried, the same whatever W; a
+    block with 9-Node faces 4 Links apart the same per Node; a hill pushes away; no faces, no change."""
     for wall in (WALL, 5 * WALL):
         pair = faces(FeedRead(1, 400, ZERO3, ZERO6), FeedRead(1, 460, ZERO3, ZERO6))
         writes = feed.apply(start(THE_ADVANCE, (3, 5, 7), ZERO3, pair, wall=wall), FeedOwn({}))
@@ -49,11 +48,9 @@ def test_a_body_falls_toward_content_the_same_for_every_body_over_the_faces_dist
 
 def test_the_contraction_books_the_momentum_with_the_vector_and_tensor_parts_and_the_electric_identity():
     """A moving body (n = (300, -200, 0)) between faces with time, vector and tensor parts: the contraction
-    f x [t - (n_b V_b) div W + (n_b n_c h_bc) div W^2] in Python integers (the off-diagonal pairs twice)
-    and the feed its difference; THE ELECTRIC IDENTITY: a time gradient of 120 over 2 Links and a vector
-    part rising by 60 push a one-Node body alike, W x 60 per 2 Gamma per interval (the feed's doubled
-    term rounded once), E = -grad phi - dA/dt in one unit; the induction pushes both integers; a block
-    of 27 Nodes with the levels summed the same."""
+    f x [t - (n_b V_b) div W + (n_b n_c h_bc) div W^2] in Python integers (the off-diagonal pairs twice),
+    the feed its difference; THE ELECTRIC IDENTITY: a time gradient of 120 over 2 Links and a vector part
+    rising by 60 push alike, W x 60 per 2 Gamma per interval (the doubled term rounded once); a block of 27."""
     n = (300, -200, 0)
     minus = FeedRead(2, 500, (7, -11, 13), (1, 2, 3, -4, 5, -6))
     plus = FeedRead(2, 530, (-9, 17, 19), (2, -3, 4, 5, -6, 7))

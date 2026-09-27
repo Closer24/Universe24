@@ -1,7 +1,6 @@
-"""THE HOLD, its own folder (ALGEBRA.md 9.117 the row "the hold"; 9.91 (3); 9.119 item 2; record 2250):
-every division through core.rule3; on the shipped moving Lorentz world the folder's carried divisions
-give the loop's own values, carries and levels over forty intervals bit for bit; forward then back
-returns the state exactly; the dipole's terms are 9.91 (3)'s table; the refusals; the declaration."""
+"""THE HOLD, its own folder (ALGEBRA.md 9.117 the row "the hold"; 9.91 (3); record 2250): every division
+through core.rule3; on the shipped moving Lorentz world the folder's divisions give the loop's values,
+carries and levels over forty intervals bit for bit; forward then back exact; the refusals; the card."""
 
 from __future__ import annotations
 
@@ -81,10 +80,9 @@ def engines_state(block, family: int) -> tuple[dict, dict]:
 
 
 def test_the_folder_gives_the_loops_integers_on_the_moving_lorentz_world_bit_for_bit():
-    """examples/events/toward_nature/lorentz_moving.json (the body of content 65 giving charge quanta at
-    v = 1 / 4, its wall and count changing, its Nodes hopping): the load as the folder's load act and
-    every interval as its advance act give the loop's values and carries of gravity's vector and
-    tensor parts and of the charge's dipoles bit for bit over forty intervals, and the parts' levels."""
+    """examples/events/toward_nature/lorentz_moving.json (content 65, giving charge quanta at v = 1 / 4, its
+    wall and count changing, its Nodes hopping): the load act and every interval's advance act give the
+    loop's values and carries of gravity's parts and the charge's dipoles bit for bit over forty intervals."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(json.loads(MOVING.read_text())))
     block = simulation.block_by_number[0]
     owns = {}
@@ -257,9 +255,8 @@ def test_the_declaration_is_the_ledgers_row():
 
 def test_the_folder_gives_the_loops_integers_backward_on_the_resting_lorentz_world_bit_for_bit():
     """examples/events/toward_nature/lorentz_rest.json (no hop, so the loop's inverse is defined): twenty
-    intervals forward with the advance act, then twenty of the loop's `step_inverse`, each the unhold
-    act then the inverse act, the loop's integers read after each: the values and carries of every
-    held family agree bit for bit on the way back, and the end state is the start state."""
+    intervals forward, then twenty of the loop's `step_inverse`, each the unhold act then the inverse act:
+    the values and carries of every held family agree bit for bit on the way back, the end the start."""
     rest = ROOT / "examples" / "events" / "toward_nature" / "lorentz_rest.json"
     simulation = DetectorLawSimulation(parse_nature_beam_world(json.loads(rest.read_text())))
     block = simulation.block_by_number[0]

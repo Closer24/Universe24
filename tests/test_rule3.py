@@ -1,9 +1,7 @@
-"""THE RULE IN ONE PLACE (the model owner's question of 2026-09-26 through the Boss; ALGEBRA.md 9.57 (1),
-9.50 (8), (9) and (13), 9.91 (2); issue #1154; src/event_universe/core/rule3.py): one function steps
-every record at every Node in either direction; the conserved form's term is read from the same
-integers; the isotropic rule is the same call with equal paces; the coefficients are the engine's two
-functions before the cut, term for term; no other file of src/ writes this arithmetic; the operation
-primitive is rule3 itself; bit for bit on every shipped world."""
+"""THE RULE IN ONE PLACE (ALGEBRA.md 9.57 (1), 9.50 (8), (9) and (13), 9.91 (2); issue #1154;
+src/event_universe/core/rule3.py): one function steps every record at every Node in either direction;
+the form's term is read from the same integers; the isotropic rule is the same call with equal paces;
+no other file of src/ writes this arithmetic; the operation primitive is rule3; bit for bit everywhere."""
 
 from __future__ import annotations
 
@@ -61,9 +59,8 @@ def old_axes(
 
 
 def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_zero_axis_contents():
-    """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term (4 num x 3 p^2 = 12
-    num p^2); with them the four paces' reads; `weak_field` False the plain first-order rule; the vacuum
-    is 2 Gamma^2 times the plain rule; a tensor along x alone slows the x read and the own term."""
+    """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four
+    paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule."""
     rng = random.Random(3)
     for _ in range(500):
         num, den = rng.randint(1, 1000), rng.randint(1, 1000)
