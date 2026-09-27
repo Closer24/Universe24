@@ -90,7 +90,6 @@ def family_names() -> set[str]:
 # exclusion: a family's name is not a column's name either)
 
 
-# green since #1236 (the loop's families built from the checked entries; the dead body keys out)
 def test_a1_the_loader_holds_no_family_name_of_the_universe():
     """Record 2226 with records 2172 to 2174: no string constant of the loader is a family name
     of the universe file, with no exclusion."""
@@ -104,7 +103,6 @@ def test_a1_the_loader_holds_no_family_name_of_the_universe():
     assert offending == [], offending
 
 
-# green since #1236 (`fixed` required, no `span`, no margin on a body that is no well)
 def test_a2_the_loader_writes_no_default_for_a_key_of_the_files():
     """Record 2089 (every default and flag out of the engine's code into the files) with record
     2226 (a missing key is refused by name from the schema): the loader has no `.get(key,
@@ -189,9 +187,9 @@ def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_a
 @pytest.mark.xfail(
     strict=True,
     reason="ALGEBRA.md 9.117 row 'the source' with record 2226: the frame reads `sourced` from the "
-    "source folder's card (#1206), and the loop has no source step (no line of the loop calls "
-    "features/source), so `world.py` refuses a family that is neither held nor clicking rather "
-    "than load a declared source the loop would ignore",
+    "source folder's card (#1206) and `world.py` carries it as the family's source term (#1236); "
+    "the fragment's `control` family declares neither held, clicks nor sourced, and the law "
+    "(9.86 (2)) refuses a family that does none: the unsourced control waits on the owner's word",
 )
 def test_b2_the_word_sourced_on_a_family_of_the_universe_loads(tmp_path, monkeypatch):
     """ALGEBRA.md 9.117 row 'the source', 9.108 items 3 and 11 (record 2217): the universe with

@@ -99,21 +99,17 @@ def test_a_baseline_raised_in_the_same_commit_is_refused_against_the_merge_base(
 
 
 def test_a_moved_file_beyond_the_limits_ratchets_against_its_old_entry(tmp_path):
-    """A file beyond the limits that moves to another folder is not new: it is compared with
-    its old path's entry (a count that grew fails, the same counts ask for the re-record), in
-    the baseline and against the merge base alike."""
+    """A moved file beyond the limits is not new: it is compared with its old path's entry."""
     root = tree(tmp_path, SMALL)
     baseline = SHAPE.record(root)
     old = root / PACKAGE / "core" / "a.py"
     new = root / PACKAGE / "features" / "a.py"
-    text = old.read_text(encoding="utf-8")
-    old.unlink()
     new.parent.mkdir(parents=True, exist_ok=True)
-    new.write_text(text, encoding="utf-8")
+    old.rename(new)
     found = SHAPE.violations(root, baseline, baseline)
     assert not any("is new" in line for line in found)
     assert any("core/a.py is in the baseline and not in the tree" in line for line in found)
-    new.write_text(text + "# one more comment\n", encoding="utf-8")
+    new.write_text(new.read_text(encoding="utf-8") + "# one more comment\n", encoding="utf-8")
     found = SHAPE.violations(root, baseline, baseline)
     assert any("features/a.py: comment lines grew from 1 to 2" in line for line in found)
     assert any("features/a.py: comment lines is 2, above the merge base's 1" in line for line in found)

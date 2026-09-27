@@ -70,9 +70,8 @@ def reads() -> list[dict]:
 def family_entry(
     name: str, pair, reads: list[dict], clock=None, sign: int = 0, quantum: int = 1
 ) -> dict:
-    """A family of records in the cards' form (the universe file's entry): one part, two
-    levels, its pair, its reads, the self-source off, clicks at the quantum; its clock and
-    its sign where given."""
+    """A family of records in the cards' form (the universe file's entry): one part, two levels,
+    its pair, its reads, the self-source off, clicks at the quantum; its clock and sign where given."""
     entry = {
         "name": name,
         "sign": sign,
