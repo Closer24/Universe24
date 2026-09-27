@@ -1,10 +1,4 @@
-"""THE COUNT'S LINE, its own folder (ALGEBRA.md 9.121 item 3, the law by the owner's word; 9.119
-item 1; 9.57 (1)): Rule3 for the family of clicks with the record's current as its read; a
-body at rest keeps its count in place (a standing mode by Rule3, and the shipped resting Lorentz
-world's own body record stepped by the loop); a moving record stepped by the loop on the shipped
-moving Lorentz world's GameBoard carries its count with it at the group velocity; the count is
-conserved exactly; the inverse undoes the line; the int64 bound on the current; the refusals;
-the declaration."""
+"""THE COUNT'S LINE, its own folder (ALGEBRA.md #the-counts-line): Rule3 for the family of clicks with the record's current as its read; a body at rest keeps its count in place; a moving record carries its count at the group velocity; the count conserved exactly; the inverse; the int64 bound; the refusals; the declaration."""
 
 from __future__ import annotations
 
