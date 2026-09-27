@@ -14,6 +14,11 @@ from event_universe.core.register import Declaration
 from event_universe.core.rule3 import rule3
 
 NO_READ = (0, 0, 0)  # the line with no read
+PORTS, SIGNS, TERMS = (
+    6,
+    2,
+    2,
+)  # a Node's six Ports (the six arrivals); a level's two signs; the line's two terms
 Wrap = tuple[bool, bool, bool]
 Pair = tuple[int, int]
 PERIODIC: Wrap = (True, True, True)
@@ -58,9 +63,8 @@ def arrivals(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
 
 def field_unit(counts: np.ndarray, num: int) -> int:
     """The field's fine unit, derived and never written: the largest scale of the levels at which num S_6 stays inside the integer width with room, the width div (2 x 6 num x the largest count's size)."""
-    return int(
-        division(1, 2 * 6 * num * int(np.abs(counts).max()), np.array(MAX_WORK_INT, dtype=object))
-    )
+    largest = int(np.abs(counts).max())
+    return int(division(1, SIGNS * PORTS * num * largest, np.array(MAX_WORK_INT, dtype=object)))
 
 
 def field_at_rest(counts: np.ndarray, pair: Pair, wrap: Wrap = PERIODIC) -> FieldAtRest:
@@ -94,9 +98,7 @@ def chain_axis(counts: np.ndarray) -> int | None:
 
 def chain_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
     """The rest on a chain in one pass (ALGEBRA.md #the-generator, THE START): the fixed point of the clamp's map, 6 den b_i = num (b_(i-1) + b_(i+1) + 4 b_i) between the bodies' Nodes with the counts times the unit at them and 0 beyond an open face, solved exactly in integers segment by segment (the tridiagonal line of the same map: the segment's determinants p_k = d p_(k-1) - num^2 p_(k-2) with d = 6 den - 4 num, the Node's value the division act N_i div p_s with N_i = L num^i p_(s-i) + R num^(s+1-i) p_(i-1) from the two ends L and R), the levels then the nearest integers by the division act; the clamp's fixed point, bit for bit."""
-    check_counts(
-        np.abs(counts), 1 + int(np.abs(counts).max())
-    )  # a signed family's counts by their sizes
+    check_counts(np.abs(counts), 1 + int(np.abs(counts).max()))  # a signed family's counts by size
     num, den = pair
     if num < 1 or den < num:
         raise ValueError(f"the field's pair [{num}, {den}] has num from 1 and den from num")
@@ -152,11 +154,10 @@ def chain_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
     return FieldAtRest(levels, fine, unit, 1, 1)
 
 
-# THE FAST LANE'S SIZES, every one from the machine's width (the owner's rule: no number of its own):
-# a product of two halves times the Nodes' partial sum, and a ratio's half times a vector's half
-# shifted up by the halves' excess over the fixed point, each stays below 2^ROOM (the sign bit out).
-# The right side's scale, the unit's growth and the margin's room come from the certificate and the
-# GameBoard itself (the inverse's bound, the free Nodes' count), inside `box_rest`.
+# THE FAST LANE'S SIZES, every one from the machine's width (the owner's rule: no number of its own): two
+# halves' product times the Nodes' partial sum, and a ratio's half times a vector's half shifted up by the
+# halves' excess over the fixed point, each below 2^ROOM (the sign bit out); the right side's scale, the
+# unit's growth and the margin's room come from the certificate and the GameBoard, inside `box_rest`.
 WIDTH = MAX_WORK_INT.bit_length()  # the machine's integer width
 ROOM = WIDTH - 1  # the bits below the sign
 NODES_BITS = int(
@@ -217,9 +218,8 @@ def line_solver(counts: np.ndarray, pair: Pair, wrap: Wrap) -> tuple[Any, np.nda
         int(np.count_nonzero(free)) + 1
     )  # the gradients end within the free Nodes' count in exact arithmetic; the floors' stops end them far sooner
     bound = 1 << VECTOR_BITS
-    room = int(
-        division(1, 4 * 6 * den, np.array(MAX_WORK_INT, dtype=object))
-    )  # |v| with A v inside the width
+    # |A v| <= 2 x 6 den |v| (the two terms, the six Ports), a sign's room for a sum of two
+    room = int(division(1, SIGNS * TERMS * PORTS * den, np.array(MAX_WORK_INT, dtype=object)))
     fast_lane = counts.size <= 1 << NODES_BITS and bound <= room
 
     def apply(vector: np.ndarray) -> np.ndarray:
@@ -315,9 +315,7 @@ def certified(
 
 def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
     """The rest on a box (ALGEBRA.md #the-generator, THE START): the line's exact rest to the nearest integer, certified in integers. The guess is the solver's; each round the exact residual R of the whole-integer field is solved back and taken off; the certificate is the exit-time bound: T solves the same line with 6 den x the lift on the right side, its own exact residual rho makes ||A^-1|| <= ||T|| / (6 den x lift - ||rho||), so the field stands within margin = ||A^-1|| ||R|| of the exact rest; where every free Node is farther than the margin from a half, the levels are the exact rest's nearest integers. Where the certificate does not close, the unit grows once and the rounds repeat; a value still within the margin of a half then rounds up, the half's own side under the division act (the margin added before the act). The cost is the load's."""
-    check_counts(
-        np.abs(counts), 1 + int(np.abs(counts).max())
-    )  # a signed family's counts by their sizes
+    check_counts(np.abs(counts), 1 + int(np.abs(counts).max()))  # a signed family's counts by size
     num, den = pair
     if num < 1 or den < num:
         raise ValueError(f"the field's pair [{num}, {den}] has num from 1 and den from num")
