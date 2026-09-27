@@ -249,7 +249,5 @@ def test_the_current_is_the_booking_and_its_bound_holds_within_int64():
 def test_the_declaration_is_the_registers_row():
     assert DECLARATION.name == "the count's line" and folder_of(DECLARATION.name) == "counts_line"
     assert DECLARATION.place == "(ii)" and DECLARATION.word == "after the step"
-    assert DECLARATION.function is apply and DECLARATION.writes == (
-        "the count at a Node",
-        "the count's remainder",
-    )
+    assert DECLARATION.function is None and not DECLARATION.built
+    assert DECLARATION.writes == ("the count at a Node", "the count's remainder")

@@ -75,7 +75,7 @@ def check(term: CountTerm, start: CountStart) -> None:
         raise ValueError(f"the count's line needs T = {term.norm} and the weight {term.weight} from 1")
     if start.direction not in (1, -1):
         raise ValueError(f"the count's line runs in the direction +1 or -1, got {start.direction}")
-    if len(start.links) != 6:
+    if len(start.links) != PORTS:
         raise ValueError(f"the count's line reads six Links, one per Port, got {len(start.links)}")
     if bound(term) > MAX_WORK_INT:
         raise ValueError(
@@ -106,12 +106,11 @@ def apply(term: CountTerm, start: CountStart) -> CountWrites:
 
 
 DECLARATION = Declaration(
-    "the count's line",
-    "(ii)",
-    ("the record's levels at the Node and across its six Ports", "T", "the current's weight"),
-    ("the count at a Node", "the count's remainder"),
-    None,
-    apply,
-    "9.121 item 3; 9.119 item 1; 9.57 (1)",
+    name="the count's line",
+    place="(ii)",
+    reads=("the record's levels at the Node and across its six Ports", "T", "the current's weight"),
+    writes=("the count at a Node", "the count's remainder"),
+    function=None,
+    section="9.121 item 3; 9.119 item 1; 9.57 (1)",
     word="after the step",
 )
