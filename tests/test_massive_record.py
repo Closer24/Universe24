@@ -525,7 +525,7 @@ def test_the_cavity_is_refused_by_name():
 
 
 def test_the_mode_line_sums_lights_field_by_residue_class():
-    """The world key `mode_axis` ("x"): the record's `mode` line per interval carries the three sums of light's total field over the Nodes whose x coordinate is 0, 1, 2 modulo 3, equal to the sums formed from the records' rows at that interval; on a chain of 30 with a planted packet the three sums are the packet's residue sums. The edge case: `mode_axis` without `massive_record` is refused, as is an axis not x, y or z."""
+    """The world key `mode_axis` ("x"): the record's `mode` line per interval carries the three sums of light's total field over the Nodes whose x coordinate is 0, 1, 2 modulo 3, equal to the sums formed from the records' rows at that interval; on a chain of 30 with a planted packet the three sums are the packet's residue sums. The edge case: an axis not x, y or z is refused."""
     document = block_world([30, 1, 1], PERIODIC_CHAIN, [800, 809], [], ticks=20)
     document["mode_axis"] = "x"
     lines: list[dict] = []

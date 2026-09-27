@@ -4,18 +4,30 @@ on:
     types: [opened, synchronize, reopened, edited, ready_for_review]
   push:
     branches: [main]
+  # the run CI starts on a pull request's branch after it commits the record there (a push
+  # made with the workflow's own token starts no run): the pull request's number and base
+  workflow_dispatch:
+    inputs:
+      pull_request:
+        description: the pull request's number
+        required: true
+      base:
+        description: the pull request's base branch
+        required: true
 permissions:
   contents: read
 concurrency:
-  group: python-${{ github.event.pull_request.number || github.ref }}
+  group: python-${{ inputs.pull_request || github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 env:
-  CHECK_BASE: ${{ github.base_ref && format('origin/{0}', github.base_ref) || github.event.before }}
+  CHECK_BASE: ${{ github.base_ref && format('origin/{0}', github.base_ref) || (inputs.base && format('origin/{0}', inputs.base)) || github.event.before }}
   PR_BODY: ${{ github.event.pull_request.body }}
+  # the tree CI checks: the pull request merged with its base; on a dispatch the same ref by number
+  CHECKOUT_REF: ${{ inputs.pull_request && format('refs/pull/{0}/merge', inputs.pull_request) || '' }}
 jobs:
   plan:
     # no run on a draft's pushes; marking it ready runs it
-    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     outputs:
       shards: ${{ steps.plan.outputs.shards }}
@@ -23,6 +35,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ env.CHECKOUT_REF }}
       - uses: actions/setup-python@v5
         with:
           python-version-file: .python-version
@@ -32,6 +45,9 @@ jobs:
     needs: plan
     name: ${{ matrix.shard }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     strategy:
       fail-fast: false
       matrix:
@@ -40,12 +56,23 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ env.CHECKOUT_REF }}
       - uses: actions/setup-python@v5
         with:
           python-version-file: .python-version
           cache: pip
           cache-dependency-path: pyproject.toml
       - run: python -m pip install -e '.[dev]'
+      # on a dispatch the pull request's body (the ownership gate reads it) comes from the API
+      - if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          {
+            echo "PR_BODY<<END_OF_THE_PULL_REQUEST_BODY"
+            gh pr view "${{ inputs.pull_request }}" --repo "${{ github.repository }}" --json body --jq .body
+            echo "END_OF_THE_PULL_REQUEST_BODY"
+          } >> "$GITHUB_ENV"
       - run: python tools/check.py --shard "${{ matrix.shard }}"
       - uses: actions/upload-artifact@v4
         if: always()
@@ -53,3 +80,68 @@ jobs:
           name: diagnostics-${{ strategy.job-index }}
           path: artifacts/
           retention-days: 1
+  record:
+    # the regression record re-recorded by CI (the model owner's word of 2026-09-27): the world
+    # jobs' entries merged into tests/shipped_worlds.json and, where it differs from the head's,
+    # committed to the pull request's branch; that push starts no run, so this job starts the
+    # run on the new head itself, which then finds no difference and commits nothing
+    needs: [plan, check]
+    if: always() && needs.plan.result == 'success' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+      pull-requests: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - id: pull
+        run: |
+          number="${{ inputs.pull_request || github.event.pull_request.number }}"
+          echo "number=$number" >> "$GITHUB_OUTPUT"
+          gh pr view "$number" --repo "${{ github.repository }}" \
+            --json headRefName,headRefOid,baseRefName,isCrossRepository \
+            --jq '"head=\(.headRefName)\nsha=\(.headRefOid)\nbase=\(.baseRefName)\ncross=\(.isCrossRepository)"' >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        if: steps.pull.outputs.cross == 'false'
+        with:
+          ref: ${{ steps.pull.outputs.head }}
+      - uses: actions/setup-python@v5
+        if: steps.pull.outputs.cross == 'false'
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      # the record tool imports the engine (the replay's reader), so the package is installed
+      - if: steps.pull.outputs.cross == 'false'
+        run: python -m pip install -e '.[dev]'
+      - uses: actions/download-artifact@v4
+        if: steps.pull.outputs.cross == 'false'
+        with:
+          pattern: diagnostics-*
+          path: artifacts/shards
+      - if: steps.pull.outputs.cross == 'false'
+        run: |
+          set -e
+          if [ "$(git rev-parse HEAD)" != "${{ steps.pull.outputs.sha }}" ]; then
+            echo "the branch moved past ${{ steps.pull.outputs.sha }}; the new head's own run records it"
+            exit 0
+          fi
+          python tools/record_shipped_worlds.py --merge artifacts/shards --recorded-at "${{ steps.pull.outputs.sha }}"
+          if git diff --quiet -- tests/shipped_worlds.json; then
+            echo "the record on ${{ steps.pull.outputs.sha }} is what the replay found; nothing to commit"
+            exit 0
+          fi
+          # the guard against a loop: a record CI itself committed is never re-recorded by CI
+          if git log -1 --format=%s | grep -q '^the record re-recorded by CI on '; then
+            echo "the record CI committed on this head replays differently: a run that is not the same twice"
+            git diff -- tests/shipped_worlds.json
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/shipped_worlds.json
+          git commit -m "the record re-recorded by CI on ${{ steps.pull.outputs.sha }}" -m "Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
+          git push origin "HEAD:${{ steps.pull.outputs.head }}"
+          gh workflow run check.yml --repo "${{ github.repository }}" --ref "${{ steps.pull.outputs.head }}" \
+            -f "pull_request=${{ steps.pull.outputs.number }}" -f "base=${{ steps.pull.outputs.base }}"

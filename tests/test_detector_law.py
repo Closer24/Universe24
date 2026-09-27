@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+from dataclasses import replace
 
 import numpy as np
 import pytest
@@ -16,6 +17,7 @@ from tests.worlds import (
     EMITTER_PAIR,
     NODE_CLOCK,
     chain_world,
+    emitter_world,
     lawful_wheel,
     layer_world,
     receiver_body,
@@ -382,3 +384,23 @@ def test_detector_is_one_connected_cube_of_side_three():
         else:
             with pytest.raises(ValueError, match=refusal):
                 parse_nature_beam_world(document)
+
+
+def test_the_wall_l_is_over_the_clocks_of_the_families_a_body_gives_and_the_emitters():
+    """The law's row "the recoil" (#1289): L is the least common multiple of the wavelengths 2 N q / p over the clocks of the families a body of the world gives and the emitters' own; a clock on a family no body gives enters nothing and is not checked (matter [7, 1] on N = 1024: 2048 / 7 is no whole number of Links), so L stands as without it. The edge case: the same clock on the given family (light) is refused at load by name."""
+    document = emitter_world(stock=2, ticks=120)
+    document["stamp"] = input_stamp(document)
+    world = parse_nature_beam_world(document)
+    families = list(world.families)
+    light, matter = (next(i for i, f in enumerate(families) if f.name == n) for n in ("light", "matter"))
+    wall = DetectorLawSimulation(world).recoil_wall
+    families[matter] = replace(families[matter], phase_per_age=(7, 1))
+    assert DetectorLawSimulation(replace(world, families=tuple(families))).recoil_wall == wall
+    families[matter], families[light] = (
+        world.families[matter],
+        replace(families[light], phase_per_age=(7, 1)),
+    )
+    with pytest.raises(
+        ValueError, match=rf"families\[{light}\] declares the clock \[7, 1\] on N = 1024"
+    ):
+        DetectorLawSimulation(replace(world, families=tuple(families)))

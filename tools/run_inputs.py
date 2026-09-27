@@ -127,7 +127,13 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
     output["counts"] = counts
     output["records_alive"] = len(simulation.records)
     verdicts = []
-    for pin in pins:
+    # the expectation file beside the world (<world>.expectation.json), written before the run: its
+    # DETECTOR section joins the pins, its GAMEBOARD section is compared below
+    expectation_path = Path(path).with_suffix(".expectation.json")
+    expectation = (
+        json.loads(expectation_path.read_text(encoding="utf-8")) if expectation_path.exists() else {}
+    )
+    for pin in [*pins, *expectation.get("DETECTOR", [])]:
         # a pin on the COUNT of clicks at the detector, on its FIRST click (the
         # least interval since the record's giving among its clicks: the stock's
         # fastest passage; for one record given at interval 0 the interval of the
@@ -154,6 +160,37 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
                 "band": band,
                 "read": read,
                 "verdict": "MATCH" if read is not None and abs(read - expected) <= band else "MISS",
+            }
+        )
+    for pin in expectation.get("GAMEBOARD", []):
+        # a pin of the expectation file's GAMEBOARD section (a diagnostic, never a measurement): a
+        # body's momentum or centre at a named interval, read from the declared readings, each
+        # component within the band
+        kind = "momentum" if "momentum" in pin else "centre"
+        expected_parts = [int(part) for part in pin[kind]]
+        found = None
+        for line in readings.output():
+            if line["kind"] == kind and line.get("body") == int(pin["body"]):
+                for entry in line["lines"]:
+                    if entry["interval"] == int(pin["interval"]):
+                        found = entry["momentum" if kind == "momentum" else "node"]
+        verdicts.append(
+            {
+                "body": int(pin["body"]),
+                "interval": int(pin["interval"]),
+                "kind": kind,
+                "pin": expected_parts,
+                "band": int(pin["band"]),
+                "read": found,
+                "verdict": (
+                    "MATCH"
+                    if found is not None
+                    and all(
+                        abs(int(r) - e) <= int(pin["band"])
+                        for r, e in zip(found, expected_parts, strict=True)
+                    )
+                    else "MISS"
+                ),
             }
         )
     output["pins"] = verdicts
