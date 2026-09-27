@@ -32,7 +32,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from merge_base import base_ref, resolved, tree_at  # noqa: E402
+from merge_base import base_ref, carried, resolved, tree_at  # noqa: E402
 
 PACKAGE = Path("src/event_universe")
 CORE = PACKAGE / "core"
@@ -131,8 +131,10 @@ def record(root: Path) -> dict[str, Any]:
 
 def record_at(root: Path, ref: str | None = None) -> dict[str, Any]:
     """The same record of the merge base's tree (CHECK_BASE, else origin/main), read from git: no file holds it."""
-    with tree_at(root, ref or base_ref(), ("src", "tools", "examples")) as base_root:
-        return record(base_root)
+    ref = ref or base_ref()
+    with tree_at(root, ref, ("src", "tools", "examples")) as base_root:
+        base = record(base_root)
+    return {**base, "files": carried(base["files"], root, ref)}
 
 
 def ratchet(root: Path, base: dict[str, Any]) -> list[str]:

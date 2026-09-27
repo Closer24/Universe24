@@ -29,7 +29,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from merge_base import base_ref, tree_at  # noqa: E402
+from merge_base import base_ref, carried, tree_at  # noqa: E402
 
 PACKAGE = Path("src/event_universe")
 LOOP = PACKAGE / "events" / "detector_law.py"
@@ -279,8 +279,10 @@ def beyond_the_limits(rel: str, shape: dict[str, int]) -> list[str]:
 
 def record_at(root: Path, ref: str | None = None) -> dict[str, Any]:
     """The same record of the merge base's tree (CHECK_BASE, else origin/main), read from git: no file holds it."""
-    with tree_at(root, ref or base_ref(), SCOPES) as base_root:
-        return record(base_root)
+    ref = ref or base_ref()
+    with tree_at(root, ref, SCOPES) as base_root:
+        base = record(base_root)
+    return {**base, "files": carried(base["files"], root, ref)}
 
 
 def violations(root: Path, base: dict[str, Any]) -> list[str]:

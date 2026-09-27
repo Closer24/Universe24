@@ -10,6 +10,7 @@ import tempfile
 from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
+from typing import Any
 
 
 def base_ref() -> str:
@@ -36,6 +37,27 @@ def resolved(root: Path, ref: str) -> str:
         raise ValueError(
             f"the merge base {ref!r} cannot be resolved: fetch it or set CHECK_BASE"
         ) from None
+
+
+def moved_since(root: Path, ref: str) -> dict[str, str]:
+    """Each file git reads as moved since the merge base, its new path to its old one: a moved file keeps its old path's counts."""
+    git = ["git", "-C", str(root)]
+    base = subprocess.run(
+        [*git, "merge-base", resolved(root, ref), "HEAD"], capture_output=True, text=True, check=True
+    ).stdout.strip()
+    lines = subprocess.run(
+        [*git, "diff", "-M", "--name-status", "--diff-filter=R", base],
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.splitlines()
+    return {new: old for _, old, new in (line.split("\t") for line in lines)}
+
+
+def carried(files: dict[str, Any], root: Path, ref: str) -> dict[str, Any]:
+    """The merge base's counts per file, a moved file's under its new path."""
+    moved = {old: new for new, old in moved_since(root, ref).items()}
+    return {moved.get(rel, rel): counts for rel, counts in files.items()}
 
 
 @contextmanager

@@ -4,6 +4,7 @@ loop's internals, and the import contracts hold; no baseline file is kept."""
 
 from __future__ import annotations
 
+import subprocess
 from pathlib import Path
 
 from tests.worlds import load_file
@@ -202,3 +203,17 @@ def test_a_moved_import_of_the_loops_internals_keeps_the_count_and_a_new_importe
     assert SHAPE.violations(root, base) == [
         "the loop's internal _inner is imported by 2 files, above the merge base's 1: nothing outside core/ imports it"
     ]
+
+
+def test_a_moved_file_keeps_its_counts_from_the_merge_base(tmp_path):
+    root = tree(tmp_path, SMALL)
+    git = ["git", "-C", str(root), "-c", "user.name=t", "-c", "user.email=t@t"]
+    subprocess.run([*git, "init", "-q"], check=True)
+    subprocess.run([*git, "add", "."], check=True)
+    subprocess.run([*git, "commit", "-qm", "base"], check=True)
+    (root / PACKAGE / "loader").mkdir()
+    subprocess.run([*git, "mv", f"{PACKAGE}/core/a.py", f"{PACKAGE}/loader/a.py"], check=True)
+    subprocess.run([*git, "commit", "-qm", "move"], check=True)
+    base = SHAPE.record_at(root, "HEAD~1")
+    assert list(base["files"]) == [f"{PACKAGE}/loader/a.py"]
+    assert SHAPE.violations(root, base) == []
