@@ -35,7 +35,7 @@ from event_universe.events.records import Block, DetectorLawLayer, Ledger, LiveR
 from event_universe.features import self_source
 from event_universe.features import signed_read as sr
 from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
-from event_universe.features.crystal import CrystalTerm, CrystalWrites
+from event_universe.features.crystal import CrystalTerm
 from event_universe.features.giving import (
     THE_CLOSE,
     THE_OPEN,
@@ -196,7 +196,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 )
         # the interval's clicks for the recoil's act: the body, the sense, the tally, the record's clock
         self._recoils: list[tuple[int, int, tuple[int, int, int], tuple[int, int]]] = []
-        self._crystal_clicks: list[tuple[int, int, int]] = []
+        self._crystal_clicks: list[tuple[int, LiveRecord]] = []
         assembly.state_arrays(self, world)
         self.kind_num = PairView(self, 0)
         self.kind_den = PairView(self, 1)
@@ -234,10 +234,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         block.spin_before = list(definition.spin_before)
         block.momentum_before = [int(component) for component in entry.momentum_before]
         return block
-
-    def _node_record(self, identity: int, level: int) -> NodeRecord:
-        # a body's record at its centre Node: the profile's level at both levels, the remainder 0
-        return NodeRecord(identity, level, level)
 
     # The register of primitives: one register, name to function, read by the loop alone
 
@@ -1030,10 +1026,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         if 2 * own.wheel * block.wait >= (2 * own.u + 1) * emitter.period:
             block.emit_now = True
 
-    def _emit(self, block: Block, pair: CrystalWrites | None = None) -> None:
-        """The click of the body's own record and the giving: the given record written once at both levels at the body, its norm and residue from the law, one quantum of the given family moved from the body's stock, the body's own levels, phase and remainders as they are, the count to the next click started here; for a crystal's pair (features/crystal) the clock, the labels and the norm are the pair's writes in place of the emitter's; the component along the body's moment and the twist are the loader's integers (ALGEBRA.md #the-second-level)."""
+    def _emit(self, block: Block) -> None:
+        """The click of the body's own record and the giving: the given record written once at both levels at the body, its norm and residue from the law, one quantum of the given family moved from the body's stock, the body's own levels, phase and remainders as they are, the count to the next click started here; for a crystal (features/crystal) the emitter is the pair's giving definition on the block; the component along the body's moment and the twist are the loader's integers (ALGEBRA.md #the-second-level)."""
         world = self.world
-        emitter = block.definition.emitter
+        emitter = block.definition.emitter if block.crystal_giving is None else block.crystal_giving
         own: LiveRecord | NodeRecord | None = (
             block.node_record if block.node_record is not None else block.own
         )
@@ -1041,9 +1037,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         number = block.number
         family = emitter.family
         definition = self.families[family]
-        (numerator, denominator), labels = (
-            (emitter.clock, emitter.branches) if pair is None else (pair.clock, pair.labels)
-        )
+        numerator, denominator = emitter.clock
         steps = world.phase_steps
         period = (steps * denominator + numerator - 1) // numerator
         cost = definition.quantum
@@ -1094,7 +1088,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             pointers=[0] * len(self.detector_names),
             first_rung=[None] * len(self.detector_names),
             wheel=wheel,
-            labels=tuple(labels),
+            labels=tuple(emitter.branches),
             emitter=number,
             pair=(int(emitter.pair[0]), int(emitter.pair[1])),
             part=emitter.part,
@@ -1127,9 +1121,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         self.ledger.held_spent[family] += 1
         # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 items 31 and 36; ALGEBRA.md #the-direction): the given record's T is p times its conserved form as written on the board, the engine's own integer with the content at the body's Nodes AS IT STANDS this interval: ONE ORDER FOR BOTH CLICKS (ALGEBRA.md #the-primitives; BUILD.md section 26 item 58): a click's writes enter at the next interval (ALGEBRA.md #the-line), so the giving's lowered quanta are held after the held families' step with the takings' (`_advance_fields`), no hold here (the hold at once, item 47, HISTORY: a defect against ALGEBRA.md #the-line) THE POINT EMITTER (item 50): the record's norm is T from the open, the excitation's action the window will reach (ALGEBRA.md), as the exact rational norm / norm_denominator, so the ladder reads its bookings from the first interval (Born's rule's walk as now)
         assert emitter.norm is not None and emitter.norm_denominator is not None
-        live.norm, live.pace = (
-            (emitter.norm, emitter.norm_denominator) if pair is None else (pair.norm, pair.denominator)
-        )
+        live.norm, live.pace = emitter.norm, emitter.norm_denominator
         self.ledger.transit_released[family] += cost
         block.emitted.append(identity)
         self.records[identity] = live
@@ -1144,7 +1136,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 "record": identity,
                 "u": residue,
                 "W": wheel,
-                "labels": [list(label) for label in labels],
+                "labels": [list(label) for label in emitter.branches],
                 "arms": 1,
                 "units": 1,
                 "multiplicity": 1,
@@ -1218,11 +1210,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                     "centre": at_centre,
                 }
             )
-
-    @staticmethod
-    def _phase(age: int, numerator: int, denominator: int, steps: int) -> int:
-        """The record's clock at its age: the zero (3 N / 4) advanced by the whole part of age x n / d on the circle of N steps."""
-        return (3 * steps // 4 + age * numerator // denominator) % steps
 
     # The inverse map (ALGEBRA.md 8.8): the step is a bijection but for the click; the property test of 9.20 (B) 4 runs it backwards
 
@@ -1910,7 +1897,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
 
     def _giving_act(self, block: Block, start: GivingStart, live: LiveRecord | None) -> GivingWrites:
         """One act of the giving through the folder's `apply` (the function the main loop looked up at (ii)): the term from the emitter's declaration, the own record from the window's record (`live`), none at the open."""
-        emitter = block.definition.emitter
+        emitter = block.definition.emitter if block.crystal_giving is None else block.crystal_giving
         if emitter is None:
             raise ValueError(f"the body {block.number} gives with no emitter declared")
         norm = emitter.norm if emitter.norm is not None else 1

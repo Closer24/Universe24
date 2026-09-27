@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from event_universe.events.output import Ratio
-from event_universe.loader.world import BlockDefinition
+from event_universe.loader.world import BlockDefinition, EmitterDefinition
 
 
 @dataclass
@@ -262,6 +262,8 @@ class Block:
     # inverted with the body
     hold_carry: dict[tuple[object, ...], int] = field(default_factory=dict)
     hold_value: dict[tuple[object, ...], int] = field(default_factory=dict)
+    # THE CRYSTAL'S GIVING (features/crystal): the pair's emitter definition set at the crystal's click from the arriving record's giver and the crystal's clock; None on every other body
+    crystal_giving: EmitterDefinition | None = None
 
 
 @dataclass
