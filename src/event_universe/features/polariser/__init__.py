@@ -109,7 +109,7 @@ DECLARATION = Declaration(
         "the polariser's angle",
         "the body's two sets",
     ),
-    writes=("the record's pair", "the two sets' shares"),
+    writes=("the level next, the remainder", "the second level"),
     function=apply,
     section="ALGEBRA.md #the-primitives, #the-transport",
     word="after the step",

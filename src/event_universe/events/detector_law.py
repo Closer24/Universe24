@@ -26,7 +26,7 @@ from event_universe.core.rule3 import (
     form_term,
     rule3,
 )
-from event_universe.events import assembly, feeding, guards, output
+from event_universe.events import after_step, assembly, feeding, guards, output
 from event_universe.events import live as live_records
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
@@ -44,9 +44,8 @@ from event_universe.features.giving import (
     GivingTerm,
     GivingWrites,
 )
-from event_universe.features.hand import HandStart, HandTerm, HandWrites
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
-from event_universe.features.lifetime import LifetimeStart, LifetimeTerm, LifetimeWrites
+from event_universe.features.polariser import PolariserTerm
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.recoil import (
     GIVING,
@@ -143,6 +142,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     receiver_detector: dict[int, int]
     has_receiver: bool
     held_records: dict[int, LiveRecord]
+    polarisers: dict[int, PolariserTerm]
     held_parts: dict[int, list[LiveRecord]]
     sourced_records: dict[int, LiveRecord]
     _source_argument: dict[int, np.ndarray]
@@ -259,6 +259,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             "the feed": Stage(self._feed_stage, (), ("the feed",)),
             "the induction": Stage(self._induction_stage, (), ("the induction",)),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
+            "the polariser": Stage(self._polariser_stage, (), ("the polariser",)),
         }
 
     _card_writes = guards.card_writes
@@ -280,6 +281,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     _detector = live_records.add_detector
     _ladder_of = live_records.ladder_of
     _release = live_records.release
+    _hand_admits = after_step.hand_admits
+    _lifetime_stage = after_step.lifetime_stage
+    _polariser_stage = after_step.polariser_stage
+    _polarised = after_step.polarised
 
     def _counts_stage(self, function: Callable[..., None]) -> None:
         """The count's line's act: each body's quanta moved by its record's current through its Nodes' Ports."""
@@ -439,37 +444,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     def _hand_stage(self, function: Callable[..., object]) -> None:
         """The hand's whole-board act carries nothing of its own: the check is nested in each record's click (`_hand_admits`, inside the clicks' act), where the taking body is known."""
 
-    def _hand_admits(self, live: LiveRecord, detector: int) -> bool:
-        """The hand's check at a click on a set with a body (features/hand, the function the main loop looked up at (ii)): the taking body's spin and momentum now against the record's family's declared hand; a family with no hand, a set with no body and the face admit."""
-        hand = self.families[live.family].hand
-        if hand is None or detector not in self.set_block:
-            return True
-        block = self.block_by_number[self.set_block[detector]]
-        spin = (int(block.spin[0]), int(block.spin[1]), int(block.spin[2]))
-        momentum = (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2]))
-        with self.main_loop.act(
-            "the hand", "(ii)", self._card_writes("the hand"), lambda: self.fingerprints_of(live)
-        ):
-            check = self.main_loop.function_of("the hand", "(ii)")
-            writes = cast(HandWrites, check(HandTerm(hand), HandStart(spin, momentum)))
-        return writes.admitted
-
-    def _lifetime_stage(self, function: Callable[..., object]) -> None:
-        """The lifetime's act (features/lifetime): every live record of a family with a lifetime L that the ladder did not click this interval ends on the border `lifetime` at age L, its content booked as escaped there, the record deleted whole at the interval's close as a clicked one."""
-        for identity in list(self.records):
-            live = self.records[identity]
-            lifetime = self.families[live.family].lifetime
-            if lifetime is None or live.clicked or self.lifetime_detector is None:
-                continue
-            writes = cast(
-                LifetimeWrites, function(LifetimeTerm(lifetime), LifetimeStart(live.age, live.clicked))
-            )
-            if writes.ends:
-                live.first_rung[self.lifetime_detector] = self.tick
-                self._gather_line(live, self.lifetime_detector)
-                live.clicked = True
-                self.dead.append(live.identity)
-
     def _recoil_stage(self, function: Callable[..., object]) -> None:
         """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1; a body with no period declares no term."""
         for number, sense, tally, clock in self._recoils:
@@ -591,6 +565,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 terms.append((f"{label}.lifetime", "the lifetime"))
             if family.hand is not None:
                 terms.append((f"{label}.hand", "the hand"))
+        terms.extend(after_step.polariser_terms(self))
         for number, entry in enumerate(self.world.measured):
             if entry.block is not None and entry.block.emitter is not None:
                 terms.append((f"measured[{number}].emitter", "the giving"))
@@ -1919,8 +1894,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         ):
             before_booking = list(live.pointers)
             for detector, value in self.detector_inflow_tally(live).items():
-                live.pointers[detector] += value
-                live.absorbed += value
+                taken = self._polarised(live, detector, value)
+                live.pointers[detector] += taken
+                live.absorbed += taken
             increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
             self._ladder_click(live, increments)
 
