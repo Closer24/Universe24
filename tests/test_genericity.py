@@ -160,8 +160,9 @@ def draw(seed: int) -> dict[str, Any]:
             "factors": [rng.randint(1, 4) for _ in parts],
             "dipole": "spin" if count_word == "content" else "moment",
         }
-        if rng.random() < 0.5:
-            entry["dipole_div"] = rng.randint(1, 3)
+        # the divisor is written on every entry (no default in the loader); the draw of the
+        # random one keeps the stream of the seeds as it was
+        entry["dipole_div"] = rng.randint(1, 3) if rng.random() < 0.5 else 1
         return entry
 
     def clicks() -> dict[str, Any]:

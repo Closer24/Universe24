@@ -14,7 +14,6 @@ DECLARATION = Declaration(
     "(i)",
     ("n pairs", "the generators' tables", "the Ports' accumulators"),
     ("the arrivals",),
-    2,
     None,
     "9.88 (7) (i); 9.101; 9.117 item 3",
     word="the right side",

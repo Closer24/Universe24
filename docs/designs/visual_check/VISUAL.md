@@ -92,7 +92,7 @@ records about 12 GB on disk, kept outside the repository.
 
 - The order and the record: record 929 of the day's log (the owner's word), the Boss's bounded order of 2026-09-22.
 - [docs/EXPERIMENTS.md](../../EXPERIMENTS.md): the register's entries L, D3, K, T, X, G2, whose pins and readings the table quotes.
-- [docs/ENGINE.md, the detector's readings by type](../../ENGINE.md#the-detectors-readings-by-type): the kinds.
+- [docs/ENGINE.md, the detector's readings by type](../../ENGINE.md#the-output): the kinds.
 - [docs/NATURE.md](../../NATURE.md): the rows the paper's Table `tab:nature` carries.
 - The atom's baseline: `docs/designs/atom_baseline/RUN.md` on the branch `atom-baseline-run` at 01e86183.
 

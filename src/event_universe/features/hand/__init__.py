@@ -15,7 +15,6 @@ DECLARATION = Declaration(
     ("a body's spin S", "a body's momentum n"),
     (),
     None,
-    None,
     "9.88 (5)",
     word="after the step",
 )

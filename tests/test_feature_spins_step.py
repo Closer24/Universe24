@@ -214,7 +214,7 @@ def test_the_refusals_by_name():
 def test_the_declaration_is_the_ledgers_row():
     assert DECLARATION.name == "the spin's step" and folder_of(DECLARATION.name) == "spins_step"
     assert DECLARATION.place == "(v)" and DECLARATION.word == "after the step"
-    assert DECLARATION.writes == ("a body's spin S", "a body's remainders") and DECLARATION.order is None
+    assert DECLARATION.writes == ("a body's spin S", "a body's remainders")
     assert DECLARATION.function is apply and DECLARATION.built
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
     registered = simulation.register.declarations["the spin's step"]

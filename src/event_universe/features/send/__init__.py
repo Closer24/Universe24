@@ -18,7 +18,6 @@ DECLARATION = Declaration(
     ("the level now", "the weight"),
     ("the Link's value",),
     None,
-    None,
     "9.112 item 1",
     word="the step",
 )

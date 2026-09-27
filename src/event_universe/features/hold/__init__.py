@@ -20,6 +20,7 @@ from event_universe.core.rule3 import (
 from event_universe.core.rule3 import (
     THE_REWRITE as THE_REWRITE,
 )
+from event_universe.core.schema import Integer, ListOf, ObjectOf, OneOf, Schema
 
 COUNT_WORDS = ("content", "sign")
 TENSOR_AXES = ((0, 0), (1, 1), (2, 2), (0, 1), (0, 2), (1, 2))
@@ -156,9 +157,9 @@ def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:
 
 
 DECLARATION = Declaration(
-    "the hold",
-    "(iv)",
-    (
+    name="the hold",
+    place="(iv)",
+    reads=(
         "a body's content M_k",
         "P_0 and P_k",
         "the wall W",
@@ -166,11 +167,27 @@ DECLARATION = Declaration(
         "the held factors",
         "the dipole",
     ),
-    ("a family's level at a Node", "a body's remainders"),
-    1,
-    apply,
-    "9.45 (2); 9.91 (3); 9.111 item 3; 9.117 item 3; 9.119 item 2, the row 'the hold'",
+    writes=("a family's level at a Node", "a body's remainders"),
+    function=apply,
+    section="9.45 (2); 9.91 (3); 9.111 item 3; 9.117 item 3; 9.119 item 2, the row 'the hold'",
     word="the right side",
+    schema=Schema(
+        {
+            "a family's entry": ObjectOf(
+                {
+                    "held": ObjectOf(
+                        {
+                            "count": OneOf(("content", "sign")),
+                            "factors": ListOf(Integer(least=1)),
+                            "dipole": OneOf(("spin", "moment")),
+                            "dipole_div": Integer(least=1),
+                        }
+                    )
+                },
+                frozenset({"held"}),
+            )
+        }
+    ),
 )
 
 
