@@ -14,9 +14,9 @@ import pytest
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, form_json
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import NODE_CLOCK, emitter_world, lawful_wheel, reads
-from tests.test_flux_reading import planted
-from tests.test_massive_record import massive_world
+from tests.bodies import CHAIN, GAMMA, PAIR, content_chain, light_body, six_reads
+from tests.running import planted
+from tests.worlds import NODE_CLOCK, PERIODIC, emitter_world, lawful_wheel, reads
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
@@ -28,46 +28,7 @@ VACUUM_WHEEL = (
     200000000,
     2427,
 )  # (g, W) of [800, 809] at c = 0 under the weak field: g = 2 Gamma^2 gcd(num, 3 den)
-PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
-CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
-GAMMA = 1000  # the suite's Node clock (declared per world like the pairs; the eighteen's 10^6)
 QUANTA = 250  # the content per Node for e / f = 0.8 at GAMMA
-PAIR = (800, 809)  # the matter kind
-
-
-def light_body(x: int, amount: int) -> dict:
-    """A measured event of light at one Node holding `amount` quanta (a body of content)."""
-    return {
-        "position": [x, 0, 0],
-        "family": "light",
-        "amount": amount,
-        "stocks": {},
-        "momentum": [0, 0, 0],
-    }
-
-
-def content_chain(length: int, boundary: dict, nodes, amount: int, gamma: int = GAMMA) -> dict:
-    """The chain [length, 1, 1] of the matter kind [800, 809] beside light with `amount` quanta
-    held at each Node of `nodes` (a light body per Node) under the Node clock `gamma`."""
-    document = massive_world([length, 1, 1], boundary, list(PAIR))
-    document["age_bound"] = 100000
-    document["node_clock"] = gamma
-    document["amplitude_bound"] = 1 << 26  # the rows at UNIT have room under the suite's Gamma = 1000
-    document["measured"] = [light_body(x, amount) for x in nodes]
-    return document
-
-
-def six_reads(levels: np.ndarray, wrap_x: bool) -> list[int]:
-    """S_6 on a chain (y and z of extent 1 read the Node itself twice each): a_W + a_E + 4 a,
-    the ends reading 0 beyond an open x."""
-    values = [int(v) for v in levels[:, 0, 0]]
-    length = len(values)
-    out = []
-    for x in range(length):
-        west = values[(x - 1) % length] if wrap_x or x > 0 else 0
-        east = values[(x + 1) % length] if wrap_x or x < length - 1 else 0
-        out.append(west + east + 4 * values[x])
-    return out
 
 
 def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_e_over_f():

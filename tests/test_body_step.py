@@ -14,8 +14,8 @@ import pytest
 from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_massive_record import emitter_at, massive_generator, matter_emitter_world
-from tests.test_vector_holds import parts_of, parts_world
+from tests.bodies import emitter_at, matter_emitter_world, parts_of, parts_world
+from tests.worlds import massive_generator
 
 GAMMA = 10_000
 

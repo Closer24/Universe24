@@ -5,7 +5,7 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
-from .test_repository_language import repository_files
+from tests.running import repository_files
 
 
 def duplicate_files(root, *, normalized_json=False, ignore_run_duration=False):

@@ -4,10 +4,8 @@ admitted attributes; every draw loads and runs, and five properties hold on each
 from __future__ import annotations
 
 import copy
-import importlib.util
 import json
 import random
-import sys
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
@@ -19,207 +17,18 @@ import event_universe.world_files as world_files
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_board_properties import reads_of
-from tests.test_emitter import emitter_world
+from tests.running import AMPLITUDE, INTERVALS, SEEDS, TEMPLATE, WORDS, draw, reads_of
+from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
-SEEDS = tuple(range(24))
 # draws kept as fixed tests with their seeds: seed -> the finding (empty until one fails)
 KEPT: dict[int, str] = {}
-INTERVALS = 20
-WORDS = (
-    "amber",
-    "basalt",
-    "cedar",
-    "delta",
-    "ember",
-    "fjord",
-    "garnet",
-    "harbor",
-    "indigo",
-    "jasper",
-    "kelp",
-    "lumen",
-    "marble",
-    "nectar",
-    "onyx",
-    "pebble",
-    "quartz",
-    "raven",
-    "saffron",
-    "tundra",
-    "umber",
-    "velvet",
-    "willow",
-    "xenon",
-    "yarrow",
-    "zephyr",
-    "anvil",
-    "birch",
-    "cobalt",
-    "dune",
-    "echo",
-    "flint",
-    "gravel",
-    "heron",
-    "iris",
-    "juniper",
-    "kestrel",
-    "lichen",
-    "meadow",
-    "nickel",
-    "orchid",
-    "prism",
-    "quill",
-    "ripple",
-    "sable",
-    "thistle",
-    "upland",
-    "vortex",
-    "walnut",
-    "yucca",
-)
-PAIRS = ([1, 1], [700, 703], [800, 809], [1000, 1019], [500, 501], [1000, 1181])
-PARTS = ([1], [1, 3], [1, 3, 6])
 
 
 def recorder():  # type: ignore[no-untyped-def]
-    spec = importlib.util.spec_from_file_location(
-        "record_shipped_worlds", ROOT / "tools" / "record_shipped_worlds.py"
-    )
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    sys.modules["record_shipped_worlds"] = module
-    spec.loader.exec_module(module)
-    return module
+    return load_file("record_shipped_worlds", ROOT / "tools" / "record_shipped_worlds.py")
 
 
-def draw(seed: int) -> dict[str, Any]:
-    """One draw: the families (the body's, the given, up to two holders, the rest clicking
-    families of random shape) with random names, and the roles by name."""
-    rng = random.Random(seed)
-    count = rng.randint(1, 20)
-    names = rng.sample(WORDS, count)
-    roles: dict[str, str] = {}
-    families: list[dict[str, Any]] = []
-    body = names[0]
-    roles["body"] = body
-    given = names[1] if count >= 2 else None
-    if given:
-        roles["given"] = given
-    holders: list[str] = []
-    rest = names[2:] if given else names[1:]
-    content_holder = rest[0] if rest and rng.random() < 0.8 else None
-    if content_holder:
-        rest = rest[1:]
-        holders.append(content_holder)
-    sign_holder = None
-    if given and rng.random() < 0.5:
-        sign_holder = given  # the given family holds the sign, as the shipped charge does
-    elif rest and rng.random() < 0.5:
-        sign_holder = rest[0]
-        rest = rest[1:]
-    if sign_holder:
-        holders.append(sign_holder)
-
-    def reads_of(exclude: str | None = None) -> list[dict[str, Any]]:
-        chosen = [h for h in holders if h != exclude and rng.random() < 0.6]
-        return [
-            {
-                "family": h,
-                "weight": rng.choice([1, 2, 3, "Lambda"]),
-                "twist": rng.choice(["own", "own", rng.randint(0, 200)]),
-                "by": rng.choice([1, "q"]),
-            }
-            for h in chosen
-        ]
-
-    def held(count_word: str, parts: list[int]) -> dict[str, Any]:
-        entry: dict[str, Any] = {
-            "count": count_word,
-            "factors": [rng.randint(1, 4) for _ in parts],
-            "dipole": "spin" if count_word == "content" else "moment",
-        }
-        # the divisor is written on every entry (no default in the loader); the draw of the
-        # random one keeps the stream of the seeds as it was
-        entry["dipole_div"] = rng.randint(1, 3) if rng.random() < 0.5 else 1
-        return entry
-
-    def clicks() -> dict[str, Any]:
-        return {"gives": True, "takes": True, "quantum": rng.randint(1, 4)}
-
-    if content_holder:
-        parts = rng.choice(([1, 3], [1, 3, 6]))
-        families.append(
-            {
-                "name": content_holder,
-                "parts": parts,
-                "phase": 1,
-                "pair": [1, 1],
-                "held": held("content", parts),
-                "reads": [],
-                "self_source": {"unit": 0},
-                "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
-            }
-        )
-    if sign_holder and sign_holder != given:
-        parts = rng.choice(([1, 3], [1, 3, 6]))
-        entry = {
-            "name": sign_holder,
-            "parts": parts,
-            "phase": rng.choice([1, 2]),
-            "pair": [1, 1],
-            "held": held("sign", parts),
-            "reads": reads_of(exclude=sign_holder),
-            "self_source": {"unit": 0},
-        }
-        if entry["reads"] or rng.random() < 0.5:
-            # a held family that reads has waves (the loader's rule, ALGEBRA.md 9.45 (2))
-            entry["clicks"] = {"gives": True, "takes": True, "quantum": 1}
-        families.append(entry)
-    if given:
-        parts = rng.choice(([1, 3], [1, 3, 6])) if sign_holder == given else rng.choice(PARTS)
-        entry = {
-            "name": given,
-            "parts": parts,
-            "phase": 2,
-            "pair": [1, 1],
-            "reads": [] if rng.random() < 0.5 else reads_of(exclude=given),
-            "self_source": {"unit": 0},
-            "clicks": {"gives": True, "takes": True, "quantum": 1},
-        }
-        if sign_holder == given:
-            entry["held"] = held("sign", parts)
-        families.append(entry)
-    families.append(
-        {
-            "name": body,
-            "parts": [1],
-            "phase": 2,
-            "pair": "body",
-            "reads": reads_of(),
-            "self_source": {"unit": 0},
-            "clicks": {"gives": True, "takes": True, "quantum": 1},
-        }
-    )
-    for name in rest:
-        families.append(
-            {
-                "name": name,
-                "parts": rng.choice(PARTS),
-                "phase": rng.choice([1, 2]),
-                "pair": rng.choice(PAIRS),
-                "reads": reads_of(),
-                "self_source": {"unit": 0 if rng.random() < 0.7 else 24 * AMPLITUDE * rng.randint(1, 3)},
-                "clicks": clicks(),
-            }
-        )
-    rng.shuffle(families)
-    return {"seed": seed, "families": families, "roles": roles, "holders": holders}
-
-
-TEMPLATE = emitter_world(stock=1, ticks=INTERVALS)
-AMPLITUDE = int(TEMPLATE["amplitude_bound"])
 SHIPPED = json.loads((ROOT / "examples/events/universe.json").read_text(encoding="utf-8"))
 INTEGERS = {**SHIPPED["integers"], "node_clock": TEMPLATE["node_clock"], "amplitude_bound": AMPLITUDE}
 

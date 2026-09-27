@@ -11,33 +11,11 @@ import numpy as np
 
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_massive_record import block_world
-from tests.test_vector_holds import KIND, WELL, parts_of
+from event_universe.world_files import parse_nature_beam_world
+from tests.bodies import PACES_SHAPE as SHAPE
+from tests.bodies import paces_world, parts_of
 
-SHAPE = [10, 6, 6]
 GAMMA = 10_000
-
-
-def paces_world() -> dict:
-    """A periodic board with a body of matter at rest and the families with parts (gravity
-    [1, 3, 6] holding the content); the matter family reads gravity's time part at 1."""
-    block = {"position": [3, 2, 2], "side": 3, "pair": WELL, "margin": "control"}
-    periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
-    document = block_world(SHAPE, periodic, KIND, [block], ticks=20)
-    document["age_bound"] = 100000
-    for family in document["universe"]:
-        if family["name"] == "clicks":
-            family.update(
-                {
-                    "parts": [1, 3, 6],
-                    "held_factors": [1, 4, 2],
-                    "held_dipole": "spin",
-                    "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
-                }
-            )
-    document["stamp"] = input_stamp(document)
-    return document
 
 
 def axis_sums(a: np.ndarray) -> list[np.ndarray]:

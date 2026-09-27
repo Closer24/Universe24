@@ -1,41 +1,5 @@
-"""Independent numerical contracts for the shared bounded integer primitives.
-
-The component arithmetic of the deleted engines (signed and ceiling division,
-ordered sums, component addition and subtraction, dot and cross products,
-reduced ratios) was deleted with its pins on 2026-09-19; see the migration
-notes. `by_clock` and `apportion_whole` are pinned where the clock uses them.
-
-The fraction-free primitive (2026-09-20, the mathematician's
-docs/designs/fraction_free/FORM.md section 1; `by_drive` with the whole part
-as its default and the step's cap `at_most`), the integers written first:
-(a) the identity at a constant rate over 10^4 self-creations on seven rates
-    from 1 / 3 to a star's 9 736 000 000 000 / 290 000 000 000 000: from an
-    empty accumulator `by_drive` gains `by_clock(k - 1, n, d)` at the k-th
-    self-creation and holds `(k n) mod d` after it; at 7 over 3 the counts
-    2, 2, 3, 2, 2, 3, ... (70 over thirty, the accumulator 0 after), and
-    with `at_most` 1 one per self-creation and 120 kept after thirty; the
-    signed rate -7 the same with the sign;
-(b) the bound: under 10^4 random rates below the denominator (3, 1000,
-    2^20) an unsigned accumulator stays in [0, d) and a signed one in
-    (-d, d), with the cap and without, the count in {-1, 0, 1} for a rate
-    below the denominator; a denominator below 1 is refused.
-
-The age wall (2026-09-21, `clock-age-v1`, the generic shape of records 421,
-422 and 428 of docs/LOG_2026-09-20.md; `age_wall`, the one wall function of
-the crowd), the integers written first:
-(c) a count at the rate r against the wall w becomes the count at the rate
-    r x d against the wall w x (d + c a_tau n) at the suspension [n, d], c
-    the member's coefficient and a_tau the age moment: the clock's member
-    (1, 1) at c = 1 with a_tau = 11 and [1, 4] gives (4, 15), the excess
-    15 - 4 = 11 = a_tau n the owed count's rate; the flight's form
-    (2 S_1 Q, 2 T_d) = (128, 192) at c = 2, a_tau = 11, [1, 4] gives
-    (512, 192 x 26 = 4992), the pace 512 / 4992 = (128 / 192) / (1 + 2 x
-    11 / 4); with no crowd (r d, w d), the same count; the count from an
-    empty accumulator at the rate 4 against the wall 15 fires 4 in 15
-    self-creations, one more than 15 / (1 + 11 / 4) rounds down; a
-    denominator below 1, a coefficient below 1, a negative age moment and a
-    negative width are refused.
-"""
+"""The shared bounded integer primitives against independent integers: `by_drive` at constant
+rates and its bound, and the age wall `age_wall` with its refusals."""
 
 import random
 

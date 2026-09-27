@@ -10,7 +10,6 @@ must lose its mark. Each test says which record it checks."""
 
 from __future__ import annotations
 
-import ast
 import copy
 import json
 import re
@@ -22,7 +21,8 @@ import event_universe.world_files as world_files
 from event_universe.core.register import discover
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import emitter_world
+from tests.running import family_names, string_constants, written_defaults
+from tests.worlds import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / "src" / "event_universe"
@@ -43,46 +43,6 @@ def loader_modules() -> list[Path]:
     ]
     assert found, "no loader module under src/event_universe"
     return sorted(found)
-
-
-def string_constants(path: Path) -> list[tuple[int, str]]:
-    """Every string constant of the module with its line, docstrings left out."""
-    tree = ast.parse(path.read_text(encoding="utf-8"))
-    docstrings: set[int] = set()
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Module | ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef):
-            body = node.body
-            if body and isinstance(body[0], ast.Expr) and isinstance(body[0].value, ast.Constant):
-                docstrings.add(id(body[0].value))
-    return [
-        (node.lineno, node.value)
-        for node in ast.walk(tree)
-        if isinstance(node, ast.Constant) and isinstance(node.value, str) and id(node) not in docstrings
-    ]
-
-
-def written_defaults(path: Path) -> list[str]:
-    """Every `<obj>.get("<key>", <default>)` of the module with a default that is not None: a
-    key of the files with a default written in the code (record 2089)."""
-    tree = ast.parse(path.read_text(encoding="utf-8"))
-    found = []
-    for node in ast.walk(tree):
-        if (
-            isinstance(node, ast.Call)
-            and isinstance(node.func, ast.Attribute)
-            and node.func.attr == "get"
-            and len(node.args) == 2
-            and isinstance(node.args[0], ast.Constant)
-            and isinstance(node.args[0].value, str)
-            and not (isinstance(node.args[1], ast.Constant) and node.args[1].value is None)
-        ):
-            found.append(f"{path.relative_to(ROOT)}:{node.lineno} {node.args[0].value!r}")
-    return found
-
-
-def family_names() -> set[str]:
-    universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    return {family["name"] for family in universe["families"]}
 
 
 # (a) THE CLOSED LOADER: no family name, no written default, no version (records 2172 to 2174,
