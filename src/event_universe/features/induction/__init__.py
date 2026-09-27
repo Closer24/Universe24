@@ -14,7 +14,6 @@ DECLARATION = Declaration(
     "(v)",
     ("the momentum part of the contraction at the body's Node this interval and the last",),
     ("a body's momentum n", "a body's remainders"),
-    {"a body's momentum n": 2},
     None,
     "9.117 item 2; 9.78 (4); 9.91 (8) (v)",
     word="after the step",

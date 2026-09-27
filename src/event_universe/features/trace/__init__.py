@@ -10,12 +10,5 @@ from __future__ import annotations
 from event_universe.core.register import Declaration
 
 DECLARATION = Declaration(
-    "the trace",
-    "any",
-    ("every word's integers",),
-    (),
-    None,
-    None,
-    "9.112 item 5; 9.117 item 2",
-    word="any",
+    "the trace", "any", ("every word's integers",), (), None, "9.112 item 5; 9.117 item 2", word="any"
 )

@@ -19,7 +19,6 @@ DECLARATION = Declaration(
     ("the six arrivals", "now", "before", "the remainder", "the family's integers w, B, W", "the loads"),
     ("the level next, the remainder",),
     None,
-    None,
     "9.57 (1); 9.112 items 1 and 2",
     word="the step",
 )

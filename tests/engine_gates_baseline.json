@@ -1,0 +1,49 @@
+{
+ "files": {
+  "src/event_universe/core/game_board.py": {
+   "family_names": 0,
+   "numbers": 6
+  },
+  "src/event_universe/core/integer.py": {
+   "family_names": 0,
+   "numbers": 9
+  },
+  "src/event_universe/core/phase.py": {
+   "family_names": 0,
+   "numbers": 10
+  },
+  "src/event_universe/core/rule3.py": {
+   "family_names": 0,
+   "numbers": 1
+  },
+  "src/event_universe/diagnostics/massive_record_margin.py": {
+   "family_names": 0,
+   "numbers": 12
+  },
+  "src/event_universe/events/detector_law.py": {
+   "family_names": 1,
+   "numbers": 4
+  },
+  "src/event_universe/events/primitives.py": {
+   "family_names": 0,
+   "numbers": 3
+  },
+  "src/event_universe/events/world.py": {
+   "family_names": 15,
+   "numbers": 25
+  },
+  "src/event_universe/features/recoil/__init__.py": {
+   "family_names": 0,
+   "numbers": 2
+  },
+  "src/event_universe/features/signed_read/__init__.py": {
+   "family_names": 0,
+   "numbers": 3
+  },
+  "src/event_universe/retention.py": {
+   "family_names": 0,
+   "numbers": 10
+  }
+ },
+ "format": "engine-gates-baseline"
+}

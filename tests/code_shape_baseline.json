@@ -47,11 +47,11 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/core/register.py": {
-   "comment_lines": 16,
-   "docstring_lines": 60,
+   "comment_lines": 4,
+   "docstring_lines": 43,
    "level_shift_sites": 0,
    "lines": 272,
-   "record_references": 5,
+   "record_references": 3,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/diagnostics/massive_record_margin.py": {
@@ -79,11 +79,11 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/detector_law.py": {
-   "comment_lines": 694,
-   "docstring_lines": 671,
+   "comment_lines": 653,
+   "docstring_lines": 619,
    "level_shift_sites": 15,
-   "lines": 4012,
-   "record_references": 44,
+   "lines": 3999,
+   "record_references": 36,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/primitives.py": {
@@ -96,10 +96,10 @@
   },
   "src/event_universe/events/world.py": {
    "comment_lines": 1043,
-   "docstring_lines": 1229,
+   "docstring_lines": 1221,
    "level_shift_sites": 0,
    "lines": 7157,
-   "record_references": 90,
+   "record_references": 88,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/features/__init__.py": {
@@ -114,7 +114,7 @@
    "comment_lines": 0,
    "docstring_lines": 6,
    "level_shift_sites": 0,
-   "lines": 21,
+   "lines": 20,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -122,7 +122,7 @@
    "comment_lines": 0,
    "docstring_lines": 6,
    "level_shift_sites": 0,
-   "lines": 21,
+   "lines": 20,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -130,7 +130,7 @@
    "comment_lines": 0,
    "docstring_lines": 6,
    "level_shift_sites": 0,
-   "lines": 21,
+   "lines": 20,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -138,7 +138,7 @@
    "comment_lines": 1,
    "docstring_lines": 7,
    "level_shift_sites": 0,
-   "lines": 29,
+   "lines": 28,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -146,7 +146,7 @@
    "comment_lines": 0,
    "docstring_lines": 6,
    "level_shift_sites": 0,
-   "lines": 21,
+   "lines": 20,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -154,7 +154,7 @@
    "comment_lines": 0,
    "docstring_lines": 6,
    "level_shift_sites": 0,
-   "lines": 21,
+   "lines": 20,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -162,7 +162,7 @@
    "comment_lines": 0,
    "docstring_lines": 6,
    "level_shift_sites": 0,
-   "lines": 21,
+   "lines": 20,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -170,7 +170,7 @@
    "comment_lines": 0,
    "docstring_lines": 7,
    "level_shift_sites": 0,
-   "lines": 30,
+   "lines": 29,
    "record_references": 0,
    "rule_arithmetic_sites": 0
   },
@@ -178,7 +178,7 @@
    "comment_lines": 1,
    "docstring_lines": 7,
    "level_shift_sites": 0,
-   "lines": 29,
+   "lines": 28,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -186,7 +186,7 @@
    "comment_lines": 0,
    "docstring_lines": 6,
    "level_shift_sites": 0,
-   "lines": 21,
+   "lines": 20,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -194,7 +194,7 @@
    "comment_lines": 1,
    "docstring_lines": 7,
    "level_shift_sites": 0,
-   "lines": 29,
+   "lines": 28,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -202,7 +202,7 @@
    "comment_lines": 1,
    "docstring_lines": 7,
    "level_shift_sites": 0,
-   "lines": 36,
+   "lines": 35,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -210,7 +210,7 @@
    "comment_lines": 0,
    "docstring_lines": 6,
    "level_shift_sites": 0,
-   "lines": 21,
+   "lines": 14,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -218,7 +218,7 @@
    "comment_lines": 1,
    "docstring_lines": 7,
    "level_shift_sites": 0,
-   "lines": 29,
+   "lines": 20,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
@@ -240,10 +240,10 @@
   },
   "src/event_universe/world_files.py": {
    "comment_lines": 0,
-   "docstring_lines": 35,
+   "docstring_lines": 21,
    "level_shift_sites": 0,
-   "lines": 95,
-   "record_references": 3,
+   "lines": 87,
+   "record_references": 1,
    "rule_arithmetic_sites": 0
   }
  },
