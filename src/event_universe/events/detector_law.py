@@ -80,7 +80,6 @@ from event_universe.core.rule3 import (
     THE_INVERSE,
     THE_REWRITE,
     THE_UNHOLD,
-    carried,
     coefficients,
     form_term,
     rule3,
@@ -94,7 +93,17 @@ from event_universe.events.world import (
 )
 from event_universe.features import self_source
 from event_universe.features.hold import TENSOR_AXES, HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
+from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
+from event_universe.features.spins_step import (
+    KEYS,
+    Neighbours,
+    SpinRead,
+    SpinStepOwn,
+    SpinStepStart,
+    SpinStepTerm,
+    SpinStepWrites,
+)
 
 Record = Callable[[dict[str, object]], None]
 
@@ -612,11 +621,11 @@ class DetectorLawSimulation:
         # triples as arrays, (c, s, d) by k_0 (fine) and by k_1 (coarse); None on a world
         # without one, where a nonzero twist is refused naming the Port
         self.twist_table = world.twist_table
+        self._receive_term = ReceiveTerm(None, None, TWIST_FINE_BITS)
         if self.twist_table is not None:
             self._fine = np.array(self.twist_table.fine, dtype=np.int64).T
             self._coarse = np.array(self.twist_table.coarse, dtype=np.int64).T
-        # HOST: the Ports' angles per (family, own twist, direction) per interval
-        self._twists: dict[tuple[int, int, bool], tuple[int, list[np.ndarray] | None]] = {}
+            self._receive_term = ReceiveTerm(self._fine, self._coarse, TWIST_FINE_BITS)
         # HOST: the self-source per family per interval (9.91 (5)), None at P_2 = 0
         self._sources: dict[tuple[int, bool], tuple[int, np.ndarray]] = {}
         self.node_clock = int(world.node_clock)
@@ -1006,9 +1015,9 @@ class DetectorLawSimulation:
                 function(block)
 
     def _spins_stage(self, function: Callable[..., None]) -> None:
-        """The spin's step's act: each body's momentum and spin from the fields as the interval leaves them."""
+        """The spin's step's act: each body's spin from the fields as the interval leaves them."""
         for block in self.blocks:
-            function(block, False)
+            self._spins_act(function, block, False)
 
     def close_interval(self) -> None:
         """The interval's closing: each body's clock, the clicked records deleted whole, then the host's probe and mode readings."""
@@ -1697,122 +1706,75 @@ class DetectorLawSimulation:
     # one stroke, commit 6): the contraction, the feed, the induction, the spin's step,
     # written once for any body and any read
 
-    def _read_factor(self, block: Block, weight: int, by: str) -> int:
-        """A read's factor on a body (ALGEBRA.md 9.78 (4)): the weight plainly, or minus
-        the body's charge Q times the weight for a read by q (the pace's convention,
-        `_effective_content`: like signs a hill)."""
-        return weight if by == "plain" else -self._body_charge(block.number) * weight
+    def _ports_of(
+        self,
+        level_now: np.ndarray,
+        silent: bool,
+        centre: tuple[int, int, int],
+        wrap: tuple[bool, bool, bool],
+    ) -> Neighbours:
+        """A level at the six neighbours of a Node in the Ports' order, the spin's step's read (HOST): None where the loop has no read there, a silent part, an axis of extent 1 or a Node beyond an open face; the wrap on a periodic axis."""
+        found: list[int | None] = []
+        for axis in range(3):
+            for sigma in (1, -1):
+                node = list(centre)
+                node[axis] += sigma
+                if silent or self.shape[axis] == 1:
+                    found.append(None)
+                    continue
+                if wrap[axis]:
+                    node[axis] %= self.shape[axis]
+                elif not 0 <= node[axis] < self.shape[axis]:
+                    found.append(None)
+                    continue
+                found.append(int(level_now[node[0], node[1], node[2]]))
+        return cast(Neighbours, tuple(found))
 
-    def _division_now(
-        self, block: Block, key: tuple[object, ...], numerator: int, wall: int, inverse: bool
-    ) -> int:
-        """This interval's value of a carried division on the body, Rule3's division act on the
-        body's remainders (core.rule3 `carried`): forward the division advanced; backward the value
-        the forward wrote (the carry then stepped back to the interval's start), so the inverse
-        subtracts the same term the step added."""
-        value = block.hold_value.get(key, 0)
-        act = THE_INVERSE if inverse else THE_ADVANCE
-        now, _ = carried(act, key, numerator, wall, block.hold_value, block.hold_carry)
-        return value if inverse else now
-
-    def _curl(
-        self, records: list[LiveRecord], centre: tuple[int, int, int], wrap: tuple[bool, bool, bool]
-    ) -> list[int]:
-        """The curl of a vector part at the centre Node from its six neighbours' levels
-        (ALGEBRA.md 9.77 (3), 9.91 (8) (v)): (curl V)_x = V_z(+y) - V_z(-y) - V_y(+z) +
-        V_y(-z) and cyclic; a read beyond an open face is 0."""
-
-        def at(component: int, axis: int, sigma: int) -> int:
-            if records[component].silent or self.shape[axis] == 1:
-                return 0
-            node = list(centre)
-            node[axis] += sigma
-            if wrap[axis]:
-                node[axis] %= self.shape[axis]
-            elif not 0 <= node[axis] < self.shape[axis]:
-                return 0
-            return int(records[component].now[node[0], node[1], node[2]])
-
-        return [
-            at(z, y, 1) - at(z, y, -1) - at(y, z, 1) + at(y, z, -1) for y, z in ((1, 2), (2, 0), (0, 1))
-        ]
-
-    def _body_step(self, block: Block, inverse: bool) -> None:
-        """The body's step at (v) from the fields as the interval leaves them: the momentum's and the spin's bookings from the curls and the gradient at the body's Node, every division carried on the body; the inverse the same lines back."""
+    def _spins_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
+        """THE BODY'S STEP AT (v) (ALGEBRA.md 9.91 (8) (v), 9.78 (5)): the spin's step's line
+        (features/spins_step) on the body, from the fields as the interval leaves them (their
+        `now` levels, which the inverse meets first): per read with a dipole, the read family's
+        vector part and, for the spin's dipole, its time part at the body's Node's six
+        neighbours with the row's two weights; the body's momentum, wall, spin and spin
+        before; its remainders under the line's keys; the writes the spin, the spin before
+        and the remainders back. THE FEED AND THE INDUCTION of 9.78 (4) are NOT here: built
+        and held back (BUILD.md section 26 item 65; 9.104 (6) (b))."""
         definition = self.families[block.family]
         if not definition.reads:
             return
-        advance = not inverse
-        gamma = self.node_clock
-        wall = self.wall_of(block)
         centre = self._window_centre(block)
         wrap = self.kind_wrap[block.family]
-        # the spin's term from S_t (the leapfrog's middle), before the momentum moves
-        spin_now = (
-            (block.spin[0], block.spin[1], block.spin[2])
-            if advance
-            else (block.spin_before[0], block.spin_before[1], block.spin_before[2])
-        )
-        omega = [0, 0, 0]
-        torque = [0, 0, 0]
-        momentum = self._momentum_now(block)  # n in the tidal term (grad c) x n
+        reads: list[SpinRead] = []
         for position, (other, weight, by, _) in enumerate(definition.reads):
-            factor = self._read_factor(block, weight, by)
             read = self.families[other]
             if len(read.parts) < 2 or read.held_dipole is None:
                 continue
-            # THE TORQUE'S FACTOR (ALGEBRA.md 9.104 (2); the Boss's record 2157): mu x B_q
-            # with the read's weight alone, since the moment mu carries the charge Q; the
-            # spin's turn keeps the read's factor (the weight by the body's sign for a read by q)
-            if factor == 0 if read.held_dipole == "spin" else weight == 0:
-                continue
-            curl = self._curl(self.held_parts[other][:3], centre, wrap)
+            factor = weight if by == "plain" else -self._body_charge(block.number) * weight
+            x, y, z = (self._ports_of(p.now, p.silent, centre, wrap) for p in self.held_parts[other][:3])
+            time = turn = None
             if read.held_dipole == "spin":
-                content = self.held_records[other].now
-                gradient = [0, 0, 0]
-                for axis in range(3):
-                    if self.shape[axis] == 1:
-                        continue
-                    ahead, behind = list(centre), list(centre)
-                    ahead[axis] += 1
-                    behind[axis] -= 1
-                    for node in (ahead, behind):
-                        if wrap[axis]:
-                            node[axis] %= self.shape[axis]
-                    inside = all(0 <= node[axis] < self.shape[axis] for node in (ahead, behind))
-                    if inside or wrap[axis]:
-                        gradient[axis] = int(content[ahead[0], ahead[1], ahead[2]]) - int(
-                            content[behind[0], behind[1], behind[2]]
-                        )
-                cross = (
-                    gradient[1] * momentum[2] - gradient[2] * momentum[1],
-                    gradient[2] * momentum[0] - gradient[0] * momentum[2],
-                    gradient[0] * momentum[1] - gradient[1] * momentum[0],
-                )
-                for i in range(3):
-                    tidal = self._division_now(
-                        block, ("gradc", position, i), 3 * cross[i], wall, inverse
-                    )
-                    omega[i] += self._division_now(
-                        block, ("omega", position, i), factor * curl[i] + tidal, 8, inverse
-                    )
-            else:
-                for i in range(3):
-                    torque[i] += self._division_now(
-                        block, ("bq", position, i), weight * curl[i], 2, inverse
-                    )
-        mu = block.definition.moment
-        turn = [
-            omega[1] * spin_now[2] - omega[2] * spin_now[1] + mu[1] * torque[2] - mu[2] * torque[1],
-            omega[2] * spin_now[0] - omega[0] * spin_now[2] + mu[2] * torque[0] - mu[0] * torque[2],
-            omega[0] * spin_now[1] - omega[1] * spin_now[0] + mu[0] * torque[1] - mu[1] * torque[0],
-        ]
-        for i in range(3):
-            step = self._division_now(block, ("spin", i), 2 * turn[i], wall * gamma, inverse)
-            if advance:
-                block.spin[i], block.spin_before[i] = block.spin_before[i] + step, block.spin[i]
-            else:
-                block.spin[i], block.spin_before[i] = block.spin_before[i], block.spin[i] - step
+                time = self._ports_of(self.held_records[other].now, False, centre, wrap)
+                turn = read.spin_weights
+            reads.append(SpinRead(position, read.held_dipole, factor, weight, (x, y, z), time, turn))
+        momentum = self._momentum_now(block)
+        start = SpinStepStart(
+            THE_INVERSE if inverse else THE_ADVANCE,
+            tuple(reads),
+            (int(momentum[0]), int(momentum[1]), int(momentum[2])),
+            self.wall_of(block),
+            (int(block.spin[0]), int(block.spin[1]), int(block.spin[2])),
+            (int(block.spin_before[0]), int(block.spin_before[1]), int(block.spin_before[2])),
+        )
+        own = SpinStepOwn(
+            {key: value for key, value in block.hold_value.items() if key[0] in KEYS},
+            {key: value for key, value in block.hold_carry.items() if key[0] in KEYS},
+        )
+        moment = block.definition.moment
+        term = SpinStepTerm((int(moment[0]), int(moment[1]), int(moment[2])), self.node_clock)
+        writes = cast(SpinStepWrites, line(term, start, own))
+        block.spin, block.spin_before = list(writes.spin), list(writes.spin_before)
+        block.hold_value.update(writes.own.values)
+        block.hold_carry.update(writes.own.carries)
 
     def shell_mask(self, block: Block) -> np.ndarray:
         """The shell of a body: its Nodes with a Port, a Link to a Node outside the body (the wrap on a periodic axis; no Port beyond an open face; a folded axis carries none)."""
@@ -2310,7 +2272,7 @@ class DetectorLawSimulation:
         the remainder's range is the wall's, constant (board_algebra.py's
         `step_inverse`). With a tensor part read, a twist on a Port or a
         second level (commits 3 and 4) the arrivals are stepped back per axis
-        after the transport's inverse (`_arrivals`), both levels."""
+        after the transport's inverse (`_transport`), both levels."""
         if live.silent:
             return  # a zero held part steps to zero exactly (HOST; 9.91 (1))
         num, den = self.pair_arrays(live.family, live.pair)
@@ -2323,11 +2285,12 @@ class DetectorLawSimulation:
         # (it was the window of the step that wrote `now`), so the inverse is
         # read on the box itself, zeros elsewhere; the box stays (a superset)
         axis_contents = None if field else self._axis_contents(live.family, inverse=True)
-        twists = None if field else self._port_twists(live, True)
+        twisted = None if field else self._twist_reads(live, True)
         sigma_self = self._self_source(live, True)
-        plain = axis_contents is None and twists is None and live.im_now is None and sigma_self is None
+        plain = axis_contents is None and twisted is None and live.im_now is None and sigma_self is None
         if not plain:
-            reads_re, reads_im = self._arrivals(live, twists, True)
+            receive = self.register.at("the receive", "(i)")
+            reads_re, reads_im = self._transport(receive, live, twisted, True)
             a_before, live.remainder = self._level_step(
                 num,
                 den,
@@ -2408,7 +2371,7 @@ class DetectorLawSimulation:
         # the bodies' step back first (9.91 (8) (v); commit 6): the momentum and the
         # spin as the interval began, from the fields as it left them
         for block in self.blocks:
-            self.register.at("the spin's step", "(v)")(block, True)
+            self._spins_act(self.register.at("the spin's step", "(v)"), block, True)
         # the joint inverse (ALGEBRA.md 9.41 (2), 9.45 (2); item 51): every
         # family backward at the held levels of the interval's start (their
         # `before` level: the held families stepped last), then the held
@@ -2516,27 +2479,18 @@ class DetectorLawSimulation:
         arrived: np.ndarray = self.ports.arrivals(a, wrap)[port_of(axis, sigma)]
         return arrived
 
-    def _port_twists(self, live: LiveRecord, inverse: bool) -> list[np.ndarray] | None:
-        """THE LINK'S ANGLE PER PORT (ALGEBRA.md 9.81 (2) (a), 9.91 (6)): k = sigma x by x
-        twist x (V_a here + V_a arrived), summed over the record's family's reads with a
-        twist, V_a the read family's vector component along the Port's axis a at this Node
-        and at the neighbour across the Port (sigma +1 toward +a, -1 toward -a; the other
-        end forms -k, the transport back the inverse rotation); the twist "own" is the
-        record's own rotation times the read's weight (9.96 (2) (b): Lambda_v is Lambda),
-        an integer twist as declared, by q the reading family's charge sign. None where
-        no read has a twist or every read's vector part is silent: the identity, bit for
-        bit. Backward the vector parts' `before` levels, the levels the step read. HOST:
-        one list of six arrays per (family, own twist) per interval."""
+    def _twist_reads(self, live: LiveRecord, inverse: bool) -> tuple[TwistRead, ...] | None:
+        """THE TWIST READS of a record's family (ALGEBRA.md 9.81 (2) (a), 9.91 (6), 9.96 (2)
+        (b)): per read with a twist whose vector part is not silent, its factor on the record
+        (the weight times the record's own rotation for the twist "own", else the declared
+        twist, by q the family's charge sign) and the read family's vector part at the Node,
+        the `before` levels backward; None where no read turns the transport (the identity,
+        bit for bit) or on a family with one level."""
         definition = self.families[live.family]
         if definition.levels < 2:
             return None
-        key = (live.family, live.twist, inverse)
-        cached = self._twists.get(key)
-        if cached is not None and cached[0] == self.tick:
-            return cached[1]
         sign = self.family_charge[live.family]
-        wrap = self.kind_wrap[live.family]
-        found: list[np.ndarray] | None = None
+        found: list[TwistRead] = []
         for other, weight, by, twist in definition.reads:
             if len(self.families[other].parts) < 2:
                 continue
@@ -2548,82 +2502,41 @@ class DetectorLawSimulation:
                 factor *= sign
             if factor == 0:
                 continue
-            if found is None:
-                found = [np.zeros(self.shape, dtype=np.int64) for _ in range(6)]
-            for axis in range(3):
-                level = vector[axis].before if inverse else vector[axis].now
-                for side, sigma in enumerate((1, -1)):
-                    found[2 * axis + side] += (
-                        sigma * factor * (level + self._arrival(level, axis, sigma, wrap))
-                    )
-        self._twists[key] = (self.tick, found)
-        return found
+            x, y, z = (part.before if inverse else part.now for part in vector)
+            found.append(TwistRead(factor, (x, y, z)))
+        return tuple(found) if found else None
 
-    def _twist_triple(self, k: np.ndarray, port: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """THE ROTATION'S TRIPLE per Node from the twist table (ALGEBRA.md 9.81 (2) (b),
-        9.96 (2) (c)): |k| = k_1 2^10 + k_0, the fine triple of k_0 and the coarse triple
-        of k_1 composed exactly, (c_1 c_0 - s_1 s_0, s_1 c_0 + c_1 s_0, d_1 d_0), with
-        (c, -s, d) for k < 0 and (1, 0, 1) at k = 0; a k_1 beyond the coarse table, or any
-        k on a world without a table, is refused naming the Port."""
-        magnitude = np.abs(k)
-        coarse_index = magnitude >> TWIST_FINE_BITS
-        most = int(coarse_index.max())
-        if self.twist_table is None or most >= len(self.twist_table.coarse):
-            axis, sigma = port // 2, (1, -1)[port % 2]
-            node = np.unravel_index(int(np.argmax(coarse_index)), self.shape)
-            raise RuntimeError(
-                f"the twist k = {int(k[node])} on the Port toward {'+' if sigma > 0 else '-'}"
-                f"{AXES[axis]} of the Node {[int(i) for i in node]} at interval {self.tick} is beyond the "
-                f"twist table ({'no table' if self.twist_table is None else f'{len(self.twist_table.coarse)} coarse triples'}; "
-                "ALGEBRA.md 9.96 (2) (c)): the run is refused"
-            )
-        fine_index = magnitude & ((1 << TWIST_FINE_BITS) - 1)
-        c0, s0, d0 = self._fine[:, fine_index]
-        c1, s1, d1 = self._coarse[:, coarse_index]
-        return c1 * c0 - s1 * s0, np.sign(k) * (s1 * c0 + c1 * s0), d1 * d0
-
-    def _arrivals(
-        self, live: LiveRecord, twists: list[np.ndarray] | None, inverse: bool
+    def _transport(
+        self,
+        line: Callable[..., object],
+        live: LiveRecord,
+        reads: tuple[TwistRead, ...] | None,
+        inverse: bool,
     ) -> tuple[list[np.ndarray], list[np.ndarray] | None]:
         """THE SIX ARRIVALS AFTER THE TRANSPORT (ALGEBRA.md 9.81 (2) (c), (d); 9.91 (6)),
-        summed per axis for the two levels: on a Port with the angle k the arriving pair
-        (re, im) is rotated by the table's triple, T_re = (c re - s im) / d and T_im = (s
-        re + c im) / d, each ROUNDED TO THE NEAREST UNIT ((2 x + d) div (2 d)), a pure
-        function of the arrivals and the angle; at k = 0 the neighbour's level exactly.
-        NO REMAINDER IS KEPT ON THE PORT: 9.81 (2) (c)'s rho in [0, d) is one to one only
-        while d stands, and d changes with the angle every interval (a remainder of up
-        to d_old flushed whole into the level when d fell to 1: the moving long Lorentz
-        clock's jump at interval 250; sent to the mathematician, BUILD.md item 64); the
-        rounding is unbiased in the mean and the inverse recomputes the same T from the
-        `before` levels, exact. The second level's sums are None while the record has
-        no second level and no rotation writes one."""
+        summed per axis for the two levels by the receive's line (features/receive): the
+        record's pair at the Node, its family's twist reads and the six Links as the Ports
+        read them (`_arrival`), the `before` levels backward; the second level's sums None
+        while the record has no second level and no rotation writes one. NO REMAINDER IS
+        KEPT ON THE PORT (BUILD.md item 64): the rounding is the line's nearest unit and the
+        inverse recomputes the same arrivals from the `before` levels, exact."""
         wrap = self.kind_wrap[live.family]
         re = live.before if inverse else live.now
         im = None if live.im_now is None else (live.im_before if inverse else live.im_now)
-        reads_re = [np.zeros_like(re) for _ in range(3)]
-        reads_im: list[np.ndarray] | None = None if im is None else [np.zeros_like(re) for _ in range(3)]
+        twisted = () if reads is None else reads
+        links = []
         for axis in range(3):
-            for side, sigma in enumerate((1, -1)):
-                port = 2 * axis + side
-                re_j = self._arrival(re, axis, sigma, wrap)
-                im_j = None if im is None else self._arrival(im, axis, sigma, wrap)
-                k = None if twists is None else twists[port]
-                if k is None or not k.any():
-                    reads_re[axis] += re_j
-                    if reads_im is not None and im_j is not None:
-                        reads_im[axis] += im_j
-                    continue
-                c, s, d = self._twist_triple(k, port)
-                base_re = c * re_j - (0 if im_j is None else s * im_j)
-                base_im = s * re_j + (0 if im_j is None else c * im_j)
-                t_re = np.floor_divide(2 * base_re + d, 2 * d)
-                t_im = np.floor_divide(2 * base_im + d, 2 * d)
-                reads_re[axis] += t_re
-                if reads_im is None and t_im.any():
-                    reads_im = [np.zeros_like(re) for _ in range(3)]
-                if reads_im is not None:
-                    reads_im[axis] += t_im
-        return reads_re, reads_im
+            for sigma in (1, -1):
+                links.append(
+                    Link(
+                        self._arrival(re, axis, sigma, wrap),
+                        None if im is None else self._arrival(im, axis, sigma, wrap),
+                        tuple(self._arrival(read.here[axis], axis, sigma, wrap) for read in twisted),
+                    )
+                )
+        start = ReceiveStart(re, im, twisted, tuple(links))
+        writes = cast(ReceiveWrites, line(self._receive_term, start, None))
+        return list(writes.re), None if writes.im is None else list(writes.im)
 
     @staticmethod
     def _level_step(
@@ -3213,17 +3126,18 @@ class DetectorLawSimulation:
         # Node steps the vacuum's rule at its own pace (the pace on each
         # read's far end, form (B) of item 34, HISTORY)
         axis_contents = None if field else self._axis_contents(live.family)
-        twists = None if field else self._port_twists(live, False)
+        twisted = None if field else self._twist_reads(live, False)
         sigma_self = self._self_source(live, False)
         window = self._window(live.box, self.kind_wrap[live.family])
         im_next: np.ndarray | None = None
-        plain = axis_contents is None and twists is None and live.im_now is None and sigma_self is None
+        plain = axis_contents is None and twisted is None and live.im_now is None and sigma_self is None
         if not plain:
             # THE FOUR PACES AND THE TRANSPORT (ALGEBRA.md 9.91 (2), (6); commits 3 and 4):
             # the arrivals per axis after the transport, the rule per level on the whole
             # board (HOST: no window shortcut here); the second level allocated by the
             # first rotation that writes it
-            reads_re, reads_im = self._arrivals(live, twists, False)
+            receive = self.register.at("the receive", "(i)")
+            reads_re, reads_im = self._transport(receive, live, twisted, False)
             nxt, live.remainder = self._level_step(
                 num,
                 den,

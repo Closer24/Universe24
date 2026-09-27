@@ -75,6 +75,7 @@ def paces_world() -> dict:
     for family in document["universe"]:
         if family["name"] == "clicks":
             family.update({"parts": [1, 3, 6], "held_factors": [1, 4, 2], "held_dipole": "spin"})
+            family["spins_step"] = {"curl": [1, 4], "tidal": [3, 4]}
     document["stamp"] = input_stamp(document)
     return document
 
@@ -466,6 +467,7 @@ def parts_world(**body: object) -> dict:
             family.update(
                 {"parts": [1, 3, 6], "held_factors": [1, 4, 2], "held_dipole": "spin", "levels": 1}
             )
+            family["spins_step"] = {"curl": [1, 4], "tidal": [3, 4]}
         if family["name"] == "charge":
             family.update(
                 {
