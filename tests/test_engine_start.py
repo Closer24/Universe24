@@ -68,7 +68,7 @@ def test_a_missing_key_of_the_world_or_the_start_file_is_refused_by_name(tmp_pat
     start.write_text(json.dumps({"law": "beam-v1", "mode": "check"}), encoding="utf-8")
     refused(document, "unknown keys: law")
     start.write_text(json.dumps({"mode": "maybe"}), encoding="utf-8")
-    refused(document, "declares mode 'maybe'")
+    refused(document, r"mode must be one of \['check', 'pin'\], not 'maybe'")
     document["engine"] = "missing.json"
     refused(document, "no file at the repository's root")
     start.write_text(json.dumps({"mode": "pin"}), encoding="utf-8")

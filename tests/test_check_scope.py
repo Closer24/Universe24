@@ -107,6 +107,7 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
     assert tests == [
         "tests/test_check_scope.py",
         "tests/test_code_shape.py",
+        "tests/test_documents.py",
         "tests/test_genericity.py",
         "tests/test_repository_hygiene.py",
         "tests/test_repository_language.py",
@@ -132,6 +133,7 @@ def test_every_change_selects_the_code_shape_gate_and_no_change_selects_nothing(
     2241); with nothing changed nothing is selected."""
     tests, _ = CHECK.select(["docs/GLOSSARY.md"], {})
     assert "tests/test_code_shape.py" in tests and "tests/test_tests_shape.py" in tests
+    assert "tests/test_documents.py" in tests
     assert CHECK.select([], {}) == ([], [])
 
 

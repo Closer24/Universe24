@@ -197,6 +197,9 @@ def select(changed, sources):
         tests.add("tests/test_code_shape.py")
         # and THE SHAPE OF TESTS/ is held against the merge base (issue #1211)
         tests.add("tests/test_tests_shape.py")
+        # and THE DOCUMENT LOCK keeps the three current documents (the short procedure,
+        # point 12)
+        tests.add("tests/test_documents.py")
     return sorted(tests), sorted(
         p for p in impacted if p.startswith("src/") and p.endswith(".py") and p in sources
     )
