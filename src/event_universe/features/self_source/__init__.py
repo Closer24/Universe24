@@ -9,6 +9,7 @@ from typing import Any
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.register import Declaration
 from event_universe.core.rule3 import rule3
+from event_universe.core.schema import Integer, ObjectOf, Schema
 
 NO_READ = (0, 0, 0)
 
@@ -90,6 +91,7 @@ DECLARATION = Declaration(
     apply,
     "9.78 (3); 9.88 (2); 9.91 (5); 9.119 item 2, the row 'the self-source'",
     word="the right side",
+    schema=Schema({"a family's entry": ObjectOf({"self_source": ObjectOf({"unit": Integer(least=0)})})}),
 )
 
 

@@ -1,9 +1,4 @@
-"""THE DEGREE (ALGEBRA.md 9.86 (2); 9.91 (2)): the representation as parts (1, 3 or 6 components), the same rule on each component. 9.113 item 2: from the rule.
-
-One folder, one primitive (record 2221 (3)); the register finds it by this folder and reads
-DECLARATION, the row of ALGEBRA.md 9.117 for this name (cut 2: bind gives the loop's method that
-implements it today, resolved at each call; the next cut moves the body of code here).
-"""
+"""THE DEGREE (ALGEBRA.md 9.86 (2); 9.91 (2)): the representation as parts (1, 3 or 6 components), the same rule on each component. 9.113 item 2: from the rule."""
 
 from __future__ import annotations
 
@@ -11,6 +6,7 @@ from collections.abc import Callable
 from typing import Any
 
 from event_universe.core.register import Declaration
+from event_universe.core.schema import Integer, ListOf, ObjectOf, Schema
 
 DECLARATION = Declaration(
     "the degree",
@@ -20,6 +16,7 @@ DECLARATION = Declaration(
     None,
     "9.86 (2); 9.91 (2)",
     word="the step",
+    schema=Schema({"a family's entry": ObjectOf({"parts": ListOf(Integer(least=1))})}),
 )
 
 

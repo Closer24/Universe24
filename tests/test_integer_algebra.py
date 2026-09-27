@@ -58,6 +58,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "core/step.py": "the step file: the interval's places and the ordered names of the primitives the loop calls, one shared file with its digest ",
     "core/register.py": "the register of primitives: one name to one function, found by the features' folders, each with its place, word, reads, writes and order (records 2212 and 2221; issue #1154)",
     "core/primitive.py": "the interface of a primitive: the term of the files, the interval's start, the primitive's own record, its writes; apply(term, start, own) -> writes (records 2212 and 2221; issue #1154)",
+    "core/schema.py": "the kinds of a value of the files and one generic check that refuses by name; a folder's schema on its card in the register (record 2226; ALGEBRA.md 9.117 item 2)",
     "core/phase.py": "the phase circle and its cosine and sine tables in bounded integers",
     "core/game_board.py": "the GameBoard's addresses, the six headings, the cube's group of 48",
 }

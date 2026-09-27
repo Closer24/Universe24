@@ -1,9 +1,4 @@
-"""THE HOLD (ALGEBRA.md 9.45 (2); 9.91 (3); 9.111 item 3; 9.117 item 3): s = SUM_k (M_k P_0) div P_k written whole into the held family's level at the body's Nodes, the vector and tensor parts over the wall, the dipole on the six neighbours; order 1 on the level at (iv), the source 2. 9.113 item 2: the read from the rule, the write beyond (H).
-
-One folder, one primitive (record 2221 (3)); the register finds it by this folder and reads
-DECLARATION, the row of ALGEBRA.md 9.117 for this name (cut 2: bind gives the loop's method that
-implements it today, resolved at each call; the next cut moves the body of code here).
-"""
+"""THE HOLD (ALGEBRA.md 9.45 (2); 9.91 (3); 9.111 item 3; 9.117 item 3): s = SUM_k (M_k P_0) div P_k written whole into the held family's level at the body's Nodes, the vector and tensor parts over the wall, the dipole on the six neighbours; order 1 on the level at (iv), the source 2. 9.113 item 2: the read from the rule, the write beyond (H)."""
 
 from __future__ import annotations
 
@@ -11,6 +6,7 @@ from collections.abc import Callable
 from typing import Any
 
 from event_universe.core.register import Declaration
+from event_universe.core.schema import Integer, ListOf, ObjectOf, OneOf, Schema
 
 DECLARATION = Declaration(
     "the hold",
@@ -27,6 +23,24 @@ DECLARATION = Declaration(
     None,
     "9.45 (2); 9.91 (3); 9.111 item 3; 9.117 item 3",
     word="the right side",
+    schema=Schema(
+        {
+            "a family's entry": ObjectOf(
+                {
+                    "held": ObjectOf(
+                        {
+                            "count": OneOf(("content", "sign")),
+                            "factors": ListOf(Integer(least=1)),
+                            "dipole": OneOf(("spin", "moment")),
+                            "dipole_div": Integer(least=1),
+                        },
+                        frozenset({"dipole_div"}),
+                    )
+                },
+                frozenset({"held"}),
+            )
+        }
+    ),
 )
 
 

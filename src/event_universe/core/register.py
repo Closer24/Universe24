@@ -34,11 +34,11 @@ import pkgutil
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field, replace
 
+from event_universe.core.schema import Schema
 from event_universe.core.step import PLACES, Step
 
-# THE THREE WORDS of 9.111 item 7, the mathematician's reading of the same interval:
-# the right side (read from the interval's start), the step (the rule), after the
-# step (the clicks, whose writes enter at t + 1); "any" the trace's.
+# the words of 9.111 item 7: the right side (read from the interval's start), the step (the rule),
+# after the step (the clicks, whose writes enter at t + 1); "any" the trace's
 WORDS: tuple[str, ...] = ("the right side", "the step", "after the step", "any")
 
 Binder = Callable[[object], Callable[..., object]]
@@ -67,7 +67,7 @@ def folder_of(name: str) -> str:
 
 @dataclass(frozen=True)
 class Declaration:
-    """What one primitive declares: its name, its place (9.91 (8)) and word (9.111 item 7), the values it reads and writes, its ALGEBRA.md line, its function once bound (None on a row not built) and its binder; its order among the writers of one value is the step file's."""
+    """What one primitive declares: its name, its place (9.91 (8)) and word (9.111 item 7), the values it reads and writes, its ALGEBRA.md line, its function once bound (None on a row not built), its binder and its schema, its keys of the files (core/schema.py); its order among the writers of one value is the step file's."""
 
     name: str
     place: str
@@ -77,6 +77,7 @@ class Declaration:
     section: str = ""
     word: str = ""
     binder: Binder | None = None
+    schema: Schema | None = None
 
     @property
     def built(self) -> bool:

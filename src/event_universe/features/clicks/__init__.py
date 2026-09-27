@@ -1,9 +1,4 @@
-"""THE CLICKS (ALGEBRA.md 9.25 (2), (3); 9.111 items 1, 2 and 6; 9.117 items 2 and 3): the ladder on the inward flux: the first k with 2 W (C + f_1 + ... + f_k) >= (2 u + 1) T; the deferred write a body's content M_k (+1 of the taken family) at t + 1; order 1 on the tally at (ii) and on M_k at (iv). 9.113 item 2: the click; the booking from the rule.
-
-One folder, one primitive (record 2221 (3)); the register finds it by this folder and reads
-DECLARATION, the row of ALGEBRA.md 9.117 for this name (cut 2: bind gives the loop's method that
-implements it today, resolved at each call; the next cut moves the body of code here).
-"""
+"""THE CLICKS (ALGEBRA.md 9.25 (2), (3); 9.111 items 1, 2 and 6; 9.117 items 2 and 3): the ladder on the inward flux: the first k with 2 W (C + f_1 + ... + f_k) >= (2 u + 1) T; the deferred write a body's content M_k (+1 of the taken family) at t + 1; order 1 on the tally at (ii) and on M_k at (iv). 9.113 item 2: the click; the booking from the rule."""
 
 from __future__ import annotations
 
@@ -11,6 +6,7 @@ from collections.abc import Callable
 from typing import Any
 
 from event_universe.core.register import Declaration
+from event_universe.core.schema import Flag, Integer, ObjectOf, Schema
 
 DECLARATION = Declaration(
     "the clicks",
@@ -24,6 +20,14 @@ DECLARATION = Declaration(
     None,
     "9.25 (2), (3); 9.111 items 1, 2 and 6; 9.117 items 2 and 3",
     word="after the step",
+    schema=Schema(
+        {
+            "a family's entry": ObjectOf(
+                {"clicks": ObjectOf({"gives": Flag(), "takes": Flag(), "quantum": Integer(least=1)})},
+                frozenset({"clicks"}),
+            )
+        }
+    ),
 )
 
 
