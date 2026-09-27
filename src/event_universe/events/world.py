@@ -845,7 +845,7 @@ MASSLESS_PAIR = (1, 1)
 # CANCELLED (docs/CANCELLED_WORLDS.md section 9; ALGEBRA.md 9.90 (1)): the ray law's columns, the only family names in the loader (read by the cancelled parse alone)
 GRAVITY_COLUMN = "gravity"
 CHARGE_COLUMN = "charge"
-GRAVITY_INDEX, CHARGE_INDEX = 0, 1
+CHARGE_INDEX = 1
 COLUMN_SIGNS = (1, -1)
 # A column's declaration on a family: its value per unit of content and
 # the column's sign.
@@ -949,7 +949,6 @@ TWIST_COARSE_MOST = 1 << 15
 TWIST_TRIPLE_BOUND = 10**9
 # THE ENTRY's keys are the folders' cards (loader/frame.py, `entry_kind`; ALGEBRA.md 9.117 item 2)
 PARTS_FORMS = ((1,), (1, 3), (1, 3, 6))
-HELD_COUNTS = ("content", "sign")
 HELD_DIPOLES = ("spin", "moment")
 # a read's twist (ALGEBRA.md 9.81 (2), 9.91 (6), 9.96 (2) (b)): an integer or "own"
 # (the reading record's own rotation in the table's unit, round(2^16 omega_0), times
