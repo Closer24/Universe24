@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
@@ -71,8 +70,8 @@ def check(term: SelfSourceTerm, start: SelfSourceStart) -> None:
         )
 
 
-def apply(term: SelfSourceTerm, start: SelfSourceStart) -> SelfSourceWrites:
-    """The primitive at (i): the six differences of every level squared and summed, the sum divided by P_2 by Rule3's division act, the remainder not kept (ALGEBRA.md 9.117 the row "the self-source")."""
+def apply(term: SelfSourceTerm, start: SelfSourceStart, own: None = None) -> SelfSourceWrites:
+    """The primitive at (i), `apply(term, start, own)` with no own record: the six differences of every level squared and summed, the sum divided by P_2 by Rule3's division act, the remainder not kept (ALGEBRA.md 9.117 the row "the self-source")."""
     check(term, start)
     total: Any = 0
     for level in start.levels:
@@ -93,8 +92,3 @@ DECLARATION = Declaration(
     word="the right side",
     schema=Schema({"a family's entry": ObjectOf({"self_source": ObjectOf({"unit": Integer(least=0)})})}),
 )
-
-
-def bind(loop: Any) -> Callable[..., object]:
-    """The loop's method `_self_source`, whose array `apply` gives bit for bit, until the loop calls `apply`."""
-    return loop._method("_self_source")  # type: ignore[no-any-return]

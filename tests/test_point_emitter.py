@@ -1,19 +1,5 @@
-"""THE POINT EMITTER (ALGEBRA.md 9.69 (2), 9.71 (1); the model owner's word of 2026-09-25 through
-the Boss, record 2054, "try to reduce them all to a Node"; BUILD.md section 26 item 50), a
-hypothesis under its own identity, the world key `point_emitter`, off by default: on a chain
-of 400 (x open) a one-Node well [800, 802] of the kind [800, 813] holds two light quanta and
-gives by the window: (1) THE WINDOW: at the giving click no rows are written; every interval
-the body's Node's rotation is added to the given row at the body's Node at the weight g and the outward
-flux through the body's Node's two Ports is summed; the window closes at the first interval at which
-the sum reaches the excitation's action T (norm / norm_denominator), the record then carrying
-the norm of its rows, the giving line naming the record with the window's length and the
-open's interval (the quantum moved at the open: the stock one less from there); the window at g = 4 is shorter than at g = 1 by about g^2
-(the outward norm growing as the square of the written amplitude); the next giving comes after
-the close (read 17.6); the books balanced at every interval. (2) THE INVERSE: inside a window the board
-returns bit for bit over 40 intervals (the writes subtracted, the outward sum taken off).
-(3) THE LOADER: the key needs body_record; a train under the key, a weight without it and a
-missing weight or norm denominator under it are refused by name. COMPUTATION on the engine's
-integers; no pin; the light clock's digests with the key off are the massive record suite's."""
+"""The point emitter, a hypothesis under its own identity (`point_emitter`, off by default): a one-Node
+well gives by the window, its Node's rotation added to the given row every interval."""
 
 from __future__ import annotations
 
@@ -164,15 +150,15 @@ def test_the_loader_pairs_the_key_with_the_one_node_body_the_weight_and_the_acti
         retired = json.loads(json.dumps(document))
         retired[key] = value
         retired["stamp"] = input_stamp(retired)
-        with pytest.raises(ValueError, match="point_emitter is refused"):
+        with pytest.raises(ValueError, match="the world has unknown keys: point_emitter"):
             parse_nature_beam_world(retired)
     with_train = json.loads(json.dumps(document))
     with_train["measured"][0]["emitter"]["train"] = {"direction": [1, 0, 0], "periods": 8}
     with_train["stamp"] = input_stamp(with_train)
-    with pytest.raises(ValueError, match="emitter.train is refused"):
+    with pytest.raises(ValueError, match="emitter has unknown keys: train"):
         parse_nature_beam_world(with_train)
     with_given = json.loads(json.dumps(document))
     with_given["measured"][0]["emitter"]["given"] = {"now": [1], "before": [-1], "norm": 1}
     with_given["stamp"] = input_stamp(with_given)
-    with pytest.raises(ValueError, match="emitter.given is refused"):
+    with pytest.raises(ValueError, match="emitter has unknown keys: given"):
         parse_nature_beam_world(with_given)

@@ -29,8 +29,8 @@
    "numbers": 3
   },
   "src/event_universe/events/world.py": {
-   "family_names": 15,
-   "numbers": 26
+   "family_names": 8,
+   "numbers": 22
   },
   "src/event_universe/features/recoil/__init__.py": {
    "family_names": 0,

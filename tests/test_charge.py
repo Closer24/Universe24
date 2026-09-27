@@ -1,20 +1,5 @@
-"""THE FAMILY OF CHARGE (the model owner's decision of 2026-09-25, "a family of charge and
-binding are missing"; ALGEBRA.md 9.48; BUILD.md section 26 item 35): the fifth family, named
-by the world key `charge_family`, is a field family like the family of clicks (the pair [1, 1],
-the quantum 1, no clock of its own); its level d at a Node is held at every body's Nodes at the
-body's signed charge Q, the sum of the signs on the quanta it holds (every family declares its
-`charge` q in {-1, 0, +1} under the detector law, no default), and steps by its own plain rule
-elsewhere, last in the interval with the family of clicks. A record of charge q reads the
-content with one sign, c - q Lambda d (Lambda the weight of its read on the charge), so its pace
-Gamma - c + q Lambda d is slowed by a body of the opposite charge (the hill deepened) and
-hastened by one of its own (the hill filled, at most to the vacuum's); light (q = 0) reads the
-content alone. The suite reads the engine: (i) the reading with one sign, the step of a record
-of charge -1 and of +1 beside a body of charge +1 bit for bit the rule's at c + Lambda d and at
-c - Lambda d, a neutral record's at c; (ii) the hold at the bodies at Q, moved at the givings
-and the clicks with the labels, the whole charge of the bodies and the records in flight
-constant; (iii) the joint step of every family and both fields inverts bit for bit; (iv) the
-loader's refusals, each naming its key; (v) with every charge 0 the field is 0 and the rows are
-bit for bit those of any Lambda. Every number a COMPUTATION on the rule's integers; no pin."""
+"""The family of charge (ALGEBRA.md 9.48): a field family held at every body's Nodes at its signed charge
+and stepping by its own plain rule elsewhere, read by the other families at the weight Lambda."""
 
 from __future__ import annotations
 
@@ -292,7 +277,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     for key, value in (("charge_family", CHARGE_FAMILY_NAME), ("charge_strength", 1)):
         retired = copy()
         retired[key] = value
-        refused(retired, f"{key} is refused: the family genericity")
+        refused(retired, f"the world has unknown keys: {key}")
     weak = copy()
     set_strength(weak, 0)
     refused(weak, r"reads\[1\].weight")

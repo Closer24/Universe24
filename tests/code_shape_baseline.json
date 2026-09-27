@@ -71,10 +71,10 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/detector_law.py": {
-   "comment_lines": 653,
-   "docstring_lines": 619,
+   "comment_lines": 650,
+   "docstring_lines": 598,
    "level_shift_sites": 15,
-   "lines": 3999,
+   "lines": 3977,
    "record_references": 36,
    "rule_arithmetic_sites": 0
   },
@@ -87,11 +87,11 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/world.py": {
-   "comment_lines": 1153,
-   "docstring_lines": 1221,
+   "comment_lines": 491,
+   "docstring_lines": 400,
    "level_shift_sites": 0,
-   "lines": 7443,
-   "record_references": 99,
+   "lines": 3424,
+   "record_references": 46,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/features/__init__.py": {
@@ -256,10 +256,6 @@
   ],
   "tests/test_node_clock.py": [
    "form_json"
-  ],
-  "tests/test_vector_holds.py": [
-   "TENSOR_AXES",
-   "cross_with_axis"
   ]
  }
 }

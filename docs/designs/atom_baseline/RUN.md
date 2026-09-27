@@ -287,7 +287,7 @@ dwell of 20 counts per Link where the loop is still near r = 12.
 7); [the atoms pins](../atoms/PINS.md); the atoms README (`examples/events/atoms/README.md`, deleted 2026-09-26);
 [series H](../../EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20);
 [ENGINE.md, the readings by type](../../ENGINE.md#the-output);
-[NATURE row 6](../../NATURE.md); [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector)
+[NATURE row 6](../../NATURE.md); [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md)
 (records 281, 721, 754, 762, 817, 881, 884, 886); [the day's log](../../LOG_2026-09-20.md).
 
 > The scripts of this folder (`baseline_readings.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/atom_baseline/<script>`).

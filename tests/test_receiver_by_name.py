@@ -1,19 +1,5 @@
-"""The receiver by name and the click line at the rung (the engine,
-DECLARATIONS.md section 13 item 7 and section 10 items 9 and 10; BUILD.md section 21;
-Nature24's eight decisions of 2026-09-24, 12:40Z, through the Boss). On a closed chain of
-200 with one emitter body and one named set 60 Links away at wheel 64: (a) exactly one
-gather line per record at the set's rung, its time the rung's interval, the record deleted
-whole at it; (b) the block's own detector on no ladder; (c) the loader's refusals of
-`receiver`; (d) the permutation test, the detector list reordered giving byte-identical
-gather lines (issue #1116); (e) a set beside the receiver books the flux into its Node and
-is never chosen, its pointer on the line's `sunk` (HOST). Then the line's time, and the
-registered world `light_clock.json` loaded and stepped. SINCE THE FLUX READING (ALGEBRA.md
-9.19 (3); BUILD.md section 26 item 14) nothing takes: every detector books the one-way flux
-into its Nodes, the click is on the cumulative ladder and ends the record; the chain's
-faces are closed (an open face is the receiver `face`, last on every ladder, and two
-Links behind a body it clicks the half that leaves). Every number here is the engine's
-reading on that head (COMPUTATION, a click line or a row's level), named so; no pin world
-is run to prove the line and no pin is read."""
+"""The receiver by name and the click line at the rung: one gather line per record at the set's rung,
+the block's own detector on no ladder, the loader's refusals, and a reordered detector list byte for byte."""
 
 from __future__ import annotations
 
@@ -246,9 +232,7 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
     number = chain_of_200()
     number["measured"][0]["receiver"] = 3
     number["stamp"] = input_stamp(number)
-    with pytest.raises(
-        ValueError, match=r"measured\[0\]\.receiver must be the name of a declared detector set"
-    ):
+    with pytest.raises(ValueError, match=r"measured\[0\]\.receiver must be a word, not 3"):
         parse_nature_beam_world(number)
 
 
