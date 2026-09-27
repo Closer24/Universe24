@@ -1,7 +1,7 @@
 # Validation evidence
 
 Since 2026-09-17, by the model owner's decision in
-[Highlights 5.5](HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions), this is
+[Highlights 5.5](HIGHLIGHTS.md), this is
 the record of research runs and physical milestones: a phenomenon that several
 rules produce together, an example world's numbers, a comparison of two worlds
 or a known experiment is one run of the engine, made once, recorded with a
@@ -1034,7 +1034,7 @@ Beam Law, `beam-v1`; the engine unchanged by the run), source fingerprint
 `a1b2a949ccda2194537ecae4c6ff7380642f8f7d7877c01ab0e1649ba51c5d4b`,
 Python 3.14.0rc2, numpy 2.5.3, headless, four cores; the model owner's go
 of 2026-09-20 on the physicist's entry 5 of the law's own predictions and
-the owner's decision on issue #359 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector));
+the owner's decision on issue #359 ([Highlights 5.4](HIGHLIGHTS.md));
 the readings registered in
 [A10 at a low rate](EXPERIMENTS.md#a10-at-a-low-rate-the-single-click-build-up-2026-09-20)
 and the worlds' README (`examples/events/buildup/`, deleted on 2026-09-22 with the register entry, record 871; in the tree's history at 59c6b811).
@@ -1074,7 +1074,7 @@ fingerprint
 `a1b2a949ccda2194537ecae4c6ff7380642f8f7d7877c01ab0e1649ba51c5d4b`,
 Python 3.14.0rc2, numpy 2.5.3, headless, four cores; the model owner's go
 of 2026-09-20 on the physicist's entry 2 of the law's own predictions
-([Highlights 5.4](HIGHLIGHTS.md#54-the-detector)); the readings registered
+([Highlights 5.4](HIGHLIGHTS.md)); the readings registered
 in [K](EXPERIMENTS.md#k-light-beside-a-mass-2026-09-20) and the worlds'
 README (`examples/events/lensing/README.md`, deleted 2026-09-26).
 

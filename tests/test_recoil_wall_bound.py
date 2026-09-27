@@ -1,9 +1,5 @@
-"""THE RECOIL'S WALL L (the law, the recoil's row and what is open, point 2; issue #1210, the owner's
-second condition): L is the least common multiple of a world's declared wavelengths, 2 N q / p over
-its families with a clock [p, q] on the world's N steps; it stays below the integer width 2^63 in
-every shipped world, it divides the product of the wavelengths, and a world whose L reaches the width
-is refused by name. The functions here are the test's reading of the worlds: the loader's line is
-the loop's owner's when the store moves to one wall."""
+"""The recoil's wall L, the least common multiple of a world's declared wavelengths, stays below 2^63 in
+every shipped world and divides their product; a world whose L reaches the width is refused by name."""
 
 from __future__ import annotations
 

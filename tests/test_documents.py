@@ -19,9 +19,9 @@ ENTRY_FILES = ("README.md", "AGENTS.md", "CONTRIBUTING.md")
 ALLOWED_FOLDERS = ("skills/",)
 # the line cap of each of the three, set when its condensed version lands; None until then
 CAPS: dict[str, int | None] = {
-    "docs/ALGEBRA.md": None,
+    "docs/ALGEBRA.md": 718,
     "docs/ENGINE.md": 200,
-    "docs/HIGHLIGHTS.md": None,
+    "docs/HIGHLIGHTS.md": 100,
 }
 HISTORY_MARKERS = (
     re.compile(r"\bsuperseded\b", re.IGNORECASE),

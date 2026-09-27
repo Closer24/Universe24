@@ -74,7 +74,7 @@ world with clicks is reversible. The law and its open limits are in
 [docs/ENGINE.md](docs/ENGINE.md) with [docs/ALGEBRA.md](docs/ALGEBRA.md)
 chapter 9 and
 [the detector requirements](docs/DETECTOR_REQUIREMENTS.md), following
-[Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector).
+[Highlights 5.4](docs/HIGHLIGHTS.md).
 
 ## GameBoard topology (2026-09-19)
 
@@ -1838,7 +1838,7 @@ claimed to represent it. In each postulate the owner's statement comes
 first, the Boss's reading after it where one is given and marked as his,
 and the citations last. The records are in
 [docs/LOG_2026-09-20.md](docs/LOG_2026-09-20.md) and their decisions in
-[Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); records 1242 to
+[Highlights 5.4](docs/HIGHLIGHTS.md); records 1242 to
 1245 are cited by number. Where
 [section 10](#10-measurement-and-display-are-outside-the-physics)
 or sections [23](#23-the-ray-event-model),
