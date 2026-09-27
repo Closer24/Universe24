@@ -4,7 +4,7 @@ of the files). loader/frame.py reads the universe file, its integers by the fram
 every family's entry by the folders' cards with the frame's one key, the name, and the start
 file, its mode; every refusal by name, no default written (record 2089: the dipole's divisor is
 the universe file's). Checked here: the shipped file and the source's fragment pass with the
-weight word resolved, every genericity draw passes, each defect is refused by name, the start
+weight word resolved (every genericity draw passes through its load in test_genericity), each defect is refused by name, the start
 file is its mode and nothing else, the world's own keys by the frame's schema with the bodies and the
 universe handed on, and the frame holds no default, no family name and no
 version (the acceptance tests' readers on the new module)."""
@@ -19,7 +19,6 @@ import pytest
 
 from event_universe.core.register import discover
 from event_universe.loader import frame
-from tests.test_genericity import SEEDS, draw
 from tests.test_loader_acceptance import family_names, string_constants, written_defaults
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,14 +52,6 @@ def test_the_shipped_file_and_the_sources_fragment_pass_with_the_weight_word_res
     table = integers["twist_table"]
     assert table["unit"] == universe["integers"]["twist_table"]["unit"]
     assert len(table["fine"]) == 1024 and table["fine"][0] == (1, 0, 1)
-
-
-@pytest.mark.parametrize("seed", SEEDS)
-def test_every_genericity_draw_passes_the_frame(seed: int):
-    """A draw's families on the shipped integers, as the genericity test places them."""
-    universe = {"integers": shipped()["integers"], "families": draw(seed)["families"]}
-    entries, _ = read(universe)
-    assert len(entries) == len(universe["families"])
 
 
 def test_every_defect_of_the_universe_file_is_refused_by_name():
