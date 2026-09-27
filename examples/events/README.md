@@ -1,6 +1,6 @@
 # The worlds of the Beam Law
 
-Four world files of the one engine (`beam-v1`, [the Beam Law](../../docs/BEAM_LAW.md),
+Four world files of the one engine (`beam-v1`, the Beam Law,
 [the engine](../../docs/ENGINE.md); [Highlights 5.4](../../docs/HIGHLIGHTS.md),
 "DECIDED: the law of the ray", the model owner, 2026-09-19). Each is a JSON
 object with `"law": "beam"`: the GameBoard, K and N (`K` the clock's rate:
@@ -31,7 +31,7 @@ emitter by its phase rate (E = h f) and a click measures that content.
 | World | What it declares | What its record reads |
 | --- | --- | --- |
 | `one_content.json` | One measured event of the free family `m` (`quantum` 0; `"phase": false`: its rays carry phase 0 and it never turns), content 2^24, held in place at the centre of an open 25^3 GameBoard; K 2^22, N 64, release 1/128 per heading per unit per self-creation on the six headings, `suspension` 1; 200 intervals | The books close at every tick and the content stays constant (what comes home is created again); six ballistic beams of 2^17 per interval, Gauss's flux through every cube equal to the emission once the front has passed; the count on the axes constant with r (a beam does not spread) |
-| `two_contents.json` | Two such measured events of `m` 8 Links apart on the x axis of an open 21^3 GameBoard, no suspension; 200 intervals | Equal and opposite pushes along the line, toward each other, each the content times the flow of the other's beam at its Node: the third law read on lone beams (read on 2026-09-19: the books close at every tick, the pushes +/-411217348788224 = 2^24 x 187 x 2^17 along x after 200 intervals; its faces click two beams of 2^17 in one interval and their records pass 2^63, exact, [validation](../../docs/VALIDATION.md)) |
+| `two_contents.json` | Two such measured events of `m` 8 Links apart on the x axis of an open 21^3 GameBoard, no suspension; 200 intervals | Equal and opposite pushes along the line, toward each other, each the content times the flow of the other's beam at its Node: the third law read on lone beams (read on 2026-09-19: the books close at every tick, the pushes +/-411217348788224 = 2^24 x 187 x 2^17 along x after 200 intervals; its faces click two beams of 2^17 in one interval and their records pass 2^63, exact, validation) |
 | `two_slits.json` | A lamp of the paid family `light` (`quantum` 1; K 2^30, turn 8, 64 rays per self-creation on five directions toward the wall), a wall at x = 8 of the paid family `wall` measuring light (the rule the keys give; no table declared) with two openings at y = 55 and 65 that declare `rerelease` on a fan of 91 primitive directions, a screen at x = 52 of measured events declared as 121 one-Node detectors `screen_<y>` (the screen's pixels) under the reading `wave` (since 2026-09-19 a detector is a set with one record: one detector of 121 Nodes would read one record with no resolution in y); 60 x 121 x 1 with z periodic, no suspension; 500 intervals | The screen's plain count is additive to the unit (no interference in the count); its squared record fringes at lambda = period / sqrt 3, the interference term correlating with the two-source cosine above 0.85 (`tests/test_nature_beam_worlds.py` (a)) |
 | `one_slit.json` | The same with one opening | The control: the record without the two-source term |
 
@@ -49,7 +49,7 @@ and, since 2026-09-21 (the owner's rule, record 353), its second runner's
 check in its `replicated` map, one entry per run block pointing at the
 run's line in `docs/REPLICATIONS.md`; an entry absent there is a run
 measured once, awaiting replication
-([TEST_EXPECTATIONS](../../docs/TEST_EXPECTATIONS.md)).
+(TEST_EXPECTATIONS).
 
 Run one:
 
@@ -143,7 +143,7 @@ self-creation on +X and on -X, and four counters with phase windows, Alice's
 pair at x = 2 and 1 and Bob's at x = 18 and 19, the settings the only
 difference between the files. `tools/click_readings/bell.py` reads their records and
 prints the counts, E, S and every criterion; the register entry is
-[A2, under the Beam Law (2026-09-19)](../../docs/EXPERIMENTS.md#a2-under-the-beam-law-2026-09-19):
+A2, under the Beam Law (2026-09-19):
 S = 2 exactly, the model's limit, unchanged from the law of events.
 
 The same folder holds the seven worlds of the run with the choosers on the
@@ -158,7 +158,7 @@ run, `written_a<a>_b<b>.json`, `fixed.json` and `one_clock.json` its
 three controls. `tools/click_readings/bell_choosers.py` bins the clicks by the window
 they carry and prints every E, S on the quadruple, the largest S over
 every quadruple that occurred and the marginals; the register entry is
-[A2 with the choosers on the GameBoard (2026-09-20)](../../docs/EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20):
+A2 with the choosers on the GameBoard (2026-09-20):
 S = 2 exactly with every E on the triangle, the law found not to
 correlate what never met.
 
@@ -177,9 +177,9 @@ axis pattern at the probes), the clock (`suspension` 1: the ages replayed
 from the presence read) and the electric reading. `tools/click_readings/coupling.py`
 reads their records, replays the source-alone worlds through the API and
 prints every criterion and every reading against the expectations of
-[BEAM_LAW section 8](../../docs/BEAM_LAW.md#8-independent-expectations-for-the-re-registered-readings);
+BEAM_LAW section 8;
 the register entry is
-[C, the couplings under the Beam Law, on the plane (2026-09-19)](../../docs/EXPERIMENTS.md#c-the-couplings-under-the-beam-law-on-the-plane-2026-09-19).
+C, the couplings under the Beam Law, on the plane (2026-09-19).
 
 ## The redshift series
 
@@ -194,7 +194,7 @@ the record since 2026-09-20). `tools/click_readings/redshift.py` reads the shell
 means of the owed count per self-creation, k x r^2 and k x r, the single
 probes on the axis and the diagonals and the redshift ratios of the age
 clocks; the register entry is
-[E, the clock's redshift in space under the age reading (2026-09-20)](../../docs/EXPERIMENTS.md#e-the-clocks-redshift-in-space-under-the-age-reading-2026-09-20):
+E, the clock's redshift in space under the age reading (2026-09-20):
 the presence falls as M / r^2 and the age moment as M / r from the same
 rays, their ratio the flight's sqrt 3 / 2. Those are GameBoard readings of
 probes in a world with no detector; the detector reading of the same field
@@ -215,7 +215,7 @@ control, the lamp alone on the same GameBoard. `tools/click_readings/shell_clock
 reads the detector's click lines and nothing else: 1 + z per window, the
 count k = 1 + z - 1 and the three ratios the map pinned before the run. The
 register entry is
-[X, Poisson after a detector (2026-09-22)](../../docs/EXPERIMENTS.md#x-poisson-after-a-detector-2026-09-22):
+X, Poisson after a detector (2026-09-22):
 inside a shell the potential is flat and the flux is not, so the interior
 tells the clock's two words apart at a source term.
 
@@ -240,7 +240,7 @@ near part and compares the far part with the coasting (q = 0),
 decelerating (q = +0.5) and accelerating (q = -0.55, what is observed
 today) forms, every line labelled a detector or a GameBoard reading; the
 register entry is
-[G, the Hubble diagram behind the detector (2026-09-20)](../../docs/EXPERIMENTS.md#g-the-hubble-diagram-behind-the-detector-2026-09-20):
+G, the Hubble diagram behind the detector (2026-09-20):
 the linear law comes out by itself (z = v / c to 0.003, H t_0 = 1.03 at
 t_0 = 350) and the far part falls below the coasting form of the near fit
 in every run, the signature of the accelerating form, by the throw's
@@ -263,7 +263,7 @@ open faces, the `wave` detectors of what comes out of the atom.
 `tools/click_readings/bohr.py` reads the orbit (GAMEBOARD) and the faces'
 coherent record per turn and cumulatively (DETECTOR), every line
 labelled by its kind; the register entry is
-[H, Bohr's lines behind the detector (2026-09-20)](../../docs/EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20):
+H, Bohr's lines behind the detector (2026-09-20):
 under the step drive (2026-09-20) the reference orbit closes four times
 and stays on the GameBoard for the run, the coherence at the closing
 radius outside (C(4) = 1.01 against 2.0, the phase's turn per orbit 0.75
@@ -280,7 +280,7 @@ rule and a `wave` detector on the proton's Node; and `helium_r12`,
 binding-v1's square fixed as the nucleus with two electrons of the
 register's electron point-symmetric about it, each releasing on the fan's
 band so that the partner's rays push it. The pins before the runs are
-[docs/designs/atoms/PINS.md](../../docs/designs/atoms/PINS.md); the runs
+docs/designs/atoms/PINS.md; the runs
 come after form B lands.
 
 ## The nucleus series
@@ -298,7 +298,7 @@ n p. `tools/click_readings/nucleus.py` reads the bodies' own `read` and
 `contact` records and the border's clicks (DETECTOR) and their steps and
 separations (GAMEBOARD), every line labelled by its kind; the register
 entry is
-[I, the nucleus (2026-09-20)](../../docs/EXPERIMENTS.md#i-the-nucleus-2026-09-20):
+I, the nucleus (2026-09-20):
 the deuteron bound at one Link and free at three, two protons bound or
 repelled by the sign of Q^2 - G^2 - M^2, the square sheared apart and the
 line held, 29 readings inside and 1 outside, registered and not tuned.
@@ -316,14 +316,14 @@ read mass 1836; the pins derived by the design's `quark_numbers.py` in
 `quarks/expectations.json` and compared by `tests/test_quarks_expectations.py`;
 `tools/click_readings/quarks.py` reads the bodies' `read`, `contact` and step
 records and the border's clicks. The register entry is
-[R, the quarks (2026-09-21)](../../docs/EXPERIMENTS.md#r-the-quarks-2026-09-21);
-the design is [the quarks as families of the family table](../../docs/designs/quarks/QUARKS.md).
+R, the quarks (2026-09-21);
+the design is the quarks as families of the family table.
 
 ## The binding series
 
 The folder binding/ (`examples/events/binding/README.md`, deleted 2026-09-26) holds the three worlds of series
 N, the binding that costs content (`binding-v1`,
-[BEAM_LAW note 40](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+BEAM_LAW note 40),
 written by `binding/make_worlds.py` on series I's base: the nucleons carry
 the paid family `bond` (quantum 1, lifetime 3) held 2 each with their free
 totals kept (1837, 1840), and give it at their first contact under
@@ -335,7 +335,7 @@ and the square p n / n p with the bond (B3, 8 units, the ratio 2.0 to the
 deuteron against nature's 12.7, the law's failure stated before the run).
 The pins were written before the run and the readings beside them; the
 register entry is
-[N, the binding that costs content (2026-09-20)](../../docs/EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20).
+N, the binding that costs content (2026-09-20).
 
 ## The orbit series
 
@@ -349,7 +349,7 @@ for a circular orbit under the measured push law, at the widths of the push
 pushes and prints whether the orbit closed, its period, its mean radius,
 its drift and the period ratio against the plane's k = 2; the register
 entry is
-[D, the orbit under the Beam Law, on the plane (2026-09-19)](../../docs/EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19):
+D, the orbit under the Beam Law, on the plane (2026-09-19):
 one orbit closes by the criterion (S = 32, r = 12, an eccentric loop), the
 mean push reads as derived, the grain of the push breaks the rest.
 
@@ -370,7 +370,7 @@ times the mass. `tools/click_readings/orbit_lamp.py` reads the click lines alone
 (the period as the recurrence of x, the lagged second difference, the
 ratio, the equivalence, the controls) and labels the probe's end state
 and the homes GAMEBOARD; the register entry is
-[D3, Newton after a detector (2026-09-22)](../../docs/EXPERIMENTS.md#d3-newton-after-a-detector-2026-09-22):
+D3, Newton after a detector (2026-09-22):
 registered twice on 2026-09-22, no number moved: the first run at n = 10
 (its pins form B's pace, which the engine does not run: the cause read
 off the controls' pace and named, the rows kept as history) and the
@@ -394,7 +394,7 @@ behind it read as 161 one-Node detectors, every detector under the
 world's `reading` (`wave` or `beam`). `tools/click_readings/heisenberg.py` reads
 the spread of the screen's record and of its count against the
 wavelength lambda = 8 / sqrt 3; the register entry is
-[A10, the width of an opening and the spread behind it](../../docs/EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20):
+A10, the width of an opening and the spread behind it:
 the `wave` record narrows with w and the count does not; the product
 w x FWHM reaches 0.886 lambda within 22 % at w = 27 and is not read at
 the smaller widths on the sparse fan.
@@ -414,16 +414,16 @@ of the arrivals (the delay), the count and the phase rate against the
 control (DETECTOR) and replays the world for the beam's rows, the rays a
 collision would have turned and the Nodes shared with the crowd
 (GAMEBOARD); the register entry is
-[K, light beside a mass (2026-09-20)](../../docs/EXPERIMENTS.md#k-light-beside-a-mass-2026-09-20):
+K, light beside a mass (2026-09-20):
 the deflection 0.000 pixel and the delay 0.00 interval at a crowd where
 nature would capture the beam, the derivation of the physicist's entry 2
 held: light is neither bent nor delayed in this law, a plain
 disagreement with nature, registered and not tuned. Since the meeting
-(2026-09-20, the world key `meeting`, [BEAM_LAW note 35](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+(2026-09-20, the world key `meeting`, BEAM_LAW note 35)
 the folder also holds the four worlds under the key
 (`<name>_meeting.json`) and `lens_meeting.json`, two beams at +-b on a
 longer box; the register entry
-[K under the meeting (2026-09-20)](../../docs/EXPERIMENTS.md#k-under-the-meeting-2026-09-20):
+K under the meeting (2026-09-20):
 light bent toward the mass with the sign of gravity, the M / b form and
 the grain of the fan (-1.8 to -4.4 pixels; the lens crossing 71 Links
 past the mass), not delayed in time, the mass measuring the light turned
@@ -433,9 +433,9 @@ into it; registered, 14 readings inside and 9 outside, not tuned.
 The folder newton_side/ (`examples/events/newton_side/README.md`, deleted 2026-09-26) holds the three worlds
 of Side A of Newton on the side (the model owner's words, records 1043,
 1046, 1098 and 1128; the design
-[NEWTON_ON_THE_SIDE.md](../../docs/designs/newton_clicks/NEWTON_ON_THE_SIDE.md)
+NEWTON_ON_THE_SIDE.md
 sections 3 and 4; the run
-[RUN_14.md](../../docs/designs/fail_rows/RUN_14.md)), written by
+RUN_14.md), written by
 `newton_side/make_worlds.py` with the pins before any run in
 `expectations.json`: series K's box with the lamp's family the massive
 family `matter` on the exact rung k = 19 of the ladder (M_row 21, p 71,
@@ -509,13 +509,13 @@ reads the readers' clicks and passes and the far detector's clicks
 (DETECTOR) against the counts computed before the run from the engine's
 flight table (GAMEBOARD), every line labelled by its kind; the register
 entry is
-[J, the weak force (2026-09-20)](../../docs/EXPERIMENTS.md#j-the-weak-force-2026-09-20):
+J, the weak force (2026-09-20):
 the first reader takes exactly 1 / 64 of a stride-1 source's arrivals and
 the 127 behind it nothing (a filter, not an attenuation), the ladder
 exhausts the beam after 64 readers, the stride 2 gives 1 / 32 at the centre
 0 and nothing at the centre 1; 13 readings inside, 0 outside, registered
 and not tuned. J1, the free neutron's decay count against its clock (the
-transformation `become`, `weak-v1`, [BEAM_LAW note 36](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+transformation `become`, `weak-v1`, BEAM_LAW note 36
 (iii)): 64 neutrons of the register's `n` on a lattice of pitch 4 in an
 open 41^3 GameBoard, each with `become` at 512 into `p` with the products
 `beta` and `nu`, a shell of readers at r = 18 declared as one `beam`
@@ -549,14 +549,14 @@ reads the products' clicks on the +x face and the centre's pointer
 (DETECTOR) and the `become` lines, the `energy` lines with their
 invariant and the intervals owed to proper time (GAMEBOARD) against the
 pins; the register entry is
-[S, the covariant readings (2026-09-21)](../../docs/EXPERIMENTS.md#s-the-covariant-readings-2026-09-21).
+S, the covariant readings (2026-09-21).
 
 ## The drive-b series
 
 The folder drive_b/ (`examples/events/drive_b/README.md`, deleted 2026-09-26) holds the six worlds of series X,
 the directional drive of a body (`drive-b-v1`, the world key `drive_b`, off
 by default; the model owner's approval of form B, 2026-09-22, record 652 of
-the log of 2026-09-20; the design [docs/designs/drive_b/DESIGN.md](../../docs/designs/drive_b/DESIGN.md)),
+the log of 2026-09-20; the design docs/designs/drive_b/DESIGN.md),
 written by `drive_b/make_worlds.py` with their expectations before the runs
 (`drive_b/expectations.json`): one body of content 64 at |**p**|_1 = 6000
 on the axis, the plane diagonal and the cube diagonal from the centre of an
@@ -564,14 +564,14 @@ open 41^3 box, under the key and, as the controls, without it.
 `tools/click_readings/drive_b.py` reads the body's click on a face (DETECTOR) and
 the `step` lines against the line of the momentum and the accumulators'
 bound (GAMEBOARD) against the pins; the register entry is
-[X, the directional drive (2026-09-22)](../../docs/EXPERIMENTS.md#x-the-directional-drive-2026-09-22).
+X, the directional drive (2026-09-22).
 
 ## The flow-link series
 
 The folder flow_link/ (`examples/events/flow_link/README.md`, deleted 2026-09-26) holds the ring worlds of
 `flow-link-v1` (the world key `flow_link`, off by default; the model
 owner's decision of 2026-09-22, record 915 of the log of 2026-09-20; the
-design [docs/designs/flow_weight/DESIGN.md](../../docs/designs/flow_weight/DESIGN.md)
+design docs/designs/flow_weight/DESIGN.md
 section 4 with its algebra), written by `flow_link/make_worlds.py` with
 their expectations before the run (`flow_link/expectations.json`): series
 K's box with the mass 2^16 at the pin n S = d and a ring of lamps on the
@@ -590,7 +590,7 @@ verdict by the pins is in the folder's README.
 The folder amplitude/ (`examples/events/amplitude/README.md`, deleted 2026-09-26) holds the worlds of series L,
 the amplitude law (`amplitude-v1`, the record form of every lamp since
 stage (vii) step 4, the world key `amplitude` deleted,
-[BEAM_LAW note 37](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+BEAM_LAW note 37),
 written by `amplitude/make_worlds.py` with `expectations.json` pinned
 before the runs: L1, the Mach-Zehnder interferometer of the design's
 section 3.4 (a 5 x 5 plane, a source releasing one record per
@@ -607,7 +607,7 @@ with the choosers, at the CHSH labels, with a which-path read and with
 Bob's counters far; L4, GHZ; L5, the gate between records (the CNOT
 pair, CNOT twice, GHZ by one gate, the register's ceiling); L6, the pair
 at N = 1024 and 4096. The register entry is
-[L, the amplitude law (2026-09-20)](../../docs/EXPERIMENTS.md#l-the-amplitude-law-2026-09-20).
+L, the amplitude law (2026-09-20).
 
 ## The c series
 
@@ -623,7 +623,7 @@ reads the faces' clicks (the tick, the Node, the face; the direction off
 the engine's label table) against the derived tick, Node and face of
 every direction and the escapes' pace against c = 1 / sqrt 3; the
 register entry is
-[Q, c measured behind a detector (2026-09-21)](../../docs/EXPERIMENTS.md#q-c-measured-behind-a-detector-2026-09-21):
+Q, c measured behind a detector (2026-09-21):
 290 of 290 clicks at the derived tick, Node and face, the pace 0.5718 to
 0.5893 (the mean 0.5810) over the fan at this GameBoard, 0.5774 to
 0.5818 in the limit, against c = 0.5774.
@@ -756,17 +756,17 @@ its record registered by `tools/click_readings/massive_rows_replay.py`); `tools/
 against the pin, every number labelled DETECTOR (the screen's gathers,
 the first `click` lines) or GAMEBOARD (the faces' and the wall's
 completions, the books). The register entry is
-[W, the massive rows (2026-09-21)](../../docs/EXPERIMENTS.md#w-the-massive-rows-2026-09-21).
+W, the massive rows (2026-09-21).
 
 ## The detector definitions
 
 The folder detector/ (`examples/events/detector/README.md`, deleted 2026-09-26) holds four worlds that place
 reusable apparatus from `detector/entities/detectors.json` through the
-[entity definitions loader](../../docs/ENTITY_DEFINITIONS.md): chains of
+entity definitions loader: chains of
 measured events measuring a carrier, declared as detectors with thresholds,
 one of them reading the tensor component of the one reading.
 
 The isolated tests of the engine are the ten `tests/test_nature_beam_*.py` modules
-([expectations](../../docs/TEST_EXPECTATIONS.md)); `tests/test_nature_beam_worlds.py`
+(expectations); `tests/test_nature_beam_worlds.py`
 runs these worlds' designs on smaller GameBoards and pins their readings as a
 check that the engine does what the law says, not as a result.

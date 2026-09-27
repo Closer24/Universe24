@@ -1,11 +1,11 @@
 # The massive record kind: the check worlds
 
 The worlds of `massive-record-v1` (the chief physicist's design
-[docs/designs/detector_law/MASSIVE_RECORD.md](../../../docs/designs/detector_law/MASSIVE_RECORD.md),
+docs/designs/detector_law/MASSIVE_RECORD.md,
 its section 11 the order of the engine's work; the build's plan
-[docs/designs/detector_law/BUILD.md](../../../docs/designs/detector_law/BUILD.md),
+docs/designs/detector_law/BUILD.md,
 its section 5 the worlds with their pins; the readings of the runs
-[docs/designs/detector_law/BUILD_READINGS.md](../../../docs/designs/detector_law/BUILD_READINGS.md)).
+docs/designs/detector_law/BUILD_READINGS.md).
 A massive record is a record of the local detector law whose family declares a
 `pair` `[num, den]` on the six-neighbour term of the rule (den > num: a gap, the
 rest frequency cos omega_0 = num / den); a block is a cube of declared Nodes

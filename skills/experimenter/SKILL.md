@@ -14,15 +14,15 @@ The team of 2026-09-26 and the generic engine's way of work: [How the team works
 
 This skill is for an agent that asks the model a question it may answer
 either way (a series or a numbered run of the
-[experiments register](../../docs/EXPERIMENTS.md)). It is not the
+experiments register). It is not the
 [simulation runner](../simulation-runner/SKILL.md), which executes a given
 world and inspects its outputs, and it is not a validator of the code: an
 experiment changes no law and no source file. Read
 [the shared workflow](../workflow.md) and its
 [physics comparison method](../workflow.md#physics-comparison-method),
-[the Beam Law](../../docs/BEAM_LAW.md),
+the Beam Law,
 [the engine's bookkeeping](../../docs/ENGINE.md),
-[the register's conventions](../../docs/EXPERIMENTS.md) and the records of
+the register's conventions and the records of
 the model owner in [Highlights 5.4](../../docs/HIGHLIGHTS.md).
 
 ## The one rule of measurement
@@ -45,7 +45,7 @@ nothing of what it did not click on, and the record ends whole at the click
 (records 1875 and 1888).
 
 Every number the experiment prints or registers is labelled one of two kinds
-([the register](../../docs/EXPERIMENTS.md), "Two kinds of readings"):
+(the register, "Two kinds of readings"):
 
 | Kind | What it is | What it may be used for |
 | --- | --- | --- |
@@ -73,8 +73,8 @@ replays a rule of the engine, and it prints the kind of every line.
    fingerprint recorded, a few minutes per world at most.
 4. **The readings tool** under `tools/<series>_readings.py`, as above, with
    one fast test on a tiny case that pins the tool to the engine's function.
-5. **The register entry** in [EXPERIMENTS](../../docs/EXPERIMENTS.md) and
-   the [validation log](../../docs/VALIDATION.md): expected against measured,
+5. **The register entry** in EXPERIMENTS and
+   the validation log: expected against measured,
    inside or outside, none moved, the kind of each reading, the fingerprint,
    what the law lacked; a README beside the worlds saying how to re-run.
 6. **The page** for the model owner, in the scratchpad, per the page
@@ -96,7 +96,7 @@ replays a rule of the engine, and it prints the kind of every line.
 - Never pins an example world's numbers in a test; never tunes a world to
   its expectation; never smooths a failed run.
 - Never introduces `Site` or a wave at a Node, and never a retired word for
-  an active thing ([the glossary](../../docs/TERMINOLOGY.md), "Retired words"):
+  an active thing (the glossary, "Retired words"):
   on the GameBoard there are only events; a row is the record of an event in
   transit, a body a measured event ("ray" is retired, record 183).
 

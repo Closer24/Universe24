@@ -1,13 +1,13 @@
 # The worlds of the launch list under the local detector law
 
 The world files of the rows that
-[docs/designs/detector_law/RUN_LIST.md](../../../docs/designs/detector_law/RUN_LIST.md)
+docs/designs/detector_law/RUN_LIST.md
 marks "to write: the builder", each written by `make_worlds.py` beside them
 from its declaration alone
-([DECLARATIONS.md](../../../docs/designs/detector_law/declarations/DECLARATIONS.md),
+(DECLARATIONS.md,
 its section 15 the world lines row by row and section 14 the tables' clocks;
-[DESIGN.md](../../../docs/designs/detector_law/DESIGN.md) sections 6.0 to 6.2;
-[PINS.md](../../../docs/designs/detector_law/PINS.md); the launch list's own
+DESIGN.md sections 6.0 to 6.2;
+PINS.md; the launch list's own
 lines). The rule of the writing (the Boss's order of 2026-09-24): every number
 in a file is the declaration's; a line the file needs and the declaration
 lacks is left ABSENT, so that the loader's refusal names it, and is reported
