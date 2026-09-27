@@ -4,6 +4,7 @@ is the well the mode sits on; a pair that binds nothing is refused."""
 
 from __future__ import annotations
 
+import json
 import math
 from fractions import Fraction
 
@@ -23,6 +24,7 @@ from tools.body_generator import (
     clock_pair,
     conserved_form,
     field_at_rest,
+    generate,
     moving_levels,
     moving_mode,
     period_by_the_rule,
@@ -119,13 +121,6 @@ def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands
         to_amplitude((mode.profile,), 1 << 41)
 
 
-def test_a_pair_whose_count_binds_nothing_is_refused_by_name():
-    """On [800, 809] (1 - cos omega_0 = 0.011) the count's well is too shallow for any cube (ALGEBRA.md
-    9.120 item 2): the iteration settles on the band's top and the tool refuses naming the rotation."""
-    with pytest.raises(ValueError, match=r"the count binds no mode of the family \[800, 809\]"):
-        bound_mode(counted_cube(8, 4, 3000), (800, 809), GAMMA)
-
-
 def test_the_period_is_the_nearest_integer_to_two_pi_over_omega_with_no_pi():
     """The period is round(2 pi / acos(a / 2 b)) in integers: 9 for the light clock, 45 for the dark body."""
     assert period_by_the_rule(1651150, 1048576) == 9
@@ -219,7 +214,51 @@ def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
         moving_mode(asymmetric, KIND, GAMMA, triple)
 
 
-def test_the_refusals_by_name():
+def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name(tmp_path):
+    """THE INPUT IS A FILE (the owner's word): a world file in the law's form (the GameBoard, the Node clock,
+    the universe it names, one body by its Nodes with their counts) gives the mode on the held fields the
+    family reads plainly (a read by the charge's sign skipped, a weight named in the universe's integers);
+    refused by name: a moving body, a family whose row says "body", two bodies, [800, 809]'s shallow well."""
+
+    def row(name, pair, held, reads):
+        return {"name": name, "pair": pair, "held": held, "reads": reads}
+
+    reads = [
+        {"family": "gravity", "weight": "one", "by": 1},
+        {"family": "charge", "weight": 1, "by": "q"},
+    ]
+    families = [
+        row("gravity", [1, 4], {"count": "content"}, []),
+        row("charge", [1, 1], {"count": "sign"}, []),
+    ]
+    families += [row("matter", list(KIND), None, reads), row("light", "body", None, [])]
+    (tmp_path / "universe.json").write_text(json.dumps({"families": families, "integers": {"one": 1}}))
+    nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
+    body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0]}
+    faces = {"x": "periodic", "y": "periodic", "z": "periodic"}
+    world = {"shape": [8, 8, 8], "boundary": faces, "node_clock": GAMMA, "measured": [body]}
+    world["universe"] = str(tmp_path / "universe.json")
+    reading, box = generate(world), counted_cube(8, 2, 3000)
+    rest = field_at_rest(box, (1, 4))
+    mode = bound_mode(box, KIND, GAMMA, content=rest.levels)
+    assert reading["rotation"] == [mode.rotation.numerator, mode.rotation.denominator]
+    assert reading["period"] == 8 and np.array_equal(reading["profile"], mode.profile)
+    assert reading["rest"]["gravity"] == {
+        "pair": [1, 4],
+        "iterations": rest.iterations,
+        "cycle": 1,
+        "at_body": 3000,
+        "at_corner": 0,
+    }
+    assert np.array_equal(reading["content"], rest.levels)
+    with pytest.raises(ValueError, match="k by bisection on the pairs is not in the tool yet"):
+        generate({**world, "measured": [{**body, "momentum": [1, 0, 0]}]})
+    with pytest.raises(ValueError, match="the row's pair is 'body', not \\[num, den\\]"):
+        generate({**world, "measured": [{**body, "family": "light"}]})
+    with pytest.raises(ValueError, match="one body in the law's form .* found 2"):
+        generate({**world, "measured": [body, body]})
+    with pytest.raises(ValueError, match=r"the count binds no mode of the family \[800, 809\]"):
+        bound_mode(counted_cube(8, 4, 3000), (800, 809), GAMMA)
     with pytest.raises(ValueError, match=r"the clock \[2, 1\] is no rotation"):
         period_by_the_rule(2, 1)
     with pytest.raises(ValueError, match="the counts stay in \\[0, Gamma\\)"):
@@ -228,39 +267,3 @@ def test_the_refusals_by_name():
         bound_mode(np.zeros((4, 4, 4), dtype=np.int64), KIND, GAMMA)
     with pytest.raises(ValueError, match="int64"):
         bound_mode(np.ones((4, 4, 4), dtype=np.int32), KIND, GAMMA)
-
-
-def test_the_field_at_rest_is_the_static_line_and_the_mode_sits_on_it():
-    """THE FIELD AT REST (ALGEBRA.md #the-generator (g)): on the open chain of 13 with 700 at the centre the
-    field of [1, 1] is the exact ramp 700, 600, ..., 100 (a fixed point), of [1, 2] the fall 89, 11, 1, 0
-    per Link; in the periodic box of 8 the field of [1, 1] fills to the count everywhere (no well: the mode
-    is refused by name), on the open box the harmonic well with the mode on it above the band; of [1, 4]
-    the well 3000, 138, 0, the mode within 2 x 10^-3 of the counts' own and the moving mode at (1, 0, 1) on
-    it the resting one; den below num refused."""
-    chain = np.zeros((13, 1, 1), dtype=np.int64)
-    chain[6] = 700
-    ramp = field_at_rest(chain, (1, 1), OPEN)
-    assert ramp.levels[:, 0, 0].tolist() == [100 * k for k in (1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2, 1)]
-    fall = field_at_rest(chain, (1, 2), OPEN).levels[:, 0, 0].tolist()
-    assert fall[6:] == [700, 89, 11, 1, 0, 0, 0] and fall == fall[::-1]
-    box = counted_cube(8, 2, 3000)
-    uniform = field_at_rest(box, (1, 1))
-    assert int(uniform.levels.min()) == int(uniform.levels.max()) == 3000 and uniform.cycle == 1
-    with pytest.raises(ValueError, match="binds no mode"):
-        bound_mode(box, KIND, GAMMA, content=uniform.levels)
-    well = field_at_rest(box, (1, 1), OPEN).levels
-    assert well[3, 3, 3] == 3000 > well[3, 3, 5] > well[3, 3, 7] > well[0, 0, 0] > 0
-    on_well = bound_mode(box, KIND, GAMMA, wrap=OPEN, content=well)
-    assert Fraction(2 * KIND[0], KIND[1]) < on_well.rotation and Fraction(
-        30, 100
-    ) < on_well.share_inside < Fraction(35, 100)
-    short = field_at_rest(box, (1, 4)).levels
-    assert short[3, 3, 3] == 3000 and 100 < short[3, 3, 5] < 200 and short[3, 3, 7] == 0
-    rotation = bound_mode(box, KIND, GAMMA, content=short).rotation
-    assert abs(rotation - bound_mode(box, KIND, GAMMA).rotation) < Fraction(2, 1000)
-    with pytest.raises(ValueError, match="num from 1 and den from num"):
-        field_at_rest(box, (2, 1))
-    still = moving_mode(box, KIND, GAMMA, AT_REST, content=short)
-    assert still.rotation == rotation and np.array_equal(
-        still.re, bound_mode(box, KIND, GAMMA, content=short).profile
-    )

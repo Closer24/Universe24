@@ -71,12 +71,11 @@ def six_reads(levels: np.ndarray, wrap_x: bool) -> list[int]:
 
 
 def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_e_over_f():
-    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md 9.57 (1); BUILD.md section 26 item 44):
-    on the periodic chain of 12 with QUANTA at every Node, one step of the engine on random rows equals
-    w a_next + r' = R S_6(a_now) + S a_now - w a_before + r in Python integers; with no content the plain
-    rule's levels bit for bit. (ii) THE ROTATION of a uniform record of the matter kind, 2 cos omega' = 2
-    - (1 + f)(1 - num / den), f = ((Gamma - c) / Gamma)^2: 1.982617 at the pace 0.75, 1.977750 in the
-    vacuum, within 10^-5 over 60 intervals; at the pace 1 / 2, 1.986094."""
+    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md 9.57 (1); item 44): on the periodic chain
+    of 12 with QUANTA at every Node, one step of the engine on random rows equals w a_next + r' = R
+    S_6(a_now) + S a_now - w a_before + r in Python integers; with no content the plain rule's levels bit
+    for bit. (ii) THE ROTATION of a uniform record of the matter kind, 2 cos omega' = 2 - (1 + f)(1 - num /
+    den), f = ((Gamma - c) / Gamma)^2: 1.982617 at the pace 0.75, 1.977750 in the vacuum, within 10^-5."""
     rng = np.random.default_rng(11)
     for family, (num, den) in ((0, (1, 1)), (1, PAIR)):
         rows_now = rng.integers(-UNIT, UNIT, size=(12, 1, 1), dtype=np.int64)
@@ -159,9 +158,8 @@ def group_pace_light(k: float, ratio: float) -> float:
 def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
     """(iii) THE SLAB: the flux test's Gaussian packet of light (40 Links, k = 0.3024) on the open chain of
     400, 400 intervals with and without a slab of 40 Nodes at [150, 190) holding QUANTA each: the transmitted
-    packet's centroid lags the vacuum's by the slab's delay 40 (1 / v' - 1 / v) (10.9 intervals, 6.23 Links;
-    read 6.16), within 15 percent; 0.974 of the energy beyond the slab in the vacuum run and 0.946 with it
-    (the faces reflect about three percent at f = 0.5625); the books' form the same to the remainders' jitter."""
+    packet's centroid lags the vacuum's by the slab's delay 40 (1 / v' - 1 / v) (6.23 Links; read 6.16),
+    within 15 percent; 0.974 of the energy beyond the slab in the vacuum run and 0.946 with it."""
     k = 0.3024
     x = np.arange(400)
     envelope = np.exp(-(((x - 60) / 14.0) ** 2))
@@ -334,9 +332,9 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
 
 def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
     """(vi) On the emitter world (the stock 4 at [5, 37), the screen at [70, 72]): the content at the body's
-    centre is 4 at the load and falls by one at each giving (the giving line's `content` 4, 3, 2, 1 and its
-    `node_clock` [Gamma - content, Gamma]); at the screen's first body 1 at the load, rising by one after each
-    gather line; the vacuum 0 until the clicks' front comes (14 Links at one per interval), then the waves."""
+    centre is 4 at the load and falls by one at each giving (the giving line's `content` and `node_clock`);
+    at the screen's first body 1, rising by one after each gather line; the vacuum 0 until the clicks' front
+    comes (14 Links at one per interval), then the waves; the books balanced."""
     document = emitter_world(stock=4)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
@@ -387,9 +385,8 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
 def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_elsewhere():
     """(vii) THE FAMILY OF CLICKS (record 1982; ALGEBRA.md 9.41 (3), 9.44 (3), 9.45): on the open chain of
     200 with light bodies of QUANTA at [90, 110), the clock record's level is the content at the bodies'
-    Nodes at both levels with the remainder 0 (the hold) and 0 elsewhere at the load; THE FRONT: nothing
-    before the cone of one Link per interval (x = 60 is 0 through interval 29), long waves at the pace 1 /
-    sqrt 3 (nonzero by 70), the field never above twice the content; no content anywhere keeps the family at 0."""
+    Nodes with the remainder 0 (the hold) and 0 elsewhere at the load; THE FRONT: nothing before the cone of
+    one Link per interval, the long waves at the pace 1 / sqrt 3, the field never above twice the content."""
     document = content_chain(200, CHAIN, range(90, 110), QUANTA)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     clock = simulation.held_records[2]
@@ -427,10 +424,9 @@ def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_el
 
 def test_the_joint_step_inverts_bit_for_bit_wherever_the_clock_falls():
     """(viii) THE EXACT BACKWARD RUN EVERYWHERE (record 1994; item 34): the periodic chain of 60 with a body
-    of QUANTA at [20, 30) and a light record of random rows (nothing clicks): the clicks' field rises and
-    falls at Nodes over 30 intervals, and the joint step inverts bit for bit (the record's levels and
-    remainders, the family's field): the wall 3 den Gamma is the same at every interval, so no two states
-    merge. The edge case: the field did move."""
+    of QUANTA at [20, 30) and a light record of random rows: the clicks' field rises and falls at Nodes
+    over 30 intervals, and the joint step inverts bit for bit, the wall 3 den Gamma the same at every
+    interval so no two states merge. The edge case: the field did move."""
     rng = np.random.default_rng(31)
     now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)

@@ -415,32 +415,80 @@ def scaled_to_norm(
     )
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--pair", type=int, nargs=2, required=True, help="the family's pair num den")
-    parser.add_argument("--gamma", type=int, required=True, help="the Node clock Gamma")
-    parser.add_argument("--box", type=int, nargs=3, required=True, help="the periodic box's shape")
-    parser.add_argument("--side", type=int, required=True, help="the counted cube's side at the centre")
-    parser.add_argument("--count", type=int, required=True, help="the count per Node of the cube")
-    parser.add_argument(
-        "--field-pair", type=int, nargs=2, help="the held family's pair: its field at rest is the well"
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+
+
+def read_document(value: str) -> Any:
+    """A JSON document at a repository path (or an absolute one), refused by name where there is no file."""
+    path = Path(value) if Path(value).is_absolute() else REPOSITORY_ROOT / value
+    if not path.is_file():
+        raise ValueError(f"no file at {value!r} (a repository path)")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def pair_of(row: dict[str, Any], label: str) -> Pair:
+    """A family's pair from its row of the universe file, [num, den]; a row whose pair is the body's word is refused: the law's form declares no pair on a body."""
+    pair = row.get("pair")
+    if not (isinstance(pair, list) and len(pair) == 2 and all(isinstance(v, int) for v in pair)):
+        raise ValueError(
+            f"{label}: the row's pair is {pair!r}, not [num, den]; the generator takes the family's"
+        )
+    return int(pair[0]), int(pair[1])
+
+
+def generate(document: dict[str, Any]) -> dict[str, Any]:
+    """The generator on its input file, a world file in the law's form (ALGEBRA.md #the-generator): the GameBoard's shape and faces, the Node clock, the universe file it names (the families' rows: the body's family's pair and reads, the held families' pairs, the integers by name) and one body written by its Nodes with their counts; the held fields the body's family reads plainly at rest under their rows' pairs, the mode on their weighted sum, the readings; no number in the tool or on the command line."""
+    shape = tuple(int(n) for n in document["shape"])
+    faces = document["boundary"]
+    wrap = tuple(
+        (faces if isinstance(faces, dict) else {a: faces for a in "xyz"})[axis] == "periodic"
+        for axis in "xyz"
     )
-    parser.add_argument("--out", type=Path, help="write the profile and its readings as JSON")
-    args = parser.parse_args()
-    counts = np.zeros(tuple(args.box), dtype=np.int64)
-    low = [(n - args.side) // 2 for n in args.box]
-    counts[low[0] : low[0] + args.side, low[1] : low[1] + args.side, low[2] : low[2] + args.side] = (
-        args.count
-    )
-    field = (
-        None
-        if args.field_pair is None
-        else field_at_rest(counts, (args.field_pair[0], args.field_pair[1]))
-    )
-    content = None if field is None else field.levels
-    mode = bound_mode(counts, (args.pair[0], args.pair[1]), args.gamma, content=content)
+    gamma = int(document["node_clock"])
+    universe = read_document(document["universe"])
+    rows = {row["name"]: row for row in universe["families"]}
+    integers = universe.get("integers", {})
+    bodies = [
+        body for body in document.get("measured", []) if isinstance(body, dict) and "nodes" in body
+    ]
+    if len(bodies) != 1:
+        raise ValueError(
+            f"the generator takes one body in the law's form (its nodes with their counts), found {len(bodies)}"
+        )
+    body = bodies[0]
+    if any(int(v) for v in body.get("momentum", (0, 0, 0))):
+        raise ValueError(
+            "a moving body's k by bisection on the pairs is not in the tool yet: the momentum is 0 here"
+        )
+    counts = np.zeros(shape, dtype=np.int64)
+    for entry in body["nodes"]:
+        counts[tuple(int(v) for v in entry["node"])] = int(entry["count"])
+    row = rows[body["family"]]
+    pair = pair_of(row, f"the family {body['family']!r}")
+    content = np.zeros(shape, dtype=np.int64)
+    rests: dict[str, Any] = {}
+    for read in row.get("reads", []):
+        if read.get("by") not in (1, "plain"):
+            continue  # a read by the charge's sign: the law's form carries no charge, the factor 0
+        weight = read["weight"]
+        if isinstance(weight, str):
+            weight = integers[weight]
+        held = rows[read["family"]]
+        rest = field_at_rest(counts, pair_of(held, f"the held family {read['family']!r}"), wrap)
+        content = content + int(weight) * rest.levels
+        rests[read["family"]] = {
+            "pair": list(held["pair"]),
+            "iterations": rest.iterations,
+            "cycle": rest.cycle,
+            "at_body": int(rest.levels[counts > 0].min()),
+            "at_corner": int(rest.levels[0, 0, 0]),
+        }
+    mode = bound_mode(counts, pair, gamma, wrap, content)
     clock = clock_pair(mode.rotation, mode.amplitude)
-    reading: dict[str, Any] = {
+    return {
+        "family": body["family"],
+        "pair": list(pair),
+        "rest": rests,
         "amplitude_unit": mode.amplitude,
         "iterations": mode.iterations,
         "cycle": mode.cycle,
@@ -448,17 +496,25 @@ def main() -> None:
         "clock": list(clock),
         "period": period_by_the_rule(*clock),
         "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
+        "profile": mode.profile,
+        "content": content,
     }
-    if field is not None:
-        reading["rest"] = {
-            "iterations": field.iterations,
-            "cycle": field.cycle,
-            "at_body": int(field.levels[counts > 0].min()),
-            "at_corner": int(field.levels[0, 0, 0]),
-        }
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", type=Path, required=True, help="the world file in the law's form")
+    parser.add_argument("--out", type=Path, help="write the readings, the profile and the well as JSON")
+    args = parser.parse_args()
+    reading = generate(json.loads(args.input.read_text(encoding="utf-8")))
+    profile, content = reading.pop("profile"), reading.pop("content")
     print(json.dumps(reading))
     if args.out is not None:
-        args.out.write_text(json.dumps({**reading, "profile": mode.profile.ravel().tolist()}))
+        args.out.write_text(
+            json.dumps(
+                {**reading, "profile": profile.ravel().tolist(), "content": content.ravel().tolist()}
+            )
+        )
 
 
 if __name__ == "__main__":

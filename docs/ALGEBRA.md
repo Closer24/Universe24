@@ -531,9 +531,11 @@ from the rule: a body's mass is its count.
 The generator builds every world from zero; it declares nothing and
 holds no float.
 
-(a) THE REGION. The iteration runs on the body's Nodes and their
-surroundings, out to where the mode's tail falls below one unit of the
-level; the count stays on the body's Nodes.
+(a) THE INPUT AND THE REGION. The input is a world file in the law's
+form: the GameBoard, the Node clock, the universe file it names and one
+body by its Nodes with their counts; nothing on the command line. The
+iteration runs on the body's Nodes and their surroundings, out to where
+the mode's tail falls below one unit; the count stays on the body's Nodes.
 
 (b) THE ITERATION. Rule3's read act with the before-coefficient 0: a <-
 (SUM_a R_a arr_a + S a) div w on the region; then Rule3's division act
@@ -550,8 +552,8 @@ unit of A (from a flat start, a fixed point at step 198, 291 and 513 for
 the sides 4, 6 and 12 of [the well](#the-well), the overlap with the float top mode 1.000000).
 
 (d) THE TWO LEVELS AND THE AMPLITUDE FROM THE COUNT. The mode's second
-level is the read act once more, halved: before = (**M** now) div 2,
-since **M** phi = 2 cos omega_b phi; the two levels are scaled together
+level is the read act once more, halved (**M** phi = 2 cos omega_b
+phi); the two levels are scaled together
 so that the record's conserved form equals c T, c the body's count and
 T the family's quantum norm: the body's record carries exactly its
 quanta's norm, and nothing of the body is declared. THE UNITS: the ladder reads a record's norm with the weights 1 / R_i and
@@ -704,15 +706,13 @@ defect, and no body's numbers are patched to meet it.
 
 ## What is open
 
-1. Whether a body at rest jitters when its current's swing reaches T /
-2: on a standing mode of sixteen Nodes the accumulated swing over 400
-intervals is one percent of T / 2 and the count stays in place.
+1. Whether a body at rest jitters when its current's swing reaches T / 2:
+on sixteen Nodes the swing over 400 intervals is one percent of T / 2.
 2. The store of the recoil across walls as one remainder against one
 declared wall of the universe, L the least common multiple of the
 world's declared wavelengths: L divides their product and is refused
 by name at or beyond 2^63 (the test of every shipped world beside it);
 the store moves to L when the loop carries the recoil.
 3. The self-source's cubic term: not in the engine, the line is the squares' sum alone.
-4. The twist table's small angles: a triple with d at most 10^9 reaches
-no angle below 6.3 x 10^-5 radians, the edge of the vector rows' twists.
+4. The twist table's small angles: a triple with d at most 10^9 reaches no angle below 6.3 x 10^-5 radians.
 5. Quantum uncertainty and entanglement beyond Born's rule are read from runs, not derived.
