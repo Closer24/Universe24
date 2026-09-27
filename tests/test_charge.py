@@ -77,8 +77,8 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
     Gamma - 2 QUANTA, the clock pair the engine reports), one of charge +1 at c - Lambda d = 0
     (the hill filled to the vacuum's pace at Lambda = 1), the neutral record at c alone and a
     record of the charged light itself (q = +1) at c - Lambda c, each bit for bit the rule's on
-    random rows; at Lambda = 3 the -1 record reads 4 QUANTA and the +1 records -2 QUANTA (a
-    pace above the vacuum's, allowed while below 2 Gamma). The wheel at a slab Node is the
+    random rows; at Lambda = 3 the -1 record reads 4 QUANTA and the +1 records 0 (the row's
+    floor: a hill lessens a hollow and never exceeds it). The wheel at a slab Node is the
     rule's at the effective content. The edge case: the engine refuses the
     load where the pace could reach 0 at a body's Nodes (its content plus Lambda times its
     charge in size not below Gamma: Lambda = 99 at the content 10 and the charge 10 gives 10 +
@@ -102,7 +102,7 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
             assert simulation.family_charge == [1, matter_charge, 0, 0, 0]
             assert [int(v) for v in simulation.level_of("sign")[:, 0, 0]] == slab
             assert [int(v) for v in simulation.level_of("content")[:, 0, 0]] == slab
-            effective = [c - matter_charge * strength * c for c in slab]
+            effective = [max(c - matter_charge * strength * c, 0) for c in slab]
             assert [int(v) for v in simulation._effective_content(MATTER)[:, 0, 0]] == effective
             assert [int(v) for v in simulation._effective_content(NEUTRAL)[:, 0, 0]] == slab
             assert simulation.node_clock_pair((25, 0, 0), MATTER) == (GAMMA - effective[25], GAMMA)
@@ -111,7 +111,7 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
             assert simulation.wheel_at(MATTER, (25, 0, 0))[1] == wheel_of(PAIR, effective[25], GAMMA)
             # one step of the rule on each family's record (the engine's `_advance`, the
             # step's own on a record: a massive record in the register is a block's own)
-            lit = [c - strength * c for c in slab]
+            lit = [max(c - strength * c, 0) for c in slab]
             for family, pair, reading in (
                 (MATTER, PAIR, effective),
                 (NEUTRAL, (1, 1), slab),
