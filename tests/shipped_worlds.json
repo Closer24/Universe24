@@ -1,6 +1,6 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "83035bff",
+ "recorded_at": "1925fa95",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
@@ -125,7 +125,7 @@
   },
   "examples/events/point_emitter/point_chain.json": {
    "stamp": {
-    "hash": "b28ce92393c39a958da8bad3da49b60d29d0cebecf4633a745d2329c7e2a6018"
+    "hash": "df9a5b7ddb9f4d10802d9124252b00bf71d4c91e5db1b04387f0eb1db45f457e"
    },
    "ticks": 70992,
    "intervals": 200,
@@ -136,7 +136,7 @@
   },
   "examples/events/point_emitter/point_light_clock.json": {
    "stamp": {
-    "hash": "027bcd07b1eedef6183416fbe93f8fd2b1ff2ac18546d834cbd2d3d0d3118066"
+    "hash": "0982c31eb3e3406f6af4b85f870de49a93d0a3343af4f35b3c137f93f1f496e1"
    },
    "ticks": 35304,
    "intervals": 3000,
