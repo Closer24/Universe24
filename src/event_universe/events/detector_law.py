@@ -104,6 +104,7 @@ from event_universe.features.giving import (
     GivingWrites,
 )
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
+from event_universe.features.lifetime import LifetimeStart, LifetimeTerm, LifetimeWrites
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.recoil import (
     GIVING,
@@ -172,6 +173,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     set_detectors: list[int]
     set_nodes: dict[int, np.ndarray | None]
     face_detector: int | None
+    lifetime_detector: int | None
     momentum_unit: int
     twist_table: TwistTable | None
     _fine: np.ndarray
@@ -228,9 +230,14 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         )
         # the state built once from the parsed world, in this order (`events/assembly.py`)
         assembly.detectors(self, world)
+        # THE BORDER `lifetime` (the law's row "the lifetime"): one detector with no Node, where a record of age L ends
+        self.lifetime_detector = (
+            self._detector("lifetime", None, True)
+            if any(row.lifetime is not None for row in world.families)
+            else None
+        )
         assembly.universe_values(self, world)
-        # THE UNIVERSE'S WALL L (the law's row "the recoil"): the least common multiple of the
-        # declared wavelengths 2 N q / p over the families and the emitters with a clock [p, q]
+        # THE UNIVERSE'S WALL L (the law's row "the recoil"): the least common multiple of the declared wavelengths 2 N q / p over the families and the emitters with a clock [p, q]
         self.recoil_wall = 1
         for index, row in enumerate(world.families):
             if row.phase_per_age is not None:
@@ -267,8 +274,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         corner: list[int],
         mask: np.ndarray,
     ) -> Block:
-        # a body's block from its measured entry: its Nodes, the detector under its position, its
-        # declared momentum, its spin at both levels and the word `fixed`
+        # a body's block from its measured entry: its Nodes, the detector under its position, its declared momentum, its spin at both levels and the word `fixed`
         block = Block(
             number,
             entry.family,
@@ -313,6 +319,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             "the giving": Stage(self._giving_stage, (), ("the giving",), creates=True),
             "the source": Stage(self._source_stage, (), ("the source",)),
             "the recoil": Stage(self._recoil_stage, (), ("the recoil",)),
+            "the lifetime": Stage(self._lifetime_stage, (), ("the lifetime",)),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
         }
 
@@ -491,6 +498,22 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 f"wavelength 2 N q / p is no whole number of Links, so the universe's wall L has no value"
             )
         return whole
+
+    def _lifetime_stage(self, function: Callable[..., object]) -> None:
+        """The lifetime's act (features/lifetime): every live record of a family with a lifetime L that the ladder did not click this interval ends on the border `lifetime` at age L, its content booked as escaped there, the record deleted whole at the interval's close as a clicked one."""
+        for identity in list(self.records):
+            live = self.records[identity]
+            lifetime = self.families[live.family].lifetime
+            if lifetime is None or live.clicked or self.lifetime_detector is None:
+                continue
+            writes = cast(
+                LifetimeWrites, function(LifetimeTerm(lifetime), LifetimeStart(live.age, live.clicked))
+            )
+            if writes.ends:
+                live.first_rung[self.lifetime_detector] = self.tick
+                self._gather_line(live, self.lifetime_detector)
+                live.clicked = True
+                self.dead.append(live.identity)
 
     def _recoil_stage(self, function: Callable[..., object]) -> None:
         """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1; a body with no period declares no term."""

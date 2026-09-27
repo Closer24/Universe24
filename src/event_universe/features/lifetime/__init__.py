@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from event_universe.core.register import Declaration
+from event_universe.core.schema import Integer, ObjectOf, Schema
 
 # the word of ALGEBRA.md #the-primitives for this primitive
 THE_WORD = "the age is the count (b) on the record; at age L on the face the record ends"
@@ -58,4 +59,7 @@ DECLARATION = Declaration(
     apply,
     THE_WORD + ' (ALGEBRA.md #the-primitives, the row "the lifetime")',
     word="after the step",
+    schema=Schema(
+        {"a family's entry": ObjectOf({"lifetime": Integer(least=1)}, frozenset({"lifetime"}))}
+    ),
 )
