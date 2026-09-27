@@ -20,6 +20,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "loader/frame.py": "the frame of the files: the schemas the loader reads them through; no arithmetic",
     "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md #the-primitives)",
+    "events/output.py": "the engine's readings and output lines: the exact rationals of the books, the leak test, the record's click line, the books, the contents and the state stream; reads the simulation, writes the lines",
     "events/guards.py": "the engine's run-time guards bound as its methods: the start's arrays to freeze, an act's grants, a card's writes, a write applied by name, the generic act's term, start view and own record, the pace guard",
     "events/live.py": "the records' making and release: the ledger's stamps, the held records and levels, a body's own record, a planted record, a detector by name, a record's receiver, ladder and release; functions taking the engine, bound as its methods",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md #the-line, #the-direction, #the-interval), and the ladder's rungs (ALGEBRA.md #the-ladder)",
