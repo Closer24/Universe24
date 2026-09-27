@@ -1,23 +1,23 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "636fe3f522235fb69c9a03031b949027df092b00",
+ "recorded_at": "11c855cc",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
-    "hash": "07dd6cd992d4bb1254f0c92a47057b59aa2a95da2d232970d20fb0a8d27373a5"
+    "hash": "23fa7d19cc00ff162aabeed42e089db060e774018ff97a9440fb676a0acec192"
    },
    "ticks": 15156,
    "intervals": 200,
-   "digest": "2bc6a7f2d8b486af199e8721594282bb3c0f7320f4896a492780b860cf0bbd8e",
+   "digest": "f0f5b7ffae7af07c1c259711a299062b6c7655f35444cd2dbe447c97512ec999",
    "records": 16,
    "clicks": 0,
-   "lines": 576,
+   "lines": 577,
    "refused_at": 181,
    "refused": "the twist on the Port toward +y reaches |k| = 43307142, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/dark_body/dark.json": {
    "stamp": {
-    "hash": "9b14b3fa4d32026d675374fcd7ad6c66e2fc95625ea869d2cc3b94b975a7f993"
+    "hash": "b0f19bb2f7511b0a795d3d961120cfcc5e49b9bb241dddf5dd1c97f31dd909ff"
    },
    "ticks": 2400,
    "intervals": 200,
@@ -34,7 +34,7 @@
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "3f1ba949f0fc7c327b8e11a7c37817b896cce93dfa1f9a42447d7c85b478fa4a",
+   "digest": "6569671f3d6151c4ba4bfbc239ffa7bf526e1dea34fd4db1623f685eac1b4e41",
    "records": 1,
    "clicks": 0,
    "lines": 203
@@ -45,7 +45,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "ea6e27a69686ae3cc3e856f4e5fdd49f98c8ccfe57c8e11318053ffda3d70833",
+   "digest": "35cf1353144fa79a155e723021bded5ab30d83ad6a1b9ab1f0e4aa9d2740f209",
    "records": 1,
    "clicks": 0,
    "lines": 403
@@ -56,7 +56,7 @@
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "85fe3b56622fe3ec6ea1416867a3eb3a3dda3c6e1c958f5fdc26d4e77e29317f",
+   "digest": "8f5ec852becfa43e7e517161af223076ffd0c96147ebb7405f9d8d97ea6760eb",
    "records": 1,
    "clicks": 0,
    "lines": 204
@@ -67,7 +67,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "474a0e1c246c4e230d418ff1eb5f93c352217b6d5845deeb25a541d49db61fe2",
+   "digest": "1b2aa8f25c3287538301c40fd9e608543127ede242bd28c3868d16b83a7f4210",
    "records": 1,
    "clicks": 0,
    "lines": 404
@@ -78,7 +78,7 @@
    },
    "ticks": 3500,
    "intervals": 200,
-   "digest": "66306ead87dd68dee78b9c4af708f080ee81b52eb2e63bdf49ab90c91f881d2f",
+   "digest": "e46e64f92e910741c796ebcdf252150427056e761ec3ff448e6b3893cd27e575",
    "records": 1,
    "clicks": 0,
    "lines": 201
@@ -89,14 +89,14 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "ecb23d2289884dff35912ee29bd9c505a9142b01ab5b74cbc35c7da8bb945bb0",
+   "digest": "00c792ae4307cc08c043b22af2288983dc5b17000f912ce1c871508049c99226",
    "records": 1,
    "clicks": 0,
    "lines": 401
   },
   "examples/events/massive_record/light_clock.json": {
    "stamp": {
-    "hash": "e35d7873be165414bc4f3822daa3c09bdd379d10c6af1d79c4191ab17d44f883"
+    "hash": "ff778e00a368f3007bcc3156cb8b5a9850d985122e9a577ffc8cac36b675bf0f"
    },
    "ticks": 4800,
    "intervals": 1500,
@@ -122,36 +122,40 @@
    },
    "ticks": 20500,
    "intervals": 200,
-   "digest": "6e65672f9dfb0bc6db24ccf08a464de8c6bdf75058ab02a806602c571e9f03d8",
+   "digest": "0c6ff8f19c49aa1c3fbec8442c3e28ca2daecdde3150efbcef46392de7318b76",
    "records": 1,
    "clicks": 0,
    "lines": 404
   },
   "examples/events/point_emitter/point_chain.json": {
    "stamp": {
-    "hash": "1f38daaa3bf5806b7ea86e9bac9bfc1234edb3e093b496b5e7921f7fa6121283"
+    "hash": "4fc4c64f3f0ddbc195438e1ef9ae7a60f1844e995f79f6273e3082ece9e121fe"
    },
    "ticks": 70992,
    "intervals": 200,
-   "digest": "46afc5fcd13187fc4a7b0b8bb5bf477bf775710a48b4ef758e6902003f2f03bf",
-   "records": 2,
+   "digest": "515aaf7dae61f1234ed82d39af7fe9172b03159dc106fa218f5e4515fd8dc767",
+   "records": 0,
    "clicks": 0,
-   "lines": 205
+   "lines": 0,
+   "refused_at": 0,
+   "refused": "families[1] declares the clock [512, 1] on N = 64 steps: its wavelength 2 N q / p is no whole number of Links, so the universe's wall L has no value"
   },
   "examples/events/point_emitter/point_light_clock.json": {
    "stamp": {
-    "hash": "39ab0210af23eeaf869237996a41c851b8a15a65cb3bbf83ad11c747e973c962"
+    "hash": "b0f76d7b81a392dc56f56da262d0b88ff63614dfe5ac787259cbfe7732989cda"
    },
    "ticks": 35304,
    "intervals": 3000,
-   "digest": "6d4dfbcf7f0daddc32007079639447ae6372f64aab3c40c5ae1e8d262bf1418b",
-   "records": 2,
-   "clicks": 9,
-   "lines": 9102
+   "digest": "515aaf7dae61f1234ed82d39af7fe9172b03159dc106fa218f5e4515fd8dc767",
+   "records": 0,
+   "clicks": 0,
+   "lines": 0,
+   "refused_at": 0,
+   "refused": "families[1] declares the clock [512, 1] on N = 64 steps: its wavelength 2 N q / p is no whole number of Links, so the universe's wall L has no value"
   },
   "examples/events/toward_nature/bending.json": {
    "stamp": {
-    "hash": "643373cfa97d1edb61558b12f9457545bcd49d4709be5cfe9fa7f29ccc80de1b"
+    "hash": "afd085a67cba2f1391a60655a71b3091ca8198aafca414fd8fce198d6d3f4c92"
    },
    "ticks": 5600,
    "intervals": 200,
@@ -164,29 +168,29 @@
   },
   "examples/events/toward_nature/lorentz_moving.json": {
    "stamp": {
-    "hash": "1eac3116b3cc7c20e1b488d90b02d19a2c0da861cfc63a5c78369b148c9e6bc4"
+    "hash": "e58c98c0a37705fd5576f51c50c2aeb83a5a68143f2df246ee28c164d3276432"
    },
    "ticks": 3600,
    "intervals": 200,
-   "digest": "da102fd6970312c6ee9714ca376c9536214d5970412049d995d9ec3225786e6d",
+   "digest": "38bcf6d98bcf458e92cfd2f7dfbfb87984e663a09439556902a36c9be65e1f6a",
    "records": 12,
    "clicks": 0,
    "lines": 631
   },
   "examples/events/toward_nature/lorentz_moving_long.json": {
    "stamp": {
-    "hash": "b48cad34a2ac65aaf07972043bbf3af2bafac353011d9fd9a652fb553179f6a1"
+    "hash": "96aad9701a60a356208beda937590e7766bc18767c4be7418964e6e6592cd86c"
    },
    "ticks": 5966,
    "intervals": 200,
-   "digest": "c3a930424f335280b8a6255493cee35792a278f736c16d7789ec5f8026632419",
-   "records": 4,
-   "clicks": 0,
-   "lines": 608
+   "digest": "643bb6db9f2b110a97d094ad3eef784d12e0f30704927b5c8a14e68e0a141818",
+   "records": 3,
+   "clicks": 1,
+   "lines": 609
   },
   "examples/events/toward_nature/lorentz_rest.json": {
    "stamp": {
-    "hash": "07bb1db95b2b07b091c6ce778a13f568a30e76be795c0da0b79277dfc605a9c1"
+    "hash": "1805359dd6bd65f6bbaae56a64d4280cd3b482b86fe4c2a2239939c58d02837f"
    },
    "ticks": 3600,
    "intervals": 1500,
@@ -197,18 +201,18 @@
   },
   "examples/events/toward_nature/lorentz_rest_long.json": {
    "stamp": {
-    "hash": "311b2687d3670de3574d834ad68acc1455d6fa1d092b5acadf2554fb2c94c1e1"
+    "hash": "58d8f0d96144a3b9c8e0c70771ddc6b2bd74c2b2ce4566a6a2184417930f0e99"
    },
    "ticks": 8206,
    "intervals": 200,
-   "digest": "842bef276bd8475e89b62e540faa9c6b89cc6731c578dd27c686b22633e75c20",
+   "digest": "92ce46699cdd15e65d35ac5217d6236b72ad730bcb01fc0282e8557d7c66f4c6",
    "records": 4,
    "clicks": 0,
    "lines": 607
   },
   "examples/events/toward_nature/redshift_bottom.json": {
    "stamp": {
-    "hash": "cc1fb880742211ec707acc56af42cba473e62c4f62382349d75ce5779e320449"
+    "hash": "31808a4d080f5b20db7bccf5cd3e0767677f2d490c60cc57e367b6e257f72195"
    },
    "ticks": 6534,
    "intervals": 200,
@@ -221,11 +225,11 @@
   },
   "examples/events/toward_nature/redshift_bottom_long.json": {
    "stamp": {
-    "hash": "d57d2fcc780023e4a83e7858914e330aacdb3cae93717971861dbdd51f3306da"
+    "hash": "e459ec74788a5ba518a6e3c4fc29ee84f17985143b37c4ea6eeba76e4b72bcf8"
    },
    "ticks": 10558,
    "intervals": 200,
-   "digest": "d0f7910a70cbc1a35435f029021d5aea9d7618c42ca8afdb84f4c20076f6d254",
+   "digest": "d8cbad90b5e3717905ea3fcc1786ec59ea2899f9507cee2e1cdb2e3422f0ce45",
    "records": 1,
    "clicks": 1,
    "lines": 165,
@@ -234,22 +238,22 @@
   },
   "examples/events/toward_nature/redshift_top.json": {
    "stamp": {
-    "hash": "7acf85b05ee0bc9f4090d7254934f2519fb0236d0931aba81051d9675623377e"
+    "hash": "29e807682f7c3d1578f5218b1af34b6177881cc1bb5af105bd7117cb8debcfaa"
    },
    "ticks": 6150,
    "intervals": 200,
-   "digest": "beab32bf0e33cf7c35fb74a813c5adabe7038aa0ddab23e257f4a0fe232bb8ed",
+   "digest": "652820f5f3bfc936c4f8e0f48b740056a25a195fec9be2c01a21c1e15c901788",
    "records": 9,
    "clicks": 1,
    "lines": 630
   },
   "examples/events/toward_nature/redshift_top_long.json": {
    "stamp": {
-    "hash": "30dbc7579748c32d50b83d67aa3c8089d755c6062095ce00445aa539d6041ea3"
+    "hash": "395e9eca0258334bdca3a9d2a0ff664d1eeeb3a9a3881e863c6a8f182321394e"
    },
    "ticks": 9598,
    "intervals": 200,
-   "digest": "26f32ee9c69c53223d25d227908d685c3a34bd51f09d21255d962d63d159389d",
+   "digest": "b309a62200c42ce112271610e5822197df10ce9210f0cf8a9da6591c93b768e7",
    "records": 4,
    "clicks": 0,
    "lines": 607

@@ -199,30 +199,37 @@ def run(path: Path, intervals: int | None = None, write_to: Path | None = None) 
     """The world stepped `intervals` times (its recorded count, or the count this tool picks) and
     its digest, with the counts that name a difference when the digest moves; a world the law
     refuses on the way keeps its count and is recorded with the refusing step and the refusal's
-    words, which the digest covers, so the replay refuses the same step the same way; a recorded
+    words, which the digest covers, so the replay refuses the same step the same way (a world refused
+    at the load is recorded with no run, the refusal's words its whole reading); a recorded
     world keeps its recorded count on every re-record, a new one gets the count this tool picks.
     With `write_to`, the entry is also written there as the world's own record file for CI's merge."""
     document = json.loads(path.read_text(encoding="utf-8"))
     stamp = input_stamp(document)
     started = time.monotonic()
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    lines: list[dict[str, object]] = []
-    simulation.record = lines.append
     ticks = int(document["ticks"])
-    if intervals is None:
-        for _ in range(min(SAMPLE_STEPS, ticks)):
-            simulation.step()
-        per_step = (time.monotonic() - started) / max(1, min(SAMPLE_STEPS, ticks))
-        intervals = ticks if per_step * ticks <= FULL_RUN_SECONDS else min(ticks, PREFIX_INTERVALS)
-        intervals = min(ticks, LONGER.get(path.resolve().relative_to(ROOT).as_posix(), intervals))
+    lines: list[dict[str, object]] = []
     refused: str | None = None
     refused_at = 0
+    simulation: DetectorLawSimulation | None = None
     try:
-        while simulation.tick < intervals:
-            simulation.step()
-    except ValueError as refusal:
-        refused, refused_at = str(refusal), simulation.tick + 1
-    reading = run_reading(simulation, lines)
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+    except ValueError as refusal:  # refused at the load: no run, the refusal's words the whole reading
+        refused, intervals = str(refusal), ticks if intervals is None else intervals
+    reading: dict[str, Any] = {}
+    if simulation is not None:
+        simulation.record = lines.append
+        if intervals is None:
+            for _ in range(min(SAMPLE_STEPS, ticks)):
+                simulation.step()
+            per_step = (time.monotonic() - started) / max(1, min(SAMPLE_STEPS, ticks))
+            intervals = ticks if per_step * ticks <= FULL_RUN_SECONDS else min(ticks, PREFIX_INTERVALS)
+            intervals = min(ticks, LONGER.get(path.resolve().relative_to(ROOT).as_posix(), intervals))
+        try:
+            while simulation.tick < intervals:
+                simulation.step()
+        except ValueError as refusal:
+            refused, refused_at = str(refusal), simulation.tick + 1
+        reading = run_reading(simulation, lines)
     if refused is not None:
         reading["refused"] = [refused_at, refused]
     entry: dict[str, Any] = {
@@ -230,8 +237,8 @@ def run(path: Path, intervals: int | None = None, write_to: Path | None = None) 
         "ticks": ticks,
         "intervals": intervals,
         "digest": digest_of(reading),
-        "records": len(simulation.records),
-        "clicks": len(simulation.layer.gathers),
+        "records": 0 if simulation is None else len(simulation.records),
+        "clicks": 0 if simulation is None else len(simulation.layer.gathers),
         "lines": len(lines),
         "seconds": round(time.monotonic() - started, 2),
     }
@@ -258,11 +265,13 @@ def write_record(worlds: dict[str, Any], recorded_at: str) -> None:
     )
 
 
-def merge(folder: Path, recorded_at: str) -> list[str]:
+def merge(folder: Path, recorded_at: str, every_world: bool = False) -> list[str]:
     """Every world's record file under `folder` (the shards' uploads, any depth) merged into the
     record: a named world replaced by its entry, every other world kept as recorded; the record
     is written only where a world's entry moved, so a record that replays as it stands keeps its
-    commit and is not rewritten for the sha alone; the worlds merged, sorted."""
+    commit and is not rewritten for the sha alone; the worlds merged, sorted. With `every_world`
+    a recorded world with no entry refuses the merge by name (a cancelled or lost shard), since a
+    record of the worlds that finished alone is no record."""
     recorded: dict[str, Any] = (
         json.loads(RECORD.read_text(encoding="utf-8")) if RECORD.exists() else {"worlds": {}}
     )
@@ -272,6 +281,9 @@ def merge(folder: Path, recorded_at: str) -> list[str]:
         for key, entry in json.loads(file.read_text(encoding="utf-8")).items():
             worlds[key] = entry
             merged.append(key)
+    missing = sorted(set(recorded.get("worlds", {})) - set(merged))
+    if every_world and missing:
+        raise ValueError(f"no entry for {len(missing)} recorded worlds under {folder}: {missing}")
     if worlds != recorded.get("worlds", {}):
         write_record(worlds, recorded_at)
     return sorted(merged)
@@ -290,6 +302,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--recorded-at", metavar="SHA", help="the commit written into the record; HEAD's"
     )
+    parser.add_argument(
+        "--every-world", action="store_true", help="refuse a merge missing a recorded world's entry"
+    )
     args = parser.parse_args(argv)
     recorded_at = (
         args.recorded_at
@@ -298,7 +313,11 @@ def main(argv: list[str] | None = None) -> int:
         ).stdout.strip()
     )
     if args.merge is not None:
-        merged = merge(args.merge, recorded_at)
+        try:
+            merged = merge(args.merge, recorded_at, args.every_world)
+        except ValueError as refusal:
+            print("the merge is refused:", refusal)
+            return 1
         print("merged", len(merged), "worlds at", recorded_at, "into", RECORD.relative_to(ROOT))
         return 0
     paths = [Path(n).resolve() for n in args.worlds] if args.worlds else shipped_worlds()

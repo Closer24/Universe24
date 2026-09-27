@@ -190,8 +190,7 @@ def test_every_family_reads_the_worlds_border_and_a_zero_face_when_open():
         assert total == read * expected
     assert world.kind_periodic(1) == (False, True, True)
     assert world.kind_periodic(0) == (False, True, True)
-    # the world open on every axis: every family open on every axis (the massive kind's
-    # periodic default of the first builds, HISTORY)
+    # the world open on every axis: every family open on every axis (the massive kind's periodic default, HISTORY)
     everywhere = parse_nature_beam_world(massive_world([5, 1, 1], "open", [1, 2]))
     assert everywhere.kind_periodic(1) == everywhere.kind_periodic(0) == (False, False, False)
 
@@ -731,7 +730,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     behind = int(np.max(np.abs(live.now[40:90, 0, 0])))
     # SINCE COMMIT 7 the window's record leaves the body both ways (no train's way; COMPUTATION)
     assert ahead > 1000 and behind > 1000, (ahead, behind)
-    with pytest.raises(ValueError, match="clock is required: the given family 'matter' declares no"):
+    with pytest.raises(ValueError, match="the given family 'matter' declares no clock"):
         parse_nature_beam_world(matter_emitter_world(True))
 
 
@@ -842,7 +841,7 @@ def test_every_declared_wheel_is_refused_by_name():
 
 
 def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_rung():
-    """The receiving set at the emitter's head books the one-way flux and clicks at the record's rung, closed or open; a set off the ladder is never chosen; the loader refuses the malformed forms."""
+    """The receiving set at the emitter's head books the one-way flux and clicks at the record's rung, closed or open, the run to that click; a set off the ladder is never chosen; the loader refuses the malformed forms."""
     for faces in ("closed", "open"):
         world = parse_nature_beam_world(light_clock_world(faces, faces == "open"))
         if faces == "closed":
@@ -877,6 +876,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
                 giving = live.giving_tick
             if pointer_at_click is not None and count_then is None:
                 count_then = count_before
+                break  # past the click the giver at the rule's period 91 (the generator's 94) recoils off the open face
         assert giving is not None and pointer_at_click is not None and pointer_at_click > 0
         gathers = [g for g in lines if g["event"] == "gather" and g["record"] == first]
         assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "A_face"
@@ -1028,7 +1028,7 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
     # the measurement: nothing given crosses the wall to click at `screen` at [70, 72]
     givings = [line for line in lines if line["event"] == "giving"]
     gathers = [line for line in lines if line["event"] == "gather"]
-    assert len(givings) == 2 and gathers == []
+    assert len(givings) == 3 and gathers == []  # 3 at the rule's period 82 (2 at the generator's 84)
     assert all(line["record"] in simulation.records for line in givings)
     for key, value in (("seed", 5), ("margin", "control")):
         bad = json.loads(json.dumps(document))

@@ -586,10 +586,6 @@ EMITTER_STOCK = (
 PHASE_STEPS = (
     1024  # N of every light world (ALGEBRA.md #a-familys-declaration: the given clock's circle)
 )
-GIVEN_CLOCK = [
-    512,
-    1,
-]  # the given clock of every light emitter on N = 1024: k = pi / 2, the wavelength 4
 TRAIN_PERIODS = 8  # HISTORY (the train retired, commit 7): the train's periods (ALGEBRA.md #the-click)
 TRAIN_LENGTH = 32  # HISTORY (the train retired, commit 7): the train's Nodes along K; the one-Node emitter stands at its head
 FACE_DEPTH = 32  # every face a receiver slab as deep as the train (ALGEBRA.md #the-ladder)
@@ -736,18 +732,23 @@ def finish_windows(
     dark row, carry ONE declared weight, read once by the trial on the first of the pair),
     the run's length covering every stock at the windows read plus `extra` intervals (at
     least the declared `ticks`), and the stamp over the whole file."""
+    from event_universe.loader.mode import period_by_the_rule
+
+    windows: dict[int, int] = {}  # HOST: the trial's window at each emitter's weight, no world key
     for number in emitters:
         if weights is not None and number in weights:
             emitter = document["measured"][number]["emitter"]
-            limit = 64 * int(emitter["period"]) * weights[number] ** 2
+            period = period_by_the_rule(*document["measured"][number]["clock"])
+            limit = 64 * period * weights[number] ** 2
             window, exceeded = massive.window_reading(document, number, weights[number], limit)
             assert window is not None and not exceeded, (number, weights[number], window, exceeded)
             emitter["weight"] = weights[number]
-            emitter["window_read"] = window  # HOST: the trial's window at the pair's weight
+            windows[number] = window
         else:
-            massive.point_weight(document, number, WINDOW_PERIODS)
+            windows[number] = massive.point_weight(document, number, WINDOW_PERIODS)[1]
     document["ticks"] = max(
-        int(document["ticks"]), *(massive.giving_ticks(document, number, extra) for number in emitters)
+        int(document["ticks"]),
+        *(massive.giving_ticks(document, number, extra, windows[number]) for number in emitters),
     )
     massive.stamped(document)
     return document
@@ -769,7 +770,6 @@ def light_clock(massive) -> dict:
         KIND,
         [emitter([LIGHT_CLOCK_EMITTER_X, 0, 0], [1, 3, 3])],
         LIGHT_CLOCK_TICKS,
-        given_clock=list(GIVEN_CLOCK),
         seed_profile=False,
     )
     document["N"] = PHASE_STEPS

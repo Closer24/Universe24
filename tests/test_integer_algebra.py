@@ -15,6 +15,7 @@ SRC = ROOT / "src" / "event_universe"
 # The physical modules: every module that runs a physical step of the interval or forms the tables it reads, one line each why.
 PHYSICAL_MODULES: dict[str, str] = {
     "loader/world.py": "the loop's classes built from the checked files and the load-time constants (the flight table, the labels)",
+    "loader/mode.py": "the body's mode as the loader reads it: the period by the one-Node rule from the clock pair, no root",
     "loader/frame.py": "the frame of the files: the schemas the loader reads them through; no arithmetic",
     "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md #the-primitives)",
