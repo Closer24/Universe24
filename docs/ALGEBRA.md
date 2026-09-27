@@ -521,10 +521,10 @@ family's own 1 - cos omega_0, so a family whose pair lies close to 1
 binds nothing: on [800, 809] (1 - cos omega_0 = 0.011) no cube of any
 side at any count is bound; on [800, 1200] (1 / 3) at Gamma = 10^4 a
 cube of side 12 is bound from 500 quanta per Node (the mode's share
-inside 0.79, 0.92 at 1000, 0.997 at 5000), of side 6 from 1000 (0.58),
-of side 3 at 3000 (0.77), one Node at 5000 (0.65); omega_b / omega_0 for
-side 12 is 0.832 at 500 and 0.771 at 2000. A body's clock is set by its
-count and its side, from the rule: a body's mass is its count.
+inside 0.79, 0.92 at 1000, 0.997 at 5000), of side 6 from 1000, of side
+3 at 3000, one Node at 5000; omega_b / omega_0 for side 12 is 0.832 at
+500 and 0.771 at 2000. A body's clock is set by its count and its side,
+from the rule: a body's mass is its count.
 
 ### The generator
 
@@ -538,18 +538,16 @@ level; the count stays on the body's Nodes.
 (b) THE ITERATION. Rule3's read act with the before-coefficient 0: a <-
 (SUM_a R_a arr_a + S a) div w on the region; then Rule3's division act
 to the amplitude unit A (the level multiplied by A and divided by its
-largest size). This is the power iteration of the symmetric form's top
-mode (the bound mode, above the band, is the eigenvalue of largest
-size, since 2 cos omega_b > 2 num / den, the size of the band's bottom);
-it converges at the rate cos omega_0 / cos omega_b per step.
+largest size): the power iteration of the symmetric form's top mode
+(the bound mode, above the band, is the eigenvalue of largest size),
+converging at the rate cos omega_0 / cos omega_b per step.
 
 (c) THE STOP FROM THE INTEGERS. The profile is an integer vector bounded
 by A, so the iteration is a map on a finite set and enters a cycle; the
 stop is the first repeat of the profile, exact, with no tolerance and
 no declared count; the profile at the repeat is the mode within one
-unit of A (from a flat start, a fixed point at step 198, 291 and 513
-for the sides 4, 6 and 12 of [the well](#the-well), the overlap with
-the float top mode 1.000000 in each case).
+unit of A (from a flat start, a fixed point at step 198, 291 and 513 for
+the sides 4, 6 and 12 of [the well](#the-well), the overlap with the float top mode 1.000000).
 
 (d) THE TWO LEVELS AND THE AMPLITUDE FROM THE COUNT. The mode's second
 level is the read act once more, halved: before = (**M** now) div 2,
@@ -564,12 +562,11 @@ times L / (2 num), so the ladder's T is the form's T times L / (2 num).
 velocity **v** = **n** / W. The same iteration runs with the arrivals
 along the axis of motion read through the rotation act by the phase k
 per Link (a Pythagorean triple (a, b, c) with cos k = a / c, exact),
-each iterate mirrored (the real part even and the imaginary part odd
-about the centre, the envelope's one gauge), each by one division act, so the parts are even and odd within one unit of the rounding; its fixed point is the
-moving mode with the rotation omega_b(k); v(k) is the difference
-quotient of omega_b over k in exact rationals, and k is the pair at
-which v(k) is the named velocity, found by bisection on the pairs. The
-body at rest is the case k = 0 of the same procedure.
+each iterate mirrored by one division act (the real part even and the
+imaginary part odd about the centre, the envelope's one gauge); its
+fixed point is the moving mode with the rotation omega_b(k); v(k) is the
+difference quotient of omega_b over k in exact rationals, and k is the
+pair at which v(k) is the named velocity, by bisection on the pairs.
 
 (f) THE AMPLITUDE UNIT A IS DERIVED, NEVER WRITTEN: the largest
 amplitude at which Rule3's total stays inside the integer width at
@@ -582,17 +579,22 @@ within 12 units of the coarser, and the rotation to 10^-6; the final
 scale comes from c T.
 
 (g) THE FIELD AT REST, THE START OF A WORLD. The generator iterates the
-held family's own line to rest first, at the pair of the family's row:
-from nothing the level at every Node is num S_6(a) div (6 den) by the
-division act on a fine unit derived from the width, the body's Nodes
-rewritten to the count each time (the hold); the map is monotone, so
-the levels rise to a fixed point, the stop its first repeat; the levels
-are the rest within one unit, and the mode is solved on that content. A
-world starts from the field at rest, never from zeros (the zero start
-radiates the transient that rings). Under [1, 1] the rest between
-periodic faces is the uniform level, the count itself, no well and no
-mode; between open faces the harmonic well; under [1, 4] the well
-3000, 138, 0 within two Links.
+held family's own line to rest first, at the pair of the family's row,
+as the rewriting hold makes it: the body's Nodes clamped to the count,
+the homogeneous line outside (a source row's static limit, (Delta -
+kappa^2) a = -sigma, is the other case, not this one). From nothing the
+level at every Node is num S_6(a) div (6 den) by the division act on a
+fine unit derived from the width, the body's Nodes rewritten each time;
+the map is monotone, so the levels rise to a fixed point, the stop its
+first repeat; the levels are the rest within one unit, and the mode is
+solved on that content: generic (one primitive, the row's pair, no
+family name), vector (the division act alone, no root, no float) and
+local (the six reads and the hold's rewrite). A world starts from the
+field at rest, never from zeros, whose transient rings. Under [1, 1] the
+clamp's rest between periodic faces is the uniform level, the count
+itself, no well and no mode there (the source row's periodic problem at
+kappa = 0 has no rest at all); between open faces the harmonic well;
+under [1, 4] the well 3000, 138, 0 within two Links.
 
 ### The velocity
 
@@ -710,9 +712,7 @@ declared wall of the universe, L the least common multiple of the
 world's declared wavelengths: L divides their product and is refused
 by name at or beyond 2^63 (the test of every shipped world beside it);
 the store moves to L when the loop carries the recoil.
-3. The structure table of the self-source's cubic term: not in the
-engine; the line is the squares' sum alone.
+3. The self-source's cubic term: not in the engine, the line is the squares' sum alone.
 4. The twist table's small angles: a triple with d at most 10^9 reaches
 no angle below 6.3 x 10^-5 radians, the edge of the vector rows' twists.
-5. Quantum uncertainty and entanglement beyond Born's rule are read
-from runs, not derived.
+5. Quantum uncertainty and entanglement beyond Born's rule are read from runs, not derived.
