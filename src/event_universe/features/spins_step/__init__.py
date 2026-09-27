@@ -16,8 +16,8 @@ MOMENT = "moment"
 KEYS = ("gradc", "omega", "bq", "spin")  # the body's remainders of this step, by their first word
 Vector = tuple[int, int, int]
 Pair = tuple[int, int]
-# a level at the six neighbours of the Node in the order +x, -x, +y, -y, +z, -z; None where the Node has no read there
-Ports = tuple[int | None, int | None, int | None, int | None, int | None, int | None]
+# a level at the six neighbours of the Node in the Ports' order +x, -x, +y, -y, +z, -z; None where the Node has no read there
+Neighbours = tuple[int | None, int | None, int | None, int | None, int | None, int | None]
 
 
 @dataclass(frozen=True)
@@ -28,8 +28,8 @@ class SpinRead:
     dipole: str
     factor: int
     weight: int
-    vector: tuple[Ports, Ports, Ports]
-    time: Ports | None
+    vector: tuple[Neighbours, Neighbours, Neighbours]
+    time: Neighbours | None
     turn: tuple[Pair, Pair] | None
 
 
@@ -83,13 +83,13 @@ def read_act(coefficients: Vector, levels: Vector, self_coefficient: int, here: 
     return int(rule3(coefficients, levels, self_coefficient, 1, here, 0, 0)[0])
 
 
-def level(ports: Ports, port: int) -> int:
+def level(ports: Neighbours, port: int) -> int:
     """A neighbour's level, 0 where the Node has no read there."""
     found = ports[port]
     return 0 if found is None else found
 
 
-def curl(vector: tuple[Ports, Ports, Ports]) -> Vector:
+def curl(vector: tuple[Neighbours, Neighbours, Neighbours]) -> Vector:
     """The curl of a vector part at the Node from its six neighbours, each component one read act: (curl V)_x = V_z(+y) - V_z(-y) - V_y(+z) + V_y(-z) and cyclic, the coefficients +1, -1, -1 on three neighbours and the self coefficient +1 on the fourth; a neighbour the Node lacks reads 0 (ALGEBRA.md 9.77 (3), 9.91 (8) (v))."""
     found = []
     for y, z in ((1, 2), (2, 0), (0, 1)):
@@ -104,7 +104,7 @@ def curl(vector: tuple[Ports, Ports, Ports]) -> Vector:
     return (found[0], found[1], found[2])
 
 
-def gradient(time: Ports) -> Vector:
+def gradient(time: Neighbours) -> Vector:
     """The gradient of the time part at the Node, per axis the read act with +1 on the neighbour ahead and the self coefficient -1 on the one behind over the wall 1; 0 on an axis where either neighbour is missing, beyond an open face or on an axis of extent 1 (ALGEBRA.md 9.78 (5))."""
     found = []
     for axis in range(3):
@@ -136,7 +136,7 @@ def spin_wall(wall: int, gamma: int) -> int:
     return wall * gamma
 
 
-def spin_read(read: SpinRead) -> tuple[Ports, tuple[Pair, Pair]]:
+def spin_read(read: SpinRead) -> tuple[Neighbours, tuple[Pair, Pair]]:
     """A spin's read's time part at the six neighbours and its row's two weights, refused by name where either is missing or the weights stand over two denominators or below 1."""
     if read.time is None or read.turn is None:
         raise ValueError(
