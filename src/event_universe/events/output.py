@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 from event_universe.core.rule3 import division_forward, rungs
 
 if TYPE_CHECKING:
-    from event_universe.events import detector_law
+    from event_universe.events import detector_law, records
 
 # A RATIONAL IS A PAIR OF INTEGERS (numerator, denominator) in lowest terms with the denominator
 # positive: the engine holds no `fractions` (the integer rule; tests/test_integer_algebra.py). The
@@ -75,7 +75,7 @@ def leaks(simulation: detector_law.DetectorLawSimulation) -> list[str]:
 
 
 def gather_line(
-    simulation: detector_law.DetectorLawSimulation, live: detector_law.LiveRecord, chosen: int | None
+    simulation: detector_law.DetectorLawSimulation, live: records.LiveRecord, chosen: int | None
 ) -> None:
     """The record's one click line (`gather`): the content handed to the measured event at the chosen detector (or booked as escaped at a face or a set without a body; with no detector chosen, to the escaped row or, where the record's own emitter took it wholly, to `taken_by_emitter`), with `click` the chosen detector's first rung (or the completion where no rung was crossed) and `clock` the detector's own count; called once per record, at the close (`_click`) or at the receiver's rung (`_line_at_rung`)."""
     # the ladder's weights: the record's ladder of `_ladder_of` (the emitter's named sets, or the
