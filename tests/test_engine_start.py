@@ -50,12 +50,12 @@ def test_the_shipped_start_file_says_check_and_every_world_of_the_law_names_it()
 def test_a_missing_key_of_the_world_or_the_start_file_is_refused_by_name(tmp_path, monkeypatch):
     document = emitter_world(stock=1, ticks=10)
     del document["engine"]
-    refused(document, "the world lacks keys the engine reads: engine")
+    refused(document, "the world lacks keys: engine")
     for key in ("boundary", "width", "clock_stamp", "massive_record", "body_record"):
         broken = json.loads(json.dumps(document))
         broken["engine"] = START
         del broken[key]
-        refused(broken, f"the world lacks keys the engine reads: .*{key}")
+        refused(broken, f"the world lacks keys: .*{key}")
     # the start file: a missing key, an unknown key, a law's name (refused as an unknown
     # key: no law's name and no version, ALGEBRA.md 9.90 (1)), a wrong mode
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
@@ -113,7 +113,7 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
     for key, value in (("suspension", 0), ("directions", []), ("action", 1)):
         broken = json.loads(json.dumps(document))
         broken[key] = value
-        refused(broken, f"the world declares {key}, which the engine never reads")
+        refused(broken, f"the world has unknown keys: {key}")
     broken = json.loads(json.dumps(document))
     broken["universe"][0]["lifetime"] = 5
     refused(broken, r"families\[0\] declares lifetime, which the engine never reads")

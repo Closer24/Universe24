@@ -164,7 +164,7 @@ def test_the_loader_pairs_the_key_with_the_one_node_body_the_weight_and_the_acti
         retired = json.loads(json.dumps(document))
         retired[key] = value
         retired["stamp"] = input_stamp(retired)
-        with pytest.raises(ValueError, match="point_emitter is refused"):
+        with pytest.raises(ValueError, match="the world has unknown keys: point_emitter"):
             parse_nature_beam_world(retired)
     with_train = json.loads(json.dumps(document))
     with_train["measured"][0]["emitter"]["train"] = {"direction": [1, 0, 0], "periods": 8}
