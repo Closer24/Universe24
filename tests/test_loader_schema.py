@@ -5,8 +5,8 @@ item 2: a term is one line of the files). core/schema.py holds the kinds of a va
 and one generic check that refuses by name; a folder's card carries its schema, its keys of the
 files by the place they live at; loader/cards.py collects the cards and refuses two folders
 claiming one key. Checked here: every kind's refusal by name, the schema's own refusals, the
-collection with its refusal, and the shipped universe file, the source's fragment and the
-genericity draws against the folders' schemas."""
+collection with its refusal, and the shipped universe file and the source's fragment against
+the folders' schemas (the genericity draws pass them through their loads in test_genericity)."""
 
 from __future__ import annotations
 
@@ -32,7 +32,6 @@ from event_universe.core.schema import (
     check_keys,
 )
 from event_universe.loader import cards
-from tests.running import SEEDS, draw
 
 ROOT = Path(__file__).resolve().parents[1]
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
@@ -189,16 +188,3 @@ def test_the_shipped_universe_and_the_sources_fragment_pass_the_folders_schemas(
             "matter",
             context,
         )
-
-
-@pytest.mark.parametrize("seed", SEEDS)
-def test_every_genericity_draw_passes_the_folders_schemas(seed: int):
-    """The genericity test's admitted attribute combinations under random names all pass the
-    folders' schemas: the schemas admit what the loader of today admits."""
-    register = discover()
-    merged = cards.at(register, FAMILY)
-    entries = draw(seed)["families"]
-    context = context_of(entries)
-    for entry in entries:
-        body = {key: value for key, value in entry.items() if key != "name"}
-        check_keys(body, merged.keys, merged.optional, entry["name"], context)
