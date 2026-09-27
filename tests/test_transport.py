@@ -29,8 +29,7 @@ def table() -> dict:
 
 
 def twisted_world() -> dict:
-    """The paces world with the matter family's read on gravity twisted by "own" and the
-    shipped twist table (an inline world declares it as a world key)."""
+    """The paces world with the matter family's read on gravity twisted by "own" and the shipped twist table (an inline world declares it as a world key)."""
     document = paces_world()
     for family in document["universe"]:
         if family["name"] == "matter":
@@ -91,11 +90,7 @@ def test_the_loader_writes_the_twist_own_and_the_given_lights_component():
 
 
 def test_a_planted_vector_part_rotates_the_arriving_pair_and_the_inverse_restores_everything():
-    """Gravity's x part set to 5 on a slab: a matter record with the twist "own" reads k =
-    sigma x twist x (V_i + V_j) on its x Ports there, its arrivals are rotated by the table's
-    triple to the nearest unit (T = (c re - s im) / d), its second level is written from
-    the rotated arrivals, and one interval back restores the levels and the remainders
-    exactly."""
+    """Gravity's x part set to 5 on a slab: a matter record with the twist "own" reads k = sigma x twist x (V_i + V_j) on its x Ports there, its arrivals are rotated by the table's triple to the nearest unit (T = (c re - s im) / d), its second level is written from the rotated arrivals, and one interval back restores the levels and the remainders exactly."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(twisted_world()))
     gravity = parts_of(simulation, "clicks")
     matter = [family.name for family in simulation.families].index("matter")
@@ -163,8 +158,7 @@ def test_with_every_vector_part_zero_the_step_is_the_plain_path_bit_for_bit():
 
 
 def test_the_ports_along_a_records_own_component_book_nothing_of_it():
-    """A record in the vector component z (part 3) is booked through the x and y Ports of a
-    set alone (ALGEBRA.md #the-second-level); the same levels as a time part are booked through all."""
+    """A record in the vector component z (part 3) is booked through the x and y Ports of a set alone (ALGEBRA.md #the-second-level); the same levels as a time part are booked through all."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(twisted_world()))
     charge = [family.name for family in simulation.families].index("charge")
     assert simulation.families[charge].parts == (1, 3)
@@ -203,16 +197,16 @@ def test_the_loader_refuses_a_light_emitter_without_one_moment_axis_and_a_bad_ta
     diagonal["measured"][0]["moment"] = [1, 1, 0]
     diagonal["stamp"] = input_stamp(diagonal)
     refused(diagonal, "lies on 2 axes")
-    # the table on an inline world: the unit, the identities and the angles' order checked (the
+    # the table on an inline world: the unit from 1, the fine count a power of two, the identities and the angles' order checked (the
     # nearest triple the retired generator's, item 73)
     good = twisted_world()
     parse_nature_beam_world(good)
     for change, match in (
-        (lambda t: t.__setitem__("unit", 7), "is not 4 Gamma 2"),
+        (lambda t: t.__setitem__("unit", 0), "unit"),
         (lambda t: t["coarse"].__setitem__(200, [3, 4, 6]), "is no triple of the table"),
         # a triple planted out of order: the loader checks the angles' order in integers (item 73)
         (lambda t: t["coarse"].__setitem__(200, [3, 4, 5]), "turns back below the entry before it"),
-        (lambda t: t["fine"].pop(), "triples, not 2"),
+        (lambda t: t["fine"].pop(), "not a power of two"),
     ):
         broken = json.loads(json.dumps(good))
         change(broken["twist_table"])

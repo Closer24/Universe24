@@ -7,10 +7,12 @@ from pathlib import Path
 import pytest
 
 from event_universe.events import primitives as P
-from event_universe.loader.world import TWIST_FINE_COUNT
 from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
+TWIST_FINE_COUNT = (
+    1 << 10
+)  # the shipped table's fine count, the test's own number (the loader takes the file's)
 
 # a hand table: the angles are the host's, the identities exact; the fine table filled with
 # (3, 4, 5) beyond its first entries so that its length is 2^10

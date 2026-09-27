@@ -201,9 +201,13 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
         row("charge", [1, 1], {"count": "sign"}, []),
     ]
     families += [row("matter", list(KIND), None, reads), row("light", "body", None, [])]
-    (tmp_path / "universe.json").write_text(
-        json.dumps({"families": families, "integers": {"one": 1, "momentum_unit": 64}})
-    )
+    table = {
+        "unit": 4 * GAMMA * 65536,
+        "fine": [[1, 0, 1]],
+        "coarse": [[1, 0, 1]],
+    }  # the own twist's scale
+    integers = {"one": 1, "momentum_unit": 64, "twist_table": table}
+    (tmp_path / "universe.json").write_text(json.dumps({"families": families, "integers": integers}))
     nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
     body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
     body["phase_denominator"] = 64  # one form: every body carries the phase's m

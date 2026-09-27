@@ -246,9 +246,10 @@ the charge sign):
 V_a the read family's vector component along the axis; both ends form the
 same number with opposite signs, so the transport back is the inverse
 rotation. The **twist table** of the universe gives, for the angle k in
-units of theta_unit = 1 / (4 Gamma 2^16) radians, a Pythagorean triple (c,
-s, d) with c^2 + s^2 = d^2 exactly: |k| = k_1 2^10 + k_0, the fine triple of
-k_0 and the coarse triple of k_1 composed, (c_1 c_0 - s_1 s_0, s_1 c_0 + c_1
+units of theta_unit = 1 / unit radians (unit the file's, 4 Gamma 2^16 in the
+shipped files), a Pythagorean triple (c, s, d) with c^2 + s^2 = d^2 exactly:
+|k| = k_1 F + k_0 with F the fine table's length (2^10 in the shipped files),
+the fine triple of k_0 and the coarse triple of k_1 composed, (c_1 c_0 - s_1 s_0, s_1 c_0 + c_1
 s_0, d_1 d_0), with (c, -s, d) for k < 0 and (1, 0, 1) at k = 0; a k beyond
 the coarse table, or any k on a world without a table, refuses the run
 naming the Port. The arriving pair is rotated to the nearest unit:
@@ -260,8 +261,8 @@ two arrivals, the load d, the wall 2 d, the remainder not kept: a remainder
 carried across intervals is one to one only while d stands, and d changes
 with the angle every interval; the rounding is unbiased in the mean and the
 inverse recomputes the same triple from the start's levels, exact. The
-record's own rotation "own" is round(2^16 omega_0), written once by the
-loader from the record's pair (matter) or from its wavelength on light's
+record's own rotation "own" is round(unit omega_0 / (4 Gamma)), written once
+by the loader from the record's pair (matter) or from its wavelength on light's
 dispersion (light), so no per-world number is declared. The charge's twist
 on a charged record is Lambda times "own", by q: no separate number exists.
 
