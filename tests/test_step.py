@@ -26,13 +26,9 @@ from event_universe.core.step import INTERVAL, PLACES, STEP_FILE, Step, read_ste
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_digest, parse_nature_beam_world, world_files
 from tests.running import ORDERS
-from tests.worlds import emitter_world
+from tests.worlds import emitter_world, shipped
 
 ROOT = Path(__file__).resolve().parents[1]
-
-
-def shipped() -> dict:
-    return json.loads((ROOT / STEP_FILE).read_text(encoding="utf-8"))
 
 
 def tool(name: str):

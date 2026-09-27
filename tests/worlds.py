@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 from event_universe.core.rule3 import coefficients
+from event_universe.core.step import STEP_FILE
 from event_universe.world_files import input_stamp
 
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
@@ -80,6 +81,11 @@ READS = [
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def shipped() -> dict:
+    """The shipped step file, `law/step.json`, as read."""
+    return json.loads((ROOT / STEP_FILE).read_text(encoding="utf-8"))
 
 
 FILE = "examples/events/universe.json"
