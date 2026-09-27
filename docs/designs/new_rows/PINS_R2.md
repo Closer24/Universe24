@@ -220,5 +220,5 @@ click reads its own Node's arrivals; nothing kept at a Node.
   [worlds/](worlds/).
 - [RUN_4AB.md](../fail_rows/RUN_4AB.md) 6.3 (the meeting remainder);
   [ALGEBRA.md](../../ALGEBRA.md) 4.1, 4.2 and
-  [5.1](../../ALGEBRA.md#51-the-click-theorem-lorentzs-factors-from-the-clicks);
+  [5.1](../../ALGEBRA.md);
   [ENGINE.md](../../ENGINE.md), what comes home.
