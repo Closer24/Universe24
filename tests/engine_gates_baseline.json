@@ -38,7 +38,7 @@
   "src/event_universe/events/world.py": {
    "family_names": 15,
    "hand_divisions": 59,
-   "numbers": 26
+   "numbers": 25
   },
   "src/event_universe/features/giving/__init__.py": {
    "family_names": 0,
