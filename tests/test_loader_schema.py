@@ -24,21 +24,11 @@ from event_universe.core.schema import (
     check_keys,
 )
 from event_universe.loader import cards
+from tests.worlds import SOURCED
 
 ROOT = Path(__file__).resolve().parents[1]
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
 # one sourced entry (the word `sourced`, a card's key), as the retired source folder wrote it
-SOURCED = {
-    "name": "field",
-    "sign": 0,
-    "parts": [1],
-    "phase": 2,
-    "pair": [1000, 1019],
-    "quantum": 1,
-    "reads": [],
-    "self_source": {"unit": 0},
-    "sourced": {"of": "matter", "weight": 1, "scale": 18910},
-}
 FAMILY = "a family's entry"
 CONTEXT = Context(("alpha", "beta"), {"Lambda": 7, "amplitude_bound": 1 << 20})
 

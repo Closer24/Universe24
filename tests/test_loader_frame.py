@@ -16,21 +16,12 @@ from event_universe.loader import frame
 from event_universe.loader.world import parse_world_document
 from event_universe.world_files import input_digest, world_files
 from tests.running import family_names, string_constants, written_defaults
+from tests.worlds import SOURCED
 
 ROOT = Path(__file__).resolve().parents[1]
+REGISTER = discover()  # the folders' cards, the keys they declare at "a body" among them
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
 # one sourced entry (the word `sourced`, a card's key), as the retired source folder wrote it
-SOURCED = {
-    "name": "field",
-    "sign": 0,
-    "parts": [1],
-    "phase": 2,
-    "pair": [1000, 1019],
-    "quantum": 1,
-    "reads": [],
-    "self_source": {"unit": 0},
-    "sourced": {"of": "matter", "weight": 1, "scale": 18910},
-}
 FRAME = ROOT / "src" / "event_universe" / "loader" / "frame.py"
 FILE = "universe.json"
 
@@ -183,7 +174,7 @@ def test_every_shipped_body_and_detector_passes_the_frames_schemas():
         if not (isinstance(document, dict) and "universe" in document) or ahead & set(path.parts):
             continue
         count += 1
-        bodies = frame.bodies(document["measured"], context)
+        bodies = frame.bodies(document["measured"], context, REGISTER)
         assert len(bodies) == len(document["measured"])
         for body, written in zip(bodies, document["measured"], strict=True):
             assert body["position"] == tuple(written["position"]) and body["family"] in families
@@ -205,7 +196,7 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
         broken = copy.deepcopy(good)
         change(broken)
         with pytest.raises(ValueError, match=match):
-            frame.bodies(broken["measured"], context)
+            frame.bodies(broken["measured"], context, REGISTER)
             frame.detectors(broken["detectors"])
 
     for key in (
@@ -276,7 +267,7 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
         r"positions\[0\] must be a list of 3, not of 2",
     )
     with pytest.raises(ValueError, match="measured must be a list"):
-        frame.bodies({}, context)
+        frame.bodies({}, context, REGISTER)
     with pytest.raises(ValueError, match="detectors must be a list"):
         frame.detectors({})
 
@@ -291,25 +282,28 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
         "momentum": [0, 0, -3],
         "momentum_before": [0, 0, -2],
     }
-    (found,) = frame.bodies([body], context)
+    (found,) = frame.bodies([body], context, REGISTER)
     assert found["nodes"] == ({"node": (1, 2, 3), "count": 5}, {"node": (1, 2, 4), "count": 7})
     assert found["momentum"] == (0, 0, -3) and found["momentum_before"] == (0, 0, -2)
     assert "spin" not in found and "stocks" not in found and "emitter" not in found
     spinning = {**body, "spin": [0, 1, 0], "spin_before": [0, 1, 1], "moment": [2, 0, 0]}
-    (found,) = frame.bodies([spinning], context)
+    (found,) = frame.bodies([spinning], context, REGISTER)
     assert found["spin"] == (0, 1, 0) and found["spin_before"] == (0, 1, 1)
     giver = {"family": families[0], "weight": 3, "norm": 5, "norm_denominator": 2}
     stocks = {families[0]: 4}
-    (found,) = frame.bodies([{**body, "stocks": stocks, "emitter": giver}], context)
+    (found,) = frame.bodies([{**body, "stocks": stocks, "emitter": giver}], context, REGISTER)
     assert found["stocks"] == stocks and found["emitter"] == giver
-    (found,) = frame.bodies([{**body, "emitter": {**giver, "family": families[-1]}}], context)
+    (found,) = frame.bodies([{**body, "emitter": {**giver, "family": families[-1]}}], context, REGISTER)
     assert found["emitter"]["family"] == families[-1]
+    turned = {"polariser": {"angle": [2, 1], "sets": ["along", "across"]}}  # a card's key at "a body"
+    (found,) = frame.bodies([{**body, **turned}], context, REGISTER)
+    assert found["polariser"] == {"angle": (2, 1), "sets": ("along", "across")}
 
     def refuses(change, match: str) -> None:
         broken = copy.deepcopy(body)
         change(broken)
         with pytest.raises(ValueError, match=match):
-            frame.bodies([broken], context)
+            frame.bodies([broken], context, REGISTER)
 
     refuses(
         lambda b: b.__setitem__("position", [1, 2, 3]),
@@ -323,12 +317,16 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
         lambda b: b.__setitem__("spin_before", [0, 0, 0]),
         r"measured\[0\] declares spin_before without spin: the spin's two levels are declared together",
     )
+    known = ", ".join(sorted(frame.counted_kind(REGISTER).keys))  # the frame's and the cards'
     for key in ("amount", "fixed", "kind", "seed", "count", "period"):
         refuses(
             lambda b, key=key: b.__setitem__(key, 1),
-            rf"measured\[0\] has unknown keys: {key} \(the keys: emitter, family, moment, momentum, "
-            r"momentum_before, nodes, phase_denominator, spin, spin_before, stocks\)",
+            rf"measured\[0\] has unknown keys: {key} \(the keys: {known}\)",
         )
+    refuses(
+        lambda b: b.__setitem__("polariser", {"angle": [2, 1]}),
+        r"measured\[0\]\.polariser lacks keys: sets",
+    )
     for key in ("period", "clock", "pair", "twist", "window_read"):
         refuses(
             lambda b, key=key: b.__setitem__("emitter", {**giver, key: 1}),
@@ -383,7 +381,7 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
         r"measured\[0\]\.family names 'nobody', no family of the universe",
     )
     with pytest.raises(ValueError, match=r"measured\[0\] must be an object: a body by its position"):
-        frame.bodies([3], context)
+        frame.bodies([3], context, REGISTER)
     world = json.loads(
         (ROOT / "examples" / "events" / "dark_body" / "bright.json").read_text(encoding="utf-8")
     )
@@ -402,7 +400,10 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
     entry = load()
     assert (entry.position, entry.block.extents, entry.amount) == ((1, 2, 0), (3, 3, 1), 13)
     assert entry.block.nodes == ((1, 2, 0), (1, 4, 0), (3, 3, 0)) and entry.block.counts == (5, 7, 1)
-    assert entry.block.spin == (0, 1, 0) and entry.block.moment == (2, 0, 0)
+    assert (
+        entry.block.spin == (0, 1, 0) and entry.block.moment == (2, 0, 0) and entry.block.declared == {}
+    )
+    assert load(**turned).block.declared == {"polariser": {"angle": (2, 1), "sets": ("along", "across")}}
     with pytest.raises(ValueError, match=r"measured\[0\]\.emitter on a body in the law's form"):
         load(emitter={**giver, "family": families[1]})
     with pytest.raises(
