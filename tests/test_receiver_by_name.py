@@ -40,7 +40,6 @@ def chain_of_200(receiver: str | None = "screen") -> dict:
     A's ladder); no wheel (the record's own, ALGEBRA.md #a-familys-declaration)."""
     document = massive_world([200, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 500
-    document["clock_stamp"] = True
     document["measured"] = [emitter(20, receiver, 70), *(body(x) for x in (91, 92, 93, 60, 61, 62))]
     document["detectors"] = [
         {"name": "screen", "positions": [[91, 0, 0], [92, 0, 0], [93, 0, 0]]},
@@ -202,7 +201,6 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     assert all(lawful_wheel(simulation.world, givings[g["record"]]) for g in found)
     document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 700
-    document["clock_stamp"] = True
     document["measured"] = [emitter(300, "at_well", 0)]
     document["detectors"] = [{"name": "at_well", "block": 0}]
     seed_source(document, 0)
@@ -248,7 +246,6 @@ def test_the_lines_time():
     # two bodies a hundred Links apart, each naming the cube beside the first
     document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 600
-    document["clock_stamp"] = True
     document["measured"] = [emitter(100, "between"), emitter(232, "between", direction=[-1, 0, 0])]
     document["detectors"] = [
         {"name": "between", "block": 0, "positions": [[132, 0, 0], [133, 0, 0], [134, 0, 0]]}

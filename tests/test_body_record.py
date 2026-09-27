@@ -33,7 +33,6 @@ def cube_world(ticks: int = 400) -> dict:
         [{"position": [5, 5, 5], "side": 6, "pair": [800, 801], "seed": 1 << 20, "margin": "control"}],
         ticks=ticks,
     )
-    document["age_bound"] = 100000  # a periodic board keeps every ray: the store's bound
     massive_generator().seed_on_the_mode(document)
     return document
 
@@ -241,7 +240,7 @@ def test_the_joint_inverse_is_exact_with_a_body_record():
 
 
 def test_the_loader_and_the_state_name_the_body_record():
-    """`body_record` is true or false (another value refused), refused without `massive_record`,
+    """`body_record` is true or false (another value refused),
     refused on a seeded block without its `clock` and profile (a flat scalar seed) naming the
     block; under it the state's block
     entry carries the rotation [a, b, r] and the form the two-term rule's invariant, and the
@@ -253,11 +252,6 @@ def test_the_loader_and_the_state_name_the_body_record():
     bad["stamp"] = input_stamp(bad)
     with pytest.raises(ValueError, match="body_record must be true or false"):
         parse_nature_beam_world(bad)
-    ray = json.loads(json.dumps(document))
-    ray["massive_record"] = False
-    ray["body_record"] = True
-    with pytest.raises(ValueError, match="body_record needs massive_record"):
-        parse_nature_beam_world(ray)
     # a flat scalar seed (no profile, no clock) is no body record: refused naming the block
     # (a profile always carries its clock, the loader's older check, record 1886)
     flat = block_world(
@@ -267,7 +261,6 @@ def test_the_loader_and_the_state_name_the_body_record():
         [{"position": [5, 5, 5], "side": 6, "pair": [800, 801], "seed": 1 << 20, "margin": "control"}],
         ticks=4,
     )
-    flat["age_bound"] = 100000
     flat["body_record"] = True
     with pytest.raises(ValueError, match=r"measured\[0\] under body_record declares no `clock`"):
         parse_nature_beam_world(flat)
@@ -318,7 +311,6 @@ def moving_world(ticks: int = 600, ramp: int = 200) -> dict:
         ],
         ticks=ticks,
     )
-    document["age_bound"] = 100000  # a periodic board keeps every ray: the store's bound
     massive_generator().seed_on_the_mode(document)
     return document
 

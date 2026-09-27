@@ -141,15 +141,11 @@ def test_every_defect_of_the_worlds_own_keys_is_refused_by_name():
             lambda d, key=key: d.__setitem__(key, 1), f"the world has unknown keys: {key} \\(the keys: "
         )
     refuses(lambda d: d.__setitem__("families", []), "the world has unknown keys: families")
-    for key in ("engine", "measured", "shape", "boundary", "clock_stamp"):
+    for key in ("engine", "measured", "shape", "boundary", "body_record"):
         refuses(lambda d, key=key: d.pop(key), f"the world lacks keys: {key}")
     refuses(lambda d: d.__setitem__("shape", [4, 4]), r"the world\.shape must be a list of 3, not of 2")
     refuses(lambda d: d.__setitem__("ticks", -1), r"the world\.ticks is -1, below its least 0")
     refuses(lambda d: d.__setitem__("N", 1), r"the world\.N is 1, below its least 2")
-    refuses(
-        lambda d: d.__setitem__("massive_record", 1),
-        r"the world\.massive_record must be true or false, not 1",
-    )
     refuses(
         lambda d: d["boundary"].__setitem__("x", "mirror"),
         r"boundary\.x must be one of \['open', 'periodic', 'closed'\], not 'mirror'",

@@ -12,8 +12,6 @@
  "face_depth": 1,
  "ticks": 2400,
  "N": 1024,
- "clock_stamp": true,
- "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
  "universe": "examples/events/universe.json",
@@ -169808,7 +169806,6 @@
   }
  ],
  "stamp": {
-  "hash": "78941ed0e4980b404f0320676293ee70cc5549be456771e225f1208824ef5d4a"
- },
- "age_bound": 2060
+  "hash": "977c6712da9ac0ec2e483884b29acdd0e549c6318d05cb6540b39fb2d7195538"
+ }
 }

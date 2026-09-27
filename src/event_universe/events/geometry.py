@@ -68,6 +68,14 @@ class GameBoardGeometry[B: Body]:
         x, y, z = (bool(wrap[axis] or (folded and self.shape[axis] == 1)) for axis in range(3))
         return x, y, z
 
+    def declared_counts(self, block: B) -> np.ndarray:
+        """The count at every Node as the world file declares it for a body in the law's form (ALGEBRA.md #what-a-body-is), 0 elsewhere and everywhere for a body by its position."""
+        counts = np.zeros(self.shape, dtype=np.int64)
+        if block.definition.nodes is not None and block.definition.counts is not None:
+            for node, count in zip(block.definition.nodes, block.definition.counts, strict=True):
+                counts[node] = count
+        return counts
+
     def mask_box(self, mask: np.ndarray) -> tuple[tuple[int, int], ...]:
         """The box of a body's Nodes, [low, high) per axis (HOST)."""
         axes = np.nonzero(mask)

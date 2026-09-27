@@ -10,10 +10,7 @@
   "z": "periodic"
  },
  "ticks": 3000,
- "age_bound": 1048576,
  "N": 64,
- "clock_stamp": true,
- "massive_record": true,
  "body_record": false,
  "engine": "examples/events/engine_start.json",
  "universe": "examples/events/universe.json",
@@ -110669,6 +110666,6 @@
  ],
  "detectors": [],
  "stamp": {
-  "hash": "5c7ec24ceb90d5dd70b4b501300f14b232100b61735d1468d609041c1fd4f909"
+  "hash": "d14838e729411bf6a55433453c6b9f2d421d1020e7bb1836fa4a594ad2d9a2ed"
  }
 }

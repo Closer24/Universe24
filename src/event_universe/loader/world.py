@@ -228,8 +228,7 @@ class FamilyDefinition:
     # local detector law's rule (`massive-record-v1`, MASSIVE_RECORD.md
     # section 1): light's kind is the value (1, 1) (every family without
     # the key `pair`); a massive kind declares den > num, its rest
-    # frequency cos omega_0 = num / den. Admitted under the world key
-    # `massive_record` alone.
+    # frequency cos omega_0 = num / den.
     pair: tuple[int, int] = MASSLESS_PAIR
     # THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25
     # through the Boss: "the engine does not know the family's name, does not
@@ -437,6 +436,8 @@ class BlockDefinition:
     # order, and the count at each (the family of clicks' level there); None on a body by its position
     nodes: tuple[Address3, ...] | None = None
     counts: tuple[int, ...] | None = None
+    # a moving body's phase denominator m, the pair (m, j) of its phase per Link (ALGEBRA.md #the-generator (e))
+    phase_denominator: int | None = None
 
 
 @dataclass(frozen=True)
@@ -512,24 +513,19 @@ class NatureBeamWorld:
     periodic: tuple[bool, bool, bool]
     ticks: int
     phase_steps: int
-    age_bound: int
     families: tuple[FamilyDefinition, ...]
     measured: tuple[MeasuredDefinition, ...]
     detectors: tuple[DetectorDefinition, ...]
     readings: tuple[Reading, ...]
     step: Step
-    # The clock stamp (the world key `clock_stamp`, false by default): every
-    # line a measured event writes carries `clock`, its own count of
-    # self-creations; a record field, no physics, no hypothesis.
-    clock_stamp: bool = False
+    # every click line carries `clock`, the body's own count; the loop's read, no key of the file
+    clock_stamp: bool = True
     # the face receiver's depth at every open border (ALGEBRA.md #the-ladder),
     # declared in the file under the detector law (no default, BUILD.md
     # section 26 item 28); 0 on a GameBoard with no open face (no slab)
     face_depth: int = 0
-    # massive-record-v1 (2026-09-23): the massive record kind beside light
-    # under the local detector law, false by default; under it a family may
-    # declare its `pair`; its faces are the world's.
-    massive_record: bool = False
+    # every family declares its pair and every body its record; the loop's read, no key of the file
+    massive_record: bool = True
     # THE BODY RECORD (ALGEBRA.md #what-a-body-is to (3); BUILD.md section 26 item
     # 37): true holds every seeded block as one rotation on its clock pair
     # (a Node with a shape), its profile read and never stepped; false, the
@@ -895,12 +891,9 @@ def _node_clock_bound(
 
 
 def _families_of(
-    entries: tuple[dict[str, object], ...],
-    age_bound: int,
-    massive_record: bool,
-    amplitude_bound: int,
+    entries: tuple[dict[str, object], ...], amplitude_bound: int
 ) -> tuple[FamilyDefinition, ...]:
-    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair under the world key massive_record with its bound and den >= num, the clock's pair [p, q] with q from 1 and p bounded by the world's largest age, the quantum on every row and the clicks card's copy equal to it, the held source's factors one per part, its dipole on a vector family with its divisor, spins_step on the family that holds the spin's dipole and no other, the self-source's unit 0 or at least 24 A, a family held, clicking or sourced, a read naming a held family once, and a held family's shape."""
+    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair with its bound and den >= num, the clock's pair [p, q] with q from 1, the quantum on every row and the clicks card's copy equal to it, the held source's factors one per part, its dipole on a vector family with its divisor, spins_step on the family that holds the spin's dipole and no other, the self-source's unit 0 or at least 24 A, a family held, clicking or sourced, a read naming a held family once, and a held family's shape."""
     if len(entries) > MOST_FAMILIES:
         raise ValueError(
             f"families declares {len(entries)}; at most {MOST_FAMILIES} families on a "
@@ -924,11 +917,6 @@ def _families_of(
             )
         parts = tuple(int(part) for part in parts_value)
         levels = cast(int, obj["phase"])
-        if not massive_record:
-            raise ValueError(
-                f"{label}.pair is refused without the world key `massive_record` "
-                f"(the world key `massive_record`, absent by default)"
-            )
         pair_value = obj["pair"]
         pair_on_body = pair_value == "body"
         pair = MASSLESS_PAIR
@@ -951,12 +939,6 @@ def _families_of(
             if clock[1] < 1:
                 raise ValueError(
                     f"{label}.clock [{clock[0]}, {clock[1]}]: the pair form [p, q] has q from 1"
-                )
-            # the walk forms (age + 1) x p whole (`by_clock_rows`): bounded here by the world's largest age
-            if clock[0] > AMOUNT_BOUND // (age_bound + 1):
-                raise ValueError(
-                    f"{label}.clock [{clock[0]}, {clock[1]}]: (age_bound + 1) x p "
-                    f"= {age_bound + 1} x {clock[0]} exceeds the integer bound {AMOUNT_BOUND}"
                 )
         sign = cast(int, obj["sign"])
         held: str | None = None
@@ -1171,7 +1153,6 @@ def _block(
     momentum: tuple[int, ...],
     amount: int,
     momentum_unit: int,
-    massive_record: bool,
     lamp_declared: bool,
     span: tuple[int, int, int],
     shape: Address3,
@@ -1181,8 +1162,7 @@ def _block(
 ) -> BlockDefinition | None:
     """The block's keys on a measured event (`massive-record-v1`), each named
     in its refusal: `side` makes a block; every other block key without
-    `side` is refused; a block needs the world key `massive_record`, no lamp
-    and no span; its `pair` is a well on the massive kind (num' / den' >
+    `side` is refused; a block needs no lamp and no span; its `pair` is a well on the massive kind (num' / den' >
     num / den) or a gap on light's kind (den' > num', the (M) wall, which
     declares no clock, seed or margin); an emitter's
     giving Node carries a rich pair (at least 500 remainder values, ALGEBRA.md #a-familys-declaration); the momentum is bounded by the pace, 3 (P . P) < (3 Q M)^2 (the wall W
@@ -1199,11 +1179,6 @@ def _block(
         raise ValueError(
             f"{label} declares both `side` and `extents`: a cube is `side`, a box is "
             "`extents` [x, y, z] (the bodies with extents per axis; BUILD.md section 26 item 23)"
-        )
-    if not massive_record:
-        raise ValueError(
-            f"{label}.side is refused without the world key `massive_record` "
-            f"(the world key `massive_record`, absent by default)"
         )
     if lamp_declared:
         raise ValueError(f"{label}: a block declares no lamp (its record is its own)")
@@ -1717,7 +1692,6 @@ def _measured(
     phase_steps: int,
     ticks: int,
     action: int | None,
-    massive_record: bool = False,
     amplitude_bound: int = AMPLITUDE_BOUND,
     momentum_unit: int = 0,
 ) -> tuple[MeasuredDefinition, ...]:
@@ -1798,7 +1772,6 @@ def _measured(
             momentum,
             amount,
             momentum_unit,
-            massive_record,
             False,
             span,
             shape,
@@ -1897,6 +1870,9 @@ def _counted(
         moment=_axes_vector(obj["moment"], f"{label}.moment") if "moment" in obj else zero,
         nodes=nodes,
         counts=counts,
+        phase_denominator=_integer(obj["phase_denominator"], f"{label}.phase_denominator", 1)
+        if "phase_denominator" in obj
+        else None,
     )
     return MeasuredDefinition(
         (corner[0], corner[1], corner[2]),
@@ -1914,50 +1890,6 @@ def _counted(
         tuple(held),
         block=block,
     )
-
-
-def _detector_law_load_checks(
-    measured: tuple[MeasuredDefinition, ...],
-    families: tuple[FamilyDefinition, ...],
-    periodic: tuple[bool, bool, bool],
-    phase_steps: int,
-) -> None:
-    """The instruments of the ray law (cancelled, ALGEBRA.md #the-primitives)
-    are refused, naming the rule: a lamp's `turns` (a fan of directions
-    with phases; the lamp inserts at its Nodes by its clock), a measured
-    event's fan `table` (an opening is free Nodes); and every paid family
-    needs the pair form of `phase_per_link`, its clock."""
-    for number, entry in enumerate(measured):
-        if entry.lamp is not None and any(entry.lamp.turns):
-            raise ValueError(
-                f"measured[{number}].lamp.turns is refused "
-                "(a lamp inserts at its Nodes by its clock; there is no fan)"
-            )
-        # A split with `inputs` is the TABLE form's splitter (build 2, component
-        # 3: the split's integer matrix on the record's read phase, the outputs
-        # re-emitted at the table's output Nodes); a split without inputs is
-        # an opening's fan, refused under the rule.
-        if any(split is not None and split.inputs is None for split in entry.splits):
-            raise ValueError(
-                f"measured[{number}] declares a fan (a rerelease split with weights and "
-                f"no inputs), refused (an opening is free Nodes; there is "
-                "no fan; a splitter declares its inputs)"
-            )
-    # A family of records may declare no clock of its own (ALGEBRA.md #the-primitives;
-    # item 59): its emitters declare the given record's clock (`_emitter`); a
-    # held family gives nothing and has no clock (ALGEBRA.md #the-counts-line; item 51)
-    for number, entry in enumerate(measured):
-        # A matter lamp (a lamp on a massive kind): the lamp verb is the same
-        # verb, the family's clock the pair form; a massive kind without a
-        # clock is a block's kind (its record a block's own or a block's
-        # response) and a lamp on it has no clock to drive.
-        family = families[entry.family]
-        if entry.lamp is not None and family.massive_kind and family.phase_per_age is None:
-            raise ValueError(
-                f"measured[{number}].lamp on the massive kind {family.name!r} needs the "
-                f"pair form of phase_per_link on the family under `massive_record` (the clock "
-                "the lamp drives; the train carries the kind's band at it)"
-            )
 
 
 def block_extents(side: int | tuple[int, int, int]) -> tuple[int, int, int]:
@@ -2527,10 +2459,6 @@ def parse_world_document(
     phase_steps = _integer(obj["N"], "N", 2, MAX_PHASE_STEPS)
     if phase_steps & (phase_steps - 1):
         raise ValueError(f"N must be a power of two from 2 through {MAX_PHASE_STEPS}")
-    # the largest age a record may carry, declared in every file (the loader's default from
-    # the ray law's flight bound went with the table)
-    age_bound = cast(int, obj["age_bound"])
-    clock_stamp = cast(bool, obj["clock_stamp"])
     # THE FACE SLAB (ALGEBRA.md #the-ladder, the mathematician's reading: a face
     # one Node deep books 0.15 of a packet and reflects the rest, the slab as
     # deep as the packet books 0.96): the receiver `face` at every open
@@ -2553,28 +2481,12 @@ def parse_world_document(
                 f"face_depth {face_depth} leaves no interior on the open axis {name} of "
                 f"extent {shape[axis]} (two slabs of the depth fill it)"
             )
-    massive_record = cast(bool, obj["massive_record"])
     body_record = cast(bool, obj["body_record"])
-    if body_record and not massive_record:
-        raise ValueError(
-            "body_record needs massive_record: true (a body record is a block held as "
-            "one rotation on its clock pair, ALGEBRA.md #what-a-body-is)"
-        )
-    # massive-record-v1: the amplitude bound A, declared per massive world;
-    # REQUIRED under the detector law with `massive_record` (no default, the
-    # model owner's record 2089; the ceiling 2^28 of item 31 RETIRED, ALGEBRA.md
-    # ALGEBRA.md #a-familys-declaration: A is the one number, the rule's int64 total its bound)
+    # the amplitude bound A, the world's where it declares one (ALGEBRA.md #a-familys-declaration:
+    # A is the one number, the rule's integer total its bound; required with a massive family below)
     amplitude_bound = AMPLITUDE_BOUND
-    if massive_record and "amplitude_bound" not in obj:
-        raise ValueError(
-            "amplitude_bound is required with `massive_record`: "
-            "A, the amplitude every row stays below, no default (the model owner's record 2089; "
-            "ALGEBRA.md #the-line, #a-familys-declaration)"
-        )
-    if massive_record and "amplitude_bound" in obj:
+    if "amplitude_bound" in obj:
         amplitude_bound = _integer(obj["amplitude_bound"], "amplitude_bound", 1, AMOUNT_BOUND)
-    elif "amplitude_bound" in obj:
-        raise ValueError("amplitude_bound is refused without the world key `massive_record`")
     # THE NODE CLOCK (the model owner's decision (5) of record 1962; ALGEBRA.md
     # ALGEBRA.md #the-paces and (3); BUILD.md section 26 item 31): Gamma, one integer from
     # 1, the clock pair (e, f) = (Gamma, Gamma + M) at every Node under the
@@ -2608,22 +2520,15 @@ def parse_world_document(
     # keys clock_family, charge_family and charge_strength are retired
     mode_axis: int | None = None
     if "mode_axis" in obj:
-        if not massive_record:
-            raise ValueError("mode_axis is refused without the world key `massive_record`")
         mode_axis = AXES.index(str(obj["mode_axis"]))
     probes: tuple[Address3, ...] = ()
     if "probes" in obj:
-        if not massive_record:
-            raise ValueError("probes is refused without the world key `massive_record`")
         declared_probes = cast(tuple[object, ...], obj["probes"])
         probes = tuple(_address(item, "probes", shape) for item in declared_probes)
     action = None
-    families = _families_of(entries, age_bound, massive_record, amplitude_bound)
-    # The bound is asked of a world with a MASSIVE FAMILY (a pair with den >
-    # num; DECLARATIONS.md section 15 M1-10 lists the massive worlds): a
-    # light world under `massive_record` (its probes, its mirror blocks of
-    # light's kind) loads without it (the Boss's 03:44Z, the gate reviewer's line on the block's grace).
-    if massive_record and "amplitude_bound" not in obj and any(f.massive_kind for f in families):
+    families = _families_of(entries, amplitude_bound)
+    # the bound is asked of a world with a massive family (a pair with den > num); a light world loads without it
+    if "amplitude_bound" not in obj and any(f.massive_kind for f in families):
         raise ValueError(
             "a world with a massive family declares `amplitude_bound`, the amplitude "
             "A every row stays below (2^28 in every registered massive world since BUILD.md "
@@ -2641,7 +2546,6 @@ def parse_world_document(
         phase_steps,
         ticks,
         action,
-        massive_record,
         amplitude_bound,
         momentum_unit,
     )
@@ -2698,15 +2602,12 @@ def parse_world_document(
         periodic,
         ticks,
         phase_steps,
-        age_bound,
         families,
         measured,
         detectors,
         readings,
         step,
-        clock_stamp=clock_stamp,
         face_depth=face_depth,
-        massive_record=massive_record,
         body_record=body_record,
         probes=probes,
         mode_axis=mode_axis,
@@ -2718,7 +2619,6 @@ def parse_world_document(
         start=start,
         universe_file=families_file,
     )
-    _detector_law_load_checks(measured, families, periodic, phase_steps)
     set_names = {detector.name for detector in detectors}
     for number, entry in enumerate(measured):
         # the emitter body's ladder by name (ALGEBRA.md #the-click): every name a
