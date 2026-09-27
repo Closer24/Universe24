@@ -7,8 +7,10 @@ from typing import TYPE_CHECKING, cast
 
 import numpy as np
 
+from event_universe.core.main_loop import ALIVE
 from event_universe.core.rule3 import NO_READ, rule3
 from event_universe.events.records import LiveRecord
+from event_universe.features.crystal import CrystalOwn, CrystalStart, CrystalWrites
 from event_universe.features.hand import HandStart, HandTerm, HandWrites
 from event_universe.features.lifetime import LifetimeStart, LifetimeTerm, LifetimeWrites
 from event_universe.features.polariser import PolariserOwn, PolariserStart, PolariserWrites
@@ -101,4 +103,36 @@ def polariser_terms(loop: DetectorLawSimulation) -> list[tuple[str, str]]:
                 f"measured[{number}].polariser names {second!r} as its second set, which is no set on the body"
             )
         terms.append((f"measured[{number}].polariser", "the polariser"))
+    return terms
+
+
+def crystal_click(loop: DetectorLawSimulation, live: LiveRecord, detector: int) -> None:
+    """The crystal's click hook (features/crystal): a click on a set whose body declares a crystal queues the pair's giving for the crystal's stage: the body's number and the taken record's norm with its denominator."""
+    number = loop.set_block.get(detector)
+    if number is not None and number in loop.crystals:
+        loop._crystal_clicks.append((number, live.norm, live.pace))
+
+
+def crystal_stage(loop: DetectorLawSimulation, function: Callable[..., object]) -> None:
+    """The crystal's act: per click of the interval at a crystal body, the folder's `apply` on the taken quantum's norm gives the pair's declaration (its two identical labels, its norm the taken one, the crystal's clock), and the body gives one record through the giving's open as an emitter does, the giving's act nested so that its writes are the giving's; the crystal itself writes nothing; the queue is emptied."""
+    for number, norm, denominator in loop._crystal_clicks:
+        writes = cast(
+            CrystalWrites, function(loop.crystals[number], CrystalStart(norm, denominator), CrystalOwn())
+        )
+        with loop.main_loop.act(
+            "the giving", "(ii)", loop._card_writes("the giving") | {ALIVE}, loop.fingerprints
+        ):
+            loop._emit(loop.block_by_number[number], writes)
+    loop._crystal_clicks = []
+
+
+def crystal_terms(loop: DetectorLawSimulation) -> list[tuple[str, str]]:
+    """The files' terms of the crystal bodies for the register's check; a crystal body with no emitter (the given family, its weight, the receiver) is refused by name, since the pair is given through the giving."""
+    terms: list[tuple[str, str]] = []
+    for number in loop.crystals:
+        if loop.block_by_number[number].definition.emitter is None:
+            raise ValueError(
+                f"measured[{number}].crystal needs the body's emitter: the pair is given through the giving"
+            )
+        terms.append((f"measured[{number}].crystal", "the crystal"))
     return terms
