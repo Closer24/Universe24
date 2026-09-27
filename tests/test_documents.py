@@ -16,7 +16,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 THE_THREE = ("docs/ALGEBRA.md", "docs/ENGINE.md", "docs/HIGHLIGHTS.md")
 ENTRY_FILES = ("README.md", "AGENTS.md", "CONTRIBUTING.md")
-ALLOWED_FOLDERS = ("skills/",)
+ALLOWED_FOLDERS = ("skills/", "paper/")  # the skills' pages and the paper's own folder
 # the line cap of each of the three, set when its condensed version lands; None until then
 CAPS: dict[str, int | None] = {
     "docs/ALGEBRA.md": 718,
@@ -35,7 +35,7 @@ HISTORY_MARKERS = (
 def markdown_files(root: Path) -> list[str]:
     """Every markdown file of the tree, as a posix path relative to the root; the git and
     virtual environment folders left out."""
-    skipped = {".git", ".venv", "venv", "node_modules", "__pycache__", "artifacts", "runs"}
+    skipped = {".git", ".venv", "venv", "node_modules", "__pycache__", ".pytest_cache", "artifacts", "runs"}
     return sorted(
         path.relative_to(root).as_posix()
         for path in root.rglob("*.md")
@@ -82,11 +82,6 @@ def history_markers(root: Path, documents: tuple[str, ...]) -> list[str]:
 # (a) ONLY THE ALLOWED DOCUMENTS EXIST: switched on in the deletion pull request
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="the deletion of every other document waits for the newcomer test and the Boss's "
-    "deletion pull request; until then the tree holds the old documents",
-)
 def test_a_only_the_three_the_skills_and_the_entry_files_exist():
     """Point 12: the tree holds the three, the skills and the entry files, and no other
     markdown file."""

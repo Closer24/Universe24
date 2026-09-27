@@ -102,10 +102,8 @@ replays a rule of the engine, and it prints the kind of every line.
 
 ## Run
 
-Write worlds, run and read them as
-[examples/events/README.md](../../examples/events/README.md) says under
-"Writing and running a new series" (the direction table, a free family's
-release, a lamp's reservoir, the runner's record and the format gate).
+Write worlds, run and read them as [docs/ENGINE.md](../../docs/ENGINE.md)
+says (the world file, how to run a world, the output and the record).
 
 ## Hand back
 
