@@ -51,7 +51,9 @@ def test_the_tree_is_at_its_baseline_and_a_new_core_module_is_approved():
 def test_a_new_number_or_family_name_fails_and_a_removed_one_asks_for_the_re_record(tmp_path):
     root = tree(tmp_path, {**WORLD, f"{PACKAGE}/a.py": '"""Doc 12."""\nX = 3\nY = 64\nZ = "glow"\n'})
     baseline = GATES.record(root)
-    assert baseline["files"] == {f"{PACKAGE}/a.py": {"numbers": 1, "family_names": 1}}
+    assert baseline["files"] == {
+        f"{PACKAGE}/a.py": {"numbers": 1, "family_names": 1, "hand_divisions": 0}
+    }
     assert GATES.ratchet(root, baseline) == []
     (root / PACKAGE / "a.py").write_text('X = 3\nY = 64\nW = 2 ** 10\nZ = "glow"\nV = "glow"\n')
     found = GATES.ratchet(root, baseline)
@@ -117,3 +119,29 @@ def test_a_merge_base_that_cannot_be_resolved_fails_by_name():
     for check in (GATES.base_baseline, GATES.new_core_modules):
         with pytest.raises(ValueError, match="'deadbeef' cannot be resolved"):
             check(ROOT, "deadbeef")
+
+
+def test_a_division_by_hand_in_a_folder_fails_and_rule3_and_a_string_format_do_not_count(tmp_path):
+    folder = f"{PACKAGE}/features/hold/__init__.py"
+    root = tree(tmp_path, {**WORLD, folder: "def f(a, b):\n    return a + b\n"})
+    baseline = GATES.record(root)
+    assert baseline["files"] == {}
+    (root / folder).write_text("def f(a, b):\n    q, r = divmod(a, b)\n    return a // b + a % b + q\n")
+    tree(
+        root,
+        {
+            f"{PACKAGE}/core/rule3.py": "def rule3(u, w):\n    return u // w, u % w\n",
+            f"{PACKAGE}/events/log.py": 'def line(x):\n    return "%d" % x\n',
+        },
+    )
+    assert GATES.ratchet(root, baseline) == [f"{folder}: hand divisions grew from 0 to 3"]
+    tree(root, {"tools/body_generator.py": "def seed(a):\n    a //= 2\n    return a\n"})
+    assert "tools/body_generator.py: hand divisions grew from 0 to 1" in GATES.ratchet(root, baseline)
+
+
+def test_a_count_the_merge_base_does_not_hold_yet_is_compared_with_the_baseline_alone(tmp_path):
+    root = tree(tmp_path, {**WORLD, f"{PACKAGE}/events/a.py": "def f(a):\n    return a // 3\n"})
+    baseline = GATES.record(root)
+    older = {"files": {rel: {"numbers": 0, "family_names": 0} for rel in baseline["files"]}}
+    assert GATES.ratchet(root, baseline, older) == []
+    assert GATES.ratchet(root, baseline | {"files": {}}, older) != []

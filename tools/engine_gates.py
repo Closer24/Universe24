@@ -1,6 +1,6 @@
 """The reviewer's recurring findings as gates (issue #1198, item 4 (a); the model owner, 2026-09-27).
 
-Three gates on `src/`, selected on every pull request by `tools/check.py`:
+Four gates, selected on every pull request by `tools/check.py`:
 
 1. Numbers. A numeric literal beyond 0, 1, 2, 3, 4, 6 and 8, outside a docstring, is counted
    per file (the count of issue #1197). No file's count may grow, or stand above the merge
@@ -9,7 +9,10 @@ Three gates on `src/`, selected on every pull request by `tools/check.py`:
    the same commit (`python tools/engine_gates.py`).
 2. Family names. A string literal equal to the name of a family declared in a world file under
    `examples/` is counted per file, on the same ratchet.
-3. A new module of `core/`. A Python file under `src/event_universe/core/` that the merge base
+3. Rule3's arithmetic by hand. A floor division, a remainder (`//`, `%`, `divmod`) in
+   `features/`, in `events/` or in `tools/body_generator.py` is counted per file, on the same
+   ratchet: a division belongs in `core/rule3.py`, and the count may only fall.
+4. A new module of `core/`. A Python file under `src/event_universe/core/` that the merge base
    does not hold needs a line in the pull request's body that starts with `APPROVED-CORE` and
    names Main Loop's approval. CI passes the body as the `PR_BODY` environment variable; the
    check runs on a pull request (or locally with PR_BODY set), never on a push to main.
@@ -35,12 +38,21 @@ CORE = PACKAGE / "core"
 WORLDS = Path("examples")
 FREE_NUMBERS = frozenset({0, 1, 2, 3, 4, 6, 8})
 APPROVAL = "APPROVED-CORE"
-COUNTS = ("numbers", "family_names")
+COUNTS = ("numbers", "family_names", "hand_divisions")
+# the places where a division by hand is Rule3's arithmetic written again
+DIVISION_SCOPES = (PACKAGE / "features", PACKAGE / "events", PACKAGE / "loader")
+DIVISION_FILES = (Path("tools/body_generator.py"),)
 
 
 def python_files(root: Path) -> list[Path]:
     base = root / PACKAGE
-    return sorted(base.rglob("*.py")) if base.is_dir() else []
+    found = sorted(base.rglob("*.py")) if base.is_dir() else []
+    return found + [root / path for path in DIVISION_FILES if (root / path).is_file()]
+
+
+def divides_by_hand(root: Path, path: Path) -> bool:
+    rel = path.relative_to(root)
+    return rel in DIVISION_FILES or any(rel.is_relative_to(scope) for scope in DIVISION_SCOPES)
 
 
 def family_names(root: Path) -> frozenset[str]:
@@ -67,8 +79,9 @@ def family_names(root: Path) -> frozenset[str]:
     return frozenset(name for name in names if isinstance(name, str))
 
 
-def counts_of(path: Path, families: frozenset[str]) -> dict[str, int]:
-    """The two counts of one file: its numbers beyond the free ones and its family-name strings."""
+def counts_of(path: Path, families: frozenset[str], divisions: bool = True) -> dict[str, int]:
+    """The counts of one file: its numbers beyond the free ones, its family-name strings and, where
+    `divisions`, its floor divisions and remainders by hand (a string's `%` format excluded)."""
     tree = ast.parse(path.read_text(encoding="utf-8"))
     docstrings = set()
     for node in ast.walk(tree):
@@ -84,12 +97,29 @@ def counts_of(path: Path, families: frozenset[str]) -> dict[str, int]:
             numbers += value not in FREE_NUMBERS
         elif isinstance(value, str):
             names += value in families
-    return {"numbers": numbers, "family_names": names}
+    hand = 0
+    if divisions:
+        for node in ast.walk(tree):
+            if isinstance(node, ast.BinOp | ast.AugAssign) and isinstance(
+                node.op, ast.FloorDiv | ast.Mod
+            ):
+                left = node.left if isinstance(node, ast.BinOp) else node.target
+                hand += not (isinstance(left, ast.Constant) and isinstance(left.value, str))
+            elif (
+                isinstance(node, ast.Call)
+                and isinstance(node.func, ast.Name)
+                and node.func.id == "divmod"
+            ):
+                hand += 1
+    return {"numbers": numbers, "family_names": names, "hand_divisions": hand}
 
 
 def present(root: Path) -> dict[str, dict[str, int]]:
     families = family_names(root)
-    return {path.relative_to(root).as_posix(): counts_of(path, families) for path in python_files(root)}
+    return {
+        path.relative_to(root).as_posix(): counts_of(path, families, divides_by_hand(root, path))
+        for path in python_files(root)
+    }
 
 
 def record(root: Path) -> dict[str, Any]:
@@ -112,12 +142,15 @@ def ratchet(root: Path, baseline: dict[str, Any], base: dict[str, Any] | None = 
     """Every count that grew, stands above the merge base's, or went down without a re-record."""
     found: list[str] = []
     re_record = "re-record the baseline in this commit: python tools/engine_gates.py"
+    zero = dict.fromkeys(COUNTS, 0)
     tree = present(root)
+    # a count the merge base's baseline does not hold yet is compared with this baseline alone
+    base_keys = set() if base is None else {k for e in base["files"].values() for k in e}
     for rel in sorted(set(baseline["files"]) - set(tree)):
         found.append(f"{rel} is in the baseline and not in the tree; {re_record}")
     for rel, shape in tree.items():
-        recorded = entry_of(rel, baseline["files"], tree)
-        based = entry_of(rel, base["files"], tree) if base is not None else recorded
+        recorded = {**zero, **entry_of(rel, baseline["files"], tree)}
+        based = {**zero, **entry_of(rel, base["files"], tree)} if base is not None else recorded
         for key in COUNTS:
             name = key.replace("_", " ")
             if shape[key] > recorded[key]:
@@ -126,8 +159,10 @@ def ratchet(root: Path, baseline: dict[str, Any], base: dict[str, Any] | None = 
                 found.append(
                     f"{rel}: {name} went down from {recorded[key]} to {shape[key]}; {re_record}"
                 )
-            if shape[key] > based[key]:
-                found.append(f"{rel}: {name} is {shape[key]}, above the merge base's {based[key]}")
+            if key in base_keys and shape[key] > based.get(key, 0):
+                found.append(
+                    f"{rel}: {name} is {shape[key]}, above the merge base's {based.get(key, 0)}"
+                )
     return found
 
 

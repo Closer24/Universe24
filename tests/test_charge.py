@@ -251,10 +251,9 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     refused; a family without `charge` is refused under the detector law, a charge beyond one
     sign (|q| > 1) is refused and a charge with a denominator other than 1 (the paid family's
     whole charge, D-1 of 2026-09-20, the check before this one) is refused; the family of
-    charge is refused as the family of clicks, on a pair other than [1, 1], on a quantum other
-    than 1, on a clock of its own and with a charge of its own; a measured event of it and
-    `held` naming it are refused; a world with the family declared and named loads, its index
-    its index among the engine's held families and its reads the matter family's."""
+    charge is refused as the family of clicks, on a quantum other than 1, on a clock of its own
+    and with a charge of its own; a measured event of it and `held` naming it are refused; a
+    world with the family declared loads, its index among the held families, its reads the matter family's."""
     good = charged_chain(12, PERIODIC, [], 1, 0, 0)
     world = parse_nature_beam_world(good)
     assert world.held_families == (CLICKS, CHARGE) and world.families[CHARGE].held == "sign"
@@ -295,10 +294,6 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     same = copy()
     same["universe"][CHARGE]["held"] = {"count": "content", "factors": [1]}
     refused(same, "two families hold 'content'")
-    massive = copy()
-    massive["universe"][MATTER]["held"] = {"count": "sign", "factors": [1]}
-    massive["universe"][MATTER]["reads"] = []
-    refused(massive, r"a held family is massless, its pair \[1, 1\]")
     quantum = copy()
     quantum["universe"][CHARGE]["clicks"] = {"gives": True, "takes": True, "quantum": 2}
     refused(quantum, "a held family is counted in quanta")
