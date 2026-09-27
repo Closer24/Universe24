@@ -30,7 +30,7 @@ def own_family_world(stock: int | None) -> dict:
     if stock is not None:
         body["stock"] = stock
     document["measured"].append(body)
-    document["universe"][1]["phase_per_link"] = [512, 1]
+    document["universe"][1]["clock"] = [512, 1]
     massive_generator().seed_on_the_mode(document)  # the emitter's mode and the stamp
     return document
 
@@ -83,7 +83,7 @@ def test_the_self_source_slot_lowers_the_step_by_the_squared_differences_over_th
     amplitude = document["amplitude_bound"]
     for family in document["universe"]:
         if family["name"] == "clicks":
-            family["self_unit"] = 24 * amplitude
+            family["self_source"] = {"unit": 24 * amplitude}
     document["stamp"] = input_stamp(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     gravity = parts_of(simulation, "clicks")
@@ -120,7 +120,7 @@ def test_the_loader_refuses_a_self_source_unit_below_24_a_and_admits_one_at_it()
     amplitude = document["amplitude_bound"]
     for family in document["universe"]:
         if family["name"] == "clicks":
-            family["self_unit"] = 24 * amplitude
+            family["self_source"] = {"unit": 24 * amplitude}
     document["stamp"] = input_stamp(document)
     parse_nature_beam_world(document)
     # the inline list checks the unit's form; the file's entries check the bound 24 A too

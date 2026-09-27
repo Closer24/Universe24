@@ -44,11 +44,13 @@ CHARGE_FAMILY_NAME = "charge"
 
 CHARGE_FAMILY = {
     "name": CHARGE_FAMILY_NAME,
-    "quantum": 1,
+    "sign": 0,
+    "parts": [1],
+    "phase": 2,
     "pair": [1, 1],
-    "charge": 0,
-    "held": "sign",
+    "held": {"count": "sign", "factors": [1]},
     "reads": [],
+    "self_source": {"unit": 0},
 }
 
 
@@ -62,11 +64,13 @@ CLOCK_FAMILY_NAME = "clicks"
 
 CLOCK_FAMILY = {
     "name": CLOCK_FAMILY_NAME,
-    "quantum": 1,
+    "sign": 0,
+    "parts": [1],
+    "phase": 2,
     "pair": [1, 1],
-    "charge": 0,
-    "held": "content",
+    "held": {"count": "content", "factors": [1]},
     "reads": [],
+    "self_source": {"unit": 0},
 }
 
 
@@ -75,8 +79,8 @@ NODE_CLOCK = 10**4
 
 
 READS = [
-    {"family": CLOCK_FAMILY_NAME, "weight": 1},
-    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "sign"},
+    {"family": CLOCK_FAMILY_NAME, "weight": 1, "twist": 0, "by": 1},
+    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "twist": 0, "by": "q"},
 ]
 
 
@@ -106,11 +110,9 @@ def chain_world(
         "boundary": {"x": faces, "y": "periodic", "z": "periodic"},
         "face_depth": 1,
         "ticks": 600,
-        "K": 1073741824,
         "N": PHASE_STEPS,
-        "release": [1, 128],
         "clock_stamp": clock_stamp,
-        "width": 1,
+        "age_bound": 100000,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
@@ -118,15 +120,8 @@ def chain_world(
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": list(GIVEN_CLOCK),
-                "charge": 0,
-                "reads": reads(),
-            },
-            {"name": "matter", "quantum": 1, "pair": list(EMITTER_KIND), "charge": 0, "reads": reads()},
+            family_entry("light", [1, 1], reads(), clock=list(GIVEN_CLOCK)),
+            family_entry("matter", list(EMITTER_KIND), reads()),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -180,6 +175,7 @@ def emitter_body(
         "start": 0,
         "stocks": {family: stock},
         "momentum": [0, 0, 0],
+        "fixed": False,
         "extents": extents,
         "q": 0,
         "spin": [0, 0, 0],
@@ -201,11 +197,9 @@ def layer_world(receiver: object = None) -> dict:
         "shape": [80, 9, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": 400,
-        "K": 1073741824,
         "N": PHASE_STEPS,
-        "release": [1, 128],
         "clock_stamp": True,
-        "width": 1,
+        "age_bound": 100000,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
@@ -213,15 +207,8 @@ def layer_world(receiver: object = None) -> dict:
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": list(GIVEN_CLOCK),
-                "charge": 0,
-                "reads": reads(),
-            },
-            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
+            family_entry("light", [1, 1], reads(), clock=list(GIVEN_CLOCK)),
+            family_entry("matter", [800, 809], reads()),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -242,6 +229,7 @@ def receiver_body(position: list[int], family: str = "light") -> dict:
         "amount": 1,
         "stocks": {},
         "momentum": [0, 0, 0],
+        "fixed": False,
     }
 
 
@@ -271,11 +259,9 @@ def emitter_world(
         "shape": [80, 1, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": ticks,
-        "K": 1073741824,
         "N": 1024,
-        "release": [1, 128],
         "clock_stamp": True,
-        "width": 1,
+        "age_bound": 100000,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
@@ -283,15 +269,8 @@ def emitter_world(
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": [512, 1],
-                "charge": 0,
-                "reads": reads(),
-            },
-            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
+            family_entry("light", [1, 1], reads(), clock=[512, 1]),
+            family_entry("matter", [800, 809], reads()),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -304,6 +283,7 @@ def emitter_world(
                 "start": 0,
                 "stocks": {"light": stock},
                 "momentum": [0, 0, 0],
+                "fixed": False,
                 "extents": [32, 1, 1],
                 "q": 0,
                 "spin": [0, 0, 0],
@@ -349,6 +329,26 @@ def massive_generator():
 def reads() -> list[dict]:
     """A reading family's `reads`, a fresh copy."""
     return [dict(read) for read in READS]
+
+
+def family_entry(
+    name: str, pair, reads: list[dict], clock=None, sign: int = 0, quantum: int = 1
+) -> dict:
+    """A family of records in the cards' form (the universe file's entry): one part, two levels,
+    its pair, its reads, the self-source off, clicks at the quantum; its clock and sign where given."""
+    entry = {
+        "name": name,
+        "sign": sign,
+        "parts": [1],
+        "phase": 2,
+        "pair": pair,
+        "reads": reads,
+        "self_source": {"unit": 0},
+        "clicks": {"gives": True, "takes": True, "quantum": quantum},
+    }
+    if clock is not None:
+        entry["clock"] = list(clock)
+    return entry
 
 
 def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:

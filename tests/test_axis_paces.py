@@ -1,9 +1,4 @@
-"""THE FOUR PACES (ALGEBRA.md 9.91 (2); the one stroke of record 2106, commit 3; BUILD.md
-section 26 item 62): a reading family's pace on the axis a is p_a = p_0 - t_a, p_0 = Gamma - c
-(the reads' time components) and t_a the reads' aa components halved with the remainder kept at
-the Node; the rule's reads along the axis a weigh 2 p_a^2 num and its own term carries the
-three axis paces; the inverse reads the paces the step read (the coefficients at equal paces
-and the step with every tensor part zero are test_rule3's and test_transport's). HOST; no pin."""
+"""The four paces: a reading family's pace on the axis a is p_a = p_0 - t_a (the reads' aa parts halved, the remainder kept at the Node), the rule's reads along a weigh 2 p_a^2 num, and the inverse reads the same paces. HOST; no pin."""
 
 from __future__ import annotations
 

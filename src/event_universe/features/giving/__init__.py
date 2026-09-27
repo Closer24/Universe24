@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any
 
 import numpy as np
 
@@ -146,8 +144,3 @@ DECLARATION = Declaration(
     + " (9.117 item 5); 9.117 item 2, the row 'the giving'; 9.107; 9.71 (1); 9.116 item 5; 9.86 (1)",
     word="after the step",
 )
-
-
-def bind(loop: Any) -> Callable[..., object]:
-    """The loop's method `_emit` (the open with the record's birth) until the loop calls `apply` at the three acts."""
-    return loop._method("_emit")  # type: ignore[no-any-return]

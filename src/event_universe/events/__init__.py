@@ -5,7 +5,7 @@ exports of the ray law's engine (`Measured`, `NatureBeamSimulation` of
 
 from __future__ import annotations
 
-from event_universe.events.world import NatureBeamWorld, parse_world_document
+from event_universe.loader.world import NatureBeamWorld, parse_world_document
 
 # the engine's package imports no host module: the whole read of a world (its files
 # and the stamp's digest) is `event_universe.world_files.parse_nature_beam_world`

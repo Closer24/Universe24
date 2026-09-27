@@ -34,7 +34,7 @@ VERSION_WORDS = {"version", "schema_version"}
 
 
 def loader_modules() -> list[Path]:
-    """The loader as it stands: today events/world.py, tomorrow core/loader.py (record 2226);
+    """The loader as it stands: loader/world.py since #1236 (events/world.py before it) (record 2226);
     every module of the engine whose name is the world's reader or names a loader."""
     found = [
         path
@@ -50,12 +50,6 @@ def loader_modules() -> list[Path]:
 # exclusion: a family's name is not a column's name either)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="record 2226: the loader of today translates the universe file to the loop's families list "
-    "by the keys 'charge' and 'clicks', which are family names of the tests' worlds; the switch "
-    "hands the loop the checked entries and names no key",
-)
 def test_a1_the_loader_holds_no_family_name_of_the_universe():
     """Record 2226 with records 2172 to 2174: no string constant of the loader is a family name
     of the universe file, with no exclusion."""
@@ -69,12 +63,6 @@ def test_a1_the_loader_holds_no_family_name_of_the_universe():
     assert offending == [], offending
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="record 2089 with record 2226: the loader of today writes defaults for the tests' inline "
-    "families' keys and for `fixed`, `span` and `margin` (ten shipped bodies write no `fixed`); "
-    "the switch and the generator's worlds remove them",
-)
 def test_a2_the_loader_writes_no_default_for_a_key_of_the_files():
     """Record 2089 (every default and flag out of the engine's code into the files) with record
     2226 (a missing key is refused by name from the schema): the loader has no `.get(key,
@@ -138,10 +126,10 @@ def body_world() -> dict:
 
 @pytest.mark.xfail(
     strict=True,
-    reason="ALGEBRA.md 9.120 item 1 with record 2226: the loop still reads N, and the loader still "
-    "requires K, release, width and the flags of the old form and a body's seed, pair and side; "
-    "the body by its family, Nodes, count per Node and momentum n alone comes with the loop's "
-    "reads of the momentum and the spin as families (the mathematician's word on #1210)",
+    reason="ALGEBRA.md 9.120 item 1 with record 2226: the frame reads the body's form (#1221) and "
+    "the loop still reads N, age_bound, clock_stamp and the flags massive_record and body_record, "
+    "which the world of 9.120 does not name; the count's line is not bound in the loop (path B, "
+    "the mathematician's word on #1210), so `world.py` refuses the form by name",
 )
 def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_and_runs(
     tmp_path, monkeypatch
@@ -158,8 +146,10 @@ def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_a
 
 @pytest.mark.xfail(
     strict=True,
-    reason="ALGEBRA.md 9.117 row 'the source' with record 2226: the loader of today refuses the "
-    "family key 'sourced' as unknown; the schema loader reads it from the source folder's schema",
+    reason="ALGEBRA.md 9.117 row 'the source' with record 2226: the frame reads `sourced` from the "
+    "source folder's card (#1206) and `world.py` carries it as the family's source term (#1236); "
+    "the fragment's `control` family declares neither held, clicks nor sourced, and the law "
+    "(9.86 (2)) refuses a family that does none: the unsourced control waits on the owner's word",
 )
 def test_b2_the_word_sourced_on_a_family_of_the_universe_loads(tmp_path, monkeypatch):
     """ALGEBRA.md 9.117 row 'the source', 9.108 items 3 and 11 (record 2217): the universe with
@@ -178,8 +168,9 @@ def test_b2_the_word_sourced_on_a_family_of_the_universe_loads(tmp_path, monkeyp
 
 @pytest.mark.xfail(
     strict=True,
-    reason="record 2199 item 1 with record 2226: the source worlds carry none of the old form's keys "
-    "K, N, release, width and the flags, which the loader still requires while the loop reads them",
+    reason="record 2199 item 1 with record 2226: K, release and width are gone (#1236); the source "
+    "worlds still carry none of N, age_bound, clock_stamp, massive_record and body_record, "
+    "which the loader requires while the loop reads them",
 )
 def test_b3_the_word_readings_on_the_shipped_source_world_loads():
     """Record 2199 item 1 (the output declared in one format; Main Loop's interface: a name, a
@@ -216,8 +207,10 @@ def test_c1_an_unknown_key_is_refused_by_name_on_the_world_the_universe_and_a_bo
 
 @pytest.mark.xfail(
     strict=True,
-    reason="record 2226 (1) and (2): the folders' cards carry no schema yet, and the loader of today "
-    "writes the keys itself; the schema loader reads every key of a family's entry from a folder's card",
+    reason="record 2226 (1) and (2): every key of a shipped family's entry is one folder's card "
+    "(#1206, #1236) but `spins_step`, the frame's until #1203's card lands; `world.py` still builds the loop's families "
+    "from the checked entries by the cards' keys (held, clicks, reads, parts, phase, sign, "
+    "self_source, pair) and reads a body's and an emitter's `pair`, the same word",
 )
 def test_c2_every_key_of_a_familys_entry_is_a_folders_schema_and_not_a_line_of_the_loader():
     """Record 2226 (1) and (2): every key a shipped family entry carries beyond its name (the

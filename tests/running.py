@@ -386,6 +386,7 @@ def draw(seed: int) -> dict[str, Any]:
             {
                 "name": content_holder,
                 "parts": parts,
+                "sign": 0,
                 "phase": 1,
                 "pair": [1, 1],
                 "held": held("content", parts),
@@ -399,6 +400,7 @@ def draw(seed: int) -> dict[str, Any]:
         entry = {
             "name": sign_holder,
             "parts": parts,
+            "sign": 0,
             "phase": rng.choice([1, 2]),
             "pair": [1, 1],
             "held": held("sign", parts),
@@ -414,6 +416,7 @@ def draw(seed: int) -> dict[str, Any]:
         entry = {
             "name": given,
             "parts": parts,
+            "sign": 0,
             "phase": 2,
             "pair": [1, 1],
             "reads": [] if rng.random() < 0.5 else reads_of(exclude=given),
@@ -427,6 +430,7 @@ def draw(seed: int) -> dict[str, Any]:
         {
             "name": body,
             "parts": [1],
+            "sign": 0,
             "phase": 2,
             "pair": "body",
             "reads": reads_of(),
@@ -439,6 +443,7 @@ def draw(seed: int) -> dict[str, Any]:
             {
                 "name": name,
                 "parts": rng.choice(PARTS),
+                "sign": 0,
                 "phase": rng.choice([1, 2]),
                 "pair": rng.choice(PAIRS),
                 "reads": reads_of(),
