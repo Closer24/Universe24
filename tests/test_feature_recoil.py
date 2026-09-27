@@ -122,12 +122,18 @@ def test_a_taking_and_a_giving_of_the_same_quantum_cancel_and_the_direction_of_t
 
 
 def test_the_bounds_and_the_terms_are_refused_by_name():
-    """The period, the wavelength, the wall and the unit from 1; the sense +1 or -1; a wall that is no
-    multiple of the wavelength; an amount reaching the width; a store at or beyond the wall."""
+    """The period, the wavelength, the wall and the unit from 1; a wall at or beyond 2^63 (the row's
+    refusal by name; 2^63 - 1 admitted as a wall, its click's amount then refused at the width); the
+    sense +1 or -1; a wall that is no multiple of the wavelength; a store at or beyond the wall."""
     with pytest.raises(ValueError, match="from 1, got P_body = 0"):
         apply(RecoilTerm(0, 4, TAKING, WALL, UNIT), START, RecoilOwn((0, 0, 0), NONE))
     with pytest.raises(ValueError, match="L = 0, Q = 64"):
         apply(RecoilTerm(21, 4, TAKING, 0, UNIT), START, RecoilOwn((0, 0, 0), NONE))
+    for wall in (1 << 63, (1 << 63) + 1, 1 << 64):
+        with pytest.raises(ValueError, match=f"wall L = {wall} reaches the width"):
+            apply(RecoilTerm(1, 1, TAKING, wall, 1), START, RecoilOwn((0, 0, 0), NONE))
+    with pytest.raises(ValueError, match="amount 3 Q P_body .* reaches the width"):
+        apply(RecoilTerm(1, 1, TAKING, (1 << 63) - 1, 1), START, RecoilOwn((0, 0, 0), NONE))
     with pytest.raises(ValueError, match=r"sense is \+1 \(a taking\) or -1 \(a giving\), got 2"):
         apply(RecoilTerm(21, 4, 2, WALL, UNIT), START, RecoilOwn((0, 0, 0), NONE))
     with pytest.raises(ValueError, match="L = 252 is not a multiple of the wavelength lambda_q = 5"):

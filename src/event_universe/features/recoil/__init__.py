@@ -56,11 +56,16 @@ def sign_of(value: int) -> int:
 
 
 def check(term: RecoilTerm, own: RecoilOwn) -> None:
-    """The refusals by name: the period, the wavelength, the wall and the unit from 1, the sense +1 or -1, the wavelength dividing the wall, the click's amount within the width, each store a remainder below the wall."""
+    """The refusals by name: the period, the wavelength, the wall and the unit from 1, the wall below the width (L at or beyond 2^63 refused), the sense +1 or -1, the wavelength dividing the wall, the click's amount within the width, each store a remainder below the wall."""
     if term.period < 1 or term.wavelength < 1 or term.wall < 1 or term.unit < 1:
         raise ValueError(
             f"the recoil needs a period, a wavelength, a wall and a unit from 1, got P_body = "
             f"{term.period}, lambda_q = {term.wavelength}, L = {term.wall}, Q = {term.unit}"
+        )
+    if term.wall > MAX_WORK_INT:
+        raise ValueError(
+            f"the recoil's wall L = {term.wall} reaches the width {MAX_WORK_INT}: the world is refused "
+            "(ALGEBRA.md #the-primitives, the row 'the recoil')"
         )
     if term.sense not in (TAKING, GIVING):
         raise ValueError(f"the recoil's sense is +1 (a taking) or -1 (a giving), got {term.sense}")
