@@ -32,6 +32,7 @@ The drawing: one box per module, an arrow for what one hands to the next, the ga
 | `src/event_universe/loader/frame.py` with `core/schema.py` and `loader/cards.py` | the schemas of the files' keys; a family's entry is the frame's `name` and `clock` with the keys the folders' cards declare | the checked values |
 | `src/event_universe/loader/world.py` | the loop's classes built from the checked values, and the rules between keys | the loaded world |
 | `src/event_universe/events/detector_law.py` | the engine: the stages and the state, built from the loaded world | `step()`, the main loop's `run` |
+| `src/event_universe/events/assembly.py` | the assembly of the engine's state from the loaded world, once before the first interval: the held counts, the detectors and their map, the universe's values, the arrays and caches, the bodies' blocks with their own records, the held families' records | the engine's attributes, named and typed in the engine |
 | `src/event_universe/events/geometry.py` | the engine's geometry: the Node sets, boxes, masks and Ports of a body or a detector from the GameBoard's shape, and the pair arrays' cache | the masks and boxes the stages read |
 | `src/event_universe/events/output.py` | the readings and the output lines: the exact rationals of the books, the leak test, the record's click line (`gather`), the books, the bodies' contents and the state stream, each a function of the simulation that the engine binds as its method | the `gather` line to the observer; the books and the state stream to the tests and the record |
 | `src/event_universe/events/guards.py` | the engine's run-time guards, bound as the engine's methods: the arrays of the interval's start to freeze, the arrays each act's card grants, a card's writes, a write applied by name, the generic act's term, `Start` view and own record, the pace guard | the frozen arrays and the refusals to the main loop |
@@ -84,7 +85,7 @@ Every primitive is one folder `src/event_universe/features/<name>/__init__.py`. 
 | `place` | one of the five places, or "any" for a read-only line |
 | `reads` | the values it reads, in the ledger's words |
 | `writes` | the values it writes |
-| `function` | its function where its code lives in the folder (the recoil's and the source's `apply`), or None; a card with both a function and a binder runs the binder's method today (the signed read) |
+| `function` | its function where its code lives in the folder (the recoil's and the source's `apply`), or None |
 | `section` | its line in ALGEBRA.md |
 | `word` | the mathematician's reading of its moment: the right side, the step, after the step, or any (the trace); optional, and only a word outside the four is refused |
 | `binder` | `bind(loop)`, which gives the loop's method that implements it today while the code still sits in the loop; the operation's binder gives Rule3 itself |
