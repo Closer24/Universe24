@@ -19,6 +19,15 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
 }
 
 
+EVERY_PULL_REQUEST = Path(__file__).with_name("every_pull_request.txt")
+
+
+def every_pull_request() -> list[str]:
+    """The tests selected on every pull request: the data file's lines, a line starting with # a note."""
+    lines = EVERY_PULL_REQUEST.read_text(encoding="utf-8").splitlines()
+    return [line.strip() for line in lines if line.strip() and not line.lstrip().startswith("#")]
+
+
 def git(*args):
     return subprocess.check_output(["git", *args], cwd=ROOT, encoding="utf-8").strip()
 
@@ -188,27 +197,8 @@ def select(changed, sources):
                 if p.startswith("tests/test_") and "event_universe" in text
             )
     if changed:
-        # EVERY SHIPPED WORLD BIT FOR BIT on every pull request, whatever it changes (the model
-        # owner's short procedure, record 2214 point 7; the Boss's records 2216 (2) and 2230):
-        # the regression record of tests/shipped_worlds.json is compared on any change at all,
-        # and the genericity test draws its seeded universes (the Boss's record 2234)
-        tests.add("tests/test_shipped_worlds.py")
-        tests.add("tests/test_genericity.py")
-        # and THE SHAPE OF THE CODE is held at its baseline (the model owner's decisions,
-        # records 2239 and 2241)
-        tests.add("tests/test_code_shape.py")
-        # and the reviewer's recurring findings as gates: no new number, family name or
-        # unapproved core module in src/ (issue #1198, item 4 (a))
-        tests.add("tests/test_engine_gates.py")
-        # and THE STEP FILE DRIVES THE STEP, whatever folder or file changed (#1198, gate 2)
-        tests.add("tests/test_step_drives_the_loop.py")
-        # and EVERY FOLDER CARD LOADS with the step file, none built by position (#1198, gate 3)
-        tests.add("tests/test_folder_cards.py")
-        # and NO ASSERT AS A GUARD, no unused module-level name, in src/ and tools/ (#1198, gate 6)
-        tests.add("tests/test_runtime_guards.py")
-        # and THE DOCUMENT LOCK keeps the three current documents (the short procedure,
-        # point 12)
-        tests.add("tests/test_documents.py")
+        # the gates every pull request runs, whatever it changes: one per line in one data file
+        tests.update(every_pull_request())
     return sorted(tests), sorted(
         p for p in impacted if p.startswith("src/") and p.endswith(".py") and p in sources
     )

@@ -1,0 +1,205 @@
+"""The shape of tests/, held against the merge base (issue #1211; the model owner, 2026-09-27: the bulk must not come back).
+
+Every count is compared with the same count at the merge base (CHECK_BASE, else origin/main),
+read from git, so no baseline file is kept: a pull request may lower a count, never raise it.
+
+(a) Size. tests/ holds no more lines than at the merge base: it only shrinks, and a pull
+    request that adds tests offsets them by deletions (the model owner, 2026-09-27); a test
+    file above 600 lines holds no more than at the merge base, and a new one stays under.
+(b) Copied setup. No test module imports another `test_*.py`: shared builders live in
+    `tests/worlds.py` and `tests/running.py`. A function of 8 lines or more whose abstracted
+    body appears twice across tests/ is refused beyond the merge base's groups.
+(c) History. Across tests/, the docstring and comment lines that carry a history marker, and
+    the docstrings beyond three lines, stay at or below the merge base's (a moved helper moves
+    its count with it).
+(d) Retired code. Across tests/, the module-wide skips and the skips that name cancelled or
+    retired code stay at or below the merge base's; a public function of `src/` outside `features/` that
+    nothing in `src/`, `tools/` or `examples/` names is refused unless the merge base has it.
+"""
+
+from __future__ import annotations
+
+import ast
+import hashlib
+import io
+import os
+import re
+import subprocess
+import tokenize
+from pathlib import Path
+
+from record_code_shape import Abstracted, docstring_of
+
+ROOT = Path(__file__).resolve().parents[1]
+FILE_LINES = 600
+DUPLICATE_LINES = 8
+DOCSTRING_LINES = 3
+HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
+RETIRED = re.compile(r"CANCELLED|[Rr]etired")
+CALLERS = ("src/", "tools/", "examples/")
+FEATURES = "src/event_universe/features/"
+
+Snapshot = dict[str, str]
+
+
+def working_tree(root: Path) -> Snapshot:
+    """Every Python file of src/, tools/, examples/ and tests/ in the working tree."""
+    found: Snapshot = {}
+    for folder in ("src", "tools", "examples", "tests"):
+        for path in sorted((root / folder).rglob("*.py")):
+            found[path.relative_to(root).as_posix()] = path.read_text(encoding="utf-8")
+    return found
+
+
+def at_ref(root: Path, ref: str) -> Snapshot | None:
+    """The same files at `ref`, or None where git cannot show it."""
+    try:
+        names = subprocess.run(
+            ["git", "ls-tree", "-r", "--name-only", ref, "--", "src", "tools", "examples", "tests"],
+            capture_output=True,
+            text=True,
+            cwd=root,
+            check=True,
+        ).stdout.split()
+        names = [name for name in names if name.endswith(".py")]
+        batch = subprocess.run(
+            ["git", "cat-file", "--batch"],
+            input="".join(f"{ref}:{name}\n" for name in names).encode(),
+            capture_output=True,
+            cwd=root,
+            check=True,
+        ).stdout
+    except OSError, subprocess.CalledProcessError:
+        return None
+    found: Snapshot = {}
+    offset = 0
+    for name in names:
+        header_end = batch.index(b"\n", offset)
+        size = int(batch[offset:header_end].split()[2])
+        found[name] = batch[header_end + 1 : header_end + 1 + size].decode("utf-8")
+        offset = header_end + 1 + size + 1
+    return found
+
+
+def tests_of(snapshot: Snapshot) -> Snapshot:
+    return {name: text for name, text in snapshot.items() if name.startswith("tests/")}
+
+
+def lines_in(snapshot: Snapshot, folder: str) -> int:
+    return sum(len(text.splitlines()) for name, text in snapshot.items() if name.startswith(folder))
+
+
+def file_counts(text: str) -> dict[str, int]:
+    """Per test file: its lines, history-marked lines, long docstrings and retirement skips."""
+    tree = ast.parse(text)
+    marked: set[int] = set()
+    long_docstrings = 0
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Module | ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef):
+            doc = docstring_of(node)
+            if doc is not None:
+                end = doc.end_lineno or doc.lineno
+                long_docstrings += end - doc.lineno + 1 > DOCSTRING_LINES
+                source = text.splitlines()[doc.lineno - 1 : end]
+                marked.update(doc.lineno + i for i, line in enumerate(source) if HISTORY.search(line))
+    for token in tokenize.generate_tokens(io.StringIO(text).readline):
+        if token.type == tokenize.COMMENT and HISTORY.search(token.string):
+            marked.add(token.start[0])
+    skip_lines: set[int] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Assign) and any(
+            isinstance(t, ast.Name) and t.id == "pytestmark" for t in node.targets
+        ):
+            if "skip" in ast.unparse(node.value):
+                skip_lines.add(node.lineno)
+        elif isinstance(node, ast.Call) and "skip" in ast.unparse(node.func):
+            if RETIRED.search(ast.unparse(node)):
+                skip_lines.add(node.lineno)
+    skips = len(skip_lines)
+    return {
+        "lines": len(text.splitlines()),
+        "history_lines": len(marked),
+        "long_docstrings": long_docstrings,
+        "retirement_skips": skips,
+    }
+
+
+def test_imports(snapshot: Snapshot) -> list[str]:
+    """Every import of a `test_*.py` module by another test file."""
+    found = []
+    for name, text in tests_of(snapshot).items():
+        for node in ast.walk(ast.parse(text)):
+            module = node.module if isinstance(node, ast.ImportFrom) else None
+            modules = [a.name for a in node.names] if isinstance(node, ast.Import) else [module or ""]
+            for imported in modules:
+                if imported.split(".")[-1].startswith("test_"):
+                    found.append(
+                        f"{name} imports {imported}: move the helper to tests/worlds.py or tests/running.py"
+                    )
+    return found
+
+
+def duplicate_groups(snapshot: Snapshot) -> dict[str, list[str]]:
+    """Every abstracted body of a function of 8 lines or more that appears twice across tests/."""
+    groups: dict[str, list[str]] = {}
+    for name, text in tests_of(snapshot).items():
+        for node in ast.walk(ast.parse(text)):
+            if (
+                isinstance(node, ast.FunctionDef)
+                and node.end_lineno - node.lineno + 1 >= DUPLICATE_LINES
+            ):
+                copy = ast.parse(ast.unparse(node)).body[0]
+                digest = hashlib.sha256(ast.dump(Abstracted().visit(copy)).encode()).hexdigest()[:16]
+                groups.setdefault(digest, []).append(f"{name}:{node.name}")
+    return {digest: sorted(names) for digest, names in groups.items() if len(names) > 1}
+
+
+def uncalled(snapshot: Snapshot) -> set[str]:
+    """The public top-level functions of src/ outside features/ that nothing else names."""
+    callers = "\n".join(text for name, text in snapshot.items() if name.startswith(CALLERS))
+    found = set()
+    for name, text in snapshot.items():
+        if not name.startswith("src/") or name.startswith(FEATURES):
+            continue
+        for node in ast.parse(text).body:
+            if isinstance(node, ast.FunctionDef) and not node.name.startswith("_"):
+                if len(re.findall(rf"\b{node.name}\b", callers)) <= 1:
+                    found.add(f"{name}:{node.name}")
+    return found
+
+
+def violations(head: Snapshot, base: Snapshot | None) -> list[str]:
+    """Every way the head departs from the shape, each one line; with no base, the head is its own base."""
+    base = head if base is None else base
+    found: list[str] = []
+    head_tests, base_tests = lines_in(head, "tests/"), lines_in(base, "tests/")
+    if head_tests > base_tests:
+        found.append(
+            f"tests/ grew from {base_tests} to {head_tests} lines; offset the new tests by deletions in the same pull request"
+        )
+    before = {name: file_counts(text) for name, text in tests_of(base).items()}
+    after = {name: file_counts(text) for name, text in tests_of(head).items()}
+    for name, counts in after.items():
+        was = before.get(name, {"lines": 0})["lines"]
+        if counts["lines"] > FILE_LINES and counts["lines"] > was:
+            found.append(
+                f"{name} has {counts['lines']} lines, above {FILE_LINES} and the merge base's {was}"
+            )
+    for key in ("history_lines", "long_docstrings", "retirement_skips"):
+        total, was = sum(c[key] for c in after.values()), sum(c[key] for c in before.values())
+        if total > was:
+            found.append(f"tests/: {key.replace('_', ' ')} grew from {was} to {total}")
+    found.extend(test_imports(head))
+    base_groups = duplicate_groups(base)
+    for digest, names in duplicate_groups(head).items():
+        if len(names) > len(base_groups.get(digest, [])):
+            found.append(
+                f"copied setup: {', '.join(names)} share one body; keep one in tests/worlds.py or tests/running.py"
+            )
+    for name in sorted(uncalled(head) - uncalled(base)):
+        found.append(f"{name} is called nowhere in src/, tools/ or examples/: delete it with its tests")
+    return found
+
+
+def base_ref() -> str:
+    return os.environ.get("CHECK_BASE") or "origin/main"

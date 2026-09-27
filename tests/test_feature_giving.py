@@ -24,8 +24,8 @@ from event_universe.features.giving import (
     bulk_share,
 )
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_emitter import emitter_world
-from tests.test_toward_nature import load_module
+from tests.running import load_module
+from tests.worlds import emitter_world
 
 TERM = GivingTerm(weight=3, norm=1000, norm_denominator=1, family=0)
 NO_TALLY = (0, 0, 0)

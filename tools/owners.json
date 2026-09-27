@@ -1,0 +1,85 @@
+{
+  "comment": "One owner per area (the owner's decision of 2026-09-27, 05:40Z, on #1198). An area is a path or a folder ending in '/'; the longest match names the owner; a path in no area is free. A pull request's author is the owner whose session link its body carries; one touching another owner's area needs the line 'HANDED BY <owner>: <files>' in its body, the arbiter's hand-over covering any area (tools/ownership.py).",
+  "arbiter": "Boss",
+  "owners": {
+    "Nature24": {
+      "sessions": [
+        "session_01FiGGiQ6ee5yyFwBih4fdeE"
+      ],
+      "areas": [
+        "src/event_universe/loader/",
+        "src/event_universe/events/world.py",
+        "docs/ENGINE.md"
+      ]
+    },
+    "Main Loop": {
+      "sessions": [
+        "session_01STjgfeDqFTYLmEfzHP4a9a"
+      ],
+      "areas": [
+        "src/event_universe/core/",
+        "src/event_universe/events/detector_law.py",
+        "law/step.json",
+        "src/event_universe/retention.py",
+        "tools/run_inputs.py",
+        "tools/record_shipped_worlds.py"
+      ]
+    },
+    "Mathematician": {
+      "sessions": [
+        "session_014v7wQ91WVmN2s1hfrr8Gvz"
+      ],
+      "areas": [
+        "docs/ALGEBRA.md",
+        "tools/body_generator.py",
+        "src/event_universe/features/feed/",
+        "src/event_universe/features/induction/",
+        "src/event_universe/features/recoil/"
+      ]
+    },
+    "Mathematician 2": {
+      "sessions": [
+        "session_01DZyWRy1SURUMECPV5E69qv"
+      ],
+      "areas": [
+        "src/event_universe/features/counts_line/",
+        "src/event_universe/features/hold/",
+        "src/event_universe/features/spins_step/",
+        "src/event_universe/features/receive/",
+        "src/event_universe/features/self_source/"
+      ]
+    },
+    "Paper Writer": {
+      "sessions": [
+        "session_01YZm2KTx4ZEZomGr1qo2HVh"
+      ],
+      "areas": [
+        "paper/",
+        "tools/check.py",
+        "tools/every_pull_request.txt",
+        "tools/engine_gates.py",
+        "tools/merge_base.py",
+        "tools/owners.json",
+        "tools/ownership.py",
+        "tools/record_code_shape.py",
+        "tools/tests_shape.py",
+        "tests/bodies.py",
+        "tests/running.py",
+        "tests/worlds.py",
+        "tests/shipped_worlds.json"
+      ]
+    },
+    "Boss": {
+      "sessions": [
+        "session_01LWjA4o154gnURFVv69FUco"
+      ],
+      "areas": [
+        "docs/HIGHLIGHTS.md",
+        "skills/",
+        "AGENTS.md",
+        "README.md",
+        "CONTRIBUTING.md"
+      ]
+    }
+  }
+}

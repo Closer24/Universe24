@@ -10,55 +10,8 @@ import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import massive_generator
-from tests.test_massive_record import massive_world
-
-CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
-KIND = [800, 813]
-WELL = [800, 802]
-
-
-def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 400) -> dict:
-    """The chain with the one-Node point emitter at its middle; the mode seeded first (as
-    `body_record`), the keys and the weight set after, the stamp renewed."""
-    document = massive_world([length, 1, 1], CHAIN, KIND)
-    document["ticks"] = ticks
-    document["clock_stamp"] = True
-    document["measured"] = [
-        {
-            "position": [length // 2, 0, 0],
-            "family": "matter",
-            "amount": 1,
-            "ramp": 0,
-            "start": 0,
-            "stocks": {"light": stock},
-            "momentum": [0, 0, 0],
-            "extents": [1, 1, 1],
-            "q": 0,
-            "spin": [0, 0, 0],
-            "twist": 0,
-            "moment": [0, 0, 0],
-            "pair": list(WELL),
-            "seed": 1 << 12,
-            "margin": "control",
-            "emitter": {"family": "light", "twist": 0},  # rewritten by the seeding (item 73)
-        }
-    ]
-    document["detectors"] = []
-    massive_generator().seed_on_the_mode(document)
-    document["measured"][0]["emitter"]["weight"] = weight
-    document["body_record"] = True
-    document["stamp"] = input_stamp(document)
-    return document
-
-
-def run(document: dict, ticks: int) -> tuple[DetectorLawSimulation, list[dict]]:
-    lines: list[dict] = []
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    for _ in range(ticks):
-        simulation.step()
-        assert simulation.books()["balanced"], simulation.tick
-    return simulation, lines
+from tests.bodies import point_world
+from tests.running import run_point_world as run
 
 
 def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_action():
