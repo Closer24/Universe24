@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
@@ -93,8 +92,3 @@ DECLARATION = Declaration(
     word="the right side",
     schema=Schema({"a family's entry": ObjectOf({"self_source": ObjectOf({"unit": Integer(least=0)})})}),
 )
-
-
-def bind(loop: Any) -> Callable[..., object]:
-    """The loop's method `_self_source`, whose array `apply` gives bit for bit, until the loop calls `apply`."""
-    return loop._method("_self_source")  # type: ignore[no-any-return]

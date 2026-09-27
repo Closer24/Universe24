@@ -24,9 +24,9 @@
   },
   "src/event_universe/core/integer.py": {
    "comment_lines": 1,
-   "docstring_lines": 137,
+   "docstring_lines": 127,
    "level_shift_sites": 0,
-   "lines": 304,
+   "lines": 271,
    "record_references": 5,
    "rule_arithmetic_sites": 0
   },
@@ -80,7 +80,7 @@
   },
   "src/event_universe/events/detector_law.py": {
    "comment_lines": 643,
-   "docstring_lines": 514,
+   "docstring_lines": 511,
    "level_shift_sites": 0,
    "lines": 3942,
    "record_references": 29,
