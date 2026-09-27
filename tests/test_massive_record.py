@@ -551,7 +551,7 @@ def test_the_mode_line_sums_lights_field_by_residue_class():
 
 
 def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
-    """A pair whose rule total at the declared amplitude bound, the clock and the content reaches 2^63 is refused at load naming them ([800, 809] and [3200, 3236] admitted); the amplitude bound is required, capped at 2^28, and a seed or a row above it is refused naming it."""
+    """A pair whose rule total at the declared amplitude bound, the clock and the content reaches 2^63 is refused at load naming them ([800, 809] and [3200, 3236] admitted); the amplitude bound is required, bounded by the width through the rule's total and the transport's room, and a seed or a row above it is refused naming it."""
     big = 1 << 20
     document = massive_world([6, 6, 6], PERIODIC, [big, big + 1])
     with pytest.raises(
