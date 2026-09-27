@@ -10,7 +10,7 @@ concurrency:
   group: python-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 env:
-  CHECK_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+  CHECK_BASE: ${{ github.base_ref && format('origin/{0}', github.base_ref) || github.event.before }}
   PR_BODY: ${{ github.event.pull_request.body }}
 jobs:
   plan:
