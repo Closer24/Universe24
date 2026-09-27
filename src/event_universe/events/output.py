@@ -12,9 +12,10 @@ if TYPE_CHECKING:
     from event_universe.events import detector_law
 
 # A RATIONAL IS A PAIR OF INTEGERS (numerator, denominator) in lowest terms with the denominator
-# positive: the engine holds no `fractions` (the integer rule; tests/test_integer_algebra.py). The pairs
-# are Python integers without the working bound (the conserved form summed over a board and the
-# body-frame booking's terms exceed 2^63, as the exact rationals they replace did); gcd, sums and products alone.
+# positive: the engine holds no `fractions` (the integer rule; tests/test_integer_algebra.py). The
+# pairs are Python integers without the working bound (the conserved form summed over a board and
+# the body-frame booking's terms exceed 2^63, as the exact rationals they replace did); gcd, sums
+# and products alone.
 Ratio = tuple[int, int]
 ZERO: Ratio = (0, 1)
 
@@ -97,7 +98,8 @@ def gather_line(
             simulation.ledger.held_measured[family] += live.content
             simulation.ledger.transit_absorbed[family] += live.content
         else:
-            # a set without a body (the face receiver, a set on free Nodes): the click consumes the quantum
+            # a set without a body (the face receiver, a set on free Nodes): the click consumes the
+            # quantum as any click does
             simulation.ledger.transit_absorbed[family] += live.content
     simulation.layer.gathered += 1
     gather: dict[str, object] = {
@@ -113,7 +115,8 @@ def gather_line(
         # (ALGEBRA.md #the-click); kept for the readers' form
         "taken_by_emitter": 0,
         # HOST (the receiver by name): the sinks' take of the record by this line, in the pointer's
-        # unit (the faces and every set but the receiver; on no pointer); on a record with a receiver alone
+        # unit (the faces and every set but the receiver; on no pointer); on a record with a
+        # receiver alone
         "given": live.given,
         "chosen": (
             [[simulation.detector_set[chosen], simulation.detector_channel[chosen], "0"]]
@@ -144,7 +147,8 @@ def gather_line(
             if pointer
         ],
         # the ladder by name (the lamp's `receiver`): the sets on it, and HOST the pointers' sum at
-        # the sinks (the detectors off the ladder, taken and booked, never chosen); None and 0 for every detector
+        # the sinks (the detectors off the ladder, taken and booked, never chosen); None and 0 for
+        # every detector
         **(
             {
                 "ladder": sorted({simulation.detector_set[detector] for detector in live.ladder}),
@@ -163,7 +167,8 @@ def gather_line(
             else simulation.tick
         ),
         # which the click's time is: the chosen detector's first rung or, where no rung was crossed
-        # (a screen row's Node at 1e-4 of the norm), the completion interval; a reader never reads a completion as a rung
+        # (a screen row's Node at 1e-4 of the norm), the completion interval; a reader never reads
+        # a completion as a rung
         "click_at": (
             "rung" if chosen is not None and live.first_rung[chosen] is not None else "completion"
         ),
