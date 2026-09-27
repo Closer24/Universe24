@@ -1,8 +1,9 @@
-"""The generator by Rule3 alone (ALGEBRA.md 9.120 item 4): a body's bound mode by Rule3's read act iterated with the before-coefficient 0 and its division act to the amplitude unit, the stop at the first repeat of the integer profile, the two levels, the clock as an exact pair, the period by the one-Node rule and the amplitude from the count and the family's quantum norm; every act one call of core.rule3, integers and exact rationals only."""
+"""The generator by Rule3 alone (ALGEBRA.md #the-generator): the held field at rest under its family's pair (the division act iterated with the remainder carried, the body's Nodes rewritten to the count, the stop at the first repeat of levels and remainders), a body's bound mode on that content by Rule3's read act iterated with the before-coefficient 0 and its division act to the amplitude unit, the stop at the first repeat of the integer profile, the two levels, the clock as an exact pair, the period by the one-Node rule and the amplitude from the count and the family's quantum norm; every act one call of core.rule3, integers and exact rationals only."""
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from dataclasses import dataclass
 from fractions import Fraction
@@ -33,6 +34,17 @@ class BoundMode:
     cycle: int
     rotation: Fraction
     share_inside: Fraction
+
+
+@dataclass(frozen=True)
+class FieldAtRest:
+    """The held field at rest around the body under its family's pair: the levels (the nearest integers), the fine levels at the derived unit, the unit, the iterations to the repeat and the cycle's length, 1 at a fixed point (ALGEBRA.md #the-generator (g))."""
+
+    levels: np.ndarray
+    fine: np.ndarray
+    unit: int
+    iterations: int
+    cycle: int
 
 
 @dataclass(frozen=True)
@@ -73,6 +85,29 @@ def amplitude_unit(pair: tuple[int, int], gamma: int, counts: np.ndarray) -> int
     if found is None or found < 1:
         raise ValueError(f"no amplitude unit keeps Rule3's total inside the width at Gamma = {gamma}")
     return int(found)
+
+
+def field_at_rest(counts: np.ndarray, pair: Pair, wrap: Wrap = PERIODIC) -> FieldAtRest:
+    """The held family's field at rest under its own line at the pace 1 (ALGEBRA.md #the-line; #the-generator (g)): a stands where 6 den a = num S_6(a), so from nothing b <- num S_6(b) div (6 den) by Rule3's division act on the levels at the fine unit (the counts times the unit at the body's Nodes, rewritten each time: the hold); the map is monotone from nothing, so the levels rise to a fixed point, the stop at its first repeat (exact, no tolerance); the fixed point is below the line's own by less than one fine unit per Node, so the levels, the nearest integers by the division act, are the rest within one unit."""
+    check_counts(counts, 1 + int(counts.max()))
+    num, den = pair
+    if num < 1 or den < num:
+        raise ValueError(f"the field's pair [{num}, {den}] has num from 1 and den from num")
+    unit = field_unit(counts, num)
+    hold = counts > 0
+    fine = np.zeros(counts.shape, dtype=np.int64)
+    seen: dict[bytes, int] = {}
+    step = 0
+    key = hashlib.sha256(fine.tobytes()).digest()
+    while key not in seen:
+        seen[key] = step
+        fine = np.asarray(rule3((num, num, num), arrivals(fine, wrap), 0, 6 * den, fine, 0, 0, 1)[0])
+        fine[hold] = counts[hold] * unit
+        step += 1
+        key = hashlib.sha256(fine.tobytes()).digest()
+    half = int(division(1, 2, np.array(unit, dtype=object)))
+    levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half, 1)[0])
+    return FieldAtRest(levels, fine, unit, step, step - seen[key])
 
 
 def rule_integers(pair: Pair, gamma: int, counts: np.ndarray) -> tuple[np.ndarray, np.ndarray, int]:
@@ -127,6 +162,11 @@ def division(numerator_coefficient: Any, wall: Any, level: np.ndarray) -> np.nda
     return np.asarray(rule3(NO_READ, NO_READ, numerator_coefficient, wall, level, 0, 0)[0])
 
 
+def field_unit(counts: np.ndarray, num: int) -> int:
+    """The field's fine unit, derived and never written: the largest scale of the levels at which num S_6 stays inside the integer width with room, the width div (2 x 6 num x the largest count)."""
+    return int(division(1, 2 * 6 * num * int(counts.max()), np.array(MAX_WORK_INT, dtype=object)))
+
+
 def to_amplitude(levels: tuple[np.ndarray, ...], amplitude: int) -> tuple[np.ndarray, ...]:
     """Rule3's division act to the amplitude unit on the levels together, a x A div max|a| by the largest size over them, the product inside int64 or refused (ALGEBRA.md 9.120 item 4 (b))."""
     size = max(int(np.abs(level).max()) for level in levels)
@@ -178,9 +218,10 @@ def rotation_and_share(
     gamma: int,
     pair: tuple[int, int],
     where: str,
+    content: np.ndarray | None = None,
 ) -> tuple[Fraction, Fraction]:
     """2 cos omega_b of a profile as the exact quotient of the symmetric form, SUM a (R S_6(a) + S a) / p^2 over w SUM a^2 / p^2, a reading of the levels and their read acts with the weights 1 / p_i^2, and the share of the profile's weight inside the counted Nodes; refused by name where the rotation does not rise above the band's top 2 num / den or the share is not twice the counted Nodes' fraction of the box, the band's uniform wave (ALGEBRA.md 9.57 (1), 9.120 item 2)."""
-    paces = gamma - counts
+    paces = gamma - (counts if content is None else content)
     numerator, denominator = Fraction(0), Fraction(0)
     for pace in {int(p) for p in paces.ravel()}:
         at = paces == pace
@@ -200,11 +241,17 @@ def rotation_and_share(
     return rotation, share
 
 
-def bound_mode(counts: np.ndarray, pair: Pair, gamma: int, wrap: Wrap = PERIODIC) -> BoundMode:
-    """The bound mode of the count's well at the derived amplitude unit: from a flat start the read act and the division act iterated until the integer profile repeats, the map on a finite set needing no limit (ALGEBRA.md 9.120 item 4 (c))."""
+def bound_mode(
+    counts: np.ndarray, pair: Pair, gamma: int, wrap: Wrap = PERIODIC, content: np.ndarray | None = None
+) -> BoundMode:
+    """The bound mode of the well at the derived amplitude unit: from a flat start the read act and the division act iterated until the integer profile repeats, the map on a finite set needing no limit; the well is the content at every Node, the held field at rest where given (ALGEBRA.md #the-generator (c), (g)), the counts alone otherwise."""
     check_counts(counts, gamma)
-    amplitude = amplitude_unit(pair, gamma, counts)
-    read, self_coefficient, wall = rule_integers(pair, gamma, counts)
+    if content is None:
+        content = counts
+    else:
+        check_counts(content, gamma)
+    amplitude = amplitude_unit(pair, gamma, content)
+    read, self_coefficient, wall = rule_integers(pair, gamma, content)
     a = np.full(counts.shape, amplitude, dtype=np.int64)
     seen: dict[bytes, int] = {}
     step = 0
@@ -216,25 +263,34 @@ def bound_mode(counts: np.ndarray, pair: Pair, gamma: int, wrap: Wrap = PERIODIC
         step += 1
     level = a.astype(object)
     total = rule3((read, read, read), arrivals(level, wrap), self_coefficient, 1, level, 0, 0)[0]
-    rotation, share = rotation_and_share((level,), (total,), wall, counts, gamma, pair, "mode")
+    rotation, share = rotation_and_share((level,), (total,), wall, counts, gamma, pair, "mode", content)
     return BoundMode(a, amplitude, step, step - seen[a.tobytes()], rotation, share)
 
 
 def moving_mode(
-    counts: np.ndarray, pair: Pair, gamma: int, triple: Triple, wrap: Wrap = PERIODIC
+    counts: np.ndarray,
+    pair: Pair,
+    gamma: int,
+    triple: Triple,
+    wrap: Wrap = PERIODIC,
+    content: np.ndarray | None = None,
 ) -> MovingMode:
-    """The bound mode of the count's well moving along x at the rotation k per Link, at the derived amplitude unit: the same iteration as at rest with the twisted read act, from a flat start, each iterate mirrored (the real part even and the imaginary part odd about the centre, the envelope's one gauge, two division acts), the stop at the first repeat of the two parts; at the triple (1, 0, 1) it is the resting mode (ALGEBRA.md 9.120 item 4 (e))."""
+    """The bound mode of the well moving along x at the rotation k per Link, at the derived amplitude unit: the same iteration as at rest with the twisted read act, from a flat start, each iterate mirrored (the real part even and the imaginary part odd about the centre, the envelope's one gauge, two division acts), the stop at the first repeat of the two parts; at the triple (1, 0, 1) it is the resting mode; the well the content at every Node, the field at rest where given (ALGEBRA.md #the-generator (e), (g))."""
     check_counts(counts, gamma)
+    if content is None:
+        content = counts
+    else:
+        check_counts(content, gamma)
     if triple[2] < 1 or triple[0] ** 2 + triple[1] ** 2 != triple[2] ** 2:
         raise ValueError(
             f"the rotation per Link {triple} is no Pythagorean triple: c from 1 and a^2 + b^2 = c^2"
         )
-    if not np.array_equal(counts, counts[::-1]):
+    if not np.array_equal(content, content[::-1]):
         raise ValueError(
-            "the moving body's counts are mirrored along x about the box's centre (the gauge of its envelope)"
+            "the moving body's well is mirrored along x about the box's centre (the gauge of its envelope)"
         )
-    amplitude = amplitude_unit(pair, gamma, counts)
-    read, self_coefficient, wall = rule_integers(pair, gamma, counts)
+    amplitude = amplitude_unit(pair, gamma, content)
+    read, self_coefficient, wall = rule_integers(pair, gamma, content)
     re = np.full(counts.shape, amplitude, dtype=np.int64)
     im = np.zeros(counts.shape, dtype=np.int64)
     seen: dict[bytes, int] = {}
@@ -255,7 +311,7 @@ def moving_mode(
         rule3(reads, arrivals_im, self_coefficient, 1, levels[1], 0, 0)[0],
     )
     rotation, share = rotation_and_share(
-        levels, totals, wall, counts, gamma, pair, f"moving mode at {triple}"
+        levels, totals, wall, counts, gamma, pair, f"moving mode at {triple}", content
     )
     return MovingMode(re, im, amplitude, step, step - seen[re.tobytes() + im.tobytes()], rotation, share)
 
@@ -359,23 +415,80 @@ def scaled_to_norm(
     )
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--pair", type=int, nargs=2, required=True, help="the family's pair num den")
-    parser.add_argument("--gamma", type=int, required=True, help="the Node clock Gamma")
-    parser.add_argument("--box", type=int, nargs=3, required=True, help="the periodic box's shape")
-    parser.add_argument("--side", type=int, required=True, help="the counted cube's side at the centre")
-    parser.add_argument("--count", type=int, required=True, help="the count per Node of the cube")
-    parser.add_argument("--out", type=Path, help="write the profile and its readings as JSON")
-    args = parser.parse_args()
-    counts = np.zeros(tuple(args.box), dtype=np.int64)
-    low = [(n - args.side) // 2 for n in args.box]
-    counts[low[0] : low[0] + args.side, low[1] : low[1] + args.side, low[2] : low[2] + args.side] = (
-        args.count
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+
+
+def read_document(value: str) -> Any:
+    """A JSON document at a repository path (or an absolute one), refused by name where there is no file."""
+    path = Path(value) if Path(value).is_absolute() else REPOSITORY_ROOT / value
+    if not path.is_file():
+        raise ValueError(f"no file at {value!r} (a repository path)")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def pair_of(row: dict[str, Any], label: str) -> Pair:
+    """A family's pair from its row of the universe file, [num, den]; a row whose pair is the body's word is refused: the law's form declares no pair on a body."""
+    pair = row.get("pair")
+    if not (isinstance(pair, list) and len(pair) == 2 and all(isinstance(v, int) for v in pair)):
+        raise ValueError(
+            f"{label}: the row's pair is {pair!r}, not [num, den]; the generator takes the family's"
+        )
+    return int(pair[0]), int(pair[1])
+
+
+def generate(document: dict[str, Any]) -> dict[str, Any]:
+    """The generator on its input file, a world file in the law's form (ALGEBRA.md #the-generator): the GameBoard's shape and faces, the Node clock, the universe file it names (the families' rows: the body's family's pair and reads, the held families' pairs, the integers by name) and one body written by its Nodes with their counts; the held fields the body's family reads plainly at rest under their rows' pairs, the mode on their weighted sum, the readings; no number in the tool or on the command line."""
+    shape = tuple(int(n) for n in document["shape"])
+    faces = document["boundary"]
+    wrap = tuple(
+        (faces if isinstance(faces, dict) else {a: faces for a in "xyz"})[axis] == "periodic"
+        for axis in "xyz"
     )
-    mode = bound_mode(counts, (args.pair[0], args.pair[1]), args.gamma)
+    gamma = int(document["node_clock"])
+    universe = read_document(document["universe"])
+    rows = {row["name"]: row for row in universe["families"]}
+    integers = universe.get("integers", {})
+    bodies = [
+        body for body in document.get("measured", []) if isinstance(body, dict) and "nodes" in body
+    ]
+    if len(bodies) != 1:
+        raise ValueError(
+            f"the generator takes one body in the law's form (its nodes with their counts), found {len(bodies)}"
+        )
+    body = bodies[0]
+    if any(int(v) for v in body.get("momentum", (0, 0, 0))):
+        raise ValueError(
+            "a moving body's k by bisection on the pairs is not in the tool yet: the momentum is 0 here"
+        )
+    counts = np.zeros(shape, dtype=np.int64)
+    for entry in body["nodes"]:
+        counts[tuple(int(v) for v in entry["node"])] = int(entry["count"])
+    row = rows[body["family"]]
+    pair = pair_of(row, f"the family {body['family']!r}")
+    content = np.zeros(shape, dtype=np.int64)
+    rests: dict[str, Any] = {}
+    for read in row.get("reads", []):
+        if read.get("by") not in (1, "plain"):
+            continue  # a read by the charge's sign: the law's form carries no charge, the factor 0
+        weight = read["weight"]
+        if isinstance(weight, str):
+            weight = integers[weight]
+        held = rows[read["family"]]
+        rest = field_at_rest(counts, pair_of(held, f"the held family {read['family']!r}"), wrap)
+        content = content + int(weight) * rest.levels
+        rests[read["family"]] = {
+            "pair": list(held["pair"]),
+            "iterations": rest.iterations,
+            "cycle": rest.cycle,
+            "at_body": int(rest.levels[counts > 0].min()),
+            "at_corner": int(rest.levels[0, 0, 0]),
+        }
+    mode = bound_mode(counts, pair, gamma, wrap, content)
     clock = clock_pair(mode.rotation, mode.amplitude)
-    reading = {
+    return {
+        "family": body["family"],
+        "pair": list(pair),
+        "rest": rests,
         "amplitude_unit": mode.amplitude,
         "iterations": mode.iterations,
         "cycle": mode.cycle,
@@ -383,10 +496,25 @@ def main() -> None:
         "clock": list(clock),
         "period": period_by_the_rule(*clock),
         "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
+        "profile": mode.profile,
+        "content": content,
     }
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", type=Path, required=True, help="the world file in the law's form")
+    parser.add_argument("--out", type=Path, help="write the readings, the profile and the well as JSON")
+    args = parser.parse_args()
+    reading = generate(json.loads(args.input.read_text(encoding="utf-8")))
+    profile, content = reading.pop("profile"), reading.pop("content")
     print(json.dumps(reading))
     if args.out is not None:
-        args.out.write_text(json.dumps({**reading, "profile": mode.profile.ravel().tolist()}))
+        args.out.write_text(
+            json.dumps(
+                {**reading, "profile": profile.ravel().tolist(), "content": content.ravel().tolist()}
+            )
+        )
 
 
 if __name__ == "__main__":

@@ -1,12 +1,4 @@
-"""EVERY SHIPPED WORLD BIT FOR BIT (the model owner's short procedure, record 2214 point 7: "the
-most important test: with the new feature off, all the old runs come out identical to the bit";
-the Boss's records 2216 (2) and 2230; issue #1155). `tests/shipped_worlds.json` holds, for every
-world file under examples/events/ that the engine loads, the stamp of its file, the number of
-intervals recorded and the SHA-256 digest of the engine's whole state after them, written by
-`tools/record_shipped_worlds.py`. This test replays exactly those intervals and compares the
-digest; it is selected by `tools/check.py` on every pull request, whatever the change. A moved
-digest is a changed run: the change re-records it on purpose, in the same commit, with the reason
-in the commit's message. HOST readings only; nothing here is a measurement."""
+"""Every shipped world bit for bit: each world of tests/shipped_worlds.json (written by tools/record_shipped_worlds.py) replayed for its recorded intervals and its state digest compared; selected when a pull request touches what runs a world. HOST readings only."""
 
 from __future__ import annotations
 

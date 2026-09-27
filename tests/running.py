@@ -389,6 +389,7 @@ def draw(seed: int) -> dict[str, Any]:
                 "phase": 1,
                 "pair": [1, 1],
                 "held": held("content", parts),
+                "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
                 "reads": [],
                 "self_source": {"unit": 0},
             }

@@ -19,11 +19,12 @@ STAGE, GENERIC, LISTED = "stage", "generic", "listed"
 
 @dataclass(frozen=True)
 class Stage:
-    """One whole-board stage of the loop object: its function, the words it takes, the cards whose writes it carries (a fused stage carries several)."""
+    """One whole-board stage of the loop object: its function, the words it takes, the cards whose writes it carries (a fused stage carries several), and whether it creates records (the records alive then change under it)."""
 
     function: Callable[..., None]
     words: tuple[str, ...] = ()
     carries: tuple[str, ...] = ()
+    creates: bool = False
 
 
 @dataclass(frozen=True)
@@ -117,7 +118,7 @@ class MainLoop:
             permitted = frozenset(
                 value for card in carries for value in register.declarations[card].writes
             )
-            if name == "the giving":
+            if stage is not None and stage.creates:
                 permitted = permitted | {ALIVE}
             acts.append(Act(place, name, dict(words), kind, stage, permitted))
         _check_chain(acts, chain, built)
@@ -280,14 +281,15 @@ class MainLoop:
 
 
 def _check_chain(acts: list[Act], chain: tuple[str, ...], built: set[str]) -> None:
-    """The record's fused chain in the file's order, no whole-board act between its names but the operation's."""
+    """The record's fused chain in the file's order, no whole-board act between its names but the one whose stage carries them."""
     positions = [index for index, act in enumerate(acts) if act.name in chain]
     ordered = [acts[index].name for index in positions]
     between = (
         [
             act.name
             for act in acts[positions[0] : positions[-1] + 1]
-            if act.kind == STAGE and act.name != "the operation"
+            if act.kind == STAGE
+            and (act.stage is None or not any(carried in chain for carried in act.stage.carries))
         ]
         if positions
         else []
