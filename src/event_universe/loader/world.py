@@ -701,33 +701,33 @@ def _node_clock_bound(
     amplitude_bound: int,
     node_clock: int,
 ) -> None:
-    """THE LOAD BOUND UNDER THE NODE CLOCK (BUILD.md section 26 item 31), the
-    second pass once the content is known: every family's pair and every
-    block's pair against the rule's int64 total at the amplitude bound with
-    the world's Gamma and M twice its whole content (the sum of every
-    measured event's held quanta of every family is the most any one Node
-    can hold, since the clicks move the quanta between the bodies and the
-    givings return them to the board; the family of clicks' level around the
-    bodies is bounded by the held content, and a wave of it off a zero face
-    doubles, ALGEBRA.md #the-counts-line; BUILD.md section 26 item 32)."""
+    """THE LOAD BOUND UNDER THE NODE CLOCK (BUILD.md section 26 item 31), the second pass once the content
+    is known: every family's pair and every block's pair against the rule's int64 total at the amplitude
+    bound with the world's Gamma and M twice its whole content (the most any one Node can hold, the clicks
+    moving the quanta between the bodies; a wave off a zero face doubles, ALGEBRA.md #the-counts-line)."""
 
     # THE READS (ALGEBRA.md #the-counts-line, #the-paces): a family reads the pace Gamma - SUM weight x sign x
-    # level over its reads; at a body's Nodes the held level is the body's source, so the effective content read
-    # there is at most SUM weight x |source|, positive at the load at every body (the run's guard holds it after)
-    def source_of(family: FamilyDefinition, entry: MeasuredDefinition) -> int:
-        quanta = sum(entry.held)
+    # level over its reads; at a Node of a body in the law's form the held level is the body's source THERE (its
+    # count at the Node, the stocks spread over its Nodes): the pace is bounded per Node, not by the whole body
+    def source_of(
+        family: FamilyDefinition, entry: MeasuredDefinition, counts: tuple[int, ...] = ()
+    ) -> int:
+        quanta, counts = sum(entry.held), counts or (sum(entry.held),)
         if family.held == "sign":
             declared = entry.block.q if entry.block is not None else 0
-            return abs(
+            quanta = abs(
                 declared
                 + sum(other.charge[0] * held for other, held in zip(families, entry.held, strict=True))
             )
-        return quanta
+            return -(-quanta // len(counts))
+        return max(counts) - (-(quanta - sum(counts)) // len(counts))
 
     for number, entry in enumerate(measured):
+        counts = entry.block.counts or () if entry.block is not None else ()
         for family in families:
             reach = sum(
-                weight * source_of(families[other], entry) for other, weight, _, _ in family.reads
+                weight * source_of(families[other], entry, counts)
+                for other, weight, _, _ in family.reads
             )
             if family.reads and reach >= node_clock:
                 raise ValueError(
