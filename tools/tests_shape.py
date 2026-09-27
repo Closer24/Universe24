@@ -3,7 +3,8 @@
 Every count is compared with the same count at the merge base (CHECK_BASE, else origin/main),
 read from git, so no baseline file is kept: a pull request may lower a count, never raise it.
 
-(a) Size. tests/ holds no more lines than src/, or no more than at the merge base; a test
+(a) Size. tests/ holds no more lines than at the merge base: it only shrinks, and a pull
+    request that adds tests offsets them by deletions (the model owner, 2026-09-27); a test
     file above 600 lines holds no more than at the merge base, and a new one stays under.
 (b) Copied setup. No test module imports another `test_*.py`: shared builders live in
     `tests/worlds.py` and `tests/running.py`. A function of 8 lines or more whose abstracted
@@ -172,10 +173,9 @@ def violations(head: Snapshot, base: Snapshot | None) -> list[str]:
     base = head if base is None else base
     found: list[str] = []
     head_tests, base_tests = lines_in(head, "tests/"), lines_in(base, "tests/")
-    head_src = lines_in(head, "src/")
-    if head_tests > head_src and head_tests > base_tests:
+    if head_tests > base_tests:
         found.append(
-            f"tests/ grew from {base_tests} to {head_tests} lines while above src/ ({head_src})"
+            f"tests/ grew from {base_tests} to {head_tests} lines; offset the new tests by deletions in the same pull request"
         )
     before = {name: file_counts(text) for name, text in tests_of(base).items()}
     after = {name: file_counts(text) for name, text in tests_of(head).items()}

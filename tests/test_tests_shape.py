@@ -15,14 +15,16 @@ def test_the_tree_keeps_the_shape_of_the_merge_base():
     assert SHAPE.violations(head, SHAPE.at_ref(ROOT, SHAPE.base_ref())) == []
 
 
-def test_growth_above_src_and_a_long_new_file_fail_and_a_cut_passes():
-    base = {"src/a.py": "x = 1\n" * 10, "tests/test_a.py": "y = 1\n" * 8}
+def test_any_growth_of_tests_and_a_long_new_file_fail_and_a_cut_passes():
+    base = {"src/a.py": "x = 1\n" * 100, "tests/test_a.py": "y = 1\n" * 8}
     head = {**base, "tests/test_a.py": "y = 1\n" * 12}
-    assert SHAPE.violations(head, base) == ["tests/ grew from 8 to 12 lines while above src/ (10)"]
-    head = {**base, "src/a.py": "x = 1\n" * 700, "tests/test_b.py": "z = 1\n" * 601}
     assert SHAPE.violations(head, base) == [
-        "tests/test_b.py has 601 lines, above 600 and the merge base's 0"
+        "tests/ grew from 8 to 12 lines; offset the new tests by deletions in the same pull request"
     ]
+    head = {**base, "tests/test_a.py": "", "tests/test_b.py": "z = 1\n" * 601}
+    assert "tests/test_b.py has 601 lines, above 600 and the merge base's 0" in SHAPE.violations(
+        head, base
+    )
     assert SHAPE.violations({**base, "tests/test_a.py": "y = 1\n"}, base) == []
 
 
