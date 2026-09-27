@@ -43,9 +43,7 @@ def a_close(flux: int, tally: tuple[int, int, int]) -> GivingStart:
 
 
 def test_the_bulk_share_keeps_the_velocity_on_the_moving_row_and_is_symmetric():
-    """The moving rows: a body of M = 65 on W = 3 Q M at v = 1 / 4 has n = 3120; a giving takes the share
-    48 and leaves n = 3072, the new wall's quarter (issue #1156); with n not divisible by M the velocity
-    stays within one unit of n on the new wall; a negative n gives the mirror image."""
+    """The moving rows: a body of M = 65 on W = 3 Q M at v = 1 / 4 has n = 3120; a giving takes the share 48 and leaves n = 3072, the new wall's quarter (issue #1156); with n not divisible by M the velocity stays within one unit of n on the new wall; a negative n gives the mirror image."""
     wall, momentum = 3 * 64 * 65, 3 * 64 * 65 // 4  # the drive wall 3 Q M, a hop every 4 intervals
     assert (wall, momentum) == (12480, 3120)
     shared = bulk_share((momentum, 0, 0), 65)
@@ -62,9 +60,7 @@ def test_the_bulk_share_keeps_the_velocity_on_the_moving_row_and_is_symmetric():
 
 
 def test_the_three_acts_of_a_window_on_synthetic_integers():
-    """The write adds g x the body's levels at its shell; the close sums the outward flux and closes at
-    the first interval with outward x den >= norm (334 closes at T = 1000 / 3, 333 not), the direction
-    the tally's sign per axis; before the close nothing is named."""
+    """The write adds g x the body's levels at its shell; the close sums the outward flux and closes at the first interval with outward x den >= norm (334 closes at T = 1000 / 3, 333 not), the direction the tally's sign per axis; before the close nothing is named."""
     term = GivingTerm(weight=3, norm=1000, norm_denominator=3, family=0)
     own = apply(term, an_open(2, NO_TALLY), CLOSED).own
     levels = np.array([7, -2, 0], dtype=np.int64)
@@ -82,8 +78,7 @@ def test_the_three_acts_of_a_window_on_synthetic_integers():
 
 
 def test_the_refusals_by_name():
-    """The weight, the norm and its denominator from 1; the act one of the three; an open on an open one,
-    a write or a close on none; the quanta from 1 at the open; every field named, no default"""
+    """The weight, the norm and its denominator from 1; the act one of the three; an open on an open one, a write or a close on none; the quanta from 1 at the open; every field named, no default"""
     with pytest.raises(ValueError, match="needs a weight, a norm and its denominator from 1"):
         apply(GivingTerm(0, 1000, 1, 0), an_open(1, NO_TALLY), CLOSED)
     with pytest.raises(ValueError, match="act is one of"):
@@ -104,9 +99,7 @@ def test_the_refusals_by_name():
 
 
 def test_the_declaration_is_the_ledgers_row():
-    """The folder declares the row of ALGEBRA.md #the-primitives in the register's form: "the giving" at (ii), the
-    word after the step, the writes ordered as a click's deferred writes at (iv), its section; its function
-    is `apply`, the act the loop calls."""
+    """The folder declares the row of ALGEBRA.md #the-primitives in the register's form: "the giving" at (ii), the word after the step, the writes ordered as a click's deferred writes at (iv), its section; its function is `apply`, the act the loop calls."""
     assert DECLARATION.name == "the giving" and folder_of("the giving") == "giving"
     assert DECLARATION.place == "(ii)" and DECLARATION.word == "after the step"
     assert DECLARATION.writes == (

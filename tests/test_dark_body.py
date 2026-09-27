@@ -6,6 +6,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
 
@@ -19,9 +21,7 @@ def load(name: str) -> dict:
 
 
 def test_the_files_are_the_generators_and_the_pins_are_declared_blind():
-    """(i) Both worlds load under their input stamp (the generator's, the loader's check); the
-    expectations file declares every pin with its kind (DETECTOR) and the bend's band from the
-    ray's COMPUTATION, positive toward the body, before any run."""
+    """(i) Both worlds load under their input stamp (the generator's, the loader's check); the expectations file declares every pin with its kind (DETECTOR) and the bend's band from the ray's COMPUTATION, positive toward the body, before any run."""
     for name in ("dark", "bright"):
         document = load(name)
         assert document["universe"] == "examples/events/universe.json"  # item 59
@@ -64,9 +64,9 @@ def test_the_dark_body_is_dark_by_declaration_and_the_bright_one_is_not():
     assert "at_body" not in dark["measured"][0]["emitter"]["receiver"]
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_both_worlds_run_balanced_and_the_dark_body_never_clicks():
-    """80 intervals each: books balanced, the sign family exactly zero, and no click of the dark
-    world names the dark body."""
+    """80 intervals each: books balanced, the sign family exactly zero, and no click of the dark world names the dark body."""
     lines: dict[str, list[dict]] = {}
     for name in ("dark", "bright"):
         lines[name] = []
