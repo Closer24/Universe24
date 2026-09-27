@@ -1,11 +1,4 @@
-"""THE HOLDS OF EVERY PART (ALGEBRA.md 9.91 (3); 9.86 (2); the one stroke of record 2106,
-commit 2; BUILD.md section 26 item 61): a body writes at every Node of its support, after the
-held families' step, gravity's time part s, its vector 4 s n_a div W and its tensor 2 s n_a
-n_b div W^2 (the factors the families file's), the charge's time part Q and its current Q n_a
-div W; the divisions' remainders are carried between intervals on the body and inverted with
-it; the spin's dipole sigma (S x e_j)_i and the moment's (sigma (mu x e_j)_i) div 2 are added
-on the body's Node's six neighbours; a part no body sources stays exactly zero and silent (the
-leak test per part). HOST; at rest bit for bit with the scalar engine."""
+"""The holds of every part: a body writes gravity's time, vector and tensor parts and the charge's time part and current at its support, the remainders carried and inverted with it; the spin's and the moment's dipoles on the six neighbours; a part no body sources stays zero. HOST; at rest bit for bit with the scalar engine."""
 
 from __future__ import annotations
 

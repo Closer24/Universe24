@@ -1,6 +1,4 @@
-"""THE SPIN'S STEP, its own folder bound to the loop (ALGEBRA.md the row "the spin's step"; 9.78 (5); 9.104 (2)):
-the curl and the gradient Rule3's read acts on the six neighbours, every division through core.rule3, the row's two
-weights from the family's entry; the loop turns a resting spin by a planted curl and by a moment's torque, and restores it."""
+"""The spin's step folder, bound: the curl and the gradient as Rule3's read acts on the six neighbours, every division through core.rule3, the two weights from the family's entry; a planted curl and a moment's torque turn a resting spin, and the inverse restores it."""
 
 from __future__ import annotations
 
