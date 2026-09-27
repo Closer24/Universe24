@@ -134,9 +134,11 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
     simulation = DetectorLawSimulation(world)
     at_node: list[int] = []
     booked = 0
+    first: int | None = None
     for _ in range(200):
         simulation.step()
-        live = simulation.records.get(1)
+        first = first if first is not None else next(iter(simulation.blocks[0].emitted), None)
+        live = simulation.records.get(first)
         if live is None:
             continue
         at_node.append(int(live.now[2, 0, 0]))
