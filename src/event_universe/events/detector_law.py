@@ -85,6 +85,7 @@ from event_universe.core.rule3 import (
     rule3,
 )
 from event_universe.events import guards, output
+from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
 from event_universe.events.output import form_json as form_json
 from event_universe.features import self_source
@@ -111,7 +112,6 @@ from event_universe.features.signed_read import SignedReadStart, SignedReadTerm,
 from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
 from event_universe.features.spins_step import (
     KEYS,
-    Neighbours,
     SpinRead,
     SpinStepOwn,
     SpinStepStart,
@@ -392,19 +392,6 @@ class Block:
     hold_value: dict[tuple[object, ...], int] = field(default_factory=dict)
 
 
-class PairView:
-    """The tests' view of a family's pair arrays by its own declared pair
-    (`kind_num[family]`, `kind_den[family]`; item 51's form): one array of
-    the two, from `pair_arrays`."""
-
-    def __init__(self, simulation: DetectorLawSimulation, index: int) -> None:
-        self.simulation = simulation
-        self.index = index
-
-    def __getitem__(self, family: int) -> np.ndarray:
-        return self.simulation.pair_arrays(family)[self.index]
-
-
 @dataclass
 class Ledger:
     """The books per family (Python integers, exact)."""
@@ -435,7 +422,7 @@ class DetectorLawLayer:
         self.gathered = 0
 
 
-class DetectorLawSimulation:
+class DetectorLawSimulation(GameBoardGeometry[Block]):
     """One world under the engine, stepped interval by interval."""
 
     # the record's step, one fused call today, its click included: the names of the file's chain
@@ -1233,22 +1220,6 @@ class DetectorLawSimulation:
                     stored[("d", family, *key[1:])] = value
         return writes
 
-    def _centre_node(self, block: Block) -> list[int]:
-        """The body's Node, the centre of its named set."""
-        return [int(axis[0]) for axis in np.nonzero(self.centre_mask(block))]
-
-    def _dipole_node(
-        self, centre: list[int], family: int, j: int, sigma: int
-    ) -> tuple[int, int, int] | None:
-        """The Node + sigma e_j of a body's Node on the family's faces, None beyond an open face."""
-        node = list(centre)
-        node[j] += sigma
-        if self.kind_wrap[family][j] or self.shape[j] == 1:
-            node[j] %= self.shape[j]
-        elif not 0 <= node[j] < self.shape[j]:
-            return None
-        return node[0], node[1], node[2]
-
     def _unhold_dipoles(self, line: Callable[..., object]) -> None:
         """The interval's dipole writes taken back (the inverse, before the fields
         step back) by the hold's line, the unhold act: each term's value off the
@@ -1303,24 +1274,6 @@ class DetectorLawSimulation:
             lambda: {"the paces": {key: id(a) for key, a in self._pace_carry.items()}},
         ):
             self._guard()
-
-    def _neighbour_nodes(
-        self, node: tuple[int, ...], wrap: tuple[bool, bool, bool]
-    ) -> list[tuple[int, int, int]]:
-        """The six reads of a Node as the send makes them: the wrap on a
-        periodic axis, the Node itself twice on a folded axis of extent 1,
-        none beyond an open face."""
-        nodes: list[tuple[int, int, int]] = []
-        for axis in range(3):
-            for side in (1, -1):
-                j = list(node)
-                j[axis] += side
-                if wrap[axis] or self.shape[axis] == 1:
-                    j[axis] %= self.shape[axis]
-                elif not 0 <= j[axis] < self.shape[axis]:
-                    continue
-                nodes.append((int(j[0]), int(j[1]), int(j[2])))
-        return nodes
 
     def wheel_at(
         self, family: int, node: tuple[int, ...], pair: tuple[int, int] | None = None
@@ -1406,80 +1359,7 @@ class DetectorLawSimulation:
         self.detector_channel.append(channel)
         return len(self.detector_names) - 1
 
-    def _span_nodes(
-        self, position: tuple[int, int, int], span: tuple[int, int, int]
-    ) -> list[tuple[int, int, int]]:
-        found: list[tuple[int, int, int]] = []
-        for dx in range(int(span[0])):
-            for dy in range(int(span[1])):
-                for dz in range(int(span[2])):
-                    node = (int(position[0]) + dx, int(position[1]) + dy, int(position[2]) + dz)
-                    if all(0 <= node[a] < self.shape[a] for a in range(3)):
-                        found.append(node)
-        return found
-
     # The blocks (massive-record-v1)
-
-    def _box(self, corner: list[int], extents: tuple[int, int, int], family: int) -> np.ndarray:
-        """The Nodes R of a block: the box of `extents` per axis (a cube's
-        side three times; the slabs of ALGEBRA.md #a-familys-declaration) from its lower
-        corner, wrapped on an axis the world's border makes periodic, cut on an
-        open one (a G_48-set of Nodes, world data)."""
-        mask = np.zeros(self.shape, dtype=bool)
-        wrap = self.kind_wrap[family]
-        ranges = []
-        for axis in range(3):
-            extent = self.shape[axis]
-            indices = [corner[axis] + offset for offset in range(extents[axis])]
-            if wrap[axis]:
-                indices = [index % extent for index in indices]
-            else:
-                indices = [index for index in indices if 0 <= index < extent]
-            ranges.append(sorted(set(indices)))
-        if all(ranges):
-            mask[np.ix_(ranges[0], ranges[1], ranges[2])] = True
-        return mask
-
-    def pair_arrays(
-        self, family: int, pair: tuple[int, int] | None = None
-    ) -> tuple[np.ndarray, np.ndarray]:
-        """THE PAIR ARRAYS of a record of `family` at its rest pair (ALGEBRA.md #the-primitives, #the-interval): num and den over the board, the pair everywhere but at the family's bodies, whose declared pairs are written at their Nodes; made once per (family, pair) by the pair folder's function through the register and kept up with the bodies' steps (`_write_pair`); `pair` None reads the family's own declared pair (refused on a family whose pair is the body's)."""
-        if pair is None:
-            definition = self.families[family]
-            if definition.pair_on_body:
-                raise ValueError(
-                    f"the family {definition.name!r} declares no pair of its own; a "
-                    "record's pair is read from the record (ALGEBRA.md #the-primitives, #the-interval)"
-                )
-            pair = definition.pair
-        key = (family, int(pair[0]), int(pair[1]))
-        found = self._pairs.get(key)
-        if found is None:
-            arrays = self.main_loop.function_of("the pair", "(i)")
-            wells = [
-                (block.mask, block.definition.pair) for block in self.blocks if block.family == family
-            ]
-            found = cast(tuple[np.ndarray, np.ndarray], arrays(self.shape, key[1:], wells))
-            self._pairs[key] = found
-        return found
-
-    def _write_pair(self, block: Block) -> None:
-        """The block's pair written on its Nodes into every pair array of its
-        family; the array's own pair elsewhere on the Nodes the block left."""
-        self.ports.begin()
-        for key in [key for key in self._kind_walls if key[0] == block.family]:
-            del self._kind_walls[key]  # the family's walls read anew (`kind_wall`)
-        for (family, rest_num, rest_den), (num, den) in self._pairs.items():
-            if family != block.family:
-                continue
-            num[~block.mask] = rest_num
-            den[~block.mask] = rest_den
-            num[block.mask] = block.definition.pair[0]
-            den[block.mask] = block.definition.pair[1]
-            for other in self.blocks:
-                if other is not block and other.family == block.family:
-                    num[other.mask & ~block.mask] = other.definition.pair[0]
-                    den[other.mask & ~block.mask] = other.definition.pair[1]
 
     def _massive_record(
         self, identity: int, number: int, family: int, pair: tuple[int, int], twist: int
@@ -1602,30 +1482,6 @@ class DetectorLawSimulation:
     # one stroke, commit 6): the contraction, the feed, the induction, the spin's step,
     # written once for any body and any read
 
-    def _ports_of(
-        self,
-        level_now: np.ndarray,
-        silent: bool,
-        centre: tuple[int, int, int],
-        wrap: tuple[bool, bool, bool],
-    ) -> Neighbours:
-        """A level at the six neighbours of a Node in the Ports' order, the spin's step's read (HOST): None where the loop has no read there, a silent part, an axis of extent 1 or a Node beyond an open face; the wrap on a periodic axis."""
-        found: list[int | None] = []
-        for axis in range(3):
-            for sigma in (1, -1):
-                node = list(centre)
-                node[axis] += sigma
-                if silent or self.shape[axis] == 1:
-                    found.append(None)
-                    continue
-                if wrap[axis]:
-                    node[axis] %= self.shape[axis]
-                elif not 0 <= node[axis] < self.shape[axis]:
-                    found.append(None)
-                    continue
-                found.append(int(level_now[node[0], node[1], node[2]]))
-        return cast(Neighbours, tuple(found))
-
     def _spins_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
         """THE BODY'S STEP AT (v) (ALGEBRA.md #the-interval, #a-familys-declaration): the spin's step's line
         (features/spins_step) on the body, from the fields as the interval leaves them (their
@@ -1671,28 +1527,6 @@ class DetectorLawSimulation:
         block.spin, block.spin_before = list(writes.spin), list(writes.spin_before)
         block.hold_value.update(writes.own.values)
         block.hold_carry.update(writes.own.carries)
-
-    def shell_mask(self, block: Block) -> np.ndarray:
-        """The shell of a body: its Nodes with a Port, a Link to a Node outside the body (the wrap on a periodic axis; no Port beyond an open face; a folded axis carries none)."""
-        outward = self.ports.outward(block.mask, self.kind_wrap[block.family])
-        shell = np.zeros(self.shape, dtype=bool)
-        for port in outward:
-            shell |= port
-        return shell
-
-    def first_shell_node(self, block: Block) -> tuple[int, int, int]:
-        """THE FIRST SHELL NODE IN THE DECLARED ORDER (ALGEBRA.md #the-ladder, #the-postulates: which Node is read is a convention): the first Node of
-        the body in the engine's x-major order (`body_node_indices`, the
-        loader's and the generator's one convention) that has a Port; it
-        follows the body's steps. A body with no shell (every Link inside
-        it) is refused: nothing reads its residue."""
-        where = np.nonzero(self.shell_mask(block))
-        if len(where[0]) == 0:
-            raise ValueError(
-                f"measured[{block.number}] has no shell (no Node of it has a Port to "
-                "a Node outside it), so no Node reads its residue (ALGEBRA.md #the-ladder)"
-            )
-        return int(where[0][0]), int(where[1][0]), int(where[2][0])
 
     def residue_of(self, live: LiveRecord | NodeRecord, block: Block) -> tuple[int, int]:
         """The residue from the law under the Node clock, read at the first shell Node: the record's rule remainder r at the body's first shell Node in the declared order, read now, in units of the remainder's step g = gcd(Gamma num, 6 den M, 3 den f) at that Node, and the wheel W = 3 den f / g (`wheel_at`); no declaration, no draw; which Node is read is a convention."""
@@ -1844,17 +1678,6 @@ class DetectorLawSimulation:
         return (
             wall * (node_record.now * node_record.now + node_record.before * node_record.before)
             - coefficient * node_record.now * node_record.before
-        )
-
-    def centre_mask(self, block: Block) -> np.ndarray:
-        """The excited record's named set (ALGEBRA.md #rule3): the body's
-        centre Node, the lower corner plus the extent // 2 on each axis, one
-        Node (the Node itself for a body of side 1); it follows the body's
-        steps."""
-        return self._box(
-            [int(block.corner[axis]) + block.definition.extents[axis] // 2 for axis in range(3)],
-            (1, 1, 1),
-            block.family,
         )
 
     def _excitation_rung(self, block: Block) -> None:
@@ -2486,19 +2309,6 @@ class DetectorLawSimulation:
         )
         return pairs
 
-    def _moving_sets(self) -> dict[int, tuple[Block, list[int]]]:
-        """The detectors bound to a block whose momentum is not zero at this
-        interval, each with its block and the momentum (ALGEBRA.md #the-ladder):
-        the faces of these sets book in the body's frame; empty on a board at
-        rest, where the rule is the Port booking alone."""
-        moving: dict[int, tuple[Block, list[int]]] = {}
-        for detector, number in self.set_block.items():
-            block = self.block_by_number[number]
-            momentum = self._momentum_now(block)
-            if any(momentum):
-                moving[detector] = (block, momentum)
-        return moving
-
     def detector_inflow_tally(self, live: LiveRecord) -> dict[int, int]:
         """The detectors' inflow per record over the Ports alone: this interval's one-way inward flux into every detector, 3 G_ij = now_i before_j - before_i now_j where positive per Port, times the family's wall (the form's units), from the record's two levels after the interval's step, by the detector's index; read at the Port pairs only (one gather per pair, exact Python integers), never over the board."""
         port_i, port_j, port_detector = self._inflow_ports(live.family)
@@ -2756,23 +2566,6 @@ class DetectorLawSimulation:
         """The norm as the exact rational: the given record's conserved form Q, the Node's terms weighted by 1 / p_i, as the pair (numerator, denominator) in lowest terms, the record's `norm` and `pace`; the ladder reads the plain flux C against Q in integers; for a record written at one level p Q is whole (the integer T in the body's own units) and the pair reduces from (p Q, p); a record written across levels has a rational Q, its world energy, and the same reading."""
         return self.conserved_form(live)
 
-    @staticmethod
-    def support_box(*arrays: np.ndarray) -> tuple[tuple[int, int], ...] | None:
-        """HOST: the bounding box [lo, hi) per axis of the Nodes where any of the
-        arrays is not zero; None when every array is zero everywhere (the
-        whole board then, the safe default)."""
-        nonzero = np.zeros(arrays[0].shape, dtype=bool)
-        for array in arrays:
-            nonzero |= array != 0
-        if not nonzero.any():
-            return None
-        box = []
-        for axis in range(nonzero.ndim):
-            along = np.any(nonzero, axis=tuple(other for other in range(nonzero.ndim) if other != axis))
-            where = np.nonzero(along)[0]
-            box.append((int(where[0]), int(where[-1]) + 1))
-        return tuple(box)
-
     def _window(
         self, box: tuple[tuple[int, int], ...] | None, wrap: tuple[bool, bool, bool]
     ) -> tuple[tuple[slice, ...], tuple[bool, bool, bool], tuple[tuple[int, int], ...]] | None:
@@ -2962,11 +2755,6 @@ class DetectorLawSimulation:
             increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
             self.register.at("the clicks", "(ii)")(live, increments)
 
-    def _window_centre(self, block: Block) -> tuple[int, int, int]:
-        """The body's Node of a block with a window (its centre Node)."""
-        axes = np.nonzero(self.centre_mask(block))
-        return (int(axes[0][0]), int(axes[1][0]), int(axes[2][0]))
-
     def _giving_act(self, block: Block, start: GivingStart, live: LiveRecord | None) -> GivingWrites:
         """One act of the giving through the folder's `apply` (the function the main loop looked up at (ii)): the term from the emitter's declaration, the own record from the window's record (`live`), none at the open."""
         emitter = block.definition.emitter
@@ -3018,11 +2806,6 @@ class DetectorLawSimulation:
                 (min(lo, low), max(hi, high))
                 for (lo, hi), (low, high) in zip(live.box, self.mask_box(block.mask), strict=True)
             )
-
-    def mask_box(self, mask: np.ndarray) -> tuple[tuple[int, int], ...]:
-        """The box of a body's Nodes, [low, high) per axis (HOST)."""
-        axes = np.nonzero(mask)
-        return tuple((int(axis.min()), int(axis.max()) + 1) for axis in axes)
 
     def _body_levels(self, block: Block) -> np.ndarray:
         """The body's rotation's level now at each of its Nodes, in the mask's
