@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import sys
 from dataclasses import dataclass
 from fractions import Fraction
 from math import isqrt
@@ -17,6 +19,7 @@ from event_universe.core.rule3 import coefficients, form_term, rule3, rule_total
 from event_universe.features.start import (
     NO_READ,
     PERIODIC,
+    FieldAtRest,
     Pair,
     Wrap,
     arrivals,
@@ -198,10 +201,10 @@ def bound_mode(
     amplitude = amplitude_unit(pair, gamma, content)
     read, self_coefficient, wall = rule_integers(pair, gamma, content)
     a = np.full(counts.shape, amplitude, dtype=np.int64)
-    seen: dict[bytes, int] = {}
+    seen: dict[bytes, int] = {}  # the iterates by their digest: the repeat found, the memory bounded
     step = 0
-    while a.tobytes() not in seen:
-        seen[a.tobytes()] = step
+    while hashlib.sha256(a.tobytes()).digest() not in seen:
+        seen[hashlib.sha256(a.tobytes()).digest()] = step
         (a,) = to_amplitude(
             read_act((a,), (arrivals(a, wrap),), read, self_coefficient, wall), amplitude
         )
@@ -209,7 +212,9 @@ def bound_mode(
     level = a.astype(object)
     total = rule3((read, read, read), arrivals(level, wrap), self_coefficient, 1, level, 0, 0)[0]
     rotation, share = rotation_and_share((level,), (total,), wall, counts, gamma, pair, "mode", content)
-    return BoundMode(a, amplitude, step, step - seen[a.tobytes()], rotation, share)
+    return BoundMode(
+        a, amplitude, step, step - seen[hashlib.sha256(a.tobytes()).digest()], rotation, share
+    )
 
 
 def moving_mode(
@@ -238,10 +243,10 @@ def moving_mode(
     read, self_coefficient, wall = rule_integers(pair, gamma, content)
     re = np.full(counts.shape, amplitude, dtype=np.int64)
     im = np.zeros(counts.shape, dtype=np.int64)
-    seen: dict[bytes, int] = {}
+    seen: dict[bytes, int] = {}  # by the digest of the two parts
     step = 0
-    while re.tobytes() + im.tobytes() not in seen:
-        seen[re.tobytes() + im.tobytes()] = step
+    while hashlib.sha256(re.tobytes() + im.tobytes()).digest() not in seen:
+        seen[hashlib.sha256(re.tobytes() + im.tobytes()).digest()] = step
         re, im = to_amplitude(
             read_act((re, im), twisted_arrivals(re, im, triple, wrap), read, self_coefficient, wall),
             amplitude,
@@ -258,7 +263,8 @@ def moving_mode(
     rotation, share = rotation_and_share(
         levels, totals, wall, counts, gamma, pair, f"moving mode at {triple}", content
     )
-    return MovingMode(re, im, amplitude, step, step - seen[re.tobytes() + im.tobytes()], rotation, share)
+    cycle = step - seen[hashlib.sha256(re.tobytes() + im.tobytes()).digest()]
+    return MovingMode(re, im, amplitude, step, cycle, rotation, share)
 
 
 def moving_levels(mode: MovingMode, triple: Triple) -> tuple[np.ndarray, np.ndarray]:
@@ -335,7 +341,7 @@ def moving_body(
     content: np.ndarray | None = None,
     rest: BoundMode | None = None,
 ) -> MovingBody:
-    """The moving body along x (ALGEBRA.md #the-generator (e)): the momentum n names the velocity v = n / (3 Q M), Q the universe's momentum unit and M the body's quanta (the counts' sum); the phase's pair (m, j), m the body's declared denominator, j by bisection from 0 to m on the packet's velocity, which rises with k, to the j whose velocity is nearest the named one, the phase's sense the momentum's sign; refused by name where the named velocity is beyond the packet's at j = m (a quarter turn per Link)."""
+    """The body along x, at rest and in motion one primitive (ALGEBRA.md #the-generator (e); the owner's word): the momentum n names the velocity v = n / (3 Q M), Q the universe's momentum unit and M the body's quanta (the counts' sum); the phase's pair (m, j), m the body's declared denominator, j by bisection from 0 to m on the packet's velocity, which rises with k, to the j whose velocity is nearest the named one, the phase's sense the momentum's sign; at the momentum 0 the pair is (m, 0), the phase's triple (1, 0, 1) and the two levels the resting mode's, no bisection; refused by name where the named velocity is beyond the packet's at j = m (a quarter turn per Link)."""
     if momentum_unit < 1 or denominator < 1:
         raise ValueError(
             f"the momentum unit Q = {momentum_unit} and the phase's denominator m = {denominator} are from 1"
@@ -352,7 +358,10 @@ def moving_body(
         a, b, c = triple_of((denominator, j))
         return packet_velocity(rest, (a, sense * b, c), pair[0], self_coefficient, wall, paces, wrap)
 
-    found = {0: at(0), denominator: at(denominator)}
+    found = {0: at(0)}
+    if momentum == 0:
+        return MovingBody(found[0][1], found[0][2], (denominator, 0), AT_REST, found[0][0], named, rest)
+    found[denominator] = at(denominator)
     if abs(found[denominator][0]) < abs(named):
         raise ValueError(
             f"the momentum {momentum} names the velocity {named}, beyond the packet's "
@@ -452,112 +461,171 @@ def pair_of(row: dict[str, Any], label: str) -> Pair:
 
 
 def generate(document: dict[str, Any]) -> dict[str, Any]:
-    """The generator on its input file, a world file in the law's form (ALGEBRA.md #the-generator): the GameBoard's shape and faces, the Node clock, the universe file it names (the families' rows: the body's family's pair and reads, the held families' pairs, the integers by name) and one body written by its Nodes with their counts; the held fields the body's family reads plainly at rest under their rows' pairs, the mode on their weighted sum, the readings; no number in the tool or on the command line."""
+    """The generator on its input file, a world file in the law's form (ALGEBRA.md #the-generator): the GameBoard's shape and faces, the Node clock (the world's, or the universe's integer), the universe file it names (the families' rows: each body's family's pair and reads, the held families' pairs, the integers by name) and the bodies written by their Nodes with their counts; the held fields at rest under every body's count (the hold's clamp at every body's Nodes), then per body whose family reads a held field plainly its mode in its own well (the weighted sum of its own counts' fields at rest) by the one path of rest and motion, the phase's pair (m, 0) at the momentum 0, and its clock in the world's well (the rotation of that profile with every body's field); a body's refusal by name is written as its reading, the other bodies go on; no number in the tool or on the command line."""
     shape = tuple(int(n) for n in document["shape"])
     faces = document["boundary"]
     wrap = tuple(
         (faces if isinstance(faces, dict) else {a: faces for a in "xyz"})[axis] == "periodic"
         for axis in "xyz"
     )
-    gamma = int(document["node_clock"])
     universe = read_document(document["universe"])
     rows = {row["name"]: row for row in universe["families"]}
     integers = universe.get("integers", {})
+    gamma = int(document.get("node_clock", integers.get("node_clock", 0)))
     bodies = [
         body for body in document.get("measured", []) if isinstance(body, dict) and "nodes" in body
     ]
-    if len(bodies) != 1:
+    if not bodies:
         raise ValueError(
-            f"the generator takes one body in the law's form (its nodes with their counts), found {len(bodies)}"
+            "the generator takes bodies in the law's form (their nodes with their counts), found none"
         )
-    body = bodies[0]
-    momentum = tuple(int(v) for v in body.get("momentum", (0, 0, 0)))
-    axes = [axis for axis, component in enumerate(momentum) if component]
-    if len(axes) > 1:
-        raise ValueError(f"a moving body moves along one axis: the momentum {momentum} has two")
-    counts = np.zeros(shape, dtype=np.int64)
-    for entry in body["nodes"]:
-        counts[tuple(int(v) for v in entry["node"])] = int(entry["count"])
-    row = rows[body["family"]]
-    pair = pair_of(row, f"the family {body['family']!r}")
-    content = np.zeros(shape, dtype=np.int64)
+    counts_of: list[np.ndarray] = []
+    total = np.zeros(shape, dtype=np.int64)
+    for body in bodies:
+        counts = np.zeros(shape, dtype=np.int64)
+        for entry in body["nodes"]:
+            counts[tuple(int(v) for v in entry["node"])] = int(entry["count"])
+        counts_of.append(counts)
+        total = total + counts
     rests: dict[str, Any] = {}
-    for read in row.get("reads", []):
-        if read.get("by") not in (1, "plain"):
-            continue  # a read by the charge's sign: the law's form carries no charge, the factor 0
-        weight = read["weight"]
-        if isinstance(weight, str):
-            weight = integers[weight]
-        held = rows[read["family"]]
-        rest = field_at_rest(counts, pair_of(held, f"the held family {read['family']!r}"), wrap)
-        content = content + int(weight) * rest.levels
-        rests[read["family"]] = {
-            "pair": list(held["pair"]),
-            "iterations": rest.iterations,
-            "cycle": rest.cycle,
-            "at_body": int(rest.levels[counts > 0].min()),
-            "at_corner": int(rest.levels[0, 0, 0]),
-        }
-    mode = bound_mode(counts, pair, gamma, wrap, content)
-    clock = clock_pair(mode.rotation, mode.amplitude)
-    moving: dict[str, Any] = {}
-    if axes:
-        axis = axes[0]
-        if "phase_denominator" not in body:
-            raise ValueError(
-                "a moving body declares its phase_denominator m (the phase's pair (m, j), j bisected)"
+    fields: dict[str, FieldAtRest] = {}
+    own_fields: dict[tuple[int, str], FieldAtRest] = {}
+    readings: list[dict[str, Any]] = []
+    for body, counts in zip(bodies, counts_of, strict=True):
+        row = rows[body["family"]]
+        reading: dict[str, Any] = {"family": body["family"], "pair": list(row.get("pair", []))}
+        readings.append(reading)
+        try:
+            pair = pair_of(row, f"the family {body['family']!r}")
+            momentum = tuple(int(v) for v in body.get("momentum", (0, 0, 0)))
+            axes = [axis for axis, component in enumerate(momentum) if component]
+            if len(axes) > 1:
+                raise ValueError(f"a moving body moves along one axis: the momentum {momentum} has two")
+            plain = [read for read in row.get("reads", []) if read.get("by") in (1, "plain")]
+            if not plain:
+                reading["mode"] = (
+                    "none: the family reads no held field plainly, the body is content alone"
+                )
+                continue
+            content = np.zeros(shape, dtype=np.int64)
+            own_content = np.zeros(shape, dtype=np.int64)  # the body's own well: its own counts' fields
+            for read in plain:
+                weight = read["weight"]
+                if isinstance(weight, str):
+                    weight = integers[weight]
+                held = rows[read["family"]]
+                if read["family"] not in fields:
+                    rest = field_at_rest(
+                        total, pair_of(held, f"the held family {read['family']!r}"), wrap
+                    )
+                    fields[read["family"]] = rest
+                    rests[read["family"]] = {
+                        "pair": list(held["pair"]),
+                        "iterations": rest.iterations,
+                        "cycle": rest.cycle,
+                        "at_bodies": int(rest.levels[total > 0].min()),
+                        "at_corner": int(rest.levels[0, 0, 0]),
+                    }
+                content = content + int(weight) * fields[read["family"]].levels
+                own_key = (id(body), read["family"])
+                if own_key not in own_fields:
+                    own_fields[own_key] = field_at_rest(
+                        counts, pair_of(held, f"the held family {read['family']!r}"), wrap
+                    )
+                own_content = own_content + int(weight) * own_fields[own_key].levels
+            if "phase_denominator" not in body:
+                raise ValueError(
+                    "a body declares its phase_denominator m (the phase's pair (m, j), j = 0 at rest, bisected in motion)"
+                )
+            axis = axes[0] if axes else 0
+            order = (axis, *(other for other in range(3) if other != axis))
+            moved = moving_body(
+                np.moveaxis(counts, axis, 0),
+                pair,
+                gamma,
+                momentum[axis],
+                int(integers["momentum_unit"]),
+                int(body["phase_denominator"]),
+                tuple(wrap[other] for other in order),
+                np.moveaxis(own_content, axis, 0),
             )
-        order = (axis, *(other for other in range(3) if other != axis))
-        moved = moving_body(
-            np.moveaxis(counts, axis, 0),
-            pair,
-            gamma,
-            momentum[axis],
-            int(integers["momentum_unit"]),
-            int(body["phase_denominator"]),
-            tuple(wrap[other] for other in order),
-            np.moveaxis(content, axis, 0),
-        )
-        moving = {
-            "axis": axis,
-            "momentum": momentum[axis],
-            "phase_pair": list(moved.pair),
-            "triple": list(moved.triple),
-            "velocity_named": [moved.named.numerator, moved.named.denominator],
-            "velocity": [moved.velocity.numerator, moved.velocity.denominator],
-            "now": np.moveaxis(moved.now, 0, axis),
-            "before": np.moveaxis(moved.before, 0, axis),
-        }
-    return {
-        "family": body["family"],
-        "pair": list(pair),
-        "rest": rests,
-        "amplitude_unit": mode.amplitude,
-        "iterations": mode.iterations,
-        "cycle": mode.cycle,
-        "rotation": [mode.rotation.numerator, mode.rotation.denominator],
-        "clock": list(clock),
-        "period": period_by_the_rule(*clock),
-        "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
-        "profile": mode.profile,
-        "content": content,
-        "moving": moving,
-    }
+            mode = moved.rest
+            # the body's clock in the world's well: the rotation of its own profile with every body's
+            # field, the same symmetric form (the redshift's depth enters here); refused by name where
+            # the profile is no mode of the world's well, the own rotation then the clock's
+            in_world: dict[str, Any] = {}
+            try:
+                level = mode.profile.astype(object)
+                read, self_coefficient, wall = rule_integers(pair, gamma, content)
+                total = rule3(
+                    (read, read, read), arrivals(level, wrap), self_coefficient, 1, level, 0, 0
+                )[0]
+                rotation, share = rotation_and_share(
+                    (level,), (total,), wall, counts, gamma, pair, "mode in the world's well", content
+                )
+                in_world = {"rotation": [rotation.numerator, rotation.denominator]}
+            except ValueError as refusal:
+                in_world = {"refused": str(refusal)}
+                rotation = mode.rotation
+            clock = clock_pair(rotation, mode.amplitude)
+            moving = {
+                "axis": axis,
+                "momentum": momentum[axis],
+                "phase_pair": list(moved.pair),
+                "triple": list(moved.triple),
+                "velocity_named": [moved.named.numerator, moved.named.denominator],
+                "velocity": [moved.velocity.numerator, moved.velocity.denominator],
+                "now": np.moveaxis(moved.now, 0, axis),
+                "before": np.moveaxis(moved.before, 0, axis),
+            }
+            reading.update(
+                {
+                    "amplitude_unit": mode.amplitude,
+                    "iterations": mode.iterations,
+                    "cycle": mode.cycle,
+                    "rotation": [mode.rotation.numerator, mode.rotation.denominator],
+                    "clock": list(clock),
+                    "period": period_by_the_rule(*clock),
+                    "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
+                    "in_the_worlds_well": in_world,
+                    "profile": mode.profile,
+                    "content": content,
+                    "moving": moving,
+                }
+            )
+        except ValueError as refusal:
+            reading["refused"] = str(refusal)
+    return {"rest": rests, "bodies": readings}
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, required=True, help="the world file in the law's form")
-    parser.add_argument("--out", type=Path, help="write the readings, the profile and the well as JSON")
+    parser.add_argument(
+        "--out",
+        type=Path,
+        help="write the mode file beside the world (<world>.mode.json): the world file's digest, the held fields at rest and every body's resting mode at its amplitude unit with its phase's pair; a derived record the loader checks in one pass, never a declaration",
+    )
     args = parser.parse_args()
-    reading = generate(json.loads(args.input.read_text(encoding="utf-8")))
-    arrays = {key: reading.pop(key) for key in ("profile", "content")}
-    arrays.update({key: reading["moving"].pop(key) for key in ("now", "before") if reading["moving"]})
+    sys.set_int_max_str_digits(
+        0
+    )  # the rotation is an exact fraction: its digits are the well's, not the host's to cap
+    document = args.input.read_bytes()
+    reading = generate(json.loads(document))
+    reading["world_digest"] = hashlib.sha256(document).hexdigest()
+    profiles: list[np.ndarray | None] = []
+    for body in reading["bodies"]:
+        profiles.append(body.pop("profile", None))
+        body.pop("content", None)
+        if "moving" in body:
+            body["moving"].pop("now")
+            body["moving"].pop("before")
     print(json.dumps(reading))
     if args.out is not None:
-        args.out.write_text(
-            json.dumps({**reading, **{key: value.ravel().tolist() for key, value in arrays.items()}})
-        )
+        for body, profile in zip(reading["bodies"], profiles, strict=True):
+            if profile is not None:
+                body["profile"] = profile.ravel().tolist()
+        args.out.write_text(json.dumps(reading))
 
 
 if __name__ == "__main__":

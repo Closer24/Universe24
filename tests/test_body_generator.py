@@ -1,6 +1,4 @@
-"""The generator by Rule3 alone (tools/body_generator.py): the read and division acts iterated to the
-first repeat give the bound mode at rest and in motion, the held field at rest under its family's pair
-is the well the mode sits on; a pair that binds nothing is refused."""
+"""The generator by Rule3 alone (tools/body_generator.py): the read and division acts iterated to the first repeat give the bound mode at rest and in motion, the held field at rest under its family's pair is the well the mode sits on; a pair that binds nothing is refused."""
 
 from __future__ import annotations
 
@@ -77,8 +75,7 @@ def float_top_mode(counts: np.ndarray, pair: tuple[int, int]) -> tuple[float, np
 
 
 def test_the_iteration_stops_at_the_first_repeat_and_gives_the_bound_mode():
-    """A cube of side 4 at 3000 per Node on [800, 1200]: a fixed point at iteration 198, the float
-    mode's rotation and profile to 10^-6, 0.76 inside the cube, the clock's period 8."""
+    """A cube of side 4 at 3000 per Node on [800, 1200]: a fixed point at iteration 198, the float mode's rotation and profile to 10^-6, 0.76 inside the cube, the clock's period 8."""
     counts = counted_cube(12, 4, 3000)
     mode = bound_mode(counts, KIND, GAMMA)
     assert (mode.iterations, mode.cycle) == (198, 1)
@@ -97,8 +94,7 @@ def test_the_iteration_stops_at_the_first_repeat_and_gives_the_bound_mode():
 
 
 def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands_beyond_it():
-    """A is the largest amplitude keeping Rule3's total inside int64 (between 2^22 and 2^23 here);
-    the profile divided to A / 2 is a fixed point of the iteration at A / 2 within one unit."""
+    """A is the largest amplitude keeping Rule3's total inside int64 (between 2^22 and 2^23 here); the profile divided to A / 2 is a fixed point of the iteration at A / 2 within one unit."""
     counts = counted_cube(12, 4, 3000)
     amplitude = amplitude_unit(KIND, GAMMA, counts)
     reads, self_coefficient, wall = coefficients(KIND[0], KIND[1], GAMMA, 3000)
@@ -153,8 +149,7 @@ def test_the_two_levels_and_the_amplitude_from_the_count_and_the_norm():
 
 
 def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
-    """At (1, 0, 1) the twisted iteration is the resting mode bit for bit and at (99, 20, 101) its rotation within
-    the rest's (the gauge); the moving body of (e): the packet's velocity bisected to the named one, both senses."""
+    """At (1, 0, 1) the twisted iteration is the resting mode bit for bit and at (99, 20, 101) its rotation within the rest's (the gauge); the moving body of (e): the packet's velocity bisected to the named one, both senses."""
     counts = counted_cube(12, 4, 3000)
     rest = bound_mode(counts, KIND, GAMMA)
     still = moving_mode(counts, KIND, GAMMA, AT_REST)
@@ -192,9 +187,7 @@ def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
 
 
 def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name(tmp_path):
-    """THE INPUT IS A FILE (the owner's word): a world file in the law's form (the GameBoard, the Node clock, the
-    universe it names, one body by its Nodes and counts) gives the mode on the held fields the family reads plainly
-    (a read by the sign skipped, a weight named in the integers); the refusals by name, [800, 809]'s shallow well."""
+    """THE INPUT IS A FILE (the owner's word): a world file in the law's form (the GameBoard, the Node clock, the universe it names, one body by its Nodes and counts) gives the mode on the held fields the family reads plainly (a read by the sign skipped, a weight named in the integers); the refusals by name, [800, 809]'s shallow well."""
 
     def row(name, pair, held, reads):
         return {"name": name, "pair": pair, "held": held, "reads": reads}
@@ -213,36 +206,46 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     )
     nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
     body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
+    body["phase_denominator"] = 64  # one form: every body carries the phase's m
     faces = {"x": "periodic", "y": "periodic", "z": "periodic"}
     world = {"shape": [8, 8, 8], "boundary": faces, "node_clock": GAMMA, "measured": [body]}
     world["universe"] = str(tmp_path / "universe.json")
-    reading, box = generate(world), counted_cube(8, 2, 3000)
+    readings, box = generate(world), counted_cube(8, 2, 3000)
+    reading = readings["bodies"][0]
     rest = field_at_rest(box, (1, 4))
     mode = bound_mode(box, KIND, GAMMA, content=rest.levels)
     assert reading["rotation"] == [mode.rotation.numerator, mode.rotation.denominator]
     assert reading["period"] == 8 and np.array_equal(reading["profile"], mode.profile)
-    assert reading["rest"]["gravity"] == {
+    assert readings["rest"]["gravity"] == {
         "pair": [1, 4],
         "iterations": rest.iterations,
         "cycle": 1,
-        "at_body": 3000,
+        "at_bodies": 3000,
         "at_corner": 0,
     }
     assert np.array_equal(reading["content"], rest.levels)
-    moving = {**body, "momentum": [0, 3 * 64 * 24000 // 40, 0], "phase_denominator": 64}
-    moved = generate({**world, "measured": [moving]})["moving"]
+    still = reading["moving"]  # one path: at the momentum 0 the pair (m, 0) and the mode's levels
+    assert still["phase_pair"] == [64, 0] and still["triple"] == [1, 0, 1]
+    assert still["velocity_named"] == [0, 1] and np.array_equal(still["now"], mode.profile)
+    moving = {**body, "momentum": [0, 3 * 64 * 24000 // 40, 0]}
+    moved = generate({**world, "measured": [moving]})["bodies"][0]["moving"]
     assert moved["axis"] == 1 and moved["velocity_named"] == [1, 40] and moved["phase_pair"][0] == 64
     assert moved["now"].shape == (8, 8, 8) and abs(
         Fraction(*moved["velocity"]) - Fraction(1, 40)
     ) < Fraction(1, 100)
-    with pytest.raises(ValueError, match="moves along one axis"):
-        generate({**world, "measured": [{**body, "momentum": [1, 1, 0]}]})
-    with pytest.raises(ValueError, match="declares its phase_denominator"):
-        generate({**world, "measured": [{**body, "momentum": [0, 1, 0]}]})
-    with pytest.raises(ValueError, match="the row's pair is 'body', not \\[num, den\\]"):
-        generate({**world, "measured": [{**body, "family": "light"}]})
-    with pytest.raises(ValueError, match="one body in the law's form .* found 2"):
-        generate({**world, "measured": [body, body]})
+
+    def refused(entry: dict) -> str:
+        return generate({**world, "measured": [entry]})["bodies"][0]["refused"]
+
+    assert "moves along one axis" in refused({**body, "momentum": [1, 1, 0]})
+    without = {k: v for k, v in body.items() if k != "phase_denominator"}
+    assert "declares its phase_denominator" in refused(without)
+    assert "the row's pair is 'body', not [num, den]" in refused({**body, "family": "light"})
+    two = generate({**world, "measured": [body, {**body, "family": "light"}]})["bodies"]
+    deeper = Fraction(
+        *two[0]["in_the_worlds_well"]["rotation"]
+    )  # a second body deepens the world's well:
+    assert deeper != Fraction(*two[0]["rotation"]) and "refused" in two[1]  # the clock's rotation moves
     with pytest.raises(ValueError, match=r"the count binds no mode of the family \[800, 809\]"):
         bound_mode(counted_cube(8, 4, 3000), (800, 809), GAMMA)
     with pytest.raises(ValueError, match=r"the clock \[2, 1\] is no rotation"):

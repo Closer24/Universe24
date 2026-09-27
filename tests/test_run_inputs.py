@@ -23,11 +23,7 @@ def write(directory: Path, name: str, document: dict) -> Path:
 
 
 def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
-    """Two small worlds (the emitter world with a stock of 2 over 250 intervals, the chain
-    world with a stock of 2) run together in two processes and each alone: the output files
-    are byte for byte the same; each output carries the format, the input's stamp, the
-    verdict LAWFUL, the ticks, the click lines (detector and interval) and the counts per
-    detector, with at least one click at `screen` in each."""
+    """Two small worlds (the emitter world with a stock of 2 over 250 intervals, the chain world with a stock of 2) run together in two processes and each alone: the output files are byte for byte the same; each output carries the format, the input's stamp, the verdict LAWFUL, the ticks, the click lines (detector and interval) and the counts per detector, with at least one click at `screen` in each."""
     emitter = emitter_world(stock=2, ticks=250)
     chain = chain_world(stock=2)
     chain["ticks"] = 250
@@ -58,13 +54,7 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
 
 
 def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path: Path):
-    """An input whose body lacks a key of the frame (its momentum) is REFUSED by name, its
-    output carrying the reason and no clicks, and the
-    command's exit is 1; a lawful input with pins registered before the run reads MATCH
-    within the band and MISS outside it, the value read written beside each: a pin on the
-    count of clicks, a pin on the detector's first click (the least interval since the
-    record's giving among its clicks) and a pin on the mean interval since the giving over
-    its clicks (ALGEBRA.md #the-ladder; a detector with no click reads None and MISS)."""
+    """An input whose body lacks a key of the frame (its momentum) is REFUSED by name, its output carrying the reason and no clicks, and the command's exit is 1; a lawful input with pins registered before the run reads MATCH within the band and MISS outside it, the value read written beside each: a pin on the count of clicks, a pin on the detector's first click (the least interval since the record's giving among its clicks) and a pin on the mean interval since the giving over its clicks (ALGEBRA.md #the-ladder; a detector with no click reads None and MISS)."""
     inputs = tmp_path / "inputs"
     inputs.mkdir()
     # THE MODE PIN (item 57): the pins are compared under the mode "pin" alone; a start file
@@ -79,8 +69,14 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     bad_path = write(inputs, "bad", bad)
     good = emitter_world(stock=2, ticks=250)
     good["engine"] = relative
+    good["readings"] = [{"name": "n", "kind": "momentum", "body": 0, "every": 50}]
     good["stamp"] = input_stamp(good)
     good_path = write(inputs, "good", good)
+    # the expectation file beside the world, two sections: DETECTOR pins join the pins file's,
+    # GAMEBOARD pins read the declared readings at the named interval (a diagnostic)
+    expectation = {"DETECTOR": [{"detector": "screen", "count": 2, "band": 1}]}
+    expectation["GAMEBOARD"] = [{"body": 0, "interval": 50, "momentum": [0, 0, 0], "band": 0}]
+    good_path.with_suffix(".expectation.json").write_text(json.dumps(expectation), encoding="utf-8")
     pins = tmp_path / "pins.json"
     pins.write_text(
         json.dumps(
@@ -112,7 +108,11 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     ]
     first = min(waits)
     mean = (2 * sum(waits) + len(waits)) // (2 * len(waits))
-    assert [pin["verdict"] for pin in good["pins"]] == [
+    assert good["pins"][6]["verdict"] == good["pins"][0]["verdict"] and len(good["pins"]) == 8
+    momentum = [line for line in good["readings"] if line["name"] == "n"][0]["lines"][1]["momentum"]
+    assert good["pins"][7]["read"] == momentum and good["pins"][7]["kind"] == "momentum"
+    assert good["pins"][7]["verdict"] == ("MATCH" if momentum == [0, 0, 0] else "MISS")
+    assert [pin["verdict"] for pin in good["pins"][:6]] == [
         "MATCH" if abs(read - 2) <= 1 else "MISS",
         "MISS",
         "MATCH" if first == 1 else "MISS",
@@ -120,8 +120,8 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
         "MATCH" if abs(mean - 100) <= 60 else "MISS",
         "MISS",
     ]
-    assert [pin["read"] for pin in good["pins"]] == [read, read, first, None, mean, None]
-    assert [pin["kind"] for pin in good["pins"]] == [
+    assert [pin["read"] for pin in good["pins"][:6]] == [read, read, first, None, mean, None]
+    assert [pin["kind"] for pin in good["pins"][:6]] == [
         "count",
         "count",
         "first_click",
@@ -132,11 +132,7 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
 
 
 def test_a_leak_refuses_the_run_naming_the_family(tmp_path: Path, monkeypatch):
-    """THE LEAK TEST IN EVERY RUN (the model owner's record 2075 (3); BUILD.md section 26 item
-    55): the runner reads the engine's leaks after every interval; a family carrying rows without
-    a source ends the run with the verdict LEAK, the reason naming the family and the interval,
-    the output written. The engine's own reading is tested in tests/test_charge.py (v); here its
-    report is stood in for on the first interval. The edge case: with no leak the run is LAWFUL."""
+    """THE LEAK TEST IN EVERY RUN (the model owner's record 2075 (3); BUILD.md section 26 item 55): the runner reads the engine's leaks after every interval; a family carrying rows without a source ends the run with the verdict LEAK, the reason naming the family and the interval, the output written. The engine's own reading is tested in tests/test_charge.py (v); here its report is stood in for on the first interval. The edge case: with no leak the run is LAWFUL."""
     from event_universe.events.detector_law import DetectorLawSimulation
 
     document = emitter_world(stock=1, ticks=20)

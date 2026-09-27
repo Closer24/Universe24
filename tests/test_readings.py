@@ -34,9 +34,13 @@ def declared(document: dict, readings: list[dict]) -> dict:
     return document
 
 
-def test_the_schema_holds_six_kinds_with_their_labels_and_keys():
-    """Six kinds, each with a label of the three and its own keys beside name and kind."""
-    assert set(SCHEMA) == {"clicks", "level", "support", "total", "centre", "alive"}
+def test_the_schema_holds_eight_kinds_with_their_labels_and_keys():
+    """Eight kinds, each with a label of the three and its own keys beside name and kind; a body's momentum and a family's rows GAMEBOARD."""
+    assert set(SCHEMA) == {"clicks", "level", "support", "total", "rows", "centre", "momentum", "alive"}
+    assert SCHEMA["momentum"] == ("GAMEBOARD", ("body", "every")) and SCHEMA["rows"][1] == (
+        "family",
+        "every",
+    )
     assert LABELS == ("DETECTOR", "GAMEBOARD", "HOST")
     assert SCHEMA["clicks"] == ("DETECTOR", ("detector",)) and SCHEMA["alive"] == ("HOST", ("every",))
     found = declarations(SIX, SHAPE, DETECTORS, FAMILIES, BODIES)
