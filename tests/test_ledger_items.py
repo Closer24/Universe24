@@ -133,8 +133,8 @@ def test_2b_the_step_declared_as_the_laws_own_four_runs_bit_for_bit_with_today()
 
 def test_2c_a_one_sided_send_is_refused_by_the_loader():
     """The send declaration admits a symmetric set of Ports alone: an axis on or off; a
-    one-sided send (five Ports) is refused by name (docs/designs/rule_alone/README.md
-    section 13: a one-sided send is a gain, the rule's step amplifies without bound)."""
+    one-sided send (five Ports) is refused by name (the rule alone's record, section 13:
+    a one-sided send is a gain, the rule's step amplifies without bound)."""
     document = emitter_world(stock=1, ticks=10)
     document["step"] = {
         "send": ["level", "pair", "accumulator"],

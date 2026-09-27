@@ -75,6 +75,7 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 from fractions import Fraction
 from pathlib import Path
 
@@ -219,7 +220,8 @@ def world(
     # declares its rest pair `kind`; the given record's clock is the given family's row's
     # (ALGEBRA.md #the-primitives, L479; no key on the emitter)
     families, integers = families_entries()
-    from event_universe.generator_numbers import body_twist
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools"))  # the host's numbers tool
+    from generator_numbers import body_twist
 
     measured: list[dict] = []
     for block in blocks:
@@ -373,7 +375,8 @@ def declare_twists(document: dict) -> None:
     kind's rest rotation; the generator's HOST number, an integer the loader reads under `twist`,
     no default. The given record's twist is the loader's from the row and the body's mode, no key
     (ALGEBRA.md #the-primitives, L479)."""
-    from event_universe.generator_numbers import body_twist
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools"))  # the host's numbers tool
+    from generator_numbers import body_twist
 
     for entry in document["measured"]:
         if "side" in entry or "extents" in entry:

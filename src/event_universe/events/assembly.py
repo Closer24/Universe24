@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from event_universe.features.receive import ReceiveTerm
-from event_universe.loader.world import TWIST_FINE_BITS, NatureBeamWorld
+from event_universe.loader.world import NatureBeamWorld
 
 if TYPE_CHECKING:
     from event_universe.events.detector_law import DetectorLawSimulation
@@ -129,11 +129,11 @@ def universe_values(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None
     # triples as arrays, (c, s, d) by k_0 (fine) and by k_1 (coarse); None on a world
     # without one, where a nonzero twist is refused naming the Port
     loop.twist_table = world.twist_table
-    loop._receive_term = ReceiveTerm(None, None, TWIST_FINE_BITS)
+    loop._receive_term = ReceiveTerm(None, None, 0)
     if loop.twist_table is not None:
         loop._fine = np.array(loop.twist_table.fine, dtype=np.int64).T
         loop._coarse = np.array(loop.twist_table.coarse, dtype=np.int64).T
-        loop._receive_term = ReceiveTerm(loop._fine, loop._coarse, TWIST_FINE_BITS)
+        loop._receive_term = ReceiveTerm(loop._fine, loop._coarse, loop.twist_table.fine_bits)
     # HOST: the self-source per family per interval (ALGEBRA.md #the-interval), None at P_2 = 0
     loop._sources = {}
     loop.node_clock = int(world.node_clock)
@@ -215,7 +215,7 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
             mask[tuple(np.array(definition.nodes).T)] = True
         block = loop._block(number, entry, definition, corner, mask)
         loop._write_pair(block)
-        identity = number * loop.OWN_IDENTITY_STRIDE
+        identity = -1 - number
         if definition.seed > 0:
             own_record = loop._massive_record(
                 identity, number, entry.family, definition.kind, definition.twist

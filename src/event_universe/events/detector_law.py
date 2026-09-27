@@ -1,5 +1,5 @@
 """The engine (one engine, no law's name and no version, ALGEBRA.md #the-primitives;
-the model owner's words of 2026-09-23, docs/designs/detector_law/DESIGN.md):
+the model owner's words of 2026-09-23):
 the record splits at every free Node inside the board and holds its
 amplitudes; outside there is no board, only clicks, and nothing passes from
 Node to Node except through a detector, at rest or moving. Every world is the
@@ -162,7 +162,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     )
 
     # a body's records' identities: the body's number times the stride, its own record at giving 0
-    OWN_IDENTITY_STRIDE = 1 << 32
+    next_identity = 1
+    next_held = 0
 
     # The state the assembly fills once from the parsed world (`events/assembly.py`): the names and types
     held: list[list[int]]
@@ -659,11 +660,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return 3 * self.momentum_unit * sum(self.held[block.number])
 
     def _held_part(self, position: int, family: int, part: int) -> LiveRecord:
-        """A held family's component record over the board (item 51; ALGEBRA.md #the-interval):
-        the identities below 0, one per held family and part; its pair the one
-        its family's row declares (`pair` None reads it), no shortcut."""
+        """A held family's component record over the board (item 51; ALGEBRA.md #the-interval): its identity the next name below the bodies' own (-1 - number), one per held family and part; its pair the one its family's row declares (`pair` None reads it), no shortcut."""
+        self.next_held += 1
         return LiveRecord(
-            -1 - position - 100 * part,
+            -len(self.world.measured) - self.next_held,
             -1 - position,
             family,
             0,
@@ -1181,7 +1181,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         body_charge = self._body_charge(number)
         # the body's own record is not ended and never rewritten (ALGEBRA.md #the-ladder)
         block.givings += 1
-        identity = number * (1 << 32) + block.givings
+        identity, self.next_identity = self.next_identity, self.next_identity + 1
         live = LiveRecord(
             identity,
             number,
@@ -1423,8 +1423,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self._induction_act(self.register.at("the induction", "(v)"), block, True)
         for block in self.blocks:
             self._feed_act(self.register.at("the feed", "(v)"), block, True)
-        # the count's line back (its own inverse, the current reversed; ALGEBRA.md
-        # #the-counts-line): the quanta return to their Nodes before the records step back
+        # the count's line back (its own inverse, the current reversed; ALGEBRA.md #the-counts-line): the quanta return to their Nodes before the records step back
         counts_line = self.register.at("the count's line", "(ii)")
         for block in self.blocks:
             self._counts_act(counts_line, block, -1)
