@@ -99,7 +99,7 @@ GIVER = ObjectOf(
         "weight": Integer(least=1),
         "norm": Integer(least=1),
         "norm_denominator": Integer(least=1),
-        "receiver": Word(),
+        "receiver": Either((Word(), ListOf(Word()))),
     },
     frozenset({"receiver"}),
 )
