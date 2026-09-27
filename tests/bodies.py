@@ -78,7 +78,12 @@ def paces_world() -> dict:
             family.update(
                 {
                     "parts": [1, 3, 6],
-                    "held": {"count": "content", "factors": [1, 4, 2], "dipole": "spin"},
+                    "held": {
+                        "count": "content",
+                        "factors": [1, 4, 2],
+                        "dipole": "spin",
+                        "dipole_div": 1,
+                    },
                     "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
                 }
             )
@@ -454,7 +459,12 @@ def parts_world(**body: object) -> dict:
                 {
                     "parts": [1, 3, 6],
                     "phase": 1,
-                    "held": {"count": "content", "factors": [1, 4, 2], "dipole": "spin"},
+                    "held": {
+                        "count": "content",
+                        "factors": [1, 4, 2],
+                        "dipole": "spin",
+                        "dipole_div": 1,
+                    },
                     "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
                 }
             )

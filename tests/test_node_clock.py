@@ -449,6 +449,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     with pytest.raises(ValueError, match="reads names 'matter', which is not held"):
         parse_nature_beam_world(unheld)
     quantum = json.loads(json.dumps(good))
+    quantum["universe"][2]["quantum"] = 2
     quantum["universe"][2]["clicks"] = {"gives": True, "takes": True, "quantum": 2}
     with pytest.raises(ValueError, match="counted in quanta, one click one unit"):
         parse_nature_beam_world(quantum)

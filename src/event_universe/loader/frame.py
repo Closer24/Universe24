@@ -46,9 +46,7 @@ FACE = OneOf(("open", "periodic", "closed"))
 WORLD = ObjectOf(
     {
         "shape": ListOf(Integer(least=1), 3),
-        "boundary": Either(
-            (OneOf(("open",)), ObjectOf({"x": FACE, "y": FACE, "z": FACE}, frozenset({"x", "y", "z"})))
-        ),
+        "boundary": Either((OneOf(("open",)), ObjectOf({"x": FACE, "y": FACE, "z": FACE}))),
         "ticks": Integer(least=0),
         "engine": Word(),
         "stamp": ObjectOf({"hash": Word()}),
@@ -198,9 +196,15 @@ def document_of(key: str, value: str, files: Mapping[str, object], label: str) -
 
 
 def entry_kind(register: Register) -> ObjectOf:
-    """A family's entry: the frame's keys, its name, its clock and its spins_step (both optional), and every key the cards declare at a family's entry, optional where a card says so."""
+    """A family's entry: the frame's keys, its name, its quantum (an integer from 1, the law's owner's row of 2026-09-27), its clock and its spins_step (both optional), and every key the cards declare at a family's entry, optional where a card says so."""
     declared = cards.at(register, "a family's entry")
-    keys = {"name": Word(), "clock": CLOCK, "spins_step": SPINS_STEP, **declared.keys}
+    keys = {
+        "name": Word(),
+        "quantum": Integer(least=1),
+        "clock": CLOCK,
+        "spins_step": SPINS_STEP,
+        **declared.keys,
+    }
     return ObjectOf(keys, declared.optional | {"clock", "spins_step"})
 
 

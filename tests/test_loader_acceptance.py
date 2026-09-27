@@ -1,12 +1,6 @@
-"""THE LOADER'S ACCEPTANCE TESTS, written ahead of the schema loader (the Boss's word of
-2026-09-26 21:17Z on the model owner's; record 2226: one generic reader of the three files,
-every primitive's schema beside its code in its folder, read from the register; record 2089:
-no default written in the code; records 2172 to 2174 and 2182: no family name, no flag, no
-version in the engine; ALGEBRA.md 9.120 item 1: a body is its family, its Nodes, its count per
-Node and its momentum n, nothing else; 9.117 row "the source" and record 2199 item 1: the words
-`sourced` and `readings`). Tests only, no line of src/. A test the loader of today fails is
-marked xfail strict, naming what fails today; it turns green the day the loader lands and then
-must lose its mark. Each test says which record it checks."""
+"""THE LOADER'S ACCEPTANCE TESTS, written ahead of the schema loader (the Boss's word of 2026-09-26
+21:17Z; records 2226, 2089, 2172 to 2174, 2182; ALGEBRA.md 9.120 item 1 and 9.117 row "the source"):
+tests only; a test the loader fails is xfail strict naming what holds it and loses its mark when green."""
 
 from __future__ import annotations
 
@@ -34,8 +28,7 @@ VERSION_WORDS = {"version", "schema_version"}
 
 
 def loader_modules() -> list[Path]:
-    """The loader as it stands: loader/world.py since #1236 (events/world.py before it) (record 2226);
-    every module of the engine whose name is the world's reader or names a loader."""
+    """The loader as it stands: loader/world.py and every module whose name names a loader (record 2226)."""
     found = [
         path
         for path in ENGINE.rglob("*.py")
@@ -46,8 +39,7 @@ def loader_modules() -> list[Path]:
 
 
 # (a) THE CLOSED LOADER: no family name, no written default, no version (records 2172 to 2174,
-# 2182, 2089, 2226; the e1, e3 and e4 acceptance tests extended to the loader alone, no
-# exclusion: a family's name is not a column's name either)
+# 2182, 2089, 2226)
 
 
 def test_a1_the_loader_holds_no_family_name_of_the_universe():
@@ -85,12 +77,8 @@ def test_a3_the_loader_holds_no_version_and_no_schema_version():
     assert offending == [], offending
 
 
-# (b) WHAT LOADS: a body by its four attributes alone, the word `sourced`, the word `readings`
-
-
 def place(tmp_path: Path, monkeypatch, universe: dict, document: dict) -> dict:
-    """The universe and the start file placed where the loader reads them, the document
-    stamped; the files' words unchanged."""
+    """The universe and the start file placed where the loader reads them, the document stamped."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     (tmp_path / "universe.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "start.json").write_text(START.read_text(encoding="utf-8"), encoding="utf-8")
@@ -105,9 +93,7 @@ def place(tmp_path: Path, monkeypatch, universe: dict, document: dict) -> dict:
 
 
 def body_world() -> dict:
-    """The world of ALGEBRA.md 9.120 item 1: the GameBoard, its boundary, the intervals, the
-    files, and one body named by its family, its Nodes, its count per Node and its momentum n;
-    no well, no seed, no stop, no profile, no closed Port, no residue key of the old loader."""
+    """The world of ALGEBRA.md 9.120 item 1: one body by its family, Nodes, count per Node and momentum."""
     return {
         "shape": [16, 1, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
@@ -181,9 +167,6 @@ def test_b3_the_word_readings_on_the_shipped_source_world_loads():
     parse_nature_beam_world(document)
 
 
-# (c) THE SCHEMA: an unknown key refused by name, every folder's schema its own
-
-
 def test_c1_an_unknown_key_is_refused_by_name_on_the_world_the_universe_and_a_body(
     tmp_path, monkeypatch
 ):
@@ -213,10 +196,8 @@ def test_c1_an_unknown_key_is_refused_by_name_on_the_world_the_universe_and_a_bo
     "self_source, pair) and reads a body's and an emitter's `pair`, the same word",
 )
 def test_c2_every_key_of_a_familys_entry_is_a_folders_schema_and_not_a_line_of_the_loader():
-    """Record 2226 (1) and (2): every key a shipped family entry carries beyond its name (the
-    universe file and the source's fragment) is declared by one folder's card in the register
-    (its `schema`, the keys and the kinds it accepts, beside its function); the loader names
-    none of those keys as a string of its own."""
+    """Record 2226 (1) and (2): every key of a shipped family's entry is one folder's card; the loader
+    names none of those keys as a string of its own."""
     register = discover()
     words = {
         key

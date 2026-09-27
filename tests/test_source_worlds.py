@@ -1,16 +1,6 @@
-"""THE RUN FILES OF THE SOURCE VERB (the ledger's primitive "source"; the Boss's record 2217 of
-2026-09-26; ALGEBRA.md 9.108 items 11 and 13, 9.116 item 4b): `examples/events/source/` holds
-two worlds written by its generator in record 2128's words, a record of matter at rest and one
-moving, each sourcing two scalar field families that nothing reads back (`field` by the plain
-count, `field_table` by the saturating table), with the unsourced family `control` beside (the
-leak test). The two declarations the loader lacks today are written as the ledger's table names
-them: `sourced` {of, weight, scale, cap} on the sourced family's entry of the universe file and
-`readings` on the world file. THE ONE UNIVERSE (record 2075): every world names the shipped
-`examples/events/universe.json`; the three entries are the folder's fragment
-`universe_entries.json`, to be appended to the shipped file the day the loader reads `sourced`.
-This test reads the structure and holds the load itself as an expected failure until the loader
-reads the words. No pin; every number here is a HOST count or the generator's
-COMPUTATION."""
+"""THE RUN FILES OF THE SOURCE VERB (record 2217; ALGEBRA.md 9.108 items 11 and 13, 9.116 item 4b):
+examples/events/source/ holds two worlds and the fragment universe_entries.json with `sourced` and
+`readings` as the ledger names them; the load waits on the loop. No pin; HOST counts alone."""
 
 from __future__ import annotations
 
@@ -143,6 +133,7 @@ def test_the_fragment_holds_the_three_families_for_the_one_universe():
             "parts",
             "phase",
             "pair",
+            "quantum",
             "reads",
             "self_source",
             "sourced",

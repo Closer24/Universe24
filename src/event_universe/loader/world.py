@@ -17,11 +17,8 @@ from event_universe.core.step import STEP_FILE, Step
 from event_universe.loader import frame
 from event_universe.loader.frame import EngineStart
 
-# the ray law's table rules and its contact rule, read by the loop's fixed values alone (DEAD, the paper writer's)
+# the ray law's table rules, read by the loop's fixed values alone (DEAD, the paper writer's)
 TABLES = ("read", "measure", "rerelease", "pass", "become")
-CONTACT_DEFAULT = "measure"
-# the quantum of a free family: its unit costs nothing
-FREE_QUANTUM = 0
 # the readings a record may carry (the loop's words)
 AGE_READS = "age"
 PRESENCE_WORD = "presence"
@@ -306,45 +303,6 @@ class FamilyDefinition:
         num."""
         return self.pair_on_body or self.pair[1] > self.pair[0]
 
-    @property
-    def free(self) -> bool:
-        """A free family (h = 0): its release costs nothing and its rays
-        carry no content."""
-        return self.quantum == FREE_QUANTUM
-
-    @property
-    def unit_label(self) -> int:
-        """The content one declared unit of the family carries for its
-        momentum label: the quantum (one phase step of content, no emitter
-        having declared its turn) for a paid family, the unit for a free
-        one, whose label is the amount along the direction."""
-        return max(self.quantum, 1)
-
-
-def default_rule(family: FamilyDefinition) -> str:
-    """The rule the family's key gives: a free family (h = 0) is read, the
-    push taken and the rays going on; a paid one (h >= 1) is measured, the
-    click."""
-    return "read" if family.free else "measure"
-
-
-def default_reads(rule: str) -> str:
-    """The component of the one reading a rule's record carries unless the
-    entry declares one: the net flow on `read`, the presence otherwise."""
-    return "vector" if rule == "read" else "scalar"
-
-
-def default_table(
-    families: tuple[FamilyDefinition, ...],
-) -> tuple[tuple[str, int | None, str], ...]:
-    """The table generated from the keys (the model owner, 2026-09-19): per
-    family in family order its rule, no window and the rule's component. A
-    measured event's declared `table` overrides only the entries it names;
-    an entry equal to this default is accepted and changes nothing."""
-    return tuple(
-        (default_rule(family), None, default_reads(default_rule(family))) for family in families
-    )
-
 
 @dataclass(frozen=True)
 class EmitterDefinition:
@@ -500,16 +458,8 @@ class MeasuredDefinition:
     at every Link it steps (over the world's `action`), and `held` the
     content it holds per family in family order at the start: its
     `amount` under its own family and what `held` declared of the others
-    (0 elsewhere). `contact` is the rule per family (in family order) by
-    which this event reads a body of that family whose step onto it is
-    refused (the contact through the table, 2026-09-20): the entry's rule
-    where it differs from the keys' own rule for that family
-    (`default_rule`: `rerelease`, `pass`, `measure` on a free family,
-    `read` on a paid one), and `CONTACT_DEFAULT` (`measure`, the keys' rule
-    for a paid arrival: the body's momentum is its own label) where the
-    entry is the keys' own, declared or not, so that an entry equal to the
-    default changes nothing. The engine reads a missing entry as the
-    default. `window_reads` is, per family in family order, the window
+    (the ray law's table, one rule per family, `measure` with the scalar
+    component: no family is free, the row's quantum is from 1). `window_reads` is, per family in family order, the window
     read from a reading (issue #363): the index of the family whose rows
     at the set give the centre and the offset, or None for a declared or
     absent centre (`windows` then holds the number, or None)."""
@@ -526,7 +476,6 @@ class MeasuredDefinition:
     span: tuple[int, int, int] = ONE_NODE
     phase_by_momentum: bool = False
     held: tuple[int, ...] = ()
-    contact: tuple[str, ...] = ()
     # the ray law's splits and lamp, read by the loop as None (its cancelled branches)
     splits: tuple[None, ...] = ()
     lamp: None = None
@@ -773,20 +722,19 @@ def body_nodes(
 
 
 def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bool]]:
-    """The GameBoard's faces: `"open"` on every face, or an object with any of
-    the keys `x`, `y`, `z`, each `"open"` or `"periodic"`, the missing axes
-    open. Returns the value as declared (what the record carries) and, per
-    axis, whether the walk wraps. A closed GameBoard and every other word are
-    refused."""
+    """The GameBoard's faces: `"open"` on every face, or an object with the three
+    keys `x`, `y`, `z`, each `"open"`, `"periodic"` or `"closed"`, every axis
+    declared (no default). Returns the value as declared (what the record carries)
+    and, per axis, whether the walk wraps. Every other word is refused."""
     if value == BOUNDARIES[0]:
         return BOUNDARIES[0], (False, False, False)
     if (
         isinstance(value, dict)
-        and set(value) <= set(AXES)
+        and set(value) == set(AXES)
         and all(item in BOUNDARIES or item == CLOSED_FACE for item in value.values())
     ):
         declared = {str(key): str(item) for key, item in value.items()}
-        wraps = tuple(declared.get(axis, BOUNDARIES[0]) == BOUNDARIES[1] for axis in AXES)
+        wraps = tuple(declared[axis] == BOUNDARIES[1] for axis in AXES)
         return declared, (wraps[0], wraps[1], wraps[2])
     raise ValueError(
         "the GameBoard is open (its edge is infinity) unless an axis is declared "
@@ -958,7 +906,7 @@ def _families_of(
     massive_record: bool,
     amplitude_bound: int,
 ) -> tuple[FamilyDefinition, ...]:
-    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair under the world key massive_record with its bound and den >= num, the clock's pair [p, q] with q from 1 and p bounded by the world's largest age, the held source's factors one per part and its dipole on a vector family, spins_step on a family that holds the spin's dipole, the self-source's unit 0 or at least 24 A, a family held, clicking or sourced, a read naming a held family once, and a held family's shape."""
+    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair under the world key massive_record with its bound and den >= num, the clock's pair [p, q] with q from 1 and p bounded by the world's largest age, the quantum on every row and the clicks card's copy equal to it, the held source's factors one per part, its dipole on a vector family with its divisor, spins_step on the family that holds the spin's dipole and no other, the self-source's unit 0 or at least 24 A, a family held, clicking or sourced, a read naming a held family once, and a held family's shape."""
     if len(entries) > MOST_FAMILIES:
         raise ValueError(
             f"families declares {len(entries)}; at most {MOST_FAMILIES} families on a "
@@ -1038,11 +986,21 @@ def _families_of(
                         f"{label}.held.dipole is refused on a scalar family: the dipole is "
                         "written into the vector part (ALGEBRA.md 9.91 (3))"
                     )
+                if "dipole_div" not in source:
+                    raise ValueError(
+                        f"{label}.held declares a dipole and lacks dipole_div: the dipole's "
+                        "divisor is the row's, no default"
+                    )
             if "dipole_div" in source:
                 divisor = cast(int, source["dipole_div"])
                 held_dipole_div = divisor
         spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
         if "spins_step" in obj:
+            if held_dipole != "spin":
+                raise ValueError(
+                    f"{label} declares spins_step and holds no spin's dipole: the row is the "
+                    "spin holder's alone (ALGEBRA.md 9.78 (5))"
+                )
             weights = cast(dict[str, object], obj["spins_step"])
             curl = cast(tuple[int, int], weights["curl"])
             tidal = cast(tuple[int, int], weights["tidal"])
@@ -1070,7 +1028,11 @@ def _families_of(
                 "self-source's unit P_2 is 0 (off) or at least 24 A (ALGEBRA.md 9.91 (5))"
             )
         clicks: tuple[bool, bool] | None = None
-        quantum = 1
+        # THE FAMILY'S QUANTUM (the law's owner's row of 2026-09-27; the Boss's word of
+        # 09:27Z): one integer from 1 on every row, required; the clicks card's copy agrees
+        quantum = cast(int, obj["quantum"])
+        if quantum > MAX_VALUE:
+            raise ValueError(f"{label}.quantum must be an integer up to {MAX_VALUE}")
         if "clicks" in obj:
             value = cast(dict[str, object], obj["clicks"])
             if value["gives"] is not True or value["takes"] is not True:
@@ -1079,10 +1041,11 @@ def _families_of(
                     "given and taken at clicks (ALGEBRA.md 9.79 (1))"
                 )
             clicks = (True, True)
-            declared_quantum = cast(int, value["quantum"])
-            if declared_quantum > MAX_VALUE:
-                raise ValueError(f"{label}.clicks.quantum must be an integer up to {MAX_VALUE}")
-            quantum = declared_quantum
+            if cast(int, value["quantum"]) != quantum:
+                raise ValueError(
+                    f"{label}.clicks.quantum {value['quantum']} differs from the row's quantum "
+                    f"{quantum}: one quantum per family (the law's owner's row, 2026-09-27)"
+                )
         elif held is None and sourced is None:
             raise ValueError(
                 f"{label} declares neither held (a field family), clicks (a family of records) "
@@ -1823,21 +1786,11 @@ def _measured(
         momentum = tuple(_integer(item, f"{label}.momentum", -AMOUNT_BOUND) for item in momentum_value)
         fixed = cast(bool, obj["fixed"])
         turning = False
-        # the table's rules of the ray law: every family at its key's rule, no entry declared
-        rules: list[str] = []
-        windows: list[int | None] = []
-        reads: list[str] = []
-        for rule, window, component in default_table(families):
-            rules.append(rule)
-            windows.append(window)
-            reads.append(component)
-        # The rule of a contact per family: the entry's rule where it
-        # differs from the keys' own rule for the family, `measure` (the
-        # keys' rule for a paid arrival, the body's momentum its own label)
-        # where the entry is the keys' own, declared or not, and under a
-        # `become` entry (the click's hand-over; no transformation fires
-        # at a contact: a body is not a click of the entry's family).
-        contact = [CONTACT_DEFAULT for _ in families]
+        # the ray law's table: every family at the keys' rule `measure` with the scalar
+        # component, no window (no family is free: the row's quantum is from 1)
+        rules: list[str] = [TABLES[1] for _ in families]
+        windows: list[int | None] = [None for _ in families]
+        reads: list[str] = ["scalar" for _ in families]
         block = _block(
             obj,
             label,
@@ -1870,7 +1823,6 @@ def _measured(
                 span,
                 turning,
                 tuple(held),
-                tuple(contact),
                 block=block,
             )
         )
