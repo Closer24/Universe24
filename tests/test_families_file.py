@@ -79,7 +79,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         # the check-mode worlds and the source verb's run files (Nature24's generators, ahead of
         # the loader's words: `readings`, `sourced`, the residue keys) carry keys the loader
         # does not read yet; tests/test_source_worlds.py reads their structure
-        ahead = {"check_mode", "source"}
+        ahead = {"check_mode", "generated", "source"}
         if isinstance(text, dict) and "universe" in text and not ahead & set(path.parts):
             assert text["universe"] == FILE, path
             assert "node_clock" not in text and "amplitude_bound" not in text, path
