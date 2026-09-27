@@ -1,17 +1,5 @@
-"""THE BOOKING IN THE BODY'S FRAME, ONE RULE (ALGEBRA.md 9.74 (2), the mathematician's ruling
-on the taking at a hop of item 48; BUILD.md section 26 item 56): a face of a body moving at v
-with outward normal n books per interval (G_in + (v . n) e_out) cut at zero after the sum, G_in
-the board's inward current through the face's Link, e_out the record's density on the Node
-outside the face; no separate hop booking. On a closed chain of 300 an emitter at [20, 52)
-gives light along +x (two records) and a cart, a silent block of three Nodes with its set bound
-to it, moves at one Link every four intervals: (1) toward the light: over the record's passage
-the booked total reaches the record's norm over its pace within a few percent, and the board's
-frame alone (the Port booking, the control) falls short by about the hop's share v / (v + c_l);
-(2) with the ladder live both records click at the cart on the first pass; (3) at rest the rule
-is the Port booking bit for bit, no carry; (4) away from the light, the record overtaking the
-cart from behind: the back face books the norm once (finding (a) of item 48 resolved), where
-the board's frame books c / (c - v) = 2.27 of it. GAMEBOARD and COMPUTATION on the engine's
-integers; no pin."""
+"""The booking in the body's frame, one rule (ALGEBRA.md 9.74 (2)): a face of a moving body books
+(G_in + (v . n) e_out) cut at zero after the sum, with no separate hop booking."""
 
 from __future__ import annotations
 

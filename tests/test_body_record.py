@@ -1,19 +1,5 @@
-"""THE BODY RECORD (the model owner's word of 2026-09-25 in the mathematician's session, "already
-now, because it is generic; a body holds real parameters, and then it is a special Node in the
-simulator; it can be checked that it is equivalent"; ALGEBRA.md 9.46 (1) to (3) and (9), 9.50 (8),
-9.49 (3); BUILD.md section 26 item 37): under the world key `body_record` every seeded block is
-held as one Node with a shape: its profile stored and never stepped, its own rows off the
-GameBoard, and one rotation (a, b, r) stepped by the two-term rule on its clock pair [num_c,
-den_c] at the pace of its Nodes, den_c Gamma a' + r' = (num_c p + 2 den_c (Gamma - p)) a -
-den_c Gamma b + r, the remainder in [0, den_c Gamma); its residue its own remainder on its own
-wheel, read at the click at the body's Node (the centre Node); its tick the count of intervals against
-(2 u + 1) P / (2 W) as the lattice body's; the given rows the file's, set on the body's Nodes as
-before. THE EQUIVALENCE (9.46 (4), the gate): (i) the ticks agree in distribution between the
-two forms (the mean cycle length, the residues spread on the wheel, no runs of one-interval
-cycles beyond a fair draw's); (ii) the rotation agrees as a rational with the lattice body's at
-every content within the profile's rounding; (iii) the same given rows at each tick; (iv) the
-block's count equal over the run; (v) the family of clicks' field identical where nothing is
-given. Every number a COMPUTATION on the rule's integers; no pin."""
+"""The body record (ALGEBRA.md 9.46): under `body_record` every seeded block is held as one Node with a
+shape, its profile stored and never stepped, and equivalent to the block on the GameBoard."""
 
 from __future__ import annotations
 
