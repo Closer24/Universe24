@@ -5,6 +5,7 @@ tests/test_documents.py
 tests/test_engine_gates.py
 tests/test_folder_cards.py
 tests/test_genericity.py
+tests/test_ownership.py
 tests/test_runtime_guards.py
 tests/test_shipped_worlds.py
 tests/test_step_drives_the_loop.py

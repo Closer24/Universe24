@@ -172,12 +172,6 @@ def core_approval(new: list[str], body: str | None) -> list[str]:
     ]
 
 
-def core_check_applies(environment: dict[str, str]) -> bool:
-    """The approval is read on a pull request, or locally where PR_BODY is set; never on a push to main."""
-    event = environment.get("GITHUB_EVENT_NAME")
-    return event == "pull_request" or (event is None and "PR_BODY" in environment)
-
-
 def main() -> None:
     """Print every count above the merge base's; exit 1 when there is one."""
     found = ratchet(ROOT, record_at(ROOT))

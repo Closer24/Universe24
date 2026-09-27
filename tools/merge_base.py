@@ -16,6 +16,12 @@ def base_ref() -> str:
     return os.environ.get("CHECK_BASE") or "origin/main"
 
 
+def on_pull_request(environment: dict[str, str]) -> bool:
+    """A check of the pull request's body runs on a pull request, or locally where PR_BODY is set; never on a push to main."""
+    event = environment.get("GITHUB_EVENT_NAME")
+    return event == "pull_request" or (event is None and "PR_BODY" in environment)
+
+
 def resolved(root: Path, ref: str) -> str:
     """The commit `ref` names; a ref git cannot resolve fails by name, never passes silently."""
     try:

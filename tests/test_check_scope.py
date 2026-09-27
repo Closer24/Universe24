@@ -111,6 +111,7 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
         "tests/test_engine_gates.py",
         "tests/test_folder_cards.py",
         "tests/test_genericity.py",
+        "tests/test_ownership.py",
         "tests/test_repository_hygiene.py",
         "tests/test_repository_language.py",
         "tests/test_repository_navigation.py",

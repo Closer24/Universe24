@@ -2,28 +2,18 @@
 
 from __future__ import annotations
 
-import importlib.util
 import json
 import os
-import sys
 from pathlib import Path
 
 import pytest
 
+from tests.worlds import load_file
+
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = "src/event_universe"
-
-
-def tool():  # type: ignore[no-untyped-def]
-    spec = importlib.util.spec_from_file_location("engine_gates", ROOT / "tools" / "engine_gates.py")
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    sys.modules["engine_gates"] = module
-    spec.loader.exec_module(module)
-    return module
-
-
-GATES = tool()
+GATES = load_file("engine_gates", ROOT / "tools" / "engine_gates.py")
+BASE = load_file("merge_base", ROOT / "tools" / "merge_base.py")
 
 
 def tree(tmp_path: Path, files: dict[str, str]) -> Path:
@@ -41,7 +31,7 @@ def test_the_tree_holds_against_the_merge_base_and_a_new_core_module_is_approved
     """Every file of src/ holds each count at or below the merge base's, read from git; a new module of core/ on a pull request has the approval line."""
     ref = GATES.base_ref()
     assert GATES.ratchet(ROOT, GATES.record_at(ROOT, ref)) == []
-    if GATES.core_check_applies(dict(os.environ)):
+    if BASE.on_pull_request(dict(os.environ)):
         new = GATES.new_core_modules(ROOT, ref)
         assert GATES.core_approval(new, os.environ.get("PR_BODY")) == []
 
@@ -72,10 +62,10 @@ def test_a_new_core_module_needs_the_approval_line():
 
 
 def test_the_core_check_runs_on_a_pull_request_and_never_on_a_push_to_main():
-    assert GATES.core_check_applies({"GITHUB_EVENT_NAME": "pull_request", "PR_BODY": ""})
-    assert not GATES.core_check_applies({"GITHUB_EVENT_NAME": "push", "PR_BODY": ""})
-    assert GATES.core_check_applies({"PR_BODY": "local"})
-    assert not GATES.core_check_applies({})
+    assert BASE.on_pull_request({"GITHUB_EVENT_NAME": "pull_request", "PR_BODY": ""})
+    assert not BASE.on_pull_request({"GITHUB_EVENT_NAME": "push", "PR_BODY": ""})
+    assert BASE.on_pull_request({"PR_BODY": "local"})
+    assert not BASE.on_pull_request({})
 
 
 def test_an_approval_counts_only_at_a_lines_start():
