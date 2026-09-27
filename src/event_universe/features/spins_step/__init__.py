@@ -72,7 +72,7 @@ class SpinStepWrites:
 
 
 def cross(a: Vector, b: Vector) -> Vector:
-    """a x b, the booking of 9.121 item 2 (c): products of two levels' components, read and never written (ALGEBRA.md 9.78 (5))."""
+    """a x b, the booking of ALGEBRA.md 9.121 item 2 (c): products of two levels' components, read and never written."""
     return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
 
 
