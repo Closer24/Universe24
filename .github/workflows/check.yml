@@ -88,7 +88,8 @@ jobs:
     needs: [plan, check]
     # never on a cancelled run (a newer push cancels the older run mid-way, and a record of the
     # worlds that had finished is no record): the merge below also refuses an entry short
-    if: always() && !cancelled() && needs.plan.result == 'success' && needs.check.result != 'cancelled' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository))
+    # only when the plan replayed worlds: an edit on a merged pull request selects none, and there is nothing to record
+    if: always() && !cancelled() && needs.plan.result == 'success' && needs.check.result != 'cancelled' && contains(needs.plan.outputs.shards, '"world') && (github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository))
     runs-on: ubuntu-latest
     permissions:
       contents: write
