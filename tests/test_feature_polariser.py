@@ -6,6 +6,7 @@ import numpy as np
 import pytest
 
 from event_universe.core.register import discover
+from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.polariser import (
     DECLARATION,
     PolariserOwn,
@@ -15,6 +16,8 @@ from event_universe.features.polariser import (
     read_term,
     triple_of,
 )
+from event_universe.world_files import parse_nature_beam_world
+from tests.worlds import emitter_world
 
 SETS = ("plus", "minus")
 
@@ -83,3 +86,22 @@ def test_the_refusals_by_name():
             PolariserStart(np.zeros(3, dtype=np.int64), np.zeros(4, dtype=np.int64)),
             PolariserOwn(),
         )
+
+
+def test_the_loops_stage_turns_the_pair_at_the_bodys_nodes_and_offers_9_to_16_to_its_two_sets():
+    """The hook on the emitter's unit world (the loop's stage called on the folder's `apply`; the body's `polariser` key through the loader is Nature24's follow-up, so the term is set on the loop): the one body's polariser at (2, 1), the triple (3, 4, 5), naming two of the world's detectors as its sets; the given record with the level 5 planted at the body's 32 Nodes and no second level: the stage rebinds the pair to (3, -4) there (the rotation by minus the angle, the transport's rounding), leaves the other Nodes, gives the record its second level at 0 elsewhere, and books 9 per Node to the first set and 16 to the second, Malus's 9 : 16 on the 32 Nodes."""
+    simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=20)))
+    simulation.step()
+    (live,) = simulation.records.values()
+    mask = simulation.blocks[0].mask
+    simulation.polarisers = {0: PolariserTerm((2, 1), ("screen", "measured:1"))}
+    now = live.now.copy()
+    now[mask] = 5
+    live.now = now
+    outside, pointers = live.now[~mask].copy(), list(live.pointers)
+    simulation._polariser_stage(apply)
+    assert set(live.now[mask].tolist()) == {3} and set(live.im_now[mask].tolist()) == {-4}
+    assert (live.now[~mask] == outside).all() and not live.im_now[~mask].any()
+    assert live.im_before is not None and not live.im_before.any() and int(mask.sum()) == 32
+    booked = [now - then for now, then in zip(live.pointers, pointers, strict=True)]
+    assert booked == [0, 16 * 32, 0, 0, 9 * 32]

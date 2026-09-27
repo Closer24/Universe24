@@ -104,6 +104,12 @@ from event_universe.features.giving import (
     GivingWrites,
 )
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
+from event_universe.features.polariser import (
+    PolariserOwn,
+    PolariserStart,
+    PolariserTerm,
+    PolariserWrites,
+)
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.recoil import (
     GIVING,
@@ -198,6 +204,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     receiver_detector: dict[int, int]
     has_receiver: bool
     held_records: dict[int, LiveRecord]
+    polarisers: dict[int, PolariserTerm]
     held_parts: dict[int, list[LiveRecord]]
     sourced_records: dict[int, LiveRecord]
     _source_argument: dict[int, np.ndarray]
@@ -315,6 +322,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             "the feed": Stage(self._feed_stage, (), ("the feed",)),
             "the induction": Stage(self._induction_stage, (), ("the induction",)),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
+            "the polariser": Stage(self._polariser_stage, (), ("the polariser",)),
         }
 
     _card_writes = guards.card_writes
@@ -495,6 +503,27 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             )
         return whole
 
+    def _polariser_stage(self, function: Callable[..., object]) -> None:
+        """The polariser's act (features/polariser): per polariser body and per live record with a level on its Nodes, the folder's `apply` on the record's pair there (a record with one level has its second at 0), the turned pair rebound at those Nodes and the two offers summed over them into the record's pointers at the body's two sets, the ladder reading them as the sets' current at its next click; a record with nothing on the body's Nodes is untouched, and the body's own standing record is no record of the ladder."""
+        for number, term in self.polarisers.items():
+            mask = self.block_by_number[number].mask
+            first, second = (self.detector_names.index(name) for name in term.sets)
+            for live in self.records.values():
+                im_now = np.zeros_like(live.now) if live.im_now is None else live.im_now
+                if not (np.any(live.now[mask]) or np.any(im_now[mask])):
+                    continue
+                writes = cast(
+                    PolariserWrites,
+                    function(term, PolariserStart(live.now[mask], im_now[mask]), PolariserOwn()),
+                )
+                now, im = live.now.copy(), im_now.copy()
+                now[mask], im[mask] = writes.re, writes.im
+                if live.im_now is None:
+                    live.im_before, live.im_remainder = np.zeros_like(im), np.zeros_like(im)
+                live.now, live.im_now = now, im
+                live.pointers[first] += int(sum(writes.first.tolist()))
+                live.pointers[second] += int(sum(writes.second.tolist()))
+
     def _recoil_stage(self, function: Callable[..., object]) -> None:
         """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1; a body with no period declares no term."""
         for number, sense, tally, clock in self._recoils:
@@ -590,12 +619,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self.record({"event": "mode", "tick": self.tick, "axis": AXES[axis], "sums": sums})
 
     def family_terms(self) -> list[tuple[str, str]]:
-        """The primitives each family of the run declares, as (label, name) pairs
-        read from its attributes (the loader's words of today; the term form
-        [name, target, of, degree, weight, table] of ALGEBRA.md #the-primitives is the loader's
-        next cut): every family the shape and the step's four words; `reads` the
-        signed read; `held` the hold; `self_source.unit` the self-source; `clicks`
-        the clicks; `lifetime` the lifetime."""
+        """The primitives each family of the run declares, as (label, name) pairs read from its attributes (the loader's words of today; the term form [name, target, of, degree, weight, table] of ALGEBRA.md #the-primitives is the loader's next cut): every family the shape and the step's four words; `reads` the signed read; `held` the hold; `self_source.unit` the self-source; `clicks` the clicks; `lifetime` the lifetime."""
         terms: list[tuple[str, str]] = []
         for index, family in enumerate(self.families):
             label = f"universe.families[{index}]"
@@ -619,6 +643,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 terms.append((f"{label}.clicks", "the clicks"))
             if family.lifetime is not None:
                 terms.append((f"{label}.lifetime", "the lifetime"))
+        for number in self.polarisers:
+            terms.append((f"measured[{number}].polariser", "the polariser"))
         for number, entry in enumerate(self.world.measured):
             if entry.block is not None and entry.block.emitter is not None:
                 terms.append((f"measured[{number}].emitter", "the giving"))
@@ -829,14 +855,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     def wheel_at(
         self, family: int, node: tuple[int, ...], pair: tuple[int, int] | None = None
     ) -> tuple[int, int]:
-        """The remainder's step g and the wheel W of the family's rule at a
-        Node under the fixed wall (ALGEBRA.md #a-familys-declaration, #the-direction and (13);
-        BUILD.md section 26 items 34 and 36): the wall 3 den Gamma, the step
-        g the gcd of the total's coefficients (p_i num on the six reads, 6
-        den c_i at the Node and the wall itself: the remainder moves on the
-        multiples of g), W = wall / g values; the pair's own 3 den / gcd(num, 3 den) in
-        the vacuum (2403 on [800, 801]), content-dependent at and beside a
-        body; read from the rule, never declared."""
+        """The remainder's step g and the wheel W of the family's rule at a Node under the fixed wall (ALGEBRA.md #a-familys-declaration, #the-direction and (13); BUILD.md section 26 items 34 and 36): the wall 3 den Gamma, the step g the gcd of the total's coefficients (p_i num on the six reads, 6 den c_i at the Node and the wall itself: the remainder moves on the multiples of g), W = wall / g values; the pair's own 3 den / gcd(num, 3 den) in the vacuum (2403 on [800, 801]), content-dependent at and beside a body; read from the rule, never declared."""
         num_all, den_all = self.pair_arrays(family, pair)
         num = int(num_all[node])
         den = int(den_all[node])
@@ -1024,14 +1043,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return int(num_c), int(den_c)
 
     def node_record_rule(self, block: Block) -> tuple[int, int, int, int]:
-        """THE ONE RULE AT THE BODY'S NODE (ALGEBRA.md #what-a-body-is; item 42): the
-        integers the body's Node's record is stepped with, (num, den, Gamma, c): the
-        body's Node's pair this interval as [num_c, 2 den_c] (`node_record_clock`: the body's
-        clock pair in the rule's convention, 2 cos omega = num_c / den_c, the
-        proper pair of its momentum on a moving body), the world's Gamma and
-        the body's Node's own effective content c (Gamma - p at the body's centre
-        Node, the family of clicks' level less the charge's read, uniform over
-        its Nodes); the wall 3 den Gamma = 6 den_c Gamma."""
+        """THE ONE RULE AT THE BODY'S NODE (ALGEBRA.md #what-a-body-is; item 42): the integers the body's Node's record is stepped with, (num, den, Gamma, c): the body's Node's pair this interval as [num_c, 2 den_c] (`node_record_clock`: the body's clock pair in the rule's convention, 2 cos omega = num_c / den_c, the proper pair of its momentum on a moving body), the world's Gamma and the body's Node's own effective content c (Gamma - p at the body's centre Node, the family of clicks' level less the charge's read, uniform over its Nodes); the wall 3 den Gamma = 6 den_c Gamma."""
         num_c, den_c = self.node_record_clock(block)
         centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
         pace, gamma = self.node_clock_pair(centre, block.family)
@@ -1506,11 +1518,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return arrived
 
     def _twist_reads(self, live: LiveRecord, inverse: bool) -> tuple[TwistRead, ...] | None:
-        """THE TWIST READS of a record's family (ALGEBRA.md #the-transport, #the-interval, #the-primitives): per read with a twist whose vector part is not silent, its factor on the record
-        (the weight times the record's own rotation for the twist "own", else the declared
-        twist, by q the family's charge sign) and the read family's vector part at the Node,
-        the `before` levels backward; None where no read turns the transport (the identity,
-        bit for bit) or on a family with one level."""
+        """THE TWIST READS of a record's family (ALGEBRA.md #the-transport, #the-interval, #the-primitives): per read with a twist whose vector part is not silent, its factor on the record (the weight times the record's own rotation for the twist "own", else the declared twist, by q the family's charge sign) and the read family's vector part at the Node, the `before` levels backward; None where no read turns the transport (the identity, bit for bit) or on a family with one level."""
         definition = self.families[live.family]
         if definition.levels < 2:
             return None
@@ -1538,13 +1546,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         reads: tuple[TwistRead, ...] | None,
         inverse: bool,
     ) -> tuple[list[np.ndarray], list[np.ndarray] | None]:
-        """THE SIX ARRIVALS AFTER THE TRANSPORT (ALGEBRA.md #the-transport, #the-interval),
-        summed per axis for the two levels by the receive's line (features/receive): the
-        record's pair at the Node, its family's twist reads and the six Links as the Ports
-        read them (`_arrival`), the `before` levels backward; the second level's sums None
-        while the record has no second level and no rotation writes one. NO REMAINDER IS
-        KEPT ON THE PORT (BUILD.md item 64): the rounding is the line's nearest unit and the
-        inverse recomputes the same arrivals from the `before` levels, exact."""
+        """THE SIX ARRIVALS AFTER THE TRANSPORT (ALGEBRA.md #the-transport, #the-interval), summed per axis for the two levels by the receive's line (features/receive): the record's pair at the Node, its family's twist reads and the six Links as the Ports read them (`_arrival`), the `before` levels backward; the second level's sums None while the record has no second level and no rotation writes one. NO REMAINDER IS KEPT ON THE PORT (BUILD.md item 64): the rounding is the line's nearest unit and the inverse recomputes the same arrivals from the `before` levels, exact."""
         wrap = self.kind_wrap[live.family]
         re = live.before if inverse else live.now
         im = None if live.im_now is None else (live.im_before if inverse else live.im_now)
@@ -1564,11 +1566,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return list(writes.re), None if writes.im is None else list(writes.im)
 
     def _self_source(self, live: LiveRecord, inverse: bool) -> np.ndarray | None:
-        """THE SELF-SOURCE'S SLOT (ALGEBRA.md #a-familys-declaration, #the-interval, #the-second-level): per family with a unit
-        P_2 above 0, the folder's line (features/self_source) through the register on every level
-        of the family at the interval's start (backward the `before` levels) with its six Links;
-        the step's right side loses w Sigma_self. None at P_2 = 0 (every shipped family). HOST:
-        once per family per interval, before any record of the family steps."""
+        """THE SELF-SOURCE'S SLOT (ALGEBRA.md #a-familys-declaration, #the-interval, #the-second-level): per family with a unit P_2 above 0, the folder's line (features/self_source) through the register on every level of the family at the interval's start (backward the `before` levels) with its six Links; the step's right side loses w Sigma_self. None at P_2 = 0 (every shipped family). HOST: once per family per interval, before any record of the family steps."""
         family = live.family
         unit = self.families[family].self_unit
         if unit <= 0:
@@ -1642,11 +1640,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return ports
 
     def _inflow_ports(self, family: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """The Port pairs of the family's detectors, listed ONCE (the click's cost,
-        the model owner's record 1934: the click never counts the board's
-        shapes; it reads the Ports alone): the flat index of every Port Node
-        i, of its neighbour j across the Link (on the family's faces), and
-        the detector of i, from `_flux_ports`."""
+        """The Port pairs of the family's detectors, listed ONCE (the click's cost, the model owner's record 1934: the click never counts the board's shapes; it reads the Ports alone): the flat index of every Port Node i, of its neighbour j across the Link (on the family's faces), and the detector of i, from `_flux_ports`."""
         cached = self._inflow_port_pairs.get(family)
         if cached is not None:
             return cached
@@ -1765,11 +1759,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
 
     @staticmethod
     def _tally_direction(live: LiveRecord, detector: int, axis: int, side: int, booked: int) -> None:
-        """THE FOUR-VECTOR CLICK'S TALLY (ALGEBRA.md #the-interval, #the-ladder; commit 5
-        without the recoil): the flux booked through a Port of the detector whose
-        outward normal is `side` along `axis` counts toward -side on that axis (a
-        quantum that enters through the -a face travels toward +a); kept per
-        detector on the record, in the flux's units."""
+        """THE FOUR-VECTOR CLICK'S TALLY (ALGEBRA.md #the-interval, #the-ladder; commit 5 without the recoil): the flux booked through a Port of the detector whose outward normal is `side` along `axis` counts toward -side on that axis (a quantum that enters through the -a face travels toward +a); kept per detector on the record, in the flux's units."""
         tally = live.momentum_tally.get(detector)
         if tally is None:
             tally = live.momentum_tally[detector] = [0, 0, 0]
@@ -2141,11 +2131,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 self._close_window(block, live)
 
     def _close_window(self, block: Block, live: LiveRecord) -> None:
-        """The window's close (ALGEBRA.md; item 50): the writing
-        ends, the record is named on its giving line with the window's length
-        and the open's interval, the next excitation's count starts (the
-        quantum moved at the open: the stock, the content and the ledger's
-        rows as the train emitter's; the norm T from the open)."""
+        """The window's close (ALGEBRA.md; item 50): the writing ends, the record is named on its giving line with the window's length and the open's interval, the next excitation's count starts (the quantum moved at the open: the stock, the content and the ledger's rows as the train emitter's; the norm T from the open)."""
         emitter = block.definition.emitter
         assert emitter is not None
         live.window_open = False
@@ -2176,11 +2162,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             block.excitations += 1
 
     def _point_window_inverse(self, block: Block) -> None:
-        """One interval of an open window backwards (ALGEBRA.md):
-        the interval's outward reading taken off the sum on the rows as the
-        interval left them, then the write subtracted (an addition inverts),
-        before the record's own inverse step; the body's Node's level is the one
-        written, its own inverse coming after."""
+        """One interval of an open window backwards (ALGEBRA.md): the interval's outward reading taken off the sum on the rows as the interval left them, then the write subtracted (an addition inverts), before the record's own inverse step; the body's Node's level is the one written, its own inverse coming after."""
         live = self.records.get(block.window) if block.window is not None else None
         emitter = block.definition.emitter
         if live is None or emitter is None or emitter.weight is None or live.window <= 0:

@@ -186,6 +186,7 @@ def state_arrays(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
     loop.dead = []
     loop.blocks = []
     loop.block_by_number = {}
+    loop.polarisers = {}
     # The block's count at a light record's first rung at its detector
     # (the click's `clock`, the body's event in the body's own clock).
     loop.rung_counts = {}
