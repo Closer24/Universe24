@@ -118,13 +118,16 @@ def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands
 
 
 def test_the_period_is_the_nearest_integer_to_two_pi_over_omega_with_no_pi():
-    """The period is round(2 pi / acos(a / 2 b)) in integers: 9 for the light clock, 45 for the dark body."""
+    """The period is round(2 pi / acos(a / 2 b)) in integers: 9 for the light clock, 45 for the dark body; the slowest rotation on b, [2 b - 1, b], returns within the pair's own horizon (four quarter turns of its first)."""
     assert period_by_the_rule(1651150, 1048576) == 9
     assert period_by_the_rule(2076636, 1048576) == 45
     b = 1 << 20
     for a in range(-2 * b + 1, 2 * b, 20_101):
         assert period_by_the_rule(a, b) == round(2 * math.pi / math.acos(a / (2 * b))), (a, b)
     assert period_by_the_rule(0, 1) == 4 and period_by_the_rule(1, 1) == 6
+    for b in (2, 3, 5, 1 << 10, 1 << 20):  # the slowest rotation on b, within the pair's own horizon
+        a = 2 * b - 1
+        assert period_by_the_rule(a, b) == round(2 * math.pi / math.acos(a / (2 * b))), (a, b)
 
 
 def test_the_two_levels_and_the_amplitude_from_the_count_and_the_norm():
