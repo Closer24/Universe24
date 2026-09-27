@@ -7,9 +7,8 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
+from event_universe.events.output import Ratio
 from event_universe.loader.world import BlockDefinition
-
-Ratio = tuple[int, int]
 
 
 @dataclass
@@ -218,7 +217,7 @@ class Block:
     fixed: bool = False
     # THE COUNT AT A NODE (ALGEBRA.md #the-counts-line; the count's line bound): the body's
     # quanta per Node and the line's remainder, laid at the line's first act; the body's Nodes
-    # are the count's support, `moved` where a quantum changed Node in the last act
+    # follow the count's centroid by whole Links, `moved` where they shifted in the last act
     counts: np.ndarray | None = None
     count_remainder: np.ndarray | None = None
     count_norm: int = 0

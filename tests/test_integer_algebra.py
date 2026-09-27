@@ -20,6 +20,10 @@ PHYSICAL_MODULES: dict[str, str] = {
     "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md #the-primitives)",
     "events/records.py": "the records' bookkeeping the loop steps: the live record, a body's Node record, the block, the books, the runner's layer; no arithmetic",
+    "events/geometry.py": "the engine's geometry: the Node sets, boxes, masks and Ports of a body or a detector from the GameBoard's shape through the core's and the loader's one copy of each rule, and the pair arrays' cache",
+    "events/output.py": "the engine's readings and output lines: the exact rationals of the books, the leak test, the record's click line, the books, the contents and the state stream; reads the simulation, writes the lines",
+    "events/guards.py": "the engine's run-time guards bound as its methods: the start's arrays to freeze, an act's grants, a card's writes, a write applied by name, the generic act's term, start view and own record, the pace guard",
+    "events/live.py": "the records' making and release: the ledger's stamps, the held records and levels, a body's own record, a planted record, a detector by name, a record's receiver, ladder and release; functions taking the engine, bound as its methods",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md #the-line, #the-direction, #the-interval), and the ladder's rungs (ALGEBRA.md #the-ladder)",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md #what-is-open): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
@@ -83,8 +87,7 @@ ROOT_NAMES = {"isqrt", "integer_root"}
 # Every root in the physical modules today, by (module, function), with its
 # reason; `None` is the module level. The set found must equal this set.
 ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
-    # the ray law's modules (nature_beam.py, meeting.py, engine.py) and their roots were
-    # deleted on 2026-09-26 (docs/CANCELLED_WORLDS.md); the loader's flight bound with #1236
+    # empty: no physical module takes a root today (docs/CANCELLED_WORLDS.md)
 }
 
 
@@ -93,8 +96,7 @@ def physical_sources() -> dict[str, str]:
 
 
 def float_literals(source: str) -> list[int]:
-    """The lines of every float literal token (a decimal point or an
-    exponent outside a hexadecimal literal)."""
+    """The lines of every float literal token (a decimal point or an exponent outside a hexadecimal literal)."""
     found = []
     for token in tokenize.generate_tokens(io.StringIO(source).readline):
         if token.type != tokenize.NUMBER:
@@ -257,8 +259,7 @@ def root_aliases(tree: ast.AST) -> tuple[set[str], set[str]]:
 
 
 def roots(tree: ast.AST) -> set[tuple[str | None, int]]:
-    """Every call of `isqrt` or `integer_root`, under any alias, with its
-    enclosing function."""
+    """Every call of `isqrt` or `integer_root`, under any alias, with its enclosing function."""
     names, modules = root_aliases(tree)
     found: set[tuple[str | None, int]] = set()
 
@@ -326,8 +327,7 @@ def test_a_feature_holds_integer_mathematics_only(name: str) -> None:
 
 
 def test_the_module_list_names_every_module_that_runs_a_step() -> None:
-    """Every module of `events/`, `core/` and `loader/` but the package markers is a
-    physical module here, so a new one cannot escape the gate unnamed."""
+    """Every module of `events/`, `core/` and `loader/` but the package markers is a physical module here, so a new one cannot escape the gate unnamed."""
     modules = {
         path.relative_to(SRC).as_posix()
         for folder in ("events", "core", "loader")
