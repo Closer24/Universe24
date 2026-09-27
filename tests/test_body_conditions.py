@@ -57,7 +57,6 @@ def seeded(
         KIND,
         [{"position": corner, "side": side, "pair": WELL, "margin": "control"}],
     )
-    document["age_bound"] = 100000
     entry = document["measured"][0]
     entry["margin"] = "control"
     if momentum is not None:
@@ -108,7 +107,6 @@ def test_a_body_that_does_not_fit_is_refused_at_load_never_cut():
         KIND,
         [{"position": [40, 14, 14], "side": 20, "pair": WELL, "margin": "control"}],
     )
-    off["age_bound"] = 100000
     with pytest.raises(
         ValueError, match=r"side 20 at 40 on the axis x reaches 59 beyond the face at 47"
     ):
@@ -119,7 +117,6 @@ def test_a_body_that_does_not_fit_is_refused_at_load_never_cut():
         KIND,
         [{"position": [2, 14, 14], "side": 20, "pair": WELL, "margin": "control"}],
     )
-    wrapped["age_bound"] = 100000
     with pytest.raises(ValueError, match=r"wraps onto itself on the periodic axis x of extent 16"):
         parse_nature_beam_world(wrapped)
     chain = block_world(
@@ -128,7 +125,6 @@ def test_a_body_that_does_not_fit_is_refused_at_load_never_cut():
         KIND,
         [{"position": [60, 0, 0], "side": 8, "pair": WELL, "margin": "control"}],
     )
-    chain["age_bound"] = 100000
     with pytest.raises(ValueError, match=r"reaches 67 beyond the face at 63"):
         parse_nature_beam_world(chain)
     # across the seam of a periodic axis the cube is whole: admitted
@@ -138,7 +134,6 @@ def test_a_body_that_does_not_fit_is_refused_at_load_never_cut():
         KIND,
         [{"position": [40, 14, 14], "side": 20, "pair": WELL, "margin": "control"}],
     )
-    seam["age_bound"] = 100000
     assert parse_nature_beam_world(seam).measured[0].block is not None
 
 
@@ -162,7 +157,6 @@ def test_a_flat_seed_is_not_the_mode_and_is_refused():
         KIND,
         [{"position": [14, 14, 14], "side": 20, "pair": WELL, "margin": "control", "seed": AMPLITUDE}],
     )
-    document["age_bound"] = 100000
     document["measured"][0]["seed"] = AMPLITUDE
     with pytest.raises(ValueError, match="a flat scalar seed is no mode"):
         checked(document)
@@ -175,7 +169,6 @@ def test_a_pair_not_lowered_is_the_loaders_own_refusal():
         KIND,
         [{"position": [14, 14, 14], "side": 20, "pair": KIND, "margin": "control"}],
     )
-    document["age_bound"] = 100000
     with pytest.raises(ValueError, match=r"is the kind's own pair"):
         parse_nature_beam_world(document)
 

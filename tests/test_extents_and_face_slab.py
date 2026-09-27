@@ -39,7 +39,6 @@ def wall(position, family="light", **keys):
         "stocks": {},
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
-        "fixed": False,
         "pair": [1, 2],
         **keys,
     }
@@ -132,7 +131,6 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
             "start": 0,
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
             "extents": [12, 5, 1],
             "q": 0,
             "spin": [0, 0, 0],
@@ -192,7 +190,6 @@ def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
 
     periodic = massive_world([80, 1, 1], {"x": "periodic", "y": "periodic", "z": "periodic"}, [800, 809])
     periodic["face_depth"] = 4
-    periodic["age_bound"] = 100000
     assert "face" not in DetectorLawSimulation(parse_nature_beam_world(periodic)).detector_names
 
 
@@ -212,7 +209,6 @@ def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
         document = massive_world(
             [300, 1, 1], {"x": "open", "y": "periodic", "z": "periodic"}, [800, 809]
         )
-        document["age_bound"] = 100000
         document["measured"] = []
         document["detectors"] = []
         document["face_depth"] = depth

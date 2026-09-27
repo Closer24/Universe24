@@ -191,8 +191,6 @@ def gather_line(
                     else simulation.tick
                 )
             }
-            if simulation.world.clock_stamp
-            else {}
         ),
     }
     simulation.layer.gathers.append(gather)
@@ -241,27 +239,26 @@ def books(simulation: detector_law.DetectorLawSimulation, recount: bool = False)
         )
         balanced = balanced and bool(measured["balanced"]) and bool(transit["balanced"])
         lines: dict[str, object] = {"measured": measured, "transit": transit}
-        if simulation.world.massive_record:
-            # The conserved form I summed over the family's live records (massive-record-v1): a
-            # GAMEBOARD diagnostic, written under the key alone.
-            lines["form"] = form_json(
-                ratio_sum(
-                    [
-                        simulation.record_form(live)
-                        for live in simulation.records.values()
-                        if live.family == index
-                    ]
-                    + [
-                        simulation.record_form(record)
-                        for record in (
-                            [simulation.held_records[index], *simulation.held_parts[index]]
-                            if index in simulation.held_records
-                            else []
-                        )
-                        if not record.silent
-                    ]
-                )
+        # The conserved form I summed over the family's live records (massive-record-v1): a
+        # GAMEBOARD diagnostic, written under the key alone.
+        lines["form"] = form_json(
+            ratio_sum(
+                [
+                    simulation.record_form(live)
+                    for live in simulation.records.values()
+                    if live.family == index
+                ]
+                + [
+                    simulation.record_form(record)
+                    for record in (
+                        [simulation.held_records[index], *simulation.held_parts[index]]
+                        if index in simulation.held_records
+                        else []
+                    )
+                    if not record.silent
+                ]
             )
+        )
         families[family.name] = lines
     return {
         "tick": simulation.tick,
@@ -314,45 +311,43 @@ def snapshot_stream(simulation: detector_law.DetectorLawSimulation) -> Iterator[
             for family, record in simulation.held_records.items()
         ],
     )
-    if simulation.world.massive_record:
-        # The blocks (massive-record-v1): the corner, the momentum, the spin, and the rows of the
-        # block's own record (its amplitude now over the board, GAMEBOARD:
-        # the mode's extent is read from them).
-        yield (
-            "blocks",
-            [
-                {
-                    "measured": block.number,
-                    "family": simulation.families[block.family].name,
-                    "corner": list(block.corner),
-                    "side": block.definition.side,
-                    "extents": list(block.definition.extents),
-                    "momentum": list(block.momentum),
-                    "spin": list(block.spin),
-                    "fixed": block.fixed,
-                    "emitted": list(block.emitted),
-                    "rows": None if block.own is None else block.own.now.ravel().tolist(),
-                    "form": (
-                        form_json((simulation.node_record_form(block), 1))
-                        if block.node_record is not None
-                        else None
-                        if block.own is None
-                        else form_json(simulation.record_form(block.own))
-                    ),
-                    # the body's Node's record, (a, b, r) at the body's Node (ALGEBRA.md #what-a-body-is; item 42; GAMEBOARD)
-                    "node_record": (
-                        None
-                        if block.node_record is None
-                        else [
-                            block.node_record.now,
-                            block.node_record.before,
-                            block.node_record.remainder,
-                        ]
-                    ),
-                }
-                for block in simulation.blocks
-            ],
-        )
+    # The blocks (massive-record-v1): the corner, the momentum, the spin, and the rows of the
+    # block's own record (its amplitude now over the board, GAMEBOARD:
+    # the mode's extent is read from them).
+    yield (
+        "blocks",
+        [
+            {
+                "measured": block.number,
+                "family": simulation.families[block.family].name,
+                "corner": list(block.corner),
+                "side": block.definition.side,
+                "extents": list(block.definition.extents),
+                "momentum": list(block.momentum),
+                "spin": list(block.spin),
+                "emitted": list(block.emitted),
+                "rows": None if block.own is None else block.own.now.ravel().tolist(),
+                "form": (
+                    form_json((simulation.node_record_form(block), 1))
+                    if block.node_record is not None
+                    else None
+                    if block.own is None
+                    else form_json(simulation.record_form(block.own))
+                ),
+                # the body's Node's record, (a, b, r) at the body's Node (ALGEBRA.md #what-a-body-is; item 42; GAMEBOARD)
+                "node_record": (
+                    None
+                    if block.node_record is None
+                    else [
+                        block.node_record.now,
+                        block.node_record.before,
+                        block.node_record.remainder,
+                    ]
+                ),
+            }
+            for block in simulation.blocks
+        ],
+    )
     yield (
         "records",
         [
@@ -373,11 +368,7 @@ def snapshot_stream(simulation: detector_law.DetectorLawSimulation) -> Iterator[
                 "norm": live.norm,
                 "absorbed": live.absorbed,
                 "pointers": dict(zip(simulation.detector_names, live.pointers, strict=True)),
-                **(
-                    {"form": form_json(simulation.record_form(live))}
-                    if simulation.world.massive_record
-                    else {}
-                ),
+                "form": form_json(simulation.record_form(live)),
             }
             for live in simulation.records.values()
         ],

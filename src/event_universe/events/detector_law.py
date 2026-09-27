@@ -216,8 +216,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         corner: list[int],
         mask: np.ndarray,
     ) -> Block:
-        # a body's block from its measured entry: its Nodes, the detector under its position, its
-        # momentum and its spin at their two levels, the file's, and the word `fixed`
+        # a body's block from its measured entry: its Nodes, the detector under its position, its momentum and spin
         block = Block(
             number,
             entry.family,
@@ -230,7 +229,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         block.spin = list(definition.spin)
         block.spin_before = list(definition.spin_before)
         block.momentum_before = [int(component) for component in entry.momentum_before]
-        block.fixed = bool(entry.fixed)
         return block
 
     def _node_record(self, identity: int, level: int) -> NodeRecord:
@@ -310,7 +308,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
 
     def _body_count(self, block: Block) -> int:
         """The count at the body, its quanta: the declared count per Node over its Nodes (the record's norm in quanta, ALGEBRA.md #what-a-body-is; the count's line moves them between the Nodes and loses none)."""
-        return int(block.mask.sum()) * self.world.measured[block.number].amount
+        return self.body_quanta(block, self.world.measured[block.number].amount)
 
     def _lay_count(self, block: Block, live: LiveRecord) -> tuple[np.ndarray, np.ndarray]:
         """THE COUNT'S LAY (ALGEBRA.md #the-counts-line, the remainder's origin): T, the count's wall, the record's conserved form per quantum of the body's declared count, read once by Rule3's division act; then at every Node of the record T c + r is the Node's share of the form plus the origin T / 2 (the share's exact rational n / d: c = (n + d T / 2) div (d T), r the rest div d, Rule3's division act twice), so the count follows the norm with the margin T / 2 against the rounding's walk; a form below one per quantum is the line's refusal."""
@@ -319,8 +317,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             rule3(NO_READ, NO_READ, 1, denominator * self._body_count(block), 0, 0, numerator)[0]
         )
         half = int(rule3(NO_READ, NO_READ, 1, SPAN, 0, 0, block.count_norm)[0])
-        counts = np.zeros(self.shape, dtype=np.int64)
+        counts = self.declared_counts(block)
         remainder = np.full(self.shape, half, dtype=np.int64)
+        if block.definition.counts is not None:
+            return counts, remainder
         terms, read_coefficient = self.form_terms(live)
         for node in zip(*np.nonzero((live.now != 0) | (live.before != 0)), strict=True):
             share = ratio_sum(
@@ -1861,7 +1861,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         largest = int(np.max(np.abs(nxt)))
         if im_next is not None:
             largest = max(largest, int(np.max(np.abs(im_next))))
-        if self.world.massive_record and largest > self.world.amplitude_bound:
+        if largest > self.world.amplitude_bound:
             raise RuntimeError(
                 f"the record {live.identity} reached the level "
                 f"{largest} at interval {self.tick}, above the world's declared "

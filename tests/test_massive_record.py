@@ -144,7 +144,6 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
     periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
     for pair in ([128, 129], [1600, 1618]):
         document = massive_world([6, 6, 6], periodic, pair)
-        document["age_bound"] = 100000
         document["amplitude_bound"] = (
             1 << 21
         )  # the pair's room under the weak field (ALGEBRA.md #the-rows-against-nature)
@@ -179,7 +178,6 @@ def test_every_family_reads_the_worlds_border_and_a_zero_face_when_open():
     """ONE BORDER FOR EVERY FAMILY (BUILD.md section 26 item 28; was BUILD.md (m), the kind's own periodic faces): on a 5 x 1 x 1 board whose world `boundary` is periodic on x the massive kind wraps (Node 0 reads Node 4 as its -x neighbour); on a board open on x the neighbour beyond the face reads 0 for the massive kind as for light."""
     for boundary, expected in (({"x": "periodic", "y": "periodic", "z": "periodic"}, 9), (CHAIN, 0)):
         document = massive_world([5, 1, 1], boundary, [1, 2])
-        document["age_bound"] = 100000
         world = parse_nature_beam_world(document)
         assert world.kind_periodic(1) == world.periodic == world.kind_periodic(0)
         simulation = DetectorLawSimulation(world)
@@ -222,9 +220,8 @@ def test_the_loaders_refusals_name_the_key():
     """BUILD.md (q): the step's keys refused one by one, each naming the key."""
     base = massive_world([4, 4, 4], "open", [2, 3])
     without_key = json.loads(json.dumps(base))
-    without_key["massive_record"] = False
     del without_key["amplitude_bound"]
-    with pytest.raises(ValueError, match="is refused without the world key `massive_record`"):
+    with pytest.raises(ValueError, match="a world with a massive family declares `amplitude_bound`"):
         parse_nature_beam_world(without_key)
     reversed_pair = json.loads(json.dumps(base))
     reversed_pair["universe"][1]["pair"] = [3, 2]
@@ -252,8 +249,8 @@ def test_the_loaders_refusals_name_the_key():
     with pytest.raises(ValueError, match="the world has unknown keys: detector_law"):
         parse_nature_beam_world(no_law)
     not_bool = json.loads(json.dumps(base))
-    not_bool["massive_record"] = 1
-    with pytest.raises(ValueError, match="massive_record must be true or false"):
+    not_bool["massive_record"] = True
+    with pytest.raises(ValueError, match="the world has unknown keys: massive_record"):
         parse_nature_beam_world(not_bool)
     lamp_on_kind = json.loads(json.dumps(base))
     lamp_on_kind["measured"] = [
@@ -264,7 +261,6 @@ def test_the_loaders_refusals_name_the_key():
             "stocks": {},
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
             "lamp": {"rate": [1, 40], "wheel": [1, 64], "train": 2},
         }
     ]
@@ -291,9 +287,8 @@ def test_the_records_keys_under_the_key_and_none_without_it():
     # without the key there is no block, so no emitter body (the lamp refused under the
     # detector law): the rule's world with the key withdrawn and light alone
     without = massive_world([4, 4, 4], "open", [2, 3])
-    without["massive_record"] = False
-    # every family declares its pair (the pair's card), admitted under massive_record alone
-    with pytest.raises(ValueError, match="is refused without the world key `massive_record`"):
+    without["clock_stamp"] = True  # the old form's key, refused by name: the stamp is always written
+    with pytest.raises(ValueError, match="the world has unknown keys: clock_stamp"):
         parse_nature_beam_world(without)
 
 
@@ -463,7 +458,6 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
                 }
             ],
         )
-        document["age_bound"] = 100000
         document["amplitude_bound"] = (
             1 << 19
         )  # the pair's room under the weak field (ALGEBRA.md #the-rows-against-nature)
@@ -481,7 +475,6 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
         [800, 809],
         [{"position": [3, 14, 14], "side": 20, "pair": [800, 800], "margin": "control"}],
     )
-    near["age_bound"] = 100000
     with pytest.raises(ValueError, match="Nodes lie 3 Links from a zero face"):
         check_margins(parse_nature_beam_world(near))
     shallow = block_world(
@@ -490,7 +483,6 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
         [800, 809],
         [{"position": [10, 10, 10], "side": 3, "pair": [800, 808], "margin": "control"}],
     )
-    shallow["age_bound"] = 100000
     with pytest.raises(ValueError, match="below the margin rule"):
         check_margins(parse_nature_beam_world(shallow))
     assert block_margin(parse_nature_beam_world(shallow), 0).extent > 100
@@ -500,7 +492,6 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
         [800, 809],
         [{"position": [14, 14, 14], "side": 20, "pair": [800, 800], "margin": "control"}],
     )
-    rest["age_bound"] = 100000
     reading = check_margins(parse_nature_beam_world(rest))[0]
     assert abs(reading.extent - 5.73) < 0.05
     assert abs(reading.omega_b - 0.1105) < 0.0005
@@ -508,13 +499,11 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
     assert reading.lines() and reading.to_record()["kind"] == "COMPUTATION"
     deep = {"position": [40, 0, 0], "side": 1, "pair": [800, 700], "margin": "control"}
     runaway = block_world([200, 1, 1], CHAIN, [800, 809], [deep])
-    runaway["age_bound"] = 100000
     reading = block_margin(parse_nature_beam_world(runaway), 0)
     assert reading.runaway and reading.omega_b == 0.0 and abs(reading.lambda_max - 2.032) < 0.002
     with pytest.raises(ValueError, match="the block's mode is a runaway"):
         check_margins(parse_nature_beam_world(runaway))
     cube = block_world([24, 24, 24], PERIODIC, [800, 809], [dict(deep, position=[10, 10, 10])])
-    cube["age_bound"] = 100000
     assert not block_margin(parse_nature_beam_world(cube), 0).runaway
 
 
@@ -527,7 +516,6 @@ def test_the_cavity_is_refused_by_name():
             [800, 809],
             [{"position": [10, 10, 10], "side": 5, "pair": [800, 800], "margin": "control"}],
         )
-        document["age_bound"] = 100000
         document["measured"][0]["cavity"] = value
         with pytest.raises(ValueError, match=r"measured\[0\] has unknown keys: cavity"):
             parse_nature_beam_world(document)
@@ -539,7 +527,6 @@ def test_the_cavity_is_refused_by_name():
 def test_the_mode_line_sums_lights_field_by_residue_class():
     """The world key `mode_axis` ("x"): the record's `mode` line per interval carries the three sums of light's total field over the Nodes whose x coordinate is 0, 1, 2 modulo 3, equal to the sums formed from the records' rows at that interval; on a chain of 30 with a planted packet the three sums are the packet's residue sums. The edge case: `mode_axis` without `massive_record` is refused, as is an axis not x, y or z."""
     document = block_world([30, 1, 1], PERIODIC_CHAIN, [800, 809], [], ticks=20)
-    document["age_bound"] = 100000
     document["mode_axis"] = "x"
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
@@ -556,8 +543,8 @@ def test_the_mode_line_sums_lights_field_by_residue_class():
     with pytest.raises(ValueError, match="mode_axis"):
         parse_nature_beam_world(bad)
     unkeyed = json.loads(json.dumps(document))
-    unkeyed["massive_record"] = False  # declared false, never absent (item 57)
-    with pytest.raises(ValueError, match="is refused without the world key `massive_record`"):
+    unkeyed["age_bound"] = 100000  # the old form's key, refused by name: no record's age is bounded
+    with pytest.raises(ValueError, match="the world has unknown keys: age_bound"):
         parse_nature_beam_world(unkeyed)
 
 
@@ -568,7 +555,6 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
     """A pair whose rule total at the declared amplitude bound, the clock and the content reaches 2^63 is refused at load naming them ([800, 809] and [3200, 3236] admitted); the amplitude bound is required, capped at 2^28, and a seed or a row above it is refused naming it."""
     big = 1 << 20
     document = massive_world([6, 6, 6], PERIODIC, [big, big + 1])
-    document["age_bound"] = 100
     with pytest.raises(
         ValueError,
         match=r"6 A R \+ A \|S\| \+ w \(A \+ 1\).*Gamma = 10000 and the content M = 0 .*not below 2\^63",
@@ -578,7 +564,6 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
         parse_nature_beam_world(document)
     for pair, amplitude in (([800, 809], 1 << 22), ([3200, 3236], 1 << 19)):
         admitted_pair = massive_world([6, 6, 6], PERIODIC, pair)
-        admitted_pair["age_bound"] = 100
         admitted_pair["amplitude_bound"] = (
             amplitude  # the integers of ALGEBRA.md #the-rows-against-nature per pair
         )
@@ -592,7 +577,6 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
             [800, 809],
             [{"position": [10, 10, 10], "side": 3, "pair": pair}],
         )
-        world["age_bound"] = 100
         if admitted:
             parse_nature_beam_world(world)
         else:
@@ -601,12 +585,10 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
             ):
                 parse_nature_beam_world(world)
     unbounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
-    unbounded["age_bound"] = 100
     del unbounded["amplitude_bound"]
-    with pytest.raises(ValueError, match="amplitude_bound is required with `massive_record`"):
+    with pytest.raises(ValueError, match="a world with a massive family declares `amplitude_bound`"):
         parse_nature_beam_world(unbounded)
     ceiling = massive_world([6, 6, 6], PERIODIC, [800, 809])
-    ceiling["age_bound"] = 100
     ceiling["amplitude_bound"] = 1 << 29
     with pytest.raises(ValueError, match="A = 536870912.*not below 2\\^63"):
         parse_nature_beam_world(ceiling)
@@ -616,11 +598,9 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
         [800, 809],
         [{"position": [10, 10, 10], "side": 3, "pair": [800, 800], "seed": 1 << 60}],
     )
-    huge_seed["age_bound"] = 100
     with pytest.raises(ValueError, match=r"above the world's amplitude bound A = 4194304 on the pair"):
         parse_nature_beam_world(huge_seed)
     bounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
-    bounded["age_bound"] = 100
     world = parse_nature_beam_world(bounded)
     simulation = DetectorLawSimulation(world)
     planted_row = planted(
@@ -638,7 +618,6 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
     """MUST 1's test: on the chain 6 x 1 x 1 (y and z folded, the Node reading itself twice on each) at the pair [2, 3], open on x, the form I of section 3 as the books read it (`record_form`, the weights L / num, L the numerators' lcm, here 2) changes by the remainders' term exactly on every interval: num x Gamma x (I(t) - I(t - 1)) = L x SUM_i (a_next - a_before)_i (r - r')_i (the pace Gamma at every Node of the vacuum, the Node's terms weighted by 1 / Gamma, item 36), integers, no tolerance, 60 intervals from random rows; the same on a periodic x."""
     for boundary in (CHAIN, PERIODIC_CHAIN):
         document = massive_world([6, 1, 1], boundary, [2, 3])
-        document["age_bound"] = 1000
         simulation = DetectorLawSimulation(parse_nature_beam_world(document))
         rng = np.random.default_rng(7)
         now = rng.integers(-50, 51, size=(6, 1, 1)).astype(np.int64)
@@ -674,7 +653,6 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
         "seed": 1 << 18,  # below the pair's amplitude bound (ALGEBRA.md #the-rows-against-nature)
     }
     document = block_world([128, 128, 1], PERIODIC, [3200, 3236], [block], ticks=1500)
-    document["age_bound"] = 100000
     document["amplitude_bound"] = (
         1 << 19
     )  # the pair's room under the weak field (ALGEBRA.md #the-rows-against-nature)
@@ -948,8 +926,6 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
     for momentum in ([0, 0, 0], [-64, 0, 0]):
         document = massive_world([300, 1, 1], CHAIN, [800, 809])
         document["ticks"] = 1200
-        document["age_bound"] = 1 << 20
-        document["clock_stamp"] = True
         document["universe"].append(source_family())
         document["measured"] = [
             dict(emitter_at(100, 2), receiver="B_nodes"),
@@ -962,7 +938,6 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
                 "start": 0,
                 "momentum": momentum,
                 "momentum_before": momentum,
-                "fixed": False,
                 "side": 12,
                 "q": 0,
                 "spin": [0, 0, 0],
@@ -1007,7 +982,6 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
 def test_a_wall_of_lights_kind_is_a_mirror_line():
     """A line of blocks of light's kind at the pair [1, 2], four Nodes deep, is a mirror: beyond it the largest level stays below four percent of the level before it over 200 intervals (COMPUTATION), the books balanced; a light-kind block with seed or margin, and any block with coupling, refused by name."""
     document = chain_world()  # the closed chain (BUILD.md section 26 item 14)
-    document["massive_record"] = True
     document["amplitude_bound"] = 1 << 22
     document["ticks"] = 200
     for x in (40, 41, 42, 43):
@@ -1021,7 +995,6 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
                 "start": 0,
                 "momentum": [0, 0, 0],
                 "momentum_before": [0, 0, 0],
-                "fixed": False,
                 "side": 1,
                 "q": 0,
                 "spin": [0, 0, 0],
@@ -1077,7 +1050,6 @@ def test_the_momentum_books_carry_the_blocks_held_momentum_and_nothing_else():
             [800, 809],
             [{"position": [10, 10, 10], "side": 3, "pair": [800, 800], "momentum": [64, 0, 0]}],
         )
-        | {"age_bound": 100}
     )
     simulation = DetectorLawSimulation(world)
     simulation.step()

@@ -28,7 +28,6 @@ def body(x: int) -> dict:
         "stocks": {},
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
-        "fixed": False,
     }
 
 
@@ -40,7 +39,6 @@ def chain_of_200(receiver: str | None = "screen") -> dict:
     A's ladder); no wheel (the record's own, ALGEBRA.md #a-familys-declaration)."""
     document = massive_world([200, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 500
-    document["clock_stamp"] = True
     document["measured"] = [emitter(20, receiver, 70), *(body(x) for x in (91, 92, 93, 60, 61, 62))]
     document["detectors"] = [
         {"name": "screen", "positions": [[91, 0, 0], [92, 0, 0], [93, 0, 0]]},
@@ -202,7 +200,6 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     assert all(lawful_wheel(simulation.world, givings[g["record"]]) for g in found)
     document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 700
-    document["clock_stamp"] = True
     document["measured"] = [emitter(300, "at_well", 0)]
     document["detectors"] = [{"name": "at_well", "block": 0}]
     seed_source(document, 0)
@@ -248,7 +245,6 @@ def test_the_lines_time():
     # two bodies a hundred Links apart, each naming the cube beside the first
     document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 600
-    document["clock_stamp"] = True
     document["measured"] = [emitter(100, "between"), emitter(232, "between", direction=[-1, 0, 0])]
     document["detectors"] = [
         {"name": "between", "block": 0, "positions": [[132, 0, 0], [133, 0, 0], [134, 0, 0]]}
@@ -273,9 +269,10 @@ def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
     the mirror returns them into A's Nodes (the line at the rung, the record deleted at it;
     at least one within the 700, the round trip about 300 intervals after the giving; under
     the row's floor and the recoil, ALGEBRA.md #the-paces and #the-primitives, A carries its
-    kicks and its own record reads them, so eight records reach their rung at A's own Nodes
-    within 200 intervals of their giving, the nearest at 4), none at the faces; the books balanced. The edge case: the file on disk is byte for byte what
-    the test read."""
+    kicks and no body is held in place (the mirrors fed, #1279): twelve records return by their
+    round trips and one reaches its rung at A's own Nodes 12 intervals after its giving), none
+    at the faces; the books balanced. The edge case: the file on disk is byte for byte what the
+    test read."""
     before = LIGHT_CLOCK.read_bytes()
     document = json.loads(before)
     world = parse_nature_beam_world(document)
@@ -293,5 +290,5 @@ def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
         line["tick"] == line["click"] and line["record"] not in simulation.records for line in found
     )
     trips = [line["click"] - line["giving"] for line in found]
-    assert sum(trip > 200 for trip in trips) == len(trips) - 8 and min(trips) == 4 and len(trips) == 24
+    assert sum(trip > 200 for trip in trips) == 12 and min(trips) == 12 and len(trips) == 13
     assert LIGHT_CLOCK.read_bytes() == before

@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import json
-
 import numpy as np
 
 from event_universe.events.detector_law import DetectorLawSimulation
@@ -75,7 +73,6 @@ def paces_world() -> dict:
     block = {"position": [3, 2, 2], "side": 3, "pair": WELL, "margin": "control"}
     periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
     document = block_world(PACES_SHAPE, periodic, KIND, [block], ticks=20, on_mode=True)
-    document["age_bound"] = 100000
     for family in document["universe"]:
         if family["name"] == "clicks":
             family.update(
@@ -92,14 +89,6 @@ def paces_world() -> dict:
             )
     document["stamp"] = input_stamp(document)
     return document
-
-
-def with_body_record(document: dict, on: bool) -> dict:
-    """The document with `body_record` set and the input stamp renewed over the whole file."""
-    copy = json.loads(json.dumps(document))
-    copy["body_record"] = on
-    copy["stamp"] = input_stamp(copy)
-    return copy
 
 
 def charged_chain(
@@ -168,7 +157,6 @@ def block_world(
             "start": 0,
             "momentum": block.get("momentum", [0, 0, 0]),
             "momentum_before": block.get("momentum", [0, 0, 0]),
-            "fixed": block.get("fixed", False),
             "side": block["side"],
             "pair": block["pair"],
             # the body's numbers (ALGEBRA.md #the-interval; commit 2), no loader default
@@ -204,11 +192,7 @@ def block_world(
         "face_depth": 1,
         "ticks": ticks,
         "N": 1024,
-        "clock_stamp": True,
-        "age_bound": 100000,
-        "body_record": False,
         "engine": "examples/events/engine_start.json",
-        "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
@@ -244,7 +228,6 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
     the set `A_face` at its head, and with `far_body` the cube `far` at [160, 162]."""
     document = massive_world([173, 1, 1], {"x": faces, "y": "periodic", "z": "periodic"}, [800, 809])
     document["ticks"] = 600
-    document["clock_stamp"] = True
     document["measured"] = [
         {
             "position": [100, 0, 0],
@@ -255,7 +238,6 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "stocks": {"light": 1},
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
             "extents": [32, 1, 1],
             "q": 0,
             "spin": [0, 0, 0],
@@ -290,11 +272,7 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "face_depth": 1,
         "ticks": 10,
         "N": 1024,
-        "clock_stamp": False,
-        "age_bound": 100000,
-        "body_record": False,
         "engine": "examples/events/engine_start.json",
-        "massive_record": True,
         "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
@@ -350,7 +328,6 @@ def content_chain(length: int, boundary: dict, nodes, amount: int, gamma: int = 
     """The chain [length, 1, 1] of the matter kind [800, 809] beside light with `amount` quanta
     held at each Node of `nodes` (a light body per Node) under the Node clock `gamma`."""
     document = massive_world([length, 1, 1], boundary, list(PAIR))
-    document["age_bound"] = 100000
     document["node_clock"] = gamma
     document["amplitude_bound"] = 1 << 26  # the rows at UNIT have room under the suite's Gamma = 1000
     document["measured"] = [light_body(x, amount) for x in nodes]
@@ -366,7 +343,6 @@ def light_body(x: int, amount: int) -> dict:
         "stocks": {},
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
-        "fixed": False,
     }
 
 
@@ -384,11 +360,10 @@ def six_reads(levels: np.ndarray, wrap_x: bool) -> list[int]:
 
 
 def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 400) -> dict:
-    """The chain with the one-Node point emitter at its middle; the mode seeded first (as
-    `body_record`), the keys and the weight set after, the stamp renewed."""
+    """The chain with the one-Node point emitter at its middle; the mode seeded first, the keys
+    and the weight set after, the stamp renewed."""
     document = massive_world([length, 1, 1], CHAIN, POINT_KIND)
     document["ticks"] = ticks
-    document["clock_stamp"] = True
     document["measured"] = [
         {
             "position": [length // 2, 0, 0],
@@ -399,7 +374,6 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
             "stocks": {"light": stock},
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "fixed": False,
             "extents": [1, 1, 1],
             "q": 0,
             "spin": [0, 0, 0],
@@ -415,7 +389,6 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
     document["detectors"] = []
     massive_generator().seed_on_the_mode(document)
     document["measured"][0]["emitter"]["weight"] = weight
-    document["body_record"] = True
     document["stamp"] = input_stamp(document)
     return document
 
@@ -438,7 +411,6 @@ def emitter(
         "stocks": {"light": stock},
         "momentum": [momentum, 0, 0],
         "momentum_before": [momentum, 0, 0],
-        "fixed": False,
         "extents": [32, 1, 1],
         "q": 0,
         "spin": [0, 0, 0],
@@ -471,7 +443,6 @@ def parts_world(**body: object) -> dict:
     block = {"position": [3, 2, 2], "side": 3, "pair": WELL, "margin": "control", **body}
     periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
     document = block_world(SHAPE, periodic, KIND, [block], ticks=20, on_mode=True)
-    document["age_bound"] = 100000  # a board periodic on every axis declares it
     for family in document["universe"]:
         if family["name"] == "clicks":
             family.update(

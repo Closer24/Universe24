@@ -339,8 +339,6 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
 def test_age_bound_fixed_sign_and_the_family_clock_are_refused_by_name_when_absent_or_wrong():
     """The keys #1236 made required, no default: each refused by the schema's or the loader's name."""
     for change, match in (
-        (lambda d: d.pop("age_bound"), "the world lacks keys: age_bound"),
-        (lambda d: d["measured"][0].pop("fixed"), r"measured\[0\] lacks keys: fixed"),
         (lambda d: d["universe"][0].pop("sign"), r"universe\[0\] lacks keys: sign"),
         (lambda d: d["universe"][0].__setitem__("clock", 3), r"clock must be a list, not 3"),
         (lambda d: d["universe"][0].__setitem__("clock", [1, 0]), r"has q from 1"),
