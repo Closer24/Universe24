@@ -2,10 +2,9 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Mapping
+from collections.abc import Mapping
 from dataclasses import dataclass
 from math import isqrt
-from typing import Any
 
 import numpy as np
 
@@ -137,9 +136,9 @@ def guard(term: SignedReadTerm, writes: SignedReadWrites, own: SignedReadOwn) ->
 
 
 def apply(term: SignedReadTerm, start: SignedReadStart, own: SignedReadOwn) -> SignedReadWrites:
-    """The primitive: the paces from the reads, then the guard (ALGEBRA.md #the-primitives row 1)."""
+    """The primitive: the paces from the reads with the row's floor, a hill lessens a hollow and never exceeds it (the reads' sum enters the pace at no less than 0), then the guard (ALGEBRA.md #the-primitives row 1, #the-paces)."""
     content = content_of(term, start) if term.reads else np.zeros(start.shape, dtype=np.int64)
-    writes = SignedReadWrites(content, start.axis_contents)
+    writes = SignedReadWrites(np.maximum(content, 0), start.axis_contents)
     guard(term, writes, own)
     return writes
 
@@ -178,8 +177,3 @@ DECLARATION = Declaration(
         }
     ),
 )
-
-
-def bind(loop: Any) -> Callable[..., object]:
-    """The loop's method `_effective_content`, which reads through `content_of`, until the loop calls `apply`."""
-    return loop._method("_effective_content")  # type: ignore[no-any-return]

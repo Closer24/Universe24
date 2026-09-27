@@ -12,14 +12,14 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
-# The physical modules: every module that runs a physical step of the
-# interval or forms the tables it reads, one line each why.
+# The physical modules: every module that runs a physical step of the interval or forms the tables it reads, one line each why.
 PHYSICAL_MODULES: dict[str, str] = {
     "loader/world.py": "the loop's classes built from the checked files and the load-time constants (the flight table, the labels)",
     "loader/frame.py": "the frame of the files: the schemas the loader reads them through; no arithmetic",
     "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md #the-primitives)",
     "events/records.py": "the records' bookkeeping the loop steps: the live record, a body's Node record, the block, the books, the runner's layer; no arithmetic",
+    "events/assembly.py": "the assembly of the engine's state from the loaded world before the first interval: the detectors' map, the arrays and caches, the bodies' blocks and own records, the held families' records; integer arrays alone",
     "events/geometry.py": "the engine's geometry: the Node sets, boxes, masks and Ports of a body or a detector from the GameBoard's shape through the core's and the loader's one copy of each rule, and the pair arrays' cache",
     "events/output.py": "the engine's readings and output lines: the exact rationals of the books, the leak test, the record's click line, the books, the contents and the state stream; reads the simulation, writes the lines",
     "events/guards.py": "the engine's run-time guards bound as its methods: the start's arrays to freeze, an act's grants, a card's writes, a write applied by name, the generic act's term, start view and own record, the pace guard",
