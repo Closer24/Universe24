@@ -71,11 +71,11 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/detector_law.py": {
-   "comment_lines": 650,
-   "docstring_lines": 598,
-   "level_shift_sites": 15,
-   "lines": 3976,
-   "record_references": 36,
+   "comment_lines": 640,
+   "docstring_lines": 489,
+   "level_shift_sites": 0,
+   "lines": 3917,
+   "record_references": 29,
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/primitives.py": {
