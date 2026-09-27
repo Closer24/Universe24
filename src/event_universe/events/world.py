@@ -4803,11 +4803,7 @@ def _block(
             family,
             families,
             names,
-            shape,
             phase_steps,
-            extents=extents,
-            periodic=periodic,
-            momentum=momentum,
             moment=moment,
             clock_pair=clock,
         )
@@ -4902,11 +4898,7 @@ def _emitter(
     family: FamilyDefinition,
     families: Sequence[FamilyDefinition],
     names: dict[str, int],
-    shape: Address3,
     phase_steps: int,
-    extents: tuple[int, int, int] = (1, 1, 1),
-    periodic: tuple[bool, bool, bool] = (True, True, True),
-    momentum: tuple[int, ...] = (0, 0, 0),
     moment: tuple[int, int, int] = (0, 0, 0),
     clock_pair: tuple[int, int] | None = None,
 ) -> EmitterDefinition:
@@ -5018,34 +5010,6 @@ def _emitter(
         else _integer(obj["norm_denominator"], f"{label}.norm_denominator", 1)
     )
     norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
-    # CANCELLED (commit 7): the given train's keys are refused by name above; the
-    # parse of `train` and `given` below is disconnected, kept as the record
-    train: TrainDefinition | None = None
-    if "train" in obj:
-        train = _train(
-            obj["train"], f"{label}.train", given_family, phase_steps, extents, momentum, clock
-        )
-    given: GivenTrain | None = None
-    if "given" in obj:
-        # THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a)): the profile of the train's
-        # two levels over the body's Nodes and its norm on the vacuum, the
-        # generator's integers, checked here in integers; the two-integer pair
-        # (the one-Node giving, a flat pulse of the body's length) refused
-        value = obj["given"]
-        if isinstance(value, list):
-            raise ValueError(
-                f"{label}.given is the pair [now, before] on every Node: a flat pulse of "
-                "the body's length is broadband and its standing components book the ladder by "
-                "sloshing, not by a passage (ALGEBRA.md 9.17 (6a), 9.25 (11)); every giving is a "
-                'travelling train: `given` {"now": [...], "before": [...], "norm": T} with `train`'
-            )
-        if train is None:
-            raise ValueError(
-                f"{label}.given needs the emitter's `train` (the direction and the "
-                "periods; ALGEBRA.md 9.17 (6a))"
-            )
-        wrap = periodic
-        given = _given_train(value, f"{label}.given", given_pair, shape, extents, wrap, train)
     # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md 9.82 (3) (d)): on a vector family the
     # component along the body's moment mu, one axis; a scalar family's one component
     part = 0
@@ -5073,145 +5037,13 @@ def _emitter(
         given_pair,
         period,
         norm,
-        train,
-        given,
+        None,
+        None,
         weight=weight,
         norm_denominator=norm_denominator,
         part=part,
         twist=twist,
     )
-
-
-def _train(
-    value: object,
-    label: str,
-    given_family: FamilyDefinition,
-    phase_steps: int,
-    extents: tuple[int, int, int],
-    momentum: tuple[int, ...],
-    rest_clock: tuple[int, int],
-) -> TrainDefinition:
-    """The emitter's `train` (ALGEBRA.md 9.17 (6a)): one signed unit axis
-    vector and the periods n >= 8; the given clock the given family's
-    declared clock [p, q], the wavelength 2 N q / p a whole number of Links
-    and the body's extent along the direction n wavelengths. DOPPLER
-    (ALGEBRA.md 9.62 (4); BUILD.md section 26 item 49): a moving body's train
-    declares its own clock pair `clock`, the wave number boosted by its
-    motion in the given family's representation (the generator's); refused
-    on a body at rest."""
-    obj = _object(value, label, {"direction", "periods", "clock"}, {"direction", "periods"})
-    direction = obj["direction"]
-    if (
-        not isinstance(direction, list)
-        or len(direction) != 3
-        or any(type(v) is not int for v in direction)
-        or sorted(abs(int(v)) for v in direction) != [0, 0, 1]
-    ):
-        raise ValueError(
-            f"{label}.direction must be one signed unit axis vector, the train's way "
-            "(ALGEBRA.md 9.17 (6a))"
-        )
-    axis = next(index for index, v in enumerate(direction) if v != 0)
-    sign = 1 if int(direction[axis]) > 0 else -1
-    periods = _integer(obj["periods"], f"{label}.periods", 8)
-    p, q = rest_clock  # the given clock, the family's or the emitter's (item 59)
-    if "clock" in obj:
-        # DOPPLER (ALGEBRA.md 9.62 (4); item 49): the moving body's train at its
-        # own boosted wave number, declared for the declared momentum
-        if all(int(component) == 0 for component in momentum):
-            raise ValueError(
-                f"{label}.clock is admitted on a moving body alone: at rest the given "
-                "rows carry the given family's clock (ALGEBRA.md 9.62 (4), the given rows of a "
-                "moving body carry its motion in the given family's representation)"
-            )
-        pair = obj["clock"]
-        if (
-            not isinstance(pair, list)
-            or len(pair) != 2
-            or any(type(item) is not int for item in pair)
-            or pair[0] < 1
-            or pair[1] < 1
-        ):
-            raise ValueError(
-                f"{label}.clock must be [p, q], two positive integers, the train's "
-                "boosted wave number 2 pi p / (2 N q) per Link (ALGEBRA.md 9.62 (4))"
-            )
-        p, q = int(pair[0]), int(pair[1])
-    if (2 * phase_steps * q) % p != 0:
-        raise ValueError(
-            f"{label}: the given family's clock [{p}, {q}] on N = {phase_steps} gives "
-            f"the wavelength 2 N q / p = {2 * phase_steps * q} / {p}, no whole number of Links "
-            "(ALGEBRA.md 9.17 (6a))"
-        )
-    wavelength = (2 * phase_steps * q) // p
-    if extents[axis] != periods * wavelength:
-        raise ValueError(
-            f"{label}: the body's extent {extents[axis]} along the train's axis "
-            f"{AXES[axis]} is not the train's length, {periods} periods of the wavelength "
-            f"{wavelength} = {periods * wavelength} Nodes (ALGEBRA.md 9.17 (6a))"
-        )
-    return TrainDefinition(axis, sign, (p, q), periods, wavelength, "clock" in obj)
-
-
-def _given_train(
-    value: object,
-    label: str,
-    given_pair: tuple[int, int],
-    shape: Address3,
-    extents: tuple[int, int, int],
-    wrap: tuple[bool, bool, bool],
-    train: TrainDefinition,
-) -> GivenTrain:
-    """The emitter's `given` profile (ALGEBRA.md 9.17 (6a)) checked in
-    integers: the two levels over the body's Nodes (the box's Node count,
-    x-major), a motion, the flux sign along the train's way positive, and
-    the norm the conserved form on the given family's vacuum (the box at the
-    board's origin: the vacuum is the same wherever the box stands)."""
-    obj = _object(value, label, {"now", "before", "norm", "rest_norm"}, {"now", "before", "norm"})
-    count = extents[0] * extents[1] * extents[2]
-    levels: list[tuple[int, ...]] = []
-    for key in ("now", "before"):
-        items = obj[key]
-        if not isinstance(items, list) or len(items) != count or any(type(v) is not int for v in items):
-            raise ValueError(
-                f"{label}.{key} must be {count} integers, the train's level on every "
-                f"Node of the body's box {list(extents)} in x-major order (ALGEBRA.md 9.17 (6a))"
-            )
-        levels.append(tuple(int(v) for v in items))
-    now, before = levels
-    if not any(now) and not any(before):
-        raise ValueError(f"{label} writes no motion (every level 0)")
-    flux = given_train_flux_sign(now, before, extents, train.axis, train.sign)
-    if flux <= 0:
-        raise ValueError(
-            f"{label}: the flux along the train's way {list(train.direction)} sums to "
-            f"{flux}, not positive: the record does not travel as declared (ALGEBRA.md 9.17 (6a))"
-        )
-    norm = _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
-    board = (int(shape[0]), int(shape[1]), int(shape[2]))
-    expected = given_train_norm(now, before, board, (0, 0, 0), extents, given_pair, wrap)
-    if norm != expected:
-        raise ValueError(
-            f"{label}.norm {norm} is not the given record's conserved form on the "
-            f"vacuum, {expected} (ALGEBRA.md 9.17 (6a), 9.19 (3); the generator's `given_train`)"
-        )
-    # THE BOOSTED NORM (ALGEBRA.md 9.74 (3); item 56): the rest train's norm,
-    # the ladder's threshold, declared with the boosted train alone
-    if train.boosted and "rest_norm" not in obj:
-        raise ValueError(
-            f"{label}.rest_norm is required with the train's own `clock`: the rest "
-            "train's norm T_rest, the ladder's threshold under the boosted rows (ALGEBRA.md 9.74 "
-            "(3), 9.75 (1); the generator's `given_train`)"
-        )
-    if not train.boosted and "rest_norm" in obj:
-        raise ValueError(
-            f"{label}.rest_norm is refused on a train at the given family's clock: the "
-            "rest train's norm is `norm` itself (ALGEBRA.md 9.74 (3))"
-        )
-    rest_norm = (
-        _integer(obj["rest_norm"], f"{label}.rest_norm", 1, NORM_BOUND) if train.boosted else norm
-    )
-    return GivenTrain(now, before, norm, rest_norm)
 
 
 def _measured(
@@ -6393,63 +6225,6 @@ def body_node_indices(
         return []
     stride_x, stride_y = shape[1] * shape[2], shape[2]
     return [x * stride_x + y * stride_y + z for x in ranges[0] for y in ranges[1] for z in ranges[2]]
-
-
-def given_train_norm(
-    now: Sequence[int],
-    before: Sequence[int],
-    shape: tuple[int, int, int],
-    corner: tuple[int, int, int],
-    extents: tuple[int, int, int],
-    pair: tuple[int, int],
-    wrap: tuple[bool, bool, bool],
-) -> int:
-    """THE GIVEN RECORD'S NORM ON THE VACUUM (ALGEBRA.md 9.17 (6a), 9.19 (3)):
-    the conserved form of the train's two levels written on the body's
-    Nodes and zero elsewhere, on the given family's vacuum (its pair [num,
-    den] at every Node, the world's faces), in the flux's units of the
-    engine's `conserved_form` with the wall num: the sum over the Nodes of
-    3 den (now^2 + before^2) - num now (S_6 before); exact integers; the
-    one copy the generator writes and the loader checks."""
-    num, den = int(pair[0]), int(pair[1])
-    count = int(shape[0]) * int(shape[1]) * int(shape[2])
-    nodes = body_node_indices(shape, corner, extents, wrap)
-    level_before = [0] * count
-    for index, value in zip(nodes, before, strict=True):
-        level_before[index] = int(value)
-    read = six_neighbours_flat(level_before, shape, wrap)
-    total = 0
-    for index, now_value, before_value in zip(nodes, now, before, strict=True):
-        total += 3 * den * (int(now_value) ** 2 + int(before_value) ** 2)
-        total -= num * int(now_value) * read[index]
-    return total
-
-
-def given_train_flux_sign(
-    now: Sequence[int],
-    before: Sequence[int],
-    extents: tuple[int, int, int],
-    axis: int,
-    sign: int,
-) -> int:
-    """THE FLUX SIGN ALONG THE TRAIN'S **K** (ALGEBRA.md 9.17 (6a), a load
-    check): the sum over the body's Links along the axis, from each Node i
-    to its neighbour j on the train's way, of the flux into j from i, now_j
-    before_i - before_j now_i (the engine's G_ji of 9.19 (3), the flux into
-    a Node from its neighbour); positive when the record travels as
-    declared (the one-way flux leaves through the head)."""
-    strides = (extents[1] * extents[2], extents[2], 1)
-    total = 0
-    for x in range(extents[0]):
-        for y in range(extents[1]):
-            for z in range(extents[2]):
-                position = [x, y, z]
-                if not 0 <= position[axis] + sign < extents[axis]:
-                    continue
-                i = x * strides[0] + y * strides[1] + z
-                j = i + sign * strides[axis]
-                total += int(now[j]) * int(before[i]) - int(before[j]) * int(now[i])
-    return total
 
 
 def six_neighbours_flat(
