@@ -1,4 +1,0 @@
-light [1, 1], 600 intervals forward then back, no click: the exact inverse returns to the start with the maximal deviation 0 (of the amplitude 957234); the same formula run backward deviates by 29
-the massive kind [128, 129], 600 intervals forward then back, no click: the exact inverse returns to the start with the maximal deviation 0 (of the amplitude 957234); the same formula run backward deviates by 365
-the massive kind [2, 3], 600 intervals forward then back, no click: the exact inverse returns to the start with the maximal deviation 0 (of the amplitude 957234); the same formula run backward deviates by 29
-light [1, 1] with a CLICK at interval 300 (the rows on 12 cells deleted): the exact inverse deviates by 40092 (of 957234), the same formula by 40101: the click is not undone
