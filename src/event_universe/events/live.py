@@ -1,4 +1,4 @@
-"""The records' making and release, out of the loop's module: the ledger's stamps for the main loop's audit, the held families' records and levels, a body's own record and its stock, a planted record for the generator's checks and the tests, a detector added by name, a record's receiver and ladder, and its rows' release; each function takes the engine (`DetectorLawSimulation` of `detector_law.py`) and is bound as its method of the same duty, so every caller, test and spy works unchanged."""
+"""The records' making and release, out of the loop's module: the ledger's stamps for the main loop's audit, the held families' records and levels, a body's own record, a planted record for the generator's checks and the tests, a detector added by name, a record's receiver and ladder, and its rows' release; each function takes the engine (`DetectorLawSimulation` of `detector_law.py`) and is bound as its method of the same duty, so every caller, test and spy works unchanged."""
 
 from __future__ import annotations
 
@@ -6,8 +6,9 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
+from event_universe.events import detector_law
+
 if TYPE_CHECKING:
-    from event_universe.events import detector_law
     from event_universe.events.detector_law import DetectorLawSimulation
 
     LiveRecord = detector_law.LiveRecord
@@ -75,7 +76,7 @@ def massive_record(
     twist: int,
 ) -> LiveRecord:
     """A record of the massive kind on the board: a block's own record at the body's kind (its rest pair) with its twist "own" (ALGEBRA.md #the-primitives); no train, no clock, no Ports."""
-    return LiveRecord(
+    return detector_law.LiveRecord(
         identity,
         number,
         family,
@@ -97,15 +98,6 @@ def massive_record(
     )
 
 
-def stock_of(loop: DetectorLawSimulation, block: Block) -> int:
-    """THE STOCK of the family a body gives (ALGEBRA.md #the-paces, #the-primitives): its held quanta of another family; of its own family, its declared `stock` less its givings (each giving lowered M by one, the held count of its own)."""
-    emitter = block.definition.emitter
-    assert emitter is not None
-    if emitter.family == block.family:
-        return block.definition.stock - block.givings
-    return loop.held[block.number][emitter.family]
-
-
 def planted_record(
     loop: DetectorLawSimulation,
     family: int,
@@ -117,7 +109,7 @@ def planted_record(
     twist: int = 0,
 ) -> LiveRecord:
     """A record of the family given to the rule directly, its two levels as given and its remainder 0 (the generator's checks of the given train, ALGEBRA.md #the-click, #a-familys-declaration, and the tests' device): registered in no ledger, advanced by `_advance` and read by `inward_flux` and `conserved_form` alone; `norm` its T where given, `part` its component and `twist` its own rotation (commit 4)."""
-    return LiveRecord(
+    return detector_law.LiveRecord(
         0,
         0,
         family,

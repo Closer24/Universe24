@@ -905,7 +905,6 @@ class DetectorLawSimulation:
     held_record = live_records.held_record
     level_of = live_records.level_of
     _massive_record = live_records.massive_record
-    stock_of = live_records.stock_of
     planted_record = live_records.planted_record
     _receiver_of = live_records.receiver_of
     _detector = live_records.add_detector
@@ -1516,6 +1515,16 @@ class DetectorLawSimulation:
                 if other is not block and other.family == block.family:
                     num[other.mask & ~block.mask] = other.definition.pair[0]
                     den[other.mask & ~block.mask] = other.definition.pair[1]
+
+    def stock_of(self, block: Block) -> int:
+        """THE STOCK of the family a body gives (ALGEBRA.md #the-paces, #the-primitives): its
+        held quanta of another family; of its own family, its declared `stock` less
+        its givings (each giving lowered M by one, the held count of its own)."""
+        emitter = block.definition.emitter
+        assert emitter is not None
+        if emitter.family == block.family:
+            return block.definition.stock - block.givings
+        return self.held[block.number][emitter.family]
 
     def _momentum_now(self, block: Block) -> list[int]:
         """The block's momentum at this interval: the declared P, or under a
