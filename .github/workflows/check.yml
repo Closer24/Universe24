@@ -86,7 +86,9 @@ jobs:
     # committed to the pull request's branch; that push starts no run, so this job starts the
     # run on the new head itself, which then finds no difference and commits nothing
     needs: [plan, check]
-    if: always() && needs.plan.result == 'success' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository))
+    # never on a cancelled run (a newer push cancels the older run mid-way, and a record of the
+    # worlds that had finished is no record): the merge below also refuses an entry short
+    if: always() && !cancelled() && needs.plan.result == 'success' && needs.check.result != 'cancelled' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository))
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -127,7 +129,7 @@ jobs:
             echo "the branch moved past ${{ steps.pull.outputs.sha }}; the new head's own run records it"
             exit 0
           fi
-          python tools/record_shipped_worlds.py --merge artifacts/shards --recorded-at "${{ steps.pull.outputs.sha }}"
+          python tools/record_shipped_worlds.py --merge artifacts/shards --every-world --recorded-at "${{ steps.pull.outputs.sha }}"
           if git diff --quiet -- tests/shipped_worlds.json; then
             echo "the record on ${{ steps.pull.outputs.sha }} is what the replay found; nothing to commit"
             exit 0
