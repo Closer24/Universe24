@@ -82,6 +82,7 @@ def paces_world() -> dict:
                     "parts": [1, 3, 6],
                     "held": {
                         "count": "content",
+                        "divisor": 40000,
                         "factors": [1, 4, 2],
                         "dipole": "spin",
                         "dipole_div": 1,
@@ -453,6 +454,7 @@ def parts_world(**body: object) -> dict:
                     "phase": 1,
                     "held": {
                         "count": "content",
+                        "divisor": 40000,
                         "factors": [1, 4, 2],
                         "dipole": "spin",
                         "dipole_div": 1,
@@ -462,11 +464,7 @@ def parts_world(**body: object) -> dict:
             )
             family["spins_step"] = {"curl": [1, 4], "tidal": [3, 4]}
         if family["name"] == "charge":
-            family.update(
-                {
-                    "parts": [1, 3],
-                    "held": {"count": "sign", "factors": [1, 1], "dipole": "moment", "dipole_div": 2},
-                }
-            )
+            family.update(parts=[1, 3], held={"count": "sign", "divisor": 40000, "factors": [1, 1]})
+            family["held"].update(dipole="moment", dipole_div=2)
     document["stamp"] = input_stamp(document)
     return document

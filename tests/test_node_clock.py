@@ -449,11 +449,11 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     with pytest.raises(ValueError, match="unknown keys: booked"):
         parse_nature_beam_world(booked)
     twice = json.loads(json.dumps(good))
-    twice["universe"][3]["held"] = {"count": "content", "factors": [1]}
+    twice["universe"][3]["held"] = {"count": "content", "divisor": 40000, "factors": [1]}
     with pytest.raises(ValueError, match="two families hold 'content'"):
         parse_nature_beam_world(twice)
     source = json.loads(json.dumps(good))
-    source["universe"][2]["held"] = {"count": "momentum", "factors": [1]}
+    source["universe"][2]["held"] = {"count": "momentum", "divisor": 40000, "factors": [1]}
     with pytest.raises(ValueError, match=r"held\.count must be one of"):
         parse_nature_beam_world(source)
     components = json.loads(json.dumps(good))

@@ -43,11 +43,12 @@ def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_fir
         value_before, carry_before = division_back(numerator, wall, value, carried)
         assert carry_before == carry
         assert value_before == -((carry - numerator) // wall)
-    term = HoldTerm("content", (1, 3, 6), (1, 4, 2), None, 1)
+    term = HoldTerm("content", (1, 3, 6), (1, 4, 2), None, 1, 1)
     loaded = apply(term, HoldStart(THE_LOAD, 64, (3120, 0, 0), 12480, None), HoldOwn({}, {}))
-    assert loaded.time_level == 64 and dict(loaded.own.values)[(1,)] == 64 * 4 * 3120 // 12480 == 64
+    assert loaded.time_level == 0 and dict(loaded.own.values)[(1,)] == 64 * 4 * 3120 // 12480 == 64
     assert all(now == before for _part, now, before in loaded.parts)
     advanced = apply(term, HoldStart(THE_ADVANCE, 64, (3120, 0, 0), 12480, None), loaded.own)
+    assert advanced.time_level == 64  # the count over the divisor 1, this interval's source
     assert [(p, b) for p, _n, b in advanced.parts] == [(p, n) for p, n, _b in loaded.parts]
     rewritten = apply(term, HoldStart(THE_REWRITE, 64, (3120, 0, 0), 12480, None), advanced.own)
     assert rewritten.own == advanced.own and all(
@@ -71,34 +72,17 @@ def test_the_dipoles_terms_are_the_table_of_9_91_3():
 
     assert cross((1, 2, 3), 0) == (0, 3, -2) and cross((1, 2, 3), 1) == (-3, 0, 1)
     assert cross((1, 2, 3), 2) == (2, -1, 0)
-    gravity = HoldTerm("content", (1, 3, 6), (1, 4, 2), "spin", 1)
+    gravity = HoldTerm("content", (1, 3, 6), (1, 4, 2), "spin", 1, 1)
     writes = apply(gravity, HoldStart(THE_LOAD, 5, (0, 0, 0), 15, (0, 0, 1)), HoldOwn({}, {}))
-    assert {(key, now) for key, now, _before in writes.dipoles} == {
-        ((1, 0, 1), 1),
-        ((1, 0, -1), -1),
-        ((0, 1, 1), -1),
-        ((0, 1, -1), 1),
-    }
-    charge = HoldTerm("sign", (1, 3), (1, 1), "moment", 2)
+    assert keyed(writes.dipoles) == {((1, 0, 1), 1), ((1, 0, -1), -1), ((0, 1, 1), -1), ((0, 1, -1), 1)}
+    charge = HoldTerm("sign", (1, 3), (1, 1), "moment", 2, 1)
     first = apply(charge, HoldStart(THE_LOAD, 1, (0, 0, 0), 3, (0, 0, 1)), HoldOwn({}, {}))
-    assert {(key, now) for key, now, _b in first.dipoles} == {
-        ((1, 0, 1), 0),
-        ((1, 0, -1), -1),
-        ((0, 1, 1), -1),
-        ((0, 1, -1), 0),
-    }
+    assert keyed(first.dipoles) == {((1, 0, 1), 0), ((1, 0, -1), -1), ((0, 1, 1), -1), ((0, 1, -1), 0)}
     assert all(carry == 1 for key, carry in first.own.carries.items() if key[0] == "d")
     second = apply(charge, HoldStart(THE_ADVANCE, 1, (0, 0, 0), 3, (0, 0, 1)), first.own)
-    assert {(key, now) for key, now, _b in second.dipoles} == {
-        ((1, 0, 1), 1),
-        ((1, 0, -1), 0),
-        ((0, 1, 1), 0),
-        ((0, 1, -1), 1),
-    }
+    assert keyed(second.dipoles) == {((1, 0, 1), 1), ((1, 0, -1), 0), ((0, 1, 1), 0), ((0, 1, -1), 1)}
     unheld = apply(charge, HoldStart(THE_UNHOLD, 1, (0, 0, 0), 3, (0, 0, 1)), second.own)
-    assert {(key, now) for key, now, _b in unheld.dipoles} == {
-        (key, now) for key, now, _b in second.dipoles
-    }
+    assert keyed(unheld.dipoles) == {(key, now) for key, now, _b in second.dipoles}
     assert dict(unheld.own.carries) == dict(first.own.carries) and dict(unheld.own.values) == dict(
         first.own.values
     )
@@ -107,7 +91,7 @@ def test_the_dipoles_terms_are_the_table_of_9_91_3():
     )
     assert (
         apply(
-            HoldTerm("content", (1,), (1,), "spin", 1),
+            HoldTerm("content", (1,), (1,), "spin", 1, 1),
             HoldStart(THE_LOAD, 5, (0, 0, 0), 15, (0, 0, 1)),
             HoldOwn({}, {}),
         ).dipoles
@@ -115,32 +99,47 @@ def test_the_dipoles_terms_are_the_table_of_9_91_3():
     )
 
 
+def keyed(dipoles):
+    return {(key, now) for key, now, _b in dipoles}
+
+
+def term_of(count, parts, factors, dipole, divisor):
+    return HoldTerm(count, parts, factors, dipole, divisor, 1)
+
+
+def act(term, start):
+    return apply(term, start, HoldOwn({}, {}))
+
+
 def test_the_refusals_by_name():
     with pytest.raises(ValueError, match="count word is 'mass'"):
-        apply(
-            HoldTerm("mass", (1,), (1,), None, 1),
-            HoldStart(THE_LOAD, 1, (0, 0, 0), 1, None),
-            HoldOwn({}, {}),
-        )
+        act(term_of("mass", (1,), (1,), None, 1), HoldStart(THE_LOAD, 1, (0, 0, 0), 1, None))
     with pytest.raises(ValueError, match="act is one of"):
-        apply(
-            HoldTerm("content", (1,), (1,), None, 1),
-            HoldStart("the hop", 1, (0, 0, 0), 1, None),
-            HoldOwn({}, {}),
-        )
+        act(term_of("content", (1,), (1,), None, 1), HoldStart("the hop", 1, (0, 0, 0), 1, None))
     with pytest.raises(ValueError, match="go group for group"):
-        apply(
-            HoldTerm("content", (1, 3), (1,), None, 1),
-            HoldStart(THE_LOAD, 1, (0, 0, 0), 1, None),
-            HoldOwn({}, {}),
-        )
+        act(term_of("content", (1, 3), (1,), None, 1), HoldStart(THE_LOAD, 1, (0, 0, 0), 1, None))
     with pytest.raises(ValueError, match="from 1"):
-        apply(
-            HoldTerm("content", (1,), (1,), None, 1),
-            HoldStart(THE_LOAD, 1, (0, 0, 0), 0, None),
-            HoldOwn({}, {}),
-        )
+        act(term_of("content", (1,), (1,), None, 1), HoldStart(THE_LOAD, 1, (0, 0, 0), 0, None))
+    with pytest.raises(ValueError, match="divisor E_s is from 1"):
+        act(HoldTerm("content", (1,), (1,), None, 1, 0), HoldStart(THE_LOAD, 1, (0, 0, 0), 1, None))
     assert ACTS == (THE_LOAD, THE_ADVANCE, THE_REWRITE, THE_INVERSE, THE_UNHOLD)
+
+
+def test_the_source_adds_the_count_over_the_divisor_each_interval_and_steps_back():
+    """The time part is this interval's increment (count + r) div E_s with the remainder carried, 0 at the load; the inverse returns the increment it subtracts and steps the store back."""
+    term = HoldTerm("content", (1,), (1,), None, 1, 7)
+    loaded = apply(term, HoldStart(THE_LOAD, 10, (0, 0, 0), 1, None), HoldOwn({}, {}))
+    own = loaded.own  # the load's division leaves the remainder 3 on the body; no increment is written
+    assert loaded.time_level == 0
+    increments = []
+    for _ in range(7):
+        writes = apply(term, HoldStart(THE_ADVANCE, 10, (0, 0, 0), 1, None), own)
+        own, increments = writes.own, increments + [writes.time_level]
+    assert increments == [1, 2, 1, 2, 1, 2, 1] and sum(increments) == 10  # exact over seven intervals
+    back = apply(term, HoldStart(THE_INVERSE, 10, (0, 0, 0), 1, None), own)
+    assert (
+        back.time_level == 1 and dict(back.own.carries)[(0,)] == 0 and dict(back.own.values)[(0,)] == 2
+    )
 
 
 def test_the_declaration_is_the_ledgers_row():

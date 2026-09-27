@@ -49,6 +49,8 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     # gravity: ten components, one level, held content with the factors (1, 4, 2) and the spin's
     # dipole, no reads, no clicks (ALGEBRA.md #the-interval)
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and gravity["pair"] == [1, 1]
+    # THE HOLD'S DIVISOR E_s (ALGEBRA.md #the-primitives, the row "the hold"): the count a source over it
+    assert gravity["held"].pop("divisor") == 40000 and charge["held"].pop("divisor") == 40000
     assert gravity["held"] == {
         "count": "content",
         "factors": [1, 4, 2],
@@ -241,49 +243,26 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     refuses(lambda d: d["families"][0].__setitem__("phase", 3), r"phase must be one of \[1, 2\], not 3")
     # the self-source's unit (ALGEBRA.md #the-interval; commit 6): 0, or at least 24 A
     refuses(lambda d: d["families"][0]["self_source"].__setitem__("unit", 24), "is below 24 A")
-    refuses(
-        lambda d: d["families"][0].pop("held") and d["families"][0].pop("spins_step"),
-        "declares neither held",
-    )
+    refuses(lambda d: [d["families"][0].pop(k) for k in ("held", "spins_step")], "declares neither held")
     refuses(
         lambda d: d["families"][2].__setitem__("spins_step", d["families"][0]["spins_step"]),
         "holds no spin's dipole",
     )
     refuses(lambda d: d["families"][0].pop("quantum"), r"families\[0\] lacks keys: quantum")
     refuses(lambda d: d["families"][0].__setitem__("quantum", 0), "quantum is 0, below its least 1")
-    refuses(
-        lambda d: d["families"][2]["clicks"].__setitem__("quantum", 2),
-        "differs from the row's quantum 1",
-    )
-    refuses(
-        lambda d: d["families"][0]["held"].pop("dipole_div"), "declares a dipole and lacks dipole_div"
-    )
+    refuses(lambda d: d["families"][2]["clicks"].update(quantum=2), "differs from the row's quantum 1")
+    H = lambda f: lambda d: f(d["families"][0]["held"])  # noqa: E731  # a change of the held row
     # no default written for the dipole's divisor: the universe file writes it (the hold's card)
-    refuses(lambda d: d["families"][0]["held"].pop("factors"), "held lacks keys: factors")
-    refuses(
-        lambda d: d["families"][2].__setitem__("pair", "mine"),
-        r"pair must be a list, not 'mine'; or .*pair must be one of \['body'\], not 'mine'",
-    )
-    refuses(
-        lambda d: d["families"][2]["reads"][1].__setitem__("weight", "Mu"),
-        "names 'Mu', no integer of the universe",
-    )
-    refuses(
-        lambda d: d["families"][2]["reads"][1].__setitem__("by", 2),
-        r"by must be one of \[1, 'q'\], not 2",
-    )
-    refuses(
-        lambda d: d["families"][0]["held"].__setitem__("factors", [1, 4]), r"held\.factors must be 3"
-    )
-    refuses(
-        lambda d: d["families"][0]["held"].__setitem__("dipole", "twist"),
-        r"dipole must be one of \['spin', 'moment'\], not 'twist'",
-    )
+    refuses(H(lambda h: h.pop("dipole_div")), "declares a dipole and lacks dipole_div")
+    refuses(H(lambda h: h.pop("factors")), "held lacks keys: factors")
+    refuses(H(lambda h: h.pop("divisor")), r"held lacks (keys: )?divisor")  # the sum's divisor E_s
+    refuses(lambda d: d["families"][2].update(pair="mine"), r"pair must be a list, not 'mine'")
+    refuses(lambda d: d["families"][2]["reads"][1].update(weight="Mu"), "names 'Mu', no integer")
+    refuses(lambda d: d["families"][2]["reads"][1].update(by=2), r"by must be one of \[1, 'q'\], not 2")
+    refuses(H(lambda h: h.update(factors=[1, 4])), r"held\.factors must be 3")
+    refuses(H(lambda h: h.update(dipole="twist")), r"dipole must be one of \['spin', 'moment'\]")
     refuses(lambda d: d["families"][0].pop("spins_step"), "holds the spin's dipole and lacks spins_step")
-    refuses(
-        lambda d: d["families"][0]["spins_step"].__setitem__("curl", 3),
-        r"spins_step\.curl must be a list, not 3",
-    )
+    refuses(lambda d: d["families"][0]["spins_step"].update(curl=3), r"spins_step\.curl must be a list")
     refuses(lambda d: d.__setitem__("law", "beam-v1"), "the universe file .* has unknown keys: law")
     (tmp_path / "universe.json").write_text(json.dumps(good), encoding="utf-8")
     document["stamp"] = input_stamp(document)

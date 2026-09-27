@@ -61,7 +61,7 @@ CHARGE_FAMILY = {
     "phase": 2,
     "pair": [1, 1],
     "quantum": 1,
-    "held": {"count": "sign", "factors": [1]},
+    "held": {"count": "sign", "divisor": 40000, "factors": [1]},
     "reads": [],
     "self_source": {"unit": 0},
 }
@@ -82,7 +82,7 @@ CLOCK_FAMILY = {
     "phase": 2,
     "pair": [1, 1],
     "quantum": 1,
-    "held": {"count": "content", "factors": [1]},
+    "held": {"count": "content", "divisor": 40000, "factors": [1]},
     "reads": [],
     "self_source": {"unit": 0},
 }
@@ -331,15 +331,18 @@ def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
     return module
 
 
-SEEDS_FILE = (
-    ROOT / "tests" / "seeds.json"
-)  # the retired generator's seedings of every fixture, recorded once
+SEEDS_FILE = ROOT / "tests" / "seeds.json"  # the retired generator's seedings, recorded once
 
 
 def _seed_key(document: dict) -> str:
     from event_universe.world_files import input_digest
 
-    return input_digest(json.loads(json.dumps({k: v for k, v in document.items() if k != "stamp"})))
+    plain = json.loads(json.dumps({k: v for k, v in document.items() if k != "stamp"}))
+    # the held row's divisor changes no recorded seeding (the seeds predate it): left out of the digest
+    for row in plain["universe"] if isinstance(plain.get("universe"), list) else ():
+        if isinstance(row.get("held"), dict):
+            row["held"].pop("divisor", None)
+    return input_digest(plain)
 
 
 def _seeds() -> dict:
@@ -347,9 +350,13 @@ def _seeds() -> dict:
 
 
 def _apply(document: dict, written: dict) -> None:
+    from event_universe.world_files import input_stamp
+
     document.update(written["top"])
     for index, keys in written["measured"].items():
         document["measured"][int(index)].update(keys)
+    if "stamp" in written["top"]:  # the stamp covers the whole seeded file, the held rows' divisor in it
+        document["stamp"] = input_stamp(document)
 
 
 def seed_on_the_mode(document: dict) -> None:

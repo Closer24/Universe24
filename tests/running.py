@@ -377,6 +377,7 @@ def draw(seed: int) -> dict[str, Any]:
     def held(count_word: str, parts: list[int]) -> dict[str, Any]:
         entry: dict[str, Any] = {
             "count": count_word,
+            "divisor": 40000,
             "factors": [rng.randint(1, 4) for _ in parts],
             "dipole": "spin" if count_word == "content" else "moment",
         }

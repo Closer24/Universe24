@@ -1,4 +1,4 @@
-"""The hold: a body's writes into a held family at its Nodes, the count whole at the time part, the vector and tensor parts factor x count x n_a (x n_b) div W (div W^2) with the remainder carried, the dipole sigma (D x e_j)_i div its divisor at the six neighbours, every division Rule3's division act (ALGEBRA.md #the-primitives the row "the hold", ALGEBRA.md #the-interval, #the-four-acts); the read from the rule, the write a load."""
+"""The hold: a body's writes into a held family at its Nodes, the count a source into the field's line ((count + r) div the row's divisor E_s added at the time part each interval, the remainder carried), the vector and tensor parts factor x count x n_a (x n_b) div W (div W^2) with the remainder carried, the dipole sigma (D x e_j)_i div its divisor at the six neighbours, every division Rule3's division act (ALGEBRA.md #the-primitives the row "the hold", ALGEBRA.md #the-interval, #the-four-acts)."""
 
 from __future__ import annotations
 
@@ -22,19 +22,21 @@ from event_universe.core.rule3 import (
 from event_universe.core.schema import Integer, ListOf, ObjectOf, OneOf, Schema
 
 COUNT_WORDS = ("content", "sign")
+TIME_PART: Key = (0,)  # the time part's key on the body's remainders, the source's carried division
 TENSOR_AXES = ((0, 0), (1, 1), (2, 2), (0, 1), (0, 2), (1, 2))
 Vector = tuple[int, int, int]
 
 
 @dataclass(frozen=True)
 class HoldTerm:
-    """The held family's row: the count word (content or sign), the parts per group (the time part, the vector, the tensor), the factor per group, the dipole's vector (spin, moment or None) and its divisor."""
+    """The held family's row: the count word (content or sign), the parts per group (the time part, the vector, the tensor), the factor per group, the dipole's vector (spin, moment or None) and its divisor, and the source's divisor E_s."""
 
     count: str
     parts: tuple[int, ...]
     factors: tuple[int, ...]
     dipole: str | None
     dipole_divisor: int
+    divisor: int
 
 
 @dataclass(frozen=True)
@@ -58,7 +60,7 @@ class HoldOwn:
 
 @dataclass(frozen=True)
 class HoldWrites:
-    """The writes of one act: the time part's level, per part (its index, now, before), per dipole term ((i, j, sigma), now, before), and the body's remainders after."""
+    """The writes of one act: the time part's increment of this interval ((count + r) div E_s at the advance, the one subtracted at the inverse, 0 at the load and at a rewrite), per part (its index, now, before), per dipole term ((i, j, sigma), now, before), and the body's remainders after."""
 
     time_level: int
     parts: tuple[tuple[int, int, int], ...]
@@ -89,6 +91,8 @@ def check(term: HoldTerm, start: HoldStart) -> None:
         raise ValueError(
             f"the hold's wall W = {start.wall} and the dipole's divisor {term.dipole_divisor} are from 1"
         )
+    if term.divisor < 1:
+        raise ValueError(f"the hold's divisor E_s is from 1, got {term.divisor}")
 
 
 def booking(factor: int, count: int, momentum: Vector, axes: tuple[int, ...]) -> int:
@@ -100,9 +104,19 @@ def booking(factor: int, count: int, momentum: Vector, axes: tuple[int, ...]) ->
 
 
 def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:
-    """The primitive at (iv) for one body and one held family: the count at the time part, every part beyond it by its carried division, the dipole's terms at the six neighbours (ALGEBRA.md #the-primitives the row "the hold")."""
+    """The primitive at (iv) for one body and one held family: the count a source at the time part (its carried division over E_s this interval's increment), every part beyond it by its carried division, the dipole's terms at the six neighbours (ALGEBRA.md #the-primitives the row "the hold")."""
     check(term, start)
     values, carries = dict(own.values), dict(own.carries)
+    time_level = 0
+    if (
+        start.act == THE_LOAD
+    ):  # the store's first division, no increment written: the rest holds the sources
+        carried(THE_LOAD, TIME_PART, start.count, term.divisor, values, carries)
+    elif start.act == THE_ADVANCE:
+        time_level, _ = carried(THE_ADVANCE, TIME_PART, start.count, term.divisor, values, carries)
+    elif start.act == THE_INVERSE:
+        time_level = values.get(TIME_PART, 0)
+        carried(THE_INVERSE, TIME_PART, start.count, term.divisor, values, carries)
     parts: list[tuple[int, int, int]] = []
     index = 0
     for group, count in enumerate(term.parts):
@@ -152,7 +166,7 @@ def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:
                     else:
                         continue
                     dipoles.append(((i, j, sigma), now, before))
-    return HoldWrites(start.count, tuple(parts), tuple(dipoles), HoldOwn(values, carries))
+    return HoldWrites(time_level, tuple(parts), tuple(dipoles), HoldOwn(values, carries))
 
 
 DECLARATION = Declaration(
@@ -160,6 +174,7 @@ DECLARATION = Declaration(
     place="(iv)",
     reads=(
         "a body's content M_k",
+        "the row's divisor E_s",
         "P_0 and P_k",
         "the wall W",
         "a body's momentum n",
@@ -178,6 +193,7 @@ DECLARATION = Declaration(
                         {
                             "count": OneOf(("content", "sign")),
                             "factors": ListOf(Integer(least=1)),
+                            "divisor": Integer(least=1),
                             "dipole": OneOf(("spin", "moment")),
                             "dipole_div": Integer(least=1),
                         },
