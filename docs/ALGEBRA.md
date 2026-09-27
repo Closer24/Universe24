@@ -18779,7 +18779,7 @@ that constancy.
    | the feed | (v) | the paces at the two faces of each axis of the body's Node (the contraction p_0 = Gamma - SUM by x weight x [t level - (n_a V_a) div W + (n_a n_b h_ab) div W^2]), W | a body's momentum n; a body's remainders | on n at (v): 1 | n_a += the difference of the contraction across the two faces of axis a, the remainder on the record (9.78 (4); 9.91 (8) (v)); retired when the rule moves bodies (9.104 item 6) |
    | the induction | (v) | the momentum part of the contraction at the body's Node this interval and the last | a body's momentum n; a body's remainders | on n at (v): 2 | n_a -= the change of (n_b V_b) div W over the interval (9.78 (4); 9.91 (8) (v)) |
    | the spin's step | (v) | S_now, the curls at the body's Node (V gravity's vector part and c its t part at the six neighbours; B_q the charge's curl), mu, n, W, Gamma | a body's spin S; a body's remainders | none (the only writer of S) | S_next = S_now + [(Omega x S_now) + mu x B_q] div (W Gamma), Omega_x = [(V_z(+y) - V_z(-y) - V_y(+z) + V_y(-z)) + 3 ((c(+y) - c(-y)) n_z - (c(+z) - c(-z)) n_y) div W] div 8 and cyclic, the remainder on the record (9.78 (5); 9.104) |
-   | the hop | (v) | n, W, the hop's remainder, `fixed` | a body's position; a body's remainders | none (the only writer of the position) | the position's accumulator += n each interval; at W the body's Nodes move one Link along the axis and the accumulator keeps the rest; a body with `fixed` does not hop (9.52; 9.104 item 6); retired by the count's line, the count following its record's current (9.121 item 3 (ii)) |
+   | the hop | (v) | n, W, the hop's remainder, `fixed` | a body's position; a body's remainders | none (the only writer of the position) | the position's accumulator += n each interval; at W the body's Nodes move one Link along the axis and the accumulator keeps the rest; a body with `fixed` does not hop (9.52; 9.104 item 6); retired when the rule moves bodies |
    | the trace (built as a name) | any | every word's integers | nothing | none | 9.112 item 5 |
 
 3. **The orders, in one place.** At (iv): on "a family's level at a
@@ -18817,13 +18817,13 @@ that constancy.
    | the signed read | from the rule | p_0 = Gamma - SUM (weight x by x argument) is the rule's own pace p = Gamma - c + q Lambda d (9.57 (1); 9.78 (4)); the guard is the rule's stability, its factor (S - 6 R) / w at -2 (9.108 item 12); the folder features/signed_read builds this sum and this edge (PR #1164; its test the equivalence with the engine's sum over a run). A FINDING (record 2137): the charge suite's chain (tests/test_charge.py, light bodies of charge +1, the content and the charge 10 at the slab, Gamma = 1000) at Lambda = 3 stands at p = 1020 for a record of charge +1 on [800, 809], beyond its edge P = 1002, where the rule's own coefficients give (S - 6 R) + 2 w < 0 and the checkerboard mode grows; today's guard admits it up to 2 Gamma and the suite reads one step, where the growth does not show; the guard refuses it naming the Node, and the world's Lambda, not the guard, is what moves when the loop binds the folder |
    | the source | the field's shape from the rule, the write beyond (H) | the static limit of the rule is (Delta - kappa^2) a = 0 with kappa^2 = 6 den / num - 6 (9.108 item 3); D_i div E_s added to a level is a load, a count written into a level, which a homogeneous rule does not have (9.113 item 2, the hold) |
    | the giving | the click (its inverse), the bulk share from the rule, the window's write beyond (H) | the open's M_k -= 1 is the click's write with the opposite sign (9.107); n_a -= sgn(n_a) (|n_a| div M) is the rule's conserved momentum shared by the quantum that leaves (9.84 (1); 9.86 (1)); a_given += g x a_body over the window is a load, as the hold's; the folder the_giving builds the three acts and no formula of its own |
-   | the clicks | the count's line; the booking from the rule | num (now_i before_j - before_i now_j) is the rule's conserved current (9.25 (2)); the ladder and the record's end are the count's line's division, one whole quantum's move, the one irreversible read-out (9.121 item 3 (i); 9.25 (12)); no separate click act |
+   | the clicks | the click; the booking from the rule | num (now_i before_j - before_i now_j) is the rule's conserved current (9.25 (2)); the ladder and the record's end are the click, the one irreversible read-out (9.25 (12)) |
    | the recoil | from the rule | the rule is translation-invariant, so its form's momentum is conserved (9.84 (1)); the taker gains what the record lost, sigma_a x (W x P_body) div (M x lambda_q) (9.84 (2), 9.91 (4)); the folder features/recoil builds this division and no other (PR #1165) |
    | the recoil's accumulator | beyond (S) | k_q div M is a fraction of a hop per click; the rule keeps nothing at a Port to carry it (9.109 item 2 (b); 9.113 item 3 (b)) |
    | the feed | its contraction from the rule, its write beyond (S) | the contraction is the rule's pace at the two faces (9.78 (4)); a body's momentum n is state the rule does not keep (its state is a Node's two levels and remainder); retired when the rule moves bodies (9.104 item 6) |
    | the induction | beyond (S) | the change of (n_b V_b) div W over an interval is a memory of the last interval on a body, which the rule does not keep |
    | the spin's step | beyond (L, S) | Omega x S is a product on a body's spin; the rule has no spinor and no body's spin (9.113 item 2, the hand) |
-   | the hop | beyond (S) | a body's position and its accumulator are state on a body; the rule moves levels and no body; retired by the count's line (9.121 item 3 (ii)) |
+   | the hop | beyond (S) | a body's position and its accumulator are state on a body; the rule moves levels and no body; retired when the rule moves bodies (9.104 item 6) |
    | the trace | neither: a diagnostic | it reads every word and moves nothing (9.112 item 5) |
 
    The well, 9.113 item 3 (a), is no declaration here: it is two sourced
@@ -18989,7 +18989,7 @@ that constancy.
    | the self-source | a composition | the six differences' squares are a booking (e) of the family's own levels with the coefficients declared (the structure table), the write the division (c) by P_2 as a load (d) |
    | the hold | a composition | s = SUM_k (M_k P_0) div P_k is the division (c) with the wall P_k and the numerator M_k P_0 (a declared integer times the count), written as the load (d) into the held family's level; the vector and tensor parts the same divisions over the wall W |
    | the source | a composition | D_i = now^2 - next x before is the booking (e) of the record's own two levels (the form, Rule3's conserved integer); its division by E_s (c) enters the sourced level as the load (d); the table s_cap the same with the declared wall |
-   | the clicks | the count's line | (e) the current read; (f) and (g) the division's carry of one whole quantum by the count's line (9.121 item 3 (i)); the count's move at t + 1 (9.111 item 6) |
+   | the clicks | the click | (e), (f), (g) as 9.25 (2), (3); the count's move M_k += 1 at t + 1 (9.111 item 6) |
    | the lifetime | a composition and the click | the record's age is the count (b) at a / b = 2 on the record; at age = L on the face the click (g) ends it |
    | the clicks list | the click | the products' shares from the record's remainders and the wheels are the click's draw (9.88 (4)); the sum is the taken momentum exactly |
    | the hand | a composition and the click | S . n is a booking (e) of two declared families' levels on the body (the spin, the momentum); its sign against the declared hand admits or refuses the click (g) |
@@ -18999,7 +18999,7 @@ that constancy.
    | the feed | a composition | the contraction at the two faces is Rule3's pace (the signed read) read with the coefficients +1 and -1; the difference divided by W (c) is a load into the momentum's level |
    | the induction | a composition | (n_b V_b) is a booking (e) of the momentum's level and the read's vector part; its change over the interval is the difference of the two levels now and before that every family carries; the division by W (c) a load into the momentum's level |
    | the spin's step | a composition | the curls are reads with the coefficients +1 and -1 (Rule3's read); Omega x S_now and mu B_q are bookings (e) of the curl and the spin's level; the division by W Gamma (c) is a load into the spin's level (a degree-three family on the body's record, the KEEP step) |
-   | the hop | retired | the count's line moves the count with its record's current, one quantum at a time, and no position's accumulator remains (9.121 item 3 (ii)) |
+   | the hop | a composition | the position's accumulator is a level with the KEEP step and the load n; at the wall W the division (c) gives the hop and keeps the remainder; the body's Nodes' translation by one Link is Rule3 with the coefficients declared 1 on the one read behind and 0 elsewhere, a_next(x) = a_now(x - 1) |
    | the trace | neither | a reading of every act's integers, it writes nothing (9.112 item 5) |
 
    No row is left beyond, on three declarations the owner is asked for
@@ -19178,7 +19178,7 @@ that constancy.
    2248). The test of record 2233, "a generated body stands still in
    the run within the rounding", stands as the gate of item 4 at k = 0.
 
-### 9.121 The click as Rule3's acts: what it is, what it is not, and the one line that makes the engine Rule3 and the families alone (the Boss's question of 2026-09-26, 21:12Z, on the model owner's "the click is also built from Rule3, no?"; the owner's word to the mathematician, "algebraically, extend Rule3"; 9.119 items 1 and 4; 9.120 item 5; the count's line the law by the owner's word of 2026-09-26)
+### 9.121 The click as Rule3's acts: what it is, what it is not, and the one line that makes the engine Rule3 and the families alone (the Boss's question of 2026-09-26, 21:12Z, on the model owner's "the click is also built from Rule3, no?"; the owner's word to the mathematician, "algebraically, extend Rule3"; 9.119 items 1 and 4; 9.120 item 5; the count's line PROPOSED until the owner's word, then the law)
 
 1. **What Rule3's acts can form (PROVED).** The four acts of 9.119
    item 1 are the read (a fixed integer combination of the six
@@ -19209,7 +19209,7 @@ that constancy.
    click needs beyond the four acts is the reading of Rule3's own
    current at the Node's Ports.
 
-3. **The one line, the count's step (the law).**
+3. **The one line, the count's step (the owner's word, PROPOSED).**
    Rule3 for the family of clicks, at every Node, in Rule3's own form
    with the current as its read:
 
@@ -19242,23 +19242,7 @@ that constancy.
    remainder; Born's rule (9.25 (3)) is the shares of the current among
    the set's Nodes, as today. (vii) THE INVERSE: the same line backward
    with the direction sigma of 9.57 (1), the current read from the
-   interval's levels as the forward step read it: the same line with
-   the coefficient sigma on the current, exact (T c_now + r = T c_next
-   + r' - SUM_a (F_a^- - F_a^+)). THE FOLDER features/counts_line is
-   this line: its apply is Rule3 with the current as its read, the
-   current's weight and T declared, the total bounded within int64 by
-   6 x weight x 4 A^2 + T (c + 1) (a second level doubles the
-   current's bound; at the weight num = 10^3 the amplitude bound A
-   stays at or below 2^24, so the loader's 2^28 is refused and the
-   generator's 2^20 admitted). The remainder at a Node starts at the
-   ladder's origin, (2 u + 1) T div 2 at the residue u (9.25 (2)):
-   started at 0, a Node with no quantum reads the count -1 at its
-   first outward swing (T c + r below 0), a hole the line conserves
-   but nature does not show. OPEN: whether a body at rest jitters
-   when its current's swing reaches T / 2 (item 6 (c) beside): on a
-   standing mode of sixteen Nodes at A = 2^10 the folder's test has
-   the accumulated swing of T c + r at 158094 against T / 2 =
-   16777216 over 400 intervals, one percent, and the count in place.
+   interval's levels as the forward step read it.
 
 4. **What it closes.** The first word of 9.119 item 4: a product of two
    levels writes one level only, the count, and that product is Rule3's

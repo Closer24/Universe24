@@ -1,4 +1,4 @@
-"""The count's line: T c_next + r' = T c_now + SUM_a (F_a^- - F_a^+) + r, Rule3 for the family of clicks at every Node with the record's current as its read and the quantum's norm T as its wall, the current through a Link the booking weight (now_i before_j - before_i now_j) of the record's levels at its two ends (the pair's second level added), the click the division's carry of one whole quantum, the inverse the same line with the current reversed (ALGEBRA.md 9.121 item 3, 9.119 item 1, 9.57 (1))."""
+"""The count's line: T c_next + r' = T c_now + SUM over the six Ports of F_ij + r, Rule3 for the family of clicks at every Node with the record's current as its read and the quantum's norm T as its wall, F_ij = weight (now_i before_j - before_i now_j) the current into Node i from its neighbour j, the booking of the record's levels at the Link's two ends (the pair's second level added), the click the division's carry of one whole quantum, the inverse the same line with the current reversed (ALGEBRA.md 9.121 item 3, 9.119 item 1, 9.57 (1))."""
 
 from __future__ import annotations
 
@@ -9,8 +9,10 @@ from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.register import Declaration
 from event_universe.core.rule3 import rule3
 
-PORTS = ("+x", "-x", "+y", "-y", "+z", "-z")
 Vector = tuple[Any, Any, Any]
+PORTS = 6  # a Node's six Ports, the lattice's own integer (Rule3's 6)
+PRODUCTS = 2  # the current's two products, now_i before_j and before_i now_j
+PAIRS = 2  # a record's level pairs, (now, before) and the second level's, each level bounded by A
 
 
 @dataclass(frozen=True)
@@ -46,7 +48,7 @@ class CountStart:
 
 @dataclass(frozen=True)
 class CountWrites:
-    """The line's writes: the count and its remainder after the act, and the net current per axis it read, F_a^- - F_a^+."""
+    """The line's writes: the count and its remainder after the act, and the inflow per axis it read, the current into the Node through the axis's two Ports."""
 
     count: Any
     remainder: Any
@@ -54,7 +56,7 @@ class CountWrites:
 
 
 def current(weight: int, here: Levels, there: Levels) -> Any:
-    """The current from one Node to the other through the Link, the booking weight (now_i before_j - before_i now_j), the second level's term added on a pair (ALGEBRA.md 9.121 item 2 (c), 9.50 (13))."""
+    """The current into the Node here from the Node there through their Link, the booking weight (now_i before_j - before_i now_j), positive inward as the ladder reads it, the second level's term added on a pair (ALGEBRA.md 9.121 item 2 (c), 9.50 (13))."""
     found = here.now * there.before - here.before * there.now
     if here.im_now is not None and there.im_now is not None:
         found = found + here.im_now * there.im_before - here.im_before * there.im_now
@@ -62,10 +64,9 @@ def current(weight: int, here: Levels, there: Levels) -> Any:
 
 
 def bound(term: CountTerm) -> int:
-    """The largest total the line reaches at a Node whose levels stand at A: six currents of weight x 4 A^2 (two levels), T (most + 1) and the remainder (ALGEBRA.md 9.57 (2))."""
-    return (
-        6 * term.weight * 4 * term.amplitude * term.amplitude + term.norm * (term.most + 1) + term.norm
-    )
+    """The largest total the line reaches at a Node whose levels stand at A: one current per Port, the weight times the two products of two levels at A on each level pair, T (most + 1) and the remainder below T (ALGEBRA.md 9.57 (2))."""
+    current_bound = term.weight * PRODUCTS * PAIRS * term.amplitude * term.amplitude
+    return PORTS * current_bound + term.norm * (term.most + 1) + term.norm
 
 
 def check(term: CountTerm, start: CountStart) -> None:
@@ -84,13 +85,13 @@ def check(term: CountTerm, start: CountStart) -> None:
 
 
 def apply(term: CountTerm, start: CountStart) -> CountWrites:
-    """The primitive at (ii): the net current per axis, entering through -a less leaving through +a, read by Rule3 with the coefficient sigma on each axis and T on the count over the wall T (ALGEBRA.md 9.121 item 3)."""
+    """The primitive at (ii): the inflow per axis, the current into the Node through its +a and -a Ports, read by Rule3 with the coefficient sigma on each axis and T on the count over the wall T (ALGEBRA.md 9.121 item 3)."""
     check(term, start)
     net = []
     for axis in range(3):
-        leaving = current(term.weight, start.here, start.links[2 * axis])
-        entering = current(term.weight, start.links[2 * axis + 1], start.here)
-        net.append(entering - leaving)
+        through_plus = current(term.weight, start.here, start.links[2 * axis])
+        through_minus = current(term.weight, start.here, start.links[2 * axis + 1])
+        net.append(through_plus + through_minus)
     sigma = start.direction
     count, remainder = rule3(
         (sigma, sigma, sigma),
