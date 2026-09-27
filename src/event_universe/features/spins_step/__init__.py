@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, cast
 
 from event_universe.core.register import Declaration
 from event_universe.core.rule3 import NO_READ, THE_ADVANCE, THE_INVERSE, Key, carried, rule3
@@ -133,8 +133,8 @@ def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinSte
         if read.dipole == SPIN:
             if read.factor == 0:
                 continue
-            assert read.gradient is not None
-            tidal_cross = cross(read.gradient, start.momentum)
+            # `check` refuses a spin's read without its gradient
+            tidal_cross = cross(cast(Vector, read.gradient), start.momentum)
             for i in range(3):
                 tidal = division_now(
                     start.act,
