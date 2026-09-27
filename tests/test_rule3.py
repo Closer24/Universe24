@@ -67,7 +67,9 @@ def old_axes(
 def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_zero_axis_contents():
     """One function of the paces: with the axis contents zero it is the isotropic rule's
     (R, R, R), S, w term for term (4 num x 3 p^2 = 12 num p^2); with them the four paces'
-    reads; `weak_field` False the plain first-order rule; `ISOTROPIC` is the default."""
+    reads; `weak_field` False the plain first-order rule; `ISOTROPIC` is the default; the vacuum
+    c = 0 is 2 Gamma^2 times the plain rule; a tensor along x alone slows the x read and the own
+    term by 4 num (p_x^2 - p_0^2)."""
     rng = random.Random(3)
     for _ in range(500):
         num, den = rng.randint(1, 1000), rng.randint(1, 1000)
@@ -86,6 +88,16 @@ def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_ze
         )
         assert coefficients(num, den, gamma, content, (0, 0, 0)) == coefficients(
             num, den, gamma, content
+        )
+        # the vacuum c = 0: 2 Gamma^2 times the plain rule (the levels bit for bit)
+        assert coefficients(num, den, gamma, 0) == ((2 * gamma**2 * num,) * 3, 0, 6 * den * gamma**2)
+        # a tensor along x alone slows the x read and the own term by 4 num (p_x^2 - p_0^2)
+        pace, axis_pace = gamma - content, gamma - content - axis_contents[0]
+        (read, *_), self_iso, wall = coefficients(num, den, gamma, content)
+        assert coefficients(num, den, gamma, content, (axis_contents[0], 0, 0)) == (
+            (2 * axis_pace**2 * num, read, read),
+            self_iso - 4 * num * (axis_pace**2 - pace**2),
+            wall,
         )
     assert ISOTROPIC == (0, 0, 0)
 
