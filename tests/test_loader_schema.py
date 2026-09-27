@@ -163,25 +163,26 @@ def context_of(entries: list[dict]) -> Context:
 
 
 def test_the_shipped_universe_and_the_sources_fragment_pass_the_folders_schemas():
-    """Every key of every shipped family entry beyond its name is one folder's, the folder named
-    by its card; every entry passes the merged check with the integer's name read as the
-    integer; an unknown attribute is refused by name."""
+    """Every key of every shipped family entry beyond the frame's own (name, clock, spins_step) is
+    one folder's, the folder named by its card; every entry passes the merged check with the
+    integer's name read as the integer; an unknown attribute is refused by name."""
     register = discover()
     owners = cards.owners(register)[FAMILY]
     entries = shipped_entries()
-    words = {key for entry in entries for key in entry} - {"name"}
+    frame_keys = {"name", "clock", "spins_step"}  # loader/frame.py, entry_kind
+    words = {key for entry in entries for key in entry} - frame_keys
     assert words <= set(owners), sorted(words - set(owners))
     assert owners["sourced"] == "the source" and owners["reads"] == "the signed read"
     merged = cards.at(register, FAMILY)
     context = context_of(entries)
     for entry in entries:
-        body = {key: value for key, value in entry.items() if key != "name"}
+        body = {key: value for key, value in entry.items() if key not in frame_keys}
         checked = check_keys(body, merged.keys, merged.optional, entry["name"], context)
         for read in checked["reads"]:
             assert type(read["weight"]) is int and read["weight"] >= 1
     with pytest.raises(ValueError, match=r"matter has unknown keys: nonsense_attribute"):
         check_keys(
-            {key: value for key, value in entries[2].items() if key != "name"}
+            {key: value for key, value in entries[2].items() if key not in frame_keys}
             | {"nonsense_attribute": 1},
             merged.keys,
             merged.optional,
