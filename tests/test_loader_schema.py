@@ -24,10 +24,11 @@ from event_universe.core.schema import (
     check_keys,
 )
 from event_universe.loader import cards
+from tests.worlds import SOURCED
 
 ROOT = Path(__file__).resolve().parents[1]
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
-FRAGMENT = ROOT / "examples" / "events" / "source" / "universe_entries.json"
+# one sourced entry (the word `sourced`, a card's key), as the retired source folder wrote it
 FAMILY = "a family's entry"
 CONTEXT = Context(("alpha", "beta"), {"Lambda": 7, "amplitude_bound": 1 << 20})
 
@@ -144,8 +145,7 @@ def test_the_cards_are_collected_by_place_and_two_folders_claiming_one_key_are_r
 
 def shipped_entries() -> list[dict]:
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    fragment = json.loads(FRAGMENT.read_text(encoding="utf-8"))
-    return universe["families"] + fragment["families"]
+    return universe["families"] + [dict(SOURCED)]
 
 
 def context_of(entries: list[dict]) -> Context:
@@ -154,7 +154,7 @@ def context_of(entries: list[dict]) -> Context:
     return Context(tuple(entry["name"] for entry in entries), integers)
 
 
-def test_the_shipped_universe_and_the_sources_fragment_pass_the_folders_schemas():
+def test_the_shipped_universe_and_a_sourced_entry_pass_the_folders_schemas():
     """Every key of every shipped family entry beyond the frame's own (name, clock, spins_step) is
     one folder's, the folder named by its card; every entry passes the merged check with the
     integer's name read as the integer; an unknown attribute is refused by name."""

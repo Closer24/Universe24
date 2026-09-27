@@ -16,10 +16,12 @@ from event_universe.loader import frame
 from event_universe.loader.world import parse_world_document
 from event_universe.world_files import input_digest, world_files
 from tests.running import family_names, string_constants, written_defaults
+from tests.worlds import SOURCED
 
 ROOT = Path(__file__).resolve().parents[1]
+REGISTER = discover()  # the folders' cards, the keys they declare at "a body" among them
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
-FRAGMENT = ROOT / "examples" / "events" / "source" / "universe_entries.json"
+# one sourced entry (the word `sourced`, a card's key), as the retired source folder wrote it
 FRAME = ROOT / "src" / "event_universe" / "loader" / "frame.py"
 FILE = "universe.json"
 
@@ -32,12 +34,10 @@ def read(universe: dict):
     return frame.universe(FILE, {FILE: universe}, discover())
 
 
-def test_the_shipped_file_and_the_sources_fragment_pass_with_the_weight_word_resolved():
-    """The three shipped families and the source's entries (the word `sourced`, a card's key)
-    pass the frame; matter's read of the charge at the word Lambda is the integer; the table's
-    lists are read as tuples of three."""
+def test_the_shipped_file_and_a_sourced_entry_pass_with_the_weight_word_resolved():
+    """The three shipped families and a sourced entry pass the frame; matter's read of the charge at the word Lambda is the integer; the table's lists are read as tuples of three."""
     universe = shipped()
-    universe["families"] += json.loads(FRAGMENT.read_text(encoding="utf-8"))["families"]
+    universe["families"] += [dict(SOURCED)]
     entries, integers = read(universe)
     assert [entry["name"] for entry in entries] == [f["name"] for f in universe["families"]]
     assert any("sourced" in entry for entry in entries)
@@ -174,7 +174,7 @@ def test_every_shipped_body_and_detector_passes_the_frames_schemas():
         if not (isinstance(document, dict) and "universe" in document) or ahead & set(path.parts):
             continue
         count += 1
-        bodies = frame.bodies(document["measured"], context)
+        bodies = frame.bodies(document["measured"], context, REGISTER)
         assert len(bodies) == len(document["measured"])
         for body, written in zip(bodies, document["measured"], strict=True):
             assert body["position"] == tuple(written["position"]) and body["family"] in families
@@ -191,15 +191,7 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
         (ROOT / "examples" / "events" / "dark_body" / "bright.json").read_text(encoding="utf-8")
     )
     context = Context(tuple(entry["name"] for entry in shipped()["families"]))
-
-    def refuses(change, match: str) -> None:
-        broken = copy.deepcopy(good)
-        change(broken)
-        with pytest.raises(ValueError, match=match):
-            frame.bodies(broken["measured"], context)
-            frame.detectors(broken["detectors"])
-
-    for key in (
+    retired = (
         "lamp",
         "phase",
         "directions",
@@ -210,64 +202,38 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
         "take",
         "coupling",
         "cavity",
-    ):
-        refuses(
-            lambda d, key=key: d["measured"][0].__setitem__(key, 1),
-            rf"measured\[0\] has unknown keys: {key} \(the keys: ",
-        )
-    for key in ("family", "amount", "momentum", "momentum_before", "stocks"):
-        refuses(lambda d, key=key: d["measured"][0].pop(key), rf"measured\[0\] lacks keys: {key}")
-    refuses(
-        lambda d: d["measured"][0].pop("spin_before"),
-        r"measured\[0\] declares spin without spin_before: the spin's two levels are declared together",
     )
-    refuses(
-        lambda d: d["measured"][0].pop("position"),
-        r"measured\[0\] is written by its position \(today's form\) or by its nodes .* not neither",
-    )
-    refuses(
-        lambda d: d["measured"][0].__setitem__("family", "nobody"),
-        r"measured\[0\]\.family names 'nobody', no family of the universe",
-    )
-    refuses(
-        lambda d: d["measured"][0].__setitem__("stocks", {"nobody": 1}),
-        r"measured\[0\]\.stocks key 'nobody' names 'nobody', no family",
-    )
-    refuses(
-        lambda d: d["measured"][0].__setitem__("stocks", {"charge": 0}),
-        r"measured\[0\]\.stocks\['charge'\] is 0, below its least 1",
-    )
-    refuses(
-        lambda d: d["measured"][0].__setitem__("stocks", [1]),
-        r"measured\[0\]\.stocks must be an object mapping names to values",
-    )
-    refuses(
-        lambda d: d["measured"][0].__setitem__("momentum", [0, 0]),
-        r"measured\[0\]\.momentum must be a list of 3, not of 2",
-    )
-    refuses(
-        lambda d: d["measured"][0].__setitem__("emitter", {"family": "nobody"}),
-        r"emitter\.family names 'nobody', no family of the universe",
-    )
-    refuses(
-        lambda d: d["measured"][0].__setitem__("emitter", {"family": "charge", "wheel": 1}),
-        r"emitter has unknown keys: wheel",
-    )
-    refuses(
-        lambda d: d["measured"][0].__setitem__("emitter", {"family": "charge", "twist": 0}),
-        r"emitter has unknown keys: twist",
-    )
-    refuses(
-        lambda d: d["detectors"][0].__setitem__("threshold", 1),
-        r"detectors\[0\] has unknown keys: threshold",
-    )
-    refuses(lambda d: d["detectors"][0].pop("name"), r"detectors\[0\] lacks keys: name")
-    refuses(
-        lambda d: d["detectors"][0].__setitem__("positions", [[0, 0]]),
-        r"positions\[0\] must be a list of 3, not of 2",
-    )
+    S = lambda key, value: lambda d: d["measured"][0].__setitem__(key, value)  # noqa: E731
+    D = lambda key, value: lambda d: d["detectors"][0].__setitem__(key, value)  # noqa: E731
+    defects = [(S(k, 1), rf"measured\[0\] has unknown keys: {k} \(the keys: ") for k in retired]
+    for k in ("family", "amount", "momentum", "momentum_before", "stocks"):
+        defects.append((lambda d, k=k: d["measured"][0].pop(k), rf"measured\[0\] lacks keys: {k}"))
+    defects += [
+        (lambda d: d["measured"][0].pop("spin_before"), r"declares spin without spin_before"),
+        (
+            lambda d: d["measured"][0].pop("position"),
+            r"by its position \(today's form\) or by its nodes .* neither",
+        ),
+        (S("family", "nobody"), r"\.family names 'nobody', no family of the universe"),
+        (S("stocks", {"nobody": 1}), r"\.stocks key 'nobody' names 'nobody', no family"),
+        (S("stocks", {"charge": 0}), r"\.stocks\['charge'\] is 0, below its least 1"),
+        (S("stocks", [1]), r"\.stocks must be an object mapping names to values"),
+        (S("momentum", [0, 0]), r"\.momentum must be a list of 3, not of 2"),
+        (S("emitter", {"family": "nobody"}), r"emitter\.family names 'nobody', no family"),
+        (S("emitter", {"family": "charge", "wheel": 1}), r"emitter has unknown keys: wheel"),
+        (S("emitter", {"family": "charge", "twist": 0}), r"emitter has unknown keys: twist"),
+        (D("threshold", 1), r"detectors\[0\] has unknown keys: threshold"),
+        (lambda d: d["detectors"][0].pop("name"), r"detectors\[0\] lacks keys: name"),
+        (D("positions", [[0, 0]]), r"positions\[0\] must be a list of 3, not of 2"),
+    ]
+    for change, match in defects:
+        broken = copy.deepcopy(good)
+        change(broken)
+        with pytest.raises(ValueError, match=match):
+            frame.bodies(broken["measured"], context, REGISTER)
+            frame.detectors(broken["detectors"])
     with pytest.raises(ValueError, match="measured must be a list"):
-        frame.bodies({}, context)
+        frame.bodies({}, context, REGISTER)
     with pytest.raises(ValueError, match="detectors must be a list"):
         frame.detectors({})
 
@@ -282,99 +248,66 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
         "momentum": [0, 0, -3],
         "momentum_before": [0, 0, -2],
     }
-    (found,) = frame.bodies([body], context)
+    (found,) = frame.bodies([body], context, REGISTER)
     assert found["nodes"] == ({"node": (1, 2, 3), "count": 5}, {"node": (1, 2, 4), "count": 7})
     assert found["momentum"] == (0, 0, -3) and found["momentum_before"] == (0, 0, -2)
     assert "spin" not in found and "stocks" not in found and "emitter" not in found
     spinning = {**body, "spin": [0, 1, 0], "spin_before": [0, 1, 1], "moment": [2, 0, 0]}
-    (found,) = frame.bodies([spinning], context)
+    (found,) = frame.bodies([spinning], context, REGISTER)
     assert found["spin"] == (0, 1, 0) and found["spin_before"] == (0, 1, 1)
     giver = {"family": families[0], "weight": 3, "norm": 5, "norm_denominator": 2}
     stocks = {families[0]: 4}
-    (found,) = frame.bodies([{**body, "stocks": stocks, "emitter": giver}], context)
+    (found,) = frame.bodies([{**body, "stocks": stocks, "emitter": giver}], context, REGISTER)
     assert found["stocks"] == stocks and found["emitter"] == giver
-    (found,) = frame.bodies([{**body, "emitter": {**giver, "family": families[-1]}}], context)
+    (found,) = frame.bodies([{**body, "emitter": {**giver, "family": families[-1]}}], context, REGISTER)
     assert found["emitter"]["family"] == families[-1]
+    turned = {"polariser": {"angle": [2, 1], "sets": ["along", "across"]}}  # a card's key at "a body"
+    (found,) = frame.bodies([{**body, **turned}], context, REGISTER)
+    assert found["polariser"] == {"angle": (2, 1), "sets": ("along", "across")}
 
     def refuses(change, match: str) -> None:
         broken = copy.deepcopy(body)
         change(broken)
         with pytest.raises(ValueError, match=match):
-            frame.bodies([broken], context)
+            frame.bodies([broken], context, REGISTER)
 
-    refuses(
-        lambda b: b.__setitem__("position", [1, 2, 3]),
-        r"measured\[0\] is written by its position \(today's form\) or by its nodes with their "
-        r"counts \(the law's form\), not both",
-    )
-    refuses(lambda b: b.pop("nodes"), r"measured\[0\] is written by its position .* not neither")
-    refuses(lambda b: b.pop("momentum"), r"measured\[0\] lacks keys: momentum")
-    refuses(lambda b: b.pop("momentum_before"), r"measured\[0\] lacks keys: momentum_before")
-    refuses(
-        lambda b: b.__setitem__("spin_before", [0, 0, 0]),
-        r"measured\[0\] declares spin_before without spin: the spin's two levels are declared together",
-    )
-    for key in ("amount", "fixed", "kind", "seed", "count", "period"):
-        refuses(
-            lambda b, key=key: b.__setitem__(key, 1),
-            rf"measured\[0\] has unknown keys: {key} \(the keys: emitter, family, moment, momentum, "
-            r"momentum_before, nodes, phase_denominator, spin, spin_before, stocks\)",
-        )
-    for key in ("period", "clock", "pair", "twist", "window_read"):
-        refuses(
-            lambda b, key=key: b.__setitem__("emitter", {**giver, key: 1}),
-            rf"measured\[0\]\.emitter has unknown keys: {key} ",
-        )
-    for key in ("family", "weight", "norm", "norm_denominator"):
-        refuses(
-            lambda b, key=key: b.__setitem__("emitter", {k: v for k, v in giver.items() if k != key}),
-            rf"measured\[0\]\.emitter lacks keys: {key}",
-        )
-    for key in ("weight", "norm", "norm_denominator"):
-        refuses(
-            lambda b, key=key: b.__setitem__("emitter", {**giver, key: 0}),
-            rf"measured\[0\]\.emitter\.{key} is 0, below its least 1",
-        )
-    refuses(
-        lambda b: b.__setitem__("emitter", {**giver, "family": "nobody"}),
-        r"measured\[0\]\.emitter\.family names 'nobody', no family of the universe",
-    )
-    refuses(
-        lambda b: b.__setitem__("emitter", giver),
-        rf"measured\[0\]\.emitter gives '{families[0]}', a family the body neither is nor stocks",
-    )
-    refuses(
-        lambda b: b.__setitem__("stocks", {families[0]: 0}),
-        rf"measured\[0\]\.stocks\['{families[0]}'\] is 0, below its least 1",
-    )
-    refuses(
-        lambda b: b.__setitem__("stocks", {"nobody": 1}),
-        r"measured\[0\]\.stocks key 'nobody' names 'nobody', no family",
-    )
-    refuses(lambda b: b.__setitem__("nodes", []), r"measured\[0\]\.nodes is empty")
-    refuses(
-        lambda b: b["nodes"].append({"node": [1, 2, 3], "count": 1}),
-        r"measured\[0\]\.nodes names the Node \[1, 2, 3\] twice",
-    )
-    refuses(
-        lambda b: b["nodes"][0].__setitem__("count", 0),
-        r"measured\[0\]\.nodes\[0\]\.count is 0, below its least 1",
-    )
-    refuses(
-        lambda b: b["nodes"][0].__setitem__("node", [1, 2]),
-        r"measured\[0\]\.nodes\[0\]\.node must be a list of 3, not of 2",
-    )
-    refuses(lambda b: b["nodes"][0].pop("count"), r"measured\[0\]\.nodes\[0\] lacks keys: count")
-    refuses(
-        lambda b: b.__setitem__("momentum", [1, 2]),
-        r"measured\[0\]\.momentum must be a list of 3, not of 2",
-    )
-    refuses(
-        lambda b: b.__setitem__("family", "nobody"),
-        r"measured\[0\]\.family names 'nobody', no family of the universe",
-    )
+    known = ", ".join(sorted(frame.counted_kind(REGISTER).keys))  # the frame's and the cards'
+    S = lambda key, value: lambda b: b.__setitem__(key, value)  # noqa: E731
+    E = lambda **keys: S("emitter", {**giver, **keys})  # noqa: E731
+    for change, match in (
+        (S("position", [1, 2, 3]), r"by its position \(today's form\) or by its nodes .* not both"),
+        (lambda b: b.pop("nodes"), r"is written by its position .* not neither"),
+        (lambda b: b.pop("momentum"), r"measured\[0\] lacks keys: momentum"),
+        (lambda b: b.pop("momentum_before"), r"lacks keys: momentum_before"),
+        (S("spin_before", [0, 0, 0]), r"declares spin_before without spin: the spin's two levels"),
+        (S("seed", 1), rf"has unknown keys: seed \(the keys: {known}\)"),
+        (S("period", 1), rf"has unknown keys: period \(the keys: {known}\)"),
+        (S("polariser", {"angle": [2, 1]}), r"\.polariser lacks keys: sets"),
+        (E(twist=1), r"\.emitter has unknown keys: twist "),
+        (E(period=1), r"\.emitter has unknown keys: period "),
+        (S("emitter", {k: v for k, v in giver.items() if k != "norm"}), r"\.emitter lacks keys: norm"),
+        (E(weight=0), r"\.emitter\.weight is 0, below its least 1"),
+        (E(family="nobody"), r"\.emitter\.family names 'nobody', no family"),
+        (S("emitter", giver), rf"gives '{families[0]}', a family the body neither is nor stocks"),
+        (S("stocks", {families[0]: 0}), rf"\.stocks\['{families[0]}'\] is 0, below its least 1"),
+        (S("stocks", {"nobody": 1}), r"\.stocks key 'nobody' names 'nobody', no family"),
+        (S("nodes", []), r"\.nodes is empty"),
+        (
+            lambda b: b["nodes"].append({"node": [1, 2, 3], "count": 1}),
+            r"names the Node \[1, 2, 3\] twice",
+        ),
+        (
+            lambda b: b["nodes"][0].__setitem__("count", 0),
+            r"\.nodes\[0\]\.count is 0, below its least 1",
+        ),
+        (lambda b: b["nodes"][0].__setitem__("node", [1, 2]), r"\.nodes\[0\]\.node must be a list of 3"),
+        (lambda b: b["nodes"][0].pop("count"), r"\.nodes\[0\] lacks keys: count"),
+        (S("momentum", [1, 2]), r"\.momentum must be a list of 3, not of 2"),
+        (S("family", "nobody"), r"\.family names 'nobody', no family of the universe"),
+    ):
+        refuses(change, match)
     with pytest.raises(ValueError, match=r"measured\[0\] must be an object: a body by its position"):
-        frame.bodies([3], context)
+        frame.bodies([3], context, REGISTER)
     world = json.loads(
         (ROOT / "examples" / "events" / "dark_body" / "bright.json").read_text(encoding="utf-8")
     )
@@ -393,7 +326,10 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
     entry = load()
     assert (entry.position, entry.block.extents, entry.amount) == ((1, 2, 0), (3, 3, 1), 13)
     assert entry.block.nodes == ((1, 2, 0), (1, 4, 0), (3, 3, 0)) and entry.block.counts == (5, 7, 1)
-    assert entry.block.spin == (0, 1, 0) and entry.block.moment == (2, 0, 0)
+    assert (
+        entry.block.spin == (0, 1, 0) and entry.block.moment == (2, 0, 0) and entry.block.declared == {}
+    )
+    assert load(**turned).block.declared == {"polariser": {"angle": (2, 1), "sets": ("along", "across")}}
     with pytest.raises(ValueError, match=r"measured\[0\]\.emitter on a body in the law's form"):
         load(emitter={**giver, "family": families[1]})
     with pytest.raises(

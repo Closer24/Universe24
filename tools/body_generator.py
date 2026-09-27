@@ -8,7 +8,7 @@ import json
 import sys
 from dataclasses import dataclass
 from fractions import Fraction
-from math import isqrt
+from math import acos, isqrt
 from pathlib import Path
 from typing import Any
 
@@ -29,6 +29,8 @@ from event_universe.features.start import (
 )
 from event_universe.features.start import rest as start_rest
 from event_universe.loader.mode import period_by_the_rule
+from event_universe.loader.world import TWIST_UNIT_SCALE
+from event_universe.world_files import input_digest
 
 Triple = tuple[int, int, int]  # (a, b, c) with a^2 + b^2 = c^2: cos k = a / c, sin k = b / c, exact
 AT_REST: Triple = (1, 0, 1)
@@ -584,6 +586,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                     "rotation": [mode.rotation.numerator, mode.rotation.denominator],
                     "clock": list(clock),
                     "period": period_by_the_rule(*clock),
+                    "twist": round(TWIST_UNIT_SCALE * acos(clock[0] / (2 * clock[1]))),
                     "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
                     "in_the_worlds_well": in_world,
                     "profile": mode.profile,
@@ -610,7 +613,9 @@ def main() -> None:
     )  # the rotation is an exact fraction: its digits are the well's, not the host's to cap
     document = args.input.read_bytes()
     reading = generate(json.loads(document))
-    reading["world_digest"] = hashlib.sha256(document).hexdigest()
+    reading["world_digest"] = input_digest(
+        json.loads(document)
+    )  # the one digest of a world, the loader's
     profiles: list[np.ndarray | None] = []
     for body in reading["bodies"]:
         profiles.append(body.pop("profile", None))

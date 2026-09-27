@@ -5,7 +5,7 @@ issue #1154; ALGEBRA.md #the-primitives.111 item 7, ALGEBRA.md #the-interval).
 A PRIMITIVE is a kind of attribute the engine can apply, written once and applied
 to any family by its declaration in the run's files, never by a family's name. Its
 IDENTITY is its unique English name, the key of the ledger's table of primitives
-(docs/designs/generic_engine/ENGINE_LEDGER.md section 3). Every primitive is ONE
+(the engine ledger's record, section 3). Every primitive is ONE
 FOLDER under src/event_universe/features/<name>/, which declares its own name,
 place, reads and writes (`DECLARATION`) and binds its function (`bind`); the
 register FINDS THE FEATURES BY THEIR FOLDERS (`discover`), so adding a feature

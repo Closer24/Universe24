@@ -10,8 +10,10 @@ from pathlib import Path
 import numpy as np
 
 from event_universe import world_files
+from event_universe.core.register import discover
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.world_files import families_file_entries, input_stamp, parse_nature_beam_world
+from event_universe.loader import frame
+from event_universe.world_files import input_stamp, parse_nature_beam_world, read_repository_json
 from tests.running import refused
 from tests.worlds import FILE, emitter_specimen, family_entry, on_the_file
 
@@ -28,6 +30,8 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         "amplitude_bound": 1 << 20,
         "Lambda": 1,
         "momentum_unit": 64,
+        "most_steps": 65536,
+        "width": 63,
     }
     # the twist table (ALGEBRA.md #the-primitives; commit 4): the unit 4 Gamma 2^16, 2^10 fine
     # and 2^15 coarse triples, every one c^2 + s^2 = d^2 with d at most 10^9
@@ -66,7 +70,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         {"family": "gravity", "weight": 1, "twist": "own", "by": 1},
         {"family": "charge", "weight": "Lambda", "twist": "own", "by": "q"},
     ]
-    entries, integers = families_file_entries(FILE)
+    entries, integers = frame.universe(FILE, {FILE: read_repository_json(FILE)}, discover())
     # the frame reads the table's lists as tuples (core/schema.py); the same numbers
     assert json.loads(json.dumps(integers)) == document["integers"] and len(entries) == 3
     assert entries[0]["held"]["count"] == "content" and entries[1]["held"]["count"] == "sign"

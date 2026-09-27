@@ -19,10 +19,7 @@ from tests.worlds import NODE_CLOCK, emitter_world, lawful_wheel
 
 
 def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
-    """A record's conserved form under the Node's own pace (ALGEBRA.md #the-direction) from its two levels and
-    the clicks' levels `content` (the engine's array when None), in the engine's units (the scale 3 L, L the
-    numerators' lcm): [3 L (den / num) Gamma (a^2 + b^2) - 6 L (den / num) c_i a b] / p_i at the Nodes,
-    p_i = Gamma - c_i, and L (a_i b_j + a_j b_i) on the Links; an exact rational over the six reads."""
+    """A record's conserved form under the Node's own pace (ALGEBRA.md #the-direction) from its two levels and the clicks' levels `content` (the engine's array when None), in the engine's units (the scale 3 L, L the numerators' lcm): [3 L (den / num) Gamma (a^2 + b^2) - 6 L (den / num) c_i a b] / p_i at the Nodes, p_i = Gamma - c_i, and L (a_i b_j + a_j b_i) on the Links; an exact rational over the six reads."""
     gamma = simulation.node_clock
     levels = simulation.level_of("content") if content is None else content
     num = simulation.kind_num[family].astype(object)
@@ -132,11 +129,11 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
         # identity, before and after every giving; the line's residue on it after the click
         entry = by_tick[line["tick"]]
         assert entry["excited_before"] is not None
-        assert entry["excited_after"] == entry["excited_before"][0] == 0
+        assert entry["excited_after"] == entry["excited_before"][0] == -1
         after = by_tick.get(line["tick"] + 1)
         assert after is None or after["excited_before"][1:3] == (line["u"], line["W"])
     assert simulation.block_by_number[0].own is not None  # the standing record continues
-    assert set(simulation.records) == {0}  # the body's own standing record alone remains
+    assert set(simulation.records) == {-1}  # the body's own standing record alone remains
     # the four gathers at `screen`, each a given record's one click of content 1, are the four
     # quanta of the stock given and clicked (the books' balance is asserted at every interval
     # in `run`; the held stock is read at each giving by the contents 5, 4, 3, 2 above)
@@ -160,23 +157,13 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
 
 
 def test_the_bodys_own_record_is_never_rewritten_and_the_residue_is_read_at_the_first_shell_node():
-    """THE RESEED RETIRED (ALGEBRA.md #the-ladder and (4); the residue at the click at the first
-    shell Node, ALGEBRA.md #the-ladder; BUILD.md section 26 item 33): the giving end sets the given rows,
-    lowers the stock and the content, and leaves the body's own record as it is: at every one
-    of the four givings the own record is the same object with its levels and remainders bit
-    for bit as before the click, and it goes on advancing after the stock is spent (its levels
-    move over the later intervals, no fifth giving). The residue on every giving line is the own
-    record's remainder at the first shell Node, the body's corner at x = 5 (the first Node in
-    x-major order with a Port; the shell the two ends of the train, x = 5 and x = 36), in the
-    remainder's step on the body's wheel there, read at the click; the given record carries
-    the same u. The edge case: a body whose every Link is inside it has no shell and is
-    refused by name."""
+    """THE RESEED RETIRED (ALGEBRA.md #the-ladder and (4); the residue at the click at the first shell Node, ALGEBRA.md #the-ladder; BUILD.md section 26 item 33): the giving end sets the given rows, lowers the stock and the content, and leaves the body's own record as it is: at every one of the four givings the own record is the same object with its levels and remainders bit for bit as before the click, and it goes on advancing after the stock is spent (its levels move over the later intervals, no fifth giving). The residue on every giving line is the own record's remainder at the first shell Node, the body's corner at x = 5 (the first Node in x-major order with a Port; the shell the two ends of the train, x = 5 and x = 36), in the remainder's step on the body's wheel there, read at the click; the given record carries the same u. The edge case: a body whose every Link is inside it has no shell and is refused by name."""
     document = emitter_world(stock=4)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     block = simulation.block_by_number[0]
     own = block.own
-    assert own is not None and not np.any(own.remainder) and own.identity == 0
+    assert own is not None and not np.any(own.remainder) and own.identity == -1
     assert simulation.first_shell_node(block) == (5, 0, 0)
     shell = simulation.shell_mask(block)
     assert int(shell.sum()) == 2 and shell[5, 0, 0] and shell[36, 0, 0]
@@ -203,7 +190,7 @@ def test_the_bodys_own_record_is_never_rewritten_and_the_residue_is_read_at_the_
         if simulation.held[0][block.definition.emitter.family] == 0:  # the stock (item 47)
             spent.append(own.now[block.mask].copy())
     givings = [line for line in lines if line["event"] == "giving"]
-    assert len(givings) == 4 and block.own is own and 0 in simulation.records
+    assert len(givings) == 4 and block.own is own and -1 in simulation.records
     assert [(line["u"], line["W"]) for line in givings] == read
     assert all(line["read_node"] == [5, 0, 0] for line in givings)
     gathers = [line for line in lines if line["event"] == "gather"]
@@ -217,15 +204,7 @@ def test_the_bodys_own_record_is_never_rewritten_and_the_residue_is_read_at_the_
 
 
 def test_the_given_record_is_written_once_and_the_law_advances_it():
-    """THE WINDOW'S GIVING (ALGEBRA.md #the-primitives; the one stroke's commit 7, the train
-    retired): at the open the given record exists with its window open and nothing written
-    yet (the writes come with the record's own steps: the body's rotation at its 32 Nodes
-    times the weight 3, zero elsewhere), no giving line yet (the line is named at the close),
-    its norm the excitation's action norm / norm_denominator (the generator's integers), its
-    ladder the named set; at the close the line carries the window's length, the outward norm
-    read (at or above the action) and the open's interval, the residue and the wheel the
-    law's, the content the giving found; nothing reaches Manhattan distance m from the body
-    before age m; no take after the write (the retired row stays 0)."""
+    """THE WINDOW'S GIVING (ALGEBRA.md #the-primitives; the one stroke's commit 7, the train retired): at the open the given record exists with its window open and nothing written yet (the writes come with the record's own steps: the body's rotation at its 32 Nodes times the weight 3, zero elsewhere), no giving line yet (the line is named at the close), its norm the excitation's action norm / norm_denominator (the generator's integers), its ladder the named set; at the close the line carries the window's length, the outward norm read (at or above the action) and the open's interval, the residue and the wheel the law's, the content the giving found; nothing reaches Manhattan distance m from the body before age m; no take after the write (the retired row stays 0)."""
     document = emitter_world(stock=1, ticks=400)
     world = parse_nature_beam_world(document)
     lines: list[dict] = []

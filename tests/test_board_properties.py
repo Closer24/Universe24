@@ -16,7 +16,7 @@ from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import exchange_of, form_I
-from tests.worlds import CHARGE_FAMILY, CLOCK_FAMILY, NODE_CLOCK, family_entry, massive_generator, reads
+from tests.worlds import CHARGE_FAMILY, CLOCK_FAMILY, NODE_CLOCK, family_entry, mode_profile, reads
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
@@ -97,9 +97,7 @@ def small_world(
     }
     if seed is None:
         # the generator writes the profile and the mode's clock [a, b] (record 1886)
-        document["measured"][0]["seed"] = massive_generator().mode_profile(
-            document, 0, amplitude=AMPLITUDE
-        )
+        document["measured"][0]["seed"] = mode_profile(document, 0, amplitude=AMPLITUDE)
     else:
         document["measured"][0]["seed"] = [int(value) for value in np.asarray(seed).ravel()]
         assert clock is not None
@@ -316,7 +314,7 @@ def test_conservation_between_clicks():
     assert all(np.all(contents[t][well] == 1) for t in range(click_tick))
     assert all(np.all(contents[t][well] == 2) for t in range(click_tick, len(states)))
     gamma = simulation.node_clock
-    for identity in (light, 0):
+    for identity in (light, -1):
         family = 0 if identity == light else 1
         num = simulation.kind_num[family]
         exchanges = 0
@@ -352,7 +350,7 @@ def test_conservation_between_clicks():
             moved = form_I(simulation, family, now, before, paced[t])
             assert moved - value == exchange, (identity, t)
             exchanges += exchange != 0
-            if identity == 0 and t == click_tick:
+            if identity == -1 and t == click_tick:
                 # THE EVENT (ALGEBRA.md #the-paces, #the-counts-line): the click's quantum enters the
                 # well's Nodes as this interval ends (its level 1 -> 2 there, one unit), the
                 # well's own weights moving with it (inside the exchange read above)

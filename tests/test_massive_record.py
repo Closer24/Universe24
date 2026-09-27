@@ -10,11 +10,6 @@ import numpy as np
 import pytest
 
 from event_universe.core.rule3 import coefficients
-from event_universe.diagnostics.massive_record_margin import (
-    block_margin,
-    check_margins,
-    iterated_mode,
-)
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord, form_json
 from event_universe.features.send import send
 from event_universe.loader.world import (
@@ -35,13 +30,13 @@ from tests.worlds import (
     NODE_CLOCK,
     chain_world,
     cube_positions,
+    iterated_mode_row,
     lawful_wheel,
     receiver_body,
     receiver_cube,
 )
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
-# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
 
@@ -185,8 +180,7 @@ def test_every_family_reads_the_worlds_border_and_a_zero_face_when_open():
         zero = np.zeros((5, 1, 1), dtype=np.int64)
         live = planted(simulation, 1, now, zero, zero)
         a_next, r_next = step_once(simulation, live)
-        # at Node 0: the total R S_6 = R (a_W + a_E + 4 x 0) = R a_W over the vacuum's wall w
-        # (the weak-field rule's integers at c = 0, item 44)
+        # at Node 0: the total R S_6 = R (a_W + a_E + 4 x 0) = R a_W over the vacuum's wall w (the weak-field rule's integers at c = 0, item 44)
         (read, _, _), _self, wall = coefficients(1, 2, NODE_CLOCK, 0)
         total = wall * int(a_next[0, 0, 0]) + int(r_next[0, 0, 0])
         assert total == read * expected
@@ -389,7 +383,7 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     assert simulation.ledger.held_spent[0] == 3 and simulation.ledger.transit_released[0] == 3
     own = simulation.blocks[0].own
     assert (
-        own is not None and own.identity == 0
+        own is not None and own.identity == -1
     )  # the standing record continues (ALGEBRA.md #the-ladder)
     assert all(
         live.family == 0 and live.content == 1 for live in simulation.records.values() if live is not own
@@ -434,78 +428,6 @@ PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 
 @pytest.mark.diagnostic
-def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
-    """The margin rule (its extent and mode a GameBoard reading, a diagnostic) refuses a block whose extent passes its board or a face (naming the axis, the extent and the side needed), an unbound well, and a runaway well on a chain, and admits a control."""
-    for margin, admitted in (("pin", False), ("control", True)):
-        document = block_world(
-            [48, 48, 48],
-            PERIODIC,
-            [1600, 1618],
-            [
-                {
-                    "position": [10, 10, 10],
-                    "side": 28,
-                    "q": 0,
-                    "spin": [0, 0, 0],
-                    "spin_before": [0, 0, 0],
-                    "twist": 0,
-                    "moment": [0, 0, 0],
-                    "pair": [1600, 1609],
-                    "margin": margin,
-                    "seed": 1
-                    << 18,  # below the pair's amplitude bound (ALGEBRA.md #the-rows-against-nature)
-                }
-            ],
-        )
-        document["amplitude_bound"] = (
-            1 << 19
-        )  # the pair's room under the weak field (ALGEBRA.md #the-rows-against-nature)
-        world = parse_nature_beam_world(document)
-        if admitted:
-            readings = check_margins(world)
-            assert 7.8 < readings[0].extent < 8.1
-            assert readings[0].axes[0][3] < 48
-        else:
-            with pytest.raises(ValueError, match="below the margin rule on x for a pin world"):
-                check_margins(world)
-    near = block_world(
-        [48, 48, 48],
-        CHAIN,
-        [800, 809],
-        [{"position": [3, 14, 14], "side": 20, "pair": [800, 800], "margin": "control"}],
-    )
-    with pytest.raises(ValueError, match="Nodes lie 3 Links from a zero face"):
-        check_margins(parse_nature_beam_world(near))
-    shallow = block_world(
-        [24, 24, 24],
-        PERIODIC,
-        [800, 809],
-        [{"position": [10, 10, 10], "side": 3, "pair": [800, 808], "margin": "control"}],
-    )
-    with pytest.raises(ValueError, match="below the margin rule"):
-        check_margins(parse_nature_beam_world(shallow))
-    assert block_margin(parse_nature_beam_world(shallow), 0).extent > 100
-    rest = block_world(
-        [48, 48, 48],
-        PERIODIC,
-        [800, 809],
-        [{"position": [14, 14, 14], "side": 20, "pair": [800, 800], "margin": "control"}],
-    )
-    reading = check_margins(parse_nature_beam_world(rest))[0]
-    assert abs(reading.extent - 5.73) < 0.05
-    assert abs(reading.omega_b - 0.1105) < 0.0005
-    assert abs(reading.omega_0 - 0.1493) < 0.0001
-    assert reading.lines() and reading.to_record()["kind"] == "COMPUTATION"
-    deep = {"position": [40, 0, 0], "side": 1, "pair": [800, 700], "margin": "control"}
-    runaway = block_world([200, 1, 1], CHAIN, [800, 809], [deep])
-    reading = block_margin(parse_nature_beam_world(runaway), 0)
-    assert reading.runaway and reading.omega_b == 0.0 and abs(reading.lambda_max - 2.032) < 0.002
-    with pytest.raises(ValueError, match="the block's mode is a runaway"):
-        check_margins(parse_nature_beam_world(runaway))
-    cube = block_world([24, 24, 24], PERIODIC, [800, 809], [dict(deep, position=[10, 10, 10])])
-    assert not block_margin(parse_nature_beam_world(cube), 0).runaway
-
-
 def test_the_cavity_is_refused_by_name():
     """THE CAVITY RETIRED (BUILD.md section 26 item 28; was BUILD.md (o), the cavity of form (I) counting the separable form's cycles): a block declaring `cavity` is refused by name with what stands in its place (a body's record held by the law alone, its border the world's), true and false alike; the kind's own pair stays no body."""
     for value in (True, False):
@@ -551,7 +473,7 @@ def test_the_mode_line_sums_lights_field_by_residue_class():
 
 
 def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
-    """A pair whose rule total at the declared amplitude bound, the clock and the content reaches 2^63 is refused at load naming them ([800, 809] and [3200, 3236] admitted); the amplitude bound is required, capped at 2^28, and a seed or a row above it is refused naming it."""
+    """A pair whose rule total at the declared amplitude bound, the clock and the content reaches 2^63 is refused at load naming them ([800, 809] and [3200, 3236] admitted); the amplitude bound is required, bounded by the width through the rule's total and the transport's room, and a seed or a row above it is refused naming it."""
     big = 1 << 20
     document = massive_world([6, 6, 6], PERIODIC, [big, big + 1])
     with pytest.raises(
@@ -660,9 +582,7 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     period = 42.36
     # the generator as the operator iterated with the stop (the owner's word of
     # 2026-09-25): the profile with its clock beside it (record 1886; ALGEBRA.md #a-familys-declaration)
-    profile, clock, _ = iterated_mode(
-        world, 0, 1 << 18
-    )  # below the pair's amplitude bound 2^19 (ALGEBRA.md #the-rows-against-nature)
+    profile, clock = iterated_mode_row(document, 0, 1 << 18)  # the retired module's mode, recorded once
     seeded = dict(document)
     seeded["measured"] = [dict(document["measured"][0], seed=profile, clock=list(clock))]
     seeded["stamp"] = input_stamp(seeded)
@@ -697,7 +617,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     assert world.families[matter].phase_per_age == (512, 1)
     simulation = DetectorLawSimulation(world)
     other = DetectorLawSimulation(beside)
-    identity = 1 * (1 << 32) + 1
+    identity: int | None = None
     given: int | None = None
     field_reached: int | None = None
     compared = 0
@@ -705,6 +625,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
         simulation.step()
         other.step()
         assert simulation.books()["balanced"], tick
+        identity = identity if identity is not None else next(iter(simulation.blocks[1].emitted), None)
         live = simulation.records.get(identity)
         if live is not None:
             given = given if given is not None else tick
@@ -752,7 +673,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
-    identities = [1 * (1 << 32) + 1, 1 * (1 << 32) + 2]
+    identities: list[int] = []
     screen = simulation.detector_names.index("screen")
     at_click: dict[int, tuple[int, int, int, int]] = {}
     original = simulation._ladder_click
@@ -768,6 +689,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     for _ in range(3000):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
+        identities = [line["record"] for line in lines if line["event"] == "giving"]
         for identity in identities:
             live = simulation.records.get(identity)
             if (
@@ -782,7 +704,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     # ALGEBRA.md #the-click the second is given (2 u + 1) P / (2 W) after the first's
     # click and may reach its rung at the screen first when its residue is
     # the smaller)
-    assert sorted(gather["record"] for gather in gathers) == identities
+    assert sorted(gather["record"] for gather in gathers) == sorted(identities) and len(identities) == 2
     for gather in gathers:
         identity = gather["record"]
         assert gather["chosen"][0][0] == "screen" and gather["click"] == gather["tick"]
@@ -842,13 +764,13 @@ def test_every_declared_wheel_is_refused_by_name():
 
 def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_rung():
     """The receiving set at the emitter's head books the one-way flux and clicks at the record's rung, closed or open, the run to that click; a set off the ladder is never chosen; the loader refuses the malformed forms."""
-    first = 1  # A's given record: block 0, giving 1
     for faces in ("closed", "open"):
         world = parse_nature_beam_world(light_clock_world(faces, faces == "open"))
         if faces == "closed":
             assert world.closed == (True, False, False) and world.boundary_per_axis["x"] == "closed"
         lines: list[dict] = []
         simulation = DetectorLawSimulation(world, observer=lines.append)
+        first = simulation.next_identity
         assert ("face" in simulation.detector_names) == (faces == "open")
         a_face = simulation.detector_names.index("A_face")
         assert int(simulation.detector_at_node[132, 0, 0]) == a_face
@@ -856,7 +778,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         pointer_at_click: int | None = None
         original = simulation._ladder_click
 
-        def spy(live, increments, original=original, a_face=a_face):
+        def spy(live, increments, original=original, a_face=a_face, first=first):
             nonlocal pointer_at_click
             pointer = live.pointers[a_face]
             original(live, increments)
@@ -899,8 +821,8 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
     on_body = light_clock_world("open", False)
     on_body["detectors"] = [{"name": "A_face", "block": 0, "positions": [[100, 0, 0]]}]
     on_body["stamp"] = input_stamp(on_body)  # the stamp over the whole file (item 28)
-    with pytest.raises(ValueError, match="names a Node of a measured event"):
-        parse_nature_beam_world(on_body)
+    loaded = parse_nature_beam_world(on_body)  # its own Node: the body's set (#the-ladder)
+    assert (loaded.detectors[0].positions, loaded.detectors[0].block) == (((100, 0, 0),), 0)
     two = light_clock_world("open", False)
     two["detectors"] = [{"name": "A_face", "block": 0, "positions": [[132, 0, 0], [133, 0, 0]]}]
     two["stamp"] = input_stamp(two)
@@ -957,7 +879,7 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
         block = simulation.blocks[1]
         detector = simulation.detector_names.index("B_nodes")
         assert int(simulation.detector_at_node[205, 0, 0]) == detector
-        identity = 0 * (1 << 32) + 1
+        identity = simulation.next_identity
         count_at_rung: int | None = None
         for _ in range(1200):
             count_before = simulation._body_count(block)

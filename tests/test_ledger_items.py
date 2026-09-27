@@ -53,9 +53,7 @@ def same(a: tuple[list, list], b: tuple[list, list]) -> bool:
 
 
 def test_1_the_output_holds_exactly_the_declared_readings_each_labelled_by_kind(tmp_path):
-    """Every line the run writes is a reading the world file declared, labelled by its kind
-    (DETECTOR, GAMEBOARD or HOST); one format for every experiment; the clicks of a declared
-    detector are its DETECTOR reading."""
+    """Every line the run writes is a reading the world file declared, labelled by its kind (DETECTOR, GAMEBOARD or HOST); one format for every experiment; the clicks of a declared detector are its DETECTOR reading."""
     document = emitter_world(stock=2, ticks=STEPS)
     document["readings"] = [
         {"name": "screen_clicks", "kind": "clicks", "detector": "screen"},
@@ -114,10 +112,7 @@ def test_2a_a_read_written_as_a_term_runs_bit_for_bit_with_the_reads_form():
     "are not read from universe.json",
 )
 def test_2b_the_step_declared_as_the_laws_own_four_runs_bit_for_bit_with_today():
-    """The step declared in the files as the rule ALGEBRA.md #the-line itself: every family's level and
-    pair sent on all six Ports, the receive rotated by the Port's accumulator, the wait 1, the
-    operation the rule's weighted sum with the remainder kept: bit for bit with the engine's
-    step of today (the ledger's primitives 13 to 16; record 2186)."""
+    """The step declared in the files as the rule ALGEBRA.md #the-line itself: every family's level and pair sent on all six Ports, the receive rotated by the Port's accumulator, the wait 1, the operation the rule's weighted sum with the remainder kept: bit for bit with the engine's step of today (the ledger's primitives 13 to 16; record 2186)."""
     document = emitter_world(stock=2, ticks=STEPS)
     declared = json.loads(json.dumps(document))
     declared["step"] = {
@@ -132,9 +127,7 @@ def test_2b_the_step_declared_as_the_laws_own_four_runs_bit_for_bit_with_today()
 
 
 def test_2c_a_one_sided_send_is_refused_by_the_loader():
-    """The send declaration admits a symmetric set of Ports alone: an axis on or off; a
-    one-sided send (five Ports) is refused by name (docs/designs/rule_alone/README.md
-    section 13: a one-sided send is a gain, the rule's step amplifies without bound)."""
+    """The send declaration admits a symmetric set of Ports alone: an axis on or off; a one-sided send (five Ports) is refused by name (the rule alone's record, section 13: a one-sided send is a gain, the rule's step amplifies without bound)."""
     document = emitter_world(stock=1, ticks=10)
     document["step"] = {
         "send": ["level", "pair", "accumulator"],
@@ -152,9 +145,7 @@ def test_2c_a_one_sided_send_is_refused_by_the_loader():
 
 
 def test_3a_a_sourced_family_is_written_where_its_records_are_and_nowhere_else():
-    """A field family sourced by the matter records: after the first intervals its level is
-    nonzero (the source's act through the folder, the count D_i of the body's own record); the
-    same family sourced by a family with no record stays exactly zero everywhere (the leak test)."""
+    """A field family sourced by the matter records: after the first intervals its level is nonzero (the source's act through the folder, the count D_i of the body's own record); the same family sourced by a family with no record stays exactly zero everywhere (the leak test)."""
     document = emitter_world(stock=2, ticks=STEPS)
     well = {
         **family_entry(
@@ -180,9 +171,7 @@ def test_3a_a_sourced_family_is_written_where_its_records_are_and_nowhere_else()
     "at run time is not refused",
 )
 def test_3b_a_content_below_zero_at_run_time_ends_the_run_with_the_guards_line():
-    """The pace is bounded on both sides, 0 < p <= Gamma (ALGEBRA.md #the-paces): a hill
-    whose weight makes the content negative at some Node ends the run with a line naming the
-    guard and the side; no level is written past it."""
+    """The pace is bounded on both sides, 0 < p <= Gamma (ALGEBRA.md #the-paces): a hill whose weight makes the content negative at some Node ends the run with a line naming the guard and the side; no level is written past it."""
     document = emitter_world(stock=2, ticks=STEPS)
     matter = next(f for f in families_of(document) if f["name"] == "matter")
     for read in matter["reads"]:
@@ -198,9 +187,7 @@ def test_3b_a_content_below_zero_at_run_time_ends_the_run_with_the_guards_line()
 
 
 def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer():
-    """At a giving's close the body's held vector n changes along the click's axis, opposite to
-    the given light, by 3 Q P_body (L div lambda_q) div L with the store on the body's record;
-    two givings each way cancel (the law's row "the recoil"; ALGEBRA.md #the-interval, #the-primitives)."""
+    """At a giving's close the body's held vector n changes along the click's axis, opposite to the given light, by 3 Q P_body (L div lambda_q) div L with the store on the body's record; two givings each way cancel (the law's row "the recoil"; ALGEBRA.md #the-interval, #the-primitives)."""
     document = emitter_world(stock=2, ticks=STEPS)
     stamped(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
@@ -224,9 +211,7 @@ def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer(
     reason="item 5 of record 2199: the trace that shows the interval's order is not built",
 )
 def test_5a_a_clicks_held_change_is_written_after_every_advance_of_its_interval(tmp_path):
-    """Within one interval the trace's order is: the steps (i), the bookings and the clicks
-    (ii), the held families' step (iii), the holds with the clicks' changes (iv); a click's
-    change of M enters the hold after every advance (ALGEBRA.md #the-interval, #the-primitives)."""
+    """Within one interval the trace's order is: the steps (i), the bookings and the clicks (ii), the held families' step (iii), the holds with the clicks' changes (iv); a click's change of M enters the hold after every advance (ALGEBRA.md #the-interval, #the-primitives)."""
     document = emitter_world(stock=2, ticks=STEPS)
     output = run_world(
         document, tmp_path, start={"mode": "check", "trace": {"primitives": ["step", "click", "hold"]}}
@@ -244,9 +229,7 @@ def test_5a_a_clicks_held_change_is_written_after_every_advance_of_its_interval(
 
 
 def test_5b_the_loads_bound_holds_at_run_time_no_level_leaves_the_integer_range():
-    """A run-time overflow bound: on a shipped world every level and remainder the run writes
-    stays within 2^62 in magnitude at every interval, so no int64 wrap can pass unseen (record
-    2185; the load's bound of world.py checks the start alone)."""
+    """A run-time overflow bound: on a shipped world every level and remainder the run writes stays within 2^62 in magnitude at every interval, so no int64 wrap can pass unseen (record 2185; the load's bound of world.py checks the start alone)."""
     document = emitter_world(stock=2, ticks=STEPS)
     stamped(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
@@ -266,10 +249,7 @@ def test_5b_the_loads_bound_holds_at_run_time_no_level_leaves_the_integer_range(
     reason="item 7 of record 2199: the start file's `trace` is not read; nothing is traced",
 )
 def test_7_a_traced_run_is_bit_for_bit_the_untraced_one_and_the_trace_only_reads(tmp_path):
-    """The start file asks for a trace of the step at three Nodes; the run's output equals the
-    untraced run's (the same stamp, the same clicks, the same state); the trace file holds one
-    line per act with the interval, the Node, the Port, the primitive, the integers read and
-    written and the remainder kept."""
+    """The start file asks for a trace of the step at three Nodes; the run's output equals the untraced run's (the same stamp, the same clicks, the same state); the trace file holds one line per act with the interval, the Node, the Port, the primitive, the integers read and written and the remainder kept."""
     plain = run_world(emitter_world(stock=2, ticks=STEPS), tmp_path / "plain")
     traced = run_world(
         emitter_world(stock=2, ticks=STEPS),

@@ -7,7 +7,7 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from tests.bodies import point_world
 from tests.running import run as run_emitter
 from tests.running import run_point_world as run_point
-from tests.worlds import emitter_world, massive_generator
+from tests.worlds import emitter_world, seed_on_the_mode
 
 
 def mirrored_emitter_world(ticks: int) -> dict:
@@ -21,7 +21,7 @@ def mirrored_emitter_world(ticks: int) -> dict:
     document["measured"] = [body]
     document["detectors"] = []
     receiver_cube(document, "screen", [7, 0, 0])
-    massive_generator().seed_on_the_mode(document)
+    seed_on_the_mode(document)
     return document
 
 

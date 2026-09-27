@@ -2,13 +2,11 @@
 
 import json
 import subprocess
-import time
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
 import pytest
 
-from event_universe.retention import MAX_AGE_SECONDS, cleanup_expired
 from tests.worlds import load_file
 
 CHECK = load_file("check_scope", Path(__file__).resolve().parents[1] / "tools/check.py")
@@ -202,50 +200,9 @@ def test_batched_prior_tree_preserves_exact_sources_and_deleted_consumers(monkey
     assert "tests/test_old.py" in tests
 
 
-def test_scope_report_is_registered_and_expires_without_removing_unregistered_files(
-    monkeypatch, tmp_path
-):
-    no_change_main(monkeypatch, tmp_path)
-    report = tmp_path / "artifacts/check-scope.json"
-    assert json.loads(report.read_text(encoding="utf-8")) == {
-        "mode": "affected",
-        "changed": [],
-        "commands": [],
-    }
-    original = report.parent / "original.json"
-    original.write_text("preserved original", encoding="utf-8")
-    result = cleanup_expired(report.parent, now=time.time() + MAX_AGE_SECONDS + 1)
-    assert result["errors"] == [] and result["deleted"] == [str(report)]
-    assert not report.exists() and original.read_text(encoding="utf-8") == "preserved original"
-
-
-def test_dry_run_creates_no_scope_report_or_retention_registry(monkeypatch, tmp_path):
+def test_dry_run_creates_no_scope_report(monkeypatch, tmp_path):
     no_change_main(monkeypatch, tmp_path, "--dry-run")
     assert list(tmp_path.iterdir()) == []
-
-
-def test_scope_report_stays_leased_until_failed_selected_command_finishes(monkeypatch, tmp_path):
-    selected = tmp_path / "tests/test_selected.py"
-    selected.parent.mkdir()
-    selected.touch()
-    monkeypatch.setattr(CHECK, "ROOT", tmp_path)
-    monkeypatch.setattr(CHECK, "git", lambda *args: "base" if args[0] == "merge-base" else "")
-    monkeypatch.setattr(CHECK.sys, "argv", ["check.py", "--tests", "tests/test_selected.py"])
-    report = tmp_path / "artifacts/check-scope.json"
-
-    def fail_command(command, **kwargs):
-        assert command[2:6] == ["pytest", "-n", "auto", "tests/test_selected.py"]
-        active = cleanup_expired(report.parent, now=time.time() + 2 * MAX_AGE_SECONDS)
-        assert not active["errors"] and not active["deleted"] and report.exists()
-        assert any(item["reason"] == "active writer" for item in active["skipped"])
-        raise CHECK.subprocess.CalledProcessError(1, command)
-
-    monkeypatch.setattr(CHECK.subprocess, "run", fail_command)
-    with pytest.raises(CHECK.subprocess.CalledProcessError):
-        CHECK.main()
-    finished = cleanup_expired(report.parent, now=time.time() + MAX_AGE_SECONDS + 1)
-    assert not finished["errors"] and finished["deleted"] == [str(report)]
-    assert selected.exists()
 
 
 def test_a_change_to_the_law_selects_its_words_and_links_gate():

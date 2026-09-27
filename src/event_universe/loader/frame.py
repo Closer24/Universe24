@@ -28,6 +28,8 @@ INTEGERS = ObjectOf(
         "amplitude_bound": Integer(least=1),
         "Lambda": Integer(least=1),
         "momentum_unit": Integer(least=1),
+        "most_steps": Integer(least=2),
+        "width": Integer(least=1),
         "twist_table": ObjectOf(
             {
                 "unit": Integer(least=1),
@@ -283,6 +285,12 @@ def world(document: object) -> dict[str, object]:
     return checked
 
 
+def counted_kind(register: Register) -> ObjectOf:
+    """A body in the law's form: the frame's keys and every key the folders declare at "a body" (each its card's kind, optional where the card says so; none named here)."""
+    declared = cards.at(register, "a body")
+    return ObjectOf({**COUNTED.keys, **declared.keys}, COUNTED.optional | declared.optional)
+
+
 def body_form(entry: object, label: str) -> ObjectOf:
     """The form a body is written in: today's, by its position (BODY), or the law's, by its Nodes with their counts (COUNTED); a body written in neither or in both is refused by name."""
     if not isinstance(entry, dict):
@@ -335,7 +343,7 @@ def counted_giver(body: Mapping[str, object], label: str) -> None:
         raise ValueError(f"{label}.emitter gives {given!r}, a family the body neither is nor stocks")
 
 
-def bodies(value: object, context: Context) -> tuple[dict[str, object], ...]:
+def bodies(value: object, context: Context, register: Register) -> tuple[dict[str, object], ...]:
     """The bodies of the world file, each against the schema of its form with the families known; an unknown key, a missing key, a wrong kind and a family the universe lacks refused by name; the rules between the keys (the spin's two levels together; in the law's form the Nodes and the giver's family)."""
     if not isinstance(value, list):
         raise ValueError("measured must be a list")
@@ -343,7 +351,7 @@ def bodies(value: object, context: Context) -> tuple[dict[str, object], ...]:
     for index, entry in enumerate(value):
         label = f"measured[{index}]"
         kind = body_form(entry, label)
-        found = check(entry, kind, label, context)
+        found = check(entry, counted_kind(register) if kind is COUNTED else kind, label, context)
         assert isinstance(found, dict)
         kept_levels(found, label)
         if kind is COUNTED:
