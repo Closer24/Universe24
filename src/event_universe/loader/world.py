@@ -45,8 +45,6 @@ ONE_NODE: tuple[int, int, int] = (1, 1, 1)
 LIFETIME_NAME = "lifetime"
 # the charge per unit of content of a family with none: 0 as the pair [0, 1]
 NO_CHARGE = (0, 1)
-# at most twenty families on a GameBoard (the model owner's word of 2026-09-25)
-MOST_FAMILIES = 20
 # the three forms of a family's parts (ALGEBRA.md #the-primitives)
 PARTS_FORMS = ((1,), (1, 3), (1, 3, 6))
 
@@ -869,14 +867,13 @@ def _node_clock_bound(
 
 
 def _families_of(
-    entries: tuple[dict[str, object], ...], amplitude_bound: int | None
+    entries: tuple[dict[str, object], ...], amplitude_bound: int | None, most_families: int | None
 ) -> tuple[FamilyDefinition, ...]:
     """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair with its bound and den >= num, the clock's pair [p, q] with q from 1, the quantum on every row and the clicks card's copy equal to it, the held source's factors one per part, its dipole on a vector family with its divisor, spins_step on the family that holds the spin's dipole and no other, the self-source's unit 0 or at least 24 A, a family held, clicking or sourced, a read naming a held family once, and a held family's shape."""
-    if len(entries) > MOST_FAMILIES:
+    if most_families is not None and len(entries) > most_families:
         raise ValueError(
-            f"families declares {len(entries)}; at most {MOST_FAMILIES} families on a "
-            "GameBoard (the model owner's record 2081 of 2026-09-25: every family works in every "
-            "experiment, the cap 20; record 1875's unification and its counts HISTORY)"
+            f"families declares {len(entries)}; at most {most_families} families on a "
+            "GameBoard (the universe's `most_families`, the owner's number in the file)"
         )
     names: list[str] = []
     for obj in entries:
@@ -1142,14 +1139,12 @@ def _block(
     phase_steps: int,
     most_steps: int | None,
     periodic: tuple[bool, bool, bool] = (True, True, True),
+    least_residues: int | None = None,
 ) -> BlockDefinition | None:
-    """The block's keys on a measured event (`massive-record-v1`), each named
-    in its refusal: `side` makes a block; every other block key without
-    `side` is refused; a block needs no lamp and no span; its `pair` is a well on the massive kind (num' / den' >
-    num / den) or a gap on light's kind (den' > num', the (M) wall, which
-    declares no clock, seed or margin); an emitter's
-    giving Node carries a rich pair (at least 500 remainder values, ALGEBRA.md #a-familys-declaration); the momentum is bounded by the pace, 3 (P . P) < (3 Q M)^2 (the wall W
-    = 3 Q M of ALGEBRA.md #the-primitives, Q the universe's `momentum_unit`)."""
+    """The block's keys on a measured event, each named in its refusal: `side` or `extents` makes a block and
+    every other block key without them is refused; its `pair` a well on the massive kind or a gap on light's;
+    a giving body's pair rich (at least the universe's `least_residues` remainder values at its Node, ALGEBRA.md
+    #a-familys-declaration); the momentum bounded by the pace, 3 (P . P) < (3 Q M)^2 (ALGEBRA.md #the-primitives)."""
     declared = [key for key in BLOCK_KEYS if key in obj]
     if "side" not in obj and "extents" not in obj:
         if declared:
@@ -1484,18 +1479,14 @@ def _block(
                 "needs W givings holds W; ALGEBRA.md #the-paces: a giving lowers the given family's "
                 "content, the body's own quanta `amount` and its charge stay)"
             )
-        # THE RICHNESS OF THE GIVING NODE (ALGEBRA.md #a-familys-declaration; BUILD.md section
-        # 26 item 15): the residue from the law takes 3 den / gcd(num, 3 den)
-        # values on the pair at the body's centre Node (its own pair), at
-        # least 500 of them ([801, 700] gives 700, [800, 801] 2403; [8, 7]
-        # 21 and [800, 800] 3 are refused)
+        # THE RICHNESS OF THE GIVING NODE (ALGEBRA.md #a-familys-declaration): 3 den / gcd(num, 3 den) residues
         residues = 3 * pair[1] // math.gcd(pair[0], 3 * pair[1])
-        if residues < 500:
+        if least_residues is not None and residues < least_residues:
             raise ValueError(
                 f"{label}.emitter: the body's pair [{pair[0]}, {pair[1]}] gives "
                 f"{residues} remainder values at the giving Node (3 den / gcd(num, 3 den)), below "
-                "500: the residue from the law needs a rich pair (ALGEBRA.md #a-familys-declaration; [801, 700] "
-                "on the kind [7, 8] gives 700, [800, 801] on [800, 809] gives 2403)"
+                f"the universe's least_residues {least_residues}: the residue from the law needs a rich pair "
+                "(ALGEBRA.md #a-familys-declaration; [801, 700] on the kind [7, 8] gives 700)"
             )
         if receiver is not None and emitter.receiver is not None:
             raise ValueError(
@@ -1671,6 +1662,7 @@ def _measured(
     action: int | None,
     amplitude_bound: int = AMPLITUDE_BOUND,
     momentum_unit: int = 0,
+    least_residues: int | None = None,
 ) -> tuple[MeasuredDefinition, ...]:
     bodies = cast(
         tuple[dict[str, object], ...], value
@@ -1755,6 +1747,7 @@ def _measured(
             phase_steps,
             most_steps,
             periodic,
+            least_residues,
         )
         found.append(
             MeasuredDefinition(
@@ -2330,8 +2323,7 @@ def parse_world_document(
     closed = tuple(isinstance(boundary, dict) and boundary.get(axis) == CLOSED_FACE for axis in AXES)
     closed = (closed[0], closed[1], closed[2])
     ticks = _integer(obj["ticks"], "ticks", 0)
-    # N declared in every file (no default: the model owner's rule through the Boss, 2026-09-25; BUILD.md
-    # section 26 item 28), a power of two through the universe's `most_steps` where the universe declares one
+    # N declared in every file (no default), a power of two through the universe's `most_steps` where declared
     most_steps = _integer(obj["most_steps"], "most_steps", 2) if "most_steps" in obj else None
     phase_steps = _integer(obj["N"], "N", 2, AMOUNT_BOUND if most_steps is None else most_steps)
     if phase_steps & (phase_steps - 1):
@@ -2412,7 +2404,13 @@ def parse_world_document(
         declared_probes = cast(tuple[object, ...], obj["probes"])
         probes = tuple(_address(item, "probes", shape) for item in declared_probes)
     action = None
-    families = _families_of(entries, amplitude_bound)
+    most_families = (
+        _integer(obj["most_families"], "most_families", 1) if "most_families" in obj else None
+    )
+    least_residues = (
+        _integer(obj["least_residues"], "least_residues", 1) if "least_residues" in obj else None
+    )
+    families = _families_of(entries, amplitude_bound, most_families)
     # the bound is asked of a world with a massive family (a pair with den > num); a light world loads without it
     if "amplitude_bound" not in obj and any(f.massive_kind for f in families):
         raise ValueError(
@@ -2434,6 +2432,7 @@ def parse_world_document(
         action,
         bound,
         momentum_unit,
+        least_residues,
     )
     _held_bodies_checks(families, measured)
     _node_clock_bound(families, measured, bound, node_clock)

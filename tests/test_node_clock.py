@@ -503,6 +503,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     ):
         parse_nature_beam_world(given)
     many = json.loads(json.dumps(good))
+    many["most_families"] = 20  # the universe's key
     many["universe"] += [
         family_entry(f"family_{n}", [800, 809], reads()) for n in range(len(many["universe"]), 21)
     ]
