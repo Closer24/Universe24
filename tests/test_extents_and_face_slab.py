@@ -50,6 +50,7 @@ def wall(position, family="light", **keys):
         entry.setdefault("start", 0)
         entry.setdefault("q", 0)
         entry.setdefault("spin", [0, 0, 0])
+        entry.setdefault("spin_before", entry["spin"])
         entry.setdefault("moment", [0, 0, 0])
         entry.setdefault("twist", 0)  # the generator's number; 0 where no read by "own" (item 73)
     return entry

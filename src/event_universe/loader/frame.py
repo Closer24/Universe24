@@ -338,9 +338,7 @@ def counted_giver(body: Mapping[str, object], label: str) -> None:
     """The rule between an emitter and its body in the law's form: the given family is the body's own or one it stocks."""
     if "emitter" not in body:
         return
-    emitter = body["emitter"]
-    assert isinstance(emitter, dict)
-    given = emitter["family"]
+    given = cast(Mapping[str, object], body["emitter"])["family"]
     stocked = "stocks" in body and given in cast(Mapping[str, object], body["stocks"])
     if given != body["family"] and not stocked:
         raise ValueError(f"{label}.emitter gives {given!r}, a family the body neither is nor stocks")
