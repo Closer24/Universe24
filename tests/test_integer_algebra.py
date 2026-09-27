@@ -21,6 +21,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md #the-primitives)",
     "events/geometry.py": "the engine's geometry: the Node sets, boxes, masks and Ports of a body or a detector from the GameBoard's shape through the core's and the loader's one copy of each rule, and the pair arrays' cache",
+    "events/output.py": "the engine's readings and output lines: the exact rationals of the books, the leak test, the record's click line, the books, the contents and the state stream; reads the simulation, writes the lines",
     "events/guards.py": "the engine's run-time guards bound as its methods: the start's arrays to freeze, an act's grants, a card's writes, a write applied by name, the generic act's term, start view and own record, the pace guard",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md #the-line, #the-direction, #the-interval), and the ladder's rungs (ALGEBRA.md #the-ladder)",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md #what-is-open): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
@@ -326,8 +327,7 @@ def test_a_feature_holds_integer_mathematics_only(name: str) -> None:
 
 
 def test_the_module_list_names_every_module_that_runs_a_step() -> None:
-    """Every module of `events/`, `core/` and `loader/` but the package markers is a
-    physical module here, so a new one cannot escape the gate unnamed."""
+    """Every module of `events/`, `core/` and `loader/` but the package markers is a physical module here, so a new one cannot escape the gate unnamed."""
     modules = {
         path.relative_to(SRC).as_posix()
         for folder in ("events", "core", "loader")
