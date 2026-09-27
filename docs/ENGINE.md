@@ -33,6 +33,7 @@ The drawing: one box per module, an arrow for what one hands to the next, the ga
 | `src/event_universe/loader/world.py` | the loop's classes built from the checked values, and the rules between keys | the loaded world |
 | `src/event_universe/events/detector_law.py` | the engine: the stages, the state and the readings, built from the loaded world | `step()`, the main loop's `run` |
 | `src/event_universe/events/assembly.py` | the assembly of the engine's state from the loaded world, once before the first interval: the held counts, the detectors and their map, the universe's values, the arrays and caches, the bodies' blocks with their own records, the held families' records | the engine's attributes, named and typed in the engine |
+| `src/event_universe/events/guards.py` | the engine's run-time guards, bound as the engine's methods: the arrays of the interval's start to freeze, the arrays each act's card grants, a card's writes, a write applied by name, the generic act's term, `Start` view and own record, the pace guard | the frozen arrays and the refusals to the main loop |
 | `src/event_universe/core/main_loop.py` | the plan of the step file's acts and the walk of one interval under its guards | each act's stage or `apply` |
 | `src/event_universe/core/register.py` with `core/step.py` | the folders' cards and the step file; `at(name, place)` | the act's function |
 | `src/event_universe/features/<name>/` | one primitive each: its card and its `apply` or `bind` | its writes |

@@ -72,7 +72,6 @@ from event_universe.core.game_board import box_centre
 from event_universe.core.integer import by_drive
 from event_universe.core.main_loop import MainLoop, Stage, read_only
 from event_universe.core.ports import Ports, port_of
-from event_universe.core.primitive import Own, Start, Term, Write
 from event_universe.core.register import Register, discover
 from event_universe.core.rule3 import (
     ISOTROPIC,
@@ -85,7 +84,7 @@ from event_universe.core.rule3 import (
     rule3,
     rungs,
 )
-from event_universe.events import assembly
+from event_universe.events import assembly, guards
 from event_universe.features import self_source
 from event_universe.features.giving import (
     THE_CLOSE,
@@ -628,47 +627,14 @@ class DetectorLawSimulation:
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
         }
 
-    def _card_writes(self, name: str) -> frozenset[str]:
-        """The ledger's words a card names as its writes."""
-        return frozenset(self.register.declarations[name].writes)
-
-    def start_arrays(self) -> Iterator[np.ndarray]:
-        """Every array of the interval's start the main loop freezes for the walk: the records', the bodies' own records' and masks, the held families', the pair arrays, the detector map, the spans, the paces' carries and the held levels."""
-        for live in self.records.values():
-            yield from live.arrays()
-        for block in self.blocks:
-            if block.own is not None:
-                yield from block.own.arrays()
-            yield block.mask
-        for record in self.held_component_records():
-            yield from record.arrays()
-        for num, den in self._pairs.values():
-            yield num
-            yield den
-        yield self.detector_at_node
-        yield from self.span_masks.values()
-        yield from self._pace_carry.values()
-        yield from self.node_level.values()
-
-    def grants(self, name: str) -> Iterator[np.ndarray]:
-        """The arrays of the start an act may write in place, as its card names them: the hop a body's position (the pair arrays and the detector map), the hold a family's level at a Node (the held families' arrays), the operation the remainders."""
-        if name == "the hop":
-            for num, den in self._pairs.values():
-                yield num
-                yield den
-            yield self.detector_at_node
-        elif name == "the hold":
-            for record in self.held_component_records():
-                yield from record.arrays()
-        elif name == "the source":
-            for family in self._source_remainders:
-                yield from self._sourced_record(family).arrays()
-        elif name == "the operation":
-            for live in self.records.values():
-                yield live.remainder
-            for block in self.blocks:
-                if block.own is not None:
-                    yield block.own.remainder
+    _card_writes = guards.card_writes
+    start_arrays = guards.start_arrays
+    grants = guards.grants
+    apply_write = guards.apply_write
+    term_of = guards.term_of
+    start_view = guards.start_view
+    own_of = guards.own_of
+    _guard = guards.guard_paces
 
     def fingerprints_of(self, *records: LiveRecord) -> dict[str, dict[object, object]]:
         """The ledger's words of the named records and the bodies' counts, stamped for the audit: a rebound array by its identity, an integer by its value."""
@@ -703,42 +669,6 @@ class DetectorLawSimulation:
         stamps["the paces"] = {key: id(array) for key, array in self._pace_carry.items()}
         stamps["the records alive"] = dict.fromkeys(self.records, True)
         return stamps
-
-    def apply_write(self, write: Write) -> None:
-        """One write of a primitive applied by the main loop: a body's momentum, spin or content by whole integers; another value is refused by name."""
-        if write.value == "a body's momentum n":
-            block = self.block_by_number[write.of]
-            for axis in range(3):
-                block.momentum[axis] += int(write.integers[axis])
-        elif write.value == "a body's spin S":
-            block = self.block_by_number[write.of]
-            for axis in range(3):
-                block.spin[axis] += int(write.integers[axis])
-        elif write.value == "a body's content M_k":
-            self.held[write.of][write.at] += int(write.integers)
-        else:
-            raise ValueError(f"the loop applies no write of {write.value!r}: no such value of a body")
-
-    def term_of(self, label: str, name: str) -> Term:
-        """The term of the files a generic act is called with: the primitive's name and the line's label, the index parsed from the label."""
-        digits = "".join(character for character in label if character.isdigit())
-        return Term(name, "", int(digits) if digits else 0, 0, 0, (), label)
-
-    def start_view(self) -> Start:
-        """The interval's start as a generic act reads it: the held levels as read-only views, the bodies' counts, walls and momenta."""
-        held = [family for family in range(len(self.families)) if family in self.held_records]
-        return Start(
-            tuple(read_only(self.held_records[family].now) for family in held),
-            tuple(read_only(self.held_records[family].before) for family in held),
-            (),
-            tuple(tuple(row) for row in self.held),
-            tuple(self.wall_of(block) for block in self.blocks),
-            tuple(tuple(block.momentum) for block in self.blocks),
-        )
-
-    def own_of(self, label: str, name: str) -> Own:
-        """The own record of a generic act: none until a folder's remainders live on the body."""
-        return Own(None)
 
     def _hop_stage(self, function: Callable[..., None]) -> None:
         """The hop's act: each body's step by its drive."""
@@ -1150,24 +1080,6 @@ class DetectorLawSimulation:
             lambda: {"the paces": {key: id(a) for key, a in self._pace_carry.items()}},
         ):
             self._guard()
-
-    def _guard(self) -> None:
-        """The pace guard: every reading family's pace stays positive at every Node, else the run is refused."""
-        for family, definition in enumerate(self.families):
-            if not definition.reads:
-                continue
-            most = int(np.max(np.abs(self._effective_content(family))))
-            axis_contents = self._axis_contents(family)
-            if axis_contents is not None:
-                content = self._effective_content(family)
-                most = max(most, *(int(np.max(np.abs(content + t))) for t in axis_contents))
-            if most >= self.node_clock:
-                raise RuntimeError(
-                    f"the effective content {definition.name!r} reads reached {most} "
-                    f"in size at interval {self.tick}, at or beyond Gamma = {self.node_clock}: "
-                    "the pace Gamma minus the weighted held levels of every read stays positive "
-                    "under the fixed wall (ALGEBRA.md #the-counts-line, #the-paces); the run is refused"
-                )
 
     def _neighbour_nodes(
         self, node: tuple[int, ...], wrap: tuple[bool, bool, bool]
