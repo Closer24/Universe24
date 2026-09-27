@@ -30,14 +30,6 @@
    "record_references": 5,
    "rule_arithmetic_sites": 0
   },
-  "src/event_universe/core/phase.py": {
-   "comment_lines": 3,
-   "docstring_lines": 58,
-   "level_shift_sites": 0,
-   "lines": 201,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
   "src/event_universe/core/primitive.py": {
    "comment_lines": 0,
    "docstring_lines": 39,
@@ -98,7 +90,7 @@
    "comment_lines": 491,
    "docstring_lines": 400,
    "level_shift_sites": 0,
-   "lines": 3418,
+   "lines": 3414,
    "record_references": 46,
    "rule_arithmetic_sites": 0
   },
