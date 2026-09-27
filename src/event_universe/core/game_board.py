@@ -9,6 +9,7 @@ quantum and of a measured event's charge as the world file declares them
 (2^30 - 1): a value above it is refused, never wrapped.
 """
 
+from collections.abc import Sequence
 from functools import lru_cache
 from itertools import permutations, product
 
@@ -35,16 +36,7 @@ PORT_HEADINGS: tuple[Heading, ...] = (
 
 @lru_cache(maxsize=1)
 def cube_symmetries() -> tuple[CubeSymmetry, ...]:
-    """The cube's group of 48 (the signed axis permutations, the symmetries
-    of the lattice about a Node: an axis permutation and a sign per axis),
-    each as its image of the six Ports; closed under `compose_symmetries`,
-    the identity `IDENTITY_SYMMETRY` among them and every inverse
-    (`inverse_symmetry`). The 24 of hand +1 are the rotations, the 24 of
-    hand -1 the reflections (`symmetry_hand`, the pseudoscalar of the
-    group: the sign of the axis permutation times the product of the
-    signs). Named on 2026-09-21 (the vector program, record 191: "the hand
-    a pseudoscalar of the cube's group of 48"); the same 48 maps the
-    collision test enumerated before."""
+    """The cube's group of 48 signed axis permutations, each as its image of the six Ports; closed under `compose_symmetries`, with `IDENTITY_SYMMETRY` and every inverse; the 24 of hand +1 the rotations, the 24 of hand -1 the reflections."""
     found = []
     for axes in permutations(range(3)):
         for signs in product((1, -1), repeat=3):
@@ -82,6 +74,12 @@ def symmetry_hand(symmetry: CubeSymmetry) -> int:
     signs = [1 if symmetry[2 * axis] & 1 == 0 else -1 for axis in range(3)]
     inversions = sum(1 for i in range(3) for j in range(i + 1, 3) if axes[i] > axes[j])
     return (-1 if inversions % 2 else 1) * signs[0] * signs[1] * signs[2]
+
+
+def box_centre(corner: Sequence[int], extents: Sequence[int], shape: Sequence[int]) -> Address3:
+    """The Node at the middle of a box: the lower corner plus half the extent on each axis, wrapped onto the GameBoard."""
+    centre = tuple((int(corner[a]) + int(extents[a]) // 2) % int(shape[a]) for a in range(3))
+    return centre[0], centre[1], centre[2]
 
 
 def adjacent_node(
