@@ -1094,8 +1094,8 @@ class DetectorLawSimulation:
 
     def _held_part(self, position: int, family: int, part: int) -> LiveRecord:
         """A held family's component record over the board (item 51; 9.91 (1)):
-        the identities below 0, one per held family and part; the pair [1, 1]
-        (a held family is massless, the loader's check)."""
+        the identities below 0, one per held family and part; its pair the one
+        its family's row declares (`pair` None reads it), no shortcut."""
         return LiveRecord(
             -1 - position - 100 * part,
             -1 - position,
@@ -1104,8 +1104,7 @@ class DetectorLawSimulation:
             0,
             self.tick,
             0,
-            1,
-            1,
+            *self.families[family].pair,
             0,
             1,
             np.zeros(self.shape, dtype=np.int64),
