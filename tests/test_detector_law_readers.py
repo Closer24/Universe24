@@ -1,13 +1,4 @@
-"""The click readers of the massive record's reader of record
-(`examples/events/massive_record/read_runs.py`: `clicks_of`, `screen_clicks`,
-`light_clicks`; RUN_LIST.md's reader of record for the ray law's screens and
-the light detectors' trains), on the tracked runs' events in
-`examples/events/massive_record/EXPLORATORY_layer_*_14/` (the block's own
-click lines) and on hand-made click and gather lines: the counts per Node,
-the centroid, the maxima and the visibility as exact fractions; the first
-click's interval from a birth stamp and the mean interval by the same
-reader as the block clocks; an empty train reads zero clicks and raises
-nothing. Readers of clicks only: no line of the board is read."""
+"""The click readers of examples/events/massive_record/read_runs.py on tracked and hand-made click and gather lines: counts per Node, centroid, maxima and visibility as exact fractions, the first click and the mean interval; clicks only, no line of the GameBoard read."""
 
 from __future__ import annotations
 

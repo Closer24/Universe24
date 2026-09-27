@@ -1,13 +1,4 @@
-"""THE READINGS OF A RUN, DECLARED AND WRITTEN IN ONE FORMAT (record 2199 item 1; the Boss's
-record 2230 item 2; ALGEBRA.md 9.115; core/readings.py; docs/ENGINE.md, the readings by type).
-
-A reading is declared in the world file by name and kind: a declared detector's clicks are its
-DETECTOR reading; a family's level at a Node, its support, its total and a body's centre are
-GAMEBOARD readings; the records alive a HOST reading. A reading reads state at the declared
-intervals and writes nothing into the run: the run's lines and state are the same with and
-without readings, bit for bit; the output carries every declared reading, labelled by its kind,
-in one format, and an empty list where none is declared; today's keys stay. Every refusal names
-the reading and its key."""
+"""The readings of a run (core/readings.py; ALGEBRA.md #readings-and-measurements): declared in the world file, labelled by their kind, written in one format; a reading writes nothing into the run, bit for bit; every refusal names the reading and its key."""
 
 from __future__ import annotations
 

@@ -269,17 +269,15 @@ def world(
         # it lands, acts on a body without the word alone); a body with a momentum is free
         if all(int(component) == 0 for component in entry["momentum"]):
             entry["fixed"] = True
+        else:
+            entry["fixed"] = False
         measured.append(entry)
     document: dict = {
         "shape": shape,
         "boundary": boundary,
         "ticks": ticks,
         "age_bound": AGE_BOUND,
-        "K": 1073741824,
         "N": 64,
-        "release": [1, 128],
-        # the drive wall's width S (3 Q S M; ALGEBRA.md 9.52 (4)), declared (record 2089)
-        "width": 1,
         "clock_stamp": True,
         "massive_record": True,
         "body_record": False,
@@ -558,7 +556,7 @@ def train_run(
     import numpy as np
 
     from event_universe.events.detector_law import DetectorLawSimulation
-    from event_universe.events.world import body_node_indices
+    from event_universe.loader.world import body_node_indices
     from event_universe.world_files import parse_nature_beam_world
 
     length = train_extents[axis]
@@ -858,7 +856,7 @@ def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
     residual bound before it is written: a profile that fails is a generator fault, raised,
     never written."""
     from event_universe.diagnostics.massive_record_margin import iterated_mode
-    from event_universe.events.world import body_node_indices, mode_residual
+    from event_universe.loader.world import body_node_indices, mode_residual
     from event_universe.world_files import parse_nature_beam_world
 
     world = parse_nature_beam_world(stamped(document))

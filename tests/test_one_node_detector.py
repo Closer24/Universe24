@@ -35,6 +35,7 @@ def one_node_layer(stock: int = STOCK, one_node_detectors: bool = True) -> dict:
                     "amount": 1,
                     "stocks": {},
                     "momentum": [0, 0, 0],
+                    "fixed": False,
                 }
             )
             document["detectors"].append({"name": name, "positions": [[71, row, 0]]})
@@ -135,6 +136,7 @@ def test_the_loader_admits_a_one_node_detector_under_body_record_alone():
             "amount": 1,
             "stocks": {},
             "momentum": [0, 0, 0],
+            "fixed": False,
         }
     )
     pair["detectors"][0]["positions"] = [[71, 1, 0], [72, 1, 0]]

@@ -305,6 +305,7 @@ def moving_world(ticks: int = 600, ramp: int = 200) -> dict:
                 "seed": 1 << 20,
                 "margin": "control",
                 "momentum": [64, 0, 0],
+                "fixed": False,
                 "ramp": ramp,
             }
         ],

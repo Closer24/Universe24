@@ -11,13 +11,7 @@
  },
  "ticks": 3600,
  "age_bound": 1048576,
- "K": 1073741824,
  "N": 1024,
- "release": [
-  1,
-  128
- ],
- "width": 1,
  "clock_stamp": true,
  "massive_record": true,
  "body_record": false,
@@ -13677,6 +13671,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "6e0a58a8e9ceda645e75e5c74acf4ac8e28edf6d28486db9d1dcf1c91c2d8669"
+  "hash": "8abf3901331cf49447e9de651ff8342e6fd82d7906f2198fda43d56ccf021097"
  }
 }

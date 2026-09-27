@@ -182,7 +182,7 @@ def clock_world(
             wall = drive_wall(content)
             assert wall % hop_every == 0, (content, wall, hop_every)
             entry["momentum"] = [wall // hop_every, 0, 0]
-            entry.pop("fixed", None)  # the moving clock's bodies are free (record 2157)
+            entry["fixed"] = False  # the moving clock's bodies are free (record 2157)
     detector.receiver_set(document, "at_well", 0)
     detector.named_receiver(document, {0: "at_well"})
     massive.seed_on_the_mode(document)

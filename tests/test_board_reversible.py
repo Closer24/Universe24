@@ -12,7 +12,7 @@ from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import Seen, chosen_by_the_rule, exchange_of, form_I, spy_on
-from tests.worlds import emitter_world, massive_generator, reads
+from tests.worlds import emitter_world, family_entry, massive_generator, reads
 
 LIGHT, MATTER, POSITIVE = 0, 1, 2
 STOCK = 3
@@ -24,18 +24,11 @@ def reversible_world(ticks: int = 400) -> dict:
     screen at [70, 72]; seeded on the mode by the generator (the profile, the clock pair, the
     period, the given rows under the stamp)."""
     document = emitter_world(stock=STOCK, ticks=ticks, on_mode=False)
-    document["universe"][LIGHT]["charge"] = -1
-    document["universe"][MATTER]["charge"] = -1
+    document["universe"][LIGHT]["sign"] = -1
+    document["universe"][MATTER]["sign"] = -1
     document["universe"].insert(
         POSITIVE,
-        {
-            "name": "positive",
-            "quantum": 1,
-            "pair": [1, 1],
-            "phase_per_link": [512, 1],
-            "charge": 1,
-            "reads": reads(),
-        },
+        family_entry("positive", [1, 1], reads(), clock=[512, 1], sign=1),
     )
     document["measured"].append(
         {
@@ -44,6 +37,7 @@ def reversible_world(ticks: int = 400) -> dict:
             "amount": 1,
             "stocks": {},
             "momentum": [0, 0, 0],
+            "fixed": False,
         }
     )
     massive_generator().seed_on_the_mode(document)
