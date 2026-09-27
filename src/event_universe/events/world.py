@@ -375,147 +375,7 @@ FIXED_DIRECTIONS = REST_DIRECTIONS + 6
 DEFAULT_DIRECTION_BOUND = 64
 MAX_DIRECTIONS = 4096
 Vector = tuple[int, int, int]
-# Keys of the earlier engines' worlds, refused by name so that the refusal
-# says which law the world belongs to.
-OLD_KEYS = (
-    "contents",
-    "initial_shadows",
-    "wait_per_quantum",
-    "schema_version",
-    "fields",
-    "disturbance_types",
-    "seeds",
-    "spatial_fields",
-    "emissions",
-    "spatial_seeds",
-    "external_bodies",
-    "initial_field",
-    "ray_interactions",
-    "couplings",
-    "interactions",
-    "dense_field",
-    "standing_field",
-    "wait_reads",
-    "shadow_wait",
-    "slots_per_node",
-    "link_ticks",
-    "normal_budget",
-    "operation_costs",
-)
-# Keys of the law of events (`events-v1`, deleted on 2026-09-19) that the law
-# of the ray refuses by name.
-EVENTS_KEYS = ("dynamics", "max_active_owners")
-WORLD_KEYS = {
-    # THE FILE'S STAMP (the model owner's record 1886; ALGEBRA.md 9.22 (7) (i),
-    # 9.90 (3) (c)): the digest of the whole file the generator wrote
-    # (`input_stamp`); no law identifier (9.90 (1))
-    "stamp",
-    "shape",
-    "boundary",
-    "ticks",
-    "K",
-    "N",
-    "release",
-    "suspension",
-    "width",
-    "age_bound",
-    "action",
-    "meeting",
-    "massive_rows",
-    "clock_stamp",
-    # THE FACE SLAB (ALGEBRA.md 9.25 (10); BUILD.md section 26 item 23): the
-    # depth of the face receiver at every open border, 1 by default
-    "face_depth",
-    # detector-law-v1 (2026-09-23): the local detector law, a boolean, false
-    # by default (docs/designs/detector_law/DESIGN.md).
-    "detector_law",
-    # THE ENGINE START FILE (the model owner's record 2089 of 2026-09-25
-    # through the Boss, "every flag the engine needs for a run should leave
-    # the code"; records 2092 and 2094; ALGEBRA.md 9.83 (2) (a); BUILD.md
-    # section 26 item 57): the repository path of the one start file, REQUIRED
-    # under `detector_law`, refused without it; the file holds the run's
-    # parameters (`mode`), every key required, none defaulted
-    "engine",
-    # massive-record-v1 (2026-09-23): the massive record kind beside light
-    # under the local detector law, a boolean, false by default
-    # (docs/designs/detector_law/MASSIVE_RECORD.md,
-    # the build's plan BUILD.md).
-    "massive_record",
-    # THE BODY RECORD (ALGEBRA.md 9.46; BUILD.md section 26 item 37): every
-    # seeded block held as one rotation (a, b, r) on its clock pair, its
-    # profile stored and never stepped, its own rows off the GameBoard;
-    # false by default (the lattice body); a host form under its own
-    # identity, gated by the equivalence test of 9.46 (4)
-    "body_record",
-    # `point_emitter` RETIRED (commit 7): the window is the law's one giving
-    # (ALGEBRA.md 9.85 (5), 9.91 (10) 7), the key refused by name (RETIRED_KEYS)
-    # massive-record-v1: `probes`, declared Nodes whose light amplitude the
-    # record writes per interval (a GAMEBOARD reading of the rows), a list
-    # of Nodes, admitted under `massive_record` alone.
-    "probes",
-    "readings",
-    # massive-record-v1: `mode_axis`, the axis ("x", "y" or "z") along which
-    # the record writes the `mode` line per interval (the three sums of
-    # light's total field over the Nodes of each residue class of that
-    # coordinate modulo 3, the content of the mode k = 2 pi / 3, a GAMEBOARD
-    # reading of the hop pump's signature, MASSIVE_RECORD.md section 7),
-    # absent by default, admitted under `massive_record` alone.
-    "mode_axis",
-    # massive-record-v1 (DECLARATIONS.md section 15 M1-10; issue #1085): the
-    # world key `amplitude_bound`, the amplitude A every row of a massive
-    # world stays below, declared per world (no default: a massive world
-    # without it is refused); MUST 3's load bound at that A, the seed and a
-    # profile's largest magnitude refused above it, the rows asserted below
-    # it at every interval.
-    "amplitude_bound",
-    # THE NODE CLOCK (the model owner's decision (5) of record 1962; ALGEBRA.md
-    # 9.35 (2) and (3); BUILD.md section 26 item 31): the world key
-    # `node_clock`, Gamma, the one integer of the clock pair (e, f) = (Gamma,
-    # Gamma + M) at every Node, M the content held at the Node; required
-    # under `detector_law` (no default), refused without it.
-    "node_clock",
-    # THE MOMENTUM'S UNIT Q (ALGEBRA.md 9.96 (1), 9.89 (2)): the universe's integer
-    # `momentum_unit`, the wall W = 3 Q M of every body; required under
-    # `detector_law` (no default), refused without it.
-    "momentum_unit",
-    # THE TWIST TABLE (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c)): the universe's table of
-    # exact triples for the transport's angles, the families file's; admitted as a
-    # world key on an inline world alone.
-    "twist_table",
-    # THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25
-    # through the Boss; BUILD.md section 26 item 51): the world keys
-    # `clock_family`, `charge_family` and `charge_strength` of items 32 and
-    # 35 are RETIRED (`RETIRED_KEYS`): what a family is stands in its own
-    # entry of `families` (`held`, `reads`, `booked`, `components`), and the
-    # engine knows no family's name or role.
-    # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
-    # object, absent by default (`COVARIANT_KEYS`).
-    "covariant_readings",
-    # optical-v1 (2026-09-21): the world's post-Newtonian parameter gamma,
-    # a non-negative integer, absent by default (`"optical"`).
-    "optical",
-    # drive-b-v1 (2026-09-22): the directional drive of a body, a boolean,
-    # false by default (`"drive-b"`).
-    "drive_b",
-    # flow-link-v1 (2026-09-22): one arrival counts one Euclidean Link of
-    # its line, a boolean, false by default (`"flow-link"`).
-    "flow_link",
-    "atom_level",
-    # centred-step-v1 (2026-09-22): the body's step at half the wall, a
-    # boolean, false by default (`"centred-step"`).
-    "centred_step",
-    "directions",
-    "direction_bound",
-    # THE UNIVERSE (record 2128 (3)): the universe file's path, or the families'
-    # list inline in a unit test's world; the word `families` is the file's own.
-    # The ray law's world (a cancelled path, loaded for the record and never run
-    # by the gate) keeps its word `families` for its inline list
-    "universe",
-    "families",
-    "measured",
-    "in_transit",
-    "detectors",
-}
+# THE WORLD'S KEYS are the frame's schema (loader/frame.py, `WORLD` and `HANDED`)
 # The identity of the amplitude law (`amplitude-v1`; the model owner,
 # 2026-09-20, Highlights 5.4, "DECIDED: `amplitude-v1` is built"; the
 # physicist's and the mathematician's design, docs/designs/amplitude-v1/DESIGN.md;
@@ -526,10 +386,6 @@ WORLD_KEYS = {
 # accumulates one record's rows at a set for the ladder of the apparatus's
 # layer. Absent (false by default), no row carries a record and every world
 # reads as it did, byte for byte.
-# The world key `amplitude` of stages (i) to (vii-3), deleted at stage
-# (vii) step 4 (the one click): the record form is the law; a world that
-# declares it is refused naming MIGRATION.
-DELETED_AMPLITUDE_KEY = "amplitude"
 # The circle must hold the quarter turn of a reflection in a recorded world
 # (`phase` + N / 4 exact on the tables): N below 4 is refused with it.
 AMPLITUDE_LEAST_STEPS = 4
@@ -2490,7 +2346,7 @@ def _ratio(value: object, label: str, zero: bool) -> tuple[int, int]:
     """A rate n / d as `[n, d]` (n from 0 with `zero`, d positive) or one integer."""
     if type(value) is int:
         return _integer(value, label, 0 if zero else 1), 1
-    if not isinstance(value, list) or len(value) != 2:
+    if not isinstance(value, list | tuple) or len(value) != 2:
         raise ValueError(f"{label} must be an integer or [numerator, denominator]")
     numerator = _integer(value[0], f"{label} numerator", 0 if zero else 1)
     denominator = _integer(value[1], f"{label} denominator", 1)
@@ -2514,7 +2370,7 @@ def _signed_ratio(value: object, label: str) -> tuple[int, int]:
 
 
 def _address(value: object, label: str, shape: Address3) -> Address3:
-    if not isinstance(value, list) or len(value) != 3:
+    if not isinstance(value, list | tuple) or len(value) != 3:
         raise ValueError(f"{label} must be three integers")
     components: list[int] = []
     for item, extent in zip(value, shape, strict=True):
@@ -6862,101 +6718,17 @@ def parse_world_document(
     document: object, files: Mapping[str, object], digest: str | None
 ) -> NatureBeamWorld:
     """Reject anything but a lawful world: the loader reads no file (the host hands it the documents and the digest) and refuses by name a key it does not read, a value outside its bounds and a stamp that is not the generator's."""
-    if not isinstance(document, dict):
-        raise ValueError("a world is a JSON object")
-    old = [key for key in OLD_KEYS if key in document]
-    if old:
-        raise ValueError(
-            f"a world of the Beam Law declares none of the earlier engines' "
-            f"keys ({', '.join(old)}); see docs/MIGRATION.md"
-        )
-    # ONE ENGINE (ALGEBRA.md 9.90 (1)): the checks of the world key `law` ("beam",
-    # "rays", "events") are CANCELLED; the key itself is refused by name below
-    events = [key for key in EVENTS_KEYS if key in document]
-    if events:
-        raise ValueError(
-            f"a world of the Beam Law declares none of the law of events' keys "
-            f"({', '.join(events)}); see docs/MIGRATION.md"
-        )
-    if DELETED_AMPLITUDE_KEY in document:
-        # The world key `amplitude` is deleted (stage (vii) step 4, the one
-        # click): the record form is the law.
-        raise ValueError(
-            f"the world key {DELETED_AMPLITUDE_KEY!r} is deleted: the record form is "
-            "the law and every lamp givings records; remove the key (docs/MIGRATION.md, the "
-            "amplitude law (vii-4))"
-        )
-    _refuse_retired(
-        document,
-        "the world",
-        (
-            "law",
-            "model_id",
-            "detector_law",
-            "input",
-            "wheel",
-            "clock_family",
-            "charge_family",
-            "charge_strength",
-            "point_emitter",
-        ),
-    )
-    # THE WORD (record 2128 (3)): under `detector_law` a world names its universe under
-    # `universe` and the word `families` is refused; the ray law's world (a cancelled
-    # path, loaded for the record) keeps its word `families` and never carries `universe`
-    under_law = True  # one engine (9.90 (1)); the ray law's word `families` CANCELLED
-    if under_law and "families" in document:
-        raise ValueError(
-            "the world.families is refused: a world names its universe under "
-            "`universe` (the universe file's path, examples/events/universe.json, or the "
-            "families' list inline in a unit test; the Boss's record 2128 (3))"
-        )
-    if not under_law and "universe" in document:
-        raise ValueError(
-            "the world.universe is the detector law's word (record 2128 (3)): a "
-            "universe file's path is admitted under `detector_law` alone; the ray law's world "
-            "names its families under `families`"
-        )
-    word = "universe" if under_law else "families"
-    obj = _object(
-        document,
-        "the world",
-        WORLD_KEYS,
-        {"shape", "ticks", "K", "N", "release", word, "measured"},
-    )
-    # NO DEFAULT UNDER THE DETECTOR LAW (the model owner's record 2089; records
-    # 2092 and 2094; BUILD.md section 26 item 57): the law's world declares
-    # every key its path reads (the flags written true or false, the start
-    # file, the faces, the wall's width, the events and the detectors), and
-    # none the law never reads (the ray law's clock rate, release, push,
-    # direction table, action and its two hypotheses' switches); a world
-    # without `detector_law` is the ray law's until its deletion (record 2095)
-    # ONE ENGINE (ALGEBRA.md 9.90 (1); the model owner's record 2103; the cancel of
-    # docs/CANCELLED_WORLDS.md): the world key `detector_law` was the law's name and is
-    # refused by name; every world is the engine's, and every branch below on the
-    # flag's absence (the ray law's parse) is CANCELLED and unreachable
+    # THE WORLD'S KEYS through the frame (loader/frame.py, `WORLD`): an unknown key, a missing
+    # key and a wrong kind refused by name; the universe, the bodies, the detectors, the
+    # readings, the records in transit, the covariant readings and an inline twist table
+    # handed on as written to their readers below
+    obj = frame.world(document)
+    # ONE ENGINE (ALGEBRA.md 9.90 (1); the model owner's record 2103): every world is the
+    # engine's; every branch below on the flag's absence (the ray law's parse) is CANCELLED
+    # and unreachable
     early_law = True
-    if early_law:
-        _require_under_law(
-            obj,
-            "the world",
-            {
-                "boundary",
-                "width",
-                "clock_stamp",
-                "massive_record",
-                "body_record",
-                "engine",
-                "measured",
-                "detectors",
-            },
-        )
-        _refuse_under_law(
-            obj,
-            "the world",
-            {"suspension", "direction_bound", "directions", "action", "meeting", "massive_rows"},
-        )
-    start = _engine_start(obj["engine"] if "engine" in obj else None, files, early_law)
+    word = "universe"
+    start = _engine_start(obj["engine"], files, early_law)
     step = files.get(STEP_FILE)
     if not isinstance(step, Step):
         raise ValueError(
@@ -6979,11 +6751,10 @@ def parse_world_document(
     else:
         obj["families"] = universe  # the families' list inline (a unit test's world)
     shape_value = obj["shape"]
-    if not isinstance(shape_value, list) or len(shape_value) != 3:
-        raise ValueError("shape must be three positive extents")
+    assert isinstance(shape_value, tuple)
     extents = tuple(_integer(item, "shape", 1, 4096) for item in shape_value)
     shape: Address3 = (extents[0], extents[1], extents[2])
-    boundary, periodic = _boundary(obj.get("boundary", BOUNDARIES[0]))
+    boundary, periodic = _boundary(obj["boundary"])
     closed = tuple(isinstance(boundary, dict) and boundary.get(axis) == CLOSED_FACE for axis in AXES)
     closed = (closed[0], closed[1], closed[2])
     ticks = _integer(obj["ticks"], "ticks", 0)
@@ -7006,40 +6777,18 @@ def parse_world_document(
     if phase_steps & (phase_steps - 1):
         raise ValueError(f"N must be a power of two from 2 through {MAX_PHASE_STEPS}")
     release = _ratio(obj["release"], "release", zero=True)
-    suspension = _ratio(obj.get("suspension", 1), "suspension", zero=True)
-    if suspension[0] == 0:
-        # Off: 0 and [0, d] alike, recorded as [0, 1].
-        suspension = (0, 1)
-    # The width S of the push: one Link per (S x M + p) / p self-creations;
-    # 1 (the rule as it was) unless the world declares it, never below 1.
-    width = _integer(obj.get("width", 1), "width", 1)
-    bound = _integer(obj.get("direction_bound", DEFAULT_DIRECTION_BOUND), "direction_bound", 1, 4096)
-    table = _direction_table(obj.get("directions", []), bound)
-    # The massive rows (`massive-rows-v1`): true or false, false by default;
-    # with it the world declares its `age_bound` (a massive row's pace is
-    # its family's, |p| / E', not the flight's, so the flight bound is not
-    # its bound).
-    massive_rows = obj.get("massive_rows", False)
-    if type(massive_rows) is not bool:
-        raise ValueError("massive_rows must be true or false")
-    if massive_rows and "age_bound" not in obj:
-        raise ValueError(
-            "age_bound is required with the world key `massive_rows`: a massive "
-            "row flies at its family's pace |p| / E', below the flight's, so the default bound "
-            "(twice the flight bound) is not its bound; declare the largest age a row may carry"
-        )
+    # the ray law's keys suspension, direction_bound, directions, action, meeting and
+    # massive_rows are no keys of the file (the frame refuses them by name); the values below
+    # and the world's fields carrying them are read by no line of the loop (DEAD, deleted whole)
+    suspension = (1, 1)
+    width = obj["width"]
+    assert isinstance(width, int)
+    bound = DEFAULT_DIRECTION_BOUND
+    table = _direction_table([], bound)
+    massive_rows = False
     age_bound = _age_bound(obj.get("age_bound"), shape, periodic, table)
-    # The clock stamp (the moving detector, 2026-09-22, the chief physicist's
-    # design docs/designs/moving_detector/DESIGN.md section 7): true or
-    # false, false by default; with it every line a measured event writes
-    # (its `click`, `read`, `rerelease` and `become` lines and its face
-    # click) carries `clock`, the event's own count of self-creations (its
-    # `age`). A record field and no physics: it enters neither the model
-    # identity nor the hypothesis list, and without it every record is byte
-    # identical to what it was.
-    clock_stamp = obj.get("clock_stamp", False)
-    if type(clock_stamp) is not bool:
-        raise ValueError("clock_stamp must be true or false (false by default)")
+    clock_stamp = obj["clock_stamp"]
+    assert isinstance(clock_stamp, bool)
     detector_law = True  # one engine (9.90 (1)); the ray law's branches below CANCELLED
     # THE FACE SLAB (ALGEBRA.md 9.25 (10), the mathematician's reading: a face
     # one Node deep books 0.15 of a packet and reflects the rest, the slab as
@@ -7068,20 +6817,10 @@ def parse_world_document(
                 f"face_depth {face_depth} leaves no interior on the open axis {name} of "
                 f"extent {shape[axis]} (two slabs of the depth fill it)"
             )
-    # massive-record-v1: true or false, false by default; a kind's pair and
-    # faces are admitted under it alone, and it needs the local detector law
-    # (the kind's rule is that law's six-neighbour step).
-    massive_record = obj.get("massive_record", False)
-    if type(massive_record) is not bool:
-        raise ValueError("massive_record must be true or false (off by default)")
-    # THE BODY RECORD (ALGEBRA.md 9.46; BUILD.md section 26 item 37): true or
-    # false, false by default (the lattice body); a body held as one
-    # rotation on its clock pair needs the massive record's blocks
-    body_record = obj.get("body_record", False)
-    if type(body_record) is not bool:
-        raise ValueError(
-            "body_record must be true or false (ALGEBRA.md 9.46; off by default, the lattice body)"
-        )
+    massive_record = obj["massive_record"]
+    assert isinstance(massive_record, bool)
+    body_record = obj["body_record"]
+    assert isinstance(body_record, bool)
     if body_record and not massive_record:
         raise ValueError(
             "body_record needs massive_record: true (a body record is a block held as "
@@ -7165,19 +6904,15 @@ def parse_world_document(
     if "mode_axis" in obj:
         if not massive_record:
             raise ValueError("mode_axis is refused without the world key `massive_record`")
-        if obj["mode_axis"] not in AXES:
-            raise ValueError(f"mode_axis must be one of {list(AXES)}")
-        mode_axis = AXES.index(obj["mode_axis"])
+        mode_axis = AXES.index(str(obj["mode_axis"]))
     probes: tuple[Address3, ...] = ()
     if "probes" in obj:
         if not massive_record:
             raise ValueError("probes is refused without the world key `massive_record`")
-        if not isinstance(obj["probes"], list):
-            raise ValueError("probes must be a list of Nodes")
-        probes = tuple(_address(item, "probes", shape) for item in obj["probes"])
-    # The quantum of action of the turn by momentum, h: absent by default
-    # (nothing turns by momentum), an integer from 1 when declared.
-    action = None if "action" not in obj else _integer(obj["action"], "action", 1)
+        declared_probes = obj["probes"]
+        assert isinstance(declared_probes, tuple)
+        probes = tuple(_address(item, "probes", shape) for item in declared_probes)
+    action = None
     declared = obj.get("measured", [])
     if phase_steps < AMPLITUDE_LEAST_STEPS and any(
         isinstance(entry, dict) and "lamp" in entry
@@ -7214,21 +6949,7 @@ def parse_world_document(
             "section 26 item 31, DECLARATIONS.md section 15 M1-10's 2^32 HISTORY; the load bound "
             "and the rows' run-time assertion use it; no default)"
         )
-    # The meeting: true or false (false by default); under it a paid family
-    # without a phase circle is refused, the phase being the register the
-    # meeting reads the crowd into (there is no other on the record).
-    meeting = obj.get("meeting", False)
-    if type(meeting) is not bool:
-        raise ValueError("meeting must be true or false")
-    if meeting:
-        for family in families:
-            if not family.free and not family.phase:
-                raise ValueError(
-                    f"meeting is refused with the paid family {family.name!r} without a "
-                    "phase circle: the meeting turns a unit in transit by its phase register (the "
-                    "crowd met is added to the phase, one grain step per wrap of the circle), and "
-                    "a phase-less family has no register to read the crowd into"
-                )
+    meeting = False
     measured = _measured(
         obj["measured"],
         shape,
@@ -7299,8 +7020,7 @@ def parse_world_document(
     # drive-b-v1 (2026-09-22): the world key `drive_b`, a boolean, false by
     # default; under it every free body's wall is tested at load.
     drive_b = obj.get("drive_b", False)
-    if type(drive_b) is not bool:
-        raise ValueError("drive_b must be true or false (drive-b-v1, off by default)")
+    assert isinstance(drive_b, bool)
     if drive_b:
         for entry in measured:
             if not entry.fixed:
@@ -7310,21 +7030,16 @@ def parse_world_document(
     # `nature_beam.direction_flight` and `nature_beam.family_flight`, their
     # one product tested by division before it is formed.
     flow_link = obj.get("flow_link", False)
-    if type(flow_link) is not bool:
-        raise ValueError(
-            f"flow_link must be true or false (flow-link, off by default), not {flow_link!r}"
-        )
+    assert isinstance(flow_link, bool)
     # centred-step-v1 (2026-09-22): the world key `centred_step`, a boolean,
     # false by default (docs/designs/atom_give/CENTRED_STEP.md section 1).
     centred_step = obj.get("centred_step", False)
-    if type(centred_step) is not bool:
-        raise ValueError("centred_step must be true or false (centred-step-v1, off by default)")
+    assert isinstance(centred_step, bool)
     # atom-level-v1 (2026-09-22): the world key `atom_level`, a boolean,
     # false by default, and the bodies' `level` declarations under it
     # (docs/designs/atom_levels/LEVELS.md section 2 (b) and (c)).
     atom_level = obj.get("atom_level", False)
-    if type(atom_level) is not bool:
-        raise ValueError("atom_level must be true or false (atom-level-v1, off by default)")
+    assert isinstance(atom_level, bool)
     measured = _atom_levels(obj["measured"], measured, families, atom_level, action, ticks)
     covariant = _covariant(
         obj.get("covariant_readings"), measured, families, width, turn_rate, action, drive_b
@@ -7332,9 +7047,7 @@ def parse_world_document(
     in_transit = _in_transit(
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
-    detectors = _detectors(
-        obj.get("detectors", []), shape, periodic, measured, body_record, detector_law
-    )
+    detectors = _detectors(obj["detectors"], shape, periodic, measured, body_record, detector_law)
     optical = _optical(obj.get("optical"), suspension, meeting, table, massive_rows)
     # Every family under one wall, step 3: a moving body under the wall
     # (the law's own since the generic entry of 2026-09-22).
