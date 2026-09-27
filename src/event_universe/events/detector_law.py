@@ -923,8 +923,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         found.extend(self.sourced_records.values())
         return found
 
-    # The held families (ALGEBRA.md #the-paces, #the-counts-line; BUILD.md section 26
-    # items 31, 32, 35 and 51): the operations, written once for any family
+    # The held families (ALGEBRA.md #the-paces, #the-counts-line; BUILD.md section 26 items 31, 32, 35 and 51): the operations, written once for any family
 
     def body_source(self, number: int, source: str) -> int:
         """A body's declared source for a held family (item 51): its content,
@@ -953,10 +952,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self.node_level[family] = record.now
             if not self.held_parts[family]:
                 continue
-            # THE VECTOR AND TENSOR PARTS AT THE BODIES (ALGEBRA.md #the-interval): the
-            # body's numbers times the held factors over the wall, the remainder
-            # carried, at every Node of the body at both levels; the interval's start
-            # rewrites a moved body's Nodes alone (a body at rest keeps them)
+            # THE VECTOR AND TENSOR PARTS AT THE BODIES (ALGEBRA.md #the-interval): the body's numbers times the held factors over the wall, the remainder carried, at every Node of the body at both levels; the interval's start rewrites a moved body's Nodes alone (a body at rest keeps them)
             held = {
                 block.number: self._held_writes(line, block, family, act)
                 for block in self.blocks
@@ -983,10 +979,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                     record.now[block.mask] = value
                     record.before[block.mask] = before
                     record.remainder[block.mask] = 0
-            # THE DIPOLES on the body's Node's six neighbours, added after the parts:
-            # forward with the division advanced, at the inverse with the values the
-            # unhold stepped back; none beyond an open face (a hopping body's dipoles
-            # at its new Node wait on the next hold)
+            # THE DIPOLES on the body's Node's six neighbours, added after the parts: forward with the division advanced, at the inverse with the values the unhold stepped back; none beyond an open face (a hopping body's dipoles at its new Node wait on the next hold)
             if advance or inverse:
                 for block in self.blocks:
                     dipoles = held[block.number].dipoles
@@ -1109,9 +1102,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         gamma = self.node_clock
         effective = self._effective_content(family)
         content = int(effective[node])
-        # the rule's three integers at the Node (ALGEBRA.md #the-line; item 44): the
-        # coefficient on the six reads, the coefficient at the Node and the
-        # wall; the remainder moves on the multiples of their gcd
+        # the rule's three integers at the Node (ALGEBRA.md #the-line; item 44): the coefficient on the six reads, the coefficient at the Node and the wall; the remainder moves on the multiples of their gcd
         axis_contents = self._axis_contents(family)
         reads, self_coefficient, wall = coefficients(
             num,
@@ -1183,9 +1174,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             return list(block.momentum)
         return [component * elapsed // ramp for component in block.momentum]
 
-    # THE BODIES ON ONE NODE (ALGEBRA.md #the-interval, #a-familys-declaration, #the-primitives; the
-    # one stroke, commit 6): the contraction, the feed, the induction, the spin's step,
-    # written once for any body and any read
+    # THE BODIES ON ONE NODE (ALGEBRA.md #the-interval, #a-familys-declaration, #the-primitives; the one stroke, commit 6): the contraction, the feed, the induction, the spin's step, written once for any body and any read
 
     def _spins_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
         """THE BODY'S STEP AT (v) (ALGEBRA.md #the-interval, #a-familys-declaration): the spin's step's line
@@ -1236,8 +1225,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     def residue_of(self, live: LiveRecord | NodeRecord, block: Block) -> tuple[int, int]:
         """The residue from the law under the Node clock, read at the first shell Node: the record's rule remainder r at the body's first shell Node in the declared order, read now, in units of the remainder's step g = gcd(Gamma num, 6 den M, 3 den f) at that Node, and the wheel W = 3 den f / g (`wheel_at`); no declaration, no draw; which Node is read is a convention."""
         if isinstance(live, NodeRecord):
-            # THE BODY'S NODE'S RECORD (ALGEBRA.md #what-a-body-is): its residue its
-            # own remainder on its own wheel, read at the body's Node
+            # THE BODY'S NODE'S RECORD (ALGEBRA.md #what-a-body-is): its residue its own remainder on its own wheel, read at the body's Node
             step, wheel = self.node_record_wheel(block)
             return live.remainder // step, wheel
         node = self.first_shell_node(block)
@@ -1249,20 +1237,14 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         emitter = block.definition.emitter
         assert emitter is not None
         if block.definition.profile is None:
-            # the mathematician's gate item 8: the excited record is the body's
-            # composed mode (ALGEBRA.md #what-a-body-is, #the-click), the generator's
-            # profile; a flat seed is no mode and is refused where a body
-            # givings (at the engine's construction: the generator parses the
-            # world with the scalar seed to compute the profile)
+            # the mathematician's gate item 8: the excited record is the body's composed mode (ALGEBRA.md #what-a-body-is, #the-click), the generator's profile; a flat seed is no mode and is refused where a body givings (at the engine's construction: the generator parses the world with the scalar seed to compute the profile)
             raise ValueError(
                 f"measured[{block.number}].emitter needs the body's `seed` as its "
                 "composed mode's profile (one integer per Node, the generator's "
                 "`seed_on_the_mode`; a flat scalar seed is no mode and givings nothing lawful, "
                 "ALGEBRA.md #the-click)"
             )
-        # THE GIVING IS THE WINDOW'S (ALGEBRA.md #the-primitives; record 2082 (4);
-        # commit 7): every emitter gives by the window at its centre Node at its declared
-        # weight; the given train is CANCELLED (`_write_given_train_cancelled`, disconnected)
+        # THE GIVING IS THE WINDOW'S (ALGEBRA.md #the-primitives; record 2082 (4); commit 7): every emitter gives by the window at its centre Node at its declared weight; the given train is CANCELLED (`_write_given_train_cancelled`, disconnected)
         if emitter.weight is None or emitter.norm_denominator is None:
             raise ValueError(
                 f"measured[{block.number}].emitter declares no `weight` or no "
@@ -1393,9 +1375,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         emitter = block.definition.emitter
         if own is None or emitter is None or block.emit_now or block.window is not None:
             return
-        # the stock is the given family's content held at the body (ALGEBRA.md
-        # ALGEBRA.md #the-paces; item 47), or the body's own quanta set aside (ALGEBRA.md #the-primitives; commit
-        # 6): nothing fires once it is spent
+        # the stock is the given family's content held at the body (ALGEBRA.md ALGEBRA.md #the-paces; item 47), or the body's own quanta set aside (ALGEBRA.md #the-primitives; commit 6): nothing fires once it is spent
         if self.stock_of(block) <= 0:
             return
         if block.residue_pending:
@@ -1424,21 +1404,16 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         period = (steps * denominator + numerator - 1) // numerator
         cost = definition.quantum
         excitation = block.excitations
-        # the given record's residue and wheel from the law (ALGEBRA.md #a-familys-declaration, #the-ladder
-        # (c)): the body's own remainder at its first shell Node in the
-        # declared order, read at the click on the body's wheel there
+        # the given record's residue and wheel from the law (ALGEBRA.md #a-familys-declaration, #the-ladder (c)): the body's own remainder at its first shell Node in the declared order, read at the click on the body's wheel there
         residue, wheel = self.residue_of(own, block)
         wait = block.wait
-        # the read Node: the first shell Node of the lattice body (item 33),
-        # the body's Node (the centre Node) of a body on one Node (ALGEBRA.md #what-a-body-is; item 42)
+        # the read Node: the first shell Node of the lattice body (item 33), the body's Node (the centre Node) of a body on one Node (ALGEBRA.md #what-a-body-is; item 42)
         read_node = (
             tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
             if block.node_record is not None
             else self.first_shell_node(block)
         )
-        # the held content's level at the read Node and at its reads as the
-        # wheel was read, before the giving lowers the content (item 34;
-        # GAMEBOARD; the family holding "content", item 51)
+        # the held content's level at the read Node and at its reads as the wheel was read, before the giving lowers the content (item 34; GAMEBOARD; the family holding "content", item 51)
         content_level = self.level_of("content")
         read_clocks = [
             int(content_level[read_node]),
@@ -1447,13 +1422,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 for j in self._neighbour_nodes(read_node, self.kind_wrap[block.family])
             ],
         ]
-        # the body's clock pair as the clicking record was advanced (the
-        # content at its centre Node; GAMEBOARD, on the giving line)
+        # the body's clock pair as the clicking record was advanced (the content at its centre Node; GAMEBOARD, on the giving line)
         centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
         clock_pair = self.node_clock_pair(centre, block.family)
-        # the content and the charge the clicking record was advanced under
-        # (before this giving lowers them; item 35's line reads them here,
-        # the pair no longer the content alone for a charged family)
+        # the content and the charge the clicking record was advanced under (before this giving lowers them; item 35's line reads them here, the pair no longer the content alone for a charged family)
         centre_content = int(content_level[centre])
         body_charge = self._body_charge(number)
         # the body's own record is not ended and never rewritten (ALGEBRA.md #the-ladder)
@@ -1480,8 +1452,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             labels=tuple(emitter.branches),
             emitter=number,
             pair=(int(emitter.pair[0]), int(emitter.pair[1])),
-            # the component along the body's moment and the twist "own" (ALGEBRA.md
-            # ALGEBRA.md #the-second-level, #the-primitives; commit 4), the loader's integers
+            # the component along the body's moment and the twist "own" (ALGEBRA.md ALGEBRA.md #the-second-level, #the-primitives; commit 4), the loader's integers
             part=emitter.part,
             twist=emitter.twist,
         )
@@ -1490,20 +1461,14 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         live.box = self.mask_box(block.mask)  # HOST (item 43): the body's own Nodes
         block.window = identity
         if emitter.receiver is not None:
-            # the named sets in the NAMED order (ALGEBRA.md #rule3: the
-            # ladder cumulative in its declared order), a set's detectors in the
-            # detectors' order within it
+            # the named sets in the NAMED order (ALGEBRA.md #rule3: the ladder cumulative in its declared order), a set's detectors in the detectors' order within it
             live.ladder = [
                 detector
                 for name in emitter.receiver
                 for detector, set_name in enumerate(self.detector_set)
                 if set_name == name
             ]
-        # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; item 47): the
-        # giving lowers the given family's content held at the body by one,
-        # the body's own quanta and its charge untouched (under the point
-        # emitter too, item 50: the quantum moves at the open, the window
-        # shapes its rows, the close names the record)
+        # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; item 47): the giving lowers the given family's content held at the body by one, the body's own quanta and its charge untouched (under the point emitter too, item 50: the quantum moves at the open, the window shapes its rows, the close names the record)
         opened = self._giving_act(
             block,
             GivingStart(
@@ -1542,22 +1507,16 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 "train": 0,
                 "excitation": excitation,
                 "excitation_norm": own.norm,
-                # the tick's count (ALGEBRA.md #the-ladder): the intervals from the
-                # residue's read to this click, the period P counted
-                # against, and the first shell Node that read u
+                # the tick's count (ALGEBRA.md #the-ladder): the intervals from the residue's read to this click, the period P counted against, and the first shell Node that read u
                 "wait": wait,
                 "period": emitter.period,
                 "read_node": list(read_node),
                 # the wheel's ingredients, read with it (item 34; GAMEBOARD)
                 "read_clocks": read_clocks,
                 "norm": live.norm,
-                # the norm's denominator (item 36): the given record's
-                # form is norm / pace, whole in the body's own units at
-                # the body's level as written
+                # the norm's denominator (item 36): the given record's form is norm / pace, whole in the body's own units at the body's level as written
                 "pace": live.pace,
-                # the file's vacuum norm (p times it the given record's T
-                # in the vacuum) and the body's content and clock pair
-                # as the clicking record was advanced (GAMEBOARD; item 31)
+                # the file's vacuum norm (p times it the given record's T in the vacuum) and the body's content and clock pair as the clicking record was advanced (GAMEBOARD; item 31)
                 "given_norm": emitter.given.norm if emitter.given is not None else 0,
                 "content": centre_content,
                 "charge": body_charge,
@@ -1573,14 +1532,11 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     def _block_clock(self, block: Block) -> None:
         """The block's clock (MASSIVE_RECORD.md sections 4 and 6): its total record summed across its Nodes (G over R: its own record), one count per cycle (the sum's crossing from at most 0 to above 0, verb D's comparison), a `click` line per count with its own count (the self-click of row (g)); a new cycle givings its emission at the next interval."""
         total = 0
-        # the co-moving centre Node (the design's reading of the clock in
-        # motion, MASSIVE_RECORD.md section 8: "the clock read at the
-        # co-moving centre"): the total record's value there, on the line
+        # the co-moving centre Node (the design's reading of the clock in motion, MASSIVE_RECORD.md section 8: "the clock read at the co-moving centre"): the total record's value there, on the line
         centre = box_centre(block.corner, block.definition.extents, self.shape)
         at_centre = 0
         if block.node_record is not None:
-            # the body's Node's record (ALGEBRA.md #what-a-body-is): its level is the standing record's
-            # coefficient, the sum over the Nodes and the centre alike
+            # the body's Node's record (ALGEBRA.md #what-a-body-is): its level is the standing record's coefficient, the sum over the Nodes and the centre alike
             total += block.node_record.now
             at_centre += block.node_record.now
         elif block.own is not None:
@@ -1626,8 +1582,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         whole part of age x n / d on the circle of N steps."""
         return (3 * steps // 4 + age * numerator // denominator) % steps
 
-    # The inverse map (ALGEBRA.md 8.8): the step is a bijection but for the
-    # click; the property test of 9.20 (B) 4 runs it backwards
+    # The inverse map (ALGEBRA.md 8.8): the step is a bijection but for the click; the property test of 9.20 (B) 4 runs it backwards
 
     def _advance_inverse(self, live: LiveRecord) -> None:
         """One interval of the rule backwards on a record: from (a_next, a_now, r') to (a_now, a_before, r) with 3 den Gamma a_before - r = num SUM_j (Gamma - c_j) a_now,j + 6 den c a_now - (3 den Gamma a_next + r') under the fixed wall (the forward step's integers, the clock field of the interval's start), the remainder in [0, 3 den Gamma), exact at every Node; with a tensor part read, a twist or a second level the arrivals are stepped back per axis after the transport's inverse (`_transport`), both levels."""
@@ -1637,11 +1592,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         field = live.held_part
         gamma = 1 if field else self.node_clock
         content = 0 if field else self._effective_content(live.family)
-        # the same integers as the forward step's: the pace on the Node's own
-        # sum (item 36)
-        # HOST (item 43): the record's box holds the reach of `before`'s rows
-        # (it was the window of the step that wrote `now`), so the inverse is
-        # read on the box itself, zeros elsewhere; the box stays (a superset)
+        # the same integers as the forward step's: the pace on the Node's own sum (item 36) HOST (item 43): the record's box holds the reach of `before`'s rows (it was the window of the step that wrote `now`), so the inverse is read on the box itself, zeros elsewhere; the box stays (a superset)
         axis_contents = None if field else self._axis_contents(live.family, inverse=True)
         twisted = None if field else self._twist_reads(live, True)
         sigma_self = self._self_source(live, True)
@@ -1717,12 +1668,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     def step_inverse(self) -> None:
         """One interval backward in the joint inverse's fixed order (the bodies' step back, every family at the interval's start levels, the held families and their hold last); no hop, click or giving in the interval."""
         self.ports.begin()
-        # the bodies' step back first (ALGEBRA.md #the-interval; commit 6): the momentum and the
-        # spin as the interval began, from the fields as it left them
+        # the bodies' step back first (ALGEBRA.md #the-interval; commit 6): the momentum and the spin as the interval began, from the fields as it left them
         for block in self.blocks:
             self._spins_act(self.register.at("the spin's step", "(v)"), block, True)
-        # the count's line back (its own inverse, the current reversed; ALGEBRA.md
-        # #the-counts-line): the quanta return to their Nodes before the records step back
+        # the count's line back (its own inverse, the current reversed; ALGEBRA.md #the-counts-line): the quanta return to their Nodes before the records step back
         counts_line = self.register.at("the count's line", "(ii)")
         for block in self.blocks:
             self._counts_act(counts_line, block, -1)
@@ -1732,15 +1681,11 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                     f"{block.number} moved at interval {self.tick}; the field moved back through the body, "
                     "ALGEBRA.md #the-primitives, is not built)"
                 )
-        # the joint inverse (ALGEBRA.md #the-counts-line; item 51): every
-        # family backward at the held levels of the interval's start (their
-        # `before` level: the held families stepped last), then the held
-        # families backward and their hold
+        # the joint inverse (ALGEBRA.md #the-counts-line; item 51): every family backward at the held levels of the interval's start (their `before` level: the held families stepped last), then the held families backward and their hold
         for family, record in self.held_records.items():
             self.node_level[family] = record.before
         self._effective.clear()
-        # the interval's dipole writes taken back first (ALGEBRA.md #the-interval; commit 2): they
-        # were the last writes of the forward interval, after the fields' step
+        # the interval's dipole writes taken back first (ALGEBRA.md #the-interval; commit 2): they were the last writes of the forward interval, after the fields' step
         hold = self.register.at("the hold", "(iv)")
         self._unhold_dipoles(hold)
         for block in self.blocks:
@@ -1810,8 +1755,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         self._axis_effective[family] = (self.tick, inverse, result)
         return result
 
-    # THE TRANSPORT (ALGEBRA.md #the-transport, #the-interval, #the-primitives; the one stroke, commit 4):
-    # the operations, written once for any phase-2 family and any read with a twist
+    # THE TRANSPORT (ALGEBRA.md #the-transport, #the-interval, #the-primitives; the one stroke, commit 4): the operations, written once for any phase-2 family and any read with a twist
 
     def _arrival(
         self, a: np.ndarray, axis: int, sigma: int, wrap: tuple[bool, bool, bool]
@@ -1984,8 +1928,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         port_detector = self.detector_at_node.ravel()[port_i]
         pairs = (port_i, port_j, port_detector)
         self._inflow_port_pairs[family] = pairs
-        # the face of every Port, (axis, side): the outward normal of the Node
-        # i's face toward j is side along the axis (ALGEBRA.md #the-ladder)
+        # the face of every Port, (axis, side): the outward normal of the Node i's face toward j is side along the axis (ALGEBRA.md #the-ladder)
         self._inflow_port_faces[family] = (
             np.concatenate(axes) if axes else np.zeros(0, dtype=np.int64),
             np.concatenate(sides) if sides else np.zeros(0, dtype=np.int64),
@@ -1996,8 +1939,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         """The detectors' inflow per record over the Ports alone: this interval's one-way inward flux into every detector, 3 G_ij = now_i before_j - before_i now_j where positive per Port, times the family's wall (the form's units), from the record's two levels after the interval's step, by the detector's index; read at the Port pairs only (one gather per pair, exact Python integers), never over the board."""
         port_i, port_j, port_detector = self._inflow_ports(live.family)
         port_axis, port_side = self._inflow_port_faces[live.family]
-        # THE TRANSVERSE BOOKING (ALGEBRA.md #the-second-level; commit 4): the Ports along
-        # the record's own vector component book nothing of it
+        # THE TRANSVERSE BOOKING (ALGEBRA.md #the-second-level; commit 4): the Ports along the record's own vector component book nothing of it
         own_axis = self.booked_axis(live)
         if own_axis is not None:
             keep = port_axis != own_axis
@@ -2005,11 +1947,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             port_axis, port_side = port_axis[keep], port_side[keep]
         if port_i.size == 0:
             return {}
-        # THE CURRENT IS UNWEIGHTED (ALGEBRA.md #the-direction and (13); BUILD.md
-        # section 26 item 36): wall (now_i before_j - before_i now_j) through
-        # the Port ij, the plain current of the form's units (the pace at
-        # both ends, form (B) of item 34, HISTORY); Born's rule at the
-        # taking end unchanged by one bit
+        # THE CURRENT IS UNWEIGHTED (ALGEBRA.md #the-direction and (13); BUILD.md section 26 item 36): wall (now_i before_j - before_i now_j) through the Port ij, the plain current of the form's units (the pace at both ends, form (B) of item 34, HISTORY); Born's rule at the taking end unchanged by one bit
         wall = self.kind_wall(live.family)
         now = live.now.ravel()
         before = live.before.ravel()
@@ -2059,17 +1997,14 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         ):
             bound = moving.get(detector)
             if value > 0:
-                # the direction from the Port booking in the board's frame, for a
-                # set at rest and for a moving one alike (the body-frame correction
-                # below moves the booked share, not the Port it entered by)
+                # the direction from the Port booking in the board's frame, for a set at rest and for a moving one alike (the body-frame correction below moves the booked share, not the Port it entered by)
                 self._tally_direction(live, detector, axis, side, int(value) * wall)
             if bound is None:
                 if value > 0:
                     offers[detector] = offers.get(detector, 0) + int(value) * wall
                 continue
             block, momentum = bound
-            # G_in + (v . n) e_out as one pair: the Port booking whole, the frame
-            # term side x momentum x e_out over the body's wall (exact integers)
+            # G_in + (v . n) e_out as one pair: the Port booking whole, the frame term side x momentum x e_out over the body's wall (exact integers)
             body_wall = self.wall_of(block)
             density_numerator, density_denominator = density[node]
             term = ratio(
@@ -2164,8 +2099,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         (read_coefficient, _, _), self_coefficient, wall_at = coefficients(
             num_all.astype(object), den_all.astype(object), gamma, content, ISOTROPIC, not field
         )
-        # the pair's two levels summed (ALGEBRA.md #the-interval; commit 4): the form of each level, the
-        # plain Link term (exact where every twist is 0, a reading elsewhere)
+        # the pair's two levels summed (ALGEBRA.md #the-interval; commit 4): the form of each level, the plain Link term (exact where every twist is 0, a reading elsewhere)
         levels = [(live.now, live.before)]
         if live.im_now is not None and live.im_before is not None:
             levels.append((live.im_now, live.im_before))
@@ -2236,10 +2170,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             return  # a zero held part steps to zero exactly (HOST; ALGEBRA.md #the-interval)
         field = live.held_part
         booked = not field and not live.standing
-        # The rule with the record's pair on the six-neighbour term
-        # (massive-record-v1, MASSIVE_RECORD.md section 1): G over the six
-        # neighbours, then D by 3 den with the remainder kept, then T; at
-        # light's pair [1, 1] the first build's integers bit for bit.
+        # The rule with the record's pair on the six-neighbour term (massive-record-v1, MASSIVE_RECORD.md section 1): G over the six neighbours, then D by 3 den with the remainder kept, then T; at light's pair [1, 1] the first build's integers bit for bit.
         num, den = self.pair_arrays(live.family, live.pair)
         # THE COUPLING IS THE CLICK ALONE (the model owner's decision (2) of record 1962; ALGEBRA.md #the-line (B); BUILD.md section 26 item 30): no coupling's term and no folded denominator (MASSIVE_RECORD.md section 7 HISTORY); the wall 3 den, one division per row per interval, the remainder kept in [0, wall) THE NODE CLOCK UNDER THE FIXED WALL (the model owner's decision (5) of record 1962 and his word of 2026-09-25 in Nature24's session, record 1994: the backward run exact everywhere; ALGEBRA.md #the-paces amended, the mathematician's section asked; BUILD.md section 26 item 34): the wall is 3 den Gamma at every Node, a constant of the declared region, and the clock enters the numerator as the pace Gamma - c_j of each of the six reads: 3 den Gamma a_next + r' = num SUM_j (Gamma - c_j) a_j + 6 den c a_now - 3 den Gamma a_before + r, c the family of clicks' level at a Node, the remainder in [0, 3 den Gamma). The remainder's range never changes, so the step is one to one at every Node for every clock history (the wall 3 den (Gamma + c) of item 31, which shrank where the level fell and merged two states into one, HISTORY). In the vacuum (c = 0) the levels are the plain rule's bit for bit and the remainder Gamma times its; at uniform content 1 - cos omega' = (1 - cos omega)(Gamma - c) / Gamma. One division per row per interval, the int64 total under the load bound of `_pair_bound`. THE FAMILY OF CLICKS ITSELF steps plain (the pace 1, the wall 3 den): it reads no other family and not its own level (ALGEBRA.md #the-counts-line)
         gamma = 1 if field else self.node_clock
@@ -2252,10 +2183,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         im_next: np.ndarray | None = None
         plain = axis_contents is None and twisted is None and live.im_now is None and sigma_self is None
         if not plain:
-            # THE FOUR PACES AND THE TRANSPORT (ALGEBRA.md #the-interval; commits 3 and 4):
-            # the arrivals per axis after the transport, the rule per level on the whole
-            # board (HOST: no window shortcut here); the second level allocated by the
-            # first rotation that writes it
+            # THE FOUR PACES AND THE TRANSPORT (ALGEBRA.md #the-interval; commits 3 and 4): the arrivals per axis after the transport, the rule per level on the whole board (HOST: no window shortcut here); the second level allocated by the first rotation that writes it
             receive = self.main_loop.function_of("the receive", "(i)")
             level_step = self.main_loop.function_of("the phase", "(i)")
             reads_re, reads_im = self._transport(receive, live, twisted, False)
@@ -2297,8 +2225,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             )
             live.box = None
         else:
-            # HOST (record 2039 (b); item 43): the rule on the support box grown
-            # by one, zeros elsewhere; the same integers at every Node
+            # HOST (record 2039 (b); item 43): the rule on the support box grown by one, zeros elsewhere; the same integers at every Node
             slices, wraps, grown = window
             content_w = content[slices] if isinstance(content, np.ndarray) else content
             arrivals = self._axis_sums(live.now[slices], wraps)
@@ -2463,9 +2390,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 block.window = None
                 continue
             if live.clicked:
-                # taken while its window was open (its own body's Node's set reading the
-                # returning light, the light clock): the window closes at the
-                # click, the record named
+                # taken while its window was open (its own body's Node's set reading the returning light, the light clock): the window closes at the click, the record named
                 self._close_window(block, live)
                 continue
             # (d) the close: the folder's close act on the outward norm summed over the window
@@ -2492,8 +2417,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             line["window"] = live.window
             line["outward"] = live.outward
             line["opened"] = self.tick - live.window  # the open's interval (HOST)
-            # THE GIVEN QUANTUM'S FOUR-VECTOR (ALGEBRA.md #the-primitives, #the-interval): the count 1, the
-            # space part the sign per axis of the outward flux over the window (DETECTOR)
+            # THE GIVEN QUANTUM'S FOUR-VECTOR (ALGEBRA.md #the-primitives, #the-interval): the count 1, the space part the sign per axis of the outward flux over the window (DETECTOR)
             line["momentum"] = self.direction_of(live.outward_tally)
             self.record(line)
         outward = live.outward_tally
@@ -2600,13 +2524,11 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         if live.clicked:
             return
         if live.norm <= 0:
-            # a record without its norm yet (the point emitter's open window, item
-            # 50): the bookings enter the running total, the click waits for the norm
+            # a record without its norm yet (the point emitter's open window, item 50): the bookings enter the running total, the click waits for the norm
             live.total += sum(increments)
             return
         ladder = self._ladder_of(live)
-        # the norm as the exact rational norm / pace (item 36): the plain
-        # flux C against it, 2 W pace C against (2 u + 1) norm
+        # the norm as the exact rational norm / pace (item 36): the plain flux C against it, 2 W pace C against (2 u + 1) norm
         threshold = (2 * live.u + 1) * live.norm
         running = 2 * live.wheel * live.pace * live.total
         for detector in ladder:
