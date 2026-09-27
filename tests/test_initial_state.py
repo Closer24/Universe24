@@ -28,7 +28,7 @@ from event_universe.loader.world import (
 )
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import CLOSED_CHAIN, emitter, light_clock_world, massive_world
-from tests.worlds import emitter_world, family_entry, massive_generator, reads
+from tests.worlds import emitter_specimen, family_entry, massive_generator, reads
 
 
 def peak_of(profile: list[int]) -> int:
@@ -44,7 +44,7 @@ def restamped(document: dict) -> dict:
 def test_a_generated_world_is_lawful_and_carries_its_clock_and_stamp():
     """The emitter world (the well [800, 801] of side 12 on the chain of 80, the amplitude 100) and the light clock's chain (the amplitude 50 x 2^20): each body's profile carries its clock [a, b] with b a power of two at least twice the amplitude and at least 2^20, a / b above the family's band top 2 x 800 / 809 and below 2, and the file its `input` stamp with this loader's law identifier and the hash of the integers; the loader admits the file and the definition carries the clock; the residual of the profile against the body's operator is within the bound at every Node (read through the loader's own function)."""
     for document, amplitude in (
-        (emitter_world(stock=2), 100),
+        (emitter_specimen(stock=2), 100),
         (light_clock_world("closed", False), 50 << 12),
     ):
         assert document["stamp"] == input_stamp(document)
@@ -72,13 +72,13 @@ def test_the_clocks_refusals_name_the_rule():
     """The clock [a, b] beside a profile: absent, refused naming the key; not [a, b] of two positive integers, refused; b below the amplitude, refused; a / b at the band's top (a = floor(2 x 800 b / 809)), refused as no bound mode; a = 2 b, refused as a runaway; a clock beside a scalar seed, refused."""
 
     def refused(mutate, message):
-        document = emitter_world(stock=2)
+        document = emitter_specimen(stock=2)
         mutate(document["measured"][0])
         restamped(document)
         with pytest.raises(ValueError, match=message):
             parse_nature_beam_world(document)
 
-    a, b = emitter_world(stock=2)["measured"][0]["clock"]
+    a, b = emitter_specimen(stock=2)["measured"][0]["clock"]
     refused(lambda entry: entry.pop("clock"), "seed as a profile needs the mode's `clock`")
     refused(lambda entry: entry.__setitem__("clock", [a]), r"clock must be a list of 2, not of 1")
     refused(lambda entry: entry.__setitem__("clock", [a, 0]), r"clock\[1\] is 0, below its least 1")
@@ -104,7 +104,7 @@ def test_the_clocks_refusals_name_the_rule():
 
 def test_at_most_five_families():
     """Five families are admitted (the emitter world's four, the families of clicks and of charge among them, and a fifth), a sixth is refused naming the count and the bound (the owner's constant: record 1875's three, four since the family of clicks, record 1982, five since the family of charge, ALGEBRA.md #the-paces; BUILD.md section 26 item 35)."""
-    document = emitter_world(stock=2)
+    document = emitter_specimen(stock=2)
     assert len(document["universe"]) <= MOST_FAMILIES
     while len(document["universe"]) < MOST_FAMILIES:
         document["universe"].append(
@@ -217,11 +217,11 @@ def test_the_six_neighbour_read_in_integers():
 
 def test_the_input_stamp_the_law_and_the_hash():
     """THE FILE'S HASH (ALGEBRA.md #a-familys-declaration, #the-primitives): a seeded world without its `stamp` is refused naming the key; a stamp carrying a law's name is refused naming the key (no law identifier, ALGEBRA.md #the-primitives); a stamp whose hash is not the digest of the whole file (the profile changed by one unit without restamping, the clock changed, the given pair changed, the ticks changed: the stamp covers every key, BUILD.md section 26 item 28) is refused as not the file the generator wrote; a world with no profile needs no stamp (the emitter world on its scalar seed, its emitter removed); the stamp is the same from the raw document and from the parsed integers (the generated world loads, test a)."""
-    missing = emitter_world(stock=2)
+    missing = emitter_specimen(stock=2)
     del missing["stamp"]
     with pytest.raises(ValueError, match="declares a seeded body and no `stamp`"):
         parse_nature_beam_world(missing)
-    other = emitter_world(stock=2)
+    other = emitter_specimen(stock=2)
     other["stamp"]["law"] = "another law"
     with pytest.raises(ValueError, match="stamp has unknown keys: law"):
         parse_nature_beam_world(other)
@@ -242,11 +242,11 @@ def test_the_input_stamp_the_law_and_the_hash():
         document["ticks"] += 1
 
     for change in (unit, clock, weight, ticks):
-        changed = emitter_world(stock=2)
+        changed = emitter_specimen(stock=2)
         change(changed)
         with pytest.raises(ValueError, match="is not the digest of the file"):
             parse_nature_beam_world(changed)
-    unseeded = emitter_world(stock=2, on_mode=False)
+    unseeded = emitter_specimen(stock=2, on_mode=False)
     assert "stamp" not in unseeded
     del unseeded["measured"][0]["emitter"]
     parse_nature_beam_world(unseeded)
@@ -255,7 +255,7 @@ def test_the_input_stamp_the_law_and_the_hash():
 @pytest.mark.diagnostic
 def test_the_generator_as_the_operator_iterated_in_integers():
     """THE GENERATOR WITH THE STOP (the model owner's word of 2026-09-25, 04:10Z, closing record 1898; ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 25): on the emitter world's chain of 80 (the well [800, 801] in the kind [800, 809]) `iterated_mode` iterates the law's own operator 3 den v' = num S_6(v) + 6 den v + r from the Nodes' indicator at the working amplitude 2^28 (scaled to the declared 2^20), reads the clock as the operator's quotient over the board, and stops at the first iteration at which the scaled profile passes the loader's own residual bound with that clock (2487 iterations read on the 32-Node well of the given train's emitter on the closed chain, its border the world's (one border for every family, BUILD.md section 26 item 28; 1805 with the matter border periodic, HISTORY), COMPUTATION; 1653 on the side-12 well, 1817 at the working amplitude 2^20, which left the muon layer's well hovering at 1.5 times the bound, BUILD.md section 26 item 25 amended); the result is bit for bit the same on a second run; the profile it writes passes `mode_residual` (the stop's own condition, read again here) and agrees with the host's eigensolver (ARPACK, a diagnostic now) within 500 units at every Node (467 read on the 32-Node well five Links from the closed chain's zero face, 276 with the matter border periodic, 204 on the side-12 well: the iteration's floor, the rounding noise of every step fed into the next mode and damped only by the gap, about 1 / gap units at the amplitude), its clock within 4 units of ARPACK's rounded 2 cos omega at the denominator 2^22 (0 read; 2 at 2^20). The fixed-count iteration (`integer_mode_iteration`, the same step 4000 times) lands within the same 300 units. The edge: a limit below the stop refuses, naming the last residual against the bound."""
-    document = emitter_world(stock=1)
+    document = emitter_specimen(stock=1)
     world = parse_nature_beam_world(document)
     entry = world.measured[0]
     block = entry.block

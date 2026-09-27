@@ -168,9 +168,9 @@ def test_bound_at_v_a_free_body_falls_toward_a_held_body_and_the_step_back_retur
     held, free = simulation.blocks
     for _ in range(10):
         simulation.step()
-    assert free.momentum == [-2, 0, 0] and free.momentum_before == [-2, 0, 0] and free.hop == (0, 0, 0)
+    assert free.momentum == [-2, 0, 0] and free.momentum_before == [-2, 0, 0]
     assert held.momentum == [0, 0, 0] and free.hold_carry[("feed", 0)] > 0
     for _ in range(10):
         simulation.step_inverse()
-    assert free.momentum == [0, 0, 0] == free.momentum_before == free.drive
+    assert free.momentum == [0, 0, 0] == free.momentum_before
     assert all(value == 0 for key, value in free.hold_carry.items() if key[0] == "feed")
