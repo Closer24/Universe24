@@ -183,6 +183,12 @@ def test_the_refusals_by_name():
         apply(
             term, SpinStepStart(THE_ADVANCE, (), (0, 0, 0), 0, (0, 0, 0), (0, 0, 0)), SpinStepOwn({}, {})
         )
+    with pytest.raises(ValueError, match=r"\(1, 2\) and \(3, 4\) stand over one denominator"):
+        apply(
+            SpinStepTerm((0, 0, 0), 1, (1, 2), TIDAL_WEIGHT),
+            SpinStepStart(THE_ADVANCE, (), (0, 0, 0), 1, (0, 0, 0), (0, 0, 0)),
+            SpinStepOwn({}, {}),
+        )
     with pytest.raises(ValueError, match="spin or moment"):
         apply(
             term,
@@ -215,7 +221,11 @@ def test_the_declaration_is_the_ledgers_row():
     assert DECLARATION.name == "the spin's step" and folder_of(DECLARATION.name) == "spins_step"
     assert DECLARATION.place == "(v)" and DECLARATION.word == "after the step"
     assert DECLARATION.writes == ("a body's spin S", "a body's remainders")
-    assert DECLARATION.function is apply and DECLARATION.built
+    assert (
+        DECLARATION.function is apply
+        and DECLARATION.built
+        and list(DECLARATION.schema) == ["spins_step"]
+    )
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
     registered = simulation.register.declarations["the spin's step"]
     assert registered.binder is bind and callable(registered.function)

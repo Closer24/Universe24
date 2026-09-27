@@ -1,10 +1,9 @@
 """THE HOLD, its own folder (ALGEBRA.md 9.117 the row "the hold"; 9.91 (3); 9.119 item 2; the
 Boss's record 2250): every division through core.rule3 (the division act forward, the state
-stepped back by the direction -1); on the shipped moving Lorentz world the folder's carried
-divisions of the gravity's vector and tensor parts and of the charge's dipoles give the loop's
-own values and carries over forty intervals bit for bit, and the parts' levels at the body's
-Nodes; forward then back returns the state exactly; the dipole's terms are 9.91 (3)'s table;
-the refusals by name; the declaration the ledger's row."""
+stepped back by the direction -1); forward then back returns the state exactly; the dipole's
+terms are 9.91 (3)'s table; the refusals by name; the declaration the ledger's row; backward on
+the resting Lorentz world the unhold and inverse acts give the loop's own state. Since the hold
+is bound (#1231) the loop's forward hold is this folder's, pinned by every shipped world's digest."""
 
 from __future__ import annotations
 
@@ -12,7 +11,6 @@ import json
 import random
 from pathlib import Path
 
-import numpy as np
 import pytest
 
 from event_universe.core.register import folder_of
@@ -36,7 +34,6 @@ from event_universe.world_files import parse_nature_beam_world
 from tests.test_emitter import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
-MOVING = ROOT / "examples" / "events" / "toward_nature" / "lorentz_moving.json"
 
 
 def term_of(simulation: DetectorLawSimulation, family: int) -> HoldTerm:
@@ -81,58 +78,6 @@ def engines_state(block, family: int) -> tuple[dict, dict]:
             elif key[0] == "d" and key[1] == family:
                 target[("d",) + tuple(key[2:])] = value
     return values, carries
-
-
-def test_the_folder_gives_the_loops_integers_on_the_moving_lorentz_world_bit_for_bit():
-    """examples/events/toward_nature/lorentz_moving.json: the body of content 65 giving charge
-    quanta at v = 1 / 4 (its wall and count change at the givings, its Nodes hop): the load as
-    the folder's load act and every interval as its advance act with the loop's own integers
-    read after the interval give the loop's values and carries of the gravity's three vector
-    and six tensor parts and of the charge's dipoles bit for bit over forty intervals, and the
-    parts' two levels at the body's Nodes are the folder's now and before."""
-    simulation = DetectorLawSimulation(parse_nature_beam_world(json.loads(MOVING.read_text())))
-    block = simulation.block_by_number[0]
-    owns = {}
-    for family in simulation.held_records:
-        owns[family] = apply(
-            term_of(simulation, family), start_of(simulation, block, family, THE_LOAD), HoldOwn({}, {})
-        ).own
-        assert (dict(owns[family].values), dict(owns[family].carries)) == engines_state(block, family)
-    seen_hop, seen_giving = False, False
-    for _ in range(40):
-        simulation.step()
-        seen_hop = seen_hop or any(block.hop)
-        for family in simulation.held_records:
-            writes = apply(
-                term_of(simulation, family),
-                start_of(simulation, block, family, THE_ADVANCE),
-                owns[family],
-            )
-            owns[family] = writes.own
-            assert (dict(writes.own.values), dict(writes.own.carries)) == engines_state(block, family)
-            assert writes.time_level == simulation.body_source(
-                block.number, simulation.families[family].held
-            )
-            assert np.all(simulation.held_records[family].now[block.mask] == writes.time_level)
-            centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))
-            for part, now, before in writes.parts:
-                record = simulation.held_parts[family][
-                    part - 1
-                ]  # the body's Node, no dipole lands on it
-                assert int(record.now[centre]) == now and int(record.before[centre]) == before
-        seen_giving = seen_giving or simulation.wall_of(block) != 3 * simulation.momentum_unit * 65
-    assert seen_hop and seen_giving
-    gravity = next(f for f in simulation.held_records if simulation.families[f].name == "gravity")
-    charge = next(f for f in simulation.held_records if simulation.families[f].name == "charge")
-    assert (
-        owns[gravity].values[(1,)] == 65 and owns[gravity].carries[(4,)] != 0
-    )  # the vector along x, the tensor xx
-    assert {key for key in owns[charge].values if key[0] == "d"} == {
-        ("d", 1, 0, 1),
-        ("d", 1, 0, -1),
-        ("d", 0, 1, 1),
-        ("d", 0, 1, -1),
-    }
 
 
 def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_first_value_twice():

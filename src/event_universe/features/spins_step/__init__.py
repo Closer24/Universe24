@@ -6,9 +6,9 @@ from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from typing import Any
 
-from event_universe.core.integer import bounded_gcd
 from event_universe.core.register import Declaration
 from event_universe.core.rule3 import NO_READ, THE_ADVANCE, THE_INVERSE, Key, carried, rule3
+from event_universe.core.schema import Integer, ListOf, ObjectOf, Schema
 
 ACTS = (THE_ADVANCE, THE_INVERSE)
 SPAN = 2  # the central difference's two Links and the leapfrog's two intervals, the lattice's own integer (ALGEBRA.md 9.78 (5))
@@ -31,7 +31,7 @@ class SpinRead:
 
 @dataclass(frozen=True)
 class SpinStepTerm:
-    """The body's declaration: its moment mu, the Node clock Gamma, and the family's row's two weights of the spin's turn as pairs, the curl's (1 / 4 in the levels' unit) and the tidal term's (3 / 4), Schiff's 1 / 2 and 3 / 2 (ALGEBRA.md 9.78 (5))."""
+    """The body's declaration: its moment mu, the Node clock Gamma, and the two weights of the spin's turn as pairs over one denominator, declared on the row of the family whose dipole is the spin (`spins_step`: the curl's, 1 / 4 in the levels' unit, and the tidal term's, 3 / 4; Schiff's 1 / 2 and 3 / 2, ALGEBRA.md 9.78 (5))."""
 
     moment: Vector
     gamma: int
@@ -98,16 +98,17 @@ def spin_wall(wall: int, gamma: int) -> int:
 
 
 def check(term: SpinStepTerm, start: SpinStepStart) -> None:
-    """The refusals by name: the act, the wall and Gamma from 1, the two weights' denominators from 1, each read's dipole spin or moment, a spin's read with its gradient."""
+    """The refusals by name: the act, the wall and Gamma from 1, the two weights over one denominator from 1, each read's dipole spin or moment, a spin's read with its gradient."""
     if start.act not in ACTS:
         raise ValueError(f"the spin's step's act is one of {list(ACTS)}, got {start.act!r}")
     if start.wall < 1 or term.gamma < 1:
         raise ValueError(
             f"the spin's step needs the wall W = {start.wall} and Gamma = {term.gamma} from 1"
         )
-    if term.curl_weight[1] < 1 or term.tidal_weight[1] < 1:
+    if term.curl_weight[1] < 1 or term.curl_weight[1] != term.tidal_weight[1]:
         raise ValueError(
-            f"the spin's step's weights {term.curl_weight} and {term.tidal_weight} need denominators from 1"
+            f"the spin's step's weights {term.curl_weight} and {term.tidal_weight} stand over one "
+            "denominator from 1"
         )
     for read in start.reads:
         if read.dipole not in (SPIN, MOMENT):
@@ -124,8 +125,7 @@ def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinSte
     """The primitive at (v): Omega from the curl and the tidal term at the declared weights over the span, the torque from the second read's curl over the span, the turn (Omega x S_now) + mu x B_q over the two intervals divided by W Gamma per axis, the leapfrog forward or back by the load act (ALGEBRA.md 9.117 the row "the spin's step")."""
     check(term, start)
     values, carries = dict(own.values), dict(own.carries)
-    (c_num, c_den), (t_num, t_den) = term.curl_weight, term.tidal_weight
-    common = c_den * t_den // bounded_gcd(c_den, t_den)  # the weights' least common denominator
+    (c_num, denominator), (t_num, _) = term.curl_weight, term.tidal_weight
     spin_now = start.spin if start.act == THE_ADVANCE else start.spin_before
     omega = [0, 0, 0]
     torque = [0, 0, 0]
@@ -147,8 +147,8 @@ def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinSte
                 omega[i] += division_now(
                     start.act,
                     ("omega", read.position, i),
-                    c_num * (common // c_den) * read.factor * read.curl[i] + (common // t_den) * tidal,
-                    SPAN * common,
+                    c_num * read.factor * read.curl[i] + tidal,
+                    SPAN * denominator,
                     values,
                     carries,
                 )
@@ -206,6 +206,18 @@ DECLARATION = Declaration(
     function=apply,
     section="9.117 item 2, the row 'the spin's step'; 9.78 (5); 9.104 (2); 9.119 item 2",
     word="after the step",
+    schema=Schema(
+        {
+            "a family's entry": ObjectOf(
+                {
+                    "spins_step": ObjectOf(
+                        {"curl": ListOf(Integer(least=1), 2), "tidal": ListOf(Integer(least=1), 2)}
+                    )
+                },
+                frozenset({"spins_step"}),
+            )
+        }
+    ),
 )
 
 
