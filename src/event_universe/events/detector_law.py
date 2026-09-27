@@ -83,9 +83,11 @@ from event_universe.core.rule3 import (
     coefficients,
     form_term,
     rule3,
-    rungs,
 )
-from event_universe.events import guards
+from event_universe.events import guards, output
+from event_universe.events.geometry import GameBoardGeometry, PairView
+from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
+from event_universe.events.output import form_json as form_json
 from event_universe.features import self_source
 from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
 from event_universe.features.giving import (
@@ -103,7 +105,6 @@ from event_universe.features.signed_read import SignedReadStart, SignedReadTerm,
 from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
 from event_universe.features.spins_step import (
     KEYS,
-    Neighbours,
     SpinRead,
     SpinStepOwn,
     SpinStepStart,
@@ -124,39 +125,6 @@ Record = Callable[[dict[str, object]], None]
 # and the state carry no law entry
 FACE_NAMES = ("face:-x", "face:+x", "face:-y", "face:+y", "face:-z", "face:+z")
 # The receiver's take (DESIGN.md sections 1 and 5): a Node that receives does not send the wave back (a mirror is a receiver body that re-emits, never a wall). The record's row at a receiver holds one amplitude per Port that faces a free Node (the NodeState's Ports), the wave entering by that Port, following it one way: g(t + 1) = a_f(t) + k (a_f(t + 1) - g(t)) with a_f the free neighbour's amplitude and k = (c - 1) / (c + 1) at c = 1 / sqrt 3, the declared pair [-15, 56] (-0.2679 against sqrt 3 - 2 = -0.2679), a rounding declared at load, not a root at run time; the free neighbour reads g as the receiver's amplitude on that Link, and the receiver books g^2 as the offer arriving by that Port.
-
-
-# A RATIONAL IS A PAIR OF INTEGERS (numerator, denominator) in lowest terms with the
-# denominator positive: the engine holds no `fractions` (the integer rule, record 2071;
-# tests/test_integer_algebra.py). The pairs are Python integers without the working
-# bound (the conserved form summed over a board and the body-frame booking's terms
-# exceed 2^63, as the exact rationals they replace did); gcd, sums and products alone.
-Ratio = tuple[int, int]
-ZERO: Ratio = (0, 1)
-
-
-def ratio(numerator: int, denominator: int) -> Ratio:
-    """The pair (n, d) in lowest terms with d positive (one gcd)."""
-    if denominator < 0:
-        numerator, denominator = -numerator, -denominator
-    common = gcd(numerator, denominator) or 1
-    return numerator // common, denominator // common
-
-
-def ratio_sum(terms: list[Ratio]) -> Ratio:
-    """The exact sum of pairs, reduced after every addition (sums and products)."""
-    numerator, denominator = 0, 1
-    for n, d in terms:
-        numerator, denominator = ratio(numerator * d + n * denominator, denominator * d)
-    return numerator, denominator
-
-
-def form_json(value: Ratio) -> list[int]:
-    """A form's exact rational for the books and the state (GAMEBOARD): the
-    pair [numerator, denominator] in lowest terms (the denominator 1 for a
-    record at one level and for the fields; ALGEBRA.md #the-direction)."""
-    numerator, denominator = ratio(value[0], value[1])
-    return [numerator, denominator]
 
 
 @dataclass
@@ -399,19 +367,6 @@ class Block:
     hold_value: dict[tuple[object, ...], int] = field(default_factory=dict)
 
 
-class PairView:
-    """The tests' view of a family's pair arrays by its own declared pair
-    (`kind_num[family]`, `kind_den[family]`; item 51's form): one array of
-    the two, from `pair_arrays`."""
-
-    def __init__(self, simulation: DetectorLawSimulation, index: int) -> None:
-        self.simulation = simulation
-        self.index = index
-
-    def __getitem__(self, family: int) -> np.ndarray:
-        return self.simulation.pair_arrays(family)[self.index]
-
-
 @dataclass
 class Ledger:
     """The books per family (Python integers, exact)."""
@@ -442,7 +397,7 @@ class DetectorLawLayer:
         self.gathered = 0
 
 
-class DetectorLawSimulation:
+class DetectorLawSimulation(GameBoardGeometry[Block]):
     """One world under the engine, stepped interval by interval."""
 
     # the record's step, one fused call today, its click included: the names of the file's chain
@@ -1294,22 +1249,6 @@ class DetectorLawSimulation:
                     stored[("d", family, *key[1:])] = value
         return writes
 
-    def _centre_node(self, block: Block) -> list[int]:
-        """The body's Node, the centre of its named set."""
-        return [int(axis[0]) for axis in np.nonzero(self.centre_mask(block))]
-
-    def _dipole_node(
-        self, centre: list[int], family: int, j: int, sigma: int
-    ) -> tuple[int, int, int] | None:
-        """The Node + sigma e_j of a body's Node on the family's faces, None beyond an open face."""
-        node = list(centre)
-        node[j] += sigma
-        if self.kind_wrap[family][j] or self.shape[j] == 1:
-            node[j] %= self.shape[j]
-        elif not 0 <= node[j] < self.shape[j]:
-            return None
-        return node[0], node[1], node[2]
-
     def _unhold_dipoles(self, line: Callable[..., object]) -> None:
         """The interval's dipole writes taken back (the inverse, before the fields
         step back) by the hold's line, the unhold act: each term's value off the
@@ -1325,37 +1264,6 @@ class DetectorLawSimulation:
                     node = self._dipole_node(centre, family, j, sigma)
                     if node is not None:
                         self.held_parts[family][i].now[node] -= value
-
-    def leaks(self) -> list[str]:
-        """The leak test: the names of the families that carry rows without a source (a held family no body ever sourced whose record has a nonzero level or remainder; a family the step alone moves with no body, no stock and no emitter that has a record), read by attribute, never by a name; a HOST reading of the state."""
-        found: list[str] = []
-        for family, record in self.held_records.items():
-            if self._sourced_ever[(family, 0)]:
-                continue
-            if record.now.any() or record.before.any() or record.remainder.any():
-                found.append(self.families[family].name)
-        # every other part of a held family with no source of its own stays
-        # exactly zero (ALGEBRA.md #the-interval: the leak test per part)
-        for family, parts in self.held_parts.items():
-            for record in parts:
-                if self._sourced_ever[(family, record.part)]:
-                    continue
-                if record.now.any() or record.before.any() or record.remainder.any():
-                    name = f"{self.families[family].name}[{record.part}]"
-                    if name not in found:
-                        found.append(name)
-        sourced = set(self.held_families)
-        for number, entry in enumerate(self.world.measured):
-            sourced.add(entry.family)
-            sourced.update(index for index, quanta in enumerate(self.held[number]) if quanta)
-            if entry.block is not None and entry.block.emitter is not None:
-                sourced.add(entry.block.emitter.family)
-        for live in self.records.values():
-            if live.family not in sourced:
-                name = self.families[live.family].name
-                if name not in found:
-                    found.append(name)
-        return found
 
     def held_record(self, source: str) -> LiveRecord | None:
         """The held record of the family holding `source` ("content" or
@@ -1395,24 +1303,6 @@ class DetectorLawSimulation:
             lambda: {"the paces": {key: id(a) for key, a in self._pace_carry.items()}},
         ):
             self._guard()
-
-    def _neighbour_nodes(
-        self, node: tuple[int, ...], wrap: tuple[bool, bool, bool]
-    ) -> list[tuple[int, int, int]]:
-        """The six reads of a Node as the send makes them: the wrap on a
-        periodic axis, the Node itself twice on a folded axis of extent 1,
-        none beyond an open face."""
-        nodes: list[tuple[int, int, int]] = []
-        for axis in range(3):
-            for side in (1, -1):
-                j = list(node)
-                j[axis] += side
-                if wrap[axis] or self.shape[axis] == 1:
-                    j[axis] %= self.shape[axis]
-                elif not 0 <= j[axis] < self.shape[axis]:
-                    continue
-                nodes.append((int(j[0]), int(j[1]), int(j[2])))
-        return nodes
 
     def wheel_at(
         self, family: int, node: tuple[int, ...], pair: tuple[int, int] | None = None
@@ -1498,80 +1388,7 @@ class DetectorLawSimulation:
         self.detector_channel.append(channel)
         return len(self.detector_names) - 1
 
-    def _span_nodes(
-        self, position: tuple[int, int, int], span: tuple[int, int, int]
-    ) -> list[tuple[int, int, int]]:
-        found: list[tuple[int, int, int]] = []
-        for dx in range(int(span[0])):
-            for dy in range(int(span[1])):
-                for dz in range(int(span[2])):
-                    node = (int(position[0]) + dx, int(position[1]) + dy, int(position[2]) + dz)
-                    if all(0 <= node[a] < self.shape[a] for a in range(3)):
-                        found.append(node)
-        return found
-
     # The blocks (massive-record-v1)
-
-    def _box(self, corner: list[int], extents: tuple[int, int, int], family: int) -> np.ndarray:
-        """The Nodes R of a block: the box of `extents` per axis (a cube's
-        side three times; the slabs of ALGEBRA.md #a-familys-declaration) from its lower
-        corner, wrapped on an axis the world's border makes periodic, cut on an
-        open one (a G_48-set of Nodes, world data)."""
-        mask = np.zeros(self.shape, dtype=bool)
-        wrap = self.kind_wrap[family]
-        ranges = []
-        for axis in range(3):
-            extent = self.shape[axis]
-            indices = [corner[axis] + offset for offset in range(extents[axis])]
-            if wrap[axis]:
-                indices = [index % extent for index in indices]
-            else:
-                indices = [index for index in indices if 0 <= index < extent]
-            ranges.append(sorted(set(indices)))
-        if all(ranges):
-            mask[np.ix_(ranges[0], ranges[1], ranges[2])] = True
-        return mask
-
-    def pair_arrays(
-        self, family: int, pair: tuple[int, int] | None = None
-    ) -> tuple[np.ndarray, np.ndarray]:
-        """THE PAIR ARRAYS of a record of `family` at its rest pair (ALGEBRA.md #the-primitives, #the-interval): num and den over the board, the pair everywhere but at the family's bodies, whose declared pairs are written at their Nodes; made once per (family, pair) by the pair folder's function through the register and kept up with the bodies' steps (`_write_pair`); `pair` None reads the family's own declared pair (refused on a family whose pair is the body's)."""
-        if pair is None:
-            definition = self.families[family]
-            if definition.pair_on_body:
-                raise ValueError(
-                    f"the family {definition.name!r} declares no pair of its own; a "
-                    "record's pair is read from the record (ALGEBRA.md #the-primitives, #the-interval)"
-                )
-            pair = definition.pair
-        key = (family, int(pair[0]), int(pair[1]))
-        found = self._pairs.get(key)
-        if found is None:
-            arrays = self.main_loop.function_of("the pair", "(i)")
-            wells = [
-                (block.mask, block.definition.pair) for block in self.blocks if block.family == family
-            ]
-            found = cast(tuple[np.ndarray, np.ndarray], arrays(self.shape, key[1:], wells))
-            self._pairs[key] = found
-        return found
-
-    def _write_pair(self, block: Block) -> None:
-        """The block's pair written on its Nodes into every pair array of its
-        family; the array's own pair elsewhere on the Nodes the block left."""
-        self.ports.begin()
-        for key in [key for key in self._kind_walls if key[0] == block.family]:
-            del self._kind_walls[key]  # the family's walls read anew (`kind_wall`)
-        for (family, rest_num, rest_den), (num, den) in self._pairs.items():
-            if family != block.family:
-                continue
-            num[~block.mask] = rest_num
-            den[~block.mask] = rest_den
-            num[block.mask] = block.definition.pair[0]
-            den[block.mask] = block.definition.pair[1]
-            for other in self.blocks:
-                if other is not block and other.family == block.family:
-                    num[other.mask & ~block.mask] = other.definition.pair[0]
-                    den[other.mask & ~block.mask] = other.definition.pair[1]
 
     def _massive_record(
         self, identity: int, number: int, family: int, pair: tuple[int, int], twist: int
@@ -1626,30 +1443,6 @@ class DetectorLawSimulation:
     # one stroke, commit 6): the contraction, the feed, the induction, the spin's step,
     # written once for any body and any read
 
-    def _ports_of(
-        self,
-        level_now: np.ndarray,
-        silent: bool,
-        centre: tuple[int, int, int],
-        wrap: tuple[bool, bool, bool],
-    ) -> Neighbours:
-        """A level at the six neighbours of a Node in the Ports' order, the spin's step's read (HOST): None where the loop has no read there, a silent part, an axis of extent 1 or a Node beyond an open face; the wrap on a periodic axis."""
-        found: list[int | None] = []
-        for axis in range(3):
-            for sigma in (1, -1):
-                node = list(centre)
-                node[axis] += sigma
-                if silent or self.shape[axis] == 1:
-                    found.append(None)
-                    continue
-                if wrap[axis]:
-                    node[axis] %= self.shape[axis]
-                elif not 0 <= node[axis] < self.shape[axis]:
-                    found.append(None)
-                    continue
-                found.append(int(level_now[node[0], node[1], node[2]]))
-        return cast(Neighbours, tuple(found))
-
     def _spins_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
         """THE BODY'S STEP AT (v) (ALGEBRA.md #the-interval, #a-familys-declaration): the spin's step's line
         (features/spins_step) on the body, from the fields as the interval leaves them (their
@@ -1695,28 +1488,6 @@ class DetectorLawSimulation:
         block.spin, block.spin_before = list(writes.spin), list(writes.spin_before)
         block.hold_value.update(writes.own.values)
         block.hold_carry.update(writes.own.carries)
-
-    def shell_mask(self, block: Block) -> np.ndarray:
-        """The shell of a body: its Nodes with a Port, a Link to a Node outside the body (the wrap on a periodic axis; no Port beyond an open face; a folded axis carries none)."""
-        outward = self.ports.outward(block.mask, self.kind_wrap[block.family])
-        shell = np.zeros(self.shape, dtype=bool)
-        for port in outward:
-            shell |= port
-        return shell
-
-    def first_shell_node(self, block: Block) -> tuple[int, int, int]:
-        """THE FIRST SHELL NODE IN THE DECLARED ORDER (ALGEBRA.md #the-ladder, #the-postulates: which Node is read is a convention): the first Node of
-        the body in the engine's x-major order (`body_node_indices`, the
-        loader's and the generator's one convention) that has a Port; it
-        follows the body's steps. A body with no shell (every Link inside
-        it) is refused: nothing reads its residue."""
-        where = np.nonzero(self.shell_mask(block))
-        if len(where[0]) == 0:
-            raise ValueError(
-                f"measured[{block.number}] has no shell (no Node of it has a Port to "
-                "a Node outside it), so no Node reads its residue (ALGEBRA.md #the-ladder)"
-            )
-        return int(where[0][0]), int(where[1][0]), int(where[2][0])
 
     def residue_of(self, live: LiveRecord | NodeRecord, block: Block) -> tuple[int, int]:
         """The residue from the law under the Node clock, read at the first shell Node: the record's rule remainder r at the body's first shell Node in the declared order, read now, in units of the remainder's step g = gcd(Gamma num, 6 den M, 3 den f) at that Node, and the wheel W = 3 den f / g (`wheel_at`); no declaration, no draw; which Node is read is a convention."""
@@ -1868,17 +1639,6 @@ class DetectorLawSimulation:
         return (
             wall * (node_record.now * node_record.now + node_record.before * node_record.before)
             - coefficient * node_record.now * node_record.before
-        )
-
-    def centre_mask(self, block: Block) -> np.ndarray:
-        """The excited record's named set (ALGEBRA.md #rule3): the body's
-        centre Node, the lower corner plus the extent // 2 on each axis, one
-        Node (the Node itself for a body of side 1); it follows the body's
-        steps."""
-        return self._box(
-            [int(block.corner[axis]) + block.definition.extents[axis] // 2 for axis in range(3)],
-            (1, 1, 1),
-            block.family,
         )
 
     def _excitation_rung(self, block: Block) -> None:
@@ -2499,19 +2259,6 @@ class DetectorLawSimulation:
         )
         return pairs
 
-    def _moving_sets(self) -> dict[int, tuple[Block, list[int]]]:
-        """The detectors bound to a block whose momentum is not zero at this
-        interval, each with its block and the momentum (ALGEBRA.md #the-ladder):
-        the faces of these sets book in the body's frame; empty on a board at
-        rest, where the rule is the Port booking alone."""
-        moving: dict[int, tuple[Block, list[int]]] = {}
-        for detector, number in self.set_block.items():
-            block = self.block_by_number[number]
-            momentum = self._momentum_now(block)
-            if any(momentum):
-                moving[detector] = (block, momentum)
-        return moving
-
     def detector_inflow_tally(self, live: LiveRecord) -> dict[int, int]:
         """The detectors' inflow per record over the Ports alone: this interval's one-way inward flux into every detector, 3 G_ij = now_i before_j - before_i now_j where positive per Port, times the family's wall (the form's units), from the record's two levels after the interval's step, by the detector's index; read at the Port pairs only (one gather per pair, exact Python integers), never over the board."""
         port_i, port_j, port_detector = self._inflow_ports(live.family)
@@ -2755,23 +2502,6 @@ class DetectorLawSimulation:
         """The norm as the exact rational: the given record's conserved form Q, the Node's terms weighted by 1 / p_i, as the pair (numerator, denominator) in lowest terms, the record's `norm` and `pace`; the ladder reads the plain flux C against Q in integers; for a record written at one level p Q is whole (the integer T in the body's own units) and the pair reduces from (p Q, p); a record written across levels has a rational Q, its world energy, and the same reading."""
         return self.conserved_form(live)
 
-    @staticmethod
-    def support_box(*arrays: np.ndarray) -> tuple[tuple[int, int], ...] | None:
-        """HOST: the bounding box [lo, hi) per axis of the Nodes where any of the
-        arrays is not zero; None when every array is zero everywhere (the
-        whole board then, the safe default)."""
-        nonzero = np.zeros(arrays[0].shape, dtype=bool)
-        for array in arrays:
-            nonzero |= array != 0
-        if not nonzero.any():
-            return None
-        box = []
-        for axis in range(nonzero.ndim):
-            along = np.any(nonzero, axis=tuple(other for other in range(nonzero.ndim) if other != axis))
-            where = np.nonzero(along)[0]
-            box.append((int(where[0]), int(where[-1]) + 1))
-        return tuple(box)
-
     def _window(
         self, box: tuple[tuple[int, int], ...] | None, wrap: tuple[bool, bool, bool]
     ) -> tuple[tuple[slice, ...], tuple[bool, bool, bool], tuple[tuple[int, int], ...]] | None:
@@ -2944,11 +2674,6 @@ class DetectorLawSimulation:
             increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
             self.register.at("the clicks", "(ii)")(live, increments)
 
-    def _window_centre(self, block: Block) -> tuple[int, int, int]:
-        """The body's Node of a block with a window (its centre Node)."""
-        axes = np.nonzero(self.centre_mask(block))
-        return (int(axes[0][0]), int(axes[1][0]), int(axes[2][0]))
-
     def _giving_act(self, block: Block, start: GivingStart, live: LiveRecord | None) -> GivingWrites:
         """One act of the giving through the folder's `apply` (the function the main loop looked up at (ii)): the term from the emitter's declaration, the own record from the window's record (`live`), none at the open."""
         emitter = block.definition.emitter
@@ -3000,11 +2725,6 @@ class DetectorLawSimulation:
                 (min(lo, low), max(hi, high))
                 for (lo, hi), (low, high) in zip(live.box, self.mask_box(block.mask), strict=True)
             )
-
-    def mask_box(self, mask: np.ndarray) -> tuple[tuple[int, int], ...]:
-        """The box of a body's Nodes, [low, high) per axis (HOST)."""
-        axes = np.nonzero(mask)
-        return tuple((int(axis.min()), int(axis.max()) + 1) for axis in axes)
 
     def _body_levels(self, block: Block) -> np.ndarray:
         """The body's rotation's level now at each of its Nodes, in the mask's
@@ -3225,321 +2945,13 @@ class DetectorLawSimulation:
         for key in [key for key in self.rung_counts if key[0] == live.identity]:
             del self.rung_counts[key]
 
-    def _gather_line(self, live: LiveRecord, chosen: int | None) -> None:
-        """The record's one click line (`gather`): the content handed to the measured event at the chosen detector (or booked as escaped at a face or a set without a body; with no detector chosen, to the escaped row or, where the record's own emitter took it wholly, to `taken_by_emitter`), with `click` the chosen detector's first rung (or the completion where no rung was crossed) and `clock` the detector's own count; called once per record, at the close (`_click`) or at the receiver's rung (`_line_at_rung`)."""
-        # the ladder's weights: the record's ladder of `_ladder_of` (the
-        # emitter's named sets, or the block's receiver, or every declared
-        # set, the face receiver last on every ladder; ALGEBRA.md #rule3
-        # (b)), every detector off it at 0, so that the detector of u is over the
-        # ladder's own sum and a detector off the ladder is never chosen
-        ladder_detectors = set(self._ladder_of(live))
-        on_ladder = [detector in ladder_detectors for detector in range(len(live.pointers))]
-        weights = [(p if here else 0, 1) for p, here in zip(live.pointers, on_ladder, strict=True)]
-        family = live.family
-        ladder, total = rungs(weights, live.wheel)
-        sunk = sum(p for p, here in zip(live.pointers, on_ladder, strict=True) if not here)
-        if chosen is None:
-            self.ledger.transit_escaped[family] += live.content
-            self.ledger.held_escaped[family] += 0
-        else:
-            measured = self.detector_measured[chosen]
-            if measured is not None and not self.detector_face[chosen]:
-                self.held[measured][family] += live.content
-                self.ledger.held_measured[family] += live.content
-                self.ledger.transit_absorbed[family] += live.content
-            else:
-                # a set without a body (the face receiver, a set on free Nodes):
-                # the click consumes the quantum as any click does
-                self.ledger.transit_absorbed[family] += live.content
-        self.layer.gathered += 1
-        gather: dict[str, object] = {
-            "event": "gather",
-            "tick": self.tick,
-            "arrived": self.tick,
-            "family": self.families[family].name,
-            "record": live.identity,
-            # HOST: the giving residue, the input of the diagnostic E_N and never
-            # a reader-of-record field (the reader reads `click`, `giving` and
-            # `chosen`; DECLARATIONS.md section 2 item 8)
-            "u": live.u,
-            # HOST: the ledger's row `taken_by_emitter` is 0 since the emitter's
-            # own take retired (ALGEBRA.md #the-click); kept for the readers' form
-            "taken_by_emitter": 0,
-            # HOST (the receiver by name): the sinks' take of the record by
-            # this line, in the pointer's unit (the faces and every set but
-            # the receiver; on no pointer); on a record with a receiver alone
-            "given": live.given,
-            "chosen": (
-                [[self.detector_set[chosen], self.detector_channel[chosen], "0"]]
-                if chosen is not None
-                else None
-            ),
-            "node": [],
-            "windows": [],
-            "content": live.content,
-            # THE FOUR-VECTOR (ALGEBRA.md #the-primitives; commit 5 without the recoil): the
-            # count is `content`, the space part the sign per axis of the chosen
-            # detector's tally, the taken quantum's direction of travel (DETECTOR);
-            # [0, 0, 0] with no detector chosen. No body's momentum moves (record 2135)
-            "momentum": (
-                self.direction_of(live.momentum_tally.get(chosen, [0, 0, 0]))
-                if chosen is not None
-                else [0, 0, 0]
-            ),
-            "weight": [live.pointers[chosen] if chosen is not None else 0, 1],
-            "total": list(total),
-            "T": live.absorbed,
-            "before": sum(1 for p in live.pointers if p),
-            "after": 1 if chosen is not None else 0,
-            "detectors": [
-                [[[set_name, channel, "0"]], rung]
-                for set_name, channel, rung, pointer in zip(
-                    self.detector_set, self.detector_channel, ladder, live.pointers, strict=True
-                )
-                if pointer
-            ],
-            # the ladder by name (the lamp's `receiver`): the sets on it, and
-            # HOST the pointers' sum at the sinks (the detectors off the ladder,
-            # taken and booked, never chosen); None and 0 for every detector
-            **(
-                {
-                    "ladder": sorted({self.detector_set[detector] for detector in live.ladder}),
-                    "sunk": sunk,
-                }
-                if live.ladder is not None
-                else {}
-            ),
-            "giving": live.giving_tick,
-            # The click's time: the interval at which the chosen detector's pointer
-            # crossed its first rung (the counting form, s_D = 1 / W), the
-            # detector's own count on the click line; the record completed at
-            # `tick`, when its offer was exhausted.
-            "click": (
-                live.first_rung[chosen]
-                if chosen is not None and live.first_rung[chosen] is not None
-                else self.tick
-            ),
-            # the gate reviewer's line on the click's time (the Boss's 01:40Z): which the click's time
-            # is, the chosen detector's first rung or, where no rung was crossed
-            # (a screen row's Node at 1e-4 of the norm), the completion
-            # interval; a reader never reads a completion as a rung.
-            "click_at": (
-                "rung" if chosen is not None and live.first_rung[chosen] is not None else "completion"
-            ),
-            # whose count the `clock` stamp is: a block's own count where the
-            # chosen detector is a block's detector or a set bound to a block (keys (i)
-            # and (ii)), else the interval
-            "clock_source": (
-                f"measured:{self.detector_measured[chosen]}"
-                if chosen is not None and (live.identity, chosen) in self.rung_counts
-                else "interval"
-            ),
-            **(
-                {
-                    "clock": (
-                        # A block's detector: the block's own count at the first
-                        # rung (the body's event in the body's own clock);
-                        # a receiver as built: its count is the interval.
-                        self.rung_counts[(live.identity, chosen)]
-                        if chosen is not None and (live.identity, chosen) in self.rung_counts
-                        else live.first_rung[chosen]
-                        if chosen is not None and live.first_rung[chosen] is not None
-                        else self.tick
-                    )
-                }
-                if self.world.clock_stamp
-                else {}
-            ),
-        }
-        self.layer.gathers.append(gather)
-        if self.record is not None:
-            self.record(gather)
-
     def step(self) -> None:
         """One interval, walked by the main loop: the clock, the file's acts through the register under its guards, the closing."""
         self.main_loop.run(self)
 
-    # The readings
-
-    def books(self, recount: bool = False) -> dict[str, object]:
-        families: dict[str, object] = {}
-        balanced = True
-        ledger = self.ledger
-        for index, family in enumerate(self.families):
-            current = sum(h[index] for h in self.held)
-            measured = {
-                "initial": ledger.held_initial[index],
-                "measured": ledger.held_measured[index],
-                "became": 0,
-                "current": current,
-                "spent": ledger.held_spent[index],
-                "escaped": ledger.held_escaped[index],
-            }
-            measured["balanced"] = measured["initial"] + measured["measured"] == (
-                measured["current"] + measured["spent"] + measured["escaped"]
-            )
-            transit_current = sum(live.content for live in self.records.values() if live.family == index)
-            transit = {
-                "initial": 0,
-                "released": ledger.transit_released[index],
-                "current": transit_current,
-                "absorbed": ledger.transit_absorbed[index],
-                "escaped": ledger.transit_escaped[index],
-                # HOST (item 10): the content the records' own emitters took
-                "taken_by_emitter": ledger.taken_by_emitter[index],
-                # HOST (the receiver by name): the count of records closed
-                # after their line at the receiver's rung; on a world with a
-                # receiver alone (a lamp world's books byte for byte)
-                **(
-                    {"closed_after_click": ledger.closed_after_click[index]} if self.has_receiver else {}
-                ),
-            }
-            transit["balanced"] = transit["released"] == (
-                transit["current"]
-                + transit["absorbed"]
-                + transit["escaped"]
-                + transit["taken_by_emitter"]
-            )
-            balanced = balanced and bool(measured["balanced"]) and bool(transit["balanced"])
-            lines: dict[str, object] = {"measured": measured, "transit": transit}
-            if self.world.massive_record:
-                # The conserved form I summed over the family's live records
-                # (massive-record-v1): a GAMEBOARD diagnostic, written under
-                # the key alone.
-                lines["form"] = form_json(
-                    ratio_sum(
-                        [
-                            self.record_form(live)
-                            for live in self.records.values()
-                            if live.family == index
-                        ]
-                        + [
-                            self.record_form(record)
-                            for record in (
-                                [self.held_records[index], *self.held_parts[index]]
-                                if index in self.held_records
-                                else []
-                            )
-                            if not record.silent
-                        ]
-                    )
-                )
-            families[family.name] = lines
-        return {
-            "tick": self.tick,
-            "families": families,
-            # Issue #1086 (the Boss's 02:00Z): the momentum books are a GAMEBOARD
-            # diagnostic, no law and no pin: `held` the sum of the blocks'
-            # declared momentum vectors (the momentum on the board's bodies);
-            # `transit` and `escaped` are not accounted until the massive
-            # kind's momentum books are designed (ALGEBRA.md 8.11, the
-            # physicist's), and `balanced` counts content alone.
-            "momentum": {
-                "held": [sum(int(block.momentum[axis]) for block in self.blocks) for axis in range(3)],
-                "transit": None,
-                "escaped": None,
-                "note": "transit and escaped not accounted (the massive kind's momentum books "
-                "are not designed, ALGEBRA.md 8.11); balanced counts content alone",
-            },
-            "records": len(self.records),
-            "balanced": balanced,
-            "balanced_scope": "content alone (the momentum books are not accounted)",
-        }
-
-    def contents(self) -> list[dict[str, object]]:
-        return [
-            {
-                "number": number,
-                "position": list(entry.position),
-                "family": self.families[entry.family].name,
-                "held": list(self.held[number]),
-            }
-            for number, entry in enumerate(self.world.measured)
-        ]
-
-    def snapshot_stream(self) -> Iterator[tuple[str, object]]:
-        """The state's (key, value) pairs for state.json: the tick,
-        the held content per measured event and the live records (their
-        identity, age, train and the detectors' pointers), not their rows."""
-        yield "tick", self.tick
-        yield "measured", self.contents()
-        # the held families' levels over the board (GAMEBOARD; ALGEBRA.md #the-counts-line,
-        # 9.48; item 51): each by its declared name and source, the Node
-        # clock's Gamma beside them
-        yield "node_clock", self.node_clock
-        yield (
-            "held_fields",
-            [
-                {
-                    "family": self.families[family].name,
-                    "held": self.families[family].held,
-                    "rows": record.now.ravel().tolist(),
-                    "form": form_json(self.record_form(record)),
-                }
-                for family, record in self.held_records.items()
-            ],
-        )
-        if self.world.massive_record:
-            # The blocks (massive-record-v1): the corner, the count, the
-            # momentum's accumulators, the steps, and the rows of the block's
-            # own record (its amplitude now over the board, GAMEBOARD: the
-            # mode's extent is read from them).
-            yield (
-                "blocks",
-                [
-                    {
-                        "measured": block.number,
-                        "family": self.families[block.family].name,
-                        "corner": list(block.corner),
-                        "side": block.definition.side,
-                        "extents": list(block.definition.extents),
-                        "momentum": list(block.momentum),
-                        "spin": list(block.spin),
-                        "fixed": block.fixed,
-                        "emitted": list(block.emitted),
-                        "rows": None if block.own is None else block.own.now.ravel().tolist(),
-                        "form": (
-                            form_json((self.node_record_form(block), 1))
-                            if block.node_record is not None
-                            else None
-                            if block.own is None
-                            else form_json(self.record_form(block.own))
-                        ),
-                        # the body's Node's record, (a, b, r) at the body's Node (ALGEBRA.md #what-a-body-is; item 42; GAMEBOARD)
-                        "node_record": (
-                            None
-                            if block.node_record is None
-                            else [
-                                block.node_record.now,
-                                block.node_record.before,
-                                block.node_record.remainder,
-                            ]
-                        ),
-                    }
-                    for block in self.blocks
-                ],
-            )
-        yield (
-            "records",
-            [
-                {
-                    "record": live.identity,
-                    "lamp": live.lamp,
-                    "family": self.families[live.family].name,
-                    "u": live.u,
-                    # HOST (the receiver by name): whether the record's line
-                    # was written at its receiver's rung (it lives on with
-                    # content 0); on a world with a receiver alone
-                    **({"clicked": live.clicked, "escaped": live.escaped} if self.has_receiver else {}),
-                    "given": live.given,
-                    "giving": live.giving_tick,
-                    "age": live.age,
-                    "train": live.train,
-                    "norm": live.norm,
-                    "absorbed": live.absorbed,
-                    "pointers": dict(zip(self.detector_names, live.pointers, strict=True)),
-                    **({"form": form_json(self.record_form(live))} if self.world.massive_record else {}),
-                }
-                for live in self.records.values()
-            ],
-        )
+    # The readings and the output lines: the functions of events/output.py bound as methods
+    leaks = output.leaks
+    _gather_line = output.gather_line
+    books = output.books
+    contents = output.contents
+    snapshot_stream = output.snapshot_stream

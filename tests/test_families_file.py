@@ -13,7 +13,7 @@ from event_universe import world_files
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import families_file_entries, input_stamp, parse_nature_beam_world
 from tests.running import refused
-from tests.worlds import FILE, emitter_world, family_entry, on_the_file
+from tests.worlds import FILE, emitter_specimen, family_entry, on_the_file
 
 ROOT = Path(__file__).resolve().parents[1]
 ATTRIBUTES = {"name", "parts", "phase", "pair", "reads", "self_source"}
@@ -99,7 +99,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
 
 
 def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
-    inline = emitter_world(stock=2, ticks=300)
+    inline = emitter_specimen(stock=2, ticks=300)
     # the shipped file's three entries with the test world's own integers (its A is 2^22, the
     # shipped file's 2^20), written as a families file of the test's root
     document = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
@@ -202,7 +202,7 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
 
 
 def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_path, monkeypatch):
-    document = on_the_file(emitter_world(stock=1, ticks=10), [512, 1])
+    document = on_the_file(emitter_specimen(stock=1, ticks=10), [512, 1])
     second = json.loads(json.dumps(document))
     second["node_clock"] = 10000
     refused(second, "the world declares node_clock, which the engine never reads")
@@ -284,7 +284,7 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
 
 
 def test_the_given_clock_is_the_emitters_when_the_family_declares_none():
-    document = on_the_file(emitter_world(stock=1, ticks=10), [512, 1])
+    document = on_the_file(emitter_specimen(stock=1, ticks=10), [512, 1])
     world = parse_nature_beam_world(document)
     emitter = world.measured[0].block.emitter  # type: ignore[union-attr]
     assert emitter is not None and emitter.clock == (512, 1)
@@ -296,7 +296,7 @@ def test_the_given_clock_is_the_emitters_when_the_family_declares_none():
         without,
         r"measured\[0\]\.emitter\.clock is required: the given family 'charge' declares no clock",
     )
-    inline = emitter_world(stock=1, ticks=10)
+    inline = emitter_specimen(stock=1, ticks=10)
     inline["measured"][0]["emitter"]["clock"] = [512, 1]
     refused(
         inline, r"measured\[0\]\.emitter\.clock is refused: the given family 'light' declares its own"
@@ -304,7 +304,7 @@ def test_the_given_clock_is_the_emitters_when_the_family_declares_none():
 
 
 def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no_pair():
-    document = on_the_file(emitter_world(stock=1, ticks=10), [512, 1])
+    document = on_the_file(emitter_specimen(stock=1, ticks=10), [512, 1])
     world = parse_nature_beam_world(document)
     body = world.measured[0]
     assert body.block is not None and body.block.kind == (800, 809) and body.block.pair == (800, 801)
@@ -314,13 +314,13 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
     light_kind = json.loads(json.dumps(document))
     light_kind["measured"][0]["kind"] = [809, 800]
     refused(light_kind, r"measured\[0\]\.kind \[809, 800\] is no massive kind")
-    inline = emitter_world(stock=1, ticks=10)
+    inline = emitter_specimen(stock=1, ticks=10)
     inline["measured"][0]["kind"] = [800, 809]
     refused(inline, r"measured\[0\]\.kind is refused: the family 'matter' declares its pair")
     # an emitter giving a family whose pair is the body's declares the given record's pair: on
     # an inline list, a body of a second massive kind giving matter (under the three entries a
     # body of matter cannot give matter, its own family; ALGEBRA.md #the-primitives waits)
-    giving_matter = emitter_world(stock=1, ticks=10)
+    giving_matter = emitter_specimen(stock=1, ticks=10)
     names = {family["name"]: family for family in giving_matter["universe"]}
     names["matter"]["pair"] = "body"
     giving_matter["universe"].append(family_entry("heavy", [1600, 1618], names["matter"]["reads"]))
@@ -330,7 +330,7 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
     body["emitter"]["family"] = "matter"
     body["emitter"]["clock"] = [512, 1]
     refused(giving_matter, r"measured\[0\]\.emitter\.pair is required: the given family 'matter'")
-    inline_pair = emitter_world(stock=1, ticks=10)
+    inline_pair = emitter_specimen(stock=1, ticks=10)
     inline_pair["measured"][0]["emitter"]["pair"] = [1, 1]
     refused(inline_pair, r"measured\[0\]\.emitter\.pair is refused: the given family 'light' declares")
 
@@ -344,6 +344,6 @@ def test_age_bound_fixed_sign_and_the_family_clock_are_refused_by_name_when_abse
         (lambda d: d["universe"][0].__setitem__("clock", 3), r"clock must be a list, not 3"),
         (lambda d: d["universe"][0].__setitem__("clock", [1, 0]), r"has q from 1"),
     ):
-        document = emitter_world(stock=1, ticks=4)
+        document = emitter_specimen(stock=1, ticks=4)
         change(document)
         refused(document, match)
