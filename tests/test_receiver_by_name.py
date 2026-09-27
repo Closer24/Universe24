@@ -27,6 +27,7 @@ def body(x: int) -> dict:
         "amount": 1,
         "stocks": {},
         "momentum": [0, 0, 0],
+        "momentum_before": [0, 0, 0],
         "fixed": False,
     }
 
@@ -88,30 +89,7 @@ def gathers(lines: list[dict]) -> list[dict]:
 
 
 def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells_off_the_ladder():
-    """(a) On the closed chain of 200 every record A emits writes EXACTLY ONE gather line, at
-    `screen`'s rung (`click_at` rung, `chosen` screen, `tick` the rung's interval equal to
-    `click`), never before the lattice's cone allows (one Link per interval from the body's
-    head at its giving to the screen's nearest Node at 91; the body steps toward the screen
-    at the momentum 70, so the later givings are nearer: the fourth's head 18 Links away,
-    its click 51 intervals after its giving on this head's residue 114 of 2403 before the Node
-    clock, COMPUTATION; SINCE THE NODE CLOCK, BUILD.md section 26 item 31, the wheel at the
-    body's Nodes is the rule's with its content and the residues moved;
-    SINCE THE REMAINDER KEPT, BUILD.md section 26 item 29, the residues spread from the
-    kept remainder), the ladder the one detector (the block's `receiver`, read
-    through `receiver_detector`), the line carrying the quantum (`content` 1) and the record
-    deleted whole at it (never in `records` after its line), the definition and
-    `receiver_detector` carrying the name; (d) the detector list reversed gives byte-identical
-    gather lines up to the order of the HOST listing `detectors` (issue #1116: the list's order
-    is no input to the click); (e) `beside` and A's own detector
-    are DETECTORS OFF THE LADDER: they book the one-way flux into their Nodes (the train
-    passes `beside` between A and the screen: its pointer above 0 as the click read it;
-    A's own detector books nothing of its outgoing train, the outward flux negative), are
-    never chosen, and the line's `T` counts them with the screen (HOST); the books
-    balanced. The edge case (c): the same world without
-    `receiver` loads (the ladder every declared set in the declared order, `screen` then
-    `beside`: the first record's line at `beside`, the set the train reaches first);
-    `receiver` on a block that emits nothing, a name no set declares (the names listed) and
-    a value that is no string are refused."""
+    """(a) On the closed chain of 200 every record A emits writes EXACTLY ONE gather line, at `screen`'s rung (`click_at` rung, `chosen` screen, `tick` the rung's interval equal to `click`), never before the lattice's cone allows (one Link per interval from the body's head at its giving to the screen's nearest Node at 91; the body steps toward the screen at the momentum 70, so the later givings are nearer: the fourth's head 18 Links away, its click 51 intervals after its giving on this head's residue 114 of 2403 before the Node clock, COMPUTATION; SINCE THE NODE CLOCK, BUILD.md section 26 item 31, the wheel at the body's Nodes is the rule's with its content and the residues moved; SINCE THE REMAINDER KEPT, BUILD.md section 26 item 29, the residues spread from the kept remainder), the ladder the one detector (the block's `receiver`, read through `receiver_detector`), the line carrying the quantum (`content` 1) and the record deleted whole at it (never in `records` after its line), the definition and `receiver_detector` carrying the name; (d) the detector list reversed gives byte-identical gather lines up to the order of the HOST listing `detectors` (issue #1116: the list's order is no input to the click); (e) `beside` and A's own detector are DETECTORS OFF THE LADDER: they book the one-way flux into their Nodes (the train passes `beside` between A and the screen: its pointer above 0 as the click read it; A's own detector books nothing of its outgoing train, the outward flux negative), are never chosen, and the line's `T` counts them with the screen (HOST); the books balanced. The edge case (c): the same world without `receiver` loads (the ladder every declared set in the declared order, `screen` then `beside`: the first record's line at `beside`, the set the train reaches first); `receiver` on a block that emits nothing, a name no set declares (the names listed) and a value that is no string are refused."""
     world = parse_nature_beam_world(chain_of_200())
     assert world.measured[0].block is not None and world.measured[0].block.receiver == "screen"
     dumps: list[list[str]] = []

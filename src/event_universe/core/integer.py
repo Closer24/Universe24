@@ -25,6 +25,14 @@ def bounded_gcd(first: int, second: int) -> int:
     raise ArithmeticError("bounded gcd iteration limit exceeded")
 
 
+def bounded_lcm(first: int, second: int) -> int:
+    """The least common multiple of two checked magnitudes through the bounded gcd; 0 where either is 0."""
+    a, b = abs(checked_work(first)), abs(checked_work(second))
+    if a == 0 or b == 0:
+        return 0
+    return checked_work(a * b // bounded_gcd(a, b))
+
+
 def reduced(numerator: int, denominator: int) -> tuple[int, int]:
     """A rational as the pair (n, d) in lowest terms with d positive."""
     common = bounded_gcd(abs(numerator), denominator) or 1
@@ -42,19 +50,7 @@ def rational_sum(terms: list[tuple[int, int]]) -> tuple[int, int]:
 
 
 def by_clock(age: int, numerator: int, denominator: int) -> int:
-    """What the whole part of age x numerator / denominator gains at the
-    self-creation that takes the age from `age` to `age + 1`: a rate read
-    off a clock, the first difference of a floor, with no remainder kept
-    anywhere. Since the fraction-free law (2026-09-20, BEAM_LAW note 41)
-    every count of a body is `by_drive` on an accumulator of the body's
-    record, and this is its constant-rate identity: from an empty
-    accumulator at age 0, `by_drive` gains `by_clock(k - 1, n, d)` at the
-    k-th self-creation and holds `(k n) mod d` after it while the rate is
-    constant (`tests/test_fraction_free.py` (a)); a row's phase per
-    interval of age (a count on a row, not on a body: `by_clock_rows`)
-    and the turn by momentum (a count against the record's own count of
-    Links) keep this form, and the readings tools derive the constant-rate
-    counts by it."""
+    """What the whole part of age x numerator / denominator gains at the self-creation that takes the age from `age` to `age + 1`: a rate read off a clock, the first difference of a floor, with no remainder kept anywhere. Since the fraction-free law (2026-09-20, BEAM_LAW note 41) every count of a body is `by_drive` on an accumulator of the body's record, and this is its constant-rate identity: from an empty accumulator at age 0, `by_drive` gains `by_clock(k - 1, n, d)` at the k-th self-creation and holds `(k n) mod d` after it while the rate is constant (`tests/test_fraction_free.py` (a)); a row's phase per interval of age (a count on a row, not on a body: `by_clock_rows`) and the turn by momentum (a count against the record's own count of Links) keep this form, and the readings tools derive the constant-rate counts by it."""
     if denominator < 1:
         raise ValueError("positive denominator required")
     return ((age + 1) * numerator) // denominator - (age * numerator) // denominator

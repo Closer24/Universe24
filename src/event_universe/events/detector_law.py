@@ -63,13 +63,13 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
-from math import gcd, lcm
+from math import gcd
 from typing import cast
 
 import numpy as np
 
 from event_universe.core.game_board import box_centre
-from event_universe.core.integer import by_drive
+from event_universe.core.integer import bounded_lcm, by_drive
 from event_universe.core.main_loop import MainLoop, Stage, read_only
 from event_universe.core.ports import Ports, port_of
 from event_universe.core.primitive import Own, Start, Term, Write
@@ -615,12 +615,12 @@ class DetectorLawSimulation:
         self.recoil_wall = 1
         for index, row in enumerate(world.families):
             if row.phase_per_age is not None:
-                self.recoil_wall = lcm(
+                self.recoil_wall = bounded_lcm(
                     self.recoil_wall, self._wavelength(row.phase_per_age, f"families[{index}]")
                 )
         for number, entry in enumerate(world.measured):
             if entry.block is not None and entry.block.emitter is not None:
-                self.recoil_wall = lcm(
+                self.recoil_wall = bounded_lcm(
                     self.recoil_wall, self._wavelength(entry.block.emitter.clock, f"measured[{number}]")
                 )
         # the interval's clicks for the recoil's act: the body, the sense, the tally, the record's clock
