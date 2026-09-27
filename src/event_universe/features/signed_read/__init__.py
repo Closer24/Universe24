@@ -154,10 +154,9 @@ DECLARATION = Declaration(
         "the axis contents with their remainders",
     ),
     ("the paces",),
-    None,
     apply,
-    THE_WORD + " (9.117 item 5); 9.117 item 2, the first row; 9.78 (4); 9.108 items 8, 11, 12, 13; "
-    "9.116 items 4a and 4c",
+    THE_WORD
+    + " (9.117 item 5); 9.117 item 2, the first row; 9.78 (4); 9.108 items 8, 11, 12, 13; 9.116 items 4a and 4c",
     word="the right side",
     schema=Schema(
         {

@@ -120,7 +120,7 @@ def test_a_schema_lives_at_the_places_of_the_files_and_gives_its_keys():
 
 
 def declaration(name: str, places: dict) -> Declaration:
-    return Declaration(name, "(iv)", (), (), None, None, "9.117", schema=Schema(places))
+    return Declaration(name, "(iv)", (), (), None, "9.117", schema=Schema(places))
 
 
 def test_the_cards_are_collected_by_place_and_two_folders_claiming_one_key_are_refused():

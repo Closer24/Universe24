@@ -14,7 +14,6 @@ DECLARATION = Declaration(
     "(ii)",
     ("the record's age", "L", "the face"),
     ("the record's tally",),
-    2,
     None,
     "9.88 (3); 9.117 item 3",
     word="after the step",

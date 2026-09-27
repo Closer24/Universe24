@@ -17,7 +17,6 @@ DECLARATION = Declaration(
     "(i)",
     ("the Link's value", "a Port's accumulator", "the twist table"),
     ("the arrivals",),
-    1,
     None,
     "9.112 item 1; 9.96 (2) (e); 9.117 item 3",
     word="the step",
