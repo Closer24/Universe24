@@ -6,11 +6,17 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 
 from event_universe.core.register import Declaration
-from event_universe.core.rule3 import THE_ADVANCE, THE_INVERSE, Key, division_back, division_forward
+from event_universe.core.rule3 import (
+    SPAN,
+    THE_ADVANCE,
+    THE_INVERSE,
+    Key,
+    division_back,
+    division_forward,
+)
 
 Vector = tuple[int, int, int]
 STEP_ACTS = (THE_ADVANCE, THE_INVERSE)
-TWO = 2  # the potential's 2 Gamma (ALGEBRA.md #the-well)
 
 
 @dataclass(frozen=True)
@@ -70,7 +76,7 @@ def apply(start: InductionStart, own: InductionOwn) -> InductionWrites:
     inverse = start.act == THE_INVERSE
     momentum, before = list(start.momentum), list(start.momentum_before)
     changes = [0, 0, 0]
-    wall = TWO * start.gamma * start.nodes
+    wall = SPAN * start.gamma * start.nodes
     for axis in range(len(momentum)):
         for read in start.reads:
             changes[axis] += read.factor * (read.vector_now[axis] - read.vector_before[axis])

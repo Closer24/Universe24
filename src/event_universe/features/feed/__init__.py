@@ -6,14 +6,22 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 
 from event_universe.core.register import Declaration
-from event_universe.core.rule3 import THE_ADVANCE, THE_INVERSE, Key, division_back, division_forward
+from event_universe.core.rule3 import (
+    SPAN,
+    THE_ADVANCE,
+    THE_INVERSE,
+    Key,
+    division_back,
+    division_forward,
+)
 
 Vector = tuple[int, int, int]
 Tensor = tuple[int, int, int, int, int, int]
 Faces = tuple["FeedFace", "FeedFace"] | None
 TENSOR_AXES = ((0, 0), (1, 1), (2, 2), (0, 1), (0, 2), (1, 2))
+# the symmetric tensor's component for an ordered pair of axes (h_bc = h_cb)
+PAIR_INDEX = {pair: k for k, (b, c) in enumerate(TENSOR_AXES) for pair in ((b, c), (c, b))}
 STEP_ACTS = (THE_ADVANCE, THE_INVERSE)
-TWO = 2  # the potential's 2 Gamma, and the leapfrog's two intervals (ALGEBRA.md #the-well)
 
 
 @dataclass(frozen=True)
@@ -80,7 +88,7 @@ def check(start: FeedStart) -> None:
                 f"Nodes, from 1: {len(minus.reads)} reads on {minus.nodes} Nodes against "
                 f"{len(plus.reads)} on {plus.nodes}"
             )
-        if start.distance[axis] < TWO:
+        if start.distance[axis] <= 1:  # the two faces' reads at least two Links apart
             raise ValueError(
                 f"the feed's faces on axis {axis} stand {start.distance[axis]} Links apart: from 2"
             )
@@ -97,13 +105,13 @@ def division(act: str, key: Key, numerator: int, wall: int, carries: dict[Key, i
 
 
 def contraction(face: FeedFace, n: Vector, start: FeedStart, key: Key, carries: dict[Key, int]) -> int:
-    """The contraction at one face (ALGEBRA.md #the-primitives, the row "the feed") with the momentum n the interval reads: per read f x [the time level - (n_b V_b) div W + (n_b n_c h_bc) div W^2], the vector and the tensor parts bookings of the momentum with the read's levels, their divisions carried by the face's key."""
+    """The contraction at one face (ALGEBRA.md #the-primitives, the row "the feed") with the momentum n the interval reads: per read f x [the time level - (n_b V_b) div W + (n_b n_c h_bc) div W^2], the vector and the tensor parts bookings of the momentum with the read's levels (the symmetric tensor over every ordered pair of axes), their divisions carried by the face's key."""
     total = 0
     for position, read in enumerate(face.reads):
         current = sum(n[b] * read.vector[b] for b in range(len(n)))
         stress = 0
-        for k, (b, c) in enumerate(TENSOR_AXES):
-            stress += n[b] * n[c] * read.tensor[k] * (1 if b == c else TWO)
+        for (b, c), k in PAIR_INDEX.items():
+            stress += n[b] * n[c] * read.tensor[k]
         vector_part = division(
             start.act, (*key, position, "v"), read.factor * current, start.wall, carries
         )
@@ -129,8 +137,8 @@ def apply(start: FeedStart, own: FeedOwn) -> FeedWrites:
         minus = contraction(faces[0], middle, start, ("feed", axis, "-"), carries)
         plus = contraction(faces[1], middle, start, ("feed", axis, "+"), carries)
         contractions.append((minus, plus))
-        wall = TWO * start.gamma * start.distance[axis] * faces[1].nodes
-        step = division(start.act, ("feed", axis), TWO * start.wall * (plus - minus), wall, carries)
+        wall = SPAN * start.gamma * start.distance[axis] * faces[1].nodes
+        step = division(start.act, ("feed", axis), SPAN * start.wall * (plus - minus), wall, carries)
         other[axis] += -step if inverse else step
     moved = (other[0], other[1], other[2])
     return FeedWrites(
