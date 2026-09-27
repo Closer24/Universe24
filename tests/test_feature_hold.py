@@ -264,3 +264,42 @@ def test_the_declaration_is_the_ledgers_row():
     registered = simulation.register.declarations["the hold"]
     assert registered.binder is bind and callable(registered.function)  # the loop's hold, bound
     assert callable(bind(simulation))
+
+
+def test_the_folder_gives_the_loops_integers_backward_on_the_resting_lorentz_world_bit_for_bit():
+    """examples/events/toward_nature/lorentz_rest.json (no hop, so the loop's inverse is defined):
+    twenty intervals forward with the folder's advance act, then twenty of the loop's
+    `step_inverse`, each the folder's unhold act (the dipoles' divisions stepped back) and its
+    inverse act (the parts' stepped back), the loop's own integers read after each: the
+    values and carries of every held family agree bit for bit on the way back, and the state at
+    the end is the state at the start."""
+    rest = ROOT / "examples" / "events" / "toward_nature" / "lorentz_rest.json"
+    simulation = DetectorLawSimulation(parse_nature_beam_world(json.loads(rest.read_text())))
+    block = simulation.block_by_number[0]
+    owns = {}
+    for family in simulation.held_records:
+        owns[family] = apply(
+            term_of(simulation, family), start_of(simulation, block, family, THE_LOAD), HoldOwn({}, {})
+        ).own
+    start = {family: (dict(own.values), dict(own.carries)) for family, own in owns.items()}
+    for _ in range(20):
+        simulation.step()
+        for family in simulation.held_records:
+            owns[family] = apply(
+                term_of(simulation, family),
+                start_of(simulation, block, family, THE_ADVANCE),
+                owns[family],
+            ).own
+    for _ in range(20):
+        simulation.step_inverse()
+        for family in simulation.held_records:
+            # the loop's interval back: the dipoles' divisions stepped back (the unhold), then
+            # the parts' (the inverse), the dipoles' levels read from the stepped-back state
+            for act in (THE_UNHOLD, THE_INVERSE):
+                owns[family] = apply(
+                    term_of(simulation, family), start_of(simulation, block, family, act), owns[family]
+                ).own
+            assert (dict(owns[family].values), dict(owns[family].carries)) == engines_state(
+                block, family
+            )
+    assert {family: (dict(own.values), dict(own.carries)) for family, own in owns.items()} == start
