@@ -1,32 +1,32 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "6766e731bd557a3abfb4b5c36e79ccca1c382ec6",
+ "recorded_at": "28bacc004e40ef090af4afaef296ca2a647e95e5",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
-    "hash": "23fa7d19cc00ff162aabeed42e089db060e774018ff97a9440fb676a0acec192"
+    "hash": "07dd6cd992d4bb1254f0c92a47057b59aa2a95da2d232970d20fb0a8d27373a5"
    },
    "ticks": 15156,
    "intervals": 200,
-   "digest": "5e0b1e3cb500ddcdf85efd6b0a393923fdf8107e17d3c7df14d2ccaf7c507c32",
-   "records": 16,
+   "digest": "b34bfd2b3ba47b360ef437415822d4f482c7fab7ef7b03f141ea4f1f18eac886",
+   "records": 3,
    "clicks": 0,
-   "lines": 577,
-   "refused_at": 181,
-   "refused": "the twist on the Port toward +y reaches |k| = 43307142, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
+   "lines": 37,
+   "refused_at": 14,
+   "refused": "the twist on the Port toward +y reaches |k| = 34034832, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/dark_body/dark.json": {
    "stamp": {
-    "hash": "b0f19bb2f7511b0a795d3d961120cfcc5e49b9bb241dddf5dd1c97f31dd909ff"
+    "hash": "9b14b3fa4d32026d675374fcd7ad6c66e2fc95625ea869d2cc3b94b975a7f993"
    },
    "ticks": 2400,
    "intervals": 200,
-   "digest": "d8223eaab295a66282e5bee935e15297a5513703c0a20ac4c1df756d30ef2e7c",
-   "records": 12,
+   "digest": "e3c0b2619b5e2e670ea55f4a718a8d772d88de79bb7a9de14f6f940b36c089d4",
+   "records": 3,
    "clicks": 0,
-   "lines": 573,
-   "refused_at": 181,
-   "refused": "the twist on the Port toward +y reaches |k| = 43416228, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
+   "lines": 37,
+   "refused_at": 14,
+   "refused": "the twist on the Port toward +y reaches |k| = 34034832, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/massive_record/boxed_clock_side_20_at_rest.json": {
    "stamp": {
@@ -34,7 +34,7 @@
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "3f1ba949f0fc7c327b8e11a7c37817b896cce93dfa1f9a42447d7c85b478fa4a",
+   "digest": "83152e83b14a5090c4b26c998764242fb7f41ddff5e01d170ed2b2bc62176a94",
    "records": 1,
    "clicks": 0,
    "lines": 203
@@ -45,7 +45,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "ea6e27a69686ae3cc3e856f4e5fdd49f98c8ccfe57c8e11318053ffda3d70833",
+   "digest": "df628c3063572657ea927d91ec2656659bf7a13cc543e9fdf3d796c5dfb9c05e",
    "records": 1,
    "clicks": 0,
    "lines": 403
@@ -56,7 +56,7 @@
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "85fe3b56622fe3ec6ea1416867a3eb3a3dda3c6e1c958f5fdc26d4e77e29317f",
+   "digest": "b993433944cd08ced98323e6df04a7d80fb23e299aff6d96370e27a6abed5cbb",
    "records": 1,
    "clicks": 0,
    "lines": 204
@@ -67,7 +67,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "474a0e1c246c4e230d418ff1eb5f93c352217b6d5845deeb25a541d49db61fe2",
+   "digest": "1f4dd62eacab3036bc32c4629553da50e304edfae5b1b83a5560889cfb85cd38",
    "records": 1,
    "clicks": 0,
    "lines": 404
@@ -78,7 +78,7 @@
    },
    "ticks": 3500,
    "intervals": 200,
-   "digest": "66306ead87dd68dee78b9c4af708f080ee81b52eb2e63bdf49ab90c91f881d2f",
+   "digest": "78283a2fe82f6b6d0d6ce2b4a916b665791111e9d60f36f097829d400b6b4927",
    "records": 1,
    "clicks": 0,
    "lines": 201
@@ -89,21 +89,21 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "ecb23d2289884dff35912ee29bd9c505a9142b01ab5b74cbc35c7da8bb945bb0",
+   "digest": "b477854999cd711f1dec24f213b907866ba26783ceba40d52039c6973393cf4b",
    "records": 1,
    "clicks": 0,
    "lines": 401
   },
   "examples/events/massive_record/light_clock.json": {
    "stamp": {
-    "hash": "ff778e00a368f3007bcc3156cb8b5a9850d985122e9a577ffc8cac36b675bf0f"
+    "hash": "e35d7873be165414bc4f3822daa3c09bdd379d10c6af1d79c4191ab17d44f883"
    },
    "ticks": 4800,
    "intervals": 1500,
-   "digest": "a6a95fb9746554431bf245044670bf581ec8e22bfc53978c0f264f98a7d15840",
-   "records": 17,
-   "clicks": 40,
-   "lines": 4754
+   "digest": "c903003173bbd4b3590138949cd00a7e82b8da37520f2de1f5a023eff9157bde",
+   "records": 13,
+   "clicks": 45,
+   "lines": 4759
   },
   "examples/events/massive_record/muon_moving_clock_at_rest_14.json": {
    "stamp": {
@@ -111,7 +111,7 @@
    },
    "ticks": 20500,
    "intervals": 200,
-   "digest": "0424b763c3638592188417a84fdbafef688892001fc9b296573881cf7258b8ad",
+   "digest": "747f9d5455f3384ac7522eb661face0d62ec4ce185b5cdbc550bb16d2c28f2ca",
    "records": 1,
    "clicks": 0,
    "lines": 204
@@ -122,49 +122,45 @@
    },
    "ticks": 20500,
    "intervals": 200,
-   "digest": "6e65672f9dfb0bc6db24ccf08a464de8c6bdf75058ab02a806602c571e9f03d8",
+   "digest": "72f05a3eba6b5a691d8c848969a8a4297de8d298d7ec1ca10752f5601a20ad62",
    "records": 1,
    "clicks": 0,
    "lines": 404
   },
   "examples/events/point_emitter/point_chain.json": {
    "stamp": {
-    "hash": "4fc4c64f3f0ddbc195438e1ef9ae7a60f1844e995f79f6273e3082ece9e121fe"
+    "hash": "1f38daaa3bf5806b7ea86e9bac9bfc1234edb3e093b496b5e7921f7fa6121283"
    },
    "ticks": 70992,
    "intervals": 200,
-   "digest": "515aaf7dae61f1234ed82d39af7fe9172b03159dc106fa218f5e4515fd8dc767",
-   "records": 0,
+   "digest": "b86691cc68ebe674371a8a1b75c2ea2332c5c65b11a2ab8e37b33d13a888d13e",
+   "records": 2,
    "clicks": 0,
-   "lines": 0,
-   "refused_at": 0,
-   "refused": "families[1] declares the clock [512, 1] on N = 64 steps: its wavelength 2 N q / p is no whole number of Links, so the universe's wall L has no value"
+   "lines": 205
   },
   "examples/events/point_emitter/point_light_clock.json": {
    "stamp": {
-    "hash": "b0f76d7b81a392dc56f56da262d0b88ff63614dfe5ac787259cbfe7732989cda"
+    "hash": "39ab0210af23eeaf869237996a41c851b8a15a65cb3bbf83ad11c747e973c962"
    },
    "ticks": 35304,
    "intervals": 3000,
-   "digest": "515aaf7dae61f1234ed82d39af7fe9172b03159dc106fa218f5e4515fd8dc767",
-   "records": 0,
-   "clicks": 0,
-   "lines": 0,
-   "refused_at": 0,
-   "refused": "families[1] declares the clock [512, 1] on N = 64 steps: its wavelength 2 N q / p is no whole number of Links, so the universe's wall L has no value"
+   "digest": "08792b322becca57575fa462e1eb4d804801b981598aab0adfc90de815088654",
+   "records": 2,
+   "clicks": 12,
+   "lines": 9108
   },
   "examples/events/toward_nature/bending.json": {
    "stamp": {
-    "hash": "afd085a67cba2f1391a60655a71b3091ca8198aafca414fd8fce198d6d3f4c92"
+    "hash": "643373cfa97d1edb61558b12f9457545bcd49d4709be5cfe9fa7f29ccc80de1b"
    },
    "ticks": 5600,
    "intervals": 200,
-   "digest": "90697852a802eab1c0b70b5fc546a1688752bc968d544b87f33ddee5383dac48",
-   "records": 13,
+   "digest": "3002ec33dacdaf04502372d044518df903d6af57a2fb735702da4af511390acd",
+   "records": 3,
    "clicks": 0,
-   "lines": 574,
-   "refused_at": 181,
-   "refused": "the twist on the Port toward +y reaches |k| = 43416228, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
+   "lines": 37,
+   "refused_at": 14,
+   "refused": "the twist on the Port toward +y reaches |k| = 33925746, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/toward_nature/lorentz_moving.json": {
    "stamp": {
@@ -179,14 +175,14 @@
   },
   "examples/events/toward_nature/lorentz_moving_long.json": {
    "stamp": {
-    "hash": "96aad9701a60a356208beda937590e7766bc18767c4be7418964e6e6592cd86c"
+    "hash": "b48cad34a2ac65aaf07972043bbf3af2bafac353011d9fd9a652fb553179f6a1"
    },
    "ticks": 5966,
    "intervals": 200,
-   "digest": "aa8321921fe7dc5389b68fd00f92c7931b9a8f12eed0006a637c7244e031946a",
+   "digest": "29b943b1d2ab7cf6fd3ac982b63af108c9cccb89a4222d979775f0342a939b25",
    "records": 3,
-   "clicks": 1,
-   "lines": 609
+   "clicks": 2,
+   "lines": 610
   },
   "examples/events/toward_nature/lorentz_rest.json": {
    "stamp": {
@@ -225,27 +221,27 @@
   },
   "examples/events/toward_nature/redshift_bottom_long.json": {
    "stamp": {
-    "hash": "e459ec74788a5ba518a6e3c4fc29ee84f17985143b37c4ea6eeba76e4b72bcf8"
+    "hash": "d57d2fcc780023e4a83e7858914e330aacdb3cae93717971861dbdd51f3306da"
    },
    "ticks": 10558,
    "intervals": 200,
-   "digest": "d0f7910a70cbc1a35435f029021d5aea9d7618c42ca8afdb84f4c20076f6d254",
+   "digest": "472fa53e09d2fd1387afc4bb4402897d83473320c2c7561b52d693657af3541b",
    "records": 1,
    "clicks": 1,
    "lines": 165,
    "refused_at": 56,
-   "refused": "the twist on the Port toward +x reaches |k| = 37704680, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
+   "refused": "the twist on the Port toward +x reaches |k| = 36862640, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/toward_nature/redshift_top.json": {
    "stamp": {
-    "hash": "29e807682f7c3d1578f5218b1af34b6177881cc1bb5af105bd7117cb8debcfaa"
+    "hash": "7acf85b05ee0bc9f4090d7254934f2519fb0236d0931aba81051d9675623377e"
    },
    "ticks": 6150,
    "intervals": 200,
-   "digest": "beab32bf0e33cf7c35fb74a813c5adabe7038aa0ddab23e257f4a0fe232bb8ed",
+   "digest": "572e392d18c88296cdb8f22754abe79256f51e3b6aaaef469a44279c93a8e04f",
    "records": 9,
-   "clicks": 1,
-   "lines": 630
+   "clicks": 0,
+   "lines": 628
   },
   "examples/events/toward_nature/redshift_top_long.json": {
    "stamp": {
