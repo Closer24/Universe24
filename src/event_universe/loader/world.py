@@ -433,6 +433,10 @@ class BlockDefinition:
     # THE STOCK OF THE BODY'S OWN FAMILY (ALGEBRA.md #the-primitives; commit 6): the count of
     # its own quanta set aside for giving where its emitter gives its own family, 0 elsewhere (another family's stock is the body's `held` quanta of it)
     stock: int = 0
+    # A BODY IN THE LAW'S FORM (ALGEBRA.md #what-a-body-is): its Nodes as declared, in the file's
+    # order, and the count at each (the family of clicks' level there); None on a body by its position
+    nodes: tuple[Address3, ...] | None = None
+    counts: tuple[int, ...] | None = None
 
 
 @dataclass(frozen=True)
@@ -1727,10 +1731,8 @@ def _measured(
     for index, obj in enumerate(bodies):
         label = f"measured[{index}]"
         if "nodes" in obj:
-            raise ValueError(
-                f"{label} is a body in the law's form (its Nodes with their counts): "
-                "the loop reads a body by its position until the count's line is bound to it"
-            )
+            found.append(_counted(obj, label, families, names, shape, occupied, momentum_unit))
+            continue
         if "side" in obj or "extents" in obj:
             # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): the drive's ramp and
             # start on every block; the momentum and the stocks are the schema's required keys
@@ -1823,6 +1825,95 @@ def _measured(
             )
         )
     return tuple(found)
+
+
+def _counted(
+    obj: dict[str, object],
+    label: str,
+    families: tuple[FamilyDefinition, ...],
+    names: dict[str, int],
+    shape: Address3,
+    occupied: set[Address3],
+    momentum_unit: int,
+) -> MeasuredDefinition:
+    """A body in the law's form (ALGEBRA.md #what-a-body-is; the frame's `COUNTED`): its family, its Nodes with their counts, its momentum's two levels, its spin's two levels and its moment where declared, its stocks; the block's corner the Nodes' lowest per axis, its extents their box, its Nodes and counts kept for the loop (the mask and the count's line); the pair its family's, no seed, no well and no giving yet."""
+    family_name = obj["family"]
+    if not isinstance(family_name, str) or family_name not in names:
+        raise ValueError(f"{label}.family names an unknown family")
+    family = names[family_name]
+    if families[family].pair_on_body:
+        raise ValueError(
+            f"{label}: the family {family_name!r} declares no pair, and a body in the law's form "
+            "declares none (its record is the generator's; ALGEBRA.md #what-a-body-is)"
+        )
+    lines = cast(tuple[dict[str, object], ...], obj["nodes"])
+    nodes = tuple(
+        _address(line["node"], f"{label}.nodes[{i}].node", shape) for i, line in enumerate(lines)
+    )
+    counts = tuple(
+        _integer(line["count"], f"{label}.nodes[{i}].count", 1) for i, line in enumerate(lines)
+    )
+    shared = [node for node in nodes if node in occupied]
+    if shared:
+        raise ValueError(f"two measured events share the Node {list(shared[0])} ({label})")
+    occupied.update(nodes)
+    corner = tuple(min(node[axis] for node in nodes) for axis in range(3))
+    extents = tuple(max(node[axis] for node in nodes) - corner[axis] + 1 for axis in range(3))
+    amount = sum(counts)
+    held = [0] * len(families)
+    held[family] = amount
+    for key, content in cast(dict[str, object], obj["stocks"] if "stocks" in obj else {}).items():
+        if key not in names:
+            raise ValueError(f"{label}.stocks names an unknown family {key!r}")
+        if names[key] == family:
+            raise ValueError(
+                f"{label}.stocks names the body's own family {key!r}, whose count is its Nodes'"
+            )
+        held[names[key]] = _integer(content, f"{label}.stocks[{key!r}]", 1)
+    momentum = _axes_vector(obj["momentum"], f"{label}.momentum")
+    momentum_before = _axes_vector(obj["momentum_before"], f"{label}.momentum_before")
+    wall = 3 * momentum_unit * sum(held)
+    if 3 * sum(component * component for component in momentum) >= wall * wall:
+        raise ValueError(
+            f"{label}.momentum {list(momentum)}: the pace bound 3 (P . P) < (3 Q M)^2 = {wall * wall} "
+            "fails (the body's velocity below c, ALGEBRA.md #the-primitives)"
+        )
+    if "emitter" in obj:
+        raise ValueError(
+            f"{label}.emitter on a body in the law's form: the given record is the body's own, "
+            "which the generator writes; a giving body is declared by its position until then"
+        )
+    zero = (0, 0, 0)
+    block = BlockDefinition(
+        extents[0],
+        families[family].pair,
+        families[family].pair,
+        0,
+        spin=_axes_vector(obj["spin"], f"{label}.spin") if "spin" in obj else zero,
+        spin_before=_axes_vector(obj["spin_before"], f"{label}.spin_before")
+        if "spin_before" in obj
+        else zero,
+        extents=(extents[0], extents[1], extents[2]),
+        moment=_axes_vector(obj["moment"], f"{label}.moment") if "moment" in obj else zero,
+        nodes=nodes,
+        counts=counts,
+    )
+    return MeasuredDefinition(
+        (corner[0], corner[1], corner[2]),
+        family,
+        amount,
+        0,
+        momentum,
+        momentum_before,
+        False,
+        tuple(TABLES[1] for _ in families),
+        tuple(None for _ in families),
+        tuple("scalar" for _ in families),
+        ONE_NODE,
+        False,
+        tuple(held),
+        block=block,
+    )
 
 
 def _detector_law_load_checks(
@@ -2041,6 +2132,8 @@ def _initial_state_checks(
         # a cube beyond a face or wrapped onto itself is refused by the fit
         # check on the parsed world (naming the axis and the vertex)
         nodes = body_node_indices(board, corner, block.extents, wrap)
+        if block.nodes is not None:
+            nodes = [x * board[1] * board[2] + y * board[2] + z for x, y, z in block.nodes]
         own = set(nodes)
         for other_number, _, _, other_nodes in blocks:
             if own.intersection(other_nodes):

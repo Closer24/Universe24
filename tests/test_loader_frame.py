@@ -277,7 +277,7 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
 
 
 def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by_name():
-    """A body in the law's form (its family, its Nodes with counts, its momentum and spin at two levels, its moment, its stocks and its emitter) passes the frame; every defect is refused by name; world.py refuses the form until the loop reads it."""
+    """A body in the law's form (its family, its Nodes with counts, its momentum and spin at two levels, its moment, its stocks and its emitter) passes the frame; every defect is refused by name; world.py builds its block: the corner the Nodes' lowest per axis, the extents their box, the Nodes and counts kept, the count their sum; a giving body in the form is refused until the generator writes its record."""
     families = tuple(entry["name"] for entry in shipped()["families"])
     context = Context(families)
     body = {
@@ -382,13 +382,30 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
     world = json.loads(
         (ROOT / "examples" / "events" / "dark_body" / "bright.json").read_text(encoding="utf-8")
     )
-    world["measured"][0] = body
+    nodes = [
+        {"node": [1, 2, 0], "count": 5},
+        {"node": [1, 4, 0], "count": 7},
+        {"node": [3, 3, 0], "count": 1},
+    ]
+    counted = {**spinning, "family": families[1], "nodes": nodes}
+
+    def load(**change):
+        world["measured"][0] = {**counted, **change}
+        world["stamp"] = {"hash": input_digest(world)}
+        return parse_world_document(world, world_files(world), input_digest(world)).measured[0]
+
+    entry = load()
+    assert (entry.position, entry.block.extents, entry.amount) == ((1, 2, 0), (3, 3, 1), 13)
+    assert entry.block.nodes == ((1, 2, 0), (1, 4, 0), (3, 3, 0)) and entry.block.counts == (5, 7, 1)
+    assert entry.block.spin == (0, 1, 0) and entry.block.moment == (2, 0, 0) and not entry.fixed
+    with pytest.raises(ValueError, match=r"measured\[0\]\.emitter on a body in the law's form"):
+        load(emitter={**giver, "family": families[1]})
     with pytest.raises(
-        ValueError,
-        match=r"measured\[0\] is a body in the law's form \(its Nodes with their counts\): the loop "
-        r"reads a body by its position until the count's line is bound to it",
+        ValueError, match=r"measured\[0\]: the family 'matter' declares no pair, and a body"
     ):
-        parse_world_document(world, world_files(world), input_digest(world))
+        load(family=families[-1])
+    with pytest.raises(ValueError, match=r"measured\[0\]\.nodes names the Node \[1, 2, 0\] twice"):
+        load(nodes=[*nodes, {"node": [1, 2, 0], "count": 2}])
 
 
 def test_the_start_file_is_its_mode_and_nothing_else():

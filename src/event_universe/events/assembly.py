@@ -209,6 +209,9 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
         definition = entry.block
         corner = [int(entry.position[axis]) for axis in range(3)]
         mask = loop._box(corner, definition.extents, entry.family)
+        if definition.nodes is not None:
+            mask = np.zeros(loop.shape, dtype=bool)
+            mask[tuple(np.array(definition.nodes).T)] = True
         block = loop._block(number, entry, definition, corner, mask)
         loop._write_pair(block)
         identity = number * loop.OWN_IDENTITY_STRIDE
