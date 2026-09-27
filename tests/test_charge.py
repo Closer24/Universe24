@@ -222,7 +222,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     split["universe"][LIGHT]["sign"] = [1, 2]
     refused(split, r"universe\[0\]\.sign must be one of \[-1, 0, 1\], not \[1, 2\]")
     same = copy()
-    same["universe"][CHARGE]["held"] = {"count": "content", "factors": [1]}
+    same["universe"][CHARGE]["held"] = {"count": "content", "factors": [1], "divisor": 40000}
     refused(same, "two families hold 'content'")
     quantum = copy()
     quantum["universe"][CHARGE]["quantum"] = 2
