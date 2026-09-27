@@ -12,7 +12,7 @@ from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import Seen, chosen_by_the_rule, exchange_of, form_I, spy_on
-from tests.worlds import emitter_world, family_entry, massive_generator, reads
+from tests.worlds import emitter_world, family_entry, reads, seed_on_the_mode
 
 LIGHT, MATTER, POSITIVE = 0, 1, 2
 STOCK = 3
@@ -40,7 +40,7 @@ def reversible_world(ticks: int = 400) -> dict:
             "momentum_before": [0, 0, 0],
         }
     )
-    massive_generator().seed_on_the_mode(document)
+    seed_on_the_mode(document)
     document["stamp"] = input_stamp(document)
     return document
 

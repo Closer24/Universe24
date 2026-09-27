@@ -28,7 +28,7 @@ from tests.bodies import (
     six_reads,
 )
 from tests.running import planted
-from tests.worlds import CHARGE_FAMILY_NAME, PERIODIC, emitter_world, massive_generator, wheel_of
+from tests.worlds import CHARGE_FAMILY_NAME, PERIODIC, emitter_world, seed_on_the_mode, wheel_of
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
@@ -116,7 +116,7 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     document = emitter_world(stock=4, on_mode=False)
     document["universe"][LIGHT]["sign"] = -1
     document["universe"][MATTER]["sign"] = -1
-    massive_generator().seed_on_the_mode(document)  # the stamp covers the charges
+    seed_on_the_mode(document)  # the stamp covers the charges
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     charge = held_record(simulation, "sign")

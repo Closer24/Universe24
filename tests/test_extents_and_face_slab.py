@@ -12,7 +12,7 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.loader.world import body_node_indices
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import planted
-from tests.worlds import emitter_world, layer_world, massive_generator
+from tests.worlds import emitter_world, layer_world, seed_on_the_mode
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
@@ -144,7 +144,7 @@ def test_a_slab_well_is_seeded_on_its_mode_and_checked_at_load():
     ]
     document["universe"][1]["pair"] = [800, 809]
     document["detectors"] = []
-    massive_generator().seed_on_the_mode(document)
+    seed_on_the_mode(document)
     world = parse_nature_beam_world(document)
     block = world.measured[0].block
     assert block is not None and block.extents == (12, 5, 1) and block.clock is not None

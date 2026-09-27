@@ -13,10 +13,12 @@ from tests.worlds import (
     NODE_CLOCK,
     chain_world,
     emitter_body,
+    emitter_rung,
     family_entry,
-    massive_generator,
+    mode_profile,
     reads,
     receiver_cube,
+    seed_on_the_mode,
 )
 
 PACES_SHAPE = [10, 6, 6]
@@ -303,7 +305,7 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
     if matter_emitter:
         document["measured"].append(emitter_at(100, stock, family="matter"))
     document["detectors"] = []
-    massive_generator().seed_on_the_mode(document)
+    seed_on_the_mode(document)
     return document
 
 
@@ -311,10 +313,9 @@ def seed_source(document: dict, number: int) -> None:
     """The measured event `number` seeded on its bound mode at its scalar seed, its `margin` made explicit."""
     entry = document["measured"][number]
     entry.setdefault("margin", "control")
-    generator = massive_generator()
-    entry["seed"] = generator.mode_profile(document, number, amplitude=entry["seed"])
+    entry["seed"] = mode_profile(document, number, entry["seed"])
     if "emitter" in entry:
-        generator.emitter_rung(document, number)  # the window's rung
+        emitter_rung(document, number)  # the window's rung
     # the input stamp: the law and the hash of the integers
     document["stamp"] = input_stamp(document)
 
@@ -387,7 +388,7 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
         }
     ]
     document["detectors"] = []
-    massive_generator().seed_on_the_mode(document)
+    seed_on_the_mode(document)
     document["measured"][0]["emitter"]["weight"] = weight
     document["stamp"] = input_stamp(document)
     return document

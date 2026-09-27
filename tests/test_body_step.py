@@ -9,7 +9,7 @@ from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import emitter_at, matter_emitter_world, parts_of, parts_world
-from tests.worlds import massive_generator
+from tests.worlds import seed_on_the_mode
 
 GAMMA = 10_000
 
@@ -25,7 +25,7 @@ def own_family_world(stock: int | None) -> dict:
         body["stock"] = stock
     document["measured"].append(body)
     document["universe"][1]["clock"] = [512, 1]
-    massive_generator().seed_on_the_mode(document)  # the emitter's mode and the stamp
+    seed_on_the_mode(document)  # the emitter's mode and the stamp
     return document
 
 
