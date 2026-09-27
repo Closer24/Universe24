@@ -35,10 +35,10 @@ daily automation or change physical laws as part of an audit.
 ## Regression comparison
 
 For recovery without conversation history, use
-[the recovery procedure](../../docs/RECOVERY.md).
+the recovery procedure.
 
 Read [the shared workflow](../workflow.md) and the regression expectations in
-[test expectations](../../docs/TEST_EXPECTATIONS.md). Run independently or accept
+test expectations. Run independently or accept
 an exact old/new tree and expected-change contract from Boss.
 
 Since 2026-09-17, by the model owner's decision in
@@ -50,14 +50,14 @@ of the cycle, the bounded integers, the phase), and then once, in parallel
 (`pytest -n auto`). Do not run the whole suite for reassurance, and do not add
 an old/new tree comparison, an example world's numbers or a known experiment to
 the suite: such a comparison is a research run, made once and recorded with a
-fingerprint and a date in [validation evidence](../../docs/VALIDATION.md). A
+fingerprint and a date in validation evidence. A
 physical milestone that several rules produce together is one fingerprinted,
 dated run of the engine, not a suite. A test exercises one generic rule in
 isolation on a minimal GameBoard, with its expected integers written down before
 the first run.
 
 For physical-path audits, apply the
-[local integer operation contract](../../docs/ARCHITECTURE.md#local-integer-operation-contract).
+local integer operation contract.
 Check intermediate bounds, exact division or declared remainder ownership,
 causal inputs and formula-free dynamic payloads alongside observed behavior.
 Use the existing related gates and report missing coverage; do not infer tensor

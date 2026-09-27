@@ -17,9 +17,9 @@ Preserve the current model identity until the numerical replacement is specified
 Before behavior edits, apply [the published-design requirement](../workflow.md#implement-from-a-published-design). Implement the cited design revision; return missing laws or interface decisions to its owner before adding behavior.
 
 Read [the shared workflow](../workflow.md)
-and [the physical feature procedure](../../docs/PHYSICAL_FEATURES.md).
+and the physical feature procedure.
 
-The active contract is [the Beam Law](../../docs/BEAM_LAW.md) with
+The active contract is the Beam Law with
 [the engine's bookkeeping](../../docs/ENGINE.md); the generic disturbance
 contract (DISTURBANCES.md) was deleted on 2026-09-19 and is in git.
 Configure identities and supported laws in JSON; do not add field-name branches
@@ -33,7 +33,7 @@ Output is an implementation plus numerical examples, tests and a review handoff.
 
 Before editing, distinguish law, local inputs and causal provenance, fixed
 evolving state, immutable parameters, derived quantities and output proposals.
-Use the current [definitions](../../SIMULATOR_DEFINITIONS.md) for bounds and model
+Use the current definitions for bounds and model
 exceptions. A new physical hypothesis needs its own explicit identity.
 
 For self-field work, inspect every upstream dependency. A local subtraction is
@@ -83,7 +83,7 @@ return the precise remaining law/contract problem to Boss.
 
 ## Reusable entity data
 
-For apparatus configuration, follow [the entity definitions contract](../../docs/ENTITY_DEFINITIONS.md).
+For apparatus configuration, follow the entity definitions contract.
 Keep detector geometry, supported rule selections and sensitivity in the separate
 entity definitions file; the world supplies explicit references and placements.
 Use the canonical host loader for validation and portable inputs. Changing these

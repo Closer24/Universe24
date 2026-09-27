@@ -115,14 +115,15 @@ def test_shared_rules_ship_with_source_and_have_one_entry_point():
     root = Path(__file__).parents[1]
     entry = root / "AGENTS.md"
     assert entry.is_file()
-    for name in ("README.md", "CONTRIBUTING.md", "docs/ARCHITECTURE.md", "MANIFEST.in"):
+    for name in ("README.md", "CONTRIBUTING.md", "MANIFEST.in"):
         assert "AGENTS.md" in (root / name).read_text()
     for name in (
-        "POSTULATES.md",
-        "SIMULATOR_DEFINITIONS.md",
-        "docs/ARCHITECTURE.md",
+        "docs/ALGEBRA.md",
+        "docs/ENGINE.md",
+        "docs/HIGHLIGHTS.md",
         "CONTRIBUTING.md",
-        "docs/TEST_EXPECTATIONS.md",
+        "skills/workflow.md",
+        "skills/boss-orchestrator/SKILL.md",
     ):
         assert name in entry.read_text()
         assert (root / name).is_file()

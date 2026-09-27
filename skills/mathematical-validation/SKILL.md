@@ -8,7 +8,7 @@ description: Derive and review Universe24 state spaces, operators, invariants, b
 The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The mathematician writes one algebraic line per primitive with its place in the step and gates each build; it never changes the engine's code.
 
 Read the [shared workflow](../workflow.md), current
-[architecture](../../docs/ARCHITECTURE.md) and the affected physical contract.
+architecture and the affected physical contract.
 Use the canonical [physics comparison method](../workflow.md#physics-comparison-method)
 with the physicist; do not maintain a separate comparison procedure.
 

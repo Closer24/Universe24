@@ -15,7 +15,7 @@ run an unchanged long suite or send Boss a sequence of waiting messages.
 Apply [the published-design requirement](../workflow.md#implement-from-a-published-design): cite the design revision and derive independent acceptance cases from its contract. A mismatch is evidence to report, not permission to rewrite behavior or expectations.
 
 Read [the shared workflow](../workflow.md) and
-[test expectations](../../docs/TEST_EXPECTATIONS.md). Input is the changed
+test expectations. Input is the changed
 behavior/risk and exact tree; output is actual commands/results, retained coverage,
 failure evidence, metadata and traces. Visual reports are optional output only
 when visualization has been explicitly requested.
