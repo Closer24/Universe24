@@ -269,7 +269,7 @@ of the readings since the last self-creation, and the free release runs
 per lattice interval at the rate held x E' over E'_0 x d; the domain |p|_1
 <= Q S M and the push ceiling of one grain per interval are refused; the
 record carries the `energy` lines and the key's block
-([ENGINE.md, the readings by type](ENGINE.md#the-detectors-readings-by-type));
+([ENGINE.md, the readings by type](ENGINE.md#the-output));
 absent, nothing of it is computed and no world changes by a byte (series
 S, examples/events/covariant/README.md (`examples/events/covariant/README.md`, deleted 2026-09-26)).
 Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
@@ -2242,7 +2242,7 @@ implementation's part of the contract. The design above is unchanged.
 34. **A table entry's window read from a reading** (issue #363, the model
     owner's go of 2026-09-20: "Alice and Bob are part of the GameBoard,
     no?"; a measurement, not a change of law; `tests/test_nature_beam_window_reads.py`
-    (a) to (c); [ENGINE, the world](ENGINE.md#the-beam-law-beam-v1-the-ray-laws-record-cancelled-docscancelled_worldsmd-the-engine-has-no-laws-name-item-70)). One
+    (a) to (c); [ENGINE, the world](ENGINE.md)). One
     additive key: on a measured event's table entry, `phase_window` may be
     the object `{"reads": "<family>", "offset": s}` in place of the number.
     The centre of the window is then the phase of the coherent pointer of

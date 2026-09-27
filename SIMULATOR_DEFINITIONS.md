@@ -623,7 +623,7 @@ and a giving Node's pair is rich, ALGEBRA.md 9.9, 9.19 items (2) and (4a)):
 The owner-approved run parameter selects open or periodic topology independently
 per axis; open is the default. The exact schema, one-interval Link transfer,
 extent-one return, unchanged carried momentum and mixed-axis refusal rules are
-in [the engine contract](docs/ENGINE.md#per-axis-gameboard-topology-2026-09-19-implementation-amendment).
+in [the engine contract](docs/ENGINE.md#1-the-words).
 This choice does not change a local contact law or establish equivalence between
 a thin periodic GameBoard and full 3D matter. Earlier topology descriptions below
 belong to their dated models, not an implicit events-world default.
