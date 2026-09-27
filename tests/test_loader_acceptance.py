@@ -16,24 +16,14 @@ from event_universe.core.register import discover
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import family_names, string_constants, written_defaults
-from tests.worlds import emitter_world
+from tests.worlds import SOURCED, emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / "src" / "event_universe"
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
+GENERATED = ROOT / "examples" / "events" / "generated" / "universe.json"  # matter's pair declared
 START = ROOT / "examples" / "events" / "engine_start.json"
 # one sourced entry (the word `sourced`, a card's key), as the retired source folder wrote it
-SOURCED = {
-    "name": "field",
-    "sign": 0,
-    "parts": [1],
-    "phase": 2,
-    "pair": [1000, 1019],
-    "quantum": 1,
-    "reads": [],
-    "self_source": {"unit": 0},
-    "sourced": {"of": "matter", "weight": 1, "scale": 18910},
-}
 VERSION_STRING = re.compile(r"-v[0-9]+$")
 VERSION_WORDS = {"version", "schema_version"}
 
@@ -104,39 +94,42 @@ def place(tmp_path: Path, monkeypatch, universe: dict, document: dict) -> dict:
 
 
 def body_world() -> dict:
-    """The world of ALGEBRA.md #the-stable-body: one body by its family, Nodes, count per Node and momentum."""
+    """The world of ALGEBRA.md #the-stable-body: one body by its family, its Nodes with their counts and its
+    momentum, a card's key on it (the polariser's), and a set on its own Nodes."""
     return {
         "shape": [16, 1, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": 4,
+        "N": 64,
         "measured": [
             {
                 "family": "matter",
-                "nodes": [[5, 0, 0], [6, 0, 0]],
-                "count": 1,
+                "nodes": [{"node": [5, 0, 0], "count": 1}, {"node": [6, 0, 0], "count": 1}],
                 "momentum": [0, 0, 0],
                 "momentum_before": [0, 0, 0],
+                "polariser": {"angle": [2, 1], "sets": ["strip", "rest"]},
             }
         ],
-        "detectors": [],
+        "detectors": [{"name": "strip", "positions": [[6, 0, 0]]}],
     }
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="ALGEBRA.md #the-stable-body: the loader reads a body by its nodes with their counts, but "
-    "the world of this test writes the older `nodes` list with one `count` and names no `engine` "
-    "and no `N`, which the loop still reads; the mark comes off with the world rewritten",
-)
 def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_and_runs(
     tmp_path, monkeypatch
 ):
-    """ALGEBRA.md #the-stable-body (records 2243, 2244): the world file names the body's family, its
-    Nodes, its count per Node and its momentum n, and nothing else; it loads on the shipped
-    universe and steps."""
-    universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    placed = place(tmp_path, monkeypatch, universe, body_world())
-    simulation = DetectorLawSimulation(parse_nature_beam_world(placed))
+    """ALGEBRA.md #the-stable-body: the body by its family, Nodes with counts and momentum loads and steps; its Q the
+    signed sum of its counts by the row's `sign`, no key; the set on its own Node its own (#the-ladder); the card's key on `declared`."""
+    universe = json.loads(GENERATED.read_text(encoding="utf-8"))
+    next(row for row in universe["families"] if row["name"] == "matter")["sign"] = -1
+    world = parse_nature_beam_world(place(tmp_path, monkeypatch, universe, body_world()))
+    entry, (strip,) = world.measured[0], world.detectors
+    assert entry.block.declared == {"polariser": {"angle": (2, 1), "sets": ("strip", "rest")}}
+    assert (
+        entry.block.q == 0
+        and sum(f.charge[0] * h for f, h in zip(world.families, entry.held, strict=True)) == -2
+    )
+    assert (strip.positions, strip.block) == (((6, 0, 0),), 0)
+    simulation = DetectorLawSimulation(world)
     simulation.step()
     assert simulation.leaks() == []
 

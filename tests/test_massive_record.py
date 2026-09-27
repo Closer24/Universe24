@@ -821,8 +821,8 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
     on_body = light_clock_world("open", False)
     on_body["detectors"] = [{"name": "A_face", "block": 0, "positions": [[100, 0, 0]]}]
     on_body["stamp"] = input_stamp(on_body)  # the stamp over the whole file (item 28)
-    with pytest.raises(ValueError, match="names a Node of a measured event"):
-        parse_nature_beam_world(on_body)
+    loaded = parse_nature_beam_world(on_body)  # its own Node: the body's set (#the-ladder)
+    assert (loaded.detectors[0].positions, loaded.detectors[0].block) == (((100, 0, 0),), 0)
     two = light_clock_world("open", False)
     two["detectors"] = [{"name": "A_face", "block": 0, "positions": [[132, 0, 0], [133, 0, 0]]}]
     two["stamp"] = input_stamp(two)

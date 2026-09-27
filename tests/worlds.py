@@ -39,6 +39,18 @@ PHASE_STEPS = 1024
 TRAIN_LENGTH = 32  # the train's Nodes along K: 8 periods of the wavelength 4
 
 
+# a sourced family's entry (the source verb's card), the loader tests' one copy
+SOURCED = {
+    "name": "field",
+    "sign": 0,
+    "parts": [1],
+    "phase": 2,
+    "pair": [1000, 1019],
+    "quantum": 1,
+    "reads": [],
+    "self_source": {"unit": 0},
+    "sourced": {"of": "matter", "weight": 1, "scale": 18910},
+}
 CHARGE_FAMILY_NAME = "charge"
 
 
