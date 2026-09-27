@@ -15,8 +15,7 @@ GAMMA = 10_000
 
 
 def own_family_world(stock: int | None) -> dict:
-    """The matter emitter world with the emitter giving ITS OWN family (`source`, its well the
-    source well): its `stock` of its own quanta, `amount` 4."""
+    """The matter emitter world with the emitter giving ITS OWN family (`source`, its well the source well): its `stock` of its own quanta, `amount` 4."""
     document = matter_emitter_world(False, [512, 1])
     body = emitter_at(100, 1, family="source")
     body["amount"] = 4
@@ -34,11 +33,7 @@ def own_family_world(stock: int | None) -> dict:
 
 
 def test_a_body_gives_its_own_family_from_its_stock_and_its_quanta_fall_by_one_per_giving():
-    """ALGEBRA.md #the-primitives: the emitter of the family `source` gives `source` records; its stock
-    is `stock` (from 1 to `amount`), each giving lowers its quanta M by one and the wall with
-    them, the given record carries the family's pair; nothing fires once the stock is spent;
-    refused without `stock`, with a `stock` above `amount`, and with `stock` on an emitter of
-    another family."""
+    """ALGEBRA.md #the-primitives: the emitter of the family `source` gives `source` records; its stock is `stock` (from 1 to `amount`), each giving lowers its quanta M by one and the wall with them, the given record carries the family's pair; nothing fires once the stock is spent; refused without `stock`, with a `stock` above `amount`, and with `stock` on an emitter of another family."""
     world = parse_nature_beam_world(own_family_world(2))
     body = world.measured[1].block
     assert body is not None and body.emitter is not None
@@ -73,10 +68,7 @@ def test_a_body_gives_its_own_family_from_its_stock_and_its_quanta_fall_by_one_p
 
 
 def test_the_self_source_slot_lowers_the_step_by_the_squared_differences_over_the_unit():
-    """ALGEBRA.md #the-interval: the held family with the unit P_2 = 24 A declared: at a slab where
-    its level jumps by 20000 the six squared differences summed give (the count of Ports
-    across the jump) x 4 x 10^8, and a_next is lower than the plain rule's by that div P_2
-    exactly, the remainder the plain rule's; the inverse restores the levels."""
+    """ALGEBRA.md #the-interval: the held family with the unit P_2 = 24 A declared: at a slab where its level jumps by 20000 the six squared differences summed give (the count of Ports across the jump) x 4 x 10^8, and a_next is lower than the plain rule's by that div P_2 exactly, the remainder the plain rule's; the inverse restores the levels."""
     document = parts_world()
     amplitude = document["amplitude_bound"]
     for family in document["universe"]:

@@ -3,6 +3,8 @@ its momentum, and every click line reads the momentum its quantum travelled with
 
 from __future__ import annotations
 
+import pytest
+
 from event_universe.events.detector_law import DetectorLawSimulation
 from tests.bodies import point_world
 from tests.running import run as run_emitter
@@ -11,8 +13,7 @@ from tests.worlds import emitter_world, seed_on_the_mode
 
 
 def mirrored_emitter_world(ticks: int) -> dict:
-    """The emitter's unit world reflected in x -> 79 - x: the body at [43, 75) (five Nodes to
-    the closed end at 79, as the original's five at 0 to 4), the screen's cube at 7 to 9."""
+    """The emitter's unit world reflected in x -> 79 - x: the body at [43, 75) (five Nodes to the closed end at 79, as the original's five at 0 to 4), the screen's cube at 7 to 9."""
     from tests.worlds import receiver_cube
 
     document = emitter_world(stock=2, ticks=ticks, on_mode=False)
@@ -29,6 +30,7 @@ def lines_of(lines: list[dict], event: str) -> list[dict]:
     return [line for line in lines if line["event"] == event]
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_click_line_carries_the_taken_quantums_direction_and_the_giver_recoils():
     for document, sign in ((emitter_world(stock=2, ticks=600), 1), (mirrored_emitter_world(600), -1)):
         lines, simulation, _ = run_emitter(document)
@@ -46,6 +48,7 @@ def test_the_click_line_carries_the_taken_quantums_direction_and_the_giver_recoi
         assert [block.momentum for block in simulation.blocks] == [kicked]
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_a_symmetric_emitters_tallies_cancel_and_the_inverse_undoes_the_windows_tally():
     document = point_world(4, stock=3, ticks=400)
     simulation, lines = run_point(document, 200)

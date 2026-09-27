@@ -383,6 +383,7 @@ def draw(seed: int) -> dict[str, Any]:
         # the divisor is written on every entry (no default in the loader); the draw of the
         # random one keeps the stream of the seeds as it was
         entry["dipole_div"] = rng.randint(1, 3) if rng.random() < 0.5 else 1
+        entry["divisor"] = 40000  # the sum's divisor, required on every held row
         return entry
 
     def clicks() -> dict[str, Any]:

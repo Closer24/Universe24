@@ -6,6 +6,8 @@
   "momentum_unit": 64,
   "most_steps": 65536,
   "width": 63,
+  "most_families": 20,
+  "least_residues": 500,
   "twist_table": {
    "unit": 2621440000,
    "fine": [
@@ -168997,7 +168999,8 @@
      2
     ],
     "dipole": "spin",
-    "dipole_div": 1
+    "dipole_div": 1,
+    "divisor": 40000
    },
    "reads": [],
    "self_source": {
@@ -169034,7 +169037,8 @@
      1
     ],
     "dipole": "moment",
-    "dipole_div": 2
+    "dipole_div": 2,
+    "divisor": 40000
    },
    "reads": [
     {
