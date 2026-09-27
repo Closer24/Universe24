@@ -43,6 +43,7 @@ def test_a_record_ends_at_age_l_unless_the_ladder_clicked_it_first():
         apply(term, LifetimeStart(-1, False))
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_a_records_of_a_family_with_a_lifetime_end_on_the_border_at_age_l_through_the_loop():
     """The emitter's unit world with the light family's lifetime L = 10 (set on the parsed world until the loader reads the key): the two records given at 54 and 77 end on the border `lifetime` at 64 and 87, each a click line there with its giving named, the record deleted whole; no record reaches the screen; without a lifetime the border is not made."""
     document = emitter_world(stock=2, ticks=120)

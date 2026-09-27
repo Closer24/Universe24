@@ -251,7 +251,7 @@ def line_solver(counts: np.ndarray, pair: Pair, wrap: Wrap) -> tuple[Any, np.nda
             pap = exact_dot(p, ap)
             if pap <= 0:
                 break
-            alpha = (rr << RATIO_BITS) // pap
+            alpha = int(division(1, pap, np.array(rr << RATIO_BITS, dtype=object)))
             if narrow and alpha >= 1 << (2 * RATIO_HALF_BITS):
                 return None
             x = x + scaled(p, alpha)
@@ -262,7 +262,7 @@ def line_solver(counts: np.ndarray, pair: Pair, wrap: Wrap) -> tuple[Any, np.nda
             size = sizes(r)
             if size <= 3 * sweep + 4 or size * STOP <= floor:
                 break  # the floors' own drift (three units a sweep), or a round's worth of the right side
-            beta = (rr_next << RATIO_BITS) // rr
+            beta = int(division(1, rr, np.array(rr_next << RATIO_BITS, dtype=object)))
             if narrow and beta >= 1 << (2 * RATIO_HALF_BITS):
                 return None
             p = r + scaled(p, beta)
