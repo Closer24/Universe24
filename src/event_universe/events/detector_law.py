@@ -83,7 +83,7 @@ from event_universe.core.rule3 import (
     form_term,
     rule3,
 )
-from event_universe.events import assembly, guards, output
+from event_universe.events import assembly, feeding, guards, output
 from event_universe.events import live as live_records
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
@@ -243,7 +243,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         mask: np.ndarray,
     ) -> Block:
         # a body's block from its measured entry: its Nodes, the detector under its position, its
-        # declared momentum, its spin at both levels and the word `fixed`
+        # momentum and its spin at their two levels, the file's, and the word `fixed`
         block = Block(
             number,
             entry.family,
@@ -254,7 +254,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             [int(component) for component in entry.momentum],
         )
         block.spin = list(definition.spin)
-        block.spin_before = list(definition.spin)
+        block.spin_before = list(definition.spin_before)
+        block.momentum_before = [int(component) for component in entry.momentum_before]
         block.fixed = bool(entry.fixed)
         return block
 
@@ -287,6 +288,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             "the operation": Stage(self._records_stage, (), chain),
             "the giving": Stage(self._giving_stage, (), ("the giving",), creates=True),
             "the source": Stage(self._source_stage, (), ("the source",)),
+            "the feed": Stage(self._feed_stage, (), ("the feed",)),
+            "the induction": Stage(self._induction_stage, (), ("the induction",)),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
         }
 
@@ -479,6 +482,16 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             if block.emit_now:
                 self._emit(block)
 
+    def _feed_stage(self, function: Callable[..., None]) -> None:
+        """The feed's act: each body's two levels of momentum from the reads at its faces as the interval leaves them."""
+        for block in self.blocks:
+            self._feed_act(function, block, False)
+
+    def _induction_stage(self, function: Callable[..., None]) -> None:
+        """The induction's act: each body's two levels of momentum from the change of the reads' vector parts over its Nodes."""
+        for block in self.blocks:
+            self._induction_act(function, block, False)
+
     def _spins_stage(self, function: Callable[..., None]) -> None:
         """The spin's step's act: each body's spin from the fields as the interval leaves them."""
         for block in self.blocks:
@@ -590,9 +603,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             found.extend(self.held_parts[family])
         found.extend(self.sourced_records.values())
         return found
-
-    # The held families (ALGEBRA.md #the-paces, #the-counts-line; BUILD.md section 26
-    # items 31, 32, 35 and 51): the operations, written once for any family
 
     def body_source(self, number: int, source: str) -> int:
         """A body's declared source for a held family (item 51): its content,
@@ -856,14 +866,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     # written once for any body and any read
 
     def _spins_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
-        """THE BODY'S STEP AT (v) (ALGEBRA.md #the-interval, #a-familys-declaration): the spin's step's line
-        (features/spins_step) on the body, from the fields as the interval leaves them (their
-        `now` levels, which the inverse meets first): per read with a dipole, the read family's
-        vector part and, for the spin's dipole, its time part at the body's Node's six
-        neighbours with the row's two weights; the body's momentum, wall, spin and spin
-        before; its remainders under the line's keys; the writes the spin, the spin before
-        and the remainders back. THE FEED AND THE INDUCTION of ALGEBRA.md #a-familys-declaration are NOT here: built
-        and held back (BUILD.md section 26 item 65; ALGEBRA.md #the-primitives)."""
+        """THE BODY'S STEP AT (v): the spin's step's line (features/spins_step) on the body from the fields as the interval leaves them (per read with a dipole the read family's vector part and, for the spin's dipole, its time part at the body's Node's six neighbours with the row's two weights), the body's momentum, wall, spin and spin before and its remainders under the line's keys; the writes the spin, the spin before and the remainders back."""
         definition = self.families[block.family]
         if not definition.reads:
             return
@@ -901,6 +904,12 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         block.hold_value.update(writes.own.values)
         block.hold_carry.update(writes.own.carries)
 
+    _read_factors = feeding.read_factors
+    _parts_summed = feeding.parts_summed
+    _faces_of = feeding.faces_of
+    _feed_act = feeding.feed_act
+    _induction_act = feeding.induction_act
+
     def residue_of(self, live: LiveRecord | NodeRecord, block: Block) -> tuple[int, int]:
         """The residue from the law under the Node clock, read at the first shell Node: the record's rule remainder r at the body's first shell Node in the declared order, read now, in units of the remainder's step g = gcd(Gamma num, 6 den M, 3 den f) at that Node, and the wheel W = 3 den f / g (`wheel_at`); no declaration, no draw; which Node is read is a convention."""
         if isinstance(live, NodeRecord):
@@ -917,11 +926,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         emitter = block.definition.emitter
         assert emitter is not None
         if block.definition.profile is None:
-            # the mathematician's gate item 8: the excited record is the body's
-            # composed mode (ALGEBRA.md #what-a-body-is, #the-click), the generator's
-            # profile; a flat seed is no mode and is refused where a body
-            # givings (at the engine's construction: the generator parses the
-            # world with the scalar seed to compute the profile)
             raise ValueError(
                 f"measured[{block.number}].emitter needs the body's `seed` as its "
                 "composed mode's profile (one integer per Node, the generator's "
@@ -1153,7 +1157,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             part=emitter.part,
             twist=emitter.twist,
         )
-        # E^T: the given clock's character on the body's Nodes, written once at both levels, every Node at the vertex's phase (the one-Node broadband giving; a line's travelling character, the per-Link pair of ALGEBRA.md ALGEBRA.md #the-click, is owed until that pair is declared) NO TABLE IN THE ENGINE (the cleanup order's step 2; ALGEBRA.md #the-click (6), ALGEBRA.md #a-familys-declaration): the given pair is the world's two integers `given: [now, before]`, the generator's, checked at load (before = -now), written on every Node of the body THE GIVEN TRAIN (ALGEBRA.md #the-click; BUILD.md section 26 item 27): the train's two levels written on the body's Nodes in the box's x-major order (`body_node_indices`, the loader's and the generator's one convention), the norm T the written one (the conserved form on the given family's vacuum, the generator's integer checked at load) THE WINDOW (ALGEBRA.md #what-a-body-is, #the-primitives; item 50; commit 7, the one giving): no train; the window opens at the click, the given row at the body's Node written from its rotation every interval (`_point_windows`) until the outward norm reaches T; the record named at the close
         live.window_open = True
         live.box = self.mask_box(block.mask)  # HOST (item 43): the body's own Nodes
         block.window = identity
@@ -1167,11 +1170,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 for detector, set_name in enumerate(self.detector_set)
                 if set_name == name
             ]
-        # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; item 47): the
-        # giving lowers the given family's content held at the body by one,
-        # the body's own quanta and its charge untouched (under the point
-        # emitter too, item 50: the quantum moves at the open, the window
-        # shapes its rows, the close names the record)
         opened = self._giving_act(
             block,
             GivingStart(
@@ -1219,9 +1217,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 # the wheel's ingredients, read with it (item 34; GAMEBOARD)
                 "read_clocks": read_clocks,
                 "norm": live.norm,
-                # the norm's denominator (item 36): the given record's
-                # form is norm / pace, whole in the body's own units at
-                # the body's level as written
                 "pace": live.pace,
                 # the file's vacuum norm (p times it the given record's T
                 # in the vacuum) and the body's content and clock pair
@@ -1394,6 +1389,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         # spin as the interval began, from the fields as it left them
         for block in self.blocks:
             self._spins_act(self.register.at("the spin's step", "(v)"), block, True)
+        for block in self.blocks:
+            self._induction_act(self.register.at("the induction", "(v)"), block, True)
+        for block in self.blocks:
+            self._feed_act(self.register.at("the feed", "(v)"), block, True)
         # the count's line back (its own inverse, the current reversed; ALGEBRA.md
         # #the-counts-line): the quanta return to their Nodes before the records step back
         counts_line = self.register.at("the count's line", "(ii)")

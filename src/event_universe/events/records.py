@@ -212,6 +212,8 @@ class Block:
     # declared `spin` at both
     spin: list[int] = field(default_factory=lambda: [0, 0, 0])
     spin_before: list[int] = field(default_factory=lambda: [0, 0, 0])
+    # the momentum's level one interval before (the feed's and the induction's KEEP pair, ALGEBRA.md the row of the feed), the file's `momentum_before`
+    momentum_before: list[int] = field(default_factory=lambda: [0, 0, 0])
     # A TOOL HELD IN PLACE (ALGEBRA.md #the-primitives; the Boss's the record): the world's
     # word `fixed`; the feed, when it lands, acts on a body without the word alone
     fixed: bool = False

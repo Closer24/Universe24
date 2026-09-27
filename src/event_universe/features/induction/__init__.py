@@ -106,7 +106,7 @@ DECLARATION = Declaration(
         "Gamma",
     ),
     writes=("a body's momentum n", "a body's remainders"),
-    function=None,
+    function=apply,
     section="ALGEBRA.md #the-primitives, #a-familys-declaration, #the-interval",
     word="after the step",
 )

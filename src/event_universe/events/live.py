@@ -35,7 +35,9 @@ def fingerprints_of(
 def fingerprints(loop: DetectorLawSimulation) -> dict[str, dict[object, object]]:
     """Every ledger word the main loop audits after an act, stamped: the bodies' counts, momenta, spins, positions and remainders, the records' and the held families' arrays by identity, the tallies, the paces' carries and the records alive."""
     stamps = fingerprints_of(loop, *loop.records.values(), *loop.held_component_records())
-    stamps["a body's momentum n"] = {b.number: tuple(b.momentum) for b in loop.blocks}
+    stamps["a body's momentum n"] = {
+        b.number: (tuple(b.momentum), tuple(b.momentum_before)) for b in loop.blocks
+    }
     stamps["a body's spin S"] = {b.number: (tuple(b.spin), tuple(b.spin_before)) for b in loop.blocks}
     stamps["a body's position"] = {b.number: (tuple(b.corner), id(b.mask)) for b in loop.blocks}
     stamps["the count at a Node"] = {b.number: id(b.counts) for b in loop.blocks}

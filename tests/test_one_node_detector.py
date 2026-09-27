@@ -23,6 +23,9 @@ def one_node_layer(stock: int = STOCK, one_node_detectors: bool = True) -> dict:
     document = layer_world(receiver=[name for _, name in PLACES])
     # the stock as the given family's content held at the body (ALGEBRA.md #the-paces; item 47)
     document["measured"][0]["stocks"] = {"light": stock}
+    document["measured"][0]["fixed"] = (
+        True  # the emitter held in place: the feed would drift it off the board
+    )
     document["ticks"] = stock * 250 + 300  # every giving a window and a rung (commit 7)
     if one_node_detectors:
         document["measured"] = [document["measured"][0]]

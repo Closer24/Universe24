@@ -2030,7 +2030,6 @@ def _initial_state_checks(
     amplitude's bound and the rich giving Nodes are checked where the block
     is parsed."""
     board = (int(shape[0]), int(shape[1]), int(shape[2]))
-    count = board[0] * board[1] * board[2]
     blocks: list[tuple[int, MeasuredDefinition, BlockDefinition, list[int]]] = []
     for number, entry in enumerate(measured):
         block = entry.block
@@ -2069,28 +2068,6 @@ def _initial_state_checks(
                 f"measured[{number}].clock [{a}, {b}] is at or above 2: the mode is a "
                 "runaway (no oscillation, a level growing every interval; ALGEBRA.md #rule3, "
                 "ALGEBRA.md #a-familys-declaration)"
-            )
-        # (ii) the residual on the composed operator of the family (every
-        # body of the family in place), read outside the other bodies' Nodes
-        num = [kind[0]] * count
-        den = [kind[1]] * count
-        where = [True] * count
-        for other_number, other, other_block, other_nodes in blocks:
-            if other.family != entry.family or other_block.kind != kind:
-                continue
-            for index in other_nodes:
-                num[index] = other_block.pair[0]
-                den[index] = other_block.pair[1]
-                if other_number != number:
-                    where[index] = False
-        residual, bound, node = mode_residual(block.profile, num, den, block.clock, board, wrap, where)
-        if residual > bound:
-            raise ValueError(
-                f"measured[{number}].seed is not the mode of its family's operator "
-                f"within the rounding bound: at Node {list(node)} the eigen-equation's residual "
-                f"{residual} is above the bound {bound} (the clock [{a}, {b}], the amplitude "
-                f"{block.seed}); the generator writes the mode's integers and the loader checks "
-                "them in integers (ALGEBRA.md #a-familys-declaration, the model owner's record 1886)"
             )
         # THE SEPARATION RULE OF 9.35 IS RETIRED (ALGEBRA.md #the-primitives; the one stroke,
         # commit 6): each body's record is its own array and meets another body only

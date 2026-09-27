@@ -1,6 +1,6 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "75f89bf3",
+ "recorded_at": "f01764fc",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
@@ -162,10 +162,10 @@
    },
    "ticks": 3600,
    "intervals": 200,
-   "digest": "234c622a43ca899f3770ddfebc90b86c869131fb9f49e549822cc697fb2ebd62",
+   "digest": "f7fb808403334cb72cdf0c2da690bac50086c558b5e0aa17779b805941f718ca",
    "records": 11,
-   "clicks": 0,
-   "lines": 630
+   "clicks": 1,
+   "lines": 632
   },
   "examples/events/toward_nature/lorentz_moving_long.json": {
    "stamp": {
@@ -173,7 +173,7 @@
    },
    "ticks": 5966,
    "intervals": 200,
-   "digest": "21af4e89504bb45e7c8d8964d2d0cc03baf106720881092c8730e4ce1a45d9ba",
+   "digest": "1001f69560c11ca5b4c8c24a62f166ddec4f00a68a726277977d9e595a7e7f7d",
    "records": 4,
    "clicks": 0,
    "lines": 607
