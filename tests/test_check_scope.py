@@ -348,3 +348,12 @@ def test_detector_definitions_select_no_cancelled_consumer():
 def test_a_change_to_the_law_selects_its_words_and_links_gate():
     tests, _ = CHECK.select(["docs/ALGEBRA.md"], {})
     assert "tests/test_law_words.py" in tests
+
+
+def test_the_every_pull_request_list_is_one_sorted_file_of_existing_tests():
+    """The gates every pull request runs live in tools/every_pull_request.txt, one existing test per line, sorted (#1198, gate 7)."""
+    listed = CHECK.every_pull_request()
+    root = Path(__file__).resolve().parents[1]
+    assert listed == sorted(listed) and len(listed) == len(set(listed))
+    assert all((root / test).is_file() for test in listed)
+    assert set(listed) <= set(CHECK.select(["docs/GLOSSARY.md"], {})[0])
