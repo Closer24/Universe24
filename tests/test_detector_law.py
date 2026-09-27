@@ -1,15 +1,4 @@
-"""The engine (docs/designs/detector_law/DESIGN.md; one engine, no law's name and no
-version, ALGEBRA.md #the-primitives),
-the build's first gate: the loader's key and refusals, the rule's step against
-the design's integers, and one chain world run headless (an emitter body at one
-end, a receiver at the other, the open face behind the emitter): one click per
-record, the books balanced at every tick, the click's time at the front's
-first rung about L / c after the giving, the click line with the stamp. SINCE
-THE EMITTER AS A CLICKING BODY (ALGEBRA.md #the-click; BUILD.md section 26) the
-lamp is refused under the detector law: the chain world's source is a body
-of the matter kind seeded on its bound mode, its excitations clicking at
-their rungs and writing the given record once; the grace, the exemption and
-the emitter's own take are retired (its Nodes are Nodes like every other)."""
+"""The engine's first gate: the loader's keys and refusals, the rule's step against the declared integers, and one chain world (an emitter body, a receiver, the open face) with one click per record, the books balanced every tick and the click's time near L / c after the giving."""
 
 from __future__ import annotations
 

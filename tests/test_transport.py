@@ -1,11 +1,4 @@
-"""THE TRANSPORT AND THE SECOND LEVEL (ALGEBRA.md #the-transport, #the-second-level, #the-interval, #the-primitives;
-the one stroke of record 2106, commit 4; BUILD.md section 26 item 64): the twist table's
-triples are exact and the nearest; the loader writes every record's twist "own" and the given
-light's component from the body's moment; a vector part on a slab rotates a matter record's
-arriving pair on the Ports with the remainders kept, writes its second level, and one interval
-back restores everything; the Ports along a record's own component book nothing of it; with
-every vector part zero the step is the plain path bit for bit; the refusals by name. HOST; no
-pin."""
+"""The transport and the second level (ALGEBRA.md #the-transport, #the-second-level): the twist table's triples are exact, a vector part rotates a record's arriving pair on the Ports with the remainders kept and one interval back restores it, and with every vector part zero the step is the plain path bit for bit. HOST; no pin."""
 
 from __future__ import annotations
 
