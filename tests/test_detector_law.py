@@ -21,179 +21,19 @@ import pytest
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import (
-    CHARGE_FAMILY,
-    CLOCK_FAMILY,
+from tests.running import Seen, chosen_by_the_rule, spy_on
+from tests.worlds import (
+    EMITTER_PAIR,
     NODE_CLOCK,
+    chain_world,
     lawful_wheel,
-    massive_generator,
-    reads,
+    layer_world,
+    receiver_body,
 )
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
-
-EMITTER_KIND = [7, 8]  # the emitter body's kind (omega_0 = 0.505)
-EMITTER_PAIR = [
-    699,
-    700,
-]  # the well of the 32-Node emitting body, rich (W = 700 remainder values, ALGEBRA.md 9.22 (4)) and bound on a chain (2 cos omega_b = 1.9944 over 32 Nodes; the one-Node well [801, 700] of the one-Node giving is a runaway over 32 Nodes, 2.285, its interior above 1)
-GIVEN_CLOCK = [
-    512,
-    1,
-]  # the given clock of every light emitter on N = 1024: k = pi / 2, the wavelength 4 (ALGEBRA.md 9.17 (6a))
-PHASE_STEPS = 1024
-TRAIN_LENGTH = 32  # the train's Nodes along K: 8 periods of the wavelength 4
-
-
-def emitter_body(
-    position: list[int],
-    stock: int,
-    receiver: object = None,
-    family: str = "light",
-    direction: list[int] | None = None,
-    extents: list[int] | None = None,
-) -> dict:
-    """An emitter body of the matter kind EMITTER_KIND (the well pair EMITTER_PAIR over the
-    train's 32 Nodes along `direction`, +x by default, seeded on its mode at 2^20 by the
-    generator; at 100 the given light's back-action swamps the excited record, ALGEBRA.md
-    9.17 (7) (c)), its stock `stock`, its `emitter` the family given with its `train` of 8
-    periods (THE GIVEN TRAIN, 9.17 (6a); BUILD.md section 26 item 27: the profile and its
-    norm the generator's, `given_train`) and, with `receiver`, the given records' ladder by
-    name. The residue and the wheel are the law's (ALGEBRA.md 9.22 (4): the clicking
-    record's remainder at the giving Node, W = 700 on EMITTER_PAIR in the vacuum, at the body's
-    Nodes the wheel of its content under the Node clock (9.35 (2); BUILD.md section 26 item
-    31), read after the excited record's first advance, 9.19 (4e); the residues spread from the kept remainder, the model
-    owner's decisions (1) and (2) of record 1962, no coupling). The cadence under the click
-    rule of ALGEBRA.md 9.17 (7)
-    (f) (BUILD.md section 26 item 24): the residue u clicks (2 u + 1) / (2 W) x P intervals
-    after its read, within the seed's rounding wobble; a well too deep for its board is a
-    runaway and refused at the margin rule."""
-    emitter: dict = {
-        "family": family,
-        "weight": 3,  # the window's weight (commit 7; the train retired)
-        "twist": 0,  # the given record's twist "own", the generator's number (item 73)
-    }
-    if receiver is not None:
-        emitter["receiver"] = receiver
-    if extents is None:
-        extents = [1, 1, 1]
-        extents[next(index for index, v in enumerate(direction or [1, 0, 0]) if v != 0)] = TRAIN_LENGTH
-    return {
-        "position": position,
-        "family": "matter",
-        "amount": 1,
-        "ramp": 0,
-        "start": 0,
-        "stocks": {family: stock},
-        "momentum": [0, 0, 0],
-        "extents": extents,
-        "q": 0,
-        "spin": [0, 0, 0],
-        "twist": 0,
-        "moment": [0, 0, 0],
-        "pair": list(EMITTER_PAIR),
-        "seed": 1
-        << 10,  # the window's writes at the body's Nodes pile up about 300-fold and stay under the bound (commit 7)
-        "margin": "control",
-        "emitter": emitter,
-    }
-
-
-DETECTOR_SIDE = 3  # the detector cube's side (the model owner's word of 2026-09-25, record 1899)
-
-
-def cube_positions(shape: list[int], corner: list[int]) -> list[list[int]]:
-    """The Nodes of a detector cube of side DETECTOR_SIDE from its lower corner, cut by the
-    GameBoard on an axis of extent below the side (a chain's or a layer's thin axis)."""
-    return [
-        [corner[0] + dx, corner[1] + dy, corner[2] + dz]
-        for dx in range(min(DETECTOR_SIDE, shape[0]))
-        for dy in range(min(DETECTOR_SIDE, shape[1]))
-        for dz in range(min(DETECTOR_SIDE, shape[2]))
-    ]
-
-
-def receiver_body(position: list[int], family: str = "light") -> dict:
-    """A fixed receiver body of the family at one Node (a measured event)."""
-    return {
-        "position": position,
-        "family": family,
-        "amount": 1,
-        "stocks": {},
-        "momentum": [0, 0, 0],
-    }
-
-
-def receiver_cube(document: dict, name: str, corner: list[int], family: str = "light") -> None:
-    """ONE DETECTOR (record 1899): the cube of side DETECTOR_SIDE of receiver bodies from
-    `corner`, read as the one set `name` (its sensitivity its whole cube, the click the
-    detector's, never a Node's)."""
-    positions = cube_positions(document["shape"], corner)
-    document["measured"].extend(receiver_body(position, family) for position in positions)
-    document["detectors"].append({"name": name, "positions": positions})
-
-
-def chain_world(
-    stock: int = 6,
-    receiver: object = None,
-    clock_stamp: bool = True,
-    on_mode: bool = True,
-    faces: str = "closed",
-) -> dict:
-    """A chain of 80 Nodes (y and z periodic, one layer each; x CLOSED, the
-    zero rows at both ends mirrors): the emitter body at [2, 34) (the
-    train's 32 Nodes of the matter kind [7, 8] with the well pair [699,
-    700], its mode the seed), the receiver cube of side 3 at [70, 72] read
-    as the set `screen` (record 1899), 36 Links ahead of the train's head;
-    the light family's given clock [512, 1] on N = 1024 (k = pi / 2, the
-    wavelength 4; THE GIVEN TRAIN, ALGEBRA.md 9.17 (6a)); no wheel anywhere
-    (the rung's wheel is the record's own, W = 700). With `faces` "open"
-    the face receiver `face` stands at both ends, last on every ladder
-    (ALGEBRA.md 9.19 (3) (a)) on the chain of 140 with the body at [34, 66)
-    and the screen at [100, 102], one train's length from both faces (the
-    generator's placement rule, ALGEBRA.md 9.25 (11) (b)); the train leaves
-    toward +x and nothing of it goes back but the tapers' dispersion."""
-    length, corner, screen = (140, 34, 100) if faces == "open" else (80, 2, 70)
-    document = {
-        "shape": [length, 1, 1],
-        "boundary": {"x": faces, "y": "periodic", "z": "periodic"},
-        "face_depth": 1,
-        "ticks": 600,
-        "K": 1073741824,
-        "N": PHASE_STEPS,
-        "release": [1, 128],
-        "clock_stamp": clock_stamp,
-        "width": 1,
-        "body_record": False,
-        "engine": "examples/events/engine_start.json",
-        "massive_record": True,
-        "amplitude_bound": 1 << 22,
-        "node_clock": NODE_CLOCK,
-        "momentum_unit": 64,
-        "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": list(GIVEN_CLOCK),
-                "charge": 0,
-                "reads": reads(),
-            },
-            {"name": "matter", "quantum": 1, "pair": list(EMITTER_KIND), "charge": 0, "reads": reads()},
-            dict(CLOCK_FAMILY),
-            dict(CHARGE_FAMILY),
-        ],
-        "measured": [
-            emitter_body([corner, 0, 0], stock, receiver),
-        ],
-        "detectors": [],
-    }
-    receiver_cube(document, "screen", [screen, 0, 0])
-    if on_mode:
-        massive_generator().seed_on_the_mode(document)
-    return document
 
 
 def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
@@ -355,59 +195,6 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
         parse_nature_beam_world(on_light)
 
 
-def layer_world(receiver: object = None) -> dict:
-    """A layer of 80 x 9 x 1 (x closed at both ends, mirrors; y and z
-    periodic): the emitter body at [2, 34) across the whole width (the
-    train's 32 Nodes by 9 of the matter kind on its mode, the stock 8: its
-    train uniform across the periodic y, the extruded form of ALGEBRA.md
-    9.22 (8)), three detector cubes of
-    side 3 at x in [70, 72] on the rows y in [0, 2], [3, 5], [6, 8] read as
-    the sets s0, s1, s2 (the screen, record 1899; s1 centred on the
-    emitter's row, s0 and s2 its mirror images across the periodic seam).
-    With `receiver`, the emitter's records' ladder is the named sets in the
-    named order; without it, every declared set in the declared order
-    (ALGEBRA.md 9.19 (3) (b))."""
-    measured = [emitter_body([2, 0, 0], 8, receiver=receiver, extents=[32, 9, 1])]
-    document = {
-        "shape": [80, 9, 1],
-        "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
-        "ticks": 400,
-        "K": 1073741824,
-        "N": PHASE_STEPS,
-        "release": [1, 128],
-        "clock_stamp": True,
-        "width": 1,
-        "body_record": False,
-        "engine": "examples/events/engine_start.json",
-        "massive_record": True,
-        "amplitude_bound": 1 << 22,
-        "node_clock": NODE_CLOCK,
-        "momentum_unit": 64,
-        "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": list(GIVEN_CLOCK),
-                "charge": 0,
-                "reads": reads(),
-            },
-            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
-            dict(CLOCK_FAMILY),
-            dict(CHARGE_FAMILY),
-        ],
-        "measured": measured,
-        "detectors": [],
-    }
-    for index, y in enumerate((0, 3, 6)):
-        receiver_cube(document, f"s{index}", [70, y, 0])
-    massive_generator().seed_on_the_mode(document)
-    return document
-
-
-Seen = dict[int, tuple[int, list[int], list[int], int, int, int, int]]
-
-
 def run_layer(document: dict, ticks: int = 3000) -> tuple[list[dict], DetectorLawSimulation, Seen]:
     """The layer world stepped with the books balanced at every interval; the gather lines,
     the simulation, and per clicked record what the click read (a spy on the engine's
@@ -422,50 +209,6 @@ def run_layer(document: dict, ticks: int = 3000) -> tuple[list[dict], DetectorLa
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
     return [line for line in lines if line["event"] == "gather"], simulation, seen
-
-
-def spy_on(simulation: DetectorLawSimulation, seen: Seen) -> None:
-    original = simulation._ladder_click
-
-    def spy(live, increments):
-        total = live.total
-        original(live, increments)
-        if live.clicked and live.identity not in seen:
-            seen[live.identity] = (
-                total,
-                list(increments),
-                simulation._ladder_of(live),
-                live.u,
-                live.norm,
-                live.wheel,
-                live.pace,
-            )
-
-    simulation._ladder_click = spy  # type: ignore[method-assign]
-
-
-def chosen_by_the_rule(
-    simulation: DetectorLawSimulation,
-    total: int,
-    increments: list[int],
-    ladder: list[int],
-    u: int,
-    norm: int,
-    wheel: int,
-    pace: int,
-) -> str:
-    """The increment ladder of ALGEBRA.md 9.25 (2) on the click's own numbers: the running
-    total C before the interval below the threshold, and the first detector k of the ladder at
-    which 2 W p (C + f_1 + ... + f_k) >= (2 u + 1) T, the f the interval's plain increments and
-    p the norm's pace (T in the body's own units, item 36)."""
-    threshold = (2 * u + 1) * norm
-    running = 2 * wheel * pace * total
-    assert running < threshold
-    for detector in ladder:
-        running += 2 * wheel * pace * increments[detector]
-        if running >= threshold:
-            return simulation.detector_set[detector]
-    raise AssertionError("no detector crossed")
 
 
 RESIDUES = 128  # the planted records' wheel: every residue once

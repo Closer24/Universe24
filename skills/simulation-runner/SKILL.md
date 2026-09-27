@@ -10,7 +10,7 @@ The team of 2026-09-26 and the generic engine's way of work: [How the team works
 > **One engine (2026-09-19).** The runner takes `--init`, `--output` and `--ticks`
 > only and runs a world of the Beam Law headless; `--visualize`,
 > `--frame-stride`, `--observer`, `--node-workers`, `--dense-field` and
-> `--standing-field` went with the old engine ([migration](../../docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
+> `--standing-field` went with the old engine (migration).
 > Where this Skill names them, read the history.
 
 For creating or changing the input, use
@@ -19,7 +19,7 @@ complete file map and runnable template. This skill executes the resulting input
 
 Read [the shared workflow](../workflow.md), current
 [run instructions](../../README.md) and the output/failure contract in
-[definitions](../../SIMULATOR_DEFINITIONS.md). This skill can run independently
+definitions. This skill can run independently
 or receive a scenario from Boss, tests or a field owner.
 
 **Input:** source tree, model, initial state, parameters, duration and acceptance
@@ -42,7 +42,7 @@ owner's words: "Add to every experiment that is made that it shows results in
 HTML: the GameBoard with the detector as an icon and the star as an icon on
 the GameBoard, so that one understands exactly what is tested; and it states why
 it was tested and what the conclusion is." So every research run (a series or
-a numbered run in [EXPERIMENTS](../../docs/EXPERIMENTS.md)) delivers, beside
+a numbered run in EXPERIMENTS) delivers, beside
 the register entry, one HTML page in the owner's page style (no document
 skeleton, a `<title>`, colour tokens with dark mode, phone width) that carries,
 in this order: (1) a drawing of the GameBoard of the world with an icon for
@@ -80,7 +80,7 @@ observable/expectation plan without retuning and retain quantitative discrepanci
 alongside the inspected HTML. A visual match is not physical acceptance.
 
 For primary runs, require the explicit world file and read its families,
-measured events, tables and detectors; see [the Beam Law](../../docs/BEAM_LAW.md)
+measured events, tables and detectors; see the Beam Law
 and [the engine's bookkeeping](../../docs/ENGINE.md) (the generic disturbance
 contract, DISTURBANCES.md, was deleted on 2026-09-19). Missing input must not
 select an implicit historical universe.
@@ -110,7 +110,7 @@ Include a `spatial_computation_delay` control when the shared field/carrier cloc
 is affected; both planning barriers must still lead to one joint Node commit.
 
 Both runners require a new or empty output directory. Follow
-[output retention](../../docs/RETENTION.md): generated output is registered for
+output retention: generated output is registered for
 24-hour cleanup after writing finishes, while active leases protect ongoing
 writes. Keep original initialization outside the output and never register source
 or templates as disposable artifacts. Inspect or save required acceptance evidence

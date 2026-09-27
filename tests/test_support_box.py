@@ -15,10 +15,9 @@ import numpy as np
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_body_record import PERIODIC
-from tests.test_emitter import emitter_world
-from tests.test_flux_reading import planted
-from tests.test_massive_record import block_world
+from tests.bodies import block_world
+from tests.running import planted
+from tests.worlds import PERIODIC, emitter_world
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)

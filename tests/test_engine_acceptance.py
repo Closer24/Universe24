@@ -12,7 +12,6 @@ must lose its mark (the ledger's item moves)."""
 from __future__ import annotations
 
 import ast
-import importlib.util
 import json
 import random
 import re
@@ -26,7 +25,7 @@ from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import MOST_FAMILIES
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import NODE_CLOCK, emitter_world
+from tests.worlds import NODE_CLOCK, emitter_world, load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / "src" / "event_universe"
@@ -312,12 +311,9 @@ def test_f_one_step_of_the_engine_is_the_rules_transcription_bit_for_bit():
     """(f) The rule as one function (ALGEBRA.md 9.57 (1), 9.91 (2)): the engine's one step on
     random levels, remainders and contents equals the independent transcription of the rule
     (docs/designs/rule_alone/rule_alone.py) integer for integer."""
-    spec = importlib.util.spec_from_file_location(
+    transcription = load_file(
         "rule_alone_transcription", ROOT / "docs" / "designs" / "rule_alone" / "rule_alone.py"
     )
-    assert spec is not None and spec.loader is not None
-    transcription = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(transcription)
     rng = np.random.default_rng(2026)
     shape = (6, 5, 4)
     for kind in ((800, 850), (800, 809), (1000, 1019)):

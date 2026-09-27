@@ -7,9 +7,9 @@ description: Independently validate every changed Universe24 physics-engine rule
 
 The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The physicist, Nature24, runs the engine, writes the run's files and the tests, and checks each ledger item; it never changes the engine's code.
 
-Read [the shared workflow](../workflow.md), [postulates](../../POSTULATES.md),
-[definitions](../../SIMULATOR_DEFINITIONS.md) and the
-[feature procedure](../../docs/PHYSICAL_FEATURES.md). This review is mandatory
+Read [the shared workflow](../workflow.md), postulates,
+definitions and the
+feature procedure. This review is mandatory
 when a change affects physics-engine behavior.
 
 **Inputs:** exact source/diff, model identity, feature contract and independent
@@ -109,7 +109,7 @@ including chains with zero net delta. A balanced final component sum does not
 prove each nonlinear rule invariant remained valid. Check that rejected proposals
 leave all actual owners and already received inventory intact.
 
-For the active engine, use [the Beam Law](../../docs/BEAM_LAW.md) and
+For the active engine, use the Beam Law and
 [the engine's bookkeeping](../../docs/ENGINE.md) for active contracts (the
 generic disturbance contract, DISTURBANCES.md, was deleted on 2026-09-19). Verify
 whole-record versus extensive transport, exact source accounting, paired
@@ -177,7 +177,7 @@ generic (no branch on an experiment, a family or a world key beyond the
 declared one), local and integer-only, that the engine is the one operator,
 the click and the birth, every tool a region of the operator with its
 material integers (they replaced the four building blocks on 2026-09-25,
-record 1875; [SIMULATOR_DEFINITIONS.md](../../SIMULATOR_DEFINITIONS.md)), and that no pin
+record 1875; SIMULATOR_DEFINITIONS.md), and that no pin
 moved. The case of 2026-09-24: one-list at 2bcadd7f re-printed the Bell pin as a
 weight ratio while that day's counts gave 181 / 64 exactly; a run would have
 counted right against a wrong pin (the wheel is retired since, the residue
