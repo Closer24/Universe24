@@ -5,7 +5,7 @@ holds only the interval's frame (the clock, the bodies' clocks, the deletion, th
 the record's fused chain; the register refuses a file naming an unknown primitive, listing one at
 a place it does not declare, or leaving out a built one, and the loop refuses an act with words
 its stage does not take or a file ordering the record's chain otherwise; the writers of one value
-at one place follow the file's order (ALGEBRA.md 9.117 item 3 transcribed); a folder's card
+at one place follow the file's order (ALGEBRA.md #the-primitives transcribed); a folder's card
 carries no order; every run writes the file's digest; two independent acts exchanged in a
 temporary file exchange the loop's calls; today's step is transcribed, every shipped world bit
 for bit (the digests' gate). HOST; no physics, no pin."""

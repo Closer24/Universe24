@@ -1,5 +1,5 @@
 """Universe24: the one engine, defined by a world file, a universe file and a
-start file (no law's name and no version, ALGEBRA.md 9.90 (1)).
+start file (no law's name and no version, ALGEBRA.md #the-primitives).
 
 Importing the package imports the world parser only; the engine module
 `event_universe.events.detector_law` loads numpy on its own import. The lazy

@@ -22,7 +22,7 @@ def test_the_rotation_and_the_dispersion_carry_the_clocks_second_order_weight():
             assert (6 * read + self_coefficient) / wall == pytest.approx(
                 2 - (1 + f) * (1 - num / den), abs=1e-12
             )
-    # light on a chain (four self reads): cos omega' = 1 - f (1 - cos k) / 3 (9.62 (1))
+    # light on a chain (four self reads): cos omega' = 1 - f (1 - cos k) / 3 (ALGEBRA.md #the-rows-against-nature)
     for c in (0, 2000):
         f = ((gamma - c) / gamma) ** 2
         (read, _, _), self_coefficient, wall = coefficients(1, 1, gamma, c)

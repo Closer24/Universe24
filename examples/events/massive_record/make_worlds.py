@@ -33,10 +33,10 @@ loader default, item 28: SEED_AMPLITUDE here).
   `cavity_24_moving.json` (the cavity pushed to k = 3 on 64^3), moved as
   written to `docs/designs/detector_law/held_worlds/` (HISTORY, their pins in
   `expectations.json` never moved), their builders retired here.
-- HELD UNDER THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27; their
+- HELD UNDER THE GIVEN TRAIN (ALGEBRA.md #the-click; BUILD.md section 26 item 27; their
   files in `docs/designs/detector_law/held_worlds/` as written with the one-Node giving,
   HISTORY, not loaded by the gate; their builders retired here, to be rebuilt from the
-  table of ALGEBRA.md 9.22 (8) in its form, the cleanup's item 7): the index at rest
+  table of ALGEBRA.md #a-familys-declaration in its form, the cleanup's item 7): the index at rest
   (`medium_index_at_rest_50`, `medium_index_at_rest_20`, `medium_index_at_rest_10`,
   `medium_index_reference`: the index block at rest on a chain of 1400, a cavity of the
   kind [7, 8] with G [1, 1] and g 1 / 50, 1 / 20, 1 / 10, the light clock [153, 100] on
@@ -86,30 +86,30 @@ CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
 # section 26 item 28)
 SEED_AMPLITUDE = (
     1 << 18
-)  # below the amplitude bound A = 2^20 of the weak-field rule's integers (ALGEBRA.md 9.61 (3); item 44)
+)  # below the amplitude bound A = 2^20 of the weak-field rule's integers (ALGEBRA.md #the-rows-against-nature; item 44)
 AGE_BOUND = 1 << 20
 # the amplitude bound A of every row: the ceiling 2^28 under the Node clock (the
 # model owner's decision (5) of record 1962; BUILD.md section 26 item 31)
 AMPLITUDE_BOUND = (
     1 << 20
-)  # the integers of ALGEBRA.md 9.57 (2) and 9.61 (3) under the weak-field rule (item 44; 2^28 under the first-order rule HISTORY)
-# THE NODE CLOCK (ALGEBRA.md 9.35 (3); item 31): Gamma, declared per world like
+)  # the integers of ALGEBRA.md #the-line, #the-rows-against-nature under the weak-field rule (item 44; 2^28 under the first-order rule HISTORY)
+# THE NODE CLOCK (ALGEBRA.md #the-paces; item 31): Gamma, declared per world like
 # the pairs, the clock pair (e, f) = (Gamma, Gamma + M) at every Node with M the
 # content held there; the eighteen declare 10^6 (a clock body of 64 quanta slows
 # by 6 x 10^-5, a well of one quantum by 10^-6, the mathematician's reading: no
 # pin of the eighteen moves beyond its band)
-# THE ONE FAMILIES FILE (ALGEBRA.md 9.83 (2), 9.85 (3); BUILD.md section 26 item 59): the
+# THE ONE FAMILIES FILE (ALGEBRA.md #a-familys-declaration, #the-primitives; BUILD.md section 26 item 59): the
 # universe's families as laws and the universe's integers, one canonical copy; every world of
 # this generator is built with the file's entries and written with the file's path
 UNIVERSE_FILE = "examples/events/universe.json"  # the universe file (record 2128 (3))
 MASSIVE_GIVEN_CLOCK = [77, 25]  # this generator's light clock (the pair form on N = 64)
-# THE THREE FAMILIES (ALGEBRA.md 9.86 (2), 9.91 (7); the one stroke, commit 1): gravity (the
+# THE THREE FAMILIES (ALGEBRA.md #the-primitives, #the-interval; the one stroke, commit 1): gravity (the
 # held content, the Node clock), the charge (the held sign; light is its wave, so a light
 # record, a mirror of light's kind and a stock of light are the charge family's), and matter
 # (one family, every body with its own rest pair `kind`)
 MATTER_FAMILY_NAME = "matter"
 WAVE_FAMILY_NAME = "charge"
-# THE LIGHT EMITTER'S MOMENT (ALGEBRA.md 9.82 (3) (d), 9.82 (4); the one stroke, commit 4):
+# THE LIGHT EMITTER'S MOMENT (ALGEBRA.md #the-second-level; the one stroke, commit 4):
 # the given light is written into the charge family's component along the body's moment
 # mu; every shipped light row gives along z, the axis with no Port in its worlds (folded
 # or the body's whole periodic extent), so its bookings are the scalar light's bit for bit
@@ -126,7 +126,7 @@ def families_entries() -> tuple[list[dict], dict[str, int]]:
 
 def universe_integer(document: dict, key: str) -> int:
     """One of the universe's integers as the world reads it: the world's own key on an inline
-    list, the universe file's under the path (Q, `momentum_unit`, ALGEBRA.md 9.96 (1))."""
+    list, the universe file's under the path (Q, `momentum_unit`, ALGEBRA.md #the-primitives)."""
     if isinstance(document["universe"], str):
         return int(families_entries()[1][key])
     return int(document[key])
@@ -146,7 +146,7 @@ def bind_universe_file(document: dict) -> dict:
 
 def families_of(document: dict) -> list[dict]:
     """The world's families in the loader's list form: the list as written, or the families
-    file's entries when the world names the file (ALGEBRA.md 9.85 (3); item 59)."""
+    file's entries when the world names the file (ALGEBRA.md #the-primitives; item 59)."""
     families = document["universe"]
     if isinstance(families, str):
         from event_universe.world_files import families_file_entries
@@ -157,7 +157,7 @@ def families_of(document: dict) -> list[dict]:
 
 def pair_on_body(document: dict, family: str) -> bool:
     """Whether the family declares no pair of its own, every body and record of it declaring
-    theirs (`pair` "body"; ALGEBRA.md 9.85 (3), 9.91 (7))."""
+    theirs (`pair` "body"; ALGEBRA.md #the-primitives, #the-interval)."""
     entry = next(item for item in families_of(document) if item["name"] == family)
     return entry.get("pair") == "body"
 
@@ -173,7 +173,7 @@ def kind_of(document: dict, entry: dict) -> list[int]:
 
 
 FAMILIES_INTEGERS = families_entries()[1]
-# Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44; the eighteen's 10^6 under
+# Gamma = 10^4 (ALGEBRA.md #the-line, #the-rows-against-nature; item 44; the eighteen's 10^6 under
 # the first-order rule HISTORY); the families file's integer
 NODE_CLOCK = FAMILIES_INTEGERS["node_clock"]
 MOMENTUM_SPEED_THIRD = 64
@@ -186,12 +186,12 @@ LAYER_HOLD = 8000
 BLOCK_KEYS = (
     "seed",
     # the stock as the given family's content held at the body (ALGEBRA.md
-    # 9.51 (8); item 47): the body's `stocks` (record 2128 (1))
+    # ALGEBRA.md #the-paces; item 47): the body's `stocks` (record 2128 (1))
     "stocks",
     "ramp",
     "start",
     "margin",
-    # the emitter as a clicking body (ALGEBRA.md 9.17; BUILD.md section 26)
+    # the emitter as a clicking body (ALGEBRA.md #the-click; BUILD.md section 26)
     "emitter",
     "receiver",
 )
@@ -216,10 +216,10 @@ def world(
     probes; every bound body's seed on its mode (`seed_on_the_mode`) unless `seed_profile` is
     off, for a caller that completes the document first (the detector-law generator's
     emitters) and calls it then."""
-    # THE ONE FAMILIES FILE (item 59; the three entries of ALGEBRA.md 9.91 (7), commit 1):
+    # THE ONE FAMILIES FILE (item 59; the three entries of ALGEBRA.md #the-interval, commit 1):
     # every family of the universe in every world, the file's entries; a body of matter
     # declares its rest pair `kind`; the light record's clock the emitter's (`clock` on
-    # every emitter, ALGEBRA.md 9.85 (3))
+    # every emitter, ALGEBRA.md #the-primitives)
     families, integers = families_entries()
     clock = list(MASSIVE_GIVEN_CLOCK if given_clock is None else given_clock)
     from event_universe.generator_numbers import body_twist, emitter_twist
@@ -248,15 +248,17 @@ def world(
             entry["extents"] = block["extents"]  # a box (BUILD.md section 26 item 23)
         entry["pair"] = block["pair"]
         if any(item["name"] == family and item.get("pair") == "body" for item in families):
-            entry["kind"] = list(block.get("kind", pair))  # the body's rest pair (9.91 (7))
-        # the body's numbers the holds read (ALGEBRA.md 9.91 (3), (7); commit 2), no default
+            entry["kind"] = list(
+                block.get("kind", pair)
+            )  # the body's rest pair (ALGEBRA.md #the-interval)
+        # the body's numbers the holds read (ALGEBRA.md #the-interval; commit 2), no default
         entry["q"] = block.get("q", 0)  # the body's signed number (record 2128 (1))
         entry["spin"] = list(block.get("spin", [0, 0, 0]))
         entry["moment"] = list(block.get("moment", [0, 0, 0]))
         for key in BLOCK_KEYS:
             if key in block:
                 entry[key] = block[key]
-        # THE TWIST "OWN" (ALGEBRA.md 9.96 (2) (a); item 73): the kind's rest rotation here,
+        # THE TWIST "OWN" (ALGEBRA.md #the-primitives; item 73): the kind's rest rotation here,
         # the mode's rotation once the body is seeded (`declare_twists` at every stamp)
         entry["twist"] = block.get("twist", body_twist(block.get("clock"), entry.get("kind", pair)))
         if "emitter" in entry:
@@ -264,7 +266,7 @@ def world(
             entry["emitter"].setdefault(
                 "twist", emitter_twist(entry["emitter"].get("pair"), block.get("clock"))
             )
-        # A TOOL IS APPARATUS HELD IN PLACE (ALGEBRA.md 9.104 (6) (b); the Boss's record
+        # A TOOL IS APPARATUS HELD IN PLACE (ALGEBRA.md #the-primitives; the Boss's record
         # 2157): every resting body of a shipped world declares `fixed: true` (the feed, when
         # it lands, acts on a body without the word alone); a body with a momentum is free
         if all(int(component) == 0 for component in entry["momentum"]):
@@ -285,15 +287,15 @@ def world(
         # canonical copy, referenced by its repository path
         "engine": "examples/events/engine_start.json",
         # the amplitude bound A every row stays below (BUILD.md section 26 item
-        # 31; the ceiling 2^28 retired, ALGEBRA.md 9.83 (2) (a); the rows
+        # 31; the ceiling 2^28 retired, ALGEBRA.md #a-familys-declaration; the rows
         # asserted below A at run time)
         "amplitude_bound": integers["amplitude_bound"],
-        # the Node clock Gamma (ALGEBRA.md 9.35 (3); item 31): (e, f) = (Gamma,
+        # the Node clock Gamma (ALGEBRA.md #the-paces; item 31): (e, f) = (Gamma,
         # Gamma + M) at every Node, M the content held there; required, no default
         "node_clock": integers["node_clock"],
-        # the momentum's unit Q (ALGEBRA.md 9.96 (1)): every body's wall W = 3 Q M
+        # the momentum's unit Q (ALGEBRA.md #the-primitives): every body's wall W = 3 Q M
         "momentum_unit": integers["momentum_unit"],
-        # the twist table (ALGEBRA.md 9.96 (2) (c)): the file's, on the inline document
+        # the twist table (ALGEBRA.md #the-primitives): the file's, on the inline document
         # while the build runs the engine
         "twist_table": integers["twist_table"],
         # the families' roles stand on the families (`held`, `reads`; the family
@@ -320,7 +322,7 @@ def seed_on_the_mode(document: dict) -> None:
     differs from it on any Node): a block of the massive kind with a lowered pair (a well),
     a nonzero scalar seed (declared on every well, no loader default: BUILD.md section 26 item 28),
     of ANY massive family (the emitter bodies of the light worlds and the M1 rows' source
-    family included, ALGEBRA.md 9.17),
+    family included, ALGEBRA.md #the-click),
     gets `seed` the profile of `mode_profile` at that scalar, its `margin` made explicit
     (the loader admits a profile with `margin` declared; "pin" is the loader's default). A
     silent block (seed 0) and a barrier (a raised pair) keep their keys."""
@@ -348,11 +350,11 @@ def seed_on_the_mode(document: dict) -> None:
         entry.setdefault("margin", "pin")
         entry["seed"] = mode_profile(document, number, amplitude=scalar)
         if any(component != 0 for component in entry.get("momentum", [0, 0, 0])):
-            # the moving body's Node's proper pairs (ALGEBRA.md 9.63 (3); item 46)
+            # the moving body's Node's proper pairs (ALGEBRA.md #the-velocity; item 46)
             entry["proper_clock"] = proper_clock(document, number)
     for number, entry in enumerate(document["measured"]):
         if "emitter" in entry:
-            # THE WINDOW IS THE ONE GIVING (ALGEBRA.md 9.85 (5), 9.71 (1); commit 7): the
+            # THE WINDOW IS THE ONE GIVING (ALGEBRA.md #the-primitives; commit 7): the
             # rung alone (the weight is set after the seeding by `point_weight`: the mode is
             # computed first)
             emitter_rung(document, number)
@@ -361,9 +363,9 @@ def seed_on_the_mode(document: dict) -> None:
 
 
 def stamped(document: dict) -> dict:
-    """THE INPUT STAMP (record 1886; ALGEBRA.md 9.22 (7) (i)) rewritten for the document's
+    """THE INPUT STAMP (record 1886; ALGEBRA.md #a-familys-declaration) rewritten for the document's
     integers as they stand: the hash of the whole file under `stamp` (no law identifier,
-    ALGEBRA.md 9.90 (1)); written before every parse of a document under construction and last of
+    ALGEBRA.md #the-primitives); written before every parse of a document under construction and last of
     all, so that the file carries the stamp of what it holds."""
     from event_universe.world_files import input_stamp
 
@@ -373,7 +375,7 @@ def stamped(document: dict) -> dict:
 
 
 def declare_twists(document: dict) -> None:
-    """THE TWIST "OWN" DECLARED (ALGEBRA.md 9.96 (2) (a); BUILD.md section 26 item 73): on
+    """THE TWIST "OWN" DECLARED (ALGEBRA.md #the-primitives; BUILD.md section 26 item 73): on
     every body (a block) round(2^16 omega_0) of its mode's rotation (`clock`) or of its
     kind's rest rotation, and on every emitter the given record's (the emitter's own `pair`
     on a body giving its own family, else the body's rotation where the window writes it);
@@ -392,10 +394,9 @@ TRAIN_FLUX_DISTANCE = 40  # Links ahead of the train's head, the plane the gener
 
 
 def emitter_rung(document: dict, number: int):  # type: ignore[no-untyped-def]
-    """The emitter's rung as the file declares it (ALGEBRA.md 9.17 (7) (e) and (f); 9.44 (5)
-    (c)): `period` P, the nearest integer to 2 pi over the body's mode's rotation, and `norm`
+    """The emitter's rung as the file declares it (ALGEBRA.md #the-click and (f); ALGEBRA.md #the-ladder): `period` P, the nearest integer to 2 pi over the body's mode's rotation, and `norm`
     T, one period's action of the excited record (`excitation_norm`), the generator's integers
-    under the input stamp, written on the emitter of measured[`number`] (ALGEBRA.md 9.71 (1)). Returns
+    under the input stamp, written on the emitter of measured[`number`] (ALGEBRA.md). Returns
     the world parsed with them."""
     from event_universe.diagnostics.massive_record_margin import (
         block_margin,
@@ -412,7 +413,7 @@ def emitter_rung(document: dict, number: int):  # type: ignore[no-untyped-def]
     period = period_of(block_margin(world, number))
     emitter["period"] = period
     emitter["norm"] = excitation_norm(world, number, period)
-    # THE WINDOW'S T (9.71 (1) (d); item 50): the action's exact rational
+    # THE WINDOW'S T (ALGEBRA.md; item 50): the action's exact rational
     action = excitation_action(world, number, period)
     assert action.numerator == emitter["norm"]
     emitter["norm_denominator"] = int(action.denominator)
@@ -468,14 +469,14 @@ def window_reading(document: dict, number: int, weight: int, limit: int) -> tupl
 
 
 def point_weight(document: dict, number: int, periods: int, start: int = 1) -> int:
-    """THE EMITTER'S WEIGHT (ALGEBRA.md 9.71 (1), 9.85 (5); BUILD.md section 26 item 50): the
+    """THE EMITTER'S WEIGHT (ALGEBRA.md #the-primitives; BUILD.md section 26 item 50): the
     integer g at which the window of measured[`number`] is nearest `periods` periods of the
     body's rotation (the window's length falls about as 1 / g^2, the outward norm growing as
     the square of the written amplitude): the window at g = `start` read first, the estimate
     g* = start sqrt(n_start / target) and its neighbours read, the nearest taken; written as
     the emitter's `weight`. HOST, a trial run of the generator; the engine reads the integer.
     SINCE COMMIT 7 every emitter's weight is chosen here (the window the one giving); a
-    light clock's window is aimed shorter than its arm's round trip (9.85 (5) (a))."""
+    light clock's window is aimed shorter than its arm's round trip (ALGEBRA.md #the-primitives)."""
     emitter = document["measured"][number]["emitter"]
     target = periods * int(emitter["period"])
     # the window at g = 1 runs about 32 periods (the point chain's 1124 intervals at P = 35);
@@ -540,7 +541,7 @@ def train_run(
     pair: tuple[int, int] | None = None,
 ) -> int:
     """CANCELLED (commit 7): the given train's helper, disconnected, not deleted.
-    THE GENERATOR'S RUN OF A TRAIN (HOST; ALGEBRA.md 9.25 (11) (a)): the train's two
+    THE GENERATOR'S RUN OF A TRAIN (HOST; ALGEBRA.md #the-ladder): the train's two
     levels planted on the given family's VACUUM of the world's families, on a check board of
     the world's transverse shape and faces whose axis along **K** is open and long (a back
     margin of one train's length behind the tail, the train, the plane one Node deep
@@ -550,7 +551,7 @@ def train_run(
     intervals, v_g the dispersion's group pace along **K** (a narrow train's oblique parts
     pass more slowly: an 8-wide train on a layer books 0.9972 of its norm in a window of
     three trains and 1.0000 in six, COMPUTATION); the one-way inward flux into the plane
-    summed over the window is returned. The transparency reading of 9.22 (7a) (iv) (a body
+    summed over the window is returned. The transparency reading of ALGEBRA.md #a-familys-declaration (a body
     placed at the train's head) is HISTORY with the coupling (the model owner's decision
     (2) of record 1962)."""
     import numpy as np
@@ -604,10 +605,10 @@ def train_run(
     if declared == "body":
         raise ValueError(
             f"the family {family!r} declares no pair; the train's pair is the emitter's (ALGEBRA.md "
-            "9.85 (3)); nothing written"
+            "ALGEBRA.md #the-primitives); nothing written"
         )
     pair = (int(declared[0]), int(declared[1]))
-    p, q = clock  # the given record's clock, the emitter's (ALGEBRA.md 9.85 (3); item 59)
+    p, q = clock  # the given record's clock, the emitter's (ALGEBRA.md #the-primitives; item 59)
     k = 2.0 * math.pi * p / (2.0 * int(document["N"]) * q)
     window = math.ceil((TRAIN_FLUX_DISTANCE + 6 * length) / group_pace(pair, k))
     booked = 0
@@ -618,7 +619,7 @@ def train_run(
 
 
 def given_clock_of(document: dict, number: int) -> tuple[int, int]:
-    """THE GIVEN CLOCK of measured[`number`]'s emitter (ALGEBRA.md 9.85 (3); item 59): the
+    """THE GIVEN CLOCK of measured[`number`]'s emitter (ALGEBRA.md #the-primitives; item 59): the
     emitter's declared `clock` [p, q], else the given family's own (`phase_per_link` on an
     inline families list)."""
     emitter = document["measured"][number]["emitter"]
@@ -628,14 +629,14 @@ def given_clock_of(document: dict, number: int) -> tuple[int, int]:
     if "phase_per_link" not in family_entry:
         raise ValueError(
             f"measured[{number}].emitter declares no `clock` and the given family "
-            f"{emitter['family']!r} declares none (ALGEBRA.md 9.85 (3)); nothing written"
+            f"{emitter['family']!r} declares none (ALGEBRA.md #the-primitives); nothing written"
         )
     return int(family_entry["phase_per_link"][0]), int(family_entry["phase_per_link"][1])
 
 
 def train_passage_flux(document: dict, number: int, now: list[int], before: list[int]) -> int:
     """CANCELLED (commit 7): the given train's helper, disconnected, not deleted.
-    THE FLUX CHECK'S READING (ALGEBRA.md 9.25 (11) (a)): the train alone on the vacuum,
+    THE FLUX CHECK'S READING (ALGEBRA.md #the-ladder): the train alone on the vacuum,
     the plane TRAIN_FLUX_DISTANCE Links ahead of its head (`train_run`)."""
     entry = document["measured"][number]
     direction = entry["emitter"]["train"]["direction"]
@@ -666,7 +667,7 @@ def block_extents_of(entry: dict) -> tuple[int, int, int]:
 
 
 def placement_check(document: dict) -> None:
-    """THE PLACEMENT RULE (ALGEBRA.md 9.25 (11) (b)): every emitter's tail and every
+    """THE PLACEMENT RULE (ALGEBRA.md #the-ladder): every emitter's tail and every
     receiver stands at least one train's length from every face slab's front (the slab
     returns what it books); refused naming the tool and the slab. The face slabs are the
     `face_depth` Nodes nearest every open border of the world's `boundary` (declared on
@@ -712,7 +713,7 @@ def placement_check(document: dict) -> None:
                     raise ValueError(
                         f"{label} stands {gap} Links from the {where} face slab's front on the axis "
                         f"{name} (the slab {depth} deep), nearer than one train's length "
-                        f"{train_length} (ALGEBRA.md 9.25 (11) (b)); nothing written"
+                        f"{train_length} (ALGEBRA.md #the-ladder); nothing written"
                     )
 
 
@@ -720,7 +721,7 @@ SOURCE_KIND = [7, 8]  # the emitter bodies' own family `source` (omega_0 = 0.505
 SOURCE_WELL = [
     801,
     700,
-]  # its one-Node well, rich (700 remainder values, ALGEBRA.md 9.19 (4a)): bound on a chain (2 cos omega_b = 1.90) and on a layer (1.75)
+]  # its one-Node well, rich (700 remainder values, ALGEBRA.md #rule3): bound on a chain (2 cos omega_b = 1.90) and on a layer (1.75)
 
 
 def rest_block(side: int, corner: int, pair: list[int], **extra: object) -> dict:
@@ -850,7 +851,7 @@ def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
     stop the first iteration at which the scaled profile passes the loader's own residual
     bound), the pin worlds' seed of MASSIVE_RECORD.md section 11 item 7: a HOST computation of
     the generator, reproducible bit for bit, written into the world file so that the run's
-    record follows from the file and the engine alone. SINCE record 1886 (ALGEBRA.md 9.22 (7))
+    record follows from the file and the engine alone. SINCE record 1886 (ALGEBRA.md #a-familys-declaration)
     the entry also receives the mode's `clock` [a, b] (2 cos omega as a rational, b at least
     twice the amplitude), and the profile is checked here once more against the loader's
     residual bound before it is written: a profile that fails is a generator fault, raised,
@@ -864,7 +865,7 @@ def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
     entry = world.measured[number]
     block = entry.block
     assert block is not None
-    kind = block.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+    kind = block.kind  # the body's rest pair (ALGEBRA.md #the-interval; commit 1)
     shape = (int(world.shape[0]), int(world.shape[1]), int(world.shape[2]))
     wrap = world.kind_periodic(entry.family)
     corner = (int(entry.position[0]), int(entry.position[1]), int(entry.position[2]))
@@ -884,14 +885,14 @@ def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
 
 
 def mode_dispersion(document: dict, number: int, axis: int) -> tuple[Fraction, Fraction]:
-    """THE MODE'S OWN DISPERSION ALONG AN AXIS (ALGEBRA.md 9.63 (3), 9.46 (7) (b), 9.24 (2)):
+    """THE MODE'S OWN DISPERSION ALONG AN AXIS (ALGEBRA.md #the-velocity, #what-a-body-is):
     the bound mode's profile p times the character of K along `axis` rotates at 2 cos omega_K
     = 2 cos omega_b - (1 - cos K) X, with X = SUM_i num_i p_i (p_{i+e} + p_{i-e}) / (3 SUM_i
     den_i p_i^2) the profile's own quotient on the axis's two reads (the operator's quotient
     as `iterated_mode` reads the clock, every Node weighing in; the reads wrap on a periodic
     axis and are zero beyond a face). Returns (2 cos omega_b, X) as exact rationals, 2 cos
     omega_b the entry's clock a / b. On a plane wave X = 2 num / (3 den) and the line is the
-    free dispersion 3 cos omega = (num / den)(cos K + 2) of 9.24 (2) exactly. HOST, the
+    free dispersion 3 cos omega = (num / den)(cos K + 2) of ALGEBRA.md #the-velocity exactly. HOST, the
     generator's own reading of its integers."""
     import numpy as np
 
@@ -935,7 +936,7 @@ def moving_rotation(two_cos_rest: float, quotient: float, pace: float) -> tuple[
     """The moving mode at the pace v = `pace` Links per interval on the dispersion 2 cos
     omega_K = 2 cos omega_b - (1 - cos K) X: the wavenumber K at which the group pace X sin
     K / (2 sin omega_K) equals v (bisection on [0, pi], the host's floats) and the rotation of the rows at the moving centre per interval,
-    omega_K - K v (ALGEBRA.md 9.63 (3), 9.24 (2)); on the plane wave of [800, 809] at v = 1 /
+    omega_K - K v (ALGEBRA.md #the-velocity); on the plane wave of [800, 809] at v = 1 /
     3 the algebra's own K = 0.18556 and (omega_K - K v) / omega_b = 0.81457 (COMPUTATION)."""
 
     def omega_at(k: float) -> float:
@@ -954,7 +955,7 @@ def moving_rotation(two_cos_rest: float, quotient: float, pace: float) -> tuple[
 
 
 def proper_clock(document: dict, number: int) -> list[list[int]]:
-    """THE PROPER PAIRS OF A MOVING BODY ON ONE NODE (ALGEBRA.md 9.63 (3); BUILD.md section 26 item 46; the
+    """THE PROPER PAIRS OF A MOVING BODY ON ONE NODE (ALGEBRA.md #the-velocity; BUILD.md section 26 item 46; the
     mathematician's ruling on Nature24's finding that the body's Node's clock did not slow in motion):
     for a block with the momentum P on one axis, the pair [num_m, b] for every whole part m of
     the momentum from 0 to |P| (the ramp's P t // ramp, then P; the engine's `_momentum_now`),
@@ -963,7 +964,7 @@ def proper_clock(document: dict, number: int) -> list[list[int]]:
     mode's own dispersion (`mode_dispersion`): the rotation of the moving mode's rows at its
     moving centre per interval, which the body's Node rotates at between hops; at m = 0 the clock
     itself. The cube carries the dilation in its rows by the rule; the body's Node carries it in
-    this declared pair, the seam of the host form (9.46). HOST, the generator's; the engine
+    this declared pair, the seam of the host form (ALGEBRA.md #what-a-body-is). HOST, the generator's; the engine
     reads the integers alone."""
     entry = document["measured"][number]
     momentum = [int(component) for component in entry.get("momentum", [0, 0, 0])]
@@ -971,12 +972,12 @@ def proper_clock(document: dict, number: int) -> list[list[int]]:
     if len(axes) != 1:
         raise ValueError(
             f"measured[{number}]: the proper pair is read along one axis of motion; the momentum "
-            f"{momentum} lies on {len(axes)} (ALGEBRA.md 9.63 (3)); nothing written"
+            f"{momentum} lies on {len(axes)} (ALGEBRA.md #the-velocity); nothing written"
         )
     two_cos_rest, quotient = mode_dispersion(document, number, axes[0])
     a, b = (int(value) for value in entry["clock"])
     # the body's wall W = 3 Q M on its whole content, its own quanta and what it holds
-    # (ALGEBRA.md 9.96 (1); Q the universe's `momentum_unit`)
+    # (ALGEBRA.md #the-primitives; Q the universe's `momentum_unit`)
     content = int(entry.get("amount", 1)) + sum(int(value) for value in entry.get("stocks", {}).values())
     wall = 3 * universe_integer(document, "momentum_unit") * content
     table = [[a, b]]

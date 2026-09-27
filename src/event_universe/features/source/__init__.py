@@ -1,4 +1,4 @@
-"""The source: a record's local count D_i, divided by the scale E_s with its remainder carried at the Node, added at the weight into another family's level (ALGEBRA.md 9.117 row "the source"; 9.108 items 3, 11, 13; 9.113 item 2: the field's shape from the rule 9.57 (1), the write beyond (H))."""
+"""The source: a record's local count D_i, divided by the scale E_s with its remainder carried at the Node, added at the weight into another family's level (ALGEBRA.md #the-primitives row "the source"; ALGEBRA.md #the-paces, #the-primitives: the field's shape from the rule ALGEBRA.md #the-line, the write beyond (H))."""
 
 from __future__ import annotations
 
@@ -9,13 +9,13 @@ import numpy as np
 from event_universe.core.register import Declaration
 from event_universe.core.schema import Integer, Name, ObjectOf, Schema
 
-THE_WORD = "the field's shape from the rule 9.57 (1), the write beyond (H)"
+THE_WORD = "the field's shape from the rule ALGEBRA.md #the-line, the write beyond (H)"
 PRODUCT_BOUND = (int(np.iinfo(np.int64).max) + 1) // 2  # half the integer width, no number of its own
 
 
 @dataclass(frozen=True)
 class SourceTerm:
-    """The declaration `sourced` {of, weight, scale, cap}: the target and the record family by index, the signed weight, the scale E_s, the table's cap or None (ALGEBRA.md 9.108 items 3, 11)."""
+    """The declaration `sourced` {of, weight, scale, cap}: the target and the record family by index, the signed weight, the scale E_s, the table's cap or None (ALGEBRA.md #the-paces)."""
 
     target: int
     of: int
@@ -26,7 +26,7 @@ class SourceTerm:
 
 @dataclass(frozen=True)
 class SourceStart:
-    """The interval's start: the GameBoard's shape and the record family's D_i at every Node, formed by the loop (ALGEBRA.md 9.108 item 13)."""
+    """The interval's start: the GameBoard's shape and the record family's D_i at every Node, formed by the loop (ALGEBRA.md #the-paces)."""
 
     shape: tuple[int, ...]
     argument: np.ndarray
@@ -34,14 +34,14 @@ class SourceStart:
 
 @dataclass
 class SourceOwn:
-    """The primitive's own record: the remainder r_i at every Node, 0 <= r_i < E_s, zero under a table (ALGEBRA.md 9.91 (2), (3))."""
+    """The primitive's own record: the remainder r_i at every Node, 0 <= r_i < E_s, zero under a table (ALGEBRA.md #the-interval)."""
 
     remainders: np.ndarray
 
 
 @dataclass(frozen=True)
 class SourceWrites:
-    """The write into the sourced family's level: the mask of nonzero counts, the weight times the count, the count, the remainder after (ALGEBRA.md 9.117 row "the source")."""
+    """The write into the sourced family's level: the mask of nonzero counts, the weight times the count, the count, the remainder after (ALGEBRA.md #the-primitives row "the source")."""
 
     at: np.ndarray
     integers: np.ndarray
@@ -50,13 +50,17 @@ class SourceWrites:
 
 
 def check(term: SourceTerm, start: SourceStart, own: SourceOwn) -> None:
-    """The refusals by name: the scale from 1, the weight nonzero, the cap from 1, the shapes the GameBoard's, int64 alone, the table's products inside the bound (ALGEBRA.md 9.116 item 6b)."""
+    """The refusals by name: the scale from 1, the weight nonzero, the cap from 1, the shapes the GameBoard's, int64 alone, the table's products inside the bound (ALGEBRA.md)."""
     if term.scale < 1:
-        raise ValueError(f"the source's scale E_s is {term.scale}: an integer from 1 (9.108 item 11)")
+        raise ValueError(
+            f"the source's scale E_s is {term.scale}: an integer from 1 (ALGEBRA.md #the-paces)"
+        )
     if term.weight == 0:
         raise ValueError("the source's weight is 0: a nonzero integer (the ledger's source row)")
     if term.cap is not None and term.cap < 1:
-        raise ValueError(f"the source's table cap s_cap is {term.cap}: an integer from 1 (9.108 item 3)")
+        raise ValueError(
+            f"the source's table cap s_cap is {term.cap}: an integer from 1 (ALGEBRA.md #the-paces)"
+        )
     if start.argument.shape != start.shape or own.remainders.shape != start.shape:
         raise ValueError(
             f"the source's argument {start.argument.shape} and remainder {own.remainders.shape} "
@@ -69,14 +73,14 @@ def check(term: SourceTerm, start: SourceStart, own: SourceOwn) -> None:
         if term.cap * largest >= PRODUCT_BOUND or term.cap * term.scale + largest >= PRODUCT_BOUND:
             raise ValueError(
                 f"the source's table products s_cap x D_i = {term.cap} x {largest} leave the bound "
-                f"{PRODUCT_BOUND} (9.116 item 6b)"
+                f"{PRODUCT_BOUND} (ALGEBRA.md)"
             )
 
 
 def counts_of(
     term: SourceTerm, argument: np.ndarray, remainders: np.ndarray
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The count s_i and the remainder after: plain, (D_i + r_i) div E_s and mod E_s; with a table, s_cap D_i div (s_cap E_s + D_i) and no remainder (ALGEBRA.md 9.108 items 3, 11)."""
+    """The count s_i and the remainder after: plain, (D_i + r_i) div E_s and mod E_s; with a table, s_cap D_i div (s_cap E_s + D_i) and no remainder (ALGEBRA.md #the-paces)."""
     if term.cap is None:
         total = argument + remainders
         return total // term.scale, total % term.scale
@@ -85,13 +89,13 @@ def counts_of(
 
 
 def apply(term: SourceTerm, start: SourceStart, own: SourceOwn) -> SourceWrites:
-    """The primitive at (iv): the count at every Node and the write of weight x count where the count is nonzero, the product inside the bound (ALGEBRA.md 9.117 row "the source")."""
+    """The primitive at (iv): the count at every Node and the write of weight x count where the count is nonzero, the product inside the bound (ALGEBRA.md #the-primitives row "the source")."""
     check(term, start, own)
     counts, remainders = counts_of(term, start.argument, own.remainders)
     if counts.size and abs(term.weight) * int(np.abs(counts).max()) >= PRODUCT_BOUND:
         raise ValueError(
             f"the source's write weight x count = {term.weight} x {int(np.abs(counts).max())} leaves "
-            f"the bound {PRODUCT_BOUND} (9.116 item 6b)"
+            f"the bound {PRODUCT_BOUND} (ALGEBRA.md)"
         )
     return SourceWrites(counts != 0, term.weight * counts, counts, remainders)
 
@@ -99,7 +103,7 @@ def apply(term: SourceTerm, start: SourceStart, own: SourceOwn) -> SourceWrites:
 def invert(
     term: SourceTerm, start: SourceStart, own_after: SourceOwn, writes: SourceWrites
 ) -> tuple[np.ndarray, SourceOwn]:
-    """The step back: the same integers subtracted (the write's negative) and the remainder before restored, r_i = s_i E_s + r_i' - D_i, zero under a table (ALGEBRA.md 9.91 (8))."""
+    """The step back: the same integers subtracted (the write's negative) and the remainder before restored, r_i = s_i E_s + r_i' - D_i, zero under a table (ALGEBRA.md #the-interval)."""
     if term.cap is None:
         before = writes.counts * term.scale + own_after.remainders - start.argument
     else:
@@ -110,7 +114,7 @@ def invert(
 def hand_identity(
     term: SourceTerm, argument: int, remainder: int, level_before: int, level_after: int
 ) -> bool:
-    """The trace's hand check at one Node: after = before + weight x count from the same integers (ALGEBRA.md 9.112 item 5)."""
+    """The trace's hand check at one Node: after = before + weight x count from the same integers (ALGEBRA.md #the-interval)."""
     if term.cap is None:
         count = (argument + remainder) // term.scale
     else:
@@ -129,7 +133,7 @@ DECLARATION = Declaration(
     ),
     ("a family's level at a Node", "the record's remainder"),
     apply,
-    THE_WORD + " (9.113 item 2; 9.117 item 5); 9.117 item 2; 9.108 items 3, 10, 11, 13; 9.116 item 4b",
+    THE_WORD + " (ALGEBRA.md #the-primitives); ALGEBRA.md #the-primitives, #the-paces",
     word="the right side",
     schema=Schema(
         {

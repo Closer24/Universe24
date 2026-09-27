@@ -1,4 +1,4 @@
-"""The world file translated to the loop's classes: the frame (loader/frame.py) reads the three files through the schemas and hands the checked values here; this module builds the loop's classes from them (NatureBeamWorld, FamilyDefinition, MeasuredDefinition, BlockDefinition, EmitterDefinition, DetectorDefinition, TwistTable), keeps the rules between keys the cards do not state, and runs the loop's load-time checks (the node clock's bound, the held bodies, the initial state, the body's fit); it leaves with the loop's reads of the old form's keys (ALGEBRA.md 9.117 item 2, 9.90 (1))."""
+"""The world file translated to the loop's classes: the frame (loader/frame.py) reads the three files through the schemas and hands the checked values here; this module builds the loop's classes from them (NatureBeamWorld, FamilyDefinition, MeasuredDefinition, BlockDefinition, EmitterDefinition, DetectorDefinition, TwistTable), keeps the rules between keys the cards do not state, and runs the loop's load-time checks (the node clock's bound, the held bodies, the initial state, the body's fit); it leaves with the loop's reads of the old form's keys (ALGEBRA.md #the-primitives.90 (1))."""
 
 from __future__ import annotations
 
@@ -44,18 +44,18 @@ LIFETIME_NAME = "lifetime"
 NO_CHARGE = (0, 1)
 # at most twenty families on a GameBoard (the model owner's word of 2026-09-25)
 MOST_FAMILIES = 20
-# the twist table (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c), (d)): unit = 4 Gamma 2^16, 2^10 fine triples, at most 2^15 coarse triples, d at most 10^9
+# the twist table (ALGEBRA.md #the-transport, #the-primitives): unit = 4 Gamma 2^16, 2^10 fine triples, at most 2^15 coarse triples, d at most 10^9
 TWIST_UNIT_SCALE = 1 << 16
 TWIST_FINE_BITS = 10
 TWIST_COARSE_MOST = 1 << 15
 TWIST_TRIPLE_BOUND = 10**9
-# the three forms of a family's parts (ALGEBRA.md 9.86 (2))
+# the three forms of a family's parts (ALGEBRA.md #the-primitives)
 PARTS_FORMS = ((1,), (1, 3), (1, 3, 6))
 
 
 @dataclass(frozen=True)
 class TwistTable:
-    """THE TWIST TABLE as read (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c)): the unit's
+    """THE TWIST TABLE as read (ALGEBRA.md #the-transport, #the-primitives): the unit's
     integer (theta_unit = 1 / unit radians, unit = 4 Gamma 2^16), the fine triples for
     k_0 in [0, 2^10) and the coarse triples for k_1 in [0, bound); the transport's
     triple for |k| = k_1 2^10 + k_0 is their exact product."""
@@ -66,7 +66,7 @@ class TwistTable:
 
 
 def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: int) -> TwistTable:
-    """The twist table read and checked in integers (ALGEBRA.md 9.96 (2) (c), (d)):
+    """The twist table read and checked in integers (ALGEBRA.md #the-primitives):
     {unit, fine, coarse}; unit = 4 Gamma 2^16; fine 2^10 triples, coarse from 1 to 2^15;
     each triple three integers, c from 1, s from 0, d from 1 to 10^9 with c^2 + s^2 = d^2,
     the first the angle 0's and the angles never falling along the table (the nearest
@@ -78,7 +78,7 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
     if unit != 4 * node_clock * TWIST_UNIT_SCALE:
         raise ValueError(
             f"{label}.unit {unit} is not 4 Gamma 2^16 = {4 * node_clock * TWIST_UNIT_SCALE}: "
-            "theta_unit = 1 / (4 Gamma 2^16) radians per unit of k (ALGEBRA.md 9.96 (2) (a))"
+            "theta_unit = 1 / (4 Gamma 2^16) radians per unit of k (ALGEBRA.md #the-primitives)"
         )
     parts: list[tuple[tuple[int, int, int], ...]] = []
     for name, least, most, _step in (
@@ -89,7 +89,7 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
         if not isinstance(rows, list | tuple) or not least <= len(rows) <= most:
             raise ValueError(
                 f"{label}.{name} must be a list of {least} to {most} triples [c, s, d] "
-                "(ALGEBRA.md 9.96 (2) (c))"
+                "(ALGEBRA.md #the-primitives)"
             )
         triples: list[tuple[int, int, int]] = []
         for index, row in enumerate(rows):
@@ -104,7 +104,7 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
             if c < 1 or s < 0 or d < 1 or d > TWIST_TRIPLE_BOUND or c * c + s * s != d * d:
                 raise ValueError(
                     f"{where} [{c}, {s}, {d}] is no triple of the table: c from 1, s from 0, "
-                    f"d from 1 to {TWIST_TRIPLE_BOUND}, c^2 + s^2 = d^2 exactly (ALGEBRA.md 9.81 (2) (b))"
+                    f"d from 1 to {TWIST_TRIPLE_BOUND}, c^2 + s^2 = d^2 exactly (ALGEBRA.md #the-transport)"
                 )
             if index == 0 and (c, s, d) != (1, 0, 1):
                 raise ValueError(f"{where} [{c}, {s}, {d}] is not the angle 0's triple [1, 0, 1]")
@@ -113,7 +113,7 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
                 # (the nearest-triple property is the generator's, checked by its own test)
                 raise ValueError(
                     f"{where} [{c}, {s}, {d}] turns back below the entry before it: the table's "
-                    "angles rise with k (ALGEBRA.md 9.96 (2) (c); the generator writes the "
+                    "angles rise with k (ALGEBRA.md #the-primitives; the generator writes the "
                     "nearest triples, the loader checks the identities, the bound and the order)"
                 )
             triples.append((c, s, d))
@@ -122,7 +122,7 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
     if room >= TOTAL_BOUND:
         raise ValueError(
             f"{label}: the transport's total at A = {amplitude_bound}, {room}, leaves int64 "
-            "(3 d_1 d_0 (A + 1) below 2^63; ALGEBRA.md 9.81 (2) (e))"
+            "(3 d_1 d_0 (A + 1) below 2^63; ALGEBRA.md #the-transport)"
         )
     return TwistTable(unit, parts[0], parts[1])
 
@@ -152,28 +152,28 @@ STAMP_KEYS = {"hash"}
 BLOCK_KEYS = {
     "side",
     # the box's extents per axis in place of `side` (the slabs of ALGEBRA.md
-    # 9.22 (8); BUILD.md section 26 item 23)
+    # ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 23)
     "extents",
     "pair",
-    # THE BODY'S KIND (ALGEBRA.md 9.85 (3), 9.91 (7); the one stroke, commit 1):
+    # THE BODY'S KIND (ALGEBRA.md #the-primitives, #the-interval; the one stroke, commit 1):
     # the body's rest pair on a family whose pair is the body's
     "kind",
-    # THE BODY'S NUMBERS the holds read (ALGEBRA.md 9.91 (3), (7); commit 2): its
+    # THE BODY'S NUMBERS the holds read (ALGEBRA.md #the-interval; commit 2): its
     # charge Q (`q`), its spin S and its moment mu (the momentum n is `momentum`)
     "spin",
     "moment",
     # the body's own record's twist "own", the generator's integer (item 73)
     "twist",
     "seed",
-    # the bound mode's clock [a, b] beside a profile (ALGEBRA.md 9.22 (7))
+    # the bound mode's clock [a, b] beside a profile (ALGEBRA.md #a-familys-declaration)
     "clock",
     # the moving body's Node's proper pairs by the momentum's whole part (ALGEBRA.md
-    # 9.63 (3); BUILD.md section 26 item 46), beside `clock` on a moving block
+    # ALGEBRA.md #the-velocity; BUILD.md section 26 item 46), beside `clock` on a moving block
     "proper_clock",
     "ramp",
     "start",
     "margin",
-    # the emitter as a clicking body (ALGEBRA.md 9.17 (4); LAB_TOOLS.md A.1):
+    # the emitter as a clicking body (ALGEBRA.md #the-click; LAB_TOOLS.md A.1):
     # the excited records in turn on the body's Nodes, each clicking at its
     # own rung, the given record written once by E^T at that interval
     "emitter",
@@ -182,7 +182,7 @@ BLOCK_KEYS = {
     # record's ladder; admitted on an emitting block alone
     "receiver",
     # the stock of the body's own family where its emitter gives it (ALGEBRA.md
-    # 9.96 (5); commit 6)
+    # ALGEBRA.md #the-primitives; commit 6)
     "stock",
 }
 # a well's margin kind, the loader's rule between keys: a pin world's margins or a control world's
@@ -238,12 +238,12 @@ class FamilyDefinition:
     # read by the engine as attributes alone, never by a name or a role:
     # `held`, the source a body's record writes at the body's Nodes at both
     # levels with the remainder 0, "content" (the quanta the body holds, the
-    # Node clock's c of ALGEBRA.md 9.45) or "charge" (the signed sum of its
+    # Node clock's c of ALGEBRA.md #the-counts-line) or "charge" (the signed sum of its
     # quanta, the d of 9.48), None for a family the step alone moves; `reads`,
     # the held families whose levels enter this family's pace at every Node,
     # (family index, weight, by) each, the effective content SUM weight x
     # level for by = "plain" and - q x weight x level for by = "sign" (q the
-    # reading family's own charge sign; 9.48 (3): c - q Lambda d), empty for
+    # reading family's own charge sign; ALGEBRA.md #the-paces: c - q Lambda d), empty for
     # a held family (the plain rule, the pace 1 of its own); `components`,
     # the representation's count (1 a scalar; 3 and 6 the vector and tensor
     # families of 9.77, not yet built). The sources and the read modes are
@@ -254,33 +254,33 @@ class FamilyDefinition:
     # emitters: those are the bodies' mechanisms.
     held: str | None = None
     reads: tuple[tuple[int, int, str, int | str], ...] = ()
-    # THE REPRESENTATION AS A LIST OF PARTS (ALGEBRA.md 9.86 (2), (3); 9.91
+    # THE REPRESENTATION AS A LIST OF PARTS (ALGEBRA.md #the-primitives, #the-interval
     # (1); the one stroke, commit 1): (1,) a scalar, (1, 3) the time part and
     # the vector, (1, 3, 6) the symmetric tensor over the four directions; the
     # component order fixed once, (t), (x, y, z), (xx, yy, zz, xy, xz, yz)
     parts: tuple[int, ...] = (1,)
-    # the levels at a Node (9.91 (1)): 1 the pair (a_now, a_before, r); 2 the
+    # the levels at a Node (ALGEBRA.md #the-interval): 1 the pair (a_now, a_before, r); 2 the
     # two levels with their remainders (the second level not yet allocated:
     # it enters with the transport, commit 4)
     levels: int = 2
-    # THE HELD SOURCE'S WRITES (9.91 (3), (7)): the factor per part (gravity (1, 4, 2): s,
+    # THE HELD SOURCE'S WRITES (ALGEBRA.md #the-interval): the factor per part (gravity (1, 4, 2): s,
     # 4 s n div W, 2 s n n div W^2; the charge (1, 1)), the body's dipole number written on the
     # six neighbours ("spin", "moment") and its divisor; one factor per part, (1,) on a scalar
     held_factors: tuple[int, ...] = (1,)
     held_dipole: str | None = None
     held_dipole_div: int = 1
-    # THE SPIN'S STEP'S ROW (9.78 (5)): the curl and tidal pairs, read by the spin's step's
+    # THE SPIN'S STEP'S ROW (ALGEBRA.md #a-familys-declaration): the curl and tidal pairs, read by the spin's step's
     # folder; required on a family that holds the spin's dipole, None on every other
     spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
     # THE SOURCE (9.117 row "the source"): the target family by index, the signed weight, the
     # scale and the cap or None; the loop builds the source's term from it (Main Loop, #1236)
     sourced: tuple[int, int, int, int | None] | None = None
-    # the self-source's unit P_2 (9.78 (3), 9.91 (5)): 0, off
+    # the self-source's unit P_2 (ALGEBRA.md #a-familys-declaration, #the-interval): 0, off
     self_unit: int = 0
-    # THE CLICKS (9.79 (1), 9.91 (7)): (gives, takes) for a family of records,
+    # THE CLICKS (ALGEBRA.md #a-familys-declaration, #the-interval): (gives, takes) for a family of records,
     # None for a field family that is never given or taken
     clicks: tuple[bool, bool] | None = None
-    # THE PAIR ON THE BODY (9.85 (3), 9.91 (7)): the family declares no pair
+    # THE PAIR ON THE BODY (ALGEBRA.md #the-primitives, #the-interval): the family declares no pair
     # of its own; every body and every given record of it declares its own
     # (`kind` on the body, `pair` on the emitter); `pair` then a placeholder
     pair_on_body: bool = False
@@ -288,12 +288,12 @@ class FamilyDefinition:
     @property
     def booked(self) -> bool:
         """The detectors book the family's records at their Ports: exactly a
-        family with clicks (derived, item 53; ALGEBRA.md 9.91 (7))."""
+        family with clicks (derived, item 53; ALGEBRA.md #the-interval)."""
         return self.clicks is not None
 
     @property
     def components(self) -> int:
-        """The count of components, the parts summed (9.91 (1))."""
+        """The count of components, the parts summed (ALGEBRA.md #the-interval)."""
         return sum(self.parts)
 
     @property
@@ -306,11 +306,11 @@ class FamilyDefinition:
 
 @dataclass(frozen=True)
 class EmitterDefinition:
-    """The emitter as a clicking body (ALGEBRA.md 9.17 (4), the mathematician's
+    """The emitter as a clicking body (ALGEBRA.md #the-click, the mathematician's
     integers of 2026-09-24; LAB_TOOLS.md A.1): on a body of a massive kind
     with its seed (the excited record: the body's seed at both levels) and
     its stock THE GIVEN FAMILY'S CONTENT HELD AT THE BODY, `held` naming the
-    given family (ALGEBRA.md 9.51 (8); BUILD.md section 26 item 47: a giving
+    given family (ALGEBRA.md #the-paces; BUILD.md section 26 item 47: a giving
     lowers the given family's content by one; the body's own quanta `amount`
     and its charge stay; the stock as `amount` HISTORY), the key
     `emitter`: {"family": the given family's name (a paid family with the
@@ -321,15 +321,14 @@ class EmitterDefinition:
     2 pi / omega_b of the body's mode (the generator's integer), "norm":
     T, one period's action P e_c: the share of the body's conserved form
     at its centre Node summed over P intervals advanced alone (the
-    generator's integer under the input stamp; ALGEBRA.md 9.17 (7) (e) and
-    (f) in the flux's units of 9.19 (3)), "given": the given record's two levels
+    generator's integer under the input stamp; ALGEBRA.md #the-click and
+    (f) in the flux's units of ALGEBRA.md #rule3), "given": the given record's two levels
     over the whole board as material (optional; {"now": [...], "before":
     [...]}, x-major, one per Node; the engine copies them at the click;
-    9.17 (5) item 3)}. Without `given` the given record is the pair on every
+    ALGEBRA.md #the-click)}. Without `given` the given record is the pair on every
     Node of the body: now = A C_2N[3 N / 2 + s] on the circle of 2 N steps
     with s = floor(n / d) the given clock's step and before = -now (the
-    character half a step either side of its zero, no static part; 9.17
-    (6)); an odd s where 2 N exceeds the tables' bound is refused. Excited
+    character half a step either side of its zero, no static part; ALGEBRA.md #the-click); an odd s where 2 N exceeds the tables' bound is refused. Excited
     record k clicks at its own rung (E the one-way flux into its centre
     Node, D the rung 2 T u_k + T <= 2 W C with T its norm); at that click
     X ends it and E^T givings the photon (content one quantum, its residue
@@ -340,31 +339,31 @@ class EmitterDefinition:
     branches: tuple[tuple[int, int], ...]
     label_hands: tuple[int, int] | None
     receiver: tuple[str, ...] | None
-    # THE GIVEN CLOCK (ALGEBRA.md 9.85 (3); item 59): the given record's clock
+    # THE GIVEN CLOCK (ALGEBRA.md #the-primitives; item 59): the given record's clock
     # [p, q], the family's own or the emitter's `clock`
     clock: tuple[int, int]
-    # THE GIVEN RECORD'S PAIR (ALGEBRA.md 9.85 (3), 9.91 (7); commit 1): the
+    # THE GIVEN RECORD'S PAIR (ALGEBRA.md #the-primitives, #the-interval; commit 1): the
     # given family's declared pair, or the emitter's own `pair` on a family
     # whose pair is the body's
     pair: tuple[int, int] = MASSLESS_PAIR
     period: int | None = None
     norm: int | None = None
     given: None = None  # the ray law's given train, read by the loop as None (its cancelled branch)
-    # THE POINT EMITTER'S NORM DENOMINATOR (9.71 (1) (d); item 50): the
+    # THE POINT EMITTER'S NORM DENOMINATOR (ALGEBRA.md; item 50): the
     # excitation's action T as the exact rational norm / norm_denominator,
     # in the form's units, which the window's outward norm is read against;
     # required on every emitter (commit 7: the window the one giving)
     norm_denominator: int | None = None
-    # THE POINT EMITTER'S WEIGHT g (ALGEBRA.md 9.71 (1) (b); item 50): the
+    # THE POINT EMITTER'S WEIGHT g (ALGEBRA.md; item 50): the
     # body's coupling to the given family, one integer, the body's Node's rotation
     # copied at that weight into the given row at the body's Node every interval of
     # the window; required on every emitter (commit 7: the window the one giving)
     weight: int | None = None
-    # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md 9.82 (3) (d), 9.91 (1); commit 4): the
+    # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md #the-second-level, #the-interval; commit 4): the
     # index in the given family's parts, 0 on a scalar family, 1 + the axis of the
     # body's moment on a vector family (the component along mu)
     part: int = 0
-    # THE GIVEN RECORD'S TWIST "OWN" (ALGEBRA.md 9.96 (2) (a); commit 4): round(2^16
+    # THE GIVEN RECORD'S TWIST "OWN" (ALGEBRA.md #the-primitives; commit 4): round(2^16
     # omega_0), the record's rest rotation from its pair (a massive kind) or from its
     # wavelength on light's dispersion (a train) or its emitter's rotation (a window)
     twist: int = 0
@@ -375,7 +374,7 @@ class BlockDefinition:
     """A block, the foreign object of the massive record kind
     (`massive-record-v1`, MASSIVE_RECORD.md sections 4 to 7): its Nodes R
     the box of `extents` per axis (the cube of `side` the shorthand for
-    equal extents; the slabs of ALGEBRA.md 9.22 (8), BUILD.md section 26
+    equal extents; the slabs of ALGEBRA.md #a-familys-declaration, BUILD.md section 26
     item 23) with its lower corner at the measured event's `position`,
     cut to the board on an open axis and wrapped on a periodic one; its `pair` on the six-neighbour term at its Nodes (a WELL of the
     massive kind's pair, `num' / den' > num / den`; on light's kind a gap,
@@ -391,7 +390,7 @@ class BlockDefinition:
 
     side: int
     pair: tuple[int, int]
-    # THE BODY'S KIND (ALGEBRA.md 9.85 (3), 9.91 (7)): the rest pair of the body's own record,
+    # THE BODY'S KIND (ALGEBRA.md #the-primitives, #the-interval): the rest pair of the body's own record,
     # its family's declared pair or, on a family whose pair is the body's, the body's own `kind`
     kind: tuple[int, int]
     # the well's own record's amplitude on its Nodes at interval 0 (0 silent), or its profile's;
@@ -402,12 +401,12 @@ class BlockDefinition:
     # the bound mode's integer profile over the whole board (x-major, one per
     # Node) when the seed is declared so; None for a flat seed
     profile: tuple[int, ...] | None = None
-    # THE MODE'S CLOCK (ALGEBRA.md 9.22 (7); record 1886): 2 cos omega of the
+    # THE MODE'S CLOCK (ALGEBRA.md #a-familys-declaration; record 1886): 2 cos omega of the
     # body's bound mode as the rational [a, b] the generator wrote, b at
     # least the profile's amplitude; the loader's integer check of the
     # profile against the eigen-equation reads it; None for a flat seed
     clock: tuple[int, int] | None = None
-    # THE PROPER PAIR OF A MOVING BODY ON ONE NODE (ALGEBRA.md 9.63 (3); BUILD.md section 26
+    # THE PROPER PAIR OF A MOVING BODY ON ONE NODE (ALGEBRA.md #the-velocity; BUILD.md section 26
     # item 46): the pairs [num_m, b] the body's Node rotates at while the drive's
     # momentum is m, indexed by m from 0 (the clock itself) to |P| along the
     # one axis of the declared momentum, the generator's reading of the moving
@@ -416,14 +415,14 @@ class BlockDefinition:
     proper_clock: tuple[tuple[int, int], ...] | None = None
     ramp: int = 0
     start: int = 0
-    # THE BODY'S NUMBERS (ALGEBRA.md 9.91 (3), (7); the one stroke, commit 2): the
+    # THE BODY'S NUMBERS (ALGEBRA.md #the-interval; the one stroke, commit 2): the
     # signed number q (the held sign's count at its Nodes; the world's word `q`,
     # record 2128 (1)), the spin S and the moment mu (the dipoles on its Node's
     # six neighbours); the momentum n is `momentum`
     q: int = 0
     spin: tuple[int, int, int] = (0, 0, 0)
     moment: tuple[int, int, int] = (0, 0, 0)
-    # THE BODY'S OWN RECORD'S TWIST "OWN" (ALGEBRA.md 9.96 (2) (a); commit 4): round(2^16
+    # THE BODY'S OWN RECORD'S TWIST "OWN" (ALGEBRA.md #the-primitives; commit 4): round(2^16
     # omega_0), its rotation from its mode's clock [a, b] (2 cos omega) where it has
     # one, else from its kind's pair
     twist: int = 0
@@ -436,10 +435,10 @@ class BlockDefinition:
     # sinks for it); None where the world names none, the ladder then every
     # detector and the line at the close, as before the key.
     receiver: str | None = None
-    # the emitter as a clicking body (ALGEBRA.md 9.17 (4)): None on a body
+    # the emitter as a clicking body (ALGEBRA.md #the-click): None on a body
     # that emits nothing by the click
     emitter: EmitterDefinition | None = None
-    # THE STOCK OF THE BODY'S OWN FAMILY (ALGEBRA.md 9.96 (5); commit 6): the count of
+    # THE STOCK OF THE BODY'S OWN FAMILY (ALGEBRA.md #the-primitives; commit 6): the count of
     # its own quanta set aside for giving where its emitter gives its own family, 0
     # elsewhere (another family's stock is the body's `held` quanta of it)
     stock: int = 0
@@ -494,7 +493,7 @@ class DetectorDefinition:
     at every interval (a stepping block's follow it) or a cube of free
     Nodes beside it, its pointer the one-way flux into them; the click
     stamps the block's own count. The rung's wheel is the record's own
-    (ALGEBRA.md 9.22 (4)): a set declares none."""
+    (ALGEBRA.md #a-familys-declaration): a set declares none."""
 
     name: str
     positions: tuple[Address3, ...]
@@ -505,8 +504,7 @@ class DetectorDefinition:
 
 @dataclass(frozen=True)
 class NatureBeamWorld:
-    """A parsed world of the engine (no law's name, no `model_id`: ALGEBRA.md
-    9.90 (1)). `boundary` is the declared value
+    """A parsed world of the engine (no law's name, no `model_id`: ALGEBRA.md #the-primitives). `boundary` is the declared value
     as the record carries it (the string `"open"` or the object per axis);
     `periodic` says per axis (x, y, z) whether the walk wraps; `directions`
     is the table `D`: the two rest vectors, the six headings and the declared
@@ -528,7 +526,7 @@ class NatureBeamWorld:
     # line a measured event writes carries `clock`, its own count of
     # self-creations; a record field, no physics, no hypothesis.
     clock_stamp: bool = False
-    # the face receiver's depth at every open border (ALGEBRA.md 9.25 (10)),
+    # the face receiver's depth at every open border (ALGEBRA.md #the-ladder),
     # declared in the file under the detector law (no default, BUILD.md
     # section 26 item 28); 0 on a GameBoard with no open face (no slab)
     face_depth: int = 0
@@ -536,7 +534,7 @@ class NatureBeamWorld:
     # under the local detector law, false by default; under it a family may
     # declare its `pair`; its faces are the world's.
     massive_record: bool = False
-    # THE BODY RECORD (ALGEBRA.md 9.46 (1) to (3); BUILD.md section 26 item
+    # THE BODY RECORD (ALGEBRA.md #what-a-body-is to (3); BUILD.md section 26 item
     # 37): true holds every seeded block as one rotation on its clock pair
     # (a Node with a shape), its profile read and never stepped; false, the
     # default, the lattice body (its own rows on the GameBoard)
@@ -553,17 +551,17 @@ class NatureBeamWorld:
     # under the Node clock, BUILD.md section 26 item 31, on a world without
     # the kind, where no row is bounded so).
     amplitude_bound: int = AMPLITUDE_BOUND
-    # THE NODE CLOCK (ALGEBRA.md 9.35 (2), (3); BUILD.md section 26 item 31):
+    # THE NODE CLOCK (ALGEBRA.md #the-paces; BUILD.md section 26 item 31):
     # Gamma, the world key `node_clock`, the clock pair (Gamma, Gamma + M) at
     # every Node; required under the detector law, 0 on a world without it
     # (the ray law has no rule with a division).
     node_clock: int = 0
-    # THE MOMENTUM'S UNIT Q (ALGEBRA.md 9.96 (1), 9.89 (2)): the universe's
+    # THE MOMENTUM'S UNIT Q (ALGEBRA.md #the-primitives, #the-well): the universe's
     # integer `momentum_unit`; every body's wall is W = 3 Q M with M its quanta,
     # its velocity n / W Links per interval; required under the detector law,
     # 0 on a world without it
     momentum_unit: int = 0
-    # THE TWIST TABLE (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c); commit 4): the exact
+    # THE TWIST TABLE (ALGEBRA.md #the-transport, #the-primitives; commit 4): the exact
     # triples of the transport's angles, None on a world without one (no transport)
     twist_table: TwistTable | None = None
     # THE ENGINE START FILE (record 2089; BUILD.md section 26 item 57): the
@@ -590,7 +588,7 @@ class NatureBeamWorld:
 
     @property
     def hypotheses(self) -> list[str]:
-        """CANCELLED (ALGEBRA.md 9.90 (1)): the identities of the physical hypotheses
+        """CANCELLED (ALGEBRA.md #the-primitives): the identities of the physical hypotheses
         a world of the ray law declared beside it, in a fixed order, now an empty
         list on every world (one engine, no identity); the order as it stood: `bohr-v1` for the turn by momentum
         (`action`), `columns-v1` for the one mechanism of the columns (a
@@ -609,7 +607,7 @@ class NatureBeamWorld:
         `binding-v1` when a measured event holds a paid family (`binding`;
         the engine appends it at the same place from the first give of a
         run, `NatureBeamSimulation.hypotheses`)."""
-        # ONE ENGINE (ALGEBRA.md 9.90 (1); docs/CANCELLED_WORLDS.md section 9): no
+        # ONE ENGINE (ALGEBRA.md #the-primitives; docs/CANCELLED_WORLDS.md section 9): no
         # identity stands beside the engine; the ray law's identities this property
         # listed (bohr, columns, weak, meeting, amplitude, massive-rows, hand,
         # covariant-readings, drive-b, flow-link, centred-step, atom-level, binding)
@@ -753,7 +751,7 @@ def _pair_bound(
     content: int = 0,
 ) -> None:
     """The load bound of a pair (Reviewer 3's MUST 3) under the Node clock
-    (ALGEBRA.md 9.57 (2), 9.61 (3); BUILD.md section 26 items 31, 34 and 44):
+    (ALGEBRA.md #the-line, #the-rows-against-nature; BUILD.md section 26 items 31, 34 and 44):
     the weak-field rule's total at a Node under the amplitude bound A (the
     world's `amplitude_bound`), 6 A R + A |S| + w (A + 1) with the rule's
     integers (R, S, w) at the vacuum's level and at the content M, below
@@ -761,7 +759,7 @@ def _pair_bound(
     world's whole content at the second pass, `_node_clock_bound`; the plain
     rule at Gamma = 1 and M = 0, the first pass on the pair alone); refused
     otherwise naming the bound, the clock, the content and the pair."""
-    # THE BOUND FROM THE RULE'S OWN INTEGERS (ALGEBRA.md 9.57 (2), 9.61 (3);
+    # THE BOUND FROM THE RULE'S OWN INTEGERS (ALGEBRA.md #the-line, #the-rows-against-nature;
     # BUILD.md section 26 item 44): 6 A R + A |S| + w (A + 1) with (R, S, w)
     # the weak-field rule's coefficients at the level 0 and at the level M
     # (the two levels a Node can read: the vacuum's and a body's), the larger;
@@ -779,22 +777,22 @@ def _pair_bound(
             f"{label}.pair [{numerator}, {denominator}]"
             + ": the rule's total 6 A R + A |S| + w (A + 1) at the amplitude bound A = "
             f"{bound}, the Node clock Gamma = {node_clock} and the content M = {content} (read at "
-            f"the level {reach}) is {total}, not below 2^63 (the bound of the rows' int64; ALGEBRA.md 9.57 (2) and "
-            "9.61 (3), BUILD.md section 26 item 44)"
+            f"the level {reach}) is {total}, not below 2^63 (the bound of the rows' int64; ALGEBRA.md #the-line and "
+            "ALGEBRA.md #the-rows-against-nature, BUILD.md section 26 item 44)"
         )
 
 
 def _held_bodies_checks(
     families: tuple[FamilyDefinition, ...], measured: tuple[MeasuredDefinition, ...]
 ) -> None:
-    """A held family takes and gives nothing (ALGEBRA.md 9.45 (1), 9.48 (2);
+    """A held family takes and gives nothing (ALGEBRA.md #the-counts-line, #the-paces;
     item 51): no measured event is of it, none holds its quanta, and no
     emitter givings into it; its level is written by the engine alone, the
     declared source at every body's Nodes."""
     for index, family in enumerate(families):
         if family.held is None or family.clicks is not None:
             # a family that is held and has clicks (the charge with light as its
-            # wave, ALGEBRA.md 9.86 (2) (b)) has bodies of light's kind, a stock
+            # wave, ALGEBRA.md #the-primitives) has bodies of light's kind, a stock
             # and givings; its held part is the engine's write as any held family's
             continue
         name = family.name
@@ -803,18 +801,18 @@ def _held_bodies_checks(
                 raise ValueError(
                     f"measured[{number}] is of the held family {name!r}: no body is of "
                     "it; its level is held at the bodies' Nodes, written by the engine at the "
-                    "load and at every click (ALGEBRA.md 9.45 (2))"
+                    "load and at every click (ALGEBRA.md #the-counts-line)"
                 )
             if len(entry.held) > index and entry.held[index]:
                 raise ValueError(
                     f"measured[{number}].stocks names the held family {name!r}: nothing "
-                    "holds its quanta; its level is held at a body's Nodes (ALGEBRA.md 9.45 (2))"
+                    "holds its quanta; its level is held at a body's Nodes (ALGEBRA.md #the-counts-line)"
                 )
             if entry.block is not None and entry.block.emitter is not None:
                 if entry.block.emitter.family == index:
                     raise ValueError(
                         f"measured[{number}].emitter givings into the held family "
-                        f"{name!r}: it takes and gives nothing (ALGEBRA.md 9.45 (1))"
+                        f"{name!r}: it takes and gives nothing (ALGEBRA.md #the-counts-line)"
                     )
 
 
@@ -832,9 +830,9 @@ def _node_clock_bound(
     can hold, since the clicks move the quanta between the bodies and the
     givings return them to the board; the family of clicks' level around the
     bodies is bounded by the held content, and a wave of it off a zero face
-    doubles, ALGEBRA.md 9.45 (2); BUILD.md section 26 item 32)."""
+    doubles, ALGEBRA.md #the-counts-line; BUILD.md section 26 item 32)."""
 
-    # THE READS (ALGEBRA.md 9.45 (3), 9.48 (3); BUILD.md section 26 items 34,
+    # THE READS (ALGEBRA.md #the-counts-line, #the-paces; BUILD.md section 26 items 34,
     # 35 and 51): a family reads the pace Gamma - SUM weight x sign x level
     # over its reads; at a body's Nodes a held level is the body's source
     # (its content for "content", its signed charge for "charge"), so the
@@ -862,7 +860,7 @@ def _node_clock_bound(
                 raise ValueError(
                     f"measured[{number}]: the pace of {family.name!r} could reach 0 at its "
                     f"Nodes: its reads weigh the body's sources to {reach} in size, not below Gamma = "
-                    f"{node_clock} (ALGEBRA.md 9.48 (3): the charge's hill hastens a clock at most to "
+                    f"{node_clock} (ALGEBRA.md #the-paces: the charge's hill hastens a clock at most to "
                     "the vacuum's; BUILD.md section 26 items 34, 35 and 51)"
                 )
     content = 0
@@ -875,7 +873,7 @@ def _node_clock_bound(
         content = max(content, reach)
     for index, family in enumerate(families):
         if family.pair_on_body:
-            continue  # the bodies' kinds are read below (ALGEBRA.md 9.91 (7))
+            continue  # the bodies' kinds are read below (ALGEBRA.md #the-interval)
         _pair_bound(
             family.pair[0], family.pair[1], f"families[{index}]", amplitude_bound, node_clock, content
         )
@@ -926,7 +924,7 @@ def _families_of(
         if parts_value not in PARTS_FORMS:
             raise ValueError(
                 f"{label}.parts must be one of {[list(form) for form in PARTS_FORMS]}: the "
-                "representation as a list of parts, the time part first (ALGEBRA.md 9.86 (2), 9.91 (1))"
+                "representation as a list of parts, the time part first (ALGEBRA.md #the-primitives, #the-interval)"
             )
         parts = tuple(int(part) for part in parts_value)
         levels = cast(int, obj["phase"])
@@ -976,7 +974,7 @@ def _families_of(
             if len(factors) != len(parts):
                 raise ValueError(
                     f"{label}.held.factors must be {len(parts)} integers from 1, one per part "
-                    "(ALGEBRA.md 9.91 (3): the held factors are the families file's numbers)"
+                    "(ALGEBRA.md #the-interval: the held factors are the families file's numbers)"
                 )
             held_factors = tuple(int(item) for item in factors)
             if "dipole" in source:
@@ -984,7 +982,7 @@ def _families_of(
                 if len(parts) < 2:
                     raise ValueError(
                         f"{label}.held.dipole is refused on a scalar family: the dipole is "
-                        "written into the vector part (ALGEBRA.md 9.91 (3))"
+                        "written into the vector part (ALGEBRA.md #the-interval)"
                     )
                 if "dipole_div" not in source:
                     raise ValueError(
@@ -999,7 +997,7 @@ def _families_of(
             if held_dipole != "spin":
                 raise ValueError(
                     f"{label} declares spins_step and holds no spin's dipole: the row is the "
-                    "spin holder's alone (ALGEBRA.md 9.78 (5))"
+                    "spin holder's alone (ALGEBRA.md #a-familys-declaration)"
                 )
             weights = cast(dict[str, object], obj["spins_step"])
             curl = cast(tuple[int, int], weights["curl"])
@@ -1008,7 +1006,7 @@ def _families_of(
         elif held_dipole == "spin":
             raise ValueError(
                 f"{label} holds the spin's dipole and lacks spins_step: the spin's step's two "
-                "weights, curl and tidal, are the row's (ALGEBRA.md 9.78 (5)), no default"
+                "weights, curl and tidal, are the row's (ALGEBRA.md #a-familys-declaration), no default"
             )
         sourced: tuple[int, int, int, int | None] | None = None
         if "sourced" in obj:
@@ -1025,7 +1023,7 @@ def _families_of(
         if 0 < self_unit < 24 * amplitude_bound:
             raise ValueError(
                 f"{label}.self_source.unit {self_unit} is below 24 A = {24 * amplitude_bound}: the "
-                "self-source's unit P_2 is 0 (off) or at least 24 A (ALGEBRA.md 9.91 (5))"
+                "self-source's unit P_2 is 0 (off) or at least 24 A (ALGEBRA.md #the-interval)"
             )
         clicks: tuple[bool, bool] | None = None
         # THE FAMILY'S QUANTUM (the law's owner's row of 2026-09-27; the Boss's word of
@@ -1038,7 +1036,7 @@ def _families_of(
             if value["gives"] is not True or value["takes"] is not True:
                 raise ValueError(
                     f"{label}.clicks.gives and .takes must be true: a family of records is "
-                    "given and taken at clicks (ALGEBRA.md 9.79 (1))"
+                    "given and taken at clicks (ALGEBRA.md #a-familys-declaration)"
                 )
             clicks = (True, True)
             if cast(int, value["quantum"]) != quantum:
@@ -1050,7 +1048,7 @@ def _families_of(
             raise ValueError(
                 f"{label} declares neither held (a field family), clicks (a family of records) "
                 "nor sourced (a field written from a record family's count): a family does one "
-                "or more (ALGEBRA.md 9.86 (2); 9.117 row 'the source')"
+                "or more (ALGEBRA.md #the-primitives row 'the source')"
             )
         raw_reads = cast(tuple[object, ...], obj["reads"])
         reads: list[tuple[int, int, str, int | str]] = []
@@ -1066,7 +1064,7 @@ def _families_of(
             raise ValueError(
                 f"{label} is held and reads {[names[i] for i, _, _, _ in reads]}: a field "
                 "family with no waves steps by the plain rule at the pace 1 of its own and reads no "
-                "level (ALGEBRA.md 9.45 (2); BUILD.md section 26 item 51)"
+                "level (ALGEBRA.md #the-counts-line; BUILD.md section 26 item 51)"
             )
         found.append(
             FamilyDefinition(
@@ -1113,24 +1111,24 @@ def _held_family_shapes(families: tuple[FamilyDefinition, ...]) -> None:
             if family.quantum != 1:
                 raise ValueError(
                     f"{label} is held with the quantum {family.quantum}: a held family "
-                    "is counted in quanta, one click one unit (`quantum` 1; ALGEBRA.md 9.45 (1))"
+                    "is counted in quanta, one click one unit (`quantum` 1; ALGEBRA.md #the-counts-line)"
                 )
             if family.phase_per_age is not None:
                 raise ValueError(
                     f"{label} is held and declares a clock: a held family "
-                    "givings nothing and has no clock of its own (ALGEBRA.md 9.45 (1))"
+                    "givings nothing and has no clock of its own (ALGEBRA.md #the-counts-line)"
                 )
             if family.charge[0] != 0:
                 raise ValueError(
                     f"{label} is held and declares the charge {family.charge[0]}: a held "
-                    "family carries none, its level is the source it holds (ALGEBRA.md 9.48 (2))"
+                    "family carries none, its level is the source it holds (ALGEBRA.md #the-paces)"
                 )
         for other, _, _, _ in family.reads:
             if families[other].held is None:
                 raise ValueError(
                     f"{label}.reads names {families[other].name!r}, which is not held: "
-                    "a family's pace reads the held families' levels alone (ALGEBRA.md 9.45 (3), "
-                    "9.48 (3); BUILD.md section 26 item 51)"
+                    "a family's pace reads the held families' levels alone (ALGEBRA.md #the-counts-line, "
+                    "ALGEBRA.md #the-paces; BUILD.md section 26 item 51)"
                 )
     for source in HELD_SOURCES:
         holders = [family.name for family in families if family.held == source]
@@ -1191,9 +1189,8 @@ def _block(
     and no span; its `pair` is a well on the massive kind (num' / den' >
     num / den) or a gap on light's kind (den' > num', the (M) wall, which
     declares no clock, seed or margin); an emitter's
-    giving Node carries a rich pair (at least 500 remainder values, ALGEBRA.md
-    9.22 (4)); the momentum is bounded by the pace, 3 (P . P) < (3 Q M)^2 (the wall W
-    = 3 Q M of ALGEBRA.md 9.96 (1), Q the universe's `momentum_unit`)."""
+    giving Node carries a rich pair (at least 500 remainder values, ALGEBRA.md #a-familys-declaration); the momentum is bounded by the pace, 3 (P . P) < (3 Q M)^2 (the wall W
+    = 3 Q M of ALGEBRA.md #the-primitives, Q the universe's `momentum_unit`)."""
     declared = [key for key in BLOCK_KEYS if key in obj]
     if "side" not in obj and "extents" not in obj:
         if declared:
@@ -1241,15 +1238,15 @@ def _block(
         _integer(value[0], f"{label}.pair numerator", 1, MAX_VALUE),
         _integer(value[1], f"{label}.pair denominator", 1, MAX_VALUE),
     )
-    # THE BODY'S KIND (ALGEBRA.md 9.85 (3), 9.91 (7)): the family's pair, or the
+    # THE BODY'S KIND (ALGEBRA.md #the-primitives, #the-interval): the family's pair, or the
     # body's own `kind` [num, den] on a family whose pair is the body's,
     # required there and refused elsewhere (one copy)
     if family.pair_on_body:
         if "kind" not in obj:
             raise ValueError(
                 f"{label}.kind is required: the family {family.name!r} declares no pair, "
-                "so every body of it declares its own rest pair [num, den] (ALGEBRA.md 9.85 (3), "
-                "9.91 (7))"
+                "so every body of it declares its own rest pair [num, den] (ALGEBRA.md #the-primitives, "
+                "ALGEBRA.md #the-interval)"
             )
         kind_value = obj["kind"]
         if not isinstance(kind_value, list | tuple) or len(kind_value) != 2:
@@ -1261,12 +1258,12 @@ def _block(
         if kind[1] <= kind[0]:
             raise ValueError(
                 f"{label}.kind [{kind[0]}, {kind[1]}] is no massive kind: den > num, "
-                "the gap cos omega_0 = num / den (ALGEBRA.md 9.22)"
+                "the gap cos omega_0 = num / den (ALGEBRA.md #a-familys-declaration)"
             )
     elif "kind" in obj:
         raise ValueError(
             f"{label}.kind is refused: the family {family.name!r} declares its pair "
-            f"{list(family.pair)}; one copy (ALGEBRA.md 9.85 (3))"
+            f"{list(family.pair)}; one copy (ALGEBRA.md #the-primitives)"
         )
     else:
         kind = family.pair
@@ -1339,7 +1336,7 @@ def _block(
         seed = max(abs(value) for value in profile)
     else:
         seed = _integer(obj["seed"], f"{label}.seed", 0)
-    # THE MODE'S CLOCK (ALGEBRA.md 9.22 (7); record 1886): a profile carries
+    # THE MODE'S CLOCK (ALGEBRA.md #a-familys-declaration; record 1886): a profile carries
     # its mode's 2 cos omega as the rational [a, b] the generator wrote, b at
     # least the amplitude; the world's integer check of the profile against
     # the eigen-equation reads it (`_initial_state_checks`)
@@ -1348,7 +1345,7 @@ def _block(
         if profile is None:
             raise ValueError(
                 f"{label}.clock is admitted only beside a profile (the mode's 2 cos "
-                "omega belongs to the mode's integers, ALGEBRA.md 9.22 (7))"
+                "omega belongs to the mode's integers, ALGEBRA.md #a-familys-declaration)"
             )
         value = obj["clock"]
         if (
@@ -1360,22 +1357,22 @@ def _block(
         ):
             raise ValueError(
                 f"{label}.clock must be [a, b], two positive integers, the mode's 2 cos "
-                "omega as a rational (ALGEBRA.md 9.22 (7))"
+                "omega as a rational (ALGEBRA.md #a-familys-declaration)"
             )
         if value[1] < seed:
             raise ValueError(
                 f"{label}.clock [{value[0]}, {value[1]}]: b must be at least the "
                 f"profile's amplitude {seed} (the rounding of 2 cos omega to 1 / b at most, "
-                "ALGEBRA.md 9.22 (7))"
+                "ALGEBRA.md #a-familys-declaration)"
             )
         clock = (int(value[0]), int(value[1]))
     elif profile is not None:
         raise ValueError(
             f"{label}.seed as a profile needs the mode's `clock` [a, b] beside it (the "
             "generator's rational for 2 cos omega, b at least the amplitude; the loader checks "
-            "the profile against the eigen-equation in integers, ALGEBRA.md 9.22 (7), record 1886)"
+            "the profile against the eigen-equation in integers, ALGEBRA.md #a-familys-declaration, record 1886)"
         )
-    # THE PROPER PAIR OF A MOVING BODY ON ONE NODE (ALGEBRA.md 9.63 (3); BUILD.md section 26
+    # THE PROPER PAIR OF A MOVING BODY ON ONE NODE (ALGEBRA.md #the-velocity; BUILD.md section 26
     # item 46): beside `clock`, on a block whose momentum lies on one axis, the
     # |P| + 1 pairs [num, den] indexed by the momentum's whole part, the first
     # the clock itself (the rest pair at K = 0)
@@ -1386,7 +1383,7 @@ def _block(
             raise ValueError(
                 f"{label}.proper_clock is admitted beside `clock` on a block whose "
                 "momentum lies on one axis (the moving body's Node's pairs by the momentum's whole part, "
-                "ALGEBRA.md 9.63 (3))"
+                "ALGEBRA.md #the-velocity)"
             )
         value = obj["proper_clock"]
         count = abs(int(momentum[moving_axes[0]])) + 1
@@ -1405,12 +1402,12 @@ def _block(
             raise ValueError(
                 f"{label}.proper_clock must be {count} pairs [num, den] of positive "
                 f"integers, den at least the profile's amplitude {seed}, one for every whole part "
-                f"of the momentum from 0 to {count - 1} (ALGEBRA.md 9.63 (3))"
+                f"of the momentum from 0 to {count - 1} (ALGEBRA.md #the-velocity)"
             )
         if (int(value[0][0]), int(value[0][1])) != clock:
             raise ValueError(
                 f"{label}.proper_clock[0] {value[0]} is not the clock {list(clock)}: at "
-                "rest the body's Node rotates at the mode's own pair (ALGEBRA.md 9.63 (3))"
+                "rest the body's Node rotates at the mode's own pair (ALGEBRA.md #the-velocity)"
             )
         proper_clock = tuple((int(item[0]), int(item[1])) for item in value)
     if seed > amplitude_bound:
@@ -1422,7 +1419,7 @@ def _block(
         )
     ramp = 0 if "ramp" not in obj else _integer(obj["ramp"], f"{label}.ramp", 0)
     start = 0 if "start" not in obj else _integer(obj["start"], f"{label}.start", 0)
-    # THE BODY'S NUMBERS (ALGEBRA.md 9.91 (3), (7); commit 2): charge, spin and moment,
+    # THE BODY'S NUMBERS (ALGEBRA.md #the-interval; commit 2): charge, spin and moment,
     # required under the law (no default), integers on the axes (record 2084)
     _require_under_law(obj, label, {"q", "spin", "moment", "twist"})
     charge = _integer(obj["q"], f"{label}.q", -AMOUNT_BOUND, AMOUNT_BOUND)
@@ -1439,15 +1436,15 @@ def _block(
     margin = cast(str, obj["margin"]) if "margin" in obj else None
     if margin is not None and margin not in MARGIN_KINDS:
         raise ValueError(f"{label}.margin must be one of {list(MARGIN_KINDS)}")
-    # THE WALL W = 3 Q M (ALGEBRA.md 9.96 (1), 9.89 (2)): one wall per body, on its
+    # THE WALL W = 3 Q M (ALGEBRA.md #the-primitives, #the-well): one wall per body, on its
     # whole content at the load, its own quanta and what it holds (the stock is
-    # content, 9.51 (8)); the width S = 1 is gone
+    # content, ALGEBRA.md #the-paces); the width S = 1 is gone
     wall = 3 * momentum_unit * sum(held)
     if 3 * sum(component * component for component in momentum) >= wall * wall:
         raise ValueError(
             f"{label}.momentum {list(momentum)}: the pace bound 3 (P . P) < (3 Q M)^2 "
             f"= {wall * wall} fails (the body's velocity v = P / (3 Q M) below c, ALGEBRA.md "
-            "9.96 (1); DESIGN.md 5.1 (a))"
+            "ALGEBRA.md #the-primitives; DESIGN.md 5.1 (a))"
         )
     receiver: str | None = None
     if "receiver" in obj:
@@ -1466,13 +1463,13 @@ def _block(
     emitter: EmitterDefinition | None = None
     stock = 0
     if "emitter" in obj:
-        # the emitter as a clicking body (ALGEBRA.md 9.17 (4)): a body of a
+        # the emitter as a clicking body (ALGEBRA.md #the-click): a body of a
         # massive kind with its seed (the excited record) and its stock
         if not family.massive_kind:
             raise ValueError(
                 f"{label}.emitter is refused on a body of light's kind: the emitter "
                 "is a body of a massive kind whose excited record (its seed, the bound mode) "
-                "clicks at its own rung (ALGEBRA.md 9.17 (4))"
+                "clicks at its own rung (ALGEBRA.md #the-click)"
             )
         if seed <= 0:
             raise ValueError(
@@ -1482,11 +1479,11 @@ def _block(
         if amount < 1:
             raise ValueError(
                 f"{label}.emitter needs `amount` from 1, the body's own quanta (its "
-                "stock is the given family's content under `held`, ALGEBRA.md 9.51 (8))"
+                "stock is the given family's content under `held`, ALGEBRA.md #the-paces)"
             )
         # THE RESIDUES OF AN EMITTING BODY spread from the remainder kept at
         # its Nodes (the model owner's decisions (1) and (2) of record 1962;
-        # ALGEBRA.md 9.34 (A) and (B)): the coupling of 9.19 (4e) is HISTORY
+        # ALGEBRA.md #the-line (A) and (B)): the coupling of ALGEBRA.md #rule3 is HISTORY
         emitter = _emitter(
             obj["emitter"],
             f"{label}.emitter",
@@ -1501,12 +1498,12 @@ def _block(
             moment=moment,
             clock_pair=clock,
         )
-        # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md 9.51 (8); BUILD.md
+        # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; BUILD.md
         # section 26 item 47): the quanta a body gives are the given family's,
         # held at the body under `held`; a giving lowers them and leaves the
         # body's own quanta and its charge (a body spending its own quantum
         # per giving would lose charge by giving light: refused)
-        # A BODY GIVING ITS OWN FAMILY (ALGEBRA.md 9.96 (5); commit 6): its stock is `stock`, a
+        # A BODY GIVING ITS OWN FAMILY (ALGEBRA.md #the-primitives; commit 6): its stock is `stock`, a
         # count of its own quanta set aside for giving, from 1 to `amount`; each giving lowers
         # M by one; `stock` is refused where the given family is another (its stock is `held`)
         if emitter.family == names[family.name]:
@@ -1514,23 +1511,23 @@ def _block(
                 raise ValueError(
                     f"{label}.stock is required: the emitter gives the body's own family "
                     f"{family.name!r}, so the body declares the count of its own quanta set aside for "
-                    "giving, from 1 to `amount` (ALGEBRA.md 9.96 (5))"
+                    "giving, from 1 to `amount` (ALGEBRA.md #the-primitives)"
                 )
             stock = _integer(obj["stock"], f"{label}.stock", 1, amount)
         elif "stock" in obj:
             raise ValueError(
                 f"{label}.stock is refused: the emitter gives {families[emitter.family].name!r}, "
-                "another family, whose stock is the body's `held` quanta of it (ALGEBRA.md 9.51 (8), "
-                "9.96 (5))"
+                "another family, whose stock is the body's `held` quanta of it (ALGEBRA.md #the-paces, "
+                "ALGEBRA.md #the-primitives)"
             )
         elif held[emitter.family] < 1:
             raise ValueError(
                 f"{label}.emitter needs its stock as the given family's content held "
                 f"at the body: `held` naming {families[emitter.family].name!r} from 1 (a world that "
-                "needs W givings holds W; ALGEBRA.md 9.51 (8): a giving lowers the given family's "
+                "needs W givings holds W; ALGEBRA.md #the-paces: a giving lowers the given family's "
                 "content, the body's own quanta `amount` and its charge stay)"
             )
-        # THE RICHNESS OF THE GIVING NODE (ALGEBRA.md 9.22 (4); BUILD.md section
+        # THE RICHNESS OF THE GIVING NODE (ALGEBRA.md #a-familys-declaration; BUILD.md section
         # 26 item 15): the residue from the law takes 3 den / gcd(num, 3 den)
         # values on the pair at the body's centre Node (its own pair), at
         # least 500 of them ([801, 700] gives 700, [800, 801] 2403; [8, 7]
@@ -1540,7 +1537,7 @@ def _block(
             raise ValueError(
                 f"{label}.emitter: the body's pair [{pair[0]}, {pair[1]}] gives "
                 f"{residues} remainder values at the giving Node (3 den / gcd(num, 3 den)), below "
-                "500: the residue from the law needs a rich pair (ALGEBRA.md 9.22 (4); [801, 700] "
+                "500: the residue from the law needs a rich pair (ALGEBRA.md #a-familys-declaration; [801, 700] "
                 "on the kind [7, 8] gives 700, [800, 801] on [800, 809] gives 2403)"
             )
         if receiver is not None and emitter.receiver is not None:
@@ -1563,7 +1560,7 @@ def _block(
         q=charge,
         spin=spin,
         moment=moment,
-        # THE BODY'S OWN RECORD'S TWIST "OWN" (ALGEBRA.md 9.96 (2) (a); item 73): the
+        # THE BODY'S OWN RECORD'S TWIST "OWN" (ALGEBRA.md #the-primitives; item 73): the
         # generator's integer round(2^16 omega_0) declared under `twist` (its mode's
         # rotation, or its kind's rest rotation on a body without a mode), no default
         twist=_integer(obj["twist"], f"{label}.twist", 0),
@@ -1600,8 +1597,8 @@ def _emitter(
     moment: tuple[int, int, int] = (0, 0, 0),
     clock_pair: tuple[int, int] | None = None,
 ) -> EmitterDefinition:
-    """The `emitter` object of a clicking body (ALGEBRA.md 9.17 (4) to (6),
-    9.22 (4)): the given family a paid family with the pair form of its
+    """The `emitter` object of a clicking body (ALGEBRA.md #the-click to (6),
+    ALGEBRA.md #a-familys-declaration): the given family a paid family with the pair form of its
     clock (not the body's own), the given labels, the ladder by name, the
     period and the norm (the generator's integers), the given profile
     (material). No wheel, no residue order and no seed: the residue is the
@@ -1612,9 +1609,9 @@ def _emitter(
     if not isinstance(name, str) or name not in names:
         raise ValueError(f"{label}.family names an unknown family")
     given_family = families[names[name]]
-    # a body may give its own family (ALGEBRA.md 9.96 (5); commit 6): the given record
+    # a body may give its own family (ALGEBRA.md #the-primitives; commit 6): the given record
     # carries the emitter's declared pair, the stock is the body's `stock` of its own quanta
-    # THE GIVEN RECORD'S PAIR (ALGEBRA.md 9.85 (3), 9.91 (7)): the emitter's
+    # THE GIVEN RECORD'S PAIR (ALGEBRA.md #the-primitives, #the-interval): the emitter's
     # `pair` [num, den], required when the given family's pair is the body's
     # and refused when the family declares one (one copy)
     given_pair: tuple[int, int]
@@ -1622,35 +1619,35 @@ def _emitter(
         if "pair" not in obj:
             raise ValueError(
                 f"{label}.pair is required: the given family {name!r} declares no pair, "
-                "so the emitter declares the given record's pair [num, den] (ALGEBRA.md 9.85 (3), "
-                "9.91 (7))"
+                "so the emitter declares the given record's pair [num, den] (ALGEBRA.md #the-primitives, "
+                "ALGEBRA.md #the-interval)"
             )
         given_pair = _ratio(obj["pair"], f"{label}.pair", zero=False)
         if given_pair[1] <= given_pair[0]:
             raise ValueError(
                 f"{label}.pair [{given_pair[0]}, {given_pair[1]}] is no massive kind: den "
-                "> num (ALGEBRA.md 9.22)"
+                "> num (ALGEBRA.md #a-familys-declaration)"
             )
     elif "pair" in obj:
         raise ValueError(
             f"{label}.pair is refused: the given family {name!r} declares its pair "
-            f"{list(given_family.pair)}; one copy (ALGEBRA.md 9.85 (3))"
+            f"{list(given_family.pair)}; one copy (ALGEBRA.md #the-primitives)"
         )
     else:
         given_pair = given_family.pair
     if given_family.held is not None and given_family.clicks is None:
         raise ValueError(
             f"{label} givings into the held family {name!r}: it takes and gives "
-            "nothing (ALGEBRA.md 9.45 (1))"
+            "nothing (ALGEBRA.md #the-counts-line)"
         )
-    # THE GIVEN CLOCK (ALGEBRA.md 9.85 (3); item 59): a light record's clock is its
+    # THE GIVEN CLOCK (ALGEBRA.md #the-primitives; item 59): a light record's clock is its
     # emitter's, `clock` [p, q] on the emitter, REQUIRED when the given family
     # declares none (the families file's light) and refused when it does (one copy)
     if "clock" in obj:
         if given_family.phase_per_age is not None:
             raise ValueError(
                 f"{label}.clock is refused: the given family {name!r} declares its own "
-                "clock (phase_per_link); one copy (ALGEBRA.md 9.85 (3))"
+                "clock (phase_per_link); one copy (ALGEBRA.md #the-primitives)"
             )
         clock = _ratio(obj["clock"], f"{label}.clock", zero=False)
     elif given_family.phase_per_age is not None:
@@ -1658,7 +1655,7 @@ def _emitter(
     else:
         raise ValueError(
             f"{label}.clock is required: the given family {name!r} declares no clock, so "
-            "the emitter declares the given record's clock [p, q] (ALGEBRA.md 9.85 (3); BUILD.md "
+            "the emitter declares the given record's clock [p, q] (ALGEBRA.md #the-primitives; BUILD.md "
             "section 26 item 59)"
         )
     step = clock[0] // clock[1]
@@ -1666,13 +1663,13 @@ def _emitter(
         raise ValueError(
             f"{label}.family {name!r}: the given clock's step floor(n / d) = {step} is "
             f"odd and the write's circle of 2 N = {2 * phase_steps} steps exceeds the tables' bound "
-            f"{MAX_PHASE_STEPS} (ALGEBRA.md 9.17 (6)); declare an even step or a smaller N"
+            f"{MAX_PHASE_STEPS} (ALGEBRA.md #the-click); declare an even step or a smaller N"
         )
     branches: tuple[tuple[int, int], ...] = ((0, 1),)
     label_hands: tuple[int, int] | None = None
     receiver = _receiver_names(obj, label)
     period = None if "period" not in obj else _integer(obj["period"], f"{label}.period", 1)
-    # THE POINT EMITTER'S WEIGHT (ALGEBRA.md 9.71 (1); item 50): an integer from
+    # THE POINT EMITTER'S WEIGHT (ALGEBRA.md; item 50): an integer from
     # 1; the world's `point_emitter` key pairs it with the absence of a train
     weight = None if "weight" not in obj else _integer(obj["weight"], f"{label}.weight", 1)
     norm_denominator = (
@@ -1681,7 +1678,7 @@ def _emitter(
         else _integer(obj["norm_denominator"], f"{label}.norm_denominator", 1)
     )
     norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
-    # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md 9.82 (3) (d)): on a vector family the
+    # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md #the-second-level): on a vector family the
     # component along the body's moment mu, one axis; a scalar family's one component
     part = 0
     if len(given_family.parts) > 1:
@@ -1690,13 +1687,13 @@ def _emitter(
             raise ValueError(
                 f"{label}: the given family {name!r} is a vector family and the body's "
                 f"moment {list(moment)} lies on {len(axes)} axes: the given record is written into the "
-                "component along the body's moment, one axis (ALGEBRA.md 9.82 (3) (d); a body with no "
+                "component along the body's moment, one axis (ALGEBRA.md #the-second-level; a body with no "
                 "moment gives no direction to write)"
             )
         part = 1 + axes[0]
-    # THE GIVEN RECORD'S TWIST "OWN" (ALGEBRA.md 9.96 (2) (a); item 73): the generator's
+    # THE GIVEN RECORD'S TWIST "OWN" (ALGEBRA.md #the-primitives; item 73): the generator's
     # integer declared under `twist` (a massive kind's rest rotation from its pair, or
-    # the emitting body's own rotation where the window writes it, 9.85 (5)), no default
+    # the emitting body's own rotation where the window writes it, ALGEBRA.md #the-primitives), no default
     twist = _integer(obj["twist"], f"{label}.twist", 0)
     return EmitterDefinition(
         names[name],
@@ -1769,7 +1766,7 @@ def _measured(
         held = [0] * len(families)
         held[family] = amount
         # THE BODY'S STOCKS of other families' quanta (`stocks`, record 2128 (1); beside
-        # 9.96 (5)'s `stock` of its own): the given family's content held at the body
+        # ALGEBRA.md #the-primitives's `stock` of its own): the given family's content held at the body
         declared_held = cast(dict[str, object], obj["stocks"])
         for key, content in declared_held.items():
             if key not in names:
@@ -1835,7 +1832,7 @@ def _detector_law_load_checks(
     periodic: tuple[bool, bool, bool],
     phase_steps: int,
 ) -> None:
-    """The instruments of the ray law (cancelled, ALGEBRA.md 9.90 (1))
+    """The instruments of the ray law (cancelled, ALGEBRA.md #the-primitives)
     are refused, naming the rule: a lamp's `turns` (a fan of directions
     with phases; the lamp inserts at its Nodes by its clock), a measured
     event's fan `table` (an opening is free Nodes); and every paid family
@@ -1856,9 +1853,9 @@ def _detector_law_load_checks(
                 f"no inputs), refused (an opening is free Nodes; there is "
                 "no fan; a splitter declares its inputs)"
             )
-    # A family of records may declare no clock of its own (ALGEBRA.md 9.85 (3);
+    # A family of records may declare no clock of its own (ALGEBRA.md #the-primitives;
     # item 59): its emitters declare the given record's clock (`_emitter`); a
-    # held family gives nothing and has no clock (9.45 (1); item 51)
+    # held family gives nothing and has no clock (ALGEBRA.md #the-counts-line; item 51)
     for number, entry in enumerate(measured):
         # A matter lamp (a lamp on a massive kind): the lamp verb is the same
         # verb, the family's clock the pair form; a massive kind without a
@@ -1914,7 +1911,7 @@ def six_neighbours_flat(
     """S_6 of a flat x-major integer array in exact integers: the sum of the
     six neighbours, a periodic axis wrapped (an axis of extent 1 reads the
     Node itself twice), an open axis reading 0 beyond its faces; the read of
-    the law's rule and of the generator's iteration (ALGEBRA.md 9.22 (7))."""
+    the law's rule and of the generator's iteration (ALGEBRA.md #a-familys-declaration)."""
     extents = (int(shape[0]), int(shape[1]), int(shape[2]))
     strides = (extents[1] * extents[2], extents[2], 1)
     total = [0] * len(values)
@@ -1941,7 +1938,7 @@ def mode_residual(
     wrap: tuple[bool, bool, bool],
     where: Sequence[bool] | None = None,
 ) -> tuple[int, int, tuple[int, int, int]]:
-    """THE EIGEN-EQUATION'S RESIDUAL IN INTEGERS (ALGEBRA.md 9.22 (7) (ii),
+    """THE EIGEN-EQUATION'S RESIDUAL IN INTEGERS (ALGEBRA.md #a-familys-declaration,
     PROVED there as the bound for the rounded profile of an exact mode): at
     every Node i of `where` (every Node by default) the residual
     abs(b num_i (S_6 p)_i - 3 den_i a p_i) against the bound b (3 num_i + 6
@@ -1978,13 +1975,12 @@ def mode_residual(
 def _input_stamp_check(
     document: dict[str, object], measured: tuple[MeasuredDefinition, ...], digest: str | None
 ) -> None:
-    """THE FILE'S HASH (the model owner's record 1886; ALGEBRA.md 9.22 (7) (i),
-    9.90 (3) (c); BUILD.md section 26 item 28): a world with a seeded body
+    """THE FILE'S HASH (the model owner's record 1886; ALGEBRA.md #a-familys-declaration, #the-primitives; BUILD.md section 26 item 28): a world with a seeded body
     carries `stamp` {hash}, the digest of the WHOLE document without `stamp`
     (the generator's stamp over every key, the profiles and the clocks among
     them), so that the file loaded is the one the generator wrote and a file
     changed by hand is regenerated, not run; no law identifier stands beside it
-    (one engine, 9.90 (1)). A world with no profile needs no stamp."""
+    (one engine, ALGEBRA.md #the-primitives). A world with no profile needs no stamp."""
     if not any(entry.block is not None and entry.block.profile is not None for entry in measured):
         return
     value = document.get("stamp")
@@ -1992,7 +1988,7 @@ def _input_stamp_check(
         raise ValueError(
             "the world declares a seeded body and no `stamp`: the generator writes `stamp` "
             '{"hash": ...}, the digest of the whole file (the model owner\'s record 1886; '
-            "ALGEBRA.md 9.22 (7) (i); BUILD.md section 26 item 28)"
+            "ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 28)"
         )
     stamp = _object(value, "stamp", STAMP_KEYS, STAMP_KEYS)
     written = stamp["hash"]
@@ -2019,10 +2015,9 @@ def _initial_state_checks(
     measured: tuple[MeasuredDefinition, ...],
 ) -> None:
     """THE INPUT CHECKED LAWFUL OR REFUSED, IN INTEGERS (the model owner's
-    record 1886; ALGEBRA.md 9.22 (3) and (7)): the initial state is stored
+    record 1886; ALGEBRA.md #a-familys-declaration and (7)): the initial state is stored
     once in the file and the loader says at load whether it is lawful, with
-    no float. Every block's Nodes disjoint from every other block's (9.9
-    (4); a cube beyond a face is the fit check's refusal, naming the axis
+    no float. Every block's Nodes disjoint from every other block's (ALGEBRA.md #what-a-body-is; a cube beyond a face is the fit check's refusal, naming the axis
     and the vertex); for every body seeded with a profile, its clock a / b
     strictly above its family's band top 2 num / den (a bound mode) and
     below 2 (stable), and the eigen-equation's residual within its proved
@@ -2031,8 +2026,7 @@ def _initial_state_checks(
     body's Nodes the operator carries that body's summand, so those Nodes
     are its check, not this one's; Nature's reading for the mathematician's
     word, BUILD.md section 26 item 20); the tail rule of 9.35 (a body's mode
-    0 at every Node of every other body of its family) is RETIRED by ALGEBRA.md
-    9.96 (4) (commit 6). The remainders are 0 by
+    0 at every Node of every other body of its family) is RETIRED by ALGEBRA.md #the-primitives (commit 6). The remainders are 0 by
     construction (the profile is written at both levels with none); the
     amplitude's bound and the rich giving Nodes are checked where the block
     is parsed."""
@@ -2053,14 +2047,14 @@ def _initial_state_checks(
             if own.intersection(other_nodes):
                 raise ValueError(
                     f"measured[{number}] and measured[{other_number}] overlap: two "
-                    "bodies' Nodes are disjoint (ALGEBRA.md 9.9 (4), 9.22 (3))"
+                    "bodies' Nodes are disjoint (ALGEBRA.md #what-a-body-is, #a-familys-declaration)"
                 )
         blocks.append((number, entry, block, nodes))
     for number, entry, block, _nodes in blocks:
         if block.profile is None or block.clock is None:
             continue
         family = families[entry.family]
-        kind = block.kind  # the body's rest pair (ALGEBRA.md 9.91 (7); commit 1)
+        kind = block.kind  # the body's rest pair (ALGEBRA.md #the-interval; commit 1)
         wrap = periodic
         a, b = block.clock
         # (iii) the band: a / b above the kind's band top 2 num / den and below 2
@@ -2068,14 +2062,14 @@ def _initial_state_checks(
             raise ValueError(
                 f"measured[{number}].clock [{a}, {b}] is not above the band's top "
                 f"2 x {kind[0]} / {kind[1]} of the kind of the family {family.name!r}: the "
-                "profile is no bound mode (ALGEBRA.md 9.22 (7) (iii); a well too shallow for its "
+                "profile is no bound mode (ALGEBRA.md #a-familys-declaration; a well too shallow for its "
                 "board, or a mode of the band)"
             )
         if a >= 2 * b:
             raise ValueError(
                 f"measured[{number}].clock [{a}, {b}] is at or above 2: the mode is a "
-                "runaway (no oscillation, a level growing every interval; ALGEBRA.md 9.19 (2), "
-                "9.22 (7) (iii))"
+                "runaway (no oscillation, a level growing every interval; ALGEBRA.md #rule3, "
+                "ALGEBRA.md #a-familys-declaration)"
             )
         # (ii) the residual on the composed operator of the family (every
         # body of the family in place), read outside the other bodies' Nodes
@@ -2097,9 +2091,9 @@ def _initial_state_checks(
                 f"within the rounding bound: at Node {list(node)} the eigen-equation's residual "
                 f"{residual} is above the bound {bound} (the clock [{a}, {b}], the amplitude "
                 f"{block.seed}); the generator writes the mode's integers and the loader checks "
-                "them in integers (ALGEBRA.md 9.22 (7) (ii), the model owner's record 1886)"
+                "them in integers (ALGEBRA.md #a-familys-declaration, the model owner's record 1886)"
             )
-        # THE SEPARATION RULE OF 9.35 IS RETIRED (ALGEBRA.md 9.96 (4); the one stroke,
+        # THE SEPARATION RULE OF 9.35 IS RETIRED (ALGEBRA.md #the-primitives; the one stroke,
         # commit 6): each body's record is its own array and meets another body only
         # through the held families, so two bodies of one family may stand anywhere;
         # the tail check of item 28 is gone
@@ -2138,7 +2132,7 @@ def _connected_pieces(
 
 
 # THE DETECTOR CUBE (the model owner's word of 2026-09-25, record 1899;
-# ALGEBRA.md 9.25): a detector is one region, a cube of side 3 or more; its
+# ALGEBRA.md #the-ladder): a detector is one region, a cube of side 3 or more; its
 # sensitivity is its whole cube, read by the flux into it through its Ports
 # from outside; the click is the detector's, reported by its name and never
 # by a Node. The cube is cut by the GameBoard on an axis whose extent is
@@ -2175,12 +2169,10 @@ def _detector_region(
     periodic: tuple[bool, bool, bool],
     one_node: bool = False,
 ) -> None:
-    """The three refusals on a detector's Nodes: disconnected pieces (ALGEBRA.md
-    9.25 (7)), no box, a side below DETECTOR_SIDE where the GameBoard's extent
-    allows it (record 1899). THE ONE-NODE DETECTOR (ALGEBRA.md 9.46 (8) (c);
+    """The three refusals on a detector's Nodes: disconnected pieces (ALGEBRA.md #the-ladder), no box, a side below DETECTOR_SIDE where the GameBoard's extent
+    allows it (record 1899). THE ONE-NODE DETECTOR (ALGEBRA.md #what-a-body-is;
     the model owner's word of 2026-09-25 in Nature24's session, "start";
-    BUILD.md section 26 item 40; SINCE COMMIT 7 on every world, ALGEBRA.md
-    9.92, record 2109: several bodies on one Node each are several detectors):
+    BUILD.md section 26 item 40; SINCE COMMIT 7 on every world, ALGEBRA.md #the-rows-against-nature, record 2109: several bodies on one Node each are several detectors):
     a detector may be ONE Node, a body's Node, its six Links its Ports (the
     cube's fifty-four HISTORY there, the counts rescaled by the Node's share);
     a set of more than one Node keeps the cube rule."""
@@ -2191,7 +2183,7 @@ def _detector_region(
         raise ValueError(
             f"the receiver {name!r} lies on {pieces} disconnected pieces; a detector "
             "is one connected region, and separate places are separate names (ALGEBRA.md "
-            "9.25 (7))"
+            "ALGEBRA.md #the-ladder)"
         )
     sides = _box_sides(positions, shape, periodic)
     if sides is None:
@@ -2210,7 +2202,7 @@ def _detector_region(
             "owner's word of 2026-09-25, record 1899)"
             + (
                 "; a detector is one Node (a body's) or a cube of three or more, nothing between "
-                "(ALGEBRA.md 9.46 (8) (c), 9.92; BUILD.md section 26 item 40; commit 7)"
+                "(ALGEBRA.md #what-a-body-is, #the-rows-against-nature; BUILD.md section 26 item 40; commit 7)"
                 if one_node
                 else ""
             )
@@ -2286,10 +2278,10 @@ def _detectors(
                     bound_positions.append(position)
                 _detector_region(name, bound_positions, shape, periodic, one_node=True)
             else:
-                # A BODY IS ITS OWN DETECTOR, whatever its support (ALGEBRA.md 9.92, the
+                # A BODY IS ITS OWN DETECTOR, whatever its support (ALGEBRA.md #the-rows-against-nature, the
                 # detectors' rule approved by the model owner, record 2109: a body of
                 # several Nodes is one detector, a body of one Node its own, its six Links
-                # its Ports, 9.46 (8) (c); item 40; commit 7): the cube rule of record
+                # its Ports, ALGEBRA.md #what-a-body-is; item 40; commit 7): the cube rule of record
                 # 1899 is the free set's, not a body's
                 if measured[bound_block].block is None:
                     raise ValueError(
@@ -2321,7 +2313,7 @@ def _detectors(
                 raise ValueError(f"a Node in two detectors {list(position)}")
             taken.add(position)
             positions.append(position)
-        # THE DETECTOR IS ONE CONNECTED REGION, A CUBE (ALGEBRA.md 9.25 (7);
+        # THE DETECTOR IS ONE CONNECTED REGION, A CUBE (ALGEBRA.md #the-ladder;
         # record 1899): its Nodes are connected by Links (across a periodic
         # seam too), fill one box, and the box's sides are DETECTOR_SIDE or
         # more where the GameBoard's extent allows; separate places are
@@ -2395,11 +2387,11 @@ def parse_world_document(
     # readings, the records in transit, the covariant readings and an inline twist table
     # handed on as written to their readers below
     obj = frame.world(document)
-    # ONE ENGINE (ALGEBRA.md 9.90 (1); the model owner's record 2103): every world is the
+    # ONE ENGINE (ALGEBRA.md #the-primitives; the model owner's record 2103): every world is the
     # engine's; every branch below on the flag's absence (the ray law's parse) is CANCELLED
     # and unreachable
     word = "universe"
-    # THE ENGINE START FILE (ALGEBRA.md 9.83 (2) (a)): one canonical copy at
+    # THE ENGINE START FILE (ALGEBRA.md #a-familys-declaration): one canonical copy at
     # examples/events/engine_start.json, named by every world by its repository path
     # (`engine`, a required word of the frame's schema) and read by the frame (`START`)
     engine = cast(str, obj["engine"])
@@ -2447,7 +2439,7 @@ def parse_world_document(
     # the ray law's flight bound went with the table)
     age_bound = cast(int, obj["age_bound"])
     clock_stamp = cast(bool, obj["clock_stamp"])
-    # THE FACE SLAB (ALGEBRA.md 9.25 (10), the mathematician's reading: a face
+    # THE FACE SLAB (ALGEBRA.md #the-ladder, the mathematician's reading: a face
     # one Node deep books 0.15 of a packet and reflects the rest, the slab as
     # deep as the packet books 0.96): the receiver `face` at every open
     # border is the slab of this depth, one detector, last on every ladder;
@@ -2460,7 +2452,7 @@ def parse_world_document(
         raise ValueError(
             f"face_depth is required on a GameBoard open on {', '.join(open_axes)} "
             "under `detector_law`: the depth of the receiver slab at every open border, no "
-            "default (ALGEBRA.md 9.25 (10); BUILD.md section 26 item 28)"
+            "default (ALGEBRA.md #the-ladder; BUILD.md section 26 item 28)"
         )
     face_depth = _integer(obj["face_depth"], "face_depth", 1) if "face_depth" in obj else 0
     for axis, name in enumerate(AXES):
@@ -2474,25 +2466,25 @@ def parse_world_document(
     if body_record and not massive_record:
         raise ValueError(
             "body_record needs massive_record: true (a body record is a block held as "
-            "one rotation on its clock pair, ALGEBRA.md 9.46 (1))"
+            "one rotation on its clock pair, ALGEBRA.md #what-a-body-is)"
         )
     # massive-record-v1: the amplitude bound A, declared per massive world;
     # REQUIRED under the detector law with `massive_record` (no default, the
     # model owner's record 2089; the ceiling 2^28 of item 31 RETIRED, ALGEBRA.md
-    # 9.83 (2) (a): A is the one number, the rule's int64 total its bound)
+    # ALGEBRA.md #a-familys-declaration: A is the one number, the rule's int64 total its bound)
     amplitude_bound = AMPLITUDE_BOUND
     if massive_record and "amplitude_bound" not in obj:
         raise ValueError(
             "amplitude_bound is required with `massive_record`: "
             "A, the amplitude every row stays below, no default (the model owner's record 2089; "
-            "ALGEBRA.md 9.57 (2), 9.83 (2) (a))"
+            "ALGEBRA.md #the-line, #a-familys-declaration)"
         )
     if massive_record and "amplitude_bound" in obj:
         amplitude_bound = _integer(obj["amplitude_bound"], "amplitude_bound", 1, AMOUNT_BOUND)
     elif "amplitude_bound" in obj:
         raise ValueError("amplitude_bound is refused without the world key `massive_record`")
     # THE NODE CLOCK (the model owner's decision (5) of record 1962; ALGEBRA.md
-    # 9.35 (2) and (3); BUILD.md section 26 item 31): Gamma, one integer from
+    # ALGEBRA.md #the-paces and (3); BUILD.md section 26 item 31): Gamma, one integer from
     # 1, the clock pair (e, f) = (Gamma, Gamma + M) at every Node under the
     # detector law's rule (M the content held at the Node, 0 in the vacuum);
     # REQUIRED with no default
@@ -2500,19 +2492,19 @@ def parse_world_document(
         raise ValueError(
             "node_clock is required: Gamma, the one integer of "
             "the Node clock (e, f) = (Gamma, Gamma + M) at every Node, no default (ALGEBRA.md "
-            "9.35 (3); BUILD.md section 26 item 31)"
+            "ALGEBRA.md #the-paces; BUILD.md section 26 item 31)"
         )
     node_clock = _integer(obj["node_clock"], "node_clock", 1, AMOUNT_BOUND)
-    # THE MOMENTUM'S UNIT Q (ALGEBRA.md 9.96 (1), 9.89 (2)): the universe's integer
+    # THE MOMENTUM'S UNIT Q (ALGEBRA.md #the-primitives, #the-well): the universe's integer
     # `momentum_unit`, REQUIRED with no default (the wall W = 3 Q M of every body)
     if "momentum_unit" not in obj:
         raise ValueError(
             "momentum_unit is required: Q, the momentum's unit "
             "of the universe's integers, the wall W = 3 Q M of every body, no default (ALGEBRA.md "
-            "9.96 (1), 9.89 (2); the model owner's record 2089)"
+            "ALGEBRA.md #the-primitives, #the-well; the model owner's record 2089)"
         )
     momentum_unit = _integer(obj["momentum_unit"], "momentum_unit", 1, AMOUNT_BOUND)
-    # THE TWIST TABLE (ALGEBRA.md 9.96 (2)): the families file's, checked with Gamma and A;
+    # THE TWIST TABLE (ALGEBRA.md #the-primitives): the families file's, checked with Gamma and A;
     # admitted on an inline world; an inline world without it has no transport (the
     # engine refuses a nonzero twist naming the Port)
     twist_table: TwistTable | None = None
@@ -2563,7 +2555,7 @@ def parse_world_document(
     )
     _held_bodies_checks(families, measured)
     _node_clock_bound(families, measured, amplitude_bound, node_clock)
-    # THE WINDOW IS THE ONE GIVING (ALGEBRA.md 9.85 (5), 9.71 (1); record 2082 (4);
+    # THE WINDOW IS THE ONE GIVING (ALGEBRA.md #the-primitives; record 2082 (4);
     # commit 7): every emitter declares its weight g and its rung's action; the world
     # key `point_emitter` and the train are retired (RETIRED_KEYS)
     for number, entry in enumerate(measured):
@@ -2574,18 +2566,18 @@ def parse_world_document(
             raise ValueError(
                 f"measured[{number}].emitter declares no `weight`: the body's rotation is "
                 "copied into the given row at its Node at a declared weight g, one integer from 1 "
-                "(ALGEBRA.md 9.71 (1) (b), 9.85 (5); commit 7)"
+                "(ALGEBRA.md #the-primitives; commit 7)"
             )
         if block.emitter.norm is not None and block.emitter.norm_denominator is None:
             raise ValueError(
                 f"measured[{number}].emitter declares no `norm_denominator`: the window "
                 "closes when the outward norm reaches the excitation's action norm / "
-                "norm_denominator, the generator's exact rational (ALGEBRA.md 9.71 (1) (d))"
+                "norm_denominator, the generator's exact rational (ALGEBRA.md)"
             )
     if body_record:
         # every seeded block carries its profile and its clock pair (the
         # generator's, under the stamp): the body record's shape and its
-        # rotation's rational (ALGEBRA.md 9.46 (1), (9) (a))
+        # rotation's rational (ALGEBRA.md #what-a-body-is)
         for number, entry in enumerate(measured):
             block = entry.block
             if block is None or block.seed <= 0:
@@ -2594,7 +2586,7 @@ def parse_world_document(
                 raise ValueError(
                     f"measured[{number}] under body_record declares no `clock` with its "
                     "profile: a body record is its stored profile and one rotation on its clock pair "
-                    "[num_c, den_c], the generator's (ALGEBRA.md 9.46 (1) and (9) (a); "
+                    "[num_c, den_c], the generator's (ALGEBRA.md #what-a-body-is and (9) (a); "
                     "`seed_on_the_mode`)"
                 )
             if block.proper_clock is None and any(int(part) != 0 for part in entry.momentum):
@@ -2602,7 +2594,7 @@ def parse_world_document(
                     f"measured[{number}] under body_record moves and declares no "
                     "`proper_clock`: the body's Node of a moving body rotates at the proper pair of its "
                     "momentum, the moving mode's rotation at its moving centre, the generator's "
-                    "(ALGEBRA.md 9.63 (3); `seed_on_the_mode`)"
+                    "(ALGEBRA.md #the-velocity; `seed_on_the_mode`)"
                 )
     _input_stamp_check(as_written, measured, digest)
     _initial_state_checks(shape, periodic, families, measured)
@@ -2637,7 +2629,7 @@ def parse_world_document(
     _detector_law_load_checks(measured, families, periodic, phase_steps)
     set_names = {detector.name for detector in detectors}
     for number, entry in enumerate(measured):
-        # the emitter body's ladder by name (ALGEBRA.md 9.17): every name a
+        # the emitter body's ladder by name (ALGEBRA.md #the-click): every name a
         # declared set's
         if entry.block is not None and entry.block.emitter is not None:
             for name in entry.block.emitter.receiver or ():

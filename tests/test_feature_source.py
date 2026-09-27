@@ -1,4 +1,4 @@
-"""The source's folder (ALGEBRA.md 9.117 row "the source"; 9.108 items 3, 11, 13): the line's integers on the run files' numbers, the carried remainder's exact floor, the table form, the write's locality, the inverse bit for bit, the refusals by name, the hand identity, the run file's record against the README's counts, the declaration the ledger's row."""
+"""The source's folder (ALGEBRA.md #the-primitives row "the source"; ALGEBRA.md #the-paces): the line's integers on the run files' numbers, the carried remainder's exact floor, the table form, the write's locality, the inverse bit for bit, the refusals by name, the hand identity, the run file's record against the README's counts, the declaration the ledger's row."""
 
 from __future__ import annotations
 
@@ -193,7 +193,7 @@ def test_the_declaration_is_the_ledgers_row_and_the_register_binds_its_function(
     assert (
         "D_i" in DECLARATION.reads[0] and "E_s" in DECLARATION.reads and "s_cap" in DECLARATION.reads[2]
     )
-    assert THE_WORD in DECLARATION.section and "9.117" in DECLARATION.section
+    assert THE_WORD in DECLARATION.section and "#the-primitives" in DECLARATION.section
     register = discover()
     declaration = register.declarations["the source"]
     assert declaration.section == DECLARATION.section and declaration.function is apply

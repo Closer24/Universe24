@@ -1,4 +1,4 @@
-"""The giving, the three acts of one window: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) x (|n_a| div M), at t + 1), the write (a_given at the shell += g x a_body, before the bookings), the close (at outward x den >= norm the record named, its direction the tally's sign per axis) (ALGEBRA.md 9.117 item 2 the row "the giving" and item 5, 9.107, 9.71 (1), 9.116 item 5); the count's close the click's inverse, the bulk share from the rule, the window's write beyond (H)."""
+"""The giving, the three acts of one window: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) x (|n_a| div M), at t + 1), the write (a_given at the shell += g x a_body, before the bookings), the close (at outward x den >= norm the record named, its direction the tally's sign per axis) (ALGEBRA.md #the-primitives the row "the giving" and item 5, 9.107, ALGEBRA.md); the count's close the click's inverse, the bulk share from the rule, the window's write beyond (H)."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ THE_CLOSE = "the close"
 ACTS = (THE_OPEN, THE_WRITE, THE_CLOSE)
 
 THE_WORD = (
-    "the close of the count the click's inverse, the bulk share from the rule 9.57 (1), "
+    "the close of the count the click's inverse, the bulk share from the rule ALGEBRA.md #the-line, "
     "the window's write beyond (H)"
 )
 
@@ -68,7 +68,7 @@ def sign_of(value: int) -> int:
 
 
 def bulk_share(momentum: tuple[int, int, int], quanta: int) -> tuple[int, int, int]:
-    """n_a -= sgn(n_a) x (|n_a| div M): the quantum carries its whole share of the momentum and the body keeps the remainder inside n_a, symmetric under reflection (ALGEBRA.md 9.116 item 5)."""
+    """n_a -= sgn(n_a) x (|n_a| div M): the quantum carries its whole share of the momentum and the body keeps the remainder inside n_a, symmetric under reflection (ALGEBRA.md)."""
     return (
         momentum[0] - sign_of(momentum[0]) * (abs(momentum[0]) // quanta),
         momentum[1] - sign_of(momentum[1]) * (abs(momentum[1]) // quanta),
@@ -81,7 +81,7 @@ def check(term: GivingTerm, start: GivingStart, own: GivingOwn) -> None:
     if term.weight < 1 or term.norm < 1 or term.norm_denominator < 1:
         raise ValueError(
             f"the giving needs a weight, a norm and its denominator from 1, got g = {term.weight}, "
-            f"norm = {term.norm} / {term.norm_denominator} (ALGEBRA.md 9.71 (1))"
+            f"norm = {term.norm} / {term.norm_denominator} (ALGEBRA.md)"
         )
     if start.act not in ACTS:
         raise ValueError(f"the giving's act is one of {list(ACTS)}, got {start.act!r}")
@@ -96,7 +96,7 @@ def check(term: GivingTerm, start: GivingStart, own: GivingOwn) -> None:
 
 
 def apply(term: GivingTerm, start: GivingStart, own: GivingOwn) -> GivingWrites:
-    """The primitive, one act per call: the open, the write or the close (ALGEBRA.md 9.117 item 2 the row "the giving")."""
+    """The primitive, one act per call: the open, the write or the close (ALGEBRA.md #the-primitives the row "the giving")."""
     check(term, start, own)
     if start.act == THE_OPEN:
         return GivingWrites(
@@ -141,6 +141,6 @@ DECLARATION = Declaration(
     ("a family's level at a Node", "a body's content M_k", "a body's momentum n"),
     apply,
     THE_WORD
-    + " (9.117 item 5); 9.117 item 2, the row 'the giving'; 9.107; 9.71 (1); 9.116 item 5; 9.86 (1)",
+    + " (ALGEBRA.md #the-primitives); ALGEBRA.md #the-primitives, the row 'the giving'; 9.107; ALGEBRA.md #the-primitives",
     word="after the step",
 )

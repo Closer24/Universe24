@@ -1,4 +1,4 @@
-"""THE DEGREE (ALGEBRA.md 9.86 (2); 9.91 (2)): the representation as parts (1, 3 or 6 components), the same rule on each component. 9.113 item 2: from the rule."""
+"""THE DEGREE (ALGEBRA.md #the-primitives, #the-interval): the representation as parts (1, 3 or 6 components), the same rule on each component. ALGEBRA.md #the-primitives: from the rule."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ DECLARATION = Declaration(
     ("parts",),
     ("the components' axes",),
     None,
-    "9.86 (2); 9.91 (2)",
+    "ALGEBRA.md #the-primitives, #the-interval",
     word="the step",
     schema=Schema({"a family's entry": ObjectOf({"parts": ListOf(Integer(least=1))})}),
 )

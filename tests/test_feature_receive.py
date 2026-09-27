@@ -1,5 +1,4 @@
-"""THE RECEIVE, its own folder (ALGEBRA.md 9.117 the row "the receive"; 9.81 (2) (b), (c); 9.96
-(2) (c); 9.119 item 2; the Boss's record 2250): the Port's angle, the table's triple and the
+"""THE RECEIVE, its own folder (ALGEBRA.md #the-primitives the row "the receive"; ALGEBRA.md #the-transport, #the-primitives, #the-four-acts; the Boss's record 2250): the Port's angle, the table's triple and the
 rotation of the Link's pair are Rule3's read acts with declared coefficients; the identity at the
 angle zero; the composed triple the table's; the refusals; the declaration, bound. The loop's
 transport is this folder's line: every shipped world's digest pins it, and tests/test_transport.py
