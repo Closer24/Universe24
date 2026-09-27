@@ -71,7 +71,7 @@ def angle(port: int, reads: tuple[TwistRead, ...], link: Link) -> Any:
 
 
 def triple(term: ReceiveTerm, k: Any, port: int) -> Triple:
-    """The rotation's triple at the Port from |k| = k_1 2^bits + k_0: the fine triple of k_0 and the coarse of k_1 composed, the booking (c_1 c_0 - s_1 s_0, s_1 c_0 + c_1 s_0, d_1 d_0) with the sine by k's sign; refused naming the Port beyond the coarse table or without one (ALGEBRA.md 9.96 (2) (c))."""
+    """The rotation's triple at the Port from |k| = k_1 2^bits + k_0: the fine triple of k_0 and the coarse of k_1 composed by two of Rule3's read acts over the wall 1, the coefficients (c_1, -s_1) and (s_1, c_1) on (c_0, s_0), the denominator d_1 d_0 a product of two declared integers, the sine by k's sign; refused naming the Port beyond the coarse table or without one (ALGEBRA.md 9.96 (2) (c))."""
     magnitude = np.abs(k)
     coarse_index = magnitude >> term.fine_bits
     if term.fine is None or term.coarse is None or int(np.max(coarse_index)) >= term.coarse.shape[1]:
@@ -82,7 +82,9 @@ def triple(term: ReceiveTerm, k: Any, port: int) -> Triple:
         )
     c0, s0, d0 = term.fine[:, magnitude & ((1 << term.fine_bits) - 1)]
     c1, s1, d1 = term.coarse[:, coarse_index]
-    return c1 * c0 - s1 * s0, np.sign(k) * (s1 * c0 + c1 * s0), d1 * d0
+    cosine, _ = rule3((c1, -s1, 0), (c0, s0, 0), 0, 1, 0, 0, 0)
+    sine, _ = rule3((s1, c1, 0), (c0, s0, 0), 0, 1, 0, 0, 0)
+    return cosine, np.sign(k) * sine, d1 * d0
 
 
 def rotated(found: Triple, re: Any, im: Any) -> tuple[Any, Any]:
@@ -106,11 +108,13 @@ def check(start: ReceiveStart) -> None:
 
 
 def apply(term: ReceiveTerm, start: ReceiveStart) -> ReceiveWrites:
-    """The primitive at (i): the angle per Port, the Link's pair rotated by its triple where the angle is not zero (the pair itself where it is), the arrivals summed per axis for the two levels (ALGEBRA.md 9.117 the row "the receive")."""
+    """The primitive at (i): the angle per Port, the Link's pair rotated by its triple where the angle is not zero (the pair itself where it is), then Rule3's input per axis, arr_a = the arrival through +a plus the arrival through -a, for the two levels (ALGEBRA.md 9.117 the row "the receive")."""
     check(start)
     angles = []
-    re_sums = [np.zeros_like(start.re) for _ in range(3)]
-    im_sums = None if start.im is None else [np.zeros_like(start.re) for _ in range(3)]
+    re_sums = [np.zeros_like(start.re) for _ in range(3)]  # Rule3's arr_a on the first level
+    im_sums = (
+        None if start.im is None else [np.zeros_like(start.re) for _ in range(3)]
+    )  # and on the second
     for port, link in enumerate(start.links):
         k = angle(port, start.reads, link)
         angles.append(k)
