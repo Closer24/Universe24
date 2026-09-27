@@ -79,10 +79,10 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/detector_law.py": {
-   "comment_lines": 653,
-   "docstring_lines": 619,
+   "comment_lines": 650,
+   "docstring_lines": 601,
    "level_shift_sites": 15,
-   "lines": 3999,
+   "lines": 3978,
    "record_references": 36,
    "rule_arithmetic_sites": 0
   },
@@ -264,10 +264,6 @@
   ],
   "tests/test_node_clock.py": [
    "form_json"
-  ],
-  "tests/test_vector_holds.py": [
-   "TENSOR_AXES",
-   "cross_with_axis"
   ]
  }
 }

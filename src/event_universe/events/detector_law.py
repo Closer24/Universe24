@@ -77,6 +77,7 @@ from event_universe.core.rule3 import (
     THE_INVERSE,
     THE_REWRITE,
     THE_UNHOLD,
+    carried,
     coefficients,
     form_term,
     rule3,
@@ -1218,50 +1219,6 @@ class DetectorLawSimulation:
             offset += count
         raise ValueError(f"the part {part} is beyond the family's components")
 
-    @staticmethod
-    def _stepped_back(numerator: int, wall: int, value: int, remainder: int) -> tuple[int, int]:
-        """The carried division one interval back (ALGEBRA.md 9.91 (3), exact): from
-        (value_t, r_t) to (value_(t-1), r_(t-1)): r_(t-1) = value_t W + r_t - S, and
-        value_(t-1) = S div W plus one where r_(t-1) is below S mod W (the only two
-        values the sum S + r can reach)."""
-        previous = value * wall + remainder - numerator
-        whole, fraction = divmod(numerator, wall)
-        return whole + (1 if previous < fraction else 0), previous
-
-    def _carried_division(
-        self,
-        block: Block,
-        key: tuple[object, ...],
-        numerator: int,
-        wall: int,
-        advance: bool,
-        inverse: bool,
-    ) -> tuple[int, int]:
-        """THE DIVISION WITH ITS REMAINDER CARRIED (ALGEBRA.md 9.91 (3)): forward,
-        value_t = (S + r_(t-1)) div W and r_t the remainder, kept on the body;
-        backward, the state stepped back exactly (`_stepped_back`). Returns the
-        value of this interval and the value of the one before it (the two
-        levels the hold writes: `now` this interval's, `before` the last one's,
-        so that the fields' inverse reads the level the step read); at the load
-        both are the first value; a hold that neither advances nor inverts (a
-        moved body's rewrite) gives the standing value twice."""
-        if inverse:
-            value, remainder = self._stepped_back(
-                numerator, wall, block.hold_value.get(key, 0), block.hold_carry.get(key, 0)
-            )
-            block.hold_value[key] = value
-            block.hold_carry[key] = remainder
-            before, _ = self._stepped_back(numerator, wall, value, remainder)
-            return value, before
-        if advance:
-            previous = block.hold_value.get(key)
-            value, remainder = divmod(numerator + block.hold_carry.get(key, 0), wall)
-            block.hold_value[key] = value
-            block.hold_carry[key] = remainder
-            return value, (value if previous is None else previous)
-        value = block.hold_value.get(key, 0)
-        return value, value
-
     def _unhold_dipoles(self, line: Callable[..., object]) -> None:
         """The interval's dipole writes taken back (the inverse, before the fields
         step back) by the hold's line, the unhold act: each term's value off the
@@ -1670,15 +1627,14 @@ class DetectorLawSimulation:
     def _division_now(
         self, block: Block, key: tuple[object, ...], numerator: int, wall: int, inverse: bool
     ) -> int:
-        """This interval's value of a carried division on the body (`_carried_division`):
-        forward the division advanced; backward the value the forward wrote (the carry
-        then stepped back to the interval's start), so the inverse subtracts the same
-        term the step added."""
-        if not inverse:
-            return self._carried_division(block, key, numerator, wall, True, False)[0]
+        """This interval's value of a carried division on the body, Rule3's division act on the
+        body's remainders (core.rule3 `carried`): forward the division advanced; backward the value
+        the forward wrote (the carry then stepped back to the interval's start), so the inverse
+        subtracts the same term the step added."""
         value = block.hold_value.get(key, 0)
-        self._carried_division(block, key, numerator, wall, False, True)
-        return value
+        act = THE_INVERSE if inverse else THE_ADVANCE
+        now, _ = carried(act, key, numerator, wall, block.hold_value, block.hold_carry)
+        return value if inverse else now
 
     def _curl(
         self, records: list[LiveRecord], centre: tuple[int, int, int], wrap: tuple[bool, bool, bool]
