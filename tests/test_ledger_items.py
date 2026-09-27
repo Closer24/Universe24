@@ -197,24 +197,24 @@ def test_3b_a_content_below_zero_at_run_time_ends_the_run_with_the_guards_line()
 
 @pytest.mark.xfail(
     strict=True,
-    reason="item 4 of record 2199: the recoil is not built; a body's held momentum does not move "
-    "at a click",
+    reason="item 4: the recoil is built and a fixed body takes none (the owner's working rule); the "
+    "acceptance needs a heavy body that is not fixed, the generator's worlds",
 )
 def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer():
     """At a giving the body's held vector n changes along the click's axis by
-    sigma_a x (W x P_body) div (M x lambda_q), the remainder on the body's record; the taker
-    with the opposite sign (ALGEBRA.md #the-interval with the sign of ALGEBRA.md #the-primitives)."""
+    sigma_a x 3 Q P_body (L div lambda_q) div L, the store on the body's record; the taker
+    with the opposite sign (the law's row "the recoil"; ALGEBRA.md #the-interval, #the-primitives)."""
     document = emitter_world(stock=2, ticks=STEPS)
     stamped(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    before = list(simulation.body_momentum(0))
+    before = list(simulation.blocks[0].momentum)
     lines: list[dict] = []
     simulation.record = lines.append
     for _ in range(STEPS):
         simulation.step()
-    givings = [line for line in lines if line.get("kind") == "giving"]
+    givings = [line for line in lines if line.get("event") == "giving"]
     assert givings, "the emitter gave nothing in the run"
-    after = list(simulation.body_momentum(0))
+    after = list(simulation.blocks[0].momentum)
     assert after != before
     assert all(isinstance(v, int) for v in after)
 

@@ -339,10 +339,11 @@ def test_the_light_record_is_byte_identical_without_the_key():
     state's `law` entry gone (one engine, no law's name; the events and the audit bit for
     bit); SINCE THE SEAT'S NAMES (record 2108; item 74) the state digest alone moved once
     more, by the block entry's key `node_record` in place of `seat` (the events and the
-    audit bit for bit)."""
+    audit bit for bit); with the recoil bound, the state digest alone moved once more, by the chain
+    world's emitter held to the GameBoard (`fixed: true`; the events and the audit bit for bit)."""
     assert run_chain_digests() == {
         "events": "be458a826af93758056f1a5f845f25ce53787ff63122bc87d1991ffbf96e0467",
-        "state": "4ad93f10916fb60cba5ef90eee02fe816bb316a66728c1653cc40833dc7ad6ff",
+        "state": "84bbe9a48e35b27e8889c214ed9f2af8df42f6840f428f6eb81895319d390ced",
         "audit": "9c4eb02e50596a16c05d5a1648f0a80338d460b398c51f04644158f68139790b",
     }
 
@@ -558,8 +559,7 @@ PERIODIC_CHAIN = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 
 def six_reads(row: np.ndarray) -> np.ndarray:
-    """The six directed reads of the rule on a periodic board (an axis of extent 1 reads the
-    Node itself twice), summed: the S_6 of MASSIVE_RECORD.md section 3."""
+    """The six directed reads of the rule on a periodic board (an axis of extent 1 reads the Node itself twice), summed: the S_6 of MASSIVE_RECORD.md section 3."""
     total = np.zeros(row.shape, dtype=object)
     for axis in range(3):
         for shift in (1, -1):

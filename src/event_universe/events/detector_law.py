@@ -63,7 +63,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
-from math import gcd
+from math import gcd, lcm
 from typing import cast
 
 import numpy as np
@@ -81,6 +81,7 @@ from event_universe.core.rule3 import (
     THE_REWRITE,
     THE_UNHOLD,
     coefficients,
+    division_forward,
     form_term,
     rule3,
     rungs,
@@ -97,6 +98,14 @@ from event_universe.features.giving import (
 )
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
+from event_universe.features.recoil import (
+    GIVING,
+    TAKING,
+    RecoilOwn,
+    RecoilStart,
+    RecoilTerm,
+    RecoilWrites,
+)
 from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
 from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
 from event_universe.features.spins_step import (
@@ -253,15 +262,10 @@ class LiveRecord:
     # booking below one unit of the flux, carried to the next interval's
     # booking (a remainder kept on the record, exact); empty at rest
     carry: dict[int, Ratio] = field(default_factory=dict)
-    # THE FOUR-VECTOR CLICK'S SPACE PART (ALGEBRA.md #the-primitives, #the-interval,
-    # ALGEBRA.md #the-ladder; commit 5 without the recoil, record 2135): per detector, per
-    # axis, the flux booked through the detector's Ports on its -a side minus
-    # the flux booked through those on its +a side, summed over the record's
-    # walk (the taken quantum's direction of travel: a quantum moving toward
-    # +a enters through the -a face); the sign per axis is sigma_a on the
-    # click line. Nothing is added to any body's momentum: the recoil of
-    # ALGEBRA.md #the-primitives waits on the closing of record 2135 (the click that keeps the
-    # momentum, 9.109, is a decision of three).
+    # THE FOUR-VECTOR CLICK'S SPACE PART (ALGEBRA.md #the-primitives, #the-interval): per detector, per
+    # axis, the flux booked through the detector's -a Ports minus its +a Ports over the record's walk
+    # (the taken quantum's direction of travel); its sign per axis is sigma_a on the click line and
+    # the recoil's tally
     momentum_tally: dict[int, list[int]] = field(default_factory=dict)
     # THE GIVEN QUANTUM'S DIRECTION (ALGEBRA.md #the-interval, the giving's tally): per axis, the
     # outward flux through the body's +a Ports minus through its -a Ports over
@@ -606,6 +610,21 @@ class DetectorLawSimulation:
             raise ValueError(
                 "the world declares no momentum unit (`momentum_unit`, Q from 1; ALGEBRA.md #the-primitives)"
             )
+        # THE UNIVERSE'S WALL L (the law's row "the recoil"): the least common multiple of the
+        # declared wavelengths 2 N q / p over the families and the emitters with a clock [p, q]
+        self.recoil_wall = 1
+        for index, row in enumerate(world.families):
+            if row.phase_per_age is not None:
+                self.recoil_wall = lcm(
+                    self.recoil_wall, self._wavelength(row.phase_per_age, f"families[{index}]")
+                )
+        for number, entry in enumerate(world.measured):
+            if entry.block is not None and entry.block.emitter is not None:
+                self.recoil_wall = lcm(
+                    self.recoil_wall, self._wavelength(entry.block.emitter.clock, f"measured[{number}]")
+                )
+        # the interval's clicks for the recoil's act: the body, the sense, the tally, the record's clock
+        self._recoils: list[tuple[int, int, tuple[int, int, int], tuple[int, int]]] = []
         # THE TWIST TABLE (ALGEBRA.md #the-transport, #the-primitives; commit 4): the universe's
         # triples as arrays, (c, s, d) by k_0 (fine) and by k_1 (coarse); None on a world
         # without one, where a nonzero twist is refused naming the Port
@@ -854,6 +873,7 @@ class DetectorLawSimulation:
             "the operation": Stage(self._records_stage, (), chain),
             "the giving": Stage(self._giving_stage, (), ("the giving",), creates=True),
             "the source": Stage(self._source_stage, (), ("the source",)),
+            "the recoil": Stage(self._recoil_stage, (), ("the recoil",)),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
         }
 
@@ -1009,6 +1029,42 @@ class DetectorLawSimulation:
             self._source_remainders[family] = writes.remainders
         for argument in self._source_argument.values():
             argument[...] = 0
+
+    def _wavelength(self, clock: tuple[int, int], label: str) -> int:
+        """The wavelength 2 N q / p of a clock [p, q] on the world's N steps (the law's row "the recoil"); a clock whose wavelength is no whole number of Links is refused by name."""
+        numerator, denominator = clock
+        whole, rest = division_forward(2 * self.world.phase_steps * denominator, numerator, 0)
+        if rest:
+            raise ValueError(
+                f"{label} declares the clock {list(clock)} on N = {self.world.phase_steps} steps: its "
+                f"wavelength 2 N q / p is no whole number of Links, so the universe's wall L has no value"
+            )
+        return whole
+
+    def _recoil_stage(self, function: Callable[..., object]) -> None:
+        """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1; a body with no period declares no term."""
+        for number, sense, tally, clock in self._recoils:
+            block = self.block_by_number.get(number)
+            emitter = block.definition.emitter if block is not None else None
+            if block is None or block.fixed or emitter is None or emitter.period is None:
+                continue
+            term = RecoilTerm(
+                emitter.period,
+                self._wavelength(clock, f"measured[{number}]"),
+                sense,
+                self.recoil_wall,
+                self.momentum_unit,
+            )
+            stores = [block.hold_value.get(("recoil", axis), 0) for axis in range(3)]
+            own = RecoilOwn(
+                (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2])),
+                (stores[0], stores[1], stores[2]),
+            )
+            writes = cast(RecoilWrites, function(term, RecoilStart(tally), own))
+            block.momentum[:] = list(writes.momentum)
+            for axis in range(3):
+                block.hold_value[("recoil", axis)] = writes.remainders[axis]
+        self._recoils.clear()
 
     def _records_stage(self, function: Callable[..., None]) -> None:
         """The records' act: the bodies' own records first, each by the rule alone, then every live record's fused step (its click included); `function` is the rule the steps apply."""
@@ -2051,23 +2107,9 @@ class DetectorLawSimulation:
             part=emitter.part,
             twist=emitter.twist,
         )
-        # E^T: the given clock's character on the body's Nodes, written once at
-        # both levels, every Node at the vertex's phase (the one-Node broadband
-        # giving; a line's travelling character, the per-Link pair of ALGEBRA.md
-        # ALGEBRA.md #the-click, is owed until that pair is declared)
-        # NO TABLE IN THE ENGINE (the cleanup order's step 2; ALGEBRA.md #the-click
-        # (6), ALGEBRA.md #a-familys-declaration): the given pair is the world's two integers `given:
-        # [now, before]`, the generator's, checked at load (before = -now),
-        # written on every Node of the body
-        # THE GIVEN TRAIN (ALGEBRA.md #the-click; BUILD.md section 26 item 27):
-        # the train's two levels written on the body's Nodes in the box's
-        # x-major order (`body_node_indices`, the loader's and the generator's
-        # one convention), the norm T the written one (the conserved form on
-        # the given family's vacuum, the generator's integer checked at load)
-        # THE WINDOW (ALGEBRA.md #what-a-body-is, #the-primitives; item 50; commit 7,
-        # the one giving): no train; the window opens at the click, the given row at
-        # the body's Node written from its rotation every interval (`_point_windows`)
-        # until the outward norm reaches T; the record named at the close
+        # THE WINDOW (ALGEBRA.md #what-a-body-is, #the-primitives): no train and no table in the engine;
+        # the window opens at the click, the given row at the body's Nodes written from its rotation
+        # every interval (`_point_windows`) until the outward norm reaches T; the record named at the close
         live.window_open = True
         live.box = self.mask_box(block.mask)  # HOST (item 43): the body's own Nodes
         block.window = identity
@@ -2100,19 +2142,11 @@ class DetectorLawSimulation:
         )
         self.held[number][family] += opened.count
         self.ledger.held_spent[family] += 1
-        # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 items 31 and
-        # 36; ALGEBRA.md #the-direction): the given record's T is p times its
-        # conserved form as written on the board, the engine's own integer
-        # with the content at the body's Nodes AS IT STANDS this interval:
-        # ONE ORDER FOR BOTH CLICKS (ALGEBRA.md #the-primitives; BUILD.md section 26
-        # item 58): a click's writes enter at the next interval (ALGEBRA.md #the-line),
-        # so the giving's lowered quanta are held after the held families'
-        # step with the takings' (`_advance_fields`), no hold here (the hold
-        # at once, item 47, HISTORY: a defect against ALGEBRA.md #the-line)
-        # THE POINT EMITTER (item 50): the record's norm is T from the open,
-        # the excitation's action the window will reach (ALGEBRA.md), as the
-        # exact rational norm / norm_denominator, so the ladder reads its
-        # bookings from the first interval (Born's rule's walk as now)
+        # THE NORM UNDER THE NODE CLOCK (ALGEBRA.md #the-direction): the given record's T is p times its conserved
+        # form with the content at the body's Nodes as it stands this interval; ONE ORDER FOR BOTH CLICKS
+        # (ALGEBRA.md #the-primitives): a click's writes enter at the next interval, the giving's lowered quanta held after
+        # the held families' step with the takings' (`_advance_fields`). THE POINT EMITTER: the norm is T
+        # from the open, the exact rational norm / norm_denominator the window's outward norm is read against.
         assert emitter.norm is not None and emitter.norm_denominator is not None
         live.norm, live.pace = emitter.norm, emitter.norm_denominator
         self.ledger.transit_released[family] += cost
@@ -2167,12 +2201,7 @@ class DetectorLawSimulation:
         own.u, own.wheel = residue, wheel
 
     def _block_clock(self, block: Block) -> None:
-        """The block's clock (MASSIVE_RECORD.md sections 4 and 6): its total
-        record summed across its Nodes (G over R: its own record), one
-        count per cycle (the sum's crossing
-        from at most 0 to above 0, verb D's comparison), a `click` line per
-        count with its own count (the self-click of row (g)); a new cycle
-        givings its emission at the next interval."""
+        """The block's clock (MASSIVE_RECORD.md sections 4 and 6): its total record summed across its Nodes (G over R: its own record), one count per cycle (the sum's crossing from at most 0 to above 0, verb D's comparison), a `click` line per count with its own count (the self-click of row (g)); a new cycle givings its emission at the next interval."""
         total = 0
         # the co-moving centre Node (the design's reading of the clock in
         # motion, MASSIVE_RECORD.md section 8: "the clock read at the
@@ -2543,13 +2572,7 @@ class DetectorLawSimulation:
     # pairs' numerators over the board).
 
     def kind_wall(self, family: int, pair: tuple[int, int] | None = None) -> int:
-        """The family's common wall: the least common multiple of the
-        numerators of its pair over the board (the vacuum's and every body's),
-        so that wall x den_i / num_i is an integer at every Node. HOST: read
-        once per family from the board's pair array and kept until a pair is
-        written (`_write_pair`, the load and a hop); the same integer at every
-        call, bit for bit (record 2039: the distinct numerators were gathered
-        anew for every record at every interval, a fifth of the run)."""
+        """The family's common wall: the least common multiple of the numerators of its pair over the board (the vacuum's and every body's), so that wall x den_i / num_i is an integer at every Node; HOST: read once per family from the board's pair array and kept until a pair is written (`_write_pair`, the load and a hop), the same integer at every call."""
         num_all, _ = self.pair_arrays(family, pair)
         rest = self.families[family].pair if pair is None else (int(pair[0]), int(pair[1]))
         key = (family, rest[0], rest[1])
@@ -2674,23 +2697,11 @@ class DetectorLawSimulation:
                     offers[detector] = offers.get(detector, 0) + int(value) * wall
                     self._tally_direction(live, detector, axis, side, int(value) * wall)
             return offers
-        # THE BOOKING IN THE BODY'S FRAME (ALGEBRA.md #the-ladder; BUILD.md section
-        # 26 item 56): a face of a body moving at v with outward normal n books
-        # per interval (G_in + (v . n) e_out) cut at zero AFTER the sum: G_in
-        # the board's inward current through the face's Link (the Port booking
-        # above), e_out the record's density on the Node outside the face
-        # (`node_density`, the same units), v . n = side x momentum / wall along
-        # the face's axis, positive at a face advancing into the outside (the
-        # front) and negative at a face receding from it (the back). One rule
-        # for every face of every moving set, per interval, not per hop: at
-        # the front an oncoming record books G_in + v e_out, a standing or
-        # transverse one v e_out, a record outrunning the body nothing; at the
-        # back a record overtaking from behind books G_in - v e_out, the norm
-        # once, with no negative booking. The whole part is booked, the
-        # fraction carried on the record per detector (`carry`, exact). The
-        # three tests: the face's Link, the outside Node's density and the
-        # body's own pace, fixed work; sums and products; no name. At v = 0
-        # the rule is the Port booking above, bit for bit.
+        # THE BOOKING IN THE BODY'S FRAME (ALGEBRA.md #the-ladder): a face of a body moving at v with outward
+        # normal n books per interval (G_in + (v . n) e_out) cut at zero after the sum, G_in the board's
+        # inward current through the face's Link, e_out the record's density on the Node outside
+        # (`node_density`), v . n = side x momentum / wall along the face's axis; the whole part booked,
+        # the fraction carried on the record per detector (`carry`, exact); at v = 0 the Port booking.
         outside = sorted(
             set(
                 int(node)
@@ -2838,18 +2849,11 @@ class DetectorLawSimulation:
         so a bound mode's share is constant where nothing flows."""
         family = live.family
         wall = self.kind_wall(family, live.pair)
-        # THE SHARE UNDER THE NODE'S OWN PACE (ALGEBRA.md #the-direction and (13);
-        # BUILD.md section 26 item 36; the form's units, the plain share in
-        # the vacuum): with the pace p_i at every Node, e_i = [3 wall (den_i
-        # / num_i) Gamma (now_i^2 + before_i^2) - 6 wall (den_i / num_i) c_i
-        # now_i before_i] / p_i - wall now_i SUM_j before_j; the step's
-        # operator is symmetric under the weight den_i / (num_i p_i), so the
-        # sum over the board is exactly invariant where the clock field
-        # stands still, and the share's change over an interval is the sum
-        # of the plain currents wall (now_i before_j - before_i now_j)
-        # through the Node's Links plus the remainders' term (wall / (num_i
-        # p_i)) (a_next - a_before)(r - r'), an exact rational per Node (the
-        # weights p_i p_j at one integer scale, form (B) of item 34, HISTORY)
+        # THE SHARE UNDER THE NODE'S OWN PACE (ALGEBRA.md #the-direction): with the pace p_i at every Node,
+        # e_i = [3 wall (den_i / num_i) Gamma (now_i^2 + before_i^2) - 6 wall (den_i / num_i) c_i now_i
+        # before_i] / p_i - wall now_i SUM_j before_j; the operator is symmetric under den_i / (num_i p_i),
+        # so the sum is invariant where the clock field stands still, and the share's change over an
+        # interval is the plain currents through the Node's Links plus the remainders' term, exact.
         field = live.held_part
         gamma = 1 if field else self.node_clock
         content = (
@@ -2925,13 +2929,7 @@ class DetectorLawSimulation:
     def _window(
         self, box: tuple[tuple[int, int], ...] | None, wrap: tuple[bool, bool, bool]
     ) -> tuple[tuple[slice, ...], tuple[bool, bool, bool], tuple[tuple[int, int], ...]] | None:
-        """HOST: the box grown by one Link per axis, the rule's reach, as the
-        slices to step, the faces the reads wrap on inside the window and the
-        window itself as the record's next box; None when the window is the
-        whole board (the whole-board step then, as before). On a periodic axis
-        a window that would touch the axis's ends is the whole axis with its
-        wrap; elsewhere the reads beyond the window are zeros, which is what
-        the rows there are (or the open face's nothing)."""
+        """HOST: the box grown by one Link per axis, the rule's reach, as the slices to step, the faces the reads wrap on inside the window and the window itself as the record's next box; None when the window is the whole board; on a periodic axis a window that would touch the axis's ends is the whole axis with its wrap, elsewhere the reads beyond the window are zeros, the rows there (or the open face's nothing)."""
         if box is None:
             return None
         slices: list[slice] = []
@@ -2984,30 +2982,12 @@ class DetectorLawSimulation:
         # neighbours, then D by 3 den with the remainder kept, then T; at
         # light's pair [1, 1] the first build's integers bit for bit.
         num, den = self.pair_arrays(live.family, live.pair)
-        # THE COUPLING IS THE CLICK ALONE (the model owner's decision (2) of
-        # record 1962; ALGEBRA.md #the-line (B); BUILD.md section 26 item 30): no
-        # coupling's term and no folded denominator (MASSIVE_RECORD.md
-        # section 7 HISTORY); the wall 3 den, one division per row per
-        # interval, the remainder kept in [0, wall)
-        # THE NODE CLOCK UNDER THE FIXED WALL (the model owner's decision (5)
-        # of record 1962 and his word of 2026-09-25 in Nature24's session,
-        # record 1994: the backward run exact everywhere; ALGEBRA.md #the-paces
-        # amended, the mathematician's section asked; BUILD.md section 26
-        # item 34): the wall is 3 den Gamma at every Node, a constant of the
-        # declared region, and the clock enters the numerator as the pace
-        # Gamma - c_j of each of the six reads: 3 den Gamma a_next + r' = num
-        # SUM_j (Gamma - c_j) a_j + 6 den c a_now - 3 den Gamma a_before + r,
-        # c the family of clicks' level at a Node, the remainder in [0, 3 den
-        # Gamma). The remainder's range never changes, so the step is one to
-        # one at every Node for every clock history (the wall 3 den (Gamma +
-        # c) of item 31, which shrank where the level fell and merged two
-        # states into one, HISTORY). In the vacuum (c = 0) the levels are the
-        # plain rule's bit for bit and the remainder Gamma times its; at
-        # uniform content 1 - cos omega' = (1 - cos omega)(Gamma - c) / Gamma.
-        # One division per row per interval, the int64 total under the load
-        # bound of `_pair_bound`. THE FAMILY OF CLICKS ITSELF steps plain (the
-        # pace 1, the wall 3 den): it reads no other family and not its own
-        # level (ALGEBRA.md #the-counts-line)
+        # THE COUPLING IS THE CLICK ALONE (ALGEBRA.md #the-line (B)): no coupling's term, the wall 3 den Gamma
+        # at every Node, one division per row per interval, the remainder in [0, wall). THE NODE CLOCK
+        # UNDER THE FIXED WALL (ALGEBRA.md #the-paces): the clock enters the numerator as the pace Gamma - c_j of each
+        # of the six reads, 3 den Gamma a_next + r' = num SUM_j (Gamma - c_j) a_j + 6 den c a_now -
+        # 3 den Gamma a_before + r, so the step is one to one at every Node for every clock history; in
+        # the vacuum the plain rule bit for bit; the family of clicks itself steps plain (ALGEBRA.md #the-counts-line).
         gamma = 1 if field else self.node_clock
         content = 0 if field else self._effective_content(live.family)
         # THE NODE'S OWN PACE (the model owner's ruling of record 2003, "take
@@ -3279,12 +3259,19 @@ class DetectorLawSimulation:
             line["window"] = live.window
             line["outward"] = live.outward
             line["opened"] = self.tick - live.window  # the open's interval (HOST)
-            # THE GIVEN QUANTUM'S FOUR-VECTOR (ALGEBRA.md #the-primitives, #the-interval; commit 5
-            # without the recoil): the count 1, the space part the sign per axis of
-            # the outward flux through the body's Ports over the window (DETECTOR);
-            # a symmetric emitter's tallies cancel (ALGEBRA.md #the-primitives); no body's momentum moves
+            # THE GIVEN QUANTUM'S FOUR-VECTOR (ALGEBRA.md #the-primitives, #the-interval): the count 1, the
+            # space part the sign per axis of the outward flux over the window (DETECTOR)
             line["momentum"] = self.direction_of(live.outward_tally)
             self.record(line)
+        outward = live.outward_tally
+        self._recoils.append(
+            (
+                block.number,
+                GIVING,
+                (int(outward[0]), int(outward[1]), int(outward[2])),
+                (live.period_numerator, live.period_denominator),
+            )
+        )
         live.giving_line = None
         block.wait = 0
         if self.stock_of(block) > 0:
@@ -3440,6 +3427,15 @@ class DetectorLawSimulation:
             measured = self.detector_measured[chosen]
             if measured is not None and not self.detector_face[chosen]:
                 self.held[measured][family] += live.content
+                tally = live.momentum_tally.get(chosen, [0, 0, 0])
+                self._recoils.append(
+                    (
+                        measured,
+                        TAKING,
+                        (int(tally[0]), int(tally[1]), int(tally[2])),
+                        (live.period_numerator, live.period_denominator),
+                    )
+                )
                 self.ledger.held_measured[family] += live.content
                 self.ledger.transit_absorbed[family] += live.content
             else:
