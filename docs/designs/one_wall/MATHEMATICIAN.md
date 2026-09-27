@@ -236,6 +236,6 @@ only on order.
 and [21.4](../../DERIVATIONS_BEAM.md#214-the-einstein-map-every-result-of-the-special-and-the-general-theory-its-status-today-what-the-six-give-what-must-be-added-the-pin)
 row E13; [the light-bending note](../open_problems/light_bending/NOTE.md)
 and its map; [the optical-v1 design](../gr_rows/DESIGN.md); [HIGHLIGHTS
-5.4](../../HIGHLIGHTS.md#54-the-detector), the decisions of 2026-09-21 on
+5.4](../../HIGHLIGHTS.md), the decisions of 2026-09-21 on
 optical-v1 (record 303), the three tests (record 202), the measurement
 rule (record 281) and the method (record 300).

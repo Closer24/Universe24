@@ -502,4 +502,4 @@ made without a registered reading, and "is nature" appears nowhere.
 [DERIVATIONS_BEAM 6.2, 6.3, 7.2, 24.3](../../DERIVATIONS_BEAM.md);
 [NATURE rows 1a, 2c, 6, 8a, 12](../../NATURE.md);
 [the Einstein Outside derivation](../einstein_outside/DERIVATION.md) (PR #792, merged at e8432e6c);
-[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector).
+[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md).

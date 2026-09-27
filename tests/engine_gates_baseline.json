@@ -27,7 +27,7 @@
   },
   "src/event_universe/events/detector_law.py": {
    "family_names": 1,
-   "hand_divisions": 25,
+   "hand_divisions": 23,
    "numbers": 4
   },
   "src/event_universe/events/primitives.py": {
@@ -36,9 +36,9 @@
    "numbers": 3
   },
   "src/event_universe/events/world.py": {
-   "family_names": 15,
-   "hand_divisions": 59,
-   "numbers": 25
+   "family_names": 8,
+   "hand_divisions": 22,
+   "numbers": 22
   },
   "src/event_universe/features/giving/__init__.py": {
    "family_names": 0,

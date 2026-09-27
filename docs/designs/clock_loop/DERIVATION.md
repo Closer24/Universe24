@@ -281,7 +281,7 @@ derivation, and it does not reopen stage 1.
 (the covariant identity; 17.6 M3 the exact square; 17.7 the root-free
 gate); [EXPERIMENTS A14](../../EXPERIMENTS.md#a14-kinematic-time-dilation-of-a-moving-bound-group);
 [HYPOTHESES 15](../../HYPOTHESES.md#15-time-dilation-from-transit-a-moving-bound-groups-clock-runs-at-1--v);
-[Highlights 5.4](../../HIGHLIGHTS.md#54-the-detector), the lines "Speed
+[Highlights 5.4](../../HIGHLIGHTS.md), the lines "Speed
 is a clock slowing", "Lorentz, A and B", "Lorentz, B replaced", "The
 clock's word is the age word" and "Stage 1 of Lorentz from the board";
 [the clock's word](../clock_age/NOTE.md) (the form of a design note);

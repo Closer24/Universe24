@@ -23,7 +23,7 @@ experiment changes no law and no source file. Read
 [the Beam Law](../../docs/BEAM_LAW.md),
 [the engine's bookkeeping](../../docs/ENGINE.md),
 [the register's conventions](../../docs/EXPERIMENTS.md) and the records of
-the model owner in [Highlights 5.4](../../docs/HIGHLIGHTS.md#54-the-detector).
+the model owner in [Highlights 5.4](../../docs/HIGHLIGHTS.md).
 
 ## The one rule of measurement
 
