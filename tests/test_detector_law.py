@@ -182,7 +182,7 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
         parse_nature_beam_world(keyed)
     world_wheel = chain_world()
     world_wheel["wheel"] = 64
-    with pytest.raises(ValueError, match="the world.wheel is refused"):
+    with pytest.raises(ValueError, match="the world has unknown keys: wheel"):
         parse_nature_beam_world(world_wheel)
     set_wheel = chain_world()
     set_wheel["detectors"][0]["wheel"] = 64

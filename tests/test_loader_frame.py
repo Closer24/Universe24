@@ -5,7 +5,8 @@ every family's entry by the folders' cards with the frame's one key, the name, a
 file, its mode; every refusal by name, no default written (record 2089: the dipole's divisor is
 the universe file's). Checked here: the shipped file and the source's fragment pass with the
 weight word resolved, every genericity draw passes, each defect is refused by name, the start
-file is its mode and nothing else, and the frame holds no default, no family name and no
+file is its mode and nothing else, the world's own keys by the frame's schema with the bodies and the
+universe handed on, and the frame holds no default, no family name and no
 version (the acceptance tests' readers on the new module)."""
 
 from __future__ import annotations
@@ -112,6 +113,69 @@ def test_every_defect_of_the_universe_file_is_refused_by_name():
         frame.universe("nowhere.json", {}, discover())
     with pytest.raises(ValueError, match="the universe file 'universe.json' must be a JSON object"):
         frame.universe(FILE, {FILE: []}, discover())
+
+
+def test_every_shipped_world_passes_the_frames_world_schema():
+    """Every shipped world of the engine passes the frame's reading of the world's keys; the
+    handed keys come back as written and the frame's as checked (lists as tuples)."""
+    count = 0
+    ahead = {
+        "check_mode",
+        "source",
+    }  # the worlds the loader of today does not load (AHEAD in the regression record)
+    for path in sorted((ROOT / "examples" / "events").glob("*/*.json")):
+        document = json.loads(path.read_text(encoding="utf-8"))
+        if not (isinstance(document, dict) and "universe" in document) or ahead & set(path.parts):
+            continue
+        count += 1
+        checked = frame.world(document)
+        assert (
+            checked["measured"] is document["measured"] and checked["universe"] == document["universe"]
+        )
+        assert checked["shape"] == tuple(document["shape"]) and checked["engine"] == document["engine"]
+        assert set(checked) == set(document)
+    assert count >= 22
+
+
+def test_every_defect_of_the_worlds_own_keys_is_refused_by_name():
+    """An unknown key (the ray law's, a retired one, a law's name), a missing key, a wrong
+    kind, a face word the GameBoard lacks, a stamp without its hash; the handed keys unchecked."""
+    good = json.loads((ROOT / "examples/events/dark_body/bright.json").read_text(encoding="utf-8"))
+
+    def refuses(change, match: str) -> None:
+        broken = copy.deepcopy(good)
+        change(broken)
+        with pytest.raises(ValueError, match=match):
+            frame.world(broken)
+
+    for key in ("suspension", "action", "meeting", "massive_rows", "directions", "detector_law", "law"):
+        refuses(
+            lambda d, key=key: d.__setitem__(key, 1), f"the world has unknown keys: {key} \\(the keys: "
+        )
+    refuses(lambda d: d.__setitem__("families", []), "the world has unknown keys: families")
+    for key in ("engine", "measured", "shape", "boundary", "clock_stamp"):
+        refuses(lambda d, key=key: d.pop(key), f"the world lacks keys: {key}")
+    refuses(lambda d: d.__setitem__("shape", [4, 4]), r"the world\.shape must be a list of 3, not of 2")
+    refuses(lambda d: d.__setitem__("ticks", -1), r"the world\.ticks is -1, below its least 0")
+    refuses(lambda d: d.__setitem__("N", 1), r"the world\.N is 1, below its least 2")
+    refuses(
+        lambda d: d.__setitem__("massive_record", 1),
+        r"the world\.massive_record must be true or false, not 1",
+    )
+    refuses(
+        lambda d: d["boundary"].__setitem__("x", "mirror"),
+        r"boundary\.x must be one of \['open', 'periodic', 'closed'\], not 'mirror'",
+    )
+    refuses(
+        lambda d: d.__setitem__("boundary", "closed"), r"the world\.boundary must be one of \['open'\]"
+    )
+    refuses(lambda d: d.__setitem__("stamp", {}), r"the world\.stamp lacks keys: hash")
+    refuses(lambda d: d.__setitem__("probes", [[0, 0]]), r"probes\[0\] must be a list of 3")
+    with pytest.raises(ValueError, match="a world is a JSON object"):
+        frame.world([])
+    handed = copy.deepcopy(good)
+    handed["measured"] = "not checked here"
+    assert frame.world(handed)["measured"] == "not checked here"
 
 
 def test_the_start_file_is_its_mode_and_nothing_else():

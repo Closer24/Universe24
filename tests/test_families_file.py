@@ -225,7 +225,7 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     refused(second, "the world declares node_clock, which the engine never reads")
     ray = json.loads(json.dumps(document))
     ray["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
-    refused(ray, "the world.detector_law is refused: one engine")
+    refused(ray, "the world has unknown keys: detector_law")
     missing = json.loads(json.dumps(document))
     missing["universe"] = "examples/events/nowhere.json"
     refused(missing, "no file at the repository's root")

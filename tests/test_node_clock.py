@@ -286,7 +286,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
         parse_nature_beam_world(document)
     ray = content_chain(12, PERIODIC, [], 1)
     ray["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
-    with pytest.raises(ValueError, match="the world.detector_law is refused: one engine"):
+    with pytest.raises(ValueError, match="the world has unknown keys: detector_law"):
         parse_nature_beam_world(ray)
     zero = content_chain(12, PERIODIC, [], 1)
     zero["node_clock"] = 0
@@ -488,11 +488,11 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     for key, value in (("clock_family", "clicks"), ("charge_family", "charge"), ("charge_strength", 1)):
         retired = json.loads(json.dumps(good))
         retired[key] = value
-        with pytest.raises(ValueError, match=f"{key} is refused: the family genericity"):
+        with pytest.raises(ValueError, match=f"the world has unknown keys: {key}"):
             parse_nature_beam_world(retired)
     ray = json.loads(json.dumps(good))
     ray["detector_law"] = False  # the flag was the law's name: refused by name (9.90 (1))
-    with pytest.raises(ValueError, match="the world.detector_law is refused: one engine"):
+    with pytest.raises(ValueError, match="the world has unknown keys: detector_law"):
         parse_nature_beam_world(ray)
     unread = json.loads(json.dumps(good))
     del unread["universe"][0]["reads"]
