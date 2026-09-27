@@ -92,14 +92,8 @@ def test_the_iteration_stops_at_the_first_repeat_and_gives_the_bound_mode():
 
 
 def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands_beyond_it():
-    """A is never written: the largest amplitude at which Rule3's total stays inside int64 at
-    every content of the region (the body's content, whose |S| is largest, binds it: (M - w)
-    div (6 R + |S| + w) at 3000 per Node, between 2^22 and 2^23 on [800, 1200] at Gamma
-    10^4), rule_total_bound at A inside the width and at A + 1 beyond; the fixed point does
-    not depend on A beyond its resolution: the profile divided to A / 2 is a fixed point of
-    the iteration at A / 2 within one unit (the final scale comes from c T)."""
     """A is the largest amplitude keeping Rule3's total inside int64 (between 2^22 and 2^23 here);
-    at A / 2 the profile agrees with the one at A, rescaled, within five units."""
+    the profile divided to A / 2 is a fixed point of the iteration at A / 2 within one unit."""
     counts = counted_cube(12, 4, 3000)
     amplitude = amplitude_unit(KIND, GAMMA, counts)
     reads, self_coefficient, wall = coefficients(KIND[0], KIND[1], GAMMA, 3000)
