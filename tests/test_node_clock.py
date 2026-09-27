@@ -32,12 +32,11 @@ QUANTA = 250  # the content per Node for e / f = 0.8 at GAMMA
 
 
 def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_e_over_f():
-    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md 9.57 (1); BUILD.md section 26 item 44):
-    on the periodic chain of 12 with QUANTA quanta at every Node, one step of the engine on random rows
-    equals w a_next + r' = R S_6(a_now) + S a_now - w a_before + r in Python integers; with no content
-    the plain rule's levels bit for bit. (ii) THE ROTATION of a uniform record of the matter kind: 2 cos
-    omega' = 2 - (1 + f)(1 - num / den), f = ((Gamma - c) / Gamma)^2 (9.56 (4)): 1.982617 at the pace
-    0.75, 1.977750 in the vacuum, within 10^-5 over 60 intervals; at the pace 1 / 2, 1.986094."""
+    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md 9.57 (1); item 44): on the periodic chain
+    of 12 with QUANTA at every Node, one step of the engine on random rows equals w a_next + r' = R
+    S_6(a_now) + S a_now - w a_before + r in Python integers; with no content the plain rule's levels bit
+    for bit. (ii) THE ROTATION of a uniform record of the matter kind, 2 cos omega' = 2 - (1 + f)(1 - num /
+    den), f = ((Gamma - c) / Gamma)^2: 1.982617 at the pace 0.75, 1.977750 in the vacuum, within 10^-5."""
     rng = np.random.default_rng(11)
     for family, (num, den) in ((0, (1, 1)), (1, PAIR)):
         rows_now = rng.integers(-UNIT, UNIT, size=(12, 1, 1), dtype=np.int64)
@@ -118,17 +117,10 @@ def group_pace_light(k: float, ratio: float) -> float:
 
 
 def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
-    """(iii) THE SLAB: the flux test's Gaussian packet of light (40 Links, k = 0.3024, UNIT) on
-    the open chain of 400 from x = 60, run 400 intervals with and without a slab of 40 Nodes at
-    [150, 190) holding QUANTA quanta each (the pace 0.75 there, item 34): the transmitted packet's
-    centroid (its levels' magnitude beyond the slab, x >= 190) lags the vacuum's by the slab's
-    delay 40 (1 / v' - 1 / v) intervals at the vacuum's pace v, v' the group pace of the slowed
-    dispersion (the pace 0.75 under the fixed wall, item 34: 10.9 intervals, 6.23 Links; read
-    6.16, COMPUTATION), within 15 percent; 0.974 of the packet's energy is beyond the slab
-    in the vacuum run and 0.946 with the slab (the planted packet's own backward part, 2.6
-    percent, returns off the face at x = 0 in both; the slab's faces reflect about three
-    percent at the weak field's index, f = (p / Gamma)^2 = 0.5625); the books' form `record_form` is the same integer to the
-    remainders' jitter (4 x 10^-6 of it) over the passage."""
+    """(iii) THE SLAB: the flux test's Gaussian packet of light (40 Links, k = 0.3024) on the open chain of
+    400, 400 intervals with and without a slab of 40 Nodes at [150, 190) holding QUANTA each: the transmitted
+    packet's centroid lags the vacuum's by the slab's delay 40 (1 / v' - 1 / v) (6.23 Links; read 6.16),
+    within 15 percent; 0.974 of the energy beyond the slab in the vacuum run and 0.946 with it."""
     k = 0.3024
     x = np.arange(400)
     envelope = np.exp(-(((x - 60) / 14.0) ** 2))
@@ -164,17 +156,11 @@ def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
 
 
 def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_content():
-    """(iv) UNDER THE FIXED WALL (BUILD.md section 26 item 34), on the periodic chain of 60 with
-    QUANTA quanta at the Nodes [20, 30), random rows of light and of the matter kind: (a) the
-    engine's `conserved_form` is the form with the pace p_i = Gamma - c_i: 3 L (den / num)
-    Gamma p_i (a^2 + b^2) - 6 L (den / num) p_i c_i a b at the Nodes and L p_i p_j (a_i b_j +
-    a_j b_i) on the Links, exactly (Gamma^2 times the plain form in the vacuum); (b) the
-    share's identity per Node: its change over an interval is L times the currents p_i p_j
-    (now_i before_j - before_i now_j) through its Links plus the remainders' term (L / num)
-    p_i (a_next - a_before) (r - r'), exactly, at the slab's Nodes as in the vacuum; (c) the
-    books' form `record_form` changes by (L / num) SUM p_i (a_next - a_before) (r - r') over 40
-    intervals exactly (L the numerators' lcm); (d) 30 steps then 30 inverse steps return the
-    two levels and the remainders bit for bit."""
+    """(iv) UNDER THE FIXED WALL (BUILD.md section 26 item 34), the periodic chain of 60, QUANTA at [20, 30),
+    random rows: (a) the engine's `conserved_form` is the form at the pace p_i = Gamma - c_i, 3 L (den / num)
+    Gamma p_i (a^2 + b^2) - 6 L (den / num) p_i c_i a b at Nodes and L p_i p_j (a_i b_j + a_j b_i) on Links;
+    (b) a Node's share changes by L times the currents on its Links plus (L / num) p_i (a_next - a_before)
+    (r - r'), exactly; (c) the books' form by that term over 40 intervals; (d) 30 steps back return bit for bit."""
     rng = np.random.default_rng(23)
     simulation = DetectorLawSimulation(
         parse_nature_beam_world(content_chain(60, PERIODIC, range(20, 30), QUANTA))
@@ -253,17 +239,10 @@ def one_node(length: int, i: int) -> np.ndarray:
 
 
 def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it():
-    """(v) `node_clock` is REQUIRED under `detector_law` (a world without it refused naming the
-    key), refused without that law, an integer from 1 (0 refused); the load bound under the
-    clock names the clock and the content: the slab world of (iii) at Gamma = 10^6 (40 bodies
-    of 250000 quanta, M = 2 x 10^7 on the matter pair [800, 809], twice the content for the
-    family of clicks' waves) refused naming Gamma and M; the
-    registered light clock declares 10^6 and loads, its A's clock pair (10^6 - 64, 10^6) at
-    its Nodes and (10^6, 10^6) in the vacuum under the fixed wall (item 34; the pair a record
-    of the matter kind reads, its charge 0, item 35), its wheel at
-    A's centre Node the rule's with the stock (4171875 on [800, 801], the remainder's step
-    576, COMPUTATION), the kind's own 2427 on [800, 809] in the vacuum beside it (the step
-    Gamma)."""
+    """(v) `node_clock` is REQUIRED under `detector_law` (refused without it by name, an integer from 1); the
+    load bound names the clock and the content (the slab of (iii) at Gamma = 10^6 refused naming Gamma and
+    M); the registered light clock declares 10^6 and loads, A's clock pair (10^6 - 64, 10^6) at its Nodes
+    and (10^6, 10^6) in the vacuum, its wheel 4171875 on [800, 801] (the step 576), the kind's own 2427."""
     document = content_chain(12, PERIODIC, [], 1)
     del document["node_clock"]
     with pytest.raises(ValueError, match="node_clock is required: Gamma"):
@@ -313,17 +292,10 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
 
 
 def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
-    """(vi) On the emitter world (the stock 4 at [5, 37), the screen the cube of light bodies at
-    [70, 72] whose first body takes the clicks' quanta): the content at the body's centre Node
-    (x = 21) is 4 at the load and falls by one at each giving (the giving line's `content` the
-    value the clicking record was advanced under, 4, 3, 2, 1, and its `node_clock` [Gamma -
-    content, Gamma]; the given record's wheel the rule's at that content); the content at the
-    screen's first body (x = 70) is 1 at the load and rises by one at the interval after each
-    gather line there (the click's quantum held by the body); the vacuum between them 0 at
-    the load and at x = 50 until the family of clicks' front from the body's head arrives
-    (14 Links at one Link per interval, ALGEBRA.md 9.44 (3)), then the family's waves and the
-    rounding's walk of the plain step at these unit levels (at most 9 read on this head, far
-    below Gamma); the books balanced at every interval."""
+    """(vi) On the emitter world (the stock 4 at [5, 37), the screen at [70, 72]): the content at the body's
+    centre is 4 at the load and falls by one at each giving (the giving line's `content` and `node_clock`);
+    at the screen's first body 1, rising by one after each gather line; the vacuum 0 until the clicks' front
+    comes (14 Links at one per interval), then the waves; the books balanced."""
     document = emitter_world(stock=4)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
@@ -372,18 +344,10 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
 
 
 def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_elsewhere():
-    """(vii) THE FAMILY OF CLICKS (the model owner's record 1982; ALGEBRA.md 9.41 (3), 9.44 (3),
-    9.45): on the open chain of 200 with a body of QUANTA quanta at every Node of [90, 110)
-    (light bodies), the clock record's level is the content at the bodies' Nodes at both
-    levels with the remainder 0 at the load and after every interval (the hold, not the
-    step's own there), and 0 elsewhere at the load; THE FRONT: nothing before the lattice cone
-    of one Link per interval (the level at x = 60, 30 Links from the body's edge, is 0 through
-    interval 29) and the family's long waves at the pace 1 / sqrt 3 of light's pair on a
-    chain (the level at x = 60 nonzero by interval 70; read 50 to 60, COMPUTATION), the field
-    never above twice the content anywhere (the wave off the zero face doubles at most); the
-    books' `form` of the
-    family of clicks is its own record's plain form, and the state carries its rows. The
-    edge case: a world with no content anywhere keeps the family at 0 for ever."""
+    """(vii) THE FAMILY OF CLICKS (record 1982; ALGEBRA.md 9.41 (3), 9.44 (3), 9.45): on the open chain of
+    200 with light bodies of QUANTA at [90, 110), the clock record's level is the content at the bodies'
+    Nodes with the remainder 0 (the hold) and 0 elsewhere at the load; THE FRONT: nothing before the cone of
+    one Link per interval, the long waves at the pace 1 / sqrt 3, the field never above twice the content."""
     document = content_chain(200, CHAIN, range(90, 110), QUANTA)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     clock = simulation.held_records[2]
@@ -420,16 +384,10 @@ def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_el
 
 
 def test_the_joint_step_inverts_bit_for_bit_wherever_the_clock_falls():
-    """(viii) THE EXACT BACKWARD RUN EVERYWHERE (the model owner's record 1994 and his word of
-    2026-09-25; BUILD.md section 26 item 34): on the periodic chain of 60 with a body of QUANTA
-    quanta at [20, 30) and a light record of random rows registered (no detector set and no
-    face: nothing clicks), the family of clicks' field rises and FALLS at Nodes over 30
-    intervals (the falls counted, above 0), and the joint step inverts bit for bit, the
-    record's two levels and remainders and the family's own field, over the whole run: the
-    wall 3 den Gamma is the same at every interval, so the remainder's range never shrinks
-    and no two states merge (the loss of item 32's finding A, where the wall 3 den (Gamma +
-    c) shrank, HISTORY). The edge case: the field did move (the end state differs from the
-    start before the inverse)."""
+    """(viii) THE EXACT BACKWARD RUN EVERYWHERE (record 1994; item 34): the periodic chain of 60 with a body
+    of QUANTA at [20, 30) and a light record of random rows: the clicks' field rises and falls at Nodes
+    over 30 intervals, and the joint step inverts bit for bit, the wall 3 den Gamma the same at every
+    interval so no two states merge. The edge case: the field did move."""
     rng = np.random.default_rng(31)
     now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
@@ -456,12 +414,11 @@ def test_the_joint_step_inverts_bit_for_bit_wherever_the_clock_falls():
 
 
 def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_cannot_be():
-    """(ix) THE FAMILY GENERICITY (record 2066; item 51): the family whose level is the Node clock is the
-    one declaring `held: "content"`, no world key, no name in the engine; refused by name: the retired
-    world keys, a held family with a quantum other than 1, a clock of its own or a charge, two families
-    holding the content, a read naming a family not held or none, a family without `reads` under the law,
-    a measured event of a held family, `held` naming it, an emitter given into it, six families (the cap
-    of twenty, record 2081); a world with the family declared loads, its index among the held."""
+    """(ix) THE FAMILY GENERICITY (record 2066; item 51): the family whose level is the Node clock is the one
+    declaring `held: "content"`, no world key, no name in the engine; refused by name: the retired world
+    keys, a held family with a quantum other than 1, a clock or a charge, two families holding the content,
+    a read naming a family not held or none, no `reads`, a measured event of a held family, `held` naming
+    it, an emitter given into it, six families (record 2081)."""
     good = content_chain(12, PERIODIC, [], 1)
     parse_nature_beam_world(good)
     for key, value in (("clock_family", "clicks"), ("charge_family", "charge"), ("charge_strength", 1)):
