@@ -268,20 +268,29 @@ def bound_mode(
 
 
 def moving_mode(
-    counts: np.ndarray, pair: Pair, gamma: int, triple: Triple, wrap: Wrap = PERIODIC
+    counts: np.ndarray,
+    pair: Pair,
+    gamma: int,
+    triple: Triple,
+    wrap: Wrap = PERIODIC,
+    content: np.ndarray | None = None,
 ) -> MovingMode:
-    """The bound mode of the count's well moving along x at the rotation k per Link, at the derived amplitude unit: the same iteration as at rest with the twisted read act, from a flat start, each iterate mirrored (the real part even and the imaginary part odd about the centre, the envelope's one gauge, two division acts), the stop at the first repeat of the two parts; at the triple (1, 0, 1) it is the resting mode (ALGEBRA.md 9.120 item 4 (e))."""
+    """The bound mode of the well moving along x at the rotation k per Link, at the derived amplitude unit: the same iteration as at rest with the twisted read act, from a flat start, each iterate mirrored (the real part even and the imaginary part odd about the centre, the envelope's one gauge, two division acts), the stop at the first repeat of the two parts; at the triple (1, 0, 1) it is the resting mode; the well the content at every Node, the field at rest where given (ALGEBRA.md #the-generator (e), (g))."""
     check_counts(counts, gamma)
+    if content is None:
+        content = counts
+    else:
+        check_counts(content, gamma)
     if triple[2] < 1 or triple[0] ** 2 + triple[1] ** 2 != triple[2] ** 2:
         raise ValueError(
             f"the rotation per Link {triple} is no Pythagorean triple: c from 1 and a^2 + b^2 = c^2"
         )
-    if not np.array_equal(counts, counts[::-1]):
+    if not np.array_equal(content, content[::-1]):
         raise ValueError(
-            "the moving body's counts are mirrored along x about the box's centre (the gauge of its envelope)"
+            "the moving body's well is mirrored along x about the box's centre (the gauge of its envelope)"
         )
-    amplitude = amplitude_unit(pair, gamma, counts)
-    read, self_coefficient, wall = rule_integers(pair, gamma, counts)
+    amplitude = amplitude_unit(pair, gamma, content)
+    read, self_coefficient, wall = rule_integers(pair, gamma, content)
     re = np.full(counts.shape, amplitude, dtype=np.int64)
     im = np.zeros(counts.shape, dtype=np.int64)
     seen: dict[bytes, int] = {}
@@ -302,7 +311,7 @@ def moving_mode(
         rule3(reads, arrivals_im, self_coefficient, 1, levels[1], 0, 0)[0],
     )
     rotation, share = rotation_and_share(
-        levels, totals, wall, counts, gamma, pair, f"moving mode at {triple}"
+        levels, totals, wall, counts, gamma, pair, f"moving mode at {triple}", content
     )
     return MovingMode(re, im, amplitude, step, step - seen[re.tobytes() + im.tobytes()], rotation, share)
 

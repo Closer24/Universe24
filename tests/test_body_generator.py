@@ -235,7 +235,8 @@ def test_the_field_at_rest_is_the_static_line_and_the_mode_sits_on_it():
     field of [1, 1] is the exact ramp 700, 600, ..., 100 (a fixed point), of [1, 2] the fall 89, 11, 1, 0
     per Link; in the periodic box of 8 the field of [1, 1] fills to the count everywhere (no well: the mode
     is refused by name), on the open box the harmonic well with the mode on it above the band; of [1, 4]
-    the well 3000, 138, 0 and the mode within 2 x 10^-3 of the counts' own; den below num refused."""
+    the well 3000, 138, 0, the mode within 2 x 10^-3 of the counts' own and the moving mode at (1, 0, 1) on
+    it the resting one; den below num refused."""
     chain = np.zeros((13, 1, 1), dtype=np.int64)
     chain[6] = 700
     ramp = field_at_rest(chain, (1, 1), OPEN)
@@ -259,3 +260,7 @@ def test_the_field_at_rest_is_the_static_line_and_the_mode_sits_on_it():
     assert abs(rotation - bound_mode(box, KIND, GAMMA).rotation) < Fraction(2, 1000)
     with pytest.raises(ValueError, match="num from 1 and den from num"):
         field_at_rest(box, (2, 1))
+    still = moving_mode(box, KIND, GAMMA, AT_REST, content=short)
+    assert still.rotation == rotation and np.array_equal(
+        still.re, bound_mode(box, KIND, GAMMA, content=short).profile
+    )
