@@ -1,17 +1,18 @@
-"""The documents that are rendered from the tree, never written by hand (the owner, 2026-09-27).
+"""The sections of docs/ENGINE.md rendered from the tree, never written by hand (the owner, 2026-09-27).
 
-Two pages are rendered into docs/generated/ and compared by tests/test_documents.py on every
-pull request: FILES.md, the keys of the run's files from the frame's schemas and the folders'
-cards; STATUS.md, the primitives from the register, the step file's acts, the expected failures
-of the tests with their reasons, the owners' map and the shipped worlds. Two pages are rendered
-on demand from git and printed: the history (every commit on the first parent of the branch, by
-day) and the decisions (each line of HIGHLIGHTS.md with the date of its last change). The same
-module checks the hand-written documents against the tree: every path a document cites in
-backticks exists, and a decision line naming a path that does not exist says "ahead of the tree".
+Two sections of docs/ENGINE.md are rendered between marker comments and compared by
+tests/test_documents.py on every pull request: the run's files, key by key, from the frame's
+schemas and the folders' cards; the state of the engine, the primitives from the register, the
+step file's acts, the expected failures of the tests with their reasons, the owners' map and the
+shipped worlds. Two pages are rendered on demand from git and printed: the history (every commit
+on the first parent of the branch, by day) and the decisions (each line of HIGHLIGHTS.md with the
+date of its last change). The same module checks the hand-written documents against the tree:
+every path a document cites in backticks exists, and a decision line naming a path that does not
+exist says "ahead of the tree".
 
-    PYTHONPATH=src python tools/render_documents.py            # write docs/generated/
-    PYTHONPATH=src python tools/render_documents.py --check    # the documents against the tree
-    PYTHONPATH=src python tools/render_documents.py --history  # the history, printed
+    PYTHONPATH=src python tools/render_documents.py --render    # write the sections into docs/ENGINE.md
+    PYTHONPATH=src python tools/render_documents.py --check     # the documents against the tree
+    PYTHONPATH=src python tools/render_documents.py --history   # the history, printed
     PYTHONPATH=src python tools/render_documents.py --decisions
 """
 
@@ -46,7 +47,6 @@ from event_universe.loader import cards, frame
 from event_universe.world_files import input_digest
 
 ROOT = Path(__file__).resolve().parents[1]
-GENERATED = ROOT / "docs" / "generated"
 HAND_WRITTEN = (
     "docs/ALGEBRA.md",
     "docs/ENGINE.md",
@@ -66,7 +66,12 @@ AHEAD = "ahead of the tree"
 CITED = re.compile(r"`([^`\n]+)`")
 PATH_TOKEN = re.compile(r"[\w./-]+")
 LINE_SUFFIX = re.compile(r":\d+(?:-\d+)?$")
-HEADER = "<!-- rendered by tools/render_documents.py from the tree; do not edit by hand -->\n"
+START = "<!-- generated: {name} -->"
+END = "<!-- end -->"
+# the lock keeps these out of the three documents; a reason's clause carrying one is dropped
+HISTORY = re.compile(
+    r"\b(?:superseded|previously|HISTORY|records? \d{3,4}|was replaced)\b", re.IGNORECASE
+)
 
 
 def kind_text(kind: Kind) -> str:
@@ -131,19 +136,19 @@ def object_rows(shape: ObjectOf, owners: dict[str, str] | None = None) -> list[t
     return rows
 
 
-def files_page() -> str:
-    """FILES.md: the keys of the run's files from the schemas and the cards."""
+def files_section() -> str:
+    """Section 8: the keys of the run's files from the schemas and the cards."""
     register = discover()
     owners = cards.owners(register)["a family's entry"]
     keys = ("key", "required", "kind")
     out = [
-        HEADER,
-        "# The run's files, key by key\n",
-        "The kinds are the frame's schemas (`src/event_universe/loader/frame.py`) and the folders'"
-        " cards; a key the frame does not name and no card declares is refused by name. The rules"
-        " between keys (a key admitted only with another) stay in the loader's prose"
-        " (docs/ENGINE.md, section 4).\n",
-        "## The world file\n",
+        "## 8. The run's files, key by key\n",
+        "Rendered by `tools/render_documents.py` from the frame's schemas"
+        " (`src/event_universe/loader/frame.py`), the folders' cards and the shipped output; a hand"
+        " edit fails the documents gate. A key the frame does not name and no card declares is"
+        " refused by name; the rules between keys (a key admitted only with another) stay in"
+        " section 4.\n",
+        "### The world file\n",
         table(keys, object_rows(frame.WORLD)),
         "\nHanded on as written to their readers, once the world's own keys are checked:\n",
         table(
@@ -156,15 +161,15 @@ def files_page() -> str:
                 ("`twist_table`", "optional", "an inline world's twist table, the universe file's form"),
             ],
         ),
-        "\n### A body by its position (today's form)\n",
+        "\n#### A body by its position (today's form)\n",
         table(keys, object_rows(frame.BODY)),
-        "\n### A body's emitter\n",
+        "\n#### A body's emitter\n",
         table(keys, object_rows(frame.EMITTER)),
-        "\n### A body by its Nodes (the law's form)\n",
+        "\n#### A body by its Nodes (the law's form)\n",
         table(keys, object_rows(frame.COUNTED)),
-        "\n### A detector\n",
+        "\n#### A detector\n",
         table(keys, object_rows(frame.DETECTOR)),
-        "\n### A reading\n",
+        "\n#### A reading\n",
         "Every reading has a `name` and a `kind`; the kind takes its own keys"
         " (`src/event_universe/core/readings.py`).\n",
         table(
@@ -174,25 +179,25 @@ def files_page() -> str:
                 for kind, (label, keys) in READING_KINDS.items()
             ],
         ),
-        "\n## The universe file\n",
+        "\n### The universe file\n",
         f"Two keys: {', '.join(f'`{key}`' for key in frame.UNIVERSE_KEYS)}.\n",
-        "\n### The integers\n",
+        "\n#### The integers\n",
         table(keys, object_rows(frame.INTEGERS)),
-        "\n### A family's entry\n",
+        "\n#### A family's entry\n",
         "Each key beyond the frame's is one folder's, declared on its card.\n",
         table(keys + ("declared by",), object_rows(frame.entry_kind(register), owners)),
-        "\n## The start file\n",
+        "\n### The start file\n",
         table(keys, object_rows(frame.START)),
-        "\n## The step file\n",
+        "\n### The step file\n",
         f"`{STEP_FILE}`: an object with the one key `interval`, a list of acts, each"
         " `[place, name]` or `[place, name, words]`, a primitive's name at its declared place with"
         " the words of its call; a name has one place; no act twice. The acts as the file lists"
-        " them today are in STATUS.md.\n",
-        "\n## The pins file\n",
+        " them today are in section 9.\n",
+        "\n### The pins file\n",
         "An object keyed by the input's file stem; each pin has a `detector`, one of `count`,"
         " `first_click` or `mean_interval`, and a `band`; passed to `tools/run_inputs.py` with"
         " `--pins`, refused under the mode `check`, required under `pin`.\n",
-        "\n## The output file\n",
+        "\n### The output file\n",
         output_section(),
     ]
     return "\n".join(out)
@@ -238,8 +243,8 @@ def how_it_runs(declaration: Declaration) -> str:
     return "not built"
 
 
-def status_page() -> str:
-    """STATUS.md: the primitives, the step file's acts, the expected failures, the owners, the shipped worlds."""
+def state_section() -> str:
+    """Section 9: the primitives, the step file's acts, the expected failures, the owners, the shipped worlds."""
     register = discover()
     owners = cards.owners(register)
     keys_of: dict[str, list[str]] = {name: [] for name in register.names}
@@ -278,9 +283,11 @@ def status_page() -> str:
     owners_map = json.loads((ROOT / "tools" / "owners.json").read_text(encoding="utf-8"))
     record = json.loads((ROOT / "tests" / "shipped_worlds.json").read_text(encoding="utf-8"))
     out = [
-        HEADER,
-        "# The state of the engine\n",
-        "## The primitives\n",
+        "## 9. The state of the engine\n",
+        "Rendered by `tools/render_documents.py` from the register, `law/step.json`, the tests'"
+        " marks, `tools/owners.json` and `tests/shipped_worlds.json`; a hand edit fails the"
+        " documents gate.\n",
+        "### The primitives\n",
         f"{len(register.names)} folders under `src/event_universe/features/`: {len(built)} built,"
         f" {len(own)} of them running their own code; {len(register.names) - len(built)} not built."
         " The register reads every card at load; a term of the files naming an unbuilt primitive is"
@@ -296,14 +303,14 @@ def status_page() -> str:
             ),
             rows,
         ),
-        "\n## The step file's acts\n",
+        "\n### The step file's acts\n",
         f"`{STEP_FILE}`, digest `{step.digest}` (written into every output as `step.hash`):"
         f" {len(step.acts)} acts, of which {sum(1 for a in acts if a[4] == 'yes')} are built and walked.\n",
         table(("#", "place", "primitive", "words", "built"), acts),
-        "\n## The expected failures\n",
+        "\n### The expected failures\n",
         "Each mark names what the tree does not do yet; it comes off when the cut lands.\n",
         table(("test", "reason"), expected_failures()),
-        "\n## The owners\n",
+        "\n### The owners\n",
         f"One owner per area (`tools/owners.json`); the arbiter is {owners_map['arbiter']}.\n",
         table(
             ("owner", "areas"),
@@ -312,7 +319,7 @@ def status_page() -> str:
                 for owner, entry in owners_map["owners"].items()
             ],
         ),
-        "\n## The shipped worlds\n",
+        "\n### The shipped worlds\n",
         f"{len(record['worlds'])} worlds under `examples/events/`, each replayed bit for bit on"
         " every pull request that runs a world (`tests/shipped_worlds.json`).\n",
         table(
@@ -349,12 +356,13 @@ def expected_failures() -> list[tuple[str, ...]]:
 
 
 def reason_text(node: ast.expr | None) -> str:
-    """A reason's literal text, the constant parts of an f-string kept."""
+    """A reason's literal text, its clauses naming a record dropped (the lock keeps them out of the three)."""
     if node is None:
         return ""
     parts = [node] if not isinstance(node, ast.JoinedStr) else list(node.values)
-    text = "".join(str(part.value) for part in parts if isinstance(part, ast.Constant))
-    text = " ".join(text.split())
+    text = " ".join("".join(str(p.value) for p in parts if isinstance(p, ast.Constant)).split())
+    clauses = [clause.strip() for clause in re.split(r"(?<=[:;]) ", text)]
+    text = " ".join(clause for clause in clauses if clause and not HISTORY.search(clause))
     return text if len(text) <= 160 else text[:157] + "..."
 
 
@@ -432,12 +440,9 @@ def resolves(root: Path, token: str) -> bool:
 
 
 def documents_to_check(root: Path) -> list[str]:
-    """The hand-written documents, the skills and the generated pages."""
+    """The hand-written documents and the skills."""
     skills = sorted(p.relative_to(root).as_posix() for p in (root / "skills").rglob("*.md"))
-    generated = sorted(
-        p.relative_to(root).as_posix() for p in (root / "docs" / "generated").glob("*.md")
-    )
-    return [*HAND_WRITTEN, *skills, *generated]
+    return [*HAND_WRITTEN, *skills]
 
 
 def missing_paths(root: Path) -> list[str]:
@@ -467,23 +472,45 @@ def unmarked_decisions(root: Path) -> list[str]:
 
 
 def rendered() -> dict[str, str]:
-    """The two generated pages by name."""
-    return {"FILES.md": files_page(), "STATUS.md": status_page()}
+    """The two generated sections of docs/ENGINE.md by name."""
+    return {"the run's files": files_section(), "the state of the engine": state_section()}
 
 
-def stale_pages(root: Path) -> list[str]:
-    """The generated pages whose committed text differs from the render."""
-    found = []
+def section_text(document: str, name: str) -> str | None:
+    """The text between the section's markers in `document`; None where a marker is absent."""
+    _, found, rest = document.partition(START.format(name=name))
+    body, closed, _ = rest.partition(END)
+    return body if found and closed else None
+
+
+def stale_sections(root: Path) -> list[str]:
+    """The generated sections of docs/ENGINE.md whose text differs from the render."""
+    document = (root / "docs" / "ENGINE.md").read_text(encoding="utf-8")
+    return [name for name, text in rendered().items() if section_text(document, name) != "\n" + text]
+
+
+def write_sections(root: Path) -> None:
+    """The generated sections written into docs/ENGINE.md in place, appended where a marker is absent."""
+    path = root / "docs" / "ENGINE.md"
+    document = path.read_text(encoding="utf-8")
     for name, text in rendered().items():
-        path = root / "docs" / "generated" / name
-        if not path.exists() or path.read_text(encoding="utf-8") != text:
-            found.append(name)
-    return found
+        start = START.format(name=name)
+        block = f"{start}\n{text}{END}\n"
+        if start in document:
+            head, _, rest = document.partition(start)
+            _, _, tail = rest.partition(END + "\n")
+            document = head + block + tail
+        else:
+            document = document.rstrip("\n") + "\n\n" + block
+    path.write_text(document, encoding="utf-8")
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "--render", action="store_true", help="write the two generated sections into docs/ENGINE.md"
     )
     parser.add_argument(
         "--check", action="store_true", help="the documents against the tree; exit 1 on a finding"
@@ -499,14 +526,18 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if arguments.check:
         findings = [*missing_paths(ROOT), *unmarked_decisions(ROOT)]
-        findings += [f"docs/generated/{name} differs from the render" for name in stale_pages(ROOT)]
+        findings += [
+            f"docs/ENGINE.md: the section '{name}' differs from the render"
+            for name in stale_sections(ROOT)
+        ]
         print("\n".join(findings) if findings else "the documents match the tree")
         return 1 if findings else 0
-    GENERATED.mkdir(parents=True, exist_ok=True)
-    for name, text in rendered().items():
-        (GENERATED / name).write_text(text, encoding="utf-8")
-        print(f"wrote docs/generated/{name}")
-    return 0
+    if arguments.render:
+        write_sections(ROOT)
+        print("wrote the two generated sections into docs/ENGINE.md")
+        return 0
+    parser.print_help()
+    return 2
 
 
 if __name__ == "__main__":

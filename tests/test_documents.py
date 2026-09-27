@@ -1,4 +1,4 @@
-"""The document lock: only the three, the skills, the entry files and the rendered pages exist; each of the three stays under its cap with no history marker; the rendered pages equal the render and every cited path exists."""
+"""The document lock: only the three, the skills and the entry files exist; each of the three stays under its cap with no history marker; ENGINE.md's rendered sections equal the render and every cited path exists."""
 
 from __future__ import annotations
 
@@ -13,10 +13,10 @@ ROOT = Path(__file__).resolve().parents[1]
 RENDER = load_file("render_documents", ROOT / "tools" / "render_documents.py")
 THE_THREE = ("docs/ALGEBRA.md", "docs/ENGINE.md", "docs/HIGHLIGHTS.md")
 ENTRY_FILES = ("README.md", "AGENTS.md", "CONTRIBUTING.md")
-ALLOWED_FOLDERS = ("skills/", "paper/", "docs/generated/")  # the skills, the paper, the rendered pages
+ALLOWED_FOLDERS = ("skills/", "paper/")  # the skills' pages and the paper's own folder
 CAPS = {
     "docs/ALGEBRA.md": 718,
-    "docs/ENGINE.md": 200,
+    "docs/ENGINE.md": 520,
     "docs/HIGHLIGHTS.md": 100,
 }  # lines, each of the three
 SKIPPED = set(".git .venv venv node_modules __pycache__ .pytest_cache artifacts runs".split())
@@ -39,7 +39,7 @@ def markdown_files(root: Path) -> list[str]:
 
 
 def unexpected_documents(root: Path) -> list[str]:
-    """Every markdown file that is none of the three, the entry files, a skill's page or a rendered page."""
+    """Every markdown file that is none of the three, the entry files or a skill's page."""
     allowed = set(THE_THREE) | set(ENTRY_FILES)
     return [
         rel for rel in markdown_files(root) if rel not in allowed and not rel.startswith(ALLOWED_FOLDERS)
@@ -74,7 +74,7 @@ def history_markers(root: Path, documents: tuple[str, ...]) -> list[str]:
     return found
 
 
-def test_a_only_the_three_the_skills_the_entry_files_and_the_rendered_pages_exist():
+def test_a_only_the_three_the_skills_and_the_entry_files_exist():
     assert unexpected_documents(ROOT) == []
 
 
@@ -88,9 +88,9 @@ def test_c_the_three_hold_no_history_marker(document: str):
     assert history_markers(ROOT, (document,)) == []
 
 
-def test_d_the_rendered_pages_equal_the_tree_and_every_cited_path_exists():
-    """docs/generated/ is what tools/render_documents.py renders from the tree now; every path a document or a skill cites in backticks exists; a decision line naming an absent path says so."""
-    assert RENDER.stale_pages(ROOT) == []
+def test_d_the_rendered_sections_equal_the_tree_and_every_cited_path_exists():
+    """ENGINE.md's sections 8 and 9 are what tools/render_documents.py renders from the tree now; every path a document or a skill cites in backticks exists; a decision line naming an absent path says so."""
+    assert RENDER.stale_sections(ROOT) == []
     assert RENDER.missing_paths(ROOT) == []
     assert RENDER.unmarked_decisions(ROOT) == []
 
@@ -112,7 +112,6 @@ def test_each_gate_fails_on_a_small_tree(tmp_path):
             "docs/HIGHLIGHTS.md": "# The decisions\n",
             "README.md": "# Entry\n",
             "skills/workflow.md": "# The workflow\n",
-            "docs/generated/FILES.md": "# Rendered\n",
         },
     )
     assert unexpected_documents(root) == []
@@ -128,6 +127,8 @@ def test_each_gate_fails_on_a_small_tree(tmp_path):
         },
     )
     assert unexpected_documents(root) == ["docs/OLD_PLAN.md"]
+    marked = "a\n<!-- generated: x -->\nT\n<!-- end -->\n"
+    assert RENDER.section_text(marked, "x") == "\nT\n" and RENDER.section_text("a\n", "x") is None
     assert history_markers(root, ("docs/ENGINE.md",)) == [
         "docs/ENGINE.md:2 'record 2251'",
         "docs/ENGINE.md:3 'HISTORY'",

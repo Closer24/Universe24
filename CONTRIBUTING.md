@@ -42,7 +42,7 @@ the short procedure of [the shared workflow](skills/workflow.md).
    physics folder or `core/`; everything else merges on green CI. Every result names
    the `main` commit it ran on; there are no tags.
 8. One owner per area (`tools/owners.json`; the map is rendered in
-   [docs/generated/STATUS.md](docs/generated/STATUS.md)): a pull request that
+   [docs/ENGINE.md](docs/ENGINE.md#9-the-state-of-the-engine)): a pull request that
    touches another owner's area carries that owner's line
    `HANDED BY <owner>: <files>` in its body, the Boss's line covering any area;
    `tests/test_ownership.py` refuses it otherwise. A path in no area is free.
@@ -60,11 +60,13 @@ the short procedure of [the shared workflow](skills/workflow.md).
   changes; a finding or approval of one pull request is a comment on it; a list
   across pull requests is one issue with a checklist.
 - A document cites a path in backticks only where the tree holds it; a decision
-  ahead of the tree says "ahead of the tree" on its line. The pages under
-  `docs/generated/` are rendered, never edited: after a change to a schema, a
-  card, the step file, the owners' map, the shipped worlds or an expected
-  failure, run `PYTHONPATH=src python tools/render_documents.py` and commit the
-  pages; `--check` lists what the documents cite and the tree lacks.
+  ahead of the tree says "ahead of the tree" on its line. Sections 8 and 9 of
+  `docs/ENGINE.md`, between `<!-- generated: ... -->` and `<!-- end -->`, are
+  rendered, never edited: after a change to a schema, a card, the step file, the
+  owners' map, the shipped worlds or an expected failure, run
+  `PYTHONPATH=src python tools/render_documents.py --render` and commit the
+  document; `--check` compares the sections and lists what the documents cite
+  and the tree lacks.
 - Write all comments, docstrings and documents in English under the rule in
   [AGENTS.md](AGENTS.md#repository-language-english); translate prose from older
   branches before integration.
