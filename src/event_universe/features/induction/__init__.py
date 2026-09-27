@@ -93,7 +93,12 @@ def apply(start: InductionStart, own: InductionOwn) -> InductionWrites:
 DECLARATION = Declaration(
     name="the induction",
     place="(v)",
-    reads=("the momentum part of the contraction at the body's Node this interval and the last",),
+    reads=(
+        "the momentum part of the contraction at the body's Node this interval and the last",
+        "n now and n before",
+        "W",
+        "Gamma",
+    ),
     writes=("a body's momentum n", "a body's remainders"),
     function=None,
     section="9.117 item 2; 9.78 (4); 9.91 (8) (v)",

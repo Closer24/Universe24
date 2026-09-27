@@ -141,7 +141,12 @@ def apply(start: FeedStart, own: FeedOwn) -> FeedWrites:
 DECLARATION = Declaration(
     name="the feed",
     place="(v)",
-    reads=("the paces at the two faces of each axis of the body's Node (the contraction)", "n", "W"),
+    reads=(
+        "the paces at the two faces of each axis of the body's Node (the contraction)",
+        "n now and n before",
+        "W",
+        "Gamma",
+    ),
     writes=("a body's momentum n", "a body's remainders"),
     function=None,
     section="9.117 item 2; 9.78 (4); 9.91 (8) (v)",
