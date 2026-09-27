@@ -25,15 +25,15 @@ from tools.body_generator import (
     conserved_form,
     field_at_rest,
     generate,
-    moving_levels,
+    moving_body,
     moving_mode,
+    packet_current,
     period_by_the_rule,
     read_act,
-    rotated,
     rule_integers,
     scaled_to_norm,
     to_amplitude,
-    twisted_arrivals,
+    triple_of,
     two_levels,
 )
 
@@ -152,20 +152,9 @@ def test_the_two_levels_and_the_amplitude_from_the_count_and_the_norm():
     assert scaled_now.dtype == np.int64 and scaled_before.dtype == np.int64
 
 
-def envelope_times_sine(mode, triple: tuple[int, int, int]) -> np.ndarray:
-    """The quarter-turned part of the moving levels, the envelope times sin(k x) by the rotation act."""
-    out = np.empty_like(mode.re)
-    phase_re = np.full(mode.re.shape[1:], mode.amplitude, dtype=np.int64)
-    phase_im = np.zeros(mode.re.shape[1:], dtype=np.int64)
-    for x in range(mode.re.shape[0]):
-        out[x] = (mode.re[x] * phase_im + mode.im[x] * phase_re) // mode.amplitude
-        phase_re, phase_im = rotated(phase_re, phase_im, triple, 1)
-    return out
-
-
 def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
-    """At (1, 0, 1) the moving iteration is the resting mode bit for bit; at (99, 20, 101) an eigenvector
-    of the untwisted rule to 10^-4, and one step of Rule3 rotates its two levels."""
+    """At (1, 0, 1) the twisted iteration is the resting mode bit for bit and at (99, 20, 101) its rotation within
+    the rest's (the gauge); the moving body of (e): the packet's velocity bisected to the named one, both senses."""
     counts = counted_cube(12, 4, 3000)
     rest = bound_mode(counts, KIND, GAMMA)
     still = moving_mode(counts, KIND, GAMMA, AT_REST)
@@ -179,33 +168,21 @@ def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
     assert Fraction(2 * KIND[0], KIND[1]) < moving.rotation < long_rest.rotation
     # the stop is a two-cycle of the rounding: one more iteration returns a profile one unit away at most
     assert moving.cycle == 2
-    read, self_coefficient, wall = rule_integers(KIND, GAMMA, long_counts)
-    again = to_amplitude(
-        read_act(
-            (moving.re, moving.im),
-            twisted_arrivals(moving.re, moving.im, triple, PERIODIC),
-            read,
-            self_coefficient,
-            wall,
-        ),
-        moving.amplitude,
+    # (e): the moving body is the rest mode with the phase k per Link; its velocity (the current over the form)
+    # rises with j, the bisection finds the named one within the pair's resolution, the sense the momentum's sign
+    quanta, unit = int(long_counts.sum()), 64
+    moved = moving_body(long_counts, KIND, GAMMA, 3 * unit * quanta // 20, unit, 1024, rest=long_rest)
+    assert moved.named == Fraction(1, 20) and moved.pair[0] == 1024 and 0 < moved.pair[1] < 1024
+    assert abs(moved.velocity - moved.named) < Fraction(1, 1000) and moved.triple == triple_of(
+        moved.pair
     )
-    again = (again[0] + again[0][::-1]) // 2, (again[1] - again[1][::-1]) // 2
-    assert int(np.abs(again[0] - moving.re).max()) <= 1 and int(np.abs(again[1] - moving.im).max()) <= 1
-    assert Fraction(70, 100) < moving.share_inside < Fraction(80, 100)
-    now, before = moving_levels(moving, triple)
-    read, self_coefficient, wall = rule_integers(KIND, GAMMA, long_counts)
-    acted = read_act((now,), (arrivals(now, PERIODIC),), read, self_coefficient, wall)[0].astype(float)
-    inner = slice(2, 22)
-    scale = float(moving.rotation)
-    assert np.linalg.norm(acted[inner] - scale * now[inner]) < 1e-4 * np.linalg.norm(now[inner])
-    stepped = ((read * sum(arrivals(now, PERIODIC)) + self_coefficient * now) // wall - before).astype(
-        float
-    )
-    cosine = scale / 2
-    sine = math.sqrt(1 - cosine * cosine)
-    expected = cosine * now + sine * envelope_times_sine(moving, triple)
-    assert np.linalg.norm(stepped[inner] - expected[inner]) < 1e-4 * np.linalg.norm(now[inner])
+    assert packet_current(moved.now, moved.before, KIND[0], PERIODIC) > 0
+    back = moving_body(long_counts, KIND, GAMMA, -3 * unit * quanta // 20, unit, 1024, rest=long_rest)
+    assert back.triple[1] < 0 and abs(back.velocity + moved.named) < Fraction(1, 1000)
+    still_body = moving_body(long_counts, KIND, GAMMA, 0, unit, 1024, rest=long_rest)
+    assert still_body.pair == (1024, 0) and np.array_equal(still_body.now, long_rest.profile)
+    with pytest.raises(ValueError, match="beyond the packet's"):
+        moving_body(long_counts, KIND, GAMMA, 3 * unit * quanta, unit, 1024, rest=long_rest)
     with pytest.raises(ValueError, match="no Pythagorean triple"):
         moving_mode(counts, KIND, GAMMA, (3, 3, 5))
     asymmetric = counted_cube(12, 4, 3000)
@@ -231,7 +208,9 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
         row("charge", [1, 1], {"count": "sign"}, []),
     ]
     families += [row("matter", list(KIND), None, reads), row("light", "body", None, [])]
-    (tmp_path / "universe.json").write_text(json.dumps({"families": families, "integers": {"one": 1}}))
+    (tmp_path / "universe.json").write_text(
+        json.dumps({"families": families, "integers": {"one": 1, "momentum_unit": 64}})
+    )
     nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
     body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0]}
     faces = {"x": "periodic", "y": "periodic", "z": "periodic"}
@@ -250,8 +229,16 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
         "at_corner": 0,
     }
     assert np.array_equal(reading["content"], rest.levels)
-    with pytest.raises(ValueError, match="k by bisection on the pairs is not in the tool yet"):
-        generate({**world, "measured": [{**body, "momentum": [1, 0, 0]}]})
+    moving = {**body, "momentum": [0, 3 * 64 * 24000 // 40, 0], "phase_denominator": 64}
+    moved = generate({**world, "measured": [moving]})["moving"]
+    assert moved["axis"] == 1 and moved["velocity_named"] == [1, 40] and moved["phase_pair"][0] == 64
+    assert moved["now"].shape == (8, 8, 8) and abs(
+        Fraction(*moved["velocity"]) - Fraction(1, 40)
+    ) < Fraction(1, 100)
+    with pytest.raises(ValueError, match="moves along one axis"):
+        generate({**world, "measured": [{**body, "momentum": [1, 1, 0]}]})
+    with pytest.raises(ValueError, match="declares its phase_denominator"):
+        generate({**world, "measured": [{**body, "momentum": [0, 1, 0]}]})
     with pytest.raises(ValueError, match="the row's pair is 'body', not \\[num, den\\]"):
         generate({**world, "measured": [{**body, "family": "light"}]})
     with pytest.raises(ValueError, match="one body in the law's form .* found 2"):
