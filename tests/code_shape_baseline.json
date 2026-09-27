@@ -174,14 +174,6 @@
    "record_references": 0,
    "rule_arithmetic_sites": 0
   },
-  "src/event_universe/features/receive/__init__.py": {
-   "comment_lines": 1,
-   "docstring_lines": 7,
-   "level_shift_sites": 0,
-   "lines": 28,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
   "src/event_universe/features/recoils_accumulator/__init__.py": {
    "comment_lines": 0,
    "docstring_lines": 6,
@@ -195,14 +187,6 @@
    "docstring_lines": 7,
    "level_shift_sites": 0,
    "lines": 28,
-   "record_references": 1,
-   "rule_arithmetic_sites": 0
-  },
-  "src/event_universe/features/spins_step/__init__.py": {
-   "comment_lines": 1,
-   "docstring_lines": 7,
-   "level_shift_sites": 0,
-   "lines": 35,
    "record_references": 1,
    "rule_arithmetic_sites": 0
   },
