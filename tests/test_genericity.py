@@ -46,7 +46,7 @@ def world_of(drawn: dict[str, Any]) -> dict[str, Any]:
     document["engine"] = "start.json"
     body = document["measured"][0]
     body["family"] = roles["body"]
-    body["kind"] = [800, 809]
+    body["kind"] = [2, 3]
     if "given" in roles:
         body["stocks"] = {roles["given"]: 1}
         body["emitter"]["family"] = roles["given"]

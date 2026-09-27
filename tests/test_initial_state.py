@@ -30,7 +30,7 @@ from event_universe.loader.world import (
 )
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import CLOSED_CHAIN, emitter, light_clock_world, massive_world
-from tests.worlds import emitter_world, family_entry, massive_generator, reads
+from tests.worlds import emitter_specimen, family_entry, massive_generator, reads
 
 
 def peak_of(profile: list[int]) -> int:
@@ -54,7 +54,7 @@ def test_a_generated_world_is_lawful_and_carries_its_clock_and_stamp():
     against the body's operator is within the bound at every Node (read through the
     loader's own function)."""
     for document, amplitude in (
-        (emitter_world(stock=2), 100),
+        (emitter_specimen(stock=2), 100),
         (light_clock_world("closed", False), 50 << 12),
     ):
         assert document["stamp"] == input_stamp(document)
@@ -89,7 +89,7 @@ def test_a_profile_off_the_mode_is_refused_and_one_unit_off_is_within_the_roundi
     bound's edge: the iteration's floor of 276 units leaves no unit of slack, and the peak
     plus one is refused there naming the Node). The stamp is rewritten for every changed
     profile so that the residual speaks (the hash's own refusal is test g)."""
-    document = emitter_world(stock=2, on_mode=False)
+    document = emitter_specimen(stock=2, on_mode=False)
     document["measured"] = [
         {
             "position": [5, 0, 0],
@@ -142,13 +142,13 @@ def test_the_clocks_refusals_name_the_rule():
     a clock beside a scalar seed, refused."""
 
     def refused(mutate, message):
-        document = emitter_world(stock=2)
+        document = emitter_specimen(stock=2)
         mutate(document["measured"][0])
         restamped(document)
         with pytest.raises(ValueError, match=message):
             parse_nature_beam_world(document)
 
-    a, b = emitter_world(stock=2)["measured"][0]["clock"]
+    a, b = emitter_specimen(stock=2)["measured"][0]["clock"]
     refused(lambda entry: entry.pop("clock"), "seed as a profile needs the mode's `clock`")
     refused(lambda entry: entry.__setitem__("clock", [a]), r"clock must be a list of 2, not of 1")
     refused(lambda entry: entry.__setitem__("clock", [a, 0]), r"clock\[1\] is 0, below its least 1")
@@ -177,7 +177,7 @@ def test_at_most_five_families():
     charge among them, and a fifth), a sixth is refused naming the count and the bound (the
     owner's constant: record 1875's three, four since the family of clicks, record 1982,
     five since the family of charge, ALGEBRA.md #the-paces; BUILD.md section 26 item 35)."""
-    document = emitter_world(stock=2)
+    document = emitter_specimen(stock=2)
     assert len(document["universe"]) <= MOST_FAMILIES
     while len(document["universe"]) < MOST_FAMILIES:
         document["universe"].append(
@@ -310,11 +310,11 @@ def test_the_input_stamp_the_law_and_the_hash():
     generator wrote; a world with no profile needs no stamp (the emitter
     world on its scalar seed, its emitter removed); the stamp is the same from the raw
     document and from the parsed integers (the generated world loads, test a)."""
-    missing = emitter_world(stock=2)
+    missing = emitter_specimen(stock=2)
     del missing["stamp"]
     with pytest.raises(ValueError, match="declares a seeded body and no `stamp`"):
         parse_nature_beam_world(missing)
-    other = emitter_world(stock=2)
+    other = emitter_specimen(stock=2)
     other["stamp"]["law"] = "another law"
     with pytest.raises(ValueError, match="stamp has unknown keys: law"):
         parse_nature_beam_world(other)
@@ -335,11 +335,11 @@ def test_the_input_stamp_the_law_and_the_hash():
         document["ticks"] += 1
 
     for change in (unit, clock, weight, ticks):
-        changed = emitter_world(stock=2)
+        changed = emitter_specimen(stock=2)
         change(changed)
         with pytest.raises(ValueError, match="is not the digest of the file"):
             parse_nature_beam_world(changed)
-    unseeded = emitter_world(stock=2, on_mode=False)
+    unseeded = emitter_specimen(stock=2, on_mode=False)
     assert "stamp" not in unseeded
     del unseeded["measured"][0]["emitter"]
     parse_nature_beam_world(unseeded)
@@ -369,7 +369,7 @@ def test_the_generator_as_the_operator_iterated_in_integers():
     iteration
     (`integer_mode_iteration`, the same step 4000 times) lands within the same 300 units. The
     edge: a limit below the stop refuses, naming the last residual against the bound."""
-    document = emitter_world(stock=1)
+    document = emitter_specimen(stock=1)
     world = parse_nature_beam_world(document)
     entry = world.measured[0]
     block = entry.block

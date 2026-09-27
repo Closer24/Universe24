@@ -321,7 +321,14 @@ WORDS = (
 )
 
 
-PAIRS = ([1, 1], [700, 703], [800, 809], [1000, 1019], [500, 501], [1000, 1181])
+PAIRS = (
+    [1, 1],
+    [233, 234],
+    [89, 90],
+    [52, 53],
+    [249, 250],
+    [11, 13],
+)  # the six depths of old at numerators the rule's walls admit under the template's amplitude bound 2^24
 
 
 PARTS = ([1], [1, 3], [1, 3, 6])

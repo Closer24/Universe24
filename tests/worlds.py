@@ -245,13 +245,10 @@ def receiver_cube(document: dict, name: str, corner: list[int], family: str = "l
     document["detectors"].append({"name": name, "positions": positions})
 
 
-def emitter_world(
-    stock: int = 4,
-    ticks: int = 1200,
-    on_mode: bool = True,
+def _emitter_world(
+    stock: int, ticks: int, on_mode: bool, kind: list[int], well: list[int], seed: int, bound: int
 ) -> dict:
-    """The emitter's unit world: a chain of 80 (x closed), an emitter of the matter kind [800, 809] at [5, 37)
-    on its mode with `stock` givings of light, and the receiver cube `screen` at [70, 72]."""
+    """The emitter's unit world: a chain of 80 (x closed), an emitter of the matter `kind` in the `well` at [5, 37) on its mode with `stock` givings of light, and the receiver cube `screen` at [70, 72]."""
     # the giving is the window's (ALGEBRA.md #the-primitives): the body's rotation written
     # at its Nodes at the weight 3 (3 x 2^20 under the bound 2^22)
     emitter: dict = {
@@ -270,12 +267,12 @@ def emitter_world(
         "body_record": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
-        "amplitude_bound": 1 << 22,
+        "amplitude_bound": bound,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
             family_entry("light", [1, 1], reads(), clock=[512, 1]),
-            family_entry("matter", [800, 809], reads()),
+            family_entry("matter", kind, reads()),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -296,8 +293,8 @@ def emitter_world(
                 "spin_before": [0, 0, 0],
                 "twist": 0,
                 "moment": [0, 0, 0],
-                "pair": [800, 801],
-                "seed": 1 << 10,  # the window's writes pile up at the body's Nodes (commit 7)
+                "pair": well,
+                "seed": seed,  # the window's writes pile up at the body's Nodes (commit 7)
                 "margin": "control",
                 "emitter": emitter,
             },
@@ -308,6 +305,16 @@ def emitter_world(
     if on_mode:
         massive_generator().seed_on_the_mode(document)
     return document
+
+
+def emitter_world(stock: int = 4, ticks: int = 1200, on_mode: bool = True) -> dict:
+    """The emitter's unit world as a real body under the count's line: the matter kind [2, 3] (the pair [800, 1200] in lowest terms, so the rule's walls admit the amplitude bound 2^24), the well [200, 201], the seed 2^12 under the bound 2^24; its count stands to the bit."""
+    return _emitter_world(stock, ticks, on_mode, [2, 3], [200, 201], 1 << 12, 1 << 24)
+
+
+def emitter_specimen(stock: int = 4, ticks: int = 1200, on_mode: bool = True) -> dict:
+    """The emitter's unit world of old, the loader's and the generator's specimen: the kind [800, 809], the well [800, 801], the seed 2^10 under the bound 2^22 (their tests read the load and the generator's integers on it; under the count's line its count does not stand)."""
+    return _emitter_world(stock, ticks, on_mode, [800, 809], [800, 801], 1 << 10, 1 << 22)
 
 
 def lawful_wheel(world, line: dict) -> bool:
