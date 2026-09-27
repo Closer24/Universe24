@@ -1,6 +1,4 @@
-"""THE LOADER'S ACCEPTANCE TESTS, written ahead of the schema loader (the Boss's word of 2026-09-26
-21:17Z; records 2226, 2089, 2172 to 2174, 2182; ALGEBRA.md #the-stable-body.117 row "the source"):
-tests only; a test the loader fails is xfail strict naming what holds it and loses its mark when green."""
+"""THE LOADER'S ACCEPTANCE TESTS (the Boss's word of 2026-09-26 21:17Z; records 2226, 2089, 2172 to 2174, 2182)."""
 
 from __future__ import annotations
 
@@ -39,8 +37,7 @@ def loader_modules() -> list[Path]:
     return sorted(found)
 
 
-# (a) THE CLOSED LOADER: no family name, no written default, no version (records 2172 to 2174,
-# 2182, 2089, 2226)
+# (a) THE CLOSED LOADER: no family name, no written default, no version (records 2172 to 2174, 2182, 2089, 2226)
 
 
 def test_a1_the_loader_holds_no_family_name_of_the_universe():
@@ -61,7 +58,6 @@ def test_a2_the_loader_writes_no_default_for_a_key_of_the_files():
     assert defaults == [], defaults
 
 
-# green since the frame's cut of the world's keys (the earlier engines' key sets left world.py)
 def test_a3_the_loader_holds_no_version_and_no_schema_version():
     """Records 2182 and 2226: no string constant of the loader is a version string (`<name>-v<digits>`), 'version' or 'schema_version'."""
     offending = [
@@ -88,8 +84,7 @@ def place(tmp_path: Path, monkeypatch, universe: dict, document: dict) -> dict:
 
 
 def body_world() -> dict:
-    """The world of ALGEBRA.md #the-stable-body: one body by its family, its Nodes with their counts and its
-    momentum, a card's key on it (the polariser's), and a set on its own Nodes."""
+    """#the-stable-body: one body by its family, Nodes with counts and momentum, a card's key, a set on its own Nodes."""
     return {
         "shape": [16, 1, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
@@ -111,32 +106,37 @@ def body_world() -> dict:
 def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_and_runs(
     tmp_path, monkeypatch
 ):
-    """ALGEBRA.md #the-stable-body: the body by its family, Nodes with counts and momentum loads and steps; its Q the
-    signed sum of its counts by the row's `sign`, no key; the set on its own Node its own (#the-ladder); the card's key on `declared`."""
+    """#the-stable-body: the body by family, Nodes with counts and momentum loads and steps; Q the signed sum of its
+    counts by the row's `sign`; the set on its own Node its own; the card's key on `declared`; the pace bound per Node."""
     universe = json.loads(GENERATED.read_text(encoding="utf-8"))
     next(row for row in universe["families"] if row["name"] == "matter")["sign"] = -1
     world = parse_nature_beam_world(place(tmp_path, monkeypatch, universe, body_world()))
     entry, (strip,) = world.measured[0], world.detectors
     assert entry.block.declared == {"polariser": {"angle": (2, 1), "sets": ("rest", "strip")}}
-    assert (
-        entry.block.q == 0
-        and sum(f.charge[0] * h for f, h in zip(world.families, entry.held, strict=True)) == -2
-    )
+    assert entry.block.q == 0
+    assert sum(f.charge[0] * h for f, h in zip(world.families, entry.held, strict=True)) == -2
     assert (strip.positions, strip.block) == (((6, 0, 0),), 0)
     simulation = DetectorLawSimulation(world)
-    simulation.step()
-    assert simulation.leaks() == []
+    assert simulation.step() is None and simulation.leaks() == []
+    wide = (
+        body_world()
+    )  # the pace bound per Node (#the-paces): six Nodes at 2,000 load, one at Gamma is refused
+    wide["measured"][0]["nodes"] = [{"node": [x, 0, 0], "count": 2000} for x in range(4, 10)]
+    loaded = parse_nature_beam_world(place(tmp_path, monkeypatch, universe, wide))
+    assert sum(loaded.measured[0].held) == 12_000
+    wide["measured"][0]["nodes"][0]["count"] = 10000
+    with pytest.raises(ValueError, match="the pace of 'charge' could reach 0 .* to 10000"):
+        parse_nature_beam_world(place(tmp_path, monkeypatch, universe, wide))
 
 
 def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_file(
     tmp_path, monkeypatch
 ):
-    """ALGEBRA.md #what-a-body-is (the record is the generator's), #the-primitives (the recoil's row): a giving body
-    by its Nodes takes its profile, clock and twist from the mode file beside the world (this world's by
-    `world_digest`), its period by the one-Node rule; each defect of the file is refused by name."""
+    """#what-a-body-is, #the-primitives (the recoil's row): a giving body by its Nodes takes its profile, clock and
+    twist from the mode file beside the world (this world's by `world_digest`), its receiver a list; defects refused by name."""
     world, universe = body_world(), json.loads(GENERATED.read_text(encoding="utf-8"))
     world["N"] = 1024  # the given clock [512, 1] whole in the wavelength (the loop's L)
-    giver = {"family": "charge", "weight": 1, "norm": 100, "norm_denominator": 1}
+    giver = {"family": "charge", "weight": 1, "norm": 100, "norm_denominator": 1, "receiver": ["strip"]}
     world["measured"][0].update(emitter=giver, stocks={"charge": 4}, moment=[0, 0, 1])
     placed = place(tmp_path, monkeypatch, universe, world)
     (tmp_path / "giver.json").write_text(json.dumps(placed), encoding="utf-8")
@@ -156,7 +156,7 @@ def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_fi
         load_world(tmp_path / "giver.json")
     block = loaded().measured[0].block
     assert (block.clock, block.twist, block.seed) == ((1530, 1000), 45875, 1000)
-    assert block.profile[5:7] == (1000, 1000) and block.emitter is not None
+    assert block.profile[5:7] == (1000, 1000) and block.emitter.receiver == ("strip",)
     assert block.emitter.period == period_by_the_rule(1530, 1000)
     B = lambda key, value: lambda m: m["bodies"][0].__setitem__(key, value)  # noqa: E731
     defects = (

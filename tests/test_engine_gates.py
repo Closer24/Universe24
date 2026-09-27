@@ -41,9 +41,11 @@ def test_a_new_number_or_family_name_fails_against_the_merge_base_and_a_cut_pass
     base = GATES.record(root)
     assert base["files"] == {f"{PACKAGE}/a.py": {"numbers": 1, "family_names": 1, "hand_divisions": 0}}
     assert GATES.ratchet(root, base) == []
-    (root / PACKAGE / "a.py").write_text('X = 3\nY = 64\nW = 2 ** 10\nZ = "glow"\nV = "glow"\n')
-    found = GATES.ratchet(root, base)
-    assert f"{PACKAGE}/a.py: numbers grew from 1 to 2" in found
+    (root / PACKAGE / "a.py").write_text(
+        'X = 3\nY = 64\nW = 2 ** 10\nZ = "glow"\nV = "glow"\nU = 4 * 8 + 8\nT = 1 << (6 * 8)\nS = -3 + a\n'
+    )
+    found = GATES.ratchet(root, base)  # 2 ** 10, 4 * 8 + 8 and 1 << (6 * 8) fold to one number each
+    assert f"{PACKAGE}/a.py: numbers grew from 1 to 4" in found
     assert f"{PACKAGE}/a.py: family names grew from 1 to 2" in found
     (root / PACKAGE / "a.py").write_text("X = 3\nFLAG = True\n")
     assert GATES.ratchet(root, base) == []
@@ -55,10 +57,7 @@ def test_a_new_core_module_needs_the_approval_line():
     new = [f"{PACKAGE}/core/main_loop.py"]
     assert GATES.core_approval([], None) == []
     assert "new module of core/" in GATES.core_approval(new, "Adds the loop.")[0]
-    assert (
-        GATES.core_approval(new, "Adds the loop.\nAPPROVED-CORE: Main Loop, review of 2026-09-27\n")
-        == []
-    )
+    assert GATES.core_approval(new, "Adds the loop.\nAPPROVED-CORE: Main Loop, 2026-09-27\n") == []
 
 
 def test_the_core_check_runs_on_a_pull_request_and_never_on_a_push_to_main():

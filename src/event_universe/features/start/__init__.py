@@ -152,27 +152,24 @@ def chain_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
     return FieldAtRest(levels, fine, unit, 1, 1)
 
 
-LIFT = 1 << (6 * 8)  # the right side lifted before a solve, so the floors fall far below it
-ROUNDS = 8  # refinements on the exact residual per precision
-PRECISION_STEP = 1 << (4 * 8)  # the fine unit's growth where the certificate does not close
-PRECISIONS = 2  # the fine unit's growths, one, before a value within the margin of a half rounds up
-MARGIN_ROOM = 1 << (
-    4 * 4
-)  # the rounds end once the margin is 2^16 below a half: only a half is left uncertified
-SWEEPS = 8  # the conjugate gradients' cap, times the extents' sum
-STOP = 1 << (
-    4 * 8 + 8
-)  # a sweep stops once the residual is below the right side's 2^-40: a round's worth
+# THE FAST LANE'S SIZES, every one from the machine's width (the owner's rule: no number of its own):
+# a product of two halves times the Nodes' partial sum, and a ratio's half times a vector's half
+# shifted up by the halves' excess over the fixed point, each stays below 2^ROOM (the sign bit out).
+# The right side's scale, the unit's growth and the margin's room come from the certificate and the
+# GameBoard itself (the inverse's bound, the free Nodes' count), inside `box_rest`.
+WIDTH = MAX_WORK_INT.bit_length()  # the machine's integer width
+ROOM = WIDTH - 1  # the bits below the sign
+NODES_BITS = int(
+    division(1, 3, np.array(WIDTH, dtype=object))
+)  # the lane's Nodes bound: a third of the width
+HALF_BITS = (ROOM - NODES_BITS) >> 1  # a vector's low half: two halves' product times the Nodes fits
 VECTOR_BITS = (
-    4 * 8 + 8
-)  # the fast lane's vectors stay below 2^40, so their halves' products fit the width
-HALF_BITS = 4 * 4 + 4  # a vector's low half: 20 bits
-RATIO_BITS = 4 * 8  # the fixed point of a ratio between two of the solver's products: 32 bits
-RATIO_HALF_BITS = 3 * 8 + 1  # a ratio's low half: 25 bits, its high half then below 2^25
-BAND = 1 << (3 * 8 + 6)  # the right side's first band in the fast lane, 2^30; shrunk by a byte on a bail
-NODES_BOUND = 1 << (
-    4 * 4 + 4
-)  # the fast lane's Nodes bound, 2^20: the partial sums of a product fit the width
+    HALF_BITS << 1
+)  # the lane's vectors stay below 2^VECTOR_BITS, their halves below 2^HALF_BITS
+RATIO_BITS = (WIDTH + 1) >> 1  # a ratio's fixed point: half the width
+RATIO_HALF_BITS = (ROOM + RATIO_BITS - VECTOR_BITS) >> 1  # a ratio's low half: the shifted product fits
+STOP = 1 << VECTOR_BITS  # a sweep stops once the residual is below the right side's 2^-VECTOR_BITS
+FLOORS = 3  # a scaled update takes three floors, so a sweep's residual drifts by at most three units
 
 
 def sizes(vector: np.ndarray) -> int:
@@ -189,14 +186,14 @@ def halves(vector: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
 
 def exact_dot(a: np.ndarray, b: np.ndarray) -> int:
-    """The product of two vectors, exact: in Python integers, or by the halves' partial sums for machine integers below 2^VECTOR_BITS on at most NODES_BOUND Nodes."""
+    """The product of two vectors, exact: in Python integers, or by the halves' partial sums for machine integers below 2^VECTOR_BITS on at most 2^NODES_BITS Nodes."""
     if a.dtype == object or b.dtype == object:
         return int(np.dot(a.astype(object).ravel(), b.astype(object).ravel()))
     a1, a0 = halves(a.ravel())
     b1, b0 = halves(b.ravel())
     top = int(np.dot(a1, b1))
     middle = int(np.dot(a1, b0)) + int(np.dot(a0, b1))
-    return (top << (2 * HALF_BITS)) + (middle << HALF_BITS) + int(np.dot(a0, b0))
+    return (top << VECTOR_BITS) + (middle << HALF_BITS) + int(np.dot(a0, b0))
 
 
 def scaled(vector: np.ndarray, ratio: int) -> np.ndarray:
@@ -216,12 +213,14 @@ def line_solver(counts: np.ndarray, pair: Pair, wrap: Wrap) -> tuple[Any, np.nda
     num, den = pair
     free = counts == 0
     held = ~free
-    cap = SWEEPS * int(sum(counts.shape))
+    cap = (
+        int(np.count_nonzero(free)) + 1
+    )  # the gradients end within the free Nodes' count in exact arithmetic; the floors' stops end them far sooner
     bound = 1 << VECTOR_BITS
     room = int(
         division(1, 4 * 6 * den, np.array(MAX_WORK_INT, dtype=object))
     )  # |v| with A v inside the width
-    fast_lane = counts.size <= NODES_BOUND and bound <= room
+    fast_lane = counts.size <= 1 << NODES_BITS and bound <= room
 
     def apply(vector: np.ndarray) -> np.ndarray:
         """A on a vector that is 0 at the bodies' Nodes, 0 kept there, in the vector's own integers."""
@@ -260,8 +259,8 @@ def line_solver(counts: np.ndarray, pair: Pair, wrap: Wrap) -> tuple[Any, np.nda
                 return None
             rr_next = exact_dot(r, r)
             size = sizes(r)
-            if size <= 3 * sweep + 4 or size * STOP <= floor:
-                break  # the floors' own drift (three units a sweep), or a round's worth of the right side
+            if size <= FLOORS * (sweep + 1) + 1 or size * STOP <= floor:
+                break  # the floors' own drift (three units a sweep, one at the start), or a round's worth of the right side
             beta = int(division(1, rr, np.array(rr_next << RATIO_BITS, dtype=object)))
             if narrow and beta >= 1 << (2 * RATIO_HALF_BITS):
                 return None
@@ -269,33 +268,29 @@ def line_solver(counts: np.ndarray, pair: Pair, wrap: Wrap) -> tuple[Any, np.nda
             rr = rr_next
         return x.astype(object)
 
-    def solve(right_side: np.ndarray) -> np.ndarray:
-        """x with A x = the right side on the free Nodes, to the floors' accuracy; the right side is 0 at the bodies: the fast lane on the right side scaled into its band, shrunk by a byte on every bail, else Python integers."""
+    def solve(right_side: np.ndarray, bound_bits: int) -> np.ndarray:
+        """x with A x = the right side on the free Nodes, to the floors' accuracy; the right side is 0 at the bodies. The fast lane takes the right side scaled by a power of two so that its rise by the inverse's bound (bound_bits, the certificate's) stays below half the lane, one bit lower on every bail; Python integers where the lane cannot hold it."""
         size = sizes(right_side)
         if fast_lane and size > 0:
-            shift = 0
-            while (size >> shift) > BAND:
-                shift += 1
-            while (size >> shift) >= 1 << 8:
-                found = sweep_lane(np.asarray(right_side >> shift), True)
+            shift = VECTOR_BITS - 1 - bound_bits - size.bit_length()
+            while (size << shift if shift >= 0 else size >> -shift) >= 1:
+                side = right_side << shift if shift >= 0 else right_side >> -shift
+                found = sweep_lane(np.asarray(side), True)
                 if found is not None:
-                    return np.asarray(found << shift)
-                shift += 8
+                    return np.asarray(division(1, 1 << shift, found) if shift >= 0 else found << -shift)
+                shift -= 1
         return np.asarray(sweep_lane(right_side, False))
 
     return solve, free.ravel()
 
 
-def solved(counts: np.ndarray, solver: Any, free: np.ndarray, right: np.ndarray) -> np.ndarray:
-    """The line solved for a right side given on the free Nodes: a small right side lifted by a power of two first and the solution taken down by the division act; a whole-board array, 0 at the bodies."""
-    size = sizes(right)
-    up = 0
-    if size > 0:
-        while (size << up) <= BAND >> 1:
-            up += 1
+def solved(
+    counts: np.ndarray, solver: Any, free: np.ndarray, right: np.ndarray, bound_bits: int
+) -> np.ndarray:
+    """The line solved for a right side given on the free Nodes, the inverse's bound in bits for the lane's scale; a whole-board array, 0 at the bodies."""
     side = np.zeros(counts.shape, dtype=object)
-    side.ravel()[free] = np.asarray(right, dtype=object) << up
-    return np.asarray(division(1, 1 << up, solver(side)))
+    side.ravel()[free] = np.asarray(right, dtype=object)
+    return np.asarray(solver(side, bound_bits))
 
 
 def residual(fine: np.ndarray, pair: Pair, wrap: Wrap, free: np.ndarray) -> np.ndarray:
@@ -327,28 +322,37 @@ def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
     if num < 1 or den < num:
         raise ValueError(f"the field's pair [{num}, {den}] has num from 1 and den from num")
     solver, free = line_solver(counts, pair, wrap)
-    lifted = np.zeros(counts.shape, dtype=object)
-    lifted[...] = 6 * den * LIFT
-    exit_time = solved(counts, solver, free, lifted.ravel()[free])
-    rho = residual(exit_time, pair, wrap, free) - 6 * den * LIFT
-    bound_wall = 6 * den * LIFT - sizes(rho)
+    nodes = int(np.count_nonzero(free))
+    ones = np.zeros(counts.shape, dtype=object)
+    ones[...] = 6 * den
+    # the exit-time field T twice: as it comes, its size the bound's bits; then lifted by the lane's room
+    bound_bits = nodes.bit_length()
+    rough = solved(counts, solver, free, ones.ravel()[free], bound_bits)
+    bound_bits = max(1, sizes(rough.ravel()[free]).bit_length() - (6 * den).bit_length() + 1)
+    lift = 1 << max(0, VECTOR_BITS - 1 - bound_bits - (6 * den).bit_length())
+    lifted = ones * lift
+    exit_time = solved(counts, solver, free, lifted.ravel()[free], bound_bits)
+    rho = residual(exit_time, pair, wrap, free) - 6 * den * lift
+    bound_wall = 6 * den * lift - sizes(rho)
     if bound_wall <= 0:
         raise ValueError(
             "the exit-time bound did not close: the line's solver is off by more than its lift"
         )
     bound_top = sizes(exit_time.ravel()[free])
+    bound_bits = max(1, bound_top.bit_length() - bound_wall.bit_length() + 1)
+    room = (
+        nodes * nodes
+    )  # the margin far below a half: over all the free Nodes no accidental near-half is expected
     unit = field_unit(counts, num)
     fine = np.zeros(counts.shape, dtype=object)
     fine[...] = counts.astype(object) * unit
-    fine = fine + solved(counts, solver, free, -residual(fine, pair, wrap, free))
+    fine = fine + solved(counts, solver, free, -residual(fine, pair, wrap, free), bound_bits)
     rounds = 0
-    for precision in range(PRECISIONS):
-        if precision > 0:
-            unit *= PRECISION_STEP
-            fine = fine * PRECISION_STEP
+    grown = False
+    while True:
         half = int(division(1, 2, np.array(unit, dtype=object)))
         floor = None
-        for _ in range(ROUNDS):
+        while True:  # the rounds end by the certificate: it closes, the margin is far below a half, or the residual stops falling
             rounds += 1
             worst = residual(fine, pair, wrap, free)
             size = sizes(worst)
@@ -361,9 +365,15 @@ def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
             levels, closed = certified(fine, unit, half, margin, free)
             if closed:
                 return FieldAtRest(levels.astype(np.int64), fine, unit, rounds, 1)
-            if margin * MARGIN_ROOM <= half:
+            if margin * room <= half:
                 break  # only a half is left uncertified
-            fine = fine + solved(counts, solver, free, -worst)
+            fine = fine + solved(counts, solver, free, -worst, bound_bits)
+        if grown:
+            break  # the one growth taken (ALGEBRA.md, THE START): a value within the margin of a half rounds up
+        grown = True
+        growth = 1 << max(0, (margin * room).bit_length() - half.bit_length() + 1)  # far below a half
+        unit *= growth
+        fine = fine * growth
     levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half + margin, 1)[0])
     return FieldAtRest(levels.astype(np.int64), fine, unit, rounds, 1)
 
