@@ -1,0 +1,251 @@
+"""THE GENERATOR BY RULE3 ALONE, tools/body_generator.py (ALGEBRA.md 9.120 item 4; the Boss's
+records 2243, 2244, 2248): from a flat start the read act and the division act iterated stop at
+the first repeat of the integer profile and give the bound mode of the count's well (its
+rotation above the band's top, its weight inside the counted cube, the float top mode's profile
+to the rounding: the test may use floats, the tool never does); a pair whose count binds
+nothing is refused by name; the moving body at a rotation k per Link (a Pythagorean triple) by the
+same iteration with the arrivals along x rotated, at rest the resting mode bit for bit, in motion
+an eigenvector of the untwisted rule away from the box's periodic seam whose two levels travel;
+the period by the one-Node rule in integers is the nearest integer to 2 pi / omega; the two
+levels and the amplitude from the count and the norm; the refusals."""
+
+from __future__ import annotations
+
+import math
+from fractions import Fraction
+
+import numpy as np
+import pytest
+import scipy.sparse as sparse
+import scipy.sparse.linalg as sparse_linalg
+
+from event_universe.core.integer import MAX_WORK_INT
+from event_universe.core.rule3 import coefficients, rule_total_bound
+from tools.body_generator import (
+    AT_REST,
+    PERIODIC,
+    _bound_mode_at,
+    amplitude_unit,
+    arrivals,
+    bound_mode,
+    clock_pair,
+    conserved_form,
+    moving_levels,
+    moving_mode,
+    period_by_the_rule,
+    read_act,
+    rotated,
+    rule_integers,
+    scaled_to_norm,
+    to_amplitude,
+    twisted_arrivals,
+    two_levels,
+)
+
+GAMMA = 10_000
+KIND = (800, 1200)
+
+
+def counted_cube(box: int, side: int, count: int) -> np.ndarray:
+    counts = np.zeros((box, box, box), dtype=np.int64)
+    low = (box - side) // 2
+    counts[low : low + side, low : low + side, low : low + side] = count
+    return counts
+
+
+def float_top_mode(counts: np.ndarray, pair: tuple[int, int]) -> tuple[float, np.ndarray]:
+    """The check's oracle in floats: the top eigenvector of the symmetric form on the periodic box, as the level a_i = phi_i p_i."""
+    num, den = pair
+    shape = counts.shape
+    idx = np.arange(counts.size).reshape(shape)
+    p = (GAMMA - counts).astype(float)
+    u = (p / GAMMA) ** 2
+    on_site = 2 - (1 + u) * (den - num) / den - 2 * num * u / den
+    rows, cols, vals = [], [], []
+    for axis in range(3):
+        j = np.roll(idx, -1, axis=axis)
+        bond = num * p * np.roll(p, -1, axis=axis) / (3 * den * GAMMA**2)
+        rows += [idx.ravel(), j.ravel()]
+        cols += [j.ravel(), idx.ravel()]
+        vals += [bond.ravel(), bond.ravel()]
+    rows.append(idx.ravel())
+    cols.append(idx.ravel())
+    vals.append(on_site.ravel())
+    matrix = sparse.csr_matrix(
+        (np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))),
+        shape=(counts.size, counts.size),
+    )
+    value, vector = sparse_linalg.eigsh(matrix, k=1, which="LA")
+    level = np.abs(vector[:, 0].reshape(shape)) * p
+    return float(value[0]), level / np.linalg.norm(level)
+
+
+def test_the_iteration_stops_at_the_first_repeat_and_gives_the_bound_mode():
+    """The cube of side 4 at 3000 per Node on the kind [800, 1200] in a periodic box of 12:
+    the repeat at iteration 198, a cycle of length 1 (a fixed point), the rotation above the
+    band's top 4 / 3 and equal to the float mode's 2 cos omega_b to 10^-6, the profile's
+    overlap with the float mode 1 to 10^-6, the share inside the cube 0.76, the clock's
+    period 8 by the one-Node rule (2 pi / 0.779)."""
+    counts = counted_cube(12, 4, 3000)
+    mode = bound_mode(counts, KIND, GAMMA)
+    assert (mode.iterations, mode.cycle) == (198, 1)
+    assert mode.rotation > Fraction(2 * KIND[0], KIND[1])
+    value, level = float_top_mode(counts, KIND)
+    assert abs(float(mode.rotation) - value) < 1e-6
+    profile = mode.profile.astype(float)
+    profile /= np.linalg.norm(profile)
+    assert abs(float(np.sum(profile * level)) - 1) < 1e-6
+    assert Fraction(75, 100) < mode.share_inside < Fraction(77, 100)
+    assert int(np.abs(mode.profile).max()) == mode.amplitude
+    clock = clock_pair(mode.rotation, mode.amplitude)
+    assert clock[1] == mode.amplitude and period_by_the_rule(*clock) == round(
+        2 * math.pi / math.acos(value / 2)
+    )
+
+
+def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands_beyond_it():
+    """A is never written: the largest amplitude at which Rule3's total stays inside int64 at
+    every content of the region (the body's content, whose |S| is largest, binds it: (M - w)
+    div (6 R + |S| + w) at 3000 per Node, between 2^22 and 2^23 on [800, 1200] at Gamma
+    10^4), rule_total_bound at A inside the width and at A + 1 beyond; the fixed point does
+    not depend on A beyond its resolution: at A / 2 the profile agrees with the one at A,
+    rescaled, within five units of the coarser (the final scale comes from c T)."""
+    counts = counted_cube(12, 4, 3000)
+    amplitude = amplitude_unit(KIND, GAMMA, counts)
+    reads, self_coefficient, wall = coefficients(KIND[0], KIND[1], GAMMA, 3000)
+    assert amplitude == (MAX_WORK_INT - wall) // (6 * abs(reads[0]) + abs(self_coefficient) + wall)
+    assert (1 << 22) < amplitude < (1 << 23)
+    for content in (0, 3000):
+        assert rule_total_bound(KIND[0], KIND[1], GAMMA, content, amplitude, True) <= MAX_WORK_INT
+    assert rule_total_bound(KIND[0], KIND[1], GAMMA, 3000, amplitude + 1, True) > MAX_WORK_INT
+    mode = bound_mode(counts, KIND, GAMMA)
+    assert mode.amplitude == amplitude
+    coarse = _bound_mode_at(counts, KIND, GAMMA, amplitude // 2, PERIODIC)
+    rescaled = (mode.profile * (amplitude // 2)) // amplitude
+    assert int(np.abs(rescaled - coarse.profile).max()) <= 5
+    assert abs(float(coarse.rotation) - float(mode.rotation)) < 1e-6
+    with pytest.raises(ValueError, match="beyond int64"):
+        _bound_mode_at(counts, KIND, GAMMA, 1 << 40, PERIODIC)
+
+
+def test_a_pair_whose_count_binds_nothing_is_refused_by_name():
+    """On [800, 809] (1 - cos omega_0 = 0.011) the count's well is too shallow for any cube
+    (ALGEBRA.md 9.120 item 2): the iteration settles on the band's top and the tool refuses
+    naming the family and the rotation."""
+    with pytest.raises(ValueError, match=r"the count binds no mode of the family \[800, 809\]"):
+        bound_mode(counted_cube(8, 4, 3000), (800, 809), GAMMA)
+
+
+def test_the_period_is_the_nearest_integer_to_two_pi_over_omega_with_no_pi():
+    """On the shipped emitters' clocks and on a sweep of clocks a / b the first return within
+    half a step after half a turn is round(2 pi / acos(a / 2 b)); in integers with the
+    remainder carried (Rule3's one-Node form), the light clock's 9 and the dark body's 45
+    where its file says 46."""
+    assert period_by_the_rule(1651150, 1048576) == 9
+    assert period_by_the_rule(2076636, 1048576) == 45
+    b = 1 << 20
+    for a in range(-2 * b + 1, 2 * b, 20_101):
+        assert period_by_the_rule(a, b) == round(2 * math.pi / math.acos(a / (2 * b))), (a, b)
+    assert period_by_the_rule(0, 1) == 4 and period_by_the_rule(1, 1) == 6
+
+
+def test_the_two_levels_and_the_amplitude_from_the_count_and_the_norm():
+    """The second level is the read act halved, so the pair (now, before) rotates by the
+    mode's own 2 cos omega_b; the form of the pair scales as the square of the levels, and
+    the levels scaled to the norm c T give the form within one part in 10^3 of c T (the
+    levels then a few tens in size, the rounding's grain)."""
+    counts = counted_cube(12, 4, 3000)
+    mode = bound_mode(counts, KIND, GAMMA)
+    read, self_coefficient, wall = rule_integers(KIND, GAMMA, counts)
+    now, before = two_levels(mode.profile, read, self_coefficient, wall, PERIODIC)
+    ratio = float(before[6, 6, 6]) / float(now[6, 6, 6])
+    assert abs(ratio - float(mode.rotation) / 2) < 1e-4
+    paces = GAMMA - counts
+    form = conserved_form(now, before, self_coefficient, wall, KIND[0], paces, PERIODIC)
+    assert form > 0
+    doubled = conserved_form(2 * now, 2 * before, self_coefficient, wall, KIND[0], paces, PERIODIC)
+    assert doubled == 4 * form
+    norm = Fraction(int(np.sum(counts)) * 34026417078243063, 24990001)  # c T, the emitter's T of today
+    scaled_now, scaled_before = scaled_to_norm(now, before, form, norm, mode.amplitude)
+    reached = conserved_form(scaled_now, scaled_before, self_coefficient, wall, KIND[0], paces, PERIODIC)
+    assert abs(reached / norm - 1) < Fraction(1, 1000)  # the rounding of levels a few tens in size
+    assert 10 < int(np.abs(scaled_now).max()) < mode.amplitude
+    assert scaled_now.dtype == np.int64 and scaled_before.dtype == np.int64
+
+
+def envelope_times_sine(mode, triple: tuple[int, int, int]) -> np.ndarray:
+    """The quarter-turned part of the moving levels, the envelope times sin(k x) by the rotation act."""
+    out = np.empty_like(mode.re)
+    phase_re = np.full(mode.re.shape[1:], mode.amplitude, dtype=np.int64)
+    phase_im = np.zeros(mode.re.shape[1:], dtype=np.int64)
+    for x in range(mode.re.shape[0]):
+        out[x] = (mode.re[x] * phase_im + mode.im[x] * phase_re) // mode.amplitude
+        phase_re, phase_im = rotated(phase_re, phase_im, triple, 1)
+    return out
+
+
+def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
+    """At the triple (1, 0, 1) the moving iteration gives the resting mode bit for bit with its
+    rotation; at (99, 20, 101), k = 0.199 per Link, on a box of 24 along x it stops at a repeat,
+    its rotation 2 cos omega_b(k) lies below the resting one and above the band's top, its
+    weight stays inside the cube, and its real level is an eigenvector of the untwisted rule to
+    10^-4 of its norm on the Nodes away from the box's periodic seam (the seam is the box's,
+    not the mode's); the two levels travel: one step of Rule3 gives cos omega x now + sin omega
+    x the quarter-turned part to the same precision (ALGEBRA.md 9.120 item 4 (e))."""
+    counts = counted_cube(12, 4, 3000)
+    rest = bound_mode(counts, KIND, GAMMA)
+    still = moving_mode(counts, KIND, GAMMA, AT_REST)
+    assert np.array_equal(still.re, rest.profile) and not still.im.any()
+    assert still.rotation == rest.rotation and still.iterations == rest.iterations
+    long_counts = np.zeros((24, 12, 12), dtype=np.int64)
+    long_counts[10:14, 4:8, 4:8] = 3000
+    long_rest = bound_mode(long_counts, KIND, GAMMA)
+    triple = (99, 20, 101)
+    moving = moving_mode(long_counts, KIND, GAMMA, triple)
+    assert Fraction(2 * KIND[0], KIND[1]) < moving.rotation < long_rest.rotation
+    # the stop is a two-cycle of the rounding: one more iteration returns a profile one unit away at most
+    assert moving.cycle == 2
+    read, self_coefficient, wall = rule_integers(KIND, GAMMA, long_counts)
+    again = to_amplitude(
+        read_act(
+            (moving.re, moving.im),
+            twisted_arrivals(moving.re, moving.im, triple, PERIODIC),
+            read,
+            self_coefficient,
+            wall,
+        ),
+        moving.amplitude,
+    )
+    again = (again[0] + again[0][::-1]) // 2, (again[1] - again[1][::-1]) // 2
+    assert int(np.abs(again[0] - moving.re).max()) <= 1 and int(np.abs(again[1] - moving.im).max()) <= 1
+    assert Fraction(70, 100) < moving.share_inside < Fraction(80, 100)
+    now, before = moving_levels(moving, triple)
+    read, self_coefficient, wall = rule_integers(KIND, GAMMA, long_counts)
+    acted = read_act((now,), (arrivals(now, PERIODIC),), read, self_coefficient, wall)[0].astype(float)
+    inner = slice(2, 22)
+    scale = float(moving.rotation)
+    assert np.linalg.norm(acted[inner] - scale * now[inner]) < 1e-4 * np.linalg.norm(now[inner])
+    stepped = ((read * sum(arrivals(now, PERIODIC)) + self_coefficient * now) // wall - before).astype(
+        float
+    )
+    cosine = scale / 2
+    sine = math.sqrt(1 - cosine * cosine)
+    expected = cosine * now + sine * envelope_times_sine(moving, triple)
+    assert np.linalg.norm(stepped[inner] - expected[inner]) < 1e-4 * np.linalg.norm(now[inner])
+    with pytest.raises(ValueError, match="no Pythagorean triple"):
+        moving_mode(counts, KIND, GAMMA, (3, 3, 5))
+    asymmetric = counted_cube(12, 4, 3000)
+    asymmetric[1, 5, 5] = 100
+    with pytest.raises(ValueError, match="mirrored along x"):
+        moving_mode(asymmetric, KIND, GAMMA, triple)
+
+
+def test_the_refusals_by_name():
+    with pytest.raises(ValueError, match=r"the clock \[2, 1\] is no rotation"):
+        period_by_the_rule(2, 1)
+    with pytest.raises(ValueError, match="the counts stay in \\[0, Gamma\\)"):
+        bound_mode(counted_cube(4, 2, GAMMA), KIND, GAMMA)
+    with pytest.raises(ValueError, match="zero everywhere"):
+        bound_mode(np.zeros((4, 4, 4), dtype=np.int64), KIND, GAMMA)
+    with pytest.raises(ValueError, match="int64"):
+        bound_mode(np.ones((4, 4, 4), dtype=np.int32), KIND, GAMMA)

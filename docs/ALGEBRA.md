@@ -19094,8 +19094,20 @@ that constancy.
    (b) THE ITERATION. Rule3's read act with the before-coefficient 0
    (the one-Node step's keep, 9.119 item 1): a <- (SUM_a R_a arr_a + S
    a) div w on the region; then Rule3's division act to the amplitude
-   unit A of the universe (the level multiplied by A and divided by its
-   largest size: a load and a division, both the rule's acts). This is
+   unit A (the level multiplied by A and divided by its largest size:
+   a load and a division, both the rule's acts). A IS DERIVED, NEVER
+   WRITTEN (the owner's decision of 2026-09-26): the largest amplitude
+   at which Rule3's total stays inside the integer width at every
+   content of the region, 9.57 (2)'s bound solved for the amplitude,
+   A = (M - w) div (6 R + |S| + w) with M = 2^63 - 1 at the content
+   whose coefficients are largest (the body's, whose |S| grows with
+   the content): 5117272 at 3000 per Node, 5221564 at 2000, 5345022
+   at 1000 on [800, 1200] at Gamma 10^4, between 2^22 and 2^23
+   (COMPUTED, `amplitude_unit`). The fixed point does not depend on A
+   beyond its resolution: at A / 2 the profile agrees with the one at
+   A, rescaled, within 5, 8 and 12 units of the coarser in the three
+   cases of (c), 5 x 10^-6 of A, and the rotation to 10^-6; the final
+   scale comes from c T (item (d)). This is
    the power iteration of the symmetric form's top mode (the bound
    mode, above the band, is the eigenvalue of largest size, since
    2 cos omega_b > 2 num / den, the size of the band's bottom); it
@@ -19107,12 +19119,12 @@ that constancy.
    set and enters a cycle; the stop is the first repeat of the
    profile, exact, with no tolerance and no declared count; the profile
    at the repeat is the mode within one unit of A. COMPUTED in integers
-   from a flat start (every level A = 2^20, no seed), Rule3's
-   coefficients as the engine's: the iteration reaches a fixed point
-   (a cycle of length 1) at step 196 for side 4 and 3000 per Node on
-   12^3, at 271 for side 6 and 2000 on 18^3, at 395 for side 12 and
-   1000 on 24^3, and the profile's overlap with the float top mode is
-   1.000000 in each case. (d) THE TWO LEVELS
+   from a flat start (every level A, no seed), Rule3's coefficients as
+   the engine's: the iteration reaches a fixed point (a cycle of
+   length 1) at step 198 for side 4 and 3000 per Node on 12^3, at 291
+   for side 6 and 2000 on 18^3, at 513 for side 12 and 1000 on 24^3,
+   and the profile's overlap with the float top mode is 1.000000 in
+   each case. (d) THE TWO LEVELS
    AND THE AMPLITUDE FROM THE COUNT. The mode's second level is the
    read act once more, halved: before = (M now) div 2, since M phi =
    2 cos omega_b phi; the two levels are scaled together so that the
@@ -19120,7 +19132,12 @@ that constancy.
    and T the family's quantum norm, a row of the family in the
    universe file (today the emitter's `norm` key, which moves to the
    family's row): the body's record carries exactly its quanta's norm,
-   and nothing of the body is declared. (e) THE MOVING BODY, THE SAME
+   and nothing of the body is declared. THE UNITS: the form here is
+   9.57 (1)'s, SUM [w (now^2 + before^2) - S now before] / p^2 - 2 num
+   SUM now S_6(before); the engine's ladder reads a record's norm with
+   the weights 1 / R_i and the family's common wall L (`given_norm`),
+   this form times L / (2 num), so c T is scaled in the tool's units
+   and the ladder's T is that times L / (2 num). (e) THE MOVING BODY, THE SAME
    PROCEDURE. The momentum n names the velocity v = n / W (the
    family's wall). The same iteration runs with the arrivals along the
    axis of motion read through the rotation act by the phase k per
@@ -19129,7 +19146,14 @@ that constancy.
    rotation omega_b(k); v(k) is the difference quotient of omega_b over
    k in exact rationals, and k is the pair at which v(k) is the named
    velocity, found by bisection on the pairs (exact; no float, record
-   2248). The body at rest is the case k = 0 of the same procedure.
+   2248). THE GAUGE: each iterate is mirrored about the box's centre
+   along the axis of motion, the real part even and the imaginary part
+   odd, re <- (re + re_mirrored) div 2 and im <- (im - im_mirrored) div
+   2, two division acts: the moving mode is determined up to a phase
+   and the mirror fixes it, the envelope's one gauge; a count not
+   mirrored along that axis is refused by name; at k = 0 the mirror is
+   the identity on the resting mode. The body at rest is the case k = 0
+   of the same procedure.
    PROPOSED: the moving mode's fixed point and its v(k) are the
    generator's to compute and the run's to confirm (item 5 (d)).
 
@@ -19258,10 +19282,11 @@ that constancy.
    step (9.113 item 2), the twist table's precision (9.113 item 3 (c)).
 
 5. **The amplitude unit A and the norm T (the Boss's question).** A is
-   DERIVED: the grain of the integers, the universe's amplitude bound
-   that the loader already holds (9.61 (3)), a host precision with no
-   physics in it; the generator scales the profile to it and then to
-   c T (9.120 item 4). T is a DECLARATION of the universe, one integer
+   DERIVED, never written (the owner's decision of 2026-09-26): the
+   largest amplitude at which Rule3's total stays inside the integer
+   width, 9.57 (2)'s bound solved for the amplitude (9.120 item 4
+   (b)), a host precision with no physics in it; the generator scales
+   the profile to it and then to c T (9.120 item 4). T is a DECLARATION of the universe, one integer
    per family beside the pair and Gamma: the action of one quantum,
    the count's wall above; Rule3 is linear and its form's scale is
    free, so no line of Rule3 fixes T; nature pins it, and no body
