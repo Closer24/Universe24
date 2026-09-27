@@ -274,11 +274,9 @@ class FamilyDefinition:
     held_factors: tuple[int, ...] = (1,)
     held_dipole: str | None = None
     held_dipole_div: int = 1
-    # THE SPIN'S STEP'S ROW (9.78 (5)): the curl and tidal pairs, required on a family that
-    # holds the spin's dipole; the leapfrog's span, required on a family that reads a family
-    # with a dipole; None where the role does not ask (Mathematician 2, #1203)
+    # THE SPIN'S STEP'S ROW (9.78 (5)): the curl and tidal pairs, read by the spin's step's
+    # folder; required on a family that holds the spin's dipole, None on every other
     spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
-    span: int | None = None
     # THE SOURCE (9.117 row "the source"): the target family by index, the signed weight, the
     # scale and the cap or None; the loop builds the source's term from it (Main Loop, #1236)
     sourced: tuple[int, int, int, int | None] | None = None
@@ -960,22 +958,13 @@ def _node_clock_bound(
                 )
 
 
-def _dipoles(entries: tuple[dict[str, object], ...]) -> dict[str, str | None]:
-    """Each family's held dipole by name, None where it holds none (the span rule of spins_step)."""
-    found: dict[str, str | None] = {}
-    for entry in entries:
-        held = cast(dict[str, object], entry["held"]) if "held" in entry else {}
-        found[cast(str, entry["name"])] = cast(str, held["dipole"]) if "dipole" in held else None
-    return found
-
-
 def _families_of(
     entries: tuple[dict[str, object], ...],
     age_bound: int,
     massive_record: bool,
     amplitude_bound: int,
 ) -> tuple[FamilyDefinition, ...]:
-    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair under the world key massive_record with its bound and den >= num, the clock's pair [p, q] with q from 1 and p bounded by the world's largest age, the held source's factors one per part and its dipole on a vector family, spins_step's curl and tidal on a family that holds the spin's dipole and its span on a family that reads a family with a dipole, the self-source's unit 0 or at least 24 A, a family held, clicking or sourced, a read naming a held family once, and a held family's shape."""
+    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair under the world key massive_record with its bound and den >= num, the clock's pair [p, q] with q from 1 and p bounded by the world's largest age, the held source's factors one per part and its dipole on a vector family, spins_step on a family that holds the spin's dipole, the self-source's unit 0 or at least 24 A, a family held, clicking or sourced, a read naming a held family once, and a held family's shape."""
     if len(entries) > MOST_FAMILIES:
         raise ValueError(
             f"families declares {len(entries)}; at most {MOST_FAMILIES} families on a "
@@ -988,7 +977,6 @@ def _families_of(
         if name in names:
             raise ValueError(f"two families named {name!r}")
         names.append(name)
-    dipole_of = _dipoles(entries)
     found: list[FamilyDefinition] = []
     for index, obj in enumerate(entries):
         label = f"families[{index}]"
@@ -1059,18 +1047,17 @@ def _families_of(
             if "dipole_div" in source:
                 divisor = cast(int, source["dipole_div"])
                 held_dipole_div = divisor
-        weights = cast(dict[str, object], obj["spins_step"]) if "spins_step" in obj else {}
         spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
-        if "curl" in weights and "tidal" in weights:
+        if "spins_step" in obj:
+            weights = cast(dict[str, object], obj["spins_step"])
             curl = cast(tuple[int, int], weights["curl"])
             tidal = cast(tuple[int, int], weights["tidal"])
             spin_weights = ((curl[0], curl[1]), (tidal[0], tidal[1]))
         elif held_dipole == "spin":
             raise ValueError(
-                f"{label} holds the spin's dipole and lacks spins_step.curl and .tidal: the spin's "
-                "step's two weights are the row's (ALGEBRA.md 9.78 (5)), no default"
+                f"{label} holds the spin's dipole and lacks spins_step: the spin's step's two "
+                "weights, curl and tidal, are the row's (ALGEBRA.md 9.78 (5)), no default"
             )
-        span = cast(int, weights["span"]) if "span" in weights else None
         sourced: tuple[int, int, int, int | None] | None = None
         if "sourced" in obj:
             term = cast(dict[str, object], obj["sourced"])
@@ -1118,11 +1105,6 @@ def _families_of(
             weight = cast(int, read["weight"])
             twist = cast(int | str, read["twist"])
             reads.append((names.index(other), weight, READ_BY[read["by"]], twist))
-        if span is None and any(dipole_of[names[other]] for other, _, _, _ in reads):
-            raise ValueError(
-                f"{label} reads a family with a dipole and lacks spins_step.span: the leapfrog's "
-                "span is the row's (ALGEBRA.md 9.78 (5); Mathematician 2 on #1236), no default"
-            )
         if held is not None and reads and clicks is None:
             raise ValueError(
                 f"{label} is held and reads {[names[i] for i, _, _, _ in reads]}: a field "
@@ -1144,7 +1126,6 @@ def _families_of(
                 held_dipole=held_dipole,
                 held_dipole_div=held_dipole_div,
                 spin_weights=spin_weights,
-                span=span,
                 sourced=sourced,
                 self_unit=self_unit,
                 clicks=clicks,

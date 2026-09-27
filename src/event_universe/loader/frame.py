@@ -80,10 +80,8 @@ WORLD = ObjectOf(
 PAIR = ListOf(Integer(least=1), 2)
 # a family's clock, the pair form [p, q] of its phase per interval of age (ALGEBRA.md, a family's declaration): the frame's key beside the name; p from 0, q from 1 (the build's rule)
 CLOCK = ListOf(Integer(least=0), 2)
-# the spin's step's row: the two weights curl and tidal, each a pair, and the leapfrog's span (ALGEBRA.md 9.78 (5)); the frame admits the key by name and kind, the loader requires each by role
-SPINS_STEP = ObjectOf(
-    {"curl": PAIR, "tidal": PAIR, "span": Integer(least=1)}, frozenset({"curl", "tidal", "span"})
-)
+# the spin's step's row: the two weights curl and tidal, each a pair (ALGEBRA.md 9.78 (5)); the frame admits the key by name and kind, the spin's step's folder reads it (the leapfrog's span is core's SPAN, never a key of a row)
+SPINS_STEP = ObjectOf({"curl": PAIR, "tidal": PAIR})
 # three integers on the axes
 AXES = ListOf(Integer(), 3)
 # a body's emitter, the giving of a clicking body (ALGEBRA.md 9.17 (4) to (6), 9.85 (5)): the given family, the ladder by name, the given record's clock and pair where the family declares none, the period, the norm with its denominator, the weight, the window's read, the twist

@@ -33875,9 +33875,6 @@
    "self_source": {
     "unit": 0
    },
-   "spins_step": {
-    "span": 2
-   },
    "clicks": {
     "gives": true,
     "takes": true,
@@ -33908,9 +33905,6 @@
    ],
    "self_source": {
     "unit": 0
-   },
-   "spins_step": {
-    "span": 2
    },
    "clicks": {
     "gives": true,

@@ -35,8 +35,6 @@ def paces_world() -> dict:
                     "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
                 }
             )
-        if family["reads"]:  # a reader of a family with a dipole declares the leapfrog's span
-            family["spins_step"] = {"span": 2}
     document["stamp"] = input_stamp(document)
     return document
 

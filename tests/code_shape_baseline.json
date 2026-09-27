@@ -199,10 +199,10 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/loader/world.py": {
-   "comment_lines": 414,
-   "docstring_lines": 324,
+   "comment_lines": 413,
+   "docstring_lines": 323,
    "level_shift_sites": 0,
-   "lines": 2751,
+   "lines": 2732,
    "record_references": 44,
    "rule_arithmetic_sites": 0
   },

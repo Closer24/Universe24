@@ -47,8 +47,6 @@ def parts_world(**body: object) -> dict:
                     "held": {"count": "sign", "factors": [1, 1], "dipole": "moment", "dipole_div": 2},
                 }
             )
-        if family["reads"]:  # a reader of a family with a dipole declares the leapfrog's span
-            family["spins_step"] = {"span": 2}
     document["stamp"] = input_stamp(document)
     return document
 

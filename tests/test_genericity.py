@@ -219,8 +219,6 @@ def draw(seed: int) -> dict[str, Any]:
                 "clicks": clicks(),
             }
         )
-    for entry in [e for e in families if e["reads"]]:  # a reader of a dipole family: the span
-        entry.setdefault("spins_step", {})["span"] = 2
     rng.shuffle(families)
     return {"seed": seed, "families": families, "roles": roles, "holders": holders}
 

@@ -308,10 +308,6 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     )
     refuses(lambda d: d["families"][0].pop("spins_step"), "holds the spin's dipole and lacks spins_step")
     refuses(
-        lambda d: d["families"][2].pop("spins_step"),
-        r"reads a family with a dipole and lacks spins_step\.span",
-    )
-    refuses(
         lambda d: d["families"][0]["spins_step"].__setitem__("curl", 3),
         r"spins_step\.curl must be a list, not 3",
     )
