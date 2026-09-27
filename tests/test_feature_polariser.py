@@ -22,7 +22,7 @@ from event_universe.features.polariser import (
     triple_of,
 )
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.worlds import ROOT, emitter_world
+from tests.worlds import ROOT
 
 LIGHT_CLOCK = ROOT / "examples" / "events" / "massive_record" / "light_clock.json"
 
@@ -95,24 +95,8 @@ def test_the_refusals_by_name():
         )
 
 
-def test_the_loops_stage_writes_nothing_and_the_turn_is_read_in_the_booking():
-    """The hook's stage on the emitter's unit world: the one body's polariser at (2, 1), the given record with the level 5 planted at the body's 32 Nodes; the stage rebinds nothing (the level 5 stands, no second level is laid, the pointers stand): the turn by the angle is read on the pair at the body's Nodes in the clicks' booking alone (`_polarised`), since a turn written every interval the record passes is a scatterer at the body, not a polariser (measured on Bell's world, tests/test_feature_crystal.py)."""
-    simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=20)))
-    simulation.step()
-    (live,) = simulation.records.values()
-    mask = simulation.blocks[0].mask
-    simulation.polarisers = {0: PolariserTerm((2, 1), ("screen", "measured:1"))}
-    now = live.now.copy()
-    now[mask] = 5
-    live.now = now
-    before, pointers = live.now.copy(), list(live.pointers)
-    simulation._polariser_stage(apply)
-    assert (live.now == before).all() and live.im_now is None and int(mask.sum()) == 32
-    assert live.pointers == pointers
-
-
 def test_the_bodys_own_set_books_the_fluxs_second_share_and_the_loop_admits_the_act():
-    """The booking's form on the shipped light clock (the mathematician's answer of 2026-09-27): A's polariser at (2, 1) with `at_well` (A's own set) as its second set and the face as its first; a record with the level 5 on A's Nodes offers 9 and 16 per Node, so the flux 100 at `at_well` books 64 and the flux 7 books 4 (7 x 16 div 25), a record with no level on A offers 0 and books 0, the face books its flux whole; a term whose second set is not a set on the body is refused by name at the terms' check; and two intervals through the main loop pass its audit, the stage laying no second level on any record."""
+    """The booking's form on the shipped light clock (the mathematician's answer of 2026-09-27): A's polariser at (2, 1) with `at_well` (A's own set) as its second set and the face as its first; a record with the level 5 on A's Nodes offers 9 and 16 per Node, so the flux 100 at `at_well` books 64 and the flux 7 books 4 (7 x 16 div 25), a record with no level on A offers 0 and books 0, the face books its flux whole; a term whose second set is not a set on the body is refused by name at the terms' check; and two intervals through the main loop pass its audit; the stage writes nothing (no level rebound, no second level laid, no pointer moved): the turn is read in the booking alone, since a turn written every interval the record passes is a scatterer at the body, not a polariser (measured on Bell's world, tests/test_feature_crystal.py)."""
     document = json.loads(LIGHT_CLOCK.read_bytes())
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     simulation.polarisers = {0: PolariserTerm((2, 1), ("face", "at_well"))}
@@ -132,7 +116,13 @@ def test_the_bodys_own_set_books_the_fluxs_second_share_and_the_loop_admits_the_
     while not simulation.records:
         simulation.step()
     simulation.step()
-    assert all(live.im_now is None for live in simulation.records.values())
+    before = {
+        live.identity: (live.now.copy(), list(live.pointers)) for live in simulation.records.values()
+    }
+    simulation._polariser_stage(apply)
+    for live in simulation.records.values():
+        assert live.im_now is None and (live.now == before[live.identity][0]).all()
+        assert live.pointers == before[live.identity][1]
 
 
 def test_the_terms_are_read_from_the_bodys_declared_key_at_the_load_and_the_second_set_is_checked():
