@@ -40,7 +40,7 @@ def test_the_file_names_every_built_primitive_at_its_declared_place_and_the_writ
     for place, names in step.places.items():
         for name in names:
             assert register.declarations[name].place == place, name
-    assert step.places["(iii)"] == () and step.places["any"] == ("the trace",)
+    assert step.places["(iii)"] == () and step.places["any"] == ("the trace", "the start")
     assert step.acts[0][:2] == ("(iv)", "the hold")
     holds = [act for act in step.acts if act[1] == "the hold"]
     assert holds == [

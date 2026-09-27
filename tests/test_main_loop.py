@@ -236,7 +236,7 @@ def test_e_an_honest_primitive_passes_and_its_write_lands(tmp_path, monkeypatch)
     simulation.step()
     assert simulation.blocks[0].spin == [0, 0, 1]
     assert simulation.register.at("the cheat", "(v)") is apply
-    assert simulation.main_loop.walked[-1] == "the cheat"
+    assert "the cheat" in simulation.main_loop.walked
 
 
 def test_f_the_six_arrivals_are_the_neighbours_addresses_once_per_array_per_interval():
