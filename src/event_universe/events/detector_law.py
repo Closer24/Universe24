@@ -229,11 +229,11 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         # the state built once from the parsed world, in this order (`events/assembly.py`)
         assembly.detectors(self, world)
         assembly.universe_values(self, world)
-        # THE UNIVERSE'S WALL L (the law's row "the recoil"): the least common multiple of the
-        # declared wavelengths 2 N q / p over the families and the emitters with a clock [p, q]
+        # THE UNIVERSE'S WALL L (the law's row "the recoil"): the least common multiple of the wavelengths 2 N q / p over the clocks [p, q] of the families a body of the world gives and of the emitters
         self.recoil_wall = 1
+        givers = [e.block.emitter for e in world.measured if e.block and e.block.emitter]
         for index, row in enumerate(world.families):
-            if row.phase_per_age is not None:
+            if row.phase_per_age is not None and any(g.family == index for g in givers):
                 self.recoil_wall = bounded_lcm(
                     self.recoil_wall, self._wavelength(row.phase_per_age, f"families[{index}]")
                 )
