@@ -37,7 +37,7 @@ one import; no run). Nothing here is registered or decided.
   at the lamp's Node, F the crowd's release per source per interval, the
   detector's `1 + z = 1 + k` (DETECTOR); G2's `gravity_scalar` on main.
 - **The age moment is already the field of the rows' rule.** optical-v1
-  (the owner's "go", record 303, [Highlights 5.4](../../HIGHLIGHTS.md#54-the-detector)):
+  (the owner's "go", record 303, [Highlights 5.4](../../HIGHLIGHTS.md)):
   a row's flight wall reads the crowd's age moment; covariant-readings-v1
   (record 270): the gradient of the age moment across the six Ports. Today
   the rows and the readings use `M / r` and the clock's default uses

@@ -309,6 +309,6 @@ dark sector](../far_lamp/DARK_SECTOR.md);
 [DERIVATIONS_BEAM](../../DERIVATIONS_BEAM.md) 2.5, 6.4, 14.3, 15.3 to
 15.5, 20; [HYPOTHESES 7](../../HYPOTHESES.md); [NATURE](../../NATURE.md)
 rows 3, 11a to 11c and 12; [EXPERIMENTS](../../EXPERIMENTS.md) series G
-and G2; [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector), the dark
+and G2; [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md), the dark
 sector (record 283), the clock's word (record 394), the detector's clock
 (records 709, 754, 768).

@@ -510,6 +510,6 @@ and 23 (the massive rows' `E'`);
 [the Lorentz note](../open_problems/lorentz/NOTE.md);
 [EXPERIMENTS K](../../EXPERIMENTS.md#k-light-beside-a-mass-2026-09-20)
 and [K under the meeting](../../EXPERIMENTS.md#k-under-the-meeting-2026-09-20);
-[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector);
+[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md);
 [issue #605](https://github.com/Closer24/Universe24/issues/605);
 [the three tests](../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).

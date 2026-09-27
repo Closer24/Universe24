@@ -260,7 +260,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 ### The columns of the one coupling, the lifetime, the held content and the contact through the table (2026-09-20)
 
 - The model owner's decision ("one mechanism for all the laws on the
-  GameBoard", [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); the
+  GameBoard", [Highlights 5.4](docs/HIGHLIGHTS.md); the
   mathematician's verified form, "correct and working";
   [BEAM_LAW note 31](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   the push a measured event takes from a free family's rays is a signed
@@ -365,7 +365,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   physics knows exists in our entity definitions, and that we can also
   support external ones such as the sun, a planet, a neutron star, so that
   they can be placed on the GameBoard and things tested";
-  [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector)):
+  [Highlights 5.4](docs/HIGHLIGHTS.md)):
   [the catalog of the entities](docs/ENTITY_CATALOG.md), every entity
   physics knows as one row of the law's keys as `world.py` accepts them
   today (the fundamental things, the composites, the external things),
@@ -422,7 +422,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 ### The turn by momentum: Bohr as parameters outside the board (2026-09-20)
 
 - The model owner's decision ("On Bohr, go, and put it as parameters
-  outside the board like the age"; [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector);
+  outside the board like the age"; [Highlights 5.4](docs/HIGHLIGHTS.md);
   [RAY_LAW note 30 (ii)](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   the world key `action` (h, an integer from 1, absent by default) and
   the measured-event key `phase_by_momentum` (false by default): at the
@@ -449,7 +449,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 - The model owner's decision on Bohr, the body on a set taken with it as
   the condition for a closed orbit (the physicist's proposal 1, "the
-  electron of width 3"; [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector);
+  electron of width 3"; [Highlights 5.4](docs/HIGHLIGHTS.md);
   [RAY_LAW note 30](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   the measured-event key `span` (three odd integers from 1, `[1, 1, 1]`
   by default) makes a measured event a body on the block of Nodes centred
@@ -542,7 +542,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 ### The age of a ray kept whole and read by the measured event (2026-09-20)
 
 - The model owner's "go for it" on the clock beside a mass (2026-09-19,
-  [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); [RAY_LAW section 10](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  [Highlights 5.4](docs/HIGHLIGHTS.md); [RAY_LAW section 10](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
   note 25): the ray's age, the count of intervals since the measured event
   that created it, is kept whole on the record (the flight reads it modulo
   the direction's period, the collision never; the board's step is
@@ -1043,7 +1043,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   `test_detector_sensitivity` ([expectations](docs/TEST_EXPECTATIONS.md#a-detectors-sensitivity)).
 - The phase window, `phase_window`, by the model owner's decision of
   2026-09-19 ("Approve the phase window as a declared width of a detector,
-  and of the emitter too"; [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector)):
+  and of the emitter too"; [Highlights 5.4](docs/HIGHLIGHTS.md)):
   a setting on the circle of N steps and the half circle centred on it. On a
   table entry (`{"rule": ..., "phase_window": s}`, any rule but `pass`; the
   string form still accepted) the response, after the threshold, only to a
@@ -1062,7 +1062,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   "there is no matter either; matter is a measured event"; "a single quantum
   does not split; in the space of events the quantum leaves in one
   direction"; "there is no shadow and no real; on the board there are only
-  events"), is recorded in [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector)
+  events"), is recorded in [Highlights 5.4](docs/HIGHLIGHTS.md)
   after "One speed, and what is seen", in the owner's words with the
   orchestrator's readings flagged, and the paragraphs it changes carry a dated
   sentence. Nothing of it is implemented: [Highlights coverage](docs/HIGHLIGHTS_IMPLEMENTATION.md),
@@ -1079,7 +1079,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 - The engine of the law of the shadow (`field-only-v1`, feature 20) is the one
   engine, by the model owner's decision of 2026-09-19 ("The field is, in fact,
   a field of events. No confrontations are needed. Only tests that everything
-  is as designed."; [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector)). The
+  is as designed."; [Highlights 5.4](docs/HIGHLIGHTS.md)). The
   old engine of the law of the bit, its worlds, catalog, tools and tests are
   deleted ([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
   The substrate the new engine took from the old one moved to
@@ -1222,7 +1222,7 @@ gains two modes and the framework's claims are narrowed to what is measured.
   configured laws are named as inputs, the Bell section carries errors and the
   causal analysis, "what is new" and "what is not claimed" are explicit, and
   the bonded pair is stated not to be a local explanation of the Bell value
-  ([paper](paper/main.tex)).
+  (the paper of that release, since removed).
 
 ## 0.3.0 - 2026-09-14
 

@@ -770,7 +770,7 @@ and the atoms README (`examples/events/atoms/README.md`, deleted 2026-09-26);
 [BEAM_LAW notes 18, 30 (ii), 40 and 41](../../BEAM_LAW.md); [NATURE row 6](../../NATURE.md);
 the paper's "Planck and de Broglie, as identities" and its sentence on
 row 6 (paper/general_formula/main.tex); [the three tests](../../../skills/workflow.md);
-[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector) (records 281, 754,
+[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md) (records 281, 754,
 817, 844, 881, 886, 910, 941, 955, 972); records 874, 899, 972 and 973
 of [the log](../../LOG_2026-09-20.md); levels_map.py (`docs/designs/atom_levels/levels_map.py`, deleted 2026-09-26) and
 [its output](levels_map.out); rungs_map.py (`docs/designs/atom_levels/rungs_map.py`, deleted 2026-09-26) and

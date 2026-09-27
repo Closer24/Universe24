@@ -590,5 +590,5 @@ presence). No run is ordered here; the owner's word only.
 [BEAM_LAW sections 2, 3, 5 and note 30 (ii)](../../BEAM_LAW.md);
 [EXPERIMENTS.md, series H and N](../../EXPERIMENTS.md);
 [the atoms pins](../atoms/PINS.md); [NATURE row 6](../../NATURE.md);
-[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector) (records 281, 721,
+[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md) (records 281, 721,
 762, 817, 822, 839).

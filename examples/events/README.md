@@ -1,7 +1,7 @@
 # The worlds of the Beam Law
 
 Four world files of the one engine (`beam-v1`, [the Beam Law](../../docs/BEAM_LAW.md),
-[the engine](../../docs/ENGINE.md); [Highlights 5.4](../../docs/HIGHLIGHTS.md#54-the-detector),
+[the engine](../../docs/ENGINE.md); [Highlights 5.4](../../docs/HIGHLIGHTS.md),
 "DECIDED: the law of the ray", the model owner, 2026-09-19). Each is a JSON
 object with `"law": "beam"`: the GameBoard, K and N (`K` the clock's rate:
 an integer K, the content per phase step per self-creation, read as the
