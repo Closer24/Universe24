@@ -242,8 +242,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         corner: list[int],
         mask: np.ndarray,
     ) -> Block:
-        # a body's block from its measured entry: its Nodes, the detector under its position, its
-        # momentum and its spin at their two levels, the file's
+        # a body's block from its measured entry: its Nodes, the detector under its position, its momentum and spin
         block = Block(
             number,
             entry.family,
@@ -2006,7 +2005,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         largest = int(np.max(np.abs(nxt)))
         if im_next is not None:
             largest = max(largest, int(np.max(np.abs(im_next))))
-        if self.world.massive_record and largest > self.world.amplitude_bound:
+        if largest > self.world.amplitude_bound:
             raise RuntimeError(
                 f"the record {live.identity} reached the level "
                 f"{largest} at interval {self.tick}, above the world's declared "

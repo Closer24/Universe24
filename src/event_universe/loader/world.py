@@ -517,14 +517,10 @@ class NatureBeamWorld:
     detectors: tuple[DetectorDefinition, ...]
     readings: tuple[Reading, ...]
     step: Step
-    # every click line carries `clock`, the body's own count; the loop's read, no key of the file
-    clock_stamp: bool = True
     # the face receiver's depth at every open border (ALGEBRA.md #the-ladder),
     # declared in the file under the detector law (no default, BUILD.md
     # section 26 item 28); 0 on a GameBoard with no open face (no slab)
     face_depth: int = 0
-    # every family declares its pair and every body its record; the loop's read, no key of the file
-    massive_record: bool = True
     # massive-record-v1: the probes, Nodes whose light amplitude is written
     # per interval (GAMEBOARD), empty by default.
     probes: tuple[Address3, ...] = ()
