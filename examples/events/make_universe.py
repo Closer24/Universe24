@@ -15,19 +15,29 @@ Run from the repository root: python examples/events/make_universe.py
 from __future__ import annotations
 
 import json
+import math
 import sys
+from fractions import Fraction
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
-sys.path.insert(0, str(ROOT / "tools"))
 
-from generator_numbers import (  # noqa: E402
-    TWIST_COARSE_MOST,
-    TWIST_FINE_BITS,
-    TWIST_UNIT_SCALE,
-    twist_triple,
-)
+# the generator's own numbers (HOST): the twist's unit scale 2^16, 2^10 fine and 2^15 coarse triples, the triples' d bound 10^9
+TWIST_UNIT_SCALE = 1 << 16
+TWIST_FINE_BITS = 10
+TWIST_COARSE_MOST = 1 << 15
+TWIST_TRIPLE_BOUND = 10**9
+
+
+def twist_triple(k: int, unit: int) -> tuple[int, int, int]:
+    """THE NEAREST TRIPLE of the angle k / unit radians (ALGEBRA.md #the-transport, #the-primitives): n / m nearest tan(angle / 2) with m at most the root of the d bound, the triple (m^2 - n^2, 2 m n, m^2 + n^2) in lowest terms, (1, 0, 1) at angle 0; HOST, the loader checks the identities and the angles' order."""
+    ratio = Fraction(math.tan(k / (2 * unit))).limit_denominator(math.isqrt(TWIST_TRIPLE_BOUND))
+    n, m = ratio.numerator, ratio.denominator
+    c, s, d = m * m - n * n, 2 * m * n, m * m + n * n
+    g = math.gcd(math.gcd(c, s), d)
+    return c // g, s // g, d // g
+
 
 FAMILIES_FILE = ROOT / "examples" / "events" / "universe.json"  # the universe file (record 2128 (3))
 

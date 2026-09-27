@@ -129,7 +129,7 @@ def chain_world(
     }
     receiver_cube(document, "screen", [screen, 0, 0])
     if on_mode:
-        massive_generator().seed_on_the_mode(document)
+        seed_on_the_mode(document)
     return document
 
 
@@ -189,7 +189,7 @@ def emitter_body(
 def layer_world(receiver: object = None) -> dict:
     """A layer of 80 x 9 x 1 (x closed): the emitter across the width at [2, 34) and three detector cubes
     s0, s1, s2 at x in [70, 72]; `receiver` names the ladder's sets in order (ALGEBRA.md #rule3)."""
-    measured = [emitter_body([2, 0, 0], 8, receiver=receiver, extents=[32, 9, 1])]
+    measured = [emitter_body([2, 0, 0], 8, extents=[32, 9, 1])]  # the receiver set after the seeding
     document = {
         "shape": [80, 9, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
@@ -210,7 +210,10 @@ def layer_world(receiver: object = None) -> dict:
     }
     for index, y in enumerate((0, 3, 6)):
         receiver_cube(document, f"s{index}", [70, y, 0])
-    massive_generator().seed_on_the_mode(document)
+    seed_on_the_mode(document)
+    if receiver is not None:
+        measured[0]["emitter"]["receiver"] = receiver
+        document["stamp"] = input_stamp(document)
     return document
 
 
@@ -285,7 +288,7 @@ def _emitter_world(
     }
     receiver_cube(document, "screen", [70, 0, 0])
     if on_mode:
-        massive_generator().seed_on_the_mode(document)
+        seed_on_the_mode(document)
     return document
 
 
@@ -316,10 +319,55 @@ def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
     return module
 
 
-def massive_generator():
-    return load_file(
-        "massive_record_make_worlds", ROOT / "examples/events/massive_record/make_worlds.py"
-    )
+SEEDS_FILE = (
+    ROOT / "tests" / "seeds.json"
+)  # the retired generator's seedings of every fixture, recorded once
+
+
+def _seed_key(document: dict) -> str:
+    from event_universe.world_files import input_digest
+
+    return input_digest(json.loads(json.dumps({k: v for k, v in document.items() if k != "stamp"})))
+
+
+def _seeds() -> dict:
+    return json.loads(SEEDS_FILE.read_text(encoding="utf-8"))
+
+
+def _apply(document: dict, written: dict) -> None:
+    document.update(written["top"])
+    for index, keys in written["measured"].items():
+        document["measured"][int(index)].update(keys)
+
+
+def seed_on_the_mode(document: dict) -> None:
+    """The fixture's bodies seeded on their modes as the retired generator wrote them once (tests/seeds.json): a fixture the table does not hold is refused by name (a new fixture is seeded by the mathematician's tool)."""
+    key = _seed_key(document)
+    table = _seeds()["seed_on_the_mode"]
+    if key not in table:
+        raise ValueError(
+            f"no recorded seeding for this fixture ({key[:12]}): tests/seeds.json holds the fixtures as recorded"
+        )
+    _apply(document, table[key])
+
+
+def emitter_rung(document: dict, number: int) -> None:
+    """The emitter's rung (its norm over the loader's period) as the retired generator wrote it once (tests/seeds.json)."""
+    _apply(document, _seeds()["emitter_rung"][f"{_seed_key(document)}:{number}"])
+
+
+def iterated_mode_row(document: dict, number: int, amplitude: int) -> tuple[list[int], list[int]]:
+    """The bound mode iterated once by the retired margin module on a fixture's body: its profile and clock (tests/seeds.json)."""
+    row = _seeds()["iterated_mode"][f"{_seed_key(document)}:{number}:{amplitude}"]
+    return row["profile"], row["clock"]
+
+
+def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
+    """The bound mode's profile of a fixture's body as the retired generator computed it once (tests/seeds.json)."""
+    key = f"{_seed_key(document)}:{number}:{amplitude}"
+    row = _seeds()["mode_profile"][key]
+    _apply(document, row["written"])
+    return row["profile"]
 
 
 def reads() -> list[dict]:
