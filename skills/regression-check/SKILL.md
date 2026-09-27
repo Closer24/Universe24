@@ -42,7 +42,7 @@ Read [the shared workflow](../workflow.md) and the regression expectations in
 an exact old/new tree and expected-change contract from Boss.
 
 Since 2026-09-17, by the model owner's decision in
-[Highlights 5.5](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions),
+[Highlights 5.5](../../docs/HIGHLIGHTS.md),
 the tests run for a change are those that depend on what it changed, selected
 by the import graph through `python tools/check.py`; the whole suite runs
 together only when the shared core changes (the Node and its Ports, the order

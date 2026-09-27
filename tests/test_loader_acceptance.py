@@ -92,8 +92,9 @@ def family_names() -> set[str]:
 
 @pytest.mark.xfail(
     strict=True,
-    reason="record 2226: the loader of today holds the family name 'gravity' as the built-in column "
-    "(world.py, GRAVITY_COLUMN); the schema loader holds no family name",
+    reason="record 2226: the loader of today translates the universe file to the loop's families list "
+    "by the keys 'charge' and 'clicks', which are family names of the tests' worlds; the switch "
+    "hands the loop the checked entries and names no key",
 )
 def test_a1_the_loader_holds_no_family_name_of_the_universe():
     """Record 2226 with records 2172 to 2174: no string constant of the loader is a family name
@@ -110,8 +111,9 @@ def test_a1_the_loader_holds_no_family_name_of_the_universe():
 
 @pytest.mark.xfail(
     strict=True,
-    reason="record 2089 with record 2226: the loader of today writes defaults for keys of the files "
-    "(`.get(key, default)`); the schema loader refuses a missing key by name from the schema",
+    reason="record 2089 with record 2226: the loader of today writes defaults for the tests' inline "
+    "families' keys and for `fixed`, `span` and `margin` (ten shipped bodies write no `fixed`); "
+    "the switch and the generator's worlds remove them",
 )
 def test_a2_the_loader_writes_no_default_for_a_key_of_the_files():
     """Record 2089 (every default and flag out of the engine's code into the files) with record
@@ -176,9 +178,10 @@ def body_world() -> dict:
 
 @pytest.mark.xfail(
     strict=True,
-    reason="ALGEBRA.md 9.120 item 1 with record 2226: the loader of today requires the residue keys "
-    "K, N, release and a body's seed, pair and side; the schema loader loads the body by its "
-    "family, Nodes, count per Node and momentum n alone",
+    reason="ALGEBRA.md 9.120 item 1 with record 2226: the loop still reads N, and the loader still "
+    "requires K, release, width and the flags of the old form and a body's seed, pair and side; "
+    "the body by its family, Nodes, count per Node and momentum n alone comes with the loop's "
+    "reads of the momentum and the spin as families (the mathematician's word on #1210)",
 )
 def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_and_runs(
     tmp_path, monkeypatch
@@ -215,8 +218,8 @@ def test_b2_the_word_sourced_on_a_family_of_the_universe_loads(tmp_path, monkeyp
 
 @pytest.mark.xfail(
     strict=True,
-    reason="record 2199 item 1 with record 2226: the loader of today refuses the world key 'readings' "
-    "and requires K, N, release; the schema loader reads the readings from their declaration",
+    reason="record 2199 item 1 with record 2226: the source worlds carry none of the old form's keys "
+    "K, N, release, width and the flags, which the loader still requires while the loop reads them",
 )
 def test_b3_the_word_readings_on_the_shipped_source_world_loads():
     """Record 2199 item 1 (the output declared in one format; Main Loop's interface: a name, a
