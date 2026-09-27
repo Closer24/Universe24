@@ -1,29 +1,31 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "5cbe91bc",
+ "recorded_at": "c7800638",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
-    "hash": "23fa7d19cc00ff162aabeed42e089db060e774018ff97a9440fb676a0acec192"
+    "hash": "07dd6cd992d4bb1254f0c92a47057b59aa2a95da2d232970d20fb0a8d27373a5"
    },
    "ticks": 15156,
-   "intervals": 181,
-   "digest": "301d573b657b4580fe4619d438129881319d421578ef082f41869d11d62c9f24",
-   "records": 17,
+   "intervals": 200,
+   "digest": "2bc6a7f2d8b486af199e8721594282bb3c0f7320f4896a492780b860cf0bbd8e",
+   "records": 16,
    "clicks": 0,
-   "lines": 578,
+   "lines": 576,
+   "refused_at": 181,
    "refused": "the twist on the Port toward +y reaches |k| = 43307142, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/dark_body/dark.json": {
    "stamp": {
-    "hash": "b0f19bb2f7511b0a795d3d961120cfcc5e49b9bb241dddf5dd1c97f31dd909ff"
+    "hash": "9b14b3fa4d32026d675374fcd7ad6c66e2fc95625ea869d2cc3b94b975a7f993"
    },
    "ticks": 2400,
-   "intervals": 181,
-   "digest": "5b874ef1746e73532ceefc8b4989c1c1f3a9c5a70f13e46ac0860fceb2014fc3",
-   "records": 13,
+   "intervals": 200,
+   "digest": "bf8289dc7b820f02a682b4d045327872c7d3b47f29c3b79622146d3c4eaefdca",
+   "records": 12,
    "clicks": 0,
-   "lines": 574,
+   "lines": 573,
+   "refused_at": 181,
    "refused": "the twist on the Port toward +y reaches |k| = 43416228, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/massive_record/boxed_clock_side_20_at_rest.json": {
@@ -94,14 +96,14 @@
   },
   "examples/events/massive_record/light_clock.json": {
    "stamp": {
-    "hash": "ff778e00a368f3007bcc3156cb8b5a9850d985122e9a577ffc8cac36b675bf0f"
+    "hash": "e35d7873be165414bc4f3822daa3c09bdd379d10c6af1d79c4191ab17d44f883"
    },
    "ticks": 4800,
    "intervals": 1500,
-   "digest": "f129a6cda149c43e612d638f4b3bab5a2f7a9c3d8d3e2844c46e4833bc181e5e",
-   "records": 9,
-   "clicks": 50,
-   "lines": 4766
+   "digest": "6dcb06ec6fe546d2fa983ff50017f6002f597c2df3a900c08b8155f7f8ff276e",
+   "records": 17,
+   "clicks": 40,
+   "lines": 4754
   },
   "examples/events/massive_record/muon_moving_clock_at_rest_14.json": {
    "stamp": {
@@ -127,7 +129,7 @@
   },
   "examples/events/point_emitter/point_chain.json": {
    "stamp": {
-    "hash": "4fc4c64f3f0ddbc195438e1ef9ae7a60f1844e995f79f6273e3082ece9e121fe"
+    "hash": "1f38daaa3bf5806b7ea86e9bac9bfc1234edb3e093b496b5e7921f7fa6121283"
    },
    "ticks": 70992,
    "intervals": 200,
@@ -138,113 +140,116 @@
   },
   "examples/events/point_emitter/point_light_clock.json": {
    "stamp": {
-    "hash": "b0f76d7b81a392dc56f56da262d0b88ff63614dfe5ac787259cbfe7732989cda"
+    "hash": "39ab0210af23eeaf869237996a41c851b8a15a65cb3bbf83ad11c747e973c962"
    },
    "ticks": 35304,
    "intervals": 3000,
-   "digest": "13563517476120e6d5bbb30b8ef8feb12a6b8e3de4508496f2d2ac1a7902cf70",
+   "digest": "05309268eceb1d9696e5f0b7c726b86b45ae845d1756d72ad67ee04f1a92b361",
    "records": 2,
-   "clicks": 10,
-   "lines": 9104
+   "clicks": 9,
+   "lines": 9102
   },
   "examples/events/toward_nature/bending.json": {
    "stamp": {
-    "hash": "afd085a67cba2f1391a60655a71b3091ca8198aafca414fd8fce198d6d3f4c92"
+    "hash": "643373cfa97d1edb61558b12f9457545bcd49d4709be5cfe9fa7f29ccc80de1b"
    },
    "ticks": 5600,
-   "intervals": 181,
-   "digest": "3bd5b843fc5f1df4062301b00bbfa4101976596b75ec662bd053a7b2872fa764",
+   "intervals": 200,
+   "digest": "342aa293e1eb1309f3394647b9fd928899d953d52e21624e34f3649fea196899",
    "records": 13,
    "clicks": 0,
-   "lines": 573,
+   "lines": 574,
+   "refused_at": 181,
    "refused": "the twist on the Port toward +y reaches |k| = 43416228, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/toward_nature/lorentz_moving.json": {
    "stamp": {
-    "hash": "e58c98c0a37705fd5576f51c50c2aeb83a5a68143f2df246ee28c164d3276432"
+    "hash": "1eac3116b3cc7c20e1b488d90b02d19a2c0da861cfc63a5c78369b148c9e6bc4"
    },
    "ticks": 3600,
    "intervals": 200,
-   "digest": "45526f1ba311bc6999eb641e68735174340d2dd061cd9b1be7948b37f8c2a589",
-   "records": 11,
-   "clicks": 1,
-   "lines": 632
+   "digest": "38bcf6d98bcf458e92cfd2f7dfbfb87984e663a09439556902a36c9be65e1f6a",
+   "records": 12,
+   "clicks": 0,
+   "lines": 631
   },
   "examples/events/toward_nature/lorentz_moving_long.json": {
    "stamp": {
-    "hash": "96aad9701a60a356208beda937590e7766bc18767c4be7418964e6e6592cd86c"
+    "hash": "b48cad34a2ac65aaf07972043bbf3af2bafac353011d9fd9a652fb553179f6a1"
    },
    "ticks": 5966,
    "intervals": 200,
-   "digest": "63329a7e3b463f2c5ec62b886558208e1af8d52d8713f6c7418f0a36a58c71f4",
+   "digest": "841e4f351b9657408fadf128368e5d422d1878a778550e07098e58f052042c28",
    "records": 4,
    "clicks": 0,
-   "lines": 607
+   "lines": 608
   },
   "examples/events/toward_nature/lorentz_rest.json": {
    "stamp": {
-    "hash": "1805359dd6bd65f6bbaae56a64d4280cd3b482b86fe4c2a2239939c58d02837f"
+    "hash": "07bb1db95b2b07b091c6ce778a13f568a30e76be795c0da0b79277dfc605a9c1"
    },
    "ticks": 3600,
    "intervals": 1500,
-   "digest": "42e3a0be60a4ea40b938785f2f3bd076187cdaa3b975fde12a21fa247fb3f603",
-   "records": 9,
-   "clicks": 50,
-   "lines": 4766
+   "digest": "e805655add5a72fcf600bb9222949b1506a63aba164247b65da84f231d489b59",
+   "records": 19,
+   "clicks": 40,
+   "lines": 4755
   },
   "examples/events/toward_nature/lorentz_rest_long.json": {
    "stamp": {
-    "hash": "58d8f0d96144a3b9c8e0c70771ddc6b2bd74c2b2ce4566a6a2184417930f0e99"
+    "hash": "311b2687d3670de3574d834ad68acc1455d6fa1d092b5acadf2554fb2c94c1e1"
    },
    "ticks": 8206,
    "intervals": 200,
-   "digest": "5d983aef993dfb01dae95f66b85969e04378a0708a22936f852057dd33ca42d8",
+   "digest": "16cd21fb0e94ebcd55b47fa5d780c1641f1d9eb7442ce6b39d075e380a643ccd",
    "records": 4,
    "clicks": 0,
    "lines": 607
   },
   "examples/events/toward_nature/redshift_bottom.json": {
    "stamp": {
-    "hash": "31808a4d080f5b20db7bccf5cd3e0767677f2d490c60cc57e367b6e257f72195"
+    "hash": "cc1fb880742211ec707acc56af42cba473e62c4f62382349d75ce5779e320449"
    },
    "ticks": 6534,
-   "intervals": 34,
-   "digest": "f125412aa27b611e8f88cdfd584bc6e16923aea6f69494d46afe04358bd3ca36",
+   "intervals": 200,
+   "digest": "d68429ed73429e6a132ff695731c4bf04e6b909fc7c2a5b38852bc8ee872ec2c",
    "records": 2,
    "clicks": 1,
    "lines": 101,
+   "refused_at": 34,
    "refused": "the twist on the Port toward +x reaches |k| = 33829026, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/toward_nature/redshift_bottom_long.json": {
    "stamp": {
-    "hash": "e459ec74788a5ba518a6e3c4fc29ee84f17985143b37c4ea6eeba76e4b72bcf8"
+    "hash": "d57d2fcc780023e4a83e7858914e330aacdb3cae93717971861dbdd51f3306da"
    },
    "ticks": 10558,
-   "intervals": 56,
-   "digest": "22584a9bfbf693f8de9fb4de88b02604b2c200382e16ee18ad0b6bf28cc2d2ac",
+   "intervals": 200,
+   "digest": "d8cbad90b5e3717905ea3fcc1786ec59ea2899f9507cee2e1cdb2e3422f0ce45",
    "records": 1,
    "clicks": 1,
    "lines": 165,
+   "refused_at": 56,
    "refused": "the twist on the Port toward +x reaches |k| = 37704680, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/toward_nature/redshift_top.json": {
    "stamp": {
-    "hash": "29e807682f7c3d1578f5218b1af34b6177881cc1bb5af105bd7117cb8debcfaa"
+    "hash": "7acf85b05ee0bc9f4090d7254934f2519fb0236d0931aba81051d9675623377e"
    },
    "ticks": 6150,
    "intervals": 200,
-   "digest": "fc1534b8549278c2e0b2a8a0e2bf0e2523509f526739eebf07c4b206fe654df1",
+   "digest": "652820f5f3bfc936c4f8e0f48b740056a25a195fec9be2c01a21c1e15c901788",
    "records": 9,
-   "clicks": 0,
-   "lines": 629
+   "clicks": 1,
+   "lines": 630
   },
   "examples/events/toward_nature/redshift_top_long.json": {
    "stamp": {
-    "hash": "395e9eca0258334bdca3a9d2a0ff664d1eeeb3a9a3881e863c6a8f182321394e"
+    "hash": "30dbc7579748c32d50b83d67aa3c8089d755c6062095ce00445aa539d6041ea3"
    },
    "ticks": 9598,
    "intervals": 200,
-   "digest": "20bc3f67a9a88301d9a2ed71f93f638f6a0e86153f92a950a6cf60b247347690",
+   "digest": "26f32ee9c69c53223d25d227908d685c3a34bd51f09d21255d962d63d159389d",
    "records": 4,
    "clicks": 0,
    "lines": 607

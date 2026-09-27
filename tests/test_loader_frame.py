@@ -167,7 +167,7 @@ def test_every_shipped_body_and_detector_passes_the_frames_schemas():
     known; a stock names a family, the checked lists are tuples."""
     families = tuple(entry["name"] for entry in shipped()["families"])
     context = Context(families)
-    ahead = {"check_mode", "source"}
+    ahead = {"check_mode", "generated", "source"}
     count = 0
     for path in sorted((ROOT / "examples" / "events").glob("*/*.json")):
         document = json.loads(path.read_text(encoding="utf-8"))

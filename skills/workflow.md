@@ -333,8 +333,7 @@ that day ("we said without 85 worlds"; "put it in the skill"):
   genericity probe of that half run in parallel with the second half.
 - **Brief with the exact files.** An agent starts cold; the brief names the
   documents, the design and the commit to start from, and the design's
-  evidence is committed under `docs/designs/<key>/` so every session can read
-  it.
+  evidence is one comment on the one issue so every session can read it.
 - **Write the record once.** The day's findings, readings and the owner's
   words go to `docs/LOG_<date>.md` as they happen, one record each with the
   next number; a decision of the owner is one line in Highlights 5.4 linked

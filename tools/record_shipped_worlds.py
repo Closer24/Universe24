@@ -45,8 +45,9 @@ EVENTS = ROOT / "examples" / "events"
 RECORD = ROOT / "tests" / "shipped_worlds.json"
 FORMAT = "shipped-worlds-digest"
 # the folders whose worlds are ahead of the loader's words (their structure tests hold their
-# load as expected failures): not shipped worlds of the engine
-AHEAD = ("check_mode", "source")
+# load as expected failures; `generated`: the readable example of the law's form, its giving body
+# refused at load until the mode file): not shipped worlds of the engine
+AHEAD = ("check_mode", "generated", "source")
 FULL_RUN_SECONDS = 12.0
 PREFIX_INTERVALS = 200
 SAMPLE_STEPS = 5
@@ -184,8 +185,9 @@ def digest_of(reading: dict[str, Any]) -> str:
 def run(path: Path, intervals: int | None = None) -> dict[str, Any]:
     """The world stepped `intervals` times (its recorded count, or the count this tool picks) and
     its digest, with the counts that name a difference when the digest moves; a world the law
-    refuses on the way is recorded at the interval of the refusal with the refusal's words, which
-    the digest covers, so the replay refuses the same step the same way."""
+    refuses on the way keeps its count and is recorded with the refusing step and the refusal's
+    words, which the digest covers, so the replay refuses the same step the same way; a recorded
+    world keeps its recorded count on every re-record, a new one gets the count this tool picks."""
     document = json.loads(path.read_text(encoding="utf-8"))
     stamp = input_stamp(document)
     started = time.monotonic()
@@ -200,14 +202,15 @@ def run(path: Path, intervals: int | None = None) -> dict[str, Any]:
         intervals = ticks if per_step * ticks <= FULL_RUN_SECONDS else min(ticks, PREFIX_INTERVALS)
         intervals = min(ticks, LONGER.get(path.resolve().relative_to(ROOT).as_posix(), intervals))
     refused: str | None = None
+    refused_at = 0
     try:
         while simulation.tick < intervals:
             simulation.step()
     except ValueError as refusal:
-        refused, intervals = str(refusal), simulation.tick + 1
+        refused, refused_at = str(refusal), simulation.tick + 1
     reading = run_reading(simulation, lines)
     if refused is not None:
-        reading["refused"] = refused
+        reading["refused"] = [refused_at, refused]
     entry: dict[str, Any] = {
         "stamp": stamp,
         "ticks": ticks,
@@ -219,7 +222,7 @@ def run(path: Path, intervals: int | None = None) -> dict[str, Any]:
         "seconds": round(time.monotonic() - started, 2),
     }
     if refused is not None:
-        entry["refused"] = refused
+        entry["refused_at"], entry["refused"] = refused_at, refused
     return entry
 
 
@@ -232,7 +235,7 @@ def main(argv: list[str] | None = None) -> int:
     worlds: dict[str, Any] = dict(recorded.get("worlds", {}))
     for path in paths:
         key = path.relative_to(ROOT).as_posix()
-        entry = run(path)
+        entry = run(path, worlds.get(key, {}).get("intervals"))
         entry.pop("seconds")
         worlds[key] = entry
         print(key, json.dumps(entry))
