@@ -1,7 +1,7 @@
 """THE SPIN'S STEP, its own folder (ALGEBRA.md 9.117 the row "the spin's step"; 9.78 (5); 9.104
 (2); 9.119 item 2; the Boss's record 2250), bound to the loop: the curl and the gradient are
 Rule3's read acts on the six neighbours' levels, Omega x S and mu x B_q bookings, every division
-through core.rule3, the row's two weights read from the family's entry; on a body at rest the loop
+through core.rule3, the row's two weights and the span read from the families' entries; on a body at rest the loop
 turns the spin by a planted curl and restores it one interval back, and the torque turns it by the
 moment and the charge's curl at the read's weight alone; the inverse undoes the advance exactly on
 synthetic integers; the refusals; the declaration, bound. HOST; no pin."""
@@ -25,13 +25,14 @@ from event_universe.features.spins_step import (
     curl,
     gradient,
 )
-from event_universe.world_files import parse_nature_beam_world
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.test_emitter import emitter_world
 from tests.test_vector_holds import parts_of, parts_world
 
 GAMMA = 10_000
-# the row's weights of the spin's turn, Schiff's 1 / 2 and 3 / 2 in the levels' unit (ALGEBRA.md 9.78 (5))
+# the row's weights of the spin's turn, Schiff's 1 / 2 and 3 / 2 in the levels' unit, and its span (ALGEBRA.md 9.78 (5))
 TURN = ((1, 4), (3, 4))
+SPAN = 2
 NONE = (None,) * 6
 ZERO = (0,) * 6
 
@@ -126,7 +127,7 @@ def test_the_inverse_undoes_the_advance_exactly():
     """On synthetic integers an advance then an inverse returns the spin, the spin before and the
     carries (the state before the advance); the omega, torque and steps of the inverse are the
     advance's, so the inverse subtracts what the step added."""
-    term = SpinStepTerm((0, 0, 1), GAMMA)
+    term = SpinStepTerm((0, 0, 1), GAMMA, SPAN)
     reads = (
         SpinRead(
             0,
@@ -156,13 +157,23 @@ def test_the_inverse_undoes_the_advance_exactly():
 
 
 def test_the_refusals_by_name():
-    term = SpinStepTerm((0, 0, 0), GAMMA)
+    term = SpinStepTerm((0, 0, 0), GAMMA, SPAN)
     own = SpinStepOwn({}, {})
     zeros = (ZERO, ZERO, ZERO)
     with pytest.raises(ValueError, match="act is one of"):
         apply(term, SpinStepStart("the hop", (), (0, 0, 0), 1, (0, 0, 0), (0, 0, 0)), own)
     with pytest.raises(ValueError, match="from 1"):
         apply(term, SpinStepStart(THE_ADVANCE, (), (0, 0, 0), 0, (0, 0, 0), (0, 0, 0)), own)
+    with pytest.raises(ValueError, match="the span 0 from 1"):
+        start = SpinStepStart(THE_ADVANCE, (), (0, 0, 0), 1, (0, 0, 0), (0, 0, 0))
+        apply(SpinStepTerm((0, 0, 0), GAMMA, 0), start, own)
+    # no silent default: the loader refuses, by name, the spin's family without its pairs and the bodies' without their span
+    for name, match in (("clicks", "lacks keys: curl, tidal"), ("matter", "no spins_step.span")):
+        document = parts_world(spin=[0, 0, 5], side=1)
+        next(f for f in document["universe"] if f["name"] == name).pop("spins_step")
+        document["stamp"] = input_stamp(document)
+        with pytest.raises(ValueError, match=match):
+            parse_nature_beam_world(document)
     with pytest.raises(ValueError, match="spin or moment"):
         reads = (SpinRead(0, "charge", 1, 1, zeros, None, None),)
         apply(term, SpinStepStart(THE_ADVANCE, reads, (0, 0, 0), 1, (0, 0, 0), (0, 0, 0)), own)

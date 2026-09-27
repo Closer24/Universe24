@@ -1658,12 +1658,11 @@ class DetectorLawSimulation:
         `now` levels, which the inverse meets first): per read with a dipole, the read family's
         vector part and, for the spin's dipole, its time part at the body's Node's six
         neighbours with the row's two weights; the body's momentum, wall, spin and spin
-        before; its remainders under the line's keys; the writes the spin, the spin before
-        and the remainders back. THE FEED AND THE INDUCTION of 9.78 (4) are NOT here: built
+        before and its family's span; its remainders under the line's keys; the writes the spin,
+        the spin before and the remainders back (a body reading no dipole has no step). THE FEED
+        AND THE INDUCTION of 9.78 (4) are NOT here: built
         and held back (BUILD.md section 26 item 65; 9.104 (6) (b))."""
         definition = self.families[block.family]
-        if not definition.reads:
-            return
         centre = self._window_centre(block)
         wrap = self.kind_wrap[block.family]
         reads: list[SpinRead] = []
@@ -1676,8 +1675,14 @@ class DetectorLawSimulation:
             time = turn = None
             if read.held_dipole == "spin":
                 time = self._ports_of(self.held_records[other].now, False, centre, wrap)
-                turn = read.spin_weights
+                turn = read.spins_step
             reads.append(SpinRead(position, read.held_dipole, factor, weight, (x, y, z), time, turn))
+        if not reads:  # no read with a dipole: no turn and no torque, the spin keeps
+            return
+        if definition.span is None:  # refused at load: a family reading a dipole declares its span
+            raise ValueError(
+                f"{definition.name} reads and declares no spins_step.span for the spin's step"
+            )
         momentum = self._momentum_now(block)
         start = SpinStepStart(
             THE_INVERSE if inverse else THE_ADVANCE,
@@ -1692,7 +1697,9 @@ class DetectorLawSimulation:
             {key: value for key, value in block.hold_carry.items() if key[0] in KEYS},
         )
         moment = block.definition.moment
-        term = SpinStepTerm((int(moment[0]), int(moment[1]), int(moment[2])), self.node_clock)
+        term = SpinStepTerm(
+            (int(moment[0]), int(moment[1]), int(moment[2])), self.node_clock, definition.span
+        )
         writes = cast(SpinStepWrites, line(term, start, own))
         block.spin, block.spin_before = list(writes.spin), list(writes.spin_before)
         block.hold_value.update(writes.own.values)
@@ -2519,7 +2526,7 @@ class DetectorLawSimulation:
                     )
                 )
         start = ReceiveStart(re, im, twisted, tuple(links))
-        writes = cast(ReceiveWrites, line(self._receive_term, start))
+        writes = cast(ReceiveWrites, line(self._receive_term, start, None))
         return list(writes.re), None if writes.im is None else list(writes.im)
 
     @staticmethod

@@ -1,4 +1,4 @@
-"""The spin's step: S_next = S_before + (SPAN [(Omega x S_now) + mu x B_q] + carry) div (W Gamma), Omega from a read whose dipole is the spin ((c_num x factor x curl V + (t_num ((grad c) x n)) div W) div (SPAN x den), the two weights the read family's row), B_q from a read whose dipole is the moment (weight x curl V_q div SPAN); the curl and the gradient Rule3's read acts on the six neighbours' levels, every division Rule3's division act with its remainder on the body (ALGEBRA.md 9.117 the row "the spin's step", 9.78 (5), 9.104 (2), 9.119 item 2)."""
+"""The spin's step: S_next = S_before + (span [(Omega x S_now) + mu x B_q] + carry) div (W Gamma), the leapfrog over the row's span, Omega from a read whose dipole is the spin ((c_num x factor x curl V + (t_num ((grad c) x n)) div W) div (span x den), the two weights the read family's row spins_step, the span the bodies' family's spins_step.span), B_q from a read whose dipole is the moment (weight x curl V_q div span); the curl and the gradient Rule3's read acts on the six neighbours' levels, every division Rule3's division act with its remainder on the body (ALGEBRA.md 9.117 the row "the spin's step", 9.78 (5), 9.104 (2), 9.119 item 2)."""
 
 from __future__ import annotations
 
@@ -10,7 +10,6 @@ from event_universe.core.rule3 import NO_READ, THE_ADVANCE, THE_INVERSE, Key, ca
 from event_universe.core.schema import Integer, ListOf, ObjectOf, Schema
 
 ACTS = (THE_ADVANCE, THE_INVERSE)
-SPAN = 2  # the central difference's two Links and the leapfrog's two intervals, the lattice's own integer (ALGEBRA.md 9.78 (5))
 SPIN = "spin"
 MOMENT = "moment"
 KEYS = ("gradc", "omega", "bq", "spin")  # the body's remainders of this step, by their first word
@@ -35,10 +34,11 @@ class SpinRead:
 
 @dataclass(frozen=True)
 class SpinStepTerm:
-    """The body's declaration: its moment mu and the Node clock Gamma."""
+    """The body's declaration: its moment mu, the Node clock Gamma and the span of the turn, the central difference's two Links and the leapfrog's two intervals, read from the bodies' family's row (spins_step.span; ALGEBRA.md 9.78 (5))."""
 
     moment: Vector
     gamma: int
+    span: int
 
 
 @dataclass(frozen=True)
@@ -156,9 +156,10 @@ def check(term: SpinStepTerm, start: SpinStepStart) -> None:
     """The refusals by name: the act, the wall and Gamma from 1, each read's dipole spin or moment, a spin's read with its time part and its two weights over one denominator from 1."""
     if start.act not in ACTS:
         raise ValueError(f"the spin's step's act is one of {list(ACTS)}, got {start.act!r}")
-    if start.wall < 1 or term.gamma < 1:
+    if start.wall < 1 or term.gamma < 1 or term.span < 1:
         raise ValueError(
-            f"the spin's step needs the wall W = {start.wall} and Gamma = {term.gamma} from 1"
+            f"the spin's step needs the wall W = {start.wall}, Gamma = {term.gamma} and the span "
+            f"{term.span} from 1"
         )
     for read in start.reads:
         if read.dipole not in (SPIN, MOMENT):
@@ -196,7 +197,7 @@ def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinSte
                     start.act,
                     ("omega", read.position, i),
                     c_num * read.factor * found[i] + tidal,
-                    SPAN * denominator,
+                    term.span * denominator,
                     values,
                     carries,
                 )
@@ -209,7 +210,7 @@ def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinSte
                     start.act,
                     ("bq", read.position, i),
                     read.weight * found[i],
-                    SPAN,
+                    term.span,
                     values,
                     carries,
                 )
@@ -221,7 +222,7 @@ def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinSte
         steps[i] = division_now(
             start.act,
             ("spin", i),
-            SPAN * (turn[i] + twist[i]),
+            term.span * (turn[i] + twist[i]),
             spin_wall(start.wall, term.gamma),
             values,
             carries,
@@ -246,7 +247,7 @@ DECLARATION = Declaration(
     reads=(
         "S_now",
         "the read families' vector parts and time parts at the body's six neighbours",
-        "the row's two weights of the turn",
+        "the spin's family's two weights of the turn and the bodies' family's span (spins_step)",
         "mu",
         "n",
         "W",
@@ -261,7 +262,12 @@ DECLARATION = Declaration(
             "a family's entry": ObjectOf(
                 {
                     "spins_step": ObjectOf(
-                        {"curl": ListOf(Integer(least=1), 2), "tidal": ListOf(Integer(least=1), 2)}
+                        {
+                            "curl": ListOf(Integer(least=1), 2),
+                            "tidal": ListOf(Integer(least=1), 2),
+                            "span": Integer(least=1),
+                        },
+                        frozenset({"curl", "tidal", "span"}),
                     )
                 },
                 frozenset({"spins_step"}),

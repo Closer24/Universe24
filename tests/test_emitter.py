@@ -56,6 +56,7 @@ READS = [
     {"family": CLOCK_FAMILY_NAME, "weight": 1},
     {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "sign"},
 ]
+SPAN = {"spins_step": {"span": 2}}  # the leapfrog's span of the bodies' spin (ALGEBRA.md 9.78 (5))
 
 
 def reads() -> list[dict]:
@@ -172,8 +173,9 @@ def emitter_world(
                 "phase_per_link": [512, 1],
                 "charge": 0,
                 "reads": reads(),
+                **SPAN,
             },
-            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
+            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads(), **SPAN},
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],

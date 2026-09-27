@@ -71,10 +71,10 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/detector_law.py": {
-   "comment_lines": 644,
-   "docstring_lines": 565,
+   "comment_lines": 646,
+   "docstring_lines": 566,
    "level_shift_sites": 15,
-   "lines": 3874,
+   "lines": 3881,
    "record_references": 33,
    "rule_arithmetic_sites": 0
   },
@@ -87,7 +87,7 @@
    "rule_arithmetic_sites": 0
   },
   "src/event_universe/events/world.py": {
-   "comment_lines": 479,
+   "comment_lines": 473,
    "docstring_lines": 400,
    "level_shift_sites": 0,
    "lines": 3420,

@@ -439,16 +439,16 @@ class FamilyDefinition:
     # two levels with their remainders (the second level not yet allocated:
     # it enters with the transport, commit 4)
     levels: int = 2
-    # THE HELD SOURCE'S WRITES (9.91 (3), (7)): the factor per part (gravity
-    # (1, 4, 2): s, 4 s n div W, 2 s n n div W^2; the charge (1, 1)), the
-    # body's dipole number written on the six neighbours ("spin", "moment")
-    # and its divisor; read by the hold once the vector parts are written
-    # (commit 2); one factor per part, (1,) on a scalar
+    # THE HELD SOURCE'S WRITES (9.91 (3), (7)): the factor per part (gravity (1, 4, 2): s,
+    # 4 s n div W, 2 s n n div W^2; the charge (1, 1)), the body's dipole number written on the
+    # six neighbours ("spin", "moment") and its divisor; one factor per part, (1,) on a scalar
     held_factors: tuple[int, ...] = (1,)
     held_dipole: str | None = None
     held_dipole_div: int = 1
-    # the spin's step's two weights of the turn, the curl's and the tidal term's pairs (9.78 (5))
-    spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
+    # the spin's step's row (9.78 (5)): a spin's family's curl and tidal weights as pairs; the
+    # bodies' family's span of the leapfrog (the two intervals)
+    spins_step: tuple[tuple[int, int], tuple[int, int]] | None = None
+    span: int | None = None
     # the self-source's unit P_2 (9.78 (3), 9.91 (5)): 0, off
     self_unit: int = 0
     # THE CLICKS (9.79 (1), 9.91 (7)): (gives, takes) for a family of records,
@@ -609,17 +609,13 @@ class BlockDefinition:
 
     side: int
     pair: tuple[int, int]
-    # THE BODY'S KIND (ALGEBRA.md 9.85 (3), 9.91 (7); the one stroke, commit
-    # 1): the rest pair of the body's own record, its family's declared pair
-    # or, on a family whose pair is the body's, the body's own `kind`
+    # THE BODY'S KIND (ALGEBRA.md 9.85 (3), 9.91 (7)): the rest pair of the body's own record,
+    # its family's declared pair or, on a family whose pair is the body's, the body's own `kind`
     kind: tuple[int, int]
-    # the well's own record's amplitude on its Nodes at interval 0 (0
-    # silent), or its profile's; declared in the file, no default (the
-    # model owner's rule through the Boss, 2026-09-25; BUILD.md section 26
-    # item 28; the loader's 2^20 of the first builds HISTORY)
+    # the well's own record's amplitude on its Nodes at interval 0 (0 silent), or its profile's;
+    # declared in the file, no default (the model owner, 2026-09-25; BUILD.md section 26 item 28)
     seed: int
-    # the box's extents per axis (x, y, z); a cube's are (side, side, side),
-    # and `side` is the x extent for the readers of a cube
+    # the box's extents per axis (x, y, z); a cube's (side, side, side), `side` its x extent
     extents: tuple[int, int, int] = (1, 1, 1)
     # the bound mode's integer profile over the whole board (x-major, one per
     # Node) when the seed is declared so; None for a flat seed
@@ -1495,7 +1491,8 @@ def _families(
             held_factors=attributes.held_factors,
             held_dipole=attributes.held_dipole,
             held_dipole_div=attributes.held_dipole_div,
-            spin_weights=attributes.spin_weights,
+            spins_step=attributes.spins_step,
+            span=attributes.span,
             self_unit=attributes.self_unit,
             clicks=attributes.clicks,
             pair_on_body=family.pair_on_body,
@@ -1520,7 +1517,8 @@ class FamilyAttributes(NamedTuple):
     held_factors: tuple[int, ...]
     held_dipole: str | None
     held_dipole_div: int
-    spin_weights: tuple[tuple[int, int], tuple[int, int]] | None
+    spins_step: tuple[tuple[int, int], tuple[int, int]] | None
+    span: int | None
     self_unit: int
     clicks: tuple[bool, bool] | None
     reads: list[tuple[str, int, str, int | str]]
@@ -1600,15 +1598,17 @@ def _family_generic(obj: dict[str, object], label: str) -> FamilyAttributes:
             )
     if "held_dipole_div" in obj:
         held_dipole_div = _integer(obj["held_dipole_div"], f"{label}.held_dipole_div", 1)
-    spin_weights = None
-    if "spins_step" in obj:
-        weights = _object(obj["spins_step"], f"{label}.spins_step", {"curl", "tidal"}, {"curl", "tidal"})
-        pairs = cast(list[list[int]], [weights["curl"], weights["tidal"]])
-        if any(len(p) != 2 or any(type(v) is not int or v < 1 for v in p) for p in pairs):
-            raise ValueError(
-                f"{label}.spins_step.curl and .tidal are pairs of integers from 1 (9.78 (5))"
-            )
-        spin_weights = ((pairs[0][0], pairs[0][1]), (pairs[1][0], pairs[1][1]))
+    spins_step = span = None
+    turn = {"curl", "tidal"} if held_dipole == "spin" else set()
+    if turn or "spins_step" in obj:  # no default: a spin's family its two pairs, a bodies' its span
+        row = _object(obj.get("spins_step", {}), f"{label}.spins_step", turn | {"span"}, turn)
+        if turn:
+            pairs = cast(list[list[int]], [row["curl"], row["tidal"]])
+            if any(len(p) != 2 or any(type(v) is not int or v < 1 for v in p) for p in pairs):
+                raise ValueError(f"{label}.spins_step.curl and .tidal are pairs of integers from 1")
+            spins_step = ((pairs[0][0], pairs[0][1]), (pairs[1][0], pairs[1][1]))
+        if "span" in row:
+            span = _integer(row["span"], f"{label}.spins_step.span", 1)
     clicks: tuple[bool, bool] | None = None
     if "clicks" in obj:
         value = _object(obj["clicks"], f"{label}.clicks", {"gives", "takes"}, {"gives", "takes"})
@@ -1671,7 +1671,7 @@ def _family_generic(obj: dict[str, object], label: str) -> FamilyAttributes:
             "level (ALGEBRA.md 9.45 (2); BUILD.md section 26 item 51)"
         )
     found = (held, parts, levels, held_factors, held_dipole, held_dipole_div)
-    return FamilyAttributes(*found, spin_weights, self_unit, clicks, reads)
+    return FamilyAttributes(*found, spins_step, span, self_unit, clicks, reads)
 
 
 def _resolve_reads(
@@ -1936,13 +1936,10 @@ def _block(
         # the mirror line of light's kind (DECLARATIONS.md section 15 L-1):
         # its Nodes carry the gap's pair and nothing else, no own record
         obj = dict(obj, seed=0)
-    # the load bound of MUST 3 on the block's own pair at its Nodes (the
-    # coupling's folded denominator HISTORY, decision (2) of record 1962)
+    # the load bound of MUST 3 on the block's own pair at its Nodes (decision (2) of record 1962)
     _pair_bound(pair[0], pair[1], label, amplitude_bound)
     if "seed" not in obj:
-        # NO IMPLICIT SEED (the model owner's rule through the Boss,
-        # 2026-09-25; BUILD.md section 26 item 28): a well declares its own
-        # record's amplitude or its profile; the loader's 2^20 is HISTORY
+        # NO IMPLICIT SEED (the model owner, 2026-09-25; BUILD.md section 26 item 28)
         raise ValueError(
             f"{label} lacks keys: seed (a well's own record on its Nodes: its "
             "amplitude at interval 0, 0 silent, or its profile with `margin`; no default, "
@@ -2406,6 +2403,9 @@ def _measured(
         if not isinstance(family_name, str) or family_name not in names:
             raise ValueError(f"{label}.family names an unknown family")
         family = names[family_name]
+        reading = families[family]  # no default (9.78 (5)): a body reading a dipole has the spin's step
+        if reading.span is None and any(families[o].held_dipole for o, *_ in reading.reads):
+            raise ValueError(f"{label}.family {family_name!r} reads a dipole, no spins_step.span")
         amount = _integer(obj["amount"], f"{label}.amount", 1)
         held = [0] * len(families)
         held[family] = amount

@@ -7,10 +7,18 @@ from typing import Any
 
 import numpy as np
 
+from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.core.register import Declaration
 from event_universe.core.rule3 import rule3
 
 PORTS = ("+x", "-x", "+y", "-y", "+z", "-z")
+
+
+def heading(port: int) -> tuple[int, int]:
+    """The Port's axis and side from the six Ports' table (core.game_board.PORT_HEADINGS)."""
+    return next((axis, side) for axis, side in enumerate(PORT_HEADINGS[port]) if side)
+
+
 Triple = tuple[Any, Any, Any]
 
 
@@ -61,7 +69,7 @@ class ReceiveWrites:
 
 def angle(port: int, reads: tuple[TwistRead, ...], link: Link) -> Any:
     """The Port's angle k = sigma SUM factor (V_a here + V_a arrived) over the twist reads, each read Rule3's read act on the arrived level with the Node's own level as the self term over the wall 1, loaded onto the sum (ALGEBRA.md 9.81 (2) (a), 9.96 (2))."""
-    axis, sigma = port // 2, (1, -1)[port % 2]
+    axis, sigma = heading(port)
     total: Any = 0
     for read, arrived in zip(reads, link.vectors, strict=True):
         coefficient = sigma * read.factor
@@ -117,7 +125,7 @@ def apply(term: ReceiveTerm, start: ReceiveStart, own: None = None) -> ReceiveWr
     for port, link in enumerate(start.links):
         k = angle(port, start.reads, link)
         angles.append(k)
-        axis = port // 2
+        axis, _ = heading(port)
         if not np.any(k):
             re_sums[axis] = re_sums[axis] + link.re
             if im_sums is not None and link.im is not None:

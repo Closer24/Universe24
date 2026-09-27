@@ -33877,6 +33877,9 @@
     "gives": true,
     "takes": true,
     "quantum": 1
+   },
+   "spins_step": {
+    "span": 2
    }
   },
   {
@@ -33907,6 +33910,9 @@
     "gives": true,
     "takes": true,
     "quantum": 1
+   },
+   "spins_step": {
+    "span": 2
    }
   }
  ]
