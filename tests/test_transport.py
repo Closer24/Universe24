@@ -91,7 +91,7 @@ def test_the_loader_writes_the_twist_own_and_the_given_lights_component():
     beam = parse_nature_beam_world(clock).measured[0].block
     # SINCE COMMIT 7 the light clock's A gives by the window too (the train retired): its
     # light turns at its own rotation, the component along z
-    assert beam is not None and beam.emitter is not None and beam.emitter.train is None
+    assert beam is not None and beam.emitter is not None
     assert beam.emitter.twist == beam.twist == rotation_twist(beam.clock[0], 2 * beam.clock[1])
     assert beam.emitter.part == 3
     # the retired train's twist was its wavelength's on light's dispersion, cos omega = (cos k + 2) / 3

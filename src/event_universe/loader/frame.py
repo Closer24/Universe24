@@ -42,7 +42,7 @@ UNIVERSE_KEYS = ("integers", "families")
 START = ObjectOf({"mode": OneOf(("check", "pin"))})
 # a face of the GameBoard: open (its edge is infinity), periodic (the walk wraps) or closed (a zero face with no take)
 FACE = OneOf(("open", "periodic", "closed"))
-# the world file's own keys (ALGEBRA.md 9.90 (2)): the GameBoard, its faces, the intervals, the files it names, its stamp; and the keys of the loop's old form, read by the loop today and deleted with it
+# the world file's own keys (ALGEBRA.md 9.90 (2)): the GameBoard, its faces, the intervals, the files it names, its stamp; and the keys of the loop's old form that the loop still reads
 WORLD = ObjectOf(
     {
         "shape": ListOf(Integer(least=1), 3),
@@ -66,11 +66,6 @@ WORLD = ObjectOf(
         "clock_stamp": Flag(),
         "massive_record": Flag(),
         "body_record": Flag(),
-        "drive_b": Flag(),
-        "flow_link": Flag(),
-        "centred_step": Flag(),
-        "atom_level": Flag(),
-        "optical": Integer(least=0),
     },
     frozenset(
         {
@@ -82,11 +77,6 @@ WORLD = ObjectOf(
             "amplitude_bound",
             "node_clock",
             "momentum_unit",
-            "drive_b",
-            "flow_link",
-            "centred_step",
-            "atom_level",
-            "optical",
         }
     ),
 )
@@ -112,9 +102,7 @@ EMITTER = ObjectOf(
         {"receiver", "period", "norm", "weight", "norm_denominator", "window_read", "clock", "pair"}
     ),
 )
-# a body's level under the world key atom_level: the family, the level's pair and the return
-LEVEL = ObjectOf({"family": Name(), "pair": PAIR, "return": ListOf(Integer(), 2)})
-# a body of the world file in today's form (ALGEBRA.md 9.120 item 1 names the form to come: its family, its Nodes, its count per Node and its momentum n): its Node, its family, its quanta, its momentum and its stocks of other families; a block's side or extents, pair and kind, seed with its clock and proper clock, ramp and start, margin, the body's numbers q, spin, moment and twist, its emitter with receiver and stock, and the ray law's fixed, axis and E the loop still reads
+# a body of the world file in today's form (ALGEBRA.md 9.120 item 1 names the form to come: its family, its Nodes, its count per Node and its momentum n): its Node, its family, its quanta, its momentum and its stocks of other families; a block's side or extents, pair and kind, seed with its clock and proper clock, ramp and start, margin, the body's numbers q, spin, moment and twist, its emitter with receiver and stock, and fixed
 BODY = ObjectOf(
     {
         "position": ListOf(Integer(least=0), 3),
@@ -140,9 +128,6 @@ BODY = ObjectOf(
         "emitter": EMITTER,
         "receiver": Word(),
         "stock": Integer(least=1),
-        "level": LEVEL,
-        "axis": AXES,
-        "E": Integer(least=1),
     },
     frozenset(
         {
@@ -164,9 +149,6 @@ BODY = ObjectOf(
             "emitter",
             "receiver",
             "stock",
-            "level",
-            "axis",
-            "E",
         }
     ),
 )
@@ -175,14 +157,12 @@ DETECTOR = ObjectOf(
     {"name": Word(), "positions": ListOf(ListOf(Integer(least=0), 3)), "block": Integer(least=0)},
     frozenset({"positions", "block"}),
 )
-# the world's keys handed on as written to their readers in events/world.py until their own cuts (True: required): the universe (a repository path, or a unit test's families inline), the bodies and the detectors (checked by `bodies` and `detectors` once the families are known), the readings, the records in transit, the covariant readings, an inline world's twist table
+# the world's keys handed on as written to their readers in events/world.py until their own cuts (True: required): the universe (a repository path, or a unit test's families inline), the bodies and the detectors (checked by `bodies` and `detectors` once the families are known), the readings, an inline world's twist table
 HANDED = {
     "universe": True,
     "measured": True,
     "detectors": True,
     "readings": False,
-    "in_transit": False,
-    "covariant_readings": False,
     "twist_table": False,
 }
 
