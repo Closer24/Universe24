@@ -1,38 +1,5 @@
-"""The algebra gate: the physical modules hold integer mathematics only
-(the model owner's word of 2026-09-22, record 920: the whole GameBoard is
-algebra and the clicks' implementation is algebra; no code that is not
-integer mathematics on the GameBoard and the clicks; the Boss's order to
-the Register Architect of the same day). The six verbs of the law
-(Highlights 5.4, "The six operations") act on integers; a root is the
-seventh verb, outside the law (record 249), admitted only where this test
-lists it by function, with its reason.
-
-The gate reads the source as tokens and as a syntax tree, never running
-a world, and asserts on every physical module: (a) no float literal token;
-(b) no `/` operator token (only `//`); (c) no import of `random`,
-`fractions`, `decimal`, `cmath` or `statistics`, and of `math` only its
-integer functions `gcd` and `isqrt`, and no alias of `math`, `isqrt` or
-`integer_root`; (d) every numpy dtype named is `int64`, `bool` or `object`
-(no `float*`, `complex*`, `floating`, no narrower integer), every
-allocation `np.zeros`, `np.ones`, `np.empty`, `np.full` carries a `dtype`
-(float64 by default without one), `np.array` takes no non-integer
-literal, and `.astype` names one of the same; (e) none of numpy's
-functions that leave the integers (`sqrt`, `mean`, `float`, `true_divide`,
-`divide`, `exp`, `log`, `sin`, `cos`, `tan`, `average`, `std`, `var`), none
-of its families `np.linalg.*`, `np.linspace`, `np.random.*`, `np.fft.*`,
-`np.polyfit`, `np.interp` (the attribute chains rooted at `np` walked), no
-call of the builtin `float` and no method `.mean`, `.std`, `.var`; (f) a
-root (`math.isqrt` or `core.integer.integer_root`, under any alias) only
-in the functions ALLOWED_ROOTS names, exactly those: a root that appears
-anywhere else fails, and a root that leaves a listed function fails too,
-so that the list is always the inventory. The reasons distinguish a rounding at load (a table constant,
-docs/designs/vector_form/LAW.md section 6), a predicate (a perfect-square
-test, no rounded number enters a reading) and a root at run time (the
-seventh verb, named in docs/designs/register_paper_sources/NODE_ALGEBRA.md
-section 2, pending the owner's word; one such root since PR #855, the
-meeting's norm). The self-tests at the end write
-sources with one violation each and show the gate catches them.
-"""
+"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import,
+dtype or numpy function, and a root only in the functions ALLOWED_ROOTS names, each with its reason."""
 
 from __future__ import annotations
 
@@ -55,6 +22,8 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md 9.88 (7)): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
     "core/readings.py": "the run's readings declared in the world file and written in one format: a detector's clicks, a family's level, support and total, a body's centre, the records alive (record 2199 item 1); reads state, writes nothing into the run",
+    "core/main_loop.py": "the main loop: the walk of the step file's acts through the register, the interval's frame (the clock, the deferred writes, the closing) and the run-time guards of the views, the writers and the Ports; the stages the engine's, handed in",
+    "core/ports.py": "the six Ports of every Node: the arrival of an array through one Port and the six arrivals once per array per interval, the outward Ports of a mask; the one shift across Nodes of the package",
     "core/step.py": "the step file: the interval's places and the ordered names of the primitives the loop calls, one shared file with its digest ",
     "core/register.py": "the register of primitives: one name to one function, found by the features' folders, each with its place, word, reads, writes and order (records 2212 and 2221; issue #1154)",
     "core/primitive.py": "the interface of a primitive: the term of the files, the interval's start, the primitive's own record, its writes; apply(term, start, own) -> writes (records 2212 and 2221; issue #1154)",

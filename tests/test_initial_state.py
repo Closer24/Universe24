@@ -29,9 +29,8 @@ from event_universe.events.world import (
     six_neighbours_flat,
 )
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.test_emitter import emitter_world, massive_generator, reads
-from tests.test_massive_record import light_clock_world, massive_world
-from tests.test_receiver_by_name import CLOSED_CHAIN, emitter
+from tests.bodies import CLOSED_CHAIN, emitter, light_clock_world, massive_world
+from tests.worlds import emitter_world, massive_generator, reads
 
 
 def peak_of(profile: list[int]) -> int:
