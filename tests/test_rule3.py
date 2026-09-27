@@ -1,7 +1,4 @@
-"""THE RULE IN ONE PLACE (ALGEBRA.md 9.57 (1), 9.50 (8), (9) and (13), 9.91 (2); issue #1154;
-src/event_universe/core/rule3.py): one function steps every record at every Node in either direction;
-the form's term is read from the same integers; the isotropic rule is the same call with equal paces;
-no other file of src/ writes this arithmetic; the operation primitive is rule3; bit for bit everywhere."""
+"""Rule3 in one place (core/rule3.py; ALGEBRA.md #the-line, #the-direction, #the-interval): one function steps every record in either direction, the isotropic rule is the same call with equal paces, and no other file of src/ writes this arithmetic."""
 
 from __future__ import annotations
 
@@ -255,7 +252,7 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
 
 def test_a_run_stepped_forward_and_back_returns_bit_for_bit():
     """Rule3 with the direction -1 undoes +1 exactly: the emitter world eight intervals forward and eight
-    back returns every record's levels, remainders and the held levels bit for bit (9.50 (8), (9))."""
+    back returns every record's levels, remainders and the held levels bit for bit (ALGEBRA.md #the-direction)."""
     simulation = detector_law.DetectorLawSimulation(
         parse_nature_beam_world(emitter_world(stock=1, ticks=8))
     )

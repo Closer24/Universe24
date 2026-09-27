@@ -1,14 +1,4 @@
-"""THE STEP FILE: the interval's order lives in one data file shared by every world, law/step.json,
-an ordered list of acts, each a primitive's name at its place with the words of its call; the
-host reads it, the loader carries it, the loop walks it act by act through the register and
-holds only the interval's frame (the clock, the bodies' clocks, the deletion, the readings) and
-the record's fused chain; the register refuses a file naming an unknown primitive, listing one at
-a place it does not declare, or leaving out a built one, and the loop refuses an act with words
-its stage does not take or a file ordering the record's chain otherwise; the writers of one value
-at one place follow the file's order (ALGEBRA.md 9.117 item 3 transcribed); a folder's card
-carries no order; every run writes the file's digest; two independent acts exchanged in a
-temporary file exchange the loop's calls; today's step is transcribed, every shipped world bit
-for bit (the digests' gate). HOST; no physics, no pin."""
+"""The step file law/step.json: the loop walks its acts through the register, the register and the loop refuse a file that names, places or orders an act wrongly, the writers of one value follow the file, and every run writes its digest. HOST; no pin."""
 
 from __future__ import annotations
 

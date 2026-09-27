@@ -310,10 +310,10 @@ that day ("we said without 85 worlds"; "put it in the skill"):
   one per table rule, key and family kind, so that every engine code path is
   replayed once; the whole register (109 worlds on 2026-09-20) is replayed
   only under `--full` or on demand. The gate set is listed with what each
-  world covers. The gate set is `examples/events/gate_set.json` (section 4 of
-  the trimming plan chose it by measured coverage on 2026-09-20);
-  `tools/run_series.py --list` replays it; a new key or rule adds the world
-  that first uses it to the list, with the line it covers.
+  world covers. The gate set is `tests/shipped_worlds.json` (every shipped
+  world, replayed bit for bit on every pull request that runs a world);
+  `tools/record_shipped_worlds.py` re-records it; a new key or rule adds the world
+  that first uses it to the record, with the line it covers.
 - **Check the near tests, then push; CI runs the whole suite (the owner,
   2026-09-27).** `python tools/check.py` selects the changed files' tests and
   the gates; when they pass, push and open the pull request READY. CI runs the
@@ -375,7 +375,7 @@ translates the state vector by a rate, thresholds it and subtracts (the
 events are what crossed), multiplies by a declared integer matrix (a split,
 a rotation) and adds (the merge). The measurement is the one threshold read
 out; its weight is the inner product of the pointer with itself, through the
-coupling's primitive (docs/LOG_2026-09-20.md records 167, 171, 173). Four
+coupling's primitive. Four
 consequences govern how every role works.
 
 1. Where the rate is constant (rows between clicks: the flight, the phase,
@@ -418,10 +418,10 @@ nature is (the paper's framing, the same record).
 run proves; and after the detector, the vector.** (1) A register entry
 carries the formula, or the derivation's section, beside its number, and
 where a formula exists the test derives and compares rather than reads a
-pinned number (`tests/test_amplitude_cone.py` is the template). (2) A run
+pinned number. (2) A run
 without a derived expectation is a research run and says so in its page
 and its record. (3) The derivation mathematician's targets
-(DERIVATIONS_BEAM.md) are the source of every series' expectations; a
+(their sections of ALGEBRA.md) are the source of every series' expectations; a
 target not reached marks a quantity a run may only measure. (4) The
 register's `expectations.json` entries carry a `derivation` field, and the
 review of an experiment's pull request checks the derivation before the
@@ -658,9 +658,9 @@ The owner's word: everything the owner and the Boss close on the way of work ent
 2. The engine supports; the run defines (record 2178). The engine implements the rule, the click and a closed set of primitives. The run's files declare the families, their attributes and the step itself: what each Port sends, receives and waits, and the operation on it (record 2186).
 3. The rule first (record 2188). What can be built from the one rule (ALGEBRA.md 9.57 (1)) and the click is built from them. What cannot is marked beyond the rule, kept as its own declaration, and studied.
 4. A new primitive: the agent who needs it asks the coder. The mathematician writes its algebraic line and its place in the step. The coder builds it once, for every run. The physicist writes its small test. It becomes an item of the ledger and is done when its test is green on main (records 2180, 2184, 2186).
-5. The ledger (docs/designs/generic_engine/ENGINE_LEDGER.md until the documents' merge, then a section of docs/ENGINE.md) holds what is implemented and what is to do, one item each with its test. The engine is closed when nothing is to do and every item is tried from the files alone (record 2180).
+5. The ledger (the primitives and the expected failures of docs/generated/STATUS.md, rendered from the tree) holds what is implemented and what is to do, one item each with its test. The engine is closed when nothing is to do and every item is tried from the files alone (record 2180).
 6. The trace (record 2187): any primitive can write one line per interval, Node and Port, with the integers read and written and the remainder. The files choose what is traced. A traced run is bit for bit the untraced one. Anyone may run the engine locally and debug with it.
-7. A new word: it enters the glossary (docs/GLOSSARY.md section 9, record 2193) with its one definition before it is used (Highlights 0.2 (2)). The Boss adds it with the record of the owner's word. Words already taken are not reused: a field is one family's levels over the Nodes, an attribute is never called a field, and an experiment is never called a row (records 2182, 2189).
+7. A new word: it enters the words of docs/ENGINE.md, section 1, with its one definition before it is used (HIGHLIGHTS.md, "Names with meaning"). The Boss adds it with the record of the owner's word. Words already taken are not reused: a field is one family's levels over the Nodes, an attribute is never called a field, and an experiment is never called a row (records 2182, 2189).
 8. Every attribute is algebra. Each has a small test of its own, and the run tests the whole (record 2184).
 9. The output is generic like the input (record 2191). Every reading the run writes is declared in the world file and labelled by its kind; one output format for every experiment; the visualizer reads the output alone, never the engine's state.
 10. The pins are outside the code (record 2191). A pin is a line of a pins file beside the world file, on a detector reading only; one generic reader outside the engine compares a run's output with it after the run; the engine never reads a pin. Nothing is compared against a pin before the Go.
@@ -714,7 +714,7 @@ stabilisation of the engine and the freeze:
    once, at the freeze; the docs after the code; the reviewer reads once
    after the merge ([physics-rule-validation](physics-rule-validation/SKILL.md)).
 5. **Every world has its test-run line, written by the world's writer before
-   the run** (`docs/designs/detector_law/TEST_RUNS.md`, written by Nature24):
+   the run** (the `expectations.json` beside the world):
    what a clean preliminary run must show, with no pin and no target number;
    the Preliminary Runner runs each feature's experiments on the writer's
    branch as soon as it is pushed and reports clean or what broke; a defect in
@@ -745,9 +745,8 @@ stabilisation of the engine and the freeze:
    is a list of entries that places tools by name in their cubes on the
    board, turned into its input file by the input-file generator (records
    1882 and 1886), and its pin is computed from the tools' algebra. All the tools are specified in one
-   file, `docs/designs/lab_tools/LAB_TOOLS.md` (one section per tool: its
-   specification, algebra, timing, cost, engine lines and test values;
-   existing design files cited, never copied), linked from ALGEBRA.md. The
+   file, `docs/ALGEBRA.md` (one section per tool: its
+   specification, algebra, timing, cost, engine lines and test values). The
    mathematician writes it; Nature24 checks every section and talks with the
    mathematician directly by Routine; a disagreement goes to the Boss for
    the owner. Nature24 writes each tool's code once its section is agreed
@@ -764,7 +763,7 @@ stabilisation of the engine and the freeze:
    the Nodes is an operation of the group: a per-Node branch that is not one
    is forbidden. A tool
    declares its own orientation and never the directions of what leaves it.
-   The specification goes into the tool file (LAB_TOOLS.md) from the
+   The specification goes into the tool's section of ALGEBRA.md from the
    algebra alone, the code is built from that file, and the experiments
    run only after every tool's algebra is closed and every tool merged; a
    well's seed is the bound mode of the composed world and never collides

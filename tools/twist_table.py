@@ -1,5 +1,4 @@
-"""THE TWIST TABLE'S GENERATOR AND CHECK, the host's floats (ALGEBRA.md 9.96 (2) (c), (d); 9.81
-(2) (b)): the fine table of 2^10 Pythagorean triples for the angles k_0 theta_unit and the
+"""THE TWIST TABLE'S GENERATOR AND CHECK, the host's floats (ALGEBRA.md #the-primitives, #the-transport): the fine table of 2^10 Pythagorean triples for the angles k_0 theta_unit and the
 coarse table for the angles k_1 (2^10 theta_unit), theta_unit = 1 / (4 Gamma 2^16) radians,
 each triple (m^2 - n^2, 2 m n, m^2 + n^2) from the n / m nearest tan(angle / 2) with d at most
 10^9. The engine reads the integers alone (`event_universe.events.primitives.TwistTable`); the
@@ -9,8 +8,8 @@ THE FINDING (HOST, 2026-09-26, Nature24 for the mathematician): every Pythagorea
 angle is 2 atan(n / m), so with d = m^2 + n^2 at most 10^9 the smallest nonzero angle is about
 2 / sqrt(10^9) = 6.3 x 10^-5 radians. theta_unit = 1 / (4 Gamma 2^16) = 3.8 x 10^-10 radians,
 and the fine table's angles k_0 theta_unit (k_0 below 2^10) are all below 3.9 x 10^-7: none of
-them is representable but the identity, and the precision theta_unit / 2^10 of 9.96 (2) (c)
-cannot be met by any triple under that bound (nor the 10^-6 radian of 9.81 (2) (e), by a
+them is representable but the identity, and the precision theta_unit / 2^10 of ALGEBRA.md #the-primitives
+cannot be met by any triple under that bound (nor the 10^-6 radian of ALGEBRA.md #the-transport, by a
 factor of about 60). `check_angles` reports the largest miss against the representable floor
 `SMALLEST_ANGLE`; the table's form waits for the mathematician's line (a coarser unit, a
 larger d, or the fine part folded into the coarse).
@@ -34,7 +33,7 @@ from event_universe.events.primitives import FINE_SIZE, Triple, TwistTable, is_t
 GAMMA = 10_000
 UNIT_SCALE = 1 << 16
 DENOMINATOR_BOUND = 10**9
-COARSE_DEFAULT = 1 << 15  # at most 2^15 coarse entries (9.96 (2) (c))
+COARSE_DEFAULT = 1 << 15  # at most 2^15 coarse entries (ALGEBRA.md #the-primitives)
 SMALLEST_ANGLE = 2.0 * math.atan(
     1.0 / math.isqrt(DENOMINATOR_BOUND)
 )  # the representable floor, about 6.3e-5
@@ -67,7 +66,7 @@ def build(coarse: int = COARSE_DEFAULT, gamma: int = GAMMA) -> TwistTable:
 
 
 def check_angles(table: TwistTable, gamma: int = GAMMA, tolerance: float | None = None) -> float:
-    """Every triple's angle within `tolerance` of its target (9.96 (2) (c) asks theta_unit /
+    """Every triple's angle within `tolerance` of its target (ALGEBRA.md #the-primitives asks theta_unit /
     2^10; the representable floor SMALLEST_ANGLE is the default here, the finding above);
     returns the largest miss (HOST)."""
     unit = theta_unit(gamma)

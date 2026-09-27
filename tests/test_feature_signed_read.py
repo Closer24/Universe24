@@ -1,5 +1,5 @@
-"""THE SIGNED READ WITH THE TWO-SIDED GUARD, its own folder (ALGEBRA.md 9.117 item 2, the first row;
-9.108 item 12; record 2224): the folder's read equals the engine's bit for bit on the emitter's world,
+"""THE SIGNED READ WITH THE TWO-SIDED GUARD, its own folder (ALGEBRA.md #the-primitives, the first row;
+ALGEBRA.md #the-paces; record 2224): the folder's read equals the engine's bit for bit on the emitter's world,
 the hand identity holds, the guard's edge (the checkerboard factor at -2) admits and refuses by name."""
 
 from __future__ import annotations
@@ -52,7 +52,7 @@ def own_of(simulation: DetectorLawSimulation, family: int) -> SignedReadOwn:
 
 
 def hand_line(simulation: DetectorLawSimulation, family: int, node: tuple[int, ...]) -> int:
-    """The trace's line of the pace's read at one Node (ALGEBRA.md 9.112 item 5): per read the family,
+    """The trace's line of the pace's read at one Node (ALGEBRA.md #the-interval): per read the family,
     the signed weight, the level, by plain or by sign with q, the product; p_0 = Gamma - the sum."""
     q = simulation.family_charge[family]
     products = []
@@ -172,7 +172,7 @@ def test_a_massless_family_admits_no_hill_and_every_family_needs_a_pace_above_ze
 
 def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
     """Three reads (2 a - 3 b plain, + 4 c by sign with q = -1) sum per Node exactly; no reads give 0; a
-    phase-2 read takes D_i = now^2 - next x before as handed in, times the weight (9.108 item 13)."""
+    phase-2 read takes D_i = now^2 - next x before as handed in, times the weight (ALGEBRA.md #the-paces)."""
     shape = (2, 1, 1)
     a = np.array([[[5]], [[7]]], dtype=np.int64)
     b = np.array([[[1]], [[-2]]], dtype=np.int64)
@@ -235,7 +235,7 @@ def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_
 
 
 def test_the_declaration_is_the_ledgers_row():
-    """The folder declares the row of ALGEBRA.md 9.117: the name, the place (i), the four reads in the
+    """The folder declares the row of ALGEBRA.md #the-primitives: the name, the place (i), the four reads in the
     row's words, the paces as its one write with no order, its function `apply`, its section."""
     assert DECLARATION.name == "the signed read"
     assert DECLARATION.place == "(i)"
@@ -249,7 +249,7 @@ def test_the_declaration_is_the_ledgers_row():
     assert DECLARATION.function is apply and DECLARATION.built
     assert DECLARATION.word == "the right side"
     assert DECLARATION.section.startswith(THE_WORD) and THE_WORD.startswith("from the rule")
-    assert "9.117" in DECLARATION.section and "9.108" in DECLARATION.section
+    assert "#the-primitives" in DECLARATION.section and "#the-paces" in DECLARATION.section
     assert folder_of(DECLARATION.name) == "signed_read"
     # the engine's register finds this folder and, until the loop calls apply, binds the
     # loop's read of today through `bind`, which apply equals bit for bit

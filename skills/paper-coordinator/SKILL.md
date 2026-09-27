@@ -2,13 +2,12 @@
 
 The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The paper writer reads the tree and the engine's output; it changes neither.
 
-The writer of the one paper on the general formula (the model owner's GO,
-record 264 of docs/LOG_2026-09-20.md; the title of record 275 as the owner
-sharpened it on 2026-09-22, record 712, "Universe24: a local integer law of
+The writer of the one paper on the general formula (the model owner's GO;
+the title as the owner sharpened it on 2026-09-22, "Universe24: a local integer law of
 nature with a non-local read-out, and what follows from it"), in its own session on
 its own branch, `paper-new-engine`, rewriting the paper on the new engine
-per `docs/designs/paper_verification/NEW_ENGINE_AUDIT.md` (records 1899 and
-1900), following [the shared workflow](../workflow.md) and its
+per the audit of the paper's rewrite on that branch, following
+[the shared workflow](../workflow.md) and its
 section [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190).
 
 ## What the coordinator writes and does not write

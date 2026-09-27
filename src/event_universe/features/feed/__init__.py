@@ -157,6 +157,6 @@ DECLARATION = Declaration(
     ),
     writes=("a body's momentum n", "a body's remainders"),
     function=None,
-    section="9.117 item 2; 9.78 (4); 9.91 (8) (v)",
+    section="ALGEBRA.md #the-primitives, #a-familys-declaration, #the-interval",
     word="after the step",
 )

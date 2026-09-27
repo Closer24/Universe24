@@ -1,4 +1,4 @@
-"""The body record (ALGEBRA.md 9.46): under `body_record` every seeded block is held as one Node with a
+"""The body record (ALGEBRA.md #what-a-body-is): under `body_record` every seeded block is held as one Node with a
 shape, its profile stored and never stepped, and equivalent to the block on the GameBoard."""
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ from tests.bodies import block_world, with_body_record
 from tests.running import planted
 from tests.worlds import PERIODIC, emitter_world, massive_generator
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
@@ -55,7 +55,7 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
     den_c Gamma); its 2 cos omega' read from three consecutive levels is K / (den_c Gamma)
     within 2 x 10^-6 at the levels above half the amplitude (the remainder's jitter over the
     level), and the lattice body's, read the same way at its centre Node, agrees with it within
-    10^-4 (the profile's rounding, 9.46 (9) (a): no bit-equal rational exists for a lattice
+    10^-4 (the profile's rounding, ALGEBRA.md #what-a-body-is: no bit-equal rational exists for a lattice
     body; the median 6 x 10^-6 and the worst 4.5 x 10^-5 over 400 intervals on this cube); the wheel in the vacuum's units is den_c /
     gcd(num_c, den_c) times Gamma / gcd(Gamma, ...) as the rule's gcd gives; the block's count
     (its cycles) over 400 intervals is the same on both forms within one; the body's invariant
@@ -77,7 +77,7 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
     centre = tuple(int(axis[0]) for axis in np.nonzero(one_node.centre_mask(one_node_block)))
     profile = np.array(document["measured"][0]["seed"], dtype=np.int64).reshape(one_node.shape)
     assert (body.now, body.before, body.remainder) == (int(profile[centre]), int(profile[centre]), 0)
-    # THE BODY'S NODE'S RULE (ALGEBRA.md 9.60 (2), 9.57 (1)): the one rule with the six reads returning
+    # THE BODY'S NODE'S RULE (ALGEBRA.md #what-a-body-is, #the-line): the one rule with the six reads returning
     # the body's Node, the pair [num_c, 2 den_c] and the body's Node's own level: its coefficient on a is 6 R
     # + S and its wall w, the weak-field rule's integers at that pair and level; asserted once
     num_c, den_c = one_node_block.definition.clock
@@ -136,7 +136,7 @@ def test_the_rotation_steps_by_the_two_term_rule_and_agrees_with_the_lattice_bod
     assert max(forms) - min(forms) < max(forms) // 10**4
     step, wheel = one_node.node_record_wheel(one_node_block)
     assert step * wheel == wall and step == math.gcd(wall, coefficient)
-    # the wheel the rule's own gcd at the body's Node (9.60 (2), 9.57 (1))
+    # the wheel the rule's own gcd at the body's Node (ALGEBRA.md #what-a-body-is, #the-line)
     assert wheel == wall // math.gcd(wall, coefficient)
 
 
@@ -181,7 +181,7 @@ def test_the_ticks_of_the_two_forms_agree_in_distribution():
     two-term rule's, another set of wheels); the given rows of the first giving are the file's train on the
     body's Nodes on both forms, bit for bit; the body record's read Node is its centre. The
     edge case: the two forms' givings differ in their intervals (different residues on different
-    wheels: the law's claim is statistical, 9.46 (4))."""
+    wheels: the law's claim is statistical, ALGEBRA.md #what-a-body-is)."""
     document = emitter_world(stock=600, ticks=1)
     period = document["measured"][0]["emitter"]["period"]
     results = {}
@@ -210,7 +210,7 @@ def test_the_ticks_of_the_two_forms_agree_in_distribution():
 
 
 def test_the_joint_inverse_is_exact_with_a_body_record():
-    """THE BACKWARD RUN (ALGEBRA.md 9.50 (8): the body record's own backward run exact through
+    """THE BACKWARD RUN (ALGEBRA.md #the-direction: the body record's own backward run exact through
     its clicks): on the solitary cube under `body_record` with a light record of random rows
     registered, 60 intervals forward and 60 back return the rotation (a, b, r), the record's
     levels and remainders and both fields bit for bit; the body's pace is constant between
@@ -290,7 +290,7 @@ def test_the_loader_and_the_state_name_the_body_record():
 def moving_world(ticks: int = 600, ramp: int = 200) -> dict:
     """The solitary body of `cube_world` pushed to speed one third along x (the momentum 64
     against the drive's wall 3 x 64 x 1 x 1 = 192: one Link every three intervals) over a ramp,
-    seeded on its mode with its proper pairs by the generator (ALGEBRA.md 9.63 (3))."""
+    seeded on its mode with its proper pairs by the generator (ALGEBRA.md #the-velocity)."""
     document = block_world(
         [16, 16, 16],
         PERIODIC,
@@ -319,9 +319,9 @@ def moving_world(ticks: int = 600, ramp: int = 200) -> dict:
 
 
 def test_the_moving_body_on_one_node_rotates_at_the_proper_pair_of_its_momentum():
-    """ALGEBRA.md 9.63 (3) (BUILD.md section 26 item 46). (1) THE GENERATOR'S LINE on a plane
+    """ALGEBRA.md #the-velocity (BUILD.md section 26 item 46). (1) THE GENERATOR'S LINE on a plane
     wave: the mode's quotient X is 2 num / (3 den) exactly and the moving rotation at v = 1 / 3
-    and v = 1 / 5 on [800, 809] is the algebra's own (9.24 (2)): K = 0.18556 with the ratio
+    and v = 1 / 5 on [800, 809] is the algebra's own (ALGEBRA.md #the-velocity): K = 0.18556 with the ratio
     0.81457 to the rest rotation, K = 0.09637 with 0.93757 (COMPUTATION). (2) THE TABLE: 65
     pairs for the momentum 64, the first the clock, the numerators never falling as the momentum
     grows (the proper rate slows), the last the rounding of b 2 cos(omega_K - K v) at v = 1 / 3

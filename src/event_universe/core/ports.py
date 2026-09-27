@@ -1,4 +1,4 @@
-"""The six Ports of every Node: the arrival of an array through one Port, the six arrivals in Port order taken once per array per interval, and the outward Ports of a set of Nodes; the arrays' own methods alone, no numeric library (ALGEBRA.md 9.111 item 7, SEND and RECEIVE)."""
+"""The six Ports of every Node: the arrival of an array through one Port, the six arrivals in Port order taken once per array per interval, and the outward Ports of a set of Nodes; the arrays' own methods alone, no numeric library (ALGEBRA.md #the-primitives, SEND and RECEIVE)."""
 
 from __future__ import annotations
 
@@ -52,7 +52,7 @@ class Ports:
         return (id(base), interface["data"][0], a.shape, interface["strides"], wrap, fill, a.dtype.str)
 
     def arrivals(self, a: Any, wrap: Wrap | None = None, fill: Any = 0) -> tuple[Any, ...]:
-        """The six arrivals of `a` in Port order, one exchange per array per interval (ALGEBRA.md 9.111 item 7: one send out, one arrival in)."""
+        """The six arrivals of `a` in Port order, one exchange per array per interval (ALGEBRA.md #the-primitives: one send out, one arrival in)."""
         faces = self.wrap if wrap is None else wrap
         key = self.key(a, faces, fill)
         base = a if a.base is None else a.base

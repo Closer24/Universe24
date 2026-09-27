@@ -1,13 +1,4 @@
-"""THE ENGINE'S ACCEPTANCE TESTS (the model owner's words of 2026-09-26 through Nature24, the
-Boss's records 2177 and 2178; docs/designs/generic_engine/FAMILY_ATTRIBUTES.md section 4 and
-ENGINE_LEDGER.md): the engine supports generic primitives and the run defines the families;
-every attribute is read by its kind and never by its name; a new family or attribute is a line
-in the files, with the engine never rebuilt. Six tests, checking code (record 2135): (a) the
-adversarial universe, (b) the cap of twenty families, (c) the null family, (d) the added
-attribute (a hill), (e) the closed engine (no family name, no universe integer, no default,
-no flag and no version in the code; record 2182), (f) the rule as one function. A test of a support the
-ledger lists as to do is marked xfail strict: it turns green the day the support lands and then
-must lose its mark (the ledger's item moves)."""
+"""The engine's acceptance tests: attributes read by kind, never by name; the adversarial universe, the cap of twenty families, the null family, an added attribute, the closed engine (no family name, universe integer, default, flag or version in the code) and the rule as one function; a support not built yet is xfail strict and loses its mark when it lands."""
 
 from __future__ import annotations
 
@@ -81,8 +72,7 @@ def stepped(document: dict, steps: int) -> tuple[DetectorLawSimulation, list[dic
 
 
 def stamped(document: dict) -> dict:
-    """The world's stamp rewritten after an edit: under `stamp` (the digest alone, ALGEBRA.md
-    9.90 (3) (c), the engine branch) or under `input` (the word before it)."""
+    """The world's stamp rewritten after an edit: under `stamp` (the digest alone, ALGEBRA.md #the-primitives, the engine branch) or under `input` (the word before it)."""
     key = "stamp" if "stamp" in document else "input"
     document[key] = input_stamp(document)
     return document
@@ -165,7 +155,7 @@ def test_c_a_family_with_no_source_stays_exactly_zero_and_silent():
 
 @pytest.mark.xfail(
     strict=True,
-    reason="the ledger's item 'a signed read weight' (ALGEBRA.md 9.108 (8)): the loader bounds "
+    reason="the ledger's item 'a signed read weight' (ALGEBRA.md #the-paces): the loader bounds "
     "the weight from 1; when the support lands this passes and the mark comes off",
 )
 def test_d_an_attribute_added_in_the_file_alone_gives_its_effect_a_hill_on_gravity():
@@ -294,7 +284,7 @@ def test_e4_no_flag_and_no_version_is_a_constant_of_the_engine():
 
 
 def test_f_one_step_of_the_engine_is_the_rules_transcription_bit_for_bit():
-    """(f) The rule as one function (ALGEBRA.md 9.57 (1), 9.91 (2)): the engine's one step on
+    """(f) The rule as one function (ALGEBRA.md #the-line, #the-interval): the engine's one step on
     random levels, remainders and contents equals the independent transcription of the rule
     (docs/designs/rule_alone/rule_alone.py) integer for integer."""
     transcription = load_file(

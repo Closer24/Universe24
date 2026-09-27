@@ -26,7 +26,7 @@ AT_REST: Triple = (1, 0, 1)
 
 @dataclass(frozen=True)
 class BoundMode:
-    """The generator's output for one body: the integer profile at the amplitude unit A, A itself (derived), the iterations to the repeat, the cycle's length, the rotation 2 cos omega_b as an exact fraction and the share of the profile's weight inside the counted Nodes (ALGEBRA.md 9.120 item 4)."""
+    """The generator's output for one body: the integer profile at the amplitude unit A, A itself (derived), the iterations to the repeat, the cycle's length, the rotation 2 cos omega_b as an exact fraction and the share of the profile's weight inside the counted Nodes (ALGEBRA.md #the-stable-body)."""
 
     profile: np.ndarray
     amplitude: int
@@ -49,7 +49,7 @@ class FieldAtRest:
 
 @dataclass(frozen=True)
 class MovingMode:
-    """The moving body's envelope at the rotation k per Link: its two parts at the amplitude unit A, A itself (derived), the iterations to the repeat, the cycle's length, the rotation 2 cos omega_b(k) as an exact fraction, the share inside the counted Nodes (ALGEBRA.md 9.120 item 4 (e))."""
+    """The moving body's envelope at the rotation k per Link: its two parts at the amplitude unit A, A itself (derived), the iterations to the repeat, the cycle's length, the rotation 2 cos omega_b(k) as an exact fraction, the share inside the counted Nodes (ALGEBRA.md #the-stable-body)."""
 
     re: np.ndarray
     im: np.ndarray
@@ -74,7 +74,7 @@ class MovingBody:
 
 
 def check_counts(counts: np.ndarray, gamma: int) -> None:
-    """The refusals by name: the counts an int64 array of nonnegative integers below Gamma, at least one nonzero (ALGEBRA.md 9.108 item 12, the guard's lower side)."""
+    """The refusals by name: the counts an int64 array of nonnegative integers below Gamma, at least one nonzero (ALGEBRA.md #the-paces, the guard's lower side)."""
     if counts.dtype != np.int64 or counts.size == 0 or not counts.any():
         raise ValueError("the counts are an int64 array (integers only), not zero everywhere: no body")
     low, high = int(counts.min()), int(counts.max())
@@ -85,7 +85,7 @@ def check_counts(counts: np.ndarray, gamma: int) -> None:
 
 
 def amplitude_unit(pair: tuple[int, int], gamma: int, counts: np.ndarray) -> int:
-    """The amplitude unit A, derived and never written: the largest amplitude at which Rule3's total stays inside the integer width at every content of the region, (M - w) div (6 R + |S| + w) at the content whose coefficients are largest, M the width, checked against rule_total_bound (ALGEBRA.md 9.120 item 4 (b); 9.57 (2))."""
+    """The amplitude unit A, derived and never written: the largest amplitude at which Rule3's total stays inside the integer width at every content of the region, (M - w) div (6 R + |S| + w) at the content whose coefficients are largest, M the width, checked against rule_total_bound (ALGEBRA.md #the-stable-body, #the-line)."""
     num, den = pair
     found = None
     for content in sorted({int(c) for c in counts.ravel()}):
@@ -124,13 +124,13 @@ def field_at_rest(counts: np.ndarray, pair: Pair, wrap: Wrap = PERIODIC) -> Fiel
 
 
 def rule_integers(pair: Pair, gamma: int, counts: np.ndarray) -> tuple[np.ndarray, np.ndarray, int]:
-    """Rule3's integers at every Node from the pace p = Gamma - c: the read R = 2 p^2 num, the self coefficient S and the wall w = 6 den Gamma^2 (ALGEBRA.md 9.57 (1))."""
+    """Rule3's integers at every Node from the pace p = Gamma - c: the read R = 2 p^2 num, the self coefficient S and the wall w = 6 den Gamma^2 (ALGEBRA.md #the-line)."""
     reads, self_coefficient, wall = coefficients(pair[0], pair[1], gamma, counts)
     return np.asarray(reads[0], dtype=np.int64), np.asarray(self_coefficient, dtype=np.int64), int(wall)
 
 
 def axis_arrivals(a: np.ndarray, axis: int, wrap: Wrap) -> np.ndarray:
-    """The two neighbours' levels summed along one axis at every Node: the row itself twice on an axis of one layer, 0 beyond a closed face (the receive of ALGEBRA.md 9.57 (1))."""
+    """The two neighbours' levels summed along one axis at every Node: the row itself twice on an axis of one layer, 0 beyond a closed face (the receive of ALGEBRA.md #the-line)."""
     if a.shape[axis] == 1:
         return 2 * a
     total = np.zeros_like(a)
@@ -156,7 +156,7 @@ def read_act(
     self_coefficient: np.ndarray,
     wall: int,
 ) -> tuple[np.ndarray, ...]:
-    """Rule3's read act with the before-coefficient 0 on each level, (R x its arrivals + S a) div w at every Node, one call of rule3 per level with the level as now and nothing before; the total at the Node's own coefficients kept inside int64 or refused by name (ALGEBRA.md 9.120 item 4 (b); 9.119 item 1; 9.57 (2))."""
+    """Rule3's read act with the before-coefficient 0 on each level, (R x its arrivals + S a) div w at every Node, one call of rule3 per level with the level as now and nothing before; the total at the Node's own coefficients kept inside int64 or refused by name (ALGEBRA.md #the-stable-body, #the-four-acts, #the-line)."""
     size = max(int(np.abs(level).max()) for level in levels)
     reach = int(np.max(6 * np.abs(read) + np.abs(self_coefficient))) * size
     if reach > MAX_WORK_INT:
@@ -171,7 +171,7 @@ def read_act(
 
 
 def division(numerator_coefficient: Any, wall: Any, level: np.ndarray) -> np.ndarray:
-    """Rule3's division act on a level: (coefficient x level) div wall, the line with no read, the coefficient as the self coefficient and the remainder not kept (ALGEBRA.md 9.119 item 1 (c))."""
+    """Rule3's division act on a level: (coefficient x level) div wall, the line with no read, the coefficient as the self coefficient and the remainder not kept (ALGEBRA.md #the-four-acts)."""
     return np.asarray(rule3(NO_READ, NO_READ, numerator_coefficient, wall, level, 0, 0)[0])
 
 
@@ -181,7 +181,7 @@ def field_unit(counts: np.ndarray, num: int) -> int:
 
 
 def to_amplitude(levels: tuple[np.ndarray, ...], amplitude: int) -> tuple[np.ndarray, ...]:
-    """Rule3's division act to the amplitude unit on the levels together, a x A div max|a| by the largest size over them, the product inside int64 or refused (ALGEBRA.md 9.120 item 4 (b))."""
+    """Rule3's division act to the amplitude unit on the levels together, a x A div max|a| by the largest size over them, the product inside int64 or refused (ALGEBRA.md #the-stable-body)."""
     size = max(int(np.abs(level).max()) for level in levels)
     if size == 0 or size * amplitude > MAX_WORK_INT:
         raise ValueError(
@@ -191,7 +191,7 @@ def to_amplitude(levels: tuple[np.ndarray, ...], amplitude: int) -> tuple[np.nda
 
 
 def turned(re: np.ndarray, im: np.ndarray, c: Any, s: Any, d: Any) -> tuple[np.ndarray, np.ndarray]:
-    """The rotation act on a pair by the triple (c, s, d): (c re - s im) div d and (s re + c im) div d, two of Rule3's read acts with the coefficients (c, -s) and (s, c) on the two parts (ALGEBRA.md 9.81 (2) (c))."""
+    """The rotation act on a pair by the triple (c, s, d): (c re - s im) div d and (s re + c im) div d, two of Rule3's read acts with the coefficients (c, -s) and (s, c) on the two parts (ALGEBRA.md #the-transport)."""
     return (
         np.asarray(rule3((c, -s, 0), (re, im, 0), 0, d, 0, 0, 0)[0]),
         np.asarray(rule3((s, c, 0), (re, im, 0), 0, d, 0, 0, 0)[0]),
@@ -199,7 +199,7 @@ def turned(re: np.ndarray, im: np.ndarray, c: Any, s: Any, d: Any) -> tuple[np.n
 
 
 def rotated(re: np.ndarray, im: np.ndarray, triple: Triple, sign: int) -> tuple[np.ndarray, np.ndarray]:
-    """The rotation act by k per Link on a level's two parts, (re + i im) x (a + i sign b) div c (ALGEBRA.md 9.120 item 4 (e))."""
+    """The rotation act by k per Link on a level's two parts, (re + i im) x (a + i sign b) div c (ALGEBRA.md #the-stable-body)."""
     a, b, c = triple
     return turned(re, im, a, sign * b, c)
 
@@ -207,7 +207,7 @@ def rotated(re: np.ndarray, im: np.ndarray, triple: Triple, sign: int) -> tuple[
 def twisted_arrivals(
     re: np.ndarray, im: np.ndarray, triple: Triple, wrap: Wrap
 ) -> tuple[tuple[np.ndarray, ...], ...]:
-    """The six arrivals per axis on the moving body's envelope: the two along x rotated by +k and -k per Link (the rotation act), the four across as at rest (ALGEBRA.md 9.120 item 4 (e))."""
+    """The six arrivals per axis on the moving body's envelope: the two along x rotated by +k and -k per Link (the rotation act), the four across as at rest (ALGEBRA.md #the-stable-body)."""
     if re.shape[0] == 1:
         along = (2 * re, 2 * im)
     else:
@@ -233,7 +233,7 @@ def rotation_and_share(
     where: str,
     content: np.ndarray | None = None,
 ) -> tuple[Fraction, Fraction]:
-    """2 cos omega_b of a profile as the exact quotient of the symmetric form, SUM a (R S_6(a) + S a) / p^2 over w SUM a^2 / p^2, a reading of the levels and their read acts with the weights 1 / p_i^2, and the share of the profile's weight inside the counted Nodes; refused by name where the rotation does not rise above the band's top 2 num / den or the share is not twice the counted Nodes' fraction of the box, the band's uniform wave (ALGEBRA.md 9.57 (1), 9.120 item 2)."""
+    """2 cos omega_b of a profile as the exact quotient of the symmetric form, SUM a (R S_6(a) + S a) / p^2 over w SUM a^2 / p^2, a reading of the levels and their read acts with the weights 1 / p_i^2, and the share of the profile's weight inside the counted Nodes; refused by name where the rotation does not rise above the band's top 2 num / den or the share is not twice the counted Nodes' fraction of the box, the band's uniform wave (ALGEBRA.md #the-line, #the-stable-body)."""
     paces = gamma - (counts if content is None else content)
     numerator, denominator = Fraction(0), Fraction(0)
     for pace in {int(p) for p in paces.ravel()}:
@@ -249,7 +249,7 @@ def rotation_and_share(
         raise ValueError(
             f"the count binds no {where} of the family [{pair[0]}, {pair[1]}]: the rotation {rotation} "
             f"against the band's top {Fraction(2 * pair[0], pair[1])}, the share inside the counted "
-            f"Nodes {share} against their fraction {fraction} of the box, not twice it (ALGEBRA.md 9.120 item 2)"
+            f"Nodes {share} against their fraction {fraction} of the box, not twice it (ALGEBRA.md #the-stable-body)"
         )
     return rotation, share
 
@@ -330,7 +330,7 @@ def moving_mode(
 
 
 def moving_levels(mode: MovingMode, triple: Triple) -> tuple[np.ndarray, np.ndarray]:
-    """The moving body's two real levels: now the envelope times cos(k x) per Link (the rotation act along x), before the same one interval earlier, cos omega_b(k) now - sin omega_b(k) x the quarter-turned part as one read act over the common denominator, sin from the exact cosine by the division act to the amplitude unit and the integer square root (ALGEBRA.md 9.120 item 4 (e); 9.113 item 3 (c))."""
+    """The moving body's two real levels: now the envelope times cos(k x) per Link (the rotation act along x), before the same one interval earlier, cos omega_b(k) now - sin omega_b(k) x the quarter-turned part as one read act over the common denominator, sin from the exact cosine by the division act to the amplitude unit and the integer square root (ALGEBRA.md #the-stable-body, #the-primitives)."""
     re, im, amplitude = mode.re.copy(), mode.im.copy(), mode.amplitude
     phase_re, phase_im = (
         np.full(re.shape[1:], amplitude, dtype=np.int64),
@@ -450,7 +450,7 @@ def clock_pair(rotation: Fraction, denominator: int) -> tuple[int, int]:
 
 
 def period_by_the_rule(a: int, b: int) -> int:
-    """The period by the one-Node Rule3 with the pair, b c_next + r' = a c_now - b c_before + r from (c_before, c_now) = (2 b, a) at the pair's own unit b, each interval one call of rule3: the first t with a negative c before it, c_t >= 0 and 4 b c_t^2 >= (2 b + a) c_before_0^2, the nearest integer to 2 pi / omega with no pi; the longest period a pair on b allows is 2 pi sqrt(b), at the rotation nearest 0, so a clock not back within 8 sqrt(b) + 8 intervals is refused by name (ALGEBRA.md 9.118 item 2 (a))."""
+    """The period by the one-Node Rule3 with the pair, b c_next + r' = a c_now - b c_before + r from (c_before, c_now) = (2 b, a) at the pair's own unit b, each interval one call of rule3: the first t with a negative c before it, c_t >= 0 and 4 b c_t^2 >= (2 b + a) c_before_0^2, the nearest integer to 2 pi / omega with no pi; the longest period a pair on b allows is 2 pi sqrt(b), at the rotation nearest 0, so a clock not back within 8 sqrt(b) + 8 intervals is refused by name (ALGEBRA.md #the-generator)."""
     if b < 1 or not -2 * b < a < 2 * b:
         raise ValueError(f"the clock [{a}, {b}] is no rotation: b from 1 and |a| below 2 b")
     before, now, carry = 2 * b * b, a * b, 0
@@ -471,7 +471,7 @@ def period_by_the_rule(a: int, b: int) -> int:
 def two_levels(
     profile: np.ndarray, read: np.ndarray, self_coefficient: np.ndarray, wall: int, wrap: Wrap
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The mode's two levels: now the profile, before the read act once more halved, (R S_6(now) + S now) div (2 w), since the mode rotates by 2 cos omega_b (ALGEBRA.md 9.120 item 4 (d))."""
+    """The mode's two levels: now the profile, before the read act once more halved, (R S_6(now) + S now) div (2 w), since the mode rotates by 2 cos omega_b (ALGEBRA.md #the-stable-body)."""
     return profile, rule3(
         (read, read, read), arrivals(profile, wrap), self_coefficient, 2 * wall, profile, 0, 0
     )[0]
@@ -486,7 +486,7 @@ def conserved_form(
     paces: np.ndarray,
     wrap: Wrap,
 ) -> Fraction:
-    """The record's conserved form, SUM [w (now^2 + before^2) - S now before] / p^2 - 2 num SUM now S_6(before), the form's Node term of core.rule3 with the plain current on the Links, exact (ALGEBRA.md 9.57 (1))."""
+    """The record's conserved form, SUM [w (now^2 + before^2) - S now before] / p^2 - 2 num SUM now S_6(before), the form's Node term of core.rule3 with the plain current on the Links, exact (ALGEBRA.md #the-line)."""
     n, b = now.astype(object), before.astype(object)
     node = form_term(self_coefficient.astype(object), wall, n, b)
     total = Fraction(0)
@@ -499,7 +499,7 @@ def conserved_form(
 def scaled_to_norm(
     now: np.ndarray, before: np.ndarray, form: Fraction, norm: Fraction, precision: int
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The two levels scaled together so that the form reaches the norm c T of the body's quanta: the factor the integer square root of the ratio's division act at the precision (the amplitude unit A), the levels by the division act with the factor as a pair (ALGEBRA.md 9.120 item 4 (d))."""
+    """The two levels scaled together so that the form reaches the norm c T of the body's quanta: the factor the integer square root of the ratio's division act at the precision (the amplitude unit A), the levels by the division act with the factor as a pair (ALGEBRA.md #the-stable-body)."""
     if form <= 0 or norm <= 0:
         raise ValueError(f"the form {form} and the norm {norm} are positive")
     ratio = norm / form

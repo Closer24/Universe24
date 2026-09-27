@@ -1,10 +1,4 @@
-"""THE BODY ON ONE NODE, COMMIT 6 (ALGEBRA.md 9.91 (8) (v), 9.91 (5), 9.96 (4), (5); the one
-stroke of record 2106; BUILD.md section 26 item 65): a body gives its own family from its
-`stock`, its quanta lowered by one per giving, the stock spent; the loader's refusals; the
-self-source slot lowers the step by (the six squared differences) div P_2 exactly where a unit
-above 0 is declared, the remainder untouched, the inverse exact; two wells of one family may
-stand anywhere (the separation rule of 9.35 retired). The spin's step's tests are the folder's,
-tests/test_feature_spins_step.py. HOST; no pin."""
+"""The body on one Node: a body gives its own family from its stock, the loader's refusals, and the self-source lowers the step exactly where declared, with the inverse exact. HOST; no pin."""
 
 from __future__ import annotations
 
@@ -36,7 +30,7 @@ def own_family_world(stock: int | None) -> dict:
 
 
 def test_a_body_gives_its_own_family_from_its_stock_and_its_quanta_fall_by_one_per_giving():
-    """ALGEBRA.md 9.96 (5): the emitter of the family `source` gives `source` records; its stock
+    """ALGEBRA.md #the-primitives: the emitter of the family `source` gives `source` records; its stock
     is `stock` (from 1 to `amount`), each giving lowers its quanta M by one and the wall with
     them, the given record carries the family's pair; nothing fires once the stock is spent;
     refused without `stock`, with a `stock` above `amount`, and with `stock` on an emitter of
@@ -75,7 +69,7 @@ def test_a_body_gives_its_own_family_from_its_stock_and_its_quanta_fall_by_one_p
 
 
 def test_the_self_source_slot_lowers_the_step_by_the_squared_differences_over_the_unit():
-    """ALGEBRA.md 9.91 (5): the held family with the unit P_2 = 24 A declared: at a slab where
+    """ALGEBRA.md #the-interval: the held family with the unit P_2 = 24 A declared: at a slab where
     its level jumps by 20000 the six squared differences summed give (the count of Ports
     across the jump) x 4 x 10^8, and a_next is lower than the plain rule's by that div P_2
     exactly, the remainder the plain rule's; the inverse restores the levels."""

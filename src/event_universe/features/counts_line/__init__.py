@@ -1,4 +1,4 @@
-"""The count's line: T c_next + r' = T c_now + SUM over the six Ports of F_ij + r, Rule3 for the family of clicks at every Node with the record's current as its read and the quantum's norm T as its wall, F_ij = weight (now_i before_j - before_i now_j) the current into Node i from its neighbour j, the booking of the record's levels at the Link's two ends (the pair's second level added), the click the division's carry of one whole quantum, the inverse the same line with the current reversed (ALGEBRA.md 9.121 item 3, 9.119 item 1, 9.57 (1))."""
+"""The count's line: T c_next + r' = T c_now + SUM over the six Ports of F_ij + r, Rule3 for the family of clicks at every Node with the record's current as its read and the quantum's norm T as its wall, F_ij = weight (now_i before_j - before_i now_j) the current into Node i from its neighbour j, the booking of the record's levels at the Link's two ends (the pair's second level added), the click the division's carry of one whole quantum, the inverse the same line with the current reversed (ALGEBRA.md #the-counts-line.119 item 1, ALGEBRA.md #the-line)."""
 
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ class Levels:
 
 @dataclass(frozen=True)
 class CountTerm:
-    """The family of clicks' declaration: T, the quantum's norm (the count's wall); the current's weight (num, 9.119 item 1 (e)); the amplitude bound A of the record's levels; the largest count."""
+    """The family of clicks' declaration: T, the quantum's norm (the count's wall); the current's weight (num, ALGEBRA.md #the-four-acts); the amplitude bound A of the record's levels; the largest count."""
 
     norm: int
     weight: int
@@ -56,7 +56,7 @@ class CountWrites:
 
 
 def current(weight: int, here: Levels, there: Levels) -> Any:
-    """The current into the Node here from the Node there through their Link, the booking weight (now_i before_j - before_i now_j), positive inward as the ladder reads it, the second level's term added on a pair (ALGEBRA.md 9.121 item 2 (c), 9.50 (13))."""
+    """The current into the Node here from the Node there through their Link, the booking weight (now_i before_j - before_i now_j), positive inward as the ladder reads it, the second level's term added on a pair (ALGEBRA.md #the-counts-line, #the-direction)."""
     found = here.now * there.before - here.before * there.now
     if here.im_now is not None and there.im_now is not None:
         found = found + here.im_now * there.im_before - here.im_before * there.im_now
@@ -64,7 +64,7 @@ def current(weight: int, here: Levels, there: Levels) -> Any:
 
 
 def bound(term: CountTerm) -> int:
-    """The largest total the line reaches at a Node whose levels stand at A: one current per Port, the weight times the two products of two levels at A on each level pair, T (most + 1) and the remainder below T (ALGEBRA.md 9.57 (2))."""
+    """The largest total the line reaches at a Node whose levels stand at A: one current per Port, the weight times the two products of two levels at A on each level pair, T (most + 1) and the remainder below T (ALGEBRA.md #the-line)."""
     current_bound = term.weight * PRODUCTS * PAIRS * term.amplitude * term.amplitude
     return PORTS * current_bound + term.norm * (term.most + 1) + term.norm
 
@@ -85,7 +85,7 @@ def check(term: CountTerm, start: CountStart) -> None:
 
 
 def apply(term: CountTerm, start: CountStart, own: None = None) -> CountWrites:
-    """The primitive at (ii), bound to the loop (the line keeps no own record, `own` is None): the inflow per axis, the current into the Node through its +a and -a Ports, read by Rule3 with the coefficient sigma on each axis and T on the count over the wall T (ALGEBRA.md 9.121 item 3)."""
+    """The primitive at (ii), bound to the loop (the line keeps no own record, `own` is None): the inflow per axis, the current into the Node through its +a and -a Ports, read by Rule3 with the coefficient sigma on each axis and T on the count over the wall T (ALGEBRA.md #the-counts-line)."""
     check(term, start)
     net = []
     for axis in range(3):
@@ -111,6 +111,6 @@ DECLARATION = Declaration(
     reads=("the record's levels at the Node and across its six Ports", "T", "the current's weight"),
     writes=("the count at a Node", "the count's remainder"),
     function=apply,
-    section="9.121 item 3; 9.119 item 1; 9.57 (1)",
+    section="ALGEBRA.md #the-counts-line, #the-four-acts, #the-line",
     word="after the step",
 )

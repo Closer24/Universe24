@@ -1,11 +1,11 @@
-"""THE RUNS TOWARD NATURE, rows (1) to (3) (ALGEBRA.md 9.59 (0) to (3); BUILD.md section 26
+"""THE RUNS TOWARD NATURE, rows (1) to (3) (ALGEBRA.md #the-rows-against-nature to (3); BUILD.md section 26
 item 41): the five world files of `examples/events/toward_nature/` are the generator's, carry
 the declared integers (Gamma 10^4, the well's level 2000 on the arm's free Nodes, the momenta
 one quarter of each block's drive wall, the bending's beam 20 wide with its body's content
 set for U_b = 0.1 on the beam's line) and no pin; the moving clock's two blocks hop together
 (the emitter, its mirror and its set one Link every 4 intervals, GAMEBOARD); the reader's
 arithmetic on a written output (the mean, the standard error, the ratio and the closed forms
-it is set beside, COMPUTATION). No run against a pin: the rows are diagnostics (9.59 (6))."""
+it is set beside, COMPUTATION). No run against a pin: the rows are diagnostics (ALGEBRA.md #the-rows-against-nature)."""
 
 from __future__ import annotations
 
@@ -30,7 +30,9 @@ NAMES = (
 
 def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     generator = load_module("make_worlds")
-    assert not (FOLDER / "expectations.json").exists(), "a diagnostic row carries no pin (9.59 (6))"
+    assert not (FOLDER / "expectations.json").exists(), (
+        "a diagnostic row carries no pin (ALGEBRA.md #the-rows-against-nature)"
+    )
     for name in NAMES:
         doc = document(name)
         world = parse_nature_beam_world(doc)
@@ -41,7 +43,7 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
             continue
         assert doc["detectors"][0]["name"] == "at_well" and doc["detectors"][0]["block"] == 0
         assert world.shape[1:] == (3, 3)
-    # the long-wave pair (ALGEBRA.md 9.62 (1)): the given clock [4096, 21] on N = 2048; SINCE
+    # the long-wave pair (ALGEBRA.md #the-rows-against-nature): the given clock [4096, 21] on N = 2048; SINCE
     # COMMIT 7 the emitter is the chain's point extruded, [1, 3, 3] at the retired train's head
     # (one train, 168 Nodes, from the face), on the point row's body's Node kind [800, 813]
     for name in ("redshift_top_long", "redshift_bottom_long"):
@@ -54,7 +56,7 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
             0,
             0,
         ]
-    # THE ARM'S HOLDERS UNDER ONE FAMILY OF MATTER (ALGEBRA.md 9.86 (2) (c); the one stroke,
+    # THE ARM'S HOLDERS UNDER ONE FAMILY OF MATTER (ALGEBRA.md #the-primitives; the one stroke,
     # commit 1): bodies of matter on one Node each, content 2000 apiece, no well and no
     # record (a second well of the emitter's family on its chain is refused by the
     # separation rule of 9.35); the first at the arm's start, 322 x 3 x 3 of them
@@ -66,7 +68,7 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     assert sum(1 for m in long_bottom if m["family"] == "matter" and "extents" not in m) == 322 * 9
     bending = document("bending")
     emitter, body = bending["measured"][0], bending["measured"][1]
-    assert "model_id" not in bending  # one engine, no identity string (ALGEBRA.md 9.90 (1))
+    assert "model_id" not in bending  # one engine, no identity string (ALGEBRA.md #the-primitives)
     # the one-Node emitter at the retired beam's head on the beam's line (commit 7; the beam of
     # 32 x 20 Nodes HISTORY)
     assert emitter["extents"] == [1, 1, 1] and emitter["amount"] == 1
@@ -79,7 +81,7 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     assert bending["ticks"] == generator.BENDING_TICKS
     assert sum(1 for d in bending["detectors"] if d["name"].startswith("screen_")) == 40
     top, bottom = document("redshift_top"), document("redshift_bottom")
-    # the emitter, the mirror and the mirror behind the emitter (ALGEBRA.md 9.85 (5) (b); commit 7)
+    # the emitter, the mirror and the mirror behind the emitter (ALGEBRA.md #the-primitives; commit 7)
     assert [m["family"] for m in top["measured"]] == ["matter", "charge", "charge"]
     arm_start = (
         generator.REDSHIFT_EMITTER_X + generator.TRAIN_LENGTH

@@ -1,7 +1,7 @@
-"""THE OPERATION (ALGEBRA.md 9.57 (1); 9.112 items 1 and 2): a_next = (SUM of the six received x w + B now - W before + the loads + r) div W with the remainder kept at the Node.
+"""THE OPERATION (ALGEBRA.md #the-line, #the-interval): a_next = (SUM of the six received x w + B now - W before + the loads + r) div W with the remainder kept at the Node.
 
 One folder, one primitive; the register finds it by this folder and reads
-DECLARATION, the row of ALGEBRA.md 9.117 for this name (the operation's cut: bind gives rule3 of
+DECLARATION, the row of ALGEBRA.md #the-primitives for this name (the operation's cut: bind gives rule3 of
 core/rule3.py itself, one function for every record at every Node).
 """
 
@@ -19,11 +19,11 @@ DECLARATION = Declaration(
     ("the six arrivals", "now", "before", "the remainder", "the family's integers w, B, W", "the loads"),
     ("the level next, the remainder",),
     None,
-    "9.57 (1); 9.112 items 1 and 2",
+    "ALGEBRA.md #the-line, #the-interval",
     word="the step",
 )
 
 
 def bind(loop: Any) -> Callable[..., object]:
-    """Rule3 itself, core/rule3.py: the one function every record steps by, in either direction (ALGEBRA.md 9.57 (1))."""
+    """Rule3 itself, core/rule3.py: the one function every record steps by, in either direction (ALGEBRA.md #the-line)."""
     return rule3

@@ -467,7 +467,7 @@
    "emitter": {
     "family": "charge",
     "clock": [
-     77,
+     80,
      25
     ],
     "weight": 4,
@@ -571,6 +571,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "027bcd07b1eedef6183416fbe93f8fd2b1ff2ac18546d834cbd2d3d0d3118066"
+  "hash": "0982c31eb3e3406f6af4b85f870de49a93d0a3343af4f35b3c137f93f1f496e1"
  }
 }

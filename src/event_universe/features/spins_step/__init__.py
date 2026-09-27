@@ -1,4 +1,4 @@
-"""The spin's step: S_next = S_before + (SPAN [(Omega x S_now) + mu x B_q] + carry) div (W Gamma), the leapfrog over core's SPAN (a step on two levels spans two intervals), Omega from a read whose dipole is the spin ((c_num x factor x curl V + (t_num ((grad c) x n)) div W) div (SPAN x den), the two weights the read family's row spins_step), B_q from a read whose dipole is the moment (weight x curl V_q div SPAN); the curl and the gradient Rule3's read acts on the six neighbours' levels, every division Rule3's division act with its remainder on the body (ALGEBRA.md 9.117 the row "the spin's step", 9.78 (5), 9.104 (2), 9.119 item 2)."""
+"""The spin's step: S_next = S_before + (SPAN [(Omega x S_now) + mu x B_q] + carry) div (W Gamma), the leapfrog over core's SPAN (a step on two levels spans two intervals), Omega from a read whose dipole is the spin ((c_num x factor x curl V + (t_num ((grad c) x n)) div W) div (SPAN x den), the two weights the read family's row spins_step), B_q from a read whose dipole is the moment (weight x curl V_q div SPAN); the curl and the gradient Rule3's read acts on the six neighbours' levels, every division Rule3's division act with its remainder on the body (ALGEBRA.md #the-primitives the row "the spin's step", ALGEBRA.md #a-familys-declaration, #the-primitives, #the-four-acts)."""
 
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ class SpinRead:
 
 @dataclass(frozen=True)
 class SpinStepTerm:
-    """The body's declaration: its moment mu and the Node clock Gamma; the span of the step is core's SPAN, two intervals (ALGEBRA.md 9.78 (5))."""
+    """The body's declaration: its moment mu and the Node clock Gamma; the span of the step is core's SPAN, two intervals (ALGEBRA.md #a-familys-declaration)."""
 
     moment: Vector
     gamma: int
@@ -73,12 +73,12 @@ class SpinStepWrites:
 
 
 def cross(a: Vector, b: Vector) -> Vector:
-    """a x b, the booking of ALGEBRA.md 9.121 item 2 (c): products of two levels' components, read and never written."""
+    """a x b, the booking of ALGEBRA.md #the-counts-line: products of two levels' components, read and never written."""
     return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
 
 
 def read_act(coefficients: Vector, levels: Vector, self_coefficient: int, here: int) -> int:
-    """Rule3's read act over the wall 1: the coefficients on three levels and the self coefficient on the Node's own, exact (ALGEBRA.md 9.119 item 1 (a))."""
+    """Rule3's read act over the wall 1: the coefficients on three levels and the self coefficient on the Node's own, exact (ALGEBRA.md #the-four-acts)."""
     return int(rule3(coefficients, levels, self_coefficient, 1, here, 0, 0)[0])
 
 
@@ -89,7 +89,7 @@ def level(ports: Neighbours, port: int) -> int:
 
 
 def curl(vector: tuple[Neighbours, Neighbours, Neighbours]) -> Vector:
-    """The curl of a vector part at the Node from its six neighbours, each component one read act: (curl V)_x = V_z(+y) - V_z(-y) - V_y(+z) + V_y(-z) and cyclic, the coefficients +1, -1, -1 on three neighbours and the self coefficient +1 on the fourth; a neighbour the Node lacks reads 0 (ALGEBRA.md 9.77 (3), 9.91 (8) (v))."""
+    """The curl of a vector part at the Node from its six neighbours, each component one read act: (curl V)_x = V_z(+y) - V_z(-y) - V_y(+z) + V_y(-z) and cyclic, the coefficients +1, -1, -1 on three neighbours and the self coefficient +1 on the fourth; a neighbour the Node lacks reads 0 (ALGEBRA.md #a-familys-declaration, #the-interval)."""
     found = []
     for y, z in ((1, 2), (2, 0), (0, 1)):
         found.append(
@@ -104,7 +104,7 @@ def curl(vector: tuple[Neighbours, Neighbours, Neighbours]) -> Vector:
 
 
 def gradient(time: Neighbours) -> Vector:
-    """The gradient of the time part at the Node, per axis the read act with +1 on the neighbour ahead and the self coefficient -1 on the one behind over the wall 1; 0 on an axis where either neighbour is missing, beyond an open face or on an axis of extent 1 (ALGEBRA.md 9.78 (5))."""
+    """The gradient of the time part at the Node, per axis the read act with +1 on the neighbour ahead and the self coefficient -1 on the one behind over the wall 1; 0 on an axis where either neighbour is missing, beyond an open face or on an axis of extent 1 (ALGEBRA.md #a-familys-declaration)."""
     found = []
     for axis in range(3):
         ahead, behind = time[2 * axis], time[2 * axis + 1]
@@ -126,12 +126,12 @@ def division_now(
 
 
 def load(level_now: int, amount: int) -> int:
-    """Rule3's load act: the level plus the amount, the line with the self coefficient 1 over the wall 1 and the amount as the carry (ALGEBRA.md 9.119 item 1 (d))."""
+    """Rule3's load act: the level plus the amount, the line with the self coefficient 1 over the wall 1 and the amount as the carry (ALGEBRA.md #the-four-acts)."""
     return int(rule3(NO_READ, NO_READ, 1, 1, level_now, 0, amount)[0])
 
 
 def spin_wall(wall: int, gamma: int) -> int:
-    """The spin's wall W_S = W Gamma, the momentum's declared wall times the Node clock (ALGEBRA.md 9.78 (5))."""
+    """The spin's wall W_S = W Gamma, the momentum's declared wall times the Node clock (ALGEBRA.md #a-familys-declaration)."""
     return wall * gamma
 
 
@@ -169,7 +169,7 @@ def check(term: SpinStepTerm, start: SpinStepStart) -> None:
 
 
 def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinStepWrites:
-    """The primitive at (v): the curl of each read's vector part and the gradient of a spin's read's time part by the read acts, Omega from the curl and the tidal term at the row's weights over SPAN, the torque from a moment's read's curl over SPAN, the turn (Omega x S_now) + mu x B_q over the two intervals divided by W Gamma per axis, the leapfrog forward or back by the load act (ALGEBRA.md 9.117 the row "the spin's step")."""
+    """The primitive at (v): the curl of each read's vector part and the gradient of a spin's read's time part by the read acts, Omega from the curl and the tidal term at the row's weights over SPAN, the torque from a moment's read's curl over SPAN, the turn (Omega x S_now) + mu x B_q over the two intervals divided by W Gamma per axis, the leapfrog forward or back by the load act (ALGEBRA.md #the-primitives the row "the spin's step")."""
     check(term, start)
     values, carries = dict(own.values), dict(own.carries)
     spin_now = start.spin if start.act == THE_ADVANCE else start.spin_before
@@ -253,7 +253,7 @@ DECLARATION = Declaration(
     ),
     writes=("a body's spin S", "a body's remainders"),
     function=apply,
-    section="9.117 item 2, the row 'the spin's step'; 9.78 (5); 9.104 (2); 9.119 item 2",
+    section="ALGEBRA.md #the-primitives, the row 'the spin's step'; ALGEBRA.md #a-familys-declaration, #the-primitives, #the-four-acts",
     word="after the step",
     schema=Schema(
         {

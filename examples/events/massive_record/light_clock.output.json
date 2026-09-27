@@ -1,0 +1,1024 @@
+{
+ "clicks": [
+  {
+   "detector": "at_well",
+   "giving": 27,
+   "interval": 268,
+   "record": 2
+  },
+  {
+   "detector": "at_well",
+   "giving": 2,
+   "interval": 440,
+   "record": 1
+  },
+  {
+   "detector": "at_well",
+   "giving": 252,
+   "interval": 497,
+   "record": 10
+  },
+  {
+   "detector": "at_well",
+   "giving": 51,
+   "interval": 557,
+   "record": 3
+  },
+  {
+   "detector": "at_well",
+   "giving": 361,
+   "interval": 605,
+   "record": 14
+  },
+  {
+   "detector": "at_well",
+   "giving": 166,
+   "interval": 694,
+   "record": 7
+  },
+  {
+   "detector": "at_well",
+   "giving": 386,
+   "interval": 696,
+   "record": 15
+  },
+  {
+   "detector": "at_well",
+   "giving": 224,
+   "interval": 760,
+   "record": 9
+  },
+  {
+   "detector": "at_well",
+   "giving": 108,
+   "interval": 798,
+   "record": 5
+  },
+  {
+   "detector": "at_well",
+   "giving": 305,
+   "interval": 833,
+   "record": 12
+  },
+  {
+   "detector": "at_well",
+   "giving": 334,
+   "interval": 841,
+   "record": 13
+  },
+  {
+   "detector": "at_well",
+   "giving": 79,
+   "interval": 849,
+   "record": 4
+  },
+  {
+   "detector": "at_well",
+   "giving": 836,
+   "interval": 850,
+   "record": 31
+  },
+  {
+   "detector": "at_well",
+   "giving": 137,
+   "interval": 854,
+   "record": 6
+  },
+  {
+   "detector": "at_well",
+   "giving": 277,
+   "interval": 973,
+   "record": 11
+  },
+  {
+   "detector": "at_well",
+   "giving": 530,
+   "interval": 992,
+   "record": 20
+  },
+  {
+   "detector": "at_well",
+   "giving": 194,
+   "interval": 1009,
+   "record": 8
+  },
+  {
+   "detector": "at_well",
+   "giving": 783,
+   "interval": 1021,
+   "record": 29
+  },
+  {
+   "detector": "at_well",
+   "giving": 555,
+   "interval": 1033,
+   "record": 21
+  },
+  {
+   "detector": "at_well",
+   "giving": 583,
+   "interval": 1054,
+   "record": 22
+  },
+  {
+   "detector": "at_well",
+   "giving": 413,
+   "interval": 1096,
+   "record": 16
+  },
+  {
+   "detector": "at_well",
+   "giving": 442,
+   "interval": 1119,
+   "record": 17
+  },
+  {
+   "detector": "at_well",
+   "giving": 882,
+   "interval": 1119,
+   "record": 33
+  },
+  {
+   "detector": "at_well",
+   "giving": 668,
+   "interval": 1135,
+   "record": 25
+  },
+  {
+   "detector": "at_well",
+   "giving": 471,
+   "interval": 1162,
+   "record": 18
+  },
+  {
+   "detector": "at_well",
+   "giving": 1146,
+   "interval": 1170,
+   "record": 43
+  },
+  {
+   "detector": "at_well",
+   "giving": 501,
+   "interval": 1174,
+   "record": 19
+  },
+  {
+   "detector": "at_well",
+   "giving": 990,
+   "interval": 1225,
+   "record": 37
+  },
+  {
+   "detector": "at_well",
+   "giving": 609,
+   "interval": 1287,
+   "record": 23
+  },
+  {
+   "detector": "at_well",
+   "giving": 1069,
+   "interval": 1316,
+   "record": 40
+  },
+  {
+   "detector": "at_well",
+   "giving": 1094,
+   "interval": 1340,
+   "record": 41
+  },
+  {
+   "detector": "at_well",
+   "giving": 695,
+   "interval": 1355,
+   "record": 26
+  },
+  {
+   "detector": "at_well",
+   "giving": 638,
+   "interval": 1370,
+   "record": 24
+  },
+  {
+   "detector": "at_well",
+   "giving": 905,
+   "interval": 1403,
+   "record": 34
+  },
+  {
+   "detector": "at_well",
+   "giving": 1168,
+   "interval": 1408,
+   "record": 44
+  },
+  {
+   "detector": "at_well",
+   "giving": 723,
+   "interval": 1409,
+   "record": 27
+  },
+  {
+   "detector": "at_well",
+   "giving": 963,
+   "interval": 1426,
+   "record": 36
+  },
+  {
+   "detector": "at_well",
+   "giving": 1192,
+   "interval": 1431,
+   "record": 45
+  },
+  {
+   "detector": "at_well",
+   "giving": 1216,
+   "interval": 1451,
+   "record": 46
+  },
+  {
+   "detector": "at_well",
+   "giving": 753,
+   "interval": 1452,
+   "record": 28
+  },
+  {
+   "detector": "at_well",
+   "giving": 1240,
+   "interval": 1481,
+   "record": 47
+  },
+  {
+   "detector": "at_well",
+   "giving": 807,
+   "interval": 1498,
+   "record": 30
+  },
+  {
+   "detector": "at_well",
+   "giving": 1043,
+   "interval": 1506,
+   "record": 39
+  },
+  {
+   "detector": "at_well",
+   "giving": 1264,
+   "interval": 1548,
+   "record": 48
+  },
+  {
+   "detector": "at_well",
+   "giving": 1347,
+   "interval": 1586,
+   "record": 51
+  },
+  {
+   "detector": "at_well",
+   "giving": 851,
+   "interval": 1602,
+   "record": 32
+  },
+  {
+   "detector": "at_well",
+   "giving": 1370,
+   "interval": 1608,
+   "record": 52
+  },
+  {
+   "detector": "at_well",
+   "giving": 933,
+   "interval": 1633,
+   "record": 35
+  },
+  {
+   "detector": "at_well",
+   "giving": 1613,
+   "interval": 1637,
+   "record": 61
+  },
+  {
+   "detector": "at_well",
+   "giving": 1118,
+   "interval": 1678,
+   "record": 42
+  },
+  {
+   "detector": "at_well",
+   "giving": 1446,
+   "interval": 1681,
+   "record": 55
+  },
+  {
+   "detector": "at_well",
+   "giving": 1013,
+   "interval": 1745,
+   "record": 38
+  },
+  {
+   "detector": "at_well",
+   "giving": 1290,
+   "interval": 1760,
+   "record": 49
+  },
+  {
+   "detector": "at_well",
+   "giving": 1420,
+   "interval": 1849,
+   "record": 54
+  },
+  {
+   "detector": "at_well",
+   "giving": 1392,
+   "interval": 1897,
+   "record": 53
+  },
+  {
+   "detector": "at_well",
+   "giving": 1468,
+   "interval": 1901,
+   "record": 56
+  },
+  {
+   "detector": "at_well",
+   "giving": 1694,
+   "interval": 1926,
+   "record": 64
+  },
+  {
+   "detector": "at_well",
+   "giving": 1526,
+   "interval": 2000,
+   "record": 58
+  },
+  {
+   "detector": "at_well",
+   "giving": 1717,
+   "interval": 2000,
+   "record": 65
+  },
+  {
+   "detector": "at_well",
+   "giving": 1772,
+   "interval": 2000,
+   "record": 67
+  },
+  {
+   "detector": "at_well",
+   "giving": 1794,
+   "interval": 2023,
+   "record": 68
+  },
+  {
+   "detector": "at_well",
+   "giving": 1316,
+   "interval": 2042,
+   "record": 50
+  },
+  {
+   "detector": "at_well",
+   "giving": 1846,
+   "interval": 2106,
+   "record": 70
+  },
+  {
+   "detector": "at_well",
+   "giving": 1930,
+   "interval": 2177,
+   "record": 73
+  },
+  {
+   "detector": "at_well",
+   "giving": 1983,
+   "interval": 2225,
+   "record": 75
+  },
+  {
+   "detector": "at_well",
+   "giving": 1584,
+   "interval": 2243,
+   "record": 60
+  },
+  {
+   "detector": "at_well",
+   "giving": 1495,
+   "interval": 2286,
+   "record": 57
+  },
+  {
+   "detector": "at_well",
+   "giving": 1553,
+   "interval": 2302,
+   "record": 59
+  },
+  {
+   "detector": "at_well",
+   "giving": 1872,
+   "interval": 2348,
+   "record": 71
+  },
+  {
+   "detector": "at_well",
+   "giving": 1665,
+   "interval": 2357,
+   "record": 63
+  },
+  {
+   "detector": "at_well",
+   "giving": 1635,
+   "interval": 2358,
+   "record": 62
+  },
+  {
+   "detector": "at_well",
+   "giving": 1742,
+   "interval": 2456,
+   "record": 66
+  },
+  {
+   "detector": "at_well",
+   "giving": 2228,
+   "interval": 2475,
+   "record": 84
+  },
+  {
+   "detector": "at_well",
+   "giving": 1817,
+   "interval": 2502,
+   "record": 69
+  },
+  {
+   "detector": "at_well",
+   "giving": 2309,
+   "interval": 2549,
+   "record": 87
+  },
+  {
+   "detector": "at_well",
+   "giving": 2064,
+   "interval": 2552,
+   "record": 78
+  },
+  {
+   "detector": "at_well",
+   "giving": 2036,
+   "interval": 2554,
+   "record": 77
+  },
+  {
+   "detector": "at_well",
+   "giving": 2147,
+   "interval": 2600,
+   "record": 81
+  },
+  {
+   "detector": "at_well",
+   "giving": 2362,
+   "interval": 2603,
+   "record": 89
+  },
+  {
+   "detector": "at_well",
+   "giving": 2091,
+   "interval": 2618,
+   "record": 79
+  },
+  {
+   "detector": "at_well",
+   "giving": 2172,
+   "interval": 2643,
+   "record": 82
+  },
+  {
+   "detector": "at_well",
+   "giving": 1953,
+   "interval": 2667,
+   "record": 74
+  },
+  {
+   "detector": "at_well",
+   "giving": 1899,
+   "interval": 2672,
+   "record": 72
+  },
+  {
+   "detector": "at_well",
+   "giving": 2253,
+   "interval": 2688,
+   "record": 85
+  },
+  {
+   "detector": "at_well",
+   "giving": 2007,
+   "interval": 2706,
+   "record": 76
+  },
+  {
+   "detector": "at_well",
+   "giving": 2525,
+   "interval": 2763,
+   "record": 95
+  },
+  {
+   "detector": "at_well",
+   "giving": 2549,
+   "interval": 2786,
+   "record": 96
+  },
+  {
+   "detector": "at_well",
+   "giving": 2117,
+   "interval": 2830,
+   "record": 80
+  },
+  {
+   "detector": "at_well",
+   "giving": 2847,
+   "interval": 2858,
+   "record": 107
+  },
+  {
+   "detector": "at_well",
+   "giving": 2629,
+   "interval": 2877,
+   "record": 99
+  },
+  {
+   "detector": "at_well",
+   "giving": 2444,
+   "interval": 2894,
+   "record": 92
+  },
+  {
+   "detector": "at_well",
+   "giving": 2197,
+   "interval": 2939,
+   "record": 83
+  },
+  {
+   "detector": "at_well",
+   "giving": 2279,
+   "interval": 2993,
+   "record": 86
+  },
+  {
+   "detector": "at_well",
+   "giving": 2499,
+   "interval": 3014,
+   "record": 94
+  },
+  {
+   "detector": "at_well",
+   "giving": 2602,
+   "interval": 3073,
+   "record": 98
+  },
+  {
+   "detector": "at_well",
+   "giving": 2385,
+   "interval": 3083,
+   "record": 90
+  },
+  {
+   "detector": "at_well",
+   "giving": 2713,
+   "interval": 3084,
+   "record": 102
+  },
+  {
+   "detector": "at_well",
+   "giving": 2332,
+   "interval": 3113,
+   "record": 88
+  },
+  {
+   "detector": "at_well",
+   "giving": 2888,
+   "interval": 3117,
+   "record": 109
+  },
+  {
+   "detector": "at_well",
+   "giving": 2415,
+   "interval": 3130,
+   "record": 91
+  },
+  {
+   "detector": "at_well",
+   "giving": 2765,
+   "interval": 3139,
+   "record": 104
+  },
+  {
+   "detector": "at_well",
+   "giving": 2654,
+   "interval": 3151,
+   "record": 100
+  },
+  {
+   "detector": "at_well",
+   "giving": 2470,
+   "interval": 3167,
+   "record": 93
+  },
+  {
+   "detector": "at_well",
+   "giving": 2910,
+   "interval": 3171,
+   "record": 110
+  },
+  {
+   "detector": "at_well",
+   "giving": 2990,
+   "interval": 3230,
+   "record": 113
+  },
+  {
+   "detector": "at_well",
+   "giving": 2573,
+   "interval": 3234,
+   "record": 97
+  },
+  {
+   "detector": "at_well",
+   "giving": 3114,
+   "interval": 3238,
+   "record": 118
+  },
+  {
+   "detector": "at_well",
+   "giving": 2737,
+   "interval": 3242,
+   "record": 103
+  },
+  {
+   "detector": "at_well",
+   "giving": 3041,
+   "interval": 3270,
+   "record": 115
+  },
+  {
+   "detector": "at_well",
+   "giving": 3090,
+   "interval": 3328,
+   "record": 117
+  },
+  {
+   "detector": "at_well",
+   "giving": 3165,
+   "interval": 3402,
+   "record": 120
+  },
+  {
+   "detector": "at_well",
+   "giving": 2935,
+   "interval": 3418,
+   "record": 111
+  },
+  {
+   "detector": "at_well",
+   "giving": 3188,
+   "interval": 3431,
+   "record": 121
+  },
+  {
+   "detector": "at_well",
+   "giving": 2682,
+   "interval": 3441,
+   "record": 101
+  },
+  {
+   "detector": "at_well",
+   "giving": 2962,
+   "interval": 3449,
+   "record": 112
+  },
+  {
+   "detector": "at_well",
+   "giving": 3212,
+   "interval": 3453,
+   "record": 122
+  },
+  {
+   "detector": "at_well",
+   "giving": 3014,
+   "interval": 3474,
+   "record": 114
+  },
+  {
+   "detector": "at_well",
+   "giving": 3236,
+   "interval": 3475,
+   "record": 123
+  },
+  {
+   "detector": "at_well",
+   "giving": 2818,
+   "interval": 3493,
+   "record": 106
+  },
+  {
+   "detector": "at_well",
+   "giving": 2789,
+   "interval": 3534,
+   "record": 105
+  },
+  {
+   "detector": "at_well",
+   "giving": 3063,
+   "interval": 3534,
+   "record": 116
+  },
+  {
+   "detector": "at_well",
+   "giving": 2859,
+   "interval": 3544,
+   "record": 108
+  },
+  {
+   "detector": "at_well",
+   "giving": 3313,
+   "interval": 3563,
+   "record": 126
+  },
+  {
+   "detector": "at_well",
+   "giving": 3364,
+   "interval": 3608,
+   "record": 128
+  },
+  {
+   "detector": "at_well",
+   "giving": 3137,
+   "interval": 3618,
+   "record": 119
+  },
+  {
+   "detector": "at_well",
+   "giving": 3475,
+   "interval": 3713,
+   "record": 132
+  },
+  {
+   "detector": "at_well",
+   "giving": 3499,
+   "interval": 3734,
+   "record": 133
+  },
+  {
+   "detector": "at_well",
+   "giving": 3259,
+   "interval": 3755,
+   "record": 124
+  },
+  {
+   "detector": "at_well",
+   "giving": 3286,
+   "interval": 3772,
+   "record": 125
+  },
+  {
+   "detector": "at_well",
+   "giving": 3338,
+   "interval": 3817,
+   "record": 127
+  },
+  {
+   "detector": "at_well",
+   "giving": 3580,
+   "interval": 3823,
+   "record": 136
+  },
+  {
+   "detector": "at_well",
+   "giving": 3633,
+   "interval": 3862,
+   "record": 138
+  },
+  {
+   "detector": "at_well",
+   "giving": 3449,
+   "interval": 3917,
+   "record": 131
+  },
+  {
+   "detector": "at_well",
+   "giving": 3682,
+   "interval": 3922,
+   "record": 140
+  },
+  {
+   "detector": "at_well",
+   "giving": 3706,
+   "interval": 3948,
+   "record": 141
+  },
+  {
+   "detector": "at_well",
+   "giving": 3730,
+   "interval": 3967,
+   "record": 142
+  },
+  {
+   "detector": "at_well",
+   "giving": 3754,
+   "interval": 3976,
+   "record": 143
+  },
+  {
+   "detector": "at_well",
+   "giving": 3777,
+   "interval": 4008,
+   "record": 144
+  },
+  {
+   "detector": "at_well",
+   "giving": 4041,
+   "interval": 4051,
+   "record": 154
+  },
+  {
+   "detector": "at_well",
+   "giving": 3825,
+   "interval": 4053,
+   "record": 146
+  },
+  {
+   "detector": "at_well",
+   "giving": 3655,
+   "interval": 4127,
+   "record": 139
+  },
+  {
+   "detector": "at_well",
+   "giving": 3418,
+   "interval": 4146,
+   "record": 130
+  },
+  {
+   "detector": "at_well",
+   "giving": 3522,
+   "interval": 4208,
+   "record": 134
+  },
+  {
+   "detector": "at_well",
+   "giving": 3388,
+   "interval": 4217,
+   "record": 129
+  },
+  {
+   "detector": "at_well",
+   "giving": 3551,
+   "interval": 4227,
+   "record": 135
+  },
+  {
+   "detector": "at_well",
+   "giving": 3966,
+   "interval": 4249,
+   "record": 151
+  },
+  {
+   "detector": "at_well",
+   "giving": 3799,
+   "interval": 4262,
+   "record": 145
+  },
+  {
+   "detector": "at_well",
+   "giving": 4016,
+   "interval": 4264,
+   "record": 153
+  },
+  {
+   "detector": "at_well",
+   "giving": 3604,
+   "interval": 4295,
+   "record": 137
+  },
+  {
+   "detector": "at_well",
+   "giving": 3848,
+   "interval": 4339,
+   "record": 147
+  },
+  {
+   "detector": "at_well",
+   "giving": 3990,
+   "interval": 4450,
+   "record": 152
+  },
+  {
+   "detector": "at_well",
+   "giving": 4219,
+   "interval": 4451,
+   "record": 161
+  },
+  {
+   "detector": "at_well",
+   "giving": 4448,
+   "interval": 4461,
+   "record": 170
+  },
+  {
+   "detector": "at_well",
+   "giving": 4270,
+   "interval": 4504,
+   "record": 163
+  },
+  {
+   "detector": "at_well",
+   "giving": 4052,
+   "interval": 4515,
+   "record": 155
+  },
+  {
+   "detector": "at_well",
+   "giving": 3875,
+   "interval": 4574,
+   "record": 148
+  },
+  {
+   "detector": "at_well",
+   "giving": 3905,
+   "interval": 4620,
+   "record": 149
+  },
+  {
+   "detector": "at_well",
+   "giving": 4291,
+   "interval": 4660,
+   "record": 164
+  },
+  {
+   "detector": "at_well",
+   "giving": 4425,
+   "interval": 4664,
+   "record": 169
+  },
+  {
+   "detector": "at_well",
+   "giving": 4191,
+   "interval": 4672,
+   "record": 160
+  },
+  {
+   "detector": "at_well",
+   "giving": 4109,
+   "interval": 4683,
+   "record": 157
+  },
+  {
+   "detector": "at_well",
+   "giving": 4165,
+   "interval": 4690,
+   "record": 159
+  },
+  {
+   "detector": "at_well",
+   "giving": 3935,
+   "interval": 4704,
+   "record": 150
+  },
+  {
+   "detector": "at_well",
+   "giving": 4462,
+   "interval": 4710,
+   "record": 171
+  },
+  {
+   "detector": "at_well",
+   "giving": 4544,
+   "interval": 4775,
+   "record": 174
+  },
+  {
+   "detector": "at_well",
+   "giving": 4242,
+   "interval": 4781,
+   "record": 162
+  },
+  {
+   "detector": "at_well",
+   "giving": 4078,
+   "interval": 4786,
+   "record": 156
+  }
+ ],
+ "counts": {
+  "at_well": 167
+ },
+ "format": "one-command-output-v1",
+ "input": "light_clock.json",
+ "mode": "check",
+ "name": "light_clock",
+ "pins": [],
+ "readings": [],
+ "records_alive": 18,
+ "stamp": {
+  "hash": "e0911e6d3aa0eba072fa4e1b42799862642ddf5ded3f62148a03a34b5de9272b"
+ },
+ "step": {
+  "hash": "777bbb80bd0456a004e4f3d8260dc2e6c3f28d0d82ce51ae8540cabd9c81c275"
+ },
+ "ticks": 4800,
+ "verdict": "LAWFUL"
+}

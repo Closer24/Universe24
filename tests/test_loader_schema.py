@@ -1,12 +1,4 @@
-"""THE SCHEMA READING, the loader's first cut (the Boss's word of 2026-09-26 22:12Z on the model
-owner's; record 2226: one generic reader of the three files, every primitive's schema beside its
-code in its folder, read from the register; record 2089: no default in the code; ALGEBRA.md 9.117
-item 2: a term is one line of the files). core/schema.py holds the kinds of a value of the files
-and one generic check that refuses by name; a folder's card carries its schema, its keys of the
-files by the place they live at; loader/cards.py collects the cards and refuses two folders
-claiming one key. Checked here: every kind's refusal by name, the schema's own refusals, the
-collection with its refusal, and the shipped universe file and the source's fragment against
-the folders' schemas (the genericity draws pass them through their loads in test_genericity)."""
+"""The schema reading: core/schema.py's kinds of a value and one check that refuses by name, each folder's card carrying its schema, loader/cards.py collecting the cards, and the shipped universe file checked against them."""
 
 from __future__ import annotations
 
