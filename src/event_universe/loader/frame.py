@@ -1,4 +1,4 @@
-"""The frame of the run's files read through the schemas: the universe file, its integers by the frame's schema and each family's entry by the cards of the register with the frame's one key, the name; and the start file, its mode; every key refused by name, no default written here (ALGEBRA.md 9.117 item 2: a term is one line of the files)."""
+"""The frame of the run's files read through the schemas: the world file's own keys by the frame's schema, the bodies, the detectors, the readings and the universe handed on as written to their readers; the universe file, its integers by the frame's schema and each family's entry by the cards of the register with the frame's one key, the name; and the start file, its mode; every key refused by name, no default written here (ALGEBRA.md 9.117 item 2: a term is one line of the files)."""
 
 from __future__ import annotations
 
@@ -6,7 +6,17 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 
 from event_universe.core.register import Register
-from event_universe.core.schema import Context, Integer, ListOf, ObjectOf, OneOf, Word, check
+from event_universe.core.schema import (
+    Context,
+    Either,
+    Flag,
+    Integer,
+    ListOf,
+    ObjectOf,
+    OneOf,
+    Word,
+    check,
+)
 from event_universe.loader import cards
 
 # the universe's integers (ALGEBRA.md 9.83 (2) (a), 9.91 (7), 9.96 (1), (2)): Gamma the Node clock, A the amplitude bound, Lambda the charge's read weight, Q the momentum's unit, and the twist table of exact triples [c, s, d] read as written and checked with Gamma and A where the transport is built
@@ -28,6 +38,66 @@ INTEGERS = ObjectOf(
 UNIVERSE_KEYS = ("integers", "families")
 # the start file (ALGEBRA.md 9.83 (2) (a)): the run's mode, check (every measured event read beside its blind expectation, no pin compared) or pin (the pins compared); no law's name, no version
 START = ObjectOf({"mode": OneOf(("check", "pin"))})
+# a face of the GameBoard: open (its edge is infinity), periodic (the walk wraps) or closed (a zero face with no take)
+FACE = OneOf(("open", "periodic", "closed"))
+# the world file's own keys (ALGEBRA.md 9.90 (2)): the GameBoard, its faces, the intervals, the files it names, its stamp; and the keys of the loop's old form, read by the loop today and deleted with it
+WORLD = ObjectOf(
+    {
+        "shape": ListOf(Integer(least=1), 3),
+        "boundary": Either(
+            (OneOf(("open",)), ObjectOf({"x": FACE, "y": FACE, "z": FACE}, frozenset({"x", "y", "z"})))
+        ),
+        "ticks": Integer(least=0),
+        "engine": Word(),
+        "stamp": ObjectOf({"hash": Word()}),
+        "face_depth": Integer(least=1),
+        "age_bound": Integer(least=1),
+        "probes": ListOf(ListOf(Integer(least=0), 3)),
+        "mode_axis": OneOf(("x", "y", "z")),
+        "amplitude_bound": Integer(least=1),
+        "node_clock": Integer(least=1),
+        "momentum_unit": Integer(least=1),
+        "K": Either((Integer(least=1), ListOf(Integer(least=1), 2))),
+        "N": Integer(least=2),
+        "release": Either((Integer(least=0), ListOf(Integer(least=0), 2))),
+        "width": Integer(least=1),
+        "clock_stamp": Flag(),
+        "massive_record": Flag(),
+        "body_record": Flag(),
+        "drive_b": Flag(),
+        "flow_link": Flag(),
+        "centred_step": Flag(),
+        "atom_level": Flag(),
+        "optical": Integer(least=0),
+    },
+    frozenset(
+        {
+            "stamp",
+            "face_depth",
+            "age_bound",
+            "probes",
+            "mode_axis",
+            "amplitude_bound",
+            "node_clock",
+            "momentum_unit",
+            "drive_b",
+            "flow_link",
+            "centred_step",
+            "atom_level",
+            "optical",
+        }
+    ),
+)
+# the world's keys handed on as written to their readers in events/world.py until their own cuts (True: required): the universe (a repository path, or a unit test's families inline), the bodies, the detectors, the readings, the records in transit, the covariant readings, an inline world's twist table
+HANDED = {
+    "universe": True,
+    "measured": True,
+    "detectors": True,
+    "readings": False,
+    "in_transit": False,
+    "covariant_readings": False,
+    "twist_table": False,
+}
 
 
 @dataclass(frozen=True)
@@ -86,6 +156,31 @@ def universe(
         assert isinstance(found, dict)
         checked.append(found)
     return tuple(checked), integers
+
+
+def world(document: object) -> dict[str, object]:
+    """The world file read: an unknown key and a missing key refused by name, every key of the frame's schema checked, every handed key as written."""
+    if not isinstance(document, dict):
+        raise ValueError("a world is a JSON object")
+    keys = set(WORLD.keys) | set(HANDED)
+    unknown = sorted(set(document) - keys)
+    if unknown:
+        raise ValueError(
+            f"the world has unknown keys: {', '.join(unknown)} (the keys: {', '.join(sorted(keys))})"
+        )
+    required = (set(WORLD.keys) - set(WORLD.optional)) | {key for key, must in HANDED.items() if must}
+    missing = sorted(required - set(document))
+    if missing:
+        raise ValueError(f"the world lacks keys: {', '.join(missing)}")
+    checked: dict[str, object] = {
+        key: check(document[key], kind, f"the world.{key}", Context())
+        for key, kind in WORLD.keys.items()
+        if key in document
+    }
+    for key in HANDED:
+        if key in document:
+            checked[key] = document[key]
+    return checked
 
 
 def start(value: str, files: Mapping[str, object]) -> EngineStart:

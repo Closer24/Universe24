@@ -121,11 +121,7 @@ def test_a2_the_loader_writes_no_default_for_a_key_of_the_files():
     assert defaults == [], defaults
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="record 2182 with record 2226: the loader of today holds the key 'schema_version' and "
-    "the identities' version strings; the schema loader holds no version and no schema version",
-)
+# green since the frame's cut of the world's keys (the earlier engines' key sets left world.py)
 def test_a3_the_loader_holds_no_version_and_no_schema_version():
     """Record 2182 (no flag and no version in the engine) with record 2226: no string constant
     of the loader is a version string (`<name>-v<digits>`), the word 'version' or the word
