@@ -23,7 +23,6 @@ from event_universe.features.giving import (
     bulk_share,
 )
 from event_universe.world_files import parse_nature_beam_world
-from tests.running import load_module
 from tests.worlds import emitter_world
 
 TERM = GivingTerm(weight=3, norm=1000, norm_denominator=1, family=0)
@@ -47,12 +46,10 @@ def test_the_bulk_share_keeps_the_velocity_on_the_moving_row_and_is_symmetric():
     """The moving rows: a body of M = 65 on W = 3 Q M at v = 1 / 4 has n = 3120; a giving takes the share
     48 and leaves n = 3072, the new wall's quarter (issue #1156); with n not divisible by M the velocity
     stays within one unit of n on the new wall; a negative n gives the mirror image."""
-    generator = load_module("make_worlds")
-    wall = generator.drive_wall(65)
-    momentum = wall // generator.HOP_EVERY
-    assert (wall, momentum) == (3 * 64 * 65, 3120)
+    wall, momentum = 3 * 64 * 65, 3 * 64 * 65 // 4  # the drive wall 3 Q M, a hop every 4 intervals
+    assert (wall, momentum) == (12480, 3120)
     shared = bulk_share((momentum, 0, 0), 65)
-    assert shared == (3072, 0, 0) and shared[0] == generator.drive_wall(64) // generator.HOP_EVERY
+    assert shared == (3072, 0, 0) and shared[0] == 3 * 64 * 64 // 4
     assert bulk_share((-momentum, 0, 0), 65) == (-3072, 0, 0)
     assert bulk_share((100, -100, 64), 65) == (99, -99, 64)
     # the velocity after, on the new wall, against before: within one unit of n on the new wall

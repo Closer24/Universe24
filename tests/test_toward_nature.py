@@ -1,5 +1,5 @@
 """THE RUNS TOWARD NATURE, rows (1) to (3) (ALGEBRA.md #the-rows-against-nature to (3); BUILD.md section 26
-item 41): the five world files of `examples/events/toward_nature/` are the generator's, carry
+item 41): the nine world files of `examples/events/toward_nature/` carry
 the declared integers (Gamma 10^4, the well's level 2000 on the arm's free Nodes, the momenta
 one quarter of each block's drive wall, the bending's beam 20 wide with its body's content
 set for U_b = 0.1 on the beam's line) and no pin; the moving clock's two blocks hop together
@@ -29,7 +29,6 @@ NAMES = (
 
 
 def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
-    generator = load_module("make_worlds")
     assert not (FOLDER / "expectations.json").exists(), (
         "a diagnostic row carries no pin (ALGEBRA.md #the-rows-against-nature)"
     )
@@ -38,7 +37,7 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
         world = parse_nature_beam_world(doc)
         # the integers from the families file alone (item 59)
         assert doc["universe"] == "examples/events/universe.json" and "node_clock" not in doc
-        assert world.node_clock == generator.NODE_CLOCK == 10_000
+        assert world.node_clock == 10_000  # the universe's Gamma
         if name == "bending":
             continue
         assert doc["detectors"][0]["name"] == "at_well" and doc["detectors"][0]["block"] == 0
@@ -48,13 +47,9 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     # (one train, 168 Nodes, from the face), on the point row's body's Node kind [800, 813]
     for name in ("redshift_top_long", "redshift_bottom_long"):
         doc = document(name)
-        assert doc["N"] == generator.LONG_PHASE_STEPS == 2048
+        assert doc["N"] == 2048
         assert doc["measured"][0]["extents"] == [1, 3, 3] and doc["measured"][0]["kind"] == [800, 813]
-        assert doc["measured"][0]["position"] == [
-            generator.LONG_REDSHIFT_EMITTER_X + generator.LONG_TRAIN_LENGTH - 1,
-            0,
-            0,
-        ]
+        assert doc["measured"][0]["position"] == [367, 0, 0]  # the retired train's head, 200 + 168 - 1
     # THE ARM'S HOLDERS UNDER ONE FAMILY OF MATTER (ALGEBRA.md #the-primitives; the one stroke,
     # commit 1): bodies of matter on one Node each, content 2000 apiece, no well and no
     # record (a second well of the emitter's family on its chain is refused by the
@@ -71,27 +66,23 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     # the one-Node emitter at the retired beam's head on the beam's line (commit 7; the beam of
     # 32 x 20 Nodes HISTORY)
     assert emitter["extents"] == [1, 1, 1] and emitter["amount"] == 1
-    assert emitter["stocks"] == {"charge": generator.BENDING_STOCK} and generator.BENDING_STOCK == 100
+    assert emitter["stocks"] == {"charge": 100}
     assert (
         body["family"] == "matter"
-        and body["amount"] == generator.BENDING_BODY_CONTENT
+        and body["amount"] == 4812  # U_b = 0.1 on the beam's line
         and "emitter" not in body
     )
-    assert bending["ticks"] == generator.BENDING_TICKS
+    assert bending["ticks"] == 5600
     assert sum(1 for d in bending["detectors"] if d["name"].startswith("screen_")) == 40
     top, bottom = document("redshift_top"), document("redshift_bottom")
     # the emitter, the mirror and the mirror behind the emitter (ALGEBRA.md #the-primitives; commit 7)
     assert [m["family"] for m in top["measured"]] == ["matter", "charge", "charge"]
-    arm_start = (
-        generator.REDSHIFT_EMITTER_X + generator.TRAIN_LENGTH
-        if hasattr(generator, "TRAIN_LENGTH")
-        else 132
-    )
-    arm_nodes = (generator.REDSHIFT_MIRROR_X - arm_start) * 9
+    arm_start = 132  # the Node after the emitter at 131
+    arm_nodes = (690 - arm_start) * 9  # to the mirror at 690
     assert [m["family"] for m in bottom["measured"]] == ["matter"] * (1 + arm_nodes) + ["charge"] * 2
     holder = bottom["measured"][1]
     assert holder["position"] == [arm_start, 0, 0]
-    assert holder["amount"] == generator.WELL_LEVEL == 2000
+    assert holder["amount"] == 2000
     assert "emitter" not in holder and "extents" not in holder
     assert bottom["measured"][-1]["pair"] == [1, 2]  # the mirror, of light's kind, the charge's
     rest, moving = document("lorentz_rest"), document("lorentz_moving")
@@ -99,8 +90,8 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
     for entry in moving["measured"]:
         # the wall on the whole content, the own quanta and the stock held (item 47)
         content = int(entry["amount"]) + sum(int(v) for v in entry.get("stocks", {}).values())
-        wall = generator.drive_wall(content)
-        assert entry["momentum"] == [wall // generator.HOP_EVERY, 0, 0]
+        wall = 3 * 64 * content  # the drive wall 3 Q M of the retired generator
+        assert entry["momentum"] == [wall // 4, 0, 0]  # a hop every 4 intervals, v = 1 / 4
 
 
 def test_the_reader_reads_the_means_the_ratio_and_the_closed_forms(tmp_path: Path, capsys):

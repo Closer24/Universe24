@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from fractions import Fraction
 from pathlib import Path
 
@@ -21,10 +20,9 @@ from event_universe.features.source import (
     invert,
 )
 from event_universe.world_files import parse_nature_beam_world
-from tests.worlds import emitter_world, load_file
+from tests.worlds import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "examples" / "events" / "source"
 SHAPE = (2, 3, 1)
 SCALE = 18_910  # E_s of the run files (D_peak 1,891,072 div 100)
 PEAK = 1_891_072
@@ -138,52 +136,6 @@ def test_the_trace_hand_identity_at_a_node():
     assert not hand_identity(PLAIN, PEAK, 0, 596, 697)
     assert hand_identity(TABLE, PEAK, 0, 300, 337)
     assert hand_identity(SourceTerm(3, 2, -3, SCALE), PEAK, 72, 0, -300)
-
-
-def generator():  # type: ignore[no-untyped-def]
-    return load_file("source_make_worlds", SOURCE / "make_worlds.py")
-
-
-def test_the_run_files_record_gives_the_readmes_counts():
-    """The rest world's seed at its clock gives D_i = p_i^2 (2 b - a) div b (the generator's
-    COMPUTATION, README section 4); the folder's first interval from zero remainders counts 100
-    at the peak Node and 14,887 in all on 2,169 Nodes for the plain form, 37 and 10,431 on
-    2,109 Nodes for the table (the fragment's E_s and cap)."""
-    module = generator()
-    world = json.loads((SOURCE / "source_rest.json").read_text(encoding="utf-8"))
-    entries = json.loads((SOURCE / "universe_entries.json").read_text(encoding="utf-8"))["families"]
-    field, table, control = entries
-    assert (
-        field["sourced"]["scale"] == SCALE and table["sourced"]["cap"] == 60 and "sourced" not in control
-    )
-    body = world["measured"][0]
-    shape = tuple(world["shape"])
-    profile = np.array(body["seed"], dtype=np.int64).reshape(shape)
-    record = np.array(
-        [int(v) for v in module.record_count(profile, body["clock"]).ravel()], dtype=np.int64
-    ).reshape(shape)
-    centre = (16, 16, 16)
-    plain = apply(
-        SourceTerm(3, 2, field["sourced"]["weight"], field["sourced"]["scale"]),
-        SourceStart(shape, record),
-        SourceOwn(np.zeros(shape, dtype=np.int64)),
-    )
-    assert (
-        int(plain.counts[centre]) == 100
-        and int(plain.counts.sum()) == 14_887
-        and int(plain.at.sum()) == 2_169
-    )
-    saturated = apply(
-        SourceTerm(4, 2, 1, table["sourced"]["scale"], table["sourced"]["cap"]),
-        SourceStart(shape, record),
-        SourceOwn(np.zeros(shape, dtype=np.int64)),
-    )
-    assert (
-        int(saturated.counts[centre]) == 37
-        and int(saturated.counts.sum()) == 10_431
-        and int(saturated.at.sum()) == 2_109
-    )
-    assert not plain.at[28, 16, 16] and not plain.at[0, 0, 0]  # 12 Links out: no count; the corner: none
 
 
 def test_the_declaration_is_the_ledgers_row_and_the_register_binds_its_function():
