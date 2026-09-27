@@ -1,4 +1,4 @@
-"""THE CLICKS (ALGEBRA.md 9.25 (2), (3); 9.111 items 1, 2 and 6; 9.117 items 2 and 3): the ladder on the inward flux: the first k with 2 W (C + f_1 + ... + f_k) >= (2 u + 1) T; the deferred write a body's content M_k (+1 of the taken family) at t + 1; order 1 on the tally at (ii) and on M_k at (iv). 9.113 item 2: the click; the booking from the rule."""
+"""THE CLICKS (ALGEBRA.md #the-ladder, #the-primitives): the ladder on the inward flux: the first k with 2 W (C + f_1 + ... + f_k) >= (2 u + 1) T; the deferred write a body's content M_k (+1 of the taken family) at t + 1; order 1 on the tally at (ii) and on M_k at (iv). ALGEBRA.md #the-primitives: the click; the booking from the rule."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ DECLARATION = Declaration(
     ),
     ("the record's tally", "a body's content M_k"),
     None,
-    "9.25 (2), (3); 9.111 items 1, 2 and 6; 9.117 items 2 and 3",
+    "ALGEBRA.md #the-ladder, #the-primitives",
     word="after the step",
     schema=Schema(
         {

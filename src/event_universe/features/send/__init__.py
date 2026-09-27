@@ -1,4 +1,4 @@
-"""THE SEND (ALGEBRA.md 9.112 item 1): the Port puts on its Link weight x the component's level at the interval's start; one folder, one primitive, the register reads DECLARATION and its function `send`."""
+"""THE SEND (ALGEBRA.md #the-interval): the Port puts on its Link weight x the component's level at the interval's start; one folder, one primitive, the register reads DECLARATION and its function `send`."""
 
 from __future__ import annotations
 
@@ -23,6 +23,6 @@ DECLARATION = Declaration(
     ("the level now", "the weight"),
     ("the Link's value",),
     send,
-    "9.112 item 1",
+    "ALGEBRA.md #the-interval",
     word="the step",
 )

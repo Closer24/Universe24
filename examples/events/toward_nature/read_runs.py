@@ -1,16 +1,16 @@
-"""The readings of rows (1) and (2) of ALGEBRA.md 9.59 from the one command's outputs
-(`tools/run_inputs.py`), every number labelled by kind; no pin, no verdict (9.59 (6)).
+"""The readings of rows (1) and (2) of ALGEBRA.md #the-rows-against-nature from the one command's outputs
+(`tools/run_inputs.py`), every number labelled by kind; no pin, no verdict (ALGEBRA.md #the-rows-against-nature).
 
 DETECTOR: for each world the intervals from a record's giving click to its click at the
-clock's own set `at_well` (the light clock's tick, 9.24 (6)), their count, mean, rms and
+clock's own set `at_well` (the light clock's tick, ALGEBRA.md #the-velocity), their count, mean, rms and
 standard error of the mean; the clicks at the faces. COMPUTATION: the ratio of the means
 between the two worlds of a row with its error, and the closed forms it is set beside: for
-the redshift the continuum's 1 / sqrt(1 - c_1 / Gamma) (9.59 (1)) and the lattice's own at
+the redshift the continuum's 1 / sqrt(1 - c_1 / Gamma) (ALGEBRA.md #the-rows-against-nature) and the lattice's own at
 the given train's wave number k = pi / 2 (the frequency conserved across the well's edge,
 the wave number refracted: cos k' = (6 Gamma cos omega_0 - 6 c_1 - 4 (Gamma - c_1)) / (2
 (Gamma - c_1)) with cos omega_0 = 2 / 3, the group velocity (Gamma - c_1) sin k' / (3 Gamma
 sin omega_0) against sin k / (3 sin omega_0)); for Lorentz the longitudinal form's gamma^2
-and nature's gamma at v over the board's own light speed c_l (9.24 (6)), c_l read from the
+and nature's gamma at v over the board's own light speed c_l (ALGEBRA.md #the-velocity), c_l read from the
 rest world's tick against the arm.
 
     PYTHONPATH=src python examples/events/toward_nature/read_runs.py <out dir>
@@ -92,10 +92,10 @@ def redshift(out: Path, suffix: str = "") -> None:
     v0 = 1 / (3 * sin_w0)
     v1 = p * sin_k1 / (3 * GAMMA * sin_w0)
     print(
-        f"COMPUTATION set beside: the continuum's 1 / sqrt(1 - 2 U_1) = {continuum:.3f} at U_1 = {u} (today's law, 9.59 (1)); nature 1 + U_1 = {1 + u:.3f} at first order"
+        f"COMPUTATION set beside: the continuum's 1 / sqrt(1 - 2 U_1) = {continuum:.3f} at U_1 = {u} (today's law, ALGEBRA.md #the-rows-against-nature); nature 1 + U_1 = {1 + u:.3f} at first order"
     )
     print(
-        f"COMPUTATION on the Einstein form (9.62 (2)): a light clock with a declared arm reads the coordinate speed of light, 1 / (1 - 2 U_1) = {1 / (1 - 2 * u):.3f}; a clock body reads the redshift 1 / sqrt(1 - 2 U_1 + 2 U_1^2) = {1 / math.sqrt(1 - 2 * u + 2 * u * u):.3f}"
+        f"COMPUTATION on the Einstein form (ALGEBRA.md #the-rows-against-nature): a light clock with a declared arm reads the coordinate speed of light, 1 / (1 - 2 U_1) = {1 / (1 - 2 * u):.3f}; a clock body reads the redshift 1 / sqrt(1 - 2 U_1 + 2 U_1^2) = {1 / math.sqrt(1 - 2 * u + 2 * u * u):.3f}"
     )
     print(
         f"COMPUTATION the lattice's own at k = pi / 2: v_g at 0 = {v0:.4f}, in the well cos k' = {cos_k1:.3f}, v_g' = {v1:.4f}, the flight ratio {v0 / v1:.3f}"
@@ -126,7 +126,7 @@ def lorentz(out: Path, suffix: str = "") -> None:
     c_l = math.sin(k) / (3 * math.sqrt(1 - cos_omega * cos_omega))
     gamma = 1 / math.sqrt(1 - (v / c_l) ** 2)
     print(
-        f"COMPUTATION set beside: c_l = {c_l:.3f} at k = {k:.3f} (the plain rule's group velocity), v / c_l = {v / c_l:.3f}, nature's gamma = {gamma:.3f}, the longitudinal form's gamma^2 = {gamma**2:.3f} on the flight (9.24 (6))"
+        f"COMPUTATION set beside: c_l = {c_l:.3f} at k = {k:.3f} (the plain rule's group velocity), v / c_l = {v / c_l:.3f}, nature's gamma = {gamma:.3f}, the longitudinal form's gamma^2 = {gamma**2:.3f} on the flight (ALGEBRA.md #the-velocity)"
     )
 
 

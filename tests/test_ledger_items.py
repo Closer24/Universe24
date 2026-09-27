@@ -88,7 +88,7 @@ def test_1_the_output_holds_exactly_the_declared_readings_each_labelled_by_kind(
     assert [line["interval"] for line in centre["lines"]] == list(range(0, STEPS + 1, 40))
 
 
-# (2) THE LOADER READS EVERY DECLARATION AS A GENERIC TERM (ALGEBRA.md 9.110 item 7; record 2186)
+# (2) THE LOADER READS EVERY DECLARATION AS A GENERIC TERM (ALGEBRA.md #the-primitives; record 2186)
 
 
 @pytest.mark.xfail(
@@ -126,7 +126,7 @@ def test_2a_a_read_written_as_a_term_runs_bit_for_bit_with_the_reads_form():
     "are not read from universe.json",
 )
 def test_2b_the_step_declared_as_the_laws_own_four_runs_bit_for_bit_with_today():
-    """The step declared in the files as the rule 9.57 (1) itself: every family's level and
+    """The step declared in the files as the rule ALGEBRA.md #the-line itself: every family's level and
     pair sent on all six Ports, the receive rotated by the Port's accumulator, the wait 1, the
     operation the rule's weighted sum with the remainder kept: bit for bit with the engine's
     step of today (the ledger's primitives 13 to 16; record 2186)."""
@@ -160,7 +160,7 @@ def test_2c_a_one_sided_send_is_refused_by_the_loader():
         parse_nature_beam_world(document)
 
 
-# (3) THE SOURCE VERB AND THE TWO-SIDED GUARD (ALGEBRA.md 9.98 (11) (b), 9.108 items 11 and 12)
+# (3) THE SOURCE VERB AND THE TWO-SIDED GUARD (ALGEBRA.md #rule3, #the-paces)
 
 
 def test_3a_a_sourced_family_is_written_where_its_records_are_and_nowhere_else():
@@ -190,7 +190,7 @@ def test_3a_a_sourced_family_is_written_where_its_records_are_and_nowhere_else()
     "at run time is not refused",
 )
 def test_3b_a_content_below_zero_at_run_time_ends_the_run_with_the_guards_line():
-    """The pace is bounded on both sides, 0 < p <= Gamma (ALGEBRA.md 9.108 item 12 (i)): a hill
+    """The pace is bounded on both sides, 0 < p <= Gamma (ALGEBRA.md #the-paces): a hill
     whose weight makes the content negative at some Node ends the run with a line naming the
     guard and the side; no level is written past it."""
     document = emitter_world(stock=2, ticks=STEPS)
@@ -204,7 +204,7 @@ def test_3b_a_content_below_zero_at_run_time_ends_the_run_with_the_guards_line()
             simulation.step()
 
 
-# (4) THE CLICK THAT KEEPS THE MOMENTUM, WITH ITS RECOIL'S STORE (ALGEBRA.md 9.109 item 2, 9.111 item 2)
+# (4) THE CLICK THAT KEEPS THE MOMENTUM, WITH ITS RECOIL'S STORE (ALGEBRA.md #the-primitives.111 item 2)
 
 
 @pytest.mark.xfail(
@@ -215,7 +215,7 @@ def test_3b_a_content_below_zero_at_run_time_ends_the_run_with_the_guards_line()
 def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer():
     """At a giving the body's held vector n changes along the click's axis by
     sigma_a x (W x P_body) div (M x lambda_q), the remainder on the body's record; the taker
-    with the opposite sign (ALGEBRA.md 9.91 (4) with the sign of 9.111 item 1)."""
+    with the opposite sign (ALGEBRA.md #the-interval with the sign of ALGEBRA.md #the-primitives)."""
     document = emitter_world(stock=2, ticks=STEPS)
     stamped(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
@@ -241,7 +241,7 @@ def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer(
 def test_5a_a_clicks_held_change_is_written_after_every_advance_of_its_interval(tmp_path):
     """Within one interval the trace's order is: the steps (i), the bookings and the clicks
     (ii), the held families' step (iii), the holds with the clicks' changes (iv); a click's
-    change of M enters the hold after every advance (ALGEBRA.md 9.91 (8), 9.85 (2))."""
+    change of M enters the hold after every advance (ALGEBRA.md #the-interval, #the-primitives)."""
     document = emitter_world(stock=2, ticks=STEPS)
     output = run_world(
         document, tmp_path, start={"mode": "check", "trace": {"primitives": ["step", "click", "hold"]}}

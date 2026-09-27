@@ -1,4 +1,4 @@
-"""THE PHASE (ALGEBRA.md 9.91 (2)): one level or the pair (now, before): the second-order line of the rule, a rotation. 9.113 item 2: from the rule."""
+"""THE PHASE (ALGEBRA.md #the-interval): one level or the pair (now, before): the second-order line of the rule, a rotation. ALGEBRA.md #the-primitives: from the rule."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ DECLARATION = Declaration(
     ("levels",),
     ("the second level",),
     None,
-    "9.91 (2)",
+    "ALGEBRA.md #the-interval",
     word="the step",
     schema=Schema({"a family's entry": ObjectOf({"phase": OneOf((1, 2))})}),
 )

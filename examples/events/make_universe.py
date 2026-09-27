@@ -1,5 +1,5 @@
 """THE UNIVERSE'S TWIST TABLE, generated once into the families file's integers block
-(ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c), (d); the one stroke, commit 4).
+(ALGEBRA.md #the-transport, #the-primitives; the one stroke, commit 4).
 
 The angle unit is theta_unit = 1 / (4 Gamma 2^16) radians per unit of the twist k. The
 transport composes two triples per Port: the FINE table holds the 2^10 triples of the angles
@@ -33,7 +33,7 @@ FAMILIES_FILE = ROOT / "examples" / "events" / "universe.json"  # the universe f
 
 def twist_table(node_clock: int) -> dict[str, object]:
     """The table for the universe's Gamma: the unit 4 Gamma 2^16, the fine and the coarse
-    triples (ALGEBRA.md 9.96 (2) (c))."""
+    triples (ALGEBRA.md #the-primitives)."""
     unit = 4 * node_clock * TWIST_UNIT_SCALE
     fine = [list(twist_triple(k, unit)) for k in range(1 << TWIST_FINE_BITS)]
     coarse = [list(twist_triple(k << TWIST_FINE_BITS, unit)) for k in range(TWIST_COARSE_MOST)]

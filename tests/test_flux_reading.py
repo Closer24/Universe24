@@ -1,4 +1,4 @@
-"""The flux reading (ALGEBRA.md 9.19 (3)): e_i(t) - e_i(t - 1) is the sum of G_ij over the reads of i,
+"""The flux reading (ALGEBRA.md #rule3): e_i(t) - e_i(t - 1) is the sum of G_ij over the reads of i,
 exactly up to the remainders' own term, on planted rows and on the engine's run."""
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ from tests.running import planted
 from tests.worlds import NODE_CLOCK, family_entry
 from tests.worlds import reads as family_reads
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
@@ -91,7 +91,7 @@ def test_the_local_flux_identity_is_exact_on_the_rules_integers():
                     if ii == i
                 )
                 # the remainders' term under the weak-field rule, (a_next - a_before) (r -
-                # r') / (3 R) at a Node without content, R = 2 Gamma^2 num (ALGEBRA.md 9.57 (1))
+                # r') / (3 R) at a Node without content, R = 2 Gamma^2 num (ALGEBRA.md #the-line)
                 remainder_term = (level(a_next, i) - level(a_before, i)) * Fraction(
                     int(r_old[i, 0, 0]) - int(r_new[i, 0, 0]), 3 * 2 * NODE_CLOCK**2 * num
                 )
@@ -162,7 +162,7 @@ def test_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
 
 def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integers():
     """(c) the engine's `conserved_form` is 3 I times the family's wall times Gamma (the Node
-    clock, ALGEBRA.md 9.35 (2); BUILD.md section 26 item 31: I with the clock's weights (den f
+    clock, ALGEBRA.md #the-paces; BUILD.md section 26 item 31: I with the clock's weights (den f
     / (Gamma num)) on the squares and (2 den M / (Gamma num)) on now x before at the seven
     Nodes with content, the well at 20 and the six receiver bodies, M = 1) on planted rows,
     exact against the Fraction form, for light (the wall 1) and for a massive family with a well
@@ -251,7 +251,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             )
             inward += max(g, Fraction(0))
         # the tally in the form's units: the wall times the plain current, unweighted
-        # (ALGEBRA.md 9.50 (13); item 36; the pace at both ends, item 34, HISTORY)
+        # (ALGEBRA.md #the-direction; item 36; the pace at both ends, item 34, HISTORY)
         assert offers.get(pair, 0) == inward * wall
         assert offers.get(far, 0) == 0
 

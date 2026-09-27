@@ -36,7 +36,7 @@ SOURCE_KIND = [7, 8]  # the emitter bodies' own kind (omega_0 = 0.505; the index
 SOURCE_WELL = [
     699,
     700,
-]  # its well over the train's 32 Nodes, rich (W = 700, ALGEBRA.md 9.22 (4)) and bound (2 cos omega_b = 1.9944 on a chain; the one-Node giving's [801, 700] is a runaway over 32 Nodes, its interior above 1)
+]  # its well over the train's 32 Nodes, rich (W = 700, ALGEBRA.md #a-familys-declaration) and bound (2 cos omega_b = 1.9944 on a chain; the one-Node giving's [801, 700] is a runaway over 32 Nodes, its interior above 1)
 
 
 CHAIN = {"x": "open", "y": "periodic", "z": "periodic"}
@@ -141,7 +141,7 @@ def block_world(
     """A world of the massive kind `matter` with blocks, a light family on the clock [77, 25], and optionally
     an emitter body of light (`emitter_at`) as the first measured event, seeded on its mode."""
     matter: dict = family_entry("matter", kind, reads())
-    # light on the given clock [512, 1] of N = 1024 (the given train, ALGEBRA.md 9.17 (6a))
+    # light on the given clock [512, 1] of N = 1024 (the given train, ALGEBRA.md #the-click)
     families = [
         family_entry("light", [1, 1], reads(), clock=[512, 1]),
         matter,
@@ -164,7 +164,7 @@ def block_world(
             "fixed": block.get("fixed", False),
             "side": block["side"],
             "pair": block["pair"],
-            # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2), no loader default
+            # the body's numbers (ALGEBRA.md #the-interval; commit 2), no loader default
             "q": block.get("q", 0),
             "spin": block.get("spin", [0, 0, 0]),
             "moment": block.get("moment", [0, 0, 0]),
@@ -220,7 +220,7 @@ def emitter_at(
     receiver: object = None,
 ) -> dict:
     """An emitter body on a chain from x: the well of the family `own` over the train's 32 Nodes, seeded
-    on its mode, with `stock` givings of `family` and, with `receiver`, the ladder by name (ALGEBRA.md 9.17 (6a))."""
+    on its mode, with `stock` givings of `family` and, with `receiver`, the ladder by name (ALGEBRA.md #the-click)."""
     entry = emitter_body([x, 0, 0], stock, receiver=receiver, family=family)
     entry["family"] = own
     entry["pair"] = list(pair or SOURCE_WELL)

@@ -1,4 +1,4 @@
-"""The world's files for the engine's loader (a host module): the loader reads no file and computes no digest; this module reads the world file, the universe and start files it names, and the step file, and hands the loader the documents with the stamp's digest (ALGEBRA.md 9.90 (2), 9.22 (7) (i))."""
+"""The world's files for the engine's loader (a host module): the loader reads no file and computes no digest; this module reads the world file, the universe and start files it names, and the step file, and hands the loader the documents with the stamp's digest (ALGEBRA.md #the-primitives, #a-familys-declaration)."""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ def read_repository_json(value: str) -> object | None:
 
 
 def input_digest(document: dict[str, object]) -> str:
-    """THE FILE'S DIGEST (ALGEBRA.md 9.22 (7) (i); the model owner's rule of
+    """THE FILE'S DIGEST (ALGEBRA.md #a-familys-declaration; the model owner's rule of
     2026-09-25 through the Boss, BUILD.md section 26 item 28: the stamp over
     the whole file): SHA-256 of the canonical JSON (the keys sorted, no
     spaces, ASCII) of the document without its `stamp` key; the same from
@@ -43,9 +43,9 @@ def input_digest(document: dict[str, object]) -> str:
 
 def input_stamp(document: dict[str, object]) -> dict[str, str]:
     """THE STAMP the generator writes into a world file under `stamp` (record 1886;
-    ALGEBRA.md 9.22 (7) (i), 9.90 (3) (c); BUILD.md section 26 item 28): the
+    ALGEBRA.md #a-familys-declaration, #the-primitives; BUILD.md section 26 item 28): the
     digest of the whole document (`input_digest`) and nothing else (no law
-    identifier, 9.90 (1)). The loader compares it with the digest this module
+    identifier, ALGEBRA.md #the-primitives). The loader compares it with the digest this module
     computes at load and refuses a file that is not the one the generator wrote."""
     return {"hash": input_digest(document)}
 

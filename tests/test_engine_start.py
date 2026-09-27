@@ -1,6 +1,6 @@
 """THE ENGINE START FILE AND NO DEFAULT UNDER THE DETECTOR LAW (the model owner's record 2089 of
 2026-09-25 through the Boss, "every flag the engine needs for a run should leave the code";
-the Boss's records 2092 and 2094; ALGEBRA.md 9.83 (2) (a); BUILD.md section 26 item 57): (1)
+the Boss's records 2092 and 2094; ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 57): (1)
 every world of the law names the one start file by its repository path (`engine`), the file
 holds the run's mode, and a missing key of either is refused by name; (2) a key the law's path
 reads and the world leaves out is refused by name (the world's flags and width, a family's
@@ -36,7 +36,7 @@ def refused(document: dict, match: str) -> None:
 
 def test_the_shipped_start_file_says_check_and_every_world_of_the_law_names_it():
     start = json.loads((ROOT / START).read_text(encoding="utf-8"))
-    assert start == {"mode": "check"}  # no law's name (ALGEBRA.md 9.90 (1))
+    assert start == {"mode": "check"}  # no law's name (ALGEBRA.md #the-primitives)
     document = emitter_world(stock=1, ticks=10)
     assert document["engine"] == START
     world = parse_nature_beam_world(document)
@@ -57,7 +57,7 @@ def test_a_missing_key_of_the_world_or_the_start_file_is_refused_by_name(tmp_pat
         del broken[key]
         refused(broken, f"the world lacks keys: .*{key}")
     # the start file: a missing key, an unknown key, a law's name (refused as an unknown
-    # key: no law's name and no version, ALGEBRA.md 9.90 (1)), a wrong mode
+    # key: no law's name and no version, ALGEBRA.md #the-primitives), a wrong mode
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     start = tmp_path / "start.json"
     document["engine"] = "start.json"
@@ -104,7 +104,7 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
         broken = json.loads(json.dumps(document))
         broken["measured"][0][key] = value
         refused(broken, rf"measured\[0\] has unknown keys: {key}")
-    # `fixed` is read since the Boss's record 2157 (ALGEBRA.md 9.104 (6) (b)): an apparatus
+    # `fixed` is read since the Boss's record 2157 (ALGEBRA.md #the-primitives): an apparatus
     # held in place, the feed (when it lands) acting on a body without the word alone
     held_in_place = json.loads(json.dumps(document))
     held_in_place["measured"][0]["fixed"] = True

@@ -24,13 +24,13 @@ EMITTER_KIND = [7, 8]  # the emitter body's kind (omega_0 = 0.505)
 EMITTER_PAIR = [
     699,
     700,
-]  # the well of the 32-Node emitting body, rich (W = 700 remainder values, ALGEBRA.md 9.22 (4)) and bound on a chain (2 cos omega_b = 1.9944 over 32 Nodes; the one-Node well [801, 700] of the one-Node giving is a runaway over 32 Nodes, 2.285, its interior above 1)
+]  # the well of the 32-Node emitting body, rich (W = 700 remainder values, ALGEBRA.md #a-familys-declaration) and bound on a chain (2 cos omega_b = 1.9944 over 32 Nodes; the one-Node well [801, 700] of the one-Node giving is a runaway over 32 Nodes, 2.285, its interior above 1)
 
 
 GIVEN_CLOCK = [
     512,
     1,
-]  # the given clock of every light emitter on N = 1024: k = pi / 2, the wavelength 4 (ALGEBRA.md 9.17 (6a))
+]  # the given clock of every light emitter on N = 1024: k = pi / 2, the wavelength 4 (ALGEBRA.md #the-click)
 
 
 PHASE_STEPS = 1024
@@ -58,8 +58,8 @@ CHARGE_FAMILY = {
 CHARGE_STRENGTH = 1
 
 
-# the family of clicks holds the content (ALGEBRA.md 9.45) and the family of charge the signed
-# charge (9.48); a reading family reads the content plainly and the charge by its sign at Lambda
+# the family of clicks holds the content (ALGEBRA.md #the-counts-line) and the family of charge the signed
+# charge (ALGEBRA.md #the-paces); a reading family reads the content plainly and the charge by its sign at Lambda
 CLOCK_FAMILY_NAME = "clicks"
 
 
@@ -76,7 +76,7 @@ CLOCK_FAMILY = {
 }
 
 
-# the Node clock Gamma of every test world (ALGEBRA.md 9.35 (2), 9.57 (2))
+# the Node clock Gamma of every test world (ALGEBRA.md #the-paces, #the-line)
 NODE_CLOCK = 10**4
 
 
@@ -105,7 +105,7 @@ def chain_world(
     faces: str = "closed",
 ) -> dict:
     """A chain of 80 Nodes (x closed): the emitter body at [2, 34) and the receiver cube `screen` at [70, 72];
-    with `faces` "open", a chain of 140 with the face receiver `face` at both ends (ALGEBRA.md 9.19 (3) (a))."""
+    with `faces` "open", a chain of 140 with the face receiver `face` at both ends (ALGEBRA.md #rule3)."""
     length, corner, screen = (140, 34, 100) if faces == "open" else (80, 2, 70)
     document = {
         "shape": [length, 1, 1],
@@ -158,7 +158,7 @@ def emitter_body(
     extents: list[int] | None = None,
 ) -> dict:
     """An emitter body of EMITTER_KIND over the train's 32 Nodes along `direction`, seeded on its mode,
-    with its stock and given family, and with `receiver` the given records' ladder by name (ALGEBRA.md 9.17 (6a))."""
+    with its stock and given family, and with `receiver` the given records' ladder by name (ALGEBRA.md #the-click)."""
     emitter: dict = {
         "family": family,
         "weight": 3,  # the window's weight (commit 7; the train retired)
@@ -193,7 +193,7 @@ def emitter_body(
 
 def layer_world(receiver: object = None) -> dict:
     """A layer of 80 x 9 x 1 (x closed): the emitter across the width at [2, 34) and three detector cubes
-    s0, s1, s2 at x in [70, 72]; `receiver` names the ladder's sets in order (ALGEBRA.md 9.19 (3) (b))."""
+    s0, s1, s2 at x in [70, 72]; `receiver` names the ladder's sets in order (ALGEBRA.md #rule3)."""
     measured = [emitter_body([2, 0, 0], 8, receiver=receiver, extents=[32, 9, 1])]
     document = {
         "shape": [80, 9, 1],
@@ -249,7 +249,7 @@ def emitter_world(
 ) -> dict:
     """The emitter's unit world: a chain of 80 (x closed), an emitter of the matter kind [800, 809] at [5, 37)
     on its mode with `stock` givings of light, and the receiver cube `screen` at [70, 72]."""
-    # the giving is the window's (ALGEBRA.md 9.85 (5), 9.71 (1)): the body's rotation written
+    # the giving is the window's (ALGEBRA.md #the-primitives): the body's rotation written
     # at its Nodes at the weight 3 (3 x 2^20 under the bound 2^22)
     emitter: dict = {
         "family": "light",
@@ -355,7 +355,7 @@ def family_entry(
 
 
 def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
-    """The wheel W of the rule at a Node: the wall over the gcd of the rule's three integers (ALGEBRA.md 9.22 (4), 9.57 (1))."""
+    """The wheel W of the rule at a Node: the wall over the gcd of the rule's three integers (ALGEBRA.md #a-familys-declaration, #the-line)."""
     num, den = int(pair[0]), int(pair[1])
     (read, _, _), self_coefficient, wall = coefficients(num, den, gamma, content)
     return wall // math.gcd(wall, self_coefficient, read)
@@ -380,7 +380,7 @@ def on_the_file(document: dict, clock: list[int]) -> dict:
             entry["emitter"]["clock"] = clock
             if entry["emitter"]["family"] == "light":
                 entry["emitter"]["family"] = "charge"
-            # the light's component along the body's moment (ALGEBRA.md 9.82 (3) (d); commit 4)
+            # the light's component along the body's moment (ALGEBRA.md #the-second-level; commit 4)
             entry["moment"] = [0, 0, 1]
     moved["stamp"] = input_stamp(moved)
     return moved

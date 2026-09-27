@@ -93,7 +93,7 @@ def test_a_body_at_rest_with_spin_and_moment_writes_the_dipoles_and_inverts_exac
 
 def test_at_rest_without_numbers_every_other_part_is_silent_and_the_scalar_engine_stands():
     """A body with no momentum, spin, moment or charge writes the time parts alone; every other
-    part is zero and silent at every interval (9.91 (9) (a)), the leak test empty."""
+    part is zero and silent at every interval (ALGEBRA.md #the-interval), the leak test empty."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(parts_world()))
     for _ in range(10):
         simulation.step()
