@@ -13,8 +13,8 @@ section [How the team works now](../workflow.md#how-the-team-works-now-the-model
 ## What the coordinator writes and does not write
 
 - Writes the manuscript only: every claim from the tree at a named commit
-  (a note of BEAM_LAW, a section of DERIVATIONS_BEAM, a design under
-  `docs/designs/`, a row of NATURE.md, a registered run with its SHA), every
+  (a line of ALGEBRA.md, a section of ENGINE.md, a decision of HIGHLIGHTS.md,
+  a registered run with its SHA), every
   number a detector reading or a formula number as the register names it,
   PASS and FAIL in the same font, a hypothesis under its own identity and
   never as the law, "the statement" where no source proves a theorem.
