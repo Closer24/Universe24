@@ -1556,7 +1556,7 @@ class DetectorLawSimulation:
     def pair_arrays(
         self, family: int, pair: tuple[int, int] | None = None
     ) -> tuple[np.ndarray, np.ndarray]:
-        """THE PAIR ARRAYS of a record of `family` at its rest pair (ALGEBRA.md #the-primitives, #the-interval): num and den over the board, the pair everywhere but at the family's bodies, whose declared pairs are written at their Nodes; made once per (family, pair) and kept up with the bodies' steps (`_write_pair`); `pair` None reads the family's own declared pair (refused on a family whose pair is the body's)."""
+        """THE PAIR ARRAYS of a record of `family` at its rest pair (ALGEBRA.md #the-primitives, #the-interval): num and den over the board, the pair everywhere but at the family's bodies, whose declared pairs are written at their Nodes; made once per (family, pair) by the pair folder's function through the register and kept up with the bodies' steps (`_write_pair`); `pair` None reads the family's own declared pair (refused on a family whose pair is the body's)."""
         if pair is None:
             definition = self.families[family]
             if definition.pair_on_body:
@@ -1568,13 +1568,11 @@ class DetectorLawSimulation:
         key = (family, int(pair[0]), int(pair[1]))
         found = self._pairs.get(key)
         if found is None:
-            num = np.full(self.shape, key[1], dtype=np.int64)
-            den = np.full(self.shape, key[2], dtype=np.int64)
-            for block in self.blocks:
-                if block.family == family:
-                    num[block.mask] = block.definition.pair[0]
-                    den[block.mask] = block.definition.pair[1]
-            found = (num, den)
+            arrays = self.main_loop.function_of("the pair", "(i)")
+            wells = [
+                (block.mask, block.definition.pair) for block in self.blocks if block.family == family
+            ]
+            found = cast(tuple[np.ndarray, np.ndarray], arrays(self.shape, key[1:], wells))
             self._pairs[key] = found
         return found
 
