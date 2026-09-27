@@ -1,7 +1,4 @@
-"""THE RECOIL, its own folder (ALGEBRA.md #the-primitives, the row "the recoil"; ALGEBRA.md #the-primitives, #the-interval; record 2224): the line's integers on the moving row's numbers, the store one remainder
-on the universe's wall L so the sum over clicks of every wavelength is the exact floor (across a
-taking and a giving too), the direction of travel, the refusals by name, the trace's hand identity on
-the emitter's run, the declaration."""
+"""The recoil's folder: the line's integers on the moving row, the store one remainder on the universe's wall L so the sum over clicks is the exact floor, the direction of travel, the refusals and the declaration."""
 
 from __future__ import annotations
 

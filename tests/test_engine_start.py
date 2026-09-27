@@ -1,13 +1,4 @@
-"""THE ENGINE START FILE AND NO DEFAULT UNDER THE DETECTOR LAW (the model owner's record 2089 of
-2026-09-25 through the Boss, "every flag the engine needs for a run should leave the code";
-the Boss's records 2092 and 2094; ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 57): (1)
-every world of the law names the one start file by its repository path (`engine`), the file
-holds the run's mode, and a missing key of either is refused by name; (2) a key the law's path
-reads and the world leaves out is refused by name (the world's flags and width, a family's
-pair, a block's held quanta and drive, a well's margin); (3) a key the law never reads is
-refused by name (a block's fixed, phase and directions, a detector's threshold, the ray law's
-suspension and direction table); (4) the runner: --jobs required, --pins refused under the mode
-check; (5) the shipped start file says check. HOST; no physics, no pin."""
+"""The start file and no default: every world names the start file, a key the law reads and the world leaves out is refused by name, a key the law never reads is refused by name, and the runner's own options. HOST; no pin."""
 
 from __future__ import annotations
 

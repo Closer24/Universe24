@@ -1,8 +1,4 @@
-"""Guard the English repository rule without banning scientific notation.
-
-This detects scripts, not language. Latin-script prose still needs human review.
-Escaped multilingual strings below are deliberate negative test inputs.
-"""
+"""The English repository rule: the gate detects scripts other than Latin, not language; escaped strings below are deliberate negative inputs."""
 
 import ast
 import re

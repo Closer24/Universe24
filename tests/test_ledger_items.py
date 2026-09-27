@@ -1,16 +1,4 @@
-"""THE LEDGER'S ITEMS, EACH WITH ITS SMALL TEST WRITTEN BEFORE THE BUILD (the Boss's record 2199,
-the model owner's word of 2026-09-26: "reach an engine that supports what we need, the fastest
-way"; docs/designs/generic_engine/ENGINE_LEDGER.md sections 2 and 3). One test per item of the
-shortest path, in its order; a test of a support not built yet is marked xfail strict: it turns
-green the day the support lands and the mark comes off (the item moves to "implemented"). Every
-test speaks the run's files alone: a world, a universe entry, a start file; no engine name.
-
-The items, top down: (1) the output declared in one format; (2) the loader reading every
-declaration as a generic term, the step's four included; (3) the source verb and the two-sided
-guard (the signed read is tests/test_engine_acceptance.py test (d)); (4) the click that keeps
-the momentum with its recoil's store; (5) a click's change after all advances and a run-time
-overflow bound; (6) no identity string, version, flag or default in the code (the acceptance
-tests (e1) to (e4)); (7) the trace; (8) the speed items."""
+"""The ledger's items, each with its small test written before the build and marked xfail strict until its support lands; every test speaks the run's files alone."""
 
 from __future__ import annotations
 
