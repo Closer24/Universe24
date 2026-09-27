@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 
 import numpy as np
@@ -19,7 +20,7 @@ from event_universe.features.polariser import (
     read_term,
     triple_of,
 )
-from event_universe.world_files import parse_nature_beam_world
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.worlds import ROOT, emitter_world
 
 LIGHT_CLOCK = ROOT / "examples" / "events" / "massive_record" / "light_clock.json"
@@ -134,3 +135,41 @@ def test_the_bodys_own_set_books_the_fluxs_second_share_and_the_loop_admits_the_
     simulation.step()
     (given,) = simulation.records.values()
     assert given.im_now is not None and given.im_now[simulation.blocks[0].mask].any()
+
+
+def test_the_terms_are_read_from_the_bodys_declared_key_at_the_load_and_the_second_set_is_checked():
+    """A body in the law's form with the card's key `polariser` (the frame admits it and carries it on the block's `declared`, #1308): the loop's term is read from it at the assembly through the folder's `read_term`, the second set the body's own set (`strip`, on its Node) and the first another body's set (`rest`); the sets the other way round are refused by name at the load, the second not being a set on the body."""
+    document = {
+        "shape": [16, 1, 1],
+        "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
+        "ticks": 4,
+        "N": 64,
+        "universe": "examples/events/generated/universe.json",
+        "engine": "examples/events/engine_start.json",
+        "measured": [
+            {
+                "family": "matter",
+                "nodes": [{"node": [5, 0, 0], "count": 1}, {"node": [6, 0, 0], "count": 1}],
+                "momentum": [0, 0, 0],
+                "momentum_before": [0, 0, 0],
+                "polariser": {"angle": [2, 1], "sets": ["rest", "strip"]},
+            },
+            {
+                "family": "matter",
+                "nodes": [{"node": [12, 0, 0], "count": 1}],
+                "momentum": [0, 0, 0],
+                "momentum_before": [0, 0, 0],
+            },
+        ],
+        "detectors": [
+            {"name": "strip", "positions": [[6, 0, 0]]},
+            {"name": "rest", "positions": [[12, 0, 0]]},
+        ],
+    }
+    document["stamp"] = input_stamp(document)
+    simulation = DetectorLawSimulation(parse_nature_beam_world(copy.deepcopy(document)))
+    assert simulation.polarisers == {0: PolariserTerm((2, 1), ("rest", "strip"))}
+    document["measured"][0]["polariser"]["sets"] = ["strip", "rest"]
+    document["stamp"] = input_stamp(document)
+    with pytest.raises(ValueError, match="names 'rest' as its second set"):
+        DetectorLawSimulation(parse_nature_beam_world(document))

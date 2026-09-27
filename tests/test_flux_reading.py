@@ -26,8 +26,7 @@ PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 
 def reads(simulation: DetectorLawSimulation, family: int, length: int) -> dict[tuple[int, int], int]:
-    """The read matrix A of a chain (y and z of extent 1): (i, j) with the multiplicity of the
-    reads of j among the six reads of i; the self-reads of the folded axes."""
+    """The read matrix A of a chain (y and z of extent 1): (i, j) with the multiplicity of the reads of j among the six reads of i; the self-reads of the folded axes."""
     wrap = simulation.kind_wrap[family]
     out: dict[tuple[int, int], int] = {}
     for x in range(length):
@@ -111,13 +110,7 @@ def test_the_local_flux_identity_is_exact_on_the_rules_integers():
 
 @pytest.mark.diagnostic
 def test_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
-    """(b) a Gaussian packet of 40 Links at k = 0.3024 on light's open chain of 400, read at the
-    Node 200 over 600 intervals: the one-way inward flux 1.0017 of I (the backward part of the
-    planted packet, 1.35 percent, returns through the -x face, no Node beyond the board, and
-    passes the Node too; the excess the lattice's counter-flow on the passage; before the
-    take retired the sponge took that part and the reading was 0.9865), the signed sum
-    7 x 10^4 against I 5.9 x 10^11 (COMPUTATION on the rule's integers: a GameBoard reading of the
-    record's two levels, a diagnostic, not a click)."""
+    """(b) a Gaussian packet of 40 Links at k = 0.3024 on light's open chain of 400, read at the Node 200 over 600 intervals: the one-way inward flux 1.0017 of I (the backward part of the planted packet, 1.35 percent, returns through the -x face, no Node beyond the board, and passes the Node too; the excess the lattice's counter-flow on the passage; before the take retired the sponge took that part and the reading was 0.9865), the signed sum 7 x 10^4 against I 5.9 x 10^11 (COMPUTATION on the rule's integers: a GameBoard reading of the record's two levels, a diagnostic, not a click)."""
     simulation = chain_world(None, 400, {"x": "open", "y": "periodic", "z": "periodic"})
     matrix = reads(simulation, 0, 400)
     k = 0.3024
@@ -248,15 +241,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
 
 
 def test_the_tally_over_the_ports_is_the_board_wide_reading_and_costs_the_ports_alone(capsys):
-    """THE CLICK'S COST (the model owner's record 1934; BUILD.md section 26 item 26): the
-    detectors' inflow per record is read at the Port pairs alone. On the emitter world
-    (the chain of 80 with the cube screen at [70, 72] and the closed faces) and on the
-    detector-law layer (24 x 9 with three cubes of side 3), after every interval of a run
-    the tally per detector equals the board-wide reading `inward_flux` into that detector's Nodes,
-    bit for bit, for every live record; the Port pairs are listed once per family; and the
-    HOST cost printed is the Ports read per record per interval against the board's Nodes
-    (4 Ports of 80 Nodes on the chain, the screen cube's two and the emitter body's two; 40
-    of 216 on the layer; the two slits' placement reported when the given train lands)."""
+    """THE CLICK'S COST (the model owner's record 1934; BUILD.md section 26 item 26): the detectors' inflow per record is read at the Port pairs alone. On the emitter world (the chain of 80 with the cube screen at [70, 72] and the closed faces) and on the detector-law layer (24 x 9 with three cubes of side 3), after every interval of a run the tally per detector equals the board-wide reading `inward_flux` into that detector's Nodes, bit for bit, for every live record; the Port pairs are listed once per family; and the HOST cost printed is the Ports read per record per interval against the board's Nodes (4 Ports of 80 Nodes on the chain, the screen cube's two and the emitter body's two; 40 of 216 on the layer; the two slits' placement reported when the given train lands)."""
     from tests.worlds import emitter_world, layer_world
 
     for name, document, intervals in (
