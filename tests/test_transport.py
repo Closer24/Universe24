@@ -15,7 +15,7 @@ from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import PACES_SHAPE as SHAPE
 from tests.bodies import paces_world, parts_of
 from tests.running import refused
-from tests.worlds import FILE, emitter_world, on_the_file
+from tests.worlds import FILE, HELD_MOMENT, emitter_world, on_the_file
 
 ROOT = Path(__file__).resolve().parents[1]
 OWN_TWIST = 9785  # round(2^16 acos(800 / 809)), the retired generator's rounding of the pair's rest rotation, measured once
@@ -37,12 +37,7 @@ def twisted_world() -> dict:
             family["reads"][0]["twist"] = "own"
         if family["name"] == "charge":
             # the charge with its vector part (the shipped file's entry on the inline list)
-            family.update(
-                {
-                    "parts": [1, 3],
-                    "held": {"count": "sign", "factors": [1, 1], "dipole": "moment", "dipole_div": 2},
-                }
-            )
+            family.update({"parts": [1, 3], "held": dict(HELD_MOMENT)})
     document["twist_table"] = table()
     document["stamp"] = input_stamp(document)
     return document

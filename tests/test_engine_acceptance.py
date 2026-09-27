@@ -14,7 +14,6 @@ import pytest
 
 from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.loader.world import MOST_FAMILIES
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.worlds import NODE_CLOCK, emitter_world, family_entry, load_file
 
@@ -120,9 +119,9 @@ def test_a_the_adversarial_universe_runs_bit_for_bit_under_random_family_names()
 
 
 def test_b_twenty_families_run_and_the_twenty_first_is_refused_by_the_loaders_own_line():
-    """(b) The owner's constant (record 2081): families up to the cap load and run; one more is
-    refused by the loader naming the cap, never by anything in the engine."""
+    """(b) The universe's `most_families`: families up to it load and run; one more is refused by the loader naming it."""
     document = emitter_world(stock=1, ticks=20)
+    MOST_FAMILIES = document["most_families"] = 20  # the universe's key, inline as its integers are
     base = len(families_of(document))
     families_of(document).extend(
         extra_family(f"extra{index:02d}") for index in range(MOST_FAMILIES - base)
