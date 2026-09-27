@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import hashlib
 from dataclasses import dataclass
-from fractions import Fraction
 from typing import Any
 
 import numpy as np
@@ -92,7 +91,7 @@ def chain_axis(counts: np.ndarray) -> int | None:
 
 
 def chain_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
-    """The rest on a chain in one pass (ALGEBRA.md #the-generator, THE START): the fixed point of the clamp's map, 6 den b_i = num (b_(i-1) + b_(i+1) + 4 b_i) between the bodies' Nodes with the counts times the unit at them and 0 beyond an open face, solved exactly in rationals segment by segment (the tridiagonal line of the same map), the levels then the nearest integers by the division act; the same rest as the clamp within one unit."""
+    """The rest on a chain in one pass (ALGEBRA.md #the-generator, THE START): the fixed point of the clamp's map, 6 den b_i = num (b_(i-1) + b_(i+1) + 4 b_i) between the bodies' Nodes with the counts times the unit at them and 0 beyond an open face, solved exactly in integers segment by segment (the tridiagonal line of the same map: the segment's determinants p_k = d p_(k-1) - num^2 p_(k-2) with d = 6 den - 4 num, the Node's value the division act N_i div p_s with N_i = L num^i p_(s-i) + R num^(s+1-i) p_(i-1) from the two ends L and R), the levels then the nearest integers by the division act; the clamp's fixed point, bit for bit."""
     check_counts(counts, 1 + int(counts.max()))
     num, den = pair
     if num < 1 or den < num:
@@ -103,48 +102,46 @@ def chain_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
     unit = field_unit(counts, num)
     line = np.moveaxis(counts, axis, 0).reshape(-1)
     extent = int(line.shape[0])
-    clamped = [int(c) * unit if c > 0 else None for c in line]
-    # the map's diagonal on a free Node with the two folded axes reading the Node itself: (6 den - 4 num) b_i = num (b_(i-1) + b_(i+1))
-    diagonal, off = Fraction(6 * den - 4 * num), Fraction(num)
-    fine_values: list[Fraction] = [Fraction(0)] * extent
+    clamped = [int(c) * unit for c in line]
+    bodies = [i for i, c in enumerate(line) if c > 0]
+    diagonal = 6 * den - 4 * num
+    fine_values = [0] * extent
+    for i in bodies:
+        fine_values[i] = clamped[i]
 
-    def solve(nodes: list[int], left: Fraction, right: Fraction) -> None:
-        """One free segment between two known values, the Thomas pass in exact rationals."""
+    def solve(nodes: list[int], left: int, right: int) -> None:
+        """One free segment between two known values: the determinants' recurrence, then one exact division per Node by the division act."""
         size = len(nodes)
         if size == 0:
             return
-        rhs = [Fraction(0)] * size
-        rhs[0] += off * left
-        rhs[-1] += off * right
-        main = [diagonal] * size
-        for k in range(1, size):
-            factor = -off / main[k - 1]
-            main[k] = main[k] - factor * -off
-            rhs[k] = rhs[k] - factor * rhs[k - 1]
-        found = [Fraction(0)] * size
-        found[-1] = rhs[-1] / main[-1]
-        for k in range(size - 2, -1, -1):
-            found[k] = (rhs[k] + off * found[k + 1]) / main[k]
+        determinants = [1, diagonal]
+        powers = [1]
+        for _ in range(size + 1):
+            determinants.append(diagonal * determinants[-1] - num * num * determinants[-2])
+            powers.append(powers[-1] * num)
         for k, node in enumerate(nodes):
-            fine_values[node] = found[k]
+            i = k + 1
+            numerator = (
+                left * powers[i] * determinants[size - i]
+                + right * powers[size + 1 - i] * determinants[i - 1]
+            )
+            fine_values[node] = int(division(numerator, determinants[size], np.array(1, dtype=object)))
 
-    bodies = [i for i, value in enumerate(clamped) if value is not None]
-    for i in bodies:
-        fine_values[i] = Fraction(clamped[i])  # type: ignore[arg-type]
     if wrap[axis]:
         for index, start in enumerate(bodies):
-            end = bodies[(index + 1) % len(bodies)]
-            nodes = [(start + step) % extent for step in range(1, (end - start) % extent or extent)]
+            end = bodies[index + 1] if index + 1 < len(bodies) else bodies[0]
+            gap = end - start if end > start else end - start + extent
+            nodes = []
+            for step in range(1, gap):
+                node = start + step
+                nodes.append(node - extent if node >= extent else node)
             solve(nodes, fine_values[start], fine_values[end])
     else:
-        solve(list(range(0, bodies[0])), Fraction(0), fine_values[bodies[0]])
+        solve(list(range(0, bodies[0])), 0, fine_values[bodies[0]])
         for start, end in zip(bodies, bodies[1:], strict=False):
             solve(list(range(start + 1, end)), fine_values[start], fine_values[end])
-        solve(list(range(bodies[-1] + 1, extent)), fine_values[bodies[-1]], Fraction(0))
-    # the fine levels are the map's exact fixed point floored to the unit's integers, the levels the nearest integers by the division act (as the clamp rounds them)
-    fine = np.array([int(value) for value in fine_values], dtype=np.int64).reshape(
-        np.moveaxis(counts, axis, 0).shape
-    )
+        solve(list(range(bodies[-1] + 1, extent)), fine_values[bodies[-1]], 0)
+    fine = np.array(fine_values, dtype=np.int64).reshape(np.moveaxis(counts, axis, 0).shape)
     fine = np.moveaxis(fine, 0, axis)
     half = int(division(1, 2, np.array(unit, dtype=object)))
     levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half, 1)[0])
