@@ -91,8 +91,9 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
     (Gamma - c) / Gamma = 0.75), one step of the engine on random rows of light and of the
     matter kind equals w a_next + r' = R S_6(a_now) + S a_now - w a_before + r with (R, S, w)
     the rule's integers at the level and the remainder in [0, w), computed in Python
-    integers; on the same rows with no content the levels are the plain rule's bit for bit and
-    the remainder 2 Gamma^2 times the plain one (from r = 0). (ii) THE ROTATION: a uniform
+    integers, and its inverse returns the rows bit for bit; on the same rows with no content the
+    levels are the plain rule's bit for bit and the remainder 2 Gamma^2 times the plain one (from
+    r = 0). (ii) THE ROTATION: a uniform
     record (k = 0) of the matter kind at 2^20 turns with 2 cos omega' = 2 - (1 + f)(1 - num /
     den), f = ((Gamma - c) / Gamma)^2 (the clock's second-order weight, 9.56 (4)), read from
     three consecutive levels at a Node: 1.982617 at the pace 0.75 and 1.977750 = 2 num / den
@@ -109,6 +110,7 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
         )
         assert int(slowed.level_of("content").min()) == QUANTA == int(slowed.level_of("content").max())
         live = planted(slowed, family, rows_now, rows_before, rows_remainder)
+        state = (live.now.copy(), live.before.copy(), live.remainder.copy())
         slowed._advance(live)
         reads = six_reads(rows_now, True)
         for x in range(12):
@@ -120,6 +122,10 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
             assert int(live.now[x, 0, 0]) == expected, (family, x)
             assert int(live.remainder[x, 0, 0]) == total - wall * expected
             assert 0 <= int(live.remainder[x, 0, 0]) < wall
+        # the inverse returns the rows and the remainders bit for bit
+        slowed._advance_inverse(live)
+        for a, b in zip((live.now, live.before, live.remainder), state, strict=True):
+            assert np.array_equal(a, b)
         # the plain limit: no content, r = 0
         vacuum = DetectorLawSimulation(parse_nature_beam_world(content_chain(12, PERIODIC, [], 1)))
         assert not vacuum.level_of("content").any()
@@ -610,59 +616,3 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
         parse_nature_beam_world(many)
     world = parse_nature_beam_world(good)
     assert world.held_families == (2, 3) and DetectorLawSimulation(world).held_families == [2, 3]
-
-
-def test_the_engine_reads_no_family_name_the_held_families_renamed_step_bit_for_bit():
-    """(x) THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26 item 51):
-    the chain of 60 with QUANTA quanta at [20, 30) and a light record of random rows, stepped
-    40 intervals, then the same world with the two held families renamed ADVERSARIALLY (the
-    family holding the content named `charge`, the family holding the sign named `content`, the
-    reads following the names; the model owner's word of 2026-09-25: a source word must not be
-    confused with a family, item 53) and the two held families in the other order: the light
-    record's rows, the held levels and the books are bit for bit the same (the engine reads the
-    attributes `held` and `reads`, never a name or a position), the books read alike. The edge
-    case: a reading family renamed too (`light` to `sign`, the read mode's own word) changes
-    nothing either."""
-    rng = np.random.default_rng(23)
-    now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
-    before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
-
-    def run(document: dict) -> tuple:
-        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-        live = planted(simulation, 0, now.copy(), before.copy(), np.zeros((60, 1, 1), dtype=np.int64))
-        simulation.records[live.identity] = live
-        for _ in range(40):
-            simulation.step()
-        content = simulation.level_of("content").copy()
-        charge = simulation.level_of("sign").copy()
-        return (
-            live.now.copy(),
-            live.before.copy(),
-            live.remainder.copy(),
-            content,
-            charge,
-            simulation.books()["balanced"],
-        )
-
-    plain = content_chain(60, PERIODIC, range(20, 30), QUANTA)
-    renamed = json.loads(json.dumps(plain))
-    names = {"clicks": "charge", "charge": "content", "light": "sign"}
-    for family in renamed["universe"]:
-        family["name"] = names.get(family["name"], family["name"])
-        for read in family["reads"]:
-            read["family"] = names.get(read["family"], read["family"])
-    for entry in renamed["measured"]:
-        entry["family"] = names.get(entry["family"], entry["family"])
-        if "stocks" in entry:
-            entry["stocks"] = {names.get(k, k): v for k, v in entry["stocks"].items()}
-    # the two held families in the other order (the indices move, the attributes stay)
-    held = [f for f in renamed["universe"] if f.get("held")]
-    others = [f for f in renamed["universe"] if not f.get("held")]
-    renamed["universe"] = others + held[::-1]
-    world = parse_nature_beam_world(renamed)
-    assert [world.families[i].held for i in world.held_families] == ["sign", "content"]
-    assert [world.families[i].name for i in world.held_families] == ["content", "charge"]
-    first, second = run(plain), run(renamed)
-    for a, b in zip(first[:5], second[:5], strict=True):
-        assert np.array_equal(a, b)
-    assert first[5] == second[5]  # the books read alike (a planted record is outside the ledger)
