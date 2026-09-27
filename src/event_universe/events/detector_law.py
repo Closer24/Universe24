@@ -2300,23 +2300,20 @@ class DetectorLawSimulation:
             )
             if sigma_self is not None:
                 a_before -= sigma_self  # the same multiple of the wall off (ALGEBRA.md #the-interval)
-            if live.im_now is not None:
-                assert live.im_before is not None and live.im_remainder is not None
-                im_reads = [np.zeros_like(live.now) for _ in range(3)] if reads_im is None else reads_im
-                im_a_before, live.im_remainder = level_step(
-                    num,
-                    den,
-                    gamma,
-                    content,
-                    axis_contents,
-                    im_reads,
+            if live.im_now is not None and live.im_before is not None and live.im_remainder is not None:
+                ir = self.main_loop.function_of("the internal representation", "(i)")
+                rule = (num, den, gamma, content, axis_contents)
+                im = ir(
+                    level_step,
+                    rule,
+                    reads_im,
                     live.im_before,
                     live.im_now,
                     live.im_remainder,
                     not field,
                     -1,
                 )
-                live.im_now = live.im_before
+                im_a_before, live.im_remainder, live.im_now, _ = im
                 live.im_before = im_a_before
         elif live.box is None or self._window(live.box, self.kind_wrap[live.family]) is None:
             arrivals = self._axis_sums(live.before, self.kind_wrap[live.family])
@@ -3027,24 +3024,20 @@ class DetectorLawSimulation:
             if sigma_self is not None:
                 nxt -= sigma_self  # the self-source's term, w Sigma_self off the right side (ALGEBRA.md #the-interval)
             if reads_im is not None or live.im_now is not None:
-                if live.im_now is None:
-                    live.im_now = np.zeros_like(live.now)
-                    live.im_before = np.zeros_like(live.now)
-                    live.im_remainder = np.zeros_like(live.now)
-                assert live.im_before is not None and live.im_remainder is not None
-                im_reads = [np.zeros_like(live.now) for _ in range(3)] if reads_im is None else reads_im
-                im_next, live.im_remainder = level_step(
-                    num,
-                    den,
-                    gamma,
-                    content,
-                    axis_contents,
-                    im_reads,
+                ir = self.main_loop.function_of("the internal representation", "(i)")
+                rule = (num, den, gamma, content, axis_contents)
+                im = ir(
+                    level_step,
+                    rule,
+                    reads_im,
                     live.im_now,
                     live.im_before,
                     live.im_remainder,
                     not field,
+                    1,
+                    live.now,
                 )
+                im_next, live.im_remainder, live.im_now, live.im_before = im
             live.box = None
         elif window is None:
             arrivals = self._axis_sums(live.now, self.kind_wrap[live.family])
