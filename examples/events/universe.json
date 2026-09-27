@@ -33818,6 +33818,7 @@
     1,
     1
    ],
+   "quantum": 1,
    "held": {
     "count": "content",
     "factors": [
@@ -33855,6 +33856,7 @@
     1,
     1
    ],
+   "quantum": 1,
    "held": {
     "count": "sign",
     "factors": [
@@ -33889,6 +33891,7 @@
    ],
    "phase": 2,
    "pair": "body",
+   "quantum": 1,
    "reads": [
     {
      "family": "gravity",

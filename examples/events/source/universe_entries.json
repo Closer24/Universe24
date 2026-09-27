@@ -6,6 +6,7 @@
    "parts": [1],
    "phase": 2,
    "pair": [1000, 1019],
+   "quantum": 1,
    "reads": [],
    "self_source": {
     "unit": 0
@@ -22,6 +23,7 @@
    "parts": [1],
    "phase": 2,
    "pair": [1000, 1019],
+   "quantum": 1,
    "reads": [],
    "self_source": {
     "unit": 0
@@ -39,6 +41,7 @@
    "parts": [1],
    "phase": 2,
    "pair": [1000, 1019],
+   "quantum": 1,
    "reads": [],
    "self_source": {
     "unit": 0

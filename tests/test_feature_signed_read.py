@@ -98,9 +98,11 @@ def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
             assert (self_coefficient - 6 * read + 2 * wall >= 0) is admitted
 
 
+@pytest.mark.diagnostic
 def test_a_like_charge_hill_is_admitted_to_the_edge_and_refused_beyond_it_naming_the_node():
     """The charged chain: a matter record of charge +1 reads c - Lambda d; at Lambda = 1 p = 1000 <=
-    1002, admitted; at Lambda = 3 p = 1020 beyond the edge of [800, 809], refused naming a slab Node."""
+    1002, admitted (the largest pace over the GameBoard is a GameBoard reading, a diagnostic,
+    not a measurement); at Lambda = 3 p = 1020 beyond the edge of [800, 809], refused naming a slab Node."""
     admitted = DetectorLawSimulation(
         parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, 1, 1))
     )
@@ -108,6 +110,7 @@ def test_a_like_charge_hill_is_admitted_to_the_edge_and_refused_beyond_it_naming
         admitted.step()
         writes = apply(term_of(admitted, MATTER), start_of(admitted, MATTER), own_of(admitted, MATTER))
         assert np.array_equal(writes.content, admitted._effective_content(MATTER))
+        # a GameBoard reading (a diagnostic), not a measurement
         assert int(np.max(admitted.node_clock - writes.content)) == CHAIN_GAMMA
     refused = DetectorLawSimulation(
         parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, 1, 3))

@@ -389,6 +389,7 @@ def draw(seed: int) -> dict[str, Any]:
                 "sign": 0,
                 "phase": 1,
                 "pair": [1, 1],
+                "quantum": 1,
                 "held": held("content", parts),
                 "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
                 "reads": [],
@@ -403,6 +404,7 @@ def draw(seed: int) -> dict[str, Any]:
             "sign": 0,
             "phase": rng.choice([1, 2]),
             "pair": [1, 1],
+            "quantum": 1,
             "held": held("sign", parts),
             "reads": reads_of(exclude=sign_holder),
             "self_source": {"unit": 0},
@@ -419,6 +421,7 @@ def draw(seed: int) -> dict[str, Any]:
             "sign": 0,
             "phase": 2,
             "pair": [1, 1],
+            "quantum": 1,
             "reads": [] if rng.random() < 0.5 else reads_of(exclude=given),
             "self_source": {"unit": 0},
             "clicks": {"gives": True, "takes": True, "quantum": 1},
@@ -433,6 +436,7 @@ def draw(seed: int) -> dict[str, Any]:
             "sign": 0,
             "phase": 2,
             "pair": "body",
+            "quantum": 1,
             "reads": reads_of(),
             "self_source": {"unit": 0},
             "clicks": {"gives": True, "takes": True, "quantum": 1},
@@ -446,11 +450,14 @@ def draw(seed: int) -> dict[str, Any]:
                 "sign": 0,
                 "phase": rng.choice([1, 2]),
                 "pair": rng.choice(PAIRS),
+                "quantum": 1,
                 "reads": reads_of(),
                 "self_source": {"unit": 0 if rng.random() < 0.7 else 24 * AMPLITUDE * rng.randint(1, 3)},
                 "clicks": clicks(),
             }
         )
+    for entry in families:  # one quantum per family: the row's is the clicks card's
+        entry["quantum"] = entry["clicks"]["quantum"] if "clicks" in entry else 1
     rng.shuffle(families)
     return {"seed": seed, "families": families, "roles": roles, "holders": holders}
 

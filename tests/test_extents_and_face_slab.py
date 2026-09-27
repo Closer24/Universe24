@@ -201,12 +201,14 @@ def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
     """ALGEBRA.md 9.25 (10), the mathematician's reading: a face one Node deep books a part of
     a packet and reflects the rest, a slab as deep as the packet books nearly all of it.
     On light's open chain of 300 a Gaussian packet of width 14 at k = 0.3 moving +x is
-    planted at 150 and kept from clicking; after 600 intervals the face slab of depth 40 has
-    booked more than 0.9 of the packet's conserved form I, the face of depth 1 less than
-    0.5 (COMPUTATION; the reflected remainder returns along the chain)."""
+    planted at 150 with its norm set to 7/10 of its conserved form, so the face clicks only
+    when it has taken most of the packet: after 600 intervals the face slab of depth 40 has
+    clicked once (one gather line, chosen the face), the face of depth 1 not at all (the
+    measurement is the click count on the gather lines; the reflected remainder returns
+    along the chain)."""
     from tests.bodies import massive_world
 
-    readings = {}
+    clicks = {}
     for depth in (1, 40):
         document = massive_world(
             [300, 1, 1], {"x": "open", "y": "periodic", "z": "periodic"}, [800, 809]
@@ -215,8 +217,8 @@ def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
         document["measured"] = []
         document["detectors"] = []
         document["face_depth"] = depth
-        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-        face = simulation.detector_names.index("face")
+        lines: list[dict] = []
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
         k = 0.3
         omega = math.acos((math.cos(k) + 2) / 3)
         x = np.arange(300)
@@ -226,10 +228,10 @@ def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
             np.rint(UNIT * envelope * np.cos(k * (x - 150) + omega)).astype(np.int64).reshape(300, 1, 1)
         )
         live = planted(simulation, 0, now, before, np.zeros((300, 1, 1), dtype=np.int64))
-        live.norm = 10**30
+        live.norm = int(Fraction(*simulation.conserved_form(live)) * 7 / 10)
         simulation.records[live.identity] = live
-        energy = Fraction(*simulation.conserved_form(live))
         for _ in range(600):
             simulation.step()
-        readings[depth] = live.pointers[face] / energy
-    assert readings[40] > 0.9 and readings[1] < 0.5, readings
+        clicks[depth] = [line for line in lines if line["event"] == "gather"]
+    assert len(clicks[40]) == 1 and clicks[40][0]["chosen"] == [["face", 0, "0"]]
+    assert clicks[1] == []

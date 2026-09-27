@@ -1,18 +1,6 @@
-"""THE ONE FAMILIES FILE WITH ITS THREE ENTRIES (ALGEBRA.md 9.83 (2), 9.85 (3), 9.86 (2), 9.91
-(7); the model owner's record 2075 through the Boss, "in every experiment we put all the
-families into action"; the one stroke of record 2106, commit 1; BUILD.md section 26 items 59
-and 60): (1) examples/events/families.json holds the universe's integers and three families as
-laws, gravity [1, 3, 6], the charge [1, 3] with light as its wave and matter [1] with the pair
-on every body; every shipped world of the detector law names it as `families` and declares no
-node_clock and no amplitude_bound of its own; (2) the loader translates the file's entries and
-refuses by name a missing key, a wrong parts list, a phase other than 1 or 2, a self-source
-unit other than 0, an entry with neither held nor clicks, a read's weight word the universe
-does not name, and a world that names the file under the ray law or beside its own integers;
-(3) the light record's clock is its emitter's: `clock` on the emitter, required when the given
-family declares none and refused when it does; (4) a body of matter declares its `kind`, the
-emitter of matter its `pair`, refused where the family declares one; (5) a small world built
-on the file's three entries and the same world with the tests' four-family inline list step
-bit for bit. HOST; no physics, no pin."""
+"""THE ONE FAMILIES FILE WITH ITS THREE ENTRIES (ALGEBRA.md 9.83 (2), 9.85 (3), 9.86 (2), 9.91 (7);
+record 2075): every shipped world names examples/events/universe.json; the loader refuses its defects by
+name; the emitter's clock and the body's kind stand where the family declares none. HOST; no pin."""
 
 from __future__ import annotations
 
@@ -53,7 +41,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     for entry in document["families"]:
         assert ATTRIBUTES <= set(entry) and entry["self_source"] == {"unit": 0}
         assert "held" in entry or "clicks" in entry
-        assert "booked" not in entry and "quantum" not in entry and "charge" not in entry
+        assert "booked" not in entry and entry["quantum"] == 1 and "charge" not in entry
     # gravity: ten components, one level, held content with the factors (1, 4, 2) and the spin's
     # dipole, no reads, no clicks (9.91 (7))
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and gravity["pair"] == [1, 1]
@@ -90,8 +78,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         # audit of ALGEBRA.md 9.90 (3)) carry none of the keys the loader still requires
         # the check-mode worlds and the source verb's run files (Nature24's generators, ahead of
         # the loader's words: `readings`, `sourced`, the residue keys) carry keys the loader
-        # does not read yet; tests/test_check_mode_worlds.py and tests/test_source_worlds.py
-        # read their structure and hold their load as expected failures
+        # does not read yet; tests/test_source_worlds.py reads their structure
         ahead = {"check_mode", "source"}
         if isinstance(text, dict) and "universe" in text and not ahead & set(path.parts):
             assert text["universe"] == FILE, path
@@ -163,12 +150,7 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
 def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_for_bit(
     tmp_path, monkeypatch
 ):
-    """ITEM 53's ADVERSARIAL TEST OVER THE WHOLE UNIVERSE FILE (the Boss's record 2128 (1)): a copy
-    of examples/events/universe.json with every family renamed to another family's word (gravity
-    to "matter", the charge to "gravity", matter to "charge") and every read, body, stock,
-    emitter and detector of the shipped light clock renamed with it runs 120 intervals bit for
-    bit with the original: the rows, the remainders, the held levels and every line (the
-    family's word on a line the renamed one). The engine reads no family's name (HOST; no pin)."""
+    """Every family renamed adversarially in the whole universe file: the light clock runs bit for bit."""
     rename = {"gravity": "matter", "charge": "gravity", "matter": "charge"}
     universe = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
     for entry in universe["families"]:
@@ -250,7 +232,23 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     refuses(lambda d: d["families"][0].__setitem__("phase", 3), r"phase must be one of \[1, 2\], not 3")
     # the self-source's unit (9.91 (5); commit 6): 0, or at least 24 A
     refuses(lambda d: d["families"][0]["self_source"].__setitem__("unit", 24), "is below 24 A")
-    refuses(lambda d: d["families"][0].pop("held"), "declares neither held")
+    refuses(
+        lambda d: d["families"][0].pop("held") and d["families"][0].pop("spins_step"),
+        "declares neither held",
+    )
+    refuses(
+        lambda d: d["families"][2].__setitem__("spins_step", d["families"][0]["spins_step"]),
+        "holds no spin's dipole",
+    )
+    refuses(lambda d: d["families"][0].pop("quantum"), r"families\[0\] lacks keys: quantum")
+    refuses(lambda d: d["families"][0].__setitem__("quantum", 0), "quantum is 0, below its least 1")
+    refuses(
+        lambda d: d["families"][2]["clicks"].__setitem__("quantum", 2),
+        "differs from the row's quantum 1",
+    )
+    refuses(
+        lambda d: d["families"][0]["held"].pop("dipole_div"), "declares a dipole and lacks dipole_div"
+    )
     # no default written for the dipole's divisor: the universe file writes it (the hold's card)
     refuses(lambda d: d["families"][0]["held"].pop("factors"), "held lacks keys: factors")
     refuses(
@@ -333,3 +331,17 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
     inline_pair = emitter_world(stock=1, ticks=10)
     inline_pair["measured"][0]["emitter"]["pair"] = [1, 1]
     refused(inline_pair, r"measured\[0\]\.emitter\.pair is refused: the given family 'light' declares")
+
+
+def test_age_bound_fixed_sign_and_the_family_clock_are_refused_by_name_when_absent_or_wrong():
+    """The keys #1236 made required, no default: each refused by the schema's or the loader's name."""
+    for change, match in (
+        (lambda d: d.pop("age_bound"), "the world lacks keys: age_bound"),
+        (lambda d: d["measured"][0].pop("fixed"), r"measured\[0\] lacks keys: fixed"),
+        (lambda d: d["universe"][0].pop("sign"), r"universe\[0\] lacks keys: sign"),
+        (lambda d: d["universe"][0].__setitem__("clock", 3), r"clock must be a list, not 3"),
+        (lambda d: d["universe"][0].__setitem__("clock", [1, 0]), r"has q from 1"),
+    ):
+        document = emitter_world(stock=1, ticks=4)
+        change(document)
+        refused(document, match)

@@ -22,9 +22,8 @@ def test_every_resource_consumer_row_names_an_existing_test():
             assert (root / consumer).exists(), consumer
 
 
-@pytest.mark.parametrize("name", ["check.py", "preflight_worlds.py"])
-def test_tool_changes_select_the_scope_test(name):
-    tests, typed = CHECK.select(["tools/" + name], {})
+def test_tool_changes_select_the_scope_test():
+    tests, typed = CHECK.select(["tools/check.py"], {})
     assert "tests/test_check_scope.py" in tests
     assert not typed
 
@@ -32,7 +31,6 @@ def test_tool_changes_select_the_scope_test(name):
 @pytest.mark.parametrize(
     "name,consumer",
     [
-        ("preflight_worlds.py", "tests/test_preflight_worlds.py"),
         ("run_inputs.py", "tests/test_run_inputs.py"),
         ("twist_table.py", "tests/test_primitives.py"),
     ],
@@ -101,14 +99,17 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
     assert not typed
 
 
-def test_example_selects_its_consumers_and_not_other_collision_candidates():
-    sources = {
-        "tests/test_atomic_interactions.py": 'EXAMPLE = "04-unequal-mass-collision.json"',
-        "tests/test_historical.py": "def test_old_candidate(): pass",
-    }
-    tests, _ = CHECK.select(["examples/04-unequal-mass-collision.json"], sources)
-    assert "tests/test_atomic_interactions.py" in tests
-    assert "tests/test_preflight_worlds.py" in tests
+@pytest.mark.parametrize(
+    "path,named",
+    [
+        ("examples/04-unequal-mass-collision.json", 'EXAMPLE = "04-unequal-mass-collision.json"'),
+        ("examples/some-world/run_experiments.py", 'SCRIPT = "examples/some-world/run_experiments.py"'),
+    ],
+)
+def test_an_example_selects_the_test_that_names_it_and_no_other(path, named):
+    sources = {"tests/test_names_it.py": named, "tests/test_historical.py": "def test_old(): pass"}
+    tests, _ = CHECK.select([path], sources)
+    assert "tests/test_names_it.py" in tests
     assert "tests/test_historical.py" not in tests
 
 
@@ -116,24 +117,6 @@ def test_shared_fixture_includes_all_its_consumers():
     sources = {"tests/test_a.py": "", "tests/test_b.py": ""}
     tests, _ = CHECK.select(["tests/conftest.py"], sources)
     assert {"tests/test_a.py", "tests/test_b.py"} <= set(tests)
-
-
-def test_example_script_selects_only_the_test_that_names_it():
-    sources = {
-        "tests/test_example_script.py": 'SCRIPT = ROOT / "examples/some-world/run_experiments.py"',
-        "tests/test_historical.py": "def test_historical(): pass",
-    }
-    tests, _ = CHECK.select(["examples/some-world/run_experiments.py"], sources)
-    assert "tests/test_example_script.py" in tests
-    assert "tests/test_historical.py" not in tests
-
-
-@pytest.mark.parametrize("resource", ["one_content.json", "two_slits.json"])
-def test_world_files_select_the_preflight_and_the_tests_that_name_them(resource):
-    sources = {"tests/test_names_it.py": f'WORLD = "{resource}"', "tests/test_other.py": ""}
-    tests, _ = CHECK.select(["examples/events/" + resource], sources)
-    assert "tests/test_preflight_worlds.py" in tests
-    assert "tests/test_names_it.py" in tests and "tests/test_other.py" not in tests
 
 
 def no_change_main(monkeypatch, tmp_path, *arguments):

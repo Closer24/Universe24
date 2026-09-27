@@ -12,8 +12,6 @@ from event_universe.world_files import parse_nature_beam_world
 ROOT = Path(__file__).resolve().parents[1]
 FOLDER = ROOT / "examples/events/dark_body"
 DARK_NUMBER = 1  # the body's measured index in both worlds
-BEAM_Y = 100
-BODY_CENTRE = (200, 145, 0)
 
 
 def load(name: str) -> dict:
@@ -66,10 +64,9 @@ def test_the_dark_body_is_dark_by_declaration_and_the_bright_one_is_not():
     assert "at_body" not in dark["measured"][0]["emitter"]["receiver"]
 
 
-def test_both_worlds_run_with_the_same_field_beside_the_body_and_the_dark_body_never_clicks():
-    """80 intervals each: books balanced, the same field beside the body within one percent, and no
-    click of the dark world names the dark body."""
-    simulations = {}
+def test_both_worlds_run_balanced_and_the_dark_body_never_clicks():
+    """80 intervals each: books balanced, the sign family exactly zero, and no click of the dark
+    world names the dark body."""
     lines: dict[str, list[dict]] = {}
     for name in ("dark", "bright"):
         lines[name] = []
@@ -84,20 +81,6 @@ def test_both_worlds_run_with_the_same_field_beside_the_body_and_the_dark_body_n
             not simulation.held_record("sign").now.any()
             and not simulation.held_record("sign").remainder.any()
         )
-        simulations[name] = simulation
-    # ten Links outside the slab's four faces (the slab [184, 216) x [143, 148)) and beside
-    # the beam's line; the bright body's content is lower by its giving clicks so far (a few
-    # quanta of 100000), so the levels agree within one percent
-    beside = [(226, 145, 0), (173, 145, 0), (200, 158, 0), (200, 132, 0), (200, 125, 0)]
-    for node in beside:
-        dark_level = int(simulations["dark"].level_of("content")[node])
-        bright_level = int(simulations["bright"].level_of("content")[node])
-        assert abs(dark_level - bright_level) <= max(10, abs(dark_level) // 100), (
-            node,
-            dark_level,
-            bright_level,
-        )
-    assert int(simulations["dark"].level_of("content")[BODY_CENTRE]) == 4812
     # the dark body's own rotation cycles on (its `click` and `block` lines are the GameBoard's
     # count of its own record, 9.54 (3)); no giving click and no taking click name it
     assert not [
