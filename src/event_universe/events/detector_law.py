@@ -85,6 +85,7 @@ from event_universe.core.rule3 import (
     rule3,
 )
 from event_universe.events import guards, output
+from event_universe.events import live as live_records
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
 from event_universe.events.output import form_json as form_json
@@ -715,43 +716,16 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     own_of = guards.own_of
     _guard = guards.guard_paces
 
-    def fingerprints_of(self, *records: LiveRecord) -> dict[str, dict[object, object]]:
-        """The ledger's words of the named records and the bodies' counts, stamped for the audit: a rebound array by its identity, an integer by its value."""
-        return {
-            "a body's content M_k": {number: tuple(row) for number, row in enumerate(self.held)},
-            "the record's tally": {
-                live.identity: (live.total, tuple(live.pointers), live.absorbed, tuple(live.first_rung))
-                for live in records
-            },
-            "the level next, the remainder": {
-                live.identity: (id(live.now), id(live.before), id(live.remainder)) for live in records
-            },
-            "the second level": {
-                live.identity: (id(live.im_now), id(live.im_before), id(live.im_remainder))
-                for live in records
-            },
-        }
-
-    def fingerprints(self) -> dict[str, dict[object, object]]:
-        """Every ledger word the main loop audits after an act, stamped: the bodies' counts, momenta, spins, positions and remainders, the records' and the held families' arrays by identity, the tallies, the paces' carries and the records alive."""
-        stamps = self.fingerprints_of(*self.records.values(), *self.held_component_records())
-        stamps["a body's momentum n"] = {
-            b.number: (tuple(b.momentum), tuple(b.momentum_before)) for b in self.blocks
-        }
-        stamps["a body's spin S"] = {
-            b.number: (tuple(b.spin), tuple(b.spin_before)) for b in self.blocks
-        }
-        stamps["a body's position"] = {b.number: (tuple(b.corner), id(b.mask)) for b in self.blocks}
-        stamps["the count at a Node"] = {b.number: id(b.counts) for b in self.blocks}
-        stamps["the count's remainder"] = {b.number: id(b.count_remainder) for b in self.blocks}
-        remainders: dict[object, object] = {}
-        for b in self.blocks:
-            for key, value in b.hold_value.items():
-                remainders[(b.number, key)] = (value, b.hold_carry.get(key))
-        stamps["a body's remainders"] = remainders
-        stamps["the paces"] = {key: id(array) for key, array in self._pace_carry.items()}
-        stamps["the records alive"] = dict.fromkeys(self.records, True)
-        return stamps
+    fingerprints_of = live_records.fingerprints_of
+    fingerprints = live_records.fingerprints
+    held_record = live_records.held_record
+    level_of = live_records.level_of
+    _massive_record = live_records.massive_record
+    planted_record = live_records.planted_record
+    _receiver_of = live_records.receiver_of
+    _detector = live_records.add_detector
+    _ladder_of = live_records.ladder_of
+    _release = live_records.release
 
     def _counts_stage(self, function: Callable[..., None]) -> None:
         """The count's line's act: each body's quanta moved by its record's current through its Nodes' Ports."""
@@ -1189,24 +1163,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                     if node is not None:
                         self.held_parts[family][i].now[node] -= value
 
-    def held_record(self, source: str) -> LiveRecord | None:
-        """The held record of the family holding `source` ("content" or
-        "sign"), None where no family holds it; a GAMEBOARD reading by the
-        declared attribute, never by a name."""
-        for family, record in self.held_records.items():
-            if self.families[family].held == source:
-                return record
-        return None
-
-    def level_of(self, source: str) -> np.ndarray:
-        """The level over the board of the family holding `source` (the Node
-        clock's c for "content", 9.45; the charge field d for "sign", 9.48),
-        zeros where no family holds it; a GAMEBOARD reading."""
-        for family in self.held_records:
-            if self.families[family].held == source:
-                return self.node_level[family]
-        return np.zeros(self.shape, dtype=np.int64)
-
     def _advance_fields(self, hold: Callable[..., object]) -> None:
         """The held families' own steps after every other family's (the plain step at every Node), then the hold at the bodies' Nodes, then the guard: every reading family's pace stays positive at every Node, else the run is refused."""
         held = self.held_component_records()
@@ -1293,53 +1249,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             sign * quanta for sign, quanta in zip(self.family_charge, self.held[number], strict=True)
         )
 
-    def _receiver_of(self, live: LiveRecord) -> int | None:
-        """The one detector of the record's ladder under the receiver by name
-        (its emitting block's `receiver`); None for a record without one (a
-        lamp's record, or a block's without the key: the ladder every detector,
-        the line at the close)."""
-        if live.emitter is None:
-            return None
-        return self.receiver_detector.get(live.emitter)
-
-    def _detector(
-        self, name: str, measured: int | None, face: bool, set_name: str | None = None, channel: int = 0
-    ) -> int:
-        self.detector_names.append(name)
-        self.detector_measured.append(measured)
-        self.detector_face.append(face)
-        self.detector_set.append(name if set_name is None else set_name)
-        self.detector_channel.append(channel)
-        return len(self.detector_names) - 1
-
     # The blocks (massive-record-v1)
-
-    def _massive_record(
-        self, identity: int, number: int, family: int, pair: tuple[int, int], twist: int
-    ) -> LiveRecord:
-        """A record of the massive kind on the board: a block's own record at
-        the body's kind (its rest pair) with its twist "own" (ALGEBRA.md #the-primitives); no
-        train, no clock, no Ports."""
-        return LiveRecord(
-            identity,
-            number,
-            family,
-            0,
-            0,
-            self.tick,
-            0,
-            1,
-            1,
-            0,
-            1,
-            np.zeros(self.shape, dtype=np.int64),
-            np.zeros(self.shape, dtype=np.int64),
-            np.zeros(self.shape, dtype=np.int64),
-            pointers=[0] * len(self.detector_names),
-            first_rung=[None] * len(self.detector_names),
-            pair=(int(pair[0]), int(pair[1])),
-            twist=twist,
-        )
 
     def stock_of(self, block: Block) -> int:
         """THE STOCK of the family a body gives (ALGEBRA.md #the-paces, #the-primitives): its
@@ -2438,45 +2348,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 total += int(np.sum(np.where(port & (flux > 0), flux, 0)))
         return total * wall
 
-    def planted_record(
-        self,
-        family: int,
-        now: np.ndarray,
-        before: np.ndarray,
-        norm: int = 0,
-        pair: tuple[int, int] | None = None,
-        part: int = 0,
-        twist: int = 0,
-    ) -> LiveRecord:
-        """A record of the family given to the rule directly, its two levels
-        as given and its remainder 0 (the generator's checks of the given
-        train, ALGEBRA.md #the-click, #a-familys-declaration, and the tests'
-        device): registered in no ledger, advanced by `_advance` and read by
-        `inward_flux` and `conserved_form` alone; `norm` its T where given,
-        `part` its component and `twist` its own rotation (commit 4)."""
-        return LiveRecord(
-            0,
-            0,
-            family,
-            0,
-            0,
-            self.tick,
-            0,
-            1,
-            1,
-            0,
-            1,
-            np.array(now, dtype=np.int64).reshape(self.shape),
-            np.array(before, dtype=np.int64).reshape(self.shape),
-            np.zeros(self.shape, dtype=np.int64),
-            pointers=[0] * len(self.detector_names),
-            first_rung=[None] * len(self.detector_names),
-            norm=norm,
-            pair=self.families[family].pair if pair is None else (int(pair[0]), int(pair[1])),
-            part=part,
-            twist=twist,
-        )
-
     def conserved_form(self, live: LiveRecord) -> Ratio:
         """The record's conserved form I in the form's units, 3 I x wall in the vacuum: over the Nodes [3 wall (den_i / num_i) Gamma (now_i^2 + before_i^2) - 6 wall (den_i / num_i) c_i now_i before_i] / p_i - wall now_i SUM_j before_j, p_i = Gamma - c_i (+ q Lambda d_i) the pace at the Node, the six reads with the family's faces; the sum of every Node's share (`form_share`), an exact rational (each Node's share read in the world's time by its own pace)."""
         return self.form_share(live, np.ones(self.shape, dtype=bool))
@@ -2929,19 +2800,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 )
         return out
 
-    def _ladder_of(self, live: LiveRecord) -> list[int]:
-        """The record's ladder in its declared order (ALGEBRA.md #rule3): the emitter's named sets (`receiver`, a list), or the block's
-        one receiver, or every detector set as declared; the face receiver
-        last on every ladder (record 15)."""
-        if live.ladder is not None:
-            ladder = list(live.ladder)
-        else:
-            receiver = self._receiver_of(live)
-            ladder = [receiver] if receiver is not None else list(self.set_detectors)
-        if self.face_detector is not None and self.face_detector not in ladder:
-            ladder.append(self.face_detector)
-        return ladder
-
     def _ladder_click(self, live: LiveRecord, increments: list[int]) -> None:
         """The increment ladder: the record's running total gains this interval's one-way flux into its ladder's detectors in the declared order; the click fires at the first interval at which the total crosses the threshold fixed at the giving, at the detector whose segment holds it (Born's rule its theorem); the record is deleted whole after the interval's advances."""
         if live.clicked:
@@ -2973,15 +2831,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     def record_form(self, live: LiveRecord) -> Ratio:
         """The conserved form I of the record, a GAMEBOARD diagnostic read by the books: the one form of the rule, `conserved_form`, from the rule's own integers, L [w (a^2 + b^2) - S a b] / R at the Nodes and L now_i SUM_j before_j on the Links, L the least common multiple of the distinct numerators, an exact rational, conserved by the rule up to the remainders' bounded jitter."""
         return self.conserved_form(live)
-
-    def _release(self, live: LiveRecord) -> None:
-        """The record's rows leave the board: the emitters' lists and the
-        rung counts of the record are dropped."""
-        for block in self.blocks:
-            if live.identity in block.emitted:
-                block.emitted.remove(live.identity)
-        for key in [key for key in self.rung_counts if key[0] == live.identity]:
-            del self.rung_counts[key]
 
     def step(self) -> None:
         """One interval, walked by the main loop: the clock, the file's acts through the register under its guards, the closing."""

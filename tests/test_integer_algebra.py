@@ -23,6 +23,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/geometry.py": "the engine's geometry: the Node sets, boxes, masks and Ports of a body or a detector from the GameBoard's shape through the core's and the loader's one copy of each rule, and the pair arrays' cache",
     "events/output.py": "the engine's readings and output lines: the exact rationals of the books, the leak test, the record's click line, the books, the contents and the state stream; reads the simulation, writes the lines",
     "events/guards.py": "the engine's run-time guards bound as its methods: the start's arrays to freeze, an act's grants, a card's writes, a write applied by name, the generic act's term, start view and own record, the pace guard",
+    "events/live.py": "the records' making and release: the ledger's stamps, the held records and levels, a body's own record, a planted record, a detector by name, a record's receiver, ladder and release; functions taking the engine, bound as its methods",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md #the-line, #the-direction, #the-interval), and the ladder's rungs (ALGEBRA.md #the-ladder)",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md #what-is-open): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
@@ -95,8 +96,7 @@ def physical_sources() -> dict[str, str]:
 
 
 def float_literals(source: str) -> list[int]:
-    """The lines of every float literal token (a decimal point or an
-    exponent outside a hexadecimal literal)."""
+    """The lines of every float literal token (a decimal point or an exponent outside a hexadecimal literal)."""
     found = []
     for token in tokenize.generate_tokens(io.StringIO(source).readline):
         if token.type != tokenize.NUMBER:
