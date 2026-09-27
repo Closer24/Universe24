@@ -317,8 +317,11 @@ from event_universe.core.integer import (
 )
 from event_universe.core.phase import MAX_PHASE_STEPS
 from event_universe.core.readings import Reading, world_readings
+from event_universe.core.register import discover
 from event_universe.core.rule3 import rule_total_bound
 from event_universe.core.step import STEP_FILE, Step
+from event_universe.loader import frame
+from event_universe.loader.frame import EngineStart
 
 # ONE ENGINE, NO LAW'S NAME AND NO VERSION (ALGEBRA.md 9.90 (1); the model owner's
 # records 2103 and 2107; the cancel of docs/CANCELLED_WORLDS.md section 9): the
@@ -933,41 +936,21 @@ MOST_FAMILIES = 20
 # THE UNIVERSE FILE (the Boss's record 2128 (3); ALGEBRA.md 9.90 (6) read UNIVERSE): what
 # repeats in every experiment, the families and the universe's integers; no `law` key,
 # no name and no version (one engine)
-FAMILIES_FILE_KEYS = {"integers", "families"}
-# THE UNIVERSE'S INTEGERS (ALGEBRA.md 9.83 (2) (a), 9.91 (7)): Gamma, A, Lambda
-# (the charge's read weight, the word "Lambda" on a read) and Q (the momentum's
-# unit, `momentum_unit`: the wall of every body is W = 3 Q M, ALGEBRA.md 9.96
-# (1), 9.89 (2)); the energy unit P_0 and the twist table enter with the
-# operations that read them (9.91 (10) commits 4 and 5)
-FAMILIES_INTEGERS = {"node_clock", "amplitude_bound", "Lambda", "momentum_unit"}
+# THE UNIVERSE'S INTEGERS are the frame's schema (loader/frame.py, `INTEGERS`)
 # THE TWIST TABLE in the integers block (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c), (d)):
 # {unit, fine, coarse}; `unit` the integer 4 Gamma 2^16 whose inverse is theta_unit in
 # radians; `fine` 2^10 triples (c, s, d) for the angles k_0 theta_unit; `coarse` at most
 # 2^15 triples for the angles k_1 2^10 theta_unit; every triple c^2 + s^2 = d^2 exactly,
 # d at most 10^9, the nearest the generator finds (`twist_triple`); the transport's
 # triple for k = k_1 2^10 + k_0 is their exact product.
-FAMILIES_TABLES = {"twist_table"}
 TWIST_UNIT_SCALE = 1 << 16
 TWIST_FINE_BITS = 10
 TWIST_COARSE_MOST = 1 << 15
 TWIST_TRIPLE_BOUND = 10**9
-# THE ENTRY, the complete attribute set (ALGEBRA.md 9.79 (1), 9.86 (3), 9.91
-# (7)): name; parts (the representation as a list of parts, [1] a scalar, [1,
-# 3] a vector with its time part, [1, 3, 6] the symmetric tensor over the
-# four directions); phase (1 or 2, the levels at a Node); pair ([num, den], or
-# "body" for the family whose pair every body and record declares); held
-# {count, factors, dipole, dipole_div} (a field family: the body's writes);
-# reads [{family, weight, twist, by}]; self_source {unit}; clicks {gives,
-# takes, quantum} (a family of records). `booked` is derived: true exactly
-# for a family with clicks (item 53).
-FAMILY_ENTRY_KEYS = {"name", "parts", "phase", "pair", "held", "reads", "self_source", "clicks"}
-FAMILY_ENTRY_REQUIRED = {"name", "parts", "phase", "pair", "reads", "self_source"}
+# THE ENTRY's keys are the folders' cards (loader/frame.py, `entry_kind`; ALGEBRA.md 9.117 item 2)
 PARTS_FORMS = ((1,), (1, 3), (1, 3, 6))
 HELD_COUNTS = ("content", "sign")
 HELD_DIPOLES = ("spin", "moment")
-# a read's weight may be the universe's word (the file's integer by name: `Lambda`, the
-# charge's read weight, record 2128 (1); `charge_weight` HISTORY)
-READ_WEIGHT_WORDS = {"Lambda": "Lambda"}
 # a read's twist (ALGEBRA.md 9.81 (2), 9.91 (6), 9.96 (2) (b)): an integer or "own"
 # (the reading record's own rotation in the table's unit, round(2^16 omega_0), times
 # the read's weight: Lambda_v is Lambda and no separate twist exists)
@@ -1013,7 +996,7 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
         ("coarse", 1, TWIST_COARSE_MOST, 1 << TWIST_FINE_BITS),
     ):
         rows = obj[name]
-        if not isinstance(rows, list) or not least <= len(rows) <= most:
+        if not isinstance(rows, list | tuple) or not least <= len(rows) <= most:
             raise ValueError(
                 f"{label}.{name} must be a list of {least} to {most} triples [c, s, d] "
                 "(ALGEBRA.md 9.96 (2) (c))"
@@ -1021,7 +1004,11 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
         triples: list[tuple[int, int, int]] = []
         for index, row in enumerate(rows):
             where = f"{label}.{name}[{index}]"
-            if not isinstance(row, list) or len(row) != 3 or any(type(item) is not int for item in row):
+            if (
+                not isinstance(row, list | tuple)
+                or len(row) != 3
+                or any(type(item) is not int for item in row)
+            ):
                 raise ValueError(f"{where} must be three integers [c, s, d]")
             c, s, d = (int(item) for item in row)
             if c < 1 or s < 0 or d < 1 or d > TWIST_TRIPLE_BOUND or c * c + s * s != d * d:
@@ -1056,65 +1043,40 @@ READ_BY_WORDS = {1: "plain", "q": "sign", "plain": "plain", "sign": "sign"}
 def universe_file_entries(
     value: str, files: Mapping[str, object]
 ) -> tuple[list[dict[str, object]], dict[str, object]]:
-    """The universe file read and translated to the families list the parse
-    reads (item 51's attributes and the one stroke's, ALGEBRA.md 9.91 (7);
-    record 2128 (3): the file examples/events/universe.json, the world's key
-    `universe`, its integer `Lambda`),
-    with the universe's integers; every key required and refused by name.
-    THE TRANSLATION: `parts` as declared; `phase` to `levels`; `pair` [num,
-    den] or "body"; `held` {count, factors, dipole, dipole_div} to `held`
-    (the count word), `held_factors`, `held_dipole`, `held_dipole_div`;
-    `reads` with the weight word resolved to the universe's integer, `by` 1
-    or "q" to the loader's words, `twist` kept; `self_source.unit` to
-    `self_unit`; `clicks` to `clicks` with the quantum, `quantum` 1 on a
-    family without clicks (a held family, one click one unit); `charge` 0
-    on every family (a body's charge is the body's number, 9.91 (7); the
-    hold writes it, commit 2)."""
-    if value not in files:
-        raise ValueError(f"universe names {value!r}, no file at the repository's root")
-    document = files[value]  # read by the host module event_universe.world_files
+    """The universe file read through the frame (loader/frame.py: its integers by the
+    frame's schema, every family's entry by the folders' cards, a read's weight word
+    resolved to the universe's integer) and translated to the families list the parse
+    reads (item 51's attributes and the one stroke's, ALGEBRA.md 9.91 (7)), with the
+    universe's integers. THE TRANSLATION: `parts` as declared; `phase` to `levels`;
+    `pair` [num, den] or "body"; `held` {count, factors, dipole, dipole_div} to `held`
+    (the count word), `held_factors`, `held_dipole`, `held_dipole_div` (as written,
+    no default: the universe file writes it); `reads` with `by` 1 or "q" to the
+    loader's words, `twist` kept; `self_source.unit` to `self_unit`; `clicks` to
+    `clicks` with the quantum, `quantum` 1 on a family without clicks (a held family,
+    one click one unit); `charge` 0 on every family (a body's charge is the body's
+    number, 9.91 (7); the hold writes it, commit 2). A key of a card this translation
+    has no word for (`sourced`, the source's, read by no loop yet) is carried as
+    written and refused by name in `_families`. The folders' rules the cards do not
+    state stay here until the switch: the three forms of `parts`, the self-source's
+    unit 0 or at least 24 A, a family held or clicking or both."""
+    entries, universe = frame.universe(value, files, discover())
     label = f"the universe file {value!r}"
-    if not isinstance(document, dict):
-        raise ValueError(f"{label} must be a JSON object")
-    unknown = set(document) - FAMILIES_FILE_KEYS
-    if unknown:
-        raise ValueError(f"{label} has unknown keys: {', '.join(sorted(unknown))}")
-    missing = FAMILIES_FILE_KEYS - set(document)
-    if missing:
-        raise ValueError(f"{label} lacks keys: {', '.join(sorted(missing))}")
-    integers = document["integers"]
-    if not isinstance(integers, dict) or set(integers) != FAMILIES_INTEGERS | FAMILIES_TABLES:
-        raise ValueError(
-            f"{label}.integers must hold exactly "
-            f"{sorted(FAMILIES_INTEGERS | FAMILIES_TABLES)} (the universe's integers and its twist "
-            "table, ALGEBRA.md 9.83 (2) (a), 9.91 (7), 9.96 (2); no default)"
-        )
-    universe: dict[str, object] = {
-        key: _integer(integers[key], f"{label}.integers.{key}", 1, AMOUNT_BOUND)
-        for key in sorted(FAMILIES_INTEGERS)
-    }
-    # the twist table as written, checked with the world's Gamma and A (`_twist_table`)
-    universe["twist_table"] = integers["twist_table"]
-    entries = document["families"]
-    if not isinstance(entries, list) or not entries:
-        raise ValueError(f"{label}.families must be a nonempty list")
     translated: list[dict[str, object]] = []
-    for index, entry in enumerate(entries):
+    for index, obj in enumerate(entries):
         where = f"{label}.families[{index}]"
-        obj = _object(entry, where, FAMILY_ENTRY_KEYS, FAMILY_ENTRY_REQUIRED)
         parts = obj["parts"]
-        if not isinstance(parts, list) or tuple(parts) not in PARTS_FORMS:
+        assert isinstance(parts, tuple)
+        if parts not in PARTS_FORMS:
             raise ValueError(
                 f"{where}.parts must be one of {[list(form) for form in PARTS_FORMS]}: "
                 "the representation as a list of parts, the time part first (ALGEBRA.md 9.86 (2), "
                 "9.91 (1))"
             )
-        if obj["phase"] not in (1, 2):
-            raise ValueError(f"{where}.phase must be 1 or 2, the levels at a Node (ALGEBRA.md 9.91 (1))")
-        self_source = _object(obj["self_source"], f"{where}.self_source", {"unit"}, {"unit"})
-        self_unit = _integer(self_source["unit"], f"{where}.self_source.unit", 0)
+        self_source = obj["self_source"]
+        assert isinstance(self_source, dict)
+        self_unit = self_source["unit"]
         amplitude = universe["amplitude_bound"]
-        assert isinstance(amplitude, int)
+        assert isinstance(self_unit, int) and isinstance(amplitude, int)
         if 0 < self_unit < 24 * amplitude:
             raise ValueError(
                 f"{where}.self_source.unit {self_unit} is below 24 A = "
@@ -1122,15 +1084,6 @@ def universe_file_entries(
                 "at least 24 A (ALGEBRA.md 9.91 (5))"
             )
         pair_value = obj["pair"]
-        if pair_value != "body" and not (
-            isinstance(pair_value, list)
-            and len(pair_value) == 2
-            and all(type(item) is int and item >= 1 for item in pair_value)
-        ):
-            raise ValueError(
-                f'{where}.pair must be [num, den] or the word "body" (every body and '
-                "record of the family declares its own pair; ALGEBRA.md 9.85 (3), 9.91 (7))"
-            )
         if "held" not in obj and "clicks" not in obj:
             raise ValueError(
                 f"{where} declares neither held (a field family) nor clicks (a family "
@@ -1139,99 +1092,57 @@ def universe_file_entries(
         legacy: dict[str, object] = {
             "name": obj["name"],
             "charge": 0,
-            "pair": pair_value,
+            "pair": list(pair_value) if isinstance(pair_value, tuple) else pair_value,
             "parts": list(parts),
             "levels": obj["phase"],
             "self_unit": self_unit,
         }
-        reads: list[dict[str, object]] = []
         raw_reads = obj["reads"]
-        if not isinstance(raw_reads, list):
-            raise ValueError(f"{where}.reads must be a list of {{family, weight, twist, by}}")
-        for position, item in enumerate(raw_reads):
-            read = _object(
-                item,
-                f"{where}.reads[{position}]",
-                {"family", "weight", "twist", "by"},
-                {"family", "weight", "twist", "by"},
-            )
-            weight = read["weight"]
-            if isinstance(weight, str):
-                if weight not in READ_WEIGHT_WORDS:
-                    raise ValueError(
-                        f"{where}.reads[{position}].weight {weight!r} names no integer of "
-                        f"the universe (the words: {sorted(READ_WEIGHT_WORDS)})"
-                    )
-                weight = universe[READ_WEIGHT_WORDS[weight]]
-            by = read["by"]
-            if by not in (1, "q"):
-                raise ValueError(
-                    f'{where}.reads[{position}].by must be 1 or "q" (the level enters '
-                    "the pace plainly, or by the reading record's charge sign; ALGEBRA.md 9.91 (7))"
-                )
+        assert isinstance(raw_reads, tuple)
+        reads: list[dict[str, object]] = []
+        for read in raw_reads:
+            assert isinstance(read, dict)
             reads.append(
                 {
                     "family": read["family"],
-                    "weight": weight,
-                    "by": READ_BY_WORDS[by],
+                    "weight": read["weight"],
+                    "by": READ_BY_WORDS[read["by"]],
                     "twist": read["twist"],
                 }
             )
         legacy["reads"] = reads
         if "held" in obj:
-            source = _object(
-                obj["held"],
-                f"{where}.held",
-                {"count", "factors", "dipole", "dipole_div"},
-                {"count", "factors", "dipole"},
-            )
+            source = obj["held"]
+            assert isinstance(source, dict)
             legacy["held"] = source["count"]
-            legacy["held_factors"] = source["factors"]
+            legacy["held_factors"] = list(source["factors"])
             legacy["held_dipole"] = source["dipole"]
-            legacy["held_dipole_div"] = source.get("dipole_div", 1)
+            legacy["held_dipole_div"] = source["dipole_div"]
         if "clicks" in obj:
-            clicks = _object(
-                obj["clicks"],
-                f"{where}.clicks",
-                {"gives", "takes", "quantum"},
-                {"gives", "takes", "quantum"},
-            )
+            clicks = obj["clicks"]
+            assert isinstance(clicks, dict)
             legacy["clicks"] = {"gives": clicks["gives"], "takes": clicks["takes"]}
             legacy["quantum"] = clicks["quantum"]
         else:
             legacy["quantum"] = 1
+        for key, as_written in obj.items():
+            if key not in ("name", "parts", "phase", "pair", "self_source", "reads", "held", "clicks"):
+                legacy[key] = as_written
         translated.append(legacy)
     return translated, universe
 
 
-# THE ENGINE START FILE (record 2089; records 2092 and 2094; ALGEBRA.md 9.83 (2)
-# (a); BUILD.md section 26 item 57): one canonical copy at
-# examples/events/engine_start.json, referenced by every world of the detector
-# law by its repository path (`engine`) and read by the runner; it holds the
-# run's parameters and no law's number (the law's numbers are the families
-# file's and the world's, 9.83 (2) (a)). Its keys, every one required: `law`
-# (the law identifier) and `mode`, "check" (every measured event read beside
-# its blind expectation, no pin compared; the run's mode until the model
-# owner's Go, records 2050 and 2054) or "pin" (the pins compared).
-START_KEYS = {"mode"}
-START_MODES = ("check", "pin")
-# THE REPOSITORY'S ROOT and every file read live in the host module
-# event_universe.world_files (the loader reads no file; tests/test_architecture.py)
-
-
-@dataclass(frozen=True)
-class EngineStart:
-    """The one engine start file as read: its repository path and its mode."""
-
-    path: str
-    mode: str
+# THE ENGINE START FILE (ALGEBRA.md 9.83 (2) (a)): one canonical copy at
+# examples/events/engine_start.json, referenced by every world by its repository
+# path (`engine`) and read by the frame (loader/frame.py, `START`: the run's mode,
+# check or pin; no law's number); the repository's root and every file read live
+# in the host module event_universe.world_files (the loader reads no file)
 
 
 def _engine_start(value: object, files: Mapping[str, object], detector_law: bool) -> EngineStart | None:
     """The world key `engine`: the repository path of the start file, required
-    (the ray law's branch below CANCELLED, 9.90 (1)); the file a JSON object with
-    exactly the keys of START_KEYS (`mode`, one of START_MODES; no law's name,
-    ALGEBRA.md 9.90 (1)); a missing key refused by name."""
+    (the ray law's branch below CANCELLED, 9.90 (1)); the file read by the frame,
+    a missing key refused by name."""
     if not detector_law:
         if value is not None:
             raise ValueError("engine is refused without `detector_law`")
@@ -1244,28 +1155,7 @@ def _engine_start(value: object, files: Mapping[str, object], detector_law: bool
         )
     if not isinstance(value, str) or not value:
         raise ValueError("engine must be the start file's repository path, a string")
-    if value not in files:
-        raise ValueError(f"engine names {value!r}, no file at the repository's root")
-    start = files[value]  # read by the host module event_universe.world_files
-    if not isinstance(start, dict):
-        raise ValueError(f"the engine start file {value!r} must be a JSON object")
-    unknown = set(start) - START_KEYS
-    if unknown:
-        raise ValueError(
-            f"the engine start file {value!r} has unknown keys: {', '.join(sorted(unknown))}"
-        )
-    missing = START_KEYS - set(start)
-    if missing:
-        raise ValueError(
-            f"the engine start file {value!r} lacks keys: {', '.join(sorted(missing))} "
-            "(every key required, no default; the model owner's record 2089)"
-        )
-    if start["mode"] not in START_MODES:
-        raise ValueError(
-            f"the engine start file {value!r} declares mode {start['mode']!r}; one of "
-            f"{list(START_MODES)}"
-        )
-    return EngineStart(value, str(start["mode"]))
+    return frame.start(value, files)
 
 
 def _require_under_law(obj: dict[str, object], label: str, keys: set[str]) -> None:
@@ -7083,7 +6973,7 @@ def parse_world_document(
         # list; the universe's integers from the file alone, the world's own refused
         # (the path reaches here under `detector_law` alone: the ray law's word is `families`)
         families_file = universe
-        _refuse_under_law(obj, "the world", FAMILIES_INTEGERS | FAMILIES_TABLES)
+        _refuse_under_law(obj, "the world", set(frame.INTEGERS.keys))
         entries, integers = universe_file_entries(families_file, files)
         obj["families"] = entries
         obj.update(integers)

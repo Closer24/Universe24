@@ -83,9 +83,9 @@ def test_every_kind_accepts_its_values_and_refuses_the_rest_by_name():
     refused(
         {"of": "alpha", "weight": 1, "scale": 3},
         shape,
-        r"the.label has unknown keys \['scale'\]: the keys are \['cap', 'of', 'weight'\]",
+        r"the.label has unknown keys: scale \(the keys: cap, of, weight\)",
     )
-    refused({"of": "alpha"}, shape, r"the.label lacks the keys \['weight'\]")
+    refused({"of": "alpha"}, shape, r"the.label lacks keys: weight")
     refused([], shape, r"the.label must be an object with the keys \['cap', 'of', 'weight'\]")
     either = Either((ListOf(Integer(least=1), length=2), OneOf(("body",))))
     assert check([1, 3], either, "the.label", CONTEXT) == (1, 3)
@@ -180,7 +180,7 @@ def test_the_shipped_universe_and_the_sources_fragment_pass_the_folders_schemas(
         checked = check_keys(body, merged.keys, merged.optional, entry["name"], context)
         for read in checked["reads"]:
             assert type(read["weight"]) is int and read["weight"] >= 1
-    with pytest.raises(ValueError, match=r"matter has unknown keys \['nonsense_attribute'\]"):
+    with pytest.raises(ValueError, match=r"matter has unknown keys: nonsense_attribute"):
         check_keys(
             {key: value for key, value in entries[2].items() if key != "name"}
             | {"nonsense_attribute": 1},
