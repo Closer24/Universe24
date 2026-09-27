@@ -1273,7 +1273,7 @@ LAMP_KEYS = {
     # form as built, u = (ordinal - 1) r mod W) or "seed" (the seed-set
     # order, u = order[(ordinal - 1) mod W], the order a Fisher-Yates
     # permutation of Z_W driven by the SplitMix64 mixing hash from
-    # `residue_seed`, `core.integer.keyed_permutation`; the stride r must be
+    # `residue_seed`, the hash deleted; the stride r must be
     # 1); `residue_seed`, an integer in [0, 2^64), an input of kind 1,
     # required under "seed" and refused under "ordinal". Neither key is
     # admitted on a lamp without arms or outside `detector_law`.
