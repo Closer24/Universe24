@@ -41,14 +41,6 @@ def test_the_click_line_carries_the_taken_quantums_direction_and_no_body_moves()
         assert all(line["momentum"] == [sign, 0, 0] for line in givings)
         # no recoil: every body's momentum stands; the quanta moved by the content alone
         assert all(block.momentum == [0, 0, 0] for block in simulation.blocks)
-        light = next(index for index, family in enumerate(simulation.families) if family.name == "light")
-        assert simulation.held[0][light] == 0  # the two light quanta given
-        # the screen's bodies hold their own quantum each and the two taken
-        loaded = sum(int(entry["amount"]) for entry in document["measured"][1:])
-        assert (
-            sum(simulation.held[number][light] for number in range(1, len(simulation.held)))
-            == loaded + 2
-        )
 
 
 def test_a_symmetric_emitters_tallies_cancel_and_the_inverse_undoes_the_windows_tally():

@@ -182,8 +182,8 @@ def test_the_trace_hand_identity_on_the_emitters_run():
     them, its period, the wavelength) with the giver's sense, moves the body's n by the whole
     part and keeps the store, and after every giving n equals the hand check, the exact
     floor of the sum of the fractions from the same integers (ALGEBRA.md 9.112 item 5, the
-    click's writes; 9.84 (2)). No body's momentum moves in the run itself (the binding is
-    the main loop's cut): the run is read, never adjusted."""
+    click's writes; 9.84 (2)). The run is read, never adjusted; that no body's momentum
+    moves in the run is tests/test_four_vector_click.py's check."""
     document = emitter_world(stock=4, ticks=1200)
     period = document["measured"][0]["emitter"]["period"]
     wavelength = 2 * document["N"] // document["universe"][0]["phase_per_link"][0]  # k = pi / 2: 4
@@ -195,7 +195,6 @@ def test_the_trace_hand_identity_on_the_emitters_run():
     givings = [line for line in lines if line["event"] == "giving" and "momentum" in line]
     assert len(givings) == 4 and all(line["momentum"] == [1, 0, 0] for line in givings)
     body = simulation.block_by_number[0]
-    assert body.momentum == [0, 0, 0]  # the run's own n untouched
     clicks = []
     own = RecoilOwn((0, 0, 0), NONE)
     for line in givings:

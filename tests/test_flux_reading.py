@@ -7,6 +7,7 @@ import math
 from fractions import Fraction
 
 import numpy as np
+import pytest
 
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
@@ -131,13 +132,15 @@ def test_the_local_flux_identity_is_exact_on_the_rules_integers():
                 assert g_ij == -g_ji
 
 
+@pytest.mark.diagnostic
 def test_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
     """(b) a Gaussian packet of 40 Links at k = 0.3024 on light's open chain of 400, read at the
     Node 200 over 600 intervals: the one-way inward flux 1.0017 of I (the backward part of the
     planted packet, 1.35 percent, returns through the -x face, no Node beyond the board, and
     passes the Node too; the excess the lattice's counter-flow on the passage; before the
     take retired the sponge took that part and the reading was 0.9865), the signed sum
-    7 x 10^4 against I 5.9 x 10^11 (COMPUTATION)."""
+    7 x 10^4 against I 5.9 x 10^11 (COMPUTATION on the rule's integers: a GameBoard reading of the
+    record's two levels, a diagnostic, not a click)."""
     simulation = chain_world(None, 400, {"x": "open", "y": "periodic", "z": "periodic"})
     matrix = reads(simulation, 0, 400)
     k = 0.3024

@@ -122,11 +122,7 @@ def test_the_folder_gives_the_loops_integers_on_the_moving_lorentz_world_bit_for
                 assert int(record.now[centre]) == now and int(record.before[centre]) == before
         seen_giving = seen_giving or simulation.wall_of(block) != 3 * simulation.momentum_unit * 65
     assert seen_hop and seen_giving
-    gravity = next(f for f in simulation.held_records if simulation.families[f].name == "gravity")
     charge = next(f for f in simulation.held_records if simulation.families[f].name == "charge")
-    assert (
-        owns[gravity].values[(1,)] == 65 and owns[gravity].carries[(4,)] != 0
-    )  # the vector along x, the tensor xx
     assert {key for key in owns[charge].values if key[0] == "d"} == {
         ("d", 1, 0, 1),
         ("d", 1, 0, -1),

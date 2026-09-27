@@ -61,6 +61,7 @@ def run(document: dict, ticks: int) -> tuple[DetectorLawSimulation, list[dict]]:
     return simulation, lines
 
 
+@pytest.mark.diagnostic
 def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_action():
     windows = {}
     for weight in (1, 4):
@@ -91,8 +92,10 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
         if live is not None:
             assert live.family == 0 and not live.window_open and live.window == first["window"]
     ratio = windows[1] / windows[4]
-    # read (COMPUTATION): g = 1 1124 intervals, g = 4 64, the ratio 17.6 beside g^2 = 16 (the
-    # outward norm as the square of the written amplitude); the band admits the build-up
+    # a GameBoard reading (COMPUTATION) from the engine's giving line, no detector in this world:
+    # g = 1 1124 intervals, g = 4 64, the ratio 17.6 beside g^2 = 16 (the outward norm as the
+    # square of the written amplitude); the band is a diagnostic check that the weight enters the
+    # window, not a measurement pinned against nature; it admits the build-up
     assert 8 < ratio < 64, windows
 
 

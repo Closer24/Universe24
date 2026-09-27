@@ -111,11 +111,13 @@ def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
             assert (self_coefficient - 6 * read + 2 * wall >= 0) is admitted
 
 
+@pytest.mark.diagnostic
 def test_a_like_charge_hill_is_admitted_to_the_edge_and_refused_beyond_it_naming_the_node():
     """On the charged chain of 60 (light bodies of charge +1 at [20, 30), the content and the
     charge QUANTA there), a matter record of charge +1 reads c - Lambda d: at Lambda = 1 the
     hill is filled to the vacuum's pace, p = Gamma = 1000 <= 1002, admitted over three
-    intervals; at Lambda = 3 it reads -2 QUANTA, p = 1020 beyond the edge 1002 of [800, 809],
+    intervals (the largest pace over the GameBoard is a GameBoard reading, a diagnostic, not
+    a measurement); at Lambda = 3 it reads -2 QUANTA, p = 1020 beyond the edge 1002 of [800, 809],
     refused naming a slab Node, where today's guard admits up to 2 Gamma and the rule's
     checkerboard mode grows (the test above): a finding for the algebra, not a fix of the
     world (record 2137)."""
@@ -126,6 +128,7 @@ def test_a_like_charge_hill_is_admitted_to_the_edge_and_refused_beyond_it_naming
         admitted.step()
         writes = apply(term_of(admitted, MATTER), start_of(admitted, MATTER), own_of(admitted, MATTER))
         assert np.array_equal(writes.content, admitted._effective_content(MATTER))
+        # a GameBoard reading (a diagnostic), not a measurement
         assert int(np.max(admitted.node_clock - writes.content)) == CHAIN_GAMMA
     refused = DetectorLawSimulation(
         parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, 1, 3))

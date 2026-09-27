@@ -163,18 +163,21 @@ def group_pace_light(k: float, ratio: float) -> float:
     return (omega(k + h) - omega(k - h)) / (2 * h)
 
 
+@pytest.mark.diagnostic
 def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
-    """(iii) THE SLAB: the flux test's Gaussian packet of light (40 Links, k = 0.3024, UNIT) on
-    the open chain of 400 from x = 60, run 400 intervals with and without a slab of 40 Nodes at
-    [150, 190) holding QUANTA quanta each (the pace 0.75 there, item 34): the transmitted packet's
-    centroid (its levels' magnitude beyond the slab, x >= 190) lags the vacuum's by the slab's
-    delay 40 (1 / v' - 1 / v) intervals at the vacuum's pace v, v' the group pace of the slowed
-    dispersion (the pace 0.75 under the fixed wall, item 34: 10.9 intervals, 6.23 Links; read
-    6.16, COMPUTATION), within 15 percent; 0.974 of the packet's energy is beyond the slab
-    in the vacuum run and 0.946 with the slab (the planted packet's own backward part, 2.6
-    percent, returns off the face at x = 0 in both; the slab's faces reflect about three
-    percent at the weak field's index, f = (p / Gamma)^2 = 0.5625); the books' form `record_form` is the same integer to the
-    remainders' jitter (4 x 10^-6 of it) over the passage."""
+    """(iii) THE SLAB, A GAMEBOARD READING (a diagnostic COMPUTATION against ALGEBRA.md 9.62 (1),
+    not a measurement compared with nature: no detector clicks here; the host reads the record's
+    two levels): the flux test's Gaussian packet of light (40 Links, k = 0.3024, UNIT) on the open
+    chain of 400 from x = 60, run 400 intervals with and without a slab of 40 Nodes at [150, 190)
+    holding QUANTA quanta each (the pace 0.75 there, item 34): the transmitted packet's centroid
+    (its levels' magnitude beyond the slab, x >= 190) lags the vacuum's by the slab's delay 40
+    (1 / v' - 1 / v) intervals at the vacuum's pace v, v' the group pace of the slowed dispersion
+    (the pace 0.75 under the fixed wall, item 34: 10.9 intervals, 6.23 Links; read 6.16), within
+    15 percent; the energy share beyond the slab reads 0.974 in the vacuum run and 0.946 with the
+    slab, the floors 0.97 and 0.94 read values (the planted packet's own backward part, 2.6
+    percent, returns off the face at x = 0 in both; the slab's faces reflect about three percent
+    at the weak field's index, f = (p / Gamma)^2 = 0.5625). The books' form over the passage is
+    proved exactly by (iv)(c) and is not read here."""
     k = 0.3024
     x = np.arange(400)
     envelope = np.exp(-(((x - 60) / 14.0) ** 2))
@@ -189,10 +192,9 @@ def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
             parse_nature_beam_world(content_chain(400, CHAIN, nodes, QUANTA))
         )
         live = planted(simulation, 0, now, before, np.zeros((400, 1, 1), dtype=np.int64))
-        start = Fraction(*simulation.record_form(live))
         for _ in range(400):
             simulation._advance(live)
-            assert abs(Fraction(*simulation.record_form(live)) - start) < start // 1000
+        # GameBoard readings (diagnostic): the host reads the record's two levels
         weights = np.abs(live.now[:, 0, 0]).astype(np.float64)
         weights[:190] = 0.0
         centroids[slab] = float(np.sum(x * weights) / np.sum(weights))
@@ -204,9 +206,14 @@ def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
     delay = 40.0 * (1.0 / slowed - 1.0 / pace)
     lag = centroids[False] - centroids[True]
     # the slab's faces reflect more under the weak field (the index at f = (p / Gamma)^2, 0.5625
-    # here, against 0.75 under the first-order rule): 0.946 beyond against 0.956 (COMPUTATION)
-    assert beyond[False] > 0.97 and beyond[True] > 0.94, beyond
-    assert 0.85 * delay * pace < lag < 1.15 * delay * pace, (centroids, delay * pace)
+    # here, against 0.75 under the first-order rule): 0.946 beyond against 0.956 (COMPUTATION);
+    # the floors are read values of a GameBoard reading, not measurements compared with nature
+    assert beyond[False] > 0.97 and beyond[True] > 0.94, ("GameBoard reading, diagnostic", beyond)
+    assert 0.85 * delay * pace < lag < 1.15 * delay * pace, (
+        "GameBoard reading, diagnostic",
+        centroids,
+        delay * pace,
+    )
 
 
 def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_content():
@@ -358,6 +365,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     assert VACUUM_WHEEL == (200000000, 2427)  # the kind [800, 809]'s vacuum wheel, read elsewhere
 
 
+@pytest.mark.diagnostic
 def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
     """(vi) On the emitter world (the stock 4 at [5, 37), the screen the cube of light bodies at
     [70, 72] whose first body takes the clicks' quanta): the content at the body's centre Node
@@ -368,8 +376,9 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
     gather line there (the click's quantum held by the body); the vacuum between them 0 at
     the load and at x = 50 until the family of clicks' front from the body's head arrives
     (14 Links at one Link per interval, ALGEBRA.md 9.44 (3)), then the family's waves and the
-    rounding's walk of the plain step at these unit levels (at most 9 read on this head, far
-    below Gamma); the books balanced at every interval."""
+    rounding's walk of the plain step at these unit levels: a GameBoard reading, a diagnostic
+    and not a measurement (the held level on [40, 70) reads at most 9, far below Gamma; the
+    bound 64 a sanity band); the books balanced at every interval."""
     document = emitter_world(stock=4)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
@@ -403,8 +412,8 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
         assert int(simulation.level_of("content")[70, 0, 0]) == 1 + clicks_seen
         if simulation.tick <= 12:
             assert int(simulation.level_of("content")[50, 0, 0]) == 0
-        # the family's waves and, at these small contents, the rounding's own walk of the
-        # plain step at unit levels: far below Gamma (at most 9 read on this head)
+        # DIAGNOSTIC (GameBoard reading, not a measurement): the held family of clicks' vacuum
+        # level on [40, 70) stays far below Gamma (read at most 9; the bound 64 a sanity band)
         assert int(np.abs(simulation.level_of("content")[40:70]).max()) <= 64
         for line in [line for line in lines if line["tick"] == simulation.tick]:
             if line["event"] == "giving":

@@ -259,7 +259,9 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     Links from the body's head at x = 33 to the screen at v_g = 0.447 (80 intervals) and
     as much of the passage as the residue asks (the train of 32 Nodes passes in 72), every
     click's quantum on the transit row `absorbed` and the screen body's `measured`, the
-    books balanced. The edge case: the faces OPEN on the chain of 140 (the body at [34, 66)
+    books balanced (the body's content level on the giving line is a GameBoard reading, a
+    diagnostic; the level sequence is pinned on the emitter world in tests/test_emitter.py).
+    The edge case: the faces OPEN on the chain of 140 (the body at [34, 66)
     one train's length from the low face): the train leaves toward +x and the faces book
     nothing of it within the first 40 intervals (no click there), the screen not reached
     yet."""
@@ -278,8 +280,6 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     # the wheel the rule's at the body's centre Node under the Node clock (the
     # stock 6 down to 1 at the six givings), u below it
     assert len(givings) == 6 and all(lawful_wheel(world, line) for line in givings)
-    # the level at the body: one own quantum beside the stock, 7 down to 2 (item 47)
-    assert [line["content"] for line in givings] == [7, 6, 5, 4, 3, 2]
     assert len(gathers) + sum(1 for live in simulation.records.values() if live.family == 0) == 6
     assert len(gathers) >= 3
     assert all("clock" in g and "giving" in g and "click" in g for g in gathers)
