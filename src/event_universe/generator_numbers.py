@@ -15,7 +15,11 @@ from __future__ import annotations
 import math
 from fractions import Fraction
 
-from event_universe.loader.world import TWIST_TRIPLE_BOUND, TWIST_UNIT_SCALE
+# the generator's own numbers (HOST): the twist's unit scale 2^16, 2^10 fine and 2^15 coarse triples, the triples' d bound 10^9
+TWIST_UNIT_SCALE = 1 << 16
+TWIST_FINE_BITS = 10
+TWIST_COARSE_MOST = 1 << 15
+TWIST_TRIPLE_BOUND = 10**9
 
 
 def twist_triple(k: int, unit: int) -> tuple[int, int, int]:
@@ -36,13 +40,6 @@ def rotation_twist(cosine_numerator: int, cosine_denominator: int) -> int:
     (a matter record's pair) or a / (2 b) of a body's clock [a, b] (2 cos omega); the
     generator's one computation (HOST), an integer the loader reads under `twist`."""
     return round(TWIST_UNIT_SCALE * math.acos(cosine_numerator / cosine_denominator))
-
-
-def light_twist(wavelength: int) -> int:
-    """THE TWIST "OWN" of a light record from its wavelength in Links on light's dispersion
-    (ALGEBRA.md #the-primitives): cos omega = (cos(2 pi / lambda) + 2) / 3, round(2^16 omega);
-    the retired train's (HISTORY since commit 7)."""
-    return round(TWIST_UNIT_SCALE * math.acos((math.cos(2 * math.pi / wavelength) + 2) / 3))
 
 
 def body_twist(clock: list[int] | tuple[int, int] | None, kind: list[int] | tuple[int, int]) -> int:

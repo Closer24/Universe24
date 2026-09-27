@@ -11,8 +11,7 @@ import pytest
 
 from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.generator_numbers import light_twist, rotation_twist, twist_triple
-from event_universe.loader.world import TWIST_FINE_BITS
+from event_universe.generator_numbers import rotation_twist, twist_triple
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import PACES_SHAPE as SHAPE
 from tests.bodies import paces_world, parts_of
@@ -51,9 +50,9 @@ def twisted_world() -> dict:
 
 def composed(k: int, rows: dict) -> tuple[int, int, int]:
     """The transport's triple of k from the two tables, by hand (ALGEBRA.md #the-primitives)."""
-    magnitude = abs(k)
-    c0, s0, d0 = rows["fine"][magnitude & ((1 << TWIST_FINE_BITS) - 1)]
-    c1, s1, d1 = rows["coarse"][magnitude >> TWIST_FINE_BITS]
+    magnitude, fine_bits = abs(k), len(rows["fine"]).bit_length() - 1
+    c0, s0, d0 = rows["fine"][magnitude & ((1 << fine_bits) - 1)]
+    c1, s1, d1 = rows["coarse"][magnitude >> fine_bits]
     sign = 1 if k > 0 else -1 if k < 0 else 0
     return c1 * c0 - s1 * s0, sign * (s1 * c0 + c1 * s0), d1 * d0
 
@@ -92,7 +91,6 @@ def test_the_loader_writes_the_twist_own_and_the_given_lights_component():
     assert beam.emitter.twist == beam.twist == rotation_twist(beam.clock[0], 2 * beam.clock[1])
     assert beam.emitter.part == 3
     # the retired train's twist was its wavelength's on light's dispersion, cos omega = (cos k + 2) / 3
-    assert light_twist(4) == round(65536 * math.acos(2 / 3))
     assert rotation_twist(800, 809) == round(65536 * math.acos(800 / 809))
 
 
@@ -214,11 +212,11 @@ def test_the_loader_refuses_a_light_emitter_without_one_moment_axis_and_a_bad_ta
     good = twisted_world()
     parse_nature_beam_world(good)
     for change, match in (
-        (lambda t: t.__setitem__("unit", 7), "is not 4 Gamma 2\\^16"),
+        (lambda t: t.__setitem__("unit", 7), "is no multiple of 4 Gamma"),
         (lambda t: t["coarse"].__setitem__(200, [3, 4, 6]), "is no triple of the table"),
         # a triple planted out of order: the loader checks the angles' order in integers (item 73)
         (lambda t: t["coarse"].__setitem__(200, [3, 4, 5]), "turns back below the entry before it"),
-        (lambda t: t["fine"].pop(), "must be a list of 1024 to 1024 triples"),
+        (lambda t: t["fine"].pop(), "no power of two"),
     ):
         broken = json.loads(json.dumps(good))
         change(broken["twist_table"])
