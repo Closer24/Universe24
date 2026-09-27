@@ -268,10 +268,11 @@ def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
     givings (its excitations click at their rungs), and its records click at at_well when
     the mirror returns them into A's Nodes (the line at the rung, the record deleted at it;
     at least one within the 700, the round trip about 300 intervals after the giving; under
-    the row's floor, ALGEBRA.md #the-paces, three records reach their rung at A's own Nodes
-    before any round trip, the shortest 27 intervals after its giving, with no body held in
-    place (the mirrors fed, #1279)), none at the faces; the books balanced. The edge case: the
-    file on disk is byte for byte what the test read."""
+    the row's floor and the recoil, ALGEBRA.md #the-paces and #the-primitives, A carries its
+    kicks and no body is held in place (the mirrors fed, #1279): twelve records return by their
+    round trips and one reaches its rung at A's own Nodes 12 intervals after its giving), none
+    at the faces; the books balanced. The edge case: the file on disk is byte for byte what the
+    test read."""
     before = LIGHT_CLOCK.read_bytes()
     document = json.loads(before)
     world = parse_nature_beam_world(document)
@@ -289,5 +290,5 @@ def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
         line["tick"] == line["click"] and line["record"] not in simulation.records for line in found
     )
     trips = [line["click"] - line["giving"] for line in found]
-    assert sum(trip > 200 for trip in trips) == 17 and min(trips) == 27 and len(trips) == 20
+    assert sum(trip > 200 for trip in trips) == 12 and min(trips) == 12 and len(trips) == 13
     assert LIGHT_CLOCK.read_bytes() == before

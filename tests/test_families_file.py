@@ -79,7 +79,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         # the check-mode worlds and the source verb's run files (Nature24's generators, ahead of
         # the loader's words: `readings`, `sourced`, the residue keys) carry keys the loader
         # does not read yet; tests/test_source_worlds.py reads their structure
-        ahead = {"check_mode", "source"}
+        ahead = {"check_mode", "generated", "source"}
         if isinstance(text, dict) and "universe" in text and not ahead & set(path.parts):
             assert text["universe"] == FILE, path
             assert "node_clock" not in text and "amplitude_bound" not in text, path
@@ -121,7 +121,8 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     lines_a: list[dict] = []
     lines_b: list[dict] = []
     a.record, b.record = lines_a.append, lines_b.append
-    for _ in range(300):
+    # 60 intervals: the two worlds are one until A's first kick at 61 (the recoil at its first giving's close); from there the file's held rows, the shipped file's gravity (1, 4, 2) and charge (1, 1) and not the specimen's, carry the momentum into the fields
+    for _ in range(60):
         a.step()
         b.step()
     renamed = [
