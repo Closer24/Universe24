@@ -38,6 +38,7 @@ def reversible_world(ticks: int = 400) -> dict:
             "amount": 1,
             "stocks": {},
             "momentum": [0, 0, 0],
+            "fixed": False,
         }
     )
     massive_generator().seed_on_the_mode(document)

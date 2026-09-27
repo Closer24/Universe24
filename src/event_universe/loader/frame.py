@@ -42,7 +42,7 @@ UNIVERSE_KEYS = ("integers", "families")
 START = ObjectOf({"mode": OneOf(("check", "pin"))})
 # a face of the GameBoard: open (its edge is infinity), periodic (the walk wraps) or closed (a zero face with no take)
 FACE = OneOf(("open", "periodic", "closed"))
-# the world file's own keys (ALGEBRA.md 9.90 (2)): the GameBoard, its faces, the intervals, the files it names, its stamp; and the keys of the loop's old form that the loop still reads
+# the world file's own keys (ALGEBRA.md 9.90 (2)): the GameBoard, its faces, the intervals, the files it names, its stamp, the largest age a record may carry; and the old form's N and three flags the loop still reads
 WORLD = ObjectOf(
     {
         "shape": ListOf(Integer(least=1), 3),
@@ -59,10 +59,7 @@ WORLD = ObjectOf(
         "amplitude_bound": Integer(least=1),
         "node_clock": Integer(least=1),
         "momentum_unit": Integer(least=1),
-        "K": Either((Integer(least=1), ListOf(Integer(least=1), 2))),
         "N": Integer(least=2),
-        "release": Either((Integer(least=0), ListOf(Integer(least=0), 2))),
-        "width": Integer(least=1),
         "clock_stamp": Flag(),
         "massive_record": Flag(),
         "body_record": Flag(),
@@ -71,7 +68,6 @@ WORLD = ObjectOf(
         {
             "stamp",
             "face_depth",
-            "age_bound",
             "probes",
             "mode_axis",
             "amplitude_bound",
@@ -133,7 +129,6 @@ BODY = ObjectOf(
     },
     frozenset(
         {
-            "fixed",
             "kind",
             "q",
             "spin",

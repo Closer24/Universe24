@@ -41,6 +41,7 @@ def emitter(
         "start": 0,
         "stocks": {"light": stock},
         "momentum": [momentum, 0, 0],
+        "fixed": False,
         "extents": [32, 1, 1],
         "q": 0,
         "spin": [0, 0, 0],
@@ -70,6 +71,7 @@ def body(x: int) -> dict:
         "amount": 1,
         "stocks": {},
         "momentum": [0, 0, 0],
+        "fixed": False,
     }
 
 

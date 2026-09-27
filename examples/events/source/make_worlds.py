@@ -253,7 +253,7 @@ def main() -> None:
         for key in ("momentum_unit", "twist_table"):
             written.pop(key, None)
         for entry in written["measured"]:
-            entry.pop("fixed", None)
+            entry["fixed"] = False
         written["readings"] = readings(centre, far, moving)
         written.pop("stamp", None)
         written["stamp"] = input_stamp(written)

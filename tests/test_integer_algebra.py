@@ -115,8 +115,7 @@ ROOT_NAMES = {"isqrt", "integer_root"}
 # reason; `None` is the module level. The set found must equal this set.
 ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
     # the ray law's modules (nature_beam.py, meeting.py, engine.py) and their roots were
-    # deleted on 2026-09-26 (docs/CANCELLED_WORLDS.md)
-    ("loader/world.py", "flight_bound"): "at load: the flight table's T_D for the parser's bound",
+    # deleted on 2026-09-26 (docs/CANCELLED_WORLDS.md); the loader's flight bound with #1236
 }
 
 

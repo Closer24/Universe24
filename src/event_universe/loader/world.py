@@ -7,11 +7,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from typing import cast
 
-from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
-from event_universe.core.integer import (
-    bounded_gcd,
-    integer_root,
-)
+from event_universe.core.game_board import MAX_VALUE, Address3
 from event_universe.core.phase import MAX_PHASE_STEPS
 from event_universe.core.readings import Reading, world_readings
 from event_universe.core.register import discover
@@ -35,13 +31,6 @@ Q = 64
 AMOUNT_BOUND = (1 << 62) - 1
 NORM_BOUND = (1 << 126) - 1
 MOMENTUM_BOUND = (1 << 62) - 1
-LABEL_SCALE = Q
-# the direction table: two rest vectors, the six headings, the declared rest (the ray law's fixed table, DEAD)
-REST_DIRECTIONS = 2
-HEADING_OFFSET = REST_DIRECTIONS
-FIXED_DIRECTIONS = REST_DIRECTIONS + 6
-DEFAULT_DIRECTION_BOUND = 64
-MAX_DIRECTIONS = 4096
 Vector = tuple[int, int, int]
 
 
@@ -533,7 +522,6 @@ class MeasuredDefinition:
     phase: int
     momentum: Vector
     fixed: bool
-    directions: tuple[int, ...]
     table: tuple[str, ...]
     windows: tuple[int | None, ...]
     reads: tuple[str, ...]
@@ -582,15 +570,8 @@ class NatureBeamWorld:
     boundary: str | dict[str, str]
     periodic: tuple[bool, bool, bool]
     ticks: int
-    K: int | tuple[int, int]
-    turn_rate: tuple[int, int]
     phase_steps: int
-    release: tuple[int, int]
-    suspension: tuple[int, int]
-    width: int
     age_bound: int
-    directions: tuple[Vector, ...]
-    direction_bound: int
     families: tuple[FamilyDefinition, ...]
     measured: tuple[MeasuredDefinition, ...]
     detectors: tuple[DetectorDefinition, ...]
@@ -764,106 +745,6 @@ def _address(value: object, label: str, shape: Address3) -> Address3:
     return components[0], components[1], components[2]
 
 
-def _vector(value: object, label: str, bound: int) -> Vector:
-    """A primitive integer vector with every component in -bound .. bound."""
-    if not isinstance(value, list) or len(value) != 3:
-        raise ValueError(f"{label} must be three integers")
-    components: list[int] = []
-    for item in value:
-        if type(item) is not int or item < -bound or item > bound:
-            raise ValueError(f"{label} components must be integers from {-bound} through {bound}")
-        components.append(item)
-    found = (components[0], components[1], components[2])
-    if found == (0, 0, 0):
-        raise ValueError(f"{label} must not be the zero vector (the rest slots are the table's)")
-    if bounded_gcd(bounded_gcd(found[0], found[1]), found[2]) != 1:
-        raise ValueError(f"{label} must be a primitive vector (its components coprime)")
-    return found[0], found[1], found[2]
-
-
-def _direction_table(value: object, bound: int) -> tuple[Vector, ...]:
-    """The table `D`: the two rest vectors, the six headings, the declared."""
-    table: list[Vector] = [(0, 0, 0), (0, 0, 0), *PORT_HEADINGS]
-    if not isinstance(value, list):
-        raise ValueError("directions must be a list of integer vectors")
-    for index, item in enumerate(value):
-        vector = _vector(item, f"directions[{index}]", bound)
-        if vector in table:
-            raise ValueError(f"directions[{index}] repeats a direction of the table")
-        table.append(vector)
-    if len(table) > MAX_DIRECTIONS:
-        raise ValueError(f"the direction table holds at most {MAX_DIRECTIONS} entries")
-    return tuple(table)
-
-
-def _direction(value: object, label: str, table: tuple[Vector, ...], *, rest: bool = False) -> int:
-    """A direction named by its vector or by its index in the world's table;
-    a rest vector only where `rest` allows it (a ray in transit)."""
-    if type(value) is int:
-        index = _integer(value, label, 0, len(table) - 1)
-    else:
-        if not isinstance(value, list) or len(value) != 3 or any(type(v) is not int for v in value):
-            raise ValueError(f"{label} must be a direction vector or an index of the table")
-        vector = (value[0], value[1], value[2])
-        if vector not in table:
-            raise ValueError(
-                f"{label} names a direction the world does not declare {list(vector)} "
-                "(the six headings or a vector of `directions`)"
-            )
-        index = table.index(vector)
-    if index < REST_DIRECTIONS and not rest:
-        raise ValueError(f"{label} must not be a rest direction")
-    return index
-
-
-def _directions(value: object, label: str, table: tuple[Vector, ...]) -> tuple[int, ...]:
-    if not isinstance(value, list) or not value:
-        raise ValueError(f"{label} must be a nonempty list of directions")
-    found = tuple(_direction(item, label, table) for item in value)
-    if len(set(found)) != len(found):
-        raise ValueError(f"{label} repeats a direction")
-    return found
-
-
-def bresenham_line(vector: tuple[int, int, int]) -> list[tuple[int, int, int]]:
-    """The S_1 unit steps of one period of the digital line of v: at each
-    step the axis whose progress is furthest behind, the lowest axis first
-    (the flight's walk, `nature_beam.direction_flight`; the loader's walk of
-    a record's paths, `_aperture_load_check`)."""
-    s1 = sum(abs(c) for c in vector)
-    line: list[tuple[int, int, int]] = []
-    position = [0, 0, 0]
-    for j in range(s1):
-        best = max(range(3), key=lambda i: (abs(vector[i]) * (j + 1) - s1 * abs(position[i]), -i))
-        step = [0, 0, 0]
-        step[best] = 1 if vector[best] > 0 else -1
-        position[best] += step[best]
-        line.append((step[0], step[1], step[2]))
-    return line
-
-
-def flight_bound(shape: Address3, table: tuple[Vector, ...]) -> int:
-    """The age at which every straight ray has left an open GameBoard of this
-    shape: the longest Manhattan flight on the GameBoard is D = X + Y + Z - 2
-    Links (inside and out), a ray of direction v makes S_1 = |a| + |b| + |c|
-    steps per period of its line and the least tau with m(tau) >= M steps
-    is at most ceil(M x T_d / (S_1 Q)) (BEAM_LAW section 3), so the exiting
-    walk of a ray of direction v is at age at most ceil(ceil(D / S_1) x
-    T_d / Q); the largest over the table's moving directions. A rest
-    direction never moves and a collision or a periodic axis may keep a ray
-    longer: the bound is exact for the straight flight alone."""
-    diameter = shape[0] + shape[1] + shape[2] - 2
-    largest = 1
-    for vector in table:
-        manhattan = sum(abs(component) for component in vector)
-        if manhattan == 0:
-            continue
-        turn = integer_root(3 * sum(component * component for component in vector) * Q * Q)
-        periods = -(-diameter // manhattan)
-        largest = max(largest, -(-(periods * turn) // Q))
-    return largest
-
-
 def body_nodes(
     position: Address3,
     span: tuple[int, int, int],
@@ -891,38 +772,6 @@ def body_nodes(
             coordinates.append(coordinate)
         axes.append(coordinates)
     return tuple((x, y, z) for x in axes[0] for y in axes[1] for z in axes[2])
-
-
-def _span(value: object, label: str, shape: Address3) -> tuple[int, int, int]:
-    """The span of a body: three odd integers from 1, each at most its
-    axis's extent (so that the body's Nodes are distinct)."""
-    if not isinstance(value, list) or len(value) != 3:
-        raise ValueError(f"{label} must be three odd integers from 1")
-    found = []
-    for item, extent in zip(value, shape, strict=True):
-        span = _integer(item, label, 1, extent)
-        if span % 2 == 0:
-            raise ValueError(f"{label} must be three odd integers from 1 (a centred body)")
-        found.append(span)
-    return found[0], found[1], found[2]
-
-
-def _age_bound(
-    value: object, shape: Address3, periodic: tuple[bool, bool, bool], table: tuple[Vector, ...]
-) -> int:
-    """The largest age a ray may carry: declared, or twice the flight bound
-    on a GameBoard with an open axis (the slack of one collision or one wrap of
-    a periodic axis), required on a GameBoard periodic on every axis, which no
-    ray leaves."""
-    if value is not None:
-        return _integer(value, "age_bound", 1)
-    if all(periodic):
-        raise ValueError(
-            "age_bound is required on a GameBoard periodic on every axis: no ray "
-            "leaves it, so the largest age a ray may carry (the bound of the store) must be "
-            "declared"
-        )
-    return 2 * flight_bound(shape, table)
 
 
 def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bool]]:
@@ -1326,28 +1175,6 @@ def axis_sign(axis: Vector, direction: Vector) -> int:
     unit label u_d, whose components carry the direction's signs."""
     product = sum(int(a) * int(d) for a, d in zip(axis, direction, strict=True))
     return (product > 0) - (product < 0)
-
-
-def _label_bound(
-    amount: int,
-    content: int,
-    table: tuple[Vector, ...],
-    directions: tuple[int, ...],
-    label: str,
-    scale: int = LABEL_SCALE,
-) -> None:
-    """The momentum label of a release or a declared ray, `content x amount x
-    u_d` with u_d the unit vector of the direction at the scale Q (no
-    component beyond Q), must fit the bound on every component: Q x content
-    x amount within 2^62 - 1, that is content x amount below 2^56; a
-    massive family's rows at their scale p where it is the larger."""
-    for direction in directions:
-        if scale * content * amount > MOMENTUM_BOUND:
-            raise ValueError(
-                f"{label}: the momentum label {scale} x {content} x {amount} = "
-                f"{scale * content * amount} along {list(table[direction])} exceeds the "
-                f"integer bound {MOMENTUM_BOUND} (content x amount at most {MOMENTUM_BOUND // scale})"
-            )
 
 
 def _receiver_names(obj: dict[str, object], label: str) -> tuple[str, ...] | None:
@@ -1926,14 +1753,10 @@ def _measured(
     shape: Address3,
     periodic: tuple[bool, bool, bool],
     families: tuple[FamilyDefinition, ...],
-    turn_rate: tuple[int, int],
     phase_steps: int,
-    release: tuple[int, int],
-    table: tuple[Vector, ...],
     ticks: int,
     action: int | None,
     massive_record: bool = False,
-    width: int = 1,
     amplitude_bound: int = AMPLITUDE_BOUND,
     momentum_unit: int = 0,
 ) -> tuple[MeasuredDefinition, ...]:
@@ -1958,7 +1781,7 @@ def _measured(
         position = _address(obj["position"], f"{label}.position", shape)
         if any(item.position == position for item in found):
             raise ValueError(f"two measured events at one Node {list(position)}")
-        span = _span(obj.get("span", list(ONE_NODE)), f"{label}.span", shape)
+        span = ONE_NODE
         nodes = body_nodes(position, span, shape, periodic)
         if nodes is None:
             raise ValueError(
@@ -1990,25 +1813,13 @@ def _measured(
                     f"{label}.stocks names the event's own family {key!r}, whose content is `amount`"
                 )
             held[names[key]] = _integer(content, f"{label}.stocks[{key!r}]", 1)
-        # The turn's static bound: 2 x content x n below d x N at the clock's
-        # rate [n, d] (2 x content below K x N for an integer K), the exact
-        # refusal of a turn at half the circle staying the frame's.
-        if 2 * sum(held) * turn_rate[0] >= turn_rate[1] * phase_steps:
-            raise ValueError(
-                f"{label}.amount must keep 2 x content below K x N (the phase step "
-                "per self-creation below half the circle; the content held of every family counts; "
-                "at the clock's rate [n, d], 2 x content x n below d x N)"
-            )
         # the ray law's phase, phase_by_momentum, directions, table and become are no keys of
         # the file (the frame refuses them by name); the loop still reads their attributes
         phase = 0
         momentum_value = cast(tuple[object, ...], obj["momentum"])
         momentum = tuple(_integer(item, f"{label}.momentum", -AMOUNT_BOUND) for item in momentum_value)
-        fixed = cast(bool, obj.get("fixed", False))
+        fixed = cast(bool, obj["fixed"])
         turning = False
-        directions = _directions(
-            list(range(HEADING_OFFSET, FIXED_DIRECTIONS)), f"{label}.directions", table
-        )
         # the table's rules of the ray law: every family at its key's rule, no entry declared
         rules: list[str] = []
         windows: list[int | None] = []
@@ -2024,11 +1835,6 @@ def _measured(
         # `become` entry (the click's hand-over; no transformation fires
         # at a contact: a body is not a click of the entry's family).
         contact = [CONTACT_DEFAULT for _ in families]
-        for held_family, content in enumerate(held):
-            if content and families[held_family].free:
-                # The label of a free release: amount x D along a heading,
-                # of the event's own family and of every free family held.
-                _label_bound(content * release[0] // release[1] or 1, 1, table, directions, label)
         block = _block(
             obj,
             label,
@@ -2055,7 +1861,6 @@ def _measured(
                 phase,
                 (momentum[0], momentum[1], momentum[2]),
                 fixed,
-                directions,
                 tuple(rules),
                 tuple(windows),
                 tuple(reads),
@@ -2072,7 +1877,6 @@ def _measured(
 def _detector_law_load_checks(
     measured: tuple[MeasuredDefinition, ...],
     families: tuple[FamilyDefinition, ...],
-    directions: tuple[Vector, ...],
     periodic: tuple[bool, bool, bool],
     phase_steps: int,
 ) -> None:
@@ -2097,22 +1901,6 @@ def _detector_law_load_checks(
                 f"no inputs), refused (an opening is free Nodes; there is "
                 "no fan; a splitter declares its inputs)"
             )
-        # An arm's half-space is the sign of (node - origin) . vector on the
-        # board's raw coordinates: on a periodic axis there is no half-space,
-        # so arms whose first direction has a component on a periodic axis
-        # are refused (the pair's two arms, component 2).
-        if entry.lamp is not None and entry.lamp.arms > 1:
-            per_arm = len(entry.lamp.directions) // entry.lamp.arms
-            for arm in range(entry.lamp.arms):
-                vector = directions[entry.lamp.directions[arm * per_arm]]
-                for axis in range(3):
-                    if int(vector[axis]) and periodic[axis]:
-                        raise ValueError(
-                            f"measured[{number}].lamp.arms: the arm {arm}'s first "
-                            f"direction {list(int(v) for v in vector)} has a component on the periodic "
-                            f"axis {AXES[axis]}, which has no half-space (an arm's row lives on its "
-                            "own side of the lamp's Node on an open axis)"
-                        )
     # A family of records may declare no clock of its own (ALGEBRA.md 9.85 (3);
     # item 59): its emitters declare the given record's clock (`_emitter`); a
     # held family gives nothing and has no clock (9.45 (1); item 51)
@@ -2694,33 +2482,15 @@ def parse_world_document(
     closed = tuple(isinstance(boundary, dict) and boundary.get(axis) == CLOSED_FACE for axis in AXES)
     closed = (closed[0], closed[1], closed[2])
     ticks = _integer(obj["ticks"], "ticks", 0)
-    # The clock's rate: an integer K is the pair [1, K] (one phase step per
-    # K units of content per self-creation), a pair [n, d] is n phase steps
-    # per d units of content per self-creation, like `release`; the record
-    # carries the key as declared.
-    declared_clock = obj["K"]
-    K: int | tuple[int, int]
-    if type(declared_clock) is int:
-        K = _integer(declared_clock, "K", 1)
-        turn_rate = (1, K)
-    else:
-        turn_rate = _ratio(declared_clock, "K", zero=False)
-        K = turn_rate
     # N declared in every file (no default: the model owner's rule through
     # the Boss, 2026-09-25; BUILD.md section 26 item 28; the 64 of the first
     # worlds HISTORY, written in each)
     phase_steps = _integer(obj["N"], "N", 2, MAX_PHASE_STEPS)
     if phase_steps & (phase_steps - 1):
         raise ValueError(f"N must be a power of two from 2 through {MAX_PHASE_STEPS}")
-    release = _ratio(obj["release"], "release", zero=True)
-    # the ray law's keys suspension, direction_bound, directions, action, meeting and
-    # massive_rows are no keys of the file (the frame refuses them by name); the values below
-    # and the world's fields carrying them are read by no line of the loop (DEAD, deleted whole)
-    suspension = (1, 1)
-    width = cast(int, obj["width"])
-    bound = DEFAULT_DIRECTION_BOUND
-    table = _direction_table([], bound)
-    age_bound = _age_bound(obj.get("age_bound"), shape, periodic, table)
+    # the largest age a record may carry, declared in every file (the loader's default from
+    # the ray law's flight bound went with the table)
+    age_bound = cast(int, obj["age_bound"])
     clock_stamp = cast(bool, obj["clock_stamp"])
     # THE FACE SLAB (ALGEBRA.md 9.25 (10), the mathematician's reading: a face
     # one Node deep books 0.15 of a packet and reflects the rest, the slab as
@@ -2829,14 +2599,10 @@ def parse_world_document(
         shape,
         periodic,
         families,
-        turn_rate,
         phase_steps,
-        release,
-        table,
         ticks,
         action,
         massive_record,
-        width,
         amplitude_bound,
         momentum_unit,
     )
@@ -2892,15 +2658,8 @@ def parse_world_document(
         boundary,
         periodic,
         ticks,
-        K,
-        turn_rate,
         phase_steps,
-        release,
-        suspension,
-        width,
         age_bound,
-        table,
-        bound,
         families,
         measured,
         detectors,
@@ -2920,7 +2679,7 @@ def parse_world_document(
         start=start,
         universe_file=families_file,
     )
-    _detector_law_load_checks(measured, families, table, periodic, phase_steps)
+    _detector_law_load_checks(measured, families, periodic, phase_steps)
     set_names = {detector.name for detector in detectors}
     for number, entry in enumerate(measured):
         # the emitter body's ladder by name (ALGEBRA.md 9.17): every name a

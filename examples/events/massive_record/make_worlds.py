@@ -269,17 +269,15 @@ def world(
         # it lands, acts on a body without the word alone); a body with a momentum is free
         if all(int(component) == 0 for component in entry["momentum"]):
             entry["fixed"] = True
+        else:
+            entry["fixed"] = False
         measured.append(entry)
     document: dict = {
         "shape": shape,
         "boundary": boundary,
         "ticks": ticks,
         "age_bound": AGE_BOUND,
-        "K": 1073741824,
         "N": 64,
-        "release": [1, 128],
-        # the drive wall's width S (3 Q S M; ALGEBRA.md 9.52 (4)), declared (record 2089)
-        "width": 1,
         "clock_stamp": True,
         "massive_record": True,
         "body_record": False,

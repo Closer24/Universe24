@@ -11,13 +11,7 @@
  },
  "ticks": 5966,
  "age_bound": 1048576,
- "K": 1073741824,
  "N": 2048,
- "release": [
-  1,
-  128
- ],
- "width": 1,
  "clock_stamp": true,
  "massive_record": true,
  "body_record": false,
@@ -26073,7 +26067,8 @@
      2070163,
      1048576
     ]
-   ]
+   ],
+   "fixed": false
   },
   {
    "position": [
@@ -26111,7 +26106,8 @@
    ],
    "ramp": 0,
    "start": 0,
-   "twist": 0
+   "twist": 0,
+   "fixed": false
   },
   {
    "position": [
@@ -26149,7 +26145,8 @@
    ],
    "ramp": 0,
    "start": 0,
-   "twist": 0
+   "twist": 0,
+   "fixed": false
   }
  ],
  "detectors": [
@@ -26160,6 +26157,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "425eb81fd6cee2129b84609d2404e5e1940a1da8dfe54c6bce93db9b92ec09a6"
+  "hash": "843428caa1fdb0f861030b94b0344fb8f1a0cf4dc8bb2bdb81e6caca681ae986"
  }
 }

@@ -33,6 +33,7 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
             "start": 0,
             "stocks": {"light": stock},
             "momentum": [0, 0, 0],
+            "fixed": False,
             "extents": [1, 1, 1],
             "q": 0,
             "spin": [0, 0, 0],

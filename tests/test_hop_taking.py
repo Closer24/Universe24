@@ -53,6 +53,7 @@ def cart_world(
         "ramp": 0,
         "start": 0,
         "momentum": [momentum, 0, 0],
+        "fixed": False,
         "extents": [3, 1, 1],
         "q": 0,
         "spin": [0, 0, 0],

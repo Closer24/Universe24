@@ -89,6 +89,7 @@ def emitter_body(
         "start": 0,
         "stocks": {family: stock},
         "momentum": [0, 0, 0],
+        "fixed": False,
         "extents": extents,
         "q": 0,
         "spin": [0, 0, 0],
@@ -124,6 +125,7 @@ def receiver_body(position: list[int], family: str = "light") -> dict:
         "amount": 1,
         "stocks": {},
         "momentum": [0, 0, 0],
+        "fixed": False,
     }
 
 
@@ -162,11 +164,9 @@ def chain_world(
         "boundary": {"x": faces, "y": "periodic", "z": "periodic"},
         "face_depth": 1,
         "ticks": 600,
-        "K": 1073741824,
         "N": PHASE_STEPS,
-        "release": [1, 128],
         "clock_stamp": clock_stamp,
-        "width": 1,
+        "age_bound": 100000,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
@@ -204,6 +204,7 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
         "amount": 6,
         "stocks": {},
         "momentum": [0, 0, 0],
+        "fixed": False,
         "lamp": {"rate": [1, 40], "wheel": [1, 64], "directions": [[1, 0, 0]], "train": 4},
     }
     with pytest.raises(ValueError, match="has unknown keys: lamp"):
@@ -366,11 +367,9 @@ def layer_world(receiver: object = None) -> dict:
         "shape": [80, 9, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": 400,
-        "K": 1073741824,
         "N": PHASE_STEPS,
-        "release": [1, 128],
         "clock_stamp": True,
-        "width": 1,
+        "age_bound": 100000,
         "body_record": False,
         "engine": "examples/events/engine_start.json",
         "massive_record": True,
@@ -679,6 +678,7 @@ def test_detector_is_one_connected_cube_of_side_three():
                 "ramp": 0,
                 "start": 0,
                 "momentum": [0, 0, 0],
+                "fixed": False,
                 "side": side,
                 "q": 0,
                 "spin": [0, 0, 0],

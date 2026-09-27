@@ -43,6 +43,7 @@ def light_body(x: int, amount: int) -> dict:
         "amount": amount,
         "stocks": {},
         "momentum": [0, 0, 0],
+        "fixed": False,
     }
 
 
