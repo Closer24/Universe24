@@ -7,8 +7,8 @@ import numpy as np
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
+from tests.bodies import KIND, paces_world, parts_of
 from tests.bodies import PACES_SHAPE as SHAPE
-from tests.bodies import paces_world, parts_of
 
 GAMMA = 10_000
 
@@ -57,7 +57,9 @@ def test_a_planted_tensor_part_bends_the_rule_per_axis_and_the_inverse_reads_the
         assert 0 <= int(live.remainder[node]) == total - wall * expected < wall, node
     # the wheel at a slab Node reads the five coefficients' gcd
     step, wheel = simulation.wheel_at(matter, (7, 2, 2))
-    reads, self_coefficient, wall = coefficients(800, 809, GAMMA, int(content[7, 2, 2]), (20, 0, 0))
+    reads, self_coefficient, wall = coefficients(
+        *KIND, GAMMA, int(content[7, 2, 2]), (20, 0, 0)
+    )  # the cube fixture's kind
     from math import gcd
 
     assert step == gcd(wall, self_coefficient, *reads) and wheel == wall // step

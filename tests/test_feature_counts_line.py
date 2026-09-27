@@ -1,4 +1,4 @@
-"""THE COUNT'S LINE, its own folder (ALGEBRA.md #the-counts-line): Rule3 for the family of clicks with the record's current as its read; a body at rest keeps its count in place; a moving record carries its count at the group velocity; the count conserved exactly; the inverse; the int64 bound; the refusals; the declaration."""
+"""THE COUNT'S LINE, its own folder (ALGEBRA.md #the-counts-line): Rule3 for the family of clicks with the record's current as its read; a body at rest keeps its count in place; a moving record carries its count at the group velocity; the count conserved exactly; the inverse; the int64 bound; the refusals; the declaration, bound."""
 
 from __future__ import annotations
 
@@ -200,5 +200,5 @@ def test_the_current_is_the_booking_and_its_bound_holds_within_int64():
 def test_the_declaration_is_the_registers_row():
     assert DECLARATION.name == "the count's line" and folder_of(DECLARATION.name) == "counts_line"
     assert DECLARATION.place == "(ii)" and DECLARATION.word == "after the step"
-    assert DECLARATION.function is None and not DECLARATION.built
+    assert DECLARATION.function is apply and DECLARATION.built  # bound: the loop calls apply
     assert DECLARATION.writes == ("the count at a Node", "the count's remainder")

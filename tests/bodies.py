@@ -57,7 +57,10 @@ POINT_WELL = [800, 802]
 CLOSED_CHAIN = {"x": "closed", "y": "periodic", "z": "periodic"}
 
 
-KIND = [800, 809]
+KIND = [
+    800,
+    1200,
+]  # the cube fixtures' kind: the well [800, 801] bound deep in it, the count standing (ALGEBRA.md #the-well)
 
 
 SHAPE = [16, 8, 8]
@@ -71,7 +74,7 @@ def paces_world() -> dict:
     [1, 3, 6] holding the content); the matter family reads gravity's time part at 1."""
     block = {"position": [3, 2, 2], "side": 3, "pair": WELL, "margin": "control"}
     periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
-    document = block_world(PACES_SHAPE, periodic, KIND, [block], ticks=20)
+    document = block_world(PACES_SHAPE, periodic, KIND, [block], ticks=20, on_mode=True)
     document["age_bound"] = 100000
     for family in document["universe"]:
         if family["name"] == "clicks":
@@ -137,9 +140,11 @@ def block_world(
     blocks: list[dict],
     source: dict | None = None,
     ticks: int = 100,
+    on_mode: bool = False,
 ) -> dict:
     """A world of the massive kind `matter` with blocks, a light family on the clock [77, 25], and optionally
-    an emitter body of light (`emitter_at`) as the first measured event, seeded on its mode."""
+    an emitter body of light (`emitter_at`) as the first measured event, seeded on its mode; with `on_mode`
+    every well seeded on its mode (a real body under the count's line: a flat seed sloshes and its quanta move)."""
     matter: dict = family_entry("matter", kind, reads())
     # light on the given clock [512, 1] of N = 1024 (the given train, ALGEBRA.md #the-click)
     families = [
@@ -147,6 +152,7 @@ def block_world(
         matter,
     ]
     measured: list[dict] = []
+    wells: list[int] = []
     if source is not None:
         measured.append(source)
         families.append(source_family())
@@ -189,6 +195,8 @@ def block_world(
             if "seed" not in entry:
                 entry["seed"] = 1 << 20
             entry.setdefault("margin", "pin")
+            if isinstance(entry["seed"], int) and entry["seed"] > 0:
+                wells.append(len(measured))
         measured.append(entry)
     document: dict = {
         "shape": shape,
@@ -210,6 +218,8 @@ def block_world(
     }
     if source is not None:
         seed_source(document, 0)
+    for number in wells if on_mode else ():
+        seed_source(document, number)
     return document
 
 
@@ -460,7 +470,7 @@ def parts_world(**body: object) -> dict:
     (gravity [1, 3, 6] and charge [1, 3])."""
     block = {"position": [3, 2, 2], "side": 3, "pair": WELL, "margin": "control", **body}
     periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
-    document = block_world(SHAPE, periodic, KIND, [block], ticks=20)
+    document = block_world(SHAPE, periodic, KIND, [block], ticks=20, on_mode=True)
     document["age_bound"] = 100000  # a board periodic on every axis declares it
     for family in document["universe"]:
         if family["name"] == "clicks":

@@ -29,7 +29,7 @@ def lines_of(lines: list[dict], event: str) -> list[dict]:
     return [line for line in lines if line["event"] == event]
 
 
-def test_the_click_line_carries_the_taken_quantums_direction_and_no_body_moves():
+def test_the_click_line_carries_the_taken_quantums_direction_and_the_giver_recoils():
     for document, sign in ((emitter_world(stock=2, ticks=600), 1), (mirrored_emitter_world(600), -1)):
         lines, simulation, _ = run_emitter(document)
         gathers, givings = lines_of(lines, "gather"), lines_of(lines, "giving")
@@ -37,10 +37,13 @@ def test_the_click_line_carries_the_taken_quantums_direction_and_no_body_moves()
         assert all(line["chosen"] == [["screen", 0, "0"]] for line in gathers)
         # the four-vector: the count and the direction of travel toward the screen
         assert all(line["content"] == 1 and line["momentum"] == [sign, 0, 0] for line in gathers)
-        # the given quantum's direction over the window
-        assert all(line["momentum"] == [sign, 0, 0] for line in givings)
-        # no recoil: every body's momentum stands; the quanta moved by the content alone
-        assert all(block.momentum == [0, 0, 0] for block in simulation.blocks)
+        # the given quantum's direction over the window: the sign of the given light's net flux through the emitter's faces at the close, an integer reading of this fixture's windows under the row's floor (15 to 25 intervals): away from the near closed face then toward it in the plain world, both away in the mirrored one
+        assert [line["momentum"] for line in givings] == (
+            [[1, 0, 0], [-1, 0, 0]] if sign == 1 else [[-1, 0, 0], [-1, 0, 0]]
+        )
+        # the recoil: the giver's two kicks summed, each opposite to its given light: nought in the plain world (one giving each way), 2 x 2640 along +x in the mirrored one
+        kicked = [0, 0, 0] if sign == 1 else [5280, 0, 0]
+        assert [block.momentum for block in simulation.blocks] == [kicked]
 
 
 def test_a_symmetric_emitters_tallies_cancel_and_the_inverse_undoes_the_windows_tally():

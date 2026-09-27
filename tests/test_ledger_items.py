@@ -157,7 +157,9 @@ def test_3a_a_sourced_family_is_written_where_its_records_are_and_nowhere_else()
     same family sourced by a family with no record stays exactly zero everywhere (the leak test)."""
     document = emitter_world(stock=2, ticks=STEPS)
     well = {
-        **family_entry("well", [1000, 1019], [], clock=[512, 1]),
+        **family_entry(
+            "well", [52, 53], [], clock=[512, 1]
+        ),  # the depth of [1000, 1019] at a numerator the walls admit under the bound 2^24
         "sourced": {"of": "matter", "weight": 1, "scale": 1000},
     }
     null = {**well, "name": "null", "sourced": {**well["sourced"], "of": "charge"}}
@@ -196,22 +198,22 @@ def test_3b_a_content_below_zero_at_run_time_ends_the_run_with_the_guards_line()
 
 
 def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer():
-    """At a giving the body's held vector n changes along the click's axis by
-    sigma_a x 3 Q P_body (L div lambda_q) div L, the store on the body's record; the taker
-    with the opposite sign (the law's row "the recoil"; ALGEBRA.md #the-interval, #the-primitives)."""
+    """At a giving's close the body's held vector n changes along the click's axis, opposite to
+    the given light, by 3 Q P_body (L div lambda_q) div L with the store on the body's record;
+    two givings each way cancel (the law's row "the recoil"; ALGEBRA.md #the-interval, #the-primitives)."""
     document = emitter_world(stock=2, ticks=STEPS)
     stamped(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    before = list(simulation.blocks[0].momentum)
     lines: list[dict] = []
     simulation.record = lines.append
-    for _ in range(STEPS):
+    for _ in range(90):  # the first giving at 69 (its light toward +x) with its window of 15 closed
         simulation.step()
-    givings = [line for line in lines if line.get("event") == "giving"]
-    assert givings, "the emitter gave nothing in the run"
-    after = list(simulation.blocks[0].momentum)
-    assert after != before
-    assert all(isinstance(v, int) for v in after)
+    kicked = list(simulation.blocks[0].momentum)
+    assert kicked[0] < 0 and kicked[1:] == [0, 0] and all(isinstance(v, int) for v in kicked)
+    for _ in range(90, STEPS):  # the second giving at 97, its light toward -x: the kicks cancel
+        simulation.step()
+    givings = [line["momentum"] for line in lines if line.get("event") == "giving"]
+    assert givings == [[1, 0, 0], [-1, 0, 0]] and list(simulation.blocks[0].momentum) == [0, 0, 0]
 
 
 # (5) A CLICK'S CHANGE AFTER ALL ADVANCES; A RUN-TIME OVERFLOW BOUND (record 2185)
