@@ -197,28 +197,23 @@ def test_3b_a_content_below_zero_at_run_time_ends_the_run_with_the_guards_line()
 # (4) THE CLICK THAT KEEPS THE MOMENTUM, WITH ITS RECOIL'S STORE (ALGEBRA.md #the-primitives.111 item 2)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="item 4 of record 2199: the recoil is not built; a body's held momentum does not move "
-    "at a click",
-)
 def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer():
-    """At a giving the body's held vector n changes along the click's axis by
-    sigma_a x (W x P_body) div (M x lambda_q), the remainder on the body's record; the taker
-    with the opposite sign (ALGEBRA.md #the-interval with the sign of ALGEBRA.md #the-primitives)."""
+    """At a giving's close the body's held vector n changes along the click's axis, opposite to
+    the given light, by 3 Q P_body (L div lambda_q) div L with the store on the body's record;
+    two givings each way cancel (the law's row "the recoil"; ALGEBRA.md #the-interval, #the-primitives)."""
     document = emitter_world(stock=2, ticks=STEPS)
     stamped(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    before = list(simulation.body_momentum(0))
     lines: list[dict] = []
     simulation.record = lines.append
-    for _ in range(STEPS):
+    for _ in range(90):  # the first giving at 69 (its light toward +x) with its window of 15 closed
         simulation.step()
-    givings = [line for line in lines if line.get("kind") == "giving"]
-    assert givings, "the emitter gave nothing in the run"
-    after = list(simulation.body_momentum(0))
-    assert after != before
-    assert all(isinstance(v, int) for v in after)
+    kicked = list(simulation.blocks[0].momentum)
+    assert kicked[0] < 0 and kicked[1:] == [0, 0] and all(isinstance(v, int) for v in kicked)
+    for _ in range(90, STEPS):  # the second giving at 97, its light toward -x: the kicks cancel
+        simulation.step()
+    givings = [line["momentum"] for line in lines if line.get("event") == "giving"]
+    assert givings == [[1, 0, 0], [-1, 0, 0]] and list(simulation.blocks[0].momentum) == [0, 0, 0]
 
 
 # (5) A CLICK'S CHANGE AFTER ALL ADVANCES; A RUN-TIME OVERFLOW BOUND (record 2185)
