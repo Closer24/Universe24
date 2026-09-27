@@ -1,14 +1,12 @@
 """THE HOLD, its own folder (ALGEBRA.md 9.117 the row "the hold"; 9.91 (3); record 2250): every division
-through core.rule3; on the shipped moving Lorentz world the folder's divisions give the loop's values,
-carries and levels over forty intervals bit for bit; forward then back exact; the refusals; the card."""
+through core.rule3, forward then back exact; the dipole's terms 9.91 (3)'s table; the refusals; the card,
+bound (#1231): the loop's hold is this folder's line, pinned by every shipped world's digest."""
 
 from __future__ import annotations
 
-import json
 import random
 from pathlib import Path
 
-import numpy as np
 import pytest
 
 from event_universe.core.register import folder_of
@@ -32,100 +30,6 @@ from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
-MOVING = ROOT / "examples" / "events" / "toward_nature" / "lorentz_moving.json"
-
-
-def term_of(simulation: DetectorLawSimulation, family: int) -> HoldTerm:
-    definition = simulation.families[family]
-    assert definition.held is not None
-    return HoldTerm(
-        definition.held,
-        tuple(definition.parts),
-        tuple(definition.held_factors),
-        definition.held_dipole,
-        definition.held_dipole_div,
-    )
-
-
-def start_of(simulation: DetectorLawSimulation, block, family: int, act: str) -> HoldStart:
-    """The loop's own integers for one body after the interval: the count, the momentum, the wall, the dipole's vector."""
-    definition = simulation.families[family]
-    assert definition.held is not None
-    if definition.held_dipole is None:
-        vector = None
-    elif definition.held_dipole == "spin":
-        vector = (int(block.spin[0]), int(block.spin[1]), int(block.spin[2]))
-    else:
-        vector = tuple(int(v) for v in block.definition.moment)
-    momentum = simulation._momentum_now(block)
-    return HoldStart(
-        act,
-        simulation.body_source(block.number, definition.held),
-        (int(momentum[0]), int(momentum[1]), int(momentum[2])),
-        simulation.wall_of(block),
-        vector,
-    )
-
-
-def engines_state(block, family: int) -> tuple[dict, dict]:
-    """The loop's hold values and carries of one family, keyed as the folder keys them."""
-    values, carries = {}, {}
-    for source, target in ((block.hold_value, values), (block.hold_carry, carries)):
-        for key, value in source.items():
-            if key[0] == family and len(key) == 2 and isinstance(key[1], int):
-                target[(key[1],)] = value
-            elif key[0] == "d" and key[1] == family:
-                target[("d",) + tuple(key[2:])] = value
-    return values, carries
-
-
-def test_the_folder_gives_the_loops_integers_on_the_moving_lorentz_world_bit_for_bit():
-    """examples/events/toward_nature/lorentz_moving.json (content 65, giving charge quanta at v = 1 / 4, its
-    wall and count changing, its Nodes hopping): the load act and every interval's advance act give the
-    loop's values and carries of gravity's parts and the charge's dipoles bit for bit over forty intervals."""
-    simulation = DetectorLawSimulation(parse_nature_beam_world(json.loads(MOVING.read_text())))
-    block = simulation.block_by_number[0]
-    owns = {}
-    for family in simulation.held_records:
-        owns[family] = apply(
-            term_of(simulation, family), start_of(simulation, block, family, THE_LOAD), HoldOwn({}, {})
-        ).own
-        assert (dict(owns[family].values), dict(owns[family].carries)) == engines_state(block, family)
-    seen_hop, seen_giving = False, False
-    for _ in range(40):
-        simulation.step()
-        seen_hop = seen_hop or any(block.hop)
-        for family in simulation.held_records:
-            writes = apply(
-                term_of(simulation, family),
-                start_of(simulation, block, family, THE_ADVANCE),
-                owns[family],
-            )
-            owns[family] = writes.own
-            assert (dict(writes.own.values), dict(writes.own.carries)) == engines_state(block, family)
-            assert writes.time_level == simulation.body_source(
-                block.number, simulation.families[family].held
-            )
-            assert np.all(simulation.held_records[family].now[block.mask] == writes.time_level)
-            centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))
-            for part, now, before in writes.parts:
-                record = simulation.held_parts[family][
-                    part - 1
-                ]  # the body's Node, no dipole lands on it
-                assert int(record.now[centre]) == now and int(record.before[centre]) == before
-        seen_giving = seen_giving or simulation.wall_of(block) != 3 * simulation.momentum_unit * 65
-    assert seen_hop and seen_giving
-    gravity = next(f for f in simulation.held_records if simulation.families[f].name == "gravity")
-    charge = next(f for f in simulation.held_records if simulation.families[f].name == "charge")
-    assert (
-        owns[gravity].values[(1,)] == 65 and owns[gravity].carries[(4,)] != 0
-    )  # the vector along x, the tensor xx
-    assert {key for key in owns[charge].values if key[0] == "d"} == {
-        ("d", 1, 0, 1),
-        ("d", 1, 0, -1),
-        ("d", 0, 1, 1),
-        ("d", 0, 1, -1),
-    }
 
 
 def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_first_value_twice():
@@ -251,39 +155,3 @@ def test_the_declaration_is_the_ledgers_row():
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
     registered = simulation.register.declarations["the hold"]
     assert registered.binder is None and registered.function is apply
-
-
-def test_the_folder_gives_the_loops_integers_backward_on_the_resting_lorentz_world_bit_for_bit():
-    """examples/events/toward_nature/lorentz_rest.json (no hop, so the loop's inverse is defined): twenty
-    intervals forward, then twenty of the loop's `step_inverse`, each the unhold act then the inverse act:
-    the values and carries of every held family agree bit for bit on the way back, the end the start."""
-    rest = ROOT / "examples" / "events" / "toward_nature" / "lorentz_rest.json"
-    simulation = DetectorLawSimulation(parse_nature_beam_world(json.loads(rest.read_text())))
-    block = simulation.block_by_number[0]
-    owns = {}
-    for family in simulation.held_records:
-        owns[family] = apply(
-            term_of(simulation, family), start_of(simulation, block, family, THE_LOAD), HoldOwn({}, {})
-        ).own
-    start = {family: (dict(own.values), dict(own.carries)) for family, own in owns.items()}
-    for _ in range(20):
-        simulation.step()
-        for family in simulation.held_records:
-            owns[family] = apply(
-                term_of(simulation, family),
-                start_of(simulation, block, family, THE_ADVANCE),
-                owns[family],
-            ).own
-    for _ in range(20):
-        simulation.step_inverse()
-        for family in simulation.held_records:
-            # the loop's interval back: the dipoles' divisions stepped back (the unhold), then
-            # the parts' (the inverse), the dipoles' levels read from the stepped-back state
-            for act in (THE_UNHOLD, THE_INVERSE):
-                owns[family] = apply(
-                    term_of(simulation, family), start_of(simulation, block, family, act), owns[family]
-                ).own
-            assert (dict(owns[family].values), dict(owns[family].carries)) == engines_state(
-                block, family
-            )
-    assert {family: (dict(own.values), dict(own.carries)) for family, own in owns.items()} == start

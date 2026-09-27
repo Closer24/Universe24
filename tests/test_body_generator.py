@@ -1,8 +1,10 @@
 """The generator by Rule3 alone (tools/body_generator.py): the read and division acts iterated to the
-first repeat give the bound mode at rest and in motion; a pair that binds nothing is refused."""
+first repeat give the bound mode at rest and in motion, the held field at rest under its family's pair
+is the well the mode sits on; a pair that binds nothing is refused."""
 
 from __future__ import annotations
 
+import json
 import math
 from fractions import Fraction
 
@@ -21,6 +23,8 @@ from tools.body_generator import (
     bound_mode,
     clock_pair,
     conserved_form,
+    field_at_rest,
+    generate,
     moving_levels,
     moving_mode,
     period_by_the_rule,
@@ -35,6 +39,7 @@ from tools.body_generator import (
 
 GAMMA = 10_000
 KIND = (800, 1200)
+OPEN = (False, False, False)
 
 
 def counted_cube(box: int, side: int, count: int) -> np.ndarray:
@@ -114,13 +119,6 @@ def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands
     assert int(np.abs(again - coarse).max()) <= 1
     with pytest.raises(ValueError, match="beyond int64"):
         to_amplitude((mode.profile,), 1 << 41)
-
-
-def test_a_pair_whose_count_binds_nothing_is_refused_by_name():
-    """On [800, 809] (1 - cos omega_0 = 0.011) the count's well is too shallow for any cube (ALGEBRA.md
-    9.120 item 2): the iteration settles on the band's top and the tool refuses naming the rotation."""
-    with pytest.raises(ValueError, match=r"the count binds no mode of the family \[800, 809\]"):
-        bound_mode(counted_cube(8, 4, 3000), (800, 809), GAMMA)
 
 
 def test_the_period_is_the_nearest_integer_to_two_pi_over_omega_with_no_pi():
@@ -216,7 +214,50 @@ def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
         moving_mode(asymmetric, KIND, GAMMA, triple)
 
 
-def test_the_refusals_by_name():
+def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name(tmp_path):
+    """THE INPUT IS A FILE (the owner's word): a world file in the law's form (the GameBoard, the Node clock, the
+    universe it names, one body by its Nodes and counts) gives the mode on the held fields the family reads plainly
+    (a read by the sign skipped, a weight named in the integers); the refusals by name, [800, 809]'s shallow well."""
+
+    def row(name, pair, held, reads):
+        return {"name": name, "pair": pair, "held": held, "reads": reads}
+
+    reads = [
+        {"family": "gravity", "weight": "one", "by": 1},
+        {"family": "charge", "weight": 1, "by": "q"},
+    ]
+    families = [
+        row("gravity", [1, 4], {"count": "content"}, []),
+        row("charge", [1, 1], {"count": "sign"}, []),
+    ]
+    families += [row("matter", list(KIND), None, reads), row("light", "body", None, [])]
+    (tmp_path / "universe.json").write_text(json.dumps({"families": families, "integers": {"one": 1}}))
+    nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
+    body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0]}
+    faces = {"x": "periodic", "y": "periodic", "z": "periodic"}
+    world = {"shape": [8, 8, 8], "boundary": faces, "node_clock": GAMMA, "measured": [body]}
+    world["universe"] = str(tmp_path / "universe.json")
+    reading, box = generate(world), counted_cube(8, 2, 3000)
+    rest = field_at_rest(box, (1, 4))
+    mode = bound_mode(box, KIND, GAMMA, content=rest.levels)
+    assert reading["rotation"] == [mode.rotation.numerator, mode.rotation.denominator]
+    assert reading["period"] == 8 and np.array_equal(reading["profile"], mode.profile)
+    assert reading["rest"]["gravity"] == {
+        "pair": [1, 4],
+        "iterations": rest.iterations,
+        "cycle": 1,
+        "at_body": 3000,
+        "at_corner": 0,
+    }
+    assert np.array_equal(reading["content"], rest.levels)
+    with pytest.raises(ValueError, match="k by bisection on the pairs is not in the tool yet"):
+        generate({**world, "measured": [{**body, "momentum": [1, 0, 0]}]})
+    with pytest.raises(ValueError, match="the row's pair is 'body', not \\[num, den\\]"):
+        generate({**world, "measured": [{**body, "family": "light"}]})
+    with pytest.raises(ValueError, match="one body in the law's form .* found 2"):
+        generate({**world, "measured": [body, body]})
+    with pytest.raises(ValueError, match=r"the count binds no mode of the family \[800, 809\]"):
+        bound_mode(counted_cube(8, 4, 3000), (800, 809), GAMMA)
     with pytest.raises(ValueError, match=r"the clock \[2, 1\] is no rotation"):
         period_by_the_rule(2, 1)
     with pytest.raises(ValueError, match="the counts stay in \\[0, Gamma\\)"):

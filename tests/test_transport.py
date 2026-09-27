@@ -123,12 +123,9 @@ def test_a_planted_vector_part_rotates_the_arriving_pair_and_the_inverse_restore
     now = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
     before = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
     live = simulation.planted_record(matter, now.copy(), before.copy(), twist=twist)
-    twists = simulation._port_twists(live, False)
-    assert twists is not None
-    # the Port toward +x at a slab Node: k = +twist x (5 + 5); toward -x at its left edge: -twist x 5
-    assert int(twists[0][6, 2, 2]) == twist * 10 and int(twists[1][6, 2, 2]) == -twist * 5
-    assert int(twists[0][5, 2, 2]) == twist * 5 and int(twists[1][5, 2, 2]) == 0
-    assert not twists[2].any() and not twists[3].any()  # no y or z twist: V_y = V_z = 0
+    # the angle per Port at the slab Node (6, 2, 2), k = sigma x twist x (V here + V arrived): toward
+    # +x, +twist x (5 + 5); toward -x at the slab's left edge, -twist x 5; no y or z twist (V_y = V_z = 0)
+    angles = (twist * 10, -twist * 5, 0, 0, 0, 0)
     content = simulation._effective_content(matter).copy()
     num_all, den_all = simulation.pair_arrays(matter)
     simulation._advance(live)
@@ -140,8 +137,7 @@ def test_a_planted_vector_part_rotates_the_arriving_pair_and_the_inverse_restore
         for side, sigma in enumerate((1, -1)):
             j = list(node)
             j[axis] = (j[axis] + sigma) % SHAPE[axis]
-            k = int(twists[2 * axis + side][node])
-            c, s, d = composed(k, rows)
+            c, s, d = composed(angles[2 * axis + side], rows)
             # the arriving pair (re_j, 0) rotated: T_re = c re_j / d to the nearest unit
             reads += (2 * c * int(now[tuple(j)]) + d) // (2 * d)
 
@@ -167,7 +163,7 @@ def test_with_every_vector_part_zero_the_step_is_the_plain_path_bit_for_bit():
     now = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
     before = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
     live = simulation.planted_record(matter, now.copy(), before.copy(), twist=rotation_twist(800, 809))
-    assert simulation._port_twists(live, False) is None
+    assert simulation._twist_reads(live, False) is None  # every vector part silent: no twist read
     content = simulation._effective_content(matter)
     num, den = simulation.pair_arrays(matter)
     reads, self_coefficient, wall = coefficients(num, den, GAMMA, content)
@@ -253,5 +249,5 @@ def test_a_twist_beyond_the_coarse_table_is_refused_naming_the_port():
         np.zeros(tuple(SHAPE), dtype=np.int64),
         twist=rotation_twist(800, 809),
     )
-    with pytest.raises(RuntimeError, match=r"beyond the twist table .*32768 coarse triples"):
+    with pytest.raises(ValueError, match=r"toward \+x .*beyond the twist table .*32768 coarse triples"):
         simulation._advance(live)

@@ -266,11 +266,9 @@ class FamilyDefinition:
     # two levels with their remainders (the second level not yet allocated:
     # it enters with the transport, commit 4)
     levels: int = 2
-    # THE HELD SOURCE'S WRITES (9.91 (3), (7)): the factor per part (gravity
-    # (1, 4, 2): s, 4 s n div W, 2 s n n div W^2; the charge (1, 1)), the
-    # body's dipole number written on the six neighbours ("spin", "moment")
-    # and its divisor; read by the hold once the vector parts are written
-    # (commit 2); one factor per part, (1,) on a scalar
+    # THE HELD SOURCE'S WRITES (9.91 (3), (7)): the factor per part (gravity (1, 4, 2): s,
+    # 4 s n div W, 2 s n n div W^2; the charge (1, 1)), the body's dipole number written on the
+    # six neighbours ("spin", "moment") and its divisor; one factor per part, (1,) on a scalar
     held_factors: tuple[int, ...] = (1,)
     held_dipole: str | None = None
     held_dipole_div: int = 1
@@ -435,17 +433,13 @@ class BlockDefinition:
 
     side: int
     pair: tuple[int, int]
-    # THE BODY'S KIND (ALGEBRA.md 9.85 (3), 9.91 (7); the one stroke, commit
-    # 1): the rest pair of the body's own record, its family's declared pair
-    # or, on a family whose pair is the body's, the body's own `kind`
+    # THE BODY'S KIND (ALGEBRA.md 9.85 (3), 9.91 (7)): the rest pair of the body's own record,
+    # its family's declared pair or, on a family whose pair is the body's, the body's own `kind`
     kind: tuple[int, int]
-    # the well's own record's amplitude on its Nodes at interval 0 (0
-    # silent), or its profile's; declared in the file, no default (the
-    # model owner's rule through the Boss, 2026-09-25; BUILD.md section 26
-    # item 28; the loader's 2^20 of the first builds HISTORY)
+    # the well's own record's amplitude on its Nodes at interval 0 (0 silent), or its profile's;
+    # declared in the file, no default (the model owner, 2026-09-25; BUILD.md section 26 item 28)
     seed: int
-    # the box's extents per axis (x, y, z); a cube's are (side, side, side),
-    # and `side` is the x extent for the readers of a cube
+    # the box's extents per axis (x, y, z); a cube's (side, side, side), `side` its x extent
     extents: tuple[int, int, int] = (1, 1, 1)
     # the bound mode's integer profile over the whole board (x-major, one per
     # Node) when the seed is declared so; None for a flat seed
@@ -1351,13 +1345,10 @@ def _block(
         # the mirror line of light's kind (DECLARATIONS.md section 15 L-1):
         # its Nodes carry the gap's pair and nothing else, no own record
         obj = dict(obj, seed=0)
-    # the load bound of MUST 3 on the block's own pair at its Nodes (the
-    # coupling's folded denominator HISTORY, decision (2) of record 1962)
+    # the load bound of MUST 3 on the block's own pair at its Nodes (decision (2) of record 1962)
     _pair_bound(pair[0], pair[1], label, amplitude_bound)
     if "seed" not in obj:
-        # NO IMPLICIT SEED (the model owner's rule through the Boss,
-        # 2026-09-25; BUILD.md section 26 item 28): a well declares its own
-        # record's amplitude or its profile; the loader's 2^20 is HISTORY
+        # NO IMPLICIT SEED (the model owner, 2026-09-25; BUILD.md section 26 item 28)
         raise ValueError(
             f"{label} lacks keys: seed (a well's own record on its Nodes: its "
             "amplitude at interval 0, 0 silent, or its profile with `margin`; no default, "
