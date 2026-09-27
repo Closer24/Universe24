@@ -1,15 +1,5 @@
-"""The flux reading (ALGEBRA.md 9.19 (3), the mathematician's derivation of 2026-09-24 from
-8.2; the model owner's word, "plant board values and check everything works as expected"):
-(a) the local identity e_i(t) - e_i(t - 1) = SUM over the reads j of i of G_ij, with G_ij =
-(1 / 3) A_ij (now_i before_j - before_i now_j) the flux into i from j, holds EXACTLY on the
-engine's integer rule up to the remainders' own term of 8.2 at the Node, (a_next,i -
-a_before,i) (r_i - r'_i) / (3 num_i), on planted random rows (light's pair [1, 1] and the
-matter kind [800, 809]), the flux antisymmetric and pair-free; (b) a packet's one-way inward
-flux into one detector, SUM over intervals and Ports of max(G, 0), over its passage is the
-packet's conserved form I to a part in a hundred (the backward part of a planted packet
-returns through the open face's mirror and passes the detector too, the excess the lattice's
-counter-flow), the signed sum below a part in a million of I. Every number here is a
-COMPUTATION on the rule's integers; no pin."""
+"""The flux reading (ALGEBRA.md 9.19 (3)): e_i(t) - e_i(t - 1) is the sum of G_ij over the reads of i,
+exactly up to the remainders' own term, on planted rows and on the engine's run."""
 
 from __future__ import annotations
 
