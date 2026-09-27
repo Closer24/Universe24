@@ -446,6 +446,21 @@ class DetectorLawLayer:
 class DetectorLawSimulation:
     """One world under the engine, stepped interval by interval."""
 
+    # the record's step, one fused call today, its click included: the names of the file's chain
+    CHAIN: tuple[str, ...] = (
+        "the pair",
+        "the degree",
+        "the signed read",
+        "the send",
+        "the wait",
+        "the receive",
+        "the internal representation",
+        "the self-source",
+        "the phase",
+        "the operation",
+        "the clicks",
+    )
+
     def __init__(self, world: NatureBeamWorld, observer: Record | None = None) -> None:
         self.world = world
         self.record = observer
@@ -802,36 +817,22 @@ class DetectorLawSimulation:
         for parts in self.held_parts.values():
             for record in parts:
                 record.silent = True
-        # THE REGISTER (issue #1154, cut 1; the model owner's record 2212): the
-        # seventeen primitives declared by name with their place, reads, writes
-        # and order, the families' terms checked against it at load
+        # the register: the folders' primitives by name, the step file's acts bound to the loop's stages
         self.register = self._engine_register()
         self.register.check_step(world.step)
         self.register.check_writers(world.step)
         self.register.check_terms(self.family_terms())
+        self._acts = self._stage_table()
         self.register.at("the hold", "(iv)")(advance=True)
 
-    # THE REGISTER OF PRIMITIVES (issue #1154, cuts 1 and 2; records 2208, 2212 and
-    # 2221; the short procedure, point 5): the identity of a primitive is its unique
-    # English name, the key of the ledger's table (ENGINE_LEDGER.md section 3); one
-    # register, name to function, read by the loop alone; each primitive is one
-    # folder under event_universe.features declaring its place in the interval
-    # (9.91 (8)) and its word (9.111 item 7), what it reads, what it writes and its
-    # order among the writers of one value at one place, found by the register by
-    # its folder. Cut 2 still binds the names to the methods that implement them
-    # today (`_method`): the next cuts move each body of code into its folder behind
-    # apply(term, start, own) -> writes (event_universe.core.primitive).
+    # The register of primitives: one register, name to function, read by the loop alone
 
     def _wait(self) -> int:
-        """WAIT is one interval, always (ALGEBRA.md 9.112 item 1): a value sent at the
-        start of t is combined in t; nothing is read in zero time."""
+        """WAIT is one interval, always (ALGEBRA.md 9.112 item 1): a value sent at the start of t is combined in t."""
         return 1
 
     def _method(self, name: str) -> Callable[..., object]:
-        """The loop's method `name` resolved at each call (cut 1 binds the names to
-        today's methods; a test's spy set on the instance, `simulation._ladder_click =
-        spy`, is honoured as before the register). The next cuts bind module-level
-        functions of the primitives' own folders and this resolver goes."""
+        """The loop's method `name` resolved at each call (a test's spy set on the instance is honoured); the folders' own functions replace it cut by cut."""
 
         def call(*args: object, **kwargs: object) -> object:
             return getattr(self, name)(*args, **kwargs)
@@ -843,6 +844,128 @@ class DetectorLawSimulation:
         register = discover()
         register.bind(self)
         return register
+
+    def _stage_table(self) -> tuple[tuple[str, str, Callable[..., None], dict[str, object]], ...]:
+        """The file's built acts in the file's order, each bound to the loop's stage of its name with the words the stage takes; a built name without a stage, an act with other words, or a file ordering the record's fused chain otherwise is refused at load."""
+        stages: dict[str, tuple[Callable[..., None], tuple[str, ...]]] = {
+            "the hop": (self._hop_stage, ()),
+            "the hold": (self._hold_stage, ("advance",)),
+            "the operation": (self._records_stage, ()),
+            "the giving": (self._giving_stage, ()),
+            "the spin's step": (self._spins_stage, ()),
+        }
+        for name in self.CHAIN + ("the recoil",):
+            stages.setdefault(name, (self._no_stage, ()))
+        built = self.register.built_names()
+        missing = [name for name in built if name not in stages]
+        if missing:
+            raise ValueError(
+                f"the loop has no stage for the built primitives {missing}: every built primitive of "
+                "the step file is bound to one act of the loop"
+            )
+        acts: list[tuple[str, str, Callable[..., None], dict[str, object]]] = []
+        for place, name, words in self.world.step.acts:
+            if name not in built:
+                continue
+            stage, taken = stages[name]
+            if sorted(dict(words)) != sorted(taken):
+                raise ValueError(
+                    f"the step file's act {name!r} at {place} carries the words {sorted(dict(words))}; "
+                    f"the loop's stage of {name!r} takes {sorted(taken)}"
+                )
+            acts.append((place, name, stage, dict(words)))
+        chain = [index for index, act in enumerate(acts) if act[1] in self.CHAIN]
+        ordered = [acts[index][1] for index in chain]
+        between = (
+            [
+                act[1]
+                for act in acts[chain[0] : chain[-1] + 1]
+                if act[2] != self._no_stage and act[1] != "the operation"
+            ]
+            if chain
+            else []
+        )
+        if ordered != [name for name in self.CHAIN if name in built] or between:
+            raise ValueError(
+                f"the record's step is one chain today: {', '.join(self.CHAIN)}; the file orders them as "
+                f"{', '.join(ordered) or 'none of them'}"
+                + (f", with {', '.join(between)} between them" if between else "")
+            )
+        return tuple(acts)
+
+    def _hop_stage(self, function: Callable[..., None]) -> None:
+        """The hop's act: each body's step by its drive."""
+        for block in self.blocks:
+            function(block)
+
+    def _hold_stage(self, function: Callable[..., None], advance: bool) -> None:
+        """The hold's two acts: at the interval's start the moved bodies' Nodes rewritten; after the records, the held families' own step, the hold and the pace guard."""
+        if advance:
+            self._advance_fields(function)
+        else:
+            function(advance=advance)
+
+    def _records_stage(self, function: Callable[..., None]) -> None:
+        """The records' act: the bodies' own records first, each by the rule alone, then every live record's fused step (its click included); `function` is the rule the steps apply."""
+        for block in self.blocks:
+            if block.node_record is not None:
+                self._advance_node_record(block)
+            elif block.own is not None:
+                self._advance(block.own)
+            else:
+                continue
+            if block.definition.emitter is not None:
+                self._excitation_rung(block)
+        for identity in list(self.records):
+            live = self.records[identity]
+            if live.arm_done or live.standing:
+                continue
+            self._advance(live)
+
+    def _giving_stage(self, function: Callable[..., None]) -> None:
+        """The giving's act: the point emitters' windows close after the interval's bookings, then each body due gives."""
+        self._point_windows()
+        for block in self.blocks:
+            if block.emit_now:
+                function(block)
+
+    def _spins_stage(self, function: Callable[..., None]) -> None:
+        """The spin's step's act: each body's momentum and spin from the fields as the interval leaves them."""
+        for block in self.blocks:
+            function(block, False)
+
+    def _no_stage(self, function: Callable[..., None]) -> None:
+        """A primitive with no whole-board act of its own: called per record or part inside another act (the record's step, the hold), or, the recoil, by no act of the loop yet."""
+
+    def _close_interval(self) -> None:
+        """The interval's closing: each body's clock, the clicked records deleted whole, then the host's probe and mode readings."""
+        for block in self.blocks:
+            self._block_clock(block)
+        for identity in self.dead:
+            if identity in self.records:
+                self._release(self.records.pop(identity))
+        self.dead = []
+        if self.world.probes and self.record is not None:
+            values = []
+            for probe in self.world.probes:
+                value = 0
+                for live in self.records.values():
+                    if not self.families[live.family].massive_kind:
+                        value += int(live.now[probe])
+                values.append(value)
+            self.record({"event": "probe", "tick": self.tick, "values": values})
+        if self.world.mode_axis is not None and self.record is not None:
+            axis = self.world.mode_axis
+            field = np.zeros(self.shape, dtype=np.int64)
+            for live in self.records.values():
+                if not self.families[live.family].massive_kind:
+                    field += live.now
+            sums = []
+            for residue in range(3):
+                index = [slice(None)] * 3
+                index[axis] = slice(residue, None, 3)
+                sums.append(int(np.sum(field[tuple(index)].astype(object))))
+            self.record({"event": "mode", "tick": self.tick, "axis": AXES[axis], "sums": sums})
 
     def family_terms(self) -> list[tuple[str, str]]:
         """The primitives each family of the run declares, as (label, name) pairs
@@ -1190,21 +1313,11 @@ class DetectorLawSimulation:
                 return self.node_level[family]
         return np.zeros(self.shape, dtype=np.int64)
 
-    def _advance_fields(self) -> None:
-        """The held families' own steps, after every other family's (ALGEBRA.md
-        9.45 (2), 9.48 (2); item 51): the plain step of the pair [1, 1] at
-        every Node (the pace 1 for its own level: a held family reads no
-        family and not itself), in the declared order, then the hold at the
-        bodies' Nodes; the joint step inverts (`step_inverse`).
-        THE GUARD: every reading family's pace Gamma - (its effective
-        content) stays positive at every Node and the content above -Gamma
-        (the loader's bound on twice the world's sources); the run is refused
-        where it does not."""
+    def _advance_fields(self, hold: Callable[..., None]) -> None:
+        """The held families' own steps after every other family's (the plain step at every Node), then the hold at the bodies' Nodes, then the guard: every reading family's pace stays positive at every Node, else the run is refused."""
         for record in self.held_component_records():
             self._advance(record)
-        self.register.at("the hold", "(iv)")(advance=True)
-        # the pace of every family's reads stays positive (ALGEBRA.md 9.45 (3),
-        # 9.48 (3); items 34, 35 and 51)
+        hold(advance=True)
         for family, definition in enumerate(self.families):
             if not definition.reads:
                 continue
@@ -1920,28 +2033,7 @@ class DetectorLawSimulation:
             block.emit_now = True
 
     def _emit(self, block: Block) -> None:
-        """The click of the body's own record and the giving (ALGEBRA.md 9.17 (4)
-        items 1 to 3, (5) items 2 to 4 and (6); 9.43 (3): the giving end sets
-        the given rows, lowers the stock and the content, and LEAVES THE
-        BODY'S OWN LEVELS, PHASE AND REMAINDERS AS THEY ARE, the step alone
-        carrying the standing record between its clicks; no X on the own
-        record, no reseed: the reseed of 9.17 (4) item 1 and the remainder
-        kept through it, items 29 and 30, HISTORY). E^T writes the given
-        record ONCE at both
-        of the body (the generator's now = A C_2N[3 N / 2 + s] on the circle
-        of 2 N steps with s = floor(n / d) the given clock's step and before =
-        -now, the character half a step either side of its zero, no static
-        part, A the amplitude unit; no table in the engine); the
-        norm T the record's conserved form (9.19 (3)), its residue and
-        wheel from the law (9.22 (4), 9.44 (5) (c): the body's own remainder
-        at the first shell Node in the declared order, read at the click,
-        the given record's residue and the next excitation's alike: every
-        Node of the body holds (M, u)), the content one quantum OF THE GIVEN
-        FAMILY moved from the body's held stock (ALGEBRA.md 9.51 (8); item
-        47: the body's own quanta and its charge stay; the own family's
-        quantum spent per giving HISTORY); the count of intervals to the next click starts
-        here (`_excitation_rung`). Nothing drives the given record
-        afterwards: the law advances it."""
+        """The click of the body's own record and the giving: the given record written once at both levels at the body, its norm and residue from the law, one quantum of the given family moved from the body's stock, the body's own levels, phase and remainders as they are, the count to the next click started here."""
         world = self.world
         emitter = block.definition.emitter
         own: LiveRecord | NodeRecord | None = (
@@ -2286,12 +2378,7 @@ class DetectorLawSimulation:
         live.age -= 1
 
     def step_inverse(self) -> None:
-        """One interval backwards (8.8), in the reverse column order of `step`:
-        the light records first, then the bodies' own records (the coupling
-        HISTORY, the model owner's decision (2) of record 1962: no source, no
-        receive, every record by the rule alone); no push, no click, no giving
-        (the bodies at rest and no click in the interval, the property test's
-        world)."""
+        """One interval backward in the joint inverse's fixed order (the bodies' step back, every family at the interval's start levels, the held families and their hold last); no hop, click or giving in the interval."""
         for block in self.blocks:
             if block.stepped > 0 or any(block.hop):
                 raise ValueError(
@@ -2302,7 +2389,7 @@ class DetectorLawSimulation:
         # the bodies' step back first (9.91 (8) (v); commit 6): the momentum and the
         # spin as the interval began, from the fields as it left them
         for block in self.blocks:
-            self._body_step(block, True)
+            self.register.at("the spin's step", "(v)")(block, True)
         # the joint inverse (ALGEBRA.md 9.41 (2), 9.45 (2); item 51): every
         # family backward at the held levels of the interval's start (their
         # `before` level: the held families stepped last), then the held
@@ -2328,7 +2415,7 @@ class DetectorLawSimulation:
                 self._advance_inverse(block.own)
         for record in reversed(self.held_component_records()):
             self._advance_inverse(record)
-        self._hold(inverse=True)
+        self.register.at("the hold", "(iv)")(inverse=True)
         # the drive's accumulator back (no hop this interval: drive' = drive + n)
         for block in self.blocks:
             momentum = self._momentum_now(block)
@@ -3530,26 +3617,7 @@ class DetectorLawSimulation:
         return ladder
 
     def _ladder_click(self, live: LiveRecord, increments: list[int]) -> None:
-        """THE INCREMENT LADDER (ALGEBRA.md 9.25 (2), the mathematician's word
-        of 2026-09-25 on the finding of BUILD.md section 26 item 14; the
-        cumulative sums of 9.19 (3) (b) withdrawn): the record's threshold
-        theta = (2 u + 1) T / (2 W) is fixed at its giving (u its residue, T
-        its norm, W its own wheel); at every interval the record's running
-        total C gains this interval's one-way flux into the detectors of its
-        ladder, the detectors in the ladder's declared order (the named sets in
-        the named order, the face last); the click fires at the first
-        interval at which C crosses theta, at the detector whose segment of that
-        interval's increment, laid out in the ladder's order, holds theta
-        (the walk: the detector k at which 2 W (C + f_1 + ... + f_k) >= (2 u + 1)
-        T first). Born's rule is its theorem (9.25 (3): the detector's share of
-        the record's total inward flux, whatever the time profile). A detector is
-        a detector's whole cube (record 1899): its increment the flux into
-        the cube through its Ports from outside, the click the detector's,
-        named on the line and never placed at a Node. The click line, the
-        content handed to the set's body, the record deleted whole after the
-        interval's advances (8.8's one deletion, record 1888). A set bound to
-        a block stamps the line with the block's count as the interval
-        began."""
+        """The increment ladder: the record's running total gains this interval's one-way flux into its ladder's detectors in the declared order; the click fires at the first interval at which the total crosses the threshold fixed at the giving, at the detector whose segment holds it (Born's rule its theorem); the record is deleted whole after the interval's advances."""
         if live.clicked:
             return
         if live.norm <= 0:
@@ -3736,89 +3804,11 @@ class DetectorLawSimulation:
             self.record(gather)
 
     def step(self) -> None:
+        """One interval: the clock, then the file's acts in the file's order, each through the register, then the interval's closing (the bodies' clocks, the clicked records leaving, the readings)."""
         self.tick += 1
-        for block in self.blocks:
-            self._move_block(block)
-        # the held levels as the interval begins: the hold follows the bodies'
-        # steps (a stepping body's Nodes), ALGEBRA.md 9.45 (2)
-        self.register.at("the hold", "(iv)")()
-        # The massive records first (each block's own record by the rule
-        # alone), then the light records: the order of the interval
-        # (MASSIVE_RECORD.md section 7's massive step first; the coupling's
-        # terms HISTORY, the model owner's decision (2) of record 1962).
-        for block in self.blocks:
-            if block.node_record is not None:
-                self._advance_node_record(block)
-            elif block.own is not None:
-                self._advance(block.own)
-            else:
-                continue
-            if block.definition.emitter is not None:
-                self._excitation_rung(block)
-        for identity in list(self.records):
-            live = self.records[identity]
-            if live.arm_done:
-                # a completed arm of a pair waits for the other arms
-                continue
-            if live.standing:
-                # A block's own standing record is advanced with its block
-                # above; every other record (a lamp's record of a massive
-                # kind too) is advanced by the rule with the family's pair
-                # alone, through the detector sets' pointers (the click at W,
-                # one per record), coupled to nothing (the coupling HISTORY,
-                # decision (2) of record 1962), its faces the world's.
-                continue
-            self._advance(live)
-        # THE POINT EMITTER'S WINDOWS (ALGEBRA.md 9.71 (1); item 50): the
-        # closes, after the interval's bookings (the writes came with the
-        # records' own steps, `_window_write`)
-        self._point_windows()
-        for block in self.blocks:
-            if block.emit_now:
-                self._emit(block)
-        for block in self.blocks:
-            self._block_clock(block)
-        # the clicked records are deleted whole (ALGEBRA.md 8.8, 9.19 (3) (b));
-        # a record alive at the run's last interval is reported alive
-        for identity in self.dead:
-            if identity in self.records:
-                self._release(self.records.pop(identity))
-        self.dead = []
-        # the held families step last, after every family read their levels,
-        # and are held at the bodies' Nodes at the sources the interval's
-        # clicks and givings left (ALGEBRA.md 9.45 (2); item 51)
-        self._advance_fields()
-        # THE BODIES ON ONE NODE (ALGEBRA.md 9.91 (8) (v); commit 6): the spin's step
-        # from the fields as the interval leaves them (the feed and the induction held
-        # back, `_body_step`)
-        for block in self.blocks:
-            self._body_step(block, False)
-        if self.world.probes and self.record is not None:
-            values = []
-            for probe in self.world.probes:
-                value = 0
-                for live in self.records.values():
-                    if not self.families[live.family].massive_kind:
-                        value += int(live.now[probe])
-                values.append(value)
-            self.record({"event": "probe", "tick": self.tick, "values": values})
-        if self.world.mode_axis is not None and self.record is not None:
-            # The mode k = 2 pi / 3 along the declared axis (MASSIVE_RECORD.md
-            # section 7, the hop pump's signature; a GAMEBOARD reading): the
-            # three sums of light's total field over the residue classes of
-            # the axis coordinate modulo 3 (verb G); the tool forms
-            # abs(S_0 + w S_1 + w^2 S_2)^2 with w the cube root of unity.
-            axis = self.world.mode_axis
-            field = np.zeros(self.shape, dtype=np.int64)
-            for live in self.records.values():
-                if not self.families[live.family].massive_kind:
-                    field += live.now
-            sums = []
-            for residue in range(3):
-                index = [slice(None)] * 3
-                index[axis] = slice(residue, None, 3)
-                sums.append(int(np.sum(field[tuple(index)].astype(object))))
-            self.record({"event": "mode", "tick": self.tick, "axis": AXES[axis], "sums": sums})
+        for place, name, stage, words in self._acts:
+            stage(self.register.at(name, place), **words)
+        self._close_interval()
 
     # The readings
 

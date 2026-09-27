@@ -25,15 +25,25 @@ file; twenty-three folders (the seventeen, the giving at (ii), the feed, the
 induction, the spin's step, the hop and the recoil's accumulator at (v)),
 fourteen bound to today's methods; the interface apply(term, start, own) ->
 writes is declared in core/primitive.py for the next cuts. SINCE THE STEP FILE the
-interval's order lives in one data file shared by every world, `law/step.json`: the places (i)
-to (v) and "any", each with the ordered names of the register's primitives; the host reads it
-(`world_files`), the loader carries it on the world (`step`), and the register refuses a file
-naming an unknown primitive, listing one at a place it does not declare or leaving out a built
-one, orders the writers of one value at one place by the file (a write deferred from (ii) to
-(iv) first; ALGEBRA.md 9.117 item 3 transcribed), and refuses the loop's call of a primitive at
-a place the file does not list; a folder's card carries no order; every run's output carries
-the file's digest (`step.hash`); today's order is transcribed from `step()`, every shipped
-world bit for bit, and each folder bound to its apply moves its call under the file's order.
+interval's order lives in one data file shared by every world, `law/step.json`: an ordered list
+of acts, each `[place, name]` or `[place, name, words]`, a primitive's name at its declared place
+with the words of its call (the hold has two acts, `{"advance": false}` after the hop and
+`{"advance": true}` after the records), the places derived from it by first appearance; the
+host reads it (`world_files`), the loader carries it on the world (`step`), the register refuses
+a file naming an unknown primitive, listing one at a place it does not declare or leaving out a
+built one, orders the writers of one value at one place by the file (a write deferred from (ii)
+to (iv) first; ALGEBRA.md 9.117 item 3 transcribed), and refuses the loop's call of a primitive
+at a place the file does not list. The loop's `step()` walks the file: the clock, then each built
+act in the file's order through `register.at(name, place)`, bound at load to the loop's stage of
+its name (the hop per body; the hold's two acts, the second carrying the held families' own step
+and the pace guard; the records' pass under "the operation", whose ten (i) names and the clicks
+act inside each record's fused step; the giving after the windows' close; the spin's step per
+body), then the interval's closing (the bodies' clocks, the clicked records deleted whole, the
+readings); a built name without a stage, an act with words its stage does not take, or a file
+ordering the record's fused chain otherwise is refused at load by name, never run silently, and
+`step_inverse()` keeps the joint inverse's fixed order. A folder's card carries no order; every
+run's output carries the file's digest (`step.hash`); today's order is transcribed, every shipped
+world bit for bit; to reorder the whole-board acts, edit the file.
 The paragraphs below on the Beam Law
 (`beam-v1`) are the record of the ray law, cancelled (docs/CANCELLED_WORLDS.md;
 [Highlights 5.4](HIGHLIGHTS.md#54-the-detector), "DECIDED: the law of the

@@ -669,10 +669,13 @@ The light record's clock is its emitter's (`clock` on every emitter). The unit t
 their small inline lists.
 
 THE STEP FILE: `law/step.json` at the
-repository's root holds the interval's order for every world, the places (i) to (v) and "any"
-with the ordered names of the register's primitives (the order among the writers of one value,
-ALGEBRA.md 9.117 item 3, is the file's); no world names it and no code holds an order; a run's
-output carries its digest under `step.hash`; to reorder the step, edit the file.
+repository's root holds the interval's order for every world: an ordered list of acts, each a
+primitive's name at its place (i) to (v) or "any" with the words of its call (the order among the
+writers of one value, ALGEBRA.md 9.117 item 3, is the file's); no world names it; the loop walks
+the file act by act through the register and holds only the interval's frame (the clock, the
+bodies' clocks, the deletion, the readings) and the record's fused chain, which it refuses to see
+reordered; a run's output carries the file's digest under `step.hash`; to reorder the whole-board
+acts, edit the file.
 
 THE ENGINE START FILE (the model owner's record 2089 of 2026-09-25 through the
 Boss; BUILD.md section 26 item 57): `engine_start.json` in this folder is the one

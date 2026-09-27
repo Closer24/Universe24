@@ -1,37 +1,29 @@
 {
- "(i)": [
-  "the pair",
-  "the degree",
-  "the signed read",
-  "the send",
-  "the wait",
-  "the receive",
-  "the internal representation",
-  "the self-source",
-  "the phase",
-  "the operation"
- ],
- "(ii)": [
-  "the clicks",
-  "the lifetime",
-  "the giving",
-  "the clicks list",
-  "the hand"
- ],
- "(iii)": [],
- "(iv)": [
-  "the hold",
-  "the source",
-  "the recoil"
- ],
- "(v)": [
-  "the feed",
-  "the induction",
-  "the spin's step",
-  "the hop",
-  "the recoil's accumulator"
- ],
- "any": [
-  "the trace"
+ "interval": [
+  ["(v)", "the hop"],
+  ["(iv)", "the hold", {"advance": false}],
+  ["(i)", "the pair"],
+  ["(i)", "the degree"],
+  ["(i)", "the signed read"],
+  ["(i)", "the send"],
+  ["(i)", "the wait"],
+  ["(i)", "the receive"],
+  ["(i)", "the internal representation"],
+  ["(i)", "the self-source"],
+  ["(i)", "the phase"],
+  ["(i)", "the operation"],
+  ["(ii)", "the clicks"],
+  ["(ii)", "the lifetime"],
+  ["(ii)", "the giving"],
+  ["(ii)", "the clicks list"],
+  ["(ii)", "the hand"],
+  ["(iv)", "the hold", {"advance": true}],
+  ["(iv)", "the source"],
+  ["(iv)", "the recoil"],
+  ["(v)", "the feed"],
+  ["(v)", "the induction"],
+  ["(v)", "the spin's step"],
+  ["(v)", "the recoil's accumulator"],
+  ["any", "the trace"]
  ]
 }
