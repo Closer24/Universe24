@@ -22,6 +22,8 @@ from event_universe.features.source import (
     hand_identity,
     invert,
 )
+from event_universe.world_files import parse_nature_beam_world
+from tests.test_emitter import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "examples" / "events" / "source"
@@ -193,9 +195,7 @@ def test_the_run_files_record_gives_the_readmes_counts():
 
 def test_the_declaration_is_the_ledgers_row_and_the_register_finds_it_unbuilt():
     assert DECLARATION.name == "the source" and folder_of(DECLARATION.name) == "source"
-    assert (
-        DECLARATION.place == "(iv)" and DECLARATION.word == "the right side" and DECLARATION.order == 2
-    )
+    assert DECLARATION.place == "(iv)" and DECLARATION.word == "the right side"
     assert DECLARATION.writes == ("a family's level at a Node", "the record's remainder")
     assert (
         "D_i" in DECLARATION.reads[0] and "E_s" in DECLARATION.reads and "s_cap" in DECLARATION.reads[2]
@@ -204,7 +204,5 @@ def test_the_declaration_is_the_ledgers_row_and_the_register_finds_it_unbuilt():
     register = discover()
     declaration = register.declarations["the source"]
     assert declaration.section == DECLARATION.section and not declaration.built
-    assert (
-        declaration.order_of("a family's level at a Node") == 2
-        and register.declarations["the hold"].order_of("a family's level at a Node") == 1
-    )
+    step = parse_nature_beam_world(emitter_world(stock=1, ticks=2)).step
+    assert register.writers("a family's level at a Node", "(iv)", step) == ("the hold", "the source")

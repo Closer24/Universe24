@@ -41,7 +41,7 @@ draws the picture. Where an entry of the past registered a GameBoard reading
 as the measurement, it says so from this date, and the detector form is
 added when the entry is re-run. Every quantity the record exposes, by type
 (scalar, vector, tensor, pair) with its line, unit and kind, is the table
-[the detector's readings by type](ENGINE.md#the-detectors-readings-by-type)
+[the detector's readings by type](ENGINE.md#the-output)
 (2026-09-21, record 205: an entry names the vector it will read from it).
 
 **The rule of every entry.** Before its run, an entry names the features it
@@ -3217,7 +3217,7 @@ states "exactly" and means integer equality at every tick.
   lines only, binned by the window they carry.
 - **Features.** One additive engine key
   ([BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
-  [ENGINE, the world](ENGINE.md#the-beam-law-beam-v1-the-ray-laws-record-cancelled-docscancelled_worldsmd-the-engine-has-no-laws-name-item-70)): a table entry's
+  [ENGINE, the world](ENGINE.md)): a table entry's
   `phase_window` as `{"reads": "<family>", "offset": s}`, the centre the
   phase of the coherent pointer of the named family's rows present at the
   set plus the offset, the width the law's, a `pass` naming `window` None
@@ -6720,7 +6720,7 @@ sequential gates on an entangled record, the full register replay.
   `energy` line of every run.
 - **Features.** The world key `covariant_readings` (`c2` [1, 3], `grain` g)
   and the identity `covariant-readings-v1` ([BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file),
-  [ENGINE.md's readings by type](ENGINE.md#the-detectors-readings-by-type));
+  [ENGINE.md's readings by type](ENGINE.md#the-output));
   no rule of the six verbs changed; the catalog's `muon`; reading (ii),
   the gradient push, not built (17.6 M4: not Lorentz's pair), the pair's
   round trips withdrawn (17.6 M5); the base `main`'s per-axis drive (form
@@ -10018,7 +10018,7 @@ sign rule, and its other couplings are catalog entries.
 
 - **Scope and authority.** The model owner's approved periodic axes and
   separate entity definitions, 2026-09-19. The published
-  [topology](ENGINE.md#per-axis-gameboard-topology-2026-09-19-implementation-amendment)
+  [topology](ENGINE.md#1-the-words)
   and [loading contract](ENTITY_DEFINITIONS.md) compose the existing detector
   candidate; they do not introduce an absorption or energy law.
 - **Frozen setup.** `examples/events/detector/periodic_z_node.json` loads

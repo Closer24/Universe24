@@ -254,12 +254,11 @@ def test_the_refusals_by_name():
 
 def test_the_declaration_is_the_ledgers_row():
     """ "the hold" at (iv), the word the right side, the writes a family's level at a Node and a
-    body's remainders, order 1 (the source 2), its function `apply`; the engine's register finds
+    body's remainders (the order the step file's), its function `apply`; the engine's register finds
     the folder built, and bind still gives the loop's hold of today."""
     assert DECLARATION.name == "the hold" and folder_of("the hold") == "hold"
     assert DECLARATION.place == "(iv)" and DECLARATION.word == "the right side"
     assert DECLARATION.writes == ("a family's level at a Node", "a body's remainders")
-    assert DECLARATION.order_of("a family's level at a Node") == 1
     assert DECLARATION.function is apply and DECLARATION.built
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
     registered = simulation.register.declarations["the hold"]

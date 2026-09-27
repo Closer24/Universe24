@@ -72,7 +72,7 @@ class SpinStepWrites:
 
 
 def cross(a: Vector, b: Vector) -> Vector:
-    """a x b, a booking of two vectors' components (ALGEBRA.md 9.78 (5))."""
+    """a x b, the booking of 9.121 item 2 (c): products of two levels' components, read and never written (ALGEBRA.md 9.78 (5))."""
     return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
 
 
@@ -192,9 +192,9 @@ def apply(term: SpinStepTerm, start: SpinStepStart, own: SpinStepOwn) -> SpinSte
 
 
 DECLARATION = Declaration(
-    "the spin's step",
-    "(v)",
-    (
+    name="the spin's step",
+    place="(v)",
+    reads=(
         "S_now",
         "the curls at the body's Node (V the first read's vector part, t its time part, B_q the second read's curl)",
         "mu",
@@ -202,10 +202,9 @@ DECLARATION = Declaration(
         "W",
         "Gamma",
     ),
-    ("a body's spin S", "a body's remainders"),
-    None,
-    apply,
-    "9.117 item 2, the row 'the spin's step'; 9.78 (5); 9.104 (2); 9.119 item 2",
+    writes=("a body's spin S", "a body's remainders"),
+    function=apply,
+    section="9.117 item 2, the row 'the spin's step'; 9.78 (5); 9.104 (2); 9.119 item 2",
     word="after the step",
 )
 

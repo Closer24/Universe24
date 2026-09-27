@@ -138,13 +138,12 @@ def apply(term: ReceiveTerm, start: ReceiveStart) -> ReceiveWrites:
 
 
 DECLARATION = Declaration(
-    "the receive",
-    "(i)",
-    ("the Link's value", "a Port's accumulator", "the twist table"),
-    ("the arrivals",),
-    1,
-    apply,
-    "9.112 item 1; 9.96 (2) (e); 9.117 item 3; 9.119 item 2, the row 'the receive'",
+    name="the receive",
+    place="(i)",
+    reads=("the Link's value", "a Port's accumulator", "the twist table"),
+    writes=("the arrivals",),
+    function=apply,
+    section="9.112 item 1; 9.96 (2) (e); 9.117 item 3; 9.119 item 2, the row 'the receive'",
     word="the step",
 )
 

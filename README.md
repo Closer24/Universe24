@@ -146,7 +146,7 @@ active contracts, explicit experiments and revision-specific evidence.
 | `tests/` | One module per generic rule on a minimal GameBoard (the one reading, the flight, the collision table, the bijection, the detector's record, the re-emission, the clock, the phase window, the world file, the worlds, the preflight, the decoder, retention, the repository gates) |
 | `docs/HIGHLIGHTS.md` | The specification, edited by the model owner |
 | `docs/BEAM_LAW.md` | The Beam Law: the design, the implementation contract and the implementation notes |
-| `docs/ENGINE.md` | The bookkeeping around the law as implemented: the GameBoard, the frame of an interval, the books, the world file's refusals, the record, the preflight |
+| `docs/ENGINE.md` | The engine as the code holds it on main: the main loop and its five places, Rule3, the folders and the register, the loader and the files, the output, the gates, how to run a world and how to add a feature |
 | `docs/DERIVATIONS.md`, `docs/EXPERIMENTS.md` | The derivations of the known laws, and the research runs with their records |
 | `POSTULATES.md`, `SIMULATOR_DEFINITIONS.md` | Shared principles and scoped candidate requirements |
 | `docs/ARCHITECTURE.md` | Ownership and dependency boundaries |
