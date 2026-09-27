@@ -203,11 +203,7 @@ def rotation_and_share(
 def bound_mode(counts: np.ndarray, pair: Pair, gamma: int, wrap: Wrap = PERIODIC) -> BoundMode:
     """The bound mode of the count's well at the derived amplitude unit: from a flat start the read act and the division act iterated until the integer profile repeats, the map on a finite set needing no limit (ALGEBRA.md 9.120 item 4 (c))."""
     check_counts(counts, gamma)
-    return _bound_mode_at(counts, pair, gamma, amplitude_unit(pair, gamma, counts), wrap)
-
-
-def _bound_mode_at(counts: np.ndarray, pair: Pair, gamma: int, amplitude: int, wrap: Wrap) -> BoundMode:
-    """The iteration at a given unit, for the resolution check alone: the mode does not depend on A beyond its grain."""
+    amplitude = amplitude_unit(pair, gamma, counts)
     read, self_coefficient, wall = rule_integers(pair, gamma, counts)
     a = np.full(counts.shape, amplitude, dtype=np.int64)
     seen: dict[bytes, int] = {}
@@ -345,11 +341,14 @@ def conserved_form(
 def scaled_to_norm(
     now: np.ndarray, before: np.ndarray, form: Fraction, norm: Fraction, precision: int
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The two levels scaled together so that the form reaches the norm c T of the body's quanta: the factor the exact square root's floor at the precision (the amplitude unit A), the levels by the division act with the factor as a pair (ALGEBRA.md 9.120 item 4 (d))."""
+    """The two levels scaled together so that the form reaches the norm c T of the body's quanta: the factor the integer square root of the ratio's division act at the precision (the amplitude unit A), the levels by the division act with the factor as a pair (ALGEBRA.md 9.120 item 4 (d))."""
     if form <= 0 or norm <= 0:
         raise ValueError(f"the form {form} and the norm {norm} are positive")
     ratio = norm / form
-    factor = Fraction(isqrt(ratio.numerator * precision * precision // ratio.denominator), precision)
+    squared = division(
+        ratio.numerator * precision * precision, ratio.denominator, np.array(1, dtype=object)
+    )
+    factor = Fraction(isqrt(int(squared)), precision)
     if factor == 0:
         raise ValueError(
             f"the norm {norm} is below the form's grain {form} at the precision {precision}"
