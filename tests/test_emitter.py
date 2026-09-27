@@ -3,13 +3,9 @@ rungs, each click giving one photon written once at both levels, the stock falli
 
 from __future__ import annotations
 
-import importlib.util
 import json
-import math
-import sys
 from dataclasses import replace
 from fractions import Fraction
-from pathlib import Path
 
 import numpy as np
 import pytest
@@ -17,71 +13,8 @@ import pytest
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-
-ROOT = Path(__file__).resolve().parents[1]
-# THE NODE CLOCK (the model owner's decision (5) of record 1962; ALGEBRA.md 9.35 (2), (3);
-# BUILD.md section 26 item 31): Gamma, the world key `node_clock` of every test world, the
-# eighteen's 10^6; the clock pair (e, f) = (Gamma - c, Gamma) at every Node under the fixed
-# wall 3 den Gamma (BUILD.md section 26 item 34), c the family of clicks' level there
-NODE_CLOCK = (
-    10**4
-)  # the integers of ALGEBRA.md 9.57 (2) and 9.61 (3) under the weak-field rule (item 44)
-# THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26 item 51): what a
-# family is stands on the family. THE FAMILY OF CLICKS (record 1982; ALGEBRA.md 9.45; item
-# 32): the fourth family of every test world, holding the content ("held": "content"); its
-# level at a Node is the Node clock. THE FAMILY OF CHARGE (9.48; item 35): the fifth family,
-# holding the signed charge; every reading family declares `reads`, the content plainly and
-# the charge by its own sign at the weight Lambda (CHARGE_STRENGTH); every family declares
-# its charge, 0 here.
-CLOCK_FAMILY_NAME = "clicks"
-CLOCK_FAMILY = {
-    "name": CLOCK_FAMILY_NAME,
-    "quantum": 1,
-    "pair": [1, 1],
-    "charge": 0,
-    "held": "content",
-    "reads": [],
-}
-CHARGE_FAMILY_NAME = "charge"
-CHARGE_FAMILY = {
-    "name": CHARGE_FAMILY_NAME,
-    "quantum": 1,
-    "pair": [1, 1],
-    "charge": 0,
-    "held": "sign",
-    "reads": [],
-}
-CHARGE_STRENGTH = 1
-READS = [
-    {"family": CLOCK_FAMILY_NAME, "weight": 1},
-    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "by": "sign"},
-]
-
-
-def reads() -> list[dict]:
-    """A reading family's `reads`, a fresh copy."""
-    return [dict(read) for read in READS]
-
-
-def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
-    """The wheel W of the rule at a Node (ALGEBRA.md 9.22 (4), 9.57 (1); BUILD.md section 26
-    items 34, 36 and 44; the engine's `wheel_at`): the wall w over the gcd of the rule's three
-    integers, R on the six reads, S at the Node and w itself (core/rule3.py `coefficients`, the
-    weak-field rule at the Node's own pace p = Gamma - c); the pair's own 3 den / gcd(num, 3
-    den) in the vacuum (2403 on [800, 801], 700 on [801, 700]: at c = 0 the weak-field rule is
-    the plain rule times 2 Gamma^2)."""
-    num, den = int(pair[0]), int(pair[1])
-    (read, _, _), self_coefficient, wall = coefficients(num, den, gamma, content)
-    return wall // math.gcd(wall, self_coefficient, read)
-
-
-def lawful_wheel(world, line: dict) -> bool:
-    """A giving line's W is the rule's at the emitting body's read Node with the family of
-    clicks' level the line carries (`read_clocks`: the level at the read Node, then at its six
-    reads, GAMEBOARD; the rule reads the Node's own level alone, item 36), its u below it."""
-    block = world.measured[line["measured"]].block
-    at_node, _reads = line["read_clocks"]
-    return line["W"] == wheel_of(block.pair, at_node) and 0 <= line["u"] < line["W"]
+from tests.running import run
+from tests.worlds import NODE_CLOCK, emitter_world, lawful_wheel, massive_generator, reads
 
 
 def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
@@ -107,130 +40,6 @@ def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
     for index in zip(*np.nonzero(node), strict=True):
         total += Fraction(int(node[index]), int(read_coefficient[index]))
     return total - int(np.sum(wall * a * read))
-
-
-def massive_generator():
-    path = ROOT / "examples/events/massive_record/make_worlds.py"
-    spec = importlib.util.spec_from_file_location("massive_record_make_worlds", path)
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[spec.name] = module
-    spec.loader.exec_module(module)
-    return module
-
-
-def emitter_world(
-    stock: int = 4,
-    ticks: int = 1200,
-    on_mode: bool = True,
-) -> dict:
-    """The emitter's unit world: a chain of 80 (x closed, mirrors), the emitter a body of the
-    matter kind [800, 809] with the well pair [800, 801] (W = 2403 remainder values in the
-    vacuum, ALGEBRA.md 9.22 (4); at its Nodes the wheel of its content under the Node clock,
-    9.35 (2)) over the train's 32 Nodes at [5, 37), seeded on its bound mode at the amplitude
-    2^20 (the generator's `seed_on_the_mode`, the body's conditions of the load check; at 100
-    the given light's back-action swamps the excited record, ALGEBRA.md 9.17 (7) (c)), its
-    stock `amount` = `stock`, its `emitter` the light family on the given clock [512, 1] of
-    N = 1024 with its `train` of 8 periods along +x (THE GIVEN TRAIN, ALGEBRA.md 9.17 (6a);
-    BUILD.md section 26 item 27) and its ladder the set `screen` (no coupling: the click alone,
-    the model owner's decision (2) of record 1962); the receiver the cube of side 3 of
-    light bodies at [70, 72] read as `screen` (record 1899), 33 Links ahead of the train's
-    head; no wheel anywhere."""
-    # the cube helper of the detector-law suite (imported here: that suite imports
-    # `massive_generator` from this one)
-    from tests.test_detector_law import receiver_cube
-
-    # SINCE COMMIT 7 the giving is the window's (ALGEBRA.md 9.85 (5), 9.71 (1)): the body's
-    # rotation written at its Nodes at the weight 3 (the written light 3 x 2^20 under the
-    # bound 2^22), the train retired
-    emitter: dict = {
-        "family": "light",
-        "receiver": ["screen"],
-        "weight": 3,
-        "twist": 0,  # the given record's twist "own", the generator's number (item 73)
-    }
-    document = {
-        "shape": [80, 1, 1],
-        "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
-        "ticks": ticks,
-        "K": 1073741824,
-        "N": 1024,
-        "release": [1, 128],
-        "clock_stamp": True,
-        "width": 1,
-        "body_record": False,
-        "engine": "examples/events/engine_start.json",
-        "massive_record": True,
-        "amplitude_bound": 1 << 22,
-        "node_clock": NODE_CLOCK,
-        "momentum_unit": 64,
-        "universe": [
-            {
-                "name": "light",
-                "quantum": 1,
-                "pair": [1, 1],
-                "phase_per_link": [512, 1],
-                "charge": 0,
-                "reads": reads(),
-            },
-            {"name": "matter", "quantum": 1, "pair": [800, 809], "charge": 0, "reads": reads()},
-            dict(CLOCK_FAMILY),
-            dict(CHARGE_FAMILY),
-        ],
-        "measured": [
-            {
-                "position": [5, 0, 0],
-                "family": "matter",
-                "amount": 1,
-                "ramp": 0,
-                "start": 0,
-                "stocks": {"light": stock},
-                "momentum": [0, 0, 0],
-                "extents": [32, 1, 1],
-                "q": 0,
-                "spin": [0, 0, 0],
-                "twist": 0,
-                "moment": [0, 0, 0],
-                "pair": [800, 801],
-                "seed": 1 << 10,  # the window's writes pile up at the body's Nodes (commit 7)
-                "margin": "control",
-                "emitter": emitter,
-            },
-        ],
-        "detectors": [],
-    }
-    receiver_cube(document, "screen", [70, 0, 0])
-    if on_mode:
-        massive_generator().seed_on_the_mode(document)
-    return document
-
-
-def run(document: dict) -> tuple[list[dict], DetectorLawSimulation, list[dict]]:
-    """The world stepped over its ticks, the books balanced at every interval; the lines,
-    the simulation, and per interval the emitter body's own record before the interval's
-    emission (its identity, residue, wheel and norm) and its count of intervals after it."""
-    world = parse_nature_beam_world(document)
-    lines: list[dict] = []
-    simulation = DetectorLawSimulation(world, observer=lines.append)
-    block = simulation.block_by_number[0]
-    trace: list[dict] = []
-    for _ in range(document["ticks"]):
-        before = (
-            None
-            if block.own is None
-            else (block.own.identity, block.own.u, block.own.wheel, block.own.norm)
-        )
-        simulation.step()
-        assert simulation.books()["balanced"], simulation.tick
-        trace.append(
-            {
-                "tick": simulation.tick,
-                "excited_before": before,
-                "excited_after": None if block.own is None else block.own.identity,
-                "wait": block.wait,
-            }
-        )
-    return lines, simulation, trace
 
 
 def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserved():

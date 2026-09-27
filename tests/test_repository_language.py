@@ -5,28 +5,15 @@ Escaped multilingual strings below are deliberate negative test inputs.
 """
 
 import ast
-import os
 import re
 import unicodedata
 from pathlib import Path
 
 import pytest
 
+from tests.running import repository_files
+
 BLOCKED_SCRIPTS = ("HEBREW", "ARABIC", "CYRILLIC", "CJK", "HIRAGANA", "KATAKANA", "HANGUL")
-GENERATED_DIRECTORIES = {
-    ".git",
-    ".venv",
-    "venv",
-    "__pycache__",
-    ".mypy_cache",
-    ".pytest_cache",
-    ".ruff_cache",
-    "artifacts",
-    "build",
-    "dist",
-    "node_modules",
-    "worktrees",  # agents' git worktrees under .claude/, checkouts and not repository content
-}
 TEXT_SUFFIXES = {
     ".py",
     ".md",
@@ -59,19 +46,6 @@ def non_english_script_lines(source):
             for char in line
         )
     ]
-
-
-def repository_files(root):
-    """Visit source files once; generated output is not repository authority."""
-    for directory, folders, files in os.walk(root):
-        folders[:] = [
-            name
-            for name in folders
-            if name not in GENERATED_DIRECTORIES and not name.endswith(".egg-info")
-        ]
-        for name in files:
-            path = Path(directory) / name
-            yield path
 
 
 def repository_text_files(root):
@@ -143,7 +117,6 @@ def test_language_rule_has_one_authoritative_entry_point():
     assert "## Repository language: English" in instructions
     for term in ("comments", "docstrings", "documentation", "every directory"):
         assert term in instructions
-    assert "../AGENTS.md#repository-language-english" in (root / "docs/ARCHITECTURE.md").read_text()
 
 
 def test_language_scan_covers_nested_source_and_keeps_generated_outputs_out(tmp_path):

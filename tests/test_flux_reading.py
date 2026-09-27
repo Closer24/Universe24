@@ -9,11 +9,12 @@ from fractions import Fraction
 import numpy as np
 
 from event_universe.core.rule3 import coefficients
-from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
+from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
-from tests.test_emitter import NODE_CLOCK
-from tests.test_emitter import reads as family_reads
-from tests.test_massive_record import massive_world
+from tests.bodies import massive_world
+from tests.running import planted
+from tests.worlds import NODE_CLOCK
+from tests.worlds import reads as family_reads
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
@@ -21,29 +22,6 @@ UNIT = 1 << 20
 
 
 PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
-
-
-def planted(simulation: DetectorLawSimulation, family: int, now, before, remainder) -> LiveRecord:
-    """A record's rows given to the rule directly (no Ports: the flux reads the rows, not a take)."""
-    return LiveRecord(
-        1,
-        0,
-        family,
-        0,
-        1,
-        0,
-        1,
-        1,
-        1,
-        0,
-        1,
-        now.astype(np.int64),
-        before.astype(np.int64),
-        remainder.astype(np.int64),
-        pointers=[0] * len(simulation.detector_names),
-        first_rung=[None] * len(simulation.detector_names),
-        age=10,
-    )
 
 
 def reads(simulation: DetectorLawSimulation, family: int, length: int) -> dict[tuple[int, int], int]:
@@ -284,8 +262,7 @@ def test_the_tally_over_the_ports_is_the_board_wide_reading_and_costs_the_ports_
     HOST cost printed is the Ports read per record per interval against the board's Nodes
     (4 Ports of 80 Nodes on the chain, the screen cube's two and the emitter body's two; 40
     of 216 on the layer; the two slits' placement reported when the given train lands)."""
-    from tests.test_detector_law import layer_world
-    from tests.test_emitter import emitter_world
+    from tests.worlds import emitter_world, layer_world
 
     for name, document, intervals in (
         ("the emitter chain", emitter_world(stock=2), 120),

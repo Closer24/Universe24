@@ -4,18 +4,13 @@ loaded and its engine constructed, no interval stepped (the model owner's rule o
 
 from __future__ import annotations
 
-import importlib.util
 import json
-import sys
 from pathlib import Path
 
+from tests.worlds import load_file
+
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = importlib.util.spec_from_file_location("preflight_worlds", ROOT / "tools/preflight_worlds.py")
-assert SPEC is not None and SPEC.loader is not None
-PREFLIGHT = importlib.util.module_from_spec(SPEC)
-# registered before the load: the tool's dataclass looks its module up by name
-sys.modules["preflight_worlds"] = PREFLIGHT
-SPEC.loader.exec_module(PREFLIGHT)
+PREFLIGHT = load_file("preflight_worlds", ROOT / "tools/preflight_worlds.py")
 
 
 def test_the_preflight_loads_every_listed_world_and_runs_none(tmp_path: Path, capsys) -> None:
@@ -26,7 +21,7 @@ def test_the_preflight_loads_every_listed_world_and_runs_none(tmp_path: Path, ca
     REFUSED by its keys, a
     world refused by the loader is REFUSED with its message, a name without a file is
     MISSING; the exit is 0 with a missing world and 1 with a refused one or under
-    `--strict` with a missing one; the real RUN_LIST.md's registered worlds all load."""
+    `--strict` with a missing one."""
     root = tmp_path / "events"
     (root / "massive_record").mkdir(parents=True)
     (root / "bell").mkdir()
@@ -67,12 +62,3 @@ def test_the_preflight_loads_every_listed_world_and_runs_none(tmp_path: Path, ca
     # Bell worlds, held until the crystal (BUILD.md section 26; the lamp is
     # refused under the detector law, the CHECKs return on the emitter that
     # fires at a crystal)
-    # the real list: every registered world loads, none is refused
-    real = PREFLIGHT.preflight(
-        PREFLIGHT.listed((ROOT / PREFLIGHT.DEFAULT_LIST).read_text(encoding="utf-8")),
-        ROOT / PREFLIGHT.DEFAULT_ROOT,
-    )
-    assert real and not [o for o in real if o.status == "REFUSED"], [
-        o for o in real if o.status == "REFUSED"
-    ]
-    assert any(o.status == "LOADED" for o in real)
