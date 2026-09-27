@@ -380,10 +380,8 @@ world's GameBoard, carries its count at Rule3's group velocity R 2 sin k /
 (2 w sin omega), the count's centroid within one Node of the record's over
 six hundred intervals, and the integrated inflow of a slab is the change of
 the form's share there within the rounding's re-allocation of the Link
-terms. The shipped moving world's own body record is a standing profile
-whose arrivals are read through the twist, with no net current, and the body
-moves by the hop there: under the count's line a moving body is the moving
-mode of [the generator](#the-generator) (e).
+terms. Under the count's line a moving body is the moving mode of
+[the generator](#the-generator) (e), its count moved by its record's current.
 
 THE BOUND. The total at a Node is at most 6 x weight x 4 A^2 + T (c + 1)
 + T: one current per Port, each the weight times the two products of two
@@ -473,13 +471,10 @@ on the record of the primitive that divided.
 | the recoil's accumulator | (v) | sigma_a, k_q (the quantum's wave number), M | a Port's angle accumulator | sigma_a x (k_q div M) into the Port's angle, the taker and the giver with opposite signs |
 | the trace | any | every act's integers | nothing | a reading of every act, it writes nothing |
 
-The hop runs until the count's line is bound in the loop and is retired
-then: the count's line moves the count with its record's current, and no
-accumulator of a body's position remains; until then the hop's tie (two axes
-over the wall in one interval, the later axis's wall subtracted with no
-move) is the frame's, not the law's. The rows whose own code the count's
-line retires when bound: the ladder's rungs, the hop, the giving's open and
-close, the clicks list's count move, the lifetime's tally.
+The hop is retired: the count's line moves the count with its record's
+current, and no accumulator of a body's position remains. The rows whose own
+code the count's line retires when bound: the ladder's rungs, the giving's
+open and close, the clicks list's count move, the lifetime's tally.
 
 A body's writes into its family's levels (the hold): a body of quanta
 M_k of the family k, each family's quantum weighing w_k (the key

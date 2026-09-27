@@ -1,5 +1,4 @@
-"""The receiver by name and the click line at the rung: one gather line per record at the set's rung,
-the block's own detector on no ladder, the loader's refusals, and a reordered detector list byte for byte."""
+"""The receiver by name and the click line at the rung: one gather line per record at the set's rung, the block's own detector on no ladder, the loader's refusals, and a reordered detector list byte for byte."""
 
 from __future__ import annotations
 
@@ -19,8 +18,7 @@ Spy = dict[int, tuple[list[int], list[int], int, int, int]]
 
 
 def body(x: int) -> dict:
-    """A receiver body of light at x (a measured event, one Node), one Node of a detector
-    cube read as a set by name (record 1899)."""
+    """A receiver body of light at x (a measured event, one Node), one Node of a detector cube read as a set by name (record 1899)."""
     return {
         "position": [x, 0, 0],
         "family": "light",
@@ -32,11 +30,7 @@ def body(x: int) -> dict:
 
 
 def chain_of_200(receiver: str | None = "screen") -> dict:
-    """The declaration's test world: a chain of 200 (x closed, mirrors), light on the given
-    clock [512, 1] of N = 1024, the emitter body A at [20, 52) naming `screen` (four givings,
-    the train along +x), the set `screen` the cube of side 3 at [91, 93] (40 Links from A's
-    head at 51), and the set `beside` the cube at [60, 62] between A and the screen (off
-    A's ladder); no wheel (the record's own, ALGEBRA.md #a-familys-declaration)."""
+    """The declaration's test world: a chain of 200 (x closed, mirrors), light on the given clock [512, 1] of N = 1024, the emitter body A at [20, 52) naming `screen` (four givings, the train along +x), the set `screen` the cube of side 3 at [91, 93] (40 Links from A's head at 51), and the set `beside` the cube at [60, 62] between A and the screen (off A's ladder); no wheel (the record's own, ALGEBRA.md #a-familys-declaration)."""
     document = massive_world([200, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 500
     document["measured"] = [emitter(20, receiver, 70), *(body(x) for x in (91, 92, 93, 60, 61, 62))]
@@ -51,10 +45,7 @@ def chain_of_200(receiver: str | None = "screen") -> dict:
 def run(
     document: dict, ticks: int, every: int = 50, seen: Spy | None = None
 ) -> tuple[DetectorLawSimulation, list[dict]]:
-    """The world stepped `ticks` intervals with the books read every `every` intervals and at
-    the end; the lines written are returned with the simulation. With `seen`, a spy on the
-    engine's `_ladder_click` records per clicked record its pointers as the click read
-    them, its ladder (`_ladder_of`), its residue and its norm."""
+    """The world stepped `ticks` intervals with the books read every `every` intervals and at the end; the lines written are returned with the simulation. With `seen`, a spy on the engine's `_ladder_click` records per clicked record its pointers as the click read them, its ladder (`_ladder_of`), its residue and its norm."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     if seen is not None:
@@ -171,18 +162,7 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
 
 
 def test_the_blocks_own_cell_is_on_no_ladder():
-    """(b) On the closed chain of 200 the block's own detector (`measured:0`) is on no record's
-    ladder: the outgoing train leaves A's Nodes through their Ports (the outward flux
-    negative, booked nowhere; what the detector books is the tapers' dispersion returned off
-    the mirror at x = 0, below a hundredth of the norm as the click read it) and A's detector
-    is never chosen, every line at `screen`. The edge case: a block naming the set that IS its own
-    Nodes (the light clock's form, `block` without positions) on the closed chain of 400 at
-    rest, A at [300, 332): the given train is written ON the set's Nodes and leaves them
-    toward +x (the outward flux is booked to no detector), so the set reads nothing of the
-    write itself; the record clicks at the set only once the mirror at x = 399 returns
-    the train into the Nodes (the round trip 2 x 67 Links at v_g = 0.447, about 300
-    intervals; the self-click of BUILD.md section 26 item 10 retired with the take), later
-    than the giving's next interval."""
+    """(b) On the closed chain of 200 the block's own detector (`measured:0`) is on no record's ladder: the outgoing train leaves A's Nodes through their Ports (the outward flux negative, booked nowhere; what the detector books is the tapers' dispersion returned off the mirror at x = 0, below a hundredth of the norm as the click read it) and A's detector is never chosen, every line at `screen`. The edge case: a block naming the set that IS its own Nodes (the light clock's form, `block` without positions) on the closed chain of 400 at rest, A at [300, 332): the given train is written ON the set's Nodes and leaves them toward +x (the outward flux is booked to no detector), so the set reads nothing of the write itself; the record clicks at the set only once the mirror at x = 399 returns the train into the Nodes (the round trip 2 x 67 Links at v_g = 0.447, about 300 intervals; the self-click of BUILD.md section 26 item 10 retired with the take), later than the giving's next interval."""
     seen: Spy = {}
     simulation, lines = run(chain_of_200(), 400, seen=seen)
     block = simulation.blocks[0]
@@ -216,19 +196,7 @@ def test_the_blocks_own_cell_is_on_no_ladder():
 
 
 def test_the_lines_time():
-    """The line's time: on the light clock's chain of 173 with the faces CLOSED and A naming
-    its own bound set `A_face` (x in [132, 134]), the first record's line is written at the
-    rung's interval (`tick` equal to `click`), after its giving (the set beside A's head
-    books the train from the first interval; the rung (2 u + 1) T / (2 W) on the record's
-    own residue from the law decides how much of the record must pass, the mirrors'
-    returns included), stamped with A's count (clock_source measured:0); the record is
-    deleted whole at its line (not among the records, no second line within 300
-    intervals). Two emitter bodies a hundred Links apart (A at [100, 132), B at [232, 264):
-    A's mode at 50 x 2^20 ends 63 Links beyond its head, and the loader refuses a body's
-    profile that is not 0 at another body of its family, BUILD.md section 26 item 28), the
-    first's train along +x and the second's along -x, naming the set on the cube of three
-    free Nodes beside the first (bound to it): both bodies' records write their lines there
-    at a rung with `tick` equal to `click`, stamped with the bound body's count."""
+    """The line's time: on the light clock's chain of 173 with the faces CLOSED and A naming its own bound set `A_face` (x in [132, 134]), the first record's line is written at the rung's interval (`tick` equal to `click`), after its giving (the set beside A's head books the train from the first interval; the rung (2 u + 1) T / (2 W) on the record's own residue from the law decides how much of the record must pass, the mirrors' returns included), stamped with A's count (clock_source measured:0); the record is deleted whole at its line (not among the records, no second line within 300 intervals). Two emitter bodies a hundred Links apart (A at [100, 132), B at [232, 264): A's mode at 50 x 2^20 ends 63 Links beyond its head, and the loader refuses a body's profile that is not 0 at another body of its family, BUILD.md section 26 item 28), the first's train along +x and the second's along -x, naming the set on the cube of three free Nodes beside the first (bound to it): both bodies' records write their lines there at a rung with `tick` equal to `click`, stamped with the bound body's count."""
     document = light_clock_world("closed", False)
     document["measured"][0]["receiver"] = "A_face"
     simulation, lines = run(document, 300)
@@ -261,19 +229,7 @@ def test_the_lines_time():
 
 
 def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
-    """The registered world `examples/events/massive_record/light_clock.json` (the one table's
-    form: [760, 3, 3] with the face slabs 32 deep, A the chain's point extruded, [1, 3, 3] at
-    x = 631, giving by the window (commit 7) with its stock of 64, the mirror at [690, 694)
-    and the mirror behind A at [629, 631), A's `receiver` at_well the set at its own
-    Nodes) loads and is stepped 700 intervals as a load-and-step diagnostic (no pin): A
-    givings (its excitations click at their rungs), and its records click at at_well when
-    the mirror returns them into A's Nodes (the line at the rung, the record deleted at it;
-    at least one within the 700, the round trip about 300 intervals after the giving; under
-    the row's floor and the recoil, ALGEBRA.md #the-paces and #the-primitives, A carries its
-    kicks and no body is held in place (the mirrors fed, #1279): twelve records return by their
-    round trips and one reaches its rung at A's own Nodes 12 intervals after its giving), none
-    at the faces; the books balanced. The edge case: the file on disk is byte for byte what the
-    test read."""
+    """The registered world `examples/events/massive_record/light_clock.json` (the one table's form: [760, 3, 3] with the face slabs 32 deep, A the chain's point extruded, [1, 3, 3] at x = 631, giving by the window (commit 7) with its stock of 64, the mirror at [690, 694) and the mirror behind A at [629, 631), A's `receiver` at_well the set at its own Nodes) loads and is stepped 700 intervals as a load-and-step diagnostic (no pin): A givings (its excitations click at their rungs), and its records click at at_well when the mirror returns them into A's Nodes (the line at the rung, the record deleted at it; at least one within the 700, the round trip about 300 intervals after the giving; under the row's floor and the recoil, ALGEBRA.md #the-paces and #the-primitives, A carries its kicks and no body is held in place (the mirrors fed, #1279): twelve records return by their round trips and one reaches its rung at A's own Nodes 12 intervals after its giving), none at the faces; the books balanced. The edge case: the file on disk is byte for byte what the test read."""
     before = LIGHT_CLOCK.read_bytes()
     document = json.loads(before)
     world = parse_nature_beam_world(document)

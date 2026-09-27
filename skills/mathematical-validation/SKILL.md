@@ -119,6 +119,6 @@ on the way (a pile-up, a lag, a collapse) is answered with the algebra's
 own expectation and a reading that decides between causes, never with a
 guess. The mathematician keeps a timed check-in (once an hour): fetch the
 writers' branches, gate any head after the last gated one, read any new run
-under docs/designs/, check the open pull request's CI and mergeability, and
+posted on the one issue, check the open pull request's CI and mergeability, and
 re-arm silently when nothing changed, so that no head passes ungated while
 no one is writing.

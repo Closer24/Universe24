@@ -43,10 +43,7 @@ def small_world(
     pair: tuple[int, int] = (800, 801),
     well_side: int = 2,
 ) -> dict:
-    """The small world of 9.20 as a document; the well's seed the composed mode's integer
-    profile at the amplitude (the generator's, or `seed` given: a transformed reference);
-    the well's `pair` and `well_side` the gate's side-2 cube of [800, 801] unless given (the
-    host-cost scaling worlds take a deeper, larger well: `scaled_world`)."""
+    """The small world of 9.20 as a document; the well's seed the composed mode's integer profile at the amplitude (the generator's, or `seed` given: a transformed reference); the well's `pair` and `well_side` the gate's side-2 cube of [800, 801] unless given (the host-cost scaling worlds take a deeper, larger well: `scaled_world`)."""
     document = {
         "shape": [side, side, side],
         "boundary": PERIODIC,
@@ -113,9 +110,7 @@ def small_world(
 
 
 def given_levels(simulation: DetectorLawSimulation) -> tuple[int, int]:
-    """The giving's pair on the circle of 2 N (ALGEBRA.md #the-click) for light's clock [80, 25] on N = 64:
-    the generator's integer (a host computation; no table in the engine), now = round(A sin(pi
-    n / (d N))), the character half a step either side of its zero, before = -now."""
+    """The giving's pair on the circle of 2 N (ALGEBRA.md #the-click) for light's clock [80, 25] on N = 64: the generator's integer (a host computation; no table in the engine), now = round(A sin(pi n / (d N))), the character half a step either side of its zero, before = -now."""
     _ = simulation
     steps = 64
     now = round(UNIT * math.sin(math.pi * 80 / (25 * steps)))
@@ -123,8 +118,7 @@ def given_levels(simulation: DetectorLawSimulation) -> tuple[int, int]:
 
 
 def plant(simulation: DetectorLawSimulation, node, u: int, ladder: bool = True, rows=None) -> LiveRecord:
-    """The light record as its giving writes it: the pair on one Node (or the rows given), the
-    residue u, the ladder the receiver's detector, the norm its conserved form."""
+    """The light record as its giving writes it: the pair on one Node (or the rows given), the residue u, the ladder the receiver's detector, the norm its conserved form."""
     now = np.zeros(SHAPE, dtype=np.int64)
     before = np.zeros(SHAPE, dtype=np.int64)
     if rows is None:
@@ -177,10 +171,7 @@ def run(
     giving=GIVING,
     contents: list[np.ndarray] | None = None,
 ):
-    """The small world run: the well's own record from interval 0, the light record planted at
-    interval 0; the states after every interval and the click lines; with `contents` given,
-    the Node clock's content array as the engine holds it after every interval (the array
-    the interval's advances used, ALGEBRA.md #the-paces)."""
+    """The small world run: the well's own record from interval 0, the light record planted at interval 0; the states after every interval and the click lines; with `contents` given, the Node clock's content array as the engine holds it after every interval (the array the interval's advances used, ALGEBRA.md #the-paces)."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     plant(simulation, giving, u, rows=rows)
@@ -207,8 +198,7 @@ def signed_axis_permutations():
 
 
 def apply_g(array: np.ndarray, g) -> np.ndarray:
-    """g on an array over the torus: axis i of the result is axis permutation[i] of the input,
-    reversed as x -> -x mod SIDE where the sign is -1 (the torus's reflection, a group action)."""
+    """g on an array over the torus: axis i of the result is axis permutation[i] of the input, reversed as x -> -x mod SIDE where the sign is -1 (the torus's reflection, a group action)."""
     permutation, signs = g
     out = np.transpose(array, permutation)
     for axis in range(3):
@@ -226,8 +216,7 @@ def apply_g_node(node, g):
 
 
 def vertex_of(mask: np.ndarray, side: int):
-    """The lower vertex of a cube's mask on the torus: the Node of the mask whose lower
-    neighbour on every axis is outside it."""
+    """The lower vertex of a cube's mask on the torus: the Node of the mask whose lower neighbour on every axis is outside it."""
     for node in zip(*np.nonzero(mask), strict=True):
         node = tuple(int(v) for v in node)
         if all(
@@ -267,8 +256,7 @@ def compare_runs(reference_states, states, transform_array, identities):
 
 
 def test_equivariance_under_the_cube_group():
-    """48 of 48 transformed worlds give the transformed states at every interval, the
-    remainders included, and the same click at the same interval."""
+    """48 of 48 transformed worlds give the transformed states at every interval, the remainders included, and the same click at the same interval."""
     document = small_world()
     _, reference, clicks = run(document)
     assert clicks, "the reference run clicks within the intervals"
@@ -302,11 +290,7 @@ def test_translation_on_the_torus():
 
 
 def test_conservation_between_clicks():
-    """(a) the content per family constant before the click and down by one quantum of light
-    at it; (b) per record, I(t) - I(t - 1) is the remainder term of 8.2 over the step, exactly,
-    both forms with the Node clock's content in force for that step (ALGEBRA.md #the-paces; BUILD.md section 26 item 31: the well's Nodes at M = 1 until the click at the set
-    bound to the well hands it the light quantum, M = 2 after; the form changes with the
-    content at the event and the identity holds step by step across it)."""
+    """(a) the content per family constant before the click and down by one quantum of light at it; (b) per record, I(t) - I(t - 1) is the remainder term of 8.2 over the step, exactly, both forms with the Node clock's content in force for that step (ALGEBRA.md #the-paces; BUILD.md section 26 item 31: the well's Nodes at M = 1 until the click at the set bound to the well hands it the light quantum, M = 2 after; the form changes with the content at the event and the identity holds step by step across it)."""
     document = small_world()
     contents: list[np.ndarray] = []
     simulation, states, clicks = run(document, contents=contents)
@@ -420,9 +404,7 @@ def manhattan_ball(node, radius: int) -> np.ndarray:
 
 
 def test_locality():
-    """Two runs whose initial elements differ at one Node of the light record by one unit of
-    `now`: at every interval m the difference is inside the Manhattan ball of radius m about
-    that Node, and nonzero somewhere for every m <= 12."""
+    """Two runs whose initial elements differ at one Node of the light record by one unit of `now`: at every interval m the difference is inside the Manhattan ball of radius m about that Node, and nonzero somewhere for every m <= 12."""
     document = small_world(receiver_named=False)
     _, reference, _ = run(document, intervals=14)
     changed = (GIVING[0] + 1, GIVING[1], GIVING[2])
@@ -445,9 +427,7 @@ def test_locality():
 
 
 def test_only_the_click_reads():
-    """(b) for 200 random elements, two Nodes whose seven inputs are equal by construction (the
-    pair, the row and remainder, the six neighbours' rows) give equal outputs; (c) two runs
-    whose records differ only in their residues u are identical until the first click."""
+    """(b) for 200 random elements, two Nodes whose seven inputs are equal by construction (the pair, the row and remainder, the six neighbours' rows) give equal outputs; (c) two runs whose records differ only in their residues u are identical until the first click."""
     document = small_world(receiver_named=False)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     rng = np.random.default_rng(11)
@@ -483,24 +463,13 @@ def test_only_the_click_reads():
 
 
 def scaled_world(side: int) -> dict:
-    """The small world's form on a cube of `side`: a well of side 4 and the pair [850, 800] at
-    the vertex (3, 4, 5), the receiver at (side - 3, side - 3, 2). The gate's side-2 well of
-    [800, 801] is bound by its torus, not by its well (2 cos omega above the band's top by
-    9 x 10^-5 on the 12-cube and 1.5 x 10^-6 on the 48-cube, where the generator's iteration
-    stops on a mixture of the band's modes and the loader refuses it as no bound mode;
-    BUILD.md section 26 item 25); the side-4 well of [850, 800] binds by 3 x 10^-3 on the
-    24-cube and is a body on every side here."""
+    """The small world's form on a cube of `side`: a well of side 4 and the pair [850, 800] at the vertex (3, 4, 5), the receiver at (side - 3, side - 3, 2). The gate's side-2 well of [800, 801] is bound by its torus, not by its well (2 cos omega above the band's top by 9 x 10^-5 on the 12-cube and 1.5 x 10^-6 on the 48-cube, where the generator's iteration stops on a mixture of the band's modes and the loader refuses it as no bound mode; BUILD.md section 26 item 25); the side-4 well of [850, 800] binds by 3 x 10^-3 on the 24-cube and is a body on every side here."""
     return small_world(receiver=(side - 3, side - 3, 2), side=side, pair=(850, 800), well_side=4)
 
 
 @pytest.mark.parametrize("side", [12, 24, 48])
 def test_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
-    """The owner's question on large boards (the Boss's 22:55Z): the host time per Node per
-    interval and the state's memory per Node stay within a constant across 12^3, 24^3 and
-    48^3 (every step linear or bilinear in the levels), and the generator's cost for the
-    composed mode is reported; HOST readings, printed, no pin. The bound asserted: the time
-    per Node per interval at 48^3 within five times that at 12^3 (the small board's fixed
-    costs dominate it)."""
+    """The owner's question on large boards (the Boss's 22:55Z): the host time per Node per interval and the state's memory per Node stay within a constant across 12^3, 24^3 and 48^3 (every step linear or bilinear in the levels), and the generator's cost for the composed mode is reported; HOST readings, printed, no pin. The bound asserted: the time per Node per interval at 48^3 within five times that at 12^3 (the small board's fixed costs dominate it)."""
     import time
     import tracemalloc
 
@@ -560,9 +529,7 @@ def test_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
 
 
 def output_of(serialized: str) -> dict:
-    """The run's output from its input text alone (the model owner's word through the Boss,
-    23:51Z: the same input gives the same output): the input's hash, the click lines (the
-    receiver and the interval) and the digest of the final state's rows, for one process."""
+    """The run's output from its input text alone (the model owner's word through the Boss, 23:51Z: the same input gives the same output): the input's hash, the click lines (the receiver and the interval) and the digest of the final state's rows, for one process."""
     document = json.loads(serialized)
     simulation, states, clicks = run(document)
     digest = hashlib.sha256()
@@ -577,13 +544,7 @@ def output_of(serialized: str) -> dict:
 
 
 def test_the_same_input_gives_the_same_output():
-    """The owner's word (the Boss's relay of 23:51Z): the same input file run twice, and run in
-    two separate processes at once, gives byte-identical outputs (the clicks and the final
-    state's digest, with the input's own hash). The edge cases: a one-unit change in the
-    input's seed profile changes the input's hash and gives a different output (the loader
-    of this head admits it; record 1886's load check refuses it), never silently the same
-    output; a one-unit change in the planted record's row gives a different output (test
-    5's difference)."""
+    """The owner's word (the Boss's relay of 23:51Z): the same input file run twice, and run in two separate processes at once, gives byte-identical outputs (the clicks and the final state's digest, with the input's own hash). The edge cases: a one-unit change in the input's seed profile changes the input's hash and gives a different output (the loader of this head admits it; record 1886's load check refuses it), never silently the same output; a one-unit change in the planted record's row gives a different output (test 5's difference)."""
     serialized = json.dumps(small_world(), sort_keys=True)
     first = output_of(serialized)
     second = output_of(serialized)
