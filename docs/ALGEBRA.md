@@ -572,7 +572,7 @@ velocity **v** = **n** / W. The same iteration runs with the arrivals
 along the axis of motion read through the rotation act by the phase k
 per Link (a Pythagorean triple (a, b, c) with cos k = a / c, exact),
 each iterate mirrored (the real part even and the imaginary part odd
-about the centre, the envelope's one gauge); its fixed point is the
+about the centre, the envelope's one gauge), each by one division act, so the parts are even and odd within one unit of the rounding; its fixed point is the
 moving mode with the rotation omega_b(k); v(k) is the difference
 quotient of omega_b over k in exact rationals, and k is the pair at
 which v(k) is the named velocity, found by bisection on the pairs. The
