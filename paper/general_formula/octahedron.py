@@ -6,7 +6,7 @@ is the rows' pace c = 1 / sqrt 3 Links per interval (the model section of
 main.tex; checks/light_speed.py). The unit cube whose group of 48 signed
 axis permutations is also the octahedron's is drawn faint behind it.
 
-    python paper/click_model/octahedron.py --output paper/click_model/figures
+    python paper/general_formula/octahedron.py --output paper/general_formula/figures
 
 Needs matplotlib (the `render` extra). Nothing is read from a run.
 """
@@ -21,6 +21,13 @@ from pathlib import Path
 import matplotlib
 
 matplotlib.use("Agg")
+matplotlib.rcParams.update(
+    {
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Arial", "Helvetica", "Liberation Sans", "DejaVu Sans"],
+        "font.size": 8,
+    }
+)  # the journal's lettering: Helvetica or Arial, 8 to 12 pt
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection  # noqa: E402
@@ -37,6 +44,12 @@ PORTS = {
     (0, 0, 1): "$+z$",
     (0, 0, -1): "$-z$",
 }
+
+
+def save(fig, path):
+    """The PDF the paper includes and the EPS the journal asks for, side by side."""
+    fig.savefig(path)
+    fig.savefig(path.with_suffix(".eps"))
 
 
 def faces() -> list[list[tuple[int, int, int]]]:
@@ -113,7 +126,7 @@ def draw(output: Path) -> None:
     ax.set_axis_off()
     fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
     output.mkdir(parents=True, exist_ok=True)
-    fig.savefig(output / "octahedron.pdf")
+    save(fig, output / "octahedron.pdf")
     plt.close(fig)
 
 

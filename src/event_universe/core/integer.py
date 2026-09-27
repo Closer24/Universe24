@@ -57,39 +57,6 @@ def rational_sum(terms: list[tuple[int, int]]) -> tuple[int, int]:
     return numerator, denominator
 
 
-MASK_64 = (1 << 64) - 1
-
-
-def mix64(state: int) -> tuple[int, int]:
-    """One step of the SplitMix64 mixing hash on plain 64-bit integers: the
-    state advanced by the golden-ratio constant, the output the state mixed
-    by two shift-xor-multiply rounds (Steele, Lea and Flood 2014). Returns
-    (the next state, the output word); no float, every intermediate bounded
-    by 2^64."""
-    state = (state + 0x9E3779B97F4A7C15) & MASK_64
-    word = state
-    word = ((word ^ (word >> 30)) * 0xBF58476D1CE4E5B9) & MASK_64
-    word = ((word ^ (word >> 27)) * 0x94D049BB133111EB) & MASK_64
-    return state, word ^ (word >> 31)
-
-
-def keyed_permutation(count: int, key: int) -> list[int]:
-    """The residues 0 .. count - 1 in the order of a keyed permutation: a
-    Fisher-Yates shuffle driven by `mix64` from the key (the world's seed,
-    DECLARATIONS.md section 2 item 8: an order indistinguishable from
-    uniform without its key, never an affine stride). A bijection on Z_count
-    for every key; the same key gives the same order."""
-    if count < 1:
-        raise ValueError("positive count required")
-    order = list(range(count))
-    state = key & MASK_64
-    for last in range(count - 1, 0, -1):
-        state, word = mix64(state)
-        other = word % (last + 1)
-        order[last], order[other] = order[other], order[last]
-    return order
-
-
 def by_clock(age: int, numerator: int, denominator: int) -> int:
     """What the whole part of age x numerator / denominator gains at the
     self-creation that takes the age from `age` to `age + 1`: a rate read
