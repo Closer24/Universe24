@@ -108,10 +108,10 @@ def test_the_loader_pairs_the_key_with_the_one_node_body_the_weight_and_the_acti
     with_train = json.loads(json.dumps(document))
     with_train["measured"][0]["emitter"]["train"] = {"direction": [1, 0, 0], "periods": 8}
     with_train["stamp"] = input_stamp(with_train)
-    with pytest.raises(ValueError, match="emitter.train is refused"):
+    with pytest.raises(ValueError, match="emitter has unknown keys: train"):
         parse_nature_beam_world(with_train)
     with_given = json.loads(json.dumps(document))
     with_given["measured"][0]["emitter"]["given"] = {"now": [1], "before": [-1], "norm": 1}
     with_given["stamp"] = input_stamp(with_given)
-    with pytest.raises(ValueError, match="emitter.given is refused"):
+    with pytest.raises(ValueError, match="emitter has unknown keys: given"):
         parse_nature_beam_world(with_given)

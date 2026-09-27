@@ -1,4 +1,4 @@
-"""The kinds of a value of the run's files and one generic check: a folder's schema names its keys, where they live and each key's kind; the check refuses an unknown key, a missing key, a wrong kind, a value beyond its bound, an empty word and a name the universe lacks, each by name; no key of any folder is written here, no default, no number of the universe (ALGEBRA.md 9.117 item 2: a term is one line of the files)."""
+"""The kinds of a value of the run's files and one generic check: a folder's schema names its keys, where they live and each key's kind (an object of named keys, a list, a mapping of names to values among them); the check refuses an unknown key, a missing key, a wrong kind, a value beyond its bound, an empty word and a name the universe lacks, each by name; no key of any folder is written here, no default, no number of the universe (ALGEBRA.md 9.117 item 2: a term is one line of the files)."""
 
 from __future__ import annotations
 
@@ -61,13 +61,21 @@ class ObjectOf:
 
 
 @dataclass(frozen=True)
+class MapOf:
+    """An object whose keys are all of one kind (a family's name) and whose values are all of one kind; any keys, each once."""
+
+    keys: Kind
+    of: Kind
+
+
+@dataclass(frozen=True)
 class Either:
     """A value the first of the kinds accepts."""
 
     kinds: tuple[Kind, ...]
 
 
-Kind = Integer | Flag | OneOf | Word | Name | IntegerName | ListOf | ObjectOf | Either
+Kind = Integer | Flag | OneOf | Word | Name | IntegerName | ListOf | ObjectOf | MapOf | Either
 
 
 @dataclass(frozen=True)
@@ -177,6 +185,14 @@ def check(value: object, kind: Kind, label: str, context: Context) -> object:
         )
     if isinstance(kind, ObjectOf):
         return check_keys(value, kind.keys, kind.optional, label, context)
+    if isinstance(kind, MapOf):
+        if not isinstance(value, dict):
+            raise ValueError(f"{label} must be an object mapping names to values, not {value!r}")
+        return {
+            key: check(item, kind.of, f"{label}[{key!r}]", context)
+            for key, item in value.items()
+            if check(key, kind.keys, f"{label} key {key!r}", context) is not None
+        }
     if isinstance(kind, Either):
         refusals = []
         for option in kind.kinds:

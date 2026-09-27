@@ -37,7 +37,7 @@ world, not things on the GameBoard.
   correlation, a visibility, a fraction, a deceleration parameter, a
   bound. A comparison that needs a unit (metres, seconds, kilograms,
   joules, coulombs) needs the dictionary's conversion fixed once
-  ([HIGHLIGHTS 5.7](HIGHLIGHTS.md#57-from-the-world-we-see-to-the-vector-world-the-conversions-the-principles-what-is-derived-and-what-is-input-2026-09-21))
+  ([HIGHLIGHTS 5.7](HIGHLIGHTS.md))
   and is listed at the end under "What needs the conversion".
 - **(c) One source per published value**: author, year, journal or arXiv
   identifier. Where the exact figure could not be checked against the
@@ -67,7 +67,7 @@ world, not things on the GameBoard.
 
 The values every row is read under, as `origin/main` at `88d843ef`
 declares them (the world-file keys in
-[HIGHLIGHTS 5.6](HIGHLIGHTS.md#56-the-glossary-of-the-names-and-how-each-is-computed-2026-09-20)):
+[HIGHLIGHTS 5.6](HIGHLIGHTS.md)):
 
 | Width | Value in the one set | Where it is declared | Rows that declare another value |
 | --- | --- | --- | --- |
@@ -813,7 +813,7 @@ The second pass compares dimensional values, which needs the dictionary's
 conversion fixed once for the whole register and never per experiment:
 one Link in metres, one interval in seconds, one unit of content in
 kilograms, the cost h of one phase step in joules, one charge step in
-coulombs ([HIGHLIGHTS 5.7](HIGHLIGHTS.md#57-from-the-world-we-see-to-the-vector-world-the-conversions-the-principles-what-is-derived-and-what-is-input-2026-09-21),
+coulombs ([HIGHLIGHTS 5.7](HIGHLIGHTS.md),
 the transformation from the GameBoard to the observed values, record 210;
 [DERIVATIONS_BEAM](DERIVATIONS_BEAM.md) section 16, in preparation on the
 owner's word of record 239, tries every dimensionless number of nature

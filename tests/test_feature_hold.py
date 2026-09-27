@@ -31,7 +31,6 @@ from event_universe.features.hold import (
     HoldStart,
     HoldTerm,
     apply,
-    bind,
 )
 from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world
@@ -255,15 +254,14 @@ def test_the_refusals_by_name():
 def test_the_declaration_is_the_ledgers_row():
     """ "the hold" at (iv), the word the right side, the writes a family's level at a Node and a
     body's remainders (the order the step file's), its function `apply`; the engine's register finds
-    the folder built, and bind still gives the loop's hold of today."""
+    the folder bound: the loop calls `apply` itself, no binder."""
     assert DECLARATION.name == "the hold" and folder_of("the hold") == "hold"
     assert DECLARATION.place == "(iv)" and DECLARATION.word == "the right side"
     assert DECLARATION.writes == ("a family's level at a Node", "a body's remainders")
     assert DECLARATION.function is apply and DECLARATION.built
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
     registered = simulation.register.declarations["the hold"]
-    assert registered.binder is bind and callable(registered.function)  # the loop's hold, bound
-    assert callable(bind(simulation))
+    assert registered.binder is None and registered.function is apply
 
 
 def test_the_folder_gives_the_loops_integers_backward_on_the_resting_lorentz_world_bit_for_bit():

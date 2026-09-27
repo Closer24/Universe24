@@ -356,12 +356,12 @@ def test_the_loaders_refusals_name_their_keys():
         document["measured"][0]["emitter"]["clock"] = [512, 1]
 
     refused(own_family, "stock is required")
-    refused(emitter("family", "nobody"), "unknown family")
+    refused(emitter("family", "nobody"), "no family of the universe")
     # the retired keys of the declared residue (ALGEBRA.md 9.22 (4)), each
     # refused by name with its successor
-    refused(emitter("wheel", [1, 4]), "emitter.wheel is refused")
-    refused(emitter("residue_order", "ordinal"), "emitter.residue_order is refused")
-    refused(emitter("residue_seed", 3), "emitter.residue_seed is refused")
+    refused(emitter("wheel", [1, 4]), "emitter has unknown keys: wheel")
+    refused(emitter("residue_order", "ordinal"), "emitter has unknown keys: residue_order")
+    refused(emitter("residue_seed", 3), "emitter has unknown keys: residue_seed")
     refused(emitter("rate", [1, 1]), "unknown keys|rate")
 
     # the coupling of MASSIVE_RECORD.md section 7 retired: refused by name with its
@@ -369,7 +369,7 @@ def test_the_loaders_refusals_name_their_keys():
     def coupled(document):
         document["measured"][0]["coupling"] = {"G": [1, 50], "g": [1, 1000]}
 
-    refused(coupled, "coupling is refused")
+    refused(coupled, "has unknown keys: coupling")
 
     # the richness of the giving Node (9.22 (4)): a pair with fewer than 500
     # remainder values refuses the emitter naming the count
@@ -400,7 +400,7 @@ def test_the_loaders_refusals_name_their_keys():
     def no_held_stock(document):
         del document["measured"][0]["stocks"]  # the stock as the given family's content (item 47)
 
-    refused(no_held_stock, "lacks keys the engine reads: stocks")  # item 57: no default
+    refused(no_held_stock, "lacks keys: stocks")  # item 57: no default
 
     # the generator's integers (ALGEBRA.md 9.17 (5) item 1): a norm the
     # emitter does not declare refuses the simulation at its first
@@ -419,9 +419,10 @@ def test_the_loaders_refusals_name_their_keys():
     # `given` are refused by name with their successor, the window; the window's integers
     # are required on every emitter: the weight g from 1, the action's denominator
     refused(
-        emitter("given", {"now": [1] * 32, "before": [-1] * 32, "norm": 1}), "emitter.given is refused"
+        emitter("given", {"now": [1] * 32, "before": [-1] * 32, "norm": 1}),
+        "emitter has unknown keys: given",
     )
-    refused(emitter("train", {"direction": [1, 0, 0], "periods": 8}), "emitter.train is refused")
+    refused(emitter("train", {"direction": [1, 0, 0], "periods": 8}), "emitter has unknown keys: train")
     refused(emitter("weight", 0), "weight")
 
     def no_weight(document):
@@ -435,11 +436,11 @@ def test_the_loaders_refusals_name_their_keys():
     refused(no_action, "declares no `norm_denominator`", on_mode=True)
 
     for key, value, message in (
-        ("emits", "light", "emits is refused"),
-        ("own_grace", 3, "own_grace is refused"),
-        ("absorbing", True, "absorbing is refused"),
-        ("take", [-15, 56], "take is refused"),
-        ("wheel", 64, "wheel is refused"),
+        ("emits", "light", "has unknown keys: emits"),
+        ("own_grace", 3, "has unknown keys: own_grace"),
+        ("absorbing", True, "has unknown keys: absorbing"),
+        ("take", [-15, 56], "has unknown keys: take"),
+        ("wheel", 64, "has unknown keys: wheel"),
     ):
 
         def beside(document, key=key, value=value):

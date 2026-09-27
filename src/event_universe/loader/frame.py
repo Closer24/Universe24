@@ -1,4 +1,4 @@
-"""The frame of the run's files read through the schemas: the world file's own keys by the frame's schema, the bodies, the detectors, the readings and the universe handed on as written to their readers; the universe file, its integers by the frame's schema and each family's entry by the cards of the register with the frame's one key, the name; and the start file, its mode; every key refused by name, no default written here (ALGEBRA.md 9.117 item 2: a term is one line of the files)."""
+"""The frame of the run's files read through the schemas: the world file's own keys by the frame's schema, the bodies' keys by the frame's schemas of today's form and of the law's form (a body by its family, its Nodes with their counts and its momentum), the detectors' by the frame's schema, the readings and the universe handed on as written to their readers; the universe file, its integers by the frame's schema and each family's entry by the cards of the register with the frame's one key, the name; and the start file, its mode; every key refused by name, no default written here (ALGEBRA.md 9.117 item 2: a term is one line of the files)."""
 
 from __future__ import annotations
 
@@ -12,6 +12,8 @@ from event_universe.core.schema import (
     Flag,
     Integer,
     ListOf,
+    MapOf,
+    Name,
     ObjectOf,
     OneOf,
     Word,
@@ -40,7 +42,7 @@ UNIVERSE_KEYS = ("integers", "families")
 START = ObjectOf({"mode": OneOf(("check", "pin"))})
 # a face of the GameBoard: open (its edge is infinity), periodic (the walk wraps) or closed (a zero face with no take)
 FACE = OneOf(("open", "periodic", "closed"))
-# the world file's own keys (ALGEBRA.md 9.90 (2)): the GameBoard, its faces, the intervals, the files it names, its stamp; and the keys of the loop's old form, read by the loop today and deleted with it
+# the world file's own keys (ALGEBRA.md 9.90 (2)): the GameBoard, its faces, the intervals, the files it names, its stamp; and the keys of the loop's old form that the loop still reads
 WORLD = ObjectOf(
     {
         "shape": ListOf(Integer(least=1), 3),
@@ -64,11 +66,6 @@ WORLD = ObjectOf(
         "clock_stamp": Flag(),
         "massive_record": Flag(),
         "body_record": Flag(),
-        "drive_b": Flag(),
-        "flow_link": Flag(),
-        "centred_step": Flag(),
-        "atom_level": Flag(),
-        "optical": Integer(least=0),
     },
     frozenset(
         {
@@ -80,22 +77,105 @@ WORLD = ObjectOf(
             "amplitude_bound",
             "node_clock",
             "momentum_unit",
-            "drive_b",
-            "flow_link",
-            "centred_step",
-            "atom_level",
-            "optical",
         }
     ),
 )
-# the world's keys handed on as written to their readers in events/world.py until their own cuts (True: required): the universe (a repository path, or a unit test's families inline), the bodies, the detectors, the readings, the records in transit, the covariant readings, an inline world's twist table
+# a pair of integers, a rational
+PAIR = ListOf(Integer(least=1), 2)
+# three integers on the axes
+AXES = ListOf(Integer(), 3)
+# a body's emitter, the giving of a clicking body (ALGEBRA.md 9.17 (4) to (6), 9.85 (5)): the given family, the ladder by name, the given record's clock and pair where the family declares none, the period, the norm with its denominator, the weight, the window's read, the twist
+EMITTER = ObjectOf(
+    {
+        "family": Name(),
+        "receiver": Either((Word(), ListOf(Word()))),
+        "period": Integer(least=1),
+        "norm": Integer(least=1),
+        "weight": Integer(least=1),
+        "norm_denominator": Integer(least=1),
+        "window_read": Integer(),
+        "clock": Either((Integer(least=1), PAIR)),
+        "pair": Either((Integer(least=1), PAIR)),
+        "twist": Integer(least=0),
+    },
+    frozenset(
+        {"receiver", "period", "norm", "weight", "norm_denominator", "window_read", "clock", "pair"}
+    ),
+)
+# a body of the world file in today's form (ALGEBRA.md 9.120 item 1 names the form to come: its family, its Nodes, its count per Node and its momentum n): its Node, its family, its quanta, its momentum and its stocks of other families; a block's side or extents, pair and kind, seed with its clock and proper clock, ramp and start, margin, the body's numbers q, spin, moment and twist, its emitter with receiver and stock, and fixed
+BODY = ObjectOf(
+    {
+        "position": ListOf(Integer(least=0), 3),
+        "family": Name(),
+        "amount": Integer(least=1),
+        "momentum": AXES,
+        "stocks": MapOf(Name(), Integer(least=1)),
+        "fixed": Flag(),
+        "kind": PAIR,
+        "q": Integer(),
+        "spin": AXES,
+        "moment": AXES,
+        "twist": Integer(least=0),
+        "side": Integer(least=1),
+        "extents": ListOf(Integer(least=1), 3),
+        "pair": PAIR,
+        "seed": Either((Integer(least=0), ListOf(Integer()))),
+        "clock": PAIR,
+        "proper_clock": ListOf(PAIR),
+        "ramp": Integer(least=0),
+        "start": Integer(least=0),
+        "margin": Word(),  # a well's margin kind, the loader's words (the gate counts a family named like one)
+        "emitter": EMITTER,
+        "receiver": Word(),
+        "stock": Integer(least=1),
+    },
+    frozenset(
+        {
+            "fixed",
+            "kind",
+            "q",
+            "spin",
+            "moment",
+            "twist",
+            "side",
+            "extents",
+            "pair",
+            "seed",
+            "clock",
+            "proper_clock",
+            "ramp",
+            "start",
+            "margin",
+            "emitter",
+            "receiver",
+            "stock",
+        }
+    ),
+)
+# one Node of a body in the law's form (ALGEBRA.md 9.120 item 1, 9.121 item 3): its address and the family of clicks' level there, the count; one line per Node
+NODE_COUNT = ObjectOf({"node": ListOf(Integer(least=0), 3), "count": Integer(least=1)})
+# a body of the world file in the law's form (ALGEBRA.md 9.120 item 1; the mathematician's word on it under (ii) of #1210): its family, its Nodes with their counts, its momentum n, and its spin and its moment where declared, nothing else; the momentum's and the spin's parts are handed to the families whose rows keep them (three parts, the KEEP step), a folder's binding and not the frame's; a folder's own key at a body joins through the cards when one declares it
+COUNTED = ObjectOf(
+    {
+        "family": Name(),
+        "nodes": ListOf(NODE_COUNT),
+        "momentum": AXES,
+        "spin": AXES,
+        "moment": AXES,
+    },
+    frozenset({"spin", "moment"}),
+)
+# a detector of the world file: its name, its Nodes, or the body it belongs to
+DETECTOR = ObjectOf(
+    {"name": Word(), "positions": ListOf(ListOf(Integer(least=0), 3)), "block": Integer(least=0)},
+    frozenset({"positions", "block"}),
+)
+# the world's keys handed on as written to their readers in events/world.py until their own cuts (True: required): the universe (a repository path, or a unit test's families inline), the bodies and the detectors (checked by `bodies` and `detectors` once the families are known), the readings, an inline world's twist table
 HANDED = {
     "universe": True,
     "measured": True,
     "detectors": True,
     "readings": False,
-    "in_transit": False,
-    "covariant_readings": False,
     "twist_table": False,
 }
 
@@ -181,6 +261,67 @@ def world(document: object) -> dict[str, object]:
         if key in document:
             checked[key] = document[key]
     return checked
+
+
+def body_form(entry: object, label: str) -> ObjectOf:
+    """The form a body is written in: today's, by its position (BODY), or the law's, by its Nodes with their counts (COUNTED); a body written in neither or in both is refused by name."""
+    if not isinstance(entry, dict):
+        raise ValueError(
+            f"{label} must be an object: a body by its position, or by its nodes with their counts"
+        )
+    by_position = "position" in entry
+    by_nodes = "nodes" in entry
+    if by_position == by_nodes:
+        which = "both" if by_position else "neither"
+        raise ValueError(
+            f"{label} is written by its position (today's form) or by its nodes with their counts "
+            f"(the law's form), not {which}"
+        )
+    return BODY if by_position else COUNTED
+
+
+def counted_nodes(body: Mapping[str, object], label: str) -> None:
+    """The rule between the lines of a body in the law's form: at least one Node, and no Node twice."""
+    nodes = body["nodes"]
+    assert isinstance(nodes, tuple)
+    if not nodes:
+        raise ValueError(f"{label}.nodes is empty: a body stands on at least one Node")
+    seen: set[object] = set()
+    for line in nodes:
+        assert isinstance(line, dict)
+        node = line["node"]
+        if node in seen:
+            assert isinstance(node, tuple)
+            raise ValueError(f"{label}.nodes names the Node {list(node)} twice")
+        seen.add(node)
+
+
+def bodies(value: object, context: Context) -> tuple[dict[str, object], ...]:
+    """The bodies of the world file, each against the schema of its form with the families known; an unknown key, a missing key, a wrong kind and a family the universe lacks refused by name."""
+    if not isinstance(value, list):
+        raise ValueError("measured must be a list")
+    checked = []
+    for index, entry in enumerate(value):
+        label = f"measured[{index}]"
+        kind = body_form(entry, label)
+        found = check(entry, kind, label, context)
+        assert isinstance(found, dict)
+        if kind is COUNTED:
+            counted_nodes(found, label)
+        checked.append(found)
+    return tuple(checked)
+
+
+def detectors(value: object) -> tuple[dict[str, object], ...]:
+    """The detectors of the world file, each against the detector's schema."""
+    if not isinstance(value, list):
+        raise ValueError("detectors must be a list")
+    checked = []
+    for index, entry in enumerate(value):
+        found = check(entry, DETECTOR, f"detectors[{index}]", Context())
+        assert isinstance(found, dict)
+        checked.append(found)
+    return tuple(checked)
 
 
 def start(value: str, files: Mapping[str, object]) -> EngineStart:

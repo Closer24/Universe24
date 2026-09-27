@@ -280,7 +280,7 @@ def test_the_given_clock_is_the_emitters_when_the_family_declares_none():
     world = parse_nature_beam_world(document)
     emitter = world.measured[0].block.emitter  # type: ignore[union-attr]
     assert emitter is not None and emitter.clock == (512, 1)
-    assert emitter.train is None and emitter.weight == 3  # the window's (commit 7; the train retired)
+    assert emitter.weight == 3  # the window's (commit 7; the train retired)
     assert emitter.pair == (1, 1)  # the charge family's declared pair, light's kind
     without = json.loads(json.dumps(document))
     del without["measured"][0]["emitter"]["clock"]

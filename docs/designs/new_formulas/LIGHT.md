@@ -460,5 +460,5 @@ three formulas, II.1 to II.10); [DERIVATIONS_BEAM](../../DERIVATIONS_BEAM.md)
 section 3, lines 3088 to 3089, note 48; [FORM.md](../light_speed/FORM.md)
 section 1; [NATURE](../../NATURE.md) rows 1a, 2a, 2c, 4b, 5a, 9, 12, 13;
 [EXPERIMENTS](../../EXPERIMENTS.md) series Q, T, X, L (L2b, L3, L7), A12,
-the optical pin worlds; [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector),
+the optical pin worlds; [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md),
 records 817, 822, 823 and 824.

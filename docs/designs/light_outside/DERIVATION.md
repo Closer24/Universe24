@@ -1554,6 +1554,6 @@ brightness](../far_lamp/BRIGHTNESS.md); [Malus](../malus/NOTE.md);
 and 13; [EXPERIMENTS](../../EXPERIMENTS.md) series Q, S, T, G, G2, X, L,
 W, A12, the optical pin worlds, E15 and E16;
 [TERMINOLOGY](../../TERMINOLOGY.md), the readings;
-[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector), lines 360, 381,
+[HIGHLIGHTS 5.4](../../HIGHLIGHTS.md), lines 360, 381,
 395 to 403; the log's records 158, 394, 569, 709, 723, 754, 762, 768, 772
 and 777 ([LOG_2026-09-20](../../LOG_2026-09-20.md)).

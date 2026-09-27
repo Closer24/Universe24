@@ -5,7 +5,7 @@ every family's entry by the folders' cards with the frame's one key, the name, a
 file, its mode; every refusal by name, no default written (record 2089: the dipole's divisor is
 the universe file's). Checked here: the shipped file and the source's fragment pass with the
 weight word resolved, every genericity draw passes, each defect is refused by name, the start
-file is its mode and nothing else, the world's own keys by the frame's schema with the bodies and the
+file is its mode and nothing else, the world's own keys, the bodies and the detectors by the frame's schemas with the
 universe handed on, and the frame holds no default, no family name and no
 version (the acceptance tests' readers on the new module)."""
 
@@ -18,7 +18,10 @@ from pathlib import Path
 import pytest
 
 from event_universe.core.register import discover
+from event_universe.core.schema import Context
+from event_universe.events.world import parse_world_document
 from event_universe.loader import frame
+from event_universe.world_files import input_digest, world_files
 from tests.running import SEEDS, draw, family_names, string_constants, written_defaults
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -176,6 +179,185 @@ def test_every_defect_of_the_worlds_own_keys_is_refused_by_name():
     handed = copy.deepcopy(good)
     handed["measured"] = "not checked here"
     assert frame.world(handed)["measured"] == "not checked here"
+
+
+def test_every_shipped_body_and_detector_passes_the_frames_schemas():
+    """Every body and every detector of the shipped worlds passes the frame with the families
+    known; a stock names a family, the checked lists are tuples."""
+    families = tuple(entry["name"] for entry in shipped()["families"])
+    context = Context(families)
+    ahead = {"check_mode", "source"}
+    count = 0
+    for path in sorted((ROOT / "examples" / "events").glob("*/*.json")):
+        document = json.loads(path.read_text(encoding="utf-8"))
+        if not (isinstance(document, dict) and "universe" in document) or ahead & set(path.parts):
+            continue
+        count += 1
+        bodies = frame.bodies(document["measured"], context)
+        assert len(bodies) == len(document["measured"])
+        for body, written in zip(bodies, document["measured"], strict=True):
+            assert body["position"] == tuple(written["position"]) and body["family"] in families
+            assert set(body["stocks"]) <= set(families)
+        detectors = frame.detectors(document["detectors"])
+        assert [d["name"] for d in detectors] == [d["name"] for d in document["detectors"]]
+    assert count >= 22
+
+
+def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
+    """The ray law's and the retired keys as unknown keys, a missing key, a wrong kind, a
+    family the universe lacks (on the body, in its stocks, in its emitter), a bad mapping."""
+    good = json.loads(
+        (ROOT / "examples" / "events" / "dark_body" / "bright.json").read_text(encoding="utf-8")
+    )
+    context = Context(tuple(entry["name"] for entry in shipped()["families"]))
+
+    def refuses(change, match: str) -> None:
+        broken = copy.deepcopy(good)
+        change(broken)
+        with pytest.raises(ValueError, match=match):
+            frame.bodies(broken["measured"], context)
+            frame.detectors(broken["detectors"])
+
+    for key in (
+        "lamp",
+        "phase",
+        "directions",
+        "table",
+        "become",
+        "span",
+        "wheel",
+        "take",
+        "coupling",
+        "cavity",
+    ):
+        refuses(
+            lambda d, key=key: d["measured"][0].__setitem__(key, 1),
+            rf"measured\[0\] has unknown keys: {key} \(the keys: ",
+        )
+    for key in ("family", "amount", "momentum", "stocks"):
+        refuses(lambda d, key=key: d["measured"][0].pop(key), rf"measured\[0\] lacks keys: {key}")
+    refuses(
+        lambda d: d["measured"][0].pop("position"),
+        r"measured\[0\] is written by its position \(today's form\) or by its nodes .* not neither",
+    )
+    refuses(
+        lambda d: d["measured"][0].__setitem__("family", "nobody"),
+        r"measured\[0\]\.family names 'nobody', no family of the universe",
+    )
+    refuses(
+        lambda d: d["measured"][0].__setitem__("stocks", {"nobody": 1}),
+        r"measured\[0\]\.stocks key 'nobody' names 'nobody', no family",
+    )
+    refuses(
+        lambda d: d["measured"][0].__setitem__("stocks", {"charge": 0}),
+        r"measured\[0\]\.stocks\['charge'\] is 0, below its least 1",
+    )
+    refuses(
+        lambda d: d["measured"][0].__setitem__("stocks", [1]),
+        r"measured\[0\]\.stocks must be an object mapping names to values",
+    )
+    refuses(
+        lambda d: d["measured"][0].__setitem__("momentum", [0, 0]),
+        r"measured\[0\]\.momentum must be a list of 3, not of 2",
+    )
+    refuses(
+        lambda d: d["measured"][0].__setitem__("emitter", {"family": "nobody", "twist": 0}),
+        r"emitter\.family names 'nobody', no family of the universe",
+    )
+    refuses(
+        lambda d: d["measured"][0].__setitem__("emitter", {"family": "charge", "wheel": 1, "twist": 0}),
+        r"emitter has unknown keys: wheel",
+    )
+    refuses(
+        lambda d: d["measured"][0].__setitem__("emitter", {"family": "charge"}),
+        r"emitter lacks keys: twist",
+    )
+    refuses(
+        lambda d: d["detectors"][0].__setitem__("threshold", 1),
+        r"detectors\[0\] has unknown keys: threshold",
+    )
+    refuses(lambda d: d["detectors"][0].pop("name"), r"detectors\[0\] lacks keys: name")
+    refuses(
+        lambda d: d["detectors"][0].__setitem__("positions", [[0, 0]]),
+        r"positions\[0\] must be a list of 3, not of 2",
+    )
+    with pytest.raises(ValueError, match="measured must be a list"):
+        frame.bodies({}, context)
+    with pytest.raises(ValueError, match="detectors must be a list"):
+        frame.detectors({})
+
+
+def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by_name():
+    """A body by its family, its Nodes with their counts and its momentum (ALGEBRA.md 9.120
+    item 1), with its spin and its moment where declared, passes the frame with the families
+    known; written in both forms or in neither, a missing key, an unknown key (today's keys
+    among them), a wrong kind, an empty Nodes list, a Node twice and a family the universe lacks
+    are refused by name; the loop's translation refuses the form by name until it reads it."""
+    families = tuple(entry["name"] for entry in shipped()["families"])
+    context = Context(families)
+    body = {
+        "family": families[-1],
+        "nodes": [{"node": [1, 2, 3], "count": 5}, {"node": [1, 2, 4], "count": 7}],
+        "momentum": [0, 0, -3],
+    }
+    (found,) = frame.bodies([body], context)
+    assert found["nodes"] == ({"node": (1, 2, 3), "count": 5}, {"node": (1, 2, 4), "count": 7})
+    assert found["momentum"] == (0, 0, -3) and "spin" not in found
+    (found,) = frame.bodies([{**body, "spin": [0, 1, 0], "moment": [2, 0, 0]}], context)
+    assert found["spin"] == (0, 1, 0) and found["moment"] == (2, 0, 0)
+
+    def refuses(change, match: str) -> None:
+        broken = copy.deepcopy(body)
+        change(broken)
+        with pytest.raises(ValueError, match=match):
+            frame.bodies([broken], context)
+
+    refuses(
+        lambda b: b.__setitem__("position", [1, 2, 3]),
+        r"measured\[0\] is written by its position \(today's form\) or by its nodes with their "
+        r"counts \(the law's form\), not both",
+    )
+    refuses(lambda b: b.pop("nodes"), r"measured\[0\] is written by its position .* not neither")
+    refuses(lambda b: b.pop("momentum"), r"measured\[0\] lacks keys: momentum")
+    for key in ("amount", "stocks", "fixed", "kind", "seed", "emitter", "count"):
+        refuses(
+            lambda b, key=key: b.__setitem__(key, 1),
+            rf"measured\[0\] has unknown keys: {key} \(the keys: family, moment, momentum, nodes, spin\)",
+        )
+    refuses(lambda b: b.__setitem__("nodes", []), r"measured\[0\]\.nodes is empty")
+    refuses(
+        lambda b: b["nodes"].append({"node": [1, 2, 3], "count": 1}),
+        r"measured\[0\]\.nodes names the Node \[1, 2, 3\] twice",
+    )
+    refuses(
+        lambda b: b["nodes"][0].__setitem__("count", 0),
+        r"measured\[0\]\.nodes\[0\]\.count is 0, below its least 1",
+    )
+    refuses(
+        lambda b: b["nodes"][0].__setitem__("node", [1, 2]),
+        r"measured\[0\]\.nodes\[0\]\.node must be a list of 3, not of 2",
+    )
+    refuses(lambda b: b["nodes"][0].pop("count"), r"measured\[0\]\.nodes\[0\] lacks keys: count")
+    refuses(
+        lambda b: b.__setitem__("momentum", [1, 2]),
+        r"measured\[0\]\.momentum must be a list of 3, not of 2",
+    )
+    refuses(
+        lambda b: b.__setitem__("family", "nobody"),
+        r"measured\[0\]\.family names 'nobody', no family of the universe",
+    )
+    with pytest.raises(ValueError, match=r"measured\[0\] must be an object: a body by its position"):
+        frame.bodies([3], context)
+    world = json.loads(
+        (ROOT / "examples" / "events" / "dark_body" / "bright.json").read_text(encoding="utf-8")
+    )
+    world["measured"][0] = body
+    with pytest.raises(
+        ValueError,
+        match=r"measured\[0\] is a body in the law's form \(its Nodes with their counts\): the loop "
+        r"reads a body by its position until the count's line is bound to it",
+    ):
+        parse_world_document(world, world_files(world), input_digest(world))
 
 
 def test_the_start_file_is_its_mode_and_nothing_else():

@@ -189,9 +189,7 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
     number = chain_of_200()
     number["measured"][0]["receiver"] = 3
     number["stamp"] = input_stamp(number)
-    with pytest.raises(
-        ValueError, match=r"measured\[0\]\.receiver must be the name of a declared detector set"
-    ):
+    with pytest.raises(ValueError, match=r"measured\[0\]\.receiver must be a word, not 3"):
         parse_nature_beam_world(number)
 
 
