@@ -42,6 +42,7 @@ from event_universe.core.register import (
 from event_universe.core.step import Step
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
+from tests.running import ORDERS
 from tests.worlds import emitter_world
 
 
@@ -85,16 +86,6 @@ ROWS_OF_9_117 = (
     "the hop",
     "the trace",
 )
-# the orders of ALGEBRA.md 9.117 item 3 as the step file law/step.json gives them (record 2251):
-# the writers of one value at one place in the file's order, a write deferred from (ii) first
-ORDERS = {
-    ("(iv)", "a family's level at a Node"): ("the hold", "the source"),
-    ("(iv)", "a body's content M_k"): ("the clicks", "the giving", "the clicks list"),
-    ("(iv)", "a body's momentum n"): ("the giving", "the recoil"),
-    ("(v)", "a body's momentum n"): ("the feed", "the induction"),
-    ("(i)", "the arrivals"): ("the receive", "the internal representation"),
-    ("(ii)", "the record's tally"): ("the clicks", "the lifetime"),
-}
 
 
 def noop() -> None:

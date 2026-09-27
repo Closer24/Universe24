@@ -493,3 +493,15 @@ def written_defaults(path: Path) -> list[str]:
 def family_names() -> set[str]:
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     return {family["name"] for family in universe["families"]}
+
+
+# the orders of ALGEBRA.md 9.117 item 3 as the step file law/step.json gives them: the writers
+# of one value at one place in the file's order, a write deferred from (ii) first
+ORDERS = {
+    ("(iv)", "a family's level at a Node"): ("the hold", "the source"),
+    ("(iv)", "a body's content M_k"): ("the clicks", "the giving", "the clicks list"),
+    ("(iv)", "a body's momentum n"): ("the giving", "the recoil"),
+    ("(v)", "a body's momentum n"): ("the feed", "the induction"),
+    ("(i)", "the arrivals"): ("the receive", "the internal representation"),
+    ("(ii)", "the record's tally"): ("the clicks", "the lifetime"),
+}
