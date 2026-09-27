@@ -289,13 +289,13 @@
  },
  "format": "code-shape-baseline",
  "loop_internal_imports": {
+  "tests/running.py": [
+   "LiveRecord"
+  ],
   "tests/test_board_properties.py": [
    "LiveRecord"
   ],
   "tests/test_detector_law.py": [
-   "LiveRecord"
-  ],
-  "tests/test_flux_reading.py": [
    "LiveRecord"
   ],
   "tests/test_massive_record.py": [

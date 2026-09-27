@@ -217,3 +217,24 @@ def test_an_import_of_the_loops_internals_outside_core_fails(tmp_path):
     assert SHAPE.violations(root, baseline) == [
         "tools/run.py imports the loop's internals *: nothing outside core/ does"
     ]
+
+
+def test_a_moved_import_of_the_loops_internals_keeps_the_count_and_a_new_importer_fails(tmp_path):
+    loop = f"{PACKAGE}/events/detector_law.py"
+    root = tree(
+        tmp_path,
+        {
+            **SMALL,
+            f"{PACKAGE}/events/__init__.py": "",
+            loop: "def _inner():\n    pass\n",
+            "tests/test_a.py": "from event_universe.events.detector_law import _inner\n",
+        },
+    )
+    base = SHAPE.record(root)
+    (root / "tests" / "test_a.py").write_text("X = 1\n", encoding="utf-8")
+    tree(root, {"tests/helpers.py": "from event_universe.events.detector_law import _inner\n"})
+    assert SHAPE.violations(root, SHAPE.record(root), base) == []
+    tree(root, {"tests/test_b.py": "from event_universe.events.detector_law import _inner\n"})
+    assert SHAPE.violations(root, SHAPE.record(root), base) == [
+        "the loop's internal _inner is imported by 2 files, above the merge base's 1"
+    ]

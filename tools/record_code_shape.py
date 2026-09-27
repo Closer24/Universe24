@@ -362,7 +362,7 @@ def above_the_base(
     imports: dict[str, list[str]],
     base: dict[str, Any],
 ) -> list[str]:
-    """Every count of a file beyond the limits, every duplicate group and every import of the loop's internals that stands higher than the merge base's baseline: raising the baseline in the same commit is refused."""
+    """Every count of a file beyond the limits, every duplicate group and every internal of the loop imported by more files than at the merge base's baseline: raising the baseline in the same commit is refused."""
     found: list[str] = []
     for rel, shape in present.items():
         recorded = base["files"].get(rel)
@@ -376,10 +376,21 @@ def above_the_base(
     for digest, names in groups.items():
         if len(names) > len(base["duplicates"].get(digest, [])):
             found.append(f"duplicate functions above the merge base: {', '.join(names)}")
-    for rel, names in imports.items():
-        grew = sorted(set(names) - set(base["loop_internal_imports"].get(rel, [])))
-        if grew:
-            found.append(f"{rel} imports the loop's internals {', '.join(grew)} above the merge base")
+
+    # per name, the number of files importing it: a helper moved between files keeps the count
+    def importers(table: dict[str, list[str]]) -> dict[str, int]:
+        counts: dict[str, int] = {}
+        for names in table.values():
+            for name in names:
+                counts[name] = counts.get(name, 0) + 1
+        return counts
+
+    was = importers(base["loop_internal_imports"])
+    for name, count in sorted(importers(imports).items()):
+        if count > was.get(name, 0):
+            found.append(
+                f"the loop's internal {name} is imported by {count} files, above the merge base's {was.get(name, 0)}"
+            )
     return found
 
 
