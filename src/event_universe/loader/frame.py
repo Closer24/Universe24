@@ -107,6 +107,7 @@ BODY = ObjectOf(
         "family": Name(),
         "amount": Integer(least=1),
         "momentum": AXES,
+        "momentum_before": AXES,
         "stocks": MapOf(Name(), Integer(least=1)),
         "fixed": Flag(),
         "kind": PAIR,
@@ -129,6 +130,7 @@ BODY = ObjectOf(
     },
     frozenset(
         {
+            "momentum_before",
             "kind",
             "q",
             "spin",
@@ -157,10 +159,11 @@ COUNTED = ObjectOf(
         "family": Name(),
         "nodes": ListOf(NODE_COUNT),
         "momentum": AXES,
+        "momentum_before": AXES,
         "spin": AXES,
         "moment": AXES,
     },
-    frozenset({"spin", "moment"}),
+    frozenset({"momentum_before", "spin", "moment"}),
 )
 # a detector of the world file: its name, its Nodes, or the body it belongs to
 DETECTOR = ObjectOf(

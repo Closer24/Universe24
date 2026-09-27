@@ -304,7 +304,7 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
     for key in ("amount", "stocks", "fixed", "kind", "seed", "emitter", "count"):
         refuses(
             lambda b, key=key: b.__setitem__(key, 1),
-            rf"measured\[0\] has unknown keys: {key} \(the keys: family, moment, momentum, nodes, spin\)",
+            rf"measured\[0\] has unknown keys: {key} \(the keys: family, moment, momentum, momentum_before, nodes, spin\)",
         )
     refuses(lambda b: b.__setitem__("nodes", []), r"measured\[0\]\.nodes is empty")
     refuses(

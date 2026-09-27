@@ -151,8 +151,6 @@ def _refuse_under_law(obj: dict[str, object], label: str, keys: set[str]) -> Non
 STAMP_KEYS = {"hash"}
 BLOCK_KEYS = {
     "side",
-    # the box's extents per axis in place of `side` (the slabs of ALGEBRA.md
-    # 9.22 (8); BUILD.md section 26 item 23)
     "extents",
     "pair",
     # THE BODY'S KIND (ALGEBRA.md 9.85 (3), 9.91 (7); the one stroke, commit 1):
@@ -167,8 +165,6 @@ BLOCK_KEYS = {
     "seed",
     # the bound mode's clock [a, b] beside a profile (ALGEBRA.md 9.22 (7))
     "clock",
-    # the moving body's Node's proper pairs by the momentum's whole part (ALGEBRA.md
-    # 9.63 (3); BUILD.md section 26 item 46), beside `clock` on a moving block
     "proper_clock",
     "ramp",
     "start",
@@ -177,9 +173,6 @@ BLOCK_KEYS = {
     # the excited records in turn on the body's Nodes, each clicking at its
     # own rung, the given record written once by E^T at that interval
     "emitter",
-    # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
-    # 7): an emitting block names the detector set whose one detector is its
-    # record's ladder; admitted on an emitting block alone
     "receiver",
     # the stock of the body's own family where its emitter gives it (ALGEBRA.md
     # 9.96 (5); commit 6)
@@ -231,27 +224,6 @@ class FamilyDefinition:
     # frequency cos omega_0 = num / den. Admitted under the world key
     # `massive_record` alone.
     pair: tuple[int, int] = MASSLESS_PAIR
-    # THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25
-    # through the Boss: "the engine does not know the family's name, does not
-    # know what the family does; it only supports the family's operations";
-    # BUILD.md section 26 item 51). What a family IS is declared here and
-    # read by the engine as attributes alone, never by a name or a role:
-    # `held`, the source a body's record writes at the body's Nodes at both
-    # levels with the remainder 0, "content" (the quanta the body holds, the
-    # Node clock's c of ALGEBRA.md 9.45) or "charge" (the signed sum of its
-    # quanta, the d of 9.48), None for a family the step alone moves; `reads`,
-    # the held families whose levels enter this family's pace at every Node,
-    # (family index, weight, by) each, the effective content SUM weight x
-    # level for by = "plain" and - q x weight x level for by = "sign" (q the
-    # reading family's own charge sign; 9.48 (3): c - q Lambda d), empty for
-    # a held family (the plain rule, the pace 1 of its own); `components`,
-    # the representation's count (1 a scalar; 3 and 6 the vector and tensor
-    # families of 9.77, not yet built). The sources and the read modes are
-    # the operations' words, never a family's name (item 53: "sign", the
-    # signed sum of the quanta by the families' declared signs). A held
-    # family is booked by no detector and every other family is (`booked`,
-    # derived, item 53); a family declares nothing about detectors or
-    # emitters: those are the bodies' mechanisms.
     held: str | None = None
     reads: tuple[tuple[int, int, str, int | str], ...] = ()
     # THE REPRESENTATION AS A LIST OF PARTS (ALGEBRA.md 9.86 (2), (3); 9.91
@@ -476,6 +448,8 @@ class MeasuredDefinition:
     span: tuple[int, int, int] = ONE_NODE
     phase_by_momentum: bool = False
     held: tuple[int, ...] = ()
+    # the momentum's level one interval before (the feed's leapfrog pair, ALGEBRA.md the row of the feed): the world's `momentum_before`, the declared momentum where the old form leaves it out (the spin's precedent)
+    momentum_before: Vector = (0, 0, 0)
     # the ray law's splits and lamp, read by the loop as None (its cancelled branches)
     splits: tuple[None, ...] = ()
     lamp: None = None
@@ -1784,6 +1758,10 @@ def _measured(
         phase = 0
         momentum_value = cast(tuple[object, ...], obj["momentum"])
         momentum = tuple(_integer(item, f"{label}.momentum", -AMOUNT_BOUND) for item in momentum_value)
+        before_value = cast(tuple[object, ...], obj.get("momentum_before", momentum_value))
+        momentum_before = tuple(
+            _integer(item, f"{label}.momentum_before", -AMOUNT_BOUND) for item in before_value
+        )
         fixed = cast(bool, obj["fixed"])
         turning = False
         # the ray law's table: every family at the keys' rule `measure` with the scalar
@@ -1824,6 +1802,7 @@ def _measured(
                 turning,
                 tuple(held),
                 block=block,
+                momentum_before=(momentum_before[0], momentum_before[1], momentum_before[2]),
             )
         )
     return tuple(found)

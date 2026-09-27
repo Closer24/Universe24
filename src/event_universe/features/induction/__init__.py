@@ -106,7 +106,7 @@ DECLARATION = Declaration(
         "Gamma",
     ),
     writes=("a body's momentum n", "a body's remainders"),
-    function=None,
+    function=apply,
     section="9.117 item 2; 9.78 (4); 9.91 (8) (v)",
     word="after the step",
 )

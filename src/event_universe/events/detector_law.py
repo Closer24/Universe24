@@ -86,6 +86,14 @@ from event_universe.core.rule3 import (
     rungs,
 )
 from event_universe.features import self_source
+from event_universe.features.feed import (
+    PAIR_INDEX,
+    FeedFace,
+    FeedOwn,
+    FeedRead,
+    FeedStart,
+    FeedWrites,
+)
 from event_universe.features.giving import (
     THE_CLOSE,
     THE_OPEN,
@@ -96,6 +104,12 @@ from event_universe.features.giving import (
     GivingWrites,
 )
 from event_universe.features.hold import TENSOR_AXES, HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
+from event_universe.features.induction import (
+    InductionOwn,
+    InductionRead,
+    InductionStart,
+    InductionWrites,
+)
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
 from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
@@ -133,11 +147,6 @@ FACE_NAMES = ("face:-x", "face:+x", "face:-y", "face:+y", "face:-z", "face:+z")
 # the offer arriving by that Port.
 
 
-# A RATIONAL IS A PAIR OF INTEGERS (numerator, denominator) in lowest terms with the
-# denominator positive: the engine holds no `fractions` (the integer rule, record 2071;
-# tests/test_integer_algebra.py). The pairs are Python integers without the working
-# bound (the conserved form summed over a board and the body-frame booking's terms
-# exceed 2^63, as the exact rationals they replace did); gcd, sums and products alone.
 Ratio = tuple[int, int]
 ZERO: Ratio = (0, 1)
 
@@ -189,53 +198,15 @@ class LiveRecord:
     absorbed: int = 0
     norm: int = 0
     first_rung: list[int | None] = field(default_factory=list)
-    # THE RESIDUE FROM THE LAW (ALGEBRA.md 9.22 (4); BUILD.md section 26 item
-    # 15): the record's own wheel W, given with its residue u, both read from
-    # the rule's remainder at the giving Node of the record that clicked to
-    # giving it (`residue_of`); a planted record carries the test's W. The
-    # rung's wheel is the record's, never a set's or the world's. UNDER THE
-    # NODE CLOCK (ALGEBRA.md 9.35 (2), (3); BUILD.md section 26 item 31) W
-    # = 3 den f / gcd(Gamma num, 6 den M, 3 den f) at that Node with f =
-    # Gamma + M (`wheel_at`): the pair's own where the content M is 0,
-    # content-dependent at a body's Nodes, read from the rule and never
-    # declared.
     wheel: int = 1
-    # massive-record-v1: the emitter's number for a record a body emitted
-    # (None for a planted record and for a block's own record); the
-    # coupling's folded denominator (`scale`) is HISTORY since the model
-    # owner's decision (2) of record 1962 (the wall 3 den alone, one D per
-    # row per interval, the remainder in [0, wall)).
     emitter: int | None = None
-    # The pair's arms (detector-law-v1, build 2, component 2; DECLARATIONS.md
-    # Bell's four settings and the no-signalling control, DESIGN.md 6.3): a lamp with `arms` givings one record
-    # per arm on one giving stamp (the same ordinal, u and tick), each arm's
-    # row confined to its own half-space by the arm's first direction (the
-    # rows zero beyond the lamp's Node on the other side, verb D's comparison
-    # at every interval), the joint labels carried on every arm unchanged;
-    # a lamp of one arm has no mask and its record is as it was.
     arm: int = 0
     arms: int = 1
     labels: tuple[tuple[int, int], ...] = ((0, 1),)
     mask: np.ndarray | None = None
-    # The joint gather (DECLARATIONS.md section 1 item 3): an arm of a pair
-    # that has completed waits, its rows still, for the other arms; the pair
-    # gathers once when every arm has completed.
     arm_done: bool = False
-    # HOST (record 2039 (b); BUILD.md section 26 item 43): the record's support
-    # box, [lo, hi) per axis, outside which its two levels and its remainder
-    # are zero; None for the whole board. The step reads and writes the box
-    # grown by one Link (the rule's reach) and writes zeros elsewhere: the
-    # same integers as the whole-board step, bit for bit, since zero rows with
-    # a zero remainder step to zero under the rule. A shortcut of the host,
-    # not of the law: the model's local work per Node is unchanged.
     box: tuple[tuple[int, int], ...] | None = None
 
-    # The record's LADDER BY NAME (the lamp's `receiver`, SIZING.md; the
-    # click line and the receiver by name, DECLARATIONS.md section 13 item
-    # 7): the detectors among which u chooses, None for every detector as built. A
-    # detector outside the ladder is a SINK for this record: it takes and books
-    # as every detector does (the pointer, `absorbed`, the rung), but the click
-    # never chooses it and its share is not in the ladder's sum.
     ladder: list[int] | None = None
 
     # THE INCREMENT LADDER (ALGEBRA.md 9.25 (2)): the record's running total
@@ -245,38 +216,15 @@ class LiveRecord:
     # crosses it, at the detector whose segment of that interval's increment
     # holds the threshold.
     total: int = 0
-    # whether the record's line was written (the record is deleted whole at
-    # that interval, ALGEBRA.md 8.8, record 1888)
     clicked: bool = False
-    # THE BOOKING IN THE BODY'S FRAME (ALGEBRA.md 9.74 (2); BUILD.md section
-    # 26 item 56): per detector of a moving set, the fraction of the face's
-    # booking below one unit of the flux, carried to the next interval's
-    # booking (a remainder kept on the record, exact); empty at rest
     carry: dict[int, Ratio] = field(default_factory=dict)
-    # THE FOUR-VECTOR CLICK'S SPACE PART (ALGEBRA.md 9.86 (1), 9.91 (4), 9.84 (2),
-    # 9.25 (12); commit 5 without the recoil, record 2135): per detector, per
-    # axis, the flux booked through the detector's Ports on its -a side minus
-    # the flux booked through those on its +a side, summed over the record's
-    # walk (the taken quantum's direction of travel: a quantum moving toward
-    # +a enters through the -a face); the sign per axis is sigma_a on the
-    # click line. Nothing is added to any body's momentum: the recoil of
-    # 9.84 (2) waits on the closing of record 2135 (the click that keeps the
-    # momentum, 9.109, is a decision of three).
     momentum_tally: dict[int, list[int]] = field(default_factory=dict)
     # THE GIVEN QUANTUM'S DIRECTION (9.91 (4), the giving's tally): per axis, the
     # outward flux through the body's +a Ports minus through its -a Ports over
     # the window, the sign per axis on the giving line at the close
     outward_tally: list[int] = field(default_factory=lambda: [0, 0, 0])
-    # THE POINT EMITTER'S WINDOW (ALGEBRA.md 9.71 (1); BUILD.md section 26 item
-    # 50): open from the giving click until the outward norm through the
-    # body's Node's six Ports reaches T; the intervals written and the outward norm
-    # summed; the giving line held until the close names the record
     window_open: bool = False
     window: int = 0
-    # THE FAMILY GENERICITY (record 2066; item 51): a body's own standing
-    # record (the lattice body's, held by the law at the body and read by no
-    # detector, its inverse with the body's), marked on the record and not
-    # on its family
     standing: bool = False
     outward: int = 0
     giving_line: dict[str, object] | None = None
@@ -284,38 +232,11 @@ class LiveRecord:
     # pointer's unit): what the faces and every set but the receiver took,
     # inside `absorbed` (the completion's measure) and on no pointer.
     escaped: int = 0
-    # THE RECORD'S PAIR (ALGEBRA.md 9.85 (3), 9.91 (7); the one stroke, commit
-    # 1): the rest pair its rows step with, its family's declared pair or, on
-    # a family whose pair is the body's, the body's `kind` or the emitter's
-    # `pair`; the board's pair arrays are read by (family, pair); None reads
-    # the family's declared pair (a record made without one, the tests')
     pair: tuple[int, int] | None = None
-    # THE COMPONENT (ALGEBRA.md 9.86 (2), 9.91 (1)): the index of the record's
-    # component in its family's parts (0 the time part; a wave of light in
-    # one transverse component of the charge family, commit 4)
     part: int = 0
-    # THE HELD PART (item 51; 9.91 (2), (3)): a field family's component
-    # record, stepped plain at the pace 1, written by the hold at the bodies'
-    # Nodes, booked by no detector; marked on the record, not on its family
-    # (the charge family is held and has waves, 9.86 (2) (b))
     held_part: bool = False
-    # HOST (record 2039 (b); 9.91 (1) "the support-box shortcut keeps a zero
-    # part free of work"): a held part never written nonzero: its two levels
-    # and remainder are zero everywhere and step to zero exactly, so the step
-    # is skipped; cleared by the first nonzero hold
     silent: bool = False
-    # THE NORM'S DENOMINATOR (ALGEBRA.md 9.50 (13); BUILD.md section 26 item
-    # 36): the record's conserved form is the exact rational norm / pace (the
-    # Node's terms weighted by 1 / p_i); at one level p times the form is
-    # whole and the pair reduces from (p x form, p), the pace Gamma - c + q
-    # Lambda d at the body's Nodes as written; the ladder reads the plain
-    # flux against it, 2 W pace C against (2 u + 1) norm. 1 for a record
-    # whose norm is set in the form's own units.
     pace: int = 1
-    # THE SECOND LEVEL of a phase-2 record (ALGEBRA.md 9.91 (1); commit 4): the pair's
-    # second component, (now, before, r) over the board, None until a rotation of the
-    # transport writes it (a second level that starts zero and meets no twist stays
-    # exactly zero, 9.91 (2), (9) (c))
     im_now: np.ndarray | None = None
     im_before: np.ndarray | None = None
     im_remainder: np.ndarray | None = None
@@ -368,29 +289,19 @@ class Block:
     mask: np.ndarray
     detector: int
     momentum: list[int]
+    momentum_before: list[int] = field(default_factory=lambda: [0, 0, 0])
     drive: list[int] = field(default_factory=lambda: [0, 0, 0])
-    # THE SPIN AS STATE (ALGEBRA.md 9.78 (5), 9.91 (8) (v); commit 6): S now and S one
-    # interval back, the leapfrog's two integers; the load's write is the body's
-    # declared `spin` at both
     spin: list[int] = field(default_factory=lambda: [0, 0, 0])
     spin_before: list[int] = field(default_factory=lambda: [0, 0, 0])
-    # A TOOL HELD IN PLACE (ALGEBRA.md 9.104 (6) (b); the Boss's record 2157): the world's
-    # word `fixed`; the feed, when it lands, acts on a body without the word alone
     fixed: bool = False
     count: int = 0
     previous_sum: int = 0
     own: LiveRecord | None = None
-    # THE BODY'S RECORD AT ITS BODY'S NODE (ALGEBRA.md 9.60; item 42, item 37
-    # HISTORY): the standing record on the body's Node under the world key
-    # `body_record`, its own rows then nowhere else on the GameBoard (`own`
-    # None); None under the lattice body
     node_record: NodeRecord | None = None
     emitted: list[int] = field(default_factory=list)
     current: int | None = None
     givings: int = 0
     hop: tuple[int, int, int] = (0, 0, 0)
-    # THE POINT EMITTER (item 50): the identity of the given record whose
-    # window is open at this body, None when none is
     window: int | None = None
     new_cycle: bool = False
     # the interval the current cycle began and the last cycle's length (the
@@ -411,11 +322,6 @@ class Block:
     # own remainder at the first shell Node after its first advance; every
     # later residue is read at the click (9.44 (5) (c))
     residue_pending: bool = False
-    # THE HOLDS' REMAINDERS (ALGEBRA.md 9.91 (3); the one stroke, commit 2): per
-    # held family and part, the division's remainder carried between intervals
-    # and the value written, (family, part) for the support's writes and ("d",
-    # family, i, j, sigma) for the dipole's on the Node + sigma e_j; exact and
-    # inverted with the body
     hold_carry: dict[tuple[object, ...], int] = field(default_factory=dict)
     hold_value: dict[tuple[object, ...], int] = field(default_factory=dict)
 
@@ -642,11 +548,6 @@ class DetectorLawSimulation:
         # tensor part is silent (the isotropic rule, bit for bit)
         self._pace_carry: dict[tuple[int, int, int], np.ndarray] = {}
         self._axis_effective: dict[int, tuple[int, bool, tuple[np.ndarray, ...] | None]] = {}
-        # THE LEAK TEST (the model owner's record 2075 (3); BUILD.md section 26
-        # item 55): a held family no body has ever sourced must be exactly zero
-        # everywhere; the hold marks the first nonzero source (HOST, a flag per
-        # held family, read by `leaks`)
-        # per part (9.91 (9) (a)): (family, part), the time part 0
         self._sourced_ever: dict[tuple[int, int], bool] = {
             (family, part): False
             for family in self.held_families
@@ -700,16 +601,10 @@ class DetectorLawSimulation:
             )
             block.spin = list(definition.spin)
             block.spin_before = list(definition.spin)
+            block.momentum_before = [int(component) for component in entry.momentum_before]
             block.fixed = bool(entry.fixed)
             self._write_pair(block)
             if definition.seed > 0 and world.body_record:
-                # THE BODY RECORD (ALGEBRA.md 9.46 (1), (7) (c); BUILD.md section
-                # 26 item 37): the load's one write, the rotation at the
-                # profile's value at the body's centre Node at both levels with
-                # the remainder 0 (the lattice body's standing start, both
-                # levels the profile), the profile a declared constant read at
-                # the giving click alone (9.60 (6)), no rows elsewhere on the
-                # GameBoard
                 assert definition.profile is not None and definition.clock is not None
                 profile = np.array(definition.profile, dtype=np.int64).reshape(self.shape)
                 centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
@@ -757,13 +652,6 @@ class DetectorLawSimulation:
                 if self.set_nodes[set_detector] is None:
                     block = self.block_by_number[number]
                     self.detector_at_node[block.mask] = set_detector
-        # The receiver by name (DECLARATIONS.md section 13 item 7): an
-        # emitting block's `receiver` names the detector set whose one detector
-        # is the ladder of every record it emits (the click line at that
-        # detector's first rung after the train; the faces and every other set
-        # sinks for it, their take into `absorbed` alone and onto no pointer).
-        # A block without the key keeps the ladder of every detector and the line
-        # at the close, as before the key (the registered worlds byte for byte).
         self.receiver_detector: dict[int, int] = {}
         for block in self.blocks:
             name = block.definition.receiver
@@ -858,6 +746,8 @@ class DetectorLawSimulation:
             "the operation": Stage(self._records_stage, (), chain),
             "the giving": Stage(self._giving_stage, (), ("the giving",), creates=True),
             "the source": Stage(self._source_stage, (), ("the source",)),
+            "the feed": Stage(self._feed_stage, (), ("the feed",)),
+            "the induction": Stage(self._induction_stage, (), ("the induction",)),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
         }
 
@@ -923,7 +813,9 @@ class DetectorLawSimulation:
     def fingerprints(self) -> dict[str, dict[object, object]]:
         """Every ledger word the main loop audits after an act, stamped: the bodies' counts, momenta, spins, positions and remainders, the records' and the held families' arrays by identity, the tallies, the paces' carries and the records alive."""
         stamps = self.fingerprints_of(*self.records.values(), *self.held_component_records())
-        stamps["a body's momentum n"] = {b.number: tuple(b.momentum) for b in self.blocks}
+        stamps["a body's momentum n"] = {
+            b.number: (tuple(b.momentum), tuple(b.momentum_before)) for b in self.blocks
+        }
         stamps["a body's spin S"] = {
             b.number: (tuple(b.spin), tuple(b.spin_before)) for b in self.blocks
         }
@@ -1038,6 +930,16 @@ class DetectorLawSimulation:
             if block.emit_now:
                 self._emit(block)
 
+    def _feed_stage(self, function: Callable[..., None]) -> None:
+        """The feed's act: each body's two levels of momentum from the reads at its faces as the interval leaves them."""
+        for block in self.blocks:
+            self._feed_act(function, block, False)
+
+    def _induction_stage(self, function: Callable[..., None]) -> None:
+        """The induction's act: each body's two levels of momentum from the change of the reads' vector parts over its Nodes."""
+        for block in self.blocks:
+            self._induction_act(function, block, False)
+
     def _spins_stage(self, function: Callable[..., None]) -> None:
         """The spin's step's act: each body's spin from the fields as the interval leaves them."""
         for block in self.blocks:
@@ -1149,9 +1051,6 @@ class DetectorLawSimulation:
             found.extend(self.held_parts[family])
         found.extend(self.sourced_records.values())
         return found
-
-    # The held families (ALGEBRA.md 9.35 (2), 9.45, 9.48; BUILD.md section 26
-    # items 31, 32, 35 and 51): the operations, written once for any family
 
     def body_source(self, number: int, source: str) -> int:
         """A body's declared source for a held family (item 51): its content,
@@ -1742,14 +1641,7 @@ class DetectorLawSimulation:
         return cast(Neighbours, tuple(found))
 
     def _spins_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
-        """THE BODY'S STEP AT (v) (ALGEBRA.md 9.91 (8) (v), 9.78 (5)): the spin's step's line
-        (features/spins_step) on the body, from the fields as the interval leaves them (their
-        `now` levels, which the inverse meets first): per read with a dipole, the read family's
-        vector part and, for the spin's dipole, its time part at the body's Node's six
-        neighbours with the row's two weights; the body's momentum, wall, spin and spin
-        before; its remainders under the line's keys; the writes the spin, the spin before
-        and the remainders back. THE FEED AND THE INDUCTION of 9.78 (4) are NOT here: built
-        and held back (BUILD.md section 26 item 65; 9.104 (6) (b))."""
+        """THE BODY'S STEP AT (v): the spin's step's line (features/spins_step) on the body from the fields as the interval leaves them (per read with a dipole the read family's vector part and, for the spin's dipole, its time part at the body's Node's six neighbours with the row's two weights), the body's momentum, wall, spin and spin before and its remainders under the line's keys; the writes the spin, the spin before and the remainders back."""
         definition = self.families[block.family]
         if not definition.reads:
             return
@@ -1785,6 +1677,118 @@ class DetectorLawSimulation:
         writes = cast(SpinStepWrites, line(term, start, own))
         block.spin, block.spin_before = list(writes.spin), list(writes.spin_before)
         block.hold_value.update(writes.own.values)
+        block.hold_carry.update(writes.own.carries)
+
+    def _read_factors(self, block: Block) -> list[tuple[int, int]]:
+        """The body's family's reads of held families with their factors f: the weight plainly, minus the body's charge times the weight by q (ALGEBRA.md #the-primitives, the rows of the feed and the induction)."""
+        found: list[tuple[int, int]] = []
+        for other, weight, by, _ in self.families[block.family].reads:
+            if other in self.held_records:
+                factor = weight if by == "plain" else -self._body_charge(block.number) * weight
+                found.append((other, factor))
+        return found
+
+    def _parts_summed(
+        self, family: int, where: np.ndarray, before: bool = False
+    ) -> tuple[int, tuple[int, int, int], tuple[int, ...]]:
+        """A held family's levels summed over the Nodes of `where` (HOST, the feed's and the induction's read): the time part, the vector part (0 where the family has none) and the symmetric tensor part in the feed's order (0 where none), as the interval leaves them or at its start."""
+
+        def total(record: LiveRecord) -> int:
+            return int((record.before if before else record.now)[where].sum())
+
+        vector = [0, 0, 0]
+        tensor = [0] * len(set(PAIR_INDEX.values()))
+        for index, record in enumerate(self.held_parts[family]):
+            group, axes = self._part_axes(family, index + 1)
+            if group == 1:
+                vector[axes[0]] = total(record)
+            elif group == 2:
+                tensor[PAIR_INDEX[axes]] = total(record)
+        return total(self.held_records[family]), (vector[0], vector[1], vector[2]), tuple(tensor)
+
+    def _faces_of(self, block: Block, axis: int) -> tuple[np.ndarray, np.ndarray] | None:
+        """The body's two faces on an axis (minus, plus): the Nodes outside the body whose Link through the Port toward it leads inside, read through the Ports (the wrap on a periodic axis, nothing beyond an open face); None where the axis has one layer or the two faces differ in size (a face beyond an open face, a body not a box)."""
+        if self.shape[axis] == 1:
+            return None
+        inside = self.ports.arrivals(block.mask, self.kind_wrap[block.family], False)
+        minus = inside[port_of(axis, 1)] & ~block.mask
+        plus = inside[port_of(axis, -1)] & ~block.mask
+        if not minus.any() or int(minus.sum()) != int(plus.sum()):
+            return None
+        return minus, plus
+
+    def _feed_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
+        """THE FEED AT (v): the feed's line (features/feed) on the body, from the fields as the interval leaves them: per axis the two faces' reads (the time, vector and tensor parts summed over the face's Nodes, with the read's factor), the faces' distance in Links (the body's layers plus one) and a face's Node count, the body's two levels of momentum, its wall and the Node clock; the writes the two levels and the remainders back; a body held in place (the word `fixed`) is not fed."""
+        factors = [] if block.fixed else self._read_factors(block)
+        if not factors:
+            return
+        faces_per_axis: list[tuple[FeedFace, FeedFace] | None] = []
+        distance = [0, 0, 0]
+        for axis in range(3):
+            faces = self._faces_of(block, axis)
+            if faces is None:
+                faces_per_axis.append(None)
+                continue
+            pair = tuple(
+                FeedFace(
+                    tuple(FeedRead(f, *self._parts_summed(other, face)) for other, f in factors),
+                    int(face.sum()),
+                )
+                for face in faces
+            )
+            faces_per_axis.append((pair[0], pair[1]))
+            layers = np.any(block.mask, axis=tuple(other for other in range(3) if other != axis))
+            distance[axis] = int(layers.sum()) + 1
+        start = FeedStart(
+            THE_INVERSE if inverse else THE_ADVANCE,
+            (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2])),
+            (
+                int(block.momentum_before[0]),
+                int(block.momentum_before[1]),
+                int(block.momentum_before[2]),
+            ),
+            self.wall_of(block),
+            self.node_clock,
+            (faces_per_axis[0], faces_per_axis[1], faces_per_axis[2]),
+            (distance[0], distance[1], distance[2]),
+        )
+        own = FeedOwn({key: value for key, value in block.hold_carry.items() if key[0] == "feed"})
+        writes = cast(FeedWrites, line(start, own))
+        block.momentum, block.momentum_before = list(writes.momentum), list(writes.momentum_before)
+        block.hold_carry.update(writes.own.carries)
+
+    def _induction_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
+        """THE INDUCTION AT (v): the induction's line (features/induction) on the body: per read the vector part summed over the body's Nodes as the interval leaves it and at its start, with the read's factor; the body's two levels of momentum, its wall, the Node clock and its Node count; the writes the two levels and the remainders back; a body held in place (the word `fixed`) is not fed."""
+        factors = [] if block.fixed else self._read_factors(block)
+        factors = [(other, f) for other, f in factors if self.held_parts[other]]
+        if not factors:
+            return
+        reads = tuple(
+            InductionRead(
+                f,
+                self._parts_summed(other, block.mask)[1],
+                self._parts_summed(other, block.mask, True)[1],
+            )
+            for other, f in factors
+        )
+        start = InductionStart(
+            THE_INVERSE if inverse else THE_ADVANCE,
+            (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2])),
+            (
+                int(block.momentum_before[0]),
+                int(block.momentum_before[1]),
+                int(block.momentum_before[2]),
+            ),
+            self.wall_of(block),
+            self.node_clock,
+            int(np.count_nonzero(block.mask)),
+            reads,
+        )
+        own = InductionOwn(
+            {key: value for key, value in block.hold_carry.items() if key[0] == "induction"}
+        )
+        writes = cast(InductionWrites, line(start, own))
+        block.momentum, block.momentum_before = list(writes.momentum), list(writes.momentum_before)
         block.hold_carry.update(writes.own.carries)
 
     def shell_mask(self, block: Block) -> np.ndarray:
@@ -2073,23 +2077,6 @@ class DetectorLawSimulation:
             part=emitter.part,
             twist=emitter.twist,
         )
-        # E^T: the given clock's character on the body's Nodes, written once at
-        # both levels, every Node at the vertex's phase (the one-Node broadband
-        # giving; a line's travelling character, the per-Link pair of ALGEBRA.md
-        # 9.17 (4) item 2, is owed until that pair is declared)
-        # NO TABLE IN THE ENGINE (the cleanup order's step 2; ALGEBRA.md 9.17
-        # (6), 9.22 (2)): the given pair is the world's two integers `given:
-        # [now, before]`, the generator's, checked at load (before = -now),
-        # written on every Node of the body
-        # THE GIVEN TRAIN (ALGEBRA.md 9.17 (6a); BUILD.md section 26 item 27):
-        # the train's two levels written on the body's Nodes in the box's
-        # x-major order (`body_node_indices`, the loader's and the generator's
-        # one convention), the norm T the written one (the conserved form on
-        # the given family's vacuum, the generator's integer checked at load)
-        # THE WINDOW (ALGEBRA.md 9.69 (2), 9.71 (1) (a), 9.85 (5); item 50; commit 7,
-        # the one giving): no train; the window opens at the click, the given row at
-        # the body's Node written from its rotation every interval (`_point_windows`)
-        # until the outward norm reaches T; the record named at the close
         live.window_open = True
         live.box = self.mask_box(block.mask)  # HOST (item 43): the body's own Nodes
         block.window = identity
@@ -2358,6 +2345,10 @@ class DetectorLawSimulation:
         # spin as the interval began, from the fields as it left them
         for block in self.blocks:
             self._spins_act(self.register.at("the spin's step", "(v)"), block, True)
+        for block in self.blocks:
+            self._induction_act(self.register.at("the induction", "(v)"), block, True)
+        for block in self.blocks:
+            self._feed_act(self.register.at("the feed", "(v)"), block, True)
         # the joint inverse (ALGEBRA.md 9.41 (2), 9.45 (2); item 51): every
         # family backward at the held levels of the interval's start (their
         # `before` level: the held families stepped last), then the held

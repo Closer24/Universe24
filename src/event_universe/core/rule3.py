@@ -71,7 +71,8 @@ NO_READ = (0, 0, 0)
 Key = tuple[object, ...]
 # the span of a step on two levels (the leapfrog of a body's spin or momentum): two intervals; the
 # same 2 is the form's second order, the potential's 2 Gamma (ALGEBRA.md #the-well)
-SPAN = 2
+LEVELS = ("now", "before")  # a record's two levels, the data's shape
+SPAN = len(LEVELS)  # the span of a step on two levels, two intervals: derived from the levels' count, never a literal
 
 
 def division_forward(numerator: int, wall: int, carry: int) -> tuple[int, int]:
