@@ -911,7 +911,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   books carry a content line balanced at every interval; measurement
   records and `state.json` carry the content. A free family's release costs
   nothing and its units carry no content, so `measure` on a free family adds
-  nothing ([the engine](docs/ENGINE.md#a-release-costs-the-emitter-by-its-phase-rate),
+  nothing ([the engine](docs/ENGINE.md#2-the-main-loop),
   [migration](docs/MIGRATION.md#a-release-costs-the-emitter-by-its-phase-rate-on-2026-09-19-e--h-f)).
   Tests: `test_release_costs_by_phase_rate` (new); `test_event_clock` (c)
   at K 82, `test_detector_sensitivity` (c) at K 24, `test_phase_window` (a)

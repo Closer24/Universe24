@@ -4192,7 +4192,7 @@ agree in the mean exactly):
 ## A release costs the emitter by its phase rate
 
 `tests/test_release_costs_by_phase_rate.py` isolates the rule of 2026-09-19
-(the model owner: "I approve the proposal"; [the engine](ENGINE.md#a-release-costs-the-emitter-by-its-phase-rate)):
+(the model owner: "I approve the proposal"; [the engine](ENGINE.md#2-the-main-loop)):
 at a self-creation whose turn is s = `by_clock(age, content, K)` phase steps,
 each unit a lamp releases costs it `quantum` x s content, carries that
 content and the momentum `quantum` x s along its heading, and gives
