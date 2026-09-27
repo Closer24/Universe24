@@ -201,28 +201,13 @@ CLOSED_FACE = "closed"
 
 @dataclass(frozen=True)
 class FamilyDefinition:
-    """One family of the world: its name, the content of one unit of it per
-    phase step of its emitter's turn (`quantum`, h; 0 for a free family,
-    1 or more for a paid one: the kind is derived, never declared), its
-    charge (`charge`: for a free family the charge per unit of content,
-    rho, the pair (n, d) with d from 1, a measured event of the family of
-    content M carrying rho x M and its rays pushing a charged reader by
-    rho; for a paid family, since 2026-09-20 (D-1), the whole charge per
-    unit of amount, the pair (c, 1), read on the charge line of the books
-    alone: its rays push by their label and its `charge` column value is
-    (0, 1)), its columns (`columns`: gravity first, charge second, the
-    declared columns after, aligned by index across the families of the
-    world; `charge` is the value of the second for a free family), whether
-    it has a phase circle, the phase steps its rays
-    turn per Link crossed, and its `lifetime` (L, or None for ever: the
-    age at which an event in transit of the family clicks on the border
-    `lifetime` instead of making its next event, the range of the family's
-    force in Links of flight)."""
+    """One family of the world: its name, the content of one unit of it per phase step of its emitter's turn (`quantum`, h; 0 for a free family, 1 or more for a paid one: the kind is derived, never declared), its charge (`charge`: for a free family the charge per unit of content, rho, the pair (n, d) with d from 1, a measured event of the family of content M carrying rho x M and its rays pushing a charged reader by rho; for a paid family, since 2026-09-20 (D-1), the whole charge per unit of amount, the pair (c, 1), read on the charge line of the books alone: its rays push by their label and its `charge` column value is (0, 1)), its columns (`columns`: gravity first, charge second, the declared columns after, aligned by index across the families of the world; `charge` is the value of the second for a free family), whether it has a phase circle, the phase steps its rays turn per Link crossed, and its `lifetime` (L, or None for ever: the age at which an event in transit of the family clicks on the border `lifetime` instead of making its next event, the range of the family's force in Links of flight)."""
 
     name: str
     quantum: int
     charge: tuple[int, int] = NO_CHARGE
     lifetime: int | None = None
+    hand: int | None = None
     phase_per_age: tuple[int, int] | None = None
     # The record kind's pair [num, den] on the six-neighbour term of the
     # local detector law's rule (`massive-record-v1`, MASSIVE_RECORD.md
@@ -1063,6 +1048,8 @@ def _families_of(
                 names[index],
                 quantum,
                 (sign, 1),
+                lifetime=cast(int | None, obj.get("lifetime")),
+                hand=cast(int | None, obj.get("hand")),
                 phase_per_age=clock,
                 pair=pair,
                 held=held,
