@@ -1,10 +1,10 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "32455582",
+ "recorded_at": "25d29714",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
-    "hash": "9bba0536607ebff3f1952438c81db824d61ed3b8f2902a11f6426381f2dc763f"
+    "hash": "9ba402875ccb6920189e21586d6f9d4bb02f3a3897c89479a3b93205677b0f1e"
    },
    "ticks": 15156,
    "intervals": 200,
@@ -15,7 +15,7 @@
   },
   "examples/events/dark_body/dark.json": {
    "stamp": {
-    "hash": "7bc3e09d18fb68e16afc8c2064849cd9f12476c72321942f845896b5e83b20b9"
+    "hash": "78941ed0e4980b404f0320676293ee70cc5549be456771e225f1208824ef5d4a"
    },
    "ticks": 2400,
    "intervals": 200,
@@ -26,7 +26,7 @@
   },
   "examples/events/massive_record/boxed_clock_side_20_at_rest.json": {
    "stamp": {
-    "hash": "8757696b13edac510070951fcdca64d7b0dbcec8bea0de8d98372cecf1f85654"
+    "hash": "5c7ec24ceb90d5dd70b4b501300f14b232100b61735d1468d609041c1fd4f909"
    },
    "ticks": 3000,
    "intervals": 200,
@@ -37,7 +37,7 @@
   },
   "examples/events/massive_record/boxed_clock_side_20_moving.json": {
    "stamp": {
-    "hash": "a05071d9257a701b7d4407120d55beceb536b47aa77ed489a76c920287dcfa94"
+    "hash": "26caa35a4ec227f275314cf86059c78dac8fb08a8f0f643a04e81f26b55bf326"
    },
    "ticks": 9500,
    "intervals": 200,
@@ -48,7 +48,7 @@
   },
   "examples/events/massive_record/boxed_clock_side_28_at_rest.json": {
    "stamp": {
-    "hash": "4f47cc4eccdf776dd024315e4aafc7909520c07b6b2345bbe62733945b2151d8"
+    "hash": "27d23cb86686a9b8f691ba0e61c66b961333951e2e54ee313a1710e7e23d37d1"
    },
    "ticks": 3000,
    "intervals": 200,
@@ -59,7 +59,7 @@
   },
   "examples/events/massive_record/boxed_clock_side_28_moving.json": {
    "stamp": {
-    "hash": "61714c1edbffe064cd25fb2fe65ebf91fb9c8af65a9c6cc3a76a5e6b3b5329b6"
+    "hash": "04791c7f6f2c78a08f54ddd957817d17a1110ae62dae6da910d2b6aa1860a15d"
    },
    "ticks": 9500,
    "intervals": 200,
@@ -70,7 +70,7 @@
   },
   "examples/events/massive_record/deep_well_clock_at_rest_40.json": {
    "stamp": {
-    "hash": "39a0138e78108471ce05a8a188c63d0d2707f0d3e1e1fe6937383415d99569d4"
+    "hash": "3151738b61cc1bc2ee3df4df48a73aaeb0aa4832e348b6d261ecc8d2d56da533"
    },
    "ticks": 3500,
    "intervals": 200,
@@ -81,7 +81,7 @@
   },
   "examples/events/massive_record/deep_well_clock_speed_third_40.json": {
    "stamp": {
-    "hash": "d001a224849ea2cedabd94ab63f2d4665fba3fd72e04c37b40ef7bebdf9e26c7"
+    "hash": "2662ea9d36da1f431b8a1b6a5cf9dfda4f18867d215ae66010bdb2d8ee808f7b"
    },
    "ticks": 9500,
    "intervals": 200,
@@ -92,7 +92,7 @@
   },
   "examples/events/massive_record/light_clock.json": {
    "stamp": {
-    "hash": "e0911e6d3aa0eba072fa4e1b42799862642ddf5ded3f62148a03a34b5de9272b"
+    "hash": "6bfad60a225f4bd7fddd4413c8cf8c060b9cdc12b11dfbe6541cbd200fe1c91e"
    },
    "ticks": 4800,
    "intervals": 1500,
@@ -103,7 +103,7 @@
   },
   "examples/events/massive_record/muon_moving_clock_at_rest_14.json": {
    "stamp": {
-    "hash": "c3ffd1b4c185eed9c831f20ddc45ef5541685281edc890acd371c3c9b95d8ce3"
+    "hash": "e867810958452cab73ebffb9d4a61ea8d820a50328a41557abf3fe3f056d245e"
    },
    "ticks": 20500,
    "intervals": 200,
@@ -114,7 +114,7 @@
   },
   "examples/events/massive_record/muon_moving_clock_speed_third_14.json": {
    "stamp": {
-    "hash": "0002adf1163ef41ad2b950133deaab03aea6b28cfad787643848cc504472d1dc"
+    "hash": "d7aa978c2212903abfbb043478472a6e85e657330be02007fc72cc181b66c880"
    },
    "ticks": 20500,
    "intervals": 200,
@@ -125,7 +125,7 @@
   },
   "examples/events/point_emitter/point_chain.json": {
    "stamp": {
-    "hash": "df9a5b7ddb9f4d10802d9124252b00bf71d4c91e5db1b04387f0eb1db45f457e"
+    "hash": "f74cdf609b8f10081f9d7402ce3b9c8ff7cdd9129d6c8dda33c58a2dade3d61f"
    },
    "ticks": 70992,
    "intervals": 200,
@@ -136,7 +136,7 @@
   },
   "examples/events/point_emitter/point_light_clock.json": {
    "stamp": {
-    "hash": "0982c31eb3e3406f6af4b85f870de49a93d0a3343af4f35b3c137f93f1f496e1"
+    "hash": "6b37f5b9b7a3ac8a98feaea1e287f8f7c96486ad1494964fc7b0c2ef2eecd256"
    },
    "ticks": 35304,
    "intervals": 3000,
@@ -147,7 +147,7 @@
   },
   "examples/events/toward_nature/bending.json": {
    "stamp": {
-    "hash": "21c23edf22c2573b004eb873662cc7e84d3893f7273145414cc76ba5dd6860cc"
+    "hash": "b3a874153c00ab0fff5121799b75269edc5ee8cecd0fe777290b189d26d6df25"
    },
    "ticks": 5600,
    "intervals": 200,
@@ -158,7 +158,7 @@
   },
   "examples/events/toward_nature/lorentz_moving.json": {
    "stamp": {
-    "hash": "437c1eb631f68ec89cb0ae37b5d237cee2edba1aa7df9de1aeaa23cac4d1acea"
+    "hash": "9f0eeb18e013f99808cfffa4c26f7c515ea8b3a1ebd91addf48f08b280bc25dd"
    },
    "ticks": 3600,
    "intervals": 200,
@@ -169,7 +169,7 @@
   },
   "examples/events/toward_nature/lorentz_moving_long.json": {
    "stamp": {
-    "hash": "843428caa1fdb0f861030b94b0344fb8f1a0cf4dc8bb2bdb81e6caca681ae986"
+    "hash": "badf1b61b9e26836133cf53d3dc31ab0e7dee84dbb5dc1beff39f9005ad95774"
    },
    "ticks": 5966,
    "intervals": 200,
@@ -180,7 +180,7 @@
   },
   "examples/events/toward_nature/lorentz_rest.json": {
    "stamp": {
-    "hash": "8abf3901331cf49447e9de651ff8342e6fd82d7906f2198fda43d56ccf021097"
+    "hash": "4d7f249660fe868748aaeb4e48ca0a2f5235f06d10b28b8ffab23d91f01b05d3"
    },
    "ticks": 3600,
    "intervals": 1500,
@@ -191,7 +191,7 @@
   },
   "examples/events/toward_nature/lorentz_rest_long.json": {
    "stamp": {
-    "hash": "6beee186b6575b0238ed9ea3c6a932a3cc48c2eabc313cad121fba8e2f8ac565"
+    "hash": "1fd119bdaf87af16517afbf52f82b96517f7c75d3bfb2eb54d5e325dcea91a9e"
    },
    "ticks": 8206,
    "intervals": 200,
@@ -202,7 +202,7 @@
   },
   "examples/events/toward_nature/redshift_bottom.json": {
    "stamp": {
-    "hash": "9b79676b86b3bdc939f73bc1d5f2c1919956c8a3f5e30505be7e79c1116676a5"
+    "hash": "d1f787862c1bee2042028f43cd64cdeda833bc07d1e3a1ab3f5f20e6458c9b0a"
    },
    "ticks": 6534,
    "intervals": 200,
@@ -213,7 +213,7 @@
   },
   "examples/events/toward_nature/redshift_bottom_long.json": {
    "stamp": {
-    "hash": "23a09bbfdfcb74ec4d5e1ff3b37b10c2c5ef03830aee130e33fce24c19eacd17"
+    "hash": "420cdfed226ad27ed7b3e775e661e75fef9921f795195f6f093dc7c611d1fcaa"
    },
    "ticks": 10558,
    "intervals": 200,
@@ -224,7 +224,7 @@
   },
   "examples/events/toward_nature/redshift_top.json": {
    "stamp": {
-    "hash": "0c56d8671e17fe9719f0affe5e9ce65ec012d29f10d576998eadfdb91e72e58c"
+    "hash": "35bce69fd35f505c4ef219a5dc84e6d8c3994412ab08695157d478f087ea0152"
    },
    "ticks": 6150,
    "intervals": 200,
@@ -235,7 +235,7 @@
   },
   "examples/events/toward_nature/redshift_top_long.json": {
    "stamp": {
-    "hash": "b478fb3c0ee5cf51a3a95cb37cf58e38e529e3f562a1c933dc0770923a1fe9b5"
+    "hash": "8b2fe5b2d143892b643f00ab08853a374f9b3dab02c6e831ed3efea78a4805f4"
    },
    "ticks": 9598,
    "intervals": 200,

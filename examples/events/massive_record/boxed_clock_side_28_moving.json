@@ -31,6 +31,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    64,
+    0,
+    0
+   ],
    "stocks": {},
    "ramp": 1500,
    "start": 0,
@@ -46,6 +51,11 @@
    ],
    "q": 0,
    "spin": [
+    0,
+    0,
+    0
+   ],
+   "spin_before": [
     0,
     0,
     0
@@ -262474,6 +262484,6 @@
  "detectors": [],
  "mode_axis": "x",
  "stamp": {
-  "hash": "61714c1edbffe064cd25fb2fe65ebf91fb9c8af65a9c6cc3a76a5e6b3b5329b6"
+  "hash": "04791c7f6f2c78a08f54ddd957817d17a1110ae62dae6da910d2b6aa1860a15d"
  }
 }

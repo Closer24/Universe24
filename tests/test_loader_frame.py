@@ -219,8 +219,12 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
             lambda d, key=key: d["measured"][0].__setitem__(key, 1),
             rf"measured\[0\] has unknown keys: {key} \(the keys: ",
         )
-    for key in ("family", "amount", "momentum", "stocks"):
+    for key in ("family", "amount", "momentum", "momentum_before", "stocks"):
         refuses(lambda d, key=key: d["measured"][0].pop(key), rf"measured\[0\] lacks keys: {key}")
+    refuses(
+        lambda d: d["measured"][0].pop("spin_before"),
+        r"measured\[0\] declares spin without spin_before: the spin's two levels are declared together",
+    )
     refuses(
         lambda d: d["measured"][0].pop("position"),
         r"measured\[0\] is written by its position \(today's form\) or by its nodes .* not neither",
@@ -273,20 +277,28 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
 
 
 def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by_name():
-    """A body in the law's form (its family, its Nodes with counts, its momentum, spin and moment) passes the
-    frame; every defect is refused by name; world.py refuses the form until the loop reads it."""
+    """A body in the law's form (its family, its Nodes with counts, its momentum and spin at two levels, its moment, its stocks and its emitter) passes the frame; every defect is refused by name; world.py refuses the form until the loop reads it."""
     families = tuple(entry["name"] for entry in shipped()["families"])
     context = Context(families)
     body = {
         "family": families[-1],
         "nodes": [{"node": [1, 2, 3], "count": 5}, {"node": [1, 2, 4], "count": 7}],
         "momentum": [0, 0, -3],
+        "momentum_before": [0, 0, -2],
     }
     (found,) = frame.bodies([body], context)
     assert found["nodes"] == ({"node": (1, 2, 3), "count": 5}, {"node": (1, 2, 4), "count": 7})
-    assert found["momentum"] == (0, 0, -3) and "spin" not in found
-    (found,) = frame.bodies([{**body, "spin": [0, 1, 0], "moment": [2, 0, 0]}], context)
-    assert found["spin"] == (0, 1, 0) and found["moment"] == (2, 0, 0)
+    assert found["momentum"] == (0, 0, -3) and found["momentum_before"] == (0, 0, -2)
+    assert "spin" not in found and "stocks" not in found and "emitter" not in found
+    spinning = {**body, "spin": [0, 1, 0], "spin_before": [0, 1, 1], "moment": [2, 0, 0]}
+    (found,) = frame.bodies([spinning], context)
+    assert found["spin"] == (0, 1, 0) and found["spin_before"] == (0, 1, 1)
+    giver = {"family": families[0], "weight": 3, "norm": 5, "norm_denominator": 2}
+    stocks = {families[0]: 4}
+    (found,) = frame.bodies([{**body, "stocks": stocks, "emitter": giver}], context)
+    assert found["stocks"] == stocks and found["emitter"] == giver
+    (found,) = frame.bodies([{**body, "emitter": {**giver, "family": families[-1]}}], context)
+    assert found["emitter"]["family"] == families[-1]
 
     def refuses(change, match: str) -> None:
         broken = copy.deepcopy(body)
@@ -301,11 +313,48 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
     )
     refuses(lambda b: b.pop("nodes"), r"measured\[0\] is written by its position .* not neither")
     refuses(lambda b: b.pop("momentum"), r"measured\[0\] lacks keys: momentum")
-    for key in ("amount", "stocks", "fixed", "kind", "seed", "emitter", "count"):
+    refuses(lambda b: b.pop("momentum_before"), r"measured\[0\] lacks keys: momentum_before")
+    refuses(
+        lambda b: b.__setitem__("spin_before", [0, 0, 0]),
+        r"measured\[0\] declares spin_before without spin: the spin's two levels are declared together",
+    )
+    for key in ("amount", "fixed", "kind", "seed", "count", "period"):
         refuses(
             lambda b, key=key: b.__setitem__(key, 1),
-            rf"measured\[0\] has unknown keys: {key} \(the keys: family, moment, momentum, nodes, spin\)",
+            rf"measured\[0\] has unknown keys: {key} \(the keys: emitter, family, moment, momentum, "
+            r"momentum_before, nodes, spin, spin_before, stocks\)",
         )
+    for key in ("period", "clock", "pair", "twist", "window_read"):
+        refuses(
+            lambda b, key=key: b.__setitem__("emitter", {**giver, key: 1}),
+            rf"measured\[0\]\.emitter has unknown keys: {key} ",
+        )
+    for key in ("family", "weight", "norm", "norm_denominator"):
+        refuses(
+            lambda b, key=key: b.__setitem__("emitter", {k: v for k, v in giver.items() if k != key}),
+            rf"measured\[0\]\.emitter lacks keys: {key}",
+        )
+    for key in ("weight", "norm", "norm_denominator"):
+        refuses(
+            lambda b, key=key: b.__setitem__("emitter", {**giver, key: 0}),
+            rf"measured\[0\]\.emitter\.{key} is 0, below its least 1",
+        )
+    refuses(
+        lambda b: b.__setitem__("emitter", {**giver, "family": "nobody"}),
+        r"measured\[0\]\.emitter\.family names 'nobody', no family of the universe",
+    )
+    refuses(
+        lambda b: b.__setitem__("emitter", giver),
+        rf"measured\[0\]\.emitter gives '{families[0]}', a family the body neither is nor stocks",
+    )
+    refuses(
+        lambda b: b.__setitem__("stocks", {families[0]: 0}),
+        rf"measured\[0\]\.stocks\['{families[0]}'\] is 0, below its least 1",
+    )
+    refuses(
+        lambda b: b.__setitem__("stocks", {"nobody": 1}),
+        r"measured\[0\]\.stocks key 'nobody' names 'nobody', no family",
+    )
     refuses(lambda b: b.__setitem__("nodes", []), r"measured\[0\]\.nodes is empty")
     refuses(
         lambda b: b["nodes"].append({"node": [1, 2, 3], "count": 1}),
