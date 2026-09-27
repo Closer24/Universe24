@@ -195,6 +195,11 @@ def select(changed, sources):
         # and THE SHAPE OF THE CODE is held at its baseline (the model owner's decisions,
         # records 2239 and 2241)
         tests.add("tests/test_code_shape.py")
+        # and the reviewer's recurring findings as gates: no new number, family name or
+        # unapproved core module in src/ (issue #1198, item 4 (a))
+        tests.add("tests/test_engine_gates.py")
+        # and THE STEP FILE DRIVES THE STEP, whatever folder or file changed (#1198, gate 2)
+        tests.add("tests/test_step_drives_the_loop.py")
         # and THE DOCUMENT LOCK keeps the three current documents (the short procedure,
         # point 12)
         tests.add("tests/test_documents.py")
