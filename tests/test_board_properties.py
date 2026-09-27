@@ -57,7 +57,7 @@ def small_world(
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
-            family_entry("light", [1, 1], reads(), clock=[77, 25]),
+            family_entry("light", [1, 1], reads(), clock=[80, 25]),
             family_entry("matter", [800, 809], reads()),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
@@ -113,12 +113,12 @@ def small_world(
 
 
 def given_levels(simulation: DetectorLawSimulation) -> tuple[int, int]:
-    """The giving's pair on the circle of 2 N (ALGEBRA.md #the-click) for light's clock [77, 25] on N = 64:
+    """The giving's pair on the circle of 2 N (ALGEBRA.md #the-click) for light's clock [80, 25] on N = 64:
     the generator's integer (a host computation; no table in the engine), now = round(A sin(pi
     n / (d N))), the character half a step either side of its zero, before = -now."""
     _ = simulation
     steps = 64
-    now = round(UNIT * math.sin(math.pi * 77 / (25 * steps)))
+    now = round(UNIT * math.sin(math.pi * 80 / (25 * steps)))
     return now, -now
 
 
@@ -142,7 +142,7 @@ def plant(simulation: DetectorLawSimulation, node, u: int, ladder: bool = True, 
         1,
         simulation.tick,
         1,
-        77,
+        80,
         25,
         0,
         21,
@@ -522,7 +522,7 @@ def test_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
         1,
         0,
         1,
-        77,
+        80,
         25,
         0,
         21,
