@@ -22,7 +22,12 @@ BY_PAPER = "Lines: tools +1 -1\n\nhttps://claude.ai/code/session_loop quoted\nht
 def test_the_pull_request_touches_only_its_authors_areas_or_handed_ones():
     if GATE.on_pull_request(dict(os.environ)):
         changed = GATE.changed_files(ROOT, GATE.base_ref())
-        assert GATE.violations(changed, os.environ.get("PR_BODY", ""), GATE.load_owners()) == []
+        assert (
+            GATE.violations(
+                changed, os.environ.get("PR_BODY", ""), GATE.load_owners(), GATE.load_arbiter()
+            )
+            == []
+        )
     owners = GATE.load_owners()
     sessions = [s for entry in owners.values() for s in entry["sessions"]]
     assert len(sessions) == len(set(sessions))
@@ -53,3 +58,7 @@ def test_another_owners_file_fails_until_that_owner_hands_it_over():
     wrong = BY_PAPER + "HANDED BY Paper Writer: src/core/ law/step.json\n"
     assert len(GATE.violations(changed, wrong, OWNERS)) == 2
     assert len(GATE.violations(["tools/check.py"], "no link", OWNERS)) == 1
+    # the arbiter's hand-over, "the" or not, covers any area
+    by_arbiter = BY_PAPER + "HANDED BY the Boss: src/core/rule3.py law/step.json\n"
+    assert GATE.violations(changed, by_arbiter, OWNERS, "Boss") == []
+    assert len(GATE.violations(changed, by_arbiter, OWNERS)) == 2

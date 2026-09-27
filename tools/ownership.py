@@ -34,6 +34,12 @@ def load_owners(path: Path = OWNERS) -> dict[str, dict[str, list[str]]]:
     return owners
 
 
+def load_arbiter(path: Path = OWNERS) -> str:
+    """The owner whose hand-over covers any area (the Boss)."""
+    arbiter: str = json.loads(path.read_text(encoding="utf-8"))["arbiter"]
+    return arbiter
+
+
 def covers(area: str, path: str) -> bool:
     return path == area or (area.endswith("/") and path.startswith(area))
 
@@ -62,14 +68,16 @@ def handed(body: str) -> dict[str, list[str]]:
     found: dict[str, list[str]] = {}
     for line in body.splitlines():
         if match := HANDED.match(line):
-            found.setdefault(match["owner"].strip(), []).extend(
+            found.setdefault(re.sub(r"(?i)^the ", "", match["owner"].strip()), []).extend(
                 re.split(r"[,\s]+", match["files"].strip())
             )
     return found
 
 
-def violations(changed: list[str], body: str, owners: dict[str, dict[str, list[str]]]) -> list[str]:
-    """One line per changed file of another owner's area that no hand-over of that owner names."""
+def violations(
+    changed: list[str], body: str, owners: dict[str, dict[str, list[str]]], arbiter: str | None = None
+) -> list[str]:
+    """One line per changed file of another owner's area that no hand-over of that owner, or of the arbiter, names."""
     writer = author(body, owners)
     given = handed(body)
     found = []
@@ -77,7 +85,8 @@ def violations(changed: list[str], body: str, owners: dict[str, dict[str, list[s
         owner = owner_of(path, owners)
         if owner is None or owner == writer:
             continue
-        if any(covers(entry, path) for entry in given.get(owner, []) if entry):
+        handers = given.get(owner, []) + (given.get(arbiter, []) if arbiter else [])
+        if any(covers(entry, path) for entry in handers if entry):
             continue
         who = writer or "a body with no owner's session link"
         found.append(
@@ -106,7 +115,9 @@ def main() -> None:
     if not on_pull_request(dict(os.environ)):
         print("the ownership check runs on a pull request, or with PR_BODY set")
         return
-    found = violations(changed_files(ROOT, base_ref()), os.environ.get("PR_BODY", ""), load_owners())
+    found = violations(
+        changed_files(ROOT, base_ref()), os.environ.get("PR_BODY", ""), load_owners(), load_arbiter()
+    )
     print("\n".join(found) or "every touched area is its author's or handed over")
     sys.exit(1 if found else 0)
 
