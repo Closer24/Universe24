@@ -110,12 +110,9 @@ def test_the_four_worlds_carry_the_declared_integers_and_no_pin():
 
 @pytest.mark.xfail(
     strict=True,
-    reason="the Boss's records 2204 and 2206 (2026-09-26): a giving lowers the live M in the wall "
-    "W = 3 Q M while n stays, so the moving emitter speeds up and the mirror hops one interval "
-    "before it from interval 51 (the gap 58 for one interval at every hop); the fix is the count "
-    "per family and P_0 = [1, 1000] of ALGEBRA.md #the-primitives, Coder 3's; marked so that the "
-    "merge into main is not held (the model owner's word of 13:20Z, speed the merge); the mark comes "
-    "off with the fix",
+    reason="#1246 item 1, the hold's count: a giving lowers the live M in the wall W = 3 Q M while "
+    "n stays, so the moving emitter hops one interval before the mirror from interval 51; the "
+    "mark comes off with the hold's row (held.quantum) bound in the loop",
 )
 @pytest.mark.diagnostic
 def test_the_held_level_is_the_well_on_the_arm_and_the_moving_clock_hops_together():

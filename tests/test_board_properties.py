@@ -1,16 +1,4 @@
-"""The property test of the board (ALGEBRA.md #the-direction (B), the mathematician's six properties of
-the one map S, ADOPTED with record 1875; the gate of every step of the cleanup, ALGEBRA.md #the-postulates):
-on the small world of 9.20 (a cube of 12 x 12 x 12 periodic on every axis; light [77, 25] and
-the massive family [800, 809]; one well of side 2 at the vertex (3, 4, 5) with the pair
-[800, 801] seeded on its composed mode; one light record given on the Node (8, 2, 7) with both
-labels and the wheel 8; one receiver, the cube of side 3 at (9, 9, 2), on the record's ladder; 60
-intervals): (1) equivariance under the 48; (2) translation on the torus; (3) conservation of
-the content and of the form I between clicks; (4) reversibility except the click, by 8.8's
-inverse; (5) locality; (6) only the click reads. Every comparison is bit for bit on the
-engine's integers unless the expected value says otherwise; a failure is an engine defect,
-never a change of the law. The record is planted as its giving would write it (the pair on the
-circle of 2 N, ALGEBRA.md #the-click); its labels are one row (the label rows of a rank-2 record are the
-crystal's, held)."""
+"""The GameBoard's six properties on a small periodic world (a well, one light record, one receiver, 60 intervals): equivariance under the 48, translation, conservation of the content and the form between clicks, reversibility except the click, locality, and only the click reads; bit for bit on the engine's integers."""
 
 from __future__ import annotations
 

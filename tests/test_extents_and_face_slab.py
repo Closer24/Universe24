@@ -1,9 +1,4 @@
-"""BODIES WITH EXTENTS AND THE FACE SLAB (ALGEBRA.md #a-familys-declaration, #the-ladder; BUILD.md
-section 26 item 23): a block is the box of `extents` per axis (the cube of `side` the
-shorthand), the slabs of the table's emitters, walls and receivers; the face receiver at
-every open border is the slab of the world's `face_depth`, one detector, last on every ladder.
-Every reading here is the engine's on small worlds (COMPUTATION); no pin.
-"""
+"""Bodies with extents and the face slab: a block is the box of its extents per axis, and the face receiver at every open border is one detector of the world's face depth, last on every ladder. COMPUTATION on small worlds; no pin."""
 
 from __future__ import annotations
 
