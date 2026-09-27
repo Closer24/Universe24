@@ -21,7 +21,7 @@ named in English at its first use, a scalar plain, a vector in bold
 lowercase (**p**), a tensor, a matrix or an operator in bold uppercase (**C**).
 The engine's data and the human names of the same things, one row each, are
 in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
-[ENGINE.md, "The detector's readings by type"](ENGINE.md#the-detectors-readings-by-type).
+[ENGINE.md, "The detector's readings by type"](ENGINE.md#the-output).
 
 ## The location
 
@@ -48,7 +48,7 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   named `face:+x` .. `face:-z`, with the threshold 1: every row or body that
   leaves through it clicks on it, the escape a measurement at the border and
   not a loss; a periodic axis has no faces (the model owner, 2026-09-19;
-  [ENGINE.md, GameBoard topology](ENGINE.md#per-axis-gameboard-topology-2026-09-19-implementation-amendment)).
+  [ENGINE.md, GameBoard topology](ENGINE.md#1-the-words)).
 - **Event**: a local state transition at a Node or a completed transfer on a
   Link. On the GameBoard there are only events: a row is an event in
   transit, a body an event created here without end (the model owner,
@@ -333,7 +333,7 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   lamp releases costs it h x s content, carries that content and the
   momentum h x s **u**_d along its direction, E = h f; a free family's
   release costs nothing; a body releases every free family it holds at the
-  world's `release` rate ([ENGINE.md](ENGINE.md#a-release-costs-the-emitter-by-its-phase-rate)).
+  world's `release` rate ([ENGINE.md](ENGINE.md#2-the-main-loop)).
 - **Turn**: the phase steps s a body's clock gains at a self-creation, the
   whole part of age x content x n / d gained at the clock's pair K = [n, d],
   0 for a family without a phase circle; a release is priced by it (the
@@ -408,7 +408,7 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   turn and count; MIGRATION 2026-09-21).
 - **Frame**: the engine's bookkeeping of an interval, the tick, the steps,
   the books and the record; it computes no physics of the row
-  ([ENGINE.md](ENGINE.md#the-beam-law-beam-v1-the-ray-laws-record-cancelled-docscancelled_worldsmd-the-engine-has-no-laws-name-item-70)).
+  ([ENGINE.md](ENGINE.md)).
 - **Bijection**: the walk, the collision, the meeting and the merge have
   inverses (`NatureBeamSimulation.inverse_step`); the click is the only
   one-way border.

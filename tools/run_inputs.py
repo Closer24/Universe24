@@ -85,6 +85,7 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
         write_output(Path(out_dir), name, output)
         return {"name": name, "verdict": "REFUSED", "seconds": time.monotonic() - started}
     output["verdict"] = "LAWFUL"
+    output["step"] = {"hash": world.step.digest}
     output["ticks"] = world.ticks
     readings = Readings(world.readings)
     readings.read(simulation)

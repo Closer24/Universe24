@@ -255,7 +255,7 @@ of unity; rho, the charge per unit of content).
   what remains of it is the vocabulary of the Beam Law: an event in
   transit is a row (`nature_beam.py:216`), a measured event is a body
   (`measured.py:477`, `Measured`), and the world file's `measured` and
-  `families` keys ([ENGINE.md, the law of events](../../ENGINE.md#the-law-of-events-events-v1),
+  `families` keys ([ENGINE.md, the law of events](../../ENGINE.md),
   the historical note).
 - **(e) The reading.** None kept: every reading of `events-v1` was
   re-registered under the law of the ray the same day ([record 15](../../LOG_2026-09-19.md#15-decided-the-law-of-the-ray), "the
@@ -403,7 +403,7 @@ of unity; rho, the charge per unit of content).
   0 for a free family, 1 or more for a paid one: the kind is derived,
   never declared"); the release, `src/event_universe/events/nature_beam.py:5494`
   (`_release_family`); the engine's contract
-  [ENGINE.md, "A release costs the emitter by its phase rate"](../../ENGINE.md#a-release-costs-the-emitter-by-its-phase-rate);
+  [ENGINE.md, "A release costs the emitter by its phase rate"](../../ENGINE.md#2-the-main-loop);
   the derivation, [DERIVATIONS_BEAM 6.4](../../DERIVATIONS_BEAM.md#64-e--h-f-from-the-release).
 - **(e) The reading.** The paper's abstract states "Planck's and de
   Broglie's relations as identities under the declared dictionary"
@@ -506,7 +506,7 @@ of unity; rho, the charge per unit of content).
   the GameBoard", "The API of the GameBoard".
 - **(d) Where it lives in the code on main.** The readings by type,
   each labelled detector or GameBoard:
-  [ENGINE.md, "The detector's readings by type"](../../ENGINE.md#the-detectors-readings-by-type);
+  [ENGINE.md, "The detector's readings by type"](../../ENGINE.md#the-output);
   the detector set's record, `src/event_universe/events/measured.py:152`
   (`DetectorSet`); the run's `detectors` and `face_detectors` blocks,
   `src/event_universe/events/engine.py:1378` and `:1410`; the GameBoard
@@ -1038,7 +1038,7 @@ of unity; rho, the charge per unit of content).
   `src/event_universe/events/nature_beam.py:522` (`read_arrivals`) and
   `:365` (`Moments.tensor`, "3 sum amount x u_d u_d^T less its trace");
   the readings by type, each with its symbol, unit and kind,
-  [ENGINE.md, "The detector's readings by type"](../../ENGINE.md#the-detectors-readings-by-type);
+  [ENGINE.md, "The detector's readings by type"](../../ENGINE.md#the-output);
   the register's `derivation` field per pin and the derive-and-compare
   tests (`tests/test_amplitude_cone.py`, the template named in
   [record 205](../../LOG_2026-09-20.md)); the readings tools (`tools/*_readings.py`) reading the
@@ -1225,7 +1225,7 @@ of unity; rho, the charge per unit of content).
   withdrawn on the owner's word of record 768 (entry 24): a detector
   without a body (an open face) has no clock of its own and its tick is
   the record's ordering, GAMEBOARD ([TERMINOLOGY, "A detector's clock"](../../TERMINOLOGY.md#the-readings);
-  [ENGINE.md, readings by type, "the tick of a line"](../../ENGINE.md#the-detectors-readings-by-type)).
+  [ENGINE.md, readings by type, "the tick of a line"](../../ENGINE.md#the-output)).
 - **(e) The reading.** The clock's rate in a crowd read by a lamp's
   births at a detector: series T (1.907) and X (1.0029), entry 21; the
   Hubble detector among its masses reads in its own slowed clock (the
@@ -1423,7 +1423,7 @@ of unity; rho, the charge per unit of content).
   `core/integer.py:118` and `measured.py:344` (entry 21). The Outside
   side is the clicks: the `click` and `gather` lines of `events.jsonl`
   and the detectors' `clicks`, read by the readings tools and never the
-  host's state ([ENGINE.md, readings by type](../../ENGINE.md#the-detectors-readings-by-type)).
+  host's state ([ENGINE.md, readings by type](../../ENGINE.md#the-output)).
   The map's four steps in code: ev, `amplitude.py:766` (`evaluate`, a
   report); R, `:788` (`gram_form`); the rung, `:275` (`cell_of`); the
   count map, the detector's clicks over its own count (entry 22).

@@ -15,7 +15,6 @@ DECLARATION = Declaration(
     ("the click's tally (sigma_a)", "k_q", "M"),
     ("a Port's accumulator",),
     None,
-    None,
     "9.117 item 2; 9.109 item 2 (b); 9.96 (2) (e)",
     word="after the step",
 )

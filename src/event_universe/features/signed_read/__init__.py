@@ -10,6 +10,16 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.register import Declaration
+from event_universe.core.schema import (
+    Either,
+    Integer,
+    IntegerName,
+    ListOf,
+    Name,
+    ObjectOf,
+    OneOf,
+    Schema,
+)
 
 # by "plain" reads the level as it is; by "sign" reads it with the reading family's own sign q
 BY_PLAIN = "plain"
@@ -144,11 +154,28 @@ DECLARATION = Declaration(
         "the axis contents with their remainders",
     ),
     ("the paces",),
-    None,
     apply,
-    THE_WORD + " (9.117 item 5); 9.117 item 2, the first row; 9.78 (4); 9.108 items 8, 11, 12, 13; "
-    "9.116 items 4a and 4c",
+    THE_WORD
+    + " (9.117 item 5); 9.117 item 2, the first row; 9.78 (4); 9.108 items 8, 11, 12, 13; 9.116 items 4a and 4c",
     word="the right side",
+    schema=Schema(
+        {
+            "a family's entry": ObjectOf(
+                {
+                    "reads": ListOf(
+                        ObjectOf(
+                            {
+                                "family": Name(),
+                                "weight": Either((Integer(least=1), IntegerName())),
+                                "twist": Either((Integer(least=0), OneOf(("own",)))),
+                                "by": OneOf((1, "q")),
+                            }
+                        )
+                    )
+                }
+            )
+        }
+    ),
 )
 
 

@@ -217,7 +217,6 @@ def test_the_declaration_is_the_ledgers_row():
     function `apply`, and its section with the word of 9.117 item 5, from the rule."""
     assert DECLARATION.name == "the recoil" and DECLARATION.place == "(iv)"
     assert DECLARATION.writes == ("a body's momentum n", "a body's remainders")
-    assert DECLARATION.order == 2
     assert DECLARATION.function is apply and DECLARATION.built
     assert DECLARATION.word == "after the step" and folder_of(DECLARATION.name) == "recoil"
     assert DECLARATION.section.startswith(THE_WORD)
@@ -225,9 +224,6 @@ def test_the_declaration_is_the_ledgers_row():
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
     registered = simulation.register.declarations["the recoil"]
     assert registered.reads == DECLARATION.reads and registered.function is apply
-    assert (
-        registered.order_of("a body's momentum n") == 2
-        and registered.place_of("a body's momentum n") == "(iv)"
-    )
+    assert registered.place_of("a body's momentum n") == "(iv)"
     assert THE_WORD.startswith("from the rule") and "beyond" not in THE_WORD
     assert "9.117" in DECLARATION.section and "9.84 (2)" in DECLARATION.section
