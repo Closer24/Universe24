@@ -12,8 +12,8 @@ TAKING = 1
 GIVING = -1
 THREE = 3  # the momentum's wall W = 3 Q M (ALGEBRA.md #the-primitives, the row "the recoil")
 
-# the word of ALGEBRA.md 9.117 item 5 for this primitive
-THE_WORD = "from the rule 9.57 (1) and the click, the store a remainder of the division on the record"
+# the word of ALGEBRA.md #the-primitives for this primitive
+THE_WORD = "from the rule ALGEBRA.md #the-line and the click, the store a remainder of the division on the record"
 
 
 @dataclass(frozen=True)
@@ -51,7 +51,7 @@ class RecoilWrites:
 
 
 def sign_of(value: int) -> int:
-    """sigma: -1, 0 or 1, the direction of travel and never the size (ALGEBRA.md 9.111 item 1)."""
+    """sigma: -1, 0 or 1, the direction of travel and never the size (ALGEBRA.md #the-primitives)."""
     return (value > 0) - (value < 0)
 
 
@@ -117,6 +117,6 @@ DECLARATION = Declaration(
     writes=("a body's momentum n", "a body's remainders"),
     function=apply,
     section=THE_WORD
-    + " (9.117 item 5); 9.117 item 2, the row 'the recoil'; 9.84 (2); 9.91 (4); 9.111 items 1 and 2",
+    + " (ALGEBRA.md #the-primitives); ALGEBRA.md #the-primitives, the row 'the recoil'; ALGEBRA.md #the-primitives, #the-interval",
     word="after the step",
 )

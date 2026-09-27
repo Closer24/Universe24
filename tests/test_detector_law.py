@@ -1,11 +1,11 @@
 """The engine (docs/designs/detector_law/DESIGN.md; one engine, no law's name and no
-version, ALGEBRA.md 9.90 (1)),
+version, ALGEBRA.md #the-primitives),
 the build's first gate: the loader's key and refusals, the rule's step against
 the design's integers, and one chain world run headless (an emitter body at one
 end, a receiver at the other, the open face behind the emitter): one click per
 record, the books balanced at every tick, the click's time at the front's
 first rung about L / c after the giving, the click line with the stamp. SINCE
-THE EMITTER AS A CLICKING BODY (ALGEBRA.md 9.17; BUILD.md section 26) the
+THE EMITTER AS A CLICKING BODY (ALGEBRA.md #the-click; BUILD.md section 26) the
 lamp is refused under the detector law: the chain world's source is a body
 of the matter kind seeded on its bound mode, its excitations clicking at
 their rungs and writing the given record once; the grace, the exemption and
@@ -31,17 +31,17 @@ from tests.worlds import (
     receiver_body,
 )
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
 
 def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
     world = parse_nature_beam_world(chain_world())
-    assert world.hypotheses == []  # no identity beside the engine (ALGEBRA.md 9.90 (1))
+    assert world.hypotheses == []  # no identity beside the engine (ALGEBRA.md #the-primitives)
     block = world.measured[0].block
     assert block is not None and block.emitter is not None and block.emitter.family == 0
-    # the lamp is refused under the detector law (ALGEBRA.md 9.17): a giving
+    # the lamp is refused under the detector law (ALGEBRA.md #the-click): a giving
     # has a clicking record behind it
     with_lamp = chain_world()
     with_lamp["measured"][0] = {
@@ -92,7 +92,7 @@ def test_the_rule_is_the_designs_integers_on_a_chain():
 
 
 def test_chain_world_clicks_once_per_record_with_the_books_balanced():
-    """The chain world under the flux reading (ALGEBRA.md 9.19 (3); BUILD.md section 26
+    """The chain world under the flux reading (ALGEBRA.md #rule3; BUILD.md section 26
     item 14): six givings at their rungs, every record clicking ONCE at `screen` (the
     cumulative ladder [screen] on the emitter's default ladder of every declared set, no
     face on a closed chain), its line at the rung's interval and the record deleted whole
@@ -116,7 +116,7 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     givings = [line for line in lines if line["event"] == "giving"]
     gathers = [line for line in lines if line["event"] == "gather"]
     # the emitter's stock of 6 excitations, each clicking at its own rung; the
-    # residues from the law (ALGEBRA.md 9.22 (4)): the clicking record's
+    # residues from the law (ALGEBRA.md #a-familys-declaration): the clicking record's
     # remainder at the giving Node on Z_700
     # the wheel the rule's at the body's centre Node under the Node clock (the
     # stock 6 down to 1 at the six givings), u below it
@@ -150,7 +150,7 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
 
 
 def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_record():
-    """ALGEBRA.md 9.17 (the Boss's line on the knot): the emitter's own Nodes are Nodes like
+    """ALGEBRA.md #the-click (the Boss's line on the knot): the emitter's own Nodes are Nodes like
     every other after the giving: no grace, no exemption, no own take. On the chain world
     the given record's row at the emitter's tail Node evolves under the rule (nonzero at ages
     after the giving, never held at 0), the ledger's row `taken_by_emitter` stays 0 (kept for the
@@ -291,20 +291,20 @@ def lockstep_givings(
 
 
 def test_the_increment_ladder_over_the_named_sets():
-    """THE INCREMENT LADDER (ALGEBRA.md 9.25 (2), the mathematician's word of 2026-09-25 on
+    """THE INCREMENT LADDER (ALGEBRA.md #the-ladder, the mathematician's word of 2026-09-25 on
     the finding of item 14; the cumulative sums withdrawn): 128 light records planted at
     the layer's emitter Node with every residue of the wheel 128 once and the ladder [s0,
-    s1, s2]: every record clicks exactly once, at the detector the walk of 9.25 (2) names on
+    s1, s2]: every record clicks exactly once, at the detector the walk of ALGEBRA.md #the-ladder names on
     the click's own numbers (the running total before the interval below the threshold,
     the first detector of the ladder at which the interval's increments carry it across); the
     counts per detector under [s0, s1, s2] agree with the counts under [s2, s1, s0] within the
     sampling of 128 residues (the detector's share of the record's total inward flux, whatever
-    the order, 9.25 (3): a theorem in distribution; on eight residues the exact counts
+    the order, ALGEBRA.md #the-ladder: a theorem in distribution; on eight residues the exact counts
     are (4, 2, 2) against (2, 2, 4), the first detector of the ladder holding more of the eight
     thresholds, COMPUTATION for the mathematician), s0 and s2 alike within the same
     sampling (the placement's symmetry about the emitter's row). The emitter's own givings
     carry residues spread from the kept remainder (the model owner's decisions (1) and (2)
-    of record 1962; the coupling's back-action of 9.19 (4e) HISTORY), each
+    of record 1962; the coupling's back-action of ALGEBRA.md #rule3 HISTORY), each
     clicking at the detector the walk names on its own numbers, the line's `ladder` the names and
     its `sunk` the pointers off the ladder; under the family of clicks (item 32, FINDING C)
     the two ladder orders are read in lockstep: the residues read before the clock field
@@ -338,8 +338,8 @@ def test_the_increment_ladder_over_the_named_sets():
         total, increments, ladder, u, norm, wheel, pace = seen[gather["record"]]
         # the record's wheel the rule's at the body's Node with its content as the giving
         # finds it (the own quantum and the stock 8 down to 1: 9 down to 2; ONE ORDER FOR
-        # BOTH CLICKS, ALGEBRA.md 9.85 (2), item 58); the wheel divides the weak-field wall
-        # 6 den Gamma^2 (9.57 (1); item 44); the norm's denominator divides the rule's read
+        # BOTH CLICKS, ALGEBRA.md #the-primitives, item 58); the wheel divides the weak-field wall
+        # 6 den Gamma^2 (ALGEBRA.md #the-line; item 44); the norm's denominator divides the rule's read
         # coefficient at the body's content the giving found
         assert ladder == names and (6 * EMITTER_PAIR[1] * NODE_CLOCK**2) % wheel == 0
         assert 0 <= u < wheel and any(
@@ -350,7 +350,7 @@ def test_the_increment_ladder_over_the_named_sets():
             simulation, total, increments, ladder, u, norm, wheel, pace
         )
         assert gather["T"] >= gather["sunk"] >= 0
-    # THE REVERSED ORDER under the family of clicks (ALGEBRA.md 9.45; BUILD.md section 26
+    # THE REVERSED ORDER under the family of clicks (ALGEBRA.md #the-counts-line; BUILD.md section 26
     # item 32, FINDING C): the residues are the body's own record's, read at the first
     # shell Node at each click (item 33), and the ladder's order is no input to them UNTIL
     # the clock field differs at the body: the first click (at 136, at s0 under one order
@@ -389,8 +389,7 @@ def test_the_increment_ladder_over_the_named_sets():
 
 
 def test_detector_is_one_connected_cube_of_side_three():
-    """THE DETECTOR CUBE (the model owner's word of 2026-09-25, record 1899; ALGEBRA.md 9.25
-    (7)): a detector is one region, a cube of side 3 or more, its click the detector's.
+    """THE DETECTOR CUBE (the model owner's word of 2026-09-25, record 1899; ALGEBRA.md #the-ladder): a detector is one region, a cube of side 3 or more, its click the detector's.
     On the layer of 80 x 9, beyond the emitter's box, the loader refuses a cube of side 2 (the 2 x 2 box at (40, 2)
     naming its sides [2, 2, 1]), admits a cube of side 3 (the 3 x 3 box at (40, 2); the
     layer's thin z axis cuts the cube to one Node deep), admits the 3 x 3 box wrapped across
@@ -398,7 +397,7 @@ def test_detector_is_one_connected_cube_of_side_three():
     bodies at (40, 2) and (43, 2), naming the two pieces) and refuses a connected set that
     fills no box (the 3 x 3 box less its centre, naming its Nodes); a set bound to a block
     admits a block of side 1 as its Nodes (SINCE COMMIT 7 a body is its own detector whatever
-    its support, ALGEBRA.md 9.92, record 2109) and one of side 3; the engine reads the
+    its support, ALGEBRA.md #the-rows-against-nature, record 2109) and one of side 3; the engine reads the
     admitted cube as ONE detector whose Nodes are the cube's (the click line names the set and
     places no Node)."""
     box = [[x, y, 0] for x in (40, 41, 42) for y in (2, 3, 4)]

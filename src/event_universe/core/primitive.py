@@ -1,22 +1,19 @@
 """THE INTERFACE OF A PRIMITIVE (the model owner's decisions of 2026-09-26 through the
-Boss, records 2208, 2212 and 2221; issue #1154; ALGEBRA.md 9.110 item 7, 9.111 items 6
-and 7, 9.112 items 1 and 5, 9.116 item 3):
+Boss, records 2208, 2212 and 2221; issue #1154; ALGEBRA.md #the-primitives.111 items 6
+and 7, ALGEBRA.md #the-interval.116 item 3):
 
     apply(term, start, own) -> writes
 
 A TERM is one line of the run's files, [name, target, of, degree, weight, table]: the
 primitive's English name, the value it writes into, the family or body whose levels or
-count are its argument, the argument's degree, its signed weight and its table (9.110
-item 7). START is the read-only view of the interval's start: every family's levels
+count are its argument, the argument's degree, its signed weight and its table (ALGEBRA.md #the-primitives). START is the read-only view of the interval's start: every family's levels
 now and before, the paces, a body's count M_k and wall W = 3 Q M, its momentum n, the
-Ports' accumulators; nothing written in the interval is read in it (9.57 (1); 9.111
-item 6). OWN is the primitive's own record at the Nodes it acts on: its levels and its
-remainder per divisor, the one place a division's remainder lives (9.91 (2), (3)).
+Ports' accumulators; nothing written in the interval is read in it (ALGEBRA.md #the-line, #the-primitives). OWN is the primitive's own record at the Nodes it acts on: its levels and its
+remainder per divisor, the one place a division's remainder lives (ALGEBRA.md #the-interval).
 WRITES are whole integers into declared targets (a family's level at Nodes, a pace,
 the record's tally) or deferred writes the loop applies at t + 1 (a body's count M_k,
 its charge Q, its momentum n, the stock); the primitive writes nothing itself: the
-loop applies its writes at the declared place and emits one trace line per act (9.112
-item 5). Integers only; no float, no root, no draw; no family's name.
+loop applies its writes at the declared place and emits one trace line per act (ALGEBRA.md #the-interval). Integers only; no float, no root, no draw; no family's name.
 
 Cut 2 declares the interface; cut 3 moves the first body of code (the hold) behind it.
 The arrays are the loop's integer numpy arrays; this module names them without importing

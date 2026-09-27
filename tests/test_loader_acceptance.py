@@ -1,5 +1,5 @@
 """THE LOADER'S ACCEPTANCE TESTS, written ahead of the schema loader (the Boss's word of 2026-09-26
-21:17Z; records 2226, 2089, 2172 to 2174, 2182; ALGEBRA.md 9.120 item 1 and 9.117 row "the source"):
+21:17Z; records 2226, 2089, 2172 to 2174, 2182; ALGEBRA.md #the-stable-body.117 row "the source"):
 tests only; a test the loader fails is xfail strict naming what holds it and loses its mark when green."""
 
 from __future__ import annotations
@@ -93,7 +93,7 @@ def place(tmp_path: Path, monkeypatch, universe: dict, document: dict) -> dict:
 
 
 def body_world() -> dict:
-    """The world of ALGEBRA.md 9.120 item 1: one body by its family, Nodes, count per Node and momentum."""
+    """The world of ALGEBRA.md #the-stable-body: one body by its family, Nodes, count per Node and momentum."""
     return {
         "shape": [16, 1, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
@@ -112,7 +112,7 @@ def body_world() -> dict:
 
 @pytest.mark.xfail(
     strict=True,
-    reason="ALGEBRA.md 9.120 item 1 with record 2226: the frame reads the body's form (#1221) and "
+    reason="ALGEBRA.md #the-stable-body with record 2226: the frame reads the body's form (#1221) and "
     "the loop still reads N, age_bound, clock_stamp and the flags massive_record and body_record, "
     "which the world of 9.120 does not name; the count's line is not bound in the loop (path B, "
     "the mathematician's word on #1210), so `world.py` refuses the form by name",
@@ -120,7 +120,7 @@ def body_world() -> dict:
 def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_and_runs(
     tmp_path, monkeypatch
 ):
-    """ALGEBRA.md 9.120 item 1 (records 2243, 2244): the world file names the body's family, its
+    """ALGEBRA.md #the-stable-body (records 2243, 2244): the world file names the body's family, its
     Nodes, its count per Node and its momentum n, and nothing else; it loads on the shipped
     universe and steps."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
@@ -132,13 +132,13 @@ def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_a
 
 @pytest.mark.xfail(
     strict=True,
-    reason="ALGEBRA.md 9.117 row 'the source' with record 2226: the frame reads `sourced` from the "
+    reason="ALGEBRA.md #the-primitives row 'the source' with record 2226: the frame reads `sourced` from the "
     "source folder's card (#1206) and `world.py` carries it as the family's source term (#1236); "
     "the fragment's `control` family declares neither held, clicks nor sourced, and the law "
-    "(9.86 (2)) refuses a family that does none: the unsourced control waits on the owner's word",
+    "(ALGEBRA.md #the-primitives) refuses a family that does none: the unsourced control waits on the owner's word",
 )
 def test_b2_the_word_sourced_on_a_family_of_the_universe_loads(tmp_path, monkeypatch):
-    """ALGEBRA.md 9.117 row 'the source', 9.108 items 3 and 11 (record 2217): the universe with
+    """ALGEBRA.md #the-primitives row 'the source', ALGEBRA.md #the-paces (record 2217): the universe with
     the source's fragment (`sourced` {of, weight, scale} and the table form with `cap`) loads,
     and the emitter's unit world runs on it with every family on."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))

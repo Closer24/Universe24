@@ -1,4 +1,4 @@
-"""The receive: at each Port the pair on the Link, (re, im), rotated by the Port's angle k through the twist table's triple (c, s, d), each level Rule3's read act with the coefficients (2c, -2s) and (2s, 2c) on the two arrivals, the load d over the wall 2d and the remainder not kept; the angle the read act on each twist read's vector part here and arrived; the arrivals summed per axis for the spatial step (ALGEBRA.md 9.117 the row "the receive", 9.81 (2) (b), (c), 9.96 (2) (c), 9.119 item 2)."""
+"""The receive: at each Port the pair on the Link, (re, im), rotated by the Port's angle k through the twist table's triple (c, s, d), each level Rule3's read act with the coefficients (2c, -2s) and (2s, 2c) on the two arrivals, the load d over the wall 2d and the remainder not kept; the angle the read act on each twist read's vector part here and arrived; the arrivals summed per axis for the spatial step (ALGEBRA.md #the-primitives the row "the receive", ALGEBRA.md #the-transport, #the-primitives, #the-four-acts)."""
 
 from __future__ import annotations
 
@@ -68,7 +68,7 @@ class ReceiveWrites:
 
 
 def angle(port: int, reads: tuple[TwistRead, ...], link: Link) -> Any:
-    """The Port's angle k = sigma SUM factor (V_a here + V_a arrived) over the twist reads, each read Rule3's read act on the arrived level with the Node's own level as the self term over the wall 1, loaded onto the sum (ALGEBRA.md 9.81 (2) (a), 9.96 (2))."""
+    """The Port's angle k = sigma SUM factor (V_a here + V_a arrived) over the twist reads, each read Rule3's read act on the arrived level with the Node's own level as the self term over the wall 1, loaded onto the sum (ALGEBRA.md #the-transport, #the-primitives)."""
     axis, sigma = heading(port)
     total: Any = 0
     for read, arrived in zip(reads, link.vectors, strict=True):
@@ -78,14 +78,14 @@ def angle(port: int, reads: tuple[TwistRead, ...], link: Link) -> Any:
 
 
 def triple(term: ReceiveTerm, k: Any, port: int) -> Triple:
-    """The rotation's triple at the Port from |k| = k_1 2^bits + k_0: the fine triple of k_0 and the coarse of k_1 composed by two of Rule3's read acts over the wall 1, the coefficients (c_1, -s_1) and (s_1, c_1) on (c_0, s_0), the denominator d_1 d_0 a product of two declared integers, the sine by k's sign; refused naming the Port beyond the coarse table or without one (ALGEBRA.md 9.96 (2) (c))."""
+    """The rotation's triple at the Port from |k| = k_1 2^bits + k_0: the fine triple of k_0 and the coarse of k_1 composed by two of Rule3's read acts over the wall 1, the coefficients (c_1, -s_1) and (s_1, c_1) on (c_0, s_0), the denominator d_1 d_0 a product of two declared integers, the sine by k's sign; refused naming the Port beyond the coarse table or without one (ALGEBRA.md #the-primitives)."""
     magnitude = np.abs(k)
     coarse_index = magnitude >> term.fine_bits
     if term.fine is None or term.coarse is None or int(np.max(coarse_index)) >= term.coarse.shape[1]:
         raise ValueError(
             f"the twist on the Port toward {PORTS[port]} reaches |k| = {int(np.max(magnitude))}, "
             f"beyond the twist table ({'no table' if term.coarse is None else f'{term.coarse.shape[1]} coarse triples'}; "
-            "ALGEBRA.md 9.96 (2) (c))"
+            "ALGEBRA.md #the-primitives)"
         )
     c0, s0, d0 = term.fine[:, magnitude & ((1 << term.fine_bits) - 1)]
     c1, s1, d1 = term.coarse[:, coarse_index]
@@ -95,7 +95,7 @@ def triple(term: ReceiveTerm, k: Any, port: int) -> Triple:
 
 
 def rotated(found: Triple, re: Any, im: Any) -> tuple[Any, Any]:
-    """The pair on the Link rotated by the triple: each level Rule3's read act with the coefficients (2c, -2s) and (2s, 2c) on the two arrivals, the load d over the wall 2d (the nearest unit), the remainder not kept (ALGEBRA.md 9.81 (2) (c))."""
+    """The pair on the Link rotated by the triple: each level Rule3's read act with the coefficients (2c, -2s) and (2s, 2c) on the two arrivals, the load d over the wall 2d (the nearest unit), the remainder not kept (ALGEBRA.md #the-transport)."""
     c, s, d = found
     t_re, _ = rule3((2 * c, -2 * s, 0), (re, im, 0), 0, 2 * d, 0, 0, d)
     t_im, _ = rule3((2 * s, 2 * c, 0), (re, im, 0), 0, 2 * d, 0, 0, d)
@@ -115,7 +115,7 @@ def check(start: ReceiveStart) -> None:
 
 
 def apply(term: ReceiveTerm, start: ReceiveStart, own: None = None) -> ReceiveWrites:
-    """The primitive at (i), `apply(term, start, own)` with no own record: the angle per Port, the Link's pair rotated by its triple where the angle is not zero (the pair itself where it is), then Rule3's input per axis, arr_a = the arrival through +a plus the arrival through -a, for the two levels (ALGEBRA.md 9.117 the row "the receive")."""
+    """The primitive at (i), `apply(term, start, own)` with no own record: the angle per Port, the Link's pair rotated by its triple where the angle is not zero (the pair itself where it is), then Rule3's input per axis, arr_a = the arrival through +a plus the arrival through -a, for the two levels (ALGEBRA.md #the-primitives the row "the receive")."""
     check(start)
     angles = []
     re_sums = [np.zeros_like(start.re) for _ in range(3)]  # Rule3's arr_a on the first level
@@ -150,6 +150,6 @@ DECLARATION = Declaration(
     reads=("the Link's value", "a Port's accumulator", "the twist table"),
     writes=("the arrivals",),
     function=apply,
-    section="9.112 item 1; 9.96 (2) (e); 9.117 item 3; 9.119 item 2, the row 'the receive'",
+    section="ALGEBRA.md #the-interval, #the-primitives, #the-four-acts, the row 'the receive'",
     word="the step",
 )

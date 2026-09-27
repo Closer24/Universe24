@@ -1,4 +1,4 @@
-"""The readings of a run, declared in the world file under `readings` and written in one format, each labelled DETECTOR (a declared detector's clicks), GAMEBOARD (a family's level, support or total, a body's centre) or HOST (the records alive); a reading reads state at the declared intervals and writes nothing into the run (ALGEBRA.md 9.115; docs/ENGINE.md, the readings by type)."""
+"""The readings of a run, declared in the world file under `readings` and written in one format, each labelled DETECTOR (a declared detector's clicks), GAMEBOARD (a family's level, support or total, a body's centre) or HOST (the records alive); a reading reads state at the declared intervals and writes nothing into the run (ALGEBRA.md #readings-and-measurements; docs/ENGINE.md, the readings by type)."""
 
 from __future__ import annotations
 

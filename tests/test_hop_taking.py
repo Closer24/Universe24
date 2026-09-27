@@ -1,4 +1,4 @@
-"""The booking in the body's frame, one rule (ALGEBRA.md 9.74 (2)): a face of a moving body books
+"""The booking in the body's frame, one rule (ALGEBRA.md #the-ladder): a face of a moving body books
 (G_in + (v . n) e_out) cut at zero after the sum, with no separate hop booking."""
 
 from __future__ import annotations
@@ -64,7 +64,7 @@ def run(
     document: dict, frame: bool, clicks: bool, ticks: int
 ) -> tuple[DetectorLawSimulation, list[dict]]:
     """`frame` False: the control, the board's frame alone (no set moving as far as the
-    booking reads, the Port booking of 9.25 (2) at the set's Nodes as they stand)."""
+    booking reads, the Port booking of ALGEBRA.md #the-ladder at the set's Nodes as they stand)."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     if not frame:
@@ -141,7 +141,7 @@ def test_at_rest_the_rule_is_the_port_booking_bit_for_bit_and_nothing_is_carried
 
 @pytest.mark.diagnostic
 def test_the_back_face_books_a_record_overtaking_the_cart_once_and_not_c_over_c_minus_v():
-    """AT THE BACK (9.74 (2)): the cart moving along +x at one Link every four intervals, the
+    """AT THE BACK (ALGEBRA.md #the-ladder): the cart moving along +x at one Link every four intervals, the
     record given along +x at 0.447 overtakes it from behind and books G_in - v e_out at the back
     face, cut at zero: the norm once. THE CONTROL, the board's frame: the rows the back face
     uncovers at each hop re-enter through the back Port and are booked again, c / (c - v) = 2.27

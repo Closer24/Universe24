@@ -10,7 +10,7 @@ from tests.bodies import block_world
 from tests.running import planted
 from tests.worlds import PERIODIC, emitter_world
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md 9.57 (2);
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
 # the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
@@ -110,7 +110,7 @@ def test_the_box_grows_by_one_link_and_stops_at_an_open_face() -> None:
 
 
 def test_a_box_short_of_a_closed_face_reads_zero_beyond_it_like_the_whole_board(monkeypatch) -> None:
-    """The mathematician's check before the merge (ALGEBRA.md 9.68 (3)): on a CLOSED axis
+    """The mathematician's check before the merge (ALGEBRA.md #the-primitives): on a CLOSED axis
     (mirrors) a window's edge inside the board reads zero beyond it, as the whole-board step
     does (the board's faces reflect nothing by themselves: a mirror is a body of light's kind,
     the face beyond the last Node has no Node); a planted record 10 Links from the closed face

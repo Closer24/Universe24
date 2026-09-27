@@ -1,4 +1,4 @@
-"""The self-source: Sigma_self = (SUM over the six Links, the family's records and their levels of (a_j - a_i)^2) div P_2 at every Node, each difference Rule3's read act on the Link's value against the Node's own level over the wall 1, its square a booking of the family's own levels, the sum divided by P_2 by Rule3's division act with the remainder not kept, the write w Sigma_self off the step's right side (ALGEBRA.md 9.117 the row "the self-source", 9.91 (5), 9.78 (3), 9.119 item 2)."""
+"""The self-source: Sigma_self = (SUM over the six Links, the family's records and their levels of (a_j - a_i)^2) div P_2 at every Node, each difference Rule3's read act on the Link's value against the Node's own level over the wall 1, its square a booking of the family's own levels, the sum divided by P_2 by Rule3's division act with the remainder not kept, the write w Sigma_self off the step's right side (ALGEBRA.md #the-primitives the row "the self-source", ALGEBRA.md #the-interval, #a-familys-declaration, #the-four-acts)."""
 
 from __future__ import annotations
 
@@ -45,12 +45,12 @@ class SelfSourceWrites:
 
 
 def difference(here: Any, arrived: Any) -> Any:
-    """The Link's value less the Node's own level, Rule3's read act with the coefficient 1 on the arrival and -1 on the level over the wall 1, exact (ALGEBRA.md 9.119 item 1 (a))."""
+    """The Link's value less the Node's own level, Rule3's read act with the coefficient 1 on the arrival and -1 on the level over the wall 1, exact (ALGEBRA.md #the-four-acts)."""
     return rule3((1, 0, 0), (arrived, 0, 0), -1, 1, here, 0, 0)[0]
 
 
 def bound(term: SelfSourceTerm, levels: int) -> int:
-    """The largest sum the line reaches with every level at A: six squared differences of 2 A per level (ALGEBRA.md 9.57 (2))."""
+    """The largest sum the line reaches with every level at A: six squared differences of 2 A per level (ALGEBRA.md #the-line)."""
     return 6 * levels * 4 * term.amplitude * term.amplitude
 
 
@@ -71,7 +71,7 @@ def check(term: SelfSourceTerm, start: SelfSourceStart) -> None:
 
 
 def apply(term: SelfSourceTerm, start: SelfSourceStart, own: None = None) -> SelfSourceWrites:
-    """The primitive at (i), `apply(term, start, own)` with no own record: the six differences of every level squared and summed, the sum divided by P_2 by Rule3's division act, the remainder not kept (ALGEBRA.md 9.117 the row "the self-source")."""
+    """The primitive at (i), `apply(term, start, own)` with no own record: the six differences of every level squared and summed, the sum divided by P_2 by Rule3's division act, the remainder not kept (ALGEBRA.md #the-primitives the row "the self-source")."""
     check(term, start)
     total: Any = 0
     for level in start.levels:
@@ -88,7 +88,7 @@ DECLARATION = Declaration(
     ("the family's own levels", "P_2", "the structure table"),
     ("a family's level at a Node",),
     apply,
-    "9.78 (3); 9.88 (2); 9.91 (5); 9.119 item 2, the row 'the self-source'",
+    "ALGEBRA.md #a-familys-declaration, #what-is-open, #the-interval, #the-four-acts, the row 'the self-source'",
     word="the right side",
     schema=Schema({"a family's entry": ObjectOf({"self_source": ObjectOf({"unit": Integer(least=0)})})}),
 )

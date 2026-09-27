@@ -1,5 +1,5 @@
 """The GameBoard is reversible in time between clicks, and the clicks keep the physical definitions:
-one small world with every piece, stepped forward and back bit for bit (ALGEBRA.md 9.50 (8))."""
+one small world with every piece, stepped forward and back bit for bit (ALGEBRA.md #the-direction)."""
 
 from __future__ import annotations
 
@@ -113,7 +113,7 @@ def close_ticks(lines: list[dict]) -> list[int]:
 
 def inverse_close_interval(simulation: DetectorLawSimulation, lines: list[dict], t: int) -> None:
     """The window's close stepped back by hand (the close is named from the run's events, as a
-    click is, ALGEBRA.md 9.80 (4)): the window reopened on its record where the record still
+    click is, ALGEBRA.md #a-familys-declaration): the window reopened on its record where the record still
     stands (a taking since then lost it, the click's one loss), then the interval stepped back
     (the write of the interval subtracted by the engine's inverse, the rows stepped back)."""
     line = next(line for line in lines if line["event"] == "giving" and line["tick"] == t)
@@ -130,7 +130,7 @@ def test_between_clicks_the_board_returns_bit_for_bit_where_the_clock_rises_and_
     returns the load's rows bit for bit: the bodies' own records, the family of clicks and the
     family of charge (their levels and remainders), the held quanta; the family of clicks' level
     fell at Nodes during the run (the falls counted, above 0), and at some Node it fell to 0 and
-    rose again (the edge case). ALGEBRA.md 9.50 (8): the wall constant, one to one."""
+    rose again (the edge case). ALGEBRA.md #the-direction: the wall constant, one to one."""
     document = reversible_world()
     probe, _, lines, _ = run_states(document, 120)
     first_giving = click_ticks(lines)[0][0]
@@ -235,7 +235,7 @@ def inverse_giving_interval(
     its rows zero, asserted: the writes come with the window's intervals and the engine's
     inverse subtracts them); every record and both fields stepped back at the content the
     interval began with (the hold before the click, which every forward step read: ONE ORDER
-    FOR BOTH CLICKS, ALGEBRA.md 9.85 (2), item 58; the giving's hold at once HISTORY), the
+    FOR BOTH CLICKS, ALGEBRA.md #the-primitives, item 58; the giving's hold at once HISTORY), the
     body's stock restored and the fields held again first. Nothing is lost at a giving
     click."""
     line = next(line for line in lines if line["event"] == "giving" and line["opened"] == t)
@@ -248,7 +248,7 @@ def inverse_giving_interval(
     simulation.records.pop(line["record"], None)
     if block.window == line["record"]:
         block.window = None
-    # ONE ORDER FOR BOTH CLICKS (ALGEBRA.md 9.85 (2); item 58): the giving's lowered quanta
+    # ONE ORDER FOR BOTH CLICKS (ALGEBRA.md #the-primitives; item 58): the giving's lowered quanta
     # are held after the held families' step, as a taking's, so every record and both fields
     # stepped forward at the content the interval began with; the inverse restores that hold
     # and steps back as across a taking
@@ -264,9 +264,9 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
     the giver's held content falls by one, the given record's content is 1, its residue u is
     in [0, W) with W the rule's at the first shell Node, and the click's interval is the
     counted one, 2 W (wait - 1) < (2 u + 1) P <= 2 W wait from the residue read before it
-    (ALGEBRA.md 9.44 (5) (c)); at every taking click the taker's held content rises by one, the
+    (ALGEBRA.md #the-ladder); at every taking click the taker's held content rises by one, the
     record's content is 1, and the detector is the one the increment ladder chooses on the
-    plain flux against the norm's rational (Born's rule at the taking end, 9.25 (2) and (3),
+    plain flux against the norm's rational (Born's rule at the taking end, ALGEBRA.md #the-ladder and (3),
     item 36)."""
     document = reversible_world()
     period = document["measured"][0]["emitter"]["period"]
@@ -278,7 +278,7 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
     total_quanta = sum(sum(h) for h in simulation.held)
     total_charge = sum(simulation._body_charge(n) for n in range(len(simulation.held)))
     # the emitter's own quantum and its stock of STOCK light quanta, all of charge -1, the
-    # screen's three light bodies and the positive body (ALGEBRA.md 9.51 (8); item 47)
+    # screen's three light bodies and the positive body (ALGEBRA.md #the-paces; item 47)
     assert total_charge == -(STOCK + 1) - 3 + 1
     block = simulation.blocks[0]
     previous_residue = None
@@ -338,12 +338,12 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
 
 
 def test_between_clicks_the_weighted_form_is_exact_where_the_field_stands():
-    """2. The conserved form of ALGEBRA.md 9.50 (9) and (13) on the given light record, interval
+    """2. The conserved form of ALGEBRA.md #the-direction and (13) on the given light record, interval
     by interval from its write to its taking click: its change with the field of the interval's
-    start in force is the remainders' term exactly (9.50 (8)), and with the field's move the
-    weights' change exactly (9.45 (5), the Node terms alone under the Node's own pace); where
+    start in force is the remainders' term exactly (ALGEBRA.md #the-direction), and with the field's move the
+    weights' change exactly (ALGEBRA.md #the-counts-line, the Node terms alone under the Node's own pace); where
     the field stands the form is constant but for the remainders' term. The content light reads
-    here is the effective content c - q Lambda d, light being of charge -1 (9.48 (3))."""
+    here is the effective content c - q Lambda d, light being of charge -1 (ALGEBRA.md #the-paces)."""
     document = reversible_world()
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
@@ -353,7 +353,7 @@ def test_between_clicks_the_weighted_form_is_exact_where_the_field_stands():
     checked = 0
     for _ in range(200):
         # the content light reads: the effective content c - q Lambda d, light of charge -1 here
-        # (ALGEBRA.md 9.48 (3), 9.51 (2))
+        # (ALGEBRA.md #the-paces)
         content_start = simulation._effective_content(LIGHT).copy()
         simulation.step()
         if followed is None:

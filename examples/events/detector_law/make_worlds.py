@@ -5,12 +5,12 @@ of the writer's own). The engine's keys are the massive record kind's (`../massi
 make_worlds.py`, whose `world` helper writes the massive worlds here, so that their form is
 that series' form byte for byte: `age_bound`, `K`, `N`, `release`, the blocks' keys), the
 bodies with extents and the face slab (BUILD.md section 26 item 23), the emitter as a
-clicking body (item 24) and THE GIVEN TRAIN (item 27; ALGEBRA.md 9.17 (6a)): every giving is
+clicking body (item 24) and THE GIVEN TRAIN (item 27; ALGEBRA.md #the-click): every giving is
 a travelling train of 8 periods on the given clock [512, 1] of N = 1024 (k = pi / 2, the
 wavelength 4, the train 32 Nodes along **K**), the body's extent along **K** the train's
 length, the profile and its norm on the vacuum the generator's integers checked at load.
 
-THE LIGHT CLOCK (ALGEBRA.md 9.22 (8), its row; the one table of 9.30: the chain of 760
+THE LIGHT CLOCK (ALGEBRA.md #a-familys-declaration, its row; the one table of 9.30: the chain of 760
 extruded to [760, 3, 3], periodic on y and z, so that every detector is a whole cube and
 every pin of the chain stands to the bit): light [1, 1] with the given clock [512, 1] on
 N = 1024, matter [800, 809]; the face slabs 32 deep at both ends of x (`face_depth`); the
@@ -19,7 +19,7 @@ well A [800, 801] of the extents [32, 3, 3] at [600, 632) with a stock of
 light's kind over the whole cross-section; the holder body's name waits on the cleanup's
 step 6); the receiving set `at_well` A's own Nodes (the set bound to the block: the
 outgoing train leaves them through their Ports, negative and not booked, the return enters
-them, 9.25 (11) (d)); 4800 intervals (COMPUTATION: 64 givings at the mean cadence P / 2 on
+them, ALGEBRA.md #the-ladder); 4800 intervals (COMPUTATION: 64 givings at the mean cadence P / 2 on
 the wheel of 2403, P = 94 on A's mode, about 3000 intervals, the last return 300, a margin;
 the run 9 seconds, HOST). The blind
 pins in `../pins.json`: the mean click interval after the giving 300 +- 9 at 64 records
@@ -30,14 +30,14 @@ outgoing pass).
 
 THE ROWS HELD UNDER THE TRAIN (their files in `docs/designs/detector_law/held_worlds/`,
 HISTORY as written with the one-Node giving, not loaded by the gate; their builders retired
-here, to be rebuilt through the generator from the table of ALGEBRA.md 9.22 (8) in its
+here, to be rebuilt through the generator from the table of ALGEBRA.md #a-familys-declaration in its
 form, the cleanup's item 7): the two slits and the pace fans (the light rows of the folder);
 the moving emitter's redshift, Sagnac's two-way light times, de Broglie's fringes and the
 moving mass's energy (the massive rows written into `../massive_record/`); the four Bell
 and the four Malus worlds held before them (HELD_NAMES below: the crystal and the polariser
 body with an axis).
 
-SINCE THE ONE STROKE'S COMMIT 7 (ALGEBRA.md 9.85 (5), 9.71 (1), 9.91 (10) 7; record 2082
+SINCE THE ONE STROKE'S COMMIT 7 (ALGEBRA.md #the-primitives, #the-interval 7; record 2082
 (4)) THE GIVEN TRAIN IS RETIRED: every emitter is a body of ONE NODE giving by the window
 (its rotation written into the given row at its Node at its `weight`, chosen by the massive
 generator's trial so that the window is about one period of the rotation, shorter than a
@@ -76,7 +76,7 @@ HELD = DESIGNS / "detector_law" / "held_worlds"
 # kind at the kind's own pair are no longer refused as a mode that is not bound, and the
 # two files are back at their RUN_LIST path (the Boss's word of 2026-09-24, 10:16Z).
 # The four Bell files are HELD until the crystal (branch `crystal`, BUILD.md section 25):
-# their two-arm lamp is cancelled and refused at load (ALGEBRA.md 9.17; the model owner's
+# their two-arm lamp is cancelled and refused at load (ALGEBRA.md #the-click; the model owner's
 # word of 2026-09-24, 15:05Z); the crystal's branch regenerates them through the crystal
 # at the wheel [1, 20] (the Boss's adoption of 00:05Z).
 # THE ROWS HELD UNDER THE GIVEN TRAIN (BUILD.md section 26 item 27) are moved there as
@@ -88,7 +88,7 @@ HELD_NAMES: set[str] = {
     "bell_a1b0",
     "bell_a1b1",
     # the four Malus worlds held with them (BUILD.md section 26 item 14): under
-    # the cumulative ladder of ALGEBRA.md 9.19 (3) (b) the table body's two
+    # the cumulative ladder of ALGEBRA.md #rule3 the table body's two
     # detectors at ONE Node cannot give Malus's counts (the entry's whole offer
     # crosses the rung no later than the + share of it), so the polariser
     # returns as a body with an axis and two receivers named (the
@@ -123,13 +123,13 @@ TEMPLATE_KEYS = {
 }
 WALL_PAIR = [1, 2]  # the mirror line's block pair, two Nodes deep (section 15 L-1, the fourth commit)
 TRAIN_32 = 32  # periods, section 15 L-3 and L-6 (HISTORY: the lamp's train, retired)
-# THE EMITTER AS A CLICKING BODY (ALGEBRA.md 9.17 (4); BUILD.md section 26): every source is a
+# THE EMITTER AS A CLICKING BODY (ALGEBRA.md #the-click; BUILD.md section 26): every source is a
 # body of a massive kind (the emitter kind EMITTER_KIND, the vacuum pair of the matter kind)
 # of side 1, seeded on its bound mode by the massive generator's `seed_on_the_mode`, with a
 # stock of excitations and a wheel; each excitation clicks at its own rung and writes its
 # photon once. THE WELL'S MODE SETS THE CADENCE (COMPUTATION, BUILD.md section 26): the u-th
 # residue clicks about (2 u + 1) P / (2 W) intervals after its excitation, P the mode's
-# period (ALGEBRA.md 9.17 (5) item 1 on the flux norm of 9.19 (3)), the whole wheel of W
+# period (ALGEBRA.md #the-click on the flux norm of ALGEBRA.md #rule3), the whole wheel of W
 # in about W P / 2; a well too deep for its board is a RUNAWAY (the
 # largest eigenvalue at or above 2, no oscillation; the deep wells [800, 700], [800, 500]
 # and [800, 400] of the first smoke runs were such on a chain and their cadences the
@@ -141,10 +141,10 @@ EMITTER_KIND = [7, 8]
 EMITTER_WELL = [
     801,
     700,
-]  # the rich well (700 remainder values, ALGEBRA.md 9.19 (4a), 9.22 (4)) bound on a chain and a layer
+]  # the rich well (700 remainder values, ALGEBRA.md #rule3, #a-familys-declaration) bound on a chain and a layer
 EMITTER_SEED_AMPLITUDE = (
     1 << 20
-)  # at 100 the given light's back-action swamps the excited record (ALGEBRA.md 9.17 (7) (c))
+)  # at 100 the given light's back-action swamps the excited record (ALGEBRA.md #the-click)
 BELL_TRAIN = 128  # periods, DECLARATIONS.md sections 1 and 3
 # The receiver by name (#1116, the physicist's form, Reviewer 3 confirmed): a key `receiver`
 # on every emitting block naming the set that takes the block's clicks. ON since the
@@ -176,7 +176,7 @@ def ray_world(name: str, shape: list[int], boundary: dict, pair: list[int], tick
     document["massive_record"] = True  # the absorbing blocks and the `probes` key live under it
     document["amplitude_bound"] = AMPLITUDE_BOUND  # the emitter body's massive family (M1-10)
     document["node_clock"] = NODE_CLOCK  # the Node clock Gamma (item 31)
-    document["momentum_unit"] = MOMENTUM_UNIT  # the momentum's unit Q (ALGEBRA.md 9.96 (1))
+    document["momentum_unit"] = MOMENTUM_UNIT  # the momentum's unit Q (ALGEBRA.md #the-primitives)
     document["universe"] = [
         light_family(pair),
         emitter_kind_family(),
@@ -207,7 +207,7 @@ def emitter_body(
     own: str = "matter",
     pair: list[int] | None = None,
 ) -> dict:
-    """An emitter body (ALGEBRA.md 9.17 (4); BUILD.md section 26): a well of the massive
+    """An emitter body (ALGEBRA.md #the-click; BUILD.md section 26): a well of the massive
     family `own` of side 1 at `position` (its seed the scalar EMITTER_SEED_AMPLITUDE, made the
     mode's profile by `seed_on_the_mode` once the document is complete), its stock `stock`
     excitations, its `emitter` the given family (the residue and the wheel the law's) and,
@@ -221,7 +221,7 @@ def emitter_body(
         "family": own,
         "amount": 1,
         # the stock as the given family's content held at the body (ALGEBRA.md
-        # 9.51 (8); BUILD.md section 26 item 47)
+        # ALGEBRA.md #the-paces; BUILD.md section 26 item 47)
         "held": {family: stock},
         "momentum": [0, 0, 0],
         "ramp": 0,
@@ -235,7 +235,7 @@ def emitter_body(
 
 
 def body(position: list[int], family: str = "light") -> dict:
-    # a tool held in place: `fixed: true` (ALGEBRA.md 9.104 (6) (b); record 2157)
+    # a tool held in place: `fixed: true` (ALGEBRA.md #the-primitives; record 2157)
     """A body of one Node at rest (the template's receiver form), every key the
     detector law reads written (record 2089; BUILD.md section 26 item 57)."""
     entry: dict = {
@@ -253,7 +253,7 @@ def wall_node(position: list[int], family: str = "light", pair: list[int] | None
     """One Node of a wall: a block of side 1 with the pair [1, 2] (section 15 L-1 the
     mirror line of light's kind; M1-6 the barrier line of the matter kind, its raised pair
     the builder's line). The take lines (`absorbing` blocks with a `take` pair) are retired
-    with the take (ALGEBRA.md 9.19 (3); BUILD.md section 26 item 15)."""
+    with the take (ALGEBRA.md #rule3; BUILD.md section 26 item 15)."""
     entry = body(position, family)
     entry["side"] = 1
     if pair is not None:
@@ -301,7 +301,7 @@ def screen(document: dict, x: int, ys: range, family: str = "light") -> list[str
     """A screen as a row of cube detectors `screen_<y>` (record 1899): from the column x,
     DETECTOR_SIDE deep, one cube per DETECTOR_SIDE rows of `ys` (whose count must divide),
     each with its own click (section 12; Builder 2's finding); the rung's wheel is the
-    record's own (ALGEBRA.md 9.22 (4)). The sets' names are returned, the emitter's
+    record's own (ALGEBRA.md #a-familys-declaration). The sets' names are returned, the emitter's
     `receiver` list (its records' ladder)."""
     assert len(ys) % DETECTOR_SIDE == 0, (ys, DETECTOR_SIDE)
     return [
@@ -381,7 +381,7 @@ BELL_SETTINGS = {"a0": 0, "a1": BELL_N // 4, "b0": BELL_N // 8, "b1": 3 * BELL_N
 # at c = 1 / sqrt 3: 2048 + 3204 + 13 = 5265; written 5500, the margin 235 intervals.
 BELL_TICKS = 5500
 MALUS_TRAIN = 32  # periods (665 intervals on [308, 25]), section 5 item 2, 2026-09-24 06:05Z
-MALUS_TICKS = 3800  # 256 excitations on the well [8, 7]: the wheel in about W P / 2 = 2560 intervals (ALGEBRA.md 9.17 (5) item 1); the engine reads 239 givings within 3200 on the flux norm of 9.19 (3), COMPUTATION; the transit 6 and the completion beside
+MALUS_TICKS = 3800  # 256 excitations on the well [8, 7]: the wheel in about W P / 2 = 2560 intervals (ALGEBRA.md #the-click); the engine reads 239 givings within 3200 on the flux norm of ALGEBRA.md #rule3, COMPUTATION; the transit 6 and the completion beside
 # Section 5 item 2, "the count of 256 givings stands": the lamp's stock of records is its
 # `amount` (a giving spends one quantum of it, the engine's `_givings`; two_slits's stock 1024
 # the same key), so the registered 2^50 would giving one record per interval to the end of
@@ -511,7 +511,7 @@ def malus(name: str, source: Path, setting: int) -> dict:
             table["phase_window"] = setting
         inner = entry.get("lamp")
         if isinstance(inner, dict):
-            # the source's lamp becomes the emitter body (ALGEBRA.md 9.17): the
+            # the source's lamp becomes the emitter body (ALGEBRA.md #the-click): the
             # stock 256 = W on the lamp's declared wheel, the well EMITTER_WELL
             # (bound on the periodic bar of 8: the extent 1.4 Links)
             rebuilt["measured"][index] = emitter_body(list(entry["position"]), MALUS_BIRTHS)
@@ -537,20 +537,18 @@ KIND = [800, 809]  # mu = 0.15
 WELL_FULL = [
     800,
     801,
-]  # the rich well of the massive rows' emitters (2403 remainder values; the mathematician's 9.21 (8))
+]  # the rich well of the massive rows' emitters (2403 remainder values; the mathematician's ALGEBRA.md #the-postulates)
 EMITTER_SEED = (
     50 << 12
-)  # the seed's unit 2^12 under the amplitude bound 2^20 (ALGEBRA.md 9.61 (3); item 44; 50 x 2^20 HISTORY)
+)  # the seed's unit 2^12 under the amplitude bound 2^20 (ALGEBRA.md #the-rows-against-nature; item 44; 50 x 2^20 HISTORY)
 AMPLITUDE_BOUND = (
     1 << 20
 )  # the world key `amplitude_bound` of every massive world: the ceiling under the Node clock (BUILD.md section 26 item 31; section 15 M1-10's 2^32 HISTORY)
-MOMENTUM_UNIT = (
-    64  # the world key `momentum_unit`, Q, the momentum's unit (ALGEBRA.md 9.96 (1)): the wall W = 3 Q M
-)
-NODE_CLOCK = 10_000  # the world key `node_clock`, Gamma = 10^4 (ALGEBRA.md 9.57 (2), 9.61 (3); item 44) (ALGEBRA.md 9.35 (3); item 31): the massive generator's integer, written in every world
+MOMENTUM_UNIT = 64  # the world key `momentum_unit`, Q, the momentum's unit (ALGEBRA.md #the-primitives): the wall W = 3 Q M
+NODE_CLOCK = 10_000  # the world key `node_clock`, Gamma = 10^4 (ALGEBRA.md #the-line, #the-rows-against-nature; item 44) (ALGEBRA.md #the-paces; item 31): the massive generator's integer, written in every world
 # THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26 item 51): what a
-# family is stands on the family: the family of clicks holds the content (ALGEBRA.md 9.45;
-# item 32), the family of charge holds the signed charge (9.48; item 35), and every other
+# family is stands on the family: the family of clicks holds the content (ALGEBRA.md #the-counts-line;
+# item 32), the family of charge holds the signed charge (ALGEBRA.md #the-paces; item 35), and every other
 # family reads them by `reads`, the charge at the weight Lambda by its own sign
 CLOCK_FAMILY_NAME = (
     "clicks"  # the family whose held level is the Node clock: the massive generator's name and family
@@ -582,33 +580,39 @@ READS = [
 EMITTER_STOCK = (
     64  # the massive rows' emitters: 64 excitations on the wheel [1, 64] (BUILD.md section 26)
 )
-PHASE_STEPS = 1024  # N of every light world (ALGEBRA.md 9.22 (8): the given clock's circle)
+PHASE_STEPS = (
+    1024  # N of every light world (ALGEBRA.md #a-familys-declaration: the given clock's circle)
+)
 GIVEN_CLOCK = [
     512,
     1,
 ]  # the given clock of every light emitter on N = 1024: k = pi / 2, the wavelength 4
-TRAIN_PERIODS = 8  # HISTORY (the train retired, commit 7): the train's periods (9.17 (6a))
+TRAIN_PERIODS = 8  # HISTORY (the train retired, commit 7): the train's periods (ALGEBRA.md #the-click)
 TRAIN_LENGTH = 32  # HISTORY (the train retired, commit 7): the train's Nodes along K; the one-Node emitter stands at its head
-FACE_DEPTH = 32  # every face a receiver slab as deep as the train (9.25 (11))
-LIGHT_CLOCK_SHAPE = [760, 3, 3]  # the one table (9.30): the chain of 760 extruded to [760, 3, 3]
+FACE_DEPTH = 32  # every face a receiver slab as deep as the train (ALGEBRA.md #the-ladder)
+LIGHT_CLOCK_SHAPE = [
+    760,
+    3,
+    3,
+]  # the one table (ALGEBRA.md #the-rows-against-nature): the chain of 760 extruded to [760, 3, 3]
 LIGHT_CLOCK_TICKS = 4800  # COMPUTATION: 64 givings at the mean cadence P / 2 = 47 (P = 94 on A's mode), about 3000 intervals, the last return 300, a margin
 MIRROR_DEPTH = 4  # the mirror's depth, the gap [1, 2] (A.3)
 LIGHT_MOMENT = [
     0,
     0,
     1,
-]  # the light emitter's moment, the given component's axis (ALGEBRA.md 9.82 (3) (d)); the massive generator's
+]  # the light emitter's moment, the given component's axis (ALGEBRA.md #the-second-level); the massive generator's
 
 
 WINDOW_SEED = (
     1 << 12
 )  # the emitter's amplitude: the written light g x a stays far below the bound at every weight read
-WINDOW_PERIODS = 2  # the window aimed at two periods of the emitter's rotation (the fixed row (iv)'s 64 intervals at omega = 0.178, ALGEBRA.md 9.85 (5) (a))
-# THE ONE-NODE EMITTER'S KIND AND WELL (the point emitter's row, ALGEBRA.md 9.69 (2), 9.71 (1);
+WINDOW_PERIODS = 2  # the window aimed at two periods of the emitter's rotation (the fixed row (iv)'s 64 intervals at omega = 0.178, ALGEBRA.md #the-primitives)
+# THE ONE-NODE EMITTER'S KIND AND WELL (the point emitter's row, ALGEBRA.md #what-a-body-is;
 # `../point_emitter/make_worlds.py`): the matter kind [800, 813] (the band's bottom omega_0 =
 # 0.179) with the well [800, 802], bound on one Node at omega = 0.178 (light's wavelength about
 # 20 at that rotation); the 32-Node body's well [800, 801] on the kind [800, 809] binds no mode
-# on one Node (the loader's check of 9.22 (7) (iii) refuses it)
+# on one Node (the loader's check of ALGEBRA.md #a-familys-declaration refuses it)
 ONE_NODE_KIND = [800, 813]
 ONE_NODE_WELL = [800, 802]
 # THE BEAM BODY'S KIND: on a layer (y open) and across the extruded chain's cross-section a
@@ -616,7 +620,7 @@ ONE_NODE_WELL = [800, 802]
 # band's top); the kind [800, 1200] binds on one Node everywhere tried and rotates near light's
 # frequency at the retired train's wave number k = pi / 2 (cos omega = (cos k + 2) / 3 = 2 / 3,
 # 2 cos omega = 4 / 3 = 1600 / 1200; the layer's mode reads omega = 0.832 against 0.841), so
-# the short rows keep about their wavelength 4; the long rows (the wavelength 21 of 9.62 (1))
+# the short rows keep about their wavelength 4; the long rows (the wavelength 21 of ALGEBRA.md #the-rows-against-nature)
 # take SEAT_KIND (omega = 0.178, the wavelength about 20)
 BEAM_KIND = [800, 1200]
 
@@ -624,31 +628,33 @@ BEAM_KIND = [800, 1200]
 def emitter(
     position: list[int], extents: list[int] | None = None, kind: list[int] | None = None, **extra: object
 ) -> dict:
-    """A well of ONE NODE that emits light by the window (ALGEBRA.md 9.85 (5), 9.71 (1); the
+    """A well of ONE NODE that emits light by the window (ALGEBRA.md #the-primitives; the
     one stroke's commit 7: the given train of item 27 retired): the kind `kind` (BEAM_KIND
     unless given) with the well SEAT_WELL (the point emitter's body's Node), its seed WINDOW_SEED on its
     mode (no coupling: the click alone, the model owner's decision (2) of record 1962), its
-    emission by its excited records' clicks (ALGEBRA.md 9.17; BUILD.md section 26): the stock
+    emission by its excited records' clicks (ALGEBRA.md #the-click; BUILD.md section 26): the stock
     EMITTER_STOCK excitations, each opening a window at its rung, the body's rotation written
     into the given row at its Node at the weight `weight` (chosen by the massive generator's
     `point_weight` after the seeding) until the outward norm reaches the excitation's action;
-    the light at the body's own rotation on the given family's dispersion (9.85 (5) answer 1)."""
+    the light at the body's own rotation on the given family's dispersion (ALGEBRA.md #the-primitives answer 1)."""
     block: dict = {
         "position": position,
         # one Node; on the one table's extruded chain [X, 3, 3] the chain's point extruded,
         # [1, 3, 3] (a one-Node well binds no mode across a periodic cross-section of 3 x 3:
         # its depth is shared by the nine Nodes; the window is at the centre Node)
         "extents": [1, 1, 1] if extents is None else list(extents),
-        "kind": list(BEAM_KIND if kind is None else kind),  # the body's rest pair (ALGEBRA.md 9.91 (7))
+        "kind": list(
+            BEAM_KIND if kind is None else kind
+        ),  # the body's rest pair (ALGEBRA.md #the-interval)
         "pair": list(ONE_NODE_WELL),
         "seed": WINDOW_SEED,
         "amount": 1,
         # the stock as the given family's content held at the body (ALGEBRA.md
-        # 9.51 (8); BUILD.md section 26 item 47); light is the charge family's wave
-        # (9.86 (2) (b)), so the stock and the giving are the charge family's
+        # ALGEBRA.md #the-paces; BUILD.md section 26 item 47); light is the charge family's wave
+        # (ALGEBRA.md #the-primitives), so the stock and the giving are the charge family's
         "stocks": {"charge": EMITTER_STOCK},
         "emitter": {"family": "charge"},
-        # the light's component along the body's moment (ALGEBRA.md 9.82 (3) (d); commit 4)
+        # the light's component along the body's moment (ALGEBRA.md #the-second-level; commit 4)
         "moment": list(LIGHT_MOMENT),
     }
     block.update(extra)
@@ -656,7 +662,7 @@ def emitter(
 
 
 def mirror_behind(node_record: list[int], direction: list[int], cross: list[int]) -> dict:
-    """THE MIRROR BEHIND THE BODY'S NODE (ALGEBRA.md 9.85 (5) (b); commit 7): a gap slab of depth 2
+    """THE MIRROR BEHIND THE BODY'S NODE (ALGEBRA.md #the-primitives; commit 7): a gap slab of depth 2
     whose face is the Node one Link behind the one-Node emitter along `direction`, `cross`
     its extents across (the axis along the direction set to 2), so the half given away from
     the arm returns forward two Links later and nothing reaches the face behind."""
@@ -670,11 +676,11 @@ def mirror_behind(node_record: list[int], direction: list[int], cross: list[int]
 
 def mirror_slab(position: list[int], extents: list[int]) -> dict:
     """A mirror (A.3): a body of light's kind over a box, carrying the gap [1, 2] at its Nodes
-    (a material of light's kind, the charge family's, ALGEBRA.md 9.86 (2) (b))."""
+    (a material of light's kind, the charge family's, ALGEBRA.md #the-primitives)."""
     entry = body(position, "charge")
     entry["extents"] = extents
     entry["pair"] = list(WALL_PAIR)
-    # the body's numbers (ALGEBRA.md 9.91 (3), (7); commit 2): a mirror carries none
+    # the body's numbers (ALGEBRA.md #the-interval; commit 2): a mirror carries none
     entry["q"] = 0
     entry["spin"] = [0, 0, 0]
     entry["moment"] = [0, 0, 0]
@@ -687,7 +693,7 @@ def mirror_slab(position: list[int], extents: list[int]) -> dict:
 def receiver_set(document: dict, name: str, block: int) -> None:
     """A detector set on the light record bound to the receiving block (section 15 M1-4:
     the one key `block`, the measured number of the block, its Nodes the block's current
-    Nodes); no wheel (the rung's wheel is the record's own, ALGEBRA.md 9.22 (4))."""
+    Nodes); no wheel (the rung's wheel is the record's own, ALGEBRA.md #a-familys-declaration)."""
     document["detectors"].append({"name": name, "block": block})
 
 
@@ -703,7 +709,7 @@ def named_receiver(document: dict, receivers: dict[int, str]) -> None:
 
 def bounded(document: dict) -> None:
     """The amplitude bound of section 15 M1-10 on a massive world, after `massive_record`
-    (no world key `wheel`: the rung's wheel is the record's own, ALGEBRA.md 9.22 (4))."""
+    (no world key `wheel`: the rung's wheel is the record's own, ALGEBRA.md #a-familys-declaration)."""
     items = list(document.items())
     document.clear()
     for key, value in items:
@@ -748,8 +754,8 @@ def light_clock(massive) -> dict:
     """THE LIGHT CLOCK in the one table's form (the module docstring): the board [760, 3, 3]
     with x open and the face slabs 32 deep, light with the given clock on N = 1024, A ONE
     NODE at x = LIGHT_CLOCK_SEAT_X (the retired train's head) with its stock, giving by the
-    window (commit 7; ALGEBRA.md 9.85 (5)), the mirror at [690, 694), the mirror behind A at
-    [629, 631) (9.85 (5) (b)), the set `at_well` A's own Node and A's `receiver` by name;
+    window (commit 7; ALGEBRA.md #the-primitives), the mirror at [690, 694), the mirror behind A at
+    [629, 631) (ALGEBRA.md #the-primitives), the set `at_well` A's own Node and A's `receiver` by name;
     the seed, the placement rule and the stamp by the massive generator's `seed_on_the_mode`,
     the weight by its trial (`finish_windows`)."""
     document = massive.world(

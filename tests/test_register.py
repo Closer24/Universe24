@@ -41,7 +41,7 @@ def declared_folders() -> list[tuple[str, str, bool]]:
     return found
 
 
-# the values named once in ALGEBRA.md 9.117 item 1 (and the source row's own word for its
+# the values named once in ALGEBRA.md #the-primitives (and the source row's own word for its
 # remainder): the rows of 9.117 write these and no other
 NAMED_VALUES = {
     "a family's level at a Node",
@@ -76,7 +76,7 @@ def noop() -> None:
 
 def test_a_name_registered_twice_or_an_unknown_place_or_word_is_refused_by_name():
     """One register, one name to one function (record 2212 (2)); a place is one of
-    9.91 (8)'s five or "any"; a word one of 9.111 item 7's three or "any"; a folder is
+    ALGEBRA.md #the-interval's five or "any"; a word one of ALGEBRA.md #the-primitives's three or "any"; a folder is
     the name without the article, the apostrophe dropped, a space or a hyphen an
     underscore (the mathematician's folders signed_read and recoil, PRs 1164 and 1165)."""
     register = Register()
@@ -87,7 +87,7 @@ def test_a_name_registered_twice_or_an_unknown_place_or_word_is_refused_by_name(
             ("a body's content M_k",),
             ("a family's level at a Node",),
             noop,
-            "9.91 (3)",
+            "ALGEBRA.md #the-interval",
             word="the right side",
         )
     )
@@ -116,7 +116,7 @@ def test_a_name_registered_twice_or_an_unknown_place_or_word_is_refused_by_name(
 
 def test_the_step_file_orders_the_writers_of_one_value_and_a_writer_it_leaves_out_is_refused():
     """The order among the writers of one value at one place is the step file's (record 2251),
-    a write deferred from (ii) to (iv) (9.117 item 1) before the place's own writers; a writer
+    a write deferred from (ii) to (iv) (ALGEBRA.md #the-primitives) before the place's own writers; a writer
     the file leaves out is refused by name; a remainder is the writer's own and never
     collides; the same value at another place is no conflict."""
     register = Register()
@@ -250,19 +250,19 @@ def test_the_register_finds_the_folders_and_refuses_a_folder_without_its_declara
     good = (
         'DECLARATION = {"name": "the hold", "place": "(iv)", "word": "the right side", '
         '"reads": ("a body\'s content M_k",), "writes": ("a family\'s level at a Node",), '
-        '"section": "9.91 (3)"}\n'
+        '"section": "ALGEBRA.md #the-interval"}\n'
         "def bind(loop):\n    return loop\n"
     )
     unbuilt = (
         'DECLARATION = {"name": "the source", "place": "(iv)", "word": "the right side", '
         '"reads": ("D_i",), "writes": ("a family\'s level at a Node",), '
-        '"section": "9.117 item 2"}\n'
+        '"section": "ALGEBRA.md #the-primitives"}\n'
     )
     own_function = (
         "from event_universe.core.register import Declaration\n"
         "def apply(term, start, own):\n    return ('the paces', term)\n"
         'DECLARATION = Declaration("the signed read", "(i)", ("the read families\' arguments",), '
-        '("the paces",), apply, "9.117 item 2, the first row")\n'
+        '("the paces",), apply, "ALGEBRA.md #the-primitives, the first row")\n'
     )
     package = write_package(tmp_path, {"hold": good, "source": unbuilt, "signed_read": own_function})
     forget(package)
@@ -312,7 +312,7 @@ def test_the_engine_registers_every_folder_on_disk_and_checks_every_term():
     them, PR #1165), each folder the name's, each with a place, a
     word and a section, the built ones bound to a function and the rows to do without
     one; the rows of 9.117 write the values named once (item 1) and the writers' orders
-    are 9.117 item 3's; every term a family or a body declares (the giving of an emitter
+    are ALGEBRA.md #the-primitives's; every term a family or a body declares (the giving of an emitter
     among them) names a built primitive; the hold and the clicks are called through the
     register (the shipped worlds bit for bit: the suites' digests)."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=20)))

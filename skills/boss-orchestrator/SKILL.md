@@ -77,7 +77,12 @@ finishes it (Far 2 to the Bresenham merge; the Replicator to the register
 fixes' merge) and is then archived; a runner, a reviewer or an Architect item
 opens a new session per item with its state. The same rule binds the Boss's
 in-session subagents (the Agent tool). A session the owner closed stays
-closed.
+closed. **Stale sessions are archived (the owner, 2026-09-27).** At every
+check-in the Boss lists the account's sessions; one that is on no owner's row
+of the map and has had no turn for a day, or whose last report says its task
+is done, is archived without asking (the four of 2026-09-24 found idle three
+days later); a team session is archived on the owner's word once its last pull
+request merges.
 
 **No new work without the owner's word; every question comes with a proposed
 solution (the model owner, 2026-09-21, record 434).** The list of work in

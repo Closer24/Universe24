@@ -36,7 +36,7 @@ def chain_of_200(receiver: str | None = "screen") -> dict:
     clock [512, 1] of N = 1024, the emitter body A at [20, 52) naming `screen` (four givings,
     the train along +x), the set `screen` the cube of side 3 at [91, 93] (40 Links from A's
     head at 51), and the set `beside` the cube at [60, 62] between A and the screen (off
-    A's ladder); no wheel (the record's own, 9.22 (4))."""
+    A's ladder); no wheel (the record's own, ALGEBRA.md #a-familys-declaration)."""
     document = massive_world([200, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 500
     document["clock_stamp"] = True
@@ -139,7 +139,7 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
             pointers, ladder, u, norm, wheel, pace = seen[line["record"]]
             assert ladder == [screen] and u == line["u"] and wheel == givings[line["record"]]["W"]
             assert lawful_wheel(simulation.world, givings[line["record"]])
-            # the cumulative rule on the click's own pointers (ALGEBRA.md 9.19 (3) (b)), the
+            # the cumulative rule on the click's own pointers (ALGEBRA.md #rule3), the
             # plain flux against the norm's rational norm / pace (item 36)
             assert pace == givings[line["record"]]["pace"]
             assert 2 * wheel * pace * pointers[screen] >= (2 * u + 1) * norm
@@ -215,7 +215,7 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     found = gathers(lines)
     assert found and all(g["chosen"] == [["screen", 0, "0"]] for g in found)
     # A's own detector books nothing of the light leaving A's Nodes (the outward flux is
-    # negative); SINCE COMMIT 7 (the window, ALGEBRA.md 9.85 (5)) the light leaves both ways
+    # negative); SINCE COMMIT 7 (the window, ALGEBRA.md #the-primitives) the light leaves both ways
     # and the half toward x = 0 returns off the mirror into A's Nodes and books there
     # (COMPUTATION), off every ladder by name: never chosen
     assert all(own_detector not in seen[g["record"]][1] for g in found)

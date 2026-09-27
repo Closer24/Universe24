@@ -1,7 +1,7 @@
-"""THE SEND (ALGEBRA.md 9.112 item 1): the Port puts on its Link weight x the component's level at the interval's start.
+"""THE SEND (ALGEBRA.md #the-interval): the Port puts on its Link weight x the component's level at the interval's start.
 
 One folder, one primitive (record 2221 (3)); the register finds it by this folder and reads
-DECLARATION, the row of ALGEBRA.md 9.117 for this name (cut 2: bind gives the loop's method that
+DECLARATION, the row of ALGEBRA.md #the-primitives for this name (cut 2: bind gives the loop's method that
 implements it today, resolved at each call; the next cut moves the body of code here).
 """
 
@@ -18,7 +18,7 @@ DECLARATION = Declaration(
     ("the level now", "the weight"),
     ("the Link's value",),
     None,
-    "9.112 item 1",
+    "ALGEBRA.md #the-interval",
     word="the step",
 )
 
