@@ -45,11 +45,6 @@
    "hand_divisions": 3,
    "numbers": 0
   },
-  "src/event_universe/features/recoil/__init__.py": {
-   "family_names": 0,
-   "hand_divisions": 8,
-   "numbers": 2
-  },
   "src/event_universe/features/signed_read/__init__.py": {
    "family_names": 0,
    "hand_divisions": 1,
