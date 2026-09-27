@@ -199,30 +199,37 @@ def run(path: Path, intervals: int | None = None, write_to: Path | None = None) 
     """The world stepped `intervals` times (its recorded count, or the count this tool picks) and
     its digest, with the counts that name a difference when the digest moves; a world the law
     refuses on the way keeps its count and is recorded with the refusing step and the refusal's
-    words, which the digest covers, so the replay refuses the same step the same way; a recorded
+    words, which the digest covers, so the replay refuses the same step the same way (a world refused
+    at the load is recorded with no run, the refusal's words its whole reading); a recorded
     world keeps its recorded count on every re-record, a new one gets the count this tool picks.
     With `write_to`, the entry is also written there as the world's own record file for CI's merge."""
     document = json.loads(path.read_text(encoding="utf-8"))
     stamp = input_stamp(document)
     started = time.monotonic()
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    lines: list[dict[str, object]] = []
-    simulation.record = lines.append
     ticks = int(document["ticks"])
-    if intervals is None:
-        for _ in range(min(SAMPLE_STEPS, ticks)):
-            simulation.step()
-        per_step = (time.monotonic() - started) / max(1, min(SAMPLE_STEPS, ticks))
-        intervals = ticks if per_step * ticks <= FULL_RUN_SECONDS else min(ticks, PREFIX_INTERVALS)
-        intervals = min(ticks, LONGER.get(path.resolve().relative_to(ROOT).as_posix(), intervals))
+    lines: list[dict[str, object]] = []
     refused: str | None = None
     refused_at = 0
+    simulation: DetectorLawSimulation | None = None
     try:
-        while simulation.tick < intervals:
-            simulation.step()
-    except ValueError as refusal:
-        refused, refused_at = str(refusal), simulation.tick + 1
-    reading = run_reading(simulation, lines)
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+    except ValueError as refusal:  # refused at the load: no run, the refusal's words the whole reading
+        refused, intervals = str(refusal), ticks if intervals is None else intervals
+    reading: dict[str, Any] = {}
+    if simulation is not None:
+        simulation.record = lines.append
+        if intervals is None:
+            for _ in range(min(SAMPLE_STEPS, ticks)):
+                simulation.step()
+            per_step = (time.monotonic() - started) / max(1, min(SAMPLE_STEPS, ticks))
+            intervals = ticks if per_step * ticks <= FULL_RUN_SECONDS else min(ticks, PREFIX_INTERVALS)
+            intervals = min(ticks, LONGER.get(path.resolve().relative_to(ROOT).as_posix(), intervals))
+        try:
+            while simulation.tick < intervals:
+                simulation.step()
+        except ValueError as refusal:
+            refused, refused_at = str(refusal), simulation.tick + 1
+        reading = run_reading(simulation, lines)
     if refused is not None:
         reading["refused"] = [refused_at, refused]
     entry: dict[str, Any] = {
@@ -230,8 +237,8 @@ def run(path: Path, intervals: int | None = None, write_to: Path | None = None) 
         "ticks": ticks,
         "intervals": intervals,
         "digest": digest_of(reading),
-        "records": len(simulation.records),
-        "clicks": len(simulation.layer.gathers),
+        "records": 0 if simulation is None else len(simulation.records),
+        "clicks": 0 if simulation is None else len(simulation.layer.gathers),
         "lines": len(lines),
         "seconds": round(time.monotonic() - started, 2),
     }

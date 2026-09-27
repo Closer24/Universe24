@@ -54,16 +54,3 @@ def body_twist(clock: list[int] | tuple[int, int] | None, kind: list[int] | tupl
     if int(kind[1]) > int(kind[0]):
         return rotation_twist(int(kind[0]), int(kind[1]))
     return 0
-
-
-def emitter_twist(
-    given_pair: list[int] | tuple[int, int] | None, body_clock: list[int] | tuple[int, int] | None
-) -> int:
-    """A given record's twist "own" (ALGEBRA.md #the-primitives): a massive kind's
-    rest rotation from the emitter's own `pair` (a body giving its own family), else the
-    emitting body's own rotation where the window writes it (its `clock`), else 0."""
-    if given_pair is not None and int(given_pair[1]) > int(given_pair[0]):
-        return rotation_twist(int(given_pair[0]), int(given_pair[1]))
-    if body_clock is not None:
-        return rotation_twist(int(body_clock[0]), 2 * int(body_clock[1]))
-    return 0
