@@ -10,6 +10,7 @@ nothing else. Start from the current checkout, never from a previous conversatio
 | The decisions in force, one line each; a decision of the model owner replaces the line it changes | [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) |
 | The team's roles, the short procedure and every shared way of working | [skills/workflow.md](skills/workflow.md) and [Boss orchestration](skills/boss-orchestrator/SKILL.md); each other skill is a short role card |
 | Every edit, check and Git operation | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| The old documents, until their deletion pull request: where one contradicts the three, the three win | [POSTULATES.md](POSTULATES.md), [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/TEST_EXPECTATIONS.md](docs/TEST_EXPECTATIONS.md) |
 
 Keep changes within the user's scope: an explanation or diagnosis does not
 authorize implementation, and a skill grants no additional permission.
