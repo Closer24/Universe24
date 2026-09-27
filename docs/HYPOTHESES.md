@@ -995,7 +995,7 @@ couplings.
   state. Not claimed: spin dynamics, an angular-momentum ledger, V-A's
   energy dependence, CP.
 - **The reading (series P, run on 2026-09-20; [EXPERIMENTS](EXPERIMENTS.md),
-  "P, the hand"; [the worlds](../examples/events/hand/README.md)).**
+  "P, the hand"; the worlds of `examples/events/hand/`, deleted on 2026-09-22, record 894, built now by `tests/support/hand_worlds.py`).**
   `w_hand`: the W born at the neutron's key with the hand -1 on +x
   against the axis -x, clicked at the proton at x = 3 at tick 9 with the
   push (192, 0, 0); under the mirror in x with the hands and the axis
@@ -1026,7 +1026,8 @@ couplings.
   Malus's 64 / 32 / 0 at s = 0, 16, 32 on the design's rung rule, not
   run).
 - **Status.** Open; `hand-v1` built on 2026-09-20 with the three worlds
-  of series P and the parity test (`tests/test_hand.py`).
+  of series P and the parity test (`tests/test_hand.py`; the shipped worlds
+  deleted on 2026-09-22, record 894, the test building them).
 
 ## 24. The binding energy is the paid content a body gives at its first contact, measurable as the border's clicks
 
@@ -1159,7 +1160,7 @@ couplings.
   apparatus as light's. Not claimed: the potential (23.4, the standing
   record under V), the transition of a body back to a record, Klein-Gordon
   or Schrodinger reached beyond the linear block (23.2).
-- **The pin (`slits_matter`, [examples/events/massive_rows/README.md](../examples/events/massive_rows/README.md);
+- **The pin (`slits_matter`, examples/events/massive_rows/README.md (`examples/events/massive_rows/README.md`, deleted 2026-09-26);
   the design's section 4, every number with its line, pinned before the
   run).** `slits_huygens`' plane, apparatus and Farey fan with `matter`
   (M 64, p 220, S 1, h 1024: E'_0 = 4096, E' = 4113, the pace 220 / 4113

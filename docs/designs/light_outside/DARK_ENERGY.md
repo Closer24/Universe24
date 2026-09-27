@@ -1,5 +1,7 @@
 # Dark energy Outside: what the passage from Inside to Outside puts into the Hubble diagram, and what it does not (the owner's question, 2026-09-22)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 5.7; this file is kept as the record of 2026-09-22.
+
 The Light Mathematician, 2026-09-22, on the owner's question in his own
 session ("check also why dark energy is not needed from our formulas:
 how it follows from the Inside and affects the Outside; there is such an

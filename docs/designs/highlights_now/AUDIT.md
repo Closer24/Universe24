@@ -23,7 +23,7 @@ sections 5.1 to 5.3, the decisions of 5.4 from 2026-09-17 to 2026-09-22
 and the acceptance tests of 5.5, [POSTULATES.md](../../../POSTULATES.md),
 the display and measurement contracts of
 [SIMULATOR_DEFINITIONS.md](../../../SIMULATOR_DEFINITIONS.md), and
-[the readings by type](../../ENGINE.md#the-detectors-readings-by-type).
+[the readings by type](../../ENGINE.md#the-output).
 Docs only; no run, no code, no rule of the law moved.
 
 **The rule.** Nothing of the owner's decisions is deleted (the standing

@@ -1,0 +1,8 @@
+{
+ "format": "one-command-pins-v1",
+ "source": "ALGEBRA.md 9.22 (8), the mathematician's table of the eighteen (lab-tools-unification); every pin written before its input runs and never moved after a reading; the one command tools/run_inputs.py reads this file with --pins",
+ "light_clock": [
+  {"detector": "at_well", "mean_interval": 300, "band": 9, "row": "the light clock in the one table's form ([760, 3, 3], the face slabs 32 deep, A [800, 801] of the extents [32, 3, 3] at [600, 632) with its train along +x, the mirror at [690, 694), at_well A's own cells): the mean click interval after the birth over the stock of 64, the passage's mean (2 x 58 + 16 + 2) / 0.44721 = 299.7 with the rms 24.8, the band 3 rms / sqrt 64 (ALGEBRA.md 9.25 (11) (d)); OWED on the flux form, blind"},
+  {"detector": "at_well", "first_click": 250, "band": 8, "row": "the light clock: the stock's first click, the least interval since its birth among the 64 records' clicks (the fastest passage: the head's round trip 2 x 58 + 2 Links at v_g = 0.44721 with the least residue, the front's precursor before it); the 214 +- 1 of the chain of 674 with the cube beside A HISTORY (the first cycle's rung 2 x 60 / 0.57689 + 3.973 on the ray's pace; a cube beside the emitter books the outgoing pass, BUILD.md section 26 item 22); blind"}
+ ]
+}

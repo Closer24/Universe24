@@ -13,11 +13,11 @@ from .architecture_rules import violations
 
 
 def test_all_physical_modules_pass_integer_audit():
-    """Both physical layers, each by its audit: `core/` integers only,
-    `events/` integer numpy and nothing that leaves the integers."""
+    """The physical layers, each by its audit: `core/` integers only, `features/`
+    and `events/` integer numpy and nothing that leaves the integers."""
     audit = audit_physical_modules()
-    assert {Path(name).parts[0] for name in audit} == {"core", "events"}
-    assert "events/run.py" not in audit and "events/engine.py" in audit
+    assert {Path(name).parts[0] for name in audit} == {"core", "features", "events"}
+    assert "events/run.py" not in audit and "events/detector_law.py" in audit
     assert {name for name, found in audit.items() if found} == set()
 
 

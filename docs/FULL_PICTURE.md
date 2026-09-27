@@ -1,5 +1,7 @@
 # The full picture: the choices, the inputs, the derived laws, what we measure, and what can be achieved now
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](ALGEBRA.md), section 1 and 7 (section 1 of this file; the rest of this file is the physicist's picture and not the algebra); this file is kept as the record of 2026-09-22.
+
 The model owner, 2026-09-21 (translated, [record 238](LOG_2026-09-20.md#238-the-owners-request-how-the-groups-are-chosen-the-input-parameters-of-our-universe-and-whether-they-are-derived-from-the-expansion-the-full-picture-with-formulas-the-owner-2026-09-21-about-0400z-translated-check-how-one-can-choose-the-groups-because-here-a-group-of-48-was-chosen-and-mass-was-added-to-it-what-has-to-be-written-down-is-what-the-input-parameters-of-our-universe-are-and-whether-they-are-derived-from-the-expansion-or-from-what-happens-now-give-a-full-picture-of-what-happens-with-formulas-the-input-parameters-what-we-measure-and-what-can-be-achieved-now-the-bosss-answer-and-assignment-1-the-group-is-not-chosen-the-lattice-is-the-choice-is-the-dimension-three-and-the-six-ports-the-l1-neighbourhood-the-group-of-48-is-the-symmetry-of-that-choice-record-226-and-it-is-the-largest-point-group-any-three-dimensional-lattice-can-have-every-bravais-lattices-point-group-is-a-subgroup-of-the-full-octahedral-group-so-another-lattice-could-only-keep-or-lose-symmetry-while-changing-the-fan-and-the-causal-front-the-phase-circle-z_n-the-boards-extents-and-the-boundary-per-axis-are-the-other-choices-mass-is-not-added-to-the-group-it-is-a-row-of-the-family-table-an-input-beside-the-group-which-neither-the-group-nor-the-constant-k-fixes-section-13-predictions-26-2-the-inputs-today-the-grain-n-q-p-w-k-the-roundings-the-family-table-mass-charge-sigma-lifetime-the-width-s-the-board-and-its-boundaries-the-apparatus-the-initial-state-and-h-if-the-growing-wall-enters-declared-absent-by-default-none-is-derived-from-the-expansion-or-from-the-present-state-the-widths-are-free-of-k-section-13-the-fans-grain-does-not-dilute-under-the-expansion-and-h-is-itself-an-input-section-15-the-masses-are-free-predictions-26-3-assigned-to-the-mathematician-series-m-session-by-a-routine-docsfull_picturemd-one-document-that-links-and-copies-no-rule-the-choices-and-what-follows-from-them-with-what-each-other-lattice-would-change-the-inputs-table-symbol-meaning-registered-value-input-or-derived-source-the-derived-laws-table-formula-and-section-c-the-event-driven-form-and-the-flights-closed-form-gauss-newton-coulomb-doppler-born-the-information-law-the-retarded-potential-the-magnetic-terms-number-the-wait-as-the-readings-cost-entropy-and-liouville-the-redshift-and-milne-the-one-map-f-and-the-six-verbs-what-we-measure-the-detectors-readings-and-their-transformation-to-our-world-with-the-status-of-each-comparison-with-nature-and-what-can-be-achieved-now-against-what-waits-on-a-build-on-a-decision-of-the-owner-or-is-not-reachable-by-the-six-verbs-the-boss-opens-the-pull-request)): "check how one can
 choose the groups, because here a group of 48 was chosen and mass was
 added to it; what has to be written down is what the input parameters of
@@ -92,7 +94,7 @@ c and the collision table:
 - **The collision table** permutes the single units in the Ports' slots
   plus the two rest slots: with six Ports, 8 slots, `3^8 = 6561` joint
   states in 5440 classes (BEAM_LAW section 4; the map
-  [designs/masses/ladder.out](designs/masses/ladder.out) A); with twelve
+  `designs/masses/ladder.out` A, deleted on 2026-09-22 with the masses design, record 871); with twelve
   Ports 14 slots and `3^14 = 4 782 969` states, with eight Ports 10 slots
   and `3^10 = 59 049`: the table's size is `3^(Ports + 2)`.
 - **The fan** is the set of primitive directions within the width P,
@@ -132,7 +134,7 @@ the width, and the state with the apparatus; K is section 13's constant.
 | sigma | the strong column's value and sign | nuclear 10000, sign -1 | INPUT | the same |
 | L | a family's lifetime, the border in intervals | nuclear 3, bond 3, w 1; none for the others | INPUT | the same |
 | n / d | a family's phase rate, steps per Link or per interval | light [8591334592, 2^30] on the slits (8 per interval); 0, 8, 16 per Link elsewhere | INPUT | the world files |
-| the hand | +-1 on a chiral family | nubar +1 | INPUT | BEAM_LAW note 39; [designs/hand/FORM.md](designs/hand/FORM.md) |
+| the hand | +-1 on a chiral family | nubar +1 | INPUT | BEAM_LAW note 39; `designs/hand/FORM.md` (deleted on 2026-09-22 with series P's worlds, record 894) |
 | S | the world's width, the push per unit of content per unit of flow (what physics calls Newton's constant, section 3.3) | 1, 8, 32, 512, 45120, 2^20, 2^28 on the register | INPUT | BEAM_LAW step 5 |
 | the extents, the boundary per axis | the torus `Z_X x Z_Y x Z_Z`, periodic or open per axis | per world (60 x 121 x 1 with z periodic on the slits; 301^3 open on the stars; 21 x 1 x 1 on the Bell line) | INPUT | the world files |
 | the initial state | the bodies' positions, momenta and held contents, the rows placed, the lamps' rates and directions | per world | INPUT | the world files; the register |

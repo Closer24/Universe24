@@ -26,7 +26,7 @@ The six worlds of `examples/events/drive_b/` run once through
 `f5a5e395...`, `65c097c0...`), every run completed with the books balanced
 at every tick; the digests, the source sha and the readings are the run
 blocks of `examples/events/drive_b/expectations.json` (`runs`). The
-readings (`tools/drive_b_readings.py`): 0 record checks failed, 19 inside,
+readings (`tools/click_readings/drive_b.py`): 0 record checks failed, 19 inside,
 0 outside, nothing moved: the clicks at 51, 101 and 152 on face:+x from
 (40, 20, 20), (40, 40, 20) and (40, 40, 40) under the key, at 36, 50 and 65
 from (40, 20, 20) without it (DETECTOR); every step within one Link of the
@@ -274,7 +274,7 @@ digested. The turn by momentum as the `action` row moves the electron's
 phase and nothing of its steps: the events of every world moved (the
 rays' phases), the books of every world are identical, every orbit's
 closings, periods, returns, radii and escapes are the signed drive's
-(`tools/bohr_readings.py` on both, the numbers in the register's H entry).
+(`tools/click_readings/bohr.py` on both, the numbers in the register's H entry).
 The digests (the first 16 hexadecimal digits of the sha256):
 
 | world | events.jsonl (was) | events.jsonl (now) | state.json (now) | books |
@@ -538,7 +538,7 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 
 | Check | Result |
 | --- | --- |
-| Series N, `examples/events/binding/` (three worlds, `tools/run_series.py --jobs 2 --wall-seconds 1200`, 3000 intervals each) | every run completed in 13 to 53 s with the books balanced at every tick; the digests (state, audit, events): `deuteron_bond` `b66833650869` / `ae9319ed637a` / `c05fb3c3a433`, `proton_bond_lamp` `67b598ee4d37` / `65de22cd56dd` / `45fd5c0c63a2` (under the one click of `amplitude-v1`, the key deleted and the world regenerated without it: `cf524330f3e6` / `5f20f826d21f` / `660ac30e7957`, the same 2993 gathers of 2961 x 8 and 32 x 7, 7 open, no contact, `held.bond` 2; B1 and B3 not re-run: no lamp, no key), `alpha_square_bond` `35e1ce3c9cf2` / `247cd70da903` / `51c4fba7ca0d`; every reading inside its pin (B3's dispersal inside in kind, at other ticks than series I's), the table in [the worlds' README](../examples/events/binding/README.md#what-was-measured-2026-09-20) and the entry in [EXPERIMENTS, N](EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20) |
+| Series N, `examples/events/binding/` (three worlds, `tools/run_series.py --jobs 2 --wall-seconds 1200`, 3000 intervals each) | every run completed in 13 to 53 s with the books balanced at every tick; the digests (state, audit, events): `deuteron_bond` `b66833650869` / `ae9319ed637a` / `c05fb3c3a433`, `proton_bond_lamp` `67b598ee4d37` / `65de22cd56dd` / `45fd5c0c63a2` (under the one click of `amplitude-v1`, the key deleted and the world regenerated without it: `cf524330f3e6` / `5f20f826d21f` / `660ac30e7957`, the same 2993 gathers of 2961 x 8 and 32 x 7, 7 open, no contact, `held.bond` 2; B1 and B3 not re-run: no lamp, no key), `alpha_square_bond` `35e1ce3c9cf2` / `247cd70da903` / `51c4fba7ca0d`; every reading inside its pin (B3's dispersal inside in kind, at other ticks than series I's), the table in the worlds' README (`examples/events/binding/README.md`, deleted 2026-09-26) and the entry in [EXPERIMENTS, N](EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20) |
 | The gate set, `examples/events/gate_set.json` (15 worlds at their listed ticks), main `b8620d8f` against the branch, `tools/run_series.py --list ... --compare` | every world identical in `state.json`, the ledger and `events.jsonl`: a0_b0 `dc4cba74e3a5` / `90cab346067c` / `dfa00b9ef9b6`, j3_deuteron `d4485137fd01` / `431cc87afa9f` / `23196889fbed`, r2 `e8e3e137bd61` / `fe50819ae70d` / `ea52bf20dda2`, lamp_mirror_screen `9de7f52ec260` / `9041dac91aae` / `e6ca788d38ca`, heavy_meeting `395040805a4d` / `18c5eb4625ac` / `188ced16170a`, grouped_12_nodes `f0b869e4d566` / `cc8eb7346911` / `a4b2d2b35cfc`, fixed `d078ace3e8d8` / `6466e974280d` / `77ca1b3b3bc9`, j2_ladder `380fbbf27895` / `48335f1672dc` / `911390d0f64b`, j3_deuteron_crowd `9bdcf69e2620` / `677af7000b26` / `094a32eb6c0f`, w27_beam `73d4980059d3` / `b5c15a82715e` / `439252c03ee8`, alpha_square `26799da3d3b2` / `9102a8f9fd11` / `600166fb5bdd`, pushing_age `5e40e4bea36a` / `ae00571de265` / `4d89f6b6182b`, 1b_m16 `391d4cbdc763` / `baee1e32e96a` / `dc1054aa43c4`, w1_beam `d843680c8246` / `61bc435a99ff` / `1e08efda9aab`, sun_planet `f7043252f62a` / `583a5e8e5163` / `4b793a913b22` (r2, 1b_m16 and alpha_square write `contact` records: without a body that holds a paid family the record carries no `given` and the contact is the hand-over alone) |
 | `tests/test_binding.py` (a) to (d) | the give at the first hand-over, the remainder, the take on the line, a body that carries nothing: the integers of [TEST_EXPECTATIONS](TEST_EXPECTATIONS.md#the-binding-that-costs-content) |
 | `python tools/check.py` | ruff lint and format, mypy and the selected tests green; `--full` before the push |
@@ -592,7 +592,7 @@ the sha256):
 keys (`ticks` 40, `cap` 23: the antineutrino's face click); its row above
 is from its one run on this source, the base row of the next replay. The worlds of
 series P were run once and read against their pins
-([the hand series](../examples/events/hand/README.md); [EXPERIMENTS](EXPERIMENTS.md),
+([the hand series](EXPERIMENTS.md#p-the-hand-2026-09-20); [EXPERIMENTS](EXPERIMENTS.md),
 "P, the hand").
 
 ## Series G2, the Hubble diagram with stars behind the detector: three runs - 2026-09-20
@@ -600,10 +600,10 @@ series P were run once and read against their pins
 The branch `claude/series-g2-stars`, headless, three jobs, Python 3.14.0rc2,
 numpy 2.5.3; the worlds of `examples/events/hubble_stars/` through
 `tools/run_series.py --jobs 3` and the readings through
-`tools/hubble_stars_readings.py`, every run of 400 intervals completed with
+`tools/click_readings/hubble_stars.py`, every run of 400 intervals completed with
 the books balanced at every interval; the readings registered in
 [G2](EXPERIMENTS.md#g2-the-hubble-diagram-with-stars-behind-the-detector-2026-09-20)
-and the worlds' [README](../examples/events/hubble_stars/README.md).
+and the worlds' README (`examples/events/hubble_stars/README.md`, deleted 2026-09-26).
 
 | Run | Engine and fingerprint | Worlds | Result |
 | --- | --- | --- | --- |
@@ -756,7 +756,7 @@ through `tools/run_series.py --jobs 3` at the fingerprint
 `071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c`, 650, 650, 700, 700 and 600
 intervals, completed in 231, 238, 82, 70 and 53 s with the books balanced
 at every tick (the charge line the same pair through every
-transformation); `tools/weak_readings.py`: 0 record checks failed, 15
+transformation); `tools/click_readings/weak.py`: 0 record checks failed, 15
 readings inside, 3 outside, none moved. The expectations were written
 before the runs by `examples/events/weak/make_worlds.py` into
 `expectations.json` (each neutron's trigger tick from the count its
@@ -780,7 +780,7 @@ numbers in the register, nothing moved.
 `examples/events/weak/w_exchange.json` run through `tools/run_series.py`
 at the fingerprint `071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c` (the
 transformation's: the W world changes no source), 16 intervals, 0.1 s,
-the books balanced at every tick; `tools/weak_readings.py`: 0 record
+the books balanced at every tick; `tools/click_readings/weak.py`: 0 record
 checks failed, 5 readings inside, 0 outside: the neutron's `become` at
 tick 8 with the W on +x, the proton's click at tick 9, its charge [0, 1]
 and content 1839 after, the border `lifetime` 0, the momenta -192 and
@@ -792,7 +792,7 @@ the five worlds of `examples/events/weak/j2_*.json` run through
 `tools/run_series.py --jobs 4` at the fingerprint
 `55f30af0309c2812646384a0caf4d16a956e5ae525df878a008c6bf075e90941`, 1037
 intervals each, every run completed in about 3 s with the books balanced
-at every tick; `tools/weak_readings.py`: 0 record checks failed, 13
+at every tick; `tools/click_readings/weak.py`: 0 record checks failed, 13
 readings inside, 0 outside, none moved. The expectations were computed
 before the runs from the engine's flight table by
 `examples/events/weak/make_worlds.py` (the first-arrival ages 13 at 8
@@ -842,7 +842,7 @@ byte-identical in `events.jsonl` to `control` (the sha256
 
 **Series K old against new.** The four worlds of K under the key
 (`<name>_meeting.json`) and the lens world, `tools/run_series.py --jobs 2`
-under the load of the replay, `tools/lensing_readings.py` (0 record
+under the load of the replay, `tools/click_readings/lensing.py` (0 record
 checks failed, 14 readings inside, 9 outside, none moved; the entry
 [K under the meeting](EXPERIMENTS.md#k-under-the-meeting-2026-09-20)):
 
@@ -885,11 +885,11 @@ their declared `ticks` on a copy of the source tree before the key and on
 the tree after it, and `events.jsonl`, `state.json` and `run.json` (its
 volatile fields `elapsed_seconds`, `source_sha256` and `package_version`
 removed) compared by SHA-256: 21 identical, 0 changed, in each of the
-three files. The Bell ten read again through `tools/bell_chsh.py` on the
+three files. The Bell ten read again through `tools/click_readings/bell.py` on the
 tree after the key: S = 2 and S' = 3/2 exactly, 326 criteria, 0 failed.
 
 The run ([A2 with the choosers on the GameBoard](EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20);
-`examples/events/bell/read.json` and its six controls, `tools/bell_choosers.py`):
+`examples/events/bell/read.json` and its six controls, `tools/click_readings/bell_choosers.py`):
 `read` 1940 intervals in about 5 s, the books balanced at every tick, 1920
 pairs in 15 bins, every E the triangle exactly, S = 2 exactly on
 (0, 25) x (8, 29), the largest S over every quadruple 2, every marginal
@@ -953,8 +953,8 @@ both with `tools/run_series.py` and the runs compared file by file.
 | Check | Result |
 | --- | --- |
 | The 66 worlds, `events.jsonl` before against after | 65 byte-identical: the coupling twenty-one, the Bell ten, the orbit six, the Bohr seven, the redshift, Hubble and detector worlds, `one_content`, `two_contents`, `two_slits`, `one_slit`, and `w1_wave`, `w3_wave`, `w9_wave` and the four `w*_beam` (no set of theirs ever read a pointer below its threshold with an amount at it); `w27_wave` differs |
-| `w27_wave` (A10, `tools/heisenberg_readings.py` on both) | 2312 `pass` records naming `threshold` (antiphase pairs at a pixel, the pointer 0) where the pairs clicked with the record 0; the pairs go on: face:+x 0 -> 408 clicks, face:+y and face:-y 12 833 -> 13 613 each, the escaped 25 666 -> 27 634, 38 of the 161 pixels' records differ, the sum of the screen's records 0.16 % higher; the count FWHM 0.761 -> 0.758, the count rms 0.325 -> 0.321, the record FWHM 0.185 and the product 4.99 unchanged, the record rms 0.224 -> 0.225, the clicks 150 187 -> 148 131; 0 record checks failed; the books balanced at every tick |
-| The Bell ten (`tools/bell_chsh.py` on both) | S = E(0, 8) - E(0, 24) + E(16, 8) + E(16, 24) = 2 exactly before and after, every run check passed |
+| `w27_wave` (A10, `tools/click_readings/heisenberg.py` on both) | 2312 `pass` records naming `threshold` (antiphase pairs at a pixel, the pointer 0) where the pairs clicked with the record 0; the pairs go on: face:+x 0 -> 408 clicks, face:+y and face:-y 12 833 -> 13 613 each, the escaped 25 666 -> 27 634, 38 of the 161 pixels' records differ, the sum of the screen's records 0.16 % higher; the count FWHM 0.761 -> 0.758, the count rms 0.325 -> 0.321, the record FWHM 0.185 and the product 4.99 unchanged, the record rms 0.224 -> 0.225, the clicks 150 187 -> 148 131; 0 record checks failed; the books balanced at every tick |
+| The Bell ten (`tools/click_readings/bell.py` on both) | S = E(0, 8) - E(0, 24) + E(16, 8) + E(16, 24) = 2 exactly before and after, every run check passed |
 | `two_slits`, `one_slit` | byte-identical: their 27 220 and 13 610 screen clicks unchanged (no antiphase pair met a pixel in one interval) |
 | The escaped momentum per family (`run.json`'s `escaped` lines) | each family's own where the world's total was written into every line: `w27_wave` light (10 830 512, 0, 0) and wall (0, 0, 0) where both read the total; the faces' `families` carry `momentum` beside the face's total; the books' escaped line unchanged |
 | `tests/test_nature_beam_detector.py` (i), the re-pinned (a) to (d), `tests/test_nature_beam_readings.py` (d), `tests/test_nature_beam_body.py` (b), `tests/test_nature_beam_books.py`; `python tools/check.py` | ruff lint and format, mypy and 499 selected tests green |
@@ -975,7 +975,7 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 
 | Check | Result |
 | --- | --- |
-| Series I, `examples/events/nucleus/` (eight worlds, `tools/run_series.py --jobs 3`, 3000 intervals each) | every run completed in 4 to 87 s with the books balanced at every tick; `tools/nucleus_readings.py`: 0 record checks failed, 29 readings inside, 1 outside (the first step of two protons at three Links at tick 66 against the steady toy's 30 .. 60), none moved; the table in [EXPERIMENTS, I](EXPERIMENTS.md#i-the-nucleus-2026-09-20) |
+| Series I, `examples/events/nucleus/` (eight worlds, `tools/run_series.py --jobs 3`, 3000 intervals each) | every run completed in 4 to 87 s with the books balanced at every tick; `tools/click_readings/nucleus.py`: 0 record checks failed, 29 readings inside, 1 outside (the first step of two protons at three Links at tick 66 against the steady toy's 30 .. 60), none moved; the table in [EXPERIMENTS, I](EXPERIMENTS.md#i-the-nucleus-2026-09-20) |
 | `tests/test_nucleus_readings.py` | the tool's reading of a run written by the runner pinned to the record: the design's pair on the six headings (the pushes (128, 0, 0) from -7936 and +8064, the hand-overs 256, 128, 640, the border's 12 clicks per interval from tick 4) |
 | `python tools/check.py` | ruff lint and format, mypy and the selected tests green |
 
@@ -1009,8 +1009,8 @@ the runs compared file by file.
 
 The six worlds under the contact, old (the refused step leaving the labels
 as they were) against new (the occupant's table reading the body,
-`measure` by the keys), `tools/bohr_readings.py` and
-`tools/orbit_readings.py` on the new runs:
+`measure` by the keys), `tools/click_readings/bohr.py` and
+`tools/click_readings/orbit.py` on the new runs:
 
 | World | Old | New |
 | --- | --- | --- |
@@ -1037,7 +1037,7 @@ of 2026-09-20 on the physicist's entry 5 of the law's own predictions and
 the owner's decision on issue #359 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector));
 the readings registered in
 [A10 at a low rate](EXPERIMENTS.md#a10-at-a-low-rate-the-single-click-build-up-2026-09-20)
-and the worlds' [README](../examples/events/buildup/README.md).
+and the worlds' README (`examples/events/buildup/`, deleted on 2026-09-22 with the register entry, record 871; in the tree's history at 59c6b811).
 
 | Check | Result |
 | --- | --- |
@@ -1076,11 +1076,11 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores; the model owner's go
 of 2026-09-20 on the physicist's entry 2 of the law's own predictions
 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector)); the readings registered
 in [K](EXPERIMENTS.md#k-light-beside-a-mass-2026-09-20) and the worlds'
-[README](../examples/events/lensing/README.md).
+README (`examples/events/lensing/README.md`, deleted 2026-09-26).
 
 | Check | Result |
 | --- | --- |
-| Series K, `examples/events/lensing/` (four worlds, `tools/run_series.py --jobs 4`, 400 intervals) | every run completed (6.5, 9.1, 9.9, 9.1 s) with the books balanced at every tick; `tools/lensing_readings.py` (with the replay): 0 record checks failed, 16 readings inside, 0 outside, none moved: the deflection of the beam's centroid 0.000 pixel in y and z beside the mass at b = 6, twice the mass, and b = 3 (expected 0 +- 0.5; nature 46 to 91 radians or the capture), the delay 0.00 interval (0 +- 1), the count 1455 the control's (1 +- 1 %), the phase rate 8.000 the lamp's turn (8 +- 0.05); the replay: 447 rows in flight at most, none turned, 162 Nodes per interval shared with the crowd |
+| Series K, `examples/events/lensing/` (four worlds, `tools/run_series.py --jobs 4`, 400 intervals) | every run completed (6.5, 9.1, 9.9, 9.1 s) with the books balanced at every tick; `tools/click_readings/lensing.py` (with the replay): 0 record checks failed, 16 readings inside, 0 outside, none moved: the deflection of the beam's centroid 0.000 pixel in y and z beside the mass at b = 6, twice the mass, and b = 3 (expected 0 +- 0.5; nature 46 to 91 radians or the capture), the delay 0.00 interval (0 +- 1), the count 1455 the control's (1 +- 1 %), the phase rate 8.000 the lamp's turn (8 +- 0.05); the replay: 447 rows in flight at most, none turned, 162 Nodes per interval shared with the crowd |
 | `tests/test_lensing_readings.py` | passed: the speed 32 / 55 and the dwell 55 / 32 off `flight_table`; on a 13 x 5 x 3 box the tool's pixels equal the engine's detector sets, the arrival at the age 17 (m(17) = 10), the centroid (3, 1), the phase rate 8.000, the crowd by series E's form, the replay's 17 rows and one meeting Node, 6 verdicts inside |
 | `python tools/check.py` (the scoped selection) | ruff lint and format, mypy and the selected tests green; the language, hygiene and navigation gates green |
 
@@ -1099,12 +1099,12 @@ per unit of content (`b9a0e6c6`) with the worlds and the tool of the series
 `examples/events/hubble/` through `tools/run_series.py --jobs 4` (36.6,
 37.3, 35.8, 36.6 s for `coasting_scalar`, `coasting_age`, `pushing_scalar`,
 `pushing_age`, 400 intervals each), every run completed with the books
-balanced at every tick; `tools/hubble_readings.py` (with the replay, 3
+balanced at every tick; `tools/click_readings/hubble.py` (with the replay, 3
 minutes): 0 record checks failed, the reading's formula 288 of 288 inside
 2 %, 22 pinned readings inside and 26 outside, none moved; the readings
 registered in
 [G](EXPERIMENTS.md#g-the-hubble-diagram-behind-the-detector-2026-09-20)
-and the worlds' [README](../examples/events/hubble/README.md).
+and the worlds' README (`examples/events/hubble/README.md`, deleted 2026-09-26).
 
 | Check | Result |
 | --- | --- |
@@ -1116,7 +1116,7 @@ and the worlds' [README](../examples/events/hubble/README.md).
 | The bend of the age clock | reported: zero in the coasting crowd, -0.089 to +0.081 per source in the pushing crowd, no monotone bend |
 | `tests/test_hubble_readings.py` | passed: c = 32 / 55 and m(17) = 10, m(34) = 20 off the flight table; on a bar of 61 the tool's `record` lines, click ages and steps equal the engine's, k = 0, z within 0.05 of 1 + v / c at v = 1 / 2 |
 | `python tools/check.py` (the scoped selection) | ruff lint and format, mypy and the selected tests green |
-| `tools/hubble_readings.py --no-replay --from-one-point` on the same four runs (the physicist's review, 2026-09-20; not pinned) | the near fit reads an exact coasting throw from one point at the windows' taus as H t_0 = 1.10 to 1.15, so q = -0.55 is "the nearest at the near H" for a coasting form itself; with every tau reduced by (r_0 / c) / (1 + z) the coasting readings lie on the Milne form at H t_0 = 1.01 to 1.04 with a best-H rms of 0.0045 to 0.0056 (q = -0.55 within 0.001 of it, q = +0.5 at 0.012 to 0.013); the pushing Doppler part from one point 3 to 11 % below the coasting run's H t_0, q = 0 the best form in 4 of 6 windows (q = -0.55 by 0.001 or less in the other two); `tests/test_hubble_readings.py` 3 passed (the collapse onto the Milne form exact, the near fit's bias upward) |
+| `tools/click_readings/hubble.py --no-replay --from-one-point` on the same four runs (the physicist's review, 2026-09-20; not pinned) | the near fit reads an exact coasting throw from one point at the windows' taus as H t_0 = 1.10 to 1.15, so q = -0.55 is "the nearest at the near H" for a coasting form itself; with every tau reduced by (r_0 / c) / (1 + z) the coasting readings lie on the Milne form at H t_0 = 1.01 to 1.04 with a best-H rms of 0.0045 to 0.0056 (q = -0.55 within 0.001 of it, q = +0.5 at 0.012 to 0.013); the pushing Doppler part from one point 3 to 11 % below the coasting run's H t_0, q = 0 the best form in 4 of 6 windows (q = -0.55 by 0.001 or less in the other two); `tests/test_hubble_readings.py` 3 passed (the collapse onto the Milne form exact, the near fit's bias upward) |
 
 The runs establish what this detector reads of a throw on this engine (the
 Doppler of the throw times the emitters' clocks, and the shape of the curve
@@ -1141,7 +1141,7 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 | `tests/test_nature_beam_body.py` (a) to (f) | passed: a set of one Node equal to the measured event of the engine before the change record by record and row by row over 30 intervals with rays, collisions and clicks (the reference integers taken on that engine first: 152 clicks, 20 record lines, 5 steps, 5 homes, the record 37348285440); the set of three Nodes reading, clicking, owing and pushing as one, stepping as one, refused at an occupied Node, clicking on the face, wrapping; the books balanced with a set that releases (the shares 8, 4, 4 then 4, 8, 4); the turn's phases 11, 37 and 50, 32, 14, 59, 41 as derived by hand, composed over axes 14 and 18, today's phase without `action`; the rays' rows identical with and without the two keys on a colliding crowd of 324 rays over 40 intervals; every refusal by name and the record |
 | `tests/test_push_width.py` (a), `tests/test_nature_beam_clock.py` (e) | `engine.step_axis` and `engine.count_owed` pinned to the step rule and the owed count, no integer changed |
 | `python tools/check.py --base 38c9b621` after each feature | ruff lint and format, mypy and 335 then 337 tests green |
-| Series H, `examples/events/bohr/` (seven worlds, `tools/run_series.py --jobs 4`, 3000 to 10300 intervals) | every run completed in 19 to 87 s with the books balanced at every tick; `tools/bohr_readings.py`: 0 record checks failed, 1 coherence reading inside and 1 outside, five worlds without a reading (fewer than two closed turns): no orbit closed within r / 4 at any radius; at r = 8 two turns of mean radius 8.11 and 7.95 with T 722 and 736 (838 derived), the returns 5 and 4 Links, the escape at the close pass of the third turn; the phase's turn per orbit 0.234 of a circle against 0 designed; C(2) = 0.84 against the expected 1.0 ([the register](EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20), [the README](../examples/events/bohr/README.md)) |
+| Series H, `examples/events/bohr/` (seven worlds, `tools/run_series.py --jobs 4`, 3000 to 10300 intervals) | every run completed in 19 to 87 s with the books balanced at every tick; `tools/click_readings/bohr.py`: 0 record checks failed, 1 coherence reading inside and 1 outside, five worlds without a reading (fewer than two closed turns): no orbit closed within r / 4 at any radius; at r = 8 two turns of mean radius 8.11 and 7.95 with T 722 and 736 (838 derived), the returns 5 and 4 Links, the escape at the close pass of the third turn; the phase's turn per orbit 0.234 of a circle against 0 designed; C(2) = 0.84 against the expected 1.0 ([the register](EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20), the README (`examples/events/bohr/README.md`, deleted 2026-09-26)) |
 | `tests/test_bohr_readings.py` (a) to (c) | the tool's flight time, pointer per turn, coherence and run reading pinned to the engine's `manhattan_steps`, `coherent_pointer` and the runner's record |
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green on the final commit |
 
@@ -1188,7 +1188,7 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 | `tests/test_nature_beam_age.py` (a) to (e) | passed: the age 200 whole after 200 intervals (35 until the change); a head-on pair parked with the ages 60 kept and the class cycle ha hb -> +z-z -> +y-y observed (the first derivation had the pair leave on z without meeting again; the pin was corrected to the observed cycle before registration); the re-emission and the birth at 0; the age moment 41, 61 with here, fixed under the 48 symmetries; the clock's ages 1, 2, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, ... under `reads: "age"` equal to the hand derivation at every interval, the scalar reader unchanged; the bound's default 108 and 222, the refusals, the stub refused at its 13th interval; the GameBoard identical with the ages whole and reduced over 40 intervals of a colliding crowd |
 | A sample of the registered worlds under the whole age (`one_content`, `two_contents`, `two_slits`, coupling `1b_m16` and `5_long`, orbit `s32_r12`, Bell `a0_b8`) | every run completed with the books balanced at every tick, no age past its default bound (the coupling plane 830, the orbit plane 830, the two slits 620, the cube 252); the `audit` of `run.json` unchanged (the clocks read the presence by default, integer by integer); `state.json` differs where a ray's age had passed its period |
 | `python tools/check.py` (the scoped selection of the age commit) | ruff lint and format, mypy and 300 tests green |
-| Series E, `examples/events/redshift/` (`scalar`, `age`; `tools/run_series.py --jobs 2`, 300 intervals each) | both completed, the books balanced at every tick, 16.0 s and 15.5 s; `tools/redshift_readings.py`: 0 record checks failed, 11 readings inside, 3 outside: k_s x r^2 = 39.0 to 44.8 (mean 41.5) and k_a x r = 33.1 to 39.2 (mean 36.1) over r = 6 to 14, their ratio 0.870 against sqrt 3 / 2; the redshift ratios of the age clocks 0.50, 0.57, 0.72, 0.82 at r = 6, 8, 10, 12 against the fitted 1 / r law 0.52, 0.65, 0.78, 0.90, outside the 15 %-of-shift criterion at r = 8, 10, 12 ([the register](EXPERIMENTS.md#e-the-clocks-redshift-in-space-under-the-age-reading-2026-09-20), [the README](../examples/events/redshift/README.md)) |
+| Series E, `examples/events/redshift/` (`scalar`, `age`; `tools/run_series.py --jobs 2`, 300 intervals each) | both completed, the books balanced at every tick, 16.0 s and 15.5 s; `tools/click_readings/redshift.py`: 0 record checks failed, 11 readings inside, 3 outside: k_s x r^2 = 39.0 to 44.8 (mean 41.5) and k_a x r = 33.1 to 39.2 (mean 36.1) over r = 6 to 14, their ratio 0.870 against sqrt 3 / 2; the redshift ratios of the age clocks 0.50, 0.57, 0.72, 0.82 at r = 6, 8, 10, 12 against the fitted 1 / r law 0.52, 0.65, 0.78, 0.90, outside the 15 %-of-shift criterion at r = 8, 10, 12 ([the register](EXPERIMENTS.md#e-the-clocks-redshift-in-space-under-the-age-reading-2026-09-20), the README (`examples/events/redshift/README.md`, deleted 2026-09-26)) |
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green on the final commit |
 
 The runs establish that the age reading of a measured event reads M / r
@@ -1211,9 +1211,9 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores; source fingerprint
 | The books under the label (`test_nature_beam_label` (b)) | a lamp of content 3 on the six headings and eight fan directions: every label 3 x u_d, the recoil -(the labels born) = (-1134, -723, -363) exactly, measured + transit + escaped = (0, 0, 0) at every one of 60 intervals through clicks at a screen (each click the ray's own label), a mirror on (7, 5, 0) (exactly 2 x 3 x (52, 37, 0) per ray reflected) and the open faces; the running transit line equal to the recount |
 | The bound (`test_nature_beam_label` (c), `test_nature_beam_world_parsing` (d)) | content x amount = 2^56 refused by the parser and by `label_weights` naming 64 x 2^56 = 2^62; 2^56 - 1 accepted; the bound-edge worlds at 1/64 of their amounts read the same integers (-(2^62 - 64), the bound reached exactly) |
 | The suite, `python -m pytest -n auto` | 391 passed in 10.6 s; every momentum pin x 64 (the fan fixtures on u_d), every position of `test_push_width` and `test_nature_beam_clock` (d) unchanged with the declared momenta x 64 (`by_clock(age, 64 n, 64 k) = by_clock(age, n, k)`), `test_nature_beam_push` (e) 96 per tick where 2, 1 alternated, `test_nature_beam_detector` (e)'s beyond-register row 2^52 -> 2^49 |
-| Series C, `tools/run_series.py --jobs 4` on the 21 coupling worlds, `tools/coupling_readings.py` | 392 criteria passed, 0 failed; 19 readings inside, 9 outside, every reading equal to the registered one (the tool divides the labels by Q where it compares with q or an amount); every push, momentum and momentum book line x 64 exactly against the registered run, the series 7 electric part included (item 7 unlike signs (-4517272576, 0, 0) = 64 x (-70582384, 0, 0)); the counts, presences, clocks and Gauss's flux unchanged; 0.3 to 2.5 s per run |
-| Bell, the ten A2 worlds, `tools/bell_chsh.py` | 326 criteria passed, 0 failed; S = 2 exactly, the lamp's momentum [0, 0, 0]; every printed line as registered |
-| Series D, the six orbit worlds regenerated by `make_worlds.py` (p = 192, 320, 576 label units), `tools/orbit_readings.py` | 12 record checks passed, 0 failed, 3.9 to 6.1 s per run; no orbit closed by the criterion; S = 32, r = 12 bound for 2891 intervals and 6.74 turns (the first closing of the angle at 289 against 343 expected, the mean radius 11.25, C 1.32; seven closings, every return 2 to 10 Links off), S = 32, r = 24 one turn in 829 (687 expected), S = 8, r = 12 one turn in 198 (196), S = 1 no read ([EXPERIMENTS](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19)) |
+| Series C, `tools/run_series.py --jobs 4` on the 21 coupling worlds, `tools/click_readings/coupling.py` | 392 criteria passed, 0 failed; 19 readings inside, 9 outside, every reading equal to the registered one (the tool divides the labels by Q where it compares with q or an amount); every push, momentum and momentum book line x 64 exactly against the registered run, the series 7 electric part included (item 7 unlike signs (-4517272576, 0, 0) = 64 x (-70582384, 0, 0)); the counts, presences, clocks and Gauss's flux unchanged; 0.3 to 2.5 s per run |
+| Bell, the ten A2 worlds, `tools/click_readings/bell.py` | 326 criteria passed, 0 failed; S = 2 exactly, the lamp's momentum [0, 0, 0]; every printed line as registered |
+| Series D, the six orbit worlds regenerated by `make_worlds.py` (p = 192, 320, 576 label units), `tools/click_readings/orbit.py` | 12 record checks passed, 0 failed, 3.9 to 6.1 s per run; no orbit closed by the criterion; S = 32, r = 12 bound for 2891 intervals and 6.74 turns (the first closing of the angle at 289 against 343 expected, the mean radius 11.25, C 1.32; seven closings, every return 2 to 10 Links off), S = 32, r = 24 one turn in 829 (687 expected), S = 8, r = 12 one turn in 198 (196), S = 1 no read ([EXPERIMENTS](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19)) |
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green |
 
 The runs establish that the label's scale changed every momentum of the
@@ -1228,10 +1228,10 @@ commit (`dacbe0f3`), source fingerprint `f3fb33607190c86c...`, Python
 `examples/events/heisenberg/` through `tools/run_series.py --jobs 4`
 (2.1, 4.5, 12.5, 52.7 s for w = 1, 3, 9, 27 under `beam`; 2.2, 5.0, 12.7,
 52.4 s under `wave`), every run completed with the books balanced at every
-tick; `tools/heisenberg_readings.py` 16 record checks passed, 0 failed;
+tick; `tools/click_readings/heisenberg.py` 16 record checks passed, 0 failed;
 the readings registered in
 [A10](EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20)
-and the worlds' [README](../examples/events/heisenberg/README.md). The
+and the worlds' README (`examples/events/heisenberg/README.md`, deleted 2026-09-26). The
 runs establish what this screen reads of the spread behind an opening
 under the two readings; they establish no physical law, and the reading
 of the lobe fails at w <= 9 on the sparse fan (a limit of the reading,
@@ -1256,7 +1256,7 @@ detectors and its status.
 | The books (`audit` per tick), the status, the faces' records | equal in 45 of 45 |
 | The `record` lines | the same number of lines in every world (one per detector set per family per interval, the sets being one Node each in every shipped world); their values differ where the default `beam` now counts (the Bell counters 1 per click instead of 32^2 x 256^2; the detector examples likewise) and are equal on the `wave` screens |
 | `two_slits`, `one_slit`: the screen's record per pixel | equal on all 121 pixels (the tip's one detector's per-Node `measured[].record` against the change's 121 one-Node `wave` detectors), 27220 and 13610 clicks alike |
-| `tools/bell_chsh.py` on the ten Bell runs, tip and change | 326 criteria passed, 0 failed on both; every printed line equal but the order Python prints a set in; S = 2, S' = 3/2, the offsets 14 and 16; the change's `run.json` carries the counters' `phase` as the last click's (15, 16, 18, 55 in `a0_b8`; 0 on the tip) and their detectors' record as the count (80, 65, 83, 64) with `reading` `beam` |
+| `tools/click_readings/bell.py` on the ten Bell runs, tip and change | 326 criteria passed, 0 failed on both; every printed line equal but the order Python prints a set in; S = 2, S' = 3/2, the offsets 14 and 16; the change's `run.json` carries the counters' `phase` as the last click's (15, 16, 18, 55 in `a0_b8`; 0 on the tip) and their detectors' record as the count (80, 65, 83, 64) with `reading` `beam` |
 | `tests/test_nature_beam_detector.py` (f), (g), (h); `tests/test_nature_beam_worlds.py` (a) | passed: the set of three Nodes records 32^2 x 256^2 whichever Node the ray reached, the threshold 2 over the set, the window on the set's phase 8; the phase returned 40 and the lamp's rays at the received phase; the beam pairing (2 in phase click, opposite cancel, the arc with a window, the greedy order, the split row); the two-slit correlation with the two-source cosine unchanged above 0.85 with the screen as 121 one-Node `wave` detectors |
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite (390 tests) green |
 
@@ -1305,7 +1305,7 @@ without `elapsed_seconds` and `source_sha256`.
 | Check | Result |
 | --- | --- |
 | The 45 worlds after each of the five commits | 45 of 45 identical (`events.jsonl`, `state.json`, `run.json` with the per-tick `audit`) on every commit; `two_contents` fails at tick 19 on the base and after alike (the affordable amount at `face:+y`, 2^18 > 261123, a pre-existing refusal of the night's bound), its partial artifacts identical |
-| `tools/bell_chsh.py` on the ten Bell runs, `tools/coupling_readings.py` on the twenty-one coupling runs | 326 and 392 criteria passed, 0 failed, on the base and after every commit; every printed line equal but the order Python prints a set in and the seconds line |
+| `tools/click_readings/bell.py` on the ten Bell runs, `tools/click_readings/coupling.py` on the twenty-one coupling runs | 326 and 392 criteria passed, 0 failed, on the base and after every commit; every printed line equal but the order Python prints a set in and the seconds line |
 | The suite, `python -m pytest -n auto` | 381 passed in 16.8 s on the base; 386 passed in 5.5 s after (the flight test 7.3 -> 0.75 s with the cached collision table, the two slits' world test 12.7 -> 3.8 s) |
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green on the final commit |
 | Timings, the best of three headless runs with the record and the books every tick (ms per interval / us per Node / us per row, base -> final) | plane source `coupling/5` 2.97 / 0.203 / 0.745 -> 1.61 / 0.110 / 0.403; `two_slits` 12.38 / 1.71 / 2.43 -> 3.51 / 0.48 / 0.69; Bell `a0_b8` 0.53 / 25.2 / 19.9 -> 0.47 / 22.4 / 17.6; `one_content` 0.77 / 0.049 / 6.2 -> 0.58 / 0.037 / 4.7; orbit `s32_r12` 1.47 / 0.101 / 1.11 -> 0.77 / 0.053 / 0.58 |
@@ -1328,10 +1328,10 @@ headless, four cores.
 | `tests/test_nature_beam_push.py` (new) | 5 passed: the reviewer's world (every push -5 V + by_clock(age, 3 V, 4), `pushed` (-340, 0, 0)), the sign, the uncharged probe, the cancellation q_A q_B = M_B (push 0 exactly), the fractional floor (-170, 0, 0), a paid emitter (the label sum, the lamp's momentum + transit + escaped = 0 at every tick), a fan emitter ((-40, -20, 0) per read), the one label at the click, the re-emission and the home |
 | `tests/test_nature_beam_collision.py` (d), `tests/test_nature_beam_detector.py` (e) | 4 and 5 passed: no collision at a measured event's Node (the head-on pair passes, the windowed click takes its label, nothing at rest); the affordable amount 261123 (a row at the bound records 2139119616^2, 261124, a sum of two rows, 2^52 and a face refused naming the sum) |
 | The ray suite and the consumers, `python tools/check.py --base HEAD` | ruff lint and format clean, mypy on the changed sources, every selected test passed |
-| Twenty-one coupling runs, `python tools/run_series.py --jobs 4`, on both sources | every `events.jsonl` identical byte for byte between the tip's source and the new one (the series 7 `read` records row by row: the one form equals the three-branch push integer by integer); `tools/coupling_readings.py`: 392 criteria passed, 0 failed, 19 inside, 9 outside on both, the printed readings equal line by line but the fingerprint; `state.json` differs on the coupling worlds by the two columns `charge`, `mass` of the free family's rows, on nothing else |
-| Ten Bell runs on both sources | `events.jsonl` and `state.json` identical on all ten; `tools/bell_chsh.py`: 326 criteria passed, 0 failed on both, every printed line equal but the fingerprint and the order Python prints a set in |
+| Twenty-one coupling runs, `python tools/run_series.py --jobs 4`, on both sources | every `events.jsonl` identical byte for byte between the tip's source and the new one (the series 7 `read` records row by row: the one form equals the three-branch push integer by integer); `tools/click_readings/coupling.py`: 392 criteria passed, 0 failed, 19 inside, 9 outside on both, the printed readings equal line by line but the fingerprint; `state.json` differs on the coupling worlds by the two columns `charge`, `mass` of the free family's rows, on nothing else |
+| Ten Bell runs on both sources | `events.jsonl` and `state.json` identical on all ten; `tools/click_readings/bell.py`: 326 criteria passed, 0 failed on both, every printed line equal but the fingerprint and the order Python prints a set in |
 | The affordable amount on the registered worlds | the coupling faces click 174762 units per interval (the 2^17 beam and the two z rays re-emitted in six shares), inside the bound; the first draft of the bound (2^17) refused them and was corrected to the derived value before the register was read |
-| Six orbit runs (series D re-registered), `python tools/run_series.py --jobs 4` | all completed in 5.7 to 6.5 s, the books balanced at every tick; `tools/orbit_readings.py`: 12 record checks passed, 0 failed, exit 0; no orbit closes at any width (S = 1 and 8 zero reads, S = 32 at r = 12 one eccentric turn in 229 intervals returning two Links off, S = 32 at r = 24 falls in); registered in [D, the orbit](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19) |
+| Six orbit runs (series D re-registered), `python tools/run_series.py --jobs 4` | all completed in 5.7 to 6.5 s, the books balanced at every tick; `tools/click_readings/orbit.py`: 12 record checks passed, 0 failed, exit 0; no orbit closes at any width (S = 1 and 8 zero reads, S = 32 at r = 12 one eccentric turn in 229 intervals returning two Links off, S = 32 at r = 24 falls in); registered in [D, the orbit](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19) |
 | `python tools/check.py --full` | ruff lint and format on 115 files clean, mypy on 21 source files clean, 437 passed in 17 s on four workers |
 
 The runs establish that the one form is the earlier computation on every
@@ -1356,8 +1356,8 @@ Python 3.14, headless.
 | --- | --- |
 | Every example world parsed on both sources | 39 worlds (the `detector/` worlds through the entity loader): the parsed `NatureBeamWorld`s equal structure by structure (tables, windows, `reads`, the families' free flags, every other field) |
 | The Bell and coupling runs, `events.jsonl`, `state.json` and the `audit` per tick | identical SHA-256 digests on both sources for all 31 runs, and for `one_content` and `two_contents` (33 of 35) |
-| `tools/bell_chsh.py` on the ten new runs | 326 criteria passed, 0 failed; every printed line equal to the base run's but the source fingerprint (and the order Python prints a set in) |
-| `tools/coupling_readings.py` on the twenty-one new runs | 392 criteria passed, 0 failed; 19 readings inside, 9 outside, the printed readings equal to the base run's line by line |
+| `tools/click_readings/bell.py` on the ten new runs | 326 criteria passed, 0 failed; every printed line equal to the base run's but the source fingerprint (and the order Python prints a set in) |
+| `tools/click_readings/coupling.py` on the twenty-one new runs | 392 criteria passed, 0 failed; 19 readings inside, 9 outside, the printed readings equal to the base run's line by line |
 | `two_slits`, `one_slit` (fans) | the digests differ, as the decision says: a fan ray now pushes by its label `content x amount x D` and not by the unit Link of its last step; the world test's correlation still passes (`test_nature_beam_worlds` (a)) |
 | Host cost | `one_content` 0.24 s per 200 intervals (0.44 before), `1a_m1` 0.62 s (0.65), `5_long` 3.1 s (3.9), `two_slits` 5.8 s (4.6): the moments per Node cost about what the slots did |
 
@@ -1376,7 +1376,7 @@ Python 3.14, headless, four cores.
 | --- | --- |
 | `tests/test_push_width.py` | 4 passed: S = 1 as the rule was, S = 8 once per 9 self-creations at p = M, the step off the clock with no remainder under a count owed (the step on the paying interval), the key's default, record and refusals |
 | `python tools/check.py` on the D1 commit | ruff lint and format clean, mypy on 11 source files, 228 passed in 25 s on four workers |
-| Six orbit runs, `python tools/run_series.py --jobs 4` | all completed in 5.5 to 6.4 s each (1 ms per interval on 121 x 121 with a fan of 120 directions and about 1200 rows in flight), the books balanced at every tick; `python tools/orbit_readings.py`: 12 record checks passed, 0 failed, exit 0; one orbit closed by the criterion (S = 32, r = 12: 346 intervals against 343 derived, the return one Link off), an eccentric loop; no other closing; the mean push C 1.1 on the first turns; registered in [D, the orbit under the Beam Law, on the plane](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19) |
+| Six orbit runs, `python tools/run_series.py --jobs 4` | all completed in 5.5 to 6.4 s each (1 ms per interval on 121 x 121 with a fan of 120 directions and about 1200 rows in flight), the books balanced at every tick; `python tools/click_readings/orbit.py`: 12 record checks passed, 0 failed, exit 0; one orbit closed by the criterion (S = 32, r = 12: 346 intervals against 343 derived, the return one Link off), an eccentric loop; no other closing; the mean push C 1.1 on the first turns; registered in [D, the orbit under the Beam Law, on the plane](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19) |
 | `tests/test_orbit_world.py` | 1 passed in 0.5 s: the probe of `s32_r12` at (71, 60, 0) after 346 intervals with its momentum's y component positive, the books balanced |
 
 ## The Beam Law: the engine, the suite and the re-registered runs - 2026-09-19
@@ -1390,13 +1390,13 @@ Runtime source SHA-256 `703f9427d9f70e6c619218e457edca0b7647381a8cc7a20d140e4a3d
 
 | Check | Result |
 | --- | --- |
-| `pytest -n auto` over the suite | 372 passed in 20 s on four workers (the ten `test_ray_*` modules, the consumers, retention and the gates); `tests/test_nature_beam_worlds.py` runs the two slits three times on 60 x 121 x 1 for 500 intervals and the ten Bell worlds through `tools/bell_chsh.py` |
+| `pytest -n auto` over the suite | 372 passed in 20 s on four workers (the ten `test_ray_*` modules, the consumers, retention and the gates); `tests/test_nature_beam_worlds.py` runs the two slits three times on 60 x 121 x 1 for 500 intervals and the ten Bell worlds through `tools/click_readings/bell.py` |
 | The collision table at load | 6561 states, 5440 classes, INV[FWD[s]] = s on every state, the amount and the heading sum conserved by every move (`test_nature_beam_collision` (a)) |
 | The bijection | 50 intervals forward and 50 inverse on a periodic 8 x 8 x 4 GameBoard with 324 records return the store bit-exact (`test_nature_beam_bijection`) |
 | The one reading | the seven basis vectors orthogonal, the slots recovered, the 48 GameBoard symmetries rotate the flow and fix the scalars (`test_nature_beam_readings` (a)) |
 | The two slits (world test) | the record's interference term correlates with the two-source cosine at lambda = 8 / sqrt 3 at 0.893 (the design pinned 0.9 for a fan of 203 directions; this world's fan is 91), below 0.5 at the periods 4 and 16; the plain count additive to the unit |
-| Ten Bell runs of 160 ticks, `python -m event_universe --init examples/events/bell/<name>.json` | all completed, the books balanced, nothing escaped; E as pinned in every run; S = 2 exactly; S' = 3/2 exactly; the offsets plus 14, minus 16; no-signalling exact; `python tools/bell_chsh.py`: 326 criteria, 0 failed, exit 0 ([A2 under the Beam Law](EXPERIMENTS.md#a2-under-the-beam-law-2026-09-19)) |
-| Twenty-one coupling runs, `python tools/run_series.py --jobs 4` | all completed in 0.5 to 3.3 s each; the books balanced at every tick; the measured content constant; age + waited = the intervals completed; `PYTHONPATH=src python tools/coupling_readings.py`: 392 criteria passed, 0 failed, exit 0; 19 readings inside the expectation of BEAM_LAW section 8 and 9 outside, registered in [C under the Beam Law](EXPERIMENTS.md#c-the-couplings-under-the-beam-law-on-the-plane-2026-09-19) (the ring means of six beams follow the GameBoard ring's Node count; the presence slope -0.76; the clock on the axis owed the beam's presence) |
+| Ten Bell runs of 160 ticks, `python -m event_universe --init examples/events/bell/<name>.json` | all completed, the books balanced, nothing escaped; E as pinned in every run; S = 2 exactly; S' = 3/2 exactly; the offsets plus 14, minus 16; no-signalling exact; `python tools/click_readings/bell.py`: 326 criteria, 0 failed, exit 0 ([A2 under the Beam Law](EXPERIMENTS.md#a2-under-the-beam-law-2026-09-19)) |
+| Twenty-one coupling runs, `python tools/run_series.py --jobs 4` | all completed in 0.5 to 3.3 s each; the books balanced at every tick; the measured content constant; age + waited = the intervals completed; `PYTHONPATH=src python tools/click_readings/coupling.py`: 392 criteria passed, 0 failed, exit 0; 19 readings inside the expectation of BEAM_LAW section 8 and 9 outside, registered in [C under the Beam Law](EXPERIMENTS.md#c-the-couplings-under-the-beam-law-on-the-plane-2026-09-19) (the ring means of six beams follow the GameBoard ring's Node count; the presence slope -0.76; the clock on the axis owed the beam's presence) |
 | Performance | 0.23 us per Node per interval on the coupling plane (121 x 121, one source), about 1.0 us on the two slits (about 5100 rows in flight, about 2.7 us per row), against the design's budget of 3.6 us; measured with `time.perf_counter` around `NatureBeamSimulation.step`, a host cost |
 | Gates | `ruff check`, `ruff format --check` and `mypy --strict` on `src`, `tests` and `tools` clean; `tests/test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` passed; `python tools/check.py --full`: ruff lint and format on 108 files, mypy on 21 source files, 372 passed |
 
@@ -1521,7 +1521,7 @@ result. A shared count does not establish entanglement.
 Base: `ddb4470a` on `claude/universe24-new-3ytqde` (main after PR #345). No
 engine change: twenty-one worlds (`examples/events/coupling/`, written by
 `make_worlds.py`, a GameBoard of 121 x 121 x 1 with `"boundary": {"z":
-"periodic"}`), the analysis `tools/coupling_readings.py` and the register
+"periodic"}`), the analysis `tools/click_readings/coupling.py` and the register
 entry [C, the couplings under the law of events, on the plane](EXPERIMENTS.md#c-the-couplings-under-the-law-of-events-on-the-plane-2026-09-19).
 The physics-rule reviewer's design of 2026-09-19, pinned for 61^3 and moved
 to the plane by the model owner's decision the same day ("cancel the runs;
@@ -1541,8 +1541,8 @@ test; a reading outside its bound reported, never moved.
 | Item 6, the clock (`suspension` 1) | identity held: (age, waited, owed) equal to the replay at all nine radii, age + waited = 200; age(200) 6, 9, 13, 19, 25, 31, 38, 47, 63 at r = 4 to 40; outside the bound: age(200) = age(60) at r = 4, 6, 20 (k + 1 above 100 at every radius against the 200-interval window; the counts written finite, 403 to 118) |
 | Item 7, the electric reading | identity held: `pushed` (0, 0, 0) for like signs, twice (-2634004, 5855, 0) for unlike, the content-4 probe 3 times; electric / gravity -1 and -1/4 exactly |
 | Convergence | (a) carried x 2 pi r / q 1.454 flat within 3.8 % over r >= 5, not equal to the flow's 0.988 within 5 %; (b) the lost fraction 0.970 to 0.685 falling with r against k / (k + 1) 0.998 to 0.990; (c) 0.055, 0.031, 0.034; (d) exact |
-| `PYTHONPATH=src python tools/coupling_readings.py artifacts/coupling` | 405 criteria, 390 passed, 15 failed (every failure a reading outside its bound, listed above), exit 1; the negative control (a copy of the runs with one push of 1a_m4 changed by one unit, not kept) fails the equivalence identity as well, 16 failed, exit 1 |
-| Gates | `ruff check` and `ruff format --check` on the two new Python files clean; `MYPYPATH=src mypy --strict tools/coupling_readings.py` clean; `pytest -q tests/test_repository_language.py tests/test_repository_hygiene.py tests/test_repository_navigation.py tests/test_configuration_validation.py -p no:cacheprovider` 34 passed; `PYTHONPATH=src python tools/check.py --base origin/main`: ruff lint and format on the two new Python files and 80 passed in 68 seconds over `test_architecture`, `test_check_scope`, `test_configuration_validation`, `test_event_worlds` and the three repository gates (the worlds sit under `examples/events/coupling/`, one level below the glob of the shipped-world preflight test, so they are preflighted by the CLI and by every run, not by that test) |
+| `PYTHONPATH=src python tools/click_readings/coupling.py artifacts/coupling` | 405 criteria, 390 passed, 15 failed (every failure a reading outside its bound, listed above), exit 1; the negative control (a copy of the runs with one push of 1a_m4 changed by one unit, not kept) fails the equivalence identity as well, 16 failed, exit 1 |
+| Gates | `ruff check` and `ruff format --check` on the two new Python files clean; `MYPYPATH=src mypy --strict tools/click_readings/coupling.py` clean; `pytest -q tests/test_repository_language.py tests/test_repository_hygiene.py tests/test_repository_navigation.py tests/test_configuration_validation.py -p no:cacheprovider` 34 passed; `PYTHONPATH=src python tools/check.py --base origin/main`: ruff lint and format on the two new Python files and 80 passed in 68 seconds over `test_architecture`, `test_check_scope`, `test_configuration_validation`, `test_event_worlds` and the three repository gates (the worlds sit under `examples/events/coupling/`, one level below the glob of the shipped-world preflight test, so they are preflighted by the CLI and by every run, not by that test) |
 
 Runtime source SHA-256 `06a050c9d27a5ab11febe10be40865866e7f0dcbc129400e08c2d7f6b71c8560`, Python 3.14.0rc2, headless.
 
@@ -1551,7 +1551,7 @@ Runtime source SHA-256 `06a050c9d27a5ab11febe10be40865866e7f0dcbc129400e08c2d7f6
 Base: `1f9f280` on `main` (after PR #335), branch
 `claude/universe24-new-3ytqde`. No engine change: ten worlds
 (`examples/events/bell/`, written by `make_worlds.py`), the analysis
-`tools/bell_chsh.py` and the register entry
+`tools/click_readings/bell.py` and the register entry
 [A2, under the law of events](EXPERIMENTS.md#a2-under-the-law-of-events-2026-09-19).
 The verdict the physicist and the mathematician pinned before the run
 (Highlights 5.4): with a deterministic local phase window CHSH is at most 2
@@ -1566,8 +1566,8 @@ against the 2015 data. A research run, made once; not a test.
 | S = E(0, 8) - E(0, 24) + E(16, 8) + E(16, 24); S' = E(0, 8) - E(0, 12) + E(4, 8) + E(4, 12) | 2 exactly; 3/2 exactly |
 | The tick offsets read off the record | plus tick = age + 9, minus tick = age + 10, the same in every run |
 | No-signalling | exact: the ages at which `alice_plus` clicks identical across every b for each a, and Bob's across every a for each b |
-| `python tools/bell_chsh.py artifacts/bell` | 326 criteria, 0 failed, exit 0; the negative control (a copy of one run with one click's phase changed by one, not kept) fails the phase criterion and exits 1 |
-| Gates | `ruff check tools tests src`, `ruff format --check tools`, `mypy tools/bell_chsh.py` clean; `pytest -q tests/test_repository_language.py tests/test_repository_hygiene.py tests/test_repository_navigation.py tests/test_configuration_validation.py` 34 passed; `python tools/check.py --base origin/main`: ruff lint and format on the two changed Python files and 80 passed in 63 seconds over `test_architecture`, `test_check_scope`, `test_configuration_validation`, `test_event_worlds` and the three repository gates (the ten worlds sit under `examples/events/bell/`, one level below the glob of the shipped-world preflight test, so they are preflighted by the CLI and by every run, not by that test) |
+| `python tools/click_readings/bell.py artifacts/bell` | 326 criteria, 0 failed, exit 0; the negative control (a copy of one run with one click's phase changed by one, not kept) fails the phase criterion and exits 1 |
+| Gates | `ruff check tools tests src`, `ruff format --check tools`, `mypy tools/click_readings/bell.py` clean; `pytest -q tests/test_repository_language.py tests/test_repository_hygiene.py tests/test_repository_navigation.py tests/test_configuration_validation.py` 34 passed; `python tools/check.py --base origin/main`: ruff lint and format on the two changed Python files and 80 passed in 63 seconds over `test_architecture`, `test_check_scope`, `test_configuration_validation`, `test_event_worlds` and the three repository gates (the ten worlds sit under `examples/events/bell/`, one level below the glob of the shipped-world preflight test, so they are preflighted by the CLI and by every run, not by that test) |
 
 Runtime source SHA-256 `53a70962c5f2c8c860a0895dbc9d6cb7cf125d53aa3d5f0ce6aa5464c79a87f9`, Python 3.14.0rc2, headless.
 
@@ -2910,7 +2910,7 @@ arbitrary user-defined algorithms.
 The movie currently omits spatial populations and spatial transfers, although
 those remain in saved state/recording data. Spatial extension settings remain
 editable through complete JSON. This capability limit is documented in
-[WORKSPACE.md](WORKSPACE.md); no visualization was requested or generated.
+`docs/WORKSPACE.md` (the workspace, deleted on 2026-09-22 with `ui.py`, record 871); no visualization was requested or generated.
 The architecture-review Skill now requires role-aware renaming, declaration
 permutations and observed activity. Shared workflow and Boss guidance were
 reviewed and already cover integration ownership and the required full gate.

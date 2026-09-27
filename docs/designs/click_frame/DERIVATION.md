@@ -1,5 +1,7 @@
 # Lorentz from the clicks: Bondi's two factors on the GameBoard, the one line that makes them one, and what the register has read (the owner's order, 2026-09-22, records 723, 725 and 728)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 3 (the click algebra) and 5.1 (the click theorem); this file is kept as the record of 2026-09-22.
+
 The derivation mathematician, 2026-09-22, on the Boss's order of about
 04:30Z; a derivation on paper, no run, no code; every number a closed
 form or a registered reading labelled by its kind (DETECTOR or
@@ -1328,8 +1330,10 @@ the least separation of two places read is one Link; (ii) the least
 time a detector times by itself is a pulse to its neighbour and its
 return; (iii) the least step of a moving record is one Node per k
 counts, so the Outside velocities are the ratios `1 / k` (M3, over Q)
-with the velocity quantum `1 / (k (k + 1))`, and c Outside is one Link
-per the least count.
+and a velocity read across `dx` Links and `dn` counts is the rational
+`dx / dn`, of resolution `1 / n` at a fixed count `n` and dense as the
+counts grow (no velocity quantum; issue 1012), and c Outside is one Link
+per the least count, the bound at k = 1.
 
 *Proof.* (i) A click moves information one Node at most (A1), so two
 places that a chain of clicks tells apart are at least one Link apart;
@@ -1355,10 +1359,12 @@ to 4 intervals" described one row's Links and not the pulse's return. (iii) A mo
 interval (A1, the hop line of (I) with its cap 1), and between two hops
 its detector counts k intervals stretched by the crowd, so a velocity
 read by clicks is `1 / k` Nodes per count, a ratio of two integers (M3,
-in the mean over a hop pattern), never a real number; two neighbouring
-velocities differ by `1 / k - 1 / (k + 1) = 1 / (k (k + 1))`, finest near
-c and coarsest near rest; and c Outside is one Link per the least
-count, the pace of a row (`1 / sqrt 3` Links per interval, `32 / 55` on a
+in the mean over a hop pattern), never a real number; a velocity read across
+`dx` Links and `dn` counts is the rational `dx / dn`, of resolution `1 /
+n` at a fixed count `n` and dense as the counts grow (the hop patterns'
+means fill Q; the earlier "velocity quantum 1 / (k (k + 1))" was the
+difference of two neighbouring patterns, not a quantum: issue 1012); and
+c Outside is one Link per the least count, the bound at k = 1, the pace of a row (`1 / sqrt 3` Links per interval, `32 / 55` on a
 heading), the same in every family by (A1). QED. *The Outside step
 formula in these quanta:* for the next click of the same record (a
 transponding record re-emitting at each arrival, section 2 (c)),
@@ -1918,5 +1924,5 @@ deleted.
 [17.6](../../DERIVATIONS_BEAM.md#176-amended-per-the-physics-rule-review-of-covariant-readings-v1-record-297-the-nine-must-fixes-the-integer-forms-the-should-fixes),
 [17.7](../../DERIVATIONS_BEAM.md#177-the-proper-time-gate-without-a-root-two-counters-compared-against-the-whole-root-the-owners-word-2026-09-22-records-642-and-647);
 [the clock loop, stage 1](../clock_loop/DERIVATION.md); [NATURE rows 4a, 4b
-and 12](../../NATURE.md); [the covariant worlds](../../../examples/events/covariant/README.md);
+and 12](../../NATURE.md); the covariant worlds (`examples/events/covariant/README.md`, deleted 2026-09-26);
 [HIGHLIGHTS 5.4](../../HIGHLIGHTS.md#54-the-detector).

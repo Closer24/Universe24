@@ -1,5 +1,7 @@
 # Einstein Outside: the step beneath the board, the step above it, and the map between them; every formula of the special and the general theory brought from inside the GameBoard to above it with the transformation of a named detector at a named place (the owner's order, 2026-09-22, about 05:55Z, and his six clauses of 06:00Z to 07:20Z, as the Boss relayed them)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 5.1 to 5.5; this file is kept as the record of 2026-09-22.
+
 The Einstein Mathematician, 2026-09-22, on the Boss's order of about
 05:55Z and the owner's clauses that followed it: a derivation on paper,
 docs only, no code, no world file, no run; every number a closed form or
@@ -547,8 +549,10 @@ k`). So a velocity Outside is a ratio of two whole counts, Nodes over
 counts, and the velocities a detector can read are the rationals `1 /
 k` and their means: a body between the patterns `1 / k` and `1 / (k +
 1)` reads as a mean of the two over many hops (the drive's remainder),
-never as a number between them at one hop; the quantum of velocity at
-the pace `1 / k` is `1 / k - 1 / (k + 1) = 1 / (k (k + 1))`, and on the
+never as a number between them at one hop; the velocities read across
+`dx` Links and `dn` counts are the rationals `dx / dn`, of resolution `1
+/ n` at a fixed count `n` and dense as the counts grow (no quantum of
+velocity: the means fill Q; issue 1012), and on the
 Beam Law's lattice the pace is a ratio over Q (the click frame's M3,
 :78-86: "a Q-linear map on the counts' ratios in the mean").
 
@@ -562,7 +566,9 @@ form (the floor of a linear function, one Link per self-creation at
 most, `by_drive`'s `at_most` 1) read through Theorem 1 (i) at `r = 1`:
 the ground detector's count between two hops is k; a pattern `floor(t
 / k)` hops once per k and no oftener; two patterns with k and `k + 1`
-differ by one hop per `k (k + 1)` intervals. QED. All rung 1, exact by
+differ by one hop per `k (k + 1)` intervals (a difference of two
+patterns, not a quantum of velocity: a body's mean over many hops reads
+any rational `dx / dn`, issue 1012). QED. All rung 1, exact by
 the primitive, from modern algebra and no run.
 
 **(c) Theorem 4 (Newton's step as the limit of the small step).** In

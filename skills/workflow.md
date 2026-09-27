@@ -455,7 +455,7 @@ dimension and its declaration per world. A rule that has no such form is a
 world's declaration and not a law. The fan of directions is the case: three
 per-world lists (91, 5, 290) each hid an equal-weights choice that the vector
 form (the primitive directions within a width, each weighted by the measure
-of its cell on the sphere) shows to be wrong by up to 5.4 on the sphere.
+of its Node on the sphere) shows to be wrong by up to 5.4 on the sphere.
 
 ## Notation: every symbol named, its kind shown (the model owner, 2026-09-21, record 184)
 
@@ -508,8 +508,9 @@ operations with no iteration inside it and gives the rows a closed form,
 generic makes one primitive serve every family (one code path, one table,
 one verification). The number of events is the floor of any exact
 computation. And it follows that a generic system is ruled by small
-conditions: the only free numbers are the family table's declared integers,
-the width and the initial state; a large system has no rule of its own
+conditions: the only free numbers are the integers of the one algebra (each
+family's pair and label module, each region's material integers) and the
+experiment's list (records 1875 and 1882); a large system has no rule of its own
 scale, every known formula is the limit of the small local rule, and a
 change of one small condition moves the registered integers everywhere,
 exactly: a wrong small condition is caught by the large system's pins.
@@ -520,30 +521,93 @@ the three (record 201 of the log of 2026-09-20).
 
 Every report, proposal, review finding or question a role sends to the Boss, and every one the Boss sends the owner, opens with six short lines, one each, never an essay: (1) the information: what the item moves between which records or Nodes, through which Link and Port, at what rate, what is kept and what is lost; (2) the generic solution: the one primitive, for every family alike, from which the number follows, never a patch beside it (record 421); (3) why it will work: the mechanism on the GameBoard, with the reading that would show it and the reading that would refute it; (4) why do this at all: what it buys the law or a measurement, and what stays unread or wrong if it is not done; (5) the Highlights: which decisions of docs/HIGHLIGHTS.md section 5.4 the item keeps and why they still hold, and whether one of them should now change, a change being an option proposed with its evidence and made on the owner's word as a new line naming the one it supersedes; (6) the implementation: what changes in the tree (engine, register, documents), which identities and registrations it touches, the time end to end (the build, the runs, the review) as a host estimate, and whether it is dangerous: what it can break, what re-run or read guards it, and whether the key stays off by default. The six lines are the report's head; the evidence follows them. Every number in them is labelled DETECTOR or GAMEBOARD.
 
-## How the team works now (the model owner, 2026-09-21, record 309)
+## Short sentences, one idea each (the model owner, 2026-09-25, record 1989)
 
-The owner's instruction: the Skills describe the team as he builds it now. The
-roles, as they run today, one writer per document:
+Every message between roles, to the Boss and to the owner, is written in short sentences, one idea each, with the central ideas first. No long paragraphs. Use short lists where there are several items. Put a question, if there is one, on its own line at the end, asked plainly. Evidence and numbers follow the ideas in the same short form. This covers every report, answer and handoff, including the six lines above; the repository's documents keep their own form. Messages to the owner in Hebrew are written one sentence per line, with no blank lines between them, no bullet points and no full stop at the end of a line, because those are hard for him to read (the model owner, 2026-09-25, record 2029). The important sentences are in bold (the model owner, 2026-09-25, record 2032).
 
-| Role | Writes | Does not write |
-| --- | --- | --- |
-| The Boss (the orchestrator) | the day's log, Highlights 5.4, the Skills, the records of every word of the owner; opens and merges the pull requests | any design, derivation or manuscript |
-| The physicist | the designs under `docs/designs/` (a hypothesis, a candidate, a verdict on the dark sector, item by item), FULL_PICTURE, the far-lamp notes | DERIVATIONS_BEAM, BEAM_LAW, the paper |
-| The derivation mathematician | DERIVATIONS_BEAM (every formula as a limit of one rule; the map 21.2 with its status, order and error term) | the designs, the law's text |
-| The architect | BEAM_LAW's text, the genericity probe, the host-only unifications | the derivations, the designs |
-| The paper coordinator | the manuscript, with its referee ([paper-coordinator](paper-coordinator/SKILL.md)) | the tree's documents; it reports what reaches the tree with its status |
-| The Visualiser | the gallery pages under `docs/pages/` | any number of the register |
-| The physics-rule reviewer, the implementers, the experimenter | one bounded assignment each, as agents of the Boss: a review file, a branch, a registered run | the shared documents beyond their assignment |
+## A big decision takes three: the owner, the Boss and a second party (the model owner, 2026-09-26, record 2136)
+
+A big decision is one that changes what the engine is: a new or removed operation of the law, a rule applied across the whole engine, a family added or removed, or a decision of docs/HIGHLIGHTS.md section 5.4 replaced. It is closed by three, never by one. (1) A second party checks it independently: a read-only reviewer, or Nature24 for the hard questions, rederiving each step and rerunning each number from its own code. (2) The Boss checks that the proposer and the second party agree, and sends the reviewer again on what still differs. (3) The owner decides on the closed plan the Boss brings him. Until the owner's word, the engine is built only in the parts that do not depend on the decision. A derivation the second party confirms and the owner approves becomes one line in section 5.4, with its record.
+
+## The method of work: from the owner's word to the build (the model owner, 2026-09-25, record 2009)
+
+The owner's word: "put the method of work in the skill". This is the method as it ran on 2026-09-25 (records 1993 to 2008).
+
+The chain, one step each:
+
+1. The owner may speak to any role. Whoever hears him relays his words verbatim to the Boss.
+2. The Boss records the word in the day's log, next number. A decision also gets one line in Highlights 5.4.
+3. The Boss sends the same text to the mathematician and to Nature24. Both work from one text.
+4. The mathematician writes the section in docs/ALGEBRA.md: proved, computed, the three tests stated.
+5. Nature24 builds on the section at once. Every commit names its section (record 1987). A piece no section states is listed for the mathematician.
+6. The mathematician gates the code. The merge waits on the rule of three (record 1940), and the owner is told in plain words.
+
+The engine implements the algebra (the model owner, 2026-09-26, record 2115):
+
+- The work began from the physics seen in the world and reached the algebra. Since then it holds to the algebra.
+- docs/ALGEBRA.md is one proof, from the first step to today: every derivation and formula of the system stands there.
+- The engine is the implementation of that file and nothing else. It is not a physics engine of its own.
+- The loop: the algebra, then the engine, then the experiments' clicks against nature, then back to the algebra. A finding changes the algebra first and the engine after it, never the engine alone.
+- An outside reviewer checks the fixed algebra one to one against the engine's code before the Go (record 2110).
+
+Pace:
+
+- Now, not later (record 2003). The sections are written in parallel. Each item is built as soon as its section lands. No long queue.
+- A doubt of the owner ("that is strange") goes back to the mathematician at once. A section may be reversed, as 9.50 (13) reversed 9.50 (12).
+- The Boss may test a proposal with a scratch host check before the section. It is labelled a diagnostic, never a result.
+- No run against pins until the owner says the engine is stable (record 1924).
+
+The physics the method keeps:
+
+- The law is written for the Node only. A body is the support of a mode of the Node's rule. The click is the one write at a body's scale (record 2008; ALGEBRA.md 9.53).
+- A host form (a body on one Node, its hop, the tick as a count, the energy count) stands only by its equivalence gate against the law's own run on the GameBoard.
+- The clock is Einstein's weak field from the Node alone: the Node's own pace entering twice, squared on its six-neighbour sum and on its mass term with the clock's second order; nothing is read from a neighbour's clock, and every level read is the interval's start value (records 2003, 2024 and 2035; ALGEBRA.md 9.57).
+- Look in the algebra for the generic solution. What changes in time enters the numerator; the wall stays constant (records 1996 and 1997).
+- The backward run is exact everywhere. A lost inverse is a defect, not a choice (record 1994).
+- No conservation is decreed. It follows from the rule at the Node or it does not exist (record 1997).
+
+## The short procedure (the model owner, 2026-09-26, record 2214)
+
+The owner's one page, in force now. It governs every other section of this file; where an older line differs, this one stands.
+
+1. `main` is the one version that works. No one pushes to it directly.
+2. Every task is one short branch from `main` (`feature/...`, `core/...`, `exp/...`). It is merged within days and the branch is deleted after the merge (this replaces the old word never to delete a branch, for merged branches only).
+3. Only the Boss merges into `main`, and only when CI is green on the pull request's head.
+4. Only Main Loop touches the core (`src/event_universe/core/`: `main_loop.py`, which takes the input, runs the step and writes the output; the step, the Node and the register, each its own file; record 2221). Whoever needs something in the core asks Main Loop.
+5. A new primitive (the owner's "feature") is one folder under `src/event_universe/features/`, which declares its own unique name, place, reads and writes; the register finds it by its folder, so adding one touches no shared file (point 12 below; record 2221). It acts only when the run's files declare it; the code holds no flag and no written default (records 2172, 2199 item 7). Several primitives that work together are one composite, registered under one name.
+6. The mathematician approves every primitive before its merge, by the comment `APPROVED-MATH` on its pull request.
+7. The most important test: with the new primitive undeclared, every old run comes out identical to the bit.
+8. Every result names the `main` commit it ran on. There are no tags (record 2218); the engine keeps no version in its code or files (record 2182).
+9. An experiment runs only on a `main` commit whose CI is green, with its pin written before the run; every result names that commit. Comparing a result against a pin waits for the Go (records 2172 to 2174, 2207).
+10. The agents talk by direct messages (item 8 of the next section): the task, the finish in two lines and a link; waking a session that does not answer is the sender's work (record 2215). No new GitHub issue is opened for a task; the issues already open (#1154 to #1158) are closed as they are done. [docs/PROJECT_STATUS.md](../docs/PROJECT_STATUS.md) is the current state. The owner's words and decisions stay in the day's log and Highlights 5.4.
+
+11. The shape of the code (record 2239). A docstring is one line: what the function does and its ALGEBRA.md line. No record number, decision or history in src/: the day's log and git keep them. A module stays small, and core/ together stays a few hundred lines. No arithmetic of Rule3's outside its one function. A gate test enforces it as a ratchet: no file in src/ may grow its prose, its record references or its length, and a new file meets the limits from its first commit. The Boss merges no pull request that grows them.
+
+Set up once: Main Loop, the regression test of every shipped world bit for bit in the CI check (`.github/workflows/check.yml`, the one CI file), selected on every pull request whatever it changes, until it runs green; the Boss, the existing branches merged one by one, the engine first (pull request 1152). The owner has no part in the procedure (record 2218): GitHub's protection of `main` is not set, so points 1 and 3 are kept by the Boss, who alone merges and only on green CI.
+
+## How the team works now (the model owner, 2026-09-26, records 2134, 2186, 2187 and 2190)
+
+The team is four agents and a paper writer. The Boss leads the four. Until the engine is merged and generic, only the coder writes the engine's code; from then on, point 11 of the next section lets a finder add an attribute or fix a bug (record 2203). Every run is a run of the engine on main, through its input and output; no side runner. The others run it, debug it with the trace, and ask for a new primitive or report a bug. One writer per document.
+
+| Role | Session name | Does | Does not |
+| --- | --- | --- | --- |
+| The Boss | Closer24 | keeps the day's log, Highlights 5.4, the glossary, the ledger and the Skills; the only one who merges into main, on green CI, and tags each engine merge (record 2214); approves each finder's change of point 11; relays every word of the owner with the same text to the others; keeps the order of the work | write code or a derivation |
+| The coder | Main Loop (Coder 3 until 2026-09-26, record 2209) | writes the engine's code until it is merged and generic; from then on writes and fixes only the central loop, the loader, the output and the one interface of a primitive (record 2204); opens its pull requests; only the Boss merges (record 2214) | write a primitive for one agent or one experiment; once the engine is generic, write attributes or fix their bugs |
+| The physicist | Nature24 | writes the run's files, the small test of each primitive and the acceptance tests; runs the engine and checks each ledger item on main as the second party; answers the hard questions by runs | change the engine's code, except by point 11 of the next section |
+| The mathematician | Mathematician | writes docs/ALGEBRA.md: one algebraic line per primitive with its place in the step; gates each build against it | change the engine's code, except by point 11 of the next section |
+| The paper writer | Paper | writes the one paper from what the tree holds ([paper-coordinator](paper-coordinator/SKILL.md)) | change the tree's documents |
+
 
 The order and the report (the owner's rules of the day, in one place):
 
-1. Every assignment is one bounded order sent by Routine into the role's own
-   session: the question, the pins written BEFORE any number, the deliverable's
-   file, the bound in time, the verdict as one of three (reached or derived;
-   a hypothesis under its own identity naming what must be added; refuted or
-   not reachable, with why). The report is one paragraph with the head SHA;
-   the Boss opens the pull request when the writer's tool refuses, and merges
-   on green. Nothing enters the law by an order alone.
+1. Every assignment is one bounded order sent as a direct message into the
+   role's own session (the rule of messaging below): the question, the pins
+   written BEFORE any number, the deliverable's file, the bound in time, the
+   verdict as one of three (reached or derived; a hypothesis under its own
+   identity naming what must be added; refuted or not reachable, with why).
+   The report is one paragraph with the head SHA; the Boss opens the pull
+   request when the writer's tool refuses, and merges on green. Nothing enters
+   the law by an order alone.
 2. No experiment for nothing: a run is ordered only with its expected number
    written first (record 205); a differing run refutes and never moves the
    number without its cause; every reported number is a detector reading or
@@ -574,6 +638,24 @@ The order and the report (the owner's rules of the day, in one place):
    formula and status); its findings are applied in the manuscript or sent
    through the Boss to the file's writer as one bounded fix; the paper never
    changes the tree, and the tree's writers never write the paper.
+8. Messaging between sessions (the model owner, 2026-09-24; corrected 2026-09-26, record 2195): the team's sessions cannot reach one another by SendMessage (ListAgents lists none of them; Nature24's test of record 2195). The channel between sessions is a Routine bound to the receiver's session (create_trigger with the receiver's session, then fire_trigger at once); the message names its sender, its record and its commit, and the receiver answers the same way to the sender's session. SendMessage stays the channel to an agent the sender itself spawned inside its own session. A Routine at a later time (a check-in) stays what it was; a message is fired at once, never left to wait.
+
+## The generic engine: the engine supports, the run defines (the model owner, 2026-09-26, records 2172 to 2190)
+
+The owner's word: everything the owner and the Boss close on the way of work enters the files. This is how the engine is built and extended.
+
+1. One engine, no version, no flag, no family name and no number in the code (records 2172, 2174, 2182). Everything a run needs is in its files: the universe file, the world file and the start file.
+2. The engine supports; the run defines (record 2178). The engine implements the rule, the click and a closed set of primitives. The run's files declare the families, their attributes and the step itself: what each Port sends, receives and waits, and the operation on it (record 2186).
+3. The rule first (record 2188). What can be built from the one rule (ALGEBRA.md 9.57 (1)) and the click is built from them. What cannot is marked beyond the rule, kept as its own declaration, and studied.
+4. A new primitive: the agent who needs it asks the coder. The mathematician writes its algebraic line and its place in the step. The coder builds it once, for every run. The physicist writes its small test. It becomes an item of the ledger and is done when its test is green on main (records 2180, 2184, 2186).
+5. The ledger (docs/designs/generic_engine/ENGINE_LEDGER.md until the documents' merge, then a section of docs/ENGINE.md) holds what is implemented and what is to do, one item each with its test. The engine is closed when nothing is to do and every item is tried from the files alone (record 2180).
+6. The trace (record 2187): any primitive can write one line per interval, Node and Port, with the integers read and written and the remainder. The files choose what is traced. A traced run is bit for bit the untraced one. Anyone may run the engine locally and debug with it.
+7. A new word: it enters the glossary (docs/GLOSSARY.md section 9, record 2193) with its one definition before it is used (Highlights 0.2 (2)). The Boss adds it with the record of the owner's word. Words already taken are not reused: a field is one family's levels over the Nodes, an attribute is never called a field, and an experiment is never called a row (records 2182, 2189).
+8. Every attribute is algebra. Each has a small test of its own, and the run tests the whole (record 2184).
+9. The output is generic like the input (record 2191). Every reading the run writes is declared in the world file and labelled by its kind; one output format for every experiment; the visualizer reads the output alone, never the engine's state.
+10. The pins are outside the code (record 2191). A pin is a line of a pins file beside the world file, on a detector reading only; one generic reader outside the engine compares a run's output with it after the run; the engine never reads a pin. Nothing is compared against a pin before the Go.
+11. A finder adds an attribute or fixes a bug (record 2203). In force once the engine is merged and generic: items 1 to 3 of record 2199 have landed (the merge, the output declared in one format, the loader reading every declaration as a generic term). A finder who needs an attribute writes it as its own primitive in its own folder and opens a pull request from a short branch. A finder who finds a bug opens one with the red test that shows it and the fix that turns it green. The mathematician approves with `APPROVED-MATH`; the Boss merges on green (record 2214). It is approved only with: the three tests passed; its word in the glossary; the mathematician's algebraic line; its small test; its ledger line; every shipped world bit for bit, or the moved world named with its reason. The coder writes and fixes only the central loop that takes the input, runs the step and writes the output, the loader and the one interface of a primitive (what it reads, what it writes and its place in the step); every attribute and operation is a small function in its own file that anyone may write, arrange or fix (record 2204). A change to the loop, the loader or the interface is the coder's, announced to the Boss first.
+12. The register (record 2212). A primitive's identity is its unique English name, the key of the ledger's table of primitives; never a number. The engine keeps one register, name to function; a name registered twice is refused at load. Every primitive declares what it reads, what it writes and its place in the step; the loop refuses two writers of one value at one place unless their order is declared. The ledger names the one agent working on each primitive now. A change of behaviour keeps every shipped world bit for bit or takes a new name.
 
 ## Tools and authority
 
@@ -595,3 +677,147 @@ unless the user authorized that communication.
 The PR owner records the tested head, current base and relevant results. The
 coordinator is the final merge owner for a coordinated task. Skills do not claim
 that GitHub enforces a branch protection rule unless it was actually verified.
+
+## The shortened process for the engine's features (the owner, 2026-09-24, records 1812 and 1813)
+
+The owner's words of 2026-09-24, 12:36Z to 14:12Z, in force for the
+stabilisation of the engine and the freeze:
+
+1. **One list, seventeen experiments** ([RUN_LIST.md](../docs/designs/detector_law/RUN_LIST.md); the sixteenth, a two-qubit quantum computer, added on 2026-09-25, record 1883; the seventeenth, Mach-Zehnder, record 1891);
+   the seven others are OUT, not deferred ("there is no after the paper").
+2. **One agent writes all the engine code, the input-file generator and the test-run lines**
+   (Nature24, the physicist; the owner's word of 17:05Z: "only one writes the
+   code, the worlds and the test world: for us Nature24"): the
+   three features are one job, making the one operator, the click and the
+   birth (which replaced the four building blocks on 2026-09-25, record 1875)
+   one code for every body on the board;
+   an experiment is a list of entries (for each its family, how much and
+   where, the receivers among them), from which the one input-file generator
+   writes its input file (records 1882 and 1886); the engine
+   knows no lamp, polariser or light clock by name. No builders, no world
+   writer, no input file before its row's feature is on `main`.
+3. **Features are named, never numbered:** the receiver by name, the joint
+   gather, the lamp's ladder.
+4. **One branch, one merge** for the three features; a feature is pushed
+   when its unit test (on a world that is none of the seventeen) passes; before
+   a push only the docs gates and the changed modules' tests; the full gate
+   once, at the freeze; the docs after the code; the reviewer reads once
+   after the merge ([physics-rule-validation](physics-rule-validation/SKILL.md)).
+5. **Every world has its test-run line, written by the world's writer before
+   the run** (`docs/designs/detector_law/TEST_RUNS.md`, written by Nature24):
+   what a clean preliminary run must show, with no pin and no target number;
+   the Preliminary Runner runs each feature's experiments on the writer's
+   branch as soon as it is pushed and reports clean or what broke; a defect in
+   `src/` goes to the writer through the Boss.
+6. **The Boss's status, three columns per experiment**
+   ([ENGINE_STATUS.md](../docs/designs/detector_law/ENGINE_STATUS.md)): the
+   engine features it needs and whether they are on `main`; its world file
+   on `main`; its test run without a pin clean or not; a Node rewritten only
+   on a merged record. The freeze is every row "yes" on one commit; then the
+   owner's GO and every pin run in one go.
+7. **Every block and every composition is tested alone before it is
+   composed** (the owner, 2026-09-24, record 1823): the emitter, the body,
+   the receiver, the clock, and each named composition (the polariser, the
+   splitter, the mirror, the crystal) has its own unit tests on a small
+   world that is none of the list, on every kind of input it can receive
+   (every label, a superposition, an input from each Port). Only then is it
+   composed into an experiment's world, which tests the composition. A
+   block tested on one kind of input alone is a gap: the polariser's bug
+   lived because it was tested on label 0 alone.
+8. **Three levels: the one operator, the lab tools, the experiments**
+   (the owner, 2026-09-24, record 1825; the engine's level made the one
+   operator, the click and the birth on 2026-09-25, record 1875). The engine
+   knows the one operator, the click, the birth and the six verbs. A lab tool
+   (the polariser, the splitter, the mirror, the crystal, the well body) is a
+   region of the operator with its material integers, defined once by its
+   card, with its own section of
+   algebra and a unit test that checks that algebra exactly. An experiment
+   is a list of entries that places tools by name in their cubes on the
+   board, turned into its input file by the input-file generator (records
+   1882 and 1886), and its pin is computed from the tools' algebra. All the tools are specified in one
+   file, `docs/designs/lab_tools/LAB_TOOLS.md` (one section per tool: its
+   specification, algebra, timing, cost, engine lines and test values;
+   existing design files cited, never copied), linked from ALGEBRA.md. The
+   mathematician writes it; Nature24 checks every section and talks with the
+   mathematician directly by Routine; a disagreement goes to the Boss for
+   the owner. Nature24 writes each tool's code once its section is agreed
+   (records 1830 to 1832). No Node carries a table: a tool is a body of
+   material whose Nodes carry only material integers, and its action arises
+   from the one rule (record 1838).
+10. **The algebra, then the code, then the mathematician confirms** (the
+   owner, 2026-09-24, record 1843). A tool is taken from the algebra, never
+   invented: its section in ALGEBRA.md names its group element (of G_48, of
+   the rotations G_24 = S4, or a rotation of the label module) and says
+   whether it has a direction at all. Nature24 writes its code from that
+   section; the code merges only after the mathematician confirms, line by
+   line, that it performs exactly that group operation. Every operation in
+   the Nodes is an operation of the group: a per-Node branch that is not one
+   is forbidden. A tool
+   declares its own orientation and never the directions of what leaves it.
+   The specification goes into the tool file (LAB_TOOLS.md) from the
+   algebra alone, the code is built from that file, and the experiments
+   run only after every tool's algebra is closed and every tool merged; a
+   well's seed is the bound mode of the composed world and never collides
+   with another tool (the owner, 2026-09-25, record 1855).
+   No tool acts on Nodes but through the law's advance and the click; momentum
+   is conserved on the board's own values. Nature24 merges each tool to main
+   on green CI with the mathematician's line-by-line confirmation, and tells
+   the Boss for the record (the owner, 2026-09-25, record 1856).
+   Everything is algebra (the owner, 2026-09-25, record 1875): a world
+   declares only its extents, its operator as data, the births' data, the
+   occupation and the receivers' names; a lab tool is a region of the
+   operator with its material integers, never code; the initial state is
+   derived and checked at load; an experiment's run checks only clicks.
+9. **A physicist's validity report at the freeze** (the owner, 2026-09-24,
+   record 1826): before the owner's GO, an independent physicist session,
+   never the worlds' writer, writes one report on the list. For each
+   experiment it states nature's experiment and what it tests, the tools
+   the world places, the mechanism the world exercises, every declared
+   input and why nature gives it, the pin and its provenance, and a
+   verdict. The writer answers its questions through the Boss.
+
+Unchanged, the law: one unit test per feature; no pin moved after a reading;
+no world file by hand; LOCALITY-1, bounded integers, the measurement rule.
+
+## The experimenter places the body exactly (the owner, 2026-09-24, record 1815)
+
+The owner's word of 2026-09-24, 16:35Z: "in the code the experimenter must be
+able to put the cube exactly where he wants it." A body is declared in the
+world file by its place and its side (its corner and its edge, the cube's
+vertices), a cube on a board, a square on a layer, a segment on a chain
+(ALGEBRA.md 8.3); the loader places it exactly there and refuses a body that
+does not fit the board rather than cutting it to fit; a refusal is a
+declaration error, never a silent change of shape. Where the loader today
+cuts a side to the board, that is a defect against this word, listed among the
+body's conditions in [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md)
+and fixed on the owner's word as an engine line with its test.
+
+## Names with meaning, never codes (the owner, 2026-09-24 and 2026-09-25, records 1815 and 1924)
+
+The owner's word: "L and M are not clear; use only clear names." Every
+experiment, world line, feature and file is called by its plain name first:
+"the two slits, the second draft", "de Broglie's fringes", "the energy of a
+moving mass", "the muon's form", "Sagnac", "the moving lamp's redshift", "the
+receiver by name". No code stands for a thing anywhere, not even in parentheses after its name
+(the owner, 2026-09-25, record 1924: "no more F1 and such numbers; everything
+must be names with meaning"); a number stays only as a count or as a citation
+after the name; a new label is not coined. The canonical names and slugs are
+those of [docs/THE_EXPERIMENTS.md](../docs/THE_EXPERIMENTS.md) and
+[the names review](../docs/designs/names_review/NAMES_REVIEW.md). In any message the owner may read,
+including an agent's replies in its own session, no code appears at all,
+not even in parentheses: say what the thing is ("the declaration of the
+muon's ramp", not "M1-8"; "the list of the world lines in the
+declarations", not "section 15") (the owner, 2026-09-24, record 1828,
+"still using unclear names").
+No wave on the board: a record holds one integer amplitude per Node and
+the one local rule is the split; "wave", "wavelength" and "phase
+matching" name only the Outside reading of that rule and are said as such
+(the owner, 2026-09-24, record 1833; docs/TERMINOLOGY.md). The features' rule of 14:00Z is the same
+rule.
+
+Our names, never the laboratory's, for a block (the owner, 2026-09-24,
+record 1820): "use only our names; there is no pump, there is an emitter."
+A block is called by what it is on the GameBoard: an emitter, a body, a
+receiver, a clock, or a named composition of them (a crystal, a polariser, a
+mirror). The laboratory's word for the same thing (a pump, a laser, a beam
+splitter) may be said once to explain what it models, never as its name.

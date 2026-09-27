@@ -12,62 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 # Every row names a kept test; main() still skips a selected test that does not exist.
 RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
-    "examples/events/README.md": ("tests/test_nature_beam_worlds.py",),
-    # The registers a test reads a world's numbers from (2026-09-21).
-    "examples/events/expectations.json": ("tests/test_nature_beam_worlds.py",),
-    "examples/events/bell/expectations.json": ("tests/test_nature_beam_worlds.py",),
-    "examples/events/amplitude/expectations.json": (
-        "tests/test_amplitude_bell_24_4.py",
-        "tests/test_amplitude_cone.py",
-        "tests/test_amplitude_gate.py",
-        "tests/test_amplitude_layer.py",
-        "tests/test_amplitude_malus.py",
-        "tests/test_amplitude_mz_345_n.py",
-        "tests/test_amplitude_pair.py",
-        "tests/test_amplitude_split.py",
-    ),
-    "examples/events/c_measured/expectations.json": ("tests/test_c_measured.py",),
-    "examples/events/c_measured/c_measured.json": ("tests/test_c_measured.py",),
-    # The massive rows' register, worlds and generators (2026-09-21): the
-    # test that reads the pin, the byte-identity digests and the replay.
-    "examples/events/massive_rows/expectations.json": ("tests/test_massive_rows.py",),
-    "examples/events/massive_rows/make_worlds.py": ("tests/test_massive_rows.py",),
-    "examples/events/massive_rows/replay_register.py": ("tests/test_massive_rows.py",),
-    "examples/events/massive_rows/slits_matter.json": ("tests/test_massive_rows.py",),
-    "examples/events/massive_rows/slits_matter_1024.json": ("tests/test_massive_rows.py",),
-    "examples/events/massive_rows/slits_matter_small.json": ("tests/test_massive_rows.py",),
-    "examples/events/gate_set.json": (
-        "tests/test_nature_beam_worlds.py",
-        "tests/test_amplitude_click.py",
-        "tests/test_massive_rows.py",
-        "tests/test_drive_b.py",
-    ),
-    # The drive-b register, worlds and generator (2026-09-22): the test that
-    # reads the pins and replays the deciding worlds.
-    "examples/events/drive_b/expectations.json": ("tests/test_drive_b.py",),
-    "examples/events/drive_b/make_worlds.py": ("tests/test_drive_b.py",),
-    "examples/events/detector/entities/detectors.json": (
-        "tests/test_entity_definitions.py",
-        "tests/test_configuration_validation.py",
-        "tests/test_entity_loading_consumers.py",
-    ),
-    # The shipped worlds take their families from `families.json` since
-    # 2026-09-20: every test that loads a shipped world depends on it.
-    "examples/events/entities/families.json": (
-        "tests/test_entity_definitions.py",
-        "tests/test_entity_catalog.py",
-        "tests/test_configuration_validation.py",
-        "tests/test_nature_beam_worlds.py",
-        "tests/test_bell_choosers.py",
-        "tests/test_entity_loading_consumers.py",
-        "tests/test_amplitude_layer.py",
-        "tests/test_amplitude_click.py",
-    ),
-    "examples/events/entities/apparatus.json": ("tests/test_entity_definitions.py",),
-    # The weak register and its generator: the tests that derive or replay
-    # their entries (J2 from the flight table, J1 and J3 from the warm runs).
-    "examples/events/weak/expectations.json": ("tests/test_weak_readings.py",),
-    "examples/events/weak/make_worlds.py": ("tests/test_weak_readings.py",),
+    # The registers, worlds and generators a living test reads by path (the ray law's
+    # rows were deleted with their tests on 2026-09-26, docs/CANCELLED_WORLDS.md).
 }
 
 
@@ -209,16 +155,20 @@ def select(changed, sources):
     for path in changed:
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
         if path.endswith(".json") and path.startswith(("examples/", "skills/")):
-            tests.add("tests/test_configuration_validation.py")
+            # the detector law's preflight (the old runner's preflight was deleted,
+            # docs/CANCELLED_WORLDS.md)
+            tests.add("tests/test_preflight_worlds.py")
         if path.endswith(".md") or path == "MANIFEST.in":
             tests.add("tests/test_repository_navigation.py")
         # Paths and duplicate contents can change in any source file, not just Python.
         tests.update(("tests/test_repository_language.py", "tests/test_repository_hygiene.py"))
         if path.startswith("src/") and path.endswith(".py"):
             tests.add("tests/test_architecture.py")
+            # The algebra gate reads the physical modules by their path.
+            tests.add("tests/test_integer_algebra.py")
         # A world, an asset or a tool is a runtime dependency of the tests
         # that name its file (a tool is loaded by its path, never imported).
-        if path.startswith(("examples/", "src/event_universe/ui_assets/", "tools/")):
+        if path.startswith(("examples/", "tools/")):
             tests.update(
                 p
                 for p, text in sources.items()
@@ -235,6 +185,24 @@ def select(changed, sources):
                 for p, text in sources.items()
                 if p.startswith("tests/test_") and "event_universe" in text
             )
+    if changed:
+        # EVERY SHIPPED WORLD BIT FOR BIT on every pull request, whatever it changes (the model
+        # owner's short procedure, record 2214 point 7; the Boss's records 2216 (2) and 2230):
+        # the regression record of tests/shipped_worlds.json is compared on any change at all,
+        # and the genericity test draws its seeded universes (the Boss's record 2234)
+        tests.add("tests/test_shipped_worlds.py")
+        tests.add("tests/test_genericity.py")
+        # and THE SHAPE OF THE CODE is held at its baseline (the model owner's decisions,
+        # records 2239 and 2241)
+        tests.add("tests/test_code_shape.py")
+        # and the reviewer's recurring findings as gates: no new number, family name or
+        # unapproved core module in src/ (issue #1198, item 4 (a))
+        tests.add("tests/test_engine_gates.py")
+        # and THE STEP FILE DRIVES THE STEP, whatever folder or file changed (#1198, gate 2)
+        tests.add("tests/test_step_drives_the_loop.py")
+        # and THE DOCUMENT LOCK keeps the three current documents (the short procedure,
+        # point 12)
+        tests.add("tests/test_documents.py")
     return sorted(tests), sorted(
         p for p in impacted if p.startswith("src/") and p.endswith(".py") and p in sources
     )

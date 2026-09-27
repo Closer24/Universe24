@@ -11,7 +11,7 @@ derives what the law's detector reads of a standard lamp under the growing
 wall of section 15, on the owner's word ("go for it"). Written by the
 mathematician, read-only; nothing here is a rule, nothing is copied from
 the owning sections, every number is made by the host script
-[far_lamp_map.py](far_lamp_map.py) with its output
+far_lamp_map.py (`docs/designs/far_lamp/far_lamp_map.py`, deleted 2026-09-26) with its output
 [far_lamp_map.out](far_lamp_map.out); no run (`expansion-v1` is not built).
 Notation per record 184: a scalar plain, every symbol named at its first
 use; rows and bodies, not light and matter.
@@ -192,4 +192,6 @@ factor) "behind at every exponent": the same verdict, on the data.
 - The growing wall, its local form and Seeliger: [DERIVATIONS_BEAM.md](../../DERIVATIONS_BEAM.md) section 15; the numbers of nature: section 16; the shell dilution: section 3.2; the click's content: section 6.4.
 - The full picture and the inputs table: [FULL_PICTURE.md](../../FULL_PICTURE.md).
 - The law's predictions against nature: [PREDICTIONS.md](../../PREDICTIONS.md).
-- The map: [far_lamp_map.py](far_lamp_map.py), [far_lamp_map.out](far_lamp_map.out); the section's own stream: [growing_wall.py](../derivations_beam/growing_wall.py).
+- The map: far_lamp_map.py (`docs/designs/far_lamp/far_lamp_map.py`, deleted 2026-09-26), [far_lamp_map.out](far_lamp_map.out); the section's own stream: growing_wall.py (`docs/designs/derivations_beam/growing_wall.py`, deleted 2026-09-26).
+
+> The scripts of this folder (`dark_sector_map.py`, `far_lamp_map.py`, `s_and_a0_map.py`) were deleted on 2026-09-26 (the model owner's word, record 2229: code not in use goes); git history keeps them at `6d2a92e2` (`git checkout 6d2a92e2 -- docs/designs/far_lamp/<script>`).

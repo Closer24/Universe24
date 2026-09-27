@@ -10,7 +10,7 @@ design under [physics-rule validation](../../../skills/physics-rule-validation/S
 and [field development](../../../skills/field-development/SKILL.md): it
 changes no law; it says what is measured, how, and what would count against
 the model; the worlds, the tool and the readings are in
-[examples/events/hubble_stars/](../../../examples/events/hubble_stars/README.md).
+examples/events/hubble_stars/ (`examples/events/hubble_stars/README.md`, deleted 2026-09-26).
 
 **The order as it happened, stated plainly.** The two briefs from the Boss
 (the design first; every reading a record click) were queued at 11:32 and

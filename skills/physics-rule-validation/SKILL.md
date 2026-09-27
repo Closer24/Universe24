@@ -5,6 +5,8 @@ description: Independently validate every changed Universe24 physics-engine rule
 
 # Physics-rule validation
 
+The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The physicist, Nature24, runs the engine, writes the run's files and the tests, and checks each ledger item; it never changes the engine's code.
+
 Read [the shared workflow](../workflow.md), [postulates](../../POSTULATES.md),
 [definitions](../../SIMULATOR_DEFINITIONS.md) and the
 [feature procedure](../../docs/PHYSICAL_FEATURES.md). This review is mandatory
@@ -163,3 +165,71 @@ An experiment's review checks the derived expectation and its section first, the
 ## The observed value is the reading (the owner, 2026-09-21, record 210)
 
 A claim that a run reproduces a value of nature is checked through the transformation that produced it (HIGHLIGHTS 5.7's dictionary): a Link count compared with a distance, or an interval count with a time, without the reading between them, is a finding.
+
+## The one read after the merge, and what a test run cannot show (the owner, 2026-09-24, records 1812 and 1813)
+
+The owner's words of 2026-09-24 (13:53Z, "shorten my rules"; 14:12Z, "do we
+need the reviewer's read at all? the test runs will find the problems, no?")
+and the Boss's answer he accepted on Reviewer 3's read of 13:20Z: a
+preliminary run shows what breaks (no click, a refusal, an overflow, a reader
+that cannot read); it does not show what this review checks: that the code is
+generic (no branch on an experiment, a family or a world key beyond the
+declared one), local and integer-only, that the engine is the one operator,
+the click and the birth, every tool a region of the operator with its
+material integers (they replaced the four building blocks on 2026-09-25,
+record 1875; [SIMULATOR_DEFINITIONS.md](../../SIMULATOR_DEFINITIONS.md)), and that no pin
+moved. The case of 2026-09-24: one-list at 2bcadd7f re-printed the Bell pin as a
+weight ratio while that day's counts gave 181 / 64 exactly; a run would have
+counted right against a wrong pin (the wheel is retired since, the residue
+coming from the law and Bell registered as a band, records 1872 and 1878).
+
+The form since 13:55Z: the reviewer does not gate a merge. The writer of the
+engine (one agent, Nature24) pushes each feature when its unit test passes,
+and the Boss merges the one branch; the reviewer then reads the merged head on
+`main` once, all features together, against the three tests, the one
+operator, the click and the birth, and the declarations, and reports CONFIRMED / lines / NOT
+CONFIRMED; a defect found is fixed on `main` as a bug with a test. Docs
+branches (a list, a declaration) are read once before their merge as before.
+One read per bundle; nothing waits on the reviewer.
+
+## Every world is composed as its real apparatus (the model owner, 2026-09-24, record 1818)
+
+The owner's word after Bell's two-arm emitter was found to play the pump and
+the crystal together (translated): "Make sure all the other experiments are
+done as they should be, not like what we found in Bell." In every read of a
+world, and in the audit of the list, the reviewer checks four things per
+block. Is the block a thing in the lab? Does every property sit at the block
+where nature puts it: the source's at the source, the medium's in the
+medium, the optics' at the optics, the detector's at the detector? Is
+anything declared in the file that nature produces by the event laws, such
+as a direction pushed after a birth, a phase set, a state assigned, or a
+pair or a correlation placed by hand? Does any block do two blocks' work?
+A world that fails any of the four is a SHORTCUT, reported with the real
+apparatus and the composition that removes it within the four building
+blocks and the six verbs. A property nature gives to an apparatus, such as
+a crystal's two conversion channels, stays DECLARED on that apparatus. What
+nature produces from such a property, such as the entangled state where
+the two channels' amplitudes add, is never declared: it must arise by the
+law (the owner, 2026-09-24, records 1821 and 1822). For every row the reviewer
+also names the mechanism the experiment exists to test, such as the split at
+every Node, the addition of amplitudes, the click or the bound mode's clock,
+and reports TESTS when the world exercises it, or BYPASSES when a
+declaration or a board edge does its work.
+
+## No per-Node branch that is not a group operation (the owner, 2026-09-24, record 1843)
+
+The owner's word (translated): "Every place in the code where a Node has an
+'if' is forbidden: every operation in the Nodes is always an operation of
+the group." In every read of the physical path the reviewer lists each
+conditional that acts per Node and classifies it as the
+group's own action written as a mask (a body's Nodes as a G_48-set, a
+half-space, the translation), as host bookkeeping outside the law's
+values, or as a per-Node branch that is not a group operation. The last
+kind is a defect, reported with the group operation that should replace
+it.
+
+The owner's further word (record 1845): no one asks a Node what is in it;
+the one read is the click, from above. The reviewer also lists every place
+where the law reads a Node's value or a record's value at a Node to decide what
+happens, marked as the click, host bookkeeping that changes no value of the
+law, or a forbidden read.

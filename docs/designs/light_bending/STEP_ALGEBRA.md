@@ -1,5 +1,7 @@
 # The step algebra of light bending: the walk of a light row past a held mass, simulated by the law's integer steps, read at a screen of Nodes (the Bending Algebraist, 2026-09-22)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 5.9; this file is kept as the record of 2026-09-22.
+
 The owner's order (2026-09-22, translated, as the Boss relayed it at
 about 07:47Z): "Try algebra, and if it does not work come back to me. An
 algebra of steps can simulate a board. For these checks one scatters
@@ -15,7 +17,7 @@ Every number below is labelled. A number the algebra gives is GAMEBOARD
 arithmetic of the declarations, called throughout **the step algebra's
 simulation of the board, not a run**, never a measurement of nature; a
 number the register holds from the engine's clicks is DETECTOR. The
-arithmetic is in [step_algebra_map.py](step_algebra_map.py) beside this
+arithmetic is in step_algebra_map.py (`docs/designs/light_bending/step_algebra_map.py`, deleted 2026-09-26) beside this
 file, its output in [step_algebra_map.out](step_algebra_map.out); no
 engine was imported or run, no pin moved, no code changed.
 
@@ -61,7 +63,7 @@ registered box with a ring of lamps, its arrival Nodes pinned in section
 
 1. Read the law's lines on main for the key's three rules and the flight
    (section 2), and the registered worlds' numbers from the world files
-   under [examples/events/optical/](../../../examples/events/optical/README.md).
+   under examples/events/optical/ (`examples/events/optical/README.md`, deleted 2026-09-26).
 2. Declare the pins before any arithmetic (section 3): `n S = d`,
    `c_f = 2`, the comparison and its tolerance, the calibration.
 3. Transcribe the steps as integers (section 4): the flight table, the hop
@@ -194,7 +196,7 @@ origin releases `scale = M / 4096` units on each of the 290 directions
 every interval; the row of direction D at age tau sits at the
 `m(tau)`-th Node of D's line, so at a Node reached at the Link `made` of
 D's line the rows present at the end of an interval have the ages
-`{tau : m(tau) = made}` = `[age_of(made), age_of(made + 1))`, and one row
+`{tau : m(tau) = made}` = `age_of(made), age_of(made + 1))`, and one row
 of D arrives there per interval. Hence, for every Node inside the box,
 
     A(r) = scale x sum over the lines D through r of the sum of those ages     (the age moment)
@@ -205,7 +207,7 @@ ages at the beam's Nodes are below 60; the register's window begins at
 110). This is what the engine's `CrowdMoments` sums, less the reader's
 own number (the beam's rows are of the lamp's number and never enter it);
 the light-bending map computed the same lines
-([light_bending_map.py](../open_problems/light_bending/light_bending_map.py)).
+([light_bending_map.py (`docs/designs/open_problems/light_bending/light_bending_map.py`, deleted 2026-09-26)).
 At the beam's Node nearest the mass, `A(0, 6, 0) = 21 x scale` (the ages
 10 and 11 of the line `(0, 1, 0)` at its Link 6), `A(0, 3, 0) = 29 x
 scale`, `A(0, 8, 0) = 27 x scale`.
@@ -582,8 +584,8 @@ needed for the plane's question. No world file is written here.
 
 ## 12. Links
 
-- [step_algebra_map.py](step_algebra_map.py), [step_algebra_map.out](step_algebra_map.out): the arithmetic of this file.
-- [examples/events/optical/README.md](../../../examples/events/optical/README.md): the registered worlds and their runs (DETECTOR).
+- step_algebra_map.py (`docs/designs/light_bending/step_algebra_map.py`, deleted 2026-09-26), [step_algebra_map.out](step_algebra_map.out): the arithmetic of this file.
+- examples/events/optical/README.md (`examples/events/optical/README.md`, deleted 2026-09-26): the registered worlds and their runs (DETECTOR).
 - [docs/designs/one_wall/NOTE.md](../one_wall/NOTE.md), [EVERY_FAMILY.md](../one_wall/EVERY_FAMILY.md): the key's rules as designed.
 - [docs/designs/open_problems/light_bending/NOTE.md](../open_problems/light_bending/NOTE.md): the lattice's lines and the comb (section 4), the pins of the register.
 - [docs/designs/einstein_outside/DERIVATION.md](../einstein_outside/DERIVATION.md) II.10a and II.11: the pin `n S = d` and the closed form under the key.

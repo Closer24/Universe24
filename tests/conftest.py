@@ -1,4 +1,6 @@
-"""Test session options: explicit visualization opt-in and result-file leases."""
+"""Test session options: explicit visualization opt-in and result-file leases. The ray law's
+test files were deleted on 2026-09-26 (docs/CANCELLED_WORLDS.md); every test file here is
+collected, a living test is never skipped."""
 
 from pathlib import Path
 

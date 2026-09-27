@@ -11,15 +11,11 @@ requires-python = ">=3.14"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Alon Gonen", email = "alon@defounder.ai" }]
-dependencies = ["numpy>=2.5.3,<3"]
+dependencies = ["numpy>=2.5.3,<3", "scipy>=1.14,<2"]
 
 [project.optional-dependencies]
 render = ["matplotlib>=3.8,<4", "Pillow>=10,<13", "playwright>=1.45,<2"]
 dev = ["pytest>=8,<10", "pytest-xdist>=3,<4", "ruff>=0.16,<0.17", "mypy>=2.3,<3", "build>=1,<2"]
-
-[project.scripts]
-event-universe = "event_universe.runner:main"
-event-universe-ui = "event_universe.ui:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -27,18 +23,9 @@ where = ["src"]
 [tool.setuptools]
 package-dir = {"" = "src"}
 
-[tool.setuptools.package-data]
-event_universe = ["ui_assets/*.html", "ui_assets/*.css", "ui_assets/*.js"]
 
 [tool.setuptools.data-files]
 "share/event-universe/examples" = ["examples/events/*.json"]
-"share/event-universe/examples/detector" = [
-    "examples/events/detector/*.json",
-    "examples/events/detector/README.md",
-]
-
-"share/event-universe/examples/detector/entities" = ["examples/events/detector/entities/*.json"]
-"share/event-universe/examples/entities" = ["examples/events/entities/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -52,6 +39,11 @@ line-length = 105
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F", "I", "B", "UP"]
 
+[tool.ruff.lint.isort]
+# The design scripts under docs/designs/ are records: some import modules deleted on
+# 2026-09-26 (docs/CANCELLED_WORLDS.md) and do not run; their import order stays as written.
+known-first-party = ["event_universe"]
+
 [tool.mypy]
 python_version = "3.14"
 strict = true
@@ -60,3 +52,9 @@ files = ["src/event_universe"]
 [[tool.mypy.overrides]]
 module = ["matplotlib.*", "mpl_toolkits.*", "PIL.*"]
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# The one module of the cancel still on disk (docs/CANCELLED_WORLDS.md section 2): imported by
+# events/amplitude.py alone, whose deletion waits for the Boss's approval; not type-checked.
+module = ["event_universe.events.measured"]
+ignore_errors = true

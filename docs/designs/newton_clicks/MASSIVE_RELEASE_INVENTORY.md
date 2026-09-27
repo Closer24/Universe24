@@ -1,5 +1,7 @@
 # What the law as built already has for a released row with mass past a held mass, read by a click (the chief physicist, an inventory, no run)
 
+The canonical statement of this algebra is [docs/ALGEBRA.md](../../ALGEBRA.md), section 5.6 (this file is the inventory beside the chain, not a statement of the algebra); this file is kept as the record of 2026-09-22.
+
 The model owner's words of 2026-09-22 (records 1044 and 1046 of
 [docs/LOG_2026-09-20.md](../../LOG_2026-09-20.md): no cart; a moving
 detector as it should be, with mass, "otherwise there is no matter to

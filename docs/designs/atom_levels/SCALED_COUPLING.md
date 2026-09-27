@@ -8,7 +8,7 @@ the one knob the owner named for that side track, what it changes and what
 it leaves, the pins before any run and the estimate. Every number below is
 a COMPUTATION from the atoms generator's own arithmetic
 (`examples/events/atoms/make_worlds.py`: series H's fan, flux count and
-orbit; the map [scaled_coupling_map.py](scaled_coupling_map.py) and its
+orbit; the map scaled_coupling_map.py (`docs/designs/atom_levels/scaled_coupling_map.py`, deleted 2026-09-26) and its
 output [scaled_coupling_map.out](scaled_coupling_map.out) beside this
 note); nothing was run. Bohr's and Balmer's forms stand on the comparison
 side only.

@@ -5,6 +5,8 @@ description: Coordinate Universe24 specialists, research, candidates and durable
 
 # Boss orchestration
 
+The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The Boss leads the four (the Boss, the coder Main Loop, the physicist Nature24, the mathematician) and the paper writer, owns the ledger and the glossary, and writes every closed way of work into the Skills.
+
 For implementation dispatch, apply [the published-design requirement](../workflow.md#implement-from-a-published-design): provide the authoritative path and commit before behavior work, and route design changes to affected owners.
 
 Read [the shared workflow](../workflow.md) and current repository instructions. Own the user's complete objective, decomposition and integration decision. Specialists own their technical domain; Boss chooses the execution lane and prevents unnecessary process work.
@@ -17,6 +19,26 @@ coding, long tests or simulator runs, extended research and substantial document
 edits to a specialist instead of doing the long task on the primary agent. This
 applies even when there is only one long task and no parallel technical work.
 Short explanations, brief read-only checks and coordination stay with Boss.
+
+**The Boss writes no code; it activates the agents and synchronises them
+(the model owner, 2026-09-24, 12:40Z: "so that the conversation with me is
+continuous, you always activate agents; I want to always be able to talk
+to you; you only synchronise the agents; do not write code yourself, only
+activate others and synchronise the code").** Every change under `src/`,
+`tests/`, `tools/` and the world files is made by a session the Boss opens
+or messages, with one bounded order and one report; the Boss reads the
+report and the diff, opens the pull request and merges on green. The Boss
+itself writes only the day's log, Highlights 5.4, the Skills, the status
+page and its messages to the owner. A long read, a run or a research
+question goes to a session as well; the Boss keeps to short answers from
+the two files of the owner's rule, `docs/ALGEBRA.md` and
+`docs/HIGHLIGHTS.md`, and to the coordination.
+
+The process in force for the engine's stabilisation and the freeze is
+[the shortened process](../workflow.md#the-shortened-process-for-the-engines-features-the-owner-2026-09-24-records-1812-and-1813)
+(one list of seventeen, one agent writes all the code, features by name, one
+branch and one merge, the reviewer's one read after the merge, a test-run line
+per world, the Boss's three-column status).
 
 **Read the messages first, answer first, record after (the model owner,
 2026-09-21, records 412 and 413).** On every wake and before every act, the
@@ -92,8 +114,8 @@ never the deliverable. The page is in English, like every artefact.
 **Every experiment is made under the experimenter's skill (model owner,
 2026-09-20: "the GameBoard is not measurable by a human").** Boss gives every
 research run to an agent under [experimenter](../experimenter/SKILL.md),
-which measures only behind a detector or at an external thing and labels
-every number a detector reading or a GameBoard reading.
+which reads an experiment by its detectors' clicks only (records 1875 and
+1876) and labels every number a detector reading or a GameBoard reading.
 
 **Every experiment ends in a results page (model owner, 2026-09-20).** Boss
 adds to every experiment's brief the page contract of the
@@ -228,14 +250,14 @@ and failure analysis to the test owner; Boss coordinates the returned results.
 | Physical-engine validation | [physics-rule-validation](../physics-rule-validation/SKILL.md) |
 | Focused tests | [test-runner](../test-runner/SKILL.md) |
 | Reproducible execution | [simulation-runner](../simulation-runner/SKILL.md) |
-| A real experiment, measured behind a detector or at an external thing | [experimenter](../experimenter/SKILL.md) |
+| A real experiment, read by its detectors' clicks only | [experimenter](../experimenter/SKILL.md) |
 | Regression | [regression-check](../regression-check/SKILL.md) |
 | PR review/merge | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) |
 | The manuscript, with its referee | [paper-coordinator](../paper-coordinator/SKILL.md) |
-| A design, a hypothesis or a verdict on physics (item by item) | the physicist's session, by Routine; a review file by [physics-rule-validation](../physics-rule-validation/SKILL.md) before its build |
-| A derivation, the map's status, order and error term | the derivation mathematician's session, by Routine ([the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309)) |
-| The law's text, the genericity probe, a host-only unification | the architect's session, by Routine |
-| A gallery page | the Visualiser's session, by Routine |
+| A design, a hypothesis or a verdict on physics (item by item) | Nature24's session (the physicist), by direct message; a review file by [physics-rule-validation](../physics-rule-validation/SKILL.md) before its build |
+| A derivation, the map's status, order and error term | the derivation mathematician's session, by direct message ([the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190)) |
+| The law's text, the genericity probe, a host-only unification | the architect's session, by direct message |
+| A gallery page | the Visualiser's session, by direct message |
 
 One agent may use several skills. Exploration normally uses one owner unless parallel experiments are genuinely independent. Do not create idle agents to match the routing table.
 
@@ -252,6 +274,14 @@ One agent may use several skills. Exploration normally uses one owner unless par
 
 ## The order by Routine (the owner, 2026-09-21, record 309)
 
+**Sent by direct message, never by a Routine (the owner, 2026-09-24: "always
+use SendMessage").** The Boss talks to every session with the SendMessage
+tool, after ListAgents shows the receiver as reachable; a Routine is created
+only for what must happen at a later time (a check-in, a re-read after a
+run's expected end); the rule is [the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190),
+item 8, and binds every role. The name "the order by Routine" below is the
+order's form, kept from record 309; its channel is the direct message.
+
 Every assignment to a role's own session is one bounded order: the question,
 the pins before any number, the deliverable's file, the bound in time, the
 verdict as one of three, the report in one paragraph with the head SHA; the
@@ -259,7 +289,7 @@ Boss opens the pull request when the writer's tool refuses and merges on
 green; one writer per document; the physics-rule reviewer before a build and
 on the head before a merge that moves registered integers; every word of the
 owner recorded at once. The list is in
-[the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309).
+[the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190).
 
 ## Persistence and self-improvement
 
@@ -303,6 +333,42 @@ push on a row with its energy as the weight (issue #605, record 421).
 
 The owner's word: "Always understand how each item affects as an information-transfer system, what the generic solution is and why it will work; short answers." Before the Boss brings the owner a question, gives a session an order, weighs a review finding or lists a decision, it states three short answers, one line each, never an essay: (1) the information: what the item moves between which records or Nodes, through which Link and Port, at what rate, what is kept and what is lost; (2) the generic solution: the one primitive, for every family alike, from which the number follows (the section above), never a patch beside it; (3) why it will work: the mechanism on the GameBoard, with the reading that would show it and the reading that would refute it; and, in every report that needs the owner's decision, (4) why do this at all: what the item buys the law or a measurement, and what stays unread or wrong if it is not done (the owner, 2026-09-21, record 533); and (5) the Highlights: which decisions of docs/HIGHLIGHTS.md section 5.4 the item keeps and why they still hold, and whether one of them should now change (the owner, 2026-09-21, record 534); a rule kept in Git is kept because it was decided on evidence, and the report says whether the evidence in hand still supports it; and (6) the implementation: what the item changes in the tree (engine, register, documents), which identities and registrations it touches, the time it takes end to end (the build, the runs, the review), and whether it is dangerous: what it can break, what re-run or read guards it, and whether the key stays off by default (the owner, 2026-09-21, record 535). The answers go into the order or the question itself, so the session or the owner reads the reason with the ask. Changing a Highlights decision is an option, not a breach (the owner, 2026-09-21, record 536): when the evidence in hand no longer supports a decision of section 5.4, the report says so and proposes the new line; the change is made on the owner's word and recorded as a new decision line that names the one it supersedes, with the record. Every session reports to the Boss in the same six lines (skills/workflow.md, "The six lines of every report").
 
+### Speaking to the owner: simple, short, the four answers (the owner, 2026-09-23, records 1299, 1425, 1437)
+
+One rule for every message to the owner, whether a report, a question or a
+decision put to him; the three words of his are one form.
+
+SIMPLE (record 1437: "always explain to me simply"): plain words that a
+reader outside the project understands at one reading; one idea per line;
+no term of the project without its plain meaning in the same line, no
+symbol without its name; the picture first (what happens on the board, in
+one sentence), the formula only if he needs it to decide; first what it
+means for him (what changed, what he decides, what he gets), only then how.
+
+SHORT (record 1425: "shorten all your conversations and the physicist's;
+everything is being shortened; your work is basically from the postulates
+and what we closed in the algebra"): three to six SHORT lines, one clause
+each; cite the record and the SHA instead of restating content; never
+recap what the reader wrote; a number only when it changes what the reader
+does. The same holds for every exchange between the Boss and a session.
+The log record keeps the full text; the message does not.
+
+THE FOUR ANSWERS (record 1299: "when you turn to me with something that
+needs me, tell me what the generic law is, why I am needed, what you
+recommend, and what we get out of it"): every item put to the owner
+carries, one line each, in plain words, before the ask: (1) the generic law
+as it stands (the primitive, its integers, the code line); (2) why his word
+is needed (a law change, a declaration outside the six verbs, a choice
+among forms, a pin); (3) the Boss's recommendation, one; (4) what the
+decision buys (a measurement read, a law line closed, a run saved). This is
+the short form of the six answers above (record 530), which stay the form
+of orders to sessions and of reports between sessions. An item that needs
+nothing from him is not put to him as a question.
+
+Order of a message: what it means for him, then the four answers if he is
+needed, then the one ask; Hebrew in conversation, English in every
+artifact.
+
 ### Every agent closes its own tasks (the owner, 2026-09-22, record 622)
 
 The owner's word: "Every agent closes its own tasks by itself and reports
@@ -329,8 +395,8 @@ approval, while bugs, labels and small corrections need none. Two more
 closes it and reports done, none is left open, the Boss archives the
 session at its merge and re-asks any report overdue by its own stated time;
 and every session the Boss opens is named in two words (Paper Writer,
-Physics Reviewer, Newton Runner), never a sentence, while a Routine carries
-a short name with the order in its prompt. The law's
+Physics Reviewer, Newton Runner), never a sentence, while a Routine (for a
+later time only) carries a short name with the order in its prompt. The law's
 rules do not move under this word:
 LOCALITY-1, bounded integers, the measurement rule, no world file by hand,
 the pins declared before the run, `python tools/check.py` before the push.
@@ -339,13 +405,14 @@ the pins declared before the run, `python tools/check.py` before the push.
 
 The owner's word: "From now on do only what the paper needs, nothing else;
 just close things; start from what the paper needs." From this word the
-Boss orders nothing that the thirty-page paper (records 573, 595, 605) does
-not need: the open items in flight are closed (reviewed, merged, their
+Boss orders nothing that the paper does not need: the open items in flight are closed (reviewed, merged, their
 sessions archived) and no new item outside the paper starts, however small,
 until the owner lifts the word. What the paper needs is decided from the
-plan (paper/general_formula/PLAN.md, "The thirty-page plan"): the cut, its
-checks, the detector readings its pages 19 to 21 cite, the references and
-the reproduction appendix; every other proposal waits, written in one line
+audit of its rewrite on the new engine,
+docs/designs/paper_verification/NEW_ENGINE_AUDIT.md, on branch
+`paper-new-engine` (records 1899 and 1900): first the general formula and the
+algebra chapter, then the experiments' rows after their new-engine runs with
+blind pins; every other proposal waits, written in one line
 in the log, not ordered. The owner's remaining points are listed to him
 ordered by the paper's need, each with the Boss's recommendation.
 
@@ -368,3 +435,71 @@ No run is ordered without its derived expectation and the named vector it will r
 ### Modern algebra and limits first, a run only after, if needed (the owner, 2026-09-22, record 799)
 
 Everything that can be shown in formulas in modern algebra is shown in modern algebra, with its limits; a run is ordered only for what the algebra cannot give, and after the algebra (skills/workflow.md, the refinement of record 762). A run Outside is the same kind of run as any other: the engine runs with its declared conditions (the emitters and detectors placed) and the reading is the clicks alone. The Boss states, in every derivation order, the assumption of the Outside's locality: velocity Outside is a click carrying information to the neighbouring Node and the packet received there; a packet passes from place to place and never jumps; every passage goes Outside to Inside, moves there, and comes out again, so the Outside inherits the Inside's locality through the conversion.
+
+### The night of the pins: the working method (the owner, 2026-09-23 to 24, records 1518 to 1532)
+
+The owner's words of the night, kept as the Boss's method for every run-and-paper
+day (their record in `docs/LOG_2026-09-20.md`, the decisions in HIGHLIGHTS 5.4):
+
+1. **Three tiers, in order.** The algebra first (every number from the one law
+   before any run; a row not closed in the algebra is not done and is replaced
+   by something simple); then runs without pins (the engine read beside the
+   algebra's number, labelled EXPLORATORY, never a result); the pins last (the
+   pin written before the run, one run, the clicks the only reading, the kind K
+   or P, a miss written as a miss). Nothing whose board is too small or that
+   takes hours; the layer instead of the box wherever the layer lemma proves the
+   reading identical, declared before the run.
+2. **One file with three checks.** `docs/designs/detector_law/APPROVALS.md`,
+   the Boss's file: one row per experiment, a check written only on a merged
+   record with its link (the algebra; the GameBoard without pins; the pins);
+   the paper exists when every row carries its three checks; the truth of the
+   moment, "partial" and "not yet" the other two words.
+3. **No pinned run without an exploratory pass of the same file first.** The
+   pinned run is the same world file and the same engine as the exploratory
+   run; what reads wrong in the pass is redeclared BEFORE the pin, never after.
+   This is why a missed pin is rare, and why a miss, when it comes, is written.
+4. **One read per bundle.** The reviewer reads a branch once when its bundle
+   lands (a build's components together; a physicist's commit with its
+   declarations; a group's pinned readings together), not each commit; the
+   reviewer of the declarations stays one (the gate on the GO).
+5. **Parallelise what has no shared interface; never the rest.** Parallelised:
+   the runs (one session per world at the GO; the 3-D controls on their own
+   machines, never a gate), the reviewers of the morning's readings (one per
+   group), a source verifier (docs only), a second builder only on separate modules. Not
+   parallelised, and why: the writer (one document, one storyline; the owner's
+   word), the declarations (one writer per interface; a pin must leave one hand
+   before the run), the input files (the one generic input-file generator,
+   no world writer; records 1879 and 1882), the log and Highlights (the Boss alone; one record, one
+   numbering), the GO (the owner's word), the gate of the declarations (one
+   standard). The Boss's own cost, more sessions to coordinate, is met by
+   batching the records about once an hour.
+6. **One writer, the storyline from a file.** The writer takes the title, the
+   opening, the order and the limits from
+   `docs/designs/paper_verification/NEW_ENGINE_AUDIT.md` on branch
+   `paper-new-engine` (records 1899 and 1900), not from a conversation; every number a visible blank until its click is read and
+   merged; the bounds rows and the derivations final before any run.
+7. **The answer before the record; waits of at most two minutes.** When the
+   owner writes, the Boss answers first (three to six short lines, the picture
+   first) and records after; no blocking wait on CI longer than two minutes,
+   so a new message is seen; every answer based on `docs/ALGEBRA.md` and
+   `docs/HIGHLIGHTS.md` (the owner's two-file rule).
+8. **A closed glossary; boxed formulas; the three worlds.** One name per term
+   in `docs/GLOSSARY.md` (the group of order 48 and the group of order 24 each
+   one entry); the key algebraic formulas boxed in the paper; the GameBoard,
+   the clicks and nature named as the three worlds with the passage between
+   them; "matches nature", never "is nature".
+
+## The Boss closes with Nature24 and the mathematician (the owner, 2026-09-24, record 1845)
+
+The owner's word (translated): "You and Nature close everything by
+yourselves: Nature writes the code, you coordinate." What the algebra
+derives is not put to the owner as a choice: the mathematician derives it,
+Nature24 checks it and writes the code, the mathematician confirms the code
+is the algebra, and the Boss coordinates and merges. Only a real
+disagreement between them, or a change of the law's own words, goes to the
+owner. Every message to the owner is in Hebrew, with plain names and no
+codes.
+
+## The method of work (the owner, 2026-09-25, record 2009)
+
+The Boss runs the chain of [skills/workflow.md](../workflow.md), "The method of work": relay and record every word of the owner, send one text to the mathematician and Nature24, a section before every build, the build at once, the gate and the rule of three before every merge. The Boss checks both branches with git after every word, so a section or a commit that already exists is never waited on. The engine implements docs/ALGEBRA.md and nothing else; a finding goes to the algebra first and to the engine after it (record 2115). A big decision is closed by three, the owner, the Boss and a second party ([skills/workflow.md](../workflow.md), "A big decision takes three", record 2136); the Boss brings the owner only a plan the second party has confirmed.

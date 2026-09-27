@@ -10,7 +10,7 @@ motion by half a Link in the mean on each axis (the reviewer's line: per
 axis, toward the motion's sign), the push read at the Node turns by
 `(S_1(v) / abs(v)) / (2 r)` along the motion (`1 / (2 r)` on an axis
 heading, 4.2 to 5.9 percent at r = 12) and pumps `pi F(r) S_1 / abs(v)`
-of the loop's constant per turn; the kick map [cause_kicks.py](cause_kicks.py) holds the loop
+of the loop's constant per turn; the kick map cause_kicks.py (`docs/designs/atom_give/cause_kicks.py`, deleted 2026-09-26) holds the loop
 at r = 12 under the step of this file. A design only: no engine line,
 no world file, no run, no pin moved after this file. Every number below
 is GAMEBOARD by formula from the map and the declared integers, or an
@@ -211,7 +211,7 @@ dwell earlier than today, the proton fixed, the rows untouched.
 
 ## Links
 
-[CAUSE.md](CAUSE.md) sections 1, 2 (iv), 2 (v) and 3; [cause_kicks.py](cause_kicks.py)
+[CAUSE.md](CAUSE.md) sections 1, 2 (iv), 2 (v) and 3; cause_kicks.py (`docs/designs/atom_give/cause_kicks.py`, deleted 2026-09-26)
 and [its printout](cause_kicks.out) (cases O, P, R, T, U);
 [DESIGN_MOMENTUM.md](DESIGN_MOMENTUM.md); [the baseline run](../atom_baseline/RUN.md)
 and [its readings](../atom_baseline/baseline_readings.out); [PINS.md](../atoms/PINS.md)

@@ -1,0 +1,29 @@
+The one stroke, commit 3: the four paces, p_0 = Gamma - c and p_a = p_0 - t_a per axis from the reads' time and diagonal components, the rule per axis with 2 p_a^2 num on each axis's reads and the three paces in its own term, the halving's remainder kept at the Node and inverted exactly; the isotropic rule untouched where no tensor part is sourced (ALGEBRA.md 9.91 (10) 3; 9.91 (2); 9.78 (4); BUILD.md section 26 item 62)
+
+A reading family's pace at a Node is four integers (9.91 (2)): p_0 = Gamma -
+c, c its reads' time components weighed, and p_a = p_0 - t_a, t_a its reads'
+aa components weighed and halved, one division per read per axis with the
+remainder kept at the Node (advanced once per interval, stepped back at the
+inverse: r' = (r - S) mod 2, the value (S + r') div 2, so the inverse reads
+the paces the step read). The rule: w a_next + r' = SUM_a R_a (a_(+a) +
+a_(-a)) + S a_now - w a_before + r, R_a = 2 p_a^2 num, S = 12 den Gamma^2 - 6
+(p_0^2 + Gamma^2)(den - num) - 4 num (p_x^2 + p_y^2 + p_z^2), w = 6 den
+Gamma^2; at p_a = p_0 the one rule term for term. Where no read's tensor part
+was ever sourced the engine steps the isotropic rule as before: bit for bit on
+the four resting worlds. The moving long Lorentz clock's rows move (GAMEBOARD):
+the moving body holds gravity's xx part 8 at its Nodes (commit 2), the matter
+record reads t_x = 4 there and steps with p_x = p_0 - 4; with that read
+silenced the world is bit for bit with the old engine (9.91 (9) (a), a
+check-mode digest). The wheel at a Node is the five coefficients' gcd; the run's
+guard keeps every p_a positive.
+
+tests/test_axis_paces.py: the coefficients at equal paces, a tensor along x
+alone, a planted xx part bending a record's step per axis in and out of a
+well, the wheel, the inverse exact, the zero-tensor path bit for bit.
+
+Not built, for the mathematician: the conserved form and the density under
+anisotropic paces (the form's Link terms per axis are not in 9.91); the
+window shortcut on the anisotropic path (HOST).
+
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01FiGGiQ6ee5yyFwBih4fdeE

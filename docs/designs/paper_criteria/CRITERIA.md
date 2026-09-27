@@ -40,7 +40,7 @@ GAMEBOARD (the host's view) or COMPUTATION (the algebra's).
 | Rows complete as they stand (nothing needed) | 7: 1a, 1b, 2b, 2c, 5a, 8c, 9 |
 | Rows needing a re-run at head | 6: 3 and 4b (one run serves both), 7a and 7b (one batch), 8a and 8b (one batch); plus 2a after its pin |
 | Rows needing more clicks | 0 (8a and 8b: the criterion does not need more clicks; see the rows) |
-| Rows needing a pin derived for this world | 1: 2a (derived in this commit, before the run: [slits_huygens_pin.py](slits_huygens_pin.py), [its output](slits_huygens_pin.out)) |
+| Rows needing a pin derived for this world | 1: 2a (derived in this commit, before the run: slits_huygens_pin.py (`docs/designs/paper_criteria/slits_huygens_pin.py`, deleted 2026-09-26), [its output](slits_huygens_pin.out)) |
 | Rows marked and left to another writer | 1: 12 (series T, being redeclared in the weak field by the chief physicist) |
 | Readings NOT MADE | 3 rows of the far lamp (11a, 11b, 11c: an engine key not built) and 4 readings the paper names: the two-way c after a detector; the inverse square's decisive reading (form B, a closed orbit's period at two radii); the moving detector's one-way ratio and the velocity's quantum (the cart build in flight); and the detector reading behind row 8a's width (a lamp at the shell counted between the clicks) |
 
@@ -138,7 +138,7 @@ per run, so none waits for the Boss's word.
   (the digital lines' landings: the bright pixels at y = 36 and 84 read
   19 and 20 where their neighbours read 41 and 42) is what the reading
   carries below the ideal. **The pin for this world's fan, derived
-  before the run** (this commit, [slits_huygens_pin.py](slits_huygens_pin.py):
+  before the run** (this commit, slits_huygens_pin.py (`docs/designs/paper_criteria/slits_huygens_pin.py`, deleted 2026-09-26):
   the register's own algebra, `two_slits_map.py`'s walk by the flight
   table's closed form on the world's declared fan and weights, the phase
   of every row by BEAM_LAW note 45, u = ordinal x 2531 mod 4096 with the
@@ -554,7 +554,7 @@ per run, so none waits for the Boss's word.
 | Reading | Where the paper names it | What it needs | Cost |
 | --- | --- | --- | --- |
 | The two-way c after a detector (a pulse and its return at one detector) | the Lorentz section; [light_outside/DERIVATION.md](../light_outside/DERIVATION.md) "NOT MADE: the two-way c after a detector" | a world of a lamp-detector and a mirror with the pin c_D = Q \|D\| / T_D from the flight table (the physicist's design, a pin per direction) | a world of seconds once designed; the design not this runner's |
-| The inverse square's decisive reading, form B: a closed orbit's period at two radii | the Newton paragraph, the claims table row 21 ("the shell mean; the inverse square's decisive reading NOT MADE"); [orbit_lamp/README.md](../../../examples/events/orbit_lamp/README.md) (the pins written at form B's pace 0.2033, which main's drive did not run; D3's 1.997 under main's drive is not decisive, a 1 / r force being scale-invariant) | since PR #813 (`e0761893`) the directional drive is on main under the key `drive_b`, off by default: the orbit-lamp worlds redeclared under the key with note 49's pins, the physicist's order, the reviewer's ADMISSIBLE | two worlds of minutes once declared; not ordered here |
+| The inverse square's decisive reading, form B: a closed orbit's period at two radii | the Newton paragraph, the claims table row 21 ("the shell mean; the inverse square's decisive reading NOT MADE"); orbit_lamp/README.md (`examples/events/orbit_lamp/README.md`, deleted 2026-09-26) (the pins written at form B's pace 0.2033, which main's drive did not run; D3's 1.997 under main's drive is not decisive, a 1 / r force being scale-invariant) | since PR #813 (`e0761893`) the directional drive is on main under the key `drive_b`, off by default: the orbit-lamp worlds redeclared under the key with note 49's pins, the physicist's order, the reviewer's ADMISSIBLE | two worlds of minutes once declared; not ordered here |
 | The moving detector's one-way ratio and the velocity's quantum | the frame paragraph (Table 3 row 4b's clause, the claims table row 27) | the cart build in flight (`moving-detector-build`, step 3 pushed at `5aa64b3e6`, step 4 running; record 868) | the physicist's; marked, left |
 | The detector reading behind row 8a's curve: a lamp at the shell counted between the clicks | the register's J entry (2026-09-22, tier (c)) | a world-file change (a lamp on the shell's Nodes, the clicks read against its count) and its pin | minutes once declared; not ordered here |
 

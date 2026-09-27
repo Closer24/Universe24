@@ -1,0 +1,52 @@
+THE READINGS OF RUNS.md, BY KIND, AGAINST THE PINS AS WRITTEN (no pin moved)
+
+malus_s16 (beam-new-rows-malus-s16-v1; the source 5166dbe90169655d):
+  DETECTOR the cells over the records 1 to 256 (the gather lines' chosen cell, one per record): 0+ 246, 0- 10; the pin 0+ 246, 0- 10 (met exactly or not at all): PASS
+  CONVERSION the pass fraction 0+ / 256 = 0.96094 against cos^2 = 0.96194 (the departure -0.00100; the pin's -0.00100)
+  DETECTOR the falsifiers: a cell on label 1: none; the wheel's coverage 256 of 256 residues over the records 1 to 256; 256 of 256 records gathered (289 gathered in all, 289 click lines at `second`)
+  GAMEBOARD the record: completed, 300 intervals, the books balanced at every tick: True; HOST 0.91 s
+
+malus_s40 (beam-new-rows-malus-s40-v1; the source 5166dbe90169655d):
+  DETECTOR the cells over the records 1 to 256 (the gather lines' chosen cell, one per record): 0+ 199, 0- 57; the pin 0+ 199, 0- 57 (met exactly or not at all): PASS
+  CONVERSION the pass fraction 0+ / 256 = 0.77734 against cos^2 = 0.77779 (the departure -0.00044; the pin's -0.00044)
+  DETECTOR the falsifiers: a cell on label 1: none; the wheel's coverage 256 of 256 residues over the records 1 to 256; 256 of 256 records gathered (289 gathered in all, 289 click lines at `second`)
+  GAMEBOARD the record: completed, 300 intervals, the books balanced at every tick: True; HOST 0.94 s
+
+malus_s48 (beam-new-rows-malus-s48-v1; the source 5166dbe90169655d):
+  DETECTOR the cells over the records 1 to 256 (the gather lines' chosen cell, one per record): 0+ 177, 0- 79; the pin 0+ 177, 0- 79 (met exactly or not at all): PASS
+  CONVERSION the pass fraction 0+ / 256 = 0.69141 against cos^2 = 0.69134 (the departure +0.00006; the pin's +0.00006)
+  DETECTOR the falsifiers: a cell on label 1: none; the wheel's coverage 256 of 256 residues over the records 1 to 256; 256 of 256 records gathered (289 gathered in all, 289 click lines at `second`)
+  GAMEBOARD the record: completed, 300 intervals, the books balanced at every tick: True; HOST 0.92 s
+
+sagnac_k17 (beam-new-rows-sagnac-k17-v1; the source 5166dbe90169655d):
+  GAMEBOARD the record: completed, 1500 intervals, the books balanced at every tick: True, age_bound 840; 1499 birth lines (two rows each), 88 step lines of the cart; HOST 11.80 s
+  DETECTOR the cart's click lines of its own family (the chain's step 5): 0, stamped 0
+  GAMEBOARD the `home` lines (a row of the event's own number taken back and created again on its directions, ENGINE.md 'what comes home'; no clock, no record on the line): {'cart': 119, 'mass': 1148}
+  DETECTOR the face clicks of the cart's rows (the records ending at the open y and z faces): {'face:-y': 107, 'face:+y': 107, 'face:-z': 1099, 'face:+z': 1099}; their momentum labels {'[0, -64, 0]': 107, '[0, 64, 0]': 107, '[0, 0, -64]': 1099, '[0, 0, 64]': 1099}; 1095 records gathered at faces
+  DETECTOR the first face click: tick 211 at the Node [140, 0, 1] through face:-y, the label [0, -64, 0]; the escaping rows' ages at the escape from 162 to 250 intervals and their displacements from the birth Node along x over 39 distinct values of 240 (COMPUTATION: no one age and no one Node, so not the loop's antipode); the escapes' (y, z) {(0, 1): 107, (2, 1): 107, (1, 0): 1099, (1, 2): 1099}, one Link off the axis
+  CONVERSION the ratio (n_+ - n_-) / (n_+ + n_- - 2 n_0): NOT READ (no stamped return of the cart's own rows exists in the record); the pin 55/544 = 0.10110 stands unread, not moved
+
+sagnac_k3 (beam-new-rows-sagnac-k3-v1; the source 5166dbe90169655d):
+  GAMEBOARD the record: failed (beam-v1: a ray carries the age 841 beyond the world's age_bound 840 (declare a larger age_bound or a smaller GameBoard)), 841 intervals, the books balanced at every tick: True, age_bound 840; 841 birth lines (two rows each), 280 step lines of the cart; HOST 5.38 s
+  DETECTOR the cart's click lines of its own family (the chain's step 5): 0, stamped 0
+  GAMEBOARD the `home` lines (a row of the event's own number taken back and created again on its directions, ENGINE.md 'what comes home'; no clock, no record on the line): {'mass': 579, 'cart': 572}
+  DETECTOR the face clicks of the cart's rows (the records ending at the open y and z faces): {'face:-z': 4, 'face:+z': 4, 'face:-y': 1, 'face:+y': 1}; their momentum labels {'[0, 0, -64]': 4, '[0, 0, 64]': 4, '[0, -64, 0]': 1, '[0, 64, 0]': 1}; 0 records gathered at faces
+  DETECTOR the first face click: tick 214 at the Node [142, 1, 0] through face:-z, the label [0, 0, -64]; the escaping rows' ages at the escape from 195 to 269 intervals and their displacements from the birth Node along x over 8 distinct values of 240 (COMPUTATION: no one age and no one Node, so not the loop's antipode); the escapes' (y, z) {(1, 0): 4, (1, 2): 4, (0, 1): 1, (2, 1): 1}, one Link off the axis
+  CONVERSION the ratio (n_+ - n_-) / (n_+ + n_- - 2 n_0): NOT READ (no stamped return of the cart's own rows exists in the record); the pin 55/96 = 0.57292 stands unread, not moved
+
+sagnac_k5 (beam-new-rows-sagnac-k5-v1; the source 5166dbe90169655d):
+  GAMEBOARD the record: completed, 1500 intervals, the books balanced at every tick: True, age_bound 840; 1499 birth lines (two rows each), 300 step lines of the cart; HOST 12.41 s
+  DETECTOR the cart's click lines of its own family (the chain's step 5): 0, stamped 0
+  GAMEBOARD the `home` lines (a row of the event's own number taken back and created again on its directions, ENGINE.md 'what comes home'; no clock, no record on the line): {'cart': 691, 'mass': 1193}
+  DETECTOR the face clicks of the cart's rows (the records ending at the open y and z faces): {'face:-y': 56, 'face:+y': 56, 'face:-z': 801, 'face:+z': 801}; their momentum labels {'[0, -64, 0]': 56, '[0, 64, 0]': 56, '[0, 0, -64]': 801, '[0, 0, 64]': 801}; 454 records gathered at faces
+  DETECTOR the first face click: tick 211 at the Node [140, 0, 1] through face:-y, the label [0, -64, 0]; the escaping rows' ages at the escape from 11 to 614 intervals and their displacements from the birth Node along x over 128 distinct values of 240 (COMPUTATION: no one age and no one Node, so not the loop's antipode); the escapes' (y, z) {(0, 1): 56, (2, 1): 56, (1, 0): 801, (1, 2): 801}, one Link off the axis
+  CONVERSION the ratio (n_+ - n_-) / (n_+ + n_- - 2 n_0): NOT READ (no stamped return of the cart's own rows exists in the record); the pin 11/32 = 0.34375 stands unread, not moved
+
+sagnac_k9 (beam-new-rows-sagnac-k9-v1; the source 5166dbe90169655d):
+  GAMEBOARD the record: completed, 1500 intervals, the books balanced at every tick: True, age_bound 840; 1499 birth lines (two rows each), 166 step lines of the cart; HOST 12.94 s
+  DETECTOR the cart's click lines of its own family (the chain's step 5): 0, stamped 0
+  GAMEBOARD the `home` lines (a row of the event's own number taken back and created again on its directions, ENGINE.md 'what comes home'; no clock, no record on the line): {'cart': 365, 'mass': 1155}
+  DETECTOR the face clicks of the cart's rows (the records ending at the open y and z faces): {'face:-y': 116, 'face:+y': 116, 'face:+z': 953, 'face:-z': 954}; their momentum labels {'[0, -64, 0]': 116, '[0, 64, 0]': 116, '[0, 0, 64]': 953, '[0, 0, -64]': 954}; 786 records gathered at faces
+  DETECTOR the first face click: tick 211 at the Node [140, 0, 1] through face:-y, the label [0, -64, 0]; the escaping rows' ages at the escape from 11 to 346 intervals and their displacements from the birth Node along x over 120 distinct values of 240 (COMPUTATION: no one age and no one Node, so not the loop's antipode); the escapes' (y, z) {(0, 1): 116, (2, 1): 116, (1, 2): 953, (1, 0): 954}, one Link off the axis
+  CONVERSION the ratio (n_+ - n_-) / (n_+ + n_- - 2 n_0): NOT READ (no stamped return of the cart's own rows exists in the record); the pin 55/288 = 0.19097 stands unread, not moved
+

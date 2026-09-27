@@ -25,7 +25,12 @@ configuration validator at load, never run), `run_8bc_pins.py` and its
 output `run_8bc_pins.out` (the pins of section 3 computed from the engine's
 own tables of the loaded world, no run); `run_8bc_readings.py` and its
 output `run_8bc_readings.out` (STEP 2: the run's record read against the
-pins, section 5).
+pins, section 5); `j2_reemit.json` and `j2_reemit_control.json` (STEP 3a,
+the re-emitter world and its control, validated at load, never run) with
+`run_8bc_reemit_pins.py` and its output `run_8bc_reemit_pins.out` (the
+pins of section 6 from the engine's own tables); `run_8bc_reemit_readings.py`
+and its output `run_8bc_reemit_readings.out` (STEP 3b: the two runs read
+against those pins, section 6.3).
 
 **The kinds of every number** (HIGHLIGHTS 5.4): DETECTOR, a click or a
 record line of a declared detector, the only kind compared with nature or
@@ -391,7 +396,244 @@ re-emitter arrangement of section 3, STEP 3 if ordered) beside the
 DECLARATION. Row 8c is unchanged by the run: a computation (section 3),
 the input no longer 0. Nothing enters the paper from this file.
 
-## 6. Links
+## 6. STEP 3a: the re-emitter world, the chain, the pins before the run (the owner's word, record 1150; the Boss's order of 2026-09-23, 01:00Z)
+
+The reviewer's line of section 3, built as a world: between the lamp and
+the readers a re-emitter whose rebirth keeps the running phase and writes a
+new u from its own wheel, so that the readers behind it are class filters
+and reading B is read. Docs and the world files only; the run (STEP 3b) on
+the Boss's GO after the reviewer's gate; no pin moves after a run. The
+files: `j2_reemit.json` (the world), `j2_reemit_control.json` (the
+control, the same wheel at both), both accepted by the validator at load
+(2 families, 5 measured events, 1 detector set, 0 issues), never run;
+`run_8bc_reemit_pins.py` and its output, every number below from the
+engine's own tables of the loaded worlds, `by_drive_rows` and
+`window_admits` themselves.
+
+### 6.1 The steps between clicks, each tagged
+
+1. **declaration: the world.** `j2_massive.json` of section 2 with the 128
+   readers replaced by the registered arrangement of series J2: the first
+   reader at x = 8, a second reader at x = 9, the far detector at x = 190
+   (the `d` family, `measure` on `nu`, the readers' window 0 of width 1,
+   the far detector without a window, byte for byte as registered); the
+   lamp at x = 0 as in section 2 (`nu` quantum 1 `massive`, p = 220, h =
+   1024, the wheel [1, 64], `rate [1, 1]`), holding K + 1024 = 1073742848
+   (why, step 3); and the re-emitter at x = 4: a fixed `d` event with the
+   table entry `nu: {rule: rerelease, weights: [1]}` on `directions [[1,
+   0, 0]]`, its Node the one-Node `sum` set `reemit` (a `rerelease` entry
+   on a `sum` set ends the arriving units there with an offer and
+   re-creates them as a new record when the record chose that set:
+   ENGINE.md, the world file's table entries; `tests/test_amplitude_layer.py`
+   (k), the registered rebirth world), and a `lamp` block `{rate: [1, 1],
+   wheel: [2, 64], directions: [[1, 0, 0]]}` whose only work is the wheel:
+   at held 1 against K = 2^30 its turn is 0 at every interval and it births
+   nothing of its own (`nature_beam.py` :5990, `turn > 0`); the
+   rebirth's u is read from `entry.lamp_wheel` (`birth_coordinate`, :714:
+   "on a lamp, u is the accumulator of the `wheel` row of its counts table
+   before this birth advances it by the declared rate r over W"; without a
+   lamp "u is its count of births less one mod N and W is N, the case [1,
+   N] as built", the control). The keys are existing keys, the families
+   the same two.
+2. **the lamp's count (GAMEBOARD; nothing pinned from it) and computation:
+   one record per interval, u = j.** The reviewer's line at M3
+   (massive_rows/DESIGN.md): a lamp holding exactly K births at the first
+   self-creation and not at the second. Holding K + d it births at every
+   interval while the count row's remainder d t - t (t - 1) / 2 stays
+   above 0 (COMPUTATION, the row replayed by `by_drive_rows` in
+   `run_8bc_reemit_pins.py`: at held K the interval 2 has no birth, at K +
+   1 the interval 4, at K + 1024 none through 1038, and none through
+   2049); so the j-th birth (j from 0) is at the tick j + 1, u = j mod 64,
+   16 births per class among the first 1024 (COMPUTATION). The turn is
+   never 2 (the gain is below 2 K), so every birth is at the turn 1 (M3).
+3. **computation: the flight and the turn to the re-emitter.** As section
+   1 steps 4 and 5: the row born at the tick t reaches x = 4 at the age 7
+   (the tick t + 7; GAMEBOARD, the flight table) with the phase u + 55
+   (floor(55 x 4 / 4) = 55, the remainder 0) and the path phase 55.
+4. **click: the re-emitter's own.** Step 4 takes the row at the `sum` set
+   `reemit` (a `rerelease` entry: no window, the amount gate alone,
+   `inside |= (rule == RERELEASE_RULE) & (record != NO_RECORD)`, :4832),
+   the row goes pending with `offered` (:5430) and its units end in the
+   layer with the record's one offer; the completion is read after step 4
+   (`nature_beam` docstring: "its completions are read after step 4 and
+   after the merge"), the ladder chooses the one offer, the `gather` line
+   names `reemit`, the completion places q_F = 1 into the re-emitter's
+   `held` (section 3 of massive_rows/DESIGN.md), and the pending row is
+   marked `rebirth` (:6606-6610). This is the re-emitter's click: every
+   record clicks there once (DETECTOR, its `gather` lines and its state).
+5. **computation: the rebirth.** Step 5 of the same interval re-releases
+   the pending row (:5856-5872: `row_record` a new identity of this
+   emitter, `row_birth` = the new u from `birth_coordinate`, the
+   `rebirth` flag on the `split` line) as one new record of one row on
+   [1, 0, 0] at the age 0 with the running phase kept, `(row.phase +
+   turn_i) % modulus`, :5897, with `turn_i` 0, and,
+   for a massive family, its direction's p_D and E'_D and `acc_turn` 0
+   (massive_rows/DESIGN.md section 2, the re-release). The registered
+   rebirth world confirms the timing (the record born at the tick 1
+   gathers at the gate at the tick 4 and its rebirth's `split` line is at
+   the tick 4). The new u = 2 k mod 64 with k the re-emitter's ordinal
+   from 0; the records arrive in birth order at one per interval, so k =
+   j. The path phase of the reborn row at its birth is (j + 55) - 2 j =
+   55 - j mod 64 (COMPUTATION).
+6. **computation: the turn behind the re-emitter.** A fresh accumulator
+   from x = 4: shift(y) = floor(55 y / 4) after y Links, 55 at y = 4 (x =
+   8), 68 at y = 5 (x = 9), 2557 at y = 186 (x = 190); the path phase at
+   x is 55 + shift(x - 4) - j mod 64: 46 - j at x = 8, 59 - j at x = 9,
+   52 - j at x = 190.
+7. **click: the readers' windows.** As section 1 step 6 (`path = (phase -
+   birth) % N`, :4633; `window_admits`, :4826): the reader at x = 8 admits
+   the row when 46 - j = 0 mod 64, the one class j = 46 mod 64; the reader
+   at x = 9 the class j = 59 mod 64, a fresh class; every other row
+   passes. The window empties a class (section 0b's theorem, now on a
+   record's rows): the reader is a class filter over the births, by the
+   two wheels.
+8. **click: the far detector.** No window: every row that reaches it is
+   taken (DETECTOR).
+
+Measured inside the board: NO. The re-emitter's gather lines, the readers'
+and the far detector's lines are the readings; the content is an input.
+The three tests: nothing enters the law; the re-emitter, the `sum` set,
+the lamp block and the wheel are registered keys of amplitude-v1 and
+massive-rows-v1, declared, and every step above is one of their verbs.
+
+### 6.2 The pins before the run, by kind, with the arithmetic
+
+The flight (GAMEBOARD, the flight table): the row born at the tick t is at
+x = 4 at t + 7, at x = 8 at t + 14, at x = 9 at t + 15, at x = 190 at t +
+333; over 1038 intervals the births 1 .. 1031 reach the re-emitter, 1 ..
+1024 the first reader, 1 .. 1023 the second, 1 .. 705 the far detector.
+
+| pin | the reading | kind | the arithmetic |
+| --- | --- | --- | --- |
+| B0 | the re-emitter: 1031 completions (one `gather` line each, chosen `reemit`) and 1031 rebirths (one `split` line with `rebirth` each, the new u the 32 even values) | DETECTOR | the births 1 .. 1031 reach x = 4 by the tick 1038; u = 2 k mod 64, k = 0 .. 1030 |
+| B1 | the first reader (x = 8): 16 clicks of 1024 arrivals | DETECTOR | the class j = 46 mod 64 among j = 0 .. 1023: j = 46, 110, ..., 1006, sixteen; 1024 = 16 x 64, 16 per class |
+| B2 | the second reader (x = 9): 16 clicks of 1007 arrivals; the ratio second over first 16 / 16 = 1.000 exactly | DETECTOR; the ratio COMPUTATION, nature's about 1 the thing compared with | 1023 births reach x = 9 less the 16 the first reader took; the fresh class j = 59 mod 64: j = 59, ..., 1019, sixteen |
+| B3 | the far detector (x = 190): 683 clicks of the 705 that reach it | DETECTOR | 705 births (1 .. 705) less 11 of the class 46 (j = 46 .. 686) and 11 of the class 59 (j = 59 .. 699); 683 / 705 = 0.9688, the limit 62 / 64 = 0.9688; nature's near-total passage the thing compared with |
+| B4 | the `pass` lines at x = 8 carry `phase - u` = (46 - j) mod 64, the 64 values 16 times each over the 1024 arrivals, the admitted rows those at 0; at x = 9 (59 - j) mod 64 | GAMEBOARD (the row's columns on the reader's line: the class filter visible) | u on those lines the rebirth's, 2 j mod 64; `phase` the running phase, j + 55 + shift(y) |
+| the books | balanced at every tick | GAMEBOARD | the completion's q_F = 1 placed at the re-emitter and the re-released row's content 1 must balance through the `waiting` and `cancelled` lines; if they do not, the world is refused as a reading and the cause reported, not patched. The books are the admissibility gate (the physics-rule reviewer's line (i), 2026-09-23): balanced, the arrangement is a READING under existing keys and the pins are read; unbalanced, the completion of a massive row at a re-emitter is its click and no rebirth carries the quantum on, the world is refused as a reading, reading B is readable by no arrangement under existing keys for a massive row (it stays readable for light, whose pair is (1, 0)), and row 8b's word for the class filter returns to a RULE outside the law |
+
+The control (`j2_reemit_control.json`, the re-emitter without a lamp
+block: u_new = k = j): the path phase behind the re-emitter is 55 +
+shift(y) for every row, the plane wave of section 3 again. C1 the first
+reader 0 of 1024 (the path phase 46); C2 the second reader 0 of 1023 (59);
+C3 the far detector 705 of 705 (the path phase 52 at x = 190 is not read:
+no window); the re-emitter 1031 completions and rebirths as B0 (DETECTOR).
+Cheap: seconds.
+
+**The edge cases.** The same wheel at both: the control above. The shift
+per Link 0 mod N (p = 2^12 at h = 2^10, the case the reviewer named): the
+path phase behind the re-emitter is -j mod 64 with no turn, so the readers
+are still class filters, every reader at x > 4 the class j = 0 mod 64, the
+first taking 16 and every one behind it 0: the classes come from the two
+wheels, the turn only fixes which class each reader takes; not run, named.
+The second reader at a class the first took (shift(x - 4) equal mod 64 at
+the two readers): 0 at the second; avoided at x = 8, 9 (55 and 68 differ
+mod 64).
+
+**The falsifiers.** A click count other than 16 at x = 8 or at x = 9 (the
+window not a class filter, or the wheels not [1, 64] and [2, 64] in
+effect); the same class at both readers (the second 0); the far detector
+other than 683 (a class taken twice or none); the re-emitter's
+completions other than 1031, or a `split` line without `rebirth` (the
+re-emitter not a `sum` set in effect); a `pass` line at x = 8 whose
+`phase - u` is not (46 - j) mod 64 for its birth's j; a birth missing
+among the ticks 1 .. 1038 (the count row's remainder); the books not
+balanced. A FAIL is written as FAIL and the pin stays. The books are the
+admissibility gate (the reviewer's line (i)): balanced, the arrangement is
+a READING under existing keys and the pins are read; unbalanced, the
+completion of a massive row at a re-emitter is its click and no rebirth
+carries the quantum on, the world is refused as a reading, reading B is
+readable by no arrangement under existing keys for a massive row (it
+stays readable for light, whose pair is (1, 0)), and row 8b's word for
+the class filter returns to a RULE outside the law.
+
+**The row's wording, conditional on the pins met, both halves** (the
+reviewer's line (ii), written before the run): under massive-rows-v1 with
+the nu quantum 1 AND a re-emitter declared between the source and the
+readers (an arrangement of the law, not nature's), the second reader's
+rate over the first's is 1.000 exactly (nature's about 1 the thing
+compared with) and the depth is the filter's: one class of 64 lost at
+each reader with a window, 62 / 64 at the far detector behind two,
+nothing behind 64; the law's filter, not a cross-section; the registered
+J2 (no re-emitter) reads 16 and 0 behind, the row FAIL for the law as
+built; the re-emitter reading beside it a declared arrangement's, not a
+pass against nature. The counts-table rate is the owner's second
+declaration of the compared number; his word on it is pending, and this
+file says so.
+
+**The cost (HOST) and the commands.** About 6 s wall each on one core (the
+world of section 5 took 6.1 s; the same size, one detector set and 1031
+rebirths added):
+
+```bash
+PYTHONPATH=src .venv/bin/python -m event_universe --init docs/designs/fail_rows/j2_reemit.json --output artifacts/fail_rows/j2_reemit
+PYTHONPATH=src .venv/bin/python -m event_universe --init docs/designs/fail_rows/j2_reemit_control.json --output artifacts/fail_rows/j2_reemit_control
+```
+
+The readings (STEP 3b, section 7 when run): per reader its `events` and
+its `pass` lines (DETECTOR), the far detector's `events`, the re-emitter's
+`gather` and `split` lines with their `u` (DETECTOR), the `phase - u` of
+the pass lines (GAMEBOARD), the books; PASS / FAIL per pin B0 to B4 and C1
+to C3, under the declaration `massive-rows-v1` with the `nu` quantum 1.
+
+### 6.3 The readings (STEP 3b, on the Boss's GO of 2026-09-23, 01:3xZ, the reviewer's gate with lines (i) and (ii) above)
+
+The two runs, headless, through the shipped runner (the commands above):
+`j2_reemit` completed, 1038 intervals, 2.42 s the engine's own, 2.9 s wall
+(HOST); `j2_reemit_control` completed, 1038 intervals, 2.50 s, 2.7 s wall;
+source sha256 `5166dbe90169655d`, the worlds' sha256 `26fa288b15be89f6`
+and `de9045f45b79d42e`. Read by `run_8bc_reemit_readings.py` beside this
+file, its output `run_8bc_reemit_readings.out`, against the pins of 6.2 as
+written; no pin moved.
+
+**The books first, the admissibility gate** (GAMEBOARD): balanced at every
+completed tick in both runs (`conserved_at_every_completed_tick` true).
+The reviewer's open point, decided by the run: the completion of a massive
+record at the re-emitter places nothing (every `gather` line chosen
+`reemit` carries `content` 0 and `momentum` [0, 0, 0]; the re-emitter's
+`held` of `nu` is 0 at the end, its own `events` 0), and the rebirth
+carries the quantum on (each `split` line with `rebirth` born 1, the reborn
+row of content 1, which the readers and the far detector then hold: `held`
+16, 16 and 683). One unit where one was born; the arrangement is a READING
+under existing keys and the pins are read.
+
+| pin | as written | read | kind | verdict |
+| --- | --- | --- | --- | --- |
+| the lamp's births | one per interval, 1038 | 1038 `birth` lines over 1038 intervals, none skipped (held K + 1024) | GAMEBOARD | PASS |
+| B0 | the re-emitter: 1031 completions and 1031 rebirths, u the 32 even values | 1031 `gather` lines chosen `reemit`; 1031 `split` lines with `rebirth`, 0 without; the rebirths' u the 32 even values 0, 2, ..., 62 | DETECTOR | PASS |
+| B1 | the first reader (x = 8): 16 clicks of 1024 arrivals, the class j = 46 mod 64 | 16 clicks of 1024 arrivals (`events` [16, 0], 1008 `pass` lines); the clicked rows' u all 28 = 2 x 46 mod 64, the one class | DETECTOR | PASS |
+| B2 | the second reader (x = 9): 16 clicks of 1007 arrivals, the fresh class j = 59 mod 64; the ratio 1.000 | 16 clicks of 1007 arrivals; the clicked rows' u all 54 = 2 x 59 mod 64; the ratio second over first 16 / 16 = 1.000 exactly | DETECTOR; the ratio COMPUTATION | PASS |
+| B3 | the far detector (x = 190): 683 clicks; 705 births reach it within the run (GAMEBOARD) less 22 taken before | 683 clicks of 683 arrivals, 0 passes; the 22 rows the two readers took all among the births 1 .. 705 (their reborn records' ordinals), 705 - 22 = 683; the fraction 683 / 705 = 0.9688 | DETECTOR; the 705 GAMEBOARD | PASS |
+| B4 | the lines at x = 8 carry `phase - u` = (46 - j) mod 64, the 64 values 16 times each, the clicked rows at 0 | the 64 values, 16 rows each over the 1024 lines; the 16 clicked rows all at 0 | GAMEBOARD (the row's columns on the reader's line) | PASS |
+| C1 | the control, the first reader: 0 of 1024 | 0 clicks of 1024 arrivals; `phase - u` = 46 on all 1024 lines (the plane wave, one value) | DETECTOR; the phase GAMEBOARD | PASS |
+| C2 | the control, the second reader: 0 of 1023 | 0 clicks of 1023 arrivals | DETECTOR | PASS |
+| C3 | the control, the far detector: 705 of 705 | 705 clicks of 705 arrivals, 0 passes | DETECTOR | PASS |
+| the control's re-emitter | 1031 completions and rebirths as B0 | 1031 and 1031, the rebirths' u the 64 values 0 .. 63 (the wheel [1, N] as built) | DETECTOR | PASS |
+
+**The falsifiers, checked.** No count other than 16 / 16 / 683 / 1031; the
+two readers at distinct classes (u 28 and 54); no `split` line without
+`rebirth`; every line at x = 8 with `phase - u` = (46 - j) mod 64 (the 64
+values 16 each, the clicked ones 0); no birth missing; the books balanced.
+None tripped.
+
+**The verdict, in the wording written before the run (line (ii)).** Under
+massive-rows-v1 with the nu quantum 1 AND a re-emitter declared between
+the source and the readers (an arrangement of the law, not nature's), the
+second reader's rate over the first's is 1.000 exactly (nature's about 1
+the thing compared with) and the depth is the filter's: one class of 64
+lost at each reader with a window, 62 / 64 at the far detector behind two
+(683 of 705, read), nothing behind 64; the law's filter, not a
+cross-section; the registered J2 (no re-emitter) reads 16 and 0 behind,
+the row FAIL for the law as built; the re-emitter reading beside it a
+declared arrangement's, not a pass against nature. The counts-table rate
+is the owner's second declaration of the compared number; his word on it
+is pending. Row 8b's word after this run: a READING under existing keys
+(this arrangement) beside the DECLARATION, as section 0 states; the
+control confirms that the reading is the two wheels' and not the turn's
+(the same wheel at both gives the plane wave, 0 and 0 and 705). Nothing
+enters the paper from this file.
+
+## 7. Links
 
 - `docs/designs/fail_rows/WHAT_IS_MISSING.md` (branch `fail-rows`), sections
   0b, 1.9 and 2 item 2: the chain, the class filter, the pins 16 / 1.000 /
@@ -400,7 +642,7 @@ the input no longer 0. Nothing enters the paper from this file.
   identity's keys, the flight and the turn of a massive row, the completion.
 - [BEAM_LAW.md note 36 (i)](../../BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
   the window's width, the filter that is not an attenuation.
-- [examples/events/weak/README.md](../../../examples/events/weak/README.md),
+- examples/events/weak/README.md (`examples/events/weak/README.md`, deleted 2026-09-26),
   J2: the registered worlds and their expectations.
 - The paper's Table 2 rows 8b and 8c (`paper/general_formula/main.tex`);
   [CRITERIA.md](../paper_criteria/CRITERIA.md) rows 8b and 8c.

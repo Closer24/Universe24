@@ -1,0 +1,108 @@
+{
+ "mode": "rest",
+ "side": 9,
+ "k_m": 1,
+ "speed": 0.0,
+ "intervals": 1500,
+ "shape": [
+  48,
+  48,
+  48
+ ],
+ "kind": [
+  800,
+  850
+ ],
+ "binding_pair": [
+  54,
+  55
+ ],
+ "count": 2000,
+ "amplitude": 131072,
+ "source": "level",
+ "guard_interval": 61,
+ "guard_content": 16676,
+ "e_s": [
+  980857
+ ],
+ "cos_omega_vacuum": 0.9411764705882353,
+ "omega_vacuum": 0.34470117979864606,
+ "readings": [
+  {
+   "t": 0,
+   "record_0": {
+    "centroid": [
+     24.000000000000004,
+     24.000000000000004,
+     24.000000000000004
+    ],
+    "width_rms": 3.1819822685039667,
+    "peak": 44291,
+    "peak_node": [
+     24,
+     24,
+     24
+    ],
+    "count_sum": 1009258,
+    "count_peak": 2000,
+    "content_peak": 4000,
+    "bound_share_12": 0.9972285010530093,
+    "tail_links": 2.1315647115735983,
+    "cos_omega_eff": NaN,
+    "omega_eff": NaN,
+    "leak": 1.0
+   }
+  },
+  {
+   "t": 25,
+   "record_0": {
+    "centroid": [
+     24.000009148069545,
+     24.000009148069548,
+     24.000009148069548
+    ],
+    "width_rms": 3.862934821621347,
+    "peak": 66718,
+    "peak_node": [
+     24,
+     24,
+     24
+    ],
+    "count_sum": 881484,
+    "count_peak": 4538,
+    "content_peak": 9076,
+    "bound_share_12": 0.9425242949538215,
+    "tail_links": 4.406776002706088,
+    "cos_omega_eff": 0.7611799949146287,
+    "omega_eff": 0.7056656876683589,
+    "leak": 0.9217534534000064
+   }
+  },
+  {
+   "t": 50,
+   "record_0": {
+    "centroid": [
+     24.002000213028385,
+     24.002000213028385,
+     24.002000213028385
+    ],
+    "width_rms": 6.136703517972599,
+    "peak": 69780,
+    "peak_node": [
+     24,
+     24,
+     24
+    ],
+    "count_sum": 532968,
+    "count_peak": 4964,
+    "content_peak": 9928,
+    "bound_share_12": 0.7399494862911403,
+    "tail_links": 5.059815435474448,
+    "cos_omega_eff": 0.908630597882691,
+    "omega_eff": 0.43080326704741845,
+    "leak": 0.5793482756170986
+   }
+  }
+ ],
+ "host_seconds": 1.0840978622436523
+}

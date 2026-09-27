@@ -1,0 +1,153 @@
+"""The giving, the three acts of one window: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) x (|n_a| div M), at t + 1), the write (a_given at the shell += g x a_body, before the bookings), the close (at outward x den >= norm the record named, its direction the tally's sign per axis) (ALGEBRA.md 9.117 item 2 the row "the giving" and item 5, 9.107, 9.71 (1), 9.116 item 5); the count's close the click's inverse, the bulk share from the rule, the window's write beyond (H)."""
+
+from __future__ import annotations
+
+from collections.abc import Callable
+from dataclasses import dataclass
+from typing import Any
+
+import numpy as np
+
+from event_universe.core.register import Declaration
+
+# the three acts of one window, the words the loop names in `start`
+THE_OPEN = "the open"
+THE_WRITE = "the write"
+THE_CLOSE = "the close"
+ACTS = (THE_OPEN, THE_WRITE, THE_CLOSE)
+
+THE_WORD = (
+    "the close of the count the click's inverse, the bulk share from the rule 9.57 (1), "
+    "the window's write beyond (H)"
+)
+
+
+@dataclass(frozen=True)
+class GivingTerm:
+    """The emitter's declaration for the window: the weight g, the quantum's norm as norm / norm_denominator, the given family's index."""
+
+    weight: int
+    norm: int
+    norm_denominator: int
+    family: int
+
+
+@dataclass(frozen=True)
+class GivingStart:
+    """The interval's reading for one act, every field named by the loop: the act's word; at the open the body's quanta M and momentum n; at the write the body's levels at its shell (None at the other acts); at the close this interval's outward flux and its tally."""
+
+    act: str
+    quanta: int
+    momentum: tuple[int, int, int]
+    body_levels: np.ndarray | None
+    outward_flux: int
+    outward_tally: tuple[int, int, int]
+
+
+@dataclass(frozen=True)
+class GivingOwn:
+    """The window on the body's record: the intervals written so far (None when closed), the outward norm summed, its tally per axis."""
+
+    window: int | None
+    outward: int
+    tally: tuple[int, int, int]
+
+
+@dataclass(frozen=True)
+class GivingWrites:
+    """The act's writes: the level write at the shell, the deferred count and momentum, the close with its direction, and the window's record after the act."""
+
+    own: GivingOwn
+    level: np.ndarray | None
+    count: int
+    momentum: tuple[int, int, int] | None
+    closed: bool
+    direction: tuple[int, int, int] | None
+
+
+def sign_of(value: int) -> int:
+    return (value > 0) - (value < 0)
+
+
+def bulk_share(momentum: tuple[int, int, int], quanta: int) -> tuple[int, int, int]:
+    """n_a -= sgn(n_a) x (|n_a| div M): the quantum carries its whole share of the momentum and the body keeps the remainder inside n_a, symmetric under reflection (ALGEBRA.md 9.116 item 5)."""
+    return (
+        momentum[0] - sign_of(momentum[0]) * (abs(momentum[0]) // quanta),
+        momentum[1] - sign_of(momentum[1]) * (abs(momentum[1]) // quanta),
+        momentum[2] - sign_of(momentum[2]) * (abs(momentum[2]) // quanta),
+    )
+
+
+def check(term: GivingTerm, start: GivingStart, own: GivingOwn) -> None:
+    """The refusals by name: the weight, the norm and its denominator from 1; the act one of the three; an open on an open window, a write or a close on none; the quanta from 1 at the open; the write without the body's levels."""
+    if term.weight < 1 or term.norm < 1 or term.norm_denominator < 1:
+        raise ValueError(
+            f"the giving needs a weight, a norm and its denominator from 1, got g = {term.weight}, "
+            f"norm = {term.norm} / {term.norm_denominator} (ALGEBRA.md 9.71 (1))"
+        )
+    if start.act not in ACTS:
+        raise ValueError(f"the giving's act is one of {list(ACTS)}, got {start.act!r}")
+    if start.act == THE_OPEN and own.window is not None:
+        raise ValueError("the giving opens a window while one is open: one window per body")
+    if start.act != THE_OPEN and own.window is None:
+        raise ValueError(f"the giving's act {start.act!r} on a body with no open window")
+    if start.act == THE_OPEN and start.quanta < 1:
+        raise ValueError(f"the giving needs quanta from 1 at the open, got M = {start.quanta}")
+    if start.act == THE_WRITE and start.body_levels is None:
+        raise ValueError("the giving's write needs the body's levels at its shell")
+
+
+def apply(term: GivingTerm, start: GivingStart, own: GivingOwn) -> GivingWrites:
+    """The primitive, one act per call: the open, the write or the close (ALGEBRA.md 9.117 item 2 the row "the giving")."""
+    check(term, start, own)
+    if start.act == THE_OPEN:
+        return GivingWrites(
+            GivingOwn(0, 0, (0, 0, 0)), None, -1, bulk_share(start.momentum, start.quanta), False, None
+        )
+    assert own.window is not None
+    if start.act == THE_WRITE:
+        assert start.body_levels is not None
+        level = term.weight * np.asarray(start.body_levels, dtype=np.int64)
+        return GivingWrites(
+            GivingOwn(own.window + 1, own.outward, own.tally), level, 0, None, False, None
+        )
+    outward = own.outward + start.outward_flux
+    tally = (
+        own.tally[0] + start.outward_tally[0],
+        own.tally[1] + start.outward_tally[1],
+        own.tally[2] + start.outward_tally[2],
+    )
+    if outward * term.norm_denominator >= term.norm:
+        return GivingWrites(
+            GivingOwn(None, outward, tally),
+            None,
+            0,
+            None,
+            True,
+            (sign_of(tally[0]), sign_of(tally[1]), sign_of(tally[2])),
+        )
+    return GivingWrites(GivingOwn(own.window, outward, tally), None, 0, None, False, None)
+
+
+DECLARATION = Declaration(
+    "the giving",
+    "(ii)",
+    (
+        "the body's own record's click (the open)",
+        "the body's rotation at its shell",
+        "the emitter's weight g",
+        "the outward flux through the body's outer Ports over the window, and its tally per axis",
+        "the quantum's norm T as norm / den",
+        "a body's content M_k and its momentum n",
+    ),
+    ("a family's level at a Node", "a body's content M_k", "a body's momentum n"),
+    apply,
+    THE_WORD
+    + " (9.117 item 5); 9.117 item 2, the row 'the giving'; 9.107; 9.71 (1); 9.116 item 5; 9.86 (1)",
+    word="after the step",
+)
+
+
+def bind(loop: Any) -> Callable[..., object]:
+    """The loop's method `_emit` (the open with the record's birth) until the loop calls `apply` at the three acts."""
+    return loop._method("_emit")  # type: ignore[no-any-return]

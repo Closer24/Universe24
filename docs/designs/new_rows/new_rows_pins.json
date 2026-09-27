@@ -1,0 +1,386 @@
+{
+  "format": "new-rows-pins-v1",
+  "worlds_validated_at_load": {
+    "sagnac_k3": "beam-new-rows-sagnac-k3-v1",
+    "sagnac_k5": "beam-new-rows-sagnac-k5-v1",
+    "sagnac_k9": "beam-new-rows-sagnac-k9-v1",
+    "sagnac_k17": "beam-new-rows-sagnac-k17-v1",
+    "malus_s16": "beam-new-rows-malus-s16-v1",
+    "malus_s40": "beam-new-rows-malus-s40-v1",
+    "malus_s48": "beam-new-rows-malus-s48-v1"
+  },
+  "R1_marginals": {
+    "kind": "DETECTOR (registered; repeated, not recomputed)",
+    "source": "examples/events/amplitude/expectations.json, pair.marginal and pair.chsh",
+    "marginal": 32,
+    "births": 64,
+    "cells": {
+      "0_8": {
+        "++": 27,
+        "+-": 5,
+        "-+": 5,
+        "--": 27
+      },
+      "0_24": {
+        "++": 5,
+        "+-": 27,
+        "-+": 27,
+        "--": 5
+      },
+      "16_8": {
+        "++": 27,
+        "+-": 5,
+        "-+": 5,
+        "--": 27
+      },
+      "16_24": {
+        "++": 27,
+        "+-": 5,
+        "-+": 5,
+        "--": 27
+      }
+    },
+    "marginals_from_the_cells": {
+      "0_8": {
+        "first_plus": 32,
+        "second_plus": 32
+      },
+      "0_24": {
+        "first_plus": 32,
+        "second_plus": 32
+      },
+      "16_8": {
+        "first_plus": 32,
+        "second_plus": 32
+      },
+      "16_24": {
+        "first_plus": 32,
+        "second_plus": 32
+      }
+    }
+  },
+  "R2_sagnac": {
+    "sagnac_k3": {
+      "k": 3,
+      "momentum": 141012366262272,
+      "pace_links_per_interval": "1/3",
+      "heading_c": "32/55",
+      "beta_on_the_heading": {
+        "exact": "55/96",
+        "value": 0.5729166666666666
+      },
+      "returns_after_the_birth_intervals": {
+        "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1)",
+        "co_moving_plus_x": {
+          "exact": "39600/41",
+          "value": 965.8536585365854
+        },
+        "counter_minus_x": {
+          "exact": "39600/151",
+          "value": 262.25165562913907
+        },
+        "ordinals_with_both_returns_inside_the_run": 534
+      },
+      "ratio": {
+        "kind": "DETECTOR",
+        "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) over the ordinals from the cart's count 60, n_0 the birth line's clock, n_+ and n_- the two click lines of that ordinal at the cart (its own family), read from the stamped clock alone",
+        "pin": {
+          "exact": "55/96",
+          "value": 0.5729166666666666
+        },
+        "reads": "v / c, r-free (the click frame's r-free lines; ALGEBRA.md 5.1)",
+        "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)"
+      },
+      "band": {
+        "kind": "COMPUTATION",
+        "remainder_per_end_counts": {
+          "exact": "151/32",
+          "value": 4.71875
+        },
+        "on_the_ratio": 0.007684601549347643,
+        "reads": "one hop (k intervals) plus one dwell (55/32) at each return, RUN_4AB.md section 6.3, over the sum of the two returns; a mean over the window narrows it"
+      }
+    },
+    "sagnac_k5": {
+      "k": 5,
+      "momentum": 70506183131136,
+      "pace_links_per_interval": "1/5",
+      "heading_c": "32/55",
+      "beta_on_the_heading": {
+        "exact": "11/32",
+        "value": 0.34375
+      },
+      "returns_after_the_birth_intervals": {
+        "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1)",
+        "co_moving_plus_x": {
+          "exact": "4400/7",
+          "value": 628.5714285714286
+        },
+        "counter_minus_x": {
+          "exact": "13200/43",
+          "value": 306.9767441860465
+        },
+        "ordinals_with_both_returns_inside_the_run": 871
+      },
+      "ratio": {
+        "kind": "DETECTOR",
+        "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) over the ordinals from the cart's count 60, n_0 the birth line's clock, n_+ and n_- the two click lines of that ordinal at the cart (its own family), read from the stamped clock alone",
+        "pin": {
+          "exact": "11/32",
+          "value": 0.34375
+        },
+        "reads": "v / c, r-free (the click frame's r-free lines; ALGEBRA.md 5.1)",
+        "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)"
+      },
+      "band": {
+        "kind": "COMPUTATION",
+        "remainder_per_end_counts": {
+          "exact": "215/32",
+          "value": 6.71875
+        },
+        "on_the_ratio": 0.014363236860795454,
+        "reads": "one hop (k intervals) plus one dwell (55/32) at each return, RUN_4AB.md section 6.3, over the sum of the two returns; a mean over the window narrows it"
+      }
+    },
+    "sagnac_k9": {
+      "k": 9,
+      "momentum": 35253091565568,
+      "pace_links_per_interval": "1/9",
+      "heading_c": "32/55",
+      "beta_on_the_heading": {
+        "exact": "55/288",
+        "value": 0.1909722222222222
+      },
+      "returns_after_the_birth_intervals": {
+        "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1)",
+        "co_moving_plus_x": {
+          "exact": "118800/233",
+          "value": 509.87124463519314
+        },
+        "counter_minus_x": {
+          "exact": "118800/343",
+          "value": 346.35568513119534
+        },
+        "ordinals_with_both_returns_inside_the_run": 990
+      },
+      "ratio": {
+        "kind": "DETECTOR",
+        "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) over the ordinals from the cart's count 60, n_0 the birth line's clock, n_+ and n_- the two click lines of that ordinal at the cart (its own family), read from the stamped clock alone",
+        "pin": {
+          "exact": "55/288",
+          "value": 0.1909722222222222
+        },
+        "reads": "v / c, r-free (the click frame's r-free lines; ALGEBRA.md 5.1)",
+        "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)"
+      },
+      "band": {
+        "kind": "COMPUTATION",
+        "remainder_per_end_counts": {
+          "exact": "343/32",
+          "value": 10.71875
+        },
+        "on_the_ratio": 0.025037170935337166,
+        "reads": "one hop (k intervals) plus one dwell (55/32) at each return, RUN_4AB.md section 6.3, over the sum of the two returns; a mean over the window narrows it"
+      }
+    },
+    "sagnac_k17": {
+      "k": 17,
+      "momentum": 17626545782784,
+      "pace_links_per_interval": "1/17",
+      "heading_c": "32/55",
+      "beta_on_the_heading": {
+        "exact": "55/544",
+        "value": 0.10110294117647059
+      },
+      "returns_after_the_birth_intervals": {
+        "kind": "GAMEBOARD (the ticks; the cart's count equals them at r = 1)",
+        "co_moving_plus_x": {
+          "exact": "74800/163",
+          "value": 458.8957055214724
+        },
+        "counter_minus_x": {
+          "exact": "224400/599",
+          "value": 374.6243739565943
+        },
+        "ordinals_with_both_returns_inside_the_run": 1041
+      },
+      "ratio": {
+        "kind": "DETECTOR",
+        "line": "(n_+ - n_-) / (n_+ + n_- - 2 n_0) over the ordinals from the cart's count 60, n_0 the birth line's clock, n_+ and n_- the two click lines of that ordinal at the cart (its own family), read from the stamped clock alone",
+        "pin": {
+          "exact": "55/544",
+          "value": 0.10110294117647059
+        },
+        "reads": "v / c, r-free (the click frame's r-free lines; ALGEBRA.md 5.1)",
+        "comparison": "the Sagnac ratio v / c, Michelson-Gale 1925 (the first-order form)"
+      },
+      "band": {
+        "kind": "COMPUTATION",
+        "remainder_per_end_counts": {
+          "exact": "599/32",
+          "value": 18.71875
+        },
+        "on_the_ratio": 0.044914934770908695,
+        "reads": "one hop (k intervals) plus one dwell (55/32) at each return, RUN_4AB.md section 6.3, over the sum of the two returns; a mean over the window narrows it"
+      }
+    }
+  },
+  "R3_malus": {
+    "malus_s16": {
+      "setting": 16,
+      "angle_degrees": 11.25,
+      "tables": {
+        "C": 251,
+        "S": 50,
+        "norm_over_65536": 0.9994659423828125
+      },
+      "weights": {
+        "0+": 4128833536,
+        "0-": 163840000
+      },
+      "rungs": [
+        0,
+        246,
+        256
+      ],
+      "counts": {
+        "kind": "DETECTOR",
+        "0+": 246,
+        "0-": 10
+      },
+      "pass_fraction": {
+        "kind": "DETECTOR",
+        "value": 0.9609375
+      },
+      "comparison": {
+        "cos2": 0.9619397662556434,
+        "count_times_256": 246.2565801614447
+      },
+      "departure": {
+        "kind": "COMPUTATION",
+        "value": -0.0010022662556433692
+      },
+      "reads": "the pass cell 0+ over the 256 births (u = ordinal x 159 mod 256, every residue once)"
+    },
+    "malus_s40": {
+      "setting": 40,
+      "angle_degrees": 28.125,
+      "tables": {
+        "C": 226,
+        "S": 121,
+        "norm_over_65536": 1.0027618408203125
+      },
+      "weights": {
+        "0+": 3347316736,
+        "0-": 959512576
+      },
+      "rungs": [
+        0,
+        199,
+        256
+      ],
+      "counts": {
+        "kind": "DETECTOR",
+        "0+": 199,
+        "0-": 57
+      },
+      "pass_fraction": {
+        "kind": "DETECTOR",
+        "value": 0.77734375
+      },
+      "comparison": {
+        "cos2": 0.7777851165098012,
+        "count_times_256": 199.1129898265091
+      },
+      "departure": {
+        "kind": "COMPUTATION",
+        "value": -0.00044136650980119985
+      },
+      "reads": "the pass cell 0+ over the 256 births (u = ordinal x 159 mod 256, every residue once)"
+    },
+    "malus_s48": {
+      "setting": 48,
+      "angle_degrees": 33.75,
+      "tables": {
+        "C": 213,
+        "S": 142,
+        "norm_over_65536": 0.9999542236328125
+      },
+      "weights": {
+        "0+": 2973302784,
+        "0-": 1321467904
+      },
+      "rungs": [
+        0,
+        177,
+        256
+      ],
+      "counts": {
+        "kind": "DETECTOR",
+        "0+": 177,
+        "0-": 79
+      },
+      "pass_fraction": {
+        "kind": "DETECTOR",
+        "value": 0.69140625
+      },
+      "comparison": {
+        "cos2": 0.6913417161825449,
+        "count_times_256": 176.9834793427315
+      },
+      "departure": {
+        "kind": "COMPUTATION",
+        "value": 6.453381745508135e-05
+      },
+      "reads": "the pass cell 0+ over the 256 births (u = ordinal x 159 mod 256, every residue once)"
+    }
+  },
+  "R4_round_trip": {
+    "kind": "DETECTOR (registered by RUN_4AB.md section 6.3; repeated, not recomputed)",
+    "source": "docs/designs/fail_rows/run_4ab_readings.json, runs.<world>.readings.round_trip",
+    "cart_k3_law": {
+      "read": 3.7083333333333335,
+      "window_counts": 445,
+      "returns": 120.0,
+      "pin": 3.682926829268293,
+      "pin_exact": "151/41",
+      "counts_off": 3.0487804878048337,
+      "remainder_per_end": 8.4375,
+      "against_the_band_as_pinned": "FAIL",
+      "against_the_preregistration_band": "PASS"
+    },
+    "cart_k5_law": {
+      "read": 2.053719008264463,
+      "window_counts": 497,
+      "returns": 241.99999999999997,
+      "pin": 2.0476190476190474,
+      "pin_exact": "43/21",
+      "counts_off": 1.4761904761905953,
+      "remainder_per_end": 10.4375,
+      "against_the_band_as_pinned": "FAIL",
+      "against_the_preregistration_band": "PASS"
+    },
+    "cart_k3_key": {
+      "read": 4.774193548387097,
+      "window_counts": 296,
+      "returns": 62.0,
+      "pin": 4.708193249854554,
+      "pin_exact": null,
+      "counts_off": 4.0920185090176915,
+      "remainder_per_end": 6.3544346994257355,
+      "against_the_band_as_pinned": "FAIL",
+      "against_the_preregistration_band": "FAIL"
+    },
+    "cart_k5_key": {
+      "read": 2.3076923076923075,
+      "window_counts": 450,
+      "returns": 195.00000000000003,
+      "pin": 2.302009878320537,
+      "pin_exact": null,
+      "counts_off": 1.1080737274951957,
+      "remainder_per_end": 9.072129279594511,
+      "against_the_band_as_pinned": "FAIL",
+      "against_the_preregistration_band": "PASS"
+    }
+  }
+}

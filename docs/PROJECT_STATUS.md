@@ -1,6 +1,69 @@
 # Project status and restart guide
 
-## Where the project stands on 2026-09-20 (read this first)
+## Where the project stands on 2026-09-25 (read this first)
+
+Items 1 to 4 written by the Boss on 2026-09-25 at about 01:00Z from `main`
+at `b3268367` (PR #1140 merged), records 1875 to 1903 of
+`docs/LOG_2026-09-20.md` and [Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"What defines the system now"; items 5 and 6 are the Boss's snapshot of
+2026-09-24 at about 12:30Z from `main` at `111e6b1e`. A snapshot, not live
+evidence: read current Git before acting on it.
+
+1. **The new engine and its cleanup.** The system is one element of the
+   algebra and one operator on it (local, six neighbours, integers); the
+   click is the only non-local act and carries no signal; the birth is the
+   only write; no table and no formula on the GameBoard (records 1875,
+   1878 and 1888). Nature24 does the cleanup on his branch `emitter-click`,
+   each head under the mathematician's gate before its merge (record 1896).
+   First: the per-detector click, the increment ladder of ALGEBRA.md 9.25
+   over detectors, each a cube of side at least 3, its increment the flux
+   into the cube through its Ports from outside, the click reported per
+   detector, and the load check refusing a smaller cube (records 1899 and
+   1900). Then the rest of the cleanup, and next the input-file generator
+   (the operator iterated in integers, record 1898), which writes each
+   experiment's input file once, checked LAWFUL or REFUSED at load
+   (record 1886), and the one command that runs the input files in
+   parallel (record 1887). Three roles: the experimenter writes the list,
+   the generator writes the input file, the engine runs; no world writer
+   (records 1879 and 1882).
+2. **The experiments.** The mathematician's table of the seventeen is
+   ALGEBRA.md 9.22 (8) on PR #1145 (`lab-tools-unification`), with the
+   tools' cards in `docs/designs/lab_tools/LAB_TOOLS.md`: each experiment's
+   entries, its detectors as cubes of side 3 or more, its neglected medium
+   with the reason (record 1891), its blind pin in clicks; it is to be
+   completed per experiment so Nature24 writes every input file through
+   the generator without asking (records 1901 to 1903).
+3. **The paper.** Rewritten on the new engine per
+   [NEW_ENGINE_AUDIT.md](designs/paper_verification/NEW_ENGINE_AUDIT.md) by
+   a new paper writer on branch `paper-new-engine`, opened from `paper-48`
+   (records 1899 and 1900): first the general formula and the algebra
+   chapter (the one operator, the click, the birth), then the experiments'
+   rows after their new-engine runs with blind pins; the old-engine figures
+   and numbers leave the body. The venue Foundations of Physics
+   (record 1621); the Zenodo record is to be opened anew and its DOI
+   replaced in the paper and in `README.md`, `CITATION.cff` (record 1653).
+4. **The goal (the model owner, 2026-09-25, record 1901).** All seventeen
+   experiments (the fifteen, the two-qubit computer and Mach-Zehnder)
+   run on the new engine from their input files, each loaded LAWFUL, each
+   read in clicks against its blind pin; a miss is a fault to find in the
+   law or the design, never a pin moved. An experiment checks only clicks
+   (records 1875 and 1876).
+5. **Open on GitHub.** Pull requests: #1115 (build-3), #1124 (`SIZING.md`,
+   the sizing by the algebra, moot while no world is built), #1006 (the
+   paper), #1107 (the records 1654 to 1806, the Highlights clauses and the
+   GO status page), and the older #1018, #907 and #863. Issues: #1113,
+   #1116, #1120, #1121, #1125, each answered on the record. Unmerged
+   branches with work: `detector-law-joint-gather`, `visualizer-3` (docs),
+   `world-sizing`, `paper-48`.
+6. **Decided and recorded (Highlights 5.4, 2026-09-24).** The order
+   channel's solution declared by the Boss on the owner's word with the
+   run guard (record 1647); the pin runs only after a preliminary run of
+   the same file reads clean and Reviewer 3's word (records 1630, 1641,
+   1648); the one list, one engine and no building of worlds; no pins
+   until the freeze and one GO; the paper only when everything is stable
+   (records 1805 and 1806, on PR #1107).
+
+## Where the project stood on 2026-09-20 (history)
 
 This is a snapshot of `claude/universe24-new-3ytqde` at the pull request
 that carries the day's work to `main`; read current Git, the linked issues
@@ -140,7 +203,7 @@ out, the engines before this one among them.
 | The frame: the clocks, the steps, the books, the readings, the inverse | `src/event_universe/events/engine.py`, `measured.py` | [ENGINE.md](ENGINE.md), "The frame", "The books" |
 | The record of a run | `src/event_universe/events/run.py`, `snapshot_writer.py`, `runner.py` | [ENGINE.md](ENGINE.md), "The record" |
 | The substrate | `src/event_universe/core/` | Bounded integers (`by_clock`, `apportion_whole`, `integer_root`), the GameBoard's addresses and headings, the phase tables; the integer audit |
-| The preflight and the workspace | `configuration_validation.py`, `ui.py` | [ENGINE.md](ENGINE.md), "Preflight"; [WORKSPACE.md](WORKSPACE.md) |
+| The preflight | `configuration_validation.py` | [ENGINE.md](ENGINE.md), "Preflight" |
 | The entity definitions | `world_loading.py` | [ENTITY_DEFINITIONS.md](ENTITY_DEFINITIONS.md) |
 | Generated output | `retention.py` | [RETENTION.md](RETENTION.md) |
 | The check | `tools/check.py` | [CONTRIBUTING.md](../CONTRIBUTING.md) |
@@ -166,8 +229,7 @@ research runs registered in [EXPERIMENTS.md](EXPERIMENTS.md).
 2. Use [README installation instructions](../README.md#install-and-run) and the
    interpreter in [.python-version](../.python-version). The minimum package version
    in [pyproject.toml](../pyproject.toml) does not select the shell interpreter.
-3. Select an explicit initialization and an unused output directory. The
-   [workspace](WORKSPACE.md) changes runtime JSON without rebuilding the engine.
+3. Select an explicit initialization and an unused output directory.
    Visualization is opt-in. Registered outputs expire under [retention](RETENTION.md);
    idle cleanup needs the existing watcher or a scheduled invocation.
 4. Follow [CONTRIBUTING.md](../CONTRIBUTING.md), inspect the affected selection from
