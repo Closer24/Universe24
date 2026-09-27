@@ -332,7 +332,7 @@ def test_conservation_between_clicks():
     assert all(np.all(contents[t][well] == 1) for t in range(click_tick))
     assert all(np.all(contents[t][well] == 2) for t in range(click_tick, len(states)))
     gamma = simulation.node_clock
-    for identity in (light, 0):
+    for identity in (light, -1):
         family = 0 if identity == light else 1
         num = simulation.kind_num[family]
         exchanges = 0
@@ -368,7 +368,7 @@ def test_conservation_between_clicks():
             moved = form_I(simulation, family, now, before, paced[t])
             assert moved - value == exchange, (identity, t)
             exchanges += exchange != 0
-            if identity == 0 and t == click_tick:
+            if identity == -1 and t == click_tick:
                 # THE EVENT (ALGEBRA.md #the-paces, #the-counts-line): the click's quantum enters the
                 # well's Nodes as this interval ends (its level 1 -> 2 there, one unit), the
                 # well's own weights moving with it (inside the exchange read above)

@@ -232,7 +232,7 @@ def test_the_lines_time():
     document = light_clock_world("closed", False)
     document["measured"][0]["receiver"] = "A_face"
     simulation, lines = run(document, 300)
-    first = 1
+    first = next(line["record"] for line in lines if line["event"] == "giving")
     found = [g for g in gathers(lines) if g["record"] == first]
     assert len(found) == 1, found
     line = found[0]
@@ -253,7 +253,8 @@ def test_the_lines_time():
     seed_source(document, 1)
     simulation, lines = run(document, 600)
     found = gathers(lines)
-    assert {line["record"] >> 32 for line in found} == {0, 1}
+    givers = {line["record"]: line["measured"] for line in lines if line["event"] == "giving"}
+    assert {givers[line["record"]] for line in found} == {0, 1}
     for line in found:
         assert line["click_at"] == "rung" and line["click"] == line["tick"]
         assert line["chosen"] == [["between", 0, "0"]] and line["clock_source"] == "measured:0"

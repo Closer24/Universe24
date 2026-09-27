@@ -214,7 +214,7 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
             mask[tuple(np.array(definition.nodes).T)] = True
         block = loop._block(number, entry, definition, corner, mask)
         loop._write_pair(block)
-        identity = number * loop.OWN_IDENTITY_STRIDE
+        identity = -1 - number
         if definition.seed > 0:
             own_record = loop._massive_record(
                 identity, number, entry.family, definition.kind, definition.twist

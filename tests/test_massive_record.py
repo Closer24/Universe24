@@ -427,7 +427,7 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     assert simulation.ledger.held_spent[0] == 3 and simulation.ledger.transit_released[0] == 3
     own = simulation.blocks[0].own
     assert (
-        own is not None and own.identity == 0
+        own is not None and own.identity == -1
     )  # the standing record continues (ALGEBRA.md #the-ladder)
     assert all(
         live.family == 0 and live.content == 1 for live in simulation.records.values() if live is not own
@@ -694,16 +694,7 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
 
 
 def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
-    """The seed as the bound mode's integer profile (MASSIVE_RECORD.md section 11 item 7, the
-    reader of record and the seed; EXPLORATORY, the cheap 128^2 rest layer): the block s = 14 at
-    g = mu^2 / 4 (the kind [3200, 3236], the well [3200, 3227]) seeded flat reads its clicks at a
-    beat (the mean interval 39.3 against the mode's period 42.36), seeded with the module's mode
-    as integers at 2^18 over the whole layer (the generator's integers in the world file, the
-    same at both levels) it reads the mode: the clicks' mean interval over [200, 1500] within
-    0.5 percent of the mode's period 2 pi / omega_b, 42.36 intervals on this layer (the
-    detector's clicks; the loader's residual bound is the law's check of the profile). The edge
-    cases: a profile without `margin` refused; a profile of the wrong length refused; an
-    all-zero profile refused."""
+    """The seed as the bound mode's integer profile (MASSIVE_RECORD.md section 11 item 7, the reader of record and the seed; EXPLORATORY, the cheap 128^2 rest layer): the block s = 14 at g = mu^2 / 4 (the kind [3200, 3236], the well [3200, 3227]) seeded flat reads its clicks at a beat (the mean interval 39.3 against the mode's period 42.36), seeded with the module's mode as integers at 2^18 over the whole layer (the generator's integers in the world file, the same at both levels) it reads the mode: the clicks' mean interval over [200, 1500] within 0.5 percent of the mode's period 2 pi / omega_b, 42.36 intervals on this layer (the detector's clicks; the loader's residual bound is the law's check of the profile). The edge cases: a profile without `margin` refused; a profile of the wrong length refused; an all-zero profile refused."""
     block = {
         "position": [57, 57, 0],
         "side": 14,
@@ -763,7 +754,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     assert world.families[matter].phase_per_age == (512, 1)
     simulation = DetectorLawSimulation(world)
     other = DetectorLawSimulation(beside)
-    identity = 1 * (1 << 32) + 1
+    identity: int | None = None
     given: int | None = None
     field_reached: int | None = None
     compared = 0
@@ -771,6 +762,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
         simulation.step()
         other.step()
         assert simulation.books()["balanced"], tick
+        identity = identity if identity is not None else next(iter(simulation.blocks[1].emitted), None)
         live = simulation.records.get(identity)
         if live is not None:
             given = given if given is not None else tick
@@ -819,7 +811,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
-    identities = [1 * (1 << 32) + 1, 1 * (1 << 32) + 2]
+    identities: list[int] = []
     screen = simulation.detector_names.index("screen")
     at_click: dict[int, tuple[int, int, int, int]] = {}
     original = simulation._ladder_click
@@ -835,6 +827,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     for _ in range(3000):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
+        identities = [line["record"] for line in lines if line["event"] == "giving"]
         for identity in identities:
             live = simulation.records.get(identity)
             if (
@@ -849,7 +842,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     # ALGEBRA.md #the-click the second is given (2 u + 1) P / (2 W) after the first's
     # click and may reach its rung at the screen first when its residue is
     # the smaller)
-    assert sorted(gather["record"] for gather in gathers) == identities
+    assert sorted(gather["record"] for gather in gathers) == sorted(identities) and len(identities) == 2
     for gather in gathers:
         identity = gather["record"]
         assert gather["chosen"][0][0] == "screen" and gather["click"] == gather["tick"]
@@ -914,13 +907,13 @@ def test_every_declared_wheel_is_refused_by_name():
 def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_rung():
     """The receiving set at the emitter's head books the one-way flux and clicks at the record's rung,
     closed or open; a set off the ladder is never chosen; the loader refuses the malformed forms."""
-    first = 1  # A's given record: block 0, giving 1
     for faces in ("closed", "open"):
         world = parse_nature_beam_world(light_clock_world(faces, faces == "open"))
         if faces == "closed":
             assert world.closed == (True, False, False) and world.boundary_per_axis["x"] == "closed"
         lines: list[dict] = []
         simulation = DetectorLawSimulation(world, observer=lines.append)
+        first = simulation.next_identity
         assert ("face" in simulation.detector_names) == (faces == "open")
         a_face = simulation.detector_names.index("A_face")
         assert int(simulation.detector_at_node[132, 0, 0]) == a_face
@@ -928,7 +921,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         pointer_at_click: int | None = None
         original = simulation._ladder_click
 
-        def spy(live, increments, original=original, a_face=a_face):
+        def spy(live, increments, original=original, a_face=a_face, first=first):
             nonlocal pointer_at_click
             pointer = live.pointers[a_face]
             original(live, increments)
@@ -993,16 +986,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
 
 
 def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_block():
-    """A set bound to a block WITHOUT positions is a receiver (Sagnac's form, DECLARATIONS.md section 13
-    item 1) under the flux reading (ALGEBRA.md #rule3): the block's twelve Nodes are the
-    set's Nodes (the detector index at them the set's); an emitter's record (the emitter
-    body of the source kind at [100, 132) on a chain of 300, its train along +x toward the
-    block 68 Links ahead, two givings, the emitter naming the set) books its one-way flux into the
-    block's Nodes to the set and clicks once there, the click stamped with the block's own
-    count as the interval began and named by `clock_source`, the record deleted whole at
-    it, the books balanced; nothing absorbs. Pushed toward the emitter at k = 3 (the block
-    stepping, its Nodes and the set's Nodes following it): the record still clicks once at
-    the set, the books balanced. The loader: a set's `wheel` refused by name."""
+    """A set bound to a block WITHOUT positions is a receiver (Sagnac's form, DECLARATIONS.md section 13 item 1) under the flux reading (ALGEBRA.md #rule3): the block's twelve Nodes are the set's Nodes (the detector index at them the set's); an emitter's record (the emitter body of the source kind at [100, 132) on a chain of 300, its train along +x toward the block 68 Links ahead, two givings, the emitter naming the set) books its one-way flux into the block's Nodes to the set and clicks once there, the click stamped with the block's own count as the interval began and named by `clock_source`, the record deleted whole at it, the books balanced; nothing absorbs. Pushed toward the emitter at k = 3 (the block stepping, its Nodes and the set's Nodes following it): the record still clicks once at the set, the books balanced. The loader: a set's `wheel` refused by name."""
     for momentum in ([0, 0, 0], [-64, 0, 0]):
         document = massive_world([300, 1, 1], CHAIN, [800, 809])
         document["ticks"] = 1200
@@ -1037,7 +1021,7 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
         block = simulation.blocks[1]
         detector = simulation.detector_names.index("B_nodes")
         assert int(simulation.detector_at_node[205, 0, 0]) == detector
-        identity = 0 * (1 << 32) + 1
+        identity = simulation.next_identity
         count_at_rung: int | None = None
         for _ in range(1200):
             count_before = simulation._body_count(block)
