@@ -1,6 +1,6 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "f01764fc",
+ "recorded_at": "ebbb6610",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
@@ -8,7 +8,7 @@
    },
    "ticks": 15156,
    "intervals": 200,
-   "digest": "e5fdcf05f6aa5fadf4280f2cc77162c903dbb1ea133aa0737ccfcd2292daf5d1",
+   "digest": "46ac60e0e2f63ea65c38c22135c42d4cff39040da4e10536e4286f5a28bf92be",
    "records": 17,
    "clicks": 0,
    "lines": 643
@@ -19,7 +19,7 @@
    },
    "ticks": 2400,
    "intervals": 200,
-   "digest": "d81be59f61aec025d8cc63ef9ed3c90fd90b7da7b834ca5786ebca658a58753c",
+   "digest": "ff4a22bbcba93acba49fefee43da739f36c63aaafd1a6ab724be5c094717e9cf",
    "records": 13,
    "clicks": 0,
    "lines": 639
@@ -95,11 +95,12 @@
     "hash": "6bfad60a225f4bd7fddd4413c8cf8c060b9cdc12b11dfbe6541cbd200fe1c91e"
    },
    "ticks": 4800,
-   "intervals": 1500,
-   "digest": "88328d497238015d897ea4de4358709d02cbd4c465c271f8880a067df7f64d0c",
-   "records": 17,
-   "clicks": 41,
-   "lines": 4755
+   "intervals": 996,
+   "digest": "04146403dd4fa9c3674552bd4bf24d13ecd722fbe2d33e4ca669be9ec195dd8f",
+   "records": 7,
+   "clicks": 38,
+   "lines": 3167,
+   "refused": "the twist on the Port toward +x reaches |k| = 33741950, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/massive_record/muon_moving_clock_at_rest_14.json": {
    "stamp": {
@@ -140,10 +141,10 @@
    },
    "ticks": 35304,
    "intervals": 3000,
-   "digest": "87074e1d6f0a6e1075181e142c994a2df075c6ff0094c9fc49bc50453daad1f9",
-   "records": 2,
-   "clicks": 10,
-   "lines": 9106
+   "digest": "897a8e4bb322ef214fe0c0097615115109f6845779953e04339487516d70d930",
+   "records": 4,
+   "clicks": 8,
+   "lines": 9104
   },
   "examples/events/toward_nature/bending.json": {
    "stamp": {
@@ -151,10 +152,10 @@
    },
    "ticks": 5600,
    "intervals": 200,
-   "digest": "f57848811302aac0b045ad0d5f13ca34d86235cd2697e286ad4db5f8192b0a2e",
-   "records": 14,
+   "digest": "7c0ce33c2cff934a7562c581579eb6697e489ba599981c77ab9ad08e02e08a1b",
+   "records": 15,
    "clicks": 0,
-   "lines": 640
+   "lines": 641
   },
   "examples/events/toward_nature/lorentz_moving.json": {
    "stamp": {
@@ -162,10 +163,10 @@
    },
    "ticks": 3600,
    "intervals": 200,
-   "digest": "f7fb808403334cb72cdf0c2da690bac50086c558b5e0aa17779b805941f718ca",
-   "records": 11,
-   "clicks": 1,
-   "lines": 632
+   "digest": "97983308ff0d2547266e9889212932da099289bb3258fc2537488d092e18db10",
+   "records": 12,
+   "clicks": 0,
+   "lines": 631
   },
   "examples/events/toward_nature/lorentz_moving_long.json": {
    "stamp": {
@@ -173,21 +174,22 @@
    },
    "ticks": 5966,
    "intervals": 200,
-   "digest": "1001f69560c11ca5b4c8c24a62f166ddec4f00a68a726277977d9e595a7e7f7d",
+   "digest": "b8ae5b71d016e6d501e7a1ff2dafd0d905be13b5de09a761186e119ef1aaa991",
    "records": 4,
    "clicks": 0,
-   "lines": 607
+   "lines": 608
   },
   "examples/events/toward_nature/lorentz_rest.json": {
    "stamp": {
     "hash": "4d7f249660fe868748aaeb4e48ca0a2f5235f06d10b28b8ffab23d91f01b05d3"
    },
    "ticks": 3600,
-   "intervals": 1500,
-   "digest": "f5b30491a85964b85b2291ec733fefe1319a0b9bbcb37fcc169a1fd7ab347aa9",
-   "records": 18,
-   "clicks": 42,
-   "lines": 4758
+   "intervals": 1050,
+   "digest": "4577572676974120ea44b327e9847e676638925b4c8bae77c1c9a9e6c9932a97",
+   "records": 6,
+   "clicks": 38,
+   "lines": 3335,
+   "refused": "the twist on the Port toward +x reaches |k| = 33785488, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)"
   },
   "examples/events/toward_nature/lorentz_rest_long.json": {
    "stamp": {
@@ -195,7 +197,7 @@
    },
    "ticks": 8206,
    "intervals": 200,
-   "digest": "d917e924524599266215ce5e739c6c192593a9265cc99abdab814a3e86455b95",
+   "digest": "d3b7bc4007273f6875f68697b3434159f43a371b6ac68c9d9130ff817d96fc9c",
    "records": 4,
    "clicks": 0,
    "lines": 607
@@ -206,10 +208,10 @@
    },
    "ticks": 6534,
    "intervals": 200,
-   "digest": "dbaf3b0484fd08d8f46b918358920b69aad6648916b76e5c5e996a5297f04b24",
-   "records": 8,
-   "clicks": 0,
-   "lines": 627
+   "digest": "105844d3d9f54c96482b0239d2cad25e056107e7342e2c588621525bb1ff58fb",
+   "records": 7,
+   "clicks": 1,
+   "lines": 628
   },
   "examples/events/toward_nature/redshift_bottom_long.json": {
    "stamp": {
@@ -217,7 +219,7 @@
    },
    "ticks": 10558,
    "intervals": 200,
-   "digest": "71610b56d4d5e083c8342f8c31edc9c9346105b2ca8f8d217e9616c84d609a03",
+   "digest": "18706ed00f53e27f14bb9937b2b17404c83509d112396946e7108cffbdc0c88c",
    "records": 3,
    "clicks": 0,
    "lines": 606
@@ -228,10 +230,10 @@
    },
    "ticks": 6150,
    "intervals": 200,
-   "digest": "fb8dd8ac650b3287089d7d516c96f26c60f4909c6c631e6023fc46b036ac402b",
-   "records": 9,
-   "clicks": 0,
-   "lines": 628
+   "digest": "0b56e5fa47aa01124bd1c3c9426a3d708ce4b1118e8db11152ecc58b9e4ad4a0",
+   "records": 8,
+   "clicks": 1,
+   "lines": 630
   },
   "examples/events/toward_nature/redshift_top_long.json": {
    "stamp": {
@@ -239,7 +241,7 @@
    },
    "ticks": 9598,
    "intervals": 200,
-   "digest": "d07c0e963fa03d2a51a72baeaafaee062bda37c7cda4b61627e7357267dc2c40",
+   "digest": "b38687dce36794e131d6f95197b9c32bffb666058a7f784dfc6922208d58d72e",
    "records": 4,
    "clicks": 0,
    "lines": 607

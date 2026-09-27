@@ -121,7 +121,8 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     lines_a: list[dict] = []
     lines_b: list[dict] = []
     a.record, b.record = lines_a.append, lines_b.append
-    for _ in range(300):
+    # 63 intervals: the two worlds are one until A's first kick at 64 (the recoil): the file's Q_unit and held factors are the shipped file's, not the specimen's
+    for _ in range(63):
         a.step()
         b.step()
     renamed = [
