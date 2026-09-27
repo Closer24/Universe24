@@ -2374,10 +2374,6 @@ class DetectorLawSimulation:
 
     # The rule
 
-    def _neighbours(self, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None) -> np.ndarray:
-        """The send's line through the register, kept for the tests' shared helper until its owner retargets it to the folder."""
-        return cast(np.ndarray, self.register.at("the send", "(i)")(self.ports, a, wrap))
-
     def _axis_sums(
         self, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
