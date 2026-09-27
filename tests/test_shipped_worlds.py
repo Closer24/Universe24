@@ -24,18 +24,16 @@ WORLDS = sorted(RECORDED["worlds"])
 def test_the_record_names_every_shipped_world_and_nothing_else():
     module = recorder()
     shipped = sorted(path.relative_to(ROOT).as_posix() for path in module.shipped_worlds())
-    assert shipped == WORLDS, "a world was added or removed: record it (tools/record_shipped_worlds.py)"
-    assert RECORDED["format"] == module.FORMAT
+    assert shipped == WORLDS and RECORDED["format"] == module.FORMAT, "a world came or went: record it"
     for entry in RECORDED["worlds"].values():
-        assert 1 <= entry["intervals"] <= entry["ticks"]
-        assert len(entry["digest"]) == 64
+        assert 1 <= entry["intervals"] <= entry["ticks"] and len(entry["digest"]) == 64
 
 
 @pytest.mark.parametrize("world", WORLDS)
 def test_a_shipped_world_runs_bit_for_bit_as_recorded(world: str):
     module = recorder()
     expected = RECORDED["worlds"][world]
-    actual = module.run(ROOT / world, expected["intervals"])
+    actual = module.run(ROOT / world, expected["intervals"], ROOT / "artifacts" / "record")
     assert actual["stamp"] == expected["stamp"], f"{world}: the world file changed; re-record it"
     assert actual["digest"] == expected["digest"], (
         f"{world}: the run moved after {expected['intervals']} intervals "
@@ -46,14 +44,7 @@ def test_a_shipped_world_runs_bit_for_bit_as_recorded(world: str):
 
 
 def test_the_digest_does_not_move_under_a_rename_of_the_engines_attributes():
-    """The digest is of what the run is, never of how the code holds it (the Boss's word on
-    PR #1172): for every attribute of the engine object, renaming it either leaves the digest
-    where it is (the reading does not name it) or breaks the reader aloud (the reading or the
-    engine's own state stream reads it by that name, and follows a rename by hand); it never
-    moves the digest. The keys of the reading are the world's family names, the records'
-    identities and the ledger's words, never an attribute's name."""
-    import json
-
+    """Renaming any attribute of the engine leaves the digest where it is or breaks the reader aloud, never moves it: the reading's keys are the files' names and the ledger's words."""
     from event_universe.events.detector_law import DetectorLawSimulation
     from event_universe.world_files import parse_nature_beam_world
 
@@ -82,12 +73,21 @@ def test_the_digest_does_not_move_under_a_rename_of_the_engines_attributes():
     reading = module.run_reading(simulation, lines)
     assert set(reading["held families"]) <= {family.name for family in simulation.families}
     assert all(key.isdigit() for key in reading["records"])
-    assert set(reading) == {
-        "lines",
-        "state",
-        "records",
-        "held families",
-        "read remainders",
-        "clicks",
-        "books",
-    }
+    keys = {"lines", "state", "records", "held families", "read remainders", "clicks", "books"}
+    assert set(reading) == keys
+
+
+def test_the_merge_replaces_the_named_worlds_and_keeps_the_rest(tmp_path, monkeypatch):
+    """CI's merge on a tiny record: a world named by an uploaded entry takes it, a world named by none stays as recorded, and the commit is written."""
+    module = recorder()
+    kept = {"stamp": {"hash": "k" * 64}, "ticks": 9, "intervals": 9, "digest": "0" * 64}
+    moved, added = {**kept, "digest": "2" * 64, "refused": "at the wall"}, {**kept, "intervals": 3}
+    monkeypatch.setattr(module, "RECORD", tmp_path / "record.json")
+    module.write_record({"a/kept.json": kept, "a/moved.json": {**kept, "digest": "1" * 64}}, "before")
+    (tmp_path / "s" / "d").mkdir(parents=True)
+    (tmp_path / "a__moved.record.json").write_text(json.dumps({"a/moved.json": moved}))
+    (tmp_path / "s" / "d" / "b__added.record.json").write_text(json.dumps({"b/added.json": added}))
+    assert module.merge(tmp_path, "abc1234") == ["a/moved.json", "b/added.json"]
+    record = json.loads((tmp_path / "record.json").read_text())
+    assert record["format"] == module.FORMAT and record["recorded_at"] == "abc1234"
+    assert record["worlds"] == {"a/kept.json": kept, "a/moved.json": moved, "b/added.json": added}
