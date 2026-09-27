@@ -1,5 +1,6 @@
 """The generator by Rule3 alone (tools/body_generator.py): the read and division acts iterated to the
-first repeat give the bound mode at rest and in motion; a pair that binds nothing is refused."""
+first repeat give the bound mode at rest and in motion, the held field at rest under its family's pair
+is the well the mode sits on; a pair that binds nothing is refused."""
 
 from __future__ import annotations
 
@@ -21,6 +22,7 @@ from tools.body_generator import (
     bound_mode,
     clock_pair,
     conserved_form,
+    field_at_rest,
     moving_levels,
     moving_mode,
     period_by_the_rule,
@@ -35,6 +37,7 @@ from tools.body_generator import (
 
 GAMMA = 10_000
 KIND = (800, 1200)
+OPEN = (False, False, False)
 
 
 def counted_cube(box: int, side: int, count: int) -> np.ndarray:
@@ -225,3 +228,34 @@ def test_the_refusals_by_name():
         bound_mode(np.zeros((4, 4, 4), dtype=np.int64), KIND, GAMMA)
     with pytest.raises(ValueError, match="int64"):
         bound_mode(np.ones((4, 4, 4), dtype=np.int32), KIND, GAMMA)
+
+
+def test_the_field_at_rest_is_the_static_line_and_the_mode_sits_on_it():
+    """THE FIELD AT REST (ALGEBRA.md #the-generator (g)): on the open chain of 13 with 700 at the centre the
+    field of [1, 1] is the exact ramp 700, 600, ..., 100 (a fixed point), of [1, 2] the fall 89, 11, 1, 0
+    per Link; in the periodic box of 8 the field of [1, 1] fills to the count everywhere (no well: the mode
+    is refused by name), on the open box the harmonic well with the mode on it above the band; of [1, 4]
+    the well 3000, 138, 0 and the mode within 2 x 10^-3 of the counts' own; den below num refused."""
+    chain = np.zeros((13, 1, 1), dtype=np.int64)
+    chain[6] = 700
+    ramp = field_at_rest(chain, (1, 1), OPEN)
+    assert ramp.levels[:, 0, 0].tolist() == [100 * k for k in (1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2, 1)]
+    fall = field_at_rest(chain, (1, 2), OPEN).levels[:, 0, 0].tolist()
+    assert fall[6:] == [700, 89, 11, 1, 0, 0, 0] and fall == fall[::-1]
+    box = counted_cube(8, 2, 3000)
+    uniform = field_at_rest(box, (1, 1))
+    assert int(uniform.levels.min()) == int(uniform.levels.max()) == 3000 and uniform.cycle == 1
+    with pytest.raises(ValueError, match="binds no mode"):
+        bound_mode(box, KIND, GAMMA, content=uniform.levels)
+    well = field_at_rest(box, (1, 1), OPEN).levels
+    assert well[3, 3, 3] == 3000 > well[3, 3, 5] > well[3, 3, 7] > well[0, 0, 0] > 0
+    on_well = bound_mode(box, KIND, GAMMA, wrap=OPEN, content=well)
+    assert Fraction(2 * KIND[0], KIND[1]) < on_well.rotation and Fraction(
+        30, 100
+    ) < on_well.share_inside < Fraction(35, 100)
+    short = field_at_rest(box, (1, 4)).levels
+    assert short[3, 3, 3] == 3000 and 100 < short[3, 3, 5] < 200 and short[3, 3, 7] == 0
+    rotation = bound_mode(box, KIND, GAMMA, content=short).rotation
+    assert abs(rotation - bound_mode(box, KIND, GAMMA).rotation) < Fraction(2, 1000)
+    with pytest.raises(ValueError, match="num from 1 and den from num"):
+        field_at_rest(box, (2, 1))

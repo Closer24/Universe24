@@ -519,14 +519,12 @@ from num / (3 den) to num p_i p_j / (3 den Gamma^2): the symmetric form
 of the line with the weights 1 / p_i. The depth is bounded by the
 family's own 1 - cos omega_0, so a family whose pair lies close to 1
 binds nothing: on [800, 809] (1 - cos omega_0 = 0.011) no cube of any
-side at any count is bound; on [800, 1200] (1 / 3) a cube of side 12 is
-bound at 500 quanta per Node (the share of the top mode's weight inside
-the cube 0.79), 1000 (0.92), 2000 (0.97), 5000 (0.997), of side 6 at
-1000 (0.58) and 2000 (0.88), of side 3 at 3000 (0.77), one Node at 5000
-(0.65), at Gamma = 10^4. The bound rotation omega_b against omega_0 =
-0.841: side 12 at 500, 0.832; at 1000, 0.812; at 2000, 0.771; one Node
-at 9000, 0.599. A body's clock is set by its count and its side, from
-the rule: a body's mass is its count.
+side at any count is bound; on [800, 1200] (1 / 3) at Gamma = 10^4 a
+cube of side 12 is bound from 500 quanta per Node (the mode's share
+inside 0.79, 0.92 at 1000, 0.997 at 5000), of side 6 from 1000 (0.58),
+of side 3 at 3000 (0.77), one Node at 5000 (0.65); omega_b / omega_0 for
+side 12 is 0.832 at 500 and 0.771 at 2000. A body's clock is set by its
+count and its side, from the rule: a body's mass is its count.
 
 ### The generator
 
@@ -535,8 +533,7 @@ holds no float.
 
 (a) THE REGION. The iteration runs on the body's Nodes and their
 surroundings, out to where the mode's tail falls below one unit of the
-level; the surroundings come out carrying the record's tail, the count
-stays on the body's Nodes.
+level; the count stays on the body's Nodes.
 
 (b) THE ITERATION. Rule3's read act with the before-coefficient 0: a <-
 (SUM_a R_a arr_a + S a) div w on the region; then Rule3's division act
@@ -550,22 +547,18 @@ it converges at the rate cos omega_0 / cos omega_b per step.
 by A, so the iteration is a map on a finite set and enters a cycle; the
 stop is the first repeat of the profile, exact, with no tolerance and
 no declared count; the profile at the repeat is the mode within one
-unit of A. From a flat start (every level A, no seed) the iteration
-reaches a fixed point at step 198 for side 4 and 3000 per Node on 12^3,
-at 291 for side 6 and 2000 on 18^3, at 513 for side 12 and 1000 on
-24^3, on [800, 1200] at Gamma = 10^4, and the profile's overlap with
-the float top mode is 1.000000 in each case.
+unit of A (from a flat start, a fixed point at step 198, 291 and 513
+for the sides 4, 6 and 12 of [the well](#the-well), the overlap with
+the float top mode 1.000000 in each case).
 
 (d) THE TWO LEVELS AND THE AMPLITUDE FROM THE COUNT. The mode's second
 level is the read act once more, halved: before = (**M** now) div 2,
 since **M** phi = 2 cos omega_b phi; the two levels are scaled together
 so that the record's conserved form equals c T, c the body's count and
 T the family's quantum norm: the body's record carries exactly its
-quanta's norm, and nothing of the body is declared. THE UNITS: the form is
-that of [the conserved form](#the-conserved-form); the ladder reads a
-record's norm with the weights 1 / R_i and the family's common wall L,
-the same form times L / (2 num); so the ladder's T is the form's T
-times L / (2 num), and the form's T is the ladder's T times 2 num / L.
+quanta's norm, and nothing of the body is declared. THE UNITS: the ladder reads a record's norm with the weights 1 / R_i and
+the family's common wall L, the form of [the conserved form](#the-conserved-form)
+times L / (2 num), so the ladder's T is the form's T times L / (2 num).
 
 (e) THE MOVING BODY, THE SAME PROCEDURE. The momentum **n** names the
 velocity **v** = **n** / W. The same iteration runs with the arrivals
@@ -582,13 +575,24 @@ body at rest is the case k = 0 of the same procedure.
 amplitude at which Rule3's total stays inside the integer width at
 every content of the region, the bound of [the bound](#the-bound) solved for the
 amplitude, A = (2^63 - 1 - w) div (6 R + |S| + w) at the
-content whose coefficients are largest (the body's, whose |S| grows
-with the content): 5117272 at 3000 per Node, 5221564 at 2000, 5345022
-at 1000 on [800, 1200] at Gamma = 10^4, between 2^22 and 2^23. The
-fixed point does not depend on A beyond its resolution: at A / 2 the
-profile agrees with the one at A, rescaled, within 5, 8 and 12 units of
-the coarser in the three cases of (c), 5 x 10^-6 of A, and the rotation
-to 10^-6; the final scale comes from c T.
+content whose coefficients are largest (between 2^22 and 2^23 in the
+cases of (c)). The fixed point does not depend on A beyond its
+resolution: at A / 2 the profile agrees with the one at A, rescaled,
+within 12 units of the coarser, and the rotation to 10^-6; the final
+scale comes from c T.
+
+(g) THE FIELD AT REST, THE START OF A WORLD. The generator iterates the
+held family's own line to rest first, at the pair of the family's row:
+from nothing the level at every Node is num S_6(a) div (6 den) by the
+division act on a fine unit derived from the width, the body's Nodes
+rewritten to the count each time (the hold); the map is monotone, so
+the levels rise to a fixed point, the stop its first repeat; the levels
+are the rest within one unit, and the mode is solved on that content. A
+world starts from the field at rest, never from zeros (the zero start
+radiates the transient that rings). Under [1, 1] the rest between
+periodic faces is the uniform level, the count itself, no well and no
+mode; between open faces the harmonic well; under [1, 4] the well
+3000, 138, 0 within two Links.
 
 ### The velocity
 
@@ -699,10 +703,8 @@ defect, and no body's numbers are patched to meet it.
 ## What is open
 
 1. Whether a body at rest jitters when its current's swing reaches T /
-2: on a standing mode of sixteen Nodes at A = 2^10 the accumulated
-swing of T c + r is 158094 against T / 2 = 16777216 over 400 intervals,
-one percent, and the count stays in place; the run of [the velocity](#the-velocity)
-stands beside it.
+2: on a standing mode of sixteen Nodes the accumulated swing over 400
+intervals is one percent of T / 2 and the count stays in place.
 2. The store of the recoil across walls as one remainder against one
 declared wall of the universe, L the least common multiple of the
 world's declared wavelengths: L divides their product and is refused
@@ -711,8 +713,6 @@ the store moves to L when the loop carries the recoil.
 3. The structure table of the self-source's cubic term: not in the
 engine; the line is the squares' sum alone.
 4. The twist table's small angles: a triple with d at most 10^9 reaches
-no angle below 6.3 x 10^-5 radians, so the mean angle per Link is exact
-only over intervals; the weak-field twists of the vector rows (7 x
-10^-5 per Link) sit at the table's edge.
+no angle below 6.3 x 10^-5 radians, the edge of the vector rows' twists.
 5. Quantum uncertainty and entanglement beyond Born's rule are read
 from runs, not derived.

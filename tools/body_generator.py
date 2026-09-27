@@ -1,8 +1,9 @@
-"""The generator by Rule3 alone (ALGEBRA.md 9.120 item 4): a body's bound mode by Rule3's read act iterated with the before-coefficient 0 and its division act to the amplitude unit, the stop at the first repeat of the integer profile, the two levels, the clock as an exact pair, the period by the one-Node rule and the amplitude from the count and the family's quantum norm; every act one call of core.rule3, integers and exact rationals only."""
+"""The generator by Rule3 alone (ALGEBRA.md #the-generator): the held field at rest under its family's pair (the division act iterated with the remainder carried, the body's Nodes rewritten to the count, the stop at the first repeat of levels and remainders), a body's bound mode on that content by Rule3's read act iterated with the before-coefficient 0 and its division act to the amplitude unit, the stop at the first repeat of the integer profile, the two levels, the clock as an exact pair, the period by the one-Node rule and the amplitude from the count and the family's quantum norm; every act one call of core.rule3, integers and exact rationals only."""
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from dataclasses import dataclass
 from fractions import Fraction
@@ -33,6 +34,17 @@ class BoundMode:
     cycle: int
     rotation: Fraction
     share_inside: Fraction
+
+
+@dataclass(frozen=True)
+class FieldAtRest:
+    """The held field at rest around the body under its family's pair: the levels (the nearest integers), the fine levels at the derived unit, the unit, the iterations to the repeat and the cycle's length, 1 at a fixed point (ALGEBRA.md #the-generator (g))."""
+
+    levels: np.ndarray
+    fine: np.ndarray
+    unit: int
+    iterations: int
+    cycle: int
 
 
 @dataclass(frozen=True)
@@ -73,6 +85,29 @@ def amplitude_unit(pair: tuple[int, int], gamma: int, counts: np.ndarray) -> int
     if found is None or found < 1:
         raise ValueError(f"no amplitude unit keeps Rule3's total inside the width at Gamma = {gamma}")
     return int(found)
+
+
+def field_at_rest(counts: np.ndarray, pair: Pair, wrap: Wrap = PERIODIC) -> FieldAtRest:
+    """The held family's field at rest under its own line at the pace 1 (ALGEBRA.md #the-line; #the-generator (g)): a stands where 6 den a = num S_6(a), so from nothing b <- num S_6(b) div (6 den) by Rule3's division act on the levels at the fine unit (the counts times the unit at the body's Nodes, rewritten each time: the hold); the map is monotone from nothing, so the levels rise to a fixed point, the stop at its first repeat (exact, no tolerance); the fixed point is below the line's own by less than one fine unit per Node, so the levels, the nearest integers by the division act, are the rest within one unit."""
+    check_counts(counts, 1 + int(counts.max()))
+    num, den = pair
+    if num < 1 or den < num:
+        raise ValueError(f"the field's pair [{num}, {den}] has num from 1 and den from num")
+    unit = field_unit(counts, num)
+    hold = counts > 0
+    fine = np.zeros(counts.shape, dtype=np.int64)
+    seen: dict[bytes, int] = {}
+    step = 0
+    key = hashlib.sha256(fine.tobytes()).digest()
+    while key not in seen:
+        seen[key] = step
+        fine = np.asarray(rule3((num, num, num), arrivals(fine, wrap), 0, 6 * den, fine, 0, 0, 1)[0])
+        fine[hold] = counts[hold] * unit
+        step += 1
+        key = hashlib.sha256(fine.tobytes()).digest()
+    half = int(division(1, 2, np.array(unit, dtype=object)))
+    levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half, 1)[0])
+    return FieldAtRest(levels, fine, unit, step, step - seen[key])
 
 
 def rule_integers(pair: Pair, gamma: int, counts: np.ndarray) -> tuple[np.ndarray, np.ndarray, int]:
@@ -127,6 +162,11 @@ def division(numerator_coefficient: Any, wall: Any, level: np.ndarray) -> np.nda
     return np.asarray(rule3(NO_READ, NO_READ, numerator_coefficient, wall, level, 0, 0)[0])
 
 
+def field_unit(counts: np.ndarray, num: int) -> int:
+    """The field's fine unit, derived and never written: the largest scale of the levels at which num S_6 stays inside the integer width with room, the width div (2 x 6 num x the largest count)."""
+    return int(division(1, 2 * 6 * num * int(counts.max()), np.array(MAX_WORK_INT, dtype=object)))
+
+
 def to_amplitude(levels: tuple[np.ndarray, ...], amplitude: int) -> tuple[np.ndarray, ...]:
     """Rule3's division act to the amplitude unit on the levels together, a x A div max|a| by the largest size over them, the product inside int64 or refused (ALGEBRA.md 9.120 item 4 (b))."""
     size = max(int(np.abs(level).max()) for level in levels)
@@ -178,9 +218,10 @@ def rotation_and_share(
     gamma: int,
     pair: tuple[int, int],
     where: str,
+    content: np.ndarray | None = None,
 ) -> tuple[Fraction, Fraction]:
     """2 cos omega_b of a profile as the exact quotient of the symmetric form, SUM a (R S_6(a) + S a) / p^2 over w SUM a^2 / p^2, a reading of the levels and their read acts with the weights 1 / p_i^2, and the share of the profile's weight inside the counted Nodes; refused by name where the rotation does not rise above the band's top 2 num / den or the share is not twice the counted Nodes' fraction of the box, the band's uniform wave (ALGEBRA.md 9.57 (1), 9.120 item 2)."""
-    paces = gamma - counts
+    paces = gamma - (counts if content is None else content)
     numerator, denominator = Fraction(0), Fraction(0)
     for pace in {int(p) for p in paces.ravel()}:
         at = paces == pace
@@ -200,11 +241,17 @@ def rotation_and_share(
     return rotation, share
 
 
-def bound_mode(counts: np.ndarray, pair: Pair, gamma: int, wrap: Wrap = PERIODIC) -> BoundMode:
-    """The bound mode of the count's well at the derived amplitude unit: from a flat start the read act and the division act iterated until the integer profile repeats, the map on a finite set needing no limit (ALGEBRA.md 9.120 item 4 (c))."""
+def bound_mode(
+    counts: np.ndarray, pair: Pair, gamma: int, wrap: Wrap = PERIODIC, content: np.ndarray | None = None
+) -> BoundMode:
+    """The bound mode of the well at the derived amplitude unit: from a flat start the read act and the division act iterated until the integer profile repeats, the map on a finite set needing no limit; the well is the content at every Node, the held field at rest where given (ALGEBRA.md #the-generator (c), (g)), the counts alone otherwise."""
     check_counts(counts, gamma)
-    amplitude = amplitude_unit(pair, gamma, counts)
-    read, self_coefficient, wall = rule_integers(pair, gamma, counts)
+    if content is None:
+        content = counts
+    else:
+        check_counts(content, gamma)
+    amplitude = amplitude_unit(pair, gamma, content)
+    read, self_coefficient, wall = rule_integers(pair, gamma, content)
     a = np.full(counts.shape, amplitude, dtype=np.int64)
     seen: dict[bytes, int] = {}
     step = 0
@@ -216,7 +263,7 @@ def bound_mode(counts: np.ndarray, pair: Pair, gamma: int, wrap: Wrap = PERIODIC
         step += 1
     level = a.astype(object)
     total = rule3((read, read, read), arrivals(level, wrap), self_coefficient, 1, level, 0, 0)[0]
-    rotation, share = rotation_and_share((level,), (total,), wall, counts, gamma, pair, "mode")
+    rotation, share = rotation_and_share((level,), (total,), wall, counts, gamma, pair, "mode", content)
     return BoundMode(a, amplitude, step, step - seen[a.tobytes()], rotation, share)
 
 
@@ -366,6 +413,9 @@ def main() -> None:
     parser.add_argument("--box", type=int, nargs=3, required=True, help="the periodic box's shape")
     parser.add_argument("--side", type=int, required=True, help="the counted cube's side at the centre")
     parser.add_argument("--count", type=int, required=True, help="the count per Node of the cube")
+    parser.add_argument(
+        "--field-pair", type=int, nargs=2, help="the held family's pair: its field at rest is the well"
+    )
     parser.add_argument("--out", type=Path, help="write the profile and its readings as JSON")
     args = parser.parse_args()
     counts = np.zeros(tuple(args.box), dtype=np.int64)
@@ -373,9 +423,15 @@ def main() -> None:
     counts[low[0] : low[0] + args.side, low[1] : low[1] + args.side, low[2] : low[2] + args.side] = (
         args.count
     )
-    mode = bound_mode(counts, (args.pair[0], args.pair[1]), args.gamma)
+    field = (
+        None
+        if args.field_pair is None
+        else field_at_rest(counts, (args.field_pair[0], args.field_pair[1]))
+    )
+    content = None if field is None else field.levels
+    mode = bound_mode(counts, (args.pair[0], args.pair[1]), args.gamma, content=content)
     clock = clock_pair(mode.rotation, mode.amplitude)
-    reading = {
+    reading: dict[str, Any] = {
         "amplitude_unit": mode.amplitude,
         "iterations": mode.iterations,
         "cycle": mode.cycle,
@@ -384,6 +440,13 @@ def main() -> None:
         "period": period_by_the_rule(*clock),
         "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
     }
+    if field is not None:
+        reading["rest"] = {
+            "iterations": field.iterations,
+            "cycle": field.cycle,
+            "at_body": int(field.levels[counts > 0].min()),
+            "at_corner": int(field.levels[0, 0, 0]),
+        }
     print(json.dumps(reading))
     if args.out is not None:
         args.out.write_text(json.dumps({**reading, "profile": mode.profile.ravel().tolist()}))
