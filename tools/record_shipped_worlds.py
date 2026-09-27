@@ -260,8 +260,9 @@ def write_record(worlds: dict[str, Any], recorded_at: str) -> None:
 
 def merge(folder: Path, recorded_at: str) -> list[str]:
     """Every world's record file under `folder` (the shards' uploads, any depth) merged into the
-    record: a named world replaced by its entry, every other world kept as recorded; the worlds
-    merged, sorted."""
+    record: a named world replaced by its entry, every other world kept as recorded; the record
+    is written only where a world's entry moved, so a record that replays as it stands keeps its
+    commit and is not rewritten for the sha alone; the worlds merged, sorted."""
     recorded: dict[str, Any] = (
         json.loads(RECORD.read_text(encoding="utf-8")) if RECORD.exists() else {"worlds": {}}
     )
@@ -271,7 +272,8 @@ def merge(folder: Path, recorded_at: str) -> list[str]:
         for key, entry in json.loads(file.read_text(encoding="utf-8")).items():
             worlds[key] = entry
             merged.append(key)
-    write_record(worlds, recorded_at)
+    if worlds != recorded.get("worlds", {}):
+        write_record(worlds, recorded_at)
     return sorted(merged)
 
 
