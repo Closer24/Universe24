@@ -198,6 +198,9 @@ def select(changed, sources):
         # and the reviewer's recurring findings as gates: no new number, family name or
         # unapproved core module in src/ (issue #1198, item 4 (a))
         tests.add("tests/test_engine_gates.py")
+        # and THE DOCUMENT LOCK keeps the three current documents (the short procedure,
+        # point 12)
+        tests.add("tests/test_documents.py")
     return sorted(tests), sorted(
         p for p in impacted if p.startswith("src/") and p.endswith(".py") and p in sources
     )
