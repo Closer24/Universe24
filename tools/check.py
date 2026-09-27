@@ -35,6 +35,11 @@ REGRESSION = "tests/test_shipped_worlds.py"
 WORLD_TEST = "test_a_shipped_world_runs_bit_for_bit_as_recorded"
 # a pull request touching none of these runs no world, so it skips the regression (the owner's word)
 RUNS_A_WORLD = ("src/", "law/", "examples/", "tools/", "tests/shipped_worlds.json", REGRESSION)
+# a pull request that adds one new folder under features/ with its own test file and touches nothing
+# else runs that test alone and no world (the owner's word of 2026-09-27); anything existing touched
+# (the loop, the loader, a folder that stands) keeps the suite's shards and the worlds
+FEATURES = "src/event_universe/features/"
+FOLDER_JOB = "folder "
 SUITE_SHARDS, HEAVY_WORLDS, WORLD_SHARDS = 3, 3, 2
 # the worlds replayed on every pull request that runs a world (the model owner, 2026-09-27); the
 # whole record on a push to main, on the body's line "RECORD: all" or on the Boss's dispatch
@@ -101,6 +106,50 @@ def shards(runs_worlds, every_world=None):
             f"{REGRESSION}::{WORLD_TEST}[{w}]" for w in group
         ]
     return plan
+
+
+def own_test(name):
+    """The test file of a folder under features/, by the folder's name."""
+    return f"tests/test_feature_{name}.py"
+
+
+def new_folder_alone(touched, base):
+    """The one new folder under features/ a pull request adds with its own test file and nothing else,
+    else None: the folder absent at the merge base, every touched path the folder's or its test's."""
+    names = {Path(p).relative_to(FEATURES).parts[0] for p in touched if p.startswith(FEATURES)}
+    if len(names) != 1:
+        return None
+    (name,) = names
+    folder, test = FEATURES + name + "/", own_test(name)
+    if test not in touched or any(not p.startswith((folder, test)) for p in touched):
+        return None
+    return None if git("ls-tree", base, "--", folder) else name
+
+
+def jobs(touched, base):
+    """The CI jobs of a pull request: a new folder's own test alone, else the suite's shards with
+    the worlds where a world path is touched."""
+    name = new_folder_alone(touched, base)
+    if name is not None:
+        return {FOLDER_JOB + name: [own_test(name)]}
+    return shards(any(p.startswith(RUNS_A_WORLD) for p in touched))
+
+
+def shard_commands(shard):
+    """One CI job's commands: a new folder's job lints the folder with its test and runs that test
+    alone; suite 1 lints the tree; every job runs its targets."""
+    junit = "--junitxml=artifacts/junit.xml"
+    if shard.startswith(FOLDER_JOB):
+        name = shard.removeprefix(FOLDER_JOB)
+        paths = [FEATURES + name, own_test(name)]
+        return [
+            ["ruff", "check", *paths],
+            ["ruff", "format", "--check", *paths],
+            ["mypy", "--follow-imports=silent", paths[0]],
+            ["pytest", "-n", "auto", paths[1], junit],
+        ]
+    targets = shards(runs_worlds=True)[shard]
+    return (LINT if shard == "suite 1" else []) + [["pytest", "-n", "auto", *targets, junit]]
 
 
 def record_seconds(junit):
@@ -321,17 +370,13 @@ def main():
     if args.plan:
         base = git("merge-base", args.base, "HEAD")
         touched = git("diff", "--name-only", base).splitlines()
-        runs_worlds = any(p.startswith(RUNS_A_WORLD) for p in touched)
-        print("shards=" + json.dumps(list(shards(runs_worlds))))
+        print("shards=" + json.dumps(list(jobs(touched, base))))
         return
     for target in args.tests:
         if not (ROOT / target.split("::")[0]).exists():
             parser.error(f"additional test target does not exist: {target}")
     if args.shard:
-        targets = shards(runs_worlds=True)[args.shard]
-        commands = (LINT if args.shard == "suite 1" else []) + [
-            ["pytest", "-n", "auto", *targets, "--junitxml=artifacts/junit.xml"]
-        ]
+        commands = shard_commands(args.shard)
         changed = []
     elif args.full:
         commands = [

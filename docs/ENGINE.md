@@ -171,7 +171,7 @@ Every pull request runs `python tools/check.py --base <the base commit>` (the on
 
 The acceptance tests state what the finished engine must satisfy: `tests/test_engine_acceptance.py`, no family name, no integer of the universe, no default, no flag and no version in the code, the rule as one function; `tests/test_loader_acceptance.py`, the same three on the loader alone, a body loaded by its four attributes alone, the words `sourced` and `readings` loading, an unknown key refused by name, and every key of a family's entry declared on one folder's card and written nowhere in the loader. A test the code fails today is marked xfail strict, with the reason; it turns green when the cut lands and then loses its mark.
 
-`python tools/check.py --full` runs everything. CI (`.github/workflows/check.yml`) runs a plan job, `check.py --plan`, then one job per shard, `check.py --shard`: the selected suite in three parts and, where a world runs, the three heaviest shipped worlds each alone and the rest in two parts; a draft's pushes run nothing. Only the Boss merges into `main`, on green.
+`python tools/check.py --full` runs everything. CI (`.github/workflows/check.yml`) runs a plan job, `check.py --plan`, then one job per shard, `check.py --shard`: the selected suite in three parts and, where a world runs, the three heaviest shipped worlds each alone and the rest in two parts; a draft's pushes run nothing; a pull request that adds one new folder under `features/` with its own test file and nothing else runs one job, that folder's lint and test, and no world (the owner's word of 2026-09-27). Only the Boss merges into `main`, on green.
 
 ## 6. How to run a world
 
