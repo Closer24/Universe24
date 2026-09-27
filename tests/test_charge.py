@@ -267,6 +267,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     same["universe"][CHARGE]["held"] = {"count": "content", "factors": [1]}
     refused(same, "two families hold 'content'")
     quantum = copy()
+    quantum["universe"][CHARGE]["quantum"] = 2
     quantum["universe"][CHARGE]["clicks"] = {"gives": True, "takes": True, "quantum": 2}
     refused(quantum, "a held family is counted in quanta")
     clocked = copy()
