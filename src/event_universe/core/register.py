@@ -34,6 +34,8 @@ import pkgutil
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field, replace
 
+from event_universe.core.schema import Schema
+
 # THE FIVE PLACES of the interval (ALGEBRA.md 9.91 (8)): (i) the clicking families'
 # step with the transport, every component; (ii) the bookings at the Ports, the
 # ladder, the takings and the givings; (iii) the held families' step; (iv) the holds
@@ -71,22 +73,19 @@ OWN_VALUES: frozenset[str] = frozenset({"a body's remainders", "the record's rem
 
 def folder_of(name: str) -> str:
     """The folder a primitive's name takes (the mathematician's contract, PRs 1164 and
-    1165): the name without the article "the ", the apostrophe dropped, a space or a
-    hyphen an underscore ("the spin's step" -> "spins_step", "the self-source" ->
-    "self_source", "the recoil's accumulator" -> "recoils_accumulator")."""
+    1165): the name without "the ", the apostrophe dropped, a space or a hyphen an
+    underscore ("the spin's step" -> "spins_step", "the self-source" -> "self_source")."""
     bare = name[4:] if name.startswith("the ") else name
     return bare.replace("'", "").replace("-", "_").replace(" ", "_")
 
 
 @dataclass(frozen=True)
 class Declaration:
-    """What one primitive declares: its name; its place (a code of 9.91 (8)) and its
-    word (9.111 item 7); the values it reads and writes (the words of the ledger's
-    columns, one string each); its order among the writers of the same value at
-    the same place (an integer, or None where it is the only writer); its ALGEBRA.md
-    line; its function once bound (None on a row of the ledger not built: the name
-    is known, a term naming it is refused as not built); and its binder, the
-    folder's `bind(loop)` that gives the function at load."""
+    """What one primitive declares: its name; its place (9.91 (8)) and its word (9.111
+    item 7); the values it reads and writes (the ledger's words); its order among the
+    writers of one value at one place (None where alone); its ALGEBRA.md line; its
+    function once bound (None on a row not built: a term naming it is refused); its
+    binder `bind(loop)`; and its schema, its keys of the files (core/schema.py)."""
 
     name: str
     place: str
@@ -97,6 +96,7 @@ class Declaration:
     section: str = ""
     word: str = ""
     binder: Binder | None = None
+    schema: Schema | None = None
 
     @property
     def built(self) -> bool:
