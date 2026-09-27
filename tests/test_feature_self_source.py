@@ -2,8 +2,9 @@
 (3); 9.119 item 2; the Boss's record 2250): each difference Rule3's read act, its square a
 booking, the sum divided by P_2 by Rule3's division act; on the shipped moving Lorentz world with
 the charge family's unit P_2 set to 24 A at A = 2^16 (the shipped universe has every unit 0, the line off)
-the folder's array is the loop's own `_self_source` at every interval, forward and backward,
-bit for bit; the refusals; the declaration."""
+the loop's self-source, the folder's line through the register, is the loop's arithmetic before
+the binding at every interval, forward and backward, bit for bit; the refusals; the declaration,
+bound."""
 
 from __future__ import annotations
 
@@ -22,7 +23,6 @@ from event_universe.features.self_source import (
     SelfSourceStart,
     SelfSourceTerm,
     apply,
-    bind,
     difference,
 )
 from event_universe.world_files import input_digest, parse_world_document, world_files
@@ -47,13 +47,15 @@ def moving_world_with_the_self_source(family_name: str) -> tuple[DetectorLawSimu
     return DetectorLawSimulation(world), index, unit
 
 
-def start_of(simulation: DetectorLawSimulation, family: int, inverse: bool) -> SelfSourceStart:
-    """Every level of the family the loop reads at the step, with its six Links as `_arrival` gives them."""
+def before_the_binding(
+    simulation: DetectorLawSimulation, family: int, unit: int, inverse: bool
+) -> np.ndarray:
+    """The loop's arithmetic before the binding: every squared difference of the family's levels across the six Links, summed, floored by P_2."""
     wrap = simulation.kind_wrap[family]
     records = [record for record in simulation.records.values() if record.family == family]
     if family in simulation.held_records:
         records.extend([simulation.held_records[family], *simulation.held_parts[family]])
-    levels = []
+    total = np.zeros(simulation.shape, dtype=np.int64)
     for record in records:
         for level in (
             record.before if inverse else record.now,
@@ -61,16 +63,15 @@ def start_of(simulation: DetectorLawSimulation, family: int, inverse: bool) -> S
         ):
             if level is None or (record.silent and record.held_part):
                 continue
-            links = tuple(
-                simulation._arrival(level, axis, sigma, wrap) for axis in range(3) for sigma in (1, -1)
-            )
-            levels.append(OwnLevel(level, links))
-    return SelfSourceStart(tuple(levels))
+            for axis in range(3):
+                for sigma in (1, -1):
+                    found = simulation._arrival(level, axis, sigma, wrap) - level
+                    total += found * found
+    return np.floor_divide(total, unit)
 
 
-def test_the_folder_gives_the_loops_self_source_on_the_moving_lorentz_world_bit_for_bit():
+def test_the_loops_self_source_is_the_folders_line_bit_for_bit_on_the_moving_lorentz_world():
     simulation, family, unit = moving_world_with_the_self_source("charge")
-    term = SelfSourceTerm(unit, unit // 24)
     nonzero, compared = 0, 0
     for _ in range(30):
         live = next((record for record in simulation.records.values() if record.family == family), None)
@@ -81,9 +82,7 @@ def test_the_folder_gives_the_loops_self_source_on_the_moving_lorentz_world_bit_
         for inverse in (False, True):
             simulation._sources.clear()  # the loop's cache holds the step's own array; its function on the state now
             loops = simulation._self_source(live, inverse)
-            assert loops is not None
-            writes = apply(term, start_of(simulation, family, inverse))
-            assert np.array_equal(writes.source, loops)
+            assert np.array_equal(loops, before_the_binding(simulation, family, unit, inverse))
             nonzero += bool(np.any(loops))
         simulation.step()
     assert compared > 0 and nonzero > 0
@@ -120,4 +119,4 @@ def test_the_declaration_is_the_registers_row():
     assert DECLARATION.function is apply and DECLARATION.writes == ("a family's level at a Node",)
     simulation, family, _ = moving_world_with_the_self_source("charge")
     registered = simulation.register.declarations["the self-source"]
-    assert registered.binder is bind and callable(registered.function)
+    assert registered.binder is None and registered.function is apply
