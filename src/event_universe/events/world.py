@@ -319,6 +319,7 @@ from event_universe.core.phase import MAX_PHASE_STEPS
 from event_universe.core.readings import Reading, world_readings
 from event_universe.core.register import discover
 from event_universe.core.rule3 import rule_total_bound
+from event_universe.core.schema import Context
 from event_universe.loader import frame
 from event_universe.loader.frame import EngineStart
 
@@ -761,7 +762,6 @@ KIND_KEY = "kind"
 # The key of the NatureBeam worlds before 2026-09-20 that gave a measured event its
 # own whole charge; the charge is the family's per unit of content.
 # CANCELLED (docs/CANCELLED_WORLDS.md section 9; ALGEBRA.md 9.90 (1)): the ray law's legacy charge key (read by the cancelled parse alone)
-CHARGE_KEY = "charge"
 # The charge per unit of content of a family with none: 0 as the pair [0, 1].
 NO_CHARGE = (0, 1)
 # The block's keys (massive-record-v1, MASSIVE_RECORD.md sections 4 to 7;
@@ -1085,34 +1085,7 @@ BLOCK_KEYS = {
 # non-periodic face and a periodic side of s + 4 extents; a control world's
 # one extent and s + 2 extents.
 MARGIN_KINDS = ("pin", "control")
-MEASURED_KEYS = {
-    "position",
-    "family",
-    "amount",
-    "stocks",  # the body's stocks of other families' quanta (record 2128 (1); `held` HISTORY)
-    "kind",
-    "q",  # the body's signed number (record 2128 (1); `charge` the family's word alone)
-    "spin",
-    "moment",
-    "twist",  # the body's own record's twist "own", the generator's integer (item 73)
-    "phase",
-    "momentum",
-    "fixed",
-    "span",
-    "phase_by_momentum",
-    "level",
-    "directions",
-    "table",
-    *BLOCK_KEYS,
-    "lamp",
-    "become",
-    # The axial record (`hand-v1`): one of the six headings, the axis the
-    # right-hand rule reads at every product of the event's `become`.
-    "axis",
-    # The energy E' a thrown body declares under `covariant_readings`
-    # (`covariant-readings-v1`; refused without the world key).
-    "E",
-}
+# THE BODY'S KEYS are the frame's schema (loader/frame.py, `BODY`)
 # CANCELLED (docs/CANCELLED_WORLDS.md section 9; ALGEBRA.md 9.90 (1)): the ray law's lamp keys (read by the cancelled parse alone)
 LAMP_KEYS = {
     "rate",
@@ -1198,7 +1171,7 @@ CLOCK_ONLY_KEYS = ("at", "crowd")
 # rows at the set give the centre, and the offset added to it.
 WINDOW_READING_KEYS = {"reads", "offset"}
 TRANSIT_KEYS = {"position", "family", "number", "direction", "amount", "phase", "age", "hand"}
-DETECTOR_KEYS = {"name", "positions", "threshold", "reading", "block"}
+# THE DETECTOR'S KEYS are the frame's schema (loader/frame.py, `DETECTOR`)
 # The readings a detector may declare; the first is the default: `wave`
 # since 2026-09-20 (the model owner: "on the GameBoard a ray, in the world a
 # wave"; `beam` was the default from 2026-09-19 to 2026-09-20).
@@ -3668,7 +3641,7 @@ def _receiver_names(obj: dict[str, object], label: str, detector_law: bool) -> t
             "record's ladder by name is the local detector law's form)"
         )
     value = obj["receiver"]
-    names = [value] if isinstance(value, str) else value
+    names = [value] if isinstance(value, str) else list(value) if isinstance(value, tuple) else value
     if (
         not isinstance(names, list)
         or not names
@@ -4162,7 +4135,7 @@ def _atom_levels(
     two positive integers; the axis 0, 1 or 2 and the sign -1 or +1. Refused
     without the key, and the key's bounds refused at load: the divisor
     `2 h d_l T` for a count T up to the run's ticks within the register."""
-    assert isinstance(value, list)
+    assert isinstance(value, tuple)  # the frame's checked bodies
     found = list(measured)
     names = {family.name: index for index, family in enumerate(families)}
     for index, (entry, definition) in enumerate(zip(value, measured, strict=True)):
@@ -4174,7 +4147,8 @@ def _atom_levels(
             raise ValueError(
                 f"{label} is refused without the world key atom_level (atom-level-v1, off by default)"
             )
-        obj = _object(entry["level"], label, {"family", "pair", "return"}, {"family", "pair", "return"})
+        obj = entry["level"]
+        assert isinstance(obj, dict)  # the frame's checked level (loader/frame.py, `LEVEL`)
         family_name = obj["family"]
         if not isinstance(family_name, str) or family_name not in names:
             raise ValueError(f"{label}.family names an unknown family")
@@ -4190,14 +4164,14 @@ def _atom_levels(
                 "circle: a released row turns its phase by its content over the quantum"
             )
         pair_value = obj["pair"]
-        if not isinstance(pair_value, list) or len(pair_value) != 2:
+        if not isinstance(pair_value, list | tuple) or len(pair_value) != 2:
             raise ValueError(f"{label}.pair must be two positive integers [n_l, d_l]")
         pair = (
             _integer(pair_value[0], f"{label}.pair[0]", 1),
             _integer(pair_value[1], f"{label}.pair[1]", 1),
         )
         return_value = obj["return"]
-        if not isinstance(return_value, list) or len(return_value) != 2:
+        if not isinstance(return_value, list | tuple) or len(return_value) != 2:
             raise ValueError(f"{label}.return must be [axis, sign]")
         axis = _integer(return_value[0], f"{label}.return[0]", 0, 2)
         sign = _integer(return_value[1], f"{label}.return[1]", -1, 1)
@@ -4273,7 +4247,7 @@ def _block(
         extents = (side, side, side)
     else:
         value = obj["extents"]
-        if not isinstance(value, list) or len(value) != 3:
+        if not isinstance(value, list | tuple) or len(value) != 3:
             raise ValueError(
                 f"{label}.extents must be [x, y, z], the box's extents per axis, "
                 "each from 1 (the bodies with extents per axis; BUILD.md section 26 item 23)"
@@ -4287,7 +4261,7 @@ def _block(
     if "pair" not in obj:
         raise ValueError(f"{label} lacks keys: pair (the block's pair at its Nodes)")
     value = obj["pair"]
-    if not isinstance(value, list) or len(value) != 2:
+    if not isinstance(value, list | tuple) or len(value) != 2:
         raise ValueError(f"{label}.pair must be [num, den], the pair at the Nodes")
     pair = (
         _integer(value[0], f"{label}.pair numerator", 1, MAX_VALUE),
@@ -4304,7 +4278,7 @@ def _block(
                 "9.91 (7))"
             )
         kind_value = obj["kind"]
-        if not isinstance(kind_value, list) or len(kind_value) != 2:
+        if not isinstance(kind_value, list | tuple) or len(kind_value) != 2:
             raise ValueError(f"{label}.kind must be [num, den], the body's rest pair")
         kind = (
             _integer(kind_value[0], f"{label}.kind numerator", 1, MAX_VALUE),
@@ -4374,7 +4348,7 @@ def _block(
         )
     seed: int
     profile: tuple[int, ...] | None = None
-    if isinstance(obj["seed"], list):
+    if isinstance(obj["seed"], list | tuple):
         # The bound mode's integer profile over the whole board (MASSIVE_RECORD.md
         # section 11 item 7: the pin worlds' seed, the generator's integers, the
         # same at both levels; admitted with `margin` declared): a flat list of
@@ -4407,7 +4381,7 @@ def _block(
             )
         value = obj["clock"]
         if (
-            not isinstance(value, list)
+            not isinstance(value, list | tuple)
             or len(value) != 2
             or any(type(item) is not int for item in value)
             or value[0] < 1
@@ -4446,10 +4420,10 @@ def _block(
         value = obj["proper_clock"]
         count = abs(int(momentum[moving_axes[0]])) + 1
         if (
-            not isinstance(value, list)
+            not isinstance(value, list | tuple)
             or len(value) != count
             or any(
-                not isinstance(item, list)
+                not isinstance(item, list | tuple)
                 or len(item) != 2
                 or any(type(part) is not int for part in item)
                 or item[0] < 1
@@ -4633,7 +4607,7 @@ def _block(
 def _axes_vector(value: object, label: str) -> tuple[int, int, int]:
     """An integer vector on the axes (record 2084: every directed thing an integer
     vector on the axes), three integers."""
-    if not isinstance(value, list) or len(value) != 3:
+    if not isinstance(value, list | tuple) or len(value) != 3:
         raise ValueError(f"{label} must be three integers, a vector on the axes")
     return (
         _integer(value[0], f"{label}[0]", -AMOUNT_BOUND, AMOUNT_BOUND),
@@ -4663,27 +4637,8 @@ def _emitter(
     (material). No wheel, no residue order and no seed: the residue is the
     law's (the clicking record's remainder at the giving Node, the wheel the
     pair's), and the keys are refused by name."""
-    _refuse_retired(value, label, ("wheel", "residue_order", "residue_seed", "train", "given"))
-    obj = _object(
-        value,
-        label,
-        {
-            "family",
-            "branches",
-            "receiver",
-            "period",
-            "norm",
-            "train",
-            "given",
-            "weight",
-            "norm_denominator",
-            "window_read",
-            "clock",
-            "pair",
-            "twist",
-        },
-        {"family"},
-    )
+    assert isinstance(value, dict)  # the frame's checked emitter (loader/frame.py, `EMITTER`)
+    obj = value
     name = obj["family"]
     if not isinstance(name, str) or name not in names:
         raise ValueError(f"{label}.family names an unknown family")
@@ -4808,7 +4763,6 @@ def _emitter(
     # THE GIVEN RECORD'S TWIST "OWN" (ALGEBRA.md 9.96 (2) (a); item 73): the generator's
     # integer declared under `twist` (a massive kind's rest rotation from its pair, or
     # the emitting body's own rotation where the window writes it, 9.85 (5)), no default
-    _require_under_law(obj, label, {"twist"})
     twist = _integer(obj["twist"], f"{label}.twist", 0)
     return EmitterDefinition(
         names[name],
@@ -4977,58 +4931,19 @@ def _measured(
     detector_law: bool = False,
     momentum_unit: int = 0,
 ) -> tuple[MeasuredDefinition, ...]:
-    if not isinstance(value, list):
-        raise ValueError("measured must be a list")
+    assert isinstance(value, tuple)  # the frame's checked bodies (loader/frame.py, `BODY`)
     names = {family.name: index for index, family in enumerate(families)}
     found: list[MeasuredDefinition] = []
     # Every Node of every body so far: two measured events never share one.
     occupied: set[Address3] = set()
     for index, entry in enumerate(value):
         label = f"measured[{index}]"
-        # under the law a body's `charge` is its own number Q (ALGEBRA.md 9.91 (3), (7);
-        # commit 2); the ray law's measured charge of 2026-09-20 stays refused without it
-        if isinstance(entry, dict) and CHARGE_KEY in entry and not detector_law:
-            raise ValueError(
-                f"{label} declares {CHARGE_KEY}, a key removed on 2026-09-20: the "
-                "charge of a measured event is its family's charge per unit of content times "
-                "its content (the family's `charge`, an integer or [n, d]); see docs/MIGRATION.md"
-            )
-        _refuse_retired(
-            entry, label, ("absorbing", "take", "emits", "own_grace", "wheel", "cavity", "coupling")
-        )
-        obj = _object(entry, label, MEASURED_KEYS, {"position", "family", "amount"})
-        if detector_law:
-            # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): the
-            # momentum and the held quanta on every measured event, the drive's
-            # ramp and start on every block (a `side` or `extents`), the margin
-            # kind on every well (`_block`); the ray law's phase, directions,
-            # phase_by_momentum, span, books and the lamp's keys never read,
-            # refused; `fixed` (an apparatus held in place) is read since the
-            # Boss's record 2157 (ALGEBRA.md 9.104 (6) (b)): the feed, when it
-            # lands, acts on a body without the word alone
-            _require_under_law(obj, label, {"momentum", "stocks"})
-            if "side" in obj or "extents" in obj:
-                _require_under_law(obj, label, {"ramp", "start"})
-            _refuse_under_law(
-                obj,
-                label,
-                {
-                    "phase",
-                    "directions",
-                    "phase_by_momentum",
-                    "span",
-                    "books",
-                    "windows",
-                    "splits",
-                    "transforms",
-                    "become",
-                    "rotations",
-                    "gates",
-                    "contact",
-                    "widths",
-                    "table",
-                },
-            )
+        assert isinstance(entry, dict)
+        obj = entry
+        if detector_law and ("side" in obj or "extents" in obj):
+            # NO DEFAULT UNDER THE DETECTOR LAW (record 2089; item 57): the drive's ramp and
+            # start on every block; the momentum and the stocks are the schema's required keys
+            _require_under_law(obj, label, {"ramp", "start"})
         position = _address(obj["position"], f"{label}.position", shape)
         if any(item.position == position for item in found):
             raise ValueError(f"two measured events at one Node {list(position)}")
@@ -5055,9 +4970,8 @@ def _measured(
         held[family] = amount
         # THE BODY'S STOCKS of other families' quanta (`stocks`, record 2128 (1); beside
         # 9.96 (5)'s `stock` of its own): the given family's content held at the body
-        declared_held = obj.get("stocks", {})
-        if not isinstance(declared_held, dict):
-            raise ValueError(f"{label}.stocks must map family names to contents")
+        declared_held = obj["stocks"]
+        assert isinstance(declared_held, dict)
         for key, content in declared_held.items():
             if key not in names:
                 raise ValueError(f"{label}.stocks names an unknown family {key!r}")
@@ -5076,18 +4990,15 @@ def _measured(
                 "per self-creation below half the circle; the content held of every family counts; "
                 "at the clock's rate [n, d], 2 x content x n below d x N)"
             )
-        # A measured event of a family without a phase circle has phase 0.
-        phase = _integer(obj.get("phase", 0), f"{label}.phase", 0, phase_steps - 1 if phased else 0)
-        momentum_value = obj.get("momentum", [0, 0, 0])
-        if not isinstance(momentum_value, list) or len(momentum_value) != 3:
-            raise ValueError(f"{label}.momentum must be three integers")
+        # the ray law's phase, phase_by_momentum, directions, table and become are no keys of
+        # the file (the frame refuses them by name); the loop still reads their attributes
+        phase = 0
+        momentum_value = obj["momentum"]
+        assert isinstance(momentum_value, tuple)
         momentum = tuple(_integer(item, f"{label}.momentum", -AMOUNT_BOUND) for item in momentum_value)
         fixed = obj.get("fixed", False)
-        if type(fixed) is not bool:
-            raise ValueError(f"{label}.fixed must be true or false")
-        turning = obj.get("phase_by_momentum", False)
-        if type(turning) is not bool:
-            raise ValueError(f"{label}.phase_by_momentum must be true or false")
+        assert isinstance(fixed, bool)
+        turning = False
         if turning:
             if action is None:
                 raise ValueError(
@@ -5116,9 +5027,7 @@ def _measured(
                     "momentum, N or run)"
                 )
         directions = _directions(
-            obj.get("directions", list(range(HEADING_OFFSET, FIXED_DIRECTIONS))),
-            f"{label}.directions",
-            table,
+            list(range(HEADING_OFFSET, FIXED_DIRECTIONS)), f"{label}.directions", table
         )
         # The table the keys give; the declared entries override what they name.
         rules: list[str] = []
@@ -5138,9 +5047,7 @@ def _measured(
             reads.append(component)
             widths.append(None)
             transforms.append(None)
-        declared = obj.get("table", {})
-        if not isinstance(declared, dict):
-            raise ValueError(f"{label}.table must map family names to rules")
+        declared: dict[str, object] = {}
         for key, entry_value in declared.items():
             if key not in names:
                 raise ValueError(f"{label}.table names an unknown family {key!r}")
@@ -5195,17 +5102,6 @@ def _measured(
             windows[names[key]] = entry_window if isinstance(entry_window, int) else None
         # The clock trigger of the transformation (`become` on the event).
         become = None
-        if "become" in obj:
-            become = _transformation(
-                obj["become"],
-                f"{label}.become",
-                families,
-                family,
-                amount,
-                table,
-                directions,
-                clock=True,
-            )
         # The axial record (`hand-v1`): one of the six headings, or none;
         # a handed product of the event's transformations must have a
         # direction on its side of it.
@@ -5243,38 +5139,6 @@ def _measured(
                 # of the event's own family and of every free family held.
                 _label_bound(content * release[0] // release[1] or 1, 1, table, directions, label)
         lamp = None
-        if "lamp" in obj:
-            if families[family].free:
-                raise ValueError(f"{label}: a lamp is a measured event of a paid family")
-            if families[family].charge[0]:
-                raise ValueError(
-                    f"{label}: a lamp of the charged paid family {family_name!r} is "
-                    "refused: its releases would create charge from nothing (a charged paid family "
-                    "is given by a transformation or declared in transit; D-1, 2026-09-20)"
-                )
-            if detector_law:
-                # THE LAMP IS RETIRED under the detector law (ALGEBRA.md 9.17,
-                # the model owner's word of 2026-09-24, 22:30Z): a giving is the
-                # other side of a click that ends a record; a rate with no
-                # record behind it and a drive on the Nodes are refused
-                raise ValueError(
-                    f"{label}.lamp is refused: a giving has a "
-                    "clicking record behind it (ALGEBRA.md 9.17); the emitter is a body of a massive "
-                    "kind with its seed, its stock and the key `emitter` (BUILD.md section 26)"
-                )
-            lamp = _lamp(
-                obj["lamp"],
-                f"{label}.lamp",
-                phase_steps,
-                phased,
-                table,
-                families[family].quantum,
-                amount,
-                turn_rate,
-                family_hand=families[family].hand,
-                massive=families[family].massive,
-                detector_law=detector_law,
-            )
         block = _block(
             obj,
             label,
@@ -6515,8 +6379,7 @@ def _detectors(
     body_record: bool,
     detector_law: bool,
 ) -> tuple[DetectorDefinition, ...]:
-    if not isinstance(value, list):
-        raise ValueError("detectors must be a list")
+    assert isinstance(value, tuple)  # the frame's checked detectors (loader/frame.py, `DETECTOR`)
     at = {entry.position for entry in measured}
     # The other Nodes of the bodies on a set: a body is named by its centre.
     inside: set[Address3] = set()
@@ -6526,12 +6389,8 @@ def _detectors(
     found: list[DetectorDefinition] = []
     for index, entry in enumerate(value):
         label = f"detectors[{index}]"
-        _refuse_retired(entry, label, ("wheel",))
-        obj = _object(entry, label, DETECTOR_KEYS, {"name"})
-        if detector_law:
-            # the ray law's threshold and reading kind: never read by the
-            # detector law (the click is the ladder's), refused (record 2089)
-            _refuse_under_law(obj, label, {"threshold", "reading"})
+        assert isinstance(entry, dict)
+        obj = entry
         name = obj["name"]
         if not isinstance(name, str) or not name:
             raise ValueError(f"{label}.name must be a nonempty string")
@@ -6556,7 +6415,7 @@ def _detectors(
                     "block; a receiver set on a BODY is `positions` on the body's Node "
                     "(DECLARATIONS.md section 15 M1-4)"
                 )
-            threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
+            threshold = 1  # the ray law's key is gone; the loop still reads the attribute
             bound_positions: list[Address3] = []
             if "positions" in obj:
                 # the receiving set on free Nodes beside the block (the light
@@ -6564,7 +6423,7 @@ def _detectors(
                 # Nodes are admitted here, the set their receiver; the cube of
                 # record 1899 as any detector
                 positions_value = obj["positions"]
-                if not isinstance(positions_value, list) or not positions_value:
+                if not isinstance(positions_value, list | tuple) or not positions_value:
                     raise ValueError(
                         f"{label}.positions with `block` must be a nonempty list of "
                         "Nodes, the receiving cube beside the block (DECLARATIONS.md section 10 "
@@ -6593,7 +6452,7 @@ def _detectors(
         if "positions" not in obj:
             raise ValueError(f"{label} needs `positions` (or `block`, a set bound to a block)")
         positions_value = obj["positions"]
-        if not isinstance(positions_value, list) or not positions_value:
+        if not isinstance(positions_value, list | tuple) or not positions_value:
             raise ValueError(f"{label}.positions must be a nonempty list of Nodes")
         positions = []
         for item in positions_value:
@@ -6620,14 +6479,14 @@ def _detectors(
         # more where the GameBoard's extent allows; separate places are
         # separate names
         _detector_region(name, positions, shape, periodic, one_node=True)
-        threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
+        threshold = 1  # the ray law's key is gone; the loop still reads the attribute
         if name.startswith(RESERVED_SET_PREFIX) or name in FACE_NAMES or name == LIFETIME_NAME:
             raise ValueError(
                 f"{label}.name {name!r} is reserved: the layer names the measured "
                 f"events outside every detector `{RESERVED_SET_PREFIX}<number>`, the faces and "
                 "the border by their own names"
             )
-        reading = obj.get("reading", DETECTOR_READINGS[0])
+        reading = DETECTOR_READINGS[0]  # the ray law's key is gone; the loop still reads the attribute
         if reading not in DETECTOR_READINGS and reading != SUM_READING:
             raise ValueError(
                 f"{label}.reading must be one of {[*DETECTOR_READINGS, SUM_READING]}, not {reading!r}"
@@ -6952,8 +6811,11 @@ def parse_world_document(
             "and the rows' run-time assertion use it; no default)"
         )
     meeting = False
+    # THE BODIES AND THE DETECTORS through the frame (loader/frame.py, `BODY`, `DETECTOR`):
+    # every key checked with the families known, an unknown key refused by name
+    bodies = frame.bodies(obj["measured"], Context(tuple(family.name for family in families)))
     measured = _measured(
-        obj["measured"],
+        bodies,
         shape,
         periodic,
         families,
@@ -7042,14 +6904,16 @@ def parse_world_document(
     # (docs/designs/atom_levels/LEVELS.md section 2 (b) and (c)).
     atom_level = obj.get("atom_level", False)
     assert isinstance(atom_level, bool)
-    measured = _atom_levels(obj["measured"], measured, families, atom_level, action, ticks)
+    measured = _atom_levels(bodies, measured, families, atom_level, action, ticks)
     covariant = _covariant(
         obj.get("covariant_readings"), measured, families, width, turn_rate, action, drive_b
     )
     in_transit = _in_transit(
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
-    detectors = _detectors(obj["detectors"], shape, periodic, measured, body_record, detector_law)
+    detectors = _detectors(
+        frame.detectors(obj["detectors"]), shape, periodic, measured, body_record, detector_law
+    )
     optical = _optical(obj.get("optical"), suspension, meeting, table, massive_rows)
     # Every family under one wall, step 3: a moving body under the wall
     # (the law's own since the generic entry of 2026-09-22).

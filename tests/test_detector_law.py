@@ -212,7 +212,7 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
         "momentum": [0, 0, 0],
         "lamp": {"rate": [1, 40], "wheel": [1, 64], "directions": [[1, 0, 0]], "train": 4},
     }
-    with pytest.raises(ValueError, match="lamp is refused"):
+    with pytest.raises(ValueError, match="has unknown keys: lamp"):
         parse_nature_beam_world(with_lamp)
     for key in ("emits", "own_grace"):
         retired = chain_world()
@@ -221,7 +221,7 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
         if key == "own_grace":
             del retired["measured"][0]["emits"]
             del retired["measured"][0]["receiver"]
-        with pytest.raises(ValueError, match=f"{key} is refused"):
+        with pytest.raises(ValueError, match=f"has unknown keys: {key}"):
             parse_nature_beam_world(retired)
     integer_clock = chain_world()
     integer_clock["universe"][0]["phase_per_link"] = 3
@@ -347,7 +347,7 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
     set_wheel = chain_world()
     set_wheel["detectors"][0]["wheel"] = 64
     set_wheel["stamp"] = input_stamp(set_wheel)  # the stamp over the whole file (item 28)
-    with pytest.raises(ValueError, match=r"detectors\[0\]\.wheel is refused"):
+    with pytest.raises(ValueError, match=r"detectors\[0\] has unknown keys: wheel"):
         parse_nature_beam_world(set_wheel)
     on_light = chain_world()
     on_light["universe"][0]["take"] = [-15, 56]
@@ -640,7 +640,7 @@ def test_the_increment_ladder_over_the_named_sets():
         parse_nature_beam_world(layer_world([]))
     coupled = layer_world("s1")
     coupled["measured"][0]["coupling"] = {"G": [1, 50], "g": [1, 1000]}
-    with pytest.raises(ValueError, match=r"measured\[0\]\.coupling is refused: the coupling retired"):
+    with pytest.raises(ValueError, match=r"measured\[0\] has unknown keys: coupling"):
         parse_nature_beam_world(coupled)
 
 

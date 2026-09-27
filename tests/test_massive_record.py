@@ -466,7 +466,7 @@ def test_the_loaders_refusals_name_the_key():
             "lamp": {"rate": [1, 40], "wheel": [1, 64], "train": 2},
         }
     ]
-    with pytest.raises(ValueError, match="lamp is refused"):
+    with pytest.raises(ValueError, match="has unknown keys: lamp"):
         parse_nature_beam_world(lamp_on_kind)
     # light's kind written out, [1, 1], is a value and not a massive kind
     written = json.loads(json.dumps(base))
@@ -837,7 +837,7 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
         bad["measured"][0].update({"emits": "light", "own_grace": 70, "receiver": "screen"})
         if key == "own_grace":
             del bad["measured"][0]["emits"]
-        with pytest.raises(ValueError, match=f"{key} is refused"):
+        with pytest.raises(ValueError, match=f"has unknown keys: {key}"):
             parse_nature_beam_world(bad)
     on_light = json.loads(json.dumps(base))
     on_light["measured"][0]["family"] = "light"
@@ -1016,7 +1016,7 @@ def test_the_cavity_is_refused_by_name():
         )
         document["age_bound"] = 100000
         document["measured"][0]["cavity"] = value
-        with pytest.raises(ValueError, match=r"measured\[0\]\.cavity is refused: the cavity retired"):
+        with pytest.raises(ValueError, match=r"measured\[0\] has unknown keys: cavity"):
             parse_nature_beam_world(document)
 
 
@@ -1483,22 +1483,28 @@ def test_every_declared_wheel_is_refused_by_name():
     parse_nature_beam_world(base)
     for mutate, message in (
         (lambda d: d.__setitem__("wheel", 64), "the world has unknown keys: wheel"),
-        (lambda d: d["detectors"][0].__setitem__("wheel", 64), r"detectors\[0\]\.wheel is refused"),
-        (lambda d: d["measured"][0].__setitem__("wheel", 64), r"measured\[0\]\.wheel is refused"),
+        (
+            lambda d: d["detectors"][0].__setitem__("wheel", 64),
+            r"detectors\[0\] has unknown keys: wheel",
+        ),
+        (lambda d: d["measured"][0].__setitem__("wheel", 64), r"measured\[0\] has unknown keys: wheel"),
         (
             lambda d: d["measured"][0]["emitter"].__setitem__("wheel", [1, 64]),
-            r"measured\[0\]\.emitter\.wheel is refused",
+            r"measured\[0\]\.emitter has unknown keys: wheel",
         ),
         (
             lambda d: d["measured"][0]["emitter"].__setitem__("residue_order", "ordinal"),
-            "residue_order is refused",
+            "emitter has unknown keys: residue_order",
         ),
         (
             lambda d: d["measured"][0]["emitter"].__setitem__("residue_seed", 7),
-            "residue_seed is refused",
+            "emitter has unknown keys: residue_seed",
         ),
-        (lambda d: d["measured"][0].__setitem__("absorbing", True), "absorbing is refused"),
-        (lambda d: d["measured"][0].__setitem__("take", [-15, 56]), r"measured\[0\]\.take is refused"),
+        (lambda d: d["measured"][0].__setitem__("absorbing", True), "has unknown keys: absorbing"),
+        (
+            lambda d: d["measured"][0].__setitem__("take", [-15, 56]),
+            r"measured\[0\] has unknown keys: take",
+        ),
         (lambda d: d["universe"][1].__setitem__("take", [-19, 86]), r"families\[1\]\.take is refused"),
     ):
         document = json.loads(json.dumps(base))
@@ -1637,7 +1643,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         parse_nature_beam_world(no_block)
     graced = light_clock_world("open", False)
     graced["measured"][0]["own_grace"] = 70
-    with pytest.raises(ValueError, match="own_grace is refused"):
+    with pytest.raises(ValueError, match="has unknown keys: own_grace"):
         parse_nature_beam_world(graced)
     empty = light_clock_world("open", False)
     empty["measured"][0]["amount"] = 0
@@ -1709,7 +1715,7 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
     bad = document
     bad["detectors"] = [{"name": "B_nodes", "block": 1, "wheel": 64}]
     bad["stamp"] = input_stamp(bad)  # the stamp over the whole file (item 28)
-    with pytest.raises(ValueError, match="wheel is refused"):
+    with pytest.raises(ValueError, match="has unknown keys: wheel"):
         parse_nature_beam_world(bad)
 
 
@@ -1827,7 +1833,7 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
             parse_nature_beam_world(bad)
     coupled = json.loads(json.dumps(document))
     coupled["measured"][4]["coupling"] = {"G": [1, 1], "g": [1, 2]}
-    with pytest.raises(ValueError, match="coupling is refused"):
+    with pytest.raises(ValueError, match="has unknown keys: coupling"):
         parse_nature_beam_world(coupled)
 
 
