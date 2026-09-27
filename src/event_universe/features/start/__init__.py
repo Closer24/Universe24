@@ -228,7 +228,7 @@ def line_solver(counts: np.ndarray, pair: Pair, wrap: Wrap) -> tuple[Any, np.nda
         total = np.zeros(vector.shape, dtype=vector.dtype)
         for summed in arrivals(vector, wrap):
             total = total + summed
-        out = 6 * den * vector - num * total
+        out = np.asarray(6 * den * vector - num * total)
         out[held] = 0
         return out
 
