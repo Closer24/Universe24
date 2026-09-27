@@ -13,13 +13,13 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
-# The physical modules: every module that runs a physical step of the
-# interval or forms the tables it reads, one line each why.
+# The physical modules: every module that runs a physical step of the interval or forms the tables it reads, one line each why.
 PHYSICAL_MODULES: dict[str, str] = {
     "loader/world.py": "the loop's classes built from the checked files and the load-time constants (the flight table, the labels)",
     "loader/frame.py": "the frame of the files: the schemas the loader reads them through; no arithmetic",
     "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
     "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the receivers' take, the first-rung click (no law's name, ALGEBRA.md #the-primitives)",
+    "events/assembly.py": "the assembly of the engine's state from the loaded world before the first interval: the detectors' map, the arrays and caches, the bodies' blocks and own records, the held families' records; integer arrays alone",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md #the-line, #the-direction, #the-interval), and the ladder's rungs (ALGEBRA.md #the-ladder)",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md #what-is-open): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
