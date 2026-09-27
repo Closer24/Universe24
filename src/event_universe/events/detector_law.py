@@ -856,7 +856,7 @@ class DetectorLawSimulation:
             "the hop": Stage(self._hop_stage, (), ("the hop",)),
             "the hold": Stage(self._hold_stage, ("advance",), ("the hold",)),
             "the operation": Stage(self._records_stage, (), chain),
-            "the giving": Stage(self._giving_stage, (), ("the giving",)),
+            "the giving": Stage(self._giving_stage, (), ("the giving",), creates=True),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
         }
 
